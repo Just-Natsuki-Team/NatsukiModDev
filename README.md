@@ -25,3 +25,19 @@ This is used for top-level game structure, and should not include any actual eve
 #### `splash.rpy`
 
 This splash screen is the first thing that Renpy will show the player. Also defines a lot of the behavior when first loading the game, such as checking for character files and jumping to scenes currently in progress.
+
+#### `script-ch30.rpy`
+
+This is the MAIN script for everything in Natsuki's room. Dialogue and code.
+
+#### `script-menus.rpy`
+
+This is for every in game menu used in JN. Like dialogue and extras and dates. This ISNT every menu OUTSIDE of normal gameplay like settings or the like.
+
+#### `Any of the script-(blank)date.rpys`
+
+These are for each of the dates you can go to in JN. They don't each need their own explanation.
+
+#### `zz_hotkey_buttons.rpy`
+
+This one is in advanced scripts. It controlls the buttons and overall interface of JN beyond the normal game's.
