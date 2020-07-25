@@ -1,4 +1,4 @@
-
+image park = "mod_assets/locations/park/park.png"
 
 
 
@@ -43,9 +43,6 @@ label chpark_noskip:
         call expression "chpark_" + str(persistent.current_monikatopic)
     jump ch30_loop
     return
-
-image splash-glitch2 = "images/bg/splash-glitch2.png"
-image park = "mod_assets/park.png"
 
 label chpark_main:
     $ delete_character("monika")
@@ -354,7 +351,7 @@ label chpark_catchaction:
                 $ delete_all_saves()
                 $ persistent.natsuki_emotion = "Angry"
                 jump chpark_loop
-    else:    
+    else:
         menu:
             "Stand and catch it.":
                 "I reach my hands out to catch the ball."

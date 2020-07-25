@@ -1,17 +1,11 @@
-
-
-
-
-default persistent.monikatopics = []
-default persistent.monika_reload = 0
-default persistent.tried_skip = None
-default persistent.monika_kill = None
 default won_water_fight = None
 default persistent.seen_bikini = False
 
-image mirage = "mod_assets/mirage.png"
-image beach_night = "mod_assets/beachnight.png"
-image beach_eve = "mod_assets/beacheve.png"
+image mirage = "mod_assets/locations/beach/mirage.png"
+image beach = "mod_assets/locations/beach/beach-day.png"
+image beach_night = "mod_assets/locations/beach/beach-night.png"
+image beach_eve = "mod_assets/locations/beach/beach-evening.png"
+image ocean = "mod_assets/locations/beach/ocean.png"
 
 label beach_showart:
     if persistent.natsuki_romance >= 100:
@@ -57,11 +51,9 @@ label chbeachdate_noskip:
     jump chbeach_loop
     return
 
-image splash-glitch2 = "images/bg/splash-glitch2.png"
-
 label chbeachdate_main:
     python:
-        today = datetime.date.today()      
+        today = datetime.date.today()
         day = datetime.date.today().strftime("%A")
         month = datetime.date.today().strftime("%B")
         date = datetime.date.today().strftime("%d")
@@ -233,7 +225,7 @@ label chbeach_loop:
         n "I know you're messing with your clock!"
         n "It can't go from day time to past midnight in an instant you know!"
         jump chbeachdate_night_autoload
-    
+
     if current_time > 6 and current_time < 18:
         scene beach
         if persistent.natsuki_romance >= 100:
@@ -329,7 +321,7 @@ label chbeach_5:
     n "You could go just to relax."
     if persistent.natsuki_love and persistent.natsuki_romance >= 150:
         n 1et "You could go for some,{w=0.2} alone time with your partner.{w=0.5} If you know what I mean."
-        n "Hee hee." 
+        n "Hee hee."
     elif persistent.natsuki_love and persistent.natsuki_romance <= 150:
         n 2dl "You could come with your girlfriend!"
         n 1dz "Ehehehe!"

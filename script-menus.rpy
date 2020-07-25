@@ -751,7 +751,7 @@ label beachtalkmenu2:
         "Last Page...":
             jump beachtalkmenu
         "Nevermind":
-            jump chbeach_loop 
+            jump chbeach_loop
 
 label beachtalkmenu3:
     $ allow_dialogue = False
@@ -761,7 +761,7 @@ label beachtalkmenu3:
         "Last Page...":
             jump beachtalkmenu
         "Nevermind":
-            jump chbeach_loop 
+            jump chbeach_loop
 
 label parktalkmenu:
     $ allow_dialogue = False
@@ -858,7 +858,7 @@ label actions:
                 jump chbeach_swimaction
             "Let's build a sand castle!":
                 if persistent.seen_castle:
-                    n "We already made one but okay..." 
+                    n "We already made one but okay..."
                 else:
                     n "Ooh sounds fun!"
                     $ persistent.natsuki_like += 5
@@ -925,7 +925,7 @@ label actions:
                 jump chbeach_night_oceanaction
             "Let's build a sand castle!":
                 if persistent.seen_castle:
-                    n "We already made one but okay..." 
+                    n "We already made one but okay..."
                 else:
                     n "Ooh sounds fun!"
                     $ persistent.natsuki_like += 5
@@ -1006,7 +1006,7 @@ label actions:
             n "What should we do?"
             "Go for a walk?":
                 if persistent.seen_walk:
-                    n "We already did that, but okay..." 
+                    n "We already did that, but okay..."
                 else:
                     n "Ooh sounds fun!"
                     $ persistent.natsuki_like += 5
@@ -1023,7 +1023,7 @@ label actions:
             "Play catch?":
                 if persistent.seen_catch:
                     $ persistent.reload_catch = False
-                    n "We already did that, but okay..." 
+                    n "We already did that, but okay..."
                 else:
                     n "A game of catch?"
                     n "Your on!"
@@ -1037,7 +1037,7 @@ label actions:
                 jump chpark_catchaction
             "Picnic?":
                 if persistent.seen_picnic:
-                    n "We already did that but okay..." 
+                    n "We already did that but okay..."
                 else:
                     n "Let's go!"
                     $ persistent.natsuki_like += 10
@@ -1058,7 +1058,7 @@ label actions:
             n "What should we do?"
             "Read manga!":
                 if persistent.seen_read:
-                    n "We already did that but okay..." 
+                    n "We already did that but okay..."
                 else:
                     n "Finally!!!"
                     $ persistent.natsuki_like += 20
@@ -1083,7 +1083,7 @@ label actions:
                 jump chclub_mangaaction
             "Grab some new manga!":
                 if persistent.seen_grab:
-                    n "We already did that but okay..." 
+                    n "We already did that but okay..."
                 else:
                     n "Finally!!!"
                     $ persistent.natsuki_like += 20
@@ -1566,7 +1566,7 @@ label extrasmenu:
                 "Nevermind":
                     n jnb "Okay."
                     jump extrasmenu
-        "Lights" if time_of_day == "Night" and persistent.background == "space": 
+        "Lights" if time_of_day == "Night" and persistent.background == "space":
             n jnb "You want to toggle the lights?"
             menu:
                 "Turn On" if persistent.lights == False:
@@ -1679,9 +1679,9 @@ label reloaded:
     scene white
     play music "bgm/monika-start.ogg" noloop
     pause 0.5
-    show splash-glitch2 with Dissolve(0.5, alpha=True)
+    show splash_glitch_2 with Dissolve(0.5, alpha=True)
     pause 2.0
-    hide splash-glitch2 with Dissolve(0.5, alpha=True)
+    hide splash_glitch_2 with Dissolve(0.5, alpha=True)
     scene black
     stop music
     show natsuki 1a at t11
