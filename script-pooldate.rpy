@@ -1,11 +1,4 @@
-
-
-
-
-default persistent.monikatopics = []
-default persistent.monika_reload = 0
-default persistent.tried_skip = None
-default persistent.monika_kill = None
+image pool = "mod_assets/locations/pool/pool.png"
 
 init python:
     import subprocess
@@ -346,7 +339,7 @@ label chpool_preferance:
     n "I think I like the equally."
     n "Maybe the Beach has more of an edge though."
     jump chpool_loop
-    
+
 
 label chpool_swimaction:
     if persistent.natsuki_romance >= 100:

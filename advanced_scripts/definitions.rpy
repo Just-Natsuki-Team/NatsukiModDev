@@ -60,13 +60,13 @@ define audio.t3g3 = "<loop 4.618>bgm/3g2.ogg"
 define audio.t3m = "<loop 4.618>bgm/3.ogg"
 define audio.t4 = "<loop 19.451>bgm/4.ogg"  #Poem minigame
 define audio.t4g = "<loop 1.000>bgm/4g.ogg"
-define audio.tdokidoki = "mod_assets/dokidoki.ogg"
-define audio.tpoems = "mod_assets/poems.ogg"
+define audio.tdokidoki = "mod_assets/bgm/dokidoki.ogg"
+define audio.tpoems = "mod_assets/bgm/poems.ogg"
 define audio.custom1 = "custom-music/01.mp3"
 define audio.custom2 = "custom-music/02.mp3"
 define audio.custom3 = "custom-music/03.mp3"
 define audio.battle = "custom-music/battle.mp3"
-define audio.spooky1 = "mod_assets/spooky1.ogg"
+define audio.spooky1 = "mod_assets/bgm/spooky1.ogg"
 
 define audio.t5 = "<loop 4.444>bgm/5.ogg"   #Sharing poems...... 'Okay Everyone~!'
 #Hey Mod team, our themes aren't defined here in the original script.
@@ -97,15 +97,15 @@ define audio.t9g = "<loop 1.532>bgm/9g.ogg" #207% speed
 define audio.t10 = "<loop 5.861>bgm/10.ogg"   #Confession
 define audio.t10y = "<loop 0>bgm/10-yuri.ogg"
 define audio.td = "<loop 36.782>bgm/d.ogg"
-define audio.tbeach = "mod_assets/beachsfx.ogg"
-define audio.tsmoshsong = "mod_assets/smoshsong.ogg"
-define audio.tattack = "mod_assets/attack.ogg"
-define audio.tattack2 = "mod_assets/mallattack.ogg"
-define audio.tchase = "mod_assets/chase.ogg"
-define audio.tmonikafight = "<loop 14.0>mod_assets/monikafight.ogg"
-define audio.theend = "mod_assets/theend.ogg"
-define audio.rewind = "mod_assets/rewind.ogg"
-define audio.tbeach_night = "<loop 5.0>mod_assets/beachnight.ogg"
+define audio.tbeach = "mod_assets/sfx/beachsfx.ogg"
+define audio.tsmoshsong = "mod_assets/bgm/smoshsong.ogg"
+define audio.tattack = "mod_assets/bgm/attack.ogg"
+define audio.tattack2 = "mod_assets/bgm/mallattack.ogg"
+define audio.tchase = "mod_assets/bgm/chase.ogg"
+define audio.tmonikafight = "<loop 14.0>mod_assets/bgm/monikafight.ogg"
+define audio.theend = "mod_assets/bgm/theend.ogg"
+define audio.rewind = "mod_assets/bgm/rewind.ogg"
+define audio.tbeach_night = "<loop 5.0>mod_assets/bgm/beachnight.ogg"
 
 define audio.m1 = "<loop 0>bgm/m1.ogg" #Monika and her spaceroom music
 define audio.mend = "<loop 6.424>bgm/monika-end.ogg" #Monika music post-deletion
@@ -120,22 +120,17 @@ define audio.closet_close = "sfx/closet-close.ogg"
 define audio.page_turn = "sfx/pageflip.ogg"
 define audio.fall = "sfx/fall.ogg"
 
+image splash_glitch_2 = "images/bg/splash-glitch2.png"
+
 # Backgrounds
 image black = "#000000"
-image dark = "#000000e4"
+#image dark = "#000000e4"
 image darkred = "#110000c8"
 image white = "#ffffff"
 image splash = "bg/splash.png"
-image chocolate:
-    "mod_assets/JustNatsuki/chocolate.png"
-image beach:
-    "mod_assets/beach.png"
-image ocean:
-    "mod_assets/ocean.png"
-image mall:
-    "mod_assets/mall.png"
-image clothesstore:
-    "mod_assets/clothesstore.png"
+image chocolate = "mod_assets/JustNatsuki/chocolate.png"
+
+
 image nb1:
     "mod_assets/nb1.png"
 image nb2:
@@ -143,11 +138,12 @@ image nb2:
 image nb3:
     "mod_assets/nb2.png"
 image smoshscreen:
-    "mod_assets/smosheastereggscreen.png"
+    "mod_assets/easter_eggs/smosheastereggscreen.png"
 image end:
     truecenter
     "gui/end.png"
 image bg residential_day = "bg/residential.png"
+image residential_night = "mod_assets/locations/residential/residential_night.png"
 image bg class_day = "bg/class.png"
 image bg corridor = "bg/corridor.png"
 image bg club_day = "bg/club.png"
@@ -168,6 +164,7 @@ image bg closet = "bg/closet.png"
 image bg bedroom = "bg/bedroom.png"
 image bg sayori_bedroom = "bg/sayori_bedroom.png"
 image bg house = "bg/house.png"
+image house_night = "mod_assets/locations/residential/house_night.png"
 image bg kitchen = "bg/kitchen.png"
 
 image bg notebook = "bg/notebook.png"
@@ -805,7 +802,6 @@ image natsuki 5bw = im.Composite((960, 960), (18, 22), "natsuki/w.png", (0, 0), 
 image natsuki 5bx = im.Composite((960, 960), (18, 22), "natsuki/x.png", (0, 0), "natsuki/3b.png")
 image natsuki 5by = im.Composite((960, 960), (18, 22), "natsuki/y.png", (0, 0), "natsuki/3b.png")
 image natsuki 5bz = im.Composite((960, 960), (18, 22), "natsuki/z.png", (0, 0), "natsuki/3b.png")
-image natsuki 6a = "mod_assets/EgSuki.png"
 
 image natsuki 1ca = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1cl.png", (0, 0), "mod_assets/natsuki/1cr.png", (0, 0), "natsuki/a.png")
 image natsuki 1cb = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1cl.png", (0, 0), "mod_assets/natsuki/1cr.png", (0, 0), "natsuki/b.png")

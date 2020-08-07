@@ -105,24 +105,21 @@ image pool = "mod_assets/pool.png"
 image space = "mod_assets/space.png"
 image partyhat = "mod_assets/JustNatsuki/partyhat.png"
 image cake = "mod_assets/JustNatsuki/cake.png"
-image cemetary = "mod_assets/cemetary.png"
+image cemetary = "mod_assets/locations/cemetary/cemetary.png"
 image ears = "mod_assets/JustNatsuki/ears.png"
-image stop = "mod_assets/stop.png"
 image flower = "mod_assets/JustNatsuki/flower.png"
 image misletoe = "mod_assets/JustNatsuki/misletoe.png"
-image room_day = "mod_assets/natsuki_day_room.png"
+image room_day = "mod_assets/locations/clubroom/natsuki_day_room.png"
 image shade = "mod_assets/JustNatsuki/shade.png"
 image shade2 = "mod_assets/JustNatsuki/shade2.png"
 image shade3 = "mod_assets/JustNatsuki/shade3.png"
 image kitchenoverlay = "mod_assets/emptykitchen.png"
-image residential_night = "mod_assets/residential_night.png"
-image house_night = "mod_assets/house_night.png"
 image clothes jhollow = "mod_assets/JustNatsuki/whichcostume.png"
 image whichhat = "mod_assets/JustNatsuki/whichhat.png"
 image clothes juni = "mod_assets/JustNatsuki/uniform.png"
-image cabin_interior = "mod_assets/cabin.png"
+image cabin_interior = "mod_assets/locations/cabin/cabin.png"
 image clothes jchris = "mod_assets/JustNatsuki/christmascostume.png"
-image decorations = "mod_assets/decorations.png"
+image decorations = "mod_assets/locations/clubroom/decorations.png"
 image clothes jmaid = "mod_assets/JustNatsuki/maidoutfit.png"
 image base 1a = "mod_assets/JustNatsuki/base.png"
 image clothes jbikini = "mod_assets/JustNatsuki/bikini.png"
@@ -142,7 +139,7 @@ image flag blm = "mod_assets/room_decor/blm.png" #Support black people in this i
 #Why am I writing these notes? No one is gunna read em...
 image plate = "mod_assets/JustNatsuki/plate.png"
 image cakelit = "mod_assets/JustNatsuki/cakelit.png"
-image n_kitchen = "mod_assets/kitchen.png"
+image n_kitchen = "mod_assets/location/kitchen/kitchen.png"
 image jumptext:
     ypos credits_ypos + 250
     xoffset 0
@@ -254,7 +251,7 @@ image mask_test2 = AnimatedMask("#ffffff", "mask_mask", "maskb", 0.03, 16)
 image mask_test3 = AnimatedMask("#FAC3FF", "mask_mask_flip", "maskb", 0.10, 32)
 image mask_test4 = AnimatedMask("#ffffff", "mask_mask_flip", "maskb", 0.03, 16)
 
-image noanim = "mod_assets/still.png"
+image noanim = "mod_assets/locations/clubroom/still.png"
 
 image mask_2:
     "images/cg/monika/mask_2.png"
@@ -281,7 +278,7 @@ image monika_bg_highlight:
     "images/cg/monika/monika_bg_highlight.png"
     function monika_alpha
 image monika_scare = "mod_assets/natsukiondrugs.png"
-image dark = "mod_assets/darkeffect.png"
+image dark = "mod_assets/effects/darkeffect.png"
 
 
 image monika_body_glitch1:
@@ -318,7 +315,7 @@ image monika_body_glitch2:
     0.15
     "images/cg/monika/monika_glitch4.png"
 
-image n2 = "mod_assets/JustNatsuki/n_deskstuff.png"
+image desk_accessories = "mod_assets/JustNatsuki/n_deskstuff.png"
 image icon = "mod_assets/logo.png"
 
 image room_glitch = "images/cg/monika/monika_bg_glitch.png"
@@ -485,7 +482,7 @@ label showroom:
         if persistent.hair_color == "Silver" and persistent.natsuki_emotion != "Sad":
             show silver zorder 3
         if not persistent.anniversary:
-            show n2 zorder 4
+            show desk_accessories zorder 4
     if persistent.two_years:
         if persistent.candels_blown:
             show cake zorder 5
@@ -535,11 +532,9 @@ label playmusic:
         stop music
     return
 
-image splash-glitch2 = "images/bg/splash-glitch2.png"
-
 label ch30_main:
     python:
-        today = datetime.date.today()      
+        today = datetime.date.today()
         day = datetime.date.today().strftime("%A")
         month = datetime.date.today().strftime("%B")
         date = datetime.date.today().strftime("%d")
@@ -579,9 +574,9 @@ label ch30_main:
     scene white
     play music "bgm/monika-start.ogg" noloop
     pause 0.5
-    show splash-glitch2 with Dissolve(0.5, alpha=True)
+    show splash_glitch_2 with Dissolve(0.5, alpha=True)
     pause 2.0
-    hide splash-glitch2 with Dissolve(0.5, alpha=True)
+    hide splash_glitch_2 with Dissolve(0.5, alpha=True)
     scene black
     stop music
     n "H-hey!"
@@ -1044,11 +1039,11 @@ label event:
     n "I'll see what I can do about it..."
     $ persistent.seen_event = True
     jump ch30_loop
-    
+
 
 label ch30_autoload:
     python:
-        today = datetime.date.today()      
+        today = datetime.date.today()
         day = datetime.date.today().strftime("%A")
         month = datetime.date.today().strftime("%B")
         date = datetime.date.today().strftime("%d")
@@ -1203,7 +1198,7 @@ label ch30_start:
                     n jnb "No...? But you're close!"
             n jnb "Uh, whatever."
             n jha "It's the two year anniversary of Just Natsuki!"
-            show plate zorder 5 with dissolve 
+            show plate zorder 5 with dissolve
             $ persistent.music_daijoubu = False
             $ persistent.music_natsuki = False
             $ persistent.music_dokidoki = False
@@ -1554,7 +1549,7 @@ label quickshow:
 
 label ch30_loop:
     python:
-        today = datetime.date.today()      
+        today = datetime.date.today()
         day = datetime.date.today().strftime("%A")
         month = datetime.date.today().strftime("%B")
         date = datetime.date.today().strftime("%d")
@@ -1719,7 +1714,7 @@ label ch30_loop:
                     stop music
                     m "[player]?"
                     n jnb "What's that?"
-                    hide n2
+                    hide desk_accessories
                     hide flower
                     hide ears
                     hide clothes
@@ -2096,8 +2091,8 @@ label chani_5:
     $ persistent.seen_anievent = True
     $ exiting_fight = True
     jump ch30_autoload
-    
- 
+
+
 label ch30_0:
     n "..."
     return
@@ -2475,7 +2470,7 @@ label ch30_28:
     n "Like Exit Music."
     n jsb "We don't talk about the ending."
     return
-    
+
 label ch30_29:
     n jnb "I've noticed that video game history and movie history are sort of similar."
     n "They both kinda have those big franchises that blew everyone away!"
@@ -2619,7 +2614,7 @@ label ch30_37:
     n "I wont get involved on the drama since I don't know much about it."
     return
 
-label ch30_38:   
+label ch30_38:
     n jnb "Hey [player]?"
     n "Do you think it's actually possible to port {i}Doki Doki Literature Club{/i} to another game console?"
     n "For instance{w=1.0} Nintendo Switch?"
@@ -2748,7 +2743,7 @@ label ch30_46:
     menu:
         "Yes":
             n "Oh, cool!"
-            n "Maybe you can help me fix up the game!" 
+            n "Maybe you can help me fix up the game!"
         "No":
             n jnb "Aw, that's a shame..."
             n "Well, hey. What can you do?"
@@ -3009,7 +3004,7 @@ label ch30_sayori:
     n jnb "Well of course!"
     n "I didn't really get to see her but I kinda remember her."
     jump ch30_loop
-   
+
 label ch30_yurikill:
     n jnb "I understand why you ask."
     n "I mean she never attacked me."
@@ -3445,7 +3440,7 @@ label ch30_mc:
         n "And I really enjoy hanging out with you!"
     else:
         n jnb "I don't know..."
-        n "I only just met the real you."   
+        n "I only just met the real you."
     jump ch30_loop
 
 label restart:
@@ -3633,7 +3628,7 @@ label ch30_loveyou:
                 elif persistent.player_gender == "Male":
                     n jha "You're the best boyfriend I could ask for."
                 else:
-                    n jha "You're the best partner I could ask for." 
+                    n jha "You're the best partner I could ask for."
         "Nevermind":
             jump normaltalkmenu
     jump ch30_loop
@@ -3774,7 +3769,7 @@ label ch30_3eye:
     hide screen tear
     n jnb "I don't know what that is!"
     $ persistent.seen_3eye = True
-    jump ch30_loop 
+    jump ch30_loop
 
 
 label ch30_act2reload:
@@ -4213,7 +4208,7 @@ label ch30_plan:
     n "Well at least why I tried too..."
     $ config.overlay_screens = []
     scene black with dissolve_scene
-    hide screen hkb_overlay 
+    hide screen hkb_overlay
     with dissolve_scene
     play music mend
     n "I know that Monika was going to delete us all..."

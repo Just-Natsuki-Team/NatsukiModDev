@@ -1,12 +1,7 @@
-
-
-
-
-default persistent.monikatopics = []
-default persistent.monika_reload = 0
-default persistent.tried_skip = None
-default persistent.monika_kill = None
-default persistent.liked_outfit1 = None
+image mall = "mod_assets/locations/mall/mall.png"
+image clothesstore = "mod_assets/locations/mall/clothesstore.png"
+image mangastore = "mod_assets/locations/mall/mangastore.png"
+image bakery = "mod_assets/locations/mall/bakery.png"
 
 init python:
     import subprocess
@@ -44,9 +39,6 @@ label chmall_noskip:
     jump chclub_loop
     return
 
-image splash-glitch2 = "images/bg/splash-glitch2.png"
-image mangastore = "mod_assets/mangastore.png"
-image bakery = "mod_assets/bakery.png"
 
 label chmall_main:
     $ delete_character("monika")

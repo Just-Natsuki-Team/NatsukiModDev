@@ -5,17 +5,17 @@ init python:
 
 
     def HKBHideButtons():
-        
-        
-        
+
+
+
         config.overlay_screens.remove("hkb_overlay")
         renpy.hide_screen("hkb_overlay")
 
 
     def HKBShowButtons():
-        
-        
-        
+
+
+
         config.overlay_screens.append("hkb_overlay")
 
 init -1 python in hkb_button:
@@ -83,16 +83,16 @@ style hkb_vbox_black:
 
 style hkb_button is default:
     properties gui.button_properties("hkb_button")
-    idle_background "mod_assets/hkb_idle_background.png"
-    hover_background "mod_assets/hkb_hover_background.png"
+    idle_background "mod_assets/buttons/hkb_idle_background.png"
+    hover_background "mod_assets/buttons/hkb_hover_background.png"
 
     hover_sound gui.hover_sound
     activate_sound gui.activate_sound
 
 style hkb_button_black is default:
     properties gui.button_properties("hkb_button_black")
-    idle_background "mod_assets/hkb_idle_background_black.png"
-    hover_background "mod_assets/hkb_hover_background_black.png"
+    idle_background "mod_assets/buttons/hkb_idle_background_black.png"
+    hover_background "mod_assets/buttons/hkb_hover_background_black.png"
 
     hover_sound gui.hover_sound
     activate_sound gui.activate_sound
@@ -110,8 +110,8 @@ style talk_vbox:
 
 style talk_button is default:
     properties gui.button_properties("talk_button")
-    idle_background "mod_assets/talk_idle_background.png"
-    hover_background "mod_assets/talk_hover_background.png"
+    idle_background "mod_assets/buttons/talk_idle_background.png"
+    hover_background "mod_assets/buttons/talk_hover_background.png"
 
     hover_sound gui.hover_sound
     activate_sound gui.activate_sound
@@ -130,8 +130,8 @@ style hkbd_vbox:
 
 style hkbd_button is default:
     properties gui.button_properties("hkb_button")
-    idle_background "mod_assets/hkb_disabled_background.png"
-    hover_background "mod_assets/hkb_disabled_background.png"
+    idle_background "mod_assets/buttons/hkb_disabled_background.png"
+    hover_background "mod_assets/buttons/hkb_disabled_background.png"
 
 style hkbd_button_text is default:
 
@@ -144,8 +144,8 @@ style hkbd_button_text is default:
 
 style hkbd_button_black is default:
     properties gui.button_properties("hkb_button_black")
-    idle_background "mod_assets/hkb_disabled_background_black.png"
-    hover_background "mod_assets/hkb_disabled_background_black.png"
+    idle_background "mod_assets/buttons/hkb_disabled_background_black.png"
+    hover_background "mod_assets/buttons/hkb_disabled_background_black.png"
 
 style hkbd_button_text_black is default:
 
@@ -169,8 +169,8 @@ style talkd_vbox:
 
 style talkd_button is default:
     properties gui.button_properties("hkb_button")
-    idle_background "mod_assets/hkb_disabled_background.png"
-    hover_background "mod_assets/hkb_disabled_background.png"
+    idle_background "mod_assets/buttons/hkb_disabled_background.png"
+    hover_background "mod_assets/buttons/hkb_disabled_background.png"
 
 style talkd_button_text is default:
 
@@ -215,7 +215,7 @@ screen hkb_overlay:
                 textbutton _("Extras"):
                     action NullAction()
                     style "hkbd_button"
-            
+
         if persistent.natsuki_love:
             if persistent.natsuki_emotion == "Happy" or persistent.natsuki_emotion == "Casual":
                 if allow_dialogue:
@@ -254,8 +254,8 @@ screen hkb_overlay:
     vbox:
         imagebutton:
             xpos 546 ypos 273
-            idle "mod_assets/boopindicator.png"
-            hover "mod_assets/boopindicator.png"
+            idle "mod_assets/buttons/boopindicator.png"
+            hover "mod_assets/buttons/boopindicator.png"
             action [If(allow_dialogue, true=Jump("ch30_boop"))]
 
 screen fight:
@@ -271,7 +271,7 @@ screen fight:
 
 
         textbutton _("Fight") action Jump("fight")
-            
+
         textbutton _("Act") action Jump("act")
 
         textbutton _("Codes") action Jump("codes")
@@ -295,7 +295,7 @@ screen talking_new:
         vbox:
             textbutton _("1") action Jump("normaltalkmenu")
             xpos 867 ypos 137
-            
+
             textbutton _("2") action Jump("normaltalkmenu2")
 
             textbutton _("3") action Jump("normaltalkmenu3")

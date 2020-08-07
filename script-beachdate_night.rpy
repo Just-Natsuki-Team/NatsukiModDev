@@ -44,8 +44,6 @@ label chbeachdate_night_noskip:
     jump chbeach_night_loop
     return
 
-image splash-glitch2 = "images/bg/splash-glitch2.png"
-
 label chbeachdate_night_main:
     $ delete_character("monika")
     $ delete_character("sayori")

@@ -7,7 +7,7 @@ label chkitchen_start:
     if persistent.seen_kitchenintro == False:
         n jnb "So you want to go to the kitchen?"
         n "Alright then!"
-        hide n2
+        hide desk_accessories
         hide shade
         hide red
         hide blonde
@@ -38,7 +38,7 @@ label chkitchen_start:
     else:
         n jnb "Wanna go and cook then?"
         n jha "Alright, let's go!"
-        hide n2
+        hide desk_accessories
         hide shade
         hide red
         hide blonde
@@ -55,7 +55,7 @@ label chkitchen_loop:
 
 label chkitchen_autoload:
     python:
-        today = datetime.date.today()      
+        today = datetime.date.today()
         day = datetime.date.today().strftime("%A")
         month = datetime.date.today().strftime("%B")
         date = datetime.date.today().strftime("%d")
@@ -65,7 +65,7 @@ label chkitchen_autoload:
     call showroom
     n jnb "Oh, you're here!"
     n "One second..."
-    hide n2
+    hide desk_accessories
     hide shade
     hide red
     hide blonde
@@ -85,4 +85,3 @@ label kitchentalkmenu:
             $ persistent.autoload = "ch30_autoload"
             $ exiting_fight = True
             jump ch30_autoload
-    
