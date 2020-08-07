@@ -1202,37 +1202,8 @@ label extrasmenu:
                     "Nevermind.":
                         jump extrasmenu
             if time_of_day == "Night":
-                menu:
-                    "The Beach":
-                        if persistent.background_night == "beach":
-                            n jha "We're already here, silly."
-                            jump extrasmenu
-                        else:
-                            n jha "Okay, get ready!"
-                            $ persistent.background_night = "beach"
-                            stop music fadeout 2.0
-                            scene white with dissolve_scene
-                            $ renpy.movie_cutscene("nighttransition1.mpg")
-                            call showroom
-                            call playmusic
-                            n jha "Here we are!"
-                            jump ch30_loop
-                    "Space":
-                        if persistent.background_night == "space":
-                            n jha "We're already here, silly."
-                            jump extrasmenu
-                        else:
-                            n jha "Okay, get ready!"
-                            $ persistent.background_night = "space"
-                            stop music fadeout 2.0
-                            scene white with dissolve_scene
-                            $ renpy.movie_cutscene("nighttransition1.mpg")
-                            call showroom
-                            call playmusic
-                            n jha "Here we are!"
-                            jump ch30_loop
-                    "Nevermind.":
-                        jump extrasmenu
+                n jnb "Sorry [player], there aren't any background options at night."
+                jump extrasmenu
         "Flower" if persistent.has_flower:
             if not persistent.flower:
                 n jnb "Sure, I'll put it on."
