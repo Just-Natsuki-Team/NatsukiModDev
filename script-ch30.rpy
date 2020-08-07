@@ -103,7 +103,6 @@ image n2 = "mod_assets/natsukiroom.png"
 image nstill = "mod_assets/natsukiartstill.png"
 image pool = "mod_assets/pool.png"
 image space = "mod_assets/space.png"
-image room_night = "mod_assets/room_night.png"
 image partyhat = "mod_assets/JustNatsuki/partyhat.png"
 image cake = "mod_assets/JustNatsuki/cake.png"
 image cemetary = "mod_assets/cemetary.png"
@@ -402,9 +401,6 @@ label showroom:
                 pos (935,200)
             show monika_room zorder 2
             show monika_room_highlight zorder 2
-        elif persistent.background_night == "beach":
-            scene beach_night
-            show room_night zorder 2
     show base 1a zorder 3
     if current_time >= 19:
         if persistent.lights == False:
