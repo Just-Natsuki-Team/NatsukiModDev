@@ -4452,19 +4452,20 @@ label ch30_trap:
     n jnb "That's a really old thing [player]."
     n "But yes I do remember."
     n "You want my opinion eh?"
-    n jaa "It's really rude."
+    n jnb "It's... complicated..."
     n "The word itself is an offensive slur used against certain people."
-    n "I suppose it's not so bad in anime, and it's harmless if you aren't calling someone it."
-    n "I won't get into the whole thing about why it's really offensive to some people."
+    n "I'm guessing what you're asking is what I think of people calling me it?"
+    n "People basically thought I was "a boy in disguise" or a transgender woman."
+    n "Which, I'm not either of those..."
+    n "I'm, just Natsuki..."
+    n "I don't actually know why people thought that, maybe because I'm small and thin?
+    n jsb "But, well there's a reason for that..."
+    n "..."
+    n "Uh, anyway..."
+    n jnb "I won't get into the whole thing about why it's really offensive to some people."
     n "Dan Salvato put it better than I could."
-    n "Just, don't{w=0.5} {b}EVER{/b} {w=0.5}say it to anyone."
+    n "Just, don't use it please..."
     n "It's really rude."
-    n "Got it?!"
-    menu:
-        "Yes":
-            n "Good."
-        "...":
-            n "Well, you better."
     jump ch30_loop
 
 label ch30_attraction:
@@ -4472,7 +4473,7 @@ label ch30_attraction:
     n "The game programmed me to love MC, who was male. But with this new freedom I don't really have preference."
     n "Hell, I don't even know what real people look like, well at least I don't have a clear idea."
     n "I guess you could say I'm attracted to anyone?"
-    if persistent.player_gender == "Female":
+    if persistent.player_gender == "Female" and persistent.natsuki_love:
         n "That's why I don't really have any worries about dating you, [player]."
         n "Even though you're a girl."
     n "There is a term for that right?"
