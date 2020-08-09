@@ -1140,7 +1140,7 @@ label musicmenu:
             $ persistent.current_music = "poem"
             n jha "I know this isn't really a \"Natsuki\" song but I think it sounds nice, so it's here."
             jump ch30_loop
-        "Natsuki's Confession" if persistent.natsuki_love:
+        "Confession" if persistent.natsuki_love:
             play music t10
             $ persistent.current_music = "confession"
             jump ch30_loop
