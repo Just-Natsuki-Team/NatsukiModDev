@@ -804,7 +804,7 @@ label actions:
     if not persistent.seen_actionwarning:
         call screen dialog("Please note that a lot of this dialogue is outdated and needs work.", ok_action=Return)
         $ persistent.seen_actionwarning = True
-    if beach:
+    if persistent.date == "beach":
         menu:
             n "What do you wanna do?"
             "Look at the water!":
@@ -893,7 +893,7 @@ label actions:
             "Nevermind":
                 n "Okay..."
                 jump chbeach_loop
-    if beach_night:
+    if persistent.date == "beach_night":
         menu:
             n "What do you wanna do?"
             "Look at the water!":
@@ -953,7 +953,7 @@ label actions:
             "Nevermind":
                 n "Okay..."
                 jump chbeach_night_loop
-    elif mall:
+    if persistent.date == "mall":
         $ allow_dialogue = False
         menu:
             n "What should we do?"
@@ -1001,7 +1001,7 @@ label actions:
                 jump chmall_bakeryaction
             "Nevermind.":
                 jump chmall_loop
-    elif park:
+    if persistent.date == "park":
         $ allow_dialogue = False
         menu:
             n "What should we do?"
@@ -1053,7 +1053,7 @@ label actions:
                 jump chpark_picnicactions
             "Nevermind.":
                 jump chpark_loop
-    elif club:
+    if persistent.date == "club":
         $ allow_dialogue = False
         menu:
             n "What should we do?"
@@ -1099,14 +1099,14 @@ label actions:
                 jump chclub_poemaction
             "Nevermind":
                 jump chclub_loop
-    elif pool:
+    if persistent.date == "pool":
         menu:
             "Swimming!":
                 jump chpool_swimaction
             "Nevermind":
                 jump chpool_loop
         jump chpool_loop
-    else:
+    if persistent.date == "":
         if not config.developer:
             menu:
                 "None avalible..."
@@ -1287,7 +1287,7 @@ label extrasmenu:
                     n "There!"
                     jump ch30_loop
                 "Silver" if persistent.has_silver:
-                    n jhb "Hehe! I've never tries this one!"
+                    n jhb "Hehe! I've never tried this one!"
                     n jha "I'm going to be old granny Natsuki."
                     hide blonde
                     hide red
@@ -1538,7 +1538,7 @@ label extrasmenu:
                 "Nevermind":
                     n jnb "Okay."
                     jump extrasmenu
-        "Lights" if time_of_day == "Night" and persistent.background == "space": 
+        "Lights" if time_of_day == "Night": 
             n jnb "You want to toggle the lights?"
             menu:
                 "Turn On" if persistent.lights == False:

@@ -157,7 +157,7 @@ label chbeach_night_loop:
     $ allow_dialogue = False
     if current_time >= 6 and current_time < 19:
         $ persistent.autoload = "chbeachdate_autoload"
-        $ beach_night = False
+        $ persistent.date = "beach"
         jump chbeachdate_autoload
 
     if persistent.random_talk:

@@ -1023,6 +1023,27 @@ image natsuki 4ex = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2el.png
 image natsuki 4ey = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2el.png", (0, 0), "mod_assets/natsuki/2er.png", (0, 0), "natsuki/y.png")
 image natsuki 4ez = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2el.png", (0, 0), "mod_assets/natsuki/2er.png", (0, 0), "natsuki/z.png")
 
+image natsuki 12ea = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1el.png", (0, 0), "mod_assets/natsuki/1er.png", (0, 0), "natsuki/2bta.png")
+image natsuki 12ee = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1el.png", (0, 0), "mod_assets/natsuki/1er.png", (0, 0), "natsuki/2bte.png")
+image natsuki 12ec = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1el.png", (0, 0), "mod_assets/natsuki/1er.png", (0, 0), "natsuki/2btc.png")
+image natsuki 12ed = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1el.png", (0, 0), "mod_assets/natsuki/1er.png", (0, 0), "natsuki/2btd.png")
+image natsuki 12ee = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1el.png", (0, 0), "mod_assets/natsuki/1er.png", (0, 0), "natsuki/2bte.png")
+image natsuki 12ef = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1el.png", (0, 0), "mod_assets/natsuki/1er.png", (0, 0), "natsuki/2btf.png")
+image natsuki 12eg = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1el.png", (0, 0), "mod_assets/natsuki/1er.png", (0, 0), "natsuki/2btg.png")
+image natsuki 12eh = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1el.png", (0, 0), "mod_assets/natsuki/1er.png", (0, 0), "natsuki/2bth.png")
+image natsuki 12ei = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1el.png", (0, 0), "mod_assets/natsuki/1er.png", (0, 0), "natsuki/2bti.png")
+
+image natsuki 42ea = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2el.png", (0, 0), "mod_assets/natsuki/2er.png", (0, 0), "natsuki/2bta.png")
+image natsuki 42ee = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2el.png", (0, 0), "mod_assets/natsuki/2er.png", (0, 0), "natsuki/2bte.png")
+image natsuki 42ec = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2el.png", (0, 0), "mod_assets/natsuki/2er.png", (0, 0), "natsuki/2btc.png")
+image natsuki 42ed = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2el.png", (0, 0), "mod_assets/natsuki/2er.png", (0, 0), "natsuki/2btd.png")
+image natsuki 42ee = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2el.png", (0, 0), "mod_assets/natsuki/2er.png", (0, 0), "natsuki/2bte.png")
+image natsuki 42ef = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2el.png", (0, 0), "mod_assets/natsuki/2er.png", (0, 0), "natsuki/2btf.png")
+image natsuki 42eg = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2el.png", (0, 0), "mod_assets/natsuki/2er.png", (0, 0), "natsuki/2btg.png")
+image natsuki 42eh = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2el.png", (0, 0), "mod_assets/natsuki/2er.png", (0, 0), "natsuki/2bth.png")
+image natsuki 42ei = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2el.png", (0, 0), "mod_assets/natsuki/2er.png", (0, 0), "natsuki/2bti.png")
+
+
 # These are expression definitions! They go like J(Emotion)(Number). N = Normal/Nuetral, H = Happy, S = Sad, A = Angry.
 
 image natsuki jn = "/mod_assets/JustNatsuki/jnbase.png"

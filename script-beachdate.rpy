@@ -206,13 +206,13 @@ label chbeach_loop:
     $ allow_dialogue = False
     if current_time >= 19:
         $ persistent.autoload = "chbeachdate_night_autoload"
-        $ beach = False
         if persistent.natsuki_romance >= 100:
             show natsuki 1ek at t11
         else:
             show natsuki 1dk at t11
         n "Oh! It's night!"
         n "Let me change us to night mode, and change my clothes."
+        $ persistent.date = "beach_night"
         jump chbeachdate_night_autoload
     elif current_time >= 0 and current_time < 6:
         $ persistent.autoload = "chbeachdate_night_autoload"
@@ -224,6 +224,7 @@ label chbeach_loop:
         n "Hey!"
         n "I know you're messing with your clock!"
         n "It can't go from day time to past midnight in an instant you know!"
+        $ persistent.date = "beach_night"
         jump chbeachdate_night_autoload
 
     if current_time > 6 and current_time < 18:
@@ -632,13 +633,48 @@ label chbeach_sandcastleaction:
         jump chbeach_loop
 
 label swimsuit:
+    if persistent.natsuki_romance >= 100:
+        show natsuki 1ek at t11
+    else:
+        show natsuki 1dk at t11
     n "Oh this?"
-    n "The art was drawn by etched."
-    n "But from my old memeries."
-    n "Sayori picked it out."
-    n "We went shopping over the weekend before you joined and she thought it looked cute on me."
-    n "So I bought it."
-    n "Hope you like it!"
+    n "If you wanna know who made the art check the {i}credits{/i}."
+    if persistent.natsuki_romance >= 100:
+        show natsuki 2ek at t11
+    else:
+        show natsuki 4dk at t11
+    n "But you meant where did I get them? Huh?"
+    if persistent.natsuki_romance >= 100:
+        n 3ek "Well, I really was debating it."
+        n 12ea "I'm not super... confident with my figure."
+        n "Mostly because, yknow... I'm... small..."
+        n "{i}sigh{/i}"
+        n 1en "Uh, a-anyway!"
+        n 3el "Being with you has made... well... more comfortable?"
+        n 1el "So I decided, \"Hey, what the heck?\" and got this outfit."
+        n 1en "I... h-hope you like it..."
+        n 12eg "..."
+        menu:
+            "I love it, Natsuki.":
+                n "T-thanks..."
+                show natsuki 4eq at h11
+                n "I-I mean! Yeah of course you should!"
+                n "You dummy!"
+            "Looks sexy.":
+                show natsuki 1ep at h11
+                n "Wha?!"
+                n "Y-y-you!"
+                n 12ed "..."
+                n "[player]..."
+                n "D-don't tease me like that..."
+    else:
+        n 1dl "I got the shirt at the mall, on one of my shopping days when my dad gave me money."
+        n "I really liked it, and had the money."
+        n "I was a bit worried about wearing it here though, because of the writing on it."
+        n "I... kinda don't like people thinking I'm a Tsundere, even though... I sorta am."
+        n 2di "D-don't tell anyone..."
+        n 1dh "Well, I guess you can't..."
+        n "You, know what I mean..."
     jump chbeach_loop
 
 label sunburn:
