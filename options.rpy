@@ -145,7 +145,7 @@ define config.save_directory = "JustNatsuki"
 
 ## The icon displayed on the taskbar or dock.
 
-define config.window_icon = "mod_assets/DDLCModTemplateLogo.png"
+define config.window_icon = "mod_assets/jnlogo.png"
 
 ## Custom configs ##############################################################
 

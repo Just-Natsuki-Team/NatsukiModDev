@@ -2,33 +2,22 @@
 
 
 init python:
-
-
     def HKBHideButtons():
-        
-        
-        
+        """
+        Hides hotkeybuttons
+        """
         config.overlay_screens.remove("hkb_overlay")
         renpy.hide_screen("hkb_overlay")
 
 
     def HKBShowButtons():
-        
-        
-        
+        """
+        Shows hotkeybuttons
+        """
         config.overlay_screens.append("hkb_overlay")
 
 init -1 python in hkb_button:
-
-
-
     enabled = True
-
-
-
-
-
-
 
 define gui.hkb_button_width = 120
 define gui.hkb_button_height = None
@@ -173,7 +162,6 @@ style talkd_button is default:
     hover_background "mod_assets/hkb_disabled_background.png"
 
 style talkd_button_text is default:
-
     font gui.default_font
     size gui.text_size
     xalign 0.5
@@ -183,7 +171,6 @@ style talkd_button_text is default:
 
 
 screen hkb_overlay:
-
     zorder 50
 
     style_prefix "hkb"
@@ -215,7 +202,7 @@ screen hkb_overlay:
                 textbutton _("Extras"):
                     action NullAction()
                     style "hkbd_button"
-            
+
         if persistent.natsuki_love:
             if persistent.natsuki_emotion == "Happy" or persistent.natsuki_emotion == "Casual":
                 if allow_dialogue:
@@ -271,7 +258,7 @@ screen fight:
 
 
         textbutton _("Fight") action Jump("fight")
-            
+
         textbutton _("Act") action Jump("act")
 
         textbutton _("Codes") action Jump("codes")
@@ -295,7 +282,7 @@ screen talking_new:
         vbox:
             textbutton _("1") action Jump("normaltalkmenu")
             xpos 867 ypos 137
-            
+
             textbutton _("2") action Jump("normaltalkmenu2")
 
             textbutton _("3") action Jump("normaltalkmenu3")

@@ -1,0 +1,5 @@
+#sayori.chr character parmaters.
+
+happiness=10
+sadness=0
+emotion_state=normal
