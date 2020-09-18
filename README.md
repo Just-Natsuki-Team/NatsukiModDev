@@ -4,6 +4,13 @@ These `.rpy` files are copies of important script files found in DDLC's `script.
 
 As written, each of these files is similar to those included in DDLC but with story specific game flow removed. This will allow you to tell the story you want to tell instead. The original code has been included in commented blocks, however, if you want to reproduce portions of the original game.
 
+**Interested in a community server or chatting with the devs? Consider joining our Discord server! We'd love to have you!**
+<div style="text-align:center">
+    <a href=https://discord.gg/B7GcUsK>
+        <img src="https://discordapp.com/api/guilds/441438764049629185/widget.png?style=banner4"/>
+    </a>
+</div>
+
 ## Explanation of scripts
 
 #### `options.rpy`
