@@ -1,3 +1,5 @@
+default player = persistent.playername
+
 #Our main topic pool
 default persistent._event_list = list()
 
@@ -241,8 +243,6 @@ init -999 python in utils:
         )
 
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
-
-
 define audio.t2 = "<loop 4.499>bgm/2.ogg"   #Sayori theme
 define audio.t2g = "bgm/2g.ogg"
 define audio.t2g2 = "<from 4.499 loop 4.499>bgm/2.ogg"
@@ -261,3 +261,10 @@ define audio.custom2 = "custom-music/02.mp3"
 define audio.custom3 = "custom-music/03.mp3"
 define audio.battle = "custom-music/battle.mp3"
 define audio.spooky1 = "mod_assets/bgm/spooky1.ogg"
+
+##Character Definitions
+define mc = DynamicCharacter('player', image='mc', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
+define s = DynamicCharacter('s_name', image='sayori', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
+define m = DynamicCharacter('m_name', image='monika', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
+define n = DynamicCharacter('n_name', image='natsuki', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
+define y = DynamicCharacter('y_name', image='yuri', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")

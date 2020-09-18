@@ -373,7 +373,7 @@ init python:
     def RigMouse2():
         currentpos = renpy.get_mouse_pos()
         targetpos = [640, 345]
-        if currentpos[1] < targetpos[1]: 
+        if currentpos[1] < targetpos[1]:
             renpy.display.draw.set_mouse_pos((currentpos[0] * 9 + targetpos[0]) / 10.0, (currentpos[1] * 9 + targetpos[1]) / 10.0)
     def RigMouse3():
         currentpos = renpy.get_mouse_pos()
@@ -658,12 +658,7 @@ screen main_menu():
         add "menu_particles"
         add "menu_particles"
         add "menu_particles"
-        if persistent.playthrough != 0:
-            add "icon2"
-        elif persistent.playthrough == 6:
-            add "icon3"
-        else:
-            add "menu_logo"
+        add "menu_logo"
 
     add "menu_particles"
     if persistent.playthrough != 4:
@@ -1080,7 +1075,7 @@ screen preferences():
 
                 ## Additional vboxes of type "radio_pref" or "check_pref" can be
                 ## added here, to add additional creator-defined preferences.
-               
+
             vbox:
                 yoffset 20
 
@@ -1125,7 +1120,7 @@ screen preferences():
                     label _("New Emotions")
                     textbutton _("Enabled") action Show(screen="dialog", message="This will cause Natsuki's emotions to change over time. Turning this off sets her emotion to normal.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"dynamic_emotions", True, False), SetField(persistent,"natsuki_emotion", "Happy")
 
-                if not persistent.dynamic_emotions: 
+                if not persistent.dynamic_emotions:
                     vbox:
                         style_prefix "navigation"
                         textbutton _("Choose Emotion") action Show(screen="emotion", message="If you turn off Natsuki's new emotion system\nyou can always just pick an emotion for her to use!\n(The change is not instant, just wait.)", close=Hide(screen="emotion", transition=None))
@@ -1188,7 +1183,7 @@ screen preferences():
                         textbutton _("Mute All"):
                             action Preference("all mute", "toggle")
                             style "mute_all_button"
-                        
+
     text "v[config.version]":
                 xalign 1.0 yalign 1.0
                 xoffset -10 yoffset -10
@@ -1748,7 +1743,7 @@ screen reload(message, ok_action):
                 spacing 50
 
                 textbutton _("Restart") action Quit(confirm=True)
-                
+
 
             hbox:
                 xalign 0.5
