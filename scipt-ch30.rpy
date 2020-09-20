@@ -1,3 +1,5 @@
+#Aaa this code is so clean!!!!! I really need to learn how to write like this! -Daisy
+
 label ch30_autoload:
     #Do all the things here for initial setup/flow hijacking
 
