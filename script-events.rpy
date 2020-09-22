@@ -76,6 +76,14 @@ label ch30_3yearevent:
         year = datetime.date.today().strftime("%Y")
         now = datetime.datetime.now()
         current_time = datetime.datetime.now().time().hour
+    if not persistent.seen_3yearintro:
+        scene black
+        "WARNING: Attempting to play the event without having seen the Anniversary Intro will lead to crashes!"
+        "Your game will now close, please re-open it and try again <3"
+        $ persistent.playthrough == 3
+        $ persistent.autoload = "ch30_autoload"
+        $ delete_all_saves()
+        $ renpy.quit()
     call showroom
     stop music
     n jha "So... it's been three years since {i}Doki Doki Literature Club{/i} came out."
@@ -153,7 +161,7 @@ label ch30_3yearevent:
     play music t2
     "Our tale begins on a fair day in the spring."
     "The birds are singing..."
-    "Flower are blooming..."
+    "Flowers are blooming..."
     "But folks, this is no time for a bad time!"
     "[player]'s best friend, Sayori comes running down the street."
     show sayori 4p at t11
@@ -240,7 +248,7 @@ label ch30_3yearevent:
         "I'm [player].":
             pass
     y 1b "Pleasure to meet you."
-    y "Sayori said she was brining a guest."
+    y "Sayori said she was bringing a guest."
     show natsuki 4c at t21
     show yuri at t22
     n "That's a good thing too."
@@ -401,7 +409,7 @@ label ch30_3yearevent:
     $ s_name = glitchtext(12)
     "Our tale begins on a fair day in the spring."
     "The birds are singing..."
-    "Flower are blooming..."
+    "Flowers are blooming..."
     "But folks, this is no time for a bad time!"
     "[player]'s best friend, [s_name] comes running down the street."
     show sayori glitch at t11 zorder 2

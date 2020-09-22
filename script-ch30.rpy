@@ -1050,15 +1050,6 @@ label ch30_autoload:
             call showroom
     else:
         $ time_of_day = "Day"
-    python:
-        try: os.remove(config.basedir + "/game/python-packages/delcode.py")
-        except: pass
-    python:
-        try: os.remove(config.basedir + "/game/python-packages/basecode.py")
-        except: pass
-    python:
-        try: renpy.file(config.basedir + "../(edgarspoem).txt")
-        except: open(config.basedir + "/edgarspoem.txt", "wb").write(renpy.file("edgarspoem.txt").read())
     call startup_dlc_check
     call showroom
     if persistent.current_monikatopic == 0:
