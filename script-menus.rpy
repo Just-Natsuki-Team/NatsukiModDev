@@ -73,6 +73,9 @@ label normaltalkmenu_select:
             jump normaltalkmenu
         "Type a question":
             jump normalchatmenu
+        "{b}Anniversary Event{/b}":
+            call screen confirm("Initiating this event means you must watch it through before returning to normal gameplay.\nIf you quit at any point you will be returned to the start of the event.\nAre you sure you want to play it now?", yes_action=Jump("ch30_3yearevent"), no_action=Jump("ch30_loop"))
+            jump ch30_loop
         "Compliments..." if persistent.natsuki_love:
             hide screen talking_new
             hide screen talking_new2
@@ -95,9 +98,9 @@ label normaltalkmenu_select:
                         n jsb "Aww, I'll miss you [player]."
                         n jnb "Study hard though, then you have time to spend with me!"
                 "I'm going to sleep, Natsuki.":
-                    if time_of_day = "Night":
+                    if time_of_day == "Night":
                         n jha "Alright, rest well!"
-                    elif time_of_day = "Day":
+                    elif time_of_day == "Day":
                         n jnb "In the day?"
                         n "Isn't that more of a nap?"
                         n "Well suit yourself, I guess."
