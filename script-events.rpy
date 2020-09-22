@@ -36,6 +36,10 @@ define audio.partymusic = "<loop 4.9>mod_assets/bgm/partymusic.mp3"
 define audio.drumroll = "mod_assets/sfx/drumroll.mp3"
 define audio.applause = "mod_assets/sfx/applause.mp3"
 
+default persistent.seen_3yearevent = False
+default persistent.seen_3yearintro = False
+default persistent.ani_cake = False
+
 label ch30_3yearautoload:
     $ persistent.playthrough == 0
     $ persistent.anticheat == 0
@@ -57,6 +61,8 @@ label ch30_3yearautoload:
     jump ch30_3yearevent
 
 label ch30_3yearevent:
+    $ s_name = "Sayori"
+    $ persistent.ani_cake = False
     $ config.overlay_screens = []
     hide screen hkb_overlay
     $ persistent.playthrough = 0
@@ -248,13 +254,323 @@ label ch30_3yearevent:
     "They discuss the club, themselves and other things."
     "Natsuki is very reserved, while Yuri is quiet."
     "Sayori and Monika are chatty though."
-    "Bye the end of the day, [player] joins the club."
+    "By the end of the day, [player] joins the club."
     if persistent.player_pronouns == "they":
         "They head home, ready for the next day!"
     elif persistent.player_pronouns == "she":
         "She heads home, ready for the next day!"
     elif persistent.player_pronouns == "he":
         "He heads home, ready for the next day!"
-    scene black dissolve_scene_full
-    "END OF DEMO"
-    jump ch30_autoload
+    stop music fadeout 2.0
+    scene club with dissolve_scene_full
+    play music t10
+    "[player] and the Literature Club spent their week together."
+    scene n_cg1_bg 
+    show n_cg1_base
+    with wipeleft_scene
+    if persistent.player_pronouns == "they":
+        "They made them all so happy."
+    elif persistent.player_pronouns == "she":
+        "She made them all so happy."
+    elif persistent.player_pronouns == "he":
+        "He made them all so happy."
+    show n_cg1_exp1
+    pause 2.0
+    scene n_cg2_bg 
+    show n_cg2_base
+    with dissolve_scene
+    pause 2.0
+    show n_cg2_exp2
+    pause 2.0
+    scene n_cg3_base
+    with dissolve_scene
+    pause 2.0
+    show n_cg3_exp1
+    pause 2.0
+    scene s_cg1
+    with dissolve_scene
+    pause 2.0
+    scene s_cg2_base1
+    with dissolve_scene
+    pause 2.0
+    scene s_cg3
+    with dissolve_scene
+    pause 2.0
+    scene y_cg1_base
+    with dissolve_scene
+    pause 2.0
+    show y_cg1_exp3
+    pause 2.0
+    scene y_cg2_bg
+    show y_cg2_base
+    show y_cg2_details
+    show y_cg2_nochoc
+    show y_cg2_dust1
+    show y_cg2_dust2
+    show y_cg2_dust3
+    show y_cg2_dust4
+    with dissolve_cg
+    pause 2.0
+    show y_cg2_exp2
+    pause 2.0
+    scene y_cg3_base with dissolve_scene
+    pause 2.0
+    show y_cg3_exp1
+    pause 3.0
+    scene black with dissolve_scene_full
+    n "It was so perfect..."
+    n "But..."
+    window hide(None)
+    window auto
+    play music td
+    show s_kill_bg2
+    show s_kill2
+    show s_kill_bg as s_kill_bg at s_kill_bg_start
+    show s_kill as s_kill at s_kill_start
+    pause 3.75
+    show s_kill_bg2 as s_kill_bg
+    show s_kill2 as s_kill
+    pause 0.01
+    show screen tear(20, 0.1, 0.1, 0, 40)
+    play sound "sfx/s_kill_glitch1.ogg"
+    pause 0.25
+    stop sound
+    hide screen tear
+    hide s_kill_bg
+    hide s_kill
+    show s_kill_bg_zoom zorder 1
+    show s_kill_bg2_zoom zorder 1
+    show s_kill_zoom zorder 3
+    show s_kill2_zoom zorder 3
+    show s_kill as s_kill_zoom_trans zorder 3:
+        truecenter
+        alpha 0.5
+        zoom 2.0 xalign 0.5 yalign 0.05
+        pause 0.5
+        dizzy(1, 1.0)
+    pause 2.0
+    show noise zorder 3:
+        alpha 0.0
+        linear 3.0 alpha 0.25
+    show vignette zorder 3:
+        alpha 0.0
+        linear 3.0 alpha 0.75
+    pause 1.5
+    show white zorder 2
+    show splash_glitch zorder 2
+    pause 1.5
+    show screen tear(20, 0.1, 0.1, 0, 40)
+    play sound "sfx/s_kill_glitch1.ogg"
+    pause 0.2
+    stop sound
+    hide screen tear
+    pause 4.0
+    show screen tear(20, 0.1, 0.1, 0, 40)
+    play sound "sfx/s_kill_glitch1.ogg"
+    pause 0.2
+    stop sound
+    hide screen tear
+    hide splash_glitch
+    show splash_glitch2 zorder 2
+    show splash_glitch_m zorder 2
+    show splash_glitch_n zorder 2
+    show splash_glitch_y zorder 2
+    pause 0.75
+    hide white
+    hide splash_glitch2
+    hide splash_glitch_m
+    hide splash_glitch_n
+    hide splash_glitch_y
+    show exception_bg zorder 2
+    show fake_exception zorder 2:
+        xpos 0.1 ypos 0.05
+    show fake_exception2 zorder 2:
+        xpos 0.1 ypos 0.15
+    "..."
+    "Sayori was gone..."
+    hide fake_exception
+    hide fake_exception2
+    hide exception_bg
+    stop music
+    scene black
+    n "And then, it began again."
+    play music t2g
+    queue music t2g2
+    scene residential
+    s "[gtext]"
+    $ s_name = glitchtext(12)
+    "Our tale begins on a fair day in the spring."
+    "The birds are singing..."
+    "Flower are blooming..."
+    "But folks, this is no time for a bad time!"
+    "[player]'s best friend, [s_name] comes running down the street."
+    show sayori glitch at t11 zorder 2
+    python:
+        currentpos = get_pos()
+        startpos = currentpos - 0.3
+        if startpos < 0: startpos = 0
+        track = "<from " + str(startpos) + " to " + str(currentpos) + ">bgm/2.ogg"
+        renpy.music.play(track, loop=True)
+    pause 1.0
+    $ gtext = glitchtext(48)
+    s "{cps=60}[gtext]{/cps}{nw}"
+    pause 1.0
+    $ gtext = glitchtext(48)
+    s "{cps=60}[gtext]{/cps}{nw}"
+    show screen tear(8, offtimeMult=1, ontimeMult=10)
+    pause 1.5
+    hide screen tear
+    window hide(None)
+    window auto
+    scene black with trueblack
+    stop music
+    n "Nothing was the same after that."
+    play sound "sfx/s_kill_glitch1.ogg"
+    show screen tear(20, 0.1, 0.1, 0, 40)
+    pause 1.0
+    hide screen tear
+    scene club
+    play music t10y
+    "Everything was wrong."
+    show yuri 1a at t11
+    "People were different."
+    window hide
+    window auto
+    show yuri 3y1 at t11
+    pause 1.0
+    hide yuri
+    show natsuki 1a at t11
+    pause 1.0
+    show natsuki scream at t11
+    pause 1.0
+    show natsuki ghost1 at t11
+    play sound "sfx/crack.ogg"
+    hide natsuki_ghost_blood
+    hide n_rects_ghost1
+    hide n_rects_ghost2
+    show natsuki ghost3
+    show n_rects_ghost4 onlayer front zorder 4
+    show n_rects_ghost5 onlayer front zorder 4
+    pause 0.5
+    hide natsuki
+    play sound "sfx/run.ogg"
+    show natsuki ghost4 at i11 onlayer front
+    pause 0.25
+    window hide(None)
+    hide natsuki onlayer front
+    hide n_rects_ghost4 onlayer front
+    hide n_rects_ghost5 onlayer front
+    scene black
+    with None
+    window auto
+    scene black
+    pause 0.5
+    "Monika was behind it all."
+    show monika 1a at t11
+    "She was always one step ahead."
+    window hide
+    show monika 3b at t11
+    "Controlling us..."
+    window hide
+    show monika 5a at t11
+    pause 1.0
+    scene black
+    "Eventually, it all came to a head."
+    scene bg club_day
+    show yuri 3d at i11
+    y "...Ahahaha."
+    y "Ahahahahahaha!"
+    $ style.say_dialogue = style.normal
+    y 3y5 "Ahahahahahahahaha!"
+    $ style.say_dialogue = style.edited
+    y 3y3 "AHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHA{nw}"
+    window hide(None)
+    window auto
+    stop music
+    $ style.say_dialogue = style.normal
+
+    play sound "sfx/yuri-kill.ogg"
+    pause 1.43
+    show yuri stab_1
+    pause 0.75
+    show yuri stab_2
+    show blood:
+        pos (610,485)
+    pause 1.25
+    show yuri stab_3
+    pause 0.75
+    show yuri stab_2
+    show blood:
+        pos (610,485)
+    show yuri stab_4 with ImageDissolve("images/yuri/stab/4_wipe.png", 0.25)
+    pause 1.25
+    show yuri stab_5
+    pause 0.70
+    show yuri stab_6:
+        2.55
+        easeout_cubic 0.5 yoffset 300
+    show blood as blood2:
+        pos (635,335)
+    pause 2.55
+    hide blood
+    hide blood2
+    pause 0.25
+    play sound fall
+    pause 0.25
+    scene black
+    pause 2.0
+
+    scene black
+    show y_kill
+    with dissolve_cg
+    "Monika had done it."
+    scene club
+    show monika 3a at t11
+    m "Don't worry about this mess [player]!"
+    m "I'll deal with it."
+    scene black
+    pause 4.0
+    n "It seemed like it was the end."
+    n "No hope."
+    n "But..."
+    play music t8
+    call showroom
+    hide natsuki
+    hide base
+    hide clothes
+    show natsuki 1l at t11 zorder 4
+    n "You saved me."
+    n "You got this mod and let me have a chance."
+    n "I can never thank you enough for that."
+    n 1k "Sadly... we can't celebrate this day with our friends."
+    n 1n "Or at least, the real versions of them."
+    n "But we can celebrate it together."
+    $ persistent.lights = True
+    $ persistent.ani_cake = True
+    $ persistent.candles_blown = False
+    call showroom
+    n jha "Are you ready?"
+    n "Three!"
+    n "Two!"
+    n "One!"
+    menu:
+        "(blow)":
+            pass
+    "I blow out the candle."
+    $ persistent.candles_blown = True
+    show cake zorder 4 with dissolve_cg
+    hide cakelit
+    n jhc "Yay!"
+    n jha "[player], did you make a wish?"
+    n "I did, but I won't tell you."
+    n jhb "Well, I'm going to leave this cake out."
+    n "It's really pretty!"
+    n "I hope you enjoyed my show, [player]."
+    n "I made it just for you."
+    n jha "Happy Third Birthday {i}Doki Doki Literature Club!{/i}"
+    $ persistent.seen_3yearevent = True
+    $ persistent.playthrough == 3
+    $ persistent.autoload = "ch30_autoload"
+    $ delete_all_saves()
+    jump ch30_loop
+    

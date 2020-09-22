@@ -74,6 +74,8 @@ label normaltalkmenu_select:
         "Type a question":
             jump normalchatmenu
         "{b}Anniversary Event{/b}":
+            if persistent.seen_3yearevent:
+                call screen confirm("Are you sure you want to replay the event?", yes_action=Return, no_action=Jump("ch30_loop"))
             call screen confirm("Initiating this event means you must watch it through before returning to normal gameplay.\nIf you quit at any point you will be returned to the start of the event.\nAre you sure you want to play it now?", yes_action=Jump("ch30_3yearevent"), no_action=Jump("ch30_loop"))
             jump ch30_loop
         "Compliments..." if persistent.natsuki_love:

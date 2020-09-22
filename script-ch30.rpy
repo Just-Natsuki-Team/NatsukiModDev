@@ -465,11 +465,11 @@ label showroom:
             show silver zorder 3
         if not persistent.anniversary:
             show desk_accessories zorder 4
-    if persistent.two_years:
+    if persistent.ani_cake:
         if persistent.candels_blown:
-            show cake zorder 5
+            show cake zorder 4
         else:
-            show cakelit zorder 5
+            show cakelit zorder 4
     if persistent.flower:
         show flower zorder 4
     return
@@ -1271,7 +1271,8 @@ label ch30_start:
             n jha "Let me know when you're ready to blow out the candles!"
         else:
             jump ch30_loop
-    if persistent.anniversary:
+    if persistent.anniversary and not persistent.seen_3yearintro:
+        stop music
         $ allow_dialogue = False
         scene black
         pause 2.0
@@ -1339,6 +1340,7 @@ label ch30_start:
         pause 2.0
         call showroom
         call playmusic
+        $ persistent.seen_3yearintro = True
         return
         
     if persistent.natsuki_left:
