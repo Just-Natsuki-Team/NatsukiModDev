@@ -94,9 +94,6 @@ default persistent.seen_thoughts = False
 default persistent.date = ""
 default persistent.background_day = "beach"
 default persistent.background_night = "space"
-default persistent.lgbtgender = ""
-default persistent.lgbt = ""
-default persistent.seen_lgbtstartup = False
 
 image nend = "mod_assets/natsukidelete.png"
 image n2 = "mod_assets/natsukiroom.png"
@@ -139,7 +136,7 @@ image flag blm = "mod_assets/room_decor/blm.png" #Support black people in this i
 #Why am I writing these notes? No one is gunna read em...
 image plate = "mod_assets/JustNatsuki/plate.png"
 image cakelit = "mod_assets/JustNatsuki/cakelit.png"
-image n_kitchen = "mod_assets/location/kitchen/kitchen.png"
+image n_kitchen = "mod_assets/locations/kitchen/kitchen.png"
 image jumptext:
     ypos credits_ypos + 250
     xoffset 0
@@ -384,8 +381,6 @@ label showroom:
         $ time_of_day = "Day"
     elif not persistent.room_animated:
         show noanim
-    elif persistent.anniversary:
-        scene black
     else:
         if persistent.background_night == "space":
             show mask_2 zorder 1
@@ -407,19 +402,6 @@ label showroom:
             show shade zorder 5
     $ persistent.other_bg = False
     call emotion_set_up
-    if persistent.anniversary:
-        hide beach
-        hide room_day
-        if persistent.christmas_time == "Eve":
-            hide shade
-            show cabin_interior zorder 1
-        elif persistent.christmas_time == "Day":
-            hide shade
-            show cabin_interior zorder 1
-        else:
-            show cemetary zorder 1
-            show monika_room zorder 2
-            show decorations zorder 3
     if persistent.flag == "Gay":
         show flag gay zorder 2
     elif persistent.flag == "Lesbian":
@@ -974,12 +956,10 @@ label endloop:
     $ renpy.quit()
 
 label emotion_set_up:
-    if today < datetime.date(2019, 12, 22):
-        $ persistent.anniversary = False
-    elif today > datetime.date(2020, 1, 2):
-        $ persistent.anniversary = False
-    else:
+    if today == datetime.date(2020, 9, 22):
         $ persistent.anniversary = True
+    else:
+        $ persistent.anniversary = False
     if today == datetime.date(2020, 5, 1):
         $ persistent.two_years = True
     elif today == datetime.date(2020, 5, 2):
@@ -996,8 +976,6 @@ label emotion_set_up:
         $ persistent.christmas_time = "NewYear"
     else:
         $ persistent.christmas_time = ""
-    if day == "Tuesday":
-        $ persistent.blackout = True
     return
 
 label event:
@@ -1295,44 +1273,74 @@ label ch30_start:
             jump ch30_loop
     if persistent.anniversary:
         $ allow_dialogue = False
-        if persistent.christmas_time == "Eve":
-            n jha "Merry Christmas [player]!"
-            n "Well, It's Christmas Eve, but nowadays it's the same thing."
-            n "I booked us a log cabin so we can relax and chill."
-            n jnb "There are a few unwrapped boxes in the corner full of stuff."
-            n "I don't know what it is though."
-            n "So, whenever you want to, you can go and wrap some gifts and put them under the tree."
-            n "Then we can open them {u}tomorrow{/u}!"
-            jump ch30_loop
-        elif persistent.christmas_time == "Day":
-            n jha "Merry Christmas!"
-            n "Thank you for coming today!"
-            n "I won't take up too much of your time!"
-            if persistent.did_wrap == True:
-                n jnb "Don't forget, we have to open our presents today!"
-            jump ch30_loop
-        elif persistent.christmas_time == "NewEve":
-            n jha "[player] [player]!"
-            n "You're here!"
-            n "It's New Years eve!"
-            n "Not much time left!"
-            n "It's going to be 2020!"
-            n jab "I hope it's less chaotic than this year..."
-            n jhc "At least I had a pretty good year."
-            n jha "There were some big highlights!"
-            n "I've been cooking up a big ol' retrospective for the year."
-            n "So, let me know when you wanna see it."
-            jump ch30_loop
-        elif persistent.christmas_time == "NewYear":
-            n jha "Happy new year!"
-            n "I can't belive it's 2020!"
-            n "A whole new decade!"
-            n "Amazing!"
-            n "I hope this year is just as good as the last!"
-            jump ch30_loop
-        n jha "Hey [player]!"
-        n "Happy holidays!"
-        n "I hope you like how I decorated the room!"
+        scene black
+        pause 2.0
+        n "Ugh! Where is it?!"
+        n "It has to be around here somewhere..."
+        n "Uurgh!"
+        menu:
+            "...Natsuki...?":
+                pass
+        n "Eek!"
+        scene n_kitchen
+        show natsuki 1cv at h11
+        n "[player]!!!"
+        menu:
+            "What are you doing here?":
+                pass
+        n 1cs "Did you forget what today is?!"
+        menu:
+            "Yeah...":
+                n 2cr "Dummy!"
+            "DDLC's third anniversary?":
+                n 1cl "That's right!"
+        n "It's DDLC's third anniversary!"
+        n "So, I came here to the kitchen to get a cake."
+        menu:
+            "Why are you wearing that?":
+                pass
+        n 2cd "Hah! Because!"
+        n 1ch "Because..."
+        n 1ch "I... uh..."
+        n 12cb "I...{w=0.4} wanted... {w=0.4}to..."
+        n 2co "D-don't laugh!"
+        n "Fine! I'll change then!"
+        show natsuki at lhide
+        hide natsuki
+        pause 1.0
+        show natsuki 4bo at t11
+        n "There!"
+        pause 1.5
+        show natsuki 1bw at t11
+        pause 1.5
+        show natsuki 1bx at t11
+        pause 1.5
+        show natsuki 1bi at t11
+        pause 1.3
+        n "Sorry for getting mad."
+        n "You just scared me..."
+        n 1bk "I need to find this cake, why don't you wait for me in the room?"
+        n "I'll see you there..."
+        scene black with wipeleft_scene
+        call showroom
+        hide natsuki
+        hide base
+        hide clothes
+        pause 5.0
+        show natsuki 1bl at t41
+        n "Okay!"
+        n "I got it!"
+        show natsuki 1bl at t11
+        n "I'll put it away for now. Tell me when you're ready to celebrate!"
+        n "Just know, this event is only available {i}Today{/i}."
+        n "So, don't take too long."
+        show natsuki at lhide
+        hide natsuki
+        pause 2.0
+        call showroom
+        call playmusic
+        return
+        
     if persistent.natsuki_left:
         n jsa "Hm?"
         n "..."
@@ -4455,10 +4463,10 @@ label ch30_trap:
     n jnb "It's... complicated..."
     n "The word itself is an offensive slur used against certain people."
     n "I'm guessing what you're asking is what I think of people calling me it?"
-    n "People basically thought I was "a boy in disguise" or a transgender woman."
+    n "People basically thought I was \"a boy in disguise\" or a transgender woman."
     n "Which, I'm not either of those..."
     n "I'm, just Natsuki..."
-    n "I don't actually know why people thought that, maybe because I'm small and thin?
+    n "I don't actually know why people thought that, maybe because I'm small and thin?"
     n jsb "But, well there's a reason for that..."
     n "..."
     n "Uh, anyway..."

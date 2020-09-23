@@ -857,6 +857,26 @@ image natsuki 2cx = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2cl.png
 image natsuki 2cy = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2cl.png", (0, 0), "mod_assets/natsuki/2cr.png", (0, 0), "natsuki/y.png")
 image natsuki 2cz = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2cl.png", (0, 0), "mod_assets/natsuki/2cr.png", (0, 0), "natsuki/z.png")
 
+image natsuki 12ca = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1cl.png", (0, 0), "mod_assets/natsuki/1cr.png", (0, 0), "natsuki/2bta.png")
+image natsuki 12cb = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1cl.png", (0, 0), "mod_assets/natsuki/1cr.png", (0, 0), "natsuki/2bte.png")
+image natsuki 12cc = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1cl.png", (0, 0), "mod_assets/natsuki/1cr.png", (0, 0), "natsuki/2btc.png")
+image natsuki 12cd = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1cl.png", (0, 0), "mod_assets/natsuki/1cr.png", (0, 0), "natsuki/2btd.png")
+image natsuki 12ce = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1cl.png", (0, 0), "mod_assets/natsuki/1cr.png", (0, 0), "natsuki/2bte.png")
+image natsuki 12cf = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1cl.png", (0, 0), "mod_assets/natsuki/1cr.png", (0, 0), "natsuki/2btf.png")
+image natsuki 12cg = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1cl.png", (0, 0), "mod_assets/natsuki/1cr.png", (0, 0), "natsuki/2btg.png")
+image natsuki 12ch = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1cl.png", (0, 0), "mod_assets/natsuki/1cr.png", (0, 0), "natsuki/2bth.png")
+image natsuki 12ci = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1cl.png", (0, 0), "mod_assets/natsuki/1cr.png", (0, 0), "natsuki/2bti.png")
+
+image natsuki 42ca = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2cl.png", (0, 0), "mod_assets/natsuki/2cr.png", (0, 0), "natsuki/2bta.png")
+image natsuki 42cb = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2cl.png", (0, 0), "mod_assets/natsuki/2cr.png", (0, 0), "natsuki/2bte.png")
+image natsuki 42cc = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2cl.png", (0, 0), "mod_assets/natsuki/2cr.png", (0, 0), "natsuki/2btc.png")
+image natsuki 42cd = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2cl.png", (0, 0), "mod_assets/natsuki/2cr.png", (0, 0), "natsuki/2btd.png")
+image natsuki 42ce = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2cl.png", (0, 0), "mod_assets/natsuki/2cr.png", (0, 0), "natsuki/2bte.png")
+image natsuki 42cf = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2cl.png", (0, 0), "mod_assets/natsuki/2cr.png", (0, 0), "natsuki/2btf.png")
+image natsuki 42cg = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2cl.png", (0, 0), "mod_assets/natsuki/2cr.png", (0, 0), "natsuki/2btg.png")
+image natsuki 42ch = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2cl.png", (0, 0), "mod_assets/natsuki/2cr.png", (0, 0), "natsuki/2bth.png")
+image natsuki 42ci = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2cl.png", (0, 0), "mod_assets/natsuki/2cr.png", (0, 0), "natsuki/2bti.png")
+
 # Normal Beach Outfit, Used at lower \"romance\" levels.
 
 image natsuki 1da = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1dl.png", (0, 0), "mod_assets/natsuki/1dr.png", (0, 0), "natsuki/a.png")
@@ -1024,7 +1044,7 @@ image natsuki 4ey = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2el.png
 image natsuki 4ez = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/2el.png", (0, 0), "mod_assets/natsuki/2er.png", (0, 0), "natsuki/z.png")
 
 image natsuki 12ea = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1el.png", (0, 0), "mod_assets/natsuki/1er.png", (0, 0), "natsuki/2bta.png")
-image natsuki 12ee = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1el.png", (0, 0), "mod_assets/natsuki/1er.png", (0, 0), "natsuki/2bte.png")
+image natsuki 12eb = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1el.png", (0, 0), "mod_assets/natsuki/1er.png", (0, 0), "natsuki/2bte.png")
 image natsuki 12ec = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1el.png", (0, 0), "mod_assets/natsuki/1er.png", (0, 0), "natsuki/2btc.png")
 image natsuki 12ed = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1el.png", (0, 0), "mod_assets/natsuki/1er.png", (0, 0), "natsuki/2btd.png")
 image natsuki 12ee = im.Composite((960, 960), (0, 0), "mod_assets/natsuki/1el.png", (0, 0), "mod_assets/natsuki/1er.png", (0, 0), "natsuki/2bte.png")
