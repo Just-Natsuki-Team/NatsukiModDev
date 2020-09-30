@@ -465,7 +465,7 @@ label showroom:
             show silver zorder 3
         if not persistent.anniversary:
             show desk_accessories zorder 4
-    if persistent.ani_cake:
+    if persistent.ani_cake and persistent.anniversary:
         if persistent.candels_blown:
             show cake zorder 4
         else:
@@ -525,12 +525,6 @@ label ch30_main:
         current_time = datetime.datetime.now().time().hour
     $ style.say_window = style.window
     $ style.namebox = style.namebox
-    python:
-        try: os.remove(config.basedir + "/game/python-packages/delcode.py")
-        except: pass
-    python:
-        try: os.remove(config.basedir + "/game/python-packages/basecode.py")
-        except: pass
     $ delete_character("monika")
     $ delete_character("sayori")
     $ delete_character("yuri")
@@ -1030,6 +1024,8 @@ label ch30_autoload:
         current_time = datetime.datetime.now().time().hour
     $ persistent.prologue = False
     $ persistent.autoload = "ch30_autoload"
+    $ persistent.playthrough = 3
+    $ delete_all_saves()
     $ n.display_args["callback"] = slow_nodismiss
     $ n.what_args["slow_abortable"] = config.developer
     $ style.say_dialogue = style.default_monika
@@ -1104,6 +1100,11 @@ label ch30_autoload:
     jump ch30_loop
 
 label ch30_start:
+    if persistent.art_demo:
+        call screen dialog("WARNING:\nYou are using a demo of a feature for Just Natsuki.", ok_action=Return)
+        call screen dialog("Some features have been disabled to prevent weird visual issues.", ok_action=Return)
+        call screen dialog("If you want to opt out of this,\nplease use a non demo version of JN [config.version].", ok_action=Return)
+        call screen confirm("Do you want to proceed?", yes_action=Return, no_action=Quit(confirm=False))
     if renpy.file(basedir + "/characters/natsuki.chr").read() == renpy.file("oldnatsuki.chr").read():
         n jnb "Hey [player]!"
         n "Guess what?"

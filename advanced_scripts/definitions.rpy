@@ -8,6 +8,7 @@
 define persistent.demo = False
 define persistent.steam = False
 define config.developer = True #Change this flag to True to enable dev tools
+define persistent.art_demo = True
 define natsuki_love = False #Don't touch this is usually breaks stuff.
 
 python early:

@@ -73,10 +73,20 @@ label normaltalkmenu_select:
             jump normaltalkmenu
         "Type a question":
             jump normalchatmenu
-        "{b}Anniversary Event{/b}":
+        "{b}Anniversary Event{/b}" if persistent.anniversary:
             if persistent.seen_3yearevent:
                 call screen confirm("Are you sure you want to replay the event?", yes_action=Return, no_action=Jump("ch30_loop"))
             call screen confirm("Initiating this event means you must watch it through before returning to normal gameplay.\nIf you quit at any point you will be returned to the start of the event.\nAre you sure you want to play it now?", yes_action=Jump("ch30_3yearevent"), no_action=Jump("ch30_loop"))
+            jump ch30_loop
+        "{b}About the new assets...{/b}" if persistent.art_demo:
+            n jnb "Ah, [player]. You'd like some info on it?"
+            n jhb "I'll be happy to give you some details."
+            n jnb "All this art was done by JMO, he did my Halloween costume as well as other stuff."
+            n "So far what you are seeing is a test."
+            n "This is just replacing the old models I had to use for a while. But I don't have any actually new expressions."
+            n jha "Eventually I'll getting new ones. So I can pose and move around a lot more."
+            n "For now, we have this test."
+            n jhc "I do look so much cleaner now!"
             jump ch30_loop
         "Compliments..." if persistent.natsuki_love:
             hide screen talking_new
@@ -92,11 +102,11 @@ label normaltalkmenu_select:
                     if persistent.natsuki_love:
                         n jha "I love you!"
                 "I have to go to a class, Natsuki.":
-                    if time_of_day = "Night":
+                    if time_of_day == "Night":
                         n jnb "A night time class?"
                         n jha "Cool!"
                         n "Study hard, [player]!"
-                    elif time_of_day = "Day":
+                    elif time_of_day == "Day":
                         n jsb "Aww, I'll miss you [player]."
                         n jnb "Study hard though, then you have time to spend with me!"
                 "I'm going to sleep, Natsuki.":
@@ -1507,6 +1517,8 @@ label extrasmenu:
                     jump extrasmenu
             jump extrasmenu
         "Accessory":
+            if persistent.art_demo:
+                call screen dialog("This isn't working", ok_action=Jump("ch30_loop"))
             n jnb "Sure, what should I put on?"
             menu:
                 "Glasses":
