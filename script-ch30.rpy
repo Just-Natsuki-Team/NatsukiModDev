@@ -82,18 +82,20 @@ default persistent.seen_chsritmas = False
 default persistent.seen_plan = False
 default persistent.natsuki_romance = 0
 default persistent.head_accessory = ""
-default persistent.player_gender = ""
-default persistent.player_pronouns = ""
+default persistent.player_gender = "" #Used to identify the player's gender.
+default persistent.player_pronouns = "" #Used for primary pronouns like He/She/Them
+default persistent.player_pronouns2 = "" #Used for secondary pronouns like Him/Her/Them
+default persistent.player_pronouns3 = "" #Used for possessive pronoun like His/Hers/Theirs
 default persistent.two_years = False
 default persistent.seen_two_years = False
 default persistent.candels_blown = False
 default persistent.mentioned_song = False
-default persistent.blackout = False
 default persistent.flag = ""
 default persistent.seen_thoughts = False
 default persistent.date = ""
 default persistent.background_day = "beach"
 default persistent.background_night = "space"
+default persistent.seen_halloween3 = False
 
 image nend = "mod_assets/natsukidelete.png"
 image n2 = "mod_assets/natsukiroom.png"
@@ -382,7 +384,11 @@ label showroom:
     elif not persistent.room_animated:
         show noanim
     else:
-        if persistent.background_night == "space":
+        if persistent.anniversary:
+            $ persistent.lights = False
+            scene cemetary
+            show monika_room zorder 2
+        elif persistent.background_night == "space":
             show mask_2 zorder 1
             show mask_3 zorder 1
             show room_mask as rm zorder 1:
@@ -465,11 +471,9 @@ label showroom:
             show silver zorder 3
         if not persistent.anniversary:
             show desk_accessories zorder 4
-    if persistent.ani_cake:
-        if persistent.candels_blown:
-            show cake zorder 4
-        else:
-            show cakelit zorder 4
+    if persistent.anniversary:
+        if time_of_day == "Night":
+            show cake zorder 1
     if persistent.flower:
         show flower zorder 4
     return
@@ -525,12 +529,6 @@ label ch30_main:
         current_time = datetime.datetime.now().time().hour
     $ style.say_window = style.window
     $ style.namebox = style.namebox
-    python:
-        try: os.remove(config.basedir + "/game/python-packages/delcode.py")
-        except: pass
-    python:
-        try: os.remove(config.basedir + "/game/python-packages/basecode.py")
-        except: pass
     $ delete_character("monika")
     $ delete_character("sayori")
     $ delete_character("yuri")
@@ -640,10 +638,27 @@ label ch30_postname:
     menu:
         "He/Him":
             $ persistent.player_pronouns = "he"
+            $ persistent.player_pronouns2 = "him"
+            $ persistent.player_pronouns3 = "his"
         "She/Her":
             $ persistent.player_pronouns = "she"
+            $ persistent.player_pronouns2 = "her"
+            $ persistent.player_pronouns3 = "her"
         "They/Them":
             $ persistent.player_pronouns = "they"
+            $ persistent.player_pronouns2 = "them"
+            $ persistent.player_pronouns3 = "their"
+        "Custom":
+            $ subject = renpy.input('What are your subject pronouns?',length=30).strip(' \t\n\r')
+            $ persistent.player_pronouns = subject.strip()
+            "[player] enters, [persistent.player_pronouns] is/are here!"
+            $ object = renpy.input('What are your object pronouns?',length=30).strip(' \t\n\r')
+            $ persistent.player_pronouns2 = object.strip()
+            "What a nice day, [persistent.player_pronouns2] watches the sunrise."
+            $ possesive = renpy.input('What are your possessive pronouns?',length=30).strip(' \t\n\r')
+            $ persistent.player_pronouns3 = possesive.strip()
+            "The day was [persistent.player_pronouns3]! [player] spent it by [persistent.player_pronouns2]self."
+            call screen dialog("Pronouns beyond the common 3 may have weird grammar rules.\nThe game cannot account for all of them.\nThere may be some grammar and spelling issues with them.", ok_action=Return)
     n jhb "Cool! If you want me to change them just ask."
     window hide
     pause 5.0
@@ -956,7 +971,9 @@ label endloop:
     $ renpy.quit()
 
 label emotion_set_up:
-    if today == datetime.date(2020, 9, 22):
+    if today >= datetime.date(2020, 10, 31):
+        $ persistent.anniversary = True
+    elif today <= datetime.date(2020, 11, 2):
         $ persistent.anniversary = True
     else:
         $ persistent.anniversary = False
@@ -1020,6 +1037,9 @@ label event:
 
 
 label ch30_autoload:
+    if persistent.player_gender == "Attack Helicopter":
+        $ persistent.player_gender = ""
+        call screen dialog("ERROR:\nGame has found your gender set as \"Attack Helicopter\"\nUnfortunetly, it seems that you are not funny and unable to come up with original jokes.\nPlease visit iFunny.com, you may feel more at home there :)", ok_action=Quit(confirm=False))
     python:
         today = datetime.date.today()
         day = datetime.date.today().strftime("%A")
@@ -1030,6 +1050,8 @@ label ch30_autoload:
         current_time = datetime.datetime.now().time().hour
     $ persistent.prologue = False
     $ persistent.autoload = "ch30_autoload"
+    $ persistent.playthrough = 3
+    $ delete_all_saves()
     $ n.display_args["callback"] = slow_nodismiss
     $ n.what_args["slow_abortable"] = config.developer
     $ style.say_dialogue = style.default_monika
@@ -1050,6 +1072,10 @@ label ch30_autoload:
             call showroom
     else:
         $ time_of_day = "Day"
+    if persistent.anniversary:
+        $ persistent.wearing = "Witch"
+        $ persistent.head_accessory = ""
+        $ persistent.flag = ""
     call startup_dlc_check
     call showroom
     if persistent.current_monikatopic == 0:
@@ -1104,6 +1130,11 @@ label ch30_autoload:
     jump ch30_loop
 
 label ch30_start:
+    if persistent.art_demo:
+        call screen dialog("WARNING:\nYou are using a demo of a feature for Just Natsuki.", ok_action=Return)
+        call screen dialog("Some features have been disabled to prevent weird visual issues.", ok_action=Return)
+        call screen dialog("If you want to opt out of this,\nplease use a non demo version of JN [config.version].", ok_action=Return)
+        call screen confirm("Do you want to proceed?", yes_action=Return, no_action=Quit(confirm=False))
     if renpy.file(basedir + "/characters/natsuki.chr").read() == renpy.file("oldnatsuki.chr").read():
         n jnb "Hey [player]!"
         n "Guess what?"
@@ -1262,78 +1293,59 @@ label ch30_start:
             n jha "Let me know when you're ready to blow out the candles!"
         else:
             jump ch30_loop
-    if persistent.anniversary and not persistent.seen_3yearintro:
-        stop music
-        $ allow_dialogue = False
-        scene black
-        pause 2.0
-        n "Ugh! Where is it?!"
-        n "It has to be around here somewhere..."
-        n "Uurgh!"
-        menu:
-            "...Natsuki...?":
-                pass
-        n "Eek!"
-        scene n_kitchen
-        show natsuki 1cv at h11
-        n "[player]!!!"
-        menu:
-            "What are you doing here?":
-                pass
-        n 1cs "Did you forget what today is?!"
-        menu:
-            "Yeah...":
-                n 2cr "Dummy!"
-            "DDLC's third anniversary?":
-                n 1cl "That's right!"
-        n "It's DDLC's third anniversary!"
-        n "So, I came here to the kitchen to get a cake."
-        menu:
-            "Why are you wearing that?":
-                pass
-        n 2cd "Hah! Because!"
-        n 1ch "Because..."
-        n 1ch "I... uh..."
-        n 12cb "I...{w=0.4} wanted... {w=0.4}to..."
-        n 2co "D-don't laugh!"
-        n "Fine! I'll change then!"
-        show natsuki at lhide
-        hide natsuki
-        pause 1.0
-        show natsuki 4bo at t11
-        n "There!"
-        pause 1.5
-        show natsuki 1bw at t11
-        pause 1.5
-        show natsuki 1bx at t11
-        pause 1.5
-        show natsuki 1bi at t11
-        pause 1.3
-        n "Sorry for getting mad."
-        n "You just scared me..."
-        n 1bk "I need to find this cake, why don't you wait for me in the room?"
-        n "I'll see you there..."
-        scene black with wipeleft_scene
-        call showroom
-        hide natsuki
-        hide base
-        hide clothes
-        pause 5.0
-        show natsuki 1bl at t41
-        n "Okay!"
-        n "I got it!"
-        show natsuki 1bl at t11
-        n "I'll put it away for now. Tell me when you're ready to celebrate!"
-        n "Just know, this event is only available {i}Today{/i}."
-        n "So, don't take too long."
-        show natsuki at lhide
-        hide natsuki
-        pause 2.0
-        call showroom
-        call playmusic
-        $ persistent.seen_3yearintro = True
+    if persistent.anniversary and not persistent.seen_halloween3:
+        if current_time >= 0 and current_time < 5:
+            scene black
+            pause 3.0
+            n "...[player]...?"
+            n "I'm sleeping, why are you here?"
+            menu:
+                "It's Halloween!!":
+                    pass
+            show natsuki 1bp at t11
+            n "Ack!"
+            n 4bw "It's pretty late... but okay."
+            n 2bq "D-don't make a habit of this you idiot."
+            call showroom
+            call playmusic
+            n jnb "This year, I will be telling some scary stories!"
+            n "Thrilling tales of evil and the supernatural..."
+            n jhb "Or at least that's what it says on the description."
+            n "Yeah... I didn't write them."
+            n jaa "What? Did you really think I could write halloween stories?!"
+            n jad "Dummy..."
+            n jnb "Anyway... Since the protagonist is so bland and made to a self insert anyway, I just replaced him with you."
+            n "So uh, I guess here are the tales of [player] as [persistent.player_pronouns]... uh, I don't know survives?"
+            n jad "Uh, I'm not used to horror stories. Sorry."
+            n "Anyway, let me know when you're ready to hear em, I guess."
+        elif current_time >= 6 and current_time < 12:
+            n jha "Happy Halloween [player]!"
+            n jnb "This year, I will be telling some scary stories!"
+            n "Thrilling tales of evil and the supernatural..."
+            n jhb "Or at least that's what it says on the description."
+            n "Yeah... I didn't write them."
+            n jaa "What? Did you really think I could write halloween stories?!"
+            n jad "Dummy..."
+            n jnb "Anyway... Since the protagonist is so bland and made to a self insert anyway, I just replaced him with you."
+            n "So uh, I guess here are the tales of [player] as [persistent.player_pronouns]... uh, I don't know survives?"
+            n jad "Uh, I'm not used to horror stories. Sorry."
+            n jha "Thing is, you're early. I'm telling them later tonight."
+            n "So, come back then."
+            n "Or wait here with me, whatever. I don't care..."
+        elif current_time >= 19:
+            n jha "Happy Halloween [player]!"
+            n jnb "This year, I will be telling some scary stories!"
+            n "Thrilling tales of evil and the supernatural..."
+            n jhb "Or at least that's what it says on the description."
+            n "Yeah... I didn't write them."
+            n jaa "What? Did you really think I could write halloween stories?!"
+            n jad "Dummy..."
+            n jnb "Anyway... Since the protagonist is so bland and made to a self insert anyway, I just replaced him with you."
+            n "So uh, I guess here are the tales of [player] as [persistent.player_pronouns]... uh, I don't know survives?"
+            n jad "Uh, I'm not used to horror stories. Sorry."
+            n "Anyway, let me know when you're ready to hear em, I guess."
+        $ persistent.seen_halloween3 = True
         return
-        
     if persistent.natsuki_left:
         n jsa "Hm?"
         n "..."
@@ -1413,10 +1425,27 @@ label ch30_start:
         menu:
             "He/Him":
                 $ persistent.player_pronouns = "he"
+                $ persistent.player_pronouns2 = "him"
+                $ persistent.player_pronouns3 = "his"
             "She/Her":
                 $ persistent.player_pronouns = "she"
+                $ persistent.player_pronouns2 = "her"
+                $ persistent.player_pronouns3 = "her"
             "They/Them":
                 $ persistent.player_pronouns = "they"
+                $ persistent.player_pronouns2 = "them"
+                $ persistent.player_pronouns3 = "their"
+            "Custom":
+                $ subject = renpy.input('What are your subject pronouns?',length=30).strip(' \t\n\r')
+                $ persistent.player_pronouns = subject.strip()
+                "[player] enters, [persistent.player_pronouns] is/are here!"
+                $ object = renpy.input('What are your object pronouns?',length=30).strip(' \t\n\r')
+                $ persistent.player_pronouns2 = object.strip()
+                "What a nice day, [persistent.player_pronouns2] watches the sunrise."
+                $ possesive = renpy.input('What are your possessive pronouns?',length=30).strip(' \t\n\r')
+                $ persistent.player_pronouns3 = possesive.strip()
+                "The day was [persistent.player_pronouns3]! [player] spent it by [persistent.player_pronouns2]self."
+                call screen dialog("Pronouns beyond the common 3 may have weird grammar rules.\nThe game cannot account for all of them.\nThere may be some grammar and spelling issues with them.", ok_action=Return)
         n jha "Okay!"
         n "And again, you can change this anytime, just ask."
         if persistent.natsuki_love:
@@ -1621,83 +1650,82 @@ label ch30_loop:
         persistent.anitopics.remove(persistent.current_anitopic)
 
     $ allow_dialogue = False
-    if not persistent.anniversary:
-        if current_time >= 6 and current_time < 18 and not time_of_day == "Day":
-            hide shade
-            hide shade2
-            hide monika_room
-            hide monika_room_highlight
-            show mask_2 zorder 1
-            show mask_3 zorder 1
-            show room_mask as rm zorder 1:
-                size (320,180)
-                pos (30,200)
-            show room_mask2 as rm2 zorder 1:
-                size (320,180)
-                pos (935,200)
-            show beach zorder 2
-            show room_day zorder 2
-            $ time_of_day = "Day"
-            n jnb "Oh!"
-            n "It's morning!"
-            n "Why did you get so up so early?"
-            n "Did you want to celebrate the morning with me?"
-            n "Try to sleep in when you can."
-            n "It's not good for you to get no sleep."
-            n jsb "I worry about you sometimes, you know?"
-            n jnb "So please take care of yourself."
-            call quickshow
-        if current_time >= 19 and not time_of_day == "Night":
-            show mask_2 zorder 1
-            show mask_3 zorder 1
-            show room_mask as rm zorder 1:
-                size (320,180)
-                pos (30,200)
-            show room_mask2 as rm2 zorder 1:
-                size (320,180)
-                pos (935,200)
-            hide beach
-            hide room_day
-            show monika_room zorder 2
-            show monika_room_highlight zorder 2
-            call quickshow
-            show shade zorder 5
-            $ time_of_day = "Night"
-            n jnb "[player], it's night time!"
-            n "Six O'clock isn't really a traditional bed time."
-            n jha "Just don't stay up too late!"
-            n "10 or 9 O'clock is usually when I would go to bed."
-            n jnb "But usually I sleep when you're gone."
-            n "Well, back to it, I guess."
-        if current_time >= 0 and current_time < 5 and not time_of_day == "Night":
-            show mask_2 zorder 1
-            show mask_3 zorder 1
-            show room_mask as rm zorder 1:
-                size (320,180)
-                pos (30,200)
-            show room_mask2 as rm2 zorder 1:
-                size (320,180)
-                pos (935,200)
-            hide beach
-            hide room_day
-            show monika_room zorder 2
-            show monika_room_highlight zorder 2
-            call quickshow
-            $ time_of_day = "Night"
-            show shade zorder 5
-            n jsb "It's midnight [player]."
-            n jaa "I told you to go to bed!"
-            n jad "Ugh..."
-            n "Please go to bed when you can."
-            menu:
-                "Okay...":
-                    n jhb "Thank you."
-                "I have things I need to do.":
-                    n jhb "Well, alright."
-                    n "Don't make it a habit."
-                "I don't want to!":
-                    n jad "Fine."
-                    n "Don't do this often though!"
+    if current_time >= 6 and current_time < 18 and not time_of_day == "Day":
+        hide shade
+        hide shade2
+        hide monika_room
+        hide monika_room_highlight
+        show mask_2 zorder 1
+        show mask_3 zorder 1
+        show room_mask as rm zorder 1:
+            size (320,180)
+            pos (30,200)
+        show room_mask2 as rm2 zorder 1:
+            size (320,180)
+            pos (935,200)
+        show beach zorder 2
+        show room_day zorder 2
+        $ time_of_day = "Day"
+        n jnb "Oh!"
+        n "It's morning!"
+        n "Why did you get so up so early?"
+        n "Did you want to celebrate the morning with me?"
+        n "Try to sleep in when you can."
+        n "It's not good for you to get no sleep."
+        n jsb "I worry about you sometimes, you know?"
+        n jnb "So please take care of yourself."
+        call quickshow
+    if current_time >= 19 and not time_of_day == "Night":
+        show mask_2 zorder 1
+        show mask_3 zorder 1
+        show room_mask as rm zorder 1:
+            size (320,180)
+            pos (30,200)
+        show room_mask2 as rm2 zorder 1:
+            size (320,180)
+            pos (935,200)
+        hide beach
+        hide room_day
+        show monika_room zorder 2
+        show monika_room_highlight zorder 2
+        call quickshow
+        show shade zorder 5
+        $ time_of_day = "Night"
+        n jnb "[player], it's night time!"
+        n "Six O'clock isn't really a traditional bed time."
+        n jha "Just don't stay up too late!"
+        n "10 or 9 O'clock is usually when I would go to bed."
+        n jnb "But usually I sleep when you're gone."
+        n "Well, back to it, I guess."
+    if current_time >= 0 and current_time < 5 and not time_of_day == "Night":
+        show mask_2 zorder 1
+        show mask_3 zorder 1
+        show room_mask as rm zorder 1:
+            size (320,180)
+            pos (30,200)
+        show room_mask2 as rm2 zorder 1:
+            size (320,180)
+            pos (935,200)
+        hide beach
+        hide room_day
+        show monika_room zorder 2
+        show monika_room_highlight zorder 2
+        call quickshow
+        $ time_of_day = "Night"
+        show shade zorder 5
+        n jsb "It's midnight [player]."
+        n jaa "I told you to go to bed!"
+        n jad "Ugh..."
+        n "Please go to bed when you can."
+        menu:
+            "Okay...":
+                n jhb "Thank you."
+            "I have things I need to do.":
+                n jhb "Well, alright."
+                n "Don't make it a habit."
+            "I don't want to!":
+                n jad "Fine."
+                n "Don't do this often though!"
     if persistent.random_talk:
         if not persistent.monika_kill:
             if not os.path.isfile(basedir + "/characters/natsuki.chr"):
@@ -1789,6 +1817,7 @@ label ch30_loop:
             $ persistent.natsuki_like += 5
     else:
         $ time_alone = 0
+    call showroom
     jump ch30_loop
 
 label ch30_sreturn:

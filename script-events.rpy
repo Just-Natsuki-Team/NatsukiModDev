@@ -40,6 +40,131 @@ default persistent.seen_3yearevent = False
 default persistent.seen_3yearintro = False
 default persistent.ani_cake = False
 
+label ch30_spookystart:
+    if time_of_day == "Day":
+        n jnb "Scary stories in the day?"
+        n jad "No, [player]."
+        n jnb "Come back after 7PM but not after 6AM, and I'll tell them to you."
+        jump ch30_loop
+    $ config.overlay_screens = []
+    hide screen hkb_overlay
+    n jha "Okay then!"
+    n "Spooky it is."
+    n "I have 2 tales for you this year."
+    n "Which one do you want to start with?"
+    menu:
+        "[player]'s home":
+            call story1
+        "No Escape":
+            call story2
+    jump ch30_loop
+
+label story1:
+    n jhb "Nice choice."
+    n "Okay..."
+    stop music fadeout 2.0
+    scene black with dissolve_scene_full
+    play music t6
+    "Our story begins in a home in Japan."
+    scene kitchen with dissolve_scene_full
+    "[player] is making food in [persistent.player_pronouns3] kitchen."
+    "Natsuki walks out from [persistent.player_pronouns3] bedroom."
+    show natsuki 2bk at t11
+    n "Hey, [player] did you finish dinner?"
+    mc "Natsuki, this takes a while."
+    n 1bg "Hey, I'm just hungry."
+    mc "Well, I'm almost done."
+    n 1bl "Cool, I'll be in your room."
+    hide natsuki with dissolve
+    "Natsuki walks off."
+    "[player] continues to make the cookies."
+    if persistent.player_pronouns == "they":
+        "As they bake, they hear a strange sound in the house."
+    else:
+        "As [persistent.player_pronouns] bakes, [persistent.player_pronouns] hears a strange sound in the house."
+    mc "Odd..."
+    "Another sound rings in [persistent.player_pronouns2] ears, this time below [persistent.player_pronouns2]."
+    if persistent.player_pronouns == "they":
+        "They squat down on the floor and press their ear to the floorboards."
+    else:
+        "So, [persistent.player_pronouns] squats down on the floor and presses [persistent.player_pronouns3] ear to the floorboards."
+    mc "Nothing... odd..."
+    "Getting up, [player] heads to [persistent.player_pronouns3] room."
+    scene bedroom with wipeleft_scene
+    mc "I'm here Natsuki!"
+    show natsuki 3bh at t11
+    n "There you are, jeez."
+    n "You took forever."
+    if persistent.player_gender == "Female":
+        n "I thought girls were supposed to be good at cooking."
+        mc "..."
+        mc "I do not know how to respond to that."
+    elif persistent.player_gender == "Male":
+        n "Typical, don't trust a boy with cooking."
+        mc "..."
+        mc "Harsh..."
+    else:
+        n "I thought you were good at cooking."
+        mc "I am, it just takes time..."
+    n 1bw "Whatever, let's just watch this movie."
+    mc "Right."
+    show natsuki at lhide
+    hide natsuki
+    "[player] heads over to [persistent.player_pronouns3] closet."
+    n "Hehe, whatcha got in your closet [player]?"
+    mc "No, I don't have any lewd manga or anime, Natsuki."
+    n "...I was gonna say bodies."
+    n "Weirdo."
+    mc "Oh."
+    mc "Why would I have bodies in my closet?"
+    n "I don't know, I wanted to make a spooky themed joke."
+    n "Jeez..."
+    "[player] finishes up and grabs some of [persistent.player_pronouns3] old DVDs."
+    show natsuki 1ba at t11
+    n "What do you wanna watch this year?"
+    mc "I don't know..."
+    "[player] reaches for the TV when-"
+    stop music
+    scene black
+    n "AAAAAAAAAAAAAAAAAAAAAHHH!!!"
+    "The lights went out."
+    mc "Natsuki calm down it's just the lights."
+    n "I-I'm not scared!"
+    n "I-I just... uh..."
+    mc "Haha, whatever. I gotta find the breaker, wait here."
+    n "Will do."
+    play music t6s
+    "[player] walks down the stars and into the bottom floor."
+    "Feeling around is [persistent.player_pronouns3] only real hope of seeing..."
+    "The house is pitch dark, so [player] makes [persistent.player_pronouns3] way to the breaker room."
+    "[player] reaches for the switch to turn on power, but nothing happens."
+    "A scream rings out in the house..."
+    mc "Natsuki!"
+    "[player] runs out of the room, crashing into things on [persistent.player_pronouns3] way."
+    "Unable to see, [player] trips and falls onto the floor."
+    mc "NATSUKI! NATSUKI!! WHERE ARE YOU?!"
+    n "Help! [player]! There's someone in here!"
+    "[player] tries to stand, but [persistent.player_pronouns3] knee is injured."
+    "Falling back to the floor, all [player] can do is listen as footsteps approach for the stairs."
+    if persistent.player_gender == "Female":
+        "???" "There you are girl."
+    elif persistent.player_gender == "Male":
+        "???" "There you are boy."
+    else:
+        "???" "There you are child."
+    mc "Who are you?! What did you do to Natsuki?!"
+    "???" "Don't worry, you'll see her soon..."
+    "[player] feels a sharp pinch in [persistent.player_pronouns3] neck."
+    if persistent.player_pronouns == "they":
+        "Resistance is futile, and they pass out on the floor..."
+    else:
+        "Resistance is futile, and [persistent.player_pronouns] passes out on the floor..."
+    pause 2.0
+    call showroom
+    n jha "Pretty scary huh?!"
+    n "I have some more stories, just ask if you want me to tell them."
+    return
+
 label ch30_3yearautoload:
     $ persistent.playthrough == 0
     $ persistent.anticheat == 0
