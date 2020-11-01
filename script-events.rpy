@@ -162,7 +162,120 @@ label story1:
     pause 2.0
     call showroom
     n jha "Pretty scary huh?!"
-    n "I have some more stories, just ask if you want me to tell them."
+    n "I have another story, just ask if you want me to tell it."
+    return
+
+label story2:
+    n jhb "Nice choice."
+    n "Okay..."
+    stop music fadeout 2.0
+    scene residential_night with dissolve_scene_full
+    play music t6s
+    "The mysterious voice had been following [persistent.player_pronouns2] for the past 3 blocks."
+    "[player] was getting terrified now, was something coming for [persistent.player_pronouns2]?"
+    "Alas, [persistent.player_pronouns] tried to whistle to herself to defuse the tension."
+    "But the steps were behind [persistent.player_pronouns2] now."
+    "So, [persistent.player_pronouns] stopped."
+    mc "Hello?"
+    show yuri 1y1 at t11
+    y "Hello."
+    mc "Yuri?! From school?"
+    y 3u "Yes, it's me."
+    mc "What are you doing out here?"
+    y 3n "I was... uh... heading home!"
+    y 4d "..."
+    mc "Oh... alright then..."
+    y 4b "May I... accompany you home, [player]?"
+    mc "Sure Yuri, since you live close by anyway..."
+    y 3y1 "Yes! Thank you!"
+    y 3o "Uh! I mean!"
+    y 4a "Thank you, [player]..."
+    mc "Lets... go then..."
+    show yuri 1a at t11
+    "[player] and Yuri walked down the road."
+    "While Yuri seemed elated to be with [player]."
+    "[player] on the other hand was deep in thought."
+    "Why would Yuri leave school at such a late hour?"
+    "Why would Yuri follow [persistent.player_pronouns2] of all people?"
+    "And why was Yuri so excited?"
+    play music t10y
+    y 1y1 "Aaah... [player]..."
+    y "Has anyone ever told you how attractive you are?"
+    mc "What?"
+    if persistent.player_gender == "Female":
+        y "You are so beautiful..."
+        y "Your hair is so smooth..."
+        y "And your eyes are so gentle..."
+        y "And your skin..."
+        y "Ahahahaha!"
+        y 3y3 "I just want to tear it off and wear it!!"
+    elif persistent.player_gender == "Male":
+        y "You are so handsome..."
+        y "Your so tall, and strong."
+        y "And your smell..."
+        y "Ehehehehe!"
+        y 3y3 "I want to crawl inside you and smell you!"
+    else:
+        y "You are so gorgeous..."
+        y "So mysterious and secretive..."
+        y "Yet so alluring..."
+        y 3y3 "Why don't you come to my house, and we can share eachother..."
+    mc "Yuri what the hell?!"
+    y "I love you [player]!"
+    y "Don't you love me back?!"
+    mc "I-I..."
+    "[player] was at a loss for words."
+    "What should [persistent.player_pronouns] say?"
+    "Yuri seemed unhinged."
+    mc "I-I..."
+    "Yuri pulls a knife from her bag."
+    "It's covered in blood."
+    y "Do you like it [player]?"
+    y "It has my blood on it."
+    y "Now I can add your blood to it."
+    y "We'll be bonded forever..."
+    mc "No!"
+    hide yuri with dissolve
+    "[player] made a run for it."
+    "Yuri screamed and began chasing [persistent.player_pronouns2]."
+    "[player] ran as fast as [persistent.player_pronouns] could down the street."
+    "If [persistent.player_pronouns] could make it to [persistent.player_pronouns3] house, she'd be safe."
+    if persistent.player_gender == "Female":
+        "Yuri caught up to [player] and grabbed the ribbon of [persistent.player_pronouns3] school uniform."
+    elif persistent.player_gender == "Male":
+        "Yuri caught up to [player] and grabbed the tie of [persistent.player_pronouns3] school uniform."
+    else:
+        "Yuri caught up to [player] and grabbed the shirt of [persistent.player_pronouns3] school uniform."
+    "[player] almost fell, but pushed Yuri off and ran."
+    "Yuri screamed again, laughing like a maniac."
+    "[player] finally made it to her house, [persistent.player_pronouns] ran in and quickly shut and locked the door."
+    scene kitchen with wipeleft_scene
+    "In her kitchen, [persistent.player_pronouns] reached for the phone and dialed the police."
+    if persistent.player_gender == "Female":
+        "Operator" "\"110 What is your emergency ma'am?\""
+    elif persistent.player_gender == "Male":
+        "Operator" "\"110 What is your emergency sir?\""
+    else:
+        "Operator" "\"110 What is your emergency?\""
+    mc "This girl from my class has gone crazy, she's trying to attack me with a knife!"
+    "Operator" "\"Okay... now, can you please tell me where you are?\""
+    mc "In my kitchen, at my house on 20221 Cassnide Street."
+    "Operator" "\"Alright, please stay on the line. We'll be there soon...\""
+    "A knife shot through the door, Yuri was trying to cut her way in!"
+    mc "Aaaa!"
+    "Operator" "\"Are you still there?\""
+    mc "Yes! She's trying to cut her way through my door."
+    "Yuri laughed maniacally. As her knife kept cutting the thin material of the door."
+    "[player] backed up as far as [persistent.player_pronouns] could."
+    "Yuri's laughs kept going, even as sirens rang from far away."
+    "[player] closed [persistent.player_pronouns3] eyes, like it was the last time [persistent.player_pronouns]'d ever see the light."
+    "Yuri's breath ran down [persistent.player_pronouns3] neck, as the voice of officers came from outside..."
+    scene black
+    stop music
+    pause 2.0
+    call showroom
+    n jha "Pretty scary huh?!"
+    n "I have another story, just ask if you want me to tell it."
     return
 
 label ch30_3yearautoload:

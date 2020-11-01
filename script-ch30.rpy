@@ -657,7 +657,7 @@ label ch30_postname:
             "What a nice day, [persistent.player_pronouns2] watches the sunrise."
             $ possesive = renpy.input('What are your possessive pronouns?',length=30).strip(' \t\n\r')
             $ persistent.player_pronouns3 = possesive.strip()
-            "The day was [persistent.player_pronouns3]! [player] spent it by [persistent.player_pronouns2]self."
+            "It was [persistent.player_pronouns3] day! [player] spent it by [persistent.player_pronouns2]self."
             call screen dialog("Pronouns beyond the common 3 may have weird grammar rules.\nThe game cannot account for all of them.\nThere may be some grammar and spelling issues with them.", ok_action=Return)
     n jhb "Cool! If you want me to change them just ask."
     window hide
@@ -1444,7 +1444,7 @@ label ch30_start:
                 "What a nice day, [persistent.player_pronouns2] watches the sunrise."
                 $ possesive = renpy.input('What are your possessive pronouns?',length=30).strip(' \t\n\r')
                 $ persistent.player_pronouns3 = possesive.strip()
-                "The day was [persistent.player_pronouns3]! [player] spent it by [persistent.player_pronouns2]self."
+                "It was [persistent.player_pronouns3] day! [player] spent it by [persistent.player_pronouns2]self."
                 call screen dialog("Pronouns beyond the common 3 may have weird grammar rules.\nThe game cannot account for all of them.\nThere may be some grammar and spelling issues with them.", ok_action=Return)
         n jha "Okay!"
         n "And again, you can change this anytime, just ask."
