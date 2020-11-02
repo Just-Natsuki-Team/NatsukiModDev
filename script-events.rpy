@@ -40,6 +40,244 @@ default persistent.seen_3yearevent = False
 default persistent.seen_3yearintro = False
 default persistent.ani_cake = False
 
+label ch30_spookystart:
+    if time_of_day == "Day":
+        n jnb "Scary stories in the day?"
+        n jad "No, [player]."
+        n jnb "Come back after 7PM but not after 6AM, and I'll tell them to you."
+        jump ch30_loop
+    $ config.overlay_screens = []
+    hide screen hkb_overlay
+    n jha "Okay then!"
+    n "Spooky it is."
+    n "I have 2 tales for you this year."
+    n "Which one do you want to start with?"
+    menu:
+        "[player]'s home":
+            call story1
+        "No Escape":
+            call story2
+    jump ch30_loop
+
+label story1:
+    n jhb "Nice choice."
+    n "Okay..."
+    stop music fadeout 2.0
+    scene black with dissolve_scene_full
+    play music t6
+    "Our story begins in a home in Japan."
+    scene kitchen with dissolve_scene_full
+    "[player] is making food in [persistent.player_pronouns3] kitchen."
+    "Natsuki walks out from [persistent.player_pronouns3] bedroom."
+    show natsuki 2bk at t11
+    n "Hey, [player] did you finish dinner?"
+    mc "Natsuki, this takes a while."
+    n 1bg "Hey, I'm just hungry."
+    mc "Well, I'm almost done."
+    n 1bl "Cool, I'll be in your room."
+    hide natsuki with dissolve
+    "Natsuki walks off."
+    "[player] continues to make the cookies."
+    if persistent.player_pronouns == "they":
+        "As they bake, they hear a strange sound in the house."
+    else:
+        "As [persistent.player_pronouns] bakes, [persistent.player_pronouns] hears a strange sound in the house."
+    mc "Odd..."
+    "Another sound rings in [persistent.player_pronouns2] ears, this time below [persistent.player_pronouns2]."
+    if persistent.player_pronouns == "they":
+        "They squat down on the floor and press their ear to the floorboards."
+    else:
+        "So, [persistent.player_pronouns] squats down on the floor and presses [persistent.player_pronouns3] ear to the floorboards."
+    mc "Nothing... odd..."
+    "Getting up, [player] heads to [persistent.player_pronouns3] room."
+    scene bedroom with wipeleft_scene
+    mc "I'm here Natsuki!"
+    show natsuki 3bh at t11
+    n "There you are, jeez."
+    n "You took forever."
+    if persistent.player_gender == "Female":
+        n "I thought girls were supposed to be good at cooking."
+        mc "..."
+        mc "I do not know how to respond to that."
+    elif persistent.player_gender == "Male":
+        n "Typical, don't trust a boy with cooking."
+        mc "..."
+        mc "Harsh..."
+    else:
+        n "I thought you were good at cooking."
+        mc "I am, it just takes time..."
+    n 1bw "Whatever, let's just watch this movie."
+    mc "Right."
+    show natsuki at lhide
+    hide natsuki
+    "[player] heads over to [persistent.player_pronouns3] closet."
+    n "Hehe, whatcha got in your closet [player]?"
+    mc "No, I don't have any lewd manga or anime, Natsuki."
+    n "...I was gonna say bodies."
+    n "Weirdo."
+    mc "Oh."
+    mc "Why would I have bodies in my closet?"
+    n "I don't know, I wanted to make a spooky themed joke."
+    n "Jeez..."
+    "[player] finishes up and grabs some of [persistent.player_pronouns3] old DVDs."
+    show natsuki 1ba at t11
+    n "What do you wanna watch this year?"
+    mc "I don't know..."
+    "[player] reaches for the TV when-"
+    stop music
+    scene black
+    n "AAAAAAAAAAAAAAAAAAAAAHHH!!!"
+    "The lights went out."
+    mc "Natsuki calm down it's just the lights."
+    n "I-I'm not scared!"
+    n "I-I just... uh..."
+    mc "Haha, whatever. I gotta find the breaker, wait here."
+    n "Will do."
+    play music t6s
+    "[player] walks down the stars and into the bottom floor."
+    "Feeling around is [persistent.player_pronouns3] only real hope of seeing..."
+    "The house is pitch dark, so [player] makes [persistent.player_pronouns3] way to the breaker room."
+    "[player] reaches for the switch to turn on power, but nothing happens."
+    "A scream rings out in the house..."
+    mc "Natsuki!"
+    "[player] runs out of the room, crashing into things on [persistent.player_pronouns3] way."
+    "Unable to see, [player] trips and falls onto the floor."
+    mc "NATSUKI! NATSUKI!! WHERE ARE YOU?!"
+    n "Help! [player]! There's someone in here!"
+    "[player] tries to stand, but [persistent.player_pronouns3] knee is injured."
+    "Falling back to the floor, all [player] can do is listen as footsteps approach for the stairs."
+    if persistent.player_gender == "Female":
+        "???" "There you are girl."
+    elif persistent.player_gender == "Male":
+        "???" "There you are boy."
+    else:
+        "???" "There you are child."
+    mc "Who are you?! What did you do to Natsuki?!"
+    "???" "Don't worry, you'll see her soon..."
+    "[player] feels a sharp pinch in [persistent.player_pronouns3] neck."
+    if persistent.player_pronouns == "they":
+        "Resistance is futile, and they pass out on the floor..."
+    else:
+        "Resistance is futile, and [persistent.player_pronouns] passes out on the floor..."
+    pause 2.0
+    call showroom
+    n jha "Pretty scary huh?!"
+    n "I have another story, just ask if you want me to tell it."
+    return
+
+label story2:
+    n jhb "Nice choice."
+    n "Okay..."
+    stop music fadeout 2.0
+    scene residential_night with dissolve_scene_full
+    play music t6s
+    "The mysterious voice had been following [persistent.player_pronouns2] for the past 3 blocks."
+    "[player] was getting terrified now, was something coming for [persistent.player_pronouns2]?"
+    "Alas, [persistent.player_pronouns] tried to whistle to herself to defuse the tension."
+    "But the steps were behind [persistent.player_pronouns2] now."
+    "So, [persistent.player_pronouns] stopped."
+    mc "Hello?"
+    show yuri 1y1 at t11
+    y "Hello."
+    mc "Yuri?! From school?"
+    y 3u "Yes, it's me."
+    mc "What are you doing out here?"
+    y 3n "I was... uh... heading home!"
+    y 4d "..."
+    mc "Oh... alright then..."
+    y 4b "May I... accompany you home, [player]?"
+    mc "Sure Yuri, since you live close by anyway..."
+    y 3y1 "Yes! Thank you!"
+    y 3o "Uh! I mean!"
+    y 4a "Thank you, [player]..."
+    mc "Lets... go then..."
+    show yuri 1a at t11
+    "[player] and Yuri walked down the road."
+    "While Yuri seemed elated to be with [player]."
+    "[player] on the other hand was deep in thought."
+    "Why would Yuri leave school at such a late hour?"
+    "Why would Yuri follow [persistent.player_pronouns2] of all people?"
+    "And why was Yuri so excited?"
+    play music t10y
+    y 1y1 "Aaah... [player]..."
+    y "Has anyone ever told you how attractive you are?"
+    mc "What?"
+    if persistent.player_gender == "Female":
+        y "You are so beautiful..."
+        y "Your hair is so smooth..."
+        y "And your eyes are so gentle..."
+        y "And your skin..."
+        y "Ahahahaha!"
+        y 3y3 "I just want to tear it off and wear it!!"
+    elif persistent.player_gender == "Male":
+        y "You are so handsome..."
+        y "Your so tall, and strong."
+        y "And your smell..."
+        y "Ehehehehe!"
+        y 3y3 "I want to crawl inside you and smell you!"
+    else:
+        y "You are so gorgeous..."
+        y "So mysterious and secretive..."
+        y "Yet so alluring..."
+        y 3y3 "Why don't you come to my house, and we can share eachother..."
+    mc "Yuri what the hell?!"
+    y "I love you [player]!"
+    y "Don't you love me back?!"
+    mc "I-I..."
+    "[player] was at a loss for words."
+    "What should [persistent.player_pronouns] say?"
+    "Yuri seemed unhinged."
+    mc "I-I..."
+    "Yuri pulls a knife from her bag."
+    "It's covered in blood."
+    y "Do you like it [player]?"
+    y "It has my blood on it."
+    y "Now I can add your blood to it."
+    y "We'll be bonded forever..."
+    mc "No!"
+    hide yuri with dissolve
+    "[player] made a run for it."
+    "Yuri screamed and began chasing [persistent.player_pronouns2]."
+    "[player] ran as fast as [persistent.player_pronouns] could down the street."
+    "If [persistent.player_pronouns] could make it to [persistent.player_pronouns3] house, she'd be safe."
+    if persistent.player_gender == "Female":
+        "Yuri caught up to [player] and grabbed the ribbon of [persistent.player_pronouns3] school uniform."
+    elif persistent.player_gender == "Male":
+        "Yuri caught up to [player] and grabbed the tie of [persistent.player_pronouns3] school uniform."
+    else:
+        "Yuri caught up to [player] and grabbed the shirt of [persistent.player_pronouns3] school uniform."
+    "[player] almost fell, but pushed Yuri off and ran."
+    "Yuri screamed again, laughing like a maniac."
+    "[player] finally made it to her house, [persistent.player_pronouns] ran in and quickly shut and locked the door."
+    scene kitchen with wipeleft_scene
+    "In her kitchen, [persistent.player_pronouns] reached for the phone and dialed the police."
+    if persistent.player_gender == "Female":
+        "Operator" "\"110 What is your emergency ma'am?\""
+    elif persistent.player_gender == "Male":
+        "Operator" "\"110 What is your emergency sir?\""
+    else:
+        "Operator" "\"110 What is your emergency?\""
+    mc "This girl from my class has gone crazy, she's trying to attack me with a knife!"
+    "Operator" "\"Okay... now, can you please tell me where you are?\""
+    mc "In my kitchen, at my house on 20221 Cassnide Street."
+    "Operator" "\"Alright, please stay on the line. We'll be there soon...\""
+    "A knife shot through the door, Yuri was trying to cut her way in!"
+    mc "Aaaa!"
+    "Operator" "\"Are you still there?\""
+    mc "Yes! She's trying to cut her way through my door."
+    "Yuri laughed maniacally. As her knife kept cutting the thin material of the door."
+    "[player] backed up as far as [persistent.player_pronouns] could."
+    "Yuri's laughs kept going, even as sirens rang from far away."
+    "[player] closed [persistent.player_pronouns3] eyes, like it was the last time [persistent.player_pronouns]'d ever see the light."
+    "Yuri's breath ran down [persistent.player_pronouns3] neck, as the voice of officers came from outside..."
+    scene black
+    stop music
+    pause 2.0
+    call showroom
+    n jha "Pretty scary huh?!"
+    n "I have another story, just ask if you want me to tell it."
+    return
+
 label ch30_3yearautoload:
     $ persistent.playthrough == 0
     $ persistent.anticheat == 0

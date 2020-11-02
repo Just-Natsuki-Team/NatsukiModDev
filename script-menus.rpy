@@ -73,11 +73,8 @@ label normaltalkmenu_select:
             jump normaltalkmenu
         "Type a question":
             jump normalchatmenu
-        "{b}Anniversary Event{/b}":
-            if persistent.seen_3yearevent:
-                call screen confirm("Are you sure you want to replay the event?", yes_action=Return, no_action=Jump("ch30_loop"))
-            call screen confirm("Initiating this event means you must watch it through before returning to normal gameplay.\nIf you quit at any point you will be returned to the start of the event.\nAre you sure you want to play it now?", yes_action=Jump("ch30_3yearevent"), no_action=Jump("ch30_loop"))
-            jump ch30_loop
+        "{b}Scary Stories{/b}":
+            jump ch30_spookystart
         "Compliments..." if persistent.natsuki_love:
             hide screen talking_new
             hide screen talking_new2
@@ -412,51 +409,12 @@ label normaltalkmenu6:
             jump ch30_loop
 
 label normaltalkmenu7:
-    if persistent.anniversary:
         menu:
-            "I'm going to wrap the presents!" if persistent.christmas_time == "Eve":
-                hide screen talking_new
-                hide screen talking_new2
-                jump ch30_christmasevent1
-            "Ready to open gifts?" if persistent.christmas_time == "Day":
-                hide screen talking_new
-                hide screen talking_new2
-                jump ch30_christmasevent2
             "Were you and Yuri really friends?":
                 hide screen talking_new
                 hide screen talking_new2
                 jump ch30_yuri
-            "What even is that fire?":
-                hide screen talking_new
-                hide screen talking_new2
-                jump ch30_fire2
-            "Can I tell you my birthday?":
-                hide screen talking_new
-                hide screen talking_new2
-                jump ch30_bdayset
-            "Next Page...":
-                jump normaltalkmenu8
-            "Last Page...":
-                jump normaltalkmenu6
-            "Nevermind":
-                hide screen talking_new
-                hide screen talking_new2
-                jump ch30_loop
-    else:
-        menu:
-            "What is your political stance?":
-                hide screen talking_new
-                hide screen talking_new2
-                jump ch30_politics
-            "Are you excited for 2019?" if persistent.seen_newyear:
-                hide screen talking_new
-                hide screen talking_new2
-                jump ch30_2019
-            "Were you and Yuri really friends?":
-                hide screen talking_new
-                hide screen talking_new2
-                jump ch30_yuri
-            "What even is that fire?":
+            "What is that fire in the background?":
                 hide screen talking_new
                 hide screen talking_new2
                 jump ch30_fire2
@@ -1174,7 +1132,7 @@ label extrasmenu:
                     jump startfight
                 "Nevermind...":
                     jump ch30_loop
-        "Background":
+        "Background" if not persistent.anniversary:
             if time_of_day == "Day":
                 menu:
                     "The Beach":
@@ -1278,7 +1236,7 @@ label extrasmenu:
                     $ persistent.hair_color = "Sky Blue"
                     n "There!"
                     jump ch30_loop
-                "Ginger":
+                "Ginger" if not persistent.art_demo:
                     n jha "Hehe, I like ginger hair!"
                     n "Alright then!"
                     hide blonde
@@ -1291,7 +1249,7 @@ label extrasmenu:
                     $ persistent.hair_color = "Ginger"
                     n "There!"
                     jump ch30_loop
-                "Silver" if persistent.has_silver:
+                "Silver" if persistent.has_silver and if not persistent.art_demo:
                     n jhb "Hehe! I've never tried this one!"
                     n jha "I'm going to be old granny Natsuki."
                     hide blonde
@@ -1320,7 +1278,7 @@ label extrasmenu:
                 "Nevermind...":
                     n jnb "Okay..."
                     jump ch30_loop
-        "Clothing" if persistent.natsuki_like >= 10:
+        "Clothing" if persistent.natsuki_like >= 10 and not persistent.anniversary:
             n jnb "Sure, what to?"
             menu:
                 "Megunin Costume":
@@ -1455,7 +1413,7 @@ label extrasmenu:
                 "Nevermind":
                     n "Alright then."
                     jump ch30_loop
-        "Room Decor":
+        "Room Decor" if not persistent.anniversary:
             n jnb "Anything you have in mind?"
             menu:
                 "Pride Flags":
@@ -1506,7 +1464,7 @@ label extrasmenu:
                 "Nevermind":
                     jump extrasmenu
             jump extrasmenu
-        "Accessory":
+        "Accessory" if not persistent.anniversary:
             n jnb "Sure, what should I put on?"
             menu:
                 "Glasses":
@@ -1543,7 +1501,7 @@ label extrasmenu:
                 "Nevermind":
                     n jnb "Okay."
                     jump extrasmenu
-        "Lights" if time_of_day == "Night": 
+        "Lights" if time_of_day == "Night" and not persistent.anniversary:
             n jnb "You want to toggle the lights?"
             menu:
                 "Turn On" if persistent.lights == False:
@@ -1753,18 +1711,35 @@ label change:
                         n jab "Are you pranking me?"
                         jump normaltalkmenu_select
                     $ persistent.player_pronouns = "he"
+                    $ persistent.player_pronouns2 = "him"
+                    $ persistent.player_pronouns3 = "his"
                 "She/Her":
                     if persistent.player_pronouns == "she":
                         n jnb "Uh [player], I already use she/her for you..."
                         n jab "Are you pranking me?"
                         jump normaltalkmenu_select
                     $ persistent.player_pronouns = "she"
+                    $ persistent.player_pronouns2 = "her"
+                    $ persistent.player_pronouns3 = "her"
                 "They/Them":
                     if persistent.player_pronouns == "they":
                         n jnb "Uh [player], I already use they/them for you..."
                         n jab "Are you pranking me?"
                         jump normaltalkmenu_select
                     $ persistent.player_pronouns = "they"
+                    $ persistent.player_pronouns2 = "them"
+                    $ persistent.player_pronouns3 = "their"
+                "Custom":
+                    $ subject = renpy.input('What are your subject pronouns?',length=30).strip(' \t\n\r')
+                    $ persistent.player_pronouns = subject.strip()
+                    "[player] enters, [persistent.player_pronouns] is/are here!"
+                    $ object = renpy.input('What are your object pronouns?',length=30).strip(' \t\n\r')
+                    $ persistent.player_pronouns2 = object.strip()
+                    "What a nice day, [persistent.player_pronouns2] watches the sunrise."
+                    $ possesive = renpy.input('What are your possessive pronouns?',length=30).strip(' \t\n\r')
+                    $ persistent.player_pronouns3 = possesive.strip()
+                    "The day was [persistent.player_pronouns3]! [player] spent it by [persistent.player_pronouns2]self."
+                    call screen dialog("Pronouns beyond the common 3 may have weird grammar rules.\nThe game cannot account for all of them.\nThere may be some grammar and spelling issues with them.", ok_action=Return)
             n jha "Alright, feel free to ask me use different ones if you'd prefer that."
         "Nevermind":
             jump normaltalkmenu_select

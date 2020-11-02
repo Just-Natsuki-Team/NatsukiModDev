@@ -7,7 +7,8 @@
 #If you plan on adding new content, pop them over down there and mimic the appropriate lines!
 define persistent.demo = False
 define persistent.steam = False
-define config.developer = True #Change this flag to True to enable dev tools
+define config.developer = False #Change this flag to True to enable dev tools
+define persistent.art_demo = False
 define natsuki_love = False #Don't touch this is usually breaks stuff.
 
 python early:
