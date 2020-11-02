@@ -973,7 +973,7 @@ label endloop:
 label emotion_set_up:
     if today >= datetime.date(2020, 10, 31):
         $ persistent.anniversary = True
-    elif today <= datetime.date(2020, 11, 2):
+    elif today <= datetime.date(2020, 11, 4):
         $ persistent.anniversary = True
     else:
         $ persistent.anniversary = False
