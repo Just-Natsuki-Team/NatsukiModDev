@@ -66,6 +66,8 @@ default persistent.bday_year = 0
 default persistent.natsuki_left = False
 default persistent.anitopics = []
 default persistent.anitopics_seen = []
+default persistent.christmastopics = []
+default persistent.current_christmastopic = []
 default persistent.seen_anievent = False
 default persistent.seen_spookystory = False
 default persistent.wearing = ""
@@ -131,10 +133,14 @@ image flag gay = "mod_assets/room_decor/gay.png" #Boys will love boys.
 image flag lesbian = "mod_assets/room_decor/lesbian.png" #Men is too headache.
 image flag trans = "mod_assets/room_decor/trans.png" #That's me!
 image flag enby = "mod_assets/room_decor/enby.png" #For those who have ascended beyond the gender plane!
-image flag bi = "mod_assets/room_decor/bisexual.png" #For people who love both genders!
+image flag bi = "mod_assets/room_decor/bisexual.png" #For people who love more than one gender!
 image flag pan = "mod_assets/room_decor/pan.png" #For people who love all genders. Look the distinction is important to some okay!
 image flag asexual = "mod_assets/room_decor/asexual.png" #Sex can be a headache.
 image flag blm = "mod_assets/room_decor/blm.png" #Support black people in this important time. They need it.
+image garland_day = "mod_assets/room_decor/bell_garland_day.png"
+image garland_night = "mod_assets/room_decor/bell_garland_space.png"
+image tree_day = "mod_assets/room_decor/xmas_tree_day.png"
+image tree_night = "mod_assets/room_decor/xmas_tree_space.png"
 #Why am I writing these notes? No one is gunna read em...
 image plate = "mod_assets/JustNatsuki/plate.png"
 image cakelit = "mod_assets/JustNatsuki/cakelit.png"
@@ -381,14 +387,12 @@ label showroom:
             scene park
         show room_day
         $ time_of_day = "Day"
-    elif not persistent.room_animated:
+    if persistent.christmas_time != "":
+        $ persistent.wearing = "Christmas"
+    if not persistent.room_animated:
         show noanim
     else:
-        if persistent.anniversary:
-            $ persistent.lights = False
-            scene cemetary
-            show monika_room zorder 2
-        elif persistent.background_night == "space":
+        if persistent.background_night == "space":
             show mask_2 zorder 1
             show mask_3 zorder 1
             show room_mask as rm zorder 1:
@@ -474,6 +478,13 @@ label showroom:
     if persistent.anniversary:
         if time_of_day == "Night":
             show cake zorder 1
+    if persistent.christmas_time != "":
+        if time_of_day == "Day":
+            show tree_day zorder 4
+            show garland_day zorder 2
+        elif time_of_day == "Night":
+            show tree_night zorder 4
+            show garland_night zorder 2
     if persistent.flower:
         show flower zorder 4
     return
@@ -971,25 +982,23 @@ label endloop:
     $ renpy.quit()
 
 label emotion_set_up:
-    if today >= datetime.date(2020, 10, 31):
-        $ persistent.anniversary = True
-    elif today <= datetime.date(2020, 11, 4):
-        $ persistent.anniversary = True
-    else:
-        $ persistent.anniversary = False
-    if today == datetime.date(2020, 5, 1):
-        $ persistent.two_years = True
-    elif today == datetime.date(2020, 5, 2):
+    if today == datetime.date(2020, 5, 2):
         $ persistent.two_years = True
     else:
         $ persistent.two_years = False
-    if today == datetime.date(2019, 12, 24):
+    if today >= datetime.date(2020, 12, 20):
+        $ persistent.christmas_time = "Christmas"
+    elif today <= datetime.date(2021, 1, 2):
+        $ persistent.christmas_time = "Christmas"
+    else:
+        $ persistent.christmas_time = ""
+    if today == datetime.date(2020, 12, 24):
         $ persistent.christmas_time = "Eve"
-    elif today == datetime.date(2019, 12, 25):
+    elif today == datetime.date(2020, 12, 25):
         $ persistent.christmas_time = "Day"
-    elif today == datetime.date(2019, 12, 31):
+    elif today == datetime.date(2020, 12, 31):
         $ persistent.christmas_time = "NewEve"
-    elif today == datetime.date(2020, 1, 1):
+    elif today == datetime.date(2021, 1, 1):
         $ persistent.christmas_time = "NewYear"
     else:
         $ persistent.christmas_time = ""
@@ -1346,6 +1355,9 @@ label ch30_start:
             n "Anyway, let me know when you're ready to hear em, I guess."
         $ persistent.seen_halloween3 = True
         return
+    if persistent.christmas_time != "":
+        n jha "Merry Christmas [player]!"
+        n "I'm happy you're here!"
     if persistent.natsuki_left:
         n jsa "Hm?"
         n "..."
@@ -1560,6 +1572,18 @@ label ch30_morning_4:
         n jhc "Hehe, you're the best [player]!"
     return
 
+label ch30_morning_5:
+    n jaa "[player]! You dummy! It's so early what are you doing up!"
+    n "This isn't good for you health!"
+    menu:
+        "Aww, you're worried about me?":
+            pass
+    n jac "W-wha! No!"
+    n jad "I-I! I just don't wanna deal with you being sick!"
+    n jab "Because then you'll be all germy and gross."
+    n jad "Just get some sleep as soon as possible, you idiot."
+    return
+
 # This will only show Natsuki. It's for when needed in certain scripts.
 label quickshow:
     if persistent.yandere:
@@ -1649,6 +1673,12 @@ label ch30_loop:
         persistent.current_anitopic = renpy.random.choice(persistent.anitopics)
         persistent.anitopics.remove(persistent.current_anitopic)
 
+    python:
+        if len(persistent.christmastopics) == 0:
+            persistent.christmastopics = range(1,6)
+        persistent.current_christmastopic = renpy.random.choice(persistent.christmastopics)
+        persistent.christmastopics.remove(persistent.current_christmastopic)
+
     $ allow_dialogue = False
     if current_time >= 6 and current_time < 18 and not time_of_day == "Day":
         hide shade
@@ -1666,6 +1696,7 @@ label ch30_loop:
         show beach zorder 2
         show room_day zorder 2
         $ time_of_day = "Day"
+        call showroom
         n jnb "Oh!"
         n "It's morning!"
         n "Why did you get so up so early?"
@@ -1691,6 +1722,7 @@ label ch30_loop:
         call quickshow
         show shade zorder 5
         $ time_of_day = "Night"
+        call showroom
         n jnb "[player], it's night time!"
         n "Six O'clock isn't really a traditional bed time."
         n jha "Just don't stay up too late!"
@@ -1713,6 +1745,7 @@ label ch30_loop:
         call quickshow
         $ time_of_day = "Night"
         show shade zorder 5
+        call showroom
         n jsb "It's midnight [player]."
         n jaa "I told you to go to bed!"
         n jad "Ugh..."
@@ -1732,6 +1765,8 @@ label ch30_loop:
                 jump ch30_end
         if persistent.new_topics:
             call expression "ch30_" + str(persistent.current_newtopic)
+        elif not persistent.christmas_time == "":
+            call expression "chholiday_" + str(persistent.current_christmastopic)
         else:
             call expression "ch30_" + str(persistent.current_monikatopic)
     else:
@@ -4512,3 +4547,103 @@ label ch30_attraction:
     n "Personally, I don't think it matters."
     n "Labels are for chumps."
     jump ch30_loop
+
+default celebrate = None
+label chholiday_1:
+    n jnb "Hey, [player]."
+    n "Do you celebrate Christmas?"
+    menu:
+        "Yes":
+            $ celebrate = True
+            n jha "Nice!"
+        "No":
+            $ celebrate = False
+            n jnb "I see..."
+    n jnb "Christmas is usually seen as a Christian holiday."
+    n "It's in the name, {i}Christ{i\}mas."
+    n "A lot of people who aren't Christian celebrate it now, though."
+    n "I mean, it is a time for presents and happy times!"
+    if celebrate:
+        n jha "Plus, presents rule! I got my baking kit for Christmas one year."
+        n "Same with my pink frilly skirt I wore when MC and I made cupcakes for the festival."
+    else:
+        n jha "Even though you don't celebrate, I'm sure you still like to enjoy the jolly feeling?"
+        n "Plus, there are other holidays."
+    return
+
+default best_gift = ""
+
+label chholiday_2:
+    n jha "[player], what was the best gift you ever got for Christmas?"
+    n "For me, it was probably the pink frilly skirt I wear sometimes."
+    n "My friend Amy got it for me."
+    n jnb "Yes, THAT Amy."
+    n "Even though I wrote bad stuff about her in my poem, I actually don't have a problem with her."
+    n jab "I'm not the kinda person to get angry at people for little things like liking spiders!"
+    menu:
+        "You get angry whenever I call you cute...":
+            pass
+    n jaa "Urk-"
+    n jac "I'm not cute!!"
+    n jad "Grr..."
+    n "Anyway..."
+    n jnb "What was the best gift you've ever received?"
+    $ gift = renpy.input('What was the best gift you ever got?',length=30).strip(' \t\n\r')
+    $ best_gift = gift.strip()
+    if best_gift == "bike":
+        n "A bike huh?"
+        n "I never had one of those growing up."
+        n jab "Always seemed like more of a boy thing, haha."
+    elif best_gift == "phone":
+        n jha "Lucky!"
+        n jnb "I have a phone but it's kind of garbage."
+        n jsa "Best my family could afford at the time was a flip phone."
+        n jnb "It worked, but it was an old thing."
+    elif best_gift == "boobs":
+        n jac "???"
+        n "What?!"
+    elif best_gift == "clothes":
+        if persistent.player_gender == "Female":
+            n jha "A fashion girl I see."
+        elif persistent.player_gender == "Male":
+            n jha "A fashion guy I see."
+        else:
+            n jha "A fashion person I see."
+        n "I like getting clothes sometimes."
+        n "Though usually they're not really anything impressive."
+        n jsa "We don't have a lot of money, so."
+        n "It's hard to afford that kinda thing."
+    else:
+        n jnb "Oh, wow!"
+        n "I've never had a [best_gift] before."
+    return
+
+label chholiday_3:
+    n jha "Did a show you like as a kid ever do a Christmas special?"
+    n "God, those are so memorable."
+    n "I would often just rewatch ones that had aired every year."
+    n "They were just that memorable."
+    n "I even watched them when it wasn't Christmas."
+    n jnb "They were that enjoyable I guess."
+    return
+
+label chholiday_4:
+    n jab "What's with Christmas movies and being so darn cheesy."
+    n "It's all \"Christmas spirit\" this, \"Peace to all\" that."
+    n jnb "I mean, I don't dislike peace for all."
+    n "But, still."
+    n "Maybe my opinion comes from only kids Christmas movies?"
+    n "I usually watch those over more adult ones."
+    n jaa "N-Not because I like childish thing, I just used to watch them as a kid..."
+    n "And... uh..."
+    n jsb "..."
+    return
+
+label chholiday_5:
+    n jsb "[player] I'm sorry I couldn't do as much this year for Christmas."
+    n "It's been... a hell of a year."
+    n "I didn't have much time to work on the room."
+    n "But, I hope to have something better for New Years."
+    n jab "I have some exciting stuff planned for next year."
+    n "Stick around for that."
+    return

@@ -73,8 +73,6 @@ label normaltalkmenu_select:
             jump normaltalkmenu
         "Type a question":
             jump normalchatmenu
-        "{b}Scary Stories{/b}":
-            jump ch30_spookystart
         "Compliments..." if persistent.natsuki_love:
             hide screen talking_new
             hide screen talking_new2
@@ -110,6 +108,8 @@ label normaltalkmenu_select:
                 $ persistent.currentpos = get_pos()
             else:
                 $ persistent.currentpos = 0
+            if persistent.christmas_time != "":
+                n jha "Happy Holidays!"
             $ renpy.quit()
         "Nevermind":
             jump ch30_loop
@@ -1249,7 +1249,7 @@ label extrasmenu:
                     $ persistent.hair_color = "Ginger"
                     n "There!"
                     jump ch30_loop
-                "Silver" if persistent.has_silver and if not persistent.art_demo:
+                "Silver" if persistent.has_silver:
                     n jhb "Hehe! I've never tried this one!"
                     n jha "I'm going to be old granny Natsuki."
                     hide blonde
@@ -1278,8 +1278,12 @@ label extrasmenu:
                 "Nevermind...":
                     n jnb "Okay..."
                     jump ch30_loop
-        "Clothing" if persistent.natsuki_like >= 10 and not persistent.anniversary:
-            n jnb "Sure, what to?"
+        "Clothing" if persistent.natsuki_like >= 10:
+            if persistent.christmas_time == "":
+                n jnb "Sure, what to?"
+            else:
+                n jaa "Hey! It's Christmas! I'm staying in the festive outfit!"
+                jump ch30_loop
             menu:
                 "Megunin Costume":
                     if persistent.wearing == "Witch":
