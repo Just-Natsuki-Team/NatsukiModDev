@@ -982,21 +982,25 @@ label endloop:
     $ renpy.quit()
 
 label emotion_set_up:
+    $ curr_year = datetime.date.today().year
+
+    #NOTE: This is not sustainable
     if today == datetime.date(2020, 5, 2):
         $ persistent.two_years = True
     else:
         $ persistent.two_years = False
+    #TODO: Make these into constants w/ functions to check the ranges instead
     if today >= datetime.date(2020, 12, 20):
         $ persistent.christmas_time = "Christmas"
     elif today <= datetime.date(2021, 1, 2):
         $ persistent.christmas_time = "Christmas"
     else:
         $ persistent.christmas_time = ""
-    if today == datetime.date(2020, 12, 24):
+    if today == datetime.date(curr_year, 12, 24):
         $ persistent.christmas_time = "Eve"
-    elif today == datetime.date(2020, 12, 25):
+    elif today == datetime.date(curr_year, 12, 25):
         $ persistent.christmas_time = "Day"
-    elif today == datetime.date(2020, 12, 31):
+    elif today == datetime.date(curr_year, 12, 31):
         $ persistent.christmas_time = "NewEve"
     elif today == datetime.date(2021, 1, 1):
         $ persistent.christmas_time = "NewYear"
@@ -4560,7 +4564,7 @@ label chholiday_1:
             $ celebrate = False
             n jnb "I see..."
     n jnb "Christmas is usually seen as a Christian holiday."
-    n "It's in the name, {i}Christ{i\}mas."
+    n "It's in the name, {i}Christ{/i}mas."
     n "A lot of people who aren't Christian celebrate it now, though."
     n "I mean, it is a time for presents and happy times!"
     if celebrate:
@@ -4590,11 +4594,11 @@ label chholiday_2:
     n jnb "What was the best gift you've ever received?"
     $ gift = renpy.input('What was the best gift you ever got?',length=30).strip(' \t\n\r')
     $ best_gift = gift.strip()
-    if best_gift == "bike":
+    if "bike" in best_gift:
         n "A bike huh?"
         n "I never had one of those growing up."
         n jab "Always seemed like more of a boy thing, haha."
-    elif best_gift == "phone":
+    elif "phone" in best_gift:
         n jha "Lucky!"
         n jnb "I have a phone but it's kind of garbage."
         n jsa "Best my family could afford at the time was a flip phone."
