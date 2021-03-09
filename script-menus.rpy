@@ -508,6 +508,12 @@ label datemenu:
                 jump chbeach_loop
         "The Pool":
             if not pool:
+                $ beach = False
+                $ beach_night = False
+                $ park = False
+                $ club = False
+                $ pool = True
+                $ mall = False
                 n jha "Oh! Yeah sure!"
                 n "Let's go!"
                 $ HKBHideButtons()
@@ -520,7 +526,11 @@ label datemenu:
             if not mall:
                 $ beach = False
                 $ beach_night = False
+                $ park = False
+                $ club = False
+                $ pool = False
                 $ mall = True
+                
                 n "I love the mall!"
                 $ HKBHideButtons()
                 $ persistent.date = "mall"
@@ -531,6 +541,13 @@ label datemenu:
                 jump chmall_loop
         "A Park":
             if not park:
+                $ beach = False
+                $ beach_night = False
+                $ park = True
+                $ club = False
+                $ pool = False
+                $ mall = False
+
                 $ persistent.date = "park"
                 n "Alright then..."
                 $ HKBHideButtons()
@@ -538,9 +555,16 @@ label datemenu:
                 hide dark onlayer front
                 jump chpark_main
             else:
-                return
+                jump chpark_loop
         "The Literature Club":
             if not club:
+                $ beach = False
+                $ beach_night = False
+                $ park = False
+                $ club = True
+                $ pool = False
+                $ mall = False
+
                 $ persistent.date = "club"
                 n "..."
                 n "Okay I guess."
@@ -551,7 +575,7 @@ label datemenu:
             elif club:
                 n "Were already here."
                 jump chclub_loop
-            else:
+            else: #this shouldn't need to be here
                 return
         "Return to the room":
             if beach:
@@ -621,6 +645,13 @@ label datemenu:
             else:
                 call screen dialog(message="You're already here, idiot.", ok_action=Return)
                 jump ch30_loop
+            $ beach = False
+            $ beach_night = False
+            $ park = False
+            $ club = False
+            $ pool = False
+            $ mall = False
+
         "Nevermind":
             if persistent.date == "beach":
                 jump chbeach_loop

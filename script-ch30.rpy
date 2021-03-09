@@ -1050,6 +1050,12 @@ label event:
 
 
 label ch30_autoload:
+    $ beach = False
+    $ beach_night = False
+    $ park = False
+    $ club = False
+    $ pool = False
+    $ mall = False
     if persistent.player_gender == "Attack Helicopter":
         $ persistent.player_gender = ""
         call screen dialog("ERROR:\nGame has found your gender set as \"Attack Helicopter\"\nUnfortunetly, it seems that you are not funny and unable to come up with original jokes.\nPlease visit iFunny.com, you may feel more at home there :)", ok_action=Quit(confirm=False))
