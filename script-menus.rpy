@@ -514,13 +514,14 @@ label datemenu:
                 $ club = False
                 $ pool = True
                 $ mall = False
-                n jha "Oh! Yeah sure!"
+                n "Oh! Yeah sure!"
                 n "Let's go!"
                 $ HKBHideButtons()
                 $ persistent.date = "pool"
                 hide dark onlayer front
                 jump chpool_main
             else:
+                n "We're already here, silly!"
                 jump chpool_loop
         "The Mall":
             if not mall:
@@ -645,12 +646,7 @@ label datemenu:
             else:
                 call screen dialog(message="You're already here, idiot.", ok_action=Return)
                 jump ch30_loop
-            $ beach = False
-            $ beach_night = False
-            $ park = False
-            $ club = False
-            $ pool = False
-            $ mall = False
+            
 
         "Nevermind":
             if persistent.date == "beach":
