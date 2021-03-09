@@ -915,7 +915,7 @@ label chbeach_episodes:
 
 label chbeach_compliment:
     hide nb1
-    show nb3
+    #show nb2 --causing issues
     n "Urk..."
     n "..."
     n "T-Thanks [player]..."
