@@ -1591,7 +1591,7 @@ screen month_input(ok_action):
                 style "confirm_prompt"
                 xalign 0.5
 
-            input default "" value VariableInputValue("month") length 15 allow "ABCDEFGHIJKLMNOPQRSTUVabcdefghijklmnopqrstuv"
+            input default "" value VariableInputValue("month") length 15 allow "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 
             #hbox:
             #    xalign 0.5
