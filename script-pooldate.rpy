@@ -317,7 +317,7 @@ label chpool_sunscreen:
 
 label chpool_cute:
     if persistent.natsuki_romance >= 100:
-        show natsuki 1eq at hqq
+        show natsuki 1eq at h11
     else:
         show natsuki 1dq at h11
     n "Urk!"
