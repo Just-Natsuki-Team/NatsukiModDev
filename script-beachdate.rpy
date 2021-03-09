@@ -133,6 +133,8 @@ label chbeachdate_autoload:
     $ config.allow_skipping = False
     $ beach = True
     $ HKBShowButtons()
+    python:
+        current_time = datetime.datetime.now().time().hour
     if current_time > 7 and current_time < 18:
         scene beach
     else:
