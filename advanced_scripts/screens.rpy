@@ -1627,7 +1627,7 @@ screen day_input(ok_action):
                 style "confirm_prompt"
                 xalign 0.5
 
-            input default "" value VariableInputValue("day") length 2 allow "123456789"
+            input default "" value VariableInputValue("day") length 2 allow "0123456789"
 
             #hbox:
             #    xalign 0.5
