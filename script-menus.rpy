@@ -1751,6 +1751,7 @@ label change:
 
 
 #I didn't know I put this here...
+#lmao
 label beachfavthings:
     n "I love the sand!"
     n "You can make so many things!"

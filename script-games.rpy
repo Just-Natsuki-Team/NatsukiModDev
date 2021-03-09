@@ -227,7 +227,8 @@ label codes:
             "You clean you hard drive!"
             $ hp += 5
             $ cleaner_uses -= 1
-            if hp == 20:
+            if hp >= 20:
+                $ hp = 20
                 "Your HP was maxed out!"
             else:
                 "You recovered 5 HP!"
