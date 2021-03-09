@@ -464,6 +464,8 @@ label datemenu:
     menu:
         n "Where should we go?"
         "The Beach":
+            python:
+                current_time = datetime.datetime.now().time().hour
             #Code for loading the beach from the room.
             if persistent.date == "":
                 n jha "Really!"
@@ -491,7 +493,7 @@ label datemenu:
                     hide dark onlayer front
                     jump chbeachdate_night_main
             #Code for the leaving other places for the beach, since the room code causes a dialogue and image mismatch.
-            elif persistent.date != "":
+            elif not (beach or beach_night):
                 if current_time >= 6 and current_time < 19:
                     n "Sure, beach sounds fun, I'll get changed!"
                     $ HKBHideButtons()
@@ -505,7 +507,11 @@ label datemenu:
                     hide dark onlayer front
                     jump chbeachdate_night_main
             else:
-                jump chbeach_loop
+                n "We are already here"
+                if beach:
+                    jump chbeach_loop
+                elif beach_night:
+                    jump chbeach_night_loop
         "The Pool":
             if not pool:
                 $ beach = False
@@ -539,6 +545,7 @@ label datemenu:
                 hide dark onlayer front
                 jump chmall_main
             else:
+                n "We're already here, silly!"
                 jump chmall_loop
         "A Park":
             if not park:
@@ -556,6 +563,7 @@ label datemenu:
                 hide dark onlayer front
                 jump chpark_main
             else:
+                n "We're already here, stupid!"
                 jump chpark_loop
         "The Literature Club":
             if not club:
