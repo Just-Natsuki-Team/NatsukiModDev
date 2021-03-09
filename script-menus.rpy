@@ -729,7 +729,9 @@ label beachnighttalkmenu:
         "This reminds me of Anime beach episodes...":
             jump chbeach_night_episodes
         "You ever been to the beach at night?":
-            jump chbeach_night_visit
+            n "no, but I'm glad we did." #placeholder to keep the game from crashing
+            jump chbeach_night_loop
+            #jump chbeach_night_visit
         "Nevermind.":
             n "Okay!"
             jump chbeach_night_loop
