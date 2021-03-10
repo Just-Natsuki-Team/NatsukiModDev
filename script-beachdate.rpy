@@ -704,7 +704,7 @@ label chbeach_others:
     call updateconsole("renpy.call(\"beachdate\")", "RenPy script called")
     $ config.overlay_screens = []
     hide screen hkb_overlay
-    hide nb1
+    hide natsuki
     show mirage
     s "Heeeeyyyyy!"
     call hideconsole
