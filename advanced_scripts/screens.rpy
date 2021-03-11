@@ -2,8 +2,9 @@
 ################################################################################
 
 init offset = -1
-init $ LETTERS_ONLY = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-init $ NUMBERS_ONLY = "0123456789"
+init python:
+    LETTERS_ONLY = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    NUMBERS_ONLY = "0123456789"
 
 
 ################################################################################
