@@ -2,6 +2,8 @@
 ################################################################################
 
 init offset = -1
+init $ LETTERS_ONLY = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+init $ NUMBERS_ONLY = "0123456789"
 
 
 ################################################################################
@@ -1555,7 +1557,7 @@ screen name_input(message, ok_action):
                 style "confirm_prompt"
                 xalign 0.5
 
-            input default "" value VariableInputValue("player") length 12 allow "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+            input default "" value VariableInputValue("player") length 12 allow LETTERS_ONLY
 
             #hbox:
             #    xalign 0.5
@@ -1591,7 +1593,7 @@ screen month_input(ok_action):
                 style "confirm_prompt"
                 xalign 0.5
 
-            input default "" value VariableInputValue("month") length 15 allow "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+            input default "" value VariableInputValue("month") length 15 allow LETTERS_ONLY
 
             #hbox:
             #    xalign 0.5
@@ -1627,7 +1629,7 @@ screen day_input(ok_action):
                 style "confirm_prompt"
                 xalign 0.5
 
-            input default "" value VariableInputValue("day") length 2 allow "0123456789"
+            input default "" value VariableInputValue("day") length 2 allow NUMBERS_ONLY
 
             #hbox:
             #    xalign 0.5
