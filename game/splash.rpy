@@ -60,17 +60,9 @@ image menu_fade:
     "white"
     menu_fadeout
 
-image menu_art_m:
+image menu_art_n:
     subpixel True
-    "gui/menu_art_m.png"
-    xcenter 1000
-    ycenter 640
-    zoom 1.00
-    menu_art_move(1.00, 1000, 1.00)
-
-image menu_art_m_ghost:
-    subpixel True
-    "gui/menu_art_m_ghost.png"
+    "gui/menu_art_n.png"
     xcenter 1000
     ycenter 640
     zoom 1.00
