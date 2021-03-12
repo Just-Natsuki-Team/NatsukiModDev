@@ -73,8 +73,16 @@ init -20 python:
 
             #Now that all checks have passed, we should create the object
             self.id = id
-            self.day_image = Image(day_image_fp)
-            self.night_image = Image(night_image_fp)
+
+            #Make the tags
+            self.day_image_tag = "{0}_day".format(id)
+            self.night_image_tag = "{0}_night".format(id)
+
+            #Register the images
+            renpy.display.image.images.update({
+                (self.day_image_tag,): Image(day_image_fp),
+                (self.night_image_tag,): Image(night_image_fp)
+            })
 
             if allowed_deco_categories is None:
                 self.allowed_deco_categories = list()
@@ -82,16 +90,13 @@ init -20 python:
             self.on_entry = on_entry
             self.on_exit = on_exit
 
-        def getCurrentRoomImage(self, Room):
+        def getCurrentRoomImage(self):
             """
             Gets the current room image
-
-            IN:
-                Room - the current Room
             """
-            if Room.is_day():
-                return self.day_image
-            return self.night_image
+            if store.main_background.is_day():
+                return self.day_image_tag
+            return self.night_image_tag
 
     class Room(object):
         """
@@ -105,7 +110,7 @@ init -20 python:
             """
             self.location = None
             self.deco = dict()
-            #TODO: make this dynamic
+            #TODO: make this dynamic (probably hook in with menus)
             self.sunrise = datetime.time(6)
             self.sunset = datetime.time(19)
             self.__is_showing_day_image = None
@@ -166,7 +171,8 @@ init -20 python:
             if full_redraw:
                 room = self.location.getCurrentRoomImage()
 
-            if room is not None and not renpy.showing(room):
+            #Draw the room if we're not showing it already
+            if room is not None and not renpy.showing("main_bg"):
                 renpy.show(room, tag="main_bg", zorder=1)
 
             # dissolving everything means dissolve last
@@ -178,7 +184,7 @@ init -20 python:
             """
             Checks if we're showing the day room
             """
-            return self.__is_showing_day_image
+            return renpy.showing(self.location.day_image_tag)
 
         def check_redraw(self):
             """
@@ -187,12 +193,10 @@ init -20 python:
             #If it's day and we're showing the night room, we should full redraw to show day room again
             if self.is_day() and not self.is_showing_day_room():
                 self.draw(full_redraw=True)
-                self.__is_showing_day_image = True
 
             #If it's night and we're showing the day room, we should do a full redraw to show the night room
             elif not self.is_day() and self.is_showing_day_room():
                 self.draw(full_redraw=True)
-                self.__is_showing_day_image = False
 
 init python:
     main_background = Room()

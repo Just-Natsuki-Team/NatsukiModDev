@@ -17,7 +17,7 @@ label ch30_visual_setup:
 
 label ch30_init:
     #Let's pick a greeting
-    greetings.select_greeting()
+    $ push(greetings.select_greeting())
     #Do all var-sets, resets, and sanity checks prior to entering the loop here
 
     #And finally, we head into the loop
@@ -53,6 +53,7 @@ label ch30_loop:
     #FALL THROUGH
 
 label ch30_wait:
+    pause 5.0
     jump ch30_loop
 
 

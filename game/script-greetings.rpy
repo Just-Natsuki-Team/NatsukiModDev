@@ -1,12 +1,16 @@
 default persistent._greeting_database = dict()
 
 init python in greetings:
+    import random
     GREETING_MAP = dict()
 
     def select_greeting():
         """
         Picks a random greeting
         """
+        #TODO: ME (for now this just returns a random)
+        return random.choice(GREETING_MAP.keys())
+
 init 5 python:
     registerTopic(
         Topic(

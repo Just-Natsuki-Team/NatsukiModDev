@@ -138,7 +138,7 @@ init 0 python:
             return {
                 key:value
                 for key, value in self.__dict__.iteritems()
-                if key != "persistent_db"
+                if key != "__persistent_db"
             }
 
         def check_conditional(self):
@@ -192,7 +192,7 @@ init 0 python:
         #Now that type-checks are done, let's add this to the map
         local_map[Topic.label] = Topic
 
-    def pushTopic(topic_label):
+    def push(topic_label):
         """
         Pushes a topic to the topic stack
 
@@ -201,7 +201,7 @@ init 0 python:
         """
         persistent._event_list.insert(0, topic_label)
 
-    def queueTopic(topic_label):
+    def queue(topic_label):
         """
         Queues a topic to the topic stack
 
