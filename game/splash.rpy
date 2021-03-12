@@ -267,9 +267,6 @@ label autoload:
     # Pop the _splashscreen label which has _confirm_quit as False and other stuff
     $ renpy.pop_call()
 
-    # finally lets run actions that needed to be run
-    $ mas_runDelayedActions(MAS_FC_START)
-
     #jump expression persistent.autoload
     # NOTE: we should always jump to ch30 instead
     jump ch30_autoload
