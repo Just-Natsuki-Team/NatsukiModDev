@@ -241,9 +241,11 @@ label autoload:
         if "_old_game_menu_screen" in globals():
             _game_menu_screen = _old_game_menu_screen
             del _old_game_menu_screen
+
         if "_old_history" in globals():
             _history = _old_history
             del _old_history
+
         renpy.block_rollback()
 
         # Fix the game context (normally done when loading save file)
@@ -268,5 +270,6 @@ label before_main_menu:
     return
 
 label quit:
-    #Do things we want to run on game quit here
+    #Save topic data
+    $ Topic._save_topic_data()
     return

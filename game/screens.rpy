@@ -509,23 +509,32 @@ screen indicator(message):
 
 init python:
     def FinishEnterName():
-        if not player: return
+        global player
+
+        if not player:
+            return
+
         persistent.playername = player
         renpy.hide_screen("name_input")
         renpy.jump_out_of_context("start")
+
     def DLC():
         renpy.jump_out_of_context("dlcmenu")
+
     def FinishEnterAge():
         if not age: return
         return
+
     def FinishEnterMonth():
         if not month: return
         persistent.bday_month = month
         renpy.hide_screen("month_input")
+
     def FinishEnterDay():
         if not day: return
         persistent.bday_day = day
         renpy.hide_screen("day_input")
+
     def DeleteName():
         persistent.playername = ""
 
@@ -539,7 +548,16 @@ screen navigation():
         spacing gui.navigation_spacing
 
         if main_menu:
-            textbutton _("New Game") action If(persistent.playername, true=Show(screen="dialog", message="A name has already been chosen...\n[player]", ok_action=Start()), false=Show(screen="name_input", message="Please enter your name", ok_action=Function(FinishEnterName)))
+            textbutton _("New Game"):
+                action If(
+                    persistent.playername,
+                    true=Start(),
+                    false=Show(
+                        screen="name_input",
+                        message="Please enter your name",
+                        ok_action=Function(FinishEnterName)
+                    )
+                )
 
         else:
             textbutton _("History") action [ShowMenu("history"), SensitiveIf(renpy.get_screen("history") == None)]

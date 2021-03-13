@@ -126,7 +126,7 @@ init 0 python:
             """
             repr override
             """
-            return "<Topic object with label '{0}' at {1}".format(self.label, hex(id(self)))
+            return "<Topic object (label '{0}' at {1})>".format(self.label, hex(id(self)))
 
         def as_dict(self):
             """
@@ -168,6 +168,13 @@ init 0 python:
             """
             self.__persistent_db[self.label] = self.as_dict()
 
+        @staticmethod
+        def _save_topic_data():
+            """
+            Saves all topics
+            """
+            for topic in store.topic_handler.ALL_TOPIC_MAP.itervalues():
+                topic.__save()
 
     #Now we'll start with generic functions which we'll use at higher inits
     def registerTopic(Topic, topic_group=TOPIC_TYPE_NORMAL):
@@ -268,3 +275,13 @@ define s = DynamicCharacter('s_name', image='sayori', what_prefix='"', what_suff
 define m = DynamicCharacter('m_name', image='monika', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 define n = DynamicCharacter('n_name', image='natsuki', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 define y = DynamicCharacter('y_name', image='yuri', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
+
+init python:
+    #If they quit during a pause, we have to set _dismiss_pause to false again (I hate this hack)
+    _dismiss_pause = config.developer
+
+    #Each of the girls' names before the MC learns their name throughout ch0.
+    s_name = "Sayori"
+    m_name = "Monika"
+    n_name = "Natsuki"
+    y_name = "Yuri"

@@ -1,6 +1,16 @@
 #Aaa this code is so clean!!!!! I really need to learn how to write like this! -Daisy
 
 label ch30_autoload:
+    #Start with black scene
+    scene black
+
+    python:
+        quick_menu = True
+        style.say_dialogue = style.normal
+        in_sayori_kill = None
+        allow_skipping = True
+        config.allow_skipping = False
+
     #Do all the things here for initial setup/flow hijacking
 
     #FALL THROUGH
@@ -79,3 +89,32 @@ init python:
         Runs every day during breaks between topics
         """
         pass
+
+#Other labels
+label call_next_topic:
+    if persistent._event_list:
+        $ topic = persistent._event_list.pop(0)
+
+        if renpy.has_label(topic):
+            call expression topic
+
+    python:
+        #Collect our return keys here
+        return_keys = _return if _return else dict()
+
+        topic_obj = get_topic(topic)
+
+        #Handle all things which act on topic objects here, since we can't access attributes of Nonetypes
+        if topic_obj is not None:
+            #Increment shown count
+            topic_obj.shown_count += 1
+
+            #Now manage return keys
+            if "derandom" in return_keys:
+                topic_obj.random = False
+
+    #This topic might quit
+    if "quit" in return_keys:
+        jump _quit
+
+    return
