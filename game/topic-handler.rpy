@@ -40,31 +40,3 @@ init 6 python:
         """
         #For now, return a random topic
         return random.choice(topics.TOPIC_MAP.keys())
-
-label call_next_topic:
-    if persistent._event_list:
-        $ topic = persistent._event_list.pop(0)
-
-        if renpy.has_label(topic):
-            call expression topic
-
-    python:
-        #Collect our return keys here
-        return_keys = _return if _return else dict()
-
-        topic_obj = pick_random_topic()
-
-        #Handle all things which act on topic objects here, since we can't access attributes of Nonetypes
-        if topic_obj is not None:
-            #Increment shown count
-            topic_obj.shown_count += 1
-
-            #Now manage return keys
-            if "derandom" in return_keys:
-                topic_obj.random = False
-
-    #This topic might quit
-    if "quit" in return_keys:
-        jump _quit
-
-    return

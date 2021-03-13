@@ -509,28 +509,36 @@ screen indicator(message):
 
 init python:
     def FinishEnterName():
-        if not player: return
+        global player
+
+        if not player:
+            return
+
         persistent.playername = player
         renpy.hide_screen("name_input")
         renpy.jump_out_of_context("start")
+
     def DLC():
         renpy.jump_out_of_context("dlcmenu")
+
     def FinishEnterAge():
         if not age: return
         return
+
     def FinishEnterMonth():
         if not month: return
         persistent.bday_month = month
         renpy.hide_screen("month_input")
+
     def FinishEnterDay():
         if not day: return
         persistent.bday_day = day
         renpy.hide_screen("day_input")
+
     def DeleteName():
         persistent.playername = ""
 
 screen navigation():
-
     vbox:
         style_prefix "navigation"
 
@@ -539,55 +547,51 @@ screen navigation():
 
         spacing gui.navigation_spacing
 
-        if not persistent.autoload or not main_menu:
-
-            if main_menu:
-
-                if persistent.playthrough == 1:
-                    textbutton _("ŔŗñĮ¼»ŧþŀÂŻŕěōì«") action If(persistent.playername, true=Start(), false=Show(screen="name_input", message="Please enter your name", ok_action=Function(FinishEnterName)))
-                else:
-                    textbutton _("New Game") action If(persistent.playername, true=Show(screen="dialog", message="A name has already been chosen...\n[player]", ok_action=Start()), false=Show(screen="name_input", message="Please enter your name", ok_action=Function(FinishEnterName)))
-
-            else:
-
-                textbutton _("History") action [ShowMenu("history"), SensitiveIf(renpy.get_screen("history") == None)]
-
-                textbutton _("Save Game") action [ShowMenu("save"), SensitiveIf(renpy.get_screen("save") == None)]
-
-            textbutton _("Load Game") action [ShowMenu("load"), SensitiveIf(renpy.get_screen("load") == None)]
-
-            if _in_replay:
-
-                textbutton _("End Replay") action EndReplay(confirm=True)
-
-            elif not main_menu:
-                if persistent.playthrough != 3:
-                    textbutton _("Main Menu") action MainMenu()
-                else:
-                    textbutton _("BAV9V9FADHBVNO") action Show(screen="dialog", message="ERROR: \"mainmenu()\" screen could not be called!", ok_action=Hide("dialog"))
-
-            textbutton _("Settings") action [ShowMenu("preferences"), SensitiveIf(renpy.get_screen("preferences") == None)]
-
-            #textbutton _("About") action ShowMenu("about")
-
-            if renpy.variant("pc"):
-
-                ## Help isn't necessary or relevant to mobile devices.
-                textbutton _("Help") action Help("README.html")
-
-                ## The quit button is banned on iOS and unnecessary on Android.
-                textbutton _("Quit") action Show(screen="quit", message="Are you sure you want to quit?", ok_action=Hide(screen="quit", transition=None))
-
-
-            textbutton _("Credits") action Show(screen="credits", message="Credits:\nWriting: Edgar.\nArt: u/Aida_Hwedo.\nBeach Art: etched\nBeach Background: Kimagure After Background Material Storage\nPark and Manga Store Background: mugenjohncel (On LemmaSoft forums)\nBakery, Clothes Store and Mall Background: u/SovietSpartan\nTypo and Bug Reporting: Willie\nNatsuki clothing store outfit #1: Eg85_MkWii\nCat Ears: DearWolf\nPriceVille Gallery: Flower\nClipart Library: Cake\nJMO: Original Clothing Art\nJparnaud: Sprite Editing\nKevin Macleod: Spooky Music(Day of Chaos)\nPinclpart: Bats\nNatsuki Low Affinity Beach Outfit: -Http_Bxbygirl-(Reddit)\nNatsuki High Affinity Beach Outfit: Huniepop (Rizky Prahesa)\nNatsuki White Tank: DestinyPveGal\nGlasses: Unknown as of now", ok_action=Hide(screen="credits", transition=None))
-
-            textbutton _("Latest Update") action OpenURL("https://justnatsukidev.wixsite.com/justnatsuki/latest")
-
-            if not main_menu and not persistent.prologue:
-                textbutton _("DLC") action Function(DLC)
+        if main_menu:
+            textbutton _("New Game"):
+                action If(
+                    persistent.playername,
+                    true=Start(),
+                    false=Show(
+                        screen="name_input",
+                        message="Please enter your name",
+                        ok_action=Function(FinishEnterName)
+                    )
+                )
 
         else:
-            timer 1.75 action Start("autoload_yurikill")
+            textbutton _("History") action [ShowMenu("history"), SensitiveIf(renpy.get_screen("history") == None)]
+
+            textbutton _("Save Game") action [ShowMenu("save"), SensitiveIf(renpy.get_screen("save") == None)]
+
+        textbutton _("Load Game") action [ShowMenu("load"), SensitiveIf(renpy.get_screen("load") == None)]
+
+
+        if not main_menu:
+            textbutton _("Main Menu") action MainMenu()
+
+        textbutton _("Settings") action [ShowMenu("preferences"), SensitiveIf(renpy.get_screen("preferences") == None)]
+
+        #textbutton _("About") action ShowMenu("about")
+
+        if renpy.variant("pc"):
+
+            ## Help isn't necessary or relevant to mobile devices.
+            textbutton _("Help") action Help("README.html")
+
+            ## The quit button is banned on iOS and unnecessary on Android.
+            textbutton _("Quit") action Show(screen="quit", message="Are you sure you want to quit?", ok_action=Hide(screen="quit", transition=None))
+
+
+        textbutton _("Credits") action Show(screen="credits", message="Credits:\nWriting: Edgar.\nArt: u/Aida_Hwedo.\nBeach Art: etched\nBeach Background: Kimagure After Background Material Storage\nPark and Manga Store Background: mugenjohncel (On LemmaSoft forums)\nBakery, Clothes Store and Mall Background: u/SovietSpartan\nTypo and Bug Reporting: Willie\nNatsuki clothing store outfit #1: Eg85_MkWii\nCat Ears: DearWolf\nPriceVille Gallery: Flower\nClipart Library: Cake\nJMO: Original Clothing Art\nJparnaud: Sprite Editing\nKevin Macleod: Spooky Music(Day of Chaos)\nPinclpart: Bats\nNatsuki Low Affinity Beach Outfit: -Http_Bxbygirl-(Reddit)\nNatsuki High Affinity Beach Outfit: Huniepop (Rizky Prahesa)\nNatsuki White Tank: DestinyPveGal\nGlasses: Unknown as of now", ok_action=Hide(screen="credits", transition=None))
+
+        #textbutton _("Latest Update") action OpenURL("https://justnatsukidev.wixsite.com/justnatsuki/latest")
+
+        #if not main_menu and not persistent.prologue:
+        #    textbutton _("DLC") action Function(DLC)
+
+        #else:
+        #    timer 1.75 action Start("autoload_yurikill")
 
 
 style navigation_button is gui_button
@@ -620,24 +624,9 @@ screen main_menu():
     tag menu
 
     style_prefix "main_menu"
+    add "menu_bg"
+    add "menu_art_n"
 
-    if persistent.ghost_menu:
-        add "white"
-        add "menu_art_y_ghost"
-        add "menu_art_n_ghost"
-    else:
-        add "menu_bg"
-        if persistent.playthrough != 6:
-            add "menu_art_y"
-            add "menu_art_n"
-            add "menu_art_m"
-        else:
-            add "menu_art_m"
-            add "menu_art_y"
-        if persistent.playthrough != 0:
-            add "menu_art_s"
-        else:
-            add "menu_art_s_glitch"
     frame:
         pass
 
