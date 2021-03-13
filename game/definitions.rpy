@@ -1,3 +1,4 @@
+default persistent.playername = ""
 default player = persistent.playername
 
 #Our main topic pool
