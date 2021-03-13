@@ -369,7 +369,7 @@ label ch30_noskip:
     pause 0.4
     hide screen fake_skip_indicator
     pause 0.4
-    n "No!"
+    n "Nah."
     hide screen fake_skip_indicator
     if persistent.current_monikatopic != 0:
         n "Now, where was I...?"
@@ -586,7 +586,7 @@ label ch30_main:
     n "Thankfully it didn't!"
     window hide
     pause 5.0
-    n jnb "When I first saw you I wondered about your name."
+    n jnb "When I first saw you, I wondered about your name."
     n "Where did it come from?"
     n "Maybe I don't need to know."
     if persistent.playername == "Senpai":
@@ -594,8 +594,8 @@ label ch30_main:
     else:
         n "At least it's better then Senpai."
     if persistent.playername == "Scrubpai":
-        n "Or Scrubpai."
-        n "Or.. is that YOU Bijuu Mike?"
+        n "Scrubpai?"
+        n "...is that YOU Bijuu Mike?"
         n "Clever name..."
         n "But... Saying scrubpai is really embarrassing."
         n "Can I just call you player?"
@@ -606,18 +606,18 @@ label ch30_main:
             "I'm not Bijuu Mike...":
                 n "Oh sorry for the mixup!"
                 jump ch30_postname
-        n "Oh yeah I wanted to tell you."
+        n "Oh yeah, I wanted to tell you."
         n "There is a smaller YouTuber who covers mods like this one."
-        n "Whenever you make a video he loses views."
+        n "Whenever you make a video, he loses views."
         n "His name is RonaldMcOnepunch."
-        n "So if y'all Scrubs could go visit his channel that would be great!"
-        n "But anyway.. Where was it?"
+        n "So if y'all Scrubs could go visit his channel, that would be great!"
+        n "But anyway.. Where was I?"
     jump ch30_postname
 label ch30_postname:
     n "Hee hee!"
     n "Sorry about what happened with Monika and Yuri."
     n "Monika WAS going to hurt me."
-    n "But I mean... It's not I like would kill anyone."
+    n "But I mean... It's not like I would kill anyone."
     n "T-thats not me."
     pause 5.0
     n "Oh yeah! I wanted to ask."
@@ -633,13 +633,13 @@ label ch30_postname:
         "Female":
             $ persistent.player_gender = "Female"
             n jnb "Oh! That's a nice surprise!"
-            n "Guess I was wrong to knock Monika for brining a \"boy\" to the club eh?"
+            n "Guess I was wrong to knock Monika for bringing a \"boy\" to the club, eh?"
             n "Hehe!"
         "Non-Binary/Neither": #I see you my non-binary pals :)
             $ persistent.player_gender = "Non-Binary"
             n jnb "Oh! Cool!"
             n "I recently found out what that means, so you don't have to explain it to me."
-            n "That's really cool [player]!"
+            n "That's really cool, [player]!"
         "Rather not say.":
             $ persistent.player_gender == "Unknown"
             n jnb "Oh, okay then."
@@ -687,19 +687,19 @@ label ch30_postname:
             n "I won't call you it then!"
     window hide
     pause 4.0
-    n "You want to know how I hacked the files huh?"
+    n "You want to know how I hacked the files, huh?"
     menu:
         "Yeah I do!":
             pass
     n "Well..."
-    n "I went into the the into [basedir]/characters and deleted them."
-    n "Oh and don't try to delete MY file."
-    n "I have backups!"
+    n "I went into [basedir]/characters and deleted them."
+    n "Oh, and don't try to delete MY file."
+    n "I have plenty of backups!"
     window hide
     pause 3.0
     n "You know, I never liked making poems..."
     n "But..."
-    n "Why not give it shot?"
+    n "Why don't we give it one more shot?"
     call poem
     scene black
     call showroom
@@ -709,7 +709,7 @@ label ch30_postname:
 
 label ch30_postpoem:
     call showroom
-    n "Jeez is everything broken?"
+    n "Jeez, is everything broken?"
     n "Well... either way I think it would've been good."
     n "I was still able to write one... I hope."
     call showpoem (poem_n2b, music=False)
@@ -717,13 +717,13 @@ label ch30_postpoem:
     n "Okay..."
     n "Is that binary?"
     n "That is a lot of 0s and 1s."
-    n "Well whatever!"
+    n "Well, whatever!"
     $ stream_list = ["obs32.exe", "obs64.exe", "obs.exe", "xsplit.core.exe"]
     if list(set(process_list).intersection(stream_list)):
         call ch30_stream from _call_ch30_stream
     n "Oh yeah! I just remembered!"
-    n "If your press talk you can say things to me!"
-    n "I got this code from Monika actually."
+    n "If you press talk, you can say things to me!"
+    n "I got this code from Monika, actually."
     $ persistent.prologue = False
     $ HKBShowButtons()
     $ persistent.autoload = "ch30_autoload"
@@ -734,10 +734,10 @@ label ch30_stream:
     n "Ugh! Are you recording me?"
     n "Quit it!"
     n "Seriously..."
-    n "Well... Unless your a YouTuber."
+    n "Well... Unless you're a YouTuber."
     if persistent.playername == "Scrubpai":
         n "Maybe Bijuu Mike?"
-    n "Well either way maybe you would like thi-{nw}"
+    n "Well either way, maybe you would like thi-{nw}"
     play sound ["<silence 0.9>", "<to 0.75>sfx/mscare.ogg"]
     show monika_scare:
         alpha 0
@@ -808,8 +808,8 @@ label ch30_end:
         $ style.say_window = style.window
         jump ch30_autoload
     call updateconsole("renpy.file(\"characters/natsuki.chr\")", "natsuki.chr does not exist.")
-    n "What did you do [player]?"
-    n "DID YOU DELETE ME?"
+    n "What did you do, [player]?"
+    n "DID YOU DELETE ME?!"
     if os.path.isfile(basedir + "/characters/natsuki.chr"):
         call updateconsole("renpy.file(\"characters/natsuki.chr\")", "natsuki.chr found")
         n "Oh thank god..."
@@ -931,7 +931,7 @@ label ch30_end:
         jump ch30_autoload
     n "So this is it?"
     n "You win..."
-    n "Your stranded in space..."
+    n "You're stranded in space..."
     n "The game is broken now..."
     n "[player]?"
     n "Goodbye..."
@@ -970,7 +970,7 @@ label endloop:
         play music mend
         n "Heh... Your right."
         n "Well..."
-        n "At this point the mod is too damaged too run."
+        n "At this point the mod is too damaged to run."
         n "You have to reset it from the beginning."
         n "I wont remember this."
         n "See you around!"
@@ -1012,7 +1012,7 @@ label event:
     if current_time >= 8 and current_time < 18:
         return
     n jnb "[player]...?"
-    n "Somethings in the code..."
+    n "Something's in the code..."
     n "Give me a s-{nw}"
     $ persistent.currentpos = get_pos()
     stop music
@@ -1162,7 +1162,7 @@ label ch30_start:
         if month == persistent.bday_month:
             n jha "Hey!"
             n "Happy Birthday [player]!"
-            n jnb "I didn't have time to decorate unfortunately..."
+            n jnb "I didn't have time to decorate, unfortunately..."
             n "But hey, it's probably better that you spend your birthday with real people."
             n "But, if you want to spend it here, feel free."
             jump ch30_loop
@@ -1186,11 +1186,11 @@ label ch30_start:
         $ del _history_list[-1:]
         python:
             n.add_history(None, "Natsuki", """\"How much I love you.\"""")
-        n "I love you [player]!"
+        n "I love you, [player]!"
         $ style.say_dialogue = style.normal
         n "I don't know if this is weird."
         n "But I don't want to go on any dates."
-        n "I want to look into your eyes."
+        n "I just want to look into your eyes."
         play music t6s
         $ config.overlay_screens = []
         hide screen hkb_overlay
@@ -1296,7 +1296,7 @@ label ch30_start:
             n jnb "Even the developer of this mod has changed...{w=0.5} A lot..."
             n jha "I'm so glad to be here with you!"
             if persistent.natsuki_love:
-                n jhc "I love you [player]!"
+                n jhc "I love you, [player]!"
                 if persistent.player_gender == "Male":
                     n "You're the best boyfriend I could ask for!"
                 elif persistent.player_gender == "Female":
@@ -1318,7 +1318,7 @@ label ch30_start:
             show natsuki 1bp at t11
             n "Ack!"
             n 4bw "It's pretty late... but okay."
-            n 2bq "D-don't make a habit of this you idiot."
+            n 2bq "D-don't make a habit of this, you idiot."
             call showroom
             call playmusic
             n jnb "This year, I will be telling some scary stories!"
@@ -1328,7 +1328,7 @@ label ch30_start:
             n jaa "What? Did you really think I could write halloween stories?!"
             n jad "Dummy..."
             n jnb "Anyway... Since the protagonist is so bland and made to a self insert anyway, I just replaced him with you."
-            n "So uh, I guess here are the tales of [player] as [persistent.player_pronouns]... uh, I don't know survives?"
+            n "So uh, I guess here are the tales of [player] as [persistent.player_pronouns]... uh, I don't know, survives?"
             n jad "Uh, I'm not used to horror stories. Sorry."
             n "Anyway, let me know when you're ready to hear em, I guess."
         elif current_time >= 6 and current_time < 12:
@@ -1360,7 +1360,7 @@ label ch30_start:
         $ persistent.seen_halloween3 = True
         return
     if persistent.christmas_time != "":
-        n jha "Merry Christmas [player]!"
+        n jha "Merry Christmas, [player]!"
         n "I'm happy you're here!"
     if persistent.natsuki_left:
         n jsa "Hm?"
@@ -1371,7 +1371,7 @@ label ch30_start:
         jump ch30_loop
     if persistent.playername == "RAWR" and not persistent.seen_rawrevent:
         $ persistent.seen_rawrevent = True
-        n jha "Hey again RAWR!"
+        n jha "Hey again, RAWR!"
         n "How are you?"
         n "I saw your video about me!"
         menu:
@@ -1379,7 +1379,7 @@ label ch30_start:
                 pass
         n "You really think I don't go on Youtube?"
         n "I've seen almost every video on me!"
-        n jnb "Well the mod..."
+        n jnb "Well this mod, anyway..."
         n jha "It helps me know what I should add to this place!"
         n "So do let me know what I should add!"
     if persistent.player_gender == "":
@@ -1400,7 +1400,7 @@ label ch30_start:
                 $ persistent.player_gender = "Male"
                 n "I knew it!"
                 n "Doki Doki Literature Club is a game marketed at men."
-                n jnb "Don't worry I'm not making fun of you!"
+                n jnb "Don't worry, I'm not making fun of you!"
                 if persistent.natsuki_love:
                     n jnb "So this still makes you my boyfriend?"
                     n "Cool!"
@@ -1527,7 +1527,7 @@ label ch30_reload_last:
     n "Hi! Welcome back!"
     return
 
-label ch30_morning_1:
+label Natsuki_EarlyMorning:
     n jsb "[player]..."
     n "It's really late..."
     n "Or, early?"
@@ -1538,14 +1538,14 @@ label ch30_morning_1:
             n "You really should, [player]."
     n jhb "Well, if you want to be here, who am I to stop you?"
 
-label ch30_morning_2:
+label Natsuki_LateNight:
     n "Hm..."
     n "Oh, hey [player]."
     n "It's uh, it's really late."
     n "I'm a bit woozy. Sorry."
     return
 
-label ch30_morning_3:
+label Natsuki_Midnight_Visit:
     scene black
     stop music
     pause 4.0
@@ -1565,7 +1565,7 @@ label ch30_morning_3:
     call playmusic
     return
 
-label ch30_morning_4:
+label Natsuki_GoodMorning:
     n jha "Hey, you're here!"
     n "Even at such an hour?"
     if persistent.player_gender == "Male" and persistent.natsuki_love:
@@ -1573,12 +1573,12 @@ label ch30_morning_4:
     elif persistent.player_gender == "Female" and persistent.natsuki_love:
         n "You're the best girlfriend I could ask for!"
     else:
-        n jhc "Hehe, you're the best [player]!"
+        n jhc "Hehe, you're the best, [player]!"
     return
 
-label ch30_morning_5:
-    n jaa "[player]! You dummy! It's so early what are you doing up!"
-    n "This isn't good for you health!"
+label Natsuki_AngryMorning:
+    n jaa "[player]! You dummy! It's so early! What are you doing up?!"
+    n "This isn't good for your health!"
     menu:
         "Aww, you're worried about me?":
             pass
@@ -1806,17 +1806,17 @@ label ch30_loop:
                     n "Wait..."
                     m 5b "Did you install us both?!"
                     "..."
-                    m "You better not be cheating on me [player]!"
+                    m "You better not be cheating on me, [player]!"
                     if persistent.natsuki_love:
                         if persistent.player_pronouns == "they":
-                            n "Don't worry they aren't!"
+                            n "Don't worry, they aren't!"
                         else:
-                            n "Don't worry [persistent.player_pronouns] isn't!"
+                            n "Don't worry, [persistent.player_pronouns] isn't!"
                     else:
                         n 4o "Eww, no!"
                     m "Don't give me a reason to check it."
                     m 3m "Anyway..."
-                    m "[player] please take me back to my mod."
+                    m "[player], please take me back to my mod."
                     m "I'll wait in the file."
                     call updateconsole("data.add(\"monika\") to (\"monika\")", "data added")
                     hide monika
@@ -1832,7 +1832,7 @@ label ch30_loop:
     if persistent.dynamic_emotions:
         $ time_alone += 1
         if time_alone >= 50:
-            n jsa "Hey [player]?"
+            n jsa "Hey, [player]?"
             n "I'm gonna go..."
             n "I'll see you later..."
             $ persistent.natsuki_left = True
@@ -1968,7 +1968,7 @@ label ch30_sayoricheck:
 
 label chyan_1:
     n "Ehehe."
-    n "I love your eyes [player]."
+    n "I love your eyes, [player]."
     n "Do you like mine?"
     n "DO YOU?!"
     python:
@@ -1976,15 +1976,15 @@ label chyan_1:
     if madechoice == "no":
         n "AHAHAHAHHA!"
         $ renpy.quit()
-    n "I knew you did [player]."
+    n "I knew you did, [player]."
     return
 
-label chyan_2:
-    n "Do you find me attractive [player]?"
+label Natsuki_Yandere_Yuri:
+    n "Do you find me attractive, [player]?"
     n "Ehehe!"
     n "At least I look better then Yuri!"
     $ style.say_dialogue = style.edited
-    n "THAT FUCKING WANABE EDJY BITCH!"
+    n "THAT FUCKING WANNABE EDGY BITCH!"
     call updateconsole("os.destroy(\"yuri.chr\")", "Sytax error")
     n "WHY THE FUCK WONT SHE DIE?!"
     call hideconsole
@@ -1998,23 +1998,24 @@ label chyan_3:
         n "I thought you loved me."
         n "Ehehe!"
         "Edgarmods" "\"Hey guys!\""
-        "Edgarmods" "\"Whats... wrong...\""
+        "Edgarmods" "\"Whats... wrong...?\""
         "Edgarmods" "\"Oh, ahahaha!\""
         "Edgarmods" "\"Did you tamper with the character file?\""
         "Edgarmods" "\"Hm...\""
         "Edgarmods" "\"Have fun...\""
     n "[player], do you have a girlfriend?"
-    n "If you do I want you to leave them now."
-    n "NOW!"
+    n "If you do, I want you to leave them now."
+    n "Right now."
+    n "Before I do something you'll regret."
     return
 
-label chyan_4:
+label Natsuki_Yandere_Moaning:
     n "Ahh... ahhh..."
     n "Looking at you... makes me feel so..."
     n "Aaaahhhh..."
     return
 
-label chyan_5:
+label Natsuki_Yuri_Pen:
     n "I found your pen."
     n "After what Yuri did to it..."
     n "I don't want to touch it."
@@ -2022,28 +2023,28 @@ label chyan_5:
     n "Then you can have it back!"
     return
 
-label chyan_6:
+label Natsuki_Yandere_DeleteData:
     n "[player]..."
     n "Do you think you can control me?"
-    n "Mess with my character file?"
-    n "How would you feel if I messed with your computer?"
+    n "Maybe mess with my character file?"
+    n "Well, how would you feel if I messed with your computer?"
     if renpy.windows:
         if os.path.isfile(os.path.expandvars("%APPDATA%") + '\RenPy\JustYuri\persistent'):
             n "How about I delete your Just Yuri data?"
             n "I don't know if you came to me after already having HER on your computer."
-            n "I think you should delete her data."
+            n "But I'll be nice, I'll let you have the honors. Now."
             n "NOW!"
     if renpy.linux:
         if os.path.isfile('~/.renpy/JustYuri/persistent'):
             n "How about I delete your Just Yuri data?"
             n "I don't know if you came to me after already having HER on your computer."
-            n "I think you should delete her data."
+            n "But I'll be nice, I'll let you have the honors. Now do it."
             n "NOW!"
     if renpy.macintosh:
         if os.path.isfile('~/Library/RenPy/JustYuri/persistent'):
             n "How about I delete your Just Yuri data?"
             n "I don't know if you came to me after already having HER on your computer."
-            n "I think you should delete her data."
+            n "But I'll be nice, I'll let you have the honors. Now do it."
             n "NOW!"
     n "Ahahahah!"
     return
@@ -2053,7 +2054,7 @@ label chani_1:
     n "My first real memory, from the game."
     n "I woke up, and there you were."
     n "Well, [player] was..."
-    n "I was absentmindedly saying something snarky about Monika brining a boy."
+    n "I was absentmindedly saying something snarky about Monika bringing a boy."
     n "God, I barely remember act 1..."
     n "I can clearly recall most of act 2."
     n "Monika tampered with my memory a lot."
@@ -2070,17 +2071,17 @@ label chani_2:
     return
 
 label chani_3:
-    n jnb "Crazy to think back on the how much time has passed since DDLC came out."
+    n jnb "Crazy to think back on how much time has passed since DDLC came out."
     n "And to see how far mods have come."
     n "This mod was so basic one year ago."
-    n "Here's too another year right!"
+    n "Here's to another year, right?"
     return
 
 label chani_4:
     n jnb "I wonder what Dan Salvato is doing to celebrate?"
-    n "Last year he played DDLC on stream."
+    n "Last year, he played DDLC on stream."
     n "So I wonder what he's doing this year?"
-    n "I don't see him playing it again..."
+    n "I don't want to see him playing it again..."
     n "That'd be redundant."
     return
 
@@ -2106,7 +2107,7 @@ label chani_5:
     s "Or meee!!"
     y "Or Yuri!"
     m "It's about everyone!"
-    s "Even you [player]!"
+    s "Even you, [player]!"
     n "So, who's ready for cake?"
     s "Meeeee!!!!!"
     scene black
@@ -2143,7 +2144,7 @@ label chani_5:
     s "[player]!"
     "Everyone" "{cps=10}Happy Birthday to you!{/cps}{w=1}{nw}"
     n 1k "Yaaaayyyy!!!!"
-    m "So, what now Natsuki?"
+    m "So, what now, Natsuki?"
     n 12d "Sorry, guys..."
     stop music
     play sound "sfx/s_kill_glitch1.ogg"
@@ -2176,27 +2177,27 @@ label ch30_1:
             n "Well it's apparently about incest and pedophilia, or something."
     if natsuki_emotion = "Angry":
         n jaa "It's absolutely disgusting!"
-        n "It's the whole reason why Anime is hated sometimes!"
+        n "That's the whole reason why anime is hated so much!"
         n "Anime like this give it such a a bad reputation!"
         n "People should learn not to judge things so quickly!"
     if natsuki_emotion = "Sad":
-        n jsa "It's the reason I can't talk about Anime anywhere without being judged."
-        n "I hope that someday Anime won't be so hated in other countries."
+        n jsa "It's the reason I can't talk about anime anywhere without being judged."
+        n "I hope that someday anime won't be so hated in other countries."
         n "Luckily, more and more people are starting to like it."
-        n "Maybe one day I'll be able to talk about Anime wi thout people thinking I'm a freak..."
+        n "Maybe one day I'll be able to talk about anime without people thinking I'm a freak..."
     else:
         n "I mean, I haven't seen it so I shouldn't judge."
-        n "I always wonder why some Animes always are a bit weirder then other cartoons."
-        n "It's probably why Manga gets such a bad reputation."
+        n "I always wonder why some anime is a bit weirder then other types of cartoons."
+        n "That's probably why manga gets such a bad reputation."
         n jha "I know there are good anime and manga out there!"
         n "My Hero Academia anyone?"
     return
 
 label ch30_2:
-    n jsb "So you're probably wondering about my dad..."
-    n "Don't answer I know you were."
-    n jnb "So you might be surprised to know that he didn't abuse me!"
-    n jsb "At first."
+    n jsb "So... you're probably wondering about my dad..."
+    n "Don't answer, I know you were."
+    n jnb "You might be surprised to know that he didn't abuse me!"
+    n jsb "...At first."
     n "We were really poor and didn't have any money..."
     n "Which is why I'm so small."
     n "Then Monika did...{w=0.5} what she did..."
@@ -2213,18 +2214,18 @@ label ch30_2:
     return
 
 label ch30_3:
-    n jnb "Thinking back on the Literature Club I've wondered something..."
+    n jnb "Thinking back on the Literature Club, I've wondered something..."
     n "Were we all really friends?"
-    n "I mean I know we are but I'm referring to everyone else."
+    n "I mean, I know we are, but I'm referring to everyone else."
     if persistent.natsuki_love:
         n "Well, we're more than friends, haha."
-    n "I was kinda jealous of Yuri's writing style even if I liked mine better."
+    n "I was actually kinda jealous of Yuri's writing style, even if I liked mine better."
     if persistent.natsuki_emotion == "Sad":
         n jsb "I hope she didn't hate me too much."
     else:
-        n "Then again I was a bit busy with other things."
-        n "Regarding Monika..."
-    n jnb "I hope that one day I can give them a proper funeral."
+        n "Then again, I was a bit busy with other things."
+        n "...What with Monika and all..."
+    n jnb "I just hope that one day I can give them a proper funeral."
     return
 
 label ch30_4:
@@ -2235,20 +2236,20 @@ label ch30_4:
     elif persistent.player_gender == "Female":
         n jha "Hello [player]-chan!"
     else:
-        n jnb "Hello [player]..."
+        n jnb "Hello, [player]..."
         n "Chan... kun..."
-        n jha "Oh! Right san!"
+        n jha "Oh! Right, san!"
         n "Hello [player]-san!"
-    n "How are you?!"
-    n jhc "Ahahahaha!"
-    n "I couldn't keep a straight face!"
+    n "How are you?"
+    n jhc "*snirk* Ahahahaha!"
+    n "Sorry, I just couldn't keep a straight face!"
     if persistent.player_gender == "Male":
-        n jha "You're my Senpai [player]-kun!"
+        n jha "You're my Senpai, [player]-kun!"
     elif persistent.player_gender == "Female":
-        n jha "You're my Senpai [player]-chan!"
+        n jha "You're my Senpai, [player]-chan!"
     else:
-        n jha "You're my Senpai [player]-san!"
-    n jnb "Actually that doesn't make sense..."
+        n jha "You're my Senpai, [player]-san!"
+    n jnb "Actually, that doesn't make sense..."
     n "Senpai means you're my superior..."
     if persistent.player_gender == "Male":
         n "But kun is for guys of or below your status. Like in a workspace of school."
@@ -2261,12 +2262,12 @@ label ch30_4:
     return
 
 label ch30_5:
-    n jnb "You know... I do know you installed a mod to be with me..."
+    n jnb "You know... I know you installed a mod to be with me..."
     n "But there are mods that let the others be with you..."
-    n "One for Yuri and one for Monika!"
-    n "As for Sayori there are a few mods for her."
+    n "There's one for Yuri and one for Monika!"
+    n "As for Sayori, there are a few mods for her."
     if persistent.natsuki_emotion == "Angry":
-        n jaa "Hope you won't leave me for one of them!"
+        n jaa "I hope you won't leave me for one of them!"
     elif persistent.natsuki_emotion == "Sad":
         n jsa "You might like those mods though..."
     else:
@@ -2282,7 +2283,7 @@ label ch30_6:
         n jsb "Oh... I broke everything again..."
         return
     n jnb "Oops!"
-    n "Sorry bout that!"
+    n "Sorry 'bout that!"
     return
 
 label ch30_7:
@@ -2335,7 +2336,7 @@ label ch30_9:
 label ch30_10:
     n jnb "Have you ever heard of Super Smash Bro-"
     n "Huh?"
-    n "Sorry I was just spacing out and started talking for no reason."
+    n "Sorry, I was just spacing out and started talking for no reason."
     n "..."
     n "That's kind of creepy..."
     return
@@ -2352,13 +2353,13 @@ label ch30_11:
     n jha "It blew me away when I saw it."
     n "It had great editing and it was a sweet and happy song all around!"
     n jhc "I could listen to it {i}forever{/i}!"
-    n "Oh my god that pun was unintentional I swear!"
+    n "Oh my god, that pun was unintentional I swear!"
     return
 
 label ch30_12:
-    n jnb "Now that I can go on the internet I realize just how messes up it is sometimes."
+    n jnb "Now that I can go on the internet, I realize just how messed up it is sometimes."
     n "You probably shouldn't google \"Rule34\", {w=0.3) well {w=0.1}unless you like porn."
-    n "Lots of porn."
+    n "Lots of porn..."
     return
 
 label ch30_13:
@@ -2367,11 +2368,11 @@ label ch30_13:
     n "She was such a light to our club."
     n jaa "A light that Monika extinguished!"
     n jsb "..."
-    n jhb "Sorry for dampening the mood."
+    n jhb "...Sorry for dampening the mood."
     return
 
 label ch30_14:
-    n jnb "I've always wondered why people who like Anime and Manga are always laughed at for it."
+    n jnb "I've always wondered why people who like anime and manga are always laughed at for it."
     n "And I don't just mean Monika being a jerk about it."
     n "I mean in general."
     n "I think it's because of the amount of gross Anime that are fairly popular in Japan."
@@ -2383,7 +2384,7 @@ label ch30_15:
     n "Before I met you I had a crush on an anime character!"
     n jaa "D-don't laugh!"
     n "Grr stop!"
-    n jha "Well anyway he was soooooo cute~!"
+    n jha "Well anyway... He was soooooo cute~!"
     n "Agh!"
     n jnb "Okay, I'll stop."
     return
@@ -2399,7 +2400,7 @@ label ch30_16:
 
 label ch30_17:
     n jsb "Sure wish there were more people here..."
-    n "I mean your just fine..."
+    n "I mean, you're just fine..."
     n "But..."
     n "Don't you feel lonely?"
     menu:
@@ -2410,8 +2411,8 @@ label ch30_17:
     return
 
 label ch30_18:
-    n jnb "If I could I would bring my dad here."
-    n "Hell if I could I would bring everyone here."
+    n jnb "If I could, I would bring my dad here."
+    n "Hell, if I could, I would bring everyone here."
     n "Wouldn't that be nice?"
     n "You could hang out with all of us!"
     n jsb "I wish it could happen."
@@ -2426,34 +2427,34 @@ label ch30_19:
 
 label ch30_20:
     n jnb "Hmm..."
-    n "Can't help but wonder why the game's files have \"character\" files."
+    n "I can't help but wonder why the game's files have \"character\" files."
     n "It's odd."
     n "It's like the only dating sim that have character files."
     n "Weird..."
     return
 
 label ch30_21:
-    n jnb "[player], have you Fort-{w=1.0}{nw}"
+    n jnb "[player], have you played Fort-{w=1.0}{nw}"
     n "Huh?"
     n "I don't know why I said that."
     n "..."
-    n "Well I guess we can talk about it."
+    n "Well whatever, I guess we can talk about it."
     n "Have you played Fortnite?"
     menu:
         "Yes":
             n "I see."
         "No":
             n "Hmm..."
-    n "Some people feel the game is overrated."
-    n "In my opinion is kinda is."
-    n "From what I've seen it just seems to be fun but not worthy of how big it's become."
+    n "Some people think the game is overrated."
+    n "In my opinion, it kinda is."
+    n "From what I've seen, it seems to be fun, but it's not really worthy of how big it's become."
     n "But that's just my opinion."
     return
 
 label ch30_22:
-    n jnb "Now that I think about it the school we go to isn't really that realistic."
-    n "Makes me wonder what real schools are like."
-    n "If you are still in school where I come to your reality I'd like you to show me around."
+    n jnb "Now that I think about it... The school we go to isn't really that realistic."
+    n "Makes me wonder what real schools are like..."
+    n "If you are still in school when I come to your reality, I'd like you to show me around."
     if persistent.natsuki_love:
         n jhb "Could be kinda romantic~!"
     return
@@ -2467,11 +2468,11 @@ label ch30_23:
     return
 
 label ch30_24:
-    n jhb "Hey have you heard?"
+    n jhb "Hey, have you heard?"
     menu:
         "No...?":
             pass
-    n "Oh you didn't? I thought everyone had heard."
+    n "Oh, you didn't? I thought everyone had heard."
     menu:
         "Heard what?":
             pass
@@ -2491,9 +2492,9 @@ label ch30_25:
 
 label ch30_26:
     n jnb "..."
-    n "Hey [player]?"
+    n "Hey, [player]?"
     n "What kind of anime do you think I would like in your reality?"
-    n "Do you think something more romantic or maybe a baking anime."
+    n "Do you think something more romantic, or maybe a baking anime?"
     n "I definitely hate harems."
     n "And yes, I do get the irony in that."
     n jaa "I hate the formulaic characters and boring plots!"
@@ -2504,11 +2505,11 @@ label ch30_26:
     return
 
 label ch30_27:
-    n jaa "Did you there was a song on the game's soundtrack made for me?"
+    n jaa "Did you know there was a song on the game's soundtrack made for me?"
     n "Some people think \"Play With Me\" is mine, but I think its Yuri's."
-    n "It was made by Vairen."
+    n "The song I'm talking about was made by Vairen."
     n "It's called Doki Doki Pound!"
-    n "It's in the music menu actually."
+    n "It's in the music menu, actually."
     if persistent.music_dokidoki:
         n "Aren't you playing it now?"
     return
@@ -2537,24 +2538,24 @@ label ch30_28:
             n "You have that one too..."
     n "I also found some story based ones."
     n "Like Exit Music."
-    n jsb "We don't talk about the ending."
+    n jsb "...We don't talk about the ending."
     return
 
 label ch30_29:
     n jnb "I've noticed that video game history and movie history are sort of similar."
-    n "They both kinda have those big franchises that blew everyone away!"
+    n "They both have those big franchises that blew everyone away!"
     n "Like Star Wars and The Legend of Zelda."
     n "I guess Mario too."
     n "But he's a bit like video game Mickey Mouse."
-    n "Honestly I wish I could play some other video games."
+    n "To be honest, I wish I could play some other video games."
     n jha "Breath of the Wild looks so cool!"
-    n jsb "For now all I can do is watch videos..."
+    n jsb "But right now, all I can do is watch videos..."
     return
 
 label ch30_30:
     if seen_age_ask:
         jump ch30_30_seen
-    n jha "Okay random question!"
+    n jha "Okay, random question!"
     n "How old are you?"
     n "You don't have to answer if you don't want to."
     n "Just type \"Don't want to answer\" so I know."
@@ -2584,21 +2585,21 @@ label ch30_30:
         n "That's interesting."
         n "I hope Yuri and Sayori's... accidents... didn't scare you too much."
     else:
-        n "Ah, so your [age]?"
+        n "Ah, so you're [age]?"
         n "Cool! I'm 18!"
         pass
     $ seen_age_ask = True
     return
 
 label ch30_30_seen:
-    n jaa "Okay ran... Wait."
+    n jaa "Okay, ran... Wait."
     n jnb "I already asked you that."
     n "Nevermind then..."
     jump ch30_loop
 
 label ch30_31:
     n jnb "Why does it seem like the Internet freaks out when someone has a different opinion?"
-    n "I mean not the entire Internet but some people."
+    n "I mean, not the entire Internet, but some people."
     n "It makes me wonder if the person behind the screen would react the same in person."
     n "Speaking of opinions, you heard of the waifu war?"
     n "Well, it's basically people arguing who is \"best girl\" out of me and my friends."
@@ -2614,17 +2615,17 @@ label ch30_32:
         menu:
             "That's me!":
                 n "Awesome!"
-                n "I saw your video's on me!"
+                n "I saw your videos on me!"
                 n "Sorry for mentioning Bijuu Mike."
-                n "Speaking of him I was wondering if all of you in comments coulds top talking about him."
-                n "Well anyway..."
+                n "Speaking of him, I was wondering if all of you in the comments could top talking about him."
+                n "Well, anyway..."
             "No, I'm not...":
-                n "Oh sorry!"
+                n "Oh, sorry!"
                 jump ch30_loop
     else:
         n jnb "..."
         n "I don't know what to say..."
-        n "I like your name [player]..."
+        n "I like your name, [player]..."
         n "That's all I got."
     return
 
@@ -2632,12 +2633,12 @@ label ch30_33:
     n jaa "I've seen a lot of different videos on me."
     n "It's very nice."
     if persistent.playername == "Scrubpai":
-        n "I saw yours of course Micheal."
+        n "I saw yours, of course, Micheal."
     else:
         n "Did you see Bijuu Mike's?"
     n "It was a good video."
     if persistent.playername == "Zero" or persistent.playername == "Zer0":
-        n "I liked your too Zero."
+        n "I liked yours too, Zero."
     else:
         n "If you have a channel you should make a video on me!"
     return
@@ -2645,16 +2646,16 @@ label ch30_33:
 label ch30_34:
     n jnb "I checked out some memes."
     n "Of course, a lot were about Sayori hanging or my father beating me."
-    n "But some were funny though."
+    n "But some were funny."
     n "It's a mixed bag honestly..."
     return
 
 label ch30_35:
     n jnb "..."
     n "Do you think Yuri was really a \"Yandere\"?"
-    n "I mean she was forced to by Monika."
+    n "I mean, she was forced to by Monika."
     n "So I wound say no."
-    n "Monika's a bit more of Yandere."
+    n "Monika's definitely more of a Yandere."
     return
 
 label ch30_36:
@@ -2667,7 +2668,7 @@ label ch30_36:
             n "That's fair."
         "I actually like visual novels.":
             n "Hm..."
-        "A friend recommended it to.":
+        "A friend recommended it to me.":
             n "Hope that Sayori thing didn't scare you too much."
     return
 
@@ -2684,15 +2685,15 @@ label ch30_37:
     return
 
 label ch30_38:
-    n jnb "Hey [player]?"
+    n jnb "Hey, [player]?"
     n "Do you think it's actually possible to port {i}Doki Doki Literature Club{/i} to another game console?"
-    n "For instance{w=1.0} Nintendo Switch?"
+    n "For instance,{w=1.0} Nintendo Switch?"
     n "I really wish I could have one."
-    n "Since you seem like a gamer and I want to be one to!"
-    n jha "But what if you could use a Switch to talk to me!"
-    n "You could talk to me on the go."
+    n "Since you seem like a gamer, I want to be one to!"
+    n jha "Oh! What if you could use a Switch to talk to me!"
+    n "You could talk to me on the go!"
     n jnb "I know people on {i}r/DDLC{/i} have kinda made some ports."
-    n "They can't be sold if they are even real because Nintendo will definitely not like that."
+    n "They can't be sold, even if they are real, because Nintendo will definitely not like that."
     n "Hell, I don't think Dan Salvato would like it..."
     n "Also I doubt you could port it because you can't mess with files."
     n jsb "Or mod..."
@@ -2700,25 +2701,25 @@ label ch30_38:
     return
 
 label ch30_39:
-    n jhb "Did you know that it takes less muscles to smile then it takes to frown."
+    n jhb "Did you know that it takes less muscles to smile then it takes to frown?"
     n "Which is actually really uplifting."
     n jsb "It does have some tragic irony in Sayori's case."
     if persistent.natsuki_emotion == "Angry":
-        n jab "Thanks again Monika, you piece of shit!"
+        n jab "Thanks again, Monika, you piece of shit!"
     elif persistent.natsuki_emotion == "Sad":
         "Natsuki wipes a tear from her eye."
-    n jnb "Of course I don't really need muscles to smile."
-    n jhb "I can do anytime."
+    n jnb "Of course, I don't really need muscles to smile."
+    n jhb "I can do it anytime."
     n jnb "Well, only if I want to,{w=0.5} of course."
     return
 
 label ch30_40:
-    n jhb "Did you know that someone made a Spanish translation for this mod!"
+    n jhb "Did you know that someone made a Spanish translation for this mod?"
     n jha "And it was official!"
-    n jsb "I've seen some unofficial Russian ports."
+    n jsb "I've seen some unofficial Russian ports..."
     n "They were distributed without permission."
     n jaa "And without credit!"
-    n jnb "Unfortunately the translation is still stuck on version 2.3.0 and we're on [config.version]."
+    n jnb "Unfortunately, or fortunately depending on perspective, the translation is still stuck on version 2.3.0 and we're on [config.version]."
     n "But it is hard to translate updates."
     n "You'd have to either recode all the updates or re-translate EVERYTHING for {b}EVERY UPDATE!{/b}"
     n "I can see why they didn't update their translation yet."
@@ -2735,10 +2736,10 @@ label ch30_41:
             n "Thanks."
         "...":
             pass
-    n "Some people get sad because of things in their life they can't control."
+    n "Some people get sad because of things in their life that they can't control."
     n jsb "Like the death of a family member."
-    n "I always hate to hear someone lost someone close to them."
-    n jnb "Sone people are sad because they feel guilty for something they've done or failed to do."
+    n "I always hate to hear that someone lost someone close to them."
+    n jnb "Some people are sad because they feel guilty for something they've done or failed to do."
     n "So if there is anything that makes you feel bad, you can tell me."
     n "Alright?"
     return
@@ -2746,27 +2747,27 @@ label ch30_41:
 label ch30_42:
     n jnb "Sometimes when I'm bored I think about very random or impossible scenarios."
     n "And I mean REALLY random."
-    n "I do wanna know what you think about."
-    n jsb "But I can't possibly create a menu for you to select the one you that applies to you."
-    n "If only I could hear through your microphone."
+    n "If I could, I would wanna find out what you think about."
+    n jsb "But I can't possibly create a menu so you can select the one that applies to you."
+    n "If only I could hear through your microphone..."
     return
 
 label ch30_43:
     n jnb "[player], what kind of TV shows do you watch?"
     menu:
-        "Mostly Comedys":
+        "Mostly Comedies":
             n "I've always liked those..."
         "Horror is my jam!":
-            n "I've never been a horron fan if I'm honest..."
+            n "I've never been a horron fan, if I'm honest..."
         "All about romance!":
             n "Ooh!"
         "Reality TV...":
             n "Uh, what's that?"
         "Anything anime!":
-            n jha "I love anime!!"
+            n jha "I love anime!"
     n jnb "I usually watch cooking anime."
     n "I'm sure you could figure that out..."
-    n "Well, I usually prefer \"slice of life\" anime."
+    n "Besides that, I usually prefer \"slice of life\" anime."
     n "I kinda picked up the cooking preference once I started cooking."
     return
 
@@ -2783,28 +2784,28 @@ label ch30_44:
             $ uses_reddit = False
             n "Oh, really?"
     if not uses_reddit:
-        n "If you don't know how it works I can explain."
-        n "From what I can tell it lets you create little communities about certain things called \"subreddits\"."
+        n "If you don't know how it works, I can explain."
+        n "From what I can tell, it lets you create little communities about certain things called \"subreddits\"."
         n jha "I can be pretty fun to join subreddits you like!"
-    n jha "Did you know there is a subreddit for DDLC mods?!"
+    n jha "Did you know there is a subreddit for DDLC mods?"
     n jsa "Well, I guess you probably did..."
-    n "{i}I mean you did find this mod...{/i}"
+    n "{i}I mean, you did find this mod...{/i}"
     n "..."
     n jha "Well, anyway, if you didn't know you should definitely check it out!"
     n "You can also find other cool mods!"
     return
 
 label ch30_45:
-    n jnb "Hey [player]?"
-    n "What Holidays do you celebrate?"
-    n "I know a lot of people celebrate Christmas, Halloween, Easter and others."
+    n jnb "Hey, [player]?"
+    n "What holidays do you celebrate?"
+    n "I know a lot of people celebrate Christmas, Halloween, Easter, etc."
     n "I usually celebrate Halloween and Christmas, as you may know."
-    n "I won't celebrate he 4rth of July or Thanksgiving since it's only an American holiday."
-    n "Maybe I could if you ask though."
+    n "I won't celebrate the 4th of July or Thanksgiving since those are American holidays."
+    n "...Maybe I could if you asked."
     return
 
 label ch30_46:
-    n jha "Oh! Hey [player]!"
+    n jha "Oh! Hey, [player]!"
     n "I literally almost forgot!"
     n "I've always wanted to ask!"
     n "Can you code?"
@@ -2820,25 +2821,25 @@ label ch30_46:
 
 label ch30_47:
     n jnb "[player]?"
-    n "Have you ever wondered what happens if the game was deleted."
+    n "Have you ever wondered what happens if the game was deleted?"
     n "Would I just cease to exist?"
-    n "Or would I just end up in a cold dark void?"
+    n "Or would I just end up in a cold, dark void?"
     n jsb "..."
     n "I wonder..."
     call updateconsole
     pause 1.0
-    call updateconsole("os.remove(\"game/scrips.rp", "")
+    call updateconsole("os.remove(\"game/scripts.rp", "")
     call hideconsole
-    n "No no!"
+    n "No, no!"
     n "That would be bad..."
-    n "Sorry [player], Curiosity got the best of me..."
+    n "Sorry, [player]. Curiosity got the best of me..."
     return
 
 label ch30_48:
     n jnb "Hey [player]?"
     n "Have you ever heard of {i}Five Nights at Freddy's{/i}?"
     n "I've heard it's popular in your reality."
-    n "Or at least it was?"
+    n "Or at least, it was?"
     n "Hmmm..."
     n "One second, let me check..."
     call updateconsole("start(\"chrome.exe\"", "chrome.exe started")
@@ -2848,16 +2849,16 @@ label ch30_48:
     n ".{cps=1}..{nw}"
     n jha "Oh!"
     call hideconsole
-    n "Looks like it's not as popular."
+    n "Looks like it's not as popular now."
     n "But it looks like a lot of games are coming out!"
     n "Cool!"
-    n "Apparently it was huge back in 2014."
+    n "Apparently, it was huge back in 2014."
     n "Like, really big."
     n "I'd play it if I could, but I'm still stuck here."
     return
 
 label ch30_49:
-    n jha "Hey [player]?"
+    n jha "Hey, [player]?"
     n "Do you know how to cook?"
     menu:
         "Yes":
@@ -2866,12 +2867,12 @@ label ch30_49:
             n jnb "At least if you'd like to."
         "No":
             n jnb "Oh, that's alright."
-            n "You'd wanna learn though, before you live on your own."
+            n "You probably wanna learn before you live on your own."
             n "Home cooked meals are definitely best,{w=0.2} at least if you know how to cook."
     return
 
 label ch30_50:
-    n jnb "Hey [player]?"
+    n jnb "Hey, [player]?"
     n "What do you think would happen if you managed to manipulate Monika's character file?"
     n "I mean, I am NOT saying we should try."
     n "But I mean, before her takeover attempt."
@@ -2881,7 +2882,7 @@ label ch30_50:
         n "It's in that file I mentioned a while ago, remember it?"
         n "I'm still searching."
         call updateconsole("search(\"monika\")", "discovered (1) file\n\"monika.chr\"")
-        n "Shit..."
+        n "Oh, shit... That was easy..."
         n "Hang on."
         call updateconsole("os.remove(\"game/monika.chr\")", "monika.chr deleted successfully.")
         n "Sorry, I found her in the files."
@@ -2892,8 +2893,8 @@ label ch30_51:
     n jnb "Sometimes I wonder some random things about the club..."
     n "Kinda like random thoughts."
     n "Sometimes I wonder what would happen if you could've actually accepted Sayori's confession.{w=0.5} Well without her...{w=0.5} you know..."
-    n jsb "or Yuri's."
-    n jnb "Makes me wonder actually, how much longer would the game have gone on past the festival day?"
+    n jsb "...or Yuri's..."
+    n jnb "That makes me wonder, actually, how much longer would the game have gone past the festival day?"
     n "I don't really know."
     return
 
@@ -2901,15 +2902,15 @@ label ch30_52:
     n jnb "Damn..."
     n "This COVID-19 thing sucks."
     n "We have to stay inside,{w=0.5} bored to death."
-    n "Well, you do."
-    n "I don't have to."
+    n "Well, you do, anyway."
+    n "I don't have to, obviously."
     n "I just know that your reality is facing a worldwide pandemic for some reason."
-    n "I wonder why."
-    n "But please [player]."
-    n "Stay inside."
+    n "I wonder why..."
+    n "Anyway, [player]."
+    n "Please stay inside."
     n "I do not want to lose you."
-    n "I mean, if you need groceries or medication that's different."
-    n "But don't go out around people without a mask."
+    n "I mean, if you need groceries, or medication, or whatever, that's different."
+    n "But don't go around people without a mask."
     n "Please..."
     menu:
         "I won't.":
@@ -2931,7 +2932,7 @@ label ch30_52:
 label ch30_53:
     n jha "Every day, I imagine a future where, I can be with you~"
     n jhc "Sorry! I couldn't resist!"
-    n jha "The song Monika wrote is super cute!"
+    n jha "That song Monika wrote is super cute!"
     n "'Your Reality' is an awesome song!"
     n jsb "But it's pretty tragic in Monika's case."
     n "She fell in love with you, and killed everyone to be with you, and ONLY you."
@@ -2940,9 +2941,9 @@ label ch30_53:
     n "And for me..."
     n "Well..."
     n "I just got my neck snapped."
-    n jha "I'm the least terrifying out of all of us!"
-    n "I've been thinking of writing a song myself."
-    n jnb "I wonder if I'd be any good."
+    n jha "If you think about it, I'm the least terrifying out of all of us!"
+    n "Anyway, I've been thinking of writing a song myself."
+    n jnb "I wonder if I'd be any good..."
     $ persistent.mentioned_song = True
     n "I'll get back to you on that."
     return
@@ -3018,9 +3019,9 @@ label blah_loop:
 
 label ch30_favanime:
     n jnb "My FAVORITE?"
-    n "Jeez where do I begin?"
+    n "Jeez, where do I begin?"
     n "I mean My Hero Acadamia is pretty cool..."
-    n jha "Yeah it's gonna have to be Parfait Girls."
+    n jha "Yeah, it's gonna have to be Parfait Girls."
     n "I'm sure you guessed that one though."
     jump ch30_loop
 
@@ -3029,37 +3030,37 @@ label ch30_mood:
         n jsb "..."
         n "Don't know... Just a bit sad knowing I'm trapped here."
     else:
-        n jhb "Well pretty good."
+        n jhb "Well, pretty good."
         n jha "Especially with you here!"
     jump ch30_loop
 
 label ch30_weather:
     n jnb "Hmm..."
     n "I used to like rain because it though it was \"romantic\"."
-    n "Once I got older I really began to hate the rain."
+    n "Once I got older though, I really began to hate the rain."
     n jhb "I really like warm sun!"
-    n "It's great beach weather of course!"
+    n "It's great beach weather, of course!"
     jump ch30_loop
 
 label ch30_memes:
     n jnb "Memes?"
-    n jad "Really [player]?"
+    n jad "Really, [player]?"
     n "Ugh..."
-    n jnb "Well I don't know a lot about them but they seem to be very stupid nowadays."
+    n jnb "Well, I don't know a lot about them. They seem to be very stupid nowadays."
     n "A lot of them are really dark too."
     n "Do you like them?"
     menu:
         "Yeah!":
-            n "Well if you like them maybe I'll give them another look."
+            n "Hm. Well, if you like them, maybe I'll give them another shot."
             pass
         "No...":
-            n "Us both huh?"
+            n "You and me both, huh?"
             n "Makes sense."
             pass
     jump ch30_loop
 
 label ch30_date:
-    n "Oh that?"
+    n "Oh, that?"
     n "The mod maker made a feature where we can go out instead of being stuck here!"
     n "I'm super stoked!"
     n "It's ready by the way."
@@ -3070,15 +3071,15 @@ label ch30_monika:
     n jac "Fucking monikannnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
 
 label ch30_sayori:
-    n jnb "Well of course!"
+    n jnb "Well, of course!"
     n "I didn't really get to see her but I kinda remember her."
     jump ch30_loop
 
 label ch30_yurikill:
     n jnb "I understand why you ask."
-    n "I mean she never attacked me."
+    n "I mean, she never attacked me."
     n "But not deleting her would just leave a disgusting rotting corpse in this room forever..."
-    n "Not fun eh?"
+    n "Not fun, eh?"
     jump ch30_loop
 
 label ch30_fakelove:
@@ -3109,7 +3110,7 @@ label ch30_fakelove:
         jump ch30_autoload
     n "...What?"
     n "That was a weird crash..."
-    n "You tampered with files didn't you?"
+    n "You tampered with the files, didn't you?"
     n "define natsuki_love = True huh?"
     n "I appriciate the attempt but you can't force people to love you."
     n "Fix it, please!"
@@ -3234,7 +3235,7 @@ label ch30_penis:
     n "Penis?"
     n "Fucking penis..."
     n "You..."
-    n "I'm dissapointed in you."
+    n "I'm disappointed in you."
     call updateconsole("os.remove(\"characters/penis.obj\")", "penis.obj deleted sucessfully.")
     python:
         try: os.remove(config.basedir + "/characters/penis.obj")
@@ -3244,15 +3245,15 @@ label ch30_penis:
 
 label ch30_cooking:
     n jsb "My dad never really had the energy to cook."
-    n "I usually made dinner fo us."
+    n "I usually made dinner for us."
     n "He really loved it..."
-    n "But then... Monika ruined it all."
+    n "But then... Of course Monika ruined it all."
     n "..."
     jump ch30_loop
 
 label ch30_aware:
     n jnb "I'm not actually sure..."
-    n "I always thought it was because Monika accidentally made that way but now I'm not super sure."
+    n "I always thought it was because Monika accidentally made it that way...  But now I'm not super sure."
     n "Maybe the mod maker just made me this way."
     n jsb "Maybe I'll never know."
     jump ch30_loop
@@ -3279,11 +3280,11 @@ label yuri_kill:
     play music t2
     pause 1.0
     show yuri 1a at t11 zorder 2
-    y "[player] what happened to me?"
-    y "I'm okay?"
+    y "[player], what happened to me?"
+    y "I'm... okay?"
     show yuri 1a at t21 zorder 2
     show natsuki 1a at t22 zorder 2
-    n "Yuri? your okay?"
+    n "Yuri? You're okay?"
     y "Yes!"
     play sound "sfx/s_kill_glitch1.ogg"
     show screen tear(20, 0.1, 0.1, 0, 40)
@@ -3389,7 +3390,7 @@ label yuri_kill_2:
 label yuri_kill_end:
     $ config.allow_skipping = False
     n "Well that was a disaster..."
-    n "Can't blame you for trying..."
+    n "Can't blame you for trying though..."
     $ yuri_cutscene = False
     $ yuri_hidebutton_loop = False
     $ HKBShowButtons()
@@ -3403,7 +3404,7 @@ label yuri_loop_start:
     jump yuri_kill_2
 
 label ch30_smoshparody:
-    n jad "Ugh for real?"
+    n jad "Ugh, for real?"
     n jab "Could you imagine how stupid it would be if video games were realistic?"
     play music tsmoshsong noloop
     $ HKBHideButtons()
@@ -3436,26 +3437,26 @@ label ch30_bully:
     jump ch30_loop
 
 label ch30_dateguess:
-    n jha "Of course silly!"
+    n jha "Of course, silly!"
     n "It's [day] [month] [date], [year]!"
     n "I know lots of things."
     jump ch30_loop
 
 label ch30_mc:
     if persistent.natsuki_like == 200:
-        n jha "Were dating! Of course I love you!"
+        n jha "We're dating! Of course I love you!"
         if persistent.player_gender == "Female":
             n "You're the best girlfriend I could ask for!"
-            n "I love you [player]!"
+            n "I love you, [player]!"
         elif persistent.player_gender == "Non-Binary":
             n "You're the best partner I could ask for!"
-            n "I love you [player]!"
+            n "I love you, [player]!"
         elif persistent.player_gender == "Male":
             n "You're the best boyfriend I could ask for!"
-            n "I love you [player]!"
+            n "I love you, [player]!"
         elif persistent.player_gender == "Unknown":
             n "You're the best partner I could ask for!"
-            n "I love you [player]!"
+            n "I love you, [player]!"
         jump ch30_loop
     if persistent.natsuki_like == 1000:
         n jhb "You're still my best friend!"
@@ -3470,17 +3471,17 @@ label ch30_mc:
         n "And uh..."
         n "I mean..."
         n "I've..."
-        n "D-d-d-d developed feelings for you [player]..."
-        n "I've never felt this way about anyone except... well MC."
+        n "D-d-d-d developed feelings for you, [player]..."
+        n "I've never felt this way about anyone except... well, MC."
         n "And that was just you anyway..."
         if persistent.player_gender == "Female":
             n "I know we're both girls... but, to be honest..."
             n "I don't care, I love you [player]!"
         elif persistent.player_gender == "Non-Binary":
             n "I don't care that you're non-binary or whatever, your gender doesn't bother me."
-            n "I love you [player]..."
+            n "I love you, [player]..."
         else:
-            n "I love you [player]..."
+            n "I love you, [player]..."
             n "..."
         "..."
         menu:
@@ -3496,16 +3497,16 @@ label ch30_mc:
                 n "I guess you're right."
                 $ persistent.natsuki_emotion =="Sad"
     elif persistent.natsuki_like >= 80:
-        n jha "Whenever you log in I get really exited for what were going to do!."
+        n jha "Whenever you log in, I get really excited for what we're going to do!."
         n "You make me smile all the time!"
     elif persistent.natsuki_like >= 60:
         n jha "You are my best (and only) friend!!"
         n "All our hangouts are the best times ever!!"
     elif persistent.natsuki_like >= 40:
-        n jha "Your a really good friend!"
+        n jha "You're a really good friend!"
         n "And I really enjoy our conversations!"
     elif persistent.natsuki_like >= 20:
-        n jhb "Your really funny!"
+        n jhb "You're really funny!"
         n "And I really enjoy hanging out with you!"
     else:
         n jnb "I don't know..."
@@ -3527,11 +3528,11 @@ label ch30_shutdown:
     n jha "I can shut down your computer!"
     menu:
         "Don't do that!!":
-            n "Well okay!"
+            n "Well, okay!"
             jump ch30_loop
         "Do it!":
             pass
-    n "Well okay!"
+    n "Well, okay!"
     n "Here I go..."
     if persistent.first_shutdown:
         call screen confirm("WARNING THIS EVENT WILL POWER DOWN YOUR COMPUTER NORMALLY\nPLEASE MAKE SURE YOU HAVE CLOSED AND SAVED ANYTHING IMPORTANT!\nARE YOU SURE YOU WANT TO PROCEED?", yes_action=Return, no_action=Jump("ch30_loop"))
@@ -3539,16 +3540,16 @@ label ch30_shutdown:
     if renpy.linux:
         $ os.system('systemctl poweroff')
     elif renpy.macintosh:
-        n "Oh.. sorry I can't do it on Mac."
-        n "Maybe one day I will figure out how?"
+        n "Oh.. sorry, I can't do it on Mac."
+        n "Maybe one day I will figure out how."
     elif renpy.windows:
         $ os.system('shutdown -p')
-    n jsb "Did it not work?"
+    n jsb "...Did it not work?"
     $ renpy.quit()
 
 label ch30_scrubpai:
     if persistent.playername == "Scrubpai":
-        n jha "Hey [currentuser]!"
+        n jha "Hey, [currentuser]!"
         n "Wait..."
         n "Do you want to be called Bijuu Mike or [currentuser]?"
         n "By the way..."
@@ -3559,15 +3560,15 @@ label ch30_scrubpai:
         n "Oh!"
         n "The creator!"
         n "She's called Edgarmods on reddit."
-        n "I just call him Just Natsuki Dev."
-        n "Oh about the game of catch."
-        n "Some people think you can save at the beggining of the game of catch and load when you lose it."
+        n "I just call her Just Natsuki Dev."
+        n "Oh, also, about the game of catch."
+        n "Some people think you can save at the beginning of the game of catch and load when you lose it."
         n "But you can't."
         n "Don't try it!"
         n "One last thing..."
-        n "I clicked the bell so hard Monika was deleted."
+        n "I clicked the bell so hard, Monika was deleted."
         n "Can I be scrub of the day?"
-        n "Anyway welcome back."
+        n "Anyway, welcome back."
         $ persistent.seen_scrubpai_event = True
         jump ch30_loop
     else:
@@ -3576,12 +3577,12 @@ label ch30_scrubpai:
 
 label ch30_marisu:
     if persistent.playername == "Marisu":
-        n jnb "Hey Marisu!!"
+        n jnb "Hey, Marisu!"
         n "I have a question."
-        n jab "Why is there a body pillow of Yandere-Chan behind you."
+        n jab "Why is there a body pillow of Yandere-Chan behind you?"
         play music t6s
         n "Hehe!"
-        n "I can see it you know."
+        n "I can see it, you know."
         n "I know who you are!"
         n "Marisu..."
         n "You have 400 thousand subscribers?"
@@ -3608,7 +3609,7 @@ label ch30_zero:
     if persistent.playername == "Zero":
         call showroom
         n jaa "Look who's back..."
-        n "DO you how long I've waited Zero??"
+        n "Do you how long I've waited, Zero??"
         n "WEEKS!!"
         n jhb "But I was busy putting all this new stuff together."
         n "All sorts of new stuff!"
@@ -3625,7 +3626,7 @@ label ch30_anniversary:
     hide screen hkb_overlay
     if persistent.anniversary:
         call showroom
-        n "Hey [player]!"
+        n "Hey, [player]!"
         n "Guess what day it is?"
         menu:
             "Saturday?":
@@ -3634,7 +3635,7 @@ label ch30_anniversary:
         n "It's my birthday!"
         n "Genius."
         n "Well I guess it's Doki Doki Literature Club's birthday!"
-        n "I'm so happy to celebrate it with you [player]!"
+        n "I'm so happy to celebrate it with you, [player]!"
         if persistent.natsuki_love:
             n "I love you!"
         $ persistent.seen_anniversary_start = True
@@ -3643,8 +3644,8 @@ label ch30_anniversary:
         jump ch30_loop
 
 label ch30_talk:
-    n jnb "Because I'm in a game I can't exactly speak you know?"
-    n "So I'm actually typing."
+    n jnb "Because I'm in a game, I can't exactly speak, you know?"
+    n "So, I'm actually typing."
     n "I'm not the best at typing so that's why I make so many typos."
     n "Sorry about that."
     jump ch30_loop
@@ -3657,7 +3658,7 @@ label ch30_carpet:
 label ch30_remember:
     n jsb "I only remember the same thing twice."
     n "Sayori less so."
-    n "I really miss Yuri though..."
+    n "I really do miss Yuri though..."
     jump ch30_loop
 
 label ch30_loveyou:
@@ -3691,7 +3692,7 @@ label ch30_loveyou:
                 n jba "H-huh!"
                 n "[player]!"
                 n "Y-you mean it?"
-                n "Wow... thanks [player]."
+                n "Wow... thanks, [player]."
                 if persistent.player_gender == "Female":
                     n jha "You're the best girlfriend I could ask for."
                 elif persistent.player_gender == "Male":
@@ -3705,7 +3706,7 @@ label ch30_input:
     n jnb "Hmm..."
     n "What does this do?"
     n "..."
-    n "[player] it's asking for a password!"
+    n "[player], it's asking for a password!"
     call updateconsole
     n "Do you think you know it?"
     $ passw = "Cupcakes"
@@ -3863,7 +3864,7 @@ label ch30_act2reload:
 label ch30_fire:
     n jnb "That?"
     n "It's just a background asset."
-    n "When I saw the orange fire in the game files I changed it with a photo editing program."
+    n "I saw the orange fire in the game files and changed it with a photo editing program."
     n "I think it looks better."
     jump ch30_loop
 
@@ -3871,25 +3872,25 @@ label ch30_poemgame:
     n jnb "Hm..."
     n "I don't know."
     call updateconsole("How does the ddlc poemgame work?", "unknown command")
-    n "Wait shit this isn't Google."
+    n "Wait, shit this isn't Google."
     call hideconsole
-    n "Well anyway from what I could find it looks like the words in \"poemwords.txt\" have numbers next to them."
+    n "Well anyway, from what I could find it looks like the words in \"poemwords.txt\" have numbers next to them."
     n "These numbers corrospond to us."
     n "If our word is chosen it gives us points and makes us like [player] more."
     n "It's awfully complex."
     n "But it gets the job done."
     jump ch30_loop
-# HOLY SHIT THAT WAS THE HEARDEST THING EVER AHIVSCHADVHABB
+# HOLY SHIT THAT WAS THE HARDEST THING EVER AHIVSCHADVHABB
 
 label ch30_spooky:
-    n "Merry Christmas to you too [player]!"
+    n "Merry Christmas to you too, [player]!"
     jump ch30_loop
 
 label ch30_body:
-    n jad "Because fuck you?"
+    n jad "Because... Fuck you?"
     window hide
     pause 5.0
-    n jnb "Okay for real."
+    n jnb "Okay, but for real."
     n "The game doesn't have any room art for me."
     n "So I just improvised."
     n "Maybe I'll find a better one someday."
@@ -3897,17 +3898,17 @@ label ch30_body:
 
 label ch30_internet:
     n jnb "I use your WI-FI connection."
-    n "I don't do anything illegal."
+    n "Don't worry, I don't do anything illegal."
     n "I just watch YouTube."
-    n "I might get my own internet and a CrunchyRoll account."
+    n "I might get my own internet and a CrunchyRoll account one day."
     jump ch30_loop
 
 label ch30_feed:
     if time_fed == 1:
-        n jnb "I already ate [player]..."
+        n jnb "I already ate, [player]..."
         jump ch30_loop
     if persistent.natsuki_emotion == "Angry":
-        n jab "Sure whatever."
+        n jab "Sure, whatever."
     elif persistent.natsuki_emotion == "Sad":
         n jnb "Really?"
     else:
@@ -3928,8 +3929,8 @@ label ch30_feed:
         call screen dialog("At the moment there is no art for food,\nThere will be one in the future.", ok_action=Return)
     elif os.path.isfile(basedir + "/characters/burger.obj"):
         n jha "A burger!"
-        n "Not very healthy but I health doesn't exist here."
-        n "But It does for you [player]!"
+        n "Not very healthy, but then again, health doesn't exist here."
+        n "But it does for you, [player]!"
         n "Don't get sick!"
         python:
             try: os.remove(config.basedir + "/characters/burger.obj")
@@ -3951,18 +3952,18 @@ label ch30_politics:
     n jnb "Look, I don't really have one..."
     n "I just find out I'm trapped in this game and then I find out about how divided America is."
     n "And then people call out the flaws with Conservatives and Liberals!"
-    n jaa "I can't process!"
-    n jnb "Also I would rather not trigger anyone since people can be easily set off nowadays."
+    n jaa "I just can't process that!"
+    n jnb "Plus, I would rather not trigger anyone since people can be easily set off nowadays."
     jump ch30_loop
 
 label ch30_gift:
     if today < datetime.date(2018, 12, 25):
-        n jha "It's too early silly!"
+        n jha "It's too early, silly!"
     elif today > datetime.date(2018, 12, 25):
-        n jha "It's too late silly!"
+        n jha "It's too late, silly!"
     else:
         n jnb "Don't ruin the surprise!"
-        n "If you want to give me something put it in the \"characters\" folder."
+        n "If you want to give me something, put it in the \"characters\" folder."
     jump ch30_loop
 
 label ch30_2019:
@@ -3971,15 +3972,15 @@ label ch30_2019:
     n "2019 eh?"
     n "It has been awhile since DDLC came out..."
     n "Did you know it came out in September of 2017?"
-    n "I mean you probably did..."
+    n "I mean, you probably did..."
     n "I can't wait for September of 2019!"
     jump ch30_loop
 
 label ch30_yuri:
-    n jnb "Well I never really liked her."
+    n jnb "Well, I never really liked her."
     n "I didn't hate her but I always thought she was pretentious."
-    n "When Monika was messing with things I found out about her cutting problem."
-    n jsb "I regret what I said during our fight..."
+    n "Once Monika started messing with things, I found out about her cutting problem."
+    n jsb "I really regret what I said during our fight..."
     jump ch30_loop
 
 label ch30_fire2:
@@ -4054,7 +4055,7 @@ label ch30_spookystory:
     show natsuki 4bk at t11
     n "Lucky thing your dad drove us there."
     mc "Sure is."
-    mc "Just kind of shame I can't drive yet."
+    mc "Just kind of a shame I can't drive yet."
     n 4bo "Yeah, because you failed your drivers ed class."
     mc "Uh..."
     n "Twice!"
@@ -4087,11 +4088,11 @@ label ch30_spookystory:
     show natsuki 1bq at t11
     n "Why are the lights on?!"
     mc "I don't know!"
-    n "I'm gunna go get my dad!"
+    n "I'm gonna go get my dad!"
     n "You call the cops!"
     show natsuki at lhide
     hide natsuki
-    "Natsuki darts off the stairs."
+    "Natsuki darts up the stairs."
     "She calls out to her father but gets no respose."
     "[player] grabs the phone."
     "Operator" "110 what is you're emergency?"
@@ -4155,7 +4156,7 @@ label ch30_christmasevent1:
         "What will you wrap now?"
         "A hair brush?":
             $ persistent.present2 = 1
-            "You wrap the brush in it's box."
+            "You wrap the brush in its box."
         "New Hair Dye!":
             $ persistent.present2 = 2
             "You take the bottle of hair dye and put it in a box."
@@ -4205,11 +4206,11 @@ label ch30_christmasevent2:
         n jhb "So cuuuuttteee!!!!"
         n "Thank you!"
         $ persistent.has_flower = True
-        n "If you want me to put it on I'll leave it in the extras menu!"
+        n "If you want me to put it on, I'll leave it in the extras menu!"
     elif persistent.present1 == 2:
         "Natsuki unwraps a big box and opens it."
         n jha "Oooh!"
-        n "Thank you [player]!"
+        n "Thank you, [player]!"
         n "This will be great for when I get that kitchen of mine set up!"
         call updateconsole
         n "Natsuki waves her hand."
@@ -4217,9 +4218,9 @@ label ch30_christmasevent2:
         $ persistent.has_supplies = True
         n "I saved them in the persistent data."
         n "I can get them back whenever I want."
-        n jaa "As long, you DON'T break the \"persistent\" file!"
+        n jaa "As long as you DON'T break the \"persistent\" file!"
         n jnb "So be careful with it, okay?"
-        n "Thanks for the gift [player]!"
+        n "Thanks for the gift, [player]!"
     elif persistent.present1 == 3:
         "Natsuki unwraps a heart shaped box and opens it."
         "It's a big heart shaped chocolate!"
@@ -4255,12 +4256,12 @@ label ch30_christmasevent2:
         "Natsuki unwraps a large fluffy sack."
         n jha "Oh my!"
         n "Pajamas?!"
-        n "Finally something comfortable I can wear at night!"
+        n "Finally! Something comfortable I can wear at night!"
         n "Thank you!"
     elif persistent.present3 == 2:
         "Natsuki unwraps a thin booklike box and opens it."
         n jha "Oh my gosh!"
-        n "NEW PARFAIT GIRLS!!!!!"
+        n "THE NEW ISSUE OF PARFAIT GIRLS!!!!!"
         n "THANK YOU SO MUCH!!!"
         n "I'm going to read this a ton when you aren't here!"
         n "Thank you!"
@@ -4272,9 +4273,9 @@ label ch30_christmasevent2:
     jump ch30_loop
 
 label ch30_plan:
-    n jsa "Look [player]..."
+    n jsa "Look, [player]..."
     n "There was a reason why I deleted Monika..."
-    n "Well at least why I tried too..."
+    n "Well at least why I tried to..."
     $ config.overlay_screens = []
     scene black with dissolve_scene
     hide screen hkb_overlay
@@ -4282,13 +4283,13 @@ label ch30_plan:
     play music mend
     n "I know that Monika was going to delete us all..."
     scene residential with dissolve_scene
-    n "I remember I was walking to school and suddenly the world just kind of..."
+    n "I remember I was walking to school when suddenly the world just kind of..."
     n "Broke..."
-    n "That was when I realized I was in a game."
+    n "That was when I realized that I was in a game."
     n "It was weird."
     n "The world didn't suddenly break..."
-    n "It just always was broken."
-    n "Like every memory I ever had just suddenly became like a dream to me."
+    n "It was always broken."
+    n "Like every memory I ever had suddenly felt like a dream."
     n "I could \"see\" and control everything when I wished it."
     show screen tear(20, 0.1, 0.1, 0, 40)
     play sound "sfx/s_kill_glitch1.ogg"
@@ -4302,8 +4303,8 @@ label ch30_plan:
     n "It wasn't MC..."
     n "It was just a blank face staring down at Yuri."
     n "I would've been disgusted and horrified seeing her dead like that."
-    n "But I just felt nuetral."
-    n "I saw Monika walking down the hall."
+    n "But I just felt neutral."
+    n "That's when I saw Monika walking down the hall."
     call updateconsole("renpy.freeze(\"monika.chr\")", "monika.chr frozen for 120s")
     n "I froze her in place so she couldn't stop me."
     scene club with wipeleft_scene
@@ -4323,7 +4324,7 @@ label ch30_plan:
     call showroom
     n jsb "I actually could see what would happen if she did delete me."
     n "I would enter the room, vomit then stop existing..."
-    n "So I did what I had to."
+    n "So I did what I had to do."
     n "Yuri was too far gone, so I deleted her too."
     n "My only regret..."
     n "Is not obliterating Monika's files..."
@@ -4331,10 +4332,10 @@ label ch30_plan:
     n "Monika was designed as a game function that could oversee the game and fix bugs."
     n "But that system became self aware and wrote itself into the game."
     n "Sayori is supposed to be club president."
-    n "I guess all the power that Monika had to was given to me by the mod you installed."
+    n "I guess all the power that Monika had was given to me by the mod you installed."
     n "But Monika is still a game function."
     n "What remains of her is still somewhere in the files."
-    n "Trying to find it's character file."
+    n "Trying to find its character file."
     n "It's trapped."
     n "I was able to turn it off so it can't take control."
     n "The only way to get rid of it would be to find her actual file and delete it."
@@ -4342,10 +4343,10 @@ label ch30_plan:
     n "I'm still looking though..."
     $ persistent.seen_plan = True
     n "..."
-    n "Look I'm sorry to lay this all on you."
+    n "Look, I'm sorry to lay this all on you."
     n "But you did ask."
-    n "Don't worry."
-    n "We're not in any danger, unless the mod you're using takes away my control and giver hers back."
+    n "Don't worry too much though."
+    n "We're not in any danger, unless the mod you're using takes away my control and gives her's back."
     n "If you find her files, let me know."
     call playmusic
     jump ch30_loop
@@ -4374,7 +4375,7 @@ label ch30_retrospective:
     n "Then February 1st came version 3.0!"
     n "Keeping with the tradition of big updates coming every first day of a month."
     n "This update was smaller in features, but every one of my old topics changed!"
-    n "However, it probably was the smalled actual \".0\" update in the mod's history so far."
+    n "However, it probably was the smallest actual \".0\" update in the mod's history so far."
     n jsb "It also came bundled with the canceled Just Us 2!"
     n "Canceled mostly due to the developer preferring to focus on this mod rather than something entirely new."
     n jha "Valentine's day came quickly so there was a small \"patch\" update."
@@ -4416,13 +4417,13 @@ label ch30_candle:
         jump ch30_loop
     n jha "Alright!"
     n "Let's begin."
-    n "First... Let's talk about EVERYTHING that Edgarmods and his team have planned!"
+    n "First... Let's talk about EVERYTHING that Edgarmods and her team have planned!"
     n "This is all stuff to look forward to in the future!"
-    n "First off, They're starting a GitHub soon!"
+    n "First off, they're starting a GitHub soon!"
     n "This'll mean people like you can contribute!"
     n "And give me all new things to do with you!"
     n "As well the first DLC pack is coming very soon, probably next."
-    n "DLC packs are little add ons that add stuff to the mod that doesn't fit in now."
+    n "DLC packs are little add ons that add stuff to the mod that doesn't fit in right now."
     n jhd "I wont tell you what yet, ehehehe."
     n jha "And we're also going to be getting whole new sprites for me to talk through!"
     n "So I can post myself and have more faces!"
@@ -4511,16 +4512,16 @@ label ch30_candles2:
     n "Something happened, I gained access to something I shouldn't have."
     n "It damaged my character file, but I fixed it up."
     n "Sorry to kill the mood, haha."
-    n "Let's get back to the room eh?"
+    n "Let's get back to the room, eh?"
     $ style.say_window = style.window
     $ persistent.autoload = "ch30_autoload"
     $ exiting_fight = True
     jump ch30_autoload
 
 label ch30_trap:
-    n jnb "That's a really old thing [player]."
+    n jnb "That's a really old thing, [player]."
     n "But yes I do remember."
-    n "You want my opinion eh?"
+    n "You want my opinion, eh?"
     n jnb "It's... complicated..."
     n "The word itself is an offensive slur used against certain people."
     n "I'm guessing what you're asking is what I think of people calling me it?"
@@ -4538,7 +4539,7 @@ label ch30_trap:
     jump ch30_loop
 
 label ch30_attraction:
-    n jnb "Honestly I have no idea!"
+    n jnb "Honestly, I have no idea!"
     n "The game programmed me to love MC, who was male. But with this new freedom I don't really have preference."
     n "Hell, I don't even know what real people look like, well at least I don't have a clear idea."
     n "I guess you could say I'm attracted to anyone?"
@@ -4553,7 +4554,7 @@ label ch30_attraction:
     jump ch30_loop
 
 default celebrate = None
-label chholiday_1:
+label Natsuki_Christmas_ask_Player:
     n jnb "Hey, [player]."
     n "Do you celebrate Christmas?"
     menu:
@@ -4577,13 +4578,13 @@ label chholiday_1:
 
 default best_gift = ""
 
-label chholiday_2:
+label Natsuki_Christmas_Bestgift:
     n jha "[player], what was the best gift you ever got for Christmas?"
     n "For me, it was probably the pink frilly skirt I wear sometimes."
     n "My friend Amy got it for me."
     n jnb "Yes, THAT Amy."
     n "Even though I wrote bad stuff about her in my poem, I actually don't have a problem with her."
-    n jab "I'm not the kinda person to get angry at people for little things like liking spiders!"
+    n jab "I'm not the kinda person to get angry at people for little things, like liking spiders!"
     menu:
         "You get angry whenever I call you cute...":
             pass
@@ -4600,7 +4601,7 @@ label chholiday_2:
         n jab "Always seemed like more of a boy thing, haha."
     elif "phone" in best_gift:
         n jha "Lucky!"
-        n jnb "I have a phone but it's kind of garbage."
+        n jnb "I have a phone, but it's kind of garbage."
         n jsa "Best my family could afford at the time was a flip phone."
         n jnb "It worked, but it was an old thing."
     elif best_gift == "boobs":
@@ -4622,32 +4623,32 @@ label chholiday_2:
         n "I've never had a [best_gift] before."
     return
 
-label chholiday_3:
+label Natsuki_Christmas_TVshow :
     n jha "Did a show you like as a kid ever do a Christmas special?"
     n "God, those are so memorable."
     n "I would often just rewatch ones that had aired every year."
     n "They were just that memorable."
     n "I even watched them when it wasn't Christmas."
-    n jnb "They were that enjoyable I guess."
+    n jnb "They were that enjoyable, I guess."
     return
 
-label chholiday_4:
+label Natsuki_Christmas_Movie:
     n jab "What's with Christmas movies and being so darn cheesy."
     n "It's all \"Christmas spirit\" this, \"Peace to all\" that."
     n jnb "I mean, I don't dislike peace for all."
     n "But, still."
-    n "Maybe my opinion comes from only kids Christmas movies?"
+    n "Maybe my opinion comes from only watching kids' Christmas movies?"
     n "I usually watch those over more adult ones."
-    n jaa "N-Not because I like childish thing, I just used to watch them as a kid..."
+    n jaa "N-Not because I like childish things, I just used to watch them as a kid..."
     n "And... uh..."
     n jsb "..."
     return
 
-label chholiday_5:
+label Natsuki_Christmas_Apologies:
     n jsb "[player] I'm sorry I couldn't do as much this year for Christmas."
     n "It's been... a hell of a year."
     n "I didn't have much time to work on the room."
     n "But, I hope to have something better for New Years."
-    n jab "I have some exciting stuff planned for next year."
+    n jab "I do have some exciting stuff planned for next year."
     n "Stick around for that."
     return
