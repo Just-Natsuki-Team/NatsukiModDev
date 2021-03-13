@@ -138,7 +138,7 @@ init 0 python:
             return {
                 key:value
                 for key, value in self.__dict__.iteritems()
-                if key != "__persistent_db"
+                if key != "_m1_definitions__persistent_db"
             }
 
         def check_conditional(self):
