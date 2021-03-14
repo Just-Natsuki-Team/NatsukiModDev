@@ -33,6 +33,7 @@ label ch30_init:
     show mask_3 zorder 1
     show monika_room zorder 2
     show natsuki zorder 3
+    show screen hkb_overlay
     #Do all var-sets, resets, and sanity checks prior to entering the loop here
 
     #And finally, we head into the loop
@@ -64,8 +65,11 @@ label ch30_loop:
     #Now, as long as there's something in the queue, we should go for it
     while persistent._event_list:
         call call_next_topic
-    $ queue(greetings.select_greeting())
-    n "crash stopper"
+
+    
+
+    $ queue(pick_random_topic())
+
     jump ch30_loop
 
 label ch30_wait:

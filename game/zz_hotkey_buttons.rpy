@@ -72,16 +72,16 @@ style hkb_vbox_black:
 
 style hkb_button is default:
     properties gui.button_properties("hkb_button")
-    idle_background "mod_assets/hkb_idle_background.png"
-    hover_background "mod_assets/hkb_hover_background.png"
+    idle_background "mod_assets/buttons/hkb_idle_background.png"
+    hover_background "mod_assets/buttons/hkb_hover_background.png"
 
     hover_sound gui.hover_sound
     activate_sound gui.activate_sound
 
 style hkb_button_black is default:
     properties gui.button_properties("hkb_button_black")
-    idle_background "mod_assets/hkb_idle_background_black.png"
-    hover_background "mod_assets/hkb_hover_background_black.png"
+    idle_background "mod_assets/buttons/hkb_idle_background_black.png"
+    hover_background "mod_assets/buttons/hkb_hover_background_black.png"
 
     hover_sound gui.hover_sound
     activate_sound gui.activate_sound
@@ -99,8 +99,8 @@ style talk_vbox:
 
 style talk_button is default:
     properties gui.button_properties("talk_button")
-    idle_background "mod_assets/talk_idle_background.png"
-    hover_background "mod_assets/talk_hover_background.png"
+    idle_background "mod_assets/buttons/talk_idle_background.png"
+    hover_background "mod_assets/buttons/talk_hover_background.png"
 
     hover_sound gui.hover_sound
     activate_sound gui.activate_sound
@@ -119,8 +119,8 @@ style hkbd_vbox:
 
 style hkbd_button is default:
     properties gui.button_properties("hkb_button")
-    idle_background "mod_assets/hkb_disabled_background.png"
-    hover_background "mod_assets/hkb_disabled_background.png"
+    idle_background "mod_assets/buttons/hkb_disabled_background.png"
+    hover_background "mod_assets/buttons/hkb_disabled_background.png"
 
 style hkbd_button_text is default:
 
@@ -133,8 +133,8 @@ style hkbd_button_text is default:
 
 style hkbd_button_black is default:
     properties gui.button_properties("hkb_button_black")
-    idle_background "mod_assets/hkb_disabled_background_black.png"
-    hover_background "mod_assets/hkb_disabled_background_black.png"
+    idle_background "mod_assets/buttons/hkb_disabled_background_black.png"
+    hover_background "mod_assets/buttons/hkb_disabled_background_black.png"
 
 style hkbd_button_text_black is default:
 
@@ -158,8 +158,8 @@ style talkd_vbox:
 
 style talkd_button is default:
     properties gui.button_properties("hkb_button")
-    idle_background "mod_assets/hkb_disabled_background.png"
-    hover_background "mod_assets/hkb_disabled_background.png"
+    idle_background "mod_assets/buttons/hkb_disabled_background.png"
+    hover_background "mod_assets/buttons/hkb_disabled_background.png"
 
 style talkd_button_text is default:
     font gui.default_font
@@ -179,59 +179,20 @@ screen hkb_overlay:
         xalign 0.05
         yalign 0.95
 
-        if persistent.blackout:
-            if allow_dialogue:
-                textbutton _("Talk"):
-                    action Jump("talkmenu")
-                    style "hkb_button_black"
-            else:
-                textbutton _("Talk"):
-                    action NullAction()
-                    style "hkbd_button_black"
-        else:
-            if allow_dialogue:
-                textbutton _("Talk") action Jump("talkmenu")
-            else:
-                textbutton _("Talk"):
-                    action NullAction()
-                    style "hkbd_button"
-        if persistent.date == "":
-            if allow_dialogue:
-                textbutton _("Extras") action Jump("extrasmenu")
-            else:
-                textbutton _("Extras"):
-                    action NullAction()
-                    style "hkbd_button"
 
-        if persistent.natsuki_love:
-            if persistent.natsuki_emotion == "Happy" or persistent.natsuki_emotion == "Casual":
-                if allow_dialogue:
-                    textbutton _("Dates") action Jump("datemenu")
-                else:
-                    textbutton _("Dates"):
-                        action NullAction()
-                        style "hkbd_button"
-        elif persistent.natsuki_emotion == "Happy" or persistent.natsuki_emotion == "Casual":
-            if allow_dialogue:
-                textbutton _("Places") action Jump("datemenu")
-            else:
-                textbutton _("Places"):
-                    action NullAction()
-                    style "hkbd_button"
-        if persistent.date == "":
-            if allow_dialogue:
-                textbutton _("Music") action Jump("musicmenu")
-            else:
-                textbutton _("Music"):
-                    action NullAction()
-                    style "hkbd_button"
-        else:
-            if allow_dialogue:
-                textbutton _("Action") action Jump("actions")
-            else:
-                textbutton _("Action"):
-                    action NullAction()
-                    style "hkbd_button"
+        textbutton _("Talk"):
+            action Jump("ch30_loop")
+            #style "hkbd_button"
+
+        textbutton _("Extras"):
+            action Jump("ch30_loop")
+            #style "hkbd_button"
+
+
+        textbutton _("Dates"):
+            action Jump("ch30_loop")
+            #style "hkbd_button"
+
 
     text "v[config.version]":
                 xalign 1.0 yalign 1.0
@@ -241,9 +202,9 @@ screen hkb_overlay:
     vbox:
         imagebutton:
             xpos 546 ypos 273
-            idle "mod_assets/boopindicator.png"
-            hover "mod_assets/boopindicator.png"
-            action [If(allow_dialogue, true=Jump("ch30_boop"))]
+            idle "mod_assets/buttons/boopindicator.png"
+            hover "mod_assets/buttons/boopindicator.png"
+            action [If(True, true=Jump("ch30_boop"))]
 
 screen fight:
 
