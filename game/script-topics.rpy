@@ -30,3 +30,51 @@ label topic_example1:
 label topic_example2:
     n "example2"
     return
+
+#---------------talk_menu_topics--------------------
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_how_are_you",
+            unlocked=True,
+            prompt="How are you today?",
+            player_says=True
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_cupcakes",
+            unlocked=True,
+            prompt="Do you like cupcakes?",
+            player_says=True
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_not_unlocked_test",
+            unlocked=False,
+            prompt="This is not unlocked",
+            player_says=True
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_how_are_you:
+    n "Pretty good!"
+    return
+
+label talk_cupcakes:
+    n "I love them!"
+    return
+
+label talk_not_unlocked_test:
+    n "this topic isn't unlocked yet"
+    return

@@ -136,8 +136,9 @@ label ch30_talk:
     python:
         choice=None
         menu_items=[]
-        for topic in talk_topics.get_unlocked():
-            menu_items.append((topic.prompt, topic.label))
+        for topic in topics.TOPIC_MAP.values():
+            if topic.unlocked and topic.player_says == True:
+                menu_items.append((topic.prompt, topic.label))
 
         menu_items.append(("Nevermind", "ch30_loop"))
         menu_items.append(("Goodbye", farewells.select_farewell()))
