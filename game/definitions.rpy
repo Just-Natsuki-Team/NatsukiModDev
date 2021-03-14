@@ -14,6 +14,7 @@ init 0 python:
     TOPIC_TYPE_FAREWELL = "FAREWELL"
     TOPIC_TYPE_GREETING = "GREETING"
     TOPIC_TYPE_NORMAL = "NORMAL"
+    TOPIC_TYPE_TALK = "TALK"
 
     class Topic(object):
         """

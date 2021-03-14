@@ -130,10 +130,17 @@ label call_next_topic:
 
     return
 
+
+
 label ch30_talk:
-    menu:
-        "I have to go.":
-            $ push(farewells.select_farewell())
-            jump ch30_loop
-        "Nevermind":
-            jump ch30_loop
+    python:
+        choice=None
+        menu_items=[]
+        for topic in talk_topics.get_unlocked():
+            menu_items.append((topic.prompt, topic.label))
+
+        menu_items.append(("Nevermind", "ch30_loop"))
+        menu_items.append(("Goodbye", farewells.select_farewell()))
+        choice = menu(menu_items)
+        push(choice)
+    jump ch30_loop
