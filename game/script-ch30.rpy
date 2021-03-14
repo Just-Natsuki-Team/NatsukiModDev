@@ -1,6 +1,16 @@
 #Aaa this code is so clean!!!!! I really need to learn how to write like this! -Daisy
 
 label ch30_autoload:
+    #Start with black scene
+    scene black
+
+    python:
+        quick_menu = True
+        style.say_dialogue = style.normal
+        in_sayori_kill = None
+        allow_skipping = True
+        config.allow_skipping = False
+
     #Do all the things here for initial setup/flow hijacking
 
     #FALL THROUGH
@@ -18,6 +28,11 @@ label ch30_visual_setup:
 label ch30_init:
     #Let's pick a greeting
     $ push(greetings.select_greeting())
+
+    show mask_2 zorder 1
+    show mask_3 zorder 1
+    show monika_room zorder 2
+    show natsuki zorder 3
     #Do all var-sets, resets, and sanity checks prior to entering the loop here
 
     #And finally, we head into the loop
@@ -49,8 +64,9 @@ label ch30_loop:
     #Now, as long as there's something in the queue, we should go for it
     while persistent._event_list:
         call call_next_topic
-
-    #FALL THROUGH
+    $ queue(greetings.select_greeting())
+    n "crash stopper"
+    jump ch30_loop
 
 label ch30_wait:
     pause 5.0
@@ -79,3 +95,32 @@ init python:
         Runs every day during breaks between topics
         """
         pass
+
+#Other labels
+label call_next_topic:
+    if persistent._event_list:
+        $ topic = persistent._event_list.pop(0)
+
+        if renpy.has_label(topic):
+            call expression topic
+
+    python:
+        #Collect our return keys here
+        return_keys = _return if _return else dict()
+
+        topic_obj = get_topic(topic)
+
+        #Handle all things which act on topic objects here, since we can't access attributes of Nonetypes
+        if topic_obj is not None:
+            #Increment shown count
+            topic_obj.shown_count += 1
+
+            #Now manage return keys
+            if "derandom" in return_keys:
+                topic_obj.random = False
+
+    #This topic might quit
+    if "quit" in return_keys:
+        jump _quit
+
+    return

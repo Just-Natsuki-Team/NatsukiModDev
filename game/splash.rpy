@@ -60,17 +60,9 @@ image menu_fade:
     "white"
     menu_fadeout
 
-image menu_art_m:
+image menu_art_n:
     subpixel True
-    "gui/menu_art_m.png"
-    xcenter 1000
-    ycenter 640
-    zoom 1.00
-    menu_art_move(1.00, 1000, 1.00)
-
-image menu_art_m_ghost:
-    subpixel True
-    "gui/menu_art_m_ghost.png"
+    "gui/menu_art_n.png"
     xcenter 1000
     ycenter 640
     zoom 1.00
@@ -249,9 +241,11 @@ label autoload:
         if "_old_game_menu_screen" in globals():
             _game_menu_screen = _old_game_menu_screen
             del _old_game_menu_screen
+
         if "_old_history" in globals():
             _history = _old_history
             del _old_history
+
         renpy.block_rollback()
 
         # Fix the game context (normally done when loading save file)
@@ -267,17 +261,18 @@ label autoload:
     # Pop the _splashscreen label which has _confirm_quit as False and other stuff
     $ renpy.pop_call()
 
-    # finally lets run actions that needed to be run
-    $ mas_runDelayedActions(MAS_FC_START)
-
     #jump expression persistent.autoload
     # NOTE: we should always jump to ch30 instead
     jump ch30_autoload
 
 label before_main_menu:
-    $ config.main_menu_music = audio.t1
+    if persistent.playername != "":
+        $ renpy.jump_out_of_context("start")
+    #else:
+    #    $ config.main_menu_music = audio.t1
     return
 
 label quit:
-    #Do things we want to run on game quit here
+    #Save topic data
+    $ Topic._save_topic_data()
     return
