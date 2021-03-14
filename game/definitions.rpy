@@ -272,8 +272,8 @@ define audio.battle = "custom-music/battle.mp3"
 define audio.spooky1 = "mod_assets/bgm/spooky1.ogg"
 
 #placeholder sprite
-image natsuki = im.Composite((1280, 720), (0, 0), "mod_assets/natsuki-assets/desk.png", (0, 0), "mod_assets/natsuki-assets/base.png", (0, 0), "mod_assets/natsuki-assets/uniform.png", (0, 0), "mod_assets/natsuki-assets/jnab.png")
-
+image natsuki a = im.Composite((1280, 720), (0, 0), "mod_assets/natsuki-assets/desk.png", (0, 0), "mod_assets/natsuki-assets/base.png", (0, 0), "mod_assets/natsuki-assets/uniform.png", (0, 0), "mod_assets/natsuki-assets/jnab.png")
+    
 ##Character Definitions
 define mc = DynamicCharacter('player', image='mc', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 define s = DynamicCharacter('s_name', image='sayori', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")

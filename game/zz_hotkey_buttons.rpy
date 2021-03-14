@@ -181,7 +181,7 @@ screen hkb_overlay:
 
 
         textbutton _("Talk"):
-            action Jump("ch30_loop")
+            action Jump("ch30_talk")
             #style "hkbd_button"
 
         textbutton _("Extras"):

@@ -32,7 +32,7 @@ label ch30_init:
     show mask_2 zorder 1
     show mask_3 zorder 1
     show monika_room zorder 2
-    show natsuki zorder 3
+    show natsuki a zorder 3
     show screen hkb_overlay
     #Do all var-sets, resets, and sanity checks prior to entering the loop here
 
@@ -60,20 +60,21 @@ label ch30_loop:
             LAST_DAY_CHECK = _now.day
 
         #We'll also check if we need to redraw the room
-        main_background.check_redraw()
+        #no day/night room images yet
+        #main_background.check_redraw()
 
     #Now, as long as there's something in the queue, we should go for it
     while persistent._event_list:
         call call_next_topic
 
+       
+    $ queue(pick_random_topic())
+    jump ch30_wait
     
 
-    $ queue(pick_random_topic())
-
-    jump ch30_loop
-
 label ch30_wait:
-    pause 5.0
+    window hide
+    $ renpy.pause(delay=5.0, hard=True)
     jump ch30_loop
 
 
@@ -128,3 +129,11 @@ label call_next_topic:
         jump _quit
 
     return
+
+label ch30_talk:
+    menu:
+        "I have to go.":
+            $ push(farewells.select_farewell())
+            jump ch30_loop
+        "Nevermind":
+            jump ch30_loop
