@@ -32,11 +32,39 @@ init 6 python:
         """
         return store.topic_handler.ALL_TOPIC_MAP.get(topic_label, None)
 
-    def pick_random_topic():
+    def pick_random_topic(**filters):
         """
-        Picks a random topic
+        Picks a random topic with possible filters
 
-        TODO: Build filters and such
+        IN(optional):
+                label - renpy label (as string) this topic corresponds to
+                prompt - string representing the prompt to use for this topic in menus
+                conditional - condition under which this topic should be allowed to be shown
+                category - list of strings representing categories to group this topic under. If None, an empty list is assigned
+                unlocked - whether or not this topic is displayed to the user in menus
+                nat_says - whether or not this topic will be brought up by Natsuki
+                player_says - whether or not this topic is to be prompted by the player
+                location - location this topic is bound to. If None, it can be shown in all locations
+                additional_properties - dictionary representing additional properties which don't directly affect the topic itself. If None, an empty dict is assigned
+        OUT:
+            topics passing all filters
         """
-        #For now, return a random topic
-        return random.choice(topics.TOPIC_MAP.keys())
+
+        #I feel like there is a better way to do this..
+        filtered_topics = []
+        passed = True
+        for topic in topics.TOPIC_MAP.values():
+            for filter_ in filters:
+                if getattr(topic, filter_) != filters[filter_]:
+                    passed = False
+                    break
+            if passed:
+                filtered_topics.append(topic)
+            passed = True
+        if filtered_topics != []:
+            return random.choice(filtered_topics).label
+        else:
+            return ch30_loop
+
+
+

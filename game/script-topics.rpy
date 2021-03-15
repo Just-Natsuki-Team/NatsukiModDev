@@ -21,11 +21,10 @@ init 5 python:
         topic_group=TOPIC_TYPE_NORMAL
     )
 
+
 label topic_example1:
     n "example1"
     return
-
-
 
 label topic_example2:
     n "example2"

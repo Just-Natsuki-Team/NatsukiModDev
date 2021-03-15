@@ -42,7 +42,7 @@ label ch30_init:
 #The main loop
 label ch30_loop:
     #Do topic selection here
-    #TODO: jump pick_random_topic
+    $ queue(pick_random_topic(unlocked=True, player_says=False))
 
     #Run our checks
     python:
@@ -67,9 +67,7 @@ label ch30_loop:
     while persistent._event_list:
         call call_next_topic
 
-       
-    $ queue(pick_random_topic())
-    jump ch30_wait
+    jump ch30_loop
     
 
 label ch30_wait:
