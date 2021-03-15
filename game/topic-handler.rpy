@@ -49,6 +49,7 @@ init 6 python:
         OUT:
             topics passing all filters
         """
+<<<<<<< HEAD
 
         #I feel like there is a better way to do this..
         filtered_topics = []
@@ -68,3 +69,7 @@ init 6 python:
 
 
 
+=======
+        #For now, return a random topic
+        return random.choice(topics.TOPIC_MAP.keys())
+>>>>>>> 5d4e149ffb53ca16b870ef655ef1f36c140a9b4e
