@@ -34,22 +34,21 @@ init 6 python:
 
     def pick_random_topic(**filters):
         """
-        Picks a random topic with possible filters
+        Picks a random topic with optional filters
 
         IN(optional):
                 label - renpy label (as string) this topic corresponds to
                 prompt - string representing the prompt to use for this topic in menus
                 conditional - condition under which this topic should be allowed to be shown
-                category - list of strings representing categories to group this topic under. If None, an empty list is assigned
+                category - list of strings representing categories to group this topic under.
                 unlocked - whether or not this topic is displayed to the user in menus
                 nat_says - whether or not this topic will be brought up by Natsuki
                 player_says - whether or not this topic is to be prompted by the player
                 location - location this topic is bound to. If None, it can be shown in all locations
-                additional_properties - dictionary representing additional properties which don't directly affect the topic itself. If None, an empty dict is assigned
+                additional_properties - dictionary representing additional properties which don't directly affect the topic itself.
         OUT:
-            topics passing all filters
+            random topic passing all filters
         """
-<<<<<<< HEAD
 
         #I feel like there is a better way to do this..
         filtered_topics = []
@@ -67,9 +66,34 @@ init 6 python:
         else:
             return ch30_loop
 
+    def get_all_topics(**filters):
+        """
+        return all topics passing optional filters
 
+        IN(optional):
+                label - renpy label (as string) this topic corresponds to
+                prompt - string representing the prompt to use for this topic in menus
+                conditional - condition under which this topic should be allowed to be shown
+                category - list of strings representing categories to group this topic under.
+                unlocked - whether or not this topic is displayed to the user in menus
+                nat_says - whether or not this topic will be brought up by Natsuki
+                player_says - whether or not this topic is to be prompted by the player
+                location - location this topic is bound to. If None, it can be shown in all locations
+                additional_properties - dictionary representing additional properties which don't directly affect the topic itself.
+        OUT:
+            topics passing all filters
+        """
 
-=======
-        #For now, return a random topic
-        return random.choice(topics.TOPIC_MAP.keys())
->>>>>>> 5d4e149ffb53ca16b870ef655ef1f36c140a9b4e
+        filtered_topics = []
+        passed = True
+        for topic in topics.TOPIC_MAP.values():
+            for filter_ in filters:
+                if getattr(topic, filter_) != filters[filter_]:
+                    passed = False
+                    break
+            if passed:
+                filtered_topics.append(topic)
+            passed = True
+        if filtered_topics != []:
+            return filtered_topics
+

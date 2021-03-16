@@ -219,6 +219,24 @@ init 0 python:
         """
         persistent._event_list.append(topic_label)
 
+    def menu_list(menu_topics, additional_topics):
+        """
+        Returns a list of items ready for a menu
+
+        IN:
+            menu_topics - array of topics. Recommended input of get_all_topics()
+            additional_topics - optional, array of tuples
+                syntax: [("prompt1", "label2"), ("prompt2", "label2"), ...]
+        OUT:
+            array of tuples usable by menu()
+        """
+        menu_items = []
+        for topic in menu_topics:
+            menu_items.append((topic.prompt, topic.label))
+
+        for topic in additional_topics:
+            menu_items.append(topic)
+        return menu_items
 
 #Stuff that's really early, which should be usable basically anywhere
 init -999 python in utils:

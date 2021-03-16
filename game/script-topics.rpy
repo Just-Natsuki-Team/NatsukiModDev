@@ -66,6 +66,8 @@ init 5 python:
         topic_group=TOPIC_TYPE_NORMAL
     )
 
+
+
 label talk_how_are_you:
     n "Pretty good!"
     return
@@ -77,3 +79,7 @@ label talk_cupcakes:
 label talk_not_unlocked_test:
     n "this topic isn't unlocked yet"
     return
+
+label talk_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
+    n "Okay!"
+    jump ch30_loop

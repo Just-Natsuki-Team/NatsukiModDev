@@ -127,22 +127,17 @@ label call_next_topic:
         jump _quit
 
     return
-<<<<<<< HEAD
 
 
 
 label ch30_talk:
     python:
-        choice=None
-        menu_items=[]
-        for topic in topics.TOPIC_MAP.values():
-            if topic.unlocked and topic.player_says == True:
-                menu_items.append((topic.prompt, topic.label))
-
-        menu_items.append(("Nevermind", "ch30_loop"))
-        menu_items.append(("Goodbye", farewells.select_farewell()))
+        topics_ = get_all_topics(player_says=True, unlocked=True)
+        addit_topics = [
+            ("Nevermind", "talk_nevermind"),
+            ("Goodbye", farewells.select_farewell())
+            ]
+        menu_items = menu_list(topics_, addit_topics)
         choice = menu(menu_items)
         push(choice)
     jump ch30_loop
-=======
->>>>>>> 5d4e149ffb53ca16b870ef655ef1f36c140a9b4e
