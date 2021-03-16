@@ -33,7 +33,7 @@ label ch30_init:
     show mask_3 zorder 1
     show monika_room zorder 2
     show natsuki a zorder 3
-    show screen hkb_overlay
+    show screen hkb_overlay(Action=False)
     #Do all var-sets, resets, and sanity checks prior to entering the loop here
 
     #And finally, we head into the loop
@@ -130,13 +130,53 @@ label call_next_topic:
 
 
 
-label ch30_talk:
+label talk_menu:
     python:
         topics_ = get_all_topics(player_says=True, unlocked=True)
         addit_topics = [
-            ("Nevermind", "talk_nevermind"),
+            ("Nevermind", "menu_nevermind"),
             ("Goodbye", farewells.select_farewell())
             ]
+        menu_items = menu_list(topics_, addit_topics)
+        choice = menu(menu_items)
+        push(choice)
+    jump ch30_loop
+
+label dates_menu:
+    python:
+        topics_ = get_all_topics(player_says=True, unlocked=True)
+        addit_topics = [("Nevermind", "menu_nevermind")]
+
+        menu_items = menu_list(topics_, addit_topics)
+        choice = menu(menu_items)
+        push(choice)
+    jump ch30_loop
+
+label action_menu:
+    python:
+        topics_ = get_all_topics(player_says=True, unlocked=True)
+        addit_topics = [("Nevermind", "menu_nevermind")]
+
+        menu_items = menu_list(topics_, addit_topics)
+        choice = menu(menu_items)
+        push(choice)
+    jump ch30_loop
+
+label music_menu:
+    python:
+        topics_ = get_all_topics(player_says=True, unlocked=True)
+        addit_topics = [("Nevermind", "menu_nevermind")]
+
+        menu_items = menu_list(topics_, addit_topics)
+        choice = menu(menu_items)
+        push(choice)
+    jump ch30_loop
+
+label extras_menu:
+    python:
+        topics_ = get_all_topics(player_says=True, unlocked=True)
+        addit_topics = [("Nevermind", "menu_nevermind")]
+
         menu_items = menu_list(topics_, addit_topics)
         choice = menu(menu_items)
         push(choice)

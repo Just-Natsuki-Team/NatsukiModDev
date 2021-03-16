@@ -119,8 +119,11 @@ style hkbd_vbox:
 
 style hkbd_button is default:
     properties gui.button_properties("hkb_button")
-    idle_background "mod_assets/buttons/hkb_disabled_background.png"
-    hover_background "mod_assets/buttons/hkb_disabled_background.png"
+    insensitive_background "mod_assets/buttons/hkb_disabled_background.png"
+    idle_background "mod_assets/buttons/hkb_idle_background.png"
+    hover_background "mod_assets/buttons/hkb_hover_background.png"
+    hover_sound gui.hover_sound
+    activate_sound gui.activate_sound
 
 style hkbd_button_text is default:
 
@@ -133,8 +136,8 @@ style hkbd_button_text is default:
 
 style hkbd_button_black is default:
     properties gui.button_properties("hkb_button_black")
-    idle_background "mod_assets/buttons/hkb_disabled_background_black.png"
-    hover_background "mod_assets/buttons/hkb_disabled_background_black.png"
+    idle_background "mod_assets/buttons/hkb_idle_background.png"
+    hover_background "mod_assets/buttons/hkb_idle_background.png"
 
 style hkbd_button_text_black is default:
 
@@ -170,7 +173,7 @@ style talkd_button_text is default:
     outlines []
 
 
-screen hkb_overlay:
+screen hkb_overlay(Talk=True, Dates=True, Music=True, Action=True, Extras=True):
     zorder 50
 
     style_prefix "hkb"
@@ -179,19 +182,26 @@ screen hkb_overlay:
         xalign 0.05
         yalign 0.95
 
-
-        textbutton _("Talk"):
-            action Jump("ch30_talk")
-            #style "hkbd_button"
-
-        textbutton _("Extras"):
-            action Jump("ch30_loop")
-            #style "hkbd_button"
-
-
-        textbutton _("Dates"):
-            action Jump("ch30_loop")
-            #style "hkbd_button"
+        if Talk:
+            textbutton _("Talk"):
+                action Jump("talk_menu")
+                style "hkbd_button"
+        if Dates:
+            textbutton _("Dates"):
+                action Jump("dates_menu")
+                style "hkbd_button"
+        if Music:
+            textbutton _("Music"):
+                action Jump("music_menu")
+                style "hkbd_button"
+        if Action:
+            textbutton _("Action"):
+                action Jump("action_menu")
+                style "hkbd_button"
+        if Extras:
+            textbutton _("Extras"):
+                action Jump("extras_menu")
+                style "hkbd_button"
 
 
     text "v[config.version]":
