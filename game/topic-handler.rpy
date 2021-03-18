@@ -64,22 +64,22 @@ init 6 python:
         if filtered_topics != []:
             return random.choice(filtered_topics).label
         else:
-            return ch30_loop
+            return
 
     def get_all_topics(**filters):
         """
         return all topics passing optional filters
 
         IN(optional):
-                label - renpy label (as string) this topic corresponds to
-                prompt - string representing the prompt to use for this topic in menus
-                conditional - condition under which this topic should be allowed to be shown
-                category - list of strings representing categories to group this topic under.
-                unlocked - whether or not this topic is displayed to the user in menus
-                nat_says - whether or not this topic will be brought up by Natsuki
-                player_says - whether or not this topic is to be prompted by the player
-                location - location this topic is bound to. If None, it can be shown in all locations
-                additional_properties - dictionary representing additional properties which don't directly affect the topic itself.
+            label - renpy label (as string) this topic corresponds to
+            prompt - string representing the prompt to use for this topic in menus
+            conditional - condition under which this topic should be allowed to be shown
+            category - list of strings representing categories to group this topic under.
+            unlocked - whether or not this topic is displayed to the user in menus
+            nat_says - whether or not this topic will be brought up by Natsuki
+            player_says - whether or not this topic is to be prompted by the player
+            location - location this topic is bound to. If None, it can be shown in all locations
+            additional_properties - dictionary representing additional properties which don't directly affect the topic itself.
         OUT:
             topics passing all filters
         """
@@ -94,6 +94,5 @@ init 6 python:
             if passed:
                 filtered_topics.append(topic)
             passed = True
-        if filtered_topics != []:
-            return filtered_topics
+        return filtered_topics
 
