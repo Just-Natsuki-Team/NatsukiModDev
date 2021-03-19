@@ -1,5 +1,5 @@
 #Start off in the clubroom
-default persistent._current_location = "clubroom"
+default persistent._current_location = "classroom"
 
 init python in locations:
     import store
@@ -119,6 +119,8 @@ init -20 python:
             """
             Sets the location. Does NOT run exit prog points for the current location
 
+            Also does not set persistent
+
             IN:
                 new_location - new location
                 **kwargs - keword arguments to pass to the prog points
@@ -198,6 +200,12 @@ init -20 python:
             elif not self.is_day() and self.is_showing_day_room():
                 self.draw(full_redraw=True)
 
+        def save(self):
+            """
+            Saves room related into to persistent
+            """
+            persistent._current_location = self.location.id
+
 init python:
     main_background = Room()
 
@@ -207,3 +215,6 @@ init python:
     )
 
     main_background.setLocation(classroom)
+
+    if persistent._current_location in locations.LOCATION_MAP:
+        main_background.changeLocation(persistent._current_location)
