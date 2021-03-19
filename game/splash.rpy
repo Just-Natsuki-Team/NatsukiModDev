@@ -275,4 +275,7 @@ label before_main_menu:
 label quit:
     #Save topic data
     $ Topic._save_topic_data()
+
+    #Save background data
+    $ main_background.save()
     return
