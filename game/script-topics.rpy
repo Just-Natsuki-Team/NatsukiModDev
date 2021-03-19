@@ -7,18 +7,18 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="clubroom_topic_example1",
+            label="classroom_topic_example1",
             unlocked=True,
-            location="clubroom"
+            location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
     )
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="clubroom_topic_example2",
+            label="classroom_topic_example2",
             unlocked=True,
-            location="clubroom"
+            location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
     )
@@ -42,12 +42,12 @@ init 5 python:
     )
 
 
-label clubroom_topic_example1:
-    n "example1"
+label classroom_topic_example1:
+    n "classroom1"
     return
 
-label clubroom_topic_example2:
-    n "example2"
+label classroom_topic_example2:
+    n "classroom2"
     return
 
 label beach_topic_example1:
@@ -68,7 +68,7 @@ init 5 python:
             unlocked=True,
             prompt="How are you today?",
             player_says=True,
-            location="clubroom"
+            location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
     )
@@ -80,7 +80,7 @@ init 5 python:
             unlocked=True,
             prompt="Do you like cupcakes?",
             player_says=True,
-            location="clubroom"
+            location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
     )
@@ -127,13 +127,15 @@ init 5 python:
 label date_go2_beach:
     n "I love the beach"
     n "Let's go!"
-    $ persistent._current_location = "beach"
-    n "(we are now at the beach)" #TODO:incorporate with location()
+    $ main_background.changeLocation(beach)
+    $ main_background.draw(full_redraw=True)
+    show natsuki a zorder 3 #remove after sprite rework
     return
 
 label date_go2_room:
     n "Heading back then?"
     n "Alright!"
-    $ persistent._current_location = "clubroom"
-    n "(we are now in the clubroom)" #TODO:incorporate with location()
+    $ main_background.changeLocation(classroom)
+    $ main_background.draw(dissolve_all=True, full_redraw=True)
+    show natsuki a zorder 3 #remove after sprite rework
     return

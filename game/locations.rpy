@@ -206,4 +206,9 @@ init python:
         image_dir="classroom"
     )
 
+    beach = Location(
+        id="beach",
+        image_dir="beach"
+    )
+
     main_background.setLocation(classroom)

@@ -29,9 +29,7 @@ label ch30_init:
     #Let's pick a greeting
     $ push(greetings.select_greeting())
 
-    show mask_2 zorder 1
-    show mask_3 zorder 1
-    show monika_room zorder 2
+    $ main_background.draw(full_redraw=True)
     show natsuki a zorder 3
     show screen hkb_overlay(Action=False)
     #Do all var-sets, resets, and sanity checks prior to entering the loop here
@@ -42,7 +40,7 @@ label ch30_init:
 #The main loop
 label ch30_loop:
     #Do topic selection here
-    $ queue(pick_random_topic(unlocked=True, player_says=False, location=persistent._current_location))
+    $ queue(pick_random_topic(unlocked=True, player_says=False, location=main_background.location.id))
 
     #Run our checks
     python:
@@ -60,7 +58,6 @@ label ch30_loop:
             LAST_DAY_CHECK = _now.day
 
         #We'll also check if we need to redraw the room
-        #no day/night room images yet
         #main_background.check_redraw()
 
     #Now, as long as there's something in the queue, we should go for it
@@ -132,7 +129,7 @@ label call_next_topic:
 
 label talk_menu:
     python:
-        topics_ = get_all_topics(player_says=True, unlocked=True, location=persistent._current_location)
+        topics_ = get_all_topics(player_says=True, unlocked=True, location=main_background.location.id)
         addit_topics = [
             ("Nevermind", "menu_nevermind"),
             ("Goodbye", farewells.select_farewell())
@@ -154,7 +151,7 @@ label dates_menu:
 
 label action_menu:
     python:
-        topics_ = get_all_topics(player_says=True, unlocked=True, location=persistent._current_location)
+        topics_ = get_all_topics(player_says=True, unlocked=True, location=main_background.location)
         addit_topics = [("Nevermind", "menu_nevermind")]
 
         menu_items = menu_list(topics_, addit_topics)
@@ -164,7 +161,7 @@ label action_menu:
 
 label music_menu:
     python:
-        topics_ = get_all_topics(player_says=True, unlocked=True, location=persistent._current_location)
+        topics_ = get_all_topics(player_says=True, unlocked=True, location=main_background.location)
         addit_topics = [("Nevermind", "menu_nevermind")]
 
         menu_items = menu_list(topics_, addit_topics)
@@ -174,7 +171,7 @@ label music_menu:
 
 label extras_menu:
     python:
-        topics_ = get_all_topics(player_says=True, unlocked=True, location=persistent._current_location)
+        topics_ = get_all_topics(player_says=True, unlocked=True, location=main_background.location)
         addit_topics = [("Nevermind", "menu_nevermind")]
 
         menu_items = menu_list(topics_, addit_topics)
