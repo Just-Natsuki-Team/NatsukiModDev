@@ -129,7 +129,7 @@ label date_go2_beach:
     n "Let's go!"
     $ main_background.changeLocation(beach)
     $ main_background.draw(full_redraw=True)
-    show natsuki a zorder 3 #remove after sprite rework
+    show natsuki a zorder 3 #replace after sprite rework
     return
 
 label date_go2_room:
@@ -137,5 +137,5 @@ label date_go2_room:
     n "Alright!"
     $ main_background.changeLocation(classroom)
     $ main_background.draw(dissolve_all=True, full_redraw=True)
-    show natsuki a zorder 3 #remove after sprite rework
+    show natsuki a zorder 3 #replace after sprite rework
     return

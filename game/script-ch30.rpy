@@ -30,12 +30,14 @@ label ch30_init:
     $ push(greetings.select_greeting())
 
     $ main_background.draw(full_redraw=True)
-    show natsuki a zorder 3
+    #show natsuki a zorder 3
+    show Natsuki zorder 3
     show screen hkb_overlay(Action=False)
     #Do all var-sets, resets, and sanity checks prior to entering the loop here
 
     #And finally, we head into the loop
     jump ch30_loop
+
 
 #The main loop
 label ch30_loop:
