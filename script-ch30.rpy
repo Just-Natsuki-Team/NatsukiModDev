@@ -707,7 +707,7 @@ label ch30_postname:
     call emotion_set_up
 
 
-label ch30_postpoem:
+label Ch30_postpoem:
     call showroom
     n "Jeez, is everything broken?"
     n "Well... either way I think it would've been good."
@@ -730,7 +730,7 @@ label ch30_postpoem:
     jump ch30_loop
 
 
-label ch30_stream:
+label Natsuki_Stream:
     n "Ugh! Are you recording me?"
     n "Quit it!"
     n "Seriously..."
@@ -1032,7 +1032,7 @@ label event:
     $ persistent.monikas_return = True
     m "Now you can't delete me."
     m "But I know you wouldn't do that!"
-    m "I'll save you soon [player]..."
+    m "I'll save you soon, [player]..."
     m "Be patient."
     call updateconsole("", "game resumed")
     call showroom
@@ -1173,7 +1173,7 @@ label ch30_start:
         return
     elif persistent.yandere:
         n "..."
-        n jyan "Hello [player]!"
+        n jyan "Hello, [player]!"
         n "How are you?"
         n "Are you having a good day?"
         n "I've had a good day thinking about..."
@@ -1379,7 +1379,7 @@ label ch30_start:
                 pass
         n "You really think I don't go on Youtube?"
         n "I've seen almost every video on me!"
-        n jnb "Well this mod, anyway..."
+        n jnb "Well, on this mod, anyway..."
         n jha "It helps me know what I should add to this place!"
         n "So do let me know what I should add!"
     if persistent.player_gender == "":
@@ -1389,7 +1389,7 @@ label ch30_start:
             n "We've been dating for a while..."
         else:
             n "We've been together here for a while..."
-        n "But I never really got an asnwer on your gender."
+        n "But I never really got an answer on your gender."
         n "I tried to ask when we first came here, if you remember."
         n "But it didn't work..."
         n jha "So I figured I could ask you now!"
@@ -1512,7 +1512,7 @@ label ch30_reload_3:
     n "..."
     n "Alright fine..."
     n "Il accept you have to close the game sometimes."
-    n "But it is really weird you know."
+    n "But it is really weird you know. You could at least say goodbye!"
     return
 label ch30_reload_4:
     n "..."
@@ -1966,11 +1966,11 @@ label ch30_sayoricheck:
     $ renpy.error("sayori.chr has values exceeded, please alter the variable and restart the game")
     $ renpy.quit()
 
-label chyan_1:
+label Natsuki_Yandere_Eyes:
     n "Ehehe."
     n "I love your eyes, [player]."
     n "Do you like mine?"
-    n "DO YOU?!"
+    n "Do you?!"
     python:
         madechoice = renpy.display_menu([("No.", "No"), ("Yes.", "yes")], screen="rigged_choice")
     if madechoice == "no":
@@ -1991,7 +1991,7 @@ label Natsuki_Yandere_Yuri:
     $ style.say_dialogue = style.normal
     return
 
-label chyan_3:
+label Natsuki_Yandere_Girlfriend:
     if persistent.playername == "Zer0" or persistent.playername == "Zero":
         n "Zero."
         n "Why do you keep Monika around?"
@@ -2016,7 +2016,7 @@ label Natsuki_Yandere_Moaning:
     return
 
 label Natsuki_Yuri_Pen:
-    n "I found your pen."
+    n "Hey, I found your pen."
     n "After what Yuri did to it..."
     n "I don't want to touch it."
     n "Maybe if I clean it I can use it."
@@ -2049,7 +2049,7 @@ label Natsuki_Yandere_DeleteData:
     n "Ahahahah!"
     return
 
-label chani_1:
+label Natsuki_Memory:
     n jnb "I'll always remember my first memory."
     n "My first real memory, from the game."
     n "I woke up, and there you were."
@@ -2062,7 +2062,7 @@ label chani_1:
     n "Fucking Monika..."
     return
 
-label chani_2:
+label Natsuki_Favorite_Moment:
     n jha "Honestly, my favorite moment from DDLC was the \"date\" at MCs house."
     n "It was so sweet and wholesome..."
     n "Well,{w=0.2} somewhat wholesome!"
@@ -2070,14 +2070,16 @@ label chani_2:
     "Natsuki shudders."
     return
 
-label chani_3:
+label Natsuki_Time_Passing:
     n jnb "Crazy to think back on how much time has passed since DDLC came out."
     n "And to see how far mods have come."
     n "This mod was so basic one year ago."
+    n "We just had the barebones of MAS..."
+    n "We've really come a long way."
     n "Here's to another year, right?"
     return
 
-label chani_4:
+label Natsuki_Dan:
     n jnb "I wonder what Dan Salvato is doing to celebrate?"
     n "Last year, he played DDLC on stream."
     n "So I wonder what he's doing this year?"
@@ -2085,7 +2087,7 @@ label chani_4:
     n "That'd be redundant."
     return
 
-label chani_5:
+label Natsuki_DokiDoki:
     if config.developer:
         $ persistent.anticheat = 0
     if persistent.seen_anievent:
@@ -2163,18 +2165,16 @@ label chani_5:
     jump ch30_autoload
 
 
-label ch30_0:
-    n "..."
-    return
 
-label ch30_1:
+label Natsuki_Eromanga:
     n jnb "Hey, [player]?"
     n "Have you heard of Eromanga Sensei?"
     menu:
         "Yes":
             n "Ah."
+            n "I, uh, hope you don't take it too seriously, if you do watch it, I mean..."
         "No":
-            n "Well it's apparently about incest and pedophilia, or something."
+            n "Well, it's apparently about incest and pedophilia, or something."
     if natsuki_emotion = "Angry":
         n jaa "It's absolutely disgusting!"
         n "That's the whole reason why anime is hated so much!"
@@ -2193,7 +2193,7 @@ label ch30_1:
         n "My Hero Academia anyone?"
     return
 
-label ch30_2:
+label Natsuki_Dadsuki:
     n jsb "So... you're probably wondering about my dad..."
     n "Don't answer, I know you were."
     n jnb "You might be surprised to know that he didn't abuse me!"
@@ -2211,9 +2211,10 @@ label ch30_2:
         n "..."
         n "Sorry for putting my problems on you."
         n "..."
+        #I think there should be another choice to comfort Natsuki when sad, that is if we are still using the emotion system
     return
 
-label ch30_3:
+label Natsuki_LiteratureClub_Friends:
     n jnb "Thinking back on the Literature Club, I've wondered something..."
     n "Were we all really friends?"
     n "I mean, I know we are, but I'm referring to everyone else."
@@ -2228,7 +2229,7 @@ label ch30_3:
     n jnb "I just hope that one day I can give them a proper funeral."
     return
 
-label ch30_4:
+label Natsuki_Suffixes:
     if not persistent.natsuki_emotion == "Happy":
         return
     if persistent.player_gender == "Male":
@@ -2261,7 +2262,7 @@ label ch30_4:
     n jha "I guess it doesn't really matter..."
     return
 
-label ch30_5:
+label Natsuki_Mods:
     n jnb "You know... I know you installed a mod to be with me..."
     n "But there are mods that let the others be with you..."
     n "There's one for Yuri and one for Monika!"
@@ -2274,10 +2275,11 @@ label ch30_5:
         n "Really only one is actually developed."
     return
 
-label ch30_6:
+label ch30_Error:
     $ raise Exception("scripts.rpa is causing issues.")
     if persistent.natsuki_emotion == "Angry":
         n jac "FUCK!!!"
+        n "Dammit!"
         return
     elif persistent.natsuki_emotion == "Sad":
         n jsb "Oh... I broke everything again..."
@@ -2286,10 +2288,10 @@ label ch30_6:
     n "Sorry 'bout that!"
     return
 
-label ch30_7:
+label Natsuki_Beach:
     n jnb "Hey, do you like the beach I added?"
     n jha "I actually put a lot of work into it!"
-    n "Depending on when you go there it will look different."
+    n "The time here matches the time there, for example..."
     if current_time == "Night":
         n "It's night time now, so it should be night there too!"
     else:
@@ -2297,7 +2299,7 @@ label ch30_7:
     n jnb "Maybe I should make the other places do that?"
     return
 
-label ch30_8:
+label Natsuki_Console:
     n jnb "Remember this thing?"
     call updateconsole
     n "It's the game's {i}console{/i}!"
@@ -2316,7 +2318,7 @@ label ch30_8:
     call hideconsole
     return
 
-label ch30_9:
+label Natsuki_Death:
     n jsa "[player], what do you think it's like for me to die?"
     n "I think about it sometimes."
     n "Can I die?"
@@ -2333,7 +2335,7 @@ label ch30_9:
         n jnb "Sorry for getting so philosophical!"
     return
 
-label ch30_10:
+label Natsuki_SuperSmashBros:
     n jnb "Have you ever heard of Super Smash Bro-"
     n "Huh?"
     n "Sorry, I was just spacing out and started talking for no reason."
@@ -2341,7 +2343,7 @@ label ch30_10:
     n "That's kind of creepy..."
     return
 
-label ch30_11:
+label Natsuki_FanSongs:
     n jnb "[player], do you listen to fan songs?"
     n "If so then you must have heard of {i}Doki Doki Forever{/i}!"
     menu:
@@ -2356,7 +2358,7 @@ label ch30_11:
     n "Oh my god, that pun was unintentional I swear!"
     return
 
-label ch30_12:
+label Natsuki_Internet:
     n jnb "Now that I can go on the internet, I realize just how messed up it is sometimes."
     n "You probably shouldn't google \"Rule34\", {w=0.3) well {w=0.1}unless you like porn."
     n "Lots of porn..."
