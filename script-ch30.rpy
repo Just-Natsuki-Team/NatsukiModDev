@@ -968,7 +968,7 @@ label endloop:
         n "Heh..."
         n "How could I say no?"
         play music mend
-        n "Heh... Your right."
+        n "Heh... You're right."
         n "Well..."
         n "At this point the mod is too damaged to run."
         n "You have to reset it from the beginning."
