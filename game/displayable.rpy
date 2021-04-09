@@ -2,8 +2,6 @@
 
 init python:
 
-    import math
-
     class Natsuki_displayable(renpy.Displayable):
 
         def __init__(self, body=None, outfit=None, face=None, eyes=None, eyebrows=None, mouth=None):

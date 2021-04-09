@@ -9,7 +9,9 @@ init 5 python:
             persistent._topic_database,
             label="classroom_topic_example1",
             unlocked=True,
-            location="classroom"
+            location="classroom",
+            affinity_range=(0, 50),
+            trust_range=(0, 50)
         ),
         topic_group=TOPIC_TYPE_NORMAL
     )
@@ -64,6 +66,20 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
+            label="Affinity_trust_dependant_topic",
+            unlocked=True,
+            prompt="affinity/trust test",
+            player_says=True,
+            affinity_range=(5, 90),
+            trust_range=(60, 70),
+            location="classroom",
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+    registerTopic(
+        Topic(
+            persistent._topic_database,
             label="talk_how_are_you",
             unlocked=True,
             prompt="How are you today?",
@@ -84,6 +100,10 @@ init 5 python:
         ),
         topic_group=TOPIC_TYPE_NORMAL
     )
+
+label Affinity_trust_dependant_topic:
+    n "you needed specific trust and affinity to show this, and you did it!"
+    return
 
 label talk_how_are_you:
     n "Pretty good!"
@@ -129,7 +149,7 @@ label date_go2_beach:
     n "Let's go!"
     $ main_background.changeLocation(beach)
     $ main_background.draw(full_redraw=True)
-    show natsuki a zorder 3 #replace after sprite rework
+    show Natsuki zorder 3 #replace after sprite rework
     return
 
 label date_go2_room:
@@ -137,5 +157,5 @@ label date_go2_room:
     n "Alright!"
     $ main_background.changeLocation(classroom)
     $ main_background.draw(dissolve_all=True, full_redraw=True)
-    show natsuki a zorder 3 #replace after sprite rework
+    show Natsuki zorder 3 #replace after sprite rework
     return

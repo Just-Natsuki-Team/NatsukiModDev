@@ -42,7 +42,7 @@ label ch30_init:
 #The main loop
 label ch30_loop:
     #Do topic selection here
-    $ queue(pick_random_topic(unlocked=True, player_says=False, location=main_background.location.id))
+    $ queue(pick_random_topic(unlocked=True, player_says=False, location=main_background.location.id, affinity=20, trust=60))
 
     #Run our checks
     python:
@@ -131,7 +131,7 @@ label call_next_topic:
 
 label talk_menu:
     python:
-        topics_ = get_all_topics(player_says=True, unlocked=True, location=main_background.location.id)
+        topics_ = get_all_topics(player_says=True, unlocked=True, location=main_background.location.id, affinity=20, trust=65)
         addit_topics = [
             ("Nevermind", "menu_nevermind"),
             ("Goodbye", farewells.select_farewell())

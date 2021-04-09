@@ -41,6 +41,8 @@ init 0 python:
             unlocked=False,
             nat_says=False,
             player_says=False,
+            affinity_range=None,
+            trust_range=None,
             location=None,
             additional_properties=None
         ):
@@ -84,6 +86,8 @@ init 0 python:
             self.unlocked = unlocked
             self.nat_says = nat_says
             self.player_says = player_says
+            self.affinity_range = affinity_range
+            self.trust_range = trust_range
 
             #Some extra properties for internal use
             self.shown_count = 0
