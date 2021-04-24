@@ -49,7 +49,7 @@ label classroom_topic_example1:
     return
 
 label classroom_topic_example2:
-    n "classroom2"
+    n "This is your affinity :)  :[persistent.affinity]"
     return
 
 label beach_topic_example1:
@@ -68,7 +68,7 @@ init 5 python:
             persistent._topic_database,
             label="Affinity_trust_dependant_topic",
             unlocked=True,
-            prompt="affinity/trust test",
+            prompt="test",
             player_says=True,
             affinity_range=(5, 90),
             trust_range=(60, 70),
@@ -82,7 +82,7 @@ init 5 python:
             persistent._topic_database,
             label="talk_how_are_you",
             unlocked=True,
-            prompt="How are you today?",
+            prompt="pls increase my trust <3",
             player_says=True,
             location="classroom"
         ),
@@ -94,7 +94,7 @@ init 5 python:
             persistent._topic_database,
             label="talk_cupcakes",
             unlocked=True,
-            prompt="Do you like cupcakes?",
+            prompt="pls increase my affinity <3",
             player_says=True,
             location="classroom"
         ),
@@ -106,11 +106,14 @@ label Affinity_trust_dependant_topic:
     return
 
 label talk_how_are_you:
-    n "Pretty good!"
+    n "I trust you this much: [persistent.trust]"
+    $ trust_increase()
     return
 
 label talk_cupcakes:
-    n "I love them!"
+    n "I like you this much: [persistent.afffinity]"
+    $ x = renpy.list_files()
+    $ affinity_increase()
     return
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics

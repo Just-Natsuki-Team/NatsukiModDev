@@ -162,13 +162,30 @@ label action_menu:
     jump ch30_loop
 
 label music_menu:
-    python:
-        topics_ = get_all_topics(player_says=True, unlocked=True, location=main_background.location)
-        addit_topics = [("Nevermind", "menu_nevermind")]
+    menu:
+        n "Want a change of tune?"
+        "track1":
+            play music track1
+        "track2":
+            play music track2
+        "track3":
+            play music track3
+        "track4":
+            play music track4
+        "custom music":
+            python:
+                custom_tracks = get_custom_tracks()
+                custom_tracks.append(("Nevermind", "menu_nevermind"))
+                choice = menu(custom_tracks)
+            if choice != "menu_nevermind":
+                play music choice
+            else:
+                call expression choice
+        "Nevermind":
+            n "Okay!"
 
-        menu_items = menu_list(topics_, addit_topics)
-        choice = menu(menu_items)
-        push(choice)
+    jump ch30_loop
+
     jump ch30_loop
 
 label extras_menu:
