@@ -242,7 +242,7 @@ init 0 python:
         for topic in additional_topics:
             menu_items.append(topic)
         return menu_items
-    
+
     def get_custom_tracks():
         """
         return all .mp3 files from custom_music folder
@@ -330,13 +330,6 @@ define audio.spooky1 = "mod_assets/bgm/spooky1.ogg"
 define body_a = "mod_assets/natsuki-assets/base.png"
 define uniform_a = "mod_assets/natsuki-assets/uniform.png"
 define face_a = "mod_assets/natsuki-assets/jnab.png"
-
-
-image Natsuki = Natsuki_displayable(
-    body = body_a,
-    outfit = uniform_a,
-    face=face_a
-)
 
 ##Character Definitions
 define mc = DynamicCharacter('player', image='mc', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
