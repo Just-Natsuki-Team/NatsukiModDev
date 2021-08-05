@@ -1,7 +1,5 @@
 default persistent.playername = ""
 default player = persistent.playername
-default persistent.trust = 1.0
-default persistent.affinity = 1.0
 
 #Our main topic pool
 default persistent._event_list = list()
@@ -258,23 +256,6 @@ init 0 python:
                 tracks.append((name, track))
 
         return tracks
-
-    def affinity_increase(multiplier=1):
-        if persistent.trust > 0:
-            persistent.affinity += multiplier*(persistent.trust/20)
-
-    def affinity_decrease(multiplier=1):
-        if persistent.trust-50 > 0:
-            persistent.affinity -= multiplier*(5 - (persistent.trust-50)/25)
-        else:
-            persistent.affinity -= multiplier*5
-
-    def trust_increase(multiplier=1):
-        if persistent.affinity > 0:
-            persistent.trust += multiplier*(1 + persistent.affinity/20)
-
-    def trust_decrease(multiplier=1):
-        persistent.trust -= multiplier*(6 + abs(persistent.affinity-50)/10)     #REMAINDER: ASK ABOUT THIS!!
 
 #Stuff that's really early, which should be usable basically anywhere
 init -999 python in utils:

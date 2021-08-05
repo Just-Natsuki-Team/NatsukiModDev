@@ -80,7 +80,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_how_are_you",
+            label="talk_trust_increase",
             unlocked=True,
             prompt="pls increase my trust <3",
             player_says=True,
@@ -92,7 +92,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_cupcakes",
+            label="talk_affinity_increase",
             unlocked=True,
             prompt="pls increase my affinity <3",
             player_says=True,
@@ -105,15 +105,14 @@ label Affinity_trust_dependant_topic:
     n "you needed specific trust and affinity to show this, and you did it!"
     return
 
-label talk_how_are_you:
+label talk_trust_increase:
     n "I trust you this much: [persistent.trust]"
-    $ trust_increase()
+    $ relationship("trust+")
     return
 
-label talk_cupcakes:
-    n "I like you this much: [persistent.afffinity]"
-    $ x = renpy.list_files()
-    $ affinity_increase()
+label talk_affinity_increase:
+    n "I like you this much: [persistent.affinity]"
+    $ relationship("affinity+")
     return
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
