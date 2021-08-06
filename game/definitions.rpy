@@ -259,6 +259,14 @@ init 0 python:
 
 #Stuff that's really early, which should be usable basically anywhere
 init -999 python in utils:
+    import datetime
+    import os
+
+    #Make log folder if not exist
+    _logdir = os.path.join(renpy.config.basedir, "log")
+    if not os.path.exists(_logdir):
+        os.makedirs(_logdir)
+
     #We always want to log and keep history
     __main_log = renpy.renpy.log.open("log/log", append=True, flush=True)
 
@@ -267,9 +275,9 @@ init -999 python in utils:
     SEVERITY_ERR = 2
 
     LOGSEVERITY_MAP = {
-        SEVERITY_INFO: "[INFO]: {0}\n",
-        SEVERITY_WARN: "[WARNING]: {0}\n",
-        SEVERITY_ERR: "[ERROR]: {0}\n"
+        SEVERITY_INFO: "[{0}] [INFO]: {1}",
+        SEVERITY_WARN: "[{0}] [WARNING]: {1}",
+        SEVERITY_ERR: "[{0}] [ERROR]: {1}"
     }
 
     def log(message, logseverity=SEVERITY_INFO):
@@ -285,7 +293,7 @@ init -999 python in utils:
             LOGSEVERITY_MAP.get(
                 logseverity,
                 LOGSEVERITY_MAP[SEVERITY_INFO]
-            )
+            ).format(datetime.datetime.now(), message)
         )
 
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
