@@ -101,14 +101,15 @@ init 5 python:
     #     topic_group=TOPIC_TYPE_NORMAL
     # )
 
-    # Discuss how Natsuki feels about screenshots
+    # Discuss how Natsuki feels about pictures
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_screenshots",
-            unlocked=False,
-            prompt="How do you feel about me taking screenshots?",
+            label="talk_having_pictures_taken",
+            unlocked=True,
+            prompt="How do you feel about having your picture taken?",
             conditional=None,
+            category=["Natsuki", "Photography"],
             player_says=True,
             location="classroom"
         ),
@@ -119,10 +120,11 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_get_screenshot_permission",
-            unlocked=False,
-            prompt="Would you mind if I took some screenshots?",
-            conditional=None,
+            label="talk_get_picture_permission",
+            unlocked=True,
+            prompt="Can I take a picture of you?",
+            conditional=(persistent._jn_first_screenshot_taken != None),
+            category=["You", "Photography"],
             player_says=True,
             location="classroom"
         ),
@@ -137,6 +139,7 @@ init 5 python:
             unlocked=True,
             prompt="Can you set my affinity to something else?",
             conditional=None,
+            category=["Debug"],
             player_says=True,
             location="classroom"
         ),
@@ -166,11 +169,11 @@ label talk_set_affinity:
             persistent.affinity = float(affinity_to_set)
             renpy.say(n, "Done! Your new affinity is [persistent.affinity]!")
         except:
-            renpy.say(n, "Oh... sorry, I can't seem to read that. Make sure you enter an integer or decimal value, okay?")
+            renpy.say(n, "Huh... sorry, I can't seem to read that. Make sure you enter an integer or decimal value, 'kay?")
     return
 
-# Natsuki's thoughts on screenshots
-label talk_screenshots:
+# Natsuki's thoughts on having her picture taken via the ingame screenshot system
+label talk_having_pictures_taken:
     if persistent._jn_first_screenshot_taken == None:
         n "W-wait... you're telling me there's a camera here? Are you kidding me?!"
         n "Uuuu-"
@@ -179,41 +182,77 @@ label talk_screenshots:
         n "It'd really mean a lot to me."
         n "I hope you can understand."
     else:
-        # TODO - Add affinity/trust dialogue permutations
-        n "H-huh? Screenshots?"
-        n "Not a fan, honestly - but you knew that much already, [player]."
-        n "It's just..."
-        n "I really... need... my privacy. It's really important to me."
-        n "You understand, right?"
-        n "So please, if you ever wanna take a picture, can you ask me first?"
-        menu:
-            "Of course!":
-                n "Thanks, [player]."
-                n "That really... means a lot to me."
-            "I'll think about it.":
-                n "[player]... come on. I'm being serious here."
-                n "Please don't mess around me with this."
-                n "Make sure you ask, okay?"
-            "...":
-                n "..."
-                n "...[player]? This isn't funny."
-                n "Make sure you ask, okay? For my sake."
+        if persistent.affinity >= 700:
+            n "Hmm? Pictures of me?"
+            n "Honestly, I don't think I'll ever be completely comfortable with them..."
+            n "But I trust you to make a good shot!"
+            n "As long as you ask, I've got no problem with it!"
+        elif persistent.affinity < 700 and persistent.affinity > 300:
+            n "H-huh? Pictures of me?"
+            n "Not a fan, honestly - but you knew that much already, [player]."
+            n "It's just..."
+            n "I really... need... my privacy. It matters a lot to me."
+            n "You understand, right?"
+            n "So please, if you ever wanna take a picture, can you ask me first?"
+            menu:
+                "Of course!":
+                    n "Thanks, [player]."
+                    n "That really... means a lot to me."
+                "I'll think about it.":
+                    n "[player]... come on. I'm being serious here."
+                    n "Please don't mess me around with this."
+                    n "Make sure you ask, okay?"
+                "...":
+                    n "..."
+                    n "Uh... [player]? This isn't very funny."
+                    n "Make sure you ask, okay? For my sake."
+        elif persistent.affinity > -50:
+            n "Pictures? Really?"
+            n "I don't think I want to have you taking my picture."
+            n "Let's talk about something else."
+        else:
+            n "Please... don't try to pretend like you care about how I feel about pictures."
+            n "I'm done talking about this."
     return
 
 # Ask Natsuki for screenshot permissions for the current session; her response will vary based on the player's relationship state.
-label talk_get_screenshot_permission:    
-    # TODO - Maximum affinity/trust branch
-    n "Eh? A picture? Of course!"
-    # TODO - High affinity/trust branch
-    n "Oh? You wanna take a picture? Alright!"
-    # TODO - Medium affinity/trust branch
-    n "Hmm? A picture? Well, okay."
-    # TODO - Low affinity/trust branch
-    n "I'm sorry, [player]. I don't want any pictures taking of me right now."
-    # TODO - Minimum affinity/trust branch
-    n "No. Don't take my picture."
-    # TODO - Zero affinity/trust branch
-    n "..."
+label talk_get_picture_permission:    
+    if persistent.affinity >= 700:
+        n "Eh? A picture? Of course!"
+        $ persistent.jn_screenshot_has_permission = True
+        return
+
+    elif persistent.affinity >= 500:
+        n "Oh? You wanna take a picture? Alright!"
+        $ persistent.jn_screenshot_has_permission = True
+        return
+
+    elif persistent.affinity >= 300:
+        n "Hmm? A picture? Well, okay."
+        $ persistent.jn_screenshot_has_permission = True
+        return
+
+    elif persistent.affinity >= 100:
+        # Indecisive; could go either way
+        n "A picture? I'm not sure... let me think about it."
+        n "..."
+        python:
+            natsuki_approves = random.choice([True, False])
+        if natsuki_approves:
+            n "Fine, I guess. Take it whenever."
+        else:
+            n "I'm sorry, [player]. I don't want any pictures taking of me right now."
+        $ persistent.jn_screenshot_has_permission = False
+        return
+
+    elif persistent.affinity >= -50:
+        n "No. I don't want my picture taken."
+        $ persistent.jn_screenshot_has_permission = False
+        return
+
+    else:
+        n "..."
+        $ persistent.jn_screenshot_has_permission = False
     return
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics

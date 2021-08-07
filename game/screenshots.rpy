@@ -3,24 +3,27 @@ init 0 python:
     from enum import Enum
     import random
 
-    # Possible types for a screenshot, based on how it was received
-    class ScreenshotReceptionTypes(Enum):
-        NEUTRAL = 1
-        GOOD = 2
-        BAD = 3
+    # Check and create the screenshot directory
+    _screenshot_dir = os.path.join(renpy.config.basedir, "screenshots")
+    if not os.path.exists(_screenshot_dir):
+        os.makedirs(_screenshot_dir)
 
-    # Handling variables for when we're processing screenshots
-    last_screenshot_type = ScreenshotReceptionTypes.NEUTRAL
-    player_screenshots_blocked = False
-    player_screenshot_in_progress = False
-    bad_screenshot_streak = 0
+    # Tracking
+    _bad_screenshot_streak = 0
+
+    # Prevent the player from taking screenshots within the screenshot dialogue tree
+    _player_screenshot_in_progress = False
+
+    # Prevent the player from taking screenshots completely
+    _player_screenshots_blocked = False
 
     # Reaction/response permutations so Natsuki feels more dynamic
     surprised_reactions = [
         "{0}... you remember what I said about pictures, right?".format(persistent.playername),
         "{0}... did you forget what I said?".format(persistent.playername),
         "{0}... I think you forgot something.".format(persistent.playername),
-        "Hey... do you remember when we talked about taking pictures?"
+        "Hey... do you remember when we talked about taking pictures?",
+        "{0}, come on. We talked about this...".format(persistent.playername)
     ]
 
     surprised_responses = [
@@ -51,6 +54,8 @@ init 0 python:
         "{0}! Stop it!".format(persistent.playername),
         "{0}! Quit it already!".format(persistent.playername),
         "Okay, enough already!".format(persistent.playername),
+        "Alright, that's enough!",
+        "Ugh! Give it a rest, {0}!".format(persistent.playername),
         "{0}! Can you stop?!".format(persistent.playername)]    
 
     angry_responses = [
@@ -66,7 +71,7 @@ init 0 python:
 label take_screenshot:
     python:
         if persistent.affinity > -50:
-            renpy.screenshot("screenshot_{0}.png".format(dt.now().strftime(r"%d-%m-%Y_%H-%M-%S"))) # WIP; pictures will need to go to a sensible (local!) location
+            renpy.screenshot("{0}/screenshot_{1}.png".format(_screenshot_dir, dt.now().strftime(r"%d-%m-%Y_%H-%M-%S"))) # WIP; pictures will need to go to a sensible (local!) location
             utils.log("Screenshot taken by player at {0}".format(dt.now().strftime(r"%d/%m/%Y, %H:%M")))
     play audio camera_shutter
     with Fade(.15, 0, .50, color="#fff")
@@ -74,15 +79,15 @@ label take_screenshot:
 
 # Handles dialogue and mechanics related to screenshots
 label screenshot_dialogue:
-    if player_screenshot_in_progress:
+    if _player_screenshot_in_progress:
         # Don't take a screenshot if we're already going through the dialogue!
         return
     else:
-        $ player_screenshot_in_progress = True
+        $ _player_screenshot_in_progress = True
 
-    if persistent._jn_first_screenshot_taken == None or type(persistent._jn_first_screenshot_taken) is str:
+    if persistent.jn_first_screenshot_taken == None or type(persistent.jn_first_screenshot_taken) is str:
         # Set the date for the first ever screenshot, play the camera effects
-        $ persistent._jn_first_screenshot_taken = dt.now()
+        $ persistent.jn_first_screenshot_taken = dt.now()
         call take_screenshot
 
         n "H-huh? What was that flash I just saw?"
@@ -91,17 +96,23 @@ label screenshot_dialogue:
         n "[player]... d-did you do that...?"
         menu:
             "Yes, I did.":
-                n "TODO"
+                n "O-oh! Aha! W-well, at least you admit it."
             "No, I didn't.":
-                n "TODO"
+                n "Huh? But then... who...?"
+                n "..."
             "I'm not sure.":
-                n "TODO"
-    if persistent._jn_screenshot_has_permission:
-        # Positive screenshot route, as we have Natsuki's permission
+                n "That's... a little worrying..."
+                n "..."
+        n "Well, anyway. The truth is, I've never been very comfortable with having my picture taken without my permission."
+        n "I just... really, really don't like it."
+        n "So for the future, could you please just let me know if you want to take pictures?"
+        n "I'd really appreciate it, [player]."
+
+    # Positive screenshot route, as we have Natsuki's permission
+    elif persistent.jn_screenshot_has_permission:
         python:
             # Update tracking and take the shot
-            persistent._jn_screenshot_good_shots_total += 1
-            last_screenshot_type = ScreenshotReceptionTypes.GOOD
+            persistent.jn_screenshot_good_shots_total += 1
         n "Huh? You're taking that picture now?"
 
         if persistent.affinity >= 700:
@@ -111,20 +122,30 @@ label screenshot_dialogue:
             n "Well... alright."
             call take_screenshot
         else:
-            n "...Fine. Just be quick, alright?"
+            n "...Fine. Just be quick."
             call take_screenshot
 
         # Retract the permission Natsuki gave, as the picture has been taken
-        n "Okaaay! Just ask me again if you wanna take another, alright?"
-        $ persistent._jn_screenshot_has_permission = False
+        if persistent.affinity > 300:
+            n "Okaaay! Just ask me again if you wanna take another, alright?"
+        else:
+            n "All done? Just ask me again if you wanna take another, alright?"
+        $ persistent.jn_screenshot_has_permission = False
 
-    elif not player_screenshots_blocked:
-        # Negative screenshot route; Natsuki is upset
+    # Too many bad screenshots in a row; Natsuki is upset
+    elif _bad_screenshot_streak >= 3 and persistent.affinity < 700:
+        python:
+            _player_screenshots_blocked = True
+        call take_screenshot
+        n "Okay, I think I've had enough. I'm just gonna turn this off for now."
+        return
+
+    # Negative screenshot route; Natsuki is upset
+    elif not _player_screenshots_blocked:
         python:
             # Update tracking and take the shot
-            persistent._jn_screenshot_bad_shots_total += 1
-            last_screenshot_type = ScreenshotReceptionTypes.BAD
-            bad_screenshot_streak += 1
+            persistent.jn_screenshot_bad_shots_total += 1
+            _bad_screenshot_streak += 1
 
         call take_screenshot
         if persistent.affinity >= 700:
@@ -136,9 +157,9 @@ label screenshot_dialogue:
             n "So... just please remember to ask next time, alright?"
             n "I won't bite... Ahaha..."
             n "Now, where were we?"
-            #python:
-                #relationship.affinity_decrease("affinity-")
-                #relationship.trust_decrease("trust-")
+            python:
+                relationship("affinity-")
+                relationship("trust-")
 
         elif persistent.affinity < 700 and persistent.affinity > 300:
             python:
@@ -149,9 +170,9 @@ label screenshot_dialogue:
             n "Hmph... could you at least give me some warning next time?"
             n "Thanks..."
             n "Now, where were we?"
-            #python:
-                #relationship.affinity_decrease("affinity-")
-                #relationship.trust_decrease("trust-")
+            python:
+                relationship("affinity-")
+                relationship("trust-")
         elif persistent.affinity > -50:
             python:
                 chosen_reaction = angry_reactions[random.randint(0, len(angry_reactions) - 1)]
@@ -160,18 +181,17 @@ label screenshot_dialogue:
             n "[chosen_response]"
             n "Don't do that again."
             n "Now, where were we?"
-            #python:
-                #relationship.affinity_decrease("affinity-")
-                #relationship.trust_decrease("trust-")
+            python:
+                relationship("affinity-")
+                relationship("trust-")
         else:
             n "You know what, [player]? No. We're not doing this."
             n "I'm just gonna turn this off. Not like you'd listen to me if I complained again."
             python:
-                #relationship.affinity_decrease("affinity-")
-                #relationship.trust_decrease("trust-")
-                player_screenshots_blocked = True
+                relationship("affinity-")
+                relationship("trust-")
+                _player_screenshots_blocked = True
 
     python:
-        utils.log('Last screenshot reception is now {0}'.format(last_screenshot_type))
-        player_screenshot_in_progress = False
+        _player_screenshot_in_progress = False
     return

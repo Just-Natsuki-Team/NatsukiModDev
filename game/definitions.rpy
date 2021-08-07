@@ -2,11 +2,10 @@ default persistent.playername = ""
 default player = persistent.playername
 
 #Screenshot data
-default persistent._jn_first_screenshot_taken = None
-default persistent._jn_screenshot_good_shots_total = None
-default persistent._jn_screenshot_bad_shots_total = None
-default persistent._jn_screenshot_last_shot_type = None
-default persistent._jn_screenshot_has_permission = False
+default persistent.jn_first_screenshot_taken = None
+default persistent.jn_screenshot_good_shots_total = 0
+default persistent.jn_screenshot_bad_shots_total = 0
+default persistent.jn_screenshot_has_permission = False
 
 #Our main topic pool
 default persistent._event_list = list()
