@@ -5,7 +5,6 @@ default player = persistent.playername
 default persistent.jn_first_screenshot_taken = None
 default persistent.jn_screenshot_good_shots_total = 0
 default persistent.jn_screenshot_bad_shots_total = 0
-default persistent.jn_screenshot_has_permission = False
 
 #Our main topic pool
 default persistent._event_list = list()
