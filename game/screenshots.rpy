@@ -100,7 +100,7 @@ label screenshot_dialogue:
             "Yes, I did.":
                 n "O-oh!{w=0.2} Aha!{w=0.2} W-well,{w=0.1} at least you admit it."
             "No, I didn't.":
-                n "Huh? But then...{w=0.3} who...?"
+                n "Huh?{w=0.2} But then...{w=0.3} who...?"
                 n "..."
             "I'm not sure.":
                 n "That's...{w=0.3} a little worrying..."
@@ -131,14 +131,14 @@ label screenshot_dialogue:
         if persistent.affinity > 300:
             n "Okaaay!{w=0.2} Just ask me again if you wanna take another,{w=0.1} alright?"
         else:
-            n "All done?{w=0.2} Just ask me again if you wanna take another,{w=0.1} alright?"
+            n "All done?{w=0.2} Just ask me again if you wanna take another,{w=0.1} okay?"
         $ player_screenshots_permission = False
 
     # Too many bad screenshots in a row; Natsuki is upset
     elif bad_screenshot_streak >= 3 and persistent.affinity < 700:
         $ player_screenshots_blocked = True
         call take_screenshot
-        n "Okay,{w=0.1} I think I've had enough.{w=0.1} I'm just gonna turn this off for now."
+        n "Okay,{w=0.1} I think I've had enough!{w=0.2} I'm just gonna turn this off for now."
         return
 
     # Negative screenshot route; Natsuki is upset
@@ -185,13 +185,12 @@ label screenshot_dialogue:
                 relationship("affinity-")
                 relationship("trust-")
         else:
-            n "You know what, [player]?{w=0.2} No.{w=0.1} We're not doing this."
+            n "You know what,{w=0.1} [player]?{w=0.2} No.{w=0.1} We're not doing this."
             n "I'm just gonna turn this off.{w=0.1} {i}Not like you'd listen to me if I complained again.{/i}"
             python:
                 relationship("affinity-")
                 relationship("trust-")
                 player_screenshots_blocked = True
 
-    python:
-        _player_screenshot_in_progress = False
+    $ _player_screenshot_in_progress = False
     return
