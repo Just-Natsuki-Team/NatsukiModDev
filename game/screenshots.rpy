@@ -119,13 +119,14 @@ label screenshot_dialogue:
 
         if persistent.affinity >= 700:
             n "Ahaha!{w=0.2} Sure!"
-            call take_screenshot
+
         elif persistent.affinity < 700 and persistent.affinity > 300:
             n "Well...{w=0.2} alright."
-            call take_screenshot
+
         else:
             n "...Fine.{w=0.1} Just be quick."
-            call take_screenshot
+
+        call take_screenshot
 
         # Retract the permission Natsuki gave, as the picture has been taken
         if persistent.affinity > 300:
@@ -143,54 +144,51 @@ label screenshot_dialogue:
 
     # Negative screenshot route; Natsuki is upset
     elif not player_screenshots_blocked:
-        python:
-            # Update tracking and take the shot
-            persistent.jn_screenshot_bad_shots_total += 1
-            bad_screenshot_streak += 1
+        # Update tracking and take the shot
+        $ persistent.jn_screenshot_bad_shots_total += 1
+        $ bad_screenshot_streak += 1
 
         call take_screenshot
         if persistent.affinity >= 700:
-            python:
-                chosen_reaction = renpy.substitute(renpy.random.choice(surprised_reactions))
-                chosen_response = renpy.substitute(renpy.random.choice(surprised_responses))
+            $ chosen_reaction = renpy.substitute(renpy.random.choice(surprised_reactions))
+            $ chosen_response = renpy.substitute(renpy.random.choice(surprised_responses))
+
             n "[chosen_reaction]"
             n "[chosen_response]"
             n "So...{w=0.3} just please remember to ask next time,{w=0.1} alright?"
             n "I won't bite...{w=0.3} Ahaha..."
             n "Now,{w=0.2} where were we?"
-            python:
-                relationship("affinity-")
-                relationship("trust-")
+            $ relationship("affinity-")
+            $ relationship("trust-")
         elif persistent.affinity < 700 and persistent.affinity > 300:
-            python:
-                chosen_reaction = renpy.substitute(renpy.random.choice(annoyed_reactions))
-                chosen_response = renpy.substitute(renpy.random.choice(annoyed_responses))
+            $ chosen_reaction = renpy.substitute(renpy.random.choice(annoyed_reactions))
+            $ chosen_response = renpy.substitute(renpy.random.choice(annoyed_responses))
+
             n "[chosen_reaction]"
             n "[chosen_response]"
             n "Hmph...{w=0.3} could you at least give me some warning next time?"
             n "Thanks..."
             n "Now,{w=0.2} where were we?"
-            python:
-                relationship("affinity-")
-                relationship("trust-")
+            $ relationship("affinity-")
+            $ relationship("trust-")
+
         elif persistent.affinity > -50:
-            python:
-                chosen_reaction = renpy.substitute(renpy.random.choice(angry_reactions))
-                chosen_response = renpy.substitute(renpy.random.choice(angry_responses))
+            $ chosen_reaction = renpy.substitute(renpy.random.choice(angry_reactions))
+            $ chosen_response = renpy.substitute(renpy.random.choice(angry_responses))
+
             n "[chosen_reaction]"
             n "[chosen_response]"
             n "Don't do that again."
             n "Now,{w=0.2} where were we?"
-            python:
-                relationship("affinity-")
-                relationship("trust-")
+            $ relationship("affinity-")
+            $ relationship("trust-")
+
         else:
             n "You know what,{w=0.1} [player]?{w=0.2} No.{w=0.1} We're not doing this."
             n "I'm just gonna turn this off.{w=0.1} {i}Not like you'd listen to me if I complained again.{/i}"
-            python:
-                relationship("affinity-")
-                relationship("trust-")
-                player_screenshots_blocked = True
+            $ relationship("affinity-")
+            $ relationship("trust-")
+            $ player_screenshots_blocked = True
 
     $ _player_screenshot_in_progress = False
     return
