@@ -14,6 +14,10 @@ init -990 python:
     import datetime
 
 init 0 python:
+
+    # Tracking
+    current_session_start_time = datetime.datetime.now()
+
     #Constants for types. Add more here if we need more organizational areas
     TOPIC_TYPE_FAREWELL = "FAREWELL"
     TOPIC_TYPE_GREETING = "GREETING"
@@ -110,6 +114,11 @@ init 0 python:
             self.category = category
             self.prompt = prompt
             self.location = location
+
+            if additional_properties is None:
+                additional_properties = list()
+
+            self.additional_properties = additional_properties
 
             #And finally, add this all back to the persistent dict
             persistent_db[label] = self.as_dict()
