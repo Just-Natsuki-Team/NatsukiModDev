@@ -1,6 +1,11 @@
 default persistent.playername = ""
 default player = persistent.playername
 
+#Screenshot data
+default persistent.jn_first_screenshot_taken = None
+default persistent.jn_screenshot_good_shots_total = 0
+default persistent.jn_screenshot_bad_shots_total = 0
+
 #Our main topic pool
 default persistent._event_list = list()
 
@@ -315,6 +320,7 @@ define audio.custom2 = "custom-music/02.mp3"
 define audio.custom3 = "custom-music/03.mp3"
 define audio.battle = "custom-music/battle.mp3"
 define audio.spooky1 = "mod_assets/bgm/spooky1.ogg"
+define audio.camera_shutter = "mod_assets/sfx/camera_shutter.mp3"
 
 define body_a = "mod_assets/natsuki-assets/base.png"
 define uniform_a = "mod_assets/natsuki-assets/uniform.png"

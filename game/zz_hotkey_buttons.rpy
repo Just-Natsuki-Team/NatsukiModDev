@@ -48,7 +48,7 @@ define gui.talk_button_text_size = gui.text_size
 define gui.talk_button_text_xalign = 0.5
 define gui.talk_button_text_idle_color = "#000"
 define gui.talk_button_text_hover_color = "#fa9"
-default allow_boop = None
+default allow_boop = False
 
 
 
