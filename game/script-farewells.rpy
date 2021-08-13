@@ -5,7 +5,7 @@ init python in farewells:
     import store
 
     # Natsuki will not ask a player to stay again if they agreed previously
-    _player_already_stayed = False
+    store.jn_globals.player_already_stayed = False
 
     FAREWELL_MAP = dict()
 
@@ -43,9 +43,9 @@ init python in farewells:
         to stay will be selected
         """
         farewells_in_affinity_range = filter(get_farewell_in_affinity_range, FAREWELL_MAP.values())
-        if _player_already_stayed:
+        if store.jn_globals.player_already_stayed:
             
-            return random.choice(filter(get_farewell_no_stay_option, farewells_in_affinity_range)).label
+            return random.choice(filter(get_farewell_has_no_stay_option, farewells_in_affinity_range)).label
 
         else:
             return random.choice(farewells_in_affinity_range).label
@@ -70,7 +70,7 @@ label farewell_maximum_aff_1:
     n "Aww...{w=0.3} you're leaving now,{w=0.1} [player]?{w=0.2} Well,{w=0.1} okay..."
     n "Y-you know I'll miss you,{w=0.1} right?"
     n "Take care, [player]! You mean the world to me!"
-    return
+    $ renpy.quit()
 
 init 5 python:
     registerTopic(
@@ -92,7 +92,7 @@ label farewell_maximum_aff_2:
     n "..."
     n "I'll be okay!{w=0.2} Just come back soon,{w=0.1} alright?"
     n "Stay safe,{w=0.1} dummy!{w=0.2} I love you!"
-    return
+    $ renpy.quit()
 
 init 5 python:
     registerTopic(
@@ -113,7 +113,7 @@ label farewell_maximum_aff_3:
     n "Uuuu...{w=0.3} I never like saying goodbye to you..."
     n "But I guess it can't be helped,{w=0.1} [player]."
     n "Take care of yourself out there!{w=0.2} I'm counting on you!"
-    return
+    $ renpy.quit()
 
 init 5 python:
     registerTopic(
@@ -135,7 +135,7 @@ label farewell_maximum_aff_4:
     n "That's fine,{w=0.1} I guess..."
     n "I'll really miss you,{w=0.1} [player]."
     n "Do your best,{w=0.1} sweetheart!"
-    return
+    $ renpy.quit()
 
 init 5 python:
     registerTopic(
@@ -158,7 +158,7 @@ label farewell_maximum_aff_5:
     n "...But I know you'll always be back for me,{w=0.1} [player]."
     n "Well...{w=0.1} I'm rooting for you!"
     n "Make me proud,{w=0.1} [player]! I love you!"
-    return
+    $ renpy.quit()
 
 # High affinity farewells
 
@@ -183,7 +183,7 @@ label farewell_high_aff_1:
     n "And I was having fun,{w=0.1} too..."
     n "Well,{w=0.1} if you gotta go,{w=0.1} you gotta go!"
     n "Take care,{w=0.1} [player]!{w=0.2} Make me proud!"
-    return
+    $ renpy.quit()
 
 init 5 python:
     registerTopic(
@@ -206,7 +206,7 @@ label farewell_high_aff_2:
     n "Hurry back if you can,{w=0.1} alright?"
     n "I'll be waiting for you!"
     n "Goodbye,{w=0.1} [player]!"
-    return
+    $ renpy.quit()
 
 init 5 python:
     registerTopic(
@@ -229,7 +229,7 @@ label farewell_high_aff_3:
     n "That's fine...{w=0.3} I'll be okay..."
     n "You better come back soon,{w=0.1} alright [player]?"
     n "Goodbye!{w=0.2} I'll miss you!"
-    return
+    $ renpy.quit()
 
 init 5 python:
     registerTopic(
@@ -252,7 +252,7 @@ label farewell_high_aff_4:
     n "But I know you have things to do."
     n "Come see me later,{w=0.1} promise?"
     n "Don't make me come find you!{w=0.2} Ehehe."
-    return
+    $ renpy.quit()
 
 init 5 python:
     registerTopic(
@@ -275,7 +275,7 @@ label farewell_high_aff_5:
     n "Well,{w=0.2} I'll be okay!"
     n "Take care of yourself,{w=0.1} [player]!{w=0.2} For both of us!"
     n "See you later!"
-    return
+    $ renpy.quit()
 
 # Medium affinity farewells
 
@@ -297,7 +297,7 @@ init 5 python:
 label farewell_medium_aff_1:
     n "Going now,{w=0.1} [player]?"
     n "No worries!{w=0.2} I'll see you later!"
-    return
+    $ renpy.quit()
 
 init 5 python:
     registerTopic(
@@ -317,7 +317,7 @@ init 5 python:
 label farewell_medium_aff_2:
     n "Heading off now,{w=0.1} [player]?"
     n "Okay!{w=0.2} Take care!"
-    return
+    $ renpy.quit()
 
 init 5 python:
     registerTopic(
@@ -337,7 +337,7 @@ init 5 python:
 label farewell_medium_aff_3:
     n "Okaaay!{w=0.2} I'll be waiting for you!"
     n "Stay safe,{w=0.1} [player]!"
-    return
+    $ renpy.quit()
 
 init 5 python:
     registerTopic(
@@ -357,7 +357,7 @@ init 5 python:
 label farewell_medium_aff_4:
     n "See you later,{w=0.1} [player]!"
     n "Take care out there!"
-    return
+    $ renpy.quit()
 
 init 5 python:
     registerTopic(
@@ -377,7 +377,7 @@ init 5 python:
 label farewell_medium_aff_5:
     n "Goodbye,{w=0.1} [player]!"
     n "Come see me soon,{w=0.1} alright?"
-    return
+    $ renpy.quit()
 
 # Low affinity farewells
 
@@ -398,7 +398,7 @@ init 5 python:
 
 label farewell_low_aff_1:
     n "See you later, [player]!"
-    return
+    $ renpy.quit()
 
 init 5 python:
     registerTopic(
@@ -417,7 +417,7 @@ init 5 python:
 
 label farewell_low_aff_2:
     n "Later, [player]!"
-    return
+    $ renpy.quit()
 
 init 5 python:
     registerTopic(
@@ -436,7 +436,7 @@ init 5 python:
 
 label farewell_low_aff_3:
     n "Goodbye, [player]!"
-    return
+    $ renpy.quit()
 
 init 5 python:
     registerTopic(
@@ -455,7 +455,7 @@ init 5 python:
 
 label farewell_low_aff_4:
     n "'kay! Bye for now!"
-    return
+    $ renpy.quit()
 
 init 5 python:
     registerTopic(
@@ -474,7 +474,7 @@ init 5 python:
 
 label farewell_low_aff_5:
     n "See ya, [player]."
-    return
+    $ renpy.quit()
 
 # Minimum affinity farewells
 
@@ -495,7 +495,7 @@ init 5 python:
 
 label farewell_minimum_aff_1:
     n "Yeah."
-    return
+    $ renpy.quit()
 
 init 5 python:
     registerTopic(
@@ -514,7 +514,7 @@ init 5 python:
 
 label farewell_minimum_aff_2:
     n "Yep."
-    return
+    $ renpy.quit()
 
 init 5 python:
     registerTopic(
@@ -533,7 +533,7 @@ init 5 python:
 
 label farewell_minimum_aff_3:
     n "Uh huh."
-    return
+    $ renpy.quit()
 
 init 5 python:
     registerTopic(
@@ -552,7 +552,7 @@ init 5 python:
 
 label farewell_minimum_aff_4:
     n "..."
-    return
+    $ renpy.quit()
 
 init 5 python:
     registerTopic(
@@ -571,7 +571,7 @@ init 5 python:
 
 label farewell_minimum_aff_5:
     n "'Kay."
-    return
+    $ renpy.quit()
 
 # Farewells that allow the player to choose to stay
 
@@ -603,10 +603,10 @@ label farewell_short_session_ask:
             time_in_session_descriptor = "a couple of minutes"
 
         elif minutes_in_session > 3 and minutes_in_session <= 5:
-            time_in_session_descriptor = "around five minutes"
+            time_in_session_descriptor = "like five minutes"
 
         elif minutes_in_session > 5 and minutes_in_session <= 10:
-            time_in_session_descriptor = "around ten minutes"
+            time_in_session_descriptor = "like ten minutes"
 
         elif minutes_in_session > 10 and minutes_in_session <= 15:
             time_in_session_descriptor = "around fifteen minutes"
@@ -628,15 +628,15 @@ label farewell_short_session_ask:
             n "..."
             n "Stop looking at me like that,{w=0.1} jeez!"
             n "Now,{w=0.1} where were we?"
-            $ _player_already_stayed = True
+            $ farewells.store.jn_globals.player_already_stayed = True
 
         "Sorry, Natsuki. I really have to leave.":
-            if minutes_in_session < 1:
-                n "Nnnnnn-!"
-                n "Well...{w=0.3} alright."
-                n "Don't take too long,{w=0.1} alright?"
-                n "See you later!"
-            return
+            n "Nnnnnn-!"
+            n "..."
+            n "Well...{w=0.3} alright."
+            n "Don't take too long,{w=0.1} alright?"
+            n "See you later!"
+            $ renpy.quit()
 
     return
 
@@ -669,14 +669,14 @@ label farewell_fake_confidence_ask:
             n "..."
             n "Jeez!{w=0.2} Let's just get back to it already..."
             n "Now,{w=0.1} where were we?"
-            $ _player_already_stayed = True
+            $ farewells.store.jn_globals.player_already_stayed = True
 
         "Sorry, I really need to go.":
             n "Oh...{w=0.3} aha..."
             n "That's fine,{w=0.1} I guess..."
             n "I'll see you later then,{w=0.1} [player]!"
             n "Don't keep me waiting,{w=0.1} alright?"
-            return
+            $ renpy.quit()
     return
 
 # Natuski really doesn't want to be alone today; she pleads for her player to stay
@@ -708,7 +708,7 @@ label farewell_pleading_ask:
             n "T-thanks, [player].{w=0.1} You're awesome,{w=0.1} you know that?"
             n "Really.{w=0.1} Thank you."
             n "N-now,{w=0.1} where were we? Heh..."
-            $ _player_already_stayed = True
+            $ farewells.store.jn_globals.player_already_stayed = True
 
         "I can't right now.":
             n "Oh..."
@@ -716,7 +716,7 @@ label farewell_pleading_ask:
             n "Come back soon,{w=0.1} alright?"
             n "Or you'll have to make it up to me...{w=0.3} ahaha..."
             n "Stay safe,{w=0.1} [player]!"
-            return
+            $ renpy.quit()
     return
 
 # Natsuki gently asks her player to stay
@@ -746,7 +746,7 @@ label farewell_gentle_ask:
             n "Truly.{w=0.1} Thanks..."
             n "..."
             n "Aha...{w=0.3} so what else did you wanna do today?"
-            $ _player_already_stayed = True
+            $ farewells.store.jn_globals.player_already_stayed = True
 
         "Sorry, I really have to go.":
             n "Oh..."
@@ -755,5 +755,5 @@ label farewell_gentle_ask:
             n "..."
             n "I-I love you,{w=0.1} [player]..."
             n "I'll see you later."
-            return
+            $ renpy.quit()
     return

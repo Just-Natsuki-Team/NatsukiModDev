@@ -271,6 +271,12 @@ init 0 python:
 
         return tracks
 
+# Variables with cross-script utility specific to Just Natsuki
+init -990 python in jn_globals:
+
+    # Tracks whether the player opted to stay for longer when Natsuki asked them to when quitting; True if so, otherwise False
+    player_already_stayed = False
+
 #Stuff that's really early, which should be usable basically anywhere
 init -999 python in utils:
     import datetime
