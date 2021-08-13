@@ -186,17 +186,21 @@ init 0 python:
         def __load(self):
             """
             Internal load funtion
+
+            NOTE: Will raise a KeyError of the lock map doesn't have the persist key in it
             """
             for persist_key, value in self.__persistent_db[self.label].iteritems():
-                if TOPIC_LOCKED_PROP_BASE_MAP.get(persist_key, True):
+                if TOPIC_LOCKED_PROP_BASE_MAP[persist_key]:
                     self.__dict__[persist_key] = value
 
         def __save(self):
             """
             Saves this topic object to persistent
+
+            NOTE: Will raise a KeyError of the lock map doesn't have the persist key in it
             """
             for persist_key, value in self.as_dict().iteritems():
-                if TOPIC_LOCKED_PROP_BASE_MAP.get(persist_key, True):
+                if TOPIC_LOCKED_PROP_BASE_MAP.get[persist_key]:
                     self.__persistent_db[self.label][persist_key] = value
 
         @staticmethod
