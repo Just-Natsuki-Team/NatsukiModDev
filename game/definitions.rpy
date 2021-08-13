@@ -195,6 +195,43 @@ init 0 python:
             for topic in store.topic_handler.ALL_TOPIC_MAP.itervalues():
                 topic.__save()
 
+        def get_player_affinity_in_topic_range(self):
+            """
+            Returns whether the player's affinity is in the affinity_range of this topic.
+            """
+            return affinity.affinity_is_between_bounds(
+                lower_bound=self.affinity_range[0],
+                affinity=store.persistent.affinity,
+                upper_bound=self.affinity_range[1]
+            )
+
+        def get_player_trust_in_topic_range(self):
+            """
+            Returns whether the player's trust is in trust_range of this topic.
+            """
+            return trust.trust_is_between_bounds(
+                lower_bound=self.trust_range[0],
+                trust=store.persistent.trust,
+                upper_bound=self.trust_range[1]
+            )
+
+        def get_topic_has_additional_property_with_value(self, property_key, property_value):
+            """
+            Returns whether this topic has a given additional_attribute key with
+            the supplied value
+            IN:
+                self - Reference to this topic
+                property_key - The key under additional_properties to test against
+                property_value - The value to test the value under the property_key
+            OUT:
+                True if the property exists and matches the given value, otherwise False, or raises an Exception if missing/undefined
+            """
+            try:
+                return self.additional_properties[property_key] is property_value
+            except:
+                # This isn't ideal, and will need to be handled more gracefully!
+                raise Exception("additional_property '{0}' is not defined for topic label: {1}".format(property_key, self.label))
+
     #Now we'll start with generic functions which we'll use at higher inits
     def registerTopic(Topic, topic_group=TOPIC_TYPE_NORMAL):
         """
@@ -274,8 +311,46 @@ init 0 python:
 # Variables with cross-script utility specific to Just Natsuki
 init -990 python in jn_globals:
 
+    # Tracking; use these for anything we might change mid-session and refer back to
+
     # Tracks whether the player opted to stay for longer when Natsuki asked them to when quitting; True if so, otherwise False
     player_already_stayed = False
+
+    # Constants; use these for anything we only want defined once and used in a read-only context
+
+    # Endearments Natsuki may use at the highest levels of affinity to refer to her player
+    # She isn't that lovey-dovey, so use sparingly!
+    DEFAULT_PLAYER_ENDEARMENTS = [
+        "babe",
+        "darling",
+        "dummy",
+        "hun",
+        "my love",
+        "sweetheart",
+        "sweetie"
+    ]
+
+    # Affinity levels, highest to lowest
+    AFFINITY_LOVE = 1250 # She happ
+    AFFINITY_ENAMORED = 1000
+    AFFINITY_AFFECTIONATE = 750
+    AFFINITY_HAPPY = 500
+    AFFINITY_NORMAL = 250
+    AFFINITY_UPSET = 100 # She amger
+    AFFINITY_DISTRESSED = 0
+    AFFINITY_BROKEN = -100
+    AFFINITY_RUINED = -250  # How could you : (
+
+    # Trust levels, highest to lowest
+    TRUST_ABSOLUTE = 100
+    TRUST_COMPLETE = 75
+    TRUST_FULL = 50
+    TRUST_PARTIAL = 25
+    TRUST_NEUTRAL = 0
+    TRUST_SCEPTICAL = -25
+    TRUST_DIMINISHED = -50
+    TRUST_DISBELIEF = -75
+    TRUST_SHATTERED = -100
 
 #Stuff that's really early, which should be usable basically anywhere
 init -999 python in utils:

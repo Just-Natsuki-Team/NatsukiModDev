@@ -9,55 +9,34 @@ init python in farewells:
 
     FAREWELL_MAP = dict()
 
-    def get_farewell_in_affinity_range(farewell):
-        """
-        Returns true if player's persistent value is within the farewell topic's affinity range
-
-        IN:
-            farewell - The farewell topic to check
-        """
-        if store.persistent.affinity in range(farewell.affinity_range[0], farewell.affinity_range[1]):
-            return True
-            
-        else:
-            return False
-
-    def get_farewell_has_no_stay_option(farewell):
-        """
-        Returns true if the farewell topic given has no has_stay_option attribute set,
-        or if has_stay_option is set to False
-
-        IN:
-            farewell - The farewell topic to check
-        """
-        if not farewell.additional_properties["has_stay_option"]:
-            return True
-
-        else:
-            return False
-
     def select_farewell():
         """
         Picks a random farewell, accounting for affinity.
         If the player has already been asked to stay by Natsuki, a farewell without the option
         to stay will be selected
         """
-        farewells_in_affinity_range = filter(get_farewell_in_affinity_range, FAREWELL_MAP.values())
-        if store.jn_globals.player_already_stayed:
-            return random.choice(filter(get_farewell_has_no_stay_option, farewells_in_affinity_range)).label
+        # Get the farewells the current affinity allows for us
+        farewells_in_affinity_range = filter(store.Topic.get_player_affinity_in_topic_range, FAREWELL_MAP.values())
+        store.utils.log("Available farewells for this affinity: {0}".format(len(farewells_in_affinity_range)))
 
+        # If Natsuki has already asked her player to stay, filter any topics that would let her ask again, and return a random one
+        if store.jn_globals.player_already_stayed:
+            return random.choice(filter(
+                lambda farewell: store.Topic.get_topic_has_additional_property_with_value(farewell, "has_stay_option", False), farewells_in_affinity_range)).label
+
+        # Otherwise, just return a random farewell
         else:
             return random.choice(farewells_in_affinity_range).label
 
-# Maximum affinity farewells
+# LOVE+ farewells
 init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_maximum_aff_1",
+            label="farewell_love_aff_1",
             unlocked=True,
             conditional=None,
-            affinity_range=(700, 1000000),
+            affinity_range=(1250, None),
             additional_properties={
                 "has_stay_option": False
             }
@@ -65,7 +44,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_maximum_aff_1:
+label farewell_love_aff_1:
     n "Aww...{w=0.3} you're leaving now,{w=0.1} [player]?{w=0.2} Well,{w=0.1} okay..."
     n "Y-you know I'll miss you,{w=0.1} right?"
     n "Take care, [player]! You mean the world to me!"
@@ -75,10 +54,10 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_maximum_aff_2",
+            label="farewell_love_aff_2",
             unlocked=True,
             conditional=None,
-            affinity_range=(700, 1000000),
+            affinity_range=(1250, None),
             additional_properties={
                 "has_stay_option": False
             }
@@ -86,7 +65,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_maximum_aff_2:
+label farewell_love_aff_2:
     n "You know I don't like saying goodbye,{w=0.1} [player]..."
     n "..."
     n "I'll be okay!{w=0.2} Just come back soon,{w=0.1} alright?"
@@ -97,10 +76,10 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_maximum_aff_3",
+            label="farewell_love_aff_3",
             unlocked=True,
             conditional=None,
-            affinity_range=(700, 1000000),
+            affinity_range=(1250, None),
             additional_properties={
                 "has_stay_option": False
             }
@@ -108,20 +87,21 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_maximum_aff_3:
+label farewell_love_aff_3:
     n "Uuuu...{w=0.3} I never like saying goodbye to you..."
     n "But I guess it can't be helped,{w=0.1} [player]."
-    n "Take care of yourself out there!{w=0.2} I'm counting on you!"
+    $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+    n "Take care of yourself out there,{w=0.1} [chosen_endearment]!{w=0.2} I'm counting on you!"
     $ renpy.quit()
 
 init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_maximum_aff_4",
+            label="farewell_love_aff_4",
             unlocked=True,
             conditional=None,
-            affinity_range=(700, 1000000),
+            affinity_range=(1250, None),
             additional_properties={
                 "has_stay_option": False
             }
@@ -129,21 +109,22 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_maximum_aff_4:
+label farewell_love_aff_4:
     n "Oh?{w=0.2} You're heading out now?"
     n "That's fine,{w=0.1} I guess..."
     n "I'll really miss you,{w=0.1} [player]."
-    n "Do your best,{w=0.1} sweetheart!"
+    $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+    n "Do your best,{w=0.1} [chosen_endearment]!"
     $ renpy.quit()
 
 init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_maximum_aff_5",
+            label="farewell_love_aff_5",
             unlocked=True,
             conditional=None,
-            affinity_range=(700, 1000000),
+            affinity_range=(1250, None),
             additional_properties={
                 "has_stay_option": False
             }
@@ -151,24 +132,25 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_maximum_aff_5:
+label farewell_love_aff_5:
     n "Huh?{w=0.2} You're leaving now?"
     n "I always hate it when you have to go somewhere..."
-    n "...But I know you'll always be back for me,{w=0.1} [player]."
+    $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+    n "...But I know you'll always be back for me,{w=0.1} [chosen_endearment]."
     n "Well...{w=0.1} I'm rooting for you!"
     n "Make me proud,{w=0.1} [player]! I love you!"
     $ renpy.quit()
 
-# High affinity farewells
+# AFFECTIONATE/ENAMORED farewells
 
 init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_high_aff_1",
+            label="farewell_affectionate_enamored_aff_1",
             unlocked=True,
             conditional=None,
-            affinity_range=(500, 699),
+            affinity_range=(1000, 1249),
             additional_properties={
                 "has_stay_option": False
             }
@@ -176,7 +158,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_high_aff_1:
+label farewell_affectionate_enamored_aff_1:
     n "Hmm?{w=0.2} You're leaving now?"
     n "Aww,{w=0.1} man..."
     n "And I was having fun,{w=0.1} too..."
@@ -188,10 +170,10 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_high_aff_2",
+            label="farewell_affectionate_enamored_aff_2",
             unlocked=True,
             conditional=None,
-            affinity_range=(500, 699),
+            affinity_range=(1000, 1249),
             additional_properties={
                 "has_stay_option": False
             }
@@ -199,7 +181,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_high_aff_2:
+label farewell_affectionate_enamored_aff_2:
     n "You're going,{w=0.1} [player]?"
     n "Uuuuu...{w=0.3} okay..."
     n "Hurry back if you can,{w=0.1} alright?"
@@ -211,10 +193,10 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_high_aff_3",
+            label="farewell_affectionate_enamored_aff_3",
             unlocked=True,
             conditional=None,
-            affinity_range=(500, 699),
+            affinity_range=(1000, 1249),
             additional_properties={
                 "has_stay_option": False
             }
@@ -222,7 +204,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_high_aff_3:
+label farewell_affectionate_enamored_aff_3:
     n "Huh?{w=0.2} You're leaving?"
     n "..."
     n "That's fine...{w=0.3} I'll be okay..."
@@ -234,10 +216,10 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_high_aff_4",
+            label="farewell_affectionate_enamored_aff_4",
             unlocked=True,
             conditional=None,
-            affinity_range=(500, 699),
+            affinity_range=(1000, 1249),
             additional_properties={
                 "has_stay_option": False
             }
@@ -245,7 +227,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_high_aff_4:
+label farewell_affectionate_enamored_aff_4:
     n "Oh?{w=0.2} Heading off now,{w=0.1} [player]?"
     n "I wish you didn't have to..."
     n "But I know you have things to do."
@@ -257,10 +239,10 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_high_aff_5",
+            label="farewell_affectionate_enamored_aff_5",
             unlocked=True,
             conditional=None,
-            affinity_range=(500, 699),
+            affinity_range=(1000, 1249),
             additional_properties={
                 "has_stay_option": False
             }
@@ -268,7 +250,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_high_aff_5:
+label farewell_affectionate_enamored_aff_5:
     n "Mmm?{w=0.2} You're going now,{w=0.1} [player]?"
     n "I was hoping you'd be around longer..."
     n "Well,{w=0.2} I'll be okay!"
@@ -276,16 +258,16 @@ label farewell_high_aff_5:
     n "See you later!"
     $ renpy.quit()
 
-# Medium affinity farewells
+# HAPPY/AFFECTIONATE farewells
 
 init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_medium_aff_1",
+            label="farewell_happy_affectionate_aff_1",
             unlocked=True,
             conditional=None,
-            affinity_range=(300, 599),
+            affinity_range=(500, 999),
             additional_properties={
                 "has_stay_option": False
             }
@@ -293,7 +275,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_medium_aff_1:
+label farewell_happy_affectionate_aff_1:
     n "Going now,{w=0.1} [player]?"
     n "No worries!{w=0.2} I'll see you later!"
     $ renpy.quit()
@@ -302,10 +284,10 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_medium_aff_2",
+            label="farewell_happy_affectionate_aff_2",
             unlocked=True,
             conditional=None,
-            affinity_range=(300, 599),
+            affinity_range=(500, 999),
             additional_properties={
                 "has_stay_option": False
             }
@@ -313,7 +295,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_medium_aff_2:
+label farewell_happy_affectionate_aff_2:
     n "Heading off now,{w=0.1} [player]?"
     n "Okay!{w=0.2} Take care!"
     $ renpy.quit()
@@ -322,10 +304,10 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_medium_aff_3",
+            label="farewell_happy_affectionate_aff_3",
             unlocked=True,
             conditional=None,
-            affinity_range=(300, 599),
+            affinity_range=(500, 999),
             additional_properties={
                 "has_stay_option": False
             }
@@ -333,7 +315,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_medium_aff_3:
+label farewell_happy_affectionate_aff_3:
     n "Okaaay!{w=0.2} I'll be waiting for you!"
     n "Stay safe,{w=0.1} [player]!"
     $ renpy.quit()
@@ -342,10 +324,10 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_medium_aff_4",
+            label="farewell_happy_affectionate_aff_4",
             unlocked=True,
             conditional=None,
-            affinity_range=(300, 599),
+            affinity_range=(500, 999),
             additional_properties={
                 "has_stay_option": False
             }
@@ -353,7 +335,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_medium_aff_4:
+label farewell_happy_affectionate_aff_4:
     n "See you later,{w=0.1} [player]!"
     n "Take care out there!"
     $ renpy.quit()
@@ -362,10 +344,10 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_medium_aff_5",
+            label="farewell_happy_affectionate_aff_5",
             unlocked=True,
             conditional=None,
-            affinity_range=(300, 599),
+            affinity_range=(500, 999),
             additional_properties={
                 "has_stay_option": False
             }
@@ -373,21 +355,21 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_medium_aff_5:
+label farewell_happy_affectionate_aff_5:
     n "Goodbye,{w=0.1} [player]!"
     n "Come see me soon,{w=0.1} alright?"
     $ renpy.quit()
 
-# Low affinity farewells
+# NORMAL/HAPPY farewells
 
 init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_low_aff_1",
+            label="farewell_normal_happy_aff_1",
             unlocked=True,
             conditional=None,
-            affinity_range=(0, 299),
+            affinity_range=(250, 499),
             additional_properties={
                 "has_stay_option": False
             }
@@ -395,7 +377,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_low_aff_1:
+label farewell_normal_happy_aff_1:
     n "See you later, [player]!"
     $ renpy.quit()
 
@@ -403,10 +385,10 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_low_aff_2",
+            label="farewell_normal_happy_aff_2",
             unlocked=True,
             conditional=None,
-            affinity_range=(0, 299),
+            affinity_range=(250, 499),
             additional_properties={
                 "has_stay_option": False
             }
@@ -414,7 +396,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_low_aff_2:
+label farewell_normal_happy_aff_2:
     n "Later, [player]!"
     $ renpy.quit()
 
@@ -422,10 +404,10 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_low_aff_3",
+            label="farewell_normal_happy_aff_3",
             unlocked=True,
             conditional=None,
-            affinity_range=(0, 299),
+            affinity_range=(250, 499),
             additional_properties={
                 "has_stay_option": False
             }
@@ -433,7 +415,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_low_aff_3:
+label farewell_normal_happy_aff_3:
     n "Goodbye, [player]!"
     $ renpy.quit()
 
@@ -441,10 +423,10 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_low_aff_4",
+            label="farewell_normal_happy_aff_4",
             unlocked=True,
             conditional=None,
-            affinity_range=(0, 299),
+            affinity_range=(250, 499),
             additional_properties={
                 "has_stay_option": False
             }
@@ -452,7 +434,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_low_aff_4:
+label farewell_normal_happy_aff_4:
     n "'kay! Bye for now!"
     $ renpy.quit()
 
@@ -460,10 +442,10 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_low_aff_5",
+            label="farewell_normal_happy_aff_5",
             unlocked=True,
             conditional=None,
-            affinity_range=(0, 299),
+            affinity_range=(250, 499),
             additional_properties={
                 "has_stay_option": False
             }
@@ -471,20 +453,116 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_low_aff_5:
-    n "See ya, [player]."
+label farewell_normal_happy_aff_5:
+    n "See ya, [player]!"
     $ renpy.quit()
 
-# Minimum affinity farewells
+# UPSET/DISTRESSED farewells
+init 5 python:
+    registerTopic(
+            Topic(
+                persistent._farewell_database,
+                label="farewell_upset_distressed_aff_1",
+                unlocked=True,
+                conditional=None,
+                affinity_range=(0, 249),
+                additional_properties={
+                    "has_stay_option": False
+                }
+            ),
+            topic_group=TOPIC_TYPE_FAREWELL
+        )
+
+label farewell_upset_distressed_aff_1:
+    n "Bye, [player]."
+    $ renpy.quit()
+
+init 5 python:
+    registerTopic(
+            Topic(
+                persistent._farewell_database,
+                label="farewell_upset_distressed_aff_2",
+                unlocked=True,
+                conditional=None,
+                affinity_range=(0, 249),
+                additional_properties={
+                    "has_stay_option": False
+                }
+            ),
+            topic_group=TOPIC_TYPE_FAREWELL
+        )
+
+label farewell_upset_distressed_aff_2:
+    n "Later, [player]."
+    $ renpy.quit()
+
+init 5 python:
+    registerTopic(
+            Topic(
+                persistent._farewell_database,
+                label="farewell_upset_distressed_aff_3",
+                unlocked=True,
+                conditional=None,
+                affinity_range=(0, 249),
+                additional_properties={
+                    "has_stay_option": False
+                }
+            ),
+            topic_group=TOPIC_TYPE_FAREWELL
+        )
+
+label farewell_upset_distressed_aff_3:
+    n "'kay, [player]. Later."
+    $ renpy.quit()
+
+init 5 python:
+    registerTopic(
+            Topic(
+                persistent._farewell_database,
+                label="farewell_upset_distressed_aff_4",
+                unlocked=True,
+                conditional=None,
+                affinity_range=(0, 249),
+                additional_properties={
+                    "has_stay_option": False
+                }
+            ),
+            topic_group=TOPIC_TYPE_FAREWELL
+        )
+
+label farewell_upset_distressed_aff_4:
+    n "Goodbye, [player]."
+    $ renpy.quit()
+
+init 5 python:
+    registerTopic(
+            Topic(
+                persistent._farewell_database,
+                label="farewell_upset_distressed_aff_5",
+                unlocked=True,
+                conditional=None,
+                affinity_range=(0, 249),
+                additional_properties={
+                    "has_stay_option": False
+                }
+            ),
+            topic_group=TOPIC_TYPE_FAREWELL
+        )
+
+label farewell_upset_distressed_aff_5:
+    n "See you around."
+    $ renpy.quit()
+
+# DISTRESSED/BROKEN/RUINED farewells
 
 init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_minimum_aff_1",
+            label="farewell_broken_ruined_aff_1",
             unlocked=True,
             conditional=None,
-            affinity_range=(-999, -1),
+            affinity_range=(None, -1),
             additional_properties={
                 "has_stay_option": False
             }
@@ -492,7 +570,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_minimum_aff_1:
+label farewell_broken_ruined_aff_1:
     n "Yeah."
     $ renpy.quit()
 
@@ -500,10 +578,10 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_minimum_aff_2",
+            label="farewell_broken_ruined_aff_2",
             unlocked=True,
             conditional=None,
-            affinity_range=(-999, -1),
+            affinity_range=(None, -1),
             additional_properties={
                 "has_stay_option": False
             }
@@ -511,7 +589,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_minimum_aff_2:
+label farewell_broken_ruined_aff_2:
     n "Yep."
     $ renpy.quit()
 
@@ -519,10 +597,10 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_minimum_aff_3",
+            label="farewell_broken_ruined_aff_3",
             unlocked=True,
             conditional=None,
-            affinity_range=(-999, -1),
+            affinity_range=(None, -1),
             additional_properties={
                 "has_stay_option": False
             }
@@ -530,7 +608,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_minimum_aff_3:
+label farewell_broken_ruined_aff_3:
     n "Uh huh."
     $ renpy.quit()
 
@@ -538,10 +616,10 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_minimum_aff_4",
+            label="farewell_broken_ruined_aff_4",
             unlocked=True,
             conditional=None,
-            affinity_range=(-999, -1),
+            affinity_range=(None, -1),
             additional_properties={
                 "has_stay_option": False
             }
@@ -549,7 +627,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_minimum_aff_4:
+label farewell_broken_ruined_aff_4:
     n "..."
     $ renpy.quit()
 
@@ -557,10 +635,10 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_minimum_aff_5",
+            label="farewell_broken_ruined_aff_5",
             unlocked=True,
             conditional=None,
-            affinity_range=(-999, -1),
+            affinity_range=(None, -1),
             additional_properties={
                 "has_stay_option": False
             }
@@ -568,8 +646,8 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_minimum_aff_5:
-    n "'Kay."
+label farewell_broken_ruined_aff_5:
+    n "'kay."
     $ renpy.quit()
 
 # Farewells that allow the player to choose to stay
@@ -582,7 +660,7 @@ init 5 python:
             label="farewell_short_session_ask",
             unlocked=True,
             conditional=None,
-            affinity_range=(100, 1000000),
+            affinity_range=(500, None),
             additional_properties={
                 "has_stay_option": True
             }
@@ -647,7 +725,7 @@ init 5 python:
             label="farewell_fake_confidence_ask",
             unlocked=True,
             conditional=None,
-            affinity_range=(300, 1000000),
+            affinity_range=(750, None),
             additional_properties={
                 "has_stay_option": True
             }
@@ -669,6 +747,7 @@ label farewell_fake_confidence_ask:
             n "Jeez!{w=0.2} Let's just get back to it already..."
             n "Now,{w=0.1} where were we?"
             $ farewells.store.jn_globals.player_already_stayed = True
+            $ relationship("affinity+")
 
         "Sorry, I really need to go.":
             n "Oh...{w=0.3} aha..."
@@ -686,7 +765,7 @@ init 5 python:
             label="farewell_pleading_ask",
             unlocked=True,
             conditional=None,
-            affinity_range=(500, 1000000),
+            affinity_range=(1000, None),
             additional_properties={
                 "has_stay_option": True
             }
@@ -708,6 +787,7 @@ label farewell_pleading_ask:
             n "Really.{w=0.1} Thank you."
             n "N-now,{w=0.1} where were we? Heh..."
             $ farewells.store.jn_globals.player_already_stayed = True
+            $ relationship("affinity+")
 
         "I can't right now.":
             n "Oh..."
@@ -726,7 +806,7 @@ init 5 python:
             label="farewell_gentle_ask",
             unlocked=True,
             conditional=None,
-            affinity_range=(700, 1000000),
+            affinity_range=(1250, None),
             additional_properties={
                 "has_stay_option": True
             }
@@ -746,6 +826,7 @@ label farewell_gentle_ask:
             n "..."
             n "Aha...{w=0.3} so what else did you wanna do today?"
             $ farewells.store.jn_globals.player_already_stayed = True
+            $ relationship("affinity+")
 
         "Sorry, I really have to go.":
             n "Oh..."
