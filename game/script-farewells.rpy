@@ -44,7 +44,6 @@ init python in farewells:
         """
         farewells_in_affinity_range = filter(get_farewell_in_affinity_range, FAREWELL_MAP.values())
         if store.jn_globals.player_already_stayed:
-            
             return random.choice(filter(get_farewell_has_no_stay_option, farewells_in_affinity_range)).label
 
         else:
