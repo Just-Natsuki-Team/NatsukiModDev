@@ -19,6 +19,25 @@ init 0 python:
     TOPIC_TYPE_GREETING = "GREETING"
     TOPIC_TYPE_NORMAL = "NORMAL"
 
+    TOPIC_LOCKED_PROP_BASE_MAP = {
+        #Things which shouldn't change
+        "conditional": True,
+        "unlocked": True,
+        "nat_says": True,
+        "player_says": True,
+        "shown_count": True,
+        "last_seen": True,
+        "unlocked_on": True,
+
+        #Things which can change
+        "affinity_range": False,
+        "trust_range": False,
+        "category": False,
+        "prompt": False,
+        "location": False,
+        "additional_properties": False
+    }
+
     class Topic(object):
         """
         Topic class. Manages all topics
@@ -112,7 +131,8 @@ init 0 python:
             self.location = location
 
             #And finally, add this all back to the persistent dict
-            persistent_db[label] = self.as_dict()
+            persistent_db[label] = dict()
+            self.__save()
 
         def __eq__(self, other):
             """
@@ -167,16 +187,21 @@ init 0 python:
             """
             Internal load funtion
 
-            IN:
-                persist_data - the as_dict representation of this topic
+            NOTE: Will raise a KeyError of the lock map doesn't have the persist key in it
             """
-            self.__dict__.update(self.__persistent_db[self.label])
+            for persist_key, value in self.__persistent_db[self.label].iteritems():
+                if TOPIC_LOCKED_PROP_BASE_MAP[persist_key]:
+                    self.__dict__[persist_key] = value
 
         def __save(self):
             """
             Saves this topic object to persistent
+
+            NOTE: Will raise a KeyError of the lock map doesn't have the persist key in it
             """
-            self.__persistent_db[self.label] = self.as_dict()
+            for persist_key, value in self.as_dict().iteritems():
+                if TOPIC_LOCKED_PROP_BASE_MAP.get[persist_key]:
+                    self.__persistent_db[self.label][persist_key] = value
 
         @staticmethod
         def _save_topic_data():
