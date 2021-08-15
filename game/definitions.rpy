@@ -316,6 +316,9 @@ init -990 python in jn_globals:
     # Tracks whether the player opted to stay for longer when Natsuki asked them to when quitting; True if so, otherwise False
     player_already_stayed = False
 
+    # The current affection state. We default this to 4 (NORMAL)
+    current_affection_state = 4
+
     # Constants; use these for anything we only want defined once and used in a read-only context
 
     # Endearments Natsuki may use at the highest levels of affinity to refer to her player
@@ -337,28 +340,6 @@ init -990 python in jn_globals:
         "so sweet",
         "the best"
     ]
-
-    # Affinity levels, highest to lowest
-    AFFINITY_LOVE = 1250 # She happ
-    AFFINITY_ENAMORED = 1000
-    AFFINITY_AFFECTIONATE = 750
-    AFFINITY_HAPPY = 500
-    AFFINITY_NORMAL = 250
-    AFFINITY_UPSET = 100 # She amger
-    AFFINITY_DISTRESSED = 0
-    AFFINITY_BROKEN = -100
-    AFFINITY_RUINED = -250  # How could you : (
-
-    # Trust levels, highest to lowest
-    TRUST_ABSOLUTE = 100
-    TRUST_COMPLETE = 75
-    TRUST_FULL = 50
-    TRUST_PARTIAL = 25
-    TRUST_NEUTRAL = 0
-    TRUST_SCEPTICAL = -25
-    TRUST_DIMINISHED = -50
-    TRUST_DISBELIEF = -75
-    TRUST_SHATTERED = -100
 
 #Stuff that's really early, which should be usable basically anywhere
 init -999 python in utils:
