@@ -1,5 +1,4 @@
 init 0 python in affinity:
-    import store
 
     def affinity_is_between_bounds(lower_bound, affinity, upper_bound):
         """

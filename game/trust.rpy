@@ -16,9 +16,9 @@ init 0 python in trust:
 
         # Set bounds if None is given for either upper or lower, as we need an integer comparison
         if lower_bound is None:
-            lower_bound = 0
+            lower_bound = -9999999
 
         if upper_bound is None:
-            upper_bound = 100
+            upper_bound = 9999999
         
         return trust >= lower_bound and trust <= upper_bound

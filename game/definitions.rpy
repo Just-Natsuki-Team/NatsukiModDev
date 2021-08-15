@@ -330,6 +330,14 @@ init -990 python in jn_globals:
         "sweetie"
     ]
 
+    # Descriptors Natsuki may use at the higher levels of affinity to define her player
+    DEFAULT_PLAYER_DESCRIPTORS = [
+        "amazing",
+        "really great",
+        "so sweet",
+        "the best"
+    ]
+
     # Affinity levels, highest to lowest
     AFFINITY_LOVE = 1250 # She happ
     AFFINITY_ENAMORED = 1000

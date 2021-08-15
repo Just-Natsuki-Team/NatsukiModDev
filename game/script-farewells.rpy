@@ -28,6 +28,57 @@ init python in farewells:
         else:
             return random.choice(farewells_in_affinity_range).label
 
+    def try_trust_dialogue():
+        """
+        Coinflip toss on whether to additionally call trust-based dialogue on farewell conclusion
+        """
+        renpy.jump("farewell_extra_trust")
+        #if random.choice([True, False]):
+            #renpy.call_in_new_context("farewell_extra_trust")
+            
+init 1 python:
+    # Resets - remove these later, once we're done tweaking affinity/trust!
+    store.persistent._farewell_database.pop("farewell_love_aff_1")
+    store.persistent._farewell_database.pop("farewell_love_aff_2")
+    store.persistent._farewell_database.pop("farewell_love_aff_3")
+    store.persistent._farewell_database.pop("farewell_love_aff_4")
+    store.persistent._farewell_database.pop("farewell_love_aff_5")
+
+    store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_1")
+    store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_2")
+    store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_3")
+    store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_4")
+    store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_5")
+
+    store.persistent._farewell_database.pop("farewell_happy_affectionate_aff_1")
+    store.persistent._farewell_database.pop("farewell_happy_affectionate_aff_2")
+    store.persistent._farewell_database.pop("farewell_happy_affectionate_aff_3")
+    store.persistent._farewell_database.pop("farewell_happy_affectionate_aff_4")
+    store.persistent._farewell_database.pop("farewell_happy_affectionate_aff_5")
+
+    store.persistent._farewell_database.pop("farewell_normal_happy_aff_1")
+    store.persistent._farewell_database.pop("farewell_normal_happy_aff_2")
+    store.persistent._farewell_database.pop("farewell_normal_happy_aff_3")
+    store.persistent._farewell_database.pop("farewell_normal_happy_aff_4")
+    store.persistent._farewell_database.pop("farewell_normal_happy_aff_5")
+
+    store.persistent._farewell_database.pop("farewell_upset_distressed_aff_1")
+    store.persistent._farewell_database.pop("farewell_upset_distressed_aff_2")
+    store.persistent._farewell_database.pop("farewell_upset_distressed_aff_3")
+    store.persistent._farewell_database.pop("farewell_upset_distressed_aff_4")
+    store.persistent._farewell_database.pop("farewell_upset_distressed_aff_5")
+
+    store.persistent._farewell_database.pop("farewell_broken_ruined_aff_1")
+    store.persistent._farewell_database.pop("farewell_broken_ruined_aff_2")
+    store.persistent._farewell_database.pop("farewell_broken_ruined_aff_3")
+    store.persistent._farewell_database.pop("farewell_broken_ruined_aff_4")
+    store.persistent._farewell_database.pop("farewell_broken_ruined_aff_5")
+
+    store.persistent._farewell_database.pop("farewell_gentle_ask")
+    store.persistent._farewell_database.pop("farewell_pleading_ask")
+    store.persistent._farewell_database.pop("farewell_fake_confidence_ask")
+    store.persistent._farewell_database.pop("farewell_short_session_ask")
+
 # LOVE+ farewells
 init 5 python:
     registerTopic(
@@ -48,6 +99,7 @@ label farewell_love_aff_1:
     n "Aww...{w=0.3} you're leaving now,{w=0.1} [player]?{w=0.2} Well,{w=0.1} okay..."
     n "Y-you know I'll miss you,{w=0.1} right?"
     n "Take care, [player]! You mean the world to me!"
+    $ farewells.try_trust_dialogue()
     $ renpy.quit()
 
 init 5 python:
@@ -70,6 +122,7 @@ label farewell_love_aff_2:
     n "..."
     n "I'll be okay!{w=0.2} Just come back soon,{w=0.1} alright?"
     n "Stay safe,{w=0.1} dummy!{w=0.2} I love you!"
+    $ farewells.try_trust_dialogue()
     $ renpy.quit()
 
 init 5 python:
@@ -92,6 +145,7 @@ label farewell_love_aff_3:
     n "But I guess it can't be helped,{w=0.1} [player]."
     $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
     n "Take care of yourself out there,{w=0.1} [chosen_endearment]!{w=0.2} I'm counting on you!"
+    $ farewells.try_trust_dialogue()
     $ renpy.quit()
 
 init 5 python:
@@ -115,6 +169,7 @@ label farewell_love_aff_4:
     n "I'll really miss you,{w=0.1} [player]."
     $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
     n "Do your best,{w=0.1} [chosen_endearment]!"
+    $ farewells.try_trust_dialogue()
     $ renpy.quit()
 
 init 5 python:
@@ -139,6 +194,7 @@ label farewell_love_aff_5:
     n "...But I know you'll always be back for me,{w=0.1} [chosen_endearment]."
     n "Well...{w=0.1} I'm rooting for you!"
     n "Make me proud,{w=0.1} [player]! I love you!"
+    $ farewells.try_trust_dialogue()
     $ renpy.quit()
 
 # AFFECTIONATE/ENAMORED farewells
@@ -783,7 +839,8 @@ label farewell_pleading_ask:
             n "Yes!{nw}"
             n "I-I mean...!"
             n "..."
-            n "T-thanks, [player].{w=0.1} You're awesome,{w=0.1} you know that?"
+            $ chosen_descriptor = random.choice(jn_globals.DEFAULT_PLAYER_DESCRIPTORS)
+            n "T-thanks, [player].{w=0.1} You're [chosen_descriptor],{w=0.1} you know that?"
             n "Really.{w=0.1} Thank you."
             n "N-now,{w=0.1} where were we? Heh..."
             $ farewells.store.jn_globals.player_already_stayed = True
@@ -822,6 +879,8 @@ label farewell_gentle_ask:
         "I can stay a little longer.":
             n "[player]..."
             n "Thank you.{w=0.1} That really means a lot to me right now."
+            $ chosen_descriptor = random.choice(jn_globals.DEFAULT_PLAYER_DESCRIPTORS)
+            n "Y-You're [chosen_descriptor]."
             n "Truly.{w=0.1} Thanks..."
             n "..."
             n "Aha...{w=0.3} so what else did you wanna do today?"
@@ -837,3 +896,68 @@ label farewell_gentle_ask:
             n "I'll see you later."
             $ renpy.quit()
     return
+
+# Trust dialogue; chance to call upon farewell completing and prior to the game closing
+
+label farewell_extra_trust:
+
+    # Debug
+    n "Okay, your trust is [store.persistent.trust], lemme work this out real quick..."
+    n "I'll just put the trust levels in the log for you... 'kay! Here goes!"
+    $ store.utils.log("TRUST_ABSOLUTE: {0}".format(store.jn_globals.TRUST_ABSOLUTE))
+    $ store.utils.log("TRUST_COMPLETE: {0}".format(store.jn_globals.TRUST_COMPLETE))
+    $ store.utils.log("TRUST_FULL: {0}".format(store.jn_globals.TRUST_FULL))
+    $ store.utils.log("TRUST_PARTIAL: {0}".format(store.jn_globals.TRUST_PARTIAL))
+    $ store.utils.log("TRUST_NEUTRAL: {0}".format(store.jn_globals.TRUST_NEUTRAL))
+    $ store.utils.log("TRUST_SCEPTICAL: {0}".format(store.jn_globals.TRUST_SCEPTICAL))
+    $ store.utils.log("TRUST_DIMINISHED: {0}".format(store.jn_globals.TRUST_DIMINISHED))
+    $ store.utils.log("TRUST_DISBELIEF: {0}".format(store.jn_globals.TRUST_DISBELIEF))
+    $ store.utils.log("TRUST_SHATTERED: {0}".format(store.jn_globals.TRUST_SHATTERED))
+
+    # ABSOLUTE+
+    if store.trust.trust_is_between_bounds(
+        lower_bound=store.jn_globals.TRUST_ABSOLUTE,
+        trust=store.persistent.trust,
+        upper_bound=None):
+        n "My [player]...{w=0.3} I'll be waiting..."
+
+    # FULL-COMPLETE
+    elif store.trust.trust_is_between_bounds(
+        lower_bound=store.jn_globals.TRUST_FULL,
+        trust=store.persistent.trust,
+        upper_bound=store.jn_globals.TRUST_ABSOLUTE):
+        n "I'll be waiting..."
+
+    # NEUTRAL-PARTIAL
+    elif store.trust.trust_is_between_bounds(
+        lower_bound=store.jn_globals.TRUST_NEUTRAL,
+        trust=store.persistent.trust,
+        upper_bound=store.jn_globals.TRUST_PARTIAL):
+        n "You'll be back...{w=0.3} right?"
+
+    # SCEPTICAL-NEUTRAL
+    elif store.trust.trust_is_between_bounds(
+        lower_bound=store.jn_globals.TRUST_SCEPTICAL,
+        trust=store.persistent.trust,
+        upper_bound=store.jn_globals.TRUST_NEUTRAL):
+        n "I'll be okay...{w=0.3} I'll be okay..."
+
+    # DIMINISHED-SCEPTICAL
+    elif store.trust.trust_is_between_bounds(
+        lower_bound=store.jn_globals.TRUST_DIMINISHED,
+        trust=store.persistent.trust,
+        upper_bound=store.jn_globals.TRUST_SCEPTICAL):
+        n "...?"
+
+    # DIMINISHED-
+    elif store.trust.trust_is_between_bounds(
+        lower_bound=None,
+        trust=store.persistent.trust,
+        upper_bound=store.jn_globals.TRUST_DIMINISHED):
+        n "..."
+
+    # Debug
+    else:
+        n "Um...{w=0.3} I think you messed up somewhere,{w=0.1} [player]...{w=0.3} Aha..."
+
+return

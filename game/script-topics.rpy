@@ -32,7 +32,7 @@ init 5 python:
     )
 
 label classroom_topic_example2:
-    n "This is your affinity :)  :[persistent.affinity]"
+    n "Your affinity is: [persistent.affinity], and your trust is: [persistent.trust] <3"
     return
 
 init 5 python:
@@ -74,7 +74,7 @@ init 5 python:
             persistent._topic_database,
             label="talk_set_affinity",
             unlocked=True,
-            prompt="Can you set my affinity to something else?",
+            prompt="Can you change my affinity?",
             conditional=None,
             category=["Debug"],
             player_says=True,
@@ -84,15 +84,43 @@ init 5 python:
     )
 
 label talk_set_affinity:
-    n "Okaaay! Just tell me what value you want!"
+    n "Okaaay! Just tell me what affinity value you want!"
     python:
-        affinity_to_set = renpy.input("Enter an affinity value:")
+        affinity_to_set = renpy.input("Enter an affinity value (current: {0}):".format(persistent.affinity))
         try:
             persistent.affinity = float(affinity_to_set)
             renpy.say(n, "Done! Your new affinity is [persistent.affinity]!")
 
         except:
-            renpy.say(n, "Huh... sorry, I can't seem to read that. Make sure you enter an integer or decimal value, 'kay?")
+            renpy.say(n, "Huh... sorry, I didn't get that. Make sure you enter an integer or decimal value, alright?")
+    return
+
+# This topic allows us to (temporarily!) set a custom trust value
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_set_trust",
+            unlocked=True,
+            prompt="Can you change my trust?",
+            conditional=None,
+            category=["Debug"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_set_trust:
+    n "Sure! Just tell me what trust value you want!"
+    python:
+        trust_to_set = renpy.input("Enter a trust value (current: {0}):".format(persistent.trust))
+        try:
+            persistent.trust = float(trust_to_set)
+            renpy.say(n, "Alright! Your new trust is [persistent.trust]!")
+
+        except:
+            renpy.say(n, "Hmm... sorry, I can't seem to read that. Make sure you enter an integer or decimal value, 'kay?")
     return
 
 # Natsuki's thoughts on having her picture taken via the ingame screenshot system
