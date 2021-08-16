@@ -207,8 +207,8 @@ init -1 python in jn_affinity:
 
         #With the outlier cases done, simply check if we're within the range
         return (
-            _compare_affinity_states(affinity_state, low_bound) <= 0
-            or _compare_affinity_states(affinity_state, high_bound) >= 0
+            _compare_affinity_states(affinity_state, low_bound) >= 0
+            and _compare_affinity_states(affinity_state, high_bound) <= 0
         )
 
     def compare_thresholds(value, threshold):

@@ -178,7 +178,7 @@ init 0 python:
             """
             Checks if the topic's action should be run
             """
-            return store.jn_affinity.is_state_within_range(jn_globals.current_affection_state, self.affinity_range)
+            return store.jn_affinity.is_state_within_range(jn_globals.current_affinity_state, self.affinity_range)
 
         def __load(self):
             """
@@ -324,9 +324,6 @@ init -990 python in jn_globals:
     # Tracks whether the player opted to stay for longer when Natsuki asked them to when quitting; True if so, otherwise False
     player_already_stayed = False
 
-    # The current affection state. We default this to 4 (NORMAL)
-    current_affection_state = 4
-
     # Constants; use these for anything we only want defined once and used in a read-only context
 
     # Endearments Natsuki may use at the highest levels of affinity to refer to her player
@@ -350,6 +347,10 @@ init -990 python in jn_globals:
     ]
 
     current_session_start_time = store.datetime.datetime.now()
+
+init 10 python in jn_globals:
+    # The current affection state. We default this to 5 (NORMAL)
+    current_affinity_state = store.jn_affinity.NORMAL
 
 #Stuff that's really early, which should be usable basically anywhere
 init -999 python in utils:
