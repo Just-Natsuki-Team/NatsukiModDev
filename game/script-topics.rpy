@@ -9,9 +9,7 @@ init 5 python:
             persistent._topic_database,
             label="classroom_topic_example1",
             unlocked=True,
-            location="classroom",
-            affinity_range=(0, 50),
-            trust_range=(0, 50)
+            location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
     )

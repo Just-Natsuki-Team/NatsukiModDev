@@ -11,18 +11,27 @@ init python in farewells:
 
     def select_farewell():
         """
-        Picks a random farewell, accounting for affinity.
+        Picks a random farewell, accounting for affinity
         If the player has already been asked to stay by Natsuki, a farewell without the option
         to stay will be selected
         """
         # Get the farewells the current affinity allows for us
-        farewells_in_affinity_range = filter(store.Topic.get_player_affinity_in_topic_range, FAREWELL_MAP.values())
-        store.utils.log("Available farewells for this affinity: {0}".format(len(farewells_in_affinity_range)))
+        #TODO: Generalized filter function
+        farewells_in_affinity_range = filter(lambda x: x.evaluate_affinity_range(), FAREWELL_MAP.values())
+
+        # Filter any time-sensitive topics
+        if divmod((store.utils.get_current_session_length()).total_seconds(), 60)[0] > 30:
+            farewells_in_affinity_range = filter(
+                lambda farewell: store.Topic.get_topic_has_additional_property_with_value(farewell, "is_time_sensitive", False),
+                farewells_in_affinity_range
+            ).label
 
         # If Natsuki has already asked her player to stay, filter any topics that would let her ask again, and return a random one
         if store.jn_globals.player_already_stayed:
             return random.choice(filter(
-                lambda farewell: store.Topic.get_topic_has_additional_property_with_value(farewell, "has_stay_option", False), farewells_in_affinity_range)).label
+                lambda farewell: store.Topic.get_topic_has_additional_property_with_value(farewell, "has_stay_option", False),
+                farewells_in_affinity_range
+            )).label
 
         # Otherwise, just return a random farewell
         else:
@@ -32,52 +41,88 @@ init python in farewells:
         """
         Coinflip decision on whether to additionally call trust-based dialogue on farewell
         """
-        #renpy.jump("farewell_extra_trust")
         if random.choice([True, False]):
             renpy.call_in_new_context("farewell_extra_trust")
-            
+
+    def get_time_in_session_descriptor():
+        """
+        Get a descriptor based on the number of minutes the player has spent in the session, up to 30 minutes
+
+        OUT:
+            Brief descriptor relating to the number of minutes spent in the session
+        """
+        minutes_in_session = divmod((farewells.store.utils.get_current_session_length()).total_seconds(), 60)[0]
+        if minutes_in_session <= 1:
+            time_in_session_descriptor = "like a minute"
+
+        elif minutes_in_session <= 3:
+            time_in_session_descriptor = "a couple of minutes"
+
+        elif minutes_in_session > 3 and minutes_in_session <= 5:
+            time_in_session_descriptor = "like five minutes"
+
+        elif minutes_in_session > 5 and minutes_in_session <= 10:
+            time_in_session_descriptor = "around ten minutes"
+
+        elif minutes_in_session > 10 and minutes_in_session <= 15:
+            time_in_session_descriptor = "around fifteen minutes"
+
+        elif minutes_in_session > 15 and minutes_in_session <= 20:
+            time_in_session_descriptor = "around twenty minutes"
+
+        elif minutes_in_session <= 30:
+            time_in_session_descriptor = "about half an hour"
+
+        else:
+            time_in_session_descriptor = "a while"
+
 init 1 python:
-    # Resets - remove these later, once we're done tweaking affinity/trust!
-    store.persistent._farewell_database.pop("farewell_love_aff_1")
-    store.persistent._farewell_database.pop("farewell_love_aff_2")
-    store.persistent._farewell_database.pop("farewell_love_aff_3")
-    store.persistent._farewell_database.pop("farewell_love_aff_4")
-    store.persistent._farewell_database.pop("farewell_love_aff_5")
+    # DEBUG: TODO: Resets - remove these later, once we're done tweaking affinity/trust!
+    try:
+        store.persistent._farewell_database.pop("farewell_love_aff_1")
+        store.persistent._farewell_database.pop("farewell_love_aff_2")
+        store.persistent._farewell_database.pop("farewell_love_aff_3")
+        store.persistent._farewell_database.pop("farewell_love_aff_4")
+        store.persistent._farewell_database.pop("farewell_love_aff_5")
 
-    store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_1")
-    store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_2")
-    store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_3")
-    store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_4")
-    store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_5")
+        store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_1")
+        store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_2")
+        store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_3")
+        store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_4")
+        store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_5")
 
-    store.persistent._farewell_database.pop("farewell_happy_affectionate_aff_1")
-    store.persistent._farewell_database.pop("farewell_happy_affectionate_aff_2")
-    store.persistent._farewell_database.pop("farewell_happy_affectionate_aff_3")
-    store.persistent._farewell_database.pop("farewell_happy_affectionate_aff_4")
-    store.persistent._farewell_database.pop("farewell_happy_affectionate_aff_5")
+        store.persistent._farewell_database.pop("farewell_happy_affectionate_aff_1")
+        store.persistent._farewell_database.pop("farewell_happy_affectionate_aff_2")
+        store.persistent._farewell_database.pop("farewell_happy_affectionate_aff_3")
+        store.persistent._farewell_database.pop("farewell_happy_affectionate_aff_4")
+        store.persistent._farewell_database.pop("farewell_happy_affectionate_aff_5")
 
-    store.persistent._farewell_database.pop("farewell_normal_happy_aff_1")
-    store.persistent._farewell_database.pop("farewell_normal_happy_aff_2")
-    store.persistent._farewell_database.pop("farewell_normal_happy_aff_3")
-    store.persistent._farewell_database.pop("farewell_normal_happy_aff_4")
-    store.persistent._farewell_database.pop("farewell_normal_happy_aff_5")
+        store.persistent._farewell_database.pop("farewell_normal_happy_aff_1")
+        store.persistent._farewell_database.pop("farewell_normal_happy_aff_2")
+        store.persistent._farewell_database.pop("farewell_normal_happy_aff_3")
+        store.persistent._farewell_database.pop("farewell_normal_happy_aff_4")
+        store.persistent._farewell_database.pop("farewell_normal_happy_aff_5")
 
-    store.persistent._farewell_database.pop("farewell_upset_distressed_aff_1")
-    store.persistent._farewell_database.pop("farewell_upset_distressed_aff_2")
-    store.persistent._farewell_database.pop("farewell_upset_distressed_aff_3")
-    store.persistent._farewell_database.pop("farewell_upset_distressed_aff_4")
-    store.persistent._farewell_database.pop("farewell_upset_distressed_aff_5")
+        store.persistent._farewell_database.pop("farewell_upset_distressed_aff_1")
+        store.persistent._farewell_database.pop("farewell_upset_distressed_aff_2")
+        store.persistent._farewell_database.pop("farewell_upset_distressed_aff_3")
+        store.persistent._farewell_database.pop("farewell_upset_distressed_aff_4")
+        store.persistent._farewell_database.pop("farewell_upset_distressed_aff_5")
 
-    store.persistent._farewell_database.pop("farewell_broken_ruined_aff_1")
-    store.persistent._farewell_database.pop("farewell_broken_ruined_aff_2")
-    store.persistent._farewell_database.pop("farewell_broken_ruined_aff_3")
-    store.persistent._farewell_database.pop("farewell_broken_ruined_aff_4")
-    store.persistent._farewell_database.pop("farewell_broken_ruined_aff_5")
+        store.persistent._farewell_database.pop("farewell_broken_ruined_aff_1")
+        store.persistent._farewell_database.pop("farewell_broken_ruined_aff_2")
+        store.persistent._farewell_database.pop("farewell_broken_ruined_aff_3")
+        store.persistent._farewell_database.pop("farewell_broken_ruined_aff_4")
+        store.persistent._farewell_database.pop("farewell_broken_ruined_aff_5")
 
-    store.persistent._farewell_database.pop("farewell_gentle_ask")
-    store.persistent._farewell_database.pop("farewell_pleading_ask")
-    store.persistent._farewell_database.pop("farewell_fake_confidence_ask")
-    store.persistent._farewell_database.pop("farewell_short_session_ask")
+        store.persistent._farewell_database.pop("farewell_gentle_ask")
+        store.persistent._farewell_database.pop("farewell_pleading_ask")
+        store.persistent._farewell_database.pop("farewell_fake_confidence_ask")
+        store.persistent._farewell_database.pop("farewell_short_session_ask")
+        store.persistent._farewell_database.pop("farewell_short_session_ask_alt")
+
+    except Exception as e:
+        utils.log(e, utils.SEVERITY_ERR)
 
 # LOVE+ farewells
 init 5 python:
@@ -87,9 +132,10 @@ init 5 python:
             label="farewell_love_aff_1",
             unlocked=True,
             conditional=None,
-            affinity_range=(1250, None),
+            affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -109,9 +155,10 @@ init 5 python:
             label="farewell_love_aff_2",
             unlocked=True,
             conditional=None,
-            affinity_range=(1250, None),
+            affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -132,9 +179,10 @@ init 5 python:
             label="farewell_love_aff_3",
             unlocked=True,
             conditional=None,
-            affinity_range=(1250, None),
+            affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -155,9 +203,10 @@ init 5 python:
             label="farewell_love_aff_4",
             unlocked=True,
             conditional=None,
-            affinity_range=(1250, None),
+            affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -179,9 +228,10 @@ init 5 python:
             label="farewell_love_aff_5",
             unlocked=True,
             conditional=None,
-            affinity_range=(1250, None),
+            affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -206,9 +256,10 @@ init 5 python:
             label="farewell_affectionate_enamored_aff_1",
             unlocked=True,
             conditional=None,
-            affinity_range=(1000, 1249),
+            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -230,9 +281,10 @@ init 5 python:
             label="farewell_affectionate_enamored_aff_2",
             unlocked=True,
             conditional=None,
-            affinity_range=(1000, 1249),
+            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -254,9 +306,10 @@ init 5 python:
             label="farewell_affectionate_enamored_aff_3",
             unlocked=True,
             conditional=None,
-            affinity_range=(1000, 1249),
+            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -278,9 +331,10 @@ init 5 python:
             label="farewell_affectionate_enamored_aff_4",
             unlocked=True,
             conditional=None,
-            affinity_range=(1000, 1249),
+            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -302,9 +356,10 @@ init 5 python:
             label="farewell_affectionate_enamored_aff_5",
             unlocked=True,
             conditional=None,
-            affinity_range=(1000, 1249),
+            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -328,9 +383,10 @@ init 5 python:
             label="farewell_happy_affectionate_aff_1",
             unlocked=True,
             conditional=None,
-            affinity_range=(500, 999),
+            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -348,9 +404,10 @@ init 5 python:
             label="farewell_happy_affectionate_aff_2",
             unlocked=True,
             conditional=None,
-            affinity_range=(500, 999),
+            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -369,9 +426,10 @@ init 5 python:
             label="farewell_happy_affectionate_aff_3",
             unlocked=True,
             conditional=None,
-            affinity_range=(500, 999),
+            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -390,9 +448,10 @@ init 5 python:
             label="farewell_happy_affectionate_aff_4",
             unlocked=True,
             conditional=None,
-            affinity_range=(500, 999),
+            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -411,9 +470,10 @@ init 5 python:
             label="farewell_happy_affectionate_aff_5",
             unlocked=True,
             conditional=None,
-            affinity_range=(500, 999),
+            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -434,9 +494,10 @@ init 5 python:
             label="farewell_normal_happy_aff_1",
             unlocked=True,
             conditional=None,
-            affinity_range=(250, 499),
+            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -453,9 +514,10 @@ init 5 python:
             label="farewell_normal_happy_aff_2",
             unlocked=True,
             conditional=None,
-            affinity_range=(250, 499),
+            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -473,9 +535,10 @@ init 5 python:
             label="farewell_normal_happy_aff_3",
             unlocked=True,
             conditional=None,
-            affinity_range=(250, 499),
+            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -493,9 +556,10 @@ init 5 python:
             label="farewell_normal_happy_aff_4",
             unlocked=True,
             conditional=None,
-            affinity_range=(250, 499),
+            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -513,9 +577,10 @@ init 5 python:
             label="farewell_normal_happy_aff_5",
             unlocked=True,
             conditional=None,
-            affinity_range=(250, 499),
+            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -529,18 +594,19 @@ label farewell_normal_happy_aff_5:
 # UPSET/DISTRESSED farewells
 init 5 python:
     registerTopic(
-            Topic(
-                persistent._farewell_database,
-                label="farewell_upset_distressed_aff_1",
-                unlocked=True,
-                conditional=None,
-                affinity_range=(0, 249),
-                additional_properties={
-                    "has_stay_option": False
-                }
-            ),
-            topic_group=TOPIC_TYPE_FAREWELL
-        )
+        Topic(
+            persistent._farewell_database,
+            label="farewell_upset_distressed_aff_1",
+            unlocked=True,
+            conditional=None,
+            affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET),
+            additional_properties={
+                "has_stay_option": False,
+                "is_time_sensitive": False
+            }
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
 
 label farewell_upset_distressed_aff_1:
     n "Bye, [player]."
@@ -548,18 +614,19 @@ label farewell_upset_distressed_aff_1:
 
 init 5 python:
     registerTopic(
-            Topic(
-                persistent._farewell_database,
-                label="farewell_upset_distressed_aff_2",
-                unlocked=True,
-                conditional=None,
-                affinity_range=(0, 249),
-                additional_properties={
-                    "has_stay_option": False
-                }
-            ),
-            topic_group=TOPIC_TYPE_FAREWELL
-        )
+        Topic(
+            persistent._farewell_database,
+            label="farewell_upset_distressed_aff_2",
+            unlocked=True,
+            conditional=None,
+            affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET),
+            additional_properties={
+                "has_stay_option": False,
+                "is_time_sensitive": False
+            }
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
 
 label farewell_upset_distressed_aff_2:
     n "Later, [player]."
@@ -567,18 +634,19 @@ label farewell_upset_distressed_aff_2:
 
 init 5 python:
     registerTopic(
-            Topic(
-                persistent._farewell_database,
-                label="farewell_upset_distressed_aff_3",
-                unlocked=True,
-                conditional=None,
-                affinity_range=(0, 249),
-                additional_properties={
-                    "has_stay_option": False
-                }
-            ),
-            topic_group=TOPIC_TYPE_FAREWELL
-        )
+        Topic(
+            persistent._farewell_database,
+            label="farewell_upset_distressed_aff_3",
+            unlocked=True,
+            conditional=None,
+            affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET),
+            additional_properties={
+                "has_stay_option": False,
+                "is_time_sensitive": False
+            }
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
 
 label farewell_upset_distressed_aff_3:
     n "'kay, [player]. Later."
@@ -586,18 +654,19 @@ label farewell_upset_distressed_aff_3:
 
 init 5 python:
     registerTopic(
-            Topic(
-                persistent._farewell_database,
-                label="farewell_upset_distressed_aff_4",
-                unlocked=True,
-                conditional=None,
-                affinity_range=(0, 249),
-                additional_properties={
-                    "has_stay_option": False
-                }
-            ),
-            topic_group=TOPIC_TYPE_FAREWELL
-        )
+        Topic(
+            persistent._farewell_database,
+            label="farewell_upset_distressed_aff_4",
+            unlocked=True,
+            conditional=None,
+            affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET),
+            additional_properties={
+                "has_stay_option": False,
+                "is_time_sensitive": False
+            }
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
 
 label farewell_upset_distressed_aff_4:
     n "Goodbye, [player]."
@@ -605,18 +674,19 @@ label farewell_upset_distressed_aff_4:
 
 init 5 python:
     registerTopic(
-            Topic(
-                persistent._farewell_database,
-                label="farewell_upset_distressed_aff_5",
-                unlocked=True,
-                conditional=None,
-                affinity_range=(0, 249),
-                additional_properties={
-                    "has_stay_option": False
-                }
-            ),
-            topic_group=TOPIC_TYPE_FAREWELL
-        )
+        Topic(
+            persistent._farewell_database,
+            label="farewell_upset_distressed_aff_5",
+            unlocked=True,
+            conditional=None,
+            affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET),
+            additional_properties={
+                "has_stay_option": False,
+            "is_time_sensitive": False
+            }
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
 
 label farewell_upset_distressed_aff_5:
     n "See you around."
@@ -631,9 +701,10 @@ init 5 python:
             label="farewell_broken_ruined_aff_1",
             unlocked=True,
             conditional=None,
-            affinity_range=(None, -1),
+            affinity_range=(jn_aff.RUINED, jn_aff.BROKEN),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -650,9 +721,10 @@ init 5 python:
             label="farewell_broken_ruined_aff_2",
             unlocked=True,
             conditional=None,
-            affinity_range=(None, -1),
+            affinity_range=(jn_aff.RUINED, jn_aff.BROKEN),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -669,9 +741,10 @@ init 5 python:
             label="farewell_broken_ruined_aff_3",
             unlocked=True,
             conditional=None,
-            affinity_range=(None, -1),
+            affinity_range=(jn_aff.RUINED, jn_aff.BROKEN),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -688,9 +761,10 @@ init 5 python:
             label="farewell_broken_ruined_aff_4",
             unlocked=True,
             conditional=None,
-            affinity_range=(None, -1),
+            affinity_range=(jn_aff.RUINED, jn_aff.BROKEN),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -707,9 +781,10 @@ init 5 python:
             label="farewell_broken_ruined_aff_5",
             unlocked=True,
             conditional=None,
-            affinity_range=(None, -1),
+            affinity_range=(jn_aff.RUINED, jn_aff.BROKEN),
             additional_properties={
-                "has_stay_option": False
+                "has_stay_option": False,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -729,9 +804,10 @@ init 5 python:
             label="farewell_short_session_ask",
             unlocked=True,
             conditional=None,
-            affinity_range=(500, None),
+            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
             additional_properties={
-                "has_stay_option": True
+                "has_stay_option": True,
+                "is_time_sensitive": True
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -739,30 +815,7 @@ init 5 python:
 
 label farewell_short_session_ask:
     n "What?{w=0.2} You're leaving?{w=0.2} But you've barely been here at all today,{w=0.1} [player]!"
-    python:
-        # Get the number of minutes the player has been here so far
-        minutes_in_session = divmod((datetime.datetime.now() - current_session_start_time).total_seconds(), 60)[0]
-        if minutes_in_session <= 1:
-            time_in_session_descriptor = "like a minute"
-
-        elif minutes_in_session <= 3:
-            time_in_session_descriptor = "a couple of minutes"
-
-        elif minutes_in_session > 3 and minutes_in_session <= 5:
-            time_in_session_descriptor = "like five minutes"
-
-        elif minutes_in_session > 5 and minutes_in_session <= 10:
-            time_in_session_descriptor = "like ten minutes"
-
-        elif minutes_in_session > 10 and minutes_in_session <= 15:
-            time_in_session_descriptor = "around fifteen minutes"
-
-        elif minutes_in_session > 15 and minutes_in_session <= 20:
-            time_in_session_descriptor = "around twenty minutes"
-
-        elif minutes_in_session <= 30:
-            time_in_session_descriptor = "about half an hour"
-
+    $ time_in_session_descriptor = farewells.get_time_in_session_descriptor()
     n "In fact, you've only been here for [time_in_session_descriptor]!"
     n "You're sure you can't stay just a little longer?"
     menu:
@@ -787,6 +840,66 @@ label farewell_short_session_ask:
 
     return
 
+# Natsuki calls the player out on how long they've been here, and asks for more time together (alt)
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_short_session_ask_alt",
+            unlocked=True,
+            conditional=None,
+            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
+            additional_properties={
+                "has_stay_option": True,
+                "is_time_sensitive": True
+            }
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
+
+label farewell_short_session_ask_alt:
+    n "N-now just wait one second,{w=0.1} [player]!{w=0.2} This isn't fair at all!"
+    $ time_in_session_descriptor = farewells.get_time_in_session_descriptor()
+    n "You've barely been here [time_in_session_descriptor],{w=0.1} and you're already going?"
+    n "Come on!{w=0.2} You'll stay a little longer,{w=0.1} won't you?"
+    menu:
+        "Sure, I can stay a while.":
+            n "H-Ha!{w=0.2} I knew it."
+            n "Ehehe.{w=0.1} Looks like I win again,{w=0.1} [player]!"
+            n "O-or maybe you just can't bring yourself to leave my side?"
+            menu:
+                "You got me, Natsuki. I couldn't leave you even if I tried.":
+                    n "W-wha...?"
+                    n "Nnnnnnn-!"
+                    n "Don't just come out with stuff like that,{w=0.1} [player]!"
+                    n "Jeez...{w=0.3} you're such a dummy sometimes..."
+
+                "Yeah, yeah.":
+                    n "Ehehe.{w=0.2} What's wrong,{w=0.1} [player]?"
+                    n "A little too close to the truth?"
+                    n "Ahaha!"
+
+            n "Well,{w=0.1} either way,{w=0.1} I'm glad you can stay a little longer!"
+            n "So...{w=0.3} what else did you wanna do today?"
+            $ farewells.store.jn_globals.player_already_stayed = True
+            $ relationship("affinity+")
+
+        "Fine, I guess.":
+            n "You {i}guess{/i}?{w=0.2} What do you mean,{w=0.1} you guess?!"
+            n "Jeez...{w=0.3} what's with the attitude today, [player]?"
+            n "Well, anyway...{w=0.3} Thanks for staying with me a little longer."
+            n "Now,{w=0.1} where were we?"
+            $ farewells.store.jn_globals.player_already_stayed = True
+
+        "Sorry Natsuki, I can't right now.":
+            n "Uuuu-"
+            n "Well,{w=0.1} I guess that's fine.{w=0.2} It can't be helped,{w=0.1} after all."
+            n "But you gotta make it up to me,{w=0.1} alright?"
+            n "Stay safe,{w=0.1} [player]!{w=0.2} I'll see you later!"
+            $ farewells.try_trust_dialogue()
+            $ renpy.quit()
+    return
+
 # Natsuki tries to confidently ask her player to stay
 init 5 python:
     registerTopic(
@@ -795,9 +908,10 @@ init 5 python:
             label="farewell_fake_confidence_ask",
             unlocked=True,
             conditional=None,
-            affinity_range=(750, None),
+            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
             additional_properties={
-                "has_stay_option": True
+                "has_stay_option": True,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -836,9 +950,10 @@ init 5 python:
             label="farewell_pleading_ask",
             unlocked=True,
             conditional=None,
-            affinity_range=(1000, None),
+            affinity_range=(jn_aff.ENAMORED, jn_aff.LOVE),
             additional_properties={
-                "has_stay_option": True
+                "has_stay_option": True,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -879,9 +994,10 @@ init 5 python:
             label="farewell_gentle_ask",
             unlocked=True,
             conditional=None,
-            affinity_range=(1250, None),
+            affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
             additional_properties={
-                "has_stay_option": True
+                "has_stay_option": True,
+                "is_time_sensitive": False
             }
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -917,20 +1033,6 @@ label farewell_gentle_ask:
 # Trust dialogue; chance to call upon farewell completing and prior to the game closing
 
 label farewell_extra_trust:
-
-    # Debug
-    n "Okay, your trust is [store.persistent.trust], lemme work this out real quick..."
-    n "I'll just put the trust levels in the log for you... 'kay! Here goes!"
-    $ store.utils.log("TRUST_ABSOLUTE: {0}".format(store.jn_globals.TRUST_ABSOLUTE))
-    $ store.utils.log("TRUST_COMPLETE: {0}".format(store.jn_globals.TRUST_COMPLETE))
-    $ store.utils.log("TRUST_FULL: {0}".format(store.jn_globals.TRUST_FULL))
-    $ store.utils.log("TRUST_PARTIAL: {0}".format(store.jn_globals.TRUST_PARTIAL))
-    $ store.utils.log("TRUST_NEUTRAL: {0}".format(store.jn_globals.TRUST_NEUTRAL))
-    $ store.utils.log("TRUST_SCEPTICAL: {0}".format(store.jn_globals.TRUST_SCEPTICAL))
-    $ store.utils.log("TRUST_DIMINISHED: {0}".format(store.jn_globals.TRUST_DIMINISHED))
-    $ store.utils.log("TRUST_DISBELIEF: {0}".format(store.jn_globals.TRUST_DISBELIEF))
-    $ store.utils.log("TRUST_SHATTERED: {0}".format(store.jn_globals.TRUST_SHATTERED))
-
     # ABSOLUTE+
     if store.trust.trust_is_between_bounds(
         lower_bound=store.jn_globals.TRUST_ABSOLUTE,

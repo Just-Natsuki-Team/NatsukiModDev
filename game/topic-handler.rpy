@@ -79,10 +79,18 @@ init 6 python:
         filtered_topics = []
         passed = True
         for topic in topics.TOPIC_MAP.values():
+            #TODO: We should explore another approach to this. Nested looping should be avoided whereever possible
+            #I'm thinking we build non-static methods on `Topic` to be able to filter an individual one, then we can iterate once and just call those methods
+            #To evaluate them. If the evaluation passes, then we can move onto the next check. This allows us to check multiple different filters
+            #While only looping once.
             for filter_ in filters:
                 if filters[filter_] == None:
                     continue
-                elif filter_ != 'affinity_range' and filter_ != 'trust_range':
+
+                elif (
+                    filter_ != 'affinity_range'
+                    and filter_ != 'trust_range'
+                ):
                     if getattr(topic, filter_) != filters[filter_]:
                         passed = False
                         break
@@ -90,15 +98,21 @@ init 6 python:
                     range_ = getattr(topic, filter_)
                     if range_ == None:
                         continue
-                    elif range_[0] < filters[filter_] < range_[1]:
+                    elif range_[0] != None and range_[1] == None:
+                        if range_[0] <= filters[filter_]:
+                            continue
+                    elif range_[0] == None and range_[1] != None:
+                        if filters[filter_] <= range_[1]:
+                            continue
+                    elif range_[0] <= filters[filter_] <= range_[1]:
                         continue
                     else:
                         passed = False
                         break
-                
-                
+
+
             if passed:
-                filtered_topics.append(topic)                  
+                filtered_topics.append(topic)
             passed = True
         if filtered_topics != []:
             return random.choice(filtered_topics).label
@@ -152,26 +166,35 @@ init 6 python:
         passed = True
 
         for topic in topics.TOPIC_MAP.values():
+            #TODO: Same comment as above
             for filter_ in filters:
                 if filters[filter_] == None:
                     continue
-                elif filter_ != 'affinity_range' and filter_ != 'trust_range':
-                    if getattr(topic, filter_) != filters[filter_]:
-                        passed = False
-                        break
+                elif (
+                    filter_ != 'affinity_range'
+                    and filter_ != 'trust_range'
+                ):
+                        if getattr(topic, filter_) != filters[filter_]:
+                            passed = False
+                            break
                 else:
                     range_ = getattr(topic, filter_)
                     if range_ == None:
                         continue
-                    elif range_[0] < filters[filter_] < range_[1]:
+                    elif range_[0] != None and range_[1] == None:
+                        if range_[0] <= filters[filter_]:
+                            continue
+                    elif range_[0] == None and range_[1] != None:
+                        if filters[filter_] <= range_[1]:
+                            continue
+                    elif range_[0] <= filters[filter_] <= range_[1]:
                         continue
                     else:
                         passed = False
                         break
-                
-                
+
+
             if passed:
-                filtered_topics.append(topic)                  
+                filtered_topics.append(topic)
             passed = True
         return filtered_topics
-

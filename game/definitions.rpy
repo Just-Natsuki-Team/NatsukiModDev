@@ -14,9 +14,7 @@ init -990 python:
     import datetime
 
 init 0 python:
-
-    # Tracking
-    current_session_start_time = datetime.datetime.now()
+    import store.jn_affinity as jn_aff
 
     #Constants for types. Add more here if we need more organizational areas
     TOPIC_TYPE_FAREWELL = "FAREWELL"
@@ -87,6 +85,10 @@ init 0 python:
             #Verify the label is legal
             if not renpy.has_label(label):
                 raise Exception("Label {0} does not exist.".format(label))
+
+            #Validate the affinity range prior to it
+            if not store.jn_affinity.is_affinity_range_valid(affinity_range):
+                raise Exception("Affinity range: {0} is invalid.".format(affinity_range))
 
             #First, we'll add all of the items here which which shouldn't change from the persisted data
             self.label = label
@@ -171,6 +173,12 @@ init 0 python:
                 except Exception as e:
                     store.utils.log(e.message, utils.SEVERITY_ERR)
                     return False
+
+        def evaluate_affinity_range(self):
+            """
+            Checks if the topic's action should be run
+            """
+            return store.jn_affinity.is_state_within_range(jn_globals.current_affection_state, self.affinity_range)
 
         def __load(self):
             """
@@ -310,7 +318,7 @@ init 0 python:
 
 # Variables with cross-script utility specific to Just Natsuki
 init -990 python in jn_globals:
-
+    import store
     # Tracking; use these for anything we might change mid-session and refer back to
 
     # Tracks whether the player opted to stay for longer when Natsuki asked them to when quitting; True if so, otherwise False
@@ -341,10 +349,13 @@ init -990 python in jn_globals:
         "the best"
     ]
 
+    current_session_start_time = store.datetime.datetime.now()
+
 #Stuff that's really early, which should be usable basically anywhere
 init -999 python in utils:
     import datetime
     import os
+    import store
 
     #Make log folder if not exist
     _logdir = os.path.join(renpy.config.basedir, "log")
@@ -379,6 +390,15 @@ init -999 python in utils:
                 LOGSEVERITY_MAP[SEVERITY_INFO]
             ).format(datetime.datetime.now(), message)
         )
+
+    def get_current_session_length():
+        """
+        Returns a timedelta object representing the length of the current game session.
+
+        OUT:
+            datetime.timedelta object representing the length of the current game session
+        """
+        return datetime.datetime.now() - store.jn_globals.current_session_start_time
 
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
 define audio.t2 = "<loop 4.499>bgm/2.ogg"   #Sayori theme
