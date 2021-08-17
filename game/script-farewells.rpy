@@ -4,9 +4,6 @@ init python in farewells:
     import random
     import store
 
-    # Natsuki will not ask a player to stay again if they agreed previously
-    store.jn_globals.player_already_stayed = False
-
     FAREWELL_MAP = dict()
 
     def select_farewell():
@@ -15,27 +12,24 @@ init python in farewells:
         If the player has already been asked to stay by Natsuki, a farewell without the option
         to stay will be selected
         """
-        # Get the farewells the current affinity allows for us
+        # Get the farewells the current affinity allows for the player
         #TODO: Generalized filter function
-        farewells_in_affinity_range = filter(lambda x: x.evaluate_affinity_range(), FAREWELL_MAP.values())
+        farewell_pool = filter(lambda x: x.evaluate_affinity_range(), FAREWELL_MAP.values())
 
-        # Filter any time-sensitive topics
+        # Filter any time-sensitive topics, if the player has been around 30 minutes or longer
         if divmod((store.utils.get_current_session_length()).total_seconds(), 60)[0] > 30:
-            farewells_in_affinity_range = filter(
-                lambda farewell: store.Topic.get_topic_has_additional_property_with_value(farewell, "is_time_sensitive", False),
-                farewells_in_affinity_range
-            ).label
+            farewell_pool = filter(
+                lambda x: store.Topic.get_topic_has_additional_property_with_value(x, "is_time_sensitive", False),
+                farewell_pool)
 
-        # If Natsuki has already asked her player to stay, filter any topics that would let her ask again, and return a random one
-        if store.jn_globals.player_already_stayed:
-            return random.choice(filter(
-                lambda farewell: store.Topic.get_topic_has_additional_property_with_value(farewell, "has_stay_option", False),
-                farewells_in_affinity_range
-            )).label
+        # If Natsuki has already asked her player to stay, filter any topics that would let her ask again
+        if store.jn_globals.player_already_stayed_on_farewell:
+            farewell_pool = filter(
+                lambda x: store.Topic.get_topic_has_additional_property_with_value(x, "has_stay_option", False),
+                farewell_pool)
 
-        # Otherwise, just return a random farewell
-        else:
-            return random.choice(farewells_in_affinity_range).label
+        # Finally return a random farewell from the remaining pool
+        return random.choice(farewell_pool).label
 
     def try_trust_dialogue():
         """
@@ -51,30 +45,30 @@ init python in farewells:
         OUT:
             Brief descriptor relating to the number of minutes spent in the session
         """
-        minutes_in_session = divmod((farewells.store.utils.get_current_session_length()).total_seconds(), 60)[0]
+        minutes_in_session = divmod((store.utils.get_current_session_length()).total_seconds(), 60)[0]
         if minutes_in_session <= 1:
-            time_in_session_descriptor = "like a minute"
+            return "like a minute"
 
         elif minutes_in_session <= 3:
-            time_in_session_descriptor = "a couple of minutes"
+            return "a couple of minutes"
 
         elif minutes_in_session > 3 and minutes_in_session <= 5:
-            time_in_session_descriptor = "like five minutes"
+            return "like five minutes"
 
         elif minutes_in_session > 5 and minutes_in_session <= 10:
-            time_in_session_descriptor = "around ten minutes"
+            return "around ten minutes"
 
         elif minutes_in_session > 10 and minutes_in_session <= 15:
-            time_in_session_descriptor = "around fifteen minutes"
+            return "around fifteen minutes"
 
         elif minutes_in_session > 15 and minutes_in_session <= 20:
-            time_in_session_descriptor = "around twenty minutes"
+            return "around twenty minutes"
 
         elif minutes_in_session <= 30:
-            time_in_session_descriptor = "about half an hour"
+            return "about half an hour"
 
         else:
-            time_in_session_descriptor = "a while"
+            return "a while"
 
 init 1 python:
     # DEBUG: TODO: Resets - remove these later, once we're done tweaking affinity/trust!
@@ -84,12 +78,16 @@ init 1 python:
         store.persistent._farewell_database.pop("farewell_love_aff_3")
         store.persistent._farewell_database.pop("farewell_love_aff_4")
         store.persistent._farewell_database.pop("farewell_love_aff_5")
+        store.persistent._farewell_database.pop("farewell_love_aff_6")
+        store.persistent._farewell_database.pop("farewell_love_aff_7")
 
         store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_1")
         store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_2")
         store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_3")
         store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_4")
         store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_5")
+        store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_6")
+        store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_7")
 
         store.persistent._farewell_database.pop("farewell_happy_affectionate_aff_1")
         store.persistent._farewell_database.pop("farewell_happy_affectionate_aff_2")
@@ -247,6 +245,55 @@ label farewell_love_aff_5:
     $ farewells.try_trust_dialogue()
     $ renpy.quit()
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_love_aff_6",
+            unlocked=True,
+            conditional=None,
+            affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
+            additional_properties={
+                "has_stay_option": False,
+                "is_time_sensitive": False
+            }
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
+
+label farewell_love_aff_6:
+    n "You're leaving now,{w=0.1} [player]?"
+    n "Awww...{w=0.3} well okay."
+    n "You take care of yourself,{w=0.1} got it? Or you'll have me to deal with!"
+    n "Bye now!{w=0.2} I love you!"
+    $ farewells.try_trust_dialogue()
+    $ renpy.quit()
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_love_aff_7",
+            unlocked=True,
+            conditional=None,
+            affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
+            additional_properties={
+                "has_stay_option": False,
+                "is_time_sensitive": False
+            }
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
+
+label farewell_love_aff_7:
+    n "Time to go,{w=0.1} [player]?"
+    n "Sometimes I wish you could just stay forever...{w=0.3} Ehehe."
+    n "But I understand you've got stuff to do."
+    $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+    n "Goodbye,{w=0.1} [chosen_endearment]!"
+    $ farewells.try_trust_dialogue()
+    $ renpy.quit()
+
 # AFFECTIONATE/ENAMORED farewells
 
 init 5 python:
@@ -371,6 +418,53 @@ label farewell_affectionate_enamored_aff_5:
     n "Well,{w=0.2} I'll be okay!"
     n "Take care of yourself,{w=0.1} [player]!{w=0.2} For both of us!"
     n "See you later!"
+    $ farewells.try_trust_dialogue()
+    $ renpy.quit()
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_affectionate_enamored_aff_6",
+            unlocked=True,
+            conditional=None,
+            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
+            additional_properties={
+                "has_stay_option": False,
+                "is_time_sensitive": False
+            }
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
+
+label farewell_affectionate_enamored_aff_6:
+    n "You're leaving now,{w=0.1} [player]?"
+    n "Nnnnnn...{w=0.3} alright."
+    n "You better be back later,{w=0.1} okay?{w=0.2} I really enjoy our time together."
+    n "See you soon,{w=0.1} [player]!"
+    $ farewells.try_trust_dialogue()
+    $ renpy.quit()
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_affectionate_enamored_aff_7",
+            unlocked=True,
+            conditional=None,
+            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
+            additional_properties={
+                "has_stay_option": False,
+                "is_time_sensitive": False
+            }
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
+
+label farewell_affectionate_enamored_aff_7:
+    n "Well,{w=0.1} I guess you had to leave eventually."
+    n "Doesn't mean I have to like it,{w=0.1} though..."
+    n "Come see me soon,{w=0.1} okay?"
     $ farewells.try_trust_dialogue()
     $ renpy.quit()
 
@@ -819,22 +913,53 @@ label farewell_short_session_ask:
     n "In fact, you've only been here for [time_in_session_descriptor]!"
     n "You're sure you can't stay just a little longer?"
     menu:
-        "I can stay a little longer.":
+        "Sure, I can stay a little longer.":
             n "Yay{nw}!"
             n "I-I mean...!"
-            n "Yeah!{w=0.2} That's what I thought!"
-            n "Yeah..."
-            n "..."
-            n "Stop looking at me like that,{w=0.1} jeez!"
+            if store.jn_affinity.get_affinity_state() > store.jn_affinity.ENAMORED:
+                n "Thanks, [player]. It means a lot to me."
+                $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+                n "Really. Thank you, [chosen_endearment]."
+                n "...A-anyway!"
+
+            else:
+                n "Yeah!{w=0.2} That's what I thought!"
+                n "Yeah..."
+                n "..."
+                n "Stop looking at me like that,{w=0.1} jeez!"
             n "Now,{w=0.1} where were we?"
-            $ farewells.store.jn_globals.player_already_stayed = True
+            $ store.jn_globals.player_already_stayed_on_farewell = True
+
+        "If you say so.":
+            n "[player]..."
+            n "I'm not forcing you to be here.{w=0.1} You know that,{w=0.1} right?"
+            n "Are you sure you wanna stay?"
+            menu:
+                "Yes, I'm sure.":
+                    "Well, if you're sure."
+                    "I just want to make sure I don't sound all naggy."
+                    if store.jn_affinity.get_affinity_state() > store.jn_affinity.ENAMORED:
+                        $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+                        n "Thanks, [chosen_endearment]. You know it means a lot to me."
+
+                    else:
+                        n "Thanks, [player]. It means a lot."
+
+                    $ store.jn_globals.player_already_stayed_on_farewell = True
+
+                "No, I have to go.":
+                    n "Well...{w=0.3} okay,{w=0.1} [player]."
+                    n "Take care out there,{w=0.1} alright?"
+                    n "See you later!"
+                    $ farewells.try_trust_dialogue()
+                    $ renpy.quit()
 
         "Sorry, Natsuki. I really have to leave.":
             n "Nnnnnn-!"
             n "..."
-            n "Well...{w=0.3} alright."
+            n "Well...{w=0.3} okay."
             n "Don't take too long,{w=0.1} alright?"
-            n "See you later!"
+            n "See you later, [player]!"
             $ farewells.try_trust_dialogue()
             $ renpy.quit()
 
@@ -858,7 +983,7 @@ init 5 python:
     )
 
 label farewell_short_session_ask_alt:
-    n "N-now just wait one second,{w=0.1} [player]!{w=0.2} This isn't fair at all!"
+    n "N-now wait just one second,{w=0.1} [player]!{w=0.2} This isn't fair at all!"
     $ time_in_session_descriptor = farewells.get_time_in_session_descriptor()
     n "You've barely been here [time_in_session_descriptor],{w=0.1} and you're already going?"
     n "Come on!{w=0.2} You'll stay a little longer,{w=0.1} won't you?"
@@ -869,27 +994,36 @@ label farewell_short_session_ask_alt:
             n "O-or maybe you just can't bring yourself to leave my side?"
             menu:
                 "You got me, Natsuki. I couldn't leave you even if I tried.":
-                    n "W-wha...?"
+                    $ player_was_snarky = False
+                    n "W-{w=0.2}wha...?"
                     n "Nnnnnnn-!"
-                    n "Don't just come out with stuff like that,{w=0.1} [player]!"
+                    $ player_initial = list(player)[0]
+                    n "[player_initial]-{w=0.2}[player]!"
+                    n "Don't just come out with stuff like that!"
                     n "Jeez...{w=0.3} you're such a dummy sometimes..."
 
                 "Yeah, yeah.":
+                    $ player_was_snarky = True
                     n "Ehehe.{w=0.2} What's wrong,{w=0.1} [player]?"
                     n "A little too close to the truth?"
                     n "Ahaha!"
 
             n "Well,{w=0.1} either way,{w=0.1} I'm glad you can stay a little longer!"
+            if player_was_snarky:
+                n "Or...{w=0.3} perhaps you should be thanking {i}me{/i}?{w=0.2} Ehehe."
             n "So...{w=0.3} what else did you wanna do today?"
-            $ farewells.store.jn_globals.player_already_stayed = True
+            $ store.jn_globals.player_already_stayed_on_farewell = True
             $ relationship("affinity+")
 
         "Fine, I guess.":
             n "You {i}guess{/i}?{w=0.2} What do you mean,{w=0.1} you guess?!"
             n "Jeez...{w=0.3} what's with the attitude today, [player]?"
             n "Well, anyway...{w=0.3} Thanks for staying with me a little longer."
+            n "...{i}I guess{/i}."
+            n "Ahaha! Oh, lighten up, [player]! I'm just messing with you!"
             n "Now,{w=0.1} where were we?"
-            $ farewells.store.jn_globals.player_already_stayed = True
+            $ store.jn_globals.player_already_stayed_on_farewell = True
+            $ relationship("affinity+")
 
         "Sorry Natsuki, I can't right now.":
             n "Uuuu-"
@@ -908,7 +1042,7 @@ init 5 python:
             label="farewell_fake_confidence_ask",
             unlocked=True,
             conditional=None,
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
+            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE),
             additional_properties={
                 "has_stay_option": True,
                 "is_time_sensitive": False
@@ -930,7 +1064,7 @@ label farewell_fake_confidence_ask:
             n "..."
             n "Jeez!{w=0.2} Let's just get back to it already..."
             n "Now,{w=0.1} where were we?"
-            $ farewells.store.jn_globals.player_already_stayed = True
+            $ store.jn_globals.player_already_stayed_on_farewell = True
             $ relationship("affinity+")
 
         "Sorry, I really need to go.":
@@ -973,7 +1107,7 @@ label farewell_pleading_ask:
             n "T-thanks, [player].{w=0.1} You're [chosen_descriptor],{w=0.1} you know that?"
             n "Really.{w=0.1} Thank you."
             n "N-now,{w=0.1} where were we? Heh..."
-            $ farewells.store.jn_globals.player_already_stayed = True
+            $ store.jn_globals.player_already_stayed_on_farewell = True
             $ relationship("affinity+")
 
         "I can't right now.":
@@ -1016,7 +1150,7 @@ label farewell_gentle_ask:
             n "Truly.{w=0.1} Thanks..."
             n "..."
             n "Aha...{w=0.3} so what else did you wanna do today?"
-            $ farewells.store.jn_globals.player_already_stayed = True
+            $ store.jn_globals.player_already_stayed_on_farewell = True
             $ relationship("affinity+")
 
         "Sorry, I really have to go.":
@@ -1035,44 +1169,44 @@ label farewell_gentle_ask:
 label farewell_extra_trust:
     # ABSOLUTE+
     if store.trust.trust_is_between_bounds(
-        lower_bound=store.jn_globals.TRUST_ABSOLUTE,
+        lower_bound=store.jn_trust.TRUST_ABSOLUTE,
         trust=store.persistent.trust,
         upper_bound=None):
         n "My [player]...{w=0.3} I'll be waiting..."
 
     # FULL-COMPLETE
     elif store.trust.trust_is_between_bounds(
-        lower_bound=store.jn_globals.TRUST_FULL,
+        lower_bound=store.jn_trust.TRUST_FULL,
         trust=store.persistent.trust,
-        upper_bound=store.jn_globals.TRUST_ABSOLUTE):
+        upper_bound=store.jn_trust.TRUST_ABSOLUTE):
         n "I'll be waiting..."
 
     # NEUTRAL-PARTIAL
     elif store.trust.trust_is_between_bounds(
-        lower_bound=store.jn_globals.TRUST_NEUTRAL,
+        lower_bound=store.jn_trust.TRUST_NEUTRAL,
         trust=store.persistent.trust,
-        upper_bound=store.jn_globals.TRUST_PARTIAL):
+        upper_bound=store.jn_trust.TRUST_PARTIAL):
         n "You'll be back...{w=0.3} right?"
 
     # SCEPTICAL-NEUTRAL
     elif store.trust.trust_is_between_bounds(
-        lower_bound=store.jn_globals.TRUST_SCEPTICAL,
+        lower_bound=store.jn_trust.TRUST_SCEPTICAL,
         trust=store.persistent.trust,
-        upper_bound=store.jn_globals.TRUST_NEUTRAL):
+        upper_bound=store.jn_trust.TRUST_NEUTRAL):
         n "I'll be okay...{w=0.3} I'll be okay..."
 
     # DIMINISHED-SCEPTICAL
     elif store.trust.trust_is_between_bounds(
-        lower_bound=store.jn_globals.TRUST_DIMINISHED,
+        lower_bound=store.jn_trust.TRUST_DIMINISHED,
         trust=store.persistent.trust,
-        upper_bound=store.jn_globals.TRUST_SCEPTICAL):
+        upper_bound=store.jn_trust.TRUST_SCEPTICAL):
         n "...?"
 
     # DIMINISHED-
     elif store.trust.trust_is_between_bounds(
         lower_bound=None,
         trust=store.persistent.trust,
-        upper_bound=store.jn_globals.TRUST_DIMINISHED):
+        upper_bound=store.jn_trust.TRUST_DIMINISHED):
         n "..."
 
     # Debug

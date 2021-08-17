@@ -19,7 +19,9 @@ init 0 python:
     player_screenshots_blocked = False
 
     # Reaction/response permutations so Natsuki feels more dynamic
-    surprised_reactions = [
+
+    # LOVE - ENAMORED
+    love_enamored_reactions = [
         "[player]...{w=0.3} you remember what I said about pictures, right?",
         "[player]...{w=0.3} did you forget what I said?",
         "[player]...{w=0.3} I think you forgot something.",
@@ -27,7 +29,7 @@ init 0 python:
         "[player],{w=0.1} come on. We talked about this..."
     ]
 
-    surprised_responses = [
+    love_enamored_responses = [
         "I really don't like being surprised with pictures when I don't expect it.",
         "I really don't like having pictures taken without my permission.",
         "I really don't like having pictures taken without my consent.",
@@ -35,21 +37,26 @@ init 0 python:
         "I want to know when you're going to take a picture of me."
     ]
 
-    annoyed_reactions = [
+    # AFFECTIONATE - NORMAL
+    affectionate_normal_reactions = [
         "[player]!{w=0.2} What're you doing?!",
         "A-ah!{w=0.2} [player]!",
         "H-hey!{w=0.2} [player]!",
         "E-excuse me!",
         "Hey!",
-        "W-what?!"]
+        "W-what?! [player]!",
+        "Kyaaahh!{w=0.2} Why?!"]
 
-    annoyed_responses = [
+    affectionate_normal_responses = [
         "You didn't say you were going to take a picture!",
         "I thought I told you to ask if you wanted pictures?",
         "I don't like surprise pictures,{w=0.1} remember?!"
     ]   
 
-    angry_reactions = [
+    # UPSET-
+    upset_minus_reactions = [
+        "Would you stop?!",
+        "Okay, okay! Stop!",
         "Hey! Cut it out!",
         "[player]!{w=0.2} Knock it off!",
         "[player]!{w=0.2} Stop it!",
@@ -57,12 +64,14 @@ init 0 python:
         "Okay, enough already!",
         "Alright, that's enough!",
         "Ugh! Give it a rest,{w=0.1} [player]!",
-        "[player]!{w=0.2} Can you stop?!"]    
+        "[player]!{w=0.2} Can you stop?!",
+        "I'm getting real tired of that,{w=0.1} [player]!"]    
 
-    angry_responses = [
+    upset_minus_responses = [
         "If I didn't give you permission,{w=0.1} it means I don't want you to do it!",
         "I told you to ask if you wanted pictures!",
-        "Don't you listen?!{w=0.2} I said you should ask if you want pictures of me!"
+        "Don't you listen?!{w=0.2} I said you should ask if you want pictures of me!",
+        "I thought I made it clear I don't want surprise pictures!"
     ]
 
     # Add the keymap for screenshots
@@ -150,8 +159,8 @@ label screenshot_dialogue:
 
         call take_screenshot
         if persistent.affinity >= 700:
-            $ chosen_reaction = renpy.substitute(renpy.random.choice(surprised_reactions))
-            $ chosen_response = renpy.substitute(renpy.random.choice(surprised_responses))
+            $ chosen_reaction = renpy.substitute(renpy.random.choice(love_enamored_reactions))
+            $ chosen_response = renpy.substitute(renpy.random.choice(love_enamored_responses))
 
             n "[chosen_reaction]"
             n "[chosen_response]"
@@ -161,8 +170,8 @@ label screenshot_dialogue:
             $ relationship("affinity-")
             $ relationship("trust-")
         elif persistent.affinity < 700 and persistent.affinity > 300:
-            $ chosen_reaction = renpy.substitute(renpy.random.choice(annoyed_reactions))
-            $ chosen_response = renpy.substitute(renpy.random.choice(annoyed_responses))
+            $ chosen_reaction = renpy.substitute(renpy.random.choice(affectionate_normal_reactions))
+            $ chosen_response = renpy.substitute(renpy.random.choice(affectionate_normal_responses))
 
             n "[chosen_reaction]"
             n "[chosen_response]"
@@ -173,8 +182,8 @@ label screenshot_dialogue:
             $ relationship("trust-")
 
         elif persistent.affinity > -50:
-            $ chosen_reaction = renpy.substitute(renpy.random.choice(angry_reactions))
-            $ chosen_response = renpy.substitute(renpy.random.choice(angry_responses))
+            $ chosen_reaction = renpy.substitute(renpy.random.choice(upset_minus_reactions))
+            $ chosen_response = renpy.substitute(renpy.random.choice(upset_minus_responses))
 
             n "[chosen_reaction]"
             n "[chosen_response]"

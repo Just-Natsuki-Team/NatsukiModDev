@@ -12,9 +12,12 @@ init python in greetings:
         """
         # Get the farewells the current affinity allows for us
         #TODO: Generalized filter function
-        return random.choice(
-            filter(lambda x: x.evaluate_affinity_range(), GREETING_MAP.values())
-        ).label
+        available_greetings = filter(lambda x: x.evaluate_affinity_range(), GREETING_MAP.values())
+        store.utils.log("{0} greetings found for this affinity state; labels:".format(len(available_greetings)))
+        for greeting in available_greetings:
+            store.utils.log("label name: {}".format(greeting.label))
+            store.utils.log("label aff range: {0} - {1}".format(greeting.affinity_range[0], greeting.affinity_range[1]))
+        return random.choice(available_greetings).label
 
 init 1 python:
     # DEBUG: TODO: Remove this eventually
@@ -66,7 +69,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_1",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, None)
+            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -82,7 +85,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_2",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, None)
+            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -90,8 +93,8 @@ init 5 python:
 label greeting_love_plus_2:
     n "[player]!{w=0.1} What took you so long?{w=0.2} Jeez!"
     n "You think my entire world revolves around you or something?"
-    n "..." # amger when sprites are in, not a dupe!
-    n "..." # smug when sprites are in, not a dupe!
+    n "..."
+    n "..."
     n "Ahaha!{w=0.2} Did I get you,{w=0.1} [player]?{w=0.2} Don't lie!"
     $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
     n "Well, anyway.{w=0.2} You're here now, [chosen_endearment]!{w=0.2} Welcome back!"
@@ -103,7 +106,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_3",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, None)
+            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -120,7 +123,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_4",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, None)
+            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -138,7 +141,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_5",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, None)
+            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )

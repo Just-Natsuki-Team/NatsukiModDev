@@ -319,10 +319,14 @@ init 0 python:
 # Variables with cross-script utility specific to Just Natsuki
 init -990 python in jn_globals:
     import store
-    # Tracking; use these for anything we might change mid-session and refer back to
+
+    # Tracking; use these for data we might refer to/modify mid-session, or anything time sensitive
+    current_session_start_time = store.datetime.datetime.now()
+
+    # Flags; use these to set/refer to binary states
 
     # Tracks whether the player opted to stay for longer when Natsuki asked them to when quitting; True if so, otherwise False
-    player_already_stayed = False
+    player_already_stayed_on_farewell = False
 
     # Constants; use these for anything we only want defined once and used in a read-only context
 
@@ -345,8 +349,6 @@ init -990 python in jn_globals:
         "so sweet",
         "the best"
     ]
-
-    current_session_start_time = store.datetime.datetime.now()
 
 init 10 python in jn_globals:
     # The current affection state. We default this to 5 (NORMAL)

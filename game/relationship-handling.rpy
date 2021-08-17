@@ -56,18 +56,26 @@ init -1 python in jn_affinity:
     import store
 
     # Affinity levels, highest to lowest
-    THRESHOLD_LOVE = 1250 # She happ
-    THRESHOLD_ENAMORED = 1000
-    THRESHOLD_AFFECTIONATE = 750
-    THRESHOLD_HAPPY = 500
-    THRESHOLD_NORMAL = 250
-    THRESHOLD_UPSET = 100 # She amger
-    THRESHOLD_DISTRESSED = 0
+    THRESHOLD_LOVE = 1000
+    THRESHOLD_ENAMORED = 500
+    THRESHOLD_AFFECTIONATE = 250
+    THRESHOLD_HAPPY = 100
+    THRESHOLD_NORMAL = 0
+    THRESHOLD_UPSET = -25
+    THRESHOLD_DISTRESSED = -50
     THRESHOLD_BROKEN = -100
-    THRESHOLD_RUINED = -250  # How could you : (
+    THRESHOLD_RUINED = -125
 
-    #Affinity States (non-prefixed as these are used for affinity_range)
-    # Descs for each tier?
+    # Affinity States (non-prefixed as these are used for affinity_range)
+    # RUINED - Natsuki is emotionally exhausted. She barely talks and holds nothing but hopelessness. Things can't get any worse.
+    # BROKEN - Natsuki is an obvious state of sadness. She lacks confidence in herself, her player and their future.
+    # DISTRESSED - Natsuki is clearly and visibly unhappy. She is distant and impersonal.
+    # UPSET - Natsuki isn't particularly happy; generally to the point and somewhat cold.
+    # NORMAL - Natsuki is generally cordial, but not particularly affectionate. This is the default state.
+    # HAPPY - Natsuki is chipper and friendly, but still not particularly affectionate. Some teasing.
+    # AFFECTIONATE - Natsuki is always glad to see her player, and feelings are beginning to obviously stir!
+    # ENAMORED - Natsuki clearly has feelings for her player, and she tentatively expresses them.
+    # LOVE - Natsuki is completely head-over-heels for her player, and wants nothing more than their love. Things can't get any better!
     RUINED = 1
     BROKEN = 2
     DISTRESSED = 3
@@ -203,7 +211,7 @@ init -1 python in jn_affinity:
 
         #If the range is only for the single level, so they should just be equal
         if low_bound == high_bound:
-            return affinity_range == low_bound
+            return affinity_state == low_bound
 
         #With the outlier cases done, simply check if we're within the range
         return (
@@ -312,6 +320,15 @@ init -1 python in jn_trust:
     TRUST_SHATTERED = -100
 
     #Trust States (non-prefixed as these are used for trust_range)
+    # SHATTERED - Natsuki doesn't know what to believe any more.
+    # DISBELIEF - Natsuki has no reason to believe her player, and doubts that trust can be regained.
+    # DIMINISHED - Natsuki has serious doubts about whether she can trust her player at all.
+    # SCEPTICAL - Natsuki has some doubts about whether she can trust her player, especially with sensitive topics.
+    # NEUTRAL - Natsuki has no particular reason to trust - or distrust - her player.
+    # PARTIAL - Natsuki feels more inclined to trust her player, but with considerable caution.
+    # FULL - Natsuki generally trusts her player.
+    # COMPLETE - Natsuki highly trusts her player, with all but her biggest sensitivities unknown.
+    # ABSOLUTE - Natsuki's trust is absolute; her heart is completely open to her player.
     SHATTERED = 1
     DISBELIEF = 2
     DIMINISHED = 3

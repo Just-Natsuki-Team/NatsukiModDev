@@ -30,7 +30,21 @@ init 5 python:
     )
 
 label classroom_topic_example2:
-    n "Your affinity is: [persistent.affinity], and your trust is: [persistent.trust] <3"
+    python:
+        affinity_index_and_descriptor = {
+            1:"RUINED",
+            2:"BROKEN",
+            3:"DISTRESSED",
+            4:"UPSET",
+            5:"NORMAL",
+            6:"HAPPY",
+            7:"AFFECTIONATE",
+            8:"ENAMORED",
+            9:"LOVE"
+        }
+        affinity_tier = affinity_index_and_descriptor[store.jn_globals.current_affinity_state]
+    n "Your affinity is: [persistent.affinity], and your trust is: [persistent.trust]!"
+    n "I'd describe your affinity as [affinity_tier]!"
     return
 
 init 5 python:
@@ -72,7 +86,7 @@ init 5 python:
             persistent._topic_database,
             label="talk_set_affinity",
             unlocked=True,
-            prompt="Can you change my affinity?",
+            prompt="Can you change my affinity state?",
             conditional=None,
             category=["Debug"],
             player_says=True,
@@ -82,15 +96,38 @@ init 5 python:
     )
 
 label talk_set_affinity:
-    n "Okaaay! Just tell me what affinity value you want!"
-    python:
-        affinity_to_set = renpy.input("Enter an affinity value (current: {0}):".format(persistent.affinity))
-        try:
-            persistent.affinity = float(affinity_to_set)
-            renpy.say(n, "Done! Your new affinity is [persistent.affinity]!")
-
-        except:
-            renpy.say(n, "Huh... sorry, I didn't get that. Make sure you enter an integer or decimal value, alright?")
+    n "Okaaay! Just tell me what affinity state you want!"
+    menu:
+        "LOVE":
+            $ store.jn_globals.current_affinity_state = 9
+            n "Alright! Your affinity state is now LOVE!"
+        "ENAMORED":
+            $ store.jn_globals.current_affinity_state = 8
+            n "Alright! Your affinity state is now ENAMORED!"
+        "AFFECTIONATE":
+            $ store.jn_globals.current_affinity_state = 7
+            n "Alright! Your affinity state is now AFFECTIONATE!"
+        "HAPPY":
+            $ store.jn_globals.current_affinity_state = 6
+            n "Alright! Your affinity state is now HAPPY!"
+        "NORMAL":
+            $ store.jn_globals.current_affinity_state = 5
+            n "Alright! Your affinity state is now NORMAL!"
+        "UPSET":
+            $ store.jn_globals.current_affinity_state = 4
+            n "Alright! Your affinity state is now UPSET!"
+        "DISTRESSED":
+            $ store.jn_globals.current_affinity_state = 3
+            n "Alright! Your affinity state is now DISTRESSED!"
+        "BROKEN":
+            $ store.jn_globals.current_affinity_state = 2
+            n "Alright! Your affinity state is now BROKEN!"
+        "RUINED":
+            $ store.jn_globals.current_affinity_state = 1
+            n "Alright! Your affinity state is now RUINED!"
+        "Nevermind.":
+            n "Oh...{w=0.3} well, alright then."
+    
     return
 
 # This topic allows us to (temporarily!) set a custom trust value
