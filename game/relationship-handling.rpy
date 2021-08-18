@@ -268,7 +268,6 @@ init -1 python in jn_affinity:
 
             i += 1
 
-
     def get_trust_state():
         """
             returns current trust state
