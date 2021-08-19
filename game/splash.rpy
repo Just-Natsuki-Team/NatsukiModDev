@@ -187,6 +187,10 @@ label splashscreen:
 
     #Check for game updates before loading the game or the splash screen
 
+    #Load affinity
+    #Load affinity
+    $ jn_globals.current_affinity_state = jn_affinity.get_affinity_state()
+
     #autoload handling
     #Use persistent.autoload if you want to bypass the splashscreen on startup for some reason
     if persistent.autoload and not _restart:

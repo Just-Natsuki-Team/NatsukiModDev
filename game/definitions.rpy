@@ -195,11 +195,29 @@ init 0 python:
                     store.utils.log(e.message, utils.SEVERITY_ERR)
                     return False
 
-        def evaluate_affinity_range(self):
+        def curr_affinity_in_affinity_range(self, affinity_state=None):
             """
-            Checks if the topic's action should be run
+            Checks if the current affinity is within this topic's affinity_range
+
+            IN:
+                affinity_state - Affinity state to test if the topic can be shown in. If None, the current affinity state is used.
+                    (Default: None)
+            OUT:
+                True if the current affinity is within range. False otherwise
             """
-            return store.jn_affinity.is_state_within_range(jn_globals.current_affinity_state, self.affinity_range)
+            if not affinity_state:
+                affinity_state = jn_globals.current_affinity_state
+
+            return store.jn_affinity.is_state_within_range(affinity_state, self.affinity_range)
+
+        def evaluate_trust_range(self, trust_state):
+            """
+            Checks if the current affinity is within this topic's affinity_range
+
+            OUT:
+                True if the current affinity is within range. False otherwise
+            """
+            return None #TODO: THIS
 
         def __load(self):
             """
@@ -229,16 +247,6 @@ init 0 python:
             for topic in store.topic_handler.ALL_TOPIC_MAP.itervalues():
                 topic.__save()
 
-        def get_player_affinity_in_topic_range(self):
-            """
-            Returns whether the player's affinity is in the affinity_range of this topic.
-            """
-            return affinity.affinity_is_between_bounds(
-                lower_bound=self.affinity_range[0],
-                affinity=store.persistent.affinity,
-                upper_bound=self.affinity_range[1]
-            )
-
         def get_player_trust_in_topic_range(self):
             """
             Returns whether the player's trust is in trust_range of this topic.
@@ -249,22 +257,144 @@ init 0 python:
                 upper_bound=self.trust_range[1]
             )
 
-        def get_topic_has_additional_property_with_value(self, property_key, property_value):
+        def has_additional_property_with_value(self, property_key, property_value):
             """
             Returns whether this topic has a given additional_attribute key with
             the supplied value
+
             IN:
                 self - Reference to this topic
                 property_key - The key under additional_properties to test against
                 property_value - The value to test the value under the property_key
+
             OUT:
                 True if the property exists and matches the given value, otherwise False, or raises an Exception if missing/undefined
             """
-            try:
-                return self.additional_properties[property_key] is property_value
-            except:
-                # This isn't ideal, and will need to be handled more gracefully!
-                raise Exception("additional_property '{0}' is not defined for topic label: {1}".format(property_key, self.label))
+            if property_key not in self.additional_properties:
+                return False
+
+            return self.additional_properties[property_key] is property_value
+
+
+        def _filter_topic(
+            self,
+            unlocked=None,
+            nat_says=None,
+            player_says=None,
+            is_seen=None,
+            location=None,
+            affinity=None,
+            trust=None,
+            includes_categories=list(),
+            excludes_categories=list(),
+            additional_properties=list()
+        ):
+            """
+            Filters this topic accordng to conditions
+
+            IN:
+                unlocked - boolean: Whether or not this topic is unlocked
+                nat_says - boolean: Whether or not this topic is something Nat says
+                player_says - boolean: Whether or not this topic is something the Player says
+                is_seen - boolean: Whether or not this topic should be seen
+                location - string: The location this topic should be visible in
+                affinity - integer: An affinity state to check whether or not the topic can be shown
+                trust - integer: A trust state to check whether or not the topic can be shown
+                includes_categories - list: A list of categories, all of which this topic MUST have
+                excludes_categories - list: A list of categories, none of which this topic should have
+                additional_properties - list: A list of additional properties, can be either string or tuple
+                    If tuple, the first item is the key, the second is the expected value. If just string, only presence is validated
+
+                NOTE: If these values are None or empty, checks on them are not performed.
+
+            OUT:
+                boolean - True if all checks pass, False otherwise
+            """
+            if unlocked is not None and unlocked != self.unlocked:
+                return False
+
+            if nat_says is not None and nat_says != self.nat_says:
+                return False
+
+            if player_says is not None and player_says != self.player_says:
+                return False
+
+            if is_seen is not None and renpy.seen_label(self.label) != is_seen:
+                return False
+
+            if location is not None and location != self.location:
+                return False
+
+            if affinity and not self.curr_affinity_in_affinity_range(affinity):
+                return False
+
+            if trust and not self.evaluate_trust_range(trust):
+                return False
+
+            if includes_categories and len(set(includes_categories).intersection(set(self.category))) != len(includes_categories):
+                return False
+
+            if excludes_categories and self.category and len(set(excludes_categories).intersection(set(self.category))) > 0:
+                return False
+
+            if additional_properties:
+                for additional_prop in additional_properties:
+                    #Key and value checks
+                    if isinstance(additional_prop, tuple):
+                        if not self.has_additional_property_with_value(*additional_prop):
+                            return False
+
+                    #Just key checks
+                    else:
+                        if additional_prop not in self.additional_properties:
+                            return False
+
+            #All checks pass
+            return True
+
+        @staticmethod
+        def filter_topics(
+            topic_list,
+            unlocked=None,
+            nat_says=None,
+            player_says=None,
+            is_seen=None,
+            location=None,
+            affinity=None,
+            trust=None,
+            includes_categories=list(),
+            excludes_categories=list(),
+            additional_properties=list()
+        ):
+            """
+            Filters this topic accordng to conditions
+
+            IN:
+                topic_list - List of topics to filter down
+
+                See _filter_topic for the rest of the properties
+
+                NOTE: If these values are None or empty, checks on them are not performed.
+
+            OUT:
+                List of topics matching the filter criteria
+            """
+            return [
+                _topic
+                for _topic in topic_list
+                if _topic._filter_topic(
+                    unlocked,
+                    nat_says,
+                    player_says,
+                    is_seen,
+                    location,
+                    affinity,
+                    trust,
+                    includes_categories,
+                    excludes_categories,
+                    additional_properties
+                )
+            ]
 
     #Now we'll start with generic functions which we'll use at higher inits
     def registerTopic(Topic, topic_group=TOPIC_TYPE_NORMAL):
