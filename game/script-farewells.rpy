@@ -20,13 +20,15 @@ init python in farewells:
         if divmod((store.utils.get_current_session_length()).total_seconds(), 60)[0] > 30:
             farewell_pool = filter(
                 lambda x: store.Topic.get_topic_has_additional_property_with_value(x, "is_time_sensitive", False),
-                farewell_pool)
+                farewell_pool
+            )
 
         # If Natsuki has already asked her player to stay, filter any topics that would let her ask again
         if store.jn_globals.player_already_stayed_on_farewell:
             farewell_pool = filter(
                 lambda x: store.Topic.get_topic_has_additional_property_with_value(x, "has_stay_option", False),
-                farewell_pool)
+                farewell_pool
+            )
 
         # Finally return a random farewell from the remaining pool
         return random.choice(farewell_pool).label
@@ -46,6 +48,7 @@ init python in farewells:
             Brief descriptor relating to the number of minutes spent in the session
         """
         minutes_in_session = divmod((store.utils.get_current_session_length()).total_seconds(), 60)[0]
+        
         if minutes_in_session <= 1:
             return "like a minute"
 
@@ -73,51 +76,51 @@ init python in farewells:
 init 1 python:
     # DEBUG: TODO: Resets - remove these later, once we're done tweaking affinity/trust!
     try:
-        store.persistent._farewell_database.pop("farewell_love_aff_1")
-        store.persistent._farewell_database.pop("farewell_love_aff_2")
-        store.persistent._farewell_database.pop("farewell_love_aff_3")
-        store.persistent._farewell_database.pop("farewell_love_aff_4")
-        store.persistent._farewell_database.pop("farewell_love_aff_5")
-        store.persistent._farewell_database.pop("farewell_love_aff_6")
-        store.persistent._farewell_database.pop("farewell_love_aff_7")
+        store.persistent._farewell_database.pop("farewell_love_you_mean_the_world_to_me")
+        store.persistent._farewell_database.pop("farewell_love_dont_like_saying_goodbye")
+        store.persistent._farewell_database.pop("farewell_love_counting_on_you")
+        store.persistent._farewell_database.pop("farewell_love_do_your_best")
+        store.persistent._farewell_database.pop("farewell_love_rooting_for_you")
+        store.persistent._farewell_database.pop("farewell_love_me_to_deal_with")
+        store.persistent._farewell_database.pop("farewell_love_wish_you_could_stay_forever")
 
-        store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_1")
-        store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_2")
-        store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_3")
-        store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_4")
-        store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_5")
-        store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_6")
-        store.persistent._farewell_database.pop("farewell_affectionate_enamored_aff_7")
+        store.persistent._farewell_database.pop("farewell_affectionate_enamored_was_having_fun")
+        store.persistent._farewell_database.pop("farewell_affectionate_enamored_waiting_for_you")
+        store.persistent._farewell_database.pop("farewell_affectionate_enamored_ill_be_okay")
+        store.persistent._farewell_database.pop("farewell_affectionate_enamored_dont_make_me_find_you")
+        store.persistent._farewell_database.pop("farewell_affectionate_enamored_take_care_for_both")
+        store.persistent._farewell_database.pop("farewell_affectionate_enamored_enjoy_our_time_together")
+        store.persistent._farewell_database.pop("farewell_affectionate_enamored_see_me_soon")
 
-        store.persistent._farewell_database.pop("farewell_happy_affectionate_aff_1")
-        store.persistent._farewell_database.pop("farewell_happy_affectionate_aff_2")
-        store.persistent._farewell_database.pop("farewell_happy_affectionate_aff_3")
-        store.persistent._farewell_database.pop("farewell_happy_affectionate_aff_4")
-        store.persistent._farewell_database.pop("farewell_happy_affectionate_aff_5")
+        store.persistent._farewell_database.pop("farewell_happy_affectionate_going_now")
+        store.persistent._farewell_database.pop("farewell_happy_affectionate_heading_off")
+        store.persistent._farewell_database.pop("farewell_happy_affectionate_stay_safe")
+        store.persistent._farewell_database.pop("farewell_happy_affectionate_take_care")
+        store.persistent._farewell_database.pop("farewell_happy_affectionate_see_me_soon")
 
-        store.persistent._farewell_database.pop("farewell_normal_happy_aff_1")
-        store.persistent._farewell_database.pop("farewell_normal_happy_aff_2")
-        store.persistent._farewell_database.pop("farewell_normal_happy_aff_3")
-        store.persistent._farewell_database.pop("farewell_normal_happy_aff_4")
-        store.persistent._farewell_database.pop("farewell_normal_happy_aff_5")
+        store.persistent._farewell_database.pop("farewell_normal_happy_see_you_later")
+        store.persistent._farewell_database.pop("farewell_normal_happy_later")
+        store.persistent._farewell_database.pop("farewell_normal_happy_goodbye")
+        store.persistent._farewell_database.pop("farewell_normal_happy_kay")
+        store.persistent._farewell_database.pop("farewell_normal_happy_see_ya")
 
-        store.persistent._farewell_database.pop("farewell_upset_distressed_aff_1")
-        store.persistent._farewell_database.pop("farewell_upset_distressed_aff_2")
-        store.persistent._farewell_database.pop("farewell_upset_distressed_aff_3")
-        store.persistent._farewell_database.pop("farewell_upset_distressed_aff_4")
-        store.persistent._farewell_database.pop("farewell_upset_distressed_aff_5")
+        store.persistent._farewell_database.pop("farewell_upset_distressed_bye")
+        store.persistent._farewell_database.pop("farewell_upset_distressed_later")
+        store.persistent._farewell_database.pop("farewell_upset_distressed_kay")
+        store.persistent._farewell_database.pop("farewell_upset_distressed_goodbye")
+        store.persistent._farewell_database.pop("farewell_upset_distressed_see_you_around")
 
-        store.persistent._farewell_database.pop("farewell_broken_ruined_aff_1")
-        store.persistent._farewell_database.pop("farewell_broken_ruined_aff_2")
-        store.persistent._farewell_database.pop("farewell_broken_ruined_aff_3")
-        store.persistent._farewell_database.pop("farewell_broken_ruined_aff_4")
-        store.persistent._farewell_database.pop("farewell_broken_ruined_aff_5")
+        store.persistent._farewell_database.pop("farewell_broken_ruined_yeah")
+        store.persistent._farewell_database.pop("farewell_broken_ruined_yep")
+        store.persistent._farewell_database.pop("farewell_broken_ruined_uh_huh")
+        store.persistent._farewell_database.pop("farewell_broken_ruined_nothing_to_say")
+        store.persistent._farewell_database.pop("farewell_broken_ruined_kay")
 
-        store.persistent._farewell_database.pop("farewell_gentle_ask")
-        store.persistent._farewell_database.pop("farewell_pleading_ask")
-        store.persistent._farewell_database.pop("farewell_fake_confidence_ask")
         store.persistent._farewell_database.pop("farewell_short_session_ask")
         store.persistent._farewell_database.pop("farewell_short_session_ask_alt")
+        store.persistent._farewell_database.pop("farewell_fake_confidence_ask")
+        store.persistent._farewell_database.pop("farewell_pleading_ask")
+        store.persistent._farewell_database.pop("farewell_gentle_ask")
 
     except Exception as e:
         utils.log(e, utils.SEVERITY_ERR)
@@ -127,7 +130,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_love_aff_1",
+            label="farewell_love_you_mean_the_world_to_me",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
@@ -139,10 +142,10 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_love_aff_1:
+label farewell_love_you_mean_the_world_to_me:
     n "Aww...{w=0.3} you're leaving now,{w=0.1} [player]?{w=0.2} Well,{w=0.1} okay..."
-    n "Y-you know I'll miss you,{w=0.1} right?"
-    n "Take care, [player]! You mean the world to me!"
+    n "Y-{w=0.2}you know I'll miss you,{w=0.1} right?"
+    n "Take care,{w=0.1} [player]!{w=0.2} You mean the world to me!"
     $ farewells.try_trust_dialogue()
     $ renpy.quit()
 
@@ -150,7 +153,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_love_aff_2",
+            label="farewell_love_dont_like_saying_goodbye",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
@@ -162,7 +165,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_love_aff_2:
+label farewell_love_dont_like_saying_goodbye:
     n "You know I don't like saying goodbye,{w=0.1} [player]..."
     n "..."
     n "I'll be okay!{w=0.2} Just come back soon,{w=0.1} alright?"
@@ -174,7 +177,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_love_aff_3",
+            label="farewell_love_counting_on_you",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
@@ -186,7 +189,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_love_aff_3:
+label farewell_love_counting_on_you:
     n "Uuuu...{w=0.3} I never like saying goodbye to you..."
     n "But I guess it can't be helped,{w=0.1} [player]."
     $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
@@ -198,7 +201,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_love_aff_4",
+            label="farewell_love_do_your_best",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
@@ -210,7 +213,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_love_aff_4:
+label farewell_love_do_your_best:
     n "Oh?{w=0.2} You're heading out now?"
     n "That's fine,{w=0.1} I guess..."
     n "I'll really miss you,{w=0.1} [player]."
@@ -223,7 +226,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_love_aff_5",
+            label="farewell_love_rooting_for_you",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
@@ -235,7 +238,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_love_aff_5:
+label farewell_love_rooting_for_you:
     n "Huh?{w=0.2} You're leaving now?"
     n "I always hate it when you have to go somewhere..."
     $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
@@ -249,7 +252,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_love_aff_6",
+            label="farewell_love_me_to_deal_with",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
@@ -261,7 +264,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_love_aff_6:
+label farewell_love_me_to_deal_with:
     n "You're leaving now,{w=0.1} [player]?"
     n "Awww...{w=0.3} well okay."
     n "You take care of yourself,{w=0.1} got it? Or you'll have me to deal with!"
@@ -273,7 +276,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_love_aff_7",
+            label="farewell_love_wish_you_could_stay_forever",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
@@ -285,7 +288,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_love_aff_7:
+label farewell_love_wish_you_could_stay_forever:
     n "Time to go,{w=0.1} [player]?"
     n "Sometimes I wish you could just stay forever...{w=0.3} Ehehe."
     n "But I understand you've got stuff to do."
@@ -300,7 +303,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_affectionate_enamored_aff_1",
+            label="farewell_affectionate_enamored_was_having_fun",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
@@ -312,7 +315,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_affectionate_enamored_aff_1:
+label farewell_affectionate_enamored_was_having_fun:
     n "Hmm?{w=0.2} You're leaving now?"
     n "Aww,{w=0.1} man..."
     n "And I was having fun,{w=0.1} too..."
@@ -325,7 +328,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_affectionate_enamored_aff_2",
+            label="farewell_affectionate_enamored_waiting_for_you",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
@@ -337,7 +340,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_affectionate_enamored_aff_2:
+label farewell_affectionate_enamored_waiting_for_you:
     n "You're going,{w=0.1} [player]?"
     n "Uuuuu...{w=0.3} okay..."
     n "Hurry back if you can,{w=0.1} alright?"
@@ -350,7 +353,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_affectionate_enamored_aff_3",
+            label="farewell_affectionate_enamored_ill_be_okay",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
@@ -362,7 +365,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_affectionate_enamored_aff_3:
+label farewell_affectionate_enamored_ill_be_okay:
     n "Huh?{w=0.2} You're leaving?"
     n "..."
     n "That's fine...{w=0.3} I'll be okay..."
@@ -375,7 +378,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_affectionate_enamored_aff_4",
+            label="farewell_affectionate_enamored_dont_make_me_find_you",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
@@ -387,7 +390,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_affectionate_enamored_aff_4:
+label farewell_affectionate_enamored_dont_make_me_find_you:
     n "Oh?{w=0.2} Heading off now,{w=0.1} [player]?"
     n "I wish you didn't have to..."
     n "But I know you have things to do."
@@ -400,7 +403,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_affectionate_enamored_aff_5",
+            label="farewell_affectionate_enamored_take_care_for_both",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
@@ -412,7 +415,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_affectionate_enamored_aff_5:
+label farewell_affectionate_enamored_take_care_for_both:
     n "Mmm?{w=0.2} You're going now,{w=0.1} [player]?"
     n "I was hoping you'd be around longer..."
     n "Well,{w=0.2} I'll be okay!"
@@ -425,7 +428,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_affectionate_enamored_aff_6",
+            label="farewell_affectionate_enamored_enjoy_our_time_together",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
@@ -437,7 +440,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_affectionate_enamored_aff_6:
+label farewell_affectionate_enamored_enjoy_our_time_together:
     n "You're leaving now,{w=0.1} [player]?"
     n "Nnnnnn...{w=0.3} alright."
     n "You better be back later,{w=0.1} okay?{w=0.2} I really enjoy our time together."
@@ -449,7 +452,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_affectionate_enamored_aff_7",
+            label="farewell_affectionate_enamored_see_me_soon",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
@@ -461,7 +464,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_affectionate_enamored_aff_7:
+label farewell_affectionate_enamored_see_me_soon:
     n "Well,{w=0.1} I guess you had to leave eventually."
     n "Doesn't mean I have to like it,{w=0.1} though..."
     n "Come see me soon,{w=0.1} okay?"
@@ -474,7 +477,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_happy_affectionate_aff_1",
+            label="farewell_happy_affectionate_going_now",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE),
@@ -486,7 +489,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_happy_affectionate_aff_1:
+label farewell_happy_affectionate_going_now:
     n "Going now,{w=0.1} [player]?{w=0.2} I'll see you later!"
     $ farewells.try_trust_dialogue()
     $ renpy.quit()
@@ -495,7 +498,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_happy_affectionate_aff_2",
+            label="farewell_happy_affectionate_heading_off",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE),
@@ -507,7 +510,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_happy_affectionate_aff_2:
+label farewell_happy_affectionate_heading_off:
     n "Heading off now,{w=0.1} [player]?"
     n "Okay!{w=0.2} Take care!"
     $ farewells.try_trust_dialogue()
@@ -517,7 +520,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_happy_affectionate_aff_3",
+            label="farewell_happy_affectionate_stay_safe",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE),
@@ -529,7 +532,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_happy_affectionate_aff_3:
+label farewell_happy_affectionate_stay_safe:
     n "Okaaay!{w=0.2} I'll be waiting for you!"
     n "Stay safe,{w=0.1} [player]!"
     $ farewells.try_trust_dialogue()
@@ -539,7 +542,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_happy_affectionate_aff_4",
+            label="farewell_happy_affectionate_take_care",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE),
@@ -551,7 +554,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_happy_affectionate_aff_4:
+label farewell_happy_affectionate_take_care:
     n "See you later,{w=0.1} [player]!"
     n "Take care out there!"
     $ farewells.try_trust_dialogue()
@@ -561,7 +564,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_happy_affectionate_aff_5",
+            label="farewell_happy_affectionate_see_me_soon",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE),
@@ -573,7 +576,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_happy_affectionate_aff_5:
+label farewell_happy_affectionate_see_me_soon:
     n "Goodbye,{w=0.1} [player]!"
     n "Come see me soon,{w=0.1} alright?"
     $ farewells.try_trust_dialogue()
@@ -585,7 +588,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_normal_happy_aff_1",
+            label="farewell_normal_happy_see_you_later",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY),
@@ -597,7 +600,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_normal_happy_aff_1:
+label farewell_normal_happy_see_you_later:
     n "See you later, [player]!"
     $ renpy.quit()
 
@@ -605,7 +608,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_normal_happy_aff_2",
+            label="farewell_normal_happy_later",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY),
@@ -617,7 +620,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_normal_happy_aff_2:
+label farewell_normal_happy_later:
     n "Later, [player]!"
     $ farewells.try_trust_dialogue()
     $ renpy.quit()
@@ -626,7 +629,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_normal_happy_aff_3",
+            label="farewell_normal_happy_goodbye",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY),
@@ -638,7 +641,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_normal_happy_aff_3:
+label farewell_normal_happy_goodbye:
     n "Goodbye, [player]!"
     $ farewells.try_trust_dialogue()
     $ renpy.quit()
@@ -647,7 +650,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_normal_happy_aff_4",
+            label="farewell_normal_happy_kay",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY),
@@ -659,7 +662,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_normal_happy_aff_4:
+label farewell_normal_happy_kay:
     n "'kay! Bye for now!"
     $ farewells.try_trust_dialogue()
     $ renpy.quit()
@@ -668,7 +671,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_normal_happy_aff_5",
+            label="farewell_normal_happy_see_ya",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY),
@@ -680,7 +683,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_normal_happy_aff_5:
+label farewell_normal_happy_see_ya:
     n "See ya, [player]!"
     $ farewells.try_trust_dialogue()
     $ renpy.quit()
@@ -690,7 +693,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_upset_distressed_aff_1",
+            label="farewell_upset_distressed_bye",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET),
@@ -702,7 +705,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_upset_distressed_aff_1:
+label farewell_upset_distressed_bye:
     n "Bye, [player]."
     $ renpy.quit()
 
@@ -710,7 +713,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_upset_distressed_aff_2",
+            label="farewell_upset_distressed_later",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET),
@@ -722,7 +725,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_upset_distressed_aff_2:
+label farewell_upset_distressed_later:
     n "Later, [player]."
     $ renpy.quit()
 
@@ -730,7 +733,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_upset_distressed_aff_3",
+            label="farewell_upset_distressed_kay",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET),
@@ -742,7 +745,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_upset_distressed_aff_3:
+label farewell_upset_distressed_kay:
     n "'kay, [player]. Later."
     $ renpy.quit()
 
@@ -750,7 +753,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_upset_distressed_aff_4",
+            label="farewell_upset_distressed_goodbye",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET),
@@ -762,7 +765,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_upset_distressed_aff_4:
+label farewell_upset_distressed_goodbye:
     n "Goodbye, [player]."
     $ renpy.quit()
 
@@ -770,7 +773,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_upset_distressed_aff_5",
+            label="farewell_upset_distressed_see_you_around",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET),
@@ -782,7 +785,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_upset_distressed_aff_5:
+label farewell_upset_distressed_see_you_around:
     n "See you around."
     $ renpy.quit()
 
@@ -792,7 +795,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_broken_ruined_aff_1",
+            label="farewell_broken_ruined_yeah",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.RUINED, jn_aff.BROKEN),
@@ -804,7 +807,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_broken_ruined_aff_1:
+label farewell_broken_ruined_yeah:
     n "Yeah."
     $ renpy.quit()
 
@@ -812,7 +815,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_broken_ruined_aff_2",
+            label="farewell_broken_ruined_yep",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.RUINED, jn_aff.BROKEN),
@@ -824,7 +827,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_broken_ruined_aff_2:
+label farewell_broken_ruined_yep:
     n "Yep."
     $ renpy.quit()
 
@@ -832,7 +835,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_broken_ruined_aff_3",
+            label="farewell_broken_ruined_uh_huh",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.RUINED, jn_aff.BROKEN),
@@ -844,7 +847,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_broken_ruined_aff_3:
+label farewell_broken_ruined_uh_huh:
     n "Uh huh."
     $ renpy.quit()
 
@@ -852,7 +855,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_broken_ruined_aff_4",
+            label="farewell_broken_ruined_nothing_to_say",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.RUINED, jn_aff.BROKEN),
@@ -864,7 +867,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_broken_ruined_aff_4:
+label farewell_broken_ruined_nothing_to_say:
     n "..."
     $ renpy.quit()
 
@@ -872,7 +875,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="farewell_broken_ruined_aff_5",
+            label="farewell_broken_ruined_kay",
             unlocked=True,
             conditional=None,
             affinity_range=(jn_aff.RUINED, jn_aff.BROKEN),
@@ -884,7 +887,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
-label farewell_broken_ruined_aff_5:
+label farewell_broken_ruined_kay:
     n "'kay."
     $ renpy.quit()
 
@@ -936,11 +939,11 @@ label farewell_short_session_ask:
             n "Are you sure you wanna stay?"
             menu:
                 "Yes, I'm sure.":
-                    "Well, if you're sure."
+                    "Well,{w=0.1} if you're sure."
                     "I just want to make sure I don't sound all naggy."
                     if store.jn_affinity.get_affinity_state() > store.jn_affinity.ENAMORED:
                         $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
-                        n "Thanks, [chosen_endearment]. You know it means a lot to me."
+                        n "Thanks,{w=0.1} [chosen_endearment]. You know it means a lot to me."
 
                     else:
                         n "Thanks, [player]. It means a lot."
@@ -983,13 +986,13 @@ init 5 python:
     )
 
 label farewell_short_session_ask_alt:
-    n "N-now wait just one second,{w=0.1} [player]!{w=0.2} This isn't fair at all!"
+    n "N-{w=0.1}now wait just one second,{w=0.1} [player]!{w=0.2} This isn't fair at all!"
     $ time_in_session_descriptor = farewells.get_time_in_session_descriptor()
     n "You've barely been here [time_in_session_descriptor],{w=0.1} and you're already going?"
     n "Come on!{w=0.2} You'll stay a little longer,{w=0.1} won't you?"
     menu:
         "Sure, I can stay a while.":
-            n "H-Ha!{w=0.2} I knew it."
+            n "H-{w=0.1}Ha!{w=0.2} I knew it."
             n "Ehehe.{w=0.1} Looks like I win again,{w=0.1} [player]!"
             n "O-or maybe you just can't bring yourself to leave my side?"
             menu:
@@ -1171,42 +1174,48 @@ label farewell_extra_trust:
     if store.trust.trust_is_between_bounds(
         lower_bound=store.jn_trust.TRUST_ABSOLUTE,
         trust=store.persistent.trust,
-        upper_bound=None):
+        upper_bound=None
+    ):
         n "My [player]...{w=0.3} I'll be waiting..."
 
     # FULL-COMPLETE
     elif store.trust.trust_is_between_bounds(
         lower_bound=store.jn_trust.TRUST_FULL,
         trust=store.persistent.trust,
-        upper_bound=store.jn_trust.TRUST_ABSOLUTE):
+        upper_bound=store.jn_trust.TRUST_ABSOLUTE
+    ):
         n "I'll be waiting..."
 
     # NEUTRAL-PARTIAL
     elif store.trust.trust_is_between_bounds(
         lower_bound=store.jn_trust.TRUST_NEUTRAL,
         trust=store.persistent.trust,
-        upper_bound=store.jn_trust.TRUST_PARTIAL):
+        upper_bound=store.jn_trust.TRUST_PARTIAL
+    ):
         n "You'll be back...{w=0.3} right?"
 
     # SCEPTICAL-NEUTRAL
     elif store.trust.trust_is_between_bounds(
         lower_bound=store.jn_trust.TRUST_SCEPTICAL,
         trust=store.persistent.trust,
-        upper_bound=store.jn_trust.TRUST_NEUTRAL):
+        upper_bound=store.jn_trust.TRUST_NEUTRAL
+    ):
         n "I'll be okay...{w=0.3} I'll be okay..."
 
     # DIMINISHED-SCEPTICAL
     elif store.trust.trust_is_between_bounds(
         lower_bound=store.jn_trust.TRUST_DIMINISHED,
         trust=store.persistent.trust,
-        upper_bound=store.jn_trust.TRUST_SCEPTICAL):
+        upper_bound=store.jn_trust.TRUST_SCEPTICAL
+    ):
         n "...?"
 
     # DIMINISHED-
     elif store.trust.trust_is_between_bounds(
         lower_bound=None,
         trust=store.persistent.trust,
-        upper_bound=store.jn_trust.TRUST_DIMINISHED):
+        upper_bound=store.jn_trust.TRUST_DIMINISHED
+    ):
         n "..."
 
     # Debug

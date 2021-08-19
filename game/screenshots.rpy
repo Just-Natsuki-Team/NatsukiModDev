@@ -111,7 +111,8 @@ label screenshot_dialogue:
 
         if store.jn_affinity.is_state_within_range(
             affinity_state=store.jn_globals.current_affinity_state,
-            affinity_range=(store.jn_affinity.NORMAL, store.jn_affinity.LOVE)): 
+            affinity_range=(store.jn_affinity.NORMAL, store.jn_affinity.LOVE)
+        ): 
 
             n "H-huh?{w=0.2} What was that flash I just saw?"
             n "Don't tell me...{w=0.3} was that a camera?!{w=0.2} There's a camera here?!"
@@ -133,7 +134,8 @@ label screenshot_dialogue:
 
         elif store.jn_affinity.is_state_within_range(
             affinity_state=store.jn_globals.current_affinity_state,
-            affinity_range=(store.jn_affinity.UPSET, store.jn_affinity.RUINED)): 
+            affinity_range=(store.jn_affinity.UPSET, store.jn_affinity.RUINED)
+        ): 
 
             n "..."
             n "You're taking pictures of me,{w=0.1} aren't you?"
@@ -173,7 +175,8 @@ label screenshot_dialogue:
 
         elif store.jn_affinity.is_state_within_range(
             affinity_state=store.jn_globals.current_affinity_state,
-            affinity_range=(store.jn_affinity.NORMAL, store.jn_affinity.AFFECTIONATE)): 
+            affinity_range=(store.jn_affinity.NORMAL, store.jn_affinity.AFFECTIONATE)
+        ): 
             n "Well...{w=0.2} alright."
 
         else:
@@ -223,7 +226,8 @@ label screenshot_dialogue:
 
         elif store.jn_affinity.is_state_within_range(
             affinity_state=store.jn_globals.current_affinity_state,
-            affinity_range=(store.jn_affinity.NORMAL, store.jn_affinity.AFFECTIONATE)): 
+            affinity_range=(store.jn_affinity.NORMAL, store.jn_affinity.AFFECTIONATE)
+        ): 
 
             # Pick the reaction and response; Natsuki is irritated
             $ chosen_reaction = renpy.substitute(renpy.random.choice(affectionate_normal_reactions))
@@ -239,7 +243,8 @@ label screenshot_dialogue:
 
         elif store.jn_affinity.is_state_within_range(
             affinity_state=store.jn_globals.current_affinity_state,
-            affinity_range=(store.jn_affinity.NORMAL, store.jn_affinity.AFFECTIONATE)): 
+            affinity_range=(store.jn_affinity.NORMAL, store.jn_affinity.AFFECTIONATE)
+        ): 
 
             # Pick the reaction and response; Natsuki is clearly upset
             $ chosen_reaction = renpy.substitute(renpy.random.choice(upset_minus_reactions))

@@ -12,52 +12,40 @@ init python in greetings:
         """
         # Get the farewells the current affinity allows for us
         #TODO: Generalized filter function
-        available_greetings = filter(lambda x: x.evaluate_affinity_range(), GREETING_MAP.values())
-        store.utils.log("{0} greetings found for this affinity state; labels:".format(len(available_greetings)))
-        for greeting in available_greetings:
-            store.utils.log("label name: {}".format(greeting.label))
-            store.utils.log("label aff range: {0} - {1}".format(greeting.affinity_range[0], greeting.affinity_range[1]))
-        return random.choice(available_greetings).label
+        return random.choice(filter(lambda x: x.evaluate_affinity_range(), GREETING_MAP.values())).label
 
 init 1 python:
-    # DEBUG: TODO: Remove this eventually
-    # Kill off old greetings
     try:
-        store.persistent._greeting_database.pop("greeting_back")
-        store.persistent._greeting_database.pop("greeting_hey")
-        store.persistent._greeting_database.pop("greeting_hi_again")
-        store.persistent._greeting_database.pop("greeting_welcome_back")
-
         # Resets - remove these later, once we're done tweaking affinity/trust!
-        store.persistent._greeting_database.pop("greeting_love_plus_1")
-        store.persistent._greeting_database.pop("greeting_love_plus_2")
-        store.persistent._greeting_database.pop("greeting_love_plus_3")
-        store.persistent._greeting_database.pop("greeting_love_plus_4")
-        store.persistent._greeting_database.pop("greeting_love_plus_5")
+        store.persistent._greeting_database.pop("greeting_love_plus_today_is_gonna_be_great")
+        store.persistent._greeting_database.pop("greeting_love_plus_world_revolves_around_you")
+        store.persistent._greeting_database.pop("greeting_love_plus_make_today_amazing")
+        store.persistent._greeting_database.pop("greeting_love_plus_always_welcome_here")
+        store.persistent._greeting_database.pop("greeting_love_plus_lovestruck")
 
-        store.persistent._greeting_database.pop("greeting_affectionate_enamored_aff_1")
-        store.persistent._greeting_database.pop("greeting_affectionate_enamored_aff_2")
-        store.persistent._greeting_database.pop("greeting_affectionate_enamored_aff_3")
-        store.persistent._greeting_database.pop("greeting_affectionate_enamored_aff_4")
-        store.persistent._greeting_database.pop("greeting_affectionate_enamored_aff_5")
+        store.persistent._greeting_database.pop("greeting_affectionate_enamored_good_to_see_you")
+        store.persistent._greeting_database.pop("greeting_affectionate_enamored_couldnt_resist")
+        store.persistent._greeting_database.pop("greeting_affectionate_enamored_just_cant_stay_away")
+        store.persistent._greeting_database.pop("greeting_affectionate_enamored_have_so_much_fun")
+        store.persistent._greeting_database.pop("greeting_affectionate_enamored_everything_is_fine")
 
-        store.persistent._greeting_database.pop("greeting_normal_happy_aff_1")
-        store.persistent._greeting_database.pop("greeting_normal_happy_aff_2")
-        store.persistent._greeting_database.pop("greeting_normal_happy_aff_3")
-        store.persistent._greeting_database.pop("greeting_normal_happy_aff_4")
-        store.persistent._greeting_database.pop("greeting_normal_happy_aff_5")
+        store.persistent._greeting_database.pop("greeting_normal_happy_whats_up")
+        store.persistent._greeting_database.pop("greeting_normal_happy_glad_to_see_you")
+        store.persistent._greeting_database.pop("greeting_normal_happy_spacing_out")
+        store.persistent._greeting_database.pop("greeting_normal_happy_heya")
+        store.persistent._greeting_database.pop("greeting_normal_happy_knew_youd_be_back")
 
-        store.persistent._greeting_database.pop("greeting_distressed_upset_1")
-        store.persistent._greeting_database.pop("greeting_distressed_upset_2")
-        store.persistent._greeting_database.pop("greeting_distressed_upset_3")
-        store.persistent._greeting_database.pop("greeting_distressed_upset_4")
-        store.persistent._greeting_database.pop("greeting_distressed_upset_5")
+        store.persistent._greeting_database.pop("greeting_distressed_upset_oh_its_you")
+        store.persistent._greeting_database.pop("greeting_distressed_upset_hi")
+        store.persistent._greeting_database.pop("greeting_distressed_upset_welcome_back_i_guess")
+        store.persistent._greeting_database.pop("greeting_distressed_upset_better_be_good")
+        store.persistent._greeting_database.pop("greeting_distressed_upset_oh_you_came_back")
 
-        store.persistent._greeting_database.pop("greeting_broken_minus_1")
-        store.persistent._greeting_database.pop("greeting_broken_minus_2")
-        store.persistent._greeting_database.pop("greeting_broken_minus_3")
-        store.persistent._greeting_database.pop("greeting_broken_minus_4")
-        store.persistent._greeting_database.pop("greeting_broken_minus_5")
+        store.persistent._greeting_database.pop("greeting_broken_minus_oh_its_you")
+        store.persistent._greeting_database.pop("greeting_broken_minus_nothing_to_say")
+        store.persistent._greeting_database.pop("greeting_broken_minus_why")
+        store.persistent._greeting_database.pop("greeting_broken_minus_enough_on_my_mind")
+        store.persistent._greeting_database.pop("greeting_broken_minus_leave_me_be")
 
     except Exception as e:
         utils.log(e, utils.SEVERITY_ERR)
@@ -67,14 +55,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_love_plus_1",
+            label="greeting_love_plus_today_is_gonna_be_great",
             unlocked=True,
             affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_love_plus_1:
+label greeting_love_plus_today_is_gonna_be_great:
     n "[player]!{w=0.2} You're back,{w=0.1} finally!"
     n "Ehehe.{w=0.2} Now I {i}know{/i} today's gonna be great!"
     return
@@ -83,14 +71,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_love_plus_2",
+            label="greeting_love_plus_world_revolves_around_you",
             unlocked=True,
             affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_love_plus_2:
+label greeting_love_plus_world_revolves_around_you:
     n "[player]!{w=0.1} What took you so long?{w=0.2} Jeez!"
     n "You think my entire world revolves around you or something?"
     n "..."
@@ -104,14 +92,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_love_plus_3",
+            label="greeting_love_plus_make_today_amazing",
             unlocked=True,
             affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_love_plus_3:
+label greeting_love_plus_make_today_amazing:
     n "[player]!{w=0.2} [player] [player] [player]!"
     n "I'm so glad to see you again!{w=0.2} Welcome back!"
     n "Let's make today amazing too,{w=0.1} alright?"
@@ -121,14 +109,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_love_plus_4",
+            label="greeting_love_plus_always_welcome_here",
             unlocked=True,
             affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_love_plus_4:
+label greeting_love_plus_always_welcome_here:
     n "[player],{w=0.1} you're back!"
     n "I was really starting to miss you, you know..."
     n "Don't keep me waiting so long next time,{w=0.2} alright?"
@@ -139,14 +127,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_love_plus_5",
+            label="greeting_love_plus_lovestruck",
             unlocked=True,
             affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_love_plus_5:
+label greeting_love_plus_lovestruck:
     n "..."
     n "..."
     n "..."
@@ -165,14 +153,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_affectionate_enamored_aff_1",
+            label="greeting_affectionate_enamored_good_to_see_you",
             unlocked=True,
             affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_affectionate_enamored_aff_1:
+label greeting_affectionate_enamored_good_to_see_you:
     n "[player]!{w=0.2} You're back!"
     n "It's so good to see you again!"
     n "Let's make today amazing as well,{w=0.1} 'kay? Ehehe."
@@ -182,14 +170,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_affectionate_enamored_aff_2",
+            label="greeting_affectionate_enamored_couldnt_resist",
             unlocked=True,
             affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_affectionate_enamored_aff_2:
+label greeting_affectionate_enamored_couldnt_resist:
     n "Hey,{w=0.1} you!{w=0.2} Back so soon?"
     n "I knew you couldn't resist.{w=0.2} Ehehe."
     n "What do you wanna do today?"
@@ -199,14 +187,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_affectionate_enamored_aff_3",
+            label="greeting_affectionate_enamored_just_cant_stay_away",
             unlocked=True,
             affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_affectionate_enamored_aff_3:
+label greeting_affectionate_enamored_just_cant_stay_away:
     n "Well, well, well.{w=0.2} What do we have here?"
     n "You just can't stay away from me,{w=0.1} can you?{w=0.2} Ahaha!"
     n "Not that I'm complaining too much!"
@@ -217,14 +205,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_affectionate_enamored_aff_4",
+            label="greeting_affectionate_enamored_have_so_much_fun",
             unlocked=True,
             affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_affectionate_enamored_aff_4:
+label greeting_affectionate_enamored_have_so_much_fun:
     n "It's [player],{w=0.1} yay!"
     n "We're gonna have so much fun today!{w=0.2} Ehehe."
     n "So,{w=0.1} what do you wanna talk about?"
@@ -234,14 +222,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_affectionate_enamored_aff_5",
+            label="greeting_affectionate_enamored_everything_is_fine",
             unlocked=True,
             affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_affectionate_enamored_aff_5:
+label greeting_affectionate_enamored_everything_is_fine:
     n "[player], you're back!"
     n "I've been waiting for you, you know..."
     n "But now that you're here, everything is fine! Ehehe."
@@ -253,14 +241,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_normal_happy_aff_1",
+            label="greeting_normal_happy_whats_up",
             unlocked=True,
             affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_normal_happy_aff_1:
+label greeting_normal_happy_whats_up:
     n "Oh!{w=0.2} Hey,{w=0.1} [player]!"
     n "What's up?"
     return
@@ -269,14 +257,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_normal_happy_aff_2",
+            label="greeting_normal_happy_glad_to_see_you",
             unlocked=True,
             affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_normal_happy_aff_2:
+label greeting_normal_happy_glad_to_see_you:
     n "Hi,{w=0.1} [player]!"
     n "I'm glad to see you again."
     return
@@ -285,14 +273,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_normal_happy_aff_3",
+            label="greeting_normal_happy_spacing_out",
             unlocked=True,
             affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_normal_happy_aff_3:
+label greeting_normal_happy_spacing_out:
     n "..."
     n "Huh?"
     n "Oh!{w=0.2} Hi,{w=0.1} [player]!"
@@ -304,14 +292,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_normal_happy_aff_4",
+            label="greeting_normal_happy_heya",
             unlocked=True,
             affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_normal_happy_aff_4:
+label greeting_normal_happy_heya:
     n "Heya,{w=0.1} [player]!"
     n "Welcome back!"
     return
@@ -320,14 +308,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_normal_happy_aff_5",
+            label="greeting_normal_happy_knew_youd_be_back",
             unlocked=True,
             affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_normal_happy_aff_5:
+label greeting_normal_happy_knew_youd_be_back:
     n "It's [player]!{w=0.2} Hi!"
     n "I-I knew you'd be back,{w=0.1} obviously."
     n "You'd have to have no taste to not visit again! Ahaha!"
@@ -339,14 +327,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_distressed_upset_1",
+            label="greeting_distressed_upset_oh_its_you",
             unlocked=True,
             affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_distressed_upset_1:
+label greeting_distressed_upset_oh_its_you:
     n "Oh.{w=0.2} It's you."
     n "Hello,{w=0.1} [player]."
     return
@@ -355,14 +343,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_distressed_upset_2",
+            label="greeting_distressed_upset_hi",
             unlocked=True,
             affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_distressed_upset_2:
+label greeting_distressed_upset_hi:
     n "[player].{w=0.2} Hi."
     return
 
@@ -370,14 +358,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_distressed_upset_3",
+            label="greeting_distressed_upset_welcome_back_i_guess",
             unlocked=True,
             affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_distressed_upset_3:
+label greeting_distressed_upset_welcome_back_i_guess:
     n "[player].{w=0.2} Welcome back,{w=0.1} I guess."
     return
 
@@ -385,14 +373,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_distressed_upset_4",
+            label="greeting_distressed_upset_better_be_good",
             unlocked=True,
             affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_distressed_upset_4:
+label greeting_distressed_upset_better_be_good:
     n "Hi,{w=0.1} [player]."
     n "This better be good."
     return
@@ -401,14 +389,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_distressed_upset_5",
+            label="greeting_distressed_upset_oh_you_came_back",
             unlocked=True,
             affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_distressed_upset_5:
+label greeting_distressed_upset_oh_you_came_back:
     n "Oh?{w=0.2} You came back?"
     n "...I wish I could say I was happy about it."
     return
@@ -419,14 +407,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_broken_minus_1",
+            label="greeting_broken_minus_oh_its_you",
             unlocked=True,
             affinity_range=(None, jn_aff.BROKEN)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_broken_minus_1:
+label greeting_broken_minus_oh_its_you:
     n "...?"
     n "Oh...{w=0.3} it's you."
     return
@@ -435,14 +423,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_broken_minus_2",
+            label="greeting_broken_minus_nothing_to_say",
             unlocked=True,
             affinity_range=(None, jn_aff.BROKEN)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_broken_minus_2:
+label greeting_broken_minus_nothing_to_say:
     n "..."
     n "..."
     return
@@ -451,14 +439,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_broken_minus_3",
+            label="greeting_broken_minus_why",
             unlocked=True,
             affinity_range=(None, jn_aff.BROKEN)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_broken_minus_3:
+label greeting_broken_minus_why:
     n "...Why?"
     n "Why did you come back,{w=0.1} [player]?"
     return
@@ -467,14 +455,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_broken_minus_4",
+            label="greeting_broken_minus_enough_on_my_mind",
             unlocked=True,
             affinity_range=(None, jn_aff.BROKEN)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_broken_minus_4:
+label greeting_broken_minus_enough_on_my_mind:
     $ player_initial = list(player)[0]
     n "[player_initial]-{w=0.1}[player]...?"
     n "As if I didn't have enough on my mind..."
@@ -484,14 +472,14 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_broken_minus_5",
+            label="greeting_broken_minus_leave_me_be",
             unlocked=True,
             affinity_range=(None, jn_aff.BROKEN)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_broken_minus_5:
+label greeting_broken_minus_leave_me_be:
     $ player_initial = list(player)[0]
     n "...Why, [player]?{w=0.2} Why do you keep coming back?"
     n "Why can't you just leave me be..."
