@@ -30,6 +30,7 @@ init 0 python:
         "unlocked_on": True,
 
         #Things which can change
+        "label": False,
         "affinity_range": False,
         "trust_range": False,
         "category": False,
@@ -200,7 +201,7 @@ init 0 python:
             NOTE: Will raise a KeyError of the lock map doesn't have the persist key in it
             """
             for persist_key, value in self.as_dict().iteritems():
-                if TOPIC_LOCKED_PROP_BASE_MAP.get[persist_key]:
+                if TOPIC_LOCKED_PROP_BASE_MAP[persist_key]:
                     self.__persistent_db[self.label][persist_key] = value
 
         @staticmethod

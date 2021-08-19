@@ -179,8 +179,8 @@ screen hkb_overlay(Talk=True, Dates=True, Music=True, Action=True, Extras=True):
     style_prefix "hkb"
 
     vbox:
-        xalign 0.05
-        yalign 0.95
+        xalign 0.09
+        yalign 1.0
 
         if Talk:
             textbutton _("Talk"):
