@@ -17,7 +17,7 @@ init python in farewells:
         farewell_pool = filter(lambda x: x.evaluate_affinity_range(), FAREWELL_MAP.values())
 
         # Filter any time-sensitive topics, if the player has been around 30 minutes or longer
-        if divmod((store.utils.get_current_session_length()).total_seconds(), 60)[0] > 30:
+        if store.utils.get_current_session_length().total_seconds() / 60 > 30:
             farewell_pool = filter(
                 lambda x: store.Topic.get_topic_has_additional_property_with_value(x, "is_time_sensitive", False),
                 farewell_pool
@@ -47,7 +47,7 @@ init python in farewells:
         OUT:
             Brief descriptor relating to the number of minutes spent in the session
         """
-        minutes_in_session = divmod((store.utils.get_current_session_length()).total_seconds(), 60)[0]
+        minutes_in_session = store.utils.get_current_session_length().total_seconds() / 60
         
         if minutes_in_session <= 1:
             return "like a minute"
