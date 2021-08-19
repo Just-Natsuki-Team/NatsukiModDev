@@ -12,7 +12,12 @@ init python in greetings:
         """
         # Get the farewells the current affinity allows for us
         #TODO: Generalized filter function
-        return random.choice(filter(lambda x: x.evaluate_affinity_range(), GREETING_MAP.values())).label
+        return random.choice(
+            store.Topic.filter_topics(
+                GREETING_MAP.values(),
+                affinity=store.jn_globals.current_affinity_state
+            )
+        ).label
 
 init 1 python:
     try:

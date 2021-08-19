@@ -67,7 +67,7 @@ label ch30_loop:
         call call_next_topic
 
     jump ch30_loop
-    
+
 
 label ch30_wait:
     window hide

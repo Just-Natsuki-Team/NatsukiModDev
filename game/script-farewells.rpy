@@ -14,21 +14,14 @@ init python in farewells:
         """
         # Get the farewells the current affinity allows for the player
         #TODO: Generalized filter function
-        farewell_pool = filter(lambda x: x.evaluate_affinity_range(), FAREWELL_MAP.values())
-
-        # Filter any time-sensitive topics, if the player has been around 30 minutes or longer
-        if store.utils.get_current_session_length().total_seconds() / 60 > 30:
-            farewell_pool = filter(
-                lambda x: store.Topic.get_topic_has_additional_property_with_value(x, "is_time_sensitive", False),
-                farewell_pool
-            )
-
-        # If Natsuki has already asked her player to stay, filter any topics that would let her ask again
-        if store.jn_globals.player_already_stayed_on_farewell:
-            farewell_pool = filter(
-                lambda x: store.Topic.get_topic_has_additional_property_with_value(x, "has_stay_option", False),
-                farewell_pool
-            )
+        farewell_pool = store.Topic.filter_topics(
+            FAREWELL_MAP.values(),
+            affinity=store.jn_globals.current_affinity_state,
+            additional_properties=[
+                ("is_time_sensitive", store.utils.get_current_session_length().total_seconds() / 60 < 30),
+                ("has_stay_option", not store.jn_globals.player_already_stayed_on_farewell)
+            ]
+        )
 
         # Finally return a random farewell from the remaining pool
         return random.choice(farewell_pool).label
@@ -48,7 +41,7 @@ init python in farewells:
             Brief descriptor relating to the number of minutes spent in the session
         """
         minutes_in_session = store.utils.get_current_session_length().total_seconds() / 60
-        
+
         if minutes_in_session <= 1:
             return "like a minute"
 
