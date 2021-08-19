@@ -14,6 +14,8 @@ init -990 python:
     import datetime
 
 init 0 python:
+    import store.jn_affinity as jn_aff
+
     #Constants for types. Add more here if we need more organizational areas
     TOPIC_TYPE_FAREWELL = "FAREWELL"
     TOPIC_TYPE_GREETING = "GREETING"
@@ -103,6 +105,10 @@ init 0 python:
             if not renpy.has_label(label):
                 raise Exception("Label {0} does not exist.".format(label))
 
+            #Validate the affinity range prior to it
+            if not store.jn_affinity.is_affinity_range_valid(affinity_range):
+                raise Exception("Affinity range: {0} is invalid.".format(affinity_range))
+
             #First, we'll add all of the items here which which shouldn't change from the persisted data
             self.label = label
             self.conditional = conditional
@@ -129,6 +135,11 @@ init 0 python:
             self.category = category
             self.prompt = prompt
             self.location = location
+
+            if additional_properties is None:
+                additional_properties = list()
+
+            self.additional_properties = additional_properties
 
             #And finally, add this all back to the persistent dict
             persistent_db[label] = dict()
@@ -183,6 +194,12 @@ init 0 python:
                     store.utils.log(e.message, utils.SEVERITY_ERR)
                     return False
 
+        def evaluate_affinity_range(self):
+            """
+            Checks if the topic's action should be run
+            """
+            return store.jn_affinity.is_state_within_range(jn_globals.current_affinity_state, self.affinity_range)
+
         def __load(self):
             """
             Internal load funtion
@@ -210,6 +227,43 @@ init 0 python:
             """
             for topic in store.topic_handler.ALL_TOPIC_MAP.itervalues():
                 topic.__save()
+
+        def get_player_affinity_in_topic_range(self):
+            """
+            Returns whether the player's affinity is in the affinity_range of this topic.
+            """
+            return affinity.affinity_is_between_bounds(
+                lower_bound=self.affinity_range[0],
+                affinity=store.persistent.affinity,
+                upper_bound=self.affinity_range[1]
+            )
+
+        def get_player_trust_in_topic_range(self):
+            """
+            Returns whether the player's trust is in trust_range of this topic.
+            """
+            return trust.trust_is_between_bounds(
+                lower_bound=self.trust_range[0],
+                trust=store.persistent.trust,
+                upper_bound=self.trust_range[1]
+            )
+
+        def get_topic_has_additional_property_with_value(self, property_key, property_value):
+            """
+            Returns whether this topic has a given additional_attribute key with
+            the supplied value
+            IN:
+                self - Reference to this topic
+                property_key - The key under additional_properties to test against
+                property_value - The value to test the value under the property_key
+            OUT:
+                True if the property exists and matches the given value, otherwise False, or raises an Exception if missing/undefined
+            """
+            try:
+                return self.additional_properties[property_key] is property_value
+            except:
+                # This isn't ideal, and will need to be handled more gracefully!
+                raise Exception("additional_property '{0}' is not defined for topic label: {1}".format(property_key, self.label))
 
     #Now we'll start with generic functions which we'll use at higher inits
     def registerTopic(Topic, topic_group=TOPIC_TYPE_NORMAL):
@@ -287,10 +341,49 @@ init 0 python:
 
         return tracks
 
+# Variables with cross-script utility specific to Just Natsuki
+init -990 python in jn_globals:
+    import store
+
+    # Tracking; use these for data we might refer to/modify mid-session, or anything time sensitive
+    current_session_start_time = store.datetime.datetime.now()
+
+    # Flags; use these to set/refer to binary states
+
+    # Tracks whether the player opted to stay for longer when Natsuki asked them to when quitting; True if so, otherwise False
+    player_already_stayed_on_farewell = False
+
+    # Constants; use these for anything we only want defined once and used in a read-only context
+
+    # Endearments Natsuki may use at the highest levels of affinity to refer to her player
+    # She isn't that lovey-dovey, so use sparingly!
+    DEFAULT_PLAYER_ENDEARMENTS = [
+        "babe",
+        "darling",
+        "dummy",
+        "hun",
+        "my love",
+        "sweetheart",
+        "sweetie"
+    ]
+
+    # Descriptors Natsuki may use at the higher levels of affinity to define her player
+    DEFAULT_PLAYER_DESCRIPTORS = [
+        "amazing",
+        "really great",
+        "so sweet",
+        "the best"
+    ]
+
+init 10 python in jn_globals:
+    # The current affection state. We default this to 5 (NORMAL)
+    current_affinity_state = store.jn_affinity.NORMAL
+
 #Stuff that's really early, which should be usable basically anywhere
 init -999 python in utils:
     import datetime
     import os
+    import store
 
     #Make log folder if not exist
     _logdir = os.path.join(renpy.config.basedir, "log")
@@ -325,6 +418,15 @@ init -999 python in utils:
                 LOGSEVERITY_MAP[SEVERITY_INFO]
             ).format(datetime.datetime.now(), message)
         )
+
+    def get_current_session_length():
+        """
+        Returns a timedelta object representing the length of the current game session.
+
+        OUT:
+            datetime.timedelta object representing the length of the current game session
+        """
+        return datetime.datetime.now() - store.jn_globals.current_session_start_time
 
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
 define audio.t2 = "<loop 4.499>bgm/2.ogg"   #Sayori theme
