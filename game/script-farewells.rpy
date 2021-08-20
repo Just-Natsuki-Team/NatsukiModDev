@@ -19,12 +19,30 @@ init python in farewells:
             affinity=store.jn_globals.current_affinity_state,
             additional_properties=[
                 ("is_time_sensitive", store.utils.get_current_session_length().total_seconds() / 60 < 30),
-                ("has_stay_option", not store.jn_globals.player_already_stayed_on_farewell)
+                ("has_stay_option", not store.jn_globals.player_already_stayed_on_farewell and store.jn_globals.current_affinity_state >= 6)
             ]
         )
 
-        # Finally return a random farewell from the remaining pool
-        return random.choice(farewell_pool).label
+        # If pool isn't empty
+        if farewell_pool != []:
+            # Return a random farewell from the remaining pool
+            return random.choice(farewell_pool).label
+
+        #else
+        # Run filter again, this time without caring for additional_properties
+        farewell_pool = store.Topic.filter_topics(
+            FAREWELL_MAP.values(),
+            affinity=store.jn_globals.current_affinity_state
+        )
+
+        # Again check if pool isn't empy
+        if farewell_pool != []:
+            # Return a random farewell from the new pool
+            return random.choice(farewell_pool).label
+
+        #else
+        #TODO: return a generic farewell and log this under the hood
+        raise Exception("No suitable farewell found")
 
     def try_trust_dialogue():
         """
