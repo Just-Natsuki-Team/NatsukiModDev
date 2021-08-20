@@ -24,7 +24,7 @@ init python in farewells:
         )
 
         # If pool isn't empty
-        if farewell_pool != []:
+        if farewell_pool:
             # Return a random farewell from the remaining pool
             return random.choice(farewell_pool).label
 
