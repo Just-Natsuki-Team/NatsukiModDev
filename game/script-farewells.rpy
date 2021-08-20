@@ -19,12 +19,34 @@ init python in farewells:
             affinity=store.jn_globals.current_affinity_state,
             additional_properties=[
                 ("is_time_sensitive", store.utils.get_current_session_length().total_seconds() / 60 < 30),
-                ("has_stay_option", not store.jn_globals.player_already_stayed_on_farewell)
+                ("has_stay_option", not store.jn_globals.player_already_stayed_on_farewell and store.jn_globals.current_affinity_state >= 6)
             ]
         )
 
-        # Finally return a random farewell from the remaining pool
-        return random.choice(farewell_pool).label
+        # If pool isn't empty
+        if farewell_pool:
+            # Return a random farewell from the remaining pool
+            return random.choice(farewell_pool).label
+
+        #else
+        # Run filter again, this time without caring for special farewells
+        farewell_pool = store.Topic.filter_topics(
+            FAREWELL_MAP.values(),
+            affinity=store.jn_globals.current_affinity_state,
+            additional_properties=[
+                ("is_time_sensitive", False),
+                ("has_stay_option", False)
+            ]
+        )
+
+        # Again check if pool isn't empy
+        if farewell_pool:
+            # Return a random farewell from the new pool
+            return random.choice(farewell_pool).label
+
+        #else
+        # Fallback if both searches fail or if something just Fs up
+        return get_topic("farewell_fallback_see_you_soon")
 
     def try_trust_dialogue():
         """
@@ -1215,3 +1237,20 @@ label farewell_extra_trust:
     else:
         n "Um...{w=0.3} I think you messed up somewhere,{w=0.1} [player]...{w=0.3} Aha..."
         n "Bye now! Good luck fixing it!"
+
+# Fallback farewell if selecting a farewell fails
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_fallback_see_you_soon",
+            unlocked=True,
+            additional_properties=["Failsafe"]
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
+
+label farewell_fallback_see_you_soon:
+    n "Alright, see you soon."
+    $ renpy.quit()
