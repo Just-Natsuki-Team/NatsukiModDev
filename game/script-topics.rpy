@@ -1,7 +1,9 @@
 default persistent._topic_database = dict()
 
 init python in topics:
+    import store
     TOPIC_MAP = dict()
+    store.persistent._topic_database.pop("talk_did_you_have_pets")
 
 init 5 python:
     registerTopic(
@@ -100,31 +102,40 @@ label talk_set_affinity:
     menu:
         "LOVE":
             $ store.jn_globals.current_affinity_state = 9
-            n "Alright! Your affinity state is now LOVE!"
+            n "Alright! Your affinity state is now LOVE!" # Yesssssss
+
         "ENAMORED":
             $ store.jn_globals.current_affinity_state = 8
             n "Alright! Your affinity state is now ENAMORED!"
+
         "AFFECTIONATE":
             $ store.jn_globals.current_affinity_state = 7
             n "Alright! Your affinity state is now AFFECTIONATE!"
+
         "HAPPY":
             $ store.jn_globals.current_affinity_state = 6
             n "Alright! Your affinity state is now HAPPY!"
+
         "NORMAL":
             $ store.jn_globals.current_affinity_state = 5
             n "Alright! Your affinity state is now NORMAL!"
+
         "UPSET":
             $ store.jn_globals.current_affinity_state = 4
             n "Alright! Your affinity state is now UPSET!"
+
         "DISTRESSED":
             $ store.jn_globals.current_affinity_state = 3
             n "Alright! Your affinity state is now DISTRESSED!"
+
         "BROKEN":
             $ store.jn_globals.current_affinity_state = 2
             n "Alright! Your affinity state is now BROKEN!"
+
         "RUINED":
             $ store.jn_globals.current_affinity_state = 1
-            n "Alright! Your affinity state is now RUINED!"
+            n "Alright! Your affinity state is now RUINED!" # How could you :(
+
         "Nevermind.":
             n "Oh...{w=0.3} well, alright then."
     
@@ -175,7 +186,7 @@ init 5 python:
     )
 
 label talk_having_pictures_taken:
-    if not persistent._jn_first_screenshot_taken:
+    if not persistent.jn_first_screenshot_taken:
         n "W-wait...{w=0.3} you're telling me there's a camera here?{w=0.2} Are you kidding me?!"
         n "Uuuu-"
         n "I've never liked having my picture taken without my permission..."
@@ -184,18 +195,21 @@ label talk_having_pictures_taken:
         n "I hope you can understand."
 
     else:
-        if persistent.affinity >= 700:
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
             n "Hmm?{w=0.2} Pictures of me?"
             n "Honestly,{w=0.1} I don't think I'll ever be completely comfortable with them..."
             n "But I trust you to make a good shot!"
             n "As long as you ask,{w=0.1} I've got no problem with it!"
 
-        elif persistent.affinity < 700 and persistent.affinity > 100:
+        elif store.jn_affinity.is_state_within_range(
+            affinity_state=store.jn_globals.current_affinity_state,
+            affinity_range=(store.jn_affinity.NORMAL, store.jn_affinity.AFFECTIONATE)
+        ):
             if player_screenshots_blocked:
                 n "Really, [player]?{w=0.1} You're asking me about this {i}now{/i}?"
                 n "You know {i}perfectly well{/i} how I feel about this."
                 n "I don't hate you,{w=0.1} but please try to remember how I feel before you do stuff like that."
-                return
+                n "I'm still gonna keep that turned off for now."
 
             else:
                 n "H-huh?{w=0.2} Pictures of me?"
@@ -219,7 +233,10 @@ label talk_having_pictures_taken:
                         n "Uh...{w=0.3} [player]?{w=0.1} This isn't very funny."
                         n "Make sure you ask,{w=0.1} okay?{w=0.1} For my sake."
 
-        elif persistent.affinity > -50:
+        elif store.jn_affinity.is_state_within_range(
+            affinity_state=store.jn_globals.current_affinity_state,
+            affinity_range=(store.jn_affinity.UPSET, store.jn_affinity.DISTRESSED)
+        ):
             n "Pictures? Really?"
             n "I don't think I want to have you taking my picture,{w=0.1} [player]."
             n "Let's talk about something else."
@@ -310,6 +327,148 @@ label talk_get_picture_permission:
         n "..."
         $ player_screenshots_permission = False
 
+    return
+
+# Natsuki discusses her lack of pet with the player, and asks about theirs
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_did_you_have_pets",
+            unlocked=True,
+            prompt="Did you ever have any pets?",
+            conditional=None,
+            category=["Natsuki", "Life", "Animals", "Family"],
+            player_says=True,
+            affinity_range=(store.jn_aff.NORMAL, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_did_you_have_pets:
+
+    if store.jn_affinity.get_affinity_state() > store.jn_affinity.ENAMORED:
+        $ player_or_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+
+    else:
+        $ player_or_endearment = player
+
+    n "Huh?{w=0.2} Did I ever have any pets?"
+    n "You know,{w=0.1} I really wish I had.{w=0.1} But I was never allowed anything!"
+    n "It was always about the mess it would make,{w=0.1} or how much it would cost,{w=0.1} or literally anything else they could think of..."
+    n "Even when I said {i}I'd{/i} take care of everything!"
+    n "Ugh..."
+    n "It still annoys me...{w=0.3} but then again,{w=0.1} it's not like I can't keep a pet here instead,{w=0.1} right?{w=0.1} Ehehe."
+    n "What about you,{w=0.1} [player]?{w=0.2} Do you have any pets?"
+    menu:
+        "Yes, I do.":
+            n "Oh!{w=0.2} Oh oh oh!{w=0.2} You gotta tell me,{w=0.1} [player]!"
+            n "What do you have?{w=0.2} What do you have?"
+            menu:
+                "Arachnids":
+                    n "A-ahh!{w=0.2} G-gross!{nw}"
+                    n "..."
+                    n "Ahaha...{w=0.3} sorry..."
+                    n "Spiders and scorpions and stuff really...{w=0.3} aren't...{w=0.3} my thing."
+                    n "But I'm sure you take great care of yours,{w=0.2} [player_or_endearment]!"
+
+                "Birds":
+                    n "Oh!{w=0.2} Neat!"
+                    n "I don't think I'd keep birds myself,{w=0.1} but they brighten up rooms for sure!"
+                    n "It doesn't get too noisy for you,{w=0.1} I hope?"
+                    n "I'm sure yours appreciate your company though."
+
+                "Cats":
+                    n "Yay!{w=0.2} Cats!"
+                    n "I really wish I had one,{w=0.1} I love seeing all the dumb situations they get into!"
+                    n "I hope you didn't just say that because I like them,{w=0.1} though.{w=0.1} Ehehe."
+                    n "Just don't pamper it too much,{w=0.1} [player_or_endearment]!"
+
+                "Dogs":
+                    n "Oh! A dog? Awesome!"
+                    n "I don't think a dog would be my first choice,{w=0.1} what with all the walks and all that."
+                    n "But I can't think of a more loving pet!"
+                    n "I hope yours looks after you as much as you look after it!"
+
+                "Fish":
+                    n "Ooh!{w=0.2} Fish are interesting!"
+                    n "I don't think I'd call them super affectionate personally..."
+                    n "But I think they're a neat way to relieve stress!{w=0.2} They must be calming to watch in their own little world."
+                    n "I bet you feel like you could lose yourself in that tank!{w=0.2} Ehehe."
+
+                "Gerbils":
+                    call did_you_have_pets_option_gerbil_mice_rat
+
+                "Mice":
+                    call did_you_have_pets_option_gerbil_mice_rat
+
+                "Rats:":
+                    call did_you_have_pets_option_gerbil_mice_rat
+
+                "Hamsters":
+                    n "Oh my gosh!{w=0.2} Hammies!"
+                    n "Aaaaaah!{w=0.2} I love them so much!"
+                    n "I love their little tails,{w=0.1} and their little paws,{w=0.1} and their little whiskers,{w=0.2} and-"
+                    n "And!{w=0.2} And..."
+                    n "..."
+                    n "A-ahaha!{w=0.2} It would appear I got a little carried away..."
+                    n "..."
+                    n "You better take good care of yours,{w=0.1} alright?"
+
+                "Insects":
+                    n "Uhmm..."
+                    n "...I wish I could share your enthusiasm!{w=0.2} Ahaha..."
+                    n "I don't think I could stomach creepy crawlies myself."
+                    n "You've certainly got an...{w=0.3} interesting taste,{w=0.1} [player_or_endearment]."
+                    n "But I'm sure you take great care of yours!"
+
+                "Something else":
+                    n "Ooh!{w=0.2} An exotic owner, are we?"
+                    n "I wonder if that says something about the rest of your tastes?{w=0.2} Ehehe."
+                    n "I trust you take good care of yours.{w=0.1} Uncommon pets can be pretty demanding!"
+
+        "No, I don't.":
+            n "Aww...{w=0.3} I'll admit,{w=0.1} I'm a little disappointed."
+            n "Well,{w=0.1} then you gotta let me know if you get one,{w=0.1} [player_or_endearment]!"
+            n "I wanna hear all about it!"
+
+        "I used to.":
+            n "Oh...{w=0.3} oh gosh."
+            n "I'm really sorry to hear that,{w=0.1} [player_or_endearment]."
+            n "I hope you're managing okay now."
+            n "..."
+            n "I...{w=0.3} think we should talk about something else, alright?"
+            
+    return
+
+label did_you_have_pets_option_gerbil_mice_rat:
+    n "Aha!{w=0.2} I knew you couldn't resist something small and cute!"
+    n "..."
+    n "Jeez,{w=0.1} stop looking at me like that!{w=0.2} Anyway..."
+    n "Cleaning the cage sounds kinda annoying... especially if you gotta take it apart every time."
+    n "But I'm sure you stay on top of it,{w=0.1} [player_or_endearment]!"
+    return
+
+# Natsuki discusses service animals with the player, in particular emotional support animals
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_service_animals",
+            unlocked=True,
+            prompt="Service animals",
+            conditional=None,
+            category=["Life", "Animals", "Health"],
+            nat_says=True,
+            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_service_animals:
+    n "(service pets)"
     return
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
