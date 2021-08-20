@@ -6,6 +6,9 @@ default persistent.jn_first_screenshot_taken = None
 default persistent.jn_screenshot_good_shots_total = 0
 default persistent.jn_screenshot_bad_shots_total = 0
 
+# Pet data
+default persistent.jn_player_pet = None
+
 #Our main topic pool
 default persistent._event_list = list()
 
@@ -246,16 +249,6 @@ init 0 python:
             """
             for topic in store.topic_handler.ALL_TOPIC_MAP.itervalues():
                 topic.__save()
-
-        def get_player_trust_in_topic_range(self):
-            """
-            Returns whether the player's trust is in trust_range of this topic.
-            """
-            return trust.trust_is_between_bounds(
-                lower_bound=self.trust_range[0],
-                trust=store.persistent.trust,
-                upper_bound=self.trust_range[1]
-            )
 
         def has_additional_property_with_value(self, property_key, property_value):
             """
@@ -579,6 +572,8 @@ define audio.custom3 = "custom-music/03.mp3"
 define audio.battle = "custom-music/battle.mp3"
 define audio.spooky1 = "mod_assets/bgm/spooky1.ogg"
 define audio.camera_shutter = "mod_assets/sfx/camera_shutter.mp3"
+define audio.select_hover = "mod_assets/sfx/select_hover.mp3"
+define audio.select_confirm = "mod_assets/sfx/select_confirm.mp3"
 
 define body_a = "mod_assets/natsuki-assets/base.png"
 define uniform_a = "mod_assets/natsuki-assets/uniform.png"

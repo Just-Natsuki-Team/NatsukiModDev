@@ -1,6 +1,6 @@
-init 0 python:
-    #from datetime import datetime
+init 0 python in jn_screenshots:
     from enum import Enum
+    import os
     import random
 
     # Check and create the screenshot directory
@@ -74,6 +74,7 @@ init 0 python:
         "I thought I made it clear I don't want surprise pictures!"
     ]
 
+init 1 python:
     # Add the keymap for screenshots
     jn_register_label_keymap("attempt_screenshot", "screenshot_dialogue", "s")
 
@@ -81,7 +82,7 @@ init 0 python:
 label take_screenshot:
     
     if store.jn_affinity.get_affinity_state() >= store.jn_affinity.BROKEN:
-        $ renpy.screenshot("{0}/screenshot_{1}.png".format(_screenshot_dir, datetime.datetime.now().strftime(r"%d-%m-%Y_%H-%M-%S"))) # WIP; pictures will need to go to a sensible (local!) location
+        $ renpy.screenshot("{0}/screenshot_{1}.png".format(store.jn_screenshots._screenshot_dir, datetime.datetime.now().strftime(r"%d-%m-%Y_%H-%M-%S")))
         $ utils.log("Screenshot taken by player at {0}".format(datetime.datetime.now().strftime(r"%d/%m/%Y, %H:%M")))
     
     else:
@@ -96,17 +97,17 @@ label take_screenshot:
 # Handles dialogue and mechanics related to screenshots
 label screenshot_dialogue:
 
-    if _player_screenshot_in_progress:
+    if store.jn_screenshots._player_screenshot_in_progress:
         # Don't take a screenshot if we're already going through the dialogue!
         return
 
     else:
-        $ _player_screenshot_in_progress = True
+        $ store.jn_screenshots._player_screenshot_in_progress = True
 
-    if persistent.jn_first_screenshot_taken is None:
+    if store.persistent.jn_first_screenshot_taken is None:
 
         # Set the date for the first ever screenshot, play the camera effects
-        $ persistent.jn_first_screenshot_taken = datetime.datetime.now()
+        $ store.persistent.jn_first_screenshot_taken = datetime.datetime.now()
         call take_screenshot
 
         if store.jn_affinity.is_state_within_range(
@@ -150,7 +151,7 @@ label screenshot_dialogue:
                     n "...{w=0.3}So why would you lie to me?"
                     n "Whatever.{w=0.1} I don't care.{w=0.1} I'm turning that off."
 
-            $ player_screenshots_blocked = False
+            $ store.jn_screenshots.player_screenshots_blocked = False
             $ relationship("affinity-")
             $ relationship("trust-")
 
@@ -160,12 +161,12 @@ label screenshot_dialogue:
             n "C-{w=0.1}camera...?"
             n "No.{w=0.2} I-{w=0.1}I can't.{w=0.2} No."
             n "I don't give a crap.{w=0.2} It's going off."
-            $ player_screenshots_blocked = False
+            $ store.jn_screenshots.player_screenshots_blocked = False
             $ relationship("affinity-")
             $ relationship("trust-")
 
     # Positive screenshot route, as we have Natsuki's permission
-    elif player_screenshots_permission:
+    elif store.jn_screenshots.player_screenshots_permission:
         
         $ persistent.jn_screenshot_good_shots_total += 1
         n "Huh?{w=0.2} You're taking that picture now?"
@@ -191,10 +192,10 @@ label screenshot_dialogue:
         else:
             n "All done?{w=0.2} Just ask me again if you wanna take another,{w=0.1} okay?"
         
-        $ player_screenshots_permission = False
+        $ store.jn_screenshots.player_screenshots_permission = False
 
     # Too many bad screenshots in a row; Natsuki is upset
-    elif bad_screenshot_streak >= 3 and store.jn_affinity.get_affinity_state() < store.jn_affinity.ENAMORED:
+    elif store.jn_screenshots.bad_screenshot_streak >= 3 and store.jn_affinity.get_affinity_state() < store.jn_affinity.ENAMORED:
         
         $ persistent.jn_screenshot_bad_shots_total += 1
         $ player_screenshots_blocked = True
@@ -203,18 +204,18 @@ label screenshot_dialogue:
         return
 
     # Negative screenshot route; Natsuki is upset
-    elif not player_screenshots_blocked:
+    elif not store.jn_screenshots.player_screenshots_blocked:
 
         # Update tracking and take shot
         $ persistent.jn_screenshot_bad_shots_total += 1
-        $ bad_screenshot_streak += 1
+        $ store.jn_screenshots.bad_screenshot_streak += 1
         call take_screenshot
         $ store.utils.log("Curr aff state: {0}".format(store.jn_affinity.get_affinity_state()))
         if store.jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
 
             # Pick the reaction and response; Natsuki is surprised but not angry
-            $ chosen_reaction = renpy.substitute(renpy.random.choice(love_enamored_reactions))
-            $ chosen_response = renpy.substitute(renpy.random.choice(love_enamored_responses))
+            $ chosen_reaction = renpy.substitute(renpy.random.choice(store.jn_screenshots.love_enamored_reactions))
+            $ chosen_response = renpy.substitute(renpy.random.choice(store.jn_screenshots.love_enamored_responses))
 
             n "[chosen_reaction]"
             n "[chosen_response]"
@@ -230,8 +231,8 @@ label screenshot_dialogue:
         ): 
 
             # Pick the reaction and response; Natsuki is irritated
-            $ chosen_reaction = renpy.substitute(renpy.random.choice(affectionate_normal_reactions))
-            $ chosen_response = renpy.substitute(renpy.random.choice(affectionate_normal_responses))
+            $ chosen_reaction = renpy.substitute(renpy.random.choice(store.jn_screenshots.affectionate_normal_reactions))
+            $ chosen_response = renpy.substitute(renpy.random.choice(store.jn_screenshots.affectionate_normal_responses))
 
             n "[chosen_reaction]"
             n "[chosen_response]"
@@ -247,8 +248,8 @@ label screenshot_dialogue:
         ): 
 
             # Pick the reaction and response; Natsuki is clearly upset
-            $ chosen_reaction = renpy.substitute(renpy.random.choice(upset_minus_reactions))
-            $ chosen_response = renpy.substitute(renpy.random.choice(upset_minus_responses))
+            $ chosen_reaction = renpy.substitute(renpy.random.choice(store.jn_screenshots.upset_minus_reactions))
+            $ chosen_response = renpy.substitute(renpy.random.choice(store.jn_screenshots.upset_minus_responses))
 
             n "[chosen_reaction]"
             n "[chosen_response]"
@@ -264,7 +265,7 @@ label screenshot_dialogue:
             n "I'm just gonna turn this off.{w=0.1} {i}Not like you'd listen to me if I complained again.{/i}"
             $ relationship("affinity-")
             $ relationship("trust-")
-            $ player_screenshots_blocked = True
+            $ store.jn_screenshots.player_screenshots_blocked = True
 
-    $ _player_screenshot_in_progress = False
+    $ store.jn_screenshots._player_screenshot_in_progress = False
     return
