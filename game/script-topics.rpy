@@ -575,14 +575,14 @@ label talk_service_animals:
             n "I-{w=0.2}I want you to know that you can depend on me,{w=0.1} 'kay?"
 
         if jn_affinity.get_affinity_state() == store.jn_affinity.LOVE:
-            n "I love you, [player]."
+            n "I love you,{w=0.1} [player]."
 
     else:
-        n "They work in a bunch of places. Airports and rescues and stuff, usually."
+        n "They work in a bunch of places.{w=0.2} Airports and rescues and stuff,{w=0.1} usually."
         n "But I really like emotional support animals."
         n "They're like specially tame pets that are used to comfort those having a bad time."
         n "..."
-        n "You know, [player]. To be perfectly honest with you?"
+        n "You know, [player].{w=0.2} To be perfectly honest with you?"
         n "Sometimes I feel like I could use one."
         n "Aha..."
 
