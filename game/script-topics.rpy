@@ -309,7 +309,7 @@ label talk_get_picture_permission:
             n "A picture?{w=0.2} I'm not sure...{w=0.3} let me think about it."
             n "..."
             # We take into account the player's behaviour with pictures so far
-            $ natsuki_approves = random.randint(1, 100) <= ((100 - bad_screenshot_streak) * 25)
+            $ natsuki_approves = random.randint(1, 100) <= (100 - (jn_screenshots.bad_screenshot_streak * 25))
             if natsuki_approves:
                 n "Fine,{w=0.1} I guess.{w=0.1} Take it whenever."
                 $ store.jn_screenshots.player_screenshots_permission = True
