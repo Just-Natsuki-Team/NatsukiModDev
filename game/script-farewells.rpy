@@ -20,7 +20,8 @@ init python in farewells:
             additional_properties=[
                 ("is_time_sensitive", store.utils.get_current_session_length().total_seconds() / 60 < 30),
                 ("has_stay_option", not store.jn_globals.player_already_stayed_on_farewell and store.jn_globals.current_affinity_state >= 6)
-            ]
+            ],
+            excludes_categories=["Failsafe"]
         )
 
         # If pool isn't empty
@@ -36,7 +37,8 @@ init python in farewells:
             additional_properties=[
                 ("is_time_sensitive", False),
                 ("has_stay_option", False)
-            ]
+            ],
+            excludes_categories=["Failsafe"]
         )
 
         # Again check if pool isn't empy
@@ -46,7 +48,7 @@ init python in farewells:
 
         #else
         # Fallback if both searches fail or if something just Fs up
-        return get_topic("farewell_fallback_see_you_soon")
+        return "farewell_fallback_see_you_soon"
 
     def try_trust_dialogue():
         """
@@ -1246,7 +1248,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_fallback_see_you_soon",
             unlocked=True,
-            additional_properties=["Failsafe"]
+            category=["Failsafe"]
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
