@@ -3,7 +3,6 @@ default persistent._topic_database = dict()
 init python in topics:
     import store
     TOPIC_MAP = dict()
-    store.persistent._topic_database.pop("talk_did_you_have_pets")
 
 init 5 python:
     registerTopic(
@@ -350,9 +349,10 @@ init 5 python:
 
 label talk_did_you_have_pets:
 
+    # Check to see if the player and Natsuki have already discussed this
     $ already_discussed_pets = False
-    if "talk_did_you_have_pets" in store.topics.TOPIC_MAP:
-        $ already_discussed_pets = store.topics.TOPIC_MAP.get("talk_did_you_have_pets").shown_count > 0
+    if get_topic("talk_did_you_have_pets"):
+        $ already_discussed_pets = get_topic("talk_did_you_have_pets").shown_count > 0
 
     if already_discussed_pets:
         n "Wait...{w=0.3} didn't we talk about this before,{w=0.1} [player]?"
@@ -471,7 +471,7 @@ label pet_options_b:
             $ persistent.jn_player_pet = "hamsters"
 
         "Horses":
-            n "W-{w=0.1}wow!{w=0.2} You aren't messing with me,{w=0.1} right?!"
+            n "W-{w=0.1}wow!{w=0.2} You aren't just messing with me,{w=0.1} right?!"
             n "Horses?!{w=0.2} That's amazing,{w=0.1} [player]!"
             n "You totally gotta teach me how to ride some day!"
             n "Make sure you visit yours often,{w=0.1} alright?"

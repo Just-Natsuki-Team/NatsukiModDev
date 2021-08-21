@@ -162,7 +162,7 @@ label farewell_love_you_mean_the_world_to_me:
     n "Y-{w=0.2}you know I'll miss you,{w=0.1} right?"
     n "Take care,{w=0.1} [player]!{w=0.2} You mean the world to me!"
     $ farewells.try_trust_dialogue()
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -186,7 +186,7 @@ label farewell_love_dont_like_saying_goodbye:
     n "I'll be okay!{w=0.2} Just come back soon,{w=0.1} alright?"
     n "Stay safe,{w=0.1} dummy!{w=0.2} I love you!"
     $ farewells.try_trust_dialogue()
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -210,7 +210,7 @@ label farewell_love_counting_on_you:
     $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
     n "Take care of yourself out there,{w=0.1} [chosen_endearment]!{w=0.2} I'm counting on you!"
     $ farewells.try_trust_dialogue()
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -235,7 +235,7 @@ label farewell_love_do_your_best:
     $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
     n "Do your best,{w=0.1} [chosen_endearment]!"
     $ farewells.try_trust_dialogue()
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -261,7 +261,7 @@ label farewell_love_rooting_for_you:
     n "Well...{w=0.1} I'm rooting for you!"
     n "Make me proud,{w=0.1} [player]! I love you!"
     $ farewells.try_trust_dialogue()
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -285,7 +285,7 @@ label farewell_love_me_to_deal_with:
     n "You take care of yourself,{w=0.1} got it? Or you'll have me to deal with!"
     n "Bye now!{w=0.2} I love you!"
     $ farewells.try_trust_dialogue()
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -310,7 +310,7 @@ label farewell_love_wish_you_could_stay_forever:
     $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
     n "Goodbye,{w=0.1} [chosen_endearment]!"
     $ farewells.try_trust_dialogue()
-    $ renpy.quit()
+    jump _quit
 
 # AFFECTIONATE/ENAMORED farewells
 
@@ -337,7 +337,7 @@ label farewell_affectionate_enamored_was_having_fun:
     n "Well,{w=0.1} if you gotta go,{w=0.1} you gotta go!"
     n "Take care,{w=0.1} [player]!{w=0.2} Make me proud!"
     $ farewells.try_trust_dialogue()
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -362,7 +362,7 @@ label farewell_affectionate_enamored_waiting_for_you:
     n "I'll be waiting for you!"
     n "Goodbye,{w=0.1} [player]!"
     $ farewells.try_trust_dialogue()
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -387,7 +387,7 @@ label farewell_affectionate_enamored_ill_be_okay:
     n "You better come back soon,{w=0.1} alright [player]?"
     n "Goodbye!{w=0.2} I'll miss you!"
     $ farewells.try_trust_dialogue()
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -412,7 +412,7 @@ label farewell_affectionate_enamored_dont_make_me_find_you:
     n "Come see me later,{w=0.1} promise?"
     n "Don't make me come find you!{w=0.2} Ehehe."
     $ farewells.try_trust_dialogue()
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -437,7 +437,7 @@ label farewell_affectionate_enamored_take_care_for_both:
     n "Take care of yourself,{w=0.1} [player]!{w=0.2} For both of us!"
     n "See you later!"
     $ farewells.try_trust_dialogue()
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -461,7 +461,7 @@ label farewell_affectionate_enamored_enjoy_our_time_together:
     n "You better be back later,{w=0.1} okay?{w=0.2} I really enjoy our time together."
     n "See you soon,{w=0.1} [player]!"
     $ farewells.try_trust_dialogue()
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -484,7 +484,7 @@ label farewell_affectionate_enamored_see_me_soon:
     n "Doesn't mean I have to like it,{w=0.1} though..."
     n "Come see me soon,{w=0.1} okay?"
     $ farewells.try_trust_dialogue()
-    $ renpy.quit()
+    jump _quit
 
 # HAPPY/AFFECTIONATE farewells
 
@@ -507,7 +507,7 @@ init 5 python:
 label farewell_happy_affectionate_going_now:
     n "Going now,{w=0.1} [player]?{w=0.2} I'll see you later!"
     $ farewells.try_trust_dialogue()
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -529,7 +529,7 @@ label farewell_happy_affectionate_heading_off:
     n "Heading off now,{w=0.1} [player]?"
     n "Okay!{w=0.2} Take care!"
     $ farewells.try_trust_dialogue()
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -551,7 +551,7 @@ label farewell_happy_affectionate_stay_safe:
     n "Okaaay!{w=0.2} I'll be waiting for you!"
     n "Stay safe,{w=0.1} [player]!"
     $ farewells.try_trust_dialogue()
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -573,7 +573,7 @@ label farewell_happy_affectionate_take_care:
     n "See you later,{w=0.1} [player]!"
     n "Take care out there!"
     $ farewells.try_trust_dialogue()
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -595,7 +595,7 @@ label farewell_happy_affectionate_see_me_soon:
     n "Goodbye,{w=0.1} [player]!"
     n "Come see me soon,{w=0.1} alright?"
     $ farewells.try_trust_dialogue()
-    $ renpy.quit()
+    jump _quit
 
 # NORMAL/HAPPY farewells
 
@@ -617,7 +617,7 @@ init 5 python:
 
 label farewell_normal_happy_see_you_later:
     n "See you later, [player]!"
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -638,7 +638,7 @@ init 5 python:
 label farewell_normal_happy_later:
     n "Later, [player]!"
     $ farewells.try_trust_dialogue()
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -659,7 +659,7 @@ init 5 python:
 label farewell_normal_happy_goodbye:
     n "Goodbye, [player]!"
     $ farewells.try_trust_dialogue()
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -680,7 +680,7 @@ init 5 python:
 label farewell_normal_happy_kay:
     n "'kay! Bye for now!"
     $ farewells.try_trust_dialogue()
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -701,7 +701,7 @@ init 5 python:
 label farewell_normal_happy_see_ya:
     n "See ya, [player]!"
     $ farewells.try_trust_dialogue()
-    $ renpy.quit()
+    jump _quit
 
 # UPSET/DISTRESSED farewells
 init 5 python:
@@ -722,7 +722,7 @@ init 5 python:
 
 label farewell_upset_distressed_bye:
     n "Bye, [player]."
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -742,7 +742,7 @@ init 5 python:
 
 label farewell_upset_distressed_later:
     n "Later, [player]."
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -762,7 +762,7 @@ init 5 python:
 
 label farewell_upset_distressed_kay:
     n "'kay, [player]. Later."
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -782,7 +782,7 @@ init 5 python:
 
 label farewell_upset_distressed_goodbye:
     n "Goodbye, [player]."
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -802,7 +802,7 @@ init 5 python:
 
 label farewell_upset_distressed_see_you_around:
     n "See you around."
-    $ renpy.quit()
+    jump _quit
 
 # DISTRESSED/BROKEN/RUINED farewells
 
@@ -824,7 +824,7 @@ init 5 python:
 
 label farewell_broken_ruined_yeah:
     n "Yeah."
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -844,7 +844,7 @@ init 5 python:
 
 label farewell_broken_ruined_yep:
     n "Yep."
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -864,7 +864,7 @@ init 5 python:
 
 label farewell_broken_ruined_uh_huh:
     n "Uh huh."
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -884,7 +884,7 @@ init 5 python:
 
 label farewell_broken_ruined_nothing_to_say:
     n "..."
-    $ renpy.quit()
+    jump _quit
 
 init 5 python:
     registerTopic(
@@ -904,7 +904,7 @@ init 5 python:
 
 label farewell_broken_ruined_kay:
     n "'kay."
-    $ renpy.quit()
+    jump _quit
 
 # Farewells that allow the player to choose to stay
 
@@ -970,7 +970,7 @@ label farewell_short_session_ask:
                     n "Take care out there,{w=0.1} alright?"
                     n "See you later!"
                     $ farewells.try_trust_dialogue()
-                    $ renpy.quit()
+                    jump _quit
 
         "Sorry, Natsuki. I really have to leave.":
             n "Nnnnnn-!"
@@ -979,7 +979,7 @@ label farewell_short_session_ask:
             n "Don't take too long,{w=0.1} alright?"
             n "See you later, [player]!"
             $ farewells.try_trust_dialogue()
-            $ renpy.quit()
+            jump _quit
 
     return
 
@@ -1049,7 +1049,7 @@ label farewell_short_session_ask_alt:
             n "But you gotta make it up to me,{w=0.1} alright?"
             n "Stay safe,{w=0.1} [player]!{w=0.2} I'll see you later!"
             $ farewells.try_trust_dialogue()
-            $ renpy.quit()
+            jump _quit
     return
 
 # Natsuki tries to confidently ask her player to stay
@@ -1091,7 +1091,7 @@ label farewell_fake_confidence_ask:
             n "I'll see you later then,{w=0.1} [player]!"
             n "Don't keep me waiting,{w=0.1} alright?"
             $ farewells.try_trust_dialogue()
-            $ renpy.quit()
+            jump _quit
     return
 
 # Natuski really doesn't want to be alone today; she pleads for her player to stay
@@ -1135,7 +1135,7 @@ label farewell_pleading_ask:
             n "Or you'll have to make it up to me...{w=0.3} ahaha..."
             n "Stay safe,{w=0.1} [player]!"
             $ farewells.try_trust_dialogue()
-            $ renpy.quit()
+            jump _quit
     return
 
 # Natsuki gently asks her player to stay
@@ -1179,7 +1179,7 @@ label farewell_gentle_ask:
             n "I-I love you,{w=0.1} [player]..."
             n "I'll see you later."
             $ farewells.try_trust_dialogue()
-            $ renpy.quit()
+            jump _quit
     return
 
 # Trust dialogue; chance to call upon farewell completing and prior to the game closing
