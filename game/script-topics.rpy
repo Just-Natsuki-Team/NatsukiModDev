@@ -609,7 +609,47 @@ init 5 python:
     )
 
 label talk_using_computers_healthily:
-    n "TODO"
+    n "Huh."
+    n "Hey,{w=0.1} [player].{w=0.2} I just thought of something."
+    n "You gotta be at your computer to talk to me,{w=0.1} right?"
+    n "And you've been here a while already..."
+    n "Alright,{w=0.1} that's it!{w=0.2} I've decided."
+    n "I'm gonna give you a little lesson on using your computer the right way!"
+    n "Number one:{w=0.2} posture!"
+    n "Sit up straight,{w=0.1} and back against the chair,{w=0.1} [player].{w=0.2} I mean it!"
+    n "You don't want back problems,{w=0.1} do you?"
+    n "Make sure your feet can still touch the floor,{w=0.1} though.{w=0.2} Even I can do that!"
+    n "Number two:{w=0.2} distance!"
+    n "I know you can't get enough of me,{w=0.1} but I don't wanna see you pressing your face against the screen.{w=0.2} It's weird."
+    n "So make sure you sit about an arm's length away from the display,{w=0.1} alright?"
+    n "Oh!{w=0.2} Don't forget to keep your stuff in easy reach though{w=0.1} - {w=0.1}like your mouse."
+    n "Number three:{w=0.2} breaks!"
+    n "I don't know about you,{w=0.1} but I get all fidgety if I stay still too long..."
+    n "So make sure you get off your butt and do some stretches a few times per hour!"
+    n "You could even get some water or something if you {i}really{/i} need an excuse to move."
+    n "It'd also give your eyes a rest from the screen!"
+    n "Alright{w=0.1} -{w=0.1} and the last one!{w=0.2} This one's important,{w=0.1} so listen up good!"
+    n "If you ever feel unwell{w=0.1} - {w=0.1}like your back aches,{w=0.1} or your eyes hurt or something..."
+    n "Please just stop whatever you're doing.{w=0.2} Your health comes first.{w=0.2} I don't care what needs to be done."
+    n "Take some time to feel better,{w=0.1} then make sure all your stuff is set up right like I said."
+    n "Don't carry on until you feel well enough{w=0.1} -{w=0.1} talk to someone if you have to!"
+    n "Okaaay!{w=0.2} Lecture over!"
+    n "Wow...{w=0.3} I rambled on a while,{w=0.1} didn't I?{w=0.2} Sorry,{w=0.1} sorry!{w=0.2} Ehehe."
+
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        n "But you know I only do these things because I really care about you,{w=0.1} [player]...{w=0.3} right?"
+        n "So please...{w=0.3} take care of yourself, okay?{w=0.2} I don't want you hurting because of me."
+
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVE:
+            $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+            n "I love you,{w=0.1} [chosen_endearment]."
+            n "..."
+
+    else:
+        n "But you know I only say these things because I care."
+        n "...And I don't want you whining to me that your back hurts.{w=0.2}"
+
+    n "Ahaha...{w=0.3} now, where were we?"
     return
 
 # Natsuki highlights the importance of staying active and getting exercise
@@ -630,7 +670,23 @@ init 5 python:
     )
 
 label talk_staying_active:
-    n "TODO"
+    n "Hey,{w=0.1} [player]..."
+    n "You should get out more."
+    n "..."
+    n "Ahaha!{w=0.2} No,{w=0.1} really!{w=0.2} I'm serious!"
+    n "At school,{w=0.1} it's easy to get exercise since we gotta walk everywhere,{w=0.1} and we have sports and such..."
+    n "I don't think it's so straightforward when you have a job and other stuff to worry about,{w=0.1} though."
+    n "I'm not gonna lie and say I work out or anything like that..."
+    n "But I try to get walks in if I can.{w=0.2} Any excuse to hit the bookshop is reason enough for me!"
+    n "You should give it a shot too,{w=0.1} [player]!"
+    n "It doesn't have to be a hike or anything crazy{w=0.1} - {w=0.1}it's more about keeping at it,{w=0.1} really."
+    n "Even a daily ten minute walk will help you feel refreshed and awake!"
+    n "So make sure you get out soon,{w=0.1} [player]."
+
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        n "I wanna see you fighting fit!{w=0.2} Ehehe."
+
+    n "I'm counting on you!"
     return
 
 # Natsuki discusses stress and offers ways she finds useful to deal with it
