@@ -187,7 +187,10 @@ label splashscreen:
 
     #Check for game updates before loading the game or the splash screen
 
-    #Load affinity
+    # Set the last visited date, if not already on record
+    if not persistent.jn_first_visited_date:
+        $ persistent.jn_first_visited_date = datetime.datetime.now()
+
     #Load affinity
     $ jn_globals.current_affinity_state = jn_affinity.get_affinity_state()
 

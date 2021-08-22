@@ -591,6 +591,231 @@ label talk_service_animals:
     n "Well,{w=0.1} enough of that.{w=0.2} What else should we talk about?"
     return
 
+# Natsuki highlights her concern for her player using their computer for long periods of time, and offers her wisdom
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_using_computers_healthily",
+            unlocked=True,
+            prompt="Using computers healthily",
+            conditional="(datetime.datetime.now() - persistent.jn_last_visited_date).seconds / 3600 >= 8",
+            category=["Life", "You", "Health"],
+            nat_says=True,
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_using_computers_healthily:
+    n "Huh."
+    n "Hey,{w=0.1} [player].{w=0.2} I just thought of something."
+    n "You gotta be at your computer to talk to me,{w=0.1} right?"
+    n "And you've been here a while already..."
+    n "Alright,{w=0.1} that's it!{w=0.2} I've decided."
+    n "I'm gonna give you a little lesson on using your computer the right way!"
+    n "Number one:{w=0.2} posture!"
+    n "Sit up straight,{w=0.1} and back against the chair,{w=0.1} [player].{w=0.2} I mean it!"
+    n "You don't want back problems,{w=0.1} do you?"
+    n "Make sure your feet can still touch the floor,{w=0.1} though.{w=0.2} Even I can do that!"
+    n "Number two:{w=0.2} distance!"
+    n "I know you can't get enough of me,{w=0.1} but I don't wanna see you pressing your face against the screen.{w=0.2} It's weird."
+    n "So make sure you sit about an arm's length away from the display,{w=0.1} alright?"
+    n "Oh!{w=0.2} Don't forget to keep your stuff in easy reach though{w=0.1} - {w=0.1}like your mouse."
+    n "Number three:{w=0.2} breaks!"
+    n "I don't know about you,{w=0.1} but I get all fidgety if I stay still too long..."
+    n "So make sure you get off your butt and do some stretches a few times per hour!"
+    n "You could even get some water or something if you {i}really{/i} need an excuse to move."
+    n "It'd also give your eyes a rest from the screen!"
+    n "Alright{w=0.1} -{w=0.1} and the last one!{w=0.2} This one's important,{w=0.1} so listen up good!"
+    n "If you ever feel unwell{w=0.1} - {w=0.1}like your back aches,{w=0.1} or your eyes hurt or something..."
+    n "Please just stop whatever you're doing.{w=0.2} Your health comes first.{w=0.2} I don't care what needs to be done."
+    n "Take some time to feel better,{w=0.1} then make sure all your stuff is set up right like I said."
+    n "Don't carry on until you feel well enough{w=0.1} -{w=0.1} talk to someone if you have to!"
+    n "Okaaay!{w=0.2} Lecture over!"
+    n "Wow...{w=0.3} I rambled on a while,{w=0.1} didn't I?{w=0.2} Sorry,{w=0.1} sorry!{w=0.2} Ehehe."
+
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        n "But you know I only do these things because I really care about you,{w=0.1} [player]...{w=0.3} right?"
+        n "So please...{w=0.3} take care of yourself, okay?{w=0.2} I don't want you hurting because of me."
+
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVE:
+            $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+            n "I love you,{w=0.1} [chosen_endearment]."
+            n "..."
+
+    else:
+        n "But you know I only say these things because I care."
+        n "...And I don't want you whining to me that your back hurts.{w=0.2}"
+
+    n "Ahaha...{w=0.3} now, where were we?"
+    return
+
+# Natsuki highlights the importance of staying active and getting exercise
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_staying_active",
+            unlocked=True,
+            prompt="Staying active",
+            conditional="persistent.jn_total_visit_count >= 10",
+            category=["Life", "You", "Health"],
+            nat_says=True,
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_staying_active:
+    n "Hey,{w=0.1} [player]..."
+    n "You should get out more."
+    n "..."
+    n "Ahaha!{w=0.2} No,{w=0.1} really!{w=0.2} I'm serious!"
+    n "At school,{w=0.1} it's easy to get exercise since we gotta walk everywhere,{w=0.1} and we have sports and such..."
+    n "I don't think it's so straightforward when you have a job and other stuff to worry about,{w=0.1} though."
+    n "I'm not gonna lie and say I work out or anything like that..."
+    n "But I try to get walks in if I can.{w=0.2} Any excuse to hit the bookshop is reason enough for me!"
+    n "You should give it a shot too,{w=0.1} [player]!"
+    n "It doesn't have to be a hike or anything crazy{w=0.1} - {w=0.1}it's more about keeping at it,{w=0.1} really."
+    n "Even a daily ten minute walk will help you feel refreshed and awake!"
+    n "So make sure you get out soon,{w=0.1} [player]."
+
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        n "I wanna see you fighting fit!{w=0.2} Ehehe."
+
+    n "I'm counting on you!"
+    return
+
+# Natsuki discusses stress and offers ways she finds useful to deal with it
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_relieving_stress",
+            unlocked=True,
+            prompt="Relieving stress",
+            conditional=None,
+            category=["Life", "You", "Health"],
+            nat_says=True,
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_relieving_stress:
+    n "You know,{w=0.1} I'll admit it,{w=0.1} [player]."
+    n "I...{w=0.3} kinda have a short fuse.{w=0.2} Ehehe."
+    n "I've been trying to work on that though,{w=0.1} and I'd love to share some of the ways I deal with stess!"
+    n "Personally,{w=0.1} I think the best way to deal with it if you can is to try and create some distance."
+    n "If things get a little too much,{w=0.1} I just step outside if I can."
+    n "Some fresh air and a change of scenery can really put things into context.{w=0.2} It's crazy effective!"
+    n "Don't just create physical distance,{w=0.1} though.{w=0.2} Distance yourself mentally too!"
+    n "If something is stressing you out,{w=0.1} you need to starve it of some attention."
+    n "If I can't go somewhere else,{w=0.1} I just read something,{w=0.1} or watch some dumb videos."
+    n "But do whatever works for you{w=0.1} - {w=0.1}we all have our own comfort zones!"
+    n "And of course,{w=0.1} you could always come see me,{w=0.1} you know..."
+
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+        n "I-{w=0.1}It'd be a welcome surprise.{w=0.2} Ahaha..."
+
+    n "A-{w=0.1}anyway!"
+    n "The point is to always try and come back with a clean headspace,{w=0.1} and don't sweat the small things."
+    n "Can you do that for me,{w=0.1} [player]?"
+    n "I'll keep working on it if you do!"
+    return
+
+# Natsuki muses on how easy it is to waste money, and offers some guidance on spending wisely
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_careful_spending",
+            unlocked=True,
+            prompt="Careful spending",
+            conditional=None,
+            category=["Life", "You", "Health", "Society"],
+            nat_says=True,
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_careful_spending:
+    n "..."
+    n "..."
+    n "Hmm...?"
+    n "O-{w=0.1}oh!{w=0.2} Sorry!{w=0.2} I spaced out!"
+    n "I was just thinking..."
+    n "It's so easy to spend more than you mean nowadays,{w=0.1} you know?"
+    n "Like...{w=0.3} it seems everywhere you go,{w=0.1} there's a sale,{w=0.1} or deals,{w=0.1} or some kind of limited offer..."
+    n "And everywhere accepts all kinds of ways of paying,{w=0.1} too.{w=0.2} They make it super convenient!"
+    n "I guess what I'm getting at is...{w=0.3} try to be careful of your spending habits,{w=0.1} okay?"
+    n "Try not to buy junk you don't need{w=0.1} -{w=0.1} think of how much you threw away the last time you cleaned out!"
+    n "T-{w=0.1}that's not to say you shouldn't treat yourself,{w=0.1} of course!{w=0.2} You deserve cool stuff too!"
+    n "Money can't buy happiness...{w=0.3} but it sure as hell makes finding it easier.{w=0.2} Ahaha!"
+    n "Well, anyway.{w=0.2} Just try to think a little before you spend,{w=0.1} [player]{w=0.1} -{w=0.1} that's all I'm saying!"
+
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+        n "Besides..."
+        n "Gotta save up all we can for when we hang out,{w=0.1} right?{w=0.2} Ehehe."
+
+    return
+
+# Natsuki discusses the importance of not only eating healthily, but regularly too
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_eating_well",
+            unlocked=True,
+            prompt="Eating well",
+            conditional=None,
+            category=["Life", "You", "Health", "Food"],
+            nat_says=True,
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_eating_well:
+    n "Hey,{w=0.1} [player]..."
+    n "Have you eaten today?"
+    menu:
+        "Yes":
+            n "Aha!{w=0.2} But did you eat {i}well{/i},{w=0.1} [player]?"
+
+        "No":
+            n "Huh?{w=0.2} What?{w=0.2} Why not?!"
+            n "You aren't skipping meals,{w=0.1} are you?"
+            n "I really hope you aren't,{w=0.1} [player]..."
+
+    n "It's super important to make sure you aren't only eating regularly,{w=0.1} but eating decently too!"
+    n "I think the right diet can honestly make all the difference,{w=0.1} [player]."
+    n "So...{w=0.3} try and make an effort with your meals,{w=0.1} okay?"
+    n "And I mean a real effort!{w=0.2} Try to prepare them from scratch if you can;{w=0.1} it's often cheaper than ready meals anyway!"
+    n "Try to cut back on things like salt and sugar and stuff too...{w=0.3} as well as anything really processed."
+    n "Oh {w=0.1}-{w=0.1} and like I said,{w=0.1} have meals regularly too!"
+    n "You shouldn't find yourself snacking on junk if you have proper meals throughout the day."
+    n "Your bank balance and your body will thank you too!{w=0.2} Ehehe."
+
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+        n "And besides..."
+        n "I gotta get you into good habits by yourself before I'm there to make you."
+        n "Ahaha!{w=0.2} I'm kidding,{w=0.1} [player]!{w=0.2} I'm kidding!"
+        n "...Mostly."
+
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n "Love you, [player]~!{w=0.2} Ehehe."
+
+    n "Now...{w=0.3} where were we?"
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop

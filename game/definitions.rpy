@@ -1,7 +1,11 @@
 default persistent.playername = ""
 default player = persistent.playername
 
-#Screenshot data
+# Generic data
+default persistent.jn_total_visit_count = 0
+default persistent.jn_first_visited_date = None
+
+# Screenshot data
 default persistent.jn_first_screenshot_taken = None
 default persistent.jn_screenshot_good_shots_total = 0
 default persistent.jn_screenshot_bad_shots_total = 0
