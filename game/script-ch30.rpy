@@ -46,7 +46,15 @@ label ch30_init:
 #The main loop
 label ch30_loop:
     #Do topic selection here
-    $ queue(pick_random_topic(unlocked=True, player_says=False, location=main_background.location.id, affinity=20, trust=60))
+    $ queue(
+        pick_random_topic(
+            unlocked=True,
+            nat_says=True,
+            location=main_background.location.id,
+            affinity=jn_globals.current_affinity_state,
+            trust=60
+        )
+    )
 
     #Run our checks
     python:
@@ -135,14 +143,30 @@ label call_next_topic:
 
 label talk_menu:
     python:
-        topics_ = get_all_topics(player_says=True, unlocked=True, location=main_background.location.id, affinity=20, trust=65)
+        _topics = Topic.filter_topics(
+            topics.TOPIC_MAP.values(),
+            player_says=True,
+            unlocked=True,
+            location=main_background.location.id,
+            affinity=jn_globals.current_affinity_state
+        )
         addit_topics = [
             ("Nevermind", "menu_nevermind"),
             ("Goodbye", farewells.select_farewell())
-            ]
-        menu_items = menu_list(topics_, addit_topics)
-        choice = menu(menu_items)
-        push(choice)
+        ]
+
+        menu_items = menu_dict(_topics)
+
+    call screen categorized_menu(menu_items,(1020, 70, 250, 572), (740, 70, 250, 572), len(_topics))
+
+    $ _choice = _return
+    if isinstance(_choice, str):
+        $ push(_choice)
+
+    elif isinstance(_choice, int):
+        n "You went baka."
+        pass
+
     jump ch30_loop
 
 label dates_menu:

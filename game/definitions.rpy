@@ -453,6 +453,27 @@ init 0 python:
             menu_items.append(topic)
         return menu_items
 
+    def menu_dict(menu_topics):
+        """
+        Builds a dict of items ready for use in a categorized menu
+
+        IN:
+            menu_topics - A List<Topic> of topics to populate the menu
+
+        OUT:
+            Dictionary<string, List<string>> representing a dict of category: [ ...prompts ]
+        """
+        menu_items = {}
+
+        for topic in menu_topics:
+            for category in topic.category:
+                if category not in menu_items:
+                    menu_items[category] = []
+
+                menu_items[category].append(topic)
+
+        return menu_items
+
     def get_custom_tracks():
         """
         return all .mp3 files from custom_music folder

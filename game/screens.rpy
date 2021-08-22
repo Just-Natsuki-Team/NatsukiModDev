@@ -68,27 +68,29 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                 mousewheel True
                 arrowkeys True
                 vbox:
+                    if category_length != 1:
+                        if category_length == 0:
+                            textbutton _("Nevermind."):
+                                action [
+                                    Return(False),
+                                    Function(prev_adjustment.change, 0),
+                                    SetVariable("selected_category", None)
+                                ]
+
+                        elif category_length > 1:
+                            textbutton _("Go baka"):
+                                style "categorized_menu_button"
+                                action [ Return(-1), Function(prev_adjustment.change, 0) ]
+
+                        null height 20
+
                     for button_name in menu_items.iterkeys():
                         textbutton button_name:
-                            style "twopane_scrollable_button"
+                            style "categorized_menu_button"
                             #Set the selected category
                             action SetVariable("selected_category", button_name)
 
-        if category_length != 1:
-            null height 20
-
-            if category_length == 0:
-                textbutton _("Nevermind."):
-                    action [
-                        Return(False),
-                        Function(prev_adjustment.change, 0),
-                        SetVariable("selected_category", None)
-                    ]
-
-            elif category_length > 1:
-                textbutton _("Go baka"):
-                    style "categorized_menu_button"
-                    action [ Return(-1), Function(prev_adjustment.change, 0) ]
+                        null height 5
 
     #Safely wrap this check so this screen cannot crash
     #If we have a selected category and need to display the options within it (if there are any)
@@ -112,22 +114,23 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                     arrowkeys True
 
                     vbox:
+                        textbutton _("Nevermind."):
+                            action [
+                                Return(False),
+                                Function(prev_adjustment.change, 0),
+                                SetVariable("selected_category", None)
+                            ]
+
+                        null height 20
+
                         for _topic in menu_items.get(selected_category):
                             #NOTE: This should be preprocessed such that Topics without prompts aren't passed into this menu
                             textbutton _topic.prompt:
                                 style "categorized_menu_button"
                                 #Return the label so it can be called
-                                action [ Return(_topic.label), Function(prev_adjustment.change, 0) ]
+                                action [ Return(_topic.label), Function(prev_adjustment.change, 0), SetVariable("selected_category", None) ]
 
-                null height 20
-
-
-                textbutton _("Nevermind."):
-                    action [
-                        Return(False),
-                        Function(prev_adjustment.change, 0),
-                        SetVariable("selected_category", None)
-                    ]
+                            null height 5
 
 
 ################################################################################
