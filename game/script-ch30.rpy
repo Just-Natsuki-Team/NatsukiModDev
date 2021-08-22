@@ -36,7 +36,7 @@ label ch30_init:
     $ main_background.draw(full_redraw=True)
     #show natsuki a zorder 3
     show Natsuki zorder 3
-    show screen hkb_overlay(Action=False)
+    show screen hkb_overlay
     #Do all var-sets, resets, and sanity checks prior to entering the loop here
 
     #And finally, we head into the loop
@@ -169,26 +169,6 @@ label talk_menu:
 
     jump ch30_loop
 
-label dates_menu:
-    python:
-        topics_ = get_all_topics(player_says=True, unlocked=True, category=["date"])
-        addit_topics = [("Nevermind", "menu_nevermind")]
-
-        menu_items = menu_list(topics_, addit_topics)
-        choice = menu(menu_items)
-        push(choice)
-    jump ch30_loop
-
-label action_menu:
-    python:
-        topics_ = get_all_topics(player_says=True, unlocked=True, location=main_background.location)
-        addit_topics = [("Nevermind", "menu_nevermind")]
-
-        menu_items = menu_list(topics_, addit_topics)
-        choice = menu(menu_items)
-        push(choice)
-    jump ch30_loop
-
 label music_menu:
     menu:
         n "Want a change of tune?"
@@ -214,14 +194,6 @@ label music_menu:
 
     jump ch30_loop
 
-    jump ch30_loop
-
 label extras_menu:
-    python:
-        topics_ = get_all_topics(player_says=True, unlocked=True, location=main_background.location)
-        addit_topics = [("Nevermind", "menu_nevermind")]
-
-        menu_items = menu_list(topics_, addit_topics)
-        choice = menu(menu_items)
-        push(choice)
+    n "This isn't done."
     jump ch30_loop
