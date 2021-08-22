@@ -32,7 +32,8 @@ init 6 python:
         """
         return store.topic_handler.ALL_TOPIC_MAP.get(topic_label, None)
 
-    def pick_random_topic(label=None,
+    def pick_random_topic(
+        label=None,
         prompt=None,
         conditional=None,
         category=None,
@@ -60,51 +61,19 @@ init 6 python:
         OUT:
             random topic passing all filters
         """
+        filtered_topics = Topic.filter_topics(
+            topics.TOPIC_MAP.values(),
+            unlocked=None,
+            nat_says=None,
+            player_says=None,
+            affinity=None,
+            trust=None,
+            location=None
+        )
 
-        #I feel like there is a better way to do this..
-        filters = {
-            "label" : label,
-            "label" : prompt,
-            "conditional" : conditional,
-            "category" : category,
-            "unlocked" : unlocked,
-            "nat_says" : nat_says,
-            "player_says" : player_says,
-            "affinity_range" : affinity,
-            "trust_range" : trust,
-            "location" : location,
-            "additional_properties" : additional_properties
-        }
+        return random.choice(filtered_topics).label if filtered_topics else None
 
-        filtered_topics = []
-        passed = True
-        for topic in topics.TOPIC_MAP.values():
-            for filter_ in filters:
-                if filters[filter_] == None:
-                    continue
-                elif filter_ != 'affinity_range' and filter_ != 'trust_range':
-                    if getattr(topic, filter_) != filters[filter_]:
-                        passed = False
-                        break
-                else:
-                    range_ = getattr(topic, filter_)
-                    if range_ == None:
-                        continue
-                    elif range_[0] < filters[filter_] < range_[1]:
-                        continue
-                    else:
-                        passed = False
-                        break
-                
-                
-            if passed:
-                filtered_topics.append(topic)                  
-            passed = True
-        if filtered_topics != []:
-            return random.choice(filtered_topics).label
-        else:
-            return
-
+    #TODO: Remove this once the new menus are implemented
     def get_all_topics(
         label=None,
         prompt=None,
@@ -152,26 +121,35 @@ init 6 python:
         passed = True
 
         for topic in topics.TOPIC_MAP.values():
+            #TODO: Same comment as above
             for filter_ in filters:
                 if filters[filter_] == None:
                     continue
-                elif filter_ != 'affinity_range' and filter_ != 'trust_range':
-                    if getattr(topic, filter_) != filters[filter_]:
-                        passed = False
-                        break
+                elif (
+                    filter_ != 'affinity_range'
+                    and filter_ != 'trust_range'
+                ):
+                        if getattr(topic, filter_) != filters[filter_]:
+                            passed = False
+                            break
                 else:
                     range_ = getattr(topic, filter_)
                     if range_ == None:
                         continue
-                    elif range_[0] < filters[filter_] < range_[1]:
+                    elif range_[0] != None and range_[1] == None:
+                        if range_[0] <= filters[filter_]:
+                            continue
+                    elif range_[0] == None and range_[1] != None:
+                        if filters[filter_] <= range_[1]:
+                            continue
+                    elif range_[0] <= filters[filter_] <= range_[1]:
                         continue
                     else:
                         passed = False
                         break
-                
-                
+
+
             if passed:
-                filtered_topics.append(topic)                  
+                filtered_topics.append(topic)
             passed = True
         return filtered_topics
-

@@ -26,6 +26,10 @@ label ch30_visual_setup:
     #FALL THROUGH
 
 label ch30_init:
+
+    # Add to the total visits counter
+    $ persistent.jn_total_visit_count += 1
+
     #Let's pick a greeting
     $ push(greetings.select_greeting())
 
@@ -67,7 +71,7 @@ label ch30_loop:
         call call_next_topic
 
     jump ch30_loop
-    
+
 
 label ch30_wait:
     window hide
