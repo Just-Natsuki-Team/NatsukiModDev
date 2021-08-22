@@ -591,6 +591,111 @@ label talk_service_animals:
     n "Well,{w=0.1} enough of that.{w=0.2} What else should we talk about?"
     return
 
+# Natsuki highlights her concern for her player using their computer for long periods of time, and offers her wisdom
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_using_computers_healthily",
+            unlocked=True,
+            prompt="Using computers healthily",
+            conditional=None,
+            category=["Life", "You", "Health"],
+            nat_says=True,
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_using_computers_healthily:
+    n "TODO"
+    return
+
+# Natsuki highlights the importance of staying active and getting exercise
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_staying_active",
+            unlocked=True,
+            prompt="Staying active",
+            conditional=None,
+            category=["Life", "You", "Health"],
+            nat_says=True,
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_staying_active:
+    n "TODO"
+    return
+
+# Natsuki discusses stress and offers ways she finds useful to deal with it
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_relieving_stress",
+            unlocked=True,
+            prompt="Relieving stress",
+            conditional=None,
+            category=["Life", "You", "Health"],
+            nat_says=True,
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_relieving_stress:
+    n "TODO"
+    return
+
+# Natsuki muses on how easy it is to waste money, and offers some guidance on spending wisely
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_careful_spending",
+            unlocked=True,
+            prompt="Careful spending",
+            conditional=None,
+            category=["Life", "You", "Health", "Society"],
+            nat_says=True,
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_careful_spending:
+    n "TODO"
+    return
+
+# Natsuki discusses the importance of not only eating healthily, but regularly too
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_eating_well",
+            unlocked=True,
+            prompt="Eating well",
+            conditional=None,
+            category=["Life", "You", "Health", "Food"],
+            nat_says=True,
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_eating_well:
+    n "TODO"
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
