@@ -30,10 +30,6 @@ label ch30_init:
     # Add to the total visits counter
     $ persistent.jn_total_visit_count += 1
 
-    # Set the last visited date, if not already on record
-    if not persistent.jn_first_visited_date:
-        $ persistent.jn_first_visited_date = datetime.datetime.now()
-
     #Let's pick a greeting
     $ push(greetings.select_greeting())
 
