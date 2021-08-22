@@ -707,7 +707,25 @@ init 5 python:
     )
 
 label talk_relieving_stress:
-    n "TODO"
+    n "You know,{w=0.1} I'll admit it,{w=0.1} [player]."
+    n "I...{w=0.3} kinda have a short fuse.{w=0.2} Ehehe."
+    n "I've been trying to work on that though,{w=0.1} and I'd love to share some of the ways I deal with stess!"
+    n "Personally,{w=0.1} I think the best way to deal with it if you can is to try and create some distance."
+    n "If things get a little too much,{w=0.1} I just step outside if I can."
+    n "Some fresh air and a change of scenery can really put things into context.{w=0.2} It's crazy effective!"
+    n "Don't just create physical distance,{w=0.1} though.{w=0.2} Distance yourself mentally too!"
+    n "If something is stressing you out,{w=0.1} you need to starve it of some attention."
+    n "If I can't go somewhere else,{w=0.1} I just read something,{w=0.1} or watch some dumb videos."
+    n "But do whatever works for you{w=0.1} - {w=0.1}we all have our own comfort zones!"
+    n "And of course,{w=0.1} you could always come see me,{w=0.1} you know..."
+
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+        n "I-{w=0.1}It'd be a welcome surprise.{w=0.2} Ahaha..."
+
+    n "A-{w=0.1}anyway!"
+    n "The point is to always try and come back with a clean headspace,{w=0.1} and don't sweat the small things."
+    n "Can you do that for me,{w=0.1} [player]?"
+    n "I'll keep working on it if you do!"
     return
 
 # Natsuki muses on how easy it is to waste money, and offers some guidance on spending wisely
@@ -728,7 +746,24 @@ init 5 python:
     )
 
 label talk_careful_spending:
-    n "TODO"
+    n "..."
+    n "..."
+    n "Hmm...?"
+    n "O-{w=0.1}oh!{w=0.2} Sorry!{w=0.2} I spaced out!"
+    n "I was just thinking..."
+    n "It's so easy to spend more than you mean nowadays,{w=0.1} you know?"
+    n "Like...{w=0.3} it seems everywhere you go,{w=0.1} there's a sale,{w=0.1} or deals,{w=0.1} or some kind of limited offer..."
+    n "And everywhere accepts all kinds of ways of paying,{w=0.1} too.{w=0.2} They make it super convenient!"
+    n "I guess what I'm getting at is...{w=0.3} try to be careful of your spending habits,{w=0.1} okay?"
+    n "Try not to buy junk you don't need{w=0.1} -{w=0.1} think of how much you threw away the last time you cleaned out!"
+    n "T-{w=0.1}that's not to say you shouldn't treat yourself,{w=0.1} of course!{w=0.2} You deserve cool stuff too!"
+    n "Money can't buy happiness...{w=0.3} but it sure as hell makes finding it easier.{w=0.2} Ahaha!"
+    n "Well, anyway.{w=0.2} Just try to think a little before you spend,{w=0.1} [player]{w=0.1} -{w=0.1} that's all I'm saying!"
+
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+        n "Besides..."
+        n "Gotta save up all we can for when we hang out,{w=0.1} right?{w=0.2} Ehehe."
+
     return
 
 # Natsuki discusses the importance of not only eating healthily, but regularly too
