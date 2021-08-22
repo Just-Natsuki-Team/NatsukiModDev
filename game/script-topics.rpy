@@ -599,7 +599,7 @@ init 5 python:
             label="talk_using_computers_healthily",
             unlocked=True,
             prompt="Using computers healthily",
-            conditional=None,
+            conditional="(datetime.datetime.now() - persistent.jn_last_visited_date).seconds / 3600 >= 8",
             category=["Life", "You", "Health"],
             nat_says=True,
             affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
@@ -660,7 +660,7 @@ init 5 python:
             label="talk_staying_active",
             unlocked=True,
             prompt="Staying active",
-            conditional=None,
+            conditional="persistent.jn_total_visit_count >= 10",
             category=["Life", "You", "Health"],
             nat_says=True,
             affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
@@ -784,7 +784,36 @@ init 5 python:
     )
 
 label talk_eating_well:
-    n "TODO"
+    n "Hey,{w=0.1} [player]..."
+    n "Have you eaten today?"
+    menu:
+        "Yes":
+            n "Aha!{w=0.2} But did you eat {i}well{/i},{w=0.1} [player]?"
+
+        "No":
+            n "Huh?{w=0.2} What?{w=0.2} Why not?!"
+            n "You aren't skipping meals,{w=0.1} are you?"
+            n "I really hope you aren't,{w=0.1} [player]..."
+
+    n "It's super important to make sure you aren't only eating regularly,{w=0.1} but eating decently too!"
+    n "I think the right diet can honestly make all the difference,{w=0.1} [player]."
+    n "So...{w=0.3} try and make an effort with your meals,{w=0.1} okay?"
+    n "And I mean a real effort!{w=0.2} Try to prepare them from scratch if you can;{w=0.1} it's often cheaper than ready meals anyway!"
+    n "Try to cut back on things like salt and sugar and stuff too...{w=0.3} as well as anything really processed."
+    n "Oh {w=0.1}-{w=0.1} and like I said,{w=0.1} have meals regularly too!"
+    n "You shouldn't find yourself snacking on junk if you have proper meals throughout the day."
+    n "Your bank balance and your body will thank you too!{w=0.2} Ehehe."
+
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+        n "And besides..."
+        n "I gotta get you into good habits by yourself before I'm there to make you."
+        n "Ahaha!{w=0.2} I'm kidding,{w=0.1} [player]!{w=0.2} I'm kidding!"
+        n "...Mostly."
+
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n "Love you, [player]~!{w=0.2} Ehehe."
+
+    n "Now...{w=0.3} where were we?"
     return
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
