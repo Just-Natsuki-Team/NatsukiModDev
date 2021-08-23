@@ -26,6 +26,10 @@ label ch30_visual_setup:
     #FALL THROUGH
 
 label ch30_init:
+
+    # Add to the total visits counter
+    $ persistent.jn_total_visit_count += 1
+
     #Let's pick a greeting
     $ push(greetings.select_greeting())
 
