@@ -51,28 +51,51 @@ init -1 python:
         return url
 
     def get_api_call_info(key, parameters):
-        url = get_api_call_url(key, parameters)
-        # Convert response from a string to a dictionary
+        """
+            Creates an API call and returns the response as a dictionary
 
+            IN:
+                key - <string> a valid API key
+                parameters - <dict> parameters to pass on to the API call
+            OUT:
+                API response - <dict>
+
+            note: API key should already be validated
+        """
+
+        # Create an API call url with a valid API key and parameters
+        url = get_api_call_url(key, parameters)
+
+        # Create a request
         request = urllib2.urlopen(url)
+        # get it's raw html
         html = request.read()
+        # Find first open brace
         start_index = html.find('{')
+        # Find last close brace
         end_index = html.rfind('}')
+        # Strip raw html, leaving only the API response
         content = html[start_index:end_index+1]
+        # Close the request
         request.close()
 
+        # Convert response from a string to a dictionary and return it
         return string_to_dict(content)
 
     def get_response_code(key, parameters=dict):
-        url = get_api_call_url(key, parameters)
-        # Convert response from a string to a dictionary
+        """
+            Returns API's response code
 
-        request = urllib2.urlopen(url)
-        html = request.read()
-        start_index = html.find('{')
-        end_index = html.rfind('}')
-        content = html[start_index:end_index+1]
-        request.close()
+            IN:
+                same as get_api_call_info()
+            OUT:
+                API response code - <int>
+
+            note: This should be used only when validating stuff like API keys, locations, etc.
+                  As this function makes a NEW API call
+        """
+        # Make an API call and get it's response
+        get_api_call_info(key, parameters)
 
         # Return response code
         return content["cod"]
@@ -86,6 +109,10 @@ init -1 python:
             OUT:
                 True - if key is valid
                 False - if key is invalid
+
+            note: Use this only when a key ~needs~ to be validated
+                  If an API key has been validated before, assume it will stay like that
+                  (This function makes a new API call)
         """
         # Get response code of API call
         response_code = get_response_code(key)
@@ -105,6 +132,8 @@ init -1 python:
             OUT:
                 True - if city was found
                 False - if city wasn't found
+
+            note: same as in function above but with location
         """
         # Create an API call url with our API key
         params = {
@@ -121,8 +150,14 @@ init -1 python:
         return False
 
     def handle_other_errors(response_code):
+        """
+            Checks for other common error codes
+
+            IN:
+                response code from an API call - <int>
+        """
         if response_code == 429:
-            raise Exception("exceeded 60 calls per minute! This shouldn't happend under any circumstances, needs fix now!")
+            raise Exception("exceeded 60 calls per minute! This shouldn't happen under any circumstances, needs fix now!")
             # we are exceeding rate limit of 60 calls/min
             # needs to be fixed ASAP!
 
@@ -131,29 +166,52 @@ init -1 python:
             # Something went horribly, horribly wrong
             # Good news tho! It's not our fault, yay!
             #TODO: Have Natsuki handle the situation in a non-immersion-breaking way
-            #      Probably ask the player if they could contact us
+            ###### Probably ask the player if they could contact us
 
     def get_new_location(city=None, country=None, zip_code=None, longitude=None, latitude=None):
-            location=dict()
+        """
+            Returns a dictionary with all known information about players location
+            note: all location info should be stored as a string to avoid constant conversion
 
-            if city:
-                location["q"] = city
+            IN:
+                city - <string> city name
+                country - <string> country name
+                zip_code - <string> postal code of inputted country
+                longitude - <string> longitude coordinates
+                latitude - <string> latitude coordinates
+            OUT:
+                location - <dictionary>
+        """
 
-            if country:
-                location["country"] = country
+        location=dict()
 
-                if zip_code:
-                    location["zip"] = zip_code
+        if city:
+            location["q"] = city
 
-            if longitude:
-                location["lon"] = longitude
+        if country:
+            location["country"] = country
 
-            if latitude:
-                location["lat"] = latitude
+            if zip_code:
+                location["zip"] = zip_code
 
-            return location
+        if longitude:
+            location["lon"] = longitude
+
+        if latitude:
+            location["lat"] = latitude
+
+        return location
 
     def get_parameters_for_call():
+        """
+            returns merged preferences and location dictionaries
+
+            IN:
+                preferences - <dictionary> containing stuff like what units to use, language etc.
+                location - <dictionary> containing location info
+            OUT:
+                merged dictionary
+        """
         params = preferences.copy()
         params.update(location)
 
@@ -694,24 +752,67 @@ init -1 python:
 
         @staticmethod
         def get_weather():
+            """
+                Returns a simple one-word description about current weather
+
+                possible outputs:
+                    Thunderstom
+                    Drizzle
+                    Rain
+                    Snow
+                    Mist/Smoke/Haze/Dust/Ash/Squall/Tornado
+                    Clear
+                    Clouds
+            """
             params = get_parameters_for_call()
 
             response = get_api_call_info(api_key, params)
-            pass
+
+            # "weather" - weather info
+            # [0] - primary weather info
+            # "main" - one word description of current weather
             return response["weather"][0]["main"]
 
         @staticmethod
         def get_weather_detail():
+            """
+                Returns detailed information about current weather with intensity of each ~~element~~
+
+                format:
+                    {
+                        "thunder" : <int>,
+                        "drizzle" : <int>,
+                        "rain" : <int>,
+                        "snow" : <int>,
+                        "clouds" : <int>,
+                        "clear" : <bool>,
+                        "special" : <string?>
+                    }
+
+                    thunder : intensity of a thunderstorm
+                    drizzle : intensity of a drizzle
+                    rain    : intensity of rain
+                    snow    : intensity of snowing
+                    clouds  : percentage of cloud sky coverage
+                    clear   : True or False
+                    special : special weather events (dust storm, tornado, volcanic ash etc.)
+            """
             params = get_parameters_for_call()
 
             response = get_api_call_info(api_key, params)
 
+            # Get primary weather info
             weather_info = response["weather"][0]
+            # Get clouds info
             clouds_info = response["clouds"]["all"]
 
+            # Get detailed weather info from look-up table WEATHER_TABLE by weather id
             parsed_weather = Weather.WEATHER_TABLE[weather_info["id"]]
 
-            parsed_weather["clouds"] = clouds_info
+            # If there is more detailed info on clouds in the API response
+            ## overwrite clouds ~intensity~ with it's percentage
+            if "clouds" in parsed_weather:
+                parsed_weather["clouds"] = clouds_info
 
             return parsed_weather
 
