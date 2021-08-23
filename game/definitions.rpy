@@ -27,6 +27,7 @@ init 0 python:
     TOPIC_TYPE_FAREWELL = "FAREWELL"
     TOPIC_TYPE_GREETING = "GREETING"
     TOPIC_TYPE_NORMAL = "NORMAL"
+    TOPIC_TYPE_ADMISSION = "ADMISSION"
 
     TOPIC_LOCKED_PROP_BASE_MAP = {
         #Things which shouldn't change
