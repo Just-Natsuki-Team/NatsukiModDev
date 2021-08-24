@@ -1,6 +1,10 @@
 init -1 python:
     import urllib2
     import json
+    import os
+    import subprocess
+    import webbrowser
+    import geocoder
 
     #TEST API key, feel free to use
     #2c2f369ad4987a01f5de4c149665c5fd
@@ -26,13 +30,14 @@ init -1 python:
         OUT:
             API call url
         """
+
         # Check if key is valid
         if not isinstance(api_key, basestring):
-            raise Exception("API key not string")
+            raise Exception("API key is type {0} instead of string".format(type(api_key)))
 
         # Check if parameters is a dictionary
         if not isinstance(parameters, dict):
-            raise Exception("argument isn't a dictionary")
+            raise Exception("parameters is {0} instead of a dictionary".format(type(parameters)))
 
         # base API call url
         url = "https://api.openweathermap.org/data/2.5/weather?"
@@ -41,16 +46,32 @@ init -1 python:
         for key in parameters:
             # Check that parameter contains a string key and value
             if not (isinstance(key, basestring) and isinstance(parameters[key], basestring)):
-                raise Exception("parameters contain a non-string key or value")
+                raise Exception("parameters contain a non-string key and/or value")
             # Append parameter to url
             url += "{0}={1}&".format(key, parameters[key])
 
         # And lastly append API key
         url += "appid={0}".format(api_key)
 
-        return url
+        return str(url)
 
-    def get_api_call_info(key, parameters):
+    def make_request(url):
+        """
+
+        """
+        error_code = 200
+        response = None
+        try:
+            request = urllib2.urlopen(url)
+            response = request.read()
+
+        except urllib2.HTTPError, err:
+            # Don't mind the highlighting... it's working
+            response = "{{\"cod\":{0}}}".format(err.code)
+
+        return response
+
+    def get_api_call_info(key, parameters=dict()):
         """
             Creates an API call and returns the response as a dictionary
 
@@ -65,24 +86,20 @@ init -1 python:
 
         # Create an API call url with a valid API key and parameters
         url = get_api_call_url(key, parameters)
-
         # Create a request
-        request = urllib2.urlopen(url)
-        # get it's raw html
-        html = request.read()
+        html = make_request(url)
+
         # Find first open brace
         start_index = html.find('{')
         # Find last close brace
         end_index = html.rfind('}')
         # Strip raw html, leaving only the API response
         content = html[start_index:end_index+1]
-        # Close the request
-        request.close()
 
         # Convert response from a string to a dictionary and return it
         return string_to_dict(content)
 
-    def get_response_code(key, parameters=dict):
+    def get_response_code(key, parameters=dict()):
         """
             Returns API's response code
 
@@ -95,7 +112,7 @@ init -1 python:
                   As this function makes a NEW API call
         """
         # Make an API call and get it's response
-        get_api_call_info(key, parameters)
+        content = get_api_call_info(key, parameters)
 
         # Return response code
         return content["cod"]
@@ -136,9 +153,7 @@ init -1 python:
             note: same as in function above but with location
         """
         # Create an API call url with our API key
-        params = {
-            "q" : city
-        }
+        params = get_location_dict(city=city)
         # Get response code of API call
         response_code = get_response_code(key, params)
 
@@ -168,15 +183,15 @@ init -1 python:
             #TODO: Have Natsuki handle the situation in a non-immersion-breaking way
             ###### Probably ask the player if they could contact us
 
-    def get_new_location(city=None, country=None, zip_code=None, longitude=None, latitude=None):
+    def get_location_dict(city=None, country=None, zip_code=None, longitude=None, latitude=None):
         """
             Returns a dictionary with all known information about players location
             note: all location info should be stored as a string to avoid constant conversion
 
             IN:
                 city - <string> city name
-                country - <string> country name
-                zip_code - <string> postal code of inputted country
+                country - <string> country code
+                state - <string> state code
                 longitude - <string> longitude coordinates
                 latitude - <string> latitude coordinates
             OUT:
@@ -188,11 +203,8 @@ init -1 python:
         if city:
             location["q"] = city
 
-        if country:
-            location["country"] = country
-
-            if zip_code:
-                location["zip"] = zip_code
+            if country:
+                location["q"] += ','+country
 
         if longitude:
             location["lon"] = longitude
@@ -217,6 +229,35 @@ init -1 python:
 
         return params
 
+    def open_txt(file):
+        """
+
+        """
+        os.startfile(file)
+
+    def txt_input(pre_format_string=""):
+        """
+
+        """
+        if not os.path.exists(".temp_input"):
+            os.makedirs(".temp_input")
+
+        file = open(".temp_input\\__temp_input__.txt", "w")
+        file.truncate(0)
+        file.write(pre_format_string)
+        file.close()
+
+        process = subprocess.Popen(["notepad.exe", ".temp_input\\__temp_input__.txt"])
+        process.wait()
+        file = open(".temp_input\\__temp_input__.txt", "r")
+        content = file.read()
+        content = content[len(pre_format_string):]
+        file.close()
+        os.remove(".temp_input\\__temp_input__.txt")
+        os.rmdir(".temp_input")
+
+        return content
+
     city = "london"
     longitude = None
     latitude = None
@@ -228,7 +269,56 @@ init -1 python:
         "units" : "metric"
     }
 
-    location = get_new_location(city, country, zip_code, longitude, latitude)
+    location = get_location_dict(city, country, zip_code, longitude, latitude)
+
+    def get_coords_by_ip():
+        try:
+            g = geocoder.ip('me')
+
+            if g.status != 'OK':
+                return False
+
+            return (g.lat, g.lng)
+
+
+        except:
+            return False
+
+    def get_coords_by_city(city, country=None):
+        lookup_file = open("countries_lookup.txt", "r")
+        lookup = lookup_file.read()
+        lookup_file.close()
+        if not country:
+            city_occurrences = lookup.count("\n{0},".format(city))
+        else:
+            city_occurrences = lookup.count("\n{0},{1},".format(city, country))
+
+        if city_occurrences == 0:
+            return 0, (None, None)
+        elif city_occurrences == 1:
+            return 1, get_coords_from_lookup(city)
+        elif city_occurrences > 1:
+            return 2, (None, None)
+
+    def get_coords_from_lookup(city):
+        lookup_file = open("countries_lookup.txt", "r")
+        lookup = lookup_file.read()
+        lookup_file.close()
+        lookup_format = "\n{0},AA,".format(city)
+        city_line_start = lookup.find("\n{0},".format(city))+1
+        city_line_end = lookup.find('\n', city_line_start)
+
+        city_line = lookup[city_line_start:city_line_end]
+
+        city_line = city_line.split(',')
+        return (city_line[2], city_line[3])
+
+    def open_maps(latitude, longitude):
+        url = "https://www.google.com/maps/place/{0},{1}".format(latitude, longitude)
+        webbrowser.open(url)
+
+    def open_browser(url):
+        webbrowser.open(url)
 
     class Weather():
 
@@ -803,18 +893,22 @@ init -1 python:
 
             # Get primary weather info
             weather_info = response["weather"][0]
-            # Get clouds info
-            clouds_info = response["clouds"]["all"]
 
             # Get detailed weather info from look-up table WEATHER_TABLE by weather id
             parsed_weather = Weather.WEATHER_TABLE[weather_info["id"]]
 
             # If there is more detailed info on clouds in the API response
+            ## Fetch that info
             ## overwrite clouds ~intensity~ with it's percentage
-            if "clouds" in parsed_weather:
+            if "clouds" in response:
+                clouds_info = response["clouds"]["all"]
                 parsed_weather["clouds"] = clouds_info
 
-            return parsed_weather
+            # If there is wind info in APi response
+            ## Fetch it
+            ## add to our detailed weather report
+            if "wind" in response:
+                wind_info = response["wind"]["speed"]
+                parsed_weather["wind"] = wind_info
 
-    Weather.get_weather()
-    Weather.get_weather_detail()
+            return parsed_weather
