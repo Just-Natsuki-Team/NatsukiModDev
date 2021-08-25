@@ -281,7 +281,74 @@ init 5 python:
     )
 
 label admission_sick:
-    n ""
+    if admissions._last_admission_type == admissions.ADMISSION_TYPE_SICK:
+        n "[player]...{w=0.3} you're still feeling sick?"
+        n "How long have you felt like this now?"
+        menu:
+            "A few hours.":
+                n "That's...{w=0.3} not great to hear,{w=0.1} [player]."
+                n "Perhaps you should get some rest soon{w=0.1} -{w=0.1} hopefully you'll feel better."
+                n "Let me know if it keeps up,{w=0.1} okay?"
+
+            "A few days.":
+                n "You're starting to worry me,{w=0.1}  [player]."
+                n "Make sure you see someone soon."
+                n "Especially if you start to hurt anywhere,{w=0.1}  or if you've been sick,{w=0.1}  or anything like that..."
+                n "Make sure you get some extra rest too,{w=0.1} okay?"
+
+            "A week or so.":
+                n "[player]..."
+                n "Have you seen anybody about this yet?"
+
+                menu:
+                    "Yes, I have.":
+                        n "Well...{w=0.3} okay."
+                        n "I really,{w=0.1} really hope they were able to help you,{w=0.1} [player]."
+                        n "Make sure you get some extra rest,{w=0.1} okay?"
+
+                    "No, I haven't.":
+                        n "[player]...{w=0.3} that's no good."
+                        n "I trust you know your own limits...{w=0.3} but please,{w=0.1} take care of yourself."
+                        n "Your health...{w=0.3} really matters to me."
+
+            "Longer.":
+                n "..."
+                n "I...{w=0.3} don't really know what to say to you,{w=0.1} [player]."
+                n "I just hope you feel better soon."
+                n "Take it easy,{w=0.1} alright?"
+
+                if jn_affinity.get_affinity_state() == store.jn_affinity.AFFECTIONATE:
+                    n "I hate seeing you unwell like this..."
+
+                elif jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+                    n "It really hurts me seeing you unwell like this..."
+
+                if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVE:
+                    n "I love you,{w=0.1} [player].{w=0.2} Please get well soon."
+
+    elif admissions._last_admission_type == admissions.ADMISSION_TYPE_HUNGRY:
+        n "You know,{w=0.1} you can start to feel unwell if you haven't eaten for a while,{w=0.1} [player]."
+        n "Have you eaten something today?{w=0.2} Like a proper meal?"
+        menu:
+            "Yes, I have.":
+                n "Hmmm...{w=0.3} maybe it was something you ate that's making you feel sick?"
+                n "Take a lie down if you need to,{w=0.1} [player].{w=0.2} Alright?"
+
+            "No, I haven't.":
+                n "Hmmm...{w=0.3} maybe you should have something now,{w=0.1} [player]."
+                n "Even something small like some candy.{w=0.2} Just to get your energy level up."
+                n "Can you do that for me,{w=0.1} [player]?"
+                n "I'm counting on you!"
+
+    else:
+        n "Feeling under the weather,{w=0.1} [player]?"
+        n "I wish there was something I could do to help..."
+        n "You aren't straining yourself by being here,{w=0.1} are you?"
+        n "I don't wanna get in the way of you feeling better."
+        n "So...{w=0.3} if you need to go,{w=0.1} just go,{w=0.1} alright?"
+        n "Your health has to come first over our time together."
+        n "Promise me you'll leave and rest if you have to,{w=0.1} okay?"
+
     $ admissions._last_admission_type = admissions.ADMISSION_TYPE_SICK
     return
 
@@ -324,7 +391,7 @@ label admission_tired:
         n "Feeling tired,{w=0.1} [player]?"
         n "Perhaps you should think about turning in soon{w=0.1} -{w=0.1} even if it's just a nap!"
         n "Don't worry about me if you need to rest!{w=0.2} I'll be alright."
-        n "Just make sure you let me know when you decide to go, [player]."
+        n "Just make sure you let me know when you decide to go,{w=0.1} [player]."
 
     $ admissions._last_admission_type = admissions.ADMISSION_TYPE_TIRED
     return
