@@ -1,0 +1,5 @@
+#sayori.chr character parmaters.
+
+happiness=0
+sadness=1000
+emotion_state=suicidal
