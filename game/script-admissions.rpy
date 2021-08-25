@@ -70,7 +70,12 @@ init 5 python:
     )
 
 label admission_anxious:
-    n ""
+    if admissions._last_admission_type == admissions.ADMISSION_TYPE_ANXIOUS:
+        n ""
+
+    else:
+        n ""
+
     $ admissions._last_admission_type = admissions.ADMISSION_TYPE_ANXIOUS
     return
 
@@ -86,7 +91,34 @@ init 5 python:
     )
 
 label admission_ashamed:
-    n ""
+    if admissions._last_admission_type == admissions.ADMISSION_TYPE_ASHAMED:
+        n "[player]...{w=0.3} you're still feeling ashamed of yourself?"
+        n "Well,{w=0.1} I'm not going to give up on you {i}that{/i} easily,{w=0.1} you know!"
+        n "Just keep trying your best to put things right,{w=0.1} okay?"
+        n "You can do it!{w=0.2} I know you can!"
+
+    else:
+        n "Huh?{w=0.2} What?"
+        n "You're feeling...{w=0.3} ashamed?{w=0.2} Of yourself?"
+        n "That's awful to hear,{w=0.2} [player].{w=0.2} Did you do something wrong?"
+        n "Well...{w=0.3} whatever you did,{w=0.1} I'm sure you didn't mean it!"
+        n "More importantly,{w=0.1} you're going to work hard to put things right.{w=0.2} I just know it!"
+        n "So...{w=0.3} don't let me down,{w=0.2} okay?"
+        n "And you aren't going to let yourself down either,{w=0.1} right?"
+        menu:
+            "Right!":
+                n "Exactly.{w=0.2} Ehehe."
+
+            "...":
+                n "..."
+                n "I don't think you get it,{w=0.1} [player]."
+                n "Now,{w=0.1} repeat after me:{w=0.2} 'I'm not gonna let myself down!'"
+                menu:
+                    "I'm not gonna let myself down!":
+                        n "See?{w=0.2} I knew you had it in you!{w=0.2} Ehehe."
+
+        n "I believe in you,{w=0.1} [player]!"
+
     $ admissions._last_admission_type = admissions.ADMISSION_TYPE_ASHAMED
     return
 
@@ -102,7 +134,37 @@ init 5 python:
     )
 
 label admission_confident:
-    n ""
+    if admissions._last_admission_type == admissions.ADMISSION_TYPE_CONFIDENT:
+        n "Still full of confidence,{w=0.1} I see?"
+        n "Well,{w=0.1} I'm glad to hear it!"
+
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n "You've got a lot to be confident of,{w=0.1} [player]."
+            n "You better remember that!"
+
+    elif admissions._last_admission_type == admissions.ADMISSION_TYPE_INSECURE:
+        n "Really?{w=0.2} That's awesome,{w=0.1} [player]!"
+        n "I was hoping you'd snap out of that sooner rather than later."
+        n "It worries me when you talk like that,{w=0.1} you know..."
+
+        if jn_affinity.get_affinity_state() == store.jn_affinity.AFFECTIONATE:
+            n "N-{w=0.1}not that I care {i}that{/i} much, o-{w=0.1}of course!"
+            n "But...{w=0.3} I'm glad to know you're okay now,{w=0.1} [player]. That's what matters."
+
+        elif jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n "I'm just really glad to know you're better now,{w=0.1} [player]."
+
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVE:
+            $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+            n "I love you, [chosen_endearment].{w=0.2} Please don't forget that,{w=0.1} alright?"
+            n "I'll get mad if you do.{w=0.2} Ahaha..."
+
+    else:
+        n "Ahaha!{w=0.2} I'm glad to hear that,{w=0.1} [player]!"
+        n "Being confident in yourself and your abilities can be really difficult sometimes."
+        n "Especially if you messed up,{w=0.1} or if you aren't feeling well."
+        n "But if you're feeling that way about yourself,{w=0.1} I won't rob you of it!"
+
     $ admissions._last_admission_type = admissions.ADMISSION_TYPE_CONFIDENT
     return
 
@@ -125,7 +187,7 @@ label admission_excited:
     else:
         n "Oh?{w=0.2} Did something happen?{w=0.2} Is something {i}gonna{/i} happen?"
         n "Whatever it is,{w=0.1} I'm happy to hear you're looking forward to it!"
-        n "It's always awesome to have something you can get excited over, right?"
+        n "It's always awesome to have something you can get excited over,{w=0.1} right?"
 
     $ admissions._last_admission_type = admissions.ADMISSION_TYPE_EXCITED
     return
@@ -143,7 +205,7 @@ init 5 python:
 
 label admission_happy:
     if admissions._last_admission_type == admissions.ADMISSION_TYPE_HAPPY:
-        n "Wow...{w=0.3} it's all sunshine and rainbows for you today,{w=0.1} isn't it?"
+        n "Wow...{w=0.3} it's all sunshine and rainbows with you today,{w=0.1} isn't it?"
         n "Ahaha!"
         n "Keep on smiling,{w=0.1} [player]!"
 
@@ -249,7 +311,20 @@ init 5 python:
     )
 
 label admission_proud:
-    n ""
+    if admissions._last_admission_type == admissions.ADMISSION_TYPE_PROUD:
+        n "Really,{w=0.1} [player]?{w=0.1} Still gloating,{w=0.1} are we?"
+        n "You {i}do{/i} know what they say about pride,{w=0.1} right?"
+        n "..."
+        n "I'm just kidding,{w=0.1} [player]!{w=0.2} Jeez!"
+        n "You should see your face!{w=0.2} Ehehe."
+        n "Well,{w=0.1} I'm glad you're still feeling good about yourself!"
+
+    else:
+        n "Oh?{w=0.2} You're feeling proud,{w=0.1} huh?"
+        n "You must be pretty pleased with yourself to brag to me about it.{w=0.2} Ahaha!"
+        n "I'm sure whatever it is,{w=0.1} it's something I can be proud of you for too."
+        n "Good work,{w=0.1} [player]!"
+
     $ admissions._last_admission_type = admissions.ADMISSION_TYPE_PROUD
     return
 
@@ -265,7 +340,12 @@ init 5 python:
     )
 
 label admission_sad:
-    n ""
+    if admissions._last_admission_type == admissions.ADMISSION_TYPE_SAD:
+        n "Oh...{w=0.3} I'm really sorry to hear you're still feeling upset,{w=0.1} [player]."
+
+    else:
+        n "Oh...{w=0.3} I'm really sorry to hear you're upset,{w=0.1} [player]."
+
     $ admissions._last_admission_type = admissions.ADMISSION_TYPE_SAD
     return
 
