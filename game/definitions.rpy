@@ -504,6 +504,16 @@ init -990 python in jn_globals:
         "the best"
     ]
 
+    # Names Natsuki may use at the higher levels of affinity to tease her player with
+    DEFAULT_PLAYER_TEASE_NAMES = [
+        "dummy",
+        "silly",
+        "stupid",
+        "you dork",
+        "you goof",
+        "you numpty"
+    ]
+
 init 10 python in jn_globals:
     # The current affection state. We default this to 5 (NORMAL)
     current_affinity_state = store.jn_affinity.NORMAL
