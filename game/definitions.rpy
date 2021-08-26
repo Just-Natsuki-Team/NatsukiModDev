@@ -13,6 +13,9 @@ default persistent.jn_screenshot_bad_shots_total = 0
 # Pet data
 default persistent.jn_player_pet = None
 
+# Admissions data
+default persistent.jn_player_admission_type_on_quit = None
+
 #Our main topic pool
 default persistent._event_list = list()
 

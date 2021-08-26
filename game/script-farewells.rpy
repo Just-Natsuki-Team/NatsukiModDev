@@ -1072,10 +1072,10 @@ init 5 python:
     )
 
 label farewell_fake_confidence_ask:
-    n "Huh? You don't really have to leave already, do you?"
+    n "Huh?{w=0.2} You don't really have to leave already,{w=0.1} do you?"
     n "It feels like you've barely been here!"
-    n "I bet you can hang out with me a little longer! Right, [player]?"
-    n "...right?"
+    n "I bet you can hang out with me a little longer!{w=0.2} Right,{w=0.1} [player]?"
+    n "{w=0.3}...right?"
     menu:
         "Right!":
             n "A-Aha!{w=0.2} I knew it!"
@@ -1237,8 +1237,7 @@ label farewell_extra_trust:
 
     # Debug
     else:
-        n "Um...{w=0.3} I think you messed up somewhere,{w=0.1} [player]...{w=0.3} Aha..."
-        n "Bye now! Good luck fixing it!"
+        n "Nnn..."
 
     return { "quit": None }
 
