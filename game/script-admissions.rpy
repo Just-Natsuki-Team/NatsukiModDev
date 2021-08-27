@@ -55,12 +55,26 @@ init 5 python:
 
 label admission_angry:
     if admissions.last_admission_type == admissions.ADMISSION_TYPE_ANGRY:
-        n ""
-        # TODO
+        n "[player]...{w=0.3} you're still mad?"
+        n "Did you spend some time outside,{w=0.1} like I said?"
+        n "..."
+        n "I wish there was more I could suggest..."
+        n "Just...{w=0.3} try and stay calm,{w=0.1} and think things through a little,{w=0.1} okay?"
+        n "I don't want you storming off and getting hurt,{w=0.1} or doing something you'll regret."
+        n "Can you do that for me,{w=0.2} [player]?"
+
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n "It really upsets me hearing you worked up like this,{w=0.1} you know..."
+            n "So please, [player]. Stay calm{w=0.1} -{w=0.1} for me?"
 
     else:
-        n ""
-        # TODO
+        n "Huh?{w=0.2} You're angry?"
+        n "[player]...{w=0.3} what's got you so worked up?{w=0.2} That's no good,{w=0.1} [player]!"
+        n "I know it's probably ironic coming from me,{w=0.1} but let's just try to calm down, okay?"
+        n "Just being mad won't solve anything,{w=0.1} so let's focus."
+        n "Personally if things get too much for me,{w=0.1} I like to take a walk.{w=0.2} It's amazing what some fresh air can do!"
+        n "Why don't you take a few minutes outside too.{w=0.2} For me?"
+        n "You'll feel a little better soon.{w=0.2} I promise!"
 
     $ admissions.last_admission_type = admissions.ADMISSION_TYPE_ANGRY
     return
@@ -78,12 +92,36 @@ init 5 python:
 
 label admission_anxious:
     if admissions.last_admission_type == admissions.ADMISSION_TYPE_ANXIOUS:
-        n "Still feeling anxious, [player]?"
-        # TODO
+        n "Still feeling anxious,{w=0.1} [player]?"
+        n "..."
+        n "I wish I could do more to help you..."
+        n "Perhaps you could try some distractions to keep your mind off things?"
+        n "You could pick up a series you haven't finished,{w=0.1} or continue a hobby or something."
+        n "Nnnn..{w=0.3} what else..."
+        n "Oh!{w=0.2} Try to avoid soda,{w=0.1} coffee and things like that too,{w=0.1} [player]."
+        n "I think caffeine is the last thing you need right now."
+        n "Music might also help!{w=0.2} Something calming, though {w=0.1}-{w=0.1} I guess kind of like meditation?"
+        n "Can you do that for me,{w=0.1} [player]?"
+        n "I promise you'll start to feel normal soon!"
 
     else:
-        n "Feeling anxious, [player]?"
-        # TODO
+        n "Feeling anxious,{w=0.1} [player]?"
+        n "..."
+        n "I wish there was more I could say to ease your mind."
+        n "But I can tell you one thing,{w=0.1} [player]."
+        n "Everything is going to be okay.{w=0.2} Everything will work out,{w=0.1} eventually."
+        n "I promise."
+        n "Getting really worked up about something won't make it any easier,{w=0.1} [player]."
+        n "And if nothing else,{w=0.1} I'll be here to listen."
+        n "So...{w=0.3} try and put your mind at rest,{w=0.1} okay?"
+        n "I know it's tough...{w=0.3} but just try,{w=0.1} alright?"
+
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+            n "I'll always have your back."
+
+        if jn_affinity.get_affinity_state() == store.jn_affinity.LOVE:
+            $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+            n "I love you, [chosen_endearment]."
 
     $ admissions.last_admission_type = admissions.ADMISSION_TYPE_ANXIOUS
     return
@@ -385,11 +423,42 @@ init 5 python:
 label admission_sad:
     if admissions.last_admission_type == admissions.ADMISSION_TYPE_SAD:
         n "Oh...{w=0.3} I'm really sorry to hear you're still feeling upset,{w=0.1} [player]."
-        # TODO
+        n "I'm not sure if it's my place to say this,{w=0.1} but..."
+        n "Perhaps you have others you can share this with?{w=0.2} Friends,{w=0.1} or family?"
+        menu:
+            "I do.":
+                n "Then I think it might be a good idea to share how you feel."
+                n "A problem shared is a problem halved,{w=0.1} as they say!{w=0.2} Ehehe."
+                n "But seriously,{w=0.1} [player].{w=0.2} Don't be afraid to ask for help,{w=0.1} alright?"
+                n "There's only so much I can do...{w=0.3} but you are worth the team effort,{w=0.1} okay?"
+
+            "I don't.":
+                n "That's...{w=0.3} really not what I was hoping to hear,{w=0.1} honestly."
+                n "I'm sorry to hear that,{w=0.1} [player].{w=0.2} Truly."
+                n "But know this."
+                n "You have my full support,{w=0.1} okay?"
+
+            "They already know.":
+                n "That's a relief to hear!"
+                n "I just hope they were supportive of you,{w=0.1} [player].{w=0.2} It's the least you deserve."
+
+        if jn_affinity.get_affinity_state() == store.jn_affinity.LOVE:
+            $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+            n "I love you,{w=0.1} [chosen_endearment]."
+
+        n "I hope you start to feel better soon!"
 
     else:
         n "Oh...{w=0.3} I'm really sorry to hear you're upset,{w=0.1} [player]."
-        # TODO
+        n "Did something happen?{w=0.2} You can tell me about it,{w=0.1} [player].{w=0.2} I won't judge."
+        n "..."
+        n "It's okay,{w=0.1} [player].{w=0.2} Everything is going to be okay."
+        n "You'll be fine...{w=0.3} you'll be just fine."
+        n "Now,{w=0.1} take some deep breaths for me,{w=0.1} alright?"
+        n "That's it,{w=0.1} [player].{w=0.2} Keep breathing."
+        n "Whatever happened,{w=0.1} I'm sure it'll all work out."
+        n "What matters is that you're okay,{w=0.1} [player].{w=0.2} So let's concentrate on fixing that, alright?"
+        n "Perhaps talking to me some more might help?{w=0.2} Ahaha..."
 
     $ admissions.last_admission_type = admissions.ADMISSION_TYPE_SAD
     return
@@ -492,7 +561,7 @@ label admission_tired:
         n "Huh?{w=0.2} You're still tired?"
         n "Did you not get any rest,{w=0.1} [player]?"
         n "I don't want you getting all cranky..."
-        n "So...{w=0.3} go back to bed, alright?"
+        n "So...{w=0.3} go to bed, alright?"
         n "I'll see you later,{w=0.1} [player]!"
 
         $ persistent.jn_player_admission_type_on_quit = admissions.ADMISSION_TYPE_TIRED
@@ -506,6 +575,7 @@ label admission_tired:
             "Yes, I will.":
                 n "Good...{w=0.3} you'll feel better soon,{w=0.1} okay?{w=0.2} I promise."
                 n "Sleep well,{w=0.1} [player]!"
+
                 $ persistent.jn_player_admission_type_on_quit = admissions.ADMISSION_TYPE_TIRED
                 return { "quit": None }
 
@@ -527,6 +597,26 @@ label admission_tired:
         n "Stop sitting around and go eat something,{w=0.1} [player]."
         n "Just take it easy getting up,{w=0.1} alright?{w=0.2} I don't want you fainting on me."
         n "And trust me,{w=0.1} I don't think you want that either..."
+
+    elif datetime.datetime.now() - persistent.jn_last_visited_date).seconds / 3600 > 24:
+        n "[player]!"
+        n "You've been here for like a day now{w=0.1} -{w=0.1} It's no wonder you're tired!"
+        n "You better get some sleep right now!{w=0.2} And I don't wanna see you come back until you've slept!"
+        n "Sheesh..."
+        n "Now get going,{w=0.1} [player]!{w=0.2} I'll see you later,{w=0.1} 'kay?"
+        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        n "Sleep well,{w=0.1} [chosen_tease]!"
+
+        $ persistent.jn_player_admission_type_on_quit = admissions.ADMISSION_TYPE_TIRED
+        return { "quit": None }
+
+    elif datetime.datetime.now() - persistent.jn_last_visited_date).seconds / 3600 > 12:
+        n "[player]!"
+        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        n "I'm not surprised you're feeling tired{w=0.1} -{w=0.1} you've been here ages,{w=0.1} [chosen_tease]!"
+        n "You should really get some sleep...{w=0.3} you'll be all cranky later otherwise."
+        n "I appreciate the company but make sure you turn in soon,{w=0.1} alright?"
+        n "Don't let me down,{w=0.1} [player]."
 
     else:
         n "Feeling tired,{w=0.1} [player]?"
