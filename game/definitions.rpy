@@ -10,6 +10,19 @@ default persistent.jn_first_screenshot_taken = None
 default persistent.jn_screenshot_good_shots_total = 0
 default persistent.jn_screenshot_bad_shots_total = 0
 
+# Weather data
+default persistent.weather_api_key = None
+default persistent.next_weather_call_time = None
+default persistent.is_weather_tracking_set_up = False
+default persistent.current_weather_short = "Clear"
+default persistent.current_weather_long = dict()
+
+# Location data
+default persistent.latitude = None
+default persistent.longitude = None
+default persistent.city = None
+default persistent.country = None
+
 # Pet data
 default persistent.jn_player_pet = None
 
@@ -19,6 +32,7 @@ default persistent._event_list = list()
 #Early imports
 init -990 python:
     import datetime
+    import time
 
 init 0 python:
     import store.jn_affinity as jn_aff

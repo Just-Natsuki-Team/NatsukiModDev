@@ -1,10 +1,8 @@
-init -1 python:
+init -1 python in weather:
     import urllib2
     import json
-    import os
-    import subprocess
-    import webbrowser
-    import geocoder
+    import time
+    import store
 
     #TEST API key, feel free to use
     #2c2f369ad4987a01f5de4c149665c5fd
@@ -51,7 +49,7 @@ init -1 python:
             url += "{0}={1}&".format(key, parameters[key])
 
         # And lastly append API key
-        url += "appid={0}".format(api_key)
+        url += "appid={0}".format(store.persistent.api_key)
 
         return str(url)
 
@@ -66,7 +64,6 @@ init -1 python:
             response = request.read()
 
         except urllib2.HTTPError, err:
-            # Don't mind the highlighting... it's working
             response = "{{\"cod\":{0}}}".format(err.code)
 
         return response
@@ -141,6 +138,7 @@ init -1 python:
         return False
 
     def is_city_valid(key, city):
+        #NOTE: Deprecated
         """
             Checks whether city can be found by the API
 
@@ -183,7 +181,7 @@ init -1 python:
             #TODO: Have Natsuki handle the situation in a non-immersion-breaking way
             ###### Probably ask the player if they could contact us
 
-    def get_location_dict(city=None, country=None, zip_code=None, longitude=None, latitude=None):
+    def get_location_dict(longitude=None, latitude=None):
         """
             Returns a dictionary with all known information about players location
             note: all location info should be stored as a string to avoid constant conversion
@@ -200,17 +198,11 @@ init -1 python:
 
         location=dict()
 
-        if city:
-            location["q"] = city
-
-            if country:
-                location["q"] += ','+country
-
         if longitude:
-            location["lon"] = longitude
+            location["lon"] = store.persistent.longitude
 
         if latitude:
-            location["lat"] = latitude
+            location["lat"] = store.persistent.latitude
 
         return location
 
@@ -229,96 +221,20 @@ init -1 python:
 
         return params
 
-    def open_txt(file):
-        """
-
-        """
-        os.startfile(file)
-
-    def txt_input(pre_format_string=""):
-        """
-
-        """
-        if not os.path.exists(".temp_input"):
-            os.makedirs(".temp_input")
-
-        file = open(".temp_input\\__temp_input__.txt", "w")
-        file.truncate(0)
-        file.write(pre_format_string)
-        file.close()
-
-        process = subprocess.Popen(["notepad.exe", ".temp_input\\__temp_input__.txt"])
-        process.wait()
-        file = open(".temp_input\\__temp_input__.txt", "r")
-        content = file.read()
-        content = content[len(pre_format_string):]
-        file.close()
-        os.remove(".temp_input\\__temp_input__.txt")
-        os.rmdir(".temp_input")
-
-        return content
+    def set_next_weather_call_time(seconds):
+        store.persistent.next_weather_call_time = time.time()+seconds
 
     city = "london"
     longitude = None
     latitude = None
     country = None
-    zip_code = None
     api_key = "2c2f369ad4987a01f5de4c149665c5fd"
 
     preferences = {
         "units" : "metric"
     }
 
-    location = get_location_dict(city, country, zip_code, longitude, latitude)
-
-    def get_coords_by_ip():
-        try:
-            g = geocoder.ip('me')
-
-            if g.status != 'OK':
-                return False
-
-            return (g.lat, g.lng)
-
-
-        except:
-            return False
-
-    def get_coords_by_city(city, country=None):
-        lookup_file = open("countries_lookup.txt", "r")
-        lookup = lookup_file.read()
-        lookup_file.close()
-        if not country:
-            city_occurrences = lookup.count("\n{0},".format(city))
-        else:
-            city_occurrences = lookup.count("\n{0},{1},".format(city, country))
-
-        if city_occurrences == 0:
-            return 0, (None, None)
-        elif city_occurrences == 1:
-            return 1, get_coords_from_lookup(city)
-        elif city_occurrences > 1:
-            return 2, (None, None)
-
-    def get_coords_from_lookup(city):
-        lookup_file = open("countries_lookup.txt", "r")
-        lookup = lookup_file.read()
-        lookup_file.close()
-        lookup_format = "\n{0},AA,".format(city)
-        city_line_start = lookup.find("\n{0},".format(city))+1
-        city_line_end = lookup.find('\n', city_line_start)
-
-        city_line = lookup[city_line_start:city_line_end]
-
-        city_line = city_line.split(',')
-        return (city_line[2], city_line[3])
-
-    def open_maps(latitude, longitude):
-        url = "https://www.google.com/maps/place/{0},{1}".format(latitude, longitude)
-        webbrowser.open(url)
-
-    def open_browser(url):
-        webbrowser.open(url)
+    location = get_location_dict(longitude, latitude)
 
     class Weather():
 
@@ -856,7 +772,7 @@ init -1 python:
             """
             params = get_parameters_for_call()
 
-            response = get_api_call_info(api_key, params)
+            response = get_api_call_info(store.persistent.api_key, params)
 
             # "weather" - weather info
             # [0] - primary weather info
@@ -889,10 +805,13 @@ init -1 python:
             """
             params = get_parameters_for_call()
 
-            response = get_api_call_info(api_key, params)
+            response = get_api_call_info(store.persistent.api_key, params)
 
             # Get primary weather info
             weather_info = response["weather"][0]
+
+            # Get one-word info about current weather
+            weather_short = weather_info["main"]
 
             # Get detailed weather info from look-up table WEATHER_TABLE by weather id
             parsed_weather = Weather.WEATHER_TABLE[weather_info["id"]]
@@ -911,4 +830,94 @@ init -1 python:
                 wind_info = response["wind"]["speed"]
                 parsed_weather["wind"] = wind_info
 
-            return parsed_weather
+            return parsed_weather, weather_short
+
+init -1 python:
+    import webbrowser
+    import os
+    import subprocess
+    import time
+
+    def open_browser(url):
+        webbrowser.open(url)
+
+
+    def open_maps(latitude, longitude):
+        url = "https://www.google.com/maps/place/{0},{1}".format(latitude, longitude)
+        webbrowser.open(url)
+
+    def open_txt(file):
+        """
+
+        """
+        os.startfile(file)
+
+    def txt_input(pre_format_string=""):
+        """
+
+        """
+        if not os.path.exists(".temp_input"):
+            os.makedirs(".temp_input")
+
+        file = open(".temp_input\\__temp_input__.txt", "w")
+        file.truncate(0)
+        file.write(pre_format_string)
+        file.close()
+
+        process = subprocess.Popen(["notepad.exe", ".temp_input\\__temp_input__.txt"])
+        process.wait()
+        file = open(".temp_input\\__temp_input__.txt", "r")
+        content = file.read()
+        if content[:len(pre_format_string)] == pre_format_string:
+            content = content[len(pre_format_string):]
+        else:
+            content = None
+        file.close()
+        os.remove(".temp_input\\__temp_input__.txt")
+        os.rmdir(".temp_input")
+
+        return content
+
+init -1 python in location:
+    import geocoder
+    import store
+
+    def get_coords_by_ip():
+        try:
+            g = geocoder.ip('me')
+
+            if g.status != 'OK':
+                return False
+
+            return (g.lat, g.lng)
+        except:
+            return False
+
+    def get_coords_by_city(city, country=None):
+        lookup_file = open("countries_lookup.txt", "r")
+        lookup = lookup_file.read()
+        lookup_file.close()
+        if not country:
+            city_occurrences = lookup.count("\n{0},".format(city))
+        else:
+            city_occurrences = lookup.count("\n{0},{1},".format(city, country))
+
+        if city_occurrences == 0:
+            return 0, (None, None)
+        elif city_occurrences == 1:
+            return 1, get_coords_from_lookup(city)
+        elif city_occurrences > 1:
+            return 2, (None, None)
+
+    def get_coords_from_lookup(city):
+        lookup_file = open("countries_lookup.txt", "r")
+        lookup = lookup_file.read()
+        lookup_file.close()
+        lookup_format = "\n{0},AA,".format(city)
+        city_line_start = lookup.find("\n{0},".format(city))+1
+        city_line_end = lookup.find('\n', city_line_start)
+
+        city_line = lookup[city_line_start:city_line_end]
+
+        city_line = city_line.split(',')
+        return (city_line[2], city_line[3])

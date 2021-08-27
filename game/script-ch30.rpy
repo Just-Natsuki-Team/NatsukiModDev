@@ -63,6 +63,23 @@ label ch30_loop:
             day_check()
             LAST_DAY_CHECK = _now.day
 
+        #TODO:(?) change this to use datetime.now() instead of time.time() if necessary
+        if persistent.next_weather_call_time and time.time() >=  persistent.next_weather_call_time:
+            if not persistent.is_weather_tracking_set_up:
+                push("talk_weather_setup_part2")
+            else:
+                last_weather_long = persistent.current_weather_long
+                last_weather_short = persistent.current_weather_short
+
+                persistent.current_weather_long, persistent.current_weather_short = weather.Weather.get_weather_detail()
+
+                if last_weather_long != persistent.current_weather_long:
+                    #TODO: change in-game weather, push topic about the change in weather etc.
+                    pass
+
+                # Queue a new call in 30 seconds
+                weather.set_next_weather_call_time(30)
+
         #We'll also check if we need to redraw the room
         #main_background.check_redraw()
 
@@ -124,6 +141,10 @@ label call_next_topic:
             #Now manage return keys
             if "derandom" in return_keys:
                 topic_obj.random = False
+
+            if "lock" in return_keys:
+                if topic_obj:
+                    topic_obj.unlocked = False
 
     #This topic might quit
     if "quit" in return_keys:
