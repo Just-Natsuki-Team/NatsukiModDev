@@ -871,7 +871,7 @@ label talk_weather_setup_part1:
                     n "Alright so one sec I'll just make a quick form for you to type in"
                     $ renpy.pause(3.0, hard=True)
                     n "Alright here it comes!"
-                    $ persistent.api_key = txt_input("API key here: ")
+                    $ persistent.weather_api_key = txt_input("API key here: ")
                     n "Thanks a bunch!"
                     n "Seems like it might take a while to activate"
                     n "I'll tell you once something changes"
@@ -895,7 +895,7 @@ init 5 python:
     )
 
 label talk_weather_setup_part2:
-    if not weather.is_api_key_valid(persistent.api_key):
+    if not weather.is_api_key_valid(persistent.weather_api_key):
         n "Hey about that weather thing"
         n "It's been like 2 hours and still nothing's happened"
         n "You sure you gave me the right thing?"
@@ -905,8 +905,8 @@ label talk_weather_setup_part2:
         while i<5:
             $ i+=1
             n "Let's try this again"
-            $ persistent.api_key = txt_input("API key: ")
-            if not weather.is_api_key_valid(persistent.api_key):
+            $ persistent.weather_api_key = txt_input("API key: ")
+            if not weather.is_api_key_valid(persistent.weather_api_key):
                 #TODO: help player troubleshoot this
                 n "Still nothing..."
             else:

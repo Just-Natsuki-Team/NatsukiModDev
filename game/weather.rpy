@@ -15,6 +15,12 @@ init -1 python in weather:
             string
         OUT:
             dictionary
+
+        note: This automaticaly converts types
+            E.G.:
+                IN: "{x : 100}"
+
+                OUT: {"x" : 100} instead of {"x" : "100"}
         """
         return json.loads(string)
 
@@ -49,20 +55,34 @@ init -1 python in weather:
             url += "{0}={1}&".format(key, parameters[key])
 
         # And lastly append API key
-        url += "appid={0}".format(store.persistent.api_key)
+        url += "appid={0}".format(store.persistent.weather_api_key)
 
         return str(url)
 
     def make_request(url):
         """
+        Makes a request to url
 
+        IN:
+            url - <string>
+        OUT:
+            raw html
+
+        note:
+            This is intended to be used with OpenWeatherMap API as such
+            if an HTTP error occurs the error code is returned in format {"cod" : [error code]}
+            because of this, refrain from using it for other purposes
         """
-        error_code = 200
+        # Default response is None
         response = None
+        # try to make a request
+        # if successful
+        ## set response to it's raw html
         try:
             request = urllib2.urlopen(url)
             response = request.read()
-
+        # else
+        ## return HTTP error code in an acceptable format
         except urllib2.HTTPError, err:
             response = "{{\"cod\":{0}}}".format(err.code)
 
@@ -164,32 +184,31 @@ init -1 python in weather:
 
     def handle_other_errors(response_code):
         """
-            Checks for other common error codes
+            Handles other common error codes
 
             IN:
                 response code from an API call - <int>
         """
         if response_code == 429:
+            utils.log("ERROR: OpenWeatherMap error 429. Exceeded rate limit of 60 calls/min.", utils.SEVERITY_ERR)
             raise Exception("exceeded 60 calls per minute! This shouldn't happen under any circumstances, needs fix now!")
-            # we are exceeding rate limit of 60 calls/min
-            # needs to be fixed ASAP!
+            # TODO: do not raise an exception in production. Should be resolved in testing.
 
         if response_code in [500, 502, 503, 504]:
-            pass
+            utils.log("ERROR: API call to OpenWeatherMap resulted in {0} response code".format(response_code), utils.SEVERITY_ERR)
             # Something went horribly, horribly wrong
             # Good news tho! It's not our fault, yay!
+            #TODO: Log whole API response for debugging purposes
             #TODO: Have Natsuki handle the situation in a non-immersion-breaking way
             ###### Probably ask the player if they could contact us
 
     def get_location_dict(longitude=None, latitude=None):
         """
-            Returns a dictionary with all known information about players location
-            note: all location info should be stored as a string to avoid constant conversion
+            Returns a dictionary with player's latitude and longitude
+            in a format understandable by OWM API
+            note: coordinates should be stored as a string to avoid constant conversion
 
             IN:
-                city - <string> city name
-                country - <string> country code
-                state - <string> state code
                 longitude - <string> longitude coordinates
                 latitude - <string> latitude coordinates
             OUT:
@@ -216,25 +235,32 @@ init -1 python in weather:
             OUT:
                 merged dictionary
         """
+        # combine the two dictionaries without modifying either of them
         params = preferences.copy()
-        params.update(location)
+        params.update(
+            get_location_dict(
+            store.persistent.latitude,
+            store.persistent.longitude
+            )
+        )
 
         return params
 
     def set_next_weather_call_time(seconds):
+        """
+        Sets a time next OWM API call should be made
+
+        IN:
+            in how many seconds should it be called
+
+        note: is a function solely for easier queuing in renpy dialogue
+        """
         store.persistent.next_weather_call_time = time.time()+seconds
 
-    city = "london"
-    longitude = None
-    latitude = None
-    country = None
-    api_key = "2c2f369ad4987a01f5de4c149665c5fd"
-
+    #TODO: persist this
     preferences = {
         "units" : "metric"
     }
-
-    location = get_location_dict(longitude, latitude)
 
     class Weather():
 
@@ -771,8 +797,11 @@ init -1 python in weather:
                     Clouds
             """
             params = get_parameters_for_call()
-
-            response = get_api_call_info(store.persistent.api_key, params)
+            try:
+                response = get_api_call_info(store.persistent.weather_api_key, params)
+                utils.log("INFO: Made succesfull API call to OpenWeatherMap")
+            except Exception as e:
+                utils.log("ERROR: While making an API call to OpenWeatherMap an exception occured. {0}".format(e), utils.SEVERITY_ERR)
 
             # "weather" - weather info
             # [0] - primary weather info
@@ -792,20 +821,29 @@ init -1 python in weather:
                         "snow" : <int>,
                         "clouds" : <int>,
                         "clear" : <bool>,
-                        "special" : <string?>
+                        "special" : <string?>,
+                        "wind" : <int>,
+                        "temp" : <int>
                     }
 
                     thunder : intensity of a thunderstorm
-                    drizzle : intensity of a drizzle
+                    drizzle : intensity of a drizzle (article correct?)
                     rain    : intensity of rain
                     snow    : intensity of snowing
                     clouds  : percentage of cloud sky coverage
                     clear   : True or False
-                    special : special weather events (dust storm, tornado, volcanic ash etc.)
+                    special : special weather events (dust storm, tornado, volcanic ash etc.), can be None
+                    "wind"  : wind speed in m/s
+                    "temp"  : temperature in °C
             """
             params = get_parameters_for_call()
 
-            response = get_api_call_info(store.persistent.api_key, params)
+            # try to make an API call
+            try:
+                response = get_api_call_info(store.persistent.weather_api_key, params)
+                utils.log("INFO: Made succesfull API call to OpenWeatherMap")
+            except Exception as e:
+                utils.log("ERROR: While making an API call to OpenWeatherMap an exception occured. {0}".format(e), utils.SEVERITY_ERR)
 
             # Get primary weather info
             weather_info = response["weather"][0]
@@ -829,6 +867,9 @@ init -1 python in weather:
             if "wind" in response:
                 wind_info = response["wind"]["speed"]
                 parsed_weather["wind"] = wind_info
+            # else set it to 0
+            else:
+                parsed_weather["wind"] = 0
 
             return parsed_weather, weather_short
 
@@ -839,39 +880,72 @@ init -1 python:
     import time
 
     def open_browser(url):
+        """
+            Opens a new tab/window in the default browser with the specified url
+
+            IN:
+                url - <string>
+        """
         webbrowser.open(url)
 
 
     def open_maps(latitude, longitude):
+        """
+            Opens google maps in a new tab/window in the default browser with specified coordinates
+        """
         url = "https://www.google.com/maps/place/{0},{1}".format(latitude, longitude)
         webbrowser.open(url)
 
     def open_txt(file):
         """
-
+            Opens a txt file in default txt editor
         """
         os.startfile(file)
 
     def txt_input(pre_format_string=""):
         """
+            Creates a new temporary txt file and opens it in default txt editor
+            File will have pre_format_string written in it before opening the file
+            Then it will wait until the user closes it
+            Returns what the user typed in or None if file doesn't start with pre_format_string
+            Deletes both the temporary text file and it's temporary folder parent
 
+            note: should be used only when user is expected to need to paste something
+                  otherwise use renpy.input()
+
+            IN:
+                pre_format_string - <string> a pre-formated string
+            OUT:
+                user's input<string> or <None>
         """
+        #NOTE: might not be necessary to create a new folder for it
+        ###### is done purely to avoid possible issue with overwriting an existing file
         if not os.path.exists(".temp_input"):
             os.makedirs(".temp_input")
 
+        # Create a new file in our new folder
         file = open(".temp_input\\__temp_input__.txt", "w")
+        # If for some reason the file already existed, delete it's content
         file.truncate(0)
+        # Write our preformatted string into it
         file.write(pre_format_string)
         file.close()
 
+        # Make a new proccess that opens our file (sorry for wrong terminology)
         process = subprocess.Popen(["notepad.exe", ".temp_input\\__temp_input__.txt"])
+        # Wait until process is terminated
         process.wait()
+        # When file is closed open it and read it's content
         file = open(".temp_input\\__temp_input__.txt", "r")
         content = file.read()
+        #if file still starts with our preformatted string
+        ## strip it's content of the pre-format string
         if content[:len(pre_format_string)] == pre_format_string:
             content = content[len(pre_format_string):]
+
         else:
             content = None
+        # close file, delete it, delete it's parent folder
         file.close()
         os.remove(".temp_input\\__temp_input__.txt")
         os.rmdir(".temp_input")
@@ -883,41 +957,69 @@ init -1 python in location:
     import store
 
     def get_coords_by_ip():
+        """
+            Returns coordinates based on users ip adress
+            note: for accuracy issues and possibility of VPN usage this should be used only if other methods fail
+
+            OUT:
+                (latitude, longitude) or None if fail
+        """
+        #try to get coordinates
         try:
             g = geocoder.ip('me')
 
+            # if no exception occured but something still went wrong return None
             if g.status != 'OK':
-                return False
+                return None
 
             return (g.lat, g.lng)
+        #if an exception occurs, catch it and return None
         except:
-            return False
+            return None
 
     def get_coords_by_city(city, country=None):
+        """
+            Returns coordinates of a city from a lookup file
+
+            IN:
+                city - <string>
+                country - <string?> (optional) two-letter code of a country
+            OUT:
+                0, (None, None) - if no occurance of city name in lookup
+                1, (latitude, longitude) if a single of city name found
+                2, (None, NOne) - if multiple occurances of city name found
+        """
+        # Open lookup file, read it's content and close it
         lookup_file = open("countries_lookup.txt", "r")
         lookup = lookup_file.read()
         lookup_file.close()
+
+        # if country wasn't inputted search only by city name
         if not country:
             city_occurrences = lookup.count("\n{0},".format(city))
+        # else search by city and country
         else:
             city_occurrences = lookup.count("\n{0},{1},".format(city, country))
 
         if city_occurrences == 0:
             return 0, (None, None)
+
         elif city_occurrences == 1:
-            return 1, get_coords_from_lookup(city)
+            # find starting index of the line our city is on
+            if not country:
+                city_line_start = lookup.find("\n{0},".format(city))+1
+            else:
+                city_line_start = lookup.find("\n{0},{1},".format(city, country))+1
+
+            # find ending index of the line (next new line after starting index)
+            city_line_end = lookup.find('\n', city_line_start)
+            # get only the line
+            city_line = lookup[city_line_start:city_line_end]
+            # split it by ','
+            ## [city_name, country, latitude, longitude, region/state]
+            city_line = city_line.split(',')
+
+            return 1, (city_line[2], city_line[3])
+
         elif city_occurrences > 1:
             return 2, (None, None)
-
-    def get_coords_from_lookup(city):
-        lookup_file = open("countries_lookup.txt", "r")
-        lookup = lookup_file.read()
-        lookup_file.close()
-        lookup_format = "\n{0},AA,".format(city)
-        city_line_start = lookup.find("\n{0},".format(city))+1
-        city_line_end = lookup.find('\n', city_line_start)
-
-        city_line = lookup[city_line_start:city_line_end]
-
-        city_line = city_line.split(',')
-        return (city_line[2], city_line[3])

@@ -12,6 +12,7 @@ label ch30_autoload:
         config.allow_skipping = False
 
     #Do all the things here for initial setup/flow hijacking
+    $ weather.is_api_key_valid(persistent.weather_api_key)
 
     #FALL THROUGH
 
@@ -74,7 +75,7 @@ label ch30_loop:
                 persistent.current_weather_long, persistent.current_weather_short = weather.Weather.get_weather_detail()
 
                 if last_weather_long != persistent.current_weather_long:
-                    #TODO: change in-game weather, push topic about the change in weather etc.
+                    #TODO: change in-game weather, push topic talking about the change in weather etc.
                     pass
 
                 # Queue a new call in 30 seconds
