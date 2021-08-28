@@ -12,26 +12,19 @@ init python in greetings:
         """
         # If the player didn't make an admission that had Natsuki make them leave, pick a random greeting
         # based on the player's affinity
-        if not store.persistent.jn_player_admission_type_on_quit:
-            return random.choice(
-                store.Topic.filter_topics(
-                    GREETING_MAP.values(),
-                    affinity=store.jn_globals.current_affinity_state,
-                    excludes_categories=["Admission"]
-                )
-            ).label
+        _kwargs = dict()
+        
+        _kwargs.update(
+            {"excludes_categories": ["Admission"]} if not store.persistent.jn_player_admission_type_on_quit else {"additional_properties": [("admission_type", store.persistent.jn_player_admission_type_on_quit)]}
+        )
 
-        # Otherwise, pick a greeting that matches the admission made
-        else:
-            return random.choice(
-                store.Topic.filter_topics(
-                    GREETING_MAP.values(),
-                    affinity=store.jn_globals.current_affinity_state,
-                    additional_properties=[
-                        ("admission_type", store.persistent.jn_player_admission_type_on_quit),
-                    ]
-                )
-            ).label
+        return random.choice(
+            store.Topic.filter_topics(
+                GREETING_MAP.values(),
+                affinity=store.jn_globals.current_affinity_state,
+                **kwargs
+            )
+        ).label
 
 init 1 python:
     try:
