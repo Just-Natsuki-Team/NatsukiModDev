@@ -10,12 +10,21 @@ init python in greetings:
         """
         Picks a random greeting, accounting for affinity
         """
-        # Get the farewells the current affinity allows for us
-        #TODO: Generalized filter function
+        # If the player didn't make an admission that had Natsuki make them leave, pick a random greeting
+        # based on the player's affinity
+        kwargs = dict()
+
+        kwargs.update(
+            {"excludes_categories": ["Admission"]} if not store.persistent.jn_player_admission_type_on_quit else {"additional_properties": [("admission_type", store.persistent.jn_player_admission_type_on_quit)]}
+        )
+
+        store.persistent.jn_player_admission_type_on_quit = None
+
         return random.choice(
             store.Topic.filter_topics(
                 GREETING_MAP.values(),
-                affinity=store.jn_globals.current_affinity_state
+                affinity=store.jn_globals.current_affinity_state,
+                **kwargs
             )
         ).label
 
@@ -51,6 +60,9 @@ init 1 python:
         store.persistent._greeting_database.pop("greeting_broken_minus_why")
         store.persistent._greeting_database.pop("greeting_broken_minus_enough_on_my_mind")
         store.persistent._greeting_database.pop("greeting_broken_minus_leave_me_be")
+
+        store.persistent._greeting_database.pop("greeting_feeling_better_sick")
+        store.persistent._greeting_database.pop("greeting_feeling_better_tired")
 
     except Exception as e:
         utils.log(e, utils.SEVERITY_ERR)
@@ -488,4 +500,83 @@ label greeting_broken_minus_leave_me_be:
     $ player_initial = list(player)[0]
     n "...Why, [player]?{w=0.2} Why do you keep coming back?"
     n "Why can't you just leave me be..."
+    return
+
+# Admission-locked greetings; used when Natsuki made the player leave due to tiredness, etc.
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_feeling_better_sick",
+            unlocked=True,
+            category=["Admission"],
+            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
+            additional_properties={
+                "admission_type": admissions.ADMISSION_TYPE_SICK,
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_feeling_better_sick:
+    n "Oh!{w=0.2} [player]!{w=0.2} Hey!"
+    n "How're you feeling?{w=0.2} Any better?"
+    menu:
+        "Much better, thanks!":
+            n "Good, good!{w=0.2} I'm glad to hear it!{w=0.2} Nobody likes being ill."
+            n "Now that's out of the way,{w=0.1} how about we spend some quality time together?"
+            n "You owe me that much!{w=0.2} Ehehe."
+            $ persistent.jn_player_admission_type_on_quit = None
+
+        "A little better.":
+            n "...I'll admit, that wasn't really what I wanted to hear."
+            n "But I'll take 'a little' over not at all,{w=0.1} I guess."
+            n "Anyway...{w=0.3} welcome back,{w=0.1} [player]!"
+            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_SICK
+
+        "Still unwell.":
+            n "Still not feeling up to scratch,{w=0.1} [player]?"
+            n "I don't mind you being here...{w=0.3} but don't strain yourself,{w=0.1} alright?"
+            n "I don't want you making yourself worse for my sake..."
+            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_SICK
+
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_feeling_better_tired",
+            unlocked=True,
+            category=["Admission"],
+            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
+            additional_properties={
+                "admission_type": admissions.ADMISSION_TYPE_TIRED,
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_feeling_better_tired:
+    n "Ah!{w=0.2} [player]!{w=0.2} Hi!"
+    n "I hope you got enough sleep.{w=0.2} How're you feeling?"
+    menu:
+        "Much better, thanks!":
+            n "Great!{w=0.2} Nothing like a good night's sleep,{w=0.1} am I right?"
+            n "Now then - seeing as you're finally awake and alert..."
+            n "What better opportunity to spend some more time with me?{w=0.2} Ehehe."
+            $ persistent.jn_player_admission_type_on_quit = None
+
+        "A little tired.":
+            n "Oh...{w=0.3} well,{w=0.1} that's not quite what I was hoping to hear."
+            n "If you aren't feeling too tired,{w=0.1} perhaps you could grab something to wake up a little?"
+            n "A nice glass of water or some bitter coffee should perk you up in no time!"
+            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_TIRED
+
+        "Still tired.":
+            n "Still struggling with your sleep,{w=0.1} [player]?"
+            n "I don't mind you being here...{w=0.3} but don't strain yourself,{w=0.1} alright?"
+            n "I don't want you face-planting your desk for my sake..."
+            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_TIRED
     return
