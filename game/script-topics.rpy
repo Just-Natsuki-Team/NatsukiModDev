@@ -871,7 +871,12 @@ label talk_weather_setup_part1:
                     n "Alright so one sec I'll just make a quick form for you to type in"
                     $ renpy.pause(3.0, hard=True)
                     n "Alright here it comes!"
-                    $ persistent.weather_api_key = txt_input("API key here: ")
+                    n "Just save and close it when you're done"
+                    while not persistent.weather_api_key:
+                        $ persistent.weather_api_key = txt_input("API key here: ")
+                        if not persistent.weather_api_key:
+                            n "Hey! I see what you're doing!"
+                            n "Let's try this again and do it properly this time"
                     n "Thanks a bunch!"
                     n "Seems like it might take a while to activate"
                     n "I'll tell you once something changes"

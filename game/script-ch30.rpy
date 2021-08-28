@@ -12,7 +12,10 @@ label ch30_autoload:
         config.allow_skipping = False
 
     #Do all the things here for initial setup/flow hijacking
-    $ weather.is_api_key_valid(persistent.weather_api_key)
+    python:
+        if persistent.weather_api_key:
+            if not weather.is_api_key_valid(persistent.weather_api_key):
+                utils.log("ERROR: OWM API key is no longer valid.", utils.SEVERITY_ERR)
 
     #FALL THROUGH
 

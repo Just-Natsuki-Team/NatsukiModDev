@@ -190,12 +190,12 @@ init -1 python in weather:
                 response code from an API call - <int>
         """
         if response_code == 429:
-            utils.log("ERROR: OpenWeatherMap error 429. Exceeded rate limit of 60 calls/min.", utils.SEVERITY_ERR)
+            store.utils.log("ERROR: OpenWeatherMap error 429. Exceeded rate limit of 60 calls/min.", store.utils.SEVERITY_ERR)
             raise Exception("exceeded 60 calls per minute! This shouldn't happen under any circumstances, needs fix now!")
             # TODO: do not raise an exception in production. Should be resolved in testing.
 
         if response_code in [500, 502, 503, 504]:
-            utils.log("ERROR: API call to OpenWeatherMap resulted in {0} response code".format(response_code), utils.SEVERITY_ERR)
+            store.utils.log("ERROR: API call to OpenWeatherMap resulted in {0} response code".format(response_code), store.utils.SEVERITY_ERR)
             # Something went horribly, horribly wrong
             # Good news tho! It's not our fault, yay!
             #TODO: Log whole API response for debugging purposes
@@ -799,9 +799,9 @@ init -1 python in weather:
             params = get_parameters_for_call()
             try:
                 response = get_api_call_info(store.persistent.weather_api_key, params)
-                utils.log("INFO: Made succesfull API call to OpenWeatherMap")
+                store.utils.log("INFO: Made succesfull API call to OpenWeatherMap")
             except Exception as e:
-                utils.log("ERROR: While making an API call to OpenWeatherMap an exception occured. {0}".format(e), utils.SEVERITY_ERR)
+                store.utils.log("ERROR: While making an API call to OpenWeatherMap an exception occured. {0}".format(e), store.utils.SEVERITY_ERR)
 
             # "weather" - weather info
             # [0] - primary weather info
@@ -841,9 +841,9 @@ init -1 python in weather:
             # try to make an API call
             try:
                 response = get_api_call_info(store.persistent.weather_api_key, params)
-                utils.log("INFO: Made succesfull API call to OpenWeatherMap")
+                store.utils.log("INFO: Made succesfull API call to OpenWeatherMap")
             except Exception as e:
-                utils.log("ERROR: While making an API call to OpenWeatherMap an exception occured. {0}".format(e), utils.SEVERITY_ERR)
+                store.utils.log("ERROR: While making an API call to OpenWeatherMap an exception occured. {0}".format(e), store.utils.SEVERITY_ERR)
 
             # Get primary weather info
             weather_info = response["weather"][0]
@@ -958,7 +958,7 @@ init -1 python in location:
 
     def get_coords_by_ip():
         """
-            Returns coordinates based on users ip adress
+            Returns coordinates tuple based on users ip adress
             note: for accuracy issues and possibility of VPN usage this should be used only if other methods fail
 
             OUT:
@@ -972,7 +972,7 @@ init -1 python in location:
             if g.status != 'OK':
                 return None
 
-            return (g.lat, g.lng)
+            return (str(g.lat), str(g.lng))
         #if an exception occurs, catch it and return None
         except:
             return None
