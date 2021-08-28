@@ -33,6 +33,9 @@ label ch30_init:
     #Let's pick a greeting
     $ push(greetings.select_greeting())
 
+    # Reset the previous admission, now that Natsuki will have picked one if relevant
+    $ persistent.jn_player_admission_type_on_quit = None
+
     $ main_background.draw(full_redraw=True)
     #show natsuki a zorder 3
     show Natsuki zorder 3

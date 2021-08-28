@@ -557,6 +557,9 @@ init 5 python:
     )
 
 label admission_tired:
+    # Calculate how long the player has been here so far
+    $ total_hours_in_session = store.utils.get_current_session_length().total_seconds() / 3600
+
     if admissions.last_admission_type == admissions.ADMISSION_TYPE_TIRED:
         n "Huh?{w=0.2} You're still tired?"
         n "Did you not get any rest,{w=0.1} [player]?"
@@ -598,7 +601,7 @@ label admission_tired:
         n "Just take it easy getting up,{w=0.1} alright?{w=0.2} I don't want you fainting on me."
         n "And trust me,{w=0.1} I don't think you want that either..."
 
-    elif datetime.datetime.now() - persistent.jn_last_visited_date).seconds / 3600 > 24:
+    elif total_hours_in_session >= 24:
         n "[player]!"
         n "You've been here for like a day now{w=0.1} -{w=0.1} It's no wonder you're tired!"
         n "You better get some sleep right now!{w=0.2} And I don't wanna see you come back until you've slept!"
@@ -610,7 +613,7 @@ label admission_tired:
         $ persistent.jn_player_admission_type_on_quit = admissions.ADMISSION_TYPE_TIRED
         return { "quit": None }
 
-    elif datetime.datetime.now() - persistent.jn_last_visited_date).seconds / 3600 > 12:
+    elif total_hours_in_session >= 12:
         n "[player]!"
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
         n "I'm not surprised you're feeling tired{w=0.1} -{w=0.1} you've been here ages,{w=0.1} [chosen_tease]!"
