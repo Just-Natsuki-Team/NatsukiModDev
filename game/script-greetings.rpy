@@ -12,9 +12,9 @@ init python in greetings:
         """
         # If the player didn't make an admission that had Natsuki make them leave, pick a random greeting
         # based on the player's affinity
-        _kwargs = dict()
-        
-        _kwargs.update(
+        kwargs = dict()
+
+        kwargs.update(
             {"excludes_categories": ["Admission"]} if not store.persistent.jn_player_admission_type_on_quit else {"additional_properties": [("admission_type", store.persistent.jn_player_admission_type_on_quit)]}
         )
 
