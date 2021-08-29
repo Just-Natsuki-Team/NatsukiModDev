@@ -57,39 +57,6 @@ init python in farewells:
         if random.choice([True, False]):
             renpy.call_in_new_context("farewell_extra_trust")
 
-    def get_time_in_session_descriptor():
-        """
-        Get a descriptor based on the number of minutes the player has spent in the session, up to 30 minutes
-
-        OUT:
-            Brief descriptor relating to the number of minutes spent in the session
-        """
-        minutes_in_session = store.utils.get_current_session_length().total_seconds() / 60
-
-        if minutes_in_session <= 1:
-            return "like a minute"
-
-        elif minutes_in_session <= 3:
-            return "a couple of minutes"
-
-        elif minutes_in_session > 3 and minutes_in_session <= 5:
-            return "like five minutes"
-
-        elif minutes_in_session > 5 and minutes_in_session <= 10:
-            return "around ten minutes"
-
-        elif minutes_in_session > 10 and minutes_in_session <= 15:
-            return "around fifteen minutes"
-
-        elif minutes_in_session > 15 and minutes_in_session <= 20:
-            return "around twenty minutes"
-
-        elif minutes_in_session <= 30:
-            return "about half an hour"
-
-        else:
-            return "a while"
-
 init 1 python:
     # DEBUG: TODO: Resets - remove these later, once we're done tweaking affinity/trust!
     try:
@@ -141,6 +108,11 @@ init 1 python:
 
     except Exception as e:
         utils.log(e, utils.SEVERITY_ERR)
+
+label farewell_start:
+    $ push(farewells.select_farewell())
+    jump call_next_topic
+
 
 # LOVE+ farewells
 init 5 python:
@@ -929,7 +901,7 @@ init 5 python:
 
 label farewell_short_session_ask:
     n "What?{w=0.2} You're leaving?{w=0.2} But you've barely been here at all today,{w=0.1} [player]!"
-    $ time_in_session_descriptor = farewells.get_time_in_session_descriptor()
+    $ time_in_session_descriptor = utils.get_time_in_session_descriptor()
     n "In fact, you've only been here for [time_in_session_descriptor]!"
     n "You're sure you can't stay just a little longer?"
     menu:
@@ -1004,7 +976,7 @@ init 5 python:
 
 label farewell_short_session_ask_alt:
     n "N-{w=0.1}now wait just one second,{w=0.1} [player]!{w=0.2} This isn't fair at all!"
-    $ time_in_session_descriptor = farewells.get_time_in_session_descriptor()
+    $ time_in_session_descriptor = utils.get_time_in_session_descriptor()
     n "You've barely been here [time_in_session_descriptor],{w=0.1} and you're already going?"
     n "Come on!{w=0.2} You'll stay a little longer,{w=0.1} won't you?"
     menu:

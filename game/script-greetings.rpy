@@ -513,7 +513,7 @@ init 5 python:
             category=["Admission"],
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
             additional_properties={
-                "admission_type": admissions.ADMISSION_TYPE_SICK,
+                "admission_type": admissions.TYPE_SICK,
             }
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -533,13 +533,13 @@ label greeting_feeling_better_sick:
             n "...I'll admit, that wasn't really what I wanted to hear."
             n "But I'll take 'a little' over not at all,{w=0.1} I guess."
             n "Anyway...{w=0.3} welcome back,{w=0.1} [player]!"
-            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_SICK
+            $ admissions.last_admission_type = admissions.TYPE_SICK
 
         "Still unwell.":
             n "Still not feeling up to scratch,{w=0.1} [player]?"
             n "I don't mind you being here...{w=0.3} but don't strain yourself,{w=0.1} alright?"
             n "I don't want you making yourself worse for my sake..."
-            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_SICK
+            $ admissions.last_admission_type = admissions.TYPE_SICK
 
     return
 
@@ -552,7 +552,7 @@ init 5 python:
             category=["Admission"],
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
             additional_properties={
-                "admission_type": admissions.ADMISSION_TYPE_TIRED,
+                "admission_type": admissions.TYPE_TIRED,
             }
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -572,11 +572,11 @@ label greeting_feeling_better_tired:
             n "Oh...{w=0.3} well,{w=0.1} that's not quite what I was hoping to hear."
             n "If you aren't feeling too tired,{w=0.1} perhaps you could grab something to wake up a little?"
             n "A nice glass of water or some bitter coffee should perk you up in no time!"
-            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_TIRED
+            $ admissions.last_admission_type = admissions.TYPE_TIRED
 
         "Still tired.":
             n "Still struggling with your sleep,{w=0.1} [player]?"
             n "I don't mind you being here...{w=0.3} but don't strain yourself,{w=0.1} alright?"
             n "I don't want you face-planting your desk for my sake..."
-            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_TIRED
+            $ admissions.last_admission_type = admissions.TYPE_TIRED
     return

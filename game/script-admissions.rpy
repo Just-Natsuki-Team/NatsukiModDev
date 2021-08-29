@@ -7,21 +7,31 @@ init 0 python in admissions:
     ADMISSION_MAP = dict()
 
     # Admission types
-    ADMISSION_TYPE_ANGRY = 0
-    ADMISSION_TYPE_ANXIOUS = 1
-    ADMISSION_TYPE_ASHAMED = 2
-    ADMISSION_TYPE_CONFIDENT = 3
-    ADMISSION_TYPE_EXCITED = 4
-    ADMISSION_TYPE_HAPPY = 5
-    ADMISSION_TYPE_HUNGRY = 6
-    ADMISSION_TYPE_INSECURE = 7
-    ADMISSION_TYPE_PROUD = 8
-    ADMISSION_TYPE_SAD = 9
-    ADMISSION_TYPE_SICK = 10
-    ADMISSION_TYPE_TIRED = 11
+    TYPE_ANGRY = 0
+    TYPE_ANXIOUS = 1
+    TYPE_ASHAMED = 2
+    TYPE_CONFIDENT = 3
+    TYPE_EXCITED = 4
+    TYPE_HAPPY = 5
+    TYPE_HUNGRY = 6
+    TYPE_INSECURE = 7
+    TYPE_PROUD = 8
+    TYPE_SAD = 9
+    TYPE_SICK = 10
+    TYPE_TIRED = 11
 
     # The last admission the player gave to Natsuki
     last_admission_type = None
+
+    def get_all_admissions():
+        """
+        Gets all admission topics which are available
+        """
+        return store.Topic.filter_topics(
+            ADMISSION_MAP,
+            affinity=store.jn_globals.current_affinity_state,
+            unlocked=True
+        )
 
 init 1 python:
     try:
@@ -42,6 +52,10 @@ init 1 python:
     except Exception as e:
         utils.log(e, utils.SEVERITY_ERR)
 
+label player_admissions_start:
+    n "Don't forget to finish this!"
+    return
+
 init 5 python:
     registerTopic(
         Topic(
@@ -54,7 +68,7 @@ init 5 python:
     )
 
 label admission_angry:
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_ANGRY:
+    if admissions.last_admission_type == admissions.TYPE_ANGRY:
         n "[player]...{w=0.3} you're still mad?"
         n "Did you spend some time outside,{w=0.1} like I said?"
         n "..."
@@ -76,7 +90,7 @@ label admission_angry:
         n "Why don't you take a few minutes outside too.{w=0.2} For me?"
         n "You'll feel a little better soon.{w=0.2} I promise!"
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_ANGRY
+    $ admissions.last_admission_type = admissions.TYPE_ANGRY
     return
 
 init 5 python:
@@ -91,7 +105,7 @@ init 5 python:
     )
 
 label admission_anxious:
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_ANXIOUS:
+    if admissions.last_admission_type == admissions.TYPE_ANXIOUS:
         n "Still feeling anxious,{w=0.1} [player]?"
         n "..."
         n "I wish I could do more to help you..."
@@ -123,7 +137,7 @@ label admission_anxious:
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
             n "I love you, [chosen_endearment]."
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_ANXIOUS
+    $ admissions.last_admission_type = admissions.TYPE_ANXIOUS
     return
 
 init 5 python:
@@ -138,7 +152,7 @@ init 5 python:
     )
 
 label admission_ashamed:
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_ASHAMED:
+    if admissions.last_admission_type == admissions.TYPE_ASHAMED:
         n "[player]...{w=0.3} you're still feeling ashamed of yourself?"
         n "Well,{w=0.1} I'm not going to give up on you {i}that{/i} easily,{w=0.1} you know!"
         n "Just keep trying your best to put things right,{w=0.1} okay?"
@@ -166,7 +180,7 @@ label admission_ashamed:
 
         n "I believe in you,{w=0.1} [player]!"
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_ASHAMED
+    $ admissions.last_admission_type = admissions.TYPE_ASHAMED
     return
 
 init 5 python:
@@ -181,7 +195,7 @@ init 5 python:
     )
 
 label admission_confident:
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_CONFIDENT:
+    if admissions.last_admission_type == admissions.TYPE_CONFIDENT:
         n "Still full of confidence,{w=0.1} I see?"
         n "Well,{w=0.1} I'm glad to hear it!"
 
@@ -189,7 +203,7 @@ label admission_confident:
             n "You've got a lot to be confident of,{w=0.1} [player]."
             n "You better remember that!"
 
-    elif admissions.last_admission_type == admissions.ADMISSION_TYPE_INSECURE:
+    elif admissions.last_admission_type == admissions.TYPE_INSECURE:
         n "Really?{w=0.2} That's awesome,{w=0.1} [player]!"
         n "I was hoping you'd snap out of those feelings sooner rather than later."
         n "It worries me when you talk like that,{w=0.1} you know..."
@@ -212,7 +226,7 @@ label admission_confident:
         n "Especially if you messed up,{w=0.1} or if you aren't feeling well."
         n "But if you're feeling that way about yourself,{w=0.1} I'm not gonna rob you of it!"
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_CONFIDENT
+    $ admissions.last_admission_type = admissions.TYPE_CONFIDENT
     return
 
 init 5 python:
@@ -227,7 +241,7 @@ init 5 python:
     )
 
 label admission_excited:
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_EXCITED:
+    if admissions.last_admission_type == admissions.TYPE_EXCITED:
         n "Still pumped up,{w=0.1} are we [player]?"
         n "I bet you just can't wait,{w=0.1} huh?{w=0.2} Ehehe."
 
@@ -236,7 +250,7 @@ label admission_excited:
         n "Whatever it is,{w=0.1} I'm happy to hear you're looking forward to it!"
         n "It's always awesome to have something you can get excited over,{w=0.1} right?"
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_EXCITED
+    $ admissions.last_admission_type = admissions.TYPE_EXCITED
     return
 
 init 5 python:
@@ -251,12 +265,12 @@ init 5 python:
     )
 
 label admission_happy:
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_HAPPY:
+    if admissions.last_admission_type == admissions.TYPE_HAPPY:
         n "Wow...{w=0.3} it's all sunshine and rainbows with you today,{w=0.1} isn't it?"
         n "Ahaha!"
         n "Keep on smiling,{w=0.1} [player]!"
 
-    elif admissions.last_admission_type == admissions.ADMISSION_TYPE_ANGRY or admissions.last_admission_type == admissions.ADMISSION_TYPE_SAD:
+    elif admissions.last_admission_type == admissions.TYPE_ANGRY or admissions.last_admission_type == admissions.TYPE_SAD:
         n "Feeling better now,{w=0.1} [player]?"
         n "I'm glad to hear it!{w=0.2} That's...{w=0.3} honestly a relief,{w=0.1} ahaha..."
 
@@ -268,12 +282,12 @@ label admission_happy:
             n "..."
             n "Jeez...{w=0.3} if you're okay,{w=0.1} then let's get back to it already!"
 
-    elif admissions.last_admission_type == admissions.ADMISSION_TYPE_HUNGRY:
+    elif admissions.last_admission_type == admissions.TYPE_HUNGRY:
         n "Feeling better,{w=0.1} [player]?{w=0.2} I'm not surprised!"
         n "You just aren't yourself when you're hungry.{w=0.2} Ehehe."
         n "Trust me...{w=0.3} I would know."
 
-    elif admissions.last_admission_type == admissions.ADMISSION_TYPE_SICK:
+    elif admissions.last_admission_type == admissions.TYPE_SICK:
         n "Feeling better,{w=0.1} [player]?{w=0.2} I'm glad to hear it!"
         n "Nothing makes you appreciate feeling normal more than being sick,{w=0.1} right?"
 
@@ -282,7 +296,7 @@ label admission_happy:
         n "Well,{w=0.1} I'm glad to hear it!"
         n "If you're happy,{w=0.1} I'm happy!"
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_HAPPY
+    $ admissions.last_admission_type = admissions.TYPE_HAPPY
     return
 
 init 5 python:
@@ -297,7 +311,7 @@ init 5 python:
     )
 
 label admission_hungry:
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_HUNGRY:
+    if admissions.last_admission_type == admissions.TYPE_HUNGRY:
         n "What?{w=0.1} You're still hungry?"
         n "Or did you not get something when I told you to earlier?"
         n "Well...{w=0.3} either way,{w=0.1} get off your butt and go get something then!"
@@ -307,7 +321,7 @@ label admission_hungry:
             n "As much as you probably wish I was,{w=0.1} right?{w=0.2} Ahaha!"
             n "Now get going already!{w=0.2} Bon appetit,{w=0.1} [player]!"
 
-    elif admissions.last_admission_type == admissions.ADMISSION_TYPE_SAD:
+    elif admissions.last_admission_type == admissions.TYPE_SAD:
         n "[player]...{w=0.3} you told me you were sad earier."
         n "I don't mind if you're hungry,{w=0.1} but try not to comfort-eat,{w=0.1} okay?"
         n "You might feel a little better...{w=0.3} but it won't fix what made you sad."
@@ -327,7 +341,7 @@ label admission_hungry:
             n "I want you fighting fit for when we hang out,{w=0.1} 'kay?"
             n "We're gonna have so much to do together,{w=0.1} after all!"
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_HUNGRY
+    $ admissions.last_admission_type = admissions.TYPE_HUNGRY
     return
 
 init 5 python:
@@ -342,7 +356,7 @@ init 5 python:
     )
 
 label admission_insecure:
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_INSECURE:
+    if admissions.last_admission_type == admissions.TYPE_INSECURE:
         n "You're still feeling insecure about yourself,{w=0.1} [player]?"
         n "You remember what I said though,{w=0.1} right?"
         n "Everybody has their own pace.{w=0.2} I don't care what yours is.{w=0.2} We'll take it together."
@@ -377,7 +391,7 @@ label admission_insecure:
                         $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
                         n "I really do love you, [chosen_endearment]."
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_INSECURE
+    $ admissions.last_admission_type = admissions.TYPE_INSECURE
     return
 
 init 5 python:
@@ -392,7 +406,7 @@ init 5 python:
     )
 
 label admission_proud:
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_PROUD:
+    if admissions.last_admission_type == admissions.TYPE_PROUD:
         n "Really,{w=0.1} [player]?{w=0.1} Still gloating,{w=0.1} are we?"
         n "You {i}do{/i} know what they say about pride,{w=0.1} right?"
         n "..."
@@ -406,7 +420,7 @@ label admission_proud:
         n "I'm sure whatever it is,{w=0.1} it's something I can be proud of you for too."
         n "Good work,{w=0.1} [player]!"
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_PROUD
+    $ admissions.last_admission_type = admissions.TYPE_PROUD
     return
 
 init 5 python:
@@ -421,7 +435,7 @@ init 5 python:
     )
 
 label admission_sad:
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_SAD:
+    if admissions.last_admission_type == admissions.TYPE_SAD:
         n "Oh...{w=0.3} I'm really sorry to hear you're still feeling upset,{w=0.1} [player]."
         n "I'm not sure if it's my place to say this,{w=0.1} but..."
         n "Perhaps you have others you can share this with?{w=0.2} Friends,{w=0.1} or family?"
@@ -460,7 +474,7 @@ label admission_sad:
         n "What matters is that you're okay,{w=0.1} [player].{w=0.2} So let's concentrate on fixing that, alright?"
         n "Perhaps talking to me some more might help?{w=0.2} Ahaha..."
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_SAD
+    $ admissions.last_admission_type = admissions.TYPE_SAD
     return
 
 init 5 python:
@@ -475,7 +489,7 @@ init 5 python:
     )
 
 label admission_sick:
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_SICK:
+    if admissions.last_admission_type == admissions.TYPE_SICK:
         n "[player]...{w=0.3} you're still feeling sick?"
         n "How long have you felt like this now?"
         menu:
@@ -520,7 +534,7 @@ label admission_sick:
                 if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVE:
                     n "I love you,{w=0.1} [player].{w=0.2} Please get well soon."
 
-    elif admissions.last_admission_type == admissions.ADMISSION_TYPE_HUNGRY:
+    elif admissions.last_admission_type == admissions.TYPE_HUNGRY:
         n "You know,{w=0.1} you can start to feel unwell if you haven't eaten for a while,{w=0.1} [player]."
         n "Have you eaten something today?{w=0.2} Like a proper meal?"
         menu:
@@ -542,7 +556,7 @@ label admission_sick:
         n "Your health has to come first over our time together."
         n "So...{w=0.3} promise me you'll leave and rest if you have to,{w=0.1} okay?"
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_SICK
+    $ admissions.last_admission_type = admissions.TYPE_SICK
     return
 
 init 5 python:
@@ -560,17 +574,17 @@ label admission_tired:
     # Calculate how long the player has been here so far
     $ total_hours_in_session = store.utils.get_current_session_length().total_seconds() / 3600
 
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_TIRED:
+    if admissions.last_admission_type == admissions.TYPE_TIRED:
         n "Huh?{w=0.2} You're still tired?"
         n "Did you not get any rest,{w=0.1} [player]?"
         n "I don't want you getting all cranky..."
         n "So...{w=0.3} go to bed, alright?"
         n "I'll see you later,{w=0.1} [player]!"
 
-        $ persistent.jn_player_admission_type_on_quit = admissions.ADMISSION_TYPE_TIRED
+        $ persistent.jn_player_admission_type_on_quit = admissions.TYPE_TIRED
         return { "quit": None }
 
-    elif admissions.last_admission_type == admissions.ADMISSION_TYPE_ANGRY or admissions.last_admission_type == admissions.ADMISSION_TYPE_SAD:
+    elif admissions.last_admission_type == admissions.TYPE_ANGRY or admissions.last_admission_type == admissions.TYPE_SAD:
         n "You said you weren't happy earlier,{w=0.1} [player]..."
         n "If you're already tired,{w=0.1} I think you should sleep on it."
         n "Are you gonna turn in,{w=0.1} [player]?"
@@ -579,23 +593,23 @@ label admission_tired:
                 n "Good...{w=0.3} you'll feel better soon,{w=0.1} okay?{w=0.2} I promise."
                 n "Sleep well,{w=0.1} [player]!"
 
-                $ persistent.jn_player_admission_type_on_quit = admissions.ADMISSION_TYPE_TIRED
+                $ persistent.jn_player_admission_type_on_quit = admissions.TYPE_TIRED
                 return { "quit": None }
 
             "No, not yet.":
                 n "Well...{w=0.3} if you're sure,{w=0.1} [player]."
                 n "Let's see if I can't improve your mood,{w=0.1} shall we?"
 
-    elif admissions.last_admission_type == admissions.ADMISSION_TYPE_SICK:
+    elif admissions.last_admission_type == admissions.TYPE_SICK:
         n "I'm really not surprised if you're already sick,{w=0.1} [player]."
         n "You should really go get some rest."
         n "We can talk later,{w=0.1} alright?"
         n "Take it easy,{w=0.1} [player]!"
 
-        $ persistent.jn_player_admission_type_on_quit = admissions.ADMISSION_TYPE_SICK
+        $ persistent.jn_player_admission_type_on_quit = admissions.TYPE_SICK
         return { "quit": None }
 
-    elif admissions.last_admission_type == admissions.ADMISSION_TYPE_HUNGRY:
+    elif admissions.last_admission_type == admissions.TYPE_HUNGRY:
         n "I'm not surprised you're feeling tired if you're hungry!"
         n "Stop sitting around and go eat something,{w=0.1} [player]."
         n "Just take it easy getting up,{w=0.1} alright?{w=0.2} I don't want you fainting on me."
@@ -610,7 +624,7 @@ label admission_tired:
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
         n "Sleep well,{w=0.1} [chosen_tease]!"
 
-        $ persistent.jn_player_admission_type_on_quit = admissions.ADMISSION_TYPE_TIRED
+        $ persistent.jn_player_admission_type_on_quit = admissions.TYPE_TIRED
         return { "quit": None }
 
     elif total_hours_in_session >= 12:
@@ -627,5 +641,5 @@ label admission_tired:
         n "Don't worry about me if you need to rest!{w=0.2} I'll be alright."
         n "Just make sure you let me know when you decide to go,{w=0.1} [player]."
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_TIRED
+    $ admissions.last_admission_type = admissions.TYPE_TIRED
     return

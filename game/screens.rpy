@@ -42,6 +42,7 @@ style categorized_menu_button_text is choice_button_text:
     text_align 0.0
 
 screen categorized_menu(menu_items, category_pane_space, option_list_space, category_length):
+    at categorized_menu_slide_in_right
     style_prefix "categorized_menu"
 
     #Just entered this menu so just need to list categories
@@ -133,6 +134,7 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                             null height 5
 
 
+screen
 ################################################################################
 ## Styles
 ################################################################################

@@ -443,7 +443,7 @@ init 0 python:
         Returns a list of items ready for a menu
 
         IN:
-            menu_topics - array of topics. Recommended input of get_all_topics()
+            menu_topics - List<Topic> of topics
             additional_topics - optional, array of tuples
                 syntax: [("prompt1", "label2"), ("prompt2", "label2"), ...]
         OUT:
@@ -582,6 +582,7 @@ init -999 python in utils:
             ).format(datetime.datetime.now(), message)
         )
 
+init python in utils:
     def get_current_session_length():
         """
         Returns a timedelta object representing the length of the current game session.
@@ -590,6 +591,39 @@ init -999 python in utils:
             datetime.timedelta object representing the length of the current game session
         """
         return datetime.datetime.now() - store.jn_globals.current_session_start_time
+
+    def get_time_in_session_descriptor():
+        """
+        Get a descriptor based on the number of minutes the player has spent in the session, up to 30 minutes
+
+        OUT:
+            Brief descriptor relating to the number of minutes spent in the session
+        """
+        minutes_in_session = get_current_session_length().total_seconds() / 60
+
+        if minutes_in_session <= 1:
+            return "like a minute"
+
+        elif minutes_in_session <= 3:
+            return "a couple of minutes"
+
+        elif minutes_in_session > 3 and minutes_in_session <= 5:
+            return "like five minutes"
+
+        elif minutes_in_session > 5 and minutes_in_session <= 10:
+            return "around ten minutes"
+
+        elif minutes_in_session > 10 and minutes_in_session <= 15:
+            return "around fifteen minutes"
+
+        elif minutes_in_session > 15 and minutes_in_session <= 20:
+            return "around twenty minutes"
+
+        elif minutes_in_session <= 30:
+            return "about half an hour"
+
+        else:
+            return "a while"
 
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
 define audio.t2 = "<loop 4.499>bgm/2.ogg"   #Sayori theme

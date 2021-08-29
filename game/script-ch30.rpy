@@ -143,8 +143,19 @@ label call_next_topic:
     return
 
 
-
 label talk_menu:
+    menu:
+        "Can I we talk about...":
+            jump player_select_topic
+
+        "I feel...":
+            jump player_admissions_start
+
+        "Goodbye.":
+            jump farewell_start
+    return
+
+label player_select_topic:
     python:
         _topics = Topic.filter_topics(
             topics.TOPIC_MAP.values(),
@@ -153,10 +164,6 @@ label talk_menu:
             location=main_background.location.id,
             affinity=jn_globals.current_affinity_state
         )
-        addit_topics = [
-            ("Nevermind", "menu_nevermind"),
-            ("Goodbye", farewells.select_farewell())
-        ]
 
         menu_items = menu_dict(_topics)
 
