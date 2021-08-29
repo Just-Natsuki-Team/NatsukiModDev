@@ -26,6 +26,9 @@ init 0 python in admissions:
     def get_all_admissions():
         """
         Gets all admission topics which are available
+
+        OUT:
+            List<Topic> of admissions which are unlocked and available at the current affinity
         """
         return store.Topic.filter_topics(
             ADMISSION_MAP,
