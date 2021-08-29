@@ -13,6 +13,9 @@ default persistent.jn_screenshot_bad_shots_total = 0
 # Pet data
 default persistent.jn_player_pet = None
 
+# Admissions data
+default persistent.jn_player_admission_type_on_quit = None
+
 #Our main topic pool
 default persistent._event_list = list()
 
@@ -27,6 +30,7 @@ init 0 python:
     TOPIC_TYPE_FAREWELL = "FAREWELL"
     TOPIC_TYPE_GREETING = "GREETING"
     TOPIC_TYPE_NORMAL = "NORMAL"
+    TOPIC_TYPE_ADMISSION = "ADMISSION"
 
     TOPIC_LOCKED_PROP_BASE_MAP = {
         #Things which shouldn't change
@@ -522,6 +526,16 @@ init -990 python in jn_globals:
         "really great",
         "so sweet",
         "the best"
+    ]
+
+    # Names Natsuki may use at the higher levels of affinity to tease her player with
+    DEFAULT_PLAYER_TEASE_NAMES = [
+        "dummy",
+        "silly",
+        "stupid",
+        "you dork",
+        "you goof",
+        "you numpty"
     ]
 
 init 10 python in jn_globals:

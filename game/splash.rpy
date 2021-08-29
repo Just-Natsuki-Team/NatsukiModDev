@@ -186,7 +186,7 @@ label splashscreen:
 
     #Check for game updates before loading the game or the splash screen
 
-    # Set the last visited date, if not already on record
+    # Set the first visited date, if not already on record
     if not persistent.jn_first_visited_date:
         $ persistent.jn_first_visited_date = datetime.datetime.now()
 
