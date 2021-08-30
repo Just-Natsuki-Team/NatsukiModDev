@@ -49,16 +49,18 @@ label ch30_init:
 #The main loop
 label ch30_loop:
     #Do topic selection here
-    $ queue(
-        Topic.filter_topics(
+    python:
+        topic_pool = Topic.filter_topics(
             topics.TOPIC_MAP.values(),
             unlocked=True,
             nat_says=True,
             location=main_background.location.id,
             affinity=jn_globals.current_affinity_state,
-            trust=60
+            #trust=60 TODO: Add trust handling
         )
-    )
+
+        if topic_pool:
+            queue(random.choice(topic_pool))
 
     #Run our checks
     python:
@@ -83,6 +85,35 @@ label ch30_loop:
         call call_next_topic
 
     jump ch30_loop
+
+#Other labels
+label call_next_topic:
+    if persistent._event_list:
+        $ _topic = persistent._event_list.pop(0)
+
+        if renpy.has_label(_topic):
+            call expression _topic
+
+    python:
+        #Collect our return keys here
+        return_keys = _return if _return else dict()
+
+        topic_obj = get_topic(_topic)
+
+        #Handle all things which act on topic objects here, since we can't access attributes of Nonetypes
+        if topic_obj is not None:
+            #Increment shown count
+            topic_obj.shown_count += 1
+
+            #Now manage return keys
+            if "derandom" in return_keys:
+                topic_obj.random = False
+
+    #This topic might quit
+    if "quit" in return_keys:
+        jump _quit
+
+    return
 
 
 label ch30_wait:
@@ -114,39 +145,9 @@ init python:
         """
         pass
 
-#Other labels
-label call_next_topic:
-    if persistent._event_list:
-        $ topic = persistent._event_list.pop(0)
-
-        if renpy.has_label(topic):
-            call expression topic
-
-    python:
-        #Collect our return keys here
-        return_keys = _return if _return else dict()
-
-        topic_obj = get_topic(topic)
-
-        #Handle all things which act on topic objects here, since we can't access attributes of Nonetypes
-        if topic_obj is not None:
-            #Increment shown count
-            topic_obj.shown_count += 1
-
-            #Now manage return keys
-            if "derandom" in return_keys:
-                topic_obj.random = False
-
-    #This topic might quit
-    if "quit" in return_keys:
-        jump _quit
-
-    return
-
-
 label talk_menu:
     menu:
-        "Can I we talk about...":
+        "Let's talk about...":
             jump player_select_topic
 
         "I feel...":
@@ -154,6 +155,9 @@ label talk_menu:
 
         "Goodbye.":
             jump farewell_start
+
+        "Nevermind.":
+            pass
     return
 
 label player_select_topic:
@@ -181,28 +185,7 @@ label player_select_topic:
     jump ch30_loop
 
 label music_menu:
-    menu:
-        n "Want a change of tune?"
-        "track1":
-            play music track1
-        "track2":
-            play music track2
-        "track3":
-            play music track3
-        "track4":
-            play music track4
-        "custom music":
-            python:
-                custom_tracks = get_custom_tracks()
-                custom_tracks.append(("Nevermind", "menu_nevermind"))
-                choice = menu(custom_tracks)
-            if choice != "menu_nevermind":
-                play music choice
-            else:
-                call expression choice
-        "Nevermind":
-            n "Okay!"
-
+    n "This isn't done."
     jump ch30_loop
 
 label extras_menu:
