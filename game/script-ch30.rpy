@@ -84,6 +84,11 @@ label ch30_loop:
     while persistent._event_list:
         call call_next_topic
 
+    #FALL THROUGH
+
+label ch30_wait:
+    window hide
+    $ renpy.pause(delay=5.0, hard=True)
     jump ch30_loop
 
 #Other labels
@@ -114,13 +119,6 @@ label call_next_topic:
         jump _quit
 
     return
-
-
-label ch30_wait:
-    window hide
-    $ renpy.pause(delay=5.0, hard=True)
-    jump ch30_loop
-
 
 init python:
     LAST_MINUTE_CHECK = datetime.datetime.now()
