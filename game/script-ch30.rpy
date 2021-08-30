@@ -51,7 +51,7 @@ label ch30_loop:
     #Do topic selection here
     $ queue(
         Topic.filter_topics(
-            topics.TOPIC_MAP,
+            topics.TOPIC_MAP.values(),
             unlocked=True,
             nat_says=True,
             location=main_background.location.id,
