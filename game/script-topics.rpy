@@ -816,7 +816,7 @@ label talk_eating_well:
     n "Now...{w=0.3} where were we?"
     return
 
-# Natsuki ask the player for help seting up weather tracking
+# Natsuki brings up the idea of in-game weather, and guides the player through installation
 init 5 python:
     registerTopic(
         Topic(
@@ -831,61 +831,192 @@ init 5 python:
     )
 
 label talk_weather_setup_part1:
-    n "Urgh!"
-    menu:
-        "What's up?":
-            pass
-        "What's wrong?":
-            pass
-    n "It's nothing...{w=0.1} Just... I was working on a little surprise for you but it's not working."
-    n "You know, I was getting kinda fed up with how the weather here never changes."
-    n "And so I thought it could be nice if it was the same as yours."
-    n "Y'know...{w=0.2} make it feel like we are just that little bit closer."
-    menu:
-        "Need some help with it?":
-            pass
-    n "Oooh! You know that would be great actually!"
-    n "N-not that I couldn't do it without you of course"
-    n "Ehehe"
-    n "So anyways. There is this website called OpenWeatherMap"
-    n "Could you take a look there?"
-    menu:
-        "Could you take a look there?"
 
-        "sure":
-            n "Yay! Okay just tell me when you're there~"
-            #hide the dialogue box... dunno how to do that
-            n "There? Good! So now could you make an account please? Don't worry it's free."
-            menu:
-                "sure, one sec!":
-                    n "Okaay don't keep me waiting too long"
-                    #again dunno how to hide it
-                    n "Nice! So now you will need to create an API key"
-                    n "It should appear when you click on your name in the top right"
-                    n "There should already be one but in case there isn't just create a new one"
-                    n "Normally I would just ask you to paste it in here"
-                    n "But can you believe renpy's input doesn't actually support copy-pasting"
-                    n "pffft, I know right"
-                    n "Thankfully you got a super smart Natsuki here to save the day!"
-                    n "Of course if you insist on retyping it I won't stop you :p"
-                    n "Alright so one sec I'll just make a quick form for you to type in"
-                    $ renpy.pause(3.0, hard=True)
-                    n "Alright here it comes!"
-                    n "Just save and close it when you're done"
-                    while not persistent.weather_api_key:
-                        $ persistent.weather_api_key = txt_input("API key here: ")
-                        if not persistent.weather_api_key:
-                            n "Hey! I see what you're doing!"
-                            n "Let's try this again and do it properly this time"
-                    n "Thanks a bunch!"
-                    n "Seems like it might take a while to activate"
-                    n "I'll tell you once something changes"
-                    $ weather.set_next_weather_call_time(7920)
+    # Introduction
+    $ player_was_rude = False
+    n "..."
+    n "Urgh...{w=0.3} so annoying!"
+    n "Why is this so hard to get right...?"
+    n "Stupid...{w=0.3} Nnnnnn-!"
+    menu:
+        "What's the matter, Natsuki?":
+            n "Huh?"
+            n "Oh!{w=0.2} [player]!"
+            n "I'm glad you asked!"
 
-        "sorry, I'm busy right now":
-            n "oh...{w=0.3} Well...{w=0.1} that's alright"
-            #TODO: unlock a topic for seting this up later
-    return {"lock" : None}
+        "What're you complaining about?":
+            n "Well,{w=0.1} your attitude,{w=0.1} for one thing!"
+            n "Anyway..."
+            $ player_was_rude = True
+
+        "...":
+            n "O-{w=0.1}oh!{w=0.2} [player]!"
+            n "Sorry,{w=0.1} sorry!{w=0.2} Don't worry{w=0.1} -{w=0.1} it's nothing you did wrong.{w=0.2} I promise!"
+
+    n "So...{w=0.3} I'm not really one to just sit around and admire the view."
+    n "But honestly...{w=0.3} it's super boring out there!{w=0.2} Outside the room,{w=0.1} I mean."
+    n "Nothing ever changes!"
+    n "But...{w=0.3} I've been doing a little tinkering,{w=0.1} and I think I found a way to make things a little more dynamic!"
+    n "I just can't quite get it to work..."
+    n "It's just...{w=0.3} it's really bugging me.{w=0.2} I hate it when I can't get stuff to go right."
+
+    menu:
+        "Perhaps I could help?":
+            n "Huh?{w=0.2} Really?!{w=0.2} Thanks, [player]!"
+            n "N-{w=0.1}not that I was totally waiting for your help,{w=0.1} obviously!{w=0.2} Ahaha..."
+
+        "What do I have to do?":
+            $ player_was_rude = True
+            n "Jeez,{w=0.1} [player]...{w=0.3} what's with the attitude today?"
+            n "I'm trying to do something nice for us here..."
+
+        "...":
+            $ player_was_quiet = True
+            n "..."
+            n "You know,{w=0.1} [player]..."
+            n "If you want to help,{w=0.1} you could just say so."
+            n "I'm not scary or anything,{w=0.1} am I?"
+
+    n "Well,{w=0.1} anyway..."
+    n "What I'm trying to do is add some atmosphere to this place,{w=0.1} and what better way to do that than..."
+    n "Weather!"
+    n "I wanna set things up so the weather here matches what it's like where you are,{w=0.1} [player]."
+    n "I know{w=0.1} -{w=0.1} awesome,{w=0.1} right?"
+    n "But...{w=0.2} I need you to go to this website I found."
+    n "Don't worry,{w=0.1} I won't make you go search for it{w=0.1} -{w=0.1} even I'm not that mean!{w=0.2} Ehehe."
+    n "It's called OpenWeatherMap,{w=0.1} and it's super cool!{w=0.2} It's just what I need to make this work."
+    n "I'll need a little time to get this all set up,{w=0.1} though.{w=0.2} So..."
+    n "Are you okay if we get started now,{w=0.1} [player]?"
+    menu:
+        "Sure.":
+            n "Yay!{w=0.2} Thanks a bunch,{w=0.1} [player]!"
+            n "This'll all be worth it{w=0.1} -{w=0.1} I promise!"
+
+        "I can't right now.":
+            n "Oh...{w=0.3} well, okay..."
+            n "Just let me know whenever you have the time,{w=0.1} okay?"
+            n "I promise,{w=0.1} it'll be super worth it!"
+            return {"lock" : None}
+
+        "I don't want to.":
+            n "Huh?{w=0.2} You don't want to?"
+            n "..."
+            n "Well,{w=0.1} I won't make you do anything you don't want to,{w=0.1} [player]."
+            n "I'm a little bummed out,{w=0.1} though..."
+            n "..."
+            n "Anyway...{w=0.3} I guess just let me know if you change your mind,{w=0.1} alright?"
+            return {"lock" : None}
+
+    # Direct the player to the website
+
+    n "Okaaay!{w=0.2} Let's get started,{w=0.1} [player]!"
+    n "So like I said{w=0.1} -{w=0.1} the website is called OpenWeatherMap.{w=0.2} You can get there from {a=https://openweathermap.org}here{/a}!"
+    n "..."
+    n "Did you get there okay, [player]?"
+
+    menu:
+        "Yes, I have the website open.":
+            n "Awesome!{w=0.2} Step one complete!"
+
+        "No, I couldn't get to the website.":
+            n "Huh?{w=0.2} Why not?{w=0.2} Is it down or something?"
+            n "Well, anyway...{w=0.3} maybe we can try this again later?"
+            n "Just let me know when you're ready,{w=0.1} 'kay?"
+            return {"lock" : None}
+
+    # Prompt the player to create an account
+    n "'Kay!{w=0.2} Now for step two!"
+    n "Basically I need something called an API key,{w=0.1} which will let me use that website to find out what the weather is like over there."
+    n "But I can't do that myself...{w=0.3} which is where you come in,{w=0.1} [player]!"
+    n "You'll need to make an account before you can get an API key though."
+    n "Don't worry{w=0.1} -{w=0.1} it's totally free,{w=0.1} I promise!"
+    n "You can create an account {a=https://home.openweathermap.org/users/sign_up}here{/a},{w=0.1} or you can sign in using the menu at the top."
+    n "Just make sure to go through all the options carefully{w=0.1} -{w=0.1} don't just dash through it!"
+    n "Oh{w=0.1} -{w=0.1} and make sure you confirm your email address once you've created it,{w=0.1} 'kay?"
+    n "{a=https://home.openweathermap.org/users/sign_up}Here's{/a} that link once more,{w=0.1} just in case!{w=0.2} Just talk to me again when you're done."
+    n "..."
+    n "Well,{w=0.1} [player]?{w=0.2} All good?"
+
+    menu:
+        "Yes, I have an account set up.":
+            n "Nice work,{w=0.1} [player]!"
+            n "You'll probably want to make sure you save your login details somewhere secure,{w=0.1} just in case."
+            n "I hope you didn't forget to confirm your email address too!"
+
+        "I already had an account set up.":
+            n "Oh?{w=0.2} I didn't realise you were such a pro at this,{w=0.1} [player]!{w=0.2} Ehehe."
+            n "The rest of this should be a piece of cake then!"
+
+        "Never mind.":
+            n "Huh?{w=0.2} You don't wanna continue?"
+            n "That's fine,{w=0.1} I guess."
+            n "Just let me know when you're ready,{w=0.1} 'kay?"
+            return {"lock" : None}
+
+    # Prompt the player for an API key
+
+    n "Alright!{w=0.2} Now here's the challenging part."
+    n "Are you ready,{w=0.1} [player]?"
+    n "You need to get your API key and send it to me!"
+    n "You can find your keys {a=https://home.openweathermap.org/api_keys}here{/a},{w=0.1} or you can get there using the menu like before."
+    n "You should have one set up already,{w=0.1} but you can create another just for me if you want!{w=0.2} Ehehe."
+    n "Oh{w=0.1} -{w=0.1} you'll need to type it all in manually though, so make sure you have it handy!"
+    n "{a=https://home.openweathermap.org/api_keys}Here's{/a} the link in case you forgot{w=0.1} -{w=0.1} and again,{w=0.1} just talk to me when you have it ready!"
+    n "..."
+    n "Okaaay!{w=0.2} Take it away, [player]!"
+
+    $ player_input_valid = False
+    $ player_input_count = 0
+
+    # Process the player's input
+
+    while not player_input_valid:
+
+        if player_input_count >= 3:
+            # Escape route if we somehow get stuck
+            n "I...{w=0.3} don't think we're getting anywhere with this,{w=0.1} [player]."
+            n "Maybe we should just try again later?"
+            return {"lock" : None}
+
+        $ player_input = txt_input("Enter your API key (or type Nevermind to go back):")
+
+        elif not player_input or player_input == "":
+            n "Huh?{w=0.2} Did you actually type anything,{w=0.1} [player]?"
+            n "I didn't get that...{w=0.3} can you try again for me?"
+            $ player_input_count += 1
+
+        elif player_input.replace(" ", "").lower() == "nevermind":
+            # Allow the player to back out
+            n "Huh?{w=0.2} You don't wanna continue?"
+            n "That's fine,{w=0.1} I guess."
+            n "Just let me know when you're ready,{w=0.1} 'kay?"
+            return {"lock" : None}
+
+        else:
+            # Get ready to lead in to the next stage of setup
+            $ player_input_valid = True
+            $ persistent.weather_api_key = player_input
+            n "Alright!{w=0.2} I got it!"
+            n "Let me just work all of this out...{w=0.3} I might be a few minutes,{w=0.1} just so you know."
+
+            # Final dialogue permutations for that personal touch
+            if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+                $ chosen_descriptor = random.choice(jn_globals.DEFAULT_PLAYER_DESCRIPTORS)
+                n "But thanks,{w=0.1} [player]!{w=0.2} You're [chosen_descriptor],{w=0.1} you know that?"
+            else:
+                n "But thanks for all your help, [player]!"
+
+            if player_was_rude:
+                n "Even despite your sourness earlier.{w=0.2} Ehehe."
+
+            elif player_was_quiet:
+                n "Even if you were a little hesitant at first.{w=0.2} Ehehe."
+
+            if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVE:
+                $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+                n "Love you,{w=0.1} [chosen_endearment]!"
+
+            $ weather.set_next_weather_call_time(7920)
 
 init 5 python:
     registerTopic(
