@@ -538,6 +538,51 @@ init -990 python in jn_globals:
         "you numpty"
     ]
 
+    # Flavor text for the talk menu at high affinity
+    DEFAULT_TALK_FLAVOR_TEXT_LOVE_ENAMORED = [
+        "What's up, [player]?",
+        "What's on your mind, [player]?",
+        "Something up, [player]?",
+        "You wanna talk? Yay!",
+        "I'd love to talk!",
+        "I always love talking to you, [player]!",
+        "[player]! What's up?"
+        "[player]! What's on your mind?",
+        "Ooh! What did you wanna talk about?",
+        "I'm all ears, [player]!"
+    ]
+
+    # Flavor text for the talk menu at medium affinity
+    DEFAULT_TALK_FLAVOR_TEXT_AFFECTIONATE_NORMAL = [
+        "What's up?",
+        "What's on your mind?",
+        "What's happening?",
+        "Something on your mind?",
+        "Oh? You wanna talk to me?",
+        "Huh? What's up?",
+        "You wanna share something?"
+    ]
+
+    # Flavor text for the talk menu at low affinity
+    DEFAULT_TALK_FLAVOR_TEXT_UPSET_DISTRESSED = [
+        "What do you want?",
+        "What is it?",
+        "Can I help you?",
+        "Do you need me?",
+        "Make it quick.",
+        "What now?"
+    ]
+
+    # Flavor text for the talk menu at minimum affinity
+    DEFAULT_TALK_FLAVOR_TEXT_BROKEN_RUINED = [
+        "...",
+        "...?",
+        "What?",
+        "Just talk already.",
+        "Spit it out.",
+        "Start talking."
+    ]
+
 init 10 python in jn_globals:
     # The current affection state. We default this to 5 (NORMAL)
     current_affinity_state = store.jn_affinity.NORMAL

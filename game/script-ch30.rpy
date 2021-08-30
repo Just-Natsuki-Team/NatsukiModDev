@@ -33,14 +33,14 @@ label ch30_init:
     #Let's pick a greeting
     $ push(greetings.select_greeting())
 
-    # Reset the previous admission, now that Natsuki will have picked one if relevant
-    $ persistent.jn_player_admission_type_on_quit = None
-
     $ main_background.draw(full_redraw=True)
-    #show natsuki a zorder 3
     show Natsuki zorder 3
     show screen hkb_overlay
-    #Do all var-sets, resets, and sanity checks prior to entering the loop here
+
+    # Do all var-sets, resets, and sanity checks prior to entering the loop here
+
+    # Reset the previous admission, now that Natsuki will have picked one if relevant
+    $ persistent.jn_player_admission_type_on_quit = None
 
     #And finally, we head into the loop
     jump ch30_loop
@@ -125,6 +125,14 @@ init python:
     LAST_HOUR_CHECK = LAST_MINUTE_CHECK.hour
     LAST_DAY_CHECK = LAST_MINUTE_CHECK.day
 
+    _NAT_SAYS = 0
+    _PLAYER_SAYS = 1
+
+    _SAYS_RANGE = [
+        _NAT_SAYS,
+        _PLAYER_SAYS
+    ]
+
     def minute_check():
         """
         Runs every minute during breaks between topics
@@ -144,11 +152,40 @@ init python:
         pass
 
 label talk_menu:
-    menu:
-        "Let's talk about...":
-            jump player_select_topic
+    python:
+        # Get the flavor text for the talk menu, based on affinity state
+        if store.jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_LOVE_ENAMORED)
 
-        "I feel...":
+        elif store.jn_affinity.is_state_within_range(
+            affinity_state=store.jn_globals.current_affinity_state,
+            affinity_range=(store.jn_affinity.NORMAL, store.jn_affinity.AFFECTIONATE)
+        ):
+            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_AFFECTIONATE_NORMAL)
+
+
+        elif store.jn_affinity.is_state_within_range(
+            affinity_state=store.jn_globals.current_affinity_state,
+            affinity_range=(store.jn_affinity.DISTRESSED, store.jn_affinity.UPSET)
+        ):
+            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_UPSET_DISTRESSED)
+
+        else:
+            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_BROKEN_RUINED)
+
+        # Ensure any variable references are substituted
+        _talk_flavor_text = renpy.substitute(_talk_flavor_text)
+
+    menu:
+        "[_talk_flavor_text]"
+
+        "Let's talk about...":
+            call player_select_topic(says=_PLAYER_SAYS)
+
+        "Tell me again about...":
+            call player_select_topic(says=_NAT_SAYS)
+
+        "I feel..." if store.jn_affinity.get_affinity_state() >= store.jn_affinity.HAPPY:
             jump player_admissions_start
 
         "Goodbye.":
@@ -158,11 +195,15 @@ label talk_menu:
             pass
     return
 
-label player_select_topic:
+label player_select_topic(says):
     python:
+        if says not in _SAYS_RANGE:
+            raise Exception("{0} is not a valid argument; must be one of {1}".format(says, _SAYS_RANGE))
+
         _topics = Topic.filter_topics(
             topics.TOPIC_MAP.values(),
-            player_says=True,
+            nat_says=(says == _NAT_SAYS),
+            player_says=(says == _PLAYER_SAYS),
             unlocked=True,
             location=main_background.location.id,
             affinity=jn_globals.current_affinity_state

@@ -32,6 +32,7 @@ init offset = -1
 define prev_adjustment = ui.adjustment()
 define main_adjustment = ui.adjustment()
 define selected_category = None
+define scroll_align = -0.1
 
 style categorized_menu_button is choice_button:
     xysize (250, None)

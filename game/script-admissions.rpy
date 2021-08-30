@@ -56,13 +56,12 @@ init 1 python:
         utils.log(e, utils.SEVERITY_ERR)
 
 label player_admissions_start:
-    n "Don't forget to finish this!"
-
     python:
         admission_menu_items = [
             (_admission.prompt, _admission.label)
             for _admission in admissions.get_all_admissions()
         ]
+        admission_menu_items.sort()
 
     call screen scrollable_choice_menu(admission_menu_items, ("Nevermind.", None))
 
