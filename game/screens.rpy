@@ -134,7 +134,40 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                             null height 5
 
 
-screen
+screen scrollable_choice_menu(items, last_item=None):
+    fixed:
+        area (680, 40, 560, 440)
+        vbox:
+            ypos 0
+            yanchor 0
+
+            if last_item:
+                textbutton last_item[0]:
+                    style "categorized_menu_button"
+                    xsize 560
+                    action Return(last_item[1])
+
+                null height 20
+
+            viewport:
+                id "viewport"
+                yfill False
+                mousewheel True
+
+                vbox:
+                    for prompt, _value in items:
+                        textbutton prompt:
+                            style "categorized_menu_button"
+                            xsize 560
+                            action Return(_value)
+
+                        null height 5
+
+        bar:
+            style "classroom_vscrollbar"
+            value YScrollValue("viewport")
+            xalign scroll_align
+
 ################################################################################
 ## Styles
 ################################################################################

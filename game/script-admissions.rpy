@@ -31,7 +31,7 @@ init 0 python in admissions:
             List<Topic> of admissions which are unlocked and available at the current affinity
         """
         return store.Topic.filter_topics(
-            ADMISSION_MAP,
+            ADMISSION_MAP.values(),
             affinity=store.jn_globals.current_affinity_state,
             unlocked=True
         )
@@ -57,12 +57,26 @@ init 1 python:
 
 label player_admissions_start:
     n "Don't forget to finish this!"
+
+    python:
+        admission_menu_items = [
+            (_admission.prompt, _admission.label)
+            for _admission in admissions.get_all_admissions()
+        ]
+
+    call screen scrollable_choice_menu(admission_menu_items, ("Nevermind.", None))
+
+    if _return:
+        $ push(_return)
+        jump call_next_topic
+
     return
 
 init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Angry",
             label="admission_angry",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
@@ -100,6 +114,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Anxious",
             label="admission_anxious",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
@@ -147,6 +162,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Ashamed",
             label="admission_ashamed",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
@@ -190,6 +206,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Confident",
             label="admission_confident",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
@@ -236,6 +253,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Excited",
             label="admission_excited",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
@@ -260,6 +278,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Happy",
             label="admission_happy",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
@@ -306,6 +325,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Hungry",
             label="admission_hungry",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
@@ -351,6 +371,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Insecure",
             label="admission_insecure",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
@@ -401,6 +422,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Proud",
             label="admission_proud",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
@@ -430,6 +452,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Sad",
             label="admission_sad",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
@@ -484,6 +507,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Sick",
             label="admission_sick",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
@@ -566,6 +590,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Tired",
             label="admission_tired",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)

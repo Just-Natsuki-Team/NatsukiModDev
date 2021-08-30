@@ -50,7 +50,8 @@ label ch30_init:
 label ch30_loop:
     #Do topic selection here
     $ queue(
-        pick_random_topic(
+        Topic.filter_topics(
+            topics.TOPIC_MAP,
             unlocked=True,
             nat_says=True,
             location=main_background.location.id,
