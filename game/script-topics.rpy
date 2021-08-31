@@ -599,7 +599,7 @@ init 5 python:
             label="talk_using_computers_healthily",
             unlocked=True,
             prompt="Using computers healthily",
-            conditional="(datetime.datetime.now() - persistent.jn_last_visited_date).seconds / 3600 >= 8",
+            conditional="store.utils.get_current_session_length().total_seconds() / 3600 >= 8",
             category=["Life", "You", "Health"],
             nat_says=True,
             affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
