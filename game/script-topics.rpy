@@ -832,80 +832,122 @@ init 5 python:
 
 label talk_weather_setup_part1:
 
-    # Introduction
+    # Set flags for how the player replied to Natsuki
     $ player_was_rude = False
-    n "..."
-    n "Urgh...{w=0.3} so annoying!"
-    n "Why is this so hard to get right...?"
-    n "Stupid...{w=0.3} Nnnnnn-!"
-    menu:
-        "What's the matter, Natsuki?":
-            n "Huh?"
-            n "Oh!{w=0.2} [player]!"
-            n "I'm glad you asked!"
+    $ player_was_quiet = False
 
-        "What're you complaining about?":
-            n "Well,{w=0.1} your attitude,{w=0.1} for one thing!"
-            n "Anyway..."
-            $ player_was_rude = True
+    # Determine if the player already went through any part of the setup here
+    $ already_discussed_setup = False
+    if get_topic("talk_weather_setup_part1"):
+        $ already_discussed_setup = get_topic("talk_weather_setup_part1").shown_count > 0
 
-        "...":
-            n "O-{w=0.1}oh!{w=0.2} [player]!"
-            n "Sorry,{w=0.1} sorry!{w=0.2} Don't worry{w=0.1} -{w=0.1} it's nothing you did wrong.{w=0.2} I promise!"
+    if not already_discussed_setup:
 
-    n "So...{w=0.3} I'm not really one to just sit around and admire the view."
-    n "But honestly...{w=0.3} it's super boring out there!{w=0.2} Outside the room,{w=0.1} I mean."
-    n "Nothing ever changes!"
-    n "But...{w=0.3} I've been doing a little tinkering,{w=0.1} and I think I found a way to make things a little more dynamic!"
-    n "I just can't quite get it to work..."
-    n "It's just...{w=0.3} it's really bugging me.{w=0.2} I hate it when I can't get stuff to go right."
+        # Introduction
+        n "..."
+        n "Urgh...{w=0.3} so annoying!"
+        n "Why is this so hard to get right...?"
+        n "Stupid...{w=0.3} Nnnnnn-!"
+        menu:
+            "What's the matter, Natsuki?":
+                n "Huh?"
+                n "Oh!{w=0.2} [player]!"
+                n "I'm glad you asked!"
 
-    menu:
-        "Perhaps I could help?":
-            n "Huh?{w=0.2} Really?!{w=0.2} Thanks, [player]!"
-            n "N-{w=0.1}not that I was totally waiting for your help,{w=0.1} obviously!{w=0.2} Ahaha..."
+            "What're you complaining about?":
+                $ player_was_rude = True
+                n "Well,{w=0.1} your attitude,{w=0.1} for one thing!"
+                n "Anyway..."
 
-        "What do I have to do?":
-            $ player_was_rude = True
-            n "Jeez,{w=0.1} [player]...{w=0.3} what's with the attitude today?"
-            n "I'm trying to do something nice for us here..."
+            "...":
+                $ player_was_quiet = True
+                n "O-{w=0.1}oh!{w=0.2} [player]!"
+                n "Sorry,{w=0.1} sorry!{w=0.2} Don't worry{w=0.1} -{w=0.1} it's nothing you did wrong.{w=0.2} I promise!"
 
-        "...":
-            $ player_was_quiet = True
-            n "..."
-            n "You know,{w=0.1} [player]..."
-            n "If you want to help,{w=0.1} you could just say so."
-            n "I'm not scary or anything,{w=0.1} am I?"
+        n "So...{w=0.3} I'm not really one to just sit around and admire the view."
+        n "But honestly...{w=0.3} it's super boring out there!{w=0.2} Outside the room,{w=0.1} I mean."
+        n "Nothing ever changes!"
+        n "But...{w=0.3} I've been doing a little tinkering,{w=0.1} and I think I found a way to make things a little more dynamic!"
+        n "I just can't quite get it to work..."
+        n "It's just...{w=0.3} it's really bugging me.{w=0.2} I hate it when I can't get stuff to go right."
 
-    n "Well,{w=0.1} anyway..."
-    n "What I'm trying to do is add some atmosphere to this place,{w=0.1} and what better way to do that than..."
-    n "Weather!"
-    n "I wanna set things up so the weather here matches what it's like where you are,{w=0.1} [player]."
-    n "I know{w=0.1} -{w=0.1} awesome,{w=0.1} right?"
-    n "But...{w=0.2} I need you to go to this website I found."
-    n "Don't worry,{w=0.1} I won't make you go search for it{w=0.1} -{w=0.1} even I'm not that mean!{w=0.2} Ehehe."
-    n "It's called OpenWeatherMap,{w=0.1} and it's super cool!{w=0.2} It's just what I need to make this work."
-    n "I'll need a little time to get this all set up,{w=0.1} though.{w=0.2} So..."
-    n "Are you okay if we get started now,{w=0.1} [player]?"
-    menu:
-        "Sure.":
-            n "Yay!{w=0.2} Thanks a bunch,{w=0.1} [player]!"
-            n "This'll all be worth it{w=0.1} -{w=0.1} I promise!"
+        menu:
+            "Perhaps I could help?":
+                n "Huh?{w=0.2} Really?!{w=0.2} Thanks, [player]!"
+                n "N-{w=0.1}not that I was totally waiting for your help,{w=0.1} obviously!{w=0.2} Ahaha..."
 
-        "I can't right now.":
-            n "Oh...{w=0.3} well, okay..."
-            n "Just let me know whenever you have the time,{w=0.1} okay?"
-            n "I promise,{w=0.1} it'll be super worth it!"
-            return {"lock" : None}
+            "What do I have to do?":
+                $ player_was_rude = True
+                n "Jeez,{w=0.1} [player]...{w=0.3} what's with the attitude today?"
+                n "I'm trying to do something nice for us here..."
 
-        "I don't want to.":
-            n "Huh?{w=0.2} You don't want to?"
-            n "..."
-            n "Well,{w=0.1} I won't make you do anything you don't want to,{w=0.1} [player]."
-            n "I'm a little bummed out,{w=0.1} though..."
-            n "..."
-            n "Anyway...{w=0.3} I guess just let me know if you change your mind,{w=0.1} alright?"
-            return {"lock" : None}
+            "...":
+                $ player_was_quiet = True
+                n "..."
+                n "You know,{w=0.1} [player]..."
+                n "If you want to help,{w=0.1} you could just say so."
+                n "I'm not scary or anything,{w=0.1} am I?"
+
+        n "Well,{w=0.1} anyway..."
+        n "What I'm trying to do is add some atmosphere to this place,{w=0.1} and what better way to do that than..."
+        n "Weather!"
+        n "I wanna set things up so the weather here matches what it's like where you are,{w=0.1} [player]."
+        n "I know{w=0.1} -{w=0.1} awesome,{w=0.1} right?"
+        n "But...{w=0.2} I need you to go to this website I found."
+        n "Don't worry,{w=0.1} I won't make you go search for it{w=0.1} -{w=0.1} even I'm not that mean!{w=0.2} Ehehe."
+        n "It's called OpenWeatherMap,{w=0.1} and it's super cool!{w=0.2} It's just what I need to make this work."
+        n "I'll need a little time to get this all set up,{w=0.1} though.{w=0.2} So..."
+        n "Are you okay if we get started now,{w=0.1} [player]?"
+        menu:
+            "Sure.":
+                n "Yay!{w=0.2} Thanks a bunch,{w=0.1} [player]!"
+                n "This'll all be worth it{w=0.1} -{w=0.1} I promise!"
+
+            "I can't right now.":
+                n "Oh...{w=0.3} well, okay..."
+                n "Just let me know whenever you have the time,{w=0.1} okay?"
+                n "I promise,{w=0.1} it'll be super worth it!"
+                return {"lock" : None}
+
+            "I don't want to.":
+                n "Huh?{w=0.2} You don't want to?"
+                n "..."
+                n "Well,{w=0.1} I won't make you do anything you don't want to,{w=0.1} [player]."
+                n "I'm a little bummed out,{w=0.1} though..."
+                n "..."
+                n "Well...{w=0.3} I guess just let me know if you change your mind,{w=0.1} alright?"
+                return {"lock" : None}
+
+    else:
+        # Natsuki and the player have already discussed this, so we skip the intro
+
+        if not persistent.weather_api_key:
+            # We assume the player backed out for whatever reason, as we have no key set
+            n "Oh!{w=0.2} Yeah,{w=0.1} I remember!"
+            n "Did you want to continue setting everything up for the weather,{w=0.1} [player]?"
+            menu:
+                "Yes.":
+                    n "Awesome!{w=0.2} You won't regret this,{w=0.1} [player]!"
+                    n "Now,{w=0.1} where were we..."
+
+                "No.":
+                    n "Huh?{w=0.2} You changed your mind already?"
+                    n "Fine,{w=0.1} fine."
+                    n "Just let me know when you want to get this set up,{w=0.1} 'kay?"
+                    return {"lock" : None}
+
+        else:
+            # We assume the player made an oopsie, and wants to give Natsuki another key
+            n "Huh?{w=0.2} It looks like you've already got an API key set up,{w=0.1} [player]."
+            n "Did you wanna give me a new one?"
+            menu:
+                "Yes.":
+                    n "Alright!{w=0.2} I'll just walk you through it again just in case,{w=0.1} 'kay?"
+
+                "No.":
+                    n "Oh...{w=0.3} well,{w=0.1} okay."
+                    n "Just let me know if you wanna give me another!"
+                    return {"lock" : None}
 
     # Direct the player to the website
 
@@ -945,7 +987,11 @@ label talk_weather_setup_part1:
 
         "I already had an account set up.":
             n "Oh?{w=0.2} I didn't realise you were such a pro at this,{w=0.1} [player]!{w=0.2} Ehehe."
-            n "The rest of this should be a piece of cake then!"
+
+            if already_discussed_setup:
+                n "Or maybe we went through this before,{w=0.1} hmm?"
+
+            n "Well, anyway.{w=0.2} The rest of this should be a piece of cake then!"
 
         "Never mind.":
             n "Huh?{w=0.2} You don't wanna continue?"
@@ -963,7 +1009,7 @@ label talk_weather_setup_part1:
     n "Oh{w=0.1} -{w=0.1} you'll need to type it all in manually though, so make sure you have it handy!"
     n "{a=https://home.openweathermap.org/api_keys}Here's{/a} the link in case you forgot{w=0.1} -{w=0.1} and again,{w=0.1} just talk to me when you have it ready!"
     n "..."
-    n "Okaaay!{w=0.2} Take it away, [player]!"
+    n "Okaaay!{w=0.2} Take it away,{w=0.1} [player]!"
 
     $ player_input_valid = False
     $ player_input_count = 0
@@ -978,10 +1024,11 @@ label talk_weather_setup_part1:
             n "Maybe we should just try again later?"
             return {"lock" : None}
 
-        $ player_input = txt_input("Enter your API key (or type Nevermind to go back):")
+        else:
+            $ player_input = txt_input("Enter your API key (or type Nevermind to go back):")
 
-        elif not player_input or player_input == "":
-            n "Huh?{w=0.2} Did you actually type anything,{w=0.1} [player]?"
+        if not player_input or player_input == "":
+            n "Uh...{w=0.3} Did you actually type anything,{w=0.1} [player]?"
             n "I didn't get that...{w=0.3} can you try again for me?"
             $ player_input_count += 1
 
@@ -994,7 +1041,7 @@ label talk_weather_setup_part1:
 
         else:
             # Get ready to lead in to the next stage of setup
-            $ player_input_valid = True
+            $ player_input_valid = True # Kill the loop!
             $ persistent.weather_api_key = player_input
             n "Alright!{w=0.2} I got it!"
             n "Let me just work all of this out...{w=0.3} I might be a few minutes,{w=0.1} just so you know."
@@ -1015,7 +1062,7 @@ label talk_weather_setup_part1:
             if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVE:
                 $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
                 n "Love you,{w=0.1} [chosen_endearment]!"
-
+            # TODO: Perhaps we should decrease this? Seems like a long time to keep the player waiting!
             $ weather.set_next_weather_call_time(7920)
 
 init 5 python:
