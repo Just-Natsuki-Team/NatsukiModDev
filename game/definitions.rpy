@@ -20,8 +20,6 @@ default persistent.current_weather_long = dict()
 # Location data
 default persistent.latitude = None
 default persistent.longitude = None
-default persistent.city = None
-default persistent.country = None
 
 # Pet data
 default persistent.jn_player_pet = None
@@ -530,6 +528,16 @@ init -990 python in jn_globals:
         "you goof",
         "you numpty"
     ]
+
+    # Links
+
+    # OpenWeatherMap; used for setting up weather in-game
+    LINK_OPEN_WEATHER_MAP_HOME = "https://openweathermap.org"
+    LINK_OPEN_WEATHER_MAP_SIGN_UP = "https://home.openweathermap.org/users/sign_up"
+    LINK_OPEN_WEATHER_MAP_API_KEYS = "https://home.openweathermap.org/api_keys"
+
+    # LatLong.net; used for helping the player find their coordinates when setting up location manually
+    LINK_LAT_LONG_HOME = "https://www.latlong.net"
 
 init 10 python in jn_globals:
     # The current affection state. We default this to 5 (NORMAL)

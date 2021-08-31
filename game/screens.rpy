@@ -49,6 +49,7 @@ style hyperlink_text:
     color gui.accent_color
     hover_color gui.hover_color
     hover_underline True
+    underline True
 
 style splash_text:
     size 24

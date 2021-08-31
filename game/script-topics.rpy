@@ -926,11 +926,11 @@ label talk_weather_setup_part1:
             n "Oh!{w=0.2} Yeah,{w=0.1} I remember!"
             n "Did you want to continue setting everything up for the weather,{w=0.1} [player]?"
             menu:
-                "Yes.":
+                "Yes, I want to continue.":
                     n "Awesome!{w=0.2} You won't regret this,{w=0.1} [player]!"
                     n "Now,{w=0.1} where were we..."
 
-                "No.":
+                "No, not right now.":
                     n "Huh?{w=0.2} You changed your mind already?"
                     n "Fine,{w=0.1} fine."
                     n "Just let me know when you want to get this set up,{w=0.1} 'kay?"
@@ -952,7 +952,7 @@ label talk_weather_setup_part1:
     # Direct the player to the website
 
     n "Okaaay!{w=0.2} Let's get started,{w=0.1} [player]!"
-    n "So like I said{w=0.1} -{w=0.1} the website is called OpenWeatherMap.{w=0.2} You can get there from {a=https://openweathermap.org}here{/a}!"
+    n "So like I said{w=0.1} -{w=0.1} the website is called OpenWeatherMap.{w=0.2} You can get there from {a=store.jn_globals.LINK_OPEN_WEATHER_MAP_HOME}here{/a}!"
     n "..."
     n "Did you get there okay, [player]?"
 
@@ -967,15 +967,16 @@ label talk_weather_setup_part1:
             return {"lock" : None}
 
     # Prompt the player to create an account
+
     n "'Kay!{w=0.2} Now for step two!"
     n "Basically I need something called an API key,{w=0.1} which will let me use that website to find out what the weather is like over there."
     n "But I can't do that myself...{w=0.3} which is where you come in,{w=0.1} [player]!"
     n "You'll need to make an account before you can get an API key though."
     n "Don't worry{w=0.1} -{w=0.1} it's totally free,{w=0.1} I promise!"
-    n "You can create an account {a=https://home.openweathermap.org/users/sign_up}here{/a},{w=0.1} or you can sign in using the menu at the top."
+    n "You can create an account {a=store.jn_globals.LINK_OPEN_WEATHER_MAP_SIGN_UP}here{/a},{w=0.1} or you can sign in using the menu at the top."
     n "Just make sure to go through all the options carefully{w=0.1} -{w=0.1} don't just dash through it!"
     n "Oh{w=0.1} -{w=0.1} and make sure you confirm your email address once you've created it,{w=0.1} 'kay?"
-    n "{a=https://home.openweathermap.org/users/sign_up}Here's{/a} that link once more,{w=0.1} just in case!{w=0.2} Just talk to me again when you're done."
+    n "{a=store.jn_globals.LINK_OPEN_WEATHER_MAP_SIGN_UP}Here's{/a} that link once more,{w=0.1} just in case!{w=0.2} Just talk to me again when you're done."
     n "..."
     n "Well,{w=0.1} [player]?{w=0.2} All good?"
 
@@ -1004,10 +1005,10 @@ label talk_weather_setup_part1:
     n "Alright!{w=0.2} Now here's the challenging part."
     n "Are you ready,{w=0.1} [player]?"
     n "You need to get your API key and send it to me!"
-    n "You can find your keys {a=https://home.openweathermap.org/api_keys}here{/a},{w=0.1} or you can get there using the menu like before."
+    n "You can find your keys {a=store.jn_globals.LINK_OPEN_WEATHER_MAP_API_KEYS}here{/a},{w=0.1} or you can get there using the menu like before."
     n "You should have one set up already,{w=0.1} but you can create another just for me if you want!{w=0.2} Ehehe."
     n "Oh{w=0.1} -{w=0.1} you'll need to type it all in manually though, so make sure you have it handy!"
-    n "{a=https://home.openweathermap.org/api_keys}Here's{/a} the link in case you forgot{w=0.1} -{w=0.1} and again,{w=0.1} just talk to me when you have it ready!"
+    n "{a=store.jn_globals.LINK_OPEN_WEATHER_MAP_API_KEYS}Here's{/a} the link in case you forgot{w=0.1} -{w=0.1} and again,{w=0.1} just talk to me when you have it ready!"
     n "..."
     n "Okaaay!{w=0.2} Take it away,{w=0.1} [player]!"
 
@@ -1025,7 +1026,9 @@ label talk_weather_setup_part1:
             return {"lock" : None}
 
         else:
-            $ player_input = txt_input("Enter your API key (or type Nevermind to go back):")
+            $ player_input = renpy.input("Enter your API key (or type Nevermind to go back):")
+            #TODO: This doesn't seem to work; will need to investigate. It's also kind of jarring from a player perspective!
+            #$ player_input = txt_input("Enter your API key (or type Nevermind to go back):")
 
         if not player_input or player_input == "":
             n "Uh...{w=0.3} Did you actually type anything,{w=0.1} [player]?"
@@ -1078,195 +1081,225 @@ init 5 python:
     )
 
 label talk_weather_setup_part2:
+
+    # API key isn't valid; we prompt the player for another
     if not weather.is_api_key_valid(persistent.weather_api_key):
-        n "Hey about that weather thing"
-        n "It's been like 2 hours and still nothing's happened"
-        n "You sure you gave me the right thing?"
-        # Why the heck doesn't renpy have a for loop
-        # reeeeeeee
-        $ i = 0
-        while i<5:
-            $ i+=1
-            n "Let's try this again"
-            $ persistent.weather_api_key = txt_input("API key: ")
-            if not weather.is_api_key_valid(persistent.weather_api_key):
-                #TODO: help player troubleshoot this
-                n "Still nothing..."
-            else:
-                jump talk_weather_setup_part2
-        # If it doesn't work at this point it's probably best to give up
-        n "Aww man nothing seems to work"
-        n "Whatever, let's try it later"
-        #TODO: randomly bring it up again
-    else:
-        n "Hey hey! The weather thing is finally doing something!"
-        n "Hmmm it says 'nothing to geocode'"
-        n "Ah, it has no idea where to look for weather"
-        n "I was so scared to ask you this that I completely forgot about it"
-        n "In order to share weather with you...{w=0.3} I need to know your location"
-        n "N-Not that I couldn't find it myself! {w=0.3}I just thought I should probably ask you."
-        n "So...{w=0.2} do you mind if I know where you live?"
+        n "Hey...{w=0.3} [player]?"
+        n "You know we went through the weather stuff?{w=0.2} With the API key and all that."
+        n "Well...{w=0.3} it's been a while,{w=0.1} and it still isn't working!"
+        n "Did you wanna try giving me the API key again?"
         menu:
-            "So... do you mind if I know where you live?"
+            "Sure.":
+                n "Okay!{w=0.2} Let's try and get it working, [player]!"
+                n "Do you remember how to find your API keys for that website?"
+                n "Fear not!{w=0.2} Natsuki is here to save the day once again!{w=0.2} Ehehe."
+                n "You can find yours {a=store.jn_globals.LINK_OPEN_WEATHER_MAP_API_KEYS}here{/a}."
 
-            "No big deal. I trust you Nat.":
-                n "Really?! I mean of course you do!"
-                n "Haha"
-                n "Okay so what city do you live in?"
-                $ city = renpy.input("city: ")
-                $ count, coords = location.get_coords_by_city(city)
-                if count == 0:
-                    n "That's strange, I can't seem to find it"
-                    n "You sure you typed it out right?"
-                    menu:
-                        "yes":
-                            n "Hmm alright then"
-                            jump weather_setup_didnt_find_city
-                        "uhh I'm not too sure":
-                            n "Okay let's try it again then"
-                            $ city = renpy.input("city: ")
-                            $ count, coords = location.get_coords_by_city(city)
-                            if count == 0:
-                                n "Still nothing..."
-                                jump weather_setup_didnt_find_city
-                            elif count == 2:
-                                n "Hey hey I got something!"
-                                n "Though now there are multiple of them"
-                                n "Hmmm could you tell me the country you live in so I can narrow it down?"
-                                n "I found this nice spreadsheet online so please just tell me your country's code"
-                                $ open_txt("country_codes.txt")
-                                $ country = renpy.input("Country code: ")
-                                jump weather_setup_found_multiple_cities
-                            elif count == 1:
-                                $ persistent.latitude, persistent.longitude = coords
-                                n "Hahaha! Found ya!"
-                                n "Actually just to make sure"
-                                $ open_maps(persistent.latitude, persistent.longitude)
-                                n "This is where you live right?"
-                                menu:
-                                    "yes":
-                                        n "Hooray!"
-                                        n "Thank you [player]! Now it feels like we're just that little bit closer to eachother again <3"
-                                        $ persistent.is_weather_tracking_set_up = True
-                                    "no":
-                                        n "What!?"
-                                        n "You serious?"
-                                        jump weather_setup_didnt_find_city
+            "No, not right now.":
+                n "Oh..."
+                n "Well...{w=0.3} that's okay, I guess."
+                n "Just let me know whenever you're ready,{w=0.1} [player]."
+                return {"lock" : None}
 
-                elif count == 2:
-                    n "Hmm seems like there are multiple cities like that"
-                    n "Could you tell me the country you live in so I can narrow it down?"
-                    n "I found this nice spreadsheet online so please just tell me your country's code"
-                    $ open_txt("country_codes.txt")
-                    $ country = renpy.input("Country code: ")
-                    jump weather_setup_found_multiple_cities
-                elif count == 1:
-                    $ persistent.latitude, persistent.longitude = coords
-                    n "Hahaha! Found ya!"
-                    n "Actually just to make sure"
-                    $ open_maps(persistent.latitude, persistent.longitude)
-                    n "This is where you live right?"
-                    menu:
-                        "yes":
-                            n "Hooray!"
-                            n "Thank you [player]! Now it feels like we're just that little bit closer to eachother again <3"
-                            $ persistent.is_weather_tracking_set_up = True
-                        "no":
-                            n "What!?"
-                            n "You serious?"
-                            jump weather_setup_manual_coords
-    return
+        $ player_input_valid = False
+        $ player_input_count = 0
 
-label weather_setup_didnt_find_city:
-    n "One sec, I'll try to find you myself"
-    $ coords = location.get_coords_by_ip()
-    if coords:
-        $ persistent.latitude, persistent.longitude = coords
         n "..."
-        $ open_maps(persistent.latitude, persistent.longitude)
-        n "Is this where you live?"
-        menu:
-            "yes":
-                n "Haha! See I told you I could do it myself"
-                $ persistent.is_weather_tracking_set_up = True
-            "no":
-                jump weather_setup_manual_coords
+        n "All set,{w=0.1} [player]?{w=0.2} Then take it away!"
+
+        while not player_input_valid:
+
+            if player_input_count >= 3:
+                # Escape route if we somehow get stuck
+                n "This really is going nowhere fast,{w=0.1} huh [player]?"
+                n "I think we should just try again later..."
+                return {"lock" : None}
+
+            else:
+                $ player_input = renpy.input("Enter your API key (or type Nevermind to go back):")
+
+            if not player_input or player_input == "":
+                n "Uhmm...{w=0.3} Did you actually type anything,{w=0.1} [player]?"
+                n "I didn't get that...{w=0.3} can you try again for me?"
+                $ player_input_count += 1
+
+            elif player_input.replace(" ", "").lower() == "nevermind":
+                # Allow the player to back out
+                n "Huh?{w=0.2} You don't wanna continue?"
+                n "That's fine,{w=0.1} I guess."
+                n "Just let me know when you're ready,{w=0.1} 'kay?"
+                return
+
+            else:
+                if weather.is_api_key_valid(player_input):
+                    # Save the new API key, since we know it works!
+                    n "Ooh!{w=0.2} I can use this one!{w=0.2} Nice work,{w=0.1} [player]!"
+                    n "I'll just put this somewhere safe..."
+                    $ persistent.weather_api_key = player_input
+                    $ player_input_valid = True
+
+                else:
+                    n "No dice,{w=0.1} [player]...{w=0.3} that one didn't work either!"
+
+    # API key is valid, now we need the player's location!
     else:
-        n "uh..."
-        n "umm..."
-        jump weather_setup_manual_coords
+        n "Huh?{w=0.2} For real?"
+        n "It looks like we aren't out of the woods yet,{w=0.1} [player]..."
+        n "Because I just realized that I have no idea where you actually live!"
+        n "Oops!{w=0.2} Ehehe..."
+        n "I could {i}probably{/i} find out myself,{w=0.1} but I think that'd be kinda rude."
+        n "So...{w=0.3} how about it,{w=0.1} [player]?"
+        n "Would you mind if I found out where you are?"
+        n "Don't worry! This'll be strictly between you and me. So..."
+        menu:
+            "How about it?"
+
+            "I don't mind telling you my location.":
+                n "Really?{w=0.2} Awesome!{w=0.2}"
+                n "Thanks a ton,{w=0.1} [player]!{w=0.2} We're getting so close!"
+                n "T-{w=0.1}to this being done,{w=0.1} I mean!"
+                n "..."
+                n "A-{w=0.1}anyway..."
+
+            "I don't want to tell you my location.":
+                n "Aww...{w=0.3} well, okay."
+                n "Just let me know if you change your mind,{w=0.1} [player]."
+                return
+
+        n "Let's get down to business!"
+        n "I'm just gonna look something up real quick..."
+        $ ip_latitude_longitude = location.get_coords_by_ip()
+
+        if not ip_latitude_longitude:
+            # We couldn't get the coordinates via IP, so we have to prompt them via the player
+            n "Huh...{w=0.3} I wasn't actually expecting that."
+            n "I was gonna try and find out where you are myself..."
+            n "But it looks like we're gonna have to do things the old-fashioned way."
+            call weather_setup_manual_coords
+
+        else:
+            # Target acquired
+            n "Aha!{w=0.2} I think I got it!"
+            n "Now...{w=0.3} wanna see something awesome, [player]?{w=0.2} I know you do!"
+            n "..."
+            $ open_maps(ip_latitude_longitude[0], ip_latitude_longitude[1])
+            n "Ta-da!"
+            n "Well?{w=0.2} Am I right?{w=0.2} Am I right, [player]?{w=0.2} I bet I am!"
+            menu:
+                "Yes, you found me.":
+                    # Natsuki is clearly a pro at hide and seek
+                    n "Yes!{w=0.2} Am I good or what?"
+                    n "Ahaha!"
+                    n "I'll just note those down real quick..."
+                    $ persistent.latitude, persistent.longitude = ip_latitude_longitude
+
+                "No, that's not right.":
+                    # We couldn't get the coordinates via IP, so we have to prompt them via the player
+                    n "What?{w=0.2} Are you kidding me!?"
+                    n "Ugh..."
+                    n "And I was so proud of myself for figuring that out,{w=0.1} too..."
+                    n "Well,{w=0.1} it looks like we're gonna have to do things the old-fashioned way."
+                    call weather_setup_manual_coords
+
+            $ persistent.is_weather_tracking_set_up = True
+            n "Okaaay!{w=0.2} It looks like we're finally good to go!"
+            n "Thanks again for all your help,{w=0.1} [player]."
+            n "I can't wait to see something different out of that window for a change!"
     return
 
 label weather_setup_manual_coords:
-    n "Dang it!"
-    n "Okay then mr. 'I live on the bottom of the ocean or something' :p"
-    n "Could you tell me your coordinates?"
-    $ persistent.latitude = renpy.input("latitude: ")
-    n "Thanks"
-    n "Btw what hemisphere do you live in?"
-    menu:
-        "Southern":
-            $ persistent.latitude = '-' if persistent.latitude[0] != '-' else ''+persistent.latitude
-        "Northern":
-            pass
-    n "Nice"
-    n "Now I just need to know your longitude and we're done!"
-    $ persistent.longitude = renpy.input("longitude: ")
-    # How the hell do you call them when you need to specify which one??
-    n "That was a lie, I still need to know {i}the other hemisphere(?){/i} :p'"
-    menu:
-        "Eastern":
-            pass
-        "Western":
-            $ persistent.longitude = '-' if persistent.longitude[0] != '-' else ''+persistent.longitude
-    n "Aaaalright, now just to check"
-    $ open_maps(persistent.latitude, persistent.longitude)
-    n "This is where you live right?"
-    menu:
-        "yeah":
-            n "Nice!"
-            n "Thank you [player]! Now it feels like we're just that little bit closer to eachother again <3"
-            $ persistent.is_weather_tracking_set_up = True
-        "no":
-            n "What!?"
-            n "How?"
-            n "You must have told me the wrong coordinates let's try again"
-            #TODO: run an altered version of this for it to feel less ~scripted~
-            jump weather_setup_manual_coords
-    return
 
-label weather_setup_found_multiple_cities:
-    n "Okay let's see what we've got"
-    $ count, coords = location.get_coords_by_city(city, country)
-    if count == 0:
-        # This shouldn't really be possible
-        # We've found multiple cities with the name player inputted
-        # But none in the country player inputted
-        # Either they're messing this up on purpose or we don't have in our lookup (seriously doubt that tho)
-        n "Aww man, cmon!"
-        n "Seems like I cannot find such city in that country"
-        n "Hmmm"
-        jump weather_setup_didnt_find_city
-    elif count == 2:
-        n "jeez where the hell are you"
-        n "There are multiple cities like that in there too"
-        jump weather_setup_didnt_find_city
-    elif count == 1:
-        $ persistent.latitude, persistent.longitude = coords
-        n "Hahaha! Found ya!"
-        n "Actually just to make sure..."
-        $ open_maps(persistent.latitude, persistent.longitude)
-        n "This is where you live right?"
-        menu:
-            "yes":
-                n "Hooray!"
-                n "Thank you [player]! Now it feels like we're just that little bit closer to eachother again <3"
-                $ persistent.is_weather_tracking_set_up = True
-            "no":
-                n "What!?"
-                n "You serious?"
-                jump weather_setup_manual_coords
-    return
+    # Determine if the player already went through any part of the setup here
+
+    $ already_discussed_setup = False
+    if get_topic("weather_setup_manual_coords"):
+        $ already_discussed_setup = get_topic("weather_setup_manual_coords").shown_count > 0
+
+    if not already_discussed_setup:
+        n "Well,{w=0.1} fortunately for you,{w=0.1} I happen to have studied Geography so this is right up my alley!"
+
+    # Get the hemispheres
+
+    n "So,{w=0.1} I'm going to need to know a few things to find out where you are."
+    n "Let's start off with the basics{w=0.1} -{w=0.1} Hemispheres!"
+    n "Do you live in the {b}Northern{/b} or {b}Southern{/b} Hemisphere?"
+    n "Just in case you didn't know,{w=0.1} it basically just means if you live {b}North{/b} or {b}South{/b} of the {b}equator{/b}."
+    n "So..."
+    menu:
+        "Which do you live in,{w=0.1} [player]?"
+
+        "The Northern Hemisphere.":
+            $ player_in_southern_hemisphere = False
+            n "Ooh!{w=0.2} Just like me!"
+            n "Looks like we're closer than I thought,{w=0.1} huh?{w=0.2} Ehehe."
+
+        "The Southern Hemisphere.":
+            $ player_in_southern_hemisphere = True
+            n "Oh?{w=0.2} The Southern Hemisphere?{w=0.2} Neat!"
+            n "I bet the weather is a real treat over there,{w=0.1} right?"
+
+    n "Okay,{w=0.1} now time for the other two!"
+    n "Do you live in the {b}Eastern{/b} or {b}Western{/b} Hemisphere?"
+    n "This one's a little more tricky,{w=0.1} but I find it helps to think of it this way..."
+    n "If we took a world map and cut it in half vertically down the middle..."
+    menu:
+        "Would you live in the Eastern half,{w=0.1} or the Western half?"
+
+        "The Eastern half.":
+            $ player_in_western_hemisphere = False
+            n "Wow!{w=0.2} Just like me again,{w=0.1} [player]!"
+            n "It really is a small world,{w=0.1} huh?{w=0.2} Ehehe."
+
+        "The Western half.":
+            $ player_in_western_hemisphere = True
+            n "The Western half...{w=0.3} gotcha!"
+
+    # Get the latitude
+
+    n "Now with that out of the way,{w=0.1} I just need your coordinates!"
+    n "And by those,{w=0.1} I mean your {b}latitude{/b} and {b}longitude{/b},{w=0.1} of course!"
+    n "I always used {a=store.jn_globals.LINK_LAT_LONG_HOME}this{/a} website to look mine up for homework,{w=0.1} but you can use your phone or whatever too."
+    n "Oh,{w=0.1} and don't worry about making it positive or negative.{w=0.2} I'll take care of that!"
+    n "We'll start off with your {b}latitude{/b} first."
+    n "So...{w=0.3} hit me,{w=0.1} [player]!"
+    $ player_latitude = renpy.input(prompt="Enter your latitude:", allow={"0123456789."})
+
+    # Get the longitude
+
+    n "Thanks,{w=0.1} [player]!{w=0.2} I'll just note that down..."
+    n "Alright!{w=0.1} Now finally,{w=0.1} I just need your {b}longitude{/b},{w=0.1} 'kay?"
+    n "Just like last time,{w=0.1} I can figure it out without any positive or negative symbols."
+    n "Take it away,{w=0.1} [player]!"
+    $ player_longitude = renpy.input("Enter your longitude:", allow={"0123456789."})
+
+    # Final checks and prompt
+
+    if player_in_southern_hemisphere:
+        $ player_latitude = "-" + player_latitude
+
+    if player_in_western_hemisphere:
+        $ player_longitude = "-" + player_longitude
+
+    n "Hey{w=0.1} -{w=0.1} I think we're nearly there now,{w=0.1} [player]!"
+    n "Let me just open up a map real quick..."
+    n "..."
+    $ open_maps(player_latitude, player_longitude)
+    n "Ta-da!"
+    n "How about it,{w=0.1} [player]?{w=0.2} Close enough,{w=0.1} right?"
+    menu:
+        "Yes, that's close enough.":
+            n "Yay!{w=0.2} Finally!"
+            n "I'll just note all that down real quick..."
+            $ persistent.latitude = player_latitude
+            $ persistent.longitude = player_longitude
+            return
+
+        "No, that's not right at all.":
+            n "What?{w=0.2} Really?!"
+            n "Nnnnnn..."
+            n "That's annoying..."
+            n "Let's try again,{w=0.1} alright?{w=0.2} I really wanna get this working!"
+            jump weather_setup_manual_coords
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
