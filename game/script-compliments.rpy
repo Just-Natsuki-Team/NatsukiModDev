@@ -131,17 +131,47 @@ init 5 python:
 label compliment_beautiful:
     if last_compliment_type == COMPLIMENT_TYPE_BEAUTIFUL:
         if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
-            n ""
+            n "Oh jeez,{w=0.1} [player]..."
+            n "You're really putting me on the spot today,{w=0.1} aren't you?"
+            n "I'll take it,{w=0.1} though!{w=0.2} Ehehe."
+            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            n "Thanks,{w=0.1} [chosen_tease]."
 
         else:
-            n ""
+            n "E-{w=0.1}excuse me?!"
+            n "[player]!{w=0.2} What did I tell you?!"
+            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            n "Seriously...{w=0.3} you're gonna give me a heart attack or something,{w=0.1} [chosen_tease]..."
+
+            if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+                n "Just...{w=0.3} save it until I can be sure you really mean it,{w=0.1} alright?"
+                n "Jeez..."
 
     else:
         if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
-            n ""
+            n "Oh...{w=0.3} [player]..."
+            n "Y-{w=0.1}you really think I'm..."
+            n "I-{w=0.3}I'm..."
+            n "..."
+            n "You're so nice to me,{w=0.1} [player]..."
+            n "You do know that,{w=0.1} right?"
+            n "T-{w=0.1}thanks,{w=0.1} sweetheart."
+
+            if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVE:
+                n "And you wonder why I love you?{w=0.2} Ahaha..."
 
         else:
-            n ""
+            n "W{w=0.1}-w{w=0.1}-what?"
+            n "W-{w=0.1}what did you say?!"
+            n "Nnnnnnnnnn-!"
+            n "Y-{w=0.1}you can't just say things like that so suddenly,{w=0.1} you dummy!"
+            n "Sheesh..."
+
+            if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+                n "..."
+                n "I mean,{w=0.1} I'm flattered,{w=0.1} but..."
+                n "Uuuuuu...{w=0.3} just stop it for now,{w=0.1} okay?"
+                n "You're making this all super awkward..."
 
     $ last_compliment_type = COMPLIMENT_TYPE_BEAUTIFUL
     return
@@ -161,18 +191,30 @@ init 5 python:
 label compliment_confident:
     if last_compliment_type == COMPLIMENT_TYPE_CONFIDENT:
         if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
-            n ""
+            n "Ehehe.{w=0.2} I'm glad you still think so,{w=0.1} [player]!"
+            n "I'd say you're worth the effort,{w=0.1} [chosen_tease]."
 
         else:
-            n ""
+            n "Ahaha.{w=0.2} I'm glad you still think so, [player]!"
+            n "I try my best,{w=0.1} after all."
 
     else:
         if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
-            n ""
+            n "Ehehe.{w=0.2} I just radiate confidence,{w=0.1} don't I?"
+            n "..."
+            n "Well...{w=0.3} to tell you the truth,{w=0.1} [player]."
+            n "I...{w=0.3} really...{w=0.3} wish I could say it was {i}all{/i} genuine."
+            n "But having you here with me...{w=0.3} it helps,{w=0.1} you know.{w=0.2} A lot."
+            n "So...{w=0.3} thanks,{w=0.1} [player].{w=0.2} Really."
 
         else:
-            n ""
+            n "H-{w=0.1}huh?{w=0.2} O-oh!{w=0.2} Well of course you do!"
+            n "I have a lot to be confident about,{w=0.1} after all!"
+            n "Wouldn't you agree?"
 
+            if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+                n "Oh,{w=0.1} who am I kidding.{w=0.2} Of course you do."
+                n "Ahaha!"
 
     $ last_compliment_type = COMPLIMENT_TYPE_CONFIDENT
     return
