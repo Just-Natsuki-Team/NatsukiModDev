@@ -8,7 +8,8 @@ init python in topic_handler:
         store.TOPIC_TYPE_GREETING: store.greetings.GREETING_MAP,
         store.TOPIC_TYPE_FAREWELL: store.farewells.FAREWELL_MAP,
         store.TOPIC_TYPE_NORMAL: store.topics.TOPIC_MAP,
-        store.TOPIC_TYPE_ADMISSION: store.admissions.ADMISSION_MAP
+        store.TOPIC_TYPE_ADMISSION: store.admissions.ADMISSION_MAP,
+        store.TOPIC_TYPE_COMPLIMENT: store.compliments.COMPLIMENT_MAP
     }
 
 init 6 python in topic_handler:

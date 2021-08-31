@@ -188,6 +188,9 @@ label talk_menu:
         "I feel..." if store.jn_affinity.get_affinity_state() >= store.jn_affinity.HAPPY:
             jump player_admissions_start
 
+        "I want to tell you something..." if store.jn_affinity.get_affinity_state() >= store.jn_affinity.HAPPY:
+            jump player_compliments_start
+
         "Goodbye.":
             jump farewell_start
 

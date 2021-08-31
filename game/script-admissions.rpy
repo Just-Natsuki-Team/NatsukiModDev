@@ -39,18 +39,18 @@ init 0 python in admissions:
 init 1 python:
     try:
         # Resets - remove these later, once we're done tweaking affinity/trust!
-        store.persistent._greeting_database.pop("admission_angry")
-        store.persistent._greeting_database.pop("admission_anxious")
-        store.persistent._greeting_database.pop("admission_ashamed")
-        store.persistent._greeting_database.pop("admission_confident")
-        store.persistent._greeting_database.pop("admission_excited")
-        store.persistent._greeting_database.pop("admission_happy")
-        store.persistent._greeting_database.pop("admission_hungry")
-        store.persistent._greeting_database.pop("admission_insecure")
-        store.persistent._greeting_database.pop("admission_proud")
-        store.persistent._greeting_database.pop("admission_sad")
-        store.persistent._greeting_database.pop("admission_sick")
-        store.persistent._greeting_database.pop("admission_tired")
+        store.persistent._admission_database.pop("admission_angry")
+        store.persistent._admission_database.pop("admission_anxious")
+        store.persistent._admission_database.pop("admission_ashamed")
+        store.persistent._admission_database.pop("admission_confident")
+        store.persistent._admission_database.pop("admission_excited")
+        store.persistent._admission_database.pop("admission_happy")
+        store.persistent._admission_database.pop("admission_hungry")
+        store.persistent._admission_database.pop("admission_insecure")
+        store.persistent._admission_database.pop("admission_proud")
+        store.persistent._admission_database.pop("admission_sad")
+        store.persistent._admission_database.pop("admission_sick")
+        store.persistent._admission_database.pop("admission_tired")
 
     except Exception as e:
         utils.log(e, utils.SEVERITY_ERR)
