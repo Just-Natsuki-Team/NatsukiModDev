@@ -76,6 +76,44 @@ init 5 python:
     )
 
 label compliment_amazing:
+
+    if last_compliment_type == COMPLIMENT_TYPE_AMAZING:
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n "[player]...{w=0.3} honestly!{w=0.2} You're making me blush!"
+            n "But still...{w=0.3} thanks.{w=0.2} It really means a lot to me."
+            n "You're just as amaazing too,{w=0.1} though.{w=0.2} Remember that!"
+
+        else:
+            n "Jeez,{w=0.1} [player]...{w=0.3} you're really doling out the compliments today,{w=0.2} aren't you?"
+            n "Don't get me wrong{w=0.1} -{w=0.1} I'm not complaining!"
+            n "Make sure you don't leave yourself out though,{w=0.1} 'kay?"
+            n "Ehehe."
+
+    else:
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n "Y{w=0.1}-you really think so,{w=0.1} [player]?"
+            n "..."
+            n "I don't like to admit it,{w=0.1} you know."
+            n "But...{w=0.3} that honestly means so much to me,{w=0.1} [player]."
+            $ chosen_descriptor = random.choice(jn_globals.DEFAULT_PLAYER_DESCRIPTORS)
+            n "Really.{w=0.2} Thank you.{w=0.2} You're honestly [chosen_descriptor]."
+            n "..."
+
+            if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVE:
+                n "Love you,{w=0.1} [player]..."
+
+        else:
+            n "O-{w=0.1}oh!{w=0.2} Aha!{w=0.2} I knew you'd admit it eventually!"
+            n "Ehehe."
+            n "Well,{w=0.1} I'm just glad both of us agree on that."
+            n "Thanks,{w=0.1} [player]!"
+
+            if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+                n "But...{w=0.3} don't think that means you don't have something going for you too!"
+                n "You're pretty awesome yourself,{w=0.1} [player].{w=0.2} Remember that,{w=0.1} 'kay?"
+                n "Ehehe."
+
+    $ last_compliment_type = COMPLIMENT_TYPE_AMAZING
     return
 
 init 5 python:
@@ -91,6 +129,21 @@ init 5 python:
     )
 
 label compliment_beautiful:
+    if last_compliment_type == COMPLIMENT_TYPE_BEAUTIFUL:
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n ""
+
+        else:
+            n ""
+
+    else:
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n ""
+
+        else:
+            n ""
+
+    $ last_compliment_type = COMPLIMENT_TYPE_BEAUTIFUL
     return
 
 init 5 python:
@@ -106,6 +159,22 @@ init 5 python:
     )
 
 label compliment_confident:
+    if last_compliment_type == COMPLIMENT_TYPE_CONFIDENT:
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n ""
+
+        else:
+            n ""
+
+    else:
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n ""
+
+        else:
+            n ""
+
+
+    $ last_compliment_type = COMPLIMENT_TYPE_CONFIDENT
     return
 
 init 5 python:
@@ -121,6 +190,22 @@ init 5 python:
     )
 
 label compliment_cute:
+    if last_compliment_type == COMPLIMENT_TYPE_CUTE:
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n ""
+
+        else:
+            n ""
+
+    else:
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n ""
+
+        else:
+            n ""
+
+
+    $ last_compliment_type = COMPLIMENT_TYPE_CUTE
     return
 
 init 5 python:
@@ -136,6 +221,22 @@ init 5 python:
     )
 
 label compliment_hilarious:
+    if last_compliment_type == COMPLIMENT_TYPE_HILARIOUS:
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n ""
+
+        else:
+            n ""
+
+    else:
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n ""
+
+        else:
+            n ""
+
+
+    $ last_compliment_type = COMPLIMENT_TYPE_HILARIOUS
     return
 
 init 5 python:
@@ -151,6 +252,22 @@ init 5 python:
     )
 
 label compliment_inspirational:
+    if last_compliment_type == COMPLIMENT_TYPE_INSPIRATIONAL:
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n ""
+
+        else:
+            n ""
+
+    else:
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n ""
+
+        else:
+            n ""
+
+
+    $ last_compliment_type = COMPLIMENT_TYPE_INSPIRATIONAL
     return
 
 init 5 python:
@@ -166,6 +283,22 @@ init 5 python:
     )
 
 label compliment_style:
+    if last_compliment_type == COMPLIMENT_TYPE_STYLE:
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n ""
+
+        else:
+            n ""
+
+    else:
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n ""
+
+        else:
+            n ""
+
+
+    $ last_compliment_type = COMPLIMENT_TYPE_STYLE
     return
 
 init 5 python:
@@ -181,4 +314,20 @@ init 5 python:
     )
 
 label compliment_thoughtful:
+    if last_compliment_type == COMPLIMENT_TYPE_THOUGHTFUL:
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n ""
+
+        else:
+            n ""
+
+    else:
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n ""
+
+        else:
+            n ""
+
+
+    $ last_compliment_type = COMPLIMENT_TYPE_THOUGHTFUL
     return
