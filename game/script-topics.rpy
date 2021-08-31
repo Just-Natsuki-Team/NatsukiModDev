@@ -1005,7 +1005,7 @@ label talk_weather_setup_part1:
     n "Alright!{w=0.2} Now here's the challenging part."
     n "Are you ready,{w=0.1} [player]?"
     n "You need to get your API key and send it to me!"
-    n "You can find your keys {a=store.jn_globals.LINK_OPEN_WEATHER_MAP_API_KEYS}here{/a},{w=0.1} or you can get there using the menu like before."
+    n "You can find your keys {a=[store.jn_globals.LINK_OPEN_WEATHER_MAP_API_KEYS]}here{/a},{w=0.1} or you can get there using the menu like before."
     n "You should have one set up already,{w=0.1} but you can create another just for me if you want!{w=0.2} Ehehe."
     n "Oh{w=0.1} -{w=0.1} you'll need to type it all in manually though, so make sure you have it handy!"
     n "{a=[store.jn_globals.LINK_OPEN_WEATHER_MAP_API_KEYS]}Here's{/a} the link in case you forgot{w=0.1} -{w=0.1} and again,{w=0.1} just talk to me when you have it ready!"
