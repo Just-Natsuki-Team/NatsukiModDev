@@ -951,8 +951,8 @@ label talk_weather_setup_part1:
 
     # Direct the player to the website
 
-    n "Okaaay!{w=0.2} Let's get started,{w=0.1} [player]!"
-    n "So like I said{w=0.1} -{w=0.1} the website is called OpenWeatherMap.{w=0.2} You can get there from {a=store.jn_globals.LINK_OPEN_WEATHER_MAP_HOME}here{/a}!"
+    n "Okaaay!{w=0.2} Let's get started!"
+    n "So like I said{w=0.1} -{w=0.1} the website is called OpenWeatherMap.{w=0.2} You can get there from {a=[store.jn_globals.LINK_OPEN_WEATHER_MAP_HOME]}here{/a}!"
     n "..."
     n "Did you get there okay, [player]?"
 
@@ -973,10 +973,10 @@ label talk_weather_setup_part1:
     n "But I can't do that myself...{w=0.3} which is where you come in,{w=0.1} [player]!"
     n "You'll need to make an account before you can get an API key though."
     n "Don't worry{w=0.1} -{w=0.1} it's totally free,{w=0.1} I promise!"
-    n "You can create an account {a=store.jn_globals.LINK_OPEN_WEATHER_MAP_SIGN_UP}here{/a},{w=0.1} or you can sign in using the menu at the top."
+    n "You can create an account {a=[store.jn_globals.LINK_OPEN_WEATHER_MAP_SIGN_UP]}here{/a},{w=0.1} or you can sign in using the menu at the top."
     n "Just make sure to go through all the options carefully{w=0.1} -{w=0.1} don't just dash through it!"
     n "Oh{w=0.1} -{w=0.1} and make sure you confirm your email address once you've created it,{w=0.1} 'kay?"
-    n "{a=store.jn_globals.LINK_OPEN_WEATHER_MAP_SIGN_UP}Here's{/a} that link once more,{w=0.1} just in case!{w=0.2} Just talk to me again when you're done."
+    n "{a=[store.jn_globals.LINK_OPEN_WEATHER_MAP_SIGN_UP]}Here's{/a} that link once more,{w=0.1} just in case!{w=0.2} Just talk to me again when you're done."
     n "..."
     n "Well,{w=0.1} [player]?{w=0.2} All good?"
 
@@ -1008,7 +1008,7 @@ label talk_weather_setup_part1:
     n "You can find your keys {a=store.jn_globals.LINK_OPEN_WEATHER_MAP_API_KEYS}here{/a},{w=0.1} or you can get there using the menu like before."
     n "You should have one set up already,{w=0.1} but you can create another just for me if you want!{w=0.2} Ehehe."
     n "Oh{w=0.1} -{w=0.1} you'll need to type it all in manually though, so make sure you have it handy!"
-    n "{a=store.jn_globals.LINK_OPEN_WEATHER_MAP_API_KEYS}Here's{/a} the link in case you forgot{w=0.1} -{w=0.1} and again,{w=0.1} just talk to me when you have it ready!"
+    n "{a=[store.jn_globals.LINK_OPEN_WEATHER_MAP_API_KEYS]}Here's{/a} the link in case you forgot{w=0.1} -{w=0.1} and again,{w=0.1} just talk to me when you have it ready!"
     n "..."
     n "Okaaay!{w=0.2} Take it away,{w=0.1} [player]!"
 
@@ -1093,7 +1093,7 @@ label talk_weather_setup_part2:
                 n "Okay!{w=0.2} Let's try and get it working, [player]!"
                 n "Do you remember how to find your API keys for that website?"
                 n "Fear not!{w=0.2} Natsuki is here to save the day once again!{w=0.2} Ehehe."
-                n "You can find yours {a=store.jn_globals.LINK_OPEN_WEATHER_MAP_API_KEYS}here{/a}."
+                n "You can find yours {a=[store.jn_globals.LINK_OPEN_WEATHER_MAP_API_KEYS]}here{/a}."
 
             "No, not right now.":
                 n "Oh..."
@@ -1258,7 +1258,7 @@ label weather_setup_manual_coords:
 
     n "Now with that out of the way,{w=0.1} I just need your coordinates!"
     n "And by those,{w=0.1} I mean your {b}latitude{/b} and {b}longitude{/b},{w=0.1} of course!"
-    n "I always used {a=store.jn_globals.LINK_LAT_LONG_HOME}this{/a} website to look mine up for homework,{w=0.1} but you can use your phone or whatever too."
+    n "I always used {a=[store.jn_globals.LINK_LAT_LONG_HOME]}this{/a} website to look mine up for homework,{w=0.1} but you can use your phone or whatever too."
     n "Oh,{w=0.1} and don't worry about making it positive or negative.{w=0.2} I'll take care of that!"
     n "We'll start off with your {b}latitude{/b} first."
     n "So...{w=0.3} hit me,{w=0.1} [player]!"
