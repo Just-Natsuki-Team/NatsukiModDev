@@ -1140,6 +1140,7 @@ label talk_weather_setup_part2:
 
                 else:
                     n "No dice,{w=0.1} [player]...{w=0.3} that one didn't work either!"
+    return {"lock!" : None}
 
     # API key is valid, now we need the player's location!
     else:
