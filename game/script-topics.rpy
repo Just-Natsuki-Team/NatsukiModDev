@@ -1067,6 +1067,7 @@ label talk_weather_setup_part1:
                 n "Love you,{w=0.1} [chosen_endearment]!"
             # TODO: Perhaps we should decrease this? Seems like a long time to keep the player waiting!
             $ weather.set_next_weather_call_time(7920)
+    return {"lock!" : None}
 
 init 5 python:
     registerTopic(
@@ -1140,7 +1141,6 @@ label talk_weather_setup_part2:
 
                 else:
                     n "No dice,{w=0.1} [player]...{w=0.3} that one didn't work either!"
-    return {"lock!" : None}
 
     # API key is valid, now we need the player's location!
     else:
