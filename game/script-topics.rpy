@@ -1122,7 +1122,6 @@ label talk_weather_setup_part2:
             if not player_input or player_input == "":
                 n "Uhmm...{w=0.3} Did you actually type anything,{w=0.1} [player]?"
                 n "I didn't get that...{w=0.3} can you try again for me?"
-                $ player_input_count += 1
 
             elif player_input.replace(" ", "").lower() == "nevermind":
                 # Allow the player to back out
@@ -1141,6 +1140,7 @@ label talk_weather_setup_part2:
 
                 else:
                     n "No dice,{w=0.1} [player]...{w=0.3} that one didn't work either!"
+            $ player_input_count += 1
 
     # API key is valid, now we need the player's location!
     else:

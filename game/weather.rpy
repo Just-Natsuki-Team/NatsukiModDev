@@ -55,7 +55,7 @@ init -1 python in weather:
             url += "{0}={1}&".format(key, parameters[key])
 
         # And lastly append API key
-        url += "appid={0}".format(store.persistent.weather_api_key)
+        url += "appid={0}".format(api_key)
 
         return str(url)
 
