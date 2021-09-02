@@ -252,7 +252,7 @@ label compliment_cute:
             n "Alright,{w=0.1} fine!{w=0.2} Fine!{w=0.2} You win,{w=0.1} okay?!"
             n "I'm kinda...{w=0.3} maybe...{w=0.3} sorta...{w=0.3} somehow..."
             n "In an abstract way..."
-            n "...{w=0.3}'cute'."
+            n "...{w=0.3}'cute.'"
             n "..."
             n "There.{w=0.3} I said it, [player].{w=0.3} I said it.{w=0.3} Hooray for you."
             n "Are we done?{w=0.3} Are you happy?{w=0.3} Are you {i}pleased{/i} with yourself now?"
@@ -307,7 +307,7 @@ init 5 python:
 label compliment_hilarious:
     if last_compliment_type == COMPLIMENT_TYPE_HILARIOUS:
         if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
-            n "Aww,{w=0.1} [player]!{w=0.2} Thanks!"
+            n "Aww,{w=0.1} [player]!{w=0.2} Thanks!{w=0.2} I pride myself on that."
             n "You aren't too shabby yourself,{w=0.1} you know!"
             n "But anyway{w=0.1} -{w=0.1} I'll keep it up,{w=0.1} just for you.{w=0.2} Ehehe."
 
@@ -353,15 +353,22 @@ label compliment_inspirational:
             n ""
 
         else:
-            n ""
+            n "Ehehe.{w=0.2} What can I say?{w=0.2} I'm a pro,{w=0.1} after all!"
+            n "But thanks,{w=0.1} [player]!"
 
     else:
         if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
             n ""
+            $ relationship("affinity+")
 
         else:
-            n ""
-
+            n "H-{w=0.1}huh?{w=0.2} I'm an inspiration to you?"
+            n "Well...{w=0.3} o-{w=0.1}of course you'd think that!"
+            n "I mean,{w=0.1} role models don't come much better than me,{w=0.1} after all."
+            n "Why,{w=0.1} I'm practically an idol,{w=0.1} right?{w=0.2} Ahaha!"
+            n "..."
+            n "...Right?"
+            $ relationship("affinity+")
 
     $ last_compliment_type = COMPLIMENT_TYPE_INSPIRATIONAL
     return
