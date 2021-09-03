@@ -1146,12 +1146,14 @@ label talk_weather_setup_part2:
     else:
         n "Huh?{w=0.2} For real?"
         n "It looks like we aren't out of the woods yet,{w=0.1} [player]..."
-        n "Because I just realized that I have no idea where you actually live!"
-        n "Oops!{w=0.2} Ehehe..."
+        n "Because...{w=0.3} I just realized something."
+        n "So {w=0.1}-{w=0.1} I can use that website and the API key to find out what the weather is like anywhere in the world,{w=0.1} right?"
+        n "But I have no idea {i}where{/i} in the world you actually are!"
+        n "I don't think I'll get much further without that.{w=0.2} Oops!"
         n "I could {i}probably{/i} find out myself,{w=0.1} but I think that'd be kinda rude."
         n "So...{w=0.3} how about it,{w=0.1} [player]?"
-        n "Would you mind if I found out where you are?"
-        n "Don't worry! This'll be strictly between you and me. So..."
+        n "Would you mind if I tried to find out where you are?"
+        n "Don't worry!{w=0.2} This'll be strictly between you and me.{w=0.2} So..."
         menu:
             "How about it?"
 
@@ -1183,29 +1185,62 @@ label talk_weather_setup_part2:
             n "Aha!{w=0.2} I think I got it!"
             n "Now...{w=0.3} wanna see something awesome, [player]?{w=0.2} I know you do!"
             n "..."
-            $ open_maps(ip_latitude_longitude[0], ip_latitude_longitude[1])
-            n "Ta-da!"
-            n "Well?{w=0.2} Am I right?{w=0.2} Am I right, [player]?{w=0.2} I bet I am!"
-            menu:
-                "Yes, you found me.":
-                    # Natsuki is clearly a pro at hide and seek
-                    n "Yes!{w=0.2} Am I good or what?"
-                    n "Ahaha!"
-                    n "I'll just note those down real quick..."
-                    $ persistent.latitude, persistent.longitude = ip_latitude_longitude
 
-                "No, that's not right.":
-                    # We couldn't get the coordinates via IP, so we have to prompt them via the player
-                    n "What?{w=0.2} Are you kidding me!?"
-                    n "Ugh..."
-                    n "And I was so proud of myself for figuring that out,{w=0.1} too..."
-                    n "Well,{w=0.1} it looks like we're gonna have to do things the old-fashioned way."
-                    call weather_setup_manual_coords
+            python:
+                # Try to show the map, and come back with the result to drive dialogue
+                # We do this as Ren'Py doesn't allow inline try/catch. Thanks, Tom
+                show_map_success = False
+                try:
+                    open_maps(ip_latitude_longitude[0], ip_latitude_longitude[1])
+                    show_map_success = True
+
+                except Exception as exception:
+                    store.utils.log(exception.message, utils.SEVERITY_ERR)
+
+            if show_map_success:
+                n "Ta-da!"
+                n "Well?{w=0.2} Am I right?{w=0.2} Am I right, [player]?{w=0.2} I bet I am!"
+                menu:
+                    "Yes, you found me.":
+                        # Natsuki is clearly a pro at hide and seek
+                        n "Yes!{w=0.2} Am I good or what?"
+                        n "Ahaha!"
+                        n "I'll just note those down real quick..."
+                        $ persistent.latitude, persistent.longitude = ip_latitude_longitude
+
+                    "No, that's not right.":
+                        # We couldn't get the coordinates via IP, so we have to prompt them via the player
+                        n "What?{w=0.2} Are you kidding me!?"
+                        n "Ugh..."
+                        n "And I was so proud of myself for figuring that out,{w=0.1} too..."
+                        n "Well,{w=0.1} it looks like we're gonna have to do things the old-fashioned way."
+                        call weather_setup_manual_coords
+
+            else:
+                n "Eh?{w=0.2} What the...?"
+                n "Huh.{w=0.2} Weird."
+                n "Well,{w=0.1} I {i}was{/i} gonna show you something neat,{w=0.1} but it looks like something messed up..."
+                n "Hey, [player]...{w=0.3} could you look these coordinates up and tell me if I got it right?"
+                n "You should be able to search them up to find a location{w=0.1} -{w=0.1} then you can just tell me if that's correct!"
+                n "I'm pretty sure your latitude is [ip_latitude_longitude[0]],{w=0.1} and your longitude is [ip_latitude_longitude[1]].{w=0.2} Just talk to me again when you're ready,{w=0.1} 'kay?"
+                n "..."
+                n "Well,{w=0.1} [player]?{w=0.2} How're we looking?"
+                menu:
+                    "Yes, that looks good to me.":
+                        n "Good!{w=0.2} Good.{w=0.2} That's a relief!"
+                        n "I was worried I'd have to get a little more creative.{w=0.2} Ehehe."
+                        $ persistent.latitude, persistent.longitude = ip_latitude_longitude
+
+                    "No, that's not right.":
+                        n "Uuuuuuu..."
+                        n "Fine.{w=0.2} It looks like we're gonna have to do things the old-fashioned way."
+                        call weather_setup_manual_coords
 
             $ persistent.is_weather_tracking_set_up = True
             n "Okaaay!{w=0.2} It looks like we're finally good to go!"
             n "Thanks again for all your help,{w=0.1} [player]."
             n "I can't wait to see something different out of that window for a change!"
+
     return
 
 label weather_setup_manual_coords:
@@ -1231,28 +1266,36 @@ label weather_setup_manual_coords:
 
         "The Northern Hemisphere.":
             $ player_in_southern_hemisphere = False
+            $ persistent.hemisphere_north_south = "North"
+
             n "Ooh!{w=0.2} Just like me!"
             n "Looks like we're closer than I thought,{w=0.1} huh?{w=0.2} Ehehe."
 
         "The Southern Hemisphere.":
             $ player_in_southern_hemisphere = True
+            $ persistent.hemisphere_north_south = "South"
+
             n "Oh?{w=0.2} The Southern Hemisphere?{w=0.2} Neat!"
             n "I bet the weather is a real treat over there,{w=0.1} right?"
 
     n "Okay,{w=0.1} now time for the other two!"
     n "Do you live in the {b}Eastern{/b} or {b}Western{/b} Hemisphere?"
-    n "This one's a little more tricky,{w=0.1} but I find it helps to think of it this way..."
+    n "This one's a little more tricky,{w=0.1} but I find it helps to think of it this way:"
     n "If we took a world map and cut it in half vertically down the middle..."
     menu:
         "Would you live in the Eastern half,{w=0.1} or the Western half?"
 
         "The Eastern half.":
             $ player_in_western_hemisphere = False
+            $ persistent.jn_hemisphere_east_west = "East"
+
             n "Wow!{w=0.2} Just like me again,{w=0.1} [player]!"
             n "It really is a small world,{w=0.1} huh?{w=0.2} Ehehe."
 
         "The Western half.":
             $ player_in_western_hemisphere = True
+            $ persistent.jn_hemisphere_east_west = "West"
+
             n "The Western half...{w=0.3} gotcha!"
 
     # Get the latitude
@@ -1284,23 +1327,53 @@ label weather_setup_manual_coords:
     n "Hey{w=0.1} -{w=0.1} I think we're nearly there now,{w=0.1} [player]!"
     n "Let me just open up a map real quick..."
     n "..."
-    $ open_maps(player_latitude, player_longitude)
-    n "Ta-da!"
-    n "How about it,{w=0.1} [player]?{w=0.2} Close enough,{w=0.1} right?"
-    menu:
-        "Yes, that's close enough.":
-            n "Yay!{w=0.2} Finally!"
-            n "I'll just note all that down real quick..."
-            $ persistent.latitude = player_latitude
-            $ persistent.longitude = player_longitude
-            return
 
-        "No, that's not right at all.":
-            n "What?{w=0.2} Really?!"
-            n "Nnnnnn..."
-            n "That's annoying..."
-            n "Let's try again,{w=0.1} alright?{w=0.2} I really wanna get this working!"
-            jump weather_setup_manual_coords
+    python:
+        # Try to show the map, and come back with the result to drive dialogue
+        show_map_success = False
+        try:
+            open_maps(ip_latitude_longitude[0], ip_latitude_longitude[1])
+            show_map_success = True
+
+        except Exception as exception:
+            store.utils.log(exception.message, utils.SEVERITY_ERR)
+
+    if show_map_success:
+        n "Ta-da!"
+        n "How about it,{w=0.1} [player]?{w=0.2} Close enough,{w=0.1} right?"
+        menu:
+            "Yes, that's close enough.":
+                n "Yay!{w=0.2} Finally!"
+                n "I'll just note all that down real quick..."
+                $ persistent.latitude = player_latitude
+                $ persistent.longitude = player_longitude
+                return
+
+            "No, that's not right at all.":
+                n "What?{w=0.2} Really?!"
+                n "Nnnnnn...!"
+                n "That's annoying..."
+                n "Let's try again,{w=0.1} alright?{w=0.2} I really wanna get this working!"
+                jump weather_setup_manual_coords
+
+    else:
+        n "Urgh...{w=0.3} really?{w=0.2} This is such a pain!"
+        n "I can't seem to show you where I think you are on a map,{w=0.1} so I'll just ask to make sure."
+        n "I've done some checks to work out the coordinates,{w=0.1} and from what you said..."
+        n "Your overall latitude would be [player_latitude],{w=0.1} and your overall longitude would be [player_longitude]."
+        menu:
+            "Is [player_latitude], [player_longitude] correct?"
+
+            "Yes, that's right.":
+                n "Finally!{w=0.2} Jeez...{w=0.3} Now we can actually wrap things up here!"
+                return
+
+            "No, that's still not right.":
+                # >_>
+                n "Wow.{w=0.2} For real?"
+                n "..."
+                n "Let's try that one more time,{w=0.1} alright?"
+                jump weather_setup_manual_coords
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
