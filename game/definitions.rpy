@@ -588,6 +588,9 @@ init 10 python in jn_globals:
     # The current affection state. We default this to 5 (NORMAL)
     current_affinity_state = store.jn_affinity.NORMAL
 
+    # This will need to be replaced with a struct and links to persistent once outfits are in
+    current_outfit = None
+
 #Stuff that's really early, which should be usable basically anywhere
 init -999 python in utils:
     import datetime
