@@ -16,6 +16,13 @@ default persistent.jn_player_pet = None
 # Admissions data
 default persistent.jn_player_admission_type_on_quit = None
 
+# Appearance data
+default persistent.jn_player_appearance_declined_share = False
+default persistent.jn_player_appearance_eye_colour = None
+default persistent.jn_player_appearance_hair_length = None
+default persistent.jn_player_appearance_hair_colour = None
+default persistent.jn_player_appearance_height_cm = None
+
 #Our main topic pool
 default persistent._event_list = list()
 
