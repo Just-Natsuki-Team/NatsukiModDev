@@ -816,6 +816,130 @@ label talk_eating_well:
     n "Now...{w=0.3} where were we?"
     return
 
+# Natsuki discusses the importance of not only eating healthily, but regularly too
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_favourite_season",
+            unlocked=True,
+            prompt="What's your favourite season?",
+            conditional=None,
+            category=["Life", "You", "Weather", "Outside"],
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_favourite_season:
+    n "Huh?{w=0.2} My favourite weather?"
+    if not persistent.persistent.jn_player_favourite_season:
+        n "That's a little random,{w=0.1} isn't it?"
+        n "Well...{w=0.3} anyway.{w=0.1} Tough question, [player]!"
+        n "I think if I had to pick..."
+        n "It'd be summer!{w=0.2} Duh!"
+        n "Why?{w=0.2} Just think about it,{w=0.1} [player]!"
+        n "Long trips to the beach...{w=0.3} ice cream in the shade...{w=0.3} lazy evening walks to the shops..."
+        n "I mean,{w=0.1} what's not to love?"
+        n "I can just enjoy things out there without having to worry about uncomfortable!"
+        n "I don't think I need to make my case any more clear,{w=0.1} do I?{w=0.2} Ahaha."
+        n "Although...{w=0.3} what about you,{w=0.1} [player]?"
+        n "That's far more interesting to me.{w=0.2} So!"
+        menu:
+            "What's your favourite season?"
+
+            "Spring":
+                n "Oh?{w=0.2} Spring,{w=0.1} huh?"
+                n "Hmmm..."
+                n "I mean,{w=0.1} I kinda get it.{w=0.2} It's the sign winter finally got lost,{w=0.1} right?"
+                n "And the flowers blooming again is kinda cool to see."
+                n "But the rain!{w=0.2} Jeez!"
+                n "It just never stops!"
+                n "Roll on summer,{w=0.1} I say."
+                persistent.persistent.jn_player_favourite_season = "Spring"
+
+            "Summer":
+                n "Aha!{w=0.2} I knew it!"
+                n "Nobody can resist some fun in the sun,{w=0.1} am I right?"
+                n "I'm glad we both agree,{w=0.1} [player].{w=0.2} Ehehe."
+                persistent.persistent.jn_player_favourite_season = "Summer"
+
+            "Autumn":
+                n "Autumn?{w=0.2} Not a bad choice,{w=0.1} actually!"
+                n "I like when it's still warm enough in the day to go out and do things..."
+                n "But you also get that crisp,{w=0.1} fresh morning air to wake you up."
+                n "The falling leaves are super pretty too!"
+                n "It's just...{w=0.3} it's all ruined when the rain comes,{w=0.1} you know?"
+                n "Trudging through all those sloppy leaves is just gross.{w=0.2} No thanks!"
+                persistent.persistent.jn_player_favourite_season = "Autumn"
+
+            "Winter":
+                n "Huh?{w=0.2} Really?"
+                n "Winter is the last thing I expected you to say,{w=0.1} [player]!"
+                n "Though...{w=0.3} I get it, kinda."
+                n "It's the perfect time of year to get super snug and spend some quality reading time!"
+                n "Especially since there's not much you can do outside,{w=0.1} anyway."
+                persistent.persistent.jn_player_favourite_season = "Winter"
+
+    else:
+        n "Hang on...{w=0.3} didn't we talk about this before,{w=0.1} [player]?"
+        n "Well,{w=0.1} anyway..."
+        n "I still love summer,{w=0.1} as you know{w=0.1} -{w=0.1} and nothing's gonna change that any time soon!"
+        n "What about you,{w=0.1} [player]?{w=0.2} Still rooting for [persistent.persistent.jn_player_favourite_season]?"
+        menu:
+            "Yes.":
+                n "Ehehe.{w=0.2} I thought as much,{w=0.1} [player]."
+                if persistent.persistent.jn_player_favourite_season == "Summer":
+                    n "You already picked the best season,{w=0.1} after all!"
+
+            "No.":
+                n "Oh?{w=0.2} Changed our mind,{w=0.1} have we?"
+                n "Well?{w=0.2} Tell me then,{w=0.1} [player]!"
+                menu:
+                    "What's your favourite season?"
+
+                    "Spring":
+                        $ new_favourite_season = "Spring"
+
+                    "Summer":
+                        $ new_favourite_season = "Summer"
+
+                    "Autumn":
+                        $ new_favourite_season = "Autumn"
+
+                    "Winter":
+                        $ new_favourite_season = "Winter"
+
+                if persistent.persistent.jn_player_favourite_season == new_favourite_season:
+                    n "Hey!{w=0.2} [player]!"
+                    n "I thought you said you'd changed your mind?"
+                    n "You haven't changed your mind at all!{w=0.2} You said [persistent.persistent.jn_player_favourite_season] last time,{w=0.1} too!"
+                    $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+                    n "Jeez...{w=0.3} you're such a wind-up sometimes,{w=0.1} [chosen_tease]!"
+                    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+                        n "But...{w=0.3} you know,{w=0.1} [player]."
+                        n "It isn't like I {i}dislike{/i} that side of you,{w=0.1} or anything..."
+                        n "Ehehe."
+
+                else:
+                    persistent.persistent.jn_player_favourite_season = new_favourite_season
+
+                if persistent.persistent.jn_player_favourite_season == "Spring":
+                    n ""
+
+                elif persistent.persistent.jn_player_favourite_season == "Summer":
+                    n ""
+
+                elif persistent.persistent.jn_player_favourite_season == "Autumn":
+                    n ""
+
+                elif persistent.persistent.jn_player_favourite_season == "Winter":
+                    n ""
+
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
