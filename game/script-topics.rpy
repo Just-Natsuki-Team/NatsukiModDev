@@ -826,7 +826,7 @@ init 5 python:
             prompt="What's your favourite season?",
             conditional=None,
             category=["Weather", "Nature"],
-            nat_says=True,
+            player_says=True,
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
             location="classroom"
         ),
@@ -962,6 +962,49 @@ label talk_favourite_season:
                     n "Well,{w=0.1} if you prefer being all cosy inside..."
                     n "Then you better not be slacking on your reading,{w=0.1} [player]!"
                     n "Ehehe."
+
+    return
+
+# Natsuki discusses the concept of timeboxing
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_time_management",
+            unlocked=True,
+            prompt="Time management",
+            conditional=None,
+            category=["Life"],
+            nat_says=True,
+            affinity_range=(jn_affinity.UPSET, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_time_management:
+    n "Hey,{w=0.1} [player]..."
+    n "Do you have off days sometimes?{w=0.2} Where you struggle to get anything done?"
+    n "Or you just get distracted super easily?"
+    n "To be honest,{w=0.1} I struggled with that for a while.{w=0.2} Especially when things like assignments are so boring!"
+    n "But...{w=0.3} I figured out a way of managing that{w=0.1} -{w=0.1} and you should know it too,{w=0.1} [player]!"
+    n "Time boxing!"
+    n "And no,{w=0.1} it's not as literal as it sounds.{w=0.2} Ehehe."
+    n "The idea is that you set aside a period during the day you want to work{w=0.1} -{w=0.1} like the school day,{w=0.1} or a few hours in the evening."
+    n "Then for each hour in that period,{w=0.1} you split it!"
+    n "So for any given hour,{w=0.1} you spend most of that working,{w=0.1} and the remainder on some kind of break."
+    n "The idea is that it becomes way easier to stay focused and motivated since you always have a breather coming up."
+    n "Personally,{w=0.1} I find a 50/10 split works best for me."
+    n "So I spent 50 minutes of each hour studying,{w=0.1} and 10 minutes doing whatever I want."
+    n "You'd be surprised how much manga time I can sneak in!"
+    n "Don't just take my schedule as a rule though.{w=0.2} Find a balance that works for you, [player]!"
+    n "Though I should remind you...{w=0.3} the key word here is {i}balance{/i}."
+    n "I'm not gonna be impressed if you work too much..."
+    n "Or just slack off!"
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+        n "Although...{w=0.3} now that I think about it..."
+        n "Perhaps I should timebox our time together, [player]."
+        n "Ahaha!"
 
     return
 
