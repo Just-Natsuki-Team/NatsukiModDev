@@ -995,7 +995,7 @@ label talk_time_management:
     n "So for any given hour,{w=0.1} you spend most of that working,{w=0.1} and the remainder on some kind of break."
     n "The idea is that it becomes way easier to stay focused and motivated since you always have a breather coming up."
     n "Personally,{w=0.1} I find a 50/10 split works best for me."
-    n "So I spent 50 minutes of each hour studying,{w=0.1} and 10 minutes doing whatever I want."
+    n "So I spend 50 minutes of each hour studying,{w=0.1} and 10 minutes doing whatever I want."
     n "You'd be surprised how much manga time I can sneak in!"
     n "Don't just take my schedule as a rule though.{w=0.2} Find a balance that works for you, [player]!"
     n "Though I should remind you...{w=0.3} the key word here is {i}balance{/i}."
