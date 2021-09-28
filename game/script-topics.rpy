@@ -1048,7 +1048,7 @@ label talk_drinking_alcohol:
     n "I mean...{w=0.3} I know we shouldn't have had it in there at all,{w=0.1} and Yuri should have known better."
     n "But she didn't deserve all of...{w=0.3} that."
     n "I think she was just trying to build bonds,{w=0.1} you know?"
-    n "It's all in the past now,{w=0.1} obviously.{w=0.2} But that doesn't mean I still feel bad about it sometimes."
+    n "It's all in the past now,{w=0.1} obviously.{w=0.2} But that doesn't mean I don't still feel bad about it sometimes."
     n "..."
     if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
         n "Hey...{w=0.3} [player]?"
