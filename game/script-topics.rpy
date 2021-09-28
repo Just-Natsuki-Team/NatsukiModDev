@@ -1468,6 +1468,75 @@ label talk_drinking_alcohol:
 
     return
 
+# Natsuki laments her inability to drive and questions the player on if they can
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_driving",
+            unlocked=True,
+            prompt="Can you drive?",
+            conditional=None,
+            category=["Natsuki", "Transport"],
+            player_says=True,
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_driving:
+    n "Pffft!"
+    n "Ahaha!{w=0.2} What kind of a question is that,{w=0.1} [player]?"
+    $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+    n "Of course I can't drive,{w=0.1} [chosen_tease]!{w=0.2} Why do you think I walk everywhere?"
+    n "I mean...{w=0.3} even if I wanted to learn,{w=0.1} I don't think I could afford it."
+    n "Lessons are super expensive nowadays!"
+    n "And then there's tests,{w=0.1} insurance...{w=0.3} it's actually pretty gross how fast it all adds up."
+    n "I think I'd rather stick to public transport and my own two feet."
+    n "But what about you,{w=0.1} [player]?"
+    menu:
+        n "Can you drive?"
+
+        "Yes, and I do currently.":
+            n "Wow."
+            n "...{w=0.3}Show-off."
+            n "..."
+            n "Relax,{w=0.1} [player]!{w=0.2} Jeez!{w=0.2} I'm just messing with you."
+            n "That's awesome though{w=0.1} -{w=0.1} you just can't beat the convenience of a car,{w=0.1} right?"
+            if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+                n "But I should probably warn you..."
+                n "I'm picking the songs for our driving playlist."
+                n "Ahaha!"
+
+            else:
+                n "Just remember,{w=0.1} [player]..."
+                n "I call shotgun.{w=0.2} Ehehe."
+
+        "Yes, but I don't right now.":
+            n "Oh?{w=0.2} Is something wrong with your car,{w=0.1} [player]?"
+            n "Or perhaps...{w=0.3} you just don't own one at the moment?"
+            n "Well,{w=0.1} I'm not one to judge.{w=0.2} I'm sure you manage just fine."
+            n "Besides,{w=0.1} you're helping the environment too,{w=0.1} right?"
+            if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+                n "Thoughtful as always,{w=0.1} [player]."
+                n "I like that about you."
+                n "Ehehe."
+
+        "No, I can't.":
+            n "Oh..."
+            n "Well,{w=0.1} chin up,{w=0.1} [player]!{w=0.2} It isn't the end of the world."
+            n "Don't worry {w=0.1}-{w=0.1} I'll teach you how to use the bus!"
+            n "Ehehe."
+            if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+                n "And besides..."
+                n "That just means we can snuggle up on the seat together,{w=0.1} [player]."
+                n "A dream come true for you,{w=0.1} right?"
+                n "Ehehe."
+
+            else:
+                n "That's what friends are for, [player]!"
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
