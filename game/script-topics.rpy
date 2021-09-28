@@ -1496,7 +1496,7 @@ label talk_driving:
     n "I think I'd rather stick to public transport and my own two feet."
     n "But what about you,{w=0.1} [player]?"
     menu:
-        "Can you drive?"
+        n "Can you drive?"
 
         "Yes, and I do currently.":
             n "Wow."
