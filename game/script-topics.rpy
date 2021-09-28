@@ -1402,6 +1402,72 @@ label talk_player_appearance:
 
     return
 
+# Natsuki discusses drinking alcohol
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_drinking_alcohol",
+            unlocked=True,
+            prompt="Do you drink alcohol?",
+            conditional=None,
+            category=["Life", "Health", "Natsuki"],
+            player_says=True,
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_drinking_alcohol:
+    n "Do I drink alcohol?"
+    n "I can't say I've ever tried it,{w=0.1} [player]."
+    n "I just don't really think it's something for me."
+    n "That being said,{w=0.1} I knew people who {i}did{/i} drink it..."
+    n "But...{w=0.3} I'd...{w=0.3} really rather not get into that,{w=0.1} [player]."
+    n "Sorry."
+    n "..."
+    n "Oh!{w=0.2} That reminds me,{w=0.1} actually!"
+    n "I bet you didn't know,{w=0.1} but guess who just randomly brought some into the club one day?"
+    n "Yuri!"
+    n "Surprised?{w=0.2} I know,{w=0.1} right?"
+    n "I mean...{w=0.3} it was just completely out of the blue!"
+    n "She just produced it from her bag like it was a book or something."
+    n "It wasn't even just some random supermarket stuff either...{w=0.3} it looked super expensive too!"
+    n "Honestly,{w=0.1} I couldn't help myself.{w=0.2} I just burst into laughter."
+    n "I think it was just how non-chalant it all was,{w=0.1} really."
+    n "Monika didn't look impressed,{w=0.1} though..."
+    n "And Sayori...{w=0.3} she just got really upset.{w=0.2} She was shouting and everything!"
+    n "It looked like she put a lot of thought into picking something out,{w=0.1} but she just got yelled at for it..."
+    n "I mean...{w=0.3} I know we shouldn't have had it in there at all,{w=0.1} and Yuri should have known better."
+    n "But she didn't deserve all of...{w=0.3} that."
+    n "I think she was just trying to build bonds,{w=0.1} you know?"
+    n "It's all in the past now,{w=0.1} obviously.{w=0.2} But that doesn't mean I don't still feel bad about it sometimes."
+    n "..."
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+        n "Hey...{w=0.3} [player]?"
+        n "Can you promise me something?"
+        n "It's dumb,{w=0.1} but it's personal to me."
+        n "I don't care if you drink or not."
+        n "But if you do..."
+        n "Please...{w=0.3} take it all in moderation,{w=0.1} okay?"
+        n "I've...{w=0.3} seen...{w=0.3} what it can do to people."
+        n "Firsthand."
+        n "You deserve better than that,{w=0.1} [player].{w=0.2} You {i}are{/i} better than that."
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVE:
+            n "..."
+            n "I love you,{w=0.1} [player]."
+            n "I'm never going to let a bottle get between us."
+
+    else:
+        n "Hey,{w=0.1} [player]?"
+        n "I don't really care if you drink or not."
+        n "Just promise you'll go easy on it,{w=0.1} okay?"
+        n "I'm not gonna clean up after you!"
+        n "Ahaha..."
+
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
