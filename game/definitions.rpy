@@ -13,8 +13,18 @@ default persistent.jn_screenshot_bad_shots_total = 0
 # Pet data
 default persistent.jn_player_pet = None
 
+# Seasonal data
+default persistent.jn_player_favourite_season = None
+
 # Admissions data
 default persistent.jn_player_admission_type_on_quit = None
+
+# Appearance data
+default persistent.jn_player_appearance_declined_share = False
+default persistent.jn_player_appearance_eye_colour = None
+default persistent.jn_player_appearance_hair_length = None
+default persistent.jn_player_appearance_hair_colour = None
+default persistent.jn_player_appearance_height_cm = None
 
 #Our main topic pool
 default persistent._event_list = list()
