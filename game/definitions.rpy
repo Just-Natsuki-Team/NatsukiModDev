@@ -13,6 +13,9 @@ default persistent.jn_screenshot_bad_shots_total = 0
 # Pet data
 default persistent.jn_player_pet = None
 
+# Seasonal data
+default persistent.jn_player_favourite_season = None
+
 # Admissions data
 default persistent.jn_player_admission_type_on_quit = None
 

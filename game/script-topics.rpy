@@ -816,6 +816,265 @@ label talk_eating_well:
     n "Now...{w=0.3} where were we?"
     return
 
+# Natsuki discusses her favourite season with the player, and asks the player theirs
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_favourite_season",
+            unlocked=True,
+            prompt="What's your favourite season?",
+            conditional=None,
+            category=["Weather", "Nature"],
+            player_says=True,
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_favourite_season:
+    n "Huh?{w=0.2} My favourite season?"
+    if not persistent.jn_player_favourite_season:
+        n "That's a little random,{w=0.1} isn't it?"
+        n "Well...{w=0.3} anyway.{w=0.1} Tough question, [player]!"
+        n "I think if I had to pick..."
+        n "It'd be summer!{w=0.2} Duh!"
+        n "Why?{w=0.2} Just think about it,{w=0.1} [player]!"
+        n "Long trips to the beach...{w=0.3} ice cream in the shade...{w=0.3} lazy evening walks to the shops..."
+        n "I mean,{w=0.1} what's not to love?"
+        n "I can just enjoy life out there without having to worry about the weather!"
+        n "I don't think I need to make my case any more clear,{w=0.1} do I?"
+        n "Ahaha."
+        n "Although...{w=0.3} what about you,{w=0.1} [player]?"
+        menu:
+            "What's your favourite season?"
+
+            "Spring":
+                n "Oh?{w=0.2} Spring,{w=0.1} huh?"
+                n "Hmmm..."
+                n "I mean,{w=0.1} I kinda get it.{w=0.2} It's the sign winter finally got lost,{w=0.1} right?"
+                n "And I suppose the flowers blooming again is kinda cool to see."
+                n "But the rain!{w=0.2} Jeez!"
+                n "It just never stops!"
+                n "Roll on summer,{w=0.1} I say."
+                $ persistent.jn_player_favourite_season = "Spring"
+
+            "Summer":
+                n "Aha!{w=0.2} I knew it!"
+                n "Nobody can resist some fun in the sun,{w=0.1} am I right?"
+                n "I'm glad we both agree,{w=0.1} [player].{w=0.2} Ehehe."
+                $ persistent.jn_player_favourite_season = "Summer"
+
+            "Autumn":
+                n "Autumn?{w=0.2} Not a bad choice,{w=0.1} actually!"
+                n "I like when it's still warm enough in the day to go out and do things..."
+                n "But you also get that crisp,{w=0.1} fresh morning air to wake you up."
+                n "The falling leaves are super pretty too!"
+                n "It's just...{w=0.3} it's all ruined when the rain comes,{w=0.1} you know?"
+                n "Trudging through all those sloppy leaves is just gross.{w=0.2} No thanks!"
+                $ persistent.jn_player_favourite_season = "Autumn"
+
+            "Winter":
+                n "Huh?{w=0.2} Really?"
+                n "Winter is the last thing I expected you to say,{w=0.1} [player]!"
+                n "Though...{w=0.3} I get it, kinda."
+                n "It's the perfect time of year to get super snug and spend some quality reading time!"
+                n "Especially since there's not much you can do outside,{w=0.1} anyway."
+                $ persistent.jn_player_favourite_season = "Winter"
+
+    else:
+        n "Hang on...{w=0.3} didn't we talk about this before,{w=0.1} [player]?"
+        n "Well,{w=0.1} anyway..."
+        n "I still love summer,{w=0.1} as you know{w=0.1} -{w=0.1} and nothing's gonna change that any time soon!"
+        n "What about you,{w=0.1} [player]?{w=0.2} Still rooting for [persistent.jn_player_favourite_season]?"
+        menu:
+            "Yes.":
+                n "Ehehe.{w=0.2} I thought as much,{w=0.1} [player]."
+                if persistent.jn_player_favourite_season == "Summer":
+                    n "You already picked the best season,{w=0.1} after all!"
+                    return
+
+                n "Well...{w=0.3} I'm afraid you're not gonna sway me!"
+                n "Ahaha!"
+
+            "No.":
+                n "Oh?{w=0.2} Changed our mind,{w=0.1} have we?"
+                n "Well?{w=0.2} Tell me then,{w=0.1} [player]!"
+                menu:
+                    "What's your favourite season?"
+
+                    "Spring":
+                        $ new_favourite_season = "Spring"
+
+                    "Summer":
+                        $ new_favourite_season = "Summer"
+
+                    "Autumn":
+                        $ new_favourite_season = "Autumn"
+
+                    "Winter":
+                        $ new_favourite_season = "Winter"
+
+                if persistent.jn_player_favourite_season == new_favourite_season:
+                    n "Hey!{w=0.2} [player]!"
+                    n "I thought you said you'd changed your mind?"
+                    n "You haven't changed your mind at all!{w=0.2} You said [persistent.jn_player_favourite_season] last time,{w=0.1} too!"
+                    $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+                    n "Jeez...{w=0.3} you're such a wind-up sometimes,{w=0.1} [chosen_tease]!"
+                    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+                        n "But...{w=0.3} you know,{w=0.1} [player]."
+                        n "It isn't like I {i}dislike{/i} that side of you,{w=0.1} or anything..."
+                        n "Ehehe."
+
+                    else:
+                        n "But...{w=0.3} I think I can {i}weather{/i} it."
+                        n "For now."
+
+                    return
+
+                else:
+                    $ persistent.jn_player_favourite_season = new_favourite_season
+
+                if persistent.jn_player_favourite_season == "Spring":
+                    n "Ooh?{w=0.2} Favouring Spring now,{w=0.1} [player]?"
+                    n "I could do without all the rain,{w=0.1} but I get it."
+                    n "Hmm...{w=0.3} Spring..."
+                    n "I wonder...{w=0.3} do you grow anything,{w=0.1} [player]?"
+                    n "Ahaha."
+
+                elif persistent.jn_player_favourite_season == "Summer":
+                    n "Aha!{w=0.2} See?"
+                    n "You knew I was right all along,{w=0.1} didn't you?"
+                    n "Don't even try to deny it,{w=0.1} [player]."
+                    n "Summer is the best!"
+                    n "I'm just glad you came around.{w=0.2} That's the important thing!"
+
+                elif persistent.jn_player_favourite_season == "Autumn":
+                    n "Oh?{w=0.2} You've taken the {i}fall{/i} for Autumn,{w=0.1} have you?"
+                    n "Ehehe."
+                    n "I'll admit,{w=0.1} it's a pretty season,{w=0.1} with all the golden leaves and stuff..."
+                    n "So long as the weather stays warm,{w=0.1} anyway."
+
+                elif persistent.jn_player_favourite_season == "Winter":
+                    n "Winter,{w=0.1} huh?{w=0.2} I wasn't expecting that."
+                    n "Do you prefer being indoors now or something,{w=0.1} [player]?"
+                    n "Well,{w=0.1} if you prefer being all cosy inside..."
+                    n "Then you better not be slacking on your reading,{w=0.1} [player]!"
+                    n "Ehehe."
+
+    return
+
+# Natsuki discusses the concept of timeboxing
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_time_management",
+            unlocked=True,
+            prompt="Time management",
+            conditional=None,
+            category=["Life"],
+            nat_says=True,
+            affinity_range=(jn_affinity.UPSET, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_time_management:
+    n "Hey,{w=0.1} [player]..."
+    n "Do you have off days sometimes?{w=0.2} Where you struggle to get anything done?"
+    n "Or you just get distracted super easily?"
+    n "To be honest,{w=0.1} I struggled with that for a while.{w=0.2} Especially when things like assignments are so boring!"
+    n "But...{w=0.3} I figured out a way of managing that{w=0.1} -{w=0.1} and you should know it too,{w=0.1} [player]!"
+    n "Time boxing!"
+    n "And no,{w=0.1} it's not as literal as it sounds.{w=0.2} Ehehe."
+    n "The idea is that you set aside a period during the day you want to work{w=0.1} -{w=0.1} like the school day,{w=0.1} or a few hours in the evening."
+    n "Then for each hour in that period,{w=0.1} you split it!"
+    n "So for any given hour,{w=0.1} you spend most of that working,{w=0.1} and the remainder on some kind of break."
+    n "The idea is that it becomes way easier to stay focused and motivated since you always have a breather coming up."
+    n "Personally,{w=0.1} I find a 50/10 split works best for me."
+    n "So I spend 50 minutes of each hour studying,{w=0.1} and 10 minutes doing whatever I want."
+    n "You'd be surprised how much manga time I can sneak in!"
+    n "Don't just take my schedule as a rule though.{w=0.2} Find a balance that works for you, [player]!"
+    n "Though I should remind you...{w=0.3} the key word here is {i}balance{/i}."
+    n "I'm not gonna be impressed if you work too much..."
+    n "Or just slack off!"
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+        n "Although...{w=0.3} now that I think about it..."
+        n "Perhaps I should timebox our time together, [player]."
+        n "Ahaha!"
+
+    return
+
+# Natsuki discusses her sweet tooth with the player
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_sweet_tooth",
+            unlocked=True,
+            prompt="Do you have a sweet tooth?",
+            conditional=None,
+            category=["Natsuki", "Health", "Food"],
+            player_says=True,
+            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_sweet_tooth:
+    n "Huh?{w=0.2} Do I have a sweet tooth?"
+
+    # Opening response
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+        n "You bet I do!"
+        n "What were you expecting,{w=0.1} [player]?{w=0.2} Ehehe."
+
+    elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+        n "Well,{w=0.1} yeah.{w=0.2} Of course I do!"
+
+    else:
+        n "Well...{w=0.3} yeah.{w=0.2} Why wouldn't I?"
+
+    n "Baked stuff is okay,{w=0.1} but I find it gets kinda sickly before long."
+    n "But to be completely honest,{w=0.1} if I had a choice?"
+    n "Just give me a bunch of candy every time."
+
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+        n "There's so much more variety!{w=0.2} Like...{w=0.3} there's always something for whatever I feel like!"
+        n "I think if I had to pick a favourite though,{w=0.1} it'd be those fizzy ones."
+        n "Just that perfect mix of sweet and sour,{w=0.1} you know?"
+        n "Jeez...{w=0.3} I can feel my tongue tingling already just thinking about them!"
+        n "..."
+        n "A-{w=0.1}anyway!"
+        n "It isn't like I'm snacking on treats all the time though."
+        n "I've got way better things to spend my money on."
+        n "And...{w=0.3} it's not exactly healthy either.{w=0.2} Ahaha."
+
+    # Closing thoughts
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+        n "Though I have to say,{w=0.1} [player]."
+        n "I'm pretty sure you have a sweet tooth too."
+        n "It'd explain why you're spending so much time with me,{w=0.1} after all."
+        n "Ahaha!"
+
+    elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+        n "I could go for some candy right now,{w=0.1} actually."
+        n "But...{w=0.3} I think I'll hold back."
+        n "Someone's gotta be a role model to you,{w=0.1} [player].{w=0.2} Am I right?"
+        n "Ehehe."
+
+    else:
+        n "..."
+        n "That being said..."
+        n "I...{w=0.3} could really use some chocolate right now."
+        n "I'll let you figure out why,{w=0.1} [player]."
+
+    return
+
 # Natsuki asks about and potentially discovers more about the player's physical appearance
 init 5 python:
     registerTopic(
