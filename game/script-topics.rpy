@@ -1008,6 +1008,73 @@ label talk_time_management:
 
     return
 
+# Natsuki discusses her sweet tooth with the player
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_sweet_tooth",
+            unlocked=True,
+            prompt="Do you have a sweet tooth?",
+            conditional=None,
+            category=["Natsuki", "Health", "Food"],
+            player_says=True,
+            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_sweet_tooth:
+    n "Huh?{w=0.2} Do I have a sweet tooth?"
+
+    # Opening response
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+        n "You bet I do!"
+        n "What were you expecting,{w=0.1} [player]?{w=0.2} Ehehe."
+
+    elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+        n "Well,{w=0.1} yeah.{w=0.2} Of course I do!"
+
+    else:
+        n "Well...{w=0.3} yeah.{w=0.2} Why wouldn't I?"
+
+    n "Baked stuff is okay,{w=0.1} but I find it gets kinda sickly before long."
+    n "But to be completely honest,{w=0.1} if I had a choice?"
+    n "Just give me a bunch of candy every time."
+
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+        n "There's so much more variety!{w=0.2} Like...{w=0.3} there's always something for whatever I feel like!"
+        n "I think if I had to pick a favourite though,{w=0.1} it'd be those fizzy ones."
+        n "Just that perfect mix of sweet and sour,{w=0.1} you know?"
+        n "Jeez...{w=0.3} I can feel my tongue tingling already just thinking about them!"
+        n "..."
+        n "A-{w=0.1}anyway!"
+        n "It isn't like I'm snacking on treats all the time though."
+        n "I've got way better things to spend my money on."
+        n "And...{w=0.3} it's not exactly healthy either.{w=0.2} Ahaha."
+
+    # Closing thoughts
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+        n "Though I have to say,{w=0.1} [player]."
+        n "I'm pretty sure you have a sweet tooth too."
+        n "It'd explain why you're spending so much time with me,{w=0.1} after all."
+        n "Ahaha!"
+
+    elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+        n "I could go for some candy right now,{w=0.1} actually."
+        n "But...{w=0.3} I think I'll hold back."
+        n "Someone's gotta be a role model to you,{w=0.1} [player].{w=0.2} Am I right?"
+        n "Ehehe."
+
+    else:
+        n "..."
+        n "That being said..."
+        n "I...{w=0.3} could really use some chocolate right now."
+        n "I'll let you figure out why,{w=0.1} [player]."
+
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
