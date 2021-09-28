@@ -1108,14 +1108,14 @@ label talk_player_appearance:
                 eye_colour_descriptor = "sparkling"
 
             else:
-                eye_colour_descriptor = lower(persistent.jn_player_appearance_eye_colour)
+                eye_colour_descriptor = persistent.jn_player_appearance_eye_colour.lower()
 
             # Get the descriptor for the hair colour
             if persistent.jn_player_appearance_hair_colour == "Other":
                 hair_colour_descriptor = "amazing"
 
             else:
-                hair_colour_descriptor = lower(persistent.jn_player_appearance_hair_colour)
+                hair_colour_descriptor = persistent.jn_player_appearance_hair_colour.lower()
 
         # Comment on hair length and colour, if the player has hair
         if not persistent.jn_player_appearance_hair_length == "None":
