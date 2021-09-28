@@ -1075,6 +1075,399 @@ label talk_sweet_tooth:
 
     return
 
+# Natsuki asks about and potentially discovers more about the player's physical appearance
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_player_appearance",
+            unlocked=True,
+            prompt="Your appearance",
+            conditional=None,
+            category=["Life", "You"],
+            nat_says=True,
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_player_appearance:
+    # Player was asked before, and declined to share their appearance
+    if persistent.jn_player_appearance_declined_share:
+        n "Huh?{w=0.2} Your appearance?"
+        n "If I remember,{w=0.1} [player]{w=0.1} -{w=0.1} you said didn't want to share it with me before."
+        n "Hmm...{w=0.3} Well..."
+        menu:
+            "Did you change your mind,{w=0.1} [player]?"
+
+            "Yes, I want to share my appearance.":
+                n "Yay!{w=0.2} I was hoping you'd come around eventually,{w=0.1} [player]."
+                n "Let's not waste any time!"
+
+            "No, I still don't want to share my appearance.":
+                n "Oh..."
+                n "Well,{w=0.1} it's your call,{w=0.1} [player]."
+                n "Just let me know if you change your mind again,{w=0.1} alright?"
+                return
+
+    # Player has already described themselves to Natsuki
+    elif persistent.jn_player_appearance_eye_colour is not None:
+        n "Huh?{w=0.2} Your appearance?"
+        n "But...{w=0.3} I was sure you already shared that with me,{w=0.1} [player]."
+        n "Ooh!{w=0.2} Did you dye your hair or something?"
+        n "Or...{w=0.3} maybe you just made a mistake last time?"
+        n "Well,{w=0.1} either way..."
+        menu:
+            "Did you want to share your appearance again,{w=0.1} [player]?"
+
+            "Yes, my appearance has changed.":
+                n "Aha!{w=0.2} I thought so!"
+                n "I can't wait to find out how!"
+
+            "No, my appearance hasn't changed.":
+                n "Eh?{w=0.2} Just pulling my leg,{w=0.1} are you?"
+                n "Okaaay..."
+                n "Just let me know if you actually {i}do{/i} change something then,{w=0.2} 'kay?"
+                n "Ehehe."
+
+    # Player has never described themselves to Natsuki, and this is their first time discussing it
+    else:
+        n "Huh..."
+        n "You know,{w=0.1} [player].{w=0.2} I just realized something."
+        n "You've seen a lot of me,{w=0.1} right?{w=0.2} By spending time with me here,{w=0.1} I mean."
+        n "So...{w=0.3} you kinda know exactly who you're dealing with."
+        n "But I don't have a clue about how you actually look!"
+        n "And honestly?{w=0.2} I'm actually pretty curious!"
+        n "Don't worry though{w=0.1} -{w=0.1} anything you tell me is staying strictly between us,{w=0.1} obviously!"
+        n "So...{w=0.3} how about it, [player]?"
+        menu:
+            "Do you wanna share your appearance with me, [player]?"
+
+            "Sure!":
+                n "Yay!{nw}"
+                n "I-{w=0.1}I mean good!{w=0.2} Thanks a bunch,{w=0.1} [player]!"
+                n "Let's get started then,{w=0.1} shall we?"
+
+            "I'm not comfortable sharing that.":
+                n "Oh..."
+                n "That's kind of disappointing to hear,{w=0.1} if I'm being honest."
+                n "But I totally get it,{w=0.1} [player].{w=0.2} So don't worry,{w=0.1} 'kay?"
+                n "Just let me know if you feel like telling me later!"
+                $ persistent.jn_player_appearance_declined_share = True
+
+    n "Okaaay!{w=0.2} Let's start with...{w=0.3} your eyes!"
+    n "They say the eyes are the window to the soul,{w=0.1} so it only makes sense to begin there,{w=0.1} right?"
+    n "Ahaha.{w=0.2} Anyway..."
+
+    # Eye colour
+    menu:
+        "How would you describe your eye colour,{w=0.1} [player]?"
+
+        "Amber":
+            n "Ooh!{w=0.2} I don't think I've seen someone with amber eyes before."
+            n "That's awesome,{w=0.1} [player]!{w=0.2} I bet those help you stand out,{w=0.1} right?"
+            $ persistent.jn_player_appearance_eye_colour = "Amber"
+
+        "Blue":
+            n "Blue eyes,{w=0.1} huh?{w=0.2} Cool!"
+            n "I really like how striking they are!"
+            $ persistent.jn_player_appearance_eye_colour = "Blue"
+
+        "Brown":
+            n "Brown eyes,{w=0.1} huh?{w=0.2} I'm not complaining!"
+            n "Nice and natural,{w=0.1} am I right?{w=0.2} Ehehe."
+            $ persistent.jn_player_appearance_eye_colour = "Brown"
+
+        "Grey":
+            n "Oh?{w=0.2} Grey eyes?{w=0.2} That's super neat, [player]!"
+            n "I don't think I've seen anyone with grey eyes before!"
+            $ persistent.jn_player_appearance_eye_colour = "Grey"
+
+        "Green":
+            n "Aha!{w=0.2} I had you figured for green eyes,{w=0.1} [player]."
+            n "I bet you're proud of them,{w=0.1} no?{w=0.2} Ehehe."
+            $ persistent.jn_player_appearance_eye_colour = "Green"
+
+        "Hazel":
+            n "Ooh!{w=0.2} Hazel,{w=0.1} huh?{w=0.2} Classy!"
+            n "Hmm...{w=0.3} I wonder if yours are closer to green or brown, [player]?"
+            $ persistent.jn_player_appearance_eye_colour = "Hazel"
+
+        "Mixed":
+            n "Wow!{w=0.2} Do you have two different colours or something,{w=0.1} [player]?"
+            n "Now if that isn't unique,{w=0.1} I don't know what is!"
+            $ persistent.jn_player_appearance_eye_colour = "Mixed"
+
+        "Other":
+            n "Oh?{w=0.2} Something a bit off the beaten trail,{w=0.1} huh?"
+            n "...Or maybe you just wear contacts a lot?{w=0.2} Ahaha."
+            n "I'm sure they look great,{w=0.1} either way!"
+            $ persistent.jn_player_appearance_eye_colour = "Other"
+
+    n "Alright!{w=0.2} That's one down!{w=0.2} Thanks for sharing that with me,{w=0.1} [player]!"
+    n "So next,{w=0.1} we have..."
+    n "Your hair,{w=0.1} of course!"
+    n "Let's just start off with the length for now,{w=0.1} 'kay?"
+    n "Now..."
+
+    # Hair length
+    menu:
+        "How would you describe your hair length,{w=0.1} [player]?"
+
+        "Short.":
+            n "Ah,{w=0.1} the low maintenance approach{w=0.1} -{w=0.1} I see,{w=0.1} I see.{w=0.2} Trendy!"
+            n "To be honest though,{w=0.1} I totally get it."
+            n "I have no idea how you even keep long hair looking good..."
+            n "It just seems like way too much effort to me."
+            $ persistent.jn_player_appearance_hair_length = "Short"
+
+        "Mid-length.":
+            n "Aha!{w=0.2} The perfect balance,{w=0.1} am I right?"
+            n "Just long enough for pretty much any style..."
+            n "And yet still short enough to suit a lazy day!{w=0.2} Ehehe."
+            n "I'm glad we think the same way,{w=0.1} [player]!"
+            $ persistent.jn_player_appearance_hair_length = "Mid-length"
+
+        "Long.":
+            n "Ooh!{w=0.2} Letting it run free,{w=0.1} are we?"
+            n "I bet you take super good care of yours!"
+            n "I might even have to borrow your products,{w=0.1} [player].{w=0.2} Ehehe!"
+            $ persistent.jn_player_appearance_hair_length = "Long"
+
+        "I don't have any hair.":
+            n "Hey{w=0.1} -{w=0.1} nothing wrong with that!{w=0.2} You wanna know why?"
+            n "Because it just means you're aerodynamic,{w=0.1} [player]."
+            n "Ahaha!"
+            $ persistent.jn_player_appearance_hair_length = "None"
+
+    n "Okay!{w=0.1} I'm really starting to get a picture now."
+    n "Let's keep the ball rolling,{w=0.1} [player]!"
+
+    # Hair colour
+    if persistent.jn_player_appearance_hair_length == "None":
+        n "You said you didn't have any hair,{w=0.1} so I think it's kinda pointless talking about hair colour."
+        n "Now,{w=0.1} let's see... what else..."
+        n "Hmm..."
+
+    else:
+        n "Now for your hair colour!"
+        n "So,{w=0.1} [player]..."
+        menu:
+            "How would you describe your hair colour?"
+
+            "Auburn":
+                n "Ooh!{w=0.2} Auburn,{w=0.1} huh?{w=0.2} That's awesome,{w=0.1} [player]!"
+                n "It's such a warm colour!"
+                $ persistent.jn_player_appearance_hair_colour = "Auburn"
+
+            "Black":
+                n "Black,{w=0.1} huh?{w=0.2} Nice!"
+                n "I bet you look super slick,{w=0.1} [player]!"
+                $ persistent.jn_player_appearance_hair_colour = "Black"
+
+            "Blond":
+                n "Aha!{w=0.2} A blond,{w=0.1} are we?{w=0.2} That explains a lot."
+                n "Ahaha!"
+                n "I'm kidding,{w=0.1} [player]!{w=0.2} I'm just kidding!"
+                n "I'm actually a little jealous.{w=0.2} Just a little."
+                $ persistent.jn_player_appearance_hair_colour = "Blond"
+
+            "Brown":
+                n "Brown hair,{w=0.1} [player]?{w=0.2} I'm for it!"
+                n "Not too subtle and not too striking,{w=0.1} you know?{w=0.2} It's just right!"
+                $ persistent.jn_player_appearance_hair_colour = "Brown"
+
+            "Grey":
+                n "Ooh...{w=0.3} I wasn't expecting that!"
+                n "I just hope that isn't from stress,{w=0.1} [player]..."
+                n "...Or at least stress from me,{w=0.1} anyway.{w=0.2} Ehehe."
+                $ persistent.jn_player_appearance_hair_colour = "Grey"
+
+            "Red":
+                n "Ehehe.{w=0.2} So you're a red head,{w=0.1} [player]?"
+                n "Not that there's anything wrong with that,{w=0.1} o-{w=0.1}obviously!"
+                n "I bet you get quite the attention,{w=0.1} huh?"
+                $ persistent.jn_player_appearance_hair_colour = "Red"
+
+            "White":
+                n "White hair?{w=0.2} Neat!"
+                n "I bet it suits you,{w=0.1} [player]!"
+                $ persistent.jn_player_appearance_hair_colour = "White"
+
+            "Other":
+                n "Oh?{w=0.2} It looks like we're more similar in taste than I thought!"
+                n "Though I should probably clarify...{w=0.3} mine is all natural,{w=0.1} [player]!{w=0.2} Ahaha."
+                $ persistent.jn_player_appearance_hair_colour = "Other"
+
+    # Height
+    n "Alright!{w=0.2} I think I'm almost done interrogating you now,{w=0.1} [player]."
+    n "Ehehe."
+    n "So...{w=0.3} don't judge me when I ask this,{w=0.1} but I gotta know."
+    n "Exactly..."
+
+    $ player_input_valid = False
+    while not player_input_valid:
+        $ player_input = int(renpy.input(prompt="How tall are you in {i}centimeters{/i},{w=0.2} [player]?", allow="0123456789"))
+
+        # Valid height
+        if player_input > 75 and player_input <= 300:
+            $ player_input_valid = True
+            $ persistent.jn_player_appearance_height_cm = player_input
+
+            if player_input < 149:
+                n "H-{w=0.1}huh?{w=0.2} Really?"
+                n "You're even shorter than me?"
+                n "Well,{w=0.1} I wasn't expecting that!"
+                n "Don't worry,{w=0.1} [player].{w=0.2} We're both on the same side,{w=0.1} right?{w=0.2} Ehehe."
+
+            elif player_input == 149:
+                n "Seriously?{w=0.2} We're the same height?"
+                n "That's amazing,{w=0.1} [player]!"
+
+                if persistent.jn_player_appearance_hair_length = "Medium" and persistent.jn_player_appearance_hair_colour = "Other":
+                    n "Well,{w=0.1} no wonder we get along so well..."
+                    n "It's like we're practically twins!"
+
+            elif player_input > 149 and player_input < 166:
+                n "Oh?{w=0.2} A little on the shorter side,{w=0.1} [player]?"
+                n "Don't worry, don't worry!{w=0.2} I'm not one to judge,{w=0.1} after all."
+
+            elif player_input >= 166 and player_input < 200:
+                n "About average height,{w=0.1} [player]?"
+                n "No complaints from me!{w=0.2} I feel like that's just the way to be,{w=0.1} personally."
+
+            elif player_input >= 200 and player_input < 250:
+                n "Oh?{w=0.2} On the taller side [player],{w=0.1} are we?"
+                n "I guess I know who to take shopping,{w=0.1} right?{w=0.2} Ehehe."
+
+            else:
+                n "W-{w=0.1}woah!{w=0.2} What the heck,{w=0.1} [player]?{w=0.2} Really?"
+                n "That's crazy tall!"
+                n "Actually...{w=0.3} I hope that isn't actually just inconvenient for you,{w=0.1} though."
+
+        else:
+            n "[player]...{w=0.3} please.{w=0.2} Take this seriously,{w=0.1} alright?"
+
+    n "Okaaay!{w=0.2} I think that's everything."
+    n "Thanks a bunch,{w=0.1} [player]!"
+    n "I know it wasn't a lot,{w=0.1} but I feel like I know you so much better now!"
+
+    if jn_affinity.get_affinity_state() == store.jn_affinity.ENAMORED:
+        n "...And now I know exactly who I should be watching out for."
+        n "So you better watch out,{w=0.1} [player]."
+        n "Ehehe."
+
+    elif jn_affinity.get_affinity_state() == store.jn_affinity.LOVE:
+        n "You know,{w=0.1} [player]?{w=0.2} I can just picture it now."
+        n "Meeting you in person somewhere out there,{w=0.1} for the first time..."
+        python:
+            # Get the descriptor for the eye colour
+            if persistent.jn_player_appearance_eye_colour == "Other":
+                eye_colour_descriptor = "sparkling"
+
+            else:
+                eye_colour_descriptor = persistent.jn_player_appearance_eye_colour.lower()
+
+            # Get the descriptor for the hair colour
+            if persistent.jn_player_appearance_hair_colour == "Other":
+                hair_colour_descriptor = "amazing"
+
+            else:
+                hair_colour_descriptor = persistent.jn_player_appearance_hair_colour.lower()
+
+        # Comment on hair length and colour, if the player has hair
+        if not persistent.jn_player_appearance_hair_length == "None":
+            $ hair_length_descriptor = persistent.jn_player_appearance_hair_length.lower()
+            n "Spotting your [hair_length_descriptor] [hair_colour_descriptor] hair in the distance and chasing you down..."
+
+        else:
+            n "Spotting you in the distance and chasing you down..."
+
+        # Comment on height and eye colour
+        if persistent.jn_player_appearance_height_cm < 149:
+            n "Gazing down into your [eye_colour_descriptor] eyes..."
+
+        elif persistent.jn_player_appearance_height_cm == 149:
+            n "Gazing directly into your [eye_colour_descriptor] eyes..."
+
+        elif persistent.jn_player_appearance_height_cm > 149:
+            n "Gazing upwards into your [eye_colour_descriptor] eyes..."
+
+        n "Uuuuuu..."
+        n "I'm getting a rush just thinking about it!"
+        $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+        n "But seriously.{w=0.2} Thank you,{w=0.1} [chosen_endearment]."
+        n "This seriously meant a lot to me."
+
+    return
+
+# Natsuki discusses drinking alcohol
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_drinking_alcohol",
+            unlocked=True,
+            prompt="Do you drink alcohol?",
+            conditional=None,
+            category=["Life", "Health", "Natsuki"],
+            player_says=True,
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_drinking_alcohol:
+    n "Do I drink alcohol?"
+    n "I can't say I've ever tried it,{w=0.1} [player]."
+    n "I just don't really think it's something for me."
+    n "That being said,{w=0.1} I knew people who {i}did{/i} drink it..."
+    n "But...{w=0.3} I'd...{w=0.3} really rather not get into that,{w=0.1} [player]."
+    n "Sorry."
+    n "..."
+    n "Oh!{w=0.2} That reminds me,{w=0.1} actually!"
+    n "I bet you didn't know,{w=0.1} but guess who just randomly brought some into the club one day?"
+    n "Yuri!"
+    n "Surprised?{w=0.2} I know,{w=0.1} right?"
+    n "I mean...{w=0.3} it was just completely out of the blue!"
+    n "She just produced it from her bag like it was a book or something."
+    n "It wasn't even just some random supermarket stuff either...{w=0.3} it looked super expensive too!"
+    n "Honestly,{w=0.1} I couldn't help myself.{w=0.2} I just burst into laughter."
+    n "I think it was just how non-chalant it all was,{w=0.1} really."
+    n "Monika didn't look impressed,{w=0.1} though..."
+    n "And Sayori...{w=0.3} she just got really upset.{w=0.2} She was shouting and everything!"
+    n "It looked like she put a lot of thought into picking something out,{w=0.1} but she just got yelled at for it..."
+    n "I mean...{w=0.3} I know we shouldn't have had it in there at all,{w=0.1} and Yuri should have known better."
+    n "But she didn't deserve all of...{w=0.3} that."
+    n "I think she was just trying to build bonds,{w=0.1} you know?"
+    n "It's all in the past now,{w=0.1} obviously.{w=0.2} But that doesn't mean I don't still feel bad about it sometimes."
+    n "..."
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+        n "Hey...{w=0.3} [player]?"
+        n "Can you promise me something?"
+        n "It's dumb,{w=0.1} but it's personal to me."
+        n "I don't care if you drink or not."
+        n "But if you do..."
+        n "Please...{w=0.3} take it all in moderation,{w=0.1} okay?"
+        n "I've...{w=0.3} seen...{w=0.3} what it can do to people."
+        n "Firsthand."
+        n "You deserve better than that,{w=0.1} [player].{w=0.2} You {i}are{/i} better than that."
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVE:
+            n "..."
+            n "I love you,{w=0.1} [player]."
+            n "I'm never going to let a bottle get between us."
+
+    else:
+        n "Hey,{w=0.1} [player]?"
+        n "I don't really care if you drink or not."
+        n "Just promise you'll go easy on it,{w=0.1} okay?"
+        n "I'm not gonna clean up after you!"
+        n "Ahaha..."
+
+    return
+
 # Natsuki laments her inability to drive and questions the player on if they can
 init 5 python:
     registerTopic(
