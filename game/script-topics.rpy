@@ -1537,6 +1537,80 @@ label talk_driving:
             else:
                 n "That's what friends are for, [player]!"
 
+# Natsuki laments her inability to drive and questions the player on if they can
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_gaming",
+            unlocked=True,
+            prompt="Are you into video games?",
+            conditional=None,
+            category=["Natsuki", "Media"],
+            player_says=True,
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_gaming:
+    n "Gaming?" 
+    n "Well...{w=0.3} duh!"
+    n "You bet I'm into gaming,{w=0.1} [player]!"
+    n "I wouldn't say I'm the most active player...{w=0.2} but I definitely do my share of button mashing."
+    n "Hmm..."
+    n "I don't think I even need to ask,{w=0.1} but..."
+    menu:
+        n "What about you,{w=0.1} [player]?{w=0.2} Do you play often?"
+
+        "Absolutely!":
+            $ gaming_choice = 0
+            n "Yep!{w=0.2} Just as I suspected..."
+            n "[player] is a mega-dork."
+            n "Ahaha!"
+            n "Relax,{w=0.1} [player]!" 
+            n "I'm not much better,{w=0.1} after all."
+
+        "I play occasionally.":
+            $ gaming_choice = 1
+            n "Yeah,{w=0.1} yeah.{w=0.2} Believe what you want to believe,{w=0.1} [player]."
+            n "I'm not sure I buy it,{w=0.1} though."
+
+        "I don't play at all.":
+            $ gaming_choice = 2
+            n "Huh?{w=0.2} Really?"
+            n "Not even the odd casual game?"
+            n "It looks like I've got a lot to teach you, [player]!"
+
+    n "Anyway,{w=0.1} putting that aside..."
+    n "When it comes to my preferences?{w=0.2} I want challenge in my games!"
+    n "I play for the win{w=0.1} -{w=0.1} it's me versus the developers,{w=0.1} and they're not around to stop me!"
+    n "Ahaha."
+    n "I'm actually more into my roguelikes,{w=0.1} to be honest."
+    n "Heh.{w=0.2} Are you surprised,{w=0.1} [player]?"
+    n "Tough as nails,{w=0.1} and I gotta think on my feet{w=0.1} -{w=0.1} plus it's super satisfying learning everything too."
+    n "And with how random everything is,{w=0.1} they always feel refreshing and fun to play!"
+    n "Every time I load it up,{w=0.1} I have no idea what I'm up against...{w=0.3} I love it!"
+    n "Ehehe.{w=0.2} Don't worry though, [player]."
+    n "I don't know if you're into that kind of stuff as well,{w=0.1} but..."
+
+    if gaming_choice == 0:
+        n "There's still plenty I can teach you!"
+
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+            n "And I'd be happy to oblige."
+
+    elif gaming_choice == 1:
+        n "I don't mind showing you how it's done."
+        n "I'm a professional,{w=0.1} after all!"
+
+    else:
+        n "I don't think I'll have much trouble convincing you."
+        n "Ehehe."
+
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
