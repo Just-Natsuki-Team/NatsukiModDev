@@ -4,6 +4,14 @@ init python in topics:
     import store
     TOPIC_MAP = dict()
 
+init 1 python:
+    try:
+        # Resets - remove these later, once we're done tweaking affinity/trust!
+        store.persistent._topic_database.clear()
+
+    except Exception as e:
+        utils.log(e, utils.SEVERITY_ERR)
+
 init 5 python:
     registerTopic(
         Topic(
@@ -848,7 +856,7 @@ label talk_favourite_season:
         n "Ahaha."
         n "Although...{w=0.3} what about you,{w=0.1} [player]?"
         menu:
-            "What's your favourite season?"
+            n "What's your favourite season?"
 
             "Spring":
                 n "Oh?{w=0.2} Spring,{w=0.1} huh?"
@@ -902,7 +910,7 @@ label talk_favourite_season:
                 n "Oh?{w=0.2} Changed our mind,{w=0.1} have we?"
                 n "Well?{w=0.2} Tell me then,{w=0.1} [player]!"
                 menu:
-                    "What's your favourite season?"
+                    n "What's your favourite season?"
 
                     "Spring":
                         $ new_favourite_season = "Spring"
@@ -1099,7 +1107,7 @@ label talk_player_appearance:
         n "If I remember,{w=0.1} [player]{w=0.1} -{w=0.1} you said didn't want to share it with me before."
         n "Hmm...{w=0.3} Well..."
         menu:
-            "Did you change your mind,{w=0.1} [player]?"
+            n "Did you change your mind,{w=0.1} [player]?"
 
             "Yes, I want to share my appearance.":
                 n "Yay!{w=0.2} I was hoping you'd come around eventually,{w=0.1} [player]."
@@ -1119,7 +1127,7 @@ label talk_player_appearance:
         n "Or...{w=0.3} maybe you just made a mistake last time?"
         n "Well,{w=0.1} either way..."
         menu:
-            "Did you want to share your appearance again,{w=0.1} [player]?"
+            n "Did you want to share your appearance again,{w=0.1} [player]?"
 
             "Yes, my appearance has changed.":
                 n "Aha!{w=0.2} I thought so!"
@@ -1142,7 +1150,7 @@ label talk_player_appearance:
         n "Don't worry though{w=0.1} -{w=0.1} anything you tell me is staying strictly between us,{w=0.1} obviously!"
         n "So...{w=0.3} how about it, [player]?"
         menu:
-            "Do you wanna share your appearance with me, [player]?"
+            n "Do you wanna share your appearance with me, [player]?"
 
             "Sure!":
                 n "Yay!{nw}"
@@ -1162,7 +1170,7 @@ label talk_player_appearance:
 
     # Eye colour
     menu:
-        "How would you describe your eye colour,{w=0.1} [player]?"
+        n "How would you describe your eye colour,{w=0.1} [player]?"
 
         "Amber":
             n "Ooh!{w=0.2} I don't think I've seen someone with amber eyes before."
@@ -1213,7 +1221,7 @@ label talk_player_appearance:
 
     # Hair length
     menu:
-        "How would you describe your hair length,{w=0.1} [player]?"
+        n "How would you describe your hair length,{w=0.1} [player]?"
 
         "Short.":
             n "Ah,{w=0.1} the low maintenance approach{w=0.1} -{w=0.1} I see,{w=0.1} I see.{w=0.2} Trendy!"
@@ -1254,7 +1262,7 @@ label talk_player_appearance:
         n "Now for your hair colour!"
         n "So,{w=0.1} [player]..."
         menu:
-            "How would you describe your hair colour?"
+            n "How would you describe your hair colour?"
 
             "Auburn":
                 n "Ooh!{w=0.2} Auburn,{w=0.1} huh?{w=0.2} That's awesome,{w=0.1} [player]!"
@@ -1411,7 +1419,7 @@ init 5 python:
             unlocked=True,
             prompt="Do you drink alcohol?",
             conditional=None,
-            category=["Life", "Health", "Natsuki"],
+            category=["Health", "Natsuki"],
             player_says=True,
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
             location="classroom"
@@ -1536,6 +1544,68 @@ label talk_driving:
 
             else:
                 n "That's what friends are for, [player]!"
+
+    return
+
+# Natsuki laments her inability to drive and questions the player on if they can
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_sustainable_fashion",
+            unlocked=True,
+            prompt="Sustainable fashion",
+            conditional=None,
+            category=["Environment", "Fashion"],
+            nat_says=True,
+            affinity_range=(jn_affinity.UPSET, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_sustainable_fashion:
+    n "Hey,{w=0.1} [player]..."
+    n "This is kinda random,{w=0.1} but are you into fashion?"
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.HAPPY:
+        n "I know I am!{w=0.2} Can you tell?"
+        n "Ehehe."
+
+    else:
+        n "I know I am."
+
+    n "But what caught me by surprise is just how much waste there is."
+    n "Seriously,{w=0.1} [player] {w=0.1}-{w=0.1} it's insane!"
+    n "People throw away a {i}lot{/i} of clothing...{w=0.3} it's estimated that we toss out around 90{w=0.3} {i}million{/i}{w=0.3} tonnes every year."
+    n "That's a truck-full every second!{w=0.2} What a waste!"
+    n "And we haven't even began to talk about the amount of water used for washing and plastic used for packaging too."
+    n "...Or the conditions some of the workers making our clothes have to put up with."
+    n "It's actually one of the reasons I began learning how to sew!"
+    n "I've never had tons of money to buy more clothes anyway,{w=0.1} so I try to reuse and fix up what I can."
+
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+        n "You'd be surprised at what you can pull off with a little creativity!"
+        n "And just a pinch of know-how too,{w=0.1} obviously."
+        n "Betcha didn't know my favourite pink skirt was hand-made,{w=0.1} did you?"
+
+    else:
+        n "It's neat what you can make with some creativity."
+
+    n "I think I've lectured you enough now,{w=0.1} [player],{w=0.1} so I won't keep harping on about it."
+    n "But...{w=0.3} the next time you're out shopping for clothes,{w=0.1} or looking through some catalogues online?"
+    n "Just spare a thought for the environment,{w=0.1} would you?"
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+        n "For me?"
+        n "I know I can count on you!"
+
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+        n "Ehehe.{w=0.2} Thanks,{w=0.1} [player]!"
+        n "I'm counting on you!"
+
+    else:
+        n "Thanks, [player]."
+
+    return
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
