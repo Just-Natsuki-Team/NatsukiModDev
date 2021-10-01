@@ -88,7 +88,6 @@ init 5 python:
             label="talk_set_affinity",
             unlocked=True,
             prompt="Can you change my affinity state?",
-            conditional=None,
             category=["Debug"],
             player_says=True,
             location="classroom"
@@ -148,7 +147,6 @@ init 5 python:
             label="talk_set_trust",
             unlocked=True,
             prompt="Can you change my trust?",
-            conditional=None,
             category=["Debug"],
             player_says=True,
             location="classroom"
@@ -176,7 +174,6 @@ init 5 python:
             label="talk_having_pictures_taken",
             unlocked=True,
             prompt="How do you feel about having your picture taken?",
-            conditional=None,
             category=["Natsuki", "Photography", "Life"],
             player_says=True,
             location="classroom"
@@ -338,7 +335,6 @@ init 5 python:
             label="talk_did_you_have_pets",
             unlocked=True,
             prompt="Did you ever have any pets?",
-            conditional=None,
             category=["Natsuki", "Life", "Animals", "Family"],
             player_says=True,
             affinity_range=(store.jn_aff.NORMAL, None),
@@ -540,7 +536,6 @@ init 5 python:
             label="talk_service_animals",
             unlocked=True,
             prompt="Service animals",
-            conditional=None,
             category=["Life", "Animals", "Health"],
             nat_says=True,
             affinity_range=(jn_affinity.DISTRESSED, jn_affinity.LOVE),
@@ -697,7 +692,6 @@ init 5 python:
             label="talk_relieving_stress",
             unlocked=True,
             prompt="Relieving stress",
-            conditional=None,
             category=["Life", "You", "Health"],
             nat_says=True,
             affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
@@ -736,7 +730,6 @@ init 5 python:
             label="talk_careful_spending",
             unlocked=True,
             prompt="Careful spending",
-            conditional=None,
             category=["Life", "You", "Health", "Society"],
             nat_says=True,
             affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
@@ -774,7 +767,6 @@ init 5 python:
             label="talk_eating_well",
             unlocked=True,
             prompt="Eating well",
-            conditional=None,
             category=["Life", "You", "Health", "Food"],
             nat_says=True,
             affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
@@ -824,7 +816,6 @@ init 5 python:
             label="talk_favourite_season",
             unlocked=True,
             prompt="What's your favourite season?",
-            conditional=None,
             category=["Weather", "Nature"],
             player_says=True,
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
@@ -973,7 +964,6 @@ init 5 python:
             label="talk_time_management",
             unlocked=True,
             prompt="Time management",
-            conditional=None,
             category=["Life"],
             nat_says=True,
             affinity_range=(jn_affinity.UPSET, jn_affinity.LOVE),
@@ -1016,7 +1006,6 @@ init 5 python:
             label="talk_sweet_tooth",
             unlocked=True,
             prompt="Do you have a sweet tooth?",
-            conditional=None,
             category=["Natsuki", "Health", "Food"],
             player_says=True,
             affinity_range=(jn_affinity.DISTRESSED, jn_affinity.LOVE),
@@ -1083,7 +1072,6 @@ init 5 python:
             label="talk_player_appearance",
             unlocked=True,
             prompt="Your appearance",
-            conditional=None,
             category=["Life", "You"],
             nat_says=True,
             affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.LOVE),
@@ -1410,7 +1398,6 @@ init 5 python:
             label="talk_drinking_alcohol",
             unlocked=True,
             prompt="Do you drink alcohol?",
-            conditional=None,
             category=["Life", "Health", "Natsuki"],
             player_says=True,
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
@@ -1476,7 +1463,6 @@ init 5 python:
             label="talk_driving",
             unlocked=True,
             prompt="Can you drive?",
-            conditional=None,
             category=["Natsuki", "Transport"],
             player_says=True,
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
@@ -1545,7 +1531,6 @@ init 5 python:
             label="talk_gaming",
             unlocked=True,
             prompt="Are you into video games?",
-            conditional=None,
             category=["Natsuki", "Media"],
             player_says=True,
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
@@ -1565,7 +1550,7 @@ label talk_gaming:
         n "What about you,{w=0.1} [player]?{w=0.2} Do you play often?"
 
         "Absolutely!":
-            $ gaming_choice = 0
+            $ persistent.jn_player_gaming_frequency = "High"
             n "Yep!{w=0.2} Just as I suspected..."
             n "[player] is a mega-dork."
             n "Ahaha!"
@@ -1573,12 +1558,12 @@ label talk_gaming:
             n "I'm not much better,{w=0.1} after all."
 
         "I play occasionally.":
-            $ gaming_choice = 1
+            $ persistent.jn_player_gaming_frequency = "Medium"
             n "Yeah,{w=0.1} yeah.{w=0.2} Believe what you want to believe,{w=0.1} [player]."
             n "I'm not sure I buy it,{w=0.1} though."
 
         "I don't play at all.":
-            $ gaming_choice = 2
+            $ persistent.jn_player_gaming_frequency = "Low"
             n "Huh?{w=0.2} Really?"
             n "Not even the odd casual game?"
             n "It looks like I've got a lot to teach you, [player]!"
@@ -1595,13 +1580,13 @@ label talk_gaming:
     n "Ehehe.{w=0.2} Don't worry though, [player]."
     n "I don't know if you're into that kind of stuff as well,{w=0.1} but..."
 
-    if gaming_choice == 0:
+    if persistent.jn_player_gaming_frequency == "High":
         n "There's still plenty I can teach you!"
 
         if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
             n "And I'd be happy to oblige."
 
-    elif gaming_choice == 1:
+    elif persistent.jn_player_gaming_frequency == "Medium":
         n "I don't mind showing you how it's done."
         n "I'm a professional,{w=0.1} after all!"
 

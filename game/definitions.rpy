@@ -16,6 +16,9 @@ default persistent.jn_player_pet = None
 # Seasonal data
 default persistent.jn_player_favourite_season = None
 
+# Hobby data
+default persistent.jn_player_gaming_frequency = None
+
 # Admissions data
 default persistent.jn_player_admission_type_on_quit = None
 
