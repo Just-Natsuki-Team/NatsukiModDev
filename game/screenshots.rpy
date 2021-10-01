@@ -118,8 +118,9 @@ label screenshot_dialogue:
             n "H-huh?{w=0.2} What was that flash I just saw?"
             n "Don't tell me...{w=0.3} was that a camera?!{w=0.2} There's a camera here?!"
             n "..."
-            n "[player]...{w=0.3} d-did you do that...?"
             menu:
+                n "[player]...{w=0.3} d-did you do that...?"
+
                 "Yes, I did.":
                     n "O-oh!{w=0.2} Aha!{w=0.2} W-well,{w=0.1} at least you admit it."
                 "No, I didn't.":
@@ -139,8 +140,9 @@ label screenshot_dialogue:
         ): 
 
             n "..."
-            n "You're taking pictures of me,{w=0.1} aren't you?"
             menu:
+                n "You're taking pictures of me,{w=0.1} aren't you?"
+                
                 "Yes.":
                     n "Yeah...{w=0.3} no.{w=0.1} I'm not doing this."
                     n "I'm turning that off."
