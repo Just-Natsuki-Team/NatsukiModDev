@@ -1576,7 +1576,7 @@ label talk_sustainable_fashion:
 
     n "But what caught me by surprise is just how much waste there is."
     n "Seriously,{w=0.1} [player] {w=0.1}-{w=0.1} it's insane!"
-    n "People throw away a {i}lot{/i} of clothing...{w=0.3} it's estimated that we discard around 90{w=0.3} {i}million{/i}{w=0.3} tonnes every year."
+    n "People throw away a {i}lot{/i} of clothing...{w=0.3} it's estimated that we toss out around 90{w=0.3} {i}million{/i}{w=0.3} tonnes every year."
     n "That's a truck-full every second!{w=0.2} What a waste!"
     n "And we haven't even began to talk about the amount of water used for washing and plastic used for packaging too."
     n "...Or the conditions some of the workers making our clothes have to put up with."
