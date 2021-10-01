@@ -1625,7 +1625,7 @@ init 5 python:
 
 label talk_natsukis_fang:
     n "..."
-    n "Eh?{w=0.2} What's up, [player]?"
+    n "Eh?{w=0.2} What's up,{w=0.1} [player]?"
     n "..."
     n "What?{w=0.2} Is there something on my face?"
     n "..."
