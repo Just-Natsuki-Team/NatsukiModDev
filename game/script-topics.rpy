@@ -371,8 +371,9 @@ label talk_did_you_have_pets:
         n "It still annoys me...{w=0.3} but then again,{w=0.1} it's not like I can't keep a pet here instead,{w=0.1} right?{w=0.1} Ehehe."
 
     if persistent.jn_player_pet is None:
-        n "What about you,{w=0.1} [player]? Do you have any pets?"
         menu:
+            n "What about you,{w=0.1} [player]? Do you have any pets?"
+
             "Yes, I do.":
                 n "Oh!{w=0.2} Oh oh oh!{w=0.2} You gotta tell me,{w=0.1} [player]!"
                 n "What do you have?{w=0.2} What do you have?"
