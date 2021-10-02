@@ -1607,6 +1607,66 @@ label talk_sustainable_fashion:
 
     return
 
+# Natsuki discusses her dislike of the horror genre
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_thoughts_on_horror",
+            unlocked=True,
+            prompt="Thoughts on horror",
+            conditional=None,
+            category=["Natsuki", "Media", "Literature"],
+            nat_says=True,
+            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_thoughts_on_horror:
+    n "You know,{w=0.1} [player]..."
+    n "I don't think I ever actually explained why I dislike horror so much."
+    n "I know I mentioned it before,{w=0.1} but I was kinda caught off guard at the time."
+    n "Honestly?"
+    n "Everyone has their tastes,{w=0.1} right? And I can get why people enjoy it."
+
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+        n "Like Yuri!"
+        n "It's suspenseful,{w=0.1} and fears are a super powerful motivator for characters!"
+        n "So don't get me wrong{w=0.1} -{w=0.1} I can totally appreciate the effort that goes into it."
+        n "...When it isn't just stupid jumpscares,{w=0.1} a-{w=0.1}anyway."
+
+    else:
+        n "I get the effort that goes into it.{w=0.2} For the most part."
+
+    n "But..."
+    n "When I read something -{w=0.1} or watch something -{w=0.1} I'm doing it because for me,{w=0.1} it's how I relax."
+    n "I don't want to be made to feel uneasy."
+    n "I don't want to be made to jump."
+    n "I don't want to have to see gross stuff."
+    n "I...{w=0.3} just want to sit back,{w=0.1} feel good and just escape for a while."
+    n "There's more than enough nasty things going out there already,{w=0.1} you know?"
+    n "Some things closer to home than others."
+    n "..."
+    n "So...{w=0.3} yeah.{w=0.1} That's about all I had to say about it."
+
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+        n "Though...{w=0.3} if you want to put something on,{w=0.1} [player]?{w=0.2} Go ahead."
+        n "If it's you,{w=0.1} I think I can put up with it..."
+        n "But we're keeping the volume low.{w=0.2} 'Kay?"
+
+    elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+        n "Don't mind me though,{w=0.1} [player].{w=0.2} If you wanna watch something,{w=0.1} go for it!"
+        n "Just don't expect me to sit there with you.{w=0.2} Ahaha..."
+
+    elif jn_affinity.get_affinity_state() <= store.jn_affinity.DISTRESSED:
+        n "..."
+        n "I {i}would{/i} ask that if you were gonna watch something like that,{w=0.1} then to warn me first..."
+        n "But you wouldn't listen to me anyway,{w=0.1} would you?"
+
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
