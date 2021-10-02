@@ -1645,6 +1645,8 @@ label talk_natsukis_fang:
     n "Ahaha!{w=0.2} Did I call you out?"
     n "Well,{w=0.1} whatever.{w=0.2} I'm just gonna assume you'll go do that later."
     n "Seriously though.{w=0.2} You better make sure you take care of your teeth!"
+    n "Regular brushing and flossing is important,{w=0.1} but watch your diet too."
+    n "Not flossing isn't great,{w=0.1} but constant sugary drinks are even worse!"
     n "Remember,{w=0.1} [player] -{w=0.1} if you ignore them,{w=0.1} they'll go away~"
     n "And besides..."
 
