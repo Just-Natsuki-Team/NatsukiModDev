@@ -26,6 +26,9 @@ default persistent.jn_player_appearance_hair_length = None
 default persistent.jn_player_appearance_hair_colour = None
 default persistent.jn_player_appearance_height_cm = None
 
+# Permissions
+default persistent.jn_player_can_nickname_natsuki = None
+
 #Our main topic pool
 default persistent._event_list = list()
 
