@@ -26,8 +26,10 @@ default persistent.jn_player_appearance_hair_length = None
 default persistent.jn_player_appearance_hair_colour = None
 default persistent.jn_player_appearance_height_cm = None
 
-# Permissions
-default persistent.jn_player_can_nickname_natsuki = None
+# Preferences
+default persistent.jn_player_nicknames_allowed = True
+default persistent.jn_player_nicknames_current_nickname = None
+default persistent.jn_player_nicknames_bad_given_total = 0
 
 #Our main topic pool
 default persistent._event_list = list()
@@ -624,5 +626,11 @@ init python:
     #Each of the girls' names before the MC learns their name throughout ch0.
     s_name = "Sayori"
     m_name = "Monika"
-    n_name = "Natsuki"
     y_name = "Yuri"
+
+    # Nickname handling for Natsuki
+    if persistent.jn_player_nicknames_allowed:
+        n_name = persistent.jn_player_nicknames_current_nickname
+
+    else:
+        n_name = "Natsuki"

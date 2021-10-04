@@ -1607,6 +1607,215 @@ label talk_sustainable_fashion:
 
     return
 
+# Natsuki gets a nickname from the player, assuming they aren't blocked from doing so
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_give_nickname",
+            unlocked=True,
+            prompt="Can I give you a nickname?",
+            conditional="persistent.jn_player_can_nickname_natsuki",
+            category=["Natsuki"],
+            player_says=True,
+            affinity_range=(jn_affinity.ENAMORED, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_give_nickname:
+    # Natsuki hasn't been nicknamed before
+    if persistent.jn_player_natsuki_current_nickname is None:
+        n "Eh?{w=0.2} You want to give me a nickname?"
+        n "Why?{w=0.2} Natsuki not good enough for you?{w=0.2} Is that it?"
+        n "Huh?{w=0.2} Come on, [player]!{w=0.2} Spit it out!"
+        n "..."
+        n "Relax,{w=0.1} [player]!{w=0.2} Jeez!{w=0.2} I'm just kidding!"
+        n "Ehehe."
+        n "Well...{w=0.3} I don't see why not!" 
+
+    # Another nickname is being assigned
+    else:
+    
+        # Account for strikes
+        if persistent.jn_player_nicknames_bad_given_total == 0:
+            n "Oh?{w=0.2} You wanna give me another nickname?"
+            n "Sure,{w=0.1} why not!"
+
+        elif persistent.jn_player_nicknames_bad_given_total == 1:
+            n "You want to give me a new nickname?"
+            n "Alright,{w=0.1} [player]."
+
+        elif persistent.jn_player_nicknames_bad_given_total == 2:
+            n "Another nickname,{w=0.1} [player]?{w=0.2} Fine."
+            n "Just...{w=0.3} think a little about what you choose,{w=0.1} 'kay?"
+
+        elif persistent.jn_player_nicknames_bad_given_total == 3:
+            n "Alright,{w=0.1} [player]."
+            n "Just remember.{w=0.3} You've had your final warning about this."
+            n "Don't let me down again."
+
+    # Validate the nickname, respond appropriately
+    $ nickname = renpy.input(prompt="What did you have in mind,{w=0.2} [player]?", allow="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-", length=30)
+    
+    if nickname.lower() == "Nevermind":
+        n "Huh?{w=0.2} You changed your mind?"
+        n "Well...{w=0.3} alright then."
+        n "Just let me know if you actually want to call me something else then,{w=0.1} 'kay?"
+        return
+    
+    else:
+        $ nickname_type = store.nicknames.get_nickname_type(nickname)
+
+    if nickname_type == store.nicknames.NICKNAME_TYPE_INVALID:
+        n "Uhmm...{w=0.3} [player]?"
+        n "I don't think that's a nickname at all."
+        n "I'll...{w=0.3} just stick with what I have now,{w=0.1} thanks."
+        return
+
+    elif nickname_type == store.nicknames.NICKNAME_TYPE_LOVED:
+        $ persistent.jn_player_nicknames_current_nickname = nickname
+        $ n_name = persistent.jn_player_nicknames_current_nickname
+        n "O-{w=0.1}oh!{w=0.2} [player]!"
+        n "..."
+        n "W-{w=0.1}well,{w=0.1} you have good taste,{w=0.1} at least."
+        n "..."
+        n "Nnnnn...{w=0.3} you made it all awkward,{w=0.1} [player].{w=0.2} I hope you're happy."
+        n "But...{w=0.3} I really like this one."
+        n "[nickname] it is!{w=0.2} Ehehe."
+        return
+
+    elif nickname_type == store.nicknames.NICKNAME_TYPE_DISLIKED:
+        n "Come on,{w=0.1} [player]...{w=0.3} really?"
+        n "You know I'm really not comfortable being called that."
+        n "..."
+        n "I'm...{w=0.3} just going to pretend you didn't say that,{w=0.1} alright?"
+        return
+
+    elif nickname_type == store.nicknames.NICKNAME_TYPE_HATED:
+        n "W-{w=0.1}what?{w=0.2} What did you just call me?!"
+        n "[player]!{w=0.2} I can't believe you!"
+        n "Why would you call me that?{w=0.2} That's awful!"
+        n "..."
+        $ persistent.jn_player_nicknames_bad_given_total += 1
+
+    elif nickname_type == store.nicknames.NICKNAME_TYPE_PROFANITY:
+        n "E-{w=0.1}excuse me?!"
+        n "What the hell did you just call me,{w=0.1} [player]?!"
+        n "..."
+        n "I seriously can't believe you,{w=0.1} [player]."
+        n "Why would you do that?{w=0.1} Are you trying to upset me?"
+        n "..."
+        $ persistent.jn_player_nicknames_bad_given_total += 1
+
+    elif nickname_type == store.nicknames.NICKNAME_TYPE_FUNNY:
+        n "Pffft!"
+        n "Ahaha!"
+        n "[nickname]?{w=0.2} What kind of nickname is that meant to be,{w=0.1} [player]?"
+        n "Well...{w=0.3} you're just lucky I have a healthy sense of humour."
+        n "[nickname] it is,{w=0.1} I guess!{w=0.2} Ehehe."
+
+        $ persistent.jn_player_nicknames_current_nickname = nickname
+        $ n_name = persistent.jn_player_nicknames_current_nickname
+        return
+
+    else:
+        $ persistent.jn_player_nicknames_current_nickname = nickname
+        $ n_name = persistent.jn_player_nicknames_current_nickname  
+
+        # Check and respond to easter egg nicknames
+        if nickname.lower() == "natsuki":
+            n "Uhmm...{w=0.3} [player]?"
+            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            n "That's just my normal name,{w=0.1} [chosen_tease]!"
+            n "Honestly...{w=0.3} sometimes I wonder why I bother."
+            n "Well,{w=0.1} I'm not complaining!{w=0.2} If it isn't broke,{w=0.1} don't fix it -{w=0.1} right?"
+            
+        elif nickname.lower() == "thiccsuki":
+            n "..."
+            n "D-{w=0.1}dreaming big,{w=0.1} are we,{w=0.1} [player]?{w=0.2} Ahaha..."
+            n "Uhmm..."
+            n "I'm...{w=0.3} really...{w=0.3} not a fan,{w=0.1} but if it's what you prefer..."
+
+        elif nickname.lower() == persistent.playername.lower():
+            n "I...{w=0.3} don't think you thought this through,{w=0.1} [player]."
+            n "Do you even know how confusing that'd be?"
+            n "I think I'll just stick to what works,{w=0.1} 'kay?"
+            n "Ehehe."
+            n "Nice try,{w=0.1} though!"
+
+        # Fallback for anything not categorised
+        else:
+            n "Hmm...{w=0.3} [nickname], huh?"
+            n "[nickname]..."
+            n "You know what?{w=0.2} Yeah!{w=0.2} I like it!"
+            n "Consider it done,{w=0.1} [player]!{w=0.2} Ehehe."
+
+        return
+
+    # Handle strikes
+    if persistent.jn_player_nicknames_bad_given_total == 1:
+        n "Jeez,{w=0.1} [player]...{w=0.3} that isn't like you at all!"
+        n "What's up with you today?"
+        n "..."
+        n "Just...{w=0.3} don't do that again,{w=0.1} okay?"
+        n "That really hurt,{w=0.1} [player].{w=0.2} Don't abuse my trust."
+
+        $ relationship(change="affinity-", multiplier=2)
+        $ relationship(change="trust-", multiplier=2)
+
+    elif persistent.jn_player_nicknames_bad_given_total == 2:
+        n "I can't believe you did that again to me,{w=0.1} [player]."
+        n "I told you it hurts,{w=0.1} and you went ahead anyway!"
+        n "..."
+        n "I...{w=0.3} really...{w=0.3} like you, [player].{w=0.2} It hurts extra bad when it's you."
+        n "Don't test my patience like this.{w=0.2} You're better than that."
+
+        $ relationship(change="affinity-", multiplier=2)
+        $ relationship(change="trust-", multiplier=2)
+
+    elif persistent.jn_player_nicknames_bad_given_total == 3:
+        n "You are honestly unbelievable,{w=0.1} [player]."
+        n "I've told you so many times now,{w=0.1} and you still won't knock it off!"
+        n "..."
+        n "No more warnings,{w=0.1} [player]."
+        menu:
+            n "Understand?"
+
+            "I understand. Sorry, Natsuki.":
+                n "You understand,{w=0.1} do you?"
+                n "...Then start acting like it,{w=0.1} [player]."
+                n "Thanks."
+
+                $ relationship(change="affinity-", multiplier=2)
+                $ relationship(change="trust-", multiplier=2)
+
+            "...":
+                n "Look.{w=0.2} I'm not kidding around,{w=0.1} [player]."
+                n "Acting like this isn't funny,{w=0.1} or cute."
+                n "It's toxic."
+                n "I don't care if you're trying to pull my leg.{w=0.2} Quit it."
+
+                $ relationship(change="affinity-", multiplier=3)
+                $ relationship(change="trust-", multiplier=3)
+
+    elif persistent.jn_player_nicknames_bad_given_total == 4:
+        # Player is locked out of nicknaming; this is why we can't have nice things
+        n "Yeah,{w=0.1} no.{w=0.2} I've heard enough.{w=0.2} I don't need to hear any more."
+        n "When will you learn that your actions have consequences?"
+        n "..."
+        n "You know what?{w=0.2} Don't even bother answering."
+        n "I warned you,{w=0.1} [player].{w=0.2} Remember that."
+
+        $ relationship(change="affinity-", multiplier=5)
+        $ relationship(change="trust-", multiplier=5)
+        $ persistent.jn_player_nicknames_allowed = False
+        $ persistent.jn_player_nicknames_current_nickname = None
+        $ n_name = "Natsuki"
+
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
