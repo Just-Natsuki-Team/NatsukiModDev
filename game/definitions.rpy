@@ -26,7 +26,7 @@ default persistent.jn_player_appearance_hair_length = None
 default persistent.jn_player_appearance_hair_colour = None
 default persistent.jn_player_appearance_height_cm = None
 
-# Preferences
+# Nickname data
 default persistent.jn_player_nicknames_allowed = True
 default persistent.jn_player_nicknames_current_nickname = None
 default persistent.jn_player_nicknames_bad_given_total = 0
