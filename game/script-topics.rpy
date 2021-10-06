@@ -1657,9 +1657,9 @@ label talk_give_nickname:
             n "Don't let me down again."
 
     # Validate the nickname, respond appropriately
-    $ nickname = renpy.input(prompt="What did you have in mind,{w=0.2} [player]?", allow="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-", length=30)
+    $ nickname = renpy.input(prompt="What did you have in mind,{w=0.2} [player]?", allow="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-' ", length=30).strip()
     
-    if nickname.lower() == "Nevermind":
+    if nickname.lower() == "nevermind":
         n "Huh?{w=0.2} You changed your mind?"
         n "Well...{w=0.3} alright then."
         n "Just let me know if you actually want to call me something else then,{w=0.1} 'kay?"
@@ -1721,8 +1721,7 @@ label talk_give_nickname:
         return
 
     else:
-        $ persistent.jn_player_nicknames_current_nickname = nickname
-        $ n_name = persistent.jn_player_nicknames_current_nickname  
+        $ neutral_nickname_permitted = False
 
         # Check and respond to easter egg nicknames
         if nickname.lower() == "natsuki":
@@ -1731,12 +1730,18 @@ label talk_give_nickname:
             n "That's just my normal name,{w=0.1} [chosen_tease]!"
             n "Honestly...{w=0.3} sometimes I wonder why I bother."
             n "Well,{w=0.1} I'm not complaining!{w=0.2} If it isn't broke,{w=0.1} don't fix it -{w=0.1} right?"
-            
+            $ neutral_nickname_permitted = True
+
         elif nickname.lower() == "thiccsuki":
             n "..."
             n "D-{w=0.1}dreaming big,{w=0.1} are we,{w=0.1} [player]?{w=0.2} Ahaha..."
             n "Uhmm..."
             n "I'm...{w=0.3} really...{w=0.3} not a fan,{w=0.1} but if it's what you prefer..."
+            $ neutral_nickname_permitted = True
+
+        elif nickname.lower() == "qeb" or nickname.lower() == "qeeb":
+            n "No you."
+            $ neutral_nickname_permitted = True
 
         elif nickname.lower() == persistent.playername.lower():
             n "I...{w=0.3} don't think you thought this through,{w=0.1} [player]."
@@ -1751,6 +1756,12 @@ label talk_give_nickname:
             n "[nickname]..."
             n "You know what?{w=0.2} Yeah!{w=0.2} I like it!"
             n "Consider it done,{w=0.1} [player]!{w=0.2} Ehehe."
+            $ neutral_nickname_permitted = True
+        
+        # Finally, assign the neutral/easter egg nickname if it was permitted by Natsuki
+        if (neutral_nickname_permitted):
+            $ persistent.jn_player_nicknames_current_nickname = nickname
+            $ n_name = persistent.jn_player_nicknames_current_nickname
 
         return
 

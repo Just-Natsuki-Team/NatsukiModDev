@@ -629,7 +629,7 @@ init python:
     y_name = "Yuri"
 
     # Nickname handling for Natsuki
-    if persistent.jn_player_nicknames_allowed:
+    if persistent.jn_player_nicknames_allowed and persistent.jn_player_nicknames_current_nickname is not None:
         n_name = persistent.jn_player_nicknames_current_nickname
 
     else:
