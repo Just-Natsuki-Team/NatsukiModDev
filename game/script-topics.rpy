@@ -1635,7 +1635,7 @@ label talk_i_love_you:
     # and therefore may have any affection level
     if persistent.jn_player_love_you_count == 0:
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVED:
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVE:
             n "O-{w=0.1}o-{w=0.1}oh my gosh..."
             n "[player_initial]-{w=0.2}[player]...{w=0.3} y-{w=0.1}you...!"
             n "Nnnnnnn-!"
@@ -1707,8 +1707,8 @@ label talk_i_love_you:
             n "Did you just...?"
             n "A-{w=0.1}ahaha!{w=0.2} Y-{w=0.1}yeah!{w=0.2} Who wouldn't love me,{w=0.1} right?"
             n "My wit,{w=0.1} my style,{w=0.1} my killer sense of humour...{w=0.3} I've got it all.{w=0.1} Yeah..."
-            n "D-{w=0.1}don't get the wrong idea or a-anything, though!"
-            n "I-{w=0.1}I mean,{w=0.1} I'm just glad you have great taste."
+            n "D-{w=0.1}don't get the wrong idea or a-{w=0.1}anything, though!"
+            n "I-{w=0.1}I mean,{w=0.1} I'm just glad you have some good taste."
             n "Ehehe..."
 
         elif jn_affinity.get_affinity_state() >= store.jn_affinity.UPSET: 
@@ -1753,7 +1753,7 @@ label talk_i_love_you:
         if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVED:
 
             # At this point, Natsuki is super comfortable with her player, so we can be open and vary things!
-            $ random_response_index = random.choice(0, 5)
+            $ random_response_index = random.choice(0, 6)
 
             if random_response_index == 0:
                 n "Ehehe.{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
@@ -1781,6 +1781,28 @@ label talk_i_love_you:
                 n "I love you too,{w=0.1} [chosen_endearment]!"
                 n "It's just us two against the world!"
 
+            elif random_response_index == 5:
+                n "Well,{w=0.1} o-{w=0.1}of course you do.{w=0.2} Ahaha!"
+                n "But...{w=0.3} we both know I love you more,{w=0.1} [player]."
+                menu:
+                    "No, I love you more.":
+                        n "No,{w=0.1} I-"
+                        n "..."
+                        n "Hey...{w=0.3} wait a minute..."
+                        n "I know where we're going with this!{w=0.2} Nice try,{w=0.1} [player]!"
+                        n "You're just gonna have to accept that I love you more,{w=0.1} and that's just the way it is."
+                        menu:
+                            "You love me more, and that's just the way it is.":
+                                n "Ehehe.{w=0.2} See?"
+                                n "That wasn't so hard,{w=0.1} was it?"
+                                n "I looooove you,{w=0.1} [player]~!"
+
+                    "Okay.":
+                        n "Pfffft!{w=0.2} Ahaha!"
+                        n "Come on,{w=0.1} [player]!{w=0.2} Where's your fighting spirit?"
+                        n "Well,{w=0.1} whatever.{w=0.2} I'm just glad you accept the truth."
+                        n "Ehehe."
+
             else:
                 n "Oh?{w=0.2} Lovey-dovey as usual?"
                 n "You're such a softie,{w=0.1} [player].{w=0.2} Ehehe."
@@ -1790,11 +1812,11 @@ label talk_i_love_you:
             $ relationship("affinity+")
 
         elif jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
-            n ""
-            $ relationship("affinity+")
-
-        elif jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
-            n ""
+            n "G-{w=0.1}gah!{w=0.2} [player]!"
+            n "What did I say about making things awkward?{w=0.2} Now it's twice as awkward!"
+            n "Jeez..."
+            n "Let's just talk about something,{w=0.1} alright?"
+            n "Y-{w=0.1}you can fawn over me in your {i}own{/i} time.{w=0.2} Ahaha!"
             $ relationship("affinity+")
 
         elif jn_affinity.get_affinity_state() >= store.jn_affinity.HAPPY:
@@ -1829,8 +1851,6 @@ label talk_i_love_you:
 
     $ persistent.jn_player_love_you_count += 1
     return
-
-label talk_i_love_you 
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
