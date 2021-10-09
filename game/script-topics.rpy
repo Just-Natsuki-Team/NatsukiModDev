@@ -1753,7 +1753,7 @@ label talk_i_love_you:
         if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVED:
 
             # At this point, Natsuki is super comfortable with her player, so we can be open and vary things!
-            $ random_response_index = random.choice(0, 6)
+            $ random_response_index = random.randint(0, 6)
 
             if random_response_index == 0:
                 n "Ehehe.{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
