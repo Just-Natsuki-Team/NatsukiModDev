@@ -1628,6 +1628,8 @@ label talk_i_love_you:
     # We use these a lot here, so we define them in a higher scope
     $ player_initial = list(player)[0]
     $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+    $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+    $ chosen_descriptor = random.choice(jn_globals.DEFAULT_PLAYER_DESCRIPTORS)
 
     # We account for the situation where a player may have unlocked the topic, but never selected it
     # and therefore may have any affection level
@@ -1696,7 +1698,7 @@ label talk_i_love_you:
             n "You really shouldn't mess around with girls like that,{w=0.1} [player]..."
             n "Y-{w=0.1}you're just lucky I've got a great sense of humour."
             n "S-{w=0.1}so it's fine...{w=0.3} this time..."
-            n "Just... think a little before you just blurt stuff out, alright?"
+            n "Just...{w=0.3} think a little before you just blurt stuff out, alright?"
             n "[chosen_tease.captalize()]..."
 
         elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
@@ -1749,11 +1751,41 @@ label talk_i_love_you:
     else:
 
         if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVED:
-            $ random_response_index = randint(0, 5)
-            
-            if random_response_index == 0:
 
-            elif 
+            # At this point, Natsuki is super comfortable with her player, so we can be open and vary things!
+            $ random_response_index = random.choice(0, 5)
+
+            if random_response_index == 0:
+                n "Ehehe.{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
+                n "You're always [chosen_descriptor] to me."
+
+            elif random_response_index == 1:
+                n "Aww,{w=0.1} you don't say?"
+                n "Ahaha!"
+                n "[chosen_endearment],{w=0.1} I love you too!"
+                n "I'll always be here to stick up for you."
+
+            elif random_response_index == 2:
+                n "Aww,{w=0.1} [chosen_endearment]!{w=0.2} I love you too!"
+                n "You're the best thing that's ever happened to me."
+
+            elif random_response_index == 3:
+                n "Oh?{w=0.2} Someone's all needy today,{w=0.1} huh?"
+                n "Well,{w=0.1} I'd be happy to oblige!"
+                n "I love you too,{w=0.1} [chosen_endearment]!"
+                n "Keep on smiling for me,{w=0.1} 'kay?"
+
+            elif random_response_index == 4:
+                n "Fawning over me like always,{w=0.1} [player]?"
+                n "Ehehe.{w=0.2} Don't worry,{w=0.1} I'm not complaining!"
+                n "I love you too,{w=0.1} [chosen_endearment]!"
+                n "It's just us two against the world!"
+
+            else:
+                n "Oh?{w=0.2} Lovey-dovey as usual?"
+                n "You're such a softie,{w=0.1} [player].{w=0.2} Ehehe."
+                n "But...{w=0.3} I'm not gonna complain!{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
+                n "You always make me feel tall."
 
             $ relationship("affinity+")
 
@@ -1766,10 +1798,10 @@ label talk_i_love_you:
             $ relationship("affinity+")
 
         elif jn_affinity.get_affinity_state() >= store.jn_affinity.HAPPY:
-            n "H-hey! I thought I told you not to just come out with stuff like that!"
-            n "Jeez, [player]..."
-            n "I don't know if you're trying to win me over, or what..."
-            n "But you're gonna have to try harder than that! Ehehe..."
+            n "H-{w=0.1}hey! I thought I told you not to just come out with stuff like that!"
+            n "Jeez,{w=0.1} [player]..."
+            n "I don't know if you're trying to win me over,{w=0.1} or what..."
+            n "But you're gonna have to try harder than that!{w=0.2} Ehehe..."
 
         elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
             n "G-{w=0.1}gah!"
@@ -1791,7 +1823,7 @@ label talk_i_love_you:
             n "You're actually unbelievable,{w=0.1} [player]."
             n "Do you even understand what you're saying?"
             n "..."
-            n "You know what?{w=0.2} Whatever.{w=0.2} I don't care."
+            n "You know what?{w=0.2} Whatever.{w=0.2} I don't care anymore."
             n "Say what you like,{w=0.1} [player].{w=0.2} It changes nothing."
             $ relationship("affinity-")
 
