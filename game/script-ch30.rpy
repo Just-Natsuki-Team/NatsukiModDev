@@ -221,7 +221,6 @@ label player_select_topic(says):
         $ push(_choice)
 
     elif isinstance(_choice, int):
-        n "You went baka."
         pass
 
     jump ch30_loop

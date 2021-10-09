@@ -80,7 +80,14 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                                 ]
 
                         elif category_length > 1:
-                            textbutton _("Go baka"):
+                            python:
+                                import random
+
+                                go_back_text = "Go back"
+                                if random.randint(0, 999) == 999:
+                                    go_back_text = "Go baka"
+
+                            textbutton _(go_back_text):
                                 style "categorized_menu_button"
                                 action [ Return(-1), Function(prev_adjustment.change, 0) ]
 
