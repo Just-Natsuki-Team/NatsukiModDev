@@ -1625,7 +1625,53 @@ init 5 python:
     )
 
 label talk_aging:
-    n ""
+    n "You know,{w=0.1} [player]..."
+    n "I think most people share a bunch of fears."
+    n "You get what I mean,{w=0.1} right?{w=0.2} Like presenting stuff to a room full of people,{w=0.1} or failing a test."
+    n "Of course,{w=0.1} it's rare to find one that {i}everyone{/i} has..."
+    n "Or at least something that makes anyone feel uneasy."
+    n "But...{w=0.3} I think I found one!"
+    n "What am I thinking of,{w=0.1} you ask?"
+    n "Well...{w=0.3} it's actually kinda boring,{w=0.1} really."
+    n "I was actually thinking about growing older."
+    n "Have you ever thought much about it,{w=0.1} [player]?"
+    n "It's probably the last thing on your mind if you're pretty young."
+    n "But I think as you actually get older,{w=0.1} it starts to creep in."
+    n "You might have less energy,{w=0.1} or friends and family begin drifting away..."
+    n "Birthdays lose all meaning -{w=0.1} you might even dread them!"
+    n "The signs appear in a bunch of ways,{w=0.1} but that's what makes it unnerving."
+    n "Everyone experiences it differently,{w=0.1} and we don't even know what happens after the end!"
+    n "Spooky,{w=0.1} huh?" 
+    n "Although... I guess you could say that's more the fear of the unknown than aging itself."
+    n "What does wind me up though is how immature people can be about it."
+    n "Especially when it comes to relationships between different ages!"
+    n "People just get so preachy about it..."
+    n "Like...{w=0.3} as long as they're both happy,{w=0.1} and nobody is being hurt or made uncomfortable,{w=0.1} who actually cares?"
+    n "It's just like most stuff,{w=0.1} really."
+    n "Besides,{w=0.1} it's not like being a certain age means you {i}have{/i} to be a certain way."
+    n "I mean...{w=0.3} look at Yuri!"
+    n "Being all old-fashioned like that -{w=0.1} you'd think she's retired!"
+    n "But anyway...{w=0.3} I think we got side-tracked."
+    n "I don't really care how old you are,{w=0.1} [player]."
+
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVE:
+        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        n "I love you all the same,{w=0.1} [chosen_tease]."
+        n "Don't forget that,{w=0.1} 'kay?"
+        n "Or you might make me a little angry.{w=0.2} Ehehe."
+
+    elif jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        n "You've been pretty awesome to me all the same."
+
+    elif jn_affinity.get_affinity_state() >= store.jn_affinity.HAPPY:
+        n "You're always fun to hang around with!"
+
+    else:
+        n "But...{w=0.3} just in case?"
+        n "We're only having one candle on your birthday cake.{w=0.2} Sorry." 
+        n "Ahaha!"
+
+    return
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
