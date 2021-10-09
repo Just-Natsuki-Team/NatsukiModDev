@@ -26,6 +26,9 @@ default persistent.jn_player_appearance_hair_length = None
 default persistent.jn_player_appearance_hair_colour = None
 default persistent.jn_player_appearance_height_cm = None
 
+# Romance data
+default persistent.jn_player_love_you_count = 0
+
 #Our main topic pool
 default persistent._event_list = list()
 
