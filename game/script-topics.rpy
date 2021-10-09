@@ -1617,7 +1617,7 @@ init 5 python:
             prompt="I love you, {0}!".format(n_name),
             conditional="store.jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED",
             category=["Natsuki", "Romance"],
-            nat_says=True,
+            player_says=True,
             affinity_range=(jn_affinity.RUINED, jn_affinity.LOVE),
             location="classroom"
         ),
