@@ -1607,6 +1607,26 @@ label talk_sustainable_fashion:
 
     return
 
+# Natsuki discusses aging, and her carefree attitude towards the age-gap in relationships
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_aging",
+            unlocked=True,
+            prompt="Aging",
+            conditional=None,
+            category=["Life"],
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_aging:
+    n ""
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
