@@ -177,7 +177,7 @@ label talk_menu:
         _talk_flavor_text = renpy.substitute(_talk_flavor_text)
 
     menu:
-        "[_talk_flavor_text]"
+        m "[_talk_flavor_text]"
 
         "Let's talk about...":
             call player_select_topic
