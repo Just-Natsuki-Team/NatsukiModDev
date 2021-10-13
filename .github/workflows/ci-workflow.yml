@@ -30,12 +30,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # - name: Setup Python
-      #   uses: actions/setup-python@v2.2.1
-      #   with:
-      #     # Install python 2.7.18
-      #     python-version: 2.7.18
-
       # Move all repo files over to the DDLC install
       - name: Copy files over
         run: |
