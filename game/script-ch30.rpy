@@ -180,10 +180,10 @@ label talk_menu:
         "[_talk_flavor_text]"
 
         "Let's talk about...":
-            call player_select_topic(says=_PLAYER_SAYS)
+            call player_select_topic
 
         "Tell me again about...":
-            call player_select_topic(says=_NAT_SAYS)
+            call player_select_topic(is_repeat_topics=True)
 
         "I feel..." if store.jn_affinity.get_affinity_state() >= store.jn_affinity.HAPPY:
             jump player_admissions_start
@@ -198,15 +198,12 @@ label talk_menu:
             pass
     return
 
-label player_select_topic(says):
+label player_select_topic(is_repeat_topics=False):
     python:
-        if says not in _SAYS_RANGE:
-            raise Exception("{0} is not a valid argument; must be one of {1}".format(says, _SAYS_RANGE))
-
         _topics = Topic.filter_topics(
             topics.TOPIC_MAP.values(),
-            nat_says=(says == _NAT_SAYS),
-            player_says=(says == _PLAYER_SAYS),
+            nat_says=is_repeat_topics,
+            player_says=not is_repeat_topics,
             unlocked=True,
             location=main_background.location.id,
             affinity=jn_globals.current_affinity_state
@@ -217,12 +214,17 @@ label player_select_topic(says):
     call screen categorized_menu(menu_items,(1020, 70, 250, 572), (740, 70, 250, 572), len(_topics))
 
     $ _choice = _return
+
+    # We got a string, we shoud push
     if isinstance(_choice, str):
         $ push(_choice)
 
-    elif isinstance(_choice, int):
-        pass
+    # -1 means go back
+    elif _choice == -1:
+        jump talk_menu
 
+    # Clear _return
+    $ _return = None
     jump ch30_loop
 
 label music_menu:
