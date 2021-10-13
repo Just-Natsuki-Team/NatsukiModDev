@@ -18,6 +18,7 @@ init 0 python in nicknames:
         "baby",
         "babycakes",
         "beautiful",
+        "bestgirl",
         "betterhalf",
         "boo",
         "bunbun",
@@ -93,7 +94,7 @@ init 0 python in nicknames:
         "sweetie",
         "sweetness",
         "sweety"
-        "the best"
+        "thebest"
     ]
 
     # Natsuki dislikes these nicknames; no penalty given but name will not be permitted
