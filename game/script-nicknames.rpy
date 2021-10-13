@@ -20,7 +20,6 @@ init 0 python in nicknames:
         "beautiful",
         "betterhalf",
         "boo",
-        "bun bun",
         "bunbun",
         "bun-bun",
         "bunny",
