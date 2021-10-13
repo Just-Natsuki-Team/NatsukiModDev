@@ -60,51 +60,7 @@ init python in farewells:
 init 1 python:
     # DEBUG: TODO: Resets - remove these later, once we're done tweaking affinity/trust!
     try:
-        store.persistent._farewell_database.pop("farewell_love_you_mean_the_world_to_me")
-        store.persistent._farewell_database.pop("farewell_love_dont_like_saying_goodbye")
-        store.persistent._farewell_database.pop("farewell_love_counting_on_you")
-        store.persistent._farewell_database.pop("farewell_love_do_your_best")
-        store.persistent._farewell_database.pop("farewell_love_rooting_for_you")
-        store.persistent._farewell_database.pop("farewell_love_me_to_deal_with")
-        store.persistent._farewell_database.pop("farewell_love_wish_you_could_stay_forever")
-
-        store.persistent._farewell_database.pop("farewell_affectionate_enamored_was_having_fun")
-        store.persistent._farewell_database.pop("farewell_affectionate_enamored_waiting_for_you")
-        store.persistent._farewell_database.pop("farewell_affectionate_enamored_ill_be_okay")
-        store.persistent._farewell_database.pop("farewell_affectionate_enamored_dont_make_me_find_you")
-        store.persistent._farewell_database.pop("farewell_affectionate_enamored_take_care_for_both")
-        store.persistent._farewell_database.pop("farewell_affectionate_enamored_enjoy_our_time_together")
-        store.persistent._farewell_database.pop("farewell_affectionate_enamored_see_me_soon")
-
-        store.persistent._farewell_database.pop("farewell_happy_affectionate_going_now")
-        store.persistent._farewell_database.pop("farewell_happy_affectionate_heading_off")
-        store.persistent._farewell_database.pop("farewell_happy_affectionate_stay_safe")
-        store.persistent._farewell_database.pop("farewell_happy_affectionate_take_care")
-        store.persistent._farewell_database.pop("farewell_happy_affectionate_see_me_soon")
-
-        store.persistent._farewell_database.pop("farewell_normal_happy_see_you_later")
-        store.persistent._farewell_database.pop("farewell_normal_happy_later")
-        store.persistent._farewell_database.pop("farewell_normal_happy_goodbye")
-        store.persistent._farewell_database.pop("farewell_normal_happy_kay")
-        store.persistent._farewell_database.pop("farewell_normal_happy_see_ya")
-
-        store.persistent._farewell_database.pop("farewell_upset_distressed_bye")
-        store.persistent._farewell_database.pop("farewell_upset_distressed_later")
-        store.persistent._farewell_database.pop("farewell_upset_distressed_kay")
-        store.persistent._farewell_database.pop("farewell_upset_distressed_goodbye")
-        store.persistent._farewell_database.pop("farewell_upset_distressed_see_you_around")
-
-        store.persistent._farewell_database.pop("farewell_broken_ruined_yeah")
-        store.persistent._farewell_database.pop("farewell_broken_ruined_yep")
-        store.persistent._farewell_database.pop("farewell_broken_ruined_uh_huh")
-        store.persistent._farewell_database.pop("farewell_broken_ruined_nothing_to_say")
-        store.persistent._farewell_database.pop("farewell_broken_ruined_kay")
-
-        store.persistent._farewell_database.pop("farewell_short_session_ask")
-        store.persistent._farewell_database.pop("farewell_short_session_ask_alt")
-        store.persistent._farewell_database.pop("farewell_fake_confidence_ask")
-        store.persistent._farewell_database.pop("farewell_pleading_ask")
-        store.persistent._farewell_database.pop("farewell_gentle_ask")
+        store.persistent._farewell_database.clear()
 
     except Exception as e:
         utils.log(e, utils.SEVERITY_ERR)

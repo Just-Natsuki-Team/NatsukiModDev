@@ -35,14 +35,7 @@ init 0 python in compliments:
 init 1 python:
     try:
         # Resets - remove these later, once we're done tweaking affinity/trust!
-        store.persistent._compliment_database.pop("compliment_amazing")
-        store.persistent._compliment_database.pop("compliment_beautiful")
-        store.persistent._compliment_database.pop("compliment_confident")
-        store.persistent._compliment_database.pop("compliment_cute")
-        store.persistent._compliment_database.pop("compliment_hilarious")
-        store.persistent._compliment_database.pop("compliment_inspirational")
-        store.persistent._compliment_database.pop("compliment_style")
-        store.persistent._compliment_database.pop("compliment_thoughtful")
+        store.persistent._compliment_database.clear()
 
     except Exception as e:
         utils.log(e, utils.SEVERITY_ERR)

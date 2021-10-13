@@ -1,5 +1,4 @@
 init 0 python in jn_screenshots:
-    from enum import Enum
     import os
     import random
 

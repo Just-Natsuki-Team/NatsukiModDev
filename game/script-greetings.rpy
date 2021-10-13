@@ -31,38 +31,7 @@ init python in greetings:
 init 1 python:
     try:
         # Resets - remove these later, once we're done tweaking affinity/trust!
-        store.persistent._greeting_database.pop("greeting_love_plus_today_is_gonna_be_great")
-        store.persistent._greeting_database.pop("greeting_love_plus_world_revolves_around_you")
-        store.persistent._greeting_database.pop("greeting_love_plus_make_today_amazing")
-        store.persistent._greeting_database.pop("greeting_love_plus_always_welcome_here")
-        store.persistent._greeting_database.pop("greeting_love_plus_lovestruck")
-
-        store.persistent._greeting_database.pop("greeting_affectionate_enamored_good_to_see_you")
-        store.persistent._greeting_database.pop("greeting_affectionate_enamored_couldnt_resist")
-        store.persistent._greeting_database.pop("greeting_affectionate_enamored_just_cant_stay_away")
-        store.persistent._greeting_database.pop("greeting_affectionate_enamored_have_so_much_fun")
-        store.persistent._greeting_database.pop("greeting_affectionate_enamored_everything_is_fine")
-
-        store.persistent._greeting_database.pop("greeting_normal_happy_whats_up")
-        store.persistent._greeting_database.pop("greeting_normal_happy_glad_to_see_you")
-        store.persistent._greeting_database.pop("greeting_normal_happy_spacing_out")
-        store.persistent._greeting_database.pop("greeting_normal_happy_heya")
-        store.persistent._greeting_database.pop("greeting_normal_happy_knew_youd_be_back")
-
-        store.persistent._greeting_database.pop("greeting_distressed_upset_oh_its_you")
-        store.persistent._greeting_database.pop("greeting_distressed_upset_hi")
-        store.persistent._greeting_database.pop("greeting_distressed_upset_welcome_back_i_guess")
-        store.persistent._greeting_database.pop("greeting_distressed_upset_better_be_good")
-        store.persistent._greeting_database.pop("greeting_distressed_upset_oh_you_came_back")
-
-        store.persistent._greeting_database.pop("greeting_broken_minus_oh_its_you")
-        store.persistent._greeting_database.pop("greeting_broken_minus_nothing_to_say")
-        store.persistent._greeting_database.pop("greeting_broken_minus_why")
-        store.persistent._greeting_database.pop("greeting_broken_minus_enough_on_my_mind")
-        store.persistent._greeting_database.pop("greeting_broken_minus_leave_me_be")
-
-        store.persistent._greeting_database.pop("greeting_feeling_better_sick")
-        store.persistent._greeting_database.pop("greeting_feeling_better_tired")
+        store.persistent._greeting_database.clear()
 
     except Exception as e:
         utils.log(e, utils.SEVERITY_ERR)
