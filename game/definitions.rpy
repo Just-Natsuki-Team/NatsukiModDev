@@ -41,6 +41,7 @@ init 0 python:
     TOPIC_TYPE_GREETING = "GREETING"
     TOPIC_TYPE_NORMAL = "NORMAL"
     TOPIC_TYPE_ADMISSION = "ADMISSION"
+    TOPIC_TYPE_COMPLIMENT = "COMPLIMENT"
 
     TOPIC_LOCKED_PROP_BASE_MAP = {
         #Things which shouldn't change
@@ -453,7 +454,7 @@ init 0 python:
         Returns a list of items ready for a menu
 
         IN:
-            menu_topics - array of topics. Recommended input of get_all_topics()
+            menu_topics - List<Topic> of topics
             additional_topics - optional, array of tuples
                 syntax: [("prompt1", "label2"), ("prompt2", "label2"), ...]
         OUT:
@@ -465,6 +466,27 @@ init 0 python:
 
         for topic in additional_topics:
             menu_items.append(topic)
+        return menu_items
+
+    def menu_dict(menu_topics):
+        """
+        Builds a dict of items ready for use in a categorized menu
+
+        IN:
+            menu_topics - A List<Topic> of topics to populate the menu
+
+        OUT:
+            Dictionary<string, List<string>> representing a dict of category: [ ...prompts ]
+        """
+        menu_items = {}
+
+        for topic in menu_topics:
+            for category in topic.category:
+                if category not in menu_items:
+                    menu_items[category] = []
+
+                menu_items[category].append(topic)
+
         return menu_items
 
     def get_custom_tracks():
@@ -527,9 +549,57 @@ init -990 python in jn_globals:
         "you numpty"
     ]
 
+    # Flavor text for the talk menu at high affinity
+    DEFAULT_TALK_FLAVOR_TEXT_LOVE_ENAMORED = [
+        "What's up, [player]?",
+        "What's on your mind, [player]?",
+        "Something up, [player]?",
+        "You wanna talk? Yay!",
+        "I'd love to talk!",
+        "I always love talking to you, [player]!",
+        "[player]! What's up?"
+        "[player]! What's on your mind?",
+        "Ooh! What did you wanna talk about?",
+        "I'm all ears, [player]!"
+    ]
+
+    # Flavor text for the talk menu at medium affinity
+    DEFAULT_TALK_FLAVOR_TEXT_AFFECTIONATE_NORMAL = [
+        "What's up?",
+        "What's on your mind?",
+        "What's happening?",
+        "Something on your mind?",
+        "Oh? You wanna talk to me?",
+        "Huh? What's up?",
+        "You wanna share something?"
+    ]
+
+    # Flavor text for the talk menu at low affinity
+    DEFAULT_TALK_FLAVOR_TEXT_UPSET_DISTRESSED = [
+        "What do you want?",
+        "What is it?",
+        "Can I help you?",
+        "Do you need me?",
+        "Make it quick.",
+        "What now?"
+    ]
+
+    # Flavor text for the talk menu at minimum affinity
+    DEFAULT_TALK_FLAVOR_TEXT_BROKEN_RUINED = [
+        "...",
+        "...?",
+        "What?",
+        "Just talk already.",
+        "Spit it out.",
+        "Start talking."
+    ]
+
 init 10 python in jn_globals:
     # The current affection state. We default this to 5 (NORMAL)
     current_affinity_state = store.jn_affinity.NORMAL
+
+    # This will need to be replaced with a struct and links to persistent once outfits are in
+    current_outfit = None
 
 #Stuff that's really early, which should be usable basically anywhere
 init -999 python in utils:
@@ -571,6 +641,7 @@ init -999 python in utils:
             ).format(datetime.datetime.now(), message)
         )
 
+init python in utils:
     def get_current_session_length():
         """
         Returns a timedelta object representing the length of the current game session.
@@ -579,6 +650,39 @@ init -999 python in utils:
             datetime.timedelta object representing the length of the current game session
         """
         return datetime.datetime.now() - store.jn_globals.current_session_start_time
+
+    def get_time_in_session_descriptor():
+        """
+        Get a descriptor based on the number of minutes the player has spent in the session, up to 30 minutes
+
+        OUT:
+            Brief descriptor relating to the number of minutes spent in the session
+        """
+        minutes_in_session = get_current_session_length().total_seconds() / 60
+
+        if minutes_in_session <= 1:
+            return "like a minute"
+
+        elif minutes_in_session <= 3:
+            return "a couple of minutes"
+
+        elif minutes_in_session > 3 and minutes_in_session <= 5:
+            return "like five minutes"
+
+        elif minutes_in_session > 5 and minutes_in_session <= 10:
+            return "around ten minutes"
+
+        elif minutes_in_session > 10 and minutes_in_session <= 15:
+            return "around fifteen minutes"
+
+        elif minutes_in_session > 15 and minutes_in_session <= 20:
+            return "around twenty minutes"
+
+        elif minutes_in_session <= 30:
+            return "about half an hour"
+
+        else:
+            return "a while"
 
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
 define audio.t2 = "<loop 4.499>bgm/2.ogg"   #Sayori theme

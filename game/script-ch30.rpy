@@ -33,14 +33,14 @@ label ch30_init:
     #Let's pick a greeting
     $ push(greetings.select_greeting())
 
+    $ main_background.draw(full_redraw=True)
+    show Natsuki zorder 3
+    show screen hkb_overlay
+
+    # Do all var-sets, resets, and sanity checks prior to entering the loop here
+
     # Reset the previous admission, now that Natsuki will have picked one if relevant
     $ persistent.jn_player_admission_type_on_quit = None
-
-    $ main_background.draw(full_redraw=True)
-    #show natsuki a zorder 3
-    show Natsuki zorder 3
-    show screen hkb_overlay(Action=False)
-    #Do all var-sets, resets, and sanity checks prior to entering the loop here
 
     #And finally, we head into the loop
     jump ch30_loop
@@ -49,7 +49,18 @@ label ch30_init:
 #The main loop
 label ch30_loop:
     #Do topic selection here
-    $ queue(pick_random_topic(unlocked=True, player_says=False, location=main_background.location.id, affinity=20, trust=60))
+    python:
+        topic_pool = Topic.filter_topics(
+            topics.TOPIC_MAP.values(),
+            unlocked=True,
+            nat_says=True,
+            location=main_background.location.id,
+            affinity=jn_globals.current_affinity_state,
+            #trust=60 TODO: Add trust handling
+        )
+
+        if topic_pool:
+            queue(random.choice(topic_pool))
 
     #Run our checks
     python:
@@ -73,19 +84,54 @@ label ch30_loop:
     while persistent._event_list:
         call call_next_topic
 
-    jump ch30_loop
-
+    #FALL THROUGH
 
 label ch30_wait:
     window hide
     $ renpy.pause(delay=5.0, hard=True)
     jump ch30_loop
 
+#Other labels
+label call_next_topic:
+    if persistent._event_list:
+        $ _topic = persistent._event_list.pop(0)
+
+        if renpy.has_label(_topic):
+            call expression _topic
+
+    python:
+        #Collect our return keys here
+        return_keys = _return if _return else dict()
+
+        topic_obj = get_topic(_topic)
+
+        #Handle all things which act on topic objects here, since we can't access attributes of Nonetypes
+        if topic_obj is not None:
+            #Increment shown count
+            topic_obj.shown_count += 1
+
+            #Now manage return keys
+            if "derandom" in return_keys:
+                topic_obj.random = False
+
+    #This topic might quit
+    if "quit" in return_keys:
+        jump _quit
+
+    return
 
 init python:
     LAST_MINUTE_CHECK = datetime.datetime.now()
     LAST_HOUR_CHECK = LAST_MINUTE_CHECK.hour
     LAST_DAY_CHECK = LAST_MINUTE_CHECK.day
+
+    _NAT_SAYS = 0
+    _PLAYER_SAYS = 1
+
+    _SAYS_RANGE = [
+        _NAT_SAYS,
+        _PLAYER_SAYS
+    ]
 
     def minute_check():
         """
@@ -105,102 +151,86 @@ init python:
         """
         pass
 
-#Other labels
-label call_next_topic:
-    if persistent._event_list:
-        $ topic = persistent._event_list.pop(0)
-
-        if renpy.has_label(topic):
-            call expression topic
-
-    python:
-        #Collect our return keys here
-        return_keys = _return if _return else dict()
-
-        topic_obj = get_topic(topic)
-
-        #Handle all things which act on topic objects here, since we can't access attributes of Nonetypes
-        if topic_obj is not None:
-            #Increment shown count
-            topic_obj.shown_count += 1
-
-            #Now manage return keys
-            if "derandom" in return_keys:
-                topic_obj.random = False
-
-    #This topic might quit
-    if "quit" in return_keys:
-        jump _quit
-
-    return
-
-
-
 label talk_menu:
     python:
-        topics_ = get_all_topics(player_says=True, unlocked=True, location=main_background.location.id, affinity=20, trust=65)
-        addit_topics = [
-            ("Nevermind", "menu_nevermind"),
-            ("Goodbye", farewells.select_farewell())
-            ]
-        menu_items = menu_list(topics_, addit_topics)
-        choice = menu(menu_items)
-        push(choice)
-    jump ch30_loop
+        # Get the flavor text for the talk menu, based on affinity state
+        if store.jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_LOVE_ENAMORED)
 
-label dates_menu:
+        elif store.jn_affinity.is_state_within_range(
+            affinity_state=store.jn_globals.current_affinity_state,
+            affinity_range=(store.jn_affinity.NORMAL, store.jn_affinity.AFFECTIONATE)
+        ):
+            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_AFFECTIONATE_NORMAL)
+
+
+        elif store.jn_affinity.is_state_within_range(
+            affinity_state=store.jn_globals.current_affinity_state,
+            affinity_range=(store.jn_affinity.DISTRESSED, store.jn_affinity.UPSET)
+        ):
+            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_UPSET_DISTRESSED)
+
+        else:
+            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_BROKEN_RUINED)
+
+        # Ensure any variable references are substituted
+        _talk_flavor_text = renpy.substitute(_talk_flavor_text)
+
+    menu:
+        m "[_talk_flavor_text]"
+
+        "Let's talk about...":
+            call player_select_topic
+
+        "Tell me again about...":
+            call player_select_topic(is_repeat_topics=True)
+
+        "I feel..." if store.jn_affinity.get_affinity_state() >= store.jn_affinity.HAPPY:
+            jump player_admissions_start
+
+        "I want to tell you something..." if store.jn_affinity.get_affinity_state() >= store.jn_affinity.HAPPY:
+            jump player_compliments_start
+
+        "Goodbye.":
+            jump farewell_start
+
+        "Nevermind.":
+            pass
+    return
+
+label player_select_topic(is_repeat_topics=False):
     python:
-        topics_ = get_all_topics(player_says=True, unlocked=True, category=["date"])
-        addit_topics = [("Nevermind", "menu_nevermind")]
+        _topics = Topic.filter_topics(
+            topics.TOPIC_MAP.values(),
+            nat_says=is_repeat_topics,
+            player_says=not is_repeat_topics,
+            unlocked=True,
+            location=main_background.location.id,
+            affinity=jn_globals.current_affinity_state
+        )
 
-        menu_items = menu_list(topics_, addit_topics)
-        choice = menu(menu_items)
-        push(choice)
-    jump ch30_loop
+        menu_items = menu_dict(_topics)
 
-label action_menu:
-    python:
-        topics_ = get_all_topics(player_says=True, unlocked=True, location=main_background.location)
-        addit_topics = [("Nevermind", "menu_nevermind")]
+    call screen categorized_menu(menu_items,(1020, 70, 250, 572), (740, 70, 250, 572), len(_topics))
 
-        menu_items = menu_list(topics_, addit_topics)
-        choice = menu(menu_items)
-        push(choice)
+    $ _choice = _return
+
+    # We got a string, we shoud push
+    if isinstance(_choice, str):
+        $ push(_choice)
+
+    # -1 means go back
+    elif _choice == -1:
+        jump talk_menu
+
+    # Clear _return
+    $ _return = None
     jump ch30_loop
 
 label music_menu:
-    menu:
-        n "Want a change of tune?"
-        "track1":
-            play music track1
-        "track2":
-            play music track2
-        "track3":
-            play music track3
-        "track4":
-            play music track4
-        "custom music":
-            python:
-                custom_tracks = get_custom_tracks()
-                custom_tracks.append(("Nevermind", "menu_nevermind"))
-                choice = menu(custom_tracks)
-            if choice != "menu_nevermind":
-                play music choice
-            else:
-                call expression choice
-        "Nevermind":
-            n "Okay!"
-
-    jump ch30_loop
-
+    n "This isn't done."
     jump ch30_loop
 
 label extras_menu:
-    python:
-        topics_ = get_all_topics(player_says=True, unlocked=True, location=main_background.location)
-        addit_topics = [("Nevermind", "menu_nevermind")]
-
-        menu_items = menu_list(topics_, addit_topics)
-        choice = menu(menu_items)
-        push(choice)
+    n "This isn't done."
     jump ch30_loop
