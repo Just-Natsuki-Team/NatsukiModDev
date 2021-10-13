@@ -111,7 +111,8 @@ init 0 python in nicknames:
         "papa",
         "sayo",
         "sayori",
-        "yuri"
+        "yuri",
+        "weeb"
     ]
 
     # Natsuki hates these (non-profanity) nicknames; awarding them detracts affinity/trust
@@ -121,6 +122,7 @@ init 0 python in nicknames:
         "bratty",
         "bonebag",
         "bonehead",
+        "breadboard",
         "child",
         "clown",
         "cuttingboard",
@@ -129,7 +131,13 @@ init 0 python in nicknames:
         "dumbo",
         "dimwit",
         "disgusting",
+        "dumb",
+        "dumbo",
         "dwarf",
+        "dweeb",
+        "fat",
+        "fatso",
+        "fatty",
         "flat",
         "gremlin",
         "halfling",
@@ -158,6 +166,7 @@ init 0 python in nicknames:
         "putrid",
         "sick",
         "simpleton",
+        "skinny",
         "slave",
         "smelly",
         "starved",
@@ -166,6 +175,7 @@ init 0 python in nicknames:
         "stuck-up",
         "stupid",
         "tiny",
+        "twerp",
         "twit",
         "useless",
         "vendingmachine",
@@ -182,6 +192,7 @@ init 0 python in nicknames:
         "5hit",
         "a_s_s",
         "a55",
+        "aids",
         "anal",
         "anus",
         "ar5e",
@@ -629,6 +640,7 @@ init 0 python in nicknames:
     # Natsuki finds these nicknames funny
     NICKNAME_FUNNY_LIST = [
         "gorgeous",
+        "hot",
         "hotstuff",
         "hottie",
         "mama",
