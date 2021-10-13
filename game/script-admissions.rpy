@@ -10,15 +10,16 @@ init 0 python in admissions:
     TYPE_ANGRY = 0
     TYPE_ANXIOUS = 1
     TYPE_ASHAMED = 2
-    TYPE_CONFIDENT = 3
-    TYPE_EXCITED = 4
-    TYPE_HAPPY = 5
-    TYPE_HUNGRY = 6
-    TYPE_INSECURE = 7
-    TYPE_PROUD = 8
-    TYPE_SAD = 9
-    TYPE_SICK = 10
-    TYPE_TIRED = 11
+    TYPE_BORED = 3
+    TYPE_CONFIDENT = 4
+    TYPE_EXCITED = 5
+    TYPE_HAPPY = 6
+    TYPE_HUNGRY = 7
+    TYPE_INSECURE = 8
+    TYPE_PROUD = 9
+    TYPE_SAD = 10
+    TYPE_SICK = 11
+    TYPE_TIRED = 12
 
     # The last admission the player gave to Natsuki
     last_admission_type = None
@@ -199,6 +200,63 @@ label admission_ashamed:
         n "I believe in you,{w=0.1} [player]!"
 
     $ admissions.last_admission_type = admissions.TYPE_ASHAMED
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._admission_database,
+            prompt="Bored",
+            label="admission_bored",
+            unlocked=True,
+            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+        ),
+        topic_group=TOPIC_TYPE_ADMISSION
+    )
+
+label admission_bored:
+    if admissions.last_admission_type == admissions.TYPE_BORED:
+        n "Still trying to beat the boredom,{w=0.1} [player]?"
+        n "Did you actually try doing what I said?"
+        n "Hmm..."
+        n "Well,{w=0.1} you could try phoning around!{w=0.2} You gotta have friends or family you can visit,{w=0.1} right?"
+        n "Or...{w=0.3} perhaps you could try reading,{w=0.1} or picking up something new?"
+        n "I guess what I'm trying to say is..."
+        n "There's no shortage of stuff to do,{w=0.1} [player]." 
+        n "You just gotta find it!"
+
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n "Now,{w=0.1} go!{w=0.2} And make sure you tell me all about it later,{w=0.1} 'kay?"
+            n "Ehehe."
+
+        else:
+            n "Well?{w=0.3} What're you waiting for?"
+            n "Go for it,{w=0.1} [player]!"
+
+    else:
+        n "Huh?{w=0.2} You're bored?"
+        n "And just what is that supposed to mean,{w=0.1} [player]?"
+        n "Am I not fun enough to be with?" 
+        n "Are you not entertained?!"
+        n "..."
+        n "Ehehe." 
+        n "Relax!{w=0.2} Relax,{w=0.1} [player]."
+        n "Well,{w=0.1} if you're bored..."
+        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        n "Then get up off your butt and do something about it,{w=0.1} [chosen_tease]!"
+        n "Jeez,{w=0.1} [player]...{w=0.3} there's a big, wide world out there just waiting for you!"
+        n "And if that isn't enough,{w=0.1} there's an even bigger one right at your fingertips!"
+        n "Or you could,{w=0.1} you know."
+
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n "Spend more time with yours truly?"
+            n "I'm not that dull...{w=0.3} right?"
+
+        else:
+            n "Appreciate that you get to spend more time with me!"
+            n "N-{w=0.1}not that I'd totally appreciate it,{w=0.1} or anything,{w=0.1} of course.{w=0.2} Ahaha..."
+
+    $ admissions.last_admission_type = admissions.TYPE_BORED
     return
 
 init 5 python:
