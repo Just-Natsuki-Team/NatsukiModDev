@@ -19,6 +19,9 @@ default persistent.jn_player_favourite_season = None
 # Admissions data
 default persistent.jn_player_admission_type_on_quit = None
 
+# Apologies data
+default persistent.jn_player_pending_apologies = list()
+
 # Appearance data
 default persistent.jn_player_appearance_declined_share = False
 default persistent.jn_player_appearance_eye_colour = None
@@ -348,6 +351,9 @@ init 0 python:
                 return False
 
             if excludes_categories and self.category and len(set(excludes_categories).intersection(set(self.category))) > 0:
+                return False
+
+            if self.conditional is not None and not eval(self.conditional):
                 return False
 
             if additional_properties:

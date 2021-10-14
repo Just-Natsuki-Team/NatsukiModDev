@@ -191,7 +191,7 @@ label talk_menu:
         "I want to tell you something..." if store.jn_affinity.get_affinity_state() >= store.jn_affinity.HAPPY:
             jump player_compliments_start
 
-        "I want to apologize..."
+        "I want to apologize...":
             jump player_apologies_start
 
         "Goodbye.":
