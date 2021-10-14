@@ -61,8 +61,9 @@ init 1 python in apologies:
     
     # DEBUG: TODO: Resets - remove these later, once we're done tweaking affinity/trust!
     try:
-        persistent._apology_database.clear()
+        store.persistent._apology_database.clear()
 
+        # TODO: Remove these entries
         add_new_pending_apology(APOLOGY_TYPE_BAD_NICKNAME)
         add_new_pending_apology(APOLOGY_TYPE_CHEATED_GAME)
         add_new_pending_apology(APOLOGY_TYPE_PROLONGED_LEAVE)
@@ -123,6 +124,7 @@ label apology_bad_nickname:
     else:
         n ""
 
+    $ persistent.jn_player_pending_apologies.remove(apologies.APOLOGY_TYPE_BAD_NICKNAME)
     return
 
 # Apology for cheating in a minigame
@@ -159,6 +161,7 @@ label apology_cheated_game:
         n "Whatever.{w=0.2} I don't care."
         n "As if I could expect much better from you,{w=0.1} anyway..."
 
+    $ persistent.jn_player_pending_apologies.remove(apologies.APOLOGY_TYPE_CHEATED_GAME)
     return
 
 # Generic apology
@@ -255,7 +258,7 @@ init 5 python:
 
 label apology_prolonged_leave:
     if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
-            n ""
+        n ""
 
     if jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
         n ""
@@ -266,6 +269,7 @@ label apology_prolonged_leave:
     else:
         n ""
 
+    $ persistent.jn_player_pending_apologies.remove(apologies.APOLOGY_TYPE_PROLONGED_LEAVE)
     return
 
 # Apology for generally being rude to Natsuki outside of nicknames
@@ -284,7 +288,7 @@ init 5 python:
 
 label apology_rude:
     if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
-            n ""
+        n ""
 
     if jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
         n ""
@@ -295,6 +299,7 @@ label apology_rude:
     else:
         n ""
 
+    $ persistent.jn_player_pending_apologies.remove(apologies.APOLOGY_TYPE_RUDE)
     return
 
 # Apology for taking pictures without Natsuki's permission
@@ -313,7 +318,7 @@ init 5 python:
 
 label apology_screenshots:
     if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
-            n ""
+        n ""
 
     if jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
         n ""
@@ -324,6 +329,7 @@ label apology_screenshots:
     else:
         n ""
 
+    $ persistent.jn_player_pending_apologies.remove(apologies.APOLOGY_TYPE_SCREENSHOT)
     return
 
 # Apology for leaving without saying "Goodbye" properly.
@@ -342,7 +348,7 @@ init 5 python:
 
 label apology_without_goodbye:
     if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
-            n ""
+        n ""
 
     if jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
         n ""
@@ -353,6 +359,7 @@ label apology_without_goodbye:
     else:
         n ""
 
+    $ persistent.jn_player_pending_apologies.remove(apologies.APOLOGY_TYPE_SUDDEN_LEAVE)
     return
 
 # Apology for failing to follow Natsuki's advice when she is concerned about the player's health
@@ -382,4 +389,5 @@ label apology_unhealthy:
     else:
         n ""
 
+    $ persistent.jn_player_pending_apologies.remove(apologies.APOLOGY_TYPE_UNHEALTHY)
     return
