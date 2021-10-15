@@ -5,30 +5,6 @@ default player = persistent.playername
 default persistent.jn_total_visit_count = 0
 default persistent.jn_first_visited_date = None
 
-# Screenshot data
-default persistent.jn_first_screenshot_taken = None
-default persistent.jn_screenshot_good_shots_total = 0
-default persistent.jn_screenshot_bad_shots_total = 0
-
-# Pet data
-default persistent.jn_player_pet = None
-
-# Seasonal data
-default persistent.jn_player_favourite_season = None
-
-# Admissions data
-default persistent.jn_player_admission_type_on_quit = None
-
-# Apologies data
-default persistent.jn_player_pending_apologies = list()
-
-# Appearance data
-default persistent.jn_player_appearance_declined_share = False
-default persistent.jn_player_appearance_eye_colour = None
-default persistent.jn_player_appearance_hair_length = None
-default persistent.jn_player_appearance_hair_colour = None
-default persistent.jn_player_appearance_height_cm = None
-
 #Our main topic pool
 default persistent._event_list = list()
 
@@ -601,6 +577,9 @@ init -990 python in jn_globals:
         "Start talking."
     ]
 
+    # Alphabetical (excluding numbers) values allowed for text input
+    DEFAULT_ALPHABETICAL_ALLOW_VALUES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-' "
+
 init 10 python in jn_globals:
     # The current affection state. We default this to 5 (NORMAL)
     current_affinity_state = store.jn_affinity.NORMAL
@@ -732,5 +711,7 @@ init python:
     #Each of the girls' names before the MC learns their name throughout ch0.
     s_name = "Sayori"
     m_name = "Monika"
-    n_name = "Natsuki"
     y_name = "Yuri"
+    
+    # Assign Natsuki the chosen nickname (defaulted to Natsuki)
+    n_name = persistent.jn_player_nicknames_current_nickname

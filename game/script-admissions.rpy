@@ -1,5 +1,8 @@
 default persistent._admission_database = dict()
 
+# Retain the last admission made on quitting the game, so Natsuki can react on boot
+default persistent.jn_player_admission_type_on_quit = None
+
 init 0 python in admissions:
     import random
     import store
