@@ -1,3 +1,7 @@
+default persistent.jn_first_screenshot_taken = None
+default persistent.jn_screenshot_good_shots_total = 0
+default persistent.jn_screenshot_bad_shots_total = 0
+
 init 0 python in jn_screenshots:
     import os
     import random
