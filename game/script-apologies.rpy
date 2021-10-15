@@ -15,8 +15,6 @@ init 0 python in apologies:
     APOLOGY_TYPE_SUDDEN_LEAVE = 6
     APOLOGY_TYPE_UNHEALTHY = 7
 
-    _last_apology_type = None
-
     def get_all_apologies():
         """
         Gets all apology topics which are available
@@ -349,12 +347,12 @@ label apology_prolonged_leave:
 
     elif jn_affinity.get_affinity_state() >= store.jn_affinity.DISTRESSED:
         n "[player]."
-        n "I know we haven't exactly been eye-to-eye lately."
+        n "I know we haven't exactly been seeing eye-to-eye lately."
         n "But do you know how {i}scary{/i} it is to me when you just disappear like that?"
         n "In case you haven't already noticed,{w=0.1} I don't exactly have many other people to talk to..."
         n "..."
         n "Thanks for the apology,{w=0.1} I guess."
-        n "Try not to do that again,{w=0.1} at least."
+        n "Just don't do that again."
         $ relationship("affinity+")
 
     else:
@@ -382,19 +380,42 @@ init 5 python:
 
 label apology_rude:
     if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
-        n ""
+        n "...[player]."
+        n "I know I give as good as I get.{w=0.2} Maybe I'm a little snappy sometimes,{w=0.1} too."
+        n "But that was really,{w=0.1} really rude,{w=0.1} [player]."
+        n "There was no need for that."
+        n "..."
+        n "Thanks for the apology,{w=0.1} [player].{w=0.2} I really do appreciate it."
+        n "Just...{w=0.3} try not to do that again,{w=0.1} 'kay?"
+        n "It would mean a lot to me."
         $ relationship("affinity+")
 
     elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
-        n ""
+        n "[player]..."
+        n "I'm glad you're apologizing for what you did,{w=0.1} but you gotta understand."
+        n "You can't just treat people like that!"
+        n "It...{w=0.3} really hurts when you act that way - {w=0.1}and that doesn't just apply to me."
+        n "..."
+        n "Let's just move on and forget about this,{w=0.1} alright?"
+        n "Thanks,{w=0.1} [player]."
         $ relationship("affinity+")
 
     elif jn_affinity.get_affinity_state() >= store.jn_affinity.DISTRESSED:
-        n ""
+        n "..."
+        n "I gotta ask,{w=0.1} [player].{w=0.2} Are you like that on purpose,{w=0.1} or are you making a special effort?"
+        n "Because I honestly can't tell anymore."
+        n "..."
+        n "...Fine.{w=0.2} I guess I should accept your apology."
+        n "I just hope you don't treat others how you're treating me."
         $ relationship("affinity+")
 
     else:
-        n ""
+        n "Ha...{w=0.3} aha..." 
+        n "You're apologizing...{w=0.3} to me? Why?"
+        n "I don't expect any better from you."
+        n "..."
+        n "You can stick your apology,{w=0.1} [player]." 
+        n "It means nothing to me."
 
     $ persistent.jn_player_pending_apologies.remove(apologies.APOLOGY_TYPE_RUDE)
     return
@@ -415,38 +436,56 @@ init 5 python:
 
 label apology_screenshots:
     # The player has been barred from taking more screenshots
-    if store.jn_screenshots.player_screenshots_blocked:
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
-            n ""
-            $ relationship("affinity+")
+    if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        n "...[player]."
+        n "I told you so many times to knock it off."
+        n "Why didn't you listen to me?"
+        n "You know how I feel about having my picture taken..."
+        n "So it really hurts when you just ignore me like that."
+        n "And not just once,{w=0.1} [player]."
+        n "Again.{w=0.2} And again.{w=0.2} And again."
+        n "..."
+        n "Thanks for the apology,{w=0.1} [player].{w=0.2} I appreciate it."
 
-        elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
-            n ""
-            $ relationship("affinity+")
+        if store.jn_screenshots.player_screenshots_blocked:
+            n "But...{w=0.3} I'm going to keep the camera switched off -{w=0.1} at least for now."
+            n "I hope you can understand why."
 
-        elif jn_affinity.get_affinity_state() >= store.jn_affinity.DISTRESSED:
-            n ""
-            $ relationship("affinity+")
+        $ relationship("affinity+")
+
+    elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+        n "[player]..."
+        n "I told you again and again not to do that."
+        n "Why did you keep ignoring me?"
+        n "...Especially after I told you I don't like it."
+        n "Thanks for coming clean to me,{w=0.1} [player].{w=0.2} I appreciate it."
+
+        if store.jn_screenshots.player_screenshots_blocked:
+            n "But...{w=0.3} the camera is staying off for now."
+            n "Thanks for understanding."
+
+        $ relationship("affinity+")
+
+    elif jn_affinity.get_affinity_state() >= store.jn_affinity.DISTRESSED:
+        n "...You're apologizing to me {i}now{/i},{w=0.1} [player]?"
+        n "And after I gave you so many chances to quit it?"
+        n "..."
+        n "...Fine.{w=0.2} I suppose I'll accept your apology..."
+
+        if store.jn_screenshots.player_screenshots_blocked:
+            n "But the camera stays off."
+            n "I don't think I need to explain why."
 
         else:
-            n ""
+            n "This time,{w=0.1} anyway."
 
-    # The player hasn't been barred from taking more screenshots
+        $ relationship("affinity+")
+
     else:
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
-            n ""
-            $ relationship("affinity+")
-
-        elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
-            n ""
-            $ relationship("affinity+")
-
-        elif jn_affinity.get_affinity_state() >= store.jn_affinity.DISTRESSED:
-            n ""
-            $ relationship("affinity+")
-
-        else:
-            n ""
+        n "...No,{w=0.1} [player].{w=0.2} Please."
+        n "Don't even {i}try{/i} to pretend like you care now."
+        n "..."
+        n "...Keep your pathetic apology.{w=0.2} I don't want it."
 
     $ persistent.jn_player_pending_apologies.remove(apologies.APOLOGY_TYPE_SCREENSHOT)
     return
