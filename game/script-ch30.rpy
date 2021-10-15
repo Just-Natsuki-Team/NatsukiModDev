@@ -101,7 +101,8 @@ label call_next_topic:
 
     python:
         #Collect our return keys here
-        return_keys = _return if _return else dict()
+        #NOTE: This is instance checked for safety
+        return_keys = _return if isinstance(_return, dict) else dict()
 
         topic_obj = get_topic(_topic)
 
