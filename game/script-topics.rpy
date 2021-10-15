@@ -1670,7 +1670,7 @@ label talk_give_nickname:
             n "Don't let me down again."
 
     # Validate the nickname, respond appropriately
-    $ nickname = renpy.input(prompt="What did you have in mind,{w=0.2} [player]?", allow=jn_globals.DEFAULT_ALPHABETICAL_ALLOW_VALUES, length=30).strip()
+    $ nickname = renpy.input(prompt="What did you have in mind,{w=0.2} [player]?", allow=jn_globals.DEFAULT_ALPHABETICAL_ALLOW_VALUES, length=10).strip()
     
     if nickname.lower() == "nevermind":
         n "Huh?{w=0.2} You changed your mind?"
