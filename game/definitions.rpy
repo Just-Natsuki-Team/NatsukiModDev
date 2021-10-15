@@ -28,7 +28,7 @@ default persistent.jn_player_appearance_height_cm = None
 
 # Nickname data
 default persistent.jn_player_nicknames_allowed = True
-default persistent.jn_player_nicknames_current_nickname = None
+default persistent.jn_player_nicknames_current_nickname = "Natsuki"
 default persistent.jn_player_nicknames_bad_given_total = 0
 
 #Our main topic pool
@@ -599,6 +599,9 @@ init -990 python in jn_globals:
         "Start talking."
     ]
 
+    # Alphabetical (excluding numbers) values allowed for text input
+    DEFAULT_ALPHABETICAL_ALLOW_VALUES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-' "
+
 init 10 python in jn_globals:
     # The current affection state. We default this to 5 (NORMAL)
     current_affinity_state = store.jn_affinity.NORMAL
@@ -731,10 +734,7 @@ init python:
     s_name = "Sayori"
     m_name = "Monika"
     y_name = "Yuri"
-
-    # Nickname handling for Natsuki
-    if persistent.jn_player_nicknames_allowed and persistent.jn_player_nicknames_current_nickname is not None:
-        n_name = persistent.jn_player_nicknames_current_nickname
-
-    else:
-        n_name = "Natsuki"
+    
+    # Assign Natsuki the chosen nickname (defaulted to Natsuki)
+    n_name = persistent.jn_player_nicknames_current_nickname
+    

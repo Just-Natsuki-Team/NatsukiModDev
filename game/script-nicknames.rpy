@@ -10,7 +10,7 @@ init 0 python in nicknames:
     NICKNAME_TYPE_FUNNY = 6
     
     # Natsuki loves these nicknames; awarding them awards affinity/trust
-    NICKNAME_LOVED_LIST = [
+    NICKNAME_LOVED_LIST = {
         "babe",
         "amazing",
         "angel",
@@ -95,10 +95,10 @@ init 0 python in nicknames:
         "sweetness",
         "sweety"
         "thebest"
-    ]
+    }
 
     # Natsuki dislikes these nicknames; no penalty given but name will not be permitted
-    NICKNAME_DISLIKED_LIST = [
+    NICKNAME_DISLIKED_LIST = {
         "baka",
         "dad",
         "daddy",
@@ -113,10 +113,10 @@ init 0 python in nicknames:
         "sayori",
         "yuri",
         "weeb"
-    ]
+    }
 
     # Natsuki hates these (non-profanity) nicknames; awarding them detracts affinity/trust
-    NICKNAME_HATED_LIST = [
+    NICKNAME_HATED_LIST = {
         "arrogant",
         "brat",
         "bratty",
@@ -182,11 +182,11 @@ init 0 python in nicknames:
         "vomit",
         "washboard",
         "wretch"
-    ]
+    }
 
     # Natsuki hates these; awarding them detracts affinity/trust. Please forgive me.
     # Source courtest of: https://github.com/RobertJGabriel/Google-profanity-words
-    NICKNAME_PROFANITY_LIST = [
+    NICKNAME_PROFANITY_LIST = {
         "4r5e",
         "5h1t",
         "5hit",
@@ -635,10 +635,10 @@ init 0 python in nicknames:
         "willy",
         "xrated",
         "xxx"
-    ]
+    }
 
     # Natsuki finds these nicknames funny
-    NICKNAME_FUNNY_LIST = [
+    NICKNAME_FUNNY_LIST = {
         "gorgeous",
         "hot",
         "hotstuff",
@@ -652,7 +652,7 @@ init 0 python in nicknames:
         "sexy",
         "smol",
         "snack"
-    ]
+    }
 
     """
     Returns the nickname type for a given string nickname, defaulting to NICKNAME_TYPE_NEUTRAL
@@ -687,3 +687,4 @@ init 0 python in nicknames:
 
             else:
                 return NICKNAME_TYPE_NEUTRAL
+                

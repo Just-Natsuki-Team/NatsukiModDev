@@ -1615,7 +1615,7 @@ init 5 python:
             label="talk_give_nickname",
             unlocked=True,
             prompt="Can I give you a nickname?",
-            conditional="persistent.jn_player_can_nickname_natsuki",
+            conditional="persistent.jn_player_nicknames_allowed",
             category=["Natsuki"],
             player_says=True,
             affinity_range=(jn_affinity.ENAMORED, jn_affinity.LOVE),
@@ -1657,7 +1657,7 @@ label talk_give_nickname:
             n "Don't let me down again."
 
     # Validate the nickname, respond appropriately
-    $ nickname = renpy.input(prompt="What did you have in mind,{w=0.2} [player]?", allow="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-' ", length=30).strip()
+    $ nickname = renpy.input(prompt="What did you have in mind,{w=0.2} [player]?", allow=jn_globals.DEFAULT_ALPHABETICAL_ALLOW_VALUES, length=30).strip()
     
     if nickname.lower() == "nevermind":
         n "Huh?{w=0.2} You changed your mind?"
@@ -1666,15 +1666,15 @@ label talk_give_nickname:
         return
     
     else:
-        $ nickname_type = store.nicknames.get_nickname_type(nickname)
+        $ nickname_type = nicknames.get_nickname_type(nickname)
 
-    if nickname_type == store.nicknames.NICKNAME_TYPE_INVALID:
+    if nickname_type == nicknames.NICKNAME_TYPE_INVALID:
         n "Uhmm...{w=0.3} [player]?"
         n "I don't think that's a nickname at all."
         n "I'll...{w=0.3} just stick with what I have now,{w=0.1} thanks."
         return
 
-    elif nickname_type == store.nicknames.NICKNAME_TYPE_LOVED:
+    elif nickname_type == nicknames.NICKNAME_TYPE_LOVED:
         $ persistent.jn_player_nicknames_current_nickname = nickname
         $ n_name = persistent.jn_player_nicknames_current_nickname
         n "O-{w=0.1}oh!{w=0.2} [player]!"
@@ -1686,21 +1686,21 @@ label talk_give_nickname:
         n "[nickname] it is!{w=0.2} Ehehe."
         return
 
-    elif nickname_type == store.nicknames.NICKNAME_TYPE_DISLIKED:
+    elif nickname_type == nicknames.NICKNAME_TYPE_DISLIKED:
         n "Come on,{w=0.1} [player]...{w=0.3} really?"
         n "You know I'm really not comfortable being called that."
         n "..."
         n "I'm...{w=0.3} just going to pretend you didn't say that,{w=0.1} alright?"
         return
 
-    elif nickname_type == store.nicknames.NICKNAME_TYPE_HATED:
+    elif nickname_type == nicknames.NICKNAME_TYPE_HATED:
         n "W-{w=0.1}what?{w=0.2} What did you just call me?!"
         n "[player]!{w=0.2} I can't believe you!"
         n "Why would you call me that?{w=0.2} That's awful!"
         n "..."
         $ persistent.jn_player_nicknames_bad_given_total += 1
 
-    elif nickname_type == store.nicknames.NICKNAME_TYPE_PROFANITY:
+    elif nickname_type == nicknames.NICKNAME_TYPE_PROFANITY:
         n "E-{w=0.1}excuse me?!"
         n "What the hell did you just call me,{w=0.1} [player]?!"
         n "..."
@@ -1709,7 +1709,7 @@ label talk_give_nickname:
         n "..."
         $ persistent.jn_player_nicknames_bad_given_total += 1
 
-    elif nickname_type == store.nicknames.NICKNAME_TYPE_FUNNY:
+    elif nickname_type == nicknames.NICKNAME_TYPE_FUNNY:
         n "Pffft!"
         n "Ahaha!"
         n "[nickname]?{w=0.2} What kind of nickname is that meant to be,{w=0.1} [player]?"
