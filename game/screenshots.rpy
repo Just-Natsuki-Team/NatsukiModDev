@@ -196,6 +196,10 @@ label screenshot_dialogue:
     # Too many bad screenshots in a row; Natsuki is upset
     elif store.jn_screenshots.bad_screenshot_streak >= 3 and store.jn_affinity.get_affinity_state() < store.jn_affinity.ENAMORED:
 
+        # Add pending apology
+        $ store.apologies.add_new_pending_apology(store.apologies.APOLOGY_TYPE_SCREENSHOT)
+
+        # Update tracking and block further screenshots
         $ persistent.jn_screenshot_bad_shots_total += 1
         $ player_screenshots_blocked = True
         call take_screenshot
@@ -204,6 +208,9 @@ label screenshot_dialogue:
 
     # Negative screenshot route; Natsuki is upset
     elif not store.jn_screenshots.player_screenshots_blocked:
+
+        # Add pending apology
+        $ store.apologies.add_new_pending_apology(store.apologies.APOLOGY_TYPE_SCREENSHOT)
 
         # Update tracking and take shot
         $ persistent.jn_screenshot_bad_shots_total += 1
@@ -258,6 +265,9 @@ label screenshot_dialogue:
             $ relationship("trust-")
 
         else:
+
+            # Add pending apology
+            $ store.apologies.add_new_pending_apology(store.apologies.APOLOGY_TYPE_SCREENSHOT)
 
             # Natsuki isn't putting up with this
             n "You know what,{w=0.1} [player]?{w=0.2} No.{w=0.1} We're not doing this."

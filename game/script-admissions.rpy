@@ -592,6 +592,9 @@ label admission_sick:
                         n "I trust you know your own limits...{w=0.3} but please,{w=0.1} take care of yourself."
                         n "Your health...{w=0.3} really matters to me."
 
+                        # Add pending apology
+                        $ store.apologies.add_new_pending_apology(store.apologies.APOLOGY_TYPE_UNHEALTHY)
+
             "Longer.":
                 n "..."
                 n "I...{w=0.3} don't really know what to say to you,{w=0.1} [player]."
@@ -606,6 +609,10 @@ label admission_sick:
 
                 if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVE:
                     n "I love you,{w=0.1} [player].{w=0.2} Please get well soon."
+
+                # Add pending apology
+                $ store.apologies.add_new_pending_apology(store.apologies.APOLOGY_TYPE_UNHEALTHY)
+
 
     elif admissions.last_admission_type == admissions.TYPE_HUNGRY:
         n "You know,{w=0.1} you can start to feel unwell if you haven't eaten for a while,{w=0.1} [player]."
@@ -680,6 +687,9 @@ label admission_tired:
         n "We can talk later,{w=0.1} alright?"
         n "Take it easy,{w=0.1} [player]!"
 
+        # Add pending apology
+        $ store.apologies.add_new_pending_apology(store.apologies.APOLOGY_TYPE_UNHEALTHY)
+
         $ persistent.jn_player_admission_type_on_quit = admissions.TYPE_SICK
         return { "quit": None }
 
@@ -698,6 +708,9 @@ label admission_tired:
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
         n "Sleep well,{w=0.1} [chosen_tease]!"
 
+        # Add pending apology
+        $ store.apologies.add_new_pending_apology(store.apologies.APOLOGY_TYPE_UNHEALTHY)
+
         $ persistent.jn_player_admission_type_on_quit = admissions.TYPE_TIRED
         return { "quit": None }
 
@@ -708,6 +721,10 @@ label admission_tired:
         n "You should really get some sleep...{w=0.3} you'll be all cranky later otherwise."
         n "I appreciate the company but make sure you turn in soon,{w=0.1} alright?"
         n "Don't let me down,{w=0.1} [player]."
+
+        # Add pending apology
+        $ store.apologies.add_new_pending_apology(store.apologies.APOLOGY_TYPE_UNHEALTHY)
+
 
     else:
         n "Feeling tired,{w=0.1} [player]?"

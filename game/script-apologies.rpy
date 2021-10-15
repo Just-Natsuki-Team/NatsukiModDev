@@ -495,7 +495,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._apology_database,
-            prompt="For leaving without saying 'Goodbye'.",
+            prompt="For leaving without saying goodbye.",
             label="apology_without_goodbye",
             unlocked=True,
             conditional="apologies.get_apology_type_pending(apologies.APOLOGY_TYPE_SUDDEN_LEAVE)",

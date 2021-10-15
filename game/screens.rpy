@@ -745,9 +745,6 @@ screen navigation():
 
             textbutton _("Save Game") action [ShowMenu("save"), SensitiveIf(renpy.get_screen("save") == None)]
 
-        textbutton _("Load Game") action [ShowMenu("load"), SensitiveIf(renpy.get_screen("load") == None)]
-
-
         if not main_menu:
             textbutton _("Main Menu") action MainMenu()
 
@@ -761,7 +758,21 @@ screen navigation():
             textbutton _("Help") action Help("README.html")
 
             ## The quit button is banned on iOS and unnecessary on Android.
-            textbutton _("Quit") action Show(screen="quit", message="Are you sure you want to quit?", ok_action=Hide(screen="quit", transition=None))
+            python:
+                # Quit message based on affinity
+                if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+                    quit_message = "Leaving without saying goodbye, [player]?"
+
+                elif jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+                    quit_message = "H-huh? You're leaving? You could at least say goodbye properly!"
+
+                elif jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+                    quit_message = "...Really? I don't even get a 'goodbye' now?"
+
+                else:
+                    quit_message = "...Going?"
+
+            textbutton _("Quit") action Show(screen="quit", message=quit_message, ok_action=Hide(screen="quit", transition=None))
 
 
         textbutton _("Credits") action Show(screen="credits", message="Credits:\nWriting: Edgar.\nArt: u/Aida_Hwedo.\nBeach Art: etched\nBeach Background: Kimagure After Background Material Storage\nPark and Manga Store Background: mugenjohncel (On LemmaSoft forums)\nBakery, Clothes Store and Mall Background: u/SovietSpartan\nTypo and Bug Reporting: Willie\nNatsuki clothing store outfit #1: Eg85_MkWii\nCat Ears: DearWolf\nPriceVille Gallery: Flower\nClipart Library: Cake\nJMO: Original Clothing Art\nJparnaud: Sprite Editing\nKevin Macleod: Spooky Music(Day of Chaos)\nPinclpart: Bats\nNatsuki Low Affinity Beach Outfit: -Http_Bxbygirl-(Reddit)\nNatsuki High Affinity Beach Outfit: Huniepop (Rizky Prahesa)\nNatsuki White Tank: DestinyPveGal\nGlasses: Unknown as of now", ok_action=Hide(screen="credits", transition=None))
@@ -1920,7 +1931,7 @@ screen reload(message, ok_action):
 
                 textbutton _("I'll do it myself") action Hide("reload")
 
-screen custummusic(message, ok_action):
+screen custommusic(message, ok_action):
 
     ## Ensure other screens do not get input while this screen is displayed.
     modal True
