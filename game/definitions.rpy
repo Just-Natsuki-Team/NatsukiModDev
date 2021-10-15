@@ -5,32 +5,6 @@ default player = persistent.playername
 default persistent.jn_total_visit_count = 0
 default persistent.jn_first_visited_date = None
 
-# Screenshot data
-default persistent.jn_first_screenshot_taken = None
-default persistent.jn_screenshot_good_shots_total = 0
-default persistent.jn_screenshot_bad_shots_total = 0
-
-# Pet data
-default persistent.jn_player_pet = None
-
-# Seasonal data
-default persistent.jn_player_favourite_season = None
-
-# Admissions data
-default persistent.jn_player_admission_type_on_quit = None
-
-# Appearance data
-default persistent.jn_player_appearance_declined_share = False
-default persistent.jn_player_appearance_eye_colour = None
-default persistent.jn_player_appearance_hair_length = None
-default persistent.jn_player_appearance_hair_colour = None
-default persistent.jn_player_appearance_height_cm = None
-
-# Nickname data
-default persistent.jn_player_nicknames_allowed = True
-default persistent.jn_player_nicknames_current_nickname = "Natsuki"
-default persistent.jn_player_nicknames_bad_given_total = 0
-
 #Our main topic pool
 default persistent._event_list = list()
 
@@ -737,4 +711,3 @@ init python:
     
     # Assign Natsuki the chosen nickname (defaulted to Natsuki)
     n_name = persistent.jn_player_nicknames_current_nickname
-    

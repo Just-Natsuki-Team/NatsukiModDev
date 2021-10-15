@@ -1,5 +1,18 @@
 default persistent._topic_database = dict()
 
+# Pet data
+default persistent.jn_player_pet = None
+
+# Seasonal data
+default persistent.jn_player_favourite_season = None
+
+# Appearance data
+default persistent.jn_player_appearance_declined_share = False
+default persistent.jn_player_appearance_eye_colour = None
+default persistent.jn_player_appearance_hair_length = None
+default persistent.jn_player_appearance_hair_colour = None
+default persistent.jn_player_appearance_height_cm = None
+
 init python in topics:
     import store
     TOPIC_MAP = dict()

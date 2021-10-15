@@ -1,3 +1,8 @@
+# Nickname data
+default persistent.jn_player_nicknames_allowed = True
+default persistent.jn_player_nicknames_current_nickname = "Natsuki"
+default persistent.jn_player_nicknames_bad_given_total = 0
+
 init 0 python in nicknames:
     
     # Nickname types
