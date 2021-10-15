@@ -1,5 +1,4 @@
 init 0 python in jn_screenshots:
-    from enum import Enum
     import os
     import random
 
@@ -51,7 +50,7 @@ init 0 python in jn_screenshots:
         "You didn't say you were going to take a picture!",
         "I thought I told you to ask if you wanted pictures?",
         "I don't like surprise pictures,{w=0.1} remember?!"
-    ]   
+    ]
 
     # UPSET-
     upset_minus_reactions = [
@@ -65,7 +64,7 @@ init 0 python in jn_screenshots:
         "Alright, that's enough!",
         "Ugh! Give it a rest,{w=0.1} [player]!",
         "[player]!{w=0.2} Can you stop?!",
-        "I'm getting real tired of that,{w=0.1} [player]!"]    
+        "I'm getting real tired of that,{w=0.1} [player]!"]
 
     upset_minus_responses = [
         "If I didn't give you permission,{w=0.1} it means I don't want you to do it!",
@@ -80,15 +79,15 @@ init 1 python:
 
 # Attempt to produce a screenshot, render associated effects
 label take_screenshot:
-    
+
     if store.jn_affinity.get_affinity_state() >= store.jn_affinity.BROKEN:
         $ renpy.screenshot("{0}/screenshot_{1}.png".format(store.jn_screenshots._screenshot_dir, datetime.datetime.now().strftime(r"%d-%m-%Y_%H-%M-%S")))
         $ utils.log("Screenshot taken by player at {0}".format(datetime.datetime.now().strftime(r"%d/%m/%Y, %H:%M")))
-    
+
     else:
         n "No, [player].{w=0.1} I'm keeping that turned off."
         return
-    
+
     hide window
     play audio camera_shutter
     with Fade(.15, 0, .50, color="#fff")
@@ -113,7 +112,7 @@ label screenshot_dialogue:
         if store.jn_affinity.is_state_within_range(
             affinity_state=store.jn_globals.current_affinity_state,
             affinity_range=(store.jn_affinity.NORMAL, store.jn_affinity.LOVE)
-        ): 
+        ):
 
             n "H-huh?{w=0.2} What was that flash I just saw?"
             n "Don't tell me...{w=0.3} was that a camera?!{w=0.2} There's a camera here?!"
@@ -136,7 +135,7 @@ label screenshot_dialogue:
         elif store.jn_affinity.is_state_within_range(
             affinity_state=store.jn_globals.current_affinity_state,
             affinity_range=(store.jn_affinity.UPSET, store.jn_affinity.RUINED)
-        ): 
+        ):
 
             n "..."
             n "You're taking pictures of me,{w=0.1} aren't you?"
@@ -167,7 +166,7 @@ label screenshot_dialogue:
 
     # Positive screenshot route, as we have Natsuki's permission
     elif store.jn_screenshots.player_screenshots_permission:
-        
+
         $ persistent.jn_screenshot_good_shots_total += 1
         n "Huh?{w=0.2} You're taking that picture now?"
 
@@ -177,7 +176,7 @@ label screenshot_dialogue:
         elif store.jn_affinity.is_state_within_range(
             affinity_state=store.jn_globals.current_affinity_state,
             affinity_range=(store.jn_affinity.NORMAL, store.jn_affinity.AFFECTIONATE)
-        ): 
+        ):
             n "Well...{w=0.2} alright."
 
         else:
@@ -191,12 +190,12 @@ label screenshot_dialogue:
 
         else:
             n "All done?{w=0.2} Just ask me again if you wanna take another,{w=0.1} okay?"
-        
+
         $ store.jn_screenshots.player_screenshots_permission = False
 
     # Too many bad screenshots in a row; Natsuki is upset
     elif store.jn_screenshots.bad_screenshot_streak >= 3 and store.jn_affinity.get_affinity_state() < store.jn_affinity.ENAMORED:
-        
+
         $ persistent.jn_screenshot_bad_shots_total += 1
         $ player_screenshots_blocked = True
         call take_screenshot
@@ -228,7 +227,7 @@ label screenshot_dialogue:
         elif store.jn_affinity.is_state_within_range(
             affinity_state=store.jn_globals.current_affinity_state,
             affinity_range=(store.jn_affinity.NORMAL, store.jn_affinity.AFFECTIONATE)
-        ): 
+        ):
 
             # Pick the reaction and response; Natsuki is irritated
             $ chosen_reaction = renpy.substitute(renpy.random.choice(store.jn_screenshots.affectionate_normal_reactions))
@@ -244,8 +243,8 @@ label screenshot_dialogue:
 
         elif store.jn_affinity.is_state_within_range(
             affinity_state=store.jn_globals.current_affinity_state,
-            affinity_range=(store.jn_affinity.NORMAL, store.jn_affinity.AFFECTIONATE)
-        ): 
+            affinity_range=(store.jn_affinity.UPSET, store.jn_affinity.DISTRESSED)
+        ):
 
             # Pick the reaction and response; Natsuki is clearly upset
             $ chosen_reaction = renpy.substitute(renpy.random.choice(store.jn_screenshots.upset_minus_reactions))

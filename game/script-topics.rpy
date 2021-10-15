@@ -298,7 +298,7 @@ label talk_get_picture_permission:
 
     elif jn_affinity.get_affinity_state() >= store.jn_affinity.HAPPY:
 
-        if player_screenshots_permission:
+        if store.jn_screenshots.player_screenshots_permission:
             n "Hmm?{w=0.2} A picture?{w=0.2} Well,{w=0.1} okay."
             $ store.jn_screenshots.player_screenshots_permission = True
 
