@@ -572,7 +572,7 @@ label admission_sick:
                 n "Let me know if it keeps up,{w=0.1} okay?"
 
             "A few days.":
-                n "You're starting to worry me,{w=0.1}  [player]."
+                n "You're starting to worry me,{w=0.1} [player]."
                 n "Make sure you see someone soon."
                 n "Especially if you start to hurt anywhere,{w=0.1}  or if you've been sick,{w=0.1}  or anything like that..."
                 n "Make sure you get some extra rest too,{w=0.1} okay?"
