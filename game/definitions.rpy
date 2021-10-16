@@ -3,7 +3,8 @@ default player = persistent.playername
 
 # Generic data
 default persistent.jn_total_visit_count = 0
-default persistent.jn_first_visited_date = None
+default persistent.jn_first_visited_date = datetime.datetime.now()
+default persistent.jn_last_visited_date = datetime.datetime.now()
 
 #Our main topic pool
 default persistent._event_list = list()
@@ -125,7 +126,6 @@ init 0 python:
             self.shown_count = 0
             self.last_seen = None
             self.unlocked_on = None
-
 
             #Now, if it's in the db, we should load its data
             if label in persistent_db:
@@ -532,6 +532,13 @@ init -990 python in jn_globals:
         "you numpty"
     ]
 
+    # Names Natsuki may use at the lowest levels of affinity to insult her player with
+    DEFAULT_PLAYER_INSULT_NAMES = [
+        "jerk",
+        "idiot",
+        "moron"
+    ]
+
     # Flavor text for the talk menu at high affinity
     DEFAULT_TALK_FLAVOR_TEXT_LOVE_ENAMORED = [
         "What's up, [player]?",
@@ -714,4 +721,6 @@ init python:
     y_name = "Yuri"
     
     # Assign Natsuki the chosen nickname (defaulted to Natsuki)
-    n_name = persistent.jn_player_nicknames_current_nickname
+    n_name = store.persistent.jn_player_nicknames_current_nickname
+    if not store.persistent.jn_player_nicknames_current_nickname:
+        n_name = "Natsuki_Default"

@@ -1786,6 +1786,8 @@ label talk_give_nickname:
         n "Just...{w=0.3} don't do that again,{w=0.1} okay?"
         n "That really hurt,{w=0.1} [player].{w=0.2} Don't abuse my trust."
 
+        # Apply penalty and pending apology
+        $ apologies.add_new_pending_apology(apologies.APOLOGY_TYPE_BAD_NICKNAME)
         $ relationship(change="affinity-", multiplier=2)
         $ relationship(change="trust-", multiplier=2)
 
@@ -1796,6 +1798,8 @@ label talk_give_nickname:
         n "I...{w=0.3} really...{w=0.3} like you, [player].{w=0.2} It hurts extra bad when it's you."
         n "Don't test my patience like this.{w=0.2} You're better than that."
 
+        # Apply penalty and pending apology
+        $ apologies.add_new_pending_apology(apologies.APOLOGY_TYPE_BAD_NICKNAME)
         $ relationship(change="affinity-", multiplier=2)
         $ relationship(change="trust-", multiplier=2)
 
@@ -1812,6 +1816,7 @@ label talk_give_nickname:
                 n "...Then start acting like it,{w=0.1} [player]."
                 n "Thanks."
 
+                # Apply penalty
                 $ relationship(change="affinity-", multiplier=2)
                 $ relationship(change="trust-", multiplier=2)
 
@@ -1821,8 +1826,12 @@ label talk_give_nickname:
                 n "It's toxic."
                 n "I don't care if you're trying to pull my leg.{w=0.2} Quit it."
 
+                # Apply penalty
                 $ relationship(change="affinity-", multiplier=3)
                 $ relationship(change="trust-", multiplier=3)
+
+        # Apply pending apology
+        $ apologies.add_new_pending_apology(apologies.APOLOGY_TYPE_BAD_NICKNAME)
 
     elif persistent.jn_player_nicknames_bad_given_total == 4:
         # Player is locked out of nicknaming; this is why we can't have nice things
@@ -1832,11 +1841,14 @@ label talk_give_nickname:
         n "You know what?{w=0.2} Don't even bother answering."
         n "I warned you,{w=0.1} [player].{w=0.2} Remember that."
 
+        # Apply affinity/trust penalties, then revoke nickname priveleges
+        # Finally, apply pending apology
         $ relationship(change="affinity-", multiplier=5)
         $ relationship(change="trust-", multiplier=5)
         $ persistent.jn_player_nicknames_allowed = False
         $ persistent.jn_player_nicknames_current_nickname = None
         $ n_name = "Natsuki"
+        $ apologies.add_new_pending_apology(apologies.APOLOGY_TYPE_BAD_NICKNAME)
 
     return
 

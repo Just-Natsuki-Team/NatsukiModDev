@@ -1,4 +1,4 @@
-default persistent.jn_first_screenshot_taken = None
+default persistent.jn_first_screenshot_taken = False
 default persistent.jn_screenshot_good_shots_total = 0
 default persistent.jn_screenshot_bad_shots_total = 0
 
@@ -107,7 +107,7 @@ label screenshot_dialogue:
     else:
         $ store.jn_screenshots._player_screenshot_in_progress = True
 
-    if store.persistent.jn_first_screenshot_taken is None:
+    if not store.persistent.jn_first_screenshot_taken:
 
         # Set the date for the first ever screenshot, play the camera effects
         $ store.persistent.jn_first_screenshot_taken = datetime.datetime.now()

@@ -1,5 +1,11 @@
 default persistent._apology_database = dict()
 
+# Retain the last apology made on quitting the game, so Natsuki can react on boot
+default persistent.jn_player_apology_type_on_quit = None
+
+# List of pending apologies the player has yet to make
+default persistent.jn_player_pending_apologies = list()
+
 init 0 python in apologies:
     import store
 
@@ -61,15 +67,6 @@ init 1 python in apologies:
     try:
         store.persistent._apology_database.clear()
 
-        # TODO: Remove these entries
-        add_new_pending_apology(APOLOGY_TYPE_BAD_NICKNAME)
-        add_new_pending_apology(APOLOGY_TYPE_CHEATED_GAME)
-        add_new_pending_apology(APOLOGY_TYPE_PROLONGED_LEAVE)
-        add_new_pending_apology(APOLOGY_TYPE_RUDE)
-        add_new_pending_apology(APOLOGY_TYPE_SCREENSHOT)
-        add_new_pending_apology(APOLOGY_TYPE_SUDDEN_LEAVE)
-        add_new_pending_apology(APOLOGY_TYPE_UNHEALTHY)
-
     except Exception as e:
         store.utils.log(e, store.utils.SEVERITY_ERR)
 
@@ -108,7 +105,7 @@ label apology_bad_nickname:
 
     if persistent.jn_player_nicknames_allowed:
         # The player is still capable of nicknaming Natsuki
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "..."
             n "That hurt,{w=0.1} [player].{w=0.2} What you did."
             n "That really hurt me."
@@ -117,7 +114,7 @@ label apology_bad_nickname:
             n "Just please...{w=0.3} try to consider my feelings next time,{w=0.1} alright?"
             $ relationship("affinity+")
 
-        elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
             n "..."
             n "...Fine.{w=0.2} I accept your apology, okay?"
             n "Just please knock it off,{w=0.1} [player]."
@@ -125,7 +122,7 @@ label apology_bad_nickname:
             n "...And I know you're better than that."
             $ relationship("affinity+")
 
-        elif jn_affinity.get_affinity_state() >= store.jn_affinity.DISTRESSED:
+        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
             n "...Are you sure,{w=0.1} [player]?"
             n "I mean...{w=0.3} if you actually cared about my feelings..."
             n "Why would you even think about doing that in the first place?"
@@ -146,7 +143,7 @@ label apology_bad_nickname:
 
     else:
         # The player has been barred from nicknaming Natsuki, and even an apology won't change that
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "...[player]."
             n "I warned you."
             n "I warned you so many times."
@@ -158,14 +155,14 @@ label apology_bad_nickname:
             n "I hope you can understand."
             $ relationship("affinity+")
 
-        elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
             n "...[player]."
             n "Look.{w=0.2} You're sorry,{w=0.1} I get it.{w=0.2} I'm sure you mean it too."
             n "But...{w=0.3} it's like I said.{w=0.1} Actions have consequences."
             n "I hope you can understand."
             $ relationship("affinity+")
 
-        elif jn_affinity.get_affinity_state() >= store.jn_affinity.DISTRESSED:
+        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
             n "Ugh...{w=0.3} really,{w=0.1} [player]?"
             n "..."
             n "I {i}said{/i} actions have consequences."
@@ -197,20 +194,20 @@ init 5 python:
     )
 
 label apology_cheated_game:
-    if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         n "Ehehe.{w=0.2} It's fine,{w=0.1} [player]."
         n "We all get a little too competitive sometimes,{w=0.1} right?"
         n "Just remember though."
         n "Two can play at that game!"
         $ relationship("affinity+")
 
-    elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "Huh?{w=0.2} Oh,{w=0.1} that."
         n "Yeah,{w=0.1} yeah.{w=0.2} It's fine."
         n "Just play fair next time,{w=0.1} 'kay?"
         $ relationship("affinity+")
 
-    elif jn_affinity.get_affinity_state() >= store.jn_affinity.DISTRESSED:
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
         n "Whatever,{w=0.1} [player]."
         n "But thanks for the apology,{w=0.1} I guess."
         $ relationship("affinity+")
@@ -238,7 +235,7 @@ init 5 python:
 label apology_default:
     if len(persistent.jn_player_pending_apologies) == 0:
         # The player has nothing to be sorry to Natsuki for; prompt them to do better
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "Huh?{w=0.2} You're sorry?"
             n "I...{w=0.3} don't get it,{w=0.1} [player].{w=0.2} You haven't done anything to upset me..."
             n "Did you upset someone else or something?"
@@ -251,7 +248,7 @@ label apology_default:
             n "You have my vote of confidence,{w=0.1} [chosen_tease] -{w=0.1} now do your best!"
             n "Ehehe."
 
-        elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
             n "Eh?{w=0.2} You're sorry?"
             n "What for,{w=0.1} [player]?{w=0.2} I don't remember you getting on my nerves lately..."
             n "Did you do something dumb that I don't know about?"
@@ -259,7 +256,7 @@ label apology_default:
             n "Well,{w=0.1} whatever it was -{w=0.1} it's not like it's unfixable,{w=0.1} you know?"
             n "Now get out there and put things right,{w=0.1} [player]!{w=0.2} I believe in you!"
 
-        elif jn_affinity.get_affinity_state() >= store.jn_affinity.DISTRESSED:
+        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
             n "...You're sorry,{w=0.1} are you?"
             n "Did you hurt someone besides me,{w=0.1} this time?"
             n "..."
@@ -275,7 +272,7 @@ label apology_default:
 
     else:
         # The player is avoiding a direct apology to Natsuki; call them out on it
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "...[player].{w=0.2} Come on."
             n "You know what you did wrong."
             n "Just apologize properly,{w=0.1} alright?"
@@ -283,13 +280,13 @@ label apology_default:
             n "I just wanna move on."
             $ relationship("affinity-")
 
-        elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
             n "Come on,{w=0.1} [player]."
             n "You know what you did."
             n "Just apologize properly so we can both move on."
             $ relationship("affinity-")
             
-        elif jn_affinity.get_affinity_state() >= store.jn_affinity.DISTRESSED:
+        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
             n "Ugh..."
             n "Really,{w=0.1} [player].{w=0.2} Haven't you screwed with me enough?"
             n "If you're gonna apologize,{w=0.1} have the guts to do it properly."
@@ -319,7 +316,7 @@ init 5 python:
     )
 
 label apology_prolonged_leave:
-    if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         n "...[player]."
         n "We've been together a while now,{w=0.1} haven't we?"
         n "I...{w=0.3} really...{w=0.3} like spending time with you.{w=0.2} Why do you think I'm always here when you drop in?"
@@ -335,7 +332,7 @@ label apology_prolonged_leave:
         n "That isn't too much to ask...{w=0.3} right?"
         $ relationship("affinity+")
 
-    elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "[player]..."
         n "What were you thinking?!{w=0.2} Just disappearing like that!"
         n "I waited so long for you...{w=0.3} I was starting to wonder if something bad happened!"
@@ -345,7 +342,7 @@ label apology_prolonged_leave:
         n "Just...{w=0.3} no more vanishing acts,{w=0.1} alright?"
         $ relationship("affinity+")
 
-    elif jn_affinity.get_affinity_state() >= store.jn_affinity.DISTRESSED:
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
         n "[player]."
         n "I know we haven't exactly been seeing eye-to-eye lately."
         n "But do you know how {i}scary{/i} it is to me when you just disappear like that?"
@@ -379,7 +376,7 @@ init 5 python:
     )
 
 label apology_rude:
-    if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         n "...[player]."
         n "I know I give as good as I get.{w=0.2} Maybe I'm a little snappy sometimes,{w=0.1} too."
         n "But that was really,{w=0.1} really rude,{w=0.1} [player]."
@@ -390,7 +387,7 @@ label apology_rude:
         n "It would mean a lot to me."
         $ relationship("affinity+")
 
-    elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "[player]..."
         n "I'm glad you're apologizing for what you did,{w=0.1} but you gotta understand."
         n "You can't just treat people like that!"
@@ -400,7 +397,7 @@ label apology_rude:
         n "Thanks,{w=0.1} [player]."
         $ relationship("affinity+")
 
-    elif jn_affinity.get_affinity_state() >= store.jn_affinity.DISTRESSED:
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
         n "..."
         n "I gotta ask,{w=0.1} [player].{w=0.2} Are you like that on purpose,{w=0.1} or are you making a special effort?"
         n "Because I honestly can't tell anymore."
@@ -436,7 +433,7 @@ init 5 python:
 
 label apology_screenshots:
     # The player has been barred from taking more screenshots
-    if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         n "...[player]."
         n "I told you so many times to knock it off."
         n "Why didn't you listen to me?"
@@ -453,7 +450,7 @@ label apology_screenshots:
 
         $ relationship("affinity+")
 
-    elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "[player]..."
         n "I told you again and again not to do that."
         n "Why did you keep ignoring me?"
@@ -466,7 +463,7 @@ label apology_screenshots:
 
         $ relationship("affinity+")
 
-    elif jn_affinity.get_affinity_state() >= store.jn_affinity.DISTRESSED:
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
         n "...You're apologizing to me {i}now{/i},{w=0.1} [player]?"
         n "And after I gave you so many chances to quit it?"
         n "..."
@@ -505,7 +502,7 @@ init 5 python:
     )
 
 label apology_without_goodbye:
-    if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         n "[player]..."
         n "Do you know how much it hurts when you do that?"
         n "It's like you're just slamming a door in my face."
@@ -516,7 +513,7 @@ label apology_without_goodbye:
         n "You can at least spare the time to say goodbye properly to me,{w=0.1} right?"
         $ relationship("affinity+")
 
-    elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "..."
         n "Hey,{w=0.1} [player]."
         n "Have you ever had a conversation where one person just walks away?"
@@ -530,7 +527,7 @@ label apology_without_goodbye:
         n "You can do that much,{w=0.1} right?"
         $ relationship("affinity+")
 
-    elif jn_affinity.get_affinity_state() >= store.jn_affinity.DISTRESSED:
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
         n "[player]."
         n "Do you even {i}care{/i} how rude that is?"
         n "To just vanish mid-conversation with someone?"
@@ -562,7 +559,7 @@ init 5 python:
     )
 
 label apology_unhealthy:
-    if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         n "[player],{w=0.1} [player],{w=0.1} [player]..."
         n "What am I gonna do with you?"
         n "Honestly..."
@@ -575,7 +572,7 @@ label apology_unhealthy:
         n "I'll get mad if you don't.{w=0.2} For real,{w=0.1} this time."
         $ relationship("affinity+")
 
-    elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "Ugh...{w=0.3} [player]."
         n "Look.{w=0.2} I accept your apology."
         n "But you gotta take better care of yourself!"
@@ -585,7 +582,7 @@ label apology_unhealthy:
         n "Try and make more of an effort to look after yourself,{w=0.1} 'kay?"
         $ relationship("affinity+")
 
-    elif jn_affinity.get_affinity_state() >= store.jn_affinity.DISTRESSED:
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
         n "...Look.{w=0.2} [player]."
         n "Firstly,{w=0.1} thanks for the apology.{w=0.2} If you even meant it,{w=0.1} anyway."
         n "But I'm really struggling to see why I should care."

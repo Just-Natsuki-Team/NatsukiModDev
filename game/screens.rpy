@@ -761,7 +761,7 @@ screen navigation():
             python:
                 # Quit message based on affinity
                 if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
-                    quit_message = "Leaving without saying goodbye, [player]?"
+                    quit_message = "Wait, you're leaving? You could at least say goodbye first, you know..."
 
                 elif jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
                     quit_message = "H-huh? You're leaving? You could at least say goodbye properly!"

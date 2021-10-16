@@ -596,7 +596,7 @@ label admission_sick:
                         n "Your health...{w=0.3} really matters to me."
 
                         # Add pending apology
-                        $ store.apologies.add_new_pending_apology(store.apologies.APOLOGY_TYPE_UNHEALTHY)
+                        $ apologies.add_new_pending_apology(apologies.APOLOGY_TYPE_UNHEALTHY)
 
             "Longer.":
                 n "..."
@@ -614,7 +614,7 @@ label admission_sick:
                     n "I love you,{w=0.1} [player].{w=0.2} Please get well soon."
 
                 # Add pending apology
-                $ store.apologies.add_new_pending_apology(store.apologies.APOLOGY_TYPE_UNHEALTHY)
+                $ apologies.add_new_pending_apology(apologies.APOLOGY_TYPE_UNHEALTHY)
 
 
     elif admissions.last_admission_type == admissions.TYPE_HUNGRY:
@@ -691,7 +691,7 @@ label admission_tired:
         n "Take it easy,{w=0.1} [player]!"
 
         # Add pending apology
-        $ store.apologies.add_new_pending_apology(store.apologies.APOLOGY_TYPE_UNHEALTHY)
+        $ apologies.add_new_pending_apology(apologies.APOLOGY_TYPE_UNHEALTHY)
 
         $ persistent.jn_player_admission_type_on_quit = admissions.TYPE_SICK
         return { "quit": None }
@@ -712,7 +712,7 @@ label admission_tired:
         n "Sleep well,{w=0.1} [chosen_tease]!"
 
         # Add pending apology
-        $ store.apologies.add_new_pending_apology(store.apologies.APOLOGY_TYPE_UNHEALTHY)
+        $ apologies.add_new_pending_apology(apologies.APOLOGY_TYPE_UNHEALTHY)
 
         $ persistent.jn_player_admission_type_on_quit = admissions.TYPE_TIRED
         return { "quit": None }
@@ -726,7 +726,7 @@ label admission_tired:
         n "Don't let me down,{w=0.1} [player]."
 
         # Add pending apology
-        $ store.apologies.add_new_pending_apology(store.apologies.APOLOGY_TYPE_UNHEALTHY)
+        $ apologies.add_new_pending_apology(apologies.APOLOGY_TYPE_UNHEALTHY)
 
 
     else:

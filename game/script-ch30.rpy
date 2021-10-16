@@ -1,5 +1,3 @@
-#Aaa this code is so clean!!!!! I really need to learn how to write like this! -Daisy
-
 label ch30_autoload:
     #Start with black scene
     scene black
@@ -27,10 +25,16 @@ label ch30_visual_setup:
 
 label ch30_init:
 
-    # Add to the total visits counter
-    $ persistent.jn_total_visit_count += 1
+    python:      
+        # Determine if the player should get a prolonged leave greeting
+        if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
+            persistent.last_apology_type = APOLOGY_TYPE_PROLONGED_LEAVE
 
-    #Let's pick a greeting
+        # Add to the total visits counter and set the last visit date
+        persistent.jn_total_visit_count += 1
+        persistent.jn_last_visited_date = datetime.datetime.now()
+
+    # Let's pick a greeting
     $ push(greetings.select_greeting())
 
     $ main_background.draw(full_redraw=True)
@@ -39,12 +43,12 @@ label ch30_init:
 
     # Do all var-sets, resets, and sanity checks prior to entering the loop here
 
-    # Reset the previous admission, now that Natsuki will have picked one if relevant
+    # Reset the previous admission/apology, now that Natsuki will have picked a greeting
     $ persistent.jn_player_admission_type_on_quit = None
+    $ persistent.jn_player_apology_type_on_quit = None
 
     #And finally, we head into the loop
     jump ch30_loop
-
 
 #The main loop
 label ch30_loop:
