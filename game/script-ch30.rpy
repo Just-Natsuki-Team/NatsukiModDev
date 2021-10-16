@@ -64,7 +64,7 @@ label ch30_loop:
         )
 
         if topic_pool:
-            queue(random.choice(topic_pool))
+            queue(random.choice(topic_pool).label)
 
     #Run our checks
     python:
@@ -158,6 +158,8 @@ init python:
 
 label talk_menu:
     python:
+        import pprint
+
         # Get the flavor text for the talk menu, based on affinity state
         if store.jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
             _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_LOVE_ENAMORED)
@@ -167,7 +169,6 @@ label talk_menu:
             affinity_range=(store.jn_affinity.NORMAL, store.jn_affinity.AFFECTIONATE)
         ):
             _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_AFFECTIONATE_NORMAL)
-
 
         elif store.jn_affinity.is_state_within_range(
             affinity_state=store.jn_globals.current_affinity_state,
@@ -198,6 +199,12 @@ label talk_menu:
 
         "I want to apologize...":
             jump player_apologies_start
+
+        "Please print my persistent.":
+            n "No problem, [player]! Just give me a second..."
+            $ utils.log(utils.pretty_print(persistent))
+            n "And we're done! Ehehe."
+            return
 
         "Goodbye.":
             jump farewell_start

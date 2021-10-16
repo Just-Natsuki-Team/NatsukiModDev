@@ -2230,7 +2230,7 @@ screen confirm(message, yes_action, no_action):
                 xalign 0.5
                 spacing 100
 
-                textbutton _("Yes") action yes_action
+                textbutton _("Yes test") action yes_action
                 textbutton _("No") action no_action
 
     ## Right-click and escape answer "no".
@@ -2254,13 +2254,9 @@ screen confirm_editable(message, yes_text, no_text, yes_action, no_action):
             yalign .5
             spacing 30
 
-            if in_sayori_kill and message == layout.QUIT:
-                add "confirm_glitch" xalign 0.5
-
-            else:
-                label _(message):
-                    style "confirm_prompt"
-                    xalign 0.5
+            label _(message):
+                style "confirm_prompt"
+                xalign 0.5
 
             hbox:
                 xalign 0.5

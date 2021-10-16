@@ -275,7 +275,7 @@ init 5 python:
             label="talk_get_picture_permission",
             unlocked=True,
             prompt="Can I take a picture of you?",
-            conditional="persistent._jn_first_screenshot_taken != None",
+            conditional="persistent._jn_first_screenshot_taken",
             category=["You", "Photography"],
             player_says=True,
             location="classroom"

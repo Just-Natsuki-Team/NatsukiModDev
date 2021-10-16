@@ -599,6 +599,7 @@ init -999 python in utils:
     import datetime
     import os
     import store
+    import pprint
 
     #Make log folder if not exist
     _logdir = os.path.join(renpy.config.basedir, "log")
@@ -633,6 +634,20 @@ init -999 python in utils:
                 LOGSEVERITY_MAP[SEVERITY_INFO]
             ).format(datetime.datetime.now(), message)
         )
+
+    def pretty_print(object, indent=1, width=150):
+        """
+        Returns a PrettyPrint-formatted representation of an object as a dict.
+
+        IN:
+            object - the object to be converted
+            indent - the level of indentation in the formatted string
+            width - the maximum length of each line in the formatted string, before remaining content is shifted to next line
+
+        OUT:
+            Formatted string representation of object __dict__
+        """
+        return pprint.pformat(object.__dict__, indent, width)
 
 init python in utils:
     def get_current_session_length():
