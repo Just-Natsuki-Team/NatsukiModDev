@@ -3,6 +3,45 @@
 
 init offset = -1
 
+init python:
+
+    def get_affinity_quit_dialogue():
+        """
+        Returns a list containing quit dialogue when exiting via game window/main menu quit option, where indexes:
+        0: Dialogue before selecting an option
+        1: Dialogue for choosing to quit
+        2: Dialogue for choosing to stay
+
+        OUT:
+            List containing quit dialogue
+        """
+        if store.jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            return [
+                "Wait, you're leaving? You could at least say goodbye first, you know...",
+                "[player]... >_>",
+                "Ehehe. Thanks, [player]~!"
+            ]
+
+        elif store.jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+            return [
+                "H-huh? You're leaving? You could at least say goodbye properly!",
+                "[player]! Come on...",
+                "Y-yeah! That's what I thought. Ehehe..."
+            ]
+
+        elif store.jn_affinity.get_affinity_state() >= store.jn_affinity.DISTRESSED:
+            return [
+                "...Really? I don't even get a 'goodbye' now?",
+                "...Jerk.",
+                "...Thanks, [player]. I guess."
+            ]
+
+        else:
+            return [
+                "...Going?",
+                "...Good riddance.",
+                "...Whatever."
+            ]
 
 ################################################################################
 ## Custom Screens
@@ -2202,6 +2241,13 @@ screen memory:
 
 screen confirm(message, yes_action, no_action):
 
+    # If this is a quit confirmation, begin personification so we can work Natsuki into this
+    if message == layout.QUIT:
+        python:
+            confirm_is_quit = True
+            quit_dialogue = get_affinity_quit_dialogue()
+            message = quit_dialogue[0]
+
     ## Ensure other screens do not get input while this screen is displayed.
     modal True
 
@@ -2218,23 +2264,52 @@ screen confirm(message, yes_action, no_action):
             yalign .5
             spacing 30
 
-            if in_sayori_kill and message == layout.QUIT:
-                add "confirm_glitch" xalign 0.5
-
-            else:
-                label _(message):
-                    style "confirm_prompt"
-                    xalign 0.5
+            label _(message):
+                style "confirm_prompt"
+                xalign 0.5
 
             hbox:
                 xalign 0.5
                 spacing 100
 
-                textbutton _("Yes test") action yes_action
-                textbutton _("No") action no_action
+                if confirm_is_quit:
+                    textbutton _("Yes") action Show(confirm_quit(True, quit_dialogue[1]))
+                    textbutton _("No") action Show(confirm_quit(False, quit_dialogue[2]))
+
+                else:
+                    textbutton _("Yes") action yes_action
+                    textbutton _("No") action no_action
 
     ## Right-click and escape answer "no".
     #key "game_menu" action no_action
+
+screen confirm_quit(quit_label, is_quitting):
+    modal True
+
+    zorder 300
+
+    style_prefix "confirm"
+
+    add "gui/overlay/confirm.png"
+
+    frame:
+
+        vbox:
+            xalign .5
+            yalign .5
+            spacing 30
+
+            label _(quit_label):
+                style "confirm_prompt"
+                xalign 0.5
+
+            hbox:
+                xalign 0.5
+                spacing 100
+                if is_quitting:
+                    textbutton _("OK") action Quit
+                else:
+                    textbutton _("OK") action Hide
 
 screen confirm_editable(message, yes_text, no_text, yes_action, no_action):
 

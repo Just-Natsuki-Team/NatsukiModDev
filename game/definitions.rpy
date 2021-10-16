@@ -737,5 +737,3 @@ init python:
     
     # Assign Natsuki the chosen nickname (defaulted to Natsuki)
     n_name = store.persistent.jn_player_nicknames_current_nickname
-    if not store.persistent.jn_player_nicknames_current_nickname:
-        n_name = "Natsuki_Default"
