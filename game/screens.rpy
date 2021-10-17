@@ -18,14 +18,14 @@ init python:
         if store.jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
             return [
                 "Wait, you're leaving? You could at least say goodbye first, you know...",
-                "[player]... >_>",
+                "[player]...\n {0}".format(random.choice(store.jn_globals.DEFAULT_SAD_EMOTICONS)),
                 "Ehehe. Thanks, [player]~!"
             ]
 
         elif store.jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
             return [
                 "H-huh? You're leaving? You could at least say goodbye properly!",
-                "[player]! Come on...",
+                "[player]! Come on...\n {0}".format(random.choice(store.jn_globals.DEFAULT_ANGRY_EMOTICONS)),
                 "Y-yeah! That's what I thought. Ehehe..."
             ]
 
@@ -2273,8 +2273,8 @@ screen confirm(message, yes_action, no_action):
                 spacing 100
 
                 if confirm_is_quit:
-                    textbutton _("Yes") action Show(confirm_quit(True, quit_dialogue[1]))
-                    textbutton _("No") action Show(confirm_quit(False, quit_dialogue[2]))
+                    textbutton _("Continue") action Show(screen="confirm_quit", is_quitting=True)
+                    textbutton _("Go back") action Show(screen="confirm_quit", is_quitting=False)
 
                 else:
                     textbutton _("Yes") action yes_action
@@ -2283,7 +2283,7 @@ screen confirm(message, yes_action, no_action):
     ## Right-click and escape answer "no".
     #key "game_menu" action no_action
 
-screen confirm_quit(quit_label, is_quitting):
+screen confirm_quit(is_quitting):
     modal True
 
     zorder 300
@@ -2291,6 +2291,13 @@ screen confirm_quit(quit_label, is_quitting):
     style_prefix "confirm"
 
     add "gui/overlay/confirm.png"
+
+    action Hide("confirm")
+
+    if is_quitting:
+        $ quit_label = get_affinity_quit_dialogue()[1]
+    else:
+        $ quit_label = get_affinity_quit_dialogue()[2] 
 
     frame:
 
@@ -2306,10 +2313,20 @@ screen confirm_quit(quit_label, is_quitting):
             hbox:
                 xalign 0.5
                 spacing 100
+
+                
                 if is_quitting:
-                    textbutton _("OK") action Quit
+                    textbutton _("...") action [
+                        # Player has decided to ditch Natsuki; add a pending apology then quit
+                        apologies.add_new_pending_apology(apologies.APOLOGY_TYPE_SUDDEN_LEAVE),
+                        Quit(confirm=False)
+                    ] 
                 else:
-                    textbutton _("OK") action Hide
+                    textbutton _("OK") action [
+                        # Player is a decent person; hide the screens
+                        Hide("confirm"),
+                        Hide("confirm_quit")
+                    ]
 
 screen confirm_editable(message, yes_text, no_text, yes_action, no_action):
 

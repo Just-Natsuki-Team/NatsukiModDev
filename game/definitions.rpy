@@ -584,6 +584,33 @@ init -990 python in jn_globals:
         "Start talking."
     ]
 
+    # Emoticon sets for where we can't express Natsuki's emotions directly (I.E modals)
+    DEFAULT_HAPPY_EMOTICONS = [
+        "^^",
+        ":)",
+        ":3",
+        "^-^",
+        "^_^",
+        ":]"
+    ]
+
+    DEFAULT_ANGRY_EMOTICONS = [
+        ">_>",
+        "<_<",
+        "-_-",
+        "-.-",
+        ">:T",
+        ">:/",
+        ">:("
+    ]
+
+    DEFAULT_SAD_EMOTICONS = [
+        ":(",
+        ":'(",
+        ":/",
+        "._."
+    ]
+
     # Alphabetical (excluding numbers) values allowed for text input
     DEFAULT_ALPHABETICAL_ALLOW_VALUES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-' "
 
