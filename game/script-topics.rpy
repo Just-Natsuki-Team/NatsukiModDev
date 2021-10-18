@@ -1564,8 +1564,8 @@ init 5 python:
     )
 
 label talk_give_nickname:
-    # Natsuki hasn't been nicknamed before
-    if persistent.jn_player_natsuki_current_nickname is None:
+    # Natsuki hasn't been nicknamed before, or is rocking her normal name
+    if persistent.jn_player_nicknames_allowed and persistent.jn_player_nicknames_current_nickname == "Natsuki":
         n "Eh?{w=0.2} You want to give me a nickname?"
         n "Why?{w=0.2} Natsuki not good enough for you?{w=0.2} Is that it?"
         n "Huh?{w=0.2} Come on, [player]!{w=0.2} Spit it out!"
@@ -1776,7 +1776,7 @@ init 5 python:
             prompt="Sleeping well",
             conditional="persistent.jn_total_visit_count >= 5",
             category=["Health", "You"],
-            player_says=True,
+            nat_says=True,
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
             location="classroom"
         ),
