@@ -60,15 +60,15 @@ init 0 python in apologies:
         if not apology_type in store.persistent.jn_player_pending_apologies:
             store.persistent.jn_player_pending_apologies.append(apology_type)
 
-init 1 python in apologies:
+init 1 python:
     import store 
     
     # DEBUG: TODO: Resets - remove these later, once we're done tweaking affinity/trust!
     try:
-        store.persistent._apology_database.clear()
+        persistent._apology_database.clear()
 
     except Exception as e:
-        store.utils.log(e, store.utils.SEVERITY_ERR)
+        utils.log(e, utils.SEVERITY_ERR)
 
 # Returns all apologies that the player qualifies for, based on wrongdoings
 label player_apologies_start:
@@ -244,7 +244,7 @@ label apology_default:
             n "You're gonna make things right,{w=0.1} [player]. 'Kay?"
             n "And no -{w=0.1} this isn't up for discussion."
             n "Whatever you did,{w=0.1} you'll fix things up and that's all there is to it."
-            $ chosen_tease = random.choice(store.jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
             n "You have my vote of confidence,{w=0.1} [chosen_tease] -{w=0.1} now do your best!"
             n "Ehehe."
 
@@ -444,7 +444,7 @@ label apology_screenshots:
         n "..."
         n "Thanks for the apology,{w=0.1} [player].{w=0.2} I appreciate it."
 
-        if store.jn_screenshots.player_screenshots_blocked:
+        if jn_screenshots.player_screenshots_blocked:
             n "But...{w=0.3} I'm going to keep the camera switched off -{w=0.1} at least for now."
             n "I hope you can understand why."
 
@@ -457,7 +457,7 @@ label apology_screenshots:
         n "...Especially after I told you I don't like it."
         n "Thanks for coming clean to me,{w=0.1} [player].{w=0.2} I appreciate it."
 
-        if store.jn_screenshots.player_screenshots_blocked:
+        if jn_screenshots.player_screenshots_blocked:
             n "But...{w=0.3} the camera is staying off for now."
             n "Thanks for understanding."
 
@@ -469,7 +469,7 @@ label apology_screenshots:
         n "..."
         n "...Fine.{w=0.2} I suppose I'll accept your apology..."
 
-        if store.jn_screenshots.player_screenshots_blocked:
+        if jn_screenshots.player_screenshots_blocked:
             n "But the camera stays off."
             n "I don't think I need to explain why."
 
