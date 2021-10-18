@@ -1774,7 +1774,7 @@ init 5 python:
             label="talk_sleeping_well",
             unlocked=True,
             prompt="Sleeping well",
-            conditional="persistent.jn_player_nicknames_allowed",
+            conditional="persistent.jn_total_visit_count >= 5",
             category=["Health", "You"],
             player_says=True,
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
@@ -1784,7 +1784,44 @@ init 5 python:
     )
 
 label talk_sleeping_well:
-    n ""
+    n "Huh..."
+    n "Hey,{w=0.1} [player].{w=0.2} Let me ask you a question,{w=0.1} 'kay?"
+    n "How do you sleep at night?"
+    n "Be honest.{w=0.2} How do you do it?"
+    n "..."
+    n "Ehehe.{w=0.2} Did I get you?"
+    n "But seriously,{w=0.2} [player].{w=0.2} Do you struggle with your sleep?"
+    
+    # Quip if the player has been around a while, or has admitted they're tired
+    if utils.get_current_session_length().total_seconds() / 3600 >= 12:
+        n "I mean,{w=0.1} you {i}have{/i} been here for a while now..."
+        n "So I kinda figured you might be feeling a little sleepy anyway."
+
+    elif admissions.last_admission_type == admissions.TYPE_TIRED:
+        n "I mean,{w=0.1} you even {i}said{/i} you were tired before."
+        n "So...{w=0.3} it only makes sense to ask,{w=0.1} right?{w=0.2} Anyway..."
+
+    n "I'll admit,{w=0.1} I get the odd sleepless night myself.{w=0.2} It's the worst!"
+    n "There's nothing I hate more than tossing and turning,{w=0.1} just waiting for my body to decide it's time for tomorrow to happen."
+    n "But...{w=0.3} you know what they say,{w=0.1} [player] -{w=0.1} with suffering..."
+    n "...Comes wisdom!"
+    n "And luckily for you,{w=0.1} I don't mind sharing.{w=0.2} Ehehe."
+    n "So,{w=0.1} listen up -{w=0.1} it's time for another lesson from yours truly!"
+    n "Alright -{w=0.1} first,{w=0.1} cut the crap!{w=0.2} If you're trying to sleep,{w=0.1} anything high-sugar or high-caffeine is your enemy."
+    n "So before anything else,{w=0.1} ditch the soda and coffee.{w=0.2} You can thank me later."
+    n "Next up -{w=0.1} no screens!{w=0.2} Including this one, [player]."
+    n "No screen means no bright lights or distractions to keep you up,{w=0.1} obviously."
+    n "If you're tired then the last thing you need is something beaming whatever at you."
+    n "Moving on, next is temperature!{w=0.2} If it's hot,{w=0.1} use thinner sheets and vice versa."
+    n "Nothing disrupts your sleep more than having to rip off blankets,{w=0.1} or pull some out."
+    n "Keeping up with me so far,{w=0.1} [player]?{w=0.2} I'm almost done,{w=0.1} don't worry."
+    n "Lastly...{w=0.3} get comfortable!"
+    n "Make sure you have enough pillows to support your head,{w=0.1} or maybe even play some quiet music if you find that helps."
+    n "...And that's about it!"
+    n "You should have known at least a few of those already,{w=0.1} but at any rate..."
+    n "I hope you can rest easy with your newfound knowledge,{w=0.1} [player]!"
+    n "Ehehe."
+
     return
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
