@@ -31,7 +31,7 @@ init python in greetings:
 init 1 python:
     try:
         # Resets - remove these later, once we're done tweaking affinity/trust!
-        store.persistent._greeting_database.clear()
+        persistent._greeting_database.clear()
 
     except Exception as e:
         utils.log(e, utils.SEVERITY_ERR)
