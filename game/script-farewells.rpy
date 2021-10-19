@@ -19,7 +19,7 @@ init python in farewells:
             affinity=store.jn_globals.current_affinity_state,
             additional_properties=[
                 ("is_time_sensitive", store.utils.get_current_session_length().total_seconds() / 60 < 30),
-                ("has_stay_option", not store.jn_globals.player_already_stayed_on_farewell and store.jn_globals.current_affinity_state >= 6)
+                ("has_stay_option", not store.jn_globals.player_already_stayed_on_farewell and jn_globals.current_affinity_state >= 6)
             ],
             excludes_categories=["Failsafe"]
         )
@@ -864,7 +864,7 @@ label farewell_short_session_ask:
         "Sure, I can stay a little longer.":
             n "Yay{nw}!"
             n "I-I mean...!"
-            if store.jn_affinity.get_affinity_state() > store.jn_affinity.ENAMORED:
+            if jn_affinity.get_affinity_state() > jn_affinity.ENAMORED:
                 n "Thanks, [player]. It means a lot to me."
                 $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
                 n "Really. Thank you, [chosen_endearment]."
@@ -876,7 +876,7 @@ label farewell_short_session_ask:
                 n "..."
                 n "Stop looking at me like that,{w=0.1} jeez!"
             n "Now,{w=0.1} where were we?"
-            $ store.jn_globals.player_already_stayed_on_farewell = True
+            $ jn_globals.player_already_stayed_on_farewell = True
 
         "If you say so.":
             n "[player]..."
@@ -886,14 +886,14 @@ label farewell_short_session_ask:
                 "Yes, I'm sure.":
                     "Well,{w=0.1} if you're sure."
                     "I just want to make sure I don't sound all naggy."
-                    if store.jn_affinity.get_affinity_state() > store.jn_affinity.ENAMORED:
+                    if jn_affinity.get_affinity_state() > jn_affinity.ENAMORED:
                         $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
                         n "Thanks,{w=0.1} [chosen_endearment]. You know it means a lot to me."
 
                     else:
                         n "Thanks, [player]. It means a lot."
 
-                    $ store.jn_globals.player_already_stayed_on_farewell = True
+                    $ jn_globals.player_already_stayed_on_farewell = True
 
                 "No, I have to go.":
                     n "Well...{w=0.3} okay,{w=0.1} [player]."
@@ -960,7 +960,7 @@ label farewell_short_session_ask_alt:
             if player_was_snarky:
                 n "Or...{w=0.3} perhaps you should be thanking {i}me{/i}?{w=0.2} Ehehe."
             n "So...{w=0.3} what else did you wanna do today?"
-            $ store.jn_globals.player_already_stayed_on_farewell = True
+            $ jn_globals.player_already_stayed_on_farewell = True
             $ relationship("affinity+")
 
         "Fine, I guess.":
@@ -970,7 +970,7 @@ label farewell_short_session_ask_alt:
             n "...{i}I guess{/i}."
             n "Ahaha! Oh, lighten up, [player]! I'm just messing with you!"
             n "Now,{w=0.1} where were we?"
-            $ store.jn_globals.player_already_stayed_on_farewell = True
+            $ jn_globals.player_already_stayed_on_farewell = True
             $ relationship("affinity+")
 
         "Sorry Natsuki, I can't right now.":
@@ -1012,7 +1012,7 @@ label farewell_fake_confidence_ask:
             n "..."
             n "Jeez!{w=0.2} Let's just get back to it already..."
             n "Now,{w=0.1} where were we?"
-            $ store.jn_globals.player_already_stayed_on_farewell = True
+            $ jn_globals.player_already_stayed_on_farewell = True
             $ relationship("affinity+")
 
         "Sorry, I really need to go.":
@@ -1055,7 +1055,7 @@ label farewell_pleading_ask:
             n "T-thanks, [player].{w=0.1} You're [chosen_descriptor],{w=0.1} you know that?"
             n "Really.{w=0.1} Thank you."
             n "N-now,{w=0.1} where were we? Heh..."
-            $ store.jn_globals.player_already_stayed_on_farewell = True
+            $ jn_globals.player_already_stayed_on_farewell = True
             $ relationship("affinity+")
 
         "I can't right now.":
@@ -1098,7 +1098,7 @@ label farewell_gentle_ask:
             n "Truly.{w=0.1} Thanks..."
             n "..."
             n "Aha...{w=0.3} so what else did you wanna do today?"
-            $ store.jn_globals.player_already_stayed_on_farewell = True
+            $ jn_globals.player_already_stayed_on_farewell = True
             $ relationship("affinity+")
 
         "Sorry, I really have to go.":
@@ -1116,7 +1116,7 @@ label farewell_gentle_ask:
 
 label farewell_extra_trust:
     # ABSOLUTE+
-    if store.trust.trust_is_between_bounds(
+    if trust.trust_is_between_bounds(
         lower_bound=store.jn_trust.TRUST_ABSOLUTE,
         trust=store.persistent.trust,
         upper_bound=None
@@ -1124,7 +1124,7 @@ label farewell_extra_trust:
         n "My [player]...{w=0.3} I'll be waiting..."
 
     # FULL-COMPLETE
-    elif store.trust.trust_is_between_bounds(
+    elif trust.trust_is_between_bounds(
         lower_bound=store.jn_trust.TRUST_FULL,
         trust=store.persistent.trust,
         upper_bound=store.jn_trust.TRUST_ABSOLUTE
@@ -1132,7 +1132,7 @@ label farewell_extra_trust:
         n "I'll be waiting..."
 
     # NEUTRAL-PARTIAL
-    elif store.trust.trust_is_between_bounds(
+    elif trust.trust_is_between_bounds(
         lower_bound=store.jn_trust.TRUST_NEUTRAL,
         trust=store.persistent.trust,
         upper_bound=store.jn_trust.TRUST_PARTIAL
@@ -1140,7 +1140,7 @@ label farewell_extra_trust:
         n "You'll be back...{w=0.3} right?"
 
     # SCEPTICAL-NEUTRAL
-    elif store.trust.trust_is_between_bounds(
+    elif trust.trust_is_between_bounds(
         lower_bound=store.jn_trust.TRUST_SCEPTICAL,
         trust=store.persistent.trust,
         upper_bound=store.jn_trust.TRUST_NEUTRAL
@@ -1148,7 +1148,7 @@ label farewell_extra_trust:
         n "I'll be okay...{w=0.3} I'll be okay..."
 
     # DIMINISHED-SCEPTICAL
-    elif store.trust.trust_is_between_bounds(
+    elif trust.trust_is_between_bounds(
         lower_bound=store.jn_trust.TRUST_DIMINISHED,
         trust=store.persistent.trust,
         upper_bound=store.jn_trust.TRUST_SCEPTICAL
@@ -1156,7 +1156,7 @@ label farewell_extra_trust:
         n "...?"
 
     # DIMINISHED-
-    elif store.trust.trust_is_between_bounds(
+    elif trust.trust_is_between_bounds(
         lower_bound=None,
         trust=store.persistent.trust,
         upper_bound=store.jn_trust.TRUST_DIMINISHED
