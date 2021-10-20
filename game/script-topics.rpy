@@ -1840,6 +1840,46 @@ label talk_give_nickname:
 
     return
 
+# Natsuki warns against the risks of wearing headphones/headsets
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_using_headphones_carefully",
+            unlocked=True,
+            prompt="Using headphones carefully",
+            category=["Health", "Music", "Technology"],
+            player_says=True,
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_using_headphones_carefully:
+    n "..."
+    n "...?"
+    n "...!"
+    n "...[player]!"
+    n "[player]! Finally! Can you hear me now?"
+    n "Jeez... took you long enough!"
+    n "..."
+    n "Ehehe."
+    n "Admit it, [player]! I'll get you one of these days."
+    n "Seriously though - do you use headphones or anything like that often?"
+    n "I'll admit, I probably use mine more than I should."
+    n "I was kinda joking about the whole hearing thing, but this is important, [player]."
+    n "I like cranking it up too, just don't make a habit of it, 'kay?"
+    n "There's even warnings in some countries if you have the volume up too loud..."
+    n "...And for a good reason!"
+    n "Not just to protect your ears either - you better be careful wearing them out and about either, [player]."
+    n "I don't wanna hear about you getting knocked over because you didn't hear something coming!"
+    n "Oh, and one last thing, actually."
+    n "You might wear them to focus at work, or relax at home - and that's fine!"
+    n "But please, [player]."
+    n "...Take them off every once and a while, will you? For other people, I mean."
+    n ""
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
