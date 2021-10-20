@@ -1832,7 +1832,7 @@ label talk_natsukis_hairstyle:
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "Huh?{w=0.2} My hairstyle?"
-        n "Wait...{w=0.3} are you messing with me?{w=0.2} Was that an insult?"
+        n "Wait...{w=0.3} are you messing with me?{w=0.2} What do you mean?"
         n "You better not be teasing me,{w=0.1} [player]..."
 
     else:
@@ -1868,13 +1868,12 @@ label talk_natsukis_hairstyle:
 
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-        n "I'm pretty sure I already let my hair down around you,{w=0.1} [chosen_tease]."
-        n "Wouldn't you agree?"
+        n "I'm pretty sure I already let my hair down around you,{w=0.1} [chosen_tease]. Wouldn't you agree?"
         n "Ahaha!"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "You know what they say,{w=0.1} [player]."
-        n "If it isn't broke,{w=0.1} don't fix it!"
+        n "If it ain't broke,{w=0.1} don't fix it!"
         n "Ehehe."
 
     else:
