@@ -5,6 +5,178 @@ init offset = -1
 
 
 ################################################################################
+## Custom Screens
+################################################################################
+
+# Categorized menu
+## Similar to MAS' twopane_scrollable menu.
+## NOTE: This is meant to be called within a loop so long as the user hasn't clicked `Nevermind`
+### PARAMETERS:
+#   menu_items: dict
+#       { key: category, value: Topic[] }
+#
+#   category_pane_space: tuple
+#       [0] top-left x coord of the category pane
+#       [1] top-left y coord of the category pane
+#       [2] width of the category pane
+#       [3] height of the category pane
+#
+#   option_list_space:
+#       [0] top-left x coord of the options pane
+#       [1] top-left y coord of the options pane
+#       [2] width of the options pane
+#       [3] height of the options pane
+#
+#   category_length:
+#       length of the category, used to calculat
+define prev_adjustment = ui.adjustment()
+define main_adjustment = ui.adjustment()
+define selected_category = None
+define scroll_align = -0.1
+
+style categorized_menu_button is choice_button:
+    xysize (250, None)
+    padding (25, 5, 25, 5)
+
+style categorized_menu_button_text is choice_button_text:
+    align (0.0, 0.0)
+    text_align 0.0
+
+screen categorized_menu(menu_items, category_pane_space, option_list_space, category_length):
+    at categorized_menu_slide_in_right
+    style_prefix "categorized_menu"
+
+    #Just entered this menu so just need to list categories
+    fixed:
+        anchor (0, 0)
+        pos (category_pane_space[0], category_pane_space[1])
+        xsize category_pane_space[2]
+        ysize category_pane_space[3]
+
+        bar:
+            adjustment prev_adjustment
+            style "classroom_vscrollbar"
+            xalign -0.1
+
+        vbox:
+            ypos 0
+            yanchor 0
+
+            viewport:
+                #Apply the old adjustment to keep the style the same
+                yadjustment prev_adjustment
+                yfill False
+                #Allow mousewheel and arrow keys for navigation
+                mousewheel True
+                arrowkeys True
+                vbox:
+                    if category_length != 1:
+                        if category_length == 0:
+                            textbutton _("Nevermind."):
+                                action [
+                                    Return(False),
+                                    Function(prev_adjustment.change, 0),
+                                    SetVariable("selected_category", None)
+                                ]
+
+                        elif category_length > 1:
+                            python:
+                                import random
+
+                                go_back_text = "Go back"
+                                if random.randint(0, 999) == 999:
+                                    go_back_text = "Go baka"
+
+                            textbutton _(go_back_text):
+                                style "categorized_menu_button"
+                                action [ Return(-1), Function(prev_adjustment.change, 0) ]
+
+                        null height 20
+
+                    for button_name in menu_items.iterkeys():
+                        textbutton button_name:
+                            style "categorized_menu_button"
+                            #Set the selected category
+                            action SetVariable("selected_category", button_name)
+
+                        null height 5
+
+    #Safely wrap this check so this screen cannot crash
+    #If we have a selected category and need to display the options within it (if there are any)
+    if menu_items.get(selected_category):
+        fixed:
+            area option_list_space
+
+            bar:
+                adjustment main_adjustment
+                style "classroom_vscrollbar"
+                xalign -0.1
+
+            vbox:
+                ypos 0
+                yanchor 0
+
+                viewport:
+                    yadjustment main_adjustment
+                    yfill False
+                    mousewheel True
+                    arrowkeys True
+
+                    vbox:
+                        textbutton _("Nevermind."):
+                            action [
+                                Return(False),
+                                Function(prev_adjustment.change, 0),
+                                SetVariable("selected_category", None)
+                            ]
+
+                        null height 20
+
+                        for _topic in menu_items.get(selected_category):
+                            #NOTE: This should be preprocessed such that Topics without prompts aren't passed into this menu
+                            textbutton _topic.prompt:
+                                style "categorized_menu_button"
+                                #Return the label so it can be called
+                                action [ Return(_topic.label), Function(prev_adjustment.change, 0), SetVariable("selected_category", None) ]
+
+                            null height 5
+
+
+screen scrollable_choice_menu(items, last_item=None):
+    fixed:
+        area (680, 40, 560, 440)
+        vbox:
+            ypos 0
+            yanchor 0
+
+            if last_item:
+                textbutton last_item[0]:
+                    style "categorized_menu_button"
+                    xsize 560
+                    action Return(last_item[1])
+
+                null height 20
+
+            viewport:
+                id "viewport"
+                yfill False
+                mousewheel True
+
+                vbox:
+                    for prompt, _value in items:
+                        textbutton prompt:
+                            style "categorized_menu_button"
+                            xsize 560
+                            action Return(_value)
+
+                        null height 5
+
+        bar:
+            style "classroom_vscrollbar"
+            value YScrollValue("viewport")
+            xalign scroll_align
+
+################################################################################
 ## Styles
 ################################################################################
 
@@ -293,6 +465,7 @@ screen choice(items, scroll="viewport"):
     style_prefix "choice"
 
     vbox:
+        xalign 0.9
         for i in items:
             textbutton i.caption action i.action
 
@@ -460,7 +633,15 @@ screen quick_menu():
 
             #textbutton _("Back") action Rollback()
             if config.developer:
-                textbutton _("Restart") action Show(screen="confirm_editable_closable", message="Do you want to RELOAD or RESET?", yes_text="Reload", no_text="Reset", yes_action=Jump("ch30_autoload"), no_action=Jump("restart"))
+                textbutton _("Restart"):
+                    action Show(
+                        screen="confirm_editable_closable",
+                        message="Do you want to RELOAD or RESET?",
+                        yes_text="Reload",
+                        no_text="Reset",
+                        yes_action=Jump("ch30_autoload"),
+                        no_action=Jump("restart")
+                    )
             textbutton _("History") action ShowMenu('history')
             textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
             textbutton _("Auto") action Preference("auto-forward", "toggle")
