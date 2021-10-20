@@ -31,38 +31,7 @@ init python in greetings:
 init 1 python:
     try:
         # Resets - remove these later, once we're done tweaking affinity/trust!
-        store.persistent._greeting_database.pop("greeting_love_plus_today_is_gonna_be_great")
-        store.persistent._greeting_database.pop("greeting_love_plus_world_revolves_around_you")
-        store.persistent._greeting_database.pop("greeting_love_plus_make_today_amazing")
-        store.persistent._greeting_database.pop("greeting_love_plus_always_welcome_here")
-        store.persistent._greeting_database.pop("greeting_love_plus_lovestruck")
-
-        store.persistent._greeting_database.pop("greeting_affectionate_enamored_good_to_see_you")
-        store.persistent._greeting_database.pop("greeting_affectionate_enamored_couldnt_resist")
-        store.persistent._greeting_database.pop("greeting_affectionate_enamored_just_cant_stay_away")
-        store.persistent._greeting_database.pop("greeting_affectionate_enamored_have_so_much_fun")
-        store.persistent._greeting_database.pop("greeting_affectionate_enamored_everything_is_fine")
-
-        store.persistent._greeting_database.pop("greeting_normal_happy_whats_up")
-        store.persistent._greeting_database.pop("greeting_normal_happy_glad_to_see_you")
-        store.persistent._greeting_database.pop("greeting_normal_happy_spacing_out")
-        store.persistent._greeting_database.pop("greeting_normal_happy_heya")
-        store.persistent._greeting_database.pop("greeting_normal_happy_knew_youd_be_back")
-
-        store.persistent._greeting_database.pop("greeting_distressed_upset_oh_its_you")
-        store.persistent._greeting_database.pop("greeting_distressed_upset_hi")
-        store.persistent._greeting_database.pop("greeting_distressed_upset_welcome_back_i_guess")
-        store.persistent._greeting_database.pop("greeting_distressed_upset_better_be_good")
-        store.persistent._greeting_database.pop("greeting_distressed_upset_oh_you_came_back")
-
-        store.persistent._greeting_database.pop("greeting_broken_minus_oh_its_you")
-        store.persistent._greeting_database.pop("greeting_broken_minus_nothing_to_say")
-        store.persistent._greeting_database.pop("greeting_broken_minus_why")
-        store.persistent._greeting_database.pop("greeting_broken_minus_enough_on_my_mind")
-        store.persistent._greeting_database.pop("greeting_broken_minus_leave_me_be")
-
-        store.persistent._greeting_database.pop("greeting_feeling_better_sick")
-        store.persistent._greeting_database.pop("greeting_feeling_better_tired")
+        persistent._greeting_database.clear()
 
     except Exception as e:
         utils.log(e, utils.SEVERITY_ERR)
@@ -513,7 +482,7 @@ init 5 python:
             category=["Admission"],
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
             additional_properties={
-                "admission_type": admissions.ADMISSION_TYPE_SICK,
+                "admission_type": admissions.TYPE_SICK,
             }
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -533,13 +502,13 @@ label greeting_feeling_better_sick:
             n "...I'll admit, that wasn't really what I wanted to hear."
             n "But I'll take 'a little' over not at all,{w=0.1} I guess."
             n "Anyway...{w=0.3} welcome back,{w=0.1} [player]!"
-            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_SICK
+            $ admissions.last_admission_type = admissions.TYPE_SICK
 
         "Still unwell.":
             n "Still not feeling up to scratch,{w=0.1} [player]?"
             n "I don't mind you being here...{w=0.3} but don't strain yourself,{w=0.1} alright?"
             n "I don't want you making yourself worse for my sake..."
-            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_SICK
+            $ admissions.last_admission_type = admissions.TYPE_SICK
 
     return
 
@@ -552,7 +521,7 @@ init 5 python:
             category=["Admission"],
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
             additional_properties={
-                "admission_type": admissions.ADMISSION_TYPE_TIRED,
+                "admission_type": admissions.TYPE_TIRED,
             }
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -572,11 +541,11 @@ label greeting_feeling_better_tired:
             n "Oh...{w=0.3} well,{w=0.1} that's not quite what I was hoping to hear."
             n "If you aren't feeling too tired,{w=0.1} perhaps you could grab something to wake up a little?"
             n "A nice glass of water or some bitter coffee should perk you up in no time!"
-            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_TIRED
+            $ admissions.last_admission_type = admissions.TYPE_TIRED
 
         "Still tired.":
             n "Still struggling with your sleep,{w=0.1} [player]?"
             n "I don't mind you being here...{w=0.3} but don't strain yourself,{w=0.1} alright?"
             n "I don't want you face-planting your desk for my sake..."
-            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_TIRED
+            $ admissions.last_admission_type = admissions.TYPE_TIRED
     return
