@@ -13,6 +13,9 @@ default persistent.jn_player_appearance_hair_length = None
 default persistent.jn_player_appearance_hair_colour = None
 default persistent.jn_player_appearance_height_cm = None
 
+# Romance data
+default persistent.jn_player_love_you_count = 0
+
 init python in topics:
     import store
     TOPIC_MAP = dict()
@@ -1888,6 +1891,251 @@ label talk_aging:
         n "We're only having one candle on your birthday cake.{w=0.2} Sorry." 
         n "Ahaha!"
 
+    return
+
+# Natsuki responds to the player confessing their love to her
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_i_love_you",
+            unlocked=True,
+            prompt="I love you, {0}!".format(n_name),
+            conditional="jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED",
+            category=["Natsuki", "Romance"],
+            player_says=True,
+            affinity_range=(jn_affinity.RUINED, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_i_love_you:
+    # We use these a lot here, so we define them in a higher scope
+    $ player_initial = player[0]
+    $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+    $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+    $ chosen_descriptor = random.choice(jn_globals.DEFAULT_PLAYER_DESCRIPTORS)
+
+    # We account for the situation where a player may have unlocked the topic, but never selected it
+    # and therefore may have any affection level
+    if persistent.jn_player_love_you_count == 0:
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            n "O-{w=0.1}o-{w=0.1}oh my gosh..."
+            n "[player_initial]-{w=0.2}[player]...{w=0.3} y-{w=0.1}you...!"
+            n "Nnnnnnn-!"
+            n "W-{w=0.1}well it took you long enough!{w=0.2} What did you think you were doing?!"
+            n "I bet you were just waiting for me to say it first!"
+            n "Jeez,{w=0.1} [player]...{w=0.3} [chosen_tease]..."
+            n "But..."
+            n "B-{w=0.1}but...!"
+            n "Uuuuuuu-!"
+            n "Oh,{w=0.1} whatever!{w=0.2} I don't care!{w=0.2} I gotta say it!{w=0.2} I gotta say it!"
+            n "[player]!{w=0.2} I love you too!"
+            n "I-{w=0.1}I love...{w=0.3} you too..."
+            n "I...{w=0.3} I..."
+            n "I love you,{w=0.1} [player]..."
+            n "..."
+            n "A-{w=0.1}ahaha...{w=0.3} sorry..."
+            n "I...{w=0.3} think I got a little carried away..."
+            n "..."
+            n "J-{w=0.1}jeez!{w=0.2} Stop looking at me like that already!"
+            n "W-{w=0.1}we're both on the same page now,{w=0.1} so..."
+            n "Where were we?{w=0.2} Ehehe..."
+            $ relationship("affinity+")
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+            n "[player_initial]-{w=0.2}[player]!"
+            n "Y-{w=0.1}you...!"
+            n "Nnnnn-!"
+            n "I-{w=0.1}I know we've been seeing each other a while,{w=0.1} but this is way too sudden!"
+            n "Gosh...{w=0.3} now you've gone and made it all awkward,{w=0.1} [player]."
+            n "I hope you're happy."
+            n "..."
+            n "D-{w=0.1}don't think this means I {i}hate{/i} you or anything,{w=0.1} though..."
+            n "It's just that...{w=0.3} It's just..." 
+            n "Uuuuuu..."
+            n "N-{w=0.1}never mind...{w=0.3} Ahaha..."
+            $ relationship("affinity+")
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+            n "W-{w=0.1}w-{w=0.1}what?"
+            n "D-{w=0.1}did you just...?"
+            n "Nnnnnnnnn-!"
+            n "[player_initial]-{w=0.2}[player]!"
+            n "Are you trying to give me a heart attack?!{w=0.2} Jeez..."
+            n "You can't just say stuff like that so suddenly,{w=0.1} [chosen_tease]..."
+            n "..."
+            n "I-{w=0.1}I mean..."
+            n "It's not that I {i}don't{/i} like you,{w=0.1} o-{w=0.1}or anything,{w=0.1} but..."
+            n "Uuuuu..."
+            n "F-{w=0.1}forget it!{w=0.2} I-{w=0.1}it's nothing..."
+            n "I guess..."
+            $ relationship("affinity+")
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+            n "Pffffft!"
+            n "Ahaha!"
+            n "You can't be serious,{w=0.1} [player]!{w=0.2} You're just messing with me!{w=0.2} Right?"
+            n "R-{w=0.1}right...?{w=0.2} Ahaha..."
+            n "..."
+            n "J-{w=0.1}jeez!{w=0.2} Enough of this!"
+            n "You really shouldn't mess around with girls like that,{w=0.1} [player]..."
+            n "Y-{w=0.1}you're just lucky I've got a great sense of humour."
+            n "S-{w=0.1}so it's fine...{w=0.3} this time..."
+            n "Just...{w=0.3} think a little before you just blurt stuff out, alright?"
+            n "[chosen_tease.capitalize()]..."
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+            n "Urk-!"
+            n "W-{w=0.1}what did you..."
+            n "Did you just...?"
+            n "A-{w=0.1}ahaha!{w=0.2} Y-{w=0.1}yeah!{w=0.2} Who wouldn't love me,{w=0.1} right?"
+            n "My wit,{w=0.1} my style,{w=0.1} my killer sense of humour...{w=0.3} I've got it all.{w=0.1} Yeah..."
+            n "D-{w=0.1}don't get the wrong idea or a-{w=0.1}anything, though!"
+            n "I-{w=0.1}I mean,{w=0.1} I'm just glad you have some good taste."
+            n "Ehehe..."
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET: 
+            n "..."
+            n "Seriously,{w=0.1} [player]?{w=0.2} You're really going to say that to me {i}now{/i}?"
+            n "The first time you choose to say it...{w=0.3} and you say it {i}now{/i}?"
+            n "..."
+            n "...I don't even know if I can believe you,{w=0.1} [player]."
+            n "And you know what?{w=0.2} That makes it so much worse."
+            n "..."
+            n "We're done with this."
+            n "And if you {i}really{/i} feel that way?"
+            n "...Then why aren't you trying to make this work,{w=0.1} [player]?"
+            $ relationship("affinity-")
+
+        else:
+            # :(
+            n "..."
+            n "Y-{w=0.1}you..."
+            n "You...{w=0.3} h-{w=0.1}how...!"
+            n "H-{w=0.1}how {i}dare{/i} you tell me that now!"
+            n "{i}How {w=0.3} dare {w=0.3} you.{/i}"
+            n "..."
+            n "You knew how I felt,{w=0.1} [player]..."
+            n "You knew for such a long time..."
+            n "And now?{w=0.2} {i}Now{/i} is when you tell me?"
+            n "For the {i}first time{/i}?"
+            n "..."
+            n "I...{w=0.3} I c-{w=0.1}can't do this right now."
+            n "It...{w=0.5} it hurts..."
+            n "..."
+            n "Get out of my sight, [player]."
+            n "..."
+            n "Go!"
+            n "{i}Just leave me alone!{/i}{nw}"
+            $ relationship("affinity-")
+            return { "quit": None }
+    
+    # Standard flows
+    else:
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+
+            # At this point, Natsuki is super comfortable with her player, so we can be open and vary things!
+            $ random_response_index = random.randint(0, 6)
+
+            if random_response_index == 0:
+                n "Ehehe.{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
+                n "You're always [chosen_descriptor] to me."
+
+            elif random_response_index == 1:
+                n "Aww,{w=0.1} you don't say?"
+                n "Ahaha!"
+                n "[chosen_endearment],{w=0.1} I love you too!"
+                n "I'll always be here to stick up for you."
+
+            elif random_response_index == 2:
+                n "Aww,{w=0.1} [chosen_endearment]!{w=0.2} I love you too!"
+                n "You're the best thing that's ever happened to me."
+
+            elif random_response_index == 3:
+                n "Oh?{w=0.2} Someone's all needy today,{w=0.1} huh?"
+                n "Well,{w=0.1} I'd be happy to oblige!"
+                n "I love you too,{w=0.1} [chosen_endearment]!"
+                n "Keep on smiling for me,{w=0.1} 'kay?"
+
+            elif random_response_index == 4:
+                n "Fawning over me like always,{w=0.1} [player]?"
+                n "Ehehe.{w=0.2} Don't worry,{w=0.1} I'm not complaining!"
+                n "I love you too,{w=0.1} [chosen_endearment]!"
+                n "It's just us two against the world!"
+
+            elif random_response_index == 5:
+                n "Well,{w=0.1} o-{w=0.1}of course you do.{w=0.2} Ahaha!"
+                n "But...{w=0.3} we both know I love you more,{w=0.1} [player]."
+                menu:
+                    "No, I love you more.":
+                        n "No,{w=0.1} I-"
+                        n "..."
+                        n "Hey...{w=0.3} wait a minute..."
+                        n "I know where we're going with this!{w=0.2} Nice try,{w=0.1} [player]!"
+                        n "You're just gonna have to accept that I love you more,{w=0.1} and that's just the way it is."
+                        menu:
+                            "You love me more, and that's just the way it is.":
+                                n "Ehehe.{w=0.2} See?"
+                                n "That wasn't so hard,{w=0.1} was it?"
+                                n "I looooove you,{w=0.1} [player]~!"
+
+                    "Okay.":
+                        n "Pfffft!{w=0.2} Ahaha!"
+                        n "Come on,{w=0.1} [player]!{w=0.2} Where's your fighting spirit?"
+                        n "Well,{w=0.1} whatever.{w=0.2} I'm just glad you accept the truth."
+                        n "Ehehe."
+
+            else:
+                n "Oh?{w=0.2} Lovey-dovey as usual?"
+                n "You're such a softie,{w=0.1} [player].{w=0.2} Ehehe."
+                n "But...{w=0.3} I'm not gonna complain!{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
+                n "You always make me feel tall."
+
+            $ relationship("affinity+")
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+            n "G-{w=0.1}gah!{w=0.2} [player]!"
+            n "What did I say about making things awkward?{w=0.2} Now it's twice as awkward!"
+            n "Jeez..."
+            n "Let's just talk about something,{w=0.1} alright?"
+            n "Y-{w=0.1}you can fawn over me in your {i}own{/i} time.{w=0.2} Ahaha!"
+            $ relationship("affinity+")
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+            n "H-{w=0.1}hey! I thought I told you not to just come out with stuff like that!"
+            n "Jeez,{w=0.1} [player]..."
+            n "I don't know if you're trying to win me over,{w=0.1} or what..."
+            n "But you're gonna have to try harder than that!{w=0.2} Ehehe..."
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+            n "G-{w=0.1}gah!"
+            n "[player_initial]-{w=0.1}[player]!"
+            n "Stop being gross!{w=0.2} Gosh..."
+            n "..."
+            n "I don't know if you think this is a joke,{w=0.1} or what..."
+            n "But it really isn't funny to me,{w=0.1} [player]."
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
+            n "..."
+            n "Talk is cheap,{w=0.1} [player]."
+            n "If you {i}really{/i} care about me like that..."
+            n "Then {i}prove{/i} it."
+            $ relationship("affinity-")
+
+        else:
+            n "..."
+            n "You're actually unbelievable,{w=0.1} [player]."
+            n "Do you even understand what you're saying?"
+            n "..."
+            n "You know what?{w=0.2} Whatever.{w=0.2} I don't care anymore."
+            n "Say what you like,{w=0.1} [player].{w=0.2} It changes nothing."
+            $ relationship("affinity-")
+
+    $ persistent.jn_player_love_you_count += 1
     return
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
