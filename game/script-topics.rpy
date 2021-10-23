@@ -1654,16 +1654,16 @@ label talk_aging:
     n "But anyway...{w=0.3} I think we got side-tracked."
     n "I don't really care how old you are,{w=0.1} [player]."
 
-    if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVE:
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
         n "I love you all the same,{w=0.1} [chosen_tease]."
         n "Don't forget that,{w=0.1} 'kay?"
         n "Or you might make me a little angry.{w=0.2} Ehehe."
 
-    elif jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         n "You've been pretty awesome to me all the same."
 
-    elif jn_affinity.get_affinity_state() >= store.jn_affinity.HAPPY:
+    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
         n "You're always fun to hang around with!"
 
     else:
