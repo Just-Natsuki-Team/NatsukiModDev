@@ -1824,66 +1824,69 @@ label talk_sleeping_well:
 
     return
 
-label talk_natsukis_hairstyle:
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n "Hmm?{w=0.2} My hairstyle?"
-        n "Why do you ask,{w=0.1} [player]?{w=0.2} Looking for a stylist?"
-        n "Ehehe."
+# Natsuki discusses aging, and her carefree attitude towards the age-gap in relationships
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_aging",
+            unlocked=True,
+            prompt="Aging",
+            conditional=None,
+            category=["Life"],
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "Huh?{w=0.2} My hairstyle?"
-        n "Wait...{w=0.3} are you messing with me?{w=0.2} What do you mean?"
-        n "You better not be teasing me,{w=0.1} [player]..."
+label talk_aging:
+    n "You know,{w=0.1} [player]..."
+    n "I think most people share a bunch of fears."
+    n "You get what I mean,{w=0.1} right?{w=0.2} Like presenting stuff to a room full of people,{w=0.1} or failing a test."
+    n "Of course,{w=0.1} it's rare to find one that {i}everyone{/i} has..."
+    n "Or at least something that makes anyone feel uneasy."
+    n "But...{w=0.3} I think I found one!"
+    n "What am I thinking of,{w=0.1} you ask?"
+    n "Well...{w=0.3} it's actually kinda boring,{w=0.1} really."
+    n "I was actually thinking about growing older."
+    n "Have you ever thought much about it,{w=0.1} [player]?"
+    n "It's probably the last thing on your mind if you're pretty young."
+    n "But I think as you actually get older,{w=0.1} it starts to creep in."
+    n "You might have less energy,{w=0.1} or friends and family begin drifting away..."
+    n "Birthdays lose all meaning -{w=0.1} you might even dread them!"
+    n "The signs appear in a bunch of ways,{w=0.1} but that's what makes it unnerving."
+    n "Everyone experiences it differently,{w=0.1} and we don't even know what happens after the end!"
+    n "Spooky,{w=0.1} huh?" 
+    n "Although... I guess you could say that's more the fear of the unknown than aging itself."
+    n "What does wind me up though is how immature people can be about it."
+    n "Especially when it comes to relationships between different ages!"
+    n "People just get so preachy about it..."
+    n "Like...{w=0.3} as long as they're both happy,{w=0.1} and nobody is being hurt or made uncomfortable,{w=0.1} who actually cares?"
+    n "It's just like most stuff,{w=0.1} really."
+    n "Besides,{w=0.1} it's not like being a certain age means you {i}have{/i} to be a certain way."
+    n "I mean...{w=0.3} look at Yuri!"
+    n "Being all old-fashioned like that -{w=0.1} you'd think she's retired!"
+    n "But anyway...{w=0.3} I think we got side-tracked."
+    n "I don't really care how old you are,{w=0.1} [player]."
 
-    else:
-        n "...Huh?{w=0.2} Oh.{w=0.2} My hair."
-        n "I'm...{w=0.3} surprised you care enough to ask about that."
-
-    n "Well,{w=0.1} anyway."
-    n "I never really thought about it that much,{w=0.1} honestly."
-    n "I just thought ponytails would look cute on me..."
-
-    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "...Yeah,{w=0.1} yeah.{w=0.2} I know what you're thinking,{w=0.1} [player]."
-
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "Was I wrong...?"
-            n "Ehehe.{w=0.2} I thought not."
-
-    n "As for the bangs,{w=0.1} I...{w=0.3} always found it difficult to get my hair cut."
-
-    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "It just costs so much,{w=0.1} you know?{w=0.2} It's super dumb!"
-        n "Like...{w=0.3} I don't get it at all!"
-        n "And the annoying thing is that if I were a guy,{w=0.1} it'd be way cheaper!{w=0.2} What's up with that?"
-        n "Ugh...{w=0.3} anyway."
-
-    else:
-        n "I was always kinda short."
-        n "...And no,{w=0.1} {i}not{/i} in the physical sense."
-
-    n "As for my hairclip?{w=0.2} It's just to keep my hair out of my eyes."
-    n "Looking good is a bonus,{w=0.1} but I mostly just got tired of brushing my hair out of my face."
-    n "Have I thought about other hairstyles?{w=0.2} Well..."
-
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-        n "I'm pretty sure I already let my hair down around you,{w=0.1} [chosen_tease]. Wouldn't you agree?"
-        n "Ahaha!"
+        n "I love you all the same,{w=0.1} [chosen_tease]."
+        n "Don't forget that,{w=0.1} 'kay?"
+        n "Or you might make me a little angry.{w=0.2} Ehehe."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "You know what they say,{w=0.1} [player]."
-        n "If it ain't broke,{w=0.1} don't fix it!"
-        n "Ehehe."
+    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n "You've been pretty awesome to me all the same."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+        n "You're always fun to hang around with!"
 
     else:
-        n "...At this point,{w=0.1} [player]?{w=0.2} I'd rather you stayed {i}out{/i} of my hair."
-        
-        if jn_affinity.get_affinity_state() <= jn_affinity.DISTRESSED:
-            n "I'm about done talking."
-
-        else:
-            n "Thanks."
+        n "But...{w=0.3} just in case?"
+        n "We're only having one candle on your birthday cake.{w=0.2} Sorry." 
+        n "Ahaha!"
 
     return
 
