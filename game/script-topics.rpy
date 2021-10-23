@@ -1626,7 +1626,7 @@ init 5 python:
 
 label talk_i_love_you:
     # We use these a lot here, so we define them in a higher scope
-    $ player_initial = list(player)[0]
+    $ player_initial = player[0]
     $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
     $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
     $ chosen_descriptor = random.choice(jn_globals.DEFAULT_PLAYER_DESCRIPTORS)
@@ -1699,7 +1699,7 @@ label talk_i_love_you:
             n "Y-{w=0.1}you're just lucky I've got a great sense of humour."
             n "S-{w=0.1}so it's fine...{w=0.3} this time..."
             n "Just...{w=0.3} think a little before you just blurt stuff out, alright?"
-            n "[chosen_tease.captalize()]..."
+            n "[chosen_tease.capitalize()]..."
 
         elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
             n "Urk-!"
@@ -1750,7 +1750,7 @@ label talk_i_love_you:
     # Standard flows
     else:
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVED:
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVE:
 
             # At this point, Natsuki is super comfortable with her player, so we can be open and vary things!
             $ random_response_index = random.randint(0, 6)
