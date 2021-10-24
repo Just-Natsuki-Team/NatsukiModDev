@@ -1,6 +1,8 @@
 default persistent.playername = ""
 default player = persistent.playername
 
+default persistent.function_limits = dict()
+
 # Generic data
 default persistent.jn_total_visit_count = 0
 default persistent.jn_first_visited_date = None
@@ -520,6 +522,9 @@ init -990 python in jn_globals:
 init 10 python in jn_globals:
     # The current affection state. We default this to 5 (NORMAL)
     current_affinity_state = store.jn_affinity.NORMAL
+
+    # current label
+    current_label = None
 
 #Stuff that's really early, which should be usable basically anywhere
 init -999 python in utils:
