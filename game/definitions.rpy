@@ -570,6 +570,70 @@ init -999 python in utils:
         """
         return datetime.datetime.now() - store.jn_globals.current_session_start_time
 
+init python:
+    def label_callback(name, abnormal):
+        jn_globals.current_label = name #NOTE: should this be a persistent or jn_globals?
+
+    renpy.config.label_callback = label_callback
+
+    def function_limit(func, max_calls=1, reset_in=86400, *args, **kwargs):
+        """
+        Calls `func` and passes it *args and **kwargs if it has not been called in the current label
+        in last `reset_in` seconds `max_calls` times
+
+        IN:
+            func: function object to call
+            max_calls: <int> function call limit
+            reset_in: in how many seconds should recorded number of function calls be reset (there is 100% a better way to phrase this)
+            *args: arguments passed to func
+            **kwargs: keyword arguments passed to func
+        """
+        curr_label = jn_globals.current_label
+        # check if this function was called before in this label
+        #  if not - add it into database (is it a db?) and call it
+        if not func in persistent.function_limits:
+            persistent.function_limits[func] = {
+                curr_label: {
+                    "calls" : 1,
+                    "reset_in" : reset_in+time.time()
+                }
+            }
+            func(*args, **kwargs)
+            return
+
+        # if it was already called but not in this label
+        #  append info to it under the label
+        if not curr_label in persistent.function_limits[func]:
+            persistent.function_limits[func][curr_label] = {
+                "calls" : 1,
+                "reset_in" : reset_in+time.time()
+            }
+            func(*args, **kwargs)
+            return
+
+        # get label specific info about function calls
+        limit_info = persistent.function_limits[func][curr_label]
+
+        # reset if it's time to reset
+        if limit_info["reset_in"] <= time.time():
+            # reseting is the same as adding a new entry into the db
+            # so we can just remove it and let code above do the work
+            #(though saying that, it is pretty scary using recursion)
+            persistent.function_limits[func].pop(curr_label)
+            function_limit(func, max_calls, reset_in, *args, **kwargs)
+            return
+
+        # if we've hit max calls do nothing
+        if limit_info["calls"] >= max_calls:
+            return
+
+        # all checks done so
+        #  increment number of calls
+        #  run function
+        limit_info["calls"] += 1
+        func(*args, **kwargs)
+        return
+
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
 define audio.t2 = "<loop 4.499>bgm/2.ogg"   #Sayori theme
 define audio.t2g = "bgm/2g.ogg"
