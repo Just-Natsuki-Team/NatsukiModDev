@@ -552,12 +552,14 @@ label greeting_feeling_better_tired:
 
 # Time-of-day based greetings
 
-# Super-early morning
+# Early morning
+
+# Natsuki questions why the player is up so early
 init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_morning_super_early",
+            label="greeting_early_morning_why_are_you_here",
             unlocked=True,
             conditional="utils.get_current_hour() in range(2, 4)",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
@@ -565,7 +567,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_morning_super_early:
+label greeting_early_morning_why_are_you_here:
     n "H-{w=0.1}huh?{w=0.2} [player]?!"
     n "What the heck are you doing here so early?"
     n "Did you have a nightmare or something?"
@@ -593,11 +595,12 @@ label greeting_morning_starshine:
     n "Good morning,{w=0.1} starshine!"
     n "The Earth says 'Hello!'"
     n "..."
-    n "Pffff-!"
-    n "I'm sorry!{w=0.2} It's just such a dumb thing to say!{w=0.2} I can't keep a straight face!"
+    n "Pfffft-!"
+    n "I'm sorry!{w=0.2} It's just such a dumb thing to say...{w=0.3} I can't keep a straight face!"
     n "Ehehe."
     $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
-    n "You really are my starshine though,{w=0.1} [chosen_endearment].{w=0.2} Welcome back!"
+    n "You really are my starshine though,{w=0.1} [chosen_endearment]."
+    n "Welcome back!"
     return
 
 # Natsuki doesn't like to be kept waiting around in the morning
@@ -614,23 +617,34 @@ init 5 python:
     )
 
 label greeting_morning_waiting_for_you:
-    n ""
+    n "Oh! Well look who finally decided to show up!"
+    n "You know I don't like being kept waiting...{w=0.3} right?"
+    n "Ehehe.{w=0.2} You're just lucky I'm in a good mood."
+    n "You better make it up to me,{w=0.1} [player]~!"
+    return
 
-# Sleepyhead!
+# Natsuki doesn't like a lazy player!
 init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
             label="greeting_morning_lazy",
             unlocked=True,
-            conditional="utils.get_current_hour() in range(5, 11)",
+            conditional="utils.get_current_hour() in range(10, 11)",
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_morning_lazy:
-    n ""
+    n "Oho!{w=0.2} Well look who finally crawled out of bed today!"
+    n "Jeez,{w=0.1} [player]...{w=0.3} I swear you're lazier than Sayori sometimes!"
+    n "Ehehe."
+    n "Well,{w=0.1} you're here now -{w=0.1} and that's all I care about."
+    n "Let's make the most of today,{w=0.1} [player]!"
+    n "Or...{w=0.3} what's left of it?"
+    n "Ahaha."
+    return
 
 init 5 python:
     registerTopic(
@@ -645,10 +659,10 @@ init 5 python:
     )
 
 label greeting_morning_top_of_the_mornin:
-    n "Oh! It's [player]!"
-    n "Well - top of the mornin' to you!"
+    n "Oh!{w=0.2} It's [player]!"
+    n "Well -{w=0.1} top of the mornin' to you!"
     n "..."
-    n "What? I'm allowed to say dumb things too, right?"
+    n "What?{w=0.2} I'm allowed to say dumb things too,{w=0.1} right?"
     n "Ehehe."
     return
 
