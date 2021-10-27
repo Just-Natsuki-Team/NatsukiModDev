@@ -561,7 +561,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_early_morning_why_are_you_here",
             unlocked=True,
-            conditional="utils.get_current_hour() in range(2, 4)",
+            conditional="utils.get_current_hour() in range(3, 4)",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -749,3 +749,41 @@ label greeting_evening_took_long_enough:
     return
 
 # Night
+
+# Natsuki enjoys staying up late too
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_night_up_late",
+            unlocked=True,
+            conditional="utils.get_current_hour() >= 22 or utils.get_current_hour() <= 2",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_night_up_late:
+    n "Oh!{w=0.2} Hey,{w=0.1} [player]."
+    n "Late night for you too,{w=0.1} huh?"
+    n "Well...{w=0.3} I'm not complaining!{w=0.2} Welcome back!"
+    return
+
+# Natsuki is also a night owl
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_night_night_owl",
+            unlocked=True,
+            conditional="utils.get_current_hour() >= 22 or utils.get_current_hour() <= 2",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_night_night_owl:
+    n "Oh,{w=0.1} [player]!{w=0.2} You're a night owl too,{w=0.1} are you?"
+    n "Not that I have a problem with that,{w=0.1} obviously."
+    n "Welcome back!"
+    return
