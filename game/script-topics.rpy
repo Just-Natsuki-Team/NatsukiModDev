@@ -1883,6 +1883,7 @@ label talk_using_headphones_carefully:
     n "It's...{w=0.3} not healthy to do that either,{w=0.1} [player]."
     n "...And that's about all I had to say!"
     n "Thanks for hearing me out!{w=0.2} Ehehe."
+    return
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
