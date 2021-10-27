@@ -646,6 +646,7 @@ label greeting_morning_lazy:
     n "Ahaha."
     return
 
+# Natsuki uses a silly greeting
 init 5 python:
     registerTopic(
         Topic(
@@ -668,6 +669,83 @@ label greeting_morning_top_of_the_mornin:
 
 # Afternoon
 
+# Natsuki hopes the player is keeping well
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_afternoon_keeping_well",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(12, 17)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_afternoon_keeping_well:
+    n "Hey!{w=0.2} Afternoon,{w=0.1} [player]!"
+    n "Keeping well?"
+    return
+
+# Natsuki asks how the player's day is going
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_afternoon_how_are_you",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(12, 17)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_afternoon_how_are_you:
+    n "Oh!{w=0.2} Afternoon,{w=0.1} [player]!"
+    n "How're you doing today?"
+    return
+
 # Evening
+
+# Natsuki tells the player they can relax now
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_evening_long_day",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(18, 21)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_evening_long_day:
+    n "Aha!{w=0.2} Evening,{w=0.1} [player]!"
+    n "Long day,{w=0.1} huh?{w=0.2} Well,{w=0.1} you've come to the right place!"
+    n "Just tell Natsuki all about it!"
+    return
+
+# Natsuki teases the player for taking so long
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_evening_took_long_enough",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(18, 21)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_evening_took_long_enough:
+    $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+    n "[player]!{w=0.2} There you are,{w=0.1} [chosen_tease]!"
+    n "Jeez...{w=0.3} took you long enough!"
+    n "Ehehe."
+    n "I'm just kidding!{w=0.2} Don't worry about it."
+    n "Welcome back!"
+    return
 
 # Night
