@@ -549,3 +549,111 @@ label greeting_feeling_better_tired:
             n "I don't want you face-planting your desk for my sake..."
             $ admissions.last_admission_type = admissions.TYPE_TIRED
     return
+
+# Time-of-day based greetings
+
+# Super-early morning
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_morning_super_early",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(2, 4)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_morning_super_early:
+    n "H-{w=0.1}huh?{w=0.2} [player]?!"
+    n "What the heck are you doing here so early?"
+    n "Did you have a nightmare or something?"
+    n "Or...{w=0.3} maybe you never slept?{w=0.2} Huh."
+    n "Well,{w=0.1} anyway..."
+    n "Morning,{w=0.1} I guess!{w=0.2} Ehehe."
+    return
+
+# Morning
+
+# The Earth says hello!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_morning_starshine",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(5, 11)",
+            affinity_range=(jn_aff.ENAMORED, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_morning_starshine:
+    n "Good morning,{w=0.1} starshine!"
+    n "The Earth says 'Hello!'"
+    n "..."
+    n "Pffff-!"
+    n "I'm sorry!{w=0.2} It's just such a dumb thing to say!{w=0.2} I can't keep a straight face!"
+    n "Ehehe."
+    $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+    n "You really are my starshine though,{w=0.1} [chosen_endearment].{w=0.2} Welcome back!"
+    return
+
+# Natsuki doesn't like to be kept waiting around in the morning
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_morning_waiting_for_you",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(5, 11)",
+            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_morning_waiting_for_you:
+    n ""
+
+# Sleepyhead!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_morning_lazy",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(5, 11)",
+            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_morning_lazy:
+    n ""
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_morning_top_of_the_mornin",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(5, 11)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_morning_top_of_the_mornin:
+    n "Oh! It's [player]!"
+    n "Well - top of the mornin' to you!"
+    n "..."
+    n "What? I'm allowed to say dumb things too, right?"
+    n "Ehehe."
+    return
+
+# Afternoon
+
+# Evening
+
+# Night

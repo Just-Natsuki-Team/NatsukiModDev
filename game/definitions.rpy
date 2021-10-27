@@ -666,6 +666,16 @@ init python in utils:
         else:
             return "a while"
 
+    def get_current_hour():
+        """
+        Gets the current hour (out of 24) of the day.
+
+        OUT:
+            Integer representing the current hour of the day.
+        """
+        return datetime.datetime.now().hour
+
+
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
 define audio.t2 = "<loop 4.499>bgm/2.ogg"   #Sayori theme
 define audio.t2g = "bgm/2g.ogg"
