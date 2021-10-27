@@ -653,7 +653,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_morning_top_of_the_mornin",
             unlocked=True,
-            conditional="utils.get_current_hour() in range(5, 11)",
+            conditional="utils.get_current_hour() in range(8, 11)",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING

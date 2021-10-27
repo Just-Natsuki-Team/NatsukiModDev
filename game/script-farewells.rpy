@@ -1185,3 +1185,112 @@ init 5 python:
 label farewell_fallback_see_you_soon:
     n "Alright, see you soon."
     return { "quit": None }
+
+# Time-of-day based farewells
+
+# Early morning
+
+# Natsuki thanks the player for visiting so early
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_early_morning_going_this_early",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(3, 4)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label farewell_early_morning_going_this_early:
+    n "Huh?{w=0.2} You're going this early?"
+    n "...Oh."
+    n "I-{w=0.1}I mean,{w=0.1} it was cool of you to drop by,{w=0.1} [player]!"
+    n "Just don't rush things for my sake,{w=0.1} alright?"
+    n "Take care out there!"
+    return
+
+# Morning
+
+# Natsuki wishes the player a good day
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_morning_heading_off",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(5, 11)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label farewell_morning_heading_off:
+    n "Heading off now,{w=0.1} [player]?{w=0.2} No worries!"
+    n "Have a good day!"
+    return
+
+# Afternoon
+
+# Natsuki asks that the player visit later
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_afternoon_",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(12, 17)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label farewell_afternoon_:
+    n "Oh?{w=0.2} Leaving a little later today,{w=0.1} [player]?"
+    n "I guess that's fine...{w=0.3} just remember to come visit soon,{w=0.1} 'kay?"
+    n "I'll be mad if you don't."
+    n "Ehehe.{w=0.2} Stay safe,{w=0.1} [player]!"
+    return
+
+# Evening
+
+# Natsuki wishes the player a good evening
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_evening_good_evening",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(18, 21)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label farewell_evening_good_evening:
+    n "Huh?{w=0.2} You're heading off now,{w=0.1} [player]?"
+    n "Well...{w=0.3} alright."
+    n "Have a good evening!{w=0.2} Come see me soon,{w=0.1} 'kay?"
+    return
+
+# Night
+
+# Natsuki can't fault the player for turning in
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_night_good_night",
+            unlocked=True,
+            conditional="utils.get_current_hour() >= 22 or utils.get_current_hour() <= 2",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label farewell_night_good_night:
+    n "Oh?{w=0.2} Are you turning in now?"
+    n "Well...{w=0.3} I can't say I blame you."
+    n "Good night,{w=0.1} [player]!"
+    return
