@@ -196,6 +196,9 @@ init 0 python:
                     store.utils.log(e.message, utils.SEVERITY_ERR)
                     return False
 
+            else:
+                return True
+
         def curr_affinity_in_affinity_range(self, affinity_state=None):
             """
             Checks if the current affinity is within this topic's affinity_range
@@ -276,6 +279,7 @@ init 0 python:
             location=None,
             affinity=None,
             trust=None,
+            conditional=None,
             includes_categories=list(),
             excludes_categories=list(),
             additional_properties=list()
@@ -322,6 +326,9 @@ init 0 python:
             if trust and not self.evaluate_trust_range(trust):
                 return False
 
+            if conditional and not self.check_conditional():
+                return False
+
             if includes_categories and len(set(includes_categories).intersection(set(self.category))) != len(includes_categories):
                 return False
 
@@ -353,6 +360,7 @@ init 0 python:
             location=None,
             affinity=None,
             trust=None,
+            conditional=None,
             includes_categories=list(),
             excludes_categories=list(),
             additional_properties=list()
@@ -381,6 +389,7 @@ init 0 python:
                     location,
                     affinity,
                     trust,
+                    conditional,
                     includes_categories,
                     excludes_categories,
                     additional_properties

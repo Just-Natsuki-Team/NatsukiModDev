@@ -17,6 +17,7 @@ init python in farewells:
         farewell_pool = store.Topic.filter_topics(
             FAREWELL_MAP.values(),
             affinity=store.jn_globals.current_affinity_state,
+            conditional=True,
             additional_properties=[
                 ("is_time_sensitive", store.utils.get_current_session_length().total_seconds() / 60 < 30),
                 ("has_stay_option", not store.jn_globals.player_already_stayed_on_farewell and jn_globals.current_affinity_state >= 6)
@@ -1200,7 +1201,7 @@ init 5 python:
             conditional="utils.get_current_hour() in range(3, 4)",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
-        topic_group=TOPIC_TYPE_GREETING
+        topic_group=TOPIC_TYPE_FAREWELL
     )
 
 label farewell_early_morning_going_this_early:
@@ -1223,7 +1224,7 @@ init 5 python:
             conditional="utils.get_current_hour() in range(5, 11)",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
-        topic_group=TOPIC_TYPE_GREETING
+        topic_group=TOPIC_TYPE_FAREWELL
     )
 
 label farewell_morning_heading_off:
@@ -1243,7 +1244,7 @@ init 5 python:
             conditional="utils.get_current_hour() in range(12, 17)",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
-        topic_group=TOPIC_TYPE_GREETING
+        topic_group=TOPIC_TYPE_FAREWELL
     )
 
 label farewell_afternoon_:
@@ -1265,7 +1266,7 @@ init 5 python:
             conditional="utils.get_current_hour() in range(18, 21)",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
-        topic_group=TOPIC_TYPE_GREETING
+        topic_group=TOPIC_TYPE_FAREWELL
     )
 
 label farewell_evening_good_evening:
@@ -1286,7 +1287,7 @@ init 5 python:
             conditional="utils.get_current_hour() >= 22 or utils.get_current_hour() <= 2",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
-        topic_group=TOPIC_TYPE_GREETING
+        topic_group=TOPIC_TYPE_FAREWELL
     )
 
 label farewell_night_good_night:

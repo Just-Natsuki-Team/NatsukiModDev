@@ -15,7 +15,8 @@ init python in greetings:
         kwargs = dict()
 
         kwargs.update(
-            {"excludes_categories": ["Admission"]} if not store.persistent.jn_player_admission_type_on_quit else {"additional_properties": [("admission_type", store.persistent.jn_player_admission_type_on_quit)]}
+            {"excludes_categories": ["Admission"]} if not store.persistent.jn_player_admission_type_on_quit
+            else {"additional_properties": [("admission_type", store.persistent.jn_player_admission_type_on_quit)]}
         )
 
         store.persistent.jn_player_admission_type_on_quit = None
@@ -24,6 +25,7 @@ init python in greetings:
             store.Topic.filter_topics(
                 GREETING_MAP.values(),
                 affinity=store.jn_globals.current_affinity_state,
+                conditional=True,
                 **kwargs
             )
         ).label
@@ -784,6 +786,5 @@ init 5 python:
 
 label greeting_night_night_owl:
     n "Oh,{w=0.1} [player]!{w=0.2} You're a night owl too,{w=0.1} are you?"
-    n "Not that I have a problem with that,{w=0.1} obviously."
-    n "Welcome back!"
+    n "Not that I have a problem with that,{w=0.1} of course - welcome back!"
     return
