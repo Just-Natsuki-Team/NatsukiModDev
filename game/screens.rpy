@@ -2381,6 +2381,7 @@ screen confirm_quit(is_quitting):
                         # Player has decided to ditch Natsuki; add a pending apology then quit
                         apologies.add_new_pending_apology(apologies.APOLOGY_TYPE_SUDDEN_LEAVE),
                         SetField(persistent, "jn_player_apology_type_on_quit", apologies.APOLOGY_TYPE_SUDDEN_LEAVE),
+                        relationship("affinity-"),
                         Quit(confirm=False)
                     ]
                 else:
