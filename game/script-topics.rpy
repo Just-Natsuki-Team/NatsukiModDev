@@ -13,9 +13,6 @@ default persistent.jn_player_appearance_hair_length = None
 default persistent.jn_player_appearance_hair_colour = None
 default persistent.jn_player_appearance_height_cm = None
 
-# Hobby data
-default persistent.jn_player_gaming_frequency = None
-
 init python in topics:
     import store
     TOPIC_MAP = dict()
@@ -1827,76 +1824,69 @@ label talk_sleeping_well:
 
     return
 
-# Natsuki discusses her gaming habits
+# Natsuki discusses aging, and her carefree attitude towards the age-gap in relationships
 init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_gaming",
+            label="talk_aging",
             unlocked=True,
-            prompt="Are you into video games?",
-            category=["Natsuki", "Media"],
-            player_says=True,
+            prompt="Aging",
+            conditional=None,
+            category=["Life"],
+            nat_says=True,
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label talk_gaming:
-    n "Gaming?" 
-    n "Well...{w=0.3} duh!"
-    n "You bet I'm into gaming,{w=0.1} [player]!"
-    n "I wouldn't say I'm the most active player...{w=0.2} but I definitely do my share of button mashing."
-    n "Hmm..."
-    n "I don't think I even need to ask,{w=0.1} but..."
-    menu:
-        n "What about you,{w=0.1} [player]?{w=0.2} Do you play often?"
+label talk_aging:
+    n "You know,{w=0.1} [player]..."
+    n "I think most people share a bunch of fears."
+    n "You get what I mean,{w=0.1} right?{w=0.2} Like presenting stuff to a room full of people,{w=0.1} or failing a test."
+    n "Of course,{w=0.1} it's rare to find one that {i}everyone{/i} has..."
+    n "Or at least something that makes anyone feel uneasy."
+    n "But...{w=0.3} I think I found one!"
+    n "What am I thinking of,{w=0.1} you ask?"
+    n "Well...{w=0.3} it's actually kinda boring,{w=0.1} really."
+    n "I was actually thinking about growing older."
+    n "Have you ever thought much about it,{w=0.1} [player]?"
+    n "It's probably the last thing on your mind if you're pretty young."
+    n "But I think as you actually get older,{w=0.1} it starts to creep in."
+    n "You might have less energy,{w=0.1} or friends and family begin drifting away..."
+    n "Birthdays lose all meaning -{w=0.1} you might even dread them!"
+    n "The signs appear in a bunch of ways,{w=0.1} but that's what makes it unnerving."
+    n "Everyone experiences it differently,{w=0.1} and we don't even know what happens after the end!"
+    n "Spooky,{w=0.1} huh?" 
+    n "Although... I guess you could say that's more the fear of the unknown than aging itself."
+    n "What does wind me up though is how immature people can be about it."
+    n "Especially when it comes to relationships between different ages!"
+    n "People just get so preachy about it..."
+    n "Like...{w=0.3} as long as they're both happy,{w=0.1} and nobody is being hurt or made uncomfortable,{w=0.1} who actually cares?"
+    n "It's just like most stuff,{w=0.1} really."
+    n "Besides,{w=0.1} it's not like being a certain age means you {i}have{/i} to be a certain way."
+    n "I mean...{w=0.3} look at Yuri!"
+    n "Being all old-fashioned like that -{w=0.1} you'd think she's retired!"
+    n "But anyway...{w=0.3} I think we got side-tracked."
+    n "I don't really care how old you are,{w=0.1} [player]."
 
-        "Absolutely!":
-            $ persistent.jn_player_gaming_frequency = "High"
-            n "Yep!{w=0.2} Just as I suspected..."
-            n "[player] is a mega-dork."
-            n "Ahaha!"
-            n "Relax,{w=0.1} [player]!" 
-            n "I'm not much better,{w=0.1} after all."
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        n "I love you all the same,{w=0.1} [chosen_tease]."
+        n "Don't forget that,{w=0.1} 'kay?"
+        n "Or you might make me a little angry.{w=0.2} Ehehe."
 
-        "I play occasionally.":
-            $ persistent.jn_player_gaming_frequency = "Medium"
-            n "Yeah,{w=0.1} yeah.{w=0.2} Believe what you want to believe,{w=0.1} [player]."
-            n "I'm not sure I buy it,{w=0.1} though."
+    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n "You've been pretty awesome to me all the same."
 
-        "I don't play at all.":
-            $ persistent.jn_player_gaming_frequency = "Low"
-            n "Huh?{w=0.2} Really?"
-            n "Not even the odd casual game?"
-            n "It looks like I've got a lot to teach you, [player]!"
-
-    n "Anyway,{w=0.1} putting that aside..."
-    n "When it comes to my preferences?{w=0.2} I want challenge in my games!"
-    n "I play for the win{w=0.1} -{w=0.1} it's me versus the developers,{w=0.1} and they're not around to stop me!"
-    n "Ahaha."
-    n "I'm actually more into my roguelikes,{w=0.1} to be honest."
-    n "Heh.{w=0.2} Are you surprised,{w=0.1} [player]?"
-    n "Tough as nails,{w=0.1} and I gotta think on my feet{w=0.1} -{w=0.1} plus it's super satisfying learning everything too."
-    n "And with how random everything is,{w=0.1} they always feel refreshing and fun to play!"
-    n "Every time I load it up,{w=0.1} I have no idea what I'm up against...{w=0.3} I love it!"
-    n "Ehehe.{w=0.2} Don't worry though, [player]."
-    n "I don't know if you're into that kind of stuff as well,{w=0.1} but..."
-
-    if persistent.jn_player_gaming_frequency == "High":
-        n "There's still plenty I can teach you!"
-
-        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            n "And I'd be happy to oblige."
-
-    elif persistent.jn_player_gaming_frequency == "Medium":
-        n "I don't mind showing you how it's done."
-        n "I'm a professional,{w=0.1} after all!"
+    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+        n "You're always fun to hang around with!"
 
     else:
-        n "I don't think I'll have much trouble convincing you."
-        n "Ehehe."
+        n "But...{w=0.3} just in case?"
+        n "We're only having one candle on your birthday cake.{w=0.2} Sorry." 
+        n "Ahaha!"
 
     return
 
