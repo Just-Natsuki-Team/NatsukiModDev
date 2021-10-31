@@ -334,12 +334,12 @@ label apology_prolonged_leave:
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "[player]..."
-        n "What were you thinking?!{w=0.2} Just disappearing like that!"
+        n "What were you thinking?!{w=0.2} Just vanishing like that!"
         n "I waited so long for you...{w=0.3} I was starting to wonder if something bad happened!"
         n "N-{w=0.1}not that I care {i}that{/i} much,{w=0.1} but still...!"
         n "..."
         n "I'm...{w=0.3} grateful for your apology,{w=0.1} [player]."
-        n "Just...{w=0.3} no more vanishing acts,{w=0.1} alright?"
+        n "Just...{w=0.3} no more disappearing acts,{w=0.1} alright?"
         $ relationship("affinity+")
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:

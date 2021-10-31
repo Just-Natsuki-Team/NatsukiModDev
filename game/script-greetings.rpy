@@ -614,6 +614,8 @@ label greeting_sudden_leave:
         n "Welcome back to you,{w=0.1} too.{w=0.2} [chosen_insult]."
         $ apologies.add_new_pending_apology(apologies.APOLOGY_TYPE_SUDDEN_LEAVE)
 
+    return
+
 init 5 python:
     registerTopic(
         Topic(
@@ -630,8 +632,9 @@ init 5 python:
     )
 
 label greeting_prolonged_leave:
+    $ player_initial = list(player)[0]
+
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        $ player_initial = list(player)[0]
         n "[player_initial]-{w=0.1}[player]!"
         n "W-{w=0.1}where were you?!{w=0.2} I was so worried that something had happened!"
         n "..."
@@ -660,3 +663,5 @@ label greeting_prolonged_leave:
         n "So you came back."
         n "{i}Great{/i}."
         $ apologies.add_new_pending_apology(apologies.APOLOGY_TYPE_PROLONGED_LEAVE)
+
+    return

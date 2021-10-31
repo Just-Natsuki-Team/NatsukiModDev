@@ -28,7 +28,7 @@ label ch30_init:
     python:      
         # Determine if the player should get a prolonged leave greeting
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
-            persistent.last_apology_type = APOLOGY_TYPE_PROLONGED_LEAVE
+            persistent.last_apology_type = apologies.APOLOGY_TYPE_PROLONGED_LEAVE
 
         # Add to the total visits counter and set the last visit date
         persistent.jn_total_visit_count += 1

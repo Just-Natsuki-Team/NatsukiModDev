@@ -536,7 +536,8 @@ init -990 python in jn_globals:
     DEFAULT_PLAYER_INSULT_NAMES = [
         "jerk",
         "idiot",
-        "moron"
+        "moron",
+        "stupid"
     ]
 
     # Flavor text for the talk menu at high affinity
@@ -591,7 +592,14 @@ init -990 python in jn_globals:
         ":3",
         "^-^",
         "^_^",
-        ":]"
+        ":]",
+        ":D",
+        "(*^▽^*)",
+        "(^∇^)",
+        "(＾▽＾)",
+        "(=^▽^=)",
+        "(^ｖ^)",
+        "(^_^)"
     ]
 
     DEFAULT_ANGRY_EMOTICONS = [
@@ -601,14 +609,20 @@ init -990 python in jn_globals:
         "-.-",
         ">:T",
         ">:/",
-        ">:("
+        ">:(",
+        "(;¬_¬)",
+        "(¬_¬)"
     ]
 
     DEFAULT_SAD_EMOTICONS = [
         ":(",
         ":'(",
         ":/",
-        "._."
+        "._.",
+        "(⌣_⌣”)",
+        "( .. )",
+        "( ;; )",
+        "(|||;-;)"
     ]
 
     # Alphabetical (excluding numbers) values allowed for text input
