@@ -43,7 +43,7 @@ init 0 python in admissions:
 init 1 python:
     try:
         # Resets - remove these later, once we're done tweaking affinity/trust!
-        store.persistent._admission_database.clear()
+        persistent._admission_database.clear()
 
     except Exception as e:
         utils.log(e, utils.SEVERITY_ERR)
