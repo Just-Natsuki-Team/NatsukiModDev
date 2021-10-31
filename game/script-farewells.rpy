@@ -19,7 +19,7 @@ init python in farewells:
             affinity=store.jn_globals.current_affinity_state,
             additional_properties=[
                 ("is_time_sensitive", store.utils.get_current_session_length().total_seconds() / 60 < 30),
-                ("has_stay_option", not store.jn_globals.player_already_stayed_on_farewell and jn_globals.current_affinity_state >= 6)
+                ("has_stay_option", not store.jn_globals.player_already_stayed_on_farewell and store.jn_globals.current_affinity_state >= 6)
             ],
             excludes_categories=["Failsafe"]
         )

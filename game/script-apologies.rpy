@@ -20,6 +20,7 @@ init 0 python in apologies:
     APOLOGY_TYPE_SCREENSHOT = 5
     APOLOGY_TYPE_SUDDEN_LEAVE = 6
     APOLOGY_TYPE_UNHEALTHY = 7
+    APOLOGY_TYPE_SCARE = 8
 
     def get_all_apologies():
         """
@@ -596,4 +597,51 @@ label apology_unhealthy:
         n "At least you care that {i}you{/i} aren't being treated right."
 
     $ persistent.jn_player_pending_apologies.remove(apologies.APOLOGY_TYPE_UNHEALTHY)
+    return
+
+# Apology for giving Natsuki a fright
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._apology_database,
+            prompt="For scaring you.",
+            label="apology_scare",
+            unlocked=True,
+            conditional="apologies.get_apology_type_pending(apologies.APOLOGY_TYPE_SCARE)",
+            affinity_range=(None, jn_aff.LOVE)
+        ),
+        topic_group=TOPIC_TYPE_APOLOGY
+    )
+
+label apology_scare:
+    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n "And I should think so too,{w=0.1} [player] -{w=0.1} jeez!"
+        n "Are you trying to give me a heart attack or what?"
+        n "..."
+        n "Thank you,{w=0.1} [player].{w=0.2} I accept your apology."
+        n "Just please...{w=0.3} no more surprises like that,{w=0.1} okay?{w=0.1} For me?"
+        $ relationship("affinity+")
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n "A-and you're right {i}to{/i} be sorry,{w=0.1} [player]!"
+        n "Yeesh...{w=0.3} I hate being made to feel like that..."
+        n "..."
+        n "Alright,{w=0.1} look.{w=0.1} I accept your apology,{w=0.1} okay?"
+        n "Just don't do stuff like that to me.{w=0.2} Please?"
+        n "I'm not messing around,{w=0.1} [player]."
+        $ relationship("affinity+")
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n "...Look,{w=0.1} [player].{w=0.2} I'm already upset.{w=0.2} Why are you trying to make me feel even worse?"
+        n "Did you think it was funny?{w=0.2} Or are you trying to piss me off?"
+        n "..."
+        n "Whatever.{w=0.2} Fine.{w=0.2} Apology accepted,{w=0.1} if you even meant it."
+        n "Just knock it off."
+        $ relationship("affinity+")
+
+    else:
+        n "Stick it, [player]."
+        n "We both know you don't mean that."
+
+    $ persistent.jn_player_pending_apologies.remove(apologies.APOLOGY_TYPE_SCARE)
     return
