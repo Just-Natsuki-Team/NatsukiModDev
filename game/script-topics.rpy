@@ -159,7 +159,7 @@ label talk_print_keymap:
     n "And...{w=0.3} done!{w=0.2} You're welcome,{w=0.1} [player]~!{w=0.2} Ehehe."
     return
 
-# This topic allows us to print all keymap data to the log
+# *whistles innocently*
 init 5 python:
     registerTopic(
         Topic(
