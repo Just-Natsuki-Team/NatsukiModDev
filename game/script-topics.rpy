@@ -159,6 +159,69 @@ label talk_print_keymap:
     n "And...{w=0.3} done!{w=0.2} You're welcome,{w=0.1} [player]~!{w=0.2} Ehehe."
     return
 
+# This topic allows us to print all keymap data to the log
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_custom_say",
+            unlocked=True,
+            prompt="Can you say something for me?",
+            conditional=None,
+            category=["Debug"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_custom_say:
+    n "Oooh!{w=0.2} Are we pranking someone,{w=0.1} [player]?{w=0.2} I'm for it!"
+    $ player_input = renpy.input("What do you want me to say?")
+    menu:
+        n "Alright!{w=0.2} Now how do you want me to say it?"
+
+        "Neutrally":
+            n "Okaaay!{w=0.2} Here goes!"
+            show placeholder_natsuki neutral
+            n "[player_input]"
+
+        "Pleading":
+            n "Okaaay!{w=0.2} Here goes!"
+            show placeholder_natsuki plead
+            n "[player_input]"
+
+        "Sadly":
+            n "Okaaay!{w=0.2} Here goes!"
+            show placeholder_natsuki sad
+            n "[player_input]"
+
+        "Happily":
+            n "Okaaay!{w=0.2} Here goes!"
+            show placeholder_natsuki smile
+            n "[player_input]"
+
+        "Sparkly":
+            n "Okaaay!{w=0.2} Here goes!"
+            show placeholder_natsuki sparkle
+            n "[player_input]"
+
+        "Unamused":
+            n "Okaaay!{w=0.2} Here goes!"
+            show placeholder_natsuki unamused
+            n "[player_input]"
+
+        "Mischievously":
+            n "Okaaay!{w=0.2} Here goes!"
+            show placeholder_natsuki wink
+            n "[player_input]"
+    
+    n "..."
+    show placeholder_natsuki smile
+    n "...And we're done here! You're welcome, [player]!"
+
+    return
+
 # Natsuki's thoughts on having her picture taken via the ingame screenshot system
 init 5 python:
     registerTopic(
