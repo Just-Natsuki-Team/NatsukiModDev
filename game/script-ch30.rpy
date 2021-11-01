@@ -33,12 +33,21 @@ label ch30_init:
         # Add to the total visits counter and set the last visit date
         persistent.jn_total_visit_count += 1
         persistent.jn_last_visited_date = datetime.datetime.now()
+        utils.log(utils.pretty_print(config))
 
     # Let's pick a greeting
     $ push(greetings.select_greeting())
 
+    # Draw background and placeholder sprites
     $ main_background.draw(full_redraw=True)
-    show Natsuki zorder 3
+    show placeholder_sky_day zorder 0
+
+    if persistent.jn_player_apology_type_on_quit is not None or jn_affinity.get_affinity_state() < jn_affinity.NORMAL:
+        show placeholder_natsuki plead zorder 3
+
+    else:
+        show placeholder_natsuki smile zorder 3
+    
     show screen hkb_overlay
 
     # Do all var-sets, resets, and sanity checks prior to entering the loop here
@@ -52,6 +61,7 @@ label ch30_init:
 
 #The main loop
 label ch30_loop:
+
     #Do topic selection here
     python:
         topic_pool = Topic.filter_topics(
@@ -87,6 +97,12 @@ label ch30_loop:
     #Now, as long as there's something in the queue, we should go for it
     while persistent._event_list:
         call call_next_topic
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+            show placeholder_natsuki neutral zorder 3
+
+        else:
+            show placeholder_natsuki sad zorder 3
 
     #FALL THROUGH
 
@@ -161,23 +177,23 @@ label talk_menu:
         import pprint
 
         # Get the flavor text for the talk menu, based on affinity state
-        if store.jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_LOVE_ENAMORED)
 
-        elif store.jn_affinity.is_state_within_range(
+        elif jn_affinity.is_state_within_range(
             affinity_state=store.jn_globals.current_affinity_state,
-            affinity_range=(store.jn_affinity.NORMAL, store.jn_affinity.AFFECTIONATE)
+            affinity_range=(store.jn_affinity.NORMAL, jn_affinity.AFFECTIONATE)
         ):
             _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_AFFECTIONATE_NORMAL)
 
-        elif store.jn_affinity.is_state_within_range(
+        elif jn_affinity.is_state_within_range(
             affinity_state=store.jn_globals.current_affinity_state,
-            affinity_range=(store.jn_affinity.DISTRESSED, store.jn_affinity.UPSET)
+            affinity_range=(store.jn_affinity.DISTRESSED, jn_affinity.UPSET)
         ):
-            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_UPSET_DISTRESSED)
+            _talk_flavor_text = random.choice(jn_globals.DEFAULT_TALK_FLAVOR_TEXT_UPSET_DISTRESSED)
 
         else:
-            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_BROKEN_RUINED)
+            _talk_flavor_text = random.choice(jn_globals.DEFAULT_TALK_FLAVOR_TEXT_BROKEN_RUINED)
 
         # Ensure any variable references are substituted
         _talk_flavor_text = renpy.substitute(_talk_flavor_text)
@@ -191,20 +207,14 @@ label talk_menu:
         "Tell me again about...":
             call player_select_topic(is_repeat_topics=True)
 
-        "I feel..." if store.jn_affinity.get_affinity_state() >= store.jn_affinity.HAPPY:
+        "I feel..." if jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
             jump player_admissions_start
 
-        "I want to tell you something..." if store.jn_affinity.get_affinity_state() >= store.jn_affinity.HAPPY:
+        "I want to tell you something..." if jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
             jump player_compliments_start
 
         "I want to apologize...":
             jump player_apologies_start
-
-        "Please print my persistent.":
-            n "No problem, [player]! Just give me a second..."
-            $ utils.log(utils.pretty_print(persistent))
-            n "And we're done! Ehehe."
-            return
 
         "Goodbye.":
             jump farewell_start

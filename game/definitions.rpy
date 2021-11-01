@@ -548,7 +548,7 @@ init -990 python in jn_globals:
         "You wanna talk? Yay!",
         "I'd love to talk!",
         "I always love talking to you, [player]!",
-        "[player]! What's up?"
+        "[player]! What's up?",
         "[player]! What's on your mind?",
         "Ooh! What did you wanna talk about?",
         "I'm all ears, [player]!"
@@ -619,7 +619,7 @@ init -990 python in jn_globals:
         ":'(",
         ":/",
         "._.",
-        "(⌣_⌣”)",
+        "(v_v”)",
         "( .. )",
         "( ;; )",
         "(|||;-;)"
@@ -759,6 +759,17 @@ define audio.select_confirm = "mod_assets/sfx/select_confirm.mp3"
 define body_a = "mod_assets/natsuki-assets/base.png"
 define uniform_a = "mod_assets/natsuki-assets/uniform.png"
 define face_a = "mod_assets/natsuki-assets/jnab.png"
+
+# These are placeholders and not permanent!
+image placeholder_natsuki neutral = "mod_assets/natsuki/placeholder_neutral.png"
+image placeholder_natsuki plead = "mod_assets/natsuki/placeholder_plead.png"
+image placeholder_natsuki sad = "mod_assets/natsuki/placeholder_sad.png"
+image placeholder_natsuki smile = "mod_assets/natsuki/placeholder_smile.png"
+image placeholder_natsuki sparkle = "mod_assets/natsuki/placeholder_sparkle.png"
+image placeholder_natsuki unamused = "mod_assets/natsuki/placeholder_unamused.png"
+image placeholder_natsuki wink = "mod_assets/natsuki/placeholder_wink.png"
+
+image placeholder_sky_day = "mod_assets/backgrounds/placeholder_sky_day.png"
 
 ##Character Definitions
 define mc = DynamicCharacter('player', image='mc', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")

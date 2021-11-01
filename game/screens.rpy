@@ -629,6 +629,8 @@ style choice_button is default:
     properties gui.button_properties("choice_button")
     hover_sound gui.hover_sound
     activate_sound gui.activate_sound
+    idle_background "game/mod_assets/buttons/choice_hover_blank.png"
+    hover_background "game/mod_assets/buttons/choice_hover_fold.png"
 
 style choice_button_text is default:
     properties gui.button_text_properties("choice_button")
@@ -745,8 +747,8 @@ screen quick_menu():
             textbutton _("History") action ShowMenu('history')
             textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
             textbutton _("Auto") action Preference("auto-forward", "toggle")
-            textbutton _("Save") action ShowMenu('save')
-            textbutton _("Load") action ShowMenu('load')
+            #textbutton _("Save") action ShowMenu('save')
+            #textbutton _("Load") action ShowMenu('load')
             #textbutton _("Q.Save") action QuickSave()
             #textbutton _("Q.Load") action QuickLoad()
             textbutton _("Settings") action ShowMenu('preferences')
@@ -843,10 +845,10 @@ screen navigation():
         else:
             textbutton _("History") action [ShowMenu("history"), SensitiveIf(renpy.get_screen("history") == None)]
 
-            textbutton _("Save Game") action [ShowMenu("save"), SensitiveIf(renpy.get_screen("save") == None)]
+            #textbutton _("Save Game") action [ShowMenu("save"), SensitiveIf(renpy.get_screen("save") == None)]
 
-        if not main_menu:
-            textbutton _("Main Menu") action MainMenu()
+        #if not main_menu:
+            #textbutton _("Main Menu") action MainMenu()
 
         textbutton _("Settings") action [ShowMenu("preferences"), SensitiveIf(renpy.get_screen("preferences") == None)]
 
@@ -872,7 +874,7 @@ screen navigation():
                 else:
                     quit_message = "...Going?"
 
-            textbutton _("Quit") action Show(screen="quit", message=quit_message, ok_action=Hide(screen="quit", transition=None))
+            #textbutton _("Quit") action Show(screen="quit", message=quit_message, ok_action=Hide(screen="quit", transition=None))
 
 
         textbutton _("Credits") action Show(screen="credits", message="Credits:\nWriting: Edgar.\nArt: u/Aida_Hwedo.\nBeach Art: etched\nBeach Background: Kimagure After Background Material Storage\nPark and Manga Store Background: mugenjohncel (On LemmaSoft forums)\nBakery, Clothes Store and Mall Background: u/SovietSpartan\nTypo and Bug Reporting: Willie\nNatsuki clothing store outfit #1: Eg85_MkWii\nCat Ears: DearWolf\nPriceVille Gallery: Flower\nClipart Library: Cake\nJMO: Original Clothing Art\nJparnaud: Sprite Editing\nKevin Macleod: Spooky Music(Day of Chaos)\nPinclpart: Bats\nNatsuki Low Affinity Beach Outfit: -Http_Bxbygirl-(Reddit)\nNatsuki High Affinity Beach Outfit: Huniepop (Rizky Prahesa)\nNatsuki White Tank: DestinyPveGal\nGlasses: Unknown as of now", ok_action=Hide(screen="credits", transition=None))

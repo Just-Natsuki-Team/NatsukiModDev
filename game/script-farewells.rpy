@@ -1137,6 +1137,7 @@ label farewell_extra_trust:
         trust=store.persistent.trust,
         upper_bound=store.jn_trust.TRUST_PARTIAL
     ):
+        show placeholder_natsuki sad zorder 3
         n "You'll be back...{w=0.3} right?"
 
     # SCEPTICAL-NEUTRAL
@@ -1145,6 +1146,7 @@ label farewell_extra_trust:
         trust=store.persistent.trust,
         upper_bound=store.jn_trust.TRUST_NEUTRAL
     ):
+        show placeholder_natsuki sad zorder 3
         n "I'll be okay...{w=0.3} I'll be okay..."
 
     # DIMINISHED-SCEPTICAL
@@ -1153,6 +1155,7 @@ label farewell_extra_trust:
         trust=store.persistent.trust,
         upper_bound=store.jn_trust.TRUST_SCEPTICAL
     ):
+        show placeholder_natsuki sad zorder 3
         n "...?"
 
     # DIMINISHED-
@@ -1161,6 +1164,7 @@ label farewell_extra_trust:
         trust=store.persistent.trust,
         upper_bound=store.jn_trust.TRUST_DIMINISHED
     ):
+        show placeholder_natsuki sad zorder 3
         n "..."
 
     # Debug

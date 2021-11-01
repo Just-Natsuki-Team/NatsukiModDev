@@ -115,6 +115,50 @@ label talk_set_trust:
             renpy.say(n, "Hmm... sorry, I can't seem to read that. Make sure you enter an integer or decimal value, 'kay?")
     return
 
+# This topic allows us to print all persistent data to the log
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_print_persistent",
+            unlocked=True,
+            prompt="Can you print my persistent data?",
+            conditional=None,
+            category=["Debug"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_print_persistent:
+    n "No problem, [player]!{w=0.1} Just give me a second..."
+    $ utils.log(utils.pretty_print(persistent))
+    n "And we're done!{w=0.2} Ehehe."
+    return
+
+# This topic allows us to print all keymap data to the log
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_print_keymap",
+            unlocked=True,
+            prompt="Can you print the keymaps?",
+            conditional=None,
+            category=["Debug"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_print_keymap:
+    n "Leave it to me,{w=0.1} [player]!{w=0.2} One second..."
+    $ utils.log(utils.pretty_print(config.keymap))
+    n "And...{w=0.3} done!{w=0.2} You're welcome,{w=0.1} [player]~!{w=0.2} Ehehe."
+    return
+
 # Natsuki's thoughts on having her picture taken via the ingame screenshot system
 init 5 python:
     registerTopic(
@@ -1809,7 +1853,7 @@ label talk_sleeping_well:
         n "I mean,{w=0.1} you {i}have{/i} been here for a while now..."
         n "So I kinda figured you might be feeling a little sleepy anyway."
 
-    elif admissions.last_admission_type == admissions.TYPE_TIRED:
+    elif admissions.last_admission_type == admissions.ADMISSION_TYPE_TIRED:
         n "I mean,{w=0.1} you even {i}said{/i} you were tired before."
         n "So...{w=0.3} it only makes sense to ask,{w=0.1} right?{w=0.2} Anyway..."
 
