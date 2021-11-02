@@ -15,6 +15,7 @@ init -990 python:
 
 init 0 python:
     import store.jn_affinity as jn_aff
+    from collections import OrderedDict
 
     #Constants for types. Add more here if we need more organizational areas
     TOPIC_TYPE_FAREWELL = "FAREWELL"
@@ -449,7 +450,7 @@ init 0 python:
 
         for topic in additional_topics:
             menu_items.append(topic)
-        return menu_items
+        return menu_items.sort()
 
     def menu_dict(menu_topics):
         """
@@ -461,16 +462,27 @@ init 0 python:
         OUT:
             Dictionary<string, List<string>> representing a dict of category: [ ...prompts ]
         """
-        menu_items = {}
+        # Python doesn't support ordered dictionaries... we have to do things the hard way here.
 
+        # Get the topic categories that the given topics share, and order them
+        topic_categories = []
         for topic in menu_topics:
             for category in topic.category:
-                if category not in menu_items:
-                    menu_items[category] = []
+                if category not in topic_categories:
+                    topic_categories.append(category)
+        topic_categories.sort()
 
-                menu_items[category].append(topic)
+        # Set up an ordered dictionaty, this will retain the order of what we return for the menu items
+        ordered_menu_items = OrderedDict()
+        for topic_category in topic_categories:
+            ordered_menu_items[topic_category] = []
+        
+        # Feed the topics into the ordered dictionary - remember that each topic can have multiple categories!
+        for topic in menu_topics:
+            for category in topic.category:
+                ordered_menu_items[category].append(topic)
 
-        return menu_items
+        return ordered_menu_items
 
     def get_custom_tracks():
         """
@@ -733,6 +745,15 @@ init python in utils:
         else:
             return "a while"
 
+    def get_current_hour():
+        """
+        Gets the current hour (out of 24) of the day.
+        
+        OUT:
+            Integer representing the current hour of the day.
+        """
+        return datetime.datetime.now().hour
+
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
 define audio.t2 = "<loop 4.499>bgm/2.ogg"   #Sayori theme
 define audio.t2g = "bgm/2g.ogg"
@@ -759,17 +780,6 @@ define audio.select_confirm = "mod_assets/sfx/select_confirm.mp3"
 define body_a = "mod_assets/natsuki-assets/base.png"
 define uniform_a = "mod_assets/natsuki-assets/uniform.png"
 define face_a = "mod_assets/natsuki-assets/jnab.png"
-
-# These are placeholders and not permanent!
-image placeholder_natsuki neutral = "mod_assets/natsuki/placeholder_neutral.png"
-image placeholder_natsuki plead = "mod_assets/natsuki/placeholder_plead.png"
-image placeholder_natsuki sad = "mod_assets/natsuki/placeholder_sad.png"
-image placeholder_natsuki smile = "mod_assets/natsuki/placeholder_smile.png"
-image placeholder_natsuki sparkle = "mod_assets/natsuki/placeholder_sparkle.png"
-image placeholder_natsuki unamused = "mod_assets/natsuki/placeholder_unamused.png"
-image placeholder_natsuki wink = "mod_assets/natsuki/placeholder_wink.png"
-
-image placeholder_sky_day = "mod_assets/backgrounds/placeholder_sky_day.png"
 
 ##Character Definitions
 define mc = DynamicCharacter('player', image='mc', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")

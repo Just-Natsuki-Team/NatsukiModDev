@@ -1184,6 +1184,7 @@ label talk_player_appearance:
                 n "Okaaay..."
                 n "Just let me know if you actually {i}do{/i} change something then,{w=0.2} 'kay?"
                 n "Ehehe."
+                return
 
     # Player has never described themselves to Natsuki, and this is their first time discussing it
     else:
@@ -1209,6 +1210,7 @@ label talk_player_appearance:
                 n "But I totally get it,{w=0.1} [player].{w=0.2} So don't worry,{w=0.1} 'kay?"
                 n "Just let me know if you feel like telling me later!"
                 $ persistent.jn_player_appearance_declined_share = True
+                return
 
     n "Okaaay!{w=0.2} Let's start with...{w=0.3} your eyes!"
     n "They say the eyes are the window to the soul,{w=0.1} so it only makes sense to begin there,{w=0.1} right?"
@@ -1766,6 +1768,11 @@ label talk_give_nickname:
         $ n_name = persistent.jn_player_nicknames_current_nickname
         return
 
+    elif nickname_type == nicknames.NICKNAME_TYPE_NOU:
+        show placeholder_natsuki wink zorder jn_placeholders.NATSUKI_Z_INDEX
+        n "No you~."
+        return
+
     else:
         $ neutral_nickname_permitted = False
 
@@ -1783,10 +1790,6 @@ label talk_give_nickname:
             n "D-{w=0.1}dreaming big,{w=0.1} are we,{w=0.1} [player]?{w=0.2} Ahaha..."
             n "Uhmm..."
             n "I'm...{w=0.3} really...{w=0.3} not a fan,{w=0.1} but if it's what you prefer..."
-            $ neutral_nickname_permitted = True
-
-        elif nickname.lower() == "qeb" or nickname.lower() == "qeeb":
-            n "No you."
             $ neutral_nickname_permitted = True
 
         elif nickname.lower() == persistent.playername.lower():

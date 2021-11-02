@@ -33,20 +33,21 @@ label ch30_init:
         # Add to the total visits counter and set the last visit date
         persistent.jn_total_visit_count += 1
         persistent.jn_last_visited_date = datetime.datetime.now()
-        utils.log(utils.pretty_print(config))
 
     # Let's pick a greeting
     $ push(greetings.select_greeting())
 
     # Draw background and placeholder sprites
     $ main_background.draw(full_redraw=True)
-    show placeholder_sky_day zorder 0
+
+    if utils.get_current_hour() < 18 or utils.get_current_hour() > 6:
+        show placeholder_sky_day zorder 0
 
     if persistent.jn_player_apology_type_on_quit is not None or jn_affinity.get_affinity_state() < jn_affinity.NORMAL:
-        show placeholder_natsuki plead zorder 3
+        show placeholder_natsuki plead zorder jn_placeholders.NATSUKI_Z_INDEX
 
     else:
-        show placeholder_natsuki smile zorder 3
+        show placeholder_natsuki smile zorder jn_placeholders.NATSUKI_Z_INDEX
     
     show screen hkb_overlay
 
@@ -98,12 +99,6 @@ label ch30_loop:
     while persistent._event_list:
         call call_next_topic
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-            show placeholder_natsuki neutral zorder 3
-
-        else:
-            show placeholder_natsuki sad zorder 3
-
     #FALL THROUGH
 
 label ch30_wait:
@@ -113,10 +108,15 @@ label ch30_wait:
 
 #Other labels
 label call_next_topic:
+
     if persistent._event_list:
         $ _topic = persistent._event_list.pop(0)
 
         if renpy.has_label(_topic):
+            
+            if not _topic in ["greeting_sudden_leave", "greeting_prolonged_leave"]:
+                $ jn_placeholders.show_resting_placeholder_natsuki()
+
             call expression _topic
 
     python:
@@ -198,6 +198,8 @@ label talk_menu:
         # Ensure any variable references are substituted
         _talk_flavor_text = renpy.substitute(_talk_flavor_text)
 
+    $ jn_placeholders.show_resting_placeholder_natsuki(offset=True)
+
     menu:
         n "[_talk_flavor_text]"
 
@@ -220,6 +222,7 @@ label talk_menu:
             jump farewell_start
 
         "Nevermind.":
+            $ jn_placeholders.show_resting_placeholder_natsuki()
             pass
     return
 
@@ -234,14 +237,20 @@ label player_select_topic(is_repeat_topics=False):
             affinity=jn_globals.current_affinity_state
         )
 
+        # Sort the topics we can pick by prompt for a cleaner appearance
+        _topics.sort(key=lambda topic: topic.prompt)
+
+        # Present the topic options grouped by category to the player
         menu_items = menu_dict(_topics)
 
     call screen categorized_menu(menu_items,(1020, 70, 250, 572), (740, 70, 250, 572), len(_topics))
 
     $ _choice = _return
 
-    # We got a string, we shoud push
+    # We got a string, we should push
     if isinstance(_choice, str):
+
+        $ jn_placeholders.show_resting_placeholder_natsuki()
         $ push(_choice)
 
     # -1 means go back
@@ -250,6 +259,8 @@ label player_select_topic(is_repeat_topics=False):
 
     # Clear _return
     $ _return = None
+    $ jn_placeholders.show_resting_placeholder_natsuki()
+
     jump ch30_loop
 
 label music_menu:
