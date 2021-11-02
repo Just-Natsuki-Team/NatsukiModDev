@@ -193,90 +193,6 @@ label talk_having_pictures_taken:
             n "I'm done talking about this,{w=0.1} [player]."
     return
 
-# Ask Natsuki for permission to take a picture of her, or have her call out the player if permission already given!
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="talk_get_picture_permission",
-            unlocked=True,
-            prompt="Can I take a picture of you?",
-            conditional="persistent._jn_first_screenshot_taken != None",
-            category=["You", "Photography"],
-            player_says=True,
-            location="classroom"
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-label talk_get_picture_permission:
-    # The player was warned!
-    if jn_screenshots.player_screenshots_blocked:
-        n "Uh...{w=0.3} no,{w=0.1} I'm not turning the camera back on,{w=0.1} [player]."
-        return
-
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        if jn_screenshots.player_screenshots_permission:
-            n "Ahaha!{w=0.2} I already said you could,{w=0.1} dummy!"
-            n "I'm ready,{w=0.1} so take one whenever!"
-
-        else:
-            n "Eh?{w=0.2} A picture?{w=0.2} Of course!"
-            $ jn_screenshots.player_screenshots_permission = True
-        return
-
-    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        if jn_screenshots.player_screenshots_permission:
-            n "Huh?{w=0.2} Didn't you ask me that already?"
-            n "It's fine,{w=0.1} so go ahead!"
-
-        else:
-            n "Oh?{w=0.2} You wanna take a picture?{w=0.2} Alright!"
-            $ jn_screenshots.player_screenshots_permission = True
-        return
-
-    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
-
-        if jn_screenshots.player_screenshots_permission:
-            n "Hmm?{w=0.2} A picture?{w=0.2} Well,{w=0.1} okay."
-            $ jn_screenshots.player_screenshots_permission = True
-
-        else:
-            n "Uuuu...{w=0.3} I just said you could,{w=0.1} [player]."
-            n "Just take it whenever,{w=0.1} alright?"
-        return
-
-    elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
-        if jn_screenshots.player_screenshots_permission:
-            n "Eh?{w=0.2} I already said you could,{w=0.1} [player]. Just take it soon,{w=0.1} alright?"
-            n "I don't really like being kept on hold like this..."
-
-        else:
-            # Indecisive; this lets lower affinity players have a chance at screenshots without upsetting Natsuki
-            n "A picture?{w=0.2} I'm not sure...{w=0.3} let me think about it."
-            n "..."
-            # We take into account the player's behaviour with pictures so far
-            $ natsuki_approves = random.randint(1, 100) <= (100 - (jn_screenshots.bad_screenshot_streak * 25))
-            if natsuki_approves:
-                n "Fine,{w=0.1} I guess.{w=0.1} Take it whenever."
-                $ jn_screenshots.player_screenshots_permission = True
-
-            else:
-                n "I'm sorry,{w=0.1} [player].{w=0.1} I don't want any pictures taking of me right now."
-                $ jn_screenshots.player_screenshots_permission = False
-        return
-
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-        n "No.{w=0.1} I {b}don't{/b} want my picture taken."
-        $ jn_screenshots.player_screenshots_permission = False
-        return
-
-    else:
-        n "..."
-        $ jn_screenshots.player_screenshots_permission = False
-
-    return
-
 # Natsuki discusses her lack of pet with the player, and asks about theirs
 init 5 python:
     registerTopic(
@@ -1572,11 +1488,11 @@ label talk_give_nickname:
         n "..."
         n "Relax,{w=0.1} [player]!{w=0.2} Jeez!{w=0.2} I'm just kidding!"
         n "Ehehe."
-        n "Well...{w=0.3} I don't see why not!" 
+        n "Well...{w=0.3} I don't see why not!"
 
     # Another nickname is being assigned
     else:
-    
+
         # Account for strikes
         if persistent.jn_player_nicknames_bad_given_total == 0:
             n "Oh?{w=0.2} You wanna give me another nickname?"
@@ -1597,13 +1513,13 @@ label talk_give_nickname:
 
     # Validate the nickname, respond appropriately
     $ nickname = renpy.input(prompt="What did you have in mind,{w=0.2} [player]?", allow=jn_globals.DEFAULT_ALPHABETICAL_ALLOW_VALUES, length=10).strip()
-    
+
     if nickname.lower() == "nevermind":
         n "Huh?{w=0.2} You changed your mind?"
         n "Well...{w=0.3} alright then."
         n "Just let me know if you actually want to call me something else then,{w=0.1} 'kay?"
         return
-    
+
     else:
         $ nickname_type = nicknames.get_nickname_type(nickname)
 
@@ -1696,7 +1612,7 @@ label talk_give_nickname:
             n "You know what?{w=0.2} Yeah!{w=0.2} I like it!"
             n "Consider it done,{w=0.1} [player]!{w=0.2} Ehehe."
             $ neutral_nickname_permitted = True
-        
+
         # Finally, assign the neutral/easter egg nickname if it was permitted by Natsuki
         if (neutral_nickname_permitted):
             $ persistent.jn_player_nicknames_current_nickname = nickname
@@ -1791,7 +1707,7 @@ label talk_sleeping_well:
     n "..."
     n "Ehehe.{w=0.2} Did I get you?"
     n "But seriously,{w=0.2} [player].{w=0.2} Do you struggle with your sleep?"
-    
+
     # Quip if the player has been around a while, or has admitted they're tired
     if utils.get_current_session_length().total_seconds() / 3600 >= 12:
         n "I mean,{w=0.1} you {i}have{/i} been here for a while now..."
@@ -1858,7 +1774,7 @@ label talk_aging:
     n "Birthdays lose all meaning -{w=0.1} you might even dread them!"
     n "The signs appear in a bunch of ways,{w=0.1} but that's what makes it unnerving."
     n "Everyone experiences it differently,{w=0.1} and we don't even know what happens after the end!"
-    n "Spooky,{w=0.1} huh?" 
+    n "Spooky,{w=0.1} huh?"
     n "Although... I guess you could say that's more the fear of the unknown than aging itself."
     n "What does wind me up though is how immature people can be about it."
     n "Especially when it comes to relationships between different ages!"
@@ -1885,7 +1801,7 @@ label talk_aging:
 
     else:
         n "But...{w=0.3} just in case?"
-        n "We're only having one candle on your birthday cake.{w=0.2} Sorry." 
+        n "We're only having one candle on your birthday cake.{w=0.2} Sorry."
         n "Ahaha!"
 
     return
