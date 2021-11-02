@@ -183,42 +183,42 @@ label talk_custom_say:
 
         "Neutrally":
             n "Okaaay!{w=0.2} Here goes!"
-            show placeholder_natsuki neutral
+            show placeholder_natsuki neutral zorder jn_placeholders.NATSUKI_Z_INDEX
             n "[player_input]"
 
         "Pleading":
             n "Okaaay!{w=0.2} Here goes!"
-            show placeholder_natsuki plead
+            show placeholder_natsuki plead zorder jn_placeholders.NATSUKI_Z_INDEX
             n "[player_input]"
 
         "Sadly":
             n "Okaaay!{w=0.2} Here goes!"
-            show placeholder_natsuki sad
+            show placeholder_natsuki sad zorder jn_placeholders.NATSUKI_Z_INDEX
             n "[player_input]"
 
         "Happily":
             n "Okaaay!{w=0.2} Here goes!"
-            show placeholder_natsuki smile
+            show placeholder_natsuki smile zorder jn_placeholders.NATSUKI_Z_INDEX
             n "[player_input]"
 
         "Sparkly":
             n "Okaaay!{w=0.2} Here goes!"
-            show placeholder_natsuki sparkle
+            show placeholder_natsuki sparkle zorder jn_placeholders.NATSUKI_Z_INDEX
             n "[player_input]"
 
         "Unamused":
             n "Okaaay!{w=0.2} Here goes!"
-            show placeholder_natsuki unamused
+            show placeholder_natsuki unamused zorder jn_placeholders.NATSUKI_Z_INDEX
             n "[player_input]"
 
         "Mischievously":
             n "Okaaay!{w=0.2} Here goes!"
-            show placeholder_natsuki wink
+            show placeholder_natsuki wink zorder jn_placeholders.NATSUKI_Z_INDEX
             n "[player_input]"
     
     n "..."
-    show placeholder_natsuki smile
-    n "...And we're done here! You're welcome, [player]!"
+    show placeholder_natsuki smile zorder jn_placeholders.NATSUKI_Z_INDEX
+    n "...And we're done here!{w=0.2} You're welcome,{w=0.1} [player]!"
 
     return
 

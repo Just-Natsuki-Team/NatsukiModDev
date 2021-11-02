@@ -40,8 +40,10 @@ label ch30_init:
     # Draw background and placeholder sprites
     $ main_background.draw(full_redraw=True)
 
-    if utils.get_current_hour() < 18 or utils.get_current_hour() > 6:
+    if utils.get_current_hour() > 6 and utils.get_current_hour() < 18:
         show placeholder_sky_day zorder 0
+    else:
+        hide placeholder_sky_day
 
     if persistent.jn_player_apology_type_on_quit is not None or jn_affinity.get_affinity_state() < jn_affinity.NORMAL:
         show placeholder_natsuki plead zorder jn_placeholders.NATSUKI_Z_INDEX
