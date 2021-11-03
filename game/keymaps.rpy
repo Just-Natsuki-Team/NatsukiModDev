@@ -45,19 +45,3 @@ init -50 python:
         #Checks passed, add the keymap
         config.keymap[keymap_name] = keys
         config.underlay.append(renpy.Keymap(**{keymap_name: keymap_action}))
-
-    def jn_remove_keymap(keymap_name):
-        """
-        Removes the keymap with the given name.
-
-        IN:
-            keymap_name - name of the keymap to remove.
-        """
-
-        # If the keymap doesn't exist, we simply log and return
-        if not keymap_name in config.keymap:
-            utils.log("ERROR: Attempted to remove a keymap that doesn't exist. Ignoring.", utils.SEVERITY_WARN);
-            return
-
-        # Otherwise, remove the keymap
-        config.underlay.remove(keymap_name)
