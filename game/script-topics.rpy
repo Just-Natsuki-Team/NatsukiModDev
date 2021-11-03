@@ -196,90 +196,6 @@ label talk_having_pictures_taken:
             n "I'm done talking about this,{w=0.1} [player]."
     return
 
-# Ask Natsuki for permission to take a picture of her, or have her call out the player if permission already given!
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="talk_get_picture_permission",
-            unlocked=True,
-            prompt="Can I take a picture of you?",
-            conditional="persistent._jn_first_screenshot_taken != None",
-            category=["You", "Photography"],
-            player_says=True,
-            location="classroom"
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-label talk_get_picture_permission:
-    # The player was warned!
-    if jn_screenshots.player_screenshots_blocked:
-        n "Uh...{w=0.3} no,{w=0.1} I'm not turning the camera back on,{w=0.1} [player]."
-        return
-
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        if jn_screenshots.player_screenshots_permission:
-            n "Ahaha!{w=0.2} I already said you could,{w=0.1} dummy!"
-            n "I'm ready,{w=0.1} so take one whenever!"
-
-        else:
-            n "Eh?{w=0.2} A picture?{w=0.2} Of course!"
-            $ jn_screenshots.player_screenshots_permission = True
-        return
-
-    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        if jn_screenshots.player_screenshots_permission:
-            n "Huh?{w=0.2} Didn't you ask me that already?"
-            n "It's fine,{w=0.1} so go ahead!"
-
-        else:
-            n "Oh?{w=0.2} You wanna take a picture?{w=0.2} Alright!"
-            $ jn_screenshots.player_screenshots_permission = True
-        return
-
-    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
-
-        if jn_screenshots.player_screenshots_permission:
-            n "Hmm?{w=0.2} A picture?{w=0.2} Well,{w=0.1} okay."
-            $ jn_screenshots.player_screenshots_permission = True
-
-        else:
-            n "Uuuu...{w=0.3} I just said you could,{w=0.1} [player]."
-            n "Just take it whenever,{w=0.1} alright?"
-        return
-
-    elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
-        if jn_screenshots.player_screenshots_permission:
-            n "Eh?{w=0.2} I already said you could,{w=0.1} [player]. Just take it soon,{w=0.1} alright?"
-            n "I don't really like being kept on hold like this..."
-
-        else:
-            # Indecisive; this lets lower affinity players have a chance at screenshots without upsetting Natsuki
-            n "A picture?{w=0.2} I'm not sure...{w=0.3} let me think about it."
-            n "..."
-            # We take into account the player's behaviour with pictures so far
-            $ natsuki_approves = random.randint(1, 100) <= (100 - (jn_screenshots.bad_screenshot_streak * 25))
-            if natsuki_approves:
-                n "Fine,{w=0.1} I guess.{w=0.1} Take it whenever."
-                $ jn_screenshots.player_screenshots_permission = True
-
-            else:
-                n "I'm sorry,{w=0.1} [player].{w=0.1} I don't want any pictures taking of me right now."
-                $ jn_screenshots.player_screenshots_permission = False
-        return
-
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-        n "No.{w=0.1} I {b}don't{/b} want my picture taken."
-        $ jn_screenshots.player_screenshots_permission = False
-        return
-
-    else:
-        n "..."
-        $ jn_screenshots.player_screenshots_permission = False
-
-    return
-
 # Natsuki discusses her lack of pet with the player, and asks about theirs
 init 5 python:
     registerTopic(
@@ -1575,11 +1491,11 @@ label talk_give_nickname:
         n "..."
         n "Relax,{w=0.1} [player]!{w=0.2} Jeez!{w=0.2} I'm just kidding!"
         n "Ehehe."
-        n "Well...{w=0.3} I don't see why not!" 
+        n "Well...{w=0.3} I don't see why not!"
 
     # Another nickname is being assigned
     else:
-    
+
         # Account for strikes
         if persistent.jn_player_nicknames_bad_given_total == 0:
             n "Oh?{w=0.2} You wanna give me another nickname?"
@@ -1600,13 +1516,13 @@ label talk_give_nickname:
 
     # Validate the nickname, respond appropriately
     $ nickname = renpy.input(prompt="What did you have in mind,{w=0.2} [player]?", allow=jn_globals.DEFAULT_ALPHABETICAL_ALLOW_VALUES, length=10).strip()
-    
+
     if nickname.lower() == "nevermind":
         n "Huh?{w=0.2} You changed your mind?"
         n "Well...{w=0.3} alright then."
         n "Just let me know if you actually want to call me something else then,{w=0.1} 'kay?"
         return
-    
+
     else:
         $ nickname_type = nicknames.get_nickname_type(nickname)
 
@@ -1699,7 +1615,7 @@ label talk_give_nickname:
             n "You know what?{w=0.2} Yeah!{w=0.2} I like it!"
             n "Consider it done,{w=0.1} [player]!{w=0.2} Ehehe."
             $ neutral_nickname_permitted = True
-        
+
         # Finally, assign the neutral/easter egg nickname if it was permitted by Natsuki
         if (neutral_nickname_permitted):
             $ persistent.jn_player_nicknames_current_nickname = nickname
@@ -1794,7 +1710,7 @@ label talk_sleeping_well:
     n "..."
     n "Ehehe.{w=0.2} Did I get you?"
     n "But seriously,{w=0.2} [player].{w=0.2} Do you struggle with your sleep?"
-    
+
     # Quip if the player has been around a while, or has admitted they're tired
     if utils.get_current_session_length().total_seconds() / 3600 >= 12:
         n "I mean,{w=0.1} you {i}have{/i} been here for a while now..."
@@ -1861,7 +1777,7 @@ label talk_aging:
     n "Birthdays lose all meaning -{w=0.1} you might even dread them!"
     n "The signs appear in a bunch of ways,{w=0.1} but that's what makes it unnerving."
     n "Everyone experiences it differently,{w=0.1} and we don't even know what happens after the end!"
-    n "Spooky,{w=0.1} huh?" 
+    n "Spooky,{w=0.1} huh?"
     n "Although... I guess you could say that's more the fear of the unknown than aging itself."
     n "What does wind me up though is how immature people can be about it."
     n "Especially when it comes to relationships between different ages!"
@@ -1888,8 +1804,85 @@ label talk_aging:
 
     else:
         n "But...{w=0.3} just in case?"
-        n "We're only having one candle on your birthday cake.{w=0.2} Sorry." 
+        n "We're only having one candle on your birthday cake.{w=0.2} Sorry."
         n "Ahaha!"
+
+    return
+
+# Natsuki discusses the concept of work-life balance, and how it can be difficult to disconnect
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_work_life_balance",
+            unlocked=True,
+            prompt="Work-life balance",
+            conditional=None,
+            category=["Life"],
+            nat_says=True,
+            affinity_range=(jn_affinity.RUINED, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_work_life_balance:
+    if jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
+        n "You know,{w=0.1} [player]..."
+
+    n "I think it's pretty easy to let your academic or work life creep into your personal time nowadays."
+    n "I mean...{w=0.3} think about it."
+    n "With everyone having mobile phones,{w=0.1} plus usually some kinda computer at home -{w=0.1} it's hard not to be connected somehow."
+    n "And like...{w=0.3} if there's already that connection,{w=0.1} then what's to stop work from bugging you during your time off?"
+    n "Or classmates asking for help at the last possible minute?"
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
+        n "It just gets annoying -{w=0.1} like everyone expects you to always be around to chip in a little more,{w=0.1} or get something done!"
+        n "Overwhelming,{w=0.1} right?"
+        n "Huh.{w=0.2} Actually...{w=0.3} now that I think about it..."
+        n "It isn't like that kind of intrusion is only limited to when you're away either."
+        n "I've heard {i}way{/i} too many stories of people doing stupid amounts of overtime at work -{w=0.1} sometimes not even paid!"
+        n "Or even students studying late into the night until they collapse... it's pretty crazy."
+
+    else:
+        n "It just gets annoying -{w=0.1} everyone expects you to always be around to do more."
+        n "Actually,{w=0.1} now that I think about it..."
+        n "It isn't like that kind of thing is only limited to when you're away either."
+        n "I've heard too many stories of people doing stupid amounts of overtime at work -{w=0.1} often not even paid."
+        n "Or even students studying late into the night until they collapse..."
+    
+    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n "Ugh...{w=0.3} I just wish people would value their own time more."
+        n "..."
+        n "Hey,{w=0.1} [player]..."
+        n "I don't know if you're working,{w=0.1} or studying,{w=0.1} or what..."
+        n "But you better not be letting whatever it is take over your life.{w=0.2} Understand?"
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+            n "You are {i}more{/i} than your career,{w=0.1} or your education.{w=0.2} You have your own wants and needs that matter too."
+            n "I don't want some dumb job or stupid assignment to take over your life."
+            n "You're...{w=0.3} way more important than either of those,{w=0.1} [player].{w=0.2} Trust me."
+
+            if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+                n "Besides..."
+                n "You and your time are mine first, [player]."
+                n "I already called dibs,{w=0.1} a-{w=0.1}after all.{w=0.2} Ehehe..."
+
+        else:
+            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            n "People are more than what they do for a living,{w=0.1} after all.{w=0.2} And that includes you too, [chosen_tease]!"
+        
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n "Makes me wish people would value their own time more."
+        n "...I guess that includes you too,{w=0.1} [player]."
+        n "Try not to let work or studying rule your life.{w=0.2} You've got better things to do."
+        n "...Like being a decent friend to others for a change.{w=0.2} Am I right?"
+
+    else:
+        n "People need to value their own time more,{w=0.1} I guess."
+        n "...Heh."
+        n "Maybe I should follow my own advice..."
+        n "Because clearly being here is a waste of my time too."
 
     return
 
@@ -1943,7 +1936,7 @@ label talk_i_love_you:
             n "J-{w=0.1}jeez!{w=0.2} Stop looking at me like that already!"
             n "W-{w=0.1}we're both on the same page now,{w=0.1} so..."
             n "Where were we?{w=0.2} Ehehe..."
-            $ relationship("affinity+")
+            $ relationship(change="affinity+", multiplier=3)
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "[player_initial]-{w=0.2}[player]!"
@@ -1957,7 +1950,7 @@ label talk_i_love_you:
             n "It's just that...{w=0.3} It's just..." 
             n "Uuuuuu..."
             n "N-{w=0.1}never mind...{w=0.3} Ahaha..."
-            $ relationship("affinity+")
+            $ relationship(change="affinity+", multiplier=2)
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
             n "W-{w=0.1}w-{w=0.1}what?"
@@ -2030,7 +2023,7 @@ label talk_i_love_you:
             n "..."
             n "Go!"
             n "{i}Just leave me alone!{/i}{nw}"
-            $ relationship("affinity-")
+            $ relationship(change="affinity-", multiplier=10)
             return { "quit": None }
     
     # Standard flows
@@ -2039,7 +2032,7 @@ label talk_i_love_you:
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
 
             # At this point, Natsuki is super comfortable with her player, so we can be open and vary things!
-            $ random_response_index = random.randint(0, 6)
+            $ random_response_index = random.randint(0, 10)
 
             if random_response_index == 0:
                 n "Ehehe.{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
@@ -2088,6 +2081,103 @@ label talk_i_love_you:
                         n "Come on,{w=0.1} [player]!{w=0.2} Where's your fighting spirit?"
                         n "Well,{w=0.1} whatever.{w=0.2} I'm just glad you accept the truth."
                         n "Ehehe."
+
+            elif random_response_index == 6:
+                n "Ehehe...{w=0.3} I always adore hearing that from you,{w=0.1} [player]."
+                n "...And I think I can guess you like hearing it just as much."
+                n "I love you too,{w=0.1} [chosen_endearment]!"
+                n "I don't need anyone else~."
+
+            elif random_response_index == 7:
+                n "Wow,{w=0.1} [player]..." 
+                n "You really are just a big sappy mess today,{w=0.1} aren't you?"
+                n "Gross..." 
+                n "...But just the kind of gross I'm down with.{w=0.2} Ehehe."
+                n "I love you too,{w=0.1} [chosen_endearment]!"
+                n "I'll always have your back."
+
+            elif random_response_index == 8:
+                n "Ehehe."
+                n "I..."
+                n "Looooooooove you too,{w=0.1} [player]!"
+                n "You'll always be my rock."
+
+            elif random_response_index == 9:
+                n "I mean...{w=0.3} that's real sweet of you and all,{w=0.1} [player]..."
+                n "But we both know I love you more~."
+                $ player_is_wrong = True
+                $ wrong_response_count = 0
+
+                # Natsuki won't lose!
+                while player_is_wrong:
+                    menu:
+                        "No, I love {i}you{/i} more!":
+                            
+                            if wrong_response_count == 1:
+                                n "Hmm?{w=0.2} Did you mishear me,{w=0.1} [player]?"
+                                n "I said I love {i}you{/i} more,{w=0.2} [chosen_tease]!"
+
+                            if wrong_response_count == 5:
+                                n "Oh?{w=0.2} Competitive,{w=0.1} are we?"
+                                n "Ehehe.{w=0.2} Silly [player].{w=0.1} Did nobody ever tell you?"
+                                n "Don't start a fight you can't finish!"
+                                n "Especially this one -{w=0.1} I love {i}you{/i} more~!"
+
+                            elif wrong_response_count == 10:
+                                n "Oho?{w=0.2} Not bad,{w=0.1} [player]!"
+                                n "I almost admire your stubbornness..."
+                                n "But not as much as I admire you!{w=0.2} I love {i}you{/i} more!"
+
+                            elif wrong_response_count == 20:
+                                n "Ehehe.{w=0.2} You're persistent!{w=0.2} I'll give you that."
+                                n "But if you think I'm giving you a win..."
+                                n "Then you've got another thing coming!"
+                                n "I love {i}you{/i} more,{w=0.1} dummy!"
+
+                            elif wrong_response_count == 50:
+                                n "Wow!{w=0.2} This is like...{w=0.3} the 50th time you've been wrong!{w=0.2} In a row!"
+                                n "Sounds to me like you're in some serious denial there,{w=0.1} [player]~."
+                                n "I don't think I can be bothered counting much more from here..."
+                                n "So why don't you do me a favour and just accept that I love {i}you{/i} more already?"
+                                n "Ehehe."
+                                n "Thanks,{w=0.1} [chosen_endearment]~!"
+
+                            elif wrong_response_count == 100:
+                                n "...Oh!{w=0.2} And it looks like we have our 100th wrong guess!"
+                                n "Dim the lights!{w=0.2} Roll the music!"
+                                n "Now,{w=0.1} audience members -{w=0.1} what does our stubborn participant get?"
+                                n "They get..."
+                                n "A correction!{w=0.2} Wow!"
+                                n "And that correction is..."
+                                n "Natsuki loves {i}them{/i} way more!{w=0.2} Congratulations,{w=0.1} dummy!"
+                                n "And now,{w=0.1} to walk away with the grand prize -{w=0.1} all our guest here needs to do..."
+                                n "Is give up and admit how wrong they are~!{w=0.2} Ehehe."
+
+                            else:
+                                player_is_wrong_responses = [
+                                    "Nope!{w=0.2} I love {i}you{/i} more!",
+                                    "Sorry,{w=0.1} bub!{w=0.2} I definitely love {i}you{/i} more!",
+                                    "Ehehe.{w=0.2} Nope~!{w=0.2} We both know I love {i}you{/i} more.",
+                                    "Hmm... nah.{w=0.2} Pretty sure I love {i}you{/i} more!",
+                                    "Nooooope~!{w=0.2} I love {i}you{/i} more!",
+                                    "Silly [player]~.{w=0.2} I love {i}you{/i} more,{w=0.1} remember?",
+                                    "Mmmmmmmm...{w=0.3} nope!{w=0.2} I love {i}you{/i} way more,{w=0.1} [player]~!",
+                                    "Come come now,{w=0.1} [player].{w=0.2}  Don't be silly!{w=0.2}  I definitely love {i}you{/i} more.",
+                                    "Wait...{w=0.3} can you hear that?{w=0.2} Oh!{w=0.2} It's how wrong you are -{w=0.1} I love you more,{w=0.1} dummy!"
+                                ]
+                                $ chosen_random_response = random.choice(player_is_wrong_responses)
+                                n "[chosen_random_response]"
+
+                            $ wrong_response_count += 1
+
+                        "Okay, fine. You love me more.":
+                            $ player_is_wrong = True
+                            n "See?{w=0.2} Was that really so hard?"
+                            n "Sometimes you just have to admit you're wrong,{w=0.1} [player]."
+                            n "Ehehe."
+
+                            if wrong_response_count >= 10:
+                                n "Nice try,{w=0.1} though~!"
 
             else:
                 n "Oh?{w=0.2} Lovey-dovey as usual?"
