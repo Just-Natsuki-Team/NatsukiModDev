@@ -20,84 +20,10 @@ init python in topics:
 init 1 python:
     try:
         # Resets - remove these later, once we're done tweaking affinity/trust!
-        store.persistent._topic_database.clear()
+        persistent._topic_database.clear()
 
     except Exception as e:
         utils.log(e, utils.SEVERITY_ERR)
-
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="classroom_topic_example1",
-            unlocked=True,
-            location="classroom"
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-label classroom_topic_example1:
-    n "classroom1"
-    return
-
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="classroom_topic_example2",
-            unlocked=True,
-            location="classroom"
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-label classroom_topic_example2:
-    python:
-        affinity_index_and_descriptor = {
-            1:"RUINED",
-            2:"BROKEN",
-            3:"DISTRESSED",
-            4:"UPSET",
-            5:"NORMAL",
-            6:"HAPPY",
-            7:"AFFECTIONATE",
-            8:"ENAMORED",
-            9:"LOVE"
-        }
-        affinity_tier = affinity_index_and_descriptor[store.jn_globals.current_affinity_state]
-    n "Your affinity is: [persistent.affinity], and your trust is: [persistent.trust]!"
-    n "I'd describe your affinity as [affinity_tier]!"
-    return
-
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="beach_topic_example1",
-            unlocked=True,
-            location="beach"
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-label beach_topic_example1:
-    n "beach1"
-    return
-
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="beach_topic_example2",
-            unlocked=True,
-            location="beach"
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-label beach_topic_example2:
-    n "beach2"
-    return
 
 # Talk menu topics
 
@@ -121,39 +47,39 @@ label talk_set_affinity:
     n "Okaaay! Just tell me what affinity state you want!"
     menu:
         "LOVE":
-            $ store.jn_globals.current_affinity_state = 9
+            $ jn_globals.current_affinity_state = 9
             n "Alright! Your affinity state is now LOVE!" # Yesssssss
 
         "ENAMORED":
-            $ store.jn_globals.current_affinity_state = 8
+            $ jn_globals.current_affinity_state = 8
             n "Alright! Your affinity state is now ENAMORED!"
 
         "AFFECTIONATE":
-            $ store.jn_globals.current_affinity_state = 7
+            $ jn_globals.current_affinity_state = 7
             n "Alright! Your affinity state is now AFFECTIONATE!"
 
         "HAPPY":
-            $ store.jn_globals.current_affinity_state = 6
+            $ jn_globals.current_affinity_state = 6
             n "Alright! Your affinity state is now HAPPY!"
 
         "NORMAL":
-            $ store.jn_globals.current_affinity_state = 5
+            $ jn_globals.current_affinity_state = 5
             n "Alright! Your affinity state is now NORMAL!"
 
         "UPSET":
-            $ store.jn_globals.current_affinity_state = 4
+            $ jn_globals.current_affinity_state = 4
             n "Alright! Your affinity state is now UPSET!"
 
         "DISTRESSED":
-            $ store.jn_globals.current_affinity_state = 3
+            $ jn_globals.current_affinity_state = 3
             n "Alright! Your affinity state is now DISTRESSED!"
 
         "BROKEN":
-            $ store.jn_globals.current_affinity_state = 2
+            $ jn_globals.current_affinity_state = 2
             n "Alright! Your affinity state is now BROKEN!"
 
         "RUINED":
-            $ store.jn_globals.current_affinity_state = 1
+            $ jn_globals.current_affinity_state = 1
             n "Alright! Your affinity state is now RUINED!" # How could you :(
 
         "Nevermind.":
@@ -216,15 +142,15 @@ label talk_having_pictures_taken:
         n "I hope you can understand."
 
     else:
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "Hmm?{w=0.2} Pictures of me?"
             n "Honestly,{w=0.1} I don't think I'll ever be completely comfortable with them..."
             n "But I trust you to make a good shot!"
             n "As long as you ask,{w=0.1} I've got no problem with it!"
 
-        elif store.jn_affinity.is_state_within_range(
-            affinity_state=store.jn_globals.current_affinity_state,
-            affinity_range=(store.jn_affinity.NORMAL, store.jn_affinity.AFFECTIONATE)
+        elif jn_affinity.is_state_within_range(
+            affinity_state=jn_globals.current_affinity_state,
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.AFFECTIONATE)
         ):
             if player_screenshots_blocked:
                 n "Really, [player]?{w=0.1} You're asking me about this {i}now{/i}?"
@@ -254,9 +180,9 @@ label talk_having_pictures_taken:
                         n "Uh...{w=0.3} [player]?{w=0.1} This isn't very funny."
                         n "Make sure you ask,{w=0.1} okay?{w=0.1} For my sake."
 
-        elif store.jn_affinity.is_state_within_range(
-            affinity_state=store.jn_globals.current_affinity_state,
-            affinity_range=(store.jn_affinity.UPSET, store.jn_affinity.DISTRESSED)
+        elif jn_affinity.is_state_within_range(
+            affinity_state=jn_globals.current_affinity_state,
+            affinity_range=(jn_affinity.UPSET, jn_affinity.DISTRESSED)
         ):
             n "Pictures? Really?"
             n "I don't think I want to have you taking my picture,{w=0.1} [player]."
@@ -265,90 +191,6 @@ label talk_having_pictures_taken:
         else:
             n "Please...{w=0.3} don't try to pretend like you care about how I feel about pictures."
             n "I'm done talking about this,{w=0.1} [player]."
-    return
-
-# Ask Natsuki for permission to take a picture of her, or have her call out the player if permission already given!
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="talk_get_picture_permission",
-            unlocked=True,
-            prompt="Can I take a picture of you?",
-            conditional="persistent._jn_first_screenshot_taken != None",
-            category=["You", "Photography"],
-            player_says=True,
-            location="classroom"
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-label talk_get_picture_permission:
-    # The player was warned!
-    if store.jn_screenshots.player_screenshots_blocked:
-        n "Uh...{w=0.3} no,{w=0.1} I'm not turning the camera back on,{w=0.1} [player]."
-        return
-
-    if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
-        if store.jn_screenshots.player_screenshots_permission:
-            n "Ahaha!{w=0.2} I already said you could,{w=0.1} dummy!"
-            n "I'm ready,{w=0.1} so take one whenever!"
-
-        else:
-            n "Eh?{w=0.2} A picture?{w=0.2} Of course!"
-            $ store.jn_screenshots.player_screenshots_permission = True
-        return
-
-    elif jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
-        if store.jn_screenshots.player_screenshots_permission:
-            n "Huh?{w=0.2} Didn't you ask me that already?"
-            n "It's fine,{w=0.1} so go ahead!"
-
-        else:
-            n "Oh?{w=0.2} You wanna take a picture?{w=0.2} Alright!"
-            $ store.jn_screenshots.player_screenshots_permission = True
-        return
-
-    elif jn_affinity.get_affinity_state() >= store.jn_affinity.HAPPY:
-
-        if store.jn_screenshots.player_screenshots_permission:
-            n "Hmm?{w=0.2} A picture?{w=0.2} Well,{w=0.1} okay."
-            $ store.jn_screenshots.player_screenshots_permission = True
-
-        else:
-            n "Uuuu...{w=0.3} I just said you could,{w=0.1} [player]."
-            n "Just take it whenever,{w=0.1} alright?"
-        return
-
-    elif jn_affinity.get_affinity_state() >= store.jn_affinity.UPSET:
-        if store.jn_screenshots.player_screenshots_permission:
-            n "Eh?{w=0.2} I already said you could,{w=0.1} [player]. Just take it soon,{w=0.1} alright?"
-            n "I don't really like being kept on hold like this..."
-
-        else:
-            # Indecisive; this lets lower affinity players have a chance at screenshots without upsetting Natsuki
-            n "A picture?{w=0.2} I'm not sure...{w=0.3} let me think about it."
-            n "..."
-            # We take into account the player's behaviour with pictures so far
-            $ natsuki_approves = random.randint(1, 100) <= (100 - (jn_screenshots.bad_screenshot_streak * 25))
-            if natsuki_approves:
-                n "Fine,{w=0.1} I guess.{w=0.1} Take it whenever."
-                $ store.jn_screenshots.player_screenshots_permission = True
-
-            else:
-                n "I'm sorry,{w=0.1} [player].{w=0.1} I don't want any pictures taking of me right now."
-                $ store.jn_screenshots.player_screenshots_permission = False
-        return
-
-    elif jn_affinity.get_affinity_state() >= store.jn_affinity.DISTRESSED:
-        n "No.{w=0.1} I {b}don't{/b} want my picture taken."
-        $ store.jn_screenshots.player_screenshots_permission = False
-        return
-
-    else:
-        n "..."
-        $ store.jn_screenshots.player_screenshots_permission = False
-
     return
 
 # Natsuki discusses her lack of pet with the player, and asks about theirs
@@ -362,7 +204,7 @@ init 5 python:
             conditional=None,
             category=["Natsuki", "Life", "Animals", "Family"],
             player_says=True,
-            affinity_range=(store.jn_aff.NORMAL, None),
+            affinity_range=(jn_aff.NORMAL, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -575,7 +417,7 @@ label talk_service_animals:
     n "Hey [player],{w=0.1} have you ever heard of service animals?"
     n "They're like animals people train up specially to do jobs that humans can't do easily."
 
-    if jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "Some work in airports to keep people safe,{w=0.1} others help in rescues...{w=0.3} it's super cool!"
         n "But there's one type that's especially awesome..."
         n "Emotional support animals!"
@@ -591,11 +433,11 @@ label talk_service_animals:
         n "And on that note,{w=0.1} if you do need support?"
         n "...I'd be happy to provide.{w=0.2} Remember that,{w=0.1} alright?"
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
             n "I really,{w=0.1} really care about you,{w=0.1} [player]."
             n "I-{w=0.2}I want you to know that you can depend on me,{w=0.1} 'kay?"
 
-        if jn_affinity.get_affinity_state() == store.jn_affinity.LOVE:
+        if jn_affinity.get_affinity_state() == jn_affinity.LOVE:
             n "I love you,{w=0.1} [player]."
 
     else:
@@ -657,11 +499,11 @@ label talk_using_computers_healthily:
     n "Okaaay!{w=0.2} Lecture over!"
     n "Wow...{w=0.3} I rambled on a while,{w=0.1} didn't I?{w=0.2} Sorry,{w=0.1} sorry!{w=0.2} Ehehe."
 
-    if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         n "But you know I only do these things because I really care about you,{w=0.1} [player]...{w=0.3} right?"
         n "So please...{w=0.3} take care of yourself, okay?{w=0.2} I don't want you hurting because of me."
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVE:
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
             n "I love you,{w=0.1} [chosen_endearment]."
             n "..."
@@ -704,7 +546,7 @@ label talk_staying_active:
     n "Even a daily ten minute walk will help you feel refreshed and awake!"
     n "So make sure you get out soon,{w=0.1} [player]."
 
-    if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         n "I wanna see you fighting fit!{w=0.2} Ehehe."
 
     n "I'm counting on you!"
@@ -740,7 +582,7 @@ label talk_relieving_stress:
     n "But do whatever works for you{w=0.1} - {w=0.1}we all have our own comfort zones!"
     n "And of course,{w=0.1} you could always come see me,{w=0.1} you know..."
 
-    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
         n "I-{w=0.1}It'd be a welcome surprise.{w=0.2} Ahaha..."
 
     n "A-{w=0.1}anyway!"
@@ -781,7 +623,7 @@ label talk_careful_spending:
     n "Money can't buy happiness...{w=0.3} but it sure as hell makes finding it easier.{w=0.2} Ahaha!"
     n "Well, anyway.{w=0.2} Just try to think a little before you spend,{w=0.1} [player]{w=0.1} -{w=0.1} that's all I'm saying!"
 
-    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
         n "Besides..."
         n "Gotta save up all we can for when we hang out,{w=0.1} right?{w=0.2} Ehehe."
 
@@ -825,13 +667,13 @@ label talk_eating_well:
     n "You shouldn't find yourself snacking on junk if you have proper meals throughout the day."
     n "Your bank balance and your body will thank you too!{w=0.2} Ehehe."
 
-    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
         n "And besides..."
         n "I gotta get you into good habits by yourself before I'm there to make you."
         n "Ahaha!{w=0.2} I'm kidding,{w=0.1} [player]!{w=0.2} I'm kidding!"
         n "...Mostly."
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "Love you, [player]~!{w=0.2} Ehehe."
 
     n "Now...{w=0.3} where were we?"
@@ -943,7 +785,7 @@ label talk_favourite_season:
                     n "You haven't changed your mind at all!{w=0.2} You said [persistent.jn_player_favourite_season] last time,{w=0.1} too!"
                     $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
                     n "Jeez...{w=0.3} you're such a wind-up sometimes,{w=0.1} [chosen_tease]!"
-                    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+                    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
                         n "But...{w=0.3} you know,{w=0.1} [player]."
                         n "It isn't like I {i}dislike{/i} that side of you,{w=0.1} or anything..."
                         n "Ehehe."
@@ -1022,7 +864,7 @@ label talk_time_management:
     n "Though I should remind you...{w=0.3} the key word here is {i}balance{/i}."
     n "I'm not gonna be impressed if you work too much..."
     n "Or just slack off!"
-    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
         n "Although...{w=0.3} now that I think about it..."
         n "Perhaps I should timebox our time together, [player]."
         n "Ahaha!"
@@ -1050,11 +892,11 @@ label talk_sweet_tooth:
     n "Huh?{w=0.2} Do I have a sweet tooth?"
 
     # Opening response
-    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
         n "You bet I do!"
         n "What were you expecting,{w=0.1} [player]?{w=0.2} Ehehe."
 
-    elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "Well,{w=0.1} yeah.{w=0.2} Of course I do!"
 
     else:
@@ -1064,7 +906,7 @@ label talk_sweet_tooth:
     n "But to be completely honest,{w=0.1} if I had a choice?"
     n "Just give me a bunch of candy every time."
 
-    if jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "There's so much more variety!{w=0.2} Like...{w=0.3} there's always something for whatever I feel like!"
         n "I think if I had to pick a favourite though,{w=0.1} it'd be those fizzy ones."
         n "Just that perfect mix of sweet and sour,{w=0.1} you know?"
@@ -1076,13 +918,13 @@ label talk_sweet_tooth:
         n "And...{w=0.3} it's not exactly healthy either.{w=0.2} Ahaha."
 
     # Closing thoughts
-    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
         n "Though I have to say,{w=0.1} [player]."
         n "I'm pretty sure you have a sweet tooth too."
         n "It'd explain why you're spending so much time with me,{w=0.1} after all."
         n "Ahaha!"
 
-    elif jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "I could go for some candy right now,{w=0.1} actually."
         n "But...{w=0.3} I think I'll hold back."
         n "Someone's gotta be a role model to you,{w=0.1} [player].{w=0.2} Am I right?"
@@ -1374,12 +1216,12 @@ label talk_player_appearance:
     n "Thanks a bunch,{w=0.1} [player]!"
     n "I know it wasn't a lot,{w=0.1} but I feel like I know you so much better now!"
 
-    if jn_affinity.get_affinity_state() == store.jn_affinity.ENAMORED:
+    if jn_affinity.get_affinity_state() == jn_affinity.ENAMORED:
         n "...And now I know exactly who I should be watching out for."
         n "So you better watch out,{w=0.1} [player]."
         n "Ehehe."
 
-    elif jn_affinity.get_affinity_state() == store.jn_affinity.LOVE:
+    elif jn_affinity.get_affinity_state() == jn_affinity.LOVE:
         n "You know,{w=0.1} [player]?{w=0.2} I can just picture it now."
         n "Meeting you in person somewhere out there,{w=0.1} for the first time..."
         python:
@@ -1465,7 +1307,7 @@ label talk_drinking_alcohol:
     n "I think she was just trying to build bonds,{w=0.1} you know?"
     n "It's all in the past now,{w=0.1} obviously.{w=0.2} But that doesn't mean I don't still feel bad about it sometimes."
     n "..."
-    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
         n "Hey...{w=0.3} [player]?"
         n "Can you promise me something?"
         n "It's dumb,{w=0.1} but it's personal to me."
@@ -1475,7 +1317,7 @@ label talk_drinking_alcohol:
         n "I've...{w=0.3} seen...{w=0.3} what it can do to people."
         n "Firsthand."
         n "You deserve better than that,{w=0.1} [player].{w=0.2} You {i}are{/i} better than that."
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVE:
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
             n "..."
             n "I love you,{w=0.1} [player]."
             n "I'm never going to let a bottle get between us."
@@ -1525,7 +1367,7 @@ label talk_driving:
             n "..."
             n "Relax,{w=0.1} [player]!{w=0.2} Jeez!{w=0.2} I'm just messing with you."
             n "That's awesome though{w=0.1} -{w=0.1} you just can't beat the convenience of a car,{w=0.1} right?"
-            if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+            if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
                 n "But I should probably warn you..."
                 n "I'm picking the songs for our driving playlist."
                 n "Ahaha!"
@@ -1539,7 +1381,7 @@ label talk_driving:
             n "Or perhaps...{w=0.3} you just don't own one at the moment?"
             n "Well,{w=0.1} I'm not one to judge.{w=0.2} I'm sure you manage just fine."
             n "Besides,{w=0.1} you're helping the environment too,{w=0.1} right?"
-            if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+            if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
                 n "Thoughtful as always,{w=0.1} [player]."
                 n "I like that about you."
                 n "Ehehe."
@@ -1549,7 +1391,7 @@ label talk_driving:
             n "Well,{w=0.1} chin up,{w=0.1} [player]!{w=0.2} It isn't the end of the world."
             n "Don't worry {w=0.1}-{w=0.1} I'll teach you how to use the bus!"
             n "Ehehe."
-            if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+            if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
                 n "And besides..."
                 n "That just means we can snuggle up on the seat together,{w=0.1} [player]."
                 n "A dream come true for you,{w=0.1} right?"
@@ -1580,7 +1422,7 @@ init 5 python:
 label talk_sustainable_fashion:
     n "Hey,{w=0.1} [player]..."
     n "This is kinda random,{w=0.1} but are you into fashion?"
-    if jn_affinity.get_affinity_state() >= store.jn_affinity.HAPPY:
+    if jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
         n "I know I am!{w=0.2} Can you tell?"
         n "Ehehe."
 
@@ -1596,7 +1438,7 @@ label talk_sustainable_fashion:
     n "It's actually one of the reasons I began learning how to sew!"
     n "I've never had tons of money to buy more clothes anyway,{w=0.1} so I try to reuse and fix up what I can."
 
-    if jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "You'd be surprised at what you can pull off with a little creativity!"
         n "And just a pinch of know-how too,{w=0.1} obviously."
         n "Betcha didn't know my favourite pink skirt was hand-made,{w=0.1} did you?"
@@ -1607,11 +1449,11 @@ label talk_sustainable_fashion:
     n "I think I've lectured you enough now,{w=0.1} [player],{w=0.1} so I won't keep harping on about it."
     n "But...{w=0.3} the next time you're out shopping for clothes,{w=0.1} or looking through some catalogues online?"
     n "Just spare a thought for the environment,{w=0.1} would you?"
-    if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
         n "For me?"
         n "I know I can count on you!"
 
-    if jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
+    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "Ehehe.{w=0.2} Thanks,{w=0.1} [player]!"
         n "I'm counting on you!"
 
@@ -1638,19 +1480,19 @@ init 5 python:
     )
 
 label talk_give_nickname:
-    # Natsuki hasn't been nicknamed before
-    if persistent.jn_player_natsuki_current_nickname is None:
+    # Natsuki hasn't been nicknamed before, or is rocking her normal name
+    if persistent.jn_player_nicknames_allowed and persistent.jn_player_nicknames_current_nickname == "Natsuki":
         n "Eh?{w=0.2} You want to give me a nickname?"
         n "Why?{w=0.2} Natsuki not good enough for you?{w=0.2} Is that it?"
         n "Huh?{w=0.2} Come on, [player]!{w=0.2} Spit it out!"
         n "..."
         n "Relax,{w=0.1} [player]!{w=0.2} Jeez!{w=0.2} I'm just kidding!"
         n "Ehehe."
-        n "Well...{w=0.3} I don't see why not!" 
+        n "Well...{w=0.3} I don't see why not!"
 
     # Another nickname is being assigned
     else:
-    
+
         # Account for strikes
         if persistent.jn_player_nicknames_bad_given_total == 0:
             n "Oh?{w=0.2} You wanna give me another nickname?"
@@ -1671,13 +1513,13 @@ label talk_give_nickname:
 
     # Validate the nickname, respond appropriately
     $ nickname = renpy.input(prompt="What did you have in mind,{w=0.2} [player]?", allow=jn_globals.DEFAULT_ALPHABETICAL_ALLOW_VALUES, length=10).strip()
-    
+
     if nickname.lower() == "nevermind":
         n "Huh?{w=0.2} You changed your mind?"
         n "Well...{w=0.3} alright then."
         n "Just let me know if you actually want to call me something else then,{w=0.1} 'kay?"
         return
-    
+
     else:
         $ nickname_type = nicknames.get_nickname_type(nickname)
 
@@ -1770,7 +1612,7 @@ label talk_give_nickname:
             n "You know what?{w=0.2} Yeah!{w=0.2} I like it!"
             n "Consider it done,{w=0.1} [player]!{w=0.2} Ehehe."
             $ neutral_nickname_permitted = True
-        
+
         # Finally, assign the neutral/easter egg nickname if it was permitted by Natsuki
         if (neutral_nickname_permitted):
             $ persistent.jn_player_nicknames_current_nickname = nickname
@@ -1840,6 +1682,207 @@ label talk_give_nickname:
 
     return
 
+# Natsuki advises the player on good sleeping habits
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_sleeping_well",
+            unlocked=True,
+            prompt="Sleeping well",
+            conditional="persistent.jn_total_visit_count >= 5",
+            category=["Health", "You"],
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_sleeping_well:
+    n "Huh..."
+    n "Hey,{w=0.1} [player].{w=0.2} Let me ask you a question,{w=0.1} 'kay?"
+    n "How do you sleep at night?"
+    n "Be honest.{w=0.2} How do you do it?"
+    n "..."
+    n "Ehehe.{w=0.2} Did I get you?"
+    n "But seriously,{w=0.2} [player].{w=0.2} Do you struggle with your sleep?"
+
+    # Quip if the player has been around a while, or has admitted they're tired
+    if utils.get_current_session_length().total_seconds() / 3600 >= 12:
+        n "I mean,{w=0.1} you {i}have{/i} been here for a while now..."
+        n "So I kinda figured you might be feeling a little sleepy anyway."
+
+    elif admissions.last_admission_type == admissions.TYPE_TIRED:
+        n "I mean,{w=0.1} you even {i}said{/i} you were tired before."
+        n "So...{w=0.3} it only makes sense to ask,{w=0.1} right?{w=0.2} Anyway..."
+
+    n "I'll admit,{w=0.1} I get the odd sleepless night myself.{w=0.2} It's the worst!"
+    n "There's nothing I hate more than tossing and turning,{w=0.1} just waiting for my body to decide it's time for tomorrow to happen."
+    n "But...{w=0.3} you know what they say,{w=0.1} [player] -{w=0.1} with suffering..."
+    n "...Comes wisdom!"
+    n "And luckily for you,{w=0.1} I don't mind sharing.{w=0.2} Ehehe."
+    n "So,{w=0.1} listen up -{w=0.1} it's time for another lesson from yours truly!"
+    n "Alright -{w=0.1} first,{w=0.1} cut the crap!{w=0.2} If you're trying to sleep,{w=0.1} anything high-sugar or high-caffeine is your enemy."
+    n "So before anything else,{w=0.1} ditch the soda and coffee.{w=0.2} You can thank me later."
+    n "Next up -{w=0.1} no screens!{w=0.2} Including this one, [player]."
+    n "No screen means no bright lights or distractions to keep you up,{w=0.1} obviously."
+    n "If you're tired then the last thing you need is something beaming whatever at you."
+    n "Moving on, next is temperature!{w=0.2} If it's hot,{w=0.1} use thinner sheets and vice versa."
+    n "Nothing disrupts your sleep more than having to rip off blankets,{w=0.1} or pull some out."
+    n "Keeping up with me so far,{w=0.1} [player]?{w=0.2} I'm almost done,{w=0.1} don't worry."
+    n "Lastly...{w=0.3} get comfortable!"
+    n "Make sure you have enough pillows to support your head,{w=0.1} or maybe even play some quiet music if you find that helps."
+    n "...And that's about it!"
+    n "You should have known at least a few of those already,{w=0.1} but at any rate..."
+    n "I hope you can rest easy with your newfound knowledge,{w=0.1} [player]!"
+    n "Ehehe."
+
+    return
+
+# Natsuki discusses aging, and her carefree attitude towards the age-gap in relationships
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_aging",
+            unlocked=True,
+            prompt="Aging",
+            conditional=None,
+            category=["Life"],
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_aging:
+    n "You know,{w=0.1} [player]..."
+    n "I think most people share a bunch of fears."
+    n "You get what I mean,{w=0.1} right?{w=0.2} Like presenting stuff to a room full of people,{w=0.1} or failing a test."
+    n "Of course,{w=0.1} it's rare to find one that {i}everyone{/i} has..."
+    n "Or at least something that makes anyone feel uneasy."
+    n "But...{w=0.3} I think I found one!"
+    n "What am I thinking of,{w=0.1} you ask?"
+    n "Well...{w=0.3} it's actually kinda boring,{w=0.1} really."
+    n "I was actually thinking about growing older."
+    n "Have you ever thought much about it,{w=0.1} [player]?"
+    n "It's probably the last thing on your mind if you're pretty young."
+    n "But I think as you actually get older,{w=0.1} it starts to creep in."
+    n "You might have less energy,{w=0.1} or friends and family begin drifting away..."
+    n "Birthdays lose all meaning -{w=0.1} you might even dread them!"
+    n "The signs appear in a bunch of ways,{w=0.1} but that's what makes it unnerving."
+    n "Everyone experiences it differently,{w=0.1} and we don't even know what happens after the end!"
+    n "Spooky,{w=0.1} huh?"
+    n "Although... I guess you could say that's more the fear of the unknown than aging itself."
+    n "What does wind me up though is how immature people can be about it."
+    n "Especially when it comes to relationships between different ages!"
+    n "People just get so preachy about it..."
+    n "Like...{w=0.3} as long as they're both happy,{w=0.1} and nobody is being hurt or made uncomfortable,{w=0.1} who actually cares?"
+    n "It's just like most stuff,{w=0.1} really."
+    n "Besides,{w=0.1} it's not like being a certain age means you {i}have{/i} to be a certain way."
+    n "I mean...{w=0.3} look at Yuri!"
+    n "Being all old-fashioned like that -{w=0.1} you'd think she's retired!"
+    n "But anyway...{w=0.3} I think we got side-tracked."
+    n "I don't really care how old you are,{w=0.1} [player]."
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        n "I love you all the same,{w=0.1} [chosen_tease]."
+        n "Don't forget that,{w=0.1} 'kay?"
+        n "Or you might make me a little angry.{w=0.2} Ehehe."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n "You've been pretty awesome to me all the same."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+        n "You're always fun to hang around with!"
+
+    else:
+        n "But...{w=0.3} just in case?"
+        n "We're only having one candle on your birthday cake.{w=0.2} Sorry."
+        n "Ahaha!"
+
+    return
+
+# Natsuki discusses the concept of work-life balance, and how it can be difficult to disconnect
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_work_life_balance",
+            unlocked=True,
+            prompt="Work-life balance",
+            conditional=None,
+            category=["Life"],
+            nat_says=True,
+            affinity_range=(jn_affinity.RUINED, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_work_life_balance:
+    if jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
+        n "You know,{w=0.1} [player]..."
+
+    n "I think it's pretty easy to let your academic or work life creep into your personal time nowadays."
+    n "I mean...{w=0.3} think about it."
+    n "With everyone having mobile phones,{w=0.1} plus usually some kinda computer at home -{w=0.1} it's hard not to be connected somehow."
+    n "And like...{w=0.3} if there's already that connection,{w=0.1} then what's to stop work from bugging you during your time off?"
+    n "Or classmates asking for help at the last possible minute?"
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
+        n "It just gets annoying -{w=0.1} like everyone expects you to always be around to chip in a little more,{w=0.1} or get something done!"
+        n "Overwhelming,{w=0.1} right?"
+        n "Huh.{w=0.2} Actually...{w=0.3} now that I think about it..."
+        n "It isn't like that kind of intrusion is only limited to when you're away either."
+        n "I've heard {i}way{/i} too many stories of people doing stupid amounts of overtime at work -{w=0.1} sometimes not even paid!"
+        n "Or even students studying late into the night until they collapse... it's pretty crazy."
+
+    else:
+        n "It just gets annoying -{w=0.1} everyone expects you to always be around to do more."
+        n "Actually,{w=0.1} now that I think about it..."
+        n "It isn't like that kind of thing is only limited to when you're away either."
+        n "I've heard too many stories of people doing stupid amounts of overtime at work -{w=0.1} often not even paid."
+        n "Or even students studying late into the night until they collapse..."
+    
+    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n "Ugh...{w=0.3} I just wish people would value their own time more."
+        n "..."
+        n "Hey,{w=0.1} [player]..."
+        n "I don't know if you're working,{w=0.1} or studying,{w=0.1} or what..."
+        n "But you better not be letting whatever it is take over your life.{w=0.2} Understand?"
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+            n "You are {i}more{/i} than your career,{w=0.1} or your education.{w=0.2} You have your own wants and needs that matter too."
+            n "I don't want some dumb job or stupid assignment to take over your life."
+            n "You're...{w=0.3} way more important than either of those,{w=0.1} [player].{w=0.2} Trust me."
+
+            if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+                n "Besides..."
+                n "You and your time are mine first, [player]."
+                n "I already called dibs,{w=0.1} a-{w=0.1}after all.{w=0.2} Ehehe..."
+
+        else:
+            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            n "People are more than what they do for a living,{w=0.1} after all.{w=0.2} And that includes you too, [chosen_tease]!"
+        
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n "Makes me wish people would value their own time more."
+        n "...I guess that includes you too,{w=0.1} [player]."
+        n "Try not to let work or studying rule your life.{w=0.2} You've got better things to do."
+        n "...Like being a decent friend to others for a change.{w=0.2} Am I right?"
+
+    else:
+        n "People need to value their own time more,{w=0.1} I guess."
+        n "...Heh."
+        n "Maybe I should follow my own advice..."
+        n "Because clearly being here is a waste of my time too."
+
+    return
+
 # Natsuki warns against the risks of wearing headphones/headsets
 init 5 python:
     registerTopic(
@@ -1899,19 +1942,7 @@ init 5 python:
             unlocked=True,
             prompt="Wanna go to the beach?",
             player_says=True,
-            category=["date"] #I'm not sure if category is for this..
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="date_go2_room",
-            unlocked=True,
-            prompt="Let's return",
-            player_says=True,
-            category=["date"] #I'm not sure if category is for this..
+            category=["date"]
         ),
         topic_group=TOPIC_TYPE_NORMAL
     )
@@ -1921,13 +1952,24 @@ label date_go2_beach:
     n "Let's go!"
     $ main_background.changeLocation(beach)
     $ main_background.draw(full_redraw=True)
-    show Natsuki zorder 3 #replace after sprite rework
     return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="date_go2_room",
+            unlocked=True,
+            prompt="Let's return",
+            player_says=True,
+            category=["date"]
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
 
 label date_go2_room:
     n "Heading back then?"
     n "Alright!"
     $ main_background.changeLocation(classroom)
     $ main_background.draw(dissolve_all=True, full_redraw=True)
-    show Natsuki zorder 3 #replace after sprite rework
     return
