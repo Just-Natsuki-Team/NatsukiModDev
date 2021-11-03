@@ -2154,7 +2154,7 @@ label talk_i_love_you:
                                 n "Is give up and admit how wrong they are~!{w=0.2} Ehehe."
 
                             else:
-                                player_is_wrong_responses = [
+                                $ player_is_wrong_responses = [
                                     "Nope!{w=0.2} I love {i}you{/i} more!",
                                     "Sorry,{w=0.1} bub!{w=0.2} I definitely love {i}you{/i} more!",
                                     "Ehehe.{w=0.2} Nope~!{w=0.2} We both know I love {i}you{/i} more.",
