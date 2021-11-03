@@ -1894,7 +1894,7 @@ init 5 python:
             conditional=None,
             category=["Fashion", "Natsuki"],
             player_says=True,
-            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.RUINED, jn_affinity.LOVE),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -1911,20 +1911,29 @@ label talk_natsukis_hairstyle:
         n "Wait...{w=0.3} are you messing with me?{w=0.2} What do you mean?"
         n "You better not be teasing me,{w=0.1} [player]..."
 
-    else:
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
         n "...Huh?{w=0.2} Oh.{w=0.2} My hair."
         n "I'm...{w=0.3} surprised you care enough to ask about that."
 
+    else:
+        n "Because I like it that way.{w=0.2} Is that good enough for you?"
+        n "Why would you even care anyway?{w=0.2} You haven't cared about me so far."
+        n "Jerk."
+        return
+
     n "Well,{w=0.1} anyway."
     n "I never really thought about it that much,{w=0.1} honestly."
-    n "I just thought ponytails would look cute on me..."
-
+    
     if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n "I just thought twintails would look cute on me..."
         n "...Yeah,{w=0.1} yeah.{w=0.2} I know what you're thinking,{w=0.1} [player]."
 
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "Was I wrong...?"
             n "Ehehe.{w=0.2} I thought not."
+
+    else:
+        n "I guess I just liked the idea of twintails."
 
     n "As for the bangs,{w=0.1} I...{w=0.3} always found it difficult to get my hair cut."
 
@@ -1935,16 +1944,21 @@ label talk_natsukis_hairstyle:
         n "Ugh...{w=0.3} anyway."
 
     else:
-        n "I was always kinda short."
+        n "I was always kinda short when it came to getting it cut."
         n "...And no,{w=0.1} {i}not{/i} in the physical sense."
 
     n "As for my hairclip?{w=0.2} It's just to keep my hair out of my eyes."
-    n "Looking good is a bonus,{w=0.1} but I mostly just got tired of brushing my hair out of my face."
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n "Looking good is a bonus,{w=0.1} but I mostly just got tired of brushing my hair out of my face."
+        n "Especially with bangs this long!"
+        n "Anyway..."
+
     n "Have I thought about other hairstyles?{w=0.2} Well..."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-        n "I'm pretty sure I already let my hair down around you,{w=0.1} [chosen_tease]. Wouldn't you agree?"
+        n "I'm pretty sure I already let my hair down around you,{w=0.1} [chosen_tease]. That qualifies, right?"
         n "Ahaha!"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
@@ -1954,12 +1968,7 @@ label talk_natsukis_hairstyle:
 
     else:
         n "...At this point,{w=0.1} [player]?{w=0.2} I'd rather you stayed {i}out{/i} of my hair."
-        
-        if jn_affinity.get_affinity_state() <= jn_affinity.DISTRESSED:
-            n "I'm about done talking. Thanks."
-
-        else:
-            n "Thanks."
+        n "Thanks."
 
     return
 
