@@ -576,6 +576,12 @@ init -990 python in jn_globals:
     # Alphabetical (excluding numbers) values allowed for text input
     DEFAULT_ALPHABETICAL_ALLOW_VALUES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-' "
 
+    #The current label we're in
+    current_label = None
+
+    #The last label we were in
+    last_label = None
+
 init 10 python in jn_globals:
     # The current affection state. We default this to 5 (NORMAL)
     current_affinity_state = store.jn_affinity.NORMAL
@@ -708,6 +714,14 @@ init python:
     s_name = "Sayori"
     m_name = "Monika"
     y_name = "Yuri"
-    
+
     # Assign Natsuki the chosen nickname (defaulted to Natsuki)
     n_name = persistent.jn_player_nicknames_current_nickname
+
+init -999 python:
+    def label_callback(name, abnormal):
+        jn_globals.last_label = jn_globals.current_label
+        jn_globals.current_label = name
+
+
+    config.label_callback = label_callback
