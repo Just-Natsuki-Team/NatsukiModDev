@@ -2143,7 +2143,7 @@ label talk_i_love_you:
                                 n "Thanks,{w=0.1} [chosen_endearment]~!"
 
                             elif wrong_response_count == 100:
-                                n "...Oh!{w=0.2} And it looks like we have our 100th wrong guess!"
+                                n "...Oh!{w=0.2} And it looks like we have our 100th wrong answer!"
                                 n "Dim the lights!{w=0.2} Roll the music!"
                                 n "Now,{w=0.1} audience members -{w=0.1} what does our stubborn participant get?"
                                 n "They get..."
