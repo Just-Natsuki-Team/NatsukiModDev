@@ -2019,7 +2019,7 @@ label talk_i_love_you:
             n "I...{w=0.3} I c-{w=0.1}can't do this right now."
             n "It...{w=0.5} it hurts..."
             n "..."
-            n "Get out of my sight, [player]."
+            n "Get out of my sight,{w=0.1} [player]."
             n "..."
             n "Go!"
             n "{i}Just leave me alone!{/i}{nw}"
