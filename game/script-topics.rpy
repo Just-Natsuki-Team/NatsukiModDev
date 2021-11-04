@@ -35,7 +35,7 @@ init 5 python:
             label="talk_set_affinity",
             unlocked=True,
             prompt="Can you change my affinity state?",
-            conditional=None,
+            conditional="config.developer",
             category=["Debug"],
             player_says=True,
             location="classroom"
@@ -95,7 +95,7 @@ init 5 python:
             label="talk_set_trust",
             unlocked=True,
             prompt="Can you change my trust?",
-            conditional=None,
+            conditional="config.developer",
             category=["Debug"],
             player_says=True,
             location="classroom"
@@ -113,6 +113,85 @@ label talk_set_trust:
 
         except:
             renpy.say(n, "Hmm... sorry, I can't seem to read that. Make sure you enter an integer or decimal value, 'kay?")
+    return
+
+# This topic allows us to toggle on/off a list of core watched items for easy reference
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_toggle_watched_items",
+            unlocked=True,
+            prompt="Can you toggle the watched item list?",
+            conditional="config.developer",
+            category=["Debug"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_toggle_watched_items:
+    n "Sure!{w=0.2} Just give me a sec here..."
+    n "..."
+    $ jn_debug.toggle_show_tracked_watch_items()
+    n "There you go, [player]!"
+    return
+
+# This topic allows us to add an item to the watched item list
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_add_watched_item",
+            unlocked=True,
+            prompt="Can you add an item to the watched item list?",
+            conditional="config.developer",
+            category=["Debug"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_add_watched_item:
+    n "No sweat, [player]! Just tell me what you want to add."
+    $ player_input = renpy.input("Enter an expression, or enter 'nevermind' to cancel:")
+    if (player_input.lower().strip() in {"nevermind", ""}):
+        n "Oh. Okay then."
+
+    else:
+        $ jn_debug.add_tracked_watch_item(str(player_input))
+        n "Okaaay! There you go, [player]!"
+    
+    return
+
+# This topic allows us to remove an item from the watched item list
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_remove_watched_item",
+            unlocked=True,
+            prompt="Can you remove an item from the watched item list?",
+            conditional="config.developer",
+            category=["Debug"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_remove_watched_item:
+    n "No worries, [player]! Just tell me what you want to remove."
+    $ player_input = renpy.input("Enter an expression, or enter 'nevermind' to cancel:")
+    if (player_input.lower().strip() in {"nevermind", ""}):
+        n "Oh. Alright then."
+
+    else:
+        $ jn_debug.remove_tracked_watch_item(str(player_input))
+        n "Gotcha! There you go, [player]!"
+    
     return
 
 # Natsuki's thoughts on having her picture taken via the ingame screenshot system
