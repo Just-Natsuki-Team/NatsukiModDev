@@ -1883,6 +1883,51 @@ label talk_work_life_balance:
 
     return
 
+# Natsuki warns against the risks of wearing headphones/headsets
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_using_headphones_carefully",
+            unlocked=True,
+            prompt="Using headphones carefully",
+            category=["Health", "Music", "Technology"],
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_using_headphones_carefully:
+    n "..."
+    n "...?"
+    n "...!"
+    n "...[player]!"
+    n "[player]!{w=0.2} Finally!{w=0.2} Can you hear me now?"
+    n "Jeez...{w=0.3} took you long enough!"
+    n "..."
+    n "Ehehe."
+    n "Admit it,{w=0.1} [player]!{w=0.2} I'll get you one of these days."
+    n "Seriously though -{w=0.1} do you use headphones or anything like that often?"
+    n "I'll admit,{w=0.1} I probably use mine more than I should."
+    n "I was kinda joking about the whole hearing thing,{w=0.1} but this is important,{w=0.1} [player]."
+    n "I like cranking it up too -{w=0.1} just don't make a bad habit of it."
+    n "There's even warnings in some countries if you have the volume up too loud..."
+    n "...And for a good reason!"
+    n "Not just to protect your ears either -{w=0.1} you better be careful wearing them out and about too."
+    n "I don't wanna hear about you getting knocked over because you didn't hear something coming!"
+    n "Oh -{w=0.1} and one last thing,{w=0.1} actually."
+    n "You might wear them to focus at work or relax at home -{w=0.1} and that's fine!"
+    n "But please,{w=0.1} [player]."
+    n "...Take them off every once and a while,{w=0.1} will you?{w=0.2} For other people,{w=0.1} I mean."
+    n "I get it -{w=0.1} if you just wanna listen to something in peace,{w=0.1} or give yourself some room,{w=0.1} that's okay."
+    n "But don't use them to barricade yourself away from everyone and everything."
+    n "It's...{w=0.3} not healthy to do that either,{w=0.1} [player]."
+    n "...And that's about all I had to say!"
+    n "Thanks for hearing me out!{w=0.2} Ehehe."
+    return
+
 # Natsuki discusses her dislike of the horror genre
 init 5 python:
     registerTopic(
