@@ -292,13 +292,17 @@ init -1 python in jn_affinity:
         elif affinity_state == DISTRESSED:
             return "DISTRESSED"
 
-        elif affinity_state == DISTRESSED:
+        elif affinity_state == BROKEN:
             return "BROKEN"
 
-        elif affinity_state == DISTRESSED:
+        elif affinity_state == RUINED:
             return "RUINED"
 
         else:
+            store.utils.log(
+                message="Unable to get tier name for affinity {0}; affinity_state was {1}".format(store.persistent.affinity, get_affinity_state()),
+                logseverity=store.utils.SEVERITY_WARN
+            )
             return "UNKNOWN"
 
 init -1 python in jn_trust:

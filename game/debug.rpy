@@ -1,11 +1,11 @@
 default persistent.jn_debug_tracked_watch_items = [
-    "store.persistent.jn_affinity",
+    "store.persistent.affinity",
     "store.jn_affinity.get_affinity_tier_name()",
     "store.persistent.trust",
     "store.jn_trust.get_trust_tier_name()"
 ]
 
-init 0 python in jn_debug:
+init python in jn_debug:
     import store
 
     _view_tracked_items_enabled = False

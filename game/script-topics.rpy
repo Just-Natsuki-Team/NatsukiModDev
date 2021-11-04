@@ -527,6 +527,7 @@ label talk_service_animals:
         n "You know, [player].{w=0.2} To be perfectly honest with you?"
         n "Sometimes I feel like I could use one."
         n "Aha..."
+        return
 
     n "..."
     n "That got kinda heavy,{w=0.1} didn't it?"
