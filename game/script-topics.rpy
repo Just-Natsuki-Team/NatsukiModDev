@@ -1901,18 +1901,19 @@ init 5 python:
     )
 
 label talk_thoughts_on_horror:
-    if jn_affinity.get_affinity_state() <= jn_affinity.NORMAL:
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "You know,{w=0.1} [player]..."
         n "I don't think I ever actually explained why I dislike horror so much."
         n "I know I mentioned it before,{w=0.1} but I was kinda caught off guard at the time."
         n "Honestly?"
         n "Everyone has their tastes,{w=0.1} right? And I can get why people enjoy it."
 
-    elif jn_affinity.get_affinity_state() <= jn_affinity.DISTRESSED:
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
         n "You know, I don't think I explained why I dislike horror."
         n "I get everyone has their tastes, but it isn't for me."
 
-    elif jn_affinity.get_affinity_state() <= jn_affinity.RUINED:
+    else:
         n "...I was about to share some of my thoughts on horror with you."
         n "Or at least,{w=0.1} I was thinking about it."
         n "...But then do you know what I realized,{w=0.1} [player]?"
@@ -1949,7 +1950,7 @@ label talk_thoughts_on_horror:
         n "Don't mind me though,{w=0.1} [player].{w=0.2} If you wanna watch something,{w=0.1} go for it!"
         n "Just don't expect me to sit there with you.{w=0.2} Ahaha..."
 
-    elif jn_affinity.get_affinity_state() <= jn_affinity.DISTRESSED:
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
         n "..."
         n "I {i}would{/i} ask that if you were gonna watch something like that,{w=0.1} then to warn me first..."
         n "But you wouldn't listen to me anyway,{w=0.1} would you?"
