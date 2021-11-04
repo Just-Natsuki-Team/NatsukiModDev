@@ -1883,6 +1883,40 @@ label talk_work_life_balance:
 
     return
 
+# Natsuki provides guidance on how to stay true to yourself and your values
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_integrity",
+            unlocked=True,
+            prompt="Preserving integrity",
+            category=["Society", "You"],
+            nat_says=True,
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_integrity:
+    n "You know, [player]..."
+    n "I feel like nowadays, everyone is trying to make a point, or preach something."
+    n "Especially with social media and all that everywhere - it's crazy!"
+    n "Like... there's posts telling you this is bad, others asking why you don't support something else..."
+    n "And of course, everyone is super tuned in to that - so it leaks into real life as well!"
+    n "It can't only be me that finds it all exhausting, right?"
+    n "I think it makes it kinda easy to lose track of what you really like, or what you stand for."
+    n "Which... is actually something I really wanted to talk to you about, [player]."
+    n "I'm not saying you should just ignore everyone else, or never consider other points of view."
+    n "That's just being ignorant."
+    n "But... don't just let other people's opinions or conceptions completely overwrite your own, 'kay?"
+    n "You are your own master, [player] - you have your own opinions, your own values - and that really matters!"
+    n "I mean, look at me!"
+    n "So... I guess what I'm saying is don't be afraid to stand up for your beliefs, [player]."
+    n "There's gonna be times you'll be wrong, but don't let it get to you!"
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
