@@ -266,6 +266,10 @@ init -1 python in jn_affinity:
             if store.jn_trust_affinity_common.compare_thresholds(store.persistent.affinity, threshold) >= 0:
                 return _AFF_STATE_ORDER[-i]
 
+            # We can't go any further beyond ruined; return it
+            if threshold == THRESHOLD_RUINED:
+                return _AFF_STATE_ORDER[0]
+
             i += 1
 
     def get_affinity_tier_name():
@@ -387,6 +391,10 @@ init -1 python in jn_trust:
             if store.jn_trust_affinity_common.compare_thresholds(store.persistent.trust, threshold) >= 0:
                 return _TRUST_STATE_ORDER[-i]
 
+            # We can't go any further beyond shattered; return it
+            if threshold == TRUST_SHATTERED:
+                return _TRUST_STATE_ORDER[0]
+
             i += 1
 
     def get_trust_tier_name():
@@ -420,4 +428,8 @@ init -1 python in jn_trust:
             return "SHATTERED"
 
         else:
+            store.utils.log(
+                message="Unable to get tier name for trust {0}; trust_state was {1}".format(store.persistent.trust, get_trust_state()),
+                logseverity=store.utils.SEVERITY_WARN
+            )
             return "UNKNOWN"
