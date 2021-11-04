@@ -1925,6 +1925,128 @@ label talk_aging:
 
     return
 
+# Natsuki discusses the concept of work-life balance, and how it can be difficult to disconnect
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_work_life_balance",
+            unlocked=True,
+            prompt="Work-life balance",
+            conditional=None,
+            category=["Life"],
+            nat_says=True,
+            affinity_range=(jn_affinity.RUINED, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_work_life_balance:
+    if jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
+        n "You know,{w=0.1} [player]..."
+
+    n "I think it's pretty easy to let your academic or work life creep into your personal time nowadays."
+    n "I mean...{w=0.3} think about it."
+    n "With everyone having mobile phones,{w=0.1} plus usually some kinda computer at home -{w=0.1} it's hard not to be connected somehow."
+    n "And like...{w=0.3} if there's already that connection,{w=0.1} then what's to stop work from bugging you during your time off?"
+    n "Or classmates asking for help at the last possible minute?"
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
+        n "It just gets annoying -{w=0.1} like everyone expects you to always be around to chip in a little more,{w=0.1} or get something done!"
+        n "Overwhelming,{w=0.1} right?"
+        n "Huh.{w=0.2} Actually...{w=0.3} now that I think about it..."
+        n "It isn't like that kind of intrusion is only limited to when you're away either."
+        n "I've heard {i}way{/i} too many stories of people doing stupid amounts of overtime at work -{w=0.1} sometimes not even paid!"
+        n "Or even students studying late into the night until they collapse... it's pretty crazy."
+
+    else:
+        n "It just gets annoying -{w=0.1} everyone expects you to always be around to do more."
+        n "Actually,{w=0.1} now that I think about it..."
+        n "It isn't like that kind of thing is only limited to when you're away either."
+        n "I've heard too many stories of people doing stupid amounts of overtime at work -{w=0.1} often not even paid."
+        n "Or even students studying late into the night until they collapse..."
+    
+    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n "Ugh...{w=0.3} I just wish people would value their own time more."
+        n "..."
+        n "Hey,{w=0.1} [player]..."
+        n "I don't know if you're working,{w=0.1} or studying,{w=0.1} or what..."
+        n "But you better not be letting whatever it is take over your life.{w=0.2} Understand?"
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+            n "You are {i}more{/i} than your career,{w=0.1} or your education.{w=0.2} You have your own wants and needs that matter too."
+            n "I don't want some dumb job or stupid assignment to take over your life."
+            n "You're...{w=0.3} way more important than either of those,{w=0.1} [player].{w=0.2} Trust me."
+
+            if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+                n "Besides..."
+                n "You and your time are mine first, [player]."
+                n "I already called dibs,{w=0.1} a-{w=0.1}after all.{w=0.2} Ehehe..."
+
+        else:
+            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            n "People are more than what they do for a living,{w=0.1} after all.{w=0.2} And that includes you too, [chosen_tease]!"
+        
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n "Makes me wish people would value their own time more."
+        n "...I guess that includes you too,{w=0.1} [player]."
+        n "Try not to let work or studying rule your life.{w=0.2} You've got better things to do."
+        n "...Like being a decent friend to others for a change.{w=0.2} Am I right?"
+
+    else:
+        n "People need to value their own time more,{w=0.1} I guess."
+        n "...Heh."
+        n "Maybe I should follow my own advice..."
+        n "Because clearly being here is a waste of my time too."
+
+    return
+
+# Natsuki warns against the risks of wearing headphones/headsets
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_using_headphones_carefully",
+            unlocked=True,
+            prompt="Using headphones carefully",
+            category=["Health", "Music", "Technology"],
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_using_headphones_carefully:
+    n "..."
+    n "...?"
+    n "...!"
+    n "...[player]!"
+    n "[player]!{w=0.2} Finally!{w=0.2} Can you hear me now?"
+    n "Jeez...{w=0.3} took you long enough!"
+    n "..."
+    n "Ehehe."
+    n "Admit it,{w=0.1} [player]!{w=0.2} I'll get you one of these days."
+    n "Seriously though -{w=0.1} do you use headphones or anything like that often?"
+    n "I'll admit,{w=0.1} I probably use mine more than I should."
+    n "I was kinda joking about the whole hearing thing,{w=0.1} but this is important,{w=0.1} [player]."
+    n "I like cranking it up too -{w=0.1} just don't make a bad habit of it."
+    n "There's even warnings in some countries if you have the volume up too loud..."
+    n "...And for a good reason!"
+    n "Not just to protect your ears either -{w=0.1} you better be careful wearing them out and about too."
+    n "I don't wanna hear about you getting knocked over because you didn't hear something coming!"
+    n "Oh -{w=0.1} and one last thing,{w=0.1} actually."
+    n "You might wear them to focus at work or relax at home -{w=0.1} and that's fine!"
+    n "But please,{w=0.1} [player]."
+    n "...Take them off every once and a while,{w=0.1} will you?{w=0.2} For other people,{w=0.1} I mean."
+    n "I get it -{w=0.1} if you just wanna listen to something in peace,{w=0.1} or give yourself some room,{w=0.1} that's okay."
+    n "But don't use them to barricade yourself away from everyone and everything."
+    n "It's...{w=0.3} not healthy to do that either,{w=0.1} [player]."
+    n "...And that's about all I had to say!"
+    n "Thanks for hearing me out!{w=0.2} Ehehe."
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
