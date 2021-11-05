@@ -1,5 +1,3 @@
-#Aaa this code is so clean!!!!! I really need to learn how to write like this! -Daisy
-
 label ch30_autoload:
     #Start with black scene
     scene black
@@ -27,26 +25,46 @@ label ch30_visual_setup:
 
 label ch30_init:
 
-    # Add to the total visits counter
-    $ persistent.jn_total_visit_count += 1
+    python:      
+        # Determine if the player should get a prolonged leave greeting
+        if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
+            persistent.last_apology_type = apologies.APOLOGY_TYPE_PROLONGED_LEAVE
 
-    #Let's pick a greeting
+        # Add to the total visits counter and set the last visit date
+        persistent.jn_total_visit_count += 1
+        persistent.jn_last_visited_date = datetime.datetime.now()
+
+    # Let's pick a greeting
     $ push(greetings.select_greeting())
 
+    # Draw background and placeholder sprites
     $ main_background.draw(full_redraw=True)
-    show Natsuki zorder 3
+
+    if utils.get_current_hour() > 6 and utils.get_current_hour() < 18:
+        show placeholder_sky_day zorder 0
+    else:
+        hide placeholder_sky_day
+
+    if persistent.jn_player_apology_type_on_quit is not None or jn_affinity.get_affinity_state() < jn_affinity.NORMAL:
+        show placeholder_natsuki plead zorder jn_placeholders.NATSUKI_Z_INDEX
+
+    else:
+        show placeholder_natsuki smile zorder jn_placeholders.NATSUKI_Z_INDEX
+    
     show screen hkb_overlay
 
     # Do all var-sets, resets, and sanity checks prior to entering the loop here
 
-    # Reset the previous admission, now that Natsuki will have picked one if relevant
+    # Reset the previous admission/apology, now that Natsuki will have picked a greeting
     $ persistent.jn_player_admission_type_on_quit = None
+    $ persistent.jn_player_apology_type_on_quit = None
 
     #And finally, we head into the loop
     jump ch30_loop
 
 #The main loop
 label ch30_loop:
+
     #Do topic selection here
     python:
         topic_pool = Topic.filter_topics(
@@ -59,7 +77,7 @@ label ch30_loop:
         )
 
         if topic_pool:
-            queue(random.choice(topic_pool))
+            queue(random.choice(topic_pool).label)
 
     #Run our checks
     python:
@@ -92,10 +110,15 @@ label ch30_wait:
 
 #Other labels
 label call_next_topic:
+
     if persistent._event_list:
         $ _topic = persistent._event_list.pop(0)
 
         if renpy.has_label(_topic):
+            
+            if not _topic in ["greeting_sudden_leave", "greeting_prolonged_leave"]:
+                $ jn_placeholders.show_resting_placeholder_natsuki()
+
             call expression _topic
 
     python:
@@ -153,6 +176,8 @@ init python:
 
 label talk_menu:
     python:
+        import pprint
+
         # Get the flavor text for the talk menu, based on affinity state
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_LOVE_ENAMORED)
@@ -169,6 +194,8 @@ label talk_menu:
         # Ensure any variable references are substituted
         _talk_flavor_text = renpy.substitute(_talk_flavor_text)
 
+    $ jn_placeholders.show_resting_placeholder_natsuki(offset=True)
+
     menu:
         n "[_talk_flavor_text]"
 
@@ -184,10 +211,14 @@ label talk_menu:
         "I want to tell you something..." if jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
             jump player_compliments_start
 
+        "I want to apologize...":
+            jump player_apologies_start
+
         "Goodbye.":
             jump farewell_start
 
         "Nevermind.":
+            $ jn_placeholders.show_resting_placeholder_natsuki()
             pass
     return
 
@@ -202,14 +233,20 @@ label player_select_topic(is_repeat_topics=False):
             affinity=jn_globals.current_affinity_state
         )
 
+        # Sort the topics we can pick by prompt for a cleaner appearance
+        _topics.sort(key=lambda topic: topic.prompt)
+
+        # Present the topic options grouped by category to the player
         menu_items = menu_dict(_topics)
 
     call screen categorized_menu(menu_items,(1020, 70, 250, 572), (740, 70, 250, 572), len(_topics))
 
     $ _choice = _return
 
-    # We got a string, we shoud push
+    # We got a string, we should push
     if isinstance(_choice, str):
+
+        $ jn_placeholders.show_resting_placeholder_natsuki()
         $ push(_choice)
 
     # -1 means go back
@@ -218,6 +255,8 @@ label player_select_topic(is_repeat_topics=False):
 
     # Clear _return
     $ _return = None
+    $ jn_placeholders.show_resting_placeholder_natsuki()
+
     jump ch30_loop
 
 label music_menu:

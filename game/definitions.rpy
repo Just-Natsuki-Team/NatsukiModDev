@@ -3,7 +3,8 @@ default player = persistent.playername
 
 # Generic data
 default persistent.jn_total_visit_count = 0
-default persistent.jn_first_visited_date = None
+default persistent.jn_first_visited_date = datetime.datetime.now()
+default persistent.jn_last_visited_date = datetime.datetime.now()
 
 #Our main topic pool
 default persistent._event_list = list()
@@ -14,6 +15,7 @@ init -990 python:
 
 init 0 python:
     import store.jn_affinity as jn_aff
+    from collections import OrderedDict
 
     #Constants for types. Add more here if we need more organizational areas
     TOPIC_TYPE_FAREWELL = "FAREWELL"
@@ -21,6 +23,7 @@ init 0 python:
     TOPIC_TYPE_NORMAL = "NORMAL"
     TOPIC_TYPE_ADMISSION = "ADMISSION"
     TOPIC_TYPE_COMPLIMENT = "COMPLIMENT"
+    TOPIC_TYPE_APOLOGY = "APOLOGY"
 
     TOPIC_LOCKED_PROP_BASE_MAP = {
         #Things which shouldn't change
@@ -124,7 +127,6 @@ init 0 python:
             self.shown_count = 0
             self.last_seen = None
             self.unlocked_on = None
-
 
             #Now, if it's in the db, we should load its data
             if label in persistent_db:
@@ -335,6 +337,9 @@ init 0 python:
             if excludes_categories and self.category and len(set(excludes_categories).intersection(set(self.category))) > 0:
                 return False
 
+            if self.conditional is not None and not eval(self.conditional):
+                return False
+
             if additional_properties:
                 for additional_prop in additional_properties:
                     #Key and value checks
@@ -454,7 +459,7 @@ init 0 python:
 
         for topic in additional_topics:
             menu_items.append(topic)
-        return menu_items
+        return menu_items.sort()
 
     def menu_dict(menu_topics):
         """
@@ -466,16 +471,27 @@ init 0 python:
         OUT:
             Dictionary<string, List<string>> representing a dict of category: [ ...prompts ]
         """
-        menu_items = {}
+        # Python doesn't support ordered dictionaries... we have to do things the hard way here.
 
+        # Get the topic categories that the given topics share, and order them
+        topic_categories = []
         for topic in menu_topics:
             for category in topic.category:
-                if category not in menu_items:
-                    menu_items[category] = []
+                if category not in topic_categories:
+                    topic_categories.append(category)
+        topic_categories.sort()
 
-                menu_items[category].append(topic)
+        # Set up an ordered dictionaty, this will retain the order of what we return for the menu items
+        ordered_menu_items = OrderedDict()
+        for topic_category in topic_categories:
+            ordered_menu_items[topic_category] = []
+        
+        # Feed the topics into the ordered dictionary - remember that each topic can have multiple categories!
+        for topic in menu_topics:
+            for category in topic.category:
+                ordered_menu_items[category].append(topic)
 
-        return menu_items
+        return ordered_menu_items
 
     def get_custom_tracks():
         """
@@ -537,6 +553,14 @@ init -990 python in jn_globals:
         "you numpty"
     ]
 
+    # Names Natsuki may use at the lowest levels of affinity to insult her player with
+    DEFAULT_PLAYER_INSULT_NAMES = [
+        "jerk",
+        "idiot",
+        "moron",
+        "stupid"
+    ]
+
     # Flavor text for the talk menu at high affinity
     DEFAULT_TALK_FLAVOR_TEXT_LOVE_ENAMORED = [
         "What's up, [player]?",
@@ -545,7 +569,7 @@ init -990 python in jn_globals:
         "You wanna talk? Yay!",
         "I'd love to talk!",
         "I always love talking to you, [player]!",
-        "[player]! What's up?"
+        "[player]! What's up?",
         "[player]! What's on your mind?",
         "Ooh! What did you wanna talk about?",
         "I'm all ears, [player]!"
@@ -582,6 +606,46 @@ init -990 python in jn_globals:
         "Start talking."
     ]
 
+    # Emoticon sets for where we can't express Natsuki's emotions directly (I.E modals)
+    DEFAULT_HAPPY_EMOTICONS = [
+        "^^",
+        ":)",
+        ":3",
+        "^-^",
+        "^_^",
+        ":]",
+        ":D",
+        "(*^▽^*)",
+        "(^∇^)",
+        "(＾▽＾)",
+        "(=^▽^=)",
+        "(^ｖ^)",
+        "(^_^)"
+    ]
+
+    DEFAULT_ANGRY_EMOTICONS = [
+        ">_>",
+        "<_<",
+        "-_-",
+        "-.-",
+        ">:T",
+        ">:/",
+        ">:(",
+        "(;¬_¬)",
+        "(¬_¬)"
+    ]
+
+    DEFAULT_SAD_EMOTICONS = [
+        ":(",
+        ":'(",
+        ":/",
+        "._.",
+        "(v_v”)",
+        "( .. )",
+        "( ;; )",
+        "(|||;-;)"
+    ]
+
     # Alphabetical (excluding numbers) values allowed for text input
     DEFAULT_ALPHABETICAL_ALLOW_VALUES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-' "
 
@@ -603,6 +667,7 @@ init -999 python in utils:
     import datetime
     import os
     import store
+    import pprint
 
     #Make log folder if not exist
     _logdir = os.path.join(renpy.config.basedir, "log")
@@ -637,6 +702,20 @@ init -999 python in utils:
                 LOGSEVERITY_MAP[SEVERITY_INFO]
             ).format(datetime.datetime.now(), message)
         )
+
+    def pretty_print(object, indent=1, width=150):
+        """
+        Returns a PrettyPrint-formatted representation of an object as a dict.
+
+        IN:
+            object - the object to be converted
+            indent - the level of indentation in the formatted string
+            width - the maximum length of each line in the formatted string, before remaining content is shifted to next line
+
+        OUT:
+            Formatted string representation of object __dict__
+        """
+        return pprint.pformat(object.__dict__, indent, width)
 
 init python in utils:
     def get_current_session_length():
@@ -684,12 +763,11 @@ init python in utils:
     def get_current_hour():
         """
         Gets the current hour (out of 24) of the day.
-
+        
         OUT:
             Integer representing the current hour of the day.
         """
         return datetime.datetime.now().hour
-
 
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
 define audio.t2 = "<loop 4.499>bgm/2.ogg"   #Sayori theme
@@ -735,7 +813,11 @@ init python:
     y_name = "Yuri"
 
     # Assign Natsuki the chosen nickname (defaulted to Natsuki)
-    n_name = persistent.jn_player_nicknames_current_nickname
+    if persistent.jn_player_nicknames_current_nickname is not None:
+        n_name = persistent.jn_player_nicknames_current_nickname
+    
+    else:
+        n_name = "Natsuki"
 
 init -999 python:
     def label_callback(name, abnormal):

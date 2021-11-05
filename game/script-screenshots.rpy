@@ -200,6 +200,9 @@ label screenshot_dialogue:
             affinity_state=jn_globals.current_affinity_state,
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE)
         ):
+
+            show placeholder_natsuki plead zorder 3
+
             n "H-huh?{w=0.2} What was that flash I just saw?"
             n "Don't tell me...{w=0.3} was that a camera?!{w=0.2} There's a camera here?!"
             n "..."
@@ -222,6 +225,9 @@ label screenshot_dialogue:
             affinity_state=jn_globals.current_affinity_state,
             affinity_range=(jn_affinity.UPSET, jn_affinity.RUINED)
         ):
+
+            show placeholder_natsuki unamused zorder 3
+
             n "..."
             n "You're taking pictures of me,{w=0.1} aren't you?"
             menu:
@@ -240,6 +246,8 @@ label screenshot_dialogue:
             $ relationship("trust-")
 
         else:
+
+            show placeholder_natsuki unamused zorder 3
 
             n "..."
             n "C-{w=0.1}camera...?"
@@ -279,6 +287,13 @@ label screenshot_dialogue:
 
     # Too many bad screenshots in a row; Natsuki is upset
     elif jn_screenshots.bad_screenshot_streak >= 3 and jn_affinity.get_affinity_state() < jn_affinity.ENAMORED:
+
+        show placeholder_natsuki unamused zorder 3
+
+        # Add pending apology
+        $ apologies.add_new_pending_apology(store.apologies.APOLOGY_TYPE_SCREENSHOT)
+
+        # Update tracking and block further screenshots
         $ persistent.jn_screenshot_bad_shots_total += 1
         $ jn_screenshots.revoke_screenshot_permission(block=True)
 
@@ -286,7 +301,6 @@ label screenshot_dialogue:
         n "Okay,{w=0.1} I think I've had enough!{w=0.2} I'm just gonna turn this off for now."
         return
 
-    # Negative screenshot route; Natsuki is upset
     elif jn_screenshots.is_allowed_to_take_screenshot():
         # Update tracking and take shot
         $ persistent.jn_screenshot_bad_shots_total += 1
@@ -294,6 +308,11 @@ label screenshot_dialogue:
 
         call take_screenshot
         $ utils.log("Curr aff state: {0}".format(jn_affinity.get_affinity_state()))
+
+        show placeholder_natsuki unamused zorder 3
+
+        # Add pending apology
+        $ apologies.add_new_pending_apology(store.apologies.APOLOGY_TYPE_SCREENSHOT)
 
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
 
@@ -342,7 +361,6 @@ label screenshot_dialogue:
             $ relationship("trust-")
 
         else:
-
             # Natsuki isn't putting up with this
             n "You know what,{w=0.1} [player]?{w=0.2} No.{w=0.1} We're not doing this."
             n "I'm just gonna turn this off.{w=0.1} {i}Not like you'd listen to me if I complained again.{/i}"
