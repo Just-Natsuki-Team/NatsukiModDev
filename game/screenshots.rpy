@@ -197,7 +197,7 @@ label screenshot_dialogue:
         call take_screenshot
 
         if jn_affinity.is_state_within_range(
-            affinity_state=jn_globals.current_affinity_state,
+            affinity_state=jn_affinity.get_affinity_state(),
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE)
         ):
             n "H-huh?{w=0.2} What was that flash I just saw?"
@@ -219,7 +219,7 @@ label screenshot_dialogue:
             n "I'd really appreciate it,{w=0.1} [player]."
 
         elif jn_affinity.is_state_within_range(
-            affinity_state=jn_globals.current_affinity_state,
+            affinity_state=jn_affinity.get_affinity_state(),
             affinity_range=(jn_affinity.UPSET, jn_affinity.RUINED)
         ):
             n "..."
@@ -258,7 +258,7 @@ label screenshot_dialogue:
             n "Ahaha!{w=0.2} Sure!"
 
         elif jn_affinity.is_state_within_range(
-            affinity_state=jn_globals.current_affinity_state,
+            affinity_state=jn_affinity.get_affinity_state(),
             affinity_range=(jn_affinity.NORMAL, jn_affinity.AFFECTIONATE)
         ):
             n "Well...{w=0.2} alright."
@@ -310,7 +310,7 @@ label screenshot_dialogue:
             $ relationship("trust-")
 
         elif jn_affinity.is_state_within_range(
-            affinity_state=jn_globals.current_affinity_state,
+            affinity_state=jn_affinity.get_affinity_state(),
             affinity_range=(jn_affinity.NORMAL, jn_affinity.AFFECTIONATE)
         ):
             # Pick the reaction and response; Natsuki is irritated
@@ -326,7 +326,7 @@ label screenshot_dialogue:
             $ relationship("trust-")
 
         elif jn_affinity.is_state_within_range(
-            affinity_state=jn_globals.current_affinity_state,
+            affinity_state=jn_affinity.get_affinity_state(),
             affinity_range=(jn_affinity.UPSET, jn_affinity.DISTRESSED)
         ):
 

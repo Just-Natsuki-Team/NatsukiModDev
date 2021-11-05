@@ -23,7 +23,7 @@ init python in greetings:
         return random.choice(
             store.Topic.filter_topics(
                 GREETING_MAP.values(),
-                affinity=store.jn_globals.current_affinity_state,
+                affinity=store.jn_affinity.get_affinity_state(),
                 **kwargs
             )
         ).label

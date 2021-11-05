@@ -55,7 +55,7 @@ label ch30_loop:
             unlocked=True,
             nat_says=True,
             location=main_background.location.id,
-            affinity=jn_globals.current_affinity_state,
+            affinity=jn_affinity.get_affinity_state(),
             #trust=60 TODO: Add trust handling
         )
 
@@ -159,14 +159,14 @@ label talk_menu:
             _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_LOVE_ENAMORED)
 
         elif store.jn_affinity.is_state_within_range(
-            affinity_state=store.jn_globals.current_affinity_state,
+            affinity_state=store.jn_affinity.get_affinity_state(),
             affinity_range=(store.jn_affinity.NORMAL, store.jn_affinity.AFFECTIONATE)
         ):
             _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_AFFECTIONATE_NORMAL)
 
 
         elif store.jn_affinity.is_state_within_range(
-            affinity_state=store.jn_globals.current_affinity_state,
+            affinity_state=store.jn_affinity.get_affinity_state(),
             affinity_range=(store.jn_affinity.DISTRESSED, store.jn_affinity.UPSET)
         ):
             _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_UPSET_DISTRESSED)
@@ -207,7 +207,7 @@ label player_select_topic(is_repeat_topics=False):
             player_says=not is_repeat_topics,
             unlocked=True,
             location=main_background.location.id,
-            affinity=jn_globals.current_affinity_state
+            affinity=jn_affinity.get_affinity_state()
         )
 
         menu_items = menu_dict(_topics)

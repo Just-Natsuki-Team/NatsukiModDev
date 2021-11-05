@@ -190,14 +190,10 @@ label splashscreen:
     if not persistent.jn_first_visited_date:
         $ persistent.jn_first_visited_date = datetime.datetime.now()
 
-    #Load affinity
-    $ jn_globals.current_affinity_state = jn_affinity.get_affinity_state()
-
     #autoload handling
     #Use persistent.autoload if you want to bypass the splashscreen on startup for some reason
     if persistent.autoload and not _restart:
         jump autoload
-
 
     # Start splash logic
     $ config.allow_skipping = False
