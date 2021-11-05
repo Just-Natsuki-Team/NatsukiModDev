@@ -2103,6 +2103,67 @@ label talk_gaming:
         n "...That being said,{w=0.1} [player]."
         n "I don't really like the kind of testing you're doing."
 
+# Natsuki talks about her trademark fang, and checks the player is keeping their own teeth healthy
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_natsukis_fang",
+            unlocked=True,
+            prompt="Natsuki's fang",
+            category=["Health", "Natsuki"],
+            nat_says=True,
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_natsukis_fang:
+    n "..."
+    n "Eh?{w=0.2} What's up,{w=0.1} [player]?"
+    n "..."
+    n "What?{w=0.2} Is there something on my face?"
+    n "..."
+    n "Oh.{w=0.2} Yeah.{w=0.2} I get it."
+    n "Just can't help but notice the fang,{w=0.1} right?{w=0.2} Ehehe."
+    n "You know..."
+    n "I wasn't always happy with my teeth,{w=0.1} [player]."
+    n "I used to be pretty self conscious about them.{w=0.2} People would just keep pointing them out all the time."
+    n "It wasn't {i}bad{/i} or anything...{w=0.3} a little annoying at first,{w=0.1} but nothing over the top."
+    n "I...{w=0.3} guess I just came to embrace them?"
+    n "They're like a trademark or something now!{w=0.2} Which is why I take good care of them."
+    n "You better not be slacking off on yours,{w=0.1} [player]!"
+    n "And I don't just mean skipping the odd brush,{w=0.1} either..."
+    n "Yeah.{w=0.2} We both know what's coming,{w=0.2} don't we?"
+    n "When's the last time {i}you{/i} flossed,{w=0.1} [player]?{w=0.2} Be honest."
+    n "..."
+    n "Ahaha!{w=0.2} Did I call you out?"
+    n "Well,{w=0.1} whatever.{w=0.2} I'm just gonna assume you'll go do that later."
+    n "Seriously though.{w=0.2} You better make sure you take care of your teeth!"
+    n "Regular brushing and flossing is important,{w=0.1} but watch your diet too."
+    n "Not flossing isn't great,{w=0.1} but constant sugary drinks are even worse!"
+    n "Remember,{w=0.1} [player] -{w=0.1} if you ignore them,{w=0.1} they'll go away~."
+    n "And besides..."
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+        n "Smiles look good on you,{w=0.1} [chosen_endearment]."
+        n "Let's keep them looking that way."
+        n "Ehehe.{w=0.2} Love you,{w=0.1} [player]~!"
+    
+    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n "I think smiles look good on you,{w=0.1} [player]."
+        n "Let's keep them looking that way!"
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n "The right smile can make all the difference,{w=0.1} you know.{w=0.2} Just look at mine!"
+        n "Ehehe."
+
+    else:
+        n "If you don't look after them?"
+        n "I'm not holding your hand at the dentist!"
+
     return
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
