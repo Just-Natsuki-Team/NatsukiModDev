@@ -36,7 +36,7 @@ init 0 python in admissions:
         """
         return store.Topic.filter_topics(
             ADMISSION_MAP.values(),
-            affinity=store.jn_globals.current_affinity_state,
+            affinity=store.jn_affinity.get_affinity_state(),
             unlocked=True
         )
 

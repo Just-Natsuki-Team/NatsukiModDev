@@ -16,7 +16,7 @@ init python in farewells:
         #TODO: Generalized filter function
         farewell_pool = store.Topic.filter_topics(
             FAREWELL_MAP.values(),
-            affinity=store.jn_globals.current_affinity_state,
+            affinity=store.jn_affinity.get_affinity_state(),
             conditional=True,
             additional_properties=[
                 ("is_time_sensitive", random.randint(1,5) == 3 and store.utils.get_current_session_length().total_seconds() / 60 < 30),
@@ -34,7 +34,7 @@ init python in farewells:
         # Run filter again, this time without caring for special farewells
         farewell_pool = store.Topic.filter_topics(
             FAREWELL_MAP.values(),
-            affinity=store.jn_globals.current_affinity_state,
+            affinity=store.jn_affinity.get_affinity_state(),
             additional_properties=[
                 ("is_time_sensitive", False),
                 ("has_stay_option", False)
