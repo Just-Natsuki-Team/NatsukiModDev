@@ -30,7 +30,7 @@ init python in farewells:
             return random.choice(farewell_pool).label
 
         #else
-        # Run filter again, this time without caring for special farewells
+        # Else run filter again, this time without caring for special farewells
         farewell_pool = store.Topic.filter_topics(
             FAREWELL_MAP.values(),
             affinity=store.jn_affinity.get_affinity_state(),
@@ -41,7 +41,7 @@ init python in farewells:
             excludes_categories=["Failsafe"]
         )
 
-        # Again check if pool isn't empy
+        # Again check if pool isn't empty
         if farewell_pool:
             # Return a random farewell from the new pool
             return random.choice(farewell_pool).label
@@ -1113,64 +1113,34 @@ label farewell_gentle_ask:
     return
 
 # Trust dialogue; chance to call upon farewell completing and prior to the game closing
-
 label farewell_extra_trust:
     # ABSOLUTE+
-    if trust.trust_is_between_bounds(
-        lower_bound=store.jn_trust.TRUST_ABSOLUTE,
-        trust=store.persistent.trust,
-        upper_bound=None
-    ):
+    if jn_trust.get_trust_state() >= jn_trust.TRUST_ABSOLUTE:
         n "My [player]...{w=0.3} I'll be waiting..."
 
-    # FULL-COMPLETE
-    elif trust.trust_is_between_bounds(
-        lower_bound=store.jn_trust.TRUST_FULL,
-        trust=store.persistent.trust,
-        upper_bound=store.jn_trust.TRUST_ABSOLUTE
-    ):
+    # FULL+
+    elif jn_trust.get_trust_state() >= jn_trust.TRUST_FULL:
         n "I'll be waiting..."
 
-    # NEUTRAL-PARTIAL
-    elif trust.trust_is_between_bounds(
-        lower_bound=store.jn_trust.TRUST_NEUTRAL,
-        trust=store.persistent.trust,
-        upper_bound=store.jn_trust.TRUST_PARTIAL
-    ):
+    # PARTIAL+
+    elif jn_trust.get_trust_state() >= jn_trust.TRUST_PARTIAL:
         n "You'll be back...{w=0.3} right?"
 
-    # SCEPTICAL-NEUTRAL
-    elif trust.trust_is_between_bounds(
-        lower_bound=store.jn_trust.TRUST_SCEPTICAL,
-        trust=store.persistent.trust,
-        upper_bound=store.jn_trust.TRUST_NEUTRAL
-    ):
+    # SCEPTICAL+
+    elif jn_trust.get_trust_state() >= jn_trust.TRUST_SCEPTICAL:
         n "I'll be okay...{w=0.3} I'll be okay..."
 
-    # DIMINISHED-SCEPTICAL
-    elif trust.trust_is_between_bounds(
-        lower_bound=store.jn_trust.TRUST_DIMINISHED,
-        trust=store.persistent.trust,
-        upper_bound=store.jn_trust.TRUST_SCEPTICAL
-    ):
+    # DIMINISHED+
+    elif jn_trust.get_trust_state() >= jn_trust.TRUST_DIMINISHED:
         n "...?"
 
-    # DIMINISHED-
-    elif trust.trust_is_between_bounds(
-        lower_bound=None,
-        trust=store.persistent.trust,
-        upper_bound=store.jn_trust.TRUST_DIMINISHED
-    ):
-        n "..."
-
-    # Debug
+    # SHATTERED+
     else:
-        n "Nnn..."
+        n "..."
 
     return { "quit": None }
 
 # Fallback farewell if selecting a farewell fails
-
 init 5 python:
     registerTopic(
         Topic(

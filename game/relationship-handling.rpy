@@ -52,6 +52,17 @@ init -2 python in jn_trust_affinity_common:
             or state is None
         )
 
+    def compare_thresholds(value, threshold):
+        """
+        Generic compareto function for values
+        """
+        if value < threshold:
+            return -1
+        elif value == threshold:
+            return 0
+        else:
+            return 1
+
 init -1 python in jn_affinity:
     import store
 
@@ -219,17 +230,6 @@ init -1 python in jn_affinity:
             and _compare_affinity_states(affinity_state, high_bound) <= 0
         )
 
-    def compare_thresholds(value, threshold):
-        """
-        Generic compareto function for values
-        """
-        if value < threshold:
-            return -1
-        elif value == threshold:
-            return 0
-        else:
-            return 1
-
     def get_affinity_state():
         """
             returns current affinity state
@@ -263,50 +263,55 @@ init -1 python in jn_affinity:
         ]:
             #if affinity is higher than threshold return it's state
             #else check lower threshold
-            if compare_thresholds(store.persistent.affinity, threshold) >= 0:
+            if store.jn_trust_affinity_common.compare_thresholds(store.persistent.affinity, threshold) >= 0:
                 return _AFF_STATE_ORDER[-i]
 
-            i += 1
-
-    def get_trust_state():
-        """
-            returns current trust state
-
-            states:
-                SHATTERED = 1
-                DISBELIEF = 2
-                DIMINISHED = 3
-                SCEPTICAL = 4
-                NEUTRAL = 5
-                PARTIAL = 6
-                FULL = 7
-                COMPLETE = 8
-                ABSOLUTE = 9
-
-            OUT:
-                current trust state
-        """
-        #iterate through all thresholds
-        i = 1
-        for threshold in [
-            TRUST_ABSOLUTE,
-            TRUST_COMPLETE,
-            TRUST_FULL,
-            TRUST_PARTIAL,
-            TRUST_NEUTRAL,
-            TRUST_SCEPTICAL,
-            TRUST_DIMINISHED,
-            TRUST_DISBELIEF,
-            TRUST_SHATTERED
-        ]:
-            #if trust is higher than threshold return it's state
-            #else check lower threshold
-            if compare_thresholds(store.persistent.trust, threshold) >= 0:
-                return _TRUST_STATE_ORDER[-i]
+            # We can't go any further beyond ruined; return it
+            if threshold == THRESHOLD_RUINED:
+                return _AFF_STATE_ORDER[0]
 
             i += 1
+
+    def get_affinity_tier_name():
+
+        affinity_state = get_affinity_state()
+        if affinity_state == LOVE:
+            return "LOVE"
+
+        elif affinity_state == ENAMORED:
+            return "ENAMORED"
+
+        elif affinity_state == AFFECTIONATE:
+            return "AFFECTIONATE"
+
+        elif affinity_state == HAPPY:
+            return "HAPPY"
+
+        elif affinity_state == NORMAL:
+            return "NORMAL"
+
+        elif affinity_state == UPSET:
+            return "UPSET"
+
+        elif affinity_state == DISTRESSED:
+            return "DISTRESSED"
+
+        elif affinity_state == BROKEN:
+            return "BROKEN"
+
+        elif affinity_state == RUINED:
+            return "RUINED"
+
+        else:
+            store.utils.log(
+                message="Unable to get tier name for affinity {0}; affinity_state was {1}".format(store.persistent.affinity, get_affinity_state()),
+                logseverity=store.utils.SEVERITY_WARN
+            )
+            return "UNKNOWN"
 
 init -1 python in jn_trust:
+    import store
+    
     # Trust levels, highest to lowest
     TRUST_ABSOLUTE = 100
     TRUST_COMPLETE = 75
@@ -349,3 +354,82 @@ init -1 python in jn_trust:
         COMPLETE,
         ABSOLUTE
     ]
+
+    def get_trust_state():
+        """
+            returns current trust state
+
+            states:
+                SHATTERED = 1
+                DISBELIEF = 2
+                DIMINISHED = 3
+                SCEPTICAL = 4
+                NEUTRAL = 5
+                PARTIAL = 6
+                FULL = 7
+                COMPLETE = 8
+                ABSOLUTE = 9
+
+            OUT:
+                current trust state
+        """
+        #iterate through all thresholds
+        i = 1
+        for threshold in [
+            TRUST_ABSOLUTE,
+            TRUST_COMPLETE,
+            TRUST_FULL,
+            TRUST_PARTIAL,
+            TRUST_NEUTRAL,
+            TRUST_SCEPTICAL,
+            TRUST_DIMINISHED,
+            TRUST_DISBELIEF,
+            TRUST_SHATTERED
+        ]:
+            #if trust is higher than threshold return it's state
+            #else check lower threshold
+            if store.jn_trust_affinity_common.compare_thresholds(store.persistent.trust, threshold) >= 0:
+                return _TRUST_STATE_ORDER[-i]
+
+            # We can't go any further beyond shattered; return it
+            if threshold == TRUST_SHATTERED:
+                return _TRUST_STATE_ORDER[0]
+
+            i += 1
+
+    def get_trust_tier_name():
+        trust_state = get_trust_state()
+
+        if trust_state == ABSOLUTE:
+            return "ABSOLUTE"
+
+        elif trust_state == COMPLETE:
+            return "COMPLETE"
+
+        elif trust_state == FULL:
+            return "FULL"
+
+        elif trust_state == PARTIAL:
+            return "PARTIAL"
+
+        elif trust_state == NEUTRAL:
+            return "NEUTRAL"
+
+        elif trust_state == SCEPTICAL:
+            return "SCEPTICAL"
+
+        elif trust_state == DIMINISHED:
+            return "DIMINISHED"
+
+        elif trust_state == DISBELIEF:
+            return "DISBELIEF"
+
+        elif trust_state == SHATTERED:
+            return "SHATTERED"
+
+        else:
+            store.utils.log(
+                message="Unable to get tier name for trust {0}; trust_state was {1}".format(store.persistent.trust, get_trust_state()),
+                logseverity=store.utils.SEVERITY_WARN
+            )
+            return "UNKNOWN"

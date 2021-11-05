@@ -5,8 +5,8 @@
 init -100 python:
     #Check for each archive needed
     for archive in ['audio','images','scripts','fonts']:
-        if not archive in config.archives:
-            #If one is missing, throw an error and chlose
+        if archive not in config.archives:
+            #If one is missing, throw an error and close
             renpy.error("DDLC archive files not found in /game folder. Check installation and try again.")
 
 ## First, a disclaimer declaring this is a mod is shown, then there is a
