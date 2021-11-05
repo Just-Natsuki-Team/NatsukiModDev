@@ -5,8 +5,8 @@
 init -100 python:
     #Check for each archive needed
     for archive in ['audio','images','scripts','fonts']:
-        if not archive in config.archives:
-            #If one is missing, throw an error and chlose
+        if archive not in config.archives:
+            #If one is missing, throw an error and close
             renpy.error("DDLC archive files not found in /game folder. Check installation and try again.")
 
 ## First, a disclaimer declaring this is a mod is shown, then there is a
@@ -189,14 +189,10 @@ label splashscreen:
     if not persistent.jn_first_visited_date:
         $ persistent.jn_first_visited_date = datetime.datetime.now()
 
-    #Load affinity
-    $ jn_globals.current_affinity_state = jn_affinity.get_affinity_state()
-
     #autoload handling
     #Use persistent.autoload if you want to bypass the splashscreen on startup for some reason
     if persistent.autoload and not _restart:
         jump autoload
-
 
     # Start splash logic
     $ config.allow_skipping = False

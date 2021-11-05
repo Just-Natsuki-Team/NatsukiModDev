@@ -33,7 +33,7 @@ init 1 python:
 
 # Talk menu topics
 
-# This topic allows us to (temporarily!) set a custom affinity value
+# This topic allows us to set a specific affinity state
 init 5 python:
     registerTopic(
         Topic(
@@ -53,54 +53,54 @@ label talk_set_affinity:
     n "Okaaay! Just tell me what affinity state you want!"
     menu:
         "LOVE":
-            $ jn_globals.current_affinity_state = 9
-            n "Alright! Your affinity state is now LOVE!" # Yesssssss
+            $ persistent.affinity = jn_affinity.THRESHOLD_LOVE
+            n "Alright!{w=0.2} Your affinity state is now LOVE!" # Yesssssss
 
         "ENAMORED":
-            $ jn_globals.current_affinity_state = 8
-            n "Alright! Your affinity state is now ENAMORED!"
+            $ persistent.affinity = jn_affinity.THRESHOLD_ENAMORED
+            n "Alright!{w=0.2} Your affinity state is now ENAMORED!"
 
         "AFFECTIONATE":
-            $ jn_globals.current_affinity_state = 7
-            n "Alright! Your affinity state is now AFFECTIONATE!"
+            $ persistent.affinity = jn_affinity.THRESHOLD_AFFECTIONATE
+            n "Alright!{w=0.2} Your affinity state is now AFFECTIONATE!"
 
         "HAPPY":
-            $ jn_globals.current_affinity_state = 6
-            n "Alright! Your affinity state is now HAPPY!"
+            $ persistent.affinity = jn_affinity.THRESHOLD_HAPPY
+            n "Alright!{w=0.2} Your affinity state is now HAPPY!"
 
         "NORMAL":
-            $ jn_globals.current_affinity_state = 5
-            n "Alright! Your affinity state is now NORMAL!"
+            $ persistent.affinity = jn_affinity.THRESHOLD_NORMAL
+            n "Alright!{w=0.2} Your affinity state is now NORMAL!"
 
         "UPSET":
-            $ jn_globals.current_affinity_state = 4
-            n "Alright! Your affinity state is now UPSET!"
+            $ persistent.affinity = jn_affinity.THRESHOLD_UPSET
+            n "Alright!{w=0.2} Your affinity state is now UPSET!"
 
         "DISTRESSED":
-            $ jn_globals.current_affinity_state = 3
-            n "Alright! Your affinity state is now DISTRESSED!"
+            $ persistent.affinity = jn_affinity.THRESHOLD_DISTRESSED
+            n "Alright!{w=0.2} Your affinity state is now DISTRESSED!"
 
         "BROKEN":
-            $ jn_globals.current_affinity_state = 2
-            n "Alright! Your affinity state is now BROKEN!"
+            $ persistent.affinity = jn_affinity.THRESHOLD_BROKEN
+            n "Alright!{w=0.2} Your affinity state is now BROKEN!"
 
         "RUINED":
-            $ jn_globals.current_affinity_state = 1
-            n "Alright! Your affinity state is now RUINED!" # How could you :(
+            $ persistent.affinity = jn_affinity.THRESHOLD_RUINED
+            n "Alright!{w=0.2} Your affinity state is now RUINED!" # How could you :(
 
         "Nevermind.":
-            n "Oh...{w=0.3} well, alright then."
+            n "Oh...{w=0.3} well,{w=0.1} alright then."
 
     return
 
-# This topic allows us to (temporarily!) set a custom trust value
+# This topic allows us to set a specific trust state
 init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
             label="talk_set_trust",
             unlocked=True,
-            prompt="Can you change my trust?",
+            prompt="Can you change my trust state?",
             conditional="config.developer",
             category=["Debug (Affinity/Trust)"],
             player_says=True,
@@ -110,15 +110,47 @@ init 5 python:
     )
 
 label talk_set_trust:
-    n "Sure! Just tell me what trust value you want!"
-    python:
-        trust_to_set = renpy.input("Enter a trust value (current: {0}):".format(persistent.trust))
-        try:
-            persistent.trust = float(trust_to_set)
-            renpy.say(n, "Alright! Your new trust is [persistent.trust]!")
+    n "Sure! Just tell me what trust state you want!"
+    menu:
+        "ABSOLUTE":
+            $ persistent.trust = jn_trust.TRUST_ABSOLUTE
+            n "Alright!{w=0.2} Your trust state is now ABSOLUTE!"
 
-        except:
-            renpy.say(n, "Hmm... sorry, I can't seem to read that. Make sure you enter an integer or decimal value, 'kay?")
+        "COMPLETE":
+            $ persistent.trust = jn_trust.TRUST_COMPLETE
+            n "Alright!{w=0.2} Your trust state is now COMPLETE!"
+
+        "FULL":
+            $ persistent.trust = jn_trust.TRUST_FULL
+            n "Alright!{w=0.2} Your trust state is now FULL!"
+
+        "PARTIAL":
+            $ persistent.trust = jn_trust.TRUST_PARTIAL
+            n "Alright!{w=0.2} Your trust state is now PARTIAL!"
+
+        "NEUTRAL":
+            $ persistent.trust = jn_trust.TRUST_NEUTRAL
+            n "Alright!{w=0.2} Your trust state is now NEUTRAL!"
+
+        "SCEPTICAL":
+            $ persistent.trust = jn_trust.TRUST_SCEPTICAL
+            n "Alright!{w=0.2} Your trust state is now SCEPTICAL!"
+
+        "DIMINISHED":
+            $ persistent.trust = jn_trust.TRUST_DIMINISHED
+            n "Alright!{w=0.2} Your trust state is now DIMINISHED!"
+
+        "DISBELIEF":
+            $ persistent.trust = jn_trust.TRUST_DISBELIEF
+            n "Alright!{w=0.2} Your trust state is now DISBELIEF!"
+
+        "SHATTERED":
+            $ persistent.trust = jn_trust.TRUST_SHATTERED
+            n "Alright!{w=0.2} Your trust state is now SHATTERED!"
+
+        "Nevermind.":
+            n "Oh...{w=0.3} well,{w=0.1} okay then."
+
     return
 
 # This topic allows us to toggle on/off a list of core watched items for easy reference
@@ -419,7 +451,7 @@ label talk_having_pictures_taken:
             n "As long as you ask,{w=0.1} I've got no problem with it!"
 
         elif jn_affinity.is_state_within_range(
-            affinity_state=jn_globals.current_affinity_state,
+            affinity_state=jn_affinity.get_affinity_state(),
             affinity_range=(jn_affinity.NORMAL, jn_affinity.AFFECTIONATE)
         ):
             if player_screenshots_blocked:
@@ -451,7 +483,7 @@ label talk_having_pictures_taken:
                         n "Make sure you ask,{w=0.1} okay?{w=0.1} For my sake."
 
         elif jn_affinity.is_state_within_range(
-            affinity_state=jn_globals.current_affinity_state,
+            affinity_state=jn_affinity.get_affinity_state(),
             affinity_range=(jn_affinity.UPSET, jn_affinity.DISTRESSED)
         ):
             n "Pictures? Really?"

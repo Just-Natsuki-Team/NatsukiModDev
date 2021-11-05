@@ -212,7 +212,7 @@ init 0 python:
                 True if the current affinity is within range. False otherwise
             """
             if not affinity_state:
-                affinity_state = jn_globals.current_affinity_state
+                affinity_state = jn_affinity.get_affinity_state()
 
             return store.jn_affinity.is_state_within_range(affinity_state, self.affinity_range)
 

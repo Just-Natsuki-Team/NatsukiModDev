@@ -72,7 +72,7 @@ label ch30_loop:
             unlocked=True,
             nat_says=True,
             location=main_background.location.id,
-            affinity=jn_globals.current_affinity_state,
+            affinity=jn_affinity.get_affinity_state(),
             #trust=60 TODO: Add trust handling
         )
 
@@ -230,7 +230,7 @@ label player_select_topic(is_repeat_topics=False):
             player_says=not is_repeat_topics,
             unlocked=True,
             location=main_background.location.id,
-            affinity=jn_globals.current_affinity_state
+            affinity=jn_affinity.get_affinity_state()
         )
 
         # Sort the topics we can pick by prompt for a cleaner appearance
