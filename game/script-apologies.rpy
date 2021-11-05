@@ -31,7 +31,7 @@ init 0 python in apologies:
         """
         return store.Topic.filter_topics(
             APOLOGY_MAP.values(),
-            affinity=store.jn_globals.current_affinity_state,
+            affinity=store.jn_affinity.get_affinity_state(),
             unlocked=True
         )
 
