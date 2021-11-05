@@ -15,7 +15,8 @@ init python in greetings:
         kwargs = dict()
 
         kwargs.update(
-            {"excludes_categories": ["Admission"]} if not store.persistent.jn_player_admission_type_on_quit else {"additional_properties": [("admission_type", store.persistent.jn_player_admission_type_on_quit)]}
+            {"excludes_categories": ["Admission"]} if not store.persistent.jn_player_admission_type_on_quit
+            else {"additional_properties": [("admission_type", store.persistent.jn_player_admission_type_on_quit)]}
         )
 
         store.persistent.jn_player_admission_type_on_quit = None
@@ -24,6 +25,7 @@ init python in greetings:
             store.Topic.filter_topics(
                 GREETING_MAP.values(),
                 affinity=store.jn_globals.current_affinity_state,
+                conditional=True,
                 **kwargs
             )
         ).label
@@ -548,4 +550,241 @@ label greeting_feeling_better_tired:
             n "I don't mind you being here...{w=0.3} but don't strain yourself,{w=0.1} alright?"
             n "I don't want you face-planting your desk for my sake..."
             $ admissions.last_admission_type = admissions.TYPE_TIRED
+    return
+
+# Time-of-day based greetings
+
+# Early morning
+
+# Natsuki questions why the player is up so early
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_early_morning_why_are_you_here",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(3, 4)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_early_morning_why_are_you_here:
+    n "H-{w=0.1}huh?{w=0.2} [player]?!"
+    n "What the heck are you doing here so early?"
+    n "Did you have a nightmare or something?"
+    n "Or...{w=0.3} maybe you never slept?{w=0.2} Huh."
+    n "Well,{w=0.1} anyway..."
+    n "Morning,{w=0.1} I guess!{w=0.2} Ehehe."
+    return
+
+# Morning
+
+# The Earth says hello!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_morning_starshine",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(5, 11)",
+            affinity_range=(jn_aff.ENAMORED, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_morning_starshine:
+    n "Good morning,{w=0.1} starshine!"
+    n "The Earth says 'Hello!'"
+    n "..."
+    n "Pfffft-!"
+    n "I'm sorry!{w=0.2} It's just such a dumb thing to say...{w=0.3} I can't keep a straight face!"
+    n "Ehehe."
+    $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+    n "You really are my starshine though,{w=0.1} [chosen_endearment]."
+    n "Welcome back!"
+    return
+
+# Natsuki doesn't like to be kept waiting around in the morning
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_morning_waiting_for_you",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(5, 11)",
+            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_morning_waiting_for_you:
+    n "Oh! Well look who finally decided to show up!"
+    n "You know I don't like being kept waiting...{w=0.3} right?"
+    n "Ehehe.{w=0.2} You're just lucky I'm in a good mood."
+    n "You better make it up to me,{w=0.1} [player]~!"
+    return
+
+# Natsuki doesn't like a lazy player!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_morning_lazy",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(10, 11)",
+            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_morning_lazy:
+    n "Oho!{w=0.2} Well look who finally crawled out of bed today!"
+    n "Jeez,{w=0.1} [player]...{w=0.3} I swear you're lazier than Sayori sometimes!"
+    n "Ehehe."
+    n "Well,{w=0.1} you're here now -{w=0.1} and that's all I care about."
+    n "Let's make the most of today,{w=0.1} [player]!"
+    n "Or...{w=0.3} what's left of it?"
+    n "Ahaha."
+    return
+
+# Natsuki uses a silly greeting
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_morning_top_of_the_mornin",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(8, 11)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_morning_top_of_the_mornin:
+    n "Oh!{w=0.2} It's [player]!"
+    n "Well -{w=0.1} top of the mornin' to you!"
+    n "..."
+    n "What?{w=0.2} I'm allowed to say dumb things too,{w=0.1} right?"
+    n "Ehehe."
+    return
+
+# Afternoon
+
+# Natsuki hopes the player is keeping well
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_afternoon_keeping_well",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(12, 17)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_afternoon_keeping_well:
+    n "Hey!{w=0.2} Afternoon,{w=0.1} [player]!"
+    n "Keeping well?"
+    return
+
+# Natsuki asks how the player's day is going
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_afternoon_how_are_you",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(12, 17)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_afternoon_how_are_you:
+    n "Oh!{w=0.2} Afternoon,{w=0.1} [player]!"
+    n "How're you doing today?"
+    return
+
+# Evening
+
+# Natsuki tells the player they can relax now
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_evening_long_day",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(18, 21)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_evening_long_day:
+    n "Aha!{w=0.2} Evening,{w=0.1} [player]!"
+    n "Long day,{w=0.1} huh?{w=0.2} Well,{w=0.1} you've come to the right place!"
+    n "Just tell Natsuki all about it!"
+    return
+
+# Natsuki teases the player for taking so long
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_evening_took_long_enough",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(18, 21)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_evening_took_long_enough:
+    $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+    n "[player]!{w=0.2} There you are,{w=0.1} [chosen_tease]!"
+    n "Jeez...{w=0.3} took you long enough!"
+    n "Ehehe."
+    n "I'm just kidding!{w=0.2} Don't worry about it."
+    n "Welcome back!"
+    return
+
+# Night
+
+# Natsuki enjoys staying up late too
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_night_up_late",
+            unlocked=True,
+            conditional="utils.get_current_hour() >= 22 or utils.get_current_hour() <= 2",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_night_up_late:
+    n "Oh!{w=0.2} Hey,{w=0.1} [player]."
+    n "Late night for you too,{w=0.1} huh?"
+    n "Well...{w=0.3} I'm not complaining!{w=0.2} Welcome back!"
+    return
+
+# Natsuki is also a night owl
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_night_night_owl",
+            unlocked=True,
+            conditional="utils.get_current_hour() >= 22 or utils.get_current_hour() <= 2",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_night_night_owl:
+    n "Oh,{w=0.1} [player]!{w=0.2} You're a night owl too,{w=0.1} are you?"
+    n "Not that I have a problem with that,{w=0.1} of course - welcome back!"
     return

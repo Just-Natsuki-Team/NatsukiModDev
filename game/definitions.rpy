@@ -196,6 +196,9 @@ init 0 python:
                     store.utils.log(e.message, utils.SEVERITY_ERR)
                     return False
 
+            else:
+                return True
+
         def curr_affinity_in_affinity_range(self, affinity_state=None):
             """
             Checks if the current affinity is within this topic's affinity_range
@@ -276,6 +279,7 @@ init 0 python:
             location=None,
             affinity=None,
             trust=None,
+            conditional=None,
             includes_categories=list(),
             excludes_categories=list(),
             additional_properties=list()
@@ -322,6 +326,9 @@ init 0 python:
             if trust and not self.evaluate_trust_range(trust):
                 return False
 
+            if conditional and not self.check_conditional():
+                return False
+
             if includes_categories and len(set(includes_categories).intersection(set(self.category))) != len(includes_categories):
                 return False
 
@@ -353,6 +360,7 @@ init 0 python:
             location=None,
             affinity=None,
             trust=None,
+            conditional=None,
             includes_categories=list(),
             excludes_categories=list(),
             additional_properties=list()
@@ -381,6 +389,7 @@ init 0 python:
                     location,
                     affinity,
                     trust,
+                    conditional,
                     includes_categories,
                     excludes_categories,
                     additional_properties
@@ -671,6 +680,16 @@ init python in utils:
 
         else:
             return "a while"
+
+    def get_current_hour():
+        """
+        Gets the current hour (out of 24) of the day.
+
+        OUT:
+            Integer representing the current hour of the day.
+        """
+        return datetime.datetime.now().hour
+
 
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
 define audio.t2 = "<loop 4.499>bgm/2.ogg"   #Sayori theme

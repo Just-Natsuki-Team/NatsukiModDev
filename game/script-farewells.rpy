@@ -17,9 +17,10 @@ init python in farewells:
         farewell_pool = store.Topic.filter_topics(
             FAREWELL_MAP.values(),
             affinity=store.jn_globals.current_affinity_state,
+            conditional=True,
             additional_properties=[
-                ("is_time_sensitive", store.utils.get_current_session_length().total_seconds() / 60 < 30),
-                ("has_stay_option", not store.jn_globals.player_already_stayed_on_farewell and jn_globals.current_affinity_state >= 6)
+                ("is_time_sensitive", random.randint(1,5) == 3 and store.utils.get_current_session_length().total_seconds() / 60 < 30),
+                ("has_stay_option", not store.jn_globals.player_already_stayed_on_farewell and store.jn_globals.current_affinity_state >= 6)
             ],
             excludes_categories=["Failsafe"]
         )
@@ -77,7 +78,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_you_mean_the_world_to_me",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
             additional_properties={
                 "has_stay_option": False,
@@ -100,7 +100,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_dont_like_saying_goodbye",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
             additional_properties={
                 "has_stay_option": False,
@@ -124,7 +123,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_counting_on_you",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
             additional_properties={
                 "has_stay_option": False,
@@ -148,7 +146,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_do_your_best",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
             additional_properties={
                 "has_stay_option": False,
@@ -173,7 +170,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_rooting_for_you",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
             additional_properties={
                 "has_stay_option": False,
@@ -199,7 +195,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_me_to_deal_with",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
             additional_properties={
                 "has_stay_option": False,
@@ -223,7 +218,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_wish_you_could_stay_forever",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
             additional_properties={
                 "has_stay_option": False,
@@ -250,7 +244,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_affectionate_enamored_was_having_fun",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
             additional_properties={
                 "has_stay_option": False,
@@ -275,7 +268,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_affectionate_enamored_waiting_for_you",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
             additional_properties={
                 "has_stay_option": False,
@@ -300,7 +292,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_affectionate_enamored_ill_be_okay",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
             additional_properties={
                 "has_stay_option": False,
@@ -325,7 +316,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_affectionate_enamored_dont_make_me_find_you",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
             additional_properties={
                 "has_stay_option": False,
@@ -350,7 +340,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_affectionate_enamored_take_care_for_both",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
             additional_properties={
                 "has_stay_option": False,
@@ -375,7 +364,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_affectionate_enamored_enjoy_our_time_together",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
             additional_properties={
                 "has_stay_option": False,
@@ -399,7 +387,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_affectionate_enamored_see_me_soon",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
             additional_properties={
                 "has_stay_option": False,
@@ -424,7 +411,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_happy_affectionate_going_now",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE),
             additional_properties={
                 "has_stay_option": False,
@@ -445,7 +431,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_happy_affectionate_heading_off",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE),
             additional_properties={
                 "has_stay_option": False,
@@ -467,7 +452,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_happy_affectionate_stay_safe",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE),
             additional_properties={
                 "has_stay_option": False,
@@ -489,7 +473,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_happy_affectionate_take_care",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE),
             additional_properties={
                 "has_stay_option": False,
@@ -511,7 +494,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_happy_affectionate_see_me_soon",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE),
             additional_properties={
                 "has_stay_option": False,
@@ -535,7 +517,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_normal_happy_see_you_later",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY),
             additional_properties={
                 "has_stay_option": False,
@@ -555,7 +536,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_normal_happy_later",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY),
             additional_properties={
                 "has_stay_option": False,
@@ -576,7 +556,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_normal_happy_goodbye",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY),
             additional_properties={
                 "has_stay_option": False,
@@ -597,7 +576,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_normal_happy_kay",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY),
             additional_properties={
                 "has_stay_option": False,
@@ -618,7 +596,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_normal_happy_see_ya",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY),
             additional_properties={
                 "has_stay_option": False,
@@ -640,7 +617,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_upset_distressed_bye",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET),
             additional_properties={
                 "has_stay_option": False,
@@ -660,7 +636,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_upset_distressed_later",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET),
             additional_properties={
                 "has_stay_option": False,
@@ -680,7 +655,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_upset_distressed_kay",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET),
             additional_properties={
                 "has_stay_option": False,
@@ -700,7 +674,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_upset_distressed_goodbye",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET),
             additional_properties={
                 "has_stay_option": False,
@@ -720,7 +693,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_upset_distressed_see_you_around",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET),
             additional_properties={
                 "has_stay_option": False,
@@ -742,7 +714,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_broken_ruined_yeah",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.RUINED, jn_aff.BROKEN),
             additional_properties={
                 "has_stay_option": False,
@@ -762,7 +733,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_broken_ruined_yep",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.RUINED, jn_aff.BROKEN),
             additional_properties={
                 "has_stay_option": False,
@@ -782,7 +752,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_broken_ruined_uh_huh",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.RUINED, jn_aff.BROKEN),
             additional_properties={
                 "has_stay_option": False,
@@ -802,7 +771,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_broken_ruined_nothing_to_say",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.RUINED, jn_aff.BROKEN),
             additional_properties={
                 "has_stay_option": False,
@@ -822,7 +790,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_broken_ruined_kay",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.RUINED, jn_aff.BROKEN),
             additional_properties={
                 "has_stay_option": False,
@@ -845,7 +812,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_short_session_ask",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
             additional_properties={
                 "has_stay_option": True,
@@ -920,7 +886,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_short_session_ask_alt",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
             additional_properties={
                 "has_stay_option": True,
@@ -989,7 +954,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_fake_confidence_ask",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE),
             additional_properties={
                 "has_stay_option": True,
@@ -1031,7 +995,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_pleading_ask",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.ENAMORED, jn_aff.LOVE),
             additional_properties={
                 "has_stay_option": True,
@@ -1075,7 +1038,6 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_gentle_ask",
             unlocked=True,
-            conditional=None,
             affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
             additional_properties={
                 "has_stay_option": True,
@@ -1184,4 +1146,157 @@ init 5 python:
 
 label farewell_fallback_see_you_soon:
     n "Alright, see you soon."
+    return { "quit": None }
+
+# Time-of-day based farewells
+
+# Early morning
+
+# Natsuki thanks the player for visiting so early
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_early_morning_going_this_early",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(3, 4)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
+
+label farewell_early_morning_going_this_early:
+    n "H-{w=0.1}huh?{w=0.2} You're going this early?"
+    n "...Oh."
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n "I was hoping we could hang out longer...{w=0.3} but if you gotta go,{w=0.1} then you gotta go."
+        n "Thanks for stopping by though,{w=0.1} [player].{w=0.2} I really appreciate it."
+        n "Just don't rush things for my sake,{w=0.1} alright?"
+
+    else:
+        n "I-{w=0.1}I mean,{w=0.1} it was cool of you to drop by,{w=0.1} [player]!"
+
+    n "Take care out there,{w=0.1} 'kay?{w=0.2} Don't do anything dumb!"
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        n "Love you, [player]~!"
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        n "See you later,{w=0.1} [chosen_tease]!"
+
+    else:
+        n "See ya!"
+
+    return { "quit": None }
+
+# Morning
+
+# Natsuki wishes the player a good day
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_morning_heading_off",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(5, 11)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
+
+label farewell_morning_heading_off:
+    n "Heading off now,{w=0.1} [player]?{w=0.2} No worries!"
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n "I hope your day is as great as you are."
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            n "Ehehe.{w=0.2} Love you, [player]~!"
+
+        else:
+            n "See you later!"
+
+    else:
+        n "Have a good day!"
+    
+    return { "quit": None }
+
+# Afternoon
+
+# Natsuki asks that the player visit later
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_afternoon_come_visit_soon",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(12, 17)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
+
+label farewell_afternoon_come_visit_soon:
+    n "Oh?{w=0.2} Leaving a little later today,{w=0.1} [player]?"
+    n "I guess that's fine...{w=0.3} just remember to come visit soon,{w=0.1} 'kay?"
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n "I'll be mad if you don't."
+        n "Ehehe.{w=0.2} Stay safe,{w=0.1} [player]!"
+
+    else:
+        n "Stay safe!"
+    
+    return { "quit": None }
+
+# Evening
+
+# Natsuki wishes the player a good evening
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_evening_good_evening",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(18, 21)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
+
+label farewell_evening_good_evening:
+    n "Huh?{w=0.2} You're heading off now,{w=0.1} [player]?"
+    n "Well...{w=0.3} alright."
+    n "Have a good evening!"
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n "Come see me soon,{w=0.1} 'kay?"
+
+    return { "quit": None }
+
+# Night
+
+# Natsuki can't fault the player for turning in
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_night_good_night",
+            unlocked=True,
+            conditional="utils.get_current_hour() >= 22 or utils.get_current_hour() <= 2",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
+
+label farewell_night_good_night:
+    n "Oh?{w=0.2} Are you turning in now?"
+    n "Well...{w=0.3} I can't say I blame you."
+    n "Good night,{w=0.1} [player]!"
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n "Sweet dreams!"
+
     return { "quit": None }
