@@ -91,7 +91,6 @@ init python in jn_debug:
                 )
 
             else:
-                global _view_tracked_items_enabled
                 _unwatch_all_tracked_items()
                 store.persistent.jn_debug_tracked_watch_items.append(expression)
 
@@ -110,7 +109,6 @@ init python in jn_debug:
         """
         if isinstance(expression, str):
             if expression in store.persistent.jn_debug_tracked_watch_items:
-                global _view_tracked_items_enabled
                 _unwatch_all_tracked_items()
                 store.persistent.jn_debug_tracked_watch_items.remove(expression)
 
@@ -171,7 +169,6 @@ init python in jn_debug:
         """
         _unwatch_all_tracked_items()
         store.persistent.jn_debug_tracked_watch_items = _default_tracked_watch_items
-        global _view_tracked_items_enabled
 
         if _view_tracked_items_enabled:
             _watch_all_tracked_items()
