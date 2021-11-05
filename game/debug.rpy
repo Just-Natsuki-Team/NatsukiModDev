@@ -1,3 +1,7 @@
+init 10 python:
+    config.console = True
+    config.allow_skipping = True
+
 default persistent.jn_debug_tracked_watch_items = [
     "store.persistent.affinity",
     "store.jn_affinity.get_affinity_tier_name()",
