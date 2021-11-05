@@ -1077,26 +1077,32 @@ label farewell_gentle_ask:
 label farewell_extra_trust:
     # ABSOLUTE+
     if jn_trust.get_trust_state() >= jn_trust.TRUST_ABSOLUTE:
+        show placeholder_natsuki sparkle zorder jn_placeholders.NATSUKI_Z_INDEX
         n "My [player]...{w=0.3} I'll be waiting..."
 
     # FULL+
     elif jn_trust.get_trust_state() >= jn_trust.TRUST_FULL:
+        show placeholder_natsuki neutral zorder jn_placeholders.NATSUKI_Z_INDEX
         n "I'll be waiting..."
 
     # PARTIAL+
     elif jn_trust.get_trust_state() >= jn_trust.TRUST_PARTIAL:
+        show placeholder_natsuki plead zorder jn_placeholders.NATSUKI_Z_INDEX
         n "You'll be back...{w=0.3} right?"
 
     # SCEPTICAL+
     elif jn_trust.get_trust_state() >= jn_trust.TRUST_SCEPTICAL:
+        show placeholder_natsuki sad zorder jn_placeholders.NATSUKI_Z_INDEX
         n "I'll be okay...{w=0.3} I'll be okay..."
 
     # DIMINISHED+
     elif jn_trust.get_trust_state() >= jn_trust.TRUST_DIMINISHED:
+        show placeholder_natsuki sad zorder jn_placeholders.NATSUKI_Z_INDEX
         n "...?"
 
     # SHATTERED+
     else:
+        show placeholder_natsuki sad zorder jn_placeholders.NATSUKI_Z_INDEX
         n "..."
 
     return { "quit": None }

@@ -41,7 +41,7 @@ init 5 python:
             label="talk_set_affinity",
             unlocked=True,
             prompt="Can you change my affinity state?",
-            conditional="config.developer",
+            conditional="config.console",
             category=["Debug (Affinity/Trust)"],
             player_says=True,
             location="classroom"
@@ -101,7 +101,7 @@ init 5 python:
             label="talk_set_trust",
             unlocked=True,
             prompt="Can you change my trust state?",
-            conditional="config.developer",
+            conditional="config.console",
             category=["Debug (Affinity/Trust)"],
             player_says=True,
             location="classroom"
@@ -161,7 +161,7 @@ init 5 python:
             label="talk_toggle_watched_items",
             unlocked=True,
             prompt="Can you toggle the watched item list view?",
-            conditional="config.developer",
+            conditional="config.console",
             category=["Debug (Watch)"],
             player_says=True,
             location="classroom"
@@ -184,7 +184,7 @@ init 5 python:
             label="talk_add_watched_item",
             unlocked=True,
             prompt="Can you add an item to the watched item list?",
-            conditional="config.developer",
+            conditional="config.console",
             category=["Debug (Watch)"],
             player_says=True,
             location="classroom"
@@ -214,7 +214,7 @@ init 5 python:
             label="talk_remove_watched_item",
             unlocked=True,
             prompt="Can you remove an item from the watched item list?",
-            conditional="config.developer",
+            conditional="config.console",
             category=["Debug (Watch)"],
             player_says=True,
             location="classroom"
@@ -244,7 +244,7 @@ init 5 python:
             label="talk_load_watched_items_from_disk",
             unlocked=True,
             prompt="Can you load the watched item list from disk?",
-            conditional="config.developer",
+            conditional="config.console",
             category=["Debug (Watch)"],
             player_says=True,
             location="classroom"
@@ -284,7 +284,7 @@ init 5 python:
             label="talk_reset_watched_items",
             unlocked=True,
             prompt="Can you reset the watched item list?",
-            conditional="config.developer",
+            conditional="config.console",
             category=["Debug (Watch)"],
             player_says=True,
             location="classroom"
@@ -318,7 +318,7 @@ init 5 python:
             label="talk_print_persistent",
             unlocked=True,
             prompt="Can you print my persistent data?",
-            conditional="config.developer",
+            conditional="config.console",
             category=["Debug (Data)"],
             player_says=True,
             location="classroom"
@@ -340,7 +340,7 @@ init 5 python:
             label="talk_print_keymap",
             unlocked=True,
             prompt="Can you print the keymaps?",
-            conditional="config.developer",
+            conditional="config.console",
             category=["Debug (Data)"],
             player_says=True,
             location="classroom"
@@ -362,7 +362,7 @@ init 5 python:
             label="talk_custom_say",
             unlocked=True,
             prompt="Can you say something for me?",
-            conditional="config.developer",
+            conditional="config.console",
             category=["Debug (Dialogue)"],
             player_says=True,
             location="classroom"
