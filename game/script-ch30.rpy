@@ -41,15 +41,9 @@ label ch30_init:
     $ main_background.draw(full_redraw=True)
 
     if utils.get_current_hour() > 6 and utils.get_current_hour() < 18:
-        show placeholder_sky_day zorder 0
+        show placeholder_sky_day zorder jn_placeholders.SKY_Z_INDEX
     else:
         hide placeholder_sky_day
-
-    if persistent.jn_player_apology_type_on_quit is not None or jn_affinity.get_affinity_state() < jn_affinity.NORMAL:
-        show placeholder_natsuki plead zorder jn_placeholders.NATSUKI_Z_INDEX
-
-    else:
-        show placeholder_natsuki smile zorder jn_placeholders.NATSUKI_Z_INDEX
     
     show screen hkb_overlay
 
@@ -72,7 +66,7 @@ label ch30_loop:
             unlocked=True,
             nat_says=True,
             location=main_background.location.id,
-            affinity=jn_globals.current_affinity_state,
+            affinity=jn_affinity.get_affinity_state(),
             #trust=60 TODO: Add trust handling
         )
 
@@ -116,9 +110,15 @@ label call_next_topic:
 
         if renpy.has_label(_topic):
             
-            if not _topic in ["greeting_sudden_leave", "greeting_prolonged_leave"]:
-                $ jn_placeholders.show_resting_placeholder_natsuki()
+            if _topic in ["greeting_sudden_leave", "greeting_prolonged_leave"]:
+                show placeholder_natsuki plead zorder jn_placeholders.NATSUKI_Z_INDEX
 
+            elif "greeting_" in _topic:
+                $ jn_placeholders.show_greeting_placeholder_natsuki()
+
+            else:
+                $ jn_placeholders.show_resting_placeholder_natsuki()
+                
             call expression _topic
 
     python:
@@ -182,20 +182,14 @@ label talk_menu:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_LOVE_ENAMORED)
 
-        elif jn_affinity.is_state_within_range(
-            affinity_state=store.jn_globals.current_affinity_state,
-            affinity_range=(store.jn_affinity.NORMAL, jn_affinity.AFFECTIONATE)
-        ):
+        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
             _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_AFFECTIONATE_NORMAL)
 
-        elif jn_affinity.is_state_within_range(
-            affinity_state=store.jn_globals.current_affinity_state,
-            affinity_range=(store.jn_affinity.DISTRESSED, jn_affinity.UPSET)
-        ):
-            _talk_flavor_text = random.choice(jn_globals.DEFAULT_TALK_FLAVOR_TEXT_UPSET_DISTRESSED)
+        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_UPSET_DISTRESSED)
 
         else:
-            _talk_flavor_text = random.choice(jn_globals.DEFAULT_TALK_FLAVOR_TEXT_BROKEN_RUINED)
+            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_BROKEN_RUINED)            
 
         # Ensure any variable references are substituted
         _talk_flavor_text = renpy.substitute(_talk_flavor_text)
@@ -236,7 +230,7 @@ label player_select_topic(is_repeat_topics=False):
             player_says=not is_repeat_topics,
             unlocked=True,
             location=main_background.location.id,
-            affinity=jn_globals.current_affinity_state
+            affinity=jn_affinity.get_affinity_state()
         )
 
         # Sort the topics we can pick by prompt for a cleaner appearance
