@@ -45,7 +45,6 @@ label ch30_init:
     #And finally, we head into the loop
     jump ch30_loop
 
-
 #The main loop
 label ch30_loop:
     #Do topic selection here
@@ -155,24 +154,17 @@ init python:
 label talk_menu:
     python:
         # Get the flavor text for the talk menu, based on affinity state
-        if store.jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_LOVE_ENAMORED)
 
-        elif store.jn_affinity.is_state_within_range(
-            affinity_state=store.jn_globals.current_affinity_state,
-            affinity_range=(store.jn_affinity.NORMAL, store.jn_affinity.AFFECTIONATE)
-        ):
+        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
             _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_AFFECTIONATE_NORMAL)
 
-
-        elif store.jn_affinity.is_state_within_range(
-            affinity_state=store.jn_globals.current_affinity_state,
-            affinity_range=(store.jn_affinity.DISTRESSED, store.jn_affinity.UPSET)
-        ):
+        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
             _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_UPSET_DISTRESSED)
 
         else:
-            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_BROKEN_RUINED)
+            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_BROKEN_RUINED)            
 
         # Ensure any variable references are substituted
         _talk_flavor_text = renpy.substitute(_talk_flavor_text)
@@ -186,10 +178,10 @@ label talk_menu:
         "Tell me again about...":
             call player_select_topic(is_repeat_topics=True)
 
-        "I feel..." if store.jn_affinity.get_affinity_state() >= store.jn_affinity.HAPPY:
+        "I feel..." if jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
             jump player_admissions_start
 
-        "I want to tell you something..." if store.jn_affinity.get_affinity_state() >= store.jn_affinity.HAPPY:
+        "I want to tell you something..." if jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
             jump player_compliments_start
 
         "Goodbye.":

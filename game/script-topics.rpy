@@ -41,8 +41,8 @@ init 5 python:
             label="talk_set_affinity",
             unlocked=True,
             prompt="Can you change my affinity state?",
-            conditional=None,
-            category=["Debug"],
+            conditional="config.developer",
+            category=["Debug (Affinity/Trust)"],
             player_says=True,
             location="classroom"
         ),
@@ -101,8 +101,8 @@ init 5 python:
             label="talk_set_trust",
             unlocked=True,
             prompt="Can you change my trust?",
-            conditional=None,
-            category=["Debug"],
+            conditional="config.developer",
+            category=["Debug (Affinity/Trust)"],
             player_says=True,
             location="classroom"
         ),
@@ -119,6 +119,163 @@ label talk_set_trust:
 
         except:
             renpy.say(n, "Hmm... sorry, I can't seem to read that. Make sure you enter an integer or decimal value, 'kay?")
+    return
+
+# This topic allows us to toggle on/off a list of core watched items for easy reference
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_toggle_watched_items",
+            unlocked=True,
+            prompt="Can you toggle the watched item list view?",
+            conditional="config.developer",
+            category=["Debug (Watch)"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_toggle_watched_items:
+    n "Sure!{w=0.2} Just give me a sec here..."
+    n "..."
+    $ jn_debug.toggle_show_tracked_watch_items()
+    n "There you go, [player]!"
+    return
+
+# This topic allows us to add an item to the watched item list
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_add_watched_item",
+            unlocked=True,
+            prompt="Can you add an item to the watched item list?",
+            conditional="config.developer",
+            category=["Debug (Watch)"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_add_watched_item:
+    n "No sweat, [player]! Just tell me what you want to add."
+    $ player_input = renpy.input("Enter an expression, or enter 'nevermind' to cancel:")
+    if (player_input.lower().strip() in {"nevermind", ""}):
+        n "Oh. Okay then."
+
+    else:
+        n "Right-o!"
+        n "..."
+        $ jn_debug.add_tracked_watch_item(str(player_input))
+        n "Okaaay!{w=0.2} There you go, [player]!"
+    
+    return
+
+# This topic allows us to remove an item from the watched item list
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_remove_watched_item",
+            unlocked=True,
+            prompt="Can you remove an item from the watched item list?",
+            conditional="config.developer",
+            category=["Debug (Watch)"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_remove_watched_item:
+    n "No worries, [player]! Just tell me what you want to remove."
+    $ player_input = renpy.input("Enter an expression, or enter 'nevermind' to cancel:")
+    if (player_input.lower().strip() in {"nevermind", ""}):
+        n "Oh.{w=0.2} Alright then."
+
+    else:
+        n "Leave it to me!"
+        n  "..."
+        $ jn_debug.remove_tracked_watch_item(str(player_input))
+        n "Gotcha!{w=0.2} There you go,{w=0.1} [player]!"
+    
+    return
+
+# This topic allows us to set the watched item list from file
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_load_watched_items_from_disk",
+            unlocked=True,
+            prompt="Can you load the watched item list from disk?",
+            conditional="config.developer",
+            category=["Debug (Watch)"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_load_watched_items_from_disk:
+    n "No problemo,{w=0.1} [player]!{w=0.2} Uno momento..."
+    n "..."
+    $ load_outcome = jn_debug.load_tracked_watch_items_from_disk()
+
+    if load_outcome == jn_debug.LOAD_FROM_DISK_NEW_FILE_CREATED:
+        n "...Huh.{w=0.2} Hey,{w=0.1} [player]..."
+        n "It looks like the file I needed didn't exist,{w=0.1} so I went ahead and created it for you."
+        $ import os
+        $ file_created_directory = os.getcwd()
+        n "It's called {i}watch_items.txt{/i},{w=0.1} and you should be able to find it in the {i}debug{/i} folder under {i}[file_created_directory]{/i}."
+        n "Remember though -{w=0.1} only one statement per line in the file,{w=0.1} 'kay?{w=0.2} Ehehe."
+
+    elif load_outcome == jn_debug.LOAD_FROM_DISK_SUCCESS:
+        n "And...{w=0.3} presto -{w=0.1} job done!"
+
+    else:
+        n "Uhmm...{w=0.3} [player]?{w=0.2} It looks like something went wrong."
+        n "Are you sure the file is actually there, and isn't blank or anything dumb like that?"
+        n "Just let me know when you've checked it out,{w=0.1} 'kay?"
+        n "Thanks,{w=0.1} [player]~!"
+
+    return
+
+# This topic allows us to reset the watched item list to its basic configuration
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_reset_watched_items",
+            unlocked=True,
+            prompt="Can you reset the watched item list?",
+            conditional="config.developer",
+            category=["Debug (Watch)"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_reset_watched_items:
+    n "Oh?{w=0.2} You want to reset the watched item list?"
+    if len(persistent.jn_debug_tracked_watch_items) > 10:
+        n "Uhmm...{w=0.3} [player]?{w=0.2} It looks like you're watching a lot of stuff..."
+        menu:
+            n "Are you sure you want to reset the list?"
+            "Yes, please reset it.":
+                pass
+            "No, not just yet.":
+                n "Oh...{w=0.3} well,{w=0.1} alright.{w=0.2} Just let me know whenever then,{w=0.1} 'kay?"
+                return
+
+    n "Okaaay!{w=0.2} Just give me a second..."
+    n "..."
+    $ jn_debug.reset_tracked_watch_items()
+    n "And...{w=0.3} gone -{w=0.1} it should be back to basics now!{w=0.2} Ehehe."
     return
 
 # Natsuki's thoughts on having her picture taken via the ingame screenshot system
@@ -454,6 +611,7 @@ label talk_service_animals:
         n "You know, [player].{w=0.2} To be perfectly honest with you?"
         n "Sometimes I feel like I could use one."
         n "Aha..."
+        return
 
     n "..."
     n "That got kinda heavy,{w=0.1} didn't it?"
