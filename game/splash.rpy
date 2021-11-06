@@ -171,11 +171,11 @@ label splashscreen:
             "I agree.":
                 pass
         scene tos2
-        with Dissolve(1.5)
+        with Dissolve(0.25)
         pause 1.0
 
         scene white
-        with Dissolve(1.5)
+        with Dissolve(0.25)
 
         ##Optional, load a copy of DDLC save data
         #if not persistent.has_merged:
@@ -211,7 +211,7 @@ label splashscreen:
         $ splash_message = renpy.random.choice(splash_messages)
     show splash_warning "[splash_message]" with Dissolve(0.5, alpha=True)
     pause 2.0
-    hide splash_warning with Dissolve(0.5, alpha=True)
+    hide splash_warning with Dissolve(0.25, alpha=True)
     $ config.allow_skipping = False
     return
 

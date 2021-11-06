@@ -183,7 +183,7 @@ screen hkb_overlay:
         yalign 0.97
 
         textbutton _("Talk"):
-            action Function(push, "talk_menu") #TODO: build an async-style approach to forcing pushes bypassing the idle wait
+            action Jump("talk_menu")
             style "hkbd_button"
 
         textbutton _("Music"):

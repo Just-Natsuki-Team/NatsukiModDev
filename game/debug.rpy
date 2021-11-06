@@ -6,7 +6,8 @@ default persistent.jn_debug_tracked_watch_items = [
     "store.persistent.affinity",
     "store.jn_affinity.get_affinity_tier_name()",
     "store.persistent.trust",
-    "store.jn_trust.get_trust_tier_name()"
+    "store.jn_trust.get_trust_tier_name()",
+    "len(persistent._event_list)"
 ]
 
 init python in jn_debug:
@@ -16,7 +17,8 @@ init python in jn_debug:
         "store.persistent.affinity\n",
         "store.jn_affinity.get_affinity_tier_name()\n",
         "store.persistent.trust\n",
-        "store.jn_trust.get_trust_tier_name()"
+        "store.jn_trust.get_trust_tier_name()\n",
+        "len(persistent._event_list)"
     ]
 
     import os
