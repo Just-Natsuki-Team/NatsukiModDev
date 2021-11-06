@@ -12,15 +12,15 @@ init 0 python in apologies:
     APOLOGY_MAP = dict()
 
     # Apology types
-    APOLOGY_TYPE_BAD_NICKNAME = 0
-    APOLOGY_TYPE_CHEATED_GAME = 1
-    APOLOGY_TYPE_DEFAULT = 2
-    APOLOGY_TYPE_PROLONGED_LEAVE = 3
-    APOLOGY_TYPE_RUDE = 4
-    APOLOGY_TYPE_SCREENSHOT = 5
-    APOLOGY_TYPE_SUDDEN_LEAVE = 6
-    APOLOGY_TYPE_UNHEALTHY = 7
-    APOLOGY_TYPE_SCARE = 8
+    TYPE_BAD_NICKNAME = 0
+    TYPE_CHEATED_GAME = 1
+    TYPE_DEFAULT = 2
+    TYPE_PROLONGED_LEAVE = 3
+    TYPE_RUDE = 4
+    TYPE_SCREENSHOT = 5
+    TYPE_SUDDEN_LEAVE = 6
+    TYPE_UNHEALTHY = 7
+    TYPE_SCARE = 8
 
     def get_all_apologies():
         """
@@ -96,7 +96,7 @@ init 5 python:
             prompt="For calling you a hurtful name.",
             label="apology_bad_nickname",
             unlocked=True,
-            conditional="apologies.get_apology_type_pending(apologies.APOLOGY_TYPE_BAD_NICKNAME)",
+            conditional="apologies.get_apology_type_pending(apologies.TYPE_BAD_NICKNAME)",
             affinity_range=(None, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_APOLOGY
@@ -177,7 +177,7 @@ label apology_bad_nickname:
             n "Whatever.{w=0.2} I literally don't care."
             n "This changes nothing,{w=0.1} [player]."
 
-    $ persistent.jn_player_pending_apologies.remove(apologies.APOLOGY_TYPE_BAD_NICKNAME)
+    $ persistent.jn_player_pending_apologies.remove(apologies.TYPE_BAD_NICKNAME)
     return
 
 # Apology for cheating in a minigame
@@ -188,7 +188,7 @@ init 5 python:
             prompt="For cheating during our games.",
             label="apology_cheated_game",
             unlocked=True,
-            conditional="apologies.get_apology_type_pending(apologies.APOLOGY_TYPE_CHEATED_GAME)",
+            conditional="apologies.get_apology_type_pending(apologies.TYPE_CHEATED_GAME)",
             affinity_range=(None, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_APOLOGY
@@ -217,7 +217,7 @@ label apology_cheated_game:
         n "Whatever.{w=0.2} I don't care."
         n "As if I could expect much better from you,{w=0.1} anyway..."
 
-    $ persistent.jn_player_pending_apologies.remove(apologies.APOLOGY_TYPE_CHEATED_GAME)
+    $ persistent.jn_player_pending_apologies.remove(apologies.TYPE_CHEATED_GAME)
     return
 
 # Generic apology
@@ -310,7 +310,7 @@ init 5 python:
             prompt="For abandoning you.",
             label="apology_prolonged_leave",
             unlocked=True,
-            conditional="apologies.get_apology_type_pending(apologies.APOLOGY_TYPE_PROLONGED_LEAVE)",
+            conditional="apologies.get_apology_type_pending(apologies.TYPE_PROLONGED_LEAVE)",
             affinity_range=(None, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_APOLOGY
@@ -359,7 +359,7 @@ label apology_prolonged_leave:
         n "...Heh..."
         n "You should be apologizing that you {i}came back{/i}."
 
-    $ persistent.jn_player_pending_apologies.remove(apologies.APOLOGY_TYPE_PROLONGED_LEAVE)
+    $ persistent.jn_player_pending_apologies.remove(apologies.TYPE_PROLONGED_LEAVE)
     return
 
 # Apology for generally being rude to Natsuki outside of nicknames
@@ -370,7 +370,7 @@ init 5 python:
             prompt="For being rude to you.",
             label="apology_rude",
             unlocked=True,
-            conditional="apologies.get_apology_type_pending(apologies.APOLOGY_TYPE_RUDE)",
+            conditional="apologies.get_apology_type_pending(apologies.TYPE_RUDE)",
             affinity_range=(None, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_APOLOGY
@@ -415,7 +415,7 @@ label apology_rude:
         n "You can stick your apology,{w=0.1} [player]." 
         n "It means nothing to me."
 
-    $ persistent.jn_player_pending_apologies.remove(apologies.APOLOGY_TYPE_RUDE)
+    $ persistent.jn_player_pending_apologies.remove(apologies.TYPE_RUDE)
     return
 
 # Apology for taking pictures without Natsuki's permission
@@ -426,7 +426,7 @@ init 5 python:
             prompt="For taking pictures of you without permission.",
             label="apology_screenshots",
             unlocked=True,
-            conditional="apologies.get_apology_type_pending(apologies.APOLOGY_TYPE_SCREENSHOT)",
+            conditional="apologies.get_apology_type_pending(apologies.TYPE_SCREENSHOT)",
             affinity_range=(None, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_APOLOGY
@@ -485,7 +485,7 @@ label apology_screenshots:
         n "..."
         n "...Keep your pathetic apology.{w=0.2} I don't want it."
 
-    $ persistent.jn_player_pending_apologies.remove(apologies.APOLOGY_TYPE_SCREENSHOT)
+    $ persistent.jn_player_pending_apologies.remove(apologies.TYPE_SCREENSHOT)
     return
 
 # Apology for leaving without saying "Goodbye" properly.
@@ -496,7 +496,7 @@ init 5 python:
             prompt="For leaving without saying goodbye.",
             label="apology_without_goodbye",
             unlocked=True,
-            conditional="apologies.get_apology_type_pending(apologies.APOLOGY_TYPE_SUDDEN_LEAVE)",
+            conditional="apologies.get_apology_type_pending(apologies.TYPE_SUDDEN_LEAVE)",
             affinity_range=(None, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_APOLOGY
@@ -542,7 +542,7 @@ label apology_without_goodbye:
         n "Whatever.{w=0.2} I don't care.{w=0.2} Keep your apology."
         n "You've so many other things to be sorry for.{w=0.2} What's another on the pile,{w=0.1} right?"
 
-    $ persistent.jn_player_pending_apologies.remove(apologies.APOLOGY_TYPE_SUDDEN_LEAVE)
+    $ persistent.jn_player_pending_apologies.remove(apologies.TYPE_SUDDEN_LEAVE)
     return
 
 # Apology for failing to follow Natsuki's advice when she is concerned about the player's health
@@ -553,7 +553,7 @@ init 5 python:
             prompt="For not taking care of myself properly.",
             label="apology_unhealthy",
             unlocked=True,
-            conditional="apologies.get_apology_type_pending(apologies.APOLOGY_TYPE_UNHEALTHY)",
+            conditional="apologies.get_apology_type_pending(apologies.TYPE_UNHEALTHY)",
             affinity_range=(None, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_APOLOGY
@@ -596,7 +596,7 @@ label apology_unhealthy:
         n "...Heh."
         n "At least you care that {i}you{/i} aren't being treated right."
 
-    $ persistent.jn_player_pending_apologies.remove(apologies.APOLOGY_TYPE_UNHEALTHY)
+    $ persistent.jn_player_pending_apologies.remove(apologies.TYPE_UNHEALTHY)
     return
 
 # Apology for giving Natsuki a fright
@@ -607,7 +607,7 @@ init 5 python:
             prompt="For scaring you.",
             label="apology_scare",
             unlocked=True,
-            conditional="apologies.get_apology_type_pending(apologies.APOLOGY_TYPE_SCARE)",
+            conditional="apologies.get_apology_type_pending(apologies.TYPE_SCARE)",
             affinity_range=(None, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_APOLOGY
@@ -643,5 +643,5 @@ label apology_scare:
         n "Stick it, [player]."
         n "We both know you don't mean that."
 
-    $ persistent.jn_player_pending_apologies.remove(apologies.APOLOGY_TYPE_SCARE)
+    $ persistent.jn_player_pending_apologies.remove(apologies.TYPE_SCARE)
     return

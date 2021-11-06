@@ -1739,7 +1739,7 @@ label talk_give_nickname:
         n "That really hurt,{w=0.1} [player].{w=0.2} Don't abuse my trust."
 
         # Apply penalty and pending apology
-        $ apologies.add_new_pending_apology(apologies.APOLOGY_TYPE_BAD_NICKNAME)
+        $ apologies.add_new_pending_apology(apologies.TYPE_BAD_NICKNAME)
         $ relationship(change="affinity-", multiplier=2)
         $ relationship(change="trust-", multiplier=2)
 
@@ -1751,7 +1751,7 @@ label talk_give_nickname:
         n "Don't test my patience like this.{w=0.2} You're better than that."
 
         # Apply penalty and pending apology
-        $ apologies.add_new_pending_apology(apologies.APOLOGY_TYPE_BAD_NICKNAME)
+        $ apologies.add_new_pending_apology(apologies.TYPE_BAD_NICKNAME)
         $ relationship(change="affinity-", multiplier=2)
         $ relationship(change="trust-", multiplier=2)
 
@@ -1781,7 +1781,7 @@ label talk_give_nickname:
                 $ relationship(change="trust-", multiplier=3)
 
         # Apply penalty and pending apology
-        $ apologies.add_new_pending_apology(apologies.APOLOGY_TYPE_BAD_NICKNAME)
+        $ apologies.add_new_pending_apology(apologies.TYPE_BAD_NICKNAME)
 
     elif persistent.jn_player_nicknames_bad_given_total == 4:
         # Player is locked out of nicknaming; this is why we can't have nice things
@@ -1797,7 +1797,7 @@ label talk_give_nickname:
         $ persistent.jn_player_nicknames_allowed = False
         $ persistent.jn_player_nicknames_current_nickname = None
         $ n_name = "Natsuki"
-        $ apologies.add_new_pending_apology(apologies.APOLOGY_TYPE_BAD_NICKNAME)
+        $ apologies.add_new_pending_apology(apologies.TYPE_BAD_NICKNAME)
 
     return
 
