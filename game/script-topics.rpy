@@ -115,6 +115,113 @@ label talk_set_trust:
             renpy.say(n, "Hmm... sorry, I can't seem to read that. Make sure you enter an integer or decimal value, 'kay?")
     return
 
+# This topic allows us to print all persistent data to the log
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_print_persistent",
+            unlocked=True,
+            prompt="Can you print my persistent data?",
+            conditional=None,
+            category=["Debug"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_print_persistent:
+    n "No problem, [player]!{w=0.1} Just give me a second..."
+    $ utils.log(utils.pretty_print(persistent))
+    n "And we're done!{w=0.2} Ehehe."
+    return
+
+# This topic allows us to print all keymap data to the log
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_print_keymap",
+            unlocked=True,
+            prompt="Can you print the keymaps?",
+            conditional=None,
+            category=["Debug"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_print_keymap:
+    n "Leave it to me,{w=0.1} [player]!{w=0.2} One second..."
+    $ utils.log(utils.pretty_print(config.keymap))
+    n "And...{w=0.3} done!{w=0.2} You're welcome,{w=0.1} [player]~!{w=0.2} Ehehe."
+    return
+
+# *whistles innocently*
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_custom_say",
+            unlocked=True,
+            prompt="Can you say something for me?",
+            conditional=None,
+            category=["Debug"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_custom_say:
+    n "Oooh!{w=0.2} Are we pranking someone,{w=0.1} [player]?{w=0.2} I'm for it!"
+    $ player_input = renpy.input("What do you want me to say?")
+    menu:
+        n "Alright!{w=0.2} Now how do you want me to say it?"
+
+        "Neutrally":
+            n "Okaaay!{w=0.2} Here goes!"
+            show placeholder_natsuki neutral zorder jn_placeholders.NATSUKI_Z_INDEX
+            n "[player_input]"
+
+        "Pleading":
+            n "Okaaay!{w=0.2} Here goes!"
+            show placeholder_natsuki plead zorder jn_placeholders.NATSUKI_Z_INDEX
+            n "[player_input]"
+
+        "Sadly":
+            n "Okaaay!{w=0.2} Here goes!"
+            show placeholder_natsuki sad zorder jn_placeholders.NATSUKI_Z_INDEX
+            n "[player_input]"
+
+        "Happily":
+            n "Okaaay!{w=0.2} Here goes!"
+            show placeholder_natsuki smile zorder jn_placeholders.NATSUKI_Z_INDEX
+            n "[player_input]"
+
+        "Sparkly":
+            n "Okaaay!{w=0.2} Here goes!"
+            show placeholder_natsuki sparkle zorder jn_placeholders.NATSUKI_Z_INDEX
+            n "[player_input]"
+
+        "Unamused":
+            n "Okaaay!{w=0.2} Here goes!"
+            show placeholder_natsuki unamused zorder jn_placeholders.NATSUKI_Z_INDEX
+            n "[player_input]"
+
+        "Mischievously":
+            n "Okaaay!{w=0.2} Here goes!"
+            show placeholder_natsuki wink zorder jn_placeholders.NATSUKI_Z_INDEX
+            n "[player_input]"
+    
+    n "..."
+    show placeholder_natsuki smile zorder jn_placeholders.NATSUKI_Z_INDEX
+    n "...And we're done here!{w=0.2} You're welcome,{w=0.1} [player]!"
+
+    return
+
 # Natsuki's thoughts on having her picture taken via the ingame screenshot system
 init 5 python:
     registerTopic(
@@ -191,90 +298,6 @@ label talk_having_pictures_taken:
         else:
             n "Please...{w=0.3} don't try to pretend like you care about how I feel about pictures."
             n "I'm done talking about this,{w=0.1} [player]."
-    return
-
-# Ask Natsuki for permission to take a picture of her, or have her call out the player if permission already given!
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="talk_get_picture_permission",
-            unlocked=True,
-            prompt="Can I take a picture of you?",
-            conditional="persistent._jn_first_screenshot_taken != None",
-            category=["You", "Photography"],
-            player_says=True,
-            location="classroom"
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-label talk_get_picture_permission:
-    # The player was warned!
-    if jn_screenshots.player_screenshots_blocked:
-        n "Uh...{w=0.3} no,{w=0.1} I'm not turning the camera back on,{w=0.1} [player]."
-        return
-
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        if jn_screenshots.player_screenshots_permission:
-            n "Ahaha!{w=0.2} I already said you could,{w=0.1} dummy!"
-            n "I'm ready,{w=0.1} so take one whenever!"
-
-        else:
-            n "Eh?{w=0.2} A picture?{w=0.2} Of course!"
-            $ jn_screenshots.player_screenshots_permission = True
-        return
-
-    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        if jn_screenshots.player_screenshots_permission:
-            n "Huh?{w=0.2} Didn't you ask me that already?"
-            n "It's fine,{w=0.1} so go ahead!"
-
-        else:
-            n "Oh?{w=0.2} You wanna take a picture?{w=0.2} Alright!"
-            $ jn_screenshots.player_screenshots_permission = True
-        return
-
-    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
-
-        if jn_screenshots.player_screenshots_permission:
-            n "Hmm?{w=0.2} A picture?{w=0.2} Well,{w=0.1} okay."
-            $ jn_screenshots.player_screenshots_permission = True
-
-        else:
-            n "Uuuu...{w=0.3} I just said you could,{w=0.1} [player]."
-            n "Just take it whenever,{w=0.1} alright?"
-        return
-
-    elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
-        if jn_screenshots.player_screenshots_permission:
-            n "Eh?{w=0.2} I already said you could,{w=0.1} [player]. Just take it soon,{w=0.1} alright?"
-            n "I don't really like being kept on hold like this..."
-
-        else:
-            # Indecisive; this lets lower affinity players have a chance at screenshots without upsetting Natsuki
-            n "A picture?{w=0.2} I'm not sure...{w=0.3} let me think about it."
-            n "..."
-            # We take into account the player's behaviour with pictures so far
-            $ natsuki_approves = random.randint(1, 100) <= (100 - (jn_screenshots.bad_screenshot_streak * 25))
-            if natsuki_approves:
-                n "Fine,{w=0.1} I guess.{w=0.1} Take it whenever."
-                $ jn_screenshots.player_screenshots_permission = True
-
-            else:
-                n "I'm sorry,{w=0.1} [player].{w=0.1} I don't want any pictures taking of me right now."
-                $ jn_screenshots.player_screenshots_permission = False
-        return
-
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-        n "No.{w=0.1} I {b}don't{/b} want my picture taken."
-        $ jn_screenshots.player_screenshots_permission = False
-        return
-
-    else:
-        n "..."
-        $ jn_screenshots.player_screenshots_permission = False
-
     return
 
 # Natsuki discusses her lack of pet with the player, and asks about theirs
@@ -1077,6 +1100,7 @@ label talk_player_appearance:
                 n "Okaaay..."
                 n "Just let me know if you actually {i}do{/i} change something then,{w=0.2} 'kay?"
                 n "Ehehe."
+                return
 
     # Player has never described themselves to Natsuki, and this is their first time discussing it
     else:
@@ -1102,6 +1126,7 @@ label talk_player_appearance:
                 n "But I totally get it,{w=0.1} [player].{w=0.2} So don't worry,{w=0.1} 'kay?"
                 n "Just let me know if you feel like telling me later!"
                 $ persistent.jn_player_appearance_declined_share = True
+                return
 
     n "Okaaay!{w=0.2} Let's start with...{w=0.3} your eyes!"
     n "They say the eyes are the window to the soul,{w=0.1} so it only makes sense to begin there,{w=0.1} right?"
@@ -1572,11 +1597,11 @@ label talk_give_nickname:
         n "..."
         n "Relax,{w=0.1} [player]!{w=0.2} Jeez!{w=0.2} I'm just kidding!"
         n "Ehehe."
-        n "Well...{w=0.3} I don't see why not!" 
+        n "Well...{w=0.3} I don't see why not!"
 
     # Another nickname is being assigned
     else:
-    
+
         # Account for strikes
         if persistent.jn_player_nicknames_bad_given_total == 0:
             n "Oh?{w=0.2} You wanna give me another nickname?"
@@ -1597,13 +1622,13 @@ label talk_give_nickname:
 
     # Validate the nickname, respond appropriately
     $ nickname = renpy.input(prompt="What did you have in mind,{w=0.2} [player]?", allow=jn_globals.DEFAULT_ALPHABETICAL_ALLOW_VALUES, length=10).strip()
-    
+
     if nickname.lower() == "nevermind":
         n "Huh?{w=0.2} You changed your mind?"
         n "Well...{w=0.3} alright then."
         n "Just let me know if you actually want to call me something else then,{w=0.1} 'kay?"
         return
-    
+
     else:
         $ nickname_type = nicknames.get_nickname_type(nickname)
 
@@ -1659,6 +1684,11 @@ label talk_give_nickname:
         $ n_name = persistent.jn_player_nicknames_current_nickname
         return
 
+    elif nickname_type == nicknames.NICKNAME_TYPE_NOU:
+        show placeholder_natsuki wink zorder jn_placeholders.NATSUKI_Z_INDEX
+        n "No you~."
+        return
+
     else:
         $ neutral_nickname_permitted = False
 
@@ -1678,10 +1708,6 @@ label talk_give_nickname:
             n "I'm...{w=0.3} really...{w=0.3} not a fan,{w=0.1} but if it's what you prefer..."
             $ neutral_nickname_permitted = True
 
-        elif nickname.lower() == "qeb" or nickname.lower() == "qeeb":
-            n "No you."
-            $ neutral_nickname_permitted = True
-
         elif nickname.lower() == persistent.playername.lower():
             n "I...{w=0.3} don't think you thought this through,{w=0.1} [player]."
             n "Do you even know how confusing that'd be?"
@@ -1696,7 +1722,7 @@ label talk_give_nickname:
             n "You know what?{w=0.2} Yeah!{w=0.2} I like it!"
             n "Consider it done,{w=0.1} [player]!{w=0.2} Ehehe."
             $ neutral_nickname_permitted = True
-        
+
         # Finally, assign the neutral/easter egg nickname if it was permitted by Natsuki
         if (neutral_nickname_permitted):
             $ persistent.jn_player_nicknames_current_nickname = nickname
@@ -1712,6 +1738,8 @@ label talk_give_nickname:
         n "Just...{w=0.3} don't do that again,{w=0.1} okay?"
         n "That really hurt,{w=0.1} [player].{w=0.2} Don't abuse my trust."
 
+        # Apply penalty and pending apology
+        $ apologies.add_new_pending_apology(apologies.TYPE_BAD_NICKNAME)
         $ relationship(change="affinity-", multiplier=2)
         $ relationship(change="trust-", multiplier=2)
 
@@ -1722,6 +1750,8 @@ label talk_give_nickname:
         n "I...{w=0.3} really...{w=0.3} like you, [player].{w=0.2} It hurts extra bad when it's you."
         n "Don't test my patience like this.{w=0.2} You're better than that."
 
+        # Apply penalty and pending apology
+        $ apologies.add_new_pending_apology(apologies.TYPE_BAD_NICKNAME)
         $ relationship(change="affinity-", multiplier=2)
         $ relationship(change="trust-", multiplier=2)
 
@@ -1750,6 +1780,9 @@ label talk_give_nickname:
                 $ relationship(change="affinity-", multiplier=3)
                 $ relationship(change="trust-", multiplier=3)
 
+        # Apply penalty and pending apology
+        $ apologies.add_new_pending_apology(apologies.TYPE_BAD_NICKNAME)
+
     elif persistent.jn_player_nicknames_bad_given_total == 4:
         # Player is locked out of nicknaming; this is why we can't have nice things
         n "Yeah,{w=0.1} no.{w=0.2} I've heard enough.{w=0.2} I don't need to hear any more."
@@ -1758,11 +1791,13 @@ label talk_give_nickname:
         n "You know what?{w=0.2} Don't even bother answering."
         n "I warned you,{w=0.1} [player].{w=0.2} Remember that."
 
+        # Apply affinity/trust penalties, then revoke nickname priveleges and finally apply pending apology
         $ relationship(change="affinity-", multiplier=5)
         $ relationship(change="trust-", multiplier=5)
         $ persistent.jn_player_nicknames_allowed = False
         $ persistent.jn_player_nicknames_current_nickname = None
         $ n_name = "Natsuki"
+        $ apologies.add_new_pending_apology(apologies.TYPE_BAD_NICKNAME)
 
     return
 
@@ -1791,13 +1826,13 @@ label talk_sleeping_well:
     n "..."
     n "Ehehe.{w=0.2} Did I get you?"
     n "But seriously,{w=0.2} [player].{w=0.2} Do you struggle with your sleep?"
-    
+
     # Quip if the player has been around a while, or has admitted they're tired
     if utils.get_current_session_length().total_seconds() / 3600 >= 12:
         n "I mean,{w=0.1} you {i}have{/i} been here for a while now..."
         n "So I kinda figured you might be feeling a little sleepy anyway."
 
-    elif admissions.last_admission_type == admissions.TYPE_TIRED:
+    elif admissions.last_admission_type == admissions.ADMISSION_TYPE_TIRED:
         n "I mean,{w=0.1} you even {i}said{/i} you were tired before."
         n "So...{w=0.3} it only makes sense to ask,{w=0.1} right?{w=0.2} Anyway..."
 
@@ -1858,7 +1893,7 @@ label talk_aging:
     n "Birthdays lose all meaning -{w=0.1} you might even dread them!"
     n "The signs appear in a bunch of ways,{w=0.1} but that's what makes it unnerving."
     n "Everyone experiences it differently,{w=0.1} and we don't even know what happens after the end!"
-    n "Spooky,{w=0.1} huh?" 
+    n "Spooky,{w=0.1} huh?"
     n "Although... I guess you could say that's more the fear of the unknown than aging itself."
     n "What does wind me up though is how immature people can be about it."
     n "Especially when it comes to relationships between different ages!"
@@ -1885,8 +1920,204 @@ label talk_aging:
 
     else:
         n "But...{w=0.3} just in case?"
-        n "We're only having one candle on your birthday cake.{w=0.2} Sorry." 
+        n "We're only having one candle on your birthday cake.{w=0.2} Sorry."
         n "Ahaha!"
+
+    return
+
+# Natsuki discusses the concept of work-life balance, and how it can be difficult to disconnect
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_work_life_balance",
+            unlocked=True,
+            prompt="Work-life balance",
+            conditional=None,
+            category=["Life"],
+            nat_says=True,
+            affinity_range=(jn_affinity.RUINED, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_work_life_balance:
+    if jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
+        n "You know,{w=0.1} [player]..."
+
+    n "I think it's pretty easy to let your academic or work life creep into your personal time nowadays."
+    n "I mean...{w=0.3} think about it."
+    n "With everyone having mobile phones,{w=0.1} plus usually some kinda computer at home -{w=0.1} it's hard not to be connected somehow."
+    n "And like...{w=0.3} if there's already that connection,{w=0.1} then what's to stop work from bugging you during your time off?"
+    n "Or classmates asking for help at the last possible minute?"
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
+        n "It just gets annoying -{w=0.1} like everyone expects you to always be around to chip in a little more,{w=0.1} or get something done!"
+        n "Overwhelming,{w=0.1} right?"
+        n "Huh.{w=0.2} Actually...{w=0.3} now that I think about it..."
+        n "It isn't like that kind of intrusion is only limited to when you're away either."
+        n "I've heard {i}way{/i} too many stories of people doing stupid amounts of overtime at work -{w=0.1} sometimes not even paid!"
+        n "Or even students studying late into the night until they collapse... it's pretty crazy."
+
+    else:
+        n "It just gets annoying -{w=0.1} everyone expects you to always be around to do more."
+        n "Actually,{w=0.1} now that I think about it..."
+        n "It isn't like that kind of thing is only limited to when you're away either."
+        n "I've heard too many stories of people doing stupid amounts of overtime at work -{w=0.1} often not even paid."
+        n "Or even students studying late into the night until they collapse..."
+    
+    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n "Ugh...{w=0.3} I just wish people would value their own time more."
+        n "..."
+        n "Hey,{w=0.1} [player]..."
+        n "I don't know if you're working,{w=0.1} or studying,{w=0.1} or what..."
+        n "But you better not be letting whatever it is take over your life.{w=0.2} Understand?"
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+            n "You are {i}more{/i} than your career,{w=0.1} or your education.{w=0.2} You have your own wants and needs that matter too."
+            n "I don't want some dumb job or stupid assignment to take over your life."
+            n "You're...{w=0.3} way more important than either of those,{w=0.1} [player].{w=0.2} Trust me."
+
+            if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+                n "Besides..."
+                n "You and your time are mine first, [player]."
+                n "I already called dibs,{w=0.1} a-{w=0.1}after all.{w=0.2} Ehehe..."
+
+        else:
+            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            n "People are more than what they do for a living,{w=0.1} after all.{w=0.2} And that includes you too, [chosen_tease]!"
+        
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n "Makes me wish people would value their own time more."
+        n "...I guess that includes you too,{w=0.1} [player]."
+        n "Try not to let work or studying rule your life.{w=0.2} You've got better things to do."
+        n "...Like being a decent friend to others for a change.{w=0.2} Am I right?"
+
+    else:
+        n "People need to value their own time more,{w=0.1} I guess."
+        n "...Heh."
+        n "Maybe I should follow my own advice..."
+        n "Because clearly being here is a waste of my time too."
+
+    return
+
+# Natsuki warns against the risks of wearing headphones/headsets
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_using_headphones_carefully",
+            unlocked=True,
+            prompt="Using headphones carefully",
+            category=["Health", "Music", "Technology"],
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_using_headphones_carefully:
+    n "..."
+    n "...?"
+    n "...!"
+    n "...[player]!"
+    n "[player]!{w=0.2} Finally!{w=0.2} Can you hear me now?"
+    n "Jeez...{w=0.3} took you long enough!"
+    n "..."
+    n "Ehehe."
+    n "Admit it,{w=0.1} [player]!{w=0.2} I'll get you one of these days."
+    n "Seriously though -{w=0.1} do you use headphones or anything like that often?"
+    n "I'll admit,{w=0.1} I probably use mine more than I should."
+    n "I was kinda joking about the whole hearing thing,{w=0.1} but this is important,{w=0.1} [player]."
+    n "I like cranking it up too -{w=0.1} just don't make a bad habit of it."
+    n "There's even warnings in some countries if you have the volume up too loud..."
+    n "...And for a good reason!"
+    n "Not just to protect your ears either -{w=0.1} you better be careful wearing them out and about too."
+    n "I don't wanna hear about you getting knocked over because you didn't hear something coming!"
+    n "Oh -{w=0.1} and one last thing,{w=0.1} actually."
+    n "You might wear them to focus at work or relax at home -{w=0.1} and that's fine!"
+    n "But please,{w=0.1} [player]."
+    n "...Take them off every once and a while,{w=0.1} will you?{w=0.2} For other people,{w=0.1} I mean."
+    n "I get it -{w=0.1} if you just wanna listen to something in peace,{w=0.1} or give yourself some room,{w=0.1} that's okay."
+    n "But don't use them to barricade yourself away from everyone and everything."
+    n "It's...{w=0.3} not healthy to do that either,{w=0.1} [player]."
+    n "...And that's about all I had to say!"
+    n "Thanks for hearing me out!{w=0.2} Ehehe."
+    return
+
+# Natsuki discusses her dislike of the horror genre
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_thoughts_on_horror",
+            unlocked=True,
+            prompt="Thoughts on horror",
+            conditional=None,
+            category=["Natsuki", "Media", "Literature"],
+            nat_says=True,
+            affinity_range=(jn_affinity.RUINED, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_thoughts_on_horror:
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n "You know,{w=0.1} [player]..."
+        n "I don't think I ever actually explained why I dislike horror so much."
+        n "I know I mentioned it before,{w=0.1} but I was kinda caught off guard at the time."
+        n "Honestly?"
+        n "Everyone has their tastes,{w=0.1} right? And I can get why people enjoy it."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n "You know, I don't think I explained why I dislike horror."
+        n "I get everyone has their tastes, but it isn't for me."
+
+    else:
+        n "...I was about to share some of my thoughts on horror with you."
+        n "Or at least,{w=0.1} I was thinking about it."
+        n "...But then do you know what I realized,{w=0.1} [player]?"
+        n "I hate horror -{w=0.1} not that you'd care -{w=0.1} and honestly?"
+        n "...I'm starting to think being here with you is horror enough.{w=0.2} Heh."
+        return
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n "Like Yuri!"
+        n "It's suspenseful,{w=0.1} and fears are a super powerful motivator for characters!"
+        n "So don't get me wrong{w=0.1} -{w=0.1} I can totally appreciate the effort that goes into it."
+        n "...When it isn't just stupid jumpscares,{w=0.1} a-{w=0.1}anyway."
+
+    else:
+        n "I get the effort that goes into it.{w=0.2} For the most part."
+
+    n "But..."
+    n "When I read something -{w=0.1} or watch something -{w=0.1} I'm doing it because for me,{w=0.1} it's how I relax."
+    n "I don't want to be made to feel uneasy."
+    n "I don't want to be made to jump."
+    n "I don't want to have to see gross stuff."
+    n "I...{w=0.3} just want to sit back,{w=0.1} feel good and just escape for a while."
+    n "There's more than enough nasty things going out there already,{w=0.1} you know?"
+    n "Some things closer to home than others."
+    n "..."
+    n "So...{w=0.3} yeah.{w=0.1} That's about all I had to say about it."
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n "Though...{w=0.3} if you want to put something on,{w=0.1} [player]?{w=0.2} Go ahead."
+        n "If it's you,{w=0.1} I think I can put up with it..."
+        n "But we're keeping the volume low.{w=0.2} 'Kay?"
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n "Don't mind me though,{w=0.1} [player].{w=0.2} If you wanna watch something,{w=0.1} go for it!"
+        n "Just don't expect me to sit there with you.{w=0.2} Ahaha..."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n "..."
+        n "I {i}would{/i} ask that if you were gonna watch something like that,{w=0.1} then to warn me first..."
+        n "But you wouldn't listen to me anyway,{w=0.1} would you?"
 
     return
 

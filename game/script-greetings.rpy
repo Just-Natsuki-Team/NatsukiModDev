@@ -8,19 +8,23 @@ init python in greetings:
 
     def select_greeting():
         """
-        Picks a random greeting, accounting for affinity
+        Picks a random greeting, accounting for affinity and the situation they previously left under
         """
-        # If the player didn't make an admission that had Natsuki make them leave, pick a random greeting
-        # based on the player's affinity
         kwargs = dict()
 
-        kwargs.update(
-            {"excludes_categories": ["Admission"]} if not store.persistent.jn_player_admission_type_on_quit
-            else {"additional_properties": [("admission_type", store.persistent.jn_player_admission_type_on_quit)]}
-        )
+        # The player either left suddenly, or has been gone a long time
+        if store.persistent.jn_player_apology_type_on_quit is not None:
+            kwargs.update({"additional_properties": [("apology_type", store.persistent.jn_player_apology_type_on_quit)]})
 
-        store.persistent.jn_player_admission_type_on_quit = None
+        # The player left or was forced to leave by way of an admission (E.G tired, sick)
+        elif store.persistent.jn_player_admission_type_on_quit is not None:
+            kwargs.update({"additional_properties": [("admission_type", store.persistent.jn_player_admission_type_on_quit)]})
 
+        # Just get a standard greeting from the affinity pool
+        else:
+            kwargs.update({"excludes_categories": ["Admission", "Apology"]})
+
+        # Finally return an appropriate greeting
         return random.choice(
             store.Topic.filter_topics(
                 GREETING_MAP.values(),
@@ -484,7 +488,7 @@ init 5 python:
             category=["Admission"],
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
             additional_properties={
-                "admission_type": admissions.TYPE_SICK,
+                "admission_type": admissions.ADMISSION_TYPE_SICK,
             }
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -501,17 +505,22 @@ label greeting_feeling_better_sick:
             $ persistent.jn_player_admission_type_on_quit = None
 
         "A little better.":
-            n "...I'll admit, that wasn't really what I wanted to hear."
+            n "...I'll admit,{w=0.1} that wasn't really what I wanted to hear."
             n "But I'll take 'a little' over not at all,{w=0.1} I guess."
             n "Anyway...{w=0.3} welcome back,{w=0.1} [player]!"
-            $ admissions.last_admission_type = admissions.TYPE_SICK
+
+            # Add pending apology, reset the admission
+            $ store.apologies.add_new_pending_apology(store.apologies.TYPE_UNHEALTHY)
+            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_SICK
 
         "Still unwell.":
             n "Still not feeling up to scratch,{w=0.1} [player]?"
             n "I don't mind you being here...{w=0.3} but don't strain yourself,{w=0.1} alright?"
             n "I don't want you making yourself worse for my sake..."
-            $ admissions.last_admission_type = admissions.TYPE_SICK
 
+            # Add pending apology, reset the admission
+            $ store.apologies.add_new_pending_apology(store.apologies.TYPE_UNHEALTHY)
+            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_SICK
     return
 
 init 5 python:
@@ -523,7 +532,7 @@ init 5 python:
             category=["Admission"],
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
             additional_properties={
-                "admission_type": admissions.TYPE_TIRED,
+                "admission_type": admissions.ADMISSION_TYPE_TIRED,
             }
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -543,13 +552,117 @@ label greeting_feeling_better_tired:
             n "Oh...{w=0.3} well,{w=0.1} that's not quite what I was hoping to hear."
             n "If you aren't feeling too tired,{w=0.1} perhaps you could grab something to wake up a little?"
             n "A nice glass of water or some bitter coffee should perk you up in no time!"
-            $ admissions.last_admission_type = admissions.TYPE_TIRED
+
+            # Add pending apology, reset the admission
+            $ store.apologies.add_new_pending_apology(store.apologies.TYPE_UNHEALTHY)
+            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_TIRED
 
         "Still tired.":
             n "Still struggling with your sleep,{w=0.1} [player]?"
             n "I don't mind you being here...{w=0.3} but don't strain yourself,{w=0.1} alright?"
             n "I don't want you face-planting your desk for my sake..."
-            $ admissions.last_admission_type = admissions.TYPE_TIRED
+
+            # Add pending apology, reset the admission
+            $ store.apologies.add_new_pending_apology(store.apologies.TYPE_UNHEALTHY)
+            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_TIRED
+    return
+
+# Absence-related greetings; used when the player leaves suddenly, or has been gone an extended period
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_sudden_leave",
+            unlocked=True,
+            category=["Apology"],
+            additional_properties={
+                "apology_type": apologies.TYPE_SUDDEN_LEAVE,
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_sudden_leave:
+    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n "..."
+        n "[player]."
+        n "Come on.{w=0.2} You're better than that."
+        n "I don't know if something happened or what,{w=0.1} but please..."
+        n "Try to remember to say goodbye properly next time,{w=0.1} 'kay?"
+        n "It'd mean a lot to me."
+        $ apologies.add_new_pending_apology(apologies.TYPE_SUDDEN_LEAVE)
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n "..."
+        n "[player]!{w=0.2} Do you know how scary it is when you just vanish like that?"
+        n "Please...{w=0.3} just remember to say goodbye properly when you gotta leave."
+        n "It's not much to ask...{w=0.3} is it?"
+        $ apologies.add_new_pending_apology(apologies.TYPE_SUDDEN_LEAVE)
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n "..."
+        n "You know I hate that,{w=0.1} [player]."
+        n "Knock it off,{w=0.1} will you?"
+        n "Thanks."
+        $ apologies.add_new_pending_apology(apologies.TYPE_SUDDEN_LEAVE)
+
+    else:
+        n "..."
+        n "Heh.{w=0.2} Yeah."
+        $ chosen_insult = random.choice(jn_globals.DEFAULT_PLAYER_INSULT_NAMES).capitalize()
+        n "Welcome back to you,{w=0.1} too.{w=0.2} [chosen_insult]."
+        $ apologies.add_new_pending_apology(apologies.TYPE_SUDDEN_LEAVE)
+
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_prolonged_leave",
+            unlocked=True,
+            category=["Apology"],
+            additional_properties={
+                "apology_type": apologies.TYPE_PROLONGED_LEAVE,
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_prolonged_leave:
+    $ player_initial = list(player)[0]
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n "[player_initial]-{w=0.1}[player]!"
+        n "W-{w=0.1}where were you?!{w=0.2} I was so worried that something had happened!"
+        n "..."
+        n "I'm...{w=0.3} glad...{w=0.3} you're back,{w=0.1} [player]."
+        n "Just...{w=0.3} some warning next time,{w=0.1} please?"
+        n "I hate having my heart played with like that..."
+        $ apologies.add_new_pending_apology(apologies.TYPE_PROLONGED_LEAVE)
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n "[player_initial]-{w=0.1}[player]!"
+        n "What the hell?!{w=0.2} Where have you been?{w=0.2} I was worried sick!"
+        n "J-{w=0.1}just as a friend,{w=0.1} but still!"
+        n "..."
+        n "...Welcome back,{w=0.1} [player]."
+        n "Just...{w=0.3} don't leave it so long next time,{w=0.1} alright?{w=0.2} Jeez..."
+        $ apologies.add_new_pending_apology(apologies.TYPE_PROLONGED_LEAVE)
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n "[player_initial]-{w=0.1}[player]?"
+        n "...You're back."
+        n "I...{w=0.3} don't know how I feel about that."
+        $ apologies.add_new_pending_apology(apologies.TYPE_PROLONGED_LEAVE)
+
+    else:
+        n "...Heh."
+        n "So you came back."
+        n "{i}Great{/i}."
+        $ apologies.add_new_pending_apology(apologies.TYPE_PROLONGED_LEAVE)
+
     return
 
 # Time-of-day based greetings
