@@ -59,32 +59,18 @@ label ch30_init:
 #The main loop
 label ch30_loop:
 
-    #Do topic selection here
-    python:
-        topic_pool = Topic.filter_topics(
-            topics.TOPIC_MAP.values(),
-            unlocked=True,
-            nat_says=True,
-            location=main_background.location.id,
-            affinity=jn_affinity.get_affinity_state(),
-            #trust=60 TODO: Add trust handling
-        )
-
-        if topic_pool:
-            queue(random.choice(topic_pool).label)
-
     #Run our checks
     python:
         _now = datetime.datetime.now()
-        if LAST_MINUTE_CHECK.minute < _now.minute < LAST_MINUTE_CHECK.minute:
+        if LAST_MINUTE_CHECK.minute is not _now.minute:
             minute_check()
             LAST_MINUTE_CHECK = _now
 
-        if LAST_HOUR_CHECK < _now.hour < LAST_HOUR_CHECK:
+        if LAST_HOUR_CHECK is not _now.hour:
             hour_check()
             LAST_HOUR_CHECK = _now.hour
 
-        if LAST_DAY_CHECK < _now.day < LAST_DAY_CHECK:
+        if LAST_DAY_CHECK is not _now.day:
             day_check()
             LAST_DAY_CHECK = _now.day
 
@@ -141,7 +127,7 @@ label call_next_topic:
     if "quit" in return_keys:
         jump _quit
 
-    return
+    jump ch30_loop
 
 init python:
     LAST_MINUTE_CHECK = datetime.datetime.now()
@@ -160,6 +146,20 @@ init python:
         """
         Runs every minute during breaks between topics
         """
+        # Push a new topic every couple of minutes
+        # TODO: Move to a wait/has-waited system to allow some more flexibility
+        if datetime.datetime.now().minute % 2 is 0:
+            topic_pool = Topic.filter_topics(
+                topics.TOPIC_MAP.values(),
+                unlocked=True,
+                nat_says=True,
+                location=main_background.location.id,
+                affinity=jn_affinity.get_affinity_state(),
+            )
+
+            if topic_pool:
+                queue(random.choice(topic_pool).label)
+
         pass
 
     def hour_check():
@@ -219,7 +219,7 @@ label talk_menu:
 
         "Nevermind.":
             $ jn_placeholders.show_resting_placeholder_natsuki()
-            pass
+            jump ch30_loop
     return
 
 label player_select_topic(is_repeat_topics=False):
@@ -244,10 +244,9 @@ label player_select_topic(is_repeat_topics=False):
     $ _choice = _return
 
     # We got a string, we should push
-    if isinstance(_choice, str):
-
-        $ jn_placeholders.show_resting_placeholder_natsuki()
-        $ push(_choice)
+    if isinstance(_choice, unicode):
+        $ push(str(_choice))
+        jump call_next_topic
 
     # -1 means go back
     elif _choice == -1:
