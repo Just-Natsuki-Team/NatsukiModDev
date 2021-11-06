@@ -19,7 +19,7 @@ init python in farewells:
             affinity=store.jn_globals.current_affinity_state,
             additional_properties=[
                 ("is_time_sensitive", store.utils.get_current_session_length().total_seconds() / 60 < 30),
-                ("has_stay_option", not store.jn_globals.player_already_stayed_on_farewell and jn_globals.current_affinity_state >= 6)
+                ("has_stay_option", not store.jn_globals.player_already_stayed_on_farewell and store.jn_globals.current_affinity_state >= 6)
             ],
             excludes_categories=["Failsafe"]
         )
@@ -1137,6 +1137,7 @@ label farewell_extra_trust:
         trust=store.persistent.trust,
         upper_bound=store.jn_trust.TRUST_PARTIAL
     ):
+        show placeholder_natsuki sad zorder 3
         n "You'll be back...{w=0.3} right?"
 
     # SCEPTICAL-NEUTRAL
@@ -1145,6 +1146,7 @@ label farewell_extra_trust:
         trust=store.persistent.trust,
         upper_bound=store.jn_trust.TRUST_NEUTRAL
     ):
+        show placeholder_natsuki sad zorder 3
         n "I'll be okay...{w=0.3} I'll be okay..."
 
     # DIMINISHED-SCEPTICAL
@@ -1153,6 +1155,7 @@ label farewell_extra_trust:
         trust=store.persistent.trust,
         upper_bound=store.jn_trust.TRUST_SCEPTICAL
     ):
+        show placeholder_natsuki sad zorder 3
         n "...?"
 
     # DIMINISHED-
@@ -1161,6 +1164,7 @@ label farewell_extra_trust:
         trust=store.persistent.trust,
         upper_bound=store.jn_trust.TRUST_DIMINISHED
     ):
+        show placeholder_natsuki sad zorder 3
         n "..."
 
     # Debug

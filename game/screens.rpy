@@ -3,6 +3,106 @@
 
 init offset = -1
 
+init python:
+    import random
+
+    # These dialogue sets are used on the Quit modal, where the indexes of each set are used as follows:
+    # [0]: Confirm prompt header
+    # [1]: Response on choosing to leave via Continue
+    # [2]: Response on choosing to stay via Go Back
+    QUIT_HIGH_AFFINITY_DIALOGUE = [
+        [
+            "Wait, you're leaving? You could at least say goodbye first, you know...",
+            "[player]...\n {0}".format(random.choice(jn_globals.DEFAULT_SAD_EMOTICONS)),
+            "Ehehe. Thanks, [player]~ \n{0}".format(random.choice(jn_globals.DEFAULT_HAPPY_EMOTICONS))
+        ],
+        [
+            "W-wait, what? Aren't you going to say goodbye first, [player]?",
+            "Come on, [player]...\n{0}".format(random.choice(jn_globals.DEFAULT_SAD_EMOTICONS)),
+            "Thanks, [player]! \n{0}".format(random.choice(jn_globals.DEFAULT_HAPPY_EMOTICONS))
+        ],
+        [
+            "Come on, [player]... at least say goodbye to me first?",
+            "Why, [player]...? \n{0}".format(random.choice(jn_globals.DEFAULT_SAD_EMOTICONS)),
+            "Thanks a bunch, [player]~ \n{0}".format(random.choice(jn_globals.DEFAULT_HAPPY_EMOTICONS)),
+        ]
+    ]
+
+    QUIT_MEDIUM_AFFINITY_DIALOGUE = [
+        [
+            "H-huh? You're leaving? You could at least say goodbye properly!",
+            "[player]! Come on...\n {0}".format(random.choice(jn_globals.DEFAULT_ANGRY_EMOTICONS)),
+            "Y-yeah! That's what I thought. Ahaha..."
+        ],
+        [
+            "W-wait, what? At least say goodbye if you're leaving, [player]!",
+            "Ugh... [player]...\n {0}".format(random.choice(jn_globals.DEFAULT_ANGRY_EMOTICONS)),
+            "G-good! Good..."
+        ],
+        [
+            "H-hey! You aren't just going to leave like that, are you?",
+            "...Really, [player]?\n {0}".format(random.choice(jn_globals.DEFAULT_ANGRY_EMOTICONS)),
+            "T-thanks, [player]."
+        ]
+    ]
+
+    QUIT_LOW_AFFINITY_DIALOGUE = [
+        [
+            "...Really? I don't even get a 'goodbye' now?",
+            "...Jerk.",
+            "...Thanks, [player]. I guess."
+        ],
+        [
+            "...You're not even going to bother saying goodbye?",
+            "Heh. Yeah. You have a {i}wonderful{/i} day too.",
+            "Thanks.",
+        ],
+        [
+            "...Is it really {i}that{/i} much effort to say goodbye properly?",
+            "Don't let the door hit you on the way out. \nJerk.",
+            "Thank you.",
+        ]
+    ]
+
+    QUIT_ZERO_AFFINITY_DIALOGUE = [
+        [
+            "...Going?",
+            "...Good riddance.",
+            "...Whatever."
+        ],
+        [
+            "...Oh. You're leaving.",
+            "...Maybe you shouldn't come back.",
+            "Uh huh.",
+        ],
+        [
+            "...Leaving?",
+            "Don't hurry back.",
+            "Whatever.",
+        ]
+    ]
+
+    def get_affinity_quit_dialogue():
+        """
+        Returns a list containing quit dialogue when exiting via game window/main menu quit option, where indexes:
+        0: Dialogue before selecting an option
+        1: Dialogue for choosing to quit
+        2: Dialogue for choosing to stay
+
+        OUT:
+            List containing quit dialogue
+        """
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+            return random.choice(QUIT_HIGH_AFFINITY_DIALOGUE)
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+            return random.choice(QUIT_MEDIUM_AFFINITY_DIALOGUE)
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+            return random.choice(QUIT_LOW_AFFINITY_DIALOGUE)
+
+        else:
+            return random.choice(QUIT_ZERO_AFFINITY_DIALOGUE)
 
 ################################################################################
 ## Custom Screens
@@ -529,6 +629,8 @@ style choice_button is default:
     properties gui.button_properties("choice_button")
     hover_sound gui.hover_sound
     activate_sound gui.activate_sound
+    idle_background "game/mod_assets/buttons/choice_hover_blank.png"
+    hover_background "game/mod_assets/buttons/choice_hover_fold.png"
 
 style choice_button_text is default:
     properties gui.button_text_properties("choice_button")
@@ -645,8 +747,8 @@ screen quick_menu():
             textbutton _("History") action ShowMenu('history')
             textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
             textbutton _("Auto") action Preference("auto-forward", "toggle")
-            textbutton _("Save") action ShowMenu('save')
-            textbutton _("Load") action ShowMenu('load')
+            #textbutton _("Save") action ShowMenu('save')
+            #textbutton _("Load") action ShowMenu('load')
             #textbutton _("Q.Save") action QuickSave()
             #textbutton _("Q.Load") action QuickLoad()
             textbutton _("Settings") action ShowMenu('preferences')
@@ -743,13 +845,10 @@ screen navigation():
         else:
             textbutton _("History") action [ShowMenu("history"), SensitiveIf(renpy.get_screen("history") == None)]
 
-            textbutton _("Save Game") action [ShowMenu("save"), SensitiveIf(renpy.get_screen("save") == None)]
+            #textbutton _("Save Game") action [ShowMenu("save"), SensitiveIf(renpy.get_screen("save") == None)]
 
-        textbutton _("Load Game") action [ShowMenu("load"), SensitiveIf(renpy.get_screen("load") == None)]
-
-
-        if not main_menu:
-            textbutton _("Main Menu") action MainMenu()
+        #if not main_menu:
+            #textbutton _("Main Menu") action MainMenu()
 
         textbutton _("Settings") action [ShowMenu("preferences"), SensitiveIf(renpy.get_screen("preferences") == None)]
 
@@ -761,7 +860,21 @@ screen navigation():
             textbutton _("Help") action Help("README.html")
 
             ## The quit button is banned on iOS and unnecessary on Android.
-            textbutton _("Quit") action Show(screen="quit", message="Are you sure you want to quit?", ok_action=Hide(screen="quit", transition=None))
+            python:
+                # Quit message based on affinity
+                if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+                    quit_message = "Wait, you're leaving? You could at least say goodbye first, you know..."
+
+                elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+                    quit_message = "H-huh? You're leaving? You could at least say goodbye properly!"
+
+                elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+                    quit_message = "...Really? I don't even get a 'goodbye' now?"
+
+                else:
+                    quit_message = "...Going?"
+
+            #textbutton _("Quit") action Show(screen="quit", message=quit_message, ok_action=Hide(screen="quit", transition=None))
 
 
         textbutton _("Credits") action Show(screen="credits", message="Credits:\nWriting: Edgar.\nArt: u/Aida_Hwedo.\nBeach Art: etched\nBeach Background: Kimagure After Background Material Storage\nPark and Manga Store Background: mugenjohncel (On LemmaSoft forums)\nBakery, Clothes Store and Mall Background: u/SovietSpartan\nTypo and Bug Reporting: Willie\nNatsuki clothing store outfit #1: Eg85_MkWii\nCat Ears: DearWolf\nPriceVille Gallery: Flower\nClipart Library: Cake\nJMO: Original Clothing Art\nJparnaud: Sprite Editing\nKevin Macleod: Spooky Music(Day of Chaos)\nPinclpart: Bats\nNatsuki Low Affinity Beach Outfit: -Http_Bxbygirl-(Reddit)\nNatsuki High Affinity Beach Outfit: Huniepop (Rizky Prahesa)\nNatsuki White Tank: DestinyPveGal\nGlasses: Unknown as of now", ok_action=Hide(screen="credits", transition=None))
@@ -1211,147 +1324,147 @@ screen preferences():
     else:
         $ cols = 4
 
-    use game_menu(_("Settings"), scroll="viewport"):
+    use game_menu(_("Settings")):
 
-        vbox:
-            xoffset 50
+        viewport id "preferences":
+            scrollbars "vertical"
+            mousewheel True
+            draggable True
 
-            hbox:
-                box_wrap True
+            vbox:
+                yoffset 0
+                xoffset 50
+                hbox:
+                    box_wrap True
 
-                if renpy.variant("pc"):
+                    if renpy.variant("pc"):
+
+                        vbox:
+                            style_prefix "radio"
+                            label _("Display")
+                            textbutton _("Window") action Preference("display", "window")
+                            textbutton _("Fullscreen") action Preference("display", "fullscreen")
+                    if config.developer:
+                        vbox:
+                            style_prefix "radio"
+                            label _("Rollback Side")
+                            textbutton _("Disable") action Preference("rollback side", "disable")
+                            textbutton _("Left") action Preference("rollback side", "left")
+                            textbutton _("Right") action Preference("rollback side", "right")
 
                     vbox:
-                        style_prefix "radio"
-                        label _("Display")
-                        textbutton _("Window") action Preference("display", "window")
-                        textbutton _("Fullscreen") action Preference("display", "fullscreen")
-                if config.developer:
+                        style_prefix "check"
+                        label _("Skip")
+                        textbutton _("Unseen Text") action Preference("skip", "toggle")
+                        textbutton _("After Choices") action Preference("after choices", "toggle")
+                        #textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
+
+
+                    ## Additional vboxes of type "radio_pref" or "check_pref" can be
+                    ## added here, to add additional creator-defined preferences.
+
+                vbox:
+                    yoffset 20
+
                     vbox:
-                        style_prefix "radio"
-                        label _("Rollback Side")
-                        textbutton _("Disable") action Preference("rollback side", "disable")
-                        textbutton _("Left") action Preference("rollback side", "left")
-                        textbutton _("Right") action Preference("rollback side", "right")
+                        style_prefix "check"
+                        label _("Random Talking")
+                        textbutton _("Enabled") action Show(screen="dialog", message="This will control weather or not Natsuki\nstrikes up conversations oh her own.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"random_talk", True, False)
 
                 vbox:
-                    style_prefix "check"
-                    label _("Skip")
-                    textbutton _("Unseen Text") action Preference("skip", "toggle")
-                    textbutton _("After Choices") action Preference("after choices", "toggle")
-                    #textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
+                    yoffset 20
 
-
-                ## Additional vboxes of type "radio_pref" or "check_pref" can be
-                ## added here, to add additional creator-defined preferences.
-
-            vbox:
-                yoffset 20
+                    vbox:
+                        style_prefix "check"
+                        label _("Youtuber Mode")
+                        textbutton _("Enabled") action Show(screen="dialog", message="This will make Natsuki start conversations faster.\nThis is useful for YouTubers who want to get through everything faster.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"youtuber_mode", True, False)
 
                 vbox:
-                    style_prefix "check"
-                    label _("Random Talking")
-                    textbutton _("Enabled") action Show(screen="dialog", message="This will control weather or not Natsuki\nstrikes up conversations oh her own.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"random_talk", True, False)
+                    yoffset -150
+                    xoffset 250
 
-            vbox:
-                yoffset 20
+                    vbox:
+                        style_prefix "check"
+                        label _("Room Animated")
+                        textbutton _("Enabled") action Show(screen="reload", message="This will turn off the moving fire\nas some people have reported lag.\nRestart is required.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"room_animated", True, False)
 
-                vbox:
-                    style_prefix "check"
-                    label _("Youtuber Mode")
-                    textbutton _("Enabled") action Show(screen="dialog", message="This will make Natsuki start conversations faster.\nThis is useful for YouTubers who want to get through everything faster.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"youtuber_mode", True, False)
-
-            vbox:
-                yoffset -150
-                xoffset 250
+                    vbox:
+                        style_prefix "check"
+                        label _("Resume Music")
+                        textbutton _("Enabled") action Show(screen="dialog", message="Turning this on will cause music to resume playing when you return\ninstead of restarting.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"save_music_place", True, False)
 
                 vbox:
-                    style_prefix "check"
-                    label _("Room Animated")
-                    textbutton _("Enabled") action Show(screen="reload", message="This will turn off the moving fire\nas some people have reported lag.\nRestart is required.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"room_animated", True, False)
+                    yoffset -320
+                    xoffset 500
 
-                vbox:
-                    style_prefix "check"
-                    label _("Resume Music")
-                    textbutton _("Enabled") action Show(screen="dialog", message="Turning this on will cause music to resume playing when you return\ninstead of restarting.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"save_music_place", True, False)
+                    vbox:
+                        style_prefix "check"
+                        label _("New Topics")
+                        textbutton _("Enabled") action Show(screen="dialog", message="This will cause Natsuki to only say topics added in the update.\nThis ONLY has her say topics in that update.\nSo don't be surprised if it doesn't change for a while.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"new_topics", True, False)
 
-            vbox:
-                yoffset -320
-                xoffset 500
+                    vbox:
+                        style_prefix "check"
+                        label _("New Emotions")
+                        textbutton _("Enabled") action Show(screen="dialog", message="This will cause Natsuki's emotions to change over time. Turning this off sets her emotion to normal.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"dynamic_emotions", True, False), SetField(persistent,"natsuki_emotion", "Happy")
 
-                vbox:
-                    style_prefix "check"
-                    label _("New Topics")
-                    textbutton _("Enabled") action Show(screen="dialog", message="This will cause Natsuki to only say topics added in the update.\nThis ONLY has her say topics in that update.\nSo don't be surprised if it doesn't change for a while.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"new_topics", True, False)
+                    if not persistent.dynamic_emotions:
+                        vbox:
+                            style_prefix "navigation"
+                            textbutton _("Choose Emotion") action Show(screen="emotion", message="If you turn off Natsuki's new emotion system\nyou can always just pick an emotion for her to use!\n(The change is not instant, just wait.)", close=Hide(screen="emotion", transition=None))
 
-                vbox:
-                    style_prefix "check"
-                    label _("New Emotions")
-                    textbutton _("Enabled") action Show(screen="dialog", message="This will cause Natsuki's emotions to change over time. Turning this off sets her emotion to normal.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"dynamic_emotions", True, False), SetField(persistent,"natsuki_emotion", "Happy")
-
-                if not persistent.dynamic_emotions:
                     vbox:
                         style_prefix "navigation"
-                        textbutton _("Choose Emotion") action Show(screen="emotion", message="If you turn off Natsuki's new emotion system\nyou can always just pick an emotion for her to use!\n(The change is not instant, just wait.)", close=Hide(screen="emotion", transition=None))
+                        textbutton _("Debug") action Show(screen="confirm", message="This action will hard reset Just Natsuki!\nYou're only supposed to use it if the game starts up, Natsuki greets you, and then it given an exception.\nThe best way to fix this is to reset the game after an update patches the issue.\nThis option allows you to do that.\nAre you sure you want to PERMANENTLY erase all your Just Natsuki save data?", yes_action=Jump("restart"), no_action=Hide("confirm"))
 
-                vbox:
-                    style_prefix "navigation"
-                    textbutton _("Debug") action Show(screen="confirm", message="This action will hard reset Just Natsuki!\nYou're only supposed to use it if the game starts up, Natsuki greets you, and then it given an exception.\nThe best way to fix this is to reset the game after an update patches the issue.\nThis option allows you to do that.\nAre you sure you want to PERMANENTLY erase all your Just Natsuki save data?", yes_action=Jump("restart"), no_action=Hide("confirm"))
+                hbox:
+                    style_prefix "slider"
+                    box_wrap True
 
-            vbox:
-                yoffset 20
+                    vbox:
 
-            null height (4 * gui.pref_spacing)
+                        label _("Text Speed")
 
-            hbox:
-                style_prefix "slider"
-                box_wrap True
+                        #bar value Preference("text speed")
+                        bar value FieldValue(_preferences, "text_cps", range=180, max_is_zero=False, style="slider", offset=20)
 
-                vbox:
+                        label _("Auto-Forward Time")
 
-                    label _("Text Speed")
+                        bar value Preference("auto-forward time")
 
-                    #bar value Preference("text speed")
-                    bar value FieldValue(_preferences, "text_cps", range=180, max_is_zero=False, style="slider", offset=20)
+                    vbox:
 
-                    label _("Auto-Forward Time")
+                        if config.has_music:
+                            label _("Music Volume")
 
-                    bar value Preference("auto-forward time")
+                            hbox:
+                                bar value Preference("music volume")
 
-                vbox:
+                        if config.has_sound:
 
-                    if config.has_music:
-                        label _("Music Volume")
+                            label _("Sound Volume")
 
-                        hbox:
-                            bar value Preference("music volume")
+                            hbox:
+                                bar value Preference("sound volume")
 
-                    if config.has_sound:
-
-                        label _("Sound Volume")
-
-                        hbox:
-                            bar value Preference("sound volume")
-
-                            if config.sample_sound:
-                                textbutton _("Test") action Play("sound", config.sample_sound)
+                                if config.sample_sound:
+                                    textbutton _("Test") action Play("sound", config.sample_sound)
 
 
-                    if config.has_voice:
-                        label _("Voice Volume")
+                        if config.has_voice:
+                            label _("Voice Volume")
 
-                        hbox:
-                            bar value Preference("voice volume")
+                            hbox:
+                                bar value Preference("voice volume")
 
-                            if config.sample_voice:
-                                textbutton _("Test") action Play("voice", config.sample_voice)
+                                if config.sample_voice:
+                                    textbutton _("Test") action Play("voice", config.sample_voice)
 
-                    if config.has_music or config.has_sound or config.has_voice:
-                        null height gui.pref_spacing
+                        if config.has_music or config.has_sound or config.has_voice:
+                            null height gui.pref_spacing
 
-                        textbutton _("Mute All"):
-                            action Preference("all mute", "toggle")
-                            style "mute_all_button"
+                            textbutton _("Mute All"):
+                                action Preference("all mute", "toggle")
+                                style "mute_all_button"
 
     text "v[config.version]":
                 xalign 1.0 yalign 1.0
@@ -1920,7 +2033,7 @@ screen reload(message, ok_action):
 
                 textbutton _("I'll do it myself") action Hide("reload")
 
-screen custummusic(message, ok_action):
+screen custommusic(message, ok_action):
 
     ## Ensure other screens do not get input while this screen is displayed.
     modal True
@@ -2191,6 +2304,13 @@ screen memory:
 
 screen confirm(message, yes_action, no_action):
 
+    # If this is a quit confirmation, begin personification so we can work Natsuki into this
+    if message == layout.QUIT:
+        python:
+            confirm_is_quit = True
+            quit_dialogue = get_affinity_quit_dialogue()
+            message = quit_dialogue[0]
+
     ## Ensure other screens do not get input while this screen is displayed.
     modal True
 
@@ -2207,23 +2327,71 @@ screen confirm(message, yes_action, no_action):
             yalign .5
             spacing 30
 
-            if in_sayori_kill and message == layout.QUIT:
-                add "confirm_glitch" xalign 0.5
-
-            else:
-                label _(message):
-                    style "confirm_prompt"
-                    xalign 0.5
+            label _(message):
+                style "confirm_prompt"
+                xalign 0.5
 
             hbox:
                 xalign 0.5
                 spacing 100
 
-                textbutton _("Yes") action yes_action
-                textbutton _("No") action no_action
+                if confirm_is_quit:
+                    textbutton _("Continue") action Show(screen="confirm_quit", is_quitting=True)
+                    textbutton _("Go back") action Show(screen="confirm_quit", is_quitting=False)
+
+                else:
+                    textbutton _("Yes") action yes_action
+                    textbutton _("No") action no_action
 
     ## Right-click and escape answer "no".
     #key "game_menu" action no_action
+
+screen confirm_quit(is_quitting):
+    modal True
+
+    zorder 300
+
+    style_prefix "confirm"
+
+    add "gui/overlay/confirm.png"
+
+    action Hide("confirm")
+
+    if is_quitting:
+        $ quit_label = get_affinity_quit_dialogue()[1]
+    else:
+        $ quit_label = get_affinity_quit_dialogue()[2] 
+
+    frame:
+
+        vbox:
+            xalign .5
+            yalign .5
+            spacing 30
+
+            label _(quit_label):
+                style "confirm_prompt"
+                xalign 0.5
+
+            hbox:
+                xalign 0.5
+                spacing 100
+
+                
+                if is_quitting:
+                    textbutton _("...") action [
+                        # Player has decided to ditch Natsuki; add a pending apology then quit
+                        apologies.add_new_pending_apology(apologies.TYPE_SUDDEN_LEAVE),
+                        SetField(persistent, "jn_player_apology_type_on_quit", apologies.TYPE_SUDDEN_LEAVE),
+                        relationship("affinity-"),
+                        Quit(confirm=False)
+                    ]
+                else:
+                    textbutton _("OK") action [
+                        # Player is a decent person; hide the screens
+                        Hide("confirm"),
+                        Hide("confirm_quit")
+                    ]
 
 screen confirm_editable(message, yes_text, no_text, yes_action, no_action):
 
@@ -2243,13 +2411,9 @@ screen confirm_editable(message, yes_text, no_text, yes_action, no_action):
             yalign .5
             spacing 30
 
-            if in_sayori_kill and message == layout.QUIT:
-                add "confirm_glitch" xalign 0.5
-
-            else:
-                label _(message):
-                    style "confirm_prompt"
-                    xalign 0.5
+            label _(message):
+                style "confirm_prompt"
+                xalign 0.5
 
             hbox:
                 xalign 0.5
