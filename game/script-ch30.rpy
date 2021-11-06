@@ -77,6 +77,8 @@ label ch30_loop:
         #We'll also check if we need to redraw the room
         #main_background.check_redraw()
 
+        jn_placeholders.show_resting_placeholder_natsuki()
+
     #Now, as long as there's something in the queue, we should go for it
     while persistent._event_list:
         call call_next_topic
@@ -218,7 +220,6 @@ label talk_menu:
             jump farewell_start
 
         "Nevermind.":
-            $ jn_placeholders.show_resting_placeholder_natsuki()
             jump ch30_loop
     return
 
