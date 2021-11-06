@@ -13,6 +13,7 @@ init 0 python in nicknames:
     NICKNAME_TYPE_HATED = 4
     NICKNAME_TYPE_PROFANITY = 5
     NICKNAME_TYPE_FUNNY = 6
+    NICKNAME_TYPE_NOU = 7
     
     # Natsuki loves these nicknames; awarding them awards affinity/trust
     NICKNAME_LOVED_LIST = {
@@ -659,6 +660,25 @@ init 0 python in nicknames:
         "snack"
     }
 
+    NICKNAME_NOU_LIST = {
+        "adorkable",
+        "booplicate",
+        "booplic8",
+        "booplik8",
+        "boopliqeeb",
+        "boopliqeb",
+        "qab",
+        "qeb",
+        "qeeb",
+        "qebqeb",
+        "qebweb",
+        "qib",
+        "qob",
+        "qub",
+        "web",
+        "webqeb"
+    }
+
     """
     Returns the nickname type for a given string nickname, defaulting to NICKNAME_TYPE_NEUTRAL
 
@@ -689,6 +709,9 @@ init 0 python in nicknames:
 
             elif nickname in NICKNAME_FUNNY_LIST:
                 return NICKNAME_TYPE_FUNNY
+
+            elif nickname in NICKNAME_NOU_LIST:
+                return NICKNAME_TYPE_NOU
 
             else:
                 return NICKNAME_TYPE_NEUTRAL

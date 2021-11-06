@@ -30,7 +30,6 @@ init python:
     _("PM died for this."),
     _("It was only partially your fault."),
     _("This game is not suitable for children\nor those who are easily dismembered.")
-#    "Don't forget to backup Monika's character file."
     ]
 
 image splash_warning = ParameterizedText(style="splash_text", xalign=0.5, yalign=0.5)
