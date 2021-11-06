@@ -247,7 +247,7 @@ label player_select_topic(is_repeat_topics=False):
     $ _choice = _return
 
     # We got a string, we should push
-    if isinstance(_choice, basetring):
+    if isinstance(_choice, basestring):
         $ push(_choice)
         $ jn_placeholders.show_resting_placeholder_natsuki()
         jump call_next_topic
