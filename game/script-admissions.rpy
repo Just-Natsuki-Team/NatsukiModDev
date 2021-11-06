@@ -1,5 +1,8 @@
 default persistent._admission_database = dict()
 
+# Retain the last admission made on quitting the game, so Natsuki can react on boot
+default persistent.jn_player_admission_type_on_quit = None
+
 init 0 python in admissions:
     import random
     import store
@@ -10,42 +13,62 @@ init 0 python in admissions:
     ADMISSION_TYPE_ANGRY = 0
     ADMISSION_TYPE_ANXIOUS = 1
     ADMISSION_TYPE_ASHAMED = 2
-    ADMISSION_TYPE_CONFIDENT = 3
-    ADMISSION_TYPE_EXCITED = 4
-    ADMISSION_TYPE_HAPPY = 5
-    ADMISSION_TYPE_HUNGRY = 6
-    ADMISSION_TYPE_INSECURE = 7
-    ADMISSION_TYPE_PROUD = 8
-    ADMISSION_TYPE_SAD = 9
-    ADMISSION_TYPE_SICK = 10
-    ADMISSION_TYPE_TIRED = 11
+    ADMISSION_TYPE_BORED = 3
+    ADMISSION_TYPE_CONFIDENT = 4
+    ADMISSION_TYPE_EXCITED = 5
+    ADMISSION_TYPE_HAPPY = 6
+    ADMISSION_TYPE_HUNGRY = 7
+    ADMISSION_TYPE_INSECURE = 8
+    ADMISSION_TYPE_PROUD = 9
+    ADMISSION_TYPE_SAD = 10
+    ADMISSION_TYPE_SICK = 11
+    ADMISSION_TYPE_TIRED = 12
 
     # The last admission the player gave to Natsuki
     last_admission_type = None
 
+    def get_all_admissions():
+        """
+        Gets all admission topics which are available
+
+        OUT:
+            List<Topic> of admissions which are unlocked and available at the current affinity
+        """
+        return store.Topic.filter_topics(
+            ADMISSION_MAP.values(),
+            affinity=store.jn_globals.current_affinity_state,
+            unlocked=True
+        )
+
 init 1 python:
     try:
         # Resets - remove these later, once we're done tweaking affinity/trust!
-        store.persistent._greeting_database.pop("admission_angry")
-        store.persistent._greeting_database.pop("admission_anxious")
-        store.persistent._greeting_database.pop("admission_ashamed")
-        store.persistent._greeting_database.pop("admission_confident")
-        store.persistent._greeting_database.pop("admission_excited")
-        store.persistent._greeting_database.pop("admission_happy")
-        store.persistent._greeting_database.pop("admission_hungry")
-        store.persistent._greeting_database.pop("admission_insecure")
-        store.persistent._greeting_database.pop("admission_proud")
-        store.persistent._greeting_database.pop("admission_sad")
-        store.persistent._greeting_database.pop("admission_sick")
-        store.persistent._greeting_database.pop("admission_tired")
+        persistent._admission_database.clear()
 
     except Exception as e:
         utils.log(e, utils.SEVERITY_ERR)
+
+label player_admissions_start:
+    python:
+        admission_menu_items = [
+            (_admission.prompt, _admission.label)
+            for _admission in admissions.get_all_admissions()
+        ]
+        admission_menu_items.sort()
+
+    call screen scrollable_choice_menu(admission_menu_items, ("Nevermind.", None))
+
+    if _return:
+        $ push(_return)
+        jump call_next_topic
+
+    return
 
 init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Angry",
             label="admission_angry",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
@@ -83,6 +106,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Anxious",
             label="admission_anxious",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
@@ -130,6 +154,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Ashamed",
             label="admission_ashamed",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
@@ -173,6 +198,64 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Bored",
+            label="admission_bored",
+            unlocked=True,
+            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+        ),
+        topic_group=TOPIC_TYPE_ADMISSION
+    )
+
+label admission_bored:
+    if admissions.last_admission_type == admissions.ADMISSION_TYPE_BORED:
+        n "Still trying to beat the boredom,{w=0.1} [player]?"
+        n "Did you actually try doing what I said?"
+        n "Hmm..."
+        n "Well,{w=0.1} you could try phoning around!{w=0.2} You gotta have friends or family you can visit,{w=0.1} right?"
+        n "Or...{w=0.3} perhaps you could try reading,{w=0.1} or picking up something new?"
+        n "I guess what I'm trying to say is..."
+        n "There's no shortage of stuff to do,{w=0.1} [player]." 
+        n "You just gotta find it!"
+
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n "Now,{w=0.1} go!{w=0.2} And make sure you tell me all about it later,{w=0.1} 'kay?"
+            n "Ehehe."
+
+        else:
+            n "Well?{w=0.3} What're you waiting for?"
+            n "Go for it,{w=0.1} [player]!"
+
+    else:
+        n "Huh?{w=0.2} You're bored?"
+        n "And just what is that supposed to mean,{w=0.1} [player]?"
+        n "Am I not fun enough to be with?" 
+        n "Are you not entertained?!"
+        n "..."
+        n "Ehehe." 
+        n "Relax!{w=0.2} Relax,{w=0.1} [player]."
+        n "Well,{w=0.1} if you're bored..."
+        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        n "Then get up off your butt and do something about it,{w=0.1} [chosen_tease]!"
+        n "Jeez,{w=0.1} [player]...{w=0.3} there's a big, wide world out there just waiting for you!"
+        n "And if that isn't enough,{w=0.1} there's an even bigger one right at your fingertips!"
+        n "Or you could,{w=0.1} you know."
+
+        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+            n "Spend more time with yours truly?"
+            n "I'm not that dull...{w=0.3} right?"
+
+        else:
+            n "Appreciate that you get to spend more time with me!"
+            n "N-{w=0.1}not that I'd totally appreciate it,{w=0.1} or anything,{w=0.1} of course.{w=0.2} Ahaha..."
+
+    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_BORED
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._admission_database,
+            prompt="Confident",
             label="admission_confident",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
@@ -219,6 +302,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Excited",
             label="admission_excited",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
@@ -243,6 +327,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Happy",
             label="admission_happy",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
@@ -289,6 +374,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Hungry",
             label="admission_hungry",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
@@ -334,6 +420,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Insecure",
             label="admission_insecure",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
@@ -384,6 +471,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Proud",
             label="admission_proud",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
@@ -413,6 +501,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Sad",
             label="admission_sad",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
@@ -467,6 +556,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Sick",
             label="admission_sick",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
@@ -485,7 +575,7 @@ label admission_sick:
                 n "Let me know if it keeps up,{w=0.1} okay?"
 
             "A few days.":
-                n "You're starting to worry me,{w=0.1}  [player]."
+                n "You're starting to worry me,{w=0.1} [player]."
                 n "Make sure you see someone soon."
                 n "Especially if you start to hurt anywhere,{w=0.1}  or if you've been sick,{w=0.1}  or anything like that..."
                 n "Make sure you get some extra rest too,{w=0.1} okay?"
@@ -505,6 +595,9 @@ label admission_sick:
                         n "I trust you know your own limits...{w=0.3} but please,{w=0.1} take care of yourself."
                         n "Your health...{w=0.3} really matters to me."
 
+                        # Add pending apology
+                        $ apologies.add_new_pending_apology(apologies.TYPE_UNHEALTHY)
+
             "Longer.":
                 n "..."
                 n "I...{w=0.3} don't really know what to say to you,{w=0.1} [player]."
@@ -519,6 +612,10 @@ label admission_sick:
 
                 if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVE:
                     n "I love you,{w=0.1} [player].{w=0.2} Please get well soon."
+
+                # Add pending apology
+                $ apologies.add_new_pending_apology(apologies.TYPE_UNHEALTHY)
+
 
     elif admissions.last_admission_type == admissions.ADMISSION_TYPE_HUNGRY:
         n "You know,{w=0.1} you can start to feel unwell if you haven't eaten for a while,{w=0.1} [player]."
@@ -549,6 +646,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._admission_database,
+            prompt="Tired",
             label="admission_tired",
             unlocked=True,
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
@@ -592,6 +690,9 @@ label admission_tired:
         n "We can talk later,{w=0.1} alright?"
         n "Take it easy,{w=0.1} [player]!"
 
+        # Add pending apology
+        $ apologies.add_new_pending_apology(apologies.TYPE_UNHEALTHY)
+
         $ persistent.jn_player_admission_type_on_quit = admissions.ADMISSION_TYPE_SICK
         return { "quit": None }
 
@@ -610,6 +711,9 @@ label admission_tired:
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
         n "Sleep well,{w=0.1} [chosen_tease]!"
 
+        # Add pending apology
+        $ apologies.add_new_pending_apology(apologies.TYPE_UNHEALTHY)
+
         $ persistent.jn_player_admission_type_on_quit = admissions.ADMISSION_TYPE_TIRED
         return { "quit": None }
 
@@ -620,6 +724,10 @@ label admission_tired:
         n "You should really get some sleep...{w=0.3} you'll be all cranky later otherwise."
         n "I appreciate the company but make sure you turn in soon,{w=0.1} alright?"
         n "Don't let me down,{w=0.1} [player]."
+
+        # Add pending apology
+        $ apologies.add_new_pending_apology(apologies.TYPE_UNHEALTHY)
+
 
     else:
         n "Feeling tired,{w=0.1} [player]?"

@@ -30,7 +30,6 @@ init python:
     _("PM died for this."),
     _("It was only partially your fault."),
     _("This game is not suitable for children\nor those who are easily dismembered.")
-#    "Don't forget to backup Monika's character file."
     ]
 
 image splash_warning = ParameterizedText(style="splash_text", xalign=0.5, yalign=0.5)
@@ -154,12 +153,11 @@ image tos2 = "bg/warning2.png"
 
 
 label splashscreen:
-    scene white
-
     #If this is the first time the game has been run, show a disclaimer
-    default persistent.first_run = False
+    default persistent.has_launched_before = False
     $ persistent.tried_skip = False
-    if not persistent.first_run:
+    if not persistent.has_launched_before:
+        scene white
         $ quick_menu = False
         pause 0.5
         scene tos
@@ -183,7 +181,7 @@ label splashscreen:
         #if not persistent.has_merged:
         #    call import_ddlc_persistent
 
-        $ persistent.first_run = True
+        $ persistent.has_launched_before = True
 
     #Check for game updates before loading the game or the splash screen
 

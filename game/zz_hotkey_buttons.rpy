@@ -1,6 +1,3 @@
-
-
-
 init python:
     def HKBHideButtons():
         """
@@ -173,114 +170,23 @@ style talkd_button_text is default:
     outlines []
 
 
-screen hkb_overlay(Talk=True, Dates=True, Music=True, Action=True, Extras=True):
+screen hkb_overlay:
     zorder 50
 
     style_prefix "hkb"
 
     vbox:
-        xalign 0.05
-        yalign 0.95
+        xalign 0.09
+        yalign 0.97
 
-        if Talk:
-            textbutton _("Talk"):
-                action Jump("talk_menu")
-                style "hkbd_button"
-        if Dates:
-            textbutton _("Dates"):
-                action Jump("dates_menu")
-                style "hkbd_button"
-        if Music:
-            textbutton _("Music"):
-                action Jump("music_menu")
-                style "hkbd_button"
-        if Action:
-            textbutton _("Action"):
-                action Jump("action_menu")
-                style "hkbd_button"
-        if Extras:
-            textbutton _("Extras"):
-                action Jump("extras_menu")
-                style "hkbd_button"
+        textbutton _("Talk"):
+            action Jump("talk_menu")
+            style "hkbd_button"
 
+        textbutton _("Music"):
+            action Jump("music_menu")
+            style "hkbd_button"
 
-    text "v[config.version]":
-                xalign 1.0 yalign 1.0
-                xoffset -10 yoffset -10
-                style "main_menu_version"
-
-    vbox:
-        imagebutton:
-            xpos 546 ypos 273
-            idle "mod_assets/buttons/boopindicator.png"
-            hover "mod_assets/buttons/boopindicator.png"
-            action [If(True, true=Jump("ch30_boop"))]
-
-screen fight:
-
-    zorder 50
-
-    style_prefix "hkb"
-
-
-    vbox:
-        xalign 0.05
-        yalign 0.95
-
-
-        textbutton _("Fight") action Jump("fight")
-
-        textbutton _("Act") action Jump("act")
-
-        textbutton _("Codes") action Jump("codes")
-
-        textbutton _("Mercy") action Jump("mercy")
-
-    xpos 424 ypos 814
-    label _("HP: [hp]")
-
-screen talking_new:
-
-    zorder 50
-
-    style_prefix "talk"
-
-
-    vbox:
-        xalign 500
-        yalign 100
-
-        vbox:
-            textbutton _("1") action Jump("normaltalkmenu")
-            xpos 867 ypos 137
-
-            textbutton _("2") action Jump("normaltalkmenu2")
-
-            textbutton _("3") action Jump("normaltalkmenu3")
-
-            textbutton _("4") action Jump("normaltalkmenu4")
-
-            textbutton _("5") action Jump("normaltalkmenu5")
-
-            textbutton _("6") action Jump("normaltalkmenu6")
-
-            textbutton _("7") action Jump("normaltalkmenu7")
-
-            textbutton _("8") action Jump("normaltalkmenu8")
-
-screen talking_new2:
-
-    zorder 50
-
-    style_prefix "talk"
-
-
-    vbox:
-        xalign 500
-        yalign 100
-
-        vbox:
-            textbutton _("X") action Hide("talking2"), Show("talking")
-            xpos 867 ypos 137
-
-# Decompiled by unrpyc: https://github.com/CensoredUsername/unrpyc
+        textbutton _("Extras"):
+            action Jump("extras_menu")
+            style "hkbd_button"
