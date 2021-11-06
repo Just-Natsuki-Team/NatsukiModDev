@@ -79,6 +79,8 @@ label ch30_loop:
         #We'll also check if we need to redraw the room
         #main_background.check_redraw()
 
+        jn_placeholders.show_resting_placeholder_natsuki()
+
     #Now, as long as there's something in the queue, we should go for it
     while persistent._event_list:
         call call_next_topic
@@ -220,7 +222,6 @@ label talk_menu:
             jump farewell_start
 
         "Nevermind.":
-            $ jn_placeholders.show_resting_placeholder_natsuki()
             jump ch30_loop
     return
 
@@ -246,7 +247,7 @@ label player_select_topic(is_repeat_topics=False):
     $ _choice = _return
 
     # We got a string, we should push
-    if isinstance(_choice, basetring):
+    if isinstance(_choice, basestring):
         $ push(_choice)
         $ jn_placeholders.show_resting_placeholder_natsuki()
         jump call_next_topic
