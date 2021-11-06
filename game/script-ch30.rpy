@@ -126,6 +126,7 @@ init python:
         Runs every minute during breaks between topics
         """
         # Push a new topic every couple of minutes
+        # TODO: Move to a wait/has-waited system to allow some more flexibility
         if datetime.datetime.now().minute % 2 is 0:
             topic_pool = Topic.filter_topics(
                 topics.TOPIC_MAP.values(),
