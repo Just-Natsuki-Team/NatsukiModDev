@@ -25,7 +25,7 @@ label ch30_visual_setup:
 
 label ch30_init:
 
-    python:      
+    python:
         # Determine if the player should get a prolonged leave greeting
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
             persistent.last_apology_type = apologies.TYPE_PROLONGED_LEAVE
@@ -44,7 +44,7 @@ label ch30_init:
         show placeholder_sky_day zorder jn_placeholders.SKY_Z_INDEX
     else:
         hide placeholder_sky_day
-    
+
     show screen hkb_overlay
 
     # Do all var-sets, resets, and sanity checks prior to entering the loop here
@@ -58,6 +58,8 @@ label ch30_init:
 
 #The main loop
 label ch30_loop:
+
+    # TODO: topic selection here once wait system is implemented
 
     #Run our checks
     python:
@@ -97,7 +99,7 @@ label call_next_topic:
         $ _topic = persistent._event_list.pop(0)
 
         if renpy.has_label(_topic):
-            
+
             if _topic in ["greeting_sudden_leave", "greeting_prolonged_leave"]:
                 show placeholder_natsuki plead zorder jn_placeholders.NATSUKI_Z_INDEX
 
@@ -106,7 +108,7 @@ label call_next_topic:
 
             else:
                 $ jn_placeholders.show_resting_placeholder_natsuki()
-                
+
             call expression _topic
 
     python:
@@ -191,7 +193,7 @@ label talk_menu:
             _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_UPSET_DISTRESSED)
 
         else:
-            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_BROKEN_RUINED)            
+            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_BROKEN_RUINED)
 
         # Ensure any variable references are substituted
         _talk_flavor_text = renpy.substitute(_talk_flavor_text)
@@ -245,8 +247,9 @@ label player_select_topic(is_repeat_topics=False):
     $ _choice = _return
 
     # We got a string, we should push
-    if isinstance(_choice, unicode):
-        $ push(str(_choice))
+    if isinstance(_choice, basetring):
+        $ push(_choice)
+        $ jn_placeholders.show_resting_placeholder_natsuki()
         jump call_next_topic
 
     # -1 means go back
