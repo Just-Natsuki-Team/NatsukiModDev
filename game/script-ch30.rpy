@@ -25,10 +25,10 @@ label ch30_visual_setup:
 
 label ch30_init:
 
-    python:      
+    python:
         # Determine if the player should get a prolonged leave greeting
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
-            persistent.last_apology_type = apologies.APOLOGY_TYPE_PROLONGED_LEAVE
+            persistent.last_apology_type = apologies.TYPE_PROLONGED_LEAVE
 
         # Add to the total visits counter and set the last visit date
         persistent.jn_total_visit_count += 1
@@ -44,7 +44,6 @@ label ch30_init:
         show placeholder_sky_day zorder jn_placeholders.SKY_Z_INDEX
     else:
         hide placeholder_sky_day
-    
     show screen hkb_overlay
 
     # Do all var-sets, resets, and sanity checks prior to entering the loop here
@@ -58,6 +57,8 @@ label ch30_init:
 
 #The main loop
 label ch30_loop:
+
+    # TODO: topic selection here once wait system is implemented
 
     #Run our checks
     python:
@@ -77,6 +78,8 @@ label ch30_loop:
         #We'll also check if we need to redraw the room
         #main_background.check_redraw()
 
+        jn_placeholders.show_resting_placeholder_natsuki()
+
     #Now, as long as there's something in the queue, we should go for it
     while persistent._event_list:
         call call_next_topic
@@ -95,7 +98,6 @@ label call_next_topic:
         $ _topic = persistent._event_list.pop(0)
 
         if renpy.has_label(_topic):
-            
             if _topic in ["greeting_sudden_leave", "greeting_prolonged_leave"]:
                 show placeholder_natsuki plead zorder jn_placeholders.NATSUKI_Z_INDEX
 
@@ -146,8 +148,8 @@ init python:
         """
         Runs every minute during breaks between topics
         """
-
         # Push a new topic every couple of minutes
+        # TODO: Move to a wait/has-waited system to allow some more flexibility
         if datetime.datetime.now().minute % 2 is 0:
             topic_pool = Topic.filter_topics(
                 topics.TOPIC_MAP.values(),
@@ -188,7 +190,7 @@ label talk_menu:
             _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_UPSET_DISTRESSED)
 
         else:
-            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_BROKEN_RUINED)            
+            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_BROKEN_RUINED)
 
         # Ensure any variable references are substituted
         _talk_flavor_text = renpy.substitute(_talk_flavor_text)
@@ -217,7 +219,6 @@ label talk_menu:
             jump farewell_start
 
         "Nevermind.":
-            $ jn_placeholders.show_resting_placeholder_natsuki()
             jump ch30_loop
     return
 
@@ -244,9 +245,8 @@ label player_select_topic(is_repeat_topics=False):
     $ utils.log("_choice is {0}".format(_choice))
 
     # We got a string, we should push
-    if isinstance(_choice, unicode):
-
-        $ push(str(_choice))
+    if isinstance(_choice, basestring):
+        $ push(_choice)
         $ jn_placeholders.show_resting_placeholder_natsuki()
         jump call_next_topic
 

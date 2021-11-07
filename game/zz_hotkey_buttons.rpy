@@ -1,6 +1,3 @@
-
-
-
 init python:
     def HKBHideButtons():
         """
