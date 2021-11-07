@@ -40,10 +40,11 @@ label ch30_init:
     # Draw background and placeholder sprites
     $ main_background.draw(full_redraw=True)
 
-    if utils.get_current_hour() > 6 and utils.get_current_hour() < 18:
+    if utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
         show placeholder_sky_day zorder jn_placeholders.SKY_Z_INDEX
     else:
         hide placeholder_sky_day
+        
     show screen hkb_overlay
 
     # Do all var-sets, resets, and sanity checks prior to entering the loop here

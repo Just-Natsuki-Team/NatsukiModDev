@@ -225,10 +225,6 @@ define gui.choice_button_text_xalign = 0.5
 define gui.choice_button_text_idle_color = "#e2d1d1"
 define gui.choice_button_text_hover_color = "#FF8ED0"
 
-# Paper ver
-#define gui.choice_button_text_idle_color = "#000"
-#define gui.choice_button_text_hover_color = "#FF8ED0"
-
 ## File Slot Buttons ###########################################################
 ##
 ## A file slot button is a special kind of button. It contains a thumbnail
@@ -297,10 +293,6 @@ define gui.slot_spacing = 10
 # Corner ver
 define gui.frame_borders = Borders(4, 4, 4, 4)
 define gui.frame_hover_borders = Borders(25, 25, 4, 4)
-
-# Paper ver
-#define gui.frame_borders = Borders(4, 4, 4, 4)
-#define gui.frame_hover_borders = Borders(4, 4, 4, 4)
 
 ## The frame that is used as part of the confirm screen.
 define gui.confirm_frame_borders = Borders(40, 40, 40, 40)

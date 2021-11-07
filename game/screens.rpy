@@ -500,6 +500,8 @@ style say_dialogue:
     xanchor gui.text_xalign
     xsize gui.text_width
     ypos gui.text_ypos
+    line_leading 10
+    line_overlap_split -2
 
     text_align gui.text_xalign
     layout ("subtitle" if gui.text_xalign else "tex")
@@ -708,14 +710,8 @@ style choice_button is default:
     properties gui.button_properties("choice_button")
     hover_sound gui.hover_sound
     activate_sound gui.activate_sound
-    # Corner ver
     idle_background Frame("mod_assets/buttons/choice_hover_blank.png", gui.frame_borders, tile=gui.frame_tile)
     hover_background Frame("mod_assets/buttons/choice_hover_fold.png", gui.frame_hover_borders, tile=gui.frame_tile)
-    
-
-    # Paper ver
-    #idle_background Frame("mod_assets/buttons/choice_paper_idle.png", gui.frame_borders, tile=gui.frame_tile)
-    #hover_background Frame("mod_assets/buttons/choice_paper_hover.png", gui.frame_hover_borders, tile=gui.frame_tile)
 
 style choice_button_text is default:
     properties gui.button_text_properties("choice_button")
@@ -727,6 +723,9 @@ style choice_button_text is default:
 ## menus.
 
 screen quick_menu():
+
+    style options_text:
+
 
     # Ensure this appears on top of other screens.
     zorder 100
@@ -751,10 +750,11 @@ screen quick_menu():
                         yes_action=Jump("ch30_autoload"),
                         no_action=Jump("restart")
                     )
-            textbutton _("History") action ShowMenu('history')
-            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
-            textbutton _("Auto") action Preference("auto-forward", "toggle")
-            textbutton _("Settings") action ShowMenu('preferences')
+            # HERE BE THE THINGS
+            textbutton _("History") action ShowMenu('history') style 
+            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True) style 
+            textbutton _("Auto") action Preference("auto-forward", "toggle") style 
+            textbutton _("Settings") action ShowMenu('preferences') style 
 
 ## This code ensures that the quick_menu screen is displayed in-game, whenever
 ## the player has not explicitly hidden the interface.
@@ -847,14 +847,7 @@ screen navigation():
         else:
             textbutton _("History") action [ShowMenu("history"), SensitiveIf(renpy.get_screen("history") == None)]
 
-            #textbutton _("Save Game") action [ShowMenu("save"), SensitiveIf(renpy.get_screen("save") == None)]
-
-        #if not main_menu:
-            #textbutton _("Main Menu") action MainMenu()
-
         textbutton _("Settings") action [ShowMenu("preferences"), SensitiveIf(renpy.get_screen("preferences") == None)]
-
-        #textbutton _("About") action ShowMenu("about")
 
         if renpy.variant("pc"):
 
