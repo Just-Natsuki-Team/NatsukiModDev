@@ -195,13 +195,13 @@ label splashscreen:
         jump autoload
 
     # Start splash logic
-    $ config.allow_skipping = False
+    $ config.allow_skipping = True
 
     # Splash screen
     show white
     $ persistent.ghost_menu = False #Handling for easter egg from DDLC
     $ splash_message = splash_message_default #Default splash message
-    $ config.main_menu_music = audio.t3 #changed main menu music to main theme
+    $ config.main_menu_music = audio.test_bgm #changed main menu music to main theme
     $ renpy.music.play(config.main_menu_music)
     show intro with Dissolve(0.5, alpha=True)
     pause 2.5

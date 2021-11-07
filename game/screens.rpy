@@ -137,6 +137,8 @@ define scroll_align = -0.1
 style categorized_menu_button is choice_button:
     xysize (250, None)
     padding (25, 5, 25, 5)
+    top_padding 10
+    bottom_padding 5
 
 style categorized_menu_button_text is choice_button_text:
     align (0.0, 0.0)
@@ -467,10 +469,10 @@ style window:
     yalign gui.textbox_yalign
     ysize gui.textbox_height
 
-    background Image("gui/textbox.png", xalign=0.5, yalign=1.0)
+    background Image("mod_assets/panels/textbox.png", xalign=0.5, yalign=1.0)
 
 style window_up is window:
-    background Image("gui/textbox.png", xalign=0.5, yalign=-5.0)
+    background Image("mod_assets/panels/textbox.png", xalign=0.5, yalign=-5.0)
 
 style window_monika is window:
     background Image("gui/textbox_monika.png", xalign=0.5, yalign=1.0)
@@ -482,7 +484,7 @@ style namebox:
     ypos gui.name_ypos
     ysize gui.namebox_height
 
-    background Frame("gui/namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign)
+    background Frame("mod_assets/panels/namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign)
     padding gui.namebox_borders.padding
 
 style say_label:
@@ -629,8 +631,6 @@ style choice_button is default:
     properties gui.button_properties("choice_button")
     hover_sound gui.hover_sound
     activate_sound gui.activate_sound
-    idle_background "game/mod_assets/buttons/choice_hover_blank.png"
-    hover_background "game/mod_assets/buttons/choice_hover_fold.png"
 
 style choice_button_text is default:
     properties gui.button_text_properties("choice_button")
@@ -708,11 +708,18 @@ style choice_button is default:
     properties gui.button_properties("choice_button")
     hover_sound gui.hover_sound
     activate_sound gui.activate_sound
+    # Corner ver
+    idle_background Frame("mod_assets/buttons/choice_hover_blank.png", gui.frame_borders, tile=gui.frame_tile)
+    hover_background Frame("mod_assets/buttons/choice_hover_fold.png", gui.frame_hover_borders, tile=gui.frame_tile)
+    
+
+    # Paper ver
+    #idle_background Frame("mod_assets/buttons/choice_paper_idle.png", gui.frame_borders, tile=gui.frame_tile)
+    #hover_background Frame("mod_assets/buttons/choice_paper_hover.png", gui.frame_hover_borders, tile=gui.frame_tile)
 
 style choice_button_text is default:
     properties gui.button_text_properties("choice_button")
     outlines []
-
 
 ## Quick Menu screen ###########################################################
 ##
@@ -747,12 +754,7 @@ screen quick_menu():
             textbutton _("History") action ShowMenu('history')
             textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
             textbutton _("Auto") action Preference("auto-forward", "toggle")
-            #textbutton _("Save") action ShowMenu('save')
-            #textbutton _("Load") action ShowMenu('load')
-            #textbutton _("Q.Save") action QuickSave()
-            #textbutton _("Q.Load") action QuickLoad()
             textbutton _("Settings") action ShowMenu('preferences')
-
 
 ## This code ensures that the quick_menu screen is displayed in-game, whenever
 ## the player has not explicitly hidden the interface.

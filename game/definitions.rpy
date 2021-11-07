@@ -791,6 +791,7 @@ define audio.spooky1 = "mod_assets/bgm/spooky1.ogg"
 define audio.camera_shutter = "mod_assets/sfx/camera_shutter.mp3"
 define audio.select_hover = "mod_assets/sfx/select_hover.mp3"
 define audio.select_confirm = "mod_assets/sfx/select_confirm.mp3"
+define audio.test_bgm = "mod_assets/bgm/background_test_music.ogg"
 
 define body_a = "mod_assets/natsuki-assets/base.png"
 define uniform_a = "mod_assets/natsuki-assets/uniform.png"
