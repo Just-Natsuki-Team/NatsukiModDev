@@ -610,6 +610,7 @@ init -990 python in jn_globals:
     DEFAULT_HAPPY_EMOTICONS = [
         "^^",
         ":)",
+        ":]",
         ":3",
         "^-^",
         "^_^",
@@ -631,8 +632,8 @@ init -990 python in jn_globals:
         ">:T",
         ">:/",
         ">:(",
-        "(;¬_¬)",
-        "(¬_¬)"
+        "(;>_>)",
+        "(-_-)"
     ]
 
     DEFAULT_SAD_EMOTICONS = [
@@ -643,7 +644,11 @@ init -990 python in jn_globals:
         "(v_v”)",
         "( .. )",
         "( ;; )",
-        "(|||;-;)"
+        "(|||;-;)",
+        "(;v-v)",
+        ":[",
+        ":-(",
+        ":-["
     ]
 
     # Alphabetical (excluding numbers) values allowed for text input
