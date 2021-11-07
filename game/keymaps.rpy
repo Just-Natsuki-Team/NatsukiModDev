@@ -34,7 +34,7 @@ init -50 python:
         """
         #If a kemap already exists, we simply log and return
         if keymap_name in config.keymap:
-            utils.log("ERROR: Attemptd to register a new keymap under an existing name. Ignoring.", utils.SEVERITY_WARN);
+            utils.log("ERROR: Attempted to register a new keymap under an existing name. Ignoring.", utils.SEVERITY_WARN);
             return
 
         #Validate the keymap is indeed callable
