@@ -722,10 +722,12 @@ style choice_button_text is default:
 ## The quick menu is displayed in-game to provide easy access to the out-of-game
 ## menus.
 
+style quickmenu_text:
+    color "#e2d1d1"
+    hover_color "#FF8ED0"
+    size 14
+
 screen quick_menu():
-
-    style options_text:
-
 
     # Ensure this appears on top of other screens.
     zorder 100
@@ -739,7 +741,6 @@ screen quick_menu():
             xalign 0.5
             yalign 0.995
 
-            #textbutton _("Back") action Rollback()
             if config.developer:
                 textbutton _("Restart"):
                     action Show(
@@ -751,15 +752,22 @@ screen quick_menu():
                         no_action=Jump("restart")
                     )
             # HERE BE THE THINGS
-            textbutton _("History") action ShowMenu('history') style 
-            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True) style 
-            textbutton _("Auto") action Preference("auto-forward", "toggle") style 
-            textbutton _("Settings") action ShowMenu('preferences') style 
+            textbutton _("History"):
+                text_style "quickmenu_text"
+                action ShowMenu('history')
 
-## This code ensures that the quick_menu screen is displayed in-game, whenever
-## the player has not explicitly hidden the interface.
-#init python:
-#    config.overlay_screens.append("quick_menu")
+            textbutton _("Skip"):
+                text_style "quickmenu_text"
+                action Skip()
+                alternate Skip(fast=True, confirm=True)
+
+            textbutton _("Auto"):
+                text_style "quickmenu_text"
+                action Preference("auto-forward", "toggle")
+
+            textbutton _("Settings"):
+                text_style "quickmenu_text"
+                action ShowMenu('preferences')
 
 default quick_menu = True
 
