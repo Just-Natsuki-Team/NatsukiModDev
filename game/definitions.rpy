@@ -198,8 +198,7 @@ init 0 python:
                     store.utils.log(e.message, utils.SEVERITY_ERR)
                     return False
 
-            else:
-                return True
+            return True
 
         def curr_affinity_in_affinity_range(self, affinity_state=None):
             """
