@@ -363,12 +363,6 @@ style prompt_text is gui_text:
     color gui.text_color
     size gui.interface_text_size
 
-
-#style bar:
-#    ysize gui.bar_size
-#    left_bar Frame("gui/bar/left.png", gui.bar_borders, tile=gui.bar_tile)
-#    right_bar Frame("gui/bar/right.png", gui.bar_borders, tile=gui.bar_tile)
-
 style vbar:
     xsize gui.bar_size
     top_bar Frame("gui/bar/top.png", gui.vbar_borders, tile=gui.bar_tile)
@@ -386,18 +380,12 @@ style scrollbar:
     unscrollable "hide"
     bar_invert True
 
-
 style vscrollbar:
     xsize 18
-    base_bar Frame("gui/scrollbar/vertical_poem_bar.png", tile=False)
-    thumb Frame("gui/scrollbar/vertical_poem_thumb.png", left=6, top=6, tile=True)
+    base_bar Frame("mod_assets/panels/slider_back.png", tile=False)
+    thumb Frame("mod_assets/panels/slider_thumb.png", left=6, top=6, tile=True)
     unscrollable "hide"
     bar_invert True
-
-#style vscrollbar:
-#    xsize gui.scrollbar_size
-#    base_bar Frame("gui/scrollbar/vertical_[prefix_]bar.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
-#    thumb Frame("gui/scrollbar/vertical_[prefix_]thumb.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
 
 style slider:
     ysize 18
@@ -409,10 +397,9 @@ style vslider:
     base_bar Frame("gui/slider/vertical_[prefix_]bar.png", gui.vslider_borders, tile=gui.slider_tile)
     thumb "gui/slider/vertical_[prefix_]thumb.png"
 
-
 style frame:
     padding gui.frame_borders.padding
-    background Frame("gui/frame.png", gui.frame_borders, tile=gui.frame_tile)
+    background Frame("mod_assets/panels/frame.png", gui.frame_borders, tile=gui.frame_tile)
 
 ################################################################################
 ## In-game screens
@@ -1635,165 +1622,6 @@ style history_label:
 
 style history_label_text:
     xalign 0.5
-
-
-## Help screen #################################################################
-##
-## A screen that gives information about key and mouse bindings. It uses other
-## screens (keyboard_help, mouse_help, and gamepad_help) to display the actual
-## help.
-
-#screen help():
-#
-#    tag menu
-#
-#    default device = "keyboard"
-#
-#    use game_menu(_("Help"), scroll="viewport"):
-#
-#        style_prefix "help"
-#
-#        vbox:
-#            spacing 15
-#
-#            hbox:
-#
-#                textbutton _("Keyboard") action SetScreenVariable("device", "keyboard")
-#                textbutton _("Mouse") action SetScreenVariable("device", "mouse")
-#
-#                if GamepadExists():
-#                    textbutton _("Gamepad") action SetScreenVariable("device", "gamepad")
-#
-#            if device == "keyboard":
-#                use keyboard_help
-#            elif device == "mouse":
-#                use mouse_help
-#            elif device == "gamepad":
-#                use gamepad_help
-#
-#
-#screen keyboard_help():
-#
-#    hbox:
-#        label _("Enter")
-#        text _("Advances dialogue and activates the interface.")
-#
-#    hbox:
-#        label _("Space")
-#        text _("Advances dialogue without selecting choices.")
-#
-#    hbox:
-#        label _("Arrow Keys")
-#        text _("Navigate the interface.")
-#
-#    hbox:
-#        label _("Escape")
-#        text _("Accesses the game menu.")
-#
-#    hbox:
-#        label _("Ctrl")
-#        text _("Skips dialogue while held down.")
-#
-#    hbox:
-#        label _("Tab")
-#        text _("Toggles dialogue skipping.")
-#
-#    hbox:
-#        label _("Page Up")
-#        text _("Rolls back to earlier dialogue.")
-#
-#    hbox:
-#        label _("Page Down")
-#        text _("Rolls forward to later dialogue.")
-#
-#    hbox:
-#        label "H"
-#        text _("Hides the user interface.")
-#
-#    hbox:
-#        label "S"
-#        text _("Takes a screenshot.")
-#
-#    hbox:
-#        label "V"
-#        text _("Toggles assistive {a=https://www.renpy.org/l/voicing}self-voicing{/a}.")
-#
-#
-#screen mouse_help():
-#
-#    hbox:
-#        label _("Left Click")
-#        text _("Advances dialogue and activates the interface.")
-#
-#    hbox:
-#        label _("Middle Click")
-#        text _("Hides the user interface.")
-#
-#    hbox:
-#        label _("Right Click")
-#        text _("Accesses the game menu.")
-#
-#    hbox:
-#        label _("Mouse Wheel Up\nClick Rollback Side")
-#        text _("Rolls back to earlier dialogue.")
-#
-#    hbox:
-#        label _("Mouse Wheel Down")
-#        text _("Rolls forward to later dialogue.")
-#
-#
-#screen gamepad_help():
-#
-#    hbox:
-#        label _("Right Trigger\nA/Bottom Button")
-#        text _("Advance dialogue and activates the interface.")
-#
-#    hbox:
-#        label ("Left Trigger\nLeft Shoulder")
-#        text _("Roll back to earlier dialogue.")
-#
-#    hbox:
-#        label _("Right Shoulder")
-#        text _("Roll forward to later dialogue.")
-#
-#    hbox:
-#        label _("D-Pad, Sticks")
-#        text _("Navigate the interface.")
-#
-#    hbox:
-#        label _("Start, Guide")
-#        text _("Access the game menu.")
-#
-#    hbox:
-#        label _("Y/Top Button")
-#        text _("Hides the user interface.")
-#
-#    textbutton _("Calibrate") action GamepadCalibrate()
-#
-#
-#style help_button is gui_button
-#style help_button_text is gui_button_text
-#style help_label is gui_label
-#style help_label_text is gui_label_text
-#style help_text is gui_text
-#
-#style help_button:
-#    properties gui.button_properties("help_button")
-#    xmargin 8
-#
-#style help_button_text:
-#    properties gui.button_text_properties("help_button")
-#
-#style help_label:
-#    xsize 250
-#    right_padding 20
-#
-#style help_label_text:
-#    size gui.text_size
-#    xalign 1.0
-#    text_align 1.0
-
-
 
 ################################################################################
 ## Additional screens
