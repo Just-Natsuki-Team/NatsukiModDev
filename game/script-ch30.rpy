@@ -53,6 +53,9 @@ label ch30_init:
     $ persistent.jn_player_admission_type_on_quit = None
     $ persistent.jn_player_apology_type_on_quit = None
 
+    if persistent.jn_debug_open_watch_on_load:
+        $ jn_debug.toggle_show_tracked_watch_items(True)
+
     #And finally, we head into the loop
     jump ch30_loop
 
