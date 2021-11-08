@@ -16,21 +16,7 @@ init -100 python:
 init python:
     menu_trans_time = 1
     #The default splash message, originally shown in Act 1 and Act 4
-    splash_message_default = _("This game is an unofficial fan work, unaffiliated with Team Salvato.")
-    splash_messages = [
-    _("Please support Doki Doki Literature Club & Team Salvato."),
-    _("You are my sunshine,\nMy only sunshine"),
-    _("I missed you."),
-    _("Play with me"),
-    _("It's just a game, mostly."),
-    _("This game is not suitable for children\nor those who are easily disturbed?"),
-    _("sdfasdklfgsdfgsgoinrfoenlvbd"),
-    _("null"),
-    _("I have granted kids to hell"),
-    _("PM died for this."),
-    _("It was only partially your fault."),
-    _("This game is not suitable for children\nor those who are easily dismembered.")
-    ]
+    splash_message = _("This game is an unofficial fan work, unaffiliated with Team Salvato.")
 
 image splash_warning = ParameterizedText(style="splash_text", xalign=0.5, yalign=0.5)
 
@@ -200,15 +186,11 @@ label splashscreen:
     # Splash screen
     show white
     $ persistent.ghost_menu = False #Handling for easter egg from DDLC
-    $ splash_message = splash_message_default #Default splash message
     $ config.main_menu_music = audio.test_bgm #changed main menu music to main theme
     $ renpy.music.play(config.main_menu_music)
     show intro with Dissolve(0.5, alpha=True)
     pause 2.5
     hide intro with Dissolve(0.5, alpha=True)
-    #You can use random splash messages, as well. By default, they are only shown during certain acts.
-    if renpy.random.randint(0, 3) == 0:
-        $ splash_message = renpy.random.choice(splash_messages)
     show splash_warning "[splash_message]" with Dissolve(0.5, alpha=True)
     pause 2.0
     hide splash_warning with Dissolve(0.25, alpha=True)

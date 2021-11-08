@@ -537,6 +537,8 @@ init -990 python in jn_globals:
     # Descriptors Natsuki may use at the higher levels of affinity to define her player
     DEFAULT_PLAYER_DESCRIPTORS = [
         "amazing",
+        "awesome",
+        "really awesome",
         "really great",
         "so sweet",
         "the best"
@@ -562,16 +564,17 @@ init -990 python in jn_globals:
 
     # Flavor text for the talk menu at high affinity
     DEFAULT_TALK_FLAVOR_TEXT_LOVE_ENAMORED = [
-        "What's up, [player]?",
-        "What's on your mind, [player]?",
-        "Something up, [player]?",
-        "You wanna talk? Yay!",
+        "What's up,{w=0.1} [player]?",
+        "What's on your mind,{w=0.1} [player]?",
+        "Something up,{w=0.1} [player]?",
+        "You wanna talk?{w=0.2} Ehehe.",
         "I'd love to talk!",
-        "I always love talking to you, [player]!",
-        "[player]! What's up?",
-        "[player]! What's on your mind?",
-        "Ooh! What did you wanna talk about?",
-        "I'm all ears, [player]!"
+        "I always love talking to you,{w=0.1} [player]!",
+        "[player]!{w=0.2} What's up?",
+        "[player]!{w=0.2} What's on your mind?",
+        "Ooh!{w=0.2} What did you wanna talk about?",
+        "I'm all ears,{w=0.1} [player]!",
+        "I've always got time for you,{w=0.1} [player]!"
     ]
 
     # Flavor text for the talk menu at medium affinity
@@ -580,9 +583,12 @@ init -990 python in jn_globals:
         "What's on your mind?",
         "What's happening?",
         "Something on your mind?",
-        "Oh? You wanna talk to me?",
-        "Huh? What's up?",
-        "You wanna share something?"
+        "Oh?{w=0.2} You wanna talk to me?",
+        "Huh?{w=0.2} What's up?",
+        "You wanna share something?",
+        "Hey!{w=0.2} What's up?",
+        "What's new,{w=0.1} [player]?",
+        "'Sup,{w=0.1} [player]?"
     ]
 
     # Flavor text for the talk menu at low affinity
@@ -592,7 +598,13 @@ init -990 python in jn_globals:
         "Can I help you?",
         "Do you need me?",
         "Make it quick.",
-        "What now?"
+        "What now?",
+        "Yes?",
+        "What do you want now?",
+        "What is it this time?",
+        "Yeah?{w=0.2} What?",
+        "What is it now?",
+        "This had better be good."
     ]
 
     # Flavor text for the talk menu at minimum affinity
@@ -608,6 +620,8 @@ init -990 python in jn_globals:
     # Emoticon sets for where we can't express Natsuki's emotions directly (I.E modals)
     DEFAULT_HAPPY_EMOTICONS = [
         "^^",
+        "^.^",
+        "\.^-^./",
         ":)",
         ":]",
         ":3",
@@ -645,9 +659,7 @@ init -990 python in jn_globals:
         "( ;; )",
         "(|||;-;)",
         "(;v-v)",
-        ":[",
-        ":-(",
-        ":-["
+        ":-("
     ]
 
     # Alphabetical (excluding numbers) values allowed for text input

@@ -375,15 +375,15 @@ style bar:
 
 style scrollbar:
     ysize 18
-    base_bar Frame("gui/scrollbar/horizontal_poem_bar.png", tile=False)
-    thumb Frame("gui/scrollbar/horizontal_poem_thumb.png", top=6, right=6, tile=True)
+    base_bar Frame("mod_assets/panels/slider_back_h.png", tile=False)
+    thumb Frame("mod_assets/panels/slider_thumb_h.png", top=6, right=6, tile=True)
     unscrollable "hide"
     bar_invert True
 
 style vscrollbar:
     xsize 18
-    base_bar Frame("mod_assets/panels/slider_back.png", tile=False)
-    thumb Frame("mod_assets/panels/slider_thumb.png", left=6, top=6, tile=True)
+    base_bar Frame("mod_assets/panels/slider_back_v.png", tile=False)
+    thumb Frame("mod_assets/panels/slider_thumb_v.png", left=6, top=6, tile=True)
     unscrollable "hide"
     bar_invert True
 
@@ -603,7 +603,7 @@ style choice_vslider:
 
 style choice_frame:
     padding gui.frame_borders.padding
-    background Frame("gui/frame.png", gui.frame_borders, tile=gui.frame_tile)
+    background Frame("mod_assets/panels/frame.png", gui.frame_borders, tile=gui.frame_tile)
 
 style choice_vbox is vbox
 style choice_button is button
@@ -2295,14 +2295,16 @@ style confirm_button is gui_medium_button
 style confirm_button_text is gui_medium_button_text
 
 style confirm_frame:
-    background Frame([ "gui/confirm_frame.png", "gui/frame.png"], gui.confirm_frame_borders, tile=gui.frame_tile)
+    background Frame([ "mod_assets/panels/frame.png", "mod_assets/panels/frame.png"], gui.confirm_frame_borders, tile=gui.frame_tile)
     padding gui.confirm_frame_borders.padding
     xalign .5
     yalign .5
 
+style confirm_frame_text is choice_button_text
+
 style confirm_prompt_text:
-    color "#000"
-    outlines []
+    color "#e2d1d1"
+    outlines [(2, "#000000aa", 0, 0)]
     text_align 0.5
     layout "subtitle"
 
@@ -2311,7 +2313,7 @@ style confirm_button:
     hover_sound gui.hover_sound
     activate_sound gui.activate_sound
 
-style confirm_button_text is navigation_button_text:
+style confirm_button_text is choice_button_text:
     properties gui.button_text_properties("confirm_button")
 
 

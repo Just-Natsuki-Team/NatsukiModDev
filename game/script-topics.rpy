@@ -2252,7 +2252,7 @@ label talk_i_love_you:
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
 
             # At this point, Natsuki is super comfortable with her player, so we can be open and vary things!
-            $ random_response_index = random.randint(0, 10)
+            $ random_response_index = random.randint(0, 11)
 
             if random_response_index == 0:
                 n "Ehehe.{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
@@ -2337,7 +2337,7 @@ label talk_i_love_you:
                                 n "Hmm?{w=0.2} Did you mishear me,{w=0.1} [player]?"
                                 n "I said I love {i}you{/i} more,{w=0.2} [chosen_tease]!"
 
-                            if wrong_response_count == 5:
+                            elif wrong_response_count == 5:
                                 n "Oh?{w=0.2} Competitive,{w=0.1} are we?"
                                 n "Ehehe.{w=0.2} Silly [player].{w=0.1} Did nobody ever tell you?"
                                 n "Don't start a fight you can't finish!"
@@ -2382,7 +2382,7 @@ label talk_i_love_you:
                                     "Nooooope~!{w=0.2} I love {i}you{/i} more!",
                                     "Silly [player]~.{w=0.2} I love {i}you{/i} more,{w=0.1} remember?",
                                     "Mmmmmmmm...{w=0.3} nope!{w=0.2} I love {i}you{/i} way more,{w=0.1} [player]~!",
-                                    "Come come now,{w=0.1} [player].{w=0.2}  Don't be silly!{w=0.2}  I definitely love {i}you{/i} more.",
+                                    "Come come now,{w=0.1} [player].{w=0.2}  Don't be silly!{w=0.2} I definitely love {i}you{/i} more.",
                                     "Wait...{w=0.3} can you hear that?{w=0.2} Oh!{w=0.2} It's how wrong you are -{w=0.1} I love you more,{w=0.1} dummy!"
                                 ]
                                 $ chosen_random_response = random.choice(player_is_wrong_responses)
@@ -2398,6 +2398,11 @@ label talk_i_love_you:
 
                             if wrong_response_count >= 10:
                                 n "Nice try,{w=0.1} though~!"
+
+            elif random_response_index == 10:
+                n "Ehehe.{w=0.2} I'll never get tired of hearing that from you,{w=0.1} [player]."
+                n "I love you too!"
+                n "You're my numero uno~."
 
             else:
                 n "Oh?{w=0.2} Lovey-dovey as usual?"
@@ -2418,7 +2423,7 @@ label talk_i_love_you:
         elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
             n "H-{w=0.1}hey! I thought I told you not to just come out with stuff like that!"
             n "Jeez,{w=0.1} [player]..."
-            n "I don't know if you're trying to win me over,{w=0.1} or what..."
+            n "I-{w=0.1}I don't know if you're trying to win me over,{w=0.1} or what..."
             n "But you're gonna have to try harder than that!{w=0.2} Ehehe..."
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:

@@ -18,7 +18,7 @@ init python in farewells:
             FAREWELL_MAP.values(),
             affinity=store.jn_affinity.get_affinity_state(),
             additional_properties=[
-                ("is_time_sensitive", random.randint(1,5) == 3 and store.utils.get_current_session_length().total_seconds() / 60 < 30),
+                ("is_time_sensitive", (random.randint(1,10) == 5 and store.utils.get_current_session_length().total_seconds() / 60 < 30)),
                 ("has_stay_option", not store.jn_globals.player_already_stayed_on_farewell and store.jn_affinity.get_affinity_state() >= 6)
             ],
             excludes_categories=["Failsafe"]
@@ -68,7 +68,6 @@ init 1 python:
 label farewell_start:
     $ push(farewells.select_farewell())
     jump call_next_topic
-
 
 # LOVE+ farewells
 init 5 python:
@@ -1083,27 +1082,27 @@ label farewell_gentle_ask:
 # Trust dialogue; chance to call upon farewell completing and prior to the game closing
 label farewell_extra_trust:
     # ABSOLUTE+
-    if jn_trust.get_trust_state() >= jn_trust.TRUST_ABSOLUTE:
+    if jn_trust.get_trust_state() >= jn_trust.ABSOLUTE:
         show placeholder_natsuki sparkle zorder jn_placeholders.NATSUKI_Z_INDEX
         n "My [player]...{w=0.3} I'll be waiting..."
 
     # FULL+
-    elif jn_trust.get_trust_state() >= jn_trust.TRUST_FULL:
+    elif jn_trust.get_trust_state() >= jn_trust.FULL:
         show placeholder_natsuki neutral zorder jn_placeholders.NATSUKI_Z_INDEX
         n "I'll be waiting..."
 
     # PARTIAL+
-    elif jn_trust.get_trust_state() >= jn_trust.TRUST_PARTIAL:
+    elif jn_trust.get_trust_state() >= jn_trust.PARTIAL:
         show placeholder_natsuki plead zorder jn_placeholders.NATSUKI_Z_INDEX
         n "You'll be back...{w=0.3} right?"
 
     # SCEPTICAL+
-    elif jn_trust.get_trust_state() >= jn_trust.TRUST_SCEPTICAL:
+    elif jn_trust.get_trust_state() >= jn_trust.SCEPTICAL:
         show placeholder_natsuki sad zorder jn_placeholders.NATSUKI_Z_INDEX
         n "I'll be okay...{w=0.3} I'll be okay..."
 
     # DIMINISHED+
-    elif jn_trust.get_trust_state() >= jn_trust.TRUST_DIMINISHED:
+    elif jn_trust.get_trust_state() >= jn_trust.DIMINISHED:
         show placeholder_natsuki sad zorder jn_placeholders.NATSUKI_Z_INDEX
         n "...?"
 
