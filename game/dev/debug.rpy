@@ -200,9 +200,22 @@ init 5 python:
 label talk_set_affinity:
     n "Okaaay! Just tell me what affinity state you want!"
     menu:
+        "High affinity...":
+            call set_affinity_options_high
+
+        "Low affinity...":
+            call set_affinity_options_low
+
+        "Nevermind.":
+            n "Oh...{w=0.3} well,{w=0.1} okay then."
+
+    return
+
+label set_affinity_options_high:
+    menu:
         "LOVE":
             $ persistent.affinity = jn_affinity.THRESHOLD_LOVE
-            n "Alright! Your affinity state is now LOVE!" # Yesssssss
+            n "Alright! Your affinity state is now LOVE!"
 
         "ENAMORED":
             $ persistent.affinity = jn_affinity.THRESHOLD_ENAMORED
@@ -210,7 +223,6 @@ label talk_set_affinity:
 
         "AFFECTIONATE":
             $ persistent.affinity = jn_affinity.THRESHOLD_AFFECTIONATE
-
             n "Alright! Your affinity state is now AFFECTIONATE!"
 
         "HAPPY":
@@ -221,6 +233,16 @@ label talk_set_affinity:
             $ persistent.affinity = jn_affinity.THRESHOLD_NORMAL
             n "Alright! Your affinity state is now NORMAL!"
 
+        "Low affinity options...":
+            call set_affinity_options_low
+
+        "Nevermind.":
+            n "Oh...{w=0.3} well,{w=0.1} okay then."
+
+    return
+
+label set_affinity_options_low:
+    menu:
         "UPSET":
             $ persistent.affinity = jn_affinity.THRESHOLD_UPSET
             n "Alright! Your affinity state is now UPSET!"
@@ -235,10 +257,13 @@ label talk_set_affinity:
 
         "RUINED":
             $ persistent.affinity = jn_affinity.THRESHOLD_RUINED
-            n "Alright! Your affinity state is now RUINED!" # How could you :(
+            n "Alright! Your affinity state is now RUINED!"
+
+        "High affinity options...":
+            call set_affinity_options_high
 
         "Nevermind.":
-            n "Oh...{w=0.3} well, alright then."
+            n "Oh...{w=0.3} well,{w=0.1} okay then."
 
     return
 
@@ -249,7 +274,7 @@ init 5 python:
             persistent._topic_database,
             label="talk_set_trust",
             unlocked=True,
-            prompt="Can you change my trust?",
+            prompt="Can you change my trust state?",
             conditional="config.console",
             category=["Debug (Affinity/Trust)"],
             player_says=True,
@@ -260,6 +285,19 @@ init 5 python:
 
 label talk_set_trust:
     n "Sure! Just tell me what trust state you want!"
+    menu:
+        "High trust...":
+            call set_trust_options_high
+
+        "Low trust...":
+            call set_trust_options_low
+
+        "Nevermind.":
+            n "Oh...{w=0.3} well,{w=0.1} okay then."
+    
+    return
+
+label set_trust_options_high:
     menu:
         "ABSOLUTE":
             $ persistent.trust = jn_trust.TRUST_ABSOLUTE
@@ -281,6 +319,16 @@ label talk_set_trust:
             $ persistent.trust = jn_trust.TRUST_NEUTRAL
             n "Alright!{w=0.2} Your trust state is now NEUTRAL!"
 
+        "Low trust options...":
+            call set_trust_options_low
+
+        "Nevermind.":
+            n "Oh...{w=0.3} well,{w=0.1} okay then."
+
+    return
+
+label set_trust_options_low:
+    menu:
         "SCEPTICAL":
             $ persistent.trust = jn_trust.TRUST_SCEPTICAL
             n "Alright!{w=0.2} Your trust state is now SCEPTICAL!"
@@ -296,6 +344,9 @@ label talk_set_trust:
         "SHATTERED":
             $ persistent.trust = jn_trust.TRUST_SHATTERED
             n "Alright!{w=0.2} Your trust state is now SHATTERED!"
+
+        "High trust options...":
+            call set_trust_options_high
 
         "Nevermind.":
             n "Oh...{w=0.3} well,{w=0.1} okay then."
@@ -520,7 +571,7 @@ init 5 python:
     )
 
 label talk_toggle_watched_items_on_load:
-    n "Can do, [player]! Just let me know what you wanna do here."
+    n "Can do,{w=0.1} [player]!{w=0.2} Just let me know what you wanna do here."
     menu:
         "Enable the watched item list on load.":
             $ persistent.jn_debug_open_watch_on_load = True
@@ -542,7 +593,7 @@ label talk_toggle_watched_items_on_load:
                         n "Alrighty!"
 
         "Disable the watched item list on load.":
-            $ persistent.jn_debug_open_watch_on_load = True
+            $ persistent.jn_debug_open_watch_on_load = False
             n "Alright -{w=0.1} all done!"
 
             if jn_debug._view_tracked_items_enabled:
