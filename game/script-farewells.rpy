@@ -824,8 +824,9 @@ label farewell_short_session_ask:
     n "What?{w=0.2} You're leaving?{w=0.2} But you've barely been here at all today,{w=0.1} [player]!"
     $ time_in_session_descriptor = utils.get_time_in_session_descriptor()
     n "In fact, you've only been here for [time_in_session_descriptor]!"
-    n "You're sure you can't stay just a little longer?"
     menu:
+        n "You're sure you can't stay just a little longer?"
+
         "Sure, I can stay a little longer.":
             n "Yay{nw}!"
             n "I-I mean...!"
@@ -846,8 +847,9 @@ label farewell_short_session_ask:
         "If you say so.":
             n "[player]..."
             n "I'm not forcing you to be here.{w=0.1} You know that,{w=0.1} right?"
-            n "Are you sure you wanna stay?"
             menu:
+                n "Are you sure you wanna stay?"
+
                 "Yes, I'm sure.":
                     "Well,{w=0.1} if you're sure."
                     "I just want to make sure I don't sound all naggy."
@@ -898,13 +900,15 @@ label farewell_short_session_ask_alt:
     n "N-{w=0.1}now wait just one second,{w=0.1} [player]!{w=0.2} This isn't fair at all!"
     $ time_in_session_descriptor = utils.get_time_in_session_descriptor()
     n "You've barely been here [time_in_session_descriptor],{w=0.1} and you're already going?"
-    n "Come on!{w=0.2} You'll stay a little longer,{w=0.1} won't you?"
     menu:
+        n "Come on!{w=0.2} You'll stay a little longer,{w=0.1} won't you?"
+        
         "Sure, I can stay a while.":
             n "H-{w=0.1}Ha!{w=0.2} I knew it."
             n "Ehehe.{w=0.1} Looks like I win again,{w=0.1} [player]!"
-            n "O-or maybe you just can't bring yourself to leave my side?"
             menu:
+                n "O-or maybe you just can't bring yourself to leave my side?"
+
                 "You got me, Natsuki. I couldn't leave you even if I tried.":
                     $ player_was_snarky = False
                     n "W-{w=0.2}wha...?"
@@ -966,8 +970,9 @@ label farewell_fake_confidence_ask:
     n "Huh?{w=0.2} You don't really have to leave already,{w=0.1} do you?"
     n "It feels like you've barely been here!"
     n "I bet you can hang out with me a little longer!{w=0.2} Right,{w=0.1} [player]?"
-    n "{w=0.3}...right?"
     menu:
+        n "{w=0.3}...right?"
+
         "Right!":
             n "A-Aha!{w=0.2} I knew it!"
             n "I totally don't need you here,{w=0.1} or anything dumb like that!"
@@ -1007,8 +1012,9 @@ label farewell_pleading_ask:
     n "N-no!{w=0.2} You can't leave yet!"
     n "..."
     n "[player]...{w=0.3} I...{w=0.3} really...{w=0.3} want you here right now."
-    n "Just stay with me a little longer...{w=0.3} please?"
     menu:
+        n "Just stay with me a little longer...{w=0.3} please?"
+
         "Of course!":
             n "Yes!{nw}"
             n "I-I mean...!"
@@ -1049,8 +1055,9 @@ init 5 python:
 label farewell_gentle_ask:
     n "[player]...{w=0.3} do you really have to leave now?"
     n "I know you have stuff to do,{w=0.1} but I...{w=0.3} really...{w=0.3} wanna spend more time with you."
-    n "Are you sure you have to go?"
     menu:
+        n "Are you sure you have to go?"
+
         "I can stay a little longer.":
             n "[player]..."
             n "Thank you.{w=0.1} That really means a lot to me right now."

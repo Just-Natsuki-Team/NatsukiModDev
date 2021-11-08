@@ -496,8 +496,9 @@ init 5 python:
 
 label greeting_feeling_better_sick:
     n "Oh!{w=0.2} [player]!{w=0.2} Hey!"
-    n "How're you feeling?{w=0.2} Any better?"
     menu:
+        n "How're you feeling?{w=0.2} Any better?"
+
         "Much better, thanks!":
             n "Good, good!{w=0.2} I'm glad to hear it!{w=0.2} Nobody likes being ill."
             n "Now that's out of the way,{w=0.1} how about we spend some quality time together?"
@@ -540,8 +541,9 @@ init 5 python:
 
 label greeting_feeling_better_tired:
     n "Ah!{w=0.2} [player]!{w=0.2} Hi!"
-    n "I hope you got enough sleep.{w=0.2} How're you feeling?"
     menu:
+        n "I hope you got enough sleep.{w=0.2} How're you feeling?"
+
         "Much better, thanks!":
             n "Great!{w=0.2} Nothing like a good night's sleep,{w=0.1} am I right?"
             n "Now then - seeing as you're finally awake and alert..."

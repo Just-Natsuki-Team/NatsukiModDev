@@ -84,6 +84,8 @@ label talk_having_pictures_taken:
                 n "You understand,{w=0.1} right?"
                 n "So please,{w=0.1} if you ever wanna take a picture,{w=0.1} can you ask me first?"
                 menu:
+                    n "Will you do that for me?"
+
                     "Of course!":
                         n "Thanks,{w=0.1} [player]."
                         n "That really...{w=0.3} means a lot to me."
@@ -150,8 +152,9 @@ label talk_did_you_have_pets:
         n "It still annoys me...{w=0.3} but then again,{w=0.1} it's not like I can't keep a pet here instead,{w=0.1} right?{w=0.1} Ehehe."
 
     if persistent.jn_player_pet is None:
-        n "What about you,{w=0.1} [player]?{w=0.2} Do you have any pets?"
         menu:
+            n "What about you,{w=0.1} [player]? Do you have any pets?"
+
             "Yes, I do.":
                 n "Oh!{w=0.2} Oh oh oh!{w=0.2} You gotta tell me,{w=0.1} [player]!"
                 n "What do you have?{w=0.2} What do you have?"
@@ -171,8 +174,9 @@ label talk_did_you_have_pets:
 
     else:
         n "What about you,{w=0.1} [player]?"
-        n "Did you get another one?"
         menu:
+            n "Did you get another one?"
+
             "Yes, I did.":
                 n "Ooh...{w=0.3} you gotta tell me!{w=0.2} What did you get?"
                 call pet_options_a
@@ -191,6 +195,8 @@ label talk_did_you_have_pets:
 
 label pet_options_a:
     menu:
+        n "What did you get?"
+
         "Birds":
             n "Oh!{w=0.2} Neat!"
             n "I don't think I'd keep birds myself,{w=0.1} but they brighten up rooms for sure!"
@@ -233,6 +239,8 @@ label pet_options_a:
 
 label pet_options_b:
     menu:
+        n "What did you get?"
+
         "Guinea pigs":
             n "Ooh!{w=0.2} I like guinea pigs!"
             n "I don't know much about them,{w=0.1} but I love the little sounds they make."
@@ -285,6 +293,8 @@ label pet_options_b:
 
 label pet_options_c:
     menu:
+        n "What did you get?"
+
         "Rats":
             n "Rats,{w=0.1} huh?"
             n "Were you expecting me to be grossed out?"
@@ -567,8 +577,9 @@ init 5 python:
 
 label talk_eating_well:
     n "Hey,{w=0.1} [player]..."
-    n "Have you eaten today?"
     menu:
+        n "Have you eaten today?"
+
         "Yes":
             n "Aha!{w=0.2} But did you eat {i}well{/i},{w=0.1} [player]?"
 
@@ -669,8 +680,9 @@ label talk_favourite_season:
         n "Hang on...{w=0.3} didn't we talk about this before,{w=0.1} [player]?"
         n "Well,{w=0.1} anyway..."
         n "I still love summer,{w=0.1} as you know{w=0.1} -{w=0.1} and nothing's gonna change that any time soon!"
-        n "What about you,{w=0.1} [player]?{w=0.2} Still rooting for [persistent.jn_player_favourite_season]?"
+        n "What about you,{w=0.1} [player]?"
         menu:
+            n "Still rooting for [persistent.jn_player_favourite_season]?"
             "Yes.":
                 n "Ehehe.{w=0.2} I thought as much,{w=0.1} [player]."
                 if persistent.jn_player_favourite_season == "Summer":
