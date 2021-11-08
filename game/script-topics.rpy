@@ -2592,6 +2592,141 @@ label talk_integrity:
     
     return
 
+# Natsuki discusses her favourite animal
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_favourite_animal",
+            unlocked=True,
+            prompt="What's your favourite animal?",
+            category=["Animals", "Natsuki"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_favourite_animal:
+    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n "Hammies."
+        n "That's barely even a question for me,{w=0.1} [player].{w=0.2} Ehehe."
+        n "Like...{w=0.3} if you've seen them,{w=0.1} can you blame me?{w=0.2} They're totally adorable!"
+        n "I just love everything about them...{w=0.3} the little paws,{w=0.1} the bright eyes, those puffy cheeks..."
+        n "And that tiny litte tail...{w=0.3} oh my gosh!{w=0.2} It's just precious!"
+        n "It really winds me up when people call them boring,{w=0.1} or unaffectionate though.{w=0.2} Like... have you ever watched one?"
+        n "They all have their own little personalities,{w=0.1} just like any other animal -{w=0.1} only smaller!"
+        n "And if you bond with them,{w=0.1} they aren't afraid to show it -{w=0.1} I've seen videos of them following their owners around,{w=0.1} and even leaping into their hands!"
+        n "Plus they're easy to take care of,{w=0.1} too!" 
+        n "Just top up their food and change their water daily,{w=0.1} and clean their cage out once a week -{w=0.1} no sweat."
+        n "Hmm..."
+        n "You know,{w=0.1} [player]...{w=0.3} it does get a little quiet when you aren't around,{w=0.1} if you know what I'm getting at..."
+        n "Perhaps one day we could have our own furry friend here too?{w=0.1} Ehehe."
+        n "Don't worry though,{w=0.1} [player]..."
+        n "I don't mind taking care of it."
+        n "...But you're in charge of the supplies!"
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+            n "Oh,{w=0.1} and relax -{w=0.1} I'll make sure it'll be well tamed!"
+            n "Or..."
+            n "At least about as tame as you,{w=0.1} huh [player]?{w=0.2} Ahaha!"
+
+            if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+                n "Love you~!"
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n "Hamsters,{w=0.1} if it matters."
+        n "Why?{w=0.2} I don't know.{w=0.2} I just think they're cute."
+        n "I think people actually underestimate how expressive they can be,{w=0.1} too."
+        n "They're like most animals really -{w=0.1} they all have their own personalities."
+        n "I guess they're pretty easy to take care of as well,{w=0.1} so there's that."
+        n "..."
+        n "...I'd be lying if I said I hadn't been thinking about getting one myself..."
+        n "But honestly,{w=0.1} [player]?{w=0.2} If you've shown you can't take care of {i}me{/i}?"
+        n "...Then I don't think it'd be fair to bring one here,{w=0.1} either.{w=0.2} Heh."
+
+    else:
+        n "Heh.{w=0.2} Really?{w=0.2} My favourite animal...?"
+        n "Not you,{w=0.1} [player].{w=0.2} That's for sure."
+    
+    return
+
+# Natsuki discusses her favourite drink
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_favourite_drink",
+            unlocked=True,
+            prompt="What's your favourite drink?",
+            category=["Food", "Natsuki"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_favourite_drink:
+    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n "Ooooh!{w=0.2} My favourite drink?"
+        
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n "Mmm?{w=0.2} My favourite drink?"
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n "Huh?{w=0.2} Oh.{w=0.1} My favourite drink."
+
+    else:
+        n "...I can't understand why you'd care,{w=0.1} [player]."
+        n "So...{w=0.3} why should I?"
+        n "Water.{w=0.2} There's an answer for you.{w=0.2} Happy?"
+        n "Now just go away..."
+        return
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n "I gotta say...{w=0.3} it depends on the weather more than anything."
+        n "I mean...{w=0.3} what kind of person would order an iced drink in the middle of winter?!"
+        n "But anyway..."
+        n "If it's cold out,{w=0.1} then hot chocolate.{w=0.2} No questions,{w=0.1} no doubts."
+        n "In the depths of winter,{w=0.1} you definitely won't get a better option than that!"
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+            n "And yeah,{w=0.1} [player] -{w=0.1} whipped cream,{w=0.1} marshmallows -{w=0.1} all of it.{w=0.2} The complete works."
+            n "...And I wouldn't accept anything less!"
+            n "I mean,{w=0.1} think about it -{w=0.1} if you're getting hot chocolate,{w=0.1} you've already kinda lost on the health front."
+            n "So you might as well go all in,{w=0.1} right?{w=0.2} Ahaha."
+
+            if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+                n "Besides,{w=0.2} I'm not too worried -{w=0.1} we can always share the calories,{w=0.1} [player]~."
+
+        n "As for warmer weather...{w=0.3} that's a little trickier,{w=0.1} actually."
+        n "Let me think..."
+        n "..."
+        n "Aha!{w=0.2} I got it!"
+        n "It's gotta be those milkshakes,{w=0.1} but from one of those places where you get to choose what goes in it!"
+        n "I don't just mean picking a flavour,{w=0.1} [player]..."
+        n "I mean where you can pick any combination of ingredients you want!"
+        n "Well...{w=0.3} as long as it blends,{w=0.1} anyway."
+        n "All kinds of sweets,{w=0.1} any type of milk..."
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+            n "Though if I had to pick a favourite?"
+            n "It's gotta be strawberries and cream,{w=0.1} obviously."
+            n "And...{w=0.3} maybe with just a dash of chocolate too?{w=0.2} Ehehe."
+        
+        else:
+            n "Yeah.{w=0.2} That's the real deal!"
+
+        n "Jeez...{w=0.3} all this talk about drinks is making me kinda thirsty,{w=0.1} actually.{w=0.2} So on that note..."
+        n "Make sure you stay hydrated too,{w=0.1} [player] -{w=0.1} whatever the weather!"
+
+    else:
+        n "I suppose it depends what the weather is like."
+        n "Hot chocolate if it's cold out,{w=0.1} though I'm not very picky I guess."
+        n "As for warmer weather..."
+        n "I don't really know.{w=0.2} Whatever is fine."
+        n "Heh.{w=0.2} Though at this rate,{w=0.1} I shouldn't expect much more than tap water from you anyway.{w=0.2} Right,{w=0.1} [player]?"
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
