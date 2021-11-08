@@ -210,6 +210,7 @@ label talk_set_affinity:
 
         "AFFECTIONATE":
             $ persistent.affinity = jn_affinity.THRESHOLD_AFFECTIONATE
+
             n "Alright! Your affinity state is now AFFECTIONATE!"
 
         "HAPPY":
@@ -241,7 +242,7 @@ label talk_set_affinity:
 
     return
 
-# This topic allows us to set the trust value
+# This topic allows us to set the trust state
 init 5 python:
     registerTopic(
         Topic(
