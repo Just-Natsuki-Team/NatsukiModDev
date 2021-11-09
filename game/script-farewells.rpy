@@ -850,7 +850,7 @@ label farewell_short_session_ask:
                     $ farewells.try_trust_dialogue()
                     return { "quit": None }
 
-        "Sorry, Natsuki. I really have to leave.":
+        "Sorry, [n_name]. I really have to leave.":
             n "Nnnnnn-!"
             n "..."
             n "Well...{w=0.3} okay."
@@ -890,7 +890,7 @@ label farewell_short_session_ask_alt:
             menu:
                 n "O-or maybe you just can't bring yourself to leave my side?"
 
-                "You got me, Natsuki. I couldn't leave you even if I tried.":
+                "You got me, [n_name]. I couldn't leave you even if I tried.":
                     $ player_was_snarky = False
                     n "W-{w=0.2}wha...?"
                     n "Nnnnnnn-!"
@@ -922,7 +922,7 @@ label farewell_short_session_ask_alt:
             $ jn_globals.player_already_stayed_on_farewell = True
             $ relationship("affinity+")
 
-        "Sorry Natsuki, I can't right now.":
+        "Sorry [n_name], I can't right now.":
             n "Uuuu-"
             n "Well,{w=0.1} I guess that's fine.{w=0.2} It can't be helped,{w=0.1} after all."
             n "But you gotta make it up to me,{w=0.1} alright?"

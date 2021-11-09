@@ -1590,7 +1590,7 @@ label talk_give_nickname:
         menu:
             n "Understand?"
 
-            "I understand. Sorry, Natsuki.":
+            "I understand. Sorry, [n_name].":
                 n "You understand,{w=0.1} do you?"
                 n "...Then start acting like it,{w=0.1} [player]."
                 n "Thanks."
@@ -2053,7 +2053,7 @@ init 5 python:
             persistent._topic_database,
             label="talk_natsukis_fang",
             unlocked=True,
-            prompt="Natsuki's fang",
+            prompt="[n_name]'s fang",
             category=["Health", "Natsuki"],
             nat_says=True,
             affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
@@ -2394,7 +2394,7 @@ label talk_i_love_you:
                                 n "They get..."
                                 n "A correction!{w=0.2} Wow!"
                                 n "And that correction is..."
-                                n "Natsuki loves {i}them{/i} way more!{w=0.2} Congratulations,{w=0.1} dummy!"
+                                n "[n_name] loves {i}them{/i} way more!{w=0.2} Congratulations,{w=0.1} dummy!"
                                 n "And now,{w=0.1} to walk away with the grand prize -{w=0.1} all our guest here needs to do..."
                                 n "Is give up and admit how wrong they are~!{w=0.2} Ehehe."
 

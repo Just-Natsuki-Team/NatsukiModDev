@@ -160,7 +160,8 @@ init python:
         
         if persistent.jn_natsuki_random_topic_frequency is not jn_preferences.random_topic_frequency.NEVER:
 
-            if datetime.datetime.now() > LAST_TOPIC_CALL + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown()):
+            if (datetime.datetime.now() > LAST_TOPIC_CALL + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown()) and 
+                len(persistent._event_list) is 0):
 
                     topic_pool = Topic.filter_topics(
                         topics.TOPIC_MAP.values(),

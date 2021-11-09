@@ -625,7 +625,7 @@ init 5 python:
             label="talk_custom_say",
             unlocked=True,
             prompt="Can you say something for me?",
-            conditional=None,
+            conditional="config.console",
             category=["Debug (Dialogue)"],
             player_says=True,
             location="classroom"
@@ -677,3 +677,40 @@ label talk_custom_say:
     n "..."
     show placeholder_natsuki smile zorder jn_placeholders.NATSUKI_Z_INDEX
     n "...And we're done here!{w=0.2} You're welcome,{w=0.1} [player]!"
+
+# This topic allows us to have Natsuki say whatever we like with any expression we choose
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_topic_count",
+            unlocked=True,
+            prompt="Can you count how many topics there are?",
+            conditional="config.console",
+            category=["Debug (Dialogue)"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_topic_count:
+    n "Sure thing,{w=0.1} [player]!"
+    n "{i}Ahem{/i}!"
+    n "Currently,{w=0.1} there are..."
+    python:
+        topics_and_counts = {
+            "generic topics": len(persistent._topic_database),
+            "compliments": len(persistent._compliment_database),
+            "greetings": len(persistent._greeting_database),
+            "farewells": len(persistent._farewell_database),
+            "admissions": len(persistent._admission_database),
+            "apologies": len(persistent._apology_database)
+        }
+
+        for topic_and_count in topics_and_counts.keys():
+            renpy.say(n, "{0} {1}...".format(topics_and_counts.get(topic_and_count), topic_and_count))
+
+    n "...And that's about it!{w=0.2} Ehehe."
+    n "Way to go,{w=0.1} [player]!"
+    return
