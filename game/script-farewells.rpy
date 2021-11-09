@@ -12,43 +12,25 @@ init python in farewells:
         If the player has already been asked to stay by Natsuki, a farewell without the option
         to stay will be selected
         """
-        # Get the farewells the current affinity allows for the player
-        #TODO: Generalized filter function
+        kwargs = dict()
+
+        if random.randint(1,10) == 5:
+            kwargs.update(
+                {"additional_properties":[
+                    ("is_time_sensitive", store.utils.get_current_session_length().total_seconds() / 60 < 30),
+                    ("has_stay_option", not store.jn_globals.player_already_stayed_on_farewell)
+                ]}
+            )
+
         farewell_pool = store.Topic.filter_topics(
             FAREWELL_MAP.values(),
             affinity=store.jn_affinity.get_affinity_state(),
-            additional_properties=[
-                ("is_time_sensitive", (random.randint(1,10) == 5 and store.utils.get_current_session_length().total_seconds() / 60 < 30)),
-                ("has_stay_option", not store.jn_globals.player_already_stayed_on_farewell and store.jn_affinity.get_affinity_state() >= 6)
-            ],
-            excludes_categories=["Failsafe"]
+            conditional=True,
+            excludes_categories=["Failsafe"],
+            **kwargs
         )
 
-        # If pool isn't empty
-        if farewell_pool:
-            # Return a random farewell from the remaining pool
-            return random.choice(farewell_pool).label
-
-        #else
-        # Else run filter again, this time without caring for special farewells
-        farewell_pool = store.Topic.filter_topics(
-            FAREWELL_MAP.values(),
-            affinity=store.jn_affinity.get_affinity_state(),
-            additional_properties=[
-                ("is_time_sensitive", False),
-                ("has_stay_option", False)
-            ],
-            excludes_categories=["Failsafe"]
-        )
-
-        # Again check if pool isn't empty
-        if farewell_pool:
-            # Return a random farewell from the new pool
-            return random.choice(farewell_pool).label
-
-        #else
-        # Fallback if both searches fail or if something just Fs up
-        return "farewell_fallback_see_you_soon"
+        return random.choice(farewell_pool).label 
 
     def try_trust_dialogue():
         """
@@ -1083,12 +1065,12 @@ label farewell_gentle_ask:
 label farewell_extra_trust:
     # ABSOLUTE+
     if jn_trust.get_trust_state() >= jn_trust.ABSOLUTE:
-        show placeholder_natsuki sparkle zorder jn_placeholders.NATSUKI_Z_INDEX
+        show placeholder_natsuki pleased zorder jn_placeholders.NATSUKI_Z_INDEX
         n "My [player]...{w=0.3} I'll be waiting..."
 
     # FULL+
     elif jn_trust.get_trust_state() >= jn_trust.FULL:
-        show placeholder_natsuki neutral zorder jn_placeholders.NATSUKI_Z_INDEX
+        show placeholder_natsuki shy zorder jn_placeholders.NATSUKI_Z_INDEX
         n "I'll be waiting..."
 
     # PARTIAL+
@@ -1111,22 +1093,6 @@ label farewell_extra_trust:
         show placeholder_natsuki sad zorder jn_placeholders.NATSUKI_Z_INDEX
         n "..."
 
-    return { "quit": None }
-
-# Fallback farewell if selecting a farewell fails
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._farewell_database,
-            label="farewell_fallback_see_you_soon",
-            unlocked=True,
-            category=["Failsafe"]
-        ),
-        topic_group=TOPIC_TYPE_FAREWELL
-    )
-
-label farewell_fallback_see_you_soon:
-    n "Alright, see you soon."
     return { "quit": None }
 
 # Time-of-day based farewells

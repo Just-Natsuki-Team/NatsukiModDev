@@ -57,6 +57,7 @@ label ch30_init:
         $ jn_debug.toggle_show_tracked_watch_items(True)
 
     #And finally, we head into the loop
+    play music audio.test_bgm
     jump ch30_loop
 
 #The main loop
@@ -136,6 +137,7 @@ label call_next_topic:
     jump ch30_loop
 
 init python:
+    LAST_TOPIC_CALL = datetime.datetime.now()
     LAST_MINUTE_CHECK = datetime.datetime.now()
     LAST_HOUR_CHECK = LAST_MINUTE_CHECK.hour
     LAST_DAY_CHECK = LAST_MINUTE_CHECK.day
@@ -154,17 +156,23 @@ init python:
         """
         # Push a new topic every couple of minutes
         # TODO: Move to a wait/has-waited system to allow some more flexibility
-        if datetime.datetime.now().minute % 2 is 0:
-            topic_pool = Topic.filter_topics(
-                topics.TOPIC_MAP.values(),
-                unlocked=True,
-                nat_says=True,
-                location=main_background.location.id,
-                affinity=jn_affinity.get_affinity_state(),
-            )
+        global LAST_TOPIC_CALL
+        
+        if persistent.jn_natsuki_random_topic_frequency is not jn_preferences.random_topic_frequency.NEVER:
 
-            if topic_pool:
-                queue(random.choice(topic_pool).label)
+            if datetime.datetime.now() > LAST_TOPIC_CALL + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown()):
+
+                    topic_pool = Topic.filter_topics(
+                        topics.TOPIC_MAP.values(),
+                        unlocked=True,
+                        nat_says=True,
+                        location=main_background.location.id,
+                        affinity=jn_affinity.get_affinity_state(),
+                    )
+
+                    if topic_pool:
+                        queue(random.choice(topic_pool).label)
+                        LAST_TOPIC_CALL = datetime.datetime.now()
         pass
 
     def hour_check():
@@ -246,7 +254,6 @@ label player_select_topic(is_repeat_topics=False):
     call screen categorized_menu(menu_items,(1020, 70, 250, 572), (740, 70, 250, 572), len(_topics))
 
     $ _choice = _return
-    $ utils.log("_choice is {0}".format(_choice))
 
     # We got a string, we should push
     if isinstance(_choice, basestring):

@@ -1,6 +1,7 @@
 default persistent.jn_debug_open_watch_on_load = False
 
 init 10 python:
+    # Enable some QoL things
     config.console = True
     config.allow_skipping = True
 
@@ -13,6 +14,10 @@ default persistent.jn_debug_tracked_watch_items = [
 
 init python in jn_debug:
 
+    import os
+    import store
+    import traceback
+
     # This is the basic set of watched data we reset to
     _default_tracked_watch_items = [
         "store.persistent.affinity\n",
@@ -21,16 +26,15 @@ init python in jn_debug:
         "store.jn_trust.get_trust_tier_name()"
     ]
 
-    import os
-    import store
-    import traceback
-
     _view_tracked_items_enabled = False
 
     # Tracking states for when attempting to load a file from disk for use on returns
     LOAD_FROM_DISK_SUCCESS = 1
     LOAD_FROM_DISK_NEW_FILE_CREATED = 2
     LOAD_FROM_DISK_FAILED = 3
+
+    # Let us call the Talk menu whenever to back out of dialogue
+    #store.jn_register_label_keymap("force_talk_menu", talk_menu, "ctrl_t")
 
     def _watch_all_tracked_items():
         """

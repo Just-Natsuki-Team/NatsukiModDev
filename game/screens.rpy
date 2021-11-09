@@ -1072,7 +1072,7 @@ style game_menu_outer_frame:
     bottom_padding 30
     top_padding 120
 
-    background "gui/overlay/game_menu.png"
+    background "mod_assets/backgrounds/menu/background.png"
 
 style game_menu_navigation_frame:
     xsize 280
@@ -1347,74 +1347,27 @@ screen preferences():
                         label _("Skip")
                         textbutton _("Unseen Text") action Preference("skip", "toggle")
                         textbutton _("After Choices") action Preference("after choices", "toggle")
-                        #textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
-
 
                     ## Additional vboxes of type "radio_pref" or "check_pref" can be
                     ## added here, to add additional creator-defined preferences.
-
-                vbox:
-                    yoffset 20
-
-                    vbox:
-                        style_prefix "check"
-                        label _("Random Talking")
-                        textbutton _("Enabled") action Show(screen="dialog", message="This will control weather or not Natsuki\nstrikes up conversations oh her own.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"random_talk", True, False)
-
-                vbox:
-                    yoffset 20
-
-                    vbox:
-                        style_prefix "check"
-                        label _("Youtuber Mode")
-                        textbutton _("Enabled") action Show(screen="dialog", message="This will make Natsuki start conversations faster.\nThis is useful for YouTubers who want to get through everything faster.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"youtuber_mode", True, False)
-
-                vbox:
-                    yoffset -150
-                    xoffset 250
-
-                    vbox:
-                        style_prefix "check"
-                        label _("Room Animated")
-                        textbutton _("Enabled") action Show(screen="reload", message="This will turn off the moving fire\nas some people have reported lag.\nRestart is required.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"room_animated", True, False)
-
-                    vbox:
-                        style_prefix "check"
-                        label _("Resume Music")
-                        textbutton _("Enabled") action Show(screen="dialog", message="Turning this on will cause music to resume playing when you return\ninstead of restarting.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"save_music_place", True, False)
-
-                vbox:
-                    yoffset -320
-                    xoffset 500
-
-                    vbox:
-                        style_prefix "check"
-                        label _("New Topics")
-                        textbutton _("Enabled") action Show(screen="dialog", message="This will cause Natsuki to only say topics added in the update.\nThis ONLY has her say topics in that update.\nSo don't be surprised if it doesn't change for a while.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"new_topics", True, False)
-
-                    vbox:
-                        style_prefix "check"
-                        label _("New Emotions")
-                        textbutton _("Enabled") action Show(screen="dialog", message="This will cause Natsuki's emotions to change over time. Turning this off sets her emotion to normal.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"dynamic_emotions", True, False), SetField(persistent,"natsuki_emotion", "Happy")
-
-                    if not persistent.dynamic_emotions:
-                        vbox:
-                            style_prefix "navigation"
-                            textbutton _("Choose Emotion") action Show(screen="emotion", message="If you turn off Natsuki's new emotion system\nyou can always just pick an emotion for her to use!\n(The change is not instant, just wait.)", close=Hide(screen="emotion", transition=None))
-
-                    vbox:
-                        style_prefix "navigation"
-                        textbutton _("Debug") action Show(screen="confirm", message="This action will hard reset Just Natsuki!\nYou're only supposed to use it if the game starts up, Natsuki greets you, and then it given an exception.\nThe best way to fix this is to reset the game after an update patches the issue.\nThis option allows you to do that.\nAre you sure you want to PERMANENTLY erase all your Just Natsuki save data?", yes_action=Jump("restart"), no_action=Hide("confirm"))
-
+                
                 hbox:
                     style_prefix "slider"
                     box_wrap True
 
                     vbox:
 
+                        label _("Random chatter: {0}".format(jn_preferences.random_topic_frequency.get_random_topic_frequency_description()))
+
+                        bar value FieldValue(
+                            object=persistent,
+                            field="jn_natsuki_random_topic_frequency", 
+                            range=4,
+                            style="slider",
+                            step=1)
+
                         label _("Text Speed")
 
-                        #bar value Preference("text speed")
                         bar value FieldValue(_preferences, "text_cps", range=180, max_is_zero=False, style="slider", offset=20)
 
                         label _("Auto-Forward Time")
@@ -1438,7 +1391,6 @@ screen preferences():
 
                                 if config.sample_sound:
                                     textbutton _("Test") action Play("sound", config.sample_sound)
-
 
                         if config.has_voice:
                             label _("Voice Volume")
@@ -2167,8 +2119,9 @@ screen confirm(message, yes_action, no_action):
                 spacing 100
 
                 if confirm_is_quit:
-                    textbutton _("Continue") action Show(screen="confirm_quit", is_quitting=True)
-                    textbutton _("Go back") action Show(screen="confirm_quit", is_quitting=False)
+                    textbutton _("Continue") action [Hide("confirm"), Show(screen="confirm_quit", is_quitting=True)] 
+
+                    textbutton _("Go back") action [Hide("confirm"), Show(screen="confirm_quit", is_quitting=False)] 
 
                 else:
                     textbutton _("Yes") action yes_action

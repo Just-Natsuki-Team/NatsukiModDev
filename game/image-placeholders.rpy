@@ -1,12 +1,17 @@
+image placeholder_natsuki boast = "mod_assets/natsuki/placeholder_boast.png"
 image placeholder_natsuki neutral = "mod_assets/natsuki/placeholder_neutral.png"
 image placeholder_natsuki plead = "mod_assets/natsuki/placeholder_plead.png"
+image placeholder_natsuki pleased = "mod_assets/natsuki/placeholder_pleased.png"
 image placeholder_natsuki sad = "mod_assets/natsuki/placeholder_sad.png"
+image placeholder_natsuki shy = "mod_assets/natsuki/placeholder_shy.png"
 image placeholder_natsuki smile = "mod_assets/natsuki/placeholder_smile.png"
+image placeholder_natsuki smug = "mod_assets/natsuki/placeholder_smug.png"
 image placeholder_natsuki sparkle = "mod_assets/natsuki/placeholder_sparkle.png"
+image placeholder_natsuki tease = "mod_assets/natsuki/placeholder_tease.png"
 image placeholder_natsuki unamused = "mod_assets/natsuki/placeholder_unamused.png"
 image placeholder_natsuki wink = "mod_assets/natsuki/placeholder_wink.png"
 
-image placeholder_sky_day = "mod_assets/backgrounds/placeholder_sky_day.png"
+image placeholder_sky_day = "mod_assets/backgrounds/classroom/placeholder_sky_day.png"
 
 define ease_transition = MoveTransition(0.1)
 

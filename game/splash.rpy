@@ -33,12 +33,12 @@ image menu_logo:
 
 image menu_bg:
     topleft
-    "gui/menu_bg.png"
+    "mod_assets/backgrounds/menu/backdrop.png"
     menu_bg_move
 
 image game_menu_bg:
     topleft
-    "gui/menu_bg.png"
+    "mod_assets/backgrounds/menu/backdrop.png"
     menu_bg_loop
 
 image menu_fade:
@@ -54,7 +54,7 @@ image menu_art_n:
     menu_art_move(1.00, 1000, 1.00)
 
 image menu_nav:
-    "gui/overlay/main_menu.png"
+    "mod_assets/backgrounds/menu/background.png"
     menu_nav_move
 
 image menu_particles:
@@ -177,7 +177,7 @@ label splashscreen:
 
     #autoload handling
     #Use persistent.autoload if you want to bypass the splashscreen on startup for some reason
-    if persistent.autoload and not _restart:
+    if persistent.has_launched_before and not persistent.playername is "" and not _restart:
         jump autoload
 
     # Start splash logic
@@ -186,8 +186,6 @@ label splashscreen:
     # Splash screen
     show white
     $ persistent.ghost_menu = False #Handling for easter egg from DDLC
-    $ config.main_menu_music = audio.test_bgm #changed main menu music to main theme
-    $ renpy.music.play(config.main_menu_music)
     show intro with Dissolve(0.5, alpha=True)
     pause 2.5
     hide intro with Dissolve(0.5, alpha=True)
@@ -216,7 +214,6 @@ label after_load:
         #Handle however you want, default is to force reset all save data
         $ renpy.utter_restart()
     return
-
 
 label autoload:
     python:

@@ -797,13 +797,6 @@ define audio.t3g3 = "<loop 4.618>bgm/3g2.ogg"
 define audio.t3m = "<loop 4.618>bgm/3.ogg"
 define audio.t4 = "<loop 19.451>bgm/4.ogg"  #Poem minigame
 define audio.t4g = "<loop 1.000>bgm/4g.ogg"
-define audio.tdokidoki = "mod_assets/bgm/dokidoki.ogg"
-define audio.tpoems = "mod_assets/bgm/poems.ogg"
-define audio.custom1 = "custom-music/01.mp3"
-define audio.custom2 = "custom-music/02.mp3"
-define audio.custom3 = "custom-music/03.mp3"
-define audio.battle = "custom-music/battle.mp3"
-define audio.spooky1 = "mod_assets/bgm/spooky1.ogg"
 define audio.camera_shutter = "mod_assets/sfx/camera_shutter.mp3"
 define audio.select_hover = "mod_assets/sfx/select_hover.mp3"
 define audio.select_confirm = "mod_assets/sfx/select_confirm.mp3"
@@ -830,8 +823,8 @@ init python:
     y_name = "Yuri"
 
     # Assign Natsuki the chosen nickname (defaulted to Natsuki)
-    if persistent.jn_player_nicknames_current_nickname is not None:
-        n_name = persistent.jn_player_nicknames_current_nickname
+    if store.persistent.jn_player_nicknames_current_nickname:
+        n_name = store.persistent.jn_player_nicknames_current_nickname
     
     else:
         n_name = "Natsuki"
@@ -840,6 +833,5 @@ init -999 python:
     def label_callback(name, abnormal):
         jn_globals.last_label = jn_globals.current_label
         jn_globals.current_label = name
-
 
     config.label_callback = label_callback
