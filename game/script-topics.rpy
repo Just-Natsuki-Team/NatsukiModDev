@@ -367,6 +367,7 @@ label talk_service_animals:
 
         if jn_affinity.get_affinity_state() == jn_affinity.LOVE:
             n "I love you,{w=0.1} [player]."
+            return
 
     else:
         n "They work in a bunch of places.{w=0.2} Airports and rescues and stuff,{w=0.1} usually."
@@ -436,6 +437,7 @@ label talk_using_computers_healthily:
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
             n "I love you,{w=0.1} [chosen_endearment]."
             n "..."
+            return
 
     else:
         n "But you know I only say these things because I care."
@@ -477,6 +479,7 @@ label talk_staying_active:
 
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         n "I wanna see you fighting fit!{w=0.2} Ehehe."
+        return
 
     n "I'm counting on you!"
     return
@@ -508,7 +511,7 @@ label talk_relieving_stress:
     n "Don't just create physical distance,{w=0.1} though.{w=0.2} Distance yourself mentally too!"
     n "If something is stressing you out,{w=0.1} you need to starve it of some attention."
     n "If I can't go somewhere else,{w=0.1} I just read something,{w=0.1} or watch some dumb videos."
-    n "But do whatever works for you{w=0.1} - {w=0.1}we all have our own comfort zones!"
+    n "But do whatever works for you; {w=0.1}we all have our own comfort zones!"
     n "And of course,{w=0.1} you could always come see me,{w=0.1} you know..."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
@@ -797,7 +800,7 @@ label talk_time_management:
     n "Or just slack off!"
     if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
         n "Although...{w=0.3} now that I think about it..."
-        n "Perhaps I should timebox our time together, [player]."
+        n "Perhaps I should timebox our time together,{w=0.1} [player]."
         n "Ahaha!"
 
     return
@@ -2245,10 +2248,12 @@ label talk_i_love_you:
             n "{i}Just leave me alone!{/i}{nw}"
             $ relationship(change="affinity-", multiplier=10)
             return { "quit": None }
+
+        $ persistent.jn_player_love_you_count += 1
     
     # Standard flows
     else:
-
+        $ persistent.jn_player_love_you_count += 1
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
 
             # At this point, Natsuki is super comfortable with her player, so we can be open and vary things!
@@ -2257,6 +2262,8 @@ label talk_i_love_you:
             if random_response_index == 0:
                 n "Ehehe.{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
                 n "You're always [chosen_descriptor] to me."
+                $ relationship("affinity+")
+                return
 
             elif random_response_index == 1:
                 n "Aww,{w=0.1} you don't say?"
@@ -2264,22 +2271,30 @@ label talk_i_love_you:
                 $ chosen_endearment = chosen_endearment.capitalize()
                 n "[chosen_endearment],{w=0.1} I love you too!"
                 n "I'll always be here to stick up for you."
+                $ relationship("affinity+")
+                return
 
             elif random_response_index == 2:
                 n "Aww,{w=0.1} [chosen_endearment]!{w=0.2} I love you too!"
                 n "You're the best thing that's ever happened to me."
+                $ relationship("affinity+")
+                return
 
             elif random_response_index == 3:
                 n "Oh?{w=0.2} Someone's all needy today,{w=0.1} huh?"
                 n "Well,{w=0.1} I'd be happy to oblige!"
                 n "I love you too,{w=0.1} [chosen_endearment]!"
                 n "Keep on smiling for me,{w=0.1} 'kay?"
+                $ relationship("affinity+")
+                return
 
             elif random_response_index == 4:
                 n "Fawning over me like always,{w=0.1} [player]?"
                 n "Ehehe.{w=0.2} Don't worry,{w=0.1} I'm not complaining!"
                 n "I love you too,{w=0.1} [chosen_endearment]!"
                 n "It's just us two against the world!"
+                $ relationship("affinity+")
+                return
 
             elif random_response_index == 5:
                 n "Well,{w=0.1} o-{w=0.1}of course you do.{w=0.2} Ahaha!"
@@ -2303,11 +2318,16 @@ label talk_i_love_you:
                         n "Well,{w=0.1} whatever.{w=0.2} I'm just glad you accept the truth."
                         n "Ehehe."
 
+                $ relationship("affinity+")
+                return
+
             elif random_response_index == 6:
                 n "Ehehe...{w=0.3} I always adore hearing that from you,{w=0.1} [player]."
                 n "...And I think I can guess you like hearing it just as much."
                 n "I love you too,{w=0.1} [chosen_endearment]!"
                 n "I don't need anyone else~."
+                $ relationship("affinity+")
+                return
 
             elif random_response_index == 7:
                 n "Wow,{w=0.1} [player]..." 
@@ -2316,12 +2336,16 @@ label talk_i_love_you:
                 n "...But just the kind of gross I'm down with.{w=0.2} Ehehe."
                 n "I love you too,{w=0.1} [chosen_endearment]!"
                 n "I'll always have your back."
+                $ relationship("affinity+")
+                return
 
             elif random_response_index == 8:
                 n "Ehehe."
                 n "I..."
                 n "Looooooooove you too,{w=0.1} [player]!"
                 n "You'll always be my rock."
+                $ relationship("affinity+")
+                return
 
             elif random_response_index == 9:
                 n "I mean...{w=0.3} that's real sweet of you and all,{w=0.1} [player]..."
@@ -2385,14 +2409,19 @@ label talk_i_love_you:
                                     "Mmmmmmmm...{w=0.3} nope!{w=0.2} I love {i}you{/i} way more,{w=0.1} [player]~!",
                                     "Come come now,{w=0.1} [player].{w=0.2}  Don't be silly!{w=0.2} I definitely love {i}you{/i} more.",
                                     "Wait...{w=0.3} can you hear that?{w=0.2} Oh!{w=0.2} It's how wrong you are -{w=0.1} I love you more,{w=0.1} dummy!"
+                                    "You're only wasting your time,{w=0.1} [player]~.{w=0.2} I love {i}you{/i} waaay more!",
+                                    "My,{w=0.1} oh my,{w=0.1} [player].{w=0.2} Don't you know that I love {i}you{/i} more by now?{w=0.2} Ehehe.",
+                                    "Uh huh...{w=0.3} Nat hears you,{w=0.1} Nat knows you're wrong.{w=0.1} I love {i}you{/i} more,{w=0.1} you goof!",
+                                    "You're adorable when you're in denial,{w=0.1} [player].{w=0.2} Ehehe.{w=0.2} I love {i}you{/i} more~!",
+                                    "Aww,{w=0.1} come on now,{w=0.1} [player].{w=0.2} If you {i}really{/i} loved me,{w=0.2} you'd admit I love {i}you{/i} more!"
                                 ]
-                                $ chosen_random_response = random.choice(player_is_wrong_responses)
+                                $ chosen_random_response = renpy.substitute(random.choice(player_is_wrong_responses))
                                 n "[chosen_random_response]"
 
                             $ wrong_response_count += 1
 
                         "Okay, fine. You love me more.":
-                            $ player_is_wrong = True
+                            $ player_is_wrong = False
                             n "See?{w=0.2} Was that really so hard?"
                             n "Sometimes you just have to admit you're wrong,{w=0.1} [player]."
                             n "Ehehe."
@@ -2400,18 +2429,23 @@ label talk_i_love_you:
                             if wrong_response_count >= 10:
                                 n "Nice try,{w=0.1} though~!"
 
+                            $ relationship("affinity+")
+                            return
+
             elif random_response_index == 10:
                 n "Ehehe.{w=0.2} I'll never get tired of hearing that from you,{w=0.1} [player]."
                 n "I love you too!"
                 n "You're my numero uno~."
+                $ relationship("affinity+")
+                return
 
             else:
                 n "Oh?{w=0.2} Lovey-dovey as usual?"
                 n "You're such a softie,{w=0.1} [player].{w=0.2} Ehehe."
                 n "But...{w=0.3} I'm not gonna complain!{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
                 n "You always make me feel tall."
-
-            $ relationship("affinity+")
+                $ relationship("affinity+")
+                return
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "G-{w=0.1}gah!{w=0.2} [player]!"
@@ -2420,12 +2454,14 @@ label talk_i_love_you:
             n "Let's just talk about something,{w=0.1} alright?"
             n "Y-{w=0.1}you can fawn over me in your {i}own{/i} time.{w=0.2} Ahaha!"
             $ relationship("affinity+")
+            return
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
             n "H-{w=0.1}hey! I thought I told you not to just come out with stuff like that!"
             n "Jeez,{w=0.1} [player]..."
             n "I-{w=0.1}I don't know if you're trying to win me over,{w=0.1} or what..."
             n "But you're gonna have to try harder than that!{w=0.2} Ehehe..."
+            return
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
             n "G-{w=0.1}gah!"
@@ -2434,6 +2470,7 @@ label talk_i_love_you:
             n "..."
             n "I don't know if you think this is a joke,{w=0.1} or what..."
             n "But it really isn't funny to me,{w=0.1} [player]."
+            return
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
             n "..."
@@ -2441,6 +2478,7 @@ label talk_i_love_you:
             n "If you {i}really{/i} care about me like that..."
             n "Then {i}prove{/i} it."
             $ relationship("affinity-")
+            return
 
         else:
             n "..."
@@ -2450,8 +2488,8 @@ label talk_i_love_you:
             n "You know what?{w=0.2} Whatever.{w=0.2} I don't care anymore."
             n "Say what you like,{w=0.1} [player].{w=0.2} It changes nothing."
             $ relationship("affinity-")
+            return
 
-    $ persistent.jn_player_love_you_count += 1
     return
 
 # Natsuki discusses her trademark hairstyle with the player
@@ -2732,6 +2770,97 @@ label talk_favourite_drink:
         n "As for warmer weather..."
         n "I don't really know.{w=0.2} Whatever is fine."
         n "Heh.{w=0.2} Though at this rate,{w=0.1} I shouldn't expect much more than tap water from you anyway.{w=0.2} Right,{w=0.1} [player]?"
+
+# Natsuki complains about her school uniform
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_school_uniform",
+            unlocked=True,
+            prompt="What do you think of your school uniform?",
+            category=["Fashion"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_school_uniform:
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        n "Oho?{w=0.2} Does [player] like a girl in uniform?"
+        n "Wow...{w=0.3} you're even {i}more{/i} gross than I thought."
+        n "..."
+        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        n "Oh come on,{w=0.1} [chosen_tease]!{w=0.2} You always get all sulky when I call you that!{w=0.2} I just can't resist."
+        n "Ehehe.{w=0.2} So anyway..."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n "Huh?{w=0.2} My school uniform?"
+        n "...Ehehe."
+        n "Why do you ask,{w=0.1} [player]?{w=0.2} Did {i}you{/i} wanna wear it or something?"
+        n "Oh!{w=0.2} We can play dress-up!{w=0.2} Wouldn't you like that,{w=0.1} [player]?{w=0.2} It'll be so much fun!"
+        n "I bet I could make you look so cute~.{w=0.1} Ahaha!"
+        n "Well anyway,{w=0.1} putting jokes aside..."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n "My school uniform?{w=0.2} That's...{w=0.3} kind of a weird thing to ask me about,{w=0.1} huh?"
+        n "Well,{w=0.1} whatever.{w=0.2} I'll let it slide...{w=0.3} this time."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n "...Huh?{w=0.2} Oh,{w=0.1} the school uniform."
+        n "I...{w=0.3} don't know what you're expecting to hear from me,{w=0.1} [player]."
+        n "I gotta wear it for school.{w=0.2} That's the point of a uniform,{w=0.1} if you hadn't realized."
+        n "It doesn't matter if I like it or not."
+        n "...And it matters even less if you do."
+        return
+
+    else:
+        n "Heh.{w=0.2} I like it more than {i}you{/i}.{w=0.2} Jerk."
+        return
+
+    n "It's alright,{w=0.1} I guess.{w=0.2} I actually really like the warm colours!"
+    n "They're way easier on the eyes than a lot of the other uniforms I've seen around."
+    n "But Oh.{w=0.2} My.{w=0.2} Gosh.{w=0.2} [player]."
+    n "The layers.{w=0.2} So many layers."
+    n "Who even thought someone needs this much clothing?!{w=0.2} For school,{w=0.1} of all places?!"
+    n "I mean...{w=0.3} do you even {i}know{/i} what wearing all of this in summer is like?!{w=0.2} It's horrible!"
+    n "And the blazer...{w=0.3} ugh!{w=0.2} It's actually the worst thing ever."
+    n "Like yeah,{w=0.1} I can take some off between class,{w=0.1} but I gotta put it all back on when I go back in."
+    n "...Or get told off.{w=0.2} {i}Again{/i}.{w=0.2} I honestly have no idea how Sayori gets away with hers being so scruffy."
+    n "And all of this stuff is super expensive too!{w=0.2} Talk about a kick in the teeth!{w=0.2} Jerks."
+    n "Ugh...{w=0.3} I seriously can't wait until I can wear whatever I like for what I'm doing."
+    n "It could be worse though,{w=0.1} I guess.{w=0.2} At least I never had to learn how to do a tie!"
+    n "What about you though, [player]?"
+    menu:
+        n "Did you have to wear uniform at school?"
+
+        "Yes, I had to wear uniform.":
+            n "Aha!{w=0.2} So you know the struggle too,{w=0.1} huh?"
+
+        "No, I didn't have to wear uniform.":
+            n "..."
+            n "...Lucky."
+
+        "I have to wear uniform now.":
+            n "Then you have my condolences,{w=0.1} [player]!{w=0.2} Ahaha."
+            n "Good to know we're on the same page,{w=0.1} though."
+
+    n "Well,{w=0.1} anyway..."
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        n "I still don't particularly {i}like{/i} wearing it..."
+        n "But I think I can put up with it.{w=0.2} Just for you,{w=0.1} [player]~."
+        n "Ehehe."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n "I-{w=0.1}if you like it, [player]?"
+        n "I suppose it has that going for it too,{w=0.1} right?{w=0.2} Ahaha..."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n "I guess at least I'm warm and toasty for the winter,{w=0.1} right?{w=0.2} Ahaha."
+
+    return
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
