@@ -469,7 +469,7 @@ label compliment_thoughtful:
             n "Nnnnn-!{w=0.2} what did I tell you,{w=0.1} [player]?"
             n "I'm just...{w=0.3} giving as good as I get,{w=0.1} alright?"
             n "Jeez...{w=0.3} are you trying to put me on the spot or what?"
-            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES).capitalize()
             n "[chosen_tease]..."
             n "But...{w=0.3} I'm just really glad you appreciate it,{w=0.1} [player]."
 
@@ -480,7 +480,7 @@ label compliment_thoughtful:
             n "Uuuuu...{w=0.3} jeez,{w=0.1} [player]..."
             n "I already said it was nothing!{w=0.2} Are you trying to put me on the spot?"
             n "It's fine,{w=0.1} so...{w=0.3} don't worry about it,{w=0.1} alright?"
-            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES).capitalize()
             n "[chosen_tease]..."
 
     else:
