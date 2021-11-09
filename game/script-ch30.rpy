@@ -218,12 +218,12 @@ label talk_menu:
         "Tell me again about...":
             call player_select_topic(is_repeat_topics=True)
 
+        "I love you, [n_name]!" if jn_affinity.get_affinity_state() >= jn_affinity.LOVE and persistent.jn_player_love_you_count > 0:
+            $ jn_placeholders.show_resting_placeholder_natsuki()
+            jump talk_i_love_you
+
         "I feel..." if jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
             jump player_admissions_start
-
-        "I love you, [n_name]!" if jn_affinity.get_affinity_state() >= jn_affinity.LOVE and persistent.jn_player_love_you_count > 0:
-            $ show_resting_placeholder_natsuki()
-            jump talk_i_love_you
 
         "I want to tell you something..." if jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
             jump player_compliments_start
