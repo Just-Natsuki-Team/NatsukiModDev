@@ -6,14 +6,14 @@ default persistent.jn_player_nicknames_bad_given_total = 0
 init 0 python in nicknames:
     
     # Nickname types
-    NICKNAME_TYPE_INVALID = 0
-    NICKNAME_TYPE_LOVED = 1
-    NICKNAME_TYPE_NEUTRAL = 2
-    NICKNAME_TYPE_DISLIKED = 3
-    NICKNAME_TYPE_HATED = 4
-    NICKNAME_TYPE_PROFANITY = 5
-    NICKNAME_TYPE_FUNNY = 6
-    NICKNAME_TYPE_NOU = 7
+    TYPE_INVALID = 0
+    TYPE_LOVED = 1
+    TYPE_NEUTRAL = 2
+    TYPE_DISLIKED = 3
+    TYPE_HATED = 4
+    TYPE_PROFANITY = 5
+    TYPE_FUNNY = 6
+    TYPE_NOU = 7
     
     # Natsuki loves these nicknames; awarding them awards affinity/trust
     NICKNAME_LOVED_LIST = {
@@ -680,7 +680,7 @@ init 0 python in nicknames:
     }
 
     """
-    Returns the nickname type for a given string nickname, defaulting to NICKNAME_TYPE_NEUTRAL
+    Returns the nickname type for a given string nickname, defaulting to TYPE_NEUTRAL
 
     IN:
         nickname - The nickname to test
@@ -690,29 +690,29 @@ init 0 python in nicknames:
     def get_nickname_type(nickname):
 
         if not isinstance(nickname, basestring):
-            return NICKNAME_TYPE_INVALID
+            return TYPE_INVALID
         
         else:
             nickname = nickname.lower().replace(" ", "")
 
             if nickname in NICKNAME_LOVED_LIST:
-                return NICKNAME_TYPE_LOVED
+                return TYPE_LOVED
 
             elif nickname in NICKNAME_DISLIKED_LIST:
-                return NICKNAME_TYPE_DISLIKED
+                return TYPE_DISLIKED
 
             elif nickname in NICKNAME_HATED_LIST:
-                return NICKNAME_TYPE_HATED
+                return TYPE_HATED
 
             elif nickname in NICKNAME_PROFANITY_LIST:
-                return NICKNAME_TYPE_PROFANITY
+                return TYPE_PROFANITY
 
             elif nickname in NICKNAME_FUNNY_LIST:
-                return NICKNAME_TYPE_FUNNY
+                return TYPE_FUNNY
 
             elif nickname in NICKNAME_NOU_LIST:
-                return NICKNAME_TYPE_NOU
+                return TYPE_NOU
 
             else:
-                return NICKNAME_TYPE_NEUTRAL
+                return TYPE_NEUTRAL
                 

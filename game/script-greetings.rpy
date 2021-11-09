@@ -488,7 +488,7 @@ init 5 python:
             category=["Admission"],
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
             additional_properties={
-                "admission_type": admissions.ADMISSION_TYPE_SICK,
+                "admission_type": admissions.TYPE_SICK,
             }
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -512,7 +512,7 @@ label greeting_feeling_better_sick:
 
             # Add pending apology, reset the admission
             $ store.apologies.add_new_pending_apology(store.apologies.TYPE_UNHEALTHY)
-            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_SICK
+            $ admissions.last_admission_type = admissions.TYPE_SICK
 
         "Still unwell.":
             n "Still not feeling up to scratch,{w=0.1} [player]?"
@@ -521,7 +521,7 @@ label greeting_feeling_better_sick:
 
             # Add pending apology, reset the admission
             $ store.apologies.add_new_pending_apology(store.apologies.TYPE_UNHEALTHY)
-            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_SICK
+            $ admissions.last_admission_type = admissions.TYPE_SICK
     return
 
 init 5 python:
@@ -533,7 +533,7 @@ init 5 python:
             category=["Admission"],
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
             additional_properties={
-                "admission_type": admissions.ADMISSION_TYPE_TIRED,
+                "admission_type": admissions.TYPE_TIRED,
             }
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -557,7 +557,7 @@ label greeting_feeling_better_tired:
 
             # Add pending apology, reset the admission
             $ store.apologies.add_new_pending_apology(store.apologies.TYPE_UNHEALTHY)
-            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_TIRED
+            $ admissions.last_admission_type = admissions.TYPE_TIRED
 
         "Still tired.":
             n "Still struggling with your sleep,{w=0.1} [player]?"
@@ -566,7 +566,7 @@ label greeting_feeling_better_tired:
 
             # Add pending apology, reset the admission
             $ store.apologies.add_new_pending_apology(store.apologies.TYPE_UNHEALTHY)
-            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_TIRED
+            $ admissions.last_admission_type = admissions.TYPE_TIRED
     return
 
 # Absence-related greetings; used when the player leaves suddenly, or has been gone an extended period

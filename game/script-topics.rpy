@@ -1456,13 +1456,13 @@ label talk_give_nickname:
     else:
         $ nickname_type = nicknames.get_nickname_type(nickname)
 
-    if nickname_type == nicknames.NICKNAME_TYPE_INVALID:
+    if nickname_type == nicknames.TYPE_INVALID:
         n "Uhmm...{w=0.3} [player]?"
         n "I don't think that's a nickname at all."
         n "I'll...{w=0.3} just stick with what I have now,{w=0.1} thanks."
         return
 
-    elif nickname_type == nicknames.NICKNAME_TYPE_LOVED:
+    elif nickname_type == nicknames.TYPE_LOVED:
         $ persistent.jn_player_nicknames_current_nickname = nickname
         $ n_name = persistent.jn_player_nicknames_current_nickname
         n "O-{w=0.1}oh!{w=0.2} [player]!"
@@ -1474,21 +1474,21 @@ label talk_give_nickname:
         n "[nickname] it is!{w=0.2} Ehehe."
         return
 
-    elif nickname_type == nicknames.NICKNAME_TYPE_DISLIKED:
+    elif nickname_type == nicknames.TYPE_DISLIKED:
         n "Come on,{w=0.1} [player]...{w=0.3} really?"
         n "You know I'm really not comfortable being called that."
         n "..."
         n "I'm...{w=0.3} just going to pretend you didn't say that,{w=0.1} alright?"
         return
 
-    elif nickname_type == nicknames.NICKNAME_TYPE_HATED:
+    elif nickname_type == nicknames.TYPE_HATED:
         n "W-{w=0.1}what?{w=0.2} What did you just call me?!"
         n "[player]!{w=0.2} I can't believe you!"
         n "Why would you call me that?{w=0.2} That's awful!"
         n "..."
         $ persistent.jn_player_nicknames_bad_given_total += 1
 
-    elif nickname_type == nicknames.NICKNAME_TYPE_PROFANITY:
+    elif nickname_type == nicknames.TYPE_PROFANITY:
         n "E-{w=0.1}excuse me?!"
         n "What the hell did you just call me,{w=0.1} [player]?!"
         n "..."
@@ -1497,7 +1497,7 @@ label talk_give_nickname:
         n "..."
         $ persistent.jn_player_nicknames_bad_given_total += 1
 
-    elif nickname_type == nicknames.NICKNAME_TYPE_FUNNY:
+    elif nickname_type == nicknames.TYPE_FUNNY:
         n "Pffft!"
         n "Ahaha!"
         n "[nickname]?{w=0.2} What kind of nickname is that meant to be,{w=0.1} [player]?"
@@ -1508,7 +1508,7 @@ label talk_give_nickname:
         $ n_name = persistent.jn_player_nicknames_current_nickname
         return
 
-    elif nickname_type == nicknames.NICKNAME_TYPE_NOU:
+    elif nickname_type == nicknames.TYPE_NOU:
         show placeholder_natsuki wink zorder jn_placeholders.NATSUKI_Z_INDEX
         n "No you~."
         return
@@ -1656,7 +1656,7 @@ label talk_sleeping_well:
         n "I mean,{w=0.1} you {i}have{/i} been here for a while now..."
         n "So I kinda figured you might be feeling a little sleepy anyway."
 
-    elif admissions.last_admission_type == admissions.ADMISSION_TYPE_TIRED:
+    elif admissions.last_admission_type == admissions.TYPE_TIRED:
         n "I mean,{w=0.1} you even {i}said{/i} you were tired before."
         n "So...{w=0.3} it only makes sense to ask,{w=0.1} right?{w=0.2} Anyway..."
 
