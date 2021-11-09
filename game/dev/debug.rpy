@@ -678,7 +678,7 @@ label talk_custom_say:
     show placeholder_natsuki smile zorder jn_placeholders.NATSUKI_Z_INDEX
     n "...And we're done here!{w=0.2} You're welcome,{w=0.1} [player]!"
 
-# This topic allows us to have Natsuki say whatever we like with any expression we choose
+# This topic allows us to have Natsuki tell us how many topics of each type we have loaded
 init 5 python:
     registerTopic(
         Topic(
@@ -713,4 +713,33 @@ label talk_topic_count:
 
     n "...And that's about it!{w=0.2} Ehehe."
     n "Way to go,{w=0.1} [player]!"
+    return
+
+# This topic allows us to have Natsuki cycle through all the placeholder sprites we have set up
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_show_all_placeholder_sprites",
+            unlocked=True,
+            prompt="Can you show me all your placeholder sprites?",
+            conditional="config.console",
+            category=["Debug (Sprites)"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_show_all_placeholder_sprites:
+    n "Oki-doki,{w=0.1} [player]!"
+    n "Ready?{w=0.2} Here we go!"
+    python:
+        for placeholder_sprite in jn_placeholders.ALL_PLACEHOLDER_SPRITES:
+            renpy.show(name=placeholder_sprite, at_list=[store.center], zorder=jn_placeholders.NATSUKI_Z_INDEX)
+            renpy.with_statement(trans=store.ease_transition)
+            renpy.say(n, "This is {0}".format(placeholder_sprite))
+
+    $ jn_placeholders.show_resting_placeholder_natsuki()
+    n "And... all done~!"
     return

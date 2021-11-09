@@ -15,6 +15,7 @@ default persistent.jn_player_appearance_height_cm = None
 
 # Hobby data
 default persistent.jn_player_gaming_frequency = None
+default persistent.jn_player_can_drive = None
 
 # Romance data
 default persistent.jn_player_love_you_count = 0
@@ -122,7 +123,7 @@ init 5 python:
             unlocked=True,
             prompt="Did you ever have any pets?",
             conditional=None,
-            category=["Natsuki", "Life", "Animals", "Family"],
+            category=["Life", "Animals", "Family"],
             player_says=True,
             affinity_range=(jn_aff.NORMAL, None),
             location="classroom"
@@ -332,7 +333,7 @@ init 5 python:
             unlocked=True,
             prompt="Service animals",
             conditional=None,
-            category=["Life", "Animals", "Health"],
+            category=["Animals"],
             nat_says=True,
             affinity_range=(jn_affinity.DISTRESSED, jn_affinity.LOVE),
             location="classroom"
@@ -814,7 +815,7 @@ init 5 python:
             unlocked=True,
             prompt="Do you have a sweet tooth?",
             conditional=None,
-            category=["Natsuki", "Health", "Food"],
+            category=["Health", "Food"],
             player_says=True,
             affinity_range=(jn_affinity.DISTRESSED, jn_affinity.LOVE),
             location="classroom"
@@ -881,7 +882,7 @@ init 5 python:
             unlocked=True,
             prompt="Your appearance",
             conditional=None,
-            category=["Life", "You"],
+            category=["You"],
             nat_says=True,
             affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.LOVE),
             location="classroom"
@@ -1210,7 +1211,7 @@ init 5 python:
             unlocked=True,
             prompt="Do you drink alcohol?",
             conditional=None,
-            category=["Health", "Natsuki"],
+            category=["Food", "Health"],
             player_says=True,
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
             location="classroom"
@@ -1276,7 +1277,7 @@ init 5 python:
             unlocked=True,
             prompt="Can you drive?",
             conditional=None,
-            category=["Natsuki", "Transport"],
+            category=["Transport"],
             player_says=True,
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
             location="classroom"
@@ -1285,57 +1286,143 @@ init 5 python:
     )
 
 label talk_driving:
+    # Check to see if the player and Natsuki have already discussed if Nat can drive in this topic, or the "are you into cars?" topic
+    if get_topic("talk_driving"):
+        $ already_discussed_driving = get_topic("talk_driving").shown_count > 0
+
+    elif get_topic("talk_are_you_into_cars"):
+        $ already_discussed_driving = get_topic("talk_are_you_into_cars").shown_count > 0
+
     n "Pffft!"
     n "Ahaha!{w=0.2} What kind of a question is that,{w=0.1} [player]?"
     $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-    n "Of course I can't drive,{w=0.1} [chosen_tease]!{w=0.2} Why do you think I walk everywhere?"
-    n "I mean...{w=0.3} even if I wanted to learn,{w=0.1} I don't think I could afford it."
+
+    if already_discussed_driving:
+        n "I already told you I can't drive,{w=0.1} [chosen_tease]!{w=0.2} I don't even have a license!"
+        n "And even if I wanted to,{w=0.1} I don't think I could afford it..."
+
+    else:
+        n "Of course I can't drive,{w=0.1} [chosen_tease]!{w=0.2} I don't even have a license!"
+        n "I mean...{w=0.3} even if I wanted to learn,{w=0.1} I don't think I could afford it."
+
     n "Lessons are super expensive nowadays!"
-    n "And then there's tests,{w=0.1} insurance...{w=0.3} it's actually pretty gross how fast it all adds up."
+    n "And then there's tests,{w=0.1} insurance,{w=0.1} fuel,{w=0.1} parking...{w=0.3} it's actually pretty gross how fast it all adds up."
     n "I think I'd rather stick to public transport and my own two feet."
     n "But what about you,{w=0.1} [player]?"
-    menu:
-        n "Can you drive?"
 
-        "Yes, and I do currently.":
-            n "Wow."
-            n "...{w=0.3}Show-off."
-            n "..."
-            n "Relax,{w=0.1} [player]!{w=0.2} Jeez!{w=0.2} I'm just messing with you."
-            n "That's awesome though{w=0.1} -{w=0.1} you just can't beat the convenience of a car,{w=0.1} right?"
-            if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-                n "But I should probably warn you..."
-                n "I'm picking the songs for our driving playlist."
-                n "Ahaha!"
+    # Player has never confirmed if they can/cannot drive
+    if persistent.jn_player_can_drive is None:
+        menu:
+            n "Can you drive?"
 
-            else:
-                n "Just remember,{w=0.1} [player]..."
-                n "I call shotgun.{w=0.2} Ehehe."
+            "Yes, and I do currently.":
+                n "Wow."
+                n "...{w=0.3}Show-off."
+                n "..."
+                n "Relax,{w=0.1} [player]!{w=0.2} Jeez!{w=0.2} I'm just messing with you."
+                n "That's awesome though{w=0.1} -{w=0.1} you just can't beat the convenience of a car,{w=0.1} right?"
 
-        "Yes, but I don't right now.":
-            n "Oh?{w=0.2} Is something wrong with your car,{w=0.1} [player]?"
-            n "Or perhaps...{w=0.3} you just don't own one at the moment?"
-            n "Well,{w=0.1} I'm not one to judge.{w=0.2} I'm sure you manage just fine."
-            n "Besides,{w=0.1} you're helping the environment too,{w=0.1} right?"
-            if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-                n "Thoughtful as always,{w=0.1} [player]."
-                n "I like that about you."
+                if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+                    n "But I should probably warn you..."
+                    n "I'm picking the songs for our driving playlist."
+                    n "Ahaha!"
+
+                else:
+                    n "Just remember,{w=0.1} [player]..."
+                    n "I call shotgun.{w=0.2} Ehehe."
+
+                $ persistent.jn_player_can_drive = True
+                return
+
+            "Yes, but I don't right now.":
+                n "Oh?{w=0.2} Is something wrong with your car,{w=0.1} [player]?"
+                n "Or perhaps...{w=0.3} you just don't own one at the moment?"
+                n "Well,{w=0.1} I'm not one to judge.{w=0.2} I'm sure you manage just fine."
+                n "Besides,{w=0.1} you're helping the environment too,{w=0.1} right?"
+
+                if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+                    n "Thoughtful as always,{w=0.1} [player]."
+                    n "I like that about you."
+                    n "Ehehe."
+
+                $ persistent.jn_player_can_drive = True
+                return
+
+            "No, I can't.":
+                n "Oh..."
+                n "Well,{w=0.1} chin up,{w=0.1} [player]!{w=0.2} It isn't the end of the world."
+                n "Don't worry {w=0.1}-{w=0.1} I'll teach you how to use the bus!"
                 n "Ehehe."
 
-        "No, I can't.":
-            n "Oh..."
-            n "Well,{w=0.1} chin up,{w=0.1} [player]!{w=0.2} It isn't the end of the world."
-            n "Don't worry {w=0.1}-{w=0.1} I'll teach you how to use the bus!"
-            n "Ehehe."
-            if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-                n "And besides..."
-                n "That just means we can snuggle up on the seat together,{w=0.1} [player]."
-                n "A dream come true for you,{w=0.1} right?"
-                n "Ehehe."
+                if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+                    n "And besides..."
+                    n "That just means we can snuggle up on the seat together,{w=0.1} [player]."
+                    n "A dream come true for you,{w=0.1} right?"
+                    n "Ehehe."
 
-            else:
-                n "That's what friends are for, [player]!"
+                else:
+                    n "That's what friends are for, [player]!"
 
+                $ persistent.jn_player_can_drive = False
+                return
+
+    # Player stated they can drive previously
+    elif persistent.jn_player_can_drive:
+        menu:
+            n "Doing much driving?"
+
+            "Yes, I'm driving frequently.":
+                n "Ah,{w=0.1}  so you're at home on the roads,{w=0.1} are you?"
+                n "Fair enough I suppose -{w=0.1} just remember to drive safe,{w=0.1} [player]!"
+
+            "I only drive sometimes.":
+                n "Well hey,{w=0.1} at least you're saving on fuel,{w=0.1} right?{w=0.2} That doesn't sound like a bad thing to me."
+                n "Besides,{w=0.1} it just means you can save the miles for ones you enjoy!"
+
+            "No, I'm not driving much.":
+                n "Oh?{w=0.2} That sounds like a bonus to me,{w=0.1} honestly!"
+                n "Just make sure you still get out there if you aren't driving around much though,{w=0.1} 'kay?"
+
+            "No, I can't drive anymore.":
+                n "Oh...{w=0.3} did something happen?"
+                n "I'm sorry to hear it,{w=0.1} [player]."
+                n "But at least that means more time to spend here,{w=0.1} right?{w=0.2} Ahaha..."
+                $ persistent.jn_player_can_drive = False
+
+        return
+
+    # Player admitted they cannot drive previously
+    else:
+        menu:
+            n "Anything new happening with you on the driving front?"
+
+            "I'm learning to drive!":
+                n "Ooh!{w=0.2} Nice,{w=0.1} [player]!"
+                n "Don't sweat the test,{w=0.1} alright?{w=0.2} I'm sure you'll do fine!"
+
+                if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+                    n "I believe in you,{w=0.1} [player]!"
+
+            "I passed my test!":
+                n "No kidding?"
+                n "Yaaay!{w=0.2} Congratulations,{w=0.1} [player]!"
+
+                if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+                    n "I'm so proud of you!{w=0.2} I knew you could do it,{w=0.1} dummy!"
+
+                n "Just make sure you keep up the good habits when you continue learning on your own,{w=0.1} alright?{w=0.2} Ahaha."
+                $ persistent.jn_player_can_drive = True
+
+            "I can drive again!":
+                n "Hey!{w=0.2} Nice going,{w=0.1} [player]!"
+                n "Drive safe!"
+                $ persistent.jn_player_can_drive = True
+
+            "Nope, nothing new.":
+                n "Oh?{w=0.2} Well,{w=0.1} fair enough!"
+                n "You and me both,{w=0.1} in that case?{w=0.2} Ahaha."
+
+        return
     return
 
 # Natsuki laments her inability to drive and questions the player on if they can
@@ -1761,9 +1848,8 @@ init 5 python:
             unlocked=True,
             prompt="Work-life balance",
             conditional=None,
-            category=["Life"],
+            category=["Life", "Society"],
             nat_says=True,
-            affinity_range=(jn_affinity.RUINED, jn_affinity.LOVE),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -1882,9 +1968,8 @@ init 5 python:
             label="talk_thoughts_on_horror",
             unlocked=True,
             prompt="Thoughts on horror",
-            category=["Natsuki", "Media", "Literature"],
+            category=["Media", "Literature"],
             nat_says=True,
-            affinity_range=(jn_affinity.RUINED, jn_affinity.LOVE),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -1947,18 +2032,16 @@ label talk_thoughts_on_horror:
 
     return
 
-# Natsuki responds to the player confessing their love to her
+# Natsuki discusses her gaming habits
 init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_i_love_you",
+            label="talk_gaming",
             unlocked=True,
-            prompt="I love you, {0}!".format(n_name),
-            conditional="jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED",
-            category=["Natsuki", "Romance"],
+            prompt="Are you into video games?",
+            category=["Media"],
             player_says=True,
-            affinity_range=(jn_affinity.RUINED, jn_affinity.LOVE),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -2054,7 +2137,7 @@ init 5 python:
             label="talk_natsukis_fang",
             unlocked=True,
             prompt="[n_name]'s fang",
-            category=["Health", "Natsuki"],
+            category=["Natsuki"],
             nat_says=True,
             affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
             location="classroom"
@@ -2120,7 +2203,6 @@ init 5 python:
             conditional="jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED",
             category=["Natsuki", "Romance"],
             player_says=True,
-            affinity_range=(jn_affinity.RUINED, jn_affinity.LOVE),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -2500,9 +2582,8 @@ init 5 python:
             label="talk_natsukis_hairstyle",
             unlocked=True,
             prompt="Why do you style your hair like that?",
-            category=["Fashion", "Natsuki"],
+            category=["Fashion"],
             player_says=True,
-            affinity_range=(jn_affinity.RUINED, jn_affinity.LOVE),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -2644,7 +2725,7 @@ init 5 python:
             label="talk_favourite_animal",
             unlocked=True,
             prompt="What's your favourite animal?",
-            category=["Animals", "Natsuki"],
+            category=["Animals"],
             player_says=True,
             location="classroom"
         ),
@@ -2703,7 +2784,7 @@ init 5 python:
             label="talk_favourite_drink",
             unlocked=True,
             prompt="What's your favourite drink?",
-            category=["Food", "Natsuki"],
+            category=["Food"],
             player_says=True,
             location="classroom"
         ),
@@ -2859,6 +2940,203 @@ label talk_school_uniform:
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "I guess at least I'm warm and toasty for the winter,{w=0.1} right?{w=0.2} Ahaha."
+
+    return
+
+# Natsuki laments how she's never travelled abroad by plane
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_flying",
+            unlocked=True,
+            prompt="Have you ever flown anywhere?",
+            category=["Transport"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_flying:
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        n "Ooh!{w=0.2} Flying?{w=0.2} Like on a plane?"
+        n "Mmm...{w=0.3} I wish I could say I have,{w=0.1} [player]..."
+        n "Don't get me wrong though!{w=0.2} I'd {i}totally{/i} fly somewhere new if I could!"
+        n "It's just...{w=0.3} the price of it all,{w=0.1} you know?"
+        n "I've never had a passport,{w=0.1} but it's mainly the tickets and everything beyond that..."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n "Huh?{w=0.2} Flying?{w=0.2} Like on a plane or something?"
+        n "I...{w=0.3} wish I could say I have,{w=0.1} [player]."
+        n "Don't get me wrong though!{w=0.2} I'd love to jet off somewhere.{w=0.2} Like for a vacation or something!"
+        n "It's just the cost that stops me, you know?"
+        n "Even if I had a passport, there's just so many things to pay out for..."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n "Oh?{w=0.2} Like flying on a plane or whatever?"
+        n "Uhmm..." 
+        n "I...{w=0.3} never really had the opportunity to fly anywhere,{w=0.1} [player]."
+        n "I don't even have a passport or anything like that,{w=0.1} and even if I did?"
+        n "It isn't like tickets are...{w=0.3} affordable,{w=0.1} if you know what I mean?"
+        n "Especially to someone in my...{w=0.3} position.{w=0.2} Ahaha..."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n "Flying?{w=0.2} Like...{w=0.3} on a plane?"
+        n "No,{w=0.1} [player].{w=0.2} I haven't."
+        n "I've never owned a passport,{w=0.1} and it's way too expensive anyway."
+        n "I don't really like the idea of the environmental impact either."
+        n "...But something tells me you don't really care about that last point,{w=0.2} do you?"
+        n "You know...{w=0.3} just going by my experience so far."
+        n "...Am I wrong?"
+        return
+
+    else:
+        n "No,{w=0.1} [player].{w=0.2} I haven't.{w=0.2} And I probably never will."
+        n "Gloat all you want.{w=0.2} I don't give a crap if you have."
+        return
+
+    n "Besides,{w=0.1} I try not to feel too bad about it.{w=0.2} It's way better for the environment if I don't,{w=0.1} anyway!"
+    n "Flying places is pretty polluting.{w=0.2} I think I'd just feel selfish if I was constantly zooming around,{w=0.1} knowing how bad that is for everyone."
+    n "But...{w=0.3} that's just me,{w=0.1} I guess.{w=0.2} What about you,{w=0.1} [player]?"
+    menu:
+        n "Are you a frequent flier?"
+
+        "Yes, I fly regularly.":
+            n "Oh?{w=0.2} Well check you out,{w=0.1} [player]!"
+            n "I guess it's {i}plane{/i} to see how well you're doing for yourself?{w=0.2} Ehehe."
+            n "Just...{w=0.3} try to avoid racking up too many miles,{w=0.1} alright?"
+            n "We all gotta do our part for the world,{w=0.1} after all..."
+
+        "I fly sometimes.":
+            n "Ooh,{w=0.1} okay!{w=0.2} So the odd vacation or family flight then?"
+            n "I see,{w=0.1} I see..."
+            n "Well,{w=0.1} good for you, [player]! Everyone should get the chance to explore the world."
+            n "Hopefully I'll get the chance someday too."
+
+        "I've flown before.":
+            n "Ooh!{w=0.2} So you've already earned your wings,{w=0.1} huh?"
+            n "Hmm... {w=0.3}I wonder where you went?"
+            n "You gotta promise to tell me if you fly again,{w=0.1} 'kay?"
+            n "I wanna hear all about it!"
+
+        "I've never flown.":
+            n "Then that's just another thing we have in common,{w=0.1} [player]!"
+            n "I guess you could say..."
+            n "We're both just well grounded people?"
+            n "Ahaha!"
+
+    return
+
+# Natsuki laments how she's never travelled abroad by plane
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_are_you_into_cars",
+            unlocked=True,
+            prompt="Are you into cars?",
+            category=["Transport"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_are_you_into_cars:
+    $ already_discussed_driving = False
+
+    # Check to see if the player and Natsuki have already discussed if Nat can drive in this topic, or the "can you drive" topic
+    if get_topic("talk_driving"):
+        $ already_discussed_driving = get_topic("talk_driving").shown_count > 0
+
+    elif get_topic("talk_are_you_into_cars"):
+        $ already_discussed_driving = get_topic("talk_are_you_into_cars").shown_count > 0
+
+    if already_discussed_driving:
+        # Natsuki has already established she can't drive at some point
+        if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+            n "Eh?{w=0.2} Cars?" 
+            n "You know I can't drive,{w=0.1} dummy!{w=0.2} I don't really think I have much of a reason to be into cars!"
+            n "Well,{w=0.1} anyway..."
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+            n "[player].{w=0.2} You know I can't drive.{w=0.2} Why would you think I'd be into cars,{w=0.1} of all things?"
+            n "...Fine.{w=0.2} Whatever."
+
+        else:
+            n "...Really?"
+            n "You know I can't drive.{w=0.2} So I'm not even going to {i}pretend{/i} I care if you're into that,{w=0.1} [player]."
+            n "Besides...{w=0.3} I bet you'd {i}never{/i} treat your dream car like you treat me,{w=0.1} would you?"
+            return
+
+    else:
+        # Natsuki hasn't stated she can't drive before
+        if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+            n "Huh?{w=0.1} Am I into cars?"
+            n "Well...{w=0.3} to tell you the truth,{w=0.1} [player]?"
+            n "...I've never actually owned a license.{w=0.2} I don't even think I could afford to learn!"
+            n "So I've never really been drawn to them honestly."
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+            n "I can't drive,{w=0.1} [player].{w=0.2} I don't have a license either;{w=0.1} learning was always too expensive."
+            n "So...{w=0.3} why would I be into that?{w=0.1} I literally can't {i}afford{/i} to be."
+
+        else:
+            n "Newsflash,{w=0.1} jerk.{w=0.2} I {i}can't{/i} drive,{w=0.1} and I can't even afford to {i}learn{/i}."
+            n "So you tell {i}me{/i} -{w=0.1} why would I be into cars?{w=0.2} And if I was,{w=0.1} why the hell would I want to talk to {i}you{/i} about them?"
+            n "...Heh.{w=0.2} Yeah,{w=0.1} I thought so.{w=0.2} We're done here,{w=0.1} [player]."
+            return
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n "I can appreciate the talent that goes into them -{w=0.1} I think it's actually pretty cool how expressive they can be!"
+        n "Like...{w=0.3} the design languages of all the different brands,{w=0.1} the engineering that goes into them and all that."
+        n "It's pretty insane how much work goes into it;{w=0.1} and that's definitely something I have respect for!"
+        n "What about your side of the story, [player]?{w=0.2} You {i}did{/i} bring it up,{w=0.1} but I thought I'd ask anyway..."
+        menu:
+            n "Are you into cars?"
+
+            "Yes! I'm into my cars.":
+
+                # The player has never stated if they can drive
+                if persistent.jn_player_can_drive is None:
+                    n "Huh.{w=0.2} I wasn't actually sure if you could even drive,{w=0.1} but I guess it doesn't matter really."
+                    n "I guess being a petrolhead isn't an exclusive club,{w=0.1} huh?" 
+                    n "Ehehe."
+
+                # The player has confirmed they can drive
+                elif persistent.jn_player_can_drive:
+                    n "Well,{w=0.1} color {i}me{/i} surprised."
+                    n "Ehehe."
+                    n "Don't worry,{w=0.1} I had you figured for the sort,{w=0.2} [player]."
+                    n "But hey -{w=0.1} whatever floats your boat!"
+
+                # The player has admitted they cannot drive
+                else:
+                    n "That's...{w=0.3} actually pretty surprising to hear from you,{w=0.1} [player]."
+                    n "You know,{w=0.1} since you said you can't drive and all that..."
+                    n "But I guess it's like anything -{w=0.1} you don't have to be doing it to be a fan,{w=0.1} and that's fine with me!"
+
+            "I don't care much for them.":
+                n "I guess that's fair enough -{w=0.1} and don't worry,{w=0.1} I completely get it."
+                n "But if someone's into that kind of thing,{w=0.1} who am we to judge,{w=0.1} after all?"
+                n "Ahaha."
+
+            "No, I'm not into them.":
+                n "...Huh.{w=0.2} That's kinda weird -{w=0.1} then why did you bring it up,{w=0.1} [player]?"
+
+                if persistent.jn_player_can_drive:
+                    n "Especially if you can drive!"
+                    n "Huh..."
+
+                n "Well,{w=0.1} anyway.{w=0.2} Fair enough I guess!"
+
+    else:
+        n "I guess I can respect the work and talent that goes into designing and making one..."
+        n "But it's just the same as anything else."
+        n "I suppose you're into your cars then,{w=0.1} are you?"
+        n "Heh.{w=0.2} It'd be nice if you extended that respect to {i}people{/i} too,{w=0.1} [player]."
+        n "Just saying."
 
     return
 

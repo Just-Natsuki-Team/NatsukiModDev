@@ -21,6 +21,21 @@ init 0 python in jn_placeholders:
     NATSUKI_Z_INDEX = 3
     SKY_Z_INDEX = 0
 
+    ALL_PLACEHOLDER_SPRITES = {
+        "placeholder_natsuki boast",
+        "placeholder_natsuki neutral",
+        "placeholder_natsuki plead",
+        "placeholder_natsuki pleased",
+        "placeholder_natsuki sad",
+        "placeholder_natsuki shy",
+        "placeholder_natsuki smile",
+        "placeholder_natsuki smug",
+        "placeholder_natsuki sparkle",
+        "placeholder_natsuki tease",
+        "placeholder_natsuki unamused",
+        "placeholder_natsuki wink"
+    }
+
     def show_greeting_placeholder_natsuki():
         """
         Shows a resting Natsuki placeholder sprite based on current affinity.
