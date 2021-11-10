@@ -134,15 +134,13 @@ init 5 python:
 label talk_did_you_have_pets:
 
     # Check to see if the player and Natsuki have already discussed this
-    $ already_discussed_pets = False
-    if get_topic("talk_did_you_have_pets"):
-        $ already_discussed_pets = get_topic("talk_did_you_have_pets").shown_count > 0
+    $ already_discussed_pets = get_topic("talk_did_you_have_pets").shown_count > 0
 
     if already_discussed_pets:
         n "Wait...{w=0.3} didn't we talk about this before,{w=0.1} [player]?"
         n "Well anyway,{w=0.1} not much has changed."
         n "I still don't have a pet,{w=0.1} as much as I wish I did."
-        n "Maybe I should get one soon. Hmm..."
+        n "Maybe I should get one soon.{w=0.2} Hmm..."
 
     else:
         n "Huh?{w=0.2} Did I ever have any pets?"
@@ -1047,7 +1045,7 @@ label talk_player_appearance:
     # Hair colour
     if persistent.jn_player_appearance_hair_length == "None":
         n "You said you didn't have any hair,{w=0.1} so I think it's kinda pointless talking about hair colour."
-        n "Now,{w=0.1} let's see... what else..."
+        n "Now,{w=0.1} let's see...{w=0.3} what else..."
         n "Hmm..."
 
     else:
@@ -1287,12 +1285,8 @@ init 5 python:
 
 label talk_driving:
     # Check to see if the player and Natsuki have already discussed if Nat can drive in this topic, or the "are you into cars?" topic
-    if get_topic("talk_driving"):
-        $ already_discussed_driving = get_topic("talk_driving").shown_count > 0
-
-    elif get_topic("talk_are_you_into_cars"):
-        $ already_discussed_driving = get_topic("talk_are_you_into_cars").shown_count > 0
-
+    $ already_discussed_driving = get_topic("talk_driving").shown_count > 0 or get_topic("talk_are_you_into_cars").shown_count > 0
+    
     n "Pffft!"
     n "Ahaha!{w=0.2} What kind of a question is that,{w=0.1} [player]?"
     $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
@@ -1472,11 +1466,12 @@ label talk_sustainable_fashion:
     n "I think I've lectured you enough now,{w=0.1} [player],{w=0.1} so I won't keep harping on about it."
     n "But...{w=0.3} the next time you're out shopping for clothes,{w=0.1} or looking through some catalogues online?"
     n "Just spare a thought for the environment,{w=0.1} would you?"
+
     if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
         n "For me?"
         n "I know I can count on you!"
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "Ehehe.{w=0.2} Thanks,{w=0.1} [player]!"
         n "I'm counting on you!"
 
@@ -1808,7 +1803,7 @@ label talk_aging:
     n "The signs appear in a bunch of ways,{w=0.1} but that's what makes it unnerving."
     n "Everyone experiences it differently,{w=0.1} and we don't even know what happens after the end!"
     n "Spooky,{w=0.1} huh?"
-    n "Although... I guess you could say that's more the fear of the unknown than aging itself."
+    n "Although...{w=0.3} I guess you could say that's more the fear of the unknown than aging itself."
     n "What does wind me up though is how immature people can be about it."
     n "Especially when it comes to relationships between different ages!"
     n "People just get so preachy about it..."
@@ -1871,7 +1866,7 @@ label talk_work_life_balance:
         n "Huh.{w=0.2} Actually...{w=0.3} now that I think about it..."
         n "It isn't like that kind of intrusion is only limited to when you're away either."
         n "I've heard {i}way{/i} too many stories of people doing stupid amounts of overtime at work -{w=0.1} sometimes not even paid!"
-        n "Or even students studying late into the night until they collapse... it's pretty crazy."
+        n "Or even students studying late into the night until they collapse...{w=0.3} it's pretty crazy."
 
     else:
         n "It just gets annoying -{w=0.1} everyone expects you to always be around to do more."
@@ -2485,7 +2480,7 @@ label talk_i_love_you:
                                     "Nope!{w=0.2} I love {i}you{/i} more!",
                                     "Sorry,{w=0.1} bub!{w=0.2} I definitely love {i}you{/i} more!",
                                     "Ehehe.{w=0.2} Nope~!{w=0.2} We both know I love {i}you{/i} more.",
-                                    "Hmm... nah.{w=0.2} Pretty sure I love {i}you{/i} more!",
+                                    "Hmm...{w=0.3} nah.{w=0.2} Pretty sure I love {i}you{/i} more!",
                                     "Nooooope~!{w=0.2} I love {i}you{/i} more!",
                                     "Silly [player]~.{w=0.2} I love {i}you{/i} more,{w=0.1} remember?",
                                     "Mmmmmmmm...{w=0.3} nope!{w=0.2} I love {i}you{/i} way more,{w=0.1} [player]~!",
@@ -2647,7 +2642,7 @@ label talk_natsukis_hairstyle:
 
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-        n "I'm pretty sure I already let my hair down around you,{w=0.1} [chosen_tease]. That qualifies, right?"
+        n "I'm pretty sure I already let my hair down around you,{w=0.1} [chosen_tease].{w=0.2} That qualifies, right?"
         n "Ahaha!"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
@@ -2725,7 +2720,7 @@ init 5 python:
             label="talk_favourite_animal",
             unlocked=True,
             prompt="What's your favourite animal?",
-            category=["Animals"],
+            category=["Animals", "Nature"],
             player_says=True,
             location="classroom"
         ),
@@ -2739,7 +2734,7 @@ label talk_favourite_animal:
         n "Like...{w=0.3} if you've seen them,{w=0.1} can you blame me?{w=0.2} They're totally adorable!"
         n "I just love everything about them...{w=0.3} the little paws,{w=0.1} the bright eyes, those puffy cheeks..."
         n "And that tiny litte tail...{w=0.3} oh my gosh!{w=0.2} It's just precious!"
-        n "It really winds me up when people call them boring,{w=0.1} or unaffectionate though.{w=0.2} Like... have you ever watched one?"
+        n "It really winds me up when people call them boring,{w=0.1} or unaffectionate though.{w=0.2} Like...{w=0.3} have you ever watched one?"
         n "They all have their own little personalities,{w=0.1} just like any other animal -{w=0.1} only smaller!"
         n "And if you bond with them,{w=0.1} they aren't afraid to show it -{w=0.1} I've seen videos of them following their owners around,{w=0.1} and even leaping into their hands!"
         n "Plus they're easy to take care of,{w=0.1} too!" 
@@ -2959,14 +2954,14 @@ init 5 python:
     )
 
 label talk_flying:
-    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         n "Ooh!{w=0.2} Flying?{w=0.2} Like on a plane?"
         n "Mmm...{w=0.3} I wish I could say I have,{w=0.1} [player]..."
         n "Don't get me wrong though!{w=0.2} I'd {i}totally{/i} fly somewhere new if I could!"
         n "It's just...{w=0.3} the price of it all,{w=0.1} you know?"
         n "I've never had a passport,{w=0.1} but it's mainly the tickets and everything beyond that..."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
         n "Huh?{w=0.2} Flying?{w=0.2} Like on a plane or something?"
         n "I...{w=0.3} wish I could say I have,{w=0.1} [player]."
         n "Don't get me wrong though!{w=0.2} I'd love to jet off somewhere.{w=0.2} Like for a vacation or something!"
@@ -3008,22 +3003,36 @@ label talk_flying:
             n "Just...{w=0.3} try to avoid racking up too many miles,{w=0.1} alright?"
             n "We all gotta do our part for the world,{w=0.1} after all..."
 
+            if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+                n "E-especially if people we really care about are in it. Ehehe..."
+
+            elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+                n "Even you, [player]! Ehehe."
+
         "I fly sometimes.":
             n "Ooh,{w=0.1} okay!{w=0.2} So the odd vacation or family flight then?"
             n "I see,{w=0.1} I see..."
             n "Well,{w=0.1} good for you, [player]! Everyone should get the chance to explore the world."
             n "Hopefully I'll get the chance someday too."
 
+            if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+                n "I hope you'll be available when that happens,{w=0.1} [player]."
+                n "I'm gonna need a tour guide,{w=0.1} after all.{w=0.2} Ehehe..."
+
+            elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+                n "You better be handy when that happens,{w=0.1} [player]..."
+                n "I bet you'd got tons of advice you can share,{w=0.1} right?{w=0.2} Ahaha."
+
         "I've flown before.":
             n "Ooh!{w=0.2} So you've already earned your wings,{w=0.1} huh?"
-            n "Hmm... {w=0.3}I wonder where you went?"
+            n "Hmm...{w=0.3} I wonder where you went?"
             n "You gotta promise to tell me if you fly again,{w=0.1} 'kay?"
             n "I wanna hear all about it!"
 
         "I've never flown.":
             n "Then that's just another thing we have in common,{w=0.1} [player]!"
             n "I guess you could say..."
-            n "We're both just well grounded people?"
+            n "We're both just {i}well grounded{/i} people,{w=0.1} huh?"
             n "Ahaha!"
 
     return
@@ -3137,6 +3146,242 @@ label talk_are_you_into_cars:
         n "I suppose you're into your cars then,{w=0.1} are you?"
         n "Heh.{w=0.2} It'd be nice if you extended that respect to {i}people{/i} too,{w=0.1} [player]."
         n "Just saying."
+
+    return
+
+# Natsuki comments on how she feels about the player, based on affinity
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_how_do_you_feel_about_me",
+            unlocked=True,
+            prompt="How do you feel about me?",
+            category=["Natsuki", "Romance", "You"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_how_do_you_feel_about_me:
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+
+        if persistent.jn_player_love_you_count > 0:
+            n "[player]...{w=0.3} isn't it obvious? You know I love you already,{w=0.1} right?"
+            n "Jeez...{w=0.3} you really are a dork sometimes,{w=0.1} you know."
+            n "But...{w=0.3} I really like that silly part of you,{w=0.1} [player]."
+            n "Never change,{w=0.1} 'kay? Ehehe."
+            n "Love you,{w=0.1} [player]~!"
+
+        else:
+            n "Nnnnnnn-!"
+            n "C-{w=0.1}come on! Isn't it obvious by now? Jeez...{w=0.3}"
+            n "Do I really have to spell it out for you,{w=0.1} [player]?"
+            n "Ugh...{w=0.3}"
+            n "Heh.{w=0.2} Actually,{w=0.1} you know what?"
+            n "I'll let you figure it out."
+            n "And no,{w=0.1} before you ask -{w=0.1} you've had enough hints already."
+            n "Ehehe...{w=0.3}"
+
+        return
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n "Uuuuuu-!"
+        n "A-{w=0.1}are you trying to put me on the spot or something,{w=0.1} [player]?"
+        n "Jeez...{w=0.3}"
+        n "You should really know how I feel about you by now,{w=0.1} you know...{w=0.3}"
+        n "...{w=0.3}"
+        n "...{w=0.3}Fine.{w=0.2} I...{w=0.3} really...{w=0.3} like you,{w=0.1} [player]."
+        n "I-{w=0.1}is that enough for you? Ahaha...{w=0.3}"
+        return
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n "H-{w=0.1}huh? How do I feel about you?"
+        n "W-{w=0.1}what're you worrying about that for,{w=0.1} you dummy?!"
+        n "You're a-{w=0.1}okay in my books,{w=0.1} [player]...{w=0.3} so just take it easy!"
+        n "Jeez...{w=0.3} you'll make things all awkward at this rate."
+        n "Ahaha...{w=0.3}"
+        return
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+        n "Huh? Well,{w=0.1} I mean...{w=0.3}"
+        n "You're pretty fun to be with,{w=0.1} all things considered!"
+        n "I guess...{w=0.3} keep up the good work?"
+        n "Ehehe...{w=0.3}"
+        return
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n "H-{w=0.1}huh? How do I feel about...{w=0.3} you?"
+        n "I-{w=0.1}I mean,{w=0.1} you're alright...{w=0.3} I guess?"
+        n "Ahaha...{w=0.3}"
+        n "...{w=0.3}"
+        n "W-{w=0.1}what?! It's the truth,{w=0.1} so...{w=0.3} yeah."
+        n "...{w=0.3}"
+        n "Let's just get back to it already!"
+        n "Jeez...{w=0.3}"
+        return
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
+        n "...{w=0.3}Oh? That matters to you now,{w=0.1} does it?"
+        n "Then tell me,{w=0.1} [player]."
+        n "Why did you keep hurting my feelings like that?"
+        n "...{w=0.3}"
+        n "I don't have much patience for jerks,{w=0.1} [player].{w=0.2} You're better than this."
+        n "I don't know if you're trying to be funny or what,{w=0.1} but knock it off."
+        n "I'd appreciate it.{w=0.2} Thanks."
+        return
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n "...{w=0.3}Let's just cut the crap."
+        n "You've hurt me,{w=0.1} [player].{w=0.2} You've hurt me again,{w=0.1} and again."
+        n "You've done it so many times now."
+        n "So you tell me."
+        n "What the hell would {i}you{/i} think of someone who did that to you?"
+        n "...{w=0.3}"
+        n "You're on thin ice,{w=0.1} [player]."
+        n "That's all I'm gonna say...{w=0.3}"
+        return
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.BROKEN:
+        $ already_discussed_relationship = get_topic("talk_how_do_you_feel_about_me").shown_count > 0
+        if already_discussed_relationship:
+            n "...Wow. Really?"
+
+        else:
+            n "...{w=0.3}I have no words for how I feel about {i}you{/i}."
+            n "Don't even bother asking twice."
+
+        return
+        
+    else:
+        n "...{w=0.3}...{w=0.3}"
+        n "...{w=0.3}...{w=0.3}"
+        return
+        
+    return
+
+# Natsuki comments on how she feels about the player, based on affinity
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_are_you_into_cosplay",
+            unlocked=True,
+            prompt="Are you into cosplay?",
+            category=["Fashion", "Media", "Society"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_are_you_into_cosplay:
+
+    $ utils.log("talk_sustainable_fashion view count is {0}".format(get_topic("talk_sustainable_fashion").shown_count))
+    $ utils.log("talk_are_you_into_cosplay view count is {0}".format(get_topic("talk_are_you_into_cosplay").shown_count))
+
+    # Check to see if Natsuki has already revealed she can sew/seamstress in this/previous topic(s)
+    $ already_mentioned_sewing = get_topic("talk_sustainable_fashion").shown_count > 0 or get_topic("talk_are_you_into_cosplay").shown_count > 0
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n "Ooh!{w=0.2} Cosplay,{w=0.1} you say?"
+        n "Honestly,{w=0.1} I've never really done any cosplaying or anything..."
+        n "But I've actually thought about it a lot since I got into manga and all that stuff more!"
+        n "Plus I mean,{w=0.1} why shouldn't I?{w=0.2} There isn't a whole lot stopping me."
+
+        if already_mentioned_sewing:
+            n "Like I think I mentioned before -{w=0.1} I'm already pretty handy with a needle and thread,{w=0.1} if I say so myself!"
+
+        else:
+            n "I'm actually pretty handy with the old needle and thread,{w=0.1} you know!"
+
+        n "And materials aren't really that expensive either -{w=0.1} besides props and wigs,{w=0.1} anyway."
+        n "So it seems like a pretty awesome way to show my appreciation for characters I like and show my {i}limitless{/i} talent while I'm at it."
+        n "Ahaha!"
+        n "And who knows?"
+        n "Maybe you'll get to see some of my handiwork some day,{w=0.1} [player]."
+        n "I bet you'd like that,{w=0.1} huh?{w=0.2} Ehehe."
+        n "No need to be shy,{w=0.1} [player] -{w=0.1} I can read you like a book."
+        n "A gross book,{w=0.1} but a book nonetheless~."
+        n "Ahaha!"
+        return
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            n "Love you,{w=0.1} [player]~!"
+            return
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+        n "...Why did I get the feeling you'd bring this up sooner or later,{w=0.1} [player]?"
+        n "What?{w=0.2} Did you think I'd {i}automatically{/i} be into it because I read manga from time to time?"
+        n "Huh?{w=0.2} Is that it?"
+        n "Well?"
+        n "Speak up,{w=0.1} [player]!{w=0.2} I can't hear you~!"
+        n "..."
+        n "Ahaha!{w=0.2} Nah,{w=0.1} it's fine."
+        n "I've thought about it a bunch,{w=0.1} honestly -{w=0.1} like since I got into manga and all that a while ago."
+        n "I haven't {i}actually{/i} gone and dressed up yet,{w=0.1} though."
+        n "But there really isn't much stopping me,{w=0.1} [player]."
+
+        if already_mentioned_sewing:
+            n "Like I said -{w=0.1} I already fix up and make my own normal clothes,{w=0.1} so a costume isn't much of a leap."
+
+        else:
+            n "You could say I'm something of a pro with a needle and thread,{w=0.1} so it's right up my alley!"
+
+        n "Besides,{w=0.1} I've done the math on materials -{w=0.1} it's actually pretty affordable,{w=0.1} so that's all good."
+        n "Well,{w=0.1} besides wigs and props and stuff.{w=0.2} Those can be kinda pricey,{w=0.1} but not exactly unaffordable -{w=0.1} just gotta shop around!"
+        n "That being said...{w=0.3} hmm..."
+        n "You know what,{w=0.1} [player]?"
+        n "Perhaps I might just give it a shot...{w=0.3} yeah!"
+        n "Man,{w=0.1} I've got so many awesome ideas buzzing around in my head now!"
+        n "Oh -{w=0.1} don't worry -{w=0.1} you'll get your chance to see them too.{w=0.2} I'll need a second opinion after all."
+        n "That's what friends are for,{w=0.1} right?{w=0.2} Ehehe."
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+            n "Besides,{w=0.1} [player].{w=0.2} You seem to have pretty good taste."
+            n "I think I can trust your judgement.{w=0.2} Ahaha."
+
+        return
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n "Cosplay,{w=0.1} huh?"
+        n "Well...{w=0.3} I mean,{w=0.1} I've considered it,{w=0.1} if that's what you're asking."
+        n "I never really thought about it that much until I got more into manga and things like that."
+        n "It kinda feels like once you start getting into that stuff,{w=0.1} you discover tons more at once!"
+        n "But anyway,{w=0.1} I've never actually gone out and cosplayed myself."
+        n "T-{w=0.1}that isn't to say there's anything stopping me,{w=0.1} of course!"
+        
+        if already_mentioned_sewing:
+            n "I told you already that I'm pretty good with a needle and thread,{w=0.1} so that's a-{w=0.1}okay!"
+
+        else:
+            n "I'm basically a pro with a needle and thread,{w=0.1} so that's the hard part already mastered!"
+
+        n "The rest of it is just shopping around for materials,{w=0.1} which are usually pretty cheap anyway."
+        n "Props and wigs and all that are a little more annoying,{w=0.1} but not exactly undoable."
+        n "Hmm..."
+        n "The more I think about it,{w=0.1} the more I like the idea!"
+        n "What about you,{w=0.1} [player]?{w=0.2} I bet you'd love to see my skills at work,{w=0.1} right?"
+        n "Ahaha."
+        n "Well...{w=0.3} we'll see,{w=0.1} but no promises!"
+        return
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n "Huh?{w=0.2} Cosplay?"
+        n "...Heh.{w=0.2} Why,{w=0.1} [player]?"
+        n "So you can make fun of my clothes too?"
+        n "..."
+        n "No,{w=0.1} [player].{w=0.2} I've never cosplayed.{w=0.2} I could,{w=0.1} but I haven't."
+        n "Does that answer your question?"
+        return
+
+    else:
+        n "Heh.{w=0.2} Why?"
+        n "So you have something else to make me feel awful about?"
+        n "...Yeah.{w=0.2} No thanks."
+        n "I'm done talking to you about this."
+        return
 
     return
 

@@ -743,3 +743,30 @@ label talk_show_all_placeholder_sprites:
     $ jn_placeholders.show_resting_placeholder_natsuki()
     n "And... all done~!"
     return
+
+# This topic allows us to have Natsuki call an API for us, and print the results to the log
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_call_api",
+            unlocked=True,
+            prompt="Can you call an API for me?",
+            conditional="config.console",
+            category=["Debug (API)"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_call_api:
+    n "Oh?{w=0.2} You want me to access {i}The Interwebz{/i}?"
+    n "Ehehe.{w=0.2} Sure!"
+    n "I'll write down whatever I get back in the log file,{w=0.1} alright?"
+
+    menu:
+        n "Now,{w=0.1} what do you want me to call?"
+
+        "Nevermind.":
+            n "Oh...{w=0.3} well,{w=0.1} if you say so!"

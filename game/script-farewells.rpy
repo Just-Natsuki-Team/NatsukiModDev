@@ -841,6 +841,8 @@ label farewell_short_session_ask:
                     else:
                         n "Thanks, [player]. It means a lot."
 
+                    $ relationship("affinity+")
+                    $ relationship("trust+")
                     $ jn_globals.player_already_stayed_on_farewell = True
 
                 "No, I have to go.":
@@ -911,6 +913,7 @@ label farewell_short_session_ask_alt:
             n "So...{w=0.3} what else did you wanna do today?"
             $ jn_globals.player_already_stayed_on_farewell = True
             $ relationship("affinity+")
+            $ relationship("trust+")
 
         "Fine, I guess.":
             n "You {i}guess{/i}?{w=0.2} What do you mean,{w=0.1} you guess?!"
@@ -921,6 +924,7 @@ label farewell_short_session_ask_alt:
             n "Now,{w=0.1} where were we?"
             $ jn_globals.player_already_stayed_on_farewell = True
             $ relationship("affinity+")
+            $ relationship("trust+")
 
         "Sorry [n_name], I can't right now.":
             n "Uuuu-"
@@ -963,6 +967,7 @@ label farewell_fake_confidence_ask:
             n "Now,{w=0.1} where were we?"
             $ jn_globals.player_already_stayed_on_farewell = True
             $ relationship("affinity+")
+            $ relationship("trust+")
 
         "Sorry, I really need to go.":
             n "Oh...{w=0.3} aha..."
@@ -1065,7 +1070,7 @@ label farewell_gentle_ask:
 label farewell_extra_trust:
     # ABSOLUTE+
     if jn_trust.get_trust_state() >= jn_trust.ABSOLUTE:
-        show placeholder_natsuki pleased zorder jn_placeholders.NATSUKI_Z_INDEX
+        show placeholder_natsuki smile zorder jn_placeholders.NATSUKI_Z_INDEX
         n "My [player]...{w=0.3} I'll be waiting..."
 
     # FULL+
