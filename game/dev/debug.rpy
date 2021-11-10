@@ -34,7 +34,7 @@ init python in jn_debug:
     LOAD_FROM_DISK_FAILED = 3
 
     # Let us call the Talk menu whenever to back out of dialogue
-    #store.jn_register_label_keymap("force_talk_menu", talk_menu, "ctrl_t")
+    #store.jn_register_label_keymap("force_debug_menu", debug_menu, "ctrl_t")
 
     def _watch_all_tracked_items():
         """
@@ -190,7 +190,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_set_affinity",
+            label="debug_set_affinity",
             unlocked=True,
             prompt="Can you change my affinity state?",
             conditional="config.console",
@@ -201,7 +201,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label talk_set_affinity:
+label debug_set_affinity:
     n "Okaaay! Just tell me what affinity state you want!"
     menu:
         "High affinity...":
@@ -276,7 +276,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_set_trust",
+            label="debug_set_trust",
             unlocked=True,
             prompt="Can you change my trust state?",
             conditional="config.console",
@@ -287,7 +287,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label talk_set_trust:
+label debug_set_trust:
     n "Sure! Just tell me what trust state you want!"
     menu:
         "High trust...":
@@ -362,7 +362,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_print_persistent",
+            label="debug_print_persistent",
             unlocked=True,
             prompt="Can you print my persistent data?",
             conditional=None,
@@ -373,7 +373,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label talk_print_persistent:
+label debug_print_persistent:
     n "No problem, [player]!{w=0.1} Just give me a second..."
     $ utils.log(utils.pretty_print(persistent))
     n "And we're done!{w=0.2} Ehehe."
@@ -384,7 +384,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_print_config",
+            label="debug_print_config",
             unlocked=True,
             prompt="Can you print the config?",
             conditional=None,
@@ -395,7 +395,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label talk_print_config:
+label debug_print_config:
     n "Leave it to me,{w=0.1} [player]!{w=0.2} One second..."
     $ utils.log(utils.pretty_print(config))
     n "And...{w=0.3} done!{w=0.2} You're welcome,{w=0.1} [player]~!{w=0.2} Ehehe."
@@ -406,7 +406,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_toggle_watched_items",
+            label="debug_toggle_watched_items",
             unlocked=True,
             prompt="Can you toggle the watched item list view?",
             conditional="config.console",
@@ -417,7 +417,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label talk_toggle_watched_items:
+label debug_toggle_watched_items:
     n "Sure!{w=0.2} Just give me a sec here..."
     n "..."
     $ jn_debug.toggle_show_tracked_watch_items()
@@ -429,7 +429,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_add_watched_item",
+            label="debug_add_watched_item",
             unlocked=True,
             prompt="Can you add an item to the watched item list?",
             conditional="config.console",
@@ -440,7 +440,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label talk_add_watched_item:
+label debug_add_watched_item:
     n "No sweat, [player]! Just tell me what you want to add."
     $ player_input = renpy.input("Enter an expression, or enter 'nevermind' to cancel:")
     if (player_input.lower().strip() in {"nevermind", ""}):
@@ -459,7 +459,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_remove_watched_item",
+            label="debug_remove_watched_item",
             unlocked=True,
             prompt="Can you remove an item from the watched item list?",
             conditional="config.console",
@@ -470,7 +470,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label talk_remove_watched_item:
+label debug_remove_watched_item:
     n "No worries, [player]! Just tell me what you want to remove."
     $ player_input = renpy.input("Enter an expression, or enter 'nevermind' to cancel:")
     if (player_input.lower().strip() in {"nevermind", ""}):
@@ -489,7 +489,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_load_watched_items_from_disk",
+            label="debug_load_watched_items_from_disk",
             unlocked=True,
             prompt="Can you load the watched item list from disk?",
             conditional="config.console",
@@ -500,7 +500,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label talk_load_watched_items_from_disk:
+label debug_load_watched_items_from_disk:
     n "No problemo,{w=0.1} [player]!{w=0.2} Uno momento..."
     n "..."
     $ load_outcome = jn_debug.load_tracked_watch_items_from_disk()
@@ -529,7 +529,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_reset_watched_items",
+            label="debug_reset_watched_items",
             unlocked=True,
             prompt="Can you reset the watched item list?",
             conditional="config.console",
@@ -540,7 +540,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label talk_reset_watched_items:
+label debug_reset_watched_items:
     n "Oh?{w=0.2} You want to reset the watched item list?"
     if len(persistent.jn_debug_tracked_watch_items) > 10:
         n "Uhmm...{w=0.3} [player]?{w=0.2} It looks like you're watching a lot of stuff..."
@@ -563,7 +563,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_toggle_watched_items_on_load",
+            label="debug_toggle_watched_items_on_load",
             unlocked=True,
             prompt="Can you toggle the watched item list on load state?",
             conditional="config.console",
@@ -574,7 +574,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label talk_toggle_watched_items_on_load:
+label debug_toggle_watched_items_on_load:
     n "Can do,{w=0.1} [player]!{w=0.2} Just let me know what you wanna do here."
     menu:
         "Enable the watched item list on load.":
@@ -622,7 +622,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_custom_say",
+            label="debug_custom_say",
             unlocked=True,
             prompt="Can you say something for me?",
             conditional="config.console",
@@ -633,7 +633,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label talk_custom_say:
+label debug_custom_say:
     n "Oooh!{w=0.2} Are we pranking someone,{w=0.1} [player]?{w=0.2} I'm for it!"
     $ player_input = renpy.input("What do you want me to say?")
     menu:
@@ -683,7 +683,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_topic_count",
+            label="debug_topic_count",
             unlocked=True,
             prompt="Can you count how many topics there are?",
             conditional="config.console",
@@ -694,13 +694,14 @@ init 5 python:
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label talk_topic_count:
+label debug_topic_count:
     n "Sure thing,{w=0.1} [player]!"
     n "{i}Ahem{/i}!"
     n "Currently,{w=0.1} there are..."
+    $ utils.log(persistent._topic_database)
     python:
         topics_and_counts = {
-            "generic topics": len(persistent._topic_database),
+            "generic (non-debug) topics": len(filter(lambda topic: (not "debug_" in topic), persistent._topic_database)),
             "compliments": len(persistent._compliment_database),
             "greetings": len(persistent._greeting_database),
             "farewells": len(persistent._farewell_database),
@@ -720,7 +721,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_show_all_placeholder_sprites",
+            label="debug_show_all_placeholder_sprites",
             unlocked=True,
             prompt="Can you show me all your placeholder sprites?",
             conditional="config.console",
@@ -731,7 +732,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label talk_show_all_placeholder_sprites:
+label debug_show_all_placeholder_sprites:
     n "Oki-doki,{w=0.1} [player]!"
     n "Ready?{w=0.2} Here we go!"
     python:
@@ -749,7 +750,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_call_api",
+            label="debug_call_api",
             unlocked=True,
             prompt="Can you call an API for me?",
             conditional="config.console",
@@ -760,7 +761,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label talk_call_api:
+label debug_call_api:
     n "Oh?{w=0.2} You want me to access {i}The Interwebz{/i}?"
     n "Ehehe.{w=0.2} Sure!"
     n "I'll write down whatever I get back in the log file,{w=0.1} alright?"
