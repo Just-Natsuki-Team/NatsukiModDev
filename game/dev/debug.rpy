@@ -770,3 +770,5 @@ label talk_call_api:
 
         "Nevermind.":
             n "Oh...{w=0.3} well,{w=0.1} if you say so!"
+
+    return
