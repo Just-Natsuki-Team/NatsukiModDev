@@ -636,48 +636,129 @@ init 5 python:
 label debug_custom_say:
     n "Oooh!{w=0.2} Are we pranking someone,{w=0.1} [player]?{w=0.2} I'm for it!"
     $ player_input = renpy.input("What do you want me to say?")
+    call debug_custom_say_options_a(player_input)
+    
+label debug_custom_say_options_a(dialogue):
     menu:
         n "Alright!{w=0.2} Now how do you want me to say it?"
+
+        "Boasting":
+            n "Okaaay!{w=0.2} Here goes!"
+            show placeholder_natsuki boast zorder jn_placeholders.NATSUKI_Z_INDEX
+            n "[dialogue]"
+            jump debug_custom_say_finish
 
         "Neutrally":
             n "Okaaay!{w=0.2} Here goes!"
             show placeholder_natsuki neutral zorder jn_placeholders.NATSUKI_Z_INDEX
-            n "[player_input]"
+            n "[dialogue]"
+            jump debug_custom_say_finish
 
-        "Pleading":
+        "Pleadingly":
             n "Okaaay!{w=0.2} Here goes!"
             show placeholder_natsuki plead zorder jn_placeholders.NATSUKI_Z_INDEX
-            n "[player_input]"
+            n "[dialogue]"
+            jump debug_custom_say_finish
+
+        "Pleased":
+            n "Okaaay!{w=0.2} Here goes!"
+            show placeholder_natsuki pleased zorder jn_placeholders.NATSUKI_Z_INDEX
+            n "[dialogue]"
+            jump debug_custom_say_finish
 
         "Sadly":
             n "Okaaay!{w=0.2} Here goes!"
             show placeholder_natsuki sad zorder jn_placeholders.NATSUKI_Z_INDEX
-            n "[player_input]"
+            n "[dialogue]"
+            jump debug_custom_say_finish
+
+        "More...":
+            call debug_custom_say_options_b(dialogue)
+
+        "Nevermind.":
+            n "Oh...{w=0.3} well, if you say so."
+
+    
+    jump ch30_loop
+
+label debug_custom_say_options_b(dialogue):
+    menu:
+        n "Alright!{w=0.2} Now how do you want me to say it?"
+
+        "Shyly":
+            n "Okaaay!{w=0.2} Here goes!"
+            show placeholder_natsuki shy zorder jn_placeholders.NATSUKI_Z_INDEX
+            n "[dialogue]"
+            jump debug_custom_say_finish
 
         "Happily":
             n "Okaaay!{w=0.2} Here goes!"
             show placeholder_natsuki smile zorder jn_placeholders.NATSUKI_Z_INDEX
-            n "[player_input]"
+            n "[dialogue]"
+            jump debug_custom_say_finish
+
+        "Smugly":
+            n "Okaaay!{w=0.2} Here goes!"
+            show placeholder_natsuki smug zorder jn_placeholders.NATSUKI_Z_INDEX
+            n "[dialogue]"
+            jump debug_custom_say_finish
 
         "Sparkly":
             n "Okaaay!{w=0.2} Here goes!"
             show placeholder_natsuki sparkle zorder jn_placeholders.NATSUKI_Z_INDEX
-            n "[player_input]"
+            n "[dialogue]"
+            jump debug_custom_say_finish
+
+        "Teasingly":
+            n "Okaaay!{w=0.2} Here goes!"
+            show placeholder_natsuki tease zorder jn_placeholders.NATSUKI_Z_INDEX
+            n "[dialogue]"
+            jump debug_custom_say_finish
+
+        "More...":
+            call debug_custom_say_options_c(dialogue)
+
+        "Back...":
+            call debug_custom_say_options_a(dialogue)
+
+        "Nevermind.":
+            n "Oh...{w=0.3} well, if you say so."
+
+    jump ch30_loop
+
+label debug_custom_say_options_c(dialogue):
+    menu:
+        n "Alright!{w=0.2} Now how do you want me to say it?"
 
         "Unamused":
             n "Okaaay!{w=0.2} Here goes!"
             show placeholder_natsuki unamused zorder jn_placeholders.NATSUKI_Z_INDEX
-            n "[player_input]"
+            n "[dialogue]"
+            jump debug_custom_say_finish
 
         "Mischievously":
             n "Okaaay!{w=0.2} Here goes!"
             show placeholder_natsuki wink zorder jn_placeholders.NATSUKI_Z_INDEX
-            n "[player_input]"
-    
+            n "[dialogue]"
+            jump debug_custom_say_finish
+
+        "Back...":
+            call debug_custom_say_options_b(dialogue)
+
+        "Nevermind.":
+            n "Oh...{w=0.3} well, if you say so."
+
+    # We have to jump to ch30, as if we've navigated previous menus then they'll be in call stack - and we cannot
+    # jump with params. Thanks, Tom...
+    jump ch30_loop
+
+label debug_custom_say_finish:
     n "..."
     show placeholder_natsuki smile zorder jn_placeholders.NATSUKI_Z_INDEX
     n "...And we're done here!{w=0.2} You're welcome,{w=0.1} [player]!"
-    return
+
+    # We have to jump to ch30, as returning will try to return call stack back at options w/o dialogue param, causing a crash...
+    jump ch30_loop
 
 # This topic allows us to have Natsuki tell us how many topics of each type we have loaded
 init 5 python:
@@ -772,5 +853,52 @@ label debug_call_api:
 
         "Nevermind.":
             n "Oh...{w=0.3} well,{w=0.1} if you say so!"
+
+    return
+
+# This topic allows us to have Natsuki change the weather for us
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="debug_change_weather",
+            unlocked=True,
+            prompt="Can you change the weather for me?",
+            conditional="config.console",
+            category=["Debug (Weather)"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label debug_change_weather:
+    n "Of course I can, dummy!"
+    menu:
+        n "What sort of weather do you feel like?"
+
+        "Overcast":
+            n "That's a little gloomy, isn't it? But alright! One sec..."
+            n "..."
+            $ jn_placeholders.show_placeholder_sky(jn_placeholders.WEATHER_OVERCAST)
+            n "There you go, [player]!"
+
+        "Rain":
+            n "Rain it is! One sec..."
+            $ jn_placeholders.show_placeholder_sky(jn_placeholders.WEATHER_RAIN)
+            n "There you go, [player]!"
+
+        "Thunder":
+            n "Not... what I'd pick, but fine. One sec..."
+            $ jn_placeholders.show_placeholder_sky(jn_placeholders.WEATHER_THUNDER)
+            n "There you go, [player]!"
+
+        "Sunny":
+            n "Alright, now we're talking! One sec..."
+            $ jn_placeholders.show_placeholder_sky(jn_placeholders.WEATHER_SUNNY)
+            n "There you go, [player]!"
+
+        "Nevermind.":
+            n "Huh. Well, suit yourself!"
 
     return

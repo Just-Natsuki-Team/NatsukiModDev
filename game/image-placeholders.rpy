@@ -29,9 +29,16 @@ init 0 python in jn_placeholders:
     import random
     import store
 
+    # Draw Z indexes for main placeholders
     NATSUKI_Z_INDEX = 3
     DIM_Z_INDEX = 1
     SKY_Z_INDEX = 0
+
+    # Weather types when calling show_placeholder_sky
+    WEATHER_OVERCAST = 1
+    WEATHER_RAIN = 2
+    WEATHER_SUNNY = 3
+    WEATHER_THUNDER = 4
 
     ALL_PLACEHOLDER_NATSUKI_SPRITES = {
         "placeholder_natsuki boast",
@@ -119,3 +126,39 @@ init 0 python in jn_placeholders:
         if dim:
             renpy.show(name=dim, zorder=DIM_Z_INDEX)
             renpy.with_statement(trans=store.ease_transition)
+
+    def show_placeholder_sky(weather_type):
+        """
+        Shows the specified sky placeholder with associated dimming effect.
+
+        IN:
+            weather_type - int; WEATHER_OVERCAST, WEATHER_RAIN, WEATHER_THUNDER or WEATHER_SUNNY
+        """
+        if (isinstance(weather_type, int)):
+            if weather_type == WEATHER_OVERCAST:
+                renpy.show(name="placeholder_sky_day overcast", zorder=SKY_Z_INDEX)
+                renpy.with_statement(trans=store.ease_transition)
+
+                renpy.show(name="placeholder_dim light", zorder=DIM_Z_INDEX)
+                renpy.with_statement(trans=store.ease_transition)
+
+            elif weather_type == WEATHER_RAIN:
+                renpy.show(name="placeholder_sky_day rain", zorder=SKY_Z_INDEX)
+                renpy.with_statement(trans=store.ease_transition)
+
+                renpy.show(name="placeholder_dim medium", zorder=DIM_Z_INDEX)
+                renpy.with_statement(trans=store.ease_transition)
+
+            elif weather_type == WEATHER_THUNDER:
+                renpy.show(name="placeholder_sky_day thunder", zorder=SKY_Z_INDEX)
+                renpy.with_statement(trans=store.ease_transition)
+
+                renpy.show(name="placeholder_dim heavy", zorder=DIM_Z_INDEX)
+                renpy.with_statement(trans=store.ease_transition)
+
+            else:
+                renpy.show(name="placeholder_sky_day sunny", zorder=SKY_Z_INDEX)
+                renpy.with_statement(trans=store.ease_transition)
+        
+        else:
+            raise Exception("weather_type {} is not a valid type.".format(weather_type))
