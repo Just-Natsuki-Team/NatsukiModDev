@@ -1,3 +1,4 @@
+# Natsuki's placeholder sprites; we use these in leiu of a full sprite system for now
 image placeholder_natsuki boast = "mod_assets/natsuki/placeholder_boast.png"
 image placeholder_natsuki neutral = "mod_assets/natsuki/placeholder_neutral.png"
 image placeholder_natsuki plead = "mod_assets/natsuki/placeholder_plead.png"
@@ -11,11 +12,13 @@ image placeholder_natsuki tease = "mod_assets/natsuki/placeholder_tease.png"
 image placeholder_natsuki unamused = "mod_assets/natsuki/placeholder_unamused.png"
 image placeholder_natsuki wink = "mod_assets/natsuki/placeholder_wink.png"
 
+# Placeholder sky types for the classroom
 image placeholder_sky_day overcast = "mod_assets/backgrounds/classroom/placeholder_sky_day_overcast.png"
 image placeholder_sky_day rain = "mod_assets/backgrounds/classroom/placeholder_sky_day_rain.png"
 image placeholder_sky_day sunny = "mod_assets/backgrounds/classroom/placeholder_sky_day_sunny.png"
 image placeholder_sky_day thunder = "mod_assets/backgrounds/classroom/placeholder_sky_day_thunder.png"
 
+# Placeholder vignettes; used with various weather conditions
 image placeholder_dim light = "mod_assets/backgrounds/classroom/placeholder_dim_light.png"
 image placeholder_dim medium = "mod_assets/backgrounds/classroom/placeholder_dim_medium.png"
 image placeholder_dim heavy = "mod_assets/backgrounds/classroom/placeholder_dim_heavy.png"
@@ -46,10 +49,10 @@ init 0 python in jn_placeholders:
     }
 
     _PLACEHOLDER_SKY_AND_DIM_MAP = {
-        "placeholder_sky_day overcast" : None,
-        "placeholder_sky_day rain" : "placeholder_dim light",
+        "placeholder_sky_day overcast" : "placeholder_dim light",
+        "placeholder_sky_day rain" : "placeholder_dim medium",
         "placeholder_sky_day sunny" : None,
-        "placeholder_sky_day thunder" : "placeholder_dim medium"
+        "placeholder_sky_day thunder" : "placeholder_dim heavy"
     }
 
     def show_greeting_placeholder_natsuki():
@@ -104,7 +107,8 @@ init 0 python in jn_placeholders:
         """
         renpy.hide("placeholder_sky_day")
         renpy.with_statement(trans=store.ease_transition)
-
+        
+        # Select the sky and dimming effect
         sky, dim = random.choice(list(_PLACEHOLDER_SKY_AND_DIM_MAP.items()))
 
         # Show the sky
