@@ -355,7 +355,7 @@ label talk_service_animals:
             n "I really,{w=0.1} really care about you,{w=0.1} [player]."
             n "I-{w=0.2}I want you to know that you can depend on me,{w=0.1} 'kay?"
 
-        if jn_affinity.get_affinity_state() == jn_affinity.LOVE:
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
             n "I love you,{w=0.1} [player]."
             return
 
@@ -3259,9 +3259,6 @@ init 5 python:
 
 label talk_are_you_into_cosplay:
 
-    $ utils.log("talk_sustainable_fashion view count is {0}".format(get_topic("talk_sustainable_fashion").shown_count))
-    $ utils.log("talk_are_you_into_cosplay view count is {0}".format(get_topic("talk_are_you_into_cosplay").shown_count))
-
     # Check to see if Natsuki has already revealed she can sew/seamstress in this/previous topic(s)
     $ already_mentioned_sewing = get_topic("talk_sustainable_fashion").shown_count > 0 or get_topic("talk_are_you_into_cosplay").shown_count > 0
 
@@ -3553,6 +3550,11 @@ label talk_fried_squid:
     n "Imagine biting through the batter,{w=0.1} only to find you're basically chewing on a bunch of rubber bands."
     n "Ugh!{w=0.2} Gross!{w=0.2} Talk about a disappointment."
     n "Don't let that put you off though,{w=0.1} [player] -{w=0.1} next time you see some,{w=0.1} why not give it a shot?"
+
+    if admissions.last_admission_type == TYPE_HUNGRY:
+        n "...Probably the sooner the better,{w=0.1} if you're hungry like you said."
+        n "But anyway..."
+
     n "You could even be all fancy if you wanted to and order it by the culinary name!"
     n "Ten points if you can guess what that is.{w=0.2} Ehehe."
 
