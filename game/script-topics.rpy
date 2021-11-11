@@ -3575,6 +3575,95 @@ label talk_fried_squid:
 
     return
 
+# Natsuki talks about collectibles
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_collectibles",
+            unlocked=True,
+            prompt="Do you have any collectibles?",
+            category=["Media"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_collectibles:
+    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n "Collectibles?{w=0.2} You mean like figurines and plushies and such?"
+        n "Mmm...{w=0.3} not really.{w=0.2} Collecting is an expensive hobby,{w=0.1} [player]!"
+        n "I mean,{w=0.1} it all depends on exactly what you collect,{w=0.1} but it feels like places that sell them prey on that."
+        n "Like...{w=0.3} the urge to complete a collection -{w=0.1} so they jack up the prices!"
+        n "Ugh...{w=0.3} and for people in my...{w=0.3} uhmm...{w=0.3} {i}position{/i},{w=0.1} it's a big barrier to entry."
+        n "But anyway..."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n "Huh?{w=0.2} You mean like figurines and all that stuff?"
+        n "Well...{w=0.3} no,{w=0.1} [player].{w=0.2} Not really."
+        n "I couldn't justify spending so much on a hobby like that!"
+        n "Especially not when I have others things to worry about spending my money on first,{w=0.1} you know."
+        n "But anyway,{w=0.1} putting all that aside..."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n "No,{w=0.1} [player]."
+        n "Collectibles are way too expensive for me.{w=0.2} I can't justify wasting the money I {i}do{/i} have."
+        n "{i}Especially{/i} on stuff that'll just sit on a shelf that I'll forget about."
+        n "Yeah,{w=0.1} [player] -{w=0.1} believe it or not,{w=0.1} some of us {i}do{/i} have to think about how we spend our money."
+        n "Shocker,{w=0.1} right?"
+        n "..."
+        n "Well?{w=0.2} Satisfied with your answer?"
+        n "We're done here."
+        return
+
+    else:
+        n "...Why?{w=0.2} ...And I don't just mean why you care."
+        n "But why should I tell {i}you{/i} if I do or not?"
+        n "You'd probably just trash them."
+        n "Heh.{w=0.2} After all." 
+        n "You've proven great at trashing things so far,{w=0.1} {i}haven't you{/i}?{w=0.2} Jerk."
+        return
+
+    n "..."
+    n "...Huh.{w=0.2} There's a point,{w=0.1} actually.{w=0.2} Does manga count as a collectible?"
+    n "I'm...{w=0.3} not really sure..."
+    n "What do you think,{w=0.1} [player]?"
+    menu:
+        n "Would you call it a collectible?"
+
+        "I'd say so!":
+            n "Oho!"
+            n "So I suppose I am something of a collector,{w=0.1} after all!"
+
+            if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:         
+                n "I guess that all makes sense.{w=0.2} After all..."
+                n "I'd like to think you're in my collection too,{w=0.1} [player]~."
+                n "Ehehe."
+
+            else:
+                n "Well,{w=0.1} in that case..."
+                n "Just let me know if you ever feel like a tour!"
+                n "You won't find a better collection,{w=0.1} I bet.{w=0.2} Ehehe."
+
+        "No,{w=0.1} I wouldn't.":
+            n "Huh...{w=0.3} you do have a point."
+            n "I suppose you'd call it a library,{w=0.1} or something like that?"
+            n "Well,{w=0.1} whatever."
+            n "I suppose I'd better {i}read{/i} up on my definitions,{w=0.1} right?"
+            n "Ehehe."
+
+        "Well,{w=0.1} it definitely isn't literature.":
+            n "Ha.{w=0.2} Ha.{w=0.2} Ha.{w=0.2} Ha.{w=0.2} ...Ha."
+            n "{i}Hilarious{/i},{w=0.1} [player]."
+            n "Keep it up,{w=0.1} and I'm gonna book you one."
+            n "...And no,{w=0.1} I don't mean read you a story."
+
+            if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+                n "Sheesh...{w=0.3} you're such a dummy sometimes,{w=0.1} [player]..."
+
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop

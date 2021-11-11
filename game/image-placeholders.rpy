@@ -11,17 +11,26 @@ image placeholder_natsuki tease = "mod_assets/natsuki/placeholder_tease.png"
 image placeholder_natsuki unamused = "mod_assets/natsuki/placeholder_unamused.png"
 image placeholder_natsuki wink = "mod_assets/natsuki/placeholder_wink.png"
 
-image placeholder_sky_day = "mod_assets/backgrounds/classroom/placeholder_sky_day.png"
+image placeholder_sky_day overcast = "mod_assets/backgrounds/classroom/placeholder_sky_day_overcast.png"
+image placeholder_sky_day rain = "mod_assets/backgrounds/classroom/placeholder_sky_day_rain.png"
+image placeholder_sky_day sunny = "mod_assets/backgrounds/classroom/placeholder_sky_day_sunny.png"
+image placeholder_sky_day thunder = "mod_assets/backgrounds/classroom/placeholder_sky_day_thunder.png"
+
+image placeholder_dim light = "mod_assets/backgrounds/classroom/placeholder_dim_light.png"
+image placeholder_dim medium = "mod_assets/backgrounds/classroom/placeholder_dim_medium.png"
+image placeholder_dim heavy = "mod_assets/backgrounds/classroom/placeholder_dim_heavy.png"
 
 define ease_transition = MoveTransition(0.1)
 
 init 0 python in jn_placeholders:
+    import random
     import store
 
     NATSUKI_Z_INDEX = 3
+    DIM_Z_INDEX = 1
     SKY_Z_INDEX = 0
 
-    ALL_PLACEHOLDER_SPRITES = {
+    ALL_PLACEHOLDER_NATSUKI_SPRITES = {
         "placeholder_natsuki boast",
         "placeholder_natsuki neutral",
         "placeholder_natsuki plead",
@@ -34,6 +43,13 @@ init 0 python in jn_placeholders:
         "placeholder_natsuki tease",
         "placeholder_natsuki unamused",
         "placeholder_natsuki wink"
+    }
+
+    _PLACEHOLDER_SKY_AND_DIM_MAP = {
+        "placeholder_sky_day overcast" : None,
+        "placeholder_sky_day rain" : "placeholder_dim light",
+        "placeholder_sky_day sunny" : None,
+        "placeholder_sky_day thunder" : "placeholder_dim medium"
     }
 
     def show_greeting_placeholder_natsuki():
@@ -81,3 +97,21 @@ init 0 python in jn_placeholders:
             else:
                 renpy.show(name="placeholder_natsuki sad", at_list=[store.center], zorder=NATSUKI_Z_INDEX)
                 renpy.with_statement(trans=store.ease_transition)
+
+    def show_random_placeholder_sky():
+        """
+        Shows a randomised sky placeholder with associated dimming effect.
+        """
+        renpy.hide("placeholder_sky_day")
+        renpy.with_statement(trans=store.ease_transition)
+
+        sky, dim = random.choice(list(_PLACEHOLDER_SKY_AND_DIM_MAP.items()))
+
+        # Show the sky
+        renpy.show(name=sky, zorder=SKY_Z_INDEX)
+        renpy.with_statement(trans=store.ease_transition)
+
+        # Add the dimming effect matching the sky, if it exists
+        if dim:
+            renpy.show(name=dim, zorder=DIM_Z_INDEX)
+            renpy.with_statement(trans=store.ease_transition)

@@ -41,9 +41,9 @@ label ch30_init:
     $ main_background.draw(full_redraw=True)
 
     if utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
-        show placeholder_sky_day zorder jn_placeholders.SKY_Z_INDEX
+        $ jn_placeholders.show_random_placeholder_sky()
     else:
-        hide placeholder_sky_day
+        hide placeholder_sky_day sunny
         
     show screen hkb_overlay
 

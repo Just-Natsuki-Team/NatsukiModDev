@@ -737,7 +737,7 @@ label debug_show_all_placeholder_sprites:
     n "Oki-doki,{w=0.1} [player]!"
     n "Ready?{w=0.2} Here we go!"
     python:
-        for placeholder_sprite in jn_placeholders.ALL_PLACEHOLDER_SPRITES:
+        for placeholder_sprite in jn_placeholders.ALL_PLACEHOLDER_NATSUKI_SPRITES:
             renpy.show(name=placeholder_sprite, at_list=[store.center], zorder=jn_placeholders.NATSUKI_Z_INDEX)
             renpy.with_statement(trans=store.ease_transition)
             renpy.say(n, "This is {0}".format(placeholder_sprite))
