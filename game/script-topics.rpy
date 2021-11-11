@@ -3460,7 +3460,7 @@ label talk_why_do_you_like_me:
             n "This isn't by chance because of what you said earlier...{w=0.3} right?"
 
         else:
-            n "Wh-why do I-...?"
+            n "Wh-{w=0.1}why do I-{w=0.1}...?"
             n "Uuuuuuu..."
 
         n "...Okay,{w=0.1} look.{w=0.2} I'll try to help you understand as best I can."
