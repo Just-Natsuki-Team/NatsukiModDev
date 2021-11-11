@@ -447,7 +447,7 @@ label admission_insecure:
         n "I don't care if people think you're falling behind.{w=0.2} I know you'll catch up."
         n "Just...{w=0.3} give yourself time and space,{w=0.1} [player]."
         n "These thoughts you're having...{w=0.3} they can lead you to some really bad places.{w=0.2} Trust me."
-        n "I won't let that happen without a fight{w=0.1} - {w=0.1}but you gotta fight with me,{w=0.1} [player].{w=0.2} Okay?"
+        n "I won't let that happen without a fight{w=0.1} -{w=0.1}but you gotta fight with me,{w=0.1} [player].{w=0.2} Okay?"
         menu:
             "Okay.":
                 n "Good.{w=0.2} Or you'll have me to deal with too.{w=0.2} Ahaha..."

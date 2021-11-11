@@ -901,5 +901,5 @@ init 5 python:
 
 label greeting_night_night_owl:
     n "Oh,{w=0.1} [player]!{w=0.2} You're a night owl too,{w=0.1} are you?"
-    n "Not that I have a problem with that,{w=0.1} of course - welcome back!"
+    n "Not that I have a problem with that,{w=0.1} of course -{w=0.1} welcome back!"
     return

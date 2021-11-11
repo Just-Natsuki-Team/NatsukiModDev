@@ -42,7 +42,6 @@ init 5 python:
             label="talk_having_pictures_taken",
             unlocked=True,
             prompt="How do you feel about having your picture taken?",
-            conditional=None,
             category=["Natsuki", "Photography", "Life"],
             player_says=True,
             location="classroom"
@@ -67,10 +66,7 @@ label talk_having_pictures_taken:
             n "But I trust you to make a good shot!"
             n "As long as you ask,{w=0.1} I've got no problem with it!"
 
-        elif jn_affinity.is_state_within_range(
-            affinity_state=jn_affinity.get_affinity_state(),
-            affinity_range=(jn_affinity.NORMAL, jn_affinity.AFFECTIONATE)
-        ):
+        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
             if player_screenshots_blocked:
                 n "Really, [player]?{w=0.1} You're asking me about this {i}now{/i}?"
                 n "You know {i}perfectly well{/i} how I feel about this."
@@ -101,10 +97,7 @@ label talk_having_pictures_taken:
                         n "Uh...{w=0.3} [player]?{w=0.1} This isn't very funny."
                         n "Make sure you ask,{w=0.1} okay?{w=0.1} For my sake."
 
-        elif jn_affinity.is_state_within_range(
-            affinity_state=jn_affinity.get_affinity_state(),
-            affinity_range=(jn_affinity.UPSET, jn_affinity.DISTRESSED)
-        ):
+        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
             n "Pictures? Really?"
             n "I don't think I want to have you taking my picture,{w=0.1} [player]."
             n "Let's talk about something else."
@@ -122,7 +115,6 @@ init 5 python:
             label="talk_did_you_have_pets",
             unlocked=True,
             prompt="Did you ever have any pets?",
-            conditional=None,
             category=["Life", "Animals", "Family"],
             player_says=True,
             affinity_range=(jn_aff.NORMAL, None),
@@ -330,7 +322,6 @@ init 5 python:
             label="talk_service_animals",
             unlocked=True,
             prompt="Service animals",
-            conditional=None,
             category=["Animals"],
             nat_says=True,
             affinity_range=(jn_affinity.DISTRESSED, jn_affinity.LOVE),
@@ -491,7 +482,6 @@ init 5 python:
             label="talk_relieving_stress",
             unlocked=True,
             prompt="Relieving stress",
-            conditional=None,
             category=["Life", "You", "Health"],
             nat_says=True,
             affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
@@ -530,7 +520,6 @@ init 5 python:
             label="talk_careful_spending",
             unlocked=True,
             prompt="Careful spending",
-            conditional=None,
             category=["Life", "You", "Health", "Society"],
             nat_says=True,
             affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
@@ -568,7 +557,6 @@ init 5 python:
             label="talk_eating_well",
             unlocked=True,
             prompt="Eating well",
-            conditional=None,
             category=["Life", "You", "Health", "Food"],
             nat_says=True,
             affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
@@ -619,7 +607,6 @@ init 5 python:
             label="talk_favourite_season",
             unlocked=True,
             prompt="What's your favourite season?",
-            conditional=None,
             category=["Weather", "Nature"],
             player_says=True,
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
@@ -769,7 +756,6 @@ init 5 python:
             label="talk_time_management",
             unlocked=True,
             prompt="Time management",
-            conditional=None,
             category=["Life"],
             nat_says=True,
             affinity_range=(jn_affinity.UPSET, jn_affinity.LOVE),
@@ -812,7 +798,6 @@ init 5 python:
             label="talk_sweet_tooth",
             unlocked=True,
             prompt="Do you have a sweet tooth?",
-            conditional=None,
             category=["Health", "Food"],
             player_says=True,
             affinity_range=(jn_affinity.DISTRESSED, jn_affinity.LOVE),
@@ -879,7 +864,6 @@ init 5 python:
             label="talk_player_appearance",
             unlocked=True,
             prompt="Your appearance",
-            conditional=None,
             category=["You"],
             nat_says=True,
             affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.LOVE),
@@ -1208,7 +1192,6 @@ init 5 python:
             label="talk_drinking_alcohol",
             unlocked=True,
             prompt="Do you drink alcohol?",
-            conditional=None,
             category=["Food", "Health"],
             player_says=True,
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
@@ -1274,7 +1257,6 @@ init 5 python:
             label="talk_driving",
             unlocked=True,
             prompt="Can you drive?",
-            conditional=None,
             category=["Transport"],
             player_says=True,
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
@@ -1427,7 +1409,6 @@ init 5 python:
             label="talk_sustainable_fashion",
             unlocked=True,
             prompt="Sustainable fashion",
-            conditional=None,
             category=["Environment", "Fashion"],
             nat_says=True,
             affinity_range=(jn_affinity.UPSET, jn_affinity.LOVE),
@@ -1776,7 +1757,6 @@ init 5 python:
             label="talk_aging",
             unlocked=True,
             prompt="Aging",
-            conditional=None,
             category=["Life"],
             nat_says=True,
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
@@ -1842,7 +1822,6 @@ init 5 python:
             label="talk_work_life_balance",
             unlocked=True,
             prompt="Work-life balance",
-            conditional=None,
             category=["Life", "Society"],
             nat_says=True,
             location="classroom"
@@ -2523,6 +2502,8 @@ label talk_i_love_you:
                 n "You always make me feel tall."
                 $ relationship("affinity+")
                 return
+
+            return
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "G-{w=0.1}gah!{w=0.2} [player]!"
@@ -3261,7 +3242,7 @@ label talk_how_do_you_feel_about_me:
         
     return
 
-# Natsuki comments on how she feels about the player, based on affinity
+# Natsuki pitches her thoughts on cosplaying
 init 5 python:
     registerTopic(
         Topic(
@@ -3382,6 +3363,156 @@ label talk_are_you_into_cosplay:
         n "...Yeah.{w=0.2} No thanks."
         n "I'm done talking to you about this."
         return
+
+    return
+
+# Natsuki describes why she likes the player
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_why_do_you_like_me",
+            unlocked=True,
+            prompt="Why do you like me?",
+            category=["Natsuki", "Romance", "You"],
+            player_says=True,
+            affinity_range=(jn_aff.AFFECTIONATE, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_why_do_you_like_me:
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        if admissions.last_admission_type == admissions.TYPE_INSECURE:
+            n "[player]..."
+            n "You aren't asking me this because of what you told me earlier...{w=0.3} right?"
+            n "..."
+            n "Look,{w=0.1} [player].{w=0.2} I'm going to be completely honest with you,{w=0.1} okay?"
+            n "What you can -{w=0.1} or {i}can't{/i} do -{w=0.1} isn't important to me."
+            n "What people {i}say{/i} you are -{w=0.1} or {i}aren't{/i} capable of -{w=0.1} isn't important to me either."
+            n "Neither is what people say about you."
+            n "[player]."
+            $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+            n "I...{w=0.3} feel about you the way I do because of how you've treated me,{w=0.1} [chosen_endearment].{w=0.2} Can you not see that?"
+            n "You've spent so much time with me,{w=0.1} day after day..."
+            n "You've listened to my problems,{w=0.1} and you've told me yours..."
+            n "You've been so patient with my mood swings,{w=0.1} and my grumpy moments..."
+
+            if persistent.jn_player_love_you_count >= 10:
+                n "And...{w=0.3} you've made me feel..."
+                n "So loved..."
+                n "..."
+
+            elif persistent.jn_player_love_you_count >= 1:
+                n "You're...{w=0.3} you're my first love,{w=0.1} [player]..."
+                n "Do you even realise how {i}much{/i} that means to me?"
+
+            elif persistent.jn_player_love_you_count == 0:
+                n "You honestly,{w=0.1} truly mean the world to me,{w=0.1} [player]..."
+
+            n "So...{w=0.3} yeah."
+            n "Does that answer your question?{w=0.2} Ehehe..."
+            n "I know I can't solve your problems with a snap of my fingers,{w=0.1} [player].{w=0.2} I'm not a miracle worker."
+            n "Believe me -{w=0.1} I {i}already{/i} would have if I could."
+            n "But..."
+            n "I hope you can believe me when I say things will work out,{w=0.1} okay?"
+            n "Just...{w=0.3} keep fighting..."
+            n "...Because I'm fighting for you too."
+            n "I love you,{w=0.1} [player].{w=0.2} You better not forget that."
+            return
+
+        else:
+            n "[player]..."
+            n "Do I really need to explain this all to you?"
+            n "It's just...{w=0.3} embarrassing...{w=0.3} to me..."
+            n "..."
+            n "...Okay,{w=0.1} look."
+            n "You've...{w=0.3} honestly done more than you could ever know,{w=0.1} [player]."
+            n "For me,{w=0.1} I mean."
+            n "I've almost lost count of how many hours you've spent talking to me..."
+            n "You've listened to so many of my dumb problems,{w=0.1} over and over..."
+            n "...And you've been so patient through all of my stupid moods."
+
+            if persistent.jn_player_love_you_count >= 10:
+                n "Y-you've made me feel..."
+                n "Really appreciated.{w=0.2} So many times,{w=0.1} I've lost count..."
+
+            elif persistent.jn_player_love_you_count >= 1:
+                n "You're...{w=0.3} you're my first love,{w=0.1} even!"
+                n "Do you even know what that {i}means{/i} to me?"
+
+            elif persistent.jn_player_love_you_count == 0:
+                n "You seriously mean the world to me,{w=0.1} [player]..."
+
+            n "So...{w=0.3} yeah."
+            n "Does that answer all of your questions?{w=0.2} Am I free to go now?{w=0.2} Ahaha..."
+            n "But seriously,{w=0.1} [player]."
+            n "Don't ever doubt how important you are to me,{w=0.1} alright?"
+            n "I'll get mad if you do."
+            n "And trust me..."
+            n "You don't want that.{w=0.2} Ehehe."
+            return
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if admissions.last_admission_type == admissions.TYPE_INSECURE:
+            n "...Hey,{w=0.1} [player]..."
+            n "This isn't by chance because of what you said earlier...{w=0.3} right?"
+
+        else:
+            n "Wh-why do I-...?"
+            n "Uuuuuuu..."
+
+        n "...Okay,{w=0.1} look.{w=0.2} I'll try to help you understand as best I can."
+        n "I don't really care about what others expect from you."
+        n "I don't really care about what others say or think about you."
+        n "I don't really care if you can -{w=0.1} or can't -{w=0.1} do something."
+        n "I...{w=0.3} like you,{w=0.1} because of how you've treated me,{w=0.1} you dummy!"
+        n "Like,{w=0.1} come on!"
+        n "You've listened to me yammer on,{w=0.1} again and again..."
+        n "You've heard me out on so many dumb problems I've had..."
+        n "You've even dealt with my crappy temper like a champ!"
+        n "..."
+        n "...I've never been treated by anyone as well as I've been treated by you,{w=0.1} [player]."
+        n "So is it any wonder why I...{w=0.3} really like you this much?"
+        n "..."
+        n "Alright,{w=0.1} okay.{w=0.2} I really don't wanna have to explain all that again,{w=0.1} so I hope you took all that in."
+        n "Just...{w=0.3} continue being you,{w=0.1} got it?" 
+        n "I...{w=0.3} really couldn't ask for better.{w=0.2} Ahaha..."
+        return
+
+    else:
+        if admissions.last_admission_type == admissions.TYPE_INSECURE:
+            n "W-{w=0.1}why do I...?"
+            n "..."
+            n "..."
+            n "Uhmm...{w=0.3} [player]?"
+            n "This isn't all related to what you told me earlier,{w=0.1} right?"
+            n "About feeling insecure and all that?"
+            n "..."
+            n "[player]."
+            n "Listen up,{w=0.1} 'kay?{w=0.2} I...{w=0.3} really don't wanna have to repeat this."
+
+        else:
+            n "Urk-!"
+            n "W-{w=0.1}wait,{w=0.1} w-{w=0.1}what?"
+            n "W-{w=0.1}why do I...{w=0.3} l-{w=0.1}like you?!"
+            n "Nnnnnnnnn-!"
+            n "I mean...!{w=0.2} It's not that I {i}like{/i} like you,{w=0.1} or anything ridiculous like that!"
+            n "Ugh...{w=0.3} I swear,{w=0.1} [player] -{w=0.1} you honestly try to put me in the most awkward freaking spots sometimes..."
+            n "..."
+            n "I...{w=0.3} guess I {i}do{/i} owe you an answer though,{w=0.1} at least."
+
+        n "Look."
+        n "You've been awesome to me so far,{w=0.1} [player]."
+        n "...Do you even know how few other people make me feel that way?"
+        n "It's...{w=0.3} really not a lot,{w=0.1} if you hadn't gathered."
+        n "You always listen to me,{w=0.1} you don't tell me I'm annoying,{w=0.1} or to pipe down..."
+        n "And you've been super understanding too."
+        n "I...{w=0.3} honestly couldn't ask for a better friend,{w=0.1} [player]."
+        n "Always remember that,{w=0.1} alright?{w=0.2} I'll get mad if you don't."
+        n "And neither of us want that,{w=0.1} do we?"
+        n "Ahaha..."
 
     return
 
