@@ -820,7 +820,7 @@ label debug_show_all_placeholder_sprites:
     python:
         for placeholder_sprite in jn_placeholders.ALL_PLACEHOLDER_NATSUKI_SPRITES:
             renpy.show(name=placeholder_sprite, at_list=[store.center], zorder=jn_placeholders.NATSUKI_Z_INDEX)
-            renpy.with_statement(trans=store.ease_transition)
+            renpy.with_statement(trans=store.natsuki_desk_move_transition)
             renpy.say(n, "This is {0}".format(placeholder_sprite))
 
     $ jn_placeholders.show_resting_placeholder_natsuki()
