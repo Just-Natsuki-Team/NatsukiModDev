@@ -677,6 +677,7 @@ label debug_custom_say:
     n "..."
     show placeholder_natsuki smile zorder jn_placeholders.NATSUKI_Z_INDEX
     n "...And we're done here!{w=0.2} You're welcome,{w=0.1} [player]!"
+    return
 
 # This topic allows us to have Natsuki tell us how many topics of each type we have loaded
 init 5 python:
