@@ -3516,6 +3516,65 @@ label talk_why_do_you_like_me:
 
     return
 
+# Natsuki actually likes fried squid!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_fried_squid",
+            unlocked=True,
+            prompt="Fried squid",
+            category=["DDLC", "Food"],
+            nat_says=True,
+            affinity_range=(jn_aff.HAPPY, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_fried_squid:
+    n "Hey,{w=0.1} [player]..."
+    n "You know what I could go for right now?"
+    n "A big,{w=0.1} steaming fresh bowl of Mon-{w=0.1}ika!"
+    n "..."
+    n "...Huh."
+    n "You know,{w=0.1} in hindsight?{w=0.2} That joke really wasn't funny the first time round."
+    n "I've...{w=0.3} no idea why it'd be funny this time,{w=0.1} to be honest."
+    n "Oh!"
+    n "But fried squid is no joke at all,{w=0.1} [player]!{w=0.2} Have you ever tried it?"
+    n "It's {i}delicious{/i}!{w=0.2} I love it!"
+    n "Not just boring old fried seafood though -{w=0.1} it's gotta have the crap battered out of it first!"
+    n "That crispy golden coating is seriously the best.{w=0.2} Fried food is awesome!"
+    n "It's not {i}good{/i} for you exactly,{w=0.1} but as a treat?{w=0.2} You could do way worse..."
+    n "Especially with sauce to spice things up a bit!"
+    n "By the way -{w=0.1} wanna know how you can tell you're dining on some top-notch squiddy goodness?"
+    n "The texture,{w=0.1} of course!" 
+    n "Overcooked squid becomes all rubbery and nasty,{w=0.1} and even worse -{w=0.1} it loses all of its flavour too!"
+    n "Imagine biting through the batter,{w=0.1} only to find you're basically chewing on a bunch of rubber bands."
+    n "Ugh!{w=0.2} Gross!{w=0.2} Talk about a disappointment."
+    n "Don't let that put you off though,{w=0.1} [player] -{w=0.1} next time you see some,{w=0.1} why not give it a shot?"
+    n "You could even be all fancy if you wanted to and order it by the culinary name!"
+    n "Ten points if you can guess what that is.{w=0.2} Ehehe."
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        n "Hmm..."
+        n "Actually...{w=0.3} you know what?"
+        n "We should just get a bowl of calamari to share.{w=0.2} That's fair,{w=0.1} right?"
+        n "I should warn you though,{w=0.1} [player]..."
+        n "I'm not handing over the last piece without a fight!"
+        n "Ehehe."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n "But yeah -{w=0.1} you should really give it a try if you haven't already,{w=0.1} [player]!"
+        n "I wouldn't want someone to miss out on that!"
+        n "Especially not you.{w=0.2} Ehehe..."
+
+    else:
+        n "But yeah -{w=0.1} you should really try it out if you haven't already,{w=0.1} [player]!"
+        n "I wouldn't want someone to miss out on that!{w=0.2} Ahaha."
+
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
