@@ -728,8 +728,9 @@ screen quick_menu():
             xalign 0.5
             yalign 0.995
 
-            if config.developer:
+            if config.console:
                 textbutton _("Restart"):
+                    text_style "quickmenu_text"
                     action Show(
                         screen="confirm_editable_closable",
                         message="Do you want to RELOAD or RESET?",
@@ -738,7 +739,7 @@ screen quick_menu():
                         yes_action=Jump("ch30_autoload"),
                         no_action=Jump("restart")
                     )
-            # HERE BE THE THINGS
+                    
             textbutton _("History"):
                 text_style "quickmenu_text"
                 action ShowMenu('history')

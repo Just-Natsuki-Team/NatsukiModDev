@@ -780,10 +780,9 @@ label debug_topic_count:
     n "Sure thing,{w=0.1} [player]!"
     n "{i}Ahem{/i}!"
     n "Currently,{w=0.1} there are..."
-    $ utils.log(persistent._topic_database)
     python:
         topics_and_counts = {
-            "generic (non-debug) topics": len(filter(lambda topic: (not "debug_" in topic), persistent._topic_database)),
+            "total (non-debug) topics": len(filter(lambda topic: (not "debug_" in topic), persistent._topic_database)),
             "compliments": len(persistent._compliment_database),
             "greetings": len(persistent._greeting_database),
             "farewells": len(persistent._farewell_database),

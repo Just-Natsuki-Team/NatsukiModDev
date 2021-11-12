@@ -3541,7 +3541,7 @@ label talk_fried_squid:
     n "But fried squid is no joke at all,{w=0.1} [player]!{w=0.2} Have you ever tried it?"
     n "It's {i}delicious{/i}!{w=0.2} I love it!"
     n "Not just boring old fried seafood though -{w=0.1} it's gotta have the crap battered out of it first!"
-    n "That crispy golden coating is seriously the best.{w=0.2} Fried food is awesome!"
+    n "That crispy golden coating is seriously the best.{w=0.2} Deep fried food is awesome!"
     n "It's not {i}good{/i} for you exactly,{w=0.1} but as a treat?{w=0.2} You could do way worse..."
     n "Especially with sauce to spice things up a bit!"
     n "By the way -{w=0.1} wanna know how you can tell you're dining on some top-notch squiddy goodness?"
@@ -3665,6 +3665,8 @@ label talk_collectibles:
                 n "Sheesh...{w=0.3} you're such a dummy sometimes,{w=0.1} [player]..."
 
     return
+
+
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
