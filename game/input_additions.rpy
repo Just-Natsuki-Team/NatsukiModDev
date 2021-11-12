@@ -15,6 +15,7 @@ init 1 python:
 
 init 999 python:
     import pygame
+
     pygame.scrap.init()
     #no idea why but pygame.scrap.get_init apparently doesn't exist... is renpy's pygame that outdated?
 
@@ -51,8 +52,10 @@ init 999 python:
         selected = self.get_selected()
         wo_selected = self.content[:mark1_pos+1]+self.content[mark2_pos+1:]
         self.content = wo_selected
-        self.caret_pos -= mark1_pos-mark2_pos-2
-        self.select_start_pos = None
+        self.caret_pos -= len(selected)-2
+
+        self.remove_selected_markers()
+
         return selected
 
     def selected_copy(self):
@@ -61,8 +64,8 @@ init 999 python:
     def selected_cut(self):
         cut = self.remove_selected()
         pygame.scrap.put(pygame.SCRAP_TEXT,cut)
-
-        self.update_text(self.content, self.editable, check_size = True)
+        #self.remove_selected_markers()
+        #self.update_text(self.content, self.editable, check_size = True)
 
     def input_paste(self):
         paste = pygame.scrap.get(pygame.SCRAP_TEXT)
@@ -72,6 +75,7 @@ init 999 python:
         self.update_text(self.content, self.editable, check_size = True)
 
     def move_selected_left(self):
+        global testytest
         if self.select_start_pos is None:
             if self.caret_pos <= 0:
                 return
@@ -85,6 +89,8 @@ init 999 python:
         self.select_end_pos -= 1
         self.caret_pos = self.select_end_pos
 
+        testytest = self.select_end_pos
+
     def move_selected_right(self):
         if self.select_start_pos is None:
             if self.caret_pos >= len(get_content_wo_markers(self)):
@@ -97,7 +103,7 @@ init 999 python:
             return
 
         self.select_end_pos += 1
-        self.caret_pos = self.select_end_pos
+        self.caret_pos = self.select_end_pos+1
 
     def move_selected_home(self):
         if self.caret_pos <= 0:
@@ -126,12 +132,15 @@ init 999 python:
         if len(self.content)<=0:
             return
 
-        if self.select_start_pos is None:
-            self.select_start_pos = 0
+        self.select_start_pos = 0
 
         self.select_end_pos = len(no_markers)
 
     def render_selected_markers(self):
+        if self.select_end_pos == self.select_last_end_pos:
+            return
+        self.select_last_end_pos = self.select_end_pos
+
         text_wo_markers = get_content_wo_markers(self)
 
         if self.select_start_pos is None:
@@ -148,29 +157,17 @@ init 999 python:
         self.update_text(text_w_markers, self.editable, check_size = True)
 
     def get_content_wo_markers(self):
-        """
-        #TODO: make this work
-        if self.select_start_pos is None:
-            return self.content
-
-        mark1_pos = self.select_start_pos
-        mark2_pos = self.select_last_end_pos
-
-        if mark1_pos > mark2_pos:
-            mark1_pos, mark2_pos = mark2_pos, mark1_pos
-
-        return self.content[:mark1_pos]+self.content[mark1_pos+1:mark2_pos+1]+self.content[mark2_pos+2:]
-        """
-
         return self.content.replace(self.select_start_char, '').replace(self.select_end_char, '')
 
     def remove_selected_markers(self):
         if self.select_start_pos is None:
             return
 
-        text_wo_markers = get_content_wo_markers(self)
+        self.content = get_content_wo_markers(self)
+        self.caret_pos = min(self.select_start_pos, self.select_end_pos)
         self.select_start_pos = None
-        self.update_text(text_wo_markers, self.editable, check_size = True)
+        self.select_last_end_pos = None
+        self.update_text(self.content, self.editable, check_size = True)
 
     def caret_relative2markers(self):
         pos = 0
@@ -208,9 +205,10 @@ init 999 python:
         raw_text = None
 
         if map_event(ev, "input_backspace"):
-            self.remove_selected_markers()
+            if self.select_start_pos is not None:
+                self.remove_selected()
 
-            if self.content and self.caret_pos > 0:
+            elif self.content and self.caret_pos > 0:
                 content = self.content[0:self.caret_pos-1] + self.content[self.caret_pos:l]
                 self.caret_pos -= 1
                 self.update_text(content, self.editable)
@@ -304,7 +302,9 @@ init 999 python:
             raw_text = ev.text
 
         elif ev.type == pygame.KEYDOWN:
-            #self.remove_selected_markers()
+            #if ev.key != pygame.KMOD_CTRL and self.select_start_pos:
+            #    self.caret_pos = min(self.select_end_pos, self.select_start_pos)
+            #    self.remove_selected()
 
             if ev.unicode and ord(ev.unicode[0]) >= 32:
                 raw_text = ev.unicode
@@ -329,6 +329,8 @@ init 999 python:
                 text = text[:remaining]
 
             if text:
+                if self.select_start_pos is not None:
+                    self.remove_selected()
 
                 content = self.content[0:self.caret_pos] + text + self.content[self.caret_pos:l]
                 self.caret_pos += len(text)
@@ -337,8 +339,7 @@ init 999 python:
 
             raise renpy.display.core.IgnoreEvent()
 
-        if not self.select_start_pos is None:
+        if self.select_start_pos is not None:
             self.render_selected_markers()
-        self.select_last_end_pos = self.select_end_pos
 
     setattr(renpy.display.behavior.Input, 'event', event_ov)
