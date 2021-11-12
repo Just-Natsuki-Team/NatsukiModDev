@@ -231,7 +231,10 @@ init 999 python:
                 return content
 
         elif map_event(ev, "input_left"):
-            if self.caret_pos > 0:
+            if self.select_start_pos is not None:
+                self.remove_selected_markers()
+
+            elif self.caret_pos > 0:
                 self.caret_pos -= 1
                 self.update_text(self.content, self.editable)
 
@@ -239,7 +242,10 @@ init 999 python:
             raise renpy.display.core.IgnoreEvent()
 
         elif map_event(ev, "input_right"):
-            if self.caret_pos < l:
+            if self.select_start_pos is not None:
+                self.remove_selected_markers()
+
+            elif self.caret_pos < l:
                 self.caret_pos += 1
                 self.update_text(self.content, self.editable)
 
@@ -290,6 +296,9 @@ init 999 python:
             self.selected_cut()
 
         elif map_event(ev, "input_paste"):
+            if self.select_start_pos is not None:
+                self.remove_selected()
+
             self.input_paste()
 
         elif ev.type == pygame.TEXTEDITING:
@@ -302,9 +311,6 @@ init 999 python:
             raw_text = ev.text
 
         elif ev.type == pygame.KEYDOWN:
-            #if ev.key != pygame.KMOD_CTRL and self.select_start_pos:
-            #    self.caret_pos = min(self.select_end_pos, self.select_start_pos)
-            #    self.remove_selected()
 
             if ev.unicode and ord(ev.unicode[0]) >= 32:
                 raw_text = ev.unicode
