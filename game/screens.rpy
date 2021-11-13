@@ -2131,6 +2131,12 @@ screen confirm(message, yes_action, no_action):
     ## Right-click and escape answer "no".
     #key "game_menu" action no_action
 
+init python:
+
+    def check_ingame_state_add_apology():
+        if jn_globals.player_is_ingame:
+            apologies.add_new_pending_apology(apologies.TYPE_CHEATED_GAME)
+
 screen confirm_quit(is_quitting):
     modal True
 
@@ -2162,11 +2168,11 @@ screen confirm_quit(is_quitting):
                 xalign 0.5
                 spacing 100
 
-                
                 if is_quitting:
                     textbutton _("...") action [
-                        # Player has decided to ditch Natsuki; add a pending apology then quit
-                        apologies.add_new_pending_apology(apologies.TYPE_SUDDEN_LEAVE),
+                        # Player has decided to ditch Natsuki; add pending apology(s) then quit
+                        Function(apologies.add_new_pending_apology, apologies.TYPE_SUDDEN_LEAVE),
+                        Function(check_ingame_state_add_apology),
                         SetField(persistent, "jn_player_apology_type_on_quit", apologies.TYPE_SUDDEN_LEAVE),
                         relationship("affinity-"),
                         Quit(confirm=False)

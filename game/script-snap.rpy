@@ -27,7 +27,13 @@ init 0 python in snap:
         "So dumb...",
         "Again?{w=0.2} Really?",
         "Ugh...",
-        "So ridiculous..."
+        "So ridiculous...",
+        "So dumb...",
+        "Jeez! Whatever...",
+        "Jeez!",
+        "Jeeeeeez!",
+        "Oh come on,{w=0.2} [player]!",
+        "How are you {i}that{/i} fast?!"
     ]
 
     _natsuki_correct_snap_quips = [
@@ -56,7 +62,8 @@ init 0 python in snap:
         "Nice one,{w=0.1} dummy.{w=0.2} Ahaha!",
         "Real smooth,{w=0.1} [player].{w=0.2} Ehehe.",
         "Ahaha!{w=0.2} What was that,{w=0.1} [player]?",
-        "Hey,{w=0.1} [player] -{w=0.1} you're meant to read the cards!{w=0.2} Ehehe."
+        "Hey,{w=0.1} [player] -{w=0.1} you're meant to read the cards!{w=0.2} Ehehe.",
+        "Great play,{w=0.1} dummy!{w=0.2} Ahaha!"
     ]
 
     _natsuki_incorrect_snap_quips = [
@@ -110,7 +117,9 @@ init 0 python in snap:
         _is_player_turn = False
         _player_forfeit = False
         _player_is_snapping = False
+        _natsuki_can_fake_snap = False
         del _cards_in_deck[:]
+        del _cards_on_table[:]
 
         if complete_reset:
             _natsuki_skill_level = 1
@@ -326,11 +335,10 @@ label snap_start:
     else:
         n "Hmph...{w=0.3} you got lucky this time.{w=0.2} Looks like I'm first,{w=0.1} [player]."
 
+    $ jn_globals.player_is_ingame = True
     jump snap_main_loop
 
 label snap_main_loop:
-    $ global _is_player_turn
-    $ global _natsuki_can_fake_snap
 
     # First, let's check to see if anyone has won yet
     if len(snap._player_hand) == 0 and len(snap._natsuki_hand) == 0:
@@ -346,7 +354,7 @@ label snap_main_loop:
         $ snap._natsuki_win_streak += 1
         $ snap.last_game_result = snap.RESULT_NATSUKI_WIN
         jump snap_end
-        
+
     elif len(snap._natsuki_hand) == 0:
         # Natsuki has lost; end the game
         $ snap._player_win_streak += 1
@@ -354,13 +362,7 @@ label snap_main_loop:
         $ snap.last_game_result = snap.RESULT_PLAYER_WIN
         jump snap_end
 
-    elif snap._player_forfeit:
-        # Player gave up
-        $ snap._player_win_streak = 0
-        $ snap.last_game_result = snap.RESULT_FORFEIT
-        jump snap_end
-
-    $ renpy.pause(delay=max(0.25, (3.0 - snap._natsuki_skill_level * 0.33)))
+    $ renpy.pause(delay=max(0.25, (3.0 - snap._natsuki_skill_level * 0.25)))
 
     # Natsuki's snap logic
 
@@ -378,7 +380,7 @@ label snap_main_loop:
         # Natsuki gets to place a card
         $ snap._place_card_on_table(False)
         $ snap._is_player_turn = True
-        $ _natsuki_can_fake_snap = True
+        $ snap._natsuki_can_fake_snap = True
 
     jump snap_main_loop
 
@@ -445,15 +447,41 @@ label snap_end:
 
         "You're on!":
             n "Yeah,{w=0.1} you bet you are,{w=0.1} [player]!"
-            $ _natsuki_skill_level += 1
+            $ snap._natsuki_skill_level += 1
             jump snap_start
 
         "I'll pass.":
             n "Awww...{w=0.3} well,{w=0.1} okay."
             n "Thanks for playing,{w=0.1} [player]~."
+
             hide player_natsuki_hands
             hide screen snap_ui
+            $ jn_globals.player_is_ingame = False
             jump ch30_loop
+
+label snap_forfeit:
+    n "Awww...{w=0.3} you're not giving up already are you,{w=0.1} [player]?"
+    menu:
+        n "Are you?"
+
+        "Yes, I give up.":
+            n "Oh...{w=0.3} well,{w=0.1} okay."
+            n "But just so you know..."
+            n "I'm calling this a win for me!{w=0.2} Ehehe."
+
+            $ snap._player_win_streak = 0
+            $ snap._natsuki_win_streak += 1
+            hide player_natsuki_hands
+            hide screen snap_ui
+            $ jn_globals.player_is_ingame = False
+
+            jump ch30_loop
+
+        "In your dreams!":
+            n "Pffffft!{w=0.2} Oh really?"
+            n "Game on then,{w=0.1} [player]!"
+            $ snap._natsuki_skill_level += 1
+            return
 
 image player_natsuki_hands:  
     pos (100, 215)
@@ -477,14 +505,14 @@ screen snap_ui:
         # Place card, but only selectable if player's turn
         textbutton _("Place"):
             style "hkbd_button"
-            action [ Function(snap._place_card_on_table, True), SensitiveIf(snap._is_player_turn) ]
+            action [ Function(snap._place_card_on_table, True), SensitiveIf(snap._is_player_turn), SensitiveIf(len(snap._natsuki_hand) > 0) ]
 
         # Forfeit, but only selectable if player's turn
         textbutton _("Forfeit"):
             style "hkbd_button"
-            action [ SetField(snap, "_player_forfeit", True), SensitiveIf(snap._is_player_turn) ]
+            action [ Function(renpy.call, "snap_forfeit"), SensitiveIf(snap._is_player_turn), SensitiveIf(len(snap._natsuki_hand) > 0) ]
 
         # Snap, but only selectable if there's enough cards down on the table
         textbutton _("Snap!"):
             style "hkbd_button"
-            action [ Function(snap._call_snap, True), SensitiveIf(len(snap._cards_on_table) >= 2), SensitiveIf(not snap._player_is_snapping) ]
+            action [ Function(snap._call_snap, True), SensitiveIf(len(snap._cards_on_table) >= 2), SensitiveIf(not snap._player_is_snapping), SensitiveIf(len(snap._natsuki_hand) > 0) ]
