@@ -17,14 +17,21 @@ init 0 python in snap:
     _player_correct_snap_quips = [
         "Nnnnn-!",
         "Ugh!{w=0.2} Come on!",
-        "You're fast!",
+        "Y-{w=0.1}You're fast!",
         "But I was just about to call ittt!",
         "Just you wait,{w=0.1} [player]...",
-        "Uuuuuu-!"
+        "Uuuuuu-!",
+        "Not again!{w=0.2} Grrr...",
+        "Damn it...",
+        "Fudge...",
+        "So dumb...",
+        "Again?{w=0.2} Really?",
+        "Ugh...",
+        "So ridiculous..."
     ]
 
     _natsuki_correct_snap_quips = [
-        "SNAP!{w=0.2} Aha!",
+        "SNAP!{w=0.2} Ahaha!",
         "Snap!{w=0.2} Ahaha!",
         "SNAP!{w=0.2} Ehehe.",
         "SNAP!",
@@ -35,9 +42,15 @@ init 0 python in snap:
         "Boom!{w=0.2} Snap!",
         "Snap!{w=0.2} Snap!",
         "Snap!{w=0.2} Snap!{w=0.2} Snap!",
+        "Yes!{w=0.2} SNAP!",
+        "Yeah!{w=0.2} SNAP!",
+        "Yeah!{w=0.2} Snap!{w=0.2} Snap!",
+        "Snap snap freaking snap!",
+        "SNAAAP!{w=0.2} Ehehe.",
+        "Bam!{w=0.2} Snap!"
     ]
 
-    _player_wrong_snap_quips = [
+    _player_incorrect_snap_quips = [
         "Oh?{w=0.2} Someone's impatient,{w=0.1} huh?",
         "Oopsie daisy,{w=0.1} [player]~.{w=0.2} Ehehe.",
         "Nice one,{w=0.1} dummy.{w=0.2} Ahaha!",
@@ -46,10 +59,10 @@ init 0 python in snap:
         "Hey,{w=0.1} [player] -{w=0.1} you're meant to read the cards!{w=0.2} Ehehe."
     ]
 
-    _natsuki_wrong_snap_quips = [
+    _natsuki_incorrect_snap_quips = [
         "Sn-...{w=0.3} oh.",
         "Snap!{w=0.2} Wait...",
-        "SNAP!{w=0.2} Wait...",
+        "SNAP!{w=0.2} Huh...?{w=0.2} O-{w=0.1}oh.",
         "Snap sna-...{w=0.3} grrr."
     ]
     
@@ -68,7 +81,8 @@ init 0 python in snap:
     _is_player_turn = False
     _player_forfeit = False
     _player_is_snapping = False
-    _natsuki_skill_level = 1
+    _natsuki_can_fake_snap = False
+    _natsuki_skill_level = 0
 
     # Collections of cards involved in the game
     _cards_in_deck = []
@@ -96,6 +110,7 @@ init 0 python in snap:
         _is_player_turn = False
         _player_forfeit = False
         _player_is_snapping = False
+        del _cards_in_deck[:]
 
         if complete_reset:
             _natsuki_skill_level = 1
@@ -151,6 +166,7 @@ init 0 python in snap:
                 new_card = _natsuki_hand.pop()
                 _cards_on_table.append(new_card)
                 renpy.play("mod_assets/sfx/card_place.mp3")
+                _is_player_turn = True
 
     def _get_card_to_display():
         """
@@ -170,7 +186,7 @@ init 0 python in snap:
         Otherwise, returns False
         Used by Natsuki's logic to determine if she should "spot" the snap opportunity
         """
-        if len(_cards_on_table) > 1:
+        if len(_cards_on_table) >= 2:
             return _cards_on_table[-1][0] == _cards_on_table[-2][0] or _cards_on_table[-1][1] == _cards_on_table[-2][1]
         
         else:
@@ -190,36 +206,36 @@ init 0 python in snap:
             _player_is_snapping = True
 
         # If the suit/value on the last placed card matches the preceding card, the snap is valid
-        if len(_cards_on_table) >= 2:
+        if _get_snap_result():
 
-            if _get_snap_result():
+            if is_player:
+                # Player called snap successfully; give them the cards on the table
+                for card in _cards_on_table:
+                    _player_hand.append(card)
 
-                if is_player:
-                    # Player called snap successfully; give them the cards on the table
-                    for card in _cards_on_table:
-                        _player_hand.append(card)
+            else:
+                # Natsuki called snap successfully; give her the cards on the table
+                for card in _cards_on_table:
+                    _natsuki_hand.append(card)
 
-                else:
-                    # Natsuki called snap successfully; give her the cards on the table
-                    for card in _cards_on_table:
-                        _natsuki_hand.append(card)
+            # Clear the cards on the table
+            del _cards_on_table[:]
+            renpy.play("mod_assets/sfx/card_shuffle.mp3")
 
-                # Clear the cards on the table
-                del _cards_on_table[:]
-                renpy.play("mod_assets/sfx/card_shuffle.mp3")
-
-                # Natsuki comments on the correct snap
-                renpy.call("snap_quip", is_player_snap=is_player, is_correct_snap=True)
+            # Natsuki comments on the correct snap
+            renpy.call("snap_quip", is_player_snap=is_player, is_correct_snap=True)
 
         else:
             # Natsuki comments on the incorrect snap
             renpy.call("snap_quip", is_player_snap=is_player, is_correct_snap=False)
 
-        # Finally switch turns
-        _is_player_turn = not _is_player_turn
-
+        # Finally reset flags
         if is_player:
+            _is_player_turn = False
             _player_is_snapping = False
+
+        else:
+            _is_player_turn = True
 
 label snap_intro:
     n "Alriiiight!{w=0.2} Let's play some Snap!"
@@ -314,6 +330,8 @@ label snap_start:
 
 label snap_main_loop:
     $ global _is_player_turn
+    $ global _natsuki_can_fake_snap
+
     # First, let's check to see if anyone has won yet
     if len(snap._player_hand) == 0 and len(snap._natsuki_hand) == 0:
         # We tied somehow? End the game
@@ -342,29 +360,30 @@ label snap_main_loop:
         $ snap.last_game_result = snap.RESULT_FORFEIT
         jump snap_end
 
+    $ renpy.pause(delay=max(0.25, (3.0 - snap._natsuki_skill_level * 0.33)))
+
+    # Natsuki's snap logic
+
+    # If a correct snap is possible, and the player isn't snapping already, Natsuki will try to call it: the higher the difficulty, the quicker Natsuki will be.
+    if not snap._player_is_snapping:
+        if (snap._get_snap_result()):  
+            $ snap._call_snap()
+
+        # She may also snap by mistake, assuming it makes sense to do so: the higher the difficulty, the less she'll accidentally snap.
+        elif random.choice(range(0,10 + snap._natsuki_skill_level)) == 1 and len(snap._cards_on_table) >= 2 and snap._natsuki_can_fake_snap:
+            $ snap._call_snap()
+            $ snap._natsuki_can_fake_snap = False
+
     if not snap._is_player_turn:
         # Natsuki gets to place a card
         $ snap._place_card_on_table(False)
         $ snap._is_player_turn = True
-
-    $ renpy.pause(delay=3.0)
-
-    # Natsuki's snap logic
-    if (snap._get_snap_result() and not snap._player_is_snapping):
-        # If a correct snap is possible, and the player isn't snapping already, Natsuki will try to call it.
-        # The higher the difficulty, the quicker Natsuki will be.
-        $ snap._call_snap()
-        pass
-
-    else:
-        # If a snap isn't possible, Natsuki may snap by mistake.
-        # The lower the difficulty, the more frequently Natsuki will mess up.
-        pass
+        $ _natsuki_can_fake_snap = True
 
     jump snap_main_loop
 
 label snap_end:
-    # Player won,{w=0.1} Natsuki amger
+    # Player won, Natsuki amger
     if snap.last_game_result == snap.RESULT_PLAYER_WIN:
         if snap._player_win_streak >= 10:
             n "Nnnnnnnnnn-!!"
@@ -387,7 +406,7 @@ label snap_end:
             n "Well,{w=0.1} heck.{w=0.2} I guess that's it,{w=0.1} huh?"
             n "Well played though,{w=0.1} [player]!"
 
-    # Natsuki won,{w=0.1} Natsuki happ
+    # Natsuki won, Natsuki happ
     elif snap.last_game_result == snap.RESULT_NATSUKI_WIN:
         if snap._natsuki_win_streak >= 10:
             n "Jeez,{w=0.1} [player]...{w=0.3} are you having a bad day or what?"
@@ -426,6 +445,7 @@ label snap_end:
 
         "You're on!":
             n "Yeah,{w=0.1} you bet you are,{w=0.1} [player]!"
+            $ _natsuki_skill_level += 1
             jump snap_start
 
         "I'll pass.":
@@ -443,7 +463,10 @@ screen snap_ui:
     zorder 20
     text "[player]'s hand: {0}".format(len(snap._player_hand)) size 22 xpos 175 ypos 55 style "categorized_menu_button"
     text "[n_name]'s hand: {0}".format(len(snap._natsuki_hand)) size 22 xpos 175 ypos 170 style "categorized_menu_button"
-    text "Current card: {0}".format(snap._get_card_to_display()) size 22 xpos 175 ypos 425 style "categorized_menu_button"
+
+    # Debug
+    text "Card: {0}".format(snap._get_card_to_display()) size 22 xpos 175 ypos 425 style "categorized_menu_button"
+    text "Cards on table: {0}".format(len(snap._cards_on_table)) size 22 xpos 175 ypos 455 style "categorized_menu_button"
 
     style_prefix "hkb"
 
