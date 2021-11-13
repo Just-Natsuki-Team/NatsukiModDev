@@ -19,7 +19,7 @@ init 0 python in snap:
         "Ugh!{w=0.2} Come on!",
         "You're fast!",
         "But I was just about to call ittt!",
-        "Just you wait,{w=0.1} [player]..."
+        "Just you wait,{w=0.1} [player]...",
         "Uuuuuu-!"
     ]
 
@@ -204,12 +204,12 @@ init 0 python in snap:
                     for card in _cards_on_table:
                         _natsuki_hand.append(card)
 
-                # Natsuki comments on the correct snap
-                renpy.call("snap_quip", is_player_snap=is_player, is_correct_snap=True)
-
                 # Clear the cards on the table
                 del _cards_on_table[:]
                 renpy.play("mod_assets/sfx/card_shuffle.mp3")
+
+                # Natsuki comments on the correct snap
+                renpy.call("snap_quip", is_player_snap=is_player, is_correct_snap=True)
 
         else:
             # Natsuki comments on the incorrect snap
@@ -298,12 +298,7 @@ label snap_start:
     $ utils.log("natsuki's hand: {0}".format(str(snap._natsuki_hand)))
 
     n "Okaaay!{w=0.2} That's the deck shuffled!"
-    
-    if not persistent.jn_snap_explanation_given:
-        n "I'm just gonna flip a coin to see who goes first.{w=0.2} No peeking,{w=0.1} [player]!"
-
-    else:
-        n "Let's see who's going first..."
+    n "Let's see who's going first..."
 
     play audio coin_flip
     n "..."
@@ -315,37 +310,31 @@ label snap_start:
     else:
         n "Hmph...{w=0.3} you got lucky this time.{w=0.2} Looks like I'm first,{w=0.1} [player]."
 
-        if not persistent.jn_snap_explanation_given:
-            n "N-{w=0.1}not like that changes anything!" 
-            n "I'm still {i}totally{/i} gonna win,{w=0.1} of course."
-
     jump snap_main_loop
 
 label snap_main_loop:
     $ global _is_player_turn
     # First, let's check to see if anyone has won yet
-    if len(snap._cards_on_table) == 0:
+    if len(snap._player_hand) == 0 and len(snap._natsuki_hand) == 0:
+        # We tied somehow? End the game
+        $ snap._player_win_streak = 0
+        $ snap._natsuki_win_streak = 0
+        $ snap.last_game_result = snap.RESULT_DRAW
+        jump snap_end
 
-        if len(snap._player_hand) == 0 and len(snap._natsuki_hand) == 0:
-            # We tied somehow? End the game
-            $ snap._player_win_streak = 0
-            $ snap._natsuki_win_streak = 0
-            $ snap.last_game_result = snap.RESULT_DRAW
-            jump snap_end
-
-        if len(snap._player_hand) == 0:
-            # Player has lost; end the game
-            $ snap._player_win_streak = 0
-            $ snap._natsuki_win_streak += 1
-            $ snap.last_game_result = snap.RESULT_NATSUKI_WIN
-            jump snap_end
-            
-        elif len(snap._natsuki_hand) == 0:
-            # Natsuki has lost; end the game
-            $ snap._player_win_streak += 1
-            $ snap._natsuki_win_streak = 0
-            $ snap.last_game_result = snap.RESULT_PLAYER_WIN
-            jump snap_end
+    elif len(snap._player_hand) == 0:
+        # Player has lost; end the game
+        $ snap._player_win_streak = 0
+        $ snap._natsuki_win_streak += 1
+        $ snap.last_game_result = snap.RESULT_NATSUKI_WIN
+        jump snap_end
+        
+    elif len(snap._natsuki_hand) == 0:
+        # Natsuki has lost; end the game
+        $ snap._player_win_streak += 1
+        $ snap._natsuki_win_streak = 0
+        $ snap.last_game_result = snap.RESULT_PLAYER_WIN
+        jump snap_end
 
     elif snap._player_forfeit:
         # Player gave up
