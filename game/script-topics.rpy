@@ -3684,7 +3684,7 @@ init 5 python:
 
 label talk_play_snap:
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-        n "Yay!{w=0.2} Play with me,{w=0.1} [player]!{w=0.2} Ehehe."
+        n "Of course I do, dummy!{w=0.2} Ehehe."
         
     elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         n "Of course I'll play some with you,{w=0.1} dummy!"
@@ -3693,7 +3693,7 @@ label talk_play_snap:
         n "Well,{w=0.1} duh!{w=0.2} Of course I'm up for a game!"
 
     else:
-        n "You wanna play?{w=0.2} Sure!" 
+        n "You wanna play Snap?{w=0.2} Sure!" 
     
     n "Let me just get the cards out real quick,{w=0.1} alright?"
     play audio card_shuffle 

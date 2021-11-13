@@ -67,6 +67,7 @@ init 0 python in snap:
     # In-game tracking
     _is_player_turn = False
     _player_forfeit = False
+    _player_is_snapping = False
     _natsuki_skill_level = 1
 
     # Collections of cards involved in the game
@@ -94,6 +95,7 @@ init 0 python in snap:
         """
         _is_player_turn = False
         _player_forfeit = False
+        _player_is_snapping = False
 
         if complete_reset:
             _natsuki_skill_level = 1
@@ -182,6 +184,10 @@ init 0 python in snap:
             - is_player boolean value representing if the player or Natsuki was the one who made the call
         """
         global _is_player_turn
+        global _player_is_snapping
+
+        if is_player:
+            _player_is_snapping = True
 
         # If the suit/value on the last placed card matches the preceding card, the snap is valid
         if len(_cards_on_table) >= 2:
@@ -193,29 +199,27 @@ init 0 python in snap:
                     for card in _cards_on_table:
                         _player_hand.append(card)
 
-                    renpy.say(store.n, renpy.substitute(random.choice(_player_correct_snap_quips)))
-
                 else:
                     # Natsuki called snap successfully; give her the cards on the table
                     for card in _cards_on_table:
                         _natsuki_hand.append(card)
 
-                    renpy.say(store.n, renpy.substitute(random.choice(_natsuki_correct_snap_quips)))
+                # Natsuki comments on the correct snap
+                renpy.call("snap_quip", is_player_snap=is_player, is_correct_snap=True)
 
+                # Clear the cards on the table
                 del _cards_on_table[:]
                 renpy.play("mod_assets/sfx/card_shuffle.mp3")
 
         else:
-            # Natsuki taunts the player for a bad snap
-            if is_player:
-                renpy.say(store.n, renpy.substitute(random.choice(_player_wrong_snap_quips)))
-
-            # Natsuki is frustrated at herself for a bad snap
-            else:
-                renpy.say(store.n, renpy.substitute(random.choice(_natsuki_wrong_snap_quips)))
+            # Natsuki comments on the incorrect snap
+            renpy.call("snap_quip", is_player_snap=is_player, is_correct_snap=False)
 
         # Finally switch turns
         _is_player_turn = not _is_player_turn
+
+        if is_player:
+            _player_is_snapping = False
 
 label snap_intro:
     n "Alriiiight!{w=0.2} Let's play some Snap!"
@@ -236,6 +240,27 @@ label snap_intro:
                 n "Ready to get your butt kicked!{w=0.2} Let's go,{w=0.1} [player]!"
                 
     jump snap_start
+
+label snap_quip(is_player_snap, is_correct_snap):
+    
+    if is_player_snap:
+
+        if is_correct_snap:
+            $ quip = renpy.substitute(random.choice(snap._player_correct_snap_quips))
+
+        else:
+            $ quip = renpy.substitute(random.choice(snap._player_incorrect_snap_quips))
+
+    else:
+
+        if is_correct_snap:
+            $ quip = renpy.substitute(random.choice(snap._natsuki_correct_snap_quips))
+
+        else:
+            $ quip = renpy.substitute(random.choice(snap._natsuki_incorrect_snap_quips))
+
+    n "[quip]"
+    return
 
 label snap_explanation:
     n "Alright!{w=0.2} So the rules are dead simple,{w=0.1} like I was saying."
@@ -268,10 +293,18 @@ label snap_start:
     $ snap._generate_hands()
     show player_natsuki_hands zorder 20
     show screen snap_ui
+
     $ utils.log("player's hand: {0}".format(str(snap._player_hand)))
     $ utils.log("natsuki's hand: {0}".format(str(snap._natsuki_hand)))
+
     n "Okaaay!{w=0.2} That's the deck shuffled!"
-    n "I'm just gonna flip a coin to see who goes first.{w=0.2} No peeking,{w=0.1} [player]!"
+    
+    if not persistent.jn_snap_explanation_given:
+        n "I'm just gonna flip a coin to see who goes first.{w=0.2} No peeking,{w=0.1} [player]!"
+
+    else:
+        n "Let's see who's going first..."
+
     play audio coin_flip
     n "..."
     $ snap._is_player_turn = random.choice([True, False])
@@ -281,8 +314,10 @@ label snap_start:
         
     else:
         n "Hmph...{w=0.3} you got lucky this time.{w=0.2} Looks like I'm first,{w=0.1} [player]."
-        n "N-{w=0.1}not like that changes anything!" 
-        n "I'm still {i}totally{/i} gonna win,{w=0.1} of course."
+
+        if not persistent.jn_snap_explanation_given:
+            n "N-{w=0.1}not like that changes anything!" 
+            n "I'm still {i}totally{/i} gonna win,{w=0.1} of course."
 
     jump snap_main_loop
 
@@ -326,8 +361,8 @@ label snap_main_loop:
     $ renpy.pause(delay=3.0)
 
     # Natsuki's snap logic
-    if (snap._get_snap_result()):
-        # If a correct snap is possible, Natsuki will try to call it.
+    if (snap._get_snap_result() and not snap._player_is_snapping):
+        # If a correct snap is possible, and the player isn't snapping already, Natsuki will try to call it.
         # The higher the difficulty, the quicker Natsuki will be.
         $ snap._call_snap()
         pass
@@ -440,4 +475,4 @@ screen snap_ui:
         # Snap, but only selectable if there's enough cards down on the table
         textbutton _("Snap!"):
             style "hkbd_button"
-            action [ Function(snap._call_snap, True), SensitiveIf(len(snap._cards_on_table) >= 2) ]
+            action [ Function(snap._call_snap, True), SensitiveIf(len(snap._cards_on_table) >= 2), SensitiveIf(not snap._player_is_snapping) ]
