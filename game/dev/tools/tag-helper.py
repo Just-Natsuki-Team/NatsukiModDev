@@ -4,9 +4,9 @@
 
 import os
 
-target_file_and_path = "./dialogue.txt"
+target_file_and_path = os.path.join(os.path.dirname(__file__), "dialogue.txt")
 
-if not os.path.isfile(target_file_and_path):
+if os.path.isfile(target_file_and_path):
 
     # Load in from source file
     source_file = open(target_file_and_path, "r")

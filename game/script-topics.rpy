@@ -3666,7 +3666,39 @@ label talk_collectibles:
 
     return
 
+# Prompt Natsuki to play a game of Snap!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_play_snap",
+            unlocked=True,
+            prompt="Do you want to play Snap?",
+            category=["Games"],
+            player_says=True,
+            affinity_range=(jn_affinity.HAPPY, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
 
+label talk_play_snap:
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        n "Yay!{w=0.2} Play with me,{w=0.1} [player]!{w=0.2} Ehehe."
+        
+    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n "Of course I'll play some with you,{w=0.1} dummy!"
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n "Well,{w=0.1} duh!{w=0.2} Of course I'm up for a game!"
+
+    else:
+        n "You wanna play?{w=0.2} Sure!" 
+    
+    n "Let me just get the cards out real quick,{w=0.1} alright?"
+    play audio card_shuffle 
+    with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+    jump snap_intro
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"

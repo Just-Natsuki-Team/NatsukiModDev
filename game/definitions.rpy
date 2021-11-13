@@ -785,6 +785,7 @@ init python in utils:
         """
         return datetime.datetime.now().hour
 
+# Vanilla resources from base DDLC
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
 define audio.t2 = "<loop 4.499>bgm/2.ogg"   #Sayori theme
 define audio.t2g = "bgm/2g.ogg"
@@ -797,9 +798,18 @@ define audio.t3g3 = "<loop 4.618>bgm/3g2.ogg"
 define audio.t3m = "<loop 4.618>bgm/3.ogg"
 define audio.t4 = "<loop 19.451>bgm/4.ogg"  #Poem minigame
 define audio.t4g = "<loop 1.000>bgm/4g.ogg"
+
+# JN resources
+
+# Sound effects
 define audio.camera_shutter = "mod_assets/sfx/camera_shutter.mp3"
 define audio.select_hover = "mod_assets/sfx/select_hover.mp3"
 define audio.select_confirm = "mod_assets/sfx/select_confirm.mp3"
+define audio.coin_flip = "mod_assets/sfx/coin_flip.mp3"
+define audio.card_shuffle = "mod_assets/sfx/card_shuffle.mp3"
+define audio.card_place = "mod_assets/sfx/card_place.mp3"
+
+# Music
 define audio.test_bgm = "mod_assets/bgm/background_test_music.ogg"
 
 define body_a = "mod_assets/natsuki-assets/base.png"

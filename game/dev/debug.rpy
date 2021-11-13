@@ -10,11 +10,13 @@ default persistent.jn_debug_tracked_watch_items = [
     "store.jn_affinity.get_affinity_tier_name()",
     "store.persistent.trust",
     "store.jn_trust.get_trust_tier_name()"
+    "store.jn_debug.get_mouse_position()"
 ]
 
 init python in jn_debug:
 
     import os
+    import pygame
     import store
     import traceback
 
@@ -23,7 +25,8 @@ init python in jn_debug:
         "store.persistent.affinity\n",
         "store.jn_affinity.get_affinity_tier_name()\n",
         "store.persistent.trust\n",
-        "store.jn_trust.get_trust_tier_name()"
+        "store.jn_trust.get_trust_tier_name()\n"
+        "store.jn_debug.get_mouse_position()"
     ]
 
     _view_tracked_items_enabled = False
@@ -45,7 +48,7 @@ init python in jn_debug:
                 renpy.watch(item)
 
             except:
-                store.utils.log(message="Failed to watch expression {0}".format(item), logseverity=SEVERITY_WARN)
+                store.utils.log(message="Failed to watch expression {0}".format(item), logseverity=store.utils.SEVERITY_WARN)
         
     def _unwatch_all_tracked_items():
         """
@@ -56,7 +59,7 @@ init python in jn_debug:
                 renpy.unwatch(item)
 
             except:
-                store.utils.log(message="Failed to unwatch expression {0}".format(item), logseverity=SEVERITY_WARN)
+                store.utils.log(message="Failed to unwatch expression {0}".format(item), logseverity=store.utils.SEVERITY_WARN)
 
     def toggle_show_tracked_watch_items(force_show_state=None):
         """
@@ -182,6 +185,15 @@ init python in jn_debug:
 
         if _view_tracked_items_enabled:
             _watch_all_tracked_items()
+
+    def get_mouse_position():
+        """
+        Returns a tuple representing the mouse's current position in the game window.
+
+        OUT:
+            - mouse position as a tuple in format (x,y)
+        """
+        return pygame.mouse.get_pos()
 
 # Debugging topics
 
