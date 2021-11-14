@@ -69,6 +69,14 @@ init 999 python:
 
     def input_paste(self):
         paste = pygame.scrap.get(pygame.SCRAP_TEXT)
+
+        # Check if text we're trying to paste contains only allowed characters
+        for char in paste:
+            if self.allow and char not in self.allow:
+                return
+            if self.exclude and char in self.exclude:
+                return
+
         self.content = self.content[:self.caret_pos]+paste+self.content[self.caret_pos:]
         self.caret_pos += len(paste)
 
