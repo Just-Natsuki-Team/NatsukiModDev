@@ -481,7 +481,7 @@ label snap_forfeit:
             n "Pffffft!{w=0.2} Oh really?"
             n "Game on then,{w=0.1} [player]!"
             $ snap._natsuki_skill_level += 1
-            return
+            jump snap_main_loop
 
 image player_natsuki_hands:  
     pos (100, 215)
@@ -510,7 +510,7 @@ screen snap_ui:
         # Forfeit, but only selectable if player's turn
         textbutton _("Forfeit"):
             style "hkbd_button"
-            action [ Function(renpy.call, "snap_forfeit"), SensitiveIf(snap._is_player_turn), SensitiveIf(len(snap._natsuki_hand) > 0) ]
+            action [ Function(renpy.jump, "snap_forfeit"), SensitiveIf(snap._is_player_turn), SensitiveIf(len(snap._natsuki_hand) > 0) ]
 
         # Snap, but only selectable if there's enough cards down on the table
         textbutton _("Snap!"):

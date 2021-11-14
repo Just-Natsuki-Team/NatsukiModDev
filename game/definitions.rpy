@@ -811,6 +811,7 @@ define audio.select_confirm = "mod_assets/sfx/select_confirm.mp3"
 define audio.coin_flip = "mod_assets/sfx/coin_flip.mp3"
 define audio.card_shuffle = "mod_assets/sfx/card_shuffle.mp3"
 define audio.card_place = "mod_assets/sfx/card_place.mp3"
+define audio.drawer = "mod_assets/sfx/drawer.mp3"
 
 # Music
 define audio.test_bgm = "mod_assets/bgm/background_test_music.ogg"

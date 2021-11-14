@@ -3696,7 +3696,7 @@ label talk_play_snap:
         n "You wanna play Snap?{w=0.2} Sure!" 
     
     n "Let me just get the cards out real quick,{w=0.1} alright?"
-    play audio card_shuffle 
+    play audio drawer 
     with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
     jump snap_intro
 
