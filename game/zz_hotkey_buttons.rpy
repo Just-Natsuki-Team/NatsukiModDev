@@ -180,13 +180,19 @@ screen hkb_overlay:
         yalign 0.97
 
         textbutton _("Talk"):
-            action Jump("talk_menu")
+            action [
+                Jump("talk_menu"),
+                SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)]
             style "hkbd_button"
 
         textbutton _("Music"):
-            action Jump("music_menu")
+            action [
+                Jump("music_menu"),
+                SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)]
             style "hkbd_button"
 
         textbutton _("Extras"):
-            action Jump("extras_menu")
+            action [
+                Jump("extras_menu"),
+                SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)]
             style "hkbd_button"

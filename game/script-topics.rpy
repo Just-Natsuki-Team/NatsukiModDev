@@ -2510,7 +2510,8 @@ label talk_i_love_you:
             n "What did I say about making things awkward?{w=0.2} Now it's twice as awkward!"
             n "Jeez..."
             n "Let's just talk about something,{w=0.1} alright?"
-            n "Y-{w=0.1}you can fawn over me in your {i}own{/i} time.{w=0.2} Ahaha!"
+            n "Y-{w=0.1}you can fawn over me in your {i}own{/i} time!"
+            n "Dummy..."
             $ relationship("affinity+")
             return
 

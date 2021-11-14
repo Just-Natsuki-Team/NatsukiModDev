@@ -523,6 +523,9 @@ init -990 python in jn_globals:
     # Tracks whether the player is or is not currently playing a game
     player_is_ingame = False
 
+    # Tracks whether the player is or is not currently in some topic flow
+    player_is_in_conversation = False
+
     # Constants; use these for anything we only want defined once and used in a read-only context
 
     # Endearments Natsuki may use at the highest levels of affinity to refer to her player

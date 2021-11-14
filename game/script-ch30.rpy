@@ -62,7 +62,6 @@ label ch30_init:
 
 #The main loop
 label ch30_loop:
-
     # TODO: topic selection here once wait system is implemented
 
     #Run our checks
@@ -84,6 +83,7 @@ label ch30_loop:
         #main_background.check_redraw()
 
         jn_placeholders.show_resting_placeholder_natsuki()
+        jn_globals.player_is_in_conversation = False
 
     #Now, as long as there's something in the queue, we should go for it
     while persistent._event_list:
@@ -111,7 +111,9 @@ label call_next_topic:
 
             else:
                 $ jn_placeholders.show_resting_placeholder_natsuki()
-                
+
+            # Call the pending topic, and disable the UI
+            $ jn_globals.player_is_in_conversation = True
             call expression _topic
 
     python:
@@ -134,6 +136,8 @@ label call_next_topic:
     if "quit" in return_keys:
         jump _quit
 
+    # Reenable the UI and hop back to the loop
+    $ jn_globals.player_is_in_conversation = False
     jump ch30_loop
 
 init python:
