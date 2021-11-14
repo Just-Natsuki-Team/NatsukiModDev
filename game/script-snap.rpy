@@ -211,6 +211,7 @@ init 0 python in snap:
         global _is_player_turn
         global _player_is_snapping
 
+        # We set this here so Natsuki can't try to snap while the player is snapping
         if is_player:
             _player_is_snapping = True
 
@@ -238,14 +239,6 @@ init 0 python in snap:
             # Natsuki comments on the incorrect snap
             renpy.call("snap_quip", is_player_snap=is_player, is_correct_snap=False)
 
-        # Finally reset flags
-        if is_player:
-            _is_player_turn = False
-            _player_is_snapping = False
-
-        else:
-            _is_player_turn = True
-
 label snap_intro:
     n "Alriiiight!{w=0.2} Let's play some Snap!"
     if not persistent.jn_snap_explanation_given:
@@ -268,23 +261,38 @@ label snap_intro:
 
 label snap_quip(is_player_snap, is_correct_snap):
     
+    # Generate the quip based on what just happened
     if is_player_snap:
-
+        
+        # Player snapped, and was correct
         if is_correct_snap:
             $ quip = renpy.substitute(random.choice(snap._player_correct_snap_quips))
 
+        # Player snapped, and was incorrect
         else:
             $ quip = renpy.substitute(random.choice(snap._player_incorrect_snap_quips))
 
     else:
 
+        # Natsuki snapped, and was correct
         if is_correct_snap:
             $ quip = renpy.substitute(random.choice(snap._natsuki_correct_snap_quips))
 
+        # Natsuki snapped, and was incorrect
         else:
             $ quip = renpy.substitute(random.choice(snap._natsuki_incorrect_snap_quips))
 
+    # Natsuki quips
     n "[quip]"
+
+    # Now we reset the flags so nothing can happen before the quip has completed
+    if is_player_snap:
+        $ snap._player_is_snapping = False
+        $ snap._is_player_turn = False
+
+    else:
+        $ snap._is_player_turn = True
+
     return
 
 label snap_explanation:
@@ -334,7 +342,7 @@ label snap_start:
         
     else:
         n "Hmph...{w=0.3} you got lucky this time.{w=0.2} Looks like I'm first,{w=0.1} [player]."
-
+        
     $ jn_globals.player_is_ingame = True
     jump snap_main_loop
 
@@ -387,20 +395,25 @@ label snap_main_loop:
 label snap_end:
     # Player won, Natsuki amger
     if snap.last_game_result == snap.RESULT_PLAYER_WIN:
-        if snap._player_win_streak >= 10:
+
+        if snap._player_win_streak > 10:
+            n "Yeah,{w=0.1} yeah.{w=0.2} You won again."
+            n "...Nerd.{w=0.2} Ehehe."
+
+        elif snap._player_win_streak == 10:
             n "Nnnnnnnnnn-!!"
             n "W-what even is this,{w=0.1} [player]?"
             n "How are you so good at this?!"
             n "Ugh..."
 
-        elif snap._player_win_streak >= 5:
+        elif snap._player_win_streak == 5:
             n "Okay!{w=0.2} Alright!{w=0.2} I get it!"
             n "You're good at Snap,{w=0.1} okay?!"
             n "Jeez..."
             n "Now...{w=0.3} how about letting up a little?"
             n "Ehehe..."
 
-        elif snap._player_win_streak >= 3:
+        elif snap._player_win_streak == 3:
             n "Oho!{w=0.2} Someone's been practicing,{w=0.1} huh?"
             n "Or maybe you're just on a lucky streak,{w=0.1} [player]."
 
@@ -410,24 +423,29 @@ label snap_end:
 
     # Natsuki won, Natsuki happ
     elif snap.last_game_result == snap.RESULT_NATSUKI_WIN:
-        if snap._natsuki_win_streak >= 10:
+
+        if snap._natsuki_win_streak > 10:
+            n "Man,{w=0.1} this is just too easy!{w=0.2} I almost feel bad..."
+            n "...Almost.{w=0.2} Ehehe."
+
+        if snap._natsuki_win_streak == 10:
             n "Jeez,{w=0.1} [player]...{w=0.3} are you having a bad day or what?"
             n "Ahaha!"
             n "So long as you're having fun though,{w=0.1} right?"
 
-        elif snap._natsuki_win_streak >= 5:
+        elif snap._natsuki_win_streak == 5:
             n "Oh?{w=0.2} This?{w=0.2} This skill?"
             n "Don't worry about it."
             n "It's all natural,{w=0.1} [player]~."
             n "What did you expect,{w=0.1} challenging a pro like that?" 
             n "Ehehe."
 
-        elif snap._natsuki_win_streak >= 3:
+        elif snap._natsuki_win_streak == 3:
             n "Yes!{w=0.2} I win again!"
             n "Ehehe."
             
         else:
-            n "I won!{w=0.2} I won!"
+            n "I won!{w=0.2} I won! Yesss!"
             n "Just as predicted,{w=0.1} right?{w=0.2} Ahaha."
 
     # What
@@ -462,12 +480,12 @@ label snap_end:
 label snap_forfeit:
     n "Awww...{w=0.3} you're not giving up already are you,{w=0.1} [player]?"
     menu:
-        n "Are you?"
+        n "...Are you?"
 
         "Yes, I give up.":
             n "Oh...{w=0.3} well,{w=0.1} okay."
             n "But just so you know..."
-            n "I'm calling this a win for me!{w=0.2} Ehehe."
+            n "I'm chalking this up as a win for me!{w=0.2} Ehehe."
 
             $ snap._player_win_streak = 0
             $ snap._natsuki_win_streak += 1
@@ -502,17 +520,17 @@ screen snap_ui:
         xpos 100
         ypos 230
     
-        # Place card, but only selectable if player's turn
+        # Place card, but only selectable if player's turn, and both players are still capable of playing
         textbutton _("Place"):
             style "hkbd_button"
-            action [ Function(snap._place_card_on_table, True), SensitiveIf(snap._is_player_turn), SensitiveIf(len(snap._natsuki_hand) > 0) ]
+            action [ Function(snap._place_card_on_table, True), SensitiveIf(snap._is_player_turn), SensitiveIf(len(snap._natsuki_hand) > 0 or len(snap._player_hand) > 0)]
 
-        # Forfeit, but only selectable if player's turn
+        # Forfeit, but only selectable if player's turn, and both players are still capable of playing
         textbutton _("Forfeit"):
             style "hkbd_button"
-            action [ Function(renpy.jump, "snap_forfeit"), SensitiveIf(snap._is_player_turn), SensitiveIf(len(snap._natsuki_hand) > 0) ]
+            action [ Function(renpy.jump, "snap_forfeit"), SensitiveIf(snap._is_player_turn), SensitiveIf(len(snap._natsuki_hand) > 0 or len(snap._player_hand) > 0)]
 
-        # Snap, but only selectable if there's enough cards down on the table
+        # Snap, but only selectable if there's enough cards down on the table, and both players are still capable of playing
         textbutton _("Snap!"):
             style "hkbd_button"
-            action [ Function(snap._call_snap, True), SensitiveIf(len(snap._cards_on_table) >= 2), SensitiveIf(not snap._player_is_snapping), SensitiveIf(len(snap._natsuki_hand) > 0) ]
+            action [ Function(snap._call_snap, True), SensitiveIf(len(snap._cards_on_table) >= 2), SensitiveIf(not snap._player_is_snapping), SensitiveIf(len(snap._natsuki_hand) > 0 or len(snap._player_hand) > 0)]
