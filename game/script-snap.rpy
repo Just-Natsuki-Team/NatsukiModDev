@@ -90,6 +90,7 @@ init 0 python in snap:
     _player_is_snapping = False
     _natsuki_can_fake_snap = False
     _natsuki_skill_level = 0
+    _controls_enabled = False
 
     # Collections of cards involved in the game
     _cards_in_deck = []
@@ -282,8 +283,10 @@ label snap_quip(is_player_snap, is_correct_snap):
         else:
             $ quip = renpy.substitute(random.choice(snap._natsuki_incorrect_snap_quips))
 
-    # Natsuki quips
+    # Natsuki quips; disable controls so player can't skip dialogue
+    $ snap._controls_enabled = False
     n "[quip]"
+    $ snap._controls_enabled = True
 
     # Now we reset the flags so nothing can happen before the quip has completed
     if is_player_snap:
@@ -342,8 +345,9 @@ label snap_start:
         
     else:
         n "Hmph...{w=0.3} you got lucky this time.{w=0.2} Looks like I'm first,{w=0.1} [player]."
-        
+
     $ jn_globals.player_is_ingame = True
+    $ snap._controls_enabled = True
     jump snap_main_loop
 
 label snap_main_loop:
@@ -393,6 +397,9 @@ label snap_main_loop:
     jump snap_main_loop
 
 label snap_end:
+
+    $ snap._controls_enabled = False
+
     # Player won, Natsuki amger
     if snap.last_game_result == snap.RESULT_PLAYER_WIN:
 
@@ -478,6 +485,7 @@ label snap_end:
             jump ch30_loop
 
 label snap_forfeit:
+    $ snap._controls_enabled = False
     n "Awww...{w=0.3} you're not giving up already are you,{w=0.1} [player]?"
     menu:
         n "...Are you?"
@@ -498,6 +506,7 @@ label snap_forfeit:
         "In your dreams!":
             n "Pffffft!{w=0.2} Oh really?"
             n "Game on then,{w=0.1} [player]!"
+            $ snap._controls_enabled = True
             $ snap._natsuki_skill_level += 1
             jump snap_main_loop
 
@@ -523,14 +532,20 @@ screen snap_ui:
         # Place card, but only selectable if player's turn, and both players are still capable of playing
         textbutton _("Place"):
             style "hkbd_button"
-            action [ Function(snap._place_card_on_table, True), SensitiveIf(snap._is_player_turn), SensitiveIf(len(snap._natsuki_hand) > 0 or len(snap._player_hand) > 0)]
+            action [ 
+                Function(snap._place_card_on_table, True),
+                SensitiveIf(snap._is_player_turn and (len(snap._natsuki_hand) > 0 or len(snap._player_hand) > 0) and snap._controls_enabled)]
 
         # Forfeit, but only selectable if player's turn, and both players are still capable of playing
         textbutton _("Forfeit"):
             style "hkbd_button"
-            action [ Function(renpy.jump, "snap_forfeit"), SensitiveIf(snap._is_player_turn), SensitiveIf(len(snap._natsuki_hand) > 0 or len(snap._player_hand) > 0)]
+            action [ 
+                Function(renpy.jump, "snap_forfeit"),
+                SensitiveIf(snap._is_player_turn and (len(snap._natsuki_hand) > 0 or len(snap._player_hand) > 0) and snap._controls_enabled)]
 
         # Snap, but only selectable if there's enough cards down on the table, and both players are still capable of playing
         textbutton _("Snap!"):
             style "hkbd_button"
-            action [ Function(snap._call_snap, True), SensitiveIf(len(snap._cards_on_table) >= 2), SensitiveIf(not snap._player_is_snapping), SensitiveIf(len(snap._natsuki_hand) > 0 or len(snap._player_hand) > 0)]
+            action [ 
+                Function(snap._call_snap, True),
+                SensitiveIf(len(snap._cards_on_table) >= 2 and not snap._player_is_snapping and (len(snap._natsuki_hand) > 0 or len(snap._player_hand) > 0) and snap._controls_enabled)]
