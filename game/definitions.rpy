@@ -20,6 +20,8 @@ default persistent.current_weather_long = dict()
 # Location data
 default persistent.latitude = None
 default persistent.longitude = None
+default persistent.jn_hemisphere_north_south = None
+default persistent.jn_hemisphere_east_west = None
 
 # Pet data
 default persistent.jn_player_pet = None
