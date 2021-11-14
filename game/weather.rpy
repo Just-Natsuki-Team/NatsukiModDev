@@ -6,6 +6,7 @@ init -1 python in weather:
 
     #TEST API key, feel free to use
     #2c2f369ad4987a01f5de4c149665c5fd
+    #NOTE: remove in production
 
     def string_to_dict(string):
         """
@@ -125,8 +126,9 @@ init -1 python in weather:
             OUT:
                 API response code - <int>
 
-            note: This should be used only when validating stuff like API keys, locations, etc.
-                  As this function makes a NEW API call
+            note:
+                This should be used only when validating stuff like API keys, locations, etc.
+                As this function makes a NEW API call
         """
         # Make an API call and get it's response
         content = get_api_call_info(key, parameters)
@@ -144,9 +146,10 @@ init -1 python in weather:
                 True - if key is valid
                 False - if key is invalid
 
-            note: Use this only when a key ~needs~ to be validated
-                  If an API key has been validated before, assume it will stay like that
-                  (This function makes a new API call)
+            note:
+                Use this only when a key ~needs~ to be validated
+                If an API key has been validated before, assume it will stay like that
+                (This function makes a new API call)
         """
         # Get response code of API call
         response_code = get_response_code(key)
@@ -903,6 +906,7 @@ init -1 python:
         os.startfile(file)
 
     def txt_input(pre_format_string=""):
+        #NOTE: leaving this here for now, but it probably should get trashed
         """
             Creates a new temporary txt file and opens it in default txt editor
             File will have pre_format_string written in it before opening the file
@@ -910,8 +914,9 @@ init -1 python:
             Returns what the user typed in or None if file doesn't start with pre_format_string
             Deletes both the temporary text file and it's temporary folder parent
 
-            note: should be used only when user is expected to need to paste something
-                  otherwise use renpy.input()
+            note:
+                should be used only when user is expected to need to paste something
+                otherwise use renpy.input()
 
             IN:
                 pre_format_string - <string> a pre-formated string

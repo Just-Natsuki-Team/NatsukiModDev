@@ -1007,7 +1007,7 @@ label talk_weather_setup_part1:
     n "You need to get your API key and send it to me!"
     n "You can find your keys {a=[store.jn_globals.LINK_OPEN_WEATHER_MAP_API_KEYS]}here{/a},{w=0.1} or you can get there using the menu like before."
     n "You should have one set up already,{w=0.1} but you can create another just for me if you want!{w=0.2} Ehehe."
-    n "Oh{w=0.1} -{w=0.1} you'll need to type it all in manually though, so make sure you have it handy!"
+    n "Don't worry, I won't make you type it all up. You can just paste it,{w=0.2} hehe. "
     n "{a=[store.jn_globals.LINK_OPEN_WEATHER_MAP_API_KEYS]}Here's{/a} the link in case you forgot{w=0.1} -{w=0.1} and again,{w=0.1} just talk to me when you have it ready!"
     n "..."
     n "Okaaay!{w=0.2} Take it away,{w=0.1} [player]!"
@@ -1027,8 +1027,6 @@ label talk_weather_setup_part1:
 
         else:
             $ player_input = renpy.input("Enter your API key (or type Nevermind to go back):")
-            #TODO: This doesn't seem to work; will need to investigate. It's also kind of jarring from a player perspective!
-            #$ player_input = txt_input("Enter your API key (or type Nevermind to go back):")
 
         if not player_input or player_input == "":
             n "Uh...{w=0.3} Did you actually type anything,{w=0.1} [player]?"
@@ -1065,7 +1063,8 @@ label talk_weather_setup_part1:
             if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVE:
                 $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
                 n "Love you,{w=0.1} [chosen_endearment]!"
-            # TODO: Perhaps we should decrease this? Seems like a long time to keep the player waiting!
+            # It can take a few hours for the API key to activate
+            # so we wait 2.2 hours before checking if the key is working
             $ weather.set_next_weather_call_time(7920)
     return {"lock!" : None}
 
@@ -1263,7 +1262,7 @@ label weather_setup_manual_coords:
     n "Oh,{w=0.1} and don't worry about making it positive or negative.{w=0.2} I'll take care of that!"
     n "We'll start off with your {b}latitude{/b} first."
     n "So...{w=0.3} hit me,{w=0.1} [player]!"
-    $ player_latitude = renpy.input(prompt="Enter your latitude:", allow={"0123456789."})
+    $ player_latitude = renpy.input(prompt="Enter your latitude:", allow="0123456789.")
 
     # Get the longitude
 
@@ -1271,7 +1270,7 @@ label weather_setup_manual_coords:
     n "Alright!{w=0.1} Now finally,{w=0.1} I just need your {b}longitude{/b},{w=0.1} 'kay?"
     n "Just like last time,{w=0.1} I can figure it out without any positive or negative symbols."
     n "Take it away,{w=0.1} [player]!"
-    $ player_longitude = renpy.input("Enter your longitude:", allow={"0123456789."})
+    $ player_longitude = renpy.input("Enter your longitude:", allow="0123456789.")
 
     # Final checks and prompt
 
