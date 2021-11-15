@@ -4,6 +4,7 @@ init 10 python:
     # Enable some QoL things
     config.console = True
     config.allow_skipping = True
+    config.debug_sound = True
 
 default persistent.jn_debug_tracked_watch_items = [
     "store.persistent.affinity",

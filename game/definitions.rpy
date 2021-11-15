@@ -677,6 +677,11 @@ init -990 python in jn_globals:
     #The last label we were in
     last_label = None
 
+    # Channel registration
+
+    # Channel for looping weather sfx
+    renpy.music.register_channel("weather_loop", "sfx", True)
+
 init 10 python in jn_globals:
     # The current affection state. We default this to 5 (NORMAL)
     current_affinity_state = store.jn_affinity.NORMAL
@@ -807,7 +812,7 @@ define audio.t4g = "<loop 1.000>bgm/4g.ogg"
 
 # JN resources
 
-# Sound effects
+# Single-play sound effects
 define audio.camera_shutter = "mod_assets/sfx/camera_shutter.mp3"
 define audio.select_hover = "mod_assets/sfx/select_hover.mp3"
 define audio.select_confirm = "mod_assets/sfx/select_confirm.mp3"
@@ -816,9 +821,13 @@ define audio.card_shuffle = "mod_assets/sfx/card_shuffle.mp3"
 define audio.card_place = "mod_assets/sfx/card_place.mp3"
 define audio.drawer = "mod_assets/sfx/drawer.mp3"
 
+# Looped sound effects
+define audio.rain_muffled = "mod_assets/sfx/rain_muffled.mp3"
+
 # Music
 define audio.test_bgm = "mod_assets/bgm/background_test_music.ogg"
 
+# Sprites
 define body_a = "mod_assets/natsuki-assets/base.png"
 define uniform_a = "mod_assets/natsuki-assets/uniform.png"
 define face_a = "mod_assets/natsuki-assets/jnab.png"

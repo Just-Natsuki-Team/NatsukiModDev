@@ -144,12 +144,16 @@ init 0 python in jn_placeholders:
                 renpy.show(name="placeholder_dim light", zorder=DIM_Z_INDEX)
                 renpy.with_statement(trans=store.dim_change_transition)
 
+                renpy.music.stop(filenames="mod_assets/sfx/rain_muffled.mp3", channel="weather_loop", fadeout=5.0)
+
             elif weather_type == WEATHER_RAIN:
                 renpy.show(name="placeholder_sky_day rain", zorder=SKY_Z_INDEX)
                 renpy.with_statement(trans=store.weather_change_transition)
 
                 renpy.show(name="placeholder_dim medium", zorder=DIM_Z_INDEX)
                 renpy.with_statement(trans=store.dim_change_transition)
+
+                renpy.music.play(filenames="mod_assets/sfx/rain_muffled.mp3", channel="weather_loop", fadein=3.0)
 
             elif weather_type == WEATHER_THUNDER:
                 renpy.show(name="placeholder_sky_day thunder", zorder=SKY_Z_INDEX)
@@ -158,10 +162,14 @@ init 0 python in jn_placeholders:
                 renpy.show(name="placeholder_dim heavy", zorder=DIM_Z_INDEX)
                 renpy.with_statement(trans=store.dim_change_transition)
 
+                renpy.music.play(filenames="mod_assets/sfx/rain_muffled.mp3", channel="weather_loop", fadein=3.0)
+
             else:
                 renpy.show(name="placeholder_sky_day sunny", zorder=SKY_Z_INDEX)
                 renpy.with_statement(trans=store.weather_change_transition)
                 renpy.hide(name="placeholder_dim")
+
+                renpy.music.stop(filenames="mod_assets/sfx/rain_muffled.mp3", channel="weather_loop", fadeout=5.0)
         
         else:
             raise Exception("Supplied param weather_type {weather_type} is not a valid type.".format(weather_type))
