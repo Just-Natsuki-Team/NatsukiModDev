@@ -1,6 +1,6 @@
 default persistent.jn_snap_explanation_given = False
 
-init 0 python in snap:
+init 0 python in jn_snap:
     import random
     import store
 
@@ -267,34 +267,34 @@ label snap_quip(is_player_snap, is_correct_snap):
         
         # Player snapped, and was correct
         if is_correct_snap:
-            $ quip = renpy.substitute(random.choice(snap._player_correct_snap_quips))
+            $ quip = renpy.substitute(random.choice(jn_snap._player_correct_snap_quips))
 
         # Player snapped, and was incorrect
         else:
-            $ quip = renpy.substitute(random.choice(snap._player_incorrect_snap_quips))
+            $ quip = renpy.substitute(random.choice(jn_snap._player_incorrect_snap_quips))
 
     else:
 
         # Natsuki snapped, and was correct
         if is_correct_snap:
-            $ quip = renpy.substitute(random.choice(snap._natsuki_correct_snap_quips))
+            $ quip = renpy.substitute(random.choice(jn_snap._natsuki_correct_snap_quips))
 
         # Natsuki snapped, and was incorrect
         else:
-            $ quip = renpy.substitute(random.choice(snap._natsuki_incorrect_snap_quips))
+            $ quip = renpy.substitute(random.choice(jn_snap._natsuki_incorrect_snap_quips))
 
     # Natsuki quips; disable controls so player can't skip dialogue
-    $ snap._controls_enabled = False
+    $ jn_snap._controls_enabled = False
     n "[quip]"
-    $ snap._controls_enabled = True
+    $ jn_snap._controls_enabled = True
 
     # Now we reset the flags so nothing can happen before the quip has completed
     if is_player_snap:
-        $ snap._player_is_snapping = False
-        $ snap._is_player_turn = False
+        $ jn_snap._player_is_snapping = False
+        $ jn_snap._is_player_turn = False
 
     else:
-        $ snap._is_player_turn = True
+        $ jn_snap._is_player_turn = True
 
     return
 
@@ -325,102 +325,102 @@ label snap_explanation:
 label snap_start:
     play audio card_shuffle
     n "..."
-    $ snap._reset()
-    $ snap._generate_hands()
+    $ jn_snap._reset()
+    $ jn_snap._generate_hands()
     show player_natsuki_hands zorder 20
     show screen snap_ui
 
-    $ utils.log("player's hand: {0}".format(str(snap._player_hand)))
-    $ utils.log("natsuki's hand: {0}".format(str(snap._natsuki_hand)))
+    $ utils.log("player's hand: {0}".format(str(jn_snap._player_hand)))
+    $ utils.log("natsuki's hand: {0}".format(str(jn_snap._natsuki_hand)))
 
     n "Okaaay!{w=0.2} That's the deck shuffled!"
     n "Let's see who's going first..."
 
     play audio coin_flip
     n "..."
-    $ snap._is_player_turn = random.choice([True, False])
+    $ jn_snap._is_player_turn = random.choice([True, False])
 
-    if snap._is_player_turn:
+    if jn_snap._is_player_turn:
         n "Ehehe.{w=0.2} Bad luck,{w=0.1} [player].{w=0.2} Looks like you're up first!"
         
     else:
         n "Hmph...{w=0.3} you got lucky this time.{w=0.2} Looks like I'm first,{w=0.1} [player]."
 
     $ jn_globals.player_is_ingame = True
-    $ snap._controls_enabled = True
+    $ jn_snap._controls_enabled = True
     jump snap_main_loop
 
 label snap_main_loop:
 
     # First, let's check to see if anyone has won yet
-    if len(snap._player_hand) == 0 and len(snap._natsuki_hand) == 0:
+    if len(jn_snap._player_hand) == 0 and len(jn_snap._natsuki_hand) == 0:
         # We tied somehow? End the game
-        $ snap._player_win_streak = 0
-        $ snap._natsuki_win_streak = 0
-        $ snap.last_game_result = snap.RESULT_DRAW
+        $ jn_snap._player_win_streak = 0
+        $ jn_snap._natsuki_win_streak = 0
+        $ jn_snap.last_game_result = jn_snap.RESULT_DRAW
         jump snap_end
 
-    elif len(snap._player_hand) == 0:
+    elif len(jn_snap._player_hand) == 0:
         # Player has lost; end the game
-        $ snap._player_win_streak = 0
-        $ snap._natsuki_win_streak += 1
-        $ snap.last_game_result = snap.RESULT_NATSUKI_WIN
+        $ jn_snap._player_win_streak = 0
+        $ jn_snap._natsuki_win_streak += 1
+        $ jn_snap.last_game_result = jn_snap.RESULT_NATSUKI_WIN
         jump snap_end
 
-    elif len(snap._natsuki_hand) == 0:
+    elif len(jn_snap._natsuki_hand) == 0:
         # Natsuki has lost; end the game
-        $ snap._player_win_streak += 1
-        $ snap._natsuki_win_streak = 0
-        $ snap.last_game_result = snap.RESULT_PLAYER_WIN
+        $ jn_snap._player_win_streak += 1
+        $ jn_snap._natsuki_win_streak = 0
+        $ jn_snap.last_game_result = jn_snap.RESULT_PLAYER_WIN
         jump snap_end
 
-    $ renpy.pause(delay=max(0.25, (3.0 - snap._natsuki_skill_level * 0.25)))
+    $ renpy.pause(delay=max(0.25, (3.0 - jn_snap._natsuki_skill_level * 0.25)))
 
     # Natsuki's snap logic
 
     # If a correct snap is possible, and the player isn't snapping already, Natsuki will try to call it: the higher the difficulty, the quicker Natsuki will be.
-    if not snap._player_is_snapping:
-        if (snap._get_snap_result()):  
-            $ snap._call_snap()
+    if not jn_snap._player_is_snapping:
+        if (jn_snap._get_snap_result()):  
+            $ jn_snap._call_snap()
 
-        # She may also snap by mistake, assuming it makes sense to do so: the higher the difficulty, the less she'll accidentally snap.
-        elif random.choice(range(0,10 + snap._natsuki_skill_level)) == 1 and len(snap._cards_on_table) >= 2 and snap._natsuki_can_fake_snap:
-            $ snap._call_snap()
-            $ snap._natsuki_can_fake_snap = False
+        # She may also snap by mistake, assuming it makes sense to do so: the higher the difficulty, the less she'll accidentally jn_snap.
+        elif random.choice(range(0,10 + jn_snap._natsuki_skill_level)) == 1 and len(jn_snap._cards_on_table) >= 2 and jn_snap._natsuki_can_fake_snap:
+            $ jn_snap._call_snap()
+            $ jn_snap._natsuki_can_fake_snap = False
 
-    if not snap._is_player_turn:
+    if not jn_snap._is_player_turn:
         # Natsuki gets to place a card
-        $ snap._place_card_on_table(False)
-        $ snap._is_player_turn = True
-        $ snap._natsuki_can_fake_snap = True
+        $ jn_snap._place_card_on_table(False)
+        $ jn_snap._is_player_turn = True
+        $ jn_snap._natsuki_can_fake_snap = True
 
     jump snap_main_loop
 
 label snap_end:
 
-    $ snap._controls_enabled = False
+    $ jn_snap._controls_enabled = False
 
     # Player won, Natsuki amger
-    if snap.last_game_result == snap.RESULT_PLAYER_WIN:
+    if jn_snap.last_game_result == jn_snap.RESULT_PLAYER_WIN:
 
-        if snap._player_win_streak > 10:
+        if jn_snap._player_win_streak > 10:
             n "Yeah,{w=0.1} yeah.{w=0.2} You won again."
             n "...Nerd.{w=0.2} Ehehe."
 
-        elif snap._player_win_streak == 10:
+        elif jn_snap._player_win_streak == 10:
             n "Nnnnnnnnnn-!!"
             n "W-what even is this,{w=0.1} [player]?"
             n "How are you so good at this?!"
             n "Ugh..."
 
-        elif snap._player_win_streak == 5:
+        elif jn_snap._player_win_streak == 5:
             n "Okay!{w=0.2} Alright!{w=0.2} I get it!"
             n "You're good at Snap,{w=0.1} okay?!"
             n "Jeez..."
             n "Now...{w=0.3} how about letting up a little?"
             n "Ehehe..."
 
-        elif snap._player_win_streak == 3:
+        elif jn_snap._player_win_streak == 3:
             n "Oho!{w=0.2} Someone's been practicing,{w=0.1} huh?"
             n "Or maybe you're just on a lucky streak,{w=0.1} [player]."
 
@@ -429,25 +429,25 @@ label snap_end:
             n "Well played though,{w=0.1} [player]!"
 
     # Natsuki won, Natsuki happ
-    elif snap.last_game_result == snap.RESULT_NATSUKI_WIN:
+    elif jn_snap.last_game_result == jn_snap.RESULT_NATSUKI_WIN:
 
-        if snap._natsuki_win_streak > 10:
+        if jn_snap._natsuki_win_streak > 10:
             n "Man,{w=0.1} this is just too easy!{w=0.2} I almost feel bad..."
             n "...Almost.{w=0.2} Ehehe."
 
-        if snap._natsuki_win_streak == 10:
+        if jn_snap._natsuki_win_streak == 10:
             n "Jeez,{w=0.1} [player]...{w=0.3} are you having a bad day or what?"
             n "Ahaha!"
             n "So long as you're having fun though,{w=0.1} right?"
 
-        elif snap._natsuki_win_streak == 5:
+        elif jn_snap._natsuki_win_streak == 5:
             n "Oh?{w=0.2} This?{w=0.2} This skill?"
             n "Don't worry about it."
             n "It's all natural,{w=0.1} [player]~."
             n "What did you expect,{w=0.1} challenging a pro like that?" 
             n "Ehehe."
 
-        elif snap._natsuki_win_streak == 3:
+        elif jn_snap._natsuki_win_streak == 3:
             n "Yes!{w=0.2} I win again!"
             n "Ehehe."
             
@@ -456,7 +456,7 @@ label snap_end:
             n "Just as predicted,{w=0.1} right?{w=0.2} Ahaha."
 
     # What
-    elif snap.last_game_result == snap.RESULT_DRAW:
+    elif jn_snap.last_game_result == jn_snap.RESULT_DRAW:
         n "...Huh.{w=0.2} We actually tied?"
         n "That's...{w=0.3} almost impressive,{w=0.1} actually.{w=0.2} Weird."
         n "Well,{w=0.1} whatever,{w=0.1} I guess!"
@@ -469,11 +469,11 @@ label snap_end:
     # Award affinity for playing to completion with best girl
     $ relationship("affinity+")
 
-    if snap._player_win_streak >= 3:
+    if jn_snap._player_win_streak >= 3:
         n "Uuuuuu-!"
         n "I-{w=0.1}I demand a rematch!{w=0.2} I'm not going down like this!"
  
-    elif snap._natsuki_win_streak >= 3:
+    elif jn_snap._natsuki_win_streak >= 3:
         n "Ehehe.{w=0.2} That can't be {i}all{/i} you've got,{w=0.1} [player].{w=0.2} Rematch!"
 
     else:
@@ -484,17 +484,17 @@ label snap_end:
 
         "You're on!":
             n "Yeah,{w=0.1} you bet you are,{w=0.1} [player]!"
-            $ snap._natsuki_skill_level += 1
+            $ jn_snap._natsuki_skill_level += 1
             jump snap_start
 
         "I'll pass.":
             n "Awww...{w=0.3} well,{w=0.1} okay."
             n "Thanks for playing,{w=0.1} [player]~."
 
-            if snap._player_win_streak >= 3:
+            if jn_snap._player_win_streak >= 3:
                 n "...Even if you did kick my butt."
 
-            elif snap._natsuki_win_streak >= 3:
+            elif jn_snap._natsuki_win_streak >= 3:
                 n "I wanna see more fight in you next time, though. Ahaha!"
 
             hide player_natsuki_hands
@@ -503,7 +503,7 @@ label snap_end:
             jump ch30_loop
 
 label snap_forfeit:
-    $ snap._controls_enabled = False
+    $ jn_snap._controls_enabled = False
     n "Awww...{w=0.3} you're not giving up already are you,{w=0.1} [player]?"
     menu:
         n "...Are you?"
@@ -513,8 +513,8 @@ label snap_forfeit:
             n "But just so you know..."
             n "I'm chalking this up as a win for me!{w=0.2} Ehehe."
 
-            $ snap._player_win_streak = 0
-            $ snap._natsuki_win_streak += 1
+            $ jn_snap._player_win_streak = 0
+            $ jn_snap._natsuki_win_streak += 1
             hide player_natsuki_hands
             hide screen snap_ui
             $ jn_globals.player_is_ingame = False
@@ -524,22 +524,22 @@ label snap_forfeit:
         "In your dreams!":
             n "Pffffft!{w=0.2} Oh really?"
             n "Game on then,{w=0.1} [player]!"
-            $ snap._controls_enabled = True
-            $ snap._natsuki_skill_level += 1
+            $ jn_snap._controls_enabled = True
+            $ jn_snap._natsuki_skill_level += 1
             jump snap_main_loop
 
 image player_natsuki_hands:  
     pos (100, 215)
-    snap._card_fan_image
+    jn_snap._card_fan_image
 
 screen snap_ui:
     zorder 20
-    text "[player]'s hand: {0}".format(len(snap._player_hand)) size 22 xpos 175 ypos 55 style "categorized_menu_button"
-    text "[n_name]'s hand: {0}".format(len(snap._natsuki_hand)) size 22 xpos 175 ypos 170 style "categorized_menu_button"
+    text "[player]'s hand: {0}".format(len(jn_snap._player_hand)) size 22 xpos 175 ypos 55 style "categorized_menu_button"
+    text "[n_name]'s hand: {0}".format(len(jn_snap._natsuki_hand)) size 22 xpos 175 ypos 170 style "categorized_menu_button"
 
     # Debug
-    text "Card: {0}".format(snap._get_card_to_display()) size 22 xpos 175 ypos 425 style "categorized_menu_button"
-    text "Cards on table: {0}".format(len(snap._cards_on_table)) size 22 xpos 175 ypos 455 style "categorized_menu_button"
+    text "Card: {0}".format(jn_snap._get_card_to_display()) size 22 xpos 175 ypos 425 style "categorized_menu_button"
+    text "Cards on table: {0}".format(len(jn_snap._cards_on_table)) size 22 xpos 175 ypos 455 style "categorized_menu_button"
 
     style_prefix "hkb"
 
@@ -551,19 +551,19 @@ screen snap_ui:
         textbutton _("Place"):
             style "hkbd_button"
             action [ 
-                Function(snap._place_card_on_table, True),
-                SensitiveIf(snap._is_player_turn and (len(snap._natsuki_hand) > 0 or len(snap._player_hand) > 0) and snap._controls_enabled)]
+                Function(jn_snap._place_card_on_table, True),
+                SensitiveIf(jn_snap._is_player_turn and (len(jn_snap._natsuki_hand) > 0 or len(jn_snap._player_hand) > 0) and jn_snap._controls_enabled)]
 
         # Forfeit, but only selectable if player's turn, and both players are still capable of playing
         textbutton _("Forfeit"):
             style "hkbd_button"
             action [ 
                 Function(renpy.jump, "snap_forfeit"),
-                SensitiveIf(snap._is_player_turn and (len(snap._natsuki_hand) > 0 or len(snap._player_hand) > 0) and snap._controls_enabled)]
+                SensitiveIf(jn_snap._is_player_turn and (len(jn_snap._natsuki_hand) > 0 or len(jn_snap._player_hand) > 0) and jn_snap._controls_enabled)]
 
         # Snap, but only selectable if there's enough cards down on the table, and both players are still capable of playing
         textbutton _("Snap!"):
             style "hkbd_button"
             action [ 
-                Function(snap._call_snap, True),
-                SensitiveIf(len(snap._cards_on_table) >= 2 and not snap._player_is_snapping and (len(snap._natsuki_hand) > 0 or len(snap._player_hand) > 0) and snap._controls_enabled)]
+                Function(jn_snap._call_snap, True),
+                SensitiveIf(len(jn_snap._cards_on_table) >= 2 and not jn_snap._player_is_snapping and (len(jn_snap._natsuki_hand) > 0 or len(jn_snap._player_hand) > 0) and jn_snap._controls_enabled)]

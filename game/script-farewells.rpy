@@ -1,6 +1,6 @@
 default persistent._farewell_database = dict()
 
-init python in farewells:
+init python in jn_farewells:
     import random
     import store
 
@@ -48,7 +48,7 @@ init 1 python:
         utils.log(e, utils.SEVERITY_ERR)
 
 label farewell_start:
-    $ push(farewells.select_farewell())
+    $ push(jn_farewells.select_farewell())
     jump call_next_topic
 
 # LOVE+ farewells
@@ -71,7 +71,7 @@ label farewell_love_you_mean_the_world_to_me:
     n "Aww...{w=0.3} you're leaving now,{w=0.1} [player]?{w=0.2} Well,{w=0.1} okay..."
     n "Y-{w=0.2}you know I'll miss you,{w=0.1} right?"
     n "Take care,{w=0.1} [player]!{w=0.2} You mean the world to me!"
-    $ farewells.try_trust_dialogue()
+    $ jn_farewells.try_trust_dialogue()
     return { "quit": None }
 
 init 5 python:
@@ -94,7 +94,7 @@ label farewell_love_dont_like_saying_goodbye:
     n "..."
     n "I'll be okay!{w=0.2} Just come back soon,{w=0.1} alright?"
     n "Stay safe,{w=0.1} dummy!{w=0.2} I love you!"
-    $ farewells.try_trust_dialogue()
+    $ jn_farewells.try_trust_dialogue()
     return { "quit": None }
 
 init 5 python:
@@ -117,7 +117,7 @@ label farewell_love_counting_on_you:
     n "But I guess it can't be helped,{w=0.1} [player]."
     $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
     n "Take care of yourself out there,{w=0.1} [chosen_endearment]!{w=0.2} I'm counting on you!"
-    $ farewells.try_trust_dialogue()
+    $ jn_farewells.try_trust_dialogue()
     return { "quit": None }
 
 init 5 python:
@@ -141,7 +141,7 @@ label farewell_love_do_your_best:
     n "I'll really miss you,{w=0.1} [player]."
     $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
     n "Do your best,{w=0.1} [chosen_endearment]!"
-    $ farewells.try_trust_dialogue()
+    $ jn_farewells.try_trust_dialogue()
     return { "quit": None }
 
 init 5 python:
@@ -166,7 +166,7 @@ label farewell_love_rooting_for_you:
     n "...But I know you'll always be back for me,{w=0.1} [chosen_endearment]."
     n "Well...{w=0.1} I'm rooting for you!"
     n "Make me proud,{w=0.1} [player]! I love you!"
-    $ farewells.try_trust_dialogue()
+    $ jn_farewells.try_trust_dialogue()
     return { "quit": None }
 
 init 5 python:
@@ -189,7 +189,7 @@ label farewell_love_me_to_deal_with:
     n "Awww...{w=0.3} well okay."
     n "You take care of yourself,{w=0.1} got it? Or you'll have me to deal with!"
     n "Bye now!{w=0.2} I love you!"
-    $ farewells.try_trust_dialogue()
+    $ jn_farewells.try_trust_dialogue()
     return { "quit": None }
 
 init 5 python:
@@ -213,7 +213,7 @@ label farewell_love_wish_you_could_stay_forever:
     n "But I understand you've got stuff to do."
     $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
     n "Goodbye,{w=0.1} [chosen_endearment]!"
-    $ farewells.try_trust_dialogue()
+    $ jn_farewells.try_trust_dialogue()
     return { "quit": None }
 
 # AFFECTIONATE/ENAMORED farewells
@@ -239,7 +239,7 @@ label farewell_affectionate_enamored_was_having_fun:
     n "And I was having fun,{w=0.1} too..."
     n "Well,{w=0.1} if you gotta go,{w=0.1} you gotta go!"
     n "Take care,{w=0.1} [player]!{w=0.2} Make me proud!"
-    $ farewells.try_trust_dialogue()
+    $ jn_farewells.try_trust_dialogue()
     return { "quit": None }
 
 init 5 python:
@@ -263,7 +263,7 @@ label farewell_affectionate_enamored_waiting_for_you:
     n "Hurry back if you can,{w=0.1} alright?"
     n "I'll be waiting for you!"
     n "Goodbye,{w=0.1} [player]!"
-    $ farewells.try_trust_dialogue()
+    $ jn_farewells.try_trust_dialogue()
     return { "quit": None }
 
 init 5 python:
@@ -287,7 +287,7 @@ label farewell_affectionate_enamored_ill_be_okay:
     n "That's fine...{w=0.3} I'll be okay..."
     n "You better come back soon,{w=0.1} alright [player]?"
     n "Goodbye!{w=0.2} I'll miss you!"
-    $ farewells.try_trust_dialogue()
+    $ jn_farewells.try_trust_dialogue()
     return { "quit": None }
 
 init 5 python:
@@ -311,7 +311,7 @@ label farewell_affectionate_enamored_dont_make_me_find_you:
     n "But I know you have things to do."
     n "Come see me later,{w=0.1} promise?"
     n "Don't make me come find you!{w=0.2} Ehehe."
-    $ farewells.try_trust_dialogue()
+    $ jn_farewells.try_trust_dialogue()
     return { "quit": None }
 
 init 5 python:
@@ -335,7 +335,7 @@ label farewell_affectionate_enamored_take_care_for_both:
     n "Well,{w=0.2} I'll be okay!"
     n "Take care of yourself,{w=0.1} [player]!{w=0.2} For both of us!"
     n "See you later!"
-    $ farewells.try_trust_dialogue()
+    $ jn_farewells.try_trust_dialogue()
     return { "quit": None }
 
 init 5 python:
@@ -358,7 +358,7 @@ label farewell_affectionate_enamored_enjoy_our_time_together:
     n "Nnnnnn...{w=0.3} alright."
     n "You better be back later,{w=0.1} okay?{w=0.2} I really enjoy our time together."
     n "See you soon,{w=0.1} [player]!"
-    $ farewells.try_trust_dialogue()
+    $ jn_farewells.try_trust_dialogue()
     return { "quit": None }
 
 init 5 python:
@@ -380,7 +380,7 @@ label farewell_affectionate_enamored_see_me_soon:
     n "Well,{w=0.1} I guess you had to leave eventually."
     n "Doesn't mean I have to like it,{w=0.1} though..."
     n "Come see me soon,{w=0.1} okay?"
-    $ farewells.try_trust_dialogue()
+    $ jn_farewells.try_trust_dialogue()
     return { "quit": None }
 
 # HAPPY/AFFECTIONATE farewells
@@ -402,7 +402,7 @@ init 5 python:
 
 label farewell_happy_affectionate_going_now:
     n "Going now,{w=0.1} [player]?{w=0.2} I'll see you later!"
-    $ farewells.try_trust_dialogue()
+    $ jn_farewells.try_trust_dialogue()
     return { "quit": None }
 
 init 5 python:
@@ -423,7 +423,7 @@ init 5 python:
 label farewell_happy_affectionate_heading_off:
     n "Heading off now,{w=0.1} [player]?"
     n "Okay!{w=0.2} Take care!"
-    $ farewells.try_trust_dialogue()
+    $ jn_farewells.try_trust_dialogue()
     return { "quit": None }
 
 init 5 python:
@@ -444,7 +444,7 @@ init 5 python:
 label farewell_happy_affectionate_stay_safe:
     n "Okaaay!{w=0.2} I'll be waiting for you!"
     n "Stay safe,{w=0.1} [player]!"
-    $ farewells.try_trust_dialogue()
+    $ jn_farewells.try_trust_dialogue()
     return { "quit": None }
 
 init 5 python:
@@ -465,7 +465,7 @@ init 5 python:
 label farewell_happy_affectionate_take_care:
     n "See you later,{w=0.1} [player]!"
     n "Take care out there!"
-    $ farewells.try_trust_dialogue()
+    $ jn_farewells.try_trust_dialogue()
     return { "quit": None }
 
 init 5 python:
@@ -486,7 +486,7 @@ init 5 python:
 label farewell_happy_affectionate_see_me_soon:
     n "Goodbye,{w=0.1} [player]!"
     n "Come see me soon,{w=0.1} alright?"
-    $ farewells.try_trust_dialogue()
+    $ jn_farewells.try_trust_dialogue()
     return { "quit": None }
 
 # NORMAL/HAPPY farewells
@@ -527,7 +527,7 @@ init 5 python:
 
 label farewell_normal_happy_later:
     n "Later, [player]!"
-    $ farewells.try_trust_dialogue()
+    $ jn_farewells.try_trust_dialogue()
     return { "quit": None }
 
 init 5 python:
@@ -547,7 +547,7 @@ init 5 python:
 
 label farewell_normal_happy_goodbye:
     n "Goodbye, [player]!"
-    $ farewells.try_trust_dialogue()
+    $ jn_farewells.try_trust_dialogue()
     return { "quit": None }
 
 init 5 python:
@@ -567,7 +567,7 @@ init 5 python:
 
 label farewell_normal_happy_kay:
     n "'kay! Bye for now!"
-    $ farewells.try_trust_dialogue()
+    $ jn_farewells.try_trust_dialogue()
     return { "quit": None }
 
 init 5 python:
@@ -587,7 +587,7 @@ init 5 python:
 
 label farewell_normal_happy_see_ya:
     n "See ya, [player]!"
-    $ farewells.try_trust_dialogue()
+    $ jn_farewells.try_trust_dialogue()
     return { "quit": None }
 
 # UPSET/DISTRESSED farewells
@@ -849,7 +849,7 @@ label farewell_short_session_ask:
                     n "Well...{w=0.3} okay,{w=0.1} [player]."
                     n "Take care out there,{w=0.1} alright?"
                     n "See you later!"
-                    $ farewells.try_trust_dialogue()
+                    $ jn_farewells.try_trust_dialogue()
                     return { "quit": None }
 
         "Sorry, [n_name]. I really have to leave.":
@@ -858,7 +858,7 @@ label farewell_short_session_ask:
             n "Well...{w=0.3} okay."
             n "Don't take too long,{w=0.1} alright?"
             n "See you later, [player]!"
-            $ farewells.try_trust_dialogue()
+            $ jn_farewells.try_trust_dialogue()
             return { "quit": None }
 
     return
@@ -931,7 +931,7 @@ label farewell_short_session_ask_alt:
             n "Well,{w=0.1} I guess that's fine.{w=0.2} It can't be helped,{w=0.1} after all."
             n "But you gotta make it up to me,{w=0.1} alright?"
             n "Stay safe,{w=0.1} [player]!{w=0.2} I'll see you later!"
-            $ farewells.try_trust_dialogue()
+            $ jn_farewells.try_trust_dialogue()
             return { "quit": None }
     return
 
@@ -974,7 +974,7 @@ label farewell_fake_confidence_ask:
             n "That's fine,{w=0.1} I guess..."
             n "I'll see you later then,{w=0.1} [player]!"
             n "Don't keep me waiting,{w=0.1} alright?"
-            $ farewells.try_trust_dialogue()
+            $ jn_farewells.try_trust_dialogue()
             return { "quit": None }
     return
 
@@ -1018,7 +1018,7 @@ label farewell_pleading_ask:
             n "Come back soon,{w=0.1} alright?"
             n "Or you'll have to make it up to me...{w=0.3} ahaha..."
             n "Stay safe,{w=0.1} [player]!"
-            $ farewells.try_trust_dialogue()
+            $ jn_farewells.try_trust_dialogue()
             return { "quit": None }
     return
 
@@ -1062,7 +1062,7 @@ label farewell_gentle_ask:
             n "..."
             n "I-I love you,{w=0.1} [player]..."
             n "I'll see you later."
-            $ farewells.try_trust_dialogue()
+            $ jn_farewells.try_trust_dialogue()
             return { "quit": None }
     return
 

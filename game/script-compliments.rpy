@@ -1,6 +1,6 @@
 default persistent._compliment_database = dict()
 
-init 0 python in compliments:
+init 0 python in jn_compliments:
     import random
     import store
 
@@ -44,7 +44,7 @@ label player_compliments_start:
     python:
         compliment_menu_items = [
             (_compliment.prompt, _compliment.label)
-            for _compliment in compliments.get_all_compliments()
+            for _compliment in jn_compliments.get_all_compliments()
         ]
         compliment_menu_items.sort()
 
@@ -70,7 +70,7 @@ init 5 python:
 
 label compliment_amazing:
 
-    if compliments.last_compliment_type == compliments.TYPE_AMAZING:
+    if jn_compliments.last_compliment_type == jn_compliments.TYPE_AMAZING:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "[player]...{w=0.3} honestly!{w=0.2} You're making me blush!"
             n "But still...{w=0.3} thanks.{w=0.2} It really means a lot to me."
@@ -110,7 +110,7 @@ label compliment_amazing:
 
             $ relationship("affinity+")
 
-    $ last_compliment_type = compliments.TYPE_AMAZING
+    $ last_compliment_type = jn_compliments.TYPE_AMAZING
     return
 
 init 5 python:
@@ -126,7 +126,7 @@ init 5 python:
     )
 
 label compliment_beautiful:
-    if compliments.last_compliment_type == compliments.TYPE_BEAUTIFUL:
+    if jn_compliments.last_compliment_type == jn_compliments.TYPE_BEAUTIFUL:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "Oh jeez,{w=0.1} [player]..."
             n "You're really putting me on the spot today,{w=0.1} aren't you?"
@@ -174,7 +174,7 @@ label compliment_beautiful:
 
             $ relationship("affinity+")
 
-    $ last_compliment_type = compliments.TYPE_BEAUTIFUL
+    $ last_compliment_type = jn_compliments.TYPE_BEAUTIFUL
     return
 
 init 5 python:
@@ -190,7 +190,7 @@ init 5 python:
     )
 
 label compliment_confident:
-    if compliments.last_compliment_type == compliments.TYPE_CONFIDENT:
+    if jn_compliments.last_compliment_type == jn_compliments.TYPE_CONFIDENT:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "Ehehe.{w=0.2} I'm glad you still think so,{w=0.1} [player]!"
             n "I'd say you're worth the effort,{w=0.1} [chosen_tease]."
@@ -220,7 +220,7 @@ label compliment_confident:
 
             $ relationship("affinity+")
 
-    $ last_compliment_type = compliments.TYPE_CONFIDENT
+    $ last_compliment_type = jn_compliments.TYPE_CONFIDENT
     return
 
 init 5 python:
@@ -236,7 +236,7 @@ init 5 python:
     )
 
 label compliment_cute:
-    if compliments.last_compliment_type == compliments.TYPE_CUTE:
+    if jn_compliments.last_compliment_type == jn_compliments.TYPE_CUTE:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "..."
             n "..."
@@ -282,7 +282,7 @@ label compliment_cute:
             n "I...{w=0.3} must have misheard you."
             n "Yeah.{w=0.2} I totally misheard you.{w=0.2} One hundred percent."
 
-    $ last_compliment_type = compliments.TYPE_CUTE
+    $ last_compliment_type = jn_compliments.TYPE_CUTE
     return
 
 init 5 python:
@@ -298,7 +298,7 @@ init 5 python:
     )
 
 label compliment_hilarious:
-    if compliments.last_compliment_type == compliments.TYPE_HILARIOUS:
+    if jn_compliments.last_compliment_type == jn_compliments.TYPE_HILARIOUS:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "Aww,{w=0.1} [player]!{w=0.2} Thanks!{w=0.2} I pride myself on that."
             n "You aren't too shabby yourself,{w=0.1} you know!"
@@ -325,7 +325,7 @@ label compliment_hilarious:
             n "It means you have great taste,{w=0.1} [player].{w=0.2} Ahaha!"
             $ relationship("affinity+")
 
-    $ last_compliment_type = compliments.TYPE_HILARIOUS
+    $ last_compliment_type = jn_compliments.TYPE_HILARIOUS
     return
 
 init 5 python:
@@ -341,7 +341,7 @@ init 5 python:
     )
 
 label compliment_inspirational:
-    if compliments.last_compliment_type == compliments.TYPE_INSPIRATIONAL:
+    if jn_compliments.last_compliment_type == jn_compliments.TYPE_INSPIRATIONAL:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "Ehehe. Thanks again for that, [player]."
             n "I hope you know you're just as inspiring to me!"
@@ -368,7 +368,7 @@ label compliment_inspirational:
             n "...Right?"
             $ relationship("affinity+")
 
-    $ last_compliment_type = compliments.TYPE_INSPIRATIONAL
+    $ last_compliment_type = jn_compliments.TYPE_INSPIRATIONAL
     return
 
 init 5 python:
@@ -384,7 +384,7 @@ init 5 python:
     )
 
 label compliment_style:
-    if compliments.last_compliment_type == compliments.TYPE_STYLE:
+    if jn_compliments.last_compliment_type == jn_compliments.TYPE_STYLE:
         if jn_globals.current_outfit:
             # Non-uniform dialogue
             if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
@@ -448,7 +448,7 @@ label compliment_style:
                 n "Good job for noticing,{w=0.1} [player]."
                 n "Ehehe!"
 
-    $ last_compliment_type = compliments.TYPE_STYLE
+    $ last_compliment_type = jn_compliments.TYPE_STYLE
     return
 
 init 5 python:
@@ -464,7 +464,7 @@ init 5 python:
     )
 
 label compliment_thoughtful:
-    if compliments.last_compliment_type == compliments.TYPE_THOUGHTFUL:
+    if jn_compliments.last_compliment_type == jn_compliments.TYPE_THOUGHTFUL:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "Nnnnn-!{w=0.2} what did I tell you,{w=0.1} [player]?"
             n "I'm just...{w=0.3} giving as good as I get,{w=0.1} alright?"
@@ -498,5 +498,5 @@ label compliment_thoughtful:
 
         $ relationship("affinity+")
 
-    $ last_compliment_type = compliments.TYPE_THOUGHTFUL
+    $ last_compliment_type = jn_compliments.TYPE_THOUGHTFUL
     return

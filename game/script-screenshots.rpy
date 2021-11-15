@@ -291,7 +291,7 @@ label screenshot_dialogue:
         show placeholder_natsuki unamused zorder 3
 
         # Add pending apology
-        $ apologies.add_new_pending_apology(store.apologies.TYPE_SCREENSHOT)
+        $ jn_apologies.add_new_pending_apology(store.jn_apologies.TYPE_SCREENSHOT)
 
         # Update tracking and block further screenshots
         $ persistent.jn_screenshot_bad_shots_total += 1
@@ -312,7 +312,7 @@ label screenshot_dialogue:
         show placeholder_natsuki unamused zorder 3
 
         # Add pending apology
-        $ apologies.add_new_pending_apology(store.apologies.TYPE_SCREENSHOT)
+        $ jn_apologies.add_new_pending_apology(store.jn_apologies.TYPE_SCREENSHOT)
 
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
 

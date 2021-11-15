@@ -2135,7 +2135,7 @@ init python:
 
     def check_ingame_state_add_apology():
         if jn_globals.player_is_ingame:
-            apologies.add_new_pending_apology(apologies.TYPE_CHEATED_GAME)
+            jn_apologies.add_new_pending_apology(jn_apologies.TYPE_CHEATED_GAME)
 
 screen confirm_quit(is_quitting):
     modal True
@@ -2171,9 +2171,9 @@ screen confirm_quit(is_quitting):
                 if is_quitting:
                     textbutton _("...") action [
                         # Player has decided to ditch Natsuki; add pending apology(s) then quit
-                        Function(apologies.add_new_pending_apology, apologies.TYPE_SUDDEN_LEAVE),
+                        Function(jn_apologies.add_new_pending_apology, jn_apologies.TYPE_SUDDEN_LEAVE),
                         Function(check_ingame_state_add_apology),
-                        SetField(persistent, "jn_player_apology_type_on_quit", apologies.TYPE_SUDDEN_LEAVE),
+                        SetField(persistent, "jn_player_apology_type_on_quit", jn_apologies.TYPE_SUDDEN_LEAVE),
                         relationship("affinity-"),
                         Quit(confirm=False)
                     ]
