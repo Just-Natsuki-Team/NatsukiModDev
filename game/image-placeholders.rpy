@@ -12,6 +12,8 @@ image placeholder_natsuki tease = "mod_assets/natsuki/placeholder_tease.png"
 image placeholder_natsuki unamused = "mod_assets/natsuki/placeholder_unamused.png"
 image placeholder_natsuki wink = "mod_assets/natsuki/placeholder_wink.png"
 
+image placeholder_hairclip rabbit = "mod_assets/natsuki/accessories/placeholder_rabbit_hairclip.png"
+
 # Placeholder sky types for the classroom
 image placeholder_sky_day overcast = "mod_assets/backgrounds/classroom/placeholder_sky_day_overcast.png"
 image placeholder_sky_day rain = "mod_assets/backgrounds/classroom/placeholder_sky_day_rain.png"

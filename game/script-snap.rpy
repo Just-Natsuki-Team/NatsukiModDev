@@ -466,9 +466,21 @@ label snap_end:
         n "Oh?{w=0.2} You're giving up?"
         n "Well,{w=0.1} I guess that's fine.{w=0.2} Let me just chalk up another win for me,{w=0.1} then.{w=0.2} Ehehe."
 
-    n "So..." 
+    # Award affinity for playing to completion with best girl
+    $ relationship("affinity+")
+
+    if snap._player_win_streak >= 3:
+        n "Uuuuuu-!"
+        n "I-{w=0.1}I demand a rematch!{w=0.2} I'm not going down like this!"
+ 
+    elif snap._natsuki_win_streak >= 3:
+        n "Ehehe.{w=0.2} That can't be {i}all{/i} you've got,{w=0.1} [player].{w=0.2} Rematch!"
+
+    else:
+        n "So..." 
+
     menu:
-        n "How 'bout another game?"
+        n "Let's play again!"
 
         "You're on!":
             n "Yeah,{w=0.1} you bet you are,{w=0.1} [player]!"
@@ -478,6 +490,12 @@ label snap_end:
         "I'll pass.":
             n "Awww...{w=0.3} well,{w=0.1} okay."
             n "Thanks for playing,{w=0.1} [player]~."
+
+            if snap._player_win_streak >= 3:
+                n "...Even if you did kick my butt."
+
+            elif snap._natsuki_win_streak >= 3:
+                n "I wanna see more fight in you next time, though. Ahaha!"
 
             hide player_natsuki_hands
             hide screen snap_ui
