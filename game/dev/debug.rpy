@@ -863,6 +863,13 @@ label debug_call_api:
     menu:
         n "Now,{w=0.1} what do you want me to call?"
 
+        "Ghostbusters!":
+            show placeholder_natsuki unamused zorder jn_placeholders.NATSUKI_Z_INDEX
+            n "...{i}Really{/i},{w=1.0} [player]?"
+
+        # Add your API calls here! We might need a scrollable menu implementation if we rack up too many services.
+        # Alternatively, just delete any you no longer use!
+
         "Nevermind.":
             n "Oh...{w=0.3} well,{w=0.1} if you say so!"
 
@@ -885,32 +892,32 @@ init 5 python:
     )
 
 label debug_change_weather:
-    n "Of course I can, dummy!"
+    n "Of course I can,{w=0.1} dummy!"
     menu:
         n "What sort of weather do you feel like?"
 
         "Overcast":
-            n "That's a little gloomy, isn't it? But alright! One sec..."
+            n "That's a little gloomy,{w=0.1} isn't it?{w=0.2} But alright!{w=0.2} One sec..."
             n "..."
             $ jn_placeholders.show_placeholder_sky(jn_placeholders.WEATHER_OVERCAST)
-            n "There you go, [player]!"
+            n "There you go,{w=0.1} [player]!"
 
         "Rain":
-            n "Rain it is! One sec..."
+            n "Rain it is!{w=0.2} One sec..."
             $ jn_placeholders.show_placeholder_sky(jn_placeholders.WEATHER_RAIN)
-            n "There you go, [player]!"
+            n "There you go,{w=0.1} [player]!"
 
         "Thunder":
-            n "Not... what I'd pick, but fine. One sec..."
+            n "Not...{w=0.3} what I'd pick,{w=0.1} but fine.{w=0.2} One sec..."
             $ jn_placeholders.show_placeholder_sky(jn_placeholders.WEATHER_THUNDER)
-            n "There you go, [player]!"
+            n "There you go,{w=0.1} [player]!"
 
         "Sunny":
-            n "Alright, now we're talking! One sec..."
+            n "Alright,{w=0.1} now we're talking!{w=0.2} One sec..."
             $ jn_placeholders.show_placeholder_sky(jn_placeholders.WEATHER_SUNNY)
-            n "There you go, [player]!"
+            n "There you go,{w=0.1} [player]!"
 
         "Nevermind.":
-            n "Huh. Well, suit yourself!"
+            n "Huh.{w=0.2} Well,{w=0.1} suit yourself!"
 
     return

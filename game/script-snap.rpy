@@ -1,3 +1,4 @@
+default persistent.jn_snap_unlocked = False
 default persistent.jn_snap_explanation_given = False
 
 init 0 python in jn_snap:

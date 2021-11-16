@@ -3675,6 +3675,7 @@ init 5 python:
             label="talk_play_snap",
             unlocked=True,
             prompt="Do you want to play Snap?",
+            conditional="persistent.jn_snap_unlocked",
             category=["Games"],
             player_says=True,
             affinity_range=(jn_affinity.HAPPY, None),
@@ -3700,6 +3701,39 @@ label talk_play_snap:
     play audio drawer 
     with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
     jump snap_intro
+
+# Natsuki goes over the rules of snap again, for if the player has already heard the explanation pre-game
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_remind_snap_rules",
+            unlocked=True,
+            prompt="Can you go over the rules of Snap again?",
+            conditional="persistent.jn_snap_unlocked and persistent.jn_snap_explanation_given",
+            category=["Games"],
+            player_says=True,
+            affinity_range=(jn_affinity.HAPPY, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_remind_snap_rules:
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        n "Ehehe.{w=0.2} You're so forgetful sometimes,{w=0.1} [player]."
+        n "Sure,{w=0.1} I'll go over it again.{w=0.2} Juuust for you~."
+        
+    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n "Of course I can!"
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n "You bet I can!"
+
+    else:
+        n "Sure thing!"
+
+    jump snap_explanation
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"

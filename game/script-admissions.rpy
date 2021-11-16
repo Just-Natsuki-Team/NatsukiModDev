@@ -86,7 +86,7 @@ label admission_angry:
         n "I don't want you storming off and getting hurt,{w=0.1} or doing something you'll regret."
         n "Can you do that for me,{w=0.2} [player]?"
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "It really upsets me hearing you worked up like this,{w=0.1} you know..."
             n "So please, [player]. Stay calm{w=0.1} -{w=0.1} for me?"
 
@@ -140,10 +140,10 @@ label admission_anxious:
         n "So...{w=0.3} try and put your mind at rest,{w=0.1} okay?"
         n "I know it's tough...{w=0.3} but just try,{w=0.1} alright?"
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
             n "I'll always have your back."
 
-        if jn_affinity.get_affinity_state() == store.jn_affinity.LOVE:
+        if jn_affinity.get_affinity_state() == jn_affinity.LOVE:
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
             n "I love you, [chosen_endearment]."
 
@@ -217,13 +217,53 @@ label admission_bored:
         n "There's no shortage of stuff to do,{w=0.1} [player]." 
         n "You just gotta find it!"
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "Now,{w=0.1} go!{w=0.2} And make sure you tell me all about it later,{w=0.1} 'kay?"
             n "Ehehe."
 
         else:
             n "Well?{w=0.3} What're you waiting for?"
             n "Go for it,{w=0.1} [player]!"
+
+    # Unlock Snap if not already unlocked
+    elif not persistent.jn_snap_unlocked:
+        n "You're bored,{w=0.1} huh?"
+        n "Well,{w=0.1} now that you mention it...{w=0.3} there isn't {i}exactly{/i} a whole lot going on here."
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+            n "Besides me,{w=0.1} anyway.{w=0.2} Ehehe."
+
+        n "Hmm...{w=0.3} there's gotta be something else..."
+        n "Think,{w=0.1} Natsuki!{w=0.2} Think..."
+        n "..."
+        n "Aha!{w=0.2} I think I got it!{w=0.2} Let me just check something real quick..."
+
+        play audio drawer 
+        with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+
+        n "Yes!{w=0.2} It's still here!"
+        n "Betcha' didn't know I had playing cards,{w=0.1} right?"
+        n "Turns out these desk drawers {i}are{/i} handy,{w=0.1} after all!"
+        n "I always had a pack here ready for a rainy day."
+        n "...Uhmm."
+        n "Hey...{w=0.3} [player]?{w=0.2} Don't judge me for it,{w=0.1} but..."
+        n "I...{w=0.3} never really learned all the really fancy card game rules or anything like that."
+        n "So...{w=0.3} we're playing Snap.{w=0.2} At least until I do some reading up,{w=0.1} anyway.{w=0.2} Ahaha..."
+        $ persistent.jn_snap_unlocked = True
+        n "What about it then,{w=0.1} [player]?{w=0.2} Fancy a game or two?"
+        menu:
+            n "Not like you have much of an excuse not to,{w=0.1} right?"
+
+            "Sure,{w=0.1} why not?":
+                jump snap_intro
+
+            "Not right now.":
+                n "Aww...{w=0.3} but I already got the cards out and everything!"
+                n "Well...{w=0.3} whatever."
+                n "Just let me know whenever you feel like a game then."
+                
+                play audio drawer 
+                with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
     else:
         n "Huh?{w=0.2} You're bored?"
@@ -240,7 +280,7 @@ label admission_bored:
         n "And if that isn't enough,{w=0.1} there's an even bigger one right at your fingertips!"
         n "Or you could,{w=0.1} you know."
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "Spend more time with yours truly?"
             n "I'm not that dull...{w=0.3} right?"
 
@@ -268,7 +308,7 @@ label admission_confident:
         n "Still full of confidence,{w=0.1} I see?"
         n "Well,{w=0.1} I'm glad to hear it!"
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "You've got a lot to be confident of,{w=0.1} [player]."
             n "You better remember that!"
 
@@ -277,14 +317,14 @@ label admission_confident:
         n "I was hoping you'd snap out of those feelings sooner rather than later."
         n "It worries me when you talk like that,{w=0.1} you know..."
 
-        if jn_affinity.get_affinity_state() == store.jn_affinity.AFFECTIONATE:
+        if jn_affinity.get_affinity_state() == jn_affinity.AFFECTIONATE:
             n "N-{w=0.1}not that I care {i}that{/i} much, o-{w=0.1}of course!"
             n "But...{w=0.3} I'm glad to know you're okay now,{w=0.1} [player]. That's what matters."
 
-        elif jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "I'm just really glad to know you're better now,{w=0.1} [player]."
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVE:
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
             n "I love you, [chosen_endearment].{w=0.2} Please don't forget that,{w=0.1} alright?"
             n "I'll get mad if you do.{w=0.2} Ahaha..."
@@ -345,7 +385,7 @@ label admission_happy:
         n "Feeling better now,{w=0.1} [player]?"
         n "I'm glad to hear it!{w=0.2} That's...{w=0.3} honestly a relief,{w=0.1} ahaha..."
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
             n "..."
             n "So...{w=0.3} where were we?"
 
@@ -389,7 +429,7 @@ label admission_hungry:
         n "Well...{w=0.3} either way,{w=0.1} get off your butt and go get something then!"
         n "Jeez,{w=0.1} [player]...{w=0.3} I'm not your babysitter!"
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "As much as you probably wish I was,{w=0.1} right?{w=0.2} Ahaha!"
             n "Now get going already!{w=0.2} Bon appetit,{w=0.1} [player]!"
 
@@ -399,7 +439,7 @@ label admission_hungry:
         n "You might feel a little better...{w=0.3} but it won't fix what made you sad."
         n "Try to enjoy your meal,{w=0.1} alright?"
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
             n "I'm here for you if you need me,{w=0.1} [player]."
 
     else:
@@ -409,7 +449,7 @@ label admission_hungry:
         n "Honestly...{w=0.3} what am I going to do with you,{w=0.1} [player]?{w=0.2} Ehehe."
         n "Now go make something already!{w=0.2} Just don't fill yourself up on junk!"
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "I want you fighting fit for when we hang out,{w=0.1} 'kay?"
             n "We're gonna have so much to do together,{w=0.1} after all!"
 
@@ -452,7 +492,7 @@ label admission_insecure:
             "Okay.":
                 n "Good.{w=0.2} Or you'll have me to deal with too.{w=0.2} Ahaha..."
                 n "..."
-                if jn_affinity.get_affinity_state() <= store.jn_affinity.AFFECTIONATE:
+                if jn_affinity.get_affinity_state() <= jn_affinity.AFFECTIONATE:
                     n "Message received?{w=0.2} T{w=0.1}-then let's get back to it already!"
                     n "Jeez..."
 
@@ -460,7 +500,7 @@ label admission_insecure:
                     n "...You know I meant every single word I said,{w=0.1} right?"
                     n "So please...{w=0.3} don't give up.{w=0.2} We both need you to win,{w=0.1} [player]."
 
-                    if jn_affinity.get_affinity_state() == store.jn_affinity.LOVE:
+                    if jn_affinity.get_affinity_state() == jn_affinity.LOVE:
                         $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
                         n "I really do love you, [chosen_endearment]."
 
@@ -531,7 +571,7 @@ label admission_sad:
                 n "That's a relief to hear!"
                 n "I just hope they were supportive of you,{w=0.1} [player].{w=0.2} It's the least you deserve."
 
-        if jn_affinity.get_affinity_state() == store.jn_affinity.LOVE:
+        if jn_affinity.get_affinity_state() == jn_affinity.LOVE:
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
             n "I love you,{w=0.1} [chosen_endearment]."
 

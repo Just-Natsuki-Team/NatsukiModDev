@@ -31,6 +31,6 @@ if os.path.isfile(target_file_and_path):
 
 else:
     # No source file found; create and return
-    new_source_file = open(target_file_and_path)
+    new_source_file = open(target_file_and_path, "w")
     new_source_file.close()
     print(f"Target file {target_file_and_path} not found and was created instead, insert dialogue to tag and retry.")
