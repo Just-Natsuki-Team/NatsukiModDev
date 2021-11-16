@@ -201,17 +201,20 @@ label apology_cheated_game:
         n "Just remember though."
         n "Two can play at that game!"
         $ relationship("affinity+")
+        $ persistent.jn_snap_player_is_cheater = False
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "Huh?{w=0.2} Oh,{w=0.1} that."
         n "Yeah,{w=0.1} yeah.{w=0.2} It's fine."
         n "Just play fair next time,{w=0.1} 'kay?"
         $ relationship("affinity+")
+        $ persistent.jn_snap_player_is_cheater = False
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
         n "Whatever,{w=0.1} [player]."
         n "But thanks for the apology,{w=0.1} I guess."
         $ relationship("affinity+")
+        $ persistent.jn_snap_player_is_cheater = False
 
     else:
         n "Whatever.{w=0.2} I don't care."

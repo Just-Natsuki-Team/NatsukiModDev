@@ -820,6 +820,7 @@ define audio.coin_flip = "mod_assets/sfx/coin_flip.mp3"
 define audio.card_shuffle = "mod_assets/sfx/card_shuffle.mp3"
 define audio.card_place = "mod_assets/sfx/card_place.mp3"
 define audio.drawer = "mod_assets/sfx/drawer.mp3"
+define audio.smack = "mod_assets/sfx/smack.mp3"
 
 # Looped sound effects
 define audio.rain_muffled = "mod_assets/sfx/rain_muffled.mp3"

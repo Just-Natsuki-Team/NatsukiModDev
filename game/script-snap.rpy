@@ -1,9 +1,17 @@
+# General tracking; the player unlocks Snap by admitting boredom to Natsuki at least once
 default persistent.jn_snap_unlocked = False
 default persistent.jn_snap_explanation_given = False
+
+# Natsuki will refuse to play with a cheater
+default persistent.jn_snap_player_is_cheater = False
+
+# Transition for the "Snap"! popup
+define popup_hide_transition = Dissolve(0.75)
 
 init 0 python in jn_snap:
     import random
     import store
+    import time
 
     # Card config
     _card_values = range(1, 11)
@@ -17,7 +25,8 @@ init 0 python in jn_snap:
     _current_table_card_image = "mod_assets/games/snap/cards/blank.png"
     _turn_indicator_image = "mod_assets/games/snap/ui/turn_indicator_none.png"
 
-    _SNAP_Z_INDEX = 4
+    _SNAP_UI_Z_INDEX = 4
+    _SNAP_POPUP_Z_INDEX = 5
 
     # Quips
     _player_correct_snap_quips = [
@@ -94,6 +103,7 @@ init 0 python in jn_snap:
     _is_player_turn = None
     _player_forfeit = False
     _player_is_snapping = False
+    _player_failed_snap_streak = 0
     _natsuki_can_fake_snap = False
     _natsuki_skill_level = 0
     _controls_enabled = False
@@ -123,6 +133,7 @@ init 0 python in jn_snap:
         _is_player_turn = None
         _player_forfeit = False
         _player_is_snapping = False
+        _player_failed_snap_streak = 0
         _natsuki_can_fake_snap = False
         del _cards_in_deck[:]
         del _cards_on_table[:]
@@ -262,7 +273,7 @@ init 0 python in jn_snap:
         else:
             _current_table_card_image = "mod_assets/games/snap/cards/blank.png"
 
-        renpy.show(name="current_table_card", zorder=_SNAP_Z_INDEX)
+        renpy.show(name="current_table_card", zorder=_SNAP_UI_Z_INDEX)
 
     def update_turn_indicator():
         """
@@ -279,7 +290,7 @@ init 0 python in jn_snap:
         else:
             _turn_indicator_image = "mod_assets/games/snap/ui/turn_indicator_natsuki.png"
 
-        renpy.show(name="turn_indicator_icon", zorder=_SNAP_Z_INDEX)
+        renpy.show(name="turn_indicator_icon", zorder=_SNAP_UI_Z_INDEX)
 
     def get_turn_label_to_display():
         """
@@ -358,9 +369,9 @@ label snap_start:
     $ jn_snap.draw_card_onscreen()
     $ jn_snap.update_turn_indicator()
 
-    show player_hand_icon zorder jn_snap._SNAP_Z_INDEX
-    show natsuki_hand_icon zorder jn_snap._SNAP_Z_INDEX
-    show turn_indicator_icon zorder jn_snap._SNAP_Z_INDEX
+    show player_hand_icon zorder jn_snap._SNAP_UI_Z_INDEX
+    show natsuki_hand_icon zorder jn_snap._SNAP_UI_Z_INDEX
+    show turn_indicator_icon zorder jn_snap._SNAP_UI_Z_INDEX
     show screen snap_ui
 
     n "Okaaay!{w=0.2} That's the deck shuffled!"
@@ -429,18 +440,69 @@ label snap_main_loop:
 
 label snap_quip(is_player_snap, is_correct_snap):
     
+    $ cheat_check = False
+
     # Generate the quip based on what just happened
     if is_player_snap:
         
         # Player snapped, and was correct
         if is_correct_snap:
+            $ jn_snap._player_failed_snap_streak = 0
             $ quip = renpy.substitute(random.choice(jn_snap._player_correct_snap_quips))
             show placeholder_natsuki plead zorder jn_placeholders.NATSUKI_Z_INDEX
 
+            # Some UE things to make it fun
+            play audio smack
+            show snap_popup zorder jn_snap._SNAP_POPUP_Z_INDEX
+            hide snap_popup with popup_hide_transition
+
         # Player snapped, and was incorrect
         else:
-            $ quip = renpy.substitute(random.choice(jn_snap._player_incorrect_snap_quips))
-            show placeholder_natsuki smug zorder jn_placeholders.NATSUKI_Z_INDEX
+            $ jn_snap._player_failed_snap_streak += 1
+            
+            # Cheating warning
+            if jn_snap._player_failed_snap_streak == 3 and not persistent.jn_snap_player_is_cheater:
+                $ cheat_check = True
+                show placeholder_natsuki unamused zorder jn_placeholders.NATSUKI_Z_INDEX
+                n "[player]!"
+                n "You're just calling Snap whenever it's your turn!"
+                n "That's not how you play at all!"
+                n "I hope you aren't trying to cheat,{w=0.1} [player]."
+                n "I don't like playing with cheaters."
+
+            # Natsuki calls off the game
+            elif jn_snap._player_failed_snap_streak == 6 and not persistent.jn_snap_player_is_cheater:
+                $ jn_snap_controls_enabled = False
+                show placeholder_natsuki unamused zorder jn_placeholders.NATSUKI_Z_INDEX
+                n "Ugh...{w=0.3} look,{w=0.1} [player]."
+                n "If you aren't gonna play fairly,{w=0.1} then why should I bother playing at all?"
+                n "I even warned you before,{w=0.1} too!"
+                n "..."
+                n "We're done with this game,{w=0.1} [player]."
+
+                $ _player_win_streak = 0
+                $ persistent.jn_snap_player_is_cheater = True
+                $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_CHEATED_GAME)
+
+                # Hide all the UI
+                hide player_natsuki_hands
+                hide current_table_card
+                hide player_hand_icon
+                hide natsuki_hand_icon
+                hide turn_indicator_icon
+                hide screen snap_ui
+
+                play audio drawer 
+                with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+
+                # Reset the ingame flag, then hop back to ch30 as getting here has lost context
+                $ jn_globals.player_is_ingame = False
+                jump ch30_loop
+
+            # Generic incorrect quip/tease
+            else:
+                $ quip = renpy.substitute(random.choice(jn_snap._player_incorrect_snap_quips))
+                show placeholder_natsuki smug zorder jn_placeholders.NATSUKI_Z_INDEX
 
     else:
 
@@ -449,6 +511,11 @@ label snap_quip(is_player_snap, is_correct_snap):
             $ quip = renpy.substitute(random.choice(jn_snap._natsuki_correct_snap_quips))
             show placeholder_natsuki smile zorder jn_placeholders.NATSUKI_Z_INDEX
 
+            # Some UE things to make it fun
+            play audio smack
+            show snap_popup zorder jn_snap._SNAP_POPUP_Z_INDEX
+            hide snap_popup with popup_hide_transition
+
         # Natsuki snapped, and was incorrect
         else:
             $ quip = renpy.substitute(random.choice(jn_snap._natsuki_incorrect_snap_quips))
@@ -456,7 +523,10 @@ label snap_quip(is_player_snap, is_correct_snap):
 
     # Natsuki quips; disable controls so player can't skip dialogue
     $ jn_snap._controls_enabled = False
-    n "[quip]"
+
+    if not cheat_check:
+        n "[quip]"
+
     $ jn_placeholders.show_resting_placeholder_natsuki(True)
     $ jn_snap._controls_enabled = True
 
@@ -648,9 +718,12 @@ image turn_indicator_icon:
     pos(675, 250)
     jn_snap._turn_indicator_image
 
+# Self-explanatory, you dummy
+image snap_popup = "mod_assets/games/snap/ui/snap.png"
+
 # Game UI
 screen snap_ui:
-    zorder jn_snap._SNAP_Z_INDEX
+    zorder jn_snap._SNAP_UI_Z_INDEX
 
     # Game information
     text "Cards down: {0}".format(len(jn_snap._cards_on_table)) size 22 xpos 1000 ypos 50 style "categorized_menu_button"
@@ -674,7 +747,7 @@ screen snap_ui:
         # Forfeit, but only selectable if player's turn, and both players are still capable of playing
         textbutton _("Forfeit"):
             style "hkbd_button"
-            action [ 
+            action [
                 Function(renpy.jump, "snap_forfeit"),
                 SensitiveIf(jn_snap._is_player_turn and (len(jn_snap._natsuki_hand) > 0 or len(jn_snap._player_hand) > 0) and jn_snap._controls_enabled)]
 

@@ -49,7 +49,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_today_is_gonna_be_great",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
+            affinity_range=(jn_aff.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -65,7 +65,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_world_revolves_around_you",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
+            affinity_range=(jn_aff.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -86,7 +86,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_make_today_amazing",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
+            affinity_range=(jn_aff.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -103,7 +103,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_always_welcome_here",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
+            affinity_range=(jn_aff.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -121,7 +121,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_lovestruck",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
+            affinity_range=(jn_aff.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -137,6 +137,47 @@ label greeting_love_plus_lovestruck:
     n "I missed you,{w=0.1} [player].{w=0.2} Ahaha..."
     $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
     n "But I know everything's gonna be okay now you're here,{w=0.1} [chosen_endearment]."
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_love_plus_looking_for_me",
+            unlocked=True,
+            affinity_range=(jn_aff.LOVE, None)
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_love_plus_looking_for_me:
+    n "...Hello?"
+    n "Was it {i}me{/i} you're looking for?"
+    n "..."
+    n "Nah,{w=0.1} don't worry about that,{w=0.1} actually."
+    n "Of course it was."
+    n "Ehehe."
+    n "Welcome back,{w=0.1} dummy!{w=0.2} Make yourself at home!"
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_love_plus_dull_moment",
+            unlocked=True,
+            affinity_range=(jn_aff.LOVE, None)
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_love_plus_dull_moment:
+    n "Well jeez,{w=0.1} you took your sweet time!"
+    n "What were you thinking,{w=0.1} [player]?!"
+    n "..."
+    n "..."
+    n "Ehehe.{w=0.2} Never a dull moment with me,{w=0.1} is there?"
+    n "You know the deal already -{w=0.1} make yourself at home,{w=0.1} silly!"
     return
 
 # AFFECTIONATE/ENAMORED greetings
