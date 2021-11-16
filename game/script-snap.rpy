@@ -573,6 +573,10 @@ label snap_end:
 
             hide player_natsuki_hands
             hide screen snap_ui
+            hide current_table_card
+            hide player_hand_icon
+            hide natsuki_hand_icon
+            hide turn_indicator_icon
             $ jn_globals.player_is_ingame = False
             jump ch30_loop
 
@@ -590,6 +594,10 @@ label snap_forfeit:
             $ jn_snap._player_win_streak = 0
             $ jn_snap._natsuki_win_streak += 1
             hide player_natsuki_hands
+            hide current_table_card
+            hide player_hand_icon
+            hide natsuki_hand_icon
+            hide turn_indicator_icon
             hide screen snap_ui
             $ jn_globals.player_is_ingame = False
 
