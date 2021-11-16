@@ -7,11 +7,16 @@ init 0 python in jn_snap:
     # Card config
     _card_values = range(1, 11)
     _card_suits = [
-        "Hearts", # Sayori
-        "Spades", # Yuri
-        "Clubs", # Natsuki
-        "Diamonds" # Monika
+        "clubs",
+        "diamonds",
+        "hearts",
+        "spades"
     ]
+
+    _current_table_card_image = "mod_assets/games/snap/cards/blank.png"
+    _turn_indicator_image = "mod_assets/games/snap/ui/turn_indicator_none.png"
+
+    _SNAP_Z_INDEX = 4
 
     # Quips
     _player_correct_snap_quips = [
@@ -85,7 +90,7 @@ init 0 python in jn_snap:
     RESULT_FORFEIT = 4
 
     # In-game tracking
-    _is_player_turn = False
+    _is_player_turn = None
     _player_forfeit = False
     _player_is_snapping = False
     _natsuki_can_fake_snap = False
@@ -100,13 +105,12 @@ init 0 python in jn_snap:
 
     # A little something extra
     if random.choice(range(1, 100)) == 1:
-        _card_fan_image = "mod_assets/games/snap/ui/card_fan_dual_alt_a.png"
-
-    elif random.choice(range(1, 100)) == 99:
-        _card_fan_image = "mod_assets/games/snap/ui/card_fan_dual_alt_b.png"
+        _card_fan_image_player = "mod_assets/games/snap/ui/card_fan_icon_alt.png"
 
     else:
-        _card_fan_image = "mod_assets/games/snap/ui/card_fan_dual.png"
+        _card_fan_image_player = "mod_assets/games/snap/ui/card_fan_icon.png"
+
+    _card_fan_image_natsuki = "mod_assets/games/snap/ui/card_fan_icon.png"
 
     def _reset(complete_reset=False):
         """
@@ -115,7 +119,7 @@ init 0 python in jn_snap:
         IN:
             - true_reset - boolean flag; if True will also reset Natsuki's skill level, etc.
         """
-        _is_player_turn = False
+        _is_player_turn = None
         _player_forfeit = False
         _player_is_snapping = False
         _natsuki_can_fake_snap = False
@@ -136,8 +140,8 @@ init 0 python in jn_snap:
         del _natsuki_hand[:]
 
         # Generate all possible card combinations based on suits and values
-        for card_suit in _card_values:
-            for card_value in _card_suits:
+        for card_suit in _card_suits:
+            for card_value in _card_values:
                 _cards_in_deck.append((card_suit, card_value))
 
         # Assign each player their deck
@@ -178,7 +182,10 @@ init 0 python in jn_snap:
                 renpy.play("mod_assets/sfx/card_place.mp3")
                 _is_player_turn = True
 
-    def _get_card_to_display():
+        update_turn_indicator()
+        draw_card_onscreen()
+
+    def _get_card_label_to_display():
         """
         Returns a string representing the uppermost card on the table pile
         """
@@ -233,12 +240,58 @@ init 0 python in jn_snap:
             del _cards_on_table[:]
             renpy.play("mod_assets/sfx/card_shuffle.mp3")
 
+            draw_card_onscreen()
+
             # Natsuki comments on the correct snap
             renpy.call("snap_quip", is_player_snap=is_player, is_correct_snap=True)
 
         else:
             # Natsuki comments on the incorrect snap
             renpy.call("snap_quip", is_player_snap=is_player, is_correct_snap=False)
+
+    def draw_card_onscreen():
+        """
+        Shows the card currently on top of the table pile, or nothing if no cards are on the pile
+        """
+        global _current_table_card_image
+
+        if len(_cards_on_table) is not 0:
+            _current_table_card_image = "mod_assets/games/snap/cards/{0}/{1}.png".format(_cards_on_table[-1][0], _cards_on_table[-1][1])
+            
+        else:
+            _current_table_card_image = "mod_assets/games/snap/cards/blank.png"
+
+        renpy.show(name="current_table_card", zorder=_SNAP_Z_INDEX)
+
+    def update_turn_indicator():
+        """
+        Updates the turn indicator graphic to display who's turn it is to move
+        """
+        global _turn_indicator_image
+
+        if _is_player_turn is None:
+            _turn_indicator_image = "mod_assets/games/snap/ui/turn_indicator_none.png"
+
+        elif _is_player_turn:
+            _turn_indicator_image = "mod_assets/games/snap/ui/turn_indicator_player.png"
+
+        else:
+            _turn_indicator_image = "mod_assets/games/snap/ui/turn_indicator_natsuki.png"
+
+        renpy.show(name="turn_indicator_icon", zorder=_SNAP_Z_INDEX)
+
+    def get_turn_label_to_display():
+        """
+        Returns a turn descriptor label based on who's turn it is to move
+        """
+        if _is_player_turn is None:
+            return "Nobody!"
+
+        elif _is_player_turn:
+            return "Yours!"
+
+        else:
+            return renpy.substitute("[n_name]")
 
 label snap_intro:
     n "Alriiiight!{w=0.2} Let's play some Snap!"
@@ -260,54 +313,19 @@ label snap_intro:
                 
     jump snap_start
 
-label snap_quip(is_player_snap, is_correct_snap):
-    
-    # Generate the quip based on what just happened
-    if is_player_snap:
-        
-        # Player snapped, and was correct
-        if is_correct_snap:
-            $ quip = renpy.substitute(random.choice(jn_snap._player_correct_snap_quips))
-
-        # Player snapped, and was incorrect
-        else:
-            $ quip = renpy.substitute(random.choice(jn_snap._player_incorrect_snap_quips))
-
-    else:
-
-        # Natsuki snapped, and was correct
-        if is_correct_snap:
-            $ quip = renpy.substitute(random.choice(jn_snap._natsuki_correct_snap_quips))
-
-        # Natsuki snapped, and was incorrect
-        else:
-            $ quip = renpy.substitute(random.choice(jn_snap._natsuki_incorrect_snap_quips))
-
-    # Natsuki quips; disable controls so player can't skip dialogue
-    $ jn_snap._controls_enabled = False
-    n "[quip]"
-    $ jn_snap._controls_enabled = True
-
-    # Now we reset the flags so nothing can happen before the quip has completed
-    if is_player_snap:
-        $ jn_snap._player_is_snapping = False
-        $ jn_snap._is_player_turn = False
-
-    else:
-        $ jn_snap._is_player_turn = True
-
-    return
-
 label snap_explanation:
-    n "Alright!{w=0.2} So the rules are dead simple,{w=0.1} like I was saying."
+    n "Alright!{w=0.2} So the rules are dead simple,{w=0.1} like I was saying before."
     n "Basically,{w=0.1} we each get half a deck of cards."
     n "Then,{w=0.1} we take it in turns placing a card face up on the table -{w=0.1} we don't get to {i}pick or see{/i} the card before,{w=0.1} though!"
     n "Following me so far,{w=0.1} [player]?{w=0.2} Ehehe."
     n "If the card just placed down on the table matches either the {i}value or suit{/i} of the card that was there before..."
     n "Then we gotta call Snap!"
     n "Whoever calls it first gets the cards on the table."
+    n "Oh -{w=0.1} but you gotta be careful,{w=0.2} [player]."
+    n "When you call snap,{w=0.2} it becomes the other player's turn..."
+    n "So don't shout unless you know you got it,{w=0.1} 'kay?"
     n "The winner is whoever ends up with all the cards first!"
-    n "Which will clearly be me,{w=0.1} obviously.{w=0.2} Ahaha."
+    n "Which is usually me,{w=0.1} obviously.{w=0.2} Ahaha."
     n "So...{w=0.3} how about it,{w=0.1} [player]?{w=0.2} You got all that?"
     menu:
         n "Do the rules all make sense to you?"
@@ -322,16 +340,26 @@ label snap_explanation:
             $ persistent.jn_snap_explanation_given = True
             jump snap_start
 
+        "Thanks, [n_name]. I'll play later.":
+            n "Ehehe.{w=0.2} No worries,{w=0.1} [player]!"
+            jump ch30_loop
+
 label snap_start:
+    # Reset everything ready for a fresh game
     play audio card_shuffle
     n "..."
     $ jn_snap._reset()
     $ jn_snap._generate_hands()
-    show player_natsuki_hands zorder 20
-    show screen snap_ui
 
-    $ utils.log("player's hand: {0}".format(str(jn_snap._player_hand)))
-    $ utils.log("natsuki's hand: {0}".format(str(jn_snap._natsuki_hand)))
+    # Reset the UI
+    $ jn_placeholders.show_resting_placeholder_natsuki(True)
+    $ jn_snap.draw_card_onscreen()
+    $ jn_snap.update_turn_indicator()
+
+    show player_hand_icon zorder jn_snap._SNAP_Z_INDEX
+    show natsuki_hand_icon zorder jn_snap._SNAP_Z_INDEX
+    show turn_indicator_icon zorder jn_snap._SNAP_Z_INDEX
+    show screen snap_ui
 
     n "Okaaay!{w=0.2} That's the deck shuffled!"
     n "Let's see who's going first..."
@@ -339,6 +367,7 @@ label snap_start:
     play audio coin_flip
     n "..."
     $ jn_snap._is_player_turn = random.choice([True, False])
+    $ jn_snap.update_turn_indicator()
 
     if jn_snap._is_player_turn:
         n "Ehehe.{w=0.2} Bad luck,{w=0.1} [player].{w=0.2} Looks like you're up first!"
@@ -395,6 +424,51 @@ label snap_main_loop:
         $ jn_snap._natsuki_can_fake_snap = True
 
     jump snap_main_loop
+
+label snap_quip(is_player_snap, is_correct_snap):
+    
+    # Generate the quip based on what just happened
+    if is_player_snap:
+        
+        # Player snapped, and was correct
+        if is_correct_snap:
+            $ quip = renpy.substitute(random.choice(jn_snap._player_correct_snap_quips))
+            show placeholder_natsuki plead zorder jn_placeholders.NATSUKI_Z_INDEX
+
+        # Player snapped, and was incorrect
+        else:
+            $ quip = renpy.substitute(random.choice(jn_snap._player_incorrect_snap_quips))
+            show placeholder_natsuki smug zorder jn_placeholders.NATSUKI_Z_INDEX
+
+    else:
+
+        # Natsuki snapped, and was correct
+        if is_correct_snap:
+            $ quip = renpy.substitute(random.choice(jn_snap._natsuki_correct_snap_quips))
+            show placeholder_natsuki smile zorder jn_placeholders.NATSUKI_Z_INDEX
+
+        # Natsuki snapped, and was incorrect
+        else:
+            $ quip = renpy.substitute(random.choice(jn_snap._natsuki_incorrect_snap_quips))
+            show placeholder_natsuki unamused zorder jn_placeholders.NATSUKI_Z_INDEX
+
+    # Natsuki quips; disable controls so player can't skip dialogue
+    $ jn_snap._controls_enabled = False
+    n "[quip]"
+    $ jn_placeholders.show_resting_placeholder_natsuki(True)
+    $ jn_snap._controls_enabled = True
+
+    # Now we reset the flags so nothing can happen before the quip has completed
+    if is_player_snap:
+        $ jn_snap._player_is_snapping = False
+        $ jn_snap._is_player_turn = False
+
+    else:
+        $ jn_snap._is_player_turn = True
+
+    $ jn_snap.update_turn_indicator()
+
+    return
 
 label snap_end:
 
@@ -528,24 +602,44 @@ label snap_forfeit:
             $ jn_snap._natsuki_skill_level += 1
             jump snap_main_loop
 
-image player_natsuki_hands:  
-    pos (100, 215)
-    jn_snap._card_fan_image
+# This is the card currently on the top of the pile being shown
+image current_table_card:
+    anchor(0, 0)
+    pos(1000, 100)
+    jn_snap._current_table_card_image
 
+# Icons representing each player's hand
+image player_hand_icon:
+    anchor(0,0)  
+    pos (675, 110)
+    jn_snap._card_fan_image_player
+
+image natsuki_hand_icon:
+    anchor(0,0)  
+    pos (675, 180)
+    jn_snap._card_fan_image_natsuki
+
+# Icon representing who's turn it is
+image turn_indicator_icon:
+    anchor(0,0)
+    pos(675, 250)
+    jn_snap._turn_indicator_image
+
+# Game UI
 screen snap_ui:
-    zorder 20
-    text "[player]'s hand: {0}".format(len(jn_snap._player_hand)) size 22 xpos 175 ypos 55 style "categorized_menu_button"
-    text "[n_name]'s hand: {0}".format(len(jn_snap._natsuki_hand)) size 22 xpos 175 ypos 170 style "categorized_menu_button"
+    zorder jn_snap._SNAP_Z_INDEX
 
-    # Debug
-    text "Card: {0}".format(jn_snap._get_card_to_display()) size 22 xpos 175 ypos 425 style "categorized_menu_button"
-    text "Cards on table: {0}".format(len(jn_snap._cards_on_table)) size 22 xpos 175 ypos 455 style "categorized_menu_button"
+    # Game information
+    text "Cards down: {0}".format(len(jn_snap._cards_on_table)) size 22 xpos 1000 ypos 50 style "categorized_menu_button"
+    text "[player]'s hand: {0}".format(len(jn_snap._player_hand)) size 22 xpos 750 ypos 125 style "categorized_menu_button"
+    text "[n_name]'s hand: {0}".format(len(jn_snap._natsuki_hand)) size 22 xpos 750 ypos 195 style "categorized_menu_button"
+    text "Turn: {0}".format(jn_snap.get_turn_label_to_display()) size 22 xpos 750 ypos 265 style "categorized_menu_button"
 
+    # Options
     style_prefix "hkb"
-
     vbox:
-        xpos 100
-        ypos 230
+        xpos 1000
+        ypos 440
     
         # Place card, but only selectable if player's turn, and both players are still capable of playing
         textbutton _("Place"):
