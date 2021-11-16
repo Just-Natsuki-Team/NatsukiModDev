@@ -325,7 +325,8 @@ label snap_explanation:
     n "When you call snap,{w=0.2} it becomes the other player's turn..."
     n "So don't shout unless you know you got it,{w=0.1} 'kay?"
     n "The winner is whoever ends up with all the cards first!"
-    n "Which is usually me,{w=0.1} obviously.{w=0.2} Ahaha."
+    n "Which is usually me,{w=0.1} obviously."
+    n "You also lose if you run out of cards to play,{w=0.1} so you should keep that in mind too."
     n "So...{w=0.3} how about it,{w=0.1} [player]?{w=0.2} You got all that?"
     menu:
         n "Do the rules all make sense to you?"
