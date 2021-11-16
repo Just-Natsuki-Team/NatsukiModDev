@@ -3748,6 +3748,141 @@ label talk_remind_snap_rules:
 
         jump snap_explanation
 
+# Natsuki hates people being inconsiderate with chewing gum
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_windup_chewing_gum",
+            unlocked=True,
+            prompt="Chewing gum",
+            category=["Wind-ups"],
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_windup_chewing_gum:
+    n "Ugh...{w=0.3} you know what really gets on my nerves?"
+    n "When people are gross and don't get rid of chewing gum properly."
+    n "Seriously -{w=0.1} it annoys the crap out of me!"
+    n "Like,{w=0.1} have you ever walked into a city center and looked at the ground?{w=0.2} At all the paving?"
+    n "All those dried up spots of gum -{w=0.1} it's freaking disgusting,{w=0.1} and it looks nasty too!"
+    n "And that's in a place where there's usually bins everywhere too,{w=0.1} so it isn't just gross..."
+    n "It's super lazy too!{w=0.2} I can't decide what winds me up more."
+    n "Even worse than that -{w=0.1} there's even people who go and stick it under tables,{w=0.1} or on walls -{w=0.1} who {i}does{/i} that?!"
+    n "Jeez...{w=0.3} makes me want to track them down and stick that crap back in their stupid mouths."
+    n "I don't really care if you chew gum yourself,{w=0.1} [player]."
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        n "Just make sure you dispose of it properly,{w=0.1} 'kay?"
+        n "I'm sure you do anyway,{w=0.1} but just in case.{w=0.2} Love you,{w=0.1} [player]~!"
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n "But please,{w=0.1} just get rid of it properly when you're done."
+        n "Thanks,{w=0.1} [player]~!"
+
+    else:
+        n "But seriously -{w=0.1} stick it in the bin when you're done,{w=0.1} alright?{w=0.2} Or just wrap it in a tissue and get rid of it later."
+        n "...Or it won't just be the gum that'll be getting chewed out!"
+
+    return
+
+# Natsuki hates people smoking/vaping indoors
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_windup_smoking_vaping_indoors",
+            unlocked=True,
+            prompt="Smoking and vaping indoors",
+            category=["Wind-ups"],
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_windup_smoking_vaping_indoors:
+    n "You know what stinks,{w=0.1} [player]?"
+    n "I mean {i}really{/i} stinks -{w=0.1} not just figuratively,{w=0.1} but literally too?"
+    n "When people smoke or vape indoors,{w=0.1} or near entrances -{w=0.1} {i}especially{/i} when other people are around.{w=0.2} I can't stand it!"
+    n "Like...{w=0.3} how inconsiderate can you be?{w=0.2} Seriously?"
+    n "For starters,{w=0.1} and like I was just saying -{w=0.1} it absolutely {i}reeks{/i}!"
+    n "Tobacco is awful smelling stuff,{w=0.1} and all those sickly vaping fluid types aren't much better either."
+    n "It clings to the walls too -{w=0.1} so the smell hangs around for ages!"
+    n "Speaking of clinging to the walls,{w=0.1} the smoke literally does that too -{w=0.1} have you {i}seen{/i} a smoker's house,{w=0.1} or car?"
+    n "All those yellow stains...{w=0.3} you'd think it was painted on or something.{w=0.2} Ew!"
+    n "And you know what,{w=0.1} [player]?{w=0.2} I haven't even gotten to the worst of it yet..."
+    n "I've said nothing about how expensive it all is,{w=0.1} or the health problems not just to the smoker..."
+    n "...But to everyone else!"
+    n "Ugh..."
+    n "Don't get me wrong -{w=0.1} if someone wants to smoke or vape,{w=0.1} that's their choice and their money.{w=0.2} I don't care."
+    n "But the least they can do is respect the decision of everyone who {i}doesn't{/i},{w=0.1} you know?"
+    n "..."
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        n "I know you,{w=0.1} [player].{w=0.2} I highly doubt you'd be the kind of person to be a jerk like that."
+        n "Just don't prove me wrong,{w=0.1} alright?{w=0.2} Ehehe."
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n "I doubt you'd be a jerk like that even if you do smoke,{w=0.1} [player]."
+        n "But...{w=0.3} try not to prove me wrong,{w=0.1} 'kay?{w=0.2} I like you more as not a jerk."
+        n "Thanks!"
+
+    else:
+        n "I don't think you'd be a jerk like that,{w=0.1} [player]."
+        n "But...{w=0.3} just in case -{w=0.1} keep it in mind,{w=0.1} will you?"
+        n "Thanks!"
+
+    return
+
+# Natsuki hates people who don't wash their hands after using a restroom
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_windup_unwashed_hands",
+            unlocked=True,
+            prompt="Not washing your hands",
+            category=["Wind-ups"],
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_windup_unwashed_hands:
+    n "Hey,{w=0.1} [player]."
+    n "Have you ever worked in a restaurant,{w=0.1} or a hospital or anything like that?"
+    n "Because I bet if there's one thing drilled into you...{w=0.3} it's how important washing your hands is!"
+    n "It really gets on my nerves when people don't wash their hands after doing something nasty."
+    n "Like...{w=0.3} we {i}know{/i} how important it is to stop germs getting around -{w=0.1} and {i}what{/i} exactly is hard about sticking your hands under the tap for a minute?!"
+    n "It annoys me even more when people are really dumb about it too!{w=0.2} Like,{w=0.1} they think they don't need to do that if they didn't go."
+    n "Newsflash -{w=0.1} if you went in,{w=0.1} you must have touched stuff -{w=0.1} so now there's all that crap on your hands that you've taken out with you!"
+    n "Not only is it {i}super{/i} icky and bad for {i}your{/i} health..."
+    n "It's awful for others too!{w=0.2} What if you're about to handle someone's food,{w=0.1} or visit someone in hospital?"
+    n "You could make someone seriously ill..."
+    n "...And then they get all upset when you call them out on their grossness!{w=0.2} I mean,{w=0.1} come {i}on{/i}!"
+    n "Just...{w=0.3} ugh."
+    n "...[player]."
+    n "I really hope you keep your hands spick and span.{w=0.2} And not just when you visit the restroom."
+    n "Before you prepare food,{w=0.1} after you've handled trash...{w=0.3} just think about where you've been,{w=0.1} alright?"
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        n "Don't get me wrong though!{w=0.2} I trust that you do the right thing!"
+        n "Just keep up the good work for me,{w=0.1} alright?{w=0.2} For everyone."
+        n "Thanks,{w=0.1} [player]!"
+
+    else:
+        n "It really isn't that much to ask...{w=0.3} is it?"
+
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop

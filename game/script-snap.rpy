@@ -24,6 +24,7 @@ init 0 python in jn_snap:
 
     _current_table_card_image = "mod_assets/games/snap/cards/blank.png"
     _turn_indicator_image = "mod_assets/games/snap/ui/turn_indicator_none.png"
+    _snap_popup_image = "mod_assets/games/snap/ui/snap_a.png"
 
     _SNAP_UI_Z_INDEX = 4
     _SNAP_POPUP_Z_INDEX = 5
@@ -123,6 +124,13 @@ init 0 python in jn_snap:
 
     _card_fan_image_natsuki = "mod_assets/games/snap/ui/card_fan_icon.png"
 
+    _snap_popup_sprites = [
+        "mod_assets/games/snap/ui/snap_a.png",
+        "mod_assets/games/snap/ui/snap_b.png",
+        "mod_assets/games/snap/ui/snap_c.png",
+        "mod_assets/games/snap/ui/snap_d.png"
+    ]
+
     def _reset(complete_reset=False):
         """
         Resets the in-game variables associated with Snap
@@ -182,14 +190,14 @@ init 0 python in jn_snap:
         global _is_player_turn
         if is_player:
             if (len(_player_hand) > 0):
-                new_card = _player_hand.pop()
+                new_card = _player_hand.pop(0)
                 _cards_on_table.append(new_card)
                 renpy.play("mod_assets/sfx/card_place.mp3")
                 _is_player_turn = False
 
         else:
             if (len(_natsuki_hand) > 0):
-                new_card = _natsuki_hand.pop()
+                new_card = _natsuki_hand.pop(0)
                 _cards_on_table.append(new_card)
                 renpy.play("mod_assets/sfx/card_place.mp3")
                 _is_player_turn = True
@@ -230,6 +238,7 @@ init 0 python in jn_snap:
         """
         global _is_player_turn
         global _player_is_snapping
+        global _snap_popup_image
 
         # We set this here so Natsuki can't try to snap while the player is snapping
         if is_player:
@@ -252,6 +261,7 @@ init 0 python in jn_snap:
             del _cards_on_table[:]
             renpy.play("mod_assets/sfx/card_shuffle.mp3")
 
+            _snap_popup_image = random.choice(_snap_popup_sprites)
             draw_card_onscreen()
 
             # Natsuki comments on the correct snap
@@ -416,13 +426,13 @@ label snap_main_loop:
         $ jn_snap.last_game_result = jn_snap.RESULT_PLAYER_WIN
         jump snap_end
 
-    $ renpy.pause(delay=max(0.25, (3.0 - jn_snap._natsuki_skill_level * 0.25)))
+    $ renpy.pause(delay=max(0.33, (3.0 - (jn_snap._natsuki_skill_level * 0.5))))
 
     # Natsuki's snap logic
 
     # If a correct snap is possible, and the player isn't snapping already, Natsuki will try to call it: the higher the difficulty, the quicker Natsuki will be.
     if not jn_snap._player_is_snapping:
-        if (jn_snap._get_snap_result()):  
+        if jn_snap._get_snap_result():  
             $ jn_snap._call_snap()
 
         # She may also snap by mistake, assuming it makes sense to do so: the higher the difficulty, the less she'll accidentally jn_snap.
@@ -433,6 +443,14 @@ label snap_main_loop:
     if not jn_snap._is_player_turn:
         # Natsuki gets to place a card
         $ jn_snap._place_card_on_table(False)
+
+        # If Natsuki only has one card left, she'll try to see if she can snap before admitting defeat
+        if len(jn_snap._natsuki_hand) == 0:
+            $ renpy.pause(delay=max(0.33, (1.25 - (jn_snap._natsuki_skill_level * 0.5))))
+
+            if jn_snap._get_snap_result():
+                $ jn_snap._call_snap()
+
         $ jn_snap._is_player_turn = True
         $ jn_snap._natsuki_can_fake_snap = True
 
@@ -453,6 +471,7 @@ label snap_quip(is_player_snap, is_correct_snap):
 
             # Some UE things to make it fun
             play audio smack
+            hide snap_popup
             show snap_popup zorder jn_snap._SNAP_POPUP_Z_INDEX
             hide snap_popup with popup_hide_transition
 
@@ -719,7 +738,7 @@ image turn_indicator_icon:
     jn_snap._turn_indicator_image
 
 # Self-explanatory, you dummy
-image snap_popup = "mod_assets/games/snap/ui/snap.png"
+image snap_popup = jn_snap._snap_popup_image
 
 # Game UI
 screen snap_ui:
