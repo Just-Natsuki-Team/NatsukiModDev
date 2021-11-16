@@ -572,12 +572,18 @@ label snap_end:
             elif jn_snap._natsuki_win_streak >= 3:
                 n "I wanna see more fight in you next time, though. Ahaha!"
 
+            # Hide all the UI
             hide player_natsuki_hands
-            hide screen snap_ui
             hide current_table_card
             hide player_hand_icon
             hide natsuki_hand_icon
             hide turn_indicator_icon
+            hide screen snap_ui
+
+            play audio drawer 
+            with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+
+            # Reset the ingame flag, then hop back to ch30 as getting here has lost context
             $ jn_globals.player_is_ingame = False
             jump ch30_loop
 
@@ -592,16 +598,23 @@ label snap_forfeit:
             n "But just so you know..."
             n "I'm chalking this up as a win for me!{w=0.2} Ehehe."
 
+            # Hit the streaks
             $ jn_snap._player_win_streak = 0
             $ jn_snap._natsuki_win_streak += 1
+
+            # Hide all the UI
             hide player_natsuki_hands
             hide current_table_card
             hide player_hand_icon
             hide natsuki_hand_icon
             hide turn_indicator_icon
             hide screen snap_ui
-            $ jn_globals.player_is_ingame = False
 
+            play audio drawer 
+            with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+
+            # Reset the ingame flag, then hop back to ch30 as getting here has lost context
+            $ jn_globals.player_is_ingame = False
             jump ch30_loop
 
         "In your dreams!":
