@@ -8,32 +8,15 @@ init -1 python in weather:
     #2c2f369ad4987a01f5de4c149665c5fd
     #NOTE: remove in production
 
-    def string_to_dict(string):
-        """
-        Converts a string in dictionary format into a dictionary
-
-        IN:
-            string
-        OUT:
-            dictionary
-
-        note: This automaticaly converts types
-            E.G.:
-                IN: "{x : 100}"
-
-                OUT: {"x" : 100} instead of {"x" : "100"}
-        """
-        return json.loads(string)
-
     def get_api_call_url(api_key, parameters=dict()):
         """
-        Creates a valid url(string) for an API call
+        Creates a valid url for an API call
 
         IN:
-            key - (string) a valid API key
-            parameters - (dictionary<string, string>) parameters to pass on to the API call
+            key - <string> a valid API key
+            parameters - <dict<string, string>> parameters to pass on to the API call
         OUT:
-            API call url
+            url - <string>
         """
 
         # Check if key is valid
@@ -60,41 +43,13 @@ init -1 python in weather:
 
         return str(url)
 
-    def make_request(url):
-        """
-        Makes a request to url
 
-        IN:
-            url - <string>
-        OUT:
-            raw html
 
-        note:
-            This is intended to be used with OpenWeatherMap API as such
-            if an HTTP error occurs the error code is returned in format {"cod" : [error code]}
-            because of this, refrain from using it for other purposes
-        """
-        # Default response is None
-        response = None
-        # try to make a request
-        # if successful
-        ## set response to it's raw html
-        try:
-            request = urllib2.urlopen(url)
-            response = request.read()
-        # else
-        ## return HTTP error code in an acceptable format
-        except urllib2.HTTPError, err:
-            response = "{{\"cod\":{0}}}".format(err.code)
-
-        return response
-
-    def get_api_call_info(key, parameters=dict()):
+    def get_api_call_info(parameters=dict()):
         """
             Creates an API call and returns the response as a dictionary
 
             IN:
-                key - <string> a valid API key
                 parameters - <dict> parameters to pass on to the API call
             OUT:
                 API response - <dict>
@@ -103,12 +58,15 @@ init -1 python in weather:
         """
 
         # Create an API call url with a valid API key and parameters
-        url = get_api_call_url(key, parameters)
+        url = get_api_call_url(parameters)
         # Create a request
-        html = make_request(url)
+        response = store.api.make_request(url)
 
-        # Find first open brace
-        start_index = html.find('{')
+        if response["status"] != 200:
+            store.utils.log("OpenWeatherAPI call error {0}".format(response["status"]), utils.SEVERITY_ERR)
+
+        # Find first open brace (is it even called a brace? Highly doubt that ngl)
+        start_index = response[].find('{')
         # Find last close brace
         end_index = html.rfind('}')
         # Strip raw html, leaving only the API response
@@ -132,6 +90,8 @@ init -1 python in weather:
         """
         # Make an API call and get it's response
         content = get_api_call_info(key, parameters)
+
+        #TODO:#TODO:#TODO:#TODO:#TODO:#TODO:#TODO:#TODO:DONT BE SUCH A FUCKING IDIOT, THANK YOU AAAAAAAAAAAA
 
         # Return response code
         return content["cod"]
