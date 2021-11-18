@@ -552,7 +552,7 @@ label greeting_feeling_better_sick:
             n "Anyway...{w=0.3} welcome back,{w=0.1} [player]!"
 
             # Add pending apology, reset the admission
-            $ store.jn_apologies.add_new_pending_apology(store.jn_apologies.TYPE_UNHEALTHY)
+            $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
             $ jn_admissions.last_admission_type = jn_admissions.TYPE_SICK
 
         "Still unwell.":
@@ -561,7 +561,7 @@ label greeting_feeling_better_sick:
             n "I don't want you making yourself worse for my sake..."
 
             # Add pending apology, reset the admission
-            $ store.jn_apologies.add_new_pending_apology(store.jn_apologies.TYPE_UNHEALTHY)
+            $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
             $ jn_admissions.last_admission_type = jn_admissions.TYPE_SICK
     return
 
@@ -587,7 +587,7 @@ label greeting_feeling_better_tired:
 
         "Much better, thanks!":
             n "Great!{w=0.2} Nothing like a good night's sleep,{w=0.1} am I right?"
-            n "Now then - seeing as you're finally awake and alert..."
+            n "Now then -{w=0.1} seeing as you're finally awake and alert..."
             n "What better opportunity to spend some more time with me?{w=0.2} Ehehe."
             $ persistent.jn_player_admission_type_on_quit = None
 
@@ -597,7 +597,7 @@ label greeting_feeling_better_tired:
             n "A nice glass of water or some bitter coffee should perk you up in no time!"
 
             # Add pending apology, reset the admission
-            $ store.jn_apologies.add_new_pending_apology(store.jn_apologies.TYPE_UNHEALTHY)
+            $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
             $ jn_admissions.last_admission_type = jn_admissions.TYPE_TIRED
 
         "Still tired.":
@@ -606,7 +606,7 @@ label greeting_feeling_better_tired:
             n "I don't want you face-planting your desk for my sake..."
 
             # Add pending apology, reset the admission
-            $ store.jn_apologies.add_new_pending_apology(store.jn_apologies.TYPE_UNHEALTHY)
+            $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
             $ jn_admissions.last_admission_type = jn_admissions.TYPE_TIRED
     return
 
