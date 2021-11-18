@@ -3847,7 +3847,7 @@ init 5 python:
             persistent._topic_database,
             label="talk_windup_unwashed_hands",
             unlocked=True,
-            prompt="Not washing your hands",
+            prompt="Handwashing",
             category=["Wind-ups"],
             nat_says=True,
             affinity_range=(jn_affinity.NORMAL, None),
@@ -3882,6 +3882,74 @@ label talk_windup_unwashed_hands:
         n "It really isn't that much to ask...{w=0.3} is it?"
 
     return
+
+# Natsuki hates people who litter
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_windup_litter",
+            unlocked=True,
+            prompt="Littering",
+            category=["Wind-ups"],
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_windup_litter:
+    n "You know,{w=0.1} [player]..."
+    n "At school?{w=0.2} At my school,{w=0.1} anyway?"
+    n "We -{w=0.1} the students -{w=0.1}  were actually responsible for keeping it all clean."
+    n "Ehehe.{w=0.2} Are you surprised?"
+    n "Yep!{w=0.2} From the bins,{w=0.1} to the desks,{w=0.1} to the floors.{w=0.2} It was all our effort that kept it squeaky clean!"
+    n "N-{w=0.1}not that I {i}enjoyed{/i} it,{w=0.1} of course!{w=0.2} Cleaning {i}is{/i} pretty lame,{w=0.1} but it's just something you gotta do."
+    n "But I'll tell you one thing,{w=0.1} [player]."
+    n "{i}Nothing{/i} pissed me off more than the jerks who just went and dropped or left their trash everywhere."
+    n "...And not even just in school!"
+    n "I mean...{w=0.3} where do I start?!"
+    n "First off -{w=0.1} how much of a freaking slob do you have to be?{w=0.2} Do these people just drop crap all over their homes too?!"
+    n "It annoys me even more when there's bins and stuff literally right there!"
+    n "Like,{w=0.1} wow...{w=0.3} lazy as well as inconsiderate?{w=0.2} What a {i}charming{/i} combo!"
+    n "Even if there isn't a trash can or whatever around..."
+    n "It's not like they don't have pockets,{w=0.1} or can't just carry it around for a few minutes!"
+    n "Ugh..."
+    n "And I haven't even mentioned people tossing their rubbish out of cars,{w=0.1} or into lakes and ponds!"
+    n "It pisses me off just thinking about it..."
+    n "..."
+    n "[player]."
+    
+    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n "I know you.{w=0.2} In fact,{w=0.1} I daresay I know you {i}very{/i} well by now."
+        n "I don't think you're the sort to do that at all..."
+        n "I'm not wrong...{w=0.3} am I?"
+        n "I don't wanna have to be.{w=0.2} Ahaha..."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n "I don't think you're like that,{w=0.1} [player]."
+        n "Or...{w=0.3} at least you don't {i}try{/i} to be anyway."
+
+    else:
+        n "I really,{w=0.1} really hope you aren't one of those people."
+
+    n "So..."
+    n "...If you're a litterbug already,{w=0.1} I'll forgive you this one time."
+    n "Just...{w=0.3} make sure you clean up your act,{w=0.1} okay?"
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        n "Ehehe.{w=0.2} Love you,{w=0.1} [player]~."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n "It'd...{w=0.3} mean a lot."
+        n "Ahaha..."
+
+    else:
+        n "Thanks,{w=0.1} [player]."
+
+    return
+
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
