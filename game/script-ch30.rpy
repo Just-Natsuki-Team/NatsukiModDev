@@ -281,10 +281,6 @@ label player_select_topic(is_repeat_topics=False):
 
     jump ch30_loop
 
-label music_menu:
-    n "This isn't done."
-    jump ch30_loop
-
 label extras_menu:
     n "This isn't done."
     jump ch30_loop

@@ -3754,7 +3754,7 @@ init 5 python:
         Topic(
             persistent._topic_database,
             label="talk_windup_chewing_gum",
-            unlocked=True,
+            unlocked=False,
             prompt="Chewing gum",
             category=["Wind-ups"],
             nat_says=True,
@@ -3796,7 +3796,7 @@ init 5 python:
         Topic(
             persistent._topic_database,
             label="talk_windup_smoking_vaping_indoors",
-            unlocked=True,
+            unlocked=False,
             prompt="Smoking and vaping indoors",
             category=["Wind-ups"],
             nat_says=True,
@@ -3846,7 +3846,7 @@ init 5 python:
         Topic(
             persistent._topic_database,
             label="talk_windup_unwashed_hands",
-            unlocked=True,
+            unlocked=False,
             prompt="Handwashing",
             category=["Wind-ups"],
             nat_says=True,
@@ -3889,7 +3889,7 @@ init 5 python:
         Topic(
             persistent._topic_database,
             label="talk_windup_litter",
-            unlocked=True,
+            unlocked=False,
             prompt="Littering",
             category=["Wind-ups"],
             nat_says=True,
@@ -3950,6 +3950,26 @@ label talk_windup_litter:
 
     return
 
+# Natsuki hates people who don't wash their hands after using a restroom
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_custom_music_explanation",
+            unlocked=True,
+            prompt="Can you explain how custom music works again?",
+            category=["Music"],
+            player_says=True,
+            affinity_range=(jn_affinity.HAPPY, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_custom_music_explanation:
+    n "Make sure that lazy,{w=0.1} good-for-nothin' Blizz writes this dialogue for custom music,{w=0.1} 'kay,{w=0.1} [player]?"
+    n "Ehehe.{w=0.2} Thanks~!"
+    return
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
