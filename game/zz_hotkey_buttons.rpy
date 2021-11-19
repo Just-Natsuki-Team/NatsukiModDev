@@ -184,12 +184,13 @@ screen hkb_overlay:
                 Jump("talk_menu"),
                 SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)]
             style "hkbd_button"
-
-        textbutton _("Music"):
-            action [
-                Jump("music_menu"),
-                SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)]
-            style "hkbd_button"
+            
+        if persistent.jn_custom_music_explanation_given:
+            textbutton _("Music"):
+                action [
+                    Jump("music_menu"),
+                    SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)]
+                style "hkbd_button"
 
         textbutton _("Extras"):
             action [

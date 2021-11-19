@@ -3754,7 +3754,7 @@ init 5 python:
         Topic(
             persistent._topic_database,
             label="talk_windup_chewing_gum",
-            unlocked=False,
+            unlocked=True,
             prompt="Chewing gum",
             category=["Wind-ups"],
             nat_says=True,
@@ -3796,7 +3796,7 @@ init 5 python:
         Topic(
             persistent._topic_database,
             label="talk_windup_smoking_vaping_indoors",
-            unlocked=False,
+            unlocked=True,
             prompt="Smoking and vaping indoors",
             category=["Wind-ups"],
             nat_says=True,
@@ -3846,7 +3846,7 @@ init 5 python:
         Topic(
             persistent._topic_database,
             label="talk_windup_unwashed_hands",
-            unlocked=False,
+            unlocked=True,
             prompt="Handwashing",
             category=["Wind-ups"],
             nat_says=True,
@@ -3889,7 +3889,7 @@ init 5 python:
         Topic(
             persistent._topic_database,
             label="talk_windup_litter",
-            unlocked=False,
+            unlocked=True,
             prompt="Littering",
             category=["Wind-ups"],
             nat_says=True,
@@ -3950,25 +3950,103 @@ label talk_windup_litter:
 
     return
 
-# Natsuki hates people who don't wash their hands after using a restroom
+# Natsuki discovers a music player, leading to the unlocking of custom music! 
+# We assign no categories to this so it isn't selectable via menu, making it a one-time conversation
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_custom_music_introduction",
+            unlocked=True,
+            prompt="Discovering custom music",
+            conditional="not persistent.jn_custom_music_unlocked",
+            nat_says=True,
+            affinity_range=(jn_affinity.HAPPY, None),
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_custom_music_introduction:
+    n "Hmm..."
+    n "I wonder if it's still here..."
+
+    play audio drawer 
+    with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+
+    n "Come on!{w=0.2} It's gotta still be here!{w=0.2} I know it!"
+
+    play audio drawer 
+    with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")    
+
+    n "..."
+    n "Aha!{w=0.2} Yes!"
+    n "..."
+    n "Oh!{w=0.2} [player]!{w=0.2} [player]!"
+    n "Guess what I fooound!{w=0.2} Ehehe."
+    n "It's...{w=0.3} a music player!{w=0.2} Neat,{w=0.1} right?"
+    n "Well...{w=0.3} kinda.{w=0.2} It's not exactly...{w=0.3} {i}modern{/i},{w=0.1} but it'll do the job!"
+    n "Come to think of it...{w=0.3} I don't really even know who it belongs to."
+    n "We just found it left in the clubroom one day.{w=0.2} Nobody knew if it belonged to anyone -{w=0.1} and trust me,{w=0.1} we tried to find out!"
+    n "We asked around in lessons,{w=0.1} we sent out notes...{w=0.3} nothing!"
+    n "So...{w=0.3} we kinda just kept it here,{w=0.1} in my desk,{w=0.1} in case whoever it was came back to pick it up."
+    n "I guess they never will now,{w=0.1} huh?" 
+    n "Ahaha..."
+    n "Well,{w=0.1} whatever.{w=0.2} The point is we can play whatever music we want now!"
+    n "I think I figured out a way to let you send me whatever you want me to put on,{w=0.1} so listen up,{w=0.1} 'kay?"
+    jump talk_custom_music_explanation
+
+# Natsuki explains how the custom music functionality works
+# Unlocked as a permanent topic once Natsuki has naturally lead into this from talk_custom_music_introduction via random topics
 init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
             label="talk_custom_music_explanation",
             unlocked=True,
-            prompt="Can you explain how custom music works again?",
+            prompt="Can you explain custom music for me again?",
             category=["Music"],
+            conditional="persistent.jn_custom_music_unlocked and persistent.jn_custom_music_explanation_given",
             player_says=True,
-            affinity_range=(jn_affinity.HAPPY, None),
-            location="classroom"
+            affinity_range=(jn_affinity.HAPPY, None)
         ),
         topic_group=TOPIC_TYPE_NORMAL
     )
 
 label talk_custom_music_explanation:
-    n "Make sure that lazy,{w=0.1} good-for-nothin' Blizz writes this dialogue for custom music,{w=0.1} 'kay,{w=0.1} [player]?"
-    n "Ehehe.{w=0.2} Thanks~!"
+    if persistent.jn_custom_music_explanation_given:
+        n "Huh?{w=0.2} You want me to explain how custom music works again?"
+        n "Sure,{w=0.1} I can do that!"
+        n "First things first,{w=0.1} let me just check for the {i}custom_music{/i} folder..."
+
+    else:
+        n "Alright!{w=0.2} So...{w=0.3} it's actually pretty simple,{w=0.1} [player]."
+        n "There should be a folder called {i}custom_music{/i} somewhere around here..."
+        n "Let me just take a look,{w=0.1} one sec..."
+        n "..."
+
+    if jn_custom_music.get_directory_exists():
+        n "Well,{w=0.1} hey!{w=0.2} It's already there!{w=0.2} I must have set it up earlier and forgot."
+        n "No complaints from me!{w=0.2} Ehehe."
+
+    else:
+        n "Okaaay!{w=0.2} It wasn't there,{w=0.1} so I've just created it for you."
+
+    $ folder = jn_custom_music.CUSTOM_MUSIC_DIRECTORY
+    n "So,{w=0.1} [player] -{w=0.1} if you click {a=[folder]}here{/a},{w=0.1} that'll take you to the folder I set up."
+    n "Then all you gotta do is just {i}copy{/i} your music into that folder,{w=0.1} and you're good to go!"
+    n "Easy as pie,{w=0.1} huh?{w=0.2} Ehehe."
+    n "Oh -{w=0.1} a couple of things first though,{w=0.1} [player]."
+    n "Any music you give me needs to be in {i}.mp3,{w=0.1} .ogg or .wav{/i} format."
+    n "If you don't know how to check,{w=0.1} then just look at the letters after the period in the file name."
+    n "You should also be able to see those in the file {i}properties{/i} if they don't appear on the screen at first."
+    n "Like I said -{w=0.1} this thing isn't {i}exactly{/i} super modern,{w=0.1} so it won't work with any fancy newer formats,{w=0.1} or weird old ones."
+    $ persistent.jn_custom_music_unlocked = True
+    $ persistent.jn_custom_music_explanation_given = True
+    n "Once you've done that,{w=0.1} just click the {i}Music{/i} button,{w=0.1} and I'll check that it's all done right."
+    n "...And that's about it!"
+    n "A word of warning though,{w=0.1} [player]..."
+    n "You better have good taste."
+    n "Ahaha!"
     return
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics

@@ -665,7 +665,10 @@ init -990 python in jn_globals:
         "( ;; )",
         "(|||;-;)",
         "(;v-v)",
-        ":-("
+        ":-(",
+        "</3",
+        "<|3",
+        ":<"
     ]
 
     # Alphabetical (excluding numbers) values allowed for text input

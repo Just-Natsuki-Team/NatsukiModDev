@@ -225,8 +225,8 @@ label talk_menu:
             call player_select_topic(is_repeat_topics=True)
 
         "I love you, [n_name]!" if jn_affinity.get_affinity_state() >= jn_affinity.LOVE and persistent.jn_player_love_you_count > 0:
-            $ jn_placeholders.show_resting_placeholder_natsuki()
-            jump talk_i_love_you
+            $ push("talk_i_love_you")
+            jump call_next_topic
 
         "I feel..." if jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
             jump player_admissions_start
@@ -268,7 +268,6 @@ label player_select_topic(is_repeat_topics=False):
     # We got a string, we should push
     if isinstance(_choice, basestring):
         $ push(_choice)
-        $ jn_placeholders.show_resting_placeholder_natsuki()
         jump call_next_topic
 
     # -1 means go back
