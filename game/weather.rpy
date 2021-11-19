@@ -44,37 +44,6 @@ init -1 python in weather:
         return str(url)
 
 
-
-    def get_api_call_info(parameters=dict()):
-        """
-            Creates an API call and returns the response as a dictionary
-
-            IN:
-                parameters - <dict> parameters to pass on to the API call
-            OUT:
-                API response - <dict>
-
-            note: API key should already be validated
-        """
-
-        # Create an API call url with a valid API key and parameters
-        url = get_api_call_url(parameters)
-        # Create a request
-        response = store.api.make_request(url)
-
-        if response["status"] != 200:
-            store.utils.log("OpenWeatherAPI call error {0}".format(response["status"]), utils.SEVERITY_ERR)
-
-        # Find first open brace (is it even called a brace? Highly doubt that ngl)
-        start_index = response[].find('{')
-        # Find last close brace
-        end_index = html.rfind('}')
-        # Strip raw html, leaving only the API response
-        content = html[start_index:end_index+1]
-
-        # Convert response from a string to a dictionary and return it
-        return string_to_dict(content)
-
     def get_response_code(key, parameters=dict()):
         """
             Returns API's response code
@@ -91,7 +60,6 @@ init -1 python in weather:
         # Make an API call and get it's response
         content = get_api_call_info(key, parameters)
 
-        #TODO:#TODO:#TODO:#TODO:#TODO:#TODO:#TODO:#TODO:DONT BE SUCH A FUCKING IDIOT, THANK YOU AAAAAAAAAAAA
 
         # Return response code
         return content["cod"]
