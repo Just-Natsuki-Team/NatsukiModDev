@@ -185,7 +185,7 @@ screen hkb_overlay:
                 SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)]
             style "hkbd_button"
             
-        if persistent.jn_custom_music_explanation_given:
+        if persistent.jn_custom_music_explanation_given and jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
             textbutton _("Music"):
                 action [
                     Jump("music_menu"),

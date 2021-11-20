@@ -88,6 +88,9 @@ init python in jn_custom_music:
         return return_file_items
 
 label music_menu:
+
+    $ jn_globals.player_is_in_conversation = True
+
     # Attempt to get the music in the custom_music directory to present as menu options
     python:
         success = False

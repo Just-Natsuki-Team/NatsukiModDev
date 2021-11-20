@@ -3962,6 +3962,7 @@ init 5 python:
             conditional="not persistent.jn_custom_music_unlocked",
             nat_says=True,
             affinity_range=(jn_affinity.HAPPY, None),
+            location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
     )
@@ -4007,7 +4008,8 @@ init 5 python:
             category=["Music"],
             conditional="persistent.jn_custom_music_unlocked and persistent.jn_custom_music_explanation_given",
             player_says=True,
-            affinity_range=(jn_affinity.HAPPY, None)
+            affinity_range=(jn_affinity.HAPPY, None),
+            location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
     )
