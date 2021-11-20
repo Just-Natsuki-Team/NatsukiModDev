@@ -4051,6 +4051,70 @@ label talk_custom_music_explanation:
     n "Ahaha!"
     return
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_vtubers",
+            unlocked=True,
+            prompt="Do you follow any VTubers?",
+            category=["Games", "Media", "Society"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_vtubers:
+    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n "VTubers,{w=0.1} huh?{w=0.2} You're asking {i}me{/i}?"
+        n "...Wow,{w=0.1} [player].{w=0.2} I'm impressed."
+        n "Yet again,{w=0.1} you've proved you're even more of a nerd than I am!"
+        n "Ehehe."
+        n "Relax!{w=0.2} Relax,{w=0.1} jeez!{w=0.2} You know I'd never seriously judge your hobbies,{w=0.1} you dummy."
+        n "But yeah,{w=0.1} anyway..."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+        n "Oh!{w=0.2} Oh!{w=0.2} I think I know those!"
+        n "They're those people with the anime avatars that stream stuff online for people,{w=0.1} right?"
+        n "Well..."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n "Huh?{w=0.2} VTubers?{w=0.2} Like those people with the anime-style avatars that play games and stuff online for people to watch?"
+        n "That {i}is{/i} what you mean,{w=0.1} right?"
+        n "Well..."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n "No,{w=0.1} I do not.{w=0.2} I'd rather be playing the game myself than watching someone play it for me."
+        n "If you follow any,{w=0.1} good for you."
+        n "{i}Some{/i} of us don't have the time to sit around on our butt for hours..."
+        n "...Or the money to just give it away to strangers."
+        n "[player]."
+        n "How much are we betting you aren't {i}nearly{/i} as toxic to {i}them{/i} as you are to me, huh?"
+        return
+
+    else:
+        n "No.{w=0.2} And I couldn't give less of a crap if you did,{w=0.1} either."
+        n "...And hey,{w=0.1} newsflash,{w=0.1} idiot."
+        n "Throwing money at a stranger hiding behind a cutesy picture doesn't make you any less of a jerk.{w=0.2} Heh."
+        return
+
+    n "It's definitely a cool idea!{w=0.2} It lets people share their passions and experiences with others behind a completely clean persona..."
+    n "Without having to worry about baggage following them into their personal lives,{w=0.1} or people being creeps,{w=0.1} or stuff like that."
+    n "A lot of them even make full-blown careers out of it: merchandise,{w=0.1} song releases and everything -{w=0.1} just like idols!{w=0.2} It's crazy!"
+    n "That being said..."
+    n "I never really got into that sort of thing myself."
+    n "Like...{w=0.3} don't get me wrong!{w=0.2} I'm sure they're pretty fun to watch.{w=0.2} If you're into that kind of thing,{w=0.1} I mean."
+    n "But I'd rather be playing or doing something {i}myself{/i} than watching someone else do it,{w=0.1} usually."
+    n "That might just be me,{w=0.1} though."
+    n "...Ehehe."
+    n "What about you,{w=0.1} [player]?{w=0.2} Are you into that sort of stuff?"
+    n "Wait,{w=0.1} wait!{w=0.2} Don't bother answering that."
+    n "You {i}did{/i} ask me about them,{w=0.1} after all -{w=0.1} I think that speaks for itself,{w=0.1} wouldn't you agree?"
+    n "Ahaha!"
+    return
+
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
