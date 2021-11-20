@@ -487,6 +487,13 @@ init 0 python:
 
         return tracks
 
+    def open_txt(file):
+        """
+            Opens a txt file in default txt editor
+        """
+        os.startfile(file)
+
+
 # Variables with cross-script utility specific to Just Natsuki
 init -990 python in jn_globals:
     import store
@@ -593,6 +600,46 @@ init -999 python in utils:
             datetime.timedelta object representing the length of the current game session
         """
         return datetime.datetime.now() - store.jn_globals.current_session_start_time
+
+    # Kinda obsessed with decorators right now, tell me in case I should stop using them everywhere
+    def coroutine_loop(t):
+        """
+            a decorator used for calling a function periodically
+            is not exact because function cannot be called while Natsuki is talking
+            because of this you should always assume the function will be called later than it should be
+            but never earlier
+
+            IN:
+                t - <datetime.timedelta> how often to call function
+        """
+        # check if we got timedelta as argument
+        if not isinstance(t, datetime.timedelta):
+            raise Exception("decorator coroutine_loop accepts only datetime.timedelta object ({0} given)".format(type(t)))
+
+        # if not yet defined, create a dictionary with all functions to loop
+        # and put it under .all attribute
+        if not hasattr(coroutine_loop, "all"):
+            coroutine_loop.all = dict()
+
+        # if not yet defined, create function to stop a loop
+        if not hasattr(coroutine_loop, "stop"):
+            def stop(func):
+                coroutine_loop.all[func]["next"] = None
+            coroutine_loop.stop = stop
+
+        # same as stop, but to start
+        if not hasattr(coroutine_loop, "start"):
+            def start(func):
+                coroutine_loop.all[func]["next"] = coroutine_loop.all[func]["loop_time"] + datetime.datetime.now()
+            coroutine_loop.start = start
+
+        def register(func):
+            #NOTE: check might not be neccessary?
+            if func not in coroutine_loop.all:
+                coroutine_loop.all[func] = {"next":None,"loop_time":t}
+
+            return func
+        return register
 
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
 define audio.t2 = "<loop 4.499>bgm/2.ogg"   #Sayori theme

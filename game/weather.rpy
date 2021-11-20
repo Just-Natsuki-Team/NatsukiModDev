@@ -1,7 +1,6 @@
 init -1 python in weather:
     import urllib2
-    import json
-    import time
+    import datetime
     import store
 
     #TEST API key, feel free to use
@@ -804,21 +803,13 @@ init -1 python in weather:
 
             return parsed_weather, weather_short
 
+# THis is here purely because of a bug in renpy extension, remove after it's fixed
 init -1 python:
-    import webbrowser
-    import os
-    import subprocess
-    import time
+    pass
 
-    def open_browser(url):
-        """
-            Opens a new tab/window in the default browser with the specified url
-
-            IN:
-                url - <string>
-        """
-        webbrowser.open(url)
-
+init -1 python in location:
+    import geocoder
+    import store
 
     def open_maps(latitude, longitude):
         """
@@ -827,75 +818,13 @@ init -1 python:
         url = "https://www.google.com/maps/place/{0},{1}".format(latitude, longitude)
         webbrowser.open(url)
 
-    def open_txt(file):
-        """
-            Opens a txt file in default txt editor
-        """
-        os.startfile(file)
-
-    def txt_input(pre_format_string=""):
-        #NOTE: leaving this here for now, but it probably should get trashed
-        """
-            Creates a new temporary txt file and opens it in default txt editor
-            File will have pre_format_string written in it before opening the file
-            Then it will wait until the user closes it
-            Returns what the user typed in or None if file doesn't start with pre_format_string
-            Deletes both the temporary text file and it's temporary folder parent
-
-            note:
-                should be used only when user is expected to need to paste something
-                otherwise use renpy.input()
-
-            IN:
-                pre_format_string - <string> a pre-formated string
-            OUT:
-                user's input<string> or <None>
-        """
-        #NOTE: might not be necessary to create a new folder for it
-        ###### is done purely to avoid possible issue with overwriting an existing file
-        if not os.path.exists(".temp_input"):
-            os.makedirs(".temp_input")
-
-        # Create a new file in our new folder
-        file = open(".temp_input\\__temp_input__.txt", "w")
-        # If for some reason the file already existed, delete it's content
-        file.truncate(0)
-        # Write our preformatted string into it
-        file.write(pre_format_string)
-        file.close()
-
-        # Make a new proccess that opens our file (sorry for wrong terminology)
-        process = subprocess.Popen(["notepad.exe", ".temp_input\\__temp_input__.txt"])
-        # Wait until process is terminated
-        process.wait()
-        # When file is closed open it and read it's content
-        file = open(".temp_input\\__temp_input__.txt", "r")
-        content = file.read()
-        #if file still starts with our preformatted string
-        ## strip it's content of the pre-format string
-        if content[:len(pre_format_string)] == pre_format_string:
-            content = content[len(pre_format_string):]
-
-        else:
-            content = None
-        # close file, delete it, delete it's parent folder
-        file.close()
-        os.remove(".temp_input\\__temp_input__.txt")
-        os.rmdir(".temp_input")
-
-        return content
-
-init -1 python in location:
-    import geocoder
-    import store
-
     def get_coords_by_ip():
         """
             Returns coordinates tuple based on users ip adress
-            note: for accuracy issues and possibility of VPN usage this should be used only if other methods fail
+            note: for accuracy issues and a possibility of VPN usage this should be used only if other methods fail
 
             OUT:
-                (latitude, longitude) or None if fail
+                (latitude, longitude) or None if failed
         """
         #try to get coordinates
         try:

@@ -1,4 +1,8 @@
 init -2 python in api:
+    import json
+    import urllib2
+    import store
+
     #NOTE: I don't really like having a dictionary like this, but I can't think of a better way
     # except of maybe using the base_url itself instead of just the API name, that just seems annoying though
     APIs = {
@@ -34,7 +38,7 @@ init -2 python in api:
         code = request.getcode()
 
         # if status OK read html
-        if code == 200
+        if code == 200:
             response["html"] = request.read()
 
         response["status"] = code
@@ -131,3 +135,12 @@ init -2 python in api:
             return
 
         return API_on_status_code.all[API][code]()
+
+    def open_browser(url):
+        """
+            Opens a new tab/window in the default browser with the specified url
+
+            IN:
+                url - <string>
+        """
+        webbrowser.open(url)
