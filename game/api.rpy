@@ -8,9 +8,10 @@ init -2 python in api:
     APIs = {
         "OpenWeatherMap" : "https://api.openweathermap.org/data/2.5/weather"
     }
-    def make_request(api):
+
+    def make_request(api, parameters, **kwargs):
         """
-            Makes a request to an API, this should only be used with an API
+            Makes a request to an API
 
             IN:
                 api - <string>
@@ -21,7 +22,7 @@ init -2 python in api:
         if not api in store.api.APIs:
             raise Exception("API {0} not found".format(api))
 
-        base_url = store.api.APIs[api]
+        url = get_api_call_url(api, parameters.update(kwargs))
 
         # this feels very janky
         response = {
@@ -36,10 +37,14 @@ init -2 python in api:
 
         # if status OK read html
         if code == 200:
+            store.utils.log("API call to {0} resulted in response 200".format(api))
             response["html"] = request.read()
 
+        else:
+            store.utils.log("API call to {0} resulted in response {1}".format(api, code), store.utils.SEVERITY_WARN)
+
         response["status"] = code
-        response["custom"] = API_respond_2_code(api, code)
+        response["custom"] = API_respond_2_code(api, code, response["html"])
 
         """TODO:remove this, just keeping it here for reference
         except urllib2.HTTPError, err:
@@ -48,28 +53,28 @@ init -2 python in api:
 
         return response
 
-    def get_api_call_url(base_url, parameters=dict(), **kwargs):
+    def get_api_call_url(api, parameters=dict(), **kwargs):
         """
         Creates a valid url for an API call
 
         IN:
-            base_url - <string> example: https://www.google.com/
+            api - <string> api from APIs dictionary
             parameters - <dict> parameters to pass on to the API call
-            kwargs - keyword arguments also passed to the url
+            kwargs - keyword arguments also passed to the url (merged with `parameters`)
         OUT:
             url - <string>
         """
         # check if base_url is a string
-        if not isinstance(base_url, str):
-            raise Exception("base_url is {0}, string was expected".format(type(base_url)))
+        if api not in store.api.APIs:
+            raise Exception("API {0} not found".format(api))
 
         # Check if parameters is a dictionary
         if not isinstance(parameters, dict):
             raise Exception("parameters is {0}, dictionary was expected".format(type(parameters)))
 
-        # base API call url
+        # add quarry separator to url
+        url = store.api.APIs[api] + '?'
         # merge parameters and kwargs
-        url = base_url + '?'
         parameters.update(kwargs)
 
         # Iterate through parameters and append them to url
@@ -100,14 +105,17 @@ init -2 python in api:
     #I think this is what you meant Multi?
     #also just realized API might be a bad arg name because it suggests it's a constant?
     #also the more I look at this the more confused and less confident that this is correct I get... oh well
-    def API_on_status_code(API, codes):
+    def API_on_status_code(API, codes=None):
         """
             decorator used for calling functions based on HTTP response codes
 
             IN:
-                API - <string> with which API is this function associated
+                API - <string> with which this function is associated
                 codes - <int/list/set/range> response codes on which this function should be called
-            NOTE: function should not accept any positional arguments
+                        if None, function will be called if API call results in a code that isn't in registry
+            NOTE:
+                function can accept `code` and `html` keyword arguments
+                function should not accept any positional arguments
         """
         # if this is the first time the decorator is used we first instantiate the registry
         if not hasattr(API_on_status_code, "all"):
@@ -124,18 +132,51 @@ init -2 python in api:
         def registered(func):
             for code in codes:
                 # check if code is an integer
-                if not isinstance(codes, int):
+                if code is not None and not isinstance(codes, int):
                     raise Exception("API_on_status_code accepts only integers for response codes")
 
-                #TODO: this can be optimized using `func.func_code.co_varnames`
-                def wrapper(code=code):
-                    # try to pass `code` to the function
-                    # if this fails call it without any arguments
-                    try:
-                        return func(code)
-                    except TypeError:
-                        return func()
+                # Now we wrap our function based on what keyword args it accepts
+                # Wrapper always accepts the same arguments to avoid possible integrity issues
+                ## First we check what keyword arguments it accepts
+                ## we try to pass it those args
+                ## if it still for some reason fails we call it without any args
 
+                # Both code and html
+                if "code" in func.func_code.co_varnames and "html" in func.func_code.co_varnames:
+                    def wrapper(code=code, html=html):
+                        try:
+                            return func(code=code, html=html)
+                        except TypeError:
+                            return func()
+                    # add wrapped function to our dictionary
+                    API_on_status_code.all[API][code] = wrapper
+                    continue
+
+                # Only code
+                if "code" in func.func_code.co_varnames:
+                    def wrapper(code=code, html=html):
+                        try:
+                            return func(code=code)
+                        except TypeError:
+                            return func()
+                    # add wrapped function to our dictionary
+                    API_on_status_code.all[API][code] = wrapper
+                    continue
+
+                # Only html
+                if "html" in func.func_code.co_varnames:
+                    def wrapper(code=code, html=html):
+                        try:
+                            return func(html=html)
+                        except TypeError:
+                            return func()
+                    # add wrapped function to our dictionary
+                    API_on_status_code.all[API][code] = wrapper
+                    continue
+
+                # not html nor code
+                def wrapper(code=code, html=html):
+                    return func()
                 # add wrapped function to our dictionary
                 API_on_status_code.all[API][code] = wrapper
 
@@ -143,14 +184,23 @@ init -2 python in api:
 
         return registered
 
-    def API_respond_2_code(API, code):
+    def API_respond_2_code(API, code, html=None):
+        """
+            calls a function from registry of callback funcs for APIs
+        """
+        # API is not in registry so return None
         if API not in API_on_status_code.all:
             return
 
         if code not in API_on_status_code.all[API]:
+            # code was not found in registry but registry contains a generic fallback
+            if None in API_on_status_code.all[API]:
+                return API_on_status_code.all[API][code](code=code, html=html)
+            # no generic nor code specific callback, return None
             return
 
-        return API_on_status_code.all[API][code]()
+        # both API and code in registry so we call that function
+        return API_on_status_code.all[API][code](code=code, html=html)
 
     def open_browser(url):
         """
