@@ -7,135 +7,10 @@ init -1 python in weather:
     #2c2f369ad4987a01f5de4c149665c5fd
     #NOTE: remove in production
 
-    def get_api_call_url(api_key, parameters=dict()):
-        """
-        Creates a valid url for an API call
-
-        IN:
-            key - <string> a valid API key
-            parameters - <dict<string, string>> parameters to pass on to the API call
-        OUT:
-            url - <string>
-        """
-
-        # Check if key is valid
-        if not isinstance(api_key, basestring):
-            raise Exception("API key is type {0} instead of string".format(type(api_key)))
-
-        # Check if parameters is a dictionary
-        if not isinstance(parameters, dict):
-            raise Exception("parameters is {0} instead of a dictionary".format(type(parameters)))
-
-        # base API call url
-        url = "https://api.openweathermap.org/data/2.5/weather?"
-
-        # Iterate through parameters
-        for key in parameters:
-            # Check that parameter contains a string key and value
-            if not (isinstance(key, basestring) and isinstance(parameters[key], basestring)):
-                raise Exception("parameters contain a non-string key and/or value")
-            # Append parameter to url
-            url += "{0}={1}&".format(key, parameters[key])
-
-        # And lastly append API key
-        url += "appid={0}".format(api_key)
-
-        return str(url)
-
-
-    def get_response_code(key, parameters=dict()):
-        """
-            Returns API's response code
-
-            IN:
-                same as get_api_call_info()
-            OUT:
-                API response code - <int>
-
-            note:
-                This should be used only when validating stuff like API keys, locations, etc.
-                As this function makes a NEW API call
-        """
-        # Make an API call and get it's response
-        content = get_api_call_info(key, parameters)
-
-
-        # Return response code
-        return content["cod"]
-
-    def is_api_key_valid(key):
-        """
-            Checks whether an API key is valid or not
-
-            IN:
-                API key - string
-            OUT:
-                True - if key is valid
-                False - if key is invalid
-
-            note:
-                Use this only when a key ~needs~ to be validated
-                If an API key has been validated before, assume it will stay like that
-                (This function makes a new API call)
-        """
-        # Get response code of API call
-        response_code = get_response_code(key)
-
-        # Check if response isn't "invalid API key" error code
-        if response_code != 401:
-            return True
-        #else
-        return False
-
-    def is_city_valid(key, city):
-        #NOTE: Deprecated
-        """
-            Checks whether city can be found by the API
-
-            IN:
-                city - (string) city name
-            OUT:
-                True - if city was found
-                False - if city wasn't found
-
-            note: same as in function above but with location
-        """
-        # Create an API call url with our API key
-        params = get_location_dict(city=city)
-        # Get response code of API call
-        response_code = get_response_code(key, params)
-
-
-        # Check if response isn't "city not found" error code
-        if response_code != 404:
-            return True
-        #else
-        return False
-
-    def handle_other_errors(response_code):
-        """
-            Handles other common error codes
-
-            IN:
-                response code from an API call - <int>
-        """
-        if response_code == 429:
-            store.utils.log("ERROR: OpenWeatherMap error 429. Exceeded rate limit of 60 calls/min.", store.utils.SEVERITY_ERR)
-            raise Exception("exceeded 60 calls per minute! This shouldn't happen under any circumstances, needs fix now!")
-            # TODO: do not raise an exception in production. Should be resolved in testing.
-
-        if response_code in [500, 502, 503, 504]:
-            store.utils.log("ERROR: API call to OpenWeatherMap resulted in {0} response code".format(response_code), store.utils.SEVERITY_ERR)
-            # Something went horribly, horribly wrong
-            # Good news tho! It's not our fault, yay!
-            #TODO: Log whole API response for debugging purposes
-            #TODO: Have Natsuki handle the situation in a non-immersion-breaking way
-            ###### Probably ask the player if they could contact us
-
     def get_location_dict(longitude=None, latitude=None):
         """
             Returns a dictionary with player's latitude and longitude
-            in a format understandable by OWM API
+            in a format understandable by OpenWeatherMap API
             note: coordinates should be stored as a string to avoid constant conversion
 
             IN:
@@ -155,42 +30,7 @@ init -1 python in weather:
 
         return location
 
-    def get_parameters_for_call():
-        """
-            returns merged preferences and location dictionaries
 
-            IN:
-                preferences - <dictionary> containing stuff like what units to use, language etc.
-                location - <dictionary> containing location info
-            OUT:
-                merged dictionary
-        """
-        # combine the two dictionaries without modifying either of them
-        params = preferences.copy()
-        params.update(
-            get_location_dict(
-            store.persistent.latitude,
-            store.persistent.longitude
-            )
-        )
-
-        return params
-
-    def set_next_weather_call_time(seconds):
-        """
-        Sets a time next OWM API call should be made
-
-        IN:
-            in how many seconds should it be called
-
-        note: is a function solely for easier queuing in renpy dialogue
-        """
-        store.persistent.next_weather_call_time = time.time()+seconds
-
-    #TODO: persist this
-    preferences = {
-        "units" : "metric"
-    }
 
     class Weather():
 
@@ -839,6 +679,7 @@ init -1 python in location:
         except:
             return None
 
+    # Currently not in use
     def get_coords_by_city(city, country=None):
         """
             Returns coordinates of a city from a lookup file

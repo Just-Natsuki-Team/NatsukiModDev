@@ -6,19 +6,22 @@ init -2 python in api:
     #NOTE: I don't really like having a dictionary like this, but I can't think of a better way
     # except of maybe using the base_url itself instead of just the API name, that just seems annoying though
     APIs = {
-        "https://api.openweathermap.org/data/2.5/weather": "OpenWeatherMap"
+        "OpenWeatherMap" : "https://api.openweathermap.org/data/2.5/weather"
     }
-    def make_request(url):
+    def make_request(api):
         """
-            Makes a request to url
+            Makes a request to an API, this should only be used with an API
 
             IN:
-                url - <string>
+                api - <string>
             OUT:
                 <dict> {"status" : response_code, "html" : raw_html, "custom": ...}
-                    custom - whatever is returned by a function declared with API_on_status_code decorator
+                    custom - whatever is returned by a function defined with API_on_status_code decorator
         """
-        global APIs
+        if not api in store.api.APIs:
+            raise Exception("API {0} not found".format(api))
+
+        base_url = store.api.APIs[api]
 
         # this feels very janky
         response = {
@@ -26,12 +29,6 @@ init -2 python in api:
             "html" : None,
             "custom" : None
         }
-        api = None
-        # find base_url based on querry separator
-        base_url = url[:url.find('?')+1]
-        # if there is one, with the api for this url
-        if base_url in APIs:
-            api = APIs[base_url]
 
         # make a request and get response code
         request = urllib2.urlopen(url)
@@ -106,22 +103,41 @@ init -2 python in api:
     def API_on_status_code(API, codes):
         """
             decorator used for calling functions based on HTTP response codes
+
+            IN:
+                API - <string> with which API is this function associated
+                codes - <int/list/set/range> response codes on which this function should be called
+            NOTE: function should not accept any positional arguments
         """
+        # if this is the first time the decorator is used we first instantiate the registry
         if not hasattr(API_on_status_code, "all"):
             API_on_status_code.all = dict()
 
+        # if API is not yet in registry, add it
         if not API in API_on_status_code.all:
             API_on_status_code.all[API] = dict()
 
+        # make codes an iterable if it isn't yet
         if not isinstance(codes, (list, set, range)):
-                codes = [codes]
+            codes = [codes]
 
         def registered(func):
             for code in codes:
-                def log_wrapper(API=API, code=code):
-                    store.utils.log("API call to {0} resulted in response {1}".format(API, code))
-                    func()
-                API_on_status_code.all[API][code] = log_wrapper
+                # check if code is an integer
+                if not isinstance(codes, int):
+                    raise Exception("API_on_status_code accepts only integers for response codes")
+
+                #TODO: this can be optimized using `func.func_code.co_varnames`
+                def wrapper(code=code):
+                    # try to pass `code` to the function
+                    # if this fails call it without any arguments
+                    try:
+                        return func(code)
+                    except TypeError:
+                        return func()
+
+                # add wrapped function to our dictionary
+                API_on_status_code.all[API][code] = wrapper
 
             return func
 
@@ -129,7 +145,7 @@ init -2 python in api:
 
     def API_respond_2_code(API, code):
         if API not in API_on_status_code.all:
-            raise Exception("API {0} does not exist".format(API))
+            return
 
         if code not in API_on_status_code.all[API]:
             return
