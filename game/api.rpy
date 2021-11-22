@@ -25,7 +25,7 @@ init -2 python in api:
             raise Exception("API {0} not found".format(api))
 
         url = get_api_call_url(api, parameters, **kwargs)
-        #store.utils.log(url)
+
         # this feels very janky
         response = {
             "status" : None,

@@ -14,6 +14,7 @@ init -1 python in weather:
     @store.utils.coroutine_loop(datetime.timedelta(seconds=30))
     def testytesttest():
         store.utils.log("testiiiiiiiiiiiiiiiiiiiiiiiiiing")
+    testytesttest.start()
 
 
     def get_json(response):
@@ -24,11 +25,11 @@ init -1 python in weather:
         if html is None:
             return {"cod" : response["status"]}
 
-        start = html.find('{')+1
-        end = html.find('}')
+        start = html.find('{')
+        end = html.rfind('}')+1
 
         stripped = html[start:end]
-        json = store.api.string_to_dict(response)
+        json = store.api.string_to_dict(stripped)
 
         return json
 
@@ -80,14 +81,14 @@ init -1 python in weather:
             OUT:
                 location - <dictionary>
         """
+        longitude = store.persistent.longitude if longitude is None else longitude
 
-        location=dict()
+        latitude = store.persistent.latitude if latitude is None else latitude
 
-        if longitude:
-            location["lon"] = store.persistent.longitude
-
-        if latitude:
-            location["lat"] = store.persistent.latitude
+        location={
+            "lon" : longitude,
+            "lat" : latitude
+        }
 
         return location
 
@@ -668,6 +669,7 @@ init -1 python in weather:
             """
 
             response = make_API_call()
+            store.utils.log(response)
 
             # Get primary weather info
             weather_info = response["weather"][0]

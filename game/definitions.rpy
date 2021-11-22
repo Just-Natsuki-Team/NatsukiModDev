@@ -622,10 +622,10 @@ init -999 python in utils:
             coroutine_loop.all = dict()
 
         def register(func):
-            def stop(self):
+            def stop(self=func):
                 coroutine_loop.all[self]["next"] = None
 
-            def start(self):
+            def start(self=func):
                 coroutine_loop.all[self]["next"] = coroutine_loop.all[self]["loop_time"] + datetime.datetime.now()
 
             setattr(func, "stop", stop)
