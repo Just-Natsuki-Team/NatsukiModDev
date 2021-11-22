@@ -7,6 +7,67 @@ init -1 python in weather:
     #2c2f369ad4987a01f5de4c149665c5fd
     #NOTE: remove in production
 
+    PREFERENCES = {
+        "units" : "metric"
+    }
+
+    @store.utils.coroutine_loop(datetime.timedelta(seconds=30))
+    def testytesttest():
+        store.utils.log("testiiiiiiiiiiiiiiiiiiiiiiiiiing")
+
+
+    def get_json(response):
+        """
+            returns json part of response as a dictionary
+        """
+        html = response["html"]
+        if html is None:
+            return {"cod" : response["status"]}
+
+        start = html.find('{')+1
+        end = html.find('}')
+
+        stripped = html[start:end]
+        json = store.api.string_to_dict(response)
+
+        return json
+
+    def make_API_call():
+        """
+
+        """
+        apikey = store.persistent.weather_api_key
+        params = get_location_dict()
+        params.update(store.weather.PREFERENCES)
+
+        response = store.api.make_request("OpenWeatherMap", params, appid=apikey)
+
+        #uhhh I probably shouldn't call it json
+        json = get_json(response)
+
+        other_API_response_codes(json["cod"])
+
+        return json
+
+    def is_api_key_valid(apikey):
+        response = get_json(store.api.make_request("OpenWeatherMap", appid=apikey))
+
+        if response["cod"] == 401:
+            return False
+
+        return True
+
+    def other_API_response_codes(code):
+        if code == 429:
+            store.utils.log("[OpenWeatherMap] Exceeded 60 calls/min", store.utils.SEVERITY_ERR)
+
+        if code == 404:
+            #we messed up... F
+            store.utils.log("[OpenWeatherMap] API request is most likely invalid", store.utils.SEVERITY_ERR)
+
+        if code in {500, 502, 503, 504}:
+            store.utils.log("[OpenWeatherMap] Something went wrong on API's side, we should contact OWM via email", store.utils.SEVERITY_ERR)
+
     def get_location_dict(longitude=None, latitude=None):
         """
             Returns a dictionary with player's latitude and longitude
@@ -566,9 +627,8 @@ init -1 python in weather:
                     Clear
                     Clouds
             """
-            params = get_parameters_for_call()
             try:
-                response = get_api_call_info(store.persistent.weather_api_key, params)
+                response = make_API_call()
                 store.utils.log("INFO: Made succesfull API call to OpenWeatherMap")
             except Exception as e:
                 store.utils.log("ERROR: While making an API call to OpenWeatherMap an exception occured. {0}".format(e), store.utils.SEVERITY_ERR)
@@ -597,23 +657,17 @@ init -1 python in weather:
                     }
 
                     thunder : intensity of a thunderstorm
-                    drizzle : intensity of a drizzle (article correct?)
+                    drizzle : intensity of drizzle
                     rain    : intensity of rain
                     snow    : intensity of snowing
                     clouds  : percentage of cloud sky coverage
                     clear   : True or False
                     special : special weather events (dust storm, tornado, volcanic ash etc.), can be None
                     "wind"  : wind speed in m/s
-                    "temp"  : temperature in °C
+                    "temp"  : temperature in Celsius
             """
-            params = get_parameters_for_call()
 
-            # try to make an API call
-            try:
-                response = get_api_call_info(store.persistent.weather_api_key, params)
-                store.utils.log("INFO: Made succesfull API call to OpenWeatherMap")
-            except Exception as e:
-                store.utils.log("ERROR: While making an API call to OpenWeatherMap an exception occured. {0}".format(e), store.utils.SEVERITY_ERR)
+            response = make_API_call()
 
             # Get primary weather info
             weather_info = response["weather"][0]
@@ -640,6 +694,9 @@ init -1 python in weather:
             # else set it to 0
             else:
                 parsed_weather["wind"] = 0
+
+            store.persistent.current_weather_long = parsed_weather
+            store.persistent.current_weather_long = weather_short
 
             return parsed_weather, weather_short
 

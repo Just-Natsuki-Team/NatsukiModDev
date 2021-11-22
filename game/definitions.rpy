@@ -621,19 +621,16 @@ init -999 python in utils:
         if not hasattr(coroutine_loop, "all"):
             coroutine_loop.all = dict()
 
-        # if not yet defined, create function to stop a loop
-        if not hasattr(coroutine_loop, "stop"):
-            def stop(func):
-                coroutine_loop.all[func]["next"] = None
-            coroutine_loop.stop = stop
-
-        # same as stop, but to start
-        if not hasattr(coroutine_loop, "start"):
-            def start(func):
-                coroutine_loop.all[func]["next"] = coroutine_loop.all[func]["loop_time"] + datetime.datetime.now()
-            coroutine_loop.start = start
-
         def register(func):
+            def stop(self):
+                coroutine_loop.all[self]["next"] = None
+
+            def start(self):
+                coroutine_loop.all[self]["next"] = coroutine_loop.all[self]["loop_time"] + datetime.datetime.now()
+
+            setattr(func, "stop", stop)
+            setattr(func, "start", start)
+
             #NOTE: check might not be neccessary?
             if func not in coroutine_loop.all:
                 coroutine_loop.all[func] = {"next":None,"loop_time":t}

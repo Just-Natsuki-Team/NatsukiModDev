@@ -9,7 +9,7 @@ init -2 python in api:
         "OpenWeatherMap" : "https://api.openweathermap.org/data/2.5/weather"
     }
 
-    def make_request(api, parameters, **kwargs):
+    def make_request(api, parameters=None, **kwargs):
         """
             Makes a request to an API
 
@@ -19,11 +19,13 @@ init -2 python in api:
                 <dict> {"status" : response_code, "html" : raw_html, "custom": ...}
                     custom - whatever is returned by a function defined with API_on_status_code decorator
         """
+        if parameters is None: parameters = dict()
+
         if not api in store.api.APIs:
             raise Exception("API {0} not found".format(api))
 
-        url = get_api_call_url(api, parameters.update(kwargs))
-
+        url = get_api_call_url(api, parameters, **kwargs)
+        #store.utils.log(url)
         # this feels very janky
         response = {
             "status" : None,
@@ -32,13 +34,16 @@ init -2 python in api:
         }
 
         # make a request and get response code
-        request = urllib2.urlopen(url)
-        code = request.getcode()
+        try:
+            request = urllib2.urlopen(url)
+            code = request.getcode()
+            response["html"] = request.read()
+        except urllib2.HTTPError as err:
+            code = err.code
 
         # if status OK read html
         if code == 200:
             store.utils.log("API call to {0} resulted in response 200".format(api))
-            response["html"] = request.read()
 
         else:
             store.utils.log("API call to {0} resulted in response {1}".format(api, code), store.utils.SEVERITY_WARN)
@@ -46,14 +51,9 @@ init -2 python in api:
         response["status"] = code
         response["custom"] = API_respond_2_code(api, code, response["html"])
 
-        """TODO:remove this, just keeping it here for reference
-        except urllib2.HTTPError, err:
-            response = "{{\"cod\":{0}}}".format(err.code)
-        """
-
         return response
 
-    def get_api_call_url(api, parameters=dict(), **kwargs):
+    def get_api_call_url(api, parameters=None, **kwargs):
         """
         Creates a valid url for an API call
 
@@ -64,6 +64,8 @@ init -2 python in api:
         OUT:
             url - <string>
         """
+        if parameters is None: parameters = dict()
+
         # check if base_url is a string
         if api not in store.api.APIs:
             raise Exception("API {0} not found".format(api))
@@ -188,6 +190,10 @@ init -2 python in api:
         """
             calls a function from registry of callback funcs for APIs
         """
+        # No function with decorator defined
+        if not hasattr(API_on_status_code, "all"):
+            return
+
         # API is not in registry so return None
         if API not in API_on_status_code.all:
             return
