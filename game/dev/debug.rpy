@@ -921,3 +921,33 @@ label debug_change_weather:
             n "Huh.{w=0.2} Well,{w=0.1} suit yourself!"
 
     return
+
+# This topic allows us to test composite image mechanics
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="debug_composite_image_test",
+            unlocked=True,
+            prompt="Can you try your composite image?",
+            conditional="config.console",
+            category=["Debug (Sprites)"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label debug_composite_image_test:
+    n "Sure!{w=0.2} Let me just switch out real quick..."
+    hide placeholder_natsuki
+    with Fade(out_time=0.25, hold_time=0.25, in_time=0.25, color="#000000")
+
+    show natsuki zorder 3
+    n happy "I'm feeling great!"
+    n sad "Today has honestly sucked."
+    hide natsuki
+
+    show placeholder_natsuki
+    with Fade(out_time=0.25, hold_time=0.25, in_time=0.25, color="#000000")
+    return

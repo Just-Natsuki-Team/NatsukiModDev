@@ -25,6 +25,7 @@ image placeholder_dim light = "mod_assets/backgrounds/classroom/placeholder_dim_
 image placeholder_dim medium = "mod_assets/backgrounds/classroom/placeholder_dim_medium.png"
 image placeholder_dim heavy = "mod_assets/backgrounds/classroom/placeholder_dim_heavy.png"
 
+# Transitions
 define natsuki_desk_move_transition = MoveTransition(0.1)
 define weather_change_transition = Dissolve(1.5)
 define dim_change_transition = Dissolve(0.25)

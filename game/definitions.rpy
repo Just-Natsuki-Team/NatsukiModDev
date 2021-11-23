@@ -526,6 +526,11 @@ init -990 python in jn_globals:
     # Tracks whether the player is or is not currently in some topic flow
     player_is_in_conversation = False
 
+    # This will need to be replaced with a struct and links to persistent once outfits are in
+    current_pose = "sitting"
+    current_outfit = "uniform"
+    current_hairstyle = "default"
+
     # Constants; use these for anything we only want defined once and used in a read-only context
 
     # Endearments Natsuki may use at the highest levels of affinity to refer to her player
@@ -689,9 +694,6 @@ init 10 python in jn_globals:
     # The current affection state. We default this to 5 (NORMAL)
     current_affinity_state = store.jn_affinity.NORMAL
 
-    # This will need to be replaced with a struct and links to persistent once outfits are in
-    current_outfit = None
-
 #Stuff that's really early, which should be usable basically anywhere
 init -999 python in utils:
     import datetime
@@ -842,6 +844,8 @@ define s = DynamicCharacter('s_name', image='sayori', what_prefix='"', what_suff
 define m = DynamicCharacter('m_name', image='monika', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 define n = DynamicCharacter('n_name', image='natsuki', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 define y = DynamicCharacter('y_name', image='yuri', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
+
+define n2 = DynamicCharacter('Natsuki Test', image='natsuki', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 
 init python:
     #If they quit during a pause, we have to set _dismiss_pause to false again (I hate this hack)
