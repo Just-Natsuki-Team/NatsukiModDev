@@ -137,6 +137,8 @@ define scroll_align = -0.1
 style categorized_menu_button is choice_button:
     xysize (250, None)
     padding (25, 5, 25, 5)
+    top_padding 10
+    bottom_padding 5
 
 style categorized_menu_button_text is choice_button_text:
     align (0.0, 0.0)
@@ -361,12 +363,6 @@ style prompt_text is gui_text:
     color gui.text_color
     size gui.interface_text_size
 
-
-#style bar:
-#    ysize gui.bar_size
-#    left_bar Frame("gui/bar/left.png", gui.bar_borders, tile=gui.bar_tile)
-#    right_bar Frame("gui/bar/right.png", gui.bar_borders, tile=gui.bar_tile)
-
 style vbar:
     xsize gui.bar_size
     top_bar Frame("gui/bar/top.png", gui.vbar_borders, tile=gui.bar_tile)
@@ -379,23 +375,17 @@ style bar:
 
 style scrollbar:
     ysize 18
-    base_bar Frame("gui/scrollbar/horizontal_poem_bar.png", tile=False)
-    thumb Frame("gui/scrollbar/horizontal_poem_thumb.png", top=6, right=6, tile=True)
+    base_bar Frame("mod_assets/panels/slider_back_h.png", tile=False)
+    thumb Frame("mod_assets/panels/slider_thumb_h.png", top=6, right=6, tile=True)
     unscrollable "hide"
     bar_invert True
-
 
 style vscrollbar:
     xsize 18
-    base_bar Frame("gui/scrollbar/vertical_poem_bar.png", tile=False)
-    thumb Frame("gui/scrollbar/vertical_poem_thumb.png", left=6, top=6, tile=True)
+    base_bar Frame("mod_assets/panels/slider_back_v.png", tile=False)
+    thumb Frame("mod_assets/panels/slider_thumb_v.png", left=6, top=6, tile=True)
     unscrollable "hide"
     bar_invert True
-
-#style vscrollbar:
-#    xsize gui.scrollbar_size
-#    base_bar Frame("gui/scrollbar/vertical_[prefix_]bar.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
-#    thumb Frame("gui/scrollbar/vertical_[prefix_]thumb.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
 
 style slider:
     ysize 18
@@ -407,10 +397,9 @@ style vslider:
     base_bar Frame("gui/slider/vertical_[prefix_]bar.png", gui.vslider_borders, tile=gui.slider_tile)
     thumb "gui/slider/vertical_[prefix_]thumb.png"
 
-
 style frame:
     padding gui.frame_borders.padding
-    background Frame("gui/frame.png", gui.frame_borders, tile=gui.frame_tile)
+    background Frame("mod_assets/panels/frame.png", gui.frame_borders, tile=gui.frame_tile)
 
 ################################################################################
 ## In-game screens
@@ -467,10 +456,10 @@ style window:
     yalign gui.textbox_yalign
     ysize gui.textbox_height
 
-    background Image("gui/textbox.png", xalign=0.5, yalign=1.0)
+    background Image("mod_assets/panels/textbox.png", xalign=0.5, yalign=1.0)
 
 style window_up is window:
-    background Image("gui/textbox.png", xalign=0.5, yalign=-5.0)
+    background Image("mod_assets/panels/textbox.png", xalign=0.5, yalign=-5.0)
 
 style window_monika is window:
     background Image("gui/textbox_monika.png", xalign=0.5, yalign=1.0)
@@ -482,7 +471,7 @@ style namebox:
     ypos gui.name_ypos
     ysize gui.namebox_height
 
-    background Frame("gui/namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign)
+    background Frame("mod_assets/panels/namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign)
     padding gui.namebox_borders.padding
 
 style say_label:
@@ -498,16 +487,18 @@ style say_dialogue:
     xanchor gui.text_xalign
     xsize gui.text_width
     ypos gui.text_ypos
+    line_leading 10
+    line_overlap_split -2
 
     text_align gui.text_xalign
     layout ("subtitle" if gui.text_xalign else "tex")
 
 image ctc:
     xalign 0.81 yalign 0.98 xoffset -5 alpha 0.0 subpixel True
-    "gui/ctc.png"
+    "mod_assets/panels/ctc.png"
     block:
-        easeout 0.75 alpha 1.0 xoffset 0
-        easein 0.75 alpha 0.5 xoffset -5
+        easeout 0.75 alpha 1.0 yoffset 0
+        easein 0.75 alpha 0.5 yoffset -5
         repeat
 
 ## Input screen ################################################################
@@ -612,7 +603,7 @@ style choice_vslider:
 
 style choice_frame:
     padding gui.frame_borders.padding
-    background Frame("gui/frame.png", gui.frame_borders, tile=gui.frame_tile)
+    background Frame("mod_assets/panels/frame.png", gui.frame_borders, tile=gui.frame_tile)
 
 style choice_vbox is vbox
 style choice_button is button
@@ -629,8 +620,6 @@ style choice_button is default:
     properties gui.button_properties("choice_button")
     hover_sound gui.hover_sound
     activate_sound gui.activate_sound
-    idle_background "game/mod_assets/buttons/choice_hover_blank.png"
-    hover_background "game/mod_assets/buttons/choice_hover_fold.png"
 
 style choice_button_text is default:
     properties gui.button_text_properties("choice_button")
@@ -708,16 +697,22 @@ style choice_button is default:
     properties gui.button_properties("choice_button")
     hover_sound gui.hover_sound
     activate_sound gui.activate_sound
+    idle_background Frame("mod_assets/buttons/choice_hover_blank.png", gui.frame_borders, tile=gui.frame_tile)
+    hover_background Frame("mod_assets/buttons/choice_hover_fold.png", gui.frame_hover_borders, tile=gui.frame_tile)
 
 style choice_button_text is default:
     properties gui.button_text_properties("choice_button")
     outlines []
 
-
 ## Quick Menu screen ###########################################################
 ##
 ## The quick menu is displayed in-game to provide easy access to the out-of-game
 ## menus.
+
+style quickmenu_text:
+    color "#e2d1d1"
+    hover_color "#FF8ED0"
+    size 14
 
 screen quick_menu():
 
@@ -733,9 +728,9 @@ screen quick_menu():
             xalign 0.5
             yalign 0.995
 
-            #textbutton _("Back") action Rollback()
-            if config.developer:
+            if config.console:
                 textbutton _("Restart"):
+                    text_style "quickmenu_text"
                     action Show(
                         screen="confirm_editable_closable",
                         message="Do you want to RELOAD or RESET?",
@@ -744,20 +739,23 @@ screen quick_menu():
                         yes_action=Jump("ch30_autoload"),
                         no_action=Jump("restart")
                     )
-            textbutton _("History") action ShowMenu('history')
-            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
-            textbutton _("Auto") action Preference("auto-forward", "toggle")
-            #textbutton _("Save") action ShowMenu('save')
-            #textbutton _("Load") action ShowMenu('load')
-            #textbutton _("Q.Save") action QuickSave()
-            #textbutton _("Q.Load") action QuickLoad()
-            textbutton _("Settings") action ShowMenu('preferences')
+                    
+            textbutton _("History"):
+                text_style "quickmenu_text"
+                action ShowMenu('history')
 
+            textbutton _("Skip"):
+                text_style "quickmenu_text"
+                action Skip()
+                alternate Skip(fast=True, confirm=True)
 
-## This code ensures that the quick_menu screen is displayed in-game, whenever
-## the player has not explicitly hidden the interface.
-#init python:
-#    config.overlay_screens.append("quick_menu")
+            textbutton _("Auto"):
+                text_style "quickmenu_text"
+                action Preference("auto-forward", "toggle")
+
+            textbutton _("Settings"):
+                text_style "quickmenu_text"
+                action ShowMenu('preferences')
 
 default quick_menu = True
 
@@ -845,14 +843,7 @@ screen navigation():
         else:
             textbutton _("History") action [ShowMenu("history"), SensitiveIf(renpy.get_screen("history") == None)]
 
-            #textbutton _("Save Game") action [ShowMenu("save"), SensitiveIf(renpy.get_screen("save") == None)]
-
-        #if not main_menu:
-            #textbutton _("Main Menu") action MainMenu()
-
         textbutton _("Settings") action [ShowMenu("preferences"), SensitiveIf(renpy.get_screen("preferences") == None)]
-
-        #textbutton _("About") action ShowMenu("about")
 
         if renpy.variant("pc"):
 
@@ -1082,7 +1073,7 @@ style game_menu_outer_frame:
     bottom_padding 30
     top_padding 120
 
-    background "gui/overlay/game_menu.png"
+    background "mod_assets/backgrounds/menu/background.png"
 
 style game_menu_navigation_frame:
     xsize 280
@@ -1160,29 +1151,6 @@ style about_text is gui_text
 style about_label_text:
     size gui.label_text_size
 
-
-## Load and Save screens #######################################################
-##
-## These screens are responsible for letting the player save the game and load
-## it again. Since they share nearly everything in common, both are implemented
-## in terms of a third screen, file_slots.
-##
-## https://www.renpy.org/doc/html/screen_special.html#save
-## https://www.renpy.org/doc/html/screen_special.html#load
-
-screen save():
-
-    tag menu
-
-    use file_slots(_("Save"))
-
-
-screen load():
-
-    tag menu
-
-    use file_slots(_("Load"))
-
 init python:
     def FileActionMod(name, page=None, **kwargs):
         if persistent.playthrough == 1 and not persistent.deleted_saves and renpy.current_screen().screen_name[0] == "load" and FileLoadable(name):
@@ -1192,82 +1160,6 @@ init python:
             return Show(screen="dialog", message="You wont be needing to save anymore,\nBesides it doesn't work when we're sitting doing nothing like this...", ok_action=Hide("dialog"))
         else:
             return FileAction(name)
-
-
-screen file_slots(title):
-
-    default page_name_value = FilePageNameInputValue()
-
-    use game_menu(title):
-
-        fixed:
-
-            ## This ensures the input will get the enter event before any of the
-            ## buttons do.
-            order_reverse True
-
-            # The page name, which can be edited by clicking on a button.
-
-            button:
-                style "page_label"
-
-                #key_events True
-                xalign 0.5
-                #action page_name_value.Toggle()
-
-                input:
-                    style "page_label_text"
-                    value page_name_value
-
-            ## The grid of file slots.
-            grid gui.file_slot_cols gui.file_slot_rows:
-                style_prefix "slot"
-
-                xalign 0.5
-                yalign 0.5
-
-                spacing gui.slot_spacing
-
-                for i in range(gui.file_slot_cols * gui.file_slot_rows):
-
-                    $ slot = i + 1
-
-                    button:
-                        action FileActionMod(slot)
-
-                        has vbox
-
-                        add FileScreenshot(slot) xalign 0.5
-
-                        text FileTime(slot, format=_("{#file_time}%A, %B %d %Y, %H:%M"), empty=_("empty slot")):
-                            style "slot_time_text"
-
-                        text FileSaveName(slot):
-                            style "slot_name_text"
-
-                        key "save_delete" action FileDelete(slot)
-
-            ## Buttons to access other pages.
-            hbox:
-                style_prefix "page"
-
-                xalign 0.5
-                yalign 1.0
-
-                spacing gui.page_spacing
-
-                #textbutton _("<") action FilePagePrevious(max=9, wrap=True)
-
-                #textbutton _("{#auto_page}A") action FilePage("auto")
-
-                #textbutton _("{#quick_page}Q") action FilePage("quick")
-
-                # range(1, 10) gives the numbers from 1 to 9.
-                for page in range(1, 10):
-                    textbutton "[page]" action FilePage(page)
-
-                #textbutton _(">") action FilePageNext(max=9, wrap=True)
-
 
 style page_label is gui_label
 style page_label_text is gui_label_text
@@ -1357,74 +1249,27 @@ screen preferences():
                         label _("Skip")
                         textbutton _("Unseen Text") action Preference("skip", "toggle")
                         textbutton _("After Choices") action Preference("after choices", "toggle")
-                        #textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
-
 
                     ## Additional vboxes of type "radio_pref" or "check_pref" can be
                     ## added here, to add additional creator-defined preferences.
-
-                vbox:
-                    yoffset 20
-
-                    vbox:
-                        style_prefix "check"
-                        label _("Random Talking")
-                        textbutton _("Enabled") action Show(screen="dialog", message="This will control weather or not Natsuki\nstrikes up conversations oh her own.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"random_talk", True, False)
-
-                vbox:
-                    yoffset 20
-
-                    vbox:
-                        style_prefix "check"
-                        label _("Youtuber Mode")
-                        textbutton _("Enabled") action Show(screen="dialog", message="This will make Natsuki start conversations faster.\nThis is useful for YouTubers who want to get through everything faster.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"youtuber_mode", True, False)
-
-                vbox:
-                    yoffset -150
-                    xoffset 250
-
-                    vbox:
-                        style_prefix "check"
-                        label _("Room Animated")
-                        textbutton _("Enabled") action Show(screen="reload", message="This will turn off the moving fire\nas some people have reported lag.\nRestart is required.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"room_animated", True, False)
-
-                    vbox:
-                        style_prefix "check"
-                        label _("Resume Music")
-                        textbutton _("Enabled") action Show(screen="dialog", message="Turning this on will cause music to resume playing when you return\ninstead of restarting.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"save_music_place", True, False)
-
-                vbox:
-                    yoffset -320
-                    xoffset 500
-
-                    vbox:
-                        style_prefix "check"
-                        label _("New Topics")
-                        textbutton _("Enabled") action Show(screen="dialog", message="This will cause Natsuki to only say topics added in the update.\nThis ONLY has her say topics in that update.\nSo don't be surprised if it doesn't change for a while.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"new_topics", True, False)
-
-                    vbox:
-                        style_prefix "check"
-                        label _("New Emotions")
-                        textbutton _("Enabled") action Show(screen="dialog", message="This will cause Natsuki's emotions to change over time. Turning this off sets her emotion to normal.", ok_action=Hide(screen="dialog", transition=None)), ToggleField(persistent,"dynamic_emotions", True, False), SetField(persistent,"natsuki_emotion", "Happy")
-
-                    if not persistent.dynamic_emotions:
-                        vbox:
-                            style_prefix "navigation"
-                            textbutton _("Choose Emotion") action Show(screen="emotion", message="If you turn off Natsuki's new emotion system\nyou can always just pick an emotion for her to use!\n(The change is not instant, just wait.)", close=Hide(screen="emotion", transition=None))
-
-                    vbox:
-                        style_prefix "navigation"
-                        textbutton _("Debug") action Show(screen="confirm", message="This action will hard reset Just Natsuki!\nYou're only supposed to use it if the game starts up, Natsuki greets you, and then it given an exception.\nThe best way to fix this is to reset the game after an update patches the issue.\nThis option allows you to do that.\nAre you sure you want to PERMANENTLY erase all your Just Natsuki save data?", yes_action=Jump("restart"), no_action=Hide("confirm"))
-
+                
                 hbox:
                     style_prefix "slider"
                     box_wrap True
 
                     vbox:
 
+                        label _("Random chatter: {0}".format(jn_preferences.random_topic_frequency.get_random_topic_frequency_description()))
+
+                        bar value FieldValue(
+                            object=persistent,
+                            field="jn_natsuki_random_topic_frequency", 
+                            range=4,
+                            style="slider",
+                            step=1)
+
                         label _("Text Speed")
 
-                        #bar value Preference("text speed")
                         bar value FieldValue(_preferences, "text_cps", range=180, max_is_zero=False, style="slider", offset=20)
 
                         label _("Auto-Forward Time")
@@ -1448,7 +1293,6 @@ screen preferences():
 
                                 if config.sample_sound:
                                     textbutton _("Test") action Play("sound", config.sample_sound)
-
 
                         if config.has_voice:
                             label _("Voice Volume")
@@ -1632,165 +1476,6 @@ style history_label:
 
 style history_label_text:
     xalign 0.5
-
-
-## Help screen #################################################################
-##
-## A screen that gives information about key and mouse bindings. It uses other
-## screens (keyboard_help, mouse_help, and gamepad_help) to display the actual
-## help.
-
-#screen help():
-#
-#    tag menu
-#
-#    default device = "keyboard"
-#
-#    use game_menu(_("Help"), scroll="viewport"):
-#
-#        style_prefix "help"
-#
-#        vbox:
-#            spacing 15
-#
-#            hbox:
-#
-#                textbutton _("Keyboard") action SetScreenVariable("device", "keyboard")
-#                textbutton _("Mouse") action SetScreenVariable("device", "mouse")
-#
-#                if GamepadExists():
-#                    textbutton _("Gamepad") action SetScreenVariable("device", "gamepad")
-#
-#            if device == "keyboard":
-#                use keyboard_help
-#            elif device == "mouse":
-#                use mouse_help
-#            elif device == "gamepad":
-#                use gamepad_help
-#
-#
-#screen keyboard_help():
-#
-#    hbox:
-#        label _("Enter")
-#        text _("Advances dialogue and activates the interface.")
-#
-#    hbox:
-#        label _("Space")
-#        text _("Advances dialogue without selecting choices.")
-#
-#    hbox:
-#        label _("Arrow Keys")
-#        text _("Navigate the interface.")
-#
-#    hbox:
-#        label _("Escape")
-#        text _("Accesses the game menu.")
-#
-#    hbox:
-#        label _("Ctrl")
-#        text _("Skips dialogue while held down.")
-#
-#    hbox:
-#        label _("Tab")
-#        text _("Toggles dialogue skipping.")
-#
-#    hbox:
-#        label _("Page Up")
-#        text _("Rolls back to earlier dialogue.")
-#
-#    hbox:
-#        label _("Page Down")
-#        text _("Rolls forward to later dialogue.")
-#
-#    hbox:
-#        label "H"
-#        text _("Hides the user interface.")
-#
-#    hbox:
-#        label "S"
-#        text _("Takes a screenshot.")
-#
-#    hbox:
-#        label "V"
-#        text _("Toggles assistive {a=https://www.renpy.org/l/voicing}self-voicing{/a}.")
-#
-#
-#screen mouse_help():
-#
-#    hbox:
-#        label _("Left Click")
-#        text _("Advances dialogue and activates the interface.")
-#
-#    hbox:
-#        label _("Middle Click")
-#        text _("Hides the user interface.")
-#
-#    hbox:
-#        label _("Right Click")
-#        text _("Accesses the game menu.")
-#
-#    hbox:
-#        label _("Mouse Wheel Up\nClick Rollback Side")
-#        text _("Rolls back to earlier dialogue.")
-#
-#    hbox:
-#        label _("Mouse Wheel Down")
-#        text _("Rolls forward to later dialogue.")
-#
-#
-#screen gamepad_help():
-#
-#    hbox:
-#        label _("Right Trigger\nA/Bottom Button")
-#        text _("Advance dialogue and activates the interface.")
-#
-#    hbox:
-#        label ("Left Trigger\nLeft Shoulder")
-#        text _("Roll back to earlier dialogue.")
-#
-#    hbox:
-#        label _("Right Shoulder")
-#        text _("Roll forward to later dialogue.")
-#
-#    hbox:
-#        label _("D-Pad, Sticks")
-#        text _("Navigate the interface.")
-#
-#    hbox:
-#        label _("Start, Guide")
-#        text _("Access the game menu.")
-#
-#    hbox:
-#        label _("Y/Top Button")
-#        text _("Hides the user interface.")
-#
-#    textbutton _("Calibrate") action GamepadCalibrate()
-#
-#
-#style help_button is gui_button
-#style help_button_text is gui_button_text
-#style help_label is gui_label
-#style help_label_text is gui_label_text
-#style help_text is gui_text
-#
-#style help_button:
-#    properties gui.button_properties("help_button")
-#    xmargin 8
-#
-#style help_button_text:
-#    properties gui.button_text_properties("help_button")
-#
-#style help_label:
-#    xsize 250
-#    right_padding 20
-#
-#style help_label_text:
-#    size gui.text_size
-#    xalign 1.0
-#    text_align 1.0
-
-
 
 ################################################################################
 ## Additional screens
@@ -2336,8 +2021,9 @@ screen confirm(message, yes_action, no_action):
                 spacing 100
 
                 if confirm_is_quit:
-                    textbutton _("Continue") action Show(screen="confirm_quit", is_quitting=True)
-                    textbutton _("Go back") action Show(screen="confirm_quit", is_quitting=False)
+                    textbutton _("Continue") action [Hide("confirm"), Show(screen="confirm_quit", is_quitting=True)] 
+
+                    textbutton _("Go back") action [Hide("confirm"), Show(screen="confirm_quit", is_quitting=False)] 
 
                 else:
                     textbutton _("Yes") action yes_action
@@ -2345,6 +2031,12 @@ screen confirm(message, yes_action, no_action):
 
     ## Right-click and escape answer "no".
     #key "game_menu" action no_action
+
+init python:
+
+    def check_ingame_state_add_apology():
+        if jn_globals.player_is_ingame:
+            jn_apologies.add_new_pending_apology(jn_apologies.TYPE_CHEATED_GAME)
 
 screen confirm_quit(is_quitting):
     modal True
@@ -2377,12 +2069,12 @@ screen confirm_quit(is_quitting):
                 xalign 0.5
                 spacing 100
 
-                
                 if is_quitting:
                     textbutton _("...") action [
-                        # Player has decided to ditch Natsuki; add a pending apology then quit
-                        apologies.add_new_pending_apology(apologies.TYPE_SUDDEN_LEAVE),
-                        SetField(persistent, "jn_player_apology_type_on_quit", apologies.TYPE_SUDDEN_LEAVE),
+                        # Player has decided to ditch Natsuki; add pending apology(s) then quit
+                        Function(jn_apologies.add_new_pending_apology, jn_apologies.TYPE_SUDDEN_LEAVE),
+                        Function(check_ingame_state_add_apology),
+                        SetField(persistent, "jn_player_apology_type_on_quit", jn_apologies.TYPE_SUDDEN_LEAVE),
                         relationship("affinity-"),
                         Quit(confirm=False)
                     ]
@@ -2464,14 +2156,16 @@ style confirm_button is gui_medium_button
 style confirm_button_text is gui_medium_button_text
 
 style confirm_frame:
-    background Frame([ "gui/confirm_frame.png", "gui/frame.png"], gui.confirm_frame_borders, tile=gui.frame_tile)
+    background Frame([ "mod_assets/panels/frame.png", "mod_assets/panels/frame.png"], gui.confirm_frame_borders, tile=gui.frame_tile)
     padding gui.confirm_frame_borders.padding
     xalign .5
     yalign .5
 
+style confirm_frame_text is choice_button_text
+
 style confirm_prompt_text:
-    color "#000"
-    outlines []
+    color "#e2d1d1"
+    outlines [(2, "#000000aa", 0, 0)]
     text_align 0.5
     layout "subtitle"
 
@@ -2480,7 +2174,7 @@ style confirm_button:
     hover_sound gui.hover_sound
     activate_sound gui.activate_sound
 
-style confirm_button_text is navigation_button_text:
+style confirm_button_text is choice_button_text:
     properties gui.button_text_properties("confirm_button")
 
 
@@ -2574,7 +2268,7 @@ style notify_text is gui_text
 style notify_frame:
     ypos gui.notify_ypos
 
-    background Frame("gui/notify.png", gui.notify_frame_borders, tile=gui.frame_tile)
+    background Frame("mod_assets/panels/notify.png", gui.notify_frame_borders, tile=gui.frame_tile)
     padding gui.notify_frame_borders.padding
 
 style notify_text:

@@ -3,26 +3,26 @@ default persistent._admission_database = dict()
 # Retain the last admission made on quitting the game, so Natsuki can react on boot
 default persistent.jn_player_admission_type_on_quit = None
 
-init 0 python in admissions:
+init 0 python in jn_admissions:
     import random
     import store
 
     ADMISSION_MAP = dict()
 
     # Admission types
-    ADMISSION_TYPE_ANGRY = 0
-    ADMISSION_TYPE_ANXIOUS = 1
-    ADMISSION_TYPE_ASHAMED = 2
-    ADMISSION_TYPE_BORED = 3
-    ADMISSION_TYPE_CONFIDENT = 4
-    ADMISSION_TYPE_EXCITED = 5
-    ADMISSION_TYPE_HAPPY = 6
-    ADMISSION_TYPE_HUNGRY = 7
-    ADMISSION_TYPE_INSECURE = 8
-    ADMISSION_TYPE_PROUD = 9
-    ADMISSION_TYPE_SAD = 10
-    ADMISSION_TYPE_SICK = 11
-    ADMISSION_TYPE_TIRED = 12
+    TYPE_ANGRY = 0
+    TYPE_ANXIOUS = 1
+    TYPE_ASHAMED = 2
+    TYPE_BORED = 3
+    TYPE_CONFIDENT = 4
+    TYPE_EXCITED = 5
+    TYPE_HAPPY = 6
+    TYPE_HUNGRY = 7
+    TYPE_INSECURE = 8
+    TYPE_PROUD = 9
+    TYPE_SAD = 10
+    TYPE_SICK = 11
+    TYPE_TIRED = 12
 
     # The last admission the player gave to Natsuki
     last_admission_type = None
@@ -36,7 +36,7 @@ init 0 python in admissions:
         """
         return store.Topic.filter_topics(
             ADMISSION_MAP.values(),
-            affinity=store.jn_globals.current_affinity_state,
+            affinity=store.jn_affinity.get_affinity_state(),
             unlocked=True
         )
 
@@ -52,7 +52,7 @@ label player_admissions_start:
     python:
         admission_menu_items = [
             (_admission.prompt, _admission.label)
-            for _admission in admissions.get_all_admissions()
+            for _admission in jn_admissions.get_all_admissions()
         ]
         admission_menu_items.sort()
 
@@ -77,7 +77,7 @@ init 5 python:
     )
 
 label admission_angry:
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_ANGRY:
+    if jn_admissions.last_admission_type == jn_admissions.TYPE_ANGRY:
         n "[player]...{w=0.3} you're still mad?"
         n "Did you spend some time outside,{w=0.1} like I said?"
         n "..."
@@ -86,7 +86,7 @@ label admission_angry:
         n "I don't want you storming off and getting hurt,{w=0.1} or doing something you'll regret."
         n "Can you do that for me,{w=0.2} [player]?"
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "It really upsets me hearing you worked up like this,{w=0.1} you know..."
             n "So please, [player]. Stay calm{w=0.1} -{w=0.1} for me?"
 
@@ -99,7 +99,7 @@ label admission_angry:
         n "Why don't you take a few minutes outside too.{w=0.2} For me?"
         n "You'll feel a little better soon.{w=0.2} I promise!"
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_ANGRY
+    $ jn_admissions.last_admission_type = jn_admissions.TYPE_ANGRY
     return
 
 init 5 python:
@@ -115,7 +115,7 @@ init 5 python:
     )
 
 label admission_anxious:
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_ANXIOUS:
+    if jn_admissions.last_admission_type == jn_admissions.TYPE_ANXIOUS:
         n "Still feeling anxious,{w=0.1} [player]?"
         n "..."
         n "I wish I could do more to help you..."
@@ -140,14 +140,14 @@ label admission_anxious:
         n "So...{w=0.3} try and put your mind at rest,{w=0.1} okay?"
         n "I know it's tough...{w=0.3} but just try,{w=0.1} alright?"
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
             n "I'll always have your back."
 
-        if jn_affinity.get_affinity_state() == store.jn_affinity.LOVE:
+        if jn_affinity.get_affinity_state() == jn_affinity.LOVE:
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
             n "I love you, [chosen_endearment]."
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_ANXIOUS
+    $ jn_admissions.last_admission_type = jn_admissions.TYPE_ANXIOUS
     return
 
 init 5 python:
@@ -163,7 +163,7 @@ init 5 python:
     )
 
 label admission_ashamed:
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_ASHAMED:
+    if jn_admissions.last_admission_type == jn_admissions.TYPE_ASHAMED:
         n "[player]...{w=0.3} you're still feeling ashamed of yourself?"
         n "Well,{w=0.1} I'm not going to give up on you {i}that{/i} easily,{w=0.1} you know!"
         n "Just keep trying your best to put things right,{w=0.1} okay?"
@@ -191,7 +191,7 @@ label admission_ashamed:
 
         n "I believe in you,{w=0.1} [player]!"
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_ASHAMED
+    $ jn_admissions.last_admission_type = jn_admissions.TYPE_ASHAMED
     return
 
 init 5 python:
@@ -207,7 +207,7 @@ init 5 python:
     )
 
 label admission_bored:
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_BORED:
+    if jn_admissions.last_admission_type == jn_admissions.TYPE_BORED:
         n "Still trying to beat the boredom,{w=0.1} [player]?"
         n "Did you actually try doing what I said?"
         n "Hmm..."
@@ -217,13 +217,53 @@ label admission_bored:
         n "There's no shortage of stuff to do,{w=0.1} [player]." 
         n "You just gotta find it!"
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "Now,{w=0.1} go!{w=0.2} And make sure you tell me all about it later,{w=0.1} 'kay?"
             n "Ehehe."
 
         else:
             n "Well?{w=0.3} What're you waiting for?"
             n "Go for it,{w=0.1} [player]!"
+
+    # Unlock Snap if not already unlocked
+    elif not persistent.jn_snap_unlocked:
+        n "You're bored,{w=0.1} huh?"
+        n "Well,{w=0.1} now that you mention it...{w=0.3} there isn't {i}exactly{/i} a whole lot going on here."
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+            n "Besides me,{w=0.1} anyway.{w=0.2} Ehehe."
+
+        n "Hmm...{w=0.3} there's gotta be something else..."
+        n "Think,{w=0.1} Natsuki!{w=0.2} Think..."
+        n "..."
+        n "Aha!{w=0.2} I think I got it!{w=0.2} Let me just check something real quick..."
+
+        play audio drawer 
+        with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+
+        n "Yes!{w=0.2} It's still here!"
+        n "Betcha' didn't know I had playing cards,{w=0.1} right?"
+        n "Turns out these desk drawers {i}are{/i} handy,{w=0.1} after all!"
+        n "I always had a pack here ready for a rainy day."
+        n "...Uhmm."
+        n "Hey...{w=0.3} [player]?{w=0.2} Don't judge me for it,{w=0.1} but..."
+        n "I...{w=0.3} never really learned all the really fancy card game rules or anything like that."
+        n "So...{w=0.3} we're playing Snap.{w=0.2} At least until I do some reading up,{w=0.1} anyway.{w=0.2} Ahaha..."
+        $ persistent.jn_snap_unlocked = True
+        n "What about it then,{w=0.1} [player]?{w=0.2} Fancy a game or two?"
+        menu:
+            n "Not like you have much of an excuse not to,{w=0.1} right?"
+
+            "Sure,{w=0.1} why not?":
+                jump snap_intro
+
+            "Not right now.":
+                n "Aww...{w=0.3} but I already got the cards out and everything!"
+                n "Well...{w=0.3} whatever."
+                n "Just let me know whenever you feel like a game then."
+                
+                play audio drawer 
+                with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
     else:
         n "Huh?{w=0.2} You're bored?"
@@ -240,7 +280,7 @@ label admission_bored:
         n "And if that isn't enough,{w=0.1} there's an even bigger one right at your fingertips!"
         n "Or you could,{w=0.1} you know."
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "Spend more time with yours truly?"
             n "I'm not that dull...{w=0.3} right?"
 
@@ -248,7 +288,7 @@ label admission_bored:
             n "Appreciate that you get to spend more time with me!"
             n "N-{w=0.1}not that I'd totally appreciate it,{w=0.1} or anything,{w=0.1} of course.{w=0.2} Ahaha..."
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_BORED
+    $ jn_admissions.last_admission_type = jn_admissions.TYPE_BORED
     return
 
 init 5 python:
@@ -264,27 +304,27 @@ init 5 python:
     )
 
 label admission_confident:
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_CONFIDENT:
+    if jn_admissions.last_admission_type == jn_admissions.TYPE_CONFIDENT:
         n "Still full of confidence,{w=0.1} I see?"
         n "Well,{w=0.1} I'm glad to hear it!"
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "You've got a lot to be confident of,{w=0.1} [player]."
             n "You better remember that!"
 
-    elif admissions.last_admission_type == admissions.ADMISSION_TYPE_INSECURE:
+    elif jn_admissions.last_admission_type == jn_admissions.TYPE_INSECURE:
         n "Really?{w=0.2} That's awesome,{w=0.1} [player]!"
         n "I was hoping you'd snap out of those feelings sooner rather than later."
         n "It worries me when you talk like that,{w=0.1} you know..."
 
-        if jn_affinity.get_affinity_state() == store.jn_affinity.AFFECTIONATE:
+        if jn_affinity.get_affinity_state() == jn_affinity.AFFECTIONATE:
             n "N-{w=0.1}not that I care {i}that{/i} much, o-{w=0.1}of course!"
             n "But...{w=0.3} I'm glad to know you're okay now,{w=0.1} [player]. That's what matters."
 
-        elif jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "I'm just really glad to know you're better now,{w=0.1} [player]."
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVE:
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
             n "I love you, [chosen_endearment].{w=0.2} Please don't forget that,{w=0.1} alright?"
             n "I'll get mad if you do.{w=0.2} Ahaha..."
@@ -295,7 +335,7 @@ label admission_confident:
         n "Especially if you messed up,{w=0.1} or if you aren't feeling well."
         n "But if you're feeling that way about yourself,{w=0.1} I'm not gonna rob you of it!"
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_CONFIDENT
+    $ jn_admissions.last_admission_type = jn_admissions.TYPE_CONFIDENT
     return
 
 init 5 python:
@@ -311,7 +351,7 @@ init 5 python:
     )
 
 label admission_excited:
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_EXCITED:
+    if jn_admissions.last_admission_type == jn_admissions.TYPE_EXCITED:
         n "Still pumped up,{w=0.1} are we [player]?"
         n "I bet you just can't wait,{w=0.1} huh?{w=0.2} Ehehe."
 
@@ -320,7 +360,7 @@ label admission_excited:
         n "Whatever it is,{w=0.1} I'm happy to hear you're looking forward to it!"
         n "It's always awesome to have something you can get excited over,{w=0.1} right?"
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_EXCITED
+    $ jn_admissions.last_admission_type = jn_admissions.TYPE_EXCITED
     return
 
 init 5 python:
@@ -336,16 +376,16 @@ init 5 python:
     )
 
 label admission_happy:
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_HAPPY:
+    if jn_admissions.last_admission_type == jn_admissions.TYPE_HAPPY:
         n "Wow...{w=0.3} it's all sunshine and rainbows with you today,{w=0.1} isn't it?"
         n "Ahaha!"
         n "Keep on smiling,{w=0.1} [player]!"
 
-    elif admissions.last_admission_type == admissions.ADMISSION_TYPE_ANGRY or admissions.last_admission_type == admissions.ADMISSION_TYPE_SAD:
+    elif jn_admissions.last_admission_type == jn_admissions.TYPE_ANGRY or jn_admissions.last_admission_type == jn_admissions.TYPE_SAD:
         n "Feeling better now,{w=0.1} [player]?"
         n "I'm glad to hear it!{w=0.2} That's...{w=0.3} honestly a relief,{w=0.1} ahaha..."
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
             n "..."
             n "So...{w=0.3} where were we?"
 
@@ -353,12 +393,12 @@ label admission_happy:
             n "..."
             n "Jeez...{w=0.3} if you're okay,{w=0.1} then let's get back to it already!"
 
-    elif admissions.last_admission_type == admissions.ADMISSION_TYPE_HUNGRY:
+    elif jn_admissions.last_admission_type == jn_admissions.TYPE_HUNGRY:
         n "Feeling better,{w=0.1} [player]?{w=0.2} I'm not surprised!"
         n "You just aren't yourself when you're hungry.{w=0.2} Ehehe."
         n "Trust me...{w=0.3} I would know."
 
-    elif admissions.last_admission_type == admissions.ADMISSION_TYPE_SICK:
+    elif jn_admissions.last_admission_type == jn_admissions.TYPE_SICK:
         n "Feeling better,{w=0.1} [player]?{w=0.2} I'm glad to hear it!"
         n "Nothing makes you appreciate feeling normal more than being sick,{w=0.1} right?"
 
@@ -367,7 +407,7 @@ label admission_happy:
         n "Well,{w=0.1} I'm glad to hear it!"
         n "If you're happy,{w=0.1} I'm happy!"
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_HAPPY
+    $ jn_admissions.last_admission_type = jn_admissions.TYPE_HAPPY
     return
 
 init 5 python:
@@ -383,23 +423,23 @@ init 5 python:
     )
 
 label admission_hungry:
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_HUNGRY:
+    if jn_admissions.last_admission_type == jn_admissions.TYPE_HUNGRY:
         n "What?{w=0.1} You're still hungry?"
         n "Or did you not get something when I told you to earlier?"
         n "Well...{w=0.3} either way,{w=0.1} get off your butt and go get something then!"
         n "Jeez,{w=0.1} [player]...{w=0.3} I'm not your babysitter!"
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "As much as you probably wish I was,{w=0.1} right?{w=0.2} Ahaha!"
             n "Now get going already!{w=0.2} Bon appetit,{w=0.1} [player]!"
 
-    elif admissions.last_admission_type == admissions.ADMISSION_TYPE_SAD:
+    elif jn_admissions.last_admission_type == jn_admissions.TYPE_SAD:
         n "[player]...{w=0.3} you told me you were sad earier."
         n "I don't mind if you're hungry,{w=0.1} but try not to comfort-eat,{w=0.1} okay?"
         n "You might feel a little better...{w=0.3} but it won't fix what made you sad."
         n "Try to enjoy your meal,{w=0.1} alright?"
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.AFFECTIONATE:
+        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
             n "I'm here for you if you need me,{w=0.1} [player]."
 
     else:
@@ -409,11 +449,11 @@ label admission_hungry:
         n "Honestly...{w=0.3} what am I going to do with you,{w=0.1} [player]?{w=0.2} Ehehe."
         n "Now go make something already!{w=0.2} Just don't fill yourself up on junk!"
 
-        if jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "I want you fighting fit for when we hang out,{w=0.1} 'kay?"
             n "We're gonna have so much to do together,{w=0.1} after all!"
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_HUNGRY
+    $ jn_admissions.last_admission_type = jn_admissions.TYPE_HUNGRY
     return
 
 init 5 python:
@@ -429,7 +469,7 @@ init 5 python:
     )
 
 label admission_insecure:
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_INSECURE:
+    if jn_admissions.last_admission_type == jn_admissions.TYPE_INSECURE:
         n "You're still feeling insecure about yourself,{w=0.1} [player]?"
         n "You remember what I said though,{w=0.1} right?"
         n "Everybody has their own pace.{w=0.2} I don't care what yours is.{w=0.2} We'll take it together."
@@ -447,12 +487,12 @@ label admission_insecure:
         n "I don't care if people think you're falling behind.{w=0.2} I know you'll catch up."
         n "Just...{w=0.3} give yourself time and space,{w=0.1} [player]."
         n "These thoughts you're having...{w=0.3} they can lead you to some really bad places.{w=0.2} Trust me."
-        n "I won't let that happen without a fight{w=0.1} - {w=0.1}but you gotta fight with me,{w=0.1} [player].{w=0.2} Okay?"
+        n "I won't let that happen without a fight{w=0.1} -{w=0.1}but you gotta fight with me,{w=0.1} [player].{w=0.2} Okay?"
         menu:
             "Okay.":
                 n "Good.{w=0.2} Or you'll have me to deal with too.{w=0.2} Ahaha..."
                 n "..."
-                if jn_affinity.get_affinity_state() <= store.jn_affinity.AFFECTIONATE:
+                if jn_affinity.get_affinity_state() <= jn_affinity.AFFECTIONATE:
                     n "Message received?{w=0.2} T{w=0.1}-then let's get back to it already!"
                     n "Jeez..."
 
@@ -460,11 +500,11 @@ label admission_insecure:
                     n "...You know I meant every single word I said,{w=0.1} right?"
                     n "So please...{w=0.3} don't give up.{w=0.2} We both need you to win,{w=0.1} [player]."
 
-                    if jn_affinity.get_affinity_state() == store.jn_affinity.LOVE:
+                    if jn_affinity.get_affinity_state() == jn_affinity.LOVE:
                         $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
                         n "I really do love you, [chosen_endearment]."
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_INSECURE
+    $ jn_admissions.last_admission_type = jn_admissions.TYPE_INSECURE
     return
 
 init 5 python:
@@ -480,7 +520,7 @@ init 5 python:
     )
 
 label admission_proud:
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_PROUD:
+    if jn_admissions.last_admission_type == jn_admissions.TYPE_PROUD:
         n "Really,{w=0.1} [player]?{w=0.1} Still gloating,{w=0.1} are we?"
         n "You {i}do{/i} know what they say about pride,{w=0.1} right?"
         n "..."
@@ -494,7 +534,7 @@ label admission_proud:
         n "I'm sure whatever it is,{w=0.1} it's something I can be proud of you for too."
         n "Good work,{w=0.1} [player]!"
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_PROUD
+    $ jn_admissions.last_admission_type = jn_admissions.TYPE_PROUD
     return
 
 init 5 python:
@@ -510,7 +550,7 @@ init 5 python:
     )
 
 label admission_sad:
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_SAD:
+    if jn_admissions.last_admission_type == jn_admissions.TYPE_SAD:
         n "Oh...{w=0.3} I'm really sorry to hear you're still feeling upset,{w=0.1} [player]."
         n "I'm not sure if it's my place to say this,{w=0.1} but..."
         n "Perhaps you have others you can share this with?{w=0.2} Friends,{w=0.1} or family?"
@@ -531,7 +571,7 @@ label admission_sad:
                 n "That's a relief to hear!"
                 n "I just hope they were supportive of you,{w=0.1} [player].{w=0.2} It's the least you deserve."
 
-        if jn_affinity.get_affinity_state() == store.jn_affinity.LOVE:
+        if jn_affinity.get_affinity_state() == jn_affinity.LOVE:
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
             n "I love you,{w=0.1} [chosen_endearment]."
 
@@ -549,7 +589,7 @@ label admission_sad:
         n "What matters is that you're okay,{w=0.1} [player].{w=0.2} So let's concentrate on fixing that, alright?"
         n "Perhaps talking to me some more might help?{w=0.2} Ahaha..."
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_SAD
+    $ jn_admissions.last_admission_type = jn_admissions.TYPE_SAD
     return
 
 init 5 python:
@@ -565,7 +605,7 @@ init 5 python:
     )
 
 label admission_sick:
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_SICK:
+    if jn_admissions.last_admission_type == jn_admissions.TYPE_SICK:
         n "[player]...{w=0.3} you're still feeling sick?"
         n "How long have you felt like this now?"
         menu:
@@ -577,7 +617,7 @@ label admission_sick:
             "A few days.":
                 n "You're starting to worry me,{w=0.1} [player]."
                 n "Make sure you see someone soon."
-                n "Especially if you start to hurt anywhere,{w=0.1}  or if you've been sick,{w=0.1}  or anything like that..."
+                n "Especially if you start to hurt anywhere,{w=0.1}  or if you've been sick,{w=0.1} or anything like that..."
                 n "Make sure you get some extra rest too,{w=0.1} okay?"
 
             "A week or so.":
@@ -596,7 +636,7 @@ label admission_sick:
                         n "Your health...{w=0.3} really matters to me."
 
                         # Add pending apology
-                        $ apologies.add_new_pending_apology(apologies.TYPE_UNHEALTHY)
+                        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
 
             "Longer.":
                 n "..."
@@ -604,20 +644,20 @@ label admission_sick:
                 n "I just hope you feel better soon."
                 n "Take it easy,{w=0.1} alright?"
 
-                if jn_affinity.get_affinity_state() == store.jn_affinity.AFFECTIONATE:
+                if jn_affinity.get_affinity_state() == jn_affinity.AFFECTIONATE:
                     n "I hate seeing you unwell like this..."
 
-                elif jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
+                elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
                     n "It really hurts me seeing you unwell like this..."
 
-                if jn_affinity.get_affinity_state() >= store.jn_affinity.LOVE:
+                if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
                     n "I love you,{w=0.1} [player].{w=0.2} Please get well soon."
 
                 # Add pending apology
-                $ apologies.add_new_pending_apology(apologies.TYPE_UNHEALTHY)
+                $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
 
 
-    elif admissions.last_admission_type == admissions.ADMISSION_TYPE_HUNGRY:
+    elif jn_admissions.last_admission_type == jn_admissions.TYPE_HUNGRY:
         n "You know,{w=0.1} you can start to feel unwell if you haven't eaten for a while,{w=0.1} [player]."
         n "Have you eaten something today?{w=0.2} Like a proper meal?"
         menu:
@@ -639,7 +679,14 @@ label admission_sick:
         n "Your health has to come first over our time together."
         n "So...{w=0.3} promise me you'll leave and rest if you have to,{w=0.1} okay?"
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_SICK
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+            n "I love you,{w=0.1} [chosen_endearment].{w=0.2} I really hope you get better soon..."
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+            n "I hope you feel better soon,{w=0.1} [player]..."
+
+    $ jn_admissions.last_admission_type = jn_admissions.TYPE_SICK
     return
 
 init 5 python:
@@ -656,19 +703,26 @@ init 5 python:
 
 label admission_tired:
     # Calculate how long the player has been here so far
-    $ total_hours_in_session = store.utils.get_current_session_length().total_seconds() / 3600
+    $ total_hours_in_session = utils.get_current_session_length().total_seconds() / 3600
 
-    if admissions.last_admission_type == admissions.ADMISSION_TYPE_TIRED:
+    if jn_admissions.last_admission_type == jn_admissions.TYPE_TIRED:
         n "Huh?{w=0.2} You're still tired?"
         n "Did you not get any rest,{w=0.1} [player]?"
         n "I don't want you getting all cranky..."
         n "So...{w=0.3} go to bed, alright?"
         n "I'll see you later,{w=0.1} [player]!"
 
-        $ persistent.jn_player_admission_type_on_quit = admissions.ADMISSION_TYPE_TIRED
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+            n "I love you,{w=0.1} [chosen_endearment]!"
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+            n "Don't let the bed bugs bite!{w=0.2} Ehehe."
+
+        $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_TIRED
         return { "quit": None }
 
-    elif admissions.last_admission_type == admissions.ADMISSION_TYPE_ANGRY or admissions.last_admission_type == admissions.ADMISSION_TYPE_SAD:
+    elif jn_admissions.last_admission_type == jn_admissions.TYPE_ANGRY or jn_admissions.last_admission_type == jn_admissions.TYPE_SAD:
         n "You said you weren't happy earlier,{w=0.1} [player]..."
         n "If you're already tired,{w=0.1} I think you should sleep on it."
         n "Are you gonna turn in,{w=0.1} [player]?"
@@ -677,26 +731,26 @@ label admission_tired:
                 n "Good...{w=0.3} you'll feel better soon,{w=0.1} okay?{w=0.2} I promise."
                 n "Sleep well,{w=0.1} [player]!"
 
-                $ persistent.jn_player_admission_type_on_quit = admissions.ADMISSION_TYPE_TIRED
+                $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_TIRED
                 return { "quit": None }
 
             "No, not yet.":
                 n "Well...{w=0.3} if you're sure,{w=0.1} [player]."
                 n "Let's see if I can't improve your mood,{w=0.1} shall we?"
 
-    elif admissions.last_admission_type == admissions.ADMISSION_TYPE_SICK:
+    elif jn_admissions.last_admission_type == jn_admissions.TYPE_SICK:
         n "I'm really not surprised if you're already sick,{w=0.1} [player]."
         n "You should really go get some rest."
         n "We can talk later,{w=0.1} alright?"
         n "Take it easy,{w=0.1} [player]!"
 
         # Add pending apology
-        $ apologies.add_new_pending_apology(apologies.TYPE_UNHEALTHY)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
 
-        $ persistent.jn_player_admission_type_on_quit = admissions.ADMISSION_TYPE_SICK
+        $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_SICK
         return { "quit": None }
 
-    elif admissions.last_admission_type == admissions.ADMISSION_TYPE_HUNGRY:
+    elif jn_admissions.last_admission_type == jn_admissions.TYPE_HUNGRY:
         n "I'm not surprised you're feeling tired if you're hungry!"
         n "Stop sitting around and go eat something,{w=0.1} [player]."
         n "Just take it easy getting up,{w=0.1} alright?{w=0.2} I don't want you fainting on me."
@@ -711,10 +765,16 @@ label admission_tired:
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
         n "Sleep well,{w=0.1} [chosen_tease]!"
 
-        # Add pending apology
-        $ apologies.add_new_pending_apology(apologies.TYPE_UNHEALTHY)
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            n "Love you~!"
 
-        $ persistent.jn_player_admission_type_on_quit = admissions.ADMISSION_TYPE_TIRED
+        elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+            n "Sweet dreams! Ehehe."
+
+        # Add pending apology
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
+
+        $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_TIRED
         return { "quit": None }
 
     elif total_hours_in_session >= 12:
@@ -723,11 +783,35 @@ label admission_tired:
         n "I'm not surprised you're feeling tired{w=0.1} -{w=0.1} you've been here ages,{w=0.1} [chosen_tease]!"
         n "You should really get some sleep...{w=0.3} you'll be all cranky later otherwise."
         n "I appreciate the company but make sure you turn in soon,{w=0.1} alright?"
-        n "Don't let me down,{w=0.1} [player]."
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            n "You know I don't like it when you don't take care of yourself like this..."
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+            n "You should know better than to treat yourself like this by now,{w=0.1} [player]..."
+
+        n "Don't let me down,{w=0.1} 'kay?"
 
         # Add pending apology
-        $ apologies.add_new_pending_apology(apologies.TYPE_UNHEALTHY)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
 
+    elif utils.get_current_hour() > 21 or utils.get_current_hour() < 3:
+        n "[player]!"
+        n "I'm not surprised you're tired!{w=0.2} Have you even seen the time?!"
+        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        n "It's the middle of the night,{w=0.1} [chosen_tease]!"
+        n "Nnnn... you should really turn in soon,{w=0.1} you know..."
+        n "I don't want you to be all cranky later because you didn't get enough sleep."
+        n "And neither do you,{w=0.1} I'm sure."
+        n "Just...{w=0.3} try to get to bed soon,{w=0.1} okay?{w=0.2} {i}Before{/i} your keyboard becomes your pillow."
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            n "Besides...{w=0.3} you do know I'm not actually strong enough to carry you to bed myself...{w=0.3} right?"
+
+        n "Ahaha..."
+
+        # Add pending apology
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
 
     else:
         n "Feeling tired,{w=0.1} [player]?"
@@ -735,5 +819,5 @@ label admission_tired:
         n "Don't worry about me if you need to rest!{w=0.2} I'll be alright."
         n "Just make sure you let me know when you decide to go,{w=0.1} [player]."
 
-    $ admissions.last_admission_type = admissions.ADMISSION_TYPE_TIRED
+    $ jn_admissions.last_admission_type = jn_admissions.TYPE_TIRED
     return

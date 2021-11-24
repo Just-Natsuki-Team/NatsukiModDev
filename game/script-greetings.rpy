@@ -28,7 +28,8 @@ init python in greetings:
         return random.choice(
             store.Topic.filter_topics(
                 GREETING_MAP.values(),
-                affinity=store.jn_globals.current_affinity_state,
+                affinity=store.jn_affinity.get_affinity_state(),
+                conditional=True,
                 **kwargs
             )
         ).label
@@ -48,7 +49,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_today_is_gonna_be_great",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
+            affinity_range=(jn_aff.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -64,7 +65,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_world_revolves_around_you",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
+            affinity_range=(jn_aff.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -85,7 +86,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_make_today_amazing",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
+            affinity_range=(jn_aff.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -102,7 +103,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_always_welcome_here",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
+            affinity_range=(jn_aff.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -120,7 +121,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_lovestruck",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
+            affinity_range=(jn_aff.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -136,6 +137,47 @@ label greeting_love_plus_lovestruck:
     n "I missed you,{w=0.1} [player].{w=0.2} Ahaha..."
     $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
     n "But I know everything's gonna be okay now you're here,{w=0.1} [chosen_endearment]."
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_love_plus_looking_for_me",
+            unlocked=True,
+            affinity_range=(jn_aff.LOVE, None)
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_love_plus_looking_for_me:
+    n "...Hello?"
+    n "Was it {i}me{/i} you're looking for?"
+    n "..."
+    n "Nah,{w=0.1} don't worry about that,{w=0.1} actually."
+    n "Of course it was."
+    n "Ehehe."
+    n "Welcome back,{w=0.1} dummy!{w=0.2} Make yourself at home!"
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_love_plus_dull_moment",
+            unlocked=True,
+            affinity_range=(jn_aff.LOVE, None)
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_love_plus_dull_moment:
+    n "Well jeez,{w=0.1} you took your sweet time!"
+    n "What were you thinking,{w=0.1} [player]?!"
+    n "..."
+    n "..."
+    n "Ehehe.{w=0.2} Never a dull moment with me,{w=0.1} is there?"
+    n "You know the deal already -{w=0.1} make yourself at home,{w=0.1} silly!"
     return
 
 # AFFECTIONATE/ENAMORED greetings
@@ -487,7 +529,7 @@ init 5 python:
             category=["Admission"],
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
             additional_properties={
-                "admission_type": admissions.ADMISSION_TYPE_SICK,
+                "admission_type": jn_admissions.TYPE_SICK,
             }
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -495,8 +537,9 @@ init 5 python:
 
 label greeting_feeling_better_sick:
     n "Oh!{w=0.2} [player]!{w=0.2} Hey!"
-    n "How're you feeling?{w=0.2} Any better?"
     menu:
+        n "How're you feeling?{w=0.2} Any better?"
+
         "Much better, thanks!":
             n "Good, good!{w=0.2} I'm glad to hear it!{w=0.2} Nobody likes being ill."
             n "Now that's out of the way,{w=0.1} how about we spend some quality time together?"
@@ -509,8 +552,8 @@ label greeting_feeling_better_sick:
             n "Anyway...{w=0.3} welcome back,{w=0.1} [player]!"
 
             # Add pending apology, reset the admission
-            $ store.apologies.add_new_pending_apology(store.apologies.TYPE_UNHEALTHY)
-            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_SICK
+            $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
+            $ jn_admissions.last_admission_type = jn_admissions.TYPE_SICK
 
         "Still unwell.":
             n "Still not feeling up to scratch,{w=0.1} [player]?"
@@ -518,8 +561,8 @@ label greeting_feeling_better_sick:
             n "I don't want you making yourself worse for my sake..."
 
             # Add pending apology, reset the admission
-            $ store.apologies.add_new_pending_apology(store.apologies.TYPE_UNHEALTHY)
-            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_SICK
+            $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
+            $ jn_admissions.last_admission_type = jn_admissions.TYPE_SICK
     return
 
 init 5 python:
@@ -531,7 +574,7 @@ init 5 python:
             category=["Admission"],
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
             additional_properties={
-                "admission_type": admissions.ADMISSION_TYPE_TIRED,
+                "admission_type": jn_admissions.TYPE_TIRED,
             }
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -539,11 +582,12 @@ init 5 python:
 
 label greeting_feeling_better_tired:
     n "Ah!{w=0.2} [player]!{w=0.2} Hi!"
-    n "I hope you got enough sleep.{w=0.2} How're you feeling?"
     menu:
+        n "I hope you got enough sleep.{w=0.2} How're you feeling?"
+
         "Much better, thanks!":
             n "Great!{w=0.2} Nothing like a good night's sleep,{w=0.1} am I right?"
-            n "Now then - seeing as you're finally awake and alert..."
+            n "Now then -{w=0.1} seeing as you're finally awake and alert..."
             n "What better opportunity to spend some more time with me?{w=0.2} Ehehe."
             $ persistent.jn_player_admission_type_on_quit = None
 
@@ -553,8 +597,8 @@ label greeting_feeling_better_tired:
             n "A nice glass of water or some bitter coffee should perk you up in no time!"
 
             # Add pending apology, reset the admission
-            $ store.apologies.add_new_pending_apology(store.apologies.TYPE_UNHEALTHY)
-            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_TIRED
+            $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
+            $ jn_admissions.last_admission_type = jn_admissions.TYPE_TIRED
 
         "Still tired.":
             n "Still struggling with your sleep,{w=0.1} [player]?"
@@ -562,8 +606,8 @@ label greeting_feeling_better_tired:
             n "I don't want you face-planting your desk for my sake..."
 
             # Add pending apology, reset the admission
-            $ store.apologies.add_new_pending_apology(store.apologies.TYPE_UNHEALTHY)
-            $ admissions.last_admission_type = admissions.ADMISSION_TYPE_TIRED
+            $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
+            $ jn_admissions.last_admission_type = jn_admissions.TYPE_TIRED
     return
 
 # Absence-related greetings; used when the player leaves suddenly, or has been gone an extended period
@@ -576,7 +620,7 @@ init 5 python:
             unlocked=True,
             category=["Apology"],
             additional_properties={
-                "apology_type": apologies.TYPE_SUDDEN_LEAVE,
+                "apology_type": jn_apologies.TYPE_SUDDEN_LEAVE,
             }
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -590,28 +634,28 @@ label greeting_sudden_leave:
         n "I don't know if something happened or what,{w=0.1} but please..."
         n "Try to remember to say goodbye properly next time,{w=0.1} 'kay?"
         n "It'd mean a lot to me."
-        $ apologies.add_new_pending_apology(apologies.TYPE_SUDDEN_LEAVE)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "..."
         n "[player]!{w=0.2} Do you know how scary it is when you just vanish like that?"
         n "Please...{w=0.3} just remember to say goodbye properly when you gotta leave."
         n "It's not much to ask...{w=0.3} is it?"
-        $ apologies.add_new_pending_apology(apologies.TYPE_SUDDEN_LEAVE)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
         n "..."
         n "You know I hate that,{w=0.1} [player]."
         n "Knock it off,{w=0.1} will you?"
         n "Thanks."
-        $ apologies.add_new_pending_apology(apologies.TYPE_SUDDEN_LEAVE)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
 
     else:
         n "..."
         n "Heh.{w=0.2} Yeah."
         $ chosen_insult = random.choice(jn_globals.DEFAULT_PLAYER_INSULT_NAMES).capitalize()
         n "Welcome back to you,{w=0.1} too.{w=0.2} [chosen_insult]."
-        $ apologies.add_new_pending_apology(apologies.TYPE_SUDDEN_LEAVE)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
 
     return
 
@@ -623,7 +667,7 @@ init 5 python:
             unlocked=True,
             category=["Apology"],
             additional_properties={
-                "apology_type": apologies.TYPE_PROLONGED_LEAVE,
+                "apology_type": jn_apologies.TYPE_PROLONGED_LEAVE,
             }
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -639,7 +683,7 @@ label greeting_prolonged_leave:
         n "I'm...{w=0.3} glad...{w=0.3} you're back,{w=0.1} [player]."
         n "Just...{w=0.3} some warning next time,{w=0.1} please?"
         n "I hate having my heart played with like that..."
-        $ apologies.add_new_pending_apology(apologies.TYPE_PROLONGED_LEAVE)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_PROLONGED_LEAVE)
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "[player_initial]-{w=0.1}[player]!"
@@ -648,18 +692,255 @@ label greeting_prolonged_leave:
         n "..."
         n "...Welcome back,{w=0.1} [player]."
         n "Just...{w=0.3} don't leave it so long next time,{w=0.1} alright?{w=0.2} Jeez..."
-        $ apologies.add_new_pending_apology(apologies.TYPE_PROLONGED_LEAVE)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_PROLONGED_LEAVE)
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
         n "[player_initial]-{w=0.1}[player]?"
         n "...You're back."
         n "I...{w=0.3} don't know how I feel about that."
-        $ apologies.add_new_pending_apology(apologies.TYPE_PROLONGED_LEAVE)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_PROLONGED_LEAVE)
 
     else:
         n "...Heh."
         n "So you came back."
         n "{i}Great{/i}."
-        $ apologies.add_new_pending_apology(apologies.TYPE_PROLONGED_LEAVE)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_PROLONGED_LEAVE)
 
+    return
+
+# Time-of-day based greetings
+
+# Early morning
+
+# Natsuki questions why the player is up so early
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_early_morning_why_are_you_here",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(3, 4)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_early_morning_why_are_you_here:
+    n "H-{w=0.1}huh?{w=0.2} [player]?!"
+    n "What the heck are you doing here so early?"
+    n "Did you have a nightmare or something?"
+    n "Or...{w=0.3} maybe you never slept?{w=0.2} Huh."
+    n "Well,{w=0.1} anyway..."
+    n "Morning,{w=0.1} I guess!{w=0.2} Ehehe."
+    return
+
+# Morning
+
+# The Earth says hello!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_morning_starshine",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(5, 11)",
+            affinity_range=(jn_aff.ENAMORED, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_morning_starshine:
+    n "Good morning,{w=0.1} starshine!"
+    n "The Earth says 'Hello!'"
+    n "..."
+    n "Pfffft-!"
+    n "I'm sorry!{w=0.2} It's just such a dumb thing to say...{w=0.3} I can't keep a straight face!"
+    n "Ehehe."
+    $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+    n "You really are my starshine though,{w=0.1} [chosen_endearment]."
+    n "Welcome back!"
+    return
+
+# Natsuki doesn't like to be kept waiting around in the morning
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_morning_waiting_for_you",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(5, 11)",
+            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_morning_waiting_for_you:
+    n "Oh! Well look who finally decided to show up!"
+    n "You know I don't like being kept waiting...{w=0.3} right?"
+    n "Ehehe.{w=0.2} You're just lucky I'm in a good mood."
+    n "You better make it up to me,{w=0.1} [player]~!"
+    return
+
+# Natsuki doesn't like a lazy player!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_morning_lazy",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(10, 11)",
+            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_morning_lazy:
+    n "Oho!{w=0.2} Well look who finally crawled out of bed today!"
+    n "Jeez,{w=0.1} [player]...{w=0.3} I swear you're lazier than Sayori sometimes!"
+    n "Ehehe."
+    n "Well,{w=0.1} you're here now -{w=0.1} and that's all I care about."
+    n "Let's make the most of today,{w=0.1} [player]!"
+    n "Or...{w=0.3} what's left of it?"
+    n "Ahaha."
+    return
+
+# Natsuki uses a silly greeting
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_morning_top_of_the_mornin",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(8, 11)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_morning_top_of_the_mornin:
+    n "Oh!{w=0.2} It's [player]!"
+    n "Well -{w=0.1} top of the mornin' to you!"
+    n "..."
+    n "What?{w=0.2} I'm allowed to say dumb things too,{w=0.1} right?"
+    n "Ehehe."
+    return
+
+# Afternoon
+
+# Natsuki hopes the player is keeping well
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_afternoon_keeping_well",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(12, 17)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_afternoon_keeping_well:
+    n "Hey!{w=0.2} Afternoon,{w=0.1} [player]!"
+    n "Keeping well?"
+    return
+
+# Natsuki asks how the player's day is going
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_afternoon_how_are_you",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(12, 17)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_afternoon_how_are_you:
+    n "Oh!{w=0.2} Afternoon,{w=0.1} [player]!"
+    n "How're you doing today?"
+    return
+
+# Evening
+
+# Natsuki tells the player they can relax now
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_evening_long_day",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(18, 21)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_evening_long_day:
+    n "Aha!{w=0.2} Evening,{w=0.1} [player]!"
+    n "Long day,{w=0.1} huh?{w=0.2} Well,{w=0.1} you've come to the right place!"
+    n "Just tell Natsuki all about it!"
+    return
+
+# Natsuki teases the player for taking so long
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_evening_took_long_enough",
+            unlocked=True,
+            conditional="utils.get_current_hour() in range(18, 21)",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_evening_took_long_enough:
+    $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+    n "[player]!{w=0.2} There you are,{w=0.1} [chosen_tease]!"
+    n "Jeez...{w=0.3} took you long enough!"
+    n "Ehehe."
+    n "I'm just kidding!{w=0.2} Don't worry about it."
+    n "Welcome back!"
+    return
+
+# Night
+
+# Natsuki enjoys staying up late too
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_night_up_late",
+            unlocked=True,
+            conditional="utils.get_current_hour() >= 22 or utils.get_current_hour() <= 2",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_night_up_late:
+    n "Oh!{w=0.2} Hey,{w=0.1} [player]."
+    n "Late night for you too,{w=0.1} huh?"
+    n "Well...{w=0.3} I'm not complaining!{w=0.2} Welcome back!"
+    return
+
+# Natsuki is also a night owl
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_night_night_owl",
+            unlocked=True,
+            conditional="utils.get_current_hour() >= 22 or utils.get_current_hour() <= 2",
+            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_night_night_owl:
+    n "Oh,{w=0.1} [player]!{w=0.2} You're a night owl too,{w=0.1} are you?"
+    n "Not that I have a problem with that,{w=0.1} of course -{w=0.1} welcome back!"
     return

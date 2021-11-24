@@ -198,6 +198,8 @@ init 0 python:
                     store.utils.log(e.message, utils.SEVERITY_ERR)
                     return False
 
+            return True
+
         def curr_affinity_in_affinity_range(self, affinity_state=None):
             """
             Checks if the current affinity is within this topic's affinity_range
@@ -209,7 +211,7 @@ init 0 python:
                 True if the current affinity is within range. False otherwise
             """
             if not affinity_state:
-                affinity_state = jn_globals.current_affinity_state
+                affinity_state = jn_affinity.get_affinity_state()
 
             return store.jn_affinity.is_state_within_range(affinity_state, self.affinity_range)
 
@@ -278,6 +280,7 @@ init 0 python:
             location=None,
             affinity=None,
             trust=None,
+            conditional=None,
             includes_categories=list(),
             excludes_categories=list(),
             additional_properties=list()
@@ -324,6 +327,9 @@ init 0 python:
             if trust and not self.evaluate_trust_range(trust):
                 return False
 
+            if conditional and not self.check_conditional():
+                return False
+
             if includes_categories and len(set(includes_categories).intersection(set(self.category))) != len(includes_categories):
                 return False
 
@@ -358,6 +364,7 @@ init 0 python:
             location=None,
             affinity=None,
             trust=None,
+            conditional=None,
             includes_categories=list(),
             excludes_categories=list(),
             additional_properties=list()
@@ -386,6 +393,7 @@ init 0 python:
                     location,
                     affinity,
                     trust,
+                    conditional,
                     includes_categories,
                     excludes_categories,
                     additional_properties
@@ -512,6 +520,19 @@ init -990 python in jn_globals:
     # Tracks whether the player opted to stay for longer when Natsuki asked them to when quitting; True if so, otherwise False
     player_already_stayed_on_farewell = False
 
+    # Tracks whether the player is or is not currently playing a game
+    player_is_ingame = False
+
+    # Tracks whether the player is or is not currently in some topic flow
+    player_is_in_conversation = False
+
+    # Outfit handling; these should be persisted and in some kind of structure going forward for presets, etc.
+    natsuki_current_pose = "sitting"
+    natsuki_current_outfit = "uniform"
+    natsuki_current_hairstyle = "default"
+    natsuki_current_accessory = "hairbands/red"
+    natsuki_current_eyewear = None
+
     # Constants; use these for anything we only want defined once and used in a read-only context
 
     # Endearments Natsuki may use at the highest levels of affinity to refer to her player
@@ -529,6 +550,8 @@ init -990 python in jn_globals:
     # Descriptors Natsuki may use at the higher levels of affinity to define her player
     DEFAULT_PLAYER_DESCRIPTORS = [
         "amazing",
+        "awesome",
+        "really awesome",
         "really great",
         "so sweet",
         "the best"
@@ -554,16 +577,17 @@ init -990 python in jn_globals:
 
     # Flavor text for the talk menu at high affinity
     DEFAULT_TALK_FLAVOR_TEXT_LOVE_ENAMORED = [
-        "What's up, [player]?",
-        "What's on your mind, [player]?",
-        "Something up, [player]?",
-        "You wanna talk? Yay!",
+        "What's up,{w=0.1} [player]?",
+        "What's on your mind,{w=0.1} [player]?",
+        "Something up,{w=0.1} [player]?",
+        "You wanna talk?{w=0.2} Ehehe.",
         "I'd love to talk!",
-        "I always love talking to you, [player]!",
-        "[player]! What's up?",
-        "[player]! What's on your mind?",
-        "Ooh! What did you wanna talk about?",
-        "I'm all ears, [player]!"
+        "I always love talking to you,{w=0.1} [player]!",
+        "[player]!{w=0.2} What's up?",
+        "[player]!{w=0.2} What's on your mind?",
+        "Ooh!{w=0.2} What did you wanna talk about?",
+        "I'm all ears,{w=0.1} [player]!",
+        "I've always got time for you,{w=0.1} [player]!"
     ]
 
     # Flavor text for the talk menu at medium affinity
@@ -572,9 +596,12 @@ init -990 python in jn_globals:
         "What's on your mind?",
         "What's happening?",
         "Something on your mind?",
-        "Oh? You wanna talk to me?",
-        "Huh? What's up?",
-        "You wanna share something?"
+        "Oh?{w=0.2} You wanna talk to me?",
+        "Huh?{w=0.2} What's up?",
+        "You wanna share something?",
+        "Hey!{w=0.2} What's up?",
+        "What's new,{w=0.1} [player]?",
+        "'Sup,{w=0.1} [player]?"
     ]
 
     # Flavor text for the talk menu at low affinity
@@ -584,7 +611,13 @@ init -990 python in jn_globals:
         "Can I help you?",
         "Do you need me?",
         "Make it quick.",
-        "What now?"
+        "What now?",
+        "Yes?",
+        "What do you want now?",
+        "What is it this time?",
+        "Yeah?{w=0.2} What?",
+        "What is it now?",
+        "This had better be good."
     ]
 
     # Flavor text for the talk menu at minimum affinity
@@ -600,7 +633,10 @@ init -990 python in jn_globals:
     # Emoticon sets for where we can't express Natsuki's emotions directly (I.E modals)
     DEFAULT_HAPPY_EMOTICONS = [
         "^^",
+        "^.^",
+        "\.^-^./",
         ":)",
+        ":]",
         ":3",
         "^-^",
         "^_^",
@@ -622,8 +658,8 @@ init -990 python in jn_globals:
         ">:T",
         ">:/",
         ">:(",
-        "(;¬_¬)",
-        "(¬_¬)"
+        "(;>_>)",
+        "(-_-)"
     ]
 
     DEFAULT_SAD_EMOTICONS = [
@@ -634,7 +670,12 @@ init -990 python in jn_globals:
         "(v_v”)",
         "( .. )",
         "( ;; )",
-        "(|||;-;)"
+        "(|||;-;)",
+        "(;v-v)",
+        ":-(",
+        "</3",
+        "<|3",
+        ":<"
     ]
 
     # Alphabetical (excluding numbers) values allowed for text input
@@ -646,12 +687,14 @@ init -990 python in jn_globals:
     #The last label we were in
     last_label = None
 
+    # Channel registration
+
+    # Channel for looping weather sfx
+    renpy.music.register_channel("weather_loop", "sfx", True)
+
 init 10 python in jn_globals:
     # The current affection state. We default this to 5 (NORMAL)
     current_affinity_state = store.jn_affinity.NORMAL
-
-    # This will need to be replaced with a struct and links to persistent once outfits are in
-    current_outfit = None
 
 #Stuff that's really early, which should be usable basically anywhere
 init -999 python in utils:
@@ -760,6 +803,7 @@ init python in utils:
         """
         return datetime.datetime.now().hour
 
+# Vanilla resources from base DDLC
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
 define audio.t2 = "<loop 4.499>bgm/2.ogg"   #Sayori theme
 define audio.t2g = "bgm/2g.ogg"
@@ -772,17 +816,26 @@ define audio.t3g3 = "<loop 4.618>bgm/3g2.ogg"
 define audio.t3m = "<loop 4.618>bgm/3.ogg"
 define audio.t4 = "<loop 19.451>bgm/4.ogg"  #Poem minigame
 define audio.t4g = "<loop 1.000>bgm/4g.ogg"
-define audio.tdokidoki = "mod_assets/bgm/dokidoki.ogg"
-define audio.tpoems = "mod_assets/bgm/poems.ogg"
-define audio.custom1 = "custom-music/01.mp3"
-define audio.custom2 = "custom-music/02.mp3"
-define audio.custom3 = "custom-music/03.mp3"
-define audio.battle = "custom-music/battle.mp3"
-define audio.spooky1 = "mod_assets/bgm/spooky1.ogg"
+
+# JN resources
+
+# Single-play sound effects
 define audio.camera_shutter = "mod_assets/sfx/camera_shutter.mp3"
 define audio.select_hover = "mod_assets/sfx/select_hover.mp3"
 define audio.select_confirm = "mod_assets/sfx/select_confirm.mp3"
+define audio.coin_flip = "mod_assets/sfx/coin_flip.mp3"
+define audio.card_shuffle = "mod_assets/sfx/card_shuffle.mp3"
+define audio.card_place = "mod_assets/sfx/card_place.mp3"
+define audio.drawer = "mod_assets/sfx/drawer.mp3"
+define audio.smack = "mod_assets/sfx/smack.mp3"
 
+# Looped sound effects
+define audio.rain_muffled = "mod_assets/sfx/rain_muffled.mp3"
+
+# Music
+define audio.test_bgm = "mod_assets/bgm/background_test_music.ogg"
+
+# Sprites
 define body_a = "mod_assets/natsuki-assets/base.png"
 define uniform_a = "mod_assets/natsuki-assets/uniform.png"
 define face_a = "mod_assets/natsuki-assets/jnab.png"
@@ -794,6 +847,8 @@ define m = DynamicCharacter('m_name', image='monika', what_prefix='"', what_suff
 define n = DynamicCharacter('n_name', image='natsuki', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 define y = DynamicCharacter('y_name', image='yuri', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 
+define n2 = DynamicCharacter('Natsuki Test', image='natsuki', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
+
 init python:
     #If they quit during a pause, we have to set _dismiss_pause to false again (I hate this hack)
     _dismiss_pause = config.developer
@@ -804,7 +859,7 @@ init python:
     y_name = "Yuri"
 
     # Assign Natsuki the chosen nickname (defaulted to Natsuki)
-    if persistent.jn_player_nicknames_current_nickname is not None:
+    if persistent.jn_player_nicknames_current_nickname:
         n_name = persistent.jn_player_nicknames_current_nickname
     
     else:
@@ -814,6 +869,5 @@ init -999 python:
     def label_callback(name, abnormal):
         jn_globals.last_label = jn_globals.current_label
         jn_globals.current_label = name
-
 
     config.label_callback = label_callback

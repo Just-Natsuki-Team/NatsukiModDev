@@ -23,8 +23,8 @@ define gui.hkb_button_borders = Borders(100, 5, 100, 5)
 define gui.hkb_button_text_font = gui.default_font
 define gui.hkb_button_text_size = gui.text_size
 define gui.hkb_button_text_xalign = 0.5
-define gui.hkb_button_text_idle_color = "#000"
-define gui.hkb_button_text_hover_color = "#fa9"
+define gui.hkb_button_text_idle_color = "#e2d1d1"
+define gui.hkb_button_text_hover_color = "#FF8ED0"
 
 define gui.hkb_button_black_width = 120
 define gui.hkb_button_black_height = None
@@ -33,8 +33,8 @@ define gui.hkb_button_black_borders = Borders(100, 5, 100, 5)
 define gui.hkb_button_black_text_font = gui.default_font
 define gui.hkb_button_black_text_size = gui.text_size
 define gui.hkb_button_black_text_xalign = 0.5
-define gui.hkb_button_black_text_idle_color = "#000"
-define gui.hkb_button_black_text_hover_color = "#fa9"
+define gui.hkb_button_black_text_idle_color = "#e2d1d1"
+define gui.hkb_button_black_text_hover_color = "#FF8ED0"
 
 define gui.talk_button_width = 120
 define gui.talk_button_height = None
@@ -43,8 +43,8 @@ define gui.talk_button_borders = Borders(100, 5, 100, 5)
 define gui.talk_button_text_font = gui.default_font
 define gui.talk_button_text_size = gui.text_size
 define gui.talk_button_text_xalign = 0.5
-define gui.talk_button_text_idle_color = "#000"
-define gui.talk_button_text_hover_color = "#fa9"
+define gui.talk_button_text_idle_color = "#e2d1d1"
+define gui.talk_button_text_hover_color = "#FF8ED0"
 default allow_boop = False
 
 
@@ -127,8 +127,8 @@ style hkbd_button_text is default:
     font gui.default_font
     size gui.text_size
     xalign 0.5
-    idle_color "#000"
-    hover_color "#000"
+    idle_color "#e2d1d1"
+    hover_color "#FF8ED0"
     outlines []
 
 style hkbd_button_black is default:
@@ -141,8 +141,8 @@ style hkbd_button_text_black is default:
     font gui.default_font
     size gui.text_size
     xalign 0.5
-    idle_color "#000"
-    hover_color "#000"
+    idle_color "#e2d1d1"
+    hover_color "#FF8ED0"
     outlines []
 
 style talkd_vbox is vbox
@@ -165,8 +165,8 @@ style talkd_button_text is default:
     font gui.default_font
     size gui.text_size
     xalign 0.5
-    idle_color "#000"
-    hover_color "#000"
+    idle_color "#e2d1d1"
+    hover_color "#FF8ED0"
     outlines []
 
 
@@ -180,13 +180,20 @@ screen hkb_overlay:
         yalign 0.97
 
         textbutton _("Talk"):
-            action Jump("talk_menu")
+            action [
+                Jump("talk_menu"),
+                SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)]
             style "hkbd_button"
-
-        textbutton _("Music"):
-            action Jump("music_menu")
-            style "hkbd_button"
+            
+        if persistent.jn_custom_music_explanation_given and jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+            textbutton _("Music"):
+                action [
+                    Jump("music_menu"),
+                    SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)]
+                style "hkbd_button"
 
         textbutton _("Extras"):
-            action Jump("extras_menu")
+            action [
+                Jump("extras_menu"),
+                SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)]
             style "hkbd_button"
