@@ -946,6 +946,9 @@ label debug_composite_outfit_test:
         "School uniform":
             $ jn_globals.natsuki_current_outfit = "uniform"
 
+        "Casual outfit":
+            $ jn_globals.natsuki_current_outfit = "casual"
+
         "Sweater":
             $ jn_globals.natsuki_current_outfit = "qeeb_sweater"
 
@@ -957,6 +960,9 @@ label debug_composite_outfit_test:
 
         "Dress":
             $ jn_globals.natsuki_current_outfit = "rose_lace_dress"
+
+        "Sango Cosplay":
+            $ jn_globals.natsuki_current_outfit = "sango_cosplay"
 
         "Nevermind":
             n "Oh... well, okay then."
