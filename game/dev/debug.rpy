@@ -922,14 +922,14 @@ label debug_change_weather:
 
     return
 
-# This topic allows us to test composite image mechanics
+# This topic allows us to test hair/outfit mechanics
 init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="debug_composite_image_test",
+            label="debug_composite_outfit_test",
             unlocked=True,
-            prompt="Can you try your composite image?",
+            prompt="Can I give you a new look?",
             conditional="config.console",
             category=["Debug (Sprites)"],
             player_says=True,
@@ -938,14 +938,90 @@ init 5 python:
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label debug_composite_image_test:
-    n "Sure!{w=0.2} Let me just switch out real quick..."
+label debug_composite_outfit_test:
+    n "Ooh!{w=0.2} What did you have in store for me,{w=0.1} [player]?{w=0.2} Let's find out!"
+    menu:
+        n "Okay! So what clothes should I wear?"
+
+        "School uniform":
+            $ jn_globals.natsuki_current_outfit = "uniform"
+
+        "Sweater":
+            $ jn_globals.natsuki_current_outfit = "qeeb_sweater"
+
+        "Sleeveless Sweater":
+            $ jn_globals.natsuki_current_outfit = "heart_sweater"
+
+        "Pajamas":
+            $ jn_globals.natsuki_current_outfit = "star_pajamas"
+
+        "Dress":
+            $ jn_globals.natsuki_current_outfit = "rose_lace_dress"
+
+        "Nevermind":
+            n "Oh... well, okay then."
+            return
+
+    menu:
+        n "Gotcha! Now, what hairstyle should I have?"
+
+        "Twintails":
+            $ jn_globals.natsuki_current_hairstyle = "default"
+
+        "Bedhead":
+            $ jn_globals.natsuki_current_hairstyle = "bedhead"
+
+        "Bun":
+            $ jn_globals.natsuki_current_hairstyle = "bun"
+
+        "Down":
+            $ jn_globals.natsuki_current_hairstyle = "down"
+
+        "Ponytail":
+            $ jn_globals.natsuki_current_hairstyle = "ponytail"
+
+        "Nevermind":
+            n "Oh... well, okay then."
+            return
+
+    menu:
+        n "Alrighty!{w=0.2} Now,{w=0.1} what hairpiece should I put on?"
+
+        "Hairband, red":
+            $ jn_globals.natsuki_current_accessory = "hairbands/red"
+
+        "Hairband, pink":
+            $ jn_globals.natsuki_current_accessory = "hairbands/pink"
+
+        "Hairband, purple":
+            $ jn_globals.natsuki_current_accessory = "hairbands/purple"
+
+        "Hairband, white":
+            $ jn_globals.natsuki_current_accessory = "hairbands/white"
+
+        "Nevermind":
+            n "Oh... well, okay then."
+            return
+
+    menu:
+        n "Last one, [player]~! What eyewear should I have?"
+
+        "None":
+            $ jn_globals.natsuki_current_eyewear = None
+
+        "Circle glasses":
+            $ jn_globals.natsuki_current_eyewear = "circles"
+
+        "Nevermind":
+            n "Oh... well, okay then."
+            return
+
+    n "Okaaay!{w=0.2} Let me just switch out real quick..."
     hide placeholder_natsuki
     with Fade(out_time=0.25, hold_time=0.25, in_time=0.25, color="#000000")
 
     show natsuki zorder 3
-    n happy "I'm feeling great!"
-    n sad "Today has honestly sucked."
+    n happy "Ta-da!{w=0.2} What do you think,{w=0.1} [player]?"
     hide natsuki
 
     show placeholder_natsuki

@@ -526,10 +526,12 @@ init -990 python in jn_globals:
     # Tracks whether the player is or is not currently in some topic flow
     player_is_in_conversation = False
 
-    # This will need to be replaced with a struct and links to persistent once outfits are in
-    current_pose = "sitting"
-    current_outfit = "uniform"
-    current_hairstyle = "default"
+    # Outfit handling; these should be persisted and in some kind of structure going forward for presets, etc.
+    natsuki_current_pose = "sitting"
+    natsuki_current_outfit = "uniform"
+    natsuki_current_hairstyle = "default"
+    natsuki_current_accessory = "hairbands/red"
+    natsuki_current_eyewear = None
 
     # Constants; use these for anything we only want defined once and used in a read-only context
 

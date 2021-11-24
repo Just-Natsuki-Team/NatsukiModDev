@@ -99,6 +99,7 @@ init python in jn_custom_music:
 label music_menu:
 
     $ jn_globals.player_is_in_conversation = True
+    $ music_title = "Error, this should have changed"
 
     # Attempt to get the music in the custom_music directory to present as menu options
     python:
@@ -169,9 +170,9 @@ label music_menu:
                 jn_custom_music._now_playing is not "No music":
                     
                     music_title_and_file = random.choice(filter(lambda track: (jn_custom_music._now_playing not in track), available_custom_music))
-
-                music_title = music_title_and_file[0]
-                renpy.play(filename=music_title_and_file[1], channel="music")
+                    renpy.say(n, music_title_and_file)
+                    music_title = music_title_and_file[0]
+                    renpy.play(filename=music_title_and_file[1], channel="music")
 
         else:
             # Play the selected specific track
