@@ -23,10 +23,10 @@ init python in jn_debug:
 
     # This is the basic set of watched data we reset to
     _default_tracked_watch_items = [
-        "store.persistent.affinity\n",
-        "store.jn_affinity.get_affinity_tier_name()\n",
-        "store.persistent.trust\n",
-        "store.jn_trust.get_trust_tier_name()\n"
+        "store.persistent.affinity",
+        "store.jn_affinity.get_affinity_tier_name()",
+        "store.persistent.trust",
+        "store.jn_trust.get_trust_tier_name()"
         "store.jn_debug.get_mouse_position()"
     ]
 
@@ -147,7 +147,26 @@ init python in jn_debug:
                 # The folder doesn't exist; create the folder and file from the default ready for use
                 os.makedirs("./debug")
                 items_setup_file = open("./debug/watch_items.txt", "a")
-                items_setup_file.writelines(_default_tracked_watch_items)
+
+                for item in _default_tracked_watch_items:
+                    if item == _default_tracked_watch_items[-1]:
+                        items_setup_file.write(item)
+                    else:
+                        items_setup_file.write("{0}\n".format(item))
+
+                items_setup_file.close()
+                return LOAD_FROM_DISK_NEW_FILE_CREATED
+
+            elif not os.path.exists("./debug/watch_items.txt"):
+                # The folder exists but the file doesn't; create the file from the default ready for use
+                items_setup_file = open("./debug/watch_items.txt", "a")
+
+                for item in _default_tracked_watch_items:
+                    if item == _default_tracked_watch_items[-1]:
+                        items_setup_file.write(item)
+                    else:
+                        items_setup_file.write("{0}\n".format(item))
+
                 items_setup_file.close()
                 return LOAD_FROM_DISK_NEW_FILE_CREATED
 
@@ -456,7 +475,7 @@ init 5 python:
 label debug_add_watched_item:
     n "No sweat, [player]! Just tell me what you want to add."
     $ player_input = renpy.input("Enter an expression, or enter 'nevermind' to cancel:")
-    if (player_input.lower().strip() in {"nevermind", ""}):
+    if (player_input.lower().strip() in ("nevermind", "")):
         n "Oh. Okay then."
 
     else:
@@ -486,7 +505,7 @@ init 5 python:
 label debug_remove_watched_item:
     n "No worries, [player]! Just tell me what you want to remove."
     $ player_input = renpy.input("Enter an expression, or enter 'nevermind' to cancel:")
-    if (player_input.lower().strip() in {"nevermind", ""}):
+    if (player_input.lower().strip() in ("nevermind", "")):
         n "Oh.{w=0.2} Alright then."
 
     else:

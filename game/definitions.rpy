@@ -859,8 +859,8 @@ init python:
     y_name = "Yuri"
 
     # Assign Natsuki the chosen nickname (defaulted to Natsuki)
-    if store.persistent.jn_player_nicknames_current_nickname:
-        n_name = store.persistent.jn_player_nicknames_current_nickname
+    if persistent.jn_player_nicknames_current_nickname:
+        n_name = persistent.jn_player_nicknames_current_nickname
     
     else:
         n_name = "Natsuki"

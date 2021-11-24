@@ -234,6 +234,9 @@ label autoload:
         main_menu = False
         _in_replay = None
 
+    # Prevent the player's menu hotkey from defaulting to Save/Load
+    $ store._game_menu_screen  = "preferences"
+
     # explicity remove keymaps we dont want
     $ config.keymap["debug_voicing"] = list()
     $ config.keymap["choose_renderer"] = list()
@@ -248,8 +251,10 @@ label autoload:
 label before_main_menu:
     if persistent.playername != "":
         $ renpy.jump_out_of_context("start")
-    #else:
-    #    $ config.main_menu_music = audio.t1
+
+    # Prevent the player's menu hotkey from defaulting to Save/Load
+    $ store._game_menu_screen  = "preferences"
+    
     return
 
 label quit:

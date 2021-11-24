@@ -14,8 +14,8 @@ init 0 python in jn_snap:
     import time
 
     # Card config
-    _card_values = range(1, 11)
-    _card_suits = [
+    _CARD_VALUES = range(1, 11)
+    _CARD_SUITS = [
         "clubs",
         "diamonds",
         "hearts",
@@ -30,7 +30,7 @@ init 0 python in jn_snap:
     _SNAP_POPUP_Z_INDEX = 5
 
     # Quips
-    _player_correct_snap_quips = [
+    _PLAYER_CORRECT_SNAP_QUIPS = [
         "Nnnnn-!",
         "Ugh!{w=0.2} Come on!",
         "Y-{w=0.1}You're fast!",
@@ -52,7 +52,7 @@ init 0 python in jn_snap:
         "How are you {i}that{/i} fast?!"
     ]
 
-    _natsuki_correct_snap_quips = [
+    _NATSUKI_CORRECT_SNAP_QUIPS = [
         "SNAP!{w=0.2} Ahaha!",
         "Snap!{w=0.2} Ahaha!",
         "SNAP!{w=0.2} Ehehe.",
@@ -72,7 +72,7 @@ init 0 python in jn_snap:
         "Bam!{w=0.2} Snap!"
     ]
 
-    _player_incorrect_snap_quips = [
+    _PLAYER_INCORRECT_SNAP_QUIPS = [
         "Oh?{w=0.2} Someone's impatient,{w=0.1} huh?",
         "Oopsie daisy,{w=0.1} [player]~.{w=0.2} Ehehe.",
         "Nice one,{w=0.1} dummy.{w=0.2} Ahaha!",
@@ -82,7 +82,7 @@ init 0 python in jn_snap:
         "Great play,{w=0.1} dummy!{w=0.2} Ahaha!"
     ]
 
-    _natsuki_incorrect_snap_quips = [
+    _NATSUKI_INCORRECT_SNAP_QUIPS = [
         "Sn-...{w=0.3} oh.",
         "Snap!{w=0.2} Wait...",
         "SNAP!{w=0.2} Huh...?{w=0.2} O-{w=0.1}oh.",
@@ -117,14 +117,14 @@ init 0 python in jn_snap:
 
     # A little something extra
     if random.choice(range(1, 100)) == 1:
-        _card_fan_image_player = "mod_assets/games/snap/ui/card_fan_icon_alt.png"
+        _CARD_FAN_IMAGE_PLAYER = "mod_assets/games/snap/ui/card_fan_icon_alt.png"
 
     else:
-        _card_fan_image_player = "mod_assets/games/snap/ui/card_fan_icon.png"
+        _CARD_FAN_IMAGE_PLAYER = "mod_assets/games/snap/ui/card_fan_icon.png"
 
-    _card_fan_image_natsuki = "mod_assets/games/snap/ui/card_fan_icon.png"
+    _CARD_FAN_IMAGE_NATSUKI = "mod_assets/games/snap/ui/card_fan_icon.png"
 
-    _snap_popup_sprites = [
+    _SNAP_POPUP_SPRITES = [
         "mod_assets/games/snap/ui/snap_a.png",
         "mod_assets/games/snap/ui/snap_b.png",
         "mod_assets/games/snap/ui/snap_c.png",
@@ -160,8 +160,8 @@ init 0 python in jn_snap:
         del _natsuki_hand[:]
 
         # Generate all possible card combinations based on suits and values
-        for card_suit in _card_suits:
-            for card_value in _card_values:
+        for card_suit in _CARD_SUITS:
+            for card_value in _CARD_VALUES:
                 _cards_in_deck.append((card_suit, card_value))
 
         # Assign each player their deck
@@ -261,8 +261,11 @@ init 0 python in jn_snap:
             del _cards_on_table[:]
             renpy.play("mod_assets/sfx/card_shuffle.mp3")
 
-            _snap_popup_image = random.choice(_snap_popup_sprites)
+            _snap_popup_image = random.choice(_SNAP_POPUP_SPRITES)
             draw_card_onscreen()
+
+            # Use of renpy.call here is a stopgap and will be reworked, as renpy.call risks breaking label flow if not carefully applied.
+            # Please use renpy.jump instead of this approach
 
             # Natsuki comments on the correct snap
             renpy.call("snap_quip", is_player_snap=is_player, is_correct_snap=True)
@@ -466,7 +469,7 @@ label snap_quip(is_player_snap, is_correct_snap):
         # Player snapped, and was correct
         if is_correct_snap:
             $ jn_snap._player_failed_snap_streak = 0
-            $ quip = renpy.substitute(random.choice(jn_snap._player_correct_snap_quips))
+            $ quip = renpy.substitute(random.choice(jn_snap._PLAYER_CORRECT_SNAP_QUIPS))
             show placeholder_natsuki plead zorder jn_placeholders.NATSUKI_Z_INDEX
 
             # Some UE things to make it fun
@@ -520,14 +523,14 @@ label snap_quip(is_player_snap, is_correct_snap):
 
             # Generic incorrect quip/tease
             else:
-                $ quip = renpy.substitute(random.choice(jn_snap._player_incorrect_snap_quips))
+                $ quip = renpy.substitute(random.choice(jn_snap._PLAYER_INCORRECT_SNAP_QUIPS))
                 show placeholder_natsuki smug zorder jn_placeholders.NATSUKI_Z_INDEX
 
     else:
 
         # Natsuki snapped, and was correct
         if is_correct_snap:
-            $ quip = renpy.substitute(random.choice(jn_snap._natsuki_correct_snap_quips))
+            $ quip = renpy.substitute(random.choice(jn_snap._NATSUKI_CORRECT_SNAP_QUIPS))
             show placeholder_natsuki smile zorder jn_placeholders.NATSUKI_Z_INDEX
 
             # Some UE things to make it fun
@@ -537,7 +540,7 @@ label snap_quip(is_player_snap, is_correct_snap):
 
         # Natsuki snapped, and was incorrect
         else:
-            $ quip = renpy.substitute(random.choice(jn_snap._natsuki_incorrect_snap_quips))
+            $ quip = renpy.substitute(random.choice(jn_snap._NATSUKI_INCORRECT_SNAP_QUIPS))
             show placeholder_natsuki unamused zorder jn_placeholders.NATSUKI_Z_INDEX
 
     # Natsuki quips; disable controls so player can't skip dialogue
@@ -724,12 +727,12 @@ image current_table_card:
 image player_hand_icon:
     anchor(0,0)  
     pos (675, 110)
-    jn_snap._card_fan_image_player
+    jn_snap._CARD_FAN_IMAGE_PLAYER
 
 image natsuki_hand_icon:
     anchor(0,0)  
     pos (675, 180)
-    jn_snap._card_fan_image_natsuki
+    jn_snap._CARD_FAN_IMAGE_NATSUKI
 
 # Icon representing who's turn it is
 image turn_indicator_icon:
