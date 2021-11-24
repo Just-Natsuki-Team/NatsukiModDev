@@ -165,12 +165,8 @@ label music_menu:
 
             # If we have more than one track, we can make sure the new chosen track isn't the same as the current one
             python: 
-                if len(available_custom_music) > 1 and\
-                jn_custom_music._now_playing is not None and\
-                jn_custom_music._now_playing is not "No music":
-                    
+                if len(available_custom_music) > 1:
                     music_title_and_file = random.choice(filter(lambda track: (jn_custom_music._now_playing not in track), available_custom_music))
-                    renpy.say(n, music_title_and_file)
                     music_title = music_title_and_file[0]
                     renpy.play(filename=music_title_and_file[1], channel="music")
 
