@@ -143,17 +143,17 @@ init python in jn_debug:
         Loads the expressions configured under debug/watch_items.txt into memory to be watched.
         """
         try:
-            if not os.path.exists(".\\debug"):
+            if not os.path.exists("./debug"):
                 # The folder doesn't exist; create the folder and file from the default ready for use
-                os.makedirs(".\\debug")
-                items_setup_file = open(".\\debug\\watch_items.txt", "a")
+                os.makedirs("./debug")
+                items_setup_file = open("./debug/watch_items.txt", "a")
                 items_setup_file.writelines(_default_tracked_watch_items)
                 items_setup_file.close()
                 return LOAD_FROM_DISK_NEW_FILE_CREATED
 
             else:
                 # The folder exists; let's try and read it into memory!
-                items_setup_file = open(".\\debug\\watch_items.txt", "r")
+                items_setup_file = open("./debug/watch_items.txt", "r")
                 _unwatch_all_tracked_items()
                 items_from_file = items_setup_file.readlines()
                 items_setup_file.close()
