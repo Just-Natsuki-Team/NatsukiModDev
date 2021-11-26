@@ -310,67 +310,6 @@ init -1 python in jn_affinity:
             )
             return "UNKNOWN"
 
-    def get_affinity_resting_sprite():
-        """
-        Returns a random sprite code based on the current affinity state.
-
-        OUT:
-            - spritecode as string
-        """
-        if get_affinity_state() >= ENAMORED:
-            sprite_codes = [
-                "1nchsml",
-                "1kwmsml",
-                "1kllsml",
-                "1klrsml",
-                "1knmsml"
-            ]
-            return random.choice(sprite_codes)
-
-        elif get_affinity_state() >= AFFECTIONATE:
-            sprite_codes = [
-                "1ullsml",
-                "1ulrsml",
-                "1unmsml",
-                "1nnmsgl"
-            ]
-            return random.choice(sprite_codes)
-
-        elif get_affinity_state() >= NORMAL:
-            sprite_codes = [
-                "1nnmsg",
-                "1nnmsm",
-                "1nllnv",
-                "1nlrnv",
-                "1nllca",
-                "1nlrca"
-            ]
-            return random.choice(sprite_codes)
-
-        elif get_affinity_state() >= DISTRESSED:
-            sprite_codes = [
-                "1fllsl",
-                "1klrsl",
-                "1kcssl",
-                "1kcssf",
-                "1fcssf",
-                "1fllsf",
-                "1flrsf",
-                "1fsqca"
-            ]
-            return random.choice(sprite_codes)
-
-        else:
-            sprite_codes = [
-                "1fcsun",
-                "1kcssr",
-                "1fsqup",
-                "1fsqun",
-                "1kcsup",
-                "1fcsup"
-            ]
-            return random.choice(sprite_codes)
-
 init -1 python in jn_trust:
     import store
     

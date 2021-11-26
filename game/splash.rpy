@@ -14,6 +14,7 @@ init -100 python:
 ## not found, the player is directed to the developer's site to download.
 ##
 init python:
+    config.rollback_enabled = False
     menu_trans_time = 1
     #The default splash message, originally shown in Act 1 and Act 4
     splash_message = _("This game is an unofficial fan work, unaffiliated with Team Salvato.")
