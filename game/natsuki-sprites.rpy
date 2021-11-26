@@ -286,6 +286,99 @@ init 1 python:
             "blush": BLUSH_MAP.get(blush),
         }
 
+    def _generate_image(exp_code):
+        """
+        Internal function to generate the image from the given expression code
+        """
+        #Parse the expression code and generate the displayable
+        disp = jn_generate_natsuki_sprite(**_parse_exp_code(exp_code))
+
+        #Get existing attrs to append this one to the known attrs
+        _existing_attr_list = renpy.display.image.image_attributes["natsuki"]
+
+        #Now add the displayable
+        renpy.display.image.images[("natsuki", exp_code)] = disp
+
+        #And finally update the attributes
+        if exp_code not in _existing_attr_list:
+            _existing_attr_list.append(exp_code)
+
+    def _find_target_override(self):
+        """
+        This method tries to find an image by its reference. It can be a displayable or tuple.
+        If this method can't find an image and it follows the pattern of Monika's sprites, it'll try to generate one.
+
+        Main change to this function is the ability to auto generate displayables
+        """
+        name = self.name
+
+        if isinstance(name, renpy.display.core.Displayable):
+            self.target = name
+            return True
+
+        if not isinstance(name, tuple):
+            name = tuple(name.split())
+
+        def error(msg):
+            self.target = renpy.text.text.Text(msg, color=(255, 0, 0, 255), xanchor=0, xpos=0, yanchor=0, ypos=0)
+
+            if renpy.config.debug:
+                raise Exception(msg)
+
+        args = [ ]
+
+        while name:
+            target = renpy.display.image.images.get(name, None)
+
+            if target is not None:
+                break
+
+            args.insert(0, name[-1])
+            name = name[:-1]
+
+        if not name:
+            if (
+                isinstance(self.name, tuple)
+                and len(self.name) == 2
+                and self.name[0] == "natsuki"
+            ):
+                #Reset name
+                name = self.name
+                #Generate
+                _generate_image(name[1])
+                #Try to get the img again
+                target = renpy.display.image.images[name]
+
+            else:
+                error("Image '%s' not found." % ' '.join(self.name))
+                return False
+
+        try:
+            a = self._args.copy(name=name, args=args)
+            self.target = target._duplicate(a)
+
+        except Exception as e:
+            if renpy.config.debug:
+                raise
+
+            error(str(e))
+
+        #Copy the old transform over.
+        new_transform = self.target._target()
+
+        if isinstance(new_transform, renpy.display.transform.Transform):
+            if self.old_transform is not None:
+                new_transform.take_state(self.old_transform)
+
+            self.old_transform = new_transform
+
+        else:
+            self.old_transform = None
+
+        return True
+
+    renpy.display.image.ImageReference.find_target = _find_target_override
+
 # Sprite code format:
 # <pose><eyebrows><eyes><mouth><tears><blush>
 #
