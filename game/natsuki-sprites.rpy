@@ -94,7 +94,7 @@ init python:
 
     class JNTears(Enum):
         heavy = 1
-        light = 2
+        pooled = 2
 
     def jn_generate_natsuki_sprite(
         pose,
@@ -155,8 +155,147 @@ init python:
             *lc_args
         )
 
+init 1 python:
+    POSE_MAP = {
+        "1": JNPose.sitting,
+    }
+
+    EYEBROW_MAP = {
+        "n": JNEyebrows.normal,
+        "u": JNEyebrows.up,
+        "k": JNEyebrows.knit,
+        "f": JNEyebrows.furrowed,
+        "t": JNEyebrows.think,
+    }
+
+    EYE_MAP = {
+        "bk": JNEyes.baka,
+        "ct": JNEyes.circletears,
+        "ch": JNEyes.closedhappy,
+        "cs": JNEyes.closedsad,
+        "cu": JNEyes.cute,
+        "nm": JNEyes.normal,
+        "pl": JNEyes.pleading,
+        "sc": JNEyes.scared,
+        "sk": JNEyes.shocked,
+        "sg": JNEyes.smug,
+        "sp": JNEyes.sparkle,
+        "sq": JNEyes.squint,
+        "un": JNEyes.unamused,
+        "wm": JNEyes.warm,
+        "wd": JNEyes.wide,
+        "wl": JNEyes.winkleft,
+        "wr": JNEyes.winkright,
+    }
+
+    MOUTH_MAP = {
+        "aj": JNMouth.ajar,
+        "an": JNMouth.angry,
+        "aw": JNMouth.awe,
+        "bg": JNMouth.big,
+        "bs": JNMouth.bigsmile,
+        "bo": JNMouth.bored,
+        "ca": JNMouth.caret,
+        "ct": JNMouth.catty,
+        "dv": JNMouth.devious,
+        "em": JNMouth.embarrassed,
+        "fr": JNMouth.frown,
+        "fu": JNMouth.furious,
+        "gs": JNMouth.gasp,
+        "gn": JNMouth.grin,
+        "lg": JNMouth.laugh,
+        "nv": JNMouth.nervous,
+        "po": JNMouth.pout,
+        "pu": JNMouth.pursed,
+        "sc": JNMouth.scream,
+        "sr": JNMouth.serious,
+        "sk": JNMouth.shock,
+        "sl": JNMouth.slant,
+        "sm": JNMouth.smile,
+        "sf": JNMouth.smallfrown,
+        "ss": JNMouth.smallsmile,
+        "sg": JNMouth.smug,
+        "ts": JNMouth.tease,
+        "tr": JNMouth.triange,
+        "un": JNMouth.uneasy,
+        "up": JNMouth.upset,
+        "wr": JNMouth.worried,
+    }
+
+    TEARS_MAP = {
+        "h": JNTears.heavy,
+        "p": JNTears.pooled,
+    }
+
+    BLUSH_MAP = {
+        "f": JNBlush.full,
+        "l": JNBlush.light,
+    }
+
+    def _parse_exp_code(exp_code):
+        """
+        Parses the given expression code and returns the **kwargs to create the sprite if it is valid
+
+        THROWS:
+            ValueError if the expression is invalid due to length (too short)
+            KeyError if the expression is invalid due to invalid parts
+        """
+        #Check if the length is valid first
+        if len(exp_code) < 6:
+            raise ValueError("Invalid expression code: {0}".format(exp_code))
+
+        #Left to right, first is the pose
+        pose = exp_code[0]
+        exp_code = exp_code[1:]
+
+        #Next, eyebrows
+        eyebrows = exp_code[0]
+        exp_code = exp_code[1:]
+
+        #Next, eyes
+        eyes = exp_code[:2]
+        exp_code = exp_code[2:]
+
+        #Next, mouth
+        mouth = exp_code[:2]
+        exp_code = exp_code[2:]
+
+        blush = None
+        tears = None
+
+        #If we still have an expcode, we know we have either tears, blush, or both
+        while exp_code:
+            exp_part = exp_code[0]
+            exp_code = exp_code[1:]
+
+            #Check if part is a tear
+            if exp_part in TEARS_MAP:
+                tears = TEARS_MAP[exp_part]
+
+            #Otherwise it might be a blush
+            elif exp_part in BLUSH_MAP:
+                blush = BLUSH_MAP[exp_part]
+
+
+        return {
+            "pose": POSE_MAP[pose],
+            "eyebrows": EYEBROW_MAP[eyebrows],
+            "eyes": EYE_MAP[eyes],
+            "mouth": MOUTH_MAP[mouth],
+            "tears": TEARS_MAP.get(tears),
+            "blush": BLUSH_MAP.get(blush),
+        }
+
 # Sprite code format:
 # <pose><eyebrows><eyes><mouth><tears><blush>
+#
+# Some notes regarding lengths of each part:
+#   pose: 1 character
+#   eyebrows: 1 character
+#   eyes: 2 characters
+#   mouth: 2 characters
+#   tears: 1 character
+#   blush: 1 character
 #
 # Sprite code values:
 # <pose> - The current pose Natsuki is resting in
@@ -174,7 +313,7 @@ init python:
 # ct - circle/cartoon tears
 # ch - closed happy
 # cs - closed sad
-# ct - cute
+# cu - cute
 # nm - normal
 # pl - pleading
 # sc - scared
@@ -223,7 +362,7 @@ init python:
 #
 # <tears> - The tears Natsuki is currently showing
 # h - heavy
-# l - light
+# p - pooled
 #
 # <blush> - The amount of blush on Natsuki's face
 # f - full
