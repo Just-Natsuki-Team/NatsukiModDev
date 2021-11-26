@@ -411,6 +411,8 @@ init 1 python:
 # ch - closed happy
 # cs - closed sad
 # cu - cute
+# ll - lookleft
+# lr - lookright
 # nm - normal
 # pl - pleading
 # sc - scared
