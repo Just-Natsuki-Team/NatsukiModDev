@@ -3552,7 +3552,7 @@ label talk_fried_squid:
     n "Ugh!{w=0.2} Gross!{w=0.2} Talk about a disappointment."
     n "Don't let that put you off though,{w=0.1} [player] -{w=0.1} next time you see some,{w=0.1} why not give it a shot?"
 
-    if jn_admissions.last_admission_type == TYPE_HUNGRY:
+    if jn_admissions.last_admission_type == jn_admissions.TYPE_HUNGRY:
         n "...Probably the sooner the better,{w=0.1} if you're hungry like you said."
         n "But anyway..."
 
