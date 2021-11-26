@@ -1268,7 +1268,7 @@ init 5 python:
 label talk_driving:
     # Check to see if the player and Natsuki have already discussed if Nat can drive in this topic, or the "are you into cars?" topic
     $ already_discussed_driving = get_topic("talk_driving").shown_count > 0 or get_topic("talk_are_you_into_cars").shown_count > 0
-    
+
     n "Pffft!"
     n "Ahaha!{w=0.2} What kind of a question is that,{w=0.1} [player]?"
     $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
@@ -1575,7 +1575,7 @@ label talk_give_nickname:
         return
 
     elif nickname_type == jn_nicknames.TYPE_NOU:
-        show placeholder_natsuki wink zorder jn_placeholders.NATSUKI_Z_INDEX
+        show natsuki 1uwlgn zorder jn_placeholders.NATSUKI_Z_INDEX
         n "No you~."
         return
 
@@ -1853,7 +1853,7 @@ label talk_work_life_balance:
         n "It isn't like that kind of thing is only limited to when you're away either."
         n "I've heard too many stories of people doing stupid amounts of overtime at work -{w=0.1} often not even paid."
         n "Or even students studying late into the night until they collapse..."
-    
+
     if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "Ugh...{w=0.3} I just wish people would value their own time more."
         n "..."
@@ -1874,7 +1874,7 @@ label talk_work_life_balance:
         else:
             $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
             n "People are more than what they do for a living,{w=0.1} after all.{w=0.2} And that includes you too, [chosen_tease]!"
-        
+
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
         n "Makes me wish people would value their own time more."
         n "...I guess that includes you too,{w=0.1} [player]."
@@ -2037,7 +2037,7 @@ label talk_gaming:
                 n "Yep!{w=0.2} Just as I suspected..."
                 n "[player] is a mega-dork."
                 n "Ahaha!"
-                n "Relax,{w=0.1} [player]!" 
+                n "Relax,{w=0.1} [player]!"
                 n "I'm not much better,{w=0.1} after all."
 
             "I play occasionally.":
@@ -2151,7 +2151,7 @@ label talk_natsukis_fang:
         n "Smiles look good on you,{w=0.1} [chosen_endearment]."
         n "Let's keep them looking that way."
         n "Ehehe.{w=0.2} Love you,{w=0.1} [player]~!"
-    
+
     elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         n "I think smiles look good on you,{w=0.1} [player]."
         n "Let's keep them looking that way!"
@@ -2226,7 +2226,7 @@ label talk_i_love_you:
             n "I hope you're happy."
             n "..."
             n "D-{w=0.1}don't think this means I {i}hate{/i} you or anything,{w=0.1} though..."
-            n "It's just that...{w=0.3} It's just..." 
+            n "It's just that...{w=0.3} It's just..."
             n "Uuuuuu..."
             n "N-{w=0.1}never mind...{w=0.3} Ahaha..."
             $ relationship(change="affinity+", multiplier=2)
@@ -2269,7 +2269,7 @@ label talk_i_love_you:
             n "I-{w=0.1}I mean,{w=0.1} I'm just glad you have some good taste."
             n "Ehehe..."
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET: 
+        elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
             n "..."
             n "Seriously,{w=0.1} [player]?{w=0.2} You're really going to say that to me {i}now{/i}?"
             n "The first time you choose to say it...{w=0.3} and you say it {i}now{/i}?"
@@ -2306,7 +2306,7 @@ label talk_i_love_you:
             return { "quit": None }
 
         $ persistent.jn_player_love_you_count += 1
-    
+
     # Standard flows
     else:
         $ persistent.jn_player_love_you_count += 1
@@ -2314,7 +2314,7 @@ label talk_i_love_you:
 
             # At this point, Natsuki is super comfortable with her player, so we can be open and vary things!
             $ random_response_index = random.randint(0, 11)
-            
+
             if random_response_index == 0:
                 n "Ehehe.{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
                 n "You're always [chosen_descriptor] to me."
@@ -2386,9 +2386,9 @@ label talk_i_love_you:
                 return
 
             elif random_response_index == 7:
-                n "Wow,{w=0.1} [player]..." 
+                n "Wow,{w=0.1} [player]..."
                 n "You really are just a big sappy mess today,{w=0.1} aren't you?"
-                n "Gross..." 
+                n "Gross..."
                 n "...But just the kind of gross I'm down with.{w=0.2} Ehehe."
                 n "I love you too,{w=0.1} [chosen_endearment]!"
                 n "I'll always have your back."
@@ -2413,7 +2413,7 @@ label talk_i_love_you:
                 while player_is_wrong:
                     menu:
                         "No, I love {i}you{/i} more!":
-                            
+
                             if wrong_response_count == 1:
                                 n "Hmm?{w=0.2} Did you mishear me,{w=0.1} [player]?"
                                 n "I said I love {i}you{/i} more,{w=0.2} [chosen_tease]!"
@@ -2589,7 +2589,7 @@ label talk_natsukis_hairstyle:
 
     n "Well,{w=0.1} anyway."
     n "I never really thought about it that much,{w=0.1} honestly."
-    
+
     if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "I just thought twintails would look cute on me..."
         n "...Yeah,{w=0.1} yeah.{w=0.2} I know what you're thinking,{w=0.1} [player]."
@@ -2691,7 +2691,7 @@ label talk_integrity:
         n "I'm sure I can help you find what's right for you."
         n "That's what friends are for,{w=0.1} right?"
         n "Especially ones like me!{w=0.2} Ehehe."
-    
+
     return
 
 # Natsuki discusses her favourite animal
@@ -2719,7 +2719,7 @@ label talk_favourite_animal:
         n "It really winds me up when people call them boring,{w=0.1} or unaffectionate though.{w=0.2} Like...{w=0.3} have you ever watched one?"
         n "They all have their own little personalities,{w=0.1} just like any other animal -{w=0.1} only smaller!"
         n "And if you bond with them,{w=0.1} they aren't afraid to show it -{w=0.1} I've seen videos of them following their owners around,{w=0.1} and even leaping into their hands!"
-        n "Plus they're easy to take care of,{w=0.1} too!" 
+        n "Plus they're easy to take care of,{w=0.1} too!"
         n "Just top up their food and change their water daily,{w=0.1} and clean their cage out once a week -{w=0.1} no sweat."
         n "Hmm..."
         n "You know,{w=0.1} [player]...{w=0.3} it does get a little quiet when you aren't around,{w=0.1} if you know what I'm getting at..."
@@ -2750,7 +2750,7 @@ label talk_favourite_animal:
     else:
         n "Heh.{w=0.2} Really?{w=0.2} My favourite animal...?"
         n "Not you,{w=0.1} [player].{w=0.2} That's for sure."
-    
+
     return
 
 # Natsuki discusses her favourite drink
@@ -2771,7 +2771,7 @@ init 5 python:
 label talk_favourite_drink:
     if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
         n "Ooooh!{w=0.2} My favourite drink?"
-        
+
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "Mmm?{w=0.2} My favourite drink?"
 
@@ -2815,7 +2815,7 @@ label talk_favourite_drink:
             n "Though if I had to pick a favourite?"
             n "It's gotta be strawberries and cream,{w=0.1} obviously."
             n "And...{w=0.3} maybe with just a dash of chocolate too?{w=0.2} Ehehe."
-        
+
         else:
             n "Yeah.{w=0.2} That's the real deal!"
 
@@ -2952,7 +2952,7 @@ label talk_flying:
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n "Oh?{w=0.2} Like flying on a plane or whatever?"
-        n "Uhmm..." 
+        n "Uhmm..."
         n "I...{w=0.3} never really had the opportunity to fly anywhere,{w=0.1} [player]."
         n "I don't even have a passport or anything like that,{w=0.1} and even if I did?"
         n "It isn't like tickets are...{w=0.3} affordable,{w=0.1} if you know what I mean?"
@@ -3047,7 +3047,7 @@ label talk_are_you_into_cars:
     if already_discussed_driving:
         # Natsuki has already established she can't drive at some point
         if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-            n "Eh?{w=0.2} Cars?" 
+            n "Eh?{w=0.2} Cars?"
             n "You know I can't drive,{w=0.1} dummy!{w=0.2} I don't really think I have much of a reason to be into cars!"
             n "Well,{w=0.1} anyway..."
 
@@ -3092,7 +3092,7 @@ label talk_are_you_into_cars:
                 # The player has never stated if they can drive
                 if persistent.jn_player_can_drive is None:
                     n "Huh.{w=0.2} I wasn't actually sure if you could even drive,{w=0.1} but I guess it doesn't matter really."
-                    n "I guess being a petrolhead isn't an exclusive club,{w=0.1} huh?" 
+                    n "I guess being a petrolhead isn't an exclusive club,{w=0.1} huh?"
                     n "Ehehe."
 
                 # The player has confirmed they can drive
@@ -3235,12 +3235,12 @@ label talk_how_do_you_feel_about_me:
             n "Don't even bother asking twice."
 
         return
-        
+
     else:
         n "...{w=0.3}...{w=0.3}"
         n "...{w=0.3}...{w=0.3}"
         return
-        
+
     return
 
 # Natsuki pitches her thoughts on cosplaying
@@ -3330,7 +3330,7 @@ label talk_are_you_into_cosplay:
         n "It kinda feels like once you start getting into that stuff,{w=0.1} you discover tons more at once!"
         n "But anyway,{w=0.1} I've never actually gone out and cosplayed myself."
         n "T-{w=0.1}that isn't to say there's anything stopping me,{w=0.1} of course!"
-        
+
         if already_mentioned_sewing:
             n "I told you already that I'm pretty good with a needle and thread,{w=0.1} so that's a-{w=0.1}okay!"
 
@@ -3475,7 +3475,7 @@ label talk_why_do_you_like_me:
         n "So is it any wonder why I...{w=0.3} really like you this much?"
         n "..."
         n "Alright,{w=0.1} okay.{w=0.2} I really don't wanna have to explain all that again,{w=0.1} so I hope you took all that in."
-        n "Just...{w=0.3} continue being you,{w=0.1} got it?" 
+        n "Just...{w=0.3} continue being you,{w=0.1} got it?"
         n "I...{w=0.3} really couldn't ask for better.{w=0.2} Ahaha..."
         return
 
@@ -3546,7 +3546,7 @@ label talk_fried_squid:
     n "It's not {i}good{/i} for you exactly,{w=0.1} but as a treat?{w=0.2} You could do way worse..."
     n "Especially with sauce to spice things up a bit!"
     n "By the way -{w=0.1} wanna know how you can tell you're dining on some top-notch squiddy goodness?"
-    n "The texture,{w=0.1} of course!" 
+    n "The texture,{w=0.1} of course!"
     n "Overcooked squid becomes all rubbery and nasty,{w=0.1} and even worse -{w=0.1} it loses all of its flavour too!"
     n "Imagine biting through the batter,{w=0.1} only to find you're basically chewing on a bunch of rubber bands."
     n "Ugh!{w=0.2} Gross!{w=0.2} Talk about a disappointment."
@@ -3624,7 +3624,7 @@ label talk_collectibles:
         n "...Why?{w=0.2} ...And I don't just mean why you care."
         n "But why should I tell {i}you{/i} if I do or not?"
         n "You'd probably just trash them."
-        n "Heh.{w=0.2} After all." 
+        n "Heh.{w=0.2} After all."
         n "You've proven great at trashing things so far,{w=0.1} {i}haven't you{/i}?{w=0.2} Jerk."
         return
 
@@ -3639,7 +3639,7 @@ label talk_collectibles:
             n "Oho!"
             n "So I suppose I am something of a collector,{w=0.1} after all!"
 
-            if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:         
+            if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
                 n "I guess that all makes sense.{w=0.2} After all..."
                 n "I'd like to think you're in my collection too,{w=0.1} [player]~."
                 n "Ehehe."
@@ -3693,7 +3693,7 @@ label talk_play_snap:
     else:
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
             n "Of course I do,{w=0.1} dummy!{w=0.2} Ehehe."
-            
+
         elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "Of course I'll play some with you,{w=0.1} dummy!"
 
@@ -3701,10 +3701,10 @@ label talk_play_snap:
             n "Well,{w=0.1} duh!{w=0.2} Of course I'm up for a game!"
 
         else:
-            n "You wanna play Snap?{w=0.2} Sure!" 
-        
+            n "You wanna play Snap?{w=0.2} Sure!"
+
         n "Let me just get the cards out real quick,{w=0.1} alright?"
-        play audio drawer 
+        play audio drawer
         with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
         jump snap_intro
 
@@ -3736,7 +3736,7 @@ label talk_remind_snap_rules:
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
             n "Ehehe.{w=0.2} You're so forgetful sometimes,{w=0.1} [player]."
             n "Sure,{w=0.1} I'll go over it again.{w=0.2} Juuust for you~."
-            
+
         elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n "Of course I can!"
 
@@ -3920,7 +3920,7 @@ label talk_windup_litter:
     n "It pisses me off just thinking about it..."
     n "..."
     n "[player]."
-    
+
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         n "I know you.{w=0.2} In fact,{w=0.1} I daresay I know you {i}very{/i} well by now."
         n "I don't think you're the sort to do that at all..."
@@ -3950,7 +3950,7 @@ label talk_windup_litter:
 
     return
 
-# Natsuki discovers a music player, leading to the unlocking of custom music! 
+# Natsuki discovers a music player, leading to the unlocking of custom music!
 # We assign no categories to this so it isn't selectable via menu, making it a one-time conversation
 init 5 python:
     registerTopic(
@@ -3971,13 +3971,13 @@ label talk_custom_music_introduction:
     n "Hmm..."
     n "I wonder if it's still here..."
 
-    play audio drawer 
+    play audio drawer
     with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
     n "Come on!{w=0.2} It's gotta still be here!{w=0.2} I know it!"
 
-    play audio drawer 
-    with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")    
+    play audio drawer
+    with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
     n "..."
     n "Aha!{w=0.2} Yes!"
@@ -3990,7 +3990,7 @@ label talk_custom_music_introduction:
     n "We just found it left in the clubroom one day.{w=0.2} Nobody knew if it belonged to anyone -{w=0.1} and trust me,{w=0.1} we tried to find out!"
     n "We asked around in lessons,{w=0.1} we sent out notes...{w=0.3} nothing!"
     n "So...{w=0.3} we kinda just kept it here,{w=0.1} in my desk,{w=0.1} in case whoever it was came back to pick it up."
-    n "I guess they never will now,{w=0.1} huh?" 
+    n "I guess they never will now,{w=0.1} huh?"
     n "Ahaha..."
     n "Well,{w=0.1} whatever.{w=0.2} The point is we can play whatever music we want now!"
     n "I think I figured out a way to let you send me whatever you want me to put on,{w=0.1} so listen up,{w=0.1} 'kay?"

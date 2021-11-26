@@ -201,7 +201,7 @@ label screenshot_dialogue:
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE)
         ):
 
-            show placeholder_natsuki plead zorder 3
+            show natsuki 1kwmsr
 
             n "H-huh?{w=0.2} What was that flash I just saw?"
             n "Don't tell me...{w=0.3} was that a camera?!{w=0.2} There's a camera here?!"
@@ -226,7 +226,7 @@ label screenshot_dialogue:
             affinity_range=(jn_affinity.UPSET, jn_affinity.RUINED)
         ):
 
-            show placeholder_natsuki unamused zorder 3
+            show natsuki 1fsqsr
 
             n "..."
             n "You're taking pictures of me,{w=0.1} aren't you?"
@@ -247,7 +247,7 @@ label screenshot_dialogue:
 
         else:
 
-            show placeholder_natsuki unamused zorder 3
+            show natsuki 1fsqsr
 
             n "..."
             n "C-{w=0.1}camera...?"
@@ -288,7 +288,7 @@ label screenshot_dialogue:
     # Too many bad screenshots in a row; Natsuki is upset
     elif jn_screenshots.bad_screenshot_streak >= 3 and jn_affinity.get_affinity_state() < jn_affinity.ENAMORED:
 
-        show placeholder_natsuki unamused zorder 3
+        show natsuki 1fsqsr
 
         # Add pending apology
         $ jn_apologies.add_new_pending_apology(store.jn_apologies.TYPE_SCREENSHOT)
@@ -309,7 +309,7 @@ label screenshot_dialogue:
         call take_screenshot
         $ utils.log("Curr aff state: {0}".format(jn_affinity.get_affinity_state()))
 
-        show placeholder_natsuki unamused zorder 3
+        show natsuki 1fsqsr zorder 3
 
         # Add pending apology
         $ jn_apologies.add_new_pending_apology(store.jn_apologies.TYPE_SCREENSHOT)

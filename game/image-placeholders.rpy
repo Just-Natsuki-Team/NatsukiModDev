@@ -1,17 +1,3 @@
-# Natsuki's placeholder sprites; we use these in leiu of a full sprite system for now
-image placeholder_natsuki boast = "mod_assets/natsuki/placeholder_boast.png"
-image placeholder_natsuki neutral = "mod_assets/natsuki/placeholder_neutral.png"
-image placeholder_natsuki plead = "mod_assets/natsuki/placeholder_plead.png"
-image placeholder_natsuki pleased = "mod_assets/natsuki/placeholder_pleased.png"
-image placeholder_natsuki sad = "mod_assets/natsuki/placeholder_sad.png"
-image placeholder_natsuki shy = "mod_assets/natsuki/placeholder_shy.png"
-image placeholder_natsuki smile = "mod_assets/natsuki/placeholder_smile.png"
-image placeholder_natsuki smug = "mod_assets/natsuki/placeholder_smug.png"
-image placeholder_natsuki sparkle = "mod_assets/natsuki/placeholder_sparkle.png"
-image placeholder_natsuki tease = "mod_assets/natsuki/placeholder_tease.png"
-image placeholder_natsuki unamused = "mod_assets/natsuki/placeholder_unamused.png"
-image placeholder_natsuki wink = "mod_assets/natsuki/placeholder_wink.png"
-
 # Placeholder sky types for the classroom
 image placeholder_sky_day overcast = "mod_assets/backgrounds/classroom/placeholder_sky_day_overcast.png"
 image placeholder_sky_day rain = "mod_assets/backgrounds/classroom/placeholder_sky_day_rain.png"
@@ -70,19 +56,19 @@ init 0 python in jn_placeholders:
         Shows a resting Natsuki placeholder sprite based on current affinity.
         """
         if store.jn_affinity.get_affinity_state() >= store.jn_affinity.ENAMORED:
-            renpy.show(name="placeholder_natsuki smile", at_list=[store.center], zorder=NATSUKI_Z_INDEX)
+            renpy.show(name="natsuki 1uchbg", at_list=[store.center], zorder=NATSUKI_Z_INDEX)
             renpy.with_statement(trans=store.natsuki_desk_move_transition)
 
         elif store.jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
-            renpy.show(name="placeholder_natsuki neutral", at_list=[store.center], zorder=NATSUKI_Z_INDEX)
+            renpy.show(name="natsuki 1unmsm", at_list=[store.center], zorder=NATSUKI_Z_INDEX)
             renpy.with_statement(trans=store.natsuki_desk_move_transition)
 
         elif store.jn_affinity.get_affinity_state() >= store.jn_affinity.DISTRESSED:
-            renpy.show(name="placeholder_natsuki unamused", at_list=[store.center], zorder=NATSUKI_Z_INDEX)
+            renpy.show(name="natsuki 1fsqsr", at_list=[store.center], zorder=NATSUKI_Z_INDEX)
             renpy.with_statement(trans=store.natsuki_desk_move_transition)
 
         else:
-            renpy.show(name="placeholder_natsuki sad", at_list=[store.center], zorder=NATSUKI_Z_INDEX)
+            renpy.show(name="natsuki 1kplsr", at_list=[store.center], zorder=NATSUKI_Z_INDEX)
             renpy.with_statement(trans=store.natsuki_desk_move_transition)
 
     def show_resting_placeholder_natsuki(offset=False):
@@ -95,7 +81,7 @@ init 0 python in jn_placeholders:
         """
         if store.jn_affinity.get_affinity_state() >= store.jn_affinity.NORMAL:
             if offset:
-                renpy.show(name="placeholder_natsuki neutral", at_list=[store.left], zorder=NATSUKI_Z_INDEX)
+                renpy.show(name="natsuki neutral", at_list=[store.left], zorder=NATSUKI_Z_INDEX)
                 renpy.with_statement(trans=store.natsuki_desk_move_transition)
 
             else:
@@ -115,7 +101,7 @@ init 0 python in jn_placeholders:
         """
         Shows a randomised sky placeholder with associated dimming effect.
         """
-        
+
         # Select the sky and dimming effect
         sky, dim = random.choice(list(_PLACEHOLDER_SKY_AND_DIM_MAP.items()))
 
@@ -169,6 +155,6 @@ init 0 python in jn_placeholders:
                 renpy.hide(name="placeholder_dim")
 
                 renpy.music.stop(channel="weather_loop", fadeout=5.0)
-        
+
         else:
             raise Exception("Supplied param weather_type {weather_type} is not a valid type.".format(weather_type))

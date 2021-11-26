@@ -24,7 +24,6 @@ label ch30_visual_setup:
     #FALL THROUGH
 
 label ch30_init:
-
     python:
         # Determine if the player should get a prolonged leave greeting
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
@@ -44,7 +43,7 @@ label ch30_init:
         $ jn_placeholders.show_random_placeholder_sky()
     else:
         hide placeholder_sky_day sunny
-        
+
     show screen hkb_overlay
 
     # Do all var-sets, resets, and sanity checks prior to entering the loop here
@@ -82,8 +81,9 @@ label ch30_loop:
         #We'll also check if we need to redraw the room
         #main_background.check_redraw()
 
-        jn_placeholders.show_resting_placeholder_natsuki()
         jn_globals.player_is_in_conversation = False
+
+    show natsuki 1unmsm zorder JN_NATSUKI_ZORDER
 
     #Now, as long as there's something in the queue, we should go for it
     while persistent._event_list:
@@ -98,19 +98,20 @@ label ch30_wait:
 
 #Other labels
 label call_next_topic:
-
     if persistent._event_list:
         $ _topic = persistent._event_list.pop(0)
 
         if renpy.has_label(_topic):
             if _topic in ["greeting_sudden_leave", "greeting_prolonged_leave"]:
-                show placeholder_natsuki plead zorder jn_placeholders.NATSUKI_Z_INDEX
+                show natsuki 1kwmsr zorder jn_placeholders.NATSUKI_Z_INDEX
 
             elif "greeting_" in _topic:
-                $ jn_placeholders.show_greeting_placeholder_natsuki()
+                pass
+                #$ jn_placeholders.show_greeting_placeholder_natsuki()
 
             else:
-                $ jn_placeholders.show_resting_placeholder_natsuki()
+                pass
+                #$ jn_placeholders.show_resting_placeholder_natsuki()
 
             # Call the pending topic, and disable the UI
             $ jn_globals.player_is_in_conversation = True
@@ -161,10 +162,10 @@ init python:
         # Push a new topic every couple of minutes
         # TODO: Move to a wait/has-waited system to allow some more flexibility
         global LAST_TOPIC_CALL
-        
+
         if persistent.jn_natsuki_random_topic_frequency is not jn_preferences.random_topic_frequency.NEVER:
 
-            if (datetime.datetime.now() > LAST_TOPIC_CALL + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown()) and 
+            if (datetime.datetime.now() > LAST_TOPIC_CALL + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown()) and
                 len(persistent._event_list) is 0):
 
                     topic_pool = Topic.filter_topics(
@@ -213,7 +214,7 @@ label talk_menu:
         # Ensure any variable references are substituted
         _talk_flavor_text = renpy.substitute(_talk_flavor_text)
 
-    $ jn_placeholders.show_resting_placeholder_natsuki(offset=True)
+    show natsuki at left
 
     menu:
         n "[_talk_flavor_text]"

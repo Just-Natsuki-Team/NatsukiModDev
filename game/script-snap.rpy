@@ -88,7 +88,7 @@ init 0 python in jn_snap:
         "SNAP!{w=0.2} Huh...?{w=0.2} O-{w=0.1}oh.",
         "Snap sna-...{w=0.3} grrr."
     ]
-    
+
     # Out of game tracking
     _player_win_streak = 0
     _natsuki_win_streak = 0
@@ -225,7 +225,7 @@ init 0 python in jn_snap:
         """
         if len(_cards_on_table) >= 2:
             return _cards_on_table[-1][0] == _cards_on_table[-2][0] or _cards_on_table[-1][1] == _cards_on_table[-2][1]
-        
+
         else:
             return False
 
@@ -282,7 +282,7 @@ init 0 python in jn_snap:
 
         if len(_cards_on_table) is not 0:
             _current_table_card_image = "mod_assets/games/snap/cards/{0}/{1}.png".format(_cards_on_table[-1][0], _cards_on_table[-1][1])
-            
+
         else:
             _current_table_card_image = "mod_assets/games/snap/cards/blank.png"
 
@@ -325,7 +325,7 @@ label snap_intro:
         n "It's a super simple game,{w=0.1} but I thought I'd better ask."
         n "I don't wanna win just because you didn't know what you were doing!"
         n "So..."
-        n "How about it?" 
+        n "How about it?"
         menu:
             n "Want me to run through the rules real quick?"
 
@@ -335,7 +335,7 @@ label snap_intro:
             "No,{w=0.1} I'm ready.":
                 n "Oh?{w=0.2} You're ready,{w=0.1} huh?"
                 n "Ready to get your butt kicked!{w=0.2} Let's go,{w=0.1} [player]!"
-                
+
     jump snap_start
 
 label snap_explanation:
@@ -378,7 +378,8 @@ label snap_start:
     $ jn_snap._generate_hands()
 
     # Reset the UI
-    $ jn_placeholders.show_resting_placeholder_natsuki(True)
+    show natsuki 1uchsm at left
+
     $ jn_snap.draw_card_onscreen()
     $ jn_snap.update_turn_indicator()
 
@@ -397,7 +398,7 @@ label snap_start:
 
     if jn_snap._is_player_turn:
         n "Ehehe.{w=0.2} Bad luck,{w=0.1} [player].{w=0.2} Looks like you're up first!"
-        
+
     else:
         n "Hmph...{w=0.3} you got lucky this time.{w=0.2} Looks like I'm first,{w=0.1} [player]."
 
@@ -435,7 +436,7 @@ label snap_main_loop:
 
     # If a correct snap is possible, and the player isn't snapping already, Natsuki will try to call it: the higher the difficulty, the quicker Natsuki will be.
     if not jn_snap._player_is_snapping:
-        if jn_snap._get_snap_result():  
+        if jn_snap._get_snap_result():
             $ jn_snap._call_snap()
 
         # She may also snap by mistake, assuming it makes sense to do so: the higher the difficulty, the less she'll accidentally jn_snap.
@@ -460,17 +461,17 @@ label snap_main_loop:
     jump snap_main_loop
 
 label snap_quip(is_player_snap, is_correct_snap):
-    
+
     $ cheat_check = False
 
     # Generate the quip based on what just happened
     if is_player_snap:
-        
+
         # Player snapped, and was correct
         if is_correct_snap:
             $ jn_snap._player_failed_snap_streak = 0
             $ quip = renpy.substitute(random.choice(jn_snap._PLAYER_CORRECT_SNAP_QUIPS))
-            show placeholder_natsuki plead zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1kwmsr zorder jn_placeholders.NATSUKI_Z_INDEX
 
             # Some UE things to make it fun
             play audio smack
@@ -481,11 +482,11 @@ label snap_quip(is_player_snap, is_correct_snap):
         # Player snapped, and was incorrect
         else:
             $ jn_snap._player_failed_snap_streak += 1
-            
+
             # Cheating warning
             if jn_snap._player_failed_snap_streak == 3 and not persistent.jn_snap_player_is_cheater:
                 $ cheat_check = True
-                show placeholder_natsuki unamused zorder jn_placeholders.NATSUKI_Z_INDEX
+                show natsuki 1fsqsr zorder jn_placeholders.NATSUKI_Z_INDEX
                 n "[player]!"
                 n "You're just calling Snap whenever it's your turn!"
                 n "That's not how you play at all!"
@@ -495,7 +496,7 @@ label snap_quip(is_player_snap, is_correct_snap):
             # Natsuki calls off the game
             elif jn_snap._player_failed_snap_streak == 6 and not persistent.jn_snap_player_is_cheater:
                 $ jn_snap_controls_enabled = False
-                show placeholder_natsuki unamused zorder jn_placeholders.NATSUKI_Z_INDEX
+                show natsuki 1fsqsr zorder jn_placeholders.NATSUKI_Z_INDEX
                 n "Ugh...{w=0.3} look,{w=0.1} [player]."
                 n "If you aren't gonna play fairly,{w=0.1} then why should I bother playing at all?"
                 n "I even warned you before,{w=0.1} too!"
@@ -514,7 +515,7 @@ label snap_quip(is_player_snap, is_correct_snap):
                 hide turn_indicator_icon
                 hide screen snap_ui
 
-                play audio drawer 
+                play audio drawer
                 with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
                 # Reset the ingame flag, then hop back to ch30 as getting here has lost context
@@ -524,14 +525,14 @@ label snap_quip(is_player_snap, is_correct_snap):
             # Generic incorrect quip/tease
             else:
                 $ quip = renpy.substitute(random.choice(jn_snap._PLAYER_INCORRECT_SNAP_QUIPS))
-                show placeholder_natsuki smug zorder jn_placeholders.NATSUKI_Z_INDEX
+                show natsuki 1fsqsm zorder jn_placeholders.NATSUKI_Z_INDEX
 
     else:
 
         # Natsuki snapped, and was correct
         if is_correct_snap:
             $ quip = renpy.substitute(random.choice(jn_snap._NATSUKI_CORRECT_SNAP_QUIPS))
-            show placeholder_natsuki smile zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1uchbg zorder jn_placeholders.NATSUKI_Z_INDEX
 
             # Some UE things to make it fun
             play audio smack
@@ -541,7 +542,7 @@ label snap_quip(is_player_snap, is_correct_snap):
         # Natsuki snapped, and was incorrect
         else:
             $ quip = renpy.substitute(random.choice(jn_snap._NATSUKI_INCORRECT_SNAP_QUIPS))
-            show placeholder_natsuki unamused zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1fsqsr zorder jn_placeholders.NATSUKI_Z_INDEX
 
     # Natsuki quips; disable controls so player can't skip dialogue
     $ jn_snap._controls_enabled = False
@@ -549,7 +550,7 @@ label snap_quip(is_player_snap, is_correct_snap):
     if not cheat_check:
         n "[quip]"
 
-    $ jn_placeholders.show_resting_placeholder_natsuki(True)
+    show natsuki 1uchsm at left
     $ jn_snap._controls_enabled = True
 
     # Now we reset the flags so nothing can happen before the quip has completed
@@ -612,13 +613,13 @@ label snap_end:
             n "Oh?{w=0.2} This?{w=0.2} This skill?"
             n "Don't worry about it."
             n "It's all natural,{w=0.1} [player]~."
-            n "What did you expect,{w=0.1} challenging a pro like that?" 
+            n "What did you expect,{w=0.1} challenging a pro like that?"
             n "Ehehe."
 
         elif jn_snap._natsuki_win_streak == 3:
             n "Yes!{w=0.2} I win again!"
             n "Ehehe."
-            
+
         else:
             n "I won!{w=0.2} I won! Yesss!"
             n "Just as predicted,{w=0.1} right?{w=0.2} Ahaha."
@@ -640,12 +641,12 @@ label snap_end:
     if jn_snap._player_win_streak >= 3:
         n "Uuuuuu-!"
         n "I-{w=0.1}I demand a rematch!{w=0.2} I'm not going down like this!"
- 
+
     elif jn_snap._natsuki_win_streak >= 3:
         n "Ehehe.{w=0.2} That can't be {i}all{/i} you've got,{w=0.1} [player].{w=0.2} Rematch!"
 
     else:
-        n "So..." 
+        n "So..."
 
     menu:
         n "Let's play again!"
@@ -673,7 +674,7 @@ label snap_end:
             hide turn_indicator_icon
             hide screen snap_ui
 
-            play audio drawer 
+            play audio drawer
             with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
             # Reset the ingame flag, then hop back to ch30 as getting here has lost context
@@ -703,7 +704,7 @@ label snap_forfeit:
             hide turn_indicator_icon
             hide screen snap_ui
 
-            play audio drawer 
+            play audio drawer
             with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
             # Reset the ingame flag, then hop back to ch30 as getting here has lost context
@@ -725,12 +726,12 @@ image current_table_card:
 
 # Icons representing each player's hand
 image player_hand_icon:
-    anchor(0,0)  
+    anchor(0,0)
     pos (675, 110)
     jn_snap._CARD_FAN_IMAGE_PLAYER
 
 image natsuki_hand_icon:
-    anchor(0,0)  
+    anchor(0,0)
     pos (675, 180)
     jn_snap._CARD_FAN_IMAGE_NATSUKI
 
@@ -758,11 +759,11 @@ screen snap_ui:
     vbox:
         xpos 1000
         ypos 440
-    
+
         # Place card, but only selectable if player's turn, and both players are still capable of playing
         textbutton _("Place"):
             style "hkbd_button"
-            action [ 
+            action [
                 Function(jn_snap._place_card_on_table, True),
                 SensitiveIf(jn_snap._is_player_turn and (len(jn_snap._natsuki_hand) > 0 or len(jn_snap._player_hand) > 0) and jn_snap._controls_enabled)]
 
@@ -776,6 +777,6 @@ screen snap_ui:
         # Snap, but only selectable if there's enough cards down on the table, and both players are still capable of playing
         textbutton _("Snap!"):
             style "hkbd_button"
-            action [ 
+            action [
                 Function(jn_snap._call_snap, True),
                 SensitiveIf(len(jn_snap._cards_on_table) >= 2 and not jn_snap._player_is_snapping and (len(jn_snap._natsuki_hand) > 0 or len(jn_snap._player_hand) > 0) and jn_snap._controls_enabled)]

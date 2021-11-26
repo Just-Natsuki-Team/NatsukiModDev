@@ -155,16 +155,16 @@ label music_menu:
             $ chosen_question_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_QUESTION_QUIPS))
             n "[chosen_question_quip]"
 
-            show placeholder_natsuki smile zorder jn_placeholders.NATSUKI_Z_INDEX
-            
+            show natsuki 1uchbg zorder jn_placeholders.NATSUKI_Z_INDEX
+
             $ chosen_answer_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_ANSWER_QUIPS))
             n "[chosen_answer_quip]"
-            
+
             $ chosen_search_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_SEARCH_QUIPS))
             n "[chosen_search_quip]"
 
             # If we have more than one track, we can make sure the new chosen track isn't the same as the current one
-            python: 
+            python:
                 if len(available_custom_music) > 1:
                     music_title_and_file = random.choice(filter(lambda track: (jn_custom_music._now_playing not in track), available_custom_music))
                     music_title = music_title_and_file[0]
@@ -174,7 +174,7 @@ label music_menu:
             # Play the selected specific track
             $ music_title = _return.split('/')[-1]
             $ renpy.play(filename=_return, channel="music")
-        
+
         # Pop a cheeky notify with the Nat for visual confirmation :)
         $ jn_custom_music._now_playing = music_title
         $ renpy.notify("Now playing: {0}".format(jn_custom_music._now_playing))

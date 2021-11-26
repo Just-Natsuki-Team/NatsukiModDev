@@ -1,24 +1,26 @@
-init 0 python in jn_sprites:
+init python:
     import store
     from Enum import Enum
 
-    _BASE_SPRITE_PATH = "mod_assets/natsuki/"
-    _NATSUKI_Z_INDEX = 3
+    JN_NATSUKI_ZORDER = 3
 
-    class Pose(Enum):
+    _BASE_SPRITE_PATH = "mod_assets/natsuki/"
+
+
+    class JNPose(Enum):
         sitting = 1
 
         def __str__(self):
             return self.name
-    
-    class Blush(Enum):
+
+    class JNBlush(Enum):
         full = 1
         light = 2
 
         def __str__(self):
             return self.name
 
-    class Mouth(Enum):
+    class JNMouth(Enum):
         agape = 1
         ajar = 2
         angry = 3
@@ -58,7 +60,7 @@ init 0 python in jn_sprites:
         def __str__(self):
             return self.name
 
-    class Eyes(Enum):
+    class JNEyes(Enum):
         baka = 1
         circletears = 2
         closedhappy = 3
@@ -80,7 +82,7 @@ init 0 python in jn_sprites:
         def __str__(self):
             return self.name
 
-    class Eyebrows(Enum):
+    class JNEyebrows(Enum):
         normal = 1
         up = 2
         knit = 3
@@ -90,11 +92,11 @@ init 0 python in jn_sprites:
         def __str__(self):
             return self.name
 
-    class Tears(Enum):
+    class JNTears(Enum):
         heavy = 1
         light = 2
 
-    def generate_natsuki_sprite(
+    def jn_generate_natsuki_sprite(
         pose,
         eyebrows,
         eyes,
@@ -104,54 +106,53 @@ init 0 python in jn_sprites:
     ):
         """
         """
+        lc_args = [
+            (1280, 720), # Anchor
+            (0, 0), _BASE_SPRITE_PATH + "desk/chair-normal.png", # Chair
+            (0, 0), "{0}{1}/base/body.png".format(_BASE_SPRITE_PATH, pose), # Base
+                (0, 0), "{0}{1}/clothes/[jn_globals.natsuki_current_outfit]/body.png".format(_BASE_SPRITE_PATH, pose), # Outfit, body
+            (0, 0), "{0}{1}/hair/[jn_globals.natsuki_current_hairstyle]/back.png".format(_BASE_SPRITE_PATH, pose), # Hair back
+        ]
 
-        # Handle required args
-        if not pose:
-            raise Exception("Parameter 'pose' cannot be None")
-
-        if not mouth:
-            raise Exception("Parameter 'mouth' cannot be None")
-
-        if not eyes:
-            raise Exception("Parameter 'eyes' cannot be None")
-
-        if not eyebrows:
-            raise Exception("Parameter 'eyebrows' cannot be None")
-        
-        # Handle optional args
-        blush_args = ((0, 0), "{0}{1}/etc/empty.png".format(_BASE_SPRITE_PATH, pose.__str__()))
         if blush:
-            blush_args = ((0, 0), "{0}{1}/face/blush/{2}.png".format((_BASE_SPRITE_PATH, pose.__str__(), blush.__str__())))
+            lc_args.extend([
+                (0, 0), "{0}{1}/face/blush/{2}.png".format(_BASE_SPRITE_PATH, pose, blush)
+            ])
 
-        tears_args = ((0, 0), "{0}{1}/etc/empty.png".format(_BASE_SPRITE_PATH, pose.__str__()))
-        if tears:
-            tears_args = ((0, 0), "{0}{1}/face/tears/{2}.png".format((_BASE_SPRITE_PATH, pose.__str__(), blush.__str__())))
+        lc_args.extend([
+            (0, 0), "{0}{1}/face/mouth/{2}.png".format(_BASE_SPRITE_PATH, pose, mouth), # Mouth
+            (0, 0), "{0}{1}/face/nose/nose.png".format(_BASE_SPRITE_PATH, pose), # Nose
+            (0, 0), "{0}{1}/hair/[jn_globals.natsuki_current_hairstyle]/bangs.png".format(_BASE_SPRITE_PATH, pose), # Hair front
+        ])
 
-        hairclip_args = ((0, 0), "{0}{1}/etc/empty.png".format(_BASE_SPRITE_PATH, pose.__str__()))
+        #TODO: Expand accessories and clothes into their own subsystems
         if store.jn_globals.natsuki_current_accessory is not None:
-            hairclip_args = ((0, 0), "{0}{1}/accessories/{2}.png".format(_BASE_SPRITE_PATH, pose.__str__(), store.jn_globals.natsuki_current_accessory))
+            lc_args.extend([
+                (0, 0), "{0}{1}/accessories/[jn_globals.natsuki_current_accessory].png".format(_BASE_SPRITE_PATH, pose)
+            ])
 
-        eyewear_args = ((0, 0), "{0}{1}/etc/empty.png".format(_BASE_SPRITE_PATH, pose.__str__()))
+        lc_args.extend([
+            (0, 0), "{0}{1}/face/eyes/{2}.png".format(_BASE_SPRITE_PATH, pose, eyes), # Eyes
+        ])
+
+        if tears:
+            lc_args.extend([
+                (0, 0), "{0}{1}/face/tears/{2}.png".format((_BASE_SPRITE_PATH, pose, blush))
+            ])
+
         if store.jn_globals.natsuki_current_eyewear is not None:
-            eyewear_args = ((0, 0), "{0}{1}/eyewear/{2}.png".format(_BASE_SPRITE_PATH, pose.__str__(), store.jn_globals.natsuki_current_eyewear))
+            lc_args.extend([
+                (0, 0), "{0}{1}/eyewear/[jn_globals.natsuki_current_eyewear].png".format(_BASE_SPRITE_PATH, pose)
+            ])
+
+        lc_args.extend([
+            (0, 0), "{0}{1}/face/eyebrows/{2}.png".format(_BASE_SPRITE_PATH, pose, eyebrows), # Brows
+            (0, 0), _BASE_SPRITE_PATH + "/desk/table-normal.png" # Table
+        ])
 
         # Generate and return the sprite
         return renpy.display.layout.LiveComposite(
-            (1280, 720), # Anchor
-            (0, 0), "{0}{1}/table/chair-normal.png".format(_BASE_SPRITE_PATH, pose.__str__()), # Chair
-            (0, 0), "{0}{1}/base/body.png".format(_BASE_SPRITE_PATH, pose.__str__()), # Base
-            (0, 0), "{0}{1}/clothes/{2}/body.png".format(_BASE_SPRITE_PATH, pose.__str__(), store.jn_globals.natsuki_current_outfit), # Outfit, body
-            (0, 0), "{0}{1}/hair/{2}/back.png".format(_BASE_SPRITE_PATH, pose.__str__(), store.jn_globals.natsuki_current_hairstyle), # Hair back
-            blush_args[0], blush_args[1], #Blush
-            (0, 0), "{0}{1}/face/mouth/{2}.png".format(_BASE_SPRITE_PATH, pose.__str__(), mouth.__str__()), # Mouth
-            (0, 0), "{0}{1}/face/nose/nose.png".format(_BASE_SPRITE_PATH, pose.__str__()), # Nose
-            (0, 0), "{0}{1}/hair/{2}/bangs.png".format(_BASE_SPRITE_PATH, pose.__str__(), store.jn_globals.natsuki_current_hairstyle), # Hair front
-            hairclip_args[0], hairclip_args[1], # Hairclip
-            (0, 0), "{0}{1}/face/eyes/{2}.png".format(_BASE_SPRITE_PATH, pose.__str__(), eyes.__str__()), # Eyes
-            tears_args[0], tears_args[1], # Tears
-            eyewear_args[0], eyewear_args[1], # Eyewear
-            (0, 0), "{0}{1}/face/eyebrows/{2}.png".format(_BASE_SPRITE_PATH, pose.__str__(), eyebrows.__str__()), # Brows
-            (0, 0), "{0}{1}/table/table-normal.png".format(_BASE_SPRITE_PATH, pose.__str__()) # Table
+            *lc_args
         )
 
 # Sprite code format:
@@ -229,6 +230,141 @@ init 0 python in jn_sprites:
 # l - light
 
 # Sprite code listing
-# Add your new sprite codes here 
-image natsuki happy = jn_sprites.generate_natsuki_sprite(pose=jn_sprites.Pose.sitting, eyebrows=jn_sprites.Eyebrows.up, eyes=jn_sprites.Eyes.closedhappy, mouth=jn_sprites.Mouth.smile)
-image natsuki sad = jn_sprites.generate_natsuki_sprite(pose=jn_sprites.Pose.sitting, eyebrows=jn_sprites.Eyebrows.knit, eyes=jn_sprites.Eyes.pleading, mouth=jn_sprites.Mouth.serious)
+# Add your new sprite codes here
+image natsuki sad = jn_generate_natsuki_sprite(
+    pose=JNPose.sitting,
+    eyebrows=JNEyebrows.knit,
+    eyes=JNEyes.pleading,
+    mouth=JNMouth.serious
+)
+
+
+image natsuki 1unmbs = jn_generate_natsuki_sprite(
+    pose=JNPose.sitting,
+    eyebrows=JNEyebrows.up,
+    eyes=JNEyes.normal,
+    mouth=JNMouth.bigsmile
+)
+
+##Placeholder redefs
+
+#Boast
+image natsuki 1ksqbs = jn_generate_natsuki_sprite(
+    pose=JNPose.sitting,
+    eyebrows=JNEyebrows.knit,
+    eyes=JNEyes.squint,
+    mouth=JNMouth.bigsmile
+)
+
+#Neutral
+image natsuki 1unmsm = jn_generate_natsuki_sprite(
+    pose=JNPose.sitting,
+    eyebrows=JNEyebrows.up,
+    eyes=JNEyes.normal,
+    mouth=JNMouth.smile
+)
+
+#Pleading
+image natsuki 1kwmsr = jn_generate_natsuki_sprite(
+    pose=JNPose.sitting,
+    eyebrows=JNEyebrows.knit,
+    eyes=JNEyes.warm,
+    mouth=JNMouth.serious
+)
+
+#Pleased
+image natsuki 1uchsm = jn_generate_natsuki_sprite(
+    pose=JNPose.sitting,
+    eyebrows=JNEyebrows.up,
+    eyes=JNEyes.closedhappy,
+    mouth=JNMouth.smile
+)
+
+#Pleased (blush)
+image natsuki 1uchsmf = jn_generate_natsuki_sprite(
+    pose=JNPose.sitting,
+    eyebrows=JNEyebrows.up,
+    eyes=JNEyes.closedhappy,
+    mouth=JNMouth.smile,
+    blush=JNBlush.full
+)
+
+#Sad
+image natsuki 1kplsr = jn_generate_natsuki_sprite(
+    pose=JNPose.sitting,
+    eyebrows=JNEyebrows.knit,
+    eyes=JNEyes.pleading,
+    mouth=JNMouth.serious
+)
+
+#Shy
+image natsuki 1kchss = jn_generate_natsuki_sprite(
+    pose=JNPose.sitting,
+    eyebrows=JNEyebrows.knit,
+    eyes=JNEyes.closedhappy,
+    mouth=JNMouth.smallsmile
+)
+
+#Smile
+image natsuki 1uchbg = jn_generate_natsuki_sprite(
+    pose=JNPose.sitting,
+    eyebrows=JNEyebrows.up,
+    eyes=JNEyes.closedhappy,
+    mouth=JNMouth.big
+)
+
+#Smile (blush)
+image natsuki 1uchbgf = jn_generate_natsuki_sprite(
+    pose=JNPose.sitting,
+    eyebrows=JNEyebrows.up,
+    eyes=JNEyes.closedhappy,
+    mouth=JNMouth.big,
+    blush=JNBlush.full
+)
+
+#Smug
+image natsuki 1fsqsm = jn_generate_natsuki_sprite(
+    pose=JNPose.sitting,
+    eyebrows=JNEyebrows.furrowed,
+    eyes=JNEyes.squint,
+    mouth=JNMouth.smile
+)
+
+#Sparkle
+image natsuki 1uspsm = jn_generate_natsuki_sprite(
+    pose=JNPose.sitting,
+    eyebrows=JNEyebrows.up,
+    eyes=JNEyes.sparkle,
+    mouth=JNMouth.smile
+)
+
+#Tease
+image natsuki 1fsqlg = jn_generate_natsuki_sprite(
+    pose=JNPose.sitting,
+    eyebrows=JNEyebrows.furrowed,
+    eyes=JNEyes.squint,
+    mouth=JNMouth.laugh
+)
+
+#Unamused
+image natsuki 1fsqsr = jn_generate_natsuki_sprite(
+    pose=JNPose.sitting,
+    eyebrows=JNEyebrows.furrowed,
+    eyes=JNEyes.squint,
+    mouth=JNMouth.serious
+)
+
+#Wink (right)
+image natsuki 1uwlgn = jn_generate_natsuki_sprite(
+    pose=JNPose.sitting,
+    eyebrows=JNEyebrows.up,
+    eyes=JNEyes.winkright,
+    mouth=JNMouth.grin
+)
+
+label emote_test:
+    n sad "this is me sad"
+    n 1unmsm "this is me smiling"
+    n 1unmbs "This is me smiling big"
+    n happy "This is me happy"
+    return

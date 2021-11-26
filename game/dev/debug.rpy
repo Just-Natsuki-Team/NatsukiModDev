@@ -50,7 +50,7 @@ init python in jn_debug:
 
             except:
                 store.utils.log(message="Failed to watch expression {0}".format(item), logseverity=store.utils.SEVERITY_WARN)
-        
+
     def _unwatch_all_tracked_items():
         """
         Calls renpy.unwatch() on all items in the tracked watch items list, hiding them.
@@ -110,10 +110,10 @@ init python in jn_debug:
 
                 if _view_tracked_items_enabled:
                     _watch_all_tracked_items()
-        
+
         else:
             raise Exception("Expression provided is not of type str")
-        
+
     def remove_tracked_watch_item(expression):
         """
         Adds the given expression to the list of items to watch and display
@@ -181,7 +181,7 @@ init python in jn_debug:
                 store.persistent.jn_debug_tracked_watch_items = []
                 for item_from_file in items_from_file:
                     store.persistent.jn_debug_tracked_watch_items.append(item_from_file.strip('\n'))
-                
+
                 # Finally redisplay if the view was open
                 if _view_tracked_items_enabled:
                     _watch_all_tracked_items()
@@ -195,7 +195,7 @@ init python in jn_debug:
                 logseverity=store.utils.SEVERITY_ERR
             )
             return LOAD_FROM_DISK_FAILED
-        
+
     def reset_tracked_watch_items():
         """
         Completely resets the tracked watch item list to the default configuration
@@ -330,7 +330,7 @@ label debug_set_trust:
 
         "Nevermind.":
             n "Oh...{w=0.3} well,{w=0.1} okay then."
-    
+
     return
 
 label set_trust_options_high:
@@ -483,7 +483,7 @@ label debug_add_watched_item:
         n "..."
         $ jn_debug.add_tracked_watch_item(str(player_input))
         n "Okaaay!{w=0.2} There you go, [player]!"
-    
+
     return
 
 # This topic allows us to remove an item from the watched item list
@@ -513,7 +513,7 @@ label debug_remove_watched_item:
         n  "..."
         $ jn_debug.remove_tracked_watch_item(str(player_input))
         n "Gotcha!{w=0.2} There you go,{w=0.1} [player]!"
-    
+
     return
 
 # This topic allows us to set the watched item list from file
@@ -669,38 +669,38 @@ label debug_custom_say:
     n "Oooh!{w=0.2} Are we pranking someone,{w=0.1} [player]?{w=0.2} I'm for it!"
     $ player_input = renpy.input("What do you want me to say?")
     call debug_custom_say_options_a(player_input)
-    
+
 label debug_custom_say_options_a(dialogue):
     menu:
         n "Alright!{w=0.2} Now how do you want me to say it?"
 
         "Boasting":
             n "Okaaay!{w=0.2} Here goes!"
-            show placeholder_natsuki boast zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1ksqbs zorder jn_placeholders.NATSUKI_Z_INDEX
             n "[dialogue]"
             jump debug_custom_say_finish
 
         "Neutrally":
             n "Okaaay!{w=0.2} Here goes!"
-            show placeholder_natsuki neutral zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1unmsm zorder jn_placeholders.NATSUKI_Z_INDEX
             n "[dialogue]"
             jump debug_custom_say_finish
 
         "Pleadingly":
             n "Okaaay!{w=0.2} Here goes!"
-            show placeholder_natsuki plead zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1kwmsr zorder jn_placeholders.NATSUKI_Z_INDEX
             n "[dialogue]"
             jump debug_custom_say_finish
 
         "Pleased":
             n "Okaaay!{w=0.2} Here goes!"
-            show placeholder_natsuki pleased zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1uchsm zorder jn_placeholders.NATSUKI_Z_INDEX
             n "[dialogue]"
             jump debug_custom_say_finish
 
         "Sadly":
             n "Okaaay!{w=0.2} Here goes!"
-            show placeholder_natsuki sad zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1kplsr zorder jn_placeholders.NATSUKI_Z_INDEX
             n "[dialogue]"
             jump debug_custom_say_finish
 
@@ -710,7 +710,7 @@ label debug_custom_say_options_a(dialogue):
         "Nevermind.":
             n "Oh...{w=0.3} well, if you say so."
 
-    
+
     jump ch30_loop
 
 label debug_custom_say_options_b(dialogue):
@@ -719,31 +719,31 @@ label debug_custom_say_options_b(dialogue):
 
         "Shyly":
             n "Okaaay!{w=0.2} Here goes!"
-            show placeholder_natsuki shy zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1kchss zorder jn_placeholders.NATSUKI_Z_INDEX
             n "[dialogue]"
             jump debug_custom_say_finish
 
         "Happily":
             n "Okaaay!{w=0.2} Here goes!"
-            show placeholder_natsuki smile zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1uchbg zorder jn_placeholders.NATSUKI_Z_INDEX
             n "[dialogue]"
             jump debug_custom_say_finish
 
         "Smugly":
             n "Okaaay!{w=0.2} Here goes!"
-            show placeholder_natsuki smug zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1fsqsm zorder jn_placeholders.NATSUKI_Z_INDEX
             n "[dialogue]"
             jump debug_custom_say_finish
 
         "Sparkly":
             n "Okaaay!{w=0.2} Here goes!"
-            show placeholder_natsuki sparkle zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1uspsm zorder jn_placeholders.NATSUKI_Z_INDEX
             n "[dialogue]"
             jump debug_custom_say_finish
 
         "Teasingly":
             n "Okaaay!{w=0.2} Here goes!"
-            show placeholder_natsuki tease zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1fsqlg zorder jn_placeholders.NATSUKI_Z_INDEX
             n "[dialogue]"
             jump debug_custom_say_finish
 
@@ -764,13 +764,13 @@ label debug_custom_say_options_c(dialogue):
 
         "Unamused":
             n "Okaaay!{w=0.2} Here goes!"
-            show placeholder_natsuki unamused zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1fsqsr zorder jn_placeholders.NATSUKI_Z_INDEX
             n "[dialogue]"
             jump debug_custom_say_finish
 
         "Mischievously":
             n "Okaaay!{w=0.2} Here goes!"
-            show placeholder_natsuki wink zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1uwlgn zorder jn_placeholders.NATSUKI_Z_INDEX
             n "[dialogue]"
             jump debug_custom_say_finish
 
@@ -786,7 +786,7 @@ label debug_custom_say_options_c(dialogue):
 
 label debug_custom_say_finish:
     n "..."
-    show placeholder_natsuki smile zorder jn_placeholders.NATSUKI_Z_INDEX
+    show natsuki 1uchbg zorder jn_placeholders.NATSUKI_Z_INDEX
     n "...And we're done here!{w=0.2} You're welcome,{w=0.1} [player]!"
 
     # We have to jump to ch30, as returning will try to return call stack back at options w/o dialogue param, causing a crash...
@@ -854,7 +854,7 @@ label debug_show_all_placeholder_sprites:
             renpy.with_statement(trans=store.natsuki_desk_move_transition)
             renpy.say(n, "This is {0}".format(placeholder_sprite))
 
-    $ jn_placeholders.show_resting_placeholder_natsuki()
+    show natsuki 1uchsm
     n "And... all done~!"
     return
 
@@ -883,7 +883,7 @@ label debug_call_api:
         n "Now,{w=0.1} what do you want me to call?"
 
         "Ghostbusters!":
-            show placeholder_natsuki unamused zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1fsqsr zorder jn_placeholders.NATSUKI_Z_INDEX
             n "...{i}Really{/i},{w=1.0} [player]?"
 
         # Add your API calls here! We might need a scrollable menu implementation if we rack up too many services.
@@ -1016,7 +1016,7 @@ label debug_composite_outfit_test:
             $ jn_globals.natsuki_current_accessory = "hairbands/red"
 
         "Hairband, pink":
-            $ jn_globals.natsuki_current_accessory = "hairbands/pink"
+            $ jn_globals.natsuki_current_accessory = "hairbands/hot_pink"
 
         "Hairband, purple":
             $ jn_globals.natsuki_current_accessory = "hairbands/purple"
@@ -1045,10 +1045,7 @@ label debug_composite_outfit_test:
     hide placeholder_natsuki
     with Fade(out_time=0.25, hold_time=0.25, in_time=0.25, color="#000000")
 
-    show natsuki zorder 3
-    n happy "Ta-da!{w=0.2} What do you think,{w=0.1} [player]?"
-    hide natsuki
+    n 1uchsm "Ta-da!{w=0.2} What do you think,{w=0.1} [player]?"
 
-    show placeholder_natsuki
     with Fade(out_time=0.25, hold_time=0.25, in_time=0.25, color="#000000")
     return

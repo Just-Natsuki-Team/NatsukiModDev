@@ -30,7 +30,7 @@ init python in jn_farewells:
             **kwargs
         )
 
-        return random.choice(farewell_pool).label 
+        return random.choice(farewell_pool).label
 
     def try_trust_dialogue():
         """
@@ -885,7 +885,7 @@ label farewell_short_session_ask_alt:
     n "You've barely been here [time_in_session_descriptor],{w=0.1} and you're already going?"
     menu:
         n "Come on!{w=0.2} You'll stay a little longer,{w=0.1} won't you?"
-        
+
         "Sure, I can stay a while.":
             n "H-{w=0.1}Ha!{w=0.2} I knew it."
             n "Ehehe.{w=0.1} Looks like I win again,{w=0.1} [player]!"
@@ -1070,32 +1070,32 @@ label farewell_gentle_ask:
 label farewell_extra_trust:
     # ABSOLUTE+
     if jn_trust.get_trust_state() >= jn_trust.ABSOLUTE:
-        show placeholder_natsuki smile zorder jn_placeholders.NATSUKI_Z_INDEX
+        show natsuki 1uchbg zorder jn_placeholders.NATSUKI_Z_INDEX
         n "My [player]...{w=0.3} I'll be waiting..."
 
     # FULL+
     elif jn_trust.get_trust_state() >= jn_trust.FULL:
-        show placeholder_natsuki shy zorder jn_placeholders.NATSUKI_Z_INDEX
+        show natsuki 1kchss zorder jn_placeholders.NATSUKI_Z_INDEX
         n "I'll be waiting..."
 
     # PARTIAL+
     elif jn_trust.get_trust_state() >= jn_trust.PARTIAL:
-        show placeholder_natsuki plead zorder jn_placeholders.NATSUKI_Z_INDEX
+        show natsuki 1kwmsr zorder jn_placeholders.NATSUKI_Z_INDEX
         n "You'll be back...{w=0.3} right?"
 
     # SCEPTICAL+
     elif jn_trust.get_trust_state() >= jn_trust.SCEPTICAL:
-        show placeholder_natsuki sad zorder jn_placeholders.NATSUKI_Z_INDEX
+        show natsuki 1kplsr zorder jn_placeholders.NATSUKI_Z_INDEX
         n "I'll be okay...{w=0.3} I'll be okay..."
 
     # DIMINISHED+
     elif jn_trust.get_trust_state() >= jn_trust.DIMINISHED:
-        show placeholder_natsuki sad zorder jn_placeholders.NATSUKI_Z_INDEX
+        show natsuki 1kplsr zorder jn_placeholders.NATSUKI_Z_INDEX
         n "...?"
 
     # SHATTERED+
     else:
-        show placeholder_natsuki sad zorder jn_placeholders.NATSUKI_Z_INDEX
+        show natsuki 1kplsr zorder jn_placeholders.NATSUKI_Z_INDEX
         n "..."
 
     return { "quit": None }
@@ -1172,7 +1172,7 @@ label farewell_morning_heading_off:
 
     else:
         n "Have a good day!"
-    
+
     return { "quit": None }
 
 # Afternoon
@@ -1200,7 +1200,7 @@ label farewell_afternoon_come_visit_soon:
 
     else:
         n "Stay safe!"
-    
+
     return { "quit": None }
 
 # Evening
