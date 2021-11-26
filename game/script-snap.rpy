@@ -378,7 +378,7 @@ label snap_start:
     $ jn_snap._generate_hands()
 
     # Reset the UI
-    show natsuki 1uchsm at left
+    show natsuki 1uchsm at jn_left
 
     $ jn_snap.draw_card_onscreen()
     $ jn_snap.update_turn_indicator()
@@ -550,7 +550,7 @@ label snap_quip(is_player_snap, is_correct_snap):
     if not cheat_check:
         n "[quip]"
 
-    show natsuki 1uchsm at left
+    show natsuki 1uchsm at jn_left
     $ jn_snap._controls_enabled = True
 
     # Now we reset the flags so nothing can happen before the quip has completed

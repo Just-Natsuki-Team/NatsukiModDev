@@ -628,7 +628,7 @@ init 5 python:
 
 label greeting_sudden_leave:
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n "..."
+        n 1kwmsr "..."
         n "[player]."
         n "Come on.{w=0.2} You're better than that."
         n "I don't know if something happened or what,{w=0.1} but please..."
@@ -637,21 +637,21 @@ label greeting_sudden_leave:
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "..."
+        n 1kwmsr "..."
         n "[player]!{w=0.2} Do you know how scary it is when you just vanish like that?"
         n "Please...{w=0.3} just remember to say goodbye properly when you gotta leave."
         n "It's not much to ask...{w=0.3} is it?"
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-        n "..."
+        n 1kwmsr "..."
         n "You know I hate that,{w=0.1} [player]."
         n "Knock it off,{w=0.1} will you?"
         n "Thanks."
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
 
     else:
-        n "..."
+        n 1kwmsr "..."
         n "Heh.{w=0.2} Yeah."
         $ chosen_insult = random.choice(jn_globals.DEFAULT_PLAYER_INSULT_NAMES).capitalize()
         n "Welcome back to you,{w=0.1} too.{w=0.2} [chosen_insult]."
@@ -677,7 +677,7 @@ label greeting_prolonged_leave:
     $ player_initial = list(player)[0]
 
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n "[player_initial]-{w=0.1}[player]!"
+        n 1kwmsr "[player_initial]-{w=0.1}[player]!"
         n "W-{w=0.1}where were you?!{w=0.2} I was so worried that something had happened!"
         n "..."
         n "I'm...{w=0.3} glad...{w=0.3} you're back,{w=0.1} [player]."
@@ -686,7 +686,7 @@ label greeting_prolonged_leave:
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_PROLONGED_LEAVE)
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "[player_initial]-{w=0.1}[player]!"
+        n 1kwmsr "[player_initial]-{w=0.1}[player]!"
         n "What the hell?!{w=0.2} Where have you been?{w=0.2} I was worried sick!"
         n "J-{w=0.1}just as a friend,{w=0.1} but still!"
         n "..."
@@ -695,13 +695,13 @@ label greeting_prolonged_leave:
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_PROLONGED_LEAVE)
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-        n "[player_initial]-{w=0.1}[player]?"
+        n 1kwmsr "[player_initial]-{w=0.1}[player]?"
         n "...You're back."
         n "I...{w=0.3} don't know how I feel about that."
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_PROLONGED_LEAVE)
 
     else:
-        n "...Heh."
+        n 1kwmsr "...Heh."
         n "So you came back."
         n "{i}Great{/i}."
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_PROLONGED_LEAVE)

@@ -61,8 +61,9 @@ label ch30_init:
 
 #The main loop
 label ch30_loop:
-    # TODO: topic selection here once wait system is implemented
+    show natsuki 1unmsm at jn_center zorder JN_NATSUKI_ZORDER
 
+    # TODO: topic selection here once wait system is implemented
     #Run our checks
     python:
         _now = datetime.datetime.now()
@@ -83,8 +84,6 @@ label ch30_loop:
 
         jn_globals.player_is_in_conversation = False
 
-    show natsuki 1unmsm zorder JN_NATSUKI_ZORDER
-
     #Now, as long as there's something in the queue, we should go for it
     while persistent._event_list:
         call call_next_topic
@@ -98,21 +97,12 @@ label ch30_wait:
 
 #Other labels
 label call_next_topic:
+    show natsuki at jn_center
+
     if persistent._event_list:
         $ _topic = persistent._event_list.pop(0)
 
         if renpy.has_label(_topic):
-            if _topic in ["greeting_sudden_leave", "greeting_prolonged_leave"]:
-                show natsuki 1kwmsr zorder jn_placeholders.NATSUKI_Z_INDEX
-
-            elif "greeting_" in _topic:
-                pass
-                #$ jn_placeholders.show_greeting_placeholder_natsuki()
-
-            else:
-                pass
-                #$ jn_placeholders.show_resting_placeholder_natsuki()
-
             # Call the pending topic, and disable the UI
             $ jn_globals.player_is_in_conversation = True
             call expression _topic
@@ -214,7 +204,7 @@ label talk_menu:
         # Ensure any variable references are substituted
         _talk_flavor_text = renpy.substitute(_talk_flavor_text)
 
-    show natsuki at left
+    show natsuki at jn_left
 
     menu:
         n "[_talk_flavor_text]"
@@ -243,6 +233,7 @@ label talk_menu:
 
         "Nevermind.":
             jump ch30_loop
+
     return
 
 label player_select_topic(is_repeat_topics=False):
