@@ -461,16 +461,8 @@ init 1 python:
 # f - full
 # l - light
 
-# Sprite code listing
-# Add your new sprite codes here
-image natsuki sad = jn_generate_natsuki_sprite(
-    pose=JNPose.sitting,
-    eyebrows=JNEyebrows.knit,
-    eyes=JNEyes.pleading,
-    mouth=JNMouth.serious
-)
-
-
+#TODO: Fix shows without expressions showing silhouettes. They should show the current exp as normal.
+#Only then can we delete these hardcoded exps.
 image natsuki 1unmbs = jn_generate_natsuki_sprite(
     pose=JNPose.sitting,
     eyebrows=JNEyebrows.up,
@@ -595,8 +587,8 @@ image natsuki 1uwlgn = jn_generate_natsuki_sprite(
 )
 
 label emote_test:
-    n sad "this is me sad"
+    n 1kplsf "this is me sad"
     n 1unmsm "this is me smiling"
     n 1unmbs "This is me smiling big"
-    n happy "This is me happy"
+    n "I'm happy~"
     return
