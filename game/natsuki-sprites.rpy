@@ -78,6 +78,8 @@ init python:
         wide = 15
         winkleft = 16
         winkright = 17
+        lookleft = 18
+        lookright = 19
 
         def __str__(self):
             return self.name
@@ -174,6 +176,8 @@ init 1 python:
         "ch": JNEyes.closedhappy,
         "cs": JNEyes.closedsad,
         "cu": JNEyes.cute,
+        "ll": JNEyes.lookleft,
+        "lr": JNEyes.lookright,
         "nm": JNEyes.normal,
         "pl": JNEyes.pleading,
         "sc": JNEyes.scared,
