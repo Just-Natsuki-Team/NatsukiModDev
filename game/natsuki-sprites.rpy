@@ -110,8 +110,8 @@ init python:
             (1280, 720), # Anchor
             (0, 0), _BASE_SPRITE_PATH + "desk/chair-normal.png", # Chair
             (0, 0), "{0}{1}/base/body.png".format(_BASE_SPRITE_PATH, pose), # Base
-                (0, 0), "{0}{1}/clothes/[jn_globals.natsuki_current_outfit]/body.png".format(_BASE_SPRITE_PATH, pose), # Outfit, body
-            (0, 0), "{0}{1}/hair/[jn_globals.natsuki_current_hairstyle]/back.png".format(_BASE_SPRITE_PATH, pose), # Hair back
+                (0, 0), "{0}{1}/clothes/[persistent.jn_natsuki_current_outfit]/body.png".format(_BASE_SPRITE_PATH, pose), # Outfit, body
+            (0, 0), "{0}{1}/hair/[persistent.jn_natsuki_current_hairstyle]/back.png".format(_BASE_SPRITE_PATH, pose), # Hair back
         ]
 
         if blush:
@@ -122,13 +122,13 @@ init python:
         lc_args.extend([
             (0, 0), "{0}{1}/face/mouth/{2}.png".format(_BASE_SPRITE_PATH, pose, mouth), # Mouth
             (0, 0), "{0}{1}/face/nose/nose.png".format(_BASE_SPRITE_PATH, pose), # Nose
-            (0, 0), "{0}{1}/hair/[jn_globals.natsuki_current_hairstyle]/bangs.png".format(_BASE_SPRITE_PATH, pose), # Hair front
+            (0, 0), "{0}{1}/hair/[persistent.jn_natsuki_current_hairstyle]/bangs.png".format(_BASE_SPRITE_PATH, pose), # Hair front
         ])
 
         #TODO: Expand accessories and clothes into their own subsystems
-        if store.jn_globals.natsuki_current_accessory is not None:
+        if store.persistent.jn_natsuki_current_accessory is not None:
             lc_args.extend([
-                (0, 0), "{0}{1}/accessories/[jn_globals.natsuki_current_accessory].png".format(_BASE_SPRITE_PATH, pose)
+                (0, 0), "{0}{1}/accessories/[persistent.jn_natsuki_current_accessory].png".format(_BASE_SPRITE_PATH, pose)
             ])
 
         lc_args.extend([
@@ -140,9 +140,9 @@ init python:
                 (0, 0), "{0}{1}/face/tears/{2}.png".format((_BASE_SPRITE_PATH, pose, blush))
             ])
 
-        if store.jn_globals.natsuki_current_eyewear is not None:
+        if store.persistent.jn_natsuki_current_eyewear is not None:
             lc_args.extend([
-                (0, 0), "{0}{1}/eyewear/[jn_globals.natsuki_current_eyewear].png".format(_BASE_SPRITE_PATH, pose)
+                (0, 0), "{0}{1}/eyewear/[persistent.jn_natsuki_current_eyewear].png".format(_BASE_SPRITE_PATH, pose)
             ])
 
         lc_args.extend([

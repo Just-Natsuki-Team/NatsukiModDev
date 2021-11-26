@@ -1575,7 +1575,7 @@ label talk_give_nickname:
         return
 
     elif nickname_type == jn_nicknames.TYPE_NOU:
-        show natsuki 1uwlgn zorder jn_placeholders.NATSUKI_Z_INDEX
+        show natsuki 1uwlgn zorder JN_NATSUKI_ZORDER
         n "No you~."
         return
 

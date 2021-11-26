@@ -471,7 +471,7 @@ label snap_quip(is_player_snap, is_correct_snap):
         if is_correct_snap:
             $ jn_snap._player_failed_snap_streak = 0
             $ quip = renpy.substitute(random.choice(jn_snap._PLAYER_CORRECT_SNAP_QUIPS))
-            show natsuki 1kwmsr zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1kwmsr zorder JN_NATSUKI_ZORDER
 
             # Some UE things to make it fun
             play audio smack
@@ -486,7 +486,7 @@ label snap_quip(is_player_snap, is_correct_snap):
             # Cheating warning
             if jn_snap._player_failed_snap_streak == 3 and not persistent.jn_snap_player_is_cheater:
                 $ cheat_check = True
-                show natsuki 1fsqsr zorder jn_placeholders.NATSUKI_Z_INDEX
+                show natsuki 1fsqsr zorder JN_NATSUKI_ZORDER
                 n "[player]!"
                 n "You're just calling Snap whenever it's your turn!"
                 n "That's not how you play at all!"
@@ -496,7 +496,7 @@ label snap_quip(is_player_snap, is_correct_snap):
             # Natsuki calls off the game
             elif jn_snap._player_failed_snap_streak == 6 and not persistent.jn_snap_player_is_cheater:
                 $ jn_snap_controls_enabled = False
-                show natsuki 1fsqsr zorder jn_placeholders.NATSUKI_Z_INDEX
+                show natsuki 1fsqsr zorder JN_NATSUKI_ZORDER
                 n "Ugh...{w=0.3} look,{w=0.1} [player]."
                 n "If you aren't gonna play fairly,{w=0.1} then why should I bother playing at all?"
                 n "I even warned you before,{w=0.1} too!"
@@ -525,14 +525,14 @@ label snap_quip(is_player_snap, is_correct_snap):
             # Generic incorrect quip/tease
             else:
                 $ quip = renpy.substitute(random.choice(jn_snap._PLAYER_INCORRECT_SNAP_QUIPS))
-                show natsuki 1fsqsm zorder jn_placeholders.NATSUKI_Z_INDEX
+                show natsuki 1fsqsm zorder JN_NATSUKI_ZORDER
 
     else:
 
         # Natsuki snapped, and was correct
         if is_correct_snap:
             $ quip = renpy.substitute(random.choice(jn_snap._NATSUKI_CORRECT_SNAP_QUIPS))
-            show natsuki 1uchbg zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1uchbg zorder JN_NATSUKI_ZORDER
 
             # Some UE things to make it fun
             play audio smack
@@ -542,7 +542,7 @@ label snap_quip(is_player_snap, is_correct_snap):
         # Natsuki snapped, and was incorrect
         else:
             $ quip = renpy.substitute(random.choice(jn_snap._NATSUKI_INCORRECT_SNAP_QUIPS))
-            show natsuki 1fsqsr zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1fsqsr zorder JN_NATSUKI_ZORDER
 
     # Natsuki quips; disable controls so player can't skip dialogue
     $ jn_snap._controls_enabled = False

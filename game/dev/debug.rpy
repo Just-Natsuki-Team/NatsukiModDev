@@ -676,31 +676,31 @@ label debug_custom_say_options_a(dialogue):
 
         "Boasting":
             n "Okaaay!{w=0.2} Here goes!"
-            show natsuki 1ksqbs zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1ksqbs zorder JN_NATSUKI_ZORDER
             n "[dialogue]"
             jump debug_custom_say_finish
 
         "Neutrally":
             n "Okaaay!{w=0.2} Here goes!"
-            show natsuki 1unmsm zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1unmsm zorder JN_NATSUKI_ZORDER
             n "[dialogue]"
             jump debug_custom_say_finish
 
         "Pleadingly":
             n "Okaaay!{w=0.2} Here goes!"
-            show natsuki 1kwmsr zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1kwmsr zorder JN_NATSUKI_ZORDER
             n "[dialogue]"
             jump debug_custom_say_finish
 
         "Pleased":
             n "Okaaay!{w=0.2} Here goes!"
-            show natsuki 1uchsm zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1uchsm zorder JN_NATSUKI_ZORDER
             n "[dialogue]"
             jump debug_custom_say_finish
 
         "Sadly":
             n "Okaaay!{w=0.2} Here goes!"
-            show natsuki 1kplsr zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1kplsr zorder JN_NATSUKI_ZORDER
             n "[dialogue]"
             jump debug_custom_say_finish
 
@@ -719,31 +719,31 @@ label debug_custom_say_options_b(dialogue):
 
         "Shyly":
             n "Okaaay!{w=0.2} Here goes!"
-            show natsuki 1kchss zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1kchss zorder JN_NATSUKI_ZORDER
             n "[dialogue]"
             jump debug_custom_say_finish
 
         "Happily":
             n "Okaaay!{w=0.2} Here goes!"
-            show natsuki 1uchbg zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1uchbg zorder JN_NATSUKI_ZORDER
             n "[dialogue]"
             jump debug_custom_say_finish
 
         "Smugly":
             n "Okaaay!{w=0.2} Here goes!"
-            show natsuki 1fsqsm zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1fsqsm zorder JN_NATSUKI_ZORDER
             n "[dialogue]"
             jump debug_custom_say_finish
 
         "Sparkly":
             n "Okaaay!{w=0.2} Here goes!"
-            show natsuki 1uspsm zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1uspsm zorder JN_NATSUKI_ZORDER
             n "[dialogue]"
             jump debug_custom_say_finish
 
         "Teasingly":
             n "Okaaay!{w=0.2} Here goes!"
-            show natsuki 1fsqlg zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1fsqlg zorder JN_NATSUKI_ZORDER
             n "[dialogue]"
             jump debug_custom_say_finish
 
@@ -764,13 +764,13 @@ label debug_custom_say_options_c(dialogue):
 
         "Unamused":
             n "Okaaay!{w=0.2} Here goes!"
-            show natsuki 1fsqsr zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1fsqsr zorder JN_NATSUKI_ZORDER
             n "[dialogue]"
             jump debug_custom_say_finish
 
         "Mischievously":
             n "Okaaay!{w=0.2} Here goes!"
-            show natsuki 1uwlgn zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1uwlgn zorder JN_NATSUKI_ZORDER
             n "[dialogue]"
             jump debug_custom_say_finish
 
@@ -786,7 +786,7 @@ label debug_custom_say_options_c(dialogue):
 
 label debug_custom_say_finish:
     n "..."
-    show natsuki 1uchbg zorder jn_placeholders.NATSUKI_Z_INDEX
+    show natsuki 1uchbg zorder JN_NATSUKI_ZORDER
     n "...And we're done here!{w=0.2} You're welcome,{w=0.1} [player]!"
 
     # We have to jump to ch30, as returning will try to return call stack back at options w/o dialogue param, causing a crash...
@@ -829,35 +829,6 @@ label debug_topic_count:
     n "Way to go,{w=0.1} [player]!"
     return
 
-# This topic allows us to have Natsuki cycle through all the placeholder sprites we have set up
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="debug_show_all_placeholder_sprites",
-            unlocked=True,
-            prompt="Can you show me all your placeholder sprites?",
-            conditional="config.console",
-            category=["Debug (Sprites)"],
-            player_says=True,
-            location="classroom"
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-label debug_show_all_placeholder_sprites:
-    n "Oki-doki,{w=0.1} [player]!"
-    n "Ready?{w=0.2} Here we go!"
-    python:
-        for placeholder_sprite in jn_placeholders.ALL_PLACEHOLDER_NATSUKI_SPRITES:
-            renpy.show(name=placeholder_sprite, at_list=[store.center], zorder=jn_placeholders.NATSUKI_Z_INDEX)
-            renpy.with_statement(trans=store.natsuki_desk_move_transition)
-            renpy.say(n, "This is {0}".format(placeholder_sprite))
-
-    show natsuki 1uchsm
-    n "And... all done~!"
-    return
-
 # This topic allows us to have Natsuki call an API for us, and print the results to the log
 init 5 python:
     registerTopic(
@@ -883,7 +854,7 @@ label debug_call_api:
         n "Now,{w=0.1} what do you want me to call?"
 
         "Ghostbusters!":
-            show natsuki 1fsqsr zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1fsqsr zorder JN_NATSUKI_ZORDER
             n "...{i}Really{/i},{w=1.0} [player]?"
 
         # Add your API calls here! We might need a scrollable menu implementation if we rack up too many services.
@@ -918,22 +889,22 @@ label debug_change_weather:
         "Overcast":
             n "That's a little gloomy,{w=0.1} isn't it?{w=0.2} But alright!{w=0.2} One sec..."
             n "..."
-            $ jn_placeholders.show_placeholder_sky(jn_placeholders.WEATHER_OVERCAST)
+            $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_OVERCAST)
             n "There you go,{w=0.1} [player]!"
 
         "Rain":
             n "Rain it is!{w=0.2} One sec..."
-            $ jn_placeholders.show_placeholder_sky(jn_placeholders.WEATHER_RAIN)
+            $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_RAIN)
             n "There you go,{w=0.1} [player]!"
 
         "Thunder":
             n "Not...{w=0.3} what I'd pick,{w=0.1} but fine.{w=0.2} One sec..."
-            $ jn_placeholders.show_placeholder_sky(jn_placeholders.WEATHER_THUNDER)
+            $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_THUNDER)
             n "There you go,{w=0.1} [player]!"
 
         "Sunny":
             n "Alright,{w=0.1} now we're talking!{w=0.2} One sec..."
-            $ jn_placeholders.show_placeholder_sky(jn_placeholders.WEATHER_SUNNY)
+            $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
             n "There you go,{w=0.1} [player]!"
 
         "Nevermind.":
@@ -963,25 +934,28 @@ label debug_composite_outfit_test:
         n "Okay! So what clothes should I wear?"
 
         "School uniform":
-            $ jn_globals.natsuki_current_outfit = "uniform"
+            $ persistent.jn_natsuki_current_outfit = "uniform"
 
         "Casual outfit":
-            $ jn_globals.natsuki_current_outfit = "casual"
+            $ persistent.jn_natsuki_current_outfit = "casual"
 
         "Sweater":
-            $ jn_globals.natsuki_current_outfit = "qeeb_sweater"
+            $ persistent.jn_natsuki_current_outfit = "qeeb_sweater"
 
-        "Sleeveless Sweater":
-            $ jn_globals.natsuki_current_outfit = "heart_sweater"
+        "Sleeveless sweater":
+            $ persistent.jn_natsuki_current_outfit = "heart_sweater"
 
         "Pajamas":
-            $ jn_globals.natsuki_current_outfit = "star_pajamas"
+            $ persistent.jn_natsuki_current_outfit = "star_pajamas"
 
         "Dress":
-            $ jn_globals.natsuki_current_outfit = "rose_lace_dress"
+            $ persistent.jn_natsuki_current_outfit = "rose_lace_dress"
 
-        "Sango Cosplay":
-            $ jn_globals.natsuki_current_outfit = "sango_cosplay"
+        "Sango cosplay":
+            $ persistent.jn_natsuki_current_outfit = "sango_cosplay"
+
+        "Magical girl":
+            $ persistent.jn_natsuki_current_outfit = "magical_girl"
 
         "Nevermind":
             n "Oh... well, okay then."
@@ -991,19 +965,19 @@ label debug_composite_outfit_test:
         n "Gotcha! Now, what hairstyle should I have?"
 
         "Twintails":
-            $ jn_globals.natsuki_current_hairstyle = "default"
+            $ persistent.jn_natsuki_current_hairstyle = "default"
 
         "Bedhead":
-            $ jn_globals.natsuki_current_hairstyle = "bedhead"
+            $ persistent.jn_natsuki_current_hairstyle = "bedhead"
 
         "Bun":
-            $ jn_globals.natsuki_current_hairstyle = "bun"
+            $ persistent.jn_natsuki_current_hairstyle = "bun"
 
         "Down":
-            $ jn_globals.natsuki_current_hairstyle = "down"
+            $ persistent.jn_natsuki_current_hairstyle = "down"
 
         "Ponytail":
-            $ jn_globals.natsuki_current_hairstyle = "ponytail"
+            $ persistent.jn_natsuki_current_hairstyle = "ponytail"
 
         "Nevermind":
             n "Oh... well, okay then."
@@ -1013,16 +987,16 @@ label debug_composite_outfit_test:
         n "Alrighty!{w=0.2} Now,{w=0.1} what hairpiece should I put on?"
 
         "Hairband, red":
-            $ jn_globals.natsuki_current_accessory = "hairbands/red"
+            $ persistent.jn_natsuki_current_accessory = "hairbands/red"
 
         "Hairband, pink":
-            $ jn_globals.natsuki_current_accessory = "hairbands/hot_pink"
+            $ persistent.jn_natsuki_current_accessory = "hairbands/hot_pink"
 
         "Hairband, purple":
-            $ jn_globals.natsuki_current_accessory = "hairbands/purple"
+            $ persistent.jn_natsuki_current_accessory = "hairbands/purple"
 
         "Hairband, white":
-            $ jn_globals.natsuki_current_accessory = "hairbands/white"
+            $ persistent.jn_natsuki_current_accessory = "hairbands/white"
 
         "Nevermind":
             n "Oh... well, okay then."
@@ -1031,11 +1005,11 @@ label debug_composite_outfit_test:
     menu:
         n "Last one, [player]~! What eyewear should I have?"
 
-        "None":
-            $ jn_globals.natsuki_current_eyewear = None
+        "No eyewear":
+            $ persistent.jn_natsuki_current_eyewear = None
 
         "Circle glasses":
-            $ jn_globals.natsuki_current_eyewear = "circles"
+            $ persistent.jn_natsuki_current_eyewear = "circles"
 
         "Nevermind":
             n "Oh... well, okay then."

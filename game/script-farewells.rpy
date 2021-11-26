@@ -1070,32 +1070,32 @@ label farewell_gentle_ask:
 label farewell_extra_trust:
     # ABSOLUTE+
     if jn_trust.get_trust_state() >= jn_trust.ABSOLUTE:
-        show natsuki 1uchbg zorder jn_placeholders.NATSUKI_Z_INDEX
+        show natsuki 1uchbg zorder JN_NATSUKI_ZORDER
         n "My [player]...{w=0.3} I'll be waiting..."
 
     # FULL+
     elif jn_trust.get_trust_state() >= jn_trust.FULL:
-        show natsuki 1kchss zorder jn_placeholders.NATSUKI_Z_INDEX
+        show natsuki 1kchss zorder JN_NATSUKI_ZORDER
         n "I'll be waiting..."
 
     # PARTIAL+
     elif jn_trust.get_trust_state() >= jn_trust.PARTIAL:
-        show natsuki 1kwmsr zorder jn_placeholders.NATSUKI_Z_INDEX
+        show natsuki 1kwmsr zorder JN_NATSUKI_ZORDER
         n "You'll be back...{w=0.3} right?"
 
     # SCEPTICAL+
     elif jn_trust.get_trust_state() >= jn_trust.SCEPTICAL:
-        show natsuki 1kplsr zorder jn_placeholders.NATSUKI_Z_INDEX
+        show natsuki 1kplsr zorder JN_NATSUKI_ZORDER
         n "I'll be okay...{w=0.3} I'll be okay..."
 
     # DIMINISHED+
     elif jn_trust.get_trust_state() >= jn_trust.DIMINISHED:
-        show natsuki 1kplsr zorder jn_placeholders.NATSUKI_Z_INDEX
+        show natsuki 1kplsr zorder JN_NATSUKI_ZORDER
         n "...?"
 
     # SHATTERED+
     else:
-        show natsuki 1kplsr zorder jn_placeholders.NATSUKI_Z_INDEX
+        show natsuki 1kplsr zorder JN_NATSUKI_ZORDER
         n "..."
 
     return { "quit": None }

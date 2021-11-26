@@ -40,7 +40,7 @@ label ch30_init:
     $ main_background.draw(full_redraw=True)
 
     if utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
-        $ jn_placeholders.show_random_placeholder_sky()
+        $ jn_atmosphere.show_random_sky()
     else:
         hide placeholder_sky_day sunny
 
@@ -169,13 +169,16 @@ init python:
                     if topic_pool:
                         queue(random.choice(topic_pool).label)
                         LAST_TOPIC_CALL = datetime.datetime.now()
+
+        #TODO - add affinity based random expressions
+
         pass
 
     def hour_check():
         """
         Runs ever hour during breaks between topics
         """
-        jn_placeholders.show_random_placeholder_sky()
+        jn_atmosphere.show_random_sky()
         pass
 
     def day_check():
@@ -268,7 +271,6 @@ label player_select_topic(is_repeat_topics=False):
 
     # Clear _return
     $ _return = None
-    $ jn_placeholders.show_resting_placeholder_natsuki()
 
     jump ch30_loop
 

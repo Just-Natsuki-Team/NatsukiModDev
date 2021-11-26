@@ -145,7 +145,7 @@ label music_menu:
             $ chosen_no_music_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_NO_MUSIC_QUIPS))
             n "[chosen_no_music_quip]"
             $ music_title = "No music"
-            stop music fadeout 1.5
+            stop music fadeout 3
 
         elif _return == "random":
 
@@ -155,7 +155,7 @@ label music_menu:
             $ chosen_question_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_QUESTION_QUIPS))
             n "[chosen_question_quip]"
 
-            show natsuki 1uchbg zorder jn_placeholders.NATSUKI_Z_INDEX
+            show natsuki 1uchbg zorder JN_NATSUKI_ZORDER
 
             $ chosen_answer_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_ANSWER_QUIPS))
             n "[chosen_answer_quip]"
