@@ -25,6 +25,7 @@ label ch30_visual_setup:
 
 label ch30_init:
     python:
+
         # Determine if the player should get a prolonged leave greeting
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
             persistent.last_apology_type = jn_apologies.TYPE_PROLONGED_LEAVE
@@ -41,8 +42,6 @@ label ch30_init:
 
     if utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
         $ jn_atmosphere.show_random_sky()
-    else:
-        hide placeholder_sky_day sunny
 
     show screen hkb_overlay
 
@@ -54,15 +53,15 @@ label ch30_init:
 
     if persistent.jn_debug_open_watch_on_load:
         $ jn_debug.toggle_show_tracked_watch_items(True)
-
+        
     #And finally, we head into the loop
     play music audio.test_bgm
     jump ch30_loop
 
 #The main loop
 label ch30_loop:
-    show natsuki 1unmsm at jn_center zorder JN_NATSUKI_ZORDER
-
+    show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
+    
     # TODO: topic selection here once wait system is implemented
     #Run our checks
     python:
@@ -169,8 +168,9 @@ init python:
                     if topic_pool:
                         queue(random.choice(topic_pool).label)
                         LAST_TOPIC_CALL = datetime.datetime.now()
-
-        #TODO - add affinity based random expressions
+        
+        #TODO: random expr every minute
+        #show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
 
         pass
 

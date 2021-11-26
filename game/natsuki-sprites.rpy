@@ -592,9 +592,113 @@ image natsuki 1uwlgn = jn_generate_natsuki_sprite(
     mouth=JNMouth.grin
 )
 
-label emote_test:
-    n 1kplsf "this is me sad"
-    n 1unmsm "this is me smiling"
-    n 1unmbs "This is me smiling big"
-    n "I'm happy~"
-    return
+# This selects which idle image to show based on current affinity state
+image natsuki idle = ConditionSwitch(
+    "jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED", "natsuki max_affinity",
+    "jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE", "natsuki high_affinity",
+    "jn_affinity.get_affinity_state() >= jn_affinity.NORMAL", "natsuki medium_affinity",
+    "jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED", "natsuki low_affinity",
+    "True", "natsuki_min_affinity",
+    predict_all = True
+)
+
+# Idle images for ENAMORED+
+image natsuki max_affinity:
+    block:
+        choice:
+            "natsuki 1nchsmf"
+        choice:
+            "natsuki 1kwmsmf"
+        choice:
+            "natsuki 1kllsmf"
+        choice:
+            "natsuki 1klrsmf"
+        choice:
+            "natsuki 1knmsmf"
+        choice:
+            "natsuki 1kllnvf"
+        choice:
+            "natsuki 1klrnvf"
+        choice:
+            "natsuki 1kcssmf"
+        choice:
+            "natsuki 1kcssgf"
+
+        pause 10
+        repeat
+
+# Idle images for AFFECTIONATE+
+image natsuki high_affinity:
+    block:
+        choice:
+            "natsuki 1ullsml"
+        choice:
+            "natsuki 1ulrsml"
+        choice:
+            "natsuki 1unmsml"
+        choice:
+            "natsuki 1nnmsgl"
+
+        pause 10
+        repeat
+
+# Idle images for NORMAL+
+image natsuki medium_affinity:
+    block:
+        choice:
+            "natsuki 1nnmsg"
+        choice:
+            "natsuki 1nnmsm"
+        choice:
+            "natsuki 1nllnv"
+        choice:
+            "natsuki 1nlrnv"
+        choice:
+            "natsuki 1nllca"
+        choice:
+            "natsuki 1nlrca"
+
+        pause 10
+        repeat
+
+# Idle images for DISTRESSED+
+image natsuki low_affinity:
+    block:
+        choice:
+            "natsuki 1fllsl"
+        choice:
+            "natsuki 1klrsl"
+        choice:
+            "natsuki 1kcssl"
+        choice:
+            "natsuki 1kcssf"
+        choice:
+            "natsuki 1fcssf"
+        choice:
+            "natsuki 1fllsf"
+        choice:
+            "natsuki 1flrsf"
+        choice:
+            "natsuki 1fsqca"
+
+        pause 10
+        repeat
+
+# Idle images for RUINED+
+image natsuki_min_affinity:
+    block:
+        choice:
+            "natsuki 1fcsun"
+        choice:
+            "natsuki 1kcssr"
+        choice:
+            "natsuki 1fsqup"
+        choice:
+            "natsuki 1fsqun"
+        choice:
+            "natsuki 1kcsup"
+        choice:
+            "natsuki 1fcsup"
+
+        pause 10
+        repeat
