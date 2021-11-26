@@ -107,75 +107,75 @@ label apology_bad_nickname:
     if persistent.jn_player_nicknames_allowed:
         # The player is still capable of nicknaming Natsuki
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "..."
-            n "That hurt,{w=0.1} [player].{w=0.2} What you did."
-            n "That really hurt me."
-            n "..."
-            n "I'm...{w=0.3} glad you've chosen to apologize."
-            n "Just please...{w=0.3} try to consider my feelings next time,{w=0.1} alright?"
+            n 1kcssf "..."
+            n 1knmsf "That hurt,{w=0.1} [player].{w=0.2} What you did."
+            n 1kplsf "That really hurt me."
+            n 1kcssf "..."
+            n 1kplss "I'm...{w=0.3} glad you've chosen to apologize."
+            n 1knmsr "Just please...{w=0.3} try to consider my feelings next time,{w=0.1} alright?"
             $ relationship("affinity+")
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-            n "..."
-            n "...Fine.{w=0.2} I accept your apology, okay?"
-            n "Just please knock it off,{w=0.1} [player]."
-            n "It isn't funny.{w=0.2} It isn't a joke."
-            n "...And I know you're better than that."
+            n 1fcssr "..."
+            n 1fnmsl "...Fine.{w=0.2} I accept your apology, okay?"
+            n 1uplsl "Just please knock it off,{w=0.1} [player]."
+            n 1uplaj "It isn't funny.{w=0.2} It isn't a joke."
+            n 1fllsl "...And I know you're better than that."
             $ relationship("affinity+")
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-            n "...Are you sure,{w=0.1} [player]?"
-            n "I mean...{w=0.3} if you actually cared about my feelings..."
-            n "Why would you even think about doing that in the first place?"
-            n "Behaving like that doesn't make you funny,{w=0.1} [player]."
-            n "It makes you toxic."
-            n "..."
-            n "...Thanks,{w=0.1} I guess.{w=0.2} For the apology."
-            n "Just quit while you're ahead,{w=0.1} understand?"
+            n 1fsqsl "...Are you sure,{w=0.1} [player]?"
+            n 1fllaj "I mean...{w=0.3} if you actually cared about my feelings..."
+            n 1fsqan "Why would you even think about doing that in the first place?"
+            n 1fcsaj "Behaving like that doesn't make you funny,{w=0.1} [player]."
+            n 1fsqsr "It makes you toxic."
+            n 1fcssr "..."
+            n 1fllsr "...Thanks,{w=0.1} I guess.{w=0.2} For the apology."
+            n 1fsqsl "Just quit while you're ahead,{w=0.1} understand?"
             $ relationship("affinity+")
 
         else:
-            n "...I honestly don't know what I find more gross about you,{w=0.1} [player]."
-            n "The fact you even did it in the first place..."
-            n "...Or that you think a simple apology makes all that a-okay."
-            n "..."
-            n "Don't think this changes a thing,{w=0.1} [player]."
-            n "Because it doesn't."
+            n 1fcsan "...I honestly don't know what I find more gross about you,{w=0.1} [player]."
+            n 1fcsaj "The fact you even did it in the first place..."
+            n 1fsqfu "...Or that you think a simple apology makes all that a-okay."
+            n 1fcssr "..."
+            n 1fcsan "Don't think this changes a thing,{w=0.1} [player]."
+            n 1fsqsr "Because it doesn't."
 
     else:
         # The player has been barred from nicknaming Natsuki, and even an apology won't change that
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "...[player]."
-            n "I warned you."
-            n "I warned you so many times."
-            n "Did you think apologizing now would change anything?"
-            n "..."
-            n "...Look,{w=0.1} [player]."
-            n "I appreciate your apology,{w=0.1} okay?{w=0.2} I do."
-            n "But...{w=0.3} it's just like I said.{w=0.2} Actions have consequences."
-            n "I hope you can understand."
+            n 1fcsfr "...[player]."
+            n 1fplsr "I warned you."
+            n 1kplsl "I warned you so many times."
+            n 1fplsl "Did you think apologizing {i}now{/i} would change anything?"
+            n 1fcssl "..."
+            n 1kcsaj "...Look,{w=0.1} [player]."
+            n 1kplsr "I appreciate your apology,{w=0.1} okay?{w=0.2} I do."
+            n 1kllsr "But...{w=0.3} it's just like I said.{w=0.2} Actions have consequences."
+            n 1kcssr "I hope you can understand."
             $ relationship("affinity+")
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-            n "...[player]."
-            n "Look.{w=0.2} You're sorry,{w=0.1} I get it.{w=0.2} I'm sure you mean it too."
-            n "But...{w=0.3} it's like I said.{w=0.1} Actions have consequences."
-            n "I hope you can understand."
+            n 1fcssr "...[player]."
+            n 1fsqsr "Look.{w=0.2} You're sorry,{w=0.1} I get it.{w=0.2} I'm sure you mean it too."
+            n 1fcssl "But...{w=0.3} it's like I said.{w=0.1} Actions have consequences."
+            n 1kcssl "I hope you can understand."
             $ relationship("affinity+")
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-            n "Ugh...{w=0.3} really,{w=0.1} [player]?"
-            n "..."
-            n "I {i}said{/i} actions have consequences."
-            n "I appreciate the apology.{w=0.2} But that's all you're getting."
+            n 1fsqfu "Ugh...{w=0.3} really,{w=0.1} [player]?"
+            n 1fcsan "..."
+            n 1fsqfr "I {i}said{/i} actions have consequences."
+            n 1fcsfr "I appreciate the apology.{w=0.2} But that's all you're getting."
             $ relationship("affinity+")
 
         else:
-            n "...Wow.{w=0.2} Just wow."
-            n "{i}Now{/i} you choose to apologize?"
-            n "..."
-            n "Whatever.{w=0.2} I literally don't care."
-            n "This changes nothing,{w=0.1} [player]."
+            n 1kcsfr "...Wow.{w=0.2} Just wow."
+            n 1fcsfu "{i}Now{/i} you choose to apologize?"
+            n 1kcssr "..."
+            n 1fsqfu "Whatever.{w=0.2} I literally don't care."
+            n 1fcsan "This changes nothing,{w=0.1} [player]."
 
     $ persistent.jn_player_pending_apologies.remove(jn_apologies.TYPE_BAD_NICKNAME)
     return
@@ -196,29 +196,29 @@ init 5 python:
 
 label apology_cheated_game:
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n "Ehehe.{w=0.2} It's fine,{w=0.1} [player]."
-        n "We all get a little too competitive sometimes,{w=0.1} right?"
-        n "Just remember though."
-        n "Two can play at that game!"
+        n 1kchbg "Ehehe.{w=0.2} It's fine,{w=0.1} [player]."
+        n 1nllsm "We all get a little too competitive sometimes,{w=0.1} right?"
+        n 1nsqsm "Just remember though."
+        n 1fsqbg "Two can play at that game!"
         $ relationship("affinity+")
         $ persistent.jn_snap_player_is_cheater = False
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "Huh?{w=0.2} Oh,{w=0.1} that."
-        n "Yeah,{w=0.1} yeah.{w=0.2} It's fine."
-        n "Just play fair next time,{w=0.1} 'kay?"
+        n 1fsqbg "Huh?{w=0.2} Oh,{w=0.1} that."
+        n 1nnmaj "Yeah,{w=0.1} yeah.{w=0.2} It's fine."
+        n 1nllsl "Just play fair next time,{w=0.1} 'kay?"
         $ relationship("affinity+")
         $ persistent.jn_snap_player_is_cheater = False
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-        n "Whatever,{w=0.1} [player]."
-        n "But thanks for the apology,{w=0.1} I guess."
+        n 1fcssl "Whatever,{w=0.1} [player]."
+        n 1fsqsl "But thanks for the apology,{w=0.1} I guess."
         $ relationship("affinity+")
         $ persistent.jn_snap_player_is_cheater = False
 
     else:
-        n "Whatever.{w=0.2} I don't care."
-        n "As if I could expect much better from you,{w=0.1} anyway..."
+        n 1fcsan "Whatever.{w=0.2} I don't care."
+        n 1fsqan "As if I could expect much better from you,{w=0.1} anyway..."
 
     $ persistent.jn_player_pending_apologies.remove(jn_apologies.TYPE_CHEATED_GAME)
     return
@@ -240,17 +240,17 @@ label apology_default:
     if len(persistent.jn_player_pending_apologies) == 0:
         # The player has nothing to be sorry to Natsuki for; prompt them to do better
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "Huh?{w=0.2} You're sorry?"
-            n "I...{w=0.3} don't get it,{w=0.1} [player].{w=0.2} You haven't done anything to upset me..."
-            n "Did you upset someone else or something?"
-            n "..."
-            n "Well,{w=0.1} there's no point sitting around here feeling sorry for yourself."
-            n "You're gonna make things right,{w=0.1} [player]. 'Kay?"
-            n "And no -{w=0.1} this isn't up for discussion."
-            n "Whatever you did,{w=0.1} you'll fix things up and that's all there is to it."
+            n 1tnmaj "Huh?{w=0.2} You're sorry?"
+            n 1tllaj "I...{w=0.3} don't get it,{w=0.1} [player].{w=0.2} You haven't done anything to upset me..."
+            n 1tnmsl "Did you upset someone else or something?"
+            n 1ncssl "..."
+            n 1kchbg "Well,{w=0.1} there's no point sitting around here feeling sorry for yourself."
+            n 1unmsm "You're gonna make things right,{w=0.1} [player]. 'Kay?"
+            n 1kchbg "And no -{w=0.1} this isn't up for discussion."
+            n 1fchsm "Whatever you did,{w=0.1} you'll fix things up and that's all there is to it."
             $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-            n "You have my vote of confidence,{w=0.1} [chosen_tease] -{w=0.1} now do your best!"
-            n "Ehehe."
+            n 1fchbg "You have my vote of confidence,{w=0.1} [chosen_tease] -{w=0.1} now do your best!"
+            n 1uchsm "Ehehe."
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
             n "Eh?{w=0.2} You're sorry?"
