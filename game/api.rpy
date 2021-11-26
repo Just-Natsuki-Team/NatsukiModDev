@@ -113,7 +113,7 @@ init -2 python in api:
 
             IN:
                 API - <string> with which this function is associated
-                codes - <int/list/set/range> response codes on which this function should be called
+                codes - <int/list(range)/set> response codes on which this function should be called
                         if None, function will be called if API call results in a code that isn't in registry
             NOTE:
                 function can accept `code` and `html` keyword arguments
@@ -128,13 +128,13 @@ init -2 python in api:
             API_on_status_code.all[API] = dict()
 
         # make codes an iterable if it isn't yet
-        if not isinstance(codes, (list, set, range)):
+        if not isinstance(codes, (list, set)):
             codes = [codes]
 
         def registered(func):
             for code in codes:
                 # check if code is an integer
-                if code is not None and not isinstance(codes, int):
+                if code is not None and not isinstance(code, int):
                     raise Exception("API_on_status_code accepts only integers for response codes")
 
                 # Now we wrap our function based on what keyword args it accepts
@@ -143,9 +143,10 @@ init -2 python in api:
                 ## we try to pass it those args
                 ## if it still for some reason fails we call it without any args
 
+                func_args = func.func_code.co_varnames
                 # Both code and html
-                if "code" in func.func_code.co_varnames and "html" in func.func_code.co_varnames:
-                    def wrapper(code=code, html=html):
+                if "code" in func_args and "html" in func_args:
+                    def wrapper(code=code, html=None):
                         try:
                             return func(code=code, html=html)
                         except TypeError:
@@ -155,8 +156,8 @@ init -2 python in api:
                     continue
 
                 # Only code
-                if "code" in func.func_code.co_varnames:
-                    def wrapper(code=code, html=html):
+                if "code" in func_args:
+                    def wrapper(code=code, html=None):
                         try:
                             return func(code=code)
                         except TypeError:
@@ -166,8 +167,8 @@ init -2 python in api:
                     continue
 
                 # Only html
-                if "html" in func.func_code.co_varnames:
-                    def wrapper(code=code, html=html):
+                if "html" in func_args:
+                    def wrapper(code=code, html=None):
                         try:
                             return func(html=html)
                         except TypeError:
@@ -177,7 +178,7 @@ init -2 python in api:
                     continue
 
                 # not html nor code
-                def wrapper(code=code, html=html):
+                def wrapper(code=code, html=None):
                     return func()
                 # add wrapped function to our dictionary
                 API_on_status_code.all[API][code] = wrapper
@@ -201,7 +202,7 @@ init -2 python in api:
         if code not in API_on_status_code.all[API]:
             # code was not found in registry but registry contains a generic fallback
             if None in API_on_status_code.all[API]:
-                return API_on_status_code.all[API][code](code=code, html=html)
+                return API_on_status_code.all[API][None](code=code, html=html)
             # no generic nor code specific callback, return None
             return
 

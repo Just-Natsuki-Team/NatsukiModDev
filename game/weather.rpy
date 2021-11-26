@@ -11,15 +11,14 @@ init -1 python in weather:
         "units" : "metric"
     }
 
-    @store.utils.coroutine_loop(datetime.timedelta(seconds=30))
-    def testytesttest():
-        store.utils.log("testiiiiiiiiiiiiiiiiiiiiiiiiiing")
-    testytesttest.start()
-
-
     def get_json(response):
         """
             returns json part of response as a dictionary
+
+            IN:
+                <string>
+            OUT:
+                <dict>
         """
         html = response["html"]
         if html is None:
@@ -35,7 +34,10 @@ init -1 python in weather:
 
     def make_API_call():
         """
+            for making an API call after all checks and validations are done
 
+            OUT:
+                <dict> API json response
         """
         apikey = store.persistent.weather_api_key
         params = get_location_dict()
@@ -50,7 +52,22 @@ init -1 python in weather:
 
         return json
 
-    def is_api_key_valid(apikey):
+    def is_api_key_valid(apikey=None):
+        """
+            makes a new API call and returns True if apikey is valid
+
+            IN:
+                apikey - <string> if None, persisted apikey is used
+
+            OUT:
+                <bool>
+        """
+        if apikey is None:
+            if store.persistent.weather_api_key is None:
+                return False
+
+            apikey = store.persistent.weather_api_key
+
         response = get_json(store.api.make_request("OpenWeatherMap", appid=apikey))
 
         if response["cod"] == 401:
@@ -59,6 +76,9 @@ init -1 python in weather:
         return True
 
     def other_API_response_codes(code):
+        """
+            logs based on what response we got from API call
+        """
         if code == 429:
             store.utils.log("[OpenWeatherMap] Exceeded 60 calls/min", store.utils.SEVERITY_ERR)
 
@@ -637,14 +657,20 @@ init -1 python in weather:
             # "weather" - weather info
             # [0] - primary weather info
             # "main" - one word description of current weather
+            store.persistent.current_weather_short = response["weather"][0]["main"]
             return response["weather"][0]["main"]
 
         @staticmethod
+        @store.utils.coroutine_loop(datetime.timedelta(seconds=30))
         def get_weather_detail():
             """
                 Returns detailed information about current weather with intensity of each ~~element~~
+                and one-word description as well
 
-                format:
+                OUT:
+                    (detailed_description, short_description)
+
+                detail format:
                     {
                         "thunder" : <int>,
                         "drizzle" : <int>,
@@ -653,8 +679,8 @@ init -1 python in weather:
                         "clouds" : <int>,
                         "clear" : <bool>,
                         "special" : <string?>,
-                        "wind" : <int>,
-                        "temp" : <int>
+                        "wind" : <float>,
+                        "temp" : <float>
                     }
 
                     thunder : intensity of a thunderstorm
@@ -698,9 +724,18 @@ init -1 python in weather:
                 parsed_weather["wind"] = 0
 
             store.persistent.current_weather_long = parsed_weather
-            store.persistent.current_weather_long = weather_short
+            store.persistent.current_weather_short = weather_short
 
             return parsed_weather, weather_short
+    testyvar = None
+    @store.api.API_on_status_code("OpenWeatherMap")
+    def testyfuncteeeest(html=None):
+        global testyvar
+
+        if html is not None:
+            testyvar = "universal works and html"
+        else:
+            testyvar = "universal works but not html"
 
 # THis is here purely because of a bug in renpy extension, remove after it's fixed
 init -1 python:

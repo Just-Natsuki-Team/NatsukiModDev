@@ -12,7 +12,7 @@ default persistent.jn_screenshot_bad_shots_total = 0
 
 # Weather data
 default persistent.weather_api_key = None
-default persistent.next_weather_call_time = None
+default persistent.weather_setup_failed_apikey_validation = 0
 default persistent.is_weather_tracking_set_up = False
 default persistent.current_weather_short = "Clear"
 default persistent.current_weather_long = dict()
@@ -35,7 +35,6 @@ default persistent._event_list = list()
 #Early imports
 init -990 python:
     import datetime
-    import time
 
 init 0 python:
     import store.jn_affinity as jn_aff
@@ -611,6 +610,15 @@ init -999 python in utils:
 
             IN:
                 t - <datetime.timedelta> how often to call function
+
+            also adds subfunctions to the function
+                start() - starts looping and calls the function
+                stop() - stops looping
+                next_call(t) - set next call time to
+                    t - <timedelta> this is a one time thing, regular loop time doesn't change
+                        if function is continued to loop afterwards depends on if it's been started or not
+
+            NOTE: loop times are not maintained in-between sessions
         """
         # check if we got timedelta as argument
         if not isinstance(t, datetime.timedelta):
@@ -624,16 +632,26 @@ init -999 python in utils:
         def register(func):
             def stop(self=func):
                 coroutine_loop.all[self]["next"] = None
+                coroutine_loop.all[self]["looping"] = False
 
             def start(self=func):
                 coroutine_loop.all[self]["next"] = coroutine_loop.all[self]["loop_time"] + datetime.datetime.now()
+                coroutine_loop.all[self]["looping"] = True
+                func()
+
+            def next_call(t, self=func):
+                if not isinstance(t, datetime.timedelta):
+                    raise Exception("{0}.next_call expected timedelta instead of {1}".format(func, type(t)))
+
+                coroutine_loop.all[self]["next"] = datetime.datetime.now() + t
 
             setattr(func, "stop", stop)
             setattr(func, "start", start)
+            setattr(func, "next_call", next_call)
 
             #NOTE: check might not be neccessary?
             if func not in coroutine_loop.all:
-                coroutine_loop.all[func] = {"next":None,"loop_time":t}
+                coroutine_loop.all[func] = {"next":None,"loop_time":t, "looping" : False}
 
             return func
         return register

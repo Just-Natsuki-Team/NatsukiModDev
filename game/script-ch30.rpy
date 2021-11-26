@@ -13,9 +13,9 @@ label ch30_autoload:
 
     #Do all the things here for initial setup/flow hijacking
     python:
-        if persistent.weather_api_key:
-            if not weather.is_api_key_valid(persistent.weather_api_key):
-                utils.log("ERROR: OWM API key is no longer valid.", utils.SEVERITY_ERR)
+        # weather tracking is setup so we start it up
+        if persistent.is_weather_tracking_set_up:
+            weather.Weather.get_weather_detail.start()
 
     #FALL THROUGH
 
@@ -53,7 +53,7 @@ label ch30_init:
 #The main loop
 label ch30_loop:
     #Do topic selection here
-    $ queue(pick_random_topic(unlocked=True, player_says=False, location=main_background.location.id, affinity=20, trust=60))
+    $ queue("talk_set_trust")#pick_random_topic(unlocked=True, player_says=False, location=main_background.location.id, affinity=20, trust=60))
 
     #Run our checks
     python:
@@ -101,23 +101,39 @@ init python:
 
     def hour_check():
         """
-        Runs ever hour during breaks between topics
+        Runs every hour during breaks between topics
         """
-        pass
+        # weather isn't setup yet but we do have an apikey awaiting validation
+        if not persistent.is_weather_tracking_set_up and persistent.weather_api_key is not None:
+            if(
+                persistent.weather_setup_failed_apikey_validation >= 2 #api_key should be activated by now
+                or persistent.weather_setup_failed_apikey_validation >= 5 #something's real fishy about this
+                or weather.is_api_key_valid() #apikey is valid
+            ):
+                push('talk_weather_setup_part2')
+
+            persistent.weather_setup_failed_apikey_validation += 1
 
     def day_check():
         """
         Runs every day during breaks between topics
         """
-        pass
+        # everyday check if OWM apikey somehow wasn't invalidated
+        if persistent.is_weather_tracking_set_up and not weather.is_api_key_valid():
+            utils.log("API key for OpenWeatherMap is no longer valid", store.utils.SEVERITY_ERR)
 
     def coroutine_check():
         """
         Runs through all functions with @coroutine_loop and checks if they should be called
         """
         for func, info in store.utils.coroutine_loop.all.items():
-            if info["next"] is not None and info["next"] <= datetime.datetime.now():
+            if info["next"] is None:
+                continue
+
+            if info["next"] <= datetime.datetime.now():
                 func()
+
+            if info["looping"]:
                 store.utils.coroutine_loop.all[func]["next"] = info["loop_time"]+datetime.datetime.now()
 
 #Other labels

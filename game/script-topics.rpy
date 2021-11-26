@@ -1064,8 +1064,8 @@ label talk_weather_setup_part1:
                 $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
                 n "Love you,{w=0.1} [chosen_endearment]!"
             # It can take a few hours for the API key to activate
-            # so we wait 2.2 hours before checking if the key is working
-            $ weather.set_next_weather_call_time(7920)
+            # so we wait 2 hours before checking if the key is working
+
     return {"lock!" : None}
 
 init 5 python:
@@ -1083,7 +1083,7 @@ init 5 python:
 label talk_weather_setup_part2:
 
     # API key isn't valid; we prompt the player for another
-    if not weather.is_api_key_valid(persistent.weather_api_key):
+    if not weather.is_api_key_valid():
         n "Hey...{w=0.3} [player]?"
         n "You know we went through the weather stuff?{w=0.2} With the API key and all that."
         n "Well...{w=0.3} it's been a while,{w=0.1} and it still isn't working!"
