@@ -957,28 +957,28 @@ init 5 python:
     )
 
 label farewell_fake_confidence_ask:
-    n "Huh?{w=0.2} You don't really have to leave already,{w=0.1} do you?"
-    n "It feels like you've barely been here!"
-    n "I bet you can hang out with me a little longer!{w=0.2} Right,{w=0.1} [player]?"
+    n 1knmaj "Huh?{w=0.2} You don't really have to leave already,{w=0.1} do you?"
+    n 1fllsf "It feels like you've barely been here!"
+    n 1flldv "I-{w=0.1}I totally bet you can hang out with me a little longer!{w=0.2} Right,{w=0.1} [player]?"
     menu:
         n "{w=0.3}...right?"
 
         "Right!":
-            n "A-Aha!{w=0.2} I knew it!"
-            n "I totally don't need you here,{w=0.1} or anything dumb like that!"
-            n "You'd have to be pretty lonely to be {i}that{/i} dependent on someone else...{w=0.3} ahaha..."
-            n "..."
-            n "Jeez!{w=0.2} Let's just get back to it already..."
-            n "Now,{w=0.1} where were we?"
+            n 1fcsbgl "A-Aha!{w=0.2} I knew it!"
+            n 1fllbg "I-{w=0.1}I totally don't need you here,{w=0.1} or anything dumb like that!"
+            n 1flldvl "You'd have to be pretty lonely to be {i}that{/i} dependent on someone else...{w=0.3} ahaha..."
+            n 1klrsll "..."
+            n 1fcswrf "J-{w=0.1}jeez!{w=0.2} Let's just get back to it already..."
+            n 1fllajf "Now,{w=0.1} where were we?"
             $ jn_globals.player_already_stayed_on_farewell = True
             $ relationship("affinity+")
             $ relationship("trust+")
 
         "Sorry, I really need to go.":
-            n "Oh...{w=0.3} aha..."
-            n "That's fine,{w=0.1} I guess..."
-            n "I'll see you later then,{w=0.1} [player]!"
-            n "Don't keep me waiting,{w=0.1} alright?"
+            n 1fllbgf "O-{w=0.1}oh...{w=0.3} aha..."
+            n 1fllpol "That's fine,{w=0.1} I guess..."
+            n 1fnmbg "I'll see you later then,{w=0.1} [player]!"
+            n 1knmpo "Don't keep me waiting,{w=0.1} alright?"
             $ jn_farewells.try_trust_dialogue()
             return { "quit": None }
     return
@@ -1000,29 +1000,30 @@ init 5 python:
     )
 
 label farewell_pleading_ask:
-    n "N-no!{w=0.2} You can't leave yet!"
-    n "..."
-    n "[player]...{w=0.3} I...{w=0.3} really...{w=0.3} want you here right now."
+    n 1kskwrf "N-no!{w=0.2} You can't leave yet!"
+    n 1kllupf "..."
+    n 1kcssfl "[player]..."
+    n 1klrsff "{w=0.3} I...{w=0.3} really...{w=0.3} want you here right now."
     menu:
         n "Just stay with me a little longer...{w=0.3} please?"
 
         "Of course!":
-            n "Yes!{nw}"
-            n "I-I mean...!"
-            n "..."
+            n 1kchbsf "Yes!{nw}"
+            n 1knmajf "I-I mean...!"
+            n 1kllslf "..."
             $ chosen_descriptor = random.choice(jn_globals.DEFAULT_PLAYER_DESCRIPTORS)
-            n "T-thanks, [player].{w=0.1} You're [chosen_descriptor],{w=0.1} you know that?"
-            n "Really.{w=0.1} Thank you."
-            n "N-now,{w=0.1} where were we? Heh..."
+            n 1kllnvf "T-thanks, [player].{w=0.1} You're [chosen_descriptor],{w=0.1} you know that?"
+            n 1kplsmf "Really.{w=0.1} Thank you."
+            n 1kllbgf "N-{w=0.1}now,{w=0.1} where were we? Heh..."
             $ jn_globals.player_already_stayed_on_farewell = True
             $ relationship("affinity+")
 
         "I can't right now.":
-            n "Oh..."
-            n "Well,{w=0.1} if you gotta go,{w=0.1} it can't be helped,{w=0.1} I guess..."
-            n "Come back soon,{w=0.1} alright?"
-            n "Or you'll have to make it up to me...{w=0.3} ahaha..."
-            n "Stay safe,{w=0.1} [player]!"
+            n 1kllsff "Oh..."
+            n 1knmajl "Well,{w=0.1} if you gotta go,{w=0.1} it can't be helped,{w=0.1} I guess..."
+            n 1kplpol "Come back soon,{w=0.1} alright?"
+            n 1klrsmf "Or you'll have to make it up to me...{w=0.3} ahaha..."
+            n 1knmsmf "Stay safe,{w=0.1} [player]!"
             $ jn_farewells.try_trust_dialogue()
             return { "quit": None }
     return
@@ -1044,29 +1045,29 @@ init 5 python:
     )
 
 label farewell_gentle_ask:
-    n "[player]...{w=0.3} do you really have to leave now?"
-    n "I know you have stuff to do,{w=0.1} but I...{w=0.3} really...{w=0.3} wanna spend more time with you."
+    n 1knmsrf "[player]...{w=0.3} do you really have to leave now?"
+    n 1kplsrf "I know you have stuff to do,{w=0.1} but I...{w=0.3} really...{w=0.3} wanna spend more time with you."
     menu:
         n "Are you sure you have to go?"
 
         "I can stay a little longer.":
-            n "[player]..."
-            n "Thank you.{w=0.1} That really means a lot to me right now."
+            n 1kplsmf "[player]..."
+            n 1kchsmf "Thank you.{w=0.1} That really means a lot to me right now."
             $ chosen_descriptor = random.choice(jn_globals.DEFAULT_PLAYER_DESCRIPTORS)
-            n "Y-You're [chosen_descriptor], [player]."
-            n "Truly.{w=0.1} Thanks..."
-            n "..."
-            n "Aha...{w=0.3} so what else did you wanna do today?"
+            n 1kwmssf "Y-You're [chosen_descriptor], [player]."
+            n 1kcssmf "Truly.{w=0.1} Thanks..."
+            n 1kcssmf "..."
+            n 1kllbgf "Aha...{w=0.3} so what else did you wanna do today?"
             $ jn_globals.player_already_stayed_on_farewell = True
             $ relationship("affinity+")
 
         "Sorry, I really have to go.":
-            n "Oh..."
-            n "I'd be lying if I said I wasn't disappointed, but I understand."
-            n "Just be careful out there, okay?"
-            n "..."
-            n "I-I love you,{w=0.1} [player]..."
-            n "I'll see you later."
+            n 1kllsrf "Oh..."
+            n 1kplsmf "I'd be lying if I said I wasn't disappointed, but I understand."
+            n 1kwmsrf "Just be careful out there, okay?"
+            n 1kllsrf "..."
+            n 1kwmsmf "I-I love you,{w=0.1} [player]..."
+            n 1kchsmf "I'll see you later."
             $ jn_farewells.try_trust_dialogue()
             return { "quit": None }
     return
@@ -1075,33 +1076,27 @@ label farewell_gentle_ask:
 label farewell_extra_trust:
     # ABSOLUTE+
     if jn_trust.get_trust_state() >= jn_trust.ABSOLUTE:
-        show natsuki 1uchbg zorder JN_NATSUKI_ZORDER
-        n "My [player]...{w=0.3} I'll be waiting..."
+        n 1uchbgf "My [player]...{w=0.3} I'll be waiting..."
 
     # FULL+
     elif jn_trust.get_trust_state() >= jn_trust.FULL:
-        show natsuki 1kchss zorder JN_NATSUKI_ZORDER
-        n "I'll be waiting..."
+        n 1kchssf "I'll be waiting..."
 
     # PARTIAL+
     elif jn_trust.get_trust_state() >= jn_trust.PARTIAL:
-        show natsuki 1kwmsr zorder JN_NATSUKI_ZORDER
-        n "You'll be back...{w=0.3} right?"
+        n 1kwmsr "You'll be back...{w=0.3} right?"
 
     # SCEPTICAL+
     elif jn_trust.get_trust_state() >= jn_trust.SCEPTICAL:
-        show natsuki 1kplsr zorder JN_NATSUKI_ZORDER
-        n "I'll be okay...{w=0.3} I'll be okay..."
+        n 1kplsr "I'll be okay...{w=0.3} I'll be okay..."
 
     # DIMINISHED+
     elif jn_trust.get_trust_state() >= jn_trust.DIMINISHED:
-        show natsuki 1kplsr zorder JN_NATSUKI_ZORDER
-        n "...?"
+        n 1kplsr "...?"
 
     # SHATTERED+
     else:
-        show natsuki 1kplsr zorder JN_NATSUKI_ZORDER
-        n "..."
+        n 1kplsr "..."
 
     return { "quit": None }
 
@@ -1123,28 +1118,28 @@ init 5 python:
     )
 
 label farewell_early_morning_going_this_early:
-    n "H-{w=0.1}huh?{w=0.2} You're going this early?"
-    n "...Oh."
+    n 1tnmaj "H-{w=0.1}huh?{w=0.2} You're going this early?"
+    n 1kllsl "...Oh."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n "I was hoping we could hang out longer...{w=0.3} but if you gotta go,{w=0.1} then you gotta go."
-        n "Thanks for stopping by though,{w=0.1} [player].{w=0.2} I really appreciate it."
-        n "Just don't rush things for my sake,{w=0.1} alright?"
+        n 1klrssl "I...{w=0.3} was hoping we could hang out longer...{w=0.3} but if you gotta go,{w=0.1} then you gotta go."
+        n 1unmbgl "Thanks for stopping by though,{w=0.1} [player].{w=0.2} I really appreciate it."
+        n 1knmssl "Just don't rush things for my sake,{w=0.1} alright?"
 
     else:
-        n "I-{w=0.1}I mean,{w=0.1} it was cool of you to drop by,{w=0.1} [player]!"
+        n 1fchbgf "I-{w=0.1}I mean,{w=0.1} it was cool of you to drop by,{w=0.1} [player]!"
 
-    n "Take care out there,{w=0.1} 'kay?{w=0.2} Don't do anything dumb!"
+    n 1uchgnl "Take care out there,{w=0.1} 'kay?{w=0.2} Don't do anything dumb!"
 
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-        n "Love you, [player]~!"
+        n 1uchbsf "Love you, [player]~!"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-        n "See you later,{w=0.1} [chosen_tease]!"
+        n 1uchbgl "See you later,{w=0.1} [chosen_tease]!"
 
     else:
-        n "See ya!"
+        n 1uchsml "See ya!"
 
     return { "quit": None }
 
@@ -1164,19 +1159,19 @@ init 5 python:
     )
 
 label farewell_morning_heading_off:
-    n "Heading off now,{w=0.1} [player]?{w=0.2} No worries!"
+    n 1nnmbg "Heading off now,{w=0.1} [player]?{w=0.2} No worries!"
 
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n "I hope your day is as great as you are."
+        n 1nchbgl "I hope your day is as great as you are."
 
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-            n "Ehehe.{w=0.2} Love you, [player]~!"
+            n 1nchsmf "Ehehe.{w=0.2} Love you, [player]~!"
 
         else:
-            n "See you later!"
+            n 1uchsml "Later!"
 
     else:
-        n "Have a good day!"
+        n 1unmbg "See ya!"
 
     return { "quit": None }
 
@@ -1196,15 +1191,15 @@ init 5 python:
     )
 
 label farewell_afternoon_come_visit_soon:
-    n "Oh?{w=0.2} Leaving a little later today,{w=0.1} [player]?"
-    n "I guess that's fine...{w=0.3} just remember to come visit soon,{w=0.1} 'kay?"
+    n 1unmaj "Oh?{w=0.2} Leaving a little later today,{w=0.1} [player]?"
+    n 1ullaj "I guess that's fine...{w=0.3} just remember to come visit soon,{w=0.1} 'kay?"
 
     if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        n "I'll be mad if you don't."
-        n "Ehehe.{w=0.2} Stay safe,{w=0.1} [player]!"
+        n 1fnmcal "I'll be mad if you don't."
+        n 1uchbgl "Ehehe.{w=0.2} Stay safe,{w=0.1} [player]!"
 
     else:
-        n "Stay safe!"
+        n 1nnmsm "Stay safe!"
 
     return { "quit": None }
 
@@ -1224,12 +1219,12 @@ init 5 python:
     )
 
 label farewell_evening_good_evening:
-    n "Huh?{w=0.2} You're heading off now,{w=0.1} [player]?"
-    n "Well...{w=0.3} alright."
-    n "Have a good evening!"
+    n 1unmaj "Huh?{w=0.2} You're heading off now,{w=0.1} [player]?"
+    n 1ullaj "Well...{w=0.3} alright."
+    n 1nchsm "Have a good evening!"
 
     if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        n "Come see me soon,{w=0.1} 'kay?"
+        n 1kwmsml "Come see me soon,{w=0.1} 'kay?"
 
     return { "quit": None }
 
@@ -1249,11 +1244,11 @@ init 5 python:
     )
 
 label farewell_night_good_night:
-    n "Oh?{w=0.2} Are you turning in now?"
-    n "Well...{w=0.3} I can't say I blame you."
-    n "Good night,{w=0.1} [player]!"
+    n 1unmaj "Oh?{w=0.2} Are you turning in now?"
+    n 1nnmbg "Well...{w=0.3} I can't say I blame you."
+    n 1uchsm "Good night,{w=0.1} [player]!"
 
     if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        n "Sweet dreams!"
+        n 1uchbgl "Sweet dreams!"
 
     return { "quit": None }
