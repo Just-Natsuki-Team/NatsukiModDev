@@ -319,13 +319,13 @@ init 0 python in jn_snap:
             return renpy.substitute("[n_name]")
 
 label snap_intro:
-    n "Alriiiight!{w=0.2} Let's play some Snap!"
+    n 1nchbs "Alriiiight!{w=0.2} Let's play some Snap!"
     if not persistent.jn_snap_explanation_given:
-        n "Oh -{w=0.1} before we start,{w=0.1} did you want an explanation?{w=0.2} You know,{w=0.1} on how it works?"
-        n "It's a super simple game,{w=0.1} but I thought I'd better ask."
-        n "I don't wanna win just because you didn't know what you were doing!"
-        n "So..."
-        n "How about it?"
+        n 1nnmaj "Oh -{w=0.1} before we start,{w=0.1} did you want an explanation?{w=0.2} You know,{w=0.1} on how it works?"
+        n 1nnmsm "It's a super simple game,{w=0.1} but I thought I'd better ask."
+        n 1fcsbg "I don't wanna win just because you didn't know what you were doing!"
+        n 1nnmbg "So..."
+        n 1nnmsm "How about it?"
         menu:
             n "Want me to run through the rules real quick?"
 
@@ -333,41 +333,43 @@ label snap_intro:
                 jump snap_explanation
 
             "No,{w=0.1} I'm ready.":
-                n "Oh?{w=0.2} You're ready,{w=0.1} huh?"
-                n "Ready to get your butt kicked!{w=0.2} Let's go,{w=0.1} [player]!"
+                n 1fsqbg "Oh?{w=0.2} You're ready,{w=0.1} huh?"
+                n 1fchbs "Ready to get your butt kicked!{w=0.2} Let's go,{w=0.1} [player]!"
+                $ persistent.jn_snap_explanation_given = True
 
     jump snap_start
 
 label snap_explanation:
-    n "Alright!{w=0.2} So the rules are dead simple,{w=0.1} like I was saying before."
-    n "Basically,{w=0.1} we each get half a deck of cards."
-    n "Then,{w=0.1} we take it in turns placing a card face up on the table -{w=0.1} we don't get to {i}pick or see{/i} the card before,{w=0.1} though!"
-    n "Following me so far,{w=0.1} [player]?{w=0.2} Ehehe."
-    n "If the card just placed down on the table matches either the {i}value or suit{/i} of the card that was there before..."
-    n "Then we gotta call Snap!"
-    n "Whoever calls it first gets the cards on the table."
-    n "Oh -{w=0.1} but you gotta be careful,{w=0.2} [player]."
-    n "When you call snap,{w=0.2} it becomes the other player's turn..."
-    n "So don't shout unless you know you got it,{w=0.1} 'kay?"
-    n "The winner is whoever ends up with all the cards first!"
-    n "Which is usually me,{w=0.1} obviously."
-    n "You also lose if you run out of cards to play,{w=0.1} so you should keep that in mind too."
-    n "So...{w=0.3} how about it,{w=0.1} [player]?{w=0.2} You got all that?"
+    n 1nnmss "Alright!{w=0.2} So the rules are dead simple,{w=0.1} like I was saying before."
+    n 1nnmsm "Basically,{w=0.1} we each get half a deck of cards."
+    n 1nnmaj "Then,{w=0.1} we take it in turns placing a card face up on the table -{w=0.1} we don't get to {i}pick or see{/i} the card before,{w=0.1} though!"
+    n 1fsgbg "Following me so far,{w=0.1} [player]?{w=0.2} Ehehe."
+    n 1nnmbg "If the card just placed down on the table matches either the {i}value or suit{/i} of the card that was there before..."
+    n 1uchbs "Then we gotta call Snap!"
+    n 1nnmsm "Whoever calls it first gets the cards on the table."
+    n 1unmaj "Oh -{w=0.1} but you gotta be careful,{w=0.2} [player]."
+    n 1fllsg "When you call snap,{w=0.2} it becomes the other player's turn..."
+    n 1fsqsg "So don't shout unless you know you got it,{w=0.1} 'kay?"
+    n 1uchbg "The winner is whoever ends up with all the cards first!"
+    n 1fcsbs "Which is usually me,{w=0.1} obviously."
+    n 1unmaj "Oh,{w=0.1} right -{w=0.1} you also lose if you run out of cards to play,{w=0.1} so you should keep that in mind too."
+    n 1nnmsm "So...{w=0.3} how about it,{w=0.1} [player]?{w=0.2} You got all that?"
     menu:
         n "Do the rules all make sense to you?"
         "Could you go over them again,{w=0.1} please?":
-            n "Huh?{w=0.2} Well,{w=0.1} okay..."
+            n 1unmaj "Huh?{w=0.2} Well,{w=0.1} okay..."
             jump snap_explanation
 
         "Got it.{w=0.2} Let's play!":
-            n "That's what I'm talking about!{w=0.2} Some fighting spirit!"
-            n "I should warn you though,{w=0.1} [player]..."
-            n "I'm not gonna hold back!{w=0.2} Let's do this!"
+            n 1uchbg "That's what I'm talking about!{w=0.2} Some fighting spirit!"
+            n 1fllbg "I should warn you though,{w=0.1} [player]..."
+            n 1fchbs "I'm not gonna hold back!{w=0.2} Let's do this!"
             $ persistent.jn_snap_explanation_given = True
             jump snap_start
 
         "Thanks, [n_name]. I'll play later.":
-            n "Ehehe.{w=0.2} No worries,{w=0.1} [player]!"
+            n 1unmaj "Huh?{w=0.2} Well,{w=0.1} alright..."
+            n 1fllpo "...Spoilsport."
             jump ch30_loop
 
 label snap_start:
@@ -378,29 +380,28 @@ label snap_start:
     $ jn_snap._generate_hands()
 
     # Reset the UI
-    show natsuki 1uchsm at jn_left
-
     $ jn_snap.draw_card_onscreen()
     $ jn_snap.update_turn_indicator()
 
+    show natsuki 1uchsm at jn_left
     show player_hand_icon zorder jn_snap._SNAP_UI_Z_INDEX
     show natsuki_hand_icon zorder jn_snap._SNAP_UI_Z_INDEX
     show turn_indicator_icon zorder jn_snap._SNAP_UI_Z_INDEX
     show screen snap_ui
 
-    n "Okaaay!{w=0.2} That's the deck shuffled!"
-    n "Let's see who's going first..."
+    n 1nchbg "Okaaay!{w=0.2} That's the deck shuffled!"
+    n 1fnmsm "Let's see who's going first..."
 
     play audio coin_flip
-    n "..."
+    n 1fnmpu "..."
     $ jn_snap._is_player_turn = random.choice([True, False])
     $ jn_snap.update_turn_indicator()
 
     if jn_snap._is_player_turn:
-        n "Ehehe.{w=0.2} Bad luck,{w=0.1} [player].{w=0.2} Looks like you're up first!"
+        n 1nchgn "Ehehe.{w=0.2} Bad luck,{w=0.1} [player].{w=0.2} Looks like you're up first!"
 
     else:
-        n "Hmph...{w=0.3} you got lucky this time.{w=0.2} Looks like I'm first,{w=0.1} [player]."
+        n 1flrpol "Hmph...{w=0.3} you got lucky this time.{w=0.2} Looks like I'm first,{w=0.1} [player]."
 
     $ jn_globals.player_is_ingame = True
     $ jn_snap._controls_enabled = True
@@ -485,23 +486,21 @@ label snap_quip(is_player_snap, is_correct_snap):
 
             # Cheating warning
             if jn_snap._player_failed_snap_streak == 3 and not persistent.jn_snap_player_is_cheater:
-                $ cheat_check = True
-                show natsuki 1fsqsr zorder JN_NATSUKI_ZORDER
-                n "[player]!"
-                n "You're just calling Snap whenever it's your turn!"
-                n "That's not how you play at all!"
-                n "I hope you aren't trying to cheat,{w=0.1} [player]."
-                n "I don't like playing with cheaters."
+                $ cheat_check = turn_indicator_player
+                n 1fnmaj "[player]!"
+                n 1fnmsf "You're just calling Snap whenever it's your turn!"
+                n 1fnmpo "That's not how you play at all!"
+                n 1fllpo "I hope you aren't trying to cheat,{w=0.1} [player]."
+                n 1fsqsl "I don't like playing with cheaters."
 
             # Natsuki calls off the game
             elif jn_snap._player_failed_snap_streak == 6 and not persistent.jn_snap_player_is_cheater:
                 $ jn_snap_controls_enabled = False
-                show natsuki 1fsqsr zorder JN_NATSUKI_ZORDER
-                n "Ugh...{w=0.3} look,{w=0.1} [player]."
-                n "If you aren't gonna play fairly,{w=0.1} then why should I bother playing at all?"
-                n "I even warned you before,{w=0.1} too!"
-                n "..."
-                n "We're done with this game,{w=0.1} [player]."
+                n 1fcsaj "Ugh...{w=0.3} look,{w=0.1} [player]."
+                n 1fsqaj "If you aren't gonna play fairly,{w=0.1} then why should I bother playing at all?"
+                n 1fsqsl "I even warned you before,{w=0.1} too!"
+                n 1fcssl "..."
+                n 1fnmsr "We're done with this game,{w=0.1} [player]."
 
                 $ _player_win_streak = 0
                 $ persistent.jn_snap_player_is_cheater = True
@@ -573,98 +572,98 @@ label snap_end:
     if jn_snap.last_game_result == jn_snap.RESULT_PLAYER_WIN:
 
         if jn_snap._player_win_streak > 10:
-            n "Yeah,{w=0.1} yeah.{w=0.2} You won again."
-            n "...Nerd.{w=0.2} Ehehe."
+            n 1fllpol "Yeah,{w=0.1} yeah.{w=0.2} You won again."
+            n 1fsqsml "...Nerd.{w=0.2} Ehehe."
 
         elif jn_snap._player_win_streak == 10:
-            n "Nnnnnnnnnn-!!"
-            n "W-what even is this,{w=0.1} [player]?"
-            n "How are you so good at this?!"
-            n "Ugh..."
+            n 1fcsanf "Nnnnnnnnnn-!!"
+            n 1fbkwrl "W-what even is this,{w=0.1} [player]?"
+            n 1fbkful "How are you so good at this?!"
+            n 1flrpol "Ugh..."
 
         elif jn_snap._player_win_streak == 5:
-            n "Okay!{w=0.2} Alright!{w=0.2} I get it!"
-            n "You're good at Snap,{w=0.1} okay?!"
-            n "Jeez..."
-            n "Now...{w=0.3} how about letting up a little?"
-            n "Ehehe..."
+            n 1kbkwrl "Okay!{w=0.2} Alright!{w=0.2} I get it!"
+            n 1flleml "You're good at Snap,{w=0.1} okay?!"
+            n 1fllpol "Jeez..."
+            n 1klrpol "Now...{w=0.3} how about letting up just a little?"
+            n 1kplpol "...Please?"
 
         elif jn_snap._player_win_streak == 3:
-            n "Oho!{w=0.2} Someone's been practicing,{w=0.1} huh?"
-            n "Or maybe you're just on a lucky streak,{w=0.1} [player]."
+            n 1fcsbg "Oho!{w=0.2} Someone's been practicing,{w=0.1} huh?"
+            n 1fsqsg "Or maybe you're just on a lucky streak,{w=0.1} [player]."
 
         else:
-            n "Well,{w=0.1} heck.{w=0.2} I guess that's it,{w=0.1} huh?"
-            n "Well played though,{w=0.1} [player]!"
+            n 1nllpo "Well,{w=0.1} heck.{w=0.2} I guess that's it,{w=0.1} huh?"
+            n 1nsqsm "Well played though,{w=0.1} [player]!"
 
     # Natsuki won, Natsuki happ
     elif jn_snap.last_game_result == jn_snap.RESULT_NATSUKI_WIN:
 
         if jn_snap._natsuki_win_streak > 10:
-            n "Man,{w=0.1} this is just too easy!{w=0.2} I almost feel bad..."
-            n "...Almost.{w=0.2} Ehehe."
+            n 1fchgnl "Man,{w=0.1} this is just too easy!{w=0.2} I almost feel bad..."
+            n 1fsqsm "...Almost.{w=0.2} Ehehe."
 
         if jn_snap._natsuki_win_streak == 10:
-            n "Jeez,{w=0.1} [player]...{w=0.3} are you having a bad day or what?"
-            n "Ahaha!"
-            n "So long as you're having fun though,{w=0.1} right?"
+            n 1fchbsl "Jeez,{w=0.1} [player]...{w=0.3} are you having a bad day or what?"
+            n 1fchbs "Ahaha!"
+            n 1nchsm "So long as you're having fun though,{w=0.1} right?"
 
         elif jn_snap._natsuki_win_streak == 5:
-            n "Oh?{w=0.2} This?{w=0.2} This skill?"
-            n "Don't worry about it."
-            n "It's all natural,{w=0.1} [player]~."
-            n "What did you expect,{w=0.1} challenging a pro like that?"
-            n "Ehehe."
+            n 1fcsss "Oh?{w=0.2} This?{w=0.2} This skill?"
+            n 1fcssg "Don't worry about it."
+            n 1fchgn "It's all natural,{w=0.1} [player]~."
+            n 1uchbs "What did you expect,{w=0.1} challenging a pro like that?"
+            n 1nsqsm "Ehehe."
 
         elif jn_snap._natsuki_win_streak == 3:
-            n "Yes!{w=0.2} I win again!"
-            n "Ehehe."
+            n 1fchbg "Yes!{w=0.2} I win again!"
+            n 1fsqsm "Ehehe."
 
         else:
-            n "I won!{w=0.2} I won! Yesss!"
-            n "Just as predicted,{w=0.1} right?{w=0.2} Ahaha."
+            n 1uchbs "I won!{w=0.2} I won! Yesss!"
+            n 1fsqsm "Just as predicted,{w=0.1} right?{w=0.2} Ahaha."
 
     # What
     elif jn_snap.last_game_result == jn_snap.RESULT_DRAW:
-        n "...Huh.{w=0.2} We actually tied?"
-        n "That's...{w=0.3} almost impressive,{w=0.1} actually.{w=0.2} Weird."
-        n "Well,{w=0.1} whatever,{w=0.1} I guess!"
+        n 1tnmaj "...Huh.{w=0.2} We actually tied?"
+        n 1tllsl "That's...{w=0.3} almost impressive,{w=0.1} actually.{w=0.2} Weird."
+        n 1nnmsm "Well,{w=0.1} whatever,{w=0.1} I guess!"
 
     else:
         # Assume forfeit
-        n "Oh?{w=0.2} You're giving up?"
-        n "Well,{w=0.1} I guess that's fine.{w=0.2} Let me just chalk up another win for me,{w=0.1} then.{w=0.2} Ehehe."
+        n 1unmaj "Oh?{w=0.2} You're giving up?"
+        n 1nchgn "Well,{w=0.1} I guess that's fine.{w=0.2} Let me just chalk up another win for me,{w=0.1} then.{w=0.2} Ehehe."
 
     # Award affinity for playing to completion with best girl
     $ relationship("affinity+")
 
     if jn_snap._player_win_streak >= 3:
-        n "Uuuuuu-!"
-        n "I-{w=0.1}I demand a rematch!{w=0.2} I'm not going down like this!"
+        n 1fcsanl "Uuuuuu-!"
+        n 1fnmwrl "I-{w=0.1}I demand a rematch!{w=0.2} I'm not going down like this!"
 
     elif jn_snap._natsuki_win_streak >= 3:
-        n "Ehehe.{w=0.2} That can't be {i}all{/i} you've got,{w=0.1} [player].{w=0.2} Rematch!"
+        n 1fsqbg "Ehehe.{w=0.2} That can't be {i}all{/i} you've got,{w=0.1} [player].{w=0.2} Rematch!"
 
     else:
-        n "So..."
+        n 1nsqsm "So..."
 
     menu:
         n "Let's play again!"
 
         "You're on!":
-            n "Yeah,{w=0.1} you bet you are,{w=0.1} [player]!"
+            n 1fsqsg "Yeah,{w=0.1} you bet you are,{w=0.1} [player]!"
             $ jn_snap._natsuki_skill_level += 1
             jump snap_start
 
         "I'll pass.":
-            n "Awww...{w=0.3} well,{w=0.1} okay."
-            n "Thanks for playing,{w=0.1} [player]~."
+            n 1kllpo "Awww...{w=0.3} well,{w=0.1} okay."
+            n 1nchbg "Thanks for playing,{w=0.1} [player]~."
 
             if jn_snap._player_win_streak >= 3:
-                n "...Even if you did kick my butt."
+                n 1flrpol "...Even if you did kick my butt."
 
             elif jn_snap._natsuki_win_streak >= 3:
-                n "I wanna see more fight in you next time, though. Ahaha!"
+                n 1fchbgl "I wanna see more fight in you next time, though. Ahaha!"
 
             # Hide all the UI
             hide player_natsuki_hands
@@ -683,14 +682,14 @@ label snap_end:
 
 label snap_forfeit:
     $ jn_snap._controls_enabled = False
-    n "Awww...{w=0.3} you're not giving up already are you,{w=0.1} [player]?"
+    n 1knmpo "Awww...{w=0.3} you're not giving up already are you,{w=0.1} [player]?"
     menu:
         n "...Are you?"
 
         "Yes, I give up.":
-            n "Oh...{w=0.3} well,{w=0.1} okay."
-            n "But just so you know..."
-            n "I'm chalking this up as a win for me!{w=0.2} Ehehe."
+            n 1kllpo "Oh...{w=0.3} well,{w=0.1} okay."
+            n 1fllsg "But just so you know..."
+            n 1fchgn "I'm chalking this up as a win for me!{w=0.2} Ehehe."
 
             # Hit the streaks
             $ jn_snap._player_win_streak = 0
@@ -712,8 +711,8 @@ label snap_forfeit:
             jump ch30_loop
 
         "In your dreams!":
-            n "Pffffft!{w=0.2} Oh really?"
-            n "Game on then,{w=0.1} [player]!"
+            n 1tsqdv "Pffffft!{w=0.2} Oh really?"
+            n 1fchbs "Game on then,{w=0.1} [player]!"
             $ jn_snap._controls_enabled = True
             $ jn_snap._natsuki_skill_level += 1
             jump snap_main_loop
