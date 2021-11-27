@@ -12,7 +12,7 @@ default persistent.jn_screenshot_bad_shots_total = 0
 
 # Weather data
 default persistent.weather_api_key = None
-default persistent.weather_setup_failed_apikey_validation = 0
+default persistent.weather_validate_apikey_in_time = None
 default persistent.is_weather_tracking_set_up = False
 default persistent.current_weather_short = "Clear"
 default persistent.current_weather_long = dict()

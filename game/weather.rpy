@@ -5,7 +5,7 @@ init -1 python in weather:
 
     #TEST API key, feel free to use
     #2c2f369ad4987a01f5de4c149665c5fd
-    #NOTE: remove in production
+    #DEBUG: TODO: remove in production
 
     PREFERENCES = {
         "units" : "metric"
@@ -727,15 +727,6 @@ init -1 python in weather:
             store.persistent.current_weather_short = weather_short
 
             return parsed_weather, weather_short
-    testyvar = None
-    @store.api.API_on_status_code("OpenWeatherMap")
-    def testyfuncteeeest(html=None):
-        global testyvar
-
-        if html is not None:
-            testyvar = "universal works and html"
-        else:
-            testyvar = "universal works but not html"
 
 # THis is here purely because of a bug in renpy extension, remove after it's fixed
 init -1 python:
@@ -744,6 +735,7 @@ init -1 python:
 init -1 python in location:
     import geocoder
     import store
+    import webbrowser
 
     def open_maps(latitude, longitude):
         """
@@ -772,51 +764,3 @@ init -1 python in location:
         #if an exception occurs, catch it and return None
         except:
             return None
-
-    # Currently not in use
-    def get_coords_by_city(city, country=None):
-        """
-            Returns coordinates of a city from a lookup file
-
-            IN:
-                city - <string>
-                country - <string?> (optional) two-letter code of a country
-            OUT:
-                0, (None, None) - if no occurance of city name in lookup
-                1, (latitude, longitude) if a single of city name found
-                2, (None, NOne) - if multiple occurances of city name found
-        """
-        # Open lookup file, read it's content and close it
-        lookup_file = open("countries_lookup.txt", "r")
-        lookup = lookup_file.read()
-        lookup_file.close()
-
-        # if country wasn't inputted search only by city name
-        if not country:
-            city_occurrences = lookup.count("\n{0},".format(city))
-        # else search by city and country
-        else:
-            city_occurrences = lookup.count("\n{0},{1},".format(city, country))
-
-        if city_occurrences == 0:
-            return 0, (None, None)
-
-        elif city_occurrences == 1:
-            # find starting index of the line our city is on
-            if not country:
-                city_line_start = lookup.find("\n{0},".format(city))+1
-            else:
-                city_line_start = lookup.find("\n{0},{1},".format(city, country))+1
-
-            # find ending index of the line (next new line after starting index)
-            city_line_end = lookup.find('\n', city_line_start)
-            # get only the line
-            city_line = lookup[city_line_start:city_line_end]
-            # split it by ','
-            ## [city_name, country, latitude, longitude, region/state]
-            city_line = city_line.split(',')
-
-            return 1, (city_line[2], city_line[3])
-
-        elif city_occurrences > 1:
-            return 2, (None, None)

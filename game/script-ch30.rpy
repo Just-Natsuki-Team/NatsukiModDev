@@ -58,15 +58,15 @@ label ch30_loop:
     #Run our checks
     python:
         _now = datetime.datetime.now()
-        if LAST_MINUTE_CHECK.minute < _now.minute < LAST_MINUTE_CHECK.minute:
+        if LAST_MINUTE_CHECK.minute != _now.minute:
             minute_check()
             LAST_MINUTE_CHECK = _now
 
-        if LAST_HOUR_CHECK < _now.hour < LAST_HOUR_CHECK:
+        if LAST_HOUR_CHECK != _now.hour:
             hour_check()
             LAST_HOUR_CHECK = _now.hour
 
-        if LAST_DAY_CHECK < _now.day < LAST_DAY_CHECK:
+        if LAST_DAY_CHECK != _now.day:
             day_check()
             LAST_DAY_CHECK = _now.day
 
@@ -97,22 +97,15 @@ init python:
         """
         Runs every minute during breaks between topics
         """
-        pass
+        if persistent.weather_validate_apikey_in_time is not None:
+            if persistent.weather_validate_apikey_in_time <= datetime.datetime.now():
+                persistent.weather_validate_apikey_in_time = None
+                push('talk_weather_setup_part2')
 
     def hour_check():
         """
         Runs every hour during breaks between topics
         """
-        # weather isn't setup yet but we do have an apikey awaiting validation
-        if not persistent.is_weather_tracking_set_up and persistent.weather_api_key is not None:
-            if(
-                persistent.weather_setup_failed_apikey_validation >= 2 #api_key should be activated by now
-                or persistent.weather_setup_failed_apikey_validation >= 5 #something's real fishy about this
-                or weather.is_api_key_valid() #apikey is valid
-            ):
-                push('talk_weather_setup_part2')
-
-            persistent.weather_setup_failed_apikey_validation += 1
 
     def day_check():
         """

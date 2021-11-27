@@ -1064,7 +1064,8 @@ label talk_weather_setup_part1:
                 $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
                 n "Love you,{w=0.1} [chosen_endearment]!"
             # It can take a few hours for the API key to activate
-            # so we wait 2 hours before checking if the key is working
+            # so we wait ~2 hours before checking if the key is working
+            $ persistent.weather_validate_apikey_in_time = datetime.datetime.now()+datetime.timedelta(minutes=0.5)
 
     return {"lock!" : None}
 
@@ -1190,7 +1191,7 @@ label talk_weather_setup_part2:
                 # We do this as Ren'Py doesn't allow inline try/catch. Thanks, Tom
                 show_map_success = False
                 try:
-                    open_maps(ip_latitude_longitude[0], ip_latitude_longitude[1])
+                    location.open_maps(ip_latitude_longitude[0], ip_latitude_longitude[1])
                     show_map_success = True
 
                 except Exception as exception:
