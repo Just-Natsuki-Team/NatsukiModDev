@@ -100,6 +100,10 @@ init 999 python in Input_overwrite:
         """
         paste = pygame.scrap.get(pygame.SCRAP_TEXT)
 
+        if self.length:
+            remaining = self.length - len(self.content)
+            paste = paste[:remaining]
+
         # Check if text we're trying to paste contains only allowed characters
         for char in paste:
             if self.allow and char not in self.allow:
@@ -447,7 +451,7 @@ init 999 python in Input_overwrite:
                 text = text[:remaining]
 
             if text:
-                # if something's typed, cancel selection
+                # if something was typed, cancel selection
                 if self.select_start_pos is not None:
                     self.remove_selected()
 

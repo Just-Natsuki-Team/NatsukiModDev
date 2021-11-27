@@ -53,7 +53,7 @@ label ch30_init:
 #The main loop
 label ch30_loop:
     #Do topic selection here
-    $ queue("talk_set_trust")#pick_random_topic(unlocked=True, player_says=False, location=main_background.location.id, affinity=20, trust=60))
+    $ push(pick_random_topic(unlocked=True, player_says=False, location=main_background.location.id, affinity=20, trust=60))
 
     #Run our checks
     python:
