@@ -4114,7 +4114,6 @@ label talk_vtubers:
     n "Ahaha!"
     return
 
-
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop

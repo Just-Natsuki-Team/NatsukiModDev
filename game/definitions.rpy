@@ -564,7 +564,9 @@ init -990 python in jn_globals:
         "stupid",
         "you dork",
         "you goof",
-        "you numpty"
+        "you numpty",
+        "you donut",
+        "you dope"
     ]
 
     # Names Natsuki may use at the lowest levels of affinity to insult her player with
