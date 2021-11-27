@@ -48,7 +48,7 @@ label ch30_init:
         $ jn_placeholders.show_random_placeholder_sky()
     else:
         hide placeholder_sky_day sunny
-        
+
     show screen hkb_overlay
 
     # Do all var-sets, resets, and sanity checks prior to entering the loop here
@@ -168,14 +168,14 @@ init python:
             if persistent.weather_validate_apikey_in_time <= datetime.datetime.now():
                 persistent.weather_validate_apikey_in_time = None
                 push('talk_weather_setup_part2')
-                
+
         # Push a new topic every couple of minutes
         # TODO: Move to a wait/has-waited system to allow some more flexibility
         global LAST_TOPIC_CALL
-        
+
         if persistent.jn_natsuki_random_topic_frequency is not jn_preferences.random_topic_frequency.NEVER:
 
-            if (datetime.datetime.now() > LAST_TOPIC_CALL + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown()) and 
+            if (datetime.datetime.now() > LAST_TOPIC_CALL + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown()) and
                 len(persistent._event_list) is 0):
 
                     topic_pool = Topic.filter_topics(
@@ -240,13 +240,13 @@ label talk_menu:
         # Ensure any variable references are substituted
         _talk_flavor_text = renpy.substitute(_talk_flavor_text)
 
-            if "lock" in return_keys:
-                if topic_obj:
-                    topic_obj.unlocked = False
+        if "lock" in return_keys:
+            if topic_obj:
+                topic_obj.unlocked = False
 
-            #This topic might quit
-            if "quit" in return_keys:
-                jump _quit
+    #This topic might quit
+    if "quit" in return_keys:
+        jump _quit
 
     $ jn_placeholders.show_resting_placeholder_natsuki(offset=True)
 

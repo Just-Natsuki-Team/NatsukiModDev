@@ -484,7 +484,7 @@ init 0 python:
         ordered_menu_items = OrderedDict()
         for topic_category in topic_categories:
             ordered_menu_items[topic_category] = []
-        
+
         # Feed the topics into the ordered dictionary - remember that each topic can have multiple categories!
         for topic in menu_topics:
             for category in topic.category:
@@ -583,7 +583,7 @@ init -990 python in jn_globals:
 
     # LatLong.net; used for helping the player find their coordinates when setting up location manually
     LINK_LAT_LONG_HOME = "https://www.latlong.net"
-    
+
     # Names Natsuki may use at the lowest levels of affinity to insult her player with
     DEFAULT_PLAYER_INSULT_NAMES = [
         "jerk",
@@ -778,6 +778,49 @@ init python in utils:
         """
         return datetime.datetime.now() - store.jn_globals.current_session_start_time
 
+    def get_time_in_session_descriptor():
+        """
+        Get a descriptor based on the number of minutes the player has spent in the session, up to 30 minutes
+
+        OUT:
+            Brief descriptor relating to the number of minutes spent in the session
+        """
+        minutes_in_session = get_current_session_length().total_seconds() / 60
+
+        if minutes_in_session <= 1:
+            return "like a minute"
+
+        elif minutes_in_session <= 3:
+            return "a couple of minutes"
+
+        elif minutes_in_session > 3 and minutes_in_session <= 5:
+            return "like five minutes"
+
+        elif minutes_in_session > 5 and minutes_in_session <= 10:
+            return "around ten minutes"
+
+        elif minutes_in_session > 10 and minutes_in_session <= 15:
+            return "around fifteen minutes"
+
+        elif minutes_in_session > 15 and minutes_in_session <= 20:
+            return "around twenty minutes"
+
+        elif minutes_in_session <= 30:
+            return "about half an hour"
+
+        else:
+            return "a while"
+
+    def get_current_hour():
+        """
+        Gets the current hour (out of 24) of the day.
+
+        OUT:
+            Integer representing the current hour of the day.
+        """
+        return datetime.datetime.now().hour
+
+init -999 python in utils:
     # Kinda obsessed with decorators right now, tell me in case I should stop using them everywhere
     def coroutine_loop(t):
         """
@@ -833,48 +876,6 @@ init python in utils:
 
             return func
         return register
-
-    def get_time_in_session_descriptor():
-        """
-        Get a descriptor based on the number of minutes the player has spent in the session, up to 30 minutes
-
-        OUT:
-            Brief descriptor relating to the number of minutes spent in the session
-        """
-        minutes_in_session = get_current_session_length().total_seconds() / 60
-
-        if minutes_in_session <= 1:
-            return "like a minute"
-
-        elif minutes_in_session <= 3:
-            return "a couple of minutes"
-
-        elif minutes_in_session > 3 and minutes_in_session <= 5:
-            return "like five minutes"
-
-        elif minutes_in_session > 5 and minutes_in_session <= 10:
-            return "around ten minutes"
-
-        elif minutes_in_session > 10 and minutes_in_session <= 15:
-            return "around fifteen minutes"
-
-        elif minutes_in_session > 15 and minutes_in_session <= 20:
-            return "around twenty minutes"
-
-        elif minutes_in_session <= 30:
-            return "about half an hour"
-
-        else:
-            return "a while"
-
-    def get_current_hour():
-        """
-        Gets the current hour (out of 24) of the day.
-        
-        OUT:
-            Integer representing the current hour of the day.
-        """
-        return datetime.datetime.now().hour
 
 # Vanilla resources from base DDLC
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
@@ -934,7 +935,7 @@ init python:
     # Assign Natsuki the chosen nickname (defaulted to Natsuki)
     if persistent.jn_player_nicknames_current_nickname:
         n_name = persistent.jn_player_nicknames_current_nickname
-    
+
     else:
         n_name = "Natsuki"
 
