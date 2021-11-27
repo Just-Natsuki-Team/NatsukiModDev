@@ -78,26 +78,26 @@ init 5 python:
 
 label admission_angry:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_ANGRY:
-        n "[player]...{w=0.3} you're still mad?"
-        n "Did you spend some time outside,{w=0.1} like I said?"
-        n "..."
-        n "I wish there was more I could suggest..."
-        n "Just...{w=0.3} try and stay calm,{w=0.1} and think things through a little,{w=0.1} okay?"
-        n "I don't want you storming off and getting hurt,{w=0.1} or doing something you'll regret."
-        n "Can you do that for me,{w=0.2} [player]?"
+        n 1uwdaj "[player]...{w=0.3} you're still mad?"
+        n 1tnmbo "Did you spend some time outside,{w=0.1} like I said?"
+        n 1tllbo "..."
+        n 1klrsl "I wish there was more I could suggest..."
+        n 1knmss "Just...{w=0.3} try and stay calm,{w=0.1} and think things through a little,{w=0.1} okay?"
+        n 1kllca "I don't want you storming off and getting hurt,{w=0.1} or doing something you'll regret."
+        n 1knmbo "Can you do that for me,{w=0.2} [player]?"
 
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "It really upsets me hearing you worked up like this,{w=0.1} you know..."
-            n "So please, [player]. Stay calm{w=0.1} -{w=0.1} for me?"
+            n 1kplbol "It really upsets me hearing you worked up like this,{w=0.1} you know..."
+            n 1knmbol "So please, [player]. Stay calm{w=0.1} -{w=0.1} for me?"
 
     else:
-        n "Huh?{w=0.2} You're angry?"
-        n "[player]...{w=0.3} what's got you so worked up?{w=0.2} That's no good,{w=0.1} [player]!"
-        n "I know it's probably ironic coming from me,{w=0.1} but let's just try to calm down, okay?"
-        n "Just being mad won't solve anything,{w=0.1} so let's focus."
-        n "Personally if things get too much for me,{w=0.1} I like to take a walk.{w=0.2} It's amazing what some fresh air can do!"
-        n "Why don't you take a few minutes outside too.{w=0.2} For me?"
-        n "You'll feel a little better soon.{w=0.2} I promise!"
+        n 1tnmaj "Huh?{w=0.2} You're angry?"
+        n 1tnmbo "[player]...{w=0.3} what's got you so worked up?{w=0.2} That's no good,{w=0.1} [player]!"
+        n 1kllem "I know it's probably ironic coming from me,{w=0.1} but let's just try to calm down, okay?"
+        n 1ncssf "Just being mad won't solve anything,{w=0.1} so let's focus."
+        n 1ulraj "Personally if things get too much for me,{w=0.1} I like to take a walk.{w=0.2} It's amazing what some fresh air can do!"
+        n 1knmsl "Why don't you take a few minutes outside too.{w=0.2} For me?"
+        n 1nnmbg "You'll feel a little better soon.{w=0.2} I promise!"
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_ANGRY
     return
@@ -116,36 +116,36 @@ init 5 python:
 
 label admission_anxious:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_ANXIOUS:
-        n "Still feeling anxious,{w=0.1} [player]?"
-        n "..."
-        n "I wish I could do more to help you..."
-        n "Perhaps you could try some distractions to keep your mind off things?"
-        n "You could pick up a series you haven't finished,{w=0.1} or continue a hobby or something."
-        n "Nnnn..{w=0.3} what else..."
-        n "Oh!{w=0.2} Try to avoid soda,{w=0.1} coffee and things like that too,{w=0.1} [player]."
-        n "I think caffeine is the last thing you need right now."
-        n "Music might also help!{w=0.2} Something calming, though {w=0.1}-{w=0.1} I guess kind of like meditation?"
-        n "Can you do that for me,{w=0.1} [player]?"
-        n "I promise you'll start to feel normal soon!"
+        n 1knmsl "Still feeling anxious,{w=0.1} [player]?"
+        n 1kllsl "..."
+        n 1kllaj "I wish I could do more to help you..."
+        n 1knmaj "Perhaps you could try some distractions to keep your mind off things?"
+        n 1unmss "You could pick up a series you haven't finished,{w=0.1} or continue a hobby or something."
+        n 1klran "Nnnn..{w=0.3} what else..."
+        n 1unmgs "Oh!{w=0.2} Try to avoid soda,{w=0.1} coffee and things like that too,{w=0.1} [player]."
+        n 1knmsl "I think caffeine is the last thing you need right now."
+        n 1klrss "Music might also help!{w=0.2} Something calming, though {w=0.1}-{w=0.1} I guess kind of like meditation?"
+        n 1knmss "Can you do something like that,{w=0.1} [player]?"
+        n 1kwmsm "I promise you'll start to feel normal soon!"
 
     else:
-        n "Feeling anxious,{w=0.1} [player]?"
-        n "..."
-        n "I wish there was more I could say to ease your mind."
-        n "But I can tell you one thing,{w=0.1} [player]."
-        n "Everything is going to be okay.{w=0.2} Everything will work out,{w=0.1} eventually."
-        n "I promise."
-        n "Getting really worked up about something won't make it any easier,{w=0.1} [player]."
-        n "And if nothing else,{w=0.1} I'll be here to listen."
-        n "So...{w=0.3} try and put your mind at rest,{w=0.1} okay?"
-        n "I know it's tough...{w=0.3} but just try,{w=0.1} alright?"
+        n 1tplsf "Feeling anxious,{w=0.1} [player]?"
+        n 1tlrsl "..."
+        n 1klraj "I wish there was more I could say to ease your mind."
+        n 1nnmbo "But I can tell you one thing,{w=0.1} [player]."
+        n 1knmaj "Everything is going to be okay.{w=0.2} Everything will work out,{w=0.1} eventually."
+        n 1knmbo "I promise."
+        n 1klrbo "Getting really worked up about something won't make it any easier,{w=0.1} [player]."
+        n 1nllssl "And if nothing else,{w=0.1} I'll be here to listen."
+        n 1knmbo "So...{w=0.3} try and put your mind at rest,{w=0.1} okay?"
+        n 1knmaj "I know it's tough...{w=0.3} but just try,{w=0.1} alright?"
 
         if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            n "I'll always have your back."
+            n 1kwmsm "I'll always have your back."
 
         if jn_affinity.get_affinity_state() == jn_affinity.LOVE:
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
-            n "I love you, [chosen_endearment]."
+            n 1kchsml "I love you, [chosen_endearment]."
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_ANXIOUS
     return
@@ -164,32 +164,33 @@ init 5 python:
 
 label admission_ashamed:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_ASHAMED:
-        n "[player]...{w=0.3} you're still feeling ashamed of yourself?"
-        n "Well,{w=0.1} I'm not going to give up on you {i}that{/i} easily,{w=0.1} you know!"
-        n "Just keep trying your best to put things right,{w=0.1} okay?"
-        n "You can do it!{w=0.2} I know you can!"
+        n 1knmsl "[player]...{w=0.3} you're still feeling ashamed of yourself?"
+        n 1fnmsl "Well,{w=0.1} I'm not going to give up on you {i}that{/i} easily,{w=0.1} you know!"
+        n 1fnmss "Just keep trying your best to put things right,{w=0.1} okay?"
+        n 1unmbg "You can do it!{w=0.2} I know you can!"
 
     else:
-        n "Huh?{w=0.2} What?"
-        n "You're feeling...{w=0.3} ashamed?{w=0.2} Of yourself?"
-        n "That's awful to hear,{w=0.2} [player].{w=0.2} Did you do something wrong?"
-        n "Well...{w=0.3} whatever you did,{w=0.1} I'm sure you didn't mean it!"
-        n "More importantly,{w=0.1} you're going to work hard to put things right.{w=0.2} I just know it!"
-        n "So...{w=0.3} don't let me down,{w=0.2} okay?"
-        n "And you aren't going to let yourself down either,{w=0.1} right?"
+        n 1unmbo "Huh?{w=0.2} What?"
+        n 1tnmbo "You're feeling...{w=0.3} ashamed?{w=0.2} Of yourself?"
+        n 1kllbo "...Why,{w=0.1} [player]?{w=0.2} Did you do something wrong?"
+        n 1ncsaj "Well...{w=0.3} whatever you did,{w=0.1} I'm sure you didn't mean it!"
+        n 1fcsbg "More importantly,{w=0.1} you're going to work hard to put things right.{w=0.2} I just know it!"
+        n 1fnmaj "So...{w=0.3} don't let me down,{w=0.2} okay?"
+        n 1fnmbo "And you aren't going to let yourself down either,{w=0.1} right?"
         menu:
             "Right!":
-                n "Exactly.{w=0.2} Ehehe."
+                n 1fchbg "Exactly!"
+                n 1fnmsm "You know you got this!"
 
             "...":
-                n "..."
-                n "I don't think you get it,{w=0.1} [player]."
-                n "Now,{w=0.1} repeat after me:{w=0.2} 'I'm not gonna let myself down!'"
+                n 1fsqpo "..."
+                n 1fsqaj "I don't think you get it,{w=0.1} [player]."
+                n 1fcsss "Now,{w=0.1} repeat after me:{w=0.2} 'I'm not gonna let myself down!'"
                 menu:
                     "I'm not gonna let myself down!":
-                        n "See?{w=0.2} I knew you had it in you!{w=0.2} Ehehe."
+                        n 1uchgn "See?{w=0.2} I knew you had it in you!{w=0.2} Ahaha."
 
-        n "I believe in you,{w=0.1} [player]!"
+        n 1fchbs "Go get 'em,{w=0.1} [player]!"
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_ASHAMED
     return
