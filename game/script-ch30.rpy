@@ -244,10 +244,10 @@ label talk_menu:
                 if topic_obj:
                     topic_obj.unlocked = False
 
-    #This topic might quit
-    if "quit" in return_keys:
-        jump _quit
-        
+            #This topic might quit
+            if "quit" in return_keys:
+                jump _quit
+
     $ jn_placeholders.show_resting_placeholder_natsuki(offset=True)
 
     menu:
