@@ -475,39 +475,40 @@ init 5 python:
 
 label admission_insecure:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_INSECURE:
-        n "You're still feeling insecure about yourself,{w=0.1} [player]?"
-        n "You remember what I said though,{w=0.1} right?"
-        n "Everybody has their own pace.{w=0.2} I don't care what yours is.{w=0.2} We'll take it together."
-        n "...Wow{w=0.1}, that seriously sounded super corny."
-        n "But seriously,{w=0.1} [player]...{w=0.3} try not to sweat it,{w=0.1} okay?"
-        n "The great Natsuki has your back,{w=0.1} after all!"
+        n 1knmsl "You're still feeling insecure about yourself,{w=0.1} [player]?"
+        n 1kllsl "You...{w=0.3} do remember what I said though,{w=0.1} right?"
+        n 1ncssl "Everybody has their own pace.{w=0.2} I don't care what yours is.{w=0.2} We'll take it together."
+        n 1fchgn "...Wow{w=0.1}, that seriously sounded super corny."
+        n 1kllnv "But really,{w=0.1} [player]...{w=0.3} try not to sweat it,{w=0.1} okay?"
+        n 1fchbgl "The great Natsuki has your back,{w=0.1} after all!"
 
     else:
-        n "Huh?{w=0.2} You're feeling insecure?{w=0.2} Where did that come from,{w=0.1} [player]?"
-        n "..."
-        n "I...{w=0.3} can't really comment on what made you feel that way..."
-        n "But you better listen,{w=0.1} and listen good,{w=0.1} [player]."
-        n "I don't care if people don't like you.{w=0.2} I like you."
-        n "I don't care if people think you have no talents.{w=0.2} I know you do."
-        n "I don't care if people think you're falling behind.{w=0.2} I know you'll catch up."
-        n "Just...{w=0.3} give yourself time and space,{w=0.1} [player]."
-        n "These thoughts you're having...{w=0.3} they can lead you to some really bad places.{w=0.2} Trust me."
-        n "I won't let that happen without a fight{w=0.1} -{w=0.1}but you gotta fight with me,{w=0.1} [player].{w=0.2} Okay?"
+        n 1knmsl "Huh?{w=0.2} You're feeling insecure?{w=0.2} Where did that come from,{w=0.1} [player]?"
+        n 1kllsl "..."
+        n 1knmpu "I...{w=0.3} can't really comment on what made you feel that way..."
+        n 1fnmpu "But you better listen,{w=0.1} and listen good,{w=0.1} [player]."
+        n 1fcspu "I don't care if people don't like you.{w=0.2} I like you."
+        n 1fcsbo "I don't care if people think you have no talents.{w=0.2} I know you do."
+        n 1fnmbo "I don't care if people think you're falling behind.{w=0.2} I know you'll catch up."
+        n 1kllsl "Just...{w=0.3} give yourself time and space,{w=0.1} [player]."
+        n 1kwmsl "These thoughts you're having...{w=0.3} they can lead you to some really bad places.{w=0.2} Trust me."
+        n 1fwmsl "I'm not gonna let that happen without a fight{w=0.1} -{w=0.1}but you gotta fight too,{w=0.1} [player].{w=0.2} Got it?"
         menu:
             "Okay.":
-                n "Good.{w=0.2} Or you'll have me to deal with too.{w=0.2} Ahaha..."
-                n "..."
+                n 1fnmsl "...Good.{w=0.2} Or you'll have me to deal with too."
+                n 1kllsm "..."
                 if jn_affinity.get_affinity_state() <= jn_affinity.AFFECTIONATE:
-                    n "Message received?{w=0.2} T{w=0.1}-then let's get back to it already!"
-                    n "Jeez..."
+                    n 1flrajl "Message received?{w=0.2} T{w=0.1}-then let's get back to it already!"
+                    n 1flrpol "Jeez..."
 
                 else:
-                    n "...You know I meant every single word I said,{w=0.1} right?"
-                    n "So please...{w=0.3} don't give up.{w=0.2} We both need you to win,{w=0.1} [player]."
+                    n 1kwmpul "...You know I meant every single word I said,{w=0.1} right?"
+                    n 1kcssll "So please...{w=0.3} don't give up.{w=0.2} We both need you to win,{w=0.1} [player]."
 
                     if jn_affinity.get_affinity_state() == jn_affinity.LOVE:
                         $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
-                        n "I really do love you, [chosen_endearment]."
+                        n 1kwmsmf "I really do love you, [chosen_endearment]."
+                        n 1kchbgf "You know I'll always have your back,{w=0.1} dummy..."
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_INSECURE
     return
@@ -526,18 +527,17 @@ init 5 python:
 
 label admission_proud:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_PROUD:
-        n "Really,{w=0.1} [player]?{w=0.1} Still gloating,{w=0.1} are we?"
-        n "You {i}do{/i} know what they say about pride,{w=0.1} right?"
-        n "..."
-        n "I'm just kidding,{w=0.1} [player]!{w=0.2} Jeez!"
-        n "You should see your face!{w=0.2} Ehehe."
-        n "Well,{w=0.1} I'm glad you're still feeling good about yourself!"
+        n 1fsqbg "Really,{w=0.1} [player]?{w=0.1} Still gloating,{w=0.1} are we?"
+        n 1tsqbg "You {i}do{/i} know what they say about pride,{w=0.1} right?"
+        n 1fsqsm "..."
+        n 1kchlg "I'm just kidding,{w=0.1} [player]!{w=0.2} Jeez!"
+        n 1kchgn "You should see your face sometimes!"
+        n 1nnmsm "Well,{w=0.1} it's cool to see you're still feeling good about yourself!"
 
     else:
-        n "Oh?{w=0.2} You're feeling proud,{w=0.1} huh?"
-        n "You must be pretty pleased with yourself to brag to me about it.{w=0.2} Ahaha!"
-        n "I'm sure whatever it is,{w=0.1} it's something I can be proud of you for too."
-        n "Good work,{w=0.1} [player]!"
+        n 1tsgbg "Oh?{w=0.2} You're feeling proud,{w=0.1} huh?"
+        n 1fsqsm "You must be pretty pleased with yourself to brag to me about it."
+        n 1fchbg "Well...{w=0.3} whatever it was -{w=0.1} good work,{w=0.1} [player]!"
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_PROUD
     return
@@ -556,43 +556,46 @@ init 5 python:
 
 label admission_sad:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_SAD:
-        n "Oh...{w=0.3} I'm really sorry to hear you're still feeling upset,{w=0.1} [player]."
-        n "I'm not sure if it's my place to say this,{w=0.1} but..."
-        n "Perhaps you have others you can share this with?{w=0.2} Friends,{w=0.1} or family?"
+        n 1knmsl "Oh...{w=0.3} I'm really sorry to hear you're still feeling upset,{w=0.1} [player]."
+        n 1kllsl "I'm...{w=0.3} not sure if it's my place to say this,{w=0.1} but..."
+        n 1knmpu "Do you have others you can share this with?{w=0.2} Friends,{w=0.1} or family?"
         menu:
             "I do.":
-                n "Then I think it might be a good idea to share how you feel."
-                n "A problem shared is a problem halved,{w=0.1} as they say!{w=0.2} Ehehe."
-                n "But seriously,{w=0.1} [player].{w=0.2} Don't be afraid to ask for help,{w=0.1} alright?"
-                n "There's only so much I can do...{w=0.3} but you are worth the team effort,{w=0.1} okay?"
+                n 1kllss "Then maybe you should share how you feel."
+                n 1kchbg "A problem shared is a problem halved,{w=0.1} as they say!"
+                n 1knmsl "But seriously,{w=0.1} [player].{w=0.2} Don't be afraid to ask for help,{w=0.1} alright?"
+                n 1klrsl "Everyone needs help sometimes."
 
             "I don't.":
-                n "That's...{w=0.3} really not what I was hoping to hear,{w=0.1} honestly."
-                n "I'm sorry to hear that,{w=0.1} [player].{w=0.2} Truly."
-                n "But know this."
-                n "You have my full support,{w=0.1} okay?"
+                n 1ncssf "That's...{w=0.3} not what I was hoping to hear,{w=0.1} honestly."
+                n 1kllsr "I'm sorry to hear that,{w=0.1} [player].{w=0.2} Truly."
+                n 1nnmpu "But know this."
+                n 1knmsr "You've got my support,{w=0.1} okay?" 
+                n 1klrpol "I-if that helps,{w=0.1} I mean."
 
             "They already know.":
-                n "That's a relief to hear!"
-                n "I just hope they were supportive of you,{w=0.1} [player].{w=0.2} It's the least you deserve."
+                n 1kcspu "Good! Good..."
+                n 1knmpo "I just hope they were supportive of you,{w=0.1} [player].{w=0.2} You at least deserve that much."
 
         if jn_affinity.get_affinity_state() == jn_affinity.LOVE:
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
-            n "I love you,{w=0.1} [chosen_endearment]."
+            n 1kchnvf "I love you,{w=0.1} [chosen_endearment]."
 
-        n "I hope you start to feel better soon!"
+        n 1kllpu "I hope you start to feel better soon!"
 
     else:
-        n "Oh...{w=0.3} I'm really sorry to hear you're upset,{w=0.1} [player]."
-        n "Did something happen?{w=0.2} You can tell me about it,{w=0.1} [player].{w=0.2} I won't judge."
-        n "..."
-        n "It's okay,{w=0.1} [player].{w=0.2} Everything is going to be okay."
-        n "You'll be fine...{w=0.3} you'll be just fine."
-        n "Now,{w=0.1} take some deep breaths for me,{w=0.1} alright?"
-        n "That's it,{w=0.1} [player].{w=0.2} Keep breathing."
-        n "Whatever happened,{w=0.1} I'm sure it'll all work out."
-        n "What matters is that you're okay,{w=0.1} [player].{w=0.2} So let's concentrate on fixing that, alright?"
-        n "Perhaps talking to me some more might help?{w=0.2} Ahaha..."
+        n 1knmpo "Oh...{w=0.3} I'm really sorry to hear you're upset,{w=0.1} [player]."
+        n 1knmpu "Did something happen?{w=0.2} You can tell me about it,{w=0.1} [player].{w=0.2} I won't judge."
+        n 1ncssr "..."
+        n 1nwmpu "It's...{w=0.3} okay,{w=0.1} [player].{w=0.2} Everything is gonna be okay."
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+            n 1knmpu "Now,{w=0.1} take some deep breaths for me,{w=0.1} alright?"
+            n 1uchsm "That's it,{w=0.1} [player].{w=0.2} Keep breathing."
+
+        n 1kllpu "Whatever happened,{w=0.1} I'm sure it'll all work out."
+        n 1ucssl "What matters is that you're okay,{w=0.1} [player].{w=0.2} So let's concentrate on fixing that, alright?"
+        n 1kwmsm "We can work on that here,{w=0.1} okay?"
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_SAD
     return
