@@ -50,7 +50,7 @@ init python in jn_debug:
 
             except:
                 store.utils.log(message="Failed to watch expression {0}".format(item), logseverity=store.utils.SEVERITY_WARN)
-        
+
     def _unwatch_all_tracked_items():
         """
         Calls renpy.unwatch() on all items in the tracked watch items list, hiding them.
@@ -110,10 +110,10 @@ init python in jn_debug:
 
                 if _view_tracked_items_enabled:
                     _watch_all_tracked_items()
-        
+
         else:
             raise Exception("Expression provided is not of type str")
-        
+
     def remove_tracked_watch_item(expression):
         """
         Adds the given expression to the list of items to watch and display
@@ -181,7 +181,7 @@ init python in jn_debug:
                 store.persistent.jn_debug_tracked_watch_items = []
                 for item_from_file in items_from_file:
                     store.persistent.jn_debug_tracked_watch_items.append(item_from_file.strip('\n'))
-                
+
                 # Finally redisplay if the view was open
                 if _view_tracked_items_enabled:
                     _watch_all_tracked_items()
@@ -195,7 +195,7 @@ init python in jn_debug:
                 logseverity=store.utils.SEVERITY_ERR
             )
             return LOAD_FROM_DISK_FAILED
-        
+
     def reset_tracked_watch_items():
         """
         Completely resets the tracked watch item list to the default configuration
@@ -214,6 +214,13 @@ init python in jn_debug:
             - mouse position as a tuple in format (x,y)
         """
         return pygame.mouse.get_pos()
+
+#after console is instantiated
+init 1702 python:
+    def console_print(message):
+        #add new history entry to console with ´message´
+        he = store._console.ConsoleHistoryEntry(None, message)
+        store._console.console.history.append(he)
 
 # Debugging topics
 
@@ -330,7 +337,7 @@ label debug_set_trust:
 
         "Nevermind.":
             n "Oh...{w=0.3} well,{w=0.1} okay then."
-    
+
     return
 
 label set_trust_options_high:
@@ -483,7 +490,7 @@ label debug_add_watched_item:
         n "..."
         $ jn_debug.add_tracked_watch_item(str(player_input))
         n "Okaaay!{w=0.2} There you go, [player]!"
-    
+
     return
 
 # This topic allows us to remove an item from the watched item list
@@ -513,7 +520,7 @@ label debug_remove_watched_item:
         n  "..."
         $ jn_debug.remove_tracked_watch_item(str(player_input))
         n "Gotcha!{w=0.2} There you go,{w=0.1} [player]!"
-    
+
     return
 
 # This topic allows us to set the watched item list from file
@@ -669,7 +676,7 @@ label debug_custom_say:
     n "Oooh!{w=0.2} Are we pranking someone,{w=0.1} [player]?{w=0.2} I'm for it!"
     $ player_input = renpy.input("What do you want me to say?")
     call debug_custom_say_options_a(player_input)
-    
+
 label debug_custom_say_options_a(dialogue):
     menu:
         n "Alright!{w=0.2} Now how do you want me to say it?"
@@ -710,7 +717,7 @@ label debug_custom_say_options_a(dialogue):
         "Nevermind.":
             n "Oh...{w=0.3} well, if you say so."
 
-    
+
     jump ch30_loop
 
 label debug_custom_say_options_b(dialogue):
