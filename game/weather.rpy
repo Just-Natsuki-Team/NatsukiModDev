@@ -1,3 +1,16 @@
+# Weather data
+default persistent.weather_api_key = None
+default persistent.weather_validate_apikey_in_time = None
+default persistent.is_weather_tracking_set_up = False
+default persistent.current_weather_short = "Clear"
+default persistent.current_weather_long = dict()
+
+# Location data
+default persistent.latitude = None
+default persistent.longitude = None
+default persistent.jn_hemisphere_north_south = None
+default persistent.jn_hemisphere_east_west = None
+
 init -1 python in weather:
     import urllib2
     import datetime

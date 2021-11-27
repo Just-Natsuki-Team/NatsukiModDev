@@ -3,31 +3,8 @@ default player = persistent.playername
 
 # Generic data
 default persistent.jn_total_visit_count = 0
-default persistent.jn_first_visited_date = None
-
-# Screenshot data
-default persistent.jn_first_screenshot_taken = None
-default persistent.jn_screenshot_good_shots_total = 0
-default persistent.jn_screenshot_bad_shots_total = 0
-
-# Weather data
-default persistent.weather_api_key = None
-default persistent.weather_validate_apikey_in_time = None
-default persistent.is_weather_tracking_set_up = False
-default persistent.current_weather_short = "Clear"
-default persistent.current_weather_long = dict()
-
-# Location data
-default persistent.latitude = None
-default persistent.longitude = None
-default persistent.jn_hemisphere_north_south = None
-default persistent.jn_hemisphere_east_west = None
-
-# Pet data
-default persistent.jn_player_pet = None
-
-# Admissions data
-default persistent.jn_player_admission_type_on_quit = None
+default persistent.jn_first_visited_date = datetime.datetime.now()
+default persistent.jn_last_visited_date = datetime.datetime.now()
 
 #Our main topic pool
 default persistent._event_list = list()
@@ -38,12 +15,15 @@ init -990 python:
 
 init 0 python:
     import store.jn_affinity as jn_aff
+    from collections import OrderedDict
 
     #Constants for types. Add more here if we need more organizational areas
     TOPIC_TYPE_FAREWELL = "FAREWELL"
     TOPIC_TYPE_GREETING = "GREETING"
     TOPIC_TYPE_NORMAL = "NORMAL"
     TOPIC_TYPE_ADMISSION = "ADMISSION"
+    TOPIC_TYPE_COMPLIMENT = "COMPLIMENT"
+    TOPIC_TYPE_APOLOGY = "APOLOGY"
 
     TOPIC_LOCKED_PROP_BASE_MAP = {
         #Things which shouldn't change
@@ -148,7 +128,6 @@ init 0 python:
             self.last_seen = None
             self.unlocked_on = None
 
-
             #Now, if it's in the db, we should load its data
             if label in persistent_db:
                 self.__load()
@@ -219,6 +198,8 @@ init 0 python:
                     store.utils.log(e.message, utils.SEVERITY_ERR)
                     return False
 
+            return True
+
         def curr_affinity_in_affinity_range(self, affinity_state=None):
             """
             Checks if the current affinity is within this topic's affinity_range
@@ -230,7 +211,7 @@ init 0 python:
                 True if the current affinity is within range. False otherwise
             """
             if not affinity_state:
-                affinity_state = jn_globals.current_affinity_state
+                affinity_state = jn_affinity.get_affinity_state()
 
             return store.jn_affinity.is_state_within_range(affinity_state, self.affinity_range)
 
@@ -299,6 +280,7 @@ init 0 python:
             location=None,
             affinity=None,
             trust=None,
+            conditional=None,
             includes_categories=list(),
             excludes_categories=list(),
             additional_properties=list()
@@ -345,10 +327,16 @@ init 0 python:
             if trust and not self.evaluate_trust_range(trust):
                 return False
 
+            if conditional and not self.check_conditional():
+                return False
+
             if includes_categories and len(set(includes_categories).intersection(set(self.category))) != len(includes_categories):
                 return False
 
             if excludes_categories and self.category and len(set(excludes_categories).intersection(set(self.category))) > 0:
+                return False
+
+            if self.conditional is not None and not eval(self.conditional):
                 return False
 
             if additional_properties:
@@ -376,6 +364,7 @@ init 0 python:
             location=None,
             affinity=None,
             trust=None,
+            conditional=None,
             includes_categories=list(),
             excludes_categories=list(),
             additional_properties=list()
@@ -404,6 +393,7 @@ init 0 python:
                     location,
                     affinity,
                     trust,
+                    conditional,
                     includes_categories,
                     excludes_categories,
                     additional_properties
@@ -456,7 +446,7 @@ init 0 python:
         Returns a list of items ready for a menu
 
         IN:
-            menu_topics - array of topics. Recommended input of get_all_topics()
+            menu_topics - List<Topic> of topics
             additional_topics - optional, array of tuples
                 syntax: [("prompt1", "label2"), ("prompt2", "label2"), ...]
         OUT:
@@ -468,7 +458,39 @@ init 0 python:
 
         for topic in additional_topics:
             menu_items.append(topic)
-        return menu_items
+        return menu_items.sort()
+
+    def menu_dict(menu_topics):
+        """
+        Builds a dict of items ready for use in a categorized menu
+
+        IN:
+            menu_topics - A List<Topic> of topics to populate the menu
+
+        OUT:
+            Dictionary<string, List<string>> representing a dict of category: [ ...prompts ]
+        """
+        # Python doesn't support ordered dictionaries... we have to do things the hard way here.
+
+        # Get the topic categories that the given topics share, and order them
+        topic_categories = []
+        for topic in menu_topics:
+            for category in topic.category:
+                if category not in topic_categories:
+                    topic_categories.append(category)
+        topic_categories.sort()
+
+        # Set up an ordered dictionaty, this will retain the order of what we return for the menu items
+        ordered_menu_items = OrderedDict()
+        for topic_category in topic_categories:
+            ordered_menu_items[topic_category] = []
+        
+        # Feed the topics into the ordered dictionary - remember that each topic can have multiple categories!
+        for topic in menu_topics:
+            for category in topic.category:
+                ordered_menu_items[category].append(topic)
+
+        return ordered_menu_items
 
     def get_custom_tracks():
         """
@@ -505,6 +527,19 @@ init -990 python in jn_globals:
     # Tracks whether the player opted to stay for longer when Natsuki asked them to when quitting; True if so, otherwise False
     player_already_stayed_on_farewell = False
 
+    # Tracks whether the player is or is not currently playing a game
+    player_is_ingame = False
+
+    # Tracks whether the player is or is not currently in some topic flow
+    player_is_in_conversation = False
+
+    # Outfit handling; these should be persisted and in some kind of structure going forward for presets, etc.
+    natsuki_current_pose = "sitting"
+    natsuki_current_outfit = "uniform"
+    natsuki_current_hairstyle = "default"
+    natsuki_current_accessory = "hairbands/red"
+    natsuki_current_eyewear = None
+
     # Constants; use these for anything we only want defined once and used in a read-only context
 
     # Endearments Natsuki may use at the highest levels of affinity to refer to her player
@@ -522,6 +557,8 @@ init -990 python in jn_globals:
     # Descriptors Natsuki may use at the higher levels of affinity to define her player
     DEFAULT_PLAYER_DESCRIPTORS = [
         "amazing",
+        "awesome",
+        "really awesome",
         "really great",
         "so sweet",
         "the best"
@@ -546,6 +583,131 @@ init -990 python in jn_globals:
 
     # LatLong.net; used for helping the player find their coordinates when setting up location manually
     LINK_LAT_LONG_HOME = "https://www.latlong.net"
+    
+    # Names Natsuki may use at the lowest levels of affinity to insult her player with
+    DEFAULT_PLAYER_INSULT_NAMES = [
+        "jerk",
+        "idiot",
+        "moron",
+        "stupid"
+    ]
+
+    # Flavor text for the talk menu at high affinity
+    DEFAULT_TALK_FLAVOR_TEXT_LOVE_ENAMORED = [
+        "What's up,{w=0.1} [player]?",
+        "What's on your mind,{w=0.1} [player]?",
+        "Something up,{w=0.1} [player]?",
+        "You wanna talk?{w=0.2} Ehehe.",
+        "I'd love to talk!",
+        "I always love talking to you,{w=0.1} [player]!",
+        "[player]!{w=0.2} What's up?",
+        "[player]!{w=0.2} What's on your mind?",
+        "Ooh!{w=0.2} What did you wanna talk about?",
+        "I'm all ears,{w=0.1} [player]!",
+        "I've always got time for you,{w=0.1} [player]!"
+    ]
+
+    # Flavor text for the talk menu at medium affinity
+    DEFAULT_TALK_FLAVOR_TEXT_AFFECTIONATE_NORMAL = [
+        "What's up?",
+        "What's on your mind?",
+        "What's happening?",
+        "Something on your mind?",
+        "Oh?{w=0.2} You wanna talk to me?",
+        "Huh?{w=0.2} What's up?",
+        "You wanna share something?",
+        "Hey!{w=0.2} What's up?",
+        "What's new,{w=0.1} [player]?",
+        "'Sup,{w=0.1} [player]?"
+    ]
+
+    # Flavor text for the talk menu at low affinity
+    DEFAULT_TALK_FLAVOR_TEXT_UPSET_DISTRESSED = [
+        "What do you want?",
+        "What is it?",
+        "Can I help you?",
+        "Do you need me?",
+        "Make it quick.",
+        "What now?",
+        "Yes?",
+        "What do you want now?",
+        "What is it this time?",
+        "Yeah?{w=0.2} What?",
+        "What is it now?",
+        "This had better be good."
+    ]
+
+    # Flavor text for the talk menu at minimum affinity
+    DEFAULT_TALK_FLAVOR_TEXT_BROKEN_RUINED = [
+        "...",
+        "...?",
+        "What?",
+        "Just talk already.",
+        "Spit it out.",
+        "Start talking."
+    ]
+
+    # Emoticon sets for where we can't express Natsuki's emotions directly (I.E modals)
+    DEFAULT_HAPPY_EMOTICONS = [
+        "^^",
+        "^.^",
+        "\.^-^./",
+        ":)",
+        ":]",
+        ":3",
+        "^-^",
+        "^_^",
+        ":]",
+        ":D",
+        "(*^▽^*)",
+        "(^∇^)",
+        "(＾▽＾)",
+        "(=^▽^=)",
+        "(^ｖ^)",
+        "(^_^)"
+    ]
+
+    DEFAULT_ANGRY_EMOTICONS = [
+        ">_>",
+        "<_<",
+        "-_-",
+        "-.-",
+        ">:T",
+        ">:/",
+        ">:(",
+        "(;>_>)",
+        "(-_-)"
+    ]
+
+    DEFAULT_SAD_EMOTICONS = [
+        ":(",
+        ":'(",
+        ":/",
+        "._.",
+        "(v_v”)",
+        "( .. )",
+        "( ;; )",
+        "(|||;-;)",
+        "(;v-v)",
+        ":-(",
+        "</3",
+        "<|3",
+        ":<"
+    ]
+
+    # Alphabetical (excluding numbers) values allowed for text input
+    DEFAULT_ALPHABETICAL_ALLOW_VALUES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-' "
+
+    #The current label we're in
+    current_label = None
+
+    #The last label we were in
+    last_label = None
+
+    # Channel registration
+
+    # Channel for looping weather sfx
+    renpy.music.register_channel("weather_loop", "sfx", True)
 
 init 10 python in jn_globals:
     # The current affection state. We default this to 5 (NORMAL)
@@ -556,6 +718,7 @@ init -999 python in utils:
     import datetime
     import os
     import store
+    import pprint
 
     #Make log folder if not exist
     _logdir = os.path.join(renpy.config.basedir, "log")
@@ -591,6 +754,21 @@ init -999 python in utils:
             ).format(datetime.datetime.now(), message)
         )
 
+    def pretty_print(object, indent=1, width=150):
+        """
+        Returns a PrettyPrint-formatted representation of an object as a dict.
+
+        IN:
+            object - the object to be converted
+            indent - the level of indentation in the formatted string
+            width - the maximum length of each line in the formatted string, before remaining content is shifted to next line
+
+        OUT:
+            Formatted string representation of object __dict__
+        """
+        return pprint.pformat(object.__dict__, indent, width)
+
+init python in utils:
     def get_current_session_length():
         """
         Returns a timedelta object representing the length of the current game session.
@@ -656,6 +834,49 @@ init -999 python in utils:
             return func
         return register
 
+    def get_time_in_session_descriptor():
+        """
+        Get a descriptor based on the number of minutes the player has spent in the session, up to 30 minutes
+
+        OUT:
+            Brief descriptor relating to the number of minutes spent in the session
+        """
+        minutes_in_session = get_current_session_length().total_seconds() / 60
+
+        if minutes_in_session <= 1:
+            return "like a minute"
+
+        elif minutes_in_session <= 3:
+            return "a couple of minutes"
+
+        elif minutes_in_session > 3 and minutes_in_session <= 5:
+            return "like five minutes"
+
+        elif minutes_in_session > 5 and minutes_in_session <= 10:
+            return "around ten minutes"
+
+        elif minutes_in_session > 10 and minutes_in_session <= 15:
+            return "around fifteen minutes"
+
+        elif minutes_in_session > 15 and minutes_in_session <= 20:
+            return "around twenty minutes"
+
+        elif minutes_in_session <= 30:
+            return "about half an hour"
+
+        else:
+            return "a while"
+
+    def get_current_hour():
+        """
+        Gets the current hour (out of 24) of the day.
+        
+        OUT:
+            Integer representing the current hour of the day.
+        """
+        return datetime.datetime.now().hour
+
+# Vanilla resources from base DDLC
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
 define audio.t2 = "<loop 4.499>bgm/2.ogg"   #Sayori theme
 define audio.t2g = "bgm/2g.ogg"
@@ -668,17 +889,26 @@ define audio.t3g3 = "<loop 4.618>bgm/3g2.ogg"
 define audio.t3m = "<loop 4.618>bgm/3.ogg"
 define audio.t4 = "<loop 19.451>bgm/4.ogg"  #Poem minigame
 define audio.t4g = "<loop 1.000>bgm/4g.ogg"
-define audio.tdokidoki = "mod_assets/bgm/dokidoki.ogg"
-define audio.tpoems = "mod_assets/bgm/poems.ogg"
-define audio.custom1 = "custom-music/01.mp3"
-define audio.custom2 = "custom-music/02.mp3"
-define audio.custom3 = "custom-music/03.mp3"
-define audio.battle = "custom-music/battle.mp3"
-define audio.spooky1 = "mod_assets/bgm/spooky1.ogg"
+
+# JN resources
+
+# Single-play sound effects
 define audio.camera_shutter = "mod_assets/sfx/camera_shutter.mp3"
 define audio.select_hover = "mod_assets/sfx/select_hover.mp3"
 define audio.select_confirm = "mod_assets/sfx/select_confirm.mp3"
+define audio.coin_flip = "mod_assets/sfx/coin_flip.mp3"
+define audio.card_shuffle = "mod_assets/sfx/card_shuffle.mp3"
+define audio.card_place = "mod_assets/sfx/card_place.mp3"
+define audio.drawer = "mod_assets/sfx/drawer.mp3"
+define audio.smack = "mod_assets/sfx/smack.mp3"
 
+# Looped sound effects
+define audio.rain_muffled = "mod_assets/sfx/rain_muffled.mp3"
+
+# Music
+define audio.test_bgm = "mod_assets/bgm/background_test_music.ogg"
+
+# Sprites
 define body_a = "mod_assets/natsuki-assets/base.png"
 define uniform_a = "mod_assets/natsuki-assets/uniform.png"
 define face_a = "mod_assets/natsuki-assets/jnab.png"
@@ -690,6 +920,8 @@ define m = DynamicCharacter('m_name', image='monika', what_prefix='"', what_suff
 define n = DynamicCharacter('n_name', image='natsuki', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 define y = DynamicCharacter('y_name', image='yuri', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 
+define n2 = DynamicCharacter('Natsuki Test', image='natsuki', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
+
 init python:
     #If they quit during a pause, we have to set _dismiss_pause to false again (I hate this hack)
     _dismiss_pause = config.developer
@@ -697,5 +929,18 @@ init python:
     #Each of the girls' names before the MC learns their name throughout ch0.
     s_name = "Sayori"
     m_name = "Monika"
-    n_name = "Natsuki"
     y_name = "Yuri"
+
+    # Assign Natsuki the chosen nickname (defaulted to Natsuki)
+    if persistent.jn_player_nicknames_current_nickname:
+        n_name = persistent.jn_player_nicknames_current_nickname
+    
+    else:
+        n_name = "Natsuki"
+
+init -999 python:
+    def label_callback(name, abnormal):
+        jn_globals.last_label = jn_globals.current_label
+        jn_globals.current_label = name
+
+    config.label_callback = label_callback

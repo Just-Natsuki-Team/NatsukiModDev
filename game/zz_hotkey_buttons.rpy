@@ -1,6 +1,3 @@
-
-
-
 init python:
     def HKBHideButtons():
         """
@@ -26,8 +23,8 @@ define gui.hkb_button_borders = Borders(100, 5, 100, 5)
 define gui.hkb_button_text_font = gui.default_font
 define gui.hkb_button_text_size = gui.text_size
 define gui.hkb_button_text_xalign = 0.5
-define gui.hkb_button_text_idle_color = "#000"
-define gui.hkb_button_text_hover_color = "#fa9"
+define gui.hkb_button_text_idle_color = "#e2d1d1"
+define gui.hkb_button_text_hover_color = "#FF8ED0"
 
 define gui.hkb_button_black_width = 120
 define gui.hkb_button_black_height = None
@@ -36,8 +33,8 @@ define gui.hkb_button_black_borders = Borders(100, 5, 100, 5)
 define gui.hkb_button_black_text_font = gui.default_font
 define gui.hkb_button_black_text_size = gui.text_size
 define gui.hkb_button_black_text_xalign = 0.5
-define gui.hkb_button_black_text_idle_color = "#000"
-define gui.hkb_button_black_text_hover_color = "#fa9"
+define gui.hkb_button_black_text_idle_color = "#e2d1d1"
+define gui.hkb_button_black_text_hover_color = "#FF8ED0"
 
 define gui.talk_button_width = 120
 define gui.talk_button_height = None
@@ -46,8 +43,8 @@ define gui.talk_button_borders = Borders(100, 5, 100, 5)
 define gui.talk_button_text_font = gui.default_font
 define gui.talk_button_text_size = gui.text_size
 define gui.talk_button_text_xalign = 0.5
-define gui.talk_button_text_idle_color = "#000"
-define gui.talk_button_text_hover_color = "#fa9"
+define gui.talk_button_text_idle_color = "#e2d1d1"
+define gui.talk_button_text_hover_color = "#FF8ED0"
 default allow_boop = False
 
 
@@ -130,8 +127,8 @@ style hkbd_button_text is default:
     font gui.default_font
     size gui.text_size
     xalign 0.5
-    idle_color "#000"
-    hover_color "#000"
+    idle_color "#e2d1d1"
+    hover_color "#FF8ED0"
     outlines []
 
 style hkbd_button_black is default:
@@ -144,8 +141,8 @@ style hkbd_button_text_black is default:
     font gui.default_font
     size gui.text_size
     xalign 0.5
-    idle_color "#000"
-    hover_color "#000"
+    idle_color "#e2d1d1"
+    hover_color "#FF8ED0"
     outlines []
 
 style talkd_vbox is vbox
@@ -168,119 +165,35 @@ style talkd_button_text is default:
     font gui.default_font
     size gui.text_size
     xalign 0.5
-    idle_color "#000"
-    hover_color "#000"
+    idle_color "#e2d1d1"
+    hover_color "#FF8ED0"
     outlines []
 
 
-screen hkb_overlay(Talk=True, Dates=True, Music=True, Action=True, Extras=True):
+screen hkb_overlay:
     zorder 50
 
     style_prefix "hkb"
 
     vbox:
-        xalign 0.05
-        yalign 0.95
+        xalign 0.09
+        yalign 0.97
 
-        if Talk:
-            textbutton _("Talk"):
-                action Jump("talk_menu")
-                style "hkbd_button"
-        if Dates:
-            textbutton _("Dates"):
-                action Jump("dates_menu")
-                style "hkbd_button"
-        if Music:
+        textbutton _("Talk"):
+            action [
+                Jump("talk_menu"),
+                SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)]
+            style "hkbd_button"
+            
+        if persistent.jn_custom_music_explanation_given and jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
             textbutton _("Music"):
-                action Jump("music_menu")
-                style "hkbd_button"
-        if Action:
-            textbutton _("Action"):
-                action Jump("action_menu")
-                style "hkbd_button"
-        if Extras:
-            textbutton _("Extras"):
-                action Jump("extras_menu")
+                action [
+                    Jump("music_menu"),
+                    SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)]
                 style "hkbd_button"
 
-
-    text "v[config.version]":
-                xalign 1.0 yalign 1.0
-                xoffset -10 yoffset -10
-                style "main_menu_version"
-
-    vbox:
-        imagebutton:
-            xpos 546 ypos 273
-            idle "mod_assets/buttons/boopindicator.png"
-            hover "mod_assets/buttons/boopindicator.png"
-            action [If(True, true=Jump("ch30_boop"))]
-
-screen fight:
-
-    zorder 50
-
-    style_prefix "hkb"
-
-
-    vbox:
-        xalign 0.05
-        yalign 0.95
-
-
-        textbutton _("Fight") action Jump("fight")
-
-        textbutton _("Act") action Jump("act")
-
-        textbutton _("Codes") action Jump("codes")
-
-        textbutton _("Mercy") action Jump("mercy")
-
-    xpos 424 ypos 814
-    label _("HP: [hp]")
-
-screen talking_new:
-
-    zorder 50
-
-    style_prefix "talk"
-
-
-    vbox:
-        xalign 500
-        yalign 100
-
-        vbox:
-            textbutton _("1") action Jump("normaltalkmenu")
-            xpos 867 ypos 137
-
-            textbutton _("2") action Jump("normaltalkmenu2")
-
-            textbutton _("3") action Jump("normaltalkmenu3")
-
-            textbutton _("4") action Jump("normaltalkmenu4")
-
-            textbutton _("5") action Jump("normaltalkmenu5")
-
-            textbutton _("6") action Jump("normaltalkmenu6")
-
-            textbutton _("7") action Jump("normaltalkmenu7")
-
-            textbutton _("8") action Jump("normaltalkmenu8")
-
-screen talking_new2:
-
-    zorder 50
-
-    style_prefix "talk"
-
-
-    vbox:
-        xalign 500
-        yalign 100
-
-        vbox:
-            textbutton _("X") action Hide("talking2"), Show("talking")
-            xpos 867 ypos 137
-
-# Decompiled by unrpyc: https://github.com/CensoredUsername/unrpyc
+        textbutton _("Extras"):
+            action [
+                Jump("extras_menu"),
+                SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)]
+            style "hkbd_button"

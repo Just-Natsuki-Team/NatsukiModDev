@@ -1,5 +1,3 @@
-#Aaa this code is so clean!!!!! I really need to learn how to write like this! -Daisy
-
 label ch30_autoload:
     #Start with black scene
     scene black
@@ -31,42 +29,57 @@ label ch30_visual_setup:
 
 label ch30_init:
 
-    # Add to the total visits counter
-    $ persistent.jn_total_visit_count += 1
+    python:
+        # Determine if the player should get a prolonged leave greeting
+        if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
+            persistent.last_apology_type = jn_apologies.TYPE_PROLONGED_LEAVE
 
-    #Let's pick a greeting
+        # Add to the total visits counter and set the last visit date
+        persistent.jn_total_visit_count += 1
+        persistent.jn_last_visited_date = datetime.datetime.now()
+
+    # Let's pick a greeting
     $ push(greetings.select_greeting())
 
-    # Reset the previous admission, now that Natsuki will have picked one if relevant
-    $ persistent.jn_player_admission_type_on_quit = None
-
+    # Draw background and placeholder sprites
     $ main_background.draw(full_redraw=True)
-    #show natsuki a zorder 3
-    show Natsuki zorder 3
-    show screen hkb_overlay(Action=False)
-    #Do all var-sets, resets, and sanity checks prior to entering the loop here
+
+    if utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
+        $ jn_placeholders.show_random_placeholder_sky()
+    else:
+        hide placeholder_sky_day sunny
+        
+    show screen hkb_overlay
+
+    # Do all var-sets, resets, and sanity checks prior to entering the loop here
+
+    # Reset the previous admission/apology, now that Natsuki will have picked a greeting
+    $ persistent.jn_player_admission_type_on_quit = None
+    $ persistent.jn_player_apology_type_on_quit = None
+
+    if persistent.jn_debug_open_watch_on_load:
+        $ jn_debug.toggle_show_tracked_watch_items(True)
 
     #And finally, we head into the loop
+    play music audio.test_bgm
     jump ch30_loop
-
 
 #The main loop
 label ch30_loop:
-    #Do topic selection here
-    $ push(pick_random_topic(unlocked=True, player_says=False, location=main_background.location.id, affinity=20, trust=60))
+    # TODO: topic selection here once wait system is implemented
 
     #Run our checks
     python:
         _now = datetime.datetime.now()
-        if LAST_MINUTE_CHECK.minute != _now.minute:
+        if LAST_MINUTE_CHECK.minute is not _now.minute:
             minute_check()
             LAST_MINUTE_CHECK = _now
 
-        if LAST_HOUR_CHECK != _now.hour:
+        if LAST_HOUR_CHECK is not _now.hour:
             hour_check()
             LAST_HOUR_CHECK = _now.hour
 
-        if LAST_DAY_CHECK != _now.day:
+        if LAST_DAY_CHECK is not _now.day:
             day_check()
             LAST_DAY_CHECK = _now.day
 
@@ -75,23 +88,77 @@ label ch30_loop:
         #We'll also check if we need to redraw the room
         #main_background.check_redraw()
 
+        jn_placeholders.show_resting_placeholder_natsuki()
+        jn_globals.player_is_in_conversation = False
+
     #Now, as long as there's something in the queue, we should go for it
     while persistent._event_list:
         call call_next_topic
 
-    jump ch30_loop
-
+    #FALL THROUGH
 
 label ch30_wait:
     window hide
     $ renpy.pause(delay=5.0, hard=True)
     jump ch30_loop
 
+#Other labels
+label call_next_topic:
+
+    if persistent._event_list:
+        $ _topic = persistent._event_list.pop(0)
+
+        if renpy.has_label(_topic):
+            if _topic in ["greeting_sudden_leave", "greeting_prolonged_leave"]:
+                show placeholder_natsuki plead zorder jn_placeholders.NATSUKI_Z_INDEX
+
+            elif "greeting_" in _topic:
+                $ jn_placeholders.show_greeting_placeholder_natsuki()
+
+            else:
+                $ jn_placeholders.show_resting_placeholder_natsuki()
+
+            # Call the pending topic, and disable the UI
+            $ jn_globals.player_is_in_conversation = True
+            call expression _topic
+
+    python:
+        #Collect our return keys here
+        #NOTE: This is instance checked for safety
+        return_keys = _return if isinstance(_return, dict) else dict()
+
+        topic_obj = get_topic(_topic)
+
+        #Handle all things which act on topic objects here, since we can't access attributes of Nonetypes
+        if topic_obj is not None:
+            #Increment shown count
+            topic_obj.shown_count += 1
+
+            #Now manage return keys
+            if "derandom" in return_keys:
+                topic_obj.random = False
+
+    #This topic might quit
+    if "quit" in return_keys:
+        jump _quit
+
+    # Reenable the UI and hop back to the loop
+    $ jn_globals.player_is_in_conversation = False
+    jump ch30_loop
 
 init python:
+    LAST_TOPIC_CALL = datetime.datetime.now()
     LAST_MINUTE_CHECK = datetime.datetime.now()
     LAST_HOUR_CHECK = LAST_MINUTE_CHECK.hour
     LAST_DAY_CHECK = LAST_MINUTE_CHECK.day
+
+    _NAT_SAYS = 0
+    _PLAYER_SAYS = 1
+
+    _SAYS_RANGE = [
+        _NAT_SAYS,
+        _PLAYER_SAYS
+    ]
 
     def minute_check():
         """
@@ -101,11 +168,35 @@ init python:
             if persistent.weather_validate_apikey_in_time <= datetime.datetime.now():
                 persistent.weather_validate_apikey_in_time = None
                 push('talk_weather_setup_part2')
+                
+        # Push a new topic every couple of minutes
+        # TODO: Move to a wait/has-waited system to allow some more flexibility
+        global LAST_TOPIC_CALL
+        
+        if persistent.jn_natsuki_random_topic_frequency is not jn_preferences.random_topic_frequency.NEVER:
+
+            if (datetime.datetime.now() > LAST_TOPIC_CALL + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown()) and 
+                len(persistent._event_list) is 0):
+
+                    topic_pool = Topic.filter_topics(
+                        topics.TOPIC_MAP.values(),
+                        unlocked=True,
+                        nat_says=True,
+                        location=main_background.location.id,
+                        affinity=jn_affinity.get_affinity_state(),
+                    )
+
+                    if topic_pool:
+                        queue(random.choice(topic_pool).label)
+                        LAST_TOPIC_CALL = datetime.datetime.now()
+        pass
 
     def hour_check():
         """
         Runs every hour during breaks between topics
         """
+        jn_placeholders.show_random_placeholder_sky()
+        pass
 
     def day_check():
         """
@@ -129,28 +220,25 @@ init python:
             if info["looping"]:
                 store.utils.coroutine_loop.all[func]["next"] = info["loop_time"]+datetime.datetime.now()
 
-#Other labels
-label call_next_topic:
-    if persistent._event_list:
-        $ topic = persistent._event_list.pop(0)
-
-        if renpy.has_label(topic):
-            call expression topic
-
+label talk_menu:
     python:
-        #Collect our return keys here
-        return_keys = _return if _return else dict()
+        import pprint
 
-        topic_obj = get_topic(topic)
+        # Get the flavor text for the talk menu, based on affinity state
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_LOVE_ENAMORED)
 
-        #Handle all things which act on topic objects here, since we can't access attributes of Nonetypes
-        if topic_obj is not None:
-            #Increment shown count
-            topic_obj.shown_count += 1
+        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_AFFECTIONATE_NORMAL)
 
-            #Now manage return keys
-            if "derandom" in return_keys:
-                topic_obj.random = False
+        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_UPSET_DISTRESSED)
+
+        else:
+            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_BROKEN_RUINED)
+
+        # Ensure any variable references are substituted
+        _talk_flavor_text = renpy.substitute(_talk_flavor_text)
 
             if "lock" in return_keys:
                 if topic_obj:
@@ -159,76 +247,74 @@ label call_next_topic:
     #This topic might quit
     if "quit" in return_keys:
         jump _quit
+        
+    $ jn_placeholders.show_resting_placeholder_natsuki(offset=True)
 
+    menu:
+        n "[_talk_flavor_text]"
+
+        "Let's talk about...":
+            call player_select_topic
+
+        "Tell me again about...":
+            call player_select_topic(is_repeat_topics=True)
+
+        "I love you, [n_name]!" if jn_affinity.get_affinity_state() >= jn_affinity.LOVE and persistent.jn_player_love_you_count > 0:
+            $ push("talk_i_love_you")
+            jump call_next_topic
+
+        "I feel..." if jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+            jump player_admissions_start
+
+        "I want to tell you something..." if jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+            jump player_compliments_start
+
+        "I want to say sorry...":
+            jump player_apologies_start
+
+        "Goodbye.":
+            jump farewell_start
+
+        "Nevermind.":
+            jump ch30_loop
     return
 
-
-
-label talk_menu:
+label player_select_topic(is_repeat_topics=False):
     python:
-        topics_ = get_all_topics(player_says=True, unlocked=True, location=main_background.location.id, affinity=20, trust=65)
-        addit_topics = [
-            ("Nevermind", "menu_nevermind"),
-            ("Goodbye", farewells.select_farewell())
-            ]
-        menu_items = menu_list(topics_, addit_topics)
-        choice = menu(menu_items)
-        push(choice)
-    jump ch30_loop
+        _topics = Topic.filter_topics(
+            topics.TOPIC_MAP.values(),
+            nat_says=is_repeat_topics,
+            player_says=not is_repeat_topics,
+            unlocked=True,
+            location=main_background.location.id,
+            affinity=jn_affinity.get_affinity_state()
+        )
 
-label dates_menu:
-    python:
-        topics_ = get_all_topics(player_says=True, unlocked=True, category=["date"])
-        addit_topics = [("Nevermind", "menu_nevermind")]
+        # Sort the topics we can pick by prompt for a cleaner appearance
+        _topics.sort(key=lambda topic: topic.prompt)
 
-        menu_items = menu_list(topics_, addit_topics)
-        choice = menu(menu_items)
-        push(choice)
-    jump ch30_loop
+        # Present the topic options grouped by category to the player
+        menu_items = menu_dict(_topics)
 
-label action_menu:
-    python:
-        topics_ = get_all_topics(player_says=True, unlocked=True, location=main_background.location)
-        addit_topics = [("Nevermind", "menu_nevermind")]
+    call screen categorized_menu(menu_items,(1020, 70, 250, 572), (740, 70, 250, 572), len(_topics))
 
-        menu_items = menu_list(topics_, addit_topics)
-        choice = menu(menu_items)
-        push(choice)
-    jump ch30_loop
+    $ _choice = _return
 
-label music_menu:
-    menu:
-        n "Want a change of tune?"
-        "track1":
-            play music track1
-        "track2":
-            play music track2
-        "track3":
-            play music track3
-        "track4":
-            play music track4
-        "custom music":
-            python:
-                custom_tracks = get_custom_tracks()
-                custom_tracks.append(("Nevermind", "menu_nevermind"))
-                choice = menu(custom_tracks)
-            if choice != "menu_nevermind":
-                play music choice
-            else:
-                call expression choice
-        "Nevermind":
-            n "Okay!"
+    # We got a string, we should push
+    if isinstance(_choice, basestring):
+        $ push(_choice)
+        jump call_next_topic
 
-    jump ch30_loop
+    # -1 means go back
+    elif _choice == -1:
+        jump talk_menu
+
+    # Clear _return
+    $ _return = None
+    $ jn_placeholders.show_resting_placeholder_natsuki()
 
     jump ch30_loop
 
 label extras_menu:
-    python:
-        topics_ = get_all_topics(player_says=True, unlocked=True, location=main_background.location)
-        addit_topics = [("Nevermind", "menu_nevermind")]
-
-        menu_items = menu_list(topics_, addit_topics)
-        choice = menu(menu_items)
-        push(choice)
+    n "This isn't done."
     jump ch30_loop

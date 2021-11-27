@@ -58,13 +58,16 @@ define gui.interface_text_color = '#ffffff'
 ## Fonts and Font Sizes ########################################################
 
 ## The font used for in-game text.
-define gui.default_font = "gui/font/Aller_Rg.ttf"
+define gui.default_font = "mod_assets/fonts/natsuki.ttf"
+
+# Font used for menuing, etc
+define gui.text_font = "mod_assets/fonts/natsuki.ttf"
 
 ## The font used for character names.
-define gui.name_font = "gui/font/RifficFree-Bold.ttf"
+define gui.name_font = "mod_assets/fonts/natsuki.ttf"
 
 ## The font used for out-of-game text.
-define gui.interface_font = "gui/font/Aller_Rg.ttf"
+define gui.interface_font = "mod_assets/fonts/natsuki.ttf"
 
 ## The size of normal dialogue text.
 define gui.text_size = 24
@@ -217,9 +220,8 @@ define gui.choice_button_borders = Borders(100, 5, 100, 5)
 define gui.choice_button_text_font = gui.default_font
 define gui.choice_button_text_size = gui.text_size
 define gui.choice_button_text_xalign = 0.5
-define gui.choice_button_text_idle_color = "#000"
-define gui.choice_button_text_hover_color = "#fa9"
-
+define gui.choice_button_text_idle_color = "#e2d1d1"
+define gui.choice_button_text_hover_color = "#FF8ED0"
 
 ## File Slot Buttons ###########################################################
 ##
@@ -285,7 +287,10 @@ define gui.slot_spacing = 10
 ## components when an overlay or window is not present.
 
 ## Generic frames that are introduced by player code.
+
+# Corner ver
 define gui.frame_borders = Borders(4, 4, 4, 4)
+define gui.frame_hover_borders = Borders(25, 25, 4, 4)
 
 ## The frame that is used as part of the confirm screen.
 define gui.confirm_frame_borders = Borders(40, 40, 40, 40)

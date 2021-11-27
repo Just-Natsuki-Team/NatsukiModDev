@@ -5,8 +5,8 @@
 init -100 python:
     #Check for each archive needed
     for archive in ['audio','images','scripts','fonts']:
-        if not archive in config.archives:
-            #If one is missing, throw an error and chlose
+        if archive not in config.archives:
+            #If one is missing, throw an error and close
             renpy.error("DDLC archive files not found in /game folder. Check installation and try again.")
 
 ## First, a disclaimer declaring this is a mod is shown, then there is a
@@ -16,22 +16,7 @@ init -100 python:
 init python:
     menu_trans_time = 1
     #The default splash message, originally shown in Act 1 and Act 4
-    splash_message_default = _("This game is an unofficial fan work, unaffiliated with Team Salvato.")
-    splash_messages = [
-    _("Please support Doki Doki Literature Club & Team Salvato."),
-    _("You are my sunshine,\nMy only sunshine"),
-    _("I missed you."),
-    _("Play with me"),
-    _("It's just a game, mostly."),
-    _("This game is not suitable for children\nor those who are easily disturbed?"),
-    _("sdfasdklfgsdfgsgoinrfoenlvbd"),
-    _("null"),
-    _("I have granted kids to hell"),
-    _("PM died for this."),
-    _("It was only partially your fault."),
-    _("This game is not suitable for children\nor those who are easily dismembered.")
-#    "Don't forget to backup Monika's character file."
-    ]
+    splash_message = _("This game is an unofficial fan work, unaffiliated with Team Salvato.")
 
 image splash_warning = ParameterizedText(style="splash_text", xalign=0.5, yalign=0.5)
 
@@ -48,12 +33,12 @@ image menu_logo:
 
 image menu_bg:
     topleft
-    "gui/menu_bg.png"
+    "mod_assets/backgrounds/menu/backdrop.png"
     menu_bg_move
 
 image game_menu_bg:
     topleft
-    "gui/menu_bg.png"
+    "mod_assets/backgrounds/menu/backdrop.png"
     menu_bg_loop
 
 image menu_fade:
@@ -69,7 +54,7 @@ image menu_art_n:
     menu_art_move(1.00, 1000, 1.00)
 
 image menu_nav:
-    "gui/overlay/main_menu.png"
+    "mod_assets/backgrounds/menu/background.png"
     menu_nav_move
 
 image menu_particles:
@@ -154,12 +139,11 @@ image tos2 = "bg/warning2.png"
 
 
 label splashscreen:
-    scene white
-
     #If this is the first time the game has been run, show a disclaimer
-    default persistent.first_run = False
+    default persistent.has_launched_before = False
     $ persistent.tried_skip = False
-    if not persistent.first_run:
+    if not persistent.has_launched_before:
+        scene white
         $ quick_menu = False
         pause 0.5
         scene tos
@@ -173,17 +157,17 @@ label splashscreen:
             "I agree.":
                 pass
         scene tos2
-        with Dissolve(1.5)
+        with Dissolve(0.25)
         pause 1.0
 
         scene white
-        with Dissolve(1.5)
+        with Dissolve(0.25)
 
         ##Optional, load a copy of DDLC save data
         #if not persistent.has_merged:
         #    call import_ddlc_persistent
 
-        $ persistent.first_run = True
+        $ persistent.has_launched_before = True
 
     #Check for game updates before loading the game or the splash screen
 
@@ -191,33 +175,23 @@ label splashscreen:
     if not persistent.jn_first_visited_date:
         $ persistent.jn_first_visited_date = datetime.datetime.now()
 
-    #Load affinity
-    $ jn_globals.current_affinity_state = jn_affinity.get_affinity_state()
-
     #autoload handling
     #Use persistent.autoload if you want to bypass the splashscreen on startup for some reason
-    if persistent.autoload and not _restart:
+    if persistent.has_launched_before and not persistent.playername is "" and not _restart:
         jump autoload
 
-
     # Start splash logic
-    $ config.allow_skipping = False
+    $ config.allow_skipping = True
 
     # Splash screen
     show white
     $ persistent.ghost_menu = False #Handling for easter egg from DDLC
-    $ splash_message = splash_message_default #Default splash message
-    $ config.main_menu_music = audio.t3 #changed main menu music to main theme
-    $ renpy.music.play(config.main_menu_music)
     show intro with Dissolve(0.5, alpha=True)
     pause 2.5
     hide intro with Dissolve(0.5, alpha=True)
-    #You can use random splash messages, as well. By default, they are only shown during certain acts.
-    if renpy.random.randint(0, 3) == 0:
-        $ splash_message = renpy.random.choice(splash_messages)
     show splash_warning "[splash_message]" with Dissolve(0.5, alpha=True)
     pause 2.0
-    hide splash_warning with Dissolve(0.5, alpha=True)
+    hide splash_warning with Dissolve(0.25, alpha=True)
     $ config.allow_skipping = False
     return
 
@@ -241,7 +215,6 @@ label after_load:
         $ renpy.utter_restart()
     return
 
-
 label autoload:
     python:
         # Stuff that's normally done after splash
@@ -261,6 +234,9 @@ label autoload:
         main_menu = False
         _in_replay = None
 
+    # Prevent the player's menu hotkey from defaulting to Save/Load
+    $ store._game_menu_screen  = "preferences"
+
     # explicity remove keymaps we dont want
     $ config.keymap["debug_voicing"] = list()
     $ config.keymap["choose_renderer"] = list()
@@ -275,8 +251,10 @@ label autoload:
 label before_main_menu:
     if persistent.playername != "":
         $ renpy.jump_out_of_context("start")
-    #else:
-    #    $ config.main_menu_music = audio.t1
+
+    # Prevent the player's menu hotkey from defaulting to Save/Load
+    $ store._game_menu_screen  = "preferences"
+    
     return
 
 label quit:
