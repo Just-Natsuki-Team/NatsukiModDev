@@ -51,7 +51,7 @@ init python:
         smirk = 29
         smug = 30
         tease = 31
-        triange = 32
+        triangle = 32
         uneasy = 33
         upset = 34
         worried = 35
@@ -219,7 +219,7 @@ init 1 python:
         "ss": JNMouth.smallsmile,
         "sg": JNMouth.smug,
         "ts": JNMouth.tease,
-        "tr": JNMouth.triange,
+        "tr": JNMouth.triangle,
         "un": JNMouth.uneasy,
         "up": JNMouth.upset,
         "wr": JNMouth.worried,

@@ -209,49 +209,50 @@ init 5 python:
 
 label admission_bored:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_BORED:
-        n "Still trying to beat the boredom,{w=0.1} [player]?"
-        n "Did you actually try doing what I said?"
-        n "Hmm..."
-        n "Well,{w=0.1} you could try phoning around!{w=0.2} You gotta have friends or family you can visit,{w=0.1} right?"
-        n "Or...{w=0.3} perhaps you could try reading,{w=0.1} or picking up something new?"
-        n "I guess what I'm trying to say is..."
-        n "There's no shortage of stuff to do,{w=0.1} [player]." 
-        n "You just gotta find it!"
+        n 1tnmsm "Still trying to beat the boredom,{w=0.1} [player]?"
+        n 1nllpo "Did you actually try doing what I said?"
+        n 1flrpu "Hmm..."
+        n 1fnmbg "Well,{w=0.1} you could try phoning around!{w=0.2} You gotta have friends or family you can visit,{w=0.1} right?"
+        n 1nllbg "Or...{w=0.3} perhaps you could try reading,{w=0.1} or picking up something new?"
+        n 1fsqsm "I guess what I'm trying to say is..."
+        n 1fsqbg "There's no shortage of stuff to do,{w=0.1} [player]." 
+        n 1fchgn "You just gotta find it!"
 
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "Now,{w=0.1} go!{w=0.2} And make sure you tell me all about it later,{w=0.1} 'kay?"
-            n "Ehehe."
+            n 1uchbg "Now,{w=0.1} go!{w=0.2} And make sure you tell me all about it later,{w=0.1} 'kay?"
 
         else:
-            n "Well?{w=0.3} What're you waiting for?"
-            n "Go for it,{w=0.1} [player]!"
+            n 1usqbg "Well?{w=0.3} What're you waiting for?"
+            n 1nchgn "Go for it,{w=0.1} [player]!"
 
     # Unlock Snap if not already unlocked
     elif not persistent.jn_snap_unlocked:
-        n "You're bored,{w=0.1} huh?"
-        n "Well,{w=0.1} now that you mention it...{w=0.3} there isn't {i}exactly{/i} a whole lot going on here."
+        n 1unmaj "You're bored,{w=0.1} huh?"
+        n 1nlrpo "Well,{w=0.1} now that you mention it...{w=0.3} there isn't {i}exactly{/i} a whole lot going on here."
 
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "Besides me,{w=0.1} anyway.{w=0.2} Ehehe."
+            n 1fllssl "Besides me,{w=0.1} anyway.{w=0.2} Ehehe."
 
-        n "Hmm...{w=0.3} there's gotta be something else..."
-        n "Think,{w=0.1} Natsuki!{w=0.2} Think..."
-        n "..."
-        n "Aha!{w=0.2} I think I got it!{w=0.2} Let me just check something real quick..."
+        n 1flrpo "Hmm...{w=0.3} there's gotta be something else..."
+        n 1fcspo "Think,{w=0.1} Natsuki!{w=0.2} Think..."
+        n 1fllpu "..."
+        n 1fsgbg "Aha!{w=0.2} I think I got it!{w=0.2} Let me just check something real quick..."
 
         play audio drawer 
         with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
-        n "Yes!{w=0.2} It's still here!"
-        n "Betcha' didn't know I had playing cards,{w=0.1} right?"
-        n "Turns out these desk drawers {i}are{/i} handy,{w=0.1} after all!"
-        n "I always had a pack here ready for a rainy day."
-        n "...Uhmm."
-        n "Hey...{w=0.3} [player]?{w=0.2} Don't judge me for it,{w=0.1} but..."
-        n "I...{w=0.3} never really learned all the really fancy card game rules or anything like that."
-        n "So...{w=0.3} we're playing Snap.{w=0.2} At least until I do some reading up,{w=0.1} anyway.{w=0.2} Ahaha..."
+        n 1fchgn "Yes!{w=0.2} It's still here!"
+        n 1fsgsg "Betcha' didn't know I had playing cards,{w=0.1} right?"
+        n 1nchgn "Turns out these desk drawers {i}are{/i} handy,{w=0.1} after all!"
+        n 1nnmsm "I always had a pack here ready for a rainy day."
+        n 1kllsll "...Uhmm."
+        n 1nnmsl "Hey...{w=0.3} [player]?{w=0.2} Don't judge me for it,{w=0.1} but..."
+        n 1nlrun "I...{w=0.3} never really learned all the really fancy card game rules or anything like that."
+        n 1ullaj "So...{w=0.3} we're playing Snap." 
+        n 1fllssl "...At least until I do some reading up,{w=0.1} anyway."
         $ persistent.jn_snap_unlocked = True
-        n "What about it then,{w=0.1} [player]?{w=0.2} Fancy a game or two?"
+        n 1nnmss "So..."
+        n 1uchgn "What about it then,{w=0.1} [player]?{w=0.2} Fancy a game or two?"
         menu:
             n "Not like you have much of an excuse not to,{w=0.1} right?"
 
@@ -259,35 +260,35 @@ label admission_bored:
                 jump snap_intro
 
             "Not right now.":
-                n "Aww...{w=0.3} but I already got the cards out and everything!"
-                n "Well...{w=0.3} whatever."
-                n "Just let me know whenever you feel like a game then."
+                n 1fllpo "Aww...{w=0.3} but I already got the cards out and everything!"
+                n 1unmpo "Well...{w=0.3} whatever."
+                n 1nnmsm "Just let me know whenever you feel like a game then."
                 
                 play audio drawer 
                 with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
     else:
-        n "Huh?{w=0.2} You're bored?"
-        n "And just what is that supposed to mean,{w=0.1} [player]?"
-        n "Am I not fun enough to be with?" 
-        n "Are you not entertained?!"
-        n "..."
-        n "Ehehe." 
-        n "Relax!{w=0.2} Relax,{w=0.1} [player]."
-        n "Well,{w=0.1} if you're bored..."
+        n 1tnmaj "Huh?{w=0.2} You're bored?"
+        n 1fnmaj "And just what is that supposed to mean,{w=0.1} [player]?"
+        n 1fsqpo "Am I not fun enough to be with?" 
+        n 1fbkwr "Are you not entertained?!"
+        n 1flrpo "..."
+        n 1fsqsm "..."
+        n 1uchgn "Relax!{w=0.2} Relax,{w=0.1} [player], jeez!"
+        n 1ullaj "Well,{w=0.1} if you're bored..."
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-        n "Then get up off your butt and do something about it,{w=0.1} [chosen_tease]!"
-        n "Jeez,{w=0.1} [player]...{w=0.3} there's a big, wide world out there just waiting for you!"
-        n "And if that isn't enough,{w=0.1} there's an even bigger one right at your fingertips!"
-        n "Or you could,{w=0.1} you know."
+        n 1uchbs "Then get up off your butt and do something about it,{w=0.1} [chosen_tease]!"
+        n 1tlrbg "Jeez,{w=0.1} [player]...{w=0.3} there's a big, wide world out there just waiting for you!"
+        n 1tsqbg "And if that isn't enough,{w=0.1} there's an even bigger one right at your fingertips!"
+        n 1fsqss "Or you could,{w=0.1} you know."
 
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "Spend more time with yours truly?"
-            n "I'm not that dull...{w=0.3} right?"
+            n 1kwmsgl "Spend more time with yours truly?"
+            n 1knmpol "I'm not that dull...{w=0.3} right?"
 
         else:
-            n "Appreciate that you get to spend more time with me!"
-            n "N-{w=0.1}not that I'd totally appreciate it,{w=0.1} or anything,{w=0.1} of course.{w=0.2} Ahaha..."
+            n 1fchbg "Appreciate that you get to spend more time with me!"
+            n 1flrpol "N-{w=0.1}not that I'd totally appreciate it,{w=0.1} or anything,{w=0.1} of course.{w=0.2} Ahaha..."
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_BORED
     return
@@ -306,35 +307,35 @@ init 5 python:
 
 label admission_confident:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_CONFIDENT:
-        n "Still full of confidence,{w=0.1} I see?"
-        n "Well,{w=0.1} I'm glad to hear it!"
+        n 1fsgsm "Still full of confidence,{w=0.1} I see?"
+        n 1nchbg "Well,{w=0.1} I'm glad to hear it!"
 
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "You've got a lot to be confident of,{w=0.1} [player]."
-            n "You better remember that!"
+            n 1kwlsml "You've got a lot to be confident of,{w=0.1} [player]."
+            n 1fchsml "You better remember that!"
 
     elif jn_admissions.last_admission_type == jn_admissions.TYPE_INSECURE:
-        n "Really?{w=0.2} That's awesome,{w=0.1} [player]!"
-        n "I was hoping you'd snap out of those feelings sooner rather than later."
-        n "It worries me when you talk like that,{w=0.1} you know..."
+        n 1fchbg "Really?{w=0.2} That's awesome,{w=0.1} [player]!"
+        n 1kllss "I was hoping you'd snap out of those feelings sooner rather than later."
+        n 1klrpo "I don't like when you talk like that,{w=0.1} you know..."
 
         if jn_affinity.get_affinity_state() == jn_affinity.AFFECTIONATE:
-            n "N-{w=0.1}not that I care {i}that{/i} much, o-{w=0.1}of course!"
-            n "But...{w=0.3} I'm glad to know you're okay now,{w=0.1} [player]. That's what matters."
+            n 1fcspol "N-{w=0.1}not that I care {i}that{/i} much, o-{w=0.1}of course!"
+            n 1fllsll "But...{w=0.3} I'm glad to know you're okay now,{w=0.1} [player]. That's what matters."
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "I'm just really glad to know you're better now,{w=0.1} [player]."
+            n 1kllsll "I'm just really glad to know you're better now,{w=0.1} [player]."
 
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
-            n "I love you, [chosen_endearment].{w=0.2} Please don't forget that,{w=0.1} alright?"
-            n "I'll get mad if you do.{w=0.2} Ahaha..."
+            n 1knmssf "I love you, [chosen_endearment].{w=0.2} Please don't forget that,{w=0.1} alright?"
+            n 1klrpof "I'll get mad if you do.{w=0.2} Ahaha..."
 
     else:
-        n "Ahaha!{w=0.2} I'm glad to hear that,{w=0.1} [player]!"
-        n "Being confident in yourself and your abilities can be really difficult sometimes."
-        n "Especially if you messed up,{w=0.1} or if you aren't feeling well."
-        n "But if you're feeling that way about yourself,{w=0.1} I'm not gonna rob you of it!"
+        n 1nchgn "Ahaha!{w=0.2} I'm glad to hear that,{w=0.1} [player]!"
+        n 1unmaj "Being confident in yourself and your abilities can be really difficult sometimes."
+        n 1ullbo "Especially if you messed up,{w=0.1} or if you aren't feeling well."
+        n 1fchbg "But if you're feeling that way about yourself,{w=0.1} I'm not gonna rob you of it!"
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_CONFIDENT
     return
@@ -353,13 +354,13 @@ init 5 python:
 
 label admission_excited:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_EXCITED:
-        n "Still pumped up,{w=0.1} are we [player]?"
-        n "I bet you just can't wait,{w=0.1} huh?{w=0.2} Ehehe."
+        n 1fnmsm "Still pumped up,{w=0.1} are we [player]?"
+        n 1fsqsm "I bet you just can't wait,{w=0.1} huh?{w=0.2} Ehehe."
 
     else:
-        n "Oh?{w=0.2} Did something happen?{w=0.2} Is something {i}gonna{/i} happen?"
-        n "Whatever it is,{w=0.1} I'm happy to hear you're looking forward to it!"
-        n "It's always awesome to have something you can get excited over,{w=0.1} right?"
+        n 1fsptr "Oh?{w=0.2} Did something happen?{w=0.2} Is something {i}gonna{/i} happen?"
+        n 1fchbg "Whatever it is,{w=0.1} good to know you're looking forward to it!"
+        n 1unmsm "It's always awesome to have something you can get excited over,{w=0.1} right?"
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_EXCITED
     return
@@ -378,35 +379,38 @@ init 5 python:
 
 label admission_happy:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_HAPPY:
-        n "Wow...{w=0.3} it's all sunshine and rainbows with you today,{w=0.1} isn't it?"
-        n "Ahaha!"
-        n "Keep on smiling,{w=0.1} [player]!"
+        n 1ksqsg "Wow...{w=0.3} it's all sunshine and rainbows with you today,{w=0.1} isn't it?"
+        n 1fchbg "Ahaha!"
+        n 1fchbg "Good for you,{w=0.1} [player]!"
 
     elif jn_admissions.last_admission_type == jn_admissions.TYPE_ANGRY or jn_admissions.last_admission_type == jn_admissions.TYPE_SAD:
-        n "Feeling better now,{w=0.1} [player]?"
-        n "I'm glad to hear it!{w=0.2} That's...{w=0.3} honestly a relief,{w=0.1} ahaha..."
+        n 1kwmss "Feeling better now,{w=0.1} [player]?"
+        n 1kllbg "That's...{w=0.3} a relief,{w=0.1} ahaha..."
 
         if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            n "..."
-            n "So...{w=0.3} where were we?"
+            n 1kllunl "..."
+            n 1klrbgl "S-{w=0.1}so...{w=0.3} where were we?"
 
         else:
-            n "..."
-            n "Jeez...{w=0.3} if you're okay,{w=0.1} then let's get back to it already!"
+            n 1fllunl "..."
+            n 1fcswrl "Jeez...{w=0.3} if you're okay,{w=0.1} then let's get back to it already!"
+            n 1klrpol "Dummy..."
 
     elif jn_admissions.last_admission_type == jn_admissions.TYPE_HUNGRY:
-        n "Feeling better,{w=0.1} [player]?{w=0.2} I'm not surprised!"
-        n "You just aren't yourself when you're hungry.{w=0.2} Ehehe."
-        n "Trust me...{w=0.3} I would know."
+        n 1fsqbg "Feeling better,{w=0.1} [player]?{w=0.2} I'm not surprised!"
+        n 1fchbg "You just aren't yourself when you're hungry.{w=0.2} Ehehe."
+        n 1kllsl "Trust me...{w=0.3} I would know."
 
     elif jn_admissions.last_admission_type == jn_admissions.TYPE_SICK:
-        n "Feeling better,{w=0.1} [player]?{w=0.2} I'm glad to hear it!"
-        n "Nothing makes you appreciate feeling normal more than being sick,{w=0.1} right?"
+        n 1nnmsm "Feeling better,{w=0.1} [player]?{w=0.2} I'm glad to hear it!"
+        n 1nchbg "Nothing makes you appreciate feeling normal more than being sick,{w=0.1} right?"
 
     else:
-        n "Oh?{w=0.1} Someone's in a good mood today!"
-        n "Well,{w=0.1} I'm glad to hear it!"
-        n "If you're happy,{w=0.1} I'm happy!"
+        n 1usqbg "Oh?{w=0.1} Someone's in a good mood today!"
+        n 1fchbg "Good for you,{w=0.1} [player]!"
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+            n 1uchsm "If you're happy,{w=0.1} I'm happy!"
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_HAPPY
     return
@@ -425,34 +429,34 @@ init 5 python:
 
 label admission_hungry:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_HUNGRY:
-        n "What?{w=0.1} You're still hungry?"
-        n "Or did you not get something when I told you to earlier?"
-        n "Well...{w=0.3} either way,{w=0.1} get off your butt and go get something then!"
-        n "Jeez,{w=0.1} [player]...{w=0.3} I'm not your babysitter!"
+        n 1tnmpu "What?{w=0.1} You're still hungry?"
+        n 1fnmpo "Or did you not get something when I told you to earlier?"
+        n 1fchgn "Well...{w=0.3} either way,{w=0.1} get off your butt and go get something then!"
+        n 1fllpol "Jeez,{w=0.1} [player]...{w=0.3} I'm not your babysitter!"
 
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "As much as you probably wish I was,{w=0.1} right?{w=0.2} Ahaha!"
-            n "Now get going already!{w=0.2} Bon appetit,{w=0.1} [player]!"
+            n 1fsqsml "A-{w=0.1}as much as you probably wish I was,{w=0.1} right?{w=0.2} Ahaha!"
+            n 1uchbs "Now get going already!{w=0.2} Bon appetit,{w=0.1} [player]!"
 
     elif jn_admissions.last_admission_type == jn_admissions.TYPE_SAD:
-        n "[player]...{w=0.3} you told me you were sad earier."
-        n "I don't mind if you're hungry,{w=0.1} but try not to comfort-eat,{w=0.1} okay?"
-        n "You might feel a little better...{w=0.3} but it won't fix what made you sad."
-        n "Try to enjoy your meal,{w=0.1} alright?"
+        n 1knmsl "[player]...{w=0.3} you told me you were sad earier."
+        n 1klrsl "I don't mind if you're hungry,{w=0.1} but try not to comfort-eat,{w=0.1} okay?"
+        n 1knmpu "You might feel a little better...{w=0.3} but it won't fix what made you sad."
+        n 1knmsm "Try to enjoy your meal,{w=0.1} alright?"
 
         if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            n "I'm here for you if you need me,{w=0.1} [player]."
+            n 1kwmsml "I'm here for you if you need me,{w=0.1} [player]."
 
     else:
-        n "Huh?{w=0.1} You're hungry?"
+        n 1unmpu "Huh?{w=0.1} You're hungry?"
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-        n "Then what're you telling me for?{w=0.2} Go get something to eat,{w=0.1} [chosen_tease]!"
-        n "Honestly...{w=0.3} what am I going to do with you,{w=0.1} [player]?{w=0.2} Ehehe."
-        n "Now go make something already!{w=0.2} Just don't fill yourself up on junk!"
+        n 1kchbg "Then what're you telling me for?{w=0.2} Go get something to eat,{w=0.1} [chosen_tease]!"
+        n 1fcspo "Honestly...{w=0.3} what am I going to do with you,{w=0.1} [player]?"
+        n 1fchbg "Now go make something already!{w=0.2} Just don't fill yourself up on junk!"
 
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "I want you fighting fit for when we hang out,{w=0.1} 'kay?"
-            n "We're gonna have so much to do together,{w=0.1} after all!"
+            n 1fsqbg "I want you fighting fit for when we hang out,{w=0.1} 'kay?"
+            n 1uchgn "We're gonna have so much to do together,{w=0.1} after all!"
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_HUNGRY
     return
