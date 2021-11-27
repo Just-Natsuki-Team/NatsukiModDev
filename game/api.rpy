@@ -208,12 +208,3 @@ init -2 python in api:
 
         # both API and code in registry so we call that function
         return API_on_status_code.all[API][code](code=code, html=html)
-
-    def open_browser(url):
-        """
-            Opens a new tab/window in the default browser with the specified url
-
-            IN:
-                url - <string>
-        """
-        webbrowser.open(url)
