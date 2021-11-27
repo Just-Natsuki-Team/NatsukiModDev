@@ -2,7 +2,7 @@
 default persistent.weather_api_key = None
 default persistent.weather_validate_apikey_in_time = None
 default persistent.is_weather_tracking_set_up = False
-default persistent.current_weather_short = "Clear"
+default persistent.current_weather_type = weather.TYPE_CLEAR
 default persistent.current_weather_long = dict()
 
 # Location data
@@ -125,7 +125,19 @@ init -1 python in weather:
 
         return location
 
-
+    TYPE_THUNDER = 0
+    TYPE_DRIZZLE = 1
+    TYPE_RAIN = 2
+    TYPE_SNOW = 3
+    TYPE_MIST = 4
+    TYPE_SMOKE = 5
+    TYPE_HAZE = 6
+    TYPE_DUST = 7
+    TYPE_ASH = 8
+    TYPE_SQUALL = 9
+    TYPE_TORNADO = 10
+    TYPE_CLEAR = 11
+    TYPE_CLOUDS = 12
 
     class Weather():
 
@@ -647,19 +659,41 @@ init -1 python in weather:
             }
         }
 
+        WEATHER_TYPES = {
+            "Thunderstom" : TYPE_THUNDER,
+            "Drizzle" : TYPE_DRIZZLE,
+            "Rain" : TYPE_RAIN,
+            "Snow" : TYPE_SNOW,
+            "Mist" : TYPE_MIST,
+            "Smoke" : TYPE_SMOKE,
+            "Haze" : TYPE_HAZE,
+            "Dust" : TYPE_DUST,
+            "Ash" : TYPE_ASH,
+            "Squall" : TYPE_SQUALL,
+            "Tornado" : TYPE_TORNADO,
+            "Clear" : TYPE_CLEAR,
+            "Clouds" : TYPE_CLOUDS
+        }
+
         @staticmethod
         def get_weather():
             """
-                Returns a simple one-word description about current weather
+                Returns current weather type from `WEATHER_TYPES`
 
                 possible outputs:
-                    Thunderstom
-                    Drizzle
-                    Rain
-                    Snow
-                    Mist/Smoke/Haze/Dust/Ash/Squall/Tornado
-                    Clear
-                    Clouds
+                    TYPE_THUNDER
+                    TYPE_DRIZZLE
+                    TYPE_RAIN
+                    TYPE_SNOW
+                    TYPE_MIST
+                    TYPE_SMOKE
+                    TYPE_HAZE
+                    TYPE_DUST
+                    TYPE_ASH
+                    TYPE_SQUALL
+                    TYPE_TORNADO
+                    TYPE_CLEAR
+                    TYPE_CLOUDS
             """
             try:
                 response = make_API_call()
@@ -670,18 +704,19 @@ init -1 python in weather:
             # "weather" - weather info
             # [0] - primary weather info
             # "main" - one word description of current weather
-            store.persistent.current_weather_short = response["weather"][0]["main"]
-            return response["weather"][0]["main"]
+            weather_type = Weather.WEATHER_TYPES[response["weather"][0]["main"]]
+            store.persistent.current_weather_type = weather_type
+            return weather_type
 
         @staticmethod
         @store.utils.coroutine_loop(datetime.timedelta(seconds=30))
         def get_weather_detail():
             """
                 Returns detailed information about current weather with intensity of each ~~element~~
-                and one-word description as well
+                and weather type as well (see get_weather above)
 
                 OUT:
-                    (detailed_description, short_description)
+                    (detailed_description, weather_type)
 
                 detail format:
                     {
@@ -714,7 +749,7 @@ init -1 python in weather:
             weather_info = response["weather"][0]
 
             # Get one-word info about current weather
-            weather_short = weather_info["main"]
+            weather_type = Weather.WEATHER_TYPES[weather_info["main"]]
 
             # Get detailed weather info from look-up table WEATHER_TABLE by weather id
             parsed_weather = Weather.WEATHER_TABLE[weather_info["id"]]
@@ -737,9 +772,9 @@ init -1 python in weather:
                 parsed_weather["wind"] = 0
 
             store.persistent.current_weather_long = parsed_weather
-            store.persistent.current_weather_short = weather_short
+            store.persistent.current_weather_type = weather_type
 
-            return parsed_weather, weather_short
+            return parsed_weather, weather_type
 
 # THis is here purely because of a bug in renpy extension, remove after it's fixed
 init -1 python:
