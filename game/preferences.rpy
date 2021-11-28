@@ -37,3 +37,7 @@ init python in jn_preferences.random_topic_frequency:
 
 # This determines how often Natsuki should start a conversation by herself
 default persistent.jn_natsuki_random_topic_frequency = jn_preferences.random_topic_frequency.SOMETIMES
+
+# This determines whether the weather must be randomly weathered by the player
+# Wether you can deal with this depends on how well you can weather this joke
+default persistent.jn_random_weather = True

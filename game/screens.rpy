@@ -1236,13 +1236,6 @@ screen preferences():
                             label _("Display")
                             textbutton _("Window") action Preference("display", "window")
                             textbutton _("Fullscreen") action Preference("display", "fullscreen")
-                    if config.developer:
-                        vbox:
-                            style_prefix "radio"
-                            label _("Rollback Side")
-                            textbutton _("Disable") action Preference("rollback side", "disable")
-                            textbutton _("Left") action Preference("rollback side", "left")
-                            textbutton _("Right") action Preference("rollback side", "right")
 
                     vbox:
                         style_prefix "check"
@@ -1250,6 +1243,15 @@ screen preferences():
                         textbutton _("Unseen Text") action Preference("skip", "toggle")
                         textbutton _("After Choices") action Preference("after choices", "toggle")
 
+                    vbox:
+                        style_prefix "check"
+                        label _("Weather")
+                        textbutton _("Random") action ToggleField(
+                            object=persistent,
+                            field="jn_random_weather",
+                            true_value=True,
+                            false_value=False)
+          
                     ## Additional vboxes of type "radio_pref" or "check_pref" can be
                     ## added here, to add additional creator-defined preferences.
                 
@@ -1519,114 +1521,6 @@ screen name_input(message, ok_action):
 
             input default "" value VariableInputValue("player") length 12 allow "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 
-            #hbox:
-            #    xalign 0.5
-            #    style_prefix "radio_pref"
-            #    textbutton "Male" action NullAction()
-            #    textbutton "Female" action NullAction()
-            hbox:
-                xalign 0.5
-                spacing 100
-
-                textbutton _("OK") action ok_action
-
-screen month_input(ok_action):
-
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
-
-    zorder 200
-
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
-    key "K_RETURN" action [Play("sound", gui.activate_sound), ok_action]
-
-    frame:
-
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _("Please enter your birth month\n(Enter the month with the first letter capitalized, eg January, February, etc)"):
-                style "confirm_prompt"
-                xalign 0.5
-
-            input default "" value VariableInputValue("month") length 15 allow "ABCDEFGHIJKLMNOPQRSTUVabcdefghijklmnopqrstuv"
-
-            #hbox:
-            #    xalign 0.5
-            #    style_prefix "radio_pref"
-            #    textbutton "Male" action NullAction()
-            #    textbutton "Female" action NullAction()
-            hbox:
-                xalign 0.5
-                spacing 100
-
-                textbutton _("Confirm") action ok_action
-
-screen day_input(ok_action):
-
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
-
-    zorder 200
-
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
-    key "K_RETURN" action [Play("sound", gui.activate_sound), ok_action]
-
-    frame:
-
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _("Please enter your birth day\n(Enter as a number, eg 22)"):
-                style "confirm_prompt"
-                xalign 0.5
-
-            input default "" value VariableInputValue("day") length 2 allow "123456789"
-
-            #hbox:
-            #    xalign 0.5
-            #    style_prefix "radio_pref"
-            #    textbutton "Male" action NullAction()
-            #    textbutton "Female" action NullAction()
-            hbox:
-                xalign 0.5
-                spacing 100
-
-                textbutton _("Confirm") action ok_action
-
-screen age_input(message, ok_action):
-
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
-
-    zorder 200
-
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
-    key "K_RETURN" action [Play("sound", gui.activate_sound), ok_action]
-
-    frame:
-
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _(message):
-                style "confirm_prompt"
-                xalign 0.5
-
-            input default "" value VariableInputValue("age") length 12 allow "don'twanttoanswer1234567890 "
-
             hbox:
                 xalign 0.5
                 spacing 100
@@ -1660,28 +1554,6 @@ screen dialog(message, ok_action):
                 spacing 100
 
                 textbutton _("OK") action ok_action
-
-screen start_dlc_check(message):
-
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
-
-    zorder 200
-
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
-
-    frame:
-
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _(message):
-                style "confirm_prompt"
-                xalign 0.5
 
 screen reload(message, ok_action):
 
@@ -1717,153 +1589,6 @@ screen reload(message, ok_action):
                 spacing 50
 
                 textbutton _("I'll do it myself") action Hide("reload")
-
-screen custommusic(message, ok_action):
-
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
-
-    zorder 200
-
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
-
-    frame:
-
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _(message):
-                style "confirm_prompt"
-                xalign 0.5
-
-            hbox:
-                xalign 0.5
-                spacing 50
-                style_prefix "check"
-                textbutton _("Don't show again") action ToggleField(persistent,"show_again", False, True)
-
-
-            hbox:
-                xalign 0.5
-                spacing 50
-
-                textbutton _("OK") action ok_action
-
-screen emotion(message, close):
-
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
-
-    zorder 200
-
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
-
-    frame:
-
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _(message):
-                style "confirm_prompt"
-                xalign 0.5
-
-            hbox:
-                xalign 0.5
-                spacing 50
-                style_prefix "check"
-                textbutton _("Happy") action SetField(persistent,"natsuki_emotion", "Happy")
-
-            hbox:
-                xalign 0.5
-                spacing 50
-                style_prefix "check"
-                textbutton _("Casual") action SetField(persistent,"natsuki_emotion", "Casual")
-
-            hbox:
-                xalign 0.5
-                spacing 50
-                style_prefix "check"
-                textbutton _("Angry") action SetField(persistent,"natsuki_emotion", "Angry")
-
-            hbox:
-                xalign 0.5
-                spacing 50
-                style_prefix "check"
-                textbutton _("Sad") action SetField(persistent,"natsuki_emotion", "Sad")
-
-
-            hbox:
-                xalign 0.5
-                spacing 50
-
-                textbutton _("Nevermind") action close
-
-screen dlc(message):
-
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
-
-    zorder 200
-
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
-
-    frame:
-
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _(message):
-                style "confirm_prompt"
-                xalign 0.5
-
-            #hbox:
-                #xalign 0.5
-                #spacing 50
-                #style_prefix "check"
-                #textbutton _("Natsuki's Kitchen!") action If(persistent.using_space_dlc, true=ToggleField(persistent,"using_space_dlc", True, False), false=Jump("space_dlc_check"))
-
-            hbox:
-                xalign 0.5
-                spacing 50
-                style_prefix "check"
-                textbutton _("Natsuki's Kitchen!") action Show(screen="dialog", message="This DLC is not released yet.", ok_action=Hide("dialog"))
-
-            hbox:
-                xalign 0.5
-                spacing 50
-                style_prefix "check"
-                textbutton _("Natsuki's Night Out!") action Show(screen="dialog", message="This DLC is not released yet.", ok_action=Hide("dialog"))
-
-            hbox:
-                xalign 0.5
-                spacing 50
-                style_prefix "check"
-                textbutton _("Natsuki's Magical Adventure!") action Show(screen="dialog", message="This DLC is not released yet.", ok_action=Hide("dialog"))
-
-            hbox:
-                xalign 0.5
-                spacing 50
-                style_prefix "check"
-                textbutton _("(Unavailable)") action NullAction()
-
-
-            hbox:
-                xalign 0.5
-                spacing 50
-
-                textbutton _("Close") action Return
 
 screen quit(message, ok_action):
 
@@ -1977,15 +1702,6 @@ image confirm_glitch:
     "gui/overlay/confirm_glitch2.png"
     pause 0.02
     repeat
-
-screen memory:
-
-    text "Monika will remember that...":
-                xalign 1.0 yalign 1.0
-                xoffset -10 yoffset -10
-                style "main_menu_version"
-
-
 
 screen confirm(message, yes_action, no_action):
 

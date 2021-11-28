@@ -614,85 +614,99 @@ init 5 python:
 
 label admission_sick:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_SICK:
-        n "[player]...{w=0.3} you're still feeling sick?"
-        n "How long have you felt like this now?"
+        n 1knmsl "[player]...{w=0.3} you're still feeling sick?"
+        n 1knmbo "How long have you felt like this now?"
         menu:
             "A few hours.":
-                n "That's...{w=0.3} not great to hear,{w=0.1} [player]."
-                n "Perhaps you should get some rest soon{w=0.1} -{w=0.1} hopefully you'll feel better."
-                n "Let me know if it keeps up,{w=0.1} okay?"
+                n 1kllsr "That's...{w=0.3} not great to hear,{w=0.1} [player]."
+                n 1tnmsr "Perhaps you should get some rest soon{w=0.1} -{w=0.1} hopefully you'll feel better."
+
+                if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+                    n 1knmsl "Let me know if it keeps up,{w=0.1} okay?"
 
             "A few days.":
-                n "You're starting to worry me,{w=0.1} [player]."
-                n "Make sure you see someone soon."
-                n "Especially if you start to hurt anywhere,{w=0.1}  or if you've been sick,{w=0.1} or anything like that..."
-                n "Make sure you get some extra rest too,{w=0.1} okay?"
+                n 1fcssl "[player]."
+                n 1fnmca "You need to make sure you see someone soon."
+                n 1knmaj "Especially if you start to hurt anywhere,{w=0.1}  or if you've been sick,{w=0.1} or anything like that..."
+                n 1knmsl "Try and get extra rest too,{w=0.1} okay?"
 
             "A week or so.":
-                n "[player]..."
-                n "Have you seen anybody about this yet?"
+                n 1fnmsl "[player]..."
+                n 1knmsl "Have you seen anybody about this yet?"
 
                 menu:
                     "Yes, I have.":
-                        n "Well...{w=0.3} okay."
-                        n "I really,{w=0.1} really hope they were able to help you,{w=0.1} [player]."
-                        n "Make sure you get some extra rest,{w=0.1} okay?"
+                        n 1kllbo "Well...{w=0.3} fine."
+                        n 1knmbo "I...{w=0.3} really hope they were able to help you,{w=0.1} [player]."
+                        n 1knmpu "Make sure you get some extra rest,{w=0.1} okay?"
 
                     "No, I haven't.":
-                        n "[player]...{w=0.3} that's no good."
-                        n "I trust you know your own limits...{w=0.3} but please,{w=0.1} take care of yourself."
-                        n "Your health...{w=0.3} really matters to me."
+                        n 1fnmpu "[player]...{w=0.3} that's no good."
+                        n 1knmpo "I trust you know your own limits...{w=0.3} but please,{w=0.1} take care of yourself."
+                        n 1klrpol "Your health...{w=0.3} matters to me, you know."
 
                         # Add pending apology
                         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
 
             "Longer.":
-                n "..."
-                n "I...{w=0.3} don't really know what to say to you,{w=0.1} [player]."
-                n "I just hope you feel better soon."
-                n "Take it easy,{w=0.1} alright?"
+                n 1knmpo "..."
+                n 1kllpo "I...{w=0.3} don't really know what to say to you,{w=0.1} [player]."
+                n 1knmpu "I just hope you feel better soon."
+                n 1knmsl "Take it easy,{w=0.1} alright?"
 
                 if jn_affinity.get_affinity_state() == jn_affinity.AFFECTIONATE:
-                    n "I hate seeing you unwell like this..."
+                    n 1kllcal "I hate seeing you unwell like this..."
 
                 elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-                    n "It really hurts me seeing you unwell like this..."
+                    n 1kllsfl "It really hurts me seeing you unwell like this..."
 
                 if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-                    n "I love you,{w=0.1} [player].{w=0.2} Please get well soon."
+                    n 1kcssff "I love you,{w=0.1} [player].{w=0.2} Please get well soon."
 
                 # Add pending apology
                 $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
 
 
     elif jn_admissions.last_admission_type == jn_admissions.TYPE_HUNGRY:
-        n "You know,{w=0.1} you can start to feel unwell if you haven't eaten for a while,{w=0.1} [player]."
-        n "Have you eaten something today?{w=0.2} Like a proper meal?"
+        n 1ulrsf "You know,{w=0.1} you can start to feel unwell if you haven't eaten for a while,{w=0.1} [player]."
+        n 1nnmsf "Have you eaten something today?{w=0.2} Like a proper meal?"
         menu:
             "Yes, I have.":
-                n "Hmmm...{w=0.3} maybe it was something you ate that's making you feel sick?"
-                n "Take a lie down if you need to,{w=0.1} [player].{w=0.2} Alright?"
+                n 1tllsl "Huh...{w=0.3} then maybe it was something you ate that's making you feel sick?"
+                n 1tnmsl "Go lie down if you need to,{w=0.1} [player].{w=0.2} Alright?"
 
             "No, I haven't.":
-                n "Hmmm...{w=0.3} maybe you should have something now,{w=0.1} [player]."
-                n "Even something small like some candy.{w=0.2} Just to get your energy level up."
-                n "Can you do that for me,{w=0.1} [player]?"
-                n "I'm counting on you!"
+                n 1fskem "T-then obviously you should have something now,{w=0.1} [player]!"
+                n 1fllpo "It doesn't have to be some big fancy dish or anything,{w=0.1} you know."
+                n 1knmsl "Even something small like some candy or whatever.{w=0.2} Just to get your energy level up."
+                n 1kllpo "That's not much to ask,{w=0.1} is it?"
+
+                if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+                    n 1kllss "Now go get something already, silly! Ahaha..."
 
     else:
-        n "Feeling under the weather,{w=0.1} [player]?"
-        n "I wish there was something I could do to help..."
-        n "You aren't straining yourself by being here,{w=0.1} are you?"
-        n "I don't wanna get in the way of you feeling better."
-        n "Your health has to come first over our time together."
-        n "So...{w=0.3} promise me you'll leave and rest if you have to,{w=0.1} okay?"
+        n 1knmsl "Feeling under the weather,{w=0.1} [player]?"
+        
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+            n 1kllsl "I wish there was something I could do to help..."
+
+        n 1fwmsl "You aren't straining yourself by being here,{w=0.1} are you?"
+        n 1klrsl "I don't wanna get in the way of you feeling better."
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+            n 1kwmsll "Your health has to come first over our time together."
+
+        else:
+            n 1flrpul "I'm not selfish like that."
+
+        n 1knmpo "So...{w=0.3} promise you'll leave and rest if you have to,{w=0.1} got it?"
 
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
-            n "I love you,{w=0.1} [chosen_endearment].{w=0.2} I really hope you get better soon..."
+            n 1knmssl "I love you,{w=0.1} [chosen_endearment].{w=0.2} I...{w=0.3} really hope you get better soon..."
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            n "I hope you feel better soon,{w=0.1} [player]..."
+            n 1knmbol "I hope you feel better soon,{w=0.1} [player]..."
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_SICK
     return
@@ -714,43 +728,47 @@ label admission_tired:
     $ total_hours_in_session = utils.get_current_session_length().total_seconds() / 3600
 
     if jn_admissions.last_admission_type == jn_admissions.TYPE_TIRED:
-        n "Huh?{w=0.2} You're still tired?"
-        n "Did you not get any rest,{w=0.1} [player]?"
-        n "I don't want you getting all cranky..."
-        n "So...{w=0.3} go to bed, alright?"
-        n "I'll see you later,{w=0.1} [player]!"
+        n 1unmpu "Huh?{w=0.2} You're still tired?"
+        n 1fnmpo "Did you not get any rest,{w=0.1} [player]?"
+        n 1fllpo "I don't want you getting all cranky..."
+        n 1klrsm "So...{w=0.3} go to bed, alright?"
+        n 1nchbg "I'll see you later,{w=0.1} [player]!"
 
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
-            n "I love you,{w=0.1} [chosen_endearment]!"
+            n 1nchsml "Love you,{w=0.1} [chosen_endearment]!"
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            n "Don't let the bed bugs bite!{w=0.2} Ehehe."
+            n 1fsqsml "Don't let the bed bugs bite!{w=0.2} Ehehe."
 
         $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_TIRED
         return { "quit": None }
 
     elif jn_admissions.last_admission_type == jn_admissions.TYPE_ANGRY or jn_admissions.last_admission_type == jn_admissions.TYPE_SAD:
-        n "You said you weren't happy earlier,{w=0.1} [player]..."
-        n "If you're already tired,{w=0.1} I think you should sleep on it."
-        n "Are you gonna turn in,{w=0.1} [player]?"
+        n 1tllpu "Well,{w=0.1} you did say you weren't happy earlier,{w=0.1} [player]."
+        n 1unmca "If you're already tired,{w=0.1} I think you should sleep on it."
+        n 1unmsr "Are you gonna turn in,{w=0.1} [player]?"
         menu:
             "Yes, I will.":
-                n "Good...{w=0.3} you'll feel better soon,{w=0.1} okay?{w=0.2} I promise."
-                n "Sleep well,{w=0.1} [player]!"
+                n 1fcssm "Good...{w=0.3} you'll feel better soon,{w=0.1} okay?"
+
+                if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+                    n 1nwmsm "I promise."
+                    
+                n 1nchbg "Sleep well,{w=0.1} [player]!"
 
                 $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_TIRED
                 return { "quit": None }
 
             "No, not yet.":
-                n "Well...{w=0.3} if you're sure,{w=0.1} [player]."
-                n "Let's see if I can't improve your mood,{w=0.1} shall we?"
+                n 1ulrpo "Well...{w=0.3} if you're sure,{w=0.1} [player]."
+                n 1fsgsm "Now,{w=0.1} let's see if I can't improve your mood,{w=0.1} huh?"
 
     elif jn_admissions.last_admission_type == jn_admissions.TYPE_SICK:
-        n "I'm really not surprised if you're already sick,{w=0.1} [player]."
-        n "You should really go get some rest."
-        n "We can talk later,{w=0.1} alright?"
-        n "Take it easy,{w=0.1} [player]!"
+        n 1ulrpo "I'm really not surprised if you're already sick,{w=0.1} [player]."
+        n 1fnmpo "You should get some rest."
+        n 1kllss "We can talk later,{w=0.1} alright?"
+        n 1knmsm "Take it easy,{w=0.1} [player]!"
 
         # Add pending apology
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
@@ -759,25 +777,25 @@ label admission_tired:
         return { "quit": None }
 
     elif jn_admissions.last_admission_type == jn_admissions.TYPE_HUNGRY:
-        n "I'm not surprised you're feeling tired if you're hungry!"
-        n "Stop sitting around and go eat something,{w=0.1} [player]."
-        n "Just take it easy getting up,{w=0.1} alright?{w=0.2} I don't want you fainting on me."
-        n "And trust me,{w=0.1} I don't think you want that either..."
+        n 1fskem "I'm not surprised you're feeling tired if you're hungry!"
+        n 1kchgn "Stop sitting around and go eat something,{w=0.1} [player]!"
+        n 1tnmsl "Just take it easy getting up,{w=0.1} alright?{w=0.2} I don't want you fainting on me."
+        n 1klrsf "And trust me,{w=0.1} I don't think you want that either..."
 
     elif total_hours_in_session >= 24:
-        n "[player]!"
-        n "You've been here for like a day now{w=0.1} -{w=0.1} It's no wonder you're tired!"
-        n "You better get some sleep right now!{w=0.2} And I don't wanna see you come back until you've slept!"
-        n "Sheesh..."
-        n "Now get going,{w=0.1} [player]!{w=0.2} I'll see you later,{w=0.1} 'kay?"
+        n 1fbkwrl "[player]!"
+        n 1kskem "You've been here for like a day now{w=0.1} -{w=0.1} It's no wonder you're tired!"
+        n 1fnmpo "You better get some sleep right now!{w=0.2} And I don't wanna see you come back until you've slept!"
+        n 1fcspo "Sheesh..."
+        n 1knmpo "Now get going,{w=0.1} [player]!{w=0.2} I'll see you later,{w=0.1} 'kay?"
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-        n "Sleep well,{w=0.1} [chosen_tease]!"
+        n 1unmbg "Sleep well,{w=0.1} [chosen_tease]!"
 
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-            n "Love you~!"
+            n 1uchsml "Love you~!"
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            n "Sweet dreams! Ehehe."
+            n 1nllsml "Sweet dreams! Ehehe."
 
         # Add pending apology
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
@@ -786,46 +804,46 @@ label admission_tired:
         return { "quit": None }
 
     elif total_hours_in_session >= 12:
-        n "[player]!"
+        n 1fbkwr "[player]!"
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-        n "I'm not surprised you're feeling tired{w=0.1} -{w=0.1} you've been here ages,{w=0.1} [chosen_tease]!"
-        n "You should really get some sleep...{w=0.3} you'll be all cranky later otherwise."
-        n "I appreciate the company but make sure you turn in soon,{w=0.1} alright?"
+        n 1fnmpo "I'm not surprised you're feeling tired{w=0.1} -{w=0.1} you've been here ages,{w=0.1} [chosen_tease]!"
+        n 1fllpo "You need to get some sleep...{w=0.3} you're gonna be all cranky later at this rate!"
+        n 1kllpo "I appreciate the company but make sure you turn in soon,{w=0.1} alright?"
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-            n "You know I don't like it when you don't take care of yourself like this..."
+        if 1knmpul jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            n 1klrpul "You know I don't like it when you don't take care of yourself like this..."
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            n "You should know better than to treat yourself like this by now,{w=0.1} [player]..."
+            n 1fcspol "You should know better than to treat yourself like this by now,{w=0.1} [player]..."
 
-        n "Don't let me down,{w=0.1} 'kay?"
+        n 1fllsfl "Don't let me down,{w=0.1} got it?"
 
         # Add pending apology
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
 
     elif utils.get_current_hour() > 21 or utils.get_current_hour() < 3:
-        n "[player]!"
-        n "I'm not surprised you're tired!{w=0.2} Have you even seen the time?!"
+        n 1fskem "[player]!"
+        n 1fnmem "I'm not surprised you're tired!{w=0.2} Have you even seen the time?!"
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-        n "It's the middle of the night,{w=0.1} [chosen_tease]!"
-        n "Nnnn... you should really turn in soon,{w=0.1} you know..."
-        n "I don't want you to be all cranky later because you didn't get enough sleep."
-        n "And neither do you,{w=0.1} I'm sure."
-        n "Just...{w=0.3} try to get to bed soon,{w=0.1} okay?{w=0.2} {i}Before{/i} your keyboard becomes your pillow."
+        n 1knmpu "It's the middle of the night,{w=0.1} [chosen_tease]!"
+        n 1fcsanl "Nnnn... you should really turn in soon,{w=0.1} you know..."
+        n 1fnmpol "I don't want you to be all cranky later because you didn't get enough sleep."
+        n 1flrpol "And neither do you,{w=0.1} I'm sure."
+        n 1kcspo "Just...{w=0.3} try to get to bed soon,{w=0.1} okay?{w=0.2} {i}Before{/i} your keyboard becomes your pillow."
 
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-            n "Besides...{w=0.3} you do know I'm not actually strong enough to carry you to bed myself...{w=0.3} right?"
+            n 1ksqpol "Besides...{w=0.3} you do know I'm not actually strong enough to carry you to bed myself...{w=0.3} right?"
 
-        n "Ahaha..."
+        n 1kllssl "Ahaha..."
 
         # Add pending apology
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
 
     else:
-        n "Feeling tired,{w=0.1} [player]?"
-        n "Perhaps you should think about turning in soon{w=0.1} -{w=0.1} even if it's just a nap!"
-        n "Don't worry about me if you need to rest!{w=0.2} I'll be alright."
-        n "Just make sure you let me know when you decide to go,{w=0.1} [player]."
+        n 1knmsl "Feeling tired,{w=0.1} [player]?"
+        n 1kllbo "You should think about turning in soon{w=0.1} -{w=0.1} even just for a nap."
+        n 1fcseml "Don't worry about me if you need to rest!{w=0.2} I'll be fine!"
+        n 1knmpo "Just make sure you let me know when you decide to go,{w=0.1} [player]."
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_TIRED
     return

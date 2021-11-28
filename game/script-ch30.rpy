@@ -40,8 +40,11 @@ label ch30_init:
     # Draw background and placeholder sprites
     $ main_background.draw(full_redraw=True)
 
-    if utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
+    if persistent.jn_random_weather and utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
         $ jn_atmosphere.show_random_sky()
+
+    elif utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
+        $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
 
     show screen hkb_overlay
 
@@ -178,7 +181,10 @@ init python:
         """
         Runs ever hour during breaks between topics
         """
-        jn_atmosphere.show_random_sky()
+        # Show a new random weather outside if allowed to do so
+        if persistent.jn_random_weather:
+            jn_atmosphere.show_random_sky()
+
         pass
 
     def day_check():
