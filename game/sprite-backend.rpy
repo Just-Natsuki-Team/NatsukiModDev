@@ -615,10 +615,6 @@ image natsuki max_affinity:
         choice:
             "natsuki 1knmsmf"
         choice:
-            "natsuki 1kllnvf"
-        choice:
-            "natsuki 1klrnvf"
-        choice:
             "natsuki 1kcssmf"
         choice:
             "natsuki 1kcssgf"

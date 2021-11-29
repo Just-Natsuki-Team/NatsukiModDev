@@ -803,19 +803,19 @@ init python in utils:
         """
         Returns a type describing the current time of day as a segment.
         """
-        if get_current_hour() in range(3, 4):
+        if get_current_hour() in range(3, 5):
             return TIME_BLOCK_EARLY_MORNING
 
-        elif get_current_hour() in range(5, 8):
+        elif get_current_hour() in range(5, 9):
             return TIME_BLOCK_MID_MORNING
         
-        elif get_current_hour() in range(9, 11):
+        elif get_current_hour() in range(9, 12):
             return TIME_BLOCK_LATE_MORNING
 
-        elif get_current_hour() in range(12, 17):
+        elif get_current_hour() in range(12, 18):
             return TIME_BLOCK_AFTERNOON
 
-        elif get_current_hour() in range(18, 21):
+        elif get_current_hour() in range(18, 22):
             return TIME_BLOCK_EVENING
 
         else:

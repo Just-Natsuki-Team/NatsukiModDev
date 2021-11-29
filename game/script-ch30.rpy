@@ -56,7 +56,7 @@ label ch30_init:
         $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
 
     # Outfit selection
-    $ jn_outfits.set_outfit_for_time_of_day()
+    $ jn_outfits.set_outfit_for_time_block()
 
     show screen hkb_overlay
     play music audio.test_bgm   
@@ -141,6 +141,7 @@ init python:
     LAST_MINUTE_CHECK = datetime.datetime.now()
     LAST_HOUR_CHECK = LAST_MINUTE_CHECK.hour
     LAST_DAY_CHECK = LAST_MINUTE_CHECK.day
+    LAST_TIME_BLOCK = utils.get_current_time_block()
 
     _NAT_SAYS = 0
     _PLAYER_SAYS = 1
@@ -175,9 +176,6 @@ init python:
                         queue(random.choice(topic_pool).label)
                         LAST_TOPIC_CALL = datetime.datetime.now()
         
-        #TODO: random expr every minute
-        #show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
-
         pass
 
     def hour_check():
@@ -188,7 +186,11 @@ init python:
         if persistent.jn_random_weather:
             jn_atmosphere.show_random_sky()
 
-        jn_outfits.set_outfit_for_time_of_day()
+        # Update outfit
+        if jn_outfits.get_outfit_for_time_block().name is not jn_outfits.current_outfit_name:
+           
+            # We call here so we don't skip day_check, as call returns us to this point
+            renpy.call("outfits_time_of_day_change")
 
         pass
 
