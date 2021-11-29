@@ -196,7 +196,7 @@ label screenshot_dialogue:
         $ persistent.jn_first_screenshot_taken = datetime.datetime.now()
         call take_screenshot
 
-        jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
             n 1uskajl "H-huh?{w=0.2} What was that flash I just saw?"
             n 1fskanl "Don't tell me...{w=0.3} was that a camera?!{w=0.2} There's a camera here?!"
             n 1fcssr "..."
@@ -215,7 +215,7 @@ label screenshot_dialogue:
             n 1klraj "So for the future,{w=0.1} could you please just let me know if you want to take pictures?"
             n 1klrbo "I'd really appreciate it,{w=0.1} [player]."
 
-        jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
             n 1fskpu "..."
             n 1fsqpu "You're taking pictures of me,{w=0.1} aren't you?"
             menu:

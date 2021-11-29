@@ -3968,32 +3968,31 @@ init 5 python:
     )
 
 label talk_custom_music_introduction:
-    n "Hmm..."
-    n "I wonder if it's still here..."
+    n 1fllpu "Hmm..."
+    n 1flrbo "I wonder if it's still here..."
 
     play audio drawer
     with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
-    n "Come on!{w=0.2} It's gotta still be here!{w=0.2} I know it!"
+    n 1fllpo "Come on!{w=0.2} It's gotta still be here!{w=0.2} I know it!"
 
     play audio drawer
     with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
-    n "..."
-    n "Aha!{w=0.2} Yes!"
-    n "..."
-    n "Oh!{w=0.2} [player]!{w=0.2} [player]!"
-    n "Guess what I fooound!{w=0.2} Ehehe."
-    n "It's...{w=0.3} a music player!{w=0.2} Neat,{w=0.1} right?"
-    n "Well...{w=0.3} kinda.{w=0.2} It's not exactly...{w=0.3} {i}modern{/i},{w=0.1} but it'll do the job!"
-    n "Come to think of it...{w=0.3} I don't really even know who it belongs to."
-    n "We just found it left in the clubroom one day.{w=0.2} Nobody knew if it belonged to anyone -{w=0.1} and trust me,{w=0.1} we tried to find out!"
-    n "We asked around in lessons,{w=0.1} we sent out notes...{w=0.3} nothing!"
-    n "So...{w=0.3} we kinda just kept it here,{w=0.1} in my desk,{w=0.1} in case whoever it was came back to pick it up."
-    n "I guess they never will now,{w=0.1} huh?"
-    n "Ahaha..."
-    n "Well,{w=0.1} whatever.{w=0.2} The point is we can play whatever music we want now!"
-    n "I think I figured out a way to let you send me whatever you want me to put on,{w=0.1} so listen up,{w=0.1} 'kay?"
+    n 1uspbg "..."
+    n 1fchbs "Aha!{w=0.2} Yes!"
+    n 1nchsm "..."
+    n 1uwdbg "Oh!{w=0.2} [player]!{w=0.2} [player]!"
+    n 1uchgn "Guess what I fooound!{w=0.2} Ehehe."
+    n 1nchbs "It's...{w=0.3} a music player!{w=0.2} Neat,{w=0.1} right?"
+    n 1tlrbg "Well...{w=0.3} kinda.{w=0.2} It's not exactly...{w=0.3} {i}modern{/i},{w=0.1} but it'll do the job!"
+    n 1tllpo "Come to think of it...{w=0.3} I don't really even know who it belongs to."
+    n 1unmpu "We just found it left in the clubroom one day.{w=0.2} Nobody knew if it belonged to anyone -{w=0.1} and trust me,{w=0.1} we tried to find out!"
+    n 1tnmsl "We asked around in lessons,{w=0.1} we sent out notes...{w=0.3} nothing!"
+    n 1tlrbg "So...{w=0.3} we kinda just kept it here,{w=0.1} in my desk,{w=0.1} in case whoever it was came back to pick it up."
+    n 1tsqpo "I guess they never will now,{w=0.1} huh?"
+    n 1uchbg "Well,{w=0.1} whatever.{w=0.2} The point is we can play whatever music we want now!"
+    n 1fchbg "I think I figured out a way to let you send me whatever you want me to put on,{w=0.1} so listen up,{w=0.1} 'kay?"
     jump talk_custom_music_explanation
 
 # Natsuki explains how the custom music functionality works
@@ -4016,39 +4015,39 @@ init 5 python:
 
 label talk_custom_music_explanation:
     if persistent.jn_custom_music_explanation_given:
-        n "Huh?{w=0.2} You want me to explain how custom music works again?"
-        n "Sure,{w=0.1} I can do that!"
-        n "First things first,{w=0.1} let me just check for the {i}custom_music{/i} folder..."
+        n 1unmaj "Huh?{w=0.2} You want me to explain how custom music works again?"
+        n 1uchbg "Sure,{w=0.1} I can do that!"
+        n 1nnmsm "First things first,{w=0.1} let me just check for the {i}custom_music{/i} folder..."
 
     else:
-        n "Alright!{w=0.2} So...{w=0.3} it's actually pretty simple,{w=0.1} [player]."
-        n "There should be a folder called {i}custom_music{/i} somewhere around here..."
-        n "Let me just take a look,{w=0.1} one sec..."
-        n "..."
+        n 1unmbg "Alright!{w=0.2} So...{w=0.3} it's actually pretty simple,{w=0.1} [player]."
+        n 1nnmsm "There should be a folder called {i}custom_music{/i} somewhere around here..."
+        n 1nchbg "Let me just take a look,{w=0.1} one sec..."
+        n 1ncssr "..."
 
     if jn_custom_music.get_directory_exists():
-        n "Well,{w=0.1} hey!{w=0.2} It's already there!{w=0.2} I must have set it up earlier and forgot."
-        n "No complaints from me!{w=0.2} Ehehe."
+        n 1tnmbg "Well,{w=0.1} hey!{w=0.2} It's already there!{w=0.2} I must have set it up earlier and forgot."
+        n 1uchgn "No complaints from me!"
 
     else:
-        n "Okaaay!{w=0.2} It wasn't there,{w=0.1} so I've just created it for you."
+        n 1uchbg "Okaaay!{w=0.2} It wasn't there,{w=0.1} so I've just created it for you."
 
     $ folder = jn_custom_music.CUSTOM_MUSIC_DIRECTORY
-    n "So,{w=0.1} [player] -{w=0.1} if you click {a=[folder]}here{/a},{w=0.1} that'll take you to the folder I set up."
-    n "Then all you gotta do is just {i}copy{/i} your music into that folder,{w=0.1} and you're good to go!"
-    n "Easy as pie,{w=0.1} huh?{w=0.2} Ehehe."
-    n "Oh -{w=0.1} a couple of things first though,{w=0.1} [player]."
-    n "Any music you give me needs to be in {i}.mp3,{w=0.1} .ogg or .wav{/i} format."
-    n "If you don't know how to check,{w=0.1} then just look at the letters after the period in the file name."
-    n "You should also be able to see those in the file {i}properties{/i} if they don't appear on the screen at first."
-    n "Like I said -{w=0.1} this thing isn't {i}exactly{/i} super modern,{w=0.1} so it won't work with any fancy newer formats,{w=0.1} or weird old ones."
+    n 1nnmss "So,{w=0.1} [player] -{w=0.1} if you click {a=[folder]}here{/a},{w=0.1} that'll take you to the folder I set up."
+    n 1ullbg "Then all you gotta do is just {i}copy{/i} your music into that folder,{w=0.1} and you're good to go!"
+    n 1uchgn "Easy as pie,{w=0.1} huh?{w=0.2} Ehehe."
+    n 1uwdaj "Oh -{w=0.1} a couple of things first though,{w=0.1} [player]."
+    n 1unmpu "Any music you give me needs to be in {i}.mp3,{w=0.1} .ogg or .wav{/i} format."
+    n 1ullss "If you don't know how to check,{w=0.1} then just look at the letters after the period in the file name."
+    n 1unmss "You should also be able to see those in the file {i}properties{/i} if they don't appear on the screen at first."
+    n 1flrbg "Like I said -{w=0.1} this thing isn't {i}exactly{/i} super modern,{w=0.1} so it won't work with any fancy newer formats,{w=0.1} or weird old ones."
     $ persistent.jn_custom_music_unlocked = True
     $ persistent.jn_custom_music_explanation_given = True
-    n "Once you've done that,{w=0.1} just click the {i}Music{/i} button,{w=0.1} and I'll check that it's all done right."
-    n "...And that's about it!"
-    n "A word of warning though,{w=0.1} [player]..."
-    n "You better have good taste."
-    n "Ahaha!"
+    n 1nnmaj "Once you've done that,{w=0.1} just click the {i}Music{/i} button,{w=0.1} and I'll check that it's all done right."
+    n 1nchbg "...And that's about it!"
+    n 1nsqbg "A word of warning though,{w=0.1} [player]..."
+    n 1usqsg "You better have good taste."
+    n 1uchgn "Ahaha!"
     return
 
 init 5 python:
@@ -4067,51 +4066,51 @@ init 5 python:
 
 label talk_vtubers:
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n "VTubers,{w=0.1} huh?{w=0.2} You're asking {i}me{/i}?"
-        n "...Wow,{w=0.1} [player].{w=0.2} I'm impressed."
-        n "Yet again,{w=0.1} you've proved you're even more of a nerd than I am!"
-        n "Ehehe."
-        n "Relax!{w=0.2} Relax,{w=0.1} jeez!{w=0.2} You know I'd never seriously judge your hobbies,{w=0.1} you dummy."
-        n "But yeah,{w=0.1} anyway..."
+        n 1tllss "VTubers,{w=0.1} huh?{w=0.2} You're asking {i}me{/i}?"
+        n 1fnmsm "...Wow,{w=0.1} [player].{w=0.2} I'm impressed."
+        n 1fsqsm "Yet again,{w=0.1} you've proved you're even more of a nerd than I am!"
+        n 1uchsm "Ehehe."
+        n 1klrbg "Relax!{w=0.2} Relax,{w=0.1} jeez!{w=0.2} You know I'd never seriously judge your hobbies,{w=0.1} you dummy."
+        n 1unmaj "But yeah,{w=0.1} anyway..."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
-        n "Oh!{w=0.2} Oh!{w=0.2} I think I know those!"
-        n "They're those people with the anime avatars that stream stuff online for people,{w=0.1} right?"
-        n "Well..."
+        n 1unmbg "Yeah!{w=0.2} I think I know those!"
+        n 1tnmpu "They're those people with the anime avatars that stream stuff online for people,{w=0.1} right?"
+        n 1tllpu "Well..."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "Huh?{w=0.2} VTubers?{w=0.2} Like those people with the anime-style avatars that play games and stuff online for people to watch?"
-        n "That {i}is{/i} what you mean,{w=0.1} right?"
-        n "Well..."
+        n 1unmpu "Huh?{w=0.2} VTubers?{w=0.2} Like those people with the anime-style avatars that play games and stuff online for people to watch?"
+        n 1tnmpu "That {i}is{/i} what you mean,{w=0.1} right?"
+        n 1tllpu "Well..."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-        n "No,{w=0.1} I do not.{w=0.2} I'd rather be playing the game myself than watching someone play it for me."
-        n "If you follow any,{w=0.1} good for you."
-        n "{i}Some{/i} of us don't have the time to sit around on our butt for hours..."
-        n "...Or the money to just give it away to strangers."
-        n "[player]."
-        n "How much are we betting you aren't {i}nearly{/i} as toxic to {i}them{/i} as you are to me, huh?"
+        n 1fsqpu "No,{w=0.1} I do not.{w=0.2} I'd rather be playing the game myself than watching someone play it for me."
+        n 1fsqbo "If you follow any,{w=0.1} good for you."
+        n 1flrbo "{i}Some{/i} of us don't have the time to sit around on our butt for hours..."
+        n 1fsqaj "...Or the money to just give it away to strangers."
+        n 1fsqpu "[player]."
+        n 1fsqsr"How much are we betting you aren't {i}nearly{/i} as toxic to {i}them{/i} as you are to me, huh?"
         return
 
     else:
-        n "No.{w=0.2} And I couldn't give less of a crap if you did,{w=0.1} either."
-        n "...And hey,{w=0.1} newsflash,{w=0.1} idiot."
-        n "Throwing money at a stranger hiding behind a cutesy picture doesn't make you any less of a jerk.{w=0.2} Heh."
+        n 1fsqan "No.{w=0.2} And I couldn't give less of a crap if you did,{w=0.1} either."
+        n 1fnmpu "...And hey,{w=0.1} newsflash,{w=0.1} idiot."
+        n 1fsqpu "Throwing money at a stranger hiding behind a cutesy picture doesn't make you any less of a jerk.{w=0.2} Heh."
         return
 
-    n "It's definitely a cool idea!{w=0.2} It lets people share their passions and experiences with others behind a completely clean persona..."
-    n "Without having to worry about baggage following them into their personal lives,{w=0.1} or people being creeps,{w=0.1} or stuff like that."
-    n "A lot of them even make full-blown careers out of it: merchandise,{w=0.1} song releases and everything -{w=0.1} just like idols!{w=0.2} It's crazy!"
-    n "That being said..."
-    n "I never really got into that sort of thing myself."
-    n "Like...{w=0.3} don't get me wrong!{w=0.2} I'm sure they're pretty fun to watch.{w=0.2} If you're into that kind of thing,{w=0.1} I mean."
-    n "But I'd rather be playing or doing something {i}myself{/i} than watching someone else do it,{w=0.1} usually."
-    n "That might just be me,{w=0.1} though."
-    n "...Ehehe."
-    n "What about you,{w=0.1} [player]?{w=0.2} Are you into that sort of stuff?"
-    n "Wait,{w=0.1} wait!{w=0.2} Don't bother answering that."
-    n "You {i}did{/i} ask me about them,{w=0.1} after all -{w=0.1} I think that speaks for itself,{w=0.1} wouldn't you agree?"
-    n "Ahaha!"
+    n 1nchsm "It's definitely a cool idea!{w=0.2} It lets people share their passions and experiences with others behind a completely clean persona..."
+    n 1fllpo "Without having to worry about baggage following them into their personal lives,{w=0.1} or people being creeps,{w=0.1} or stuff like that."
+    n 1uwdem "A lot of them even make full-blown careers out of it: merchandise,{w=0.1} song releases and everything -{w=0.1} just like idols!{w=0.2} It's crazy!"
+    n 1tllem "That being said..."
+    n 1tnmbo "I never really got into that sort of thing myself."
+    n 1klrss "Like...{w=0.3} don't get me wrong!{w=0.2} I'm sure they're pretty fun to watch.{w=0.2} If you're into that kind of thing,{w=0.1} I mean."
+    n 1nllsl "But I'd rather be playing or doing something {i}myself{/i} than watching someone else do it,{w=0.1} usually."
+    n 1nllss "That might just be me,{w=0.1} though."
+    n 1nllbg "Ehehe."
+    n 1unmaj "What about you,{w=0.1} [player]?{w=0.2} Are you into that sort of stuff?"
+    n 1fcssm "Wait,{w=0.1} wait!{w=0.2} Don't bother answering that."
+    n 1tsqsm "You {i}did{/i} ask me about them,{w=0.1} after all -{w=0.1} I think that speaks for itself,{w=0.1} wouldn't you agree?"
+    n 1uchbs "Ahaha!"
     return
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
