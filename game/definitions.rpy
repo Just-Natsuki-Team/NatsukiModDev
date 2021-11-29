@@ -492,22 +492,6 @@ init 0 python:
 
         return ordered_menu_items
 
-    def get_custom_tracks():
-        """
-        return all .mp3 files from custom_music folder
-        """
-        all_files = renpy.list_files()
-        tracks = []
-        for file in all_files:
-            if ".mp3" in file[-4:] and "custom_music" in file:
-                name = file.split('.')
-                name = name[-2].split('/')
-                name = name[-1]
-                track = "<loop 0.0>" + file
-                tracks.append((name, track))
-
-        return tracks
-
 # Variables with cross-script utility specific to Just Natsuki
 init -990 python in jn_globals:
     import store
@@ -525,13 +509,6 @@ init -990 python in jn_globals:
 
     # Tracks whether the player is or is not currently in some topic flow
     player_is_in_conversation = False
-
-    # Outfit handling; these should be persisted and in some kind of structure going forward for presets, etc.
-    natsuki_current_pose = "sitting"
-    natsuki_current_outfit = "uniform"
-    natsuki_current_hairstyle = "default"
-    natsuki_current_accessory = "hairbands/red"
-    natsuki_current_eyewear = None
 
     # Constants; use these for anything we only want defined once and used in a read-only context
 
@@ -754,6 +731,14 @@ init -999 python in utils:
         return pprint.pformat(object.__dict__, indent, width)
 
 init python in utils:
+
+    TIME_BLOCK_EARLY_MORNING = 0
+    TIME_BLOCK_MID_MORNING = 1
+    TIME_BLOCK_LATE_MORNING = 2
+    TIME_BLOCK_AFTERNOON = 3
+    TIME_BLOCK_EVENING = 4
+    TIME_BLOCK_NIGHT = 5
+
     def get_current_session_length():
         """
         Returns a timedelta object representing the length of the current game session.
@@ -805,6 +790,37 @@ init python in utils:
         """
         return datetime.datetime.now().hour
 
+    def get_is_weekday():
+        """
+        Gets whether the current day is a weekday (Monday : Friday).
+
+        OUT:
+            True if weekday, otherwise False
+        """
+        return datetime.datetime.now().weekday() < 5
+
+    def get_current_time_block():
+        """
+        Returns a type describing the current time of day as a segment.
+        """
+        if get_current_hour() in range(3, 4):
+            return TIME_BLOCK_EARLY_MORNING
+
+        elif get_current_hour() in range(5, 8):
+            return TIME_BLOCK_MID_MORNING
+        
+        elif get_current_hour() in range(9, 11):
+            return TIME_BLOCK_LATE_MORNING
+
+        elif get_current_hour() in range(12, 17):
+            return TIME_BLOCK_AFTERNOON
+
+        elif get_current_hour() in range(18, 21):
+            return TIME_BLOCK_EVENING
+
+        else:
+            return TIME_BLOCK_NIGHT
+
 # Vanilla resources from base DDLC
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
 define audio.t2 = "<loop 4.499>bgm/2.ogg"   #Sayori theme
@@ -837,19 +853,12 @@ define audio.rain_muffled = "mod_assets/sfx/rain_muffled.mp3"
 # Music
 define audio.test_bgm = "mod_assets/bgm/background_test_music.ogg"
 
-# Sprites
-define body_a = "mod_assets/natsuki-assets/base.png"
-define uniform_a = "mod_assets/natsuki-assets/uniform.png"
-define face_a = "mod_assets/natsuki-assets/jnab.png"
-
 ##Character Definitions
 define mc = DynamicCharacter('player', image='mc', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 define s = DynamicCharacter('s_name', image='sayori', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 define m = DynamicCharacter('m_name', image='monika', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 define n = DynamicCharacter('n_name', image='natsuki', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 define y = DynamicCharacter('y_name', image='yuri', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
-
-define n2 = DynamicCharacter('Natsuki Test', image='natsuki', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 
 init python:
     #If they quit during a pause, we have to set _dismiss_pause to false again (I hate this hack)

@@ -37,17 +37,6 @@ label ch30_init:
     # Let's pick a greeting
     $ push(greetings.select_greeting())
 
-    # Draw background and placeholder sprites
-    $ main_background.draw(full_redraw=True)
-
-    if persistent.jn_random_weather and utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
-        $ jn_atmosphere.show_random_sky()
-
-    elif utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
-        $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
-
-    show screen hkb_overlay
-
     # Do all var-sets, resets, and sanity checks prior to entering the loop here
 
     # Reset the previous admission/apology, now that Natsuki will have picked a greeting
@@ -56,9 +45,23 @@ label ch30_init:
 
     if persistent.jn_debug_open_watch_on_load:
         $ jn_debug.toggle_show_tracked_watch_items(True)
-        
+
+    # Draw background
+    $ main_background.draw(full_redraw=True)
+
+    if persistent.jn_random_weather and utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
+        $ jn_atmosphere.show_random_sky()
+
+    elif utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
+        $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
+
+    # Outfit selection
+    $ jn_outfits.set_outfit_for_time_of_day()
+
+    show screen hkb_overlay
+    play music audio.test_bgm   
+
     #And finally, we head into the loop
-    play music audio.test_bgm
     jump ch30_loop
 
 #The main loop
@@ -184,6 +187,8 @@ init python:
         # Show a new random weather outside if allowed to do so
         if persistent.jn_random_weather:
             jn_atmosphere.show_random_sky()
+
+        jn_outfits.set_outfit_for_time_of_day()
 
         pass
 
