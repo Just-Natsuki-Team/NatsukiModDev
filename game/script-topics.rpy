@@ -3765,28 +3765,29 @@ init 5 python:
     )
 
 label talk_windup_chewing_gum:
-    n "Ugh...{w=0.3} you know what really gets on my nerves?"
-    n "When people are gross and don't get rid of chewing gum properly."
-    n "Seriously -{w=0.1} it annoys the crap out of me!"
-    n "Like,{w=0.1} have you ever walked into a city center and looked at the ground?{w=0.2} At all the paving?"
-    n "All those dried up spots of gum -{w=0.1} it's freaking disgusting,{w=0.1} and it looks nasty too!"
-    n "And that's in a place where there's usually bins everywhere too,{w=0.1} so it isn't just gross..."
-    n "It's super lazy too!{w=0.2} I can't decide what winds me up more."
-    n "Even worse than that -{w=0.1} there's even people who go and stick it under tables,{w=0.1} or on walls -{w=0.1} who {i}does{/i} that?!"
-    n "Jeez...{w=0.3} makes me want to track them down and stick that crap back in their stupid mouths."
-    n "I don't really care if you chew gum yourself,{w=0.1} [player]."
+    n 1fcsan "Ugh...{w=0.3} you know what really gets on my nerves?"
+    n 1fsqsl "When people are gross and don't get rid of chewing gum properly."
+    n 1fbkwr "Seriously -{w=0.1} it annoys the crap out of me!"
+    n 1fllem "Like,{w=0.1} have you ever walked into a city center and looked at the ground?{w=0.2} At all the paving?"
+    n 1fcsan "All those dried up spots of gum -{w=0.1} it's freaking disgusting,{w=0.1} and it looks nasty too!"
+    n 1fsqan "And that's in a place where there's usually bins everywhere too,{w=0.1} so it isn't just gross..."
+    n 1fnmwr "It's super lazy too!{w=0.2} I can't decide what winds me up more."
+    n 1fcswr "Even worse than that -{w=0.1} there's even people who go and stick it under tables,{w=0.1} or on walls -{w=0.1} who {i}does{/i} that?!"
+    n 1flrpu "Jeez...{w=0.3} makes me want to track them down and stick that crap back in their stupid mouths."
+    n 1nnmsl "I don't really care if you chew gum yourself,{w=0.1} [player]."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-        n "Just make sure you dispose of it properly,{w=0.1} 'kay?"
-        n "I'm sure you do anyway,{w=0.1} but just in case.{w=0.2} Love you,{w=0.1} [player]~!"
+        n 1kllca "Just make sure you dispose of it properly,{w=0.1} 'kay?"
+        n 1kllss "I'm sure you do anyway,{w=0.1} but...{w=0.3} just in case."
+        n 1kchsml "Love you,{w=0.1} [player]~!"
 
     if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        n "But please,{w=0.1} just get rid of it properly when you're done."
-        n "Thanks,{w=0.1} [player]~!"
+        n 1nllca "But please,{w=0.1} just get rid of it properly when you're done."
+        n 1nchsm "Thanks,{w=0.1} [player]~!"
 
     else:
-        n "But seriously -{w=0.1} stick it in the bin when you're done,{w=0.1} alright?{w=0.2} Or just wrap it in a tissue and get rid of it later."
-        n "...Or it won't just be the gum that'll be getting chewed out!"
+        n 1fnmaj "But seriously -{w=0.1} stick it in the bin when you're done,{w=0.1} alright?{w=0.2} Or just wrap it in a tissue and get rid of it later."
+        n 1fsqaj "...Or it won't just be the gum that'll be getting chewed out!"
 
     return
 
@@ -3807,36 +3808,37 @@ init 5 python:
     )
 
 label talk_windup_smoking_vaping_indoors:
-    n "You know what stinks,{w=0.1} [player]?"
-    n "I mean {i}really{/i} stinks -{w=0.1} not just figuratively,{w=0.1} but literally too?"
-    n "When people smoke or vape indoors,{w=0.1} or near entrances -{w=0.1} {i}especially{/i} when other people are around.{w=0.2} I can't stand it!"
-    n "Like...{w=0.3} how inconsiderate can you be?{w=0.2} Seriously?"
-    n "For starters,{w=0.1} and like I was just saying -{w=0.1} it absolutely {i}reeks{/i}!"
-    n "Tobacco is awful smelling stuff,{w=0.1} and all those sickly vaping fluid types aren't much better either."
-    n "It clings to the walls too -{w=0.1} so the smell hangs around for ages!"
-    n "Speaking of clinging to the walls,{w=0.1} the smoke literally does that too -{w=0.1} have you {i}seen{/i} a smoker's house,{w=0.1} or car?"
-    n "All those yellow stains...{w=0.3} you'd think it was painted on or something.{w=0.2} Ew!"
-    n "And you know what,{w=0.1} [player]?{w=0.2} I haven't even gotten to the worst of it yet..."
-    n "I've said nothing about how expensive it all is,{w=0.1} or the health problems not just to the smoker..."
-    n "...But to everyone else!"
-    n "Ugh..."
-    n "Don't get me wrong -{w=0.1} if someone wants to smoke or vape,{w=0.1} that's their choice and their money.{w=0.2} I don't care."
-    n "But the least they can do is respect the decision of everyone who {i}doesn't{/i},{w=0.1} you know?"
-    n "..."
+    n 1fllaj "You know what stinks,{w=0.1} [player]?"
+    n 1fsqaj "I mean {i}really{/i} stinks -{w=0.1} not just figuratively,{w=0.1} but literally too?"
+    n 1fcssf "When people smoke or vape indoors,{w=0.1} or near entrances -{w=0.1} {i}especially{/i} when other people are around.{w=0.2} I can't stand it!"
+    n 1fcsan "Like...{w=0.3} how inconsiderate can you be?{w=0.2} Seriously?"
+    n 1fsqwr "For starters,{w=0.1} and like I was just saying -{w=0.1} it absolutely {i}reeks{/i}!"
+    n 1fllem "Tobacco is awful smelling stuff,{w=0.1} and all those sickly vaping fluid types aren't much better either."
+    n 1ksqup "It clings to the walls too -{w=0.1} so the smell hangs around for ages!"
+    n 1kllan "Speaking of clinging to the walls,{w=0.1} the smoke literally does that too -{w=0.1} have you {i}seen{/i} a smoker's house,{w=0.1} or car?"
+    n 1ksqup "All those yellow stains...{w=0.3} you'd think it was painted on or something.{w=0.2} Ew!"
+    n 1fsqan "And you know what,{w=0.1} [player]?{w=0.2} I haven't even gotten to the worst of it yet..."
+    n 1fcsan "I've said nothing about how expensive it all is,{w=0.1} or the health problems not just to the smoker..."
+    n 1fsqaj "...But to everyone else!"
+    n 1fcsbo "Ugh..."
+    n 1flrbo "Don't get me wrong -{w=0.1} if someone wants to smoke or vape,{w=0.1} that's their choice and their money.{w=0.2} I don't care."
+    n 1fnmbo "But the least they can do is respect the decision of everyone who {i}doesn't{/i},{w=0.1} you know?"
+    n 1fcssl "..."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-        n "I know you,{w=0.1} [player].{w=0.2} I highly doubt you'd be the kind of person to be a jerk like that."
-        n "Just don't prove me wrong,{w=0.1} alright?{w=0.2} Ehehe."
+        n 1nnmsl "I know you,{w=0.1} [player].{w=0.2} I highly doubt you'd be the kind of person to be a jerk like that."
+        n 1klrss "Just... don't prove me wrong,{w=0.1} alright?"
+        n 1uchgn "'ppreciate it!{w=0.2} Ahaha."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        n "I doubt you'd be a jerk like that even if you do smoke,{w=0.1} [player]."
-        n "But...{w=0.3} try not to prove me wrong,{w=0.1} 'kay?{w=0.2} I like you more as not a jerk."
-        n "Thanks!"
+        n 1kllpo "I doubt you'd be a jerk like that even if you do smoke,{w=0.1} [player]."
+        n 1fsqpo "But...{w=0.3} try not to prove me wrong,{w=0.1} 'kay?{w=0.2} I like you more as not a jerk."
+        n 1uchsm "Thanks!"
 
     else:
-        n "I don't think you'd be a jerk like that,{w=0.1} [player]."
-        n "But...{w=0.3} just in case -{w=0.1} keep it in mind,{w=0.1} will you?"
-        n "Thanks!"
+        n 1ullaj "I don't think you'd be a jerk like that,{w=0.1} [player]."
+        n 1nnmaj "But...{w=0.3} just in case -{w=0.1} keep it in mind,{w=0.1} will you?"
+        n 1nchsm "Thanks!"
 
     return
 
@@ -3857,29 +3859,29 @@ init 5 python:
     )
 
 label talk_windup_unwashed_hands:
-    n "Hey,{w=0.1} [player]."
-    n "Have you ever worked in a restaurant,{w=0.1} or a hospital or anything like that?"
-    n "Because I bet if there's one thing drilled into you...{w=0.3} it's how important washing your hands is!"
-    n "It really gets on my nerves when people don't wash their hands after doing something nasty."
-    n "Like...{w=0.3} we {i}know{/i} how important it is to stop germs getting around -{w=0.1} and {i}what{/i} exactly is hard about sticking your hands under the tap for a minute?!"
-    n "It annoys me even more when people are really dumb about it too!{w=0.2} Like,{w=0.1} they think they don't need to do that if they didn't go."
-    n "Newsflash -{w=0.1} if you went in,{w=0.1} you must have touched stuff -{w=0.1} so now there's all that crap on your hands that you've taken out with you!"
-    n "Not only is it {i}super{/i} icky and bad for {i}your{/i} health..."
-    n "It's awful for others too!{w=0.2} What if you're about to handle someone's food,{w=0.1} or visit someone in hospital?"
-    n "You could make someone seriously ill..."
-    n "...And then they get all upset when you call them out on their grossness!{w=0.2} I mean,{w=0.1} come {i}on{/i}!"
-    n "Just...{w=0.3} ugh."
-    n "...[player]."
-    n "I really hope you keep your hands spick and span.{w=0.2} And not just when you visit the restroom."
-    n "Before you prepare food,{w=0.1} after you've handled trash...{w=0.3} just think about where you've been,{w=0.1} alright?"
+    n 1unmaj "Hey,{w=0.1} [player]."
+    n 1nnmaj "Have you ever worked in a restaurant,{w=0.1} or a hospital or anything like that?"
+    n 1fnmaj "Because I bet if there's one thing drilled into you...{w=0.3} it's how important washing your hands is!"
+    n 1flraj "It really gets on my nerves when people don't wash their hands after doing something nasty."
+    n 1fsqsl "Like...{w=0.3} we {i}know{/i} how important it is to stop germs getting around -{w=0.1} and {i}what{/i} exactly is hard about sticking your hands under the tap for a minute?!"
+    n 1fsqem "It annoys me even more when people are really dumb about it too!{w=0.2} Like,{w=0.1} they think they don't need to do that if they didn't go."
+    n 1fcsem "Newsflash -{w=0.1} if you went in,{w=0.1} you must have touched stuff -{w=0.1} so now there's all that crap on your hands that you've taken out with you!"
+    n 1fsqsf "Not only is it {i}super{/i} icky and bad for {i}your{/i} health..."
+    n 1ksqan "It's awful for others too!{w=0.2} What if you're about to handle someone's food,{w=0.1} or visit someone in hospital?"
+    n 1fllan "You could make someone seriously ill..."
+    n 1fnmfu "...And then they get all upset when you call them out on their grossness!{w=0.2} I mean,{w=0.1} come {i}on{/i}!"
+    n 1fcssl "Just...{w=0.3} ugh."
+    n 1ncssl "...[player]."
+    n 1nnmpu "I really hope you keep your hands spick and span.{w=0.2} And not just when you visit the restroom."
+    n 1fnmpu "Before you prepare food,{w=0.1} after you've handled trash...{w=0.3} just think about where you've been,{w=0.1} alright?"
 
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-        n "Don't get me wrong though!{w=0.2} I trust that you do the right thing!"
-        n "Just keep up the good work for me,{w=0.1} alright?{w=0.2} For everyone."
-        n "Thanks,{w=0.1} [player]!"
+        n 1kchbg "Don't get me wrong though!{w=0.2} I'm pretty sure you at least try to do the right thing!"
+        n 1nnmbg "Just...{w=0.3} keep up the good work,{w=0.1} alright?{w=0.2} For everyone."
+        n 1nchsm "Thanks,{w=0.1} [player]!"
 
     else:
-        n "It really isn't that much to ask...{w=0.3} is it?"
+        n 1tsqpo "It really isn't that much to ask...{w=0.3} is it?"
 
     return
 
@@ -3900,53 +3902,52 @@ init 5 python:
     )
 
 label talk_windup_litter:
-    n "You know,{w=0.1} [player]..."
-    n "At school?{w=0.2} At my school,{w=0.1} anyway?"
-    n "We -{w=0.1} the students -{w=0.1}  were actually responsible for keeping it all clean."
-    n "Ehehe.{w=0.2} Are you surprised?"
-    n "Yep!{w=0.2} From the bins,{w=0.1} to the desks,{w=0.1} to the floors.{w=0.2} It was all our effort that kept it squeaky clean!"
-    n "N-{w=0.1}not that I {i}enjoyed{/i} it,{w=0.1} of course!{w=0.2} Cleaning {i}is{/i} pretty lame,{w=0.1} but it's just something you gotta do."
-    n "But I'll tell you one thing,{w=0.1} [player]."
-    n "{i}Nothing{/i} pissed me off more than the jerks who just went and dropped or left their trash everywhere."
-    n "...And not even just in school!"
-    n "I mean...{w=0.3} where do I start?!"
-    n "First off -{w=0.1} how much of a freaking slob do you have to be?{w=0.2} Do these people just drop crap all over their homes too?!"
-    n "It annoys me even more when there's bins and stuff literally right there!"
-    n "Like,{w=0.1} wow...{w=0.3} lazy as well as inconsiderate?{w=0.2} What a {i}charming{/i} combo!"
-    n "Even if there isn't a trash can or whatever around..."
-    n "It's not like they don't have pockets,{w=0.1} or can't just carry it around for a few minutes!"
-    n "Ugh..."
-    n "And I haven't even mentioned people tossing their rubbish out of cars,{w=0.1} or into lakes and ponds!"
-    n "It pisses me off just thinking about it..."
-    n "..."
-    n "[player]."
+    n 1ullpu "You know,{w=0.1} [player]..."
+    n 1unmaj "At school?{w=0.2} At my school,{w=0.1} anyway?"
+    n 1unmss "We -{w=0.1} the students -{w=0.1}  were actually responsible for keeping it all clean."
+    n 1fcsbg "Ehehe.{w=0.2} Are you surprised?"
+    n 1fchgn "Yep!{w=0.2} From the bins,{w=0.1} to the desks,{w=0.1} to the floors.{w=0.2} It was all our effort that kept it squeaky clean!"
+    n 1flrpol "N-{w=0.1}not that I {i}enjoyed{/i} it,{w=0.1} of course!{w=0.2} Cleaning {i}is{/i} pretty lame,{w=0.1} but it's just something you gotta do."
+    n 1fnmpo "But I'll tell you one thing,{w=0.1} [player]."
+    n 1fsqtr "{i}Nothing{/i} pissed me off more than the jerks who just went and dropped or left their trash everywhere."
+    n 1fnman "...And not even just in school!"
+    n 1fcsan "I mean...{w=0.3} where do I start?!"
+    n 1fnmaj "First off -{w=0.1} how much of a freaking slob do you have to be?{w=0.2} Do these people just drop crap all over their homes too?!"
+    n 1flran "It annoys me even more when there's bins and stuff literally right there!"
+    n 1fcsfu "Like,{w=0.1} wow...{w=0.3} lazy as well as inconsiderate?{w=0.2} What a {i}charming{/i} combo!"
+    n 1fllpu "Even if there isn't a trash can or whatever around..."
+    n 1fllan "It's not like they don't have pockets,{w=0.1} or can't just carry it around for a few minutes!"
+    n 1fcsan "Ugh..."
+    n 1flrup "And I haven't even mentioned people tossing their rubbish out of cars,{w=0.1} or into lakes and ponds!"
+    n 1fcssl "It pisses me off just thinking about it..."
+    n 1fllbo "..."
+    n 1fnmbo "[player]."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n "I know you.{w=0.2} In fact,{w=0.1} I daresay I know you {i}very{/i} well by now."
-        n "I don't think you're the sort to do that at all..."
-        n "I'm not wrong...{w=0.3} am I?"
-        n "I don't wanna have to be.{w=0.2} Ahaha..."
+        n 1ksqbo "I know you.{w=0.2} In fact,{w=0.1} I daresay I know you {i}very{/i} well by now."
+        n 1knmbo "I don't think you're the sort to do that at all..."
+        n 1klraj "I'm not wrong...{w=0.3} am I?"
+        n 1klrss "I don't wanna have to be.{w=0.2} Ahaha..."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        n "I don't think you're like that,{w=0.1} [player]."
-        n "Or...{w=0.3} at least you don't {i}try{/i} to be anyway."
+        n 1unmaj "I don't think you're like that,{w=0.1} [player]."
+        n 1ullsl "Or...{w=0.3} at least you don't {i}try{/i} to be anyway."
 
     else:
-        n "I really,{w=0.1} really hope you aren't one of those people."
+        n 1fnmsl "I really,{w=0.1} really hope you aren't one of those people."
 
-    n "So..."
-    n "...If you're a litterbug already,{w=0.1} I'll forgive you this one time."
-    n "Just...{w=0.3} make sure you clean up your act,{w=0.1} okay?"
+    n 1nllpu "So..."
+    n 1nnmsl "...If you're a litterbug already,{w=0.1} I'll forgive you this one time."
+    n 1klrpo "Just...{w=0.3} make sure you clean up your act,{w=0.1} okay?"
 
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-        n "Ehehe.{w=0.2} Love you,{w=0.1} [player]~."
+        n 1uchsml "Ehehe.{w=0.2} Love you,{w=0.1} [player]~."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        n "It'd...{w=0.3} mean a lot."
-        n "Ahaha..."
+        n 1nlrpol "It'd...{w=0.3} mean a lot."
 
     else:
-        n "Thanks,{w=0.1} [player]."
+        n 1fchbg "Thanks,{w=0.1} [player]."
 
     return
 
