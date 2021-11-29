@@ -3686,24 +3686,24 @@ init 5 python:
 
 label talk_play_snap:
     if persistent.jn_snap_player_is_cheater:
-        n "[player]...{w=0.3} if you aren't even sorry you cheated,{w=0.1} why should I play with you again?"
-        n "Come on...{w=0.3} it's not hard to apologize,{w=0.1} is it?"
+        n 1fnmem "[player]...{w=0.3} if you aren't even sorry you cheated,{w=0.1} why should I play with you again?"
+        n 1kllpo "Come on...{w=0.3} it's not hard to apologize,{w=0.1} is it?"
         return
 
     else:
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-            n "Of course I do,{w=0.1} dummy!{w=0.2} Ehehe."
+            n 1uchbg "Of course I do,{w=0.1} dummy!{w=0.2} Ehehe."
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "Of course I'll play some with you,{w=0.1} dummy!"
+            n 1fchbg "Of course I'll play some with you,{w=0.1} dummy!"
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            n "Well,{w=0.1} duh!{w=0.2} Of course I'm up for a game!"
+            n 1fchsm "Well,{w=0.1} duh!{w=0.2} Of course I'm up for a game!"
 
         else:
-            n "You wanna play Snap?{w=0.2} Sure!"
+            n 1nnmss "You wanna play Snap?{w=0.2} Sure!"
 
-        n "Let me just get the cards out real quick,{w=0.1} alright?"
+        n 1unmsm "Let me just get the cards out real quick,{w=0.1} alright?"
         play audio drawer
         with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
         jump snap_intro
@@ -3727,24 +3727,24 @@ init 5 python:
 
 label talk_remind_snap_rules:
     if persistent.jn_snap_player_is_cheater:
-        n "Come on,{w=0.1} [player]."
-        n "If you cared about the rules,{w=0.1} then why did you cheat when we played earlier?"
-        n "You haven't even apologized for it yet..."
+        n 1fcsan "Come on,{w=0.1} [player]."
+        n 1flrpo "If you cared about the rules,{w=0.1} then why did you cheat when we played earlier?"
+        n 1fnmpo "You haven't even apologized for it yet..."
         return
 
     else:
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-            n "Ehehe.{w=0.2} You're so forgetful sometimes,{w=0.1} [player]."
-            n "Sure,{w=0.1} I'll go over it again.{w=0.2} Juuust for you~."
+            n 1nchbg "Ahaha.{w=0.2} You're so forgetful sometimes,{w=0.1} [player]."
+            n 1nsqbg "Sure,{w=0.1} I'll go over it again!{w=0.2} Juuust for you~."
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "Of course I can!"
+            n 1nchbg "Of course I can!"
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            n "You bet I can!"
+            n 1fchsm "You bet I can!"
 
         else:
-            n "Sure thing!"
+            n 1nnmss "Sure thing!"
 
         jump snap_explanation
 
@@ -3781,7 +3781,7 @@ label talk_windup_chewing_gum:
         n 1kllss "I'm sure you do anyway,{w=0.1} but...{w=0.3} just in case."
         n 1kchsml "Love you,{w=0.1} [player]~!"
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
         n 1nllca "But please,{w=0.1} just get rid of it properly when you're done."
         n 1nchsm "Thanks,{w=0.1} [player]~!"
 
@@ -3828,9 +3828,9 @@ label talk_windup_smoking_vaping_indoors:
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
         n 1nnmsl "I know you,{w=0.1} [player].{w=0.2} I highly doubt you'd be the kind of person to be a jerk like that."
         n 1klrss "Just... don't prove me wrong,{w=0.1} alright?"
-        n 1uchgn "'ppreciate it!{w=0.2} Ahaha."
+        n 1uchgn "'preciate it!{w=0.2} Ahaha."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
         n 1kllpo "I doubt you'd be a jerk like that even if you do smoke,{w=0.1} [player]."
         n 1fsqpo "But...{w=0.3} try not to prove me wrong,{w=0.1} 'kay?{w=0.2} I like you more as not a jerk."
         n 1uchsm "Thanks!"
