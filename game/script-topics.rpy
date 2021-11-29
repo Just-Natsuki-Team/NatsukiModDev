@@ -3531,50 +3531,50 @@ init 5 python:
     )
 
 label talk_fried_squid:
-    n "Hey,{w=0.1} [player]..."
-    n "You know what I could go for right now?"
-    n "A big,{w=0.1} steaming fresh bowl of Mon-{w=0.1}ika!"
-    n "..."
-    n "...Huh."
-    n "You know,{w=0.1} in hindsight?{w=0.2} That joke really wasn't funny the first time round."
-    n "I've...{w=0.3} no idea why it'd be funny this time,{w=0.1} to be honest."
-    n "Oh!"
-    n "But fried squid is no joke at all,{w=0.1} [player]!{w=0.2} Have you ever tried it?"
-    n "It's {i}delicious{/i}!{w=0.2} I love it!"
-    n "Not just boring old fried seafood though -{w=0.1} it's gotta have the crap battered out of it first!"
-    n "That crispy golden coating is seriously the best.{w=0.2} Deep fried food is awesome!"
-    n "It's not {i}good{/i} for you exactly,{w=0.1} but as a treat?{w=0.2} You could do way worse..."
-    n "Especially with sauce to spice things up a bit!"
-    n "By the way -{w=0.1} wanna know how you can tell you're dining on some top-notch squiddy goodness?"
-    n "The texture,{w=0.1} of course!"
-    n "Overcooked squid becomes all rubbery and nasty,{w=0.1} and even worse -{w=0.1} it loses all of its flavour too!"
-    n "Imagine biting through the batter,{w=0.1} only to find you're basically chewing on a bunch of rubber bands."
-    n "Ugh!{w=0.2} Gross!{w=0.2} Talk about a disappointment."
-    n "Don't let that put you off though,{w=0.1} [player] -{w=0.1} next time you see some,{w=0.1} why not give it a shot?"
+    n 1fllss "Hey,{w=0.1} [player]..."
+    n 1usqsm "You know what I could go for right now?"
+    n 1uchbs "A big,{w=0.1} steaming fresh bowl of Mon-{w=0.1}ika!"
+    n 1uchbg "..."
+    n 1flrpu "...Huh."
+    n 1tnmpu "You know,{w=0.1} in hindsight?{w=0.2} That joke really wasn't funny the first time round."
+    n 1tllpo "I've...{w=0.3} no idea why it'd be funny this time,{w=0.1} to be honest."
+    n 1uspgs "Oh!"
+    n 1fchbg "But fried squid is no joke at all,{w=0.1} [player]!{w=0.2} Have you ever tried it?"
+    n 1uchbs "It's {i}delicious{/i}!{w=0.2} I love it!"
+    n 1fsqsm "Not just boring old fried seafood though -{w=0.1} it's gotta have the crap battered out of it first!"
+    n 1uspbg "That crispy golden coating is seriously the best.{w=0.2} Deep fried food is awesome!"
+    n 1fllbg "It's not {i}good{/i} for you exactly,{w=0.1} but as a treat?{w=0.2} You could do way worse..."
+    n 1fcssm "Especially with sauce to spice things up a bit!"
+    n 1fnmss "By the way -{w=0.1} wanna know how you can tell you're dining on some top-notch squiddy goodness?"
+    n 1uchbs "The texture,{w=0.1} of course!"
+    n 1fllaj "Overcooked squid becomes all rubbery and nasty,{w=0.1} and even worse -{w=0.1} it loses all of its flavour too!"
+    n 1fsqsr "Imagine biting through the batter,{w=0.1} only to find you're basically chewing on a bunch of rubber bands."
+    n 1fsqem "Ugh!{w=0.2} Gross!{w=0.2} Talk about a disappointment."
+    n 1unmaj "Don't let that put you off though,{w=0.1} [player] -{w=0.1} next time you see some,{w=0.1} why not give it a shot?"
 
     if jn_admissions.last_admission_type == jn_admissions.TYPE_HUNGRY:
-        n "...Probably the sooner the better,{w=0.1} if you're hungry like you said."
-        n "But anyway..."
+        n 1kllss "...Probably the sooner the better,{w=0.1} if you're hungry like you said."
+        n 1ullaj "But anyway..."
 
-    n "You could even be all fancy if you wanted to and order it by the culinary name!"
-    n "Ten points if you can guess what that is.{w=0.2} Ehehe."
+    n 1unmbg "You could even be all fancy if you wanted to and order it by the culinary name!"
+    n 1fnmbg "Ten points if you can guess what that is.{w=0.2} Ehehe."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-        n "Hmm..."
-        n "Actually...{w=0.3} you know what?"
-        n "We should just get a bowl of calamari to share.{w=0.2} That's fair,{w=0.1} right?"
-        n "I should warn you though,{w=0.1} [player]..."
-        n "I'm not handing over the last piece without a fight!"
-        n "Ehehe."
+        n 1flrsg "Hmm..."
+        n 1fnmbg "Actually...{w=0.3} you know what?"
+        n 1fchbg "We should just get a bowl of calamari to share.{w=0.2} That's fair,{w=0.1} right?"
+        n 1fsqsm "I should warn you though,{w=0.1} [player]..."
+        n 1fchgn "I'm not handing over the last piece without a fight!"
+        n 1nchsml "Ehehe."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n "But yeah -{w=0.1} you should really give it a try if you haven't already,{w=0.1} [player]!"
-        n "I wouldn't want someone to miss out on that!"
-        n "Especially not you.{w=0.2} Ehehe..."
+        n 1uchbg "But yeah -{w=0.1} you should really give it a try if you haven't already,{w=0.1} [player]!"
+        n 1fchbg "I wouldn't want someone to miss out on that!"
+        n 1klrssl "E-{w=0.1}especially not you.{w=0.2} Ehehe..."
 
     else:
-        n "But yeah -{w=0.1} you should really try it out if you haven't already,{w=0.1} [player]!"
-        n "I wouldn't want someone to miss out on that!{w=0.2} Ahaha."
+        n 1uchbg "But yeah -{w=0.1} you should really try it out if you haven't already,{w=0.1} [player]!"
+        n 1fchbg "I wouldn't want someone to miss out on that!{w=0.2} Ahaha."
 
     return
 
@@ -3595,75 +3595,73 @@ init 5 python:
 
 label talk_collectibles:
     if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        n "Collectibles?{w=0.2} You mean like figurines and plushies and such?"
-        n "Mmm...{w=0.3} not really.{w=0.2} Collecting is an expensive hobby,{w=0.1} [player]!"
-        n "I mean,{w=0.1} it all depends on exactly what you collect,{w=0.1} but it feels like places that sell them prey on that."
-        n "Like...{w=0.3} the urge to complete a collection -{w=0.1} so they jack up the prices!"
-        n "Ugh...{w=0.3} and for people in my...{w=0.3} uhmm...{w=0.3} {i}position{/i},{w=0.1} it's a big barrier to entry."
-        n "But anyway..."
+        n 1unmpu "Collectibles?{w=0.2} You mean like figurines and plushies and such?"
+        n 1flrpu "Mmm...{w=0.3} not really.{w=0.2} Collecting is an expensive hobby,{w=0.1} [player]!"
+        n 1klrpo "I mean,{w=0.1} it all depends on exactly what you collect,{w=0.1} but it feels like places that sell them prey on that."
+        n 1flraj "Like...{w=0.3} the urge to complete a collection -{w=0.1} so they jack up the prices!"
+        n 1fcsbo "Ugh..." 
+        n 1kllbo "And for people in my...{w=0.3} uhmm...{w=0.3} {i}position{/i},{w=0.1} it's a big barrier to entry."
+        n 1unmaj "But anyway..."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "Huh?{w=0.2} You mean like figurines and all that stuff?"
-        n "Well...{w=0.3} no,{w=0.1} [player].{w=0.2} Not really."
-        n "I couldn't justify spending so much on a hobby like that!"
-        n "Especially not when I have others things to worry about spending my money on first,{w=0.1} you know."
-        n "But anyway,{w=0.1} putting all that aside..."
+        n 1tnmpu "Huh?{w=0.2} You mean like figurines and all that stuff?"
+        n 1tlrpu "Well...{w=0.3} no,{w=0.1} [player].{w=0.2} Not really."
+        n 1knmsf "I couldn't justify spending so much on a hobby like that!"
+        n 1flrbo "Especially not when I have others things to worry about spending my money on first,{w=0.1} you know."
+        n 1unmaj "But anyway,{w=0.1} putting all that aside..."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-        n "No,{w=0.1} [player]."
-        n "Collectibles are way too expensive for me.{w=0.2} I can't justify wasting the money I {i}do{/i} have."
-        n "{i}Especially{/i} on stuff that'll just sit on a shelf that I'll forget about."
-        n "Yeah,{w=0.1} [player] -{w=0.1} believe it or not,{w=0.1} some of us {i}do{/i} have to think about how we spend our money."
-        n "Shocker,{w=0.1} right?"
-        n "..."
-        n "Well?{w=0.2} Satisfied with your answer?"
-        n "We're done here."
+        n 1fsqsf "No,{w=0.1} [player]."
+        n 1fsqaj "Collectibles are way too expensive for me.{w=0.2} I can't justify wasting the money I {i}do{/i} have."
+        n 1fnmsl "{i}Especially{/i} on stuff that'll just sit on a shelf that I'll forget about."
+        n 1fsqsr "Yeah,{w=0.1} [player] -{w=0.1} believe it or not,{w=0.1} some of us {i}do{/i} have to think about how we spend our money."
+        n 1fsqun "Shocker,{w=0.1} right?"
+        n 1fcsun "..."
+        n 1fnmaj "Well?{w=0.2} Satisfied with your answer?"
+        n 1fsqaj "We're done here."
         return
 
     else:
-        n "...Why?{w=0.2} ...And I don't just mean why you care."
-        n "But why should I tell {i}you{/i} if I do or not?"
-        n "You'd probably just trash them."
-        n "Heh.{w=0.2} After all."
-        n "You've proven great at trashing things so far,{w=0.1} {i}haven't you{/i}?{w=0.2} Jerk."
+        n 1fsqsr "...Why?{w=0.2} ...And I don't just mean why you care."
+        n 1fsqan "But why should I tell {i}you{/i} if I do or not?"
+        n 1fcsan "You'd probably just trash them."
+        n 1fcsun "Heh.{w=0.2} After all."
+        n 1fsqup "You've proven great at trashing things so far,{w=0.1} {i}haven't you{/i}?{w=0.2} Jerk."
         return
 
-    n "..."
-    n "...Huh.{w=0.2} There's a point,{w=0.1} actually.{w=0.2} Does manga count as a collectible?"
-    n "I'm...{w=0.3} not really sure..."
-    n "What do you think,{w=0.1} [player]?"
+    n 1ullbo "..."
+    n 1tllbo "...Huh.{w=0.2} There's a point,{w=0.1} actually.{w=0.2} Does manga count as a collectible?"
+    n 1tllaj "I'm...{w=0.3} not really sure..."
+    n 1tnmpu "What do you think,{w=0.1} [player]?"
     menu:
         n "Would you call it a collectible?"
 
         "I'd say so!":
-            n "Oho!"
-            n "So I suppose I am something of a collector,{w=0.1} after all!"
+            n 1fsqbg "Oho!"
+            n 1fchbg "So I suppose I am something of a collector,{w=0.1} after all!"
 
             if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-                n "I guess that all makes sense.{w=0.2} After all..."
-                n "I'd like to think you're in my collection too,{w=0.1} [player]~."
-                n "Ehehe."
+                n 1uchsm "I guess that all makes sense.{w=0.2} After all..."
+                n 1fllsmf "I'd like to think you're in my collection too,{w=0.1} [player]~."
+                n 1uchsmf "Ehehe."
 
             else:
-                n "Well,{w=0.1} in that case..."
-                n "Just let me know if you ever feel like a tour!"
-                n "You won't find a better collection,{w=0.1} I bet.{w=0.2} Ehehe."
+                n 1flrsm "Well,{w=0.1} in that case..."
+                n 1nchbg "Just let me know if you ever feel like a tour!"
+                n 1nchgn "You won't find a better collection!{w=0.2} Ehehe."
 
         "No,{w=0.1} I wouldn't.":
-            n "Huh...{w=0.3} you do have a point."
-            n "I suppose you'd call it a library,{w=0.1} or something like that?"
-            n "Well,{w=0.1} whatever."
-            n "I suppose I'd better {i}read{/i} up on my definitions,{w=0.1} right?"
-            n "Ehehe."
+            n 1flrpo "Huh...{w=0.3} you do have a point."
+            n 1tnmpo "I suppose you'd call it a library,{w=0.1} or something like that?"
+            n 1nnmsm "Well,{w=0.1} whatever."
+            n 1nsqsm "I suppose I'd better {i}read{/i} up on my definitions,{w=0.1} right?"
+            n 1nchsm "Ehehe."
 
         "Well,{w=0.1} it definitely isn't literature.":
-            n "Ha.{w=0.2} Ha.{w=0.2} Ha.{w=0.2} Ha.{w=0.2} ...Ha."
-            n "{i}Hilarious{/i},{w=0.1} [player]."
-            n "Keep it up,{w=0.1} and I'm gonna book you one."
-            n "...And no,{w=0.1} I don't mean read you a story."
-
-            if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-                n "Sheesh...{w=0.3} you're such a dummy sometimes,{w=0.1} [player]..."
+            n 1nsqsr "Ha.{w=0.2} Ha.{w=0.2} Ha.{w=0.2} Ha.{w=0.2} ...Ha."
+            n 1flrpo "{i}Hilarious{/i},{w=0.1} [player]."
+            n 1flraj "Keep it up,{w=0.1} and I'm gonna book you one."
+            n 1fsqsg "...And no,{w=0.1} I don't mean read you a story."
 
     return
 
