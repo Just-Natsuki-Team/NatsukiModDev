@@ -109,7 +109,7 @@ label compliment_amazing:
 
             $ relationship("affinity+")
 
-    $ last_compliment_type = jn_compliments.TYPE_AMAZING
+    $ jn_compliments.last_compliment_type = jn_compliments.TYPE_AMAZING
     return
 
 init 5 python:
@@ -163,7 +163,7 @@ label compliment_beautiful:
             n 1klrbgl "T-{w=0.1}thanks,{w=0.1} [player]."
 
             if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-                n 1kwmsmf "...Love you,{w=0.1} [player]...{w=0.3} Ahaha..."
+                n 1kwmsmf "... I love you,{w=0.1} [player]...{w=0.3} Ahaha..."
 
             $ relationship("affinity+")
 
@@ -182,7 +182,7 @@ label compliment_beautiful:
 
             $ relationship("affinity+")
 
-    $ last_compliment_type = jn_compliments.TYPE_BEAUTIFUL
+    $ jn_compliments.last_compliment_type = jn_compliments.TYPE_BEAUTIFUL
     return
 
 init 5 python:
@@ -230,7 +230,7 @@ label compliment_confident:
 
             $ relationship("affinity+")
 
-    $ last_compliment_type = jn_compliments.TYPE_CONFIDENT
+    $ jn_compliments.last_compliment_type = jn_compliments.TYPE_CONFIDENT
     return
 
 init 5 python:
@@ -248,51 +248,51 @@ init 5 python:
 label compliment_cute:
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_CUTE:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "..."
-            n "..."
-            n "..."
-            n "Urgh!"
-            n "Alright,{w=0.1} fine!{w=0.2} Fine!{w=0.2} You win,{w=0.1} okay?!"
-            n "I'm kinda...{w=0.3} maybe...{w=0.3} sorta...{w=0.3} somehow..."
-            n "In an abstract way..."
-            n "...{w=0.3}'cute.'"
-            n "..."
-            n "There.{w=0.3} I said it, [player].{w=0.3} I said it.{w=0.3} Hooray for you."
-            n "Are we done?{w=0.3} Are you happy?{w=0.3} Are you {i}pleased{/i} with yourself now?"
-            n "Jeez..."
-            n "I swear,{w=0.1} you're such a goofball sometimes..."
+            n 1fskwrl "..."
+            n 1fcsanl "..."
+            n 1fcsful "..."
+            n 1fcsfuf "Urgh!"
+            n 1fbkwrf "Alright,{w=0.1} fine!{w=0.2} Fine!{w=0.2} You win,{w=0.1} okay?!"
+            n 1fcsemf  "I'm kinda...{w=0.3} maybe...{w=0.3} sorta...{w=0.3} somehow..."
+            n 1fsqemf "In an abstract way..."
+            n 1fsqpuf "...{w=0.3}'cute.'"
+            n 1fsqslf "..."
+            n 1fcsemf "There.{w=0.3} I said it, [player].{w=0.3} I said it.{w=0.3} {i}Hooray{/i} for you."
+            n 1fsqpof "Are we done?{w=0.3} Are you happy?{w=0.3} Are you {i}pleased{/i} with yourself now?"
+            n 1flrpof "Jeez..."
+            n 1fnmpof "I swear,{w=0.1} you're such a goofball sometimes..."
 
             if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-                n "Besides,{w=0.1} I'm not even the cutest here,{w=0.1} anyhow..."
+                n 1fcsbgf "Besides,{w=0.1} I'm not even the cutest here,{w=0.1} a-{w=0.1}anyhow..."
                 $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-                n "I guess I'll let you figure out the rest,{w=0.1} [chosen_tease].{w=0.2} Ehehe."
+                n 1fcssmf "I guess I'll let you figure out the rest,{w=0.1} [chosen_tease].{w=0.2} Ehehe."
 
         else:
-            n "Nnnnnnn-!"
-            n "How many times do I have to say this,{w=0.1} [player]?!"
-            n "{i}I'm not cute!{/i}"
-            n "Jeez..."
-            n "Now I {i}know{/i} you just wanted me to say that,{w=0.1} didn't you?"
-            n "Really now...{w=0.3} you're such a jerk sometimes,{w=0.1} [player]."
+            n 1fcsanf "Nnnnnnn-!"
+            n 1fcsfuf "How many times do I have to say this,{w=0.1} [player]?!"
+            n 1fbkwrf "{i}I'm not cute!!{/i}"
+            n 1flremf "Jeez..."
+            n 1fsqemf "Now I {i}know{/i} you just wanted me to say that,{w=0.1} didn't you?"
+            n 1flrpof "Really now...{w=0.3} you're such a jerk sometimes,{w=0.1} [player]."
 
             if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-                n "You're just lucky I like you,{w=0.1} honestly."
-                n "Or I wouldn't be nearly this patient.{w=0.2} Ehehe."
+                n 1fsqpol "You're just lucky you're in my good books."
+                n 1fsqbgl "O-{w=0.1}or I wouldn't be nearly this patient.{w=0.2} Ehehe."
 
     else:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "A-{w=0.1}Aha!{w=0.2} Nope!"
-            n "Nice try,{w=0.1} [player]!"
-            n "You're not gonna get me to say it that easily!{w=0.2} Ehehe."
+            n 1fsqbsl "A-{w=0.1}Aha!{w=0.2} Nope!"
+            n 1fcsbgl "Nice try,{w=0.1} [player]!"
+            n 1fchgnl "You're not gonna get me to say it that easily!{w=0.2} Ehehe."
 
         else:
-            n "W-{w=0.1}what?{w=0.2} What did you just say?!"
-            n "..."
-            n "..."
-            n "I...{w=0.3} must have misheard you."
-            n "Yeah.{w=0.2} I totally misheard you.{w=0.2} One hundred percent."
+            n 1uskemf "W-{w=0.1}what?{w=0.2} What did you just say?!"
+            n 1nllemf "..."
+            n 1nlrpuf "..."
+            n 1flrbgl "I...{w=0.3} must have misheard you."
+            n 1fcsbgl "Y-{w=0.1}yeah.{w=0.2} Yeah!{w=0.2} I totally misheard you.{w=0.2} One hundred percent."
 
-    $ last_compliment_type = jn_compliments.TYPE_CUTE
+    $ jn_compliments.last_compliment_type = jn_compliments.TYPE_CUTE
     return
 
 init 5 python:
@@ -310,32 +310,34 @@ init 5 python:
 label compliment_hilarious:
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_HILARIOUS:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "Aww,{w=0.1} [player]!{w=0.2} Thanks!{w=0.2} I pride myself on that."
-            n "You aren't too shabby yourself,{w=0.1} you know!"
-            n "But anyway{w=0.1} -{w=0.1} I'll keep it up,{w=0.1} just for you.{w=0.2} Ehehe."
+            n 1uchgn "Ehehe. Thanks, [player]!{w=0.2} I pride myself on that,{w=0.1} you know."
+            n 1fnmbg "You aren't too shabby yourself,{w=0.1} you know!"
+            n 1fwlts "But anyway{w=0.1} -{w=0.1} I'll keep it up,{w=0.1} juuust for you.{w=0.2} Ehehe."
 
         else:
-            n "Ehehe.{w=0.2} I'm glad you're still having fun listening to me,{w=0.1} [player]."
-            n "Thanks!{w=0.2} I'll keep it up!"
+            n 1uchgn "Ehehe.{w=0.2} I'm glad you're still having fun listening to me,{w=0.1} [player]."
+            n 1fwlts "Thanks!{w=0.2} I'll keep it up!"
 
     else:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "Huh?{w=0.2} You do?"
-            n "...{w=0.3}To tell you the truth,{w=0.1} [player]?"
-            n "I'm honestly...{w=0.3} really glad to hear that."
-            n "It's probably dumb,{w=0.1} but I always worry a little about how much fun you're having here."
-            n "I don't want you to get all bored..."
-            n "So...{w=0.3} thanks for telling me that,{w=0.1} [player].{w=0.2} Truly."
-            n "It means a lot."
+            n 1unmpu "Huh?{w=0.2} You do?"
+            n 1nllpu "...{w=0.3}To tell you the truth,{w=0.1} [player]?"
+            n 1kllaj "I'm honestly...{w=0.3} really glad to hear that."
+            n 1kllsl "It's probably dumb,{w=0.1} but I always kinda worry about how much fun you're having here."
+            n 1klrsl "I...{w=0.3} don't want you to get all bored..."
+            n 1flrssl "That'd be super lame."
+            n 1kllbol "So...{w=0.3} thanks for telling me that,{w=0.1} [player].{w=0.2} Truly."
+            n 1klrssl "It means a lot."
             $ relationship("affinity+")
 
         else:
-            n "O-{w=0.1}Oh?{w=0.2} Aha!{w=0.2} Well,{w=0.1} I'm glad to hear it!"
-            n "You know what that means,{w=0.1} right?"
-            n "It means you have great taste,{w=0.1} [player].{w=0.2} Ahaha!"
+            n 1fcsbgl "O-{w=0.1}Oh?{w=0.2} Aha!{w=0.2} Well,{w=0.1} I'm glad to hear it!"
+            n 1fsqsm "You know what that means,{w=0.1} right?"
+            n 1fchgn "It means you have great taste,{w=0.1} [player]!"
+            n 1uchbs "Ahaha!"
             $ relationship("affinity+")
 
-    $ last_compliment_type = jn_compliments.TYPE_HILARIOUS
+    $ jn_compliments.last_compliment_type = jn_compliments.TYPE_HILARIOUS
     return
 
 init 5 python:
@@ -353,32 +355,32 @@ init 5 python:
 label compliment_inspirational:
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_INSPIRATIONAL:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "Ehehe. Thanks again for that, [player]."
-            n "I hope you know you're just as inspiring to me!"
+            n 1fchbg "Ahaha.{w=0.2} Thanks again for that,{w=0.1} [player]."
+            n 1nllss "You're not half-bad an inspiration either,{w=0.1} you know!"
 
         else:
-            n "Ehehe.{w=0.2} What can I say?{w=0.2} I'm a pro,{w=0.1} after all!"
-            n "But thanks,{w=0.1} [player]!"
-            n "I'm glad you still find inspiration in yours truly!"
+            n 1nchgn "Ehehe.{w=0.2} What can I say?{w=0.2} I'm a pro,{w=0.1} after all!"
+            n 1nnmbg "But thanks,{w=0.1} [player]!"
+            n 1fchsm "I'm glad you still find inspiration in yours truly!"
 
     else:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "H-{w=0.1}huh?{w=0.2} I'm inspirational to you?"
-            n "Ahaha...{w=0.3} well...{w=0.3} of course I am!"
-            n "..."
-            n "Though I'm glad to hear it,{w=0.1} all the same."
+            n 1fskeml "H-{w=0.1}huh?{w=0.2} I'm inspirational to you?"
+            n 1fllbgl "Ahaha...{w=0.3} well...{w=0.3} of course I am!"
+            n 1kllsr "..."
+            n 1kllssl "Though I'm glad to hear it,{w=0.1} all the same."
             $ relationship("affinity+")
 
         else:
-            n "H-{w=0.1}huh?{w=0.2} I'm an inspiration to you?"
-            n "Well...{w=0.3} o-{w=0.1}of course you'd think that!"
-            n "I mean,{w=0.1} role models don't come much better than me,{w=0.1} after all."
-            n "Why,{w=0.1} I'm practically an idol,{w=0.1} right?{w=0.2} Ahaha!"
-            n "..."
-            n "...Right?"
+            n 1fskeml "H-{w=0.1}huh?{w=0.2} I'm an inspiration to you?"
+            n 1fcsbgl "Well...{w=0.3} o-{w=0.1}of course you'd think that!"
+            n 1fllbgl "I mean,{w=0.1} role models don't come much better than me,{w=0.1} after all."
+            n 1uchgn "Why,{w=0.1} I'm practically an idol,{w=0.1} right?{w=0.2} Ahaha!"
+            n 1nllss "..."
+            n 1knmss "...Right?"
             $ relationship("affinity+")
 
-    $ last_compliment_type = jn_compliments.TYPE_INSPIRATIONAL
+    $ jn_compliments.last_compliment_type = jn_compliments.TYPE_INSPIRATIONAL
     return
 
 init 5 python:
@@ -395,70 +397,70 @@ init 5 python:
 
 label compliment_style:
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_STYLE:
-        if jn_globals.current_outfit:
+        if jn_outfits.current_outfit_name != "School uniform":
+
             # Non-uniform dialogue
             if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-                n "Ehehe.{w=0.2} Still awestruck by my sense of fashion,{w=0.1} [player]?"
-                n "You can't deny I'm a snappy dresser!"
+                n 1fchgn "Ehehe.{w=0.2} Still awestruck by my sense of fashion,{w=0.1} [player]?"
+                n 1fwlbg "You can't deny I'm a snappy dresser!"
 
                 if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
                     $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-                    n "I don't just dress for me though,{w=0.1} [chosen_tease]~"
-                    n "Ahaha!"
+                    n 1fllbgl "D-{w=0.1}don't think I just dress for me though,{w=0.1} [chosen_tease]~."
+                    n 1nchsml "Ahaha!"
 
             else:
-                n "Oh?{w=0.2} Someone could stand to take a few points,{w=0.1} huh?"
-                n "Ehehe!"
-                n "Relax,{w=0.1} relax!{w=0.2} I'm kidding,{w=0.1} [player].{w=0.2} Don't worry."
-                n "But thanks again!"
+                n 1tsgssl "Oh?{w=0.2} Someone could stand to take a few points,{w=0.1} huh?"
+                n 1fsgsm "Ehehe."
+                n 1fchbg "Relax,{w=0.1} relax!{w=0.2} I'm kidding,{w=0.1} [player].{w=0.2} Don't worry."
+                n 1fwrsm "But thanks again!"
 
         else:
             # Uniform dialogue
             if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-                n "I mean...{w=0.3} thanks again,{w=0.1} [player]..."
-                n "But it isn't like I picked out these clothes myself,{w=0.1} you know!"
-                n "A confidence boost is always welcome though."
+                n 1flleml "I mean...{w=0.3} thanks again,{w=0.1} [player]..."
+                n 1fllpol "But it isn't like I picked out these clothes myself,{w=0.1} you know!"
+                n 1flrsml "I guess a confidence boost is always welcome though..."
 
             else:
-                n "Ah...{w=0.3} well...{w=0.3} thanks again,{w=0.1} I think?"
+                n 1tlrpul "Uh...{w=0.3} well...{w=0.3} thanks again,{w=0.1} ...I think?"
                 $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-                n "But you could at least save the compliments for my own clothes,{w=0.1} [chosen_tease]..."
-                n "I appreciate the sentiment though...{w=0.3} I guess..."
+                n 1fllpol "You could at least save the compliments for my own clothes though,{w=0.1} [chosen_tease]..."
+                n 1nlrbg "But...{w=0.3} I guess I appreciate the sentiment.{w=0.2} Ahaha."
 
     else:
 
-        if jn_globals.current_outfit:
-            # Uniform dialogue
-            if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-                n "H-{w=0.1}huh?{w=0.2} You like my sense of style?"
-                n "I mean,{w=0.1} it's not like I can do much styling in this sort of getup..."
-                n "But thanks,{w=0.1} [player]."
-
-            else:
-                n "W-{w=0.1}what?{w=0.2} My sense of style?"
-                n "But [player]!{w=0.2} It isn't like I came up with this look myself!"
-                n "..."
-                n "Unless..."
-                n "A-{w=0.1}are you saying I look good in {i}uniform{/i}?"
-                n "..."
-                n "A-{w=0.1}ah!{w=0.2} Gross!{w=0.2} I don't like where this is going at all!"
-                $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-                n "Jeez,{w=0.1} [chosen_tease]..."
-
-        else:
+        if jn_outfits.current_outfit_name != "School uniform":
             # Non-uniform dialogue
             if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-                n "Ehehe.{w=0.2} I'm just happy you like this outfit,{w=0.1} [player]!"
-                n "But then...{w=0.3} should I really be surprised?"
-                n "I-{w=0.1}I'm the one wearing it,{w=0.1} a-{w=0.1}after all!"
+                n 1nchsml "Ehehe.{w=0.2} I'm just happy you like this outfit,{w=0.1} [player]!"
+                n 1usqsml "But then...{w=0.3} should I really be surprised?"
+                n 1fllssl "I-{w=0.1}I'm the one wearing it,{w=0.1} a-{w=0.1}after all!"
 
             else:
-                n "H-{w=0.1}ha!{w=0.2} I'm glad you agree!"
-                n "It's only natural though,{w=0.1} right?{w=0.2} I like to pride myself on my sense of style!"
-                n "Good job for noticing,{w=0.1} [player]."
-                n "Ehehe!"
+                n 1fchbgl "H-{w=0.1}ha!{w=0.2} I'm glad you agree!"
+                n 1fcsbgl "It's only natural though,{w=0.1} right?{w=0.2} I like to pride myself on my sense of style!"
+                n 1fchbg "Good job for noticing,{w=0.1} [player]!"
 
-    $ last_compliment_type = jn_compliments.TYPE_STYLE
+        else:
+            # Uniform dialogue
+            if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+                n 1tskeml "H-{w=0.1}huh?{w=0.2} You like my sense of style?"
+                n 1fllpol "I mean,{w=0.1} it's not like I can do much styling in this sort of getup..."
+                n 1flrpol "But thanks,{w=0.1} [player]."
+
+            else:
+                n 1tskeml "W-{w=0.1}what?{w=0.2} My sense of style?"
+                n 1fbkeml "But [player]!{w=0.2} It isn't like I came up with this look myself!"
+                n 1fsqpol "..."
+                n 1fllpul "Unless..."
+                n 1tnmaj "A-{w=0.1}are you saying I look good in {i}uniform{/i}?"
+                n 1fskemf "..."
+                n 1fbkwrf "A-{w=0.1}ah!{w=0.2} Gross!{w=0.2} I don't like where this is going at all!{w=0.2} That's enough!"
+                $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+                n 1flremf "Jeez,{w=0.1} [chosen_tease]..."
+            
+    $ jn_compliments.last_compliment_type = jn_compliments.TYPE_STYLE
     return
 
 init 5 python:
@@ -476,37 +478,37 @@ init 5 python:
 label compliment_thoughtful:
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_THOUGHTFUL:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "Nnnnn-!{w=0.2} what did I tell you,{w=0.1} [player]?"
-            n "I'm just...{w=0.3} giving as good as I get,{w=0.1} alright?"
-            n "Jeez...{w=0.3} are you trying to put me on the spot or what?"
+            n 1fcsanl "Nnnnn-!{w=0.2} what did I tell you,{w=0.1} [player]?"
+            n 1kllpol "I'm just...{w=0.3} giving as good as I get,{w=0.1} alright?"
+            n 1knmpol "Jeez...{w=0.3} are you trying to put me on the spot or what?"
             $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES).capitalize()
-            n "[chosen_tease]..."
-            n "But...{w=0.3} I'm just really glad you appreciate it,{w=0.1} [player]."
+            n 1klrpo "[chosen_tease]..."
+            n 1klrpu "But...{w=0.3} I'm just really glad you appreciate it,{w=0.1} [player]."
 
             if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-                n "You're totally worth the effort."
+                n 1knmsml "You're totally worth the effort."
 
         else:
-            n "Uuuuu...{w=0.3} jeez,{w=0.1} [player]..."
-            n "I already said it was nothing!{w=0.2} Are you trying to put me on the spot?"
-            n "It's fine,{w=0.1} so...{w=0.3} don't worry about it,{w=0.1} alright?"
+            n 1fcsanl "Uuuuu...{w=0.3} jeez,{w=0.1} [player]..."
+            n 1fbkeml "I already said it was nothing!{w=0.2} Are you trying to put me on the spot?"
+            n 1fllpol "It's fine,{w=0.1} so...{w=0.3} don't worry about it,{w=0.1} alright?"
             $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES).capitalize()
-            n "[chosen_tease]..."
+            n 1flrpol "[chosen_tease]..."
 
     else:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "Honestly,{w=0.1} [player]?{w=0.2} Don't worry about it,{w=0.1} 'kay?"
-            n "You've done so much for me already..."
-            n "So...{w=0.3} I'm just returning the favour,{w=0.1} that's all."
-            n "Ehehe..."
+            n 1klrpol "Honestly,{w=0.1} [player]?{w=0.2} Don't worry about it,{w=0.1} 'kay?"
+            n 1knmpol "You've done...{w=0.3} a lot for me already..."
+            n 1klrnvl "So...{w=0.3} I'm just returning the favour,{w=0.1} that's all."
+            n 1klrssl "Ahaha..."
 
         else:
-            n "Ah,{w=0.1} jeez,{w=0.1} [player]..."
-            n "It's nothing,{w=0.1} honestly!"
-            n "I-{w=0.1}I'm just trying to be friendly,{w=0.1} you know?"
-            n "Yeah!{w=0.2} Totally no special treatment going on here.{w=0.2} Nope!"
+            n 1fcsssl "Ah,{w=0.1} jeez,{w=0.1} [player]..."
+            n 1fllssl "It's nothing,{w=0.1} honestly!"
+            n 1knmpol "I-{w=0.1}I'm just trying to be friendly,{w=0.1} you know?"
+            n 1fcsbgl "Yeah!{w=0.2} Totally no special treatment going on here.{w=0.2} Nope!"
 
         $ relationship("affinity+")
 
-    $ last_compliment_type = jn_compliments.TYPE_THOUGHTFUL
+    $ jn_compliments.last_compliment_type = jn_compliments.TYPE_THOUGHTFUL
     return
