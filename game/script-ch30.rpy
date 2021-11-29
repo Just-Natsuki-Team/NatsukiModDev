@@ -141,7 +141,6 @@ init python:
     LAST_MINUTE_CHECK = datetime.datetime.now()
     LAST_HOUR_CHECK = LAST_MINUTE_CHECK.hour
     LAST_DAY_CHECK = LAST_MINUTE_CHECK.day
-    LAST_TIME_BLOCK = utils.get_current_time_block()
 
     _NAT_SAYS = 0
     _PLAYER_SAYS = 1

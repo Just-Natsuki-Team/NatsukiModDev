@@ -435,7 +435,7 @@ label compliment_style:
             if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
                 n 1nchsml "Ehehe.{w=0.2} I'm just happy you like this outfit,{w=0.1} [player]!"
                 n 1usqsml "But then...{w=0.3} should I really be surprised?"
-                n 1fllssl "I-{w=0.1}I'm the one wearing it,{w=0.1} a-{w=0.1}after all!"
+                n 1fllssl "I-{w=0.1}I {i}am{/i} the one wearing it,{w=0.1} a-{w=0.1}after all!"
 
             else:
                 n 1fchbgl "H-{w=0.1}ha!{w=0.2} I'm glad you agree!"
