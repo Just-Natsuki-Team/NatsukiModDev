@@ -186,7 +186,7 @@ init python:
             jn_atmosphere.show_random_sky()
 
         # Update outfit
-        if jn_outfits.get_outfit_for_time_block().name is not jn_outfits.current_outfit_name:
+        if jn_outfits.get_outfit_for_time_block().reference_name is not jn_outfits.current_outfit_name:
            
             # We call here so we don't skip day_check, as call returns us to this point
             renpy.call("outfits_time_of_day_change")

@@ -3,6 +3,7 @@ default persistent.jn_natsuki_current_outfit = "uniform"
 default persistent.jn_natsuki_current_hairstyle = "default"
 default persistent.jn_natsuki_current_accessory = "hairbands/red"
 default persistent.jn_natsuki_current_eyewear = None
+default persistent.jn_natsuki_saved_outfits = {}
 
 init python in jn_outfits:
     import random
@@ -11,6 +12,7 @@ init python in jn_outfits:
     import store.utils as utils
 
     current_outfit_name = None
+    _use_alt_outfit = random.choice(range(1, 3)) == 1
 
     class Outfit():
         """
@@ -18,23 +20,29 @@ init python in jn_outfits:
         """
         def __init__(
             self,
-            name,
+            display_name,
+            reference_name,
             unlocked,
             clothes,
             hairstyle,
             accessory,
             eyewear
         ):
-            self.name = name
+            self.display_name = display_name
+            self.reference_name = reference_name
             self.unlocked = unlocked
             self.clothes = clothes
             self.hairstyle = hairstyle
             self.accessory = accessory
             self.eyewear = eyewear
 
+    #TODO: We need a means of storing and recalling user-defined outfit combos, as well as creating them.
+    # For now, we'll settle with presets.
+
     # Default outfits
     DEFAULT_OUTFIT_UNIFORM = Outfit(
-        name="School uniform",
+        display_name="School uniform",
+        reference_name="jn_school_uniform",
         unlocked=True,
         clothes="uniform",
         hairstyle="default",
@@ -43,7 +51,8 @@ init python in jn_outfits:
     )
 
     DEFAULT_OUTFIT_CASUAL_WEEKDAY = Outfit(
-        name="Casual clothes",
+        display_name="Casual clothes",
+        reference_name="jn_casual_weekday",
         unlocked=True,
         clothes="casual",
         hairstyle="default",
@@ -51,29 +60,52 @@ init python in jn_outfits:
         eyewear=None
     )
 
-    DEFAULT_OUTFIT_CASUAL_WEEKEND = Outfit(
-        name="Casual clothes",
+    DEFAULT_OUTFIT_CASUAL_WEEKDAY_ALT = Outfit(
+        display_name="Casual clothes",
+        reference_name="jn_casual_weekday_alt",
         unlocked=True,
         clothes="casual",
-        hairstyle="bun",
+        hairstyle="ponytail",
         accessory="hairbands/white",
         eyewear=None
     )
 
-    DEFAULT_OUTFIT_MORNING = Outfit(
-        name="Pyjamas, night",
+    DEFAULT_OUTFIT_CASUAL_WEEKEND = Outfit(
+        display_name="Casual clothes",
+        reference_name="jn_casual_weekend",
         unlocked=True,
-        clothes="star_pajamas",
-        hairstyle="bedhead",
+        clothes="casual",
+        hairstyle="bun",
         accessory="hairbands/red",
         eyewear=None
     )
 
+    DEFAULT_OUTFIT_CASUAL_WEEKEND_ALT = Outfit(
+        display_name="Casual clothes",
+        reference_name="jn_casual_weekend_alt",
+        unlocked=True,
+        clothes="casual",
+        hairstyle="messy_bun",
+        accessory="hairbands/white",
+        eyewear=None
+    )
+
     DEFAULT_OUTFIT_NIGHT = Outfit(
-        name="Pyjamas, day",
+        display_name="Pyjamas",
+        reference_name="jn_pajamas_morning",
         unlocked=True,
         clothes="star_pajamas",
         hairstyle="down",
+        accessory="hairbands/red",
+        eyewear=None
+    )
+
+    DEFAULT_OUTFIT_MORNING = Outfit(
+        display_name="Pyjamas",
+        reference_name="jn_pajamas_night",
+        unlocked=True,
+        clothes="star_pajamas",
+        hairstyle="bedhead",
         accessory="hairbands/red",
         eyewear=None
     )
@@ -84,7 +116,7 @@ init python in jn_outfits:
         utils.TIME_BLOCK_MID_MORNING: DEFAULT_OUTFIT_UNIFORM,
         utils.TIME_BLOCK_LATE_MORNING: DEFAULT_OUTFIT_UNIFORM,
         utils.TIME_BLOCK_AFTERNOON: DEFAULT_OUTFIT_UNIFORM,
-        utils.TIME_BLOCK_EVENING: DEFAULT_OUTFIT_CASUAL_WEEKDAY,
+        utils.TIME_BLOCK_EVENING: DEFAULT_OUTFIT_CASUAL_WEEKDAY_ALT if _use_alt_outfit else DEFAULT_OUTFIT_CASUAL_WEEKDAY,
         utils.TIME_BLOCK_NIGHT: DEFAULT_OUTFIT_NIGHT
     }
 
@@ -92,8 +124,8 @@ init python in jn_outfits:
         utils.TIME_BLOCK_EARLY_MORNING: DEFAULT_OUTFIT_MORNING,
         utils.TIME_BLOCK_MID_MORNING: DEFAULT_OUTFIT_MORNING,
         utils.TIME_BLOCK_LATE_MORNING: DEFAULT_OUTFIT_MORNING,
-        utils.TIME_BLOCK_AFTERNOON: DEFAULT_OUTFIT_CASUAL_WEEKEND,
-        utils.TIME_BLOCK_EVENING: DEFAULT_OUTFIT_CASUAL_WEEKEND,
+        utils.TIME_BLOCK_AFTERNOON: DEFAULT_OUTFIT_CASUAL_WEEKEND_ALT if _use_alt_outfit else DEFAULT_OUTFIT_CASUAL_WEEKEND,
+        utils.TIME_BLOCK_EVENING: DEFAULT_OUTFIT_CASUAL_WEEKEND_ALT if _use_alt_outfit else DEFAULT_OUTFIT_CASUAL_WEEKEND,
         utils.TIME_BLOCK_NIGHT:DEFAULT_OUTFIT_NIGHT
     }
 
@@ -156,7 +188,7 @@ init python in jn_outfits:
             store.persistent.jn_natsuki_current_hairstyle = outfit.hairstyle
             store.persistent.jn_natsuki_current_accessory = outfit.accessory
             store.persistent.jn_natsuki_current_eyewear = outfit.eyewear
-            current_outfit_name = outfit.name
+            current_outfit_name = outfit.reference_name
 
         else:
             utils.log("Cannot dress Natsuki in outfit {0}; outfit is locked".format(outfit.name))
@@ -229,10 +261,9 @@ label outfits_time_of_day_change:
         n 1fsqsl "I'm changing."
 
     play audio drawer
-    with Fade(out_time=0.5, hold_time=1, in_time=0.5, color="#181212")
-    $ renpy.pause(delay=0.33, hard=True)
+    with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
     $ jn_outfits.set_outfit_for_time_block()
-
+    
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         n 1uchgn "Ta-da!{w=0.2} There we go!{w=0.2} Ehehe."
 
