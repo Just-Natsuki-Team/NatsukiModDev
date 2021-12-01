@@ -117,10 +117,11 @@ init python:
             (0, 0), "{0}{1}/clothes/[persistent.jn_natsuki_current_outfit]/body.png".format(_BASE_SPRITE_PATH, pose), # Outfit, body
         ]
 
-        if store.persistent.jn_natsuki_current_necklace is not None:
-            lc_args.extend([
-                (0, 0), "{0}{1}/necklace/[persistent.jn_natsuki_current_necklace].png".format(_BASE_SPRITE_PATH, pose)
-            ])
+         #TODO: Fix this
+        # if store.persistent.jn_natsuki_current_necklace is not None:
+        #     lc_args.extend([
+        #         (0, 0), "{0}{1}/necklace/[persistent.jn_natsuki_current_necklace].png".format(_BASE_SPRITE_PATH, pose)
+        #     ])
 
         lc_args.extend([
             (0, 0), "{0}{1}/base/head.png".format(_BASE_SPRITE_PATH, pose), # Head
@@ -152,15 +153,17 @@ init python:
                 (0, 0), "{0}{1}/face/tears/{2}.png".format((_BASE_SPRITE_PATH, pose, blush))
             ])
 
-        if store.persistent.jn_natsuki_current_headgear is not None:
-            lc_args.extend([
-                (0, 0), "{0}{1}/headgear/[persistent.jn_natsuki_current_headgear].png".format(_BASE_SPRITE_PATH, pose)
-            ])
+        #TODO: Fix this
+        # if store.persistent.jn_natsuki_current_headgear is not None:
+        #     lc_args.extend([
+        #         (0, 0), "{0}{1}/headgear/[persistent.jn_natsuki_current_headgear].png".format(_BASE_SPRITE_PATH, pose)
+        #     ])
 
-        if store.persistent.jn_natsuki_current_eyewear is not None:
-            lc_args.extend([
-                (0, 0), "{0}{1}/eyewear/[persistent.jn_natsuki_current_eyewear].png".format(_BASE_SPRITE_PATH, pose)
-            ])
+         #TODO: Fix this
+        # if store.persistent.jn_natsuki_current_eyewear is not None:
+        #     lc_args.extend([
+        #         (0, 0), "{0}{1}/eyewear/[persistent.jn_natsuki_current_eyewear].png".format(_BASE_SPRITE_PATH, pose)
+        #     ])
 
         lc_args.extend([
             (0, 0), "{0}{1}/face/eyebrows/{2}.png".format(_BASE_SPRITE_PATH, pose, eyebrows), # Brows
