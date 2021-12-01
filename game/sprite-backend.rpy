@@ -79,6 +79,8 @@ init python:
         winkright = 17
         lookleft = 18
         lookright = 19
+        squintleft = 20
+        squintright = 21
 
         def __str__(self):
             return self.name
@@ -110,10 +112,19 @@ init python:
         lc_args = [
             (1280, 720), # Anchor
             (0, 0), _BASE_SPRITE_PATH + "desk/chair-normal.png", # Chair
-            (0, 0), "{0}{1}/base/body.png".format(_BASE_SPRITE_PATH, pose), # Base
-                (0, 0), "{0}{1}/clothes/[persistent.jn_natsuki_current_outfit]/body.png".format(_BASE_SPRITE_PATH, pose), # Outfit, body
             (0, 0), "{0}{1}/hair/[persistent.jn_natsuki_current_hairstyle]/back.png".format(_BASE_SPRITE_PATH, pose), # Hair back
+            (0, 0), "{0}{1}/base/body.png".format(_BASE_SPRITE_PATH, pose), # Body
+            (0, 0), "{0}{1}/clothes/[persistent.jn_natsuki_current_outfit]/body.png".format(_BASE_SPRITE_PATH, pose), # Outfit, body
         ]
+
+        if store.persistent.jn_natsuki_current_necklace is not None:
+            lc_args.extend([
+                (0, 0), "{0}{1}/necklace/[persistent.jn_natsuki_current_necklace].png".format(_BASE_SPRITE_PATH, pose)
+            ])
+
+        lc_args.extend([
+            (0, 0), "{0}{1}/base/head.png".format(_BASE_SPRITE_PATH, pose), # Head
+        ])
 
         if blush:
             lc_args.extend([
@@ -141,6 +152,11 @@ init python:
                 (0, 0), "{0}{1}/face/tears/{2}.png".format((_BASE_SPRITE_PATH, pose, blush))
             ])
 
+        if store.persistent.jn_natsuki_current_headgear is not None:
+            lc_args.extend([
+                (0, 0), "{0}{1}/headgear/[persistent.jn_natsuki_current_headgear].png".format(_BASE_SPRITE_PATH, pose)
+            ])
+
         if store.persistent.jn_natsuki_current_eyewear is not None:
             lc_args.extend([
                 (0, 0), "{0}{1}/eyewear/[persistent.jn_natsuki_current_eyewear].png".format(_BASE_SPRITE_PATH, pose)
@@ -150,7 +166,9 @@ init python:
             (0, 0), "{0}{1}/face/eyebrows/{2}.png".format(_BASE_SPRITE_PATH, pose, eyebrows), # Brows
             (0, 0), _BASE_SPRITE_PATH + "/desk/table-normal.png" # Table
         ])
-
+        store.utils.log(store.utils.pretty_print(renpy.display.layout.LiveComposite(
+            *lc_args
+        )))
         # Generate and return the sprite
         return renpy.display.layout.LiveComposite(
             *lc_args
@@ -184,6 +202,8 @@ init 1 python:
         "sg": JNEyes.smug,
         "sp": JNEyes.sparkle,
         "sq": JNEyes.squint,
+        "sl": JNEyes.squintleft,
+        "sr": JNEyes.squintright,
         "un": JNEyes.unamused,
         "wm": JNEyes.warm,
         "wd": JNEyes.wide,
@@ -419,6 +439,8 @@ init 1 python:
 # sg - smug
 # sp - sparkle
 # sq - squint
+# sl - squint, left
+# sr - squint, right
 # un - unamused
 # wm - warm
 # wd - wide

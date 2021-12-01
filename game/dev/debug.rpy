@@ -917,9 +917,9 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="debug_composite_outfit_test",
+            label="debug_clothing_combinations",
             unlocked=True,
-            prompt="Can I give you a new look?",
+            prompt="Can I try out a new clothing combination?",
             conditional="config.console",
             category=["Debug (Sprites)"],
             player_says=True,
@@ -928,7 +928,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label debug_composite_outfit_test:
+label debug_clothing_combinations:
     n "Ooh!{w=0.2} What did you have in store for me,{w=0.1} [player]?{w=0.2} Let's find out!"
     menu:
         n "Okay! So what clothes should I wear?"
@@ -1022,4 +1022,47 @@ label debug_composite_outfit_test:
     n 1uchsm "Ta-da!{w=0.2} What do you think,{w=0.1} [player]?"
 
     with Fade(out_time=0.25, hold_time=0.25, in_time=0.25, color="#000000")
+    return
+
+# This topic allows us to test hair/outfit mechanics
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="debug_wear_outfit",
+            unlocked=True,
+            prompt="Can you wear an outfit for me?",
+            conditional="config.console",
+            category=["Debug (Sprites)"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label debug_wear_outfit:
+    n 1nchbg "Sure thing!{w=0.2} What do you want me to wear?"
+    $ outfit_options = [
+        (jn_outfits.DEFAULT_OUTFIT_UNIFORM.reference_name, jn_outfits.DEFAULT_OUTFIT_UNIFORM),
+        (jn_outfits.DEFAULT_OUTFIT_CASUAL_WEEKDAY.reference_name, jn_outfits.DEFAULT_OUTFIT_CASUAL_WEEKDAY),
+        (jn_outfits.DEFAULT_OUTFIT_CASUAL_WEEKDAY_ALT.reference_name, jn_outfits.DEFAULT_OUTFIT_CASUAL_WEEKDAY_ALT),
+        (jn_outfits.DEFAULT_OUTFIT_CASUAL_WEEKEND.reference_name, jn_outfits.DEFAULT_OUTFIT_CASUAL_WEEKEND),
+        (jn_outfits.DEFAULT_OUTFIT_CASUAL_WEEKEND_ALT.reference_name, jn_outfits.DEFAULT_OUTFIT_CASUAL_WEEKEND_ALT),
+        (jn_outfits.DEFAULT_OUTFIT_NIGHT.reference_name, jn_outfits.DEFAULT_OUTFIT_NIGHT),
+        (jn_outfits.DEFAULT_OUTFIT_MORNING.reference_name, jn_outfits.DEFAULT_OUTFIT_MORNING),
+        (jn_outfits.DEV_OUTFIT_QEEB.reference_name, jn_outfits.DEV_OUTFIT_QEEB),
+        (jn_outfits.DEV_OUTFIT_TRAINER.reference_name, jn_outfits.DEV_OUTFIT_TRAINER)
+    ]
+    call screen scrollable_choice_menu(outfit_options, ("Nevermind.", None))
+
+    if _return is not None:
+        n 1uchbg "Okaaay!{w=0.2} Just give me a sec..."
+        play audio drawer
+        with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
+        $ jn_outfits.set_outfit(_return)
+        n 1uchgn "And...{w=0.3} all done!"
+
+    else:
+        n 1tllpo "Oh... well, okay then."
+
     return

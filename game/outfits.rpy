@@ -3,6 +3,8 @@ default persistent.jn_natsuki_current_outfit = "uniform"
 default persistent.jn_natsuki_current_hairstyle = "default"
 default persistent.jn_natsuki_current_accessory = "hairbands/red"
 default persistent.jn_natsuki_current_eyewear = None
+default persistent.jn_natsuki_current_headgear = None
+default persistent.jn_natsuki_current_necklace = None
 default persistent.jn_natsuki_saved_outfits = {}
 
 init python in jn_outfits:
@@ -25,8 +27,10 @@ init python in jn_outfits:
             unlocked,
             clothes,
             hairstyle,
-            accessory,
-            eyewear
+            accessory=None,
+            eyewear=None,
+            headgear=None,
+            necklace=None
         ):
             self.display_name = display_name
             self.reference_name = reference_name
@@ -35,6 +39,8 @@ init python in jn_outfits:
             self.hairstyle = hairstyle
             self.accessory = accessory
             self.eyewear = eyewear
+            self.headgear = headgear
+            self.necklace = necklace
 
     #TODO: We need a means of storing and recalling user-defined outfit combos, as well as creating them.
     # For now, we'll settle with presets.
@@ -46,8 +52,7 @@ init python in jn_outfits:
         unlocked=True,
         clothes="uniform",
         hairstyle="default",
-        accessory="hairbands/red",
-        eyewear=None
+        accessory="hairbands/red"
     )
 
     DEFAULT_OUTFIT_CASUAL_WEEKDAY = Outfit(
@@ -56,8 +61,7 @@ init python in jn_outfits:
         unlocked=True,
         clothes="casual",
         hairstyle="default",
-        accessory="hairbands/red",
-        eyewear=None
+        accessory="hairbands/red"
     )
 
     DEFAULT_OUTFIT_CASUAL_WEEKDAY_ALT = Outfit(
@@ -66,8 +70,7 @@ init python in jn_outfits:
         unlocked=True,
         clothes="casual",
         hairstyle="ponytail",
-        accessory="hairbands/white",
-        eyewear=None
+        accessory="hairbands/white"
     )
 
     DEFAULT_OUTFIT_CASUAL_WEEKEND = Outfit(
@@ -76,8 +79,7 @@ init python in jn_outfits:
         unlocked=True,
         clothes="casual",
         hairstyle="bun",
-        accessory="hairbands/red",
-        eyewear=None
+        accessory="hairbands/red"
     )
 
     DEFAULT_OUTFIT_CASUAL_WEEKEND_ALT = Outfit(
@@ -86,8 +88,7 @@ init python in jn_outfits:
         unlocked=True,
         clothes="casual",
         hairstyle="messy_bun",
-        accessory="hairbands/white",
-        eyewear=None
+        accessory="hairbands/white"
     )
 
     DEFAULT_OUTFIT_NIGHT = Outfit(
@@ -96,8 +97,7 @@ init python in jn_outfits:
         unlocked=True,
         clothes="star_pajamas",
         hairstyle="down",
-        accessory="hairbands/red",
-        eyewear=None
+        accessory="hairbands/red"
     )
 
     DEFAULT_OUTFIT_MORNING = Outfit(
@@ -106,8 +106,7 @@ init python in jn_outfits:
         unlocked=True,
         clothes="star_pajamas",
         hairstyle="bedhead",
-        accessory="hairbands/red",
-        eyewear=None
+        accessory="hairbands/red"
     )
 
     # Default outfit schedules
@@ -188,6 +187,8 @@ init python in jn_outfits:
             store.persistent.jn_natsuki_current_hairstyle = outfit.hairstyle
             store.persistent.jn_natsuki_current_accessory = outfit.accessory
             store.persistent.jn_natsuki_current_eyewear = outfit.eyewear
+            store.persistent.jn_natsuki_current_headgear = outfit.headgear
+            store.persistent.jn_natsuki_current_necklace = outfit.necklace
             current_outfit_name = outfit.reference_name
 
         else:
