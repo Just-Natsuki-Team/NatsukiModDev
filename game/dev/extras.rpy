@@ -19,3 +19,12 @@ init 1 python in jn_outfits:
         headgear="trainer_hat",
         necklace="trainer_scarf"
     )
+
+    DEV_OUTFIT_LOW_CUT_DRESS = Outfit(
+        display_name="Low-cut dress",
+        reference_name="jn_low_cut_dress",
+        unlocked=True,
+        clothes="low_cut_dress",
+        hairstyle="ponytail",
+        accessory="hairbands/purple"
+    )

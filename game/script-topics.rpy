@@ -4112,12 +4112,6 @@ label talk_vtubers:
     n 1uchbs "Ahaha!"
     return
 
-label expr_test:
-    n 1fsgbg "Oh, I'm the best, alright."
-    n 1fsqbs "The best there ever was!"
-    n 1uchgn "Pfffffff-!"
-    return
-
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop

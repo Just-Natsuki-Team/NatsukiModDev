@@ -1051,11 +1051,12 @@ label debug_wear_outfit:
         (jn_outfits.DEFAULT_OUTFIT_NIGHT.reference_name, jn_outfits.DEFAULT_OUTFIT_NIGHT),
         (jn_outfits.DEFAULT_OUTFIT_MORNING.reference_name, jn_outfits.DEFAULT_OUTFIT_MORNING),
         (jn_outfits.DEV_OUTFIT_QEEB.reference_name, jn_outfits.DEV_OUTFIT_QEEB),
-        (jn_outfits.DEV_OUTFIT_TRAINER.reference_name, jn_outfits.DEV_OUTFIT_TRAINER)
+        (jn_outfits.DEV_OUTFIT_TRAINER.reference_name, jn_outfits.DEV_OUTFIT_TRAINER),
+        (jn_outfits.DEV_OUTFIT_LOW_CUT_DRESS.reference_name, jn_outfits.DEV_OUTFIT_LOW_CUT_DRESS)
     ]
     call screen scrollable_choice_menu(outfit_options, ("Nevermind.", None))
 
-    if _return is not None:
+    if isinstance(_return, jn_outfits.Outfit):
         n 1uchbg "Okaaay!{w=0.2} Just give me a sec..."
         play audio drawer
         with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
@@ -1063,6 +1064,6 @@ label debug_wear_outfit:
         n 1uchgn "And...{w=0.3} all done!"
 
     else:
-        n 1tllpo "Oh... well, okay then."
+        n 1tllpo "Oh...{w=0.3} well,{w=0.1} okay then."
 
     return
