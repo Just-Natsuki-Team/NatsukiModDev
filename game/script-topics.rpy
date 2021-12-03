@@ -3150,95 +3150,95 @@ label talk_how_do_you_feel_about_me:
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
 
         if persistent.jn_player_love_you_count > 0:
-            n "[player]...{w=0.3} isn't it obvious? You know I love you already,{w=0.1} right?"
-            n "Jeez...{w=0.3} you really are a dork sometimes,{w=0.1} you know."
-            n "But...{w=0.3} I really like that silly part of you,{w=0.1} [player]."
-            n "Never change,{w=0.1} 'kay? Ehehe."
-            n "Love you,{w=0.1} [player]~!"
+            n 1kwmpof "[player]...{w=0.3} isn't it obvious? You know I love you already,{w=0.1} right?"
+            n 1fllpol "Jeez...{w=0.3} you really are a dork sometimes,{w=0.1} you know."
+            n 1kllssl "But...{w=0.3} I kinda like that silly part of you,{w=0.1} [player]."
+            n 1nwmbgl "Never change,{w=0.1} 'kay? Ehehe."
+            n 1nchbgl "Love you,{w=0.1} [player]~!"
 
         else:
-            n "Nnnnnnn-!"
-            n "C-{w=0.1}come on! Isn't it obvious by now? Jeez...{w=0.3}"
-            n "Do I really have to spell it out for you,{w=0.1} [player]?"
-            n "Ugh...{w=0.3}"
-            n "Heh.{w=0.2} Actually,{w=0.1} you know what?"
-            n "I'll let you figure it out."
-            n "And no,{w=0.1} before you ask -{w=0.1} you've had enough hints already."
-            n "Ehehe...{w=0.3}"
+            n 1fcsanf "Nnnnnnn-!"
+            n 1fnmanf "C-{w=0.1}come on! Isn't it obvious by now? Jeez...{w=0.3}"
+            n 1fllpof "Do I really have to spell it out for you,{w=0.1} [player]?"
+            n 1fcspol "Ugh...{w=0.3}"
+            n 1fsqssl "Heh.{w=0.2} Actually,{w=0.1} you know what?"
+            n 1fsqbgl "I'll let you figure it out."
+            n 1fslajl "And no,{w=0.1} before you ask -{w=0.1} you've had enough hints already."
+            n 1fllpol "Dummy..."
 
         return
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n "Uuuuuu-!"
-        n "A-{w=0.1}are you trying to put me on the spot or something,{w=0.1} [player]?"
-        n "Jeez...{w=0.3}"
-        n "You should really know how I feel about you by now,{w=0.1} you know...{w=0.3}"
-        n "...{w=0.3}"
-        n "...{w=0.3}Fine.{w=0.2} I...{w=0.3} really...{w=0.3} like you,{w=0.1} [player]."
-        n "I-{w=0.1}is that enough for you? Ahaha...{w=0.3}"
+        n 1fcsanf "Uuuuuu-!"
+        n 1fskwrf "A-{w=0.1}are you trying to put me on the spot or something,{w=0.1} [player]?"
+        n 1fllemf "Jeez...{w=0.3}"
+        n 1fcseml "You should {i}know{/i} what I think of you by now...{w=0.3}"
+        n 1fllpol "...{w=0.3}"
+        n 1kcspol "...{w=0.3}Fine."
+        n 1fcspol "I...{w=0.3} like...{w=0.3} you,{w=0.1} [player].{w=0.2} A bunch."
+        n 1fbkwrf "T-{w=0.1}there!{w=0.2} Happy now?!"
+        n 1kllsrl "Sheesh..."
         return
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        n "H-{w=0.1}huh? How do I feel about you?"
-        n "W-{w=0.1}what're you worrying about that for,{w=0.1} you dummy?!"
-        n "You're a-{w=0.1}okay in my books,{w=0.1} [player]...{w=0.3} so just take it easy!"
-        n "Jeez...{w=0.3} you'll make things all awkward at this rate."
-        n "Ahaha...{w=0.3}"
+        n 1fskemf "H-{w=0.1}huh? How do I feel about you?"
+        n 1fbkwrf "W-{w=0.1}what're you asking me about that for?!"
+        n 1fllpol "Sheesh,{w=0.1} [player]...{w=0.3} you'll make things all awkward at this rate..."
+        n 1fcseml "You're fine,{w=0.1} so you don't need to keep bugging me about it!"
+        n 1flrunl "Jeez..."
         return
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
-        n "Huh? Well,{w=0.1} I mean...{w=0.3}"
-        n "You're pretty fun to be with,{w=0.1} all things considered!"
-        n "I guess...{w=0.3} keep up the good work?"
-        n "Ehehe...{w=0.3}"
+        n 1uskemf "H-huh?!"
+        n 1fllbgl "O-oh! Ahaha..."
+        n 1nllaj "Well,{w=0.1} I mean...{w=0.3}"
+        n 1ullaj "You're pretty fun to be with,{w=0.1} all things considered."
+        n 1fllnvl "So...{w=0.3} yeah...."
         return
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "H-{w=0.1}huh? How do I feel about...{w=0.3} you?"
-        n "I-{w=0.1}I mean,{w=0.1} you're alright...{w=0.3} I guess?"
-        n "Ahaha...{w=0.3}"
-        n "...{w=0.3}"
-        n "W-{w=0.1}what?! It's the truth,{w=0.1} so...{w=0.3} yeah."
-        n "...{w=0.3}"
-        n "Let's just get back to it already!"
-        n "Jeez...{w=0.3}"
+        n 1uskeml "H-{w=0.1}huh?!"
+        n 1fllbg "O-oh!"
+        n 1unmaj "I mean...{w=0.3} you're alright...{w=0.3} I guess?"
+        n 1nnmpu "That's about all I can say so far,{w=0.1} so...{w=0.3} yeah."
+        n 1nllca "...{w=0.3}"
+        n 1nlraj "So... where were we?"
         return
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
-        n "...{w=0.3}Oh? That matters to you now,{w=0.1} does it?"
-        n "Then tell me,{w=0.1} [player]."
-        n "Why did you keep hurting my feelings like that?"
-        n "...{w=0.3}"
-        n "I don't have much patience for jerks,{w=0.1} [player].{w=0.2} You're better than this."
-        n "I don't know if you're trying to be funny or what,{w=0.1} but knock it off."
-        n "I'd appreciate it.{w=0.2} Thanks."
+        n 1fsqaj "...{w=0.3}Oh? That matters to you now,{w=0.1} does it?"
+        n 1fsqbo "Then tell me,{w=0.1} [player]."
+        n 1fnmun "Why did you keep hurting my feelings like that?"
+        n 1fcsun "...{w=0.3}"
+        n 1fllan "I don't have much patience for jerks,{w=0.1} [player]."
+        n 1fnmaj "I don't know if you're trying to be funny or what,{w=0.1} but knock it off.{w=0.2} Got it?"
+        n 1fsqsr "Thanks."
         return
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-        n "...{w=0.3}Let's just cut the crap."
-        n "You've hurt me,{w=0.1} [player].{w=0.2} You've hurt me again,{w=0.1} and again."
-        n "You've done it so many times now."
-        n "So you tell me."
-        n "What the hell would {i}you{/i} think of someone who did that to you?"
-        n "...{w=0.3}"
-        n "You're on thin ice,{w=0.1} [player]."
-        n "That's all I'm gonna say...{w=0.3}"
+        n 1fsqsr "...{w=0.3}Let's just cut the crap."
+        n 1fcsan "You've hurt me,{w=0.1} [player].{w=0.2} You've hurt me again,{w=0.1} and again."
+        n 1fnmfu "You've done it so many times now."
+        n 1fnman "So you tell me."
+        n 1fsqpu "What the hell would {i}you{/i} think of someone who did that to you?"
+        n 1fcspu "...{w=0.3}"
+        n 1fsqan "You're on thin ice,{w=0.1} [player].{w=0.2} Got it?"
         return
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.BROKEN:
         $ already_discussed_relationship = get_topic("talk_how_do_you_feel_about_me").shown_count > 0
         if already_discussed_relationship:
-            n "...Wow. Really?"
+            n 1fsqpu "...Wow.{w=0.2} Really?"
 
         else:
-            n "...{w=0.3}I have no words for how I feel about {i}you{/i}."
-            n "Don't even bother asking twice."
+            n 1fsqpu "...{w=0.3}I have no words for how I feel about {i}you{/i}."
+            n 1fsqfu "Don't freaking test me, {i}[player]{/i}."
 
         return
 
     else:
-        n "...{w=0.3}...{w=0.3}"
-        n "...{w=0.3}...{w=0.3}"
+        n 1fcsun "...{w=0.3}...{w=0.3}"
+        n 1fcsan "...{w=0.3}...{w=0.3}"
         return
 
     return
