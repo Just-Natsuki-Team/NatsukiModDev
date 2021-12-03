@@ -3047,43 +3047,44 @@ label talk_are_you_into_cars:
     if already_discussed_driving:
         # Natsuki has already established she can't drive at some point
         if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-            n "Eh?{w=0.2} Cars?"
-            n "You know I can't drive,{w=0.1} dummy!{w=0.2} I don't really think I have much of a reason to be into cars!"
-            n "Well,{w=0.1} anyway..."
+            n 1unmaj "Eh?{w=0.2} Cars?"
+            n 1fchgn "Jeez,{w=0.1} you know I can't drive,{w=0.1} dummy!{w=0.2} I don't have a reason to be into cars!"
+            n 1nlrbg "Well,{w=0.1} anyway..."
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-            n "[player].{w=0.2} You know I can't drive.{w=0.2} Why would you think I'd be into cars,{w=0.1} of all things?"
-            n "...Fine.{w=0.2} Whatever."
+            n 1fcssl 1nnmsl "[player].{w=0.2} You know I can't drive.{w=0.2} Why would you think I'd be into cars,{w=0.1} of all things?"
+            n 1fllsl 1nllsl "...Fine.{w=0.2} Whatever."
 
         else:
-            n "...Really?"
-            n "You know I can't drive.{w=0.2} So I'm not even going to {i}pretend{/i} I care if you're into that,{w=0.1} [player]."
-            n "Besides...{w=0.3} I bet you'd {i}never{/i} treat your dream car like you treat me,{w=0.1} would you?"
+            n 1fsqpu "...Really?"
+            n 1fsqaj "You know I can't drive.{w=0.2} So I'm not even going to {i}pretend{/i} I care if you're into that,{w=0.1} [player]."
+            n 1fsqan "Besides...{w=0.3} I bet you'd {i}never{/i} treat your dream car like you treat me,{w=0.1} would you?"
             return
 
     else:
         # Natsuki hasn't stated she can't drive before
         if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-            n "Huh?{w=0.1} Am I into cars?"
-            n "Well...{w=0.3} to tell you the truth,{w=0.1} [player]?"
-            n "...I've never actually owned a license.{w=0.2} I don't even think I could afford to learn!"
-            n "So I've never really been drawn to them honestly."
+            n 1unmaj "Huh?{w=0.1} Am I into cars?"
+            n 1fllnv "Well...{w=0.3} to tell you the truth,{w=0.1} [player]?"
+            n 1unmaj "...I've never actually owned a license." 
+            n 1flrpo "I don't even think I could afford to learn!"
+            n 1nnmaj "So I've never really been drawn to them honestly."
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-            n "I can't drive,{w=0.1} [player].{w=0.2} I don't have a license either;{w=0.1} learning was always too expensive."
-            n "So...{w=0.3} why would I be into that?{w=0.1} I literally can't {i}afford{/i} to be."
+            n 1fnmsr "I can't drive,{w=0.1} [player].{w=0.2} I don't have a license either;{w=0.1} learning was always too expensive."
+            n 1fnmpu "So...{w=0.3} why would I be into that?{w=0.1} I literally can't {i}afford{/i} to be."
 
         else:
-            n "Newsflash,{w=0.1} jerk.{w=0.2} I {i}can't{/i} drive,{w=0.1} and I can't even afford to {i}learn{/i}."
-            n "So you tell {i}me{/i} -{w=0.1} why would I be into cars?{w=0.2} And if I was,{w=0.1} why the hell would I want to talk to {i}you{/i} about them?"
-            n "...Heh.{w=0.2} Yeah,{w=0.1} I thought so.{w=0.2} We're done here,{w=0.1} [player]."
+            n 1fcsan "Newsflash,{w=0.1} jerk.{w=0.2} I {i}can't{/i} drive,{w=0.1} and I can't even afford to {i}learn{/i}."
+            n 1fsqan "So you tell {i}me{/i} -{w=0.1} why would I be into cars?{w=0.2} And if I was,{w=0.1} why the hell would I want to talk to {i}you{/i} about them?"
+            n 1fcspu "...Heh.{w=0.2} Yeah,{w=0.1} I thought so.{w=0.2} We're done here,{w=0.1} [player]."
             return
 
     if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "I can appreciate the talent that goes into them -{w=0.1} I think it's actually pretty cool how expressive they can be!"
-        n "Like...{w=0.3} the design languages of all the different brands,{w=0.1} the engineering that goes into them and all that."
-        n "It's pretty insane how much work goes into it;{w=0.1} and that's definitely something I have respect for!"
-        n "What about your side of the story, [player]?{w=0.2} You {i}did{/i} bring it up,{w=0.1} but I thought I'd ask anyway..."
+        n 1unmsm "I can appreciate the talent that goes into them -{w=0.1} I think it's actually pretty cool how expressive they can be!"
+        n 1nllss "Like...{w=0.3} the design languages of all the different brands,{w=0.1} the engineering that goes into them and all that."
+        n 1fchbg "It's pretty insane how much work goes into it;{w=0.1} and that's definitely something I have respect for!"
+        n 1fsqsm "What about you though, [player]?{w=0.2} You {i}did{/i} bring it up,{w=0.1} but I thought I'd ask anyway..."
         menu:
             n "Are you into cars?"
 
@@ -3091,43 +3092,43 @@ label talk_are_you_into_cars:
 
                 # The player has never stated if they can drive
                 if persistent.jn_player_can_drive is None:
-                    n "Huh.{w=0.2} I wasn't actually sure if you could even drive,{w=0.1} but I guess it doesn't matter really."
-                    n "I guess being a petrolhead isn't an exclusive club,{w=0.1} huh?"
-                    n "Ehehe."
+                    n 1tllbo "Huh.{w=0.2} I wasn't actually sure if you could even drive,{w=0.1} but I suppose that doesn't matter really."
+                    n 1fsqsm "I guess being a petrolhead isn't an exclusive club,{w=0.1} huh?"
+                    n 1uchbg "Ahaha."
 
                 # The player has confirmed they can drive
                 elif persistent.jn_player_can_drive:
-                    n "Well,{w=0.1} color {i}me{/i} surprised."
-                    n "Ehehe."
-                    n "Don't worry,{w=0.1} I had you figured for the sort,{w=0.2} [player]."
-                    n "But hey -{w=0.1} whatever floats your boat!"
+                    n 1fsgbg "Well,{w=0.1} color {i}me{/i} surprised."
+                    n 1fchgn "Ehehe."
+                    n 1fcsbg "Don't worry,{w=0.1} I had you figured for the sort,{w=0.2} [player]."
+                    n 1fchbg "But hey -{w=0.1} whatever floats your boat!"
 
                 # The player has admitted they cannot drive
                 else:
-                    n "That's...{w=0.3} actually pretty surprising to hear from you,{w=0.1} [player]."
-                    n "You know,{w=0.1} since you said you can't drive and all that..."
-                    n "But I guess it's like anything -{w=0.1} you don't have to be doing it to be a fan,{w=0.1} and that's fine with me!"
+                    n 1unmaj "That's...{w=0.3} actually pretty surprising to hear from you,{w=0.1} [player]."
+                    n 1nllaj "You know,{w=0.1} since you said you can't drive and all that..."
+                    n 1fchbg "But I guess it's like anything -{w=0.1} you don't have to be doing it to be a fan,{w=0.1} and that's fine with me!"
 
             "I don't care much for them.":
-                n "I guess that's fair enough -{w=0.1} and don't worry,{w=0.1} I completely get it."
-                n "But if someone's into that kind of thing,{w=0.1} who am we to judge,{w=0.1} after all?"
-                n "Ahaha."
+                n 1ullss "I guess that's fair enough -{w=0.1} and don't worry,{w=0.1} I completely get it."
+                n 1nnmsm "But if someone's into that kind of thing,{w=0.1} who are we to judge,{w=0.1} after all?"
 
             "No, I'm not into them.":
-                n "...Huh.{w=0.2} That's kinda weird -{w=0.1} then why did you bring it up,{w=0.1} [player]?"
+                n 1ulraj "...Huh.{w=0.2} That's kinda weird -{w=0.1} then why did you bring it up,{w=0.1} [player]?"
 
                 if persistent.jn_player_can_drive:
-                    n "Especially if you can drive!"
-                    n "Huh..."
+                    n 1tlraj "Especially if you can drive!"
+                    n 1tllpu "Huh..."
 
-                n "Well,{w=0.1} anyway.{w=0.2} Fair enough I guess!"
+                n 1fchbg "Well,{w=0.1} anyway.{w=0.2} Fair enough I guess!"
 
     else:
-        n "I guess I can respect the work and talent that goes into designing and making one..."
-        n "But it's just the same as anything else."
-        n "I suppose you're into your cars then,{w=0.1} are you?"
-        n "Heh.{w=0.2} It'd be nice if you extended that respect to {i}people{/i} too,{w=0.1} [player]."
-        n "Just saying."
+        n 1flrsr "I guess I can respect the work and talent that goes into designing and making one..."
+        n 1fnmbo "But it's just the same as anything else."
+        n 1fsqbo "...I suppose you're into your cars then,{w=0.1} are you?"
+        n 1fcspu "Heh."
+        n 1fsqpu "It'd be nice if you extended that respect to {i}people{/i} too,{w=0.1} [player]."
+        n 1fsqsr "{i}Just saying.{/i}"
 
     return
 
