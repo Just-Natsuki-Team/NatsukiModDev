@@ -3264,102 +3264,103 @@ label talk_are_you_into_cosplay:
     $ already_mentioned_sewing = get_topic("talk_sustainable_fashion").shown_count > 0 or get_topic("talk_are_you_into_cosplay").shown_count > 0
 
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n "Ooh!{w=0.2} Cosplay,{w=0.1} you say?"
-        n "Honestly,{w=0.1} I've never really done any cosplaying or anything..."
-        n "But I've actually thought about it a lot since I got into manga and all that stuff more!"
-        n "Plus I mean,{w=0.1} why shouldn't I?{w=0.2} There isn't a whole lot stopping me."
+        n 1unmbg "Ooh!{w=0.2} Cosplay,{w=0.1} you say?"
+        n 1fllbg "Honestly,{w=0.1} I've never really done any cosplaying or anything..."
+        n 1nnmss "But I've actually thought about it a lot since I got into manga and all that stuff more!"
+        n 1flrbg "Plus I mean,{w=0.1} why shouldn't I?{w=0.2} There isn't a whole lot stopping me."
 
         if already_mentioned_sewing:
-            n "Like I think I mentioned before -{w=0.1} I'm already pretty handy with a needle and thread,{w=0.1} if I say so myself!"
+            n 1fcssm "Like I think I mentioned before -{w=0.1} I'm already pretty handy with a needle and thread,{w=0.1} if I say so myself!"
 
         else:
-            n "I'm actually pretty handy with the old needle and thread,{w=0.1} you know!"
+            n 1fwlsm "I'm actually pretty handy with the old needle and thread,{w=0.1} you know!"
 
-        n "And materials aren't really that expensive either -{w=0.1} besides props and wigs,{w=0.1} anyway."
-        n "So it seems like a pretty awesome way to show my appreciation for characters I like and show my {i}limitless{/i} talent while I'm at it."
-        n "Ahaha!"
-        n "And who knows?"
-        n "Maybe you'll get to see some of my handiwork some day,{w=0.1} [player]."
-        n "I bet you'd like that,{w=0.1} huh?{w=0.2} Ehehe."
-        n "No need to be shy,{w=0.1} [player] -{w=0.1} I can read you like a book."
-        n "A gross book,{w=0.1} but a book nonetheless~."
-        n "Ahaha!"
+        n 1ulrss "And materials aren't really that expensive either -{w=0.1} besides props and wigs,{w=0.1} anyway."
+        n 1nnmsm "So it seems like a pretty awesome way to show my appreciation for characters I like..." 
+        n 1fsqbg "...And show my {i}limitless{/i} talent while I'm at it."
+        n 1fchgn "Ahaha!"
+        n 1uchgn "And who knows?"
+        n 1uchsm "Maybe you'll get to see some of my handiwork some day,{w=0.1} [player]."
+        n 1fsqbg "I bet you'd like that,{w=0.1} huh?{w=0.2} Ehehe."
+        n 1fsgsg "No need to be shy,{w=0.1} [player] -{w=0.1} I can read you like a book."
+        n 1fsqsgl "A gross book,{w=0.1} but a book nonetheless~."
+        n 1fchgn "Ahaha!"
         return
 
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-            n "Love you,{w=0.1} [player]~!"
+            n 1uchtsl "Love you,{w=0.1} [player]~!"
             return
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
-        n "...Why did I get the feeling you'd bring this up sooner or later,{w=0.1} [player]?"
-        n "What?{w=0.2} Did you think I'd {i}automatically{/i} be into it because I read manga from time to time?"
-        n "Huh?{w=0.2} Is that it?"
-        n "Well?"
-        n "Speak up,{w=0.1} [player]!{w=0.2} I can't hear you~!"
-        n "..."
-        n "Ahaha!{w=0.2} Nah,{w=0.1} it's fine."
-        n "I've thought about it a bunch,{w=0.1} honestly -{w=0.1} like since I got into manga and all that a while ago."
-        n "I haven't {i}actually{/i} gone and dressed up yet,{w=0.1} though."
-        n "But there really isn't much stopping me,{w=0.1} [player]."
+        n 1tsrpu "...Why did I get the feeling you'd bring this up sooner or later,{w=0.1} [player]?"
+        n 1fnmpo "What?{w=0.2} Did you think I'd {i}automatically{/i} be into it because I read manga from time to time?"
+        n 1fsqpo "Huh?{w=0.2} Is that it?"
+        n 1fnmaj "Well?"
+        n 1fsqsg "Speak up,{w=0.1} [player]!{w=0.2} I can't hear you~!"
+        n 1fslpo "..."
+        n 1fchgn "Ahaha!{w=0.2} Nah,{w=0.1} it's fine."
+        n 1ulraj "I've thought about it a bunch,{w=0.1} honestly -{w=0.1} like since I got into manga and all that a while ago."
+        n 1nnmaj "I haven't {i}actually{/i} gone and dressed up yet,{w=0.1} though."
+        n 1fnmaj "But there really isn't much stopping me,{w=0.1} [player]."
 
         if already_mentioned_sewing:
-            n "Like I said -{w=0.1} I already fix up and make my own normal clothes,{w=0.1} so a costume isn't much of a leap."
+            n 1ullbo "Like I said -{w=0.1} I already fix up and make my own normal clothes,{w=0.1} so a costume isn't much of a leap."
 
         else:
-            n "You could say I'm something of a pro with a needle and thread,{w=0.1} so it's right up my alley!"
+            n 1flrbg "You could say I'm something of a pro with a needle and thread,{w=0.1} so it's right up my alley!"
 
-        n "Besides,{w=0.1} I've done the math on materials -{w=0.1} it's actually pretty affordable,{w=0.1} so that's all good."
-        n "Well,{w=0.1} besides wigs and props and stuff.{w=0.2} Those can be kinda pricey,{w=0.1} but not exactly unaffordable -{w=0.1} just gotta shop around!"
-        n "That being said...{w=0.3} hmm..."
-        n "You know what,{w=0.1} [player]?"
-        n "Perhaps I might just give it a shot...{w=0.3} yeah!"
-        n "Man,{w=0.1} I've got so many awesome ideas buzzing around in my head now!"
-        n "Oh -{w=0.1} don't worry -{w=0.1} you'll get your chance to see them too.{w=0.2} I'll need a second opinion after all."
-        n "That's what friends are for,{w=0.1} right?{w=0.2} Ehehe."
+        n 1unmaj "Besides,{w=0.1} I've done the math on materials -{w=0.1} it's actually pretty affordable,{w=0.1} so that's all good."
+        n 1nllaj "Well,{w=0.1} besides wigs and props and stuff.{w=0.2} Those can be kinda pricey,{w=0.1} but not exactly unaffordable -{w=0.1} just gotta shop around!"
+        n 1fllsl "That being said...{w=0.3} hmm..."
+        n 1fllsm "You know what,{w=0.1} [player]?"
+        n 1fnmbg "Perhaps I might just give it a shot...{w=0.3} yeah!"
+        n 1fchgn "Man,{w=0.1} I've got so many awesome ideas buzzing around in my head now!"
+        n 1fchsm "Oh -{w=0.1} don't worry -{w=0.1} you'll get your chance to see them too.{w=0.2} I'll need a second opinion after all."
+        n 1uchbg "That's what friends are for,{w=0.1} right?{w=0.2} Ehehe."
 
         if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            n "Besides,{w=0.1} [player].{w=0.2} You seem to have pretty good taste."
-            n "I think I can trust your judgement.{w=0.2} Ahaha."
+            n 1fsqbg "Besides,{w=0.1} [player].{w=0.2} You seem to have pretty good taste."
+            n 1fsqsml "I think I can trust your judgement..."
 
         return
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "Cosplay,{w=0.1} huh?"
-        n "Well...{w=0.3} I mean,{w=0.1} I've considered it,{w=0.1} if that's what you're asking."
-        n "I never really thought about it that much until I got more into manga and things like that."
-        n "It kinda feels like once you start getting into that stuff,{w=0.1} you discover tons more at once!"
-        n "But anyway,{w=0.1} I've never actually gone out and cosplayed myself."
-        n "T-{w=0.1}that isn't to say there's anything stopping me,{w=0.1} of course!"
+        n 1unmaj "Cosplay,{w=0.1} huh?"
+        n 1ulraj "Well...{w=0.3} I mean,{w=0.1} I've considered it,{w=0.1} if that's what you're asking."
+        n 1nnmbo "I never really thought about it that much until I got more into manga and things like that."
+        n 1flrbg "It kinda feels like once you start getting into that stuff,{w=0.1} you discover tons more at once!"
+        n 1nnmaj "But anyway,{w=0.1} I've never actually gone out and cosplayed myself."
+        n 1flleml "T-{w=0.1}that isn't to say there's anything stopping me,{w=0.1} of course!"
 
         if already_mentioned_sewing:
-            n "I told you already that I'm pretty good with a needle and thread,{w=0.1} so that's a-{w=0.1}okay!"
+            n 1fllss "I told you already that I'm pretty good with a needle and thread,{w=0.1} so that's a-{w=0.1}okay!"
 
         else:
-            n "I'm basically a pro with a needle and thread,{w=0.1} so that's the hard part already mastered!"
+            n 1fcsbg "I'm basically a pro with a needle and thread,{w=0.1} so that's the hard part already mastered!"
 
-        n "The rest of it is just shopping around for materials,{w=0.1} which are usually pretty cheap anyway."
-        n "Props and wigs and all that are a little more annoying,{w=0.1} but not exactly undoable."
-        n "Hmm..."
-        n "The more I think about it,{w=0.1} the more I like the idea!"
-        n "What about you,{w=0.1} [player]?{w=0.2} I bet you'd love to see my skills at work,{w=0.1} right?"
-        n "Ahaha."
-        n "Well...{w=0.3} we'll see,{w=0.1} but no promises!"
+        n 1nlrpu "The rest of it is just shopping around for materials,{w=0.1} which are usually pretty cheap anyway."
+        n 1unmpu "Props and wigs and all that are a little more annoying,{w=0.1} but not exactly undoable."
+        n 1fllsr "Hmm..."
+        n 1fllbg "The more I think about it,{w=0.1} the more I like the idea!"
+        n 1fnmbg "What about you,{w=0.1} [player]?{w=0.2} I bet you'd love to see my skills at work,{w=0.1} right?"
+        n 1nnmsm "Ahaha."
+        n 1flrsml "Well...{w=0.3} we'll see,{w=0.1} but no promises!"
         return
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-        n "Huh?{w=0.2} Cosplay?"
-        n "...Heh.{w=0.2} Why,{w=0.1} [player]?"
-        n "So you can make fun of my clothes too?"
-        n "..."
-        n "No,{w=0.1} [player].{w=0.2} I've never cosplayed.{w=0.2} I could,{w=0.1} but I haven't."
-        n "Does that answer your question?"
+        n 1nnmpu "Huh?{w=0.2} Cosplay?"
+        n 1fsqsr "...Why,{w=0.1} [player]?"
+        n 1fsqpu "So you can make fun of my clothes too?"
+        n 1fslsr "..."
+        n 1fsqpu "No,{w=0.1} [player].{w=0.2} I've never cosplayed.{w=0.2} I could,{w=0.1} but I haven't."
+        n 1fsqan "Does that answer your question?"
         return
 
     else:
-        n "Heh.{w=0.2} Why?"
-        n "So you have something else to make me feel awful about?"
-        n "...Yeah.{w=0.2} No thanks."
-        n "I'm done talking to you about this."
+        n 1fsqsr "Heh.{w=0.2} Why?"
+        n 1fcsan "So you have something else to make me feel awful about?"
+        n 1kcssr "...Yeah.{w=0.2} No thanks."
+        n 1fcsan "I'm done talking to you about this."
         return
 
     return
