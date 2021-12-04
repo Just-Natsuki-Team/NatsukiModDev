@@ -2846,77 +2846,78 @@ init 5 python:
 
 label talk_school_uniform:
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-        n "Oho?{w=0.2} Does [player] like a girl in uniform?"
-        n "Wow...{w=0.3} you're even {i}more{/i} gross than I thought."
-        n "..."
+        n 1fsqctl "Oho?{w=0.2} Does [player] like a girl in uniform?"
+        n 1ksqaj "Wow...{w=0.3} you're even {i}more{/i} gross than I thought."
+        n 1fsqsm "..."
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-        n "Oh come on,{w=0.1} [chosen_tease]!{w=0.2} You always get all sulky when I call you that!{w=0.2} I just can't resist."
-        n "Ehehe.{w=0.2} So anyway..."
+        n 1uchgn "Oh come on,{w=0.1} [chosen_tease]!{w=0.2} You always get all sulky when I call you that!{w=0.2} I just can't resist."
+        n 1fchsm "Ehehe.{w=0.2} So anyway..."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        n "Huh?{w=0.2} My school uniform?"
-        n "...Ehehe."
-        n "Why do you ask,{w=0.1} [player]?{w=0.2} Did {i}you{/i} wanna wear it or something?"
-        n "Oh!{w=0.2} We can play dress-up!{w=0.2} Wouldn't you like that,{w=0.1} [player]?{w=0.2} It'll be so much fun!"
-        n "I bet I could make you look so cute~.{w=0.1} Ahaha!"
-        n "Well anyway,{w=0.1} putting jokes aside..."
+        n 1unmaj "Huh?{w=0.2} My school uniform?"
+        n 1fsqsm "...Ehehe."
+        n 1fcsbgl "Why do you ask,{w=0.1} [player]?{w=0.2} Did {i}you{/i} wanna wear it or something?"
+        n 1fchgn "Oh!{w=0.2} We can play dress-up!{w=0.2} Wouldn't you like that,{w=0.1} [player]?{w=0.2} It'll be so much fun!"
+        n 1uchbs "I bet I could make you look so cute~.{w=0.1} Ahaha!"
+        n 1nllss "Well anyway,{w=0.1} putting jokes aside..."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "My school uniform?{w=0.2} That's...{w=0.3} kind of a weird thing to ask me about,{w=0.1} huh?"
-        n "Well,{w=0.1} whatever.{w=0.2} I'll let it slide...{w=0.3} this time."
+        n 1tnmaj "My school uniform?{w=0.2} That's...{w=0.3} kind of a weird thing to ask me about,{w=0.1} huh?"
+        n 1nslaj "Well,{w=0.1} whatever.{w=0.2} I'll let it slide...{w=0.3} this time."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-        n "...Huh?{w=0.2} Oh,{w=0.1} the school uniform."
-        n "I...{w=0.3} don't know what you're expecting to hear from me,{w=0.1} [player]."
-        n "I gotta wear it for school.{w=0.2} That's the point of a uniform,{w=0.1} if you hadn't realized."
-        n "It doesn't matter if I like it or not."
-        n "...And it matters even less if you do."
+        n 1nsraj "...Huh?{w=0.2} Oh,{w=0.1} the school uniform."
+        n 1nsqsl "I...{w=0.3} don't know what you're expecting to hear from me,{w=0.1} [player]."
+        n 1fsqsl "I gotta wear it for school.{w=0.2} That's the point of a uniform,{w=0.1} if you hadn't realized."
+        n 1fsrsf "It doesn't matter if I like it or not."
+        n 1fsqbo "...And it matters even less if you do."
         return
 
     else:
-        n "Heh.{w=0.2} I like it more than {i}you{/i}.{w=0.2} Jerk."
+        n 1fsran "Heh.{w=0.2} I like it more than {i}you{/i}.{w=0.2} Jerk."
         return
 
-    n "It's alright,{w=0.1} I guess.{w=0.2} I actually really like the warm colours!"
-    n "They're way easier on the eyes than a lot of the other uniforms I've seen around."
-    n "But Oh.{w=0.2} My.{w=0.2} Gosh.{w=0.2} [player]."
-    n "The layers.{w=0.2} So many layers."
-    n "Who even thought someone needs this much clothing?!{w=0.2} For school,{w=0.1} of all places?!"
-    n "I mean...{w=0.3} do you even {i}know{/i} what wearing all of this in summer is like?!{w=0.2} It's horrible!"
-    n "And the blazer...{w=0.3} ugh!{w=0.2} It's actually the worst thing ever."
-    n "Like yeah,{w=0.1} I can take some off between class,{w=0.1} but I gotta put it all back on when I go back in."
-    n "...Or get told off.{w=0.2} {i}Again{/i}.{w=0.2} I honestly have no idea how Sayori gets away with hers being so scruffy."
-    n "And all of this stuff is super expensive too!{w=0.2} Talk about a kick in the teeth!{w=0.2} Jerks."
-    n "Ugh...{w=0.3} I seriously can't wait until I can wear whatever I like for what I'm doing."
-    n "It could be worse though,{w=0.1} I guess.{w=0.2} At least I never had to learn how to do a tie!"
-    n "What about you though, [player]?"
+    n 1unmaj "It's alright,{w=0.1} I guess.{w=0.2} I actually really like the warm colours!"
+    n 1nnmss "They're way easier on the eyes than a lot of the other uniforms I've seen around."
+    n 1nsqsr "But Oh.{w=0.2} My.{w=0.2} Gosh.{w=0.2} [player]."
+    n 1fcsan "The layers.{w=0.2} So many layers."
+    n 1fllem "Who even thought someone needs that much clothing?!{w=0.2} For school,{w=0.1} of all places?!"
+    n 1fbkwr "I mean...{w=0.3} do you even {i}know{/i} what wearing all of this in summer is like?!{w=0.2} It's horrible!"
+    n 1flrpo "And the blazer...{w=0.3} ugh!{w=0.2} It's actually the worst thing ever."
+    n 1fsqpo "Like yeah,{w=0.1} I can take some off between class,{w=0.1} but I gotta put it all back on when I go back in."
+    n 1fllpo "...Or get told off.{w=0.2} {i}Again{/i}.{w=0.2} I honestly have no idea how Sayori gets away with hers being so scruffy."
+    n 1fcsan "And all of this stuff is super expensive too!{w=0.2} Talk about a kick in the teeth!"
+    n 1fslan "Jerks."
+    n 1fslsr "Ugh...{w=0.3} I seriously can't wait until I can wear whatever I like for what I'm doing."
+    n 1flrpo "It could be worse though,{w=0.1} I guess.{w=0.2} At least I never had to learn how to do a tie."
+    n 1unmaj "What about you though, [player]?"
     menu:
         n "Did you have to wear uniform at school?"
 
         "Yes, I had to wear uniform.":
-            n "Aha!{w=0.2} So you know the struggle too,{w=0.1} huh?"
+            n 1fcsbg "Aha!{w=0.2} So you know the struggle too,{w=0.1} huh?"
 
         "No, I didn't have to wear uniform.":
-            n "..."
-            n "...Lucky."
+            n 1fslsr "..."
+            n 1fsqsr "...Lucky."
 
         "I have to wear uniform now.":
-            n "Then you have my condolences,{w=0.1} [player]!{w=0.2} Ahaha."
-            n "Good to know we're on the same page,{w=0.1} though."
+            n 1fchgn "Then you have my condolences,{w=0.1} [player]!{w=0.2} Ahaha."
+            n 1fcsbg "Good to know we're on the same page,{w=0.1} though."
 
-    n "Well,{w=0.1} anyway..."
+    n 1ullss "Well,{w=0.1} anyway..."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-        n "I still don't particularly {i}like{/i} wearing it..."
-        n "But I think I can put up with it.{w=0.2} Just for you,{w=0.1} [player]~."
-        n "Ehehe."
+        n 1fllss "I still don't particularly {i}like{/i} wearing it..."
+        n 1uslbgl "But...{w=0.3} I think I can put up with it.{w=0.2} Just for you,{w=0.1} [player]~."
+        n 1usrdvl "Ehehe."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        n "I-{w=0.1}if you like it, [player]?"
-        n "I suppose it has that going for it too,{w=0.1} right?{w=0.2} Ahaha..."
+        n 1usrdvl "I-{w=0.1}if you don't mind it,{w=0.1} [player]?"
+        n 1fllbgl "I suppose it has that going for it too,{w=0.1} a-at least..."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "I guess at least I'm warm and toasty for the winter,{w=0.1} right?{w=0.2} Ahaha."
+        n 1fchgn "I guess at least I'm warm and toasty for the winter,{w=0.1} right?{w=0.2} Ahaha."
 
     return
 
