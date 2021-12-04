@@ -2937,85 +2937,87 @@ init 5 python:
 
 label talk_flying:
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n "Ooh!{w=0.2} Flying?{w=0.2} Like on a plane?"
-        n "Mmm...{w=0.3} I wish I could say I have,{w=0.1} [player]..."
-        n "Don't get me wrong though!{w=0.2} I'd {i}totally{/i} fly somewhere new if I could!"
-        n "It's just...{w=0.3} the price of it all,{w=0.1} you know?"
-        n "I've never had a passport,{w=0.1} but it's mainly the tickets and everything beyond that..."
+        n 1uwdbg "Ooh!{w=0.2} Flying?{w=0.2} Like on a plane?"
+        n 1fllun "Nnn...{w=0.3} I wish I could say I have,{w=0.1} [player]..."
+        n 1fchbg "Don't get me wrong though!{w=0.2} I'd {i}totally{/i} fly somewhere new if I could!"
+        n 1fslsl "It's just...{w=0.3} the price of it all,{w=0.1} you know?"
+        n 1kllsl "I've never had a passport,{w=0.1} but it's mainly the tickets and everything beyond that..."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
-        n "Huh?{w=0.2} Flying?{w=0.2} Like on a plane or something?"
-        n "I...{w=0.3} wish I could say I have,{w=0.1} [player]."
-        n "Don't get me wrong though!{w=0.2} I'd love to jet off somewhere.{w=0.2} Like for a vacation or something!"
-        n "It's just the cost that stops me, you know?"
-        n "Even if I had a passport, there's just so many things to pay out for..."
+        n 1unmaj "Huh?{w=0.2} Flying?{w=0.2} Like on a plane or something?"
+        n 1kllaj "I...{w=0.3} wish I could say I have,{w=0.1} [player]."
+        n 1fnmbg "Don't get me wrong though!{w=0.2} I'd love to jet off somewhere.{w=0.2} Like for a vacation or something!"
+        n 1flrpo "It's just the cost that stops me, you know?"
+        n 1fcspo "Even if I had a passport, there's just so many things to pay out for..."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "Oh?{w=0.2} Like flying on a plane or whatever?"
-        n "Uhmm..."
-        n "I...{w=0.3} never really had the opportunity to fly anywhere,{w=0.1} [player]."
-        n "I don't even have a passport or anything like that,{w=0.1} and even if I did?"
-        n "It isn't like tickets are...{w=0.3} affordable,{w=0.1} if you know what I mean?"
-        n "Especially to someone in my...{w=0.3} position.{w=0.2} Ahaha..."
+        n 1unmaj "Oh?{w=0.2} Like flying on a plane or whatever?"
+        n 1kllbo "Uhmm..."
+        n 1klraj "I...{w=0.3} never really had the opportunity to fly anywhere,{w=0.1} [player]."
+        n 1unmaj "I don't even have a passport or anything like that,{w=0.1} and even if I did?"
+        n 1nsraj "It isn't like tickets are...{w=0.3} affordable,{w=0.1} if you know what I mean?"
+        n 1nslpo "Especially to someone in my...{w=0.3} position."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-        n "Flying?{w=0.2} Like...{w=0.3} on a plane?"
-        n "No,{w=0.1} [player].{w=0.2} I haven't."
-        n "I've never owned a passport,{w=0.1} and it's way too expensive anyway."
-        n "I don't really like the idea of the environmental impact either."
-        n "...But something tells me you don't really care about that last point,{w=0.2} do you?"
-        n "You know...{w=0.3} just going by my experience so far."
-        n "...Am I wrong?"
+        n 1nnmbo "Flying?{w=0.2} Like...{w=0.3} on a plane?"
+        n 1fnmsf "No,{w=0.1} [player].{w=0.2} I haven't."
+        n 1fllsf "I've never owned a passport,{w=0.1} and it's way too expensive anyway."
+        n 1fnmaj "I don't really like the idea of the environmental impact either."
+        n 1fsqaj "...But something tells me you don't really care about that last point,{w=0.2} do you?"
+        n 1flrca "You know...{w=0.3} just going by my experience so far."
+        n 1fsqca "...Am I wrong?"
         return
 
     else:
-        n "No,{w=0.1} [player].{w=0.2} I haven't.{w=0.2} And I probably never will."
-        n "Gloat all you want.{w=0.2} I don't give a crap if you have."
+        n 1fsqan "No,{w=0.1} [player].{w=0.2} I haven't.{w=0.2} And I probably never will."
+        n 1fcsan "Gloat all you want.{w=0.2} I don't give a crap if you have."
         return
 
-    n "Besides,{w=0.1} I try not to feel too bad about it.{w=0.2} It's way better for the environment if I don't,{w=0.1} anyway!"
-    n "Flying places is pretty polluting.{w=0.2} I think I'd just feel selfish if I was constantly zooming around,{w=0.1} knowing how bad that is for everyone."
-    n "But...{w=0.3} that's just me,{w=0.1} I guess.{w=0.2} What about you,{w=0.1} [player]?"
+    n 1ullaj "Besides,{w=0.1} I try not to feel too bad about it.{w=0.2} It's way better for the environment if I don't,{w=0.1} anyway!"
+    n 1nnmbo "Flying places is pretty polluting.{w=0.2} I think I'd just feel selfish if I was constantly zooming around,{w=0.1} knowing how bad that is for everyone."
+    n 1nllss "But...{w=0.3} that's just me,{w=0.1} I guess."
+    n 1unmaj "What about you,{w=0.1} [player]?"
     menu:
         n "Are you a frequent flier?"
 
         "Yes, I fly regularly.":
-            n "Oh?{w=0.2} Well check you out,{w=0.1} [player]!"
-            n "I guess it's {i}plane{/i} to see how well you're doing for yourself?{w=0.2} Ehehe."
-            n "Just...{w=0.3} try to avoid racking up too many miles,{w=0.1} alright?"
-            n "We all gotta do our part for the world,{w=0.1} after all..."
+            n 1fcsbg "Oh?{w=0.2} Well check you out,{w=0.1} [player]!"
+            n 1fslpo "I guess it's {i}plane{/i} to see how well you're doing for yourself?" 
+            n 1fchbg "Ehehe."
+            n 1fnmaj "Just try to avoid racking up too many miles,{w=0.1} [player]."
+            n 1fllss "You gotta think about the planet too,{w=0.1} you know..."
 
             if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-                n "E-especially if people we really care about are in it. Ehehe..."
+                n 1fslnvf "E-{w=0.1}especially if people we really care about are in it.{w=0.2} Ahaha..."
 
             elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
-                n "Even you, [player]! Ehehe."
+                n 1fchgn "No excuses,{w=0.1} [player]! Ehehe."
 
         "I fly sometimes.":
-            n "Ooh,{w=0.1} okay!{w=0.2} So the odd vacation or family flight then?"
-            n "I see,{w=0.1} I see..."
-            n "Well,{w=0.1} good for you, [player]! Everyone should get the chance to explore the world."
-            n "Hopefully I'll get the chance someday too."
+            n 1unmss "Ooh,{w=0.1} okay!{w=0.2} So the odd vacation or family flight then?"
+            n 1fslsm "I see,{w=0.1} I see..."
+            n 1fcsbg "Well,{w=0.1} good for you,{w=0.1} [player]!{w=0.2} Everyone should get the chance to explore the world."
+            n 1kslss "Hopefully I'll get the chance someday too."
 
             if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-                n "I hope you'll be available when that happens,{w=0.1} [player]."
-                n "I'm gonna need a tour guide,{w=0.1} after all.{w=0.2} Ehehe..."
+                n 1fsqsg "I hope you'll be available when that happens,{w=0.1} [player]."
+                n 1fchgnl "You're gonna be my tour guide,{w=0.1} whether you like it or not!"
 
             elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
-                n "You better be handy when that happens,{w=0.1} [player]..."
-                n "I bet you'd got tons of advice you can share,{w=0.1} right?{w=0.2} Ahaha."
+                n 1fsqsm "You better be handy when that happens,{w=0.1} [player]..."
+                n 1fchgn "We'll see how good a guide you are!"
 
         "I've flown before.":
-            n "Ooh!{w=0.2} So you've already earned your wings,{w=0.1} huh?"
-            n "Hmm...{w=0.3} I wonder where you went?"
-            n "You gotta promise to tell me if you fly again,{w=0.1} 'kay?"
-            n "I wanna hear all about it!"
+            n 1fsqct "Oh?{w=0.2} So you've already earned your wings,{w=0.1} huh?"
+            n 1tllaj "Hmm...{w=0.3} I wonder where you went?"
+            n 1fnmaj "You gotta promise to tell me if you fly again,{w=0.1} 'kay?"
+            n 1fchgn "I wanna hear all about it!"
 
         "I've never flown.":
-            n "Then that's just another thing we have in common,{w=0.1} [player]!"
-            n "I guess you could say..."
-            n "We're both just {i}well grounded{/i} people,{w=0.1} huh?"
-            n "Ahaha!"
+            n 1fcsbg "Then that's just another thing we have in common,{w=0.1} [player]!"
+            n 1fsqss "I guess you could say..."
+            n 1fsqdv "We're both just {i}well grounded{/i} people,{w=0.1} huh?"
+            n 1fchgn "Ahaha!"
 
     return
 
