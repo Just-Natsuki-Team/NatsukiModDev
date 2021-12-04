@@ -2770,64 +2770,64 @@ init 5 python:
 
 label talk_favourite_drink:
     if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        n "Ooooh!{w=0.2} My favourite drink?"
+        n 1unmbg "Ooooh!{w=0.2} My favourite drink?"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "Mmm?{w=0.2} My favourite drink?"
+        n 1unmaj "Mmm?{w=0.2} My favourite drink?"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-        n "Huh?{w=0.2} Oh.{w=0.1} My favourite drink."
+        n 1nllbo "Huh?{w=0.2} Oh.{w=0.1} My favourite drink."
 
     else:
-        n "...I can't understand why you'd care,{w=0.1} [player]."
-        n "So...{w=0.3} why should I?"
-        n "Water.{w=0.2} There's an answer for you.{w=0.2} Happy?"
-        n "Now just go away..."
+        n 1fslsf "...I can't understand why you'd care,{w=0.1} [player]."
+        n 1fsqsf "So...{w=0.3} why should I?"
+        n 1fsqan "Water.{w=0.2} There's an answer for you.{w=0.2} Happy?"
+        n 1fcsan "Now just go away..."
         return
 
     if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "I gotta say...{w=0.3} it depends on the weather more than anything."
-        n "I mean...{w=0.3} what kind of person would order an iced drink in the middle of winter?!"
-        n "But anyway..."
-        n "If it's cold out,{w=0.1} then hot chocolate.{w=0.2} No questions,{w=0.1} no doubts."
-        n "In the depths of winter,{w=0.1} you definitely won't get a better option than that!"
+        n 1ullaj "I gotta say...{w=0.3} it depends on the weather more than anything."
+        n 1tnmaj "I mean...{w=0.3} what kind of dope would order an iced drink in the middle of winter?!"
+        n 1fllss "But anyway..."
+        n 1fcsbg "If it's cold out,{w=0.1} then hot chocolate.{w=0.2} No questions,{w=0.1} no doubts."
+        n 1uchgn "In the depths of winter,{w=0.1} you definitely won't get a better option than that!"
 
         if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            n "And yeah,{w=0.1} [player] -{w=0.1} whipped cream,{w=0.1} marshmallows -{w=0.1} all of it.{w=0.2} The complete works."
-            n "...And I wouldn't accept anything less!"
-            n "I mean,{w=0.1} think about it -{w=0.1} if you're getting hot chocolate,{w=0.1} you've already kinda lost on the health front."
-            n "So you might as well go all in,{w=0.1} right?{w=0.2} Ahaha."
+            n 1fcsbg "And yeah,{w=0.1} [player] -{w=0.1} whipped cream,{w=0.1} marshmallows -{w=0.1} all of it.{w=0.2} The complete works."
+            n 1uchgn "...And I wouldn't accept anything less!"
+            n 1fllbg "I mean,{w=0.1} think about it -{w=0.1} if you're getting hot chocolate,{w=0.1} you've already kinda lost on the health front."
+            n 1uchgn "So you might as well go all in,{w=0.1} right?{w=0.2} Ahaha."
 
             if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-                n "Besides,{w=0.2} I'm not too worried -{w=0.1} we can always share the calories,{w=0.1} [player]~."
+                n 1fcsdvl "Besides,{w=0.2} I'm not too worried -{w=0.1} we'll just share the calories,{w=0.1} [player]~."
 
-        n "As for warmer weather...{w=0.3} that's a little trickier,{w=0.1} actually."
-        n "Let me think..."
-        n "..."
-        n "Aha!{w=0.2} I got it!"
-        n "It's gotta be those milkshakes,{w=0.1} but from one of those places where you get to choose what goes in it!"
-        n "I don't just mean picking a flavour,{w=0.1} [player]..."
-        n "I mean where you can pick any combination of ingredients you want!"
-        n "Well...{w=0.3} as long as it blends,{w=0.1} anyway."
-        n "All kinds of sweets,{w=0.1} any type of milk..."
+        n 1unmaj "As for warmer weather...{w=0.3} that's a little trickier,{w=0.1} actually."
+        n 1fslsr "Let me think..."
+        n 1fsrsr "..."
+        n 1fchbs "Aha!{w=0.2} I got it!"
+        n 1unmbg "It's gotta be those milkshakes,{w=0.1} but from one of those places where you get to choose what goes in it!"
+        n 1fsqsm "I don't just mean picking a flavour,{w=0.1} [player]..."
+        n 1fchgn "I mean where you can pick any combination of ingredients you want!"
+        n 1fllss "Well...{w=0.3} as long as it blends,{w=0.1} anyway."
+        n 1ncssm "All kinds of sweets,{w=0.1} any type of milk..."
 
         if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            n "Though if I had to pick a favourite?"
-            n "It's gotta be strawberries and cream,{w=0.1} obviously."
-            n "And...{w=0.3} maybe with just a dash of chocolate too?{w=0.2} Ehehe."
+            n 1ucssm "Though if I had to pick a favourite?"
+            n 1fcsbg "It's gotta be strawberries and cream,{w=0.1} obviously."
+            n 1fllbgl "And...{w=0.3} maybe with just a dash of chocolate too?{w=0.2} Ehehe."
 
         else:
-            n "Yeah.{w=0.2} That's the real deal!"
+            n 1fchbg "Yeah.{w=0.2} That's the real deal!"
 
-        n "Jeez...{w=0.3} all this talk about drinks is making me kinda thirsty,{w=0.1} actually.{w=0.2} So on that note..."
-        n "Make sure you stay hydrated too,{w=0.1} [player] -{w=0.1} whatever the weather!"
+        n 1fllpo "Jeez...{w=0.3} all this talk about drinks is making me kinda thirsty,{w=0.1} actually.{w=0.2} So on that note..."
+        n 1fnmbg "You need to stay hydrated too,{w=0.1} [player] -{w=0.1} whatever the weather!"
 
     else:
-        n "I suppose it depends what the weather is like."
-        n "Hot chocolate if it's cold out,{w=0.1} though I'm not very picky I guess."
-        n "As for warmer weather..."
-        n "I don't really know.{w=0.2} Whatever is fine."
-        n "Heh.{w=0.2} Though at this rate,{w=0.1} I shouldn't expect much more than tap water from you anyway.{w=0.2} Right,{w=0.1} [player]?"
+        n 1flrsl "I suppose it depends what the weather is like."
+        n 1fnmbo "Hot chocolate if it's cold out,{w=0.1} though I'm not very picky I guess."
+        n 1fllaj "As for warmer weather..."
+        n 1fllsl "I don't really know.{w=0.2} Whatever is fine."
+        n 1fsqsl "Heh.{w=0.2} Though at this rate,{w=0.1} I shouldn't expect much more than tap water from you anyway.{w=0.2} Right,{w=0.1} [player]?"
 
 # Natsuki complains about her school uniform
 init 5 python:
