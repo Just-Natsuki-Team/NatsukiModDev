@@ -2711,45 +2711,47 @@ init 5 python:
 
 label talk_favourite_animal:
     if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "Hammies."
-        n "That's barely even a question for me,{w=0.1} [player].{w=0.2} Ehehe."
-        n "Like...{w=0.3} if you've seen them,{w=0.1} can you blame me?{w=0.2} They're totally adorable!"
-        n "I just love everything about them...{w=0.3} the little paws,{w=0.1} the bright eyes, those puffy cheeks..."
-        n "And that tiny litte tail...{w=0.3} oh my gosh!{w=0.2} It's just precious!"
-        n "It really winds me up when people call them boring,{w=0.1} or unaffectionate though.{w=0.2} Like...{w=0.3} have you ever watched one?"
-        n "They all have their own little personalities,{w=0.1} just like any other animal -{w=0.1} only smaller!"
-        n "And if you bond with them,{w=0.1} they aren't afraid to show it -{w=0.1} I've seen videos of them following their owners around,{w=0.1} and even leaping into their hands!"
-        n "Plus they're easy to take care of,{w=0.1} too!"
-        n "Just top up their food and change their water daily,{w=0.1} and clean their cage out once a week -{w=0.1} no sweat."
-        n "Hmm..."
-        n "You know,{w=0.1} [player]...{w=0.3} it does get a little quiet when you aren't around,{w=0.1} if you know what I'm getting at..."
-        n "Perhaps one day we could have our own furry friend here too?{w=0.1} Ehehe."
-        n "Don't worry though,{w=0.1} [player]..."
-        n "I don't mind taking care of it."
-        n "...But you're in charge of the supplies!"
+        n 1fsqsr "Hammies."
+        n 1fcssm "That's barely even a question for me,{w=0.1} [player]."
+        n 1uwdaj "Like...{w=0.3} if you've seen them,{w=0.1} can you blame me?" 
+        n 1fcspu "They're...{w=0.5}{nw}"
+        n 1fspgs "{i}Adorable{/i}!!"
+        n 1fbkbsl "I just love everything about them...{w=0.3} the little paws,{w=0.1} the bright eyes, those puffy cheeks..."
+        n 1fspbgl "And that tiny little tail...{w=0.3} oh my gosh!{w=0.2} It's just precious!"
+        n 1fllan "It really winds me up when people call them boring,{w=0.1} or unaffectionate though.{w=0.2} Like...{w=0.3} have you ever watched one?"
+        n 1fnmaj "They all have their own little personalities,{w=0.1} just like any other animal -{w=0.1} only smaller!"
+        n 1uwdaj "And if you bond with them,{w=0.1} they aren't afraid to show it -{w=0.1} I've seen videos of them following their owners around,{w=0.1} and even leaping into their hands!"
+        n 1fchbg "Plus they're easy to take care of,{w=0.1} too!"
+        n 1fchsm "Just top up their food and change their water daily,{w=0.1} and clean their cage out once a week -{w=0.1} no sweat."
+        n 1nllpu "Hmm..."
+        n 1unmpu "You know,{w=0.1} [player]...{w=0.3} it does get a little quiet when you aren't around,{w=0.1} if you know what I'm getting at..."
+        n 1fnmsm "Perhaps one day we could have our own furry friend here too?{w=0.1} Ehehe."
+        n 1fllss "Don't worry though,{w=0.1} [player]..."
+        n 1ucssm "I don't mind taking care of it."
+        n 1fchgn "...But you're in charge of the supplies!"
 
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "Oh,{w=0.1} and relax -{w=0.1} I'll make sure it'll be well tamed!"
-            n "Or..."
-            n "At least about as tame as you,{w=0.1} huh [player]?{w=0.2} Ahaha!"
+            n 1fchbg "Oh,{w=0.1} and relax -{w=0.1} I'll make sure it'll be well tamed!"
+            n 1uslbg "Or..."
+            n 1usqts "At least about as tame as you,{w=0.1} huh [player]?{w=0.2} Ahaha!"
 
             if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-                n "Love you~!"
+                n 1uchbg "Love you~!"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-        n "Hamsters,{w=0.1} if it matters."
-        n "Why?{w=0.2} I don't know.{w=0.2} I just think they're cute."
-        n "I think people actually underestimate how expressive they can be,{w=0.1} too."
-        n "They're like most animals really -{w=0.1} they all have their own personalities."
-        n "I guess they're pretty easy to take care of as well,{w=0.1} so there's that."
-        n "..."
-        n "...I'd be lying if I said I hadn't been thinking about getting one myself..."
-        n "But honestly,{w=0.1} [player]?{w=0.2} If you've shown you can't take care of {i}me{/i}?"
-        n "...Then I don't think it'd be fair to bring one here,{w=0.1} either.{w=0.2} Heh."
+        n 1fsqpu "Hamsters,{w=0.1} if it matters."
+        n 1fllpu "Why?{w=0.2} I don't know.{w=0.2} I just think they're cute."
+        n 1nllbo "I think people actually underestimate how expressive they can be,{w=0.1} too."
+        n 1nnmbo "They're like most animals really -{w=0.1} they all have their own personalities."
+        n 1nnmaj "I guess they're pretty easy to take care of as well,{w=0.1} so there's that."
+        n 1nlrsl "..."
+        n 1flrsl "...I'd be lying if I said I hadn't been thinking about getting one myself..."
+        n 1fsqpu "But honestly,{w=0.1} [player]?{w=0.2} If you've shown you can't take care of {i}me{/i}?"
+        n 1fcsan "...Then I don't think it'd be fair to bring one here,{w=0.1} either.{w=0.2} Heh."
 
     else:
-        n "Heh.{w=0.2} Really?{w=0.2} My favourite animal...?"
-        n "Not you,{w=0.1} [player].{w=0.2} That's for sure."
+        n 1fsqpu "Heh.{w=0.2} Really?{w=0.2} My favourite animal...?"
+        n 1fcsan "Not you,{w=0.1} [player].{w=0.2} That's for sure."
 
     return
 
