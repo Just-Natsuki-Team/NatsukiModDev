@@ -2653,44 +2653,43 @@ init 5 python:
     )
 
 label talk_integrity:
-    n "You know,{w=0.1} [player]..."
-    n "I feel like nowadays,{w=0.1} everyone is trying to make a point,{w=0.1} or preach something."
-    n "Especially with social media and all that everywhere -{w=0.1} it's crazy!"
-    n "Like...{w=0.3} there's posts telling you this is bad,{w=0.1} others asking why you don't support something else..."
-    n "And of course,{w=0.1} {i}everyone{/i} is tuned in to that -{w=0.1} so it leaks into real life as well!"
-    n "Ugh...{w=0.3} it can't only be me that finds it all exhausting,{w=0.1} right?"
-    n "I think it makes it kinda easy to lose track of what you really like,{w=0.1} or what you stand for."
-    n "Which...{w=0.3} is actually something I really wanted to talk to you about,{w=0.1} [player]."
-    n "I'm not saying you should just ignore everyone else,{w=0.1} or never consider other points of view."
-    n "That's just being ignorant."
-    n "But...{w=0.3} don't just let other people's opinions or conceptions completely overwrite your own,{w=0.1} 'kay?"
-    n "At least not without a fight,{w=0.1} at least."
-    n "You are your own master,{w=0.1} [player] -{w=0.1} you have your own opinions,{w=0.1} your own values:{w=0.1} and that's super important!"
-    n "I mean,{w=0.1} look at me!"
-    n "So what if someone says what I'm into sucks?{w=0.2} Or if I should be following something more popular?"
-    n "It isn't hurting anyone,{w=0.1} so who are they to judge and tell me what I should be enjoying?"
-    n "It's my life,{w=0.1} so they can jog on!"
-    n "Anyway...{w=0.3} I guess what I'm saying is don't be afraid to stand up for what matters to you,{w=0.1} [player]."
-    n "There's gonna be times you'll be wrong,{w=0.1} but don't let it get to you!"
-    n "I just don't like the idea of people being pushed into what isn't right for them."
-    n "That being said,{w=0.1} [player]..."
+    n 1ullaj "You know,{w=0.1} [player]..."
+    n 1nnmaj "I feel like nowadays,{w=0.1} everyone is trying to make a point,{w=0.1} or preach something."
+    n 1flrem "Especially with social media and all that everywhere -{w=0.1} it's crazy!"
+    n 1fllem "Like...{w=0.3} there's posts telling you this is bad,{w=0.1} others asking why you don't support something else..."
+    n 1fcsan "And of course,{w=0.1} {i}everyone{/i} is tuned in to that -{w=0.1} so it leaks into real life as well!"
+    n 1flrsl "Ugh...{w=0.3} it can't only be me that finds it all exhausting,{w=0.1} right?"
+    n 1unmaj "I think it makes it kinda easy to lose track of what you really like,{w=0.1} or what you stand for."
+    n 1ullaj "Which...{w=0.3} is actually something I really wanted to talk to you about,{w=0.1} [player]."
+    n 1fllpu "I'm not saying you should just ignore everyone else,{w=0.1} or never consider other points of view."
+    n 1fnmpo "That's just being ignorant."
+    n 1knmaj "But...{w=0.3} don't just let other people's opinions or conceptions completely overwrite your own,{w=0.1} 'kay?"
+    n 1fnmbo "At least not without a fight,{w=0.1} at least."
+    n 1fnmpu "{i}You{/i} are your own master,{w=0.1} [player] -{w=0.1} you have your own opinions,{w=0.1} your own values:{w=0.1} and that's super important!"
+    n 1fcsbg "I mean,{w=0.1} look at me!"
+    n 1fllaj "So what if someone says what I'm into sucks?{w=0.2} Or if I should be following something more popular?"
+    n 1fnmsf "It isn't hurting anyone,{w=0.1} so who are they to judge and tell me what I should be enjoying?"
+    n 1fcsbg "It's my life,{w=0.1} so they can jog on!"
+    n 1nnmsr "Anyway...{w=0.3} I guess what I'm saying is don't be afraid to stand up for what matters to you,{w=0.1} [player]."
+    n 1fcsaj "There's gonna be times you'll be wrong,{w=0.1} but don't let it get to you!"
+    n 1flrsl "I just don't like the idea of people being pushed into what isn't right for them."
+    n 1nnmpu "That being said,{w=0.1} [player]..."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n "I'm pretty sure we both know what's right for each other by now,{w=0.1} huh?"
-        n "O-{w=0.1}or should I say,{w=0.1} {i}who{/i} is right...?"
-        n "Ehehe."
+        n 1ksqsm "I'm pretty sure we both know what's right for each other by now,{w=0.1} huh?"
+        n 1fcsbgl "Ahaha."
 
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-            n "Love you,{w=0.1} [player]~!"
+            n 1uchsml "Love you,{w=0.1} [player]~!"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        n "I'm pretty sure I know what's right for you..."
-        n "Spending more time with me!{w=0.2} Ahaha."
+        n 1ksqsm "I'm pretty sure I know what's right for you..."
+        n 1fcsbgl "Spending more time with me!{w=0.2} Ahaha."
 
     else:
-        n "I'm sure I can help you find what's right for you."
-        n "That's what friends are for,{w=0.1} right?"
-        n "Especially ones like me!{w=0.2} Ehehe."
+        n 1unmss "I'm sure I can help you find what's right for you."
+        n 1fllss "That's what friends are for,{w=0.1} right?"
+        n 1fcsbg "Especially ones like me!{w=0.2} Ehehe."
 
     return
 

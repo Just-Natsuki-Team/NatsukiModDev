@@ -287,5 +287,11 @@ label player_select_topic(is_repeat_topics=False):
     jump ch30_loop
 
 label extras_menu:
-    n "This isn't done."
+    if config.console:
+        menu:
+            "Scritch":
+                jump scritch_start
+
+            "Nevermind":
+                pass
     jump ch30_loop

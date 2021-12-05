@@ -24,7 +24,6 @@ init 0 python in jn_snap:
 
     _current_table_card_image = "mod_assets/games/snap/cards/blank.png"
     _turn_indicator_image = "mod_assets/games/snap/ui/turn_indicator_none.png"
-    _snap_popup_image = "mod_assets/games/snap/ui/snap_a.png"
 
     _SNAP_UI_Z_INDEX = 4
     _SNAP_POPUP_Z_INDEX = 5
@@ -238,7 +237,6 @@ init 0 python in jn_snap:
         """
         global _is_player_turn
         global _player_is_snapping
-        global _snap_popup_image
 
         # We set this here so Natsuki can't try to snap while the player is snapping
         if is_player:
@@ -260,8 +258,6 @@ init 0 python in jn_snap:
             # Clear the cards on the table
             del _cards_on_table[:]
             renpy.play("mod_assets/sfx/card_shuffle.mp3")
-
-            _snap_popup_image = random.choice(_SNAP_POPUP_SPRITES)
             draw_card_onscreen()
 
             # Use of renpy.call here is a stopgap and will be reworked, as renpy.call risks breaking label flow if not carefully applied.
@@ -741,7 +737,16 @@ image turn_indicator_icon:
     jn_snap._turn_indicator_image
 
 # Self-explanatory, you dummy
-image snap_popup = jn_snap._snap_popup_image
+image snap_popup:
+    block:
+        choice:
+            "mod_assets/games/snap/ui/snap_a.png"
+        choice:
+            "mod_assets/games/snap/ui/snap_b.png"
+        choice:
+            "mod_assets/games/snap/ui/snap_c.png"
+        choice:
+            "mod_assets/games/snap/ui/snap_d.png"
 
 # Game UI
 screen snap_ui:

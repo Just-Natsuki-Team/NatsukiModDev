@@ -135,9 +135,12 @@ label music_menu:
     else:
         $ chosen_quip = renpy.substitute(random.choice(jn_custom_music._CHOOSE_PLAY_MUSIC_QUIPS))
         n 1unmbgl "[chosen_quip]"
+        show natsuki idle at jn_left
 
     # We have custom music options, present the choices
     call screen scrollable_choice_menu(custom_music_options, ("Nevermind.", None))
+
+    show natsuki idle at jn_center
 
     if isinstance(_return, unicode):
 
