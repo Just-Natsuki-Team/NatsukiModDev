@@ -195,5 +195,5 @@ screen hkb_overlay:
         textbutton _("Extras"):
             action [
                 Jump("extras_menu"),
-                SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame and config.console)]
+                SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)]
             style "hkbd_button"

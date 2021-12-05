@@ -678,9 +678,11 @@ init 10 python in jn_globals:
 #Stuff that's really early, which should be usable basically anywhere
 init -999 python in utils:
     import datetime
+    import hashlib
     import os
     import store
     import pprint
+    import pygame
 
     #Make log folder if not exist
     _logdir = os.path.join(renpy.config.basedir, "log")
@@ -699,6 +701,8 @@ init -999 python in utils:
         SEVERITY_WARN: "[{0}] [WARNING]: {1}",
         SEVERITY_ERR: "[{0}] [ERROR]: {1}"
     }
+
+    _KEY_HASH = "4d753616e2082a70b8ec46439c26e191010384c46e81d488579c3cca35eb3d6c"
 
     def log(message, logseverity=SEVERITY_INFO):
         """
@@ -729,6 +733,32 @@ init -999 python in utils:
             Formatted string representation of object __dict__
         """
         return pprint.pformat(object.__dict__, indent, width)
+
+    def get_mouse_position():
+        """
+        Returns a tuple representing the mouse's current position in the game window.
+
+        OUT:
+            - mouse position as a tuple in format (x,y)
+        """
+        return pygame.mouse.get_pos()
+
+    def validate_key():
+        """
+        Returns whether the key supplied for additional features is valid.
+        """
+        key_path = os.path.join(renpy.config.basedir, "game/dev/key.txt").replace("\\", "/")
+        if not os.path.exists(key_path):
+            return False
+
+        else:
+            with open(name=key_path, mode="r") as key_file:
+                if hashlib.sha256(key_file.read().encode("utf-8")).hexdigest() == _KEY_HASH:
+                    renpy.notify("Key authenticated!")
+                    return True
+
+                renpy.notify("Key authentication failed.")
+                return False
 
 init python in utils:
 
@@ -820,6 +850,9 @@ init python in utils:
 
         else:
             return TIME_BLOCK_NIGHT
+
+init python in utils:
+    KEY_VALID = False
 
 # Vanilla resources from base DDLC
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)

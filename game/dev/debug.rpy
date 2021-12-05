@@ -11,7 +11,7 @@ default persistent.jn_debug_tracked_watch_items = [
     "store.jn_affinity.get_affinity_tier_name()",
     "store.persistent.trust",
     "store.jn_trust.get_trust_tier_name()"
-    "store.jn_debug.get_mouse_position()"
+    "store.utils.get_mouse_position()"
 ]
 
 init python in jn_debug:
@@ -27,7 +27,7 @@ init python in jn_debug:
         "store.jn_affinity.get_affinity_tier_name()",
         "store.persistent.trust",
         "store.jn_trust.get_trust_tier_name()"
-        "store.jn_debug.get_mouse_position()"
+        "store.utils.get_mouse_position()"
     ]
 
     _view_tracked_items_enabled = False
@@ -206,15 +206,6 @@ init python in jn_debug:
         if _view_tracked_items_enabled:
             _watch_all_tracked_items()
 
-    def get_mouse_position():
-        """
-        Returns a tuple representing the mouse's current position in the game window.
-
-        OUT:
-            - mouse position as a tuple in format (x,y)
-        """
-        return pygame.mouse.get_pos()
-
 # Debugging topics
 
 # This topic allows us to set the affinity state
@@ -225,7 +216,7 @@ init 5 python:
             label="debug_set_affinity",
             unlocked=True,
             prompt="Can you change my affinity state?",
-            conditional="config.console",
+            conditional="utils.KEY_VALID",
             category=["Debug (Affinity/Trust)"],
             player_says=True,
             location="classroom"
@@ -311,7 +302,7 @@ init 5 python:
             label="debug_set_trust",
             unlocked=True,
             prompt="Can you change my trust state?",
-            conditional="config.console",
+            conditional="utils.KEY_VALID",
             category=["Debug (Affinity/Trust)"],
             player_says=True,
             location="classroom"
@@ -397,7 +388,7 @@ init 5 python:
             label="debug_print_persistent",
             unlocked=True,
             prompt="Can you print my persistent data?",
-            conditional=None,
+            conditional="utils.KEY_VALID",
             category=["Debug (Data)"],
             player_says=True,
             location="classroom"
@@ -419,7 +410,7 @@ init 5 python:
             label="debug_print_config",
             unlocked=True,
             prompt="Can you print the config?",
-            conditional=None,
+            conditional="utils.KEY_VALID",
             category=["Debug (Data)"],
             player_says=True,
             location="classroom"
@@ -441,7 +432,7 @@ init 5 python:
             label="debug_toggle_watched_items",
             unlocked=True,
             prompt="Can you toggle the watched item list view?",
-            conditional="config.console",
+            conditional="utils.KEY_VALID",
             category=["Debug (Watch)"],
             player_says=True,
             location="classroom"
@@ -464,7 +455,7 @@ init 5 python:
             label="debug_add_watched_item",
             unlocked=True,
             prompt="Can you add an item to the watched item list?",
-            conditional="config.console",
+            conditional="utils.KEY_VALID",
             category=["Debug (Watch)"],
             player_says=True,
             location="classroom"
@@ -494,7 +485,7 @@ init 5 python:
             label="debug_remove_watched_item",
             unlocked=True,
             prompt="Can you remove an item from the watched item list?",
-            conditional="config.console",
+            conditional="utils.KEY_VALID",
             category=["Debug (Watch)"],
             player_says=True,
             location="classroom"
@@ -524,7 +515,7 @@ init 5 python:
             label="debug_load_watched_items_from_disk",
             unlocked=True,
             prompt="Can you load the watched item list from disk?",
-            conditional="config.console",
+            conditional="utils.KEY_VALID",
             category=["Debug (Watch)"],
             player_says=True,
             location="classroom"
@@ -564,7 +555,7 @@ init 5 python:
             label="debug_reset_watched_items",
             unlocked=True,
             prompt="Can you reset the watched item list?",
-            conditional="config.console",
+            conditional="utils.KEY_VALID",
             category=["Debug (Watch)"],
             player_says=True,
             location="classroom"
@@ -598,7 +589,7 @@ init 5 python:
             label="debug_toggle_watched_items_on_load",
             unlocked=True,
             prompt="Can you toggle the watched item list on load state?",
-            conditional="config.console",
+            conditional="utils.KEY_VALID",
             category=["Debug (Watch)"],
             player_says=True,
             location="classroom"
@@ -657,7 +648,7 @@ init 5 python:
             label="debug_custom_say",
             unlocked=True,
             prompt="Can you say something for me?",
-            conditional="config.console",
+            conditional="utils.KEY_VALID",
             category=["Debug (Dialogue)"],
             player_says=True,
             location="classroom"
@@ -800,7 +791,7 @@ init 5 python:
             label="debug_topic_count",
             unlocked=True,
             prompt="Can you count how many topics there are?",
-            conditional="config.console",
+            conditional="utils.KEY_VALID",
             category=["Debug (Dialogue)"],
             player_says=True,
             location="classroom"
@@ -837,7 +828,7 @@ init 5 python:
             label="debug_call_api",
             unlocked=True,
             prompt="Can you call an API for me?",
-            conditional="config.console",
+            conditional="utils.KEY_VALID",
             category=["Debug (API)"],
             player_says=True,
             location="classroom"
@@ -873,7 +864,7 @@ init 5 python:
             label="debug_change_weather",
             unlocked=True,
             prompt="Can you change the weather for me?",
-            conditional="config.console",
+            conditional="utils.KEY_VALID",
             category=["Debug (Weather)"],
             player_says=True,
             location="classroom"
@@ -920,7 +911,7 @@ init 5 python:
             label="debug_clothing_combinations",
             unlocked=True,
             prompt="Can I try out a new clothing combination?",
-            conditional="config.console",
+            conditional="utils.KEY_VALID",
             category=["Debug (Sprites)"],
             player_says=True,
             location="classroom"
@@ -1032,7 +1023,7 @@ init 5 python:
             label="debug_wear_outfit",
             unlocked=True,
             prompt="Can you wear an outfit for me?",
-            conditional="config.console",
+            conditional="utils.KEY_VALID",
             category=["Debug (Sprites)"],
             player_says=True,
             location="classroom"

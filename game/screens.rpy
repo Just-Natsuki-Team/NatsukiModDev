@@ -728,7 +728,7 @@ screen quick_menu():
             xalign 0.5
             yalign 0.995
 
-            if config.console:
+            if utils.KEY_VALID:
                 textbutton _("Restart"):
                     text_style "quickmenu_text"
                     action Show(

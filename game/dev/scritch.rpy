@@ -1,3 +1,5 @@
+default persistent.jn_scritches_total_given = 0
+
 init python in jn_scritch:
     import os
     import pygame
@@ -9,18 +11,21 @@ init python in jn_scritch:
     _FINISHED_START_QUIPS = [
         "...Satisfied?",
         "Happy now,{w=0.1} [player]?",
-        "...Y-{w=0.3}you're done now?"
+        "...Y-{w=0.3}you're done now?",
+        "A-{w=0.1}all done,{w=0.1} [player]?",
+        "I-{w=0.1}is that all,{w=0.1} [player]?"
     ]
 
     _FINISHED_END_QUIPS = [
         "...Good.",
         "...About time.",
-        "Finally...{w=0.3} jeez..."
+        "Finally...{w=0.3} jeez...",
+        "Took you long enough.",
+        "Finally..."
     ]
 
     # Tracking
     _has_been_scritched = False
-    _scritch_count = 0
 
     # Collision detection
     game_window = pygame.Surface((1280, 720))
@@ -34,7 +39,7 @@ label scritch_start:
     jump scritch_loop
 
 label scritch_loop:
-    $ current_mouse_position = jn_debug.get_mouse_position()
+    $ current_mouse_position = utils.get_mouse_position()
 
     if not jn_scritch._has_been_scritched:
         show natsuki scritch nervous
@@ -42,7 +47,7 @@ label scritch_loop:
 
     if jn_scritch.active_scritch_area.collidepoint(current_mouse_position[0], current_mouse_position[1]):
         $ jn_scritch._has_been_scritched = True
-        $ jn_scritch._scritch_count += 1
+        $ persistent.jn_scritches_total_given += 1
         play audio scritch
         show scritch_popup zorder jn_scritch._SCRITCH_POPUP_Z_INDEX
         hide scritch_popup with popup_hide_transition
@@ -56,11 +61,31 @@ label scritch_loop:
     jump scritch_loop
 
 label scritch_finished:
-    $ finished_start_quip = renpy.substitute(random.choice(jn_scritch._FINISHED_START_QUIPS))
-    n 1kwmpul "[finished_start_quip]"
-    $ finished_end_quip = renpy.substitute(random.choice(jn_scritch._FINISHED_END_QUIPS))
-    n 1kllpul "[finished_end_quip]"
-    n 1kcsdvf "..."
+    if random.choice(range(4)) == 3:
+        n 1kllunf "..."
+        n 1knmpuf "Uhmm...{w=0.3} [player]?"
+        n 1klrssf "Could you...{w=0.3} you know..."
+        n 1klrpof "Keep doing that just a little longer?"
+
+        menu:
+            n "J-{w=0.1}just a little."
+
+            "Of course.":
+                n 1kwmnvf "...{w=0.3}Thanks,{w=0.1} [player]."
+                jump scritch_loop
+
+            "That's it for now.":
+                n 1kllajl "...Oh."
+                n 1fllpol "W-{w=0.1}well, that's fine!{w=0.2} Not like I was super into it or anything dumb like that anyway."
+                n 1kllpol "..."
+                pass
+    else:
+        $ finished_start_quip = renpy.substitute(random.choice(jn_scritch._FINISHED_START_QUIPS))
+        n 1kwmpul "[finished_start_quip]"
+        $ finished_end_quip = renpy.substitute(random.choice(jn_scritch._FINISHED_END_QUIPS))
+        n 1kllpul "[finished_end_quip]"
+        n 1kcsdvf "..."
+
     hide screen scritch_ui
     $ jn_globals.player_is_ingame = False
     jump ch30_loop
@@ -72,11 +97,20 @@ image scritch_popup:
     block:
         choice:
             "dev/mod_assets/ui/scritch_a.png"
+            ease 0.33 alpha 1.0 yoffset -30
         choice:
             "dev/mod_assets/ui/scritch_b.png"
+            ease 0.33 alpha 1.0 yoffset -30
         choice:
             "dev/mod_assets/ui/scritch_c.png"
-
+            ease 0.33 alpha 1.0 yoffset -30
+        choice:
+            "dev/mod_assets/ui/scritch_d.png"
+            ease 0.33 alpha 1.0 yoffset -30
+        choice:
+            "dev/mod_assets/ui/scritch_e.png"
+            ease 0.33 alpha 1.0 yoffset -30
+    
 image natsuki scritch nervous:
     block:
         choice:
@@ -138,7 +172,7 @@ image natsuki scritch active:
 screen scritch_ui:
     zorder jn_scritch._SCRITCH_UI_Z_INDEX
 
-    text "{0} scritches".format(jn_scritch._scritch_count) size 30 xpos 555 ypos 60 style "categorized_menu_button"
+    text "{0} scritches".format(persistent.jn_scritches_total_given) size 30 xpos 555 ypos 60 style "categorized_menu_button"
     
     # Options
     style_prefix "hkb"

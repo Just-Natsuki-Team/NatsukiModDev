@@ -58,6 +58,9 @@ label ch30_init:
     # Outfit selection
     $ jn_outfits.set_outfit_for_time_block()
 
+    # Check key
+    $ utils.KEY_VALID = utils.validate_key()
+
     show screen hkb_overlay
     play music audio.test_bgm   
 
@@ -181,6 +184,8 @@ init python:
         """
         Runs ever hour during breaks between topics
         """
+        main_background.draw(True)
+        
         # Show a new random weather outside if allowed to do so
         if persistent.jn_random_weather:
             jn_atmosphere.show_random_sky()
@@ -287,11 +292,10 @@ label player_select_topic(is_repeat_topics=False):
     jump ch30_loop
 
 label extras_menu:
-    if config.console:
-        menu:
-            "Scritch":
-                jump scritch_start
+    menu:
+        "Scritch" if utils.KEY_VALID:
+            jump scritch_start
 
-            "Nevermind":
-                pass
+        "Nevermind":
+            pass
     jump ch30_loop
