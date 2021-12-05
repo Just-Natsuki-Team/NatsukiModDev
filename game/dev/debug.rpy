@@ -1041,6 +1041,7 @@ label debug_wear_outfit:
         (jn_outfits.DEFAULT_OUTFIT_CASUAL_WEEKEND_ALT.reference_name, jn_outfits.DEFAULT_OUTFIT_CASUAL_WEEKEND_ALT),
         (jn_outfits.DEFAULT_OUTFIT_NIGHT.reference_name, jn_outfits.DEFAULT_OUTFIT_NIGHT),
         (jn_outfits.DEFAULT_OUTFIT_MORNING.reference_name, jn_outfits.DEFAULT_OUTFIT_MORNING),
+        (jn_outfits.DEFAULT_OUTFIT_MORNING_ALT.reference_name, jn_outfits.DEFAULT_OUTFIT_MORNING_ALT),
         (jn_outfits.DEV_OUTFIT_QEEB.reference_name, jn_outfits.DEV_OUTFIT_QEEB),
         (jn_outfits.DEV_OUTFIT_TRAINER.reference_name, jn_outfits.DEV_OUTFIT_TRAINER),
         (jn_outfits.DEV_OUTFIT_LOW_CUT_DRESS.reference_name, jn_outfits.DEV_OUTFIT_LOW_CUT_DRESS)

@@ -2194,114 +2194,126 @@ label talk_i_love_you:
     if persistent.jn_player_love_you_count == 0:
 
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-            n "O-{w=0.1}o-{w=0.1}oh my gosh..."
-            n "[player_initial]-{w=0.2}[player]...{w=0.3} y-{w=0.1}you...!"
-            n "Nnnnnnn-!"
-            n "W-{w=0.1}well it took you long enough!{w=0.2} What did you think you were doing?!"
-            n "I bet you were just waiting for me to say it first!"
-            n "Jeez,{w=0.1} [player]...{w=0.3} [chosen_tease]..."
-            n "But..."
-            n "B-{w=0.1}but...!"
-            n "Uuuuuuu-!"
-            n "Oh,{w=0.1} whatever!{w=0.2} I don't care!{w=0.2} I gotta say it!{w=0.2} I gotta say it!"
-            n "[player]!{w=0.2} I love you too!"
-            n "I-{w=0.1}I love...{w=0.3} you too..."
-            n "I...{w=0.3} I..."
-            n "I love you,{w=0.1} [player]..."
-            n "..."
-            n "A-{w=0.1}ahaha...{w=0.3} sorry..."
-            n "I...{w=0.3} think I got a little carried away..."
-            n "..."
-            n "J-{w=0.1}jeez!{w=0.2} Stop looking at me like that already!"
-            n "W-{w=0.1}we're both on the same page now,{w=0.1} so..."
-            n "Where were we?{w=0.2} Ehehe..."
+            n 1uscemf "O-{w=0.1}o-{w=0.1}oh my gosh..."
+            n 1uskemf "[player_initial]-{w=0.2}[player]...{w=0.3} y-{w=0.1}you...!"
+            n 1fcsanf "Nnnnnnn-!"
+            n 1fbkwrf "W-{w=0.1}well it took you long enough!{w=0.2} What did you think you were doing?!"
+            n 1flrwrf "I bet you were just waiting for me to say it first!"
+            n 1fllemf "Jeez,{w=0.1} [player]...{w=0.3} [chosen_tease]..."
+            n 1kllemf "But..."
+            n 1fcswrf "B-{w=0.1}but...!"
+            n 1flranf "Uuuuuuu-!"
+            n 1fchwrf "Oh,{w=0.1} whatever!{w=0.2} I don't care!{w=0.2} I gotta say it!{w=0.2} I gotta say it!"
+            n 1kwdemf "[player]!{w=0.2} I love you too!"
+            n 1kchbsf "I-{w=0.1}I love...{w=0.3} you too..."
+            n 1kplbgf "I...{w=0.3} I..."
+            n 1kchsmf "..."
+            n 1kwmsmf "I love you,{w=0.1} [player]..."
+            n 1kllsml "..."
+            n 1kskemf "S-{w=0.1}sorry...!"
+            n 1klrunf "I...{w=0.3} think I got a little carried away..."
+            n 1kcssmf "..."
+            n 1knmajf "..."
+            n 1kbkemf "J-{w=0.1}jeez!{w=0.2} Stop looking at me like that already!"
+            n 1fllemf "W-{w=0.1}we're both on the same page now,{w=0.1} so..."
+            n 1kllbof "...{w=0.3}T-that's all I had."
+            n 1kllsmf "..."
+            n 1kllssf "S-{w=0.1}so..."
+            n 1kplssf "Where were we?{w=0.2} Ehehe..."
             $ relationship(change="affinity+", multiplier=3)
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "[player_initial]-{w=0.2}[player]!"
-            n "Y-{w=0.1}you...!"
-            n "Nnnnn-!"
-            n "I-{w=0.1}I know we've been seeing each other a while,{w=0.1} but this is way too sudden!"
-            n "Gosh...{w=0.3} now you've gone and made it all awkward,{w=0.1} [player]."
-            n "I hope you're happy."
-            n "..."
-            n "D-{w=0.1}don't think this means I {i}hate{/i} you or anything,{w=0.1} though..."
-            n "It's just that...{w=0.3} It's just..."
-            n "Uuuuuu..."
-            n "N-{w=0.1}never mind...{w=0.3} Ahaha..."
+            n 1uscgsf "[player_initial]-{w=0.2}[player]!"
+            n 1fskgsf "Y-{w=0.1}you...!"
+            n 1fcsanf "Nnnnn-!"
+            n 1fbkwrf "I-{w=0.1}I know we've been seeing each other a while,{w=0.1} but this is way too sudden!"
+            n 1fllwrf "Now you've gone and made it super awkward,{w=0.1} [player]!{w=0.2} Why'd you have to go do that?!" 
+            n 1fcsemf "Sheesh!"
+            n 1fslpof "...I hope you're happy."
+            n 1fsqunf "..."
+            n 1fnmpof "D-{w=0.1}don't think this means I {i}hate{/i} you or anything,{w=0.1} though..."
+            n 1flreml "It's just that...{w=0.3} It's just..."
+            n 1fcsanl "Uuuuuu..."
+            n 1flrbol "N-{w=0.1}never mind..."
+            n 1fcseml "Forget I said anything."
+            n 1kllbof "..."
             $ relationship(change="affinity+", multiplier=2)
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            n "W-{w=0.1}w-{w=0.1}what?"
-            n "D-{w=0.1}did you just...?"
-            n "Nnnnnnnnn-!"
-            n "[player_initial]-{w=0.2}[player]!"
-            n "Are you trying to give me a heart attack?!{w=0.2} Jeez..."
-            n "You can't just say stuff like that so suddenly,{w=0.1} [chosen_tease]..."
-            n "..."
-            n "I-{w=0.1}I mean..."
-            n "It's not that I {i}don't{/i} like you,{w=0.1} o-{w=0.1}or anything,{w=0.1} but..."
-            n "Uuuuu..."
-            n "F-{w=0.1}forget it!{w=0.2} I-{w=0.1}it's nothing..."
-            n "I guess..."
+            n 1uskwrf "W-{w=0.1}w-{w=0.1}what?"
+            n 1fwdwrf "D-{w=0.1}did you just...?"
+            n 1fcsanf "Nnnnnnnnn-!"
+            n 1fbkwrf "[player_initial]-{w=0.2}[player]!"
+            n 1fcsemf "Are you trying to give me a heart attack?!{w=0.2} Jeez!"
+            n 1fllemf "You can't just say stuff like that so suddenly..."
+            n 1kllunf "..."
+            n 1fllajf "I-{w=0.1}I mean..."
+            n 1flranf "It's not that I {i}don't{/i} like you,{w=0.1} o-{w=0.1}or anything,{w=0.1} but..."
+            n 1fslanf "But...!"
+            n 1fcsanf "Uuuuu..."
+            n 1fcsajf "F-{w=0.1}forget it!{w=0.2} I-{w=0.1}it's nothing..."
+            n 1kslslf "..."
             $ relationship("affinity+")
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
-            n "Pffffft!"
-            n "Ahaha!"
-            n "You can't be serious,{w=0.1} [player]!{w=0.2} You're just messing with me!{w=0.2} Right?"
-            n "R-{w=0.1}right...?{w=0.2} Ahaha..."
-            n "..."
-            n "J-{w=0.1}jeez!{w=0.2} Enough of this!"
-            n "You really shouldn't mess around with girls like that,{w=0.1} [player]..."
-            n "Y-{w=0.1}you're just lucky I've got a great sense of humour."
-            n "S-{w=0.1}so it's fine...{w=0.3} this time..."
-            n "Just...{w=0.3} think a little before you just blurt stuff out, alright?"
-            n "[chosen_tease.capitalize()]..."
+            n 1fsqdvl "Pffffft!"
+            n 1uchbsl "Ahaha!"
+            n 1tllbgl "You can't be serious,{w=0.1} [player]!{w=0.2} You're just messing with me!{w=0.2} Right?"
+            n 1knmbgl "Right,{w=0.1} [player]?"
+            n 1knmajf "R-{w=0.1}right...?"
+            n 1fllunf "..."
+            n 1fcsgsf "J-{w=0.1}jeez!{w=0.2} Enough of this!"
+            n 1fsqajf "You really shouldn't mess around with girls like that,{w=0.1} [player]!"
+            n 1fslpul "Y-{w=0.1}you're just lucky I've got a great sense of humour."
+            n 1fnmpol "S-{w=0.1}so it's fine...{w=0.3} this time..."
+            n 1fcsajl "Just...{w=0.3} think a little before you just blurt stuff out!{w=0.2} Sheesh."
+            n 1fllslf "[chosen_tease.capitalize()]..."
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-            n "Urk-!"
-            n "W-{w=0.1}what did you..."
-            n "Did you just...?"
-            n "A-{w=0.1}ahaha!{w=0.2} Y-{w=0.1}yeah!{w=0.2} Who wouldn't love me,{w=0.1} right?"
-            n "My wit,{w=0.1} my style,{w=0.1} my killer sense of humour...{w=0.3} I've got it all.{w=0.1} Yeah..."
-            n "D-{w=0.1}don't get the wrong idea or a-{w=0.1}anything, though!"
-            n "I-{w=0.1}I mean,{w=0.1} I'm just glad you have some good taste."
-            n "Ehehe..."
+            n 1fscgsf "Urk-!"
+            n 1fskanf "W-{w=0.1}what did you..."
+            n 1fwdanf "Did you just...?"
+            n 1fllajl "..."
+            n 1fcsbgf "A-{w=0.1}aha!{w=0.2} I mean...{w=0.3} y-{w=0.1}yeah!{w=0.2} Who wouldn't love me,{w=0.1} right?"
+            n 1fllbgf "My wit,{w=0.1} my style,{w=0.1} my killer sense of humour...{w=0.3} I've got it all.{w=0.1} Yeah..."
+            n 1fbkwrf "D-{w=0.1}don't get the wrong idea or a-{w=0.1}anything, though!"
+            n 1fllssf "I-{w=0.1}I mean,{w=0.1} I'm just glad you have some good taste."
+            n 1fllunf "Yeah..."
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
-            n "..."
-            n "Seriously,{w=0.1} [player]?{w=0.2} You're really going to say that to me {i}now{/i}?"
-            n "The first time you choose to say it...{w=0.3} and you say it {i}now{/i}?"
-            n "..."
-            n "...I don't even know if I can believe you,{w=0.1} [player]."
-            n "And you know what?{w=0.2} That makes it so much worse."
-            n "..."
-            n "We're done with this."
-            n "And if you {i}really{/i} feel that way?"
-            n "...Then why aren't you trying to make this work,{w=0.1} [player]?"
+            n 1fcsan "..."
+            n 1fnmfu "Seriously,{w=0.1} [player]?{w=0.2} You're really going to say that to me {i}now{/i}?"
+            n 1fsqfu "The first time you choose to say it...{w=0.3} and you say it {i}now{/i}?"
+            n 1fcspu "..."
+            n 1fwman "...And you really think I'm gonna buy that {i}now{/i},{w=0.1} [player]?"
+            n 1fcsfu "..."
+            n 1fcssr "..."
+            n 1fsqsr "We're done with this."
+            n 1fsqpu "And if you {i}really{/i} feel that way?"
+            n 1fsqsf "...Then why aren't {i}you{/i} trying to make this work,{w=0.1} [player]?"
             $ relationship("affinity-")
 
         else:
             # :(
-            n "..."
-            n "Y-{w=0.1}you..."
-            n "You...{w=0.3} h-{w=0.1}how...!"
-            n "H-{w=0.1}how {i}dare{/i} you tell me that now!"
-            n "{i}How {w=0.3} dare {w=0.3} you.{/i}"
-            n "..."
-            n "You knew how I felt,{w=0.1} [player]..."
-            n "You knew for such a long time..."
-            n "And now?{w=0.2} {i}Now{/i} is when you tell me?"
-            n "For the {i}first time{/i}?"
-            n "..."
-            n "I...{w=0.3} I c-{w=0.1}can't do this right now."
-            n "It...{w=0.5} it hurts..."
-            n "..."
-            n "Get out of my sight,{w=0.1} [player]."
-            n "..."
-            n "Go!"
-            n "{i}Just leave me alone!{/i}{nw}"
+            n 1fsqpu "..."
+            n 1fcsun "Y-{w=0.1}you..."
+            n 1fcsan "You...{w=0.3} h-{w=0.1}how...!"
+            n 1fscwr "H-{w=0.1}how {i}dare{/i} you tell me that now!"
+            n 1fscfu "{i}How {w=0.3} dare {w=0.3} you.{/i}"
+            n 1fcsfu "..."
+            n 1fcssr "..."
+            n 1fsqsr "You knew how I felt,{w=0.1} [player]..."
+            n 1fcsan "You knew for such a long time..."
+            n 1fsqfu "And now?{w=0.2} {i}Now{/i} is when you tell me?"
+            n 1fsqup "For the {i}first time{/i}?"
+            n 1fcsup "..."
+            n 1kplan "I...{w=0.3} I c-{w=0.1}can't do this right now."
+            n 1kcsan "It...{w=0.5} it hurts..."
+            n 1kcsfu "..."
+            n 1fcspu "Get out of my sight,{w=0.1} [player]."
+            n 1fcsan "..."
+            n 1fsqfu "Go!"
+            n 1fscsc "{i}Just leave me alone!{/i}{nw}"
             $ relationship(change="affinity-", multiplier=10)
             return { "quit": None }
 
@@ -2316,96 +2328,96 @@ label talk_i_love_you:
             $ random_response_index = random.randint(0, 11)
 
             if random_response_index == 0:
-                n "Ehehe.{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
-                n "You're always [chosen_descriptor] to me."
+                n 1unmbgf "Ehehe.{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
+                n 1uchsmf "You're always [chosen_descriptor] to me."
                 $ relationship("affinity+")
                 return
 
             elif random_response_index == 1:
-                n "Aww,{w=0.1} you don't say?"
-                n "Ahaha!"
+                n 1tsqssl "Aww,{w=0.1} you don't say?"
+                n 1uchbsl "Ahaha!"
                 $ chosen_endearment = chosen_endearment.capitalize()
-                n "[chosen_endearment],{w=0.1} I love you too!"
-                n "I'll always be here to stick up for you."
+                n 1kwmbgf "[chosen_endearment],{w=0.1} I love you too!"
+                n 1fcsbgf "I'll always be here to stick up for you."
                 $ relationship("affinity+")
                 return
 
             elif random_response_index == 2:
-                n "Aww,{w=0.1} [chosen_endearment]!{w=0.2} I love you too!"
-                n "You're the best thing that's ever happened to me."
+                n 1uchsmf "Aww,{w=0.1} [chosen_endearment]!{w=0.2} I love you too!"
+                n 1klrbgf "You're the best thing that's ever happened to me."
                 $ relationship("affinity+")
                 return
 
             elif random_response_index == 3:
-                n "Oh?{w=0.2} Someone's all needy today,{w=0.1} huh?"
-                n "Well,{w=0.1} I'd be happy to oblige!"
-                n "I love you too,{w=0.1} [chosen_endearment]!"
-                n "Keep on smiling for me,{w=0.1} 'kay?"
+                n 1ksqbgf "Oh?{w=0.2} Someone's all needy today,{w=0.1} huh?"
+                n 1fsqsmf "Well,{w=0.1} I'd be happy to oblige!"
+                n 1uchsmf "I love you too,{w=0.1} [chosen_endearment]!"
+                n 1fchbgf "Keep on smiling for me,{w=0.1} 'kay?"
                 $ relationship("affinity+")
                 return
 
             elif random_response_index == 4:
-                n "Fawning over me like always,{w=0.1} [player]?"
-                n "Ehehe.{w=0.2} Don't worry,{w=0.1} I'm not complaining!"
-                n "I love you too,{w=0.1} [chosen_endearment]!"
-                n "It's just us two against the world!"
+                n 1flrpof "Fawning over me like always,{w=0.1} [player]?"
+                n 1usqssf "Ehehe.{w=0.2} Don't worry,{w=0.1} I'm not complaining!"
+                n 1uchbgf "I love you too,{w=0.1} [chosen_endearment]!"
+                n 1fcssmf "It's just us two against the world!"
                 $ relationship("affinity+")
                 return
 
             elif random_response_index == 5:
-                n "Well,{w=0.1} o-{w=0.1}of course you do.{w=0.2} Ahaha!"
-                n "But...{w=0.3} we both know I love you more,{w=0.1} [player]."
+                n 1fllbgf "Well,{w=0.1} o-{w=0.1}of course you do.{w=0.2} Ahaha!"
+                n 1fchbgf "But...{w=0.3} we both know I love you more,{w=0.1} [player]."
                 menu:
                     "No, I love you more.":
-                        n "No,{w=0.1} I-"
-                        n "..."
-                        n "Hey...{w=0.3} wait a minute..."
-                        n "I know where we're going with this!{w=0.2} Nice try,{w=0.1} [player]!"
-                        n "You're just gonna have to accept that I love you more,{w=0.1} and that's just the way it is."
+                        n 1fnmbgf "No,{w=0.1} I-"
+                        n 1tllajl "..."
+                        n 1fnmawl "H-{w=0.1}hey...{w=0.3} wait a minute...!"
+                        n 1fchgnl "I know where we're going with this!{w=0.2} Nice try,{w=0.1} [player]!"
+                        n 1fsqsml "You're just gonna have to accept that I love you more,{w=0.1} and that's just the way it is."
                         menu:
                             "You love me more, and that's just the way it is.":
-                                n "Ehehe.{w=0.2} See?"
-                                n "That wasn't so hard,{w=0.1} was it?"
-                                n "I looooove you,{w=0.1} [player]~!"
+                                n 1uchgnf "Ehehe.{w=0.2} See?"
+                                n 1fwmsmf "That wasn't so hard,{w=0.1} was it?"
+                                n 1nchbgf "I looooove you,{w=0.1} [player]~!"
 
                     "Okay.":
-                        n "Pfffft!{w=0.2} Ahaha!"
-                        n "Come on,{w=0.1} [player]!{w=0.2} Where's your fighting spirit?"
-                        n "Well,{w=0.1} whatever.{w=0.2} I'm just glad you accept the truth."
-                        n "Ehehe."
+                        n 1uchgnl "Pfffft!{w=0.2} Ahaha!"
+                        n 1fwltsf "Come on,{w=0.1} [player]!{w=0.2} Where's your fighting spirit?"
+                        n 1fchsmf "Well,{w=0.1} whatever.{w=0.2} I'm just glad you accept the truth."
+                        n 1uchsmf "Ehehe."
 
                 $ relationship("affinity+")
                 return
 
             elif random_response_index == 6:
-                n "Ehehe...{w=0.3} I always adore hearing that from you,{w=0.1} [player]."
-                n "...And I think I can guess you like hearing it just as much."
-                n "I love you too,{w=0.1} [chosen_endearment]!"
-                n "I don't need anyone else~."
+                n 1uchsmf "Ehehe...{w=0.3} I always adore hearing that from you,{w=0.1} [player]."
+                n 1usqsmf "...And I think I can guess you like hearing it just as much."
+                n 1uchbgf "I love you too,{w=0.1} [chosen_endearment]!"
+                n 1nchsmf "I don't need anyone else~."
                 $ relationship("affinity+")
                 return
 
             elif random_response_index == 7:
-                n "Wow,{w=0.1} [player]..."
-                n "You really are just a big sappy mess today,{w=0.1} aren't you?"
-                n "Gross..."
-                n "...But just the kind of gross I'm down with.{w=0.2} Ehehe."
-                n "I love you too,{w=0.1} [chosen_endearment]!"
-                n "I'll always have your back."
+                n 1nsqajl "Wow,{w=0.1} [player]..."
+                n 1tslajl "You really are just a big sappy mess today,{w=0.1} aren't you?"
+                n 1tsldvl "Gross..."
+                n 1fchbgf "...But just the kind of gross I'm down with.{w=0.2} Ehehe."
+                n 1uchbgf "I love you too,{w=0.1} [chosen_endearment]!"
+                n 1unmsmf "I'll always have your back."
                 $ relationship("affinity+")
                 return
 
             elif random_response_index == 8:
-                n "Ehehe."
-                n "I..."
-                n "Looooooooove you too,{w=0.1} [player]!"
-                n "You'll always be my rock."
+                n 1uchsmf "Ehehe."
+                n 1nchssf "I..."
+                n 1uchbsf "Looooooooove you too,{w=0.1} [player]!"
+                n 1kwmsmf "You'll always be my rock."
                 $ relationship("affinity+")
                 return
 
             elif random_response_index == 9:
-                n "I mean...{w=0.3} that's real sweet of you and all,{w=0.1} [player]..."
-                n "But we both know I love you more~."
+                n 1fllsmf "I mean...{w=0.3} that's real sweet of you and all,{w=0.1} [player]..."
+                n 1fsqsmf "But we both know I love you more~."
                 $ player_is_wrong = True
                 $ wrong_response_count = 0
 
@@ -2415,44 +2427,44 @@ label talk_i_love_you:
                         "No, I love {i}you{/i} more!":
 
                             if wrong_response_count == 1:
-                                n "Hmm?{w=0.2} Did you mishear me,{w=0.1} [player]?"
-                                n "I said I love {i}you{/i} more,{w=0.2} [chosen_tease]!"
+                                n 1fsqbgl "Hmm?{w=0.2} Did you mishear me,{w=0.1} [player]?"
+                                n 1fchbgf "I said I love {i}you{/i} more,{w=0.2} [chosen_tease]!"
 
                             elif wrong_response_count == 5:
-                                n "Oh?{w=0.2} Competitive,{w=0.1} are we?"
-                                n "Ehehe.{w=0.2} Silly [player].{w=0.1} Did nobody ever tell you?"
-                                n "Don't start a fight you can't finish!"
-                                n "Especially this one -{w=0.1} I love {i}you{/i} more~!"
+                                n 1fsqbgl "Oh?{w=0.2} Competitive,{w=0.1} are we?"
+                                n 1fslbgl "Ehehe.{w=0.2} Silly [player].{w=0.1} Did nobody ever tell you?"
+                                n 1fchgnl "Don't start a fight you can't finish!"
+                                n 1fchbgf "Especially this one -{w=0.1} I love {i}you{/i} more~!"
 
                             elif wrong_response_count == 10:
-                                n "Oho?{w=0.2} Not bad,{w=0.1} [player]!"
-                                n "I almost admire your stubbornness..."
-                                n "But not as much as I admire you!{w=0.2} I love {i}you{/i} more!"
+                                n 1tsqbgl "Oho?{w=0.2} Not bad,{w=0.1} [player]!"
+                                n 1fsqbgl "I almost admire your stubbornness..."
+                                n 1uchsmf "But not as much as I admire you!{w=0.2} I love {i}you{/i} more!"
 
                             elif wrong_response_count == 20:
-                                n "Ehehe.{w=0.2} You're persistent!{w=0.2} I'll give you that."
-                                n "But if you think I'm giving you a win..."
-                                n "Then you've got another thing coming!"
-                                n "I love {i}you{/i} more,{w=0.1} dummy!"
+                                n 1fsqbgl "Ehehe.{w=0.2} You're persistent!{w=0.2} I'll give you that."
+                                n 1fsqsml "But if you think I'm giving you a win..."
+                                n 1fchgnl "Then you've got another thing coming!"
+                                n 1uchbgl "I love {i}you{/i} more,{w=0.1} dummy!"
 
                             elif wrong_response_count == 50:
-                                n "Wow!{w=0.2} This is like...{w=0.3} the 50th time you've been wrong!{w=0.2} In a row!"
-                                n "Sounds to me like you're in some serious denial there,{w=0.1} [player]~."
-                                n "I don't think I can be bothered counting much more from here..."
-                                n "So why don't you do me a favour and just accept that I love {i}you{/i} more already?"
-                                n "Ehehe."
-                                n "Thanks,{w=0.1} [chosen_endearment]~!"
+                                n 1tnmajl "Wow!{w=0.2} This is like...{w=0.3} the 50th time you've been wrong!{w=0.2} In a row!"
+                                n 1tsqsgl "Sounds to me like you're in some serious denial there,{w=0.1} [player]~."
+                                n 1nllssl "I don't think I can be bothered counting much more from here..."
+                                n 1fsqtsl "So why don't you do me a favour and just accept that I love {i}you{/i} more already?"
+                                n 1uchsml "Ehehe."
+                                n 1fchbgl "Thanks,{w=0.1} [chosen_endearment]~!"
 
                             elif wrong_response_count == 100:
-                                n "...Oh!{w=0.2} And it looks like we have our 100th wrong answer!"
-                                n "Dim the lights!{w=0.2} Roll the music!"
-                                n "Now,{w=0.1} audience members -{w=0.1} what does our stubborn participant get?"
-                                n "They get..."
-                                n "A correction!{w=0.2} Wow!"
-                                n "And that correction is..."
-                                n "[n_name] loves {i}them{/i} way more!{w=0.2} Congratulations,{w=0.1} dummy!"
-                                n "And now,{w=0.1} to walk away with the grand prize -{w=0.1} all our guest here needs to do..."
-                                n "Is give up and admit how wrong they are~!{w=0.2} Ehehe."
+                                n 1uwdgsl "...Oh!{w=0.2} And it looks like we have our 100th wrong answer!"
+                                n 1fllawl "Dim the lights!{w=0.2} Roll the music!"
+                                n 1flrbgl "Now,{w=0.1} audience members -{w=0.1} what does our stubborn participant get?"
+                                n 1fsqbgl "They get..."
+                                n 1uchgnl "A correction!{w=0.2} Wow!"
+                                n 1fsqbgl "And that correction is..."
+                                n 1fchbsf "[n_name] loves {i}them{/i} way more!{w=0.2} Congratulations,{w=0.1} dummy!"
+                                n 1fsqdvl "And now,{w=0.1} to walk away with the grand prize -{w=0.1} all our guest here needs to do..."
+                                n 1fchbsl "...Is give up and admit how wrong they are~!{w=0.2} Ehehe."
 
                             else:
                                 $ player_is_wrong_responses = [
@@ -2472,80 +2484,80 @@ label talk_i_love_you:
                                     "Aww,{w=0.1} come on now,{w=0.1} [player].{w=0.2} If you {i}really{/i} loved me,{w=0.2} you'd admit I love {i}you{/i} more!"
                                 ]
                                 $ chosen_random_response = renpy.substitute(random.choice(player_is_wrong_responses))
-                                n "[chosen_random_response]"
+                                n 1fchbgf "[chosen_random_response]"
 
                             $ wrong_response_count += 1
 
                         "Okay, fine. You love me more.":
                             $ player_is_wrong = False
-                            n "See?{w=0.2} Was that really so hard?"
-                            n "Sometimes you just have to admit you're wrong,{w=0.1} [player]."
-                            n "Ehehe."
+                            n 1tsqbgl "See?{w=0.2} Was that really so hard?"
+                            n 1uchtsl "Sometimes you just have to admit you're wrong,{w=0.1} [player]~."
+                            n 1nchsml "Ehehe."
 
                             if wrong_response_count >= 10:
-                                n "Nice try,{w=0.1} though~!"
+                                n 1nsqsml "Nice try,{w=0.1} though~!"
 
                             $ relationship("affinity+")
                             return
 
             elif random_response_index == 10:
-                n "Ehehe.{w=0.2} I'll never get tired of hearing that from you,{w=0.1} [player]."
-                n "I love you too!"
-                n "You're my numero uno~."
+                n 1ksqsml "Ehehe.{w=0.2} I'll never get tired of hearing that from you,{w=0.1} [player]."
+                n 1uchsmf "I love you too!"
+                n 1uchbgf "You're my numero uno~."
                 $ relationship("affinity+")
                 return
 
             else:
-                n "Oh?{w=0.2} Lovey-dovey as usual?"
-                n "You're such a softie,{w=0.1} [player].{w=0.2} Ehehe."
-                n "But...{w=0.3} I'm not gonna complain!{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
-                n "You always make me feel tall."
+                n 1usqbgf "Oh?{w=0.2} Lovey-dovey as usual?"
+                n 1uslsmf "You're such a softie,{w=0.1} [player].{w=0.2} Ehehe."
+                n 1uchbgf "But...{w=0.3} I'm not gonna complain!{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
+                n 1uchsmf "You always make me feel tall."
                 $ relationship("affinity+")
                 return
 
             return
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "G-{w=0.1}gah!{w=0.2} [player]!"
-            n "What did I say about making things awkward?{w=0.2} Now it's twice as awkward!"
-            n "Jeez..."
-            n "Let's just talk about something,{w=0.1} alright?"
-            n "Y-{w=0.1}you can fawn over me in your {i}own{/i} time!"
-            n "Dummy..."
+            n 1fbkwrf "G-{w=0.1}gah!{w=0.2} [player]!"
+            n 1fllwrf "What did I say about making things awkward?{w=0.2} Now it's twice as awkward!"
+            n 1fcsemf "Jeez..."
+            n 1flremf "Let's just talk about something,{w=0.1} alright?"
+            n 1flrpof "Y-{w=0.1}you can fawn over me in your {i}own{/i} time!"
+            n 1klrpof "Dummy..."
             $ relationship("affinity+")
             return
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
-            n "H-{w=0.1}hey! I thought I told you not to just come out with stuff like that!"
-            n "Jeez,{w=0.1} [player]..."
-            n "I-{w=0.1}I don't know if you're trying to win me over,{w=0.1} or what..."
-            n "But you're gonna have to try harder than that!{w=0.2} Ehehe..."
+            n 1fskemf "H-{w=0.1}hey! I thought I told you not to just come out with stuff like that!"
+            n 1fllemf "Jeez..."
+            n 1fcsemf "I-{w=0.1}I don't know if you're trying to win me over,{w=0.1} or what..."
+            n 1fcspof "But you're gonna have to try a lot harder than that!"
             return
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-            n "G-{w=0.1}gah!"
-            n "[player_initial]-{w=0.1}[player]!"
-            n "Stop being gross!{w=0.2} Gosh..."
-            n "..."
-            n "I don't know if you think this is a joke,{w=0.1} or what..."
-            n "But it really isn't funny to me,{w=0.1} [player]."
+            n 1fskemf "G-{w=0.1}gah!"
+            n 1fbkwrf "[player_initial]-{w=0.1}[player]!"
+            n 1fnmanl "Stop being gross!"
+            n 1fcsanl "Jeez..."
+            n 1fllajl "I don't know if you think this is a joke,{w=0.1} or what..."
+            n 1fsqaj "But it really isn't funny to me,{w=0.1} [player]."
             return
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
-            n "..."
-            n "Talk is cheap,{w=0.1} [player]."
-            n "If you {i}really{/i} care about me like that..."
-            n "Then {i}prove{/i} it."
+            n 1fcssr "..."
+            n 1fsqsr "Talk is cheap,{w=0.1} [player]."
+            n 1fsqaj "If you {i}really{/i} care about me..."
+            n 1fsqpu "Then {i}prove{/i} it."
             $ relationship("affinity-")
             return
 
         else:
-            n "..."
-            n "You're actually unbelievable,{w=0.1} [player]."
-            n "Do you even understand what you're saying?"
-            n "..."
-            n "You know what?{w=0.2} Whatever.{w=0.2} I don't care anymore."
-            n "Say what you like,{w=0.1} [player].{w=0.2} It changes nothing."
+            n 1fsqpu "..."
+            n 1fsqan "You're actually unbelievable,{w=0.1} [player]."
+            n 1fsqfu "Do you even {i}understand{/i} what you're saying?"
+            n 1fcsfu "..."
+            n 1fcspu "You know what?{w=0.2} Whatever.{w=0.2} I don't care anymore."
+            n 1fsqfu "Say what you like,{w=0.1} [player].{w=0.2} It's all crap,{w=0.1} just like everything else from you."
             $ relationship("affinity-")
             return
 

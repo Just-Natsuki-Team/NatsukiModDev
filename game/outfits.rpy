@@ -93,7 +93,7 @@ init python in jn_outfits:
 
     DEFAULT_OUTFIT_NIGHT = Outfit(
         display_name="Pyjamas",
-        reference_name="jn_pajamas_morning",
+        reference_name="jn_pajamas_night",
         unlocked=True,
         clothes="star_pajamas",
         hairstyle="down",
@@ -102,16 +102,25 @@ init python in jn_outfits:
 
     DEFAULT_OUTFIT_MORNING = Outfit(
         display_name="Pyjamas",
-        reference_name="jn_pajamas_night",
+        reference_name="jn_pajamas_morning",
         unlocked=True,
         clothes="star_pajamas",
         hairstyle="bedhead",
         accessory="hairbands/red"
     )
 
+    DEFAULT_OUTFIT_MORNING_ALT = Outfit(
+        display_name="Pyjamas",
+        reference_name="jn_pajamas_morning_alt",
+        unlocked=True,
+        clothes="star_pajamas",
+        hairstyle="super_messy",
+        accessory=None
+    )
+
     # Default outfit schedules
     DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_HIGH_AFFINITY = {
-        utils.TIME_BLOCK_EARLY_MORNING: DEFAULT_OUTFIT_MORNING,
+        utils.TIME_BLOCK_EARLY_MORNING: DEFAULT_OUTFIT_MORNING_ALT if _use_alt_outfit else DEFAULT_OUTFIT_MORNING,
         utils.TIME_BLOCK_MID_MORNING: DEFAULT_OUTFIT_UNIFORM,
         utils.TIME_BLOCK_LATE_MORNING: DEFAULT_OUTFIT_UNIFORM,
         utils.TIME_BLOCK_AFTERNOON: DEFAULT_OUTFIT_UNIFORM,
@@ -120,9 +129,9 @@ init python in jn_outfits:
     }
 
     DEFAULT_OUTFIT_SCHEDULE_WEEKEND_HIGH_AFFINITY = {
-        utils.TIME_BLOCK_EARLY_MORNING: DEFAULT_OUTFIT_MORNING,
-        utils.TIME_BLOCK_MID_MORNING: DEFAULT_OUTFIT_MORNING,
-        utils.TIME_BLOCK_LATE_MORNING: DEFAULT_OUTFIT_MORNING,
+        utils.TIME_BLOCK_EARLY_MORNING: DEFAULT_OUTFIT_MORNING_ALT if _use_alt_outfit else DEFAULT_OUTFIT_MORNING,
+        utils.TIME_BLOCK_MID_MORNING: DEFAULT_OUTFIT_MORNING_ALT if _use_alt_outfit else DEFAULT_OUTFIT_MORNING,
+        utils.TIME_BLOCK_LATE_MORNING: DEFAULT_OUTFIT_MORNING_ALT if _use_alt_outfit else DEFAULT_OUTFIT_MORNING,
         utils.TIME_BLOCK_AFTERNOON: DEFAULT_OUTFIT_CASUAL_WEEKEND_ALT if _use_alt_outfit else DEFAULT_OUTFIT_CASUAL_WEEKEND,
         utils.TIME_BLOCK_EVENING: DEFAULT_OUTFIT_CASUAL_WEEKEND_ALT if _use_alt_outfit else DEFAULT_OUTFIT_CASUAL_WEEKEND,
         utils.TIME_BLOCK_NIGHT:DEFAULT_OUTFIT_NIGHT
