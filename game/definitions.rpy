@@ -756,8 +756,7 @@ init -999 python in utils:
                 if hashlib.sha256(key_file.read().encode("utf-8")).hexdigest() == _KEY_HASH:
                     renpy.notify("Key authenticated!")
                     return True
-
-                renpy.notify("Key authentication failed.")
+                    
                 return False
 
 init python in utils:
