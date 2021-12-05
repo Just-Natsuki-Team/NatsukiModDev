@@ -1000,29 +1000,29 @@ label talk_weather_setup_part2:
                         call weather_setup_manual_coords
 
             else:
-                n "Eh?{w=0.2} What the...?"
-                n "Huh.{w=0.2} Weird."
-                n "Well,{w=0.1} I {i}was{/i} gonna show you something neat,{w=0.1} but it looks like something messed up..."
-                n "Hey, [player]...{w=0.3} could you look these coordinates up and tell me if I got it right?"
-                n "You should be able to search them up to find a location{w=0.1} -{w=0.1} then you can just tell me if that's correct!"
-                n "I'm pretty sure your latitude is [ip_latitude_longitude[0]],{w=0.1} and your longitude is [ip_latitude_longitude[1]].{w=0.2} Just talk to me again when you're ready,{w=0.1} 'kay?"
-                n "..."
-                n "Well,{w=0.1} [player]?{w=0.2} How're we looking?"
+                n 1fnmaj "Eh?{w=0.2} What the...?"
+                n 1nnmpu "Huh.{w=0.2} Weird."
+                n 1nlrss "Well,{w=0.1} I {i}was{/i} gonna show you something neat,{w=0.1} but it looks like something messed up..."
+                n 1nnmsm "Hey, [player]...{w=0.3} could you look these coordinates up and tell me if I got it right?"
+                n 1nnmss "You should be able to search them up to find a location{w=0.1} -{w=0.1} then you can just tell me if that's correct!"
+                n 1nllaj "I'm pretty sure your latitude is [ip_latitude_longitude[0]],{w=0.1} and your longitude is [ip_latitude_longitude[1]].{w=0.2} Just talk to me again when you're ready,{w=0.1} 'kay?"
+                n 1nnmnv "..."
+                n 1nlrss "Well,{w=0.1} [player]?{w=0.2} How're we looking?"
                 menu:
                     "Yes, that looks good to me.":
-                        n "Good!{w=0.2} Good.{w=0.2} That's a relief!"
-                        n "I was worried I'd have to get a little more creative.{w=0.2} Ehehe."
+                        n 1nwdbg "Good!{w=0.2} Good.{w=0.2} That's a relief!"
+                        n 1nchsm "I was worried I'd have to get a little more creative.{w=0.2} Ehehe."
                         $ persistent.latitude, persistent.longitude = ip_latitude_longitude
 
                     "No, that's not right.":
-                        n "Uuuuuuu..."
-                        n "Fine.{w=0.2} It looks like we're gonna have to do things the old-fashioned way."
+                        n 1nllpo "Uuuuuuu..."
+                        n 1nlrbo "Fine.{w=0.2} It looks like we're gonna have to do things the old-fashioned way."
                         call weather_setup_manual_coords
 
             $ persistent.is_weather_tracking_set_up = True
-            n "Okaaay!{w=0.2} It looks like we're finally good to go!"
-            n "Thanks again for all your help,{w=0.1} [player]."
-            n "I can't wait to see something different out of that window for a change!"
+            n 1nwdbg "Okaaay!{w=0.2} It looks like we're finally good to go!"
+            n 1nllsml "Thanks again for all your help,{w=0.1} [player]."
+            n 1nchbgl "I can't wait to see something different out of that window for a change!"
 
     return
 
@@ -1035,68 +1035,72 @@ label weather_setup_manual_coords:
         $ already_discussed_setup = get_topic("weather_setup_manual_coords").shown_count > 0
 
     if not already_discussed_setup:
-        n "Well,{w=0.1} fortunately for you,{w=0.1} I happen to have studied Geography so this is right up my alley!"
+        n 1nllgn "Well,{w=0.1} fortunately for you,{w=0.1} I happen to have studied Geography so this is right up my alley!"
 
     # Get the hemispheres
 
-    n "So,{w=0.1} I'm going to need to know a few things to find out where you are."
-    n "Let's start off with the basics{w=0.1} -{w=0.1} Hemispheres!"
-    n "Do you live in the {b}Northern{/b} or {b}Southern{/b} Hemisphere?"
-    n "Just in case you didn't know,{w=0.1} it basically just means if you live {b}North{/b} or {b}South{/b} of the {b}equator{/b}."
-    n "So..."
+    n 1nnmaj "So,{w=0.1} I'm going to need to know a few things to find out where you are."
+    n 1nnmss "Let's start off with the basics{w=0.1} -{w=0.1} Hemispheres!"
+    n 1nllaj "Do you live in the {b}Northern{/b} or {b}Southern{/b} Hemisphere?"
+    n 1nnmss "Just in case you didn't know,{w=0.1} it basically just means if you live {b}North{/b} or {b}South{/b} of the {b}equator{/b}."
+    n 1nlraj "So..."
     menu:
-        "Which do you live in,{w=0.1} [player]?"
+        n 1nnmsm "Which do you live in,{w=0.1} [player]?"
 
         "The Northern Hemisphere.":
             $ player_in_southern_hemisphere = False
             $ persistent.hemisphere_north_south = "North"
 
-            n "Ooh!{w=0.2} Just like me!"
-            n "Looks like we're closer than I thought,{w=0.1} huh?{w=0.2} Ehehe."
+            n 1nwdbg "Ooh!{w=0.2} Just like me!"
+            n 1nllsml "Looks like we're closer than I thought,{w=0.1} huh?{w=0.2} Ehehe."
 
         "The Southern Hemisphere.":
             $ player_in_southern_hemisphere = True
             $ persistent.hemisphere_north_south = "South"
 
-            n "Oh?{w=0.2} The Southern Hemisphere?{w=0.2} Neat!"
-            n "I bet the weather is a real treat over there,{w=0.1} right?"
+            n 1uwdaj "Oh?{w=0.2} The Southern Hemisphere?{w=0.2} Neat!"
+            n 1nchbg "I bet the weather is a real treat over there,{w=0.1} right?"
 
-    n "Okay,{w=0.1} now time for the other two!"
-    n "Do you live in the {b}Eastern{/b} or {b}Western{/b} Hemisphere?"
-    n "This one's a little more tricky,{w=0.1} but I find it helps to think of it this way:"
-    n "If we took a world map and cut it in half vertically down the middle..."
+    n 1nnmss "Okay,{w=0.1} now time for the other two!"
+    n 1nlraj "Do you live in the {b}Eastern{/b} or {b}Western{/b} Hemisphere?"
+    n 1nnmsm "This one's a little more tricky,{w=0.1} but I find it helps to think of it this way:"
+    n 1nllss "If we took a world map and cut it in half vertically down the middle..."
     menu:
-        "Would you live in the Eastern half,{w=0.1} or the Western half?"
+        n 1nwmsm "Would you live in the Eastern half,{w=0.1} or the Western half?"
 
         "The Eastern half.":
             $ player_in_western_hemisphere = False
             $ persistent.jn_hemisphere_east_west = "East"
 
-            n "Wow!{w=0.2} Just like me again,{w=0.1} [player]!"
-            n "It really is a small world,{w=0.1} huh?{w=0.2} Ehehe."
+            if not player_in_southern_hemisphere:
+                n 1nwdbg "Wow!{w=0.2} Just like me again,{w=0.1} [player]!"
+                n 1nwrbg "It really is a small world,{w=0.1} huh?{w=0.2} Ehehe."
+
+            else:
+                n 1nwdbg "Ooh!{w=0.2} Just like me!"
 
         "The Western half.":
             $ player_in_western_hemisphere = True
             $ persistent.jn_hemisphere_east_west = "West"
 
-            n "The Western half...{w=0.3} gotcha!"
+            n 1nnmsm "The Western half...{w=0.3} gotcha!"
 
     # Get the latitude
 
-    n "Now with that out of the way,{w=0.1} I just need your coordinates!"
-    n "And by those,{w=0.1} I mean your {b}latitude{/b} and {b}longitude{/b},{w=0.1} of course!"
-    n "I always used {a=[store.jn_globals.LINK_LAT_LONG_HOME]}this{/a} website to look mine up for homework,{w=0.1} but you can use your phone or whatever too."
-    n "Oh,{w=0.1} and don't worry about making it positive or negative.{w=0.2} I'll take care of that!"
-    n "We'll start off with your {b}latitude{/b} first."
-    n "So...{w=0.3} hit me,{w=0.1} [player]!"
+    n 1nwmbg "Now with that out of the way,{w=0.1} I just need your coordinates!"
+    n 1nllss "And by those,{w=0.1} I mean your {b}latitude{/b} and {b}longitude{/b},{w=0.1} of course!"
+    n 1nlraj "I always used {a=[store.jn_globals.LINK_LAT_LONG_HOME]}this{/a} website to look mine up for homework,{w=0.1} but you can use your phone or whatever too."
+    n 1nchss "Oh,{w=0.1} and don't worry about making it positive or negative.{w=0.2} I'll take care of that!"
+    n 1nnmsm "We'll start off with your {b}latitude{/b} first."
+    n 1nnmaj "So...{w=0.3} hit me,{w=0.1} [player]!"
     $ player_latitude = renpy.input(prompt="Enter your latitude:", allow="0123456789.")
 
     # Get the longitude
 
-    n "Thanks,{w=0.1} [player]!{w=0.2} I'll just note that down..."
-    n "Alright!{w=0.1} Now finally,{w=0.1} I just need your {b}longitude{/b},{w=0.1} 'kay?"
-    n "Just like last time,{w=0.1} I can figure it out without any positive or negative symbols."
-    n "Take it away,{w=0.1} [player]!"
+    n 1nchss "Thanks,{w=0.1} [player]!{w=0.2} I'll just note that down..."
+    n 1nnmaj "Alright!{w=0.1} Now finally,{w=0.1} I just need your {b}longitude{/b},{w=0.1} 'kay?"
+    n 1nwrss "Just like last time,{w=0.1} I can figure it out without any positive or negative symbols."
+    n 1nnmbg"Take it away,{w=0.1} [player]!"
     $ player_longitude = renpy.input("Enter your longitude:", allow="0123456789.")
 
     # Final checks and prompt
@@ -1107,9 +1111,9 @@ label weather_setup_manual_coords:
     if player_in_western_hemisphere:
         $ player_longitude = "-" + player_longitude
 
-    n "Hey{w=0.1} -{w=0.1} I think we're nearly there now,{w=0.1} [player]!"
-    n "Let me just open up a map real quick..."
-    n "..."
+    n 1nwdbg "Hey{w=0.1} -{w=0.1} I think we're nearly there now,{w=0.1} [player]!"
+    n 1nlrts "Let me just open up a map real quick..."
+    n 1nchsm "..."
 
     python:
         # Try to show the map, and come back with the result to drive dialogue
@@ -1122,43 +1126,46 @@ label weather_setup_manual_coords:
             store.utils.log(exception.message, utils.SEVERITY_ERR)
 
     if show_map_success:
-        n "Ta-da!"
-        n "How about it,{w=0.1} [player]?{w=0.2} Close enough,{w=0.1} right?"
+        n 1nwdbs "Ta-da!"
+        n 1nllbg "How about it,{w=0.1} [player]?{w=0.2} Close enough,{w=0.1} right?"
         menu:
             "Yes, that's close enough.":
-                n "Yay!{w=0.2} Finally!"
-                n "I'll just note all that down real quick..."
+                n 1nchbg "Yay!{w=0.2} Finally!"
+                n 1nwmsm "I'll just note all that down real quick..."
+                n 1nchssl "And again,{w=0.2} thanks a bunch [player]."
+                n 1nchbgl "I can't wait to see something different out of that window for a change!"
                 $ persistent.latitude = player_latitude
                 $ persistent.longitude = player_longitude
                 return
 
             "No, that's not right at all.":
-                n "What?{w=0.2} Really?!"
-                n "Nnnnnn...!"
-                n "That's annoying..."
-                n "Let's try again,{w=0.1} alright?{w=0.2} I really wanna get this working!"
+                n 1fnmaj "What?{w=0.2} Really?!"
+                n 1fllbo "Nnnnnn...!"
+                n 1nlrsl "That's annoying..."
+                n 1nwmss "Let's try again,{w=0.1} alright?{w=0.2} I really wanna get this working!"
                 jump weather_setup_manual_coords
 
     else:
-        n "Urgh...{w=0.3} really?{w=0.2} This is such a pain!"
-        n "I can't seem to show you where I think you are on a map,{w=0.1} so I'll just ask to make sure."
-        n "I've done some checks to work out the coordinates,{w=0.1} and from what you said..."
-        n "Your overall latitude would be [player_latitude],{w=0.1} and your overall longitude would be [player_longitude]."
+        n 1fllaj "Urgh...{w=0.3} really?{w=0.2} This is such a pain!"
+        n 1nlrsl "I can't seem to show you where I think you are on a map,{w=0.1} so I'll just ask to make sure."
+        n 1nnmss "I've done some checks to work out the coordinates,{w=0.1} and from what you said..."
+        n 1nnmaj "Your overall latitude would be [player_latitude],{w=0.1} and your overall longitude would be [player_longitude]."
         menu:
-            "Is [player_latitude], [player_longitude] correct?"
+            n 1nnmsm "Is [player_latitude], [player_longitude] correct?"
 
             "Yes, that's right.":
-                n "Finally!{w=0.2} Jeez...{w=0.3} Now we can actually wrap things up here!"
+                n 1nnmbg "Finally!{w=0.2} Jeez...{w=0.3} Now we can actually wrap things up here!"
+                n 1nchts "Thanks a bunch for helping me out with this [player]!"
                 return
 
             "No, that's still not right.":
                 # >_>
-                n "Wow.{w=0.2} For real?"
-                n "..."
-                n "Let's try that one more time,{w=0.1} alright?"
+                n 1nunpu "Wow.{w=0.2} For real?"
+                n 1nlrsl "..."
+                n 1nchss "Let's try that one more time,{w=0.1} alright?"
                 jump weather_setup_manual_coords
 
-####################TODO: delit this
+
 # Natsuki discusses her favourite season with the player, and asks the player theirs
 init 5 python:
     registerTopic(
