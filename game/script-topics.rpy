@@ -2568,73 +2568,91 @@ init 5 python:
 
 label talk_natsukis_hairstyle:
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n "Hmm?{w=0.2} My hairstyle?"
-        n "Why do you ask,{w=0.1} [player]?{w=0.2} Looking for a stylist?"
-        n "Ehehe."
+        n 1unmaj "Hmm?{w=0.2} My hairstyle?"
+        n 1fsgsg "Why do you ask,{w=0.1} [player]?{w=0.2} Looking for a stylist?"
+        n 1fchsm "Ehehe."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "Huh?{w=0.2} My hairstyle?"
-        n "Wait...{w=0.3} are you messing with me?{w=0.2} What do you mean?"
-        n "You better not be teasing me,{w=0.1} [player]..."
+        n 1unmaj "Huh?{w=0.2} My hairstyle?"
+        n 1fsqaj "Wait...{w=0.3} are you messing with me?{w=0.2} What do you mean?"
+        n 1fllpo "You better not be teasing me,{w=0.1} [player]..."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-        n "...Huh?{w=0.2} Oh.{w=0.2} My hair."
-        n "I'm...{w=0.3} surprised you care enough to ask about that."
+        n 1nnmsl "...Huh?{w=0.2} Oh.{w=0.2} My hair."
+        n 1flrsl "I'm...{w=0.3} surprised you care enough to ask about that."
 
     else:
-        n "Because I like it that way.{w=0.2} Is that good enough for you?"
-        n "Why would you even care anyway?{w=0.2} You haven't cared about me so far."
-        n "Jerk."
+        n 1fsqsl "Because I like it that way.{w=0.2} Is that good enough for you?"
+        n 1fsqan "Why would you even care anyway?{w=0.2} You haven't cared about me so far."
+        n 1fslpu "Jerk."
         return
 
-    n "Well,{w=0.1} anyway."
-    n "I never really thought about it that much,{w=0.1} honestly."
+    n 1nnmpu "Well,{w=0.1} anyway."
+    n 1ullpu "I never really thought about it that much,{w=0.1} honestly."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "I just thought twintails would look cute on me..."
-        n "...Yeah,{w=0.1} yeah.{w=0.2} I know what you're thinking,{w=0.1} [player]."
+        if persistent.jn_natsuki_current_hairstyle == "default":
+            n 1ulrpo "I just thought twintails would look kinda cute on me."
+
+        else:
+            n 1ulrpo "I know I'm not showing them off now,{w=0.1} but I just thought twintails would look kinda cute on me."
+
+        n 1fsqpo "...Yeah,{w=0.1} yeah.{w=0.2} I know what you're thinking,{w=0.1} [player]."
 
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "Was I wrong...?"
-            n "Ehehe.{w=0.2} I thought not."
+            n 1ksqsm "Was I wrong...?"
+            n 1fchbg "Ehehe.{w=0.2} I thought not."
 
     else:
-        n "I guess I just liked the idea of twintails."
+        if persistent.jn_natsuki_current_hairstyle == "default":
+            n 1nnmsl "I guess I just liked the idea of twintails."
 
-    n "As for the bangs,{w=0.1} I...{w=0.3} always found it difficult to get my hair cut."
+        else:
+            n 1nnmsl "Not like I'm showing it now,{w=0.1} but I guess I just liked the idea of twintails."
+
+    n 1ulraj "As for the bangs,{w=0.1} I...{w=0.3} always found it difficult to get my hair cut."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "It just costs so much,{w=0.1} you know?{w=0.2} It's super dumb!"
-        n "Like...{w=0.3} I don't get it at all!"
-        n "And the annoying thing is that if I were a guy,{w=0.1} it'd be way cheaper!{w=0.2} What's up with that?"
-        n "Ugh...{w=0.3} anyway."
+        n 1flraj "It just costs so much,{w=0.1} you know?{w=0.2} It's super dumb!"
+        n 1fnman "Like...{w=0.3} I don't get it at all!"
+        n 1fllan "And the annoying thing is that if I were a guy,{w=0.1} it'd be way cheaper!{w=0.2} What's up with that?"
+        n 1ncssl "Ugh...{w=0.3} but yeah."
 
     else:
-        n "I was always kinda short when it came to getting it cut."
-        n "...And no,{w=0.1} {i}not{/i} in the physical sense."
+        n 1nlrsl "I was always kinda short when it came to getting it cut."
+        n 1fsqsl "...And no,{w=0.1} {i}not{/i} in the physical sense."
 
-    n "As for my hairclip?{w=0.2} It's just to keep my hair out of my eyes."
+    if persistent.jn_natsuki_current_accessory is not None:
+        n 1ullaj "As for my hairclip?{w=0.2} It's just to keep my hair out of my eyes."
+
+    else:
+        n 1ullaj "I'm not wearing it now,{w=0.1} but the hairclip is just to keep my hair out of my eyes."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "Looking good is a bonus,{w=0.1} but I mostly just got tired of brushing my hair out of my face."
-        n "Especially with bangs this long!"
-        n "Anyway..."
+        n 1fllss "Looking good is a bonus,{w=0.1} but I mostly just got tired of brushing my hair out of my face."
+        n 1nsrca "Especially with bangs this long!"
+        n 1unmaj "Anyway..."
 
-    n "Have I thought about other hairstyles?{w=0.2} Well..."
+    n 1tllaj "Have I thought about other hairstyles?{w=0.2} Well..."
+
+    if persistent.jn_natsuki_current_hairstyle != "default":
+        n 1ullbo "I think that kinda speaks for itself,{w=0.1} really.{w=0.2} I {i}am{/i} trying out a different one..."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-        n "I'm pretty sure I already let my hair down around you,{w=0.1} [chosen_tease].{w=0.2} That qualifies, right?"
-        n "Ahaha!"
+        n 1fcssml "I'm pretty sure I already let my hair down around you,{w=0.1} [chosen_tease].{w=0.2} That qualifies, right?"
+        n 1uchgnl "Ahaha!"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "You know what they say,{w=0.1} [player]."
-        n "If it ain't broke,{w=0.1} don't fix it!"
-        n "Ehehe."
+        n 1unmaj "You know what they say,{w=0.1} [player]."
+        n 1fnmbg "If it ain't broke,{w=0.1} don't fix it!"
+        n 1uchgn "Ehehe."
 
     else:
-        n "...At this point,{w=0.1} [player]?{w=0.2} I'd rather you stayed {i}out{/i} of my hair."
-        n "Thanks."
+        n 1fslaj "...At this point,{w=0.1} [player]?{w=0.2} I'd rather you stayed {i}out{/i} of my hair."
+        n 1fsqbo "Thanks."
+
+    return
 
 # Natsuki provides guidance on how to stay true to yourself and your values
 init 5 python:
@@ -2829,6 +2847,8 @@ label talk_favourite_drink:
         n 1fllaj "As for warmer weather..."
         n 1fllsl "I don't really know.{w=0.2} Whatever is fine."
         n 1fsqsl "Heh.{w=0.2} Though at this rate,{w=0.1} I shouldn't expect much more than tap water from you anyway.{w=0.2} Right,{w=0.1} [player]?"
+
+    return
 
 # Natsuki complains about her school uniform
 init 5 python:
