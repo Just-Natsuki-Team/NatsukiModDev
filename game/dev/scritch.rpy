@@ -34,7 +34,22 @@ init python in jn_scritch:
 label scritch_start:
     $ jn_globals.player_is_ingame = True
     n 1kwdajl "H-{w=0.1}huh?!"
-    n 1kbkeml "W-{w=0.1}wait...!"
+
+    if persistent.jn_scritches_total_given < 5:
+        n 1kbkeml "W-{w=0.1}wait...!"
+
+    elif persistent.jn_scritches_total_given < 25:
+        n 1kllunl "...Fine." 
+
+    elif persistent.jn_scritches_total_given < 50:
+        n 1kllssl "...Okay."
+
+    elif persistent.jn_scritches_total_given < 250:
+        n 1kllssl "Sure."
+
+    else:
+        n 1kcsssl "...Yes please."
+    
     show screen scritch_ui
     jump scritch_loop
 
@@ -42,7 +57,12 @@ label scritch_loop:
     $ current_mouse_position = utils.get_mouse_position()
 
     if not jn_scritch._has_been_scritched:
-        show natsuki scritch nervous
+        if persistent.jn_scritches_total_given < 5:
+            show natsuki scritch nervous
+
+        else:
+            show natsuki scritch waiting
+            
         $ renpy.pause(2)
 
     if jn_scritch.active_scritch_area.collidepoint(current_mouse_position[0], current_mouse_position[1]):
@@ -54,10 +74,84 @@ label scritch_loop:
         show natsuki scritch active
         $ renpy.pause(1)
 
+        # Scritch milestones
+        if persistent.jn_scritches_total_given == 5:
+            jump scritch_milestone_5
+
+        elif persistent.jn_scritches_total_given == 10:
+            jump scritch_milestone_10
+
+        elif persistent.jn_scritches_total_given == 25:
+            jump scritch_milestone_25
+
+        elif persistent.jn_scritches_total_given == 50:
+            jump scritch_milestone_50
+
+        elif persistent.jn_scritches_total_given == 100:
+            jump scritch_milestone_100
+
+        elif persistent.jn_scritches_total_given == 250:
+            jump scritch_milestone_250
+
+        elif persistent.jn_scritches_total_given == 500:
+            jump scritch_milestone_500
+
+        elif persistent.jn_scritches_total_given == 1000:
+            jump scritch_milestone_1000
+
+        elif persistent.jn_scritches_total_given % 1000 == 0:
+            jump scritch_milestone_1000_plus
+
     elif jn_scritch._has_been_scritched:
         show natsuki scritch waiting
         $ renpy.pause(2)
 
+    jump scritch_loop
+
+label scritch_milestone_5:
+    n 1kwmpol "...Enjoying yourself,{w=0.1} [player]?"
+    n 1kllpof "..."
+    jump scritch_loop
+
+label scritch_milestone_10:
+    n 1knmpul "You're still going,{w=0.1} huh?"
+    n 1kllpul "..."
+    n 1kllpof "...I never said stop."
+    jump scritch_loop
+
+label scritch_milestone_25:
+    n 1klrpol "This...{w=0.3} isn't so bad.{w=0.2} I guess."
+    n 1klrssf "...You can keep going."
+    jump scritch_loop
+
+label scritch_milestone_50:
+    n 1kchssl "..."
+    n 1knmajl "W-what?"
+    n 1klrslf "I didn't say you should stop..."
+    jump scritch_loop
+
+label scritch_milestone_100:
+    n "...You really enjoy doing this,{w=0.1} huh?"
+    n "I'm...{w=0.3} warming up to it."
+    jump scritch_loop
+    
+label scritch_milestone_250:
+    n 1kllsml "..."
+    n 1knmnvl "...Well?{w=0.2} Keep going,{w=0.1} [player]..."
+    jump scritch_loop
+    
+label scritch_milestone_500:
+    n 1knmnvl "..."
+    n 1kcssml "..."
+    jump scritch_loop
+
+label scritch_milestone_1000:
+    n 1kllsml "..."
+    n 1kwmssl "...More?"
+    jump scritch_loop
+
+label scritch_milestone_1000_plus:
+    n 1kcssml "...[player]..."
     jump scritch_loop
 
 label scritch_finished:

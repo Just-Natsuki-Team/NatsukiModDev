@@ -293,7 +293,7 @@ label player_select_topic(is_repeat_topics=False):
 
 label extras_menu:
     menu:
-        "Scritch" if utils.KEY_VALID:
+        "Scritch" if utils.KEY_VALID and jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
             jump scritch_start
 
         "Nevermind":
