@@ -1,3 +1,5 @@
+default persistent.jn_ui_style = "default"
+
 init python in jn_preferences.random_topic_frequency:
     import store
 
