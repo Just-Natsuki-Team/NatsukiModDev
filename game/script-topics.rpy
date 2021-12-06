@@ -2014,7 +2014,7 @@ init 5 python:
             label="talk_gaming",
             unlocked=True,
             prompt="Are you into video games?",
-            category=["Media"],
+            category=["Games", "Media"],
             player_says=True,
             location="classroom"
         ),
@@ -2023,85 +2023,86 @@ init 5 python:
 
 label talk_gaming:
     if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "Gaming?"
-        n "Well...{w=0.3} duh!"
-        n "You bet I'm into gaming,{w=0.1} [player]!"
-        n "I wouldn't say I'm the most active player...{w=0.2} but I definitely do my share of button mashing."
-        n "Hmm..."
-        n "I don't think I even need to ask,{w=0.1} but..."
+        n 1unmaj "Gaming?"
+        n 1fcsbg "Well...{w=0.3} duh!"
+        n 1fnmbg "You bet I'm into gaming,{w=0.1} [player]!"
+        n 1ullss "I wouldn't say I'm the most active player...{w=0.2} but I definitely do my share of button mashing."
+        n 1nslsg "Hmm..."
+        n 1tnmss "I don't think I even need to ask,{w=0.1} but..."
         menu:
             n "What about you,{w=0.1} [player]?{w=0.2} Do you play often?"
 
             "Absolutely!":
                 $ persistent.jn_player_gaming_frequency = "High"
-                n "Yep!{w=0.2} Just as I suspected..."
-                n "[player] is a mega-dork."
-                n "Ahaha!"
-                n "Relax,{w=0.1} [player]!"
-                n "I'm not much better,{w=0.1} after all."
+                n 1fcsbg "Yep!{w=0.2} Just as I suspected..."
+                n 1uchgn "[player] is a mega-dork."
+                n 1uchbs "Ahaha!"
+                n 1uchsm "Relax,{w=0.1} [player]!"
+                n 1fllssl "I'm not much better,{w=0.1} after all."
 
             "I play occasionally.":
                 $ persistent.jn_player_gaming_frequency = "Medium"
-                n "Yeah,{w=0.1} yeah.{w=0.2} Believe what you want to believe,{w=0.1} [player]."
-                n "I'm not sure I buy it,{w=0.1} though."
+                n 1fsqsm "Yeah,{w=0.1} yeah.{w=0.2} Believe what you want to believe,{w=0.1} [player]."
+                n 1usqbg "I'm not sure I buy it,{w=0.1} though."
 
             "I don't play at all.":
                 $ persistent.jn_player_gaming_frequency = "Low"
-                n "Huh?{w=0.2} Really?"
-                n "Not even the odd casual game?"
-                n "It looks like I've got a lot to teach you, [player]!"
+                n 1tnmaj "Huh?{w=0.2} Really?"
+                n 1tllaj "Not even the odd casual game?"
+                n 1ncsaj "...Well then."
+                n 1fnmbg "It looks like I've got a lot to teach you, [player]!"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-        n "Huh?{w=0.2} Video games?"
-        n "Yeah,{w=0.1} I guess.{w=0.2} For what that's worth to you."
+        n 1nnmsl "Huh?{w=0.2} Video games?"
+        n 1nslsl "Yeah,{w=0.1} I guess.{w=0.2} For what that's worth to you."
 
     else:
-        n "Video games...?"
-        n "...Heh.{w=0.2} Why,{w=0.1} [player]?"
-        n "Was stomping all over my feelings not enough? "
-        n "Or were you looking to see if you can stomp all over me in games too?"
-        n "..."
-        n "...I don't wanna talk about this any more.{w=0.2} We're done here."
+        n 1nsqsl "Video games...?"
+        n 1fsqsl "...Heh.{w=0.2} Why,{w=0.1} [player]?"
+        n 1fcsan "Was stomping all over my feelings not enough? "
+        n 1fsqfu "Or were you looking to see if you can stomp all over me in games too?"
+        n 1fslsl "..."
+        n 1fslaj "...I don't wanna talk about this any more.{w=0.2} We're done here."
         return
 
     if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "Anyway,{w=0.1} putting that aside..."
-        n "When it comes to my preferences?{w=0.2} I want challenge in my games!"
-        n "I play for the win{w=0.1} -{w=0.1} it's me versus the developers,{w=0.1} and they're not around to stop me!"
-        n "Ahaha."
-        n "I'm actually more into my roguelikes,{w=0.1} to be honest."
-        n "Heh.{w=0.2} Are you surprised,{w=0.1} [player]?"
-        n "Tough as nails,{w=0.1} and I gotta think on my feet{w=0.1} -{w=0.1} plus it's super satisfying learning everything too."
-        n "And with how random everything is,{w=0.1} they always feel refreshing and fun to play!"
-        n "Every time I load it up,{w=0.1} I have no idea what I'm up against...{w=0.3} I love it!"
-        n "Ehehe.{w=0.2} Don't worry though, [player]."
-        n "I don't know if you're into that kind of stuff as well,{w=0.1} but..."
+        n 1ullaj "Anyway,{w=0.1} putting that aside..."
+        n 1nsgbg "When it comes to my preferences?{w=0.2} I want challenge in my games!"
+        n 1fcsbg "I play for the win{w=0.1} -{w=0.1} it's me versus the developers,{w=0.1} and they're not around to stop me!"
+        n 1fchbg "Ahaha."
+        n 1ullss "I'm actually more into my roguelikes,{w=0.1} to be honest."
+        n 1fnmsm "Heh.{w=0.2} Are you surprised,{w=0.1} [player]?"
+        n 1fcsbg "Tough as nails,{w=0.1} and I gotta think on my feet{w=0.1} -{w=0.1} plus it's super satisfying learning everything too."
+        n 1fchsm "And with how random everything is,{w=0.1} they always feel refreshing and fun to play!"
+        n 1fnmbg "Every time I load one up,{w=0.1} I have no idea what I'm up against...{w=0.3} and that's what makes them addicting!"
+        n 1fcssm "Ehehe.{w=0.2} Don't worry though, [player]."
+        n 1fcsbg "I don't know if you're into that kind of stuff as well,{w=0.1} but..."
 
         if persistent.jn_player_gaming_frequency == "High":
-            n "There's still plenty I can teach you!"
+            n 1fchgn "There's still plenty I can teach you!"
 
             if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-                n "I'd love to help you learn,{w=0.1} [player]."
-                n "And I think you'd like that too -{w=0.1} am I right?"
-                n "Ehehe."
+                n 1ksqsml "And I bet you'd like that too,{w=0.1} huh?"
+                n 1nchbg "Ahaha."
 
             elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-                n "And I'd be happy to oblige~."
+                n 1fchbg "And I'm not gonna take 'No' for an answer!"
 
         elif persistent.jn_player_gaming_frequency == "Medium":
-            n "I don't mind showing you how it's done."
-            n "I'm a professional,{w=0.1} after all!"
+            n 1fsqsm "I don't mind showing you how it's done."
+            n 1fchbg "I {i}am{/i} a professional,{w=0.1} after all!"
 
         else:
-            n "I don't think I'll have much trouble convincing you."
-            n "Ehehe."
+            n 1usqsm "I'm sure I can get {i}you{/i} of all people into it."
 
     else:
-        n "I suppose I look for challenge in my games more than anything."
-        n "It's fun pitting myself against the developers and beating them at their own game."
-        n "I guess I could say I like being tested -{w=0.1} so long as I'm in control of it,{w=0.1} that is."
-        n "...That being said,{w=0.1} [player]."
-        n "I don't really like the kind of testing you're doing."
+        n 1nnmsl "I suppose I look for challenge in my games more than anything."
+        n 1nllsl "It's fun pitting myself against the developers and beating them at their own game."
+        n 1nsqaj "I guess I could say I like being tested -{w=0.1} so long as I'm in control of it,{w=0.1} that is."
+        n 1fsqbo "What does that mean?{w=0.2} I guess I'll spell it out for you,{w=0.1} [player]."
+        n 1fsqan "I really {i}don't{/i} like the kind of testing you're doing."
+
+    return
 
 # Natsuki talks about her trademark fang, and checks the player is keeping their own teeth healthy
 init 5 python:
@@ -2120,49 +2121,50 @@ init 5 python:
     )
 
 label talk_natsukis_fang:
-    n "..."
-    n "Eh?{w=0.2} What's up,{w=0.1} [player]?"
-    n "..."
-    n "What?{w=0.2} Is there something on my face?"
-    n "..."
-    n "Oh.{w=0.2} Yeah.{w=0.2} I get it."
-    n "Just can't help but notice the fang,{w=0.1} right?{w=0.2} Ehehe."
-    n "You know..."
-    n "I wasn't always happy with my teeth,{w=0.1} [player]."
-    n "I used to be pretty self conscious about them.{w=0.2} People would just keep pointing them out all the time."
-    n "It wasn't {i}bad{/i} or anything...{w=0.3} a little annoying at first,{w=0.1} but nothing over the top."
-    n "I...{w=0.3} guess I just came to embrace them?"
-    n "They're like a trademark or something now!{w=0.2} Which is why I take good care of them."
-    n "You better not be slacking off on yours,{w=0.1} [player]!"
-    n "And I don't just mean skipping the odd brush,{w=0.1} either..."
-    n "Yeah.{w=0.2} We both know what's coming,{w=0.2} don't we?"
-    n "When's the last time {i}you{/i} flossed,{w=0.1} [player]?{w=0.2} Be honest."
-    n "..."
-    n "Ahaha!{w=0.2} Did I call you out?"
-    n "Well,{w=0.1} whatever.{w=0.2} I'm just gonna assume you'll go do that later."
-    n "Seriously though.{w=0.2} You better make sure you take care of your teeth!"
-    n "Regular brushing and flossing is important,{w=0.1} but watch your diet too."
-    n "Not flossing isn't great,{w=0.1} but constant sugary drinks are even worse!"
-    n "Remember,{w=0.1} [player] -{w=0.1} if you ignore them,{w=0.1} they'll go away~."
-    n "And besides..."
+    n 1nllbo "..."
+    n 1unmaj "Eh?{w=0.2} What's up,{w=0.1} [player]?"
+    n 1unmsl "..."
+    n 1tnmaj "What?{w=0.2} Is there something on my face?"
+    n 1tnmca "..."
+    n 1uwdaj "Oh.{w=0.2} Yeah.{w=0.2} I get it."
+    n 1nsqss "Just can't help but notice the fang,{w=0.1} right?{w=0.2} Ehehe."
+    n 1nllss "You know..."
+    n 1nnmaj "I wasn't always happy with my teeth,{w=0.1} [player]."
+    n 1flran "I used to be pretty self conscious about them.{w=0.2} People would just keep pointing them out all the time."
+    n 1fcsaj "It wasn't...{w=0.3} {i}bad{/i} or anything...{w=0.3} a little annoying at first,{w=0.1} but nothing over the top."
+    n 1kslsf "...Mostly."
+    n 1ulrsl "But...{w=0.3} I guess I just came to embrace them?"
+    n 1fchbg "They're like a trademark or something now!{w=0.2} Which is why I take good care of them."
+    n 1fnmsf "You better not be slacking off on yours,{w=0.1} [player]!"
+    n 1fnmaj "And I don't just mean skipping the odd brush,{w=0.1} either..."
+    n 1fsgss "Yeah.{w=0.2} We both know what's coming,{w=0.2} don't we?"
+    n 1fsqbg "When's the last time {i}you{/i} flossed,{w=0.1} [player]?{w=0.2} Be honest."
+    n 1tsqsm "..."
+    n 1fchbg "Ahaha!{w=0.2} Did I call you out?"
+    n 1nlrss "Well,{w=0.1} whatever.{w=0.2} I'm just gonna assume you'll go do that later."
+    n 1fcsaw "Seriously though.{w=0.2} You better make sure you take care of your teeth!"
+    n 1fnmaj "Regular brushing and flossing is important,{w=0.1} but watch your diet too."
+    n 1fllsl "Not flossing isn't great,{w=0.1} but constant sugary drinks are even worse!"
+    n 1fsgsm "Remember,{w=0.1} [player] -{w=0.1} if you ignore them,{w=0.1} they'll go away~."
+    n 1nllss "But no, seriously."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
         $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
-        n "Smiles look good on you,{w=0.1} [chosen_endearment]."
-        n "Let's keep them looking that way."
-        n "Ehehe.{w=0.2} Love you,{w=0.1} [player]~!"
+        n 1kllss "Smiles look good on you,{w=0.1} [chosen_endearment]."
+        n 1fnmsm "Let's keep them looking that way."
+        n 1uchsml "Ehehe.{w=0.2} Love you,{w=0.1} [player]~!"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n "I think smiles look good on you,{w=0.1} [player]."
-        n "Let's keep them looking that way!"
+        n 1fnmsml "I think smiles look good on you,{w=0.1} [player]."
+        n 1fchbgl "Let's keep them looking that way!"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        n "The right smile can make all the difference,{w=0.1} you know.{w=0.2} Just look at mine!"
-        n "Ehehe."
+        n 1usqbg "The right smile can make all the difference,{w=0.1} you know.{w=0.2} Just look at mine!"
+        n 1uchgn "Ehehe."
 
     else:
-        n "If you don't look after them?"
-        n "I'm not holding your hand at the dentist!"
+        n 1unmaj "If you don't look after them?"
+        n 1fllajl "I'm not holding your hand at the dentist!"
 
     return
 
