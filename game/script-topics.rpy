@@ -1952,57 +1952,58 @@ init 5 python:
 label talk_thoughts_on_horror:
 
     if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "You know,{w=0.1} [player]..."
-        n "I don't think I ever actually explained why I dislike horror so much."
-        n "I know I mentioned it before,{w=0.1} but I was kinda caught off guard at the time."
-        n "Honestly?"
-        n "Everyone has their tastes,{w=0.1} right? And I can get why people enjoy it."
+        n 1unmaj "You know,{w=0.1} [player]..."
+        n 1tllaj "I don't think I ever actually explained why I dislike horror so much."
+        n 1tlrss "I know I mentioned it before,{w=0.1} but I was kinda caught off guard at the time."
+        n 1unmaj "Honestly?"
+        n 1nnmsm "Everyone has their tastes,{w=0.1} right? And I can get why people enjoy it."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-        n "You know, I don't think I explained why I dislike horror."
-        n "I get everyone has their tastes, but it isn't for me."
+        n 1nllbo "I don't think I explained why I dislike horror."
+        n 1nnmsl "I get everyone has their tastes,{w=0.1} but I don't care for it."
 
     else:
-        n "...I was about to share some of my thoughts on horror with you."
-        n "Or at least,{w=0.1} I was thinking about it."
-        n "...But then do you know what I realized,{w=0.1} [player]?"
-        n "I hate horror -{w=0.1} not that you'd care -{w=0.1} and honestly?"
-        n "...I'm starting to think being here with you is horror enough.{w=0.2} Heh."
+        n 1kslsl "..."
+        n 1fsqaj "...I was about to share some of my thoughts on horror with you."
+        n 1fsrsl "Or at least,{w=0.1} I was thinking about it."
+        n 1fnmaj "...But then do you know what I realized,{w=0.1} [player]?"
+        n 1fsqsf "I hate horror -{w=0.1} not that you'd care -{w=0.1} and honestly?"
+        n 1fcsun "Being stuck here with {i}you{/i} is horror enough."
         return
 
     if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "Like Yuri!"
-        n "It's suspenseful,{w=0.1} and fears are a super powerful motivator for characters!"
-        n "So don't get me wrong{w=0.1} -{w=0.1} I can totally appreciate the effort that goes into it."
-        n "...When it isn't just stupid jumpscares,{w=0.1} a-{w=0.1}anyway."
+        n 1fchbg "Like Yuri!"
+        n 1fcsss "It's suspenseful,{w=0.1} and fears are a super powerful motivator for characters!"
+        n 1ullpu "So don't get me wrong{w=0.1} -{w=0.1} I can totally appreciate the effort that goes into it."
+        n 1fllpol "...When it isn't just stupid jumpscares,{w=0.1} a-{w=0.1}anyway."
 
     else:
-        n "I get the effort that goes into it.{w=0.2} For the most part."
+        n 1ullpu "I get the effort that goes into it.{w=0.2} For the most part."
 
-    n "But..."
-    n "When I read something -{w=0.1} or watch something -{w=0.1} I'm doing it because for me,{w=0.1} it's how I relax."
-    n "I don't want to be made to feel uneasy."
-    n "I don't want to be made to jump."
-    n "I don't want to have to see gross stuff."
-    n "I...{w=0.3} just want to sit back,{w=0.1} feel good and just escape for a while."
-    n "There's more than enough nasty things going out there already,{w=0.1} you know?"
-    n "Some things closer to home than others."
-    n "..."
-    n "So...{w=0.3} yeah.{w=0.1} That's about all I had to say about it."
+    n 1nllpu "But..."
+    n 1nnmbo "When I read something -{w=0.1} or watch something -{w=0.1} I'm doing it because for me,{w=0.1} it's how I relax."
+    n 1fllbo "I don't want to be made to feel uneasy."
+    n 1fllpu "I don't want to be made to jump."
+    n 1fllsr "I don't want to have to see gross stuff."
+    n 1fcssr "I...{w=0.3} just want to sit back,{w=0.1} feel good and just escape for a while."
+    n 1fnmsl "There's more than enough nasty things going out there already,{w=0.1} you know?"
+    n 1flrpu "Some things closer to home than others."
+    n 1fcssl "..."
+    n 1nnmaj "So...{w=0.3} yeah.{w=0.1} That's about all I had to say about it."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        n "Though...{w=0.3} if you want to put something on,{w=0.1} [player]?{w=0.2} Go ahead."
-        n "If it's you,{w=0.1} I think I can put up with it..."
-        n "But we're keeping the volume low.{w=0.2} 'Kay?"
+        n 1unmss "Though...{w=0.3} if you want to put something on,{w=0.1} [player]?{w=0.2} Go ahead."
+        n 1fllssl "If it's you,{w=0.1} I {i}think{/i} I can deal with it."
+        n 1flrpol "But... we're keeping the volume low.{w=0.2} Got it?"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "Don't mind me though,{w=0.1} [player].{w=0.2} If you wanna watch something,{w=0.1} go for it!"
-        n "Just don't expect me to sit there with you.{w=0.2} Ahaha..."
+        n 1nnmaj "Don't mind me though,{w=0.1} [player].{w=0.2} If you wanna watch something,{w=0.1} go for it."
+        n 1flrcal "But you're watching it solo."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-        n "..."
-        n "I {i}would{/i} ask that if you were gonna watch something like that,{w=0.1} then to warn me first..."
-        n "But you wouldn't listen to me anyway,{w=0.1} would you?"
+        n 1flrsl "..."
+        n 1fnmpu "I {i}would{/i} ask that if you were gonna watch something like that,{w=0.1} then to warn me first."
+        n 1fsqsr "But you wouldn't listen to me anyway,{w=0.1} would you?"
 
     return
 
