@@ -1051,11 +1051,13 @@ label debug_wear_outfit:
     if isinstance(_return, jn_outfits.Outfit):
         n 1uchbg "Okaaay!{w=0.2} Just give me a sec..."
         play audio drawer
-        with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
         $ jn_outfits.set_outfit(_return)
+        with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
+        
         n 1uchgn "And...{w=0.3} all done!"
 
     else:
         n 1tllpo "Oh...{w=0.3} well,{w=0.1} okay then."
 
+    show natsuki idle
     return

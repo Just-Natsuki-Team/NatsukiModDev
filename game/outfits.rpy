@@ -271,8 +271,8 @@ label outfits_time_of_day_change:
         n 1fsqsl "I'm changing."
 
     play audio drawer
-    with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
     $ jn_outfits.set_outfit_for_time_block()
+    with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
     
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         n 1uchgn "Ta-da!{w=0.2} There we go!{w=0.2} Ehehe."
@@ -289,4 +289,5 @@ label outfits_time_of_day_change:
     else:
         n 1fsqsl "..."
 
+    show natsuki idle
     return

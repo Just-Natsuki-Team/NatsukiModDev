@@ -26,26 +26,31 @@ init python in jn_scritch:
 
     # Tracking
     _has_been_scritched = False
+    _more_scritches_requested = False
 
     # Collision detection
     game_window = pygame.Surface((1280, 720))
     active_scritch_area = pygame.Rect(457, 105, 353, 163)
 
+# Initial dialogue based on scritch count
 label scritch_start:
     $ jn_globals.player_is_ingame = True
-    n 1kwdajl "H-{w=0.1}huh?!"
-
+    $ jn_scritch._more_scritches_requested = False
+    
     if persistent.jn_scritches_total_given < 5:
+        n 1kwdajl "H-{w=0.1}huh?!"
         n 1kbkeml "W-{w=0.1}wait...!"
 
     elif persistent.jn_scritches_total_given < 25:
+        n 1kllajl "Huh?{w=0.2} Oh..."
         n 1kllunl "...Fine." 
 
     elif persistent.jn_scritches_total_given < 50:
-        n 1kllssl "...Okay."
+        n 1kwmpul "Huh?{w=0.2} Oh."
+        n 1kllssl "Well...{w=0.3} Okay."
 
     elif persistent.jn_scritches_total_given < 250:
-        n 1kllssl "Sure."
+        n 1kllssl "...Sure."
 
     else:
         n 1kcsssl "...Yes please."
@@ -53,6 +58,7 @@ label scritch_start:
     show screen scritch_ui
     jump scritch_loop
 
+# Main scritch loop/logic
 label scritch_loop:
     $ current_mouse_position = utils.get_mouse_position()
 
@@ -96,6 +102,9 @@ label scritch_loop:
         elif persistent.jn_scritches_total_given == 500:
             jump scritch_milestone_500
 
+        elif persistent.jn_scritches_total_given == 750:
+            jump scritch_milestone_750
+
         elif persistent.jn_scritches_total_given == 1000:
             jump scritch_milestone_1000
 
@@ -107,6 +116,8 @@ label scritch_loop:
         $ renpy.pause(2)
 
     jump scritch_loop
+
+# Dialogue for each scritch milestone
 
 label scritch_milestone_5:
     n 1kwmpol "...Enjoying yourself,{w=0.1} [player]?"
@@ -145,17 +156,24 @@ label scritch_milestone_500:
     n 1kcssml "..."
     jump scritch_loop
 
+label scritch_milestone_750:
+    n 1kcsssl "...You know..."
+    n 1kllssf "This is...{w=0.3} pretty great after all."
+    jump scritch_loop
+
 label scritch_milestone_1000:
     n 1kllsml "..."
     n 1kwmssl "...More?"
     jump scritch_loop
 
 label scritch_milestone_1000_plus:
+    # What a qeb
     n 1kcssml "...[player]..."
     jump scritch_loop
 
 label scritch_finished:
-    if random.choice(range(4)) == 3:
+    # About a 1/3 chance to ask for more scritches, if not already asked
+    if random.choice(range(4)) == 3 and not jn_scritch._more_scritches_requested:
         n 1kllunf "..."
         n 1knmpuf "Uhmm...{w=0.3} [player]?"
         n 1klrssf "Could you...{w=0.3} you know..."
@@ -166,6 +184,7 @@ label scritch_finished:
 
             "Of course.":
                 n 1kwmnvf "...{w=0.3}Thanks,{w=0.1} [player]."
+                $ jn_scritch._more_scritches_requested = True
                 jump scritch_loop
 
             "That's it for now.":
@@ -184,9 +203,11 @@ label scritch_finished:
     $ jn_globals.player_is_ingame = False
     jump ch30_loop
 
+# Definitions
 define popup_hide_transition = Dissolve(0.75)
 define audio.scritch = "mod_assets/sfx/scritch.mp3"
 
+# Appears, floats up and fades away above Natsuki's head for each scritch given
 image scritch_popup:
     block:
         choice:
@@ -204,7 +225,8 @@ image scritch_popup:
         choice:
             "dev/mod_assets/ui/scritch_e.png"
             ease 0.33 alpha 1.0 yoffset -30
-    
+
+# Pre-scritch Natsuki sprites
 image natsuki scritch nervous:
     block:
         choice:
@@ -221,6 +243,7 @@ image natsuki scritch nervous:
         pause 3
         repeat
 
+# Natsuki waiting for scritch sprites
 image natsuki scritch waiting:
     block:
         choice:
@@ -243,6 +266,7 @@ image natsuki scritch waiting:
         pause 5
         repeat
 
+# Natsuki during scritch sprites
 image natsuki scritch active:
     block:
         choice:
@@ -266,7 +290,8 @@ image natsuki scritch active:
 screen scritch_ui:
     zorder jn_scritch._SCRITCH_UI_Z_INDEX
 
-    text "{0} scritches".format(persistent.jn_scritches_total_given) size 30 xpos 555 ypos 60 style "categorized_menu_button"
+    # Scritch counter
+    text "{0} scritches".format(persistent.jn_scritches_total_given) size 30 xpos 555 ypos 40 style "categorized_menu_button"
     
     # Options
     style_prefix "hkb"
