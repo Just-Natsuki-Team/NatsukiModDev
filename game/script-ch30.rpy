@@ -12,7 +12,7 @@ label ch30_autoload:
     #Do all the things here for initial setup/flow hijacking
     python:
         # weather tracking is setup so we start it up
-        if persistent.jn_wejn_weather_is_tracking_set_upather_tracking_set_up:
+        if persistent.jn_weather_is_tracking_set_up:
             weather.Weather.get_weather_detail.start()
 
     #FALL THROUGH
@@ -136,7 +136,7 @@ label call_next_topic:
 
             #Now manage return keys
             if "derandom" in return_keys:
-                topic_obj.random = False
+                topic_obj.derandom()
 
             if "lock" in return_keys:
                 topic_obj.unlocked = False

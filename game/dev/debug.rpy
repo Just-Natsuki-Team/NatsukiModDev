@@ -13,7 +13,7 @@ default persistent.jn_debug_tracked_watch_items = [
     "store.persistent.affinity",
     "store.jn_affinity.get_affinity_tier_name()",
     "store.persistent.trust",
-    "store.jn_trust.get_trust_tier_name()"
+    "store.jn_trust.get_trust_tier_name()",
     "store.jn_debug.get_mouse_position()"
 ]
 
@@ -889,15 +889,15 @@ label debug_call_api:
             show placeholder_natsuki unamused zorder jn_placeholders.NATSUKI_Z_INDEX
             n "...{i}Really{/i},{w=1.0} [player]?"
 
+        # Add your API calls here! We might need a scrollable menu implementation if we rack up too many services.
+        # Alternatively, just delete any you no longer use!
+
         "OpenWeatherMap":
             if store.weather.jn_weather_api_key is None:
                 n "You didn't give me one dummy!"
             else:
                 n "Okaay, weather it is!"
                 store.weather.Weather.get_weather_detail()
-
-        # Add your API calls here! We might need a scrollable menu implementation if we rack up too many services.
-        # Alternatively, just delete any you no longer use!
 
         "Nevermind.":
             n "Oh...{w=0.3} well,{w=0.1} if you say so!"

@@ -608,7 +608,8 @@ init 5 python:
             unlocked=True,
             nat_says=True,
             affinity_range=(jn_affinity.HAPPY, None),
-            category=["one-time", "weather"]
+            category=["weather"],
+            additional_properties={"Nat_says_once" : True}
         ),
         topic_group=TOPIC_TYPE_NORMAL
     )

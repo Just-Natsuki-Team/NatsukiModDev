@@ -270,6 +270,13 @@ init 0 python:
 
             return self.additional_properties[property_key] is property_value
 
+        def derandom(self):
+            """
+                makes topic unable to be randomly brought up by Nat
+                also makes it available through talk_menu
+            """
+            self.nat_says = False
+            self.player_says = True
 
         def _filter_topic(
             self,
