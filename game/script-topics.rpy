@@ -52,59 +52,59 @@ init 5 python:
 label talk_having_pictures_taken:
 
     if not persistent.jn_first_screenshot_taken:
-        n "W-wait...{w=0.3} you're telling me there's a camera here?{w=0.2} Are you kidding me?!"
-        n "Uuuu-"
-        n "I've never liked having my picture taken without my permission..."
-        n "Just...{w=0.3} please don't take any pictures of me unless I ask,{w=0.1} okay [player]?"
+        n 1uskwr "W-wait...{w=0.3} you're telling me there's a camera here?{w=0.2} Are you kidding me?!"
+        n 1kbktr "Uuuu-"
+        n 1kslaj "I've never liked having my picture taken without my permission..."
+        n 1ksgsl "Just...{w=0.3} please don't take any pictures of me unless I ask,{w=0.1} okay [player]?"
         n "It'd really mean a lot to me."
-        n "I hope you can understand."
+        n 1kllsf "I hope you can understand."
 
     else:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "Hmm?{w=0.2} Pictures of me?"
-            n "Honestly,{w=0.1} I don't think I'll ever be completely comfortable with them..."
-            n "But I trust you to make a good shot!"
-            n "As long as you ask,{w=0.1} I've got no problem with it!"
+            n 1tnmsf "Hmm?{w=0.2} Pictures of me?"
+            n 1nllsl "Honestly,{w=0.1} I don't think I'll ever be completely comfortable with them..."
+            n 1unmss "But I trust you to make a good shot!"
+            n 1uchlg "As long as you ask,{w=0.1} I've got no problem with it!"
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
             if player_screenshots_blocked:
-                n "Really, [player]?{w=0.1} You're asking me about this {i}now{/i}?"
-                n "You know {i}perfectly well{/i} how I feel about this."
-                n "I don't hate you,{w=0.1} but please try to remember how I feel before you do stuff like that."
+                n 1fsqpu "Really, [player]?{w=0.1} You're asking me about this {i}now{/i}?"
+                n 1fslaj "You know {i}perfectly well{/i} how I feel about this."
+                n 1fsgbo "I don't hate you,{w=0.1} but please try to remember how I feel before you do stuff like that."
                 n "I'm still gonna keep that turned off for now."
 
             else:
-                n "H-huh?{w=0.2} Pictures of me?"
-                n "Not a fan,{w=0.1} honestly -{w=0.1} but you knew that much already,{w=0.1} [player]."
-                n "It's just..."
-                n "I really...{w=0.3} need...{w=0.3} my privacy.{w=0.1} It matters a lot to me."
-                n "You understand,{w=0.1} right?"
-                n "So please,{w=0.1} if you ever wanna take a picture,{w=0.1} can you ask me first?"
+                n 1ncuaj "H-huh?{w=0.2} Pictures of me?"
+                n 1nlrsr "Not a fan,{w=0.1} honestly -{w=0.1} but you knew that much already,{w=0.1} [player]."
+                n 1knmpu "It's just..."
+                n 1kcspu "I really...{w=0.3} need...{w=0.3} my privacy.{w=0.1} It matters a lot to me."
+                n 1kwmpu "You understand,{w=0.1} right?"
+                n 1knmnv "So please,{w=0.1} if you ever wanna take a picture,{w=0.1} can you ask me first?"
                 menu:
                     n "Will you do that for me?"
 
                     "Of course!":
-                        n "Thanks,{w=0.1} [player]."
-                        n "That really...{w=0.3} means a lot to me."
+                        n 1kcssg "Thanks,{w=0.1} [player]."
+                        n 1knmss "That really...{w=0.3} means a lot to me."
 
                     "I'll think about it.":
-                        n "[player]...{w=0.3} come on.{w=0.1} I'm being serious here."
+                        n 1fwmsf "[player]...{w=0.3} come on.{w=0.1} I'm being serious here."
                         n "Please don't mess me around with this."
-                        n "Make sure you ask,{w=0.1} okay?"
+                        n 1nnmaj "Make sure you ask,{w=0.1} okay?"
 
                     "...":
-                        n "..."
-                        n "Uh...{w=0.3} [player]?{w=0.1} This isn't very funny."
-                        n "Make sure you ask,{w=0.1} okay?{w=0.1} For my sake."
+                        n 1nunfr "..."
+                        n 1fnmaj "Uh...{w=0.3} [player]?{w=0.1} This isn't very funny."
+                        n 1fllsl "Make sure you ask,{w=0.1} okay?{w=0.1} For my sake."
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-            n "Pictures? Really?"
-            n "I don't think I want to have you taking my picture,{w=0.1} [player]."
-            n "Let's talk about something else."
+            n 1fsqsl "Pictures? Really?"
+            n 1fsqaj "I don't think I want to have you taking my picture,{w=0.1} [player]."
+            n 1fslfr "Let's talk about something else."
 
         else:
-            n "Please...{w=0.3} don't try to pretend like you care about how I feel about pictures."
-            n "I'm done talking about this,{w=0.1} [player]."
+            n 1kplpu "Please...{w=0.3} don't try to pretend like you care about how I feel about pictures."
+            n 1kcssr "I'm done talking about this,{w=0.1} [player]."
     return
 
 # Natsuki discusses her lack of pet with the player, and asks about theirs
