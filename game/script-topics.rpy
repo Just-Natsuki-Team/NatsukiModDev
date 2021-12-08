@@ -213,7 +213,7 @@ label pet_options_a:
             $ persistent.jn_player_pet = "dogs"
             
         "Ferrets":
-            n 1unmlg "Oh!{w=0.2} A ferret?
+            n 1unmlg "Oh!{w=0.2} A ferret?"
             n 1uchbs "That's sooo cute!"
             n "They're like cats!{w=0.2} Or pandas!{w=0.2} But long!"
             n 1uchgn "And that's a plus in my book!"
