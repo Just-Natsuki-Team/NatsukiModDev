@@ -138,6 +138,9 @@ label call_next_topic:
             if "derandom" in return_keys:
                 topic_obj.random = False
 
+            if "lock" in return_keys:
+                topic_obj.unlocked = False
+
     #This topic might quit
     if "quit" in return_keys:
         jump _quit
@@ -239,14 +242,6 @@ label talk_menu:
 
         # Ensure any variable references are substituted
         _talk_flavor_text = renpy.substitute(_talk_flavor_text)
-
-        if "lock" in return_keys:
-            if topic_obj:
-                topic_obj.unlocked = False
-
-    #This topic might quit
-    if "quit" in return_keys:
-        jump _quit
 
     $ jn_placeholders.show_resting_placeholder_natsuki(offset=True)
 

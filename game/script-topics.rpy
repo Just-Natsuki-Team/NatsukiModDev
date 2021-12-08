@@ -690,7 +690,7 @@ label talk_weather_setup_part1:
                 n 1knmpu "Oh...{w=0.3} well, okay..."
                 n 1nnmsm "Just let me know whenever you have the time,{w=0.1} okay?"
                 n 1nwmbg"I promise,{w=0.1} it'll be super worth it!"
-                return {"lock" : None}
+                return {"derandom" : None}
 
             "I don't want to.":
                 n 1knmsf "Huh?{w=0.2} You don't want to?"
@@ -699,7 +699,7 @@ label talk_weather_setup_part1:
                 n 1klraj "I'm a little bummed out,{w=0.1} though..."
                 n 1kcssf"..."
                 n 1knmaj "Well...{w=0.3} I guess just let me know if you change your mind,{w=0.1} alright?"
-                return {"lock" : None}
+                return {"derandom" : None}
 
     else:
         # Natsuki and the player have already discussed this, so we skip the intro
@@ -717,7 +717,6 @@ label talk_weather_setup_part1:
                     n 1unmaj "Huh?{w=0.2} You changed your mind already?"
                     n 1nllss "Fine,{w=0.1} fine."
                     n 1nwmsm "Just let me know when you want to get this set up,{w=0.1} 'kay?"
-                    return {"lock" : None}
 
         else:
             # We assume the player made an oopsie, and wants to give Natsuki another key
@@ -730,7 +729,7 @@ label talk_weather_setup_part1:
                 "No.":
                     n 1nnmpu "Oh...{w=0.3} well,{w=0.1} okay."
                     n 1nllss "Just let me know if you wanna give me another!"
-                    return {"lock" : None}
+                    return {"derandom" : None}
 
     # Direct the player to the website
 
@@ -747,7 +746,7 @@ label talk_weather_setup_part1:
             n 1tnmpu "Huh?{w=0.2} Why not?{w=0.2} Is it down or something?"
             n 1nnmss "Well, anyway...{w=0.3} maybe we can try this again later?"
             n 1nnmbg "Just let me know when you're ready,{w=0.1} 'kay?"
-            return {"lock" : None}
+            return {"derandom" : None}
 
     # Prompt the player to create an account
 
@@ -782,7 +781,7 @@ label talk_weather_setup_part1:
             n 1tnmpu "Huh?{w=0.2} You don't wanna continue?"
             n 1nlraj "That's fine,{w=0.1} I guess."
             n 1nnmss "Just let me know when you're ready,{w=0.1} 'kay?"
-            return {"lock" : None}
+            return {"derandom" : None}
 
     # Prompt the player for an API key
 
@@ -806,7 +805,7 @@ label talk_weather_setup_part1:
             # Escape route if we somehow get stuck
             n 1kllaj "I...{w=0.3} don't think we're getting anywhere with this,{w=0.1} [player]."
             n 1nnmss "Maybe we should just try again later?"
-            return {"lock" : None}
+            return {"derandom" : None}
 
         else:
             $ player_input = renpy.input("Enter your API key (or type Nevermind to go back):")
@@ -821,7 +820,7 @@ label talk_weather_setup_part1:
             n 1knmaj"Huh?{w=0.2} You don't wanna continue?"
             n 1nwmpu "That's fine,{w=0.1} I guess."
             n 1nnmss "Just let me know when you're ready,{w=0.1} 'kay?"
-            return {"lock" : None}
+            return {"derandom" : None}
 
         else:
             # Get ready to lead in to the next stage of setup
@@ -883,7 +882,7 @@ label talk_weather_setup_part2:
                 n 1nnmpu "Oh..."
                 n 1nllaj "Well...{w=0.3} that's okay, I guess."
                 n 1nnmss "Just let me know whenever you're ready,{w=0.1} [player]."
-                return {"lock" : None}
+                return {"derandom" : None}
 
         $ player_input_valid = False
         $ player_input_count = 0
@@ -897,7 +896,7 @@ label talk_weather_setup_part2:
                 # Escape route if we somehow get stuck
                 n 1kllaj "This really is going nowhere fast,{w=0.1} huh [player]?"
                 n 1nnmss "I think we should just try again later..."
-                return {"lock" : None}
+                return {"derandom" : None}
 
             else:
                 $ player_input = renpy.input("Enter your API key (or type Nevermind to go back):")
