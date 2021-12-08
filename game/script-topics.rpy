@@ -140,7 +140,8 @@ label talk_did_you_have_pets:
         n 1fsgpo "It was always about the mess it would make,{w=0.1} or how much it would cost,{w=0.1} or literally anything else they could think of..."
         n 1fnmaj "Even when I said {i}I'd{/i} take care of everything!"
         n 1fslem "Ugh..."
-        n 1fslun "It still annoys me...{w=0.3}{nw}" extend 1uchgn "but then again,{w=0.1} it's not like I can't keep a pet here instead,{w=0.1} right?{w=0.1} Ehehe."
+        n 1fslun "It still annoys me...{w=0.3}{nw}" 
+        extend 1uchgn "but then again,{w=0.1} it's not like I can't keep a pet here instead,{w=0.1} right?{w=0.1} Ehehe."
 
     if persistent.jn_player_pet is None:
         menu:
