@@ -129,58 +129,58 @@ label talk_did_you_have_pets:
     $ already_discussed_pets = get_topic("talk_did_you_have_pets").shown_count > 0
 
     if already_discussed_pets:
-        n "Wait...{w=0.3} didn't we talk about this before,{w=0.1} [player]?"
-        n "Well anyway,{w=0.1} not much has changed."
-        n "I still don't have a pet,{w=0.1} as much as I wish I did."
-        n "Maybe I should get one soon.{w=0.2} Hmm..."
+        n 1tnmsl "Wait...{w=0.3} didn't we talk about this before,{w=0.1} [player]?"
+        n 1unmsl "Well anyway,{w=0.1} not much has changed."
+        n 1ullsl "I still don't have a pet,{w=0.1} as much as I wish I did."
+        n 1nnmsm "Maybe I should get one soon.{w=0.2} Hmm..."
 
     else:
-        n "Huh?{w=0.2} Did I ever have any pets?"
-        n "You know,{w=0.1} I really wish I had.{w=0.1} But I was never allowed anything!"
-        n "It was always about the mess it would make,{w=0.1} or how much it would cost,{w=0.1} or literally anything else they could think of..."
-        n "Even when I said {i}I'd{/i} take care of everything!"
-        n "Ugh..."
-        n "It still annoys me...{w=0.3} but then again,{w=0.1} it's not like I can't keep a pet here instead,{w=0.1} right?{w=0.1} Ehehe."
+        n 1tnmsl "Huh?{w=0.2} Did I ever have any pets?"
+        n 1fllaj "You know,{w=0.1} I really wish I had.{w=0.1} But I was never allowed anything!"
+        n 1fsgpo "It was always about the mess it would make,{w=0.1} or how much it would cost,{w=0.1} or literally anything else they could think of..."
+        n 1fnmaj "Even when I said {i}I'd{/i} take care of everything!"
+        n 1fslem "Ugh..."
+        n 1fslun "It still annoys me...{w=0.3}{nw}" extend 1uchgn "but then again,{w=0.1} it's not like I can't keep a pet here instead,{w=0.1} right?{w=0.1} Ehehe."
 
     if persistent.jn_player_pet is None:
         menu:
             n "What about you,{w=0.1} [player]? Do you have any pets?"
 
             "Yes, I do.":
-                n "Oh!{w=0.2} Oh oh oh!{w=0.2} You gotta tell me,{w=0.1} [player]!"
-                n "What do you have?{w=0.2} What do you have?"
+                n 1uspaw "Oh!{w=0.2} Oh oh oh!{w=0.2} You gotta tell me,{w=0.1} [player]!"
+                n 1uspbs "What do you have?{w=0.2} What do you have?"
                 call pet_options_a
 
             "No, I don't.":
-                n "Aww...{w=0.3} I'll admit,{w=0.1} I'm a little disappointed."
-                n "Well,{w=0.1} then you gotta let me know if you get one,{w=0.1} [player]!"
+                n 1usgem "Aww...{w=0.3} I'll admit,{w=0.1} I'm a little disappointed."
+                n 1nchhn "Well,{w=0.1} then you gotta let me know if you get one,{w=0.1} [player]!"
                 n "I wanna hear all about it!"
 
             "I used to.":
-                n "Oh...{w=0.3} oh gosh."
-                n "I'm really sorry to hear that,{w=0.1} [player]."
-                n "I hope you're managing okay now."
-                n "..."
-                n "I...{w=0.3} think we should talk about something else, alright?"
+                n 1kplaj "Oh...{w=0.3} oh gosh."
+                n 1kllbo "I'm really sorry to hear that,{w=0.1} [player]."
+                n 1knmbo "I hope you're managing okay now."
+                n 1kcsbo "..."
+                n 1knmbo "I...{w=0.3} think we should talk about something else, alright?"
 
     else:
-        n "What about you,{w=0.1} [player]?"
+        n 1unmbs "What about you,{w=0.1} [player]?"
         menu:
             n "Did you get another one?"
 
             "Yes, I did.":
-                n "Ooh...{w=0.3} you gotta tell me!{w=0.2} What did you get?"
+                n 1uspaw "Ooh...{w=0.3} you gotta tell me!{w=0.2} What did you get?"
                 call pet_options_a
 
             "No, I didn't.":
-                n "Oh.{w=0.2} Well,{w=0.1} that's fair."
-                n "You're already giving a home to something,{w=0.1} so I won't complain!"
+                n 1nnmaj "Oh.{w=0.2} Well,{w=0.1} that's fair."
+                n 1nnmsm "You're already giving a home to something,{w=0.1} so I won't complain!"
 
             "I lost one.":
-                n "Oh...{w=0.3} oh jeez..."
-                n "I'm so sorry,{w=0.1} [player].{w=0.2} Are you okay?"
-                n "Maybe we should talk about something else to keep your mind off things..."
-                n "I'm here for you,{w=0.1} [player]."
+                n 1knmaj "Oh...{w=0.3} oh jeez..."
+                n 1knmfr "I'm so sorry,{w=0.1} [player].{w=0.2} Are you okay?"
+                n 1kllbo "Maybe we should talk about something else to keep your mind off things..."
+                n 1knmbo "I'm here for you,{w=0.1} [player]."
 
     return
 
