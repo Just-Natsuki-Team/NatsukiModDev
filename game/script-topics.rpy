@@ -704,7 +704,7 @@ label talk_weather_setup_part1:
     else:
         # Natsuki and the player have already discussed this, so we skip the intro
 
-        if not persistent.weather_api_key:
+        if not persistent.jn_weather_api_key:
             # We assume the player backed out for whatever reason, as we have no key set
             n 1nwdbg "Oh!{w=0.2} Yeah,{w=0.1} I remember!"
             n 1nnmss "Did you want to continue setting everything up for the weather,{w=0.1} [player]?"
@@ -825,7 +825,7 @@ label talk_weather_setup_part1:
         else:
             # Get ready to lead in to the next stage of setup
             $ player_input_valid = True # Kill the loop!
-            $ persistent.weather_api_key = player_input
+            $ persistent.jn_weather_api_key = player_input
             n 1nchlg "Alright!{w=0.2} I got it!"
             n 1nlrbg "Let me just work all of this out...{w=0.3} I might be a few minutes,{w=0.1} just so you know."
 
@@ -917,7 +917,7 @@ label talk_weather_setup_part2:
                     # Save the new API key, since we know it works!
                     n 1nwdbg "Ooh!{w=0.2} I can use this one!{w=0.2} Nice work,{w=0.1} [player]!"
                     n 1nlrss "I'll just put this somewhere safe..."
-                    $ persistent.weather_api_key = player_input
+                    $ persistent.jn_weather_api_key = player_input
                     $ player_input_valid = True
 
                 else:
@@ -988,7 +988,7 @@ label talk_weather_setup_part2:
                         n 1nsgbg "Yes!{w=0.2} Am I good or what?"
                         n 1nchbg "Ahaha!"
                         n 1nnmts "I'll just note those down real quick..."
-                        $ persistent.latitude, persistent.longitude = ip_latitude_longitude
+                        $ persistent.jn_player_latitude, persistent.jn_player_longitude = ip_latitude_longitude
 
                     "No, that's not right.":
                         # We couldn't get the coordinates via IP, so we have to prompt them via the player
@@ -1011,14 +1011,14 @@ label talk_weather_setup_part2:
                     "Yes, that looks good to me.":
                         n 1nwdbg "Good!{w=0.2} Good.{w=0.2} That's a relief!"
                         n 1nchsm "I was worried I'd have to get a little more creative.{w=0.2} Ehehe."
-                        $ persistent.latitude, persistent.longitude = ip_latitude_longitude
+                        $ persistent.jn_player_latitude, persistent.jn_player_longitude = ip_latitude_longitude
 
                     "No, that's not right.":
                         n 1nllpo "Uuuuuuu..."
                         n 1nlrbo "Fine.{w=0.2} It looks like we're gonna have to do things the old-fashioned way."
                         call weather_setup_manual_coords
 
-            $ persistent.is_weather_tracking_set_up = True
+            $ persistent.jn_weather_is_tracking_set_up = True
             n 1nwdbg "Okaaay!{w=0.2} It looks like we're finally good to go!"
             n 1nllsml "Thanks again for all your help,{w=0.1} [player]."
             n 1nchbgl "I can't wait to see something different out of that window for a change!"
@@ -1133,8 +1133,8 @@ label weather_setup_manual_coords:
                 n 1nwmsm "I'll just note all that down real quick..."
                 n 1nchssl "And again,{w=0.2} thanks a bunch [player]."
                 n 1nchbgl "I can't wait to see something different out of that window for a change!"
-                $ persistent.latitude = player_latitude
-                $ persistent.longitude = player_longitude
+                $ persistent.jn_player_latitude = player_latitude
+                $ persistent.jn_player_longitude = player_longitude
                 return
 
             "No, that's not right at all.":

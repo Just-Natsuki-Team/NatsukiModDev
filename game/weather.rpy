@@ -1,13 +1,13 @@
 # Weather data
-default persistent.weather_api_key = None
-default persistent.weather_validate_apikey_in_time = None
-default persistent.is_weather_tracking_set_up = False
-default persistent.current_weather_type = weather.TYPE_CLEAR
-default persistent.current_weather_long = dict()
+default persistent.jn_weather_api_key = None
+default persistent.jn_weather_validate_apikey_in_time = None
+default persistent.jn_weather_is_tracking_set_up = False
+default persistent.jn_current_weather_type = weather.TYPE_CLEAR
+default persistent.jn_current_weather_long = dict()
 
 # Location data
-default persistent.latitude = None
-default persistent.longitude = None
+default persistent.jn_player_latitude = None
+default persistent.jn_player_longitude = None
 default persistent.jn_hemisphere_north_south = None
 default persistent.jn_hemisphere_east_west = None
 
@@ -15,10 +15,6 @@ init -1 python in weather:
     import urllib2
     import datetime
     import store
-
-    #TEST API key, feel free to use
-    #2c2f369ad4987a01f5de4c149665c5fd
-    #DEBUG: TODO: remove in production
 
     PREFERENCES = {
         "units" : "metric"
@@ -52,7 +48,7 @@ init -1 python in weather:
             OUT:
                 <dict> API json response
         """
-        apikey = store.persistent.weather_api_key
+        apikey = store.persistent.jn_weather_api_key
         params = get_location_dict()
         params.update(store.weather.PREFERENCES)
 
@@ -76,10 +72,10 @@ init -1 python in weather:
                 <bool>
         """
         if apikey is None:
-            if store.persistent.weather_api_key is None:
+            if store.persistent.jn_weather_api_key is None:
                 return False
 
-            apikey = store.persistent.weather_api_key
+            apikey = store.persistent.jn_weather_api_key
 
         response = get_json(store.api.make_request("OpenWeatherMap", appid=apikey))
 
@@ -114,9 +110,9 @@ init -1 python in weather:
             OUT:
                 location - <dictionary>
         """
-        longitude = store.persistent.longitude if longitude is None else longitude
+        longitude = store.persistent.jn_player_longitude if longitude is None else longitude
 
-        latitude = store.persistent.latitude if latitude is None else latitude
+        latitude = store.persistent.jn_player_latitude if latitude is None else latitude
 
         location={
             "lon" : longitude,
@@ -705,7 +701,7 @@ init -1 python in weather:
             # [0] - primary weather info
             # "main" - one word description of current weather
             weather_type = Weather.WEATHER_TYPES[response["weather"][0]["main"]]
-            store.persistent.current_weather_type = weather_type
+            store.persistent.jn_current_weather_type = weather_type
             return weather_type
 
         @staticmethod
@@ -771,8 +767,8 @@ init -1 python in weather:
             else:
                 parsed_weather["wind"] = 0
 
-            store.persistent.current_weather_long = parsed_weather
-            store.persistent.current_weather_type = weather_type
+            store.persistent.jn_current_weather_long = parsed_weather
+            store.persistent.jn_current_weather_type = weather_type
 
             return parsed_weather, weather_type
 

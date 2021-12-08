@@ -12,7 +12,7 @@ label ch30_autoload:
     #Do all the things here for initial setup/flow hijacking
     python:
         # weather tracking is setup so we start it up
-        if persistent.is_weather_tracking_set_up:
+        if persistent.jn_wejn_weather_is_tracking_set_upather_tracking_set_up:
             weather.Weather.get_weather_detail.start()
 
     #FALL THROUGH
@@ -167,9 +167,9 @@ init python:
         """
         Runs every minute during breaks between topics
         """
-        if persistent.weather_validate_apikey_in_time is not None:
-            if persistent.weather_validate_apikey_in_time <= datetime.datetime.now():
-                persistent.weather_validate_apikey_in_time = None
+        if persistent.jn_weather_validate_apikey_in_time is not None:
+            if persistent.jn_weather_validate_apikey_in_time <= datetime.datetime.now():
+                persistent.jn_weather_validate_apikey_in_time = None
                 push('talk_weather_setup_part2')
 
         # Push a new topic every couple of minutes
@@ -206,7 +206,7 @@ init python:
         Runs every day during breaks between topics
         """
         # everyday check if OWM apikey somehow wasn't invalidated
-        if persistent.is_weather_tracking_set_up and not weather.is_api_key_valid():
+        if persistent.jn_weather_is_tracking_set_up and not weather.is_api_key_valid():
             utils.log("API key for OpenWeatherMap is no longer valid", store.utils.SEVERITY_ERR)
 
     def coroutine_check():

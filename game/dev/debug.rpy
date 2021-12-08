@@ -1,5 +1,8 @@
 default persistent.jn_debug_open_watch_on_load = False
 
+#OpenWeatherMap test API key
+#2c2f369ad4987a01f5de4c149665c5fd
+
 init 10 python:
     # Enable some QoL things
     config.console = True
@@ -50,7 +53,7 @@ init python in jn_debug:
 
             except:
                 store.utils.log(message="Failed to watch expression {0}".format(item), logseverity=store.utils.SEVERITY_WARN)
-        
+
     def _unwatch_all_tracked_items():
         """
         Calls renpy.unwatch() on all items in the tracked watch items list, hiding them.
@@ -110,10 +113,10 @@ init python in jn_debug:
 
                 if _view_tracked_items_enabled:
                     _watch_all_tracked_items()
-        
+
         else:
             raise Exception("Expression provided is not of type str")
-        
+
     def remove_tracked_watch_item(expression):
         """
         Adds the given expression to the list of items to watch and display
@@ -181,7 +184,7 @@ init python in jn_debug:
                 store.persistent.jn_debug_tracked_watch_items = []
                 for item_from_file in items_from_file:
                     store.persistent.jn_debug_tracked_watch_items.append(item_from_file.strip('\n'))
-                
+
                 # Finally redisplay if the view was open
                 if _view_tracked_items_enabled:
                     _watch_all_tracked_items()
@@ -195,7 +198,7 @@ init python in jn_debug:
                 logseverity=store.utils.SEVERITY_ERR
             )
             return LOAD_FROM_DISK_FAILED
-        
+
     def reset_tracked_watch_items():
         """
         Completely resets the tracked watch item list to the default configuration
@@ -330,7 +333,7 @@ label debug_set_trust:
 
         "Nevermind.":
             n "Oh...{w=0.3} well,{w=0.1} okay then."
-    
+
     return
 
 label set_trust_options_high:
@@ -483,7 +486,7 @@ label debug_add_watched_item:
         n "..."
         $ jn_debug.add_tracked_watch_item(str(player_input))
         n "Okaaay!{w=0.2} There you go, [player]!"
-    
+
     return
 
 # This topic allows us to remove an item from the watched item list
@@ -513,7 +516,7 @@ label debug_remove_watched_item:
         n  "..."
         $ jn_debug.remove_tracked_watch_item(str(player_input))
         n "Gotcha!{w=0.2} There you go,{w=0.1} [player]!"
-    
+
     return
 
 # This topic allows us to set the watched item list from file
@@ -669,7 +672,7 @@ label debug_custom_say:
     n "Oooh!{w=0.2} Are we pranking someone,{w=0.1} [player]?{w=0.2} I'm for it!"
     $ player_input = renpy.input("What do you want me to say?")
     call debug_custom_say_options_a(player_input)
-    
+
 label debug_custom_say_options_a(dialogue):
     menu:
         n "Alright!{w=0.2} Now how do you want me to say it?"
@@ -710,7 +713,7 @@ label debug_custom_say_options_a(dialogue):
         "Nevermind.":
             n "Oh...{w=0.3} well, if you say so."
 
-    
+
     jump ch30_loop
 
 label debug_custom_say_options_b(dialogue):
@@ -885,6 +888,13 @@ label debug_call_api:
         "Ghostbusters!":
             show placeholder_natsuki unamused zorder jn_placeholders.NATSUKI_Z_INDEX
             n "...{i}Really{/i},{w=1.0} [player]?"
+
+        "OpenWeatherMap":
+            if store.weather.jn_weather_api_key is None:
+                n "You didn't give me one dummy!"
+            else:
+                n "Okaay, weather it is!"
+                store.weather.Weather.get_weather_detail()
 
         # Add your API calls here! We might need a scrollable menu implementation if we rack up too many services.
         # Alternatively, just delete any you no longer use!
