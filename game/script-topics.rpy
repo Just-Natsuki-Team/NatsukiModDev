@@ -211,6 +211,14 @@ label pet_options_a:
             n 1uchbs "But I can't think of a more loving pet!"
             n "I hope yours looks after you as much as you look after it!"
             $ persistent.jn_player_pet = "dogs"
+            
+        "Ferrets":
+            n 1unmlg "Oh!{w=0.2} A ferret?
+            n 1uchbs "That's sooo cute!"
+            n "They're like cats!{w=0.2} Or pandas!{w=0.2} But long!"
+            n 1uchgn "And that's a plus in my book!"
+            n 1unmlg "Take good care of it for me, okay?"
+            $ persistent.jn_player_pet = "ferret"
 
         "Fish":
             n 1unmaj "Ooh!{w=0.2} Fish are interesting!"
@@ -218,13 +226,6 @@ label pet_options_a:
             n 1uchgn "But I think they're a neat way to relieve stress!{w=0.2} They must be calming to watch in their own little world."
             n "I bet you feel like you could lose yourself in that tank!{w=0.2} Ehehe."
             $ persistent.jn_player_pet = "fish"
-
-        "Gerbils":
-            n 1kspaw "Awww!{w=0.2} I like gerbils!"
-            n 1uchbs "It's so cute how they live in little groups to keep each other company."
-            n 1unmbs "They're good at digging,{w=0.1} too -{w=0.2} like seriously good!"
-            n "Take good care of yours for me,{w=0.1} okay?"
-            $ persistent.jn_player_pet = "gerbils"
 
         "More...":
             call pet_options_b
@@ -234,7 +235,14 @@ label pet_options_a:
 label pet_options_b:
     menu:
         n "What did you get?"
-
+        
+        "Gerbils":
+            n 1kspaw "Awww!{w=0.2} I like gerbils!"
+            n 1uchbs "It's so cute how they live in little groups to keep each other company."
+            n 1unmbs "They're good at digging,{w=0.1} too -{w=0.2} like seriously good!"
+            n "Take good care of yours for me,{w=0.1} okay?"
+            $ persistent.jn_player_pet = "gerbils"
+            
         "Guinea pigs":
             n 1unmaj "Ooh!{w=0.2} I like guinea pigs!"
             n 1uchbs "I don't know much about them,{w=0.1} but I love the little sounds they make."
@@ -243,39 +251,33 @@ label pet_options_b:
             $ persistent.jn_player_pet = "guinea pigs"
 
         "Hamsters":
-            n "Oh my gosh!{w=0.2} Hammies!"
+            n 1uspbs "Oh my gosh!{w=0.2} Hammies!"
             n 1uchbs "Aaaaaah!{w=0.2} I love them so much!"
-            n "I love their little tails,{w=0.1} and their little paws,{w=0.1} and their little whiskers,{w=0.2} and-"
+            n 1uspbs "I love their little tails,{w=0.1} and their little paws,{w=0.1} and their little whiskers,{w=0.2} and-"
             n "And!{w=0.2} And..."
-            n "..."
-            n "A-{w=0.1}ahaha!{w=0.2} It would appear I got a little carried away..."
-            n "..."
-            n "You better take good care of yours for me,{w=0.1} alright?"
+            n 1uwdbol "..."
+            n 1uchbsl "A-{w=0.1}ahaha!{w=0.2} It would appear I got a little carried away..."
+            n 1uchgnf "..."
+            n 1fllgnf "You better take good care of yours for me,{w=0.1} alright?"
             $ persistent.jn_player_pet = "hamsters"
 
         "Horses":
-            n "W-{w=0.1}wow!{w=0.2} You aren't just messing with me,{w=0.1} right?!"
-            n "Horses?!{w=0.2} That's amazing,{w=0.1} [player]!"
+            n 1uspaw "W-{w=0.1}wow!{w=0.2} You aren't just messing with me,{w=0.1} right?!"
+            n 1uspbs "Horses?!{w=0.2} That's amazing,{w=0.1} [player]!"
             n 1uchbs "You totally gotta teach me how to ride some day!"
-            n "Make sure you visit yours often,{w=0.1} alright?"
-            n "Oh -{w=0.2} and wear a helmet if you ride!"
+            n 1uchbs "Make sure you visit yours often,{w=0.1} alright?"
+            n 1unmlg "Oh -{w=0.2} and wear a helmet if you ride!"
             $ persistent.jn_player_pet = "horses"
 
         "Insects":
-            n "Ack-{nw}"
-            n "Nnnnn..."
-            n "...I wish I could share your enthusiasm!{w=0.2} Ahaha..."
-            n "I don't think I could stomach creepy crawlies myself."
-            n "You've certainly got an...{w=0.3} interesting taste,{w=0.1} [player]."
-            n "But I'm sure you take great care of yours!"
+            n 1twmsc "Ack-{nw}"
+            n 1kslup "Nnnnn..."
+            n 1kwmsg "...I wish I could share your enthusiasm!{w=0.2}{nw}
+            extend 1kllss "Ahaha..."
+            n 1ksqun "I don't think I could stomach creepy crawlies myself."
+            n 1ksrun "You've certainly got an...{w=0.3} interesting taste,{w=0.1} [player]."
+            n 1kwmss "But I'm sure you take great care of yours!"
             $ persistent.jn_player_pet = "insects"
-
-        "Mice":
-            n "Ehehe.{w=0.2} Mice are adorable!"
-            n "I'm still not sure how I feel about the tail..."
-            n "But they're so curious and sociable!{w=0.2} I love watching them play together."
-            n "Make sure you take care of yours for me,{w=0.1} okay?"
-            $ persistent.jn_player_pet = "mice"
 
         "More...":
             call pet_options_c
@@ -289,6 +291,13 @@ label pet_options_c:
     menu:
         n "What did you get?"
 
+        "Mice":
+            n "Ehehe.{w=0.2} Mice are adorable!"
+            n "I'm still not sure how I feel about the tail..."
+            n "But they're so curious and sociable!{w=0.2} I love watching them play together."
+            n "Make sure you take care of yours for me,{w=0.1} okay?"
+            $ persistent.jn_player_pet = "mice"
+            
         "Rats":
             n 1unmbs "Rats,{w=0.1} huh?"
             n "Were you expecting me to be grossed out?"
