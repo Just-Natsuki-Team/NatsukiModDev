@@ -190,37 +190,39 @@ label pet_options_a:
         n "What did you get?"
 
         "Birds":
-            n "Oh!{w=0.2} Neat!"
-            n "I don't think I'd keep birds myself,{w=0.1} but they brighten up rooms for sure!"
-            n "It doesn't get too noisy for you,{w=0.1} I hope?"
-            n "I'm sure yours appreciate your company though."
+            n 1uchgn "Oh!{w=0.2} Neat!"
+            n 1nnmsm "I don't think I'd keep birds myself,{w=0.1} but they brighten up rooms for sure!"
+            n 1tnmaj "It doesn't get too noisy for you,{w=0.1} I hope?"
+            n 1uchsm "I'm sure yours appreciate your company though."
             $ persistent.jn_player_pet = "birds"
 
         "Cats":
-            n "Yay!{w=0.2} Cats!"
-            n "I really wish I had one,{w=0.1} I love seeing all the dumb situations they get into!"
-            n "I hope you didn't just say that because I like them,{w=0.1} though.{w=0.1} Ehehe."
-            n "Just don't pamper it too much,{w=0.1} [player]!"
+            n 1uchsm "Yay!{w=0.2} Cats!"
+            n 1uchgn "I really wish I had one,{w=0.1} I love seeing all the dumb situations they get into!"
+            n 1unmbs "I hope you didn't just say that because I like them,{w=0.1} though.{w=0.1}{nw}"
+            extend 1uchsm "Ehehe."
+            n 1tnmsm "Just don't pamper it too much,{w=0.1} [player]!"
             $ persistent.jn_player_pet = "cats"
 
         "Dogs":
-            n "Oh!{w=0.2} A dog?{w=0.2} Awesome!"
-            n "I don't think a dog would be my first choice,{w=0.1} what with all the walks and all that."
-            n "But I can't think of a more loving pet!"
+            n 1uwdaj "Oh!{w=0.2} A dog?{w=0.2}{nw}"
+            extend 1uchbs "Awesome!"
+            n 1nnmsm "I don't think a dog would be my first choice,{w=0.1} what with all the walks and all that."
+            n 1uchbs "But I can't think of a more loving pet!"
             n "I hope yours looks after you as much as you look after it!"
             $ persistent.jn_player_pet = "dogs"
 
         "Fish":
-            n "Ooh!{w=0.2} Fish are interesting!"
-            n "I don't think I'd call them super affectionate personally..."
-            n "But I think they're a neat way to relieve stress!{w=0.2} They must be calming to watch in their own little world."
+            n 1unmaj "Ooh!{w=0.2} Fish are interesting!"
+            n 1kllnv "I don't think I'd call them super affectionate personally..."
+            n 1uchgn "But I think they're a neat way to relieve stress!{w=0.2} They must be calming to watch in their own little world."
             n "I bet you feel like you could lose yourself in that tank!{w=0.2} Ehehe."
             $ persistent.jn_player_pet = "fish"
 
         "Gerbils":
-            n "Awww!{w=0.2} I like gerbils!"
-            n "It's so cute how they live in little groups to keep each other company."
-            n "They're good at digging,{w=0.1} too -{w=0.2} like seriously good!"
+            n 1kspaw "Awww!{w=0.2} I like gerbils!"
+            n 1uchbs "It's so cute how they live in little groups to keep each other company."
+            n 1unmbs "They're good at digging,{w=0.1} too -{w=0.2} like seriously good!"
             n "Take good care of yours for me,{w=0.1} okay?"
             $ persistent.jn_player_pet = "gerbils"
 
@@ -234,15 +236,15 @@ label pet_options_b:
         n "What did you get?"
 
         "Guinea pigs":
-            n "Ooh!{w=0.2} I like guinea pigs!"
-            n "I don't know much about them,{w=0.1} but I love the little sounds they make."
+            n 1unmaj "Ooh!{w=0.2} I like guinea pigs!"
+            n 1uchbs "I don't know much about them,{w=0.1} but I love the little sounds they make."
             n "It's like they're always having a conversation!"
-            n "Take good care of yours for me,{w=0.1} okay?"
+            n 1unmbs "Take good care of yours for me,{w=0.1} okay?"
             $ persistent.jn_player_pet = "guinea pigs"
 
         "Hamsters":
             n "Oh my gosh!{w=0.2} Hammies!"
-            n "Aaaaaah!{w=0.2} I love them so much!"
+            n 1uchbs "Aaaaaah!{w=0.2} I love them so much!"
             n "I love their little tails,{w=0.1} and their little paws,{w=0.1} and their little whiskers,{w=0.2} and-"
             n "And!{w=0.2} And..."
             n "..."
@@ -254,7 +256,7 @@ label pet_options_b:
         "Horses":
             n "W-{w=0.1}wow!{w=0.2} You aren't just messing with me,{w=0.1} right?!"
             n "Horses?!{w=0.2} That's amazing,{w=0.1} [player]!"
-            n "You totally gotta teach me how to ride some day!"
+            n 1uchbs "You totally gotta teach me how to ride some day!"
             n "Make sure you visit yours often,{w=0.1} alright?"
             n "Oh -{w=0.2} and wear a helmet if you ride!"
             $ persistent.jn_player_pet = "horses"
@@ -288,24 +290,24 @@ label pet_options_c:
         n "What did you get?"
 
         "Rats":
-            n "Rats,{w=0.1} huh?"
+            n 1unmbs "Rats,{w=0.1} huh?"
             n "Were you expecting me to be grossed out?"
-            n "Ahaha!"
+            n 1uchbs "Ahaha!"
             n "Rats are fine.{w=0.2} They're surprisingly intelligent,{w=0.1} too!"
             n "Are you perhaps training yours,{w=0.1} [player]?{w=0.2} Ehehe."
-            n "Make sure you take care of yours for me,{w=0.1} okay?"
+            n 1unmbs "Make sure you take care of yours for me,{w=0.1} okay?"
             $ persistent.jn_player_pet = "rats"
 
         "Rabbits":
-            n "Awwwwww!{w=0.2} Bunnies!"
+            n 1kspaw "Awwwwww!{w=0.2} Bunnies!"
             n "They're so cuuute!{w=0.2} I love them!"
-            n "Especially the ones with the floppy ears,{w=0.1} they look so cuddly!"
+            n 1uchbs "Especially the ones with the floppy ears,{w=0.1} they look so cuddly!"
             n "It's a shame they need so much space,{w=0.1} though."
             n "But I'm sure yours have plenty of room to roam!{w=0.2} Ehehe."
             $ persistent.jn_player_pet = "rabbits"
 
         "Something else":
-            n "Ooh!{w=0.2} An exotic owner, are we?"
+            n 1unmaj "Ooh!{w=0.2} An exotic owner, are we?"
             n "I wonder if that says something about the rest of your tastes?{w=0.2} Ehehe."
             n "I trust you take good care of yours.{w=0.1} Uncommon pets can be pretty demanding!"
             $ persistent.jn_player_pet = "something_else"
