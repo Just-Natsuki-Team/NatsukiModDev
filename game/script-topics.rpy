@@ -272,7 +272,7 @@ label pet_options_b:
         "Insects":
             n 1twmsc "Ack-{nw}"
             n 1kslup "Nnnnn..."
-            n 1kwmsg "...I wish I could share your enthusiasm!{w=0.2}{nw}
+            n 1kwmsg "...I wish I could share your enthusiasm!{w=0.2}{nw}"
             extend 1kllss "Ahaha..."
             n 1ksqun "I don't think I could stomach creepy crawlies myself."
             n 1ksrun "You've certainly got an...{w=0.3} interesting taste,{w=0.1} [player]."
