@@ -673,9 +673,9 @@ label talk_weather_setup_part1:
 
         n 1nlrss "Well,{w=0.1} anyway..."
         n 1nnmsm "What I'm trying to do is add some atmosphere to this place,{w=0.1} and what better way to do that than..."
-        n 1uwdbg "Weather!"
+        n 1uchbg "Weather!"
         n 1nnmss "I wanna set things up so the weather here matches what it's like where you are,{w=0.1} [player]."
-        n 1nlrbg "I know{w=0.1} -{w=0.1} awesome,{w=0.1} right?"
+        n 1flrbg "I know{w=0.1} -{w=0.1} awesome,{w=0.1} right?"
         n 1nnmss "But...{w=0.2} I need you to go to this website I found."
         n 1nchbg "Don't worry,{w=0.1} I won't make you go search for it{w=0.1} -{w=0.1} even I'm not that mean!{w=0.2} Ehehe."
         n 1nwmss "It's called OpenWeatherMap,{w=0.1} and it's super cool!{w=0.2} It's just what I need to make this work."
@@ -756,7 +756,7 @@ label talk_weather_setup_part1:
     n 1nlraj "But I can't do that myself...{w=0.3} which is where you come in,{w=0.1} [player]!"
     n 1nnmss "You'll need to make an account before you can get an API key though."
     n 1nwrbg "Don't worry{w=0.1} -{w=0.1} it's totally free,{w=0.1} I promise!"
-    n 1nnmss "You can create an account {a=[store.jn_globals.LINK_OPEN_WEATHER_MAP_SIGN_UP]}here{/a},{w=0.1} or you can sign in using the menu at the top."
+    n 1nnmsm "You can create an account {a=[store.jn_globals.LINK_OPEN_WEATHER_MAP_SIGN_UP]}here{/a},{w=0.1} or you can sign in using the menu at the top."
     n 1fwdaw "Just make sure to go through all the options carefully{w=0.1} -{w=0.1} don't just dash through it!"
     n 1nllaj "Oh{w=0.1} -{w=0.1} and make sure you confirm your email address once you've created it,{w=0.1} 'kay?"
     n 1nnmss "{a=[store.jn_globals.LINK_OPEN_WEATHER_MAP_SIGN_UP]}Here's{/a} that link once more,{w=0.1} just in case!{w=0.2} Just talk to me again when you're done."
@@ -771,12 +771,12 @@ label talk_weather_setup_part1:
             n 1nnmss "Alright!{w=0.2} Now here's the challenging part."
 
         "I already had an account set up.":
-            n 1uwdaj "Oh?{w=0.2} I didn't realise you were such a pro at this,{w=0.1} [player]!{w=0.2} Ehehe."
+            n 1nsqbg "Oh?{w=0.2} I didn't realise you were such a pro at this,{w=0.1} [player]!{w=0.2} Ehehe."
 
             if already_discussed_setup:
                 n 1nlrdv "Or maybe we went through this before,{w=0.1} hmm?" #Not quite sure with this expression
 
-            n 1nnmbg "Well, anyway.{w=0.2} The rest of this should be a piece of cake then!"
+            n 1nsgts "Well, anyway.{w=0.2} The rest of this should be a piece of cake then!"
 
         "Never mind.":
             n 1tnmpu "Huh?{w=0.2} You don't wanna continue?"
@@ -787,13 +787,13 @@ label talk_weather_setup_part1:
     # Prompt the player for an API key
 
     n 1nnmbg "Are you ready,{w=0.1} [player]?"
-    n 1nllss "You need to get your API key and send it to me!"
+    n 1uchbg "You need to get your API key and send it to me!"
     n 1nnmbg "You can find your keys {a=[store.jn_globals.LINK_OPEN_WEATHER_MAP_API_KEYS]}here{/a},{w=0.1} or you can get there using the menu like before."
     n 1nwrts "You should have one set up already,{w=0.1} but you can create another just for me if you want!{w=0.2} Ehehe."
-    n 1nchbg "Don't worry, I won't make you type it all up. You can just paste it,{w=0.2} hehe. "
+    n 1nchbg "Don't worry, I won't make you type it all up. You can just paste it."
     n 1nnmss "{a=[store.jn_globals.LINK_OPEN_WEATHER_MAP_API_KEYS]}Here's{/a} the link in case you forgot{w=0.1} -{w=0.1} and again,{w=0.1} just talk to me when you have it ready!"
     n 1nnmsm "..."
-    n 1nwdbg "Okaaay!{w=0.2} Take it away,{w=0.1} [player]!"
+    n 1nchbg "Okaaay!{w=0.2} Take it away,{w=0.1} [player]!"
 
     $ player_input_valid = False
     $ player_input_count = 0
@@ -827,7 +827,7 @@ label talk_weather_setup_part1:
             # Get ready to lead in to the next stage of setup
             $ player_input_valid = True # Kill the loop!
             $ persistent.weather_api_key = player_input
-            n 1nnmlg "Alright!{w=0.2} I got it!"
+            n 1nchlg "Alright!{w=0.2} I got it!"
             n 1nlrbg "Let me just work all of this out...{w=0.3} I might be a few minutes,{w=0.1} just so you know."
 
             # Final dialogue permutations for that personal touch
@@ -938,7 +938,7 @@ label talk_weather_setup_part2:
         n 1nwdss "Would you mind if I tried to find out where you are?"
         n 1nchbg "Don't worry!{w=0.2} This'll be strictly between you and me.{w=0.2} So..."
         menu:
-            "How about it?"
+            n "How about it?"
 
             "I don't mind telling you my location.":
                 n 1nwdbs "Really?{w=0.2} Awesome!{w=0.2}"
@@ -1045,7 +1045,7 @@ label weather_setup_manual_coords:
     n 1nnmss "Just in case you didn't know,{w=0.1} it basically just means if you live {b}North{/b} or {b}South{/b} of the {b}equator{/b}."
     n 1nlraj "So..."
     menu:
-        n 1nnmsm "Which do you live in,{w=0.1} [player]?"
+        n "Which do you live in,{w=0.1} [player]?"
 
         "The Northern Hemisphere.":
             $ player_in_southern_hemisphere = False
@@ -1066,7 +1066,7 @@ label weather_setup_manual_coords:
     n 1nnmsm "This one's a little more tricky,{w=0.1} but I find it helps to think of it this way:"
     n 1nllss "If we took a world map and cut it in half vertically down the middle..."
     menu:
-        n 1nwmsm "Would you live in the Eastern half,{w=0.1} or the Western half?"
+        n "Would you live in the Eastern half,{w=0.1} or the Western half?"
 
         "The Eastern half.":
             $ player_in_western_hemisphere = False
@@ -1151,7 +1151,7 @@ label weather_setup_manual_coords:
         n 1nnmss "I've done some checks to work out the coordinates,{w=0.1} and from what you said..."
         n 1nnmaj "Your overall latitude would be [player_latitude],{w=0.1} and your overall longitude would be [player_longitude]."
         menu:
-            n 1nnmsm "Is [player_latitude], [player_longitude] correct?"
+            n "Is [player_latitude], [player_longitude] correct?"
 
             "Yes, that's right.":
                 n 1nnmbg "Finally!{w=0.2} Jeez...{w=0.3} Now we can actually wrap things up here!"
