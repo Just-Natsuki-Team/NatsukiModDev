@@ -292,33 +292,33 @@ label pet_options_c:
         n "What did you get?"
 
         "Mice":
-            n "Ehehe.{w=0.2} Mice are adorable!"
-            n "I'm still not sure how I feel about the tail..."
-            n "But they're so curious and sociable!{w=0.2} I love watching them play together."
-            n "Make sure you take care of yours for me,{w=0.1} okay?"
+            n 1uchgn "Ehehe.{w=0.2} Mice are adorable!"
+            n 1nllaj "I'm still not sure how I feel about the tail..."
+            n 1unmbg "But they're so curious and sociable!{w=0.2} I love watching them play together."
+            n 1uchgn  "Make sure you take care of yours for me,{w=0.1} okay?"
             $ persistent.jn_player_pet = "mice"
             
         "Rats":
             n 1unmbs "Rats,{w=0.1} huh?"
-            n "Were you expecting me to be grossed out?"
+            n 1fsgsg "Were you expecting me to be grossed out?"
             n 1uchbs "Ahaha!"
-            n "Rats are fine.{w=0.2} They're surprisingly intelligent,{w=0.1} too!"
-            n "Are you perhaps training yours,{w=0.1} [player]?{w=0.2} Ehehe."
+            n 1unmsm "Rats are fine.{w=0.2} They're surprisingly intelligent,{w=0.1} too!"
+            n 1uchgn "Are you perhaps training yours,{w=0.1} [player]?{w=0.2} Ehehe."
             n 1unmbs "Make sure you take care of yours for me,{w=0.1} okay?"
             $ persistent.jn_player_pet = "rats"
 
         "Rabbits":
             n 1kspaw "Awwwwww!{w=0.2} Bunnies!"
-            n "They're so cuuute!{w=0.2} I love them!"
+            n 1kcuaw "They're so cuuute!{w=0.2} I love them!"
             n 1uchbs "Especially the ones with the floppy ears,{w=0.1} they look so cuddly!"
-            n "It's a shame they need so much space,{w=0.1} though."
-            n "But I'm sure yours have plenty of room to roam!{w=0.2} Ehehe."
+            n 1knmbo "It's a shame they need so much space,{w=0.1} though."
+            n 1uchgn "But I'm sure yours have plenty of room to roam!{w=0.2} Ehehe."
             $ persistent.jn_player_pet = "rabbits"
 
         "Something else":
             n 1unmaj "Ooh!{w=0.2} An exotic owner, are we?"
-            n "I wonder if that says something about the rest of your tastes?{w=0.2} Ehehe."
-            n "I trust you take good care of yours.{w=0.1} Uncommon pets can be pretty demanding!"
+            n 1tsgsg "I wonder if that says something about the rest of your tastes?{w=0.2} Ehehe."
+            n 1uchgn "I trust you take good care of yours.{w=0.1} Uncommon pets can be pretty demanding!"
             $ persistent.jn_player_pet = "something_else"
 
         "Back...":
