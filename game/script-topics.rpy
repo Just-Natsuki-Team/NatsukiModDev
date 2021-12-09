@@ -314,6 +314,15 @@ label pet_options_c:
             n 1knmbo "It's a shame they need so much space,{w=0.1} though."
             n 1uchgn "But I'm sure yours have plenty of room to roam!{w=0.2} Ehehe."
             $ persistent.jn_player_pet = "rabbits"
+            
+        "Snakes":
+            n 1nnmaj "Oh.{w=0.2} Snakes?"
+            n 1kllbg "Snakes can be cute, but some of them are really scary..."
+            n 1nnmbo "I hope you don't have the kind that could hurt you."
+            n 1uchgn "But if it's one of those teeny ones, and you have little hats for it..."
+            n "Ehehe!"
+            n 1unmlg "They can be adorable for sure!"
+            n 1tnmbg "Take good care of your noodle for me,{w=0.1} okay?"
 
         "Something else":
             n 1unmaj "Ooh!{w=0.2} An exotic owner, are we?"
