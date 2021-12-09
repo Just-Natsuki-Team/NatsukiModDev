@@ -332,7 +332,7 @@ label pet_options_c:
             n 1unmbs "Make sure you take care of yours for me,{w=0.1} okay?"
             $ persistent.jn_player_pet = "rats"
             
-        "More..."
+        "More...":
             call pet_options_d
 
         "Back...":
@@ -368,7 +368,7 @@ label pet_options_d:
             n 1uchgn "I trust you take good care of yours.{w=0.1} Uncommon pets can be pretty demanding!"
             $ persistent.jn_player_pet = "something_else"
             
-        "Back..."
+        "Back...":
             call pet_options_c
             
     return
