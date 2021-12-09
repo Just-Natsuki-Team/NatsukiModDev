@@ -52,7 +52,7 @@ init 5 python:
 label talk_having_pictures_taken:
 
     if not persistent.jn_first_screenshot_taken:
-        n 1uskwr "W-wait...{w=0.3} you're telling me there's a camera here?{w=0.2}
+        n 1uskwr "W-wait...{w=0.3} you're telling me there's a camera here?{w=0.2}"
         extend 1fbkwr "Are you kidding me?!"
         n 1kbktr "Uuuu-"
         n 1kslaj "I've never liked having my picture taken without my permission..."
