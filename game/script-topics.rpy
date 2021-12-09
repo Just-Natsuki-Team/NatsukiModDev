@@ -52,7 +52,8 @@ init 5 python:
 label talk_having_pictures_taken:
 
     if not persistent.jn_first_screenshot_taken:
-        n 1uskwr "W-wait...{w=0.3} you're telling me there's a camera here?{w=0.2} Are you kidding me?!"
+        n 1uskwr "W-wait...{w=0.3} you're telling me there's a camera here?{w=0.2}
+        extend 1fbkwr "Are you kidding me?!"
         n 1kbktr "Uuuu-"
         n 1kslaj "I've never liked having my picture taken without my permission..."
         n 1ksgsl "Just...{w=0.3} please don't take any pictures of me unless I ask,{w=0.1} okay [player]?"
@@ -453,48 +454,54 @@ init 5 python:
     )
 
 label talk_using_computers_healthily:
-    n "Huh."
-    n "Hey,{w=0.1} [player].{w=0.2} I just thought of something."
-    n "You gotta be at your computer to talk to me,{w=0.1} right?"
-    n "And you've been here a while already..."
-    n "Alright,{w=0.1} that's it!{w=0.2} I've decided."
-    n "I'm gonna give you a little lesson on using your computer the right way!"
-    n "Number one:{w=0.2} posture!"
-    n "Sit up straight,{w=0.1} and back against the chair,{w=0.1} [player].{w=0.2} I mean it!"
-    n "You don't want back problems,{w=0.1} do you?"
-    n "Make sure your feet can still touch the floor,{w=0.1} though.{w=0.2} Even I can do that!"
-    n "Number two:{w=0.2} distance!"
-    n "I know you can't get enough of me,{w=0.1} but I don't wanna see you pressing your face against the screen.{w=0.2} It's weird."
-    n "So make sure you sit about an arm's length away from the display,{w=0.1} alright?"
-    n "Oh!{w=0.2} Don't forget to keep your stuff in easy reach though{w=0.1} - {w=0.1}like your mouse."
-    n "Number three:{w=0.2} breaks!"
-    n "I don't know about you,{w=0.1} but I get all fidgety if I stay still too long..."
-    n "So make sure you get off your butt and do some stretches a few times per hour!"
-    n "You could even get some water or something if you {i}really{/i} need an excuse to move."
-    n "It'd also give your eyes a rest from the screen!"
-    n "Alright{w=0.1} -{w=0.1} and the last one!{w=0.2} This one's important,{w=0.1} so listen up good!"
-    n "If you ever feel unwell{w=0.1} - {w=0.1}like your back aches,{w=0.1} or your eyes hurt or something..."
-    n "Please just stop whatever you're doing.{w=0.2} Your health comes first.{w=0.2} I don't care what needs to be done."
-    n "Take some time to feel better,{w=0.1} then make sure all your stuff is set up right like I said."
+    n 1unmaj "Huh."
+    n 1tnmaj "Hey,{w=0.1} [player].{w=0.2} I just thought of something."
+    n 1unmsf "You gotta be at your computer to talk to me,{w=0.1} right?"
+    n 1ullsf "And you've been here a while already..."
+    n 1nchgn "Alright,{w=0.1} that's it!{w=0.2} I've decided."
+    n 1uchgn "I'm gonna give you a little lesson on using your computer the right way!"
+    n 1nnmss "Number one:{w=0.2} posture!"
+    n 1fwmlg "Sit up straight,{w=0.1} and back against the chair,{w=0.1} [player].{w=0.2}"
+    extend 1uchlg "I mean it!"
+    n 1tnmlg "You don't want back problems,{w=0.1} do you?"
+    n 1nnmsm "Make sure your feet can still touch the floor,{w=0.1} though.{w=0.2}"
+    extend 1uchgn "Even I can do that!"
+    n 1nnmaj "Number two:{w=0.2} distance!"
+    n 1nsggn "I know you can't get enough of me,{w=0.1}"
+    extend 1fnmpo "but I don't wanna see you pressing your face against the screen.{w=0.2} It's weird."
+    n 1uchgn "So make sure you sit about an arm's length away from the display,{w=0.1} alright?"
+    n 1uwdaj "Oh!{w=0.2} Don't forget to keep your stuff in easy reach though{w=0.1} -{w=0.1}"
+    extend 1unmsm "like your mouse."
+    n 1unmbg "Number three:{w=0.2} breaks!"
+    n 1uwmbg "I don't know about you,{w=0.1} but I get all fidgety if I stay still too long..."
+    n 1fchgn "So make sure you get off your butt and do some stretches a few times per hour!"
+    n 1fsqsg "You could even get some water or something if you {i}really{/i} need an excuse to move."
+    n 1nnmsm "It'd also give your eyes a rest from the screen!"
+    n 1uchbs "Alright{w=0.1} -{w=0.1} and the last one!{w=0.2} This one's important,{w=0.1}"
+    extend 1uchgn "so listen up good!"
+    n 1unmbo "If you ever feel unwell{w=0.1} - {w=0.1}like your back aches,{w=0.1} or your eyes hurt or something..."
+    n 1nwmbo "Please just stop whatever you're doing.{w=0.2} Your health comes first.{w=0.2} I don't care what needs to be done."
+    n 1unmsm "Take some time to feel better,{w=0.1} then make sure all your stuff is set up right like I said."
     n "Don't carry on until you feel well enough{w=0.1} -{w=0.1} talk to someone if you have to!"
-    n "Okaaay!{w=0.2} Lecture over!"
-    n "Wow...{w=0.3} I rambled on a while,{w=0.1} didn't I?{w=0.2} Sorry,{w=0.1} sorry!{w=0.2} Ehehe."
+    n 1uchgn "Okaaay!{w=0.2} Lecture over!"
+    n 1ullaj "Wow...{w=0.3} I rambled on a while,{w=0.1} didn't I?{w=0.2}"
+    extend 1klrbgl "Sorry,{w=0.1} sorry!{w=0.2} Ehehe."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n "But you know I only do these things because I really care about you,{w=0.1} [player]...{w=0.3} right?"
-        n "So please...{w=0.3} take care of yourself, okay?{w=0.2} I don't want you hurting because of me."
+        n 1kwmsml "But you know I only do these things because I really care about you,{w=0.1} [player]...{w=0.3} right?"
+        n 1kwmnvl "So please...{w=0.3} take care of yourself, okay?{w=0.2} I don't want you hurting because of me."
 
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
-            n "I love you,{w=0.1} [chosen_endearment]."
-            n "..."
+            n 1kwmsml "I love you,{w=0.1} [chosen_endearment]."
+            n 1kwmnvl "..."
             return
 
     else:
-        n "But you know I only say these things because I care."
-        n "...And I don't want you whining to me that your back hurts.{w=0.2}"
+        n 1usglg "But you know I only say these things because I care."
+        n 1nsqpo "...And I don't want you whining to me that your back hurts.{w=0.2}"
 
-    n "Ahaha...{w=0.3} now, where were we?"
+    n 1nchgn "Ahaha...{w=0.3} now, where were we?"
     return
 
 # Natsuki highlights the importance of staying active and getting exercise
