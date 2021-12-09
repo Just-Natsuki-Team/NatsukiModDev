@@ -391,47 +391,48 @@ init 5 python:
     )
 
 label talk_service_animals:
-    n "Hmm..."
-    n "Hey [player],{w=0.1} have you ever heard of service animals?"
-    n "They're like animals people train up specially to do jobs that humans can't do easily."
+    n 1ullbo "Hmm..."
+    n 1unmaj "Hey [player],{w=0.1} have you ever heard of service animals?"
+    n 1unmbg "They're like animals people train up specially to do jobs that humans can't do easily."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "Some work in airports to keep people safe,{w=0.1} others help in rescues...{w=0.3} it's super cool!"
-        n "But there's one type that's especially awesome..."
-        n "Emotional support animals!"
+        n 1unmbs "Some work in airports to keep people safe,{w=0.1} others help in rescues...{w=0.3} it's super cool!"
+        n 1uwmsm "But there's one type that's especially awesome..."
+        n 1uchgn "Emotional support animals!"
         n "They're like really tame pets that are used to comfort people going through a bad time."
         n "They come in all different shapes and sizes too!{w=0.2} Dogs and cats -{w=0.2} obviously -{w=0.2} but even horses sometimes!"
         n "Isn't that amazing?"
-        n "..."
-        n "You know,{w=0.1} [player]..."
-        n "Sometimes I wonder if one could have helped Sayori..."
-        n "...but I try not to think about that too much."
-        n "They {i}are{/i} great,{w=0.1} but they don't do miracles."
-        n "[player]...{w=0.3} I really hope you never have to seek their help."
-        n "And on that note,{w=0.1} if you do need support?"
+        n 1ulrbo "..."
+        n 1uplaj "You know,{w=0.1} [player]..."
+        n 1kcsaj "Sometimes I wonder if one could have helped Sayori..."
+        n 1klrfr "...but I try not to think about that too much."
+        n 1knmem "They {i}are{/i} great,{w=0.1} but they don't do miracles."
+        n 1kwmem "[player]...{w=0.3} I really hope you never have to seek their help."
+        n 1kwmnv "And on that note,{w=0.1} if you do need support?"
         n "...I'd be happy to provide.{w=0.2} Remember that,{w=0.1} alright?"
 
         if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            n "I really,{w=0.1} really care about you,{w=0.1} [player]."
+            n 1kwmnv "I really,{w=0.1} really care about you,{w=0.1} [player]."
             n "I-{w=0.2}I want you to know that you can depend on me,{w=0.1} 'kay?"
 
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-            n "I love you,{w=0.1} [player]."
+            n 1kwmnv "I love you,{w=0.1} [player]."
             return
 
     else:
-        n "They work in a bunch of places.{w=0.2} Airports and rescues and stuff,{w=0.1} usually."
-        n "But I really like emotional support animals."
+        n 1unmbo "They work in a bunch of places.{w=0.2} Airports and rescues and stuff,{w=0.1} usually."
+        n 1unmss "But I really like emotional support animals."
         n "They're like specially tame pets that are used to comfort those having a bad time."
-        n "..."
-        n "You know, [player].{w=0.2} To be perfectly honest with you?"
+        n 1nsgbo "..."
+        n 1nsgaj "You know, [player].{w=0.2} To be perfectly honest with you?"
         n "Sometimes I feel like I could use one."
-        n "Aha..."
+        n 1nsrss "Aha..."
         return
 
-    n "..."
-    n "That got kinda heavy,{w=0.1} didn't it?"
-    n "Well,{w=0.1} enough of that.{w=0.2} What else should we talk about?"
+    n 1ksrfr "..."
+    n 1kwmfr "That got kinda heavy,{w=0.1} didn't it?"
+    n 1kwmbg "Well,{w=0.1} enough of that.{w=0.2}"
+    extend 1uwmss "What else should we talk about?"
     return
 
 # Natsuki highlights her concern for her player using their computer for long periods of time, and offers her wisdom
