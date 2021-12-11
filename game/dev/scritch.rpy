@@ -4,6 +4,8 @@ init python in jn_scritch:
     import os
     import pygame
     import random
+    import store
+    import store.utils as utils
 
     _SCRITCH_UI_Z_INDEX = 4
     _SCRITCH_POPUP_Z_INDEX = 5
@@ -27,10 +29,36 @@ init python in jn_scritch:
     # Tracking
     _has_been_scritched = False
     _more_scritches_requested = False
+    _no_scritch_count = 0
 
     # Collision detection
-    game_window = pygame.Surface((1280, 720))
-    active_scritch_area = pygame.Rect(457, 105, 353, 163)
+    _last_mouse_position = None
+
+    _POSE_TO_ACTIVE_SCRITCH_AREA_MAP = {
+        "sitting": pygame.Rect(457, 105, 353, 163)
+    }
+
+    def _get_active_scritch_area():
+        """
+        Returns a pygame.Rect object representing the current active area for scritches, based on the current pose Natsuki is in.
+
+        OUT:
+            - pygame.Rect representing the active scritchable area for Natsuki
+        """
+        _return = _POSE_TO_ACTIVE_SCRITCH_AREA_MAP.get(store.persistent.jn_natsuki_current_pose)
+        if _return is None:
+            raise Exception("Pose {0} does not have a corresponding active scritch area map entry.".format())
+
+        return _return
+
+    def _get_mouse_position_changed():
+        """
+        Returns whether the current mouse position has changed compared to the last mouse position given as stored under _last_mouse_position.
+        """
+        if _last_mouse_position is None or _last_mouse_position != utils.get_mouse_position():
+            return True
+
+        return False
 
 # Initial dialogue based on scritch count
 label scritch_start:
@@ -71,13 +99,21 @@ label scritch_loop:
             
         $ renpy.pause(2)
 
-    if jn_scritch.active_scritch_area.collidepoint(current_mouse_position[0], current_mouse_position[1]):
-        $ jn_scritch._has_been_scritched = True
-        $ persistent.jn_scritches_total_given += 1
+    if (jn_scritch._get_active_scritch_area().collidepoint(current_mouse_position[0], current_mouse_position[1])
+        and jn_scritch._get_mouse_position_changed()):
+
+        python:
+            global _last_mouse_position
+            jn_scritch._has_been_scritched = True
+            persistent.jn_scritches_total_given += 1
+            jn_scritch._no_scritch_count = 0
+            jn_scritch._last_mouse_position = current_mouse_position
+
         play audio scritch
         show scritch_popup zorder jn_scritch._SCRITCH_POPUP_Z_INDEX
         hide scritch_popup with popup_hide_transition
         show natsuki scritch active
+
         $ renpy.pause(1)
 
         # Scritch milestones
@@ -115,8 +151,34 @@ label scritch_loop:
         show natsuki scritch waiting
         $ renpy.pause(2)
 
+    else:
+        $ jn_scritch._no_scritch_count += 1
+        $ renpy.pause(2)
+
+    # Natsuki picks up on no scritches for extended time
+    if (jn_scritch._no_scritch_count == 5):
+        jump scritch_inactive
+
     jump scritch_loop
 
+label scritch_inactive:
+    if persistent.jn_scritches_total_given >= 750:
+        n 1kwmunf "..."
+
+    elif persistent.jn_scritches_total_given >= 50:
+        n 1kplunf "...{w=0.3}Why aren't you...{w=0.3} know know?"
+
+    elif persistent.jn_scritches_total_given >= 25:
+        n 1kwmpof "...{w=0.3}I said you can keep going,{w=0.1} [player]."
+
+    elif persistent.jn_scritches_total_given >= 10:
+        n 1fllpof "...{w=0.3}I didn't say stop,{w=0.1} you know."
+
+    else:
+        n 1kllemf "...{w=0.3}A-{w=0.1}are you going to do something or what?"
+
+    jump scritch_loop
+        
 # Dialogue for each scritch milestone
 
 label scritch_milestone_5:
