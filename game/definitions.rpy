@@ -657,6 +657,14 @@ init -990 python in jn_globals:
         ":<"
     ]
 
+    DEFAULT_TEASE_EMOTICONS = [
+        ">:3",
+        ">:)",
+        "^.^",
+        "(^ｖ^)",
+        ">:P"
+    ]
+
     # Alphabetical (excluding numbers) values allowed for text input
     DEFAULT_ALPHABETICAL_ALLOW_VALUES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-' "
 
