@@ -499,6 +499,10 @@ init -990 python in jn_globals:
     # Tracking; use these for data we might refer to/modify mid-session, or anything time sensitive
     current_session_start_time = store.datetime.datetime.now()
 
+    minute_check_calls = []
+    hour_check_calls = []
+    day_check_calls = []
+
     # Flags; use these to set/refer to binary states
 
     # Tracks whether the player opted to stay for longer when Natsuki asked them to when quitting; True if so, otherwise False

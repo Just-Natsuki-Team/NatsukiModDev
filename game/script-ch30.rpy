@@ -157,10 +157,15 @@ init python:
         """
         Runs every minute during breaks between topics
         """
+        
+        # Run through all externally-registered minute check actions
+        if len(jn_globals.minute_check_calls) > 0:
+            for action in jn_globals.minute_check_calls:
+                eval(action.statement)
+
         # Push a new topic every couple of minutes
         # TODO: Move to a wait/has-waited system to allow some more flexibility
         global LAST_TOPIC_CALL
-
         if persistent.jn_natsuki_random_topic_frequency is not jn_preferences.random_topic_frequency.NEVER:
 
             if (datetime.datetime.now() > LAST_TOPIC_CALL + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown()) and
@@ -186,6 +191,11 @@ init python:
         """
         main_background.draw(True)
         
+        # Run through all externally-registered hour check actions
+        if len(jn_globals.hour_check_calls) > 0:
+            for action in jn_globals.hour_check_calls:
+                eval(action.statement)
+
         # Show a new random weather outside if allowed to do so
         if persistent.jn_random_weather:
             jn_atmosphere.show_random_sky()
@@ -202,6 +212,12 @@ init python:
         """
         Runs every day during breaks between topics
         """
+
+        # Run through all externally-registered day check actions
+        if len(jn_globals.day_check_calls) > 0:
+            for action in jn_globals.day_check_calls:
+                eval(action.statement)
+
         pass
 
 label talk_menu:
