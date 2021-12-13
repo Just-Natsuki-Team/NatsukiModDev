@@ -159,8 +159,8 @@ init python:
         """
         
         # Run through all externally-registered minute check actions
-        if len(jn_globals.minute_check_calls) > 0:
-            for action in jn_globals.minute_check_calls:
+        if len(jn_plugins.minute_check_calls) > 0:
+            for action in jn_plugins.minute_check_calls:
                 eval(action.statement)
 
         # Push a new topic every couple of minutes
@@ -192,8 +192,8 @@ init python:
         main_background.draw(True)
         
         # Run through all externally-registered hour check actions
-        if len(jn_globals.hour_check_calls) > 0:
-            for action in jn_globals.hour_check_calls:
+        if len(jn_plugins.hour_check_calls) > 0:
+            for action in jn_plugins.hour_check_calls:
                 eval(action.statement)
 
         # Show a new random weather outside if allowed to do so
@@ -214,8 +214,8 @@ init python:
         """
 
         # Run through all externally-registered day check actions
-        if len(jn_globals.day_check_calls) > 0:
-            for action in jn_globals.day_check_calls:
+        if len(jn_plugins.day_check_calls) > 0:
+            for action in jn_plugins.day_check_calls:
                 eval(action.statement)
 
         pass
@@ -308,10 +308,23 @@ label player_select_topic(is_repeat_topics=False):
     jump ch30_loop
 
 label extras_menu:
-    menu:
-        "Scritch" if utils.KEY_VALID and jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-            jump scritch_start
+    python:
+        avaliable_extras_options = []
+        
+        # Since conditions can change, we check each time if each option is now avaliable due to context changes (E.G affinity is now higher)
+        for extras_option in jn_plugins.extras_options:
+            if eval(extras_option.visible_if):
+                avaliable_extras_options.append((extras_option.option_name, extras_option.jump_label))
 
-        "Nevermind":
-            pass
+        # Sort the extras options by their display name
+        avaliable_extras_options.sort(key = lambda option: option[0])
+
+        for x in avaliable_extras_options:
+            utils.log("{0}, {1}".format(x[0], x[1]))
+
+    call screen scrollable_choice_menu(avaliable_extras_options, ("Nevermind.", None))
+
+    if isinstance(_return, basestring):
+        $ renpy.jump(_return)
+
     jump ch30_loop
