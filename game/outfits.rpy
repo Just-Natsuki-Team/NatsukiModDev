@@ -255,39 +255,39 @@ init python in jn_outfits:
             
 label outfits_time_of_day_change:
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n 1uchbg "Oh!{w=0.2} I gotta change,{w=0.1} just give me a sec..."
+        n 1uchbg "Oh!{w=0.2} I gotta change,{w=0.1} just give me a sec...{w=0.75}{nw}"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
         n 1unmpu "Oh!{w=0.2} I should probably change,{w=0.1} one second..."
-        n 1flrpol "A-{w=0.1}and no peeking,{w=0.1} got it?!"
+        n 1flrpol "A-{w=0.1}and no peeking,{w=0.1} got it?!{w=0.75}{nw}"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n 1unmpu "Oh -{w=0.1} I gotta get changed.{w=0.2} I'll be back in a sec."
+        n 1unmpu "Oh -{w=0.1} I gotta get changed.{w=0.2} I'll be back in a sec.{w=0.75}{nw}"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-        n 1nnmsl "Back in a second."
+        n 1nnmsl "Back in a second.{w=0.75}{nw}"
 
     else:
-        n 1fsqsl "I'm changing."
+        n 1fsqsl "I'm changing.{w=0.75}{nw}"
 
     play audio drawer
     $ jn_outfits.set_outfit_for_time_block()
     with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
     
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n 1uchgn "Ta-da!{w=0.2} There we go!{w=0.2} Ehehe."
+        n 1uchgn "Ta-da!{w=0.2} There we go!{w=0.2} Ehehe.{w=0.75}{nw}"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
-        n 1nchbg "Okaaay!{w=0.2} I'm back!"
+        n 1nchbg "Okaaay!{w=0.2} I'm back!{w=0.75}{nw}"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n 1nnmsm "And...{w=0.3} all done."
+        n 1nnmsm "And...{w=0.3} all done.{w=0.75}{nw}"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-        n 1nllsl "I'm back."
+        n 1nllsl "I'm back.{w=0.75}{nw}"
 
     else:
-        n 1fsqsl "..."
+        n 1fsqsl "...{w=0.75}{nw}"
 
     show natsuki idle
     return
