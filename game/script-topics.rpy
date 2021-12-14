@@ -1709,43 +1709,56 @@ init 5 python:
     )
 
 label talk_sleeping_well:
-    n "Huh..."
-    n "Hey,{w=0.1} [player].{w=0.2} Let me ask you a question,{w=0.1} 'kay?"
-    n "How do you sleep at night?"
-    n "Be honest.{w=0.2} How do you do it?"
-    n "..."
-    n "Ehehe.{w=0.2} Did I get you?"
-    n "But seriously,{w=0.2} [player].{w=0.2} Do you struggle with your sleep?"
+    n 1fllpu "Huh..."
+    n 1fllpu "Hey,{w=0.1} [player].{w=0.2}"
+    extend 1nnmaj " Let me ask you a question,{w=0.1} 'kay?"
+    n 1fsqsr "How do you sleep at night?"
+    n 1fsqpu "Be honest.{w=0.2} How do you do it?"
+    n 1ksqsm "..."
+    n 1fchsm "Ehehe.{w=0.2} Did I get you?"
+    n 1unmaj "But seriously,{w=0.2} [player].{w=0.2}"
+    extend 1tnmaj " Do you struggle with your sleep?"
 
     # Quip if the player has been around a while, or has admitted they're tired
     if utils.get_current_session_length().total_seconds() / 3600 >= 12:
-        n "I mean,{w=0.1} you {i}have{/i} been here for a while now..."
-        n "So I kinda figured you might be feeling a little sleepy anyway."
+        n 1fsqpo "I mean,{w=0.1} you {i}have{/i} been here for a while now..."
+        n 1ullaj "So...{w=0.3}"
+        extend 1nnmaj " I kinda figured you might be feeling a little sleepy anyway."
 
     elif jn_admissions.last_admission_type == jn_admissions.TYPE_TIRED:
-        n "I mean,{w=0.1} you even {i}said{/i} you were tired before."
-        n "So...{w=0.3} it only makes sense to ask,{w=0.1} right?{w=0.2} Anyway..."
+        n 1fllpo "I mean,{w=0.1} you even {i}said{/i} you were tired before."
+        n 1ullaj "So...{w=0.3}" 
+        extend 1nnmaj " it only makes sense to ask,{w=0.1} right?{w=0.2} Anyway..."
 
-    n "I'll admit,{w=0.1} I get the odd sleepless night myself.{w=0.2} It's the worst!"
-    n "There's nothing I hate more than tossing and turning,{w=0.1} just waiting for my body to decide it's time for tomorrow to happen."
-    n "But...{w=0.3} you know what they say,{w=0.1} [player] -{w=0.1} with suffering..."
-    n "...Comes wisdom!"
-    n "And luckily for you,{w=0.1} I don't mind sharing.{w=0.2} Ehehe."
-    n "So,{w=0.1} listen up -{w=0.1} it's time for another lesson from yours truly!"
-    n "Alright -{w=0.1} first,{w=0.1} cut the crap!{w=0.2} If you're trying to sleep,{w=0.1} anything high-sugar or high-caffeine is your enemy."
-    n "So before anything else,{w=0.1} ditch the soda and coffee.{w=0.2} You can thank me later."
-    n "Next up -{w=0.1} no screens!{w=0.2} Including this one, [player]."
-    n "No screen means no bright lights or distractions to keep you up,{w=0.1} obviously."
-    n "If you're tired then the last thing you need is something beaming whatever at you."
-    n "Moving on, next is temperature!{w=0.2} If it's hot,{w=0.1} use thinner sheets and vice versa."
-    n "Nothing disrupts your sleep more than having to rip off blankets,{w=0.1} or pull some out."
-    n "Keeping up with me so far,{w=0.1} [player]?{w=0.2} I'm almost done,{w=0.1} don't worry."
-    n "Lastly...{w=0.3} get comfortable!"
-    n "Make sure you have enough pillows to support your head,{w=0.1} or maybe even play some quiet music if you find that helps."
-    n "...And that's about it!"
-    n "You should have known at least a few of those already,{w=0.1} but at any rate..."
-    n "I hope you can rest easy with your newfound knowledge,{w=0.1} [player]!"
-    n "Ehehe."
+    n 1nnmaj "I'll admit,{w=0.1} I get the odd sleepless night myself.{w=0.2}"
+    extend 1fbkwr " It's the worst!"
+    n 1fllem "There's nothing I hate more than tossing and turning,{w=0.1}"
+    extend 1fcsan " just waiting for my body to decide it's time for tomorrow to happen."
+    n 1ullaj "But...{w=0.3}" 
+    extend 1fnmss " you know what they say,{w=0.1} [player]." 
+    n 1fcsss "With suffering...{w=0.3}"
+    extend 1uchbg  " ...comes wisdom!"
+    n 1nsqbg "And luckily for you,{w=0.1} I don't mind sharing.{w=0.2}" 
+    extend 1nchsm " Ehehe."
+    n 1fcsbg "So,{w=0.1} listen up -{w=0.1} it's time for another lesson from yours truly!"
+    n 1fnmaj "Alright -{w=0.1} first,{w=0.1} cut the crap!{w=0.2} If you're trying to sleep,{w=0.1} anything high-sugar or high-caffeine is your enemy."
+    n 1fllss "So before anything else,{w=0.1} ditch the soda and coffee.{w=0.2} You can thank me later."
+    n 1fcsaj "Next up -{w=0.1} no screens!{w=0.2}" 
+    extend 1fsqpo " Including this one, [player]."
+    n 1unmsl "No screen means no bright lights or distractions to keep you up,{w=0.1} obviously."
+    n 1fnmpu "If you're tired then the last thing you need is something beaming whatever at you."
+    n 1fcsbg "Moving on, next is temperature!{w=0.2} If it's hot,{w=0.1} use thinner sheets and vice versa."
+    n 1fcspu "Nothing disrupts your sleep more than having to rip off blankets,{w=0.1} or pull some out."
+    n 1fsgsg "Keeping up with me so far,{w=0.1} [player]?{w=0.2}" 
+    extend 1fchgn " I'm almost done,{w=0.1} don't worry."
+    n 1unmaj "Lastly...{w=0.3}" 
+    extend 1fchbg " get comfortable!"
+    n 1nnmsm "Make sure you have enough pillows to support your head,{w=0.1} or maybe even play some quiet music if you find that helps."
+    n 1fcssm "...And that's about it!"
+    n 1nllss "You should have known at least a few of those already,{w=0.1}" 
+    extend 1unmss " but at any rate..."
+    n 1fwlbg "I hope you can rest easy with your newfound knowledge,{w=0.1} [player]!"
+    n 1uchsm "Ehehe."
 
     return
 
@@ -1814,7 +1827,7 @@ label talk_aging:
     else:
         n 1fllbg "But...{w=0.3} just in case?"
         n 1fsqsg "We're only having one candle on your birthday cake.{w=0.2} Sorry."
-        extend 1uchbg "Ahaha!"
+        extend 1uchbg " Ahaha!"
 
     return
 
@@ -1857,7 +1870,7 @@ label talk_work_life_balance:
         n 1fslsl "Actually,{w=0.1} now that I think about it..."
         n 1fcsaj "It isn't like that kind of thing is only limited to when you're away either."
         n 1fsrsr "I've heard too many stories of people doing stupid amounts of overtime at work."
-        extend 1fsqan "Often not even paid."
+        extend 1fsqan " Often not even paid."
         n 1fslem "Or even students studying late into the night until they collapse..."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
@@ -1876,7 +1889,7 @@ label talk_work_life_balance:
                 n 1fllun "Besides..."
                 n 1fllssl "You and your time are mine first, [player]."
                 n 1flldvl "I already called dibs,{w=0.1} a-{w=0.1}after all.{w=0.2}" 
-                extend 1fchsml "Ehehe..."
+                extend 1fchsml " Ehehe..."
 
         else:
             $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
