@@ -1766,51 +1766,55 @@ init 5 python:
     )
 
 label talk_aging:
-    n "You know,{w=0.1} [player]..."
-    n "I think most people share a bunch of fears."
-    n "You get what I mean,{w=0.1} right?{w=0.2} Like presenting stuff to a room full of people,{w=0.1} or failing a test."
-    n "Of course,{w=0.1} it's rare to find one that {i}everyone{/i} has..."
-    n "Or at least something that makes anyone feel uneasy."
-    n "But...{w=0.3} I think I found one!"
-    n "What am I thinking of,{w=0.1} you ask?"
-    n "Well...{w=0.3} it's actually kinda boring,{w=0.1} really."
-    n "I was actually thinking about growing older."
-    n "Have you ever thought much about it,{w=0.1} [player]?"
-    n "It's probably the last thing on your mind if you're pretty young."
-    n "But I think as you actually get older,{w=0.1} it starts to creep in."
-    n "You might have less energy,{w=0.1} or friends and family begin drifting away..."
-    n "Birthdays lose all meaning -{w=0.1} you might even dread them!"
-    n "The signs appear in a bunch of ways,{w=0.1} but that's what makes it unnerving."
-    n "Everyone experiences it differently,{w=0.1} and we don't even know what happens after the end!"
-    n "Spooky,{w=0.1} huh?"
-    n "Although...{w=0.3} I guess you could say that's more the fear of the unknown than aging itself."
-    n "What does wind me up though is how immature people can be about it."
-    n "Especially when it comes to relationships between different ages!"
-    n "People just get so preachy about it..."
-    n "Like...{w=0.3} as long as they're both happy,{w=0.1} and nobody is being hurt or made uncomfortable,{w=0.1} who actually cares?"
-    n "It's just like most stuff,{w=0.1} really."
-    n "Besides,{w=0.1} it's not like being a certain age means you {i}have{/i} to be a certain way."
-    n "I mean...{w=0.3} look at Yuri!"
-    n "Being all old-fashioned like that -{w=0.1} you'd think she's retired!"
-    n "But anyway...{w=0.3} I think we got side-tracked."
-    n "I don't really care how old you are,{w=0.1} [player]."
+    n 1unmaj "You know,{w=0.1} [player]..."
+    n 1nllpu "I think most people share a bunch of fears."
+    n 1unmpu "You get what I mean,{w=0.1} right?{w=0.2} Like presenting stuff to a room full of people,{w=0.1} or failing a test."
+    n 1tlrss "Of course,{w=0.1} it's rare to find one that {i}everyone{/i} has..."
+    n 1tnmaj "Or at least something that makes anyone feel uneasy."
+    n 1unmbg "But...{w=0.3} I think I found one!"
+    n 1usgsm "What am I thinking of,{w=0.1} you ask?"
+    n 1ullaj "Well...{w=0.3} it's actually kinda boring,{w=0.1} really."
+    n 1nnmbo "I was actually thinking about growing older."
+    n 1unmpu "Have you ever thought much about it,{w=0.1} [player]?"
+    n 1fllbg "It's probably the last thing on your mind if you're pretty young."
+    n 1nwmpu "But I think as you actually get older,{w=0.1} it starts to creep in."
+    n 1kllpu "You might have less energy,{w=0.1} or friends and family begin drifting away..."
+    n 1knmem "Birthdays lose all meaning -{w=0.1} you might even dread them!"
+    n 1ullaj "The signs appear in a bunch of ways,{w=0.1}"
+    extend 1knmsl " but that's what makes it unnerving."
+    n 1kllaj "Everyone experiences it differently,{w=0.1}"
+    extend 1kskaw " and we don't even know what happens after the end!"
+    n 1klrss "Spooky,{w=0.1} huh?"
+    n 1ulrpu "Although...{w=0.3} I guess you could say that's more the fear of the unknown than aging itself."
+    n 1flraj "What does wind me up though is how immature people can be about it."
+    n 1fnmaj "Especially when it comes to relationships between different ages!"
+    n 1fslsf "People just get so preachy about it..."
+    n 1fllaj "Like...{w=0.3} as long as they're both happy,{w=0.1}"
+    extend 1fnmem " and nobody is being hurt or made uncomfortable,{w=0.1} who actually cares?"
+    n 1nlrpu "It's just like most stuff,{w=0.1} really."
+    n 1unmaj "Besides,{w=0.1} it's not like being a certain age means you {i}have{/i} to be a certain way."
+    n 1fchbg "I mean...{w=0.3} look at Yuri!"
+    n 1uchgn "Being all old-fashioned like that -{w=0.1} you'd think she's retired!"
+    n 1nllbg "But anyway...{w=0.3} I think we got side-tracked."
+    n 1unmss "I don't really care how old you are,{w=0.1} [player]."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-        n "I love you all the same,{w=0.1} [chosen_tease]."
-        n "Don't forget that,{w=0.1} 'kay?"
-        n "Or you might make me a little angry.{w=0.2} Ehehe."
+        n 1klrpol "Y-{w=0.1}you better know that I love you all the same,{w=0.1} [chosen_tease]."
+        n 1knmpol "Don't forget that,{w=0.1} 'kay?"
+        n 1flrpol "I'll get mad if you do.{w=0.2}"
+        extend 1klrbgl " Ahaha..."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n "You've been pretty awesome to me all the same."
+        n 1fllbgl "You've been pretty awesome to me all the same."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
-        n "You're always fun to hang around with!"
+        n 1fchbgl "You're always fun to hang around with!"
 
     else:
-        n "But...{w=0.3} just in case?"
-        n "We're only having one candle on your birthday cake.{w=0.2} Sorry."
-        n "Ahaha!"
+        n 1fllbg "But...{w=0.3} just in case?"
+        n 1fsqsg "We're only having one candle on your birthday cake.{w=0.2} Sorry."
+        extend 1uchbg "Ahaha!"
 
     return
 
@@ -1831,61 +1835,64 @@ init 5 python:
 
 label talk_work_life_balance:
     if jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
-        n "You know,{w=0.1} [player]..."
+        n 1ullaj "You know,{w=0.1} [player]..."
 
-    n "I think it's pretty easy to let your academic or work life creep into your personal time nowadays."
-    n "I mean...{w=0.3} think about it."
-    n "With everyone having mobile phones,{w=0.1} plus usually some kinda computer at home -{w=0.1} it's hard not to be connected somehow."
-    n "And like...{w=0.3} if there's already that connection,{w=0.1} then what's to stop work from bugging you during your time off?"
-    n "Or classmates asking for help at the last possible minute?"
+    n 1nnmaj "I think it's pretty easy to let your academic or work life creep into your personal time nowadays."
+    n 1nlrsl "I mean...{w=0.3} think about it."
+    n 1nnmsl "With everyone having mobile phones,{w=0.1} plus usually some kinda computer at home -{w=0.1} it's hard not to be connected somehow."
+    n 1flrbo "And like...{w=0.3} if there's already that connection,{w=0.1} then what's to stop work from bugging you during your time off?"
+    n 1fsrbo "Or classmates asking for help at the last possible minute?"
 
     if jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
-        n "It just gets annoying -{w=0.1} like everyone expects you to always be around to chip in a little more,{w=0.1} or get something done!"
-        n "Overwhelming,{w=0.1} right?"
-        n "Huh.{w=0.2} Actually...{w=0.3} now that I think about it..."
-        n "It isn't like that kind of intrusion is only limited to when you're away either."
-        n "I've heard {i}way{/i} too many stories of people doing stupid amounts of overtime at work -{w=0.1} sometimes not even paid!"
-        n "Or even students studying late into the night until they collapse...{w=0.3} it's pretty crazy."
+        n 1fcsem "It just gets annoying -{w=0.1} like everyone expects you to always be around to chip in a little more,{w=0.1} or get something done!"
+        n 1fnmpo "Overwhelming,{w=0.1} right?"
+        n 1fllaj "Huh.{w=0.2} Actually...{w=0.3} now that I think about it..."
+        n 1fnmsf "It isn't like that kind of intrusion is only limited to when you're away either."
+        n 1fslpu "I've heard {i}way{/i} too many stories of people doing stupid amounts of overtime at work...{w=0.3}"
+        extend 1fnman " sometimes not even paid!"
+        n 1fsran "Or even students studying late into the night until they collapse...{w=0.3} it's pretty crazy."
 
     else:
-        n "It just gets annoying -{w=0.1} everyone expects you to always be around to do more."
-        n "Actually,{w=0.1} now that I think about it..."
-        n "It isn't like that kind of thing is only limited to when you're away either."
-        n "I've heard too many stories of people doing stupid amounts of overtime at work -{w=0.1} often not even paid."
-        n "Or even students studying late into the night until they collapse..."
+        n 1fsqpu "It just gets annoying -{w=0.1} everyone expects you to always be around to do more."
+        n 1fslsl "Actually,{w=0.1} now that I think about it..."
+        n 1fcsaj "It isn't like that kind of thing is only limited to when you're away either."
+        n 1fsrsr "I've heard too many stories of people doing stupid amounts of overtime at work."
+        extend 1fsqan "Often not even paid."
+        n 1fslem "Or even students studying late into the night until they collapse..."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "Ugh...{w=0.3} I just wish people would value their own time more."
-        n "..."
-        n "Hey,{w=0.1} [player]..."
-        n "I don't know if you're working,{w=0.1} or studying,{w=0.1} or what..."
-        n "But you better not be letting whatever it is take over your life.{w=0.2} Understand?"
+        n 1kcsem "Ugh...{w=0.3} I just wish people would value their own time more."
+        n 1klrsr "..."
+        n 1unmaj "Hey,{w=0.1} [player]..."
+        n 1nllaj "I don't know if you're working,{w=0.1} or studying,{w=0.1} or what..."
+        n 1fnmsf "But you better not be letting whatever it is take over your life.{w=0.2} Understand?"
 
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "You are {i}more{/i} than your career,{w=0.1} or your education.{w=0.2} You have your own wants and needs that matter too."
-            n "I don't want some dumb job or stupid assignment to take over your life."
-            n "You're...{w=0.3} way more important than either of those,{w=0.1} [player].{w=0.2} Trust me."
+            n 1knmpu "You are {i}more{/i} than your career,{w=0.1} or your education.{w=0.2} You have your own wants and needs that matter too."
+            n 1kllun "I don't want some dumb job or stupid assignment to take over your life."
+            n 1fcsun "You're...{w=0.3} way more important than either of those,{w=0.1} [player].{w=0.2} Trust me."
 
             if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-                n "Besides..."
-                n "You and your time are mine first, [player]."
-                n "I already called dibs,{w=0.1} a-{w=0.1}after all.{w=0.2} Ehehe..."
+                n 1fllun "Besides..."
+                n 1fllssl "You and your time are mine first, [player]."
+                n 1flldvl "I already called dibs,{w=0.1} a-{w=0.1}after all.{w=0.2}" 
+                extend 1fchsml "Ehehe..."
 
         else:
             $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-            n "People are more than what they do for a living,{w=0.1} after all.{w=0.2} And that includes you too, [chosen_tease]!"
+            n 1kllpo "People are more than what they do for a living,{w=0.1} after all.{w=0.2} And that includes you too, [chosen_tease]!"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-        n "Makes me wish people would value their own time more."
-        n "...I guess that includes you too,{w=0.1} [player]."
-        n "Try not to let work or studying rule your life.{w=0.2} You've got better things to do."
-        n "...Like being a decent friend to others for a change.{w=0.2} Am I right?"
+        n 1fllsr "Makes me wish people would value their own time more."
+        n 1fnmsr "...I guess that includes you too,{w=0.1} [player]."
+        n 1fllpu "You've got better things to do."
+        n 1fsqsf "...Like being a decent friend to others for a change.{w=0.2} Am I right?"
 
     else:
-        n "People need to value their own time more,{w=0.1} I guess."
-        n "...Heh."
-        n "Maybe I should follow my own advice..."
-        n "Because clearly being here is a waste of my time too."
+        n 1fslbo "People need to value their own time more,{w=0.1} I guess."
+        n 1fcssl "...Heh."
+        n 1fcsun "Maybe I should follow my own advice..."
+        n 1fsqfu "Because {i}clearly{/i} being here is a waste of my time too."
 
     return
 
