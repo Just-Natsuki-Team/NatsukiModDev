@@ -1382,30 +1382,34 @@ label talk_driving:
             n "Anything new happening with you on the driving front?"
 
             "I'm learning to drive!":
-                n "Ooh!{w=0.2} Nice,{w=0.1} [player]!"
-                n "Don't sweat the test,{w=0.1} alright?{w=0.2} I'm sure you'll do fine!"
+                n 1fnmss "Ooh!{w=0.2}" 
+                extend 1fchbg " Nice,{w=0.1} [player]!"
+                n 1fchsm "Don't sweat the test,{w=0.1} alright?{w=0.2} I'm sure you'll do fine!"
 
                 if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-                    n "I believe in you,{w=0.1} [player]!"
+                    n 1uchsm "I believe in you,{w=0.1} [player]!"
 
             "I passed my test!":
-                n "No kidding?"
-                n "Yaaay!{w=0.2} Congratulations,{w=0.1} [player]!"
+                n 1uskgs "No kidding?{w=0.2}"
+                extend 1uchbs " Yaaay!{w=0.2} Congrats,{w=0.1} [player]!"
 
                 if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-                    n "I'm so proud of you!{w=0.2} I knew you could do it,{w=0.1} dummy!"
+                    n 1kwmsm "I knew you could do it,{w=0.1} you big dummy!"
+                    extend 1kchsm " Ehehe."
 
-                n "Just make sure you keep up the good habits when you continue learning on your own,{w=0.1} alright?{w=0.2} Ahaha."
+                n 1kwmsm "Just make sure you keep up the good habits when you continue learning on your own,{w=0.1} alright?{w=0.2} Ahaha."
                 $ persistent.jn_player_can_drive = True
 
             "I can drive again!":
-                n "Hey!{w=0.2} Nice going,{w=0.1} [player]!"
-                n "Drive safe!"
+                n 1uchbg "Hey!{w=0.2} Nice going,{w=0.1} [player]!"
+                n 1uwlsm "Drive safe!"
                 $ persistent.jn_player_can_drive = True
 
             "Nope, nothing new.":
-                n "Oh?{w=0.2} Well,{w=0.1} fair enough!"
-                n "You and me both,{w=0.1} in that case?{w=0.2} Ahaha."
+                n 1unmaj "Oh?{w=0.2}" 
+                extend 1nlrss " Well,{w=0.1} fair enough!"
+                n 1tnmsm "You and me both then,{w=0.1} in that case?{w=0.2}" 
+                extend 1nchsm " Ahaha."
 
         return
     return
