@@ -1481,94 +1481,96 @@ init 5 python:
 label talk_give_nickname:
     # Natsuki hasn't been nicknamed before, or is rocking her normal name
     if persistent.jn_player_nicknames_allowed and persistent.jn_player_nicknames_current_nickname == "Natsuki":
-        n "Eh?{w=0.2} You want to give me a nickname?"
-        n "Why?{w=0.2} Natsuki not good enough for you?{w=0.2} Is that it?"
-        n "Huh?{w=0.2} Come on, [player]!{w=0.2} Spit it out!"
-        n "..."
-        n "Relax,{w=0.1} [player]!{w=0.2} Jeez!{w=0.2} I'm just kidding!"
-        n "Ehehe."
-        n "Well...{w=0.3} I don't see why not!"
+        n 1unmaj "Eh?{w=0.2} You want to give me a nickname?"
+        n 1fsqsl "Why?{w=0.2} Natsuki not good enough for you?{w=0.2} Is that it?"
+        extend 1fsqpu " Huh?{w=0.2} Come on, [player]!{w=0.2} Spit it out!"
+        n 1fsqsm "..."
+        n 1fchbg "Relax,{w=0.1} [player]!{w=0.2} Jeez!{w=0.2} I'm just kidding!"
+        extend 1fchsm " Ehehe."
+        n 1ullbg "Well...{w=0.3} I don't see why not!"
 
     # Another nickname is being assigned
     else:
 
         # Account for strikes
         if persistent.jn_player_nicknames_bad_given_total == 0:
-            n "Oh?{w=0.2} You wanna give me another nickname?"
-            n "Sure,{w=0.1} why not!"
+            n 1unmaj "Oh?{w=0.2} You wanna give me another nickname?"
+            n 1uchbg "Sure,{w=0.1} why not!"
 
         elif persistent.jn_player_nicknames_bad_given_total == 1:
-            n "You want to give me a new nickname?"
-            n "Alright,{w=0.1} [player]."
+            n 1unmaj "You want to give me a new nickname?"
+            n 1unmbo "Alright,{w=0.1} [player]."
 
         elif persistent.jn_player_nicknames_bad_given_total == 2:
-            n "Another nickname,{w=0.1} [player]?{w=0.2} Fine."
-            n "Just...{w=0.3} think a little about what you choose,{w=0.1} 'kay?"
+            n 1nnmsl "Another nickname,{w=0.1} [player]?{w=0.2}" 
+            extend 1nllsl " Fine."
+            n 1ncsaj "Just...{w=0.3} think a little about what you choose,{w=0.1} 'kay?"
 
         elif persistent.jn_player_nicknames_bad_given_total == 3:
-            n "Alright,{w=0.1} [player]."
-            n "Just remember.{w=0.3} You've had your final warning about this."
-            n "Don't let me down again."
+            n 1nnmsl "Alright,{w=0.1} [player]."
+            n 1fsqpu "Just remember.{w=0.3} You've had your final warning about this."
+            n 1nsqsl "Don't let me down again."
 
     # Validate the nickname, respond appropriately
     $ nickname = renpy.input(prompt="What did you have in mind,{w=0.2} [player]?", allow=jn_globals.DEFAULT_ALPHABETICAL_ALLOW_VALUES, length=10).strip()
 
     if nickname.lower() == "nevermind":
-        n "Huh?{w=0.2} You changed your mind?"
-        n "Well...{w=0.3} alright then."
-        n "Just let me know if you actually want to call me something else then,{w=0.1} 'kay?"
+        n 1tnmpu "Huh?{w=0.2} You changed your mind?"
+        n 1tllpu "Well...{w=0.3} alright then."
+        n 1nnmaj "Just let me know if you actually want to call me something else then,{w=0.1} 'kay?"
         return
 
     else:
         $ nickname_type = jn_nicknames.get_nickname_type(nickname)
 
     if nickname_type == jn_nicknames.TYPE_INVALID:
-        n "Uhmm...{w=0.3} [player]?"
-        n "I don't think that's a nickname at all."
-        n "I'll...{w=0.3} just stick with what I have now,{w=0.1} thanks."
+        n 1tlraj "Uhmm...{w=0.3} [player]?"
+        n 1tnmaj "I don't think that's a nickname at all."
+        n 1tllss "I'll...{w=0.3} just stick with what I have now,{w=0.1} thanks."
         return
 
     elif nickname_type == jn_nicknames.TYPE_LOVED:
         $ persistent.jn_player_nicknames_current_nickname = nickname
         $ n_name = persistent.jn_player_nicknames_current_nickname
-        n "O-{w=0.1}oh!{w=0.2} [player]!"
-        n "..."
-        n "W-{w=0.1}well,{w=0.1} you have good taste,{w=0.1} at least."
-        n "..."
-        n "Nnnnn...{w=0.3} you made it all awkward,{w=0.1} [player].{w=0.2} I hope you're happy."
-        n "But...{w=0.3} I really like this one."
-        n "[nickname] it is!{w=0.2} Ehehe."
+        n 1uskgsl "O-{w=0.1}oh!{w=0.2} [player]!"
+        n 1ulrunl "..."
+        n 1fcsbgl "W-{w=0.1}well,{w=0.1} you have good taste,{w=0.1} at least."
+        n 1fcssml "[nickname] it is!{w=0.2}" 
+        extend 1uchsml " Ehehe."
         return
 
     elif nickname_type == jn_nicknames.TYPE_DISLIKED:
-        n "Come on,{w=0.1} [player]...{w=0.3} really?"
-        n "You know I'm really not comfortable being called that."
-        n "..."
-        n "I'm...{w=0.3} just going to pretend you didn't say that,{w=0.1} alright?"
+        n 1fsqbo "Come on,{w=0.1} [player]...{w=0.3} really?"
+        n 1fllsl "You knew I'm not gonna be comfortable being called that."
+        n 1fcssl "..."
+        n 1nlraj "I'm...{w=0.3} just going to pretend you didn't say that,{w=0.1} alright?"
         return
 
     elif nickname_type == jn_nicknames.TYPE_HATED:
-        n "W-{w=0.1}what?{w=0.2} What did you just call me?!"
-        n "[player]!{w=0.2} I can't believe you!"
-        n "Why would you call me that?{w=0.2} That's awful!"
-        n "..."
+        n 1fskem "W-{w=0.1}what?{w=0.2}"
+        extend 1fscwr " What did you just call me?!"
+        n 1fcsan "[player]!{w=0.2} I can't believe you!"
+        n 1fcsfu "Why would you call me that?{w=0.2}" 
+        extend 1fsqfu " That's {i}awful{/i}!"
+        n 1fcspu "..."
         $ persistent.jn_player_nicknames_bad_given_total += 1
 
     elif nickname_type == jn_nicknames.TYPE_PROFANITY:
-        n "E-{w=0.1}excuse me?!"
-        n "What the hell did you just call me,{w=0.1} [player]?!"
-        n "..."
-        n "I seriously can't believe you,{w=0.1} [player]."
-        n "Why would you do that?{w=0.1} Are you trying to upset me?"
-        n "..."
+        n 1fskpu "E-{w=0.1}excuse me?!"
+        n 1fskfu "What the hell did you just call me,{w=0.1} [player]?!"
+        n 1fcsan "..."
+        n 1fslan "I seriously can't believe you,{w=0.1} [player]."
+        extend 1fnman " Why would you do that?{w=0.1} Are you {i}trying{/i} to get on my nerves?!"
+        n 1fcspu "..."
         $ persistent.jn_player_nicknames_bad_given_total += 1
 
     elif nickname_type == jn_nicknames.TYPE_FUNNY:
-        n "Pffft!"
-        n "Ahaha!"
-        n "[nickname]?{w=0.2} What kind of nickname is that meant to be,{w=0.1} [player]?"
-        n "Well...{w=0.3} you're just lucky I have a healthy sense of humour."
-        n "[nickname] it is,{w=0.1} I guess!{w=0.2} Ehehe."
+        n 1nbkdv "Pffft!"
+        n 1uchbs "Ahaha!"
+        n 1fbkbs "[nickname]?!{w=0.2} What was that meant to be,{w=0.1} [player]?"
+        n 1fbkbs "Well...{w=0.3} you're just lucky I have a healthy sense of humour."
+        n 1fsgbg "[nickname] it is,{w=0.1} I guess!{w=0.2}" 
+        extend 1fchgn " Ehehe."
 
         $ persistent.jn_player_nicknames_current_nickname = nickname
         $ n_name = persistent.jn_player_nicknames_current_nickname
@@ -1576,7 +1578,7 @@ label talk_give_nickname:
 
     elif nickname_type == jn_nicknames.TYPE_NOU:
         show natsuki 1uwlgn zorder JN_NATSUKI_ZORDER
-        n "No you~."
+        n 1usqsg "No you~."
         return
 
     else:
@@ -1584,33 +1586,38 @@ label talk_give_nickname:
 
         # Check and respond to easter egg nicknames
         if nickname.lower() == "natsuki":
-            n "Uhmm...{w=0.3} [player]?"
+            n 1fllss "Uhmm...{w=0.3}"
+            extend 1tnmdv " [player]?"
             $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-            n "That's just my normal name,{w=0.1} [chosen_tease]!"
-            n "Honestly...{w=0.3} sometimes I wonder why I bother."
-            n "Well,{w=0.1} I'm not complaining!{w=0.2} If it isn't broke,{w=0.1} don't fix it -{w=0.1} right?"
+            n 1fchbg "That's just my normal name,{w=0.1} [chosen_tease]!"
+            n 1fcsca "Honestly...{w=0.3}" 
+            extend 1ksgsg " sometimes I wonder why I bother."
+            n 1unmbg "Well,{w=0.1} I'm not complaining!{w=0.2} If it isn't broke,{w=0.1} don't fix it -{w=0.1} right?"
+            n 1nchbg "Ahaha."
             $ neutral_nickname_permitted = True
 
         elif nickname.lower() == "thiccsuki":
-            n "..."
-            n "D-{w=0.1}dreaming big,{w=0.1} are we,{w=0.1} [player]?{w=0.2} Ahaha..."
-            n "Uhmm..."
-            n "I'm...{w=0.3} really...{w=0.3} not a fan,{w=0.1} but if it's what you prefer..."
+            n 1kllunl "..."
+            n 1fnmssl "D-{w=0.1}dreaming big,{w=0.1} are we,{w=0.1} [player]?"
+            n 1klrsrl "Uhmm..."
+            n 1klrpol "I'm...{w=0.3} really...{w=0.3} not a fan,{w=0.1} but if it's what you prefer..."
             $ neutral_nickname_permitted = True
 
         elif nickname.lower() == persistent.playername.lower():
-            n "I...{w=0.3} don't think you thought this through,{w=0.1} [player]."
-            n "Do you even know how confusing that'd be?"
-            n "I think I'll just stick to what works,{w=0.1} 'kay?"
-            n "Ehehe."
-            n "Nice try,{w=0.1} though!"
+            n 1fsldv "I...{w=0.3} don't think you thought this through,{w=0.1} [player]."
+            n 1tnmbg "Do you even know how confusing that'd be?"
+            n 1tlrss "I...{w=0.3} think I'll just stick to what works,{w=0.1} 'kay?"
+            extend 1fsqsm " Ehehe."
+            n 1uchbg "Nice try though!"
 
         # Fallback for anything not categorised
         else:
-            n "Hmm...{w=0.3} [nickname], huh?"
-            n "[nickname]..."
-            n "You know what?{w=0.2} Yeah!{w=0.2} I like it!"
-            n "Consider it done,{w=0.1} [player]!{w=0.2} Ehehe."
+            n 1fllsr "Hmm...{w=0.3}" 
+            extend 1ullpu " [nickname],{w=0.1} huh?"
+            n 1fllss "[nickname]..."
+            n 1fnmbg "You know what?{w=0.2} Yeah!{w=0.2} I like it!"
+            n 1fchbg "Consider it done,{w=0.1} [player]!{w=0.2}" 
+            extend 1uchsm " Ehehe."
             $ neutral_nickname_permitted = True
 
         # Finally, assign the neutral/easter egg nickname if it was permitted by Natsuki
@@ -1622,11 +1629,11 @@ label talk_give_nickname:
 
     # Handle strikes
     if persistent.jn_player_nicknames_bad_given_total == 1:
-        n "Jeez,{w=0.1} [player]...{w=0.3} that isn't like you at all!"
-        n "What's up with you today?"
-        n "..."
-        n "Just...{w=0.3} don't do that again,{w=0.1} okay?"
-        n "That really hurt,{w=0.1} [player].{w=0.2} Don't abuse my trust."
+        n 1kllsf "Jeez,{w=0.1} [player]...{w=0.3} that isn't like you at all!"
+        extend 1knmaj " What's up with you today?"
+        n 1kcssl "..."
+        n 1knmsl "Just...{w=0.3} don't do that again,{w=0.1} okay?"
+        n 1fsqsl "That really hurt,{w=0.1} [player].{w=0.2} Don't abuse my trust."
 
         # Apply penalty and pending apology
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
@@ -1634,11 +1641,12 @@ label talk_give_nickname:
         $ relationship(change="trust-", multiplier=2)
 
     elif persistent.jn_player_nicknames_bad_given_total == 2:
-        n "I can't believe you did that again to me,{w=0.1} [player]."
-        n "I told you it hurts,{w=0.1} and you went ahead anyway!"
-        n "..."
-        n "I...{w=0.3} really...{w=0.3} like you, [player].{w=0.2} It hurts extra bad when it's you."
-        n "Don't test my patience like this.{w=0.2} You're better than that."
+        n 1fsqsl "I can't believe you did that again to me,{w=0.1} [player]."
+        n 1fsqan "I told you it hurts,{w=0.1} and you went ahead anyway!"
+        n 1fcsan "..."
+        n 1fcsun "I...{w=0.3} really...{w=0.3} like you, [player].{w=0.2}" 
+        extend 1kllun " It hurts extra bad when it's you."
+        n 1fsqsr "Don't test my patience like this.{w=0.2} You're better than that."
 
         # Apply penalty and pending apology
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
@@ -1646,26 +1654,26 @@ label talk_give_nickname:
         $ relationship(change="trust-", multiplier=2)
 
     elif persistent.jn_player_nicknames_bad_given_total == 3:
-        n "You are honestly unbelievable,{w=0.1} [player]."
-        n "I've told you so many times now,{w=0.1} and you still won't knock it off!"
-        n "..."
-        n "No more warnings,{w=0.1} [player]."
+        n 1fsqan "You are honestly unbelievable,{w=0.1} [player]."
+        n 1fnmfu "I've told you so many times now,{w=0.1} and you still won't knock it off!"
+        n 1fcspu "..."
+        n 1fsqpu "No more warnings,{w=0.1} [player]."
         menu:
             n "Understand?"
 
             "I understand. Sorry, [n_name].":
-                n "You understand,{w=0.1} do you?"
-                n "...Then start acting like it,{w=0.1} [player]."
-                n "Thanks."
+                n 1fsqsr "You understand,{w=0.1} do you?"
+                n 1fsqan "...Then start acting like it,{w=0.1} [player]."
+                n 1fslsl "Thanks."
 
                 $ relationship(change="affinity-", multiplier=2)
                 $ relationship(change="trust-", multiplier=2)
 
             "...":
-                n "Look.{w=0.2} I'm not kidding around,{w=0.1} [player]."
-                n "Acting like this isn't funny,{w=0.1} or cute."
-                n "It's toxic."
-                n "I don't care if you're trying to pull my leg.{w=0.2} Quit it."
+                n 1fcssl "Look.{w=0.2} I'm not kidding around,{w=0.1} [player]."
+                n 1fnmpu "Acting like this isn't funny,{w=0.1} or cute."
+                n 1fsqem "It's toxic."
+                n 1fsqsr "I don't care if you're trying to pull my leg.{w=0.2} Quit it."
 
                 $ relationship(change="affinity-", multiplier=3)
                 $ relationship(change="trust-", multiplier=3)
@@ -1675,11 +1683,12 @@ label talk_give_nickname:
 
     elif persistent.jn_player_nicknames_bad_given_total == 4:
         # Player is locked out of nicknaming; this is why we can't have nice things
-        n "Yeah,{w=0.1} no.{w=0.2} I've heard enough.{w=0.2} I don't need to hear any more."
-        n "When will you learn that your actions have consequences?"
-        n "..."
-        n "You know what?{w=0.2} Don't even bother answering."
-        n "I warned you,{w=0.1} [player].{w=0.2} Remember that."
+        n 1fcsan "Yeah,{w=0.1} no.{w=0.2} I've heard enough.{w=0.2} I don't need to hear any more."
+        n 1fnmem "When will you learn that your actions have consequences?"
+        n 1fcspu "..."
+        n 1fnmpu "You know what?{w=0.2}" 
+        extend 1fsqpu " Don't even bother answering."
+        n 1fsqsr "I warned you,{w=0.1} [player].{w=0.2} Remember that."
 
         # Apply affinity/trust penalties, then revoke nickname priveleges and finally apply pending apology
         $ relationship(change="affinity-", multiplier=5)
