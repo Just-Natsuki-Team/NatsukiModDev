@@ -1269,22 +1269,26 @@ label talk_driving:
     # Check to see if the player and Natsuki have already discussed if Nat can drive in this topic, or the "are you into cars?" topic
     $ already_discussed_driving = get_topic("talk_driving").shown_count > 0 or get_topic("talk_are_you_into_cars").shown_count > 0
 
-    n "Pffft!"
-    n "Ahaha!{w=0.2} What kind of a question is that,{w=0.1} [player]?"
+    n 1fchdv "Pffft!{w=0.2}"
+    extend 1uchbs " Ahaha!" 
+    n 1fchgn "What kind of a question is that,{w=0.1} [player]?"
     $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
 
     if already_discussed_driving:
-        n "I already told you I can't drive,{w=0.1} [chosen_tease]!{w=0.2} I don't even have a license!"
-        n "And even if I wanted to,{w=0.1} I don't think I could afford it..."
+        n 1tllss "I already told you I can't drive,{w=0.1} [chosen_tease]!{w=0.2}" 
+        extend 1fchgn " I don't even have a license!"
+        n 1kllpo "And even if I wanted to,{w=0.1} I don't think I could afford it..."
 
     else:
-        n "Of course I can't drive,{w=0.1} [chosen_tease]!{w=0.2} I don't even have a license!"
-        n "I mean...{w=0.3} even if I wanted to learn,{w=0.1} I don't think I could afford it."
+        n 1tllss "Of course I can't drive,{w=0.1} [chosen_tease]!{w=0.2}" 
+        extend 1fchgn " I don't even have a license!"
+        n 1kllpo "I mean...{w=0.3} even if I wanted to learn,{w=0.1} I don't think I could afford it."
 
-    n "Lessons are super expensive nowadays!"
-    n "And then there's tests,{w=0.1} insurance,{w=0.1} fuel,{w=0.1} parking...{w=0.3} it's actually pretty gross how fast it all adds up."
-    n "I think I'd rather stick to public transport and my own two feet."
-    n "But what about you,{w=0.1} [player]?"
+    n 1uskgs "Lessons are super expensive nowadays!"
+    n 1fslem "And then there's tests,{w=0.1} insurance,{w=0.1} fuel,{w=0.1} parking...{w=0.3}" 
+    extend 1fsqaj " it's actually pretty gross how fast it all adds up."
+    n 1nlraj "I think I'd rather stick to public transport and my own two feet."
+    n 1unmaj "But what about you,{w=0.1} [player]?"
 
     # Player has never confirmed if they can/cannot drive
     if persistent.jn_player_can_drive is None:
@@ -1292,52 +1296,54 @@ label talk_driving:
             n "Can you drive?"
 
             "Yes, and I do currently.":
-                n "Wow."
-                n "...{w=0.3}Show-off."
-                n "..."
-                n "Relax,{w=0.1} [player]!{w=0.2} Jeez!{w=0.2} I'm just messing with you."
-                n "That's awesome though{w=0.1} -{w=0.1} you just can't beat the convenience of a car,{w=0.1} right?"
+                n 1uwdaj "Wow..."
+                extend 1fsraj " ...{w=0.3}show-off."
+                n 1fsqpo "..."
+                n 1fchbg "Relax,{w=0.1} [player]!{w=0.2} Jeez!{w=0.2}" 
+                extend 1nchsm " I'm just messing with you."
+                n 1unmbg "That's awesome though{w=0.1} -{w=0.1} you just can't beat the convenience of a car,{w=0.1} right?"
 
                 if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-                    n "But I should probably warn you..."
-                    n "I'm picking the songs for our driving playlist."
-                    n "Ahaha!"
+                    n 1fllbg "But I should probably warn you..."
+                    n 1fsgsm "I'm picking the songs for our driving playlist."
+                    extend 1uchbg " Ahaha!"
 
                 else:
-                    n "Just remember,{w=0.1} [player]..."
-                    n "I call shotgun.{w=0.2} Ehehe."
+                    n 1fllbg "Just remember,{w=0.1} [player]..."
+                    n 1fsgsm "I call shotgun.{w=0.2}"
 
                 $ persistent.jn_player_can_drive = True
                 return
 
             "Yes, but I don't right now.":
-                n "Oh?{w=0.2} Is something wrong with your car,{w=0.1} [player]?"
-                n "Or perhaps...{w=0.3} you just don't own one at the moment?"
-                n "Well,{w=0.1} I'm not one to judge.{w=0.2} I'm sure you manage just fine."
-                n "Besides,{w=0.1} you're helping the environment too,{w=0.1} right?"
+                n 1unmaj "Oh?{w=0.2} Is something wrong with your car,{w=0.1} [player]?"
+                n 1tllbo "Or perhaps...{w=0.3} you just don't own one at the moment?"
+                n 1nnmsm "Well,{w=0.1} I'm not one to judge.{w=0.2} I'm sure you manage just fine."
+                n 1flrss "Besides,{w=0.1} you're helping the environment too,{w=0.1} right?"
 
                 if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-                    n "Thoughtful as always,{w=0.1} [player]."
-                    n "I like that about you."
-                    n "Ehehe."
+                    n 1fsgsm "Thoughtful as always,{w=0.1} [player]."
+                    extend 1nchsm " Ehehe."
 
                 $ persistent.jn_player_can_drive = True
                 return
 
             "No, I can't.":
-                n "Oh..."
-                n "Well,{w=0.1} chin up,{w=0.1} [player]!{w=0.2} It isn't the end of the world."
-                n "Don't worry {w=0.1}-{w=0.1} I'll teach you how to use the bus!"
-                n "Ehehe."
+                n 1klrsl "Oh..."
+                n 1flrss "Well,{w=0.1}" 
+                extend 1fchbg " chin up,{w=0.1} [player]!{w=0.2} It isn't the end of the world."
+                n 1usgsg "Don't worry -{w=0.1}"
+                extend 1fsgsm " I'll teach you how to use the bus!"
+                n 1uchsm "Ehehe."
 
-                if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-                    n "And besides..."
-                    n "That just means we can snuggle up on the seat together,{w=0.1} [player]."
-                    n "A dream come true for you,{w=0.1} right?"
-                    n "Ehehe."
+                if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+                    n 1fllsm "And besides..."
+                    n 1fllssl "That just means we can huddle up on the seat together,{w=0.1} [player]."
+                    n 1fcsbgl "A dream come true for you,{w=0.1} right?"
+                    n 1flldvl "Ehehe."
 
                 else:
-                    n "That's what friends are for, [player]!"
+                    n 1fchbg "That's what friends are for, [player]!"
 
                 $ persistent.jn_player_can_drive = False
                 return
@@ -1348,21 +1354,24 @@ label talk_driving:
             n "Doing much driving?"
 
             "Yes, I'm driving frequently.":
-                n "Ah,{w=0.1}  so you're at home on the roads,{w=0.1} are you?"
-                n "Fair enough I suppose -{w=0.1} just remember to drive safe,{w=0.1} [player]!"
+                n 1fnmbg "Ah,{w=0.1}  so you're at home on the roads,{w=0.1} are you?"
+                n 1ullss "Fair enough I suppose -{w=0.1} just remember to drive safe,{w=0.1} [player]!"
 
             "I only drive sometimes.":
-                n "Well hey,{w=0.1} at least you're saving on fuel,{w=0.1} right?{w=0.2} That doesn't sound like a bad thing to me."
-                n "Besides,{w=0.1} it just means you can save the miles for ones you enjoy!"
+                n 1ullss "Well hey,{w=0.1} at least you're saving on fuel,{w=0.1} right?{w=0.2}" 
+                extend 1ullsm " That doesn't sound like a bad thing to me."
+                n 1fchsm "Besides,{w=0.1} it just means you can save the miles for ones you enjoy!"
 
             "No, I'm not driving much.":
-                n "Oh?{w=0.2} That sounds like a bonus to me,{w=0.1} honestly!"
-                n "Just make sure you still get out there if you aren't driving around much though,{w=0.1} 'kay?"
+                n 1unmaj "Oh?{w=0.2}" 
+                extend 1tllbg " That sounds like a bonus to me,{w=0.1} honestly!"
+                n 1tnmbg "Just make sure you still get out there if you aren't driving around much though,{w=0.1} 'kay?"
 
             "No, I can't drive anymore.":
-                n "Oh...{w=0.3} did something happen?"
-                n "I'm sorry to hear it,{w=0.1} [player]."
-                n "But at least that means more time to spend here,{w=0.1} right?{w=0.2} Ahaha..."
+                n 1tnmsl "Oh...{w=0.3} did something happen?"
+                n 1kllsl "I'm...{w=0.3} sorry to hear it,{w=0.1} [player]."
+                n 1fsgsm "But at least that means more time to hang out with me,{w=0.1} right?{w=0.2}" 
+                extend 1fchbg " Ahaha."
                 $ persistent.jn_player_can_drive = False
 
         return
