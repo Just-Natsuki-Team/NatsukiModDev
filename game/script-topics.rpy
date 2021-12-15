@@ -1418,46 +1418,54 @@ init 5 python:
     )
 
 label talk_sustainable_fashion:
-    n "Hey,{w=0.1} [player]..."
-    n "This is kinda random,{w=0.1} but are you into fashion?"
+    n 1nnmaj "Hey,{w=0.1} [player]..."
+    n 1nllaj "This is kinda random,{w=0.1} but..."
+    extend 1unmpu " are you into fashion?"
     if jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
-        n "I know I am!{w=0.2} Can you tell?"
-        n "Ehehe."
+        n 1fcsbg "I know I am!{w=0.2} Can you tell?"
+        extend 1nchsm "Ehehe."
 
     else:
-        n "I know I am."
+        n 1nnmpu "I know I am."
 
-    n "But what caught me by surprise is just how much waste there is."
-    n "Seriously,{w=0.1} [player] {w=0.1}-{w=0.1} it's insane!"
-    n "People throw away a {i}lot{/i} of clothing...{w=0.3} it's estimated that we toss out around 90{w=0.3} {i}million{/i}{w=0.3} tonnes every year."
-    n "That's a truck-full every second!{w=0.2} What a waste!"
-    n "And we haven't even began to talk about the amount of water used for washing and plastic used for packaging too."
-    n "...Or the conditions some of the workers making our clothes have to put up with."
-    n "It's actually one of the reasons I began learning how to sew!"
-    n "I've never had tons of money to buy more clothes anyway,{w=0.1} so I try to reuse and fix up what I can."
+    n 1fllpu "But what caught me by surprise is just how much waste there is."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "You'd be surprised at what you can pull off with a little creativity!"
-        n "And just a pinch of know-how too,{w=0.1} obviously."
-        n "Betcha didn't know my favourite pink skirt was hand-made,{w=0.1} did you?"
-
+        n 1uwdgs "Seriously,{w=0.1} [player] {w=0.1}-{w=0.1} it's insane!"
+        n 1ullaj "People throw away a {i}lot{/i} of clothing...{w=0.3}"
+        extend 1flrem " it's estimated that we toss out around 90{w=0.3} {i}million{/i}{w=0.3} tonnes every year."
+        n 1fnman "That's a truck-full every second!{w=0.2} What a waste!"
+    
     else:
-        n "It's neat what you can make with some creativity."
+        n 1nllbo "It's pretty insane, honestly."
+        n 1fnmsl "I remember reading somewhere that we toss out something like 90{w=0.3} {i}million{/i}{w=0.3} tonnes each year."
+        n 1fcsan "That's literally a truck-full {i}every{w=0.3} second{/i}."
 
-    n "I think I've lectured you enough now,{w=0.1} [player],{w=0.1} so I won't keep harping on about it."
-    n "But...{w=0.3} the next time you're out shopping for clothes,{w=0.1} or looking through some catalogues online?"
-    n "Just spare a thought for the environment,{w=0.1} would you?"
+    n 1fsrem "And we haven't even began to talk about the amount of water used for washing and plastic used for packaging too."
+    n 1ksrsr "...Or the conditions some of the workers making our clothes have to put up with."
+    
+    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n 1fcssm "It's actually one of the reasons I began learning how to sew!"
+        n 1klrsr "I've...{w=0.3} never had tons of money to buy more clothes anyway,{w=0.1} so I try to reuse and fix up what I can."
+        n 1fchbg "But you'd be surprised at what you can pull off with a little creativity!"
+        extend 1fcssm " And just a pinch of know-how too,{w=0.1} obviously."
+        n 1fchgn "Betcha didn't know my favourite pink skirt was hand-made,{w=0.1} did you?"
+
+    n 1unmaj "I think I've lectured you enough now,{w=0.1} [player],{w=0.1} so I won't keep harping on about it."
+    n 1nllpu "But...{w=0.3} the next time you're out shopping for clothes,{w=0.1} or looking through some catalogues online?"
+    n 1unmpu "Just spare a thought for the environment,{w=0.1} would you?"
 
     if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        n "For me?"
-        n "I know I can count on you!"
+        n 1kllssl "For me?"
+        n 1nchbg "Ahaha.{w=0.2}"
+        extend 1uchsm " Thanks,{w=0.1} [player]!"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n "Ehehe.{w=0.2} Thanks,{w=0.1} [player]!"
-        n "I'm counting on you!"
+        n 1nchbg "Ahaha.{w=0.2}" 
+        extend 1uchsm " Thanks,{w=0.1} [player]!"
 
     else:
-        n "Thanks, [player]."
+        n 1nllsl "Thanks."
 
     return
 
