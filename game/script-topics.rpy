@@ -491,25 +491,26 @@ init 5 python:
     )
 
 label talk_relieving_stress:
-    n "You know,{w=0.1} I'll admit it,{w=0.1} [player]."
-    n "I...{w=0.3} kinda have a short fuse.{w=0.2} Ehehe."
-    n "I've been trying to work on that though,{w=0.1} and I'd love to share some of the ways I deal with stess!"
-    n "Personally,{w=0.1} I think the best way to deal with it if you can is to try and create some distance."
-    n "If things get a little too much,{w=0.1} I just step outside if I can."
-    n "Some fresh air and a change of scenery can really put things into context.{w=0.2} It's crazy effective!"
-    n "Don't just create physical distance,{w=0.1} though.{w=0.2} Distance yourself mentally too!"
-    n "If something is stressing you out,{w=0.1} you need to starve it of some attention."
-    n "If I can't go somewhere else,{w=0.1} I just read something,{w=0.1} or watch some dumb videos."
-    n "But do whatever works for you; {w=0.1}we all have our own comfort zones!"
-    n "And of course,{w=0.1} you could always come see me,{w=0.1} you know..."
-
-    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        n "I-{w=0.1}It'd be a welcome surprise.{w=0.2} Ahaha..."
-
-    n "A-{w=0.1}anyway!"
-    n "The point is to always try and come back with a clean headspace,{w=0.1} and don't sweat the small things."
-    n "Can you do that for me,{w=0.1} [player]?"
-    n "I'll keep working on it if you do!"
+    n 1ullaj "You know,{w=0.1} I'll admit it,{w=0.1} [player]."
+    n 1flrbg "I...{w=0.3} kinda have a short fuse.{w=0.2}{nw}" 
+    extend 1klrss " Ehehe."
+    n 1fnmss "I've been trying to work on that though,{w=0.1}{nw}" 
+    extend 1fchbg " and I'd love to share some of the ways I deal with stess!"
+    n 1unmss "Personally,{w=0.1} I think the best way to deal with it if you can is to try and create some distance."
+    n 1nllss "If things get a little too much,{w=0.1} I just step outside if I can."
+    n 1unmbo "Some fresh air and a change of scenery can really put things into context.{w=0.2}{nw}" 
+    extend 1fwdaj " It's crazy effective!"
+    n 1ulraj "Don't just create physical distance,{w=0.1} though.{w=0.2}{nw}" 
+    extend 1fnmpu " Distance yourself mentally too!"
+    n 1ncssr "If something is stressing you out,{w=0.1} you need to starve it of attention."
+    n 1nllsf "If I can't go somewhere else,{w=0.1} I just read something,{w=0.1} or watch some dumb videos."
+    n 1fchbg "But do whatever works for you; {w=0.1}we all have our own comfort zones!"
+    n 1fslpo "A-{w=0.1}and of course,{w=0.1} you could always come see me,{w=0.1} you know..."
+    n 1fchbgl "A-{w=0.1}anyway!"
+    n 1unmpu "The point is to always try and come back with a clean headspace,{w=0.1}{nw}" 
+    extend 1nnmss " and don't sweat the small things."
+    n 1tnmss "You can manage that,{w=0.1} right [player]?"
+    n 1uchsm "I'll keep working on it if you do!"
     return
 
 # Natsuki muses on how easy it is to waste money, and offers some guidance on spending wisely
