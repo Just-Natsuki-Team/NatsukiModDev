@@ -566,37 +566,47 @@ init 5 python:
     )
 
 label talk_eating_well:
-    n "Hey,{w=0.1} [player]..."
+    n 1unmaj "Hey,{w=0.1} [player]..."
     menu:
         n "Have you eaten today?"
 
         "Yes":
-            n "Aha!{w=0.2} But did you eat {i}well{/i},{w=0.1} [player]?"
+            n 1fnmbg "Aha!{w=0.2}{nw}" 
+            extend 1fsqbg " But did you eat {i}well{/i},{w=0.1} [player]?"
 
         "No":
-            n "Huh?{w=0.2} What?{w=0.2} Why not?!"
-            n "You aren't skipping meals,{w=0.1} are you?"
-            n "I really hope you aren't,{w=0.1} [player]..."
+            n 1knmpu "Huh?{w=0.2} What?{w=0.2}{nw}"
+            extend 1knmem " Why not?!"
+            n 1fnmem "You aren't skipping meals,{w=0.1} are you?"
+            n 1flrpo "You better not be,{w=0.1} [player]."
 
-    n "It's super important to make sure you aren't only eating regularly,{w=0.1} but eating decently too!"
-    n "I think the right diet can honestly make all the difference,{w=0.1} [player]."
-    n "So...{w=0.3} try and make an effort with your meals,{w=0.1} okay?"
-    n "And I mean a real effort!{w=0.2} Try to prepare them from scratch if you can;{w=0.1} it's often cheaper than ready meals anyway!"
-    n "Try to cut back on things like salt and sugar and stuff too...{w=0.3} as well as anything really processed."
-    n "Oh {w=0.1}-{w=0.1} and like I said,{w=0.1} have meals regularly too!"
-    n "You shouldn't find yourself snacking on junk if you have proper meals throughout the day."
-    n "Your bank balance and your body will thank you too!{w=0.2} Ehehe."
+    n 1unmpu "It's super important to make sure you aren't only eating regularly,{w=0.1}{nw}" 
+    extend 1fnmpu " but eating decently too!"
+    n 1fnmsr "The right diet makes all the difference,{w=0.1} [player]."
+    n 1ullaj "So...{w=0.3}{nw}" 
+    extend 1nnmaj " try and make an effort with your meals,{w=0.1} got it?"
+    n 1fnmaj "And I mean a real effort!{w=0.2}{nw}" 
+    extend 1ulrss " Try to prepare them from scratch if you can;{w=0.1}{nw}" 
+    extend 1flrss " it's often cheaper than ready meals anyway."
+    n 1unmss "Cut back on things like salt and sugar and stuff too...{w=0.3}{nw}" 
+    extend 1nslpo " as well as anything really processed."
+    n 1unmaj "Oh {w=0.1}-{w=0.1}{nw}" 
+    extend 1fnmaj " and like I said,{w=0.1} have meals regularly too!"
+    n 1fchbg "You shouldn't find yourself snacking on junk if you have proper meals throughout the day."
+    n 1usqsm "Your bank balance and your body will thank you.{w=0.2}{nw}" 
+    extend 1nchsm " Ehehe."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        n "And besides..."
-        n "I gotta get you into good habits by yourself before I'm there to make you."
-        n "Ahaha!{w=0.2} I'm kidding,{w=0.1} [player]!{w=0.2} I'm kidding!"
-        n "...Mostly."
+        n 1fsqsm "And besides..."
+        n 1usqss "I gotta get you into good habits by yourself before I'm there to make you."
+        n 1fchgn "Ahaha!{w=0.2} I'm kidding,{w=0.1} [player]!{w=0.2} I'm kidding!"
+        n 1fsqsm "...Mostly."
 
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "Love you, [player]~!{w=0.2} Ehehe."
+            n 1uchsm "Love you, [player]~!{w=0.2} Ehehe."
+            return
 
-    n "Now...{w=0.3} where were we?"
+    n 1fllss "Now...{w=0.3} where were we?"
     return
 
 # Natsuki discusses her favourite season with the player, and asks the player theirs
