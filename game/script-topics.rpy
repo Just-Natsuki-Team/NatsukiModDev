@@ -529,23 +529,36 @@ init 5 python:
     )
 
 label talk_careful_spending:
-    n "..."
-    n "..."
-    n "Hmm...?"
-    n "O-{w=0.1}oh!{w=0.2} Sorry!{w=0.2} I spaced out!"
-    n "I was just thinking..."
-    n "It's so easy to spend more than you mean nowadays,{w=0.1} you know?"
-    n "Like...{w=0.3} it seems everywhere you go,{w=0.1} there's a sale,{w=0.1} or deals,{w=0.1} or some kind of limited offer..."
-    n "And everywhere accepts all kinds of ways of paying,{w=0.1} too.{w=0.2} They make it super convenient!"
-    n "I guess what I'm getting at is...{w=0.3} try to be careful of your spending habits,{w=0.1} okay?"
-    n "Try not to buy junk you don't need{w=0.1} -{w=0.1} think of how much you threw away the last time you cleaned out!"
-    n "T-{w=0.1}that's not to say you shouldn't treat yourself,{w=0.1} of course!{w=0.2} You deserve cool stuff too!"
-    n "Money can't buy happiness...{w=0.3} but it sure as hell makes finding it easier.{w=0.2} Ahaha!"
-    n "Well, anyway.{w=0.2} Just try to think a little before you spend,{w=0.1} [player]{w=0.1} -{w=0.1} that's all I'm saying!"
+    n 1tllsr "..."
+    n 1fllsr "..."
+    n 1tnmpu "Hmm...?"
+    n 1uwdgs "O-{w=0.1}oh!{w=0.2}{nw} " 
+    extend 1flrbg " A-{w=0.1}aha!{w=0.2}{nw}" 
+    extend 1flrdvl " I spaced out!"
+    n 1unmaj "I was just thinking..."
+    n 1flrbo "It's so easy to spend more than you mean nowadays,{w=0.1} you know?"
+    n 1flrpu "Like...{w=0.3} it seems everywhere you go,{w=0.1} there's a sale,{w=0.1} or deals,{w=0.1} or some kind of limited offer..."
+    n 1unmpu "And every place accepts all kinds of ways of paying,{w=0.1} too.{w=0.2}{nw}" 
+    extend 1fsrpo " They make it super convenient!"
+    n 1fsrpo "I guess what I'm getting at is...{w=0.3} try to be careful of your spending habits,{w=0.1} okay?"
+    n 1unmss "Try not to buy junk you don't need{w=0.1} -{w=0.1}{nw}" 
+    extend 1flrbg " think of how much you threw away the last time you cleaned out!"
+    n 1uwdajl "T-{w=0.1}that's not to say you shouldn't treat yourself,{w=0.1} of course!{w=0.2}{nw}" 
+    extend 1flrssl " You deserve cool stuff too!"
+    n 1flrss "Money can't buy happiness...{w=0.3}{nw}" 
+    extend 1fchgn " but it sure as hell makes finding it easier.{w=0.2}{nw}" 
+    extend 1uchbs " Ahaha!"
+    n 1nllss "Well,{w=0.1} anyway.{w=0.2}{nw}" 
+    extend 1tnmsg " Just try to think a little before you spend,{w=0.1} [player]{w=0.1} -{w=0.1}{nw}" 
+    extend 1uchbs " that's all I'm saying!"
 
     if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        n "Besides..."
-        n "Gotta save up all we can for when we hang out,{w=0.1} right?{w=0.2} Ehehe."
+        n 1nslbg "Besides..."
+        n 1fsqsm "Gotta save up all we can for when we hang out,{w=0.1} right?{w=0.2}{nw}" 
+        extend 1uchsm " Ehehe."
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            n 1uchbgl "Love you,{w=0.1} [player]~!"
 
     return
 
