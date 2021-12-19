@@ -13,7 +13,7 @@ default persistent.jn_player_appearance_hair_length = None
 default persistent.jn_player_appearance_hair_colour = None
 default persistent.jn_player_appearance_height_cm = None
 
-# Hobby datal
+# Hobby data
 default persistent.jn_player_gaming_frequency = None
 default persistent.jn_player_can_drive = None
 
