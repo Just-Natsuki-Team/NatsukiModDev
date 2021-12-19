@@ -169,9 +169,7 @@ init python:
             (0, 0), "{0}{1}/face/eyebrows/{2}.png".format(_BASE_SPRITE_PATH, pose, eyebrows), # Brows
             (0, 0), _BASE_SPRITE_PATH + "/desk/table-normal.png" # Table
         ])
-        store.utils.log(store.utils.pretty_print(renpy.display.layout.LiveComposite(
-            *lc_args
-        )))
+
         # Generate and return the sprite
         return renpy.display.layout.LiveComposite(
             *lc_args

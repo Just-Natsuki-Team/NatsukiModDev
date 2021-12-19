@@ -14,6 +14,29 @@ label ch30_autoload:
     #FALL THROUGH
 
 label ch30_holiday_check:
+    python:
+        import datetime
+        import easter
+        import store.utils as utils
+
+        current_day_and_month = (datetime.datetime.now().date().day, datetime.datetime.now().date().month)
+        current_year_easter = easter.easter(datetime.datetime.now().date().year)
+
+        if current_day_and_month[0] == 1 and current_day_and_month[0] == 1:
+            utils.log("Today is a holiday: New Year!")
+
+        elif current_day_and_month[0] == current_year_easter.day and current_day_and_month[0] == current_year_easter.month:
+            utils.log("Today is a holiday: Easter!")
+
+        elif current_day_and_month[0] == 31 and current_day_and_month[0] == 10:
+            utils.log("Today is a holiday: Halloween!")
+
+        elif current_day_and_month[0] == 25 and current_day_and_month[0] == 12:
+            utils.log("Today is a holiday: Christmas!")
+
+        else:
+            utils.log("Holiday check complate: today is not a holiday.")
+
     #Run holiday checks and push/setup holiday related things here
 
     #FALL THROUGH
