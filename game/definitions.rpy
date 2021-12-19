@@ -768,6 +768,8 @@ init -999 python in utils:
                 return False
 
 init python in utils:
+    import easter
+    from Enum import Enum
 
     TIME_BLOCK_EARLY_MORNING = 0
     TIME_BLOCK_MID_MORNING = 1
@@ -775,6 +777,16 @@ init python in utils:
     TIME_BLOCK_AFTERNOON = 3
     TIME_BLOCK_EVENING = 4
     TIME_BLOCK_NIGHT = 5
+
+    class JNHolidays(Enum):
+        none = 0
+        new_year = 1
+        easter = 2
+        halloween = 3
+        christmas = 4
+
+        def __str__(self):
+            return self.name
 
     def get_current_session_length():
         """
@@ -857,6 +869,38 @@ init python in utils:
 
         else:
             return TIME_BLOCK_NIGHT
+
+    def get_holiday_for_date(input_date):
+        """
+        Gets the holiday - if any - corresponding to the supplied date.
+
+        IN:
+            - date - date object to test against.
+
+        OUT:
+            - JNHoliday representing the holiday for the supplied date.
+        """
+
+        if not isinstance(input_date, datetime.date):
+            raise TypeError("input_date for holiday check must be of type date; type given was {0}".format(type(input_date)))
+
+        input_day_and_month = (input_date.day, input_date.month)
+        input_year_easter = easter.easter(input_date.year)
+
+        if input_day_and_month[0] == 1 and input_day_and_month[0] == 1:
+            return JNHolidays.new_year
+
+        elif input_day_and_month[0] == input_year_easter.day and input_day_and_month[0] == input_year_easter.month:
+            return JNHolidays.easter
+
+        elif input_day_and_month[0] == 31 and input_day_and_month[0] == 10:
+            return JNHolidays.halloween
+
+        elif input_day_and_month[0] == 25 and input_day_and_month[0] == 12:
+            return JNHolidays.christmas
+
+        else:
+            return JNHolidays.none
 
 init python in utils:
     KEY_VALID = False
