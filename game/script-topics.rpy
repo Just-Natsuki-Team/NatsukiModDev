@@ -454,24 +454,28 @@ init 5 python:
     )
 
 label talk_staying_active:
-    n "Hey,{w=0.1} [player]..."
-    n "You should get out more."
-    n "..."
-    n "Ahaha!{w=0.2} No,{w=0.1} really!{w=0.2} I'm serious!"
-    n "At school,{w=0.1} it's easy to get exercise since we gotta walk everywhere,{w=0.1} and we have sports and such..."
-    n "I don't think it's so straightforward when you have a job and other stuff to worry about,{w=0.1} though."
-    n "I'm not gonna lie and say I work out or anything like that..."
-    n "But I try to get walks in if I can.{w=0.2} Any excuse to hit the bookshop is reason enough for me!"
-    n "You should give it a shot too,{w=0.1} [player]!"
-    n "It doesn't have to be a hike or anything crazy{w=0.1} - {w=0.1}it's more about keeping at it,{w=0.1} really."
-    n "Even a daily ten minute walk will help you feel refreshed and awake!"
-    n "So make sure you get out soon,{w=0.1} [player]."
+    n 1nnmbo "Hey,{w=0.1} [player]..."
+    n 1nllsr "You should get out more."
+    n 1fsqsm "..."
+    n 1fchbg "Ahaha!{w=0.2} No,{w=0.1} really!{w=0.2} I'm serious!"
+    n 1ulraj "At school,{w=0.1} it's easy to get exercise since we gotta walk everywhere,{w=0.1} and we have sports and such..."
+    n 1nsqsf "It's not so straightforward when you have a job and other stuff to worry about,{w=0.1} though."
+    n 1fllss "I'm not gonna lie and say I work out or anything like that..."
+    n 1ullaj "But I try to get walks in if I can.{w=0.2}{nw}"
+    extend 1uchgn " Any excuse to hit the bookshop is reason enough for me!"
+    n 1unmbg "You should give it a shot too,{w=0.1} [player]!"
+    n 1nlrss "It doesn't have to be a hike or anything crazy{w=0.1} -{w=0.1}{nw}" 
+    extend 1nnmsm " it's more about keeping at it,{w=0.1} really."
+    n 1fchsm "Even a daily ten minute walk will help you feel refreshed and awake!"
+    n 1ullaj "So...{w=0.3}{nw}" 
+    extend 1fnmss " make sure you get out soon,{w=0.1} [player]."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n "I wanna see you fighting fit!{w=0.2} Ehehe."
+        n 1fchbg "I wanna see you fighting fit!{w=0.2}{nw}" 
+        extend 1uchsm " Ehehe."
         return
 
-    n "I'm counting on you!"
+    n 1fchbg "I'm counting on you!"
     return
 
 # Natsuki discusses stress and offers ways she finds useful to deal with it
