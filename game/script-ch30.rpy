@@ -80,8 +80,16 @@ label ch30_loop:
     #Run our checks
     python:
         _now = datetime.datetime.now()
+
         if LAST_MINUTE_CHECK.minute is not _now.minute:
             minute_check()
+
+            if LAST_MINUTE_CHECK.minute in (0, 15, 30, 45):
+                quarter_hour_check()
+
+            if LAST_MINUTE_CHECK.minute in (0, 30):
+                half_hour_check()
+
             LAST_MINUTE_CHECK = _now
 
         if LAST_HOUR_CHECK is not _now.hour:
@@ -188,6 +196,30 @@ init python:
                         queue(random.choice(topic_pool).label)
                         LAST_TOPIC_CALL = datetime.datetime.now()
         
+        pass
+
+    def quarter_hour_check():
+        """
+        Runs every fifteen minutes during breaks between topics
+        """
+
+        # Run through all externally-registered quarter-hour check actions
+        if len(jn_plugins.quarter_hour_check_calls) > 0:
+            for action in jn_plugins.quarter_hour_check_calls:
+                eval(action.statement)
+
+        pass
+
+    def half_hour_check():
+        """
+        Runs every thirty minutes during breaks between topics
+        """
+
+        # Run through all externally-registered half-hour check actions
+        if len(jn_plugins.half_hour_check_calls) > 0:
+            for action in jn_plugins.half_hour_check_calls:
+                eval(action.statement)
+
         pass
 
     def hour_check():

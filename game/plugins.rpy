@@ -5,6 +5,8 @@ init -1 python in jn_plugins:
 
     # Plugins for minute/hour/day checks
     minute_check_calls = []
+    quarter_hour_check_calls = []
+    half_hour_check_calls = []
     hour_check_calls = []
     day_check_calls = []
 
@@ -12,9 +14,11 @@ init -1 python in jn_plugins:
     extras_options = []
 
     class JNRegisteredActionType(Enum):
-        minute = 1
-        hour = 2
-        day = 3
+        minute = 0
+        quarter_hour = 1
+        half_hour = 2
+        hour = 3
+        day = 4
 
     class JNRegisteredAction():
         def __init__(self, statement, priority):
@@ -37,6 +41,7 @@ init -1 python in jn_plugins:
             - priority - integer order in which the statement should be executed
         """
 
+        # Type validation - reject invalid argument
         if not isinstance(statement, basestring):
             raise TypeError("statement for registered action must be of type basestring; type given was {0}".format(type(statement)))
 
@@ -47,16 +52,31 @@ init -1 python in jn_plugins:
             raise TypeError("action_type for registered action must be of type JNRegisteredActionType; type given was {0}".format(type(action_type)))
         
         if action_type == JNRegisteredActionType.minute:
+            # Add action to minute roster
             global minute_check_calls
             minute_check_calls.append(JNRegisteredAction(statement, priority))
             minute_check_calls.sort(key = lambda action: action.priority)
 
+        elif action_type == JNRegisteredActionType.quarter_hour:
+            # Add action to quarter-hour roster
+            global quarter_hour_check_calls
+            quarter_hour_check_calls.append(JNRegisteredAction(statement, priority))
+            quarter_hour_check_calls.sort(key = lambda action: action.priority)
+
+        elif action_type == JNRegisteredActionType.half_hour:
+            # Add action to half-hour roster
+            global half_hour_check_calls
+            half_hour_check_calls.append(JNRegisteredAction(statement, priority))
+            half_hour_check_calls.sort(key = lambda action: action.priority)
+
         elif action_type == JNRegisteredActionType.hour:
+            # Add action to hourly roster
             global hour_check_calls
             hour_check_calls.append(JNRegisteredAction(statement, priority))
             hour_check_calls.sort(key = lambda action: action.priority)
 
         elif action_type == JNRegisteredActionType.day:
+            # Add action to daily roster
             global day_check_calls
             hour_check_calls.append(JNRegisteredAction(statement, priority))
             hour_check_calls.sort(key = lambda action: action.priority)
