@@ -83,14 +83,13 @@ label ch30_loop:
 
         if LAST_MINUTE_CHECK.minute is not _now.minute:
             minute_check()
+            LAST_MINUTE_CHECK = _now
 
             if LAST_MINUTE_CHECK.minute in (0, 15, 30, 45):
                 quarter_hour_check()
 
             if LAST_MINUTE_CHECK.minute in (0, 30):
                 half_hour_check()
-
-            LAST_MINUTE_CHECK = _now
 
         if LAST_HOUR_CHECK is not _now.hour:
             hour_check()
