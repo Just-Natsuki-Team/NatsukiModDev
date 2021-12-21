@@ -492,7 +492,7 @@ label admission_insecure:
         n 1fnmbo "I don't care if people think you're falling behind.{w=0.2} I know you'll catch up."
         n 1kllsl "Just...{w=0.3} give yourself time and space,{w=0.1} [player]."
         n 1kwmsl "These thoughts you're having...{w=0.3} they can lead you to some really bad places.{w=0.2} Trust me."
-        n 1fwmsl "I'm not gonna let that happen without a fight{w=0.1} -{w=0.1}but you gotta fight too,{w=0.1} [player].{w=0.2} Got it?"
+        n 1fwmsl "I'm not gonna let that happen without a fight{w=0.1} -{w=0.1} but you gotta fight too,{w=0.1} [player].{w=0.2} Got it?"
         menu:
             "Okay.":
                 n 1fnmsl "...Good.{w=0.2} Or you'll have me to deal with too."
