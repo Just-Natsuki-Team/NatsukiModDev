@@ -15,10 +15,11 @@ init 1 python:
     config.keymap['input_move_select_home'] = ['ctrl_K_HOME']
     config.keymap['input_move_select_end'] = ['ctrl_K_END']
 
-init 999 python in Input_overwrite:
+init 999 python in jn_input_overwrite:
     import pygame
     pygame.scrap.init()
 
+    ## Add some new vars
     # select_start_pos - does not change while selecting, set on selection start
     #  if is None -> nothing is selected
     # select_end_pos - moves about
@@ -277,7 +278,7 @@ init 999 python in Input_overwrite:
         self.update_text(self.content, self.editable, check_size = True)
 
 
-    # Add new functions to the Input class
+    # Add new methods to the Input class
     setattr(renpy.display.behavior.Input, 'move_selected_left', move_selected_left)
     setattr(renpy.display.behavior.Input, 'move_selected_right', move_selected_right)
     setattr(renpy.display.behavior.Input, 'move_selected_home', move_selected_home)
@@ -291,10 +292,14 @@ init 999 python in Input_overwrite:
     setattr(renpy.display.behavior.Input, 'get_selected', get_selected)
     setattr(renpy.display.behavior.Input, 'remove_selected', remove_selected)
 
+    # renpy's function for detecting and processing keyboard events
     map_event = renpy.display.behavior.map_event
 
-    # event function overwrite
+    # `event` overwrite
     def event_ov(self, ev, x, y, st):
+        """
+            editted renpy's `event` method
+        """
         self.old_caret_pos = self.caret_pos
 
         if not self.editable:
