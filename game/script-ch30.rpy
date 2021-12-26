@@ -232,13 +232,13 @@ init python:
                 eval(action.statement)
 
         # Draw background
-        $ main_background.draw(full_redraw=True)
+        main_background.draw(full_redraw=True)
 
         if persistent.jn_random_weather and utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
-            $ jn_atmosphere.show_random_sky()
+            jn_atmosphere.show_random_sky()
 
         elif utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
-            $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
+            jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
 
         # Update outfit
         if jn_outfits.get_outfit_for_time_block().reference_name is not jn_outfits.current_outfit_name:
