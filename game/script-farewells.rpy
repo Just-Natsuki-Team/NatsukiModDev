@@ -12,7 +12,7 @@ init python in jn_farewells:
         """
         return [
             ("I'm going to sleep.", "farewell_option_sleep"),
-            ("I'm going to eat.", "farewell_option_eat"),
+            ("I'm going to go eat something.", "farewell_option_eat"),
             ("I'm going out somewhere.", "farewell_option_going_out"),
             ("I'm going to work.", "farewell_option_work"),
             ("I'm going to school.", "farewell_option_school"),

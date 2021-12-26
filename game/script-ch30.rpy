@@ -225,16 +225,20 @@ init python:
         """
         Runs ever hour during breaks between topics
         """
-        main_background.draw(True)
         
         # Run through all externally-registered hour check actions
         if len(jn_plugins.hour_check_calls) > 0:
             for action in jn_plugins.hour_check_calls:
                 eval(action.statement)
 
-        # Show a new random weather outside if allowed to do so
-        if persistent.jn_random_weather:
-            jn_atmosphere.show_random_sky()
+        # Draw background
+        $ main_background.draw(full_redraw=True)
+
+        if persistent.jn_random_weather and utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
+            $ jn_atmosphere.show_random_sky()
+
+        elif utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
+            $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
 
         # Update outfit
         if jn_outfits.get_outfit_for_time_block().reference_name is not jn_outfits.current_outfit_name:
@@ -258,8 +262,6 @@ init python:
 
 label talk_menu:
     python:
-        import pprint
-
         # Get the flavor text for the talk menu, based on affinity state
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_LOVE_ENAMORED)
@@ -300,7 +302,7 @@ label talk_menu:
         "I want to say sorry...":
             jump player_apologies_start
 
-        "Goodbye.":
+        "Goodbye...":
             jump farewell_menu
 
         "Nevermind.":
