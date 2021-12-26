@@ -6,6 +6,19 @@ init python in jn_farewells:
 
     FAREWELL_MAP = dict()
 
+    def get_farewell_options():
+        """
+        Returns the list of all farewell options when saying Goodbye to Natsuki.
+        """
+        return [
+            ("I'm going to sleep.", "farewell_option_sleep"),
+            ("I'm going to eat.", "farewell_option_eat"),
+            ("I'm going out somewhere.", "farewell_option_going_out"),
+            ("I'm going to work.", "farewell_option_work"),
+            ("I'm going to school.", "farewell_option_school"),
+            ("I'm going to do something else.", "farewell_option_misc_activity")
+        ]
+
     def select_farewell():
         """
         Picks a random farewell, accounting for affinity
@@ -50,6 +63,243 @@ init 1 python:
 label farewell_start:
     $ push(jn_farewells.select_farewell())
     jump call_next_topic
+
+# Non-generic farewells - each of these should be registered under FAREWELL_OPTIONS. Affectionate + only.
+
+label farewell_option_sleep:
+
+    if jn_admissions.last_admission_type in (jn_admissions.TYPE_SICK , jn_admissions.TYPE_TIRED):
+        # Sick/tired
+        n 1kllsl "...[player]."
+        n 1knmpu "I...{w=0.3} think that'd be a good idea.{w=0.2} You know."
+        $ feeling_like = "feeling sick" if jn_admissions.last_admission_type == jn_admissions.TYPE_SICK else "feeling tired"
+        n 1klrpu "Given what you said earlier and all about [feeling_like].{w=0.2}{nw}"
+        extend 1knmss " Go get some rest,{w=0.1} 'kay?{w=0.2} We can always talk later anyway." 
+        n 1kllbg "Right?"
+        n 1kchsm "Sleep well,{w=0.1} [player]!"
+
+    elif utils.get_current_hour() > 22 or utils.get_current_hour() < 6:
+        # Late night
+        n 1fnmaj "A-{w=0.1}and I should think so, too!{w=0.2}{nw}"
+        extend 1tnmem " It took you that long to notice the time?!"
+        n 1fllpo "Jeez...{w=0.3}{nw}"
+        extend 1nllpo " but better late than never,{w=0.1} I guess."
+        n 1fllsm "Ehehe.{w=0.2}{nw}"
+        extend 1fchsm " Sleep well, [player]!"
+
+    elif utils.get_current_hour() >= 21:
+        # Standard night
+        n 1unmaj "About ready to turn in,{w=0.1} huh?"
+        n 1ullaj "That's fine...{w=0.3}{nw}" 
+        extend 1fslaj " I guess."
+        n 1fcssm "...Ehehe."
+        n 1uchbg "No worries!{w=0.2} Sleep well,{w=0.1} [player]!"
+
+    elif utils.get_current_hour() >= 19:
+        # Early night
+        n 1unmaj "Huh?{w=0.2} You're taking an early night?"
+        n 1ullaj "That's fine.{w=0.2} I suppose."
+        n 1fsqpo "You better stay up with me later though.{w=0.2}{nw}"
+        extend 1fchsg " Ehehe."
+        n 1fchbg "Night,{w=0.1} [player]!"
+
+    else:
+        # Nap
+        n 1tnmpu "Huh?{w=0.2} You're taking naps now?{w=0.2}{nw}"
+        extend 1tsqca " ...Really?"
+        n 1fllca "Jeez...{w=0.3} I swear I'm gonna be feeding you next at this rate..."
+        n 1fsqsm "..."
+        n 1fchbg "Ehehe.{w=0.2} I'm kidding,{w=0.1} I'm kidding!{w=0.2}{nw}" 
+        extend 1ullbg " Sheesh."
+        n 1uchbg "See you later,{w=0.1} [player]~!"
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n 1fchbg "Don't let the bedbugs bite!"
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        n 1uchbgf "Love you~!"
+
+    jump _quit
+
+label farewell_option_eat:
+
+    if jn_admissions.last_admission_type == jn_admissions.TYPE_HUNGRY:
+        n 1fcsgs "W-{w=0.1}well, yeah!{w=0.2} Go get something already,{w=0.1} dummy!"
+        n 1fllpo "Jeez..."
+        n 1fnmpo "Just make it something healthy,{w=0.1} got it?"
+        n 1fllsm "...Ehehe.{w=0.2}{nm}"
+        extend 1fchbg " Enjoy,{w=0.1} [player]!"
+
+    elif utils.get_current_hour() in (7, 8):
+        n 1fnmaj "You better!{w=0.2}{nw}" 
+        extend 1fslca " You {i}do{/i} know what they say about breakfast,{w=0.1} right?"
+        n 1fllsm "...Ehehe.{w=0.2}{nm}"
+        n 1fchbg "Bon appetit,{w=0.1} [player]!"
+
+    elif utils.get_current_hour() in (12, 13):
+        n 1unmaj "Heading out for lunch,{w=0.1} [player]?"
+        n 1nlrpu "That's cool,{w=0.1} that's cool."
+        n 1nsqsm "Just remember though...{w=0.3}{nm}" 
+        extend 1fsqss " you are what you eat~."
+        n 1fchsm "...Ehehe.{w=0.2}{nw}" 
+        extend 1uchsm " Enjoy!"
+
+    elif utils.get_current_hour() in (18, 19):
+        n 1unmaj "Dinner time,{w=0.1} huh?{w=0.2}{nw}" 
+        extend 1unmbg " No probs!"
+        n 1nlrpu "Just...{w=0.3}{nw}" 
+        extend 1flrpo " make sure it isn't a ready meal.{w=0.2}{nw}" 
+        extend 1fsqpo " Got it?"
+        n 1fsqsm "...Ehehe."
+        n 1fchbg "Enjoy,{w=0.1} [player]~!"
+
+    else:
+        n 1unmaj "Oh?{w=0.2} You're gonna grab a bite to eat?"
+        n 1nllaj "That's fine."
+        n 1nsqpo "You better not be filling up on junk though, [player]."
+        n 1fsqsm "...Ehehe.{w=0.2}{nw}"
+        extend 1uchbg " Enjoy~!"
+
+    jump _quit
+
+label farewell_option_going_out:
+    if utils.get_holiday_for_date() == utils.JNHolidays.new_years_eve:
+        n 1tsqbg "Oho?{w=0.2} Going out for the new year,{w=0.1} are we?{w=0.2}{nw}"
+        extend 1fchbg " Can't say I blame you!"
+        n 1ullaj "Just...{w=0.3}{nw}" 
+        extend 1nsqsl " don't be an idiot out there,{w=0.1} okay?"
+        n 1fslsl "I don't you messing around with drinks and fireworks like an complete moron and getting hurt."
+        n 1ullpu "But...{w=0.3}{nw}" 
+        extend 1uchbg " yeah!{w=0.2} Have fun out there,{w=0.1} [player]!"
+        n 1usqbg "And if I don't see you sooner?"
+        n 1fbkbs "Happy new year!"
+
+    elif utils.get_holiday_for_date() == utils.JNHolidays.easter:
+        n 1unmaj "Oh?{w=0.2} You're heading off now?"
+        n 1unmbg "Did you have a meal planned for today or something?"
+        n 1tlrsm "It {i}is{/i} Easter,{w=0.1} after all!{w=0.2}{nw}"
+        extend 1uchsm " Ehehe." 
+        n 1ullss "Well,{w=0.1} anyway.{w=0.2}{nw}" 
+        extend 1uchgn " See you later,{w=0.1} [player]!"
+
+    elif utils.get_holiday_for_date() == utils.JNHolidays.halloween:
+        n 1usqss "Ooh?{w=0.2} Heading out for Halloween,{w=0.1} [player]?"
+        n 1fsqsm "Just don't forget..."
+        n 1fsqbg "I want my share of treats too!"
+        n 1fchgn "Ehehe.{w=0.2}{nw}"
+        extend 1uchbg " Have fun~!"
+
+    elif utils.get_holiday_for_date() == utils.JNHolidays.christmas_eve:
+        n 1unmbo "Oh?{w=0.2} You're heading out for Christmas Eve?"
+        n 1kllsl "Well...{w=0.3} okay."
+        n 1kllajl "...You will be back in time for Christmas though...{w=0.3}{nw}" 
+        extend 1knmsll " right?"
+        n 1klrbgl "...Ahaha.{w=0.3}" 
+        extend 1kchbg " See you later,{w=0.1} [player]!"
+
+    elif utils.get_holiday_for_date() == utils.JNHolidays.christmas_day:
+        n 1unmbo "Huh?{w=0.2} You're heading off now?"
+        n 1kllsl "Well...{w=0.3} alright."
+        n 1kllss "Thanks for dropping by today though,{w=0.1} [player]."
+        n 1kcsssl "It...{w=0.3} really meant a lot to me."
+        n 1kchss "See you later,{w=0.1} [player]!{w=0.2}{nw}" 
+        extend 1kchbg " And Merry Christmas!"
+
+    else:
+        n 1unmaj "Oh?{w=0.2} You're heading out,{w=0.1} [player]?"
+        n 1fchbg "No worries!{w=0.2} I'll see you later then,{w=0.1} 'kay?"
+        n 1nchbg "Bye-{w=0.1}bye,{w=0.1} [player]!"
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        n 1uchbgf "Love you~!"
+
+    jump _quit
+
+label farewell_option_work:
+    if utils.get_current_hour() >= 20 or utils.get_current_hour() <= 4:
+        n 1knmaj "H-{w=0.1}huh?{w=0.2} You're going to work now?"
+        $ time_concern = "late" if utils.get_current_hour() >= 20 else "early"
+        n 1kllaj "But...{w=0.3} it's super [time_concern] though,{w=0.1} [player]..."
+        n 1kllun "..."
+        n 1fnmun "Just...{w=0.3} be careful,{w=0.1} alright?"
+        extend 1fsqpo " And you {i}better{/i} come visit when you get back."
+        n 1fllsm "...Ehehe."
+        n 1fchbg "Do your best,{w=0.1} [player]!"
+
+    else:
+        n 1unmaj "Oh?{w=0.2} You're working today?"
+
+        if not utils.get_is_weekday():
+            n 1uwdaj "A-{w=0.1}and on a weekend,{w=0.1} too?{w=0.2}{nw}" 
+            extend 1fslpu " Man..."
+
+        n 1nlrpo "It sucks that you've gotta work,{w=0.1} but I get it.{w=0.2} I guess."
+        n 1fnmpo "...You better come finish when you visit though."
+        n 1fsqsm "Ehehe."
+        n 1fchbg "Take it easy,{w=0.1} [player]!{w=0.2} Don't let anyone push you around!"
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+        n 1uchbgf "You got this,{w=0.1} [chosen_endearment]!{w=0.2} Love you~!"
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        n 1uchbgl "I believe in you,{w=0.1} [chosen_tease]!"
+
+    jump _quit
+
+label farewell_option_school:
+    if utils.get_current_hour() >= 20 or utils.get_current_hour() <= 4:
+        n 1twdem "...School?{w=0.2} At this hour?"
+
+        if not utils.get_is_weekday():
+            extend 1uskwr "A-{w=0.1}and on a {i}weekend{/i} too?!"
+
+        n 1fbkgs "What the hell kind of school is thaaaat?!"
+        n 1kllpo "Jeez.{w=0.2}{nw}" 
+        extend 1fllpo " And I thought my school experience was bad enough."
+        n 1kcspu "Just...{w=0.3}{nw}" 
+        extend 1knmpu " take care getting there,{w=0.1} alright?"
+        $ time_concern = "late" if utils.get_current_hour() >= 20 else "early"
+        extend 1fllsr "It's really [time_concern],{w=0.1} after all."
+        n 1kllss "Study hard,{w=0.1} [player]!"
+
+    else:
+        if utils.get_is_weekday():
+            n 1unmaj "Off to school,{w=0.1} [player]?{w=0.2}{nw}"
+            extend 1nchsm " No worries!"
+
+        else:
+            n 1tnmpu "Huh?{w=0.2} You're at school today?{w=0.2}{nw}"
+            extend 1nsqpu "...On a {i}weekend{/i}?"
+            n 1fslpu "..."
+            n 1fsqpo "Gross..."
+
+        n 1tsqsm "Sucks to be you though,{w=0.1} huh?{w=0.2}{nw}"
+        extend 1fchsm " Ehehe."
+        n 1fchbg "No slacking off,{w=0.1} [player]!{w=0.2} I'll see you later!"
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+        n 1uchbgf "Love you, [chosen_endearment]!"
+
+    jump _quit
+
+label farewell_option_misc_activity:
+    n 1knmpu "H-{w=0.1}huh?{w=0.2}{nw}" 
+    extend 1kllaj " And you gotta leave to do that too?"
+    n 1fcsun "Nnnnnn...{w=0.3}{nw}" 
+    extend 1kcsaj " okay."
+    n 1fnmpol "...But you better come visit once you're done." 
+    extend 1klrpo "{w=0.2} Got it?"
+    n 1kllpo "See you soon,{w=0.1} [player]!"
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        n 1kllssf "Love you!"
+
+    jump _quit
+
+# Generic farewells
 
 # LOVE+ farewells
 init 5 python:

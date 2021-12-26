@@ -114,8 +114,18 @@ init python in jn_outfits:
         reference_name="jn_pajamas_morning_alt",
         unlocked=True,
         clothes="star_pajamas",
-        hairstyle="super_messy",
-        accessory=None
+        hairstyle="bedhead",
+        accessory="hairbands/green"
+    )
+
+    DEFAULT_OUTFIT_CHRISTMAS = Outfit(
+        display_name="Natsu Claus",
+        reference_name="jn_natsu_claus",
+        unlocked=True,
+        clothes="casual",
+        hairstyle="down",
+        accessory="hairbands/green",
+        headgear="natsu_claus_hat"
     )
 
     # Default outfit schedules
