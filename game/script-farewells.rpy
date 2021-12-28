@@ -16,6 +16,8 @@ init python in jn_farewells:
             ("I'm going out somewhere.", "farewell_option_going_out"),
             ("I'm going to work.", "farewell_option_work"),
             ("I'm going to school.", "farewell_option_school"),
+            ("I'm going to play something.", "farewell_option_play"),
+            ("I'm going to do some studying.", "farewell_option_studying"),
             ("I'm going to do something else.", "farewell_option_misc_activity")
         ]
 
@@ -296,6 +298,38 @@ label farewell_option_misc_activity:
 
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
         n 1kllssf "Love you!"
+
+    jump _quit
+
+label farewell_option_play:
+    n 1fsqaj "...Really,{w=0.5} [player]?"
+    n 1nslpu "You'd seriously rather play a {i}game{/i}...{w=0.2}{nw}" 
+    extend 1fsqsf " than chill out with me?"
+    n 1fcssl "..."
+    n 1uchgn "Well,{w=0.1} your loss!{w=0.2}{nw}"
+    extend 1uchlg " Ahaha!"
+    n 1nllbg "No,{w=0.1} no.{w=0.2} It's fine.{w=0.2} You go do that, [player].{w=0.2}{nw}"
+    extend 1nsqbg " Besides..."
+    n 1usqct "You sure could use the practice,{w=0.1} huh?{w=0.2}{nw}"
+    extend 1fchsm " Ehehe."
+    $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+    n 1fchbg "Catch you later,{w=0.1} [chosen_tease]!"
+
+    jump _quit
+
+label farewell_option_studying:
+    $ player_initial = list(player)[0]
+    n 1fskgsl "[player_initial]-{w=0.1}[player]!"
+    n 1fllanl "If I'd known you were meant to be studying I'd have thrown you out myself!{w=0.2}{nw}"
+    extend 1fllpo " Geez..."
+    n 1fnmpo "I really hope you don't have exams tomorrow or something like that..."
+    n 1flrpo "But either way,{w=0.1} you'll be fine.{w=0.2} Just go!{w=0.5}{nw}"
+    extend 1fwdaj " Go!"
+    n 1fchgn "...Shoo,{w=0.1} you dummy!{w=0.2} Ehehe.{w=0.2}{nw}"
+    extend " We'll talk later!"
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        n 1uchbgf "Love you~!"
 
     jump _quit
 
