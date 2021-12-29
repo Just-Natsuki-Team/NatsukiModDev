@@ -569,7 +569,7 @@ label apology_unhealthy:
         n 1knmajl "What am I gonna do with you?"
         n 1kllsll "Honestly..."
         n 1kwmsl "You know I just want what's best for you,{w=0.1} right?"
-        n 1klrsl "It... hurts when you don't take care of yourself."
+        n 1klrsl "It...{w=0.3} hurts when you don't take care of yourself."
         n 1kcssl "..."
         n 1knmss "Thanks,{w=0.1} [player].{w=0.2} I accept your apology."
         n 1knmbo "Just please...{w=0.3} take better care of yourself,{w=0.1} alright?"
@@ -591,7 +591,7 @@ label apology_unhealthy:
         n 1flrsl "Firstly,{w=0.1} thanks for the apology.{w=0.2} If you even meant it,{w=0.1} anyway."
         n 1fcsaj "But I'm really struggling to see why I should care."
         n 1fcssl "..."
-        n 1fnmsl "Just... take more care of yourself."
+        n 1fnmsl "Just...{w=0.3} take more care of yourself."
         n 1fsqsl "...And while you're at it, perhaps try taking better care of me.{w=0.2} Thanks."
         $ relationship("affinity+")
 
