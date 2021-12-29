@@ -1251,6 +1251,17 @@ screen preferences():
                             field="jn_random_weather",
                             true_value=True,
                             false_value=False)
+
+                    vbox:
+                        style_prefix "check"
+                        label _("Outfits")
+                        textbutton _("Auto Change") action [
+                            ToggleField(
+                                object=persistent,
+                                field="jn_natsuki_auto_outfit_change_enabled",
+                                true_value=True,
+                                false_value=False)
+                        ]
           
                     ## Additional vboxes of type "radio_pref" or "check_pref" can be
                     ## added here, to add additional creator-defined preferences.

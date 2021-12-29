@@ -35,6 +35,9 @@ label ch30_init:
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
             persistent.last_apology_type = jn_apologies.TYPE_PROLONGED_LEAVE
 
+        else:
+            relationship("affinity+")
+
         # Add to the total visits counter and set the last visit date
         persistent.jn_total_visit_count += 1
         persistent.jn_last_visited_date = datetime.datetime.now()
@@ -61,7 +64,8 @@ label ch30_init:
         $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
 
     # Outfit selection
-    $ jn_outfits.set_outfit_for_time_block()
+    if persistent.jn_natsuki_auto_outfit_change_enabled:
+        $ jn_outfits.set_outfit_for_time_block()
 
     # Check key
     $ utils.KEY_VALID = utils.validate_key()
@@ -207,6 +211,8 @@ init python:
             for action in jn_plugins.quarter_hour_check_calls:
                 eval(action.statement)
 
+        jn_random_music.random_music_change_check()
+
         pass
 
     def half_hour_check():
@@ -225,16 +231,20 @@ init python:
         """
         Runs ever hour during breaks between topics
         """
-        main_background.draw(True)
         
         # Run through all externally-registered hour check actions
         if len(jn_plugins.hour_check_calls) > 0:
             for action in jn_plugins.hour_check_calls:
                 eval(action.statement)
 
-        # Show a new random weather outside if allowed to do so
-        if persistent.jn_random_weather:
+        # Draw background
+        main_background.draw(full_redraw=True)
+
+        if persistent.jn_random_weather and utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
             jn_atmosphere.show_random_sky()
+
+        elif utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
+            jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
 
         # Update outfit
         if jn_outfits.get_outfit_for_time_block().reference_name is not jn_outfits.current_outfit_name:
@@ -258,8 +268,6 @@ init python:
 
 label talk_menu:
     python:
-        import pprint
-
         # Get the flavor text for the talk menu, based on affinity state
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_LOVE_ENAMORED)
@@ -300,8 +308,8 @@ label talk_menu:
         "I want to say sorry...":
             jump player_apologies_start
 
-        "Goodbye.":
-            jump farewell_start
+        "Goodbye...":
+            jump farewell_menu
 
         "Nevermind.":
             jump ch30_loop
@@ -343,6 +351,26 @@ label player_select_topic(is_repeat_topics=False):
 
     jump ch30_loop
 
+label farewell_menu:
+    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+
+        python:
+            # Sort the farewell options by their display name
+            avaliable_farewell_options = jn_farewells.get_farewell_options()
+            avaliable_farewell_options.sort(key = lambda option: option[0])
+            avaliable_farewell_options.append(("Goodbye.", "farewell_start"))
+
+        call screen scrollable_choice_menu(avaliable_farewell_options, ("Nevermind.", None))
+
+        if isinstance(_return, basestring):
+            show natsuki at jn_center
+            $ renpy.jump(_return)
+
+    else:
+        jump farewell_start
+
+    jump ch30_loop
+
 label extras_menu:
     python:
         avaliable_extras_options = []
@@ -354,9 +382,6 @@ label extras_menu:
 
         # Sort the extras options by their display name
         avaliable_extras_options.sort(key = lambda option: option[0])
-
-        for x in avaliable_extras_options:
-            utils.log("{0}, {1}".format(x[0], x[1]))
 
     call screen scrollable_choice_menu(avaliable_extras_options, ("Nevermind.", None))
 

@@ -123,6 +123,7 @@ label music_menu:
 
     # We failed to get the custom music, prompt player to correct
     if not success:
+        show natsuki at jn_center
         n 1kllunl "Uhmm..."
         n 1knmunl "Hey...{w=0.3} [player]?"
         n 1klrbgl "Something went wrong when I was trying look for your music..."
@@ -131,6 +132,30 @@ label music_menu:
         n 1knmbgl "If you forgot -{w=0.1} anything you want me to play needs to be in the {a=[folder]}custom_music{/a} folder."
         n 1uwdaj "Oh!{w=0.2} Right!{w=0.2} And it also needs to be in {i}.mp3,{w=0.1} .ogg or .wav{/i} format -{w=0.1} just look for the letters after the period in the file name!"
         jump ch30_loop
+
+    elif preferences.get_volume("music") == 0:
+        show natsuki at jn_center
+        n 1tsqaj "Uh...{w=0.5}{nw}"
+        extend 1tslaj " huh."
+        n 1tsgsg "And {i}how{/i} exactly do you plan to hear any music with the volume at zero?"
+        n 1fchbg "Jeez, [player].{w=0.5}{nw}" 
+        extend 1uchgn " How do you even get dressed in the morning with memory like that?!"
+        n 1ullss "Well, whatever.{w=0.5}{nw}"
+        extend 1unmaj " So..."
+        menu:
+            n "Did you want me to turn the music back up so you can pick something?"
+
+            "Yes.":
+                n 1nchsm "Okey-{w=0.1}dokey!{w=0.2} Just a second..."
+                $ preferences.set_volume("music", 0.75)
+                n 1fcsbg "And there we are!"
+                n 1ullss "So...{w=0.5}{nw}"
+                extend 1unmaj " What did you wanna listen to?"
+
+            "No.":
+                n 1fcsbg "The sound of silence it is,{w=0.1} then!{w=0.5}{nw}"
+                extend 1fchsm " Ehehe."
+                jump ch30_loop
 
     else:
         $ chosen_quip = renpy.substitute(random.choice(jn_custom_music._CHOOSE_PLAY_MUSIC_QUIPS))
@@ -149,6 +174,12 @@ label music_menu:
             n 1knmsm "[chosen_no_music_quip]"
             $ music_title = "No music"
             n 1uchsm "There you go, [player]!"
+
+            if persistent.jn_random_music_enabled:
+                # Stop playing random music, if enabled
+                $ persistent.jn_random_music_enabled = False
+                n 1unmaj "Oh{w=0.1} -{w=0.1} and I'll stop switching around the music too."
+
             stop music fadeout 3
             
         elif _return == "random":

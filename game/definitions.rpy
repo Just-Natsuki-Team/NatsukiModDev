@@ -780,10 +780,12 @@ init python in utils:
 
     class JNHolidays(Enum):
         none = 0
-        new_year = 1
+        new_years_day = 1
         easter = 2
         halloween = 3
-        christmas = 4
+        christmas_eve = 4
+        christmas_day = 5
+        new_years_eve = 6
 
         def __str__(self):
             return self.name
@@ -870,12 +872,12 @@ init python in utils:
         else:
             return TIME_BLOCK_NIGHT
 
-    def get_holiday_for_date(input_date):
+    def get_holiday_for_date(input_date=None):
         """
         Gets the holiday - if any - corresponding to the supplied date.
 
         IN:
-            - date - date object to test against.
+            - date - date object to test against. Defaults to the current date.
 
         OUT:
             - JNHoliday representing the holiday for the supplied date.
@@ -884,11 +886,17 @@ init python in utils:
         if not isinstance(input_date, datetime.date):
             raise TypeError("input_date for holiday check must be of type date; type given was {0}".format(type(input_date)))
 
-        input_day_and_month = (input_date.day, input_date.month)
-        input_year_easter = easter.easter(input_date.year)
+        if input_date is None:
+            _date = datetime.datetime.now()
+            input_day_and_month = (_date.day, _date.month)
+            input_year_easter = easter.easter(_date.year)
 
+        else:
+            input_day_and_month = (input_date.day, input_date.month)
+            input_year_easter = easter.easter(input_date.year)
+        
         if input_day_and_month[0] == 1 and input_day_and_month[0] == 1:
-            return JNHolidays.new_year
+            return JNHolidays.new_years_day
 
         elif input_day_and_month[0] == input_year_easter.day and input_day_and_month[0] == input_year_easter.month:
             return JNHolidays.easter
@@ -896,8 +904,14 @@ init python in utils:
         elif input_day_and_month[0] == 31 and input_day_and_month[0] == 10:
             return JNHolidays.halloween
 
+        elif input_day_and_month[0] == 24 and input_day_and_month[0] == 12:
+            return JNHolidays.christmas_eve
+
         elif input_day_and_month[0] == 25 and input_day_and_month[0] == 12:
-            return JNHolidays.christmas
+            return JNHolidays.christmas_day
+
+        elif input_day_and_month[0] == 31 and input_day_and_month[0] == 12:
+            return JNHolidays.new_years_eve
 
         else:
             return JNHolidays.none
@@ -930,6 +944,7 @@ define audio.card_shuffle = "mod_assets/sfx/card_shuffle.mp3"
 define audio.card_place = "mod_assets/sfx/card_place.mp3"
 define audio.drawer = "mod_assets/sfx/drawer.mp3"
 define audio.smack = "mod_assets/sfx/smack.mp3"
+define audio.clothing_ruffle = "mod_assets/sfx/clothing_ruffle.mp3"
 
 # Looped sound effects
 define audio.rain_muffled = "mod_assets/sfx/rain_muffled.mp3"

@@ -162,15 +162,9 @@ init python in jn_screenshots:
         global __screenshots_blocked
         __screenshots_blocked = False
 
-    def take_screenshot():
-        """
-        Checks if screenshots are enabled, and if so will start the screenshot flow
-        """
-        if __screenshots_enabled and not __screenshots_blocked:
-            renpy.call("screenshot_dialogue")
-
     #Register this as the new screenshot hotkey
-    store.jn_register_keymap("attempt_screenshot", take_screenshot, "s")
+    for screenshot_key in ("s", "alt_K_s", "alt_shift_K_s", "noshift_K_s"):
+        store.jn_register_label_keymap("attempt_screenshot", "screenshot_dialogue", screenshot_key)
 
 # Attempt to produce a screenshot, render associated effects
 label take_screenshot:
@@ -179,7 +173,7 @@ label take_screenshot:
         $ utils.log("Screenshot taken by player at {0}".format(datetime.datetime.now().strftime(r"%d/%m/%Y, %H:%M")))
 
     else:
-        n "No, [player].{w=0.1} I'm keeping that turned off."
+        n 1fsqsr "No, [player].{w=0.1} I'm keeping that turned off."
         return
 
     hide window
@@ -189,6 +183,10 @@ label take_screenshot:
 
 # Handles dialogue and mechanics related to screenshots
 label screenshot_dialogue:
+
+    if jn_screenshots.are_screenshots_blocked():
+        return
+
     $ jn_screenshots.disable_screenshots()
 
     if persistent.jn_first_screenshot_taken is None:
@@ -268,7 +266,7 @@ label screenshot_dialogue:
         $ jn_screenshots.revoke_screenshot_permission()
 
     # Too many bad screenshots in a row; Natsuki is upset
-    elif jn_screenshots.bad_screenshot_streak >= 3 and jn_affinity.get_affinity_state() < jn_affinity.ENAMORED:
+    elif jn_screenshots.bad_screenshot_streak >= 3:
 
         show natsuki 1fsqsr
 
@@ -283,7 +281,7 @@ label screenshot_dialogue:
         n 1fcswr "Okay,{w=0.1} I think I've had enough!{w=0.2} I'm just gonna turn this off for now."
         return
 
-    elif jn_screenshots.is_allowed_to_take_screenshot():
+    elif not jn_screenshots.is_allowed_to_take_screenshot():
         # Update tracking and take shot
         $ persistent.jn_screenshot_bad_shots_total += 1
         $ jn_screenshots.bad_screenshot_streak += 1
@@ -310,7 +308,7 @@ label screenshot_dialogue:
             $ relationship("affinity-")
             $ relationship("trust-")
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
             # Pick the reaction and response; Natsuki is irritated
             $ chosen_reaction = renpy.substitute(renpy.random.choice(jn_screenshots.affectionate_normal_reactions))
             $ chosen_response = renpy.substitute(renpy.random.choice(jn_screenshots.affectionate_normal_responses))
@@ -323,10 +321,7 @@ label screenshot_dialogue:
             $ relationship("affinity-")
             $ relationship("trust-")
 
-        elif jn_affinity.is_state_within_range(
-            affinity_state=jn_affinity.get_affinity_state(),
-            affinity_range=(jn_affinity.UPSET, jn_affinity.DISTRESSED)
-        ):
+        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
 
             # Pick the reaction and response; Natsuki is clearly upset
             $ chosen_reaction = renpy.substitute(renpy.random.choice(jn_screenshots.upset_minus_reactions))

@@ -6,6 +6,7 @@ default persistent.jn_natsuki_current_eyewear = None
 default persistent.jn_natsuki_current_headgear = None
 default persistent.jn_natsuki_current_necklace = None
 default persistent.jn_natsuki_saved_outfits = {}
+default persistent.jn_natsuki_auto_outfit_change_enabled = True
 
 init python in jn_outfits:
     import random
@@ -114,8 +115,18 @@ init python in jn_outfits:
         reference_name="jn_pajamas_morning_alt",
         unlocked=True,
         clothes="star_pajamas",
-        hairstyle="super_messy",
-        accessory=None
+        hairstyle="bedhead",
+        accessory="hairbands/green"
+    )
+
+    DEFAULT_OUTFIT_CHRISTMAS = Outfit(
+        display_name="Natsu Claus",
+        reference_name="jn_natsu_claus",
+        unlocked=True,
+        clothes="casual",
+        hairstyle="down",
+        accessory="hairbands/green",
+        headgear="natsu_claus_hat"
     )
 
     # Default outfit schedules

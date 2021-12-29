@@ -99,13 +99,37 @@ init python:
         heavy = 1
         pooled = 2
 
+        def __str__(self):
+            return self.name
+
+    class JNEmote(Enum):
+        affection = 1
+        anger = 2
+        dazzle = 3
+        dread = 4
+        exclamation = 5
+        idea = 6
+        merry = 7
+        questionmark = 8
+        sad = 9
+        sigh = 10
+        shock = 11
+        sleepy = 12
+        somber = 13
+        speech = 14
+        surprise = 15
+
+        def __str__(self):
+            return self.name
+
     def jn_generate_natsuki_sprite(
         pose,
         eyebrows,
         eyes,
         mouth,
         blush=None,
-        tears=None
+        tears=None,
+        emote=None
     ):
         """
         """
@@ -164,6 +188,11 @@ init python:
         #     lc_args.extend([
         #         (0, 0), "{0}{1}/eyewear/[persistent.jn_natsuki_current_eyewear].png".format(_BASE_SPRITE_PATH, pose)
         #     ])
+
+        if emote:
+            lc_args.extend([
+                (0, 0), "{0}{1}/emote/{2}.png".format(_BASE_SPRITE_PATH, pose, blush)
+            ])
 
         lc_args.extend([
             (0, 0), "{0}{1}/face/eyebrows/{2}.png".format(_BASE_SPRITE_PATH, pose, eyebrows), # Brows
@@ -256,6 +285,24 @@ init 1 python:
         "l": JNBlush.light,
     }
 
+    EMOTE_MAP = {
+        "af": JNEmote.affection,
+        "an": JNEmote.anger,
+        "dz": JNEmote.dazzle,
+        "dr": JNEmote.dread,
+        "ex": JNEmote.exclamation,
+        "id": JNEmote.idea,
+        "mr": JNEmote.merry,
+        "qm": JNEmote.questionmark,
+        "sd": JNEmote.sad,
+        "sh": JNEmote.sigh,
+        "sk": JNEmote.shock,
+        "sl": JNEmote.sleepy,
+        "so": JNEmote.somber,
+        "sp": JNEmote.speech,
+        "su": JNEmote.surprise 
+    }
+
     def _parse_exp_code(exp_code):
         """
         Parses the given expression code and returns the **kwargs to create the sprite if it is valid
@@ -286,6 +333,7 @@ init 1 python:
 
         blush = None
         tears = None
+        emote = None
 
         #If we still have an expcode, we know we have either tears, blush, or both
         while exp_code:
@@ -488,6 +536,23 @@ init 1 python:
 # <blush> - The amount of blush on Natsuki's face
 # f - full
 # l - light
+#
+# <emote> - Emotion effects around Natsuki, E.G lightbulb representing an idea, etc.
+# af - affection
+# an - anger
+# dz - dazzle
+# dr - dread
+# ex - exclamation
+# id - idea
+# mr - merry
+# qm - questionmark
+# sd - sad
+# sh - sigh
+# sk - shock
+# sl - sleepy
+# so - somber
+# sp - speech
+# su - surprise
 
 #TODO: Fix shows without expressions showing silhouettes. They should show the current exp as normal.
 #Only then can we delete these hardcoded exps.
