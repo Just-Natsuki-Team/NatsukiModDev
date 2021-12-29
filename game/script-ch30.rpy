@@ -35,6 +35,9 @@ label ch30_init:
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
             persistent.last_apology_type = jn_apologies.TYPE_PROLONGED_LEAVE
 
+        else:
+            relationship("affinity+")
+
         # Add to the total visits counter and set the last visit date
         persistent.jn_total_visit_count += 1
         persistent.jn_last_visited_date = datetime.datetime.now()
@@ -207,6 +210,8 @@ init python:
         if len(jn_plugins.quarter_hour_check_calls) > 0:
             for action in jn_plugins.quarter_hour_check_calls:
                 eval(action.statement)
+
+        jn_random_music.random_music_change_check()
 
         pass
 
