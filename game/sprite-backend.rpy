@@ -300,7 +300,7 @@ init 1 python:
         "sl": JNEmote.sleepy,
         "so": JNEmote.somber,
         "sp": JNEmote.speech,
-        "su": JNEmote.surprise 
+        "su": JNEmote.surprise
     }
 
     def _parse_exp_code(exp_code):
@@ -342,12 +342,11 @@ init 1 python:
 
             #Check if part is a tear
             if exp_part in TEARS_MAP:
-                tears = TEARS_MAP[exp_part]
+                tears = exp_part
 
             #Otherwise it might be a blush
             elif exp_part in BLUSH_MAP:
-                blush = BLUSH_MAP[exp_part]
-
+                blush = exp_part
 
         return {
             "pose": POSE_MAP[pose],
