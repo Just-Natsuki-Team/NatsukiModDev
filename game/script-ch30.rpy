@@ -61,7 +61,8 @@ label ch30_init:
         $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
 
     # Outfit selection
-    $ jn_outfits.set_outfit_for_time_block()
+    if persistent.jn_natsuki_auto_outfit_change_enabled:
+        $ jn_outfits.set_outfit_for_time_block()
 
     # Check key
     $ utils.KEY_VALID = utils.validate_key()

@@ -6,6 +6,7 @@ default persistent.jn_natsuki_current_eyewear = None
 default persistent.jn_natsuki_current_headgear = None
 default persistent.jn_natsuki_current_necklace = None
 default persistent.jn_natsuki_saved_outfits = {}
+default persistent.jn_natsuki_auto_outfit_change_enabled = True
 
 init python in jn_outfits:
     import random

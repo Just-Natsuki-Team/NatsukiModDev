@@ -87,7 +87,7 @@ label compliment_amazing:
             n 1kwmpul "Y{w=0.1}-you really think so,{w=0.1} [player]?"
             n 1kllsrl "..."
             n 1fcssrl "I-{w=0.1}I don't like to admit it,{w=0.1} you know."
-            n 1klrssl "But...{w=0.3} that means... a lot to me,{w=0.1} [player]."
+            n 1klrssl "But...{w=0.3} that means...{w=0.3} a lot to me,{w=0.1} [player]."
             $ chosen_descriptor = random.choice(jn_globals.DEFAULT_PLAYER_DESCRIPTORS)
             n 1kwmnvl "Really.{w=0.2} Thank you.{w=0.2} You're honestly [chosen_descriptor]."
             n 1klrnvl "..."
@@ -163,7 +163,7 @@ label compliment_beautiful:
             n 1klrbgl "T-{w=0.1}thanks,{w=0.1} [player]."
 
             if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-                n 1kwmsmf "... I love you,{w=0.1} [player]...{w=0.3} Ahaha..."
+                n 1kwmsmf "...I love you,{w=0.1} [player]...{w=0.3} Ahaha..."
 
             $ relationship("affinity+")
 

@@ -826,7 +826,7 @@ label admission_tired:
         n 1fnmem "I'm not surprised you're tired!{w=0.2} Have you even seen the time?!"
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
         n 1knmpu "It's the middle of the night,{w=0.1} [chosen_tease]!"
-        n 1fcsanl "Nnnn... you should really turn in soon,{w=0.1} you know..."
+        n 1fcsanl "Nnnn...{w=0.3} you should really turn in soon,{w=0.1} you know..."
         n 1fnmpol "I don't want you to be all cranky later because you didn't get enough sleep."
         n 1flrpol "And neither do you,{w=0.1} I'm sure."
         n 1kcspo "Just...{w=0.3} try to get to bed soon,{w=0.1} okay?{w=0.2} {i}Before{/i} your keyboard becomes your pillow."
