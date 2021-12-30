@@ -551,7 +551,8 @@ init -990 python in jn_globals:
         "jerk",
         "idiot",
         "moron",
-        "stupid"
+        "stupid",
+        "loser"
     ]
 
     # Flavor text for the talk menu at high affinity
@@ -951,6 +952,9 @@ define audio.rain_muffled = "mod_assets/sfx/rain_muffled.mp3"
 
 # Music
 define audio.test_bgm = "mod_assets/bgm/background_test_music.ogg"
+
+# Voicing - we disable TTS
+define config.tts_voice = None
 
 ##Character Definitions
 define mc = DynamicCharacter('player', image='mc', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")

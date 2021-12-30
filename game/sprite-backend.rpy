@@ -191,7 +191,7 @@ init python:
 
         if emote:
             lc_args.extend([
-                (0, 0), "{0}{1}/emote/{2}.png".format(_BASE_SPRITE_PATH, pose, blush)
+                (0, 0), "{0}{1}/emote/{2}.png".format(_BASE_SPRITE_PATH, pose, emote)
             ])
 
         lc_args.extend([
@@ -286,21 +286,21 @@ init 1 python:
     }
 
     EMOTE_MAP = {
-        "af": JNEmote.affection,
-        "an": JNEmote.anger,
-        "dz": JNEmote.dazzle,
-        "dr": JNEmote.dread,
-        "ex": JNEmote.exclamation,
-        "id": JNEmote.idea,
-        "mr": JNEmote.merry,
-        "qm": JNEmote.questionmark,
-        "sd": JNEmote.sad,
-        "sh": JNEmote.sigh,
-        "sk": JNEmote.shock,
-        "sl": JNEmote.sleepy,
-        "so": JNEmote.somber,
-        "sp": JNEmote.speech,
-        "su": JNEmote.surprise
+        "f": JNEmote.affection,
+        "n": JNEmote.anger,
+        "z": JNEmote.dazzle,
+        "d": JNEmote.dread,
+        "e": JNEmote.exclamation,
+        "i": JNEmote.idea,
+        "m": JNEmote.merry,
+        "q": JNEmote.questionmark,
+        "s": JNEmote.sad,
+        "h": JNEmote.sigh,
+        "k": JNEmote.shock,
+        "l": JNEmote.sleepy,
+        "o": JNEmote.somber,
+        "p": JNEmote.speech,
+        "u": JNEmote.surprise
     }
 
     def _parse_exp_code(exp_code):
@@ -339,7 +339,7 @@ init 1 python:
         while exp_code:
             exp_part = exp_code[0]
             exp_code = exp_code[1:]
-
+            
             #Check if part is a tear
             if exp_part in TEARS_MAP:
                 tears = exp_part
@@ -348,6 +348,10 @@ init 1 python:
             elif exp_part in BLUSH_MAP:
                 blush = exp_part
 
+            # Finally, emote
+            elif exp_part in EMOTE_MAP:
+                emote = exp_part
+
         return {
             "pose": POSE_MAP[pose],
             "eyebrows": EYEBROW_MAP[eyebrows],
@@ -355,6 +359,7 @@ init 1 python:
             "mouth": MOUTH_MAP[mouth],
             "tears": TEARS_MAP.get(tears),
             "blush": BLUSH_MAP.get(blush),
+            "emote": EMOTE_MAP.get(emote)
         }
 
     def _generate_image(exp_code):
@@ -537,21 +542,21 @@ init 1 python:
 # l - light
 #
 # <emote> - Emotion effects around Natsuki, E.G lightbulb representing an idea, etc.
-# af - affection
-# an - anger
-# dz - dazzle
-# dr - dread
-# ex - exclamation
-# id - idea
-# mr - merry
-# qm - questionmark
-# sd - sad
-# sh - sigh
-# sk - shock
-# sl - sleepy
-# so - somber
-# sp - speech
-# su - surprise
+# f - affection
+# n - anger
+# z - dazzle
+# d - dread
+# e - exclamation
+# i - idea
+# m - merry
+# q - questionmark
+# s - sad
+# h - sigh
+# k - shock
+# l - sleepy
+# o - somber
+# p - speech
+# u - surprise
 
 #TODO: Fix shows without expressions showing silhouettes. They should show the current exp as normal.
 #Only then can we delete these hardcoded exps.

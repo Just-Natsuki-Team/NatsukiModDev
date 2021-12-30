@@ -448,7 +448,7 @@ label apology_screenshots:
         n 1fcsun "..."
         n 1knmsl "Thanks for the apology,{w=0.1} [player].{w=0.2} I appreciate it."
 
-        if jn_screenshots.player_screenshots_blocked:
+        if jn_screenshots.are_screenshots_blocked():
             n 1klrsl "But...{w=0.3} I'm going to keep the camera switched off -{w=0.1} at least for now."
             n 1kplsl "I hope you can understand why."
 
@@ -462,7 +462,7 @@ label apology_screenshots:
         n 1fcssl  "..."
         n 1nllbo "Thanks for coming clean to me,{w=0.1} [player].{w=0.2} I appreciate it."
 
-        if jn_screenshots.player_screenshots_blocked:
+        if jn_screenshots.are_screenshots_blocked():
             n 1fnmaj "But...{w=0.3} the camera is staying off for now."
             n 1flrbo "Thanks for understanding."
 
@@ -474,7 +474,7 @@ label apology_screenshots:
         n 1fcssf "..."
         n 1fsqaj "...Fine.{w=0.2} I suppose I'll accept your apology..."
 
-        if jn_screenshots.player_screenshots_blocked:
+        if jn_screenshots.are_screenshots_blocked():
             n 1fnmsl "But the camera stays off."
             n 1fsqbo "I don't think I need to explain why."
 

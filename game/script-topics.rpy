@@ -4301,6 +4301,14 @@ label talk_vtubers:
     n 1uchbs "Ahaha!"
     return
 
+label emote:
+    n 1fsqpoln "..."
+    n 1uwdajk "!"
+    n 1ksluns "..."
+    n 1ncsemh "..."
+    n 1uspgsz "!!"
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop

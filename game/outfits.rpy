@@ -281,7 +281,7 @@ label outfits_time_of_day_change:
     else:
         n 1fsqsl "I'm changing.{w=0.75}{nw}"
 
-    play audio drawer
+    play audio clothing_ruffle
     $ jn_outfits.set_outfit_for_time_block()
     with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
     
