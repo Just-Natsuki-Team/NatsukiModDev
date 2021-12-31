@@ -170,7 +170,7 @@ label farewell_option_going_out:
         extend 1fchbg " Can't say I blame you!"
         n 1ullaj "Just...{w=0.5}{nw}" 
         extend 1nsqsl " don't be an idiot out there,{w=0.1} okay?"
-        n 1fslsl "I don't you messing around with drinks and fireworks like an complete moron and getting hurt."
+        n 1fslsl "I don't want you messing around with drinks and fireworks like a complete moron and getting hurt."
         n 1ullpu "But...{w=0.5}{nw}" 
         extend 1uchbg " yeah!{w=0.2} Have fun out there,{w=0.1} [player]!"
         n 1usqbg "And if I don't see you sooner?"
