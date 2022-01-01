@@ -238,7 +238,7 @@ init python:
                 eval(action.statement)
 
         # Draw background
-        main_background.draw(full_redraw=True)
+        main_background.check_redraw()
 
         if persistent.jn_random_weather and utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
             jn_atmosphere.show_random_sky()

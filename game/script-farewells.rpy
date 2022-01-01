@@ -3,6 +3,9 @@ default persistent._farewell_database = dict()
 init python in jn_farewells:
     import random
     import store
+    import store.jn_affinity as jn_affinity
+    import store.jn_globals as jn_globals
+    import store.utils as utils
 
     FAREWELL_MAP = dict()
 
@@ -16,9 +19,10 @@ init python in jn_farewells:
             ("I'm going out somewhere.", "farewell_option_going_out"),
             ("I'm going to work.", "farewell_option_work"),
             ("I'm going to school.", "farewell_option_school"),
-            ("I'm going to play something.", "farewell_option_play"),
+            ("I'm going to play something else.", "farewell_option_play"),
             ("I'm going to do some studying.", "farewell_option_studying"),
-            ("I'm going to do something else.", "farewell_option_misc_activity")
+            ("I'm going to do something else.", "farewell_option_misc_activity"),
+            ("I'm going to do some chores.", "farewell_option_chores")
         ]
 
     def select_farewell():
@@ -29,17 +33,9 @@ init python in jn_farewells:
         """
         kwargs = dict()
 
-        if random.randint(1,10) == 5:
-            kwargs.update(
-                {"additional_properties":[
-                    ("is_time_sensitive", store.utils.get_current_session_length().total_seconds() / 60 < 30),
-                    ("has_stay_option", not store.jn_globals.player_already_stayed_on_farewell)
-                ]}
-            )
-
         farewell_pool = store.Topic.filter_topics(
             FAREWELL_MAP.values(),
-            affinity=store.jn_affinity.get_affinity_state(),
+            affinity=jn_affinity.get_affinity_state(),
             conditional=True,
             excludes_categories=["Failsafe"],
             **kwargs
@@ -230,8 +226,27 @@ label farewell_option_work:
 
     else:
         n 1unmaj "Oh?{w=0.2} You're working today?"
+        $ holiday_check = utils.get_holiday_for_date()
 
-        if not utils.get_is_weekday():
+        if holiday_check == utils.JNHolidays.easter:
+            n 1uskgs "...And on Easter,{w=0.1} of all days?{w=0.5}{nw}" 
+            extend 1fslpo " Man..."
+
+        elif holiday_check == utils.JNHolidays.christmas_eve:
+            n 1fskgsl "...On Christmas Eve?{w=0.5}{nw}"
+            extend 1fcseml " You've gotta be kidding me..."
+
+        elif holiday_check == utils.JNHolidays.christmas_day:
+            n 1fskwrl "...On {i}Christmas{/i}?!{w=0.5}{nw}"
+            extend 1fcseml " Ugh..."
+            n 1fslpol "..."
+            n 1fslajl "Well..."
+
+        elif holiday_check == utils.JNHolidays.new_years_eve:
+            n 1fskgsl "...And on New Year's Eve,{w=0.1} too?!{w=0.5}{nw}"
+            extend 1fcseml " Jeez..."
+
+        elif not utils.get_is_weekday():
             n 1uwdaj "A-{w=0.1}and on a weekend,{w=0.1} too?{w=0.5}{nw}" 
             extend 1fslpu " Man..."
 
@@ -251,8 +266,22 @@ label farewell_option_work:
     jump _quit
 
 label farewell_option_school:
+    $ holiday_check = utils.get_holiday_for_date()
+
     if utils.get_current_hour() >= 20 or utils.get_current_hour() <= 4:
         n 1twdem "...School?{w=0.2} At this hour?"
+
+        if holiday_check == utils.JNHolidays.easter:
+            n 1uskgs "...And on Easter,{w=0.1} of all days?}"
+
+        elif holiday_check == utils.JNHolidays.christmas_eve:
+            n 1fskgsl "...On Christmas Eve?"
+
+        elif holiday_check == utils.JNHolidays.christmas_day:
+            n 1fskwrl "...On {i}Christmas{/i}?!"
+
+        elif holiday_check == utils.JNHolidays.new_years_eve:
+            n 1fskgsl "...And on New Year's Eve,{w=0.1} too?!"
 
         if not utils.get_is_weekday():
             extend 1uskwr "A-{w=0.1}and on a {i}weekend{/i} too?!"
@@ -267,7 +296,25 @@ label farewell_option_school:
         n 1kllss "Study hard,{w=0.1} [player]!"
 
     else:
-        if utils.get_is_weekday():
+        if holiday_check == utils.JNHolidays.easter:
+            n 1uskgs "...And on Easter,{w=0.1} of all days?{w=0.5}{nw}" 
+            extend 1fslpo " Man..."
+
+        elif holiday_check == utils.JNHolidays.christmas_eve:
+            n 1fskgsl "...On Christmas Eve?{w=0.5}{nw}"
+            extend 1fcseml " You've gotta be kidding me..."
+
+        elif holiday_check == utils.JNHolidays.christmas_day:
+            n 1fskwrl "...On {i}Christmas{/i}?!{w=0.5}{nw}"
+            extend 1fcseml " Ugh..."
+            n 1fslpol "..."
+            n 1fslajl "Well..."
+
+        elif holiday_check == utils.JNHolidays.new_years_eve:
+            n 1fskgsl "...And on New Year's Eve,{w=0.1} too?!{w=0.5}{nw}"
+            extend 1fcseml " Jeez..."
+
+        elif utils.get_is_weekday():
             n 1unmaj "Off to school,{w=0.1} [player]?{w=0.5}{nw}"
             extend 1nchsm " No worries!"
 
@@ -333,6 +380,37 @@ label farewell_option_studying:
 
     jump _quit
 
+label farewell_option_chores:
+    if utils.get_current_hour() >= 20 or utils.get_current_hour() <= 4:
+        n 1tnmaj "...Chores?{w=0.5}{nw}"
+        extend 1tsqem " At {i}this{/i} time?"
+        n 1nllbo "I gotta say,{w=0.1} [player]."
+        n 1nsqdv "You're either dedicated or desperate.{w=0.5}{nw}"
+        extend 1nchsm " Ehehe."
+        n 1ullss "Well,{w=0.1} whatever.{w=0.5}{nw}" 
+        extend 1tnmss " Just hurry up and go sleep,{w=0.1} 'kay?"
+        
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            n 1uchbg "Later,{w=0.1} [player]!"
+            extend 1uchbgf " Love you~!"
+
+        else:
+            n 1fchbg "Later,{w=0.1} [player]!"
+
+    else:
+        n 1tnmsg "Stuck on chore duty,{w=0.1} huh?"
+        n 1nchsm "Ehehe.{w=0.2} Yeah,{w=0.1} that's fine.{w=0.5}{nw}"
+        extend 1fchgn " You go take care of your clean streak!"
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            n 1uchbg "Later,{w=0.1} [player]!{w=0.5}{nw}"
+            extend 1uchbgf " Love you~!"
+
+        else:
+            n 1fchbg "Ehehe.{w=0.2} Later,{w=0.1} [player]!"
+
+    jump _quit
+
 # Generic farewells
 
 # LOVE+ farewells
@@ -342,11 +420,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_you_mean_the_world_to_me",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -364,11 +438,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_dont_like_saying_goodbye",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -387,11 +457,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_counting_on_you",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -410,11 +476,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_do_your_best",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -434,11 +496,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_rooting_for_you",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -459,11 +517,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_me_to_deal_with",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -482,11 +536,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_wish_you_could_stay_forever",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -508,11 +558,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_affectionate_enamored_was_having_fun",
             unlocked=True,
-            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -532,11 +578,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_affectionate_enamored_waiting_for_you",
             unlocked=True,
-            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -556,11 +598,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_affectionate_enamored_ill_be_okay",
             unlocked=True,
-            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -580,11 +618,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_affectionate_enamored_dont_make_me_find_you",
             unlocked=True,
-            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -604,11 +638,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_affectionate_enamored_take_care_for_both",
             unlocked=True,
-            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -628,11 +658,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_affectionate_enamored_enjoy_our_time_together",
             unlocked=True,
-            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -651,11 +677,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_affectionate_enamored_see_me_soon",
             unlocked=True,
-            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -675,11 +697,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_happy_affectionate_going_now",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -695,11 +713,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_happy_affectionate_heading_off",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -716,11 +730,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_happy_affectionate_stay_safe",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -737,11 +747,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_happy_affectionate_take_care",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -758,11 +764,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_happy_affectionate_see_me_soon",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -781,11 +783,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_normal_happy_see_you_later",
             unlocked=True,
-            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -800,11 +798,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_normal_happy_later",
             unlocked=True,
-            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -820,11 +814,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_normal_happy_goodbye",
             unlocked=True,
-            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -840,11 +830,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_normal_happy_kay",
             unlocked=True,
-            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -860,11 +846,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_normal_happy_see_ya",
             unlocked=True,
-            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -881,11 +863,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_upset_distressed_bye",
             unlocked=True,
-            affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -900,11 +878,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_upset_distressed_later",
             unlocked=True,
-            affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -919,11 +893,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_upset_distressed_kay",
             unlocked=True,
-            affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -938,11 +908,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_upset_distressed_goodbye",
             unlocked=True,
-            affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -978,11 +944,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_broken_ruined_yeah",
             unlocked=True,
-            affinity_range=(jn_aff.RUINED, jn_aff.BROKEN),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.RUINED, jn_aff.BROKEN)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -997,11 +959,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_broken_ruined_yep",
             unlocked=True,
-            affinity_range=(jn_aff.RUINED, jn_aff.BROKEN),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.RUINED, jn_aff.BROKEN)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1016,11 +974,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_broken_ruined_uh_huh",
             unlocked=True,
-            affinity_range=(jn_aff.RUINED, jn_aff.BROKEN),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.RUINED, jn_aff.BROKEN)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1035,11 +989,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_broken_ruined_nothing_to_say",
             unlocked=True,
-            affinity_range=(jn_aff.RUINED, jn_aff.BROKEN),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.RUINED, jn_aff.BROKEN)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1055,11 +1005,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_broken_ruined_kay",
             unlocked=True,
-            affinity_range=(jn_aff.RUINED, jn_aff.BROKEN),
-            additional_properties={
-                "has_stay_option": False,
-                "is_time_sensitive": False
-            }
+            affinity_range=(jn_aff.RUINED, jn_aff.BROKEN)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1077,11 +1023,8 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_short_session_ask",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
-            additional_properties={
-                "has_stay_option": True,
-                "is_time_sensitive": True
-            }
+            conditional="not jn_globals.player_already_stayed_on_farewell and utils.get_current_session_length().total_seconds() / 60 < 30",
+            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1157,11 +1100,8 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_short_session_ask_alt",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.ENAMORED),
-            additional_properties={
-                "has_stay_option": True,
-                "is_time_sensitive": True
-            }
+            conditional="not jn_globals.player_already_stayed_on_farewell and utils.get_current_session_length().total_seconds() / 60 < 30",
+            affinity_range=(jn_aff.HAPPY, jn_aff.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1231,11 +1171,8 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_fake_confidence_ask",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE),
-            additional_properties={
-                "has_stay_option": True,
-                "is_time_sensitive": False
-            }
+            conditional="not jn_globals.player_already_stayed_on_farewell",
+            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1274,11 +1211,8 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_pleading_ask",
             unlocked=True,
-            affinity_range=(jn_aff.ENAMORED, jn_aff.LOVE),
-            additional_properties={
-                "has_stay_option": True,
-                "is_time_sensitive": False
-            }
+            conditional="not jn_globals.player_already_stayed_on_farewell",
+            affinity_range=(jn_aff.ENAMORED, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1319,11 +1253,8 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_gentle_ask",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE),
-            additional_properties={
-                "has_stay_option": True,
-                "is_time_sensitive": False
-            }
+            conditional="not jn_globals.player_already_stayed_on_farewell",
+            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
