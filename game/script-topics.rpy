@@ -2800,6 +2800,7 @@ label talk_natsukis_hairstyle:
 
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        n 1usgss "Either way though,{w=0.1} [player]..."
         n 1fcssml "I'm pretty sure I already let my hair down around you,{w=0.1} [chosen_tease].{w=0.2} That qualifies, right?"
         n 1uchgnl "Ahaha!"
 
