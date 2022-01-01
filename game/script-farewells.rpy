@@ -116,7 +116,7 @@ label farewell_option_sleep:
         n 1uchbg "See you later,{w=0.1} [player]~!"
 
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n 1fchbg "Don't let the bedbugs bite!"
+        n 1fchbgl "Don't let the bedbugs bite!"
 
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
         n 1uchbgf "Love you~!"

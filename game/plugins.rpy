@@ -78,8 +78,8 @@ init -1 python in jn_plugins:
         elif action_type == JNRegisteredActionType.day:
             # Add action to daily roster
             global day_check_calls
-            hour_check_calls.append(JNRegisteredAction(statement, priority))
-            hour_check_calls.sort(key = lambda action: action.priority)
+            day_check_calls.append(JNRegisteredAction(statement, priority))
+            day_check_calls.sort(key = lambda action: action.priority)
 
     def register_extras_option(option_name, visible_if, jump_label):
         """

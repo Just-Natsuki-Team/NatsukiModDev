@@ -382,7 +382,7 @@ init 1 python:
     def _find_target_override(self):
         """
         This method tries to find an image by its reference. It can be a displayable or tuple.
-        If this method can't find an image and it follows the pattern of Monika's sprites, it'll try to generate one.
+        If this method can't find an image and it follows the pattern of Natsuki's sprites, it'll try to generate one.
 
         Main change to this function is the ability to auto generate displayables
         """

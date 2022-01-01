@@ -173,15 +173,15 @@ label music_menu:
             $ chosen_no_music_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_NO_MUSIC_QUIPS))
             n 1knmsm "[chosen_no_music_quip]"
             $ music_title = "No music"
-            n 1uchsm "There you go, [player]!"
 
+            stop music fadeout 3
+            n 1uchsm "There you go, [player]!"
+            
             if persistent.jn_random_music_enabled:
                 # Stop playing random music, if enabled
                 $ persistent.jn_random_music_enabled = False
                 n 1unmaj "Oh{w=0.1} -{w=0.1} and I'll stop switching around the music too."
 
-            stop music fadeout 3
-            
         elif _return == "random":
 
             $ available_custom_music = jn_custom_music._get_all_custom_music()

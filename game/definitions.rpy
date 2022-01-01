@@ -875,7 +875,7 @@ init python in utils:
 
     def get_holiday_for_date(input_date=None):
         """
-        Gets the holiday - if any - corresponding to the supplied date.
+        Gets the holiday - if any - corresponding to the supplied date, or the current date by default.
 
         IN:
             - date - date object to test against. Defaults to the current date.
