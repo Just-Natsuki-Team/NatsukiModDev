@@ -693,14 +693,6 @@ image natsuki idle = ConditionSwitch(
     predict_all = True
 )
 
-image natsuki talk_menu = ConditionSwitch(
-    "jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED", "natsuki talk_menu max_affinity",
-    "jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE", "natsuki talk_menu high_affinity",
-    "jn_affinity.get_affinity_state() >= jn_affinity.NORMAL", "natsuki talk_menu medium_affinity",
-    "jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED", "natsuki talk_menu low_affinity",
-    "True", "natsuki talk_menu min_affinity"
-)
-
 # Idle images for ENAMORED+
 image natsuki idle max_affinity:
     block:
@@ -837,6 +829,8 @@ image natsuki talk_menu_high_affinity:
             "natsuki 1unmbg"
         choice:
             "natsuki 1uchbg"
+        choice:
+            "natsuki 1nchbg"
 
 # Menu images for NORMAL+
 image natsuki talk_menu_medium_affinity:
