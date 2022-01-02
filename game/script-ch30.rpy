@@ -361,7 +361,8 @@ label farewell_menu:
 
         if isinstance(_return, basestring):
             show natsuki at jn_center
-            $ renpy.jump(_return)
+            $ push(_return)
+            jump call_next_topic
 
     else:
         jump farewell_start

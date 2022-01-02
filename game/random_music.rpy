@@ -12,7 +12,20 @@ init python in jn_random_music:
         "Alright!{w=0.2} About time for a different tune,{w=0.1} I think!",
         "Okay!{w=0.2} Time for another song!",
         "I think I'm about done with this song.",
-        "That's about enough of that track,{w=0.1} I think."
+        "That's about enough of that track,{w=0.1} I think.",
+        "New song time!",
+        "That's about enough of that song!",
+        "I wanna listen to something else...",
+        "Time to change things up!"
+    ]
+
+    _NEW_TRACK_FOLLOWUPS = [
+        "Now, let's see...",
+        "Now, what have we got...",
+        "Let's see here..."
+        "What else have we got...",
+        "Aha!{w=0.2} Let's try this one!",
+        "Let me see..."
     ]
 
     def random_music_change_check():
@@ -25,13 +38,15 @@ init python in jn_random_music:
             and jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE
             and store.preferences.get_volume("music") > 0
             and len(jn_custom_music._get_all_custom_music()) >= 2):
-
-            renpy.jump("random_music_change")
+            
+            store.push("random_music_change")
+            renpy.jump("call_next_topic")
 
 label random_music_change:
     $ track_quip = random.choice(jn_random_music._NEW_TRACK_QUIPS)
     n 1nchbg "[track_quip]{w=2}{nw}"
-    n 1unmbgl "Now,{w=0.1} let's see...{w=2}{nw}"
+    $ track_followup = random.choice(jn_random_music._NEW_TRACK_FOLLOWUPS)
+    n 1unmbgl "[track_followup]{w=2}{nw}"
     stop music fadeout 3
 
     python:
