@@ -685,16 +685,24 @@ image natsuki 1uwlgn = jn_generate_natsuki_sprite(
 
 # This selects which idle image to show based on current affinity state
 image natsuki idle = ConditionSwitch(
-    "jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED", "natsuki max_affinity",
-    "jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE", "natsuki high_affinity",
-    "jn_affinity.get_affinity_state() >= jn_affinity.NORMAL", "natsuki medium_affinity",
-    "jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED", "natsuki low_affinity",
-    "True", "natsuki_min_affinity",
+    "jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED", "natsuki idle max_affinity",
+    "jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE", "natsuki idle high_affinity",
+    "jn_affinity.get_affinity_state() >= jn_affinity.NORMAL", "natsuki idle medium_affinity",
+    "jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED", "natsuki idle low_affinity",
+    "True", "natsuki idle min_affinity",
     predict_all = True
 )
 
+image natsuki talk_menu = ConditionSwitch(
+    "jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED", "natsuki talk_menu max_affinity",
+    "jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE", "natsuki talk_menu high_affinity",
+    "jn_affinity.get_affinity_state() >= jn_affinity.NORMAL", "natsuki talk_menu medium_affinity",
+    "jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED", "natsuki talk_menu low_affinity",
+    "True", "natsuki talk_menu min_affinity"
+)
+
 # Idle images for ENAMORED+
-image natsuki max_affinity:
+image natsuki idle max_affinity:
     block:
         choice:
             "natsuki 1nchsmf"
@@ -715,7 +723,7 @@ image natsuki max_affinity:
         repeat
 
 # Idle images for AFFECTIONATE+
-image natsuki high_affinity:
+image natsuki idle high_affinity:
     block:
         choice:
             "natsuki 1ullsml"
@@ -730,7 +738,7 @@ image natsuki high_affinity:
         repeat
 
 # Idle images for NORMAL+
-image natsuki medium_affinity:
+image natsuki idle medium_affinity:
     block:
         choice:
             "natsuki 1nnmsg"
@@ -749,7 +757,7 @@ image natsuki medium_affinity:
         repeat
 
 # Idle images for DISTRESSED+
-image natsuki low_affinity:
+image natsuki idle low_affinity:
     block:
         choice:
             "natsuki 1fllsl"
@@ -772,7 +780,7 @@ image natsuki low_affinity:
         repeat
 
 # Idle images for RUINED+
-image natsuki_min_affinity:
+image natsuki idle min_affinity:
     block:
         choice:
             "natsuki 1fcsun"
@@ -789,3 +797,69 @@ image natsuki_min_affinity:
 
         pause 10
         repeat
+
+# Menu images for ENAMORED+
+image natsuki talk_menu max_affinity:
+    block:
+        choice:
+            "natsuki 1nchbgl"
+        choice:
+            "natsuki 1nnmbgl"
+        choice:
+            "natsuki 1uchssl"
+        choice:
+            "natsuki 1unmssl"
+        choice:
+            "natsuki 1uwltsl"
+
+# Menu images for AFFECTIONATE+
+image natsuki talk_menu high_affinity:
+    block:
+        choice:
+            "natsuki 1unmsm"
+        choice:
+            "natsuki 1unmbg"
+        choice:
+            "natsuki 1uchbg"
+
+# Menu images for NORMAL+
+image natsuki talk_menu medium_affinity:
+    block:
+        choice:
+            "natsuki 1unmss"
+        choice:
+            "natsuki 1unmaj"
+        choice:
+            "natsuki 1ulraj"
+        choice:
+            "natsuki 1ullaj"
+        choice:
+            "natsuki 1unmca"
+
+# Menu images for DISTRESSED+
+image natsuki talk_menu low_affinity:
+    block:
+        choice:
+            "natsuki 1fnmaj"
+        choice:
+            "natsuki 1fslaj"
+        choice:
+            "natsuki 1fsrbo"
+        choice:
+            "natsuki 1fcsbo"
+        choice:
+            "natsuki 1fcsaj"
+
+# Menu images for RUINED+
+image natsuki talk_menu min_affinity:
+    block:
+        choice:
+            "natsuki 1fcsan"
+        choice:
+            "natsuki 1fslem"
+        choice:
+            "natsuki 1fsrsf"
+        choice:
+            "natsuki 1fcssf"
+        choice:
+            "natsuki 1kcsan"

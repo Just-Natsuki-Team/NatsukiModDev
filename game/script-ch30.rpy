@@ -282,7 +282,7 @@ label talk_menu:
         # Ensure any variable references are substituted
         _talk_flavor_text = renpy.substitute(_talk_flavor_text)
 
-    show natsuki at jn_left
+    show natsuki talk_menu at jn_left
 
     menu:
         n "[_talk_flavor_text]"
