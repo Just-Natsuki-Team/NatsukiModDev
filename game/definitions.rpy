@@ -663,7 +663,11 @@ init -990 python in jn_globals:
         ">:)",
         "^.^",
         "(^ｖ^)",
-        ">:P"
+        ">:P",
+        ">;P",
+        ">;D",
+        ">:D",
+        ">;)"
     ]
 
     # Alphabetical (excluding numbers) values allowed for text input

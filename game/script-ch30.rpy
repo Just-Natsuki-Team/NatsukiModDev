@@ -103,9 +103,6 @@ label ch30_loop:
             day_check()
             LAST_DAY_CHECK = _now.day
 
-        #We'll also check if we need to redraw the room
-        #main_background.check_redraw()
-
         jn_globals.player_is_in_conversation = False
 
     #Now, as long as there's something in the queue, we should go for it
