@@ -1803,7 +1803,9 @@ screen confirm_quit(is_quitting):
                         Function(check_ingame_state_add_apology),
                         SetField(persistent, "jn_player_apology_type_on_quit", jn_apologies.TYPE_SUDDEN_LEAVE),
                         relationship("affinity-"),
-                        Quit(confirm=False)
+                        Hide("confirm"),
+                        Hide("confirm_quit"),
+                        Jump("quit")
                     ]
                 else:
                     textbutton _("OK") action [

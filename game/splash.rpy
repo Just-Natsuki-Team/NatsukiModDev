@@ -259,9 +259,12 @@ label before_main_menu:
     return
 
 label quit:
-    #Save topic data
-    $ Topic._save_topic_data()
+    python:
+        #Save topic data
+        Topic._save_topic_data()
 
-    #Save background data
-    $ main_background.save()
-    return
+        #Save background data
+        main_background.save()
+
+        # Finally quit
+        renpy.quit()

@@ -240,6 +240,8 @@ init 0 python:
 
             NOTE: Will raise a KeyError of the lock map doesn't have the persist key in it
             """
+            if self.label == "talk_are_you_into_cosplay":
+                store.utils.log(store.utils.pretty_print(self))
             for persist_key, value in self.as_dict().iteritems():
                 if TOPIC_LOCKED_PROP_BASE_MAP[persist_key]:
                     self.__persistent_db[self.label][persist_key] = value

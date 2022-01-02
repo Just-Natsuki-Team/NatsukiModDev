@@ -3986,7 +3986,7 @@ init 5 python:
             persistent._topic_database,
             label="talk_windup_smoking_vaping_indoors",
             unlocked=True,
-            prompt="Smoking and vaping indoors",
+            prompt="Indoor smoking",
             category=["Wind-ups"],
             nat_says=True,
             affinity_range=(jn_affinity.NORMAL, None),

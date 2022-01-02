@@ -117,7 +117,7 @@ label farewell_option_sleep:
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
         n 1uchbgf "Love you~!"
 
-    jump _quit
+    return { "quit": None }
 
 label farewell_option_eat:
 
@@ -158,7 +158,7 @@ label farewell_option_eat:
         n 1fsqsm "...Ehehe.{w=0.5}{nw}"
         extend 1uchbg " Enjoy~!"
 
-    jump _quit
+    return { "quit": None }
 
 label farewell_option_going_out:
     if utils.get_holiday_for_date() == utils.JNHolidays.new_years_eve:
@@ -211,7 +211,7 @@ label farewell_option_going_out:
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
         n 1uchbgf "Love you~!"
 
-    jump _quit
+    return { "quit": None }
 
 label farewell_option_work:
     if utils.get_current_hour() >= 20 or utils.get_current_hour() <= 4:
@@ -263,7 +263,7 @@ label farewell_option_work:
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
         n 1uchbgl "I believe in you,{w=0.1} [chosen_tease]!"
 
-    jump _quit
+    return { "quit": None }
 
 label farewell_option_school:
     $ holiday_check = utils.get_holiday_for_date()
@@ -332,7 +332,7 @@ label farewell_option_school:
         $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
         n 1uchbgf "Love you, [chosen_endearment]!"
 
-    jump _quit
+    return { "quit": None }
 
 label farewell_option_misc_activity:
     n 1knmpu "H-{w=0.1}huh?{w=0.5}{nw}" 
@@ -346,7 +346,7 @@ label farewell_option_misc_activity:
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
         n 1kllssf "Love you!"
 
-    jump _quit
+    return { "quit": None }
 
 label farewell_option_play:
     n 1fsqaj "...Really,{w=0.5} [player]?"
@@ -362,7 +362,7 @@ label farewell_option_play:
     $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
     n 1fchbg "Catch you later,{w=0.1} [chosen_tease]!"
 
-    jump _quit
+    return { "quit": None }
 
 label farewell_option_studying:
     $ player_initial = list(player)[0]
@@ -378,7 +378,7 @@ label farewell_option_studying:
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
         n 1uchbgf "Love you~!"
 
-    jump _quit
+    return { "quit": None }
 
 label farewell_option_chores:
     if utils.get_current_hour() >= 20 or utils.get_current_hour() <= 4:
@@ -409,7 +409,7 @@ label farewell_option_chores:
         else:
             n 1fchbg "Ehehe.{w=0.2} Later,{w=0.1} [player]!"
 
-    jump _quit
+    return { "quit": None }
 
 # Generic farewells
 

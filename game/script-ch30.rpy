@@ -137,8 +137,10 @@ label call_next_topic:
 
         #Handle all things which act on topic objects here, since we can't access attributes of Nonetypes
         if topic_obj is not None:
-            #Increment shown count
+            #Increment shown count, update last seen
             topic_obj.shown_count += 1
+            topic_obj.last_seen = datetime.datetime.now()
+            renpy.notify("Topic {0} updated!".format(topic_obj.label))
 
             #Now manage return keys
             if "derandom" in return_keys:
@@ -146,7 +148,7 @@ label call_next_topic:
 
     #This topic might quit
     if "quit" in return_keys:
-        jump _quit
+        jump quit
 
     # Reenable the UI and hop back to the loop
     $ jn_globals.player_is_in_conversation = False
