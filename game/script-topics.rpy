@@ -1523,7 +1523,7 @@ label talk_sustainable_fashion:
     extend 1unmpu " are you into fashion?"
     if jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
         n 1fcsbg "I know I am!{w=0.2} Can you tell?"
-        extend 1nchsm "Ehehe."
+        extend 1nchsm " Ehehe."
 
     else:
         n 1nnmpu "I know I am."
