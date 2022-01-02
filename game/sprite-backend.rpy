@@ -339,7 +339,7 @@ init 1 python:
         while exp_code:
             exp_part = exp_code[0]
             exp_code = exp_code[1:]
-            
+
             #Check if part is a tear
             if exp_part in TEARS_MAP:
                 tears = exp_part
@@ -798,8 +798,24 @@ image natsuki idle min_affinity:
         pause 10
         repeat
 
+init python:
+    def show_natsuki_talk_menu():
+        """
+        Hack to work around renpy issue where the sprite is not refreshed when showing again
+        """
+        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+            renpy.show("natsuki talk_menu_max_affinity", at_list=[jn_left])
+        elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+            renpy.show("natsuki talk_menu_high_affinity", at_list=[jn_left])
+        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+            renpy.show("natsuki talk_menu_medium_affinity", at_list=[jn_left])
+        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+            renpy.show("natsuki talk_menu_low_affinity", at_list=[jn_left])
+        else:
+            renpy.show("natsuki talk_menu_min_affinity", at_list=[jn_left])
+
 # Menu images for ENAMORED+
-image natsuki talk_menu max_affinity:
+image natsuki talk_menu_max_affinity:
     block:
         choice:
             "natsuki 1nchbgl"
@@ -813,7 +829,7 @@ image natsuki talk_menu max_affinity:
             "natsuki 1uwltsl"
 
 # Menu images for AFFECTIONATE+
-image natsuki talk_menu high_affinity:
+image natsuki talk_menu_high_affinity:
     block:
         choice:
             "natsuki 1unmsm"
@@ -823,7 +839,7 @@ image natsuki talk_menu high_affinity:
             "natsuki 1uchbg"
 
 # Menu images for NORMAL+
-image natsuki talk_menu medium_affinity:
+image natsuki talk_menu_medium_affinity:
     block:
         choice:
             "natsuki 1unmss"
@@ -837,7 +853,7 @@ image natsuki talk_menu medium_affinity:
             "natsuki 1unmca"
 
 # Menu images for DISTRESSED+
-image natsuki talk_menu low_affinity:
+image natsuki talk_menu_low_affinity:
     block:
         choice:
             "natsuki 1fnmaj"
@@ -851,7 +867,7 @@ image natsuki talk_menu low_affinity:
             "natsuki 1fcsaj"
 
 # Menu images for RUINED+
-image natsuki talk_menu min_affinity:
+image natsuki talk_menu_min_affinity:
     block:
         choice:
             "natsuki 1fcsan"

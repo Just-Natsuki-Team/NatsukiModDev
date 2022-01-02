@@ -17,7 +17,7 @@ label ch30_holiday_check:
     python:
         import datetime
         import store.utils as utils
-        
+
         utils.log("Holiday check: {0}".format(utils.get_holiday_for_date(datetime.datetime.now().date())))
     #Run holiday checks and push/setup holiday related things here
 
@@ -71,7 +71,7 @@ label ch30_init:
     $ utils.KEY_VALID = utils.validate_key()
 
     show screen hkb_overlay
-    play music audio.test_bgm   
+    play music audio.test_bgm
 
     #And finally, we head into the loop
     jump ch30_loop
@@ -79,7 +79,7 @@ label ch30_init:
 #The main loop
 label ch30_loop:
     show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
-    
+
     # TODO: topic selection here once wait system is implemented
     #Run our checks
     python:
@@ -171,7 +171,7 @@ init python:
         """
         Runs every minute during breaks between topics
         """
-        
+
         # Run through all externally-registered minute check actions
         if len(jn_plugins.minute_check_calls) > 0:
             for action in jn_plugins.minute_check_calls:
@@ -196,7 +196,7 @@ init python:
                     if topic_pool:
                         queue(random.choice(topic_pool).label)
                         LAST_TOPIC_CALL = datetime.datetime.now()
-        
+
         pass
 
     def quarter_hour_check():
@@ -229,7 +229,7 @@ init python:
         """
         Runs ever hour during breaks between topics
         """
-        
+
         # Run through all externally-registered hour check actions
         if len(jn_plugins.hour_check_calls) > 0:
             for action in jn_plugins.hour_check_calls:
@@ -246,7 +246,7 @@ init python:
 
         # Update outfit
         if jn_outfits.get_outfit_for_time_block().reference_name is not jn_outfits.current_outfit_name:
-           
+
             # We call here so we don't skip day_check, as call returns us to this point
             renpy.call("outfits_time_of_day_change")
 
@@ -282,7 +282,7 @@ label talk_menu:
         # Ensure any variable references are substituted
         _talk_flavor_text = renpy.substitute(_talk_flavor_text)
 
-    show natsuki talk_menu at jn_left
+    $ show_natsuki_talk_menu()
 
     menu:
         n "[_talk_flavor_text]"
@@ -383,7 +383,7 @@ label farewell_menu:
 label extras_menu:
     python:
         avaliable_extras_options = []
-        
+
         # Since conditions can change, we check each time if each option is now avaliable due to context changes (E.G affinity is now higher)
         for extras_option in jn_plugins.extras_options:
             if eval(extras_option.visible_if):
