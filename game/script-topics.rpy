@@ -24,14 +24,6 @@ init python in topics:
     import store
     TOPIC_MAP = dict()
 
-init 1 python:
-    try:
-        # Resets - remove these later, once we're done tweaking affinity/trust!
-        persistent._topic_database.clear()
-
-    except Exception as e:
-        utils.log(e, utils.SEVERITY_ERR)
-
 # Talk menu topics
 
 # Natsuki's thoughts on having her picture taken via the ingame screenshot system
@@ -431,7 +423,7 @@ label talk_using_computers_healthily:
 
     else:
         n "But you know I only say these things because I care."
-        n "...And I don't want you whining to me that your back hurts.{w=0.2}"
+        n "...And I don't want you whining to me that your back hurts.{w=0.5}{nw}"
 
     n "Ahaha...{w=0.3} now, where were we?"
     return
@@ -706,7 +698,7 @@ label talk_favourite_season:
         n 1tllbo "Hang on...{w=0.5}{nw}"
         extend 1tnmss " didn't we talk about this before,{w=0.1} [player]?"
         n 1nlrpu "Well,{w=0.1} anyway..."
-        n 1ucsbg "I still love summer,{w=0.1} as you know{w=0.1} -{w=0.1}"
+        n 1ucsbg "I still love summer,{w=0.1} as you know{w=0.1} -{w=0.3}{nw}"
         extend 1fcsbg " and nothing's gonna change that any time soon!"
         n 1tsqsg "What about you,{w=0.1} [player]?"
         menu:
@@ -762,7 +754,7 @@ label talk_favourite_season:
                     n 1usqss "Ooh?{w=0.2} Favouring Spring now,{w=0.1} [player]?"
                     n 1nlrbo "I could do without all the rain,{w=0.1} but I get it."
                     n 1flrpu "Hmm...{w=0.3} Spring..."
-                    n 1tlrbo "I wonder...{w=0.3}"
+                    n 1tlrbo "I wonder...{w=0.5}{nw}"
                     extend 1tnmss " do you grow anything,{w=0.1} [player]?"
                     n 1fchsm "Ahaha."
 
@@ -881,7 +873,7 @@ label talk_sweet_tooth:
         n 1flleml "A-{w=0.1}anyway!"
         n 1fcseml "It isn't like I'm snacking on treats all the time though."
         n 1fllpo "I've got way better things to spend my money on."
-        n 1fnmss "And...{w=0.3} it's not exactly healthy either.{w=0.2}"
+        n 1fnmss "And...{w=0.3} it's not exactly healthy either.{w=0.5}{nw}"
         extend 1fchsm " Ahaha."
 
     # Closing thoughts
@@ -981,7 +973,7 @@ label talk_player_appearance:
 
             "Sure!":
                 n 1uchbsl "Yes!{w=0.5}{nw}"
-                extend 1fcsbgl " I-{w=0.1}I mean good!{w=0.2}"
+                extend 1fcsbgl " I-{w=0.1}I mean good!{w=0.5}{nw}"
                 n 1fchbg "Let's get started then,{w=0.1} shall we?"
 
             "I'm not comfortable sharing that.":
@@ -1295,39 +1287,39 @@ label talk_drinking_alcohol:
     n 1unmaj "Oh!{w=0.2} That reminds me,{w=0.1} actually!"
     n 1fnmbg "I bet you didn't know,{w=0.1} but guess who just randomly brought some into the club one day?"
     n 1fchgn "...Yuri!"
-    n 1tnmbg "Surprised?{w=0.2}"
+    n 1tnmbg "Surprised?{w=0.5}{nw}"
     extend 1fcsss " I know,{w=0.1} right?"
     n 1tllss "I mean...{w=0.3} it was just completely out of the blue!"
     n 1uchbs "She just produced it from her bag like it was a book or something."
-    n 1unmbo "It wasn't even just some random supermarket stuff either...{w=0.3}"
+    n 1unmbo "It wasn't even just some random supermarket stuff either...{w=0.5}{nw}"
     extend 1uwdaj " it looked super expensive too!"
     n 1kllss "Honestly,{w=0.1} I couldn't help myself.{w=0.2} I just burst into laughter."
     n 1ullun "I think it was just how non-chalant it all was,{w=0.1} really."
     n 1nnmsl "Monika didn't look impressed,{w=0.1} though..."
-    n 1klrsl "And Sayori...{w=0.3} she just got really upset.{w=0.2}"
+    n 1klrsl "And Sayori...{w=0.3} she just got really upset.{w=0.5}{nw}"
     extend 1klrpu " She was shouting and everything!"
     n 1kcspu "It looked like Yuri put a lot of thought into picking something out,{w=0.1} but she just got yelled at for it..."
-    n 1kcssr "I mean...{w=0.3}"
+    n 1kcssr "I mean...{w=0.5}{nw}"
     extend 1kllsr " I know we shouldn't have had it in there at all,{w=0.1} and Yuri should have known better."
-    n 1fslsr "But she didn't deserve all of...{w=0.3}"
+    n 1fslsr "But she didn't deserve all of...{w=0.5}{nw}"
     extend 1kslsr " that."
     n 1kslaj "I think she was just trying to be nice,{w=0.1} you know?"
-    n 1unmsr "It's all in the past now,{w=0.1} obviously.{w=0.2}"
+    n 1unmsr "It's all in the past now,{w=0.1} obviously.{w=0.5}{nw}"
     extend 1kslsr " But...{w=0.3} that doesn't mean I don't still feel bad about it sometimes."
     n 1kcssr "..."
     if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        n 1kllsr "Hey...{w=0.3}"
+        n 1kllsr "Hey...{w=0.5}{nw}"
         extend 1knmpu " [player]?"
         n 1klrsr "Can you promise me something?"
         n 1fcssr "It's dumb,{w=0.1} but I don't care."
         n 1nnmsl "It doesn't really matter to me if you drink or not."
         n 1klrpu "But...{w=0.3} if you do?"
         n 1ksqsr "Please just take it all in moderation,{w=0.1} okay?"
-        n 1kllsr "I've...{w=0.3}"
-        extend 1fcsan " seen...{w=0.3}"
+        n 1kllsr "I've...{w=0.5}{nw}"
+        extend 1fcsan " seen...{w=0.5}{nw}"
         extend 1fcssr " what it can do to people."
         n 1kslsr "...Firsthand."
-        n 1ksqsl "You deserve better than that,{w=0.1} [player].{w=0.2}"
+        n 1ksqsl "You deserve better than that,{w=0.1} [player].{w=0.5}{nw}"
         extend 1kslun " You {i}are{/i} better than that."
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
             n 1kcsun "..."
@@ -1364,23 +1356,23 @@ label talk_driving:
     # Check to see if the player and Natsuki have already discussed if Nat can drive in this topic, or the "are you into cars?" topic
     $ already_discussed_driving = get_topic("talk_driving").shown_count > 0 or get_topic("talk_are_you_into_cars").shown_count > 0
 
-    n 1fchdv "Pffft!{w=0.2}"
+    n 1fchdv "Pffft!{w=0.5}{nw}"
     extend 1uchbs " Ahaha!"
     n 1fchgn "What kind of a question is that,{w=0.1} [player]?"
     $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
 
     if already_discussed_driving:
-        n 1tllss "I already told you I can't drive,{w=0.1} [chosen_tease]!{w=0.2}"
+        n 1tllss "I already told you I can't drive,{w=0.1} [chosen_tease]!{w=0.5}{nw}"
         extend 1fchgn " I don't even have a license!"
         n 1kllpo "And even if I wanted to,{w=0.1} I don't think I could afford it..."
 
     else:
-        n 1tllss "Of course I can't drive,{w=0.1} [chosen_tease]!{w=0.2}"
+        n 1tllss "Of course I can't drive,{w=0.1} [chosen_tease]!{w=0.5}{nw}"
         extend 1fchgn " I don't even have a license!"
         n 1kllpo "I mean...{w=0.3} even if I wanted to learn,{w=0.1} I don't think I could afford it."
 
     n 1uskgs "Lessons are super expensive nowadays!"
-    n 1fslem "And then there's tests,{w=0.1} insurance,{w=0.1} fuel,{w=0.1} parking...{w=0.3}"
+    n 1fslem "And then there's tests,{w=0.1} insurance,{w=0.1} fuel,{w=0.1} parking...{w=0.5}{nw}"
     extend 1fsqaj " it's actually pretty gross how fast it all adds up."
     n 1nlraj "I think I'd rather stick to public transport and my own two feet."
     n 1unmaj "But what about you,{w=0.1} [player]?"
@@ -1394,7 +1386,7 @@ label talk_driving:
                 n 1uwdaj "Wow..."
                 extend 1fsraj " ...{w=0.3}show-off."
                 n 1fsqpo "..."
-                n 1fchbg "Relax,{w=0.1} [player]!{w=0.2} Jeez!{w=0.2}"
+                n 1fchbg "Relax,{w=0.1} [player]!{w=0.2} Jeez!{w=0.5}{nw}"
                 extend 1nchsm " I'm just messing with you."
                 n 1unmbg "That's awesome though{w=0.1} -{w=0.1} you just can't beat the convenience of a car,{w=0.1} right?"
 
@@ -1405,7 +1397,7 @@ label talk_driving:
 
                 else:
                     n 1fllbg "Just remember,{w=0.1} [player]..."
-                    n 1fsgsm "I call shotgun.{w=0.2}"
+                    n 1fsgsm "I call shotgun.{w=0.5}{nw}"
 
                 $ persistent.jn_player_can_drive = True
                 return
@@ -1425,9 +1417,9 @@ label talk_driving:
 
             "No, I can't.":
                 n 1klrsl "Oh..."
-                n 1flrss "Well,{w=0.1}"
+                n 1flrss "Well,{w=0.3}{nw}"
                 extend 1fchbg " chin up,{w=0.1} [player]!{w=0.2} It isn't the end of the world."
-                n 1usgsg "Don't worry -{w=0.1}"
+                n 1usgsg "Don't worry -{w=0.3}{nw}"
                 extend 1fsgsm " I'll teach you how to use the bus!"
                 n 1uchsm "Ehehe."
 
@@ -1453,19 +1445,19 @@ label talk_driving:
                 n 1ullss "Fair enough I suppose -{w=0.1} just remember to drive safe,{w=0.1} [player]!"
 
             "I only drive sometimes.":
-                n 1ullss "Well hey,{w=0.1} at least you're saving on fuel,{w=0.1} right?{w=0.2}"
+                n 1ullss "Well hey,{w=0.1} at least you're saving on fuel,{w=0.1} right?{w=0.5}{nw}"
                 extend 1ullsm " That doesn't sound like a bad thing to me."
                 n 1fchsm "Besides,{w=0.1} it just means you can save the miles for ones you enjoy!"
 
             "No, I'm not driving much.":
-                n 1unmaj "Oh?{w=0.2}"
+                n 1unmaj "Oh?{w=0.5}{nw}"
                 extend 1tllbg " That sounds like a bonus to me,{w=0.1} honestly!"
                 n 1tnmbg "Just make sure you still get out there if you aren't driving around much though,{w=0.1} 'kay?"
 
             "No, I can't drive anymore.":
                 n 1tnmsl "Oh...{w=0.3} did something happen?"
                 n 1kllsl "I'm...{w=0.3} sorry to hear it,{w=0.1} [player]."
-                n 1fsgsm "But at least that means more time to hang out with me,{w=0.1} right?{w=0.2}"
+                n 1fsgsm "But at least that means more time to hang out with me,{w=0.1} right?{w=0.5}{nw}"
                 extend 1fchbg " Ahaha."
                 $ persistent.jn_player_can_drive = False
 
@@ -1477,7 +1469,7 @@ label talk_driving:
             n "Anything new happening with you on the driving front?"
 
             "I'm learning to drive!":
-                n 1fnmss "Ooh!{w=0.2}"
+                n 1fnmss "Ooh!{w=0.5}{nw}"
                 extend 1fchbg " Nice,{w=0.1} [player]!"
                 n 1fchsm "Don't sweat the test,{w=0.1} alright?{w=0.2} I'm sure you'll do fine!"
 
@@ -1485,7 +1477,7 @@ label talk_driving:
                     n 1uchsm "I believe in you,{w=0.1} [player]!"
 
             "I passed my test!":
-                n 1uskgs "No kidding?{w=0.2}"
+                n 1uskgs "No kidding?{w=0.5}{nw}"
                 extend 1uchbs " Yaaay!{w=0.2} Congrats,{w=0.1} [player]!"
 
                 if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
@@ -1501,9 +1493,9 @@ label talk_driving:
                 $ persistent.jn_player_can_drive = True
 
             "Nope, nothing new.":
-                n 1unmaj "Oh?{w=0.2}"
+                n 1unmaj "Oh?{w=0.5}{nw}"
                 extend 1nlrss " Well,{w=0.1} fair enough!"
-                n 1tnmsm "You and me both then,{w=0.1} in that case?{w=0.2}"
+                n 1tnmsm "You and me both then,{w=0.1} in that case?{w=0.5}{nw}"
                 extend 1nchsm " Ahaha."
 
         return
@@ -1540,7 +1532,7 @@ label talk_sustainable_fashion:
 
     if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n 1uwdgs "Seriously,{w=0.1} [player] {w=0.1}-{w=0.1} it's insane!"
-        n 1ullaj "People throw away a {i}lot{/i} of clothing...{w=0.3}"
+        n 1ullaj "People throw away a {i}lot{/i} of clothing...{w=0.5}{nw}"
         extend 1flrem " it's estimated that we toss out around 90{w=0.3} {i}million{/i}{w=0.3} tonnes every year."
         n 1fnman "That's a truck-full every second!{w=0.2} What a waste!"
 
@@ -1565,11 +1557,11 @@ label talk_sustainable_fashion:
 
     if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
         n 1kllssl "For me?"
-        n 1nchbg "Ahaha.{w=0.2}"
+        n 1nchbg "Ahaha.{w=0.5}{nw}"
         extend 1uchsm " Thanks,{w=0.1} [player]!"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n 1nchbg "Ahaha.{w=0.2}"
+        n 1nchbg "Ahaha.{w=0.5}{nw}"
         extend 1uchsm " Thanks,{w=0.1} [player]!"
 
     else:
@@ -1618,7 +1610,7 @@ label talk_give_nickname:
             n 1unmbo "Alright,{w=0.1} [player]."
 
         elif persistent.jn_player_nicknames_bad_given_total == 2:
-            n 1nnmsl "Another nickname,{w=0.1} [player]?{w=0.2}"
+            n 1nnmsl "Another nickname,{w=0.1} [player]?{w=0.5}{nw}"
             extend 1nllsl " Fine."
             n 1ncsaj "Just...{w=0.3} think a little about what you choose,{w=0.1} 'kay?"
 
@@ -1651,7 +1643,7 @@ label talk_give_nickname:
         n 1uskgsl "O-{w=0.1}oh!{w=0.2} [player]!"
         n 1ulrunl "..."
         n 1fcsbgl "W-{w=0.1}well,{w=0.1} you have good taste,{w=0.1} at least."
-        n 1fcssml "[nickname] it is!{w=0.2}"
+        n 1fcssml "[nickname] it is!{w=0.5}{nw}"
         extend 1uchsml " Ehehe."
         return
 
@@ -1663,10 +1655,10 @@ label talk_give_nickname:
         return
 
     elif nickname_type == jn_nicknames.TYPE_HATED:
-        n 1fskem "W-{w=0.1}what?{w=0.2}"
+        n 1fskem "W-{w=0.1}what?{w=0.5}{nw}"
         extend 1fscwr " What did you just call me?!"
         n 1fcsan "[player]!{w=0.2} I can't believe you!"
-        n 1fcsfu "Why would you call me that?{w=0.2}"
+        n 1fcsfu "Why would you call me that?{w=0.5}{nw}"
         extend 1fsqfu " That's {i}awful{/i}!"
         n 1fcspu "..."
         $ persistent.jn_player_nicknames_bad_given_total += 1
@@ -1675,7 +1667,7 @@ label talk_give_nickname:
         n 1fskpu "E-{w=0.1}excuse me?!"
         n 1fskfu "What the hell did you just call me,{w=0.1} [player]?!"
         n 1fcsan "..."
-        n 1fslan "I seriously can't believe you,{w=0.1} [player]."
+        n 1fslan "I seriously can't believe you,{w=0.1} [player].{w=0.5}{nw}"
         extend 1fnman " Why would you do that?{w=0.1} Are you {i}trying{/i} to get on my nerves?!"
         n 1fcspu "..."
         $ persistent.jn_player_nicknames_bad_given_total += 1
@@ -1685,7 +1677,7 @@ label talk_give_nickname:
         n 1uchbs "Ahaha!"
         n 1fbkbs "[nickname]?!{w=0.2} What was that meant to be,{w=0.1} [player]?"
         n 1fbkbs "Well...{w=0.3} you're just lucky I have a healthy sense of humour."
-        n 1fsgbg "[nickname] it is,{w=0.1} I guess!{w=0.2}"
+        n 1fsgbg "[nickname] it is,{w=0.1} I guess!{w=0.5}{nw}"
         extend 1fchgn " Ehehe."
 
         $ persistent.jn_player_nicknames_current_nickname = nickname
@@ -1702,11 +1694,11 @@ label talk_give_nickname:
 
         # Check and respond to easter egg nicknames
         if nickname.lower() == "natsuki":
-            n 1fllss "Uhmm...{w=0.3}"
+            n 1fllss "Uhmm...{w=0.5}{nw}"
             extend 1tnmdv " [player]?"
             $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
             n 1fchbg "That's just my normal name,{w=0.1} [chosen_tease]!"
-            n 1fcsca "Honestly...{w=0.3}"
+            n 1fcsca "Honestly...{w=0.5}{nw}"
             extend 1ksgsg " sometimes I wonder why I bother."
             n 1unmbg "Well,{w=0.1} I'm not complaining!{w=0.2} If it isn't broke,{w=0.1} don't fix it -{w=0.1} right?"
             n 1nchbg "Ahaha."
@@ -1722,17 +1714,17 @@ label talk_give_nickname:
         elif nickname.lower() == persistent.playername.lower():
             n 1fsldv "I...{w=0.3} don't think you thought this through,{w=0.1} [player]."
             n 1tnmbg "Do you even know how confusing that'd be?"
-            n 1tlrss "I...{w=0.3} think I'll just stick to what works,{w=0.1} 'kay?"
+            n 1tlrss "I...{w=0.3} think I'll just stick to what works,{w=0.1} 'kay?{w=0.5}{nw}"
             extend 1fsqsm " Ehehe."
             n 1uchbg "Nice try though!"
 
         # Fallback for anything not categorised
         else:
-            n 1fllsr "Hmm...{w=0.3}"
+            n 1fllsr "Hmm...{w=0.5}{nw}"
             extend 1ullpu " [nickname],{w=0.1} huh?"
             n 1fllss "[nickname]..."
             n 1fnmbg "You know what?{w=0.2} Yeah!{w=0.2} I like it!"
-            n 1fchbg "Consider it done,{w=0.1} [player]!{w=0.2}"
+            n 1fchbg "Consider it done,{w=0.1} [player]!{w=0.5}{nw}"
             extend 1uchsm " Ehehe."
             $ neutral_nickname_permitted = True
 
@@ -1745,7 +1737,7 @@ label talk_give_nickname:
 
     # Handle strikes
     if persistent.jn_player_nicknames_bad_given_total == 1:
-        n 1kllsf "Jeez,{w=0.1} [player]...{w=0.3} that isn't like you at all!"
+        n 1kllsf "Jeez,{w=0.1} [player]...{w=0.3} that isn't like you at all!{w=0.5}{nw}"
         extend 1knmaj " What's up with you today?"
         n 1kcssl "..."
         n 1knmsl "Just...{w=0.3} don't do that again,{w=0.1} okay?"
@@ -1760,7 +1752,7 @@ label talk_give_nickname:
         n 1fsqsl "I can't believe you did that again to me,{w=0.1} [player]."
         n 1fsqan "I told you it hurts,{w=0.1} and you went ahead anyway!"
         n 1fcsan "..."
-        n 1fcsun "I...{w=0.3} really...{w=0.3} like you, [player].{w=0.2}"
+        n 1fcsun "I...{w=0.3} really...{w=0.3} like you, [player].{w=0.5}{nw}"
         extend 1kllun " It hurts extra bad when it's you."
         n 1fsqsr "Don't test my patience like this.{w=0.2} You're better than that."
 
@@ -1802,7 +1794,7 @@ label talk_give_nickname:
         n 1fcsan "Yeah,{w=0.1} no.{w=0.2} I've heard enough.{w=0.2} I don't need to hear any more."
         n 1fnmem "When will you learn that your actions have consequences?"
         n 1fcspu "..."
-        n 1fnmpu "You know what?{w=0.2}"
+        n 1fnmpu "You know what?{w=0.5}{nw}"
         extend 1fsqpu " Don't even bother answering."
         n 1fsqsr "I warned you,{w=0.1} [player].{w=0.2} Remember that."
 
@@ -1835,52 +1827,52 @@ init 5 python:
 
 label talk_sleeping_well:
     n 1fllpu "Huh..."
-    n 1fllpu "Hey,{w=0.1} [player].{w=0.2}"
+    n 1fllpu "Hey,{w=0.1} [player].{w=0.5}{nw}"
     extend 1nnmaj " Let me ask you a question,{w=0.1} 'kay?"
     n 1fsqsr "How do you sleep at night?"
     n 1fsqpu "Be honest.{w=0.2} How do you do it?"
     n 1ksqsm "..."
     n 1fchsm "Ehehe.{w=0.2} Did I get you?"
-    n 1unmaj "But seriously,{w=0.2} [player].{w=0.2}"
+    n 1unmaj "But seriously,{w=0.2} [player].{w=0.5}{nw}"
     extend 1tnmaj " Do you struggle with your sleep?"
 
     # Quip if the player has been around a while, or has admitted they're tired
     if utils.get_current_session_length().total_seconds() / 3600 >= 12:
         n 1fsqpo "I mean,{w=0.1} you {i}have{/i} been here for a while now..."
-        n 1ullaj "So...{w=0.3}"
+        n 1ullaj "So...{w=0.5}{nw}"
         extend 1nnmaj " I kinda figured you might be feeling a little sleepy anyway."
 
     elif jn_admissions.last_admission_type == jn_admissions.TYPE_TIRED:
         n 1fllpo "I mean,{w=0.1} you even {i}said{/i} you were tired before."
-        n 1ullaj "So...{w=0.3}"
+        n 1ullaj "So...{w=0.5}{nw}"
         extend 1nnmaj " it only makes sense to ask,{w=0.1} right?{w=0.2} Anyway..."
 
-    n 1nnmaj "I'll admit,{w=0.1} I get the odd sleepless night myself.{w=0.2}"
+    n 1nnmaj "I'll admit,{w=0.1} I get the odd sleepless night myself.{w=0.5}{nw}"
     extend 1fbkwr " It's the worst!"
-    n 1fllem "There's nothing I hate more than tossing and turning,{w=0.1}"
+    n 1fllem "There's nothing I hate more than tossing and turning,{w=0.3}{nw}"
     extend 1fcsan " just waiting for my body to decide it's time for tomorrow to happen."
-    n 1ullaj "But...{w=0.3}"
+    n 1ullaj "But...{w=0.5}{nw}"
     extend 1fnmss " you know what they say,{w=0.1} [player]."
-    n 1fcsss "With suffering...{w=0.3}"
+    n 1fcsss "With suffering...{w=0.5}{nw}"
     extend 1uchbg  " ...comes wisdom!"
-    n 1nsqbg "And luckily for you,{w=0.1} I don't mind sharing.{w=0.2}"
+    n 1nsqbg "And luckily for you,{w=0.1} I don't mind sharing.{w=0.5}{nw}"
     extend 1nchsm " Ehehe."
     n 1fcsbg "So,{w=0.1} listen up -{w=0.1} it's time for another lesson from yours truly!"
     n 1fnmaj "Alright -{w=0.1} first,{w=0.1} cut the crap!{w=0.2} If you're trying to sleep,{w=0.1} anything high-sugar or high-caffeine is your enemy."
     n 1fllss "So before anything else,{w=0.1} ditch the soda and coffee.{w=0.2} You can thank me later."
-    n 1fcsaj "Next up -{w=0.1} no screens!{w=0.2}"
+    n 1fcsaj "Next up -{w=0.1} no screens!{w=0.5}{nw}"
     extend 1fsqpo " Including this one, [player]."
     n 1unmsl "No screen means no bright lights or distractions to keep you up,{w=0.1} obviously."
     n 1fnmpu "If you're tired then the last thing you need is something beaming whatever at you."
     n 1fcsbg "Moving on, next is temperature!{w=0.2} If it's hot,{w=0.1} use thinner sheets and vice versa."
     n 1fcspu "Nothing disrupts your sleep more than having to rip off blankets,{w=0.1} or pull some out."
-    n 1fsgsg "Keeping up with me so far,{w=0.1} [player]?{w=0.2}"
+    n 1fsgsg "Keeping up with me so far,{w=0.1} [player]?{w=0.5}{nw}"
     extend 1fchgn " I'm almost done,{w=0.1} don't worry."
-    n 1unmaj "Lastly...{w=0.3}"
+    n 1unmaj "Lastly...{w=0.5}{nw}"
     extend 1fchbg " get comfortable!"
     n 1nnmsm "Make sure you have enough pillows to support your head,{w=0.1} or maybe even play some quiet music if you find that helps."
     n 1fcssm "...And that's about it!"
-    n 1nllss "You should have known at least a few of those already,{w=0.1}"
+    n 1nllss "You should have known at least a few of those already,{w=0.3}{nw}"
     extend 1unmss " but at any rate..."
     n 1fwlbg "I hope you can rest easy with your newfound knowledge,{w=0.1} [player]!"
     n 1uchsm "Ehehe."
@@ -1918,16 +1910,16 @@ label talk_aging:
     n 1nwmpu "But I think as you actually get older,{w=0.1} it starts to creep in."
     n 1kllpu "You might have less energy,{w=0.1} or friends and family begin drifting away..."
     n 1knmem "Birthdays lose all meaning -{w=0.1} you might even dread them!"
-    n 1ullaj "The signs appear in a bunch of ways,{w=0.1}"
+    n 1ullaj "The signs appear in a bunch of ways,{w=0.3}{nw}"
     extend 1knmsl " but that's what makes it unnerving."
-    n 1kllaj "Everyone experiences it differently,{w=0.1}"
+    n 1kllaj "Everyone experiences it differently,{w=0.3}{nw}"
     extend 1kskaw " and we don't even know what happens after the end!"
     n 1klrss "Spooky,{w=0.1} huh?"
     n 1ulrpu "Although...{w=0.3} I guess you could say that's more the fear of the unknown than aging itself."
     n 1flraj "What does wind me up though is how immature people can be about it."
     n 1fnmaj "Especially when it comes to relationships between different ages!"
     n 1fslsf "People just get so preachy about it..."
-    n 1fllaj "Like...{w=0.3} as long as they're both happy,{w=0.1}"
+    n 1fllaj "Like...{w=0.3} as long as they're both happy,{w=0.3}{nw}"
     extend 1fnmem " and nobody is being hurt or made uncomfortable,{w=0.1} who actually cares?"
     n 1nlrpu "It's just like most stuff,{w=0.1} really."
     n 1unmaj "Besides,{w=0.1} it's not like being a certain age means you {i}have{/i} to be a certain way."
@@ -1940,7 +1932,7 @@ label talk_aging:
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
         n 1klrpol "Y-{w=0.1}you better know that I love you all the same,{w=0.1} [chosen_tease]."
         n 1knmpol "Don't forget that,{w=0.1} 'kay?"
-        n 1flrpol "I'll get mad if you do.{w=0.2}"
+        n 1flrpol "I'll get mad if you do.{w=0.5}{nw}"
         extend 1klrbgl " Ahaha..."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
@@ -1951,7 +1943,7 @@ label talk_aging:
 
     else:
         n 1fllbg "But...{w=0.3} just in case?"
-        n 1fsqsg "We're only having one candle on your birthday cake.{w=0.2} Sorry."
+        n 1fsqsg "We're only having one candle on your birthday cake.{w=0.2} Sorry.{w=0.5}{nw}"
         extend 1uchbg " Ahaha!"
 
     return
@@ -1986,15 +1978,15 @@ label talk_work_life_balance:
         n 1fnmpo "Overwhelming,{w=0.1} right?"
         n 1fllaj "Huh.{w=0.2} Actually...{w=0.3} now that I think about it..."
         n 1fnmsf "It isn't like that kind of intrusion is only limited to when you're away either."
-        n 1fslpu "I've heard {i}way{/i} too many stories of people doing stupid amounts of overtime at work...{w=0.3}"
+        n 1fslpu "I've heard {i}way{/i} too many stories of people doing stupid amounts of overtime at work...{w=0.5}{nw}"
         extend 1fnman " sometimes not even paid!"
-        n 1fsran "Or even students studying late into the night until they collapse...{w=0.3} it's pretty crazy."
+        n 1fsran "Or even students studying late into the night until they collapse...{w=0.3} it's crazy!"
 
     else:
         n 1fsqpu "It just gets annoying -{w=0.1} everyone expects you to always be around to do more."
         n 1fslsl "Actually,{w=0.1} now that I think about it..."
         n 1fcsaj "It isn't like that kind of thing is only limited to when you're away either."
-        n 1fsrsr "I've heard too many stories of people doing stupid amounts of overtime at work."
+        n 1fsrsr "I've heard too many stories of people doing stupid amounts of overtime at work.{w=0.5}{nw}"
         extend 1fsqan " Often not even paid."
         n 1fslem "Or even students studying late into the night until they collapse..."
 
@@ -2013,7 +2005,7 @@ label talk_work_life_balance:
             if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
                 n 1fllun "Besides..."
                 n 1fllssl "You and your time are mine first, [player]."
-                n 1flldvl "I already called dibs,{w=0.1} a-{w=0.1}after all.{w=0.2}"
+                n 1flldvl "I already called dibs,{w=0.1} a-{w=0.1}after all.{w=0.5}{nw}"
                 extend 1fchsml " Ehehe..."
 
         else:
@@ -3344,9 +3336,9 @@ label talk_how_do_you_feel_about_me:
 
         else:
             n 1fcsanf "Nnnnnnn-!"
-            n 1fnmanf "C-{w=0.1}come on! Isn't it obvious by now? Jeez...{w=0.3}"
+            n 1fnmanf "C-{w=0.1}come on! Isn't it obvious by now? Jeez...{w=0.5}{nw}"
             n 1fllpof "Do I really have to spell it out for you,{w=0.1} [player]?"
-            n 1fcspol "Ugh...{w=0.3}"
+            n 1fcspol "Ugh...{w=0.5}{nw}"
             n 1fsqssl "Heh.{w=0.2} Actually,{w=0.1} you know what?"
             n 1fsqbgl "I'll let you figure it out."
             n 1fslajl "And no,{w=0.1} before you ask -{w=0.1} you've had enough hints already."
@@ -3357,9 +3349,9 @@ label talk_how_do_you_feel_about_me:
     elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         n 1fcsanf "Uuuuuu-!"
         n 1fskwrf "A-{w=0.1}are you trying to put me on the spot or something,{w=0.1} [player]?"
-        n 1fllemf "Jeez...{w=0.3}"
-        n 1fcseml "You should {i}know{/i} what I think of you by now...{w=0.3}"
-        n 1fllpol "...{w=0.3}"
+        n 1fllemf "Jeez...{w=0.5}{nw}"
+        n 1fcseml "You should {i}know{/i} what I think of you by now...{w=0.5}{nw}"
+        n 1fllpol "...{w=0.5}{nw}"
         n 1kcspol "...{w=0.3}Fine."
         n 1fcspol "I...{w=0.3} like...{w=0.3} you,{w=0.1} [player].{w=0.2} A bunch."
         n 1fbkwrf "T-{w=0.1}there!{w=0.2} Happy now?!"
@@ -3377,7 +3369,7 @@ label talk_how_do_you_feel_about_me:
     elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
         n 1uskemf "H-huh?!"
         n 1fllbgl "O-oh! Ahaha..."
-        n 1nllaj "Well,{w=0.1} I mean...{w=0.3}"
+        n 1nllaj "Well,{w=0.1} I mean...{w=0.5}{nw}"
         n 1ullaj "You're pretty fun to be with,{w=0.1} all things considered."
         n 1fllnvl "So...{w=0.3} yeah...."
         return
@@ -3387,7 +3379,7 @@ label talk_how_do_you_feel_about_me:
         n 1fllbg "O-oh!"
         n 1unmaj "I mean...{w=0.3} you're alright...{w=0.3} I guess?"
         n 1nnmpu "That's about all I can say so far,{w=0.1} so...{w=0.3} yeah."
-        n 1nllca "...{w=0.3}"
+        n 1nllca "...{w=0.5}{nw}"
         n 1nlraj "So...{w=0.3} where were we?"
         return
 
@@ -3395,7 +3387,7 @@ label talk_how_do_you_feel_about_me:
         n 1fsqaj "...{w=0.3}Oh? That matters to you now,{w=0.1} does it?"
         n 1fsqbo "Then tell me,{w=0.1} [player]."
         n 1fnmun "Why did you keep hurting my feelings like that?"
-        n 1fcsun "...{w=0.3}"
+        n 1fcsun "...{w=0.5}{nw}"
         n 1fllan "I don't have much patience for jerks,{w=0.1} [player]."
         n 1fnmaj "I don't know if you're trying to be funny or what,{w=0.1} but knock it off.{w=0.2} Got it?"
         n 1fsqsr "Thanks."
@@ -3407,7 +3399,7 @@ label talk_how_do_you_feel_about_me:
         n 1fnmfu "You've done it so many times now."
         n 1fnman "So you tell me."
         n 1fsqpu "What the hell would {i}you{/i} think of someone who did that to you?"
-        n 1fcspu "...{w=0.3}"
+        n 1fcspu "...{w=0.5}{nw}"
         n 1fsqan "You're on thin ice,{w=0.1} [player].{w=0.2} Got it?"
         return
 
@@ -3423,8 +3415,8 @@ label talk_how_do_you_feel_about_me:
         return
 
     else:
-        n 1fcsun "...{w=0.3}...{w=0.3}"
-        n 1fcsan "...{w=0.3}...{w=0.3}"
+        n 1fcsun "...{w=0.3}...{w=0.5}{nw}"
+        n 1fcsan "...{w=0.3}...{w=0.5}{nw}"
         return
 
     return

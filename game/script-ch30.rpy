@@ -140,7 +140,6 @@ label call_next_topic:
             #Increment shown count, update last seen
             topic_obj.shown_count += 1
             topic_obj.last_seen = datetime.datetime.now()
-            renpy.notify("Topic {0} updated!".format(topic_obj.label))
 
             #Now manage return keys
             if "derandom" in return_keys:
@@ -317,14 +316,24 @@ label talk_menu:
 
 label player_select_topic(is_repeat_topics=False):
     python:
-        _topics = Topic.filter_topics(
-            topics.TOPIC_MAP.values(),
-            nat_says=is_repeat_topics,
-            player_says=not is_repeat_topics,
-            unlocked=True,
-            location=main_background.location.id,
-            affinity=jn_affinity.get_affinity_state()
-        )
+        if (is_repeat_topics):
+            _topics = Topic.filter_topics(
+                topics.TOPIC_MAP.values(),
+                nat_says=True,
+                unlocked=True,
+                location=main_background.location.id,
+                affinity=jn_affinity.get_affinity_state(),
+                shown_count=1
+            )
+
+        else:
+            _topics = Topic.filter_topics(
+                topics.TOPIC_MAP.values(),
+                player_says=True,
+                unlocked=True,
+                location=main_background.location.id,
+                affinity=jn_affinity.get_affinity_state()
+            )
 
         # Sort the topics we can pick by prompt for a cleaner appearance
         _topics.sort(key=lambda topic: topic.prompt)

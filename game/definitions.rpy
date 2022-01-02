@@ -283,6 +283,7 @@ init 0 python:
             affinity=None,
             trust=None,
             conditional=None,
+            shown_count=None,
             includes_categories=list(),
             excludes_categories=list(),
             additional_properties=list()
@@ -332,6 +333,9 @@ init 0 python:
             if conditional and not self.check_conditional():
                 return False
 
+            if shown_count is not None and not self.shown_count >= shown_count:
+                return False
+
             if includes_categories and len(set(includes_categories).intersection(set(self.category))) != len(includes_categories):
                 return False
 
@@ -367,6 +371,7 @@ init 0 python:
             affinity=None,
             trust=None,
             conditional=None,
+            shown_count=None,
             includes_categories=list(),
             excludes_categories=list(),
             additional_properties=list()
@@ -396,6 +401,7 @@ init 0 python:
                     affinity,
                     trust,
                     conditional,
+                    shown_count,
                     includes_categories,
                     excludes_categories,
                     additional_properties

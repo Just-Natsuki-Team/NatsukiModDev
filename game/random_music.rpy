@@ -79,7 +79,7 @@ label random_music_enable:
     n 1unmbg "Ooh!{w=0.5}{nw}"
     extend 1fchbg " Yeah,{w=0.1} I can do that!"
     n 1unmss "I'll change it about every fifteen minutes or so then,{w=0.1} 'kay?"
-    n 1uwdaj "Oh!{w=0.2}"
+    n 1uwdaj "Oh!{w=0.5}{nw}"
     extend 1fllbg " I almost forgot {w=0.1}-{w=0.1} let me just check there's actually any music for me to play first."
     n 1ncsbo "..."
 
@@ -87,7 +87,7 @@ label random_music_enable:
         # Proceed if we have at least two tracks
         n 1uchgn "Okaaay!{w=0.2} I think I've got enough to work with here!{w=0.5}{nw}"
         extend 1nchsm " Ehehe."
-        n 1nsqsm "Don't worry,{w=0.1} [player].{w=0.2}"
+        n 1nsqsm "Don't worry,{w=0.1} [player].{w=0.5}{nw}"
         extend 1fcsbg " I'll pick good ones!"
         $ persistent.jn_random_music_enabled = True
 
@@ -103,7 +103,7 @@ label random_music_enable:
         # Cancel if the player doesn't have a selection of custom music
         n 1tllaj "Uhmm...{w=0.3} [player]?{w=0.5}{nw}"
         extend 1tnmca " You haven't exactly given me a lot to work with here."
-        n 1unmaj "Can you give me at least a couple of tracks?{w=0.2}"
+        n 1unmaj "Can you give me at least a couple of tracks?{w=0.5}{nw}"
         extend 1tnmpo " You {i}do{/i} remember how do to that,{w=0.1} right?"
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
         n 1uchbg "Just add them to the custom music folder,{w=0.1} [chosen_tease]!"

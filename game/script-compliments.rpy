@@ -32,14 +32,6 @@ init 0 python in jn_compliments:
             unlocked=True
         )
 
-init 1 python:
-    try:
-        # Resets - remove these later, once we're done tweaking affinity/trust!
-        persistent._compliment_database.clear()
-
-    except Exception as e:
-        utils.log(e, utils.SEVERITY_ERR)
-
 label player_compliments_start:
     python:
         compliment_menu_items = [

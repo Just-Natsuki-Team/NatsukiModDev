@@ -34,14 +34,6 @@ init python in greetings:
             )
         ).label
 
-init 1 python:
-    try:
-        # Resets - remove these later, once we're done tweaking affinity/trust!
-        persistent._greeting_database.clear()
-
-    except Exception as e:
-        utils.log(e, utils.SEVERITY_ERR)
-
 # LOVE+ greetings
 init 5 python:
     registerTopic(
