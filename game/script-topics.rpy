@@ -2197,7 +2197,7 @@ label talk_gaming:
     else:
         n 1nsqsl "Video games...?"
         n 1fsqsl "...Heh.{w=0.2} Why,{w=0.1} [player]?"
-        n 1fcsan "Was stomping all over my feelings not enough? "
+        n 1fcsan "Was stomping all over my feelings not enough?"
         n 1fsqfu "Or were you looking to see if you can stomp all over me in games too?"
         n 1fslsl "..."
         n 1fslaj "...I don't wanna talk about this any more.{w=0.2} We're done here."
@@ -4276,7 +4276,7 @@ label talk_vtubers:
     else:
         n 1fsqan "No.{w=0.2} And I couldn't give less of a crap if you did,{w=0.1} either."
         n 1fnmpu "...And hey,{w=0.1} newsflash,{w=0.1} idiot."
-        n 1fsqpu "Throwing money at a stranger hiding behind a cutesy picture doesn't make you any less of a jerk.{w=0.2} Heh."
+        n 1fsqpu "Throwing money at a stranger hiding behind a cutesy picture doesn't make you any less of a jerk."
         return
 
     n 1nchsm "It's definitely a cool idea!{w=0.2} It lets people share their passions and experiences with others behind a completely clean persona..."

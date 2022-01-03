@@ -306,8 +306,11 @@ label talk_menu:
         "I want to say sorry...":
             jump player_apologies_start
 
-        "Goodbye...":
+        "Goodbye..." if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
             jump farewell_menu
+
+        "Goodbye." if jn_affinity.get_affinity_state() < jn_affinity.AFFECTIONATE:
+            jump farewell_start
 
         "Nevermind.":
             jump ch30_loop
@@ -360,23 +363,18 @@ label player_select_topic(is_repeat_topics=False):
     jump ch30_loop
 
 label farewell_menu:
-    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    python:
+        # Sort the farewell options by their display name
+        avaliable_farewell_options = jn_farewells.get_farewell_options()
+        avaliable_farewell_options.sort(key = lambda option: option[0])
+        avaliable_farewell_options.append(("Goodbye.", "farewell_start"))
 
-        python:
-            # Sort the farewell options by their display name
-            avaliable_farewell_options = jn_farewells.get_farewell_options()
-            avaliable_farewell_options.sort(key = lambda option: option[0])
-            avaliable_farewell_options.append(("Goodbye.", "farewell_start"))
+    call screen scrollable_choice_menu(avaliable_farewell_options, ("Nevermind.", None))
 
-        call screen scrollable_choice_menu(avaliable_farewell_options, ("Nevermind.", None))
-
-        if isinstance(_return, basestring):
-            show natsuki at jn_center
-            $ push(_return)
-            jump call_next_topic
-
-    else:
-        jump farewell_start
+    if isinstance(_return, basestring):
+        show natsuki at jn_center
+        $ push(_return)
+        jump call_next_topic
 
     jump ch30_loop
 
