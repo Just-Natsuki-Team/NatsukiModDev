@@ -487,7 +487,7 @@ style say_dialogue:
     xanchor gui.text_xalign
     xsize gui.text_width
     ypos gui.text_ypos
-    line_leading 10
+    line_spacing 10
     line_overlap_split -2
 
     text_align gui.text_xalign

@@ -154,7 +154,6 @@ label apology_bad_nickname:
             n 1kplsr "I appreciate your apology,{w=0.1} okay?{w=0.2} I do."
             n 1kllsr "But...{w=0.3} it's just like I said.{w=0.2} Actions have consequences."
             n 1kcssr "I hope you can understand."
-            $ relationship("affinity+")
             $ jn_relationship("affinity+")
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
