@@ -182,13 +182,24 @@ init python:
             if (datetime.datetime.now() > LAST_TOPIC_CALL + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown()) and
                 len(persistent._event_list) is 0):
 
-                    topic_pool = Topic.filter_topics(
-                        topics.TOPIC_MAP.values(),
-                        unlocked=True,
-                        nat_says=True,
-                        location=main_background.location.id,
-                        affinity=jn_affinity.get_affinity_state(),
-                    )
+                    if not persistent.jn_natsuki_repeat_topics:
+                        topic_pool = Topic.filter_topics(
+                            topics.TOPIC_MAP.values(),
+                            unlocked=True,
+                            nat_says=True,
+                            location=main_background.location.id,
+                            affinity=jn_affinity.get_affinity_state(),
+                            shown_count=0
+                        )
+
+                    else:
+                        topic_pool = Topic.filter_topics(
+                            topics.TOPIC_MAP.values(),
+                            unlocked=True,
+                            nat_says=True,
+                            location=main_background.location.id,
+                            affinity=jn_affinity.get_affinity_state()
+                        )
 
                     if topic_pool:
                         queue(random.choice(topic_pool).label)

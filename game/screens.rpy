@@ -1262,10 +1262,21 @@ screen preferences():
                                 true_value=True,
                                 false_value=False)
                         ]
+
+                    vbox:
+                        style_prefix "check"
+                        label _("Topics")
+                        textbutton _("Repeat seen") action [
+                            ToggleField(
+                                object=persistent,
+                                field="jn_natsuki_repeat_topics",
+                                true_value=True,
+                                false_value=False)
+                        ]
           
                     ## Additional vboxes of type "radio_pref" or "check_pref" can be
                     ## added here, to add additional creator-defined preferences.
-                
+
                 hbox:
                     style_prefix "slider"
                     box_wrap True

@@ -202,12 +202,15 @@ label screenshot_dialogue:
             menu:
                 "Yes, I did.":
                     n 1fcsbgl "O-oh!{w=0.2} Aha!{w=0.2} W-well,{w=0.1} at least you admit it."
+
                 "No, I didn't.":
                     n 1tnmpu "Huh?{w=0.2} But then...{w=0.3} who...?"
                     n 1tllpu "..."
+
                 "I'm not sure.":
                     n 1tllpu "That's...{w=0.3} a little worrying..."
                     n 1tnmpu "..."
+                    
             n 1nnmpu "Well...{w=0.3} anyway.{w=0.1} The truth is,{w=0.1} I've never been very comfortable with having my picture taken without my permission."
             n 1klrbol "I just...{w=0.3} really,{w=0.1} really don't like it."
             n 1klraj "So for the future,{w=0.1} could you please just let me know if you want to take pictures?"

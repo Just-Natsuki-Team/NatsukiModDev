@@ -59,8 +59,8 @@ label talk_having_pictures_taken:
             n "As long as you ask,{w=0.1} I've got no problem with it!"
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-            if player_screenshots_blocked:
-                n "Really, [player]?{w=0.1} You're asking me about this {i}now{/i}?"
+            if jn_screenshots.are_screenshots_blocked():
+                n "Really,{w=0.1} [player]?{w=0.1} You're asking me about this {i}now{/i}?"
                 n "You know {i}perfectly well{/i} how I feel about this."
                 n "I don't hate you,{w=0.1} but please try to remember how I feel before you do stuff like that."
                 n "I'm still gonna keep that turned off for now."
