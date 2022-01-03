@@ -717,7 +717,7 @@ init 5 python:
 
 label admission_tired:
     # Calculate how long the player has been here so far
-    $ total_hours_in_session = utils.get_current_session_length().total_seconds() / 3600
+    $ total_hours_in_session = utils.jn_get_current_session_length().total_seconds() / 3600
 
     if jn_admissions.last_admission_type == jn_admissions.TYPE_TIRED:
         n 1unmpu "Huh?{w=0.2} You're still tired?"
@@ -813,7 +813,7 @@ label admission_tired:
         # Add pending apology
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
 
-    elif utils.get_current_hour() > 21 or utils.get_current_hour() < 3:
+    elif utils.jn_get_current_hour() > 21 or utils.jn_get_current_hour() < 3:
         n 1fskem "[player]!"
         n 1fnmem "I'm not surprised you're tired!{w=0.2} Have you even seen the time?!"
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)

@@ -374,7 +374,7 @@ init 5 python:
             label="talk_using_computers_healthily",
             unlocked=True,
             prompt="Using computers healthily",
-            conditional="store.utils.get_current_session_length().total_seconds() / 3600 >= 8",
+            conditional="store.utils.jn_get_current_session_length().total_seconds() / 3600 >= 8",
             category=["Life", "You", "Health"],
             nat_says=True,
             affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
@@ -1745,8 +1745,8 @@ label talk_give_nickname:
 
         # Apply penalty and pending apology
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
-        $ relationship(change="affinity-", multiplier=2)
-        $ relationship(change="trust-", multiplier=2)
+        $ jn_relationship(change="affinity-", multiplier=2)
+        $ jn_relationship(change="trust-", multiplier=2)
 
     elif persistent.jn_player_nicknames_bad_given_total == 2:
         n 1fsqsl "I can't believe you did that again to me,{w=0.1} [player]."
@@ -1758,8 +1758,8 @@ label talk_give_nickname:
 
         # Apply penalty and pending apology
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
-        $ relationship(change="affinity-", multiplier=2)
-        $ relationship(change="trust-", multiplier=2)
+        $ jn_relationship(change="affinity-", multiplier=2)
+        $ jn_relationship(change="trust-", multiplier=2)
 
     elif persistent.jn_player_nicknames_bad_given_total == 3:
         n 1fsqan "You are honestly unbelievable,{w=0.1} [player]."
@@ -1774,8 +1774,8 @@ label talk_give_nickname:
                 n 1fsqan "...Then start acting like it,{w=0.1} [player]."
                 n 1fslsl "Thanks."
 
-                $ relationship(change="affinity-", multiplier=2)
-                $ relationship(change="trust-", multiplier=2)
+                $ jn_relationship(change="affinity-", multiplier=2)
+                $ jn_relationship(change="trust-", multiplier=2)
 
             "...":
                 n 1fcssl "Look.{w=0.2} I'm not kidding around,{w=0.1} [player]."
@@ -1783,8 +1783,8 @@ label talk_give_nickname:
                 n 1fsqem "It's toxic."
                 n 1fsqsr "I don't care if you're trying to pull my leg.{w=0.2} Quit it."
 
-                $ relationship(change="affinity-", multiplier=3)
-                $ relationship(change="trust-", multiplier=3)
+                $ jn_relationship(change="affinity-", multiplier=3)
+                $ jn_relationship(change="trust-", multiplier=3)
 
         # Apply penalty and pending apology
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
@@ -1799,8 +1799,8 @@ label talk_give_nickname:
         n 1fsqsr "I warned you,{w=0.1} [player].{w=0.2} Remember that."
 
         # Apply affinity/trust penalties, then revoke nickname priveleges and finally apply pending apology
-        $ relationship(change="affinity-", multiplier=5)
-        $ relationship(change="trust-", multiplier=5)
+        $ jn_relationship(change="affinity-", multiplier=5)
+        $ jn_relationship(change="trust-", multiplier=5)
         $ persistent.jn_player_nicknames_allowed = False
         $ persistent.jn_player_nicknames_current_nickname = None
         $ n_name = "Natsuki"
@@ -1837,7 +1837,7 @@ label talk_sleeping_well:
     extend 1tnmaj " Do you struggle with your sleep?"
 
     # Quip if the player has been around a while, or has admitted they're tired
-    if utils.get_current_session_length().total_seconds() / 3600 >= 12:
+    if utils.jn_get_current_session_length().total_seconds() / 3600 >= 12:
         n 1fsqpo "I mean,{w=0.1} you {i}have{/i} been here for a while now..."
         n 1ullaj "So...{w=0.5}{nw}"
         extend 1nnmaj " I kinda figured you might be feeling a little sleepy anyway."
@@ -2360,7 +2360,7 @@ label talk_i_love_you:
             n 1kllsmf "..."
             n 1kllssf "S-{w=0.1}so..."
             n 1kplssf "Where were we?{w=0.2} Ehehe..."
-            $ relationship(change="affinity+", multiplier=3)
+            $ jn_relationship(change="affinity+", multiplier=3)
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n 1uscgsf "[player_initial]-{w=0.2}[player]!"
@@ -2377,7 +2377,7 @@ label talk_i_love_you:
             n 1flrbol "N-{w=0.1}never mind..."
             n 1fcseml "Forget I said anything."
             n 1kllbof "..."
-            $ relationship(change="affinity+", multiplier=2)
+            $ jn_relationship(change="affinity+", multiplier=2)
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
             n 1uskwrf "W-{w=0.1}w-{w=0.1}what?"
@@ -2393,7 +2393,7 @@ label talk_i_love_you:
             n 1fcsanf "Uuuuu..."
             n 1fcsajf "F-{w=0.1}forget it!{w=0.2} I-{w=0.1}it's nothing..."
             n 1kslslf "..."
-            $ relationship("affinity+")
+            $ jn_relationship("affinity+")
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
             n 1fsqdvl "Pffffft!"
@@ -2431,7 +2431,7 @@ label talk_i_love_you:
             n 1fsqsr "We're done with this."
             n 1fsqpu "And if you {i}really{/i} feel that way?"
             n 1fsqsf "...Then why aren't {i}you{/i} trying to make this work,{w=0.1} [player]?"
-            $ relationship("affinity-")
+            $ jn_relationship("affinity-")
 
         else:
             # :(
@@ -2454,7 +2454,7 @@ label talk_i_love_you:
             n 1fcsan "..."
             n 1fsqfu "Go!"
             n 1fscsc "{i}Just leave me alone!{/i}{nw}"
-            $ relationship(change="affinity-", multiplier=10)
+            $ jn_relationship(change="affinity-", multiplier=10)
             return { "quit": None }
 
         $ persistent.jn_player_love_you_count += 1
@@ -2470,7 +2470,7 @@ label talk_i_love_you:
             if random_response_index == 0:
                 n 1unmbgf "Ehehe.{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
                 n 1uchsmf "You're always [chosen_descriptor] to me."
-                $ relationship("affinity+")
+                $ jn_relationship("affinity+")
                 return
 
             elif random_response_index == 1:
@@ -2479,13 +2479,13 @@ label talk_i_love_you:
                 $ chosen_endearment = chosen_endearment.capitalize()
                 n 1kwmbgf "[chosen_endearment],{w=0.1} I love you too!"
                 n 1fcsbgf "I'll always be here to stick up for you."
-                $ relationship("affinity+")
+                $ jn_relationship("affinity+")
                 return
 
             elif random_response_index == 2:
                 n 1uchsmf "Aww,{w=0.1} [chosen_endearment]!{w=0.2} I love you too!"
                 n 1klrbgf "You're the best thing that's ever happened to me."
-                $ relationship("affinity+")
+                $ jn_relationship("affinity+")
                 return
 
             elif random_response_index == 3:
@@ -2493,7 +2493,7 @@ label talk_i_love_you:
                 n 1fsqsmf "Well,{w=0.1} I'd be happy to oblige!"
                 n 1uchsmf "I love you too,{w=0.1} [chosen_endearment]!"
                 n 1fchbgf "Keep on smiling for me,{w=0.1} 'kay?"
-                $ relationship("affinity+")
+                $ jn_relationship("affinity+")
                 return
 
             elif random_response_index == 4:
@@ -2501,7 +2501,7 @@ label talk_i_love_you:
                 n 1usqssf "Ehehe.{w=0.2} Don't worry,{w=0.1} I'm not complaining!"
                 n 1uchbgf "I love you too,{w=0.1} [chosen_endearment]!"
                 n 1fcssmf "It's just us two against the world!"
-                $ relationship("affinity+")
+                $ jn_relationship("affinity+")
                 return
 
             elif random_response_index == 5:
@@ -2526,7 +2526,7 @@ label talk_i_love_you:
                         n 1fchsmf "Well,{w=0.1} whatever.{w=0.2} I'm just glad you accept the truth."
                         n 1uchsmf "Ehehe."
 
-                $ relationship("affinity+")
+                $ jn_relationship("affinity+")
                 return
 
             elif random_response_index == 6:
@@ -2534,7 +2534,7 @@ label talk_i_love_you:
                 n 1usqsmf "...And I think I can guess you like hearing it just as much."
                 n 1uchbgf "I love you too,{w=0.1} [chosen_endearment]!"
                 n 1nchsmf "I don't need anyone else~."
-                $ relationship("affinity+")
+                $ jn_relationship("affinity+")
                 return
 
             elif random_response_index == 7:
@@ -2544,7 +2544,7 @@ label talk_i_love_you:
                 n 1fchbgf "...But just the kind of gross I'm down with.{w=0.2} Ehehe."
                 n 1uchbgf "I love you too,{w=0.1} [chosen_endearment]!"
                 n 1unmsmf "I'll always have your back."
-                $ relationship("affinity+")
+                $ jn_relationship("affinity+")
                 return
 
             elif random_response_index == 8:
@@ -2552,7 +2552,7 @@ label talk_i_love_you:
                 n 1nchssf "I..."
                 n 1uchbsf "Looooooooove you too,{w=0.1} [player]!"
                 n 1kwmsmf "You'll always be my rock."
-                $ relationship("affinity+")
+                $ jn_relationship("affinity+")
                 return
 
             elif random_response_index == 9:
@@ -2637,14 +2637,14 @@ label talk_i_love_you:
                             if wrong_response_count >= 10:
                                 n 1nsqsml "Nice try,{w=0.1} though~!"
 
-                            $ relationship("affinity+")
+                            $ jn_relationship("affinity+")
                             return
 
             elif random_response_index == 10:
                 n 1ksqsml "Ehehe.{w=0.2} I'll never get tired of hearing that from you,{w=0.1} [player]."
                 n 1uchsmf "I love you too!"
                 n 1uchbgf "You're my numero uno~."
-                $ relationship("affinity+")
+                $ jn_relationship("affinity+")
                 return
 
             else:
@@ -2652,7 +2652,7 @@ label talk_i_love_you:
                 n 1uslsmf "You're such a softie,{w=0.1} [player].{w=0.2} Ehehe."
                 n 1uchbgf "But...{w=0.3} I'm not gonna complain!{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
                 n 1uchsmf "You always make me feel tall."
-                $ relationship("affinity+")
+                $ jn_relationship("affinity+")
                 return
 
             return
@@ -2664,7 +2664,7 @@ label talk_i_love_you:
             n 1flremf "Let's just talk about something,{w=0.1} alright?"
             n 1flrpof "Y-{w=0.1}you can fawn over me in your {i}own{/i} time!"
             n 1klrpof "Dummy..."
-            $ relationship("affinity+")
+            $ jn_relationship("affinity+")
             return
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
@@ -2688,7 +2688,7 @@ label talk_i_love_you:
             n 1fsqsr "Talk is cheap,{w=0.1} [player]."
             n 1fsqaj "If you {i}really{/i} care about me..."
             n 1fsqpu "Then {i}prove{/i} it."
-            $ relationship("affinity-")
+            $ jn_relationship("affinity-")
             return
 
         else:
@@ -2698,7 +2698,7 @@ label talk_i_love_you:
             n 1fcsfu "..."
             n 1fcspu "You know what?{w=0.2} Whatever.{w=0.2} I don't care anymore."
             n 1fsqfu "Say what you like,{w=0.1} [player].{w=0.2} It's all crap,{w=0.1} just like everything else from you."
-            $ relationship("affinity-")
+            $ jn_relationship("affinity-")
             return
 
     return

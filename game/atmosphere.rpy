@@ -66,40 +66,28 @@ init 0 python in jn_atmosphere:
         IN:
             weather_type - int; WEATHER_OVERCAST, WEATHER_RAIN, WEATHER_THUNDER or WEATHER_SUNNY
         """
-        if (isinstance(weather_type, int)):
-            if weather_type == WEATHER_OVERCAST:
-                renpy.show(name="sky_day overcast", zorder=_SKY_Z_INDEX)
-                renpy.with_statement(trans=store.weather_change_transition)
+        if weather_type == WEATHER_OVERCAST:
+            sky = "sky_day overcast"
+            dim = "dim light"
+            renpy.music.stop(channel="weather_loop", fadeout=5.0)
 
-                renpy.show(name="dim light", zorder=_DIM_Z_INDEX)
-                renpy.with_statement(trans=store.dim_change_transition)
+        elif weather_type == WEATHER_RAIN:
+            sky = "sky_day rain"
+            dim = "dim medium"
+            renpy.music.play(filenames=_MUFFLED_RAIN_PATH, channel="weather_loop", fadein=3.0)
 
-                renpy.music.stop(channel="weather_loop", fadeout=5.0)
-
-            elif weather_type == WEATHER_RAIN:
-                renpy.show(name="sky_day rain", zorder=_SKY_Z_INDEX)
-                renpy.with_statement(trans=store.weather_change_transition)
-
-                renpy.show(name="dim medium", zorder=_DIM_Z_INDEX)
-                renpy.with_statement(trans=store.dim_change_transition)
-
-                renpy.music.play(filenames=_MUFFLED_RAIN_PATH, channel="weather_loop", fadein=3.0)
-
-            elif weather_type == WEATHER_THUNDER:
-                renpy.show(name="sky_day thunder", zorder=_SKY_Z_INDEX)
-                renpy.with_statement(trans=store.weather_change_transition)
-
-                renpy.show(name="dim heavy", zorder=_DIM_Z_INDEX)
-                renpy.with_statement(trans=store.dim_change_transition)
-
-                renpy.music.play(filenames=_MUFFLED_RAIN_PATH, channel="weather_loop", fadein=3.0)
-
-            else:
-                renpy.show(name="sky_day sunny", zorder=_SKY_Z_INDEX)
-                renpy.with_statement(trans=store.weather_change_transition)
-                renpy.hide(name="dim")
-
-                renpy.music.stop(channel="weather_loop", fadeout=5.0)
+        elif weather_type == WEATHER_THUNDER:
+            sky = "sky_day thunder"
+            dim = "dim heavy"
+            renpy.music.play(filenames=_MUFFLED_RAIN_PATH, channel="weather_loop", fadein=3.0)
 
         else:
-            raise Exception("Supplied param weather_type {weather_type} is not a valid type.".format(weather_type))
+            sky = "sky_day sunny"
+            renpy.music.stop(channel="weather_loop", fadeout=5.0)
+
+        renpy.show(name=sky, zorder=_SKY_Z_INDEX)
+        renpy.with_statement(trans=store.weather_change_transition)
+
+        if dim:
+            renpy.show(name=dim, zorder=_DIM_Z_INDEX)
+            renpy.with_statement(trans=store.dim_change_transition)

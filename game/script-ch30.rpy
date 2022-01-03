@@ -18,7 +18,7 @@ label ch30_holiday_check:
         import datetime
         import store.utils as utils
 
-        utils.log("Holiday check: {0}".format(utils.get_holiday_for_date(datetime.datetime.now().date())))
+        utils.log("Holiday check: {0}".format(utils.jn_get_holiday_for_date(datetime.datetime.now().date())))
     #Run holiday checks and push/setup holiday related things here
 
     #FALL THROUGH
@@ -36,7 +36,7 @@ label ch30_init:
             persistent.last_apology_type = jn_apologies.TYPE_PROLONGED_LEAVE
 
         else:
-            relationship("affinity+")
+            jn_relationship("affinity+")
 
         # Add to the total visits counter and set the last visit date
         persistent.jn_total_visit_count += 1
@@ -57,18 +57,15 @@ label ch30_init:
     # Draw background
     $ main_background.draw(full_redraw=True)
 
-    if persistent.jn_random_weather and utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
+    if persistent.jn_random_weather and utils.jn_get_current_hour() > 6 and utils.jn_get_current_hour() <= 18:
         $ jn_atmosphere.show_random_sky()
 
-    elif utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
+    elif utils.jn_get_current_hour() > 6 and utils.jn_get_current_hour() <= 18:
         $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
 
     # Outfit selection
     if persistent.jn_natsuki_auto_outfit_change_enabled:
         $ jn_outfits.set_outfit_for_time_block()
-
-    # Check key
-    $ utils.KEY_VALID = utils.validate_key()
 
     show screen hkb_overlay
     play music audio.test_bgm
@@ -238,10 +235,10 @@ init python:
         # Draw background
         main_background.check_redraw()
 
-        if persistent.jn_random_weather and utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
+        if persistent.jn_random_weather and utils.jn_get_current_hour() > 6 and utils.jn_get_current_hour() <= 18:
             jn_atmosphere.show_random_sky()
 
-        elif utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
+        elif utils.jn_get_current_hour() > 6 and utils.jn_get_current_hour() <= 18:
             jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
 
         # Update outfit

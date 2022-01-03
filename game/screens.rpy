@@ -728,7 +728,7 @@ screen quick_menu():
             xalign 0.5
             yalign 0.995
 
-            if utils.KEY_VALID:
+            if utils.jn_get_key_valid():
                 textbutton _("Restart"):
                     text_style "quickmenu_text"
                     action Show(
@@ -1802,7 +1802,7 @@ screen confirm_quit(is_quitting):
                         Function(jn_apologies.add_new_pending_apology, jn_apologies.TYPE_SUDDEN_LEAVE),
                         Function(check_ingame_state_add_apology),
                         SetField(persistent, "jn_player_apology_type_on_quit", jn_apologies.TYPE_SUDDEN_LEAVE),
-                        relationship("affinity-"),
+                        jn_relationship("affinity-"),
                         Hide("confirm"),
                         Hide("confirm_quit"),
                         Jump("quit")

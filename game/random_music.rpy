@@ -37,7 +37,7 @@ init python in jn_random_music:
             and store.persistent.jn_random_music_enabled
             and jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE
             and store.preferences.get_volume("music") > 0
-            and len(jn_custom_music._get_all_custom_music()) >= 2):
+            and len(jn_custom_music.get_all_custom_music()) >= 2):
             
             store.push("random_music_change")
             renpy.jump("call_next_topic")
@@ -50,7 +50,7 @@ label random_music_change:
     stop music fadeout 3
 
     python:
-        music_title_and_file = random.choice(filter(lambda track: (jn_custom_music._now_playing not in track), jn_custom_music._get_all_custom_music()))
+        music_title_and_file = random.choice(filter(lambda track: (jn_custom_music._now_playing not in track), jn_custom_music.get_all_custom_music()))
         music_title = music_title_and_file[0]
         renpy.play(filename=music_title_and_file[1], channel="music", fadein=3)
         jn_custom_music._now_playing = music_title
@@ -83,7 +83,7 @@ label random_music_enable:
     extend 1fllbg " I almost forgot {w=0.1}-{w=0.1} let me just check there's actually any music for me to play first."
     n 1ncsbo "..."
 
-    if len(jn_custom_music._get_all_custom_music()) >= 2:
+    if len(jn_custom_music.get_all_custom_music()) >= 2:
         # Proceed if we have at least two tracks
         n 1uchgn "Okaaay!{w=0.2} I think I've got enough to work with here!{w=0.5}{nw}"
         extend 1nchsm " Ehehe."

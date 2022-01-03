@@ -631,7 +631,7 @@ label snap_end:
         n 1nchgn "Well,{w=0.1} I guess that's fine.{w=0.2} Let me just chalk up another win for me,{w=0.1} then.{w=0.2} Ehehe."
 
     # Award affinity for playing to completion with best girl
-    $ relationship("affinity+")
+    $ jn_relationship("affinity+")
 
     if jn_snap._player_win_streak >= 3:
         n 1fcsanl "Uuuuuu-!"

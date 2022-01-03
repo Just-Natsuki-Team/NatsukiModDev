@@ -17,9 +17,10 @@ init python in jn_outfits:
     current_outfit_name = None
     _use_alt_outfit = random.choice(range(1, 3)) == 1
 
-    class Outfit():
+    class JNOutfitPreset():
         """
         Describes a complete outfit for Natsuki to wear; including clothing, hairstyle, etc.
+        At minimum, an outfit must consist of clothes and a hairstyle
         """
         def __init__(
             self,
@@ -33,6 +34,14 @@ init python in jn_outfits:
             headgear=None,
             necklace=None
         ):
+            if clothes is None:
+                raise TypeError("Outfit clothing cannot be None")
+                return
+
+            if hairstyle is None:
+                raise TypeError("Outfit hairstyle cannot be None")
+                return
+
             self.display_name = display_name
             self.reference_name = reference_name
             self.unlocked = unlocked
@@ -47,7 +56,7 @@ init python in jn_outfits:
     # For now, we'll settle with presets.
 
     # Default outfits
-    DEFAULT_OUTFIT_UNIFORM = Outfit(
+    DEFAULT_OUTFIT_UNIFORM = JNOutfitPreset(
         display_name="School uniform",
         reference_name="jn_school_uniform",
         unlocked=True,
@@ -56,7 +65,7 @@ init python in jn_outfits:
         accessory="hairbands/red"
     )
 
-    DEFAULT_OUTFIT_CASUAL_WEEKDAY = Outfit(
+    DEFAULT_OUTFIT_CASUAL_WEEKDAY = JNOutfitPreset(
         display_name="Casual clothes",
         reference_name="jn_casual_weekday",
         unlocked=True,
@@ -65,7 +74,7 @@ init python in jn_outfits:
         accessory="hairbands/red"
     )
 
-    DEFAULT_OUTFIT_CASUAL_WEEKDAY_ALT = Outfit(
+    DEFAULT_OUTFIT_CASUAL_WEEKDAY_ALT = JNOutfitPreset(
         display_name="Casual clothes",
         reference_name="jn_casual_weekday_alt",
         unlocked=True,
@@ -74,7 +83,7 @@ init python in jn_outfits:
         accessory="hairbands/white"
     )
 
-    DEFAULT_OUTFIT_CASUAL_WEEKEND = Outfit(
+    DEFAULT_OUTFIT_CASUAL_WEEKEND = JNOutfitPreset(
         display_name="Casual clothes",
         reference_name="jn_casual_weekend",
         unlocked=True,
@@ -83,7 +92,7 @@ init python in jn_outfits:
         accessory="hairbands/red"
     )
 
-    DEFAULT_OUTFIT_CASUAL_WEEKEND_ALT = Outfit(
+    DEFAULT_OUTFIT_CASUAL_WEEKEND_ALT = JNOutfitPreset(
         display_name="Casual clothes",
         reference_name="jn_casual_weekend_alt",
         unlocked=True,
@@ -92,7 +101,7 @@ init python in jn_outfits:
         accessory="hairbands/white"
     )
 
-    DEFAULT_OUTFIT_NIGHT = Outfit(
+    DEFAULT_OUTFIT_NIGHT = JNOutfitPreset(
         display_name="Pyjamas",
         reference_name="jn_pajamas_night",
         unlocked=True,
@@ -101,7 +110,7 @@ init python in jn_outfits:
         accessory="hairbands/red"
     )
 
-    DEFAULT_OUTFIT_MORNING = Outfit(
+    DEFAULT_OUTFIT_MORNING = JNOutfitPreset(
         display_name="Pyjamas",
         reference_name="jn_pajamas_morning",
         unlocked=True,
@@ -110,7 +119,7 @@ init python in jn_outfits:
         accessory="hairbands/red"
     )
 
-    DEFAULT_OUTFIT_MORNING_ALT = Outfit(
+    DEFAULT_OUTFIT_MORNING_ALT = JNOutfitPreset(
         display_name="Pyjamas",
         reference_name="jn_pajamas_morning_alt",
         unlocked=True,
@@ -119,7 +128,7 @@ init python in jn_outfits:
         accessory="hairbands/green"
     )
 
-    DEFAULT_OUTFIT_CHRISTMAS = Outfit(
+    DEFAULT_OUTFIT_CHRISTMAS = JNOutfitPreset(
         display_name="Natsu Claus",
         reference_name="jn_natsu_claus",
         unlocked=True,
@@ -187,21 +196,12 @@ init python in jn_outfits:
     def set_outfit(outfit):
         """
         Sets Natsuki's appearance using the given outfit.
+
+        IN:
+            - outfit - JNOutfitPreset outfit for Natsuki to wear
         """
         global current_outfit_name
         
-        if not isinstance(outfit, Outfit):
-            raise Exception("Outfit given is not an Outfit-class object")
-            return
-
-        if outfit.clothes is None:
-            raise Exception("Outfit clothing cannot be None")
-            return
-
-        if outfit.hairstyle is None:
-            raise Exception("Outfit hairstyle cannot be None")
-            return
-
         if outfit.unlocked:
             store.persistent.jn_natsuki_current_outfit = outfit.clothes
             store.persistent.jn_natsuki_current_hairstyle = outfit.hairstyle
@@ -219,50 +219,50 @@ init python in jn_outfits:
         Returns the outfit corresponding to affinity, the current time block and whether or not is is a weekday.
         """
         if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            if utils.get_is_weekday():
-                return DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_HIGH_AFFINITY.get(utils.get_current_time_block())
+            if utils.jn_get_is_weekday():
+                return DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_HIGH_AFFINITY.get(utils.jn_get_current_time_block())
 
             else:
-                return DEFAULT_OUTFIT_SCHEDULE_WEEKEND_HIGH_AFFINITY.get(utils.get_current_time_block())
+                return DEFAULT_OUTFIT_SCHEDULE_WEEKEND_HIGH_AFFINITY.get(utils.jn_get_current_time_block())
         
         elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
-            if utils.get_is_weekday():
-                return DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_MEDIUM_AFFINITY.get(utils.get_current_time_block())
+            if utils.jn_get_is_weekday():
+                return DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_MEDIUM_AFFINITY.get(utils.jn_get_current_time_block())
 
             else:
-                return DEFAULT_OUTFIT_SCHEDULE_WEEKEND_MEDIUM_AFFINITY.get(utils.get_current_time_block())
+                return DEFAULT_OUTFIT_SCHEDULE_WEEKEND_MEDIUM_AFFINITY.get(utils.jn_get_current_time_block())
         
         else:
-            if utils.get_is_weekday():
-                return DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_LOW_AFFINITY.get(utils.get_current_time_block())
+            if utils.jn_get_is_weekday():
+                return DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_LOW_AFFINITY.get(utils.jn_get_current_time_block())
 
             else:
-                return DEFAULT_OUTFIT_SCHEDULE_WEEKEND_LOW_AFFINITY.get(utils.get_current_time_block())
+                return DEFAULT_OUTFIT_SCHEDULE_WEEKEND_LOW_AFFINITY.get(utils.jn_get_current_time_block())
 
     def set_outfit_for_time_block():
         """
         Sets Natsuki's outfit based on the time of day, whether it is a weekday/weekend, and affinity.
         """
         if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            if utils.get_is_weekday():
-                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_HIGH_AFFINITY.get(utils.get_current_time_block()))
+            if utils.jn_get_is_weekday():
+                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_HIGH_AFFINITY.get(utils.jn_get_current_time_block()))
 
             else:
-                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKEND_HIGH_AFFINITY.get(utils.get_current_time_block()))
+                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKEND_HIGH_AFFINITY.get(utils.jn_get_current_time_block()))
         
         elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
-            if utils.get_is_weekday():
-                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_MEDIUM_AFFINITY.get(utils.get_current_time_block()))
+            if utils.jn_get_is_weekday():
+                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_MEDIUM_AFFINITY.get(utils.jn_get_current_time_block()))
 
             else:
-                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKEND_MEDIUM_AFFINITY.get(utils.get_current_time_block()))
+                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKEND_MEDIUM_AFFINITY.get(utils.jn_get_current_time_block()))
         
         else:
-            if utils.get_is_weekday():
-                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_LOW_AFFINITY.get(utils.get_current_time_block()))
+            if utils.jn_get_is_weekday():
+                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_LOW_AFFINITY.get(utils.jn_get_current_time_block()))
 
             else:
-                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKEND_LOW_AFFINITY.get(utils.get_current_time_block()))
+                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKEND_LOW_AFFINITY.get(utils.jn_get_current_time_block()))
             
 label outfits_time_of_day_change:
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:

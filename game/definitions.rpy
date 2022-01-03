@@ -240,8 +240,6 @@ init 0 python:
 
             NOTE: Will raise a KeyError of the lock map doesn't have the persist key in it
             """
-            if self.label == "talk_are_you_into_cosplay":
-                store.utils.log(store.utils.pretty_print(self))
             for persist_key, value in self.as_dict().iteritems():
                 if TOPIC_LOCKED_PROP_BASE_MAP[persist_key]:
                     self.__persistent_db[self.label][persist_key] = value
@@ -723,7 +721,7 @@ init -999 python in utils:
         SEVERITY_ERR: "[{0}] [ERROR]: {1}"
     }
 
-    _KEY_HASH = "4d753616e2082a70b8ec46439c26e191010384c46e81d488579c3cca35eb3d6c"
+    __KEY_HASH = "4d753616e2082a70b8ec46439c26e191010384c46e81d488579c3cca35eb3d6c"
 
     def log(message, logseverity=SEVERITY_INFO):
         """
@@ -741,7 +739,7 @@ init -999 python in utils:
             ).format(datetime.datetime.now(), message)
         )
 
-    def pretty_print(object, indent=1, width=150):
+    def jn_pretty_print(object, indent=1, width=150):
         """
         Returns a PrettyPrint-formatted representation of an object as a dict.
 
@@ -755,7 +753,7 @@ init -999 python in utils:
         """
         return pprint.pformat(object.__dict__, indent, width)
 
-    def get_mouse_position():
+    def jn_get_mouse_position():
         """
         Returns a tuple representing the mouse's current position in the game window.
 
@@ -763,22 +761,6 @@ init -999 python in utils:
             - mouse position as a tuple in format (x,y)
         """
         return pygame.mouse.get_pos()
-
-    def validate_key():
-        """
-        Returns whether the key supplied for additional features is valid.
-        """
-        key_path = os.path.join(renpy.config.basedir, "game/dev/key.txt").replace("\\", "/")
-        if not os.path.exists(key_path):
-            return False
-
-        else:
-            with open(name=key_path, mode="r") as key_file:
-                if hashlib.sha256(key_file.read().encode("utf-8")).hexdigest() == _KEY_HASH:
-                    renpy.notify("Key authenticated!")
-                    return True
-                    
-                return False
 
 init python in utils:
     import easter
@@ -790,6 +772,15 @@ init python in utils:
     TIME_BLOCK_AFTERNOON = 3
     TIME_BLOCK_EVENING = 4
     TIME_BLOCK_NIGHT = 5
+    
+    _easter = easter.easter(datetime.datetime.today().year)
+
+    JN_NEW_YEARS_DAY = datetime.date(datetime.date.today().year, 1, 1)
+    JN_EASTER = datetime.date(_easter.year, _easter.month, _easter.day)
+    JN_HALLOWEEN = datetime.date(datetime.date.today().year, 10, 31)
+    JN_CHRISTMAS_EVE = datetime.date(datetime.date.today().year, 12, 24)
+    JN_CHRISTMAS_DAY = datetime.date(datetime.date.today().year, 12, 25)
+    JN_NEW_YEARS_EVE = datetime.date(datetime.date.today().year, 12, 31)
 
     class JNHolidays(Enum):
         none = 0
@@ -803,7 +794,7 @@ init python in utils:
         def __str__(self):
             return self.name
 
-    def get_current_session_length():
+    def jn_get_current_session_length():
         """
         Returns a timedelta object representing the length of the current game session.
 
@@ -812,14 +803,14 @@ init python in utils:
         """
         return datetime.datetime.now() - store.jn_globals.current_session_start_time
 
-    def get_time_in_session_descriptor():
+    def jn_get_time_in_session_descriptor():
         """
         Get a descriptor based on the number of minutes the player has spent in the session, up to 30 minutes
 
         OUT:
             Brief descriptor relating to the number of minutes spent in the session
         """
-        minutes_in_session = get_current_session_length().total_seconds() / 60
+        minutes_in_session = jn_get_current_session_length().total_seconds() / 60
 
         if minutes_in_session <= 1:
             return "like a minute"
@@ -845,7 +836,7 @@ init python in utils:
         else:
             return "a while"
 
-    def get_current_hour():
+    def jn_get_current_hour():
         """
         Gets the current hour (out of 24) of the day.
         
@@ -854,7 +845,7 @@ init python in utils:
         """
         return datetime.datetime.now().hour
 
-    def get_is_weekday():
+    def jn_get_is_weekday():
         """
         Gets whether the current day is a weekday (Monday : Friday).
 
@@ -863,74 +854,123 @@ init python in utils:
         """
         return datetime.datetime.now().weekday() < 5
 
-    def get_current_time_block():
+    def jn_get_current_time_block():
         """
         Returns a type describing the current time of day as a segment.
         """
-        if get_current_hour() in range(3, 5):
+        current_hour = jn_get_current_hour()
+        if current_hour in range(3, 5):
             return TIME_BLOCK_EARLY_MORNING
 
-        elif get_current_hour() in range(5, 9):
+        elif current_hour in range(5, 9):
             return TIME_BLOCK_MID_MORNING
         
-        elif get_current_hour() in range(9, 12):
+        elif current_hour in range(9, 12):
             return TIME_BLOCK_LATE_MORNING
 
-        elif get_current_hour() in range(12, 18):
+        elif current_hour in range(12, 18):
             return TIME_BLOCK_AFTERNOON
 
-        elif get_current_hour() in range(18, 22):
+        elif current_hour in range(18, 22):
             return TIME_BLOCK_EVENING
 
         else:
             return TIME_BLOCK_NIGHT
 
-    def get_holiday_for_date(input_date=None):
+    def jn_is_time_block_early_morning():
+        """
+        Returns True if the current time is judged to be early morning.
+        """
+        return jn_get_current_hour() in range(3, 5)
+
+    def jn_is_time_block_mid_morning():
+        """
+        Returns True if the current time is judged to be mid morning.
+        """
+        return jn_get_current_hour() in range(5, 9)
+
+    def jn_is_time_block_late_morning():
+        """
+        Returns True if the current time is judged to be late morning.
+        """
+        return jn_get_current_hour() in range(9, 12)
+
+    def jn_is_time_block_afternoon():
+        """
+        Returns True if the current time is judged to be afternoon.
+        """
+        return jn_get_current_hour() in range(12, 18)
+
+    def jn_is_time_block_evening():
+        """
+        Returns True if the current time is judged to be evening.
+        """
+        return jn_get_current_hour() in range(18, 22)
+
+    def jn_is_time_block_night():
+        """
+        Returns True if the current time is judged to be night.
+        """
+        return jn_get_current_hour() in range(22, 3)
+
+    def jn_get_holiday_for_date(input_date=None):
         """
         Gets the holiday - if any - corresponding to the supplied date, or the current date by default.
 
         IN:
-            - date - date object to test against. Defaults to the current date.
+            - date - datetime object to test against. Defaults to the current date.
 
         OUT:
             - JNHoliday representing the holiday for the supplied date.
         """
 
         if input_date is None:
-            _date = datetime.datetime.now()
-            input_day_and_month = (_date.day, _date.month)
-            input_year_easter = easter.easter(_date.year)
+            input_date = datetime.datetime.today()
 
         elif not isinstance(input_date, datetime.date):
             raise TypeError("input_date for holiday check must be of type date; type given was {0}".format(type(input_date)))
 
-        else:
-            input_day_and_month = (input_date.day, input_date.month)
-            input_year_easter = easter.easter(input_date.year)
-        
-        if input_day_and_month[0] == 1 and input_day_and_month[1] == 1:
+        if input_date == JN_NEW_YEARS_DAY:
             return JNHolidays.new_years_day
 
-        elif input_day_and_month[0] == input_year_easter.day and input_day_and_month[1] == input_year_easter.month:
+        elif input_date == JN_EASTER:
             return JNHolidays.easter
 
-        elif input_day_and_month[0] == 31 and input_day_and_month[1] == 10:
+        elif input_date == JN_HALLOWEEN:
             return JNHolidays.halloween
 
-        elif input_day_and_month[0] == 24 and input_day_and_month[1] == 12:
+        elif input_date == JN_CHRISTMAS_EVE:
             return JNHolidays.christmas_eve
 
-        elif input_day_and_month[0] == 25 and input_day_and_month[1] == 12:
+        elif input_date == JN_CHRISTMAS_DAY:
             return JNHolidays.christmas_day
 
-        elif input_day_and_month[0] == 31 and input_day_and_month[1] == 12:
+        elif input_date == JN_NEW_YEARS_EVE:
             return JNHolidays.new_years_eve
 
         else:
             return JNHolidays.none
 
 init python in utils:
-    KEY_VALID = False
+    # Key setup
+    key_path = os.path.join(renpy.config.basedir, "game/dev/key.txt").replace("\\", "/")
+    if not os.path.exists(key_path):
+        __KEY_VALID = False
+
+    else:
+        with open(name=key_path, mode="r") as key_file:
+            if hashlib.sha256(key_file.read().encode("utf-8")).hexdigest() == __KEY_HASH:
+                __KEY_VALID = True
+                
+            else:   
+                __KEY_VALID = False
+
+    def jn_get_key_valid():
+        """
+        Returns the validation state of the key.
+        """
+        global __KEY_VALID
+        return __KEY_VALID
 
 # Vanilla resources from base DDLC
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
