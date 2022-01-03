@@ -1,8 +1,18 @@
-## DDLC Mod Template
+## Just Natsuki
+An After Story style mod for Natsuki.
 
-These `.rpy` files are copies of important script files found in DDLC's `script.rpa` archive that are necessary to change for most basic modding projects.
+### Disclaimer:
+For those who clone this repository to try the mod, please note that Just Natsuki is in heavy development.
+As such, a lot of what you may see may be removed as more changes happen, they may wind up locked behind other features, or they may be removed entirely.
 
-As written, each of these files is similar to those included in DDLC but with story specific game flow removed. This will allow you to tell the story you want to tell instead. The original code has been included in commented blocks, however, if you want to reproduce portions of the original game.
+Therefore, if you're interested in really getting to know Natsuki, we recommend you wait until we're in a position to release, as there can be major issues with your persistent as development continues and our code changes.
+
+If you're just interested in seeing what we're up to, or hunting for bugs, please open an issue if you come across one and there isn't an existing issue open for it.
+
+#### TL;DR:
+- Don't install the source code expecting a complete, polished Just Natsuki yet
+- There likely will be data integrity issues if you play through enough of the commits
+- There **will** be bugs
 
 **Interested in a community server or chatting with the devs? Consider joining our Discord server! We'd love to have you!**
 <p align="center">
@@ -12,7 +22,9 @@ As written, each of these files is similar to those included in DDLC but with st
 </p>
 
 ## Explanation of scripts
+These `.rpy` files are copies of important script files found in DDLC's `script.rpa` archive that are necessary to change for most basic modding projects.
 
+As written, each of these files is similar to those included in DDLC but with story specific game flow removed. This will allow you to tell the story you want to tell instead. The original code has been included in commented blocks, however, if you want to reproduce portions of the original game.
 #### `options.rpy`
 
 This file contains options that can be changed to customize your game. This file also includes the build options used when exporting your game for others to download.
