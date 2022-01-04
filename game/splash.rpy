@@ -73,7 +73,7 @@ transform menu_bg_move:
     topleft
     parallel:
         xoffset 0 yoffset 0
-        linear 3.0 xoffset -100 yoffset -100
+        linear 3.0 xoffset 0 yoffset -160
         repeat
     parallel:
         ypos 0
@@ -85,7 +85,7 @@ transform menu_bg_loop:
     topleft
     parallel:
         xoffset 0 yoffset 0
-        linear 3.0 xoffset -100 yoffset -100
+        linear 3.0 xoffset 0 yoffset -160
         repeat
 
 transform menu_logo_move:

@@ -910,6 +910,7 @@ screen main_menu():
 
     style_prefix "main_menu"
     add "menu_bg"
+    add "warmth"
     add "menu_art_n"
 
     frame:
@@ -1390,7 +1391,9 @@ style radio_button:
 style radio_button_text:
     properties gui.button_text_properties("radio_button")
     font "gui/font/Halogen.ttf"
-    outlines []
+    color "#e2d1d1"
+    hover_color "#FF8ED0"
+    outlines [(2, "#000000aa", 0, 0)]
 
 style check_vbox:
     spacing gui.pref_button_spacing
@@ -1402,7 +1405,9 @@ style check_button:
 style check_button_text:
     properties gui.button_text_properties("check_button")
     font "gui/font/Halogen.ttf"
-    outlines []
+    color "#e2d1d1"
+    hover_color "#FF8ED0"
+    outlines [(2, "#000000aa", 0, 0)]
 
 style slider_slider:
     xsize 350
