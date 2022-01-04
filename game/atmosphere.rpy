@@ -83,6 +83,7 @@ init 0 python in jn_atmosphere:
 
         else:
             sky = "sky_day sunny"
+            dim = None
             renpy.music.stop(channel="weather_loop", fadeout=5.0)
 
         renpy.show(name=sky, zorder=_SKY_Z_INDEX)
