@@ -147,7 +147,11 @@ label call_next_topic:
         jump quit
 
     # Reenable the UI and hop back to the loop
-    $ jn_globals.player_is_in_conversation = False
+    python:
+        global LAST_TOPIC_CALL
+        LAST_TOPIC_CALL = datetime.datetime.now()
+        jn_globals.player_is_in_conversation = False
+        
     jump ch30_loop
 
 init python:
@@ -203,7 +207,6 @@ init python:
 
                     if topic_pool:
                         queue(random.choice(topic_pool).label)
-                        LAST_TOPIC_CALL = datetime.datetime.now()
 
         pass
 
