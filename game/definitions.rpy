@@ -340,9 +340,6 @@ init 0 python:
             if excludes_categories and self.category and len(set(excludes_categories).intersection(set(self.category))) > 0:
                 return False
 
-            if self.conditional is not None and not eval(self.conditional):
-                return False
-
             if additional_properties:
                 for additional_prop in additional_properties:
                     #Key and value checks
@@ -490,7 +487,7 @@ init 0 python:
         ordered_menu_items = OrderedDict()
         for topic_category in topic_categories:
             ordered_menu_items[topic_category] = []
-        
+
         # Feed the topics into the ordered dictionary - remember that each topic can have multiple categories!
         for topic in menu_topics:
             for category in topic.category:
@@ -772,7 +769,7 @@ init python in utils:
     TIME_BLOCK_AFTERNOON = 3
     TIME_BLOCK_EVENING = 4
     TIME_BLOCK_NIGHT = 5
-    
+
     _easter = easter.easter(datetime.datetime.today().year)
 
     JN_NEW_YEARS_DAY = datetime.date(datetime.date.today().year, 1, 1)
@@ -839,7 +836,7 @@ init python in utils:
     def jn_get_current_hour():
         """
         Gets the current hour (out of 24) of the day.
-        
+
         OUT:
             Integer representing the current hour of the day.
         """
@@ -864,7 +861,7 @@ init python in utils:
 
         elif current_hour in range(5, 9):
             return TIME_BLOCK_MID_MORNING
-        
+
         elif current_hour in range(9, 12):
             return TIME_BLOCK_LATE_MORNING
 
@@ -961,8 +958,8 @@ init python in utils:
         with open(name=key_path, mode="r") as key_file:
             if hashlib.sha256(key_file.read().encode("utf-8")).hexdigest() == __KEY_HASH:
                 __KEY_VALID = True
-                
-            else:   
+
+            else:
                 __KEY_VALID = False
 
     def jn_get_key_valid():
@@ -1027,7 +1024,7 @@ init python:
     # Assign Natsuki the chosen nickname (defaulted to Natsuki)
     if persistent.jn_player_nicknames_current_nickname:
         n_name = persistent.jn_player_nicknames_current_nickname
-    
+
     else:
         n_name = "Natsuki"
 
