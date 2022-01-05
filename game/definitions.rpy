@@ -192,10 +192,10 @@ init 0 python:
             """
             if self.conditional is not None:
                 try:
-                    return eval(self.conditional)
+                    return eval(self.conditional, globals=store.__dict__)
 
                 except Exception as e:
-                    store.utils.log(e.message, utils.SEVERITY_ERR)
+                    store.utils.log("Error evaluating conditional on topic '{0}'. {1}".format(self.label, e.message), utils.SEVERITY_ERR)
                     return False
 
             return True
