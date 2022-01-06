@@ -61,16 +61,6 @@ init 0 python in jn_apologies:
         if not apology_type in store.persistent.jn_player_pending_apologies:
             store.persistent.jn_player_pending_apologies.append(apology_type)
 
-init 1 python:
-    import store 
-    
-    # DEBUG: TODO: Resets - remove these later, once we're done tweaking affinity/trust!
-    try:
-        persistent._apology_database.clear()
-
-    except Exception as e:
-        utils.log(e, utils.SEVERITY_ERR)
-
 # Returns all apologies that the player qualifies for, based on wrongdoings
 label player_apologies_start:
     python:

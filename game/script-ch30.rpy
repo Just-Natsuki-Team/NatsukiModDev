@@ -60,8 +60,9 @@ label ch30_init:
     if persistent.jn_random_weather and utils.jn_get_current_hour() > 6 and utils.jn_get_current_hour() <= 18:
         $ jn_atmosphere.show_random_sky()
 
-    elif utils.jn_get_current_hour() > 6 and utils.jn_get_current_hour() <= 18:
-        $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
+    elif (utils.jn_get_current_hour() > 6 and utils.jn_get_current_hour() <= 18
+        and not jn_atmosphere.is_current_weather_sunny()):
+        $ jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny)
 
     # Outfit selection
     if persistent.jn_natsuki_auto_outfit_change_enabled:
@@ -248,12 +249,13 @@ init python:
 
         # Draw background
         main_background.check_redraw()
-
-        if persistent.jn_random_weather and utils.jn_get_current_hour() > 6 and utils.jn_get_current_hour() <= 18:
-            jn_atmosphere.show_random_sky()
-
-        elif utils.jn_get_current_hour() > 6 and utils.jn_get_current_hour() <= 18:
-            jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
+        
+        if utils.jn_get_current_hour() > 6 and utils.jn_get_current_hour() <= 18:
+            if persistent.jn_random_weather:
+                jn_atmosphere.show_random_sky()
+                
+            else:
+                jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny)
 
         # Update outfit
         if jn_outfits.get_outfit_for_time_block().reference_name is not jn_outfits.current_outfit_name:

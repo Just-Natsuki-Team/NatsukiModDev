@@ -17,34 +17,39 @@ define dim_change_transition = Dissolve(0.25)
 init 0 python in jn_atmosphere:
     import random
     import store
+    from Enum import Enum
 
     # Draw Z indexes
     _DIM_Z_INDEX = 1
     _SKY_Z_INDEX = 0
 
-    # Weather types when calling show_sky
-    WEATHER_OVERCAST = 1
-    WEATHER_RAIN = 2
-    WEATHER_SUNNY = 3
-    WEATHER_THUNDER = 4
+    class JNWeatherTypes(Enum):
+        overcast = 0
+        rain = 1
+        sunny = 2
+        thunder = 3
 
     # Maps a sky type to a given vignette/dimming effect
-    _SKY_AND_DIM_MAP = {
-        "sky_day overcast" : "dim light",
-        "sky_day rain" : "dim medium",
-        "sky_day sunny" : None,
-        "sky_day thunder" : "dim heavy"
+    __WEATHER_EFFECT_MAP = {
+        JNWeatherTypes.overcast: ("sky_day overcast", "dim light"),
+        JNWeatherTypes.rain: ("sky_day rain", "dim medium"),
+        JNWeatherTypes.sunny: ("sky_day sunny", None),
+        JNWeatherTypes.thunder: ("sky_day thunder", "dim heavy")
     }
 
-    _MUFFLED_RAIN_PATH = "mod_assets/sfx/rain_muffled.mp3"
+    __MUFFLED_RAIN_PATH = "mod_assets/sfx/rain_muffled.mp3"
+
+    current_weather = None
 
     def show_random_sky():
         """
-        Shows a randomised sky placeholder with associated dimming effect.
+        Shows a randomised sky placeholder with associated dimming effect
         """
 
         # Select the sky and dimming effect
-        sky, dim = random.choice(list(_SKY_AND_DIM_MAP.items()))
+        weather_map = random.choice(list(__WEATHER_EFFECT_MAP.items()))
+        weather_type = weather_map[0]
+        sky, dim = weather_map[1]
 
         # Show the sky
         renpy.show(name=sky, zorder=_SKY_Z_INDEX)
@@ -56,30 +61,33 @@ init 0 python in jn_atmosphere:
             renpy.with_statement(trans=store.dim_change_transition)
 
         # Play rain sfx if the chosen weather is rainy
-        if sky in ("rain", "thunder"):
-            renpy.music.play(filenames=_MUFFLED_RAIN_PATH, channel="weather_loop", fadein=3.0)
+        if weather_type in (JNWeatherTypes.rain, JNWeatherTypes.thunder):
+            renpy.music.play(filenames=__MUFFLED_RAIN_PATH, channel="weather_loop", fadein=3.0)
+
+        global current_weather
+        current_weather = weather_type
 
     def show_sky(weather_type):
         """
         Shows the specified sky placeholder with associated dimming effect.
 
         IN:
-            weather_type - int; WEATHER_OVERCAST, WEATHER_RAIN, WEATHER_THUNDER or WEATHER_SUNNY
+            weather_type - JNWeatherTypes value for the weather to set
         """
-        if weather_type == WEATHER_OVERCAST:
+        if weather_type == JNWeatherTypes.overcast:
             sky = "sky_day overcast"
             dim = "dim light"
             renpy.music.stop(channel="weather_loop", fadeout=5.0)
 
-        elif weather_type == WEATHER_RAIN:
+        elif weather_type == JNWeatherTypes.rain:
             sky = "sky_day rain"
             dim = "dim medium"
-            renpy.music.play(filenames=_MUFFLED_RAIN_PATH, channel="weather_loop", fadein=3.0)
+            renpy.music.play(filenames=__MUFFLED_RAIN_PATH, channel="weather_loop", fadein=3.0)
 
-        elif weather_type == WEATHER_THUNDER:
+        elif weather_type == JNWeatherTypes.thunder:
             sky = "sky_day thunder"
             dim = "dim heavy"
-            renpy.music.play(filenames=_MUFFLED_RAIN_PATH, channel="weather_loop", fadein=3.0)
+            renpy.music.play(filenames=__MUFFLED_RAIN_PATH, channel="weather_loop", fadein=3.0)
 
         else:
             sky = "sky_day sunny"
@@ -92,3 +100,30 @@ init 0 python in jn_atmosphere:
         if dim:
             renpy.show(name=dim, zorder=_DIM_Z_INDEX)
             renpy.with_statement(trans=store.dim_change_transition)
+
+        global current_weather
+        current_weather = weather_type
+
+    def is_current_weather_overcast():
+        """
+        Returns True if the current weather is overcast, otherwise False
+        """
+        return current_weather == JNWeatherTypes.overcast
+
+    def is_current_weather_rain():
+        """
+        Returns True if the current weather is rain, otherwise False
+        """
+        return current_weather == JNWeatherTypes.rain
+
+    def is_current_weather_sunny():
+        """
+        Returns True if the current weather is sunny, otherwise False
+        """
+        return current_weather == JNWeatherTypes.sunny
+
+    def is_current_weather_thunder():
+        """
+        Returns True if the current weather is thunder, otherwise False
+        """
+        return current_weather == JNWeatherTypes.thunder
