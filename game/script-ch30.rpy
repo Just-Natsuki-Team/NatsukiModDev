@@ -57,10 +57,10 @@ label ch30_init:
     # Draw background
     $ main_background.draw(full_redraw=True)
 
-    if persistent.jn_random_weather and utils.jn_get_current_hour() > 6 and utils.jn_get_current_hour() <= 18:
+    if persistent.jn_random_weather and 6 < utils.jn_get_current_hour() <= 18:
         $ jn_atmosphere.show_random_sky()
 
-    elif (utils.jn_get_current_hour() > 6 and utils.jn_get_current_hour() <= 18
+    elif (6 < and utils.jn_get_current_hour() <= 18
         and not jn_atmosphere.is_current_weather_sunny()):
         $ jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny)
 
@@ -152,7 +152,7 @@ label call_next_topic:
         global LAST_TOPIC_CALL
         LAST_TOPIC_CALL = datetime.datetime.now()
         jn_globals.player_is_in_conversation = False
-        
+
     jump ch30_loop
 
 init python:
@@ -249,11 +249,11 @@ init python:
 
         # Draw background
         main_background.check_redraw()
-        
-        if utils.jn_get_current_hour() > 6 and utils.jn_get_current_hour() <= 18:
+
+        if 6 < and utils.jn_get_current_hour() <= 18:
             if persistent.jn_random_weather:
                 jn_atmosphere.show_random_sky()
-                
+
             else:
                 jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny)
 
