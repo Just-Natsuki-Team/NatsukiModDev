@@ -250,7 +250,7 @@ init python:
         # Draw background
         main_background.check_redraw()
 
-        if 6 < and utils.jn_get_current_hour() <= 18:
+        if 6 < utils.jn_get_current_hour() <= 18:
             if persistent.jn_random_weather:
                 jn_atmosphere.show_random_sky()
 
