@@ -152,7 +152,7 @@ label farewell_option_eat:
     return { "quit": None }
 
 label farewell_option_going_out:
-    if jn_utils.get_holiday_for_date() == jn_utils.JNHolidays.new_years_eve:
+    if jn_get_holiday_for_date() == JNHolidays.new_years_eve:
         n 1tsqbg "Oho?{w=0.2} Going out for the new year,{w=0.1} are we?{w=0.5}{nw}"
         extend 1fchbg " Can't say I blame you!"
         n 1ullaj "Just...{w=0.5}{nw}" 
@@ -163,7 +163,7 @@ label farewell_option_going_out:
         n 1usqbg "And if I don't see you sooner?"
         n 1fbkbs "Happy new year!"
 
-    elif jn_utils.get_holiday_for_date() == jn_utils.JNHolidays.easter:
+    elif jn_get_holiday_for_date() == JNHolidays.easter:
         n 1unmaj "Oh?{w=0.2} You're heading off now?"
         n 1unmbg "Did you have a meal planned for today or something?"
         n 1tlrsm "It {i}is{/i} Easter,{w=0.1} after all!{w=0.5}{nw}"
@@ -171,14 +171,14 @@ label farewell_option_going_out:
         n 1ullss "Well,{w=0.1} anyway.{w=0.5}{nw}" 
         extend 1uchgn " See you later,{w=0.1} [player]!"
 
-    elif jn_utils.get_holiday_for_date() == jn_utils.JNHolidays.halloween:
+    elif jn_get_holiday_for_date() == JNHolidays.halloween:
         n 1usqss "Ooh?{w=0.2} Heading out for Halloween,{w=0.1} [player]?"
         n 1fsqsm "Just don't forget..."
         n 1fsqbg "I want my share of treats too!"
         n 1fchgn "Ehehe.{w=0.5}{nw}"
         extend 1uchbg " Have fun~!"
 
-    elif jn_utils.get_holiday_for_date() == jn_utils.JNHolidays.christmas_eve:
+    elif jn_get_holiday_for_date() == JNHolidays.christmas_eve:
         n 1unmbo "Oh?{w=0.2} You're heading out for Christmas Eve?"
         n 1kllsl "Well...{w=0.3} okay."
         n 1kllajl "...You will be back in time for Christmas though...{w=0.5}{nw}" 
@@ -186,7 +186,7 @@ label farewell_option_going_out:
         n 1klrbgl "...Ahaha.{w=0.3}" 
         extend 1kchbg " See you later,{w=0.1} [player]!"
 
-    elif jn_utils.get_holiday_for_date() == jn_utils.JNHolidays.christmas_day:
+    elif jn_get_holiday_for_date() == JNHolidays.christmas_day:
         n 1unmbo "Huh?{w=0.2} You're heading off now?"
         n 1kllsl "Well...{w=0.3} alright."
         n 1kllss "Thanks for dropping by today though,{w=0.1} [player]."
@@ -217,23 +217,23 @@ label farewell_option_work:
 
     else:
         n 1unmaj "Oh?{w=0.2} You're working today?"
-        $ holiday_check = jn_utils.get_holiday_for_date()
+        $ holiday_check = jn_get_holiday_for_date()
 
-        if holiday_check == jn_utils.JNHolidays.easter:
+        if holiday_check == JNHolidays.easter:
             n 1uskgs "...And on Easter,{w=0.1} of all days?{w=0.5}{nw}" 
             extend 1fslpo " Man..."
 
-        elif holiday_check == jn_utils.JNHolidays.christmas_eve:
+        elif holiday_check == JNHolidays.christmas_eve:
             n 1fskgsl "...On Christmas Eve?{w=0.5}{nw}"
             extend 1fcseml " You've gotta be kidding me..."
 
-        elif holiday_check == jn_utils.JNHolidays.christmas_day:
+        elif holiday_check == JNHolidays.christmas_day:
             n 1fskwrl "...On {i}Christmas{/i}?!{w=0.5}{nw}"
             extend 1fcseml " Ugh..."
             n 1fslpol "..."
             n 1fslajl "Well..."
 
-        elif holiday_check == jn_utils.JNHolidays.new_years_eve:
+        elif holiday_check == JNHolidays.new_years_eve:
             n 1fskgsl "...And on New Year's Eve,{w=0.1} too?!{w=0.5}{nw}"
             extend 1fcseml " Jeez..."
 
@@ -257,21 +257,21 @@ label farewell_option_work:
     return { "quit": None }
 
 label farewell_option_school:
-    $ holiday_check = jn_utils.get_holiday_for_date()
+    $ holiday_check = jn_get_holiday_for_date()
 
     if jn_utils.get_current_hour() >= 20 or jn_utils.get_current_hour() <= 4:
         n 1twdem "...School?{w=0.2} At this hour?"
 
-        if holiday_check == jn_utils.JNHolidays.easter:
+        if holiday_check == JNHolidays.easter:
             n 1uskgs "...And on Easter,{w=0.1} of all days?}"
 
-        elif holiday_check == jn_utils.JNHolidays.christmas_eve:
+        elif holiday_check == JNHolidays.christmas_eve:
             n 1fskgsl "...On Christmas Eve?"
 
-        elif holiday_check == jn_utils.JNHolidays.christmas_day:
+        elif holiday_check == JNHolidays.christmas_day:
             n 1fskwrl "...On {i}Christmas{/i}?!"
 
-        elif holiday_check == jn_utils.JNHolidays.new_years_eve:
+        elif holiday_check == JNHolidays.new_years_eve:
             n 1fskgsl "...And on New Year's Eve,{w=0.1} too?!"
 
         if not jn_utils.get_is_weekday():
@@ -287,21 +287,21 @@ label farewell_option_school:
         n 1kllss "Study hard,{w=0.1} [player]!"
 
     else:
-        if holiday_check == jn_utils.JNHolidays.easter:
+        if holiday_check == JNHolidays.easter:
             n 1uskgs "...And on Easter,{w=0.1} of all days?{w=0.5}{nw}" 
             extend 1fslpo " Man..."
 
-        elif holiday_check == jn_utils.JNHolidays.christmas_eve:
+        elif holiday_check == JNHolidays.christmas_eve:
             n 1fskgsl "...On Christmas Eve?{w=0.5}{nw}"
             extend 1fcseml " You've gotta be kidding me..."
 
-        elif holiday_check == jn_utils.JNHolidays.christmas_day:
+        elif holiday_check == JNHolidays.christmas_day:
             n 1fskwrl "...On {i}Christmas{/i}?!{w=0.5}{nw}"
             extend 1fcseml " Ugh..."
             n 1fslpol "..."
             n 1fslajl "Well..."
 
-        elif holiday_check == jn_utils.JNHolidays.new_years_eve:
+        elif holiday_check == JNHolidays.new_years_eve:
             n 1fskgsl "...And on New Year's Eve,{w=0.1} too?!{w=0.5}{nw}"
             extend 1fcseml " Jeez..."
 

@@ -23,9 +23,22 @@ define JN_CHRISTMAS_DAY = datetime.date(datetime.date.today().year, 12, 25)
 define JN_NEW_YEARS_EVE = datetime.date(datetime.date.today().year, 12, 31)
 
 init 0 python:
-    import store.jn_affinity as jn_aff
     from collections import OrderedDict
+    from Enum import Enum
     import re
+    import store.jn_affinity as jn_aff
+
+    class JNHolidays(Enum):
+        none = 0
+        new_years_day = 1
+        easter = 2
+        halloween = 3
+        christmas_eve = 4
+        christmas_day = 5
+        new_years_eve = 6
+
+        def __str__(self):
+            return self.name
 
     #Constants for types. Add more here if we need more organizational areas
     TOPIC_TYPE_FAREWELL = "FAREWELL"
@@ -565,6 +578,116 @@ init 0 python:
 
         return ordered_menu_items
 
+    def jn_is_new_years_day(input_date=None):
+        """
+        Returns True if the current date is New Year's Day; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_NEW_YEARS_DAY
+
+    def jn_is_easter(input_date=None):
+        """
+        Returns True if the current date is Easter; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_EASTER
+
+    def jn_is_halloween(input_date=None):
+        """
+        Returns True if the current date is Halloween; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_HALLOWEEN
+
+    def jn_is_christmas_eve(input_date=None):
+        """
+        Returns True if the current date is Christmas Eve; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_CHRISTMAS_EVE
+
+    def jn_is_christmas_day(input_date=None):
+        """
+        Returns True if the current date is Christmas Day; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_CHRISTMAS_DAY
+
+    def jn_is_new_years_eve(input_date=None):
+        """
+        Returns True if the current date is New Year's Eve; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_NEW_YEARS_EVE
+
+    def jn_get_holiday_for_date(input_date=None):
+        """
+        Gets the holiday - if any - corresponding to the supplied date, or the current date by default.
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+
+        OUT:
+            - JNHoliday representing the holiday for the supplied date.
+        """
+
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        elif not isinstance(input_date, datetime.date):
+            raise TypeError("input_date for holiday check must be of type date; type given was {0}".format(type(input_date)))
+
+        if jn_is_new_years_day(input_date):
+            return JNHolidays.new_years_day
+
+        elif jn_is_easter(input_date):
+            return JNHolidays.easter
+
+        elif jn_is_halloween(input_date):
+            return JNHolidays.halloween
+
+        elif jn_is_christmas_eve(input_date):
+            return JNHolidays.christmas_eve
+
+        elif jn_is_christmas_day(input_date):
+            return JNHolidays.christmas_day
+
+        elif jn_is_christmas_eve(input_date):
+            return JNHolidays.new_years_eve
+
+        else:
+            return JNHolidays.none
+
 # Variables with cross-script utility specific to Just Natsuki
 init -990 python in jn_globals:
     import store
@@ -842,17 +965,7 @@ init python in jn_utils:
     TIME_BLOCK_EVENING = 4
     TIME_BLOCK_NIGHT = 5
 
-    class JNHolidays(Enum):
-        none = 0
-        new_years_day = 1
-        easter = 2
-        halloween = 3
-        christmas_eve = 4
-        christmas_day = 5
-        new_years_eve = 6
 
-        def __str__(self):
-            return self.name
 
     def get_current_session_length():
         """
@@ -972,44 +1085,6 @@ init python in jn_utils:
         Returns True if the current time is judged to be night.
         """
         return get_current_hour() in range(22, 3)
-
-    def get_holiday_for_date(input_date=None):
-        """
-        Gets the holiday - if any - corresponding to the supplied date, or the current date by default.
-
-        IN:
-            - date - datetime object to test against. Defaults to the current date.
-
-        OUT:
-            - JNHoliday representing the holiday for the supplied date.
-        """
-
-        if input_date is None:
-            input_date = datetime.datetime.today()
-
-        elif not isinstance(input_date, datetime.date):
-            raise TypeError("input_date for holiday check must be of type date; type given was {0}".format(type(input_date)))
-
-        if input_date == store.JN_NEW_YEARS_DAY:
-            return JNHolidays.new_years_day
-
-        elif input_date == store.JN_EASTER:
-            return JNHolidays.easter
-
-        elif input_date == store.JN_HALLOWEEN:
-            return JNHolidays.halloween
-
-        elif input_date == store.JN_CHRISTMAS_EVE:
-            return JNHolidays.christmas_eve
-
-        elif input_date == store.JN_CHRISTMAS_DAY:
-            return JNHolidays.christmas_day
-
-        elif input_date == store.JN_NEW_YEARS_EVE:
-            return JNHolidays.new_years_eve
-
-        else:
-            return JNHolidays.none
 
     # Key setup
     key_path = os.path.join(renpy.config.basedir, "game/dev/key.txt").replace("\\", "/")

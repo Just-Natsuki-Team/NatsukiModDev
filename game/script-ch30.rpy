@@ -18,7 +18,7 @@ label ch30_holiday_check:
         import datetime
         import store.jn_utils as jn_utils
 
-        jn_utils.log("Holiday check: {0}".format(jn_utils.get_holiday_for_date(datetime.datetime.now().date())))
+        jn_utils.log("Holiday check: {0}".format(jn_get_holiday_for_date(datetime.datetime.now().date())))
     #Run holiday checks and push/setup holiday related things here
 
     #FALL THROUGH
