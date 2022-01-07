@@ -67,7 +67,7 @@ label farewell_option_sleep:
         n 1kllbg "Right?"
         n 1kchsm "Sleep well,{w=0.1} [player]!"
 
-    elif jn_utils.get_current_hour() > 22 or jn_utils.get_current_hour() < 6:
+    elif store.jn_get_current_hour() > 22 or store.jn_get_current_hour() < 6:
         # Late night
         n 1fnmaj "A-{w=0.1}and I should think so, too!{w=0.5}{nw}"
         extend 1tnmem " It took you that long to notice the time?!"
@@ -76,7 +76,7 @@ label farewell_option_sleep:
         n 1fllsm "Ehehe.{w=0.5}{nw}"
         extend 1fchsm " Sleep well, [player]!"
 
-    elif jn_utils.get_current_hour() >= 21:
+    elif store.jn_get_current_hour() >= 21:
         # Standard night
         n 1unmaj "About ready to turn in,{w=0.1} huh?"
         n 1ullaj "That's fine...{w=0.5}{nw}" 
@@ -84,7 +84,7 @@ label farewell_option_sleep:
         n 1fcssm "...Ehehe."
         n 1uchbg "No worries!{w=0.2} Sleep well,{w=0.1} [player]!"
 
-    elif jn_utils.get_current_hour() >= 19:
+    elif store.jn_get_current_hour() >= 19:
         # Early night
         n 1unmaj "Huh?{w=0.2} You're taking an early night?"
         n 1ullaj "That's fine.{w=0.2} I suppose."
@@ -119,13 +119,13 @@ label farewell_option_eat:
         n 1fllsm "...Ehehe.{w=0.2}{nm}"
         extend 1fchbg " Enjoy,{w=0.1} [player]!"
 
-    elif jn_utils.get_current_hour() in (7, 8):
+    elif store.jn_get_current_hour() in (7, 8):
         n 1fnmaj "You better!{w=0.5}{nw}" 
         extend 1fslca " You {i}do{/i} know what they say about breakfast,{w=0.1} right?"
         n 1fllsm "...Ehehe.{w=0.2}{nm}"
         n 1fchbg "Bon appetit,{w=0.1} [player]!"
 
-    elif jn_utils.get_current_hour() in (12, 13):
+    elif store.jn_get_current_hour() in (12, 13):
         n 1unmaj "Heading out for lunch,{w=0.1} [player]?"
         n 1nlrpu "That's cool,{w=0.1} that's cool."
         n 1nsqsm "Just remember though...{w=0.3}{nm}" 
@@ -133,7 +133,7 @@ label farewell_option_eat:
         n 1fchsm "...Ehehe.{w=0.5}{nw}" 
         extend 1uchsm " Enjoy!"
 
-    elif jn_utils.get_current_hour() in (18, 19):
+    elif store.jn_get_current_hour() in (18, 19):
         n 1unmaj "Dinner time,{w=0.1} huh?{w=0.5}{nw}" 
         extend 1unmbg " No probs!"
         n 1nlrpu "Just...{w=0.5}{nw}" 
@@ -205,9 +205,9 @@ label farewell_option_going_out:
     return { "quit": None }
 
 label farewell_option_work:
-    if jn_utils.get_current_hour() >= 20 or jn_utils.get_current_hour() <= 4:
+    if store.jn_get_current_hour() >= 20 or store.jn_get_current_hour() <= 4:
         n 1knmaj "H-{w=0.1}huh?{w=0.2} You're going to work now?"
-        $ time_concern = "late" if jn_utils.get_current_hour() >= 20 else "early"
+        $ time_concern = "late" if store.jn_get_current_hour() >= 20 else "early"
         n 1kllaj "But...{w=0.3} it's super [time_concern] though,{w=0.1} [player]..."
         n 1kllun "..."
         n 1fnmun "Just...{w=0.3} be careful,{w=0.1} alright?"
@@ -237,7 +237,7 @@ label farewell_option_work:
             n 1fskgsl "...And on New Year's Eve,{w=0.1} too?!{w=0.5}{nw}"
             extend 1fcseml " Jeez..."
 
-        elif not jn_utils.get_is_weekday():
+        elif not store.jn_get_is_weekday():
             n 1uwdaj "A-{w=0.1}and on a weekend,{w=0.1} too?{w=0.5}{nw}" 
             extend 1fslpu " Man..."
 
@@ -259,7 +259,7 @@ label farewell_option_work:
 label farewell_option_school:
     $ holiday_check = jn_get_holiday_for_date()
 
-    if jn_utils.get_current_hour() >= 20 or jn_utils.get_current_hour() <= 4:
+    if store.jn_get_current_hour() >= 20 or store.jn_get_current_hour() <= 4:
         n 1twdem "...School?{w=0.2} At this hour?"
 
         if holiday_check == JNHolidays.easter:
@@ -274,7 +274,7 @@ label farewell_option_school:
         elif holiday_check == JNHolidays.new_years_eve:
             n 1fskgsl "...And on New Year's Eve,{w=0.1} too?!"
 
-        if not jn_utils.get_is_weekday():
+        if not store.jn_get_is_weekday():
             extend 1uskwr "A-{w=0.1}and on a {i}weekend{/i} too?!"
 
         n 1fbkgs "What the hell kind of school is thaaaat?!"
@@ -282,7 +282,7 @@ label farewell_option_school:
         extend 1fllpo " And I thought my school experience was bad enough."
         n 1kcspu "Just...{w=0.5}{nw}" 
         extend 1knmpu " take care getting there,{w=0.1} alright?"
-        $ time_concern = "late" if jn_utils.get_current_hour() >= 20 else "early"
+        $ time_concern = "late" if store.jn_get_current_hour() >= 20 else "early"
         extend 1fllsr "It's really [time_concern],{w=0.1} after all."
         n 1kllss "Study hard,{w=0.1} [player]!"
 
@@ -305,7 +305,7 @@ label farewell_option_school:
             n 1fskgsl "...And on New Year's Eve,{w=0.1} too?!{w=0.5}{nw}"
             extend 1fcseml " Jeez..."
 
-        elif jn_utils.get_is_weekday():
+        elif store.jn_get_is_weekday():
             n 1unmaj "Off to school,{w=0.1} [player]?{w=0.5}{nw}"
             extend 1nchsm " No worries!"
 
@@ -372,7 +372,7 @@ label farewell_option_studying:
     return { "quit": None }
 
 label farewell_option_chores:
-    if jn_utils.get_current_hour() >= 20 or jn_utils.get_current_hour() <= 4:
+    if store.jn_get_current_hour() >= 20 or store.jn_get_current_hour() <= 4:
         n 1tnmaj "...Chores?{w=0.5}{nw}"
         extend 1tsqem " At {i}this{/i} time?"
         n 1nllbo "I gotta say,{w=0.1} [player]."
@@ -1313,7 +1313,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_early_morning_going_this_early",
             unlocked=True,
-            conditional="jn_utils.get_current_hour() in range(3, 4)",
+            conditional="store.jn_get_current_hour() in range(3, 4)",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -1354,7 +1354,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_morning_heading_off",
             unlocked=True,
-            conditional="jn_utils.get_current_hour() in range(5, 11)",
+            conditional="store.jn_get_current_hour() in range(5, 11)",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -1386,7 +1386,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_afternoon_come_visit_soon",
             unlocked=True,
-            conditional="jn_utils.get_current_hour() in range(12, 17)",
+            conditional="store.jn_get_current_hour() in range(12, 17)",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -1414,7 +1414,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_evening_good_evening",
             unlocked=True,
-            conditional="jn_utils.get_current_hour() in range(18, 21)",
+            conditional="store.jn_get_current_hour() in range(18, 21)",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -1439,7 +1439,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_night_good_night",
             unlocked=True,
-            conditional="jn_utils.get_current_hour() >= 22 or jn_utils.get_current_hour() <= 2",
+            conditional="store.jn_get_current_hour() >= 22 or store.jn_get_current_hour() <= 2",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_FAREWELL

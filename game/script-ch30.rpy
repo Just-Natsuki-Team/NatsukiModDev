@@ -58,11 +58,11 @@ label ch30_init:
         # Draw background
         main_background.draw(full_redraw=True)
 
-        if persistent.jn_random_weather and 6 < jn_utils.get_current_hour() <= 18:
+        if persistent.jn_random_weather and 6 < store.jn_get_current_hour() <= 18:
             jn_atmosphere.show_random_sky()
 
         elif (
-            jn_utils.get_current_hour() > 6 and jn_utils.get_current_hour() <= 18
+            store.jn_get_current_hour() > 6 and store.jn_get_current_hour() <= 18
             and not jn_atmosphere.is_current_weather_sunny()
         ):
             jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny)
@@ -253,7 +253,7 @@ init python:
         # Draw background
         main_background.check_redraw()
 
-        if 6 < jn_utils.get_current_hour() <= 18:
+        if 6 < store.jn_get_current_hour() <= 18:
             if persistent.jn_random_weather:
                 jn_atmosphere.show_random_sky()
 

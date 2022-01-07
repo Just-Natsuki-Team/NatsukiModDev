@@ -56,13 +56,6 @@ init 0 python:
     TOPIC_TYPE_COMPLIMENT = "COMPLIMENT"
     TOPIC_TYPE_APOLOGY = "APOLOGY"
 
-    TIME_BLOCK_EARLY_MORNING = 0
-    TIME_BLOCK_MID_MORNING = 1
-    TIME_BLOCK_LATE_MORNING = 2
-    TIME_BLOCK_AFTERNOON = 3
-    TIME_BLOCK_EVENING = 4
-    TIME_BLOCK_NIGHT = 5
-
     TOPIC_LOCKED_PROP_BASE_MAP = {
         #Things which shouldn't change
         "conditional": True,
@@ -703,8 +696,7 @@ init 0 python:
         else:
             return JNHolidays.none
 
-    
-    def get_current_hour():
+    def jn_get_current_hour():
         """
         Gets the current hour (out of 24) of the day.
 
@@ -713,7 +705,7 @@ init 0 python:
         """
         return datetime.datetime.now().hour
 
-    def get_is_weekday():
+    def jn_get_is_weekday():
         """
         Gets whether the current day is a weekday (Monday : Friday).
 
@@ -722,64 +714,70 @@ init 0 python:
         """
         return datetime.datetime.now().weekday() < 5
 
-    def get_current_time_block():
+    def jn_get_current_time_block():
         """
         Returns a type describing the current time of day as a segment.
         """
-        current_hour = get_current_hour()
+        current_hour = jn_get_current_hour()
         if current_hour in range(3, 5):
-            return TIME_BLOCK_EARLY_MORNING
+            return JNTimeBlocks.early_morning
 
         elif current_hour in range(5, 9):
-            return TIME_BLOCK_MID_MORNING
+            return JNTimeBlocks.mid_morning
 
         elif current_hour in range(9, 12):
-            return TIME_BLOCK_LATE_MORNING
+            return JNTimeBlocks.late_morning
 
         elif current_hour in range(12, 18):
-            return TIME_BLOCK_AFTERNOON
+            return JNTimeBlocks.afternoon
 
         elif current_hour in range(18, 22):
-            return TIME_BLOCK_EVENING
+            return JNTimeBlocks.evening
 
         else:
-            return TIME_BLOCK_NIGHT
+            return JNTimeBlocks.night
 
-    def is_time_block_early_morning():
+    def jn_is_time_block_early_morning():
         """
         Returns True if the current time is judged to be early morning.
         """
-        return get_current_hour() in range(3, 5)
+        return jn_get_current_hour() in range(3, 5)
 
-    def is_time_block_mid_morning():
+    def jn_is_time_block_mid_morning():
         """
         Returns True if the current time is judged to be mid morning.
         """
-        return get_current_hour() in range(5, 9)
+        return jn_get_current_hour() in range(5, 9)
 
-    def is_time_block_late_morning():
+    def jn_is_time_block_late_morning():
         """
         Returns True if the current time is judged to be late morning.
         """
-        return get_current_hour() in range(9, 12)
+        return jn_get_current_hour() in range(9, 12)
 
-    def is_time_block_afternoon():
+    def jn_is_time_block_morning():
+        """
+        Returns True if the current time is judged to be morning generally, and not a specific time of morning.
+        """
+        return jn_get_current_hour() in range(3, 12) 
+
+    def jn_is_time_block_afternoon():
         """
         Returns True if the current time is judged to be afternoon.
         """
-        return get_current_hour() in range(12, 18)
+        return jn_get_current_hour() in range(12, 18)
 
-    def is_time_block_evening():
+    def jn_is_time_block_evening():
         """
         Returns True if the current time is judged to be evening.
         """
-        return get_current_hour() in range(18, 22)
+        return jn_get_current_hour() in range(18, 22)
 
-    def is_time_block_night():
+    def jn_is_time_block_night():
         """
         Returns True if the current time is judged to be night.
         """
-        return get_current_hour() in range(22, 3)
+        return jn_get_current_hour() in range(22, 3)
 
 # Variables with cross-script utility specific to Just Natsuki
 init -990 python in jn_globals:
@@ -1098,11 +1096,7 @@ init python in jn_utils:
 
     else:
         with open(name=key_path, mode="r") as key_file:
-            if hashlib.sha256(key_file.read().encode("utf-8")).hexdigest() == __KEY_HASH:
-                __KEY_VALID = True
-
-            else:
-                __KEY_VALID = False
+            __KEY_VALID = hashlib.sha256(key_file.read().encode("utf-8")).hexdigest() == __KEY_HASH
 
     def get_key_valid():
         """

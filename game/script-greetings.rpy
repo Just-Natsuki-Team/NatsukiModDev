@@ -714,7 +714,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_early_morning_why_are_you_here",
             unlocked=True,
-            conditional="jn_utils.get_current_hour() in range(3, 4)",
+            conditional="store.jn_get_current_hour() in range(3, 4)",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -738,7 +738,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_morning_starshine",
             unlocked=True,
-            conditional="jn_utils.get_current_hour() in range(5, 11)",
+            conditional="store.jn_get_current_hour() in range(5, 11)",
             affinity_range=(jn_aff.ENAMORED, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -763,7 +763,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_morning_waiting_for_you",
             unlocked=True,
-            conditional="jn_utils.get_current_hour() in range(5, 11)",
+            conditional="store.jn_get_current_hour() in range(5, 11)",
             affinity_range=(jn_aff.AFFECTIONATE, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -783,7 +783,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_morning_lazy",
             unlocked=True,
-            conditional="jn_utils.get_current_hour() in range(10, 11)",
+            conditional="store.jn_get_current_hour() in range(10, 11)",
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -806,7 +806,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_morning_top_of_the_mornin",
             unlocked=True,
-            conditional="jn_utils.get_current_hour() in range(8, 11)",
+            conditional="store.jn_get_current_hour() in range(8, 11)",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -829,7 +829,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_afternoon_keeping_well",
             unlocked=True,
-            conditional="jn_utils.get_current_hour() in range(12, 17)",
+            conditional="store.jn_get_current_hour() in range(12, 17)",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -847,7 +847,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_afternoon_how_are_you",
             unlocked=True,
-            conditional="jn_utils.get_current_hour() in range(12, 17)",
+            conditional="store.jn_get_current_hour() in range(12, 17)",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -867,7 +867,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_evening_long_day",
             unlocked=True,
-            conditional="jn_utils.get_current_hour() in range(18, 21)",
+            conditional="store.jn_get_current_hour() in range(18, 21)",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -886,7 +886,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_evening_took_long_enough",
             unlocked=True,
-            conditional="jn_utils.get_current_hour() in range(18, 21)",
+            conditional="store.jn_get_current_hour() in range(18, 21)",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -910,7 +910,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_night_up_late",
             unlocked=True,
-            conditional="jn_utils.get_current_hour() >= 22 or jn_utils.get_current_hour() <= 2",
+            conditional="store.jn_get_current_hour() >= 22 or store.jn_get_current_hour() <= 2",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -929,7 +929,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_night_night_owl",
             unlocked=True,
-            conditional="jn_utils.get_current_hour() >= 22 or jn_utils.get_current_hour() <= 2",
+            conditional="store.jn_get_current_hour() >= 22 or store.jn_get_current_hour() <= 2",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
