@@ -12,6 +12,15 @@ default persistent._event_list = list()
 #Early imports
 init -990 python:
     import datetime
+    import easter
+    _easter = easter.easter(datetime.datetime.today().year)
+
+define JN_NEW_YEARS_DAY = datetime.date(datetime.date.today().year, 1, 1)
+define JN_EASTER = datetime.date(_easter.year, _easter.month, _easter.day)
+define JN_HALLOWEEN = datetime.date(datetime.date.today().year, 10, 31)
+define JN_CHRISTMAS_EVE = datetime.date(datetime.date.today().year, 12, 24)
+define JN_CHRISTMAS_DAY = datetime.date(datetime.date.today().year, 12, 25)
+define JN_NEW_YEARS_EVE = datetime.date(datetime.date.today().year, 12, 31)
 
 init 0 python:
     import store.jn_affinity as jn_aff
@@ -769,15 +778,6 @@ init python in jn_utils:
     TIME_BLOCK_EVENING = 4
     TIME_BLOCK_NIGHT = 5
 
-    _easter = easter.easter(datetime.datetime.today().year)
-
-    JN_NEW_YEARS_DAY = datetime.date(datetime.date.today().year, 1, 1)
-    JN_EASTER = datetime.date(_easter.year, _easter.month, _easter.day)
-    JN_HALLOWEEN = datetime.date(datetime.date.today().year, 10, 31)
-    JN_CHRISTMAS_EVE = datetime.date(datetime.date.today().year, 12, 24)
-    JN_CHRISTMAS_DAY = datetime.date(datetime.date.today().year, 12, 25)
-    JN_NEW_YEARS_EVE = datetime.date(datetime.date.today().year, 12, 31)
-
     class JNHolidays(Enum):
         none = 0
         new_years_day = 1
@@ -926,22 +926,22 @@ init python in jn_utils:
         elif not isinstance(input_date, datetime.date):
             raise TypeError("input_date for holiday check must be of type date; type given was {0}".format(type(input_date)))
 
-        if input_date == JN_NEW_YEARS_DAY:
+        if input_date == store.JN_NEW_YEARS_DAY:
             return JNHolidays.new_years_day
 
-        elif input_date == JN_EASTER:
+        elif input_date == store.JN_EASTER:
             return JNHolidays.easter
 
-        elif input_date == JN_HALLOWEEN:
+        elif input_date == store.JN_HALLOWEEN:
             return JNHolidays.halloween
 
-        elif input_date == JN_CHRISTMAS_EVE:
+        elif input_date == store.JN_CHRISTMAS_EVE:
             return JNHolidays.christmas_eve
 
-        elif input_date == JN_CHRISTMAS_DAY:
+        elif input_date == store.JN_CHRISTMAS_DAY:
             return JNHolidays.christmas_day
 
-        elif input_date == JN_NEW_YEARS_EVE:
+        elif input_date == store.JN_NEW_YEARS_EVE:
             return JNHolidays.new_years_eve
 
         else:
