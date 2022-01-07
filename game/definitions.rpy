@@ -1102,7 +1102,6 @@ init python in jn_utils:
         """
         Returns the validation state of the key.
         """
-        global __KEY_VALID
         return __KEY_VALID
 
 # Vanilla resources from base DDLC
