@@ -40,6 +40,14 @@ init 0 python:
         def __str__(self):
             return self.name
 
+    class JNTimeBlocks(Enum):
+        early_morning = 0
+        mid_morning = 1
+        late_morning = 2
+        afternoon = 3
+        evening = 4
+        night = 5
+
     #Constants for types. Add more here if we need more organizational areas
     TOPIC_TYPE_FAREWELL = "FAREWELL"
     TOPIC_TYPE_GREETING = "GREETING"
@@ -47,6 +55,13 @@ init 0 python:
     TOPIC_TYPE_ADMISSION = "ADMISSION"
     TOPIC_TYPE_COMPLIMENT = "COMPLIMENT"
     TOPIC_TYPE_APOLOGY = "APOLOGY"
+
+    TIME_BLOCK_EARLY_MORNING = 0
+    TIME_BLOCK_MID_MORNING = 1
+    TIME_BLOCK_LATE_MORNING = 2
+    TIME_BLOCK_AFTERNOON = 3
+    TIME_BLOCK_EVENING = 4
+    TIME_BLOCK_NIGHT = 5
 
     TOPIC_LOCKED_PROP_BASE_MAP = {
         #Things which shouldn't change
@@ -688,6 +703,84 @@ init 0 python:
         else:
             return JNHolidays.none
 
+    
+    def get_current_hour():
+        """
+        Gets the current hour (out of 24) of the day.
+
+        OUT:
+            Integer representing the current hour of the day.
+        """
+        return datetime.datetime.now().hour
+
+    def get_is_weekday():
+        """
+        Gets whether the current day is a weekday (Monday : Friday).
+
+        OUT:
+            True if weekday, otherwise False
+        """
+        return datetime.datetime.now().weekday() < 5
+
+    def get_current_time_block():
+        """
+        Returns a type describing the current time of day as a segment.
+        """
+        current_hour = get_current_hour()
+        if current_hour in range(3, 5):
+            return TIME_BLOCK_EARLY_MORNING
+
+        elif current_hour in range(5, 9):
+            return TIME_BLOCK_MID_MORNING
+
+        elif current_hour in range(9, 12):
+            return TIME_BLOCK_LATE_MORNING
+
+        elif current_hour in range(12, 18):
+            return TIME_BLOCK_AFTERNOON
+
+        elif current_hour in range(18, 22):
+            return TIME_BLOCK_EVENING
+
+        else:
+            return TIME_BLOCK_NIGHT
+
+    def is_time_block_early_morning():
+        """
+        Returns True if the current time is judged to be early morning.
+        """
+        return get_current_hour() in range(3, 5)
+
+    def is_time_block_mid_morning():
+        """
+        Returns True if the current time is judged to be mid morning.
+        """
+        return get_current_hour() in range(5, 9)
+
+    def is_time_block_late_morning():
+        """
+        Returns True if the current time is judged to be late morning.
+        """
+        return get_current_hour() in range(9, 12)
+
+    def is_time_block_afternoon():
+        """
+        Returns True if the current time is judged to be afternoon.
+        """
+        return get_current_hour() in range(12, 18)
+
+    def is_time_block_evening():
+        """
+        Returns True if the current time is judged to be evening.
+        """
+        return get_current_hour() in range(18, 22)
+
+    def is_time_block_night():
+        """
+        Returns True if the current time is judged to be night.
+        """
+        return get_current_hour() in range(22, 3)
+
 # Variables with cross-script utility specific to Just Natsuki
 init -990 python in jn_globals:
     import store
@@ -955,17 +1048,6 @@ init -999 python in jn_utils:
         return pygame.mouse.get_pos()
 
 init python in jn_utils:
-    import easter
-    from Enum import Enum
-
-    TIME_BLOCK_EARLY_MORNING = 0
-    TIME_BLOCK_MID_MORNING = 1
-    TIME_BLOCK_LATE_MORNING = 2
-    TIME_BLOCK_AFTERNOON = 3
-    TIME_BLOCK_EVENING = 4
-    TIME_BLOCK_NIGHT = 5
-
-
 
     def get_current_session_length():
         """
@@ -1008,83 +1090,6 @@ init python in jn_utils:
 
         else:
             return "a while"
-
-    def get_current_hour():
-        """
-        Gets the current hour (out of 24) of the day.
-
-        OUT:
-            Integer representing the current hour of the day.
-        """
-        return datetime.datetime.now().hour
-
-    def get_is_weekday():
-        """
-        Gets whether the current day is a weekday (Monday : Friday).
-
-        OUT:
-            True if weekday, otherwise False
-        """
-        return datetime.datetime.now().weekday() < 5
-
-    def get_current_time_block():
-        """
-        Returns a type describing the current time of day as a segment.
-        """
-        current_hour = get_current_hour()
-        if current_hour in range(3, 5):
-            return TIME_BLOCK_EARLY_MORNING
-
-        elif current_hour in range(5, 9):
-            return TIME_BLOCK_MID_MORNING
-
-        elif current_hour in range(9, 12):
-            return TIME_BLOCK_LATE_MORNING
-
-        elif current_hour in range(12, 18):
-            return TIME_BLOCK_AFTERNOON
-
-        elif current_hour in range(18, 22):
-            return TIME_BLOCK_EVENING
-
-        else:
-            return TIME_BLOCK_NIGHT
-
-    def is_time_block_early_morning():
-        """
-        Returns True if the current time is judged to be early morning.
-        """
-        return get_current_hour() in range(3, 5)
-
-    def is_time_block_mid_morning():
-        """
-        Returns True if the current time is judged to be mid morning.
-        """
-        return get_current_hour() in range(5, 9)
-
-    def is_time_block_late_morning():
-        """
-        Returns True if the current time is judged to be late morning.
-        """
-        return get_current_hour() in range(9, 12)
-
-    def is_time_block_afternoon():
-        """
-        Returns True if the current time is judged to be afternoon.
-        """
-        return get_current_hour() in range(12, 18)
-
-    def is_time_block_evening():
-        """
-        Returns True if the current time is judged to be evening.
-        """
-        return get_current_hour() in range(18, 22)
-
-    def is_time_block_night():
-        """
-        Returns True if the current time is judged to be night.
-        """
-        return get_current_hour() in range(22, 3)
 
     # Key setup
     key_path = os.path.join(renpy.config.basedir, "game/dev/key.txt").replace("\\", "/")

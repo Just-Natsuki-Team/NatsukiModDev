@@ -75,16 +75,6 @@ label player_apologies_start:
 
     return
 
-init 1 python:
-    import store 
-    
-    # DEBUG: TODO: Resets - remove these later, once we're done tweaking affinity/trust!
-    try:
-        persistent._apology_database.clear()
-
-    except Exception as e:
-        utils.log(e, utils.SEVERITY_ERR)
-
 # Apology for giving Natsuki a bad nickname
 init 5 python:
     registerTopic(

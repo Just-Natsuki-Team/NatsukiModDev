@@ -62,7 +62,7 @@ label ch30_init:
             jn_atmosphere.show_random_sky()
 
         elif (
-            6 < jn_utils.get_current_hour() <= 18
+            jn_utils.get_current_hour() > 6 and jn_utils.get_current_hour() <= 18
             and not jn_atmosphere.is_current_weather_sunny()
         ):
             jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny)

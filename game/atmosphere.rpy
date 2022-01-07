@@ -74,24 +74,11 @@ init 0 python in jn_atmosphere:
         IN:
             weather_type - JNWeatherTypes value for the weather to set
         """
-        if weather_type == JNWeatherTypes.overcast:
-            sky = "sky_day overcast"
-            dim = "dim light"
-            renpy.music.stop(channel="weather_loop", fadeout=5.0)
-
-        elif weather_type == JNWeatherTypes.rain:
-            sky = "sky_day rain"
-            dim = "dim medium"
+        sky, dim = __WEATHER_EFFECT_MAP.get(weather_type)
+        if weather_type in (JNWeatherTypes.rain, JNWeatherTypes.thunder):
             renpy.music.play(filenames=__MUFFLED_RAIN_PATH, channel="weather_loop", fadein=3.0)
-
-        elif weather_type == JNWeatherTypes.thunder:
-            sky = "sky_day thunder"
-            dim = "dim heavy"
-            renpy.music.play(filenames=__MUFFLED_RAIN_PATH, channel="weather_loop", fadein=3.0)
-
+        
         else:
-            sky = "sky_day sunny"
-            dim = None
             renpy.music.stop(channel="weather_loop", fadeout=5.0)
 
         renpy.show(name=sky, zorder=_SKY_Z_INDEX)
