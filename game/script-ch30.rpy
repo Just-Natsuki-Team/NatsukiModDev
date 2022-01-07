@@ -60,7 +60,7 @@ label ch30_init:
     if persistent.jn_random_weather and 6 < utils.jn_get_current_hour() <= 18:
         $ jn_atmosphere.show_random_sky()
 
-    elif (6 < and utils.jn_get_current_hour() <= 18
+    elif (6 < utils.jn_get_current_hour() <= 18
         and not jn_atmosphere.is_current_weather_sunny()):
         $ jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny)
 
