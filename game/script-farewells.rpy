@@ -236,7 +236,7 @@ label farewell_option_work:
             n 1fskgsl "...And on New Year's Eve,{w=0.1} too?!{w=0.5}{nw}"
             extend 1fcseml " Jeez..."
 
-        elif not jn_get_is_weekday():
+        elif not jn_is_weekday():
             n 1uwdaj "A-{w=0.1}and on a weekend,{w=0.1} too?{w=0.5}{nw}" 
             extend 1fslpu " Man..."
 
@@ -271,7 +271,7 @@ label farewell_option_school:
         elif jn_is_new_years_eve():
             n 1fskgsl "...And on New Year's Eve,{w=0.1} too?!"
 
-        if not jn_get_is_weekday():
+        if not jn_is_weekday():
             extend 1uskwr "A-{w=0.1}and on a {i}weekend{/i} too?!"
 
         n 1fbkgs "What the hell kind of school is thaaaat?!"
@@ -302,7 +302,7 @@ label farewell_option_school:
             n 1fskgsl "...And on New Year's Eve,{w=0.1} too?!{w=0.5}{nw}"
             extend 1fcseml " Jeez..."
 
-        elif jn_get_is_weekday():
+        elif jn_is_weekday():
             n 1unmaj "Off to school,{w=0.1} [player]?{w=0.5}{nw}"
             extend 1nchsm " No worries!"
 

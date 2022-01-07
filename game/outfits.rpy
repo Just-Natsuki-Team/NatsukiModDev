@@ -219,21 +219,21 @@ init python in jn_outfits:
         Returns the outfit corresponding to affinity, the current time block and whether or not is is a weekday.
         """
         if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            if store.jn_get_is_weekday():
+            if store.jn_is_weekday():
                 return DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_HIGH_AFFINITY.get(store.jn_get_current_time_block())
 
             else:
                 return DEFAULT_OUTFIT_SCHEDULE_WEEKEND_HIGH_AFFINITY.get(store.jn_get_current_time_block())
         
         elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
-            if store.jn_get_is_weekday():
+            if store.jn_is_weekday():
                 return DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_MEDIUM_AFFINITY.get(store.jn_get_current_time_block())
 
             else:
                 return DEFAULT_OUTFIT_SCHEDULE_WEEKEND_MEDIUM_AFFINITY.get(store.jn_get_current_time_block())
         
         else:
-            if store.jn_get_is_weekday():
+            if store.jn_is_weekday():
                 return DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_LOW_AFFINITY.get(store.jn_get_current_time_block())
 
             else:
@@ -244,21 +244,21 @@ init python in jn_outfits:
         Sets Natsuki's outfit based on the time of day, whether it is a weekday/weekend, and affinity.
         """
         if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            if store.jn_get_is_weekday():
+            if store.jn_is_weekday():
                 set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_HIGH_AFFINITY.get(store.jn_get_current_time_block()))
 
             else:
                 set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKEND_HIGH_AFFINITY.get(store.jn_get_current_time_block()))
         
         elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
-            if store.jn_get_is_weekday():
+            if store.jn_is_weekday():
                 set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_MEDIUM_AFFINITY.get(store.jn_get_current_time_block()))
 
             else:
                 set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKEND_MEDIUM_AFFINITY.get(store.jn_get_current_time_block()))
         
         else:
-            if store.jn_get_is_weekday():
+            if store.jn_is_weekday():
                 set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_LOW_AFFINITY.get(store.jn_get_current_time_block()))
 
             else:

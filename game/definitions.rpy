@@ -705,7 +705,7 @@ init 0 python:
         """
         return datetime.datetime.now().hour
 
-    def jn_get_is_weekday():
+    def jn_is_weekday():
         """
         Gets whether the current day is a weekday (Monday : Friday).
 
