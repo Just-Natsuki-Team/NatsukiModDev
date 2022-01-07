@@ -374,7 +374,7 @@ init 5 python:
             label="talk_using_computers_healthily",
             unlocked=True,
             prompt="Using computers healthily",
-            conditional="store.utils.jn_get_current_session_length().total_seconds() / 3600 >= 8",
+            conditional="store.jn_utils.get_current_session_length().total_seconds() / 3600 >= 8",
             category=["Life", "You", "Health"],
             nat_says=True,
             affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
@@ -1744,7 +1744,7 @@ label talk_give_nickname:
         n 1fsqsl "That really hurt,{w=0.1} [player].{w=0.2} Don't abuse my trust."
 
         # Apply penalty and pending apology
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.bad_nickname)
         $ jn_relationship(change="affinity-", multiplier=2)
         $ jn_relationship(change="trust-", multiplier=2)
 
@@ -1757,7 +1757,7 @@ label talk_give_nickname:
         n 1fsqsr "Don't test my patience like this.{w=0.2} You're better than that."
 
         # Apply penalty and pending apology
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.bad_nickname)
         $ jn_relationship(change="affinity-", multiplier=2)
         $ jn_relationship(change="trust-", multiplier=2)
 
@@ -1787,7 +1787,7 @@ label talk_give_nickname:
                 $ jn_relationship(change="trust-", multiplier=3)
 
         # Apply penalty and pending apology
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.bad_nickname)
 
     elif persistent.jn_player_nicknames_bad_given_total == 4:
         # Player is locked out of nicknaming; this is why we can't have nice things
@@ -1804,7 +1804,7 @@ label talk_give_nickname:
         $ persistent.jn_player_nicknames_allowed = False
         $ persistent.jn_player_nicknames_current_nickname = None
         $ n_name = "Natsuki"
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.bad_nickname)
 
     return
 
@@ -1837,7 +1837,7 @@ label talk_sleeping_well:
     extend 1tnmaj " Do you struggle with your sleep?"
 
     # Quip if the player has been around a while, or has admitted they're tired
-    if utils.jn_get_current_session_length().total_seconds() / 3600 >= 12:
+    if jn_utils.get_current_session_length().total_seconds() / 3600 >= 12:
         n 1fsqpo "I mean,{w=0.1} you {i}have{/i} been here for a while now..."
         n 1ullaj "So...{w=0.5}{nw}"
         extend 1nnmaj " I kinda figured you might be feeling a little sleepy anyway."

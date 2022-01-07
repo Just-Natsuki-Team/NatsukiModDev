@@ -456,7 +456,7 @@ init 1 python:
     renpy.display.image.ImageReference.find_target = _find_target_override
 
 # Sprite code format:
-# <pose><eyebrows><eyes><mouth><tears><blush>
+# <pose><eyebrows><eyes><mouth><tears><blush><emote>
 #
 # Some notes regarding lengths of each part:
 #   pose: 1 character
@@ -733,17 +733,19 @@ image natsuki idle high_affinity:
 image natsuki idle medium_affinity:
     block:
         choice:
-            "natsuki 1nnmsg"
+            "natsuki 1nllbo"
         choice:
-            "natsuki 1nnmsm"
+            "natsuki 1nlrbo"
         choice:
-            "natsuki 1nllnv"
+            "natsuki 1nllpu"
         choice:
-            "natsuki 1nlrnv"
+            "natsuki 1nlrpu"
         choice:
             "natsuki 1nllca"
         choice:
             "natsuki 1nlrca"
+        choice:
+            "natsuki 1nnmca"
 
         pause 10
         repeat
@@ -797,12 +799,16 @@ init python:
         """
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             renpy.show("natsuki talk_menu_max_affinity", at_list=[jn_left])
+
         elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
             renpy.show("natsuki talk_menu_high_affinity", at_list=[jn_left])
+
         elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
             renpy.show("natsuki talk_menu_medium_affinity", at_list=[jn_left])
+
         elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
             renpy.show("natsuki talk_menu_low_affinity", at_list=[jn_left])
+
         else:
             renpy.show("natsuki talk_menu_min_affinity", at_list=[jn_left])
 

@@ -195,7 +195,7 @@ init 0 python:
                     return eval(self.conditional, globals=store.__dict__)
 
                 except Exception as e:
-                    store.utils.log("Error evaluating conditional on topic '{0}'. {1}".format(self.label, e.message), utils.SEVERITY_ERR)
+                    store.jn_utils.log("Error evaluating conditional on topic '{0}'. {1}".format(self.label, e.message), jn_utils.SEVERITY_ERR)
                     return False
 
             return True
@@ -280,7 +280,6 @@ init 0 python:
             location=None,
             affinity=None,
             trust=None,
-            conditional=None,
             shown_count=None,
             includes_categories=list(),
             excludes_categories=list(),
@@ -328,7 +327,7 @@ init 0 python:
             if trust and not self.evaluate_trust_range(trust):
                 return False
 
-            if conditional and not self.check_conditional():
+            if not self.check_conditional():
                 return False
 
             if shown_count is not None and not self.shown_count >= shown_count:
@@ -365,7 +364,6 @@ init 0 python:
             location=None,
             affinity=None,
             trust=None,
-            conditional=None,
             shown_count=None,
             includes_categories=list(),
             excludes_categories=list(),
@@ -395,7 +393,6 @@ init 0 python:
                     location,
                     affinity,
                     trust,
-                    conditional,
                     shown_count,
                     includes_categories,
                     excludes_categories,
@@ -692,8 +689,10 @@ init 10 python in jn_globals:
     current_affinity_state = store.jn_affinity.NORMAL
 
 #Stuff that's really early, which should be usable basically anywhere
-init -999 python in utils:
+init -999 python in jn_utils:
     import datetime
+    import easter
+    from Enum import Enum
     import hashlib
     import os
     import store
@@ -736,7 +735,7 @@ init -999 python in utils:
             ).format(datetime.datetime.now(), message)
         )
 
-    def jn_pretty_print(object, indent=1, width=150):
+    def pretty_print(object, indent=1, width=150):
         """
         Returns a PrettyPrint-formatted representation of an object as a dict.
 
@@ -750,7 +749,7 @@ init -999 python in utils:
         """
         return pprint.pformat(object.__dict__, indent, width)
 
-    def jn_get_mouse_position():
+    def get_mouse_position():
         """
         Returns a tuple representing the mouse's current position in the game window.
 
@@ -759,7 +758,7 @@ init -999 python in utils:
         """
         return pygame.mouse.get_pos()
 
-init python in utils:
+init python in jn_utils:
     import easter
     from Enum import Enum
 
@@ -791,7 +790,7 @@ init python in utils:
         def __str__(self):
             return self.name
 
-    def jn_get_current_session_length():
+    def get_current_session_length():
         """
         Returns a timedelta object representing the length of the current game session.
 
@@ -800,14 +799,14 @@ init python in utils:
         """
         return datetime.datetime.now() - store.jn_globals.current_session_start_time
 
-    def jn_get_time_in_session_descriptor():
+    def get_time_in_session_descriptor():
         """
         Get a descriptor based on the number of minutes the player has spent in the session, up to 30 minutes
 
         OUT:
             Brief descriptor relating to the number of minutes spent in the session
         """
-        minutes_in_session = jn_get_current_session_length().total_seconds() / 60
+        minutes_in_session = get_current_session_length().total_seconds() / 60
 
         if minutes_in_session <= 1:
             return "like a minute"
@@ -833,7 +832,7 @@ init python in utils:
         else:
             return "a while"
 
-    def jn_get_current_hour():
+    def get_current_hour():
         """
         Gets the current hour (out of 24) of the day.
 
@@ -842,7 +841,7 @@ init python in utils:
         """
         return datetime.datetime.now().hour
 
-    def jn_get_is_weekday():
+    def get_is_weekday():
         """
         Gets whether the current day is a weekday (Monday : Friday).
 
@@ -851,11 +850,11 @@ init python in utils:
         """
         return datetime.datetime.now().weekday() < 5
 
-    def jn_get_current_time_block():
+    def get_current_time_block():
         """
         Returns a type describing the current time of day as a segment.
         """
-        current_hour = jn_get_current_hour()
+        current_hour = get_current_hour()
         if current_hour in range(3, 5):
             return TIME_BLOCK_EARLY_MORNING
 
@@ -874,43 +873,43 @@ init python in utils:
         else:
             return TIME_BLOCK_NIGHT
 
-    def jn_is_time_block_early_morning():
+    def is_time_block_early_morning():
         """
         Returns True if the current time is judged to be early morning.
         """
-        return jn_get_current_hour() in range(3, 5)
+        return get_current_hour() in range(3, 5)
 
-    def jn_is_time_block_mid_morning():
+    def is_time_block_mid_morning():
         """
         Returns True if the current time is judged to be mid morning.
         """
-        return jn_get_current_hour() in range(5, 9)
+        return get_current_hour() in range(5, 9)
 
-    def jn_is_time_block_late_morning():
+    def is_time_block_late_morning():
         """
         Returns True if the current time is judged to be late morning.
         """
-        return jn_get_current_hour() in range(9, 12)
+        return get_current_hour() in range(9, 12)
 
-    def jn_is_time_block_afternoon():
+    def is_time_block_afternoon():
         """
         Returns True if the current time is judged to be afternoon.
         """
-        return jn_get_current_hour() in range(12, 18)
+        return get_current_hour() in range(12, 18)
 
-    def jn_is_time_block_evening():
+    def is_time_block_evening():
         """
         Returns True if the current time is judged to be evening.
         """
-        return jn_get_current_hour() in range(18, 22)
+        return get_current_hour() in range(18, 22)
 
-    def jn_is_time_block_night():
+    def is_time_block_night():
         """
         Returns True if the current time is judged to be night.
         """
-        return jn_get_current_hour() in range(22, 3)
+        return get_current_hour() in range(22, 3)
 
-    def jn_get_holiday_for_date(input_date=None):
+    def get_holiday_for_date(input_date=None):
         """
         Gets the holiday - if any - corresponding to the supplied date, or the current date by default.
 
@@ -948,7 +947,6 @@ init python in utils:
         else:
             return JNHolidays.none
 
-init python in utils:
     # Key setup
     key_path = os.path.join(renpy.config.basedir, "game/dev/key.txt").replace("\\", "/")
     if not os.path.exists(key_path):
@@ -962,7 +960,7 @@ init python in utils:
             else:
                 __KEY_VALID = False
 
-    def jn_get_key_valid():
+    def get_key_valid():
         """
         Returns the validation state of the key.
         """

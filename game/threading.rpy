@@ -1,6 +1,6 @@
 init python in jn_threading:
     import store
-    import store.utils as utils
+    import store.jn_utils as jn_utils
     import threading
     import uuid
 
@@ -31,4 +31,4 @@ init python in jn_threading:
             thread.start()
 
         except:
-            utils.log(message="Failed to launch thread for function {0} with args {1}".format(function, args), logseverity=utils.SEVERITY_ERR)
+            jn_utils.log(message="Failed to launch thread for function {0} with args {1}".format(function, args), logseverity=jn_utils.SEVERITY_ERR)

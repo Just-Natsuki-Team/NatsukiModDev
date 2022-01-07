@@ -729,7 +729,7 @@ screen quick_menu():
             xalign 0.5
             yalign 0.995
 
-            if utils.jn_get_key_valid():
+            if jn_utils.get_key_valid():
                 textbutton _("Restart"):
                     text_style "quickmenu_text"
                     action Show(
@@ -740,7 +740,7 @@ screen quick_menu():
                         yes_action=Jump("ch30_autoload"),
                         no_action=Jump("restart")
                     )
-                    
+
             textbutton _("History"):
                 text_style "quickmenu_text"
                 action ShowMenu('history')
@@ -910,7 +910,6 @@ screen main_menu():
 
     style_prefix "main_menu"
     add "menu_bg"
-    add "warmth"
     add "menu_art_n"
 
     frame:
@@ -1780,7 +1779,7 @@ init python:
 
     def check_ingame_state_add_apology():
         if jn_globals.player_is_ingame:
-            jn_apologies.add_new_pending_apology(jn_apologies.TYPE_CHEATED_GAME)
+            jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.cheated_game)
 
 screen confirm_quit(is_quitting):
     modal True

@@ -75,10 +75,6 @@ transform menu_bg_move:
         xoffset 0 yoffset 0
         linear 3.0 xoffset 0 yoffset -160
         repeat
-    parallel:
-        ypos 0
-        time 0.65
-        ease_cubic 2.5 ypos -500
 
 transform menu_bg_loop:
     subpixel True
@@ -96,7 +92,6 @@ transform menu_logo_move:
 
 transform menu_nav_move:
     subpixel True
-    xoffset -500
     time 1.5
     easein_quint 1 xoffset 0
 

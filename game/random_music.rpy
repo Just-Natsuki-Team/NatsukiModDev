@@ -6,7 +6,7 @@ init python in jn_random_music:
     import store.jn_affinity as jn_affinity
     import store.jn_custom_music as jn_custom_music
     import store.jn_plugins as jn_plugins
-    import store.utils as utils
+    import store.jn_utils as jn_utils
 
     _NEW_TRACK_QUIPS = [
         "Alright!{w=0.2} About time for a different tune,{w=0.1} I think!",

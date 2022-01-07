@@ -170,7 +170,7 @@ init python in jn_screenshots:
 label take_screenshot:
     if jn_affinity.get_affinity_state() >= jn_affinity.BROKEN:
         $ renpy.screenshot("{0}/screenshot_{1}.png".format(jn_screenshots._screenshot_dir, datetime.datetime.now().strftime(r"%d-%m-%Y_%H-%M-%S")))
-        $ utils.log("Screenshot taken by player at {0}".format(datetime.datetime.now().strftime(r"%d/%m/%Y, %H:%M")))
+        $ jn_utils.log("Screenshot taken by player at {0}".format(datetime.datetime.now().strftime(r"%d/%m/%Y, %H:%M")))
 
     else:
         n 1fsqsr "No, [player].{w=0.1} I'm keeping that turned off."
@@ -290,7 +290,7 @@ label screenshot_dialogue:
         $ jn_screenshots.bad_screenshot_streak += 1
 
         call take_screenshot
-        $ utils.log("Curr aff state: {0}".format(jn_affinity.get_affinity_state()))
+        $ jn_utils.log("Curr aff state: {0}".format(jn_affinity.get_affinity_state()))
 
         show natsuki 1fsqsr zorder 3
 

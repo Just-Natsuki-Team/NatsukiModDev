@@ -12,7 +12,7 @@ init python in jn_outfits:
     import random
     import store
     import store.jn_affinity as jn_affinity
-    import store.utils as utils
+    import store.jn_utils as jn_utils
 
     current_outfit_name = None
     _use_alt_outfit = random.choice(range(1, 3)) == 1
@@ -140,57 +140,57 @@ init python in jn_outfits:
 
     # Default outfit schedules
     DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_HIGH_AFFINITY = {
-        utils.TIME_BLOCK_EARLY_MORNING: DEFAULT_OUTFIT_MORNING_ALT if _use_alt_outfit else DEFAULT_OUTFIT_MORNING,
-        utils.TIME_BLOCK_MID_MORNING: DEFAULT_OUTFIT_UNIFORM,
-        utils.TIME_BLOCK_LATE_MORNING: DEFAULT_OUTFIT_UNIFORM,
-        utils.TIME_BLOCK_AFTERNOON: DEFAULT_OUTFIT_UNIFORM,
-        utils.TIME_BLOCK_EVENING: DEFAULT_OUTFIT_CASUAL_WEEKDAY_ALT if _use_alt_outfit else DEFAULT_OUTFIT_CASUAL_WEEKDAY,
-        utils.TIME_BLOCK_NIGHT: DEFAULT_OUTFIT_NIGHT
+        jn_utils.TIME_BLOCK_EARLY_MORNING: DEFAULT_OUTFIT_MORNING_ALT if _use_alt_outfit else DEFAULT_OUTFIT_MORNING,
+        jn_utils.TIME_BLOCK_MID_MORNING: DEFAULT_OUTFIT_UNIFORM,
+        jn_utils.TIME_BLOCK_LATE_MORNING: DEFAULT_OUTFIT_UNIFORM,
+        jn_utils.TIME_BLOCK_AFTERNOON: DEFAULT_OUTFIT_UNIFORM,
+        jn_utils.TIME_BLOCK_EVENING: DEFAULT_OUTFIT_CASUAL_WEEKDAY_ALT if _use_alt_outfit else DEFAULT_OUTFIT_CASUAL_WEEKDAY,
+        jn_utils.TIME_BLOCK_NIGHT: DEFAULT_OUTFIT_NIGHT
     }
 
     DEFAULT_OUTFIT_SCHEDULE_WEEKEND_HIGH_AFFINITY = {
-        utils.TIME_BLOCK_EARLY_MORNING: DEFAULT_OUTFIT_MORNING_ALT if _use_alt_outfit else DEFAULT_OUTFIT_MORNING,
-        utils.TIME_BLOCK_MID_MORNING: DEFAULT_OUTFIT_MORNING_ALT if _use_alt_outfit else DEFAULT_OUTFIT_MORNING,
-        utils.TIME_BLOCK_LATE_MORNING: DEFAULT_OUTFIT_MORNING_ALT if _use_alt_outfit else DEFAULT_OUTFIT_MORNING,
-        utils.TIME_BLOCK_AFTERNOON: DEFAULT_OUTFIT_CASUAL_WEEKEND_ALT if _use_alt_outfit else DEFAULT_OUTFIT_CASUAL_WEEKEND,
-        utils.TIME_BLOCK_EVENING: DEFAULT_OUTFIT_CASUAL_WEEKEND_ALT if _use_alt_outfit else DEFAULT_OUTFIT_CASUAL_WEEKEND,
-        utils.TIME_BLOCK_NIGHT:DEFAULT_OUTFIT_NIGHT
+        jn_utils.TIME_BLOCK_EARLY_MORNING: DEFAULT_OUTFIT_MORNING_ALT if _use_alt_outfit else DEFAULT_OUTFIT_MORNING,
+        jn_utils.TIME_BLOCK_MID_MORNING: DEFAULT_OUTFIT_MORNING_ALT if _use_alt_outfit else DEFAULT_OUTFIT_MORNING,
+        jn_utils.TIME_BLOCK_LATE_MORNING: DEFAULT_OUTFIT_MORNING_ALT if _use_alt_outfit else DEFAULT_OUTFIT_MORNING,
+        jn_utils.TIME_BLOCK_AFTERNOON: DEFAULT_OUTFIT_CASUAL_WEEKEND_ALT if _use_alt_outfit else DEFAULT_OUTFIT_CASUAL_WEEKEND,
+        jn_utils.TIME_BLOCK_EVENING: DEFAULT_OUTFIT_CASUAL_WEEKEND_ALT if _use_alt_outfit else DEFAULT_OUTFIT_CASUAL_WEEKEND,
+        jn_utils.TIME_BLOCK_NIGHT:DEFAULT_OUTFIT_NIGHT
     }
 
     DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_MEDIUM_AFFINITY = {
-        utils.TIME_BLOCK_EARLY_MORNING: DEFAULT_OUTFIT_UNIFORM,
-        utils.TIME_BLOCK_MID_MORNING: DEFAULT_OUTFIT_UNIFORM,
-        utils.TIME_BLOCK_LATE_MORNING: DEFAULT_OUTFIT_UNIFORM,
-        utils.TIME_BLOCK_AFTERNOON: DEFAULT_OUTFIT_UNIFORM,
-        utils.TIME_BLOCK_EVENING: DEFAULT_OUTFIT_CASUAL_WEEKDAY,
-        utils.TIME_BLOCK_NIGHT: DEFAULT_OUTFIT_CASUAL_WEEKDAY
+        jn_utils.TIME_BLOCK_EARLY_MORNING: DEFAULT_OUTFIT_UNIFORM,
+        jn_utils.TIME_BLOCK_MID_MORNING: DEFAULT_OUTFIT_UNIFORM,
+        jn_utils.TIME_BLOCK_LATE_MORNING: DEFAULT_OUTFIT_UNIFORM,
+        jn_utils.TIME_BLOCK_AFTERNOON: DEFAULT_OUTFIT_UNIFORM,
+        jn_utils.TIME_BLOCK_EVENING: DEFAULT_OUTFIT_CASUAL_WEEKDAY,
+        jn_utils.TIME_BLOCK_NIGHT: DEFAULT_OUTFIT_CASUAL_WEEKDAY
     }
 
     DEFAULT_OUTFIT_SCHEDULE_WEEKEND_MEDIUM_AFFINITY = {
-        utils.TIME_BLOCK_EARLY_MORNING: DEFAULT_OUTFIT_CASUAL_WEEKEND,
-        utils.TIME_BLOCK_MID_MORNING: DEFAULT_OUTFIT_CASUAL_WEEKEND,
-        utils.TIME_BLOCK_LATE_MORNING: DEFAULT_OUTFIT_CASUAL_WEEKEND,
-        utils.TIME_BLOCK_AFTERNOON: DEFAULT_OUTFIT_CASUAL_WEEKEND,
-        utils.TIME_BLOCK_EVENING: DEFAULT_OUTFIT_CASUAL_WEEKEND,
-        utils.TIME_BLOCK_NIGHT: DEFAULT_OUTFIT_CASUAL_WEEKEND
+        jn_utils.TIME_BLOCK_EARLY_MORNING: DEFAULT_OUTFIT_CASUAL_WEEKEND,
+        jn_utils.TIME_BLOCK_MID_MORNING: DEFAULT_OUTFIT_CASUAL_WEEKEND,
+        jn_utils.TIME_BLOCK_LATE_MORNING: DEFAULT_OUTFIT_CASUAL_WEEKEND,
+        jn_utils.TIME_BLOCK_AFTERNOON: DEFAULT_OUTFIT_CASUAL_WEEKEND,
+        jn_utils.TIME_BLOCK_EVENING: DEFAULT_OUTFIT_CASUAL_WEEKEND,
+        jn_utils.TIME_BLOCK_NIGHT: DEFAULT_OUTFIT_CASUAL_WEEKEND
     }
 
     DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_LOW_AFFINITY = {
-        utils.TIME_BLOCK_EARLY_MORNING: DEFAULT_OUTFIT_UNIFORM,
-        utils.TIME_BLOCK_MID_MORNING: DEFAULT_OUTFIT_UNIFORM,
-        utils.TIME_BLOCK_LATE_MORNING: DEFAULT_OUTFIT_UNIFORM,
-        utils.TIME_BLOCK_AFTERNOON: DEFAULT_OUTFIT_UNIFORM,
-        utils.TIME_BLOCK_EVENING: DEFAULT_OUTFIT_UNIFORM,
-        utils.TIME_BLOCK_NIGHT: DEFAULT_OUTFIT_UNIFORM
+        jn_utils.TIME_BLOCK_EARLY_MORNING: DEFAULT_OUTFIT_UNIFORM,
+        jn_utils.TIME_BLOCK_MID_MORNING: DEFAULT_OUTFIT_UNIFORM,
+        jn_utils.TIME_BLOCK_LATE_MORNING: DEFAULT_OUTFIT_UNIFORM,
+        jn_utils.TIME_BLOCK_AFTERNOON: DEFAULT_OUTFIT_UNIFORM,
+        jn_utils.TIME_BLOCK_EVENING: DEFAULT_OUTFIT_UNIFORM,
+        jn_utils.TIME_BLOCK_NIGHT: DEFAULT_OUTFIT_UNIFORM
     }
 
     DEFAULT_OUTFIT_SCHEDULE_WEEKEND_LOW_AFFINITY = {
-        utils.TIME_BLOCK_EARLY_MORNING: DEFAULT_OUTFIT_CASUAL_WEEKEND,
-        utils.TIME_BLOCK_MID_MORNING: DEFAULT_OUTFIT_CASUAL_WEEKEND,
-        utils.TIME_BLOCK_LATE_MORNING: DEFAULT_OUTFIT_CASUAL_WEEKEND,
-        utils.TIME_BLOCK_AFTERNOON: DEFAULT_OUTFIT_CASUAL_WEEKEND,
-        utils.TIME_BLOCK_EVENING: DEFAULT_OUTFIT_CASUAL_WEEKEND,
-        utils.TIME_BLOCK_NIGHT: DEFAULT_OUTFIT_CASUAL_WEEKEND
+        jn_utils.TIME_BLOCK_EARLY_MORNING: DEFAULT_OUTFIT_CASUAL_WEEKEND,
+        jn_utils.TIME_BLOCK_MID_MORNING: DEFAULT_OUTFIT_CASUAL_WEEKEND,
+        jn_utils.TIME_BLOCK_LATE_MORNING: DEFAULT_OUTFIT_CASUAL_WEEKEND,
+        jn_utils.TIME_BLOCK_AFTERNOON: DEFAULT_OUTFIT_CASUAL_WEEKEND,
+        jn_utils.TIME_BLOCK_EVENING: DEFAULT_OUTFIT_CASUAL_WEEKEND,
+        jn_utils.TIME_BLOCK_NIGHT: DEFAULT_OUTFIT_CASUAL_WEEKEND
     }
 
     def set_outfit(outfit):
@@ -212,57 +212,57 @@ init python in jn_outfits:
             current_outfit_name = outfit.reference_name
 
         else:
-            utils.log("Cannot dress Natsuki in outfit {0}; outfit is locked".format(outfit.name))
+            jn_utils.log("Cannot dress Natsuki in outfit {0}; outfit is locked".format(outfit.name))
 
     def get_outfit_for_time_block():
         """
         Returns the outfit corresponding to affinity, the current time block and whether or not is is a weekday.
         """
         if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            if utils.jn_get_is_weekday():
-                return DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_HIGH_AFFINITY.get(utils.jn_get_current_time_block())
+            if jn_utils.get_is_weekday():
+                return DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_HIGH_AFFINITY.get(jn_utils.get_current_time_block())
 
             else:
-                return DEFAULT_OUTFIT_SCHEDULE_WEEKEND_HIGH_AFFINITY.get(utils.jn_get_current_time_block())
+                return DEFAULT_OUTFIT_SCHEDULE_WEEKEND_HIGH_AFFINITY.get(jn_utils.get_current_time_block())
         
         elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
-            if utils.jn_get_is_weekday():
-                return DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_MEDIUM_AFFINITY.get(utils.jn_get_current_time_block())
+            if jn_utils.get_is_weekday():
+                return DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_MEDIUM_AFFINITY.get(jn_utils.get_current_time_block())
 
             else:
-                return DEFAULT_OUTFIT_SCHEDULE_WEEKEND_MEDIUM_AFFINITY.get(utils.jn_get_current_time_block())
+                return DEFAULT_OUTFIT_SCHEDULE_WEEKEND_MEDIUM_AFFINITY.get(jn_utils.get_current_time_block())
         
         else:
-            if utils.jn_get_is_weekday():
-                return DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_LOW_AFFINITY.get(utils.jn_get_current_time_block())
+            if jn_utils.get_is_weekday():
+                return DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_LOW_AFFINITY.get(jn_utils.get_current_time_block())
 
             else:
-                return DEFAULT_OUTFIT_SCHEDULE_WEEKEND_LOW_AFFINITY.get(utils.jn_get_current_time_block())
+                return DEFAULT_OUTFIT_SCHEDULE_WEEKEND_LOW_AFFINITY.get(jn_utils.get_current_time_block())
 
     def set_outfit_for_time_block():
         """
         Sets Natsuki's outfit based on the time of day, whether it is a weekday/weekend, and affinity.
         """
         if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            if utils.jn_get_is_weekday():
-                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_HIGH_AFFINITY.get(utils.jn_get_current_time_block()))
+            if jn_utils.get_is_weekday():
+                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_HIGH_AFFINITY.get(jn_utils.get_current_time_block()))
 
             else:
-                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKEND_HIGH_AFFINITY.get(utils.jn_get_current_time_block()))
+                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKEND_HIGH_AFFINITY.get(jn_utils.get_current_time_block()))
         
         elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
-            if utils.jn_get_is_weekday():
-                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_MEDIUM_AFFINITY.get(utils.jn_get_current_time_block()))
+            if jn_utils.get_is_weekday():
+                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_MEDIUM_AFFINITY.get(jn_utils.get_current_time_block()))
 
             else:
-                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKEND_MEDIUM_AFFINITY.get(utils.jn_get_current_time_block()))
+                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKEND_MEDIUM_AFFINITY.get(jn_utils.get_current_time_block()))
         
         else:
-            if utils.jn_get_is_weekday():
-                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_LOW_AFFINITY.get(utils.jn_get_current_time_block()))
+            if jn_utils.get_is_weekday():
+                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_LOW_AFFINITY.get(jn_utils.get_current_time_block()))
 
             else:
-                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKEND_LOW_AFFINITY.get(utils.jn_get_current_time_block()))
+                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKEND_LOW_AFFINITY.get(jn_utils.get_current_time_block()))
             
 label outfits_time_of_day_change:
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:

@@ -308,9 +308,9 @@ init -1 python in jn_affinity:
             return "RUINED"
 
         else:
-            store.utils.log(
+            store.jn_utils.log(
                 message="Unable to get tier name for affinity {0}; affinity_state was {1}".format(store.persistent.affinity, get_affinity_state()),
-                logseverity=store.utils.SEVERITY_WARN
+                logseverity=store.jn_utils.SEVERITY_WARN
             )
             return "UNKNOWN"
 
@@ -433,8 +433,8 @@ init -1 python in jn_trust:
             return "SHATTERED"
 
         else:
-            store.utils.log(
+            store.jn_utils.log(
                 message="Unable to get tier name for trust {0}; trust_state was {1}".format(store.persistent.trust, get_trust_state()),
-                logseverity=store.utils.SEVERITY_WARN
+                logseverity=store.jn_utils.SEVERITY_WARN
             )
             return "UNKNOWN"

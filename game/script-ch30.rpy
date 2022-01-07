@@ -16,9 +16,9 @@ label ch30_autoload:
 label ch30_holiday_check:
     python:
         import datetime
-        import store.utils as utils
+        import store.jn_utils as jn_utils
 
-        utils.log("Holiday check: {0}".format(utils.jn_get_holiday_for_date(datetime.datetime.now().date())))
+        jn_utils.log("Holiday check: {0}".format(jn_utils.get_holiday_for_date(datetime.datetime.now().date())))
     #Run holiday checks and push/setup holiday related things here
 
     #FALL THROUGH
@@ -57,10 +57,10 @@ label ch30_init:
     # Draw background
     $ main_background.draw(full_redraw=True)
 
-    if persistent.jn_random_weather and 6 < utils.jn_get_current_hour() <= 18:
+    if persistent.jn_random_weather and 6 < jn_utils.get_current_hour() <= 18:
         $ jn_atmosphere.show_random_sky()
 
-    elif (6 < utils.jn_get_current_hour() <= 18
+    elif (6 < jn_utils.get_current_hour() <= 18
         and not jn_atmosphere.is_current_weather_sunny()):
         $ jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny)
 
@@ -250,7 +250,7 @@ init python:
         # Draw background
         main_background.check_redraw()
 
-        if 6 < utils.jn_get_current_hour() <= 18:
+        if 6 < jn_utils.get_current_hour() <= 18:
             if persistent.jn_random_weather:
                 jn_atmosphere.show_random_sky()
 

@@ -500,7 +500,7 @@ label snap_quip(is_player_snap, is_correct_snap):
 
                 $ _player_win_streak = 0
                 $ persistent.jn_snap_player_is_cheater = True
-                $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_CHEATED_GAME)
+                $ jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.cheated_game)
 
                 # Hide all the UI
                 hide player_natsuki_hands

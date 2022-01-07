@@ -5,7 +5,7 @@ init python in jn_farewells:
     import store
     import store.jn_affinity as jn_affinity
     import store.jn_globals as jn_globals
-    import store.utils as utils
+    import store.jn_utils as jn_utils
 
     FAREWELL_MAP = dict()
 
@@ -36,7 +36,6 @@ init python in jn_farewells:
         farewell_pool = store.Topic.filter_topics(
             FAREWELL_MAP.values(),
             affinity=jn_affinity.get_affinity_state(),
-            conditional=True,
             excludes_categories=["Failsafe"],
             **kwargs
         )
@@ -68,7 +67,7 @@ label farewell_option_sleep:
         n 1kllbg "Right?"
         n 1kchsm "Sleep well,{w=0.1} [player]!"
 
-    elif utils.jn_get_current_hour() > 22 or utils.jn_get_current_hour() < 6:
+    elif jn_utils.get_current_hour() > 22 or jn_utils.get_current_hour() < 6:
         # Late night
         n 1fnmaj "A-{w=0.1}and I should think so, too!{w=0.5}{nw}"
         extend 1tnmem " It took you that long to notice the time?!"
@@ -77,7 +76,7 @@ label farewell_option_sleep:
         n 1fllsm "Ehehe.{w=0.5}{nw}"
         extend 1fchsm " Sleep well, [player]!"
 
-    elif utils.jn_get_current_hour() >= 21:
+    elif jn_utils.get_current_hour() >= 21:
         # Standard night
         n 1unmaj "About ready to turn in,{w=0.1} huh?"
         n 1ullaj "That's fine...{w=0.5}{nw}" 
@@ -85,7 +84,7 @@ label farewell_option_sleep:
         n 1fcssm "...Ehehe."
         n 1uchbg "No worries!{w=0.2} Sleep well,{w=0.1} [player]!"
 
-    elif utils.jn_get_current_hour() >= 19:
+    elif jn_utils.get_current_hour() >= 19:
         # Early night
         n 1unmaj "Huh?{w=0.2} You're taking an early night?"
         n 1ullaj "That's fine.{w=0.2} I suppose."
@@ -120,13 +119,13 @@ label farewell_option_eat:
         n 1fllsm "...Ehehe.{w=0.2}{nm}"
         extend 1fchbg " Enjoy,{w=0.1} [player]!"
 
-    elif utils.jn_get_current_hour() in (7, 8):
+    elif jn_utils.get_current_hour() in (7, 8):
         n 1fnmaj "You better!{w=0.5}{nw}" 
         extend 1fslca " You {i}do{/i} know what they say about breakfast,{w=0.1} right?"
         n 1fllsm "...Ehehe.{w=0.2}{nm}"
         n 1fchbg "Bon appetit,{w=0.1} [player]!"
 
-    elif utils.jn_get_current_hour() in (12, 13):
+    elif jn_utils.get_current_hour() in (12, 13):
         n 1unmaj "Heading out for lunch,{w=0.1} [player]?"
         n 1nlrpu "That's cool,{w=0.1} that's cool."
         n 1nsqsm "Just remember though...{w=0.3}{nm}" 
@@ -134,7 +133,7 @@ label farewell_option_eat:
         n 1fchsm "...Ehehe.{w=0.5}{nw}" 
         extend 1uchsm " Enjoy!"
 
-    elif utils.jn_get_current_hour() in (18, 19):
+    elif jn_utils.get_current_hour() in (18, 19):
         n 1unmaj "Dinner time,{w=0.1} huh?{w=0.5}{nw}" 
         extend 1unmbg " No probs!"
         n 1nlrpu "Just...{w=0.5}{nw}" 
@@ -153,7 +152,7 @@ label farewell_option_eat:
     return { "quit": None }
 
 label farewell_option_going_out:
-    if utils.jn_get_holiday_for_date() == utils.JNHolidays.new_years_eve:
+    if jn_utils.get_holiday_for_date() == jn_utils.JNHolidays.new_years_eve:
         n 1tsqbg "Oho?{w=0.2} Going out for the new year,{w=0.1} are we?{w=0.5}{nw}"
         extend 1fchbg " Can't say I blame you!"
         n 1ullaj "Just...{w=0.5}{nw}" 
@@ -164,7 +163,7 @@ label farewell_option_going_out:
         n 1usqbg "And if I don't see you sooner?"
         n 1fbkbs "Happy new year!"
 
-    elif utils.jn_get_holiday_for_date() == utils.JNHolidays.easter:
+    elif jn_utils.get_holiday_for_date() == jn_utils.JNHolidays.easter:
         n 1unmaj "Oh?{w=0.2} You're heading off now?"
         n 1unmbg "Did you have a meal planned for today or something?"
         n 1tlrsm "It {i}is{/i} Easter,{w=0.1} after all!{w=0.5}{nw}"
@@ -172,14 +171,14 @@ label farewell_option_going_out:
         n 1ullss "Well,{w=0.1} anyway.{w=0.5}{nw}" 
         extend 1uchgn " See you later,{w=0.1} [player]!"
 
-    elif utils.jn_get_holiday_for_date() == utils.JNHolidays.halloween:
+    elif jn_utils.get_holiday_for_date() == jn_utils.JNHolidays.halloween:
         n 1usqss "Ooh?{w=0.2} Heading out for Halloween,{w=0.1} [player]?"
         n 1fsqsm "Just don't forget..."
         n 1fsqbg "I want my share of treats too!"
         n 1fchgn "Ehehe.{w=0.5}{nw}"
         extend 1uchbg " Have fun~!"
 
-    elif utils.jn_get_holiday_for_date() == utils.JNHolidays.christmas_eve:
+    elif jn_utils.get_holiday_for_date() == jn_utils.JNHolidays.christmas_eve:
         n 1unmbo "Oh?{w=0.2} You're heading out for Christmas Eve?"
         n 1kllsl "Well...{w=0.3} okay."
         n 1kllajl "...You will be back in time for Christmas though...{w=0.5}{nw}" 
@@ -187,7 +186,7 @@ label farewell_option_going_out:
         n 1klrbgl "...Ahaha.{w=0.3}" 
         extend 1kchbg " See you later,{w=0.1} [player]!"
 
-    elif utils.jn_get_holiday_for_date() == utils.JNHolidays.christmas_day:
+    elif jn_utils.get_holiday_for_date() == jn_utils.JNHolidays.christmas_day:
         n 1unmbo "Huh?{w=0.2} You're heading off now?"
         n 1kllsl "Well...{w=0.3} alright."
         n 1kllss "Thanks for dropping by today though,{w=0.1} [player]."
@@ -206,9 +205,9 @@ label farewell_option_going_out:
     return { "quit": None }
 
 label farewell_option_work:
-    if utils.jn_get_current_hour() >= 20 or utils.jn_get_current_hour() <= 4:
+    if jn_utils.get_current_hour() >= 20 or jn_utils.get_current_hour() <= 4:
         n 1knmaj "H-{w=0.1}huh?{w=0.2} You're going to work now?"
-        $ time_concern = "late" if utils.jn_get_current_hour() >= 20 else "early"
+        $ time_concern = "late" if jn_utils.get_current_hour() >= 20 else "early"
         n 1kllaj "But...{w=0.3} it's super [time_concern] though,{w=0.1} [player]..."
         n 1kllun "..."
         n 1fnmun "Just...{w=0.3} be careful,{w=0.1} alright?"
@@ -218,27 +217,27 @@ label farewell_option_work:
 
     else:
         n 1unmaj "Oh?{w=0.2} You're working today?"
-        $ holiday_check = utils.jn_get_holiday_for_date()
+        $ holiday_check = jn_utils.get_holiday_for_date()
 
-        if holiday_check == utils.JNHolidays.easter:
+        if holiday_check == jn_utils.JNHolidays.easter:
             n 1uskgs "...And on Easter,{w=0.1} of all days?{w=0.5}{nw}" 
             extend 1fslpo " Man..."
 
-        elif holiday_check == utils.JNHolidays.christmas_eve:
+        elif holiday_check == jn_utils.JNHolidays.christmas_eve:
             n 1fskgsl "...On Christmas Eve?{w=0.5}{nw}"
             extend 1fcseml " You've gotta be kidding me..."
 
-        elif holiday_check == utils.JNHolidays.christmas_day:
+        elif holiday_check == jn_utils.JNHolidays.christmas_day:
             n 1fskwrl "...On {i}Christmas{/i}?!{w=0.5}{nw}"
             extend 1fcseml " Ugh..."
             n 1fslpol "..."
             n 1fslajl "Well..."
 
-        elif holiday_check == utils.JNHolidays.new_years_eve:
+        elif holiday_check == jn_utils.JNHolidays.new_years_eve:
             n 1fskgsl "...And on New Year's Eve,{w=0.1} too?!{w=0.5}{nw}"
             extend 1fcseml " Jeez..."
 
-        elif not utils.jn_get_is_weekday():
+        elif not jn_utils.get_is_weekday():
             n 1uwdaj "A-{w=0.1}and on a weekend,{w=0.1} too?{w=0.5}{nw}" 
             extend 1fslpu " Man..."
 
@@ -258,24 +257,24 @@ label farewell_option_work:
     return { "quit": None }
 
 label farewell_option_school:
-    $ holiday_check = utils.jn_get_holiday_for_date()
+    $ holiday_check = jn_utils.get_holiday_for_date()
 
-    if utils.jn_get_current_hour() >= 20 or utils.jn_get_current_hour() <= 4:
+    if jn_utils.get_current_hour() >= 20 or jn_utils.get_current_hour() <= 4:
         n 1twdem "...School?{w=0.2} At this hour?"
 
-        if holiday_check == utils.JNHolidays.easter:
+        if holiday_check == jn_utils.JNHolidays.easter:
             n 1uskgs "...And on Easter,{w=0.1} of all days?}"
 
-        elif holiday_check == utils.JNHolidays.christmas_eve:
+        elif holiday_check == jn_utils.JNHolidays.christmas_eve:
             n 1fskgsl "...On Christmas Eve?"
 
-        elif holiday_check == utils.JNHolidays.christmas_day:
+        elif holiday_check == jn_utils.JNHolidays.christmas_day:
             n 1fskwrl "...On {i}Christmas{/i}?!"
 
-        elif holiday_check == utils.JNHolidays.new_years_eve:
+        elif holiday_check == jn_utils.JNHolidays.new_years_eve:
             n 1fskgsl "...And on New Year's Eve,{w=0.1} too?!"
 
-        if not utils.jn_get_is_weekday():
+        if not jn_utils.get_is_weekday():
             extend 1uskwr "A-{w=0.1}and on a {i}weekend{/i} too?!"
 
         n 1fbkgs "What the hell kind of school is thaaaat?!"
@@ -283,30 +282,30 @@ label farewell_option_school:
         extend 1fllpo " And I thought my school experience was bad enough."
         n 1kcspu "Just...{w=0.5}{nw}" 
         extend 1knmpu " take care getting there,{w=0.1} alright?"
-        $ time_concern = "late" if utils.jn_get_current_hour() >= 20 else "early"
+        $ time_concern = "late" if jn_utils.get_current_hour() >= 20 else "early"
         extend 1fllsr "It's really [time_concern],{w=0.1} after all."
         n 1kllss "Study hard,{w=0.1} [player]!"
 
     else:
-        if holiday_check == utils.JNHolidays.easter:
+        if holiday_check == jn_utils.JNHolidays.easter:
             n 1uskgs "...And on Easter,{w=0.1} of all days?{w=0.5}{nw}" 
             extend 1fslpo " Man..."
 
-        elif holiday_check == utils.JNHolidays.christmas_eve:
+        elif holiday_check == jn_utils.JNHolidays.christmas_eve:
             n 1fskgsl "...On Christmas Eve?{w=0.5}{nw}"
             extend 1fcseml " You've gotta be kidding me..."
 
-        elif holiday_check == utils.JNHolidays.christmas_day:
+        elif holiday_check == jn_utils.JNHolidays.christmas_day:
             n 1fskwrl "...On {i}Christmas{/i}?!{w=0.5}{nw}"
             extend 1fcseml " Ugh..."
             n 1fslpol "..."
             n 1fslajl "Well..."
 
-        elif holiday_check == utils.JNHolidays.new_years_eve:
+        elif holiday_check == jn_utils.JNHolidays.new_years_eve:
             n 1fskgsl "...And on New Year's Eve,{w=0.1} too?!{w=0.5}{nw}"
             extend 1fcseml " Jeez..."
 
-        elif utils.jn_get_is_weekday():
+        elif jn_utils.get_is_weekday():
             n 1unmaj "Off to school,{w=0.1} [player]?{w=0.5}{nw}"
             extend 1nchsm " No worries!"
 
@@ -373,7 +372,7 @@ label farewell_option_studying:
     return { "quit": None }
 
 label farewell_option_chores:
-    if utils.jn_get_current_hour() >= 20 or utils.jn_get_current_hour() <= 4:
+    if jn_utils.get_current_hour() >= 20 or jn_utils.get_current_hour() <= 4:
         n 1tnmaj "...Chores?{w=0.5}{nw}"
         extend 1tsqem " At {i}this{/i} time?"
         n 1nllbo "I gotta say,{w=0.1} [player]."
@@ -1011,7 +1010,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_short_session_ask",
             unlocked=True,
-            conditional="not jn_globals.player_already_stayed_on_farewell and utils.jn_get_current_session_length().total_seconds() / 60 < 30",
+            conditional="not jn_globals.player_already_stayed_on_farewell and jn_utils.get_current_session_length().total_seconds() / 60 < 30",
             affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -1019,7 +1018,7 @@ init 5 python:
 
 label farewell_short_session_ask:
     n 1uskwrl "What?{w=0.2} You're leaving?{w=0.2} But you've barely been here at all today,{w=0.1} [player]!"
-    $ time_in_session_descriptor = utils.jn_get_time_in_session_descriptor()
+    $ time_in_session_descriptor = jn_utils.get_time_in_session_descriptor()
     n 1fnmpol "In fact, you've only been here for [time_in_session_descriptor]!"
     menu:
         n "You're sure you can't stay just a little longer?"
@@ -1088,7 +1087,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_short_session_ask_alt",
             unlocked=True,
-            conditional="not jn_globals.player_already_stayed_on_farewell and utils.jn_get_current_session_length().total_seconds() / 60 < 30",
+            conditional="not jn_globals.player_already_stayed_on_farewell and jn_utils.get_current_session_length().total_seconds() / 60 < 30",
             affinity_range=(jn_aff.HAPPY, jn_aff.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -1096,7 +1095,7 @@ init 5 python:
 
 label farewell_short_session_ask_alt:
     n 1knmgsl "N-{w=0.1}now wait just one second,{w=0.1} [player]!{w=0.2} This isn't fair at all!"
-    $ time_in_session_descriptor = utils.jn_get_time_in_session_descriptor()
+    $ time_in_session_descriptor = jn_utils.get_time_in_session_descriptor()
     n 1knmpol "You've barely been here [time_in_session_descriptor],{w=0.1} and you're already going?"
     menu:
         n "Come on!{w=0.2} You'll stay a little longer,{w=0.1} won't you?"
@@ -1314,7 +1313,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_early_morning_going_this_early",
             unlocked=True,
-            conditional="utils.jn_get_current_hour() in range(3, 4)",
+            conditional="jn_utils.get_current_hour() in range(3, 4)",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -1355,7 +1354,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_morning_heading_off",
             unlocked=True,
-            conditional="utils.jn_get_current_hour() in range(5, 11)",
+            conditional="jn_utils.get_current_hour() in range(5, 11)",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -1387,7 +1386,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_afternoon_come_visit_soon",
             unlocked=True,
-            conditional="utils.jn_get_current_hour() in range(12, 17)",
+            conditional="jn_utils.get_current_hour() in range(12, 17)",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -1415,7 +1414,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_evening_good_evening",
             unlocked=True,
-            conditional="utils.jn_get_current_hour() in range(18, 21)",
+            conditional="jn_utils.get_current_hour() in range(18, 21)",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_FAREWELL
@@ -1440,7 +1439,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_night_good_night",
             unlocked=True,
-            conditional="utils.jn_get_current_hour() >= 22 or utils.jn_get_current_hour() <= 2",
+            conditional="jn_utils.get_current_hour() >= 22 or jn_utils.get_current_hour() <= 2",
             affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
         ),
         topic_group=TOPIC_TYPE_FAREWELL
