@@ -25,6 +25,7 @@ define JN_NEW_YEARS_EVE = datetime.date(datetime.date.today().year, 12, 31)
 init 0 python:
     import store.jn_affinity as jn_aff
     from collections import OrderedDict
+    import re
 
     #Constants for types. Add more here if we need more organizational areas
     TOPIC_TYPE_FAREWELL = "FAREWELL"
@@ -449,6 +450,69 @@ init 0 python:
             topic_label - Topic.label of the topic you wish you queue
         """
         persistent._event_list.append(topic_label)
+
+    def jn_topic_in_event_list(topic_label):
+        """
+        Returns whether or not a topic is in the event list
+
+        IN:
+            topic_label - Topic.label of the topic you wish to check
+
+        OUT:
+            boolean - True if the topic is in the event list, False otherwise
+        """
+        return topic_label in persistent._event_list
+
+    def jn_topic_in_event_list_pattern(topic_pattern):
+        """
+        Returns whether or not a topic is in the event list
+
+        IN:
+            topic_pattern - Pattern to match against the topic labels
+
+        OUT:
+            boolean - True if the topic is in the event list, False otherwise
+        """
+        return any(
+            re.match(topic_pattern, topic_label)
+            for topic_label in persistent._event_list
+        )
+
+    def jn_rm_topic_occurrence_from_event_list(topic_label):
+        """
+        Removes a single occurrence of a topic from the event list
+
+        IN:
+            topic_label - label of the topic you wish to remove
+        """
+        if topic_label in persistent._event_list:
+            persistent._event_list.remove(topic_label)
+
+    def jn_rm_topic_from_event_list(topic_label):
+        """
+        Removes all occurrences of a topic from the event list
+
+        IN:
+            topic_label - label of the topic you wish to remove
+        """
+        persistent._event_list = [
+            _topic_label
+            for _topic_label in persistent._event_list
+            if _topic_label != topic_label
+        ]
+
+    def jn_rm_topic_from_event_list_pattern(topic_label_pattern):
+        """
+        Removes all occurrences of a topic from the event list
+
+        IN:
+            topic_label_pattern - regex identifier of the topic you wish to remove
+        """
+        persistent._event_list = [
+            _topic_label
+            for _topic_label in persistent._event_list
+            if not re.match(topic_label_pattern, _topic_label)
+        ]
 
     def menu_list(menu_topics, additional_topics):
         """

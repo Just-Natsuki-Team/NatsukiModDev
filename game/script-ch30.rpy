@@ -42,31 +42,34 @@ label ch30_init:
         persistent.jn_total_visit_count += 1
         persistent.jn_last_visited_date = datetime.datetime.now()
 
-    # Let's pick a greeting
-    $ push(greetings.select_greeting())
+        # Let's pick a greeting
+        if not jn_topic_in_event_list_pattern("^greeting_"):
+            push(greetings.select_greeting())
 
-    # Do all var-sets, resets, and sanity checks prior to entering the loop here
+        # Do all var-sets, resets, and sanity checks prior to entering the loop here
 
-    # Reset the previous admission/apology, now that Natsuki will have picked a greeting
-    $ persistent.jn_player_admission_type_on_quit = None
-    $ persistent.jn_player_apology_type_on_quit = None
+        # Reset the previous admission/apology, now that Natsuki will have picked a greeting
+        persistent.jn_player_admission_type_on_quit = None
+        persistent.jn_player_apology_type_on_quit = None
 
-    if persistent.jn_debug_open_watch_on_load:
-        $ jn_debug.toggle_show_tracked_watch_items(True)
+        if persistent.jn_debug_open_watch_on_load:
+            jn_debug.toggle_show_tracked_watch_items(True)
 
-    # Draw background
-    $ main_background.draw(full_redraw=True)
+        # Draw background
+        main_background.draw(full_redraw=True)
 
-    if persistent.jn_random_weather and 6 < jn_utils.get_current_hour() <= 18:
-        $ jn_atmosphere.show_random_sky()
+        if persistent.jn_random_weather and 6 < jn_utils.get_current_hour() <= 18:
+            jn_atmosphere.show_random_sky()
 
-    elif (6 < jn_utils.get_current_hour() <= 18
-        and not jn_atmosphere.is_current_weather_sunny()):
-        $ jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny)
+        elif (
+            6 < jn_utils.get_current_hour() <= 18
+            and not jn_atmosphere.is_current_weather_sunny()
+        ):
+            jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny)
 
-    # Outfit selection
-    if persistent.jn_natsuki_auto_outfit_change_enabled:
-        $ jn_outfits.set_outfit_for_time_block()
+        # Outfit selection
+        if persistent.jn_natsuki_auto_outfit_change_enabled:
+            jn_outfits.set_outfit_for_time_block()
 
     show screen hkb_overlay
     play music audio.test_bgm
