@@ -309,7 +309,7 @@ init 5 python:
     )
 
 label greeting_normal_happy_spacing_out:
-    n 1ncss "..."
+    n 1kllpu "..."
     n 1uwdajl "Huh?"
     n 1uchbgl "O-{w=0.1}oh!{w=0.2} Hi,{w=0.1} [player]!"
     n 1knmss "Sorry,{w=0.1} I was just kinda spacing out a little."
