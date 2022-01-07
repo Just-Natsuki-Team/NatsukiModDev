@@ -14,6 +14,11 @@ label ch30_autoload:
     #FALL THROUGH
 
 label ch30_holiday_check:
+    python:
+        import datetime
+        import store.jn_utils as jn_utils
+
+        jn_utils.log("Holiday check: {0}".format(jn_get_holiday_for_date(datetime.datetime.now().date())))
     #Run holiday checks and push/setup holiday related things here
 
     #FALL THROUGH
@@ -24,52 +29,72 @@ label ch30_visual_setup:
     #FALL THROUGH
 
 label ch30_init:
-
     python:
+
         # Determine if the player should get a prolonged leave greeting
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
             persistent.last_apology_type = jn_apologies.TYPE_PROLONGED_LEAVE
+
+        else:
+            jn_relationship("affinity+")
 
         # Add to the total visits counter and set the last visit date
         persistent.jn_total_visit_count += 1
         persistent.jn_last_visited_date = datetime.datetime.now()
 
-    # Let's pick a greeting
-    $ push(greetings.select_greeting())
+        # Let's pick a greeting
+        if not jn_topic_in_event_list_pattern("^greeting_"):
+            push(greetings.select_greeting())
 
-    # Draw background and placeholder sprites
-    $ main_background.draw(full_redraw=True)
+        # Do all var-sets, resets, and sanity checks prior to entering the loop here
 
-    if utils.get_current_hour() > 6 and utils.get_current_hour() <= 18:
-        $ jn_placeholders.show_random_placeholder_sky()
-    else:
-        hide placeholder_sky_day sunny
-        
+        # Reset the previous admission/apology, now that Natsuki will have picked a greeting
+        persistent.jn_player_admission_type_on_quit = None
+        persistent.jn_player_apology_type_on_quit = None
+
+        if persistent.jn_debug_open_watch_on_load:
+            jn_debug.toggle_show_tracked_watch_items(True)
+
+        # Draw background
+        main_background.draw(full_redraw=True)
+
+        if persistent.jn_random_weather and 6 < store.jn_get_current_hour() <= 18:
+            jn_atmosphere.show_random_sky()
+
+        elif (
+            store.jn_get_current_hour() > 6 and store.jn_get_current_hour() <= 18
+            and not jn_atmosphere.is_current_weather_sunny()
+        ):
+            jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny)
+
+        # Outfit selection
+        if persistent.jn_natsuki_auto_outfit_change_enabled:
+            jn_outfits.set_outfit_for_time_block()
+
     show screen hkb_overlay
-
-    # Do all var-sets, resets, and sanity checks prior to entering the loop here
-
-    # Reset the previous admission/apology, now that Natsuki will have picked a greeting
-    $ persistent.jn_player_admission_type_on_quit = None
-    $ persistent.jn_player_apology_type_on_quit = None
-
-    if persistent.jn_debug_open_watch_on_load:
-        $ jn_debug.toggle_show_tracked_watch_items(True)
+    play music audio.test_bgm
 
     #And finally, we head into the loop
-    play music audio.test_bgm
     jump ch30_loop
 
 #The main loop
 label ch30_loop:
-    # TODO: topic selection here once wait system is implemented
+    show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
 
+    # TODO: topic selection here once wait system is implemented
     #Run our checks
     python:
         _now = datetime.datetime.now()
+
         if LAST_MINUTE_CHECK.minute is not _now.minute:
             minute_check()
             LAST_MINUTE_CHECK = _now
+
+            if LAST_MINUTE_CHECK.minute in (0, 15, 30, 45):
+                quarter_hour_check()
+
+            if LAST_MINUTE_CHECK.minute in (0, 30):
+                half_hour_check()
 
         if LAST_HOUR_CHECK is not _now.hour:
             hour_check()
@@ -79,10 +104,6 @@ label ch30_loop:
             day_check()
             LAST_DAY_CHECK = _now.day
 
-        #We'll also check if we need to redraw the room
-        #main_background.check_redraw()
-
-        jn_placeholders.show_resting_placeholder_natsuki()
         jn_globals.player_is_in_conversation = False
 
     #Now, as long as there's something in the queue, we should go for it
@@ -98,20 +119,12 @@ label ch30_wait:
 
 #Other labels
 label call_next_topic:
+    show natsuki at jn_center
 
     if persistent._event_list:
         $ _topic = persistent._event_list.pop(0)
 
         if renpy.has_label(_topic):
-            if _topic in ["greeting_sudden_leave", "greeting_prolonged_leave"]:
-                show placeholder_natsuki plead zorder jn_placeholders.NATSUKI_Z_INDEX
-
-            elif "greeting_" in _topic:
-                $ jn_placeholders.show_greeting_placeholder_natsuki()
-
-            else:
-                $ jn_placeholders.show_resting_placeholder_natsuki()
-
             # Call the pending topic, and disable the UI
             $ jn_globals.player_is_in_conversation = True
             call expression _topic
@@ -125,8 +138,9 @@ label call_next_topic:
 
         #Handle all things which act on topic objects here, since we can't access attributes of Nonetypes
         if topic_obj is not None:
-            #Increment shown count
+            #Increment shown count, update last seen
             topic_obj.shown_count += 1
+            topic_obj.last_seen = datetime.datetime.now()
 
             #Now manage return keys
             if "derandom" in return_keys:
@@ -134,10 +148,14 @@ label call_next_topic:
 
     #This topic might quit
     if "quit" in return_keys:
-        jump _quit
+        jump quit
 
     # Reenable the UI and hop back to the loop
-    $ jn_globals.player_is_in_conversation = False
+    python:
+        global LAST_TOPIC_CALL
+        LAST_TOPIC_CALL = datetime.datetime.now()
+        jn_globals.player_is_in_conversation = False
+
     jump ch30_loop
 
 init python:
@@ -158,45 +176,112 @@ init python:
         """
         Runs every minute during breaks between topics
         """
+
+        # Run through all externally-registered minute check actions
+        if len(jn_plugins.minute_check_calls) > 0:
+            for action in jn_plugins.minute_check_calls:
+                eval(action.statement)
+
         # Push a new topic every couple of minutes
         # TODO: Move to a wait/has-waited system to allow some more flexibility
         global LAST_TOPIC_CALL
-        
         if persistent.jn_natsuki_random_topic_frequency is not jn_preferences.random_topic_frequency.NEVER:
 
-            if (datetime.datetime.now() > LAST_TOPIC_CALL + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown()) and 
+            if (datetime.datetime.now() > LAST_TOPIC_CALL + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown()) and
                 len(persistent._event_list) is 0):
 
-                    topic_pool = Topic.filter_topics(
-                        topics.TOPIC_MAP.values(),
-                        unlocked=True,
-                        nat_says=True,
-                        location=main_background.location.id,
-                        affinity=jn_affinity.get_affinity_state(),
-                    )
+                    if not persistent.jn_natsuki_repeat_topics:
+                        topic_pool = Topic.filter_topics(
+                            topics.TOPIC_MAP.values(),
+                            unlocked=True,
+                            nat_says=True,
+                            location=main_background.location.id,
+                            affinity=jn_affinity.get_affinity_state(),
+                            shown_count=0
+                        )
+
+                    else:
+                        topic_pool = Topic.filter_topics(
+                            topics.TOPIC_MAP.values(),
+                            unlocked=True,
+                            nat_says=True,
+                            location=main_background.location.id,
+                            affinity=jn_affinity.get_affinity_state()
+                        )
 
                     if topic_pool:
                         queue(random.choice(topic_pool).label)
-                        LAST_TOPIC_CALL = datetime.datetime.now()
+
+        pass
+
+    def quarter_hour_check():
+        """
+        Runs every fifteen minutes during breaks between topics
+        """
+
+        # Run through all externally-registered quarter-hour check actions
+        if len(jn_plugins.quarter_hour_check_calls) > 0:
+            for action in jn_plugins.quarter_hour_check_calls:
+                eval(action.statement)
+
+        jn_random_music.random_music_change_check()
+
+        pass
+
+    def half_hour_check():
+        """
+        Runs every thirty minutes during breaks between topics
+        """
+
+        # Run through all externally-registered half-hour check actions
+        if len(jn_plugins.half_hour_check_calls) > 0:
+            for action in jn_plugins.half_hour_check_calls:
+                eval(action.statement)
+
         pass
 
     def hour_check():
         """
         Runs ever hour during breaks between topics
         """
-        jn_placeholders.show_random_placeholder_sky()
+
+        # Run through all externally-registered hour check actions
+        if len(jn_plugins.hour_check_calls) > 0:
+            for action in jn_plugins.hour_check_calls:
+                eval(action.statement)
+
+        # Draw background
+        main_background.check_redraw()
+
+        if 6 < store.jn_get_current_hour() <= 18:
+            if persistent.jn_random_weather:
+                jn_atmosphere.show_random_sky()
+
+            else:
+                jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny)
+
+        # Update outfit
+        if jn_outfits.get_outfit_for_time_block().reference_name is not jn_outfits.current_outfit_name:
+
+            # We call here so we don't skip day_check, as call returns us to this point
+            renpy.call("outfits_time_of_day_change")
+
         pass
 
     def day_check():
         """
         Runs every day during breaks between topics
         """
+
+        # Run through all externally-registered day check actions
+        if len(jn_plugins.day_check_calls) > 0:
+            for action in jn_plugins.day_check_calls:
+                eval(action.statement)
+
         pass
 
 label talk_menu:
     python:
-        import pprint
-
         # Get the flavor text for the talk menu, based on affinity state
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_LOVE_ENAMORED)
@@ -213,7 +298,7 @@ label talk_menu:
         # Ensure any variable references are substituted
         _talk_flavor_text = renpy.substitute(_talk_flavor_text)
 
-    $ jn_placeholders.show_resting_placeholder_natsuki(offset=True)
+    $ show_natsuki_talk_menu()
 
     menu:
         n "[_talk_flavor_text]"
@@ -237,23 +322,37 @@ label talk_menu:
         "I want to say sorry...":
             jump player_apologies_start
 
-        "Goodbye.":
+        "Goodbye..." if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+            jump farewell_menu
+
+        "Goodbye." if jn_affinity.get_affinity_state() < jn_affinity.AFFECTIONATE:
             jump farewell_start
 
         "Nevermind.":
             jump ch30_loop
+
     return
 
 label player_select_topic(is_repeat_topics=False):
     python:
-        _topics = Topic.filter_topics(
-            topics.TOPIC_MAP.values(),
-            nat_says=is_repeat_topics,
-            player_says=not is_repeat_topics,
-            unlocked=True,
-            location=main_background.location.id,
-            affinity=jn_affinity.get_affinity_state()
-        )
+        if (is_repeat_topics):
+            _topics = Topic.filter_topics(
+                topics.TOPIC_MAP.values(),
+                nat_says=True,
+                unlocked=True,
+                location=main_background.location.id,
+                affinity=jn_affinity.get_affinity_state(),
+                shown_count=1
+            )
+
+        else:
+            _topics = Topic.filter_topics(
+                topics.TOPIC_MAP.values(),
+                player_says=True,
+                unlocked=True,
+                location=main_background.location.id,
+                affinity=jn_affinity.get_affinity_state()
+            )
 
         # Sort the topics we can pick by prompt for a cleaner appearance
         _topics.sort(key=lambda topic: topic.prompt)
@@ -276,10 +375,40 @@ label player_select_topic(is_repeat_topics=False):
 
     # Clear _return
     $ _return = None
-    $ jn_placeholders.show_resting_placeholder_natsuki()
+
+    jump ch30_loop
+
+label farewell_menu:
+    python:
+        # Sort the farewell options by their display name
+        avaliable_farewell_options = jn_farewells.get_farewell_options()
+        avaliable_farewell_options.sort(key = lambda option: option[0])
+        avaliable_farewell_options.append(("Goodbye.", "farewell_start"))
+
+    call screen scrollable_choice_menu(avaliable_farewell_options, ("Nevermind.", None))
+
+    if isinstance(_return, basestring):
+        show natsuki at jn_center
+        $ push(_return)
+        jump call_next_topic
 
     jump ch30_loop
 
 label extras_menu:
-    n "This isn't done."
+    python:
+        avaliable_extras_options = []
+
+        # Since conditions can change, we check each time if each option is now avaliable due to context changes (E.G affinity is now higher)
+        for extras_option in jn_plugins.extras_options:
+            if eval(extras_option.visible_if):
+                avaliable_extras_options.append((extras_option.option_name, extras_option.jump_label))
+
+        # Sort the extras options by their display name
+        avaliable_extras_options.sort(key = lambda option: option[0])
+
+    call screen scrollable_choice_menu(avaliable_extras_options, ("Nevermind.", None))
+
+    if isinstance(_return, basestring):
+        $ renpy.jump(_return)
+
     jump ch30_loop

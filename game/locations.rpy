@@ -177,6 +177,8 @@ init -20 python:
             if room is not None and not renpy.showing("main_bg"):
                 renpy.show(room, tag="main_bg", zorder=1)
 
+            renpy.show("natsuki idle", at_list=[jn_center], zorder=3)
+
             # dissolving everything means dissolve last
             if dissolve_all or full_redraw:
                 renpy.with_statement(Dissolve(1.0))
@@ -186,7 +188,8 @@ init -20 python:
             """
             Checks if we're showing the day room
             """
-            return renpy.showing(self.location.day_image_tag)
+            #TODO: Check this; it looks like it always returns None?
+            return renpy.showing(self.location.day_image_tag) #tag = classroom_day
 
         def check_redraw(self):
             """
