@@ -1274,7 +1274,7 @@ screen preferences():
                                 true_value=True,
                                 false_value=False)
                         ]
-          
+
                     ## Additional vboxes of type "radio_pref" or "check_pref" can be
                     ## added here, to add additional creator-defined preferences.
 
@@ -1288,10 +1288,11 @@ screen preferences():
 
                         bar value FieldValue(
                             object=persistent,
-                            field="jn_natsuki_random_topic_frequency", 
+                            field="jn_natsuki_random_topic_frequency",
                             range=4,
                             style="slider",
-                            step=1)
+                            step=1
+                        )
 
                         label _("Text Speed")
 
@@ -1764,9 +1765,9 @@ screen confirm(message, yes_action, no_action):
                 spacing 100
 
                 if confirm_is_quit:
-                    textbutton _("Continue") action [Hide("confirm"), Show(screen="confirm_quit", is_quitting=True)] 
+                    textbutton _("Continue") action [Hide("confirm"), Show(screen="confirm_quit", is_quitting=True)]
 
-                    textbutton _("Go back") action [Hide("confirm"), Show(screen="confirm_quit", is_quitting=False)] 
+                    textbutton _("Go back") action [Hide("confirm"), Show(screen="confirm_quit", is_quitting=False)]
 
                 else:
                     textbutton _("Yes") action yes_action
@@ -1795,7 +1796,7 @@ screen confirm_quit(is_quitting):
     if is_quitting:
         $ quit_label = get_affinity_quit_dialogue()[1]
     else:
-        $ quit_label = get_affinity_quit_dialogue()[2] 
+        $ quit_label = get_affinity_quit_dialogue()[2]
 
     frame:
 
