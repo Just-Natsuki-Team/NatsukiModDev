@@ -4369,7 +4369,7 @@ label talk_skateboarding:
     extend 1fnmsm " Besides,{w=0.1} [player]..."
     n 1fsqss "I can tell when you're getting...{w=0.3} {i}board{/i}."
     n 1fchsm "Ehehe.{w=0.5}{nw}"
-    extend 1uchgn " No regrets, [player]!"
+    extend 1uchgn " No regrets,{w=0.1} [player]!"
     return
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
