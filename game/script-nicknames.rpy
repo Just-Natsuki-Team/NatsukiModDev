@@ -416,7 +416,6 @@ init 0 python in jn_nicknames:
         "gaylord",
         "gaysex",
         "goatse",
-        "God",
         "god-dam",
         "goddamn",
         "goddamned",
