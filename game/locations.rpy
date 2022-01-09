@@ -98,7 +98,7 @@ init -20 python:
                 return self.day_image_tag
             return self.night_image_tag
 
-    class Room(object):
+    class JNRoom(object):
         """
         The main representation of the room.
         """
@@ -114,6 +114,10 @@ init -20 python:
             self.sunrise = datetime.time(6)
             self.sunset = datetime.time(19)
             self.__is_showing_day_image = None
+
+            #Eventhandlers
+            self.day_to_night_event = JNEvent()
+            self.night_to_day_event = JNEvent()
 
         def setLocation(self, new_location, **kwargs):
             """
@@ -209,8 +213,20 @@ init -20 python:
             """
             persistent._current_location = self.location.id
 
+        def night_to_day_event(self):
+            """
+            Called when the night to day event is triggered
+            """
+            gui.hover_sound = "mod_assets/buttons/"
+
+        def day_to_night_event(self):
+            """
+            Called when the day to night event is triggered
+            """
+            pass
+
 init python:
-    main_background = Room()
+    main_background = JNRoom()
 
     classroom = Location(
         id="classroom",
@@ -223,6 +239,18 @@ init python:
     )
 
     main_background.setLocation(classroom)
+
+    #Register the event handlers to handle button sounds
+    def __change_to_night_button_sounds():
+        gui.hover_sound = "mod_assets/buttons/sounds/button_hover_night.ogg"
+        gui.activate_sound = "mod_assets/buttons/sounds/button_click_night.ogg"
+
+    def __change_to_day_button_sounds():
+        gui.hover_sound = "mod_assets/buttons/sounds/button_hover_day.ogg"
+        gui.activate_sound = "mod_assets/buttons/sounds/button_click_day.ogg"
+
+    main_background.day_to_night_event += __change_to_night_button_sounds
+    main_background.night_to_day_event += __change_to_day_button_sounds
 
     if persistent._current_location in locations.LOCATION_MAP:
         main_background.changeLocation(persistent._current_location)
