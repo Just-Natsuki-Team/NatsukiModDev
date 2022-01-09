@@ -14,6 +14,7 @@ init -100 python:
 ## not found, the player is directed to the developer's site to download.
 ##
 init python:
+    config.rollback_enabled = False
     menu_trans_time = 1
     #The default splash message, originally shown in Act 1 and Act 4
     splash_message = _("This game is an unofficial fan work, unaffiliated with Team Salvato.")
@@ -72,19 +73,15 @@ transform menu_bg_move:
     topleft
     parallel:
         xoffset 0 yoffset 0
-        linear 3.0 xoffset -100 yoffset -100
+        linear 3.0 xoffset 0 yoffset -160
         repeat
-    parallel:
-        ypos 0
-        time 0.65
-        ease_cubic 2.5 ypos -500
 
 transform menu_bg_loop:
     subpixel True
     topleft
     parallel:
         xoffset 0 yoffset 0
-        linear 3.0 xoffset -100 yoffset -100
+        linear 3.0 xoffset 0 yoffset -160
         repeat
 
 transform menu_logo_move:
@@ -95,7 +92,6 @@ transform menu_logo_move:
 
 transform menu_nav_move:
     subpixel True
-    xoffset -500
     time 1.5
     easein_quint 1 xoffset 0
 
@@ -258,9 +254,12 @@ label before_main_menu:
     return
 
 label quit:
-    #Save topic data
-    $ Topic._save_topic_data()
+    python:
+        #Save topic data
+        Topic._save_topic_data()
 
-    #Save background data
-    $ main_background.save()
-    return
+        #Save background data
+        main_background.save()
+
+        # Finally quit
+        renpy.quit()

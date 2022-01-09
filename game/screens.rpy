@@ -316,6 +316,9 @@ style normal is default:
     text_align gui.text_xalign
     layout ("subtitle" if gui.text_xalign else "tex")
 
+    line_overlap_split -3
+    line_spacing 3
+
 style input:
     color gui.accent_color
 
@@ -488,8 +491,6 @@ style say_dialogue:
     xanchor gui.text_xalign
     xsize gui.text_width
     ypos gui.text_ypos
-    line_leading 10
-    line_overlap_split -2
 
     text_align gui.text_xalign
     layout ("subtitle" if gui.text_xalign else "tex")
@@ -729,7 +730,7 @@ screen quick_menu():
             xalign 0.5
             yalign 0.995
 
-            if config.console:
+            if jn_utils.get_key_valid():
                 textbutton _("Restart"):
                     text_style "quickmenu_text"
                     action Show(
@@ -740,7 +741,7 @@ screen quick_menu():
                         yes_action=Jump("ch30_autoload"),
                         no_action=Jump("restart")
                     )
-                    
+
             textbutton _("History"):
                 text_style "quickmenu_text"
                 action ShowMenu('history')
@@ -1237,13 +1238,6 @@ screen preferences():
                             label _("Display")
                             textbutton _("Window") action Preference("display", "window")
                             textbutton _("Fullscreen") action Preference("display", "fullscreen")
-                    if config.developer:
-                        vbox:
-                            style_prefix "radio"
-                            label _("Rollback Side")
-                            textbutton _("Disable") action Preference("rollback side", "disable")
-                            textbutton _("Left") action Preference("rollback side", "left")
-                            textbutton _("Right") action Preference("rollback side", "right")
 
                     vbox:
                         style_prefix "check"
@@ -1251,9 +1245,40 @@ screen preferences():
                         textbutton _("Unseen Text") action Preference("skip", "toggle")
                         textbutton _("After Choices") action Preference("after choices", "toggle")
 
+                    vbox:
+                        style_prefix "check"
+                        label _("Weather")
+                        textbutton _("Random") action ToggleField(
+                            object=persistent,
+                            field="jn_random_weather",
+                            true_value=True,
+                            false_value=False)
+
+                    vbox:
+                        style_prefix "check"
+                        label _("Outfits")
+                        textbutton _("Auto Change") action [
+                            ToggleField(
+                                object=persistent,
+                                field="jn_natsuki_auto_outfit_change_enabled",
+                                true_value=True,
+                                false_value=False)
+                        ]
+
+                    vbox:
+                        style_prefix "check"
+                        label _("Topics")
+                        textbutton _("Repeat seen") action [
+                            ToggleField(
+                                object=persistent,
+                                field="jn_natsuki_repeat_topics",
+                                true_value=True,
+                                false_value=False)
+                        ]
+
                     ## Additional vboxes of type "radio_pref" or "check_pref" can be
                     ## added here, to add additional creator-defined preferences.
-                
+
                 hbox:
                     style_prefix "slider"
                     box_wrap True
@@ -1264,10 +1289,11 @@ screen preferences():
 
                         bar value FieldValue(
                             object=persistent,
-                            field="jn_natsuki_random_topic_frequency", 
+                            field="jn_natsuki_random_topic_frequency",
                             range=4,
                             style="slider",
-                            step=1)
+                            step=1
+                        )
 
                         label _("Text Speed")
 
@@ -1366,7 +1392,9 @@ style radio_button:
 style radio_button_text:
     properties gui.button_text_properties("radio_button")
     font "gui/font/Halogen.ttf"
-    outlines []
+    color "#e2d1d1"
+    hover_color "#FF8ED0"
+    outlines [(2, "#000000aa", 0, 0)]
 
 style check_vbox:
     spacing gui.pref_button_spacing
@@ -1378,7 +1406,9 @@ style check_button:
 style check_button_text:
     properties gui.button_text_properties("check_button")
     font "gui/font/Halogen.ttf"
-    outlines []
+    color "#e2d1d1"
+    hover_color "#FF8ED0"
+    outlines [(2, "#000000aa", 0, 0)]
 
 style slider_slider:
     xsize 350
@@ -1520,114 +1550,6 @@ screen name_input(message, ok_action):
 
             input default "" value VariableInputValue("player") length 12 allow "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 
-            #hbox:
-            #    xalign 0.5
-            #    style_prefix "radio_pref"
-            #    textbutton "Male" action NullAction()
-            #    textbutton "Female" action NullAction()
-            hbox:
-                xalign 0.5
-                spacing 100
-
-                textbutton _("OK") action ok_action
-
-screen month_input(ok_action):
-
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
-
-    zorder 200
-
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
-    key "K_RETURN" action [Play("sound", gui.activate_sound), ok_action]
-
-    frame:
-
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _("Please enter your birth month\n(Enter the month with the first letter capitalized, eg January, February, etc)"):
-                style "confirm_prompt"
-                xalign 0.5
-
-            input default "" value VariableInputValue("month") length 15 allow "ABCDEFGHIJKLMNOPQRSTUVabcdefghijklmnopqrstuv"
-
-            #hbox:
-            #    xalign 0.5
-            #    style_prefix "radio_pref"
-            #    textbutton "Male" action NullAction()
-            #    textbutton "Female" action NullAction()
-            hbox:
-                xalign 0.5
-                spacing 100
-
-                textbutton _("Confirm") action ok_action
-
-screen day_input(ok_action):
-
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
-
-    zorder 200
-
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
-    key "K_RETURN" action [Play("sound", gui.activate_sound), ok_action]
-
-    frame:
-
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _("Please enter your birth day\n(Enter as a number, eg 22)"):
-                style "confirm_prompt"
-                xalign 0.5
-
-            input default "" value VariableInputValue("day") length 2 allow "123456789"
-
-            #hbox:
-            #    xalign 0.5
-            #    style_prefix "radio_pref"
-            #    textbutton "Male" action NullAction()
-            #    textbutton "Female" action NullAction()
-            hbox:
-                xalign 0.5
-                spacing 100
-
-                textbutton _("Confirm") action ok_action
-
-screen age_input(message, ok_action):
-
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
-
-    zorder 200
-
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
-    key "K_RETURN" action [Play("sound", gui.activate_sound), ok_action]
-
-    frame:
-
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _(message):
-                style "confirm_prompt"
-                xalign 0.5
-
-            input default "" value VariableInputValue("age") length 12 allow "don'twanttoanswer1234567890 "
-
             hbox:
                 xalign 0.5
                 spacing 100
@@ -1661,28 +1583,6 @@ screen dialog(message, ok_action):
                 spacing 100
 
                 textbutton _("OK") action ok_action
-
-screen start_dlc_check(message):
-
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
-
-    zorder 200
-
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
-
-    frame:
-
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _(message):
-                style "confirm_prompt"
-                xalign 0.5
 
 screen reload(message, ok_action):
 
@@ -1718,153 +1618,6 @@ screen reload(message, ok_action):
                 spacing 50
 
                 textbutton _("I'll do it myself") action Hide("reload")
-
-screen custommusic(message, ok_action):
-
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
-
-    zorder 200
-
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
-
-    frame:
-
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _(message):
-                style "confirm_prompt"
-                xalign 0.5
-
-            hbox:
-                xalign 0.5
-                spacing 50
-                style_prefix "check"
-                textbutton _("Don't show again") action ToggleField(persistent,"show_again", False, True)
-
-
-            hbox:
-                xalign 0.5
-                spacing 50
-
-                textbutton _("OK") action ok_action
-
-screen emotion(message, close):
-
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
-
-    zorder 200
-
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
-
-    frame:
-
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _(message):
-                style "confirm_prompt"
-                xalign 0.5
-
-            hbox:
-                xalign 0.5
-                spacing 50
-                style_prefix "check"
-                textbutton _("Happy") action SetField(persistent,"natsuki_emotion", "Happy")
-
-            hbox:
-                xalign 0.5
-                spacing 50
-                style_prefix "check"
-                textbutton _("Casual") action SetField(persistent,"natsuki_emotion", "Casual")
-
-            hbox:
-                xalign 0.5
-                spacing 50
-                style_prefix "check"
-                textbutton _("Angry") action SetField(persistent,"natsuki_emotion", "Angry")
-
-            hbox:
-                xalign 0.5
-                spacing 50
-                style_prefix "check"
-                textbutton _("Sad") action SetField(persistent,"natsuki_emotion", "Sad")
-
-
-            hbox:
-                xalign 0.5
-                spacing 50
-
-                textbutton _("Nevermind") action close
-
-screen dlc(message):
-
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
-
-    zorder 200
-
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
-
-    frame:
-
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _(message):
-                style "confirm_prompt"
-                xalign 0.5
-
-            #hbox:
-                #xalign 0.5
-                #spacing 50
-                #style_prefix "check"
-                #textbutton _("Natsuki's Kitchen!") action If(persistent.using_space_dlc, true=ToggleField(persistent,"using_space_dlc", True, False), false=Jump("space_dlc_check"))
-
-            hbox:
-                xalign 0.5
-                spacing 50
-                style_prefix "check"
-                textbutton _("Natsuki's Kitchen!") action Show(screen="dialog", message="This DLC is not released yet.", ok_action=Hide("dialog"))
-
-            hbox:
-                xalign 0.5
-                spacing 50
-                style_prefix "check"
-                textbutton _("Natsuki's Night Out!") action Show(screen="dialog", message="This DLC is not released yet.", ok_action=Hide("dialog"))
-
-            hbox:
-                xalign 0.5
-                spacing 50
-                style_prefix "check"
-                textbutton _("Natsuki's Magical Adventure!") action Show(screen="dialog", message="This DLC is not released yet.", ok_action=Hide("dialog"))
-
-            hbox:
-                xalign 0.5
-                spacing 50
-                style_prefix "check"
-                textbutton _("(Unavailable)") action NullAction()
-
-
-            hbox:
-                xalign 0.5
-                spacing 50
-
-                textbutton _("Close") action Return
 
 screen quit(message, ok_action):
 
@@ -1979,15 +1732,6 @@ image confirm_glitch:
     pause 0.02
     repeat
 
-screen memory:
-
-    text "Monika will remember that...":
-                xalign 1.0 yalign 1.0
-                xoffset -10 yoffset -10
-                style "main_menu_version"
-
-
-
 screen confirm(message, yes_action, no_action):
 
     # If this is a quit confirmation, begin personification so we can work Natsuki into this
@@ -2022,9 +1766,9 @@ screen confirm(message, yes_action, no_action):
                 spacing 100
 
                 if confirm_is_quit:
-                    textbutton _("Continue") action [Hide("confirm"), Show(screen="confirm_quit", is_quitting=True)] 
+                    textbutton _("Continue") action [Hide("confirm"), Show(screen="confirm_quit", is_quitting=True)]
 
-                    textbutton _("Go back") action [Hide("confirm"), Show(screen="confirm_quit", is_quitting=False)] 
+                    textbutton _("Go back") action [Hide("confirm"), Show(screen="confirm_quit", is_quitting=False)]
 
                 else:
                     textbutton _("Yes") action yes_action
@@ -2037,7 +1781,7 @@ init python:
 
     def check_ingame_state_add_apology():
         if jn_globals.player_is_ingame:
-            jn_apologies.add_new_pending_apology(jn_apologies.TYPE_CHEATED_GAME)
+            jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.cheated_game)
 
 screen confirm_quit(is_quitting):
     modal True
@@ -2053,7 +1797,7 @@ screen confirm_quit(is_quitting):
     if is_quitting:
         $ quit_label = get_affinity_quit_dialogue()[1]
     else:
-        $ quit_label = get_affinity_quit_dialogue()[2] 
+        $ quit_label = get_affinity_quit_dialogue()[2]
 
     frame:
 
@@ -2076,8 +1820,10 @@ screen confirm_quit(is_quitting):
                         Function(jn_apologies.add_new_pending_apology, jn_apologies.TYPE_SUDDEN_LEAVE),
                         Function(check_ingame_state_add_apology),
                         SetField(persistent, "jn_player_apology_type_on_quit", jn_apologies.TYPE_SUDDEN_LEAVE),
-                        relationship("affinity-"),
-                        Quit(confirm=False)
+                        jn_relationship("affinity-"),
+                        Hide("confirm"),
+                        Hide("confirm_quit"),
+                        Jump("quit")
                     ]
                 else:
                     textbutton _("OK") action [

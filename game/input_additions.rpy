@@ -15,10 +15,11 @@ init 1 python:
     config.keymap['input_move_select_home'] = ['ctrl_K_HOME']
     config.keymap['input_move_select_end'] = ['ctrl_K_END']
 
-init 999 python in Input_overwrite:
+init 999 python in jn_input_overwrite:
     import pygame
     pygame.scrap.init()
 
+    ## Add some new vars
     # select_start_pos - does not change while selecting, set on selection start
     #  if is None -> nothing is selected
     # select_end_pos - moves about
@@ -99,10 +100,6 @@ init 999 python in Input_overwrite:
             only if it contains only allowed characters and no excluded chars
         """
         paste = pygame.scrap.get(pygame.SCRAP_TEXT)
-
-        if self.length:
-            remaining = self.length - len(self.content)
-            paste = paste[:remaining]
 
         # Check if text we're trying to paste contains only allowed characters
         for char in paste:
@@ -281,7 +278,7 @@ init 999 python in Input_overwrite:
         self.update_text(self.content, self.editable, check_size = True)
 
 
-    # Add new functions to the Input class
+    # Add new methods to the Input class
     setattr(renpy.display.behavior.Input, 'move_selected_left', move_selected_left)
     setattr(renpy.display.behavior.Input, 'move_selected_right', move_selected_right)
     setattr(renpy.display.behavior.Input, 'move_selected_home', move_selected_home)
@@ -295,10 +292,14 @@ init 999 python in Input_overwrite:
     setattr(renpy.display.behavior.Input, 'get_selected', get_selected)
     setattr(renpy.display.behavior.Input, 'remove_selected', remove_selected)
 
+    # renpy's function for detecting and processing keyboard events
     map_event = renpy.display.behavior.map_event
 
-    # event function overwrite
+    # `event` overwrite
     def event_ov(self, ev, x, y, st):
+        """
+            editted renpy's `event` method
+        """
         self.old_caret_pos = self.caret_pos
 
         if not self.editable:
@@ -451,7 +452,7 @@ init 999 python in Input_overwrite:
                 text = text[:remaining]
 
             if text:
-                # if something was typed, cancel selection
+                # if something's typed, cancel selection
                 if self.select_start_pos is not None:
                     self.remove_selected()
 

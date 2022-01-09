@@ -12,7 +12,7 @@ init -50 python:
         NOTE: labels are always called in new context to formally interrupt flow without issues
         """
         if not renpy.has_label(keymap_label):
-            utils.log("[ERROR]: Attempted to register label keymap for label that doesn't exist", utils.SEVERITY_WARN)
+            jn_utils.log("[ERROR]: Attempted to register label keymap for label that doesn't exist", jn_utils.SEVERITY_WARN)
 
         jn_register_keymap(
             keymap_name,
@@ -34,12 +34,12 @@ init -50 python:
         """
         #If a kemap already exists, we simply log and return
         if keymap_name in config.keymap:
-            utils.log("ERROR: Attempted to register a new keymap under an existing name. Ignoring.", utils.SEVERITY_WARN);
+            jn_utils.log("ERROR: Attempted to register a new keymap under an existing name. Ignoring.", jn_utils.SEVERITY_WARN);
             return
 
         #Validate the keymap is indeed callable
         if not callable(keymap_action):
-            utils.log("ERROR: keymap action provided is not callable. Ignoring.", utils.SEVERITY_WARN)
+            jn_utils.log("ERROR: keymap action provided is not callable. Ignoring.", jn_utils.SEVERITY_WARN)
             return
 
         #Checks passed, add the keymap
