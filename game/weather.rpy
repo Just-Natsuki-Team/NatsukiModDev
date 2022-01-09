@@ -12,34 +12,12 @@ default persistent.jn_hemisphere_north_south = None
 default persistent.jn_hemisphere_east_west = None
 
 init -1 python in weather:
-    import urllib2
     import datetime
     import store
 
     PREFERENCES = {
         "units" : "metric"
     }
-
-    def get_json(response):
-        """
-            returns json part of response as a dictionary
-
-            IN:
-                <string>
-            OUT:
-                <dict>
-        """
-        html = response["html"]
-        if html is None:
-            return {"cod" : response["status"]}
-
-        start = html.find('{')
-        end = html.rfind('}')+1
-
-        stripped = html[start:end]
-        json = store.api.string_to_dict(stripped)
-
-        return json
 
     def make_API_call():
         """
@@ -55,7 +33,7 @@ init -1 python in weather:
         response = store.api.make_request("OpenWeatherMap", params, appid=apikey)
 
         #uhhh I probably shouldn't call it json
-        json = get_json(response)
+        json = response["json"]
 
         other_API_response_codes(json["cod"])
 
@@ -77,7 +55,7 @@ init -1 python in weather:
 
             apikey = store.persistent.jn_weather_api_key
 
-        response = get_json(store.api.make_request("OpenWeatherMap", appid=apikey))
+        response = store.api.make_request("OpenWeatherMap", appid=apikey)["json"]
 
         if response["cod"] == 401:
             return False
@@ -89,14 +67,14 @@ init -1 python in weather:
             logs based on what response we got from API call
         """
         if code == 429:
-            store.utils.log("[OpenWeatherMap] Exceeded 60 calls/min", store.utils.SEVERITY_ERR)
+            store.jn_utils.log("[OpenWeatherMap] Exceeded 60 calls/min", store.jn_utils.SEVERITY_ERR)
 
         if code == 404:
             #we messed up... F
-            store.utils.log("[OpenWeatherMap] API request is most likely invalid", store.utils.SEVERITY_ERR)
+            store.jn_utils.log("[OpenWeatherMap] API request is most likely invalid", store.jn_utils.SEVERITY_ERR)
 
         if code in {500, 502, 503, 504}:
-            store.utils.log("[OpenWeatherMap] Something went wrong on API's side, we should contact OWM via email", store.utils.SEVERITY_ERR)
+            store.jn_utils.log("[OpenWeatherMap] Something went wrong on API's side, we should contact OWM via email", store.jn_utils.SEVERITY_ERR)
 
     def get_location_dict(longitude=None, latitude=None):
         """
@@ -693,9 +671,9 @@ init -1 python in weather:
             """
             try:
                 response = make_API_call()
-                store.utils.log("INFO: Made succesfull API call to OpenWeatherMap")
+                store.jn_utils.log("INFO: Made succesfull API call to OpenWeatherMap")
             except Exception as e:
-                store.utils.log("ERROR: While making an API call to OpenWeatherMap an exception occured. {0}".format(e), store.utils.SEVERITY_ERR)
+                store.jn_utils.log("ERROR: While making an API call to OpenWeatherMap an exception occured. {0}".format(e), store.jn_utils.SEVERITY_ERR)
 
             # "weather" - weather info
             # [0] - primary weather info
@@ -705,7 +683,7 @@ init -1 python in weather:
             return weather_type
 
         @staticmethod
-        @store.utils.coroutine_loop(datetime.timedelta(seconds=30))
+        @store.jn_utils.coroutine_loop(datetime.timedelta(seconds=30))
         def get_weather_detail():
             """
                 Returns detailed information about current weather with intensity of each ~~element~~
@@ -739,7 +717,7 @@ init -1 python in weather:
             """
 
             response = make_API_call()
-            store.utils.log(response)
+            store.jn_utils.log(response)
 
             # Get primary weather info
             weather_info = response["weather"][0]

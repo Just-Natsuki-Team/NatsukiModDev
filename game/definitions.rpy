@@ -1128,7 +1128,8 @@ init python in jn_utils:
         """
         return __KEY_VALID
 
-init -999 python in utils:
+init -999 python in jn_utils:
+    import datetime
     # Kinda obsessed with decorators right now, tell me in case I should stop using them everywhere
     def coroutine_loop(t):
         """

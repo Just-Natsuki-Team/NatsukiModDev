@@ -1,7 +1,8 @@
 init -2 python in api:
     import json
-    import urllib2
+    import requests
     import store
+    import os
 
     #NOTE: I don't really like having a dictionary like this, but I can't think of a better way
     # except of maybe using the base_url itself instead of just the API name, that just seems annoying though
@@ -29,27 +30,27 @@ init -2 python in api:
         # this feels very janky
         response = {
             "status" : None,
-            "html" : None,
+            "json" : None,
             "custom" : None
         }
 
         # make a request and get response code
         try:
-            request = urllib2.urlopen(url)
-            code = request.getcode()
-            response["html"] = request.read()
-        except urllib2.HTTPError as err:
-            code = err.code
+            request = requests.get(url=url,verify=os.environ['SSL_CERT_FILE'])
+            code = request.status_code
+            response["json"] = request.json()
+        except requests.HTTPError as err:
+            code = err.response.status_code
 
         # if status OK read html
         if code == 200:
-            store.utils.log("API call to {0} resulted in response 200".format(api))
+            store.jn_utils.log("API call to {0} resulted in response 200".format(api))
 
         else:
-            store.utils.log("API call to {0} resulted in response {1}".format(api, code), store.utils.SEVERITY_WARN)
+            store.jn_utils.log("API call to {0} resulted in response {1}".format(api, code), store.jn_utils.SEVERITY_WARN)
 
         response["status"] = code
-        response["custom"] = API_respond_2_code(api, code, response["html"])
+        response["custom"] = API_respond_2_code(api, code, response["json"])
 
         return response
 
@@ -105,7 +106,6 @@ init -2 python in api:
 
 
     #I think this is what you meant Multi?
-    #also just realized API might be a bad arg name because it suggests it's a constant?
     #also the more I look at this the more confused and less confident that this is correct I get... oh well
     def API_on_status_code(API, codes=None):
         """
@@ -138,6 +138,7 @@ init -2 python in api:
                     raise Exception("API_on_status_code accepts only integers for response codes")
 
                 # Now we wrap our function based on what keyword args it accepts
+                # Wrapper func is defined multiple times so checks only happen on init and not during runtime
                 # Wrapper always accepts the same arguments to avoid possible integrity issues
                 ## First we check what keyword arguments it accepts
                 ## we try to pass it those args
@@ -167,10 +168,10 @@ init -2 python in api:
                     continue
 
                 # Only html
-                if "html" in func_args:
-                    def wrapper(code=code, html=None):
+                if "json" in func_args:
+                    def wrapper(code=code, json=None):
                         try:
-                            return func(html=html)
+                            return func(json=json)
                         except TypeError:
                             return func()
                     # add wrapped function to our dictionary
@@ -187,7 +188,7 @@ init -2 python in api:
 
         return registered
 
-    def API_respond_2_code(API, code, html=None):
+    def API_respond_2_code(API, code, json=None):
         """
             calls a function from registry of callback funcs for APIs
         """
@@ -202,9 +203,9 @@ init -2 python in api:
         if code not in API_on_status_code.all[API]:
             # code was not found in registry but registry contains a generic fallback
             if None in API_on_status_code.all[API]:
-                return API_on_status_code.all[API][None](code=code, html=html)
+                return API_on_status_code.all[API][None](code=code, json=json)
             # no generic nor code specific callback, return None
             return
 
         # both API and code in registry so we call that function
-        return API_on_status_code.all[API][code](code=code, html=html)
+        return API_on_status_code.all[API][code](code=code, json=json)
