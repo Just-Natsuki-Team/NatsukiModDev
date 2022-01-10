@@ -13,7 +13,7 @@ label ch30_autoload:
     python:
         # weather tracking is setup so we start it up
         if persistent.jn_weather_is_tracking_set_up:
-            weather.Weather.get_weather_detail.start()
+            jn_weather.Weather.get_weather_detail.start()
 
     #FALL THROUGH
 
@@ -89,6 +89,8 @@ label ch30_loop:
     #Run our checks
     python:
         _now = datetime.datetime.now()
+
+        store.jn_utils.coroutine_check()
 
         if LAST_MINUTE_CHECK.minute is not _now.minute:
             minute_check()
@@ -264,9 +266,6 @@ init python:
             if persistent.jn_random_weather:
                 jn_atmosphere.show_random_sky()
 
-            else:
-                jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny)
-
         # Update outfit
         if jn_outfits.get_outfit_for_time_block().reference_name is not jn_outfits.current_outfit_name:
 
@@ -285,7 +284,9 @@ init python:
             for action in jn_plugins.day_check_calls:
                 eval(action.statement)
 
-        pass
+        # everyday check if OWM apikey somehow wasn't invalidated
+        if persistent.jn_weather_is_tracking_set_up and not jn_weather.is_api_key_valid():
+            utils.log("API key for OpenWeatherMap is no longer valid", store.jn_utils.SEVERITY_ERR)
 
 label talk_menu:
     python:

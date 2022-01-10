@@ -887,7 +887,7 @@ init 5 python:
 label talk_weather_setup_part2:
 
     # API key isn't valid; we prompt the player for another
-    if not weather.is_api_key_valid():
+    if not jn_weather.is_api_key_valid():
         n 1nlrss "Hey...{w=0.3} [player]?"
         n 1nnmaj "You know how we went through the weather stuff?{w=0.2} With the API key and all that."
         n 1nnmpu "Well...{w=0.3} it's been a while,{w=0.1} and it still isn't working!"
@@ -934,7 +934,7 @@ label talk_weather_setup_part2:
                 return
 
             else:
-                if weather.is_api_key_valid(player_input):
+                if jn_weather.is_api_key_valid(player_input):
                     # Save the new API key, since we know it works!
                     n 1nwdbg "Ooh!{w=0.2} I can use this one!{w=0.2} Nice work,{w=0.1} [player]!"
                     n 1nlrss "I'll just put this somewhere safe..."

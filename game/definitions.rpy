@@ -1186,6 +1186,33 @@ init -999 python in jn_utils:
             return func
         return register
 
+    def coroutine_check():
+        """
+        Runs through all functions with @coroutine_loop and checks if they should be called
+        """
+        for func, info in store.jn_utils.coroutine_loop.all.items():
+            if info["next"] is None:
+                continue
+
+            if info["next"] <= datetime.datetime.now():
+                func()
+
+            if info["looping"]:
+                store.jn_utils.coroutine_loop.all[func]["next"] = info["loop_time"]+datetime.datetime.now()
+
+#after console is instantiated
+init 1702 python in jn_utils:
+    def console_print(message):
+        """
+            prints to renpy's console
+        """
+        if not isinstance(message, basestring):
+            message = message.__str__()
+
+        #add new history entry to console with ´message´
+        he = store._console.ConsoleHistoryEntry(None, message)
+        store._console.console.history.append(he)
+
 # Vanilla resources from base DDLC
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
 define audio.t2 = "<loop 4.499>bgm/2.ogg"   #Sayori theme

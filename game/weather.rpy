@@ -2,7 +2,7 @@
 default persistent.jn_weather_api_key = None
 default persistent.jn_weather_validate_apikey_in_time = None
 default persistent.jn_weather_is_tracking_set_up = False
-default persistent.jn_current_weather_type = weather.TYPE_CLEAR
+default persistent.jn_current_weather_type = jn_weather.TYPE_CLEAR
 default persistent.jn_current_weather_long = dict()
 
 # Location data
@@ -11,7 +11,7 @@ default persistent.jn_player_longitude = None
 default persistent.jn_hemisphere_north_south = None
 default persistent.jn_hemisphere_east_west = None
 
-init -1 python in weather:
+init -1 python in jn_weather:
     import datetime
     import store
 
@@ -28,7 +28,7 @@ init -1 python in weather:
         """
         apikey = store.persistent.jn_weather_api_key
         params = get_location_dict()
-        params.update(store.weather.PREFERENCES)
+        params.update(store.jn_weather.PREFERENCES)
 
         response = store.api.make_request("OpenWeatherMap", params, appid=apikey)
 
@@ -650,6 +650,28 @@ init -1 python in weather:
         }
 
         @staticmethod
+        def update_weather():
+            """
+                maps current weather type to currently supported weather
+            """
+            if store.persistent.jn_random_weather:
+                return
+
+            if store.persistent.jn_current_weather_type in {TYPE_THUNDER, TYPE_TORNADO}:
+                store.jn_atmosphere.current_weather = store.jn_atmosphere.JNWeatherTypes.thunder
+
+            elif store.persistent.jn_current_weather_type in {TYPE_RAIN, TYPE_DRIZZLE, TYPE_SNOW, TYPE_SQUALL, }:
+                store.jn_atmosphere.current_weather = store.jn_atmosphere.JNWeatherTypes.rain
+
+            elif store.persistent.jn_current_weather_type in {TYPE_MIST, TYPE_CLOUDS, TYPE_SMOKE, TYPE_HAZE, TYPE_ASH, TYPE_DUST}:
+                store.jn_atmosphere.current_weather = store.jn_atmosphere.JNWeatherTypes.overcast
+
+            else:
+                store.jn_atmosphere.current_weather = store.jn_atmosphere.JNWeatherTypes.sunny
+
+            store.jn_atmosphere.show_sky(store.jn_atmosphere.current_weather)
+
+        @staticmethod
         def get_weather():
             """
                 Returns current weather type from `WEATHER_TYPES`
@@ -680,6 +702,9 @@ init -1 python in weather:
             # "main" - one word description of current weather
             weather_type = Weather.WEATHER_TYPES[response["weather"][0]["main"]]
             store.persistent.jn_current_weather_type = weather_type
+
+            # Update var for visualizing weather
+            Weather.update_weather()
             return weather_type
 
         @staticmethod
@@ -748,6 +773,8 @@ init -1 python in weather:
             store.persistent.jn_current_weather_long = parsed_weather
             store.persistent.jn_current_weather_type = weather_type
 
+            # Update var for visualizing weather
+            Weather.update_weather()
             return parsed_weather, weather_type
 
 # THis is here purely because of a bug in renpy extension, remove after it's fixed

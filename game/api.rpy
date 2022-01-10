@@ -42,7 +42,7 @@ init -2 python in api:
         except requests.HTTPError as err:
             code = err.response.status_code
 
-        # if status OK read html
+        # log response
         if code == 200:
             store.jn_utils.log("API call to {0} resulted in response 200".format(api))
 
@@ -191,6 +191,8 @@ init -2 python in api:
     def API_respond_2_code(API, code, json=None):
         """
             calls a function from registry of callback funcs for APIs
+
+            if exists for `code`, it is automatically called when making a call to specified API
         """
         # No function with decorator defined
         if not hasattr(API_on_status_code, "all"):
