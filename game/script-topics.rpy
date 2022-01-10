@@ -4294,6 +4294,84 @@ label talk_vtubers:
     n 1uchbs "Ahaha!"
     return
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_skateboarding",
+            unlocked=True,
+            prompt="Are you into skateboarding?",
+            category=["Transport"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_skateboarding:
+    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n 1fchbs "You bet I am,{w=0.1} [player]!{w=0.5}{nw}"
+        extend 1fchsm " Ehehe."
+        n 1tllbg "But how'd you guess?{w=0.5}{nw}" 
+        extend 1tnmbg " Do I look the type or something?"
+        n 1tlrsm "Well,{w=0.1} whatever."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+        n 1uchsm "Ehehe.{w=0.5}{nw}"
+        extend 1fchbg " You bet!"
+        n 1uwlbg "Good guess,{w=0.1} [player]!"
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n 1ullaj "I...{w=0.3} am,{w=0.1} actually.{w=0.5}{nw}"
+        extend 1tllss " How'd you guess?"
+        n 1unmss "Well,{w=0.1} anyway."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n 1fcsaj "Ugh..."
+        n 1fnmbo "Yes,{w=0.1} [player].{w=0.2} I'm a skateboarder.{w=0.2} I skateboard.{w=0.5}{nw}"
+        extend 1fsqsf " Is that a problem or something?"
+        n 1fllpu "It's just a convenient way to get around.{w=0.5}{nw}" 
+        extend 1fsqpu " An {i}affordable{/i} way."
+        n 1flrsl "..."
+        n 1flraj "...Yeah.{w=0.2} I don't have much else to say about it.{w=0.5}{nw}"
+        extend 1fnmbo " But hey."
+        n 1fsgaj "Not like you'd really care to listen anyway...{w=0.5}{nw}"
+        extend 1fsqsf " isn't that right,{w=0.1} {i}[player]{/i}?"
+        return
+
+    else:
+        n 1fsqan "...And since when did {i}you{/i} give a crap about my hobbies and interests?"
+        n 1fcsan "..."
+        n 1fnmsf "Yes,{w=0.1} [player].{w=0.5}{nw}" 
+        extend 1fsqsf " I {i}do{/i} enjoy skateboarding."
+        n 1fsqup "And I'd rather be doing that than be stuck here talking to {i}you{/i}.{w=0.5}{nw}"
+        extend 1fcsan " Jerk."
+        return
+
+    n 1tchbg "I'm a skater girl alright!"
+    n 1tllss "Though...{w=0.3} not really by choice.{w=0.5}{nw}"
+    extend 1knmaj " Bikes are {i}expensive{/i}, [player]!"
+    n 1kllun "And I could never rely on lifts from my...{w=0.3} folk,{w=0.3}{nw}" 
+    extend 1kllss " so I saved up all I could and got a board the first chance I had!"
+    n 1nsqaj "Seriously.{w=0.5}{nw}" 
+    extend 1fllpu " You have no {i}idea{/i} how many lunches I skipped to earn that thing."
+    n 1unmbg "But it's actually super convenient!{w=0.5}{nw}"
+    extend 1flrbg " I don't have to worry about locking it up somewhere,{w=0.1} or some jerk damaging it..."
+    n 1fchsm "I can just pick it up and take it around with me,{w=0.1} or toss it in my locker."
+    n 1fsqss "You gotta admit,{w=0.1} [player] {w=0.1}-{w=0.1} I'm nothing if not resourceful!{w=0.5}{nw}"
+    extend 1fchsm " Ahaha."
+    n 1fllss "I...{w=0.3} never really learned any tricks or anything though.{w=0.5}{nw}"
+    extend 1kscwr " I couldn't stand the thought of breaking it by accident {w=0.1}-{w=0.3}{nw}"
+    extend 1kllun " not after all that effort!"
+    n 1kcsaj "...Yeah,{w=0.1} yeah.{w=0.5}{nw}" 
+    extend 1fcspo " Not very {i}radical{/i} of me,{w=0.1} huh?"
+    n 1ullpo "But...{w=0.3} enough of that for now.{w=0.5}{nw}" 
+    extend 1fnmsm " Besides,{w=0.1} [player]..."
+    n 1fsqss "I can tell when you're getting...{w=0.3} {i}board{/i}."
+    n 1fchsm "Ehehe.{w=0.5}{nw}"
+    extend 1uchgn " No regrets,{w=0.1} [player]!"
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
