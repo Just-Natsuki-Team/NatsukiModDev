@@ -998,7 +998,7 @@ label talk_weather_setup_part2:
                     show_map_success = True
 
                 except Exception as exception:
-                    store.utils.log(exception.message, utils.SEVERITY_ERR)
+                    store.jn_utils.log(exception.message, jn_utils.SEVERITY_ERR)
 
             if show_map_success:
                 n 1nchbg "Ta-da!"
@@ -1143,7 +1143,7 @@ label weather_setup_manual_coords:
             show_map_success = True
 
         except Exception as exception:
-            store.utils.log(exception.message, utils.SEVERITY_ERR)
+            store.jn_utils.log(exception.message, store.jn_utils.SEVERITY_ERR)
 
     if show_map_success:
         n 1nwdbs "Ta-da!"

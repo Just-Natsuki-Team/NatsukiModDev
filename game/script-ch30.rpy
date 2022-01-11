@@ -279,7 +279,7 @@ init python:
 
         # everyday check if OWM apikey somehow wasn't invalidated
         if persistent.jn_weather_is_tracking_set_up and not jn_weather.is_api_key_valid():
-            utils.log("API key for OpenWeatherMap is no longer valid", store.jn_utils.SEVERITY_ERR)
+            jn_utils.log("API key for OpenWeatherMap is no longer valid", store.jn_utils.SEVERITY_ERR)
 
 label talk_menu:
     python:
