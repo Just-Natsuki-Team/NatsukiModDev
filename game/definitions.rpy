@@ -1161,15 +1161,25 @@ init -999 python in jn_utils:
 
         def register(func):
             def stop(self=func):
+                """
+                    stops looping of this func
+                """
                 coroutine_loop.all[self]["next"] = None
                 coroutine_loop.all[self]["looping"] = False
 
             def start(self=func):
+                """
+                    start looping of this func and calls it
+                """
                 coroutine_loop.all[self]["next"] = coroutine_loop.all[self]["loop_time"] + datetime.datetime.now()
                 coroutine_loop.all[self]["looping"] = True
                 func()
 
             def next_call(t, self=func):
+                """
+                    sets the next time the func should be called, this is a one time thing only and does not affect
+                    regular looping time
+                """
                 if not isinstance(t, datetime.timedelta):
                     raise Exception("{0}.next_call expected timedelta instead of {1}".format(func, type(t)))
 
@@ -1195,16 +1205,19 @@ init -999 python in jn_utils:
                 continue
 
             if info["next"] <= datetime.datetime.now():
+                log("called function {0} using coroutine_loop".format(func.__name__))
                 func()
 
-            if info["looping"]:
-                store.jn_utils.coroutine_loop.all[func]["next"] = info["loop_time"]+datetime.datetime.now()
+                if info["looping"]:
+                    store.jn_utils.coroutine_loop.all[func]["next"] = info["loop_time"]+datetime.datetime.now()
 
 #after console is instantiated
 init 1702 python in jn_utils:
     def console_print(message):
         """
             prints to renpy's console
+
+            NOTE: keep in mind this is defined fairly late on init 1702
         """
         if not isinstance(message, basestring):
             message = message.__str__()

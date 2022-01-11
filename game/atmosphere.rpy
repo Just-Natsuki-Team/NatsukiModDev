@@ -77,7 +77,7 @@ init 0 python in jn_atmosphere:
         sky, dim = __WEATHER_EFFECT_MAP.get(weather_type)
         if weather_type in (JNWeatherTypes.rain, JNWeatherTypes.thunder):
             renpy.music.play(filenames=__MUFFLED_RAIN_PATH, channel="weather_loop", fadein=3.0)
-        
+
         else:
             renpy.music.stop(channel="weather_loop", fadeout=5.0)
 
@@ -90,6 +90,19 @@ init 0 python in jn_atmosphere:
 
         global current_weather
         current_weather = weather_type
+
+    def show_random_weather_background():
+        """
+            decides whether to show random sky or default to sunny
+        """
+        if store.persistent.jn_random_weather and 6 < store.jn_get_current_hour() <= 18:
+            show_random_sky()
+
+        elif (
+            6 < store.jn_get_current_hour() <= 18
+            and not is_current_weather_sunny()
+        ):
+            show_sky(JNWeatherTypes.sunny)
 
     def is_current_weather_overcast():
         """

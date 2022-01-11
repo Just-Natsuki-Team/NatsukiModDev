@@ -11,9 +11,7 @@ label ch30_autoload:
 
     #Do all the things here for initial setup/flow hijacking
     python:
-        # weather tracking is setup so we start it up
-        if persistent.jn_weather_is_tracking_set_up:
-            jn_weather.Weather.get_weather_detail.start()
+        pass
 
     #FALL THROUGH
 
@@ -62,14 +60,11 @@ label ch30_init:
         # Draw background
         main_background.draw(full_redraw=True)
 
-        if persistent.jn_random_weather and 6 < store.jn_get_current_hour() <= 18:
-            jn_atmosphere.show_random_sky()
+        if persistent.jn_weather_is_tracking_set_up and 6 < store.jn_get_current_hour() <= 18:
+            # Weather tracking is setup so we start it
+            jn_weather.Weather.get_weather_detail.start()
 
-        elif (
-            store.jn_get_current_hour() > 6 and store.jn_get_current_hour() <= 18
-            and not jn_atmosphere.is_current_weather_sunny()
-        ):
-            jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny)
+        jn_atmosphere.show_random_weather_background()
 
         # Outfit selection
         if persistent.jn_natsuki_auto_outfit_change_enabled:
@@ -262,9 +257,7 @@ init python:
         # Draw background
         main_background.check_redraw()
 
-        if 6 < store.jn_get_current_hour() <= 18:
-            if persistent.jn_random_weather:
-                jn_atmosphere.show_random_sky()
+        jn_atmosphere.show_random_weather_background()
 
         # Update outfit
         if jn_outfits.get_outfit_for_time_block().reference_name is not jn_outfits.current_outfit_name:

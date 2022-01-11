@@ -99,6 +99,23 @@ init -1 python in jn_weather:
 
         return location
 
+    def get_weather_descriptor(weather_type=None):
+        """
+            returns a descriptor for a weather_type
+
+            IN:
+                weather_type:
+                    if None -> returns current weather type descriptor
+                    else -> returns descriptor of weather_type
+
+            OUT:
+                <string>
+        """
+        if weather_type is not None:
+            return Weather.__WEATHER_TYPE_2_DESC[weather_type]
+
+        return Weather.__WEATHER_TYPE_2_DESC[store.persistent.jn_current_weather_type]
+
     TYPE_THUNDER = 0
     TYPE_DRIZZLE = 1
     TYPE_RAIN = 2
@@ -633,7 +650,7 @@ init -1 python in jn_weather:
             }
         }
 
-        WEATHER_TYPES = {
+        __WEATHER_DESC_2_TYPE = {
             "Thunderstom" : TYPE_THUNDER,
             "Drizzle" : TYPE_DRIZZLE,
             "Rain" : TYPE_RAIN,
@@ -649,6 +666,8 @@ init -1 python in jn_weather:
             "Clouds" : TYPE_CLOUDS
         }
 
+        __WEATHER_TYPE_2_DESC = dict((v,k) for k,v in __WEATHER_DESC_2_TYPE.iteritems())
+
         @staticmethod
         def update_weather():
             """
@@ -658,23 +677,23 @@ init -1 python in jn_weather:
                 return
 
             if store.persistent.jn_current_weather_type in {TYPE_THUNDER, TYPE_TORNADO}:
-                store.jn_atmosphere.current_weather = store.jn_atmosphere.JNWeatherTypes.thunder
+                weather_type = store.jn_atmosphere.JNWeatherTypes.thunder
 
             elif store.persistent.jn_current_weather_type in {TYPE_RAIN, TYPE_DRIZZLE, TYPE_SNOW, TYPE_SQUALL, }:
-                store.jn_atmosphere.current_weather = store.jn_atmosphere.JNWeatherTypes.rain
+                weather_type = store.jn_atmosphere.JNWeatherTypes.rain
 
             elif store.persistent.jn_current_weather_type in {TYPE_MIST, TYPE_CLOUDS, TYPE_SMOKE, TYPE_HAZE, TYPE_ASH, TYPE_DUST}:
-                store.jn_atmosphere.current_weather = store.jn_atmosphere.JNWeatherTypes.overcast
+                weather_type = store.jn_atmosphere.JNWeatherTypes.overcast
 
             else:
-                store.jn_atmosphere.current_weather = store.jn_atmosphere.JNWeatherTypes.sunny
+                weather_type = store.jn_atmosphere.JNWeatherTypes.sunny
 
-            store.jn_atmosphere.show_sky(store.jn_atmosphere.current_weather)
+            store.jn_atmosphere.show_sky(weather_type)
 
         @staticmethod
         def get_weather():
             """
-                Returns current weather type from `WEATHER_TYPES`
+                Returns current weather type from `__WEATHER_DESC_2_TYPE`
 
                 possible outputs:
                     TYPE_THUNDER
@@ -700,7 +719,7 @@ init -1 python in jn_weather:
             # "weather" - weather info
             # [0] - primary weather info
             # "main" - one word description of current weather
-            weather_type = Weather.WEATHER_TYPES[response["weather"][0]["main"]]
+            weather_type = Weather.__WEATHER_DESC_2_TYPE[response["weather"][0]["main"]]
             store.persistent.jn_current_weather_type = weather_type
 
             # Update var for visualizing weather
@@ -742,13 +761,12 @@ init -1 python in jn_weather:
             """
 
             response = make_API_call()
-            store.jn_utils.log(response)
 
             # Get primary weather info
             weather_info = response["weather"][0]
 
             # Get one-word info about current weather
-            weather_type = Weather.WEATHER_TYPES[weather_info["main"]]
+            weather_type = Weather.__WEATHER_DESC_2_TYPE[weather_info["main"]]
 
             # Get detailed weather info from look-up table WEATHER_TABLE by weather id
             parsed_weather = Weather.WEATHER_TABLE[weather_info["id"]]
