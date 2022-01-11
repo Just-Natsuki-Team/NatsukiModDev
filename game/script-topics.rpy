@@ -4372,6 +4372,89 @@ label talk_skateboarding:
     extend 1uchgn " No regrets,{w=0.1} [player]!"
     return
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_sports",
+            unlocked=True,
+            prompt="Do you play much sports?",
+            category=["Health"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_sports:
+    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n 1unmaj "Huh?{w=0.2} Sports?"
+        n 1fllss "I...{w=0.3} don't like to have to break it to you,{w=0.1} [player]..."
+        n 1fchgn "But what kind of sports do you think I can play in a single room?{w=0.2} By myself?{w=0.2} With no gear?"
+        n 1kllbg "Jeez...{w=0.5}{nw}" 
+        extend 1tnmss " you're such a dope sometimes,{w=0.1} [player]."
+        n 1ullbg "Well,{w=0.1} anyway."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n 1unmpu "Eh?{w=0.2} Sports?"
+        n 1tnmdv "You...{w=0.3} do know it's kinda hard to stay active in a single room,{w=0.1} right?"
+        n 1fcsss "Ehehe.{w=0.5}{nw}"
+        extend 1ullss " Well,{w=0.1} anyway."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n 1nsqpu "Yeah,{w=0.1} no.{w=0.5}{nw}" 
+        extend 1fsqsl " I don't {i}now{/i},{w=0.1} if that's what you're asking."
+        n 1fllpu "..."
+        n 1fsqan "...And no,{w=0.2} we didn't wear the sort of uniforms I bet {i}you're{/i} thinking of."
+        n 1fsqsr "Does that answer your question?{w=0.5}{nw}"
+        extend 1fslbo " Whatever."
+        n 1fcsbo "Moving on."
+        return
+
+    else:
+        n 1fsqan "I don't {i}now{/i},{w=0.1} if you somehow hadn't already noticed."
+        n 1fslsl "..."
+        n 1fsqpu "..."
+        n 1fcsun "...Do I even want to know why you asked?"
+        n 1fcsan "...No.{w=0.2} I {i}don't{/i}."
+        return
+
+    n 1nnmaj "I try to keep up how I can.{w=0.2} I can't do laps or anything,{w=0.5}{nw}"
+    extend 1fcsbg " but I can easily get some stretches and jumping jacks in!"
+    n 1ullpu "Of course school was always a lot more varied,{w=0.1} but...{w=0.5}{nw}"
+    extend 1tllsr " I always kinda struggled to keep up."
+    n 1tllss "I guess...{w=0.3} I just don't have much stamina?"
+
+    # Check to see if the player and Natsuki have discussed how she skipped lunches to save money
+    $ already_discussed_skateboarding = get_topic("talk_skateboarding").shown_count > 0
+    if already_discussed_skateboarding:
+        n 1nslpo "Probably didn't help myself saving for that skateboard..."
+
+    n 1ullaj "Well,{w=0.1} whatever.{w=0.5}{nw}"
+    extend 1nnmbo " I wasn't {i}really{/i} that into it anyway."
+    n 1nlrca "..."
+    n 1unmbs "Oh!{w=0.2} Oh!{w=0.2} But you know who was?{w=0.5}{nw}"
+    extend 1fsqbg " I bet you do,{w=0.1} huh?{w=0.5}{nw}"
+    extend 1fcssm " Ehehe."
+    n 1tsqss "And that's...{w=0.5}{nw}"
+    extend 1fchgn " ...{w=0.3}Sayori,{w=0.1} duh!"
+    n 1uskgs "I mean,{w=0.1} really!{w=0.2} You should have seen her!{w=0.5}{nw}" 
+    extend 1fnmca " She was a {i}menace{/i}!"
+    n 1uskaj "...Seriously!{w=0.5}{nw}" 
+    extend 1fnmpo " You don't believe me?"
+    n 1fspgs "She was so fast!{w=0.2} Just a flash of orange fluff and messy gym clothes...{w=0.5}{nw}" 
+    extend 1fbkwr " and then boom!{w=0.2} Tackled!"
+    n 1fllpol "And off she'd skip,{w=0.1} merrily into the sunset..."
+    n 1tsqaj "...Yeah.{w=0.2} If Sayori was on your side?{w=0.5}{nw}" 
+    extend 1fllbg " You {i}knew{/i} your team wasn't going to be packing everything away in defeat."
+    n 1ullaj "I mean,{w=0.3}{nw}" 
+    extend 1nnmbo " Monika was always pretty good at sports too,{w=0.1} obviously.{w=0.5}{nw}"
+    extend 1nsgca " But {i}nobody{/i} outran Sayori,{w=0.1} [player].{w=0.2}" 
+    n 1nsqun " N{w=0.1}-{w=0.1}o{w=0.1}-{w=0.1}b{w=0.1}-{w=0.1}o{w=0.1}-{w=0.1}d{w=0.1}-{w=0.1}y."
+    n 1fchbg "...When she remembered to tie her laces anyway.{w=0.5}{nw}"
+    extend 1fchsm " Ehehe."
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
