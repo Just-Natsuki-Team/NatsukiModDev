@@ -206,7 +206,7 @@ init -20 python:
                 self.draw(full_redraw=True)
 
                 #Run events
-                self.day_to_night_event()
+                self.night_to_day_event()
 
             #If it's night and we're showing the day room, we should do a full redraw to show the night room
             elif not self.is_day() and self.__is_showing_day_image is True:
@@ -214,7 +214,7 @@ init -20 python:
                 self.draw(full_redraw=True)
 
                 #Run events
-                self.night_to_day_event()
+                self.day_to_night_event()
 
         def save(self):
             """
