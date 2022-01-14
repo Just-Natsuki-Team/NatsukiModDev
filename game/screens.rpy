@@ -180,6 +180,8 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                                     Function(prev_adjustment.change, 0),
                                     SetVariable("selected_category", None)
                                 ]
+                                hover_sound gui.hover_sound
+                                activate_sound gui.activate_sound
 
                         elif category_length > 1:
                             python:
@@ -192,6 +194,8 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                             textbutton _(go_back_text):
                                 style "categorized_menu_button"
                                 action [ Return(-1), Function(prev_adjustment.change, 0) ]
+                                hover_sound gui.hover_sound
+                                activate_sound gui.activate_sound
 
                         null height 20
 
@@ -200,6 +204,8 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                             style "categorized_menu_button"
                             #Set the selected category
                             action SetVariable("selected_category", button_name)
+                            hover_sound gui.hover_sound
+                            activate_sound gui.activate_sound
 
                         null height 5
 
@@ -231,6 +237,8 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                                 Function(prev_adjustment.change, 0),
                                 SetVariable("selected_category", None)
                             ]
+                            hover_sound gui.hover_sound
+                            activate_sound gui.activate_sound
 
                         null height 20
 
@@ -240,6 +248,8 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                                 style "categorized_menu_button"
                                 #Return the label so it can be called
                                 action [ Return(_topic.label), Function(prev_adjustment.change, 0), SetVariable("selected_category", None) ]
+                                hover_sound gui.hover_sound
+                                activate_sound gui.activate_sound
 
                             null height 5
 
@@ -256,6 +266,8 @@ screen scrollable_choice_menu(items, last_item=None):
                     style "categorized_menu_button"
                     xsize 560
                     action Return(last_item[1])
+                    hover_sound gui.hover_sound
+                    activate_sound gui.activate_sound
 
                 null height 20
 
@@ -270,6 +282,8 @@ screen scrollable_choice_menu(items, last_item=None):
                             style "categorized_menu_button"
                             xsize 560
                             action Return(_value)
+                            hover_sound gui.hover_sound
+                            activate_sound gui.activate_sound
 
                         null height 5
 
@@ -559,7 +573,10 @@ screen choice(items, scroll="viewport"):
     vbox:
         xalign 0.9
         for i in items:
-            textbutton i.caption action i.action
+            textbutton i.caption:
+                action i.action
+                hover_sound gui.hover_sound
+                activate_sound gui.activate_sound
 
 
 ## When this is true, menu captions will be spoken by the narrator. When false,
@@ -740,23 +757,34 @@ screen quick_menu():
                         yes_action=Jump("ch30_autoload"),
                         no_action=Jump("restart")
                     )
+                    hover_sound gui.hover_sound
+                    activate_sound gui.activate_sound
+
 
             textbutton _("History"):
                 text_style "quickmenu_text"
                 action ShowMenu('history')
+                hover_sound gui.hover_sound
+                activate_sound gui.activate_sound
 
             textbutton _("Skip"):
                 text_style "quickmenu_text"
                 action Skip()
                 alternate Skip(fast=True, confirm=True)
+                hover_sound gui.hover_sound
+                activate_sound gui.activate_sound
 
             textbutton _("Auto"):
                 text_style "quickmenu_text"
                 action Preference("auto-forward", "toggle")
+                hover_sound gui.hover_sound
+                activate_sound gui.activate_sound
 
             textbutton _("Settings"):
                 text_style "quickmenu_text"
                 action ShowMenu('preferences')
+                hover_sound gui.hover_sound
+                activate_sound gui.activate_sound
 
 default quick_menu = True
 

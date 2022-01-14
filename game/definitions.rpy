@@ -759,7 +759,7 @@ init 0 python:
         """
         Returns True if the current time is judged to be morning generally, and not a specific time of morning.
         """
-        return jn_get_current_hour() in range(3, 12) 
+        return jn_get_current_hour() in range(3, 12)
 
     def jn_is_time_block_afternoon():
         """
@@ -1046,7 +1046,6 @@ init -999 python in jn_utils:
         return pygame.mouse.get_pos()
 
 init python in jn_utils:
-
     def get_current_session_length():
         """
         Returns a timedelta object representing the length of the current game session.
@@ -1169,3 +1168,25 @@ init -999 python:
         jn_globals.current_label = name
 
     config.label_callback = label_callback
+
+    class JNEvent(object):
+        """
+        Pythonic equivalent of C#'s event type
+
+        Events are added and removed via `+=` to add a listener, and `-=` to remove a listener.
+        To call all handlers, simply call the instance of the event class
+        """
+        def __init__(self):
+            self.__eventhandlers = []
+
+        def __iadd__(self, handler):
+            self.__eventhandlers.append(handler)
+            return self
+
+        def __isub__(self, handler):
+            self.__eventhandlers.remove(handler)
+            return self
+
+        def __call__(self, *args, **keywargs):
+            for eventhandler in self.__eventhandlers:
+                eventhandler(*args, **keywargs)

@@ -182,18 +182,30 @@ screen hkb_overlay:
         textbutton _("Talk"):
             action [
                 Jump("talk_menu"),
-                SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)]
+                SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)
+            ]
+            hover_sound gui.hover_sound
+            activate_sound gui.activate_sound
+
             style "hkbd_button"
-            
+
         if persistent.jn_custom_music_explanation_given and jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
             textbutton _("Music"):
                 action [
                     Jump("music_menu"),
-                    SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)]
+                    SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)
+                ]
+                hover_sound gui.hover_sound
+                activate_sound gui.activate_sound
+
                 style "hkbd_button"
 
         textbutton _("Extras"):
             action [
                 Jump("extras_menu"),
-                SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)]
+                SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)
+            ]
+            hover_sound gui.hover_sound
+            activate_sound gui.activate_sound
+
             style "hkbd_button"
