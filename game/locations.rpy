@@ -113,7 +113,9 @@ init -20 python:
             #TODO: make this dynamic (probably hook in with menus)
             self.sunrise = datetime.time(6)
             self.sunset = datetime.time(19)
-            self.__is_showing_day_image = None
+
+            #States
+            self.__is_showing_day_image = self.is_day()
 
             #Eventhandlers
             self.day_to_night_event = JNEvent()
@@ -192,38 +194,33 @@ init -20 python:
             """
             Checks if we're showing the day room
             """
-            #TODO: Check this; it looks like it always returns None?
-            return renpy.showing(self.location.day_image_tag) #tag = classroom_day
+            return self.__is_showing_day_image
 
         def check_redraw(self):
             """
             Checks if we need to redraw the room for a time change
             """
             #If it's day and we're showing the night room, we should full redraw to show day room again
-            if self.is_day() and not self.is_showing_day_room():
+            if self.is_day() and self.__is_showing_day_image is False:
+                self.__is_showing_day_image = True
                 self.draw(full_redraw=True)
 
+                #Run events
+                self.day_to_night_event()
+
             #If it's night and we're showing the day room, we should do a full redraw to show the night room
-            elif not self.is_day() and self.is_showing_day_room():
+            elif not self.is_day() and self.__is_showing_day_image is True:
+                self.__is_showing_day_image = False
                 self.draw(full_redraw=True)
+
+                #Run events
+                self.night_to_day_event()
 
         def save(self):
             """
             Saves room related into to persistent
             """
             persistent._current_location = self.location.id
-
-        def night_to_day_event(self):
-            """
-            Called when the night to day event is triggered
-            """
-            gui.hover_sound = "mod_assets/buttons/"
-
-        def day_to_night_event(self):
-            """
-            Called when the day to night event is triggered
-            """
-            pass
 
 init python:
     main_background = JNRoom()
@@ -251,6 +248,13 @@ init python:
 
     main_background.day_to_night_event += __change_to_night_button_sounds
     main_background.night_to_day_event += __change_to_day_button_sounds
+
+    #Now, run the appropriate eventhandler
+    #If it's day now, we need to run night to day, and vice versa
+    if main_background.is_day():
+        main_background.night_to_day_event()
+    else:
+        main_background.day_to_night_event()
 
     if persistent._current_location in locations.LOCATION_MAP:
         main_background.changeLocation(persistent._current_location)
