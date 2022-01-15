@@ -63,7 +63,7 @@ init python in jn_custom_music:
     # Tracks what is currently playing to avoid repetition with random music picks
     _now_playing = None
 
-    def __get_directory_exists():
+    def get_directory_exists():
         """
         Checks to see if the custom_music directory exists, and creates it if not
         Returns True/False based on whether the directory already existed
@@ -105,7 +105,7 @@ label music_menu:
     python:
         success = False
 
-        if jn_custom_music.__get_directory_exists():
+        if jn_custom_music.get_directory_exists():
 
             # Get the user's music, then sort the options for presentation
             custom_music_options = jn_custom_music.get_all_custom_music()
