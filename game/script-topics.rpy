@@ -4520,7 +4520,7 @@ label talk_online_shopping:
 
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         n 1fsqbg "I don't really care how much you protest."
-        n 1fchgn "We're definitely hitting some {i}real{/i} bookstores -{w=0.1} whether you like it or not!{w=0.5}{nw}"
+        n 1fchgn "We're definitely hitting some {i}real{/i} bookstores {w=0.1}-{w=0.1} whether you like it or not!{w=0.5}{nw}"
         extend 1fchsm " Ehehe."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
