@@ -4455,6 +4455,60 @@ label talk_sports:
     extend 1fchsm " Ehehe."
     return
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_feelings_about_monika",
+            unlocked=True,
+            prompt="How do you feel about Monika?",
+            category=["DDLC"],
+            player_says=True,
+            affinity_range=(jn_aff.AFFECTIONATE, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_feelings_about_monika:
+return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_feelings_about_sayori",
+            unlocked=True,
+            prompt="How do you feel about Sayori?",
+            category=["DDLC"],
+            player_says=True,
+            affinity_range=(jn_aff.AFFECTIONATE, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_feelings_about_sayori:
+return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_feelings_about_yuri",
+            unlocked=True,
+            prompt="How do you feel about Yuri?",
+            category=["DDLC"],
+            player_says=True,
+            affinity_range=(jn_aff.AFFECTIONATE, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_feelings_about_yuri:
+return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
