@@ -14,7 +14,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     container:
-      image: ghcr.io/just-natsuki-team/mod-ci-base:latest
+      image: ghcr.io/just-natsuki-team/mod_ci_image:1.0
 
     name: ci_build
 
