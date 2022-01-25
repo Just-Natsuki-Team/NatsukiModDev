@@ -4577,7 +4577,7 @@ label talk_windup_subscriptions:
     extend 1fcspu " What a mess..."
     n 1ullaj "I mean,{w=0.1} don't get me wrong.{w=0.2} There are {i}other{/i} ways of getting stuff {w=0.1}-{w=0.3}{nw}" 
     extend 1fsqdv " you probably know that already."
-    n 1tlrsl " But I wanna support actual creators too,{w=0.1} you know?"
+    n 1tlrsl "But I wanna support actual creators too,{w=0.1} you know?"
     n 1fcssl "..."
     n 1fllpo "Well,{w=0.1} whatever.{w=0.2} At least I won't get charged for {i}that{/i} again.{w=0.5}{nw}"
     extend 1fslpo " Jerks."
