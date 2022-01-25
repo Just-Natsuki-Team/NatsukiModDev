@@ -4501,8 +4501,7 @@ label talk_online_shopping:
     extend 1fslem " Ugh."
 
     # Check to see if the player and Natsuki have discussed careful spending
-    $ already_discussed_spending = get_topic("talk_careful_spending").shown_count > 0
-    if already_discussed_spending:
+    if get_topic("talk_careful_spending").shown_count > 0:
         n 1fllsl "Not only that..."
         n 1fnmpu "I think I mentioned before how shops make it really easy to spend money...{w=0.5}{nw}"
         extend 1fbkwr " but that's even easier online!{w=0.5}{nw}" 
