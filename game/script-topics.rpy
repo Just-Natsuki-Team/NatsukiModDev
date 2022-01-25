@@ -4455,6 +4455,83 @@ label talk_sports:
     extend 1fchsm " Ehehe."
     return
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_online_shopping",
+            unlocked=True,
+            prompt="Online shopping",
+            category=["Society"],
+            nat_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_online_shopping:
+    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n 1ullaj "You know,{w=0.1} it's kinda crazy how common online shopping is nowadays."
+        n 1uwdaj "I mean,{w=0.1} don't get me wrong!{w=0.5}{nw}"
+        extend 1fcsbg " It's super convenient!{w=0.2} You don't even need to leave your house!"
+        n 1fllpo "So don't think I'm just complaining,{w=0.1} or anything like that.{w=0.5}{nw}"
+        extend 1ullpu " But..."
+
+    else:
+        n 1nllsl "It's funny how common online shopping is nowadays."
+        n 1nlrsl "I guess I'm not really complaining though.{w=0.5}{nw}"
+        extend 1nlrpu " It {i}is{/i} pretty convenient."
+        n 1ulrpu "But...{w=0.5}{nw}" 
+        extend 1nnmsf " I still think it's a shame how people miss out on an actual experience."
+        n 1fllsl "I'd never pass up on an afternoon just flicking through books at my favourite bookstore."
+        n 1fcssf "...Which is somewhere I'd {i}much{/i} rather be.{w=0.5}{nw}" 
+        extend 1fsqan " {i}Shockingly{/i}."
+        return
+
+    n 1fllbg "I don't think it's the be-all and end-all,{w=0.1} you know."
+    n 1unmaj "I mean...{w=0.3} think about it,{w=0.1} [player]."
+    n 1fllaj "I guess it's cheaper if you don't have to think about getting somewhere,{w=0.1} or parking or whatever."
+    n 1knmpu "But wouldn't you like to {i}see{/i} what you're paying for?{w=0.5}{nw}"
+    extend 1fnmaj " Especially if it's super expensive!"
+    n 1fllpu "Or sometimes...{w=0.5}{nw}"
+    extend 1fllpu " even if it isn't!"
+    n 1fllpo "I can't be the only one that's been burned by something that turned out to be junk,{w=0.1} or broken,{w=0.1} right?"
+    n 1fnmem "And you don't even know it would be like that until it's on your doorstep!{w=0.5}{nw}"
+    extend 1fcsan " Then you gotta send it back!{w=0.5}{nw}"
+    extend 1fslem " Ugh."
+
+    # Check to see if the player and Natsuki have discussed careful spending
+    if get_topic("talk_careful_spending").shown_count > 0:
+        n 1fllsl "Not only that..."
+        n 1fnmpu "I think I mentioned before how shops make it really easy to spend money...{w=0.5}{nw}"
+        extend 1fbkwr " but that's even easier online!{w=0.5}{nw}" 
+        extend 1kbkwr " It doesn't even {i}feel{/i} like spending money properly!"
+        n 1fcsan "Sheesh."
+
+    n 1fcsem "That aside..."
+    n 1kllsl "It...{w=0.3} also makes me kinda sad seeing all the closed stores when I do go out,{w=0.1} too."
+    n 1tnmsl "I suppose you could say that's just business,{w=0.1} and they lost out."
+    n 1flrsll "But that doesn't mean I {i}don't{/i} miss some of them."
+    n 1ncsem "I don't know.{w=0.2} I guess what I'm saying is..."
+    n 1fllpo "Don't just instantly write off anything you can't do or buy digitally,{w=0.1} [player]."
+    n 1knmaj "There's still merit in getting your stuff physically!"
+    n 1fnmss "And to be completely honest?"
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n 1fsqbg "I don't really care how much you protest."
+        n 1fchgn "We're definitely hitting some {i}real{/i} bookstores {w=0.1}-{w=0.1} whether you like it or not!{w=0.5}{nw}"
+        extend 1fchsm " Ehehe."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+        n 1fchgn "You gotta be kidding if you think I'm letting you miss out on {i}real{/i} bookstores!{w=0.5}{nw}"
+        extend 1nchbg " Ahaha."
+
+    else:
+        n 1fchbg "If there's one thing I'm gonna teach you,{w=0.1} it's experiencing a {i}real{/i} bookstore!{w=0.5}{nw}"
+        extend 1fchsm " Ahaha."
+
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
