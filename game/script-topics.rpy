@@ -4455,6 +4455,73 @@ label talk_sports:
     extend 1fchsm " Ehehe."
     return
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_windup_subscriptions",
+            unlocked=True,
+            prompt="Subscriptions",
+            category=["Wind-ups"],
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_windup_subscriptions:
+    n 1fllan "Grrr..."
+    n 1fcsan "Man,{w=0.1} that's {i}such{/i} a pain!{w=0.5}{nw}"
+    extend 1fbkwr " I thought I cancelled thaaat!"
+    n 1fslpo "..."
+    n 1uwdem "O-{w=0.1}oh!{w=0.2} [player]!{w=0.5}{nw}"
+    extend 1flrem " Can you {i}believe{/i} this?"
+    n 1fslem "I signed up to some free trial for a streaming website,{w=0.3}{nw}"
+    extend 1fcswr " but I totally forgot about it!{w=0.5}{nw}"
+    extend 1flrwr " And now I gotta pay for something I barely even {i}used{/i}!"
+    n 1fcsem "Jeez...{w=0.5}{nw}"
+    extend 1tnmem " Doesn't that wind you up too?"
+    n 1tllbo "In fact,{w=0.1} thinking about it..."
+    n 1fnmbo "Why is so much stuff nowadays all subscription based?"
+    n 1fllpu "Like...{w=0.5}{nw}"
+    extend 1nnmaj " I get it if it's like an ongoing thing,{w=0.3}{nw}"
+    extend 1flrsl " but what's up with everyone and their dog trying to sign you up?!"
+    n 1fsqsl "And half the time you don't even get a choice...{w=0.5}{nw}"
+    extend 1fsqem " like with software!"
+    n 1fcsan "I've had to skip out on so many programs because they want me to pay for a whole bunch of crap in a package I don't care about!"
+    n 1fllan "Like...{w=0.3} come {i}on{/i}!{w=0.5}{nw}"
+    extend 1fllfr " Just let me pay for what I need!"
+    n 1kcsem "Ugh..."
+    n 1fnmsl "The worst part is that it all adds up too!{w=0.5}{nw}"
+    extend 1fllpu " It's super easy to lose track of what you're paying for each month..."
+    n 1fnmpu "And then before you know it,{w=0.3}{nw}"
+    extend 1fbkwr " half your money is down the drain as soon as it comes in!{w=0.5}{nw}"
+    extend 1fcspu " What a mess..."
+    n 1fllpo "Well,{w=0.1} whatever.{w=0.2} At least I won't get charged for {i}that{/i} again.{w=0.5}{nw}"
+    extend 1fslpo " Jerks."
+    n 1nllbo "But...{w=0.5}{nw}" 
+    extend 1unmpu " what about you though,{w=0.1} [player]?{w=0.5}{nw}"
+    extend 1fsqsm " Actually,{w=0.1} I can tell you one thing."
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n 1fsqssl "A-{w=0.1}at least you have {i}one{/i} subscription you don't have to worry about paying for!"
+        
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            n 1fchsml "Ehehe.{w=0.5}{nw}"
+            extend 1uchbgf " Love you,{w=0.1} dork!"
+
+        else:
+            n 1fllbgl "A-{w=0.1}ahaha..."
+
+    else:
+        n 1fcsbg "You're already subscribed to some pretty pro thinking,{w=0.1} if I say so myself."
+        n 1nsqsg "Fortunately for you though,{w=0.1} I don't charge.{w=0.5}{nw}"
+        extend 1fsqss "...Yet."
+        n 1fchsm "Ehehe."
+
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
