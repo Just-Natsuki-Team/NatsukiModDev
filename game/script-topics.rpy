@@ -143,7 +143,7 @@ label talk_did_you_have_pets:
         n 1fslem "Ugh..."
         n 1fslun "It still annoys me...{w=0.3}{nw}" 
         extend 1uchgn " but then again,{w=0.1} it's not like I can't keep a pet here instead,{w=0.1} right?{w=0.1} Ehehe."
-
+n 1unmbg "But what about you,{w=0.1} [player]?"
     if persistent.jn_player_pet is None:
         menu:
             n "Do you have any pets?"
@@ -442,7 +442,7 @@ label talk_service_animals:
     n 1ksrfr "..."
     n 1kwmfr "That got kinda heavy,{w=0.1} didn't it?"
     n 1kwmbg "Well,{w=0.1} enough of that.{w=0.2}"
-    extend 1uwmss "What else should we talk about?"
+    extend 1uwmss " What else should we talk about?"
     return
 
 # Natsuki highlights her concern for her player using their computer for long periods of time, and offers her wisdom
@@ -471,30 +471,30 @@ label talk_using_computers_healthily:
     n 1uchgn "I'm gonna give you a little lesson on using your computer the right way!"
     n 1nnmss "Number one:{w=0.2} posture!"
     n 1fwmlg "Sit up straight,{w=0.1} and back against the chair,{w=0.1} [player].{w=0.2}"
-    extend 1uchlg "I mean it!"
+    extend 1uchlg " I mean it!"
     n 1tnmlg "You don't want back problems,{w=0.1} do you?"
     n 1nnmsm "Make sure your feet can still touch the floor,{w=0.1} though.{w=0.2}"
-    extend 1uchgn "Even I can do that!"
+    extend 1uchgn " Even I can do that!"
     n 1nnmaj "Number two:{w=0.2} distance!"
     n 1nsggn "I know you can't get enough of me,{w=0.1}"
-    extend 1fnmpo "but I don't wanna see you pressing your face against the screen.{w=0.2} It's weird."
+    extend 1fnmpo " but I don't wanna see you pressing your face against the screen.{w=0.2} It's weird."
     n 1uchgn "So make sure you sit about an arm's length away from the display,{w=0.1} alright?"
     n 1uwdaj "Oh!{w=0.2} Don't forget to keep your stuff in easy reach though{w=0.1} -{w=0.1}"
-    extend 1unmsm "like your mouse."
+    extend 1unmsm " like your mouse."
     n 1unmbg "Number three:{w=0.2} breaks!"
     n 1uwmbg "I don't know about you,{w=0.1} but I get all fidgety if I stay still too long..."
     n 1fchgn "So make sure you get off your butt and do some stretches a few times per hour!"
     n 1fsqsg "You could even get some water or something if you {i}really{/i} need an excuse to move."
     n 1nnmsm "It'd also give your eyes a rest from the screen!"
     n 1uchbs "Alright{w=0.1} -{w=0.1} and the last one!{w=0.2} This one's important,{w=0.1}"
-    extend 1uchgn "so listen up good!"
+    extend 1uchgn " so listen up good!"
     n 1unmbo "If you ever feel unwell{w=0.1} - {w=0.1}like your back aches,{w=0.1} or your eyes hurt or something..."
     n 1nwmbo "Please just stop whatever you're doing.{w=0.2} Your health comes first.{w=0.2} I don't care what needs to be done."
     n 1unmsm "Take some time to feel better,{w=0.1} then make sure all your stuff is set up right like I said."
     n "Don't carry on until you feel well enough{w=0.1} -{w=0.1} talk to someone if you have to!"
     n 1uchgn "Okaaay!{w=0.2} Lecture over!"
     n 1ullaj "Wow...{w=0.3} I rambled on a while,{w=0.1} didn't I?{w=0.2}"
-    extend 1klrbgl "Sorry,{w=0.1} sorry!{w=0.2} Ehehe."
+    extend 1klrbgl " Sorry,{w=0.1} sorry!{w=0.2} Ehehe."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         n 1kwmsml "But you know I only do these things because I really care about you,{w=0.1} [player]...{w=0.3} right?"
@@ -577,13 +577,13 @@ label talk_relieving_stress:
     n 1unmbg "Don't just create physical distance,{w=0.1} though.{w=0.2} Distance yourself mentally too!"
     n 1nnmbg "If something is stressing you out,{w=0.1} you need to starve it of some attention."
     n "If I can't go somewhere else,{w=0.1} I just read something,{w=0.1}"
-    extend 1nslbg "or watch some dumb videos."
+    extend 1nslbg " or watch some dumb videos."
     n 1uchsm "But do whatever works for you; {w=0.1}we all have our own comfort zones!"
     n 1nsrss "And of course,{w=0.1} you could always come see me,{w=0.1} you know..."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
         n 1kllssl "I-{w=0.1}"
-        extend 1knmssl "It'd be a welcome surprise.{w=0.2} Ahaha..."
+        extend 1knmssl " It'd be a welcome surprise.{w=0.2} Ahaha..."
 
     n 1uwdeml "A-{w=0.1}anyway!"
     n 1nnmajl "The point is to always try and come back with a clean headspace,{w=0.1} and don't sweat the small things."
