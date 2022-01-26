@@ -104,8 +104,8 @@ label talk_having_pictures_taken:
             n 1fslfr "Let's talk about something else."
 
         else:
-            n 1kplpu "Please...{w=0.3} don't try to pretend like you care about how I feel about pictures."
-            n 1kcssr "I'm done talking about this,{w=0.1} [player]."
+            n 1kplpu "Don't even {i}try{/i} to pretend like you care about how I feel about pictures."
+            n 1kcssr "We're done here,{w=0.1} [player]."
     return
 
 # Natsuki discusses her lack of pet with the player, and asks about theirs
@@ -142,11 +142,11 @@ label talk_did_you_have_pets:
         n 1fnmaj "Even when I said {i}I'd{/i} take care of everything!"
         n 1fslem "Ugh..."
         n 1fslun "It still annoys me...{w=0.3}{nw}" 
-        extend 1uchgn "but then again,{w=0.1} it's not like I can't keep a pet here instead,{w=0.1} right?{w=0.1} Ehehe."
+        extend 1uchgn " but then again,{w=0.1} it's not like I can't keep a pet here instead,{w=0.1} right?{w=0.1} Ehehe."
 
     if persistent.jn_player_pet is None:
         menu:
-            n "What about you,{w=0.1} [player]? Do you have any pets?"
+            n "Do you have any pets?"
 
             "Yes, I do.":
                 n 1uspaw "Oh!{w=0.2} Oh oh oh!{w=0.2} You gotta tell me,{w=0.1} [player]!"
@@ -200,23 +200,22 @@ label pet_options_a:
         "Cats":
             n 1uchsm "Yay!{w=0.2} Cats!"
             n 1uchgn "I really wish I had one,{w=0.1} I love seeing all the dumb situations they get into!"
-            n 1unmbs "I hope you didn't just say that because I like them,{w=0.1} though.{w=0.1}{nw}"
-            extend 1uchsm "Ehehe."
+            n 1unmbs "I hope you didn't just say that because I like them,{w=0.1} though.{w=0.2}{nw}"
+            extend 1uchsm " Ehehe."
             n 1tnmsm "Just don't pamper it too much,{w=0.1} [player]!"
             $ persistent.jn_player_pet = "cats"
             
         "Chameleons":
-            n 1unmaj "Ooh! Chameleons!"
-            n 1uchgn "They're so cool looking!"
-            n 1unmbg "The way they change colors, and their eyes move independently..."
-            n 1kllsm "Okay, maybe that last part is a little creepy."
-            n 1uchgn "But they're still such awesome little creatures!"
-            n 1unmbg "Take good care of it for me,{w=0.1} okay?"
+            n 1unmaj "Oh!{w=0.2} Chameleons!"
+            n 1uchgn "That's super cool,{w=0.1} [player]!"
+            n 1unmbg "The colour changing is crazy enough,{w=0.1} but those eyes too{w=0.1} -{w=0.1} it's like someone just made them up!"
+            n 1uchgn "Still{w=0.1} -{w=0.1} that's awesome!"
+            n 1unmbg "You better take good care of it,{w=0.1} okay?"
             $ persistent.jn_player_pet = "chameleons"
 
         "Dogs":
             n 1uwdaj "Oh!{w=0.2} A dog?{w=0.2}{nw}"
-            extend 1uchbs "Awesome!"
+            extend 1uchbs " Awesome!"
             n 1nnmsm "I don't think a dog would be my first choice,{w=0.1} what with all the walks and all that."
             n 1uchbs "But I can't think of a more loving pet!"
             n "I hope yours looks after you as much as you look after it!"
@@ -224,10 +223,11 @@ label pet_options_a:
             
         "Ferrets":
             n 1unmlg "Oh!{w=0.2} A ferret?"
-            n 1uchbs "That's sooo cute!"
-            n "They're like cats!{w=0.2} Or pandas!{w=0.2} But long!"
-            n 1uchgn "And that's a plus in my book!"
-            n 1unmlg "Take good care of it for me, okay?"
+            n 1uchbs "That's {i}adorable{/i}!"
+            n 1tllbg "But...{w=0.3} I've always wondered.{w=0.2}{nw}"
+            n 1tchbg " Are they more like a cat,{w=0.1} or a dog?"
+            n 1flrss "Well,{w=0.1} whatever.{w=0.2} Either way,{w=0.1} [player]..."
+            n 1unmlg "You better take good care of the little guy!"
             $ persistent.jn_player_pet = "ferrets"
 
         "More...":
@@ -243,21 +243,23 @@ label pet_options_b:
             n 1unmaj "Ooh!{w=0.2} Fish are interesting!"
             n 1kllnv "I don't think I'd call them super affectionate personally..."
             n 1uchgn "But I think they're a neat way to relieve stress!{w=0.2} They must be calming to watch in their own little world."
-            n "I bet you feel like you could lose yourself in that tank!{w=0.2} Ehehe."
+            n 1nsqsm "I bet you feel like you could lose yourself in that tank.{w=0.2}{nw}" 
+            extend 1nchsm " Ehehe."
             $ persistent.jn_player_pet = "fish"
             
         "Frogs":
-            n 1kspaw "Aww! Froggies!"
-            n 1kspbs "They're soooo cute!"
-            n 1uchbs "I love their dumb little noises they make!"
-            n "Ehehe!{w=0.2} That's really awesome [player],{w=0.1} I love frogs!"
-            n 1unmbs "You better take super good care of yours,{w=0.1} okay?"
+            n 1kspaw "Ooh!{w=0.2} Froggies!"
+            extend 1kspbs " Cute!"
+            n 1fsqsm "I seriously can't get enough of their faces.{w=0.2}{nw}" 
+            extend 1fbkbs " They always look so confused!"
+            n 1fllbg "Ehehe.{w=0.2} Well,{w=0.1} [player]..."
+            n 1fchgn "You better {i}hop{/i} to it and take care of yours!"
             $ persistent.jn_player_pet = "frogs"
         
         "Gerbils":
             n 1kspaw "Awww!{w=0.2} I like gerbils!"
             n 1uchbs "It's so cute how they live in little groups to keep each other company."
-            n 1unmbs "They're good at digging,{w=0.1} too -{w=0.2} like seriously good!"
+            n 1unmbs "They're good at digging,{w=0.1} too{w=0.1} -{w=0.1} like seriously good!"
             n "Take good care of yours for me,{w=0.1} okay?"
             $ persistent.jn_player_pet = "gerbils"
             
@@ -303,18 +305,20 @@ label pet_options_c:
             n 1twmsc "Ack-{nw}"
             n 1kslup "Nnnnn..."
             n 1kwmsg "...I wish I could share your enthusiasm!{w=0.2}{nw}"
-            extend 1kllss "Ahaha..."
+            extend 1kllss " Ahaha..."
             n 1ksqun "I don't think I could stomach creepy crawlies myself."
             n 1ksrun "You've certainly got an...{w=0.3} interesting taste,{w=0.1} [player]."
             n 1kwmss "But I'm sure you take great care of yours!"
             $ persistent.jn_player_pet = "insects"
             
         "Lizards":
-            n 1uchgn "Cool! Lizards!"
-            n 1unmbs "Exotic or not, they always look so awesome!"
-            n "Some of them are so unique,{w=0.1} like blue tongues or spikes and horns!"
-            n 1unmbo "I guess they have to live under a heat lamp though,{w=0.1} huh?"
-            n 1uchgn "Either way, I bet you take super good care of yours!"
+            n 1uchgn "Ooh!{w=0.2} Lizards,{w=0.1} huh?"
+            n 1fsqss "...I trust you aren't just as cold-blooded yourself,{w=0.1} [player]."
+            n 1fchgn "...Pffffft!{w=0.2}{nw}"
+            extend 1uchlg " I'm kidding, [player]!{w=0.2} I'm just kidding!"
+            n 1unmbg "Cool looking critters though!{w=0.2}"
+            extend 1tllbg " I think you'd actually be hard pressed to find a more varied kind of pet."
+            n 1uchgn "You better keep yours nice and toasty,{w=0.1} [player]!"
             $ persistent.jn_player_pet = "lizards"
             
         "Mice":
@@ -354,13 +358,18 @@ label pet_options_d:
             $ persistent.jn_player_pet = "rabbits"
             
         "Snakes":
-            n 1nnmaj "Oh.{w=0.2} Snakes?"
-            n 1kllbg "Snakes can be cute, but some of them are really scary..."
-            n 1nnmbo "I hope you don't have the kind that could hurt you."
-            n 1uchgn "But if it's one of those teeny ones, and you have little hats for it..."
-            n "Ehehe!"
-            n 1unmlg "They can be adorable for sure!"
-            n 1tnmbg "Take good care of your noodle for me,{w=0.1} okay?"
+            n 1uskaj "H-{w=0.1}huh?"
+            extend 1uscem " S-{w=0.1}snakes?"
+            n 1fcsun "Uuuuuu..."
+            n 1kcsaj "...Fine.{w=0.2} I'll just be straight with you, [player].{w=0.2}{nw}"
+            extend 1kllsl " I'm...{w=0.3} not great with those."
+            n 1kllaj "S-{w=0.1}snakes,{w=0.1} I mean."
+            n 1kllsl "They just...{w=0.3} don't really agree with me.{w=0.2} I don't know why."
+            n 1fcsgsl "B-{w=0.1}but that's not to say that they {i}can't{/i} be cute,{w=0.1} obviously!{w=0.2}{nw}" 
+            extend  1flrpo " Making that assumption would just be ignorant."
+            n 1ksrpo "...And they deserve care just like any other pet.{w=0.2}{nw}" 
+            extend 1flraj " So..."
+            n 1fnmpo "You better not be flaking out on yours,{w=0.1} [player]!"
             $ persistent.jn_player_pet = "snakes"
 
         "Something else":
