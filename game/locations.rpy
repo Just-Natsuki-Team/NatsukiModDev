@@ -98,7 +98,7 @@ init -20 python:
                 return self.day_image_tag
             return self.night_image_tag
 
-    class Room(object):
+    class JNRoom(object):
         """
         The main representation of the room.
         """
@@ -113,7 +113,13 @@ init -20 python:
             #TODO: make this dynamic (probably hook in with menus)
             self.sunrise = datetime.time(6)
             self.sunset = datetime.time(19)
-            self.__is_showing_day_image = None
+
+            #States
+            self.__is_showing_day_image = self.is_day()
+
+            #Eventhandlers
+            self.day_to_night_event = JNEvent()
+            self.night_to_day_event = JNEvent()
 
         def setLocation(self, new_location, **kwargs):
             """
@@ -177,6 +183,8 @@ init -20 python:
             if room is not None and not renpy.showing("main_bg"):
                 renpy.show(room, tag="main_bg", zorder=1)
 
+            renpy.show("natsuki idle", at_list=[jn_center], zorder=3)
+
             # dissolving everything means dissolve last
             if dissolve_all or full_redraw:
                 renpy.with_statement(Dissolve(1.0))
@@ -186,19 +194,27 @@ init -20 python:
             """
             Checks if we're showing the day room
             """
-            return renpy.showing(self.location.day_image_tag)
+            return self.__is_showing_day_image
 
         def check_redraw(self):
             """
             Checks if we need to redraw the room for a time change
             """
             #If it's day and we're showing the night room, we should full redraw to show day room again
-            if self.is_day() and not self.is_showing_day_room():
+            if self.is_day() and self.__is_showing_day_image is False:
+                self.__is_showing_day_image = True
                 self.draw(full_redraw=True)
 
+                #Run events
+                self.night_to_day_event()
+
             #If it's night and we're showing the day room, we should do a full redraw to show the night room
-            elif not self.is_day() and self.is_showing_day_room():
+            elif not self.is_day() and self.__is_showing_day_image is True:
+                self.__is_showing_day_image = False
                 self.draw(full_redraw=True)
+
+                #Run events
+                self.day_to_night_event()
 
         def save(self):
             """
@@ -207,7 +223,7 @@ init -20 python:
             persistent._current_location = self.location.id
 
 init python:
-    main_background = Room()
+    main_background = JNRoom()
 
     classroom = Location(
         id="classroom",
@@ -220,6 +236,25 @@ init python:
     )
 
     main_background.setLocation(classroom)
+
+    #Register the event handlers to handle button sounds
+    def __change_to_night_button_sounds():
+        gui.hover_sound = "mod_assets/buttons/sounds/button_hover_night.ogg"
+        gui.activate_sound = "mod_assets/buttons/sounds/button_click_night.ogg"
+
+    def __change_to_day_button_sounds():
+        gui.hover_sound = "mod_assets/buttons/sounds/button_hover_day.ogg"
+        gui.activate_sound = "mod_assets/buttons/sounds/button_click_day.ogg"
+
+    main_background.day_to_night_event += __change_to_night_button_sounds
+    main_background.night_to_day_event += __change_to_day_button_sounds
+
+    #Now, run the appropriate eventhandler
+    #If it's day now, we need to run night to day, and vice versa
+    if main_background.is_day():
+        main_background.night_to_day_event()
+    else:
+        main_background.day_to_night_event()
 
     if persistent._current_location in locations.LOCATION_MAP:
         main_background.changeLocation(persistent._current_location)

@@ -77,7 +77,7 @@ init python in jn_custom_music:
 
         return True
 
-    def _get_all_custom_music():
+    def get_all_custom_music():
         """
         Runs through the files in the custom_music directory, identifying supported music files via extension check
         Returns a tuple representing (file_name, file_path_for_renpy_playback)
@@ -108,7 +108,7 @@ label music_menu:
         if jn_custom_music.get_directory_exists():
 
             # Get the user's music, then sort the options for presentation
-            custom_music_options = jn_custom_music._get_all_custom_music()
+            custom_music_options = jn_custom_music.get_all_custom_music()
             custom_music_options.sort()
 
             # Add the default music as the first option
@@ -118,65 +118,100 @@ label music_menu:
             if len(custom_music_options) > 1:
                 custom_music_options.insert(1, ("You pick!", "random"))
 
-            custom_music_options.append(("No music", "none"))
+            custom_music_options.append(("No music", "no_music"))
             success = True
 
     # We failed to get the custom music, prompt player to correct
     if not success:
-        n "Uhmm..."
-        n "Hey...{w=0.3} [player]?"
-        n "Something went wrong when I was trying look for your music..."
-        n "Can you do me a favour and just check everything out real quick?"
+        show natsuki at jn_center
+        n 1kllunl "Uhmm..."
+        n 1knmunl "Hey...{w=0.3} [player]?"
+        n 1klrbgl "Something went wrong when I was trying look for your music..."
+        n 1kchbgl "Can you do me a favour and just check everything out real quick?"
         $ folder = jn_custom_music.CUSTOM_MUSIC_DIRECTORY
-        n "If you forgot -{w=0.1} anything you want me to play needs to be in the {a=[folder]}custom_music{/a} folder."
-        n "Oh!{w=0.2} Right!{w=0.2} And it also needs to be in {i}.mp3,{w=0.1} .ogg or .wav{/i} format -{w=0.1} just look for the letters after the period in the file name!"
+        n 1knmbgl "If you forgot -{w=0.1} anything you want me to play needs to be in the {a=[folder]}custom_music{/a} folder."
+        n 1uwdaj "Oh!{w=0.2} Right!{w=0.2} And it also needs to be in {i}.mp3,{w=0.1} .ogg or .wav{/i} format -{w=0.1} just look for the letters after the period in the file name!"
         jump ch30_loop
+
+    elif preferences.get_volume("music") == 0:
+        show natsuki at jn_center
+        n 1tsqaj "Uh...{w=0.5}{nw}"
+        extend 1tslaj " huh."
+        n 1tsgsg "And {i}how{/i} exactly do you plan to hear any music with the volume at zero?"
+        n 1fchbg "Jeez, [player].{w=0.5}{nw}" 
+        extend 1uchgn " How do you even get dressed in the morning with memory like that?!"
+        n 1ullss "Well, whatever.{w=0.5}{nw}"
+        extend 1unmaj " So..."
+        menu:
+            n "Did you want me to turn the music back up so you can pick something?"
+
+            "Yes.":
+                n 1nchsm "Okey-{w=0.1}dokey!{w=0.2} Just a second..."
+                $ preferences.set_volume("music", 0.75)
+                n 1fcsbg "And there we are!"
+                n 1ullss "So...{w=0.5}{nw}"
+                extend 1unmaj " What did you wanna listen to?"
+
+            "No.":
+                n 1fcsbg "The sound of silence it is,{w=0.1} then!{w=0.5}{nw}"
+                extend 1fchsm " Ehehe."
+                jump ch30_loop
 
     else:
         $ chosen_quip = renpy.substitute(random.choice(jn_custom_music._CHOOSE_PLAY_MUSIC_QUIPS))
-        n "[chosen_quip]"
+        n 1unmbgl "[chosen_quip]"
+        show natsuki idle at jn_left
 
     # We have custom music options, present the choices
-    call screen scrollable_choice_menu(custom_music_options, ("Nevermind.", None))
+    call screen scrollable_choice_menu(custom_music_options, ("Nevermind.", False))
+    show natsuki idle at jn_center
 
-    if isinstance(_return, unicode):
+    if not _return:
+        jump ch30_loop
 
-        if _return == "none":
-            $ chosen_no_music_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_NO_MUSIC_QUIPS))
-            n "[chosen_no_music_quip]"
-            $ music_title = "No music"
-            stop music fadeout 1.5
+    if _return == "no_music":
+        $ chosen_no_music_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_NO_MUSIC_QUIPS))
+        n 1knmsm "[chosen_no_music_quip]"
+        $ music_title = "No music"
 
-        elif _return == "random":
-
-            $ available_custom_music = jn_custom_music._get_all_custom_music()
-
-            # Play a random track
-            $ chosen_question_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_QUESTION_QUIPS))
-            n "[chosen_question_quip]"
-
-            show placeholder_natsuki smile zorder jn_placeholders.NATSUKI_Z_INDEX
-            
-            $ chosen_answer_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_ANSWER_QUIPS))
-            n "[chosen_answer_quip]"
-            
-            $ chosen_search_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_SEARCH_QUIPS))
-            n "[chosen_search_quip]"
-
-            # If we have more than one track, we can make sure the new chosen track isn't the same as the current one
-            python: 
-                if len(available_custom_music) > 1:
-                    music_title_and_file = random.choice(filter(lambda track: (jn_custom_music._now_playing not in track), available_custom_music))
-                    music_title = music_title_and_file[0]
-                    renpy.play(filename=music_title_and_file[1], channel="music")
-
-        else:
-            # Play the selected specific track
-            $ music_title = _return.split('/')[-1]
-            $ renpy.play(filename=_return, channel="music")
+        stop music fadeout 3
+        n 1uchsm "There you go, [player]!"
         
-        # Pop a cheeky notify with the Nat for visual confirmation :)
-        $ jn_custom_music._now_playing = music_title
-        $ renpy.notify("Now playing: {0}".format(jn_custom_music._now_playing))
+        if persistent.jn_random_music_enabled:
+            # Stop playing random music, if enabled
+            $ persistent.jn_random_music_enabled = False
+            n 1unmaj "Oh{w=0.1} -{w=0.1} and I'll stop switching around the music too."
+
+    elif _return == "random":
+
+        $ available_custom_music = jn_custom_music.get_all_custom_music()
+
+        # Play a random track
+        $ chosen_question_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_QUESTION_QUIPS))
+        n 1unmajl "[chosen_question_quip]"
+
+        show natsuki 1uchbg zorder JN_NATSUKI_ZORDER
+
+        $ chosen_answer_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_ANSWER_QUIPS))
+        n 1uchbsl "[chosen_answer_quip]"
+
+        $ chosen_search_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_SEARCH_QUIPS))
+        n 1ullbgl "[chosen_search_quip]"
+
+        # If we have more than one track, we can make sure the new chosen track isn't the same as the current one
+        python:
+            if len(available_custom_music) > 1:
+                music_title_and_file = random.choice(filter(lambda track: (jn_custom_music._now_playing not in track), available_custom_music))
+                music_title = music_title_and_file[0]
+                renpy.play(filename=music_title_and_file[1], channel="music")
+
+    elif _return is not None:
+        # Play the selected specific track
+        $ music_title = _return.split('/')[-1]
+        $ renpy.play(filename=_return, channel="music")
+
+    # Pop a cheeky notify with the Nat for visual confirmation :)
+    $ jn_custom_music._now_playing = music_title
+    $ renpy.notify("Now playing: {0}".format(jn_custom_music._now_playing))
 
     jump ch30_loop

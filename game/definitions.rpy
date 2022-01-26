@@ -12,10 +12,41 @@ default persistent._event_list = list()
 #Early imports
 init -990 python:
     import datetime
+    import easter
+    _easter = easter.easter(datetime.datetime.today().year)
+
+define JN_NEW_YEARS_DAY = datetime.date(datetime.date.today().year, 1, 1)
+define JN_EASTER = datetime.date(_easter.year, _easter.month, _easter.day)
+define JN_HALLOWEEN = datetime.date(datetime.date.today().year, 10, 31)
+define JN_CHRISTMAS_EVE = datetime.date(datetime.date.today().year, 12, 24)
+define JN_CHRISTMAS_DAY = datetime.date(datetime.date.today().year, 12, 25)
+define JN_NEW_YEARS_EVE = datetime.date(datetime.date.today().year, 12, 31)
 
 init 0 python:
-    import store.jn_affinity as jn_aff
     from collections import OrderedDict
+    from Enum import Enum
+    import re
+    import store.jn_affinity as jn_aff
+
+    class JNHolidays(Enum):
+        none = 0
+        new_years_day = 1
+        easter = 2
+        halloween = 3
+        christmas_eve = 4
+        christmas_day = 5
+        new_years_eve = 6
+
+        def __str__(self):
+            return self.name
+
+    class JNTimeBlocks(Enum):
+        early_morning = 0
+        mid_morning = 1
+        late_morning = 2
+        afternoon = 3
+        evening = 4
+        night = 5
 
     #Constants for types. Add more here if we need more organizational areas
     TOPIC_TYPE_FAREWELL = "FAREWELL"
@@ -192,10 +223,10 @@ init 0 python:
             """
             if self.conditional is not None:
                 try:
-                    return eval(self.conditional)
+                    return eval(self.conditional, globals=store.__dict__)
 
                 except Exception as e:
-                    store.utils.log(e.message, utils.SEVERITY_ERR)
+                    store.jn_utils.log("Error evaluating conditional on topic '{0}'. {1}".format(self.label, e.message), jn_utils.SEVERITY_ERR)
                     return False
 
             return True
@@ -280,7 +311,7 @@ init 0 python:
             location=None,
             affinity=None,
             trust=None,
-            conditional=None,
+            shown_count=None,
             includes_categories=list(),
             excludes_categories=list(),
             additional_properties=list()
@@ -327,16 +358,16 @@ init 0 python:
             if trust and not self.evaluate_trust_range(trust):
                 return False
 
-            if conditional and not self.check_conditional():
+            if not self.check_conditional():
+                return False
+
+            if shown_count is not None and not self.shown_count >= shown_count:
                 return False
 
             if includes_categories and len(set(includes_categories).intersection(set(self.category))) != len(includes_categories):
                 return False
 
             if excludes_categories and self.category and len(set(excludes_categories).intersection(set(self.category))) > 0:
-                return False
-
-            if self.conditional is not None and not eval(self.conditional):
                 return False
 
             if additional_properties:
@@ -364,7 +395,7 @@ init 0 python:
             location=None,
             affinity=None,
             trust=None,
-            conditional=None,
+            shown_count=None,
             includes_categories=list(),
             excludes_categories=list(),
             additional_properties=list()
@@ -393,7 +424,7 @@ init 0 python:
                     location,
                     affinity,
                     trust,
-                    conditional,
+                    shown_count,
                     includes_categories,
                     excludes_categories,
                     additional_properties
@@ -441,6 +472,69 @@ init 0 python:
         """
         persistent._event_list.append(topic_label)
 
+    def jn_topic_in_event_list(topic_label):
+        """
+        Returns whether or not a topic is in the event list
+
+        IN:
+            topic_label - Topic.label of the topic you wish to check
+
+        OUT:
+            boolean - True if the topic is in the event list, False otherwise
+        """
+        return topic_label in persistent._event_list
+
+    def jn_topic_in_event_list_pattern(topic_pattern):
+        """
+        Returns whether or not a topic is in the event list
+
+        IN:
+            topic_pattern - Pattern to match against the topic labels
+
+        OUT:
+            boolean - True if the topic is in the event list, False otherwise
+        """
+        return any(
+            re.match(topic_pattern, topic_label)
+            for topic_label in persistent._event_list
+        )
+
+    def jn_rm_topic_occurrence_from_event_list(topic_label):
+        """
+        Removes a single occurrence of a topic from the event list
+
+        IN:
+            topic_label - label of the topic you wish to remove
+        """
+        if topic_label in persistent._event_list:
+            persistent._event_list.remove(topic_label)
+
+    def jn_rm_topic_from_event_list(topic_label):
+        """
+        Removes all occurrences of a topic from the event list
+
+        IN:
+            topic_label - label of the topic you wish to remove
+        """
+        persistent._event_list = [
+            _topic_label
+            for _topic_label in persistent._event_list
+            if _topic_label != topic_label
+        ]
+
+    def jn_rm_topic_from_event_list_pattern(topic_label_pattern):
+        """
+        Removes all occurrences of a topic from the event list
+
+        IN:
+            topic_label_pattern - regex identifier of the topic you wish to remove
+        """
+        persistent._event_list = [
+            _topic_label
+            for _topic_label in persistent._event_list
+            if not re.match(topic_label_pattern, _topic_label)
+        ]
+
     def menu_list(menu_topics, additional_topics):
         """
         Returns a list of items ready for a menu
@@ -484,7 +578,7 @@ init 0 python:
         ordered_menu_items = OrderedDict()
         for topic_category in topic_categories:
             ordered_menu_items[topic_category] = []
-        
+
         # Feed the topics into the ordered dictionary - remember that each topic can have multiple categories!
         for topic in menu_topics:
             for category in topic.category:
@@ -492,21 +586,198 @@ init 0 python:
 
         return ordered_menu_items
 
-    def get_custom_tracks():
+    def jn_is_new_years_day(input_date=None):
         """
-        return all .mp3 files from custom_music folder
-        """
-        all_files = renpy.list_files()
-        tracks = []
-        for file in all_files:
-            if ".mp3" in file[-4:] and "custom_music" in file:
-                name = file.split('.')
-                name = name[-2].split('/')
-                name = name[-1]
-                track = "<loop 0.0>" + file
-                tracks.append((name, track))
+        Returns True if the current date is New Year's Day; otherwise False
 
-        return tracks
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_NEW_YEARS_DAY
+
+    def jn_is_easter(input_date=None):
+        """
+        Returns True if the current date is Easter; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_EASTER
+
+    def jn_is_halloween(input_date=None):
+        """
+        Returns True if the current date is Halloween; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_HALLOWEEN
+
+    def jn_is_christmas_eve(input_date=None):
+        """
+        Returns True if the current date is Christmas Eve; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_CHRISTMAS_EVE
+
+    def jn_is_christmas_day(input_date=None):
+        """
+        Returns True if the current date is Christmas Day; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_CHRISTMAS_DAY
+
+    def jn_is_new_years_eve(input_date=None):
+        """
+        Returns True if the current date is New Year's Eve; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_NEW_YEARS_EVE
+
+    def jn_get_holiday_for_date(input_date=None):
+        """
+        Gets the holiday - if any - corresponding to the supplied date, or the current date by default.
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+
+        OUT:
+            - JNHoliday representing the holiday for the supplied date.
+        """
+
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        elif not isinstance(input_date, datetime.date):
+            raise TypeError("input_date for holiday check must be of type date; type given was {0}".format(type(input_date)))
+
+        if jn_is_new_years_day(input_date):
+            return JNHolidays.new_years_day
+
+        elif jn_is_easter(input_date):
+            return JNHolidays.easter
+
+        elif jn_is_halloween(input_date):
+            return JNHolidays.halloween
+
+        elif jn_is_christmas_eve(input_date):
+            return JNHolidays.christmas_eve
+
+        elif jn_is_christmas_day(input_date):
+            return JNHolidays.christmas_day
+
+        elif jn_is_christmas_eve(input_date):
+            return JNHolidays.new_years_eve
+
+        else:
+            return JNHolidays.none
+
+    def jn_get_current_hour():
+        """
+        Gets the current hour (out of 24) of the day.
+
+        OUT:
+            Integer representing the current hour of the day.
+        """
+        return datetime.datetime.now().hour
+
+    def jn_is_weekday():
+        """
+        Gets whether the current day is a weekday (Monday : Friday).
+
+        OUT:
+            True if weekday, otherwise False
+        """
+        return datetime.datetime.now().weekday() < 5
+
+    def jn_get_current_time_block():
+        """
+        Returns a type describing the current time of day as a segment.
+        """
+        current_hour = jn_get_current_hour()
+        if current_hour in range(3, 5):
+            return JNTimeBlocks.early_morning
+
+        elif current_hour in range(5, 9):
+            return JNTimeBlocks.mid_morning
+
+        elif current_hour in range(9, 12):
+            return JNTimeBlocks.late_morning
+
+        elif current_hour in range(12, 18):
+            return JNTimeBlocks.afternoon
+
+        elif current_hour in range(18, 22):
+            return JNTimeBlocks.evening
+
+        else:
+            return JNTimeBlocks.night
+
+    def jn_is_time_block_early_morning():
+        """
+        Returns True if the current time is judged to be early morning.
+        """
+        return jn_get_current_hour() in range(3, 5)
+
+    def jn_is_time_block_mid_morning():
+        """
+        Returns True if the current time is judged to be mid morning.
+        """
+        return jn_get_current_hour() in range(5, 9)
+
+    def jn_is_time_block_late_morning():
+        """
+        Returns True if the current time is judged to be late morning.
+        """
+        return jn_get_current_hour() in range(9, 12)
+
+    def jn_is_time_block_morning():
+        """
+        Returns True if the current time is judged to be morning generally, and not a specific time of morning.
+        """
+        return jn_get_current_hour() in range(3, 12)
+
+    def jn_is_time_block_afternoon():
+        """
+        Returns True if the current time is judged to be afternoon.
+        """
+        return jn_get_current_hour() in range(12, 18)
+
+    def jn_is_time_block_evening():
+        """
+        Returns True if the current time is judged to be evening.
+        """
+        return jn_get_current_hour() in range(18, 22)
+
+    def jn_is_time_block_night():
+        """
+        Returns True if the current time is judged to be night.
+        """
+        return jn_get_current_hour() in range(22, 3)
 
 # Variables with cross-script utility specific to Just Natsuki
 init -990 python in jn_globals:
@@ -525,13 +796,6 @@ init -990 python in jn_globals:
 
     # Tracks whether the player is or is not currently in some topic flow
     player_is_in_conversation = False
-
-    # Outfit handling; these should be persisted and in some kind of structure going forward for presets, etc.
-    natsuki_current_pose = "sitting"
-    natsuki_current_outfit = "uniform"
-    natsuki_current_hairstyle = "default"
-    natsuki_current_accessory = "hairbands/red"
-    natsuki_current_eyewear = None
 
     # Constants; use these for anything we only want defined once and used in a read-only context
 
@@ -564,7 +828,9 @@ init -990 python in jn_globals:
         "stupid",
         "you dork",
         "you goof",
-        "you numpty"
+        "you numpty",
+        "you donut",
+        "you dope"
     ]
 
     # Names Natsuki may use at the lowest levels of affinity to insult her player with
@@ -572,7 +838,8 @@ init -990 python in jn_globals:
         "jerk",
         "idiot",
         "moron",
-        "stupid"
+        "stupid",
+        "loser"
     ]
 
     # Flavor text for the talk menu at high affinity
@@ -678,6 +945,18 @@ init -990 python in jn_globals:
         ":<"
     ]
 
+    DEFAULT_TEASE_EMOTICONS = [
+        ">:3",
+        ">:)",
+        "^.^",
+        "(^ｖ^)",
+        ">:P",
+        ">;P",
+        ">;D",
+        ">:D",
+        ">;)"
+    ]
+
     # Alphabetical (excluding numbers) values allowed for text input
     DEFAULT_ALPHABETICAL_ALLOW_VALUES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-' "
 
@@ -697,11 +976,15 @@ init 10 python in jn_globals:
     current_affinity_state = store.jn_affinity.NORMAL
 
 #Stuff that's really early, which should be usable basically anywhere
-init -999 python in utils:
+init -999 python in jn_utils:
     import datetime
+    import easter
+    from Enum import Enum
+    import hashlib
     import os
     import store
     import pprint
+    import pygame
 
     #Make log folder if not exist
     _logdir = os.path.join(renpy.config.basedir, "log")
@@ -720,6 +1003,8 @@ init -999 python in utils:
         SEVERITY_WARN: "[{0}] [WARNING]: {1}",
         SEVERITY_ERR: "[{0}] [ERROR]: {1}"
     }
+
+    __KEY_HASH = "4d753616e2082a70b8ec46439c26e191010384c46e81d488579c3cca35eb3d6c"
 
     def log(message, logseverity=SEVERITY_INFO):
         """
@@ -751,7 +1036,16 @@ init -999 python in utils:
         """
         return pprint.pformat(object.__dict__, indent, width)
 
-init python in utils:
+    def get_mouse_position():
+        """
+        Returns a tuple representing the mouse's current position in the game window.
+
+        OUT:
+            - mouse position as a tuple in format (x,y)
+        """
+        return pygame.mouse.get_pos()
+
+init python in jn_utils:
     def get_current_session_length():
         """
         Returns a timedelta object representing the length of the current game session.
@@ -794,14 +1088,20 @@ init python in utils:
         else:
             return "a while"
 
-    def get_current_hour():
+    # Key setup
+    key_path = os.path.join(renpy.config.basedir, "game/dev/key.txt").replace("\\", "/")
+    if not os.path.exists(key_path):
+        __KEY_VALID = False
+
+    else:
+        with open(name=key_path, mode="r") as key_file:
+            __KEY_VALID = hashlib.sha256(key_file.read().encode("utf-8")).hexdigest() == __KEY_HASH
+
+    def get_key_valid():
         """
-        Gets the current hour (out of 24) of the day.
-        
-        OUT:
-            Integer representing the current hour of the day.
+        Returns the validation state of the key.
         """
-        return datetime.datetime.now().hour
+        return __KEY_VALID
 
 # Vanilla resources from base DDLC
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
@@ -828,6 +1128,7 @@ define audio.card_shuffle = "mod_assets/sfx/card_shuffle.mp3"
 define audio.card_place = "mod_assets/sfx/card_place.mp3"
 define audio.drawer = "mod_assets/sfx/drawer.mp3"
 define audio.smack = "mod_assets/sfx/smack.mp3"
+define audio.clothing_ruffle = "mod_assets/sfx/clothing_ruffle.mp3"
 
 # Looped sound effects
 define audio.rain_muffled = "mod_assets/sfx/rain_muffled.mp3"
@@ -835,10 +1136,8 @@ define audio.rain_muffled = "mod_assets/sfx/rain_muffled.mp3"
 # Music
 define audio.test_bgm = "mod_assets/bgm/background_test_music.ogg"
 
-# Sprites
-define body_a = "mod_assets/natsuki-assets/base.png"
-define uniform_a = "mod_assets/natsuki-assets/uniform.png"
-define face_a = "mod_assets/natsuki-assets/jnab.png"
+# Voicing - we disable TTS
+define config.tts_voice = None
 
 ##Character Definitions
 define mc = DynamicCharacter('player', image='mc', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
@@ -846,8 +1145,6 @@ define s = DynamicCharacter('s_name', image='sayori', what_prefix='"', what_suff
 define m = DynamicCharacter('m_name', image='monika', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 define n = DynamicCharacter('n_name', image='natsuki', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 define y = DynamicCharacter('y_name', image='yuri', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
-
-define n2 = DynamicCharacter('Natsuki Test', image='natsuki', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 
 init python:
     #If they quit during a pause, we have to set _dismiss_pause to false again (I hate this hack)
@@ -861,7 +1158,7 @@ init python:
     # Assign Natsuki the chosen nickname (defaulted to Natsuki)
     if persistent.jn_player_nicknames_current_nickname:
         n_name = persistent.jn_player_nicknames_current_nickname
-    
+
     else:
         n_name = "Natsuki"
 
@@ -871,3 +1168,25 @@ init -999 python:
         jn_globals.current_label = name
 
     config.label_callback = label_callback
+
+    class JNEvent(object):
+        """
+        Pythonic equivalent of C#'s event type
+
+        Events are added and removed via `+=` to add a listener, and `-=` to remove a listener.
+        To call all handlers, simply call the instance of the event class
+        """
+        def __init__(self):
+            self.__eventhandlers = []
+
+        def __iadd__(self, handler):
+            self.__eventhandlers.append(handler)
+            return self
+
+        def __isub__(self, handler):
+            self.__eventhandlers.remove(handler)
+            return self
+
+        def __call__(self, *args, **keywargs):
+            for eventhandler in self.__eventhandlers:
+                eventhandler(*args, **keywargs)
