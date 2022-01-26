@@ -135,7 +135,8 @@ label talk_did_you_have_pets:
         n 1fslem "Ugh..."
         n 1fslun "It still annoys me...{w=0.3}{nw}" 
         extend 1uchgn " but then again,{w=0.1} it's not like I can't keep a pet here instead,{w=0.1} right?{w=0.1} Ehehe."
-n 1unmbg "But what about you,{w=0.1} [player]?"
+        
+    n 1unmbg "But what about you,{w=0.1} [player]?"
     if persistent.jn_player_pet is None:
         menu:
             n "Do you have any pets?"
