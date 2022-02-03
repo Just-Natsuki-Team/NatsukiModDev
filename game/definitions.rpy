@@ -957,6 +957,20 @@ init -990 python in jn_globals:
         ">;)"
     ]
 
+    DEFAULT_CONFUSED_EMOTICONS = [
+        "o.o",
+        "o.o;",
+        "O.O",
+        "T.T",
+        "T_T",
+        "@_@",
+        "@.@",
+        "0.0?",
+        "C-C",
+        "C_C",
+        "C.C"
+    ]
+
     # Alphabetical (excluding numbers) values allowed for text input
     DEFAULT_ALPHABETICAL_ALLOW_VALUES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-' "
 

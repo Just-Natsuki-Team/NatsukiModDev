@@ -81,13 +81,15 @@ init python in jn_activity:
         OUT:
             - JNActivities type for the active window, or JNActivities.unknown
         """
-        window_name = get_current_window_name().replace(" ", "").lower()
-        for entry in WINDOW_NAME_ACTIVITY_MAP.items():
-            if entry[0] in window_name:
-                if not has_player_done_activity(int(entry[1])):
-                    store.persistent.jn_activity_used_programs.append(int(entry[1]))
-                
-                return entry[1]
+        window_name = get_current_window_name()
+        if window_name is not None:
+            window_name = get_current_window_name().replace(" ", "").lower()
+            for entry in WINDOW_NAME_ACTIVITY_MAP.items():
+                if entry[0] in window_name:
+                    if not has_player_done_activity(int(entry[1])):
+                        store.persistent.jn_activity_used_programs.append(int(entry[1]))
+                    
+                    return entry[1]
 
         return JNActivities.unknown
 
