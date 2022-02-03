@@ -2,7 +2,11 @@ default persistent.jn_activity_used_programs = []
 
 init python in jn_activity:
     from Enum import Enum
-    import pygetwindow
+    if renpy.windows:
+        import pygetwindow
+    else:
+        import Xlib
+        import Xlib.display
     import store
     import store.jn_utils as jn_utils
 
@@ -60,7 +64,14 @@ init python in jn_activity:
         OUT:
             - str representing the title of the currently active window
         """
-        return pygetwindow.getActiveWindow().title
+        if renpy.windows:
+            return pygetwindow.getActiveWindow().title
+            
+        elif renpy.linux:
+            return Xlib.display.Display().get_input_focus().focus.get_wm_name()
+
+        else:
+            return ""
 
     def get_current_activity():
         """
@@ -70,7 +81,6 @@ init python in jn_activity:
         OUT:
             - JNActivities type for the active window, or JNActivities.unknown
         """
-        renpy.pause(2.0)
         window_name = get_current_window_name().replace(" ", "").lower()
         for entry in WINDOW_NAME_ACTIVITY_MAP.items():
             if entry[0] in window_name:
