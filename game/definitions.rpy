@@ -926,7 +926,8 @@ init -990 python in jn_globals:
         ">:/",
         ">:(",
         "(;>_>)",
-        "(-_-)"
+        "(-_-)",
+        "||-_-"
     ]
 
     DEFAULT_SAD_EMOTICONS = [

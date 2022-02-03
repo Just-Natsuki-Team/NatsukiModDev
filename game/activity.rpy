@@ -15,37 +15,33 @@ init python in jn_activity:
         unknown = 0
         coding = 1
         discord = 2
-        spotify = 3
+        music_applications = 3
         gaming  = 4
         youtube = 5
         github_jn = 6
-        github_other = 6
         artwork = 7
-        anime_streaming = 10
-        work_applications = 11
-        twitter = 14
-        deviantart = 15
-        manga = 16
-        facebook = 17
+        anime_streaming = 8
+        work_applications = 9
+        twitter = 10
+        deviantart = 11
+        manga = 12
 
         def __int__(self):
             return self.value
 
     WINDOW_NAME_REGEX_ACTIVITY_MAP = {
-        "(visualstudio|notepad/+/+|atom|brackets|vim)": JNActivities.coding,
-        "(discord)": JNActivities.discord,
-        "(spotify)": JNActivities.spotify,
-        "(steam|origin)": JNActivities.gaming,
-        "(youtube)": JNActivities.youtube,
+        "(- visual studio|- notepad/+/+|- atom|- brackets|vim|eclipse)": JNActivities.coding,
+        "(- discord)": JNActivities.discord,
+        "(spotify|groove|zune|itunes)": JNActivities.music_applications,
+        "(steam|origin|battle.net)": JNActivities.gaming,
+        "(- youtube)": JNActivities.youtube,
         "(natsukimoddev)": JNActivities.github_jn,
-        "(github)": JNActivities.github_other,
-        "(clipstudiopaint|photoshop|krita|gimp|paint.net)": JNActivities.artwork,
+        "(clip studio paint|photoshop|krita|gimp|paint.net)": JNActivities.artwork,
         "(crunchyroll)": JNActivities.anime_streaming,
         "(word|excel|powerpoint|openoffice|libreoffice)": JNActivities.work_applications,
-        "(twitter)": JNActivities.twitter,
-        "(deviantart)": JNActivities.deviantart,
-        "(mangadex|mangasee)": JNActivities.manga,
-        "(facebook)": JNActivities.facebook,
+        "(/ twitter)": JNActivities.twitter,
+        "(deviantart - |/|deviantart)": JNActivities.deviantart,
+        "(- mangadex|- mangasee|- mangakot)": JNActivities.manga
     }
 
     def get_current_window_name():
@@ -78,7 +74,7 @@ init python in jn_activity:
 
         window_name = get_current_window_name()
         if window_name is not None:
-            window_name = get_current_window_name().replace(" ", "").lower()
+            window_name = get_current_window_name().lower()
             for entry in WINDOW_NAME_REGEX_ACTIVITY_MAP.items():
                 if re.search(entry[0], window_name):
                     if not has_player_done_activity(int(entry[1])):
