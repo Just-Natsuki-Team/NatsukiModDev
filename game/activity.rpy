@@ -35,7 +35,7 @@ init python in jn_activity:
         "(spotify|groove|zune|itunes)": JNActivities.music_applications,
         "(steam|origin|battle.net)": JNActivities.gaming,
         "(- youtube)": JNActivities.youtube,
-        "(natsukimoddev)": JNActivities.github_jn,
+        "(just-natsuki-team/natsukimoddev)": JNActivities.github_jn,
         "(clip studio paint|photoshop|krita|gimp|paint.net)": JNActivities.artwork,
         "(crunchyroll)": JNActivities.anime_streaming,
         "(word|excel|powerpoint|openoffice|libreoffice)": JNActivities.work_applications,
@@ -52,7 +52,10 @@ init python in jn_activity:
             - str representing the title of the currently active window
         """
         if renpy.windows:
-            return pygetwindow.getActiveWindow().title
+            if pygetwindow.getActiveWindow():
+                return pygetwindow.getActiveWindow().title
+
+            return ""
             
         elif renpy.linux:
             return Xlib.display.Display().get_input_focus().focus.get_wm_name()
