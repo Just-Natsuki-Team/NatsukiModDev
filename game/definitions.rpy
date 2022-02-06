@@ -926,7 +926,8 @@ init -990 python in jn_globals:
         ">:/",
         ">:(",
         "(;>_>)",
-        "(-_-)"
+        "(-_-)",
+        "||-_-"
     ]
 
     DEFAULT_SAD_EMOTICONS = [
@@ -955,6 +956,20 @@ init -990 python in jn_globals:
         ">;D",
         ">:D",
         ">;)"
+    ]
+
+    DEFAULT_CONFUSED_EMOTICONS = [
+        "o.o",
+        "o.o;",
+        "O.O",
+        "T.T",
+        "T_T",
+        "@_@",
+        "@.@",
+        "0.0?",
+        "C-C",
+        "C_C",
+        "C.C"
     ]
 
     # Alphabetical (excluding numbers) values allowed for text input

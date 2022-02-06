@@ -182,6 +182,9 @@ init python:
             for action in jn_plugins.minute_check_calls:
                 eval(action.statement)
 
+        # Check what the player is currently doing
+        jn_activity.get_current_activity()
+
         # Push a new topic every couple of minutes
         # TODO: Move to a wait/has-waited system to allow some more flexibility
         if (
