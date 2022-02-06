@@ -4,7 +4,7 @@ init python in jn_activity:
     from Enum import Enum
     if renpy.windows:
         import pygetwindow
-    else:
+    elif renpy.linux:
         import Xlib
         import Xlib.display
     import re
@@ -40,7 +40,7 @@ init python in jn_activity:
         "(crunchyroll)": JNActivities.anime_streaming,
         "(word|excel|powerpoint|openoffice|libreoffice)": JNActivities.work_applications,
         "(/ twitter)": JNActivities.twitter,
-        "(deviantart - |/|deviantart)": JNActivities.deviantart,
+        "(deviantart - |\| deviantart)": JNActivities.deviantart,
         "(- mangadex|- mangasee|- mangakot)": JNActivities.manga
     }
 
@@ -61,6 +61,7 @@ init python in jn_activity:
             return Xlib.display.Display().get_input_focus().focus.get_wm_name()
 
         else:
+            # We don't currently support Mac OS
             return ""
 
     def get_current_activity(delay=0):
@@ -78,12 +79,12 @@ init python in jn_activity:
         window_name = get_current_window_name()
         if window_name is not None:
             window_name = get_current_window_name().lower()
-            for entry in WINDOW_NAME_REGEX_ACTIVITY_MAP.items():
-                if re.search(entry[0], window_name):
-                    if not has_player_done_activity(int(entry[1])):
-                        store.persistent.jn_activity_used_programs.append(int(entry[1]))
+            for regex, activity in WINDOW_NAME_REGEX_ACTIVITY_MAP.items():
+                if re.search(regex, window_name):
+                    if not has_player_done_activity(int(activity)):
+                        store.persistent.jn_activity_used_programs.append(int(activity))
                     
-                    return entry[1]
+                    return activity
 
         return JNActivities.unknown
 
