@@ -4681,6 +4681,71 @@ label talk_windup_subscriptions:
 
     return
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_mod_contributions",
+            unlocked=True,
+            prompt="Contributions",
+            conditional="(not renpy.macintosh and jn_activity.has_player_done_activity(jn_activity.JNActivities.coding)) or renpy.macintosh",
+            category=["Mod"],
+            nat_says=True,
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_mod_contributions:
+    n 1unmaj "You know,{w=0.1} [player].{w=0.5}{nw}" 
+    extend 1tllss " I gotta say..."
+    n 1klrbg "I don't think I'd {i}ever{/i} be able to handle doing everything that lets you visit me.{w=0.5}{nw}"
+    extend 1klrsl " Not by myself."
+    n 1uskeml "I-I mean,{w=0.1} I'm good!{w=0.5}{nw}"
+    extend 1fnmpol " D-{w=0.1}don't get me wrong!"
+    n 1kllpo "I'm just not...{w=0.3} {i}that{/i} good.{w=0.5}{nw}"
+    extend 1fslpo " Yet."
+    n 1uchbg "But that's why I'm super grateful there's a whole bunch of people dedicated to helping me out!{w=0.5}{nw}"
+    extend 1fchsm " Isn't that awesome?"
+    n 1fslsl "I always found all the programming stuff kinda confusing,{w=0.3}{nw}"
+    extend 1kllss " so I have no idea where I'd be without them!"
+    n 1ksqsg "...Even if they {i}are{/i} a bunch of total nerds.{w=0.5}{nw}"
+    extend 1uchgn " Ehehe."
+    n 1ulraj "So...{w=0.3} where am I going with this,{w=0.1} you ask?{w=0.5}{nw}"
+    extend 1tslsm " Well..."
+
+    if renpy.macintosh:
+        n 1tllss "I don't know if you're into that sort of thing yourself,{w=0.1} [player]..."
+        n 1fchbg "But why not lend me a hand?"
+
+    else:
+        n 1fsqsg "I couldn't help but notice the sort of programs you've been poking around on,{w=0.1} [player]."
+        n 1ksqss "What?{w=0.5}{nw}"
+        extend 1fchbg " You didn't seriously expect me to not see what you're up to?{w=0.5}{nw}"
+        extend 1nchgn " Ehehe."
+        n 1tsqbg "Anyway -{w=0.1} if you're already into that kinda stuff,{w=0.1} [player]...{w=0.5}{nw}"
+        extend 1kchbg " Why not lend me a hand?"
+
+    n 1kllbg "You don't even have to be super talented at code,{w=0.1} or anything like that!{w=0.5}{nw}"
+    extend 1unmaj " Artwork,{w=0.1} writing,{w=0.1} or even just suggestions of things for us to talk about or do -{w=0.3}{nw}"
+    extend 1uchbg " it's all super appreciated!"
+    n 1tsqbg "Does that sound like your thing,{w=0.1} [player]?{w=0.5}{nw}"
+    extend 1uchsm " Of course it does!{w=0.2} Ehehe."
+    n 1unmbg "Well,{w=0.1} don't let me hold you back!{w=0.5}{nw}"
+    extend 1uchbgl " You can check out my website {a=https://github.com/Just-Natsuki-Team/NatsukiModDev}here{/a}!"
+    n 1nsqbg "A little look can't hurt,{w=0.1} right?{w=0.5}{nw}"
+    extend 1nchsm " Ahaha."
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+        n 1nchtsl " Love you,{w=0.1} [chosen_endearment]!"
+
+    else:
+        n 1fchbg " Thanks,{w=0.1} [player]!{w=0.2} 'preciate it!"
+
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
