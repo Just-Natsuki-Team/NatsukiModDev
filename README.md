@@ -16,8 +16,8 @@ If you're just interested in seeing what we're up to, or hunting for bugs, pleas
 
 **Interested in a community server or chatting with the devs? Consider joining our Discord server! We'd love to have you!**
 <p align="center">
-    <a href=https://discord.gg/B7GcUsK>
-        <img src="https://discordapp.com/api/guilds/441438764049629185/widget.png?style=banner4"/>
+    <a href="https://discord.gg/sFxdsCBh94">
+        <img src="https://discordapp.com/api/guilds/930206430148063242/widget.png?style=banner4"/>
     </a>
 </p>
 
