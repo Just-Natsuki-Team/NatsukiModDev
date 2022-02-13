@@ -1407,7 +1407,7 @@ label talk_drinking_alcohol:
     else:
         n 1unmsr "Hey,{w=0.1} [player]?"
         n 1nllaj "I don't really care that much if you drink or not."
-        n 1ncssr "Just...{w-0.3} go easy on the stuff."
+        n 1ncssr "Just...{w=0.3} go easy on the stuff."
         n 1flleml "B-{w=0.1}but only because I'm not gonna clean up after you!"
         n 1fllss "Ahaha..."
         n 1kllsr "..."

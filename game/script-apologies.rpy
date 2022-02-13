@@ -596,7 +596,7 @@ init 5 python:
 
 label apology_scare:
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n 1fskwrf "A-{w-0.1}and I should think so too,{w=0.1} [player] -{w=0.1} jeez!"
+        n 1fskwrf "A-{w=0.1}and I should think so too,{w=0.1} [player] -{w=0.1} jeez!"
         n 1fwmpof "Are you trying to give me a heart attack or what?"
         n 1fcspol "..."
         n 1kllbol "Thank you,{w=0.1} [player].{w=0.2} I accept your apology."
@@ -604,7 +604,7 @@ label apology_scare:
         $ jn_relationship("affinity+")
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-        n 1fbkwrl "A-{w-0.1}and you're right {i}to{/i} be sorry,{w=0.1} [player]!"
+        n 1fbkwrl "A-{w=0.1}and you're right {i}to{/i} be sorry,{w=0.1} [player]!"
         n 1flleml "I {i}hate{/i} being made to feel like that!{w=0.2} Dummy..."
         n 1fcspo "..."
         n 1fnmpo "Alright,{w=0.1} look.{w=0.1} I accept your apology,{w=0.1} okay?"
