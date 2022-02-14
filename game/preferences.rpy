@@ -3,11 +3,11 @@ default persistent.jn_ui_style = "default"
 init python in jn_preferences.random_topic_frequency:
     import store
 
-    OFTEN = 0
-    FREQUENT = 1
+    NEVER = 0
+    RARELY = 1
     SOMETIMES = 2
-    RARELY = 3
-    NEVER = 4
+    FREQUENT = 3
+    OFTEN = 4
 
     _RANDOM_TOPIC_FREQUENCY_COOLDOWN_MAP = {
         0: 999,
