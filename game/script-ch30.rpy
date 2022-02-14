@@ -130,7 +130,7 @@ label call_next_topic:
                 and jn_utils.get_current_session_length().total_seconds() > 60
                 and not jn_activity.get_jn_window_active()):
                     play audio notification
-                    $ jn_activity.taskbar_flash(2, 750)
+                    $ jn_activity.taskbar_flash()
 
             # Call the pending topic, and disable the UI
             $ jn_globals.player_is_in_conversation = True
