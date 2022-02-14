@@ -139,16 +139,13 @@ init python in jn_activity:
         """
         return int(activity) in store.persistent.jn_activity_used_programs
 
-    def taskbar_flash(flash_count, flash_frequency_milliseconds, delay=0):
+    def taskbar_flash(flash_count, flash_frequency_milliseconds):
         """
         Flashes the JN icon on the taskbar (Windows only).
 
         IN:
             - flash_count - The amount of times to flash the icon
-            - flash_frequency_milliseconds - The time to wait between each flash
+            - flash_frequency_milliseconds - The time to wait between each flash, in milliseconds
         """
         if renpy.windows:
-            if delay is not 0:
-                renpy.pause(delay)
-
             win32gui.FlashWindowEx(__get_jn_window_hwnd(), 6, flash_count, flash_frequency_milliseconds)
