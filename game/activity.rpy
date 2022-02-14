@@ -19,6 +19,8 @@ init python in jn_activity:
 
     class JNWindowFoundException(Exception):
         """
+        Custom exception; used to break out of the win32gui.EnumWindows method while still returning a value,
+        as only that and returning False are valid means of termination.
         """
         def __init__(self, hwnd):
             self.hwnd = hwnd
