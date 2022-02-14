@@ -1,7 +1,12 @@
 ## Just Natsuki
 An After-Story style mod for Natsuki from DDLC, focusing on building a post-game relationship between Natsuki and her player (you!).
 
-### Disclaimer:
+### Contents
+1. [Disclaimer](#disclaimer)
+2. [Installation](#installation)
+3. [Community](#community)
+
+### Disclaimer
 
 Please note that as Just Natsuki is currently undergoing a complete overhaul, any/all mod content under the overhaul is liable to change or be removed without prior warning.
 
@@ -12,7 +17,7 @@ If you are looking for a complete mod experience, this is not something we are r
 However, if you are interested in helping to making Just Natsuki the best it can be, we welcome your support! 
 Please feel free to clone the repository, suggest new content by raising an issue, or try out the mod yourself and let us know about any problems by raising bug reports.
 
-#### In short:
+#### In short
 
 - Do not expect a complete, polished experience at this stage in development.
 - Do not expect progress made by playing under the overhaul to be supported into release, or further in development.
