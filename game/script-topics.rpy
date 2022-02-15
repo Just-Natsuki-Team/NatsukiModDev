@@ -4688,7 +4688,7 @@ init 5 python:
             label="talk_mod_contributions",
             unlocked=True,
             prompt="Contributions",
-            conditional="(not renpy.macintosh and jn_activity.has_player_done_activity(jn_activity.JNActivities.coding)) or renpy.macintosh",
+            conditional="renpy.macintosh or jn_activity.has_player_done_activity(jn_activity.JNActivities.coding)",
             category=["Mod"],
             nat_says=True,
             affinity_range=(jn_affinity.AFFECTIONATE, None),
