@@ -125,6 +125,13 @@ label call_next_topic:
         $ _topic = persistent._event_list.pop(0)
 
         if renpy.has_label(_topic):
+            # Notify if the window isn't currently active
+            if (persistent.jn_notify_conversations
+                and jn_utils.get_current_session_length().total_seconds() > 60
+                and not jn_activity.get_jn_window_active()):
+                    play audio notification
+                    $ jn_activity.taskbar_flash()
+
             # Call the pending topic, and disable the UI
             $ jn_globals.player_is_in_conversation = True
             call expression _topic

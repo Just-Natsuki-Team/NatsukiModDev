@@ -46,3 +46,6 @@ default persistent.jn_natsuki_repeat_topics = True
 # This determines whether the weather must be randomly weathered by the player
 # Wether you can deal with this depends on how well you can weather this joke
 default persistent.jn_random_weather = True
+
+# This determines if Natsuki should attempt to notify the user when starting a conversation
+default persistent.jn_notify_conversations = True

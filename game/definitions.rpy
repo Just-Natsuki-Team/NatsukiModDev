@@ -1144,6 +1144,7 @@ define audio.card_place = "mod_assets/sfx/card_place.mp3"
 define audio.drawer = "mod_assets/sfx/drawer.mp3"
 define audio.smack = "mod_assets/sfx/smack.mp3"
 define audio.clothing_ruffle = "mod_assets/sfx/clothing_ruffle.mp3"
+define audio.notification = "mod_assets/sfx/notification.ogg"
 
 # Looped sound effects
 define audio.rain_muffled = "mod_assets/sfx/rain_muffled.mp3"

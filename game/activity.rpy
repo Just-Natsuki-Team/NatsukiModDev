@@ -2,14 +2,31 @@ default persistent.jn_activity_used_programs = []
 
 init python in jn_activity:
     from Enum import Enum
-    if renpy.windows:
-        import pygetwindow
-    elif renpy.linux:
-        import Xlib
-        import Xlib.display
+    import sys
     import re
     import store
     import store.jn_utils as jn_utils
+
+    if renpy.windows:
+        import pygetwindow
+        sys.path.append(renpy.config.gamedir + '\\python-packages\\')
+        import win32api
+        import win32gui
+
+    elif renpy.linux:
+        import Xlib
+        import Xlib.display
+
+    class JNWindowFoundException(Exception):
+        """
+        Custom exception; used to break out of the win32gui.EnumWindows method while still returning a value,
+        as only that and returning False are valid means of termination.
+        """
+        def __init__(self, hwnd):
+            self.hwnd = hwnd
+
+        def __str__(self):
+            return self.hwnd
 
     class JNActivities(Enum):
         unknown = 0
@@ -43,6 +60,33 @@ init python in jn_activity:
         "(deviantart - |\| deviantart)": JNActivities.deviantart,
         "(- mangadex|- mangasee|- mangakot)": JNActivities.manga
     }
+
+    def __get_jn_window_hwnd():
+        """
+        Gets the hwnd of the JN game window (Windows only).
+
+        OUT:
+            - int representing the hwnd of the JN game window
+        """
+        def check_jn_window(hwnd, ctx):
+            """
+            Returns JNWindowFoundException containing the hwnd of the JN game window.
+            """
+            if win32gui.GetWindowText(hwnd) == "Just Natsuki":
+                raise JNWindowFoundException(hwnd)
+
+        try:
+            # Iterate through all windows, comparing titles to find the JN game window
+            win32gui.EnumWindows(check_jn_window, None)
+        
+        except JNWindowFoundException as exception:
+            return exception.hwnd
+
+    def get_jn_window_active():
+        """
+        Returns True if the currently active window is the JN game window, otherwise False.
+        """
+        return get_current_window_name() == "Just Natsuki"
 
     def get_current_window_name():
         """
@@ -96,3 +140,15 @@ init python in jn_activity:
             - activity - The JNActivities activity to check
         """
         return int(activity) in store.persistent.jn_activity_used_programs
+
+    def taskbar_flash(flash_count=2, flash_frequency_milliseconds=750):
+        """
+        Flashes the JN icon on the taskbar (Windows only).
+        By default, the icon will flash twice with a healthy delay between each flash, before remaining lit.
+
+        IN:
+            - flash_count - The amount of times to flash the icon before the icon remains in a lit state
+            - flash_frequency_milliseconds - The amount of time to wait between each flash, in milliseconds
+        """
+        if renpy.windows:
+            win32gui.FlashWindowEx(__get_jn_window_hwnd(), 6, flash_count, flash_frequency_milliseconds)

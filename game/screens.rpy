@@ -1303,6 +1303,17 @@ screen preferences():
                                 false_value=False)
                         ]
 
+                    vbox:
+                        style_prefix "check"
+                        label _("Notifications")
+                        textbutton _("Conversations") action [
+                            ToggleField(
+                                object=persistent,
+                                field="jn_notify_conversations",
+                                true_value=True,
+                                false_value=False)
+                        ]
+
                     ## Additional vboxes of type "radio_pref" or "check_pref" can be
                     ## added here, to add additional creator-defined preferences.
 

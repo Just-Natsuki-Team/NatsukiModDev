@@ -61,13 +61,13 @@ label talk_having_pictures_taken:
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
             if jn_screenshots.are_screenshots_blocked():
-                n 1fsqpu "Really, [player]?{w=0.1} You're asking me about this {i}now{/i}?"
+                n 1fsqpu "Really,{w=0.1} [player]?{w=0.1} You're asking me about this {i}now{/i}?"
                 n 1fslaj "You know {i}perfectly well{/i} how I feel about this."
                 n 1fsgbo "I don't hate you,{w=0.1} but please try to remember how I feel before you do stuff like that."
                 n 1ncssl "I'm...{w=0.3} still gonna keep that turned off for now,{w=0.1} though."
 
             else:
-                n 1ncuaj "H-huh?{w=0.2} Pictures of me?"
+                n 1ncuaj "H-{w=0.1}huh?{w=0.2} Pictures of me?"
                 n 1nlrsr "Not a fan,{w=0.1} honestly -{w=0.1} but you knew that much already,{w=0.1} [player]."
                 n 1knmpu "It's just..."
                 n 1kcspu "I really...{w=0.3} need...{w=0.3} my privacy.{w=0.1} It matters a lot to me."
@@ -460,6 +460,13 @@ label talk_using_computers_healthily:
     n 1tnmaj "Hey,{w=0.1} [player].{w=0.2} I just thought of something."
     n 1unmsf "You gotta be at your computer to talk to me,{w=0.1} right?"
     n 1ullsf "And you've been here a while already..."
+
+    if (jn_activity.has_player_done_activity(jn_activity.JNActivities.work_applications) 
+        or jn_activity.has_player_done_activity(JNActivities.artwork)
+        or jn_activity.has_player_done_activity(JNActivities.coding)):
+            n 1knmaj "In fact, I've even {i}seen{/i} you working on a lot of stuff myself!"
+            n 1kllsl "..."
+
     n 1nchgn "Alright,{w=0.1} that's it!{w=0.2} I've decided."
     n 1uchgn "I'm gonna give you a little lesson on using your computer the right way!"
     n 1nnmss "Number one:{w=0.2} posture!"
@@ -1942,6 +1949,12 @@ label talk_sleeping_well:
     extend 1fsqpo " Including this one, [player]."
     n 1unmsl "No screen means no bright lights or distractions to keep you up,{w=0.1} obviously."
     n 1fnmpu "If you're tired then the last thing you need is something beaming whatever at you."
+
+    if jn_activity.has_player_done_activity(jn_activity.JNActivities.anime_streaming):
+        n 1tsqsr "And no, [player] {w=0.1}-{w=0.3}{nw}"
+        extend 1fnmpo "No late-night anime binging sessions either."
+        n 1nchgn "Sorry~!"
+
     n 1fcsbg "Moving on, next is temperature!{w=0.2} If it's hot,{w=0.1} use thinner sheets and vice versa."
     n 1fcspu "Nothing disrupts your sleep more than having to rip off blankets,{w=0.1} or pull some out."
     n 1fsgsg "Keeping up with me so far,{w=0.1} [player]?{w=0.5}{nw}"
@@ -2143,6 +2156,10 @@ label talk_using_headphones_carefully:
     n 1nnmsr "But please,{w=0.1} [player]."
     n 1flrsr "...Take them off every once and a while,{w=0.1} will you?{w=0.2} For other people,{w=0.1} I mean."
     n 1ncsbo "I get it -{w=0.1} if you just wanna listen to something in peace,{w=0.1} or give yourself some room,{w=0.1} that's okay."
+    
+    if jn_activity.has_player_done_activity(jn_activity.JNActivities.music_applications):
+        n 1kslbg "I know you like your music streaming."
+    
     n 1nsqbo "But don't use them to barricade yourself away from everyone and everything."
     n 1ksrsl "It's...{w=0.3} not healthy to do that either,{w=0.1} [player]."
     n 1nchsm "...And that's about all I had to say!"
@@ -2265,8 +2282,12 @@ label talk_gaming:
                 $ persistent.jn_player_gaming_frequency = "Low"
                 n 1tnmaj "Huh?{w=0.2} Really?"
                 n 1tllaj "Not even the odd casual game?"
+
+                if jn_activity.has_player_done_activity(jn_activity.JNActivities.gaming):
+                    n 1fsqts "Liar.{nw}"
+
                 n 1ncsaj "...Well then."
-                n 1fnmbg "It looks like I've got a lot to teach you, [player]!"
+                n 1fnmbg "It looks like I've got a lot to teach you,{w=0.1} [player]!"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
         n 1nnmsl "Huh?{w=0.2} Video games?"
@@ -2309,7 +2330,11 @@ label talk_gaming:
             n 1fchbg "I {i}am{/i} a professional,{w=0.1} after all!"
 
         else:
-            n 1usqsm "I'm sure I can get {i}you{/i} of all people into it."
+            if jn_activity.has_player_done_activity(jn_activity.JNActivities.gaming):
+                n 1fsqts "Liar.{nw}"
+
+            n 1ullaj "Well then...{w=0.5}{nw}"
+            extend 1usqsm " I'm sure I can get {i}you{/i} of all people into it."
 
     else:
         n 1nnmsl "I suppose I look for challenge in my games more than anything."
@@ -3909,6 +3934,12 @@ label talk_collectibles:
                 n 1flrsm "Well,{w=0.1} in that case..."
                 n 1nchbg "Just let me know if you ever feel like a tour!"
                 n 1nchgn "You won't find a better collection!{w=0.2} Ehehe."
+
+                if jn_activity.has_player_done_activity(jn_activity.JNActivities.manga):
+                    n 1fllss "Or,{w=0.1} at least...{w=0.5}{nw}"
+                    extend 1fsqss " a better...{w=0.3} {i}physical{/i} one."
+                    n 1fsqsm "Right,{w=0.5}{nw}"
+                    extend 1fsqbg " [player]?"
 
         "No,{w=0.1} I wouldn't.":
             n 1flrpo "Huh...{w=0.3} you do have a point."
