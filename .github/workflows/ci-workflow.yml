@@ -1,0 +1,48 @@
+# This workflow runs CI checks for the Just Natsuki DDLC mod
+name: CI
+
+on:
+  # Run on all pushes and pull requests
+  push:
+  pull_request:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    container:
+      image: ghcr.io/just-natsuki-team/mod_ci_image:1.0
+
+    name: ci_build
+
+    # Run on ubuntu
+    runs-on: ubuntu-latest
+
+    env:
+      SDL_AUDIODRIVER: dummy # handles ALSA issues
+      SDL_VIDEODRIVER: null # handles display mode
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Move all repo files over to the DDLC install
+      - name: Copy files over
+        run: |
+          cp -Rf ./* /ddlcbase/
+
+      # lint renpy
+      - name: rpy lint
+        run: |
+          cd /renpy
+          ./renpy.sh "../ddlcbase/" lint
+
+      # And finally, distribute renpy under the mod package
+      - name: rpy distribute
+        run: |
+          cd /renpy
+          ./renpy.sh launcher distribute "../ddlcbase/" --package Mod

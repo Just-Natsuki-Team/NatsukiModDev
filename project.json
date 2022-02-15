@@ -1,0 +1,13 @@
+{
+    "build_update": true,
+    "packages": [
+        "DDLC Mod File",
+        "DDLCMod",
+        "",
+        "source",
+        "Mod"
+    ],
+    "add_from": true,
+    "force_recompile": true,
+    "renamed_all": true
+}
