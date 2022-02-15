@@ -61,13 +61,13 @@ label talk_having_pictures_taken:
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
             if jn_screenshots.are_screenshots_blocked():
-                n 1fsqpu "Really, [player]?{w=0.1} You're asking me about this {i}now{/i}?"
+                n 1fsqpu "Really,{w=0.1} [player]?{w=0.1} You're asking me about this {i}now{/i}?"
                 n 1fslaj "You know {i}perfectly well{/i} how I feel about this."
                 n 1fsgbo "I don't hate you,{w=0.1} but please try to remember how I feel before you do stuff like that."
                 n 1ncssl "I'm...{w=0.3} still gonna keep that turned off for now,{w=0.1} though."
 
             else:
-                n 1ncuaj "H-huh?{w=0.2} Pictures of me?"
+                n 1ncuaj "H-{w=0.1}huh?{w=0.2} Pictures of me?"
                 n 1nlrsr "Not a fan,{w=0.1} honestly -{w=0.1} but you knew that much already,{w=0.1} [player]."
                 n 1knmpu "It's just..."
                 n 1kcspu "I really...{w=0.3} need...{w=0.3} my privacy.{w=0.1} It matters a lot to me."
