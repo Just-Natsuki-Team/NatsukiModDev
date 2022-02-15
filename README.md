@@ -22,13 +22,13 @@ Please feel free to clone the repository, suggest new content by raising an issu
 - Do not expect a complete, polished experience at this stage in development.
 - Do not expect progress made by playing under the overhaul to be supported into release, or further in development.
 - Progress made by playing under the old distribution of Just Natsuki will not be supported in the overhaul.
-- Do not expect support if you are playing the old distribution of Just Natsuki.
+- Do not expect support if you are playing the old distribution of Just Natsuki. It is **discontinued**.
 
 ### Installation
 
 1. Download a fresh copy of DDLC from https://ddlc.moe.
 2. Extract/unzip DDLC.
-3. Download the JN mod files: go to https://github.com/Just-Natsuki-Team/NatsukiModDev, then select the _Code_ tab. On the option labelled _Master_, click and ensure you select the _TheOverhaulBranch_ item. Then, click the green _Code_ button, and then select _download ZIP_.
+3. Download the JN mod files: go to https://github.com/Just-Natsuki-Team/NatsukiModDev, then select the _Code_ tab and make sure the branch _master_ is selected. Click the green _Code_ button, and then select _download ZIP_.
 4. Extract/unzip the JN mod files.
 5. From the JN mod files, copy the `game` folder contents into the `game` folder of DDLC. If asked to replace files, select _Yes_.
 6. From the JN mod files, copy the `lib` folder contents into the `lib` folder of DDLC. If asked to replace files, select _Yes_.
