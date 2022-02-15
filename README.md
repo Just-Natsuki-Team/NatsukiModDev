@@ -14,7 +14,7 @@ In addition, we unfortunately no longer offer support to those running the (now-
 
 If you are looking for a complete mod experience, this is not something we are ready to offer just yet: please rest assured that announcements will be made when the time comes, and we make every attempt to keep our community updated through our official communication channels (GitHub, Twitter and Discord).
 
-However, if you are interested in helping to making Just Natsuki the best it can be, we welcome your support! 
+However, if you are interested in helping to making Just Natsuki the best it can be, we welcome your support!
 Please feel free to clone the repository, suggest new content by raising an issue, or try out the mod yourself and let us know about any problems by raising bug reports.
 
 #### In short
