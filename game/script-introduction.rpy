@@ -14,7 +14,7 @@ init 0 python in jn_introduction:
 
 default persistent.jn_introduction_state = 0
 
-#TODO: Handling for player quit-out during the introduction sequence
+#TODO: Handling for player quit-out during the introduction sequence, so can continue where left off w/ additional dialogue
 
 label introduction_opening:
     $ allow_skipping = False
@@ -52,7 +52,7 @@ label introduction_opening:
 
     if random.randint(0,10) == 1:
         play audio glitch_a
-        show glitch_garbled_red zorder 99 with vpunch
+        show glitch_garbled_red zorder 99 with hpunch
         $ renpy.pause(1)
         hide glitch_garbled_red
 
@@ -133,10 +133,12 @@ label introduction_first_meeting:
 
 label introduction_collecting_thoughts:
     $ persistent.jn_introduction_state = int(jn_introduction.JNIntroductionStates.collecting_thoughts)
+    #TODO: Expand
     n "This is where I collect my thoughts..."
     jump introduction_outro
 
 label introduction_outro:
+    #TODO: Expand
     n "And now we're ready to spend forever together!"
     $ persistent.jn_introduction_state = int(jn_introduction.JNIntroductionStates.complete)
     
