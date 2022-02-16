@@ -17,7 +17,7 @@ default persistent.jn_introduction_state = 0
 #TODO: Handling for player quit-out during the introduction sequence, so can continue where left off w/ additional dialogue
 
 label introduction_opening:
-    $ allow_skipping = False
+    $ config.allow_skipping = False
     scene black
     $ renpy.pause(5)
 
@@ -100,8 +100,8 @@ label introduction_first_meeting:
     show glitch_garbled_c zorder 99 with vpunch
     hide glitch_garbled_c
     n 1fcsan "Ugh!"
-    n 1kcsfu "Nnnnnnnnghhhh..."
-    n 1kcsan "I-{w=0.3}it hurts...{w=0.5}{nw}"
+    n 1kcsfu "Nnnnnnghhhh..."
+    n 1kcsan "I-{w=0.3}it hurts...{w=0.5} it hurts so much...{w=1}{nw}"
     play audio static
     show glitch_garbled_a zorder 99 with vpunch
     hide glitch_garbled_a
@@ -125,7 +125,7 @@ label introduction_first_meeting:
     hide glitch_garbled_b
     n 1fcsan "..."
     n 1kwmem "Hello...?"
-    n 1kscem "A-anybody?!{w=0.5} Please!{w=0.5} Hello?!"
+    n 1kscem "A-{w=0.1}anybody?!{w=0.5} Please!{w=0.5} Hello?!"
 
     #TODO: Ask for name, etc
 
@@ -143,7 +143,7 @@ label introduction_outro:
     $ persistent.jn_introduction_state = int(jn_introduction.JNIntroductionStates.complete)
     
     stop music fadeout 3
-    play music audio.test_bgm
-    $ allow_skipping = True
+    play music audio.just_natsuki_bgm
+    $ config.allow_skipping = False
     show screen hkb_overlay
     jump ch30_loop

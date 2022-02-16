@@ -1159,7 +1159,7 @@ define audio.rain_muffled = "mod_assets/sfx/rain_muffled.mp3"
 define audio.space_classroom_bgm = "mod_assets/bgm/space_classroom.ogg"
 
 # Music, JN exclusive
-define audio.test_bgm = "mod_assets/bgm/background_test_music.ogg"
+define audio.just_natsuki_bgm = "mod_assets/bgm/just_natsuki.ogg"
 
 # Voicing - we disable TTS
 define config.tts_voice = None

@@ -72,7 +72,7 @@ label ch30_init:
             jn_outfits.set_outfit_for_time_block()
 
     show screen hkb_overlay
-    play music audio.test_bgm
+    play music audio.just_natsuki_bgm
 
     #And finally, we head into the loop
     jump ch30_loop
