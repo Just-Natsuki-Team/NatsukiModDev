@@ -9,9 +9,11 @@ image dim light = "mod_assets/backgrounds/classroom/dim_light.png"
 image dim medium = "mod_assets/backgrounds/classroom/dim_medium.png"
 image dim heavy = "mod_assets/backgrounds/classroom/dim_heavy.png"
 
+# Glitch effects
 image glitch_garbled_a = "mod_assets/backgrounds/etc/glitch_garbled_a.png"
 image glitch_garbled_b = "mod_assets/backgrounds/etc/glitch_garbled_b.png"
 image glitch_garbled_c = "mod_assets/backgrounds/etc/glitch_garbled_c.png"
+image glitch_garbled_red = "mod_assets/backgrounds/etc/glitch_garbled_red.png"
 
 image glitch_fuzzy:
     "mod_assets/backgrounds/etc/glitch_fuzzy_a.png"
@@ -54,9 +56,12 @@ init 0 python in jn_atmosphere:
 
     current_weather = None
 
-    def show_random_sky():
+    def show_random_sky(with_transition=True):
         """
         Shows a randomised sky placeholder with associated dimming effect
+
+        IN:
+            with_transition - If True, will visually fade in the new weather
         """
 
         # Select the sky and dimming effect
@@ -66,12 +71,14 @@ init 0 python in jn_atmosphere:
 
         # Show the sky
         renpy.show(name=sky, zorder=_SKY_Z_INDEX)
-        renpy.with_statement(trans=store.weather_change_transition)
+        if with_transition:
+            renpy.with_statement(trans=store.weather_change_transition)
 
         # Add the dimming effect matching the sky, if it exists
         if dim:
             renpy.show(name=dim, zorder=_DIM_Z_INDEX)
-            renpy.with_statement(trans=store.dim_change_transition)
+            if with_transition:
+                renpy.with_statement(trans=store.dim_change_transition)
 
         # Play rain sfx if the chosen weather is rainy
         if weather_type in (JNWeatherTypes.rain, JNWeatherTypes.thunder):
@@ -80,12 +87,13 @@ init 0 python in jn_atmosphere:
         global current_weather
         current_weather = weather_type
 
-    def show_sky(weather_type):
+    def show_sky(weather_type, with_transition=True):
         """
         Shows the specified sky placeholder with associated dimming effect.
 
         IN:
             weather_type - JNWeatherTypes value for the weather to set
+            with_transition - If True, will visually fade in the new weather
         """
         sky, dim = __WEATHER_EFFECT_MAP.get(weather_type)
         if weather_type in (JNWeatherTypes.rain, JNWeatherTypes.thunder):
@@ -95,11 +103,13 @@ init 0 python in jn_atmosphere:
             renpy.music.stop(channel="weather_loop", fadeout=5.0)
 
         renpy.show(name=sky, zorder=_SKY_Z_INDEX)
-        renpy.with_statement(trans=store.weather_change_transition)
+        if with_transition:
+            renpy.with_statement(trans=store.weather_change_transition)
 
         if dim:
             renpy.show(name=dim, zorder=_DIM_Z_INDEX)
-            renpy.with_statement(trans=store.dim_change_transition)
+            if with_transition:
+                renpy.with_statement(trans=store.dim_change_transition)
 
         global current_weather
         current_weather = weather_type

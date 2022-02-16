@@ -567,6 +567,7 @@ style input:
 ##
 ## http://www.renpy.org/doc/html/screen_special.html#choice
 
+# Default choice screen; this is offset so it doesn't get in front of Natsuki's face during dialogue
 screen choice(items, scroll="viewport"):
     style_prefix "choice"
 
@@ -578,7 +579,20 @@ screen choice(items, scroll="viewport"):
                 hover_sound gui.hover_sound
                 activate_sound gui.activate_sound
 
+# Identical to choice, but not offset - use this for menu options when Natsuki isn't present
 screen choice_centred(items, scroll="viewport"):
+    style_prefix "choice"
+
+    vbox:
+        for i in items:
+            textbutton i.caption:
+                action i.action
+                hover_sound gui.hover_sound
+                activate_sound gui.activate_sound
+
+# Identical to choice_centred, but without hover/activate sounds - use this for menu options when Natsuki isn't present,
+# and when we need silence for atmospheric reasons (like the intro sequence)
+screen choice_centred_mute(items, scroll="viewport"):
     style_prefix "choice"
 
     vbox:

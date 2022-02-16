@@ -1155,7 +1155,10 @@ define audio.static = "mod_assets/sfx/glitch_static.ogg"
 # Looped sound effects
 define audio.rain_muffled = "mod_assets/sfx/rain_muffled.mp3"
 
-# Music
+# Music, vanilla DDLC
+define audio.space_classroom_bgm = "mod_assets/bgm/space_classroom.ogg"
+
+# Music, JN exclusive
 define audio.test_bgm = "mod_assets/bgm/background_test_music.ogg"
 
 # Voicing - we disable TTS
