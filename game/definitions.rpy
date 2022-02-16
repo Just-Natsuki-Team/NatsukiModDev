@@ -1146,6 +1146,12 @@ define audio.smack = "mod_assets/sfx/smack.mp3"
 define audio.clothing_ruffle = "mod_assets/sfx/clothing_ruffle.mp3"
 define audio.notification = "mod_assets/sfx/notification.ogg"
 
+define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
+define audio.glitch_b = "mod_assets/sfx/glitch_b.ogg"
+define audio.glitch_c = "mod_assets/sfx/glitch_c.ogg"
+define audio.interference = "mod_assets/sfx/interference.ogg"
+define audio.static = "mod_assets/sfx/glitch_static.ogg"
+
 # Looped sound effects
 define audio.rain_muffled = "mod_assets/sfx/rain_muffled.mp3"
 

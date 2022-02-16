@@ -133,7 +133,6 @@ image warning:
 image tos = "bg/warning.png"
 image tos2 = "bg/warning2.png"
 
-
 label splashscreen:
     #If this is the first time the game has been run, show a disclaimer
     default persistent.has_launched_before = False
@@ -148,15 +147,16 @@ label splashscreen:
         "[config.name] is a Doki Doki Literature Club fan mod that is not affiliated with Team Salvato."
         "It is designed to be played only after the official game has been completed, and contains spoilers for the official game."
         "Game files for Doki Doki Literature Club are required to play this mod and can be downloaded for free at: http://ddlc.moe"
-        menu:
-            "By playing [config.name] you agree that you have completed Doki Doki Literature Club and accept any spoilers contained within."
-            "I agree.":
-                pass
+        $ narrator(
+            "By playing [config.name] you agree that you have completed Doki Doki Literature Club and accept any spoilers contained within.",
+            interact=False
+        )
+        $ renpy.display_menu(items=[ ("I agree.", True)], screen="choice_centred")
         scene tos2
         with Dissolve(0.25)
         pause 1.0
 
-        scene white
+        scene black
         with Dissolve(0.25)
 
         ##Optional, load a copy of DDLC save data
@@ -171,30 +171,7 @@ label splashscreen:
     if not persistent.jn_first_visited_date:
         $ persistent.jn_first_visited_date = datetime.datetime.now()
 
-    #autoload handling
-    #Use persistent.autoload if you want to bypass the splashscreen on startup for some reason
-    if persistent.has_launched_before and not persistent.playername is "" and not _restart:
-        jump autoload
-
-    # Start splash logic
-    $ config.allow_skipping = True
-
-    # Splash screen
-    show white
-    $ persistent.ghost_menu = False #Handling for easter egg from DDLC
-    show intro with Dissolve(0.5, alpha=True)
-    pause 2.5
-    hide intro with Dissolve(0.5, alpha=True)
-    show splash_warning "[splash_message]" with Dissolve(0.5, alpha=True)
-    pause 2.0
-    hide splash_warning with Dissolve(0.25, alpha=True)
-    $ config.allow_skipping = False
-    return
-
-label warningscreen:
-    hide intro
-    show warning
-    pause 3.0
+    jump autoload
 
 label after_load:
     $ config.allow_skipping = False
@@ -242,7 +219,11 @@ label autoload:
 
     #jump expression persistent.autoload
     # NOTE: we should always jump to ch30 instead
-    jump ch30_autoload
+    if jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.new_game:
+        jump introduction_opening
+
+    else:
+        jump ch30_autoload
 
 label before_main_menu:
     if persistent.playername != "":

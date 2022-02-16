@@ -578,6 +578,15 @@ screen choice(items, scroll="viewport"):
                 hover_sound gui.hover_sound
                 activate_sound gui.activate_sound
 
+screen choice_centred(items, scroll="viewport"):
+    style_prefix "choice"
+
+    vbox:
+        for i in items:
+            textbutton i.caption:
+                action i.action
+                hover_sound None
+                activate_sound None
 
 ## When this is true, menu captions will be spoken by the narrator. When false,
 ## menu captions will be displayed as empty buttons.
@@ -599,7 +608,6 @@ style choice_scrollbar:
     thumb Frame("gui/scrollbar/horizontal_poem_thumb.png", top=6, right=6, tile=True)
     unscrollable "hide"
     bar_invert True
-
 
 style choice_vscrollbar:
     xsize 18
@@ -1775,9 +1783,13 @@ screen confirm(message, yes_action, no_action):
     # If this is a quit confirmation, begin personification so we can work Natsuki into this
     if message == layout.QUIT:
         python:
-            confirm_is_quit = True
-            quit_dialogue = get_affinity_quit_dialogue()
-            message = quit_dialogue[0]
+            if jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete:
+                confirm_is_quit = True
+                quit_dialogue = get_affinity_quit_dialogue()
+                message = quit_dialogue[0]
+
+            else:
+                renpy.jump("quit")
 
     ## Ensure other screens do not get input while this screen is displayed.
     modal True

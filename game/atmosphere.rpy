@@ -9,6 +9,19 @@ image dim light = "mod_assets/backgrounds/classroom/dim_light.png"
 image dim medium = "mod_assets/backgrounds/classroom/dim_medium.png"
 image dim heavy = "mod_assets/backgrounds/classroom/dim_heavy.png"
 
+image glitch_garbled_a = "mod_assets/backgrounds/etc/glitch_garbled_a.png"
+image glitch_garbled_b = "mod_assets/backgrounds/etc/glitch_garbled_b.png"
+image glitch_garbled_c = "mod_assets/backgrounds/etc/glitch_garbled_c.png"
+
+image glitch_fuzzy:
+    "mod_assets/backgrounds/etc/glitch_fuzzy_a.png"
+    pause 0.25
+    "mod_assets/backgrounds/etc/glitch_fuzzy_b.png"
+    pause 0.25
+    "mod_assets/backgrounds/etc/glitch_fuzzy_c.png"
+    pause 0.25
+    repeat
+
 # Transitions
 define natsuki_desk_move_transition = MoveTransition(0.1)
 define weather_change_transition = Dissolve(1.5)
