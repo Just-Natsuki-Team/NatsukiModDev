@@ -210,17 +210,16 @@ label autoload:
     # Prevent the player's menu hotkey from defaulting to Save/Load
     $ store._game_menu_screen  = "preferences"
 
-    # explicity remove keymaps we dont want
+    # Explicity remove keymaps we dont want
     $ config.keymap["debug_voicing"] = list()
     $ config.keymap["choose_renderer"] = list()
 
     # Pop the _splashscreen label which has _confirm_quit as False and other stuff
     $ renpy.pop_call()
 
-    #jump expression persistent.autoload
-    # NOTE: we should always jump to ch30 instead
-    if jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.new_game:
-        jump introduction_opening
+    # Load the appropriate introduction sequence stage, or go straight to ch30 if already completed introduction
+    if not jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete:
+        jump introduction_progress_check
 
     else:
         jump ch30_autoload

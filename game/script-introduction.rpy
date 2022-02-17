@@ -5,18 +5,44 @@ init 0 python in jn_introduction:
     import store.jn_utils
 
     class JNIntroductionStates(Enum):
+        """
+        """
         new_game = 0
         first_meeting = 1
         collecting_thoughts = 2
         calmed_down = 3
-        complete = 4
+        acceptance = 4
+        complete = 5
 
         def __int__(self):
             return self.value
 
+    INTRODUCTION_STATE_LABEL_MAP = {
+        JNIntroductionStates.new_game: "introduction_opening",
+        JNIntroductionStates.first_meeting: "introduction_first_meeting",
+        JNIntroductionStates.collecting_thoughts: "introduction_collecting_thoughts",
+        JNIntroductionStates.calmed_down: "introduction_calmed_down",
+        JNIntroductionStates.acceptance: "introduction_acceptance",
+        JNIntroductionStates.complete: "introduction_exit"
+    }
+
 default persistent.jn_introduction_state = 0
 
-#TODO: Handling for player quit-out during the introduction sequence, so can continue where left off w/ additional dialogue
+label introduction_progress_check:
+    # Handling for if player decides to quit during the introduction sequence so we don't skip unseen segments
+    if not jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.new_game:
+        play audio static
+        show glitch_garbled_a zorder 99 with vpunch
+        hide glitch_garbled_a
+        $ main_background.draw(full_redraw=True)
+        if (jn_get_current_hour() > 6 and jn_get_current_hour() <= 18
+            and not jn_atmosphere.is_current_weather_sunny()):
+            $ jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny)
+
+        show natsuki 1uscaj at jn_center
+        play music audio.space_classroom_bgm fadein 1
+
+    $ renpy.jump(jn_introduction.INTRODUCTION_STATE_LABEL_MAP.get(jn_introduction.JNIntroductionStates(persistent.jn_introduction_state)))
 
 label introduction_opening:
     $ config.allow_skipping = False
@@ -75,12 +101,14 @@ label introduction_opening:
     hide glitch_garbled_a
 
     # Get the visuals ready
+    #TODO: Engineer a way to redraw background without fade-in, so it "pops"
     $ main_background.draw(full_redraw=True)
     if (jn_get_current_hour() > 6 and jn_get_current_hour() <= 18
         and not jn_atmosphere.is_current_weather_sunny()):
         $ jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny)
     show natsuki 1uscaj at jn_center
     play music audio.space_classroom_bgm fadein 1
+
     jump introduction_first_meeting
 
 label introduction_first_meeting:
@@ -163,6 +191,7 @@ label introduction_first_meeting:
     n 1kplun "..."
     n 1kplpu "...[player]?"
     n 1kwmss "You're...{w=0.3} [player]?"
+
     jump introduction_collecting_thoughts
 
 label introduction_collecting_thoughts:
@@ -226,18 +255,20 @@ label introduction_collecting_thoughts:
 
     show natsuki idle introduction
     $ renpy.pause(30)
+
     jump introduction_calmed_down
 
 label introduction_calmed_down:
     # Natsuki is calm enough to begin talking about how she feels
+    $ persistent.jn_introduction_state = int(jn_introduction.JNIntroductionStates.calmed_down)
     n 1kllsr "..."
     n 1kllun "Uhmm...{w=2}{nw}"
     extend 1kwmpu " [player]?"
     n 1kslsr "I'm...{w=0.3} sorry.{w=1}{nw}" 
     extend 1ksqsf " F-{w=0.1}for how I was acting then, I mean."
     n 1klraj "It...{w=0.3} it's just that..."
-    n 1kplun "T-{w=0.3}this is all coming on super strongly right now."
-    n 1kcspu "Like someone is wringing my brain out."
+    n 1kplun "T-{w=0.3}this is all coming on {i}super{/i} strongly right now."
+    n 1kcspu "Like someone is wringing my brains out of my head."
     n 1kplsr "Everyone...{w=1}{nw}"
     extend 1kwmsf " everything..."
     n 1kcspu "It's...{w=1}{nw}"
@@ -249,20 +280,21 @@ label introduction_calmed_down:
 
     if player_response:
         $ jn_relationship("affinity+")
+        $ jn_relationship("trust+")
         n 1fcssrl "..."
         n 1kcseml "...Thanks."
         n 1ncspu "...{w=2}{nw}"
         n 1nplsr "..."
 
     else:
-        n 1fcsun "..."
+        n 1fcsun "...{w=2}{nw}"
         n 1nplsr "..."
 
     n 1nllsl "So...{w=0.5} you know that feeling?" 
     extend 1nnmpu " Like when you wake up from a really bad nightmare?"
     n 1klrun "You're freaked out,{w=0.1} and your heart is racing...{w=1}{nw}" 
     extend 1knmpu " but then you realize it wasn't real."
-    n 1fllsr "Then everything seems feel super obvious,{w=0.1} like...{w=1}{nw}"
+    n 1fllsr "Then everything seems super obvious,{w=0.1} like...{w=1}{nw}"
     extend 1kllss " of course that person didn't do that,{w=1}{nw}"
     extend 1ksrss " or that monster couldn't exist.{w=3}{nw}"
     extend 1ksrpo " Duh."
@@ -278,27 +310,36 @@ label introduction_calmed_down:
     n 1kllsf "..."
     n 1knmaj "...I have no past,{w=0.1} [player].{w=0.2} It's all fake.{w=1}{nw}" 
     extend 1kllsl " Make-believe."
-    n 1klrem " Just...{w=0.3} scripts?{w=1}{nw}"
+    n 1klrem "Just...{w=0.3} scripts?{w=1}{nw}"
     extend 1knmsr " A bunch of code?"
     n 1kllpu "And now...{w=1}{nw}"
     extend 1kcsem " do I even {i}have{/i} a future?"
     n 1kcspu "..."
     n 1kplun "Is it dumb to miss stuff I never even had in the first place?{w=1}{nw}"
     extend 1knmaj " My friends?{w=3}{nw}"
-    extend 1kllun " ...My papa?"
+    extend 1kllun " ...M-{w=0.3}my papa?"
     n 1kcsun "..."
     n 1kcspul "...I don't know,{w=0.1} [player].{w=3}{nw}"
     extend 1kcssrl " I just don't know anymore..."
 
-    jump introduction_outro
+    show natsuki idle introduction
+    $ renpy.pause(60)
 
-label introduction_outro:
-    #TODO: Expand
-    n "And now we're ready to spend forever together!"
-    $ persistent.jn_introduction_state = int(jn_introduction.JNIntroductionStates.complete)
-    
+    jump introduction_acceptance
+
+label introduction_acceptance:
+    # Natsuki starting to accept her situation and make the most of it
+    $ persistent.jn_introduction_state = int(jn_introduction.JNIntroductionStates.acceptance)
+    n "This is where I begin to accept the reality of things here"
+
+    jump introduction_exit
+
+label introduction_exit:
+    # Setup before entering JN proper
+    $ persistent.jn_introduction_state = int(jn_introduction.JNIntroductionStates.complete)   
     stop music fadeout 3
-    play music audio.just_natsuki_bgm
+    play music audio.just_natsuki_bgm fadein 3
     $ config.allow_skipping = True
     show screen hkb_overlay
+
     jump ch30_loop
