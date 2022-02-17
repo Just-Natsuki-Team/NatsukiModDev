@@ -8,7 +8,8 @@ init 0 python in jn_introduction:
         new_game = 0
         first_meeting = 1
         collecting_thoughts = 2
-        complete = 3
+        calmed_down = 3
+        complete = 4
 
         def __int__(self):
             return self.value
@@ -217,11 +218,50 @@ label introduction_collecting_thoughts:
     n 1kslpu "I...{w=0.3} I really need some time to figure things out."
     n 1kwmsr "..."
     n 1kplpul "Can you...{w=0.3} stay here?{w=0.2} W-{w=0.3}with me?{w=1}{nw}"
-    extend 1flrunf " J-{w=0.1}just for a while!"
+    extend 1flrunf " J-{w=0.1}just for a minute!"
     n 1ksrunl "It's just...{w=1}{nw}"
-    extend 1kplsr " I don't think I can be alone right now."
+    extend 1kplsr " I don't think I can be alone right now.{w=1} I...{w=1} I just need to think."
     n 1kllsr "You understand...{w=1.5}{nw}"
     extend 1kplpu " right?"
+
+    show natsuki idle introduction
+    $ renpy.pause(30)
+    jump introduction_calmed_down
+
+label introduction_calmed_down:
+    # Natsuki is calm enough to begin talking about how she feels
+    n 1kllsr "..."
+    n 1kllun "Uhmm..."
+    extend 1kwmpu " [player]?"
+    n 1kslsr "I'm... sorry." 
+    extend 1ksqsf " F-for how I was acting then, I mean."
+    n 1klraj "It... it's just that..."
+    n 1kplun "T-this is all coming on super strongly right now."
+    n 1kcspu "Like... someone is wringing my brain out..."
+    n 1kplsr "Everyone..."
+    extend 1kwmsf " everything..."
+    n 1kcspu "It's..."
+    extend 1kcsanl " it's just like..."
+
+    $ player_response = renpy.display_menu(items=[ 
+        ("Take your time, Natsuki.", True), ("...", False)],
+        screen="choice_centred")
+
+    if player_response:
+        $ jn_relationship("affinity+")
+        n 1fcssrl "..."
+        n 1kcseml "...Thanks."
+        n 1ncspu "..."
+        n 1nplsr "..."
+
+    else:
+        n 1fcsun "..."
+        n 1nplsr "..."
+
+    n "...You know that feeling?" 
+    extend " Like when you wake up from a really bad nightmare?"
+    # CONT
+
 
     jump introduction_outro
 
