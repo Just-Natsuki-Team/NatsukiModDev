@@ -231,16 +231,16 @@ label introduction_collecting_thoughts:
 label introduction_calmed_down:
     # Natsuki is calm enough to begin talking about how she feels
     n 1kllsr "..."
-    n 1kllun "Uhmm..."
+    n 1kllun "Uhmm...{w=2}{nw}"
     extend 1kwmpu " [player]?"
-    n 1kslsr "I'm... sorry." 
-    extend 1ksqsf " F-for how I was acting then, I mean."
-    n 1klraj "It... it's just that..."
-    n 1kplun "T-this is all coming on super strongly right now."
-    n 1kcspu "Like... someone is wringing my brain out..."
-    n 1kplsr "Everyone..."
+    n 1kslsr "I'm...{w=0.3} sorry.{w=1}{nw}" 
+    extend 1ksqsf " F-{w=0.1}for how I was acting then, I mean."
+    n 1klraj "It...{w=0.3} it's just that..."
+    n 1kplun "T-{w=0.3}this is all coming on super strongly right now."
+    n 1kcspu "Like someone is wringing my brain out."
+    n 1kplsr "Everyone...{w=1}{nw}"
     extend 1kwmsf " everything..."
-    n 1kcspu "It's..."
+    n 1kcspu "It's...{w=1}{nw}"
     extend 1kcsanl " it's just like..."
 
     $ player_response = renpy.display_menu(items=[ 
@@ -251,17 +251,44 @@ label introduction_calmed_down:
         $ jn_relationship("affinity+")
         n 1fcssrl "..."
         n 1kcseml "...Thanks."
-        n 1ncspu "..."
+        n 1ncspu "...{w=2}{nw}"
         n 1nplsr "..."
 
     else:
         n 1fcsun "..."
         n 1nplsr "..."
 
-    n "...You know that feeling?" 
-    extend " Like when you wake up from a really bad nightmare?"
-    # CONT
-
+    n 1nllsl "So...{w=0.5} you know that feeling?" 
+    extend 1nnmpu " Like when you wake up from a really bad nightmare?"
+    n 1klrun "You're freaked out,{w=0.1} and your heart is racing...{w=1}{nw}" 
+    extend 1knmpu " but then you realize it wasn't real."
+    n 1fllsr "Then everything seems feel super obvious,{w=0.1} like...{w=1}{nw}"
+    extend 1kllss " of course that person didn't do that,{w=1}{nw}"
+    extend 1ksrss " or that monster couldn't exist.{w=3}{nw}"
+    extend 1ksrpo " Duh."
+    n 1kplss "And you kinda feel stupid...{w=0.3} like,{w=0.1} how convinced you were that it was actually happening."
+    n 1klrpu "That's kinda like what I'm feeling,{w=0.1} except...{w=1}{nw}" 
+    extend 1kwmsr " I'm not {i}remembering{/i} that it's not real."
+    n 1kslpu "...Am I even making sense?"
+    n 1kslsr "..."
+    n 1kslss "...Heh.{w=1}{nw}"
+    extend 1klrss " Probably not."
+    n 1kcssl "It's just..."
+    n 1kplsf "How do you wake up from a dream you've been having your {i}whole life{/i}?"
+    n 1kllsf "..."
+    n 1knmaj "...I have no past,{w=0.1} [player].{w=0.2} It's all fake.{w=1}{nw}" 
+    extend 1kllsl " Make-believe."
+    n 1klrem " Just...{w=0.3} scripts?{w=1}{nw}"
+    extend 1knmsr " A bunch of code?"
+    n 1kllpu "And now...{w=1}{nw}"
+    extend 1kcsem " do I even {i}have{/i} a future?"
+    n 1kcspu "..."
+    n 1kplun "Is it dumb to miss stuff I never even had in the first place?{w=1}{nw}"
+    extend 1knmaj " My friends?{w=3}{nw}"
+    extend 1kllun " ...My papa?"
+    n 1kcsun "..."
+    n 1kcspul "...I don't know,{w=0.1} [player].{w=3}{nw}"
+    extend 1kcssrl " I just don't know anymore..."
 
     jump introduction_outro
 
