@@ -975,6 +975,9 @@ init -990 python in jn_globals:
     # Alphabetical (excluding numbers) values allowed for text input
     DEFAULT_ALPHABETICAL_ALLOW_VALUES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-' "
 
+    # Numerical values allowed for text input
+    DEFAULT_NUMERICAL_ALLOW_VALUES = "1234567890"
+
     #The current label we're in
     current_label = None
 
@@ -1102,6 +1105,15 @@ init python in jn_utils:
 
         else:
             return "a while"
+
+    def get_player_initial():
+        """
+        Returns the first letter of the player's name.
+
+        OUT:
+            First letter of the player's name.
+        """
+        return list(player)[0]
 
     # Key setup
     key_path = os.path.join(renpy.config.basedir, "game/dev/key.txt").replace("\\", "/")

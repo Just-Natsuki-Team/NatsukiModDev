@@ -184,7 +184,10 @@ label take_screenshot:
 # Handles dialogue and mechanics related to screenshots
 label screenshot_dialogue:
 
-    if jn_screenshots.are_screenshots_blocked():
+    if (
+        jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) != jn_introduction.JNIntroductionStates.complete
+        or jn_screenshots.are_screenshots_blocked()
+    ):
         return
 
     $ jn_screenshots.disable_screenshots()
