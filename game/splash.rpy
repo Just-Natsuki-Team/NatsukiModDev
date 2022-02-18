@@ -130,8 +130,8 @@ image warning:
     "white" with Dissolve(0.5, alpha=True)
     0.5
 
-image tos = "bg/warning.png"
-image tos2 = "bg/warning2.png"
+image tos_a = "mod_assets/backgrounds/menu/tos_a.png"
+image tos_b = "mod_assets/backgrounds/menu/tos_b.png"
 
 label splashscreen:
     #If this is the first time the game has been run, show a disclaimer
@@ -141,7 +141,7 @@ label splashscreen:
         scene white
         $ quick_menu = False
         pause 0.5
-        scene tos
+        scene tos_a
         with Dissolve(1.0)
         pause 1.0
         "[config.name] is a Doki Doki Literature Club fan mod that is not affiliated with Team Salvato."
@@ -152,7 +152,7 @@ label splashscreen:
             interact=False
         )
         $ renpy.display_menu(items=[ ("I agree.", True)], screen="choice_centred")
-        scene tos2
+        scene tos_b
         with Dissolve(0.25)
         pause 1.0
 

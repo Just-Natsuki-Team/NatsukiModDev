@@ -6,6 +6,7 @@ init 0 python in jn_introduction:
 
     class JNIntroductionStates(Enum):
         """
+        Different introduction sequences states/phases; we use these to track progress
         """
         new_game = 0
         first_meeting = 1
@@ -34,12 +35,11 @@ label introduction_progress_check:
         play audio static
         show glitch_garbled_a zorder 99 with vpunch
         hide glitch_garbled_a
-        $ main_background.draw(full_redraw=True)
+        $ main_background.appear()
         if (jn_get_current_hour() > 6 and jn_get_current_hour() <= 18
             and not jn_atmosphere.is_current_weather_sunny()):
-            $ jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny)
+            $ jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny, with_transition=False)
 
-        show natsuki 1uscaj at jn_center
         play music audio.space_classroom_bgm fadein 1
 
     $ renpy.jump(jn_introduction.INTRODUCTION_STATE_LABEL_MAP.get(jn_introduction.JNIntroductionStates(persistent.jn_introduction_state)))
@@ -93,6 +93,15 @@ label introduction_opening:
     play sound interference loop
     $ renpy.pause(10)
 
+    play audio static
+    show glitch_garbled_a zorder 99 with hpunch
+    hide glitch_garbled_c
+    hide glitch_garbled_b
+    hide glitch_garbled_a
+    show glitch_fuzzy zorder 99
+    play sound interference loop
+    $ renpy.pause(1.5)
+
     # Restore finally works
     stop sound
     hide glitch_fuzzy
@@ -101,12 +110,10 @@ label introduction_opening:
     hide glitch_garbled_a
 
     # Get the visuals ready
-    #TODO: Engineer a way to redraw background without fade-in, so it "pops"
-    $ main_background.draw(full_redraw=True)
+    $ main_background.appear()
     if (jn_get_current_hour() > 6 and jn_get_current_hour() <= 18
         and not jn_atmosphere.is_current_weather_sunny()):
-        $ jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny)
-    show natsuki 1uscaj at jn_center
+        $ jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny, with_transition=False)
     play music audio.space_classroom_bgm fadein 1
 
     jump introduction_first_meeting
@@ -164,7 +171,7 @@ label introduction_first_meeting:
 
     n 1fcsan "..."
     n 1kwmem "Hello...?"
-    n 1kscem "A-{w=0.1}anybody?!{w=0.5} Please!{w=0.5} Hello?!"
+    n 1kscem "A-{w=0.1}anybody?!{w=0.5} Please!{w=0.5} H-{w=0.3}hello?!"
     $ renpy.display_menu(items=[ ("I'm here, Natsuki.", True)], screen="choice_centred")
     n 1kskaj "W-{w=0.3}who is...?{w=1}{nw}"
     extend 1kllem " A-{w=0.3}and how do you know...?"
