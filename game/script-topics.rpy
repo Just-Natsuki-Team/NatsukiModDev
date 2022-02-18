@@ -135,9 +135,9 @@ label talk_did_you_have_pets:
         n 1fslem "Ugh..."
         n 1fslun "It still annoys me...{w=0.3}{nw}" 
         extend 1uchgn " but then again,{w=0.1} it's not like I can't keep a pet here instead,{w=0.1} right?{w=0.1} Ehehe."
-        
-    n 1unmbg "But what about you,{w=0.1} [player]?"
+
     if persistent.jn_player_pet is None:
+        n 1unmbg "But what about you,{w=0.1} [player]?"
         menu:
             n "Do you have any pets?"
 
@@ -148,8 +148,8 @@ label talk_did_you_have_pets:
 
             "No, I don't.":
                 n 1usgem "Aww...{w=0.3} I'll admit,{w=0.1} I'm a little disappointed."
-                n 1nchhn "Well,{w=0.1} then you gotta let me know if you get one,{w=0.1} [player]!"
-                n "I wanna hear all about it!"
+                n 1nchbg "Well,{w=0.1} then you gotta let me know if you get one,{w=0.1} [player]!"
+                n 1uchgn "I wanna hear all about it!"
 
             "I used to.":
                 n 1kplaj "Oh...{w=0.3} oh gosh."
@@ -168,14 +168,16 @@ label talk_did_you_have_pets:
                 call pet_options_a
 
             "No, I didn't.":
-                n 1nnmaj "Oh.{w=0.2} Well,{w=0.1} that's fair."
-                n 1nnmsm "You're already giving a home to something,{w=0.1} so I won't complain!"
+                n 1usgem "Aww...{w=0.3} I'll admit,{w=0.1} I'm a little disappointed."
+                n 1nchbg "Well,{w=0.1} then you gotta let me know if you get one,{w=0.1} [player]!"
+                n 1uchgn "I wanna hear all about it!"
 
             "I lost one.":
                 n 1knmaj "Oh...{w=0.3} oh jeez..."
                 n 1knmfr "I'm so sorry,{w=0.1} [player].{w=0.2} Are you okay?"
                 n 1kllbo "Maybe we should talk about something else to keep your mind off things..."
-                n 1knmbo "I'm here for you,{w=0.1} [player]."
+                if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+                    n 1knmbo "I'm here for you,{w=0.1} [player]."
 
     return
 
