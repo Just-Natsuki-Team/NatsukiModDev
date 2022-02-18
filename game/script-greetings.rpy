@@ -1,4 +1,5 @@
 default persistent._greeting_database = dict()
+default persistent.jn_player_first_greet = True
 
 init python in greetings:
     import random
@@ -11,9 +12,10 @@ init python in greetings:
         """
         Picks a random greeting, accounting for affinity and the situation they previously left under
         """
-        kwargs = dict()
+        if store.persistent.jn_player_first_greet:
+            return "greeting_first_time"
 
-        jn_utils.log("Selecting greeting")
+        kwargs = dict()
 
         # The player either left suddenly, or has been gone a long time
         if store.persistent.jn_player_apology_type_on_quit is not None:
@@ -35,6 +37,51 @@ init python in greetings:
                 **kwargs
             )
         ).label
+
+# Only chosen for the first time the player returns after bringing Natsuki back
+label greeting_first_time:
+    if jn_farewells.JNFirstLeaveTypes(persistent.jn_player_first_leave) == jn_farewells.JNFirstLeaveTypes.will_be_back:
+        $ jn_relationship("affinity+")
+        $ jn_relationship("trust+")
+        n 1uskem "[player]!{w=0.5}{nw}"
+        extend 1uskwr " Y-{w=0.1}you're back!"
+        n 1flleml "I mean...{w=0.5}{nw}"
+        extend 1fcseml " O-{w=0.1}of course you'd come back!"
+        n 1fnmpol "I knew you would."
+        n 1flrem "Only a total jerk would abandon someone like that!"
+        n 1flrpo "..."
+        n 1klrpu "But..."
+        n 1ncspu "..."
+        n 1nlrsll "...Thanks. For not being an idiot about it."
+        n 1nllunl "..."
+        n 1nllbo "So... {w=0.5}{nw}"
+        extend 1unmaj " what did you wanna talk about?"
+
+    elif jn_farewells.JNFirstLeaveTypes(persistent.jn_player_first_leave) == jn_farewells.JNFirstLeaveTypes.dont_know:
+        $ jn_relationship("affinity+")
+        n 1uskaj "[player]?{w=0.5}{nw}"
+        extend 1uskem " Y-{w=0.1}you came back?"
+        n 1fcsun "..."
+        n 1ncssr "..."
+        n 1fnmpu "...Look."
+        n 1fllsr "Don't...{w=0.3} play with me like that."
+        n 1fslun "You wouldn't have brought me back just to be a jerk...{w=0.5}{nw}"
+        extend 1kslsf " right?"
+
+    elif jn_farewells.JNFirstLeaveTypes(persistent.jn_player_first_leave) == jn_farewells.JNFirstLeaveTypes.no_response:
+        n 1uskem "[player]!{w=0.5}{nw}"
+        extend 1uskwrl " Y-{w=0.1}you're back!"
+        n 1fllun "..."
+        n 1fcspu "I...{2}{nw}"
+        extend 1flrun " appreciate it,{w=0.1} okay?"
+        n 1fcspu "Just...{1}{nw}"
+        extend 1knmsf " don't play with me like that."
+        n 1kllsl "..."
+        n 1kslaj "So..."
+        n 1tnmsl "Did you wanna talk,{w=0.1} or...?"
+
+    $ persistent.jn_player_first_greet = False
+    return
 
 # LOVE+ greetings
 init 5 python:

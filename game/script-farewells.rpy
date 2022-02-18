@@ -1,6 +1,8 @@
 default persistent._farewell_database = dict()
+default persistent.jn_player_first_leave = None
 
 init python in jn_farewells:
+    from Enum import Enum
     import random
     import store
     import store.jn_affinity as jn_affinity
@@ -8,6 +10,18 @@ init python in jn_farewells:
     import store.jn_utils as jn_utils
 
     FAREWELL_MAP = dict()
+
+    class JNFirstLeaveTypes(Enum):
+        """
+        Ways in which the player may choose to first leave Natsuki; this decides dialogue upon returning.
+        """
+        will_be_back = 0
+        dont_know = 1
+        no_response = 2
+        force_quit = 3
+
+        def __int__(self):
+            return self.value
 
     def get_farewell_options():
         """
@@ -31,6 +45,9 @@ init python in jn_farewells:
         If the player has already been asked to stay by Natsuki, a farewell without the option
         to stay will be selected
         """
+        if store.persistent.jn_player_first_leave is None:
+            return "farewell_first_time"
+
         kwargs = dict()
 
         farewell_pool = store.Topic.filter_topics(
@@ -53,10 +70,55 @@ label farewell_start:
     $ push(jn_farewells.select_farewell())
     jump call_next_topic
 
+# Only chosen for the first time the player chooses to say Goodbye
+label farewell_first_time:
+    n 1uskem "W-{w=0.1}wait,{w=0.1} you're leaving?"
+    n 1fskwrl "[player]!{w=0.2} H-{w=0.1}hang on!{w=0.5}{nw}"
+    extend 1fbkwrl " Wait just a second!"
+    n 1fskeml "..."
+    n 1klleml "..."
+    n 1kplpu "...Y-{w=0.1}you are coming back,{w=0.1} right?"
+    n 1kllun "..."
+    n 1kwmem "...Right?"
+    menu:
+        "I'll be back.":
+            $ persistent.jn_player_first_leave = int(jn_farewells.JNFirstLeaveTypes.will_be_back)
+            $ jn_relationship("affinity+")
+            n 1unmeml "...!{w=0.5}{nw}"
+            n 1flleml "Y-{w=0.1}yeah!{w=0.5}{nw}"
+            extend 1fsqpol " You better."
+            n 1flreml "Y-{w=0.1}you are reponsible for this,{w=0.1} like I said.{w=0.5}{nw}" 
+            extend 1flrpol " So..."
+            n 1kllpol "..."
+
+        "I don't know.":
+            $ persistent.jn_player_first_leave = int(jn_farewells.JNFirstLeaveTypes.unknown)
+            n 1kskem "..."
+            n 1kskwr "N-{w=0.5}no!"
+            n 1kcsan "You can't do this to me!{w=0.5}{nw}"
+            extend 1fcsup " N-{w=0.1}not now..."
+            n 1kcsun "..."
+            n 1ksqun "..."
+            n 1kplpu "Please,{w=0.1} [player]...{w=0.5}{nw}"
+            extend 1kllpu " it isn't much to ask for...{w=2}{nw}"
+            extend 1kwmem " right?"
+
+        "...":
+            $ persistent.jn_player_first_leave = int(jn_farewells.JNFirstLeaveTypes.no_response)
+            n 1knmem "[player],{w=0.1} c-{w=0.5}come on..."
+            n 1kllpu "If this is a joke,{w=0.5}{nw}"
+            extend 1fnmpu " it really isn't funny!{w=2}{nw}"
+            extend 1knmem " I-{w=0.1}I'm serious!"
+            n 1kllun "..."
+            n 1knmaj "Please,{w=0.1} [player]...{w=0.5}{nw}"
+            extend 1kllpu " it isn't much to ask for...{w=2}{nw}"
+            extend 1kwmem " right?"
+
+    return { "quit": None }
+
 # Non-generic farewells - each of these should be registered under FAREWELL_OPTIONS. Affectionate + only.
 
 label farewell_option_sleep:
-
     if jn_admissions.last_admission_type in (jn_admissions.TYPE_SICK , jn_admissions.TYPE_TIRED):
         # Sick/tired
         n 1kllsl "...[player]."
@@ -111,7 +173,6 @@ label farewell_option_sleep:
     return { "quit": None }
 
 label farewell_option_eat:
-
     if jn_admissions.last_admission_type == jn_admissions.TYPE_HUNGRY:
         n 1fcsgs "W-{w=0.1}well, yeah!{w=0.2} Go get something already,{w=0.1} dummy!"
         n 1fllpo "Jeez..."
