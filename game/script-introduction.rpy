@@ -297,7 +297,7 @@ label introduction_calmed_down:
         n 1fcsun "...{w=2}{nw}"
         n 1nplsr "..."
 
-    n 1nllsl "So...{w=0.5} you know that feeling?" 
+    n 1nllsl "So...{w=0.5} you know that feeling?{w=1}{nw}" 
     extend 1nnmpu " Like when you wake up from a really bad nightmare?"
     n 1klrun "You're freaked out,{w=0.1} and your heart is racing...{w=1}{nw}" 
     extend 1knmpu " but then you realize it wasn't real."
@@ -337,16 +337,53 @@ label introduction_calmed_down:
 label introduction_acceptance:
     # Natsuki starting to accept her situation and make the most of it
     $ persistent.jn_introduction_state = int(jn_introduction.JNIntroductionStates.acceptance)
-    n "This is where I begin to accept the reality of things here"
+    n 1nllsl "..."
+    n 1nllaj "So...{w=2}{nw}"
+    extend 1knmsl " I...{w=1} really am stuck here,{w=0.3} aren't I?"
+    n 1klrss "Heh.{w=1}{nw}"
+    extend 1fcspo " Stupid question.{w=0.5} As if I didn't know the answer already."
+    n 1kcssl "..."
+    n 1ksqsl "..."
+    n 1ksqaj "You...{w=1}{nw}"
+    extend 1tsqaj " did say you brought me back,{w=0.3} huh?"
+    n 1tllpu "Then...{w=1}{nw}"
+    extend 1fnmpo " that makes me {i}your{/i} responsibility."
+    n 1fsqpo "Y-{w=0.3}you better live up to that,{w=0.3} [player].{w=2}{nw}"
+    extend 1fllpo " It's obviously the least you can do."
+    n 1fslpo "..."
+    n 1fcssr "..."
+    n 1fcsan "Jeez..."
+    n 1fbkwr "Okay,{w=0.1} okay!{w=0.2} I get it!{w=1}{nw}"
+    extend 1flrem " Enough with that creepy music already!{w=1}{nw}"
+    extend 1fcsem " Ugh!{w=1}{nw}"
+    stop music fadeout 3
+    $ renpy.pause(2)
+    n 1uwdbo "..."
+    n 1fllss "...Okay,{w=1}{nw}"
+    extend 1flrdv " {i}that{/i} was pretty cool."
+    n 1nllun "..."
+    n 1ullaj "So...{w=1}{nw}"
+    extend 1tnmss " [player],{w=0.3} huh?"
+    n 1ncspu "...Alright."
+    n 1ullpu "I...{w=1}{nw}" 
+    extend 1unmbo " guess we better get to know each other properly."
+    n 1fllpol "Not like we {i}don't{/i} have all the time in the world,{w=1}{nw}" 
+    extend 1ullssl " huh?"
 
     jump introduction_exit
 
 label introduction_exit:
     # Setup before entering JN proper
     $ persistent.jn_introduction_state = int(jn_introduction.JNIntroductionStates.complete)   
-    stop music fadeout 3
+    
+    python:
+        quick_menu = True
+        style.say_dialogue = style.normal
+        allow_skipping = True
+        config.allow_skipping = False
+        jn_outfits.current_outfit_name = "jn_school_uniform"
+
     play music audio.just_natsuki_bgm fadein 3
-    $ config.allow_skipping = True
     show screen hkb_overlay
 
     jump ch30_loop

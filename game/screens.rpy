@@ -507,6 +507,8 @@ style say_dialogue:
 
     text_align gui.text_xalign
     layout ("subtitle" if gui.text_xalign else "tex")
+    line_overlap_split -7
+    line_spacing 7
 
 image ctc:
     xalign 0.81 yalign 0.98 xoffset -5 alpha 0.0 subpixel True
@@ -916,19 +918,7 @@ screen navigation():
                 else:
                     quit_message = "...Going?"
 
-            #textbutton _("Quit") action Show(screen="quit", message=quit_message, ok_action=Hide(screen="quit", transition=None))
-
-
-        textbutton _("Credits") action Show(screen="credits", message="Credits:\nWriting: Edgar.\nArt: u/Aida_Hwedo.\nBeach Art: etched\nBeach Background: Kimagure After Background Material Storage\nPark and Manga Store Background: mugenjohncel (On LemmaSoft forums)\nBakery, Clothes Store and Mall Background: u/SovietSpartan\nTypo and Bug Reporting: Willie\nNatsuki clothing store outfit #1: Eg85_MkWii\nCat Ears: DearWolf\nPriceVille Gallery: Flower\nClipart Library: Cake\nJMO: Original Clothing Art\nJparnaud: Sprite Editing\nKevin Macleod: Spooky Music(Day of Chaos)\nPinclpart: Bats\nNatsuki Low Affinity Beach Outfit: -Http_Bxbygirl-(Reddit)\nNatsuki High Affinity Beach Outfit: Huniepop (Rizky Prahesa)\nNatsuki White Tank: DestinyPveGal\nGlasses: Unknown as of now", ok_action=Hide(screen="credits", transition=None))
-
-        #textbutton _("Latest Update") action OpenURL("https://justnatsukidev.wixsite.com/justnatsuki/latest")
-
-        #if not main_menu and not persistent.prologue:
-        #    textbutton _("DLC") action Function(DLC)
-
-        #else:
-        #    timer 1.75 action Start("autoload_yurikill")
-
+        textbutton _("GitHub") action OpenURL("https://github.com/Just-Natsuki-Team/NatsukiModDev")
 
 style navigation_button is gui_button
 style navigation_button_text is gui_button_text
