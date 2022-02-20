@@ -4738,7 +4738,21 @@ label talk_feelings_about_yuri:
     n "...I won't lie, [player]."
     extend " I really didn't want to think about... {i}that{/i} again."
     n "I know we never saw eye-to-eye {i}all{/i} the time, even before you joined the club..."
-    n "But "
+    n "But, well, our relationship was... complicated. To put it lightly."
+    n "For the longest time, I actually thought she secretly hated my guts."
+    n "I mean, I guess I didn't exactly make things {i}better,{/i} but she {i}definitely{/i} started it."
+    n "I always got the feeling that she looked down on my interests even more than Monika did."
+    n "I mean, you saw the way she talked about my poems! Come on!"
+    n "But, uh... when I really think about it... maybe it's not really that straightforward."
+    n "I realized she was really insecure about the things she liked. Maybe we were {i}both{/i} getting defensive."
+    n "We did it in pretty different ways--she liked to put on that prim and proper act, but it wasn't too hard to see that she was nervous behind it."
+    n "I mean, it was {i}too{/i} easy to crack that act, [player]. Ehehe~"
+    n "Maybe I picked on her too much, but I liked seeing that more honest side of her. Even if it was 'cuz she was ticked off."
+    n "But then... well, that last fight we had, when Monika had already started messing with us... I do regret {i}that{/i} one."
+    n "..."
+    ##not sure if this poem interaction is something only some players see?
+    n "Well... You know, I think the poems we wrote about the beach were some of my favorites."
+    n "It started out like a competition, but by the end I kinda felt like we made something cool together."
     return
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
