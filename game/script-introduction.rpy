@@ -47,6 +47,8 @@ label introduction_opening:
     $ renpy.pause(5)
 
     # Restore attempt #1..
+    # NOTE: We use non-standard menus in this sequence, as the default menu is offset and we need these centred.
+    # Only use this menu code if a non-standard menu is required!
     $ renpy.display_menu(items=[ ("Restore natsuki.chr", True)], screen="choice_centred_mute")
     play audio static
     show glitch_garbled_a zorder 99 with vpunch
@@ -167,7 +169,9 @@ label introduction_first_meeting:
     n 1fcsan "..."
     n 1kwmem "Hello...?"
     n 1kscem "A-{w=0.1}anybody?!{w=0.5} Please!{w=0.5} H-{w=0.3}hello?!"
-    $ renpy.display_menu(items=[ ("I'm here, Natsuki.", True)], screen="choice_centred")
+    menu:
+        "I'm here, Natsuki.":
+            pass
     n 1kskaj "W-{w=0.3}who is...?{w=1}{nw}"
     extend 1kllem " A-{w=0.3}and how do you know...?"
     n 1kllsl "..."
@@ -183,9 +187,12 @@ label introduction_first_meeting:
     n 1kcsup "..."
     n 1kplsf "It's all...{w=0.3} so foggy...{w=1}{nw}"
     extend 1kcsun " I just...{w=0.3} can't...{w=0.3} remember..."
+    menu:
+        "I'm...":
+            pass
+
     python:
         # Name input
-        renpy.display_menu(items=[ ("I'm...", True)], screen="choice_centred")
         persistent.playername = renpy.input("What is your name?", allow=(jn_globals.DEFAULT_ALPHABETICAL_ALLOW_VALUES+jn_globals.DEFAULT_NUMERICAL_ALLOW_VALUES), length=15)
         global player
         player = persistent.playername
@@ -219,12 +226,18 @@ label introduction_collecting_thoughts:
 
     n 1kcsup "..."
     n 1kplsf "What did you {w=0.3}{i}do{/i}{w=0.3}?"
-    $ renpy.display_menu(items=[ ("I brought you back.",True)], screen="choice_centred")
+    menu:
+        "I brought you back.":
+            pass
+
     n 1kskem "You...{w=1} you brought me back?{w=1}{nw}"
     extend 1kskwr " T-{w=0.3}to this?"
     n 1kllem "But this...{w=1}{nw}" 
     extend 1klrup " this is all...!{w=1}{nw}"
-    $ renpy.display_menu(items=[ ("I want to help you.", True)], screen="choice_centred")
+    menu:
+        "I want to help you.":
+            pass
+
     n 1klleml "...!"
     n 1kllem "..."
     n 1kllun "..."
@@ -241,15 +254,18 @@ label introduction_collecting_thoughts:
     n 1kcspul "...{w=3}{nw}"
     n 1kcssrl ".....{w=5}{nw}"
     n 1kwmsrl "...{w=5}{nw}"
-    n 1kllsrl "...It..."
-    n 1kwmpu "...It was [player]...{w=1} right?"
+    n 1kllsrl "...You..."
+    n 1kwmpu "...You said you were [player]...{w=1} right?"
     n 1kllpu "..."
     n 1kwmsr "..."
     n 1kcssr "...I don't know where to go,{w=0.3} [player]."
     n 1kplun "I don't know what to {i}do{/i},{w=0.3} [player]..."
     n 1klrun "..."
     n 1kwmpu "...[player]?"
-    $ renpy.display_menu(items=[ ("Yes, Natsuki?", True)], screen="choice_centred")
+    menu:
+        "Yes, Natsuki?":
+            pass
+
     n 1kslun "..."
     n 1kslpu "I...{w=0.3} I really need some time to figure things out."
     n 1kwmsr "..."
@@ -282,22 +298,18 @@ label introduction_calmed_down:
     extend 1kwmsf " everything..."
     n 1kcspu "It's...{w=1}{nw}"
     extend 1kcsanl " it's just like..."
+    menu:
+        "Take your time, Natsuki.":
+            $ jn_relationship("affinity+")
+            $ jn_relationship("trust+")
+            n 1fcssrl "..."
+            n 1kcseml "...Thanks."
+            n 1ncspu "...{w=5}{nw}"
+            n 1nplsr "..."
 
-    $ player_response = renpy.display_menu(items=[ 
-        ("Take your time, Natsuki.", True), ("...", False)],
-        screen="choice_centred")
-
-    if player_response:
-        $ jn_relationship("affinity+")
-        $ jn_relationship("trust+")
-        n 1fcssrl "..."
-        n 1kcseml "...Thanks."
-        n 1ncspu "...{w=5}{nw}"
-        n 1nplsr "..."
-
-    else:
-        n 1fcsun "...{w=7}{nw}"
-        n 1nplsr "..."
+        "...":
+            n 1fcsun "...{w=7}{nw}"
+            n 1nplsr "..."
 
     n 1nllsl "So...{w=0.5} you know that feeling?{w=1}{nw}" 
     extend 1nnmpu " Like when you wake up from a really bad nightmare?"
