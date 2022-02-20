@@ -11,7 +11,8 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
 
 1. [Disclaimer](#disclaimer)
 2. [Installation](#installation)
-3. [Community](#community)
+3. [FAQ](#faq)
+4. [Community](#community)
 
 ### Disclaimer
 
