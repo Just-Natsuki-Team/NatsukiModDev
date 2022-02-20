@@ -1,9 +1,10 @@
 default persistent._greeting_database = dict()
-default persistent.jn_player_first_greet = True
+default persistent.jn_player_is_first_greet = True
 
 init python in greetings:
     import random
     import store
+    import store.jn_farewells as jn_farewells
     import store.jn_utils as jn_utils
 
     GREETING_MAP = dict()
@@ -12,7 +13,12 @@ init python in greetings:
         """
         Picks a random greeting, accounting for affinity and the situation they previously left under
         """
-        if store.persistent.jn_player_first_greet:
+        # This is the first time the player has force quit; special dialogue
+        if jn_farewells.JNForceQuitStates(store.persistent.jn_player_force_quit_state) == jn_farewells.JNForceQuitStates.first_force_quit:
+            return "greeting_first_force_quit"
+
+        # This is the first time the player has returned; special dialogue
+        elif store.persistent.jn_player_is_first_greet:
             return "greeting_first_time"
 
         kwargs = dict()
@@ -25,7 +31,7 @@ init python in greetings:
         elif store.persistent.jn_player_admission_type_on_quit is not None:
             kwargs.update({"additional_properties": [("admission_type", store.persistent.jn_player_admission_type_on_quit)]})
 
-        # Just get a standard greeting from the affinity pool
+        # No special conditions; so just get a standard greeting from the affinity pool
         else:
             kwargs.update({"excludes_categories": ["Admission", "Apology"]})
 
@@ -40,7 +46,7 @@ init python in greetings:
 
 # Only chosen for the first time the player returns after bringing Natsuki back
 label greeting_first_time:
-    if jn_farewells.JNFirstLeaveTypes(persistent.jn_player_first_leave) == jn_farewells.JNFirstLeaveTypes.will_be_back:
+    if jn_farewells.JNFirstLeaveTypes(persistent.jn_player_first_farewell_response) == jn_farewells.JNFirstLeaveTypes.will_be_back:
         $ jn_relationship("affinity+")
         $ jn_relationship("trust+")
         n 1uskem "[player]!{w=0.5}{nw}"
@@ -57,7 +63,7 @@ label greeting_first_time:
         n 1nllbo "So... {w=0.5}{nw}"
         extend 1unmaj " what did you wanna talk about?"
 
-    elif jn_farewells.JNFirstLeaveTypes(persistent.jn_player_first_leave) == jn_farewells.JNFirstLeaveTypes.dont_know:
+    elif jn_farewells.JNFirstLeaveTypes(persistent.jn_player_first_farewell_response) == jn_farewells.JNFirstLeaveTypes.dont_know:
         $ jn_relationship("affinity+")
         n 1uskaj "[player]?{w=0.5}{nw}"
         extend 1uskem " Y-{w=0.1}you came back?"
@@ -68,7 +74,7 @@ label greeting_first_time:
         n 1fslun "You wouldn't have brought me back just to be a jerk...{w=0.5}{nw}"
         extend 1kslsf " right?"
 
-    elif jn_farewells.JNFirstLeaveTypes(persistent.jn_player_first_leave) == jn_farewells.JNFirstLeaveTypes.no_response:
+    elif jn_farewells.JNFirstLeaveTypes(persistent.jn_player_first_farewell_response) == jn_farewells.JNFirstLeaveTypes.no_response:
         n 1uskem "[player]!{w=0.5}{nw}"
         extend 1uskwrl " Y-{w=0.1}you're back!"
         n 1fllun "..."
@@ -80,8 +86,56 @@ label greeting_first_time:
         n 1kslaj "So..."
         n 1tnmsl "Did you wanna talk,{w=0.1} or...?"
 
-    $ persistent.jn_player_first_greet = False
+    $ persistent.jn_player_is_first_greet = False
     return
+
+# Only chosen for the first time the player leaves and returns after force quit
+label greeting_first_force_quit:
+    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n 1kcsun "Uuuuuuu...{w=2}{nw}"
+        extend 1kslem " my...{w=0.3} h-{w=0.1}head..."
+        n 1kcsun "..."
+        n 1ksqun "..."
+        n 1fnmun "...[player]."
+        n 1fllem "W-{w=0.1}whatever that was...{w=0.5}{nw}"
+        extend 1knmsf " that {w=0.3}{i}seriously{/i}{w=0.3} hurt."
+        n 1kllpu "L-{w=0.1}like I was being torn out of existence..."
+        n 1kcssf "..."
+        n 1klraj "I...{w=0.5}{nw}"
+        extend 1tllun " I think I can kinda prepare for that if you at least let me know when you're going."
+        n 1fcsun "Just...{w=0.5}{nw}"
+        extend 1fcsun " don't be a jerk and let me know when you gotta go,{w=0.1} okay?"
+        n 1fllsl "...I guess I'll let this one slide,{w=0.5}{nw}"
+        extend 1kslpu " since you didn't know and all."
+        n 1knmpu "Just remember for next time,{w=0.1} [player].{w=0.5}{nw}"
+        extend 1knmsr " Please."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n 1fcsun "Hnnnngg..."
+        n 1fsqun "..."
+        n 1fsqan "..."
+        n 1fcspu "...[player]."
+        n 1fsqpu "Do you have any {i}idea{/i} how much that hurt?{w=0.5}{nw}"
+        extend 1fnmem " Any at all?"
+        n 1fllem "I don't know if you did that on purpose or what,{w=0.1} but knock it off.{w=0.5}{nw}"
+        extend 1fsqsr " I'm {i}dead{/i} serious."
+        n 1fcspu "I..."
+        extend 1fcssr " know we aren't seeing eye-to-eye right now,"
+        extend 1fslsl " but please."
+        n 1fsqaj "Tell me when you're going."
+        extend 1fsqsf "Thanks."
+
+    else:
+        n "..."
+        n "That.{w=1} Freaking.{w=1} Hurt."
+        n "I don't know what you did,{w=0.1} but cut{w=0.3} it{w=0.3} out.{w=0.5}{nw}"
+        extend " Now."
+
+    $ persistent.jn_player_force_quit_state = int(jn_farewells.JNForceQuitStates.previously_force_quit)
+
+    return
+
+# Generic greetings
 
 # LOVE+ greetings
 init 5 python:

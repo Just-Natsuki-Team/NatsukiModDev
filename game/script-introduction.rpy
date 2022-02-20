@@ -8,12 +8,12 @@ init 0 python in jn_introduction:
         """
         Different introduction sequences states/phases; we use these to track progress
         """
-        new_game = 0
-        first_meeting = 1
-        collecting_thoughts = 2
-        calmed_down = 3
-        acceptance = 4
-        complete = 5
+        new_game = 1
+        first_meeting = 2
+        collecting_thoughts = 3
+        calmed_down = 4
+        acceptance = 5
+        complete = 6
 
         def __int__(self):
             return self.value
@@ -27,7 +27,7 @@ init 0 python in jn_introduction:
         JNIntroductionStates.complete: "introduction_exit"
     }
 
-default persistent.jn_introduction_state = 0
+default persistent.jn_introduction_state = 1
 
 label introduction_progress_check:
     # Handling for if player decides to quit during the introduction sequence so we don't skip unseen segments
@@ -36,10 +36,7 @@ label introduction_progress_check:
         show glitch_garbled_a zorder 99 with vpunch
         hide glitch_garbled_a
         $ main_background.appear()
-        if (jn_get_current_hour() > 6 and jn_get_current_hour() <= 18
-            and not jn_atmosphere.is_current_weather_sunny()):
-            $ jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny, with_transition=False)
-
+        $ jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.glitch, with_transition=False)
         play music audio.space_classroom_bgm fadein 1
 
     $ renpy.jump(jn_introduction.INTRODUCTION_STATE_LABEL_MAP.get(jn_introduction.JNIntroductionStates(persistent.jn_introduction_state)))
@@ -111,9 +108,7 @@ label introduction_opening:
 
     # Get the visuals ready
     $ main_background.appear()
-    if (jn_get_current_hour() > 6 and jn_get_current_hour() <= 18
-        and not jn_atmosphere.is_current_weather_sunny()):
-        $ jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny, with_transition=False)
+    $ jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.glitch, with_transition=False)
     play music audio.space_classroom_bgm fadein 1
 
     jump introduction_first_meeting
@@ -365,8 +360,10 @@ label introduction_acceptance:
     n 1fbkwr "Okay,{w=0.1} okay!{w=0.2} I get it!{w=1}{nw}"
     extend 1flrem " Enough with that creepy music already!{w=1}{nw}"
     extend 1fcsem " Ugh!{w=1}{nw}"
+
     stop music fadeout 3
-    $ renpy.pause(2)
+    $ jn_atmosphere.show_current_sky()
+
     n 1uwdbo "..."
     n 1fllss "...Okay,{w=1}{nw}"
     extend 1flrdv " {i}that{/i} was pretty cool."

@@ -330,8 +330,8 @@ style normal is default:
     text_align gui.text_xalign
     layout ("subtitle" if gui.text_xalign else "tex")
 
-    line_overlap_split -3
-    line_spacing 3
+    line_overlap_split -8
+    line_spacing 8
 
 style input:
     color gui.accent_color
@@ -507,8 +507,8 @@ style say_dialogue:
 
     text_align gui.text_xalign
     layout ("subtitle" if gui.text_xalign else "tex")
-    line_overlap_split -7
-    line_spacing 7
+    line_overlap_split -8
+    line_spacing 8
 
 image ctc:
     xalign 0.81 yalign 0.98 xoffset -5 alpha 0.0 subpixel True
@@ -1669,33 +1669,33 @@ screen reload(message, ok_action):
 
                 textbutton _("I'll do it myself") action Hide("reload")
 
-screen quit(message, ok_action):
+# screen quit(message, ok_action):
 
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
+#     ## Ensure other screens do not get input while this screen is displayed.
+#     modal True
 
-    zorder 200
+#     zorder 200
 
-    style_prefix "confirm"
+#     style_prefix "confirm"
 
-    add "gui/overlay/confirm.png"
+#     add "gui/overlay/confirm.png"
 
-    frame:
+#     frame:
 
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
+#         vbox:
+#             xalign .5
+#             yalign .5
+#             spacing 30
 
-            label _(message):
-                style "confirm_prompt"
-                xalign 0.5
+#             label _(message):
+#                 style "confirm_prompt"
+#                 xalign 0.5
 
-            hbox:
-                xalign 0.5
-                spacing 100
+#             hbox:
+#                 xalign 0.5
+#                 spacing 100
 
-                textbutton _("No") action ok_action
+#                 textbutton _("No") action ok_action
 
 screen endgame(message): # No spoilers, promise!
 
@@ -1745,105 +1745,77 @@ screen credits(message, ok_action):
                 xalign 0.5
                 spacing 100
 
-                textbutton _("Good work!") action ok_action
-
-screen credits2(message, ok_action):
-
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
-
-    zorder 200
-
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
-
-    frame:
-
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _(message):
-                style "confirm_prompt"
-                xalign 0.5
-
-            hbox:
-                xalign 0.5
-                spacing 100
-
-                textbutton _("FAJNCAKJ") action ok_action
-
-image confirm_glitch:
-    "gui/overlay/confirm_glitch.png"
-    pause 0.02
-    "gui/overlay/confirm_glitch2.png"
-    pause 0.02
-    repeat
-
-screen confirm(message, yes_action, no_action):
-
-    # If this is a quit confirmation, begin personification so we can work Natsuki into this
-    if message == layout.QUIT:
-        python:
-            if jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete:
-                confirm_is_quit = True
-                quit_dialogue = get_affinity_quit_dialogue()
-                message = quit_dialogue[0]
-
-            else:
-                renpy.jump("quit")
-
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
-
-    zorder 200
-
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
-
-    frame:
-
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _(message):
-                style "confirm_prompt"
-                xalign 0.5
-
-            hbox:
-                xalign 0.5
-                spacing 100
-
-                if confirm_is_quit:
-                    textbutton _("Continue") action [Hide("confirm"), Show(screen="confirm_quit", is_quitting=True)]
-
-                    textbutton _("Go back") action [Hide("confirm"), Show(screen="confirm_quit", is_quitting=False)]
-
-                else:
-                    textbutton _("Yes") action yes_action
-                    textbutton _("No") action no_action
-
-    ## Right-click and escape answer "no".
-    #key "game_menu" action no_action
+                textbutton _("Done") action ok_action
 
 init python:
-
     def check_ingame_state_add_apology():
         if jn_globals.player_is_ingame:
             jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.cheated_game)
 
-screen confirm_quit(is_quitting):
+# screen confirm(message, yes_action, no_action):
+#     python:
+#         if (jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete
+#             and jn_farewells.JNForceQuitStates(persistent.jn_player_force_quit_state) == jn_farewells.JNForceQuitStates.not_force_quit
+#         ):
+#             ui.close()
+#             push("farewell_force_quit")
+#             renpy.jump("call_next_topic")
+#             jn_utils.log("confirm: force quit")
+
+#         elif not jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete:
+#             renpy.jump("quit")
+#             jn_utils.log("confirm: plain quit")
+
+#         else:
+#             jn_utils.log("confirm: confirm quit")
+#             renpy.show_screen("jn_confirm_quit")
+
+label jn_quit_action:
+    # Override label
+    if (jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete
+        and jn_farewells.JNForceQuitStates(persistent.jn_player_force_quit_state) == jn_farewells.JNForceQuitStates.not_force_quit
+    ):
+        $ jn_utils.log("confirm: force quit")
+        $ push("farewell_force_quit")
+        $ renpy.jump("call_next_topic")
+
+    elif not jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete:
+        $ jn_utils.log("confirm: plain quit")
+        $ renpy.jump("quit")
+
+    else:
+        $ jn_utils.log("confirm: confirm quit")
+        call screen jn_confirm_quit
+
+    return
+
+screen jn_confirm_quit():
+    ## Ensure other screens do not get input while this screen is displayed.
     modal True
-
-    zorder 300
-
+    zorder 200
     style_prefix "confirm"
+    add "gui/overlay/confirm.png"
 
+    frame:
+        vbox:
+            xalign .5
+            yalign .5
+            spacing 30
+
+            label _(get_affinity_quit_dialogue()[0]):
+                style "confirm_prompt"
+                xalign 0.5
+
+            hbox:
+                xalign 0.5
+                spacing 100
+                textbutton _("Continue") action [Hide("jn_confirm_quit"), Show(screen="jn_acknowledge_quit_action", is_quitting=True)]
+                textbutton _("Go back") action [Hide("jn_confirm_quit"), Show(screen="jn_acknowledge_quit_action", is_quitting=False)]
+
+screen jn_acknowledge_quit_action(is_quitting):
+    modal True
+    zorder 300
+    style_prefix "confirm"
     add "gui/overlay/confirm.png"
 
     action Hide("confirm")
@@ -1854,7 +1826,6 @@ screen confirm_quit(is_quitting):
         $ quit_label = get_affinity_quit_dialogue()[2]
 
     frame:
-
         vbox:
             xalign .5
             yalign .5
@@ -1875,15 +1846,16 @@ screen confirm_quit(is_quitting):
                         Function(check_ingame_state_add_apology),
                         SetField(persistent, "jn_player_apology_type_on_quit", jn_apologies.TYPE_SUDDEN_LEAVE),
                         jn_relationship("affinity-"),
-                        Hide("confirm"),
-                        Hide("confirm_quit"),
+                        Hide("jn_confirm_quit"),
+                        Hide("jn_acknowledge_quit_action"),
                         Jump("quit")
                     ]
                 else:
                     textbutton _("OK") action [
                         # Player is a decent person; hide the screens
-                        Hide("confirm"),
-                        Hide("confirm_quit")
+                        Hide("jn_confirm_quit"),
+                        Hide("jn_acknowledge_quit_action"),
+                        Jump(jn_globals.last_label)
                     ]
 
 screen confirm_editable(message, yes_text, no_text, yes_action, no_action):

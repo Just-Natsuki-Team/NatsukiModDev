@@ -30,35 +30,52 @@ define weather_change_transition = Dissolve(1.5)
 define dim_change_transition = Dissolve(0.25)
 
 init 0 python in jn_atmosphere:
+    from Enum import Enum
     import random
     import store
-    from Enum import Enum
 
     # Draw Z indexes
     _DIM_Z_INDEX = 1
     _SKY_Z_INDEX = 0
 
     class JNWeatherTypes(Enum):
-        overcast = 0
-        rain = 1
-        sunny = 2
-        thunder = 3
+        overcast = 1
+        rain = 2
+        sunny = 3
+        thunder = 4
+        glitch = 5
 
     # Maps a sky type to a given vignette/dimming effect
     __WEATHER_EFFECT_MAP = {
         JNWeatherTypes.overcast: ("sky_day overcast", "dim light"),
         JNWeatherTypes.rain: ("sky_day rain", "dim medium"),
         JNWeatherTypes.sunny: ("sky_day sunny", None),
-        JNWeatherTypes.thunder: ("sky_day thunder", "dim heavy")
+        JNWeatherTypes.thunder: ("sky_day thunder", "dim heavy"),
+        JNWeatherTypes.glitch: ("glitch_fuzzy", None)
     }
 
     __MUFFLED_RAIN_PATH = "mod_assets/sfx/rain_muffled.mp3"
 
     current_weather = None
 
+    def show_current_sky(with_transition=True):
+        """
+        Shows the sky based on the sunrise/sunset times specified under the persistent.
+
+        IN:
+            with_transition - If True, will visually fade in the new weather
+        """
+        if (store.jn_get_current_hour() > store.persistent.jn_sunrise_hour 
+            and store.jn_get_current_hour() <= store.persistent.jn_sunset_hour ):
+            if store.persistent.jn_random_weather:
+                show_random_sky(with_transition=with_transition)
+
+            elif not jn_atmosphere.is_current_weather_sunny():
+                show_sky(JNWeatherTypes.sunny, with_transition=with_transition)
+
     def show_random_sky(with_transition=True):
         """
-        Shows a randomised sky placeholder with associated dimming effect
+        Shows a random sky with associated dimming effect
 
         IN:
             with_transition - If True, will visually fade in the new weather
@@ -137,3 +154,9 @@ init 0 python in jn_atmosphere:
         Returns True if the current weather is thunder, otherwise False
         """
         return current_weather == JNWeatherTypes.thunder
+
+    def is_current_weather_glitch():
+        """
+        Returns True if the current weather is glitchy, otherwise False
+        """
+        return current_weather == JNWeatherTypes.glitch

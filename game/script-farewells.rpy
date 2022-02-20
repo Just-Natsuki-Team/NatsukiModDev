@@ -1,5 +1,6 @@
 default persistent._farewell_database = dict()
-default persistent.jn_player_first_leave = None
+default persistent.jn_player_first_farewell_response = None
+default persistent.jn_player_force_quit_state = 1
 
 init python in jn_farewells:
     from Enum import Enum
@@ -15,10 +16,21 @@ init python in jn_farewells:
         """
         Ways in which the player may choose to first leave Natsuki; this decides dialogue upon returning.
         """
-        will_be_back = 0
-        dont_know = 1
-        no_response = 2
-        force_quit = 3
+        will_be_back = 1
+        dont_know = 2
+        no_response = 3
+        force_quit = 4
+
+        def __int__(self):
+            return self.value
+
+    class JNForceQuitStates(Enum):
+        """
+        Tracking for player force quits; this decides dialogue on returning. 
+        """
+        not_force_quit = 1
+        first_force_quit = 2
+        previously_force_quit = 3
 
         def __int__(self):
             return self.value
@@ -45,7 +57,7 @@ init python in jn_farewells:
         If the player has already been asked to stay by Natsuki, a farewell without the option
         to stay will be selected
         """
-        if store.persistent.jn_player_first_leave is None:
+        if store.persistent.jn_player_first_farewell_response is None:
             return "farewell_first_time"
 
         kwargs = dict()
@@ -82,7 +94,7 @@ label farewell_first_time:
     n 1kwmem "...Right?"
     menu:
         "I'll be back.":
-            $ persistent.jn_player_first_leave = int(jn_farewells.JNFirstLeaveTypes.will_be_back)
+            $ persistent.jn_player_first_farewell_response = int(jn_farewells.JNFirstLeaveTypes.will_be_back)
             $ jn_relationship("affinity+")
             n 1unmeml "...!{w=0.5}{nw}"
             n 1flleml "Y-{w=0.1}yeah!{w=0.5}{nw}"
@@ -92,7 +104,7 @@ label farewell_first_time:
             n 1kllpol "..."
 
         "I don't know.":
-            $ persistent.jn_player_first_leave = int(jn_farewells.JNFirstLeaveTypes.unknown)
+            $ persistent.jn_player_first_farewell_response = int(jn_farewells.JNFirstLeaveTypes.unknown)
             n 1kskem "..."
             n 1kskwr "N-{w=0.5}no!"
             n 1kcsan "You can't do this to me!{w=0.5}{nw}"
@@ -104,7 +116,7 @@ label farewell_first_time:
             extend 1kwmem " right?"
 
         "...":
-            $ persistent.jn_player_first_leave = int(jn_farewells.JNFirstLeaveTypes.no_response)
+            $ persistent.jn_player_first_farewell_response = int(jn_farewells.JNFirstLeaveTypes.no_response)
             n 1knmem "[player],{w=0.1} c-{w=0.5}come on..."
             n 1kllpu "If this is a joke,{w=0.5}{nw}"
             extend 1fnmpu " it really isn't funny!{w=2}{nw}"
@@ -113,6 +125,22 @@ label farewell_first_time:
             n 1knmaj "Please,{w=0.1} [player]...{w=0.5}{nw}"
             extend 1kllpu " it isn't much to ask for...{w=2}{nw}"
             extend 1kwmem " right?"
+
+    return { "quit": None }
+
+# Only chosen for the first time the player leaves via force quit
+label farewell_force_quit:
+    $ persistent.jn_player_force_quit_state = int(jn_farewells.JNForceQuitStates.first_force_quit)
+    if not persistent.jn_player_first_farewell_response:
+        $ persistent.jn_player_first_farewell_response = int(jn_farewells.JNFirstLeaveTypes.force_quit)
+
+    n 1uskem "H-{w=0.3}huh?{w=1}{nw}"
+    extend 1uscwr " N-{w=0.3}no!{w=0.2} Wait!!{w=0.2} PLEASE-{w=0.3}{nw}"
+
+    hide screen hkb_overlay
+    play audio static
+    show glitch_garbled_b zorder 99 with hpunch
+    hide glitch_garbled_b
 
     return { "quit": None }
 

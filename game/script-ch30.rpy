@@ -262,13 +262,7 @@ init python:
 
         # Draw background
         main_background.check_redraw()
-
-        if 6 < store.jn_get_current_hour() <= 18:
-            if persistent.jn_random_weather:
-                jn_atmosphere.show_random_sky()
-
-            else:
-                jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny)
+        jn_atmosphere.show_current_sky()
 
         # Update outfit
         if jn_outfits.get_outfit_for_time_block().reference_name is not jn_outfits.current_outfit_name:
