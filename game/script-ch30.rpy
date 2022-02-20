@@ -65,7 +65,7 @@ label ch30_init:
             store.jn_get_current_hour() > 6 and store.jn_get_current_hour() <= 18
             and not jn_atmosphere.is_current_weather_sunny()
         ):
-            jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.sunny)
+            jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
 
         # Outfit selection
         if persistent.jn_natsuki_auto_outfit_change_enabled:

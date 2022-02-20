@@ -153,11 +153,11 @@ label splashscreen:
         )
         $ renpy.display_menu(items=[ ("I agree.", True)], screen="choice_centred")
         scene tos_b
-        with Dissolve(0.25)
+        with Dissolve(1)
         pause 1.0
 
         scene black
-        with Dissolve(0.25)
+        with Dissolve(1)
 
         ##Optional, load a copy of DDLC save data
         #if not persistent.has_merged:

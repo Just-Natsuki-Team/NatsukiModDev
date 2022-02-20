@@ -36,7 +36,7 @@ label introduction_progress_check:
         show glitch_garbled_a zorder 99 with vpunch
         hide glitch_garbled_a
         $ main_background.appear()
-        $ jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.glitch, with_transition=False)
+        $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
         play music audio.space_classroom_bgm fadein 1
 
     $ renpy.jump(jn_introduction.INTRODUCTION_STATE_LABEL_MAP.get(jn_introduction.JNIntroductionStates(persistent.jn_introduction_state)))
@@ -108,7 +108,7 @@ label introduction_opening:
 
     # Get the visuals ready
     $ main_background.appear()
-    $ jn_atmosphere.show_sky(jn_atmosphere.JNWeatherTypes.glitch, with_transition=False)
+    $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
     play music audio.space_classroom_bgm fadein 1
 
     jump introduction_first_meeting
@@ -292,11 +292,11 @@ label introduction_calmed_down:
         $ jn_relationship("trust+")
         n 1fcssrl "..."
         n 1kcseml "...Thanks."
-        n 1ncspu "...{w=2}{nw}"
+        n 1ncspu "...{w=5}{nw}"
         n 1nplsr "..."
 
     else:
-        n 1fcsun "...{w=2}{nw}"
+        n 1fcsun "...{w=7}{nw}"
         n 1nplsr "..."
 
     n 1nllsl "So...{w=0.5} you know that feeling?{w=1}{nw}" 
@@ -363,6 +363,7 @@ label introduction_acceptance:
 
     stop music fadeout 3
     $ jn_atmosphere.show_current_sky()
+    $ renpy.pause(1)
 
     n 1uwdbo "..."
     n 1fllss "...Okay,{w=1}{nw}"

@@ -1752,24 +1752,6 @@ init python:
         if jn_globals.player_is_ingame:
             jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.cheated_game)
 
-# screen confirm(message, yes_action, no_action):
-#     python:
-#         if (jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete
-#             and jn_farewells.JNForceQuitStates(persistent.jn_player_force_quit_state) == jn_farewells.JNForceQuitStates.not_force_quit
-#         ):
-#             ui.close()
-#             push("farewell_force_quit")
-#             renpy.jump("call_next_topic")
-#             jn_utils.log("confirm: force quit")
-
-#         elif not jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete:
-#             renpy.jump("quit")
-#             jn_utils.log("confirm: plain quit")
-
-#         else:
-#             jn_utils.log("confirm: confirm quit")
-#             renpy.show_screen("jn_confirm_quit")
-
 label jn_quit_action:
     # Override label
     if (jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete
@@ -1845,7 +1827,7 @@ screen jn_acknowledge_quit_action(is_quitting):
                         Function(jn_apologies.add_new_pending_apology, jn_apologies.TYPE_SUDDEN_LEAVE),
                         Function(check_ingame_state_add_apology),
                         SetField(persistent, "jn_player_apology_type_on_quit", jn_apologies.TYPE_SUDDEN_LEAVE),
-                        jn_relationship("affinity-"),
+                        Function(jn_relationship, "affinity-"),
                         Hide("jn_confirm_quit"),
                         Hide("jn_acknowledge_quit_action"),
                         Jump("quit")
@@ -1855,7 +1837,7 @@ screen jn_acknowledge_quit_action(is_quitting):
                         # Player is a decent person; hide the screens
                         Hide("jn_confirm_quit"),
                         Hide("jn_acknowledge_quit_action"),
-                        Jump(jn_globals.last_label)
+                        Return()
                     ]
 
 screen confirm_editable(message, yes_text, no_text, yes_action, no_action):

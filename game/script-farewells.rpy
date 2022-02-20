@@ -133,11 +133,16 @@ label farewell_force_quit:
     $ persistent.jn_player_force_quit_state = int(jn_farewells.JNForceQuitStates.first_force_quit)
     if not persistent.jn_player_first_farewell_response:
         $ persistent.jn_player_first_farewell_response = int(jn_farewells.JNFirstLeaveTypes.force_quit)
+    
+    hide screen hkb_overlay
+    show glitch_garbled_a zorder 99 with hpunch
+    hide glitch_garbled_a
+    stop music
+    play audio glitch_c
 
     n 1uskem "H-{w=0.3}huh?{w=1}{nw}"
     extend 1uscwr " N-{w=0.3}no!{w=0.2} Wait!!{w=0.2} PLEASE-{w=0.3}{nw}"
 
-    hide screen hkb_overlay
     play audio static
     show glitch_garbled_b zorder 99 with hpunch
     hide glitch_garbled_b
