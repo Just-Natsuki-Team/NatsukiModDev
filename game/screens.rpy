@@ -1757,16 +1757,13 @@ label jn_quit_action:
     if (jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete
         and jn_farewells.JNForceQuitStates(persistent.jn_player_force_quit_state) == jn_farewells.JNForceQuitStates.not_force_quit
     ):
-        $ jn_utils.log("confirm: force quit")
         $ push("farewell_force_quit")
         $ renpy.jump("call_next_topic")
 
     elif not jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete:
-        $ jn_utils.log("confirm: plain quit")
         $ renpy.jump("quit")
 
     else:
-        $ jn_utils.log("confirm: confirm quit")
         call screen jn_confirm_quit
 
     return
