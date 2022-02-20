@@ -1,7 +1,14 @@
+<p align="center">
+    <img src="https://justnatsuki.club/img/jnlogo.png" height="500"/>
+</p>
+<br>
+
 ## Just Natsuki
+
 An After-Story style mod for Natsuki from DDLC, focusing on building a post-game relationship between Natsuki and her player (you!).
 
 ### Contents
+
 1. [Disclaimer](#disclaimer)
 2. [Installation](#installation)
 3. [Community](#community)
@@ -20,7 +27,7 @@ Please feel free to clone the repository, suggest new content by raising an issu
 #### In short
 
 - Do not expect a complete, polished experience at this stage in development.
-- Do not expect progress made by playing under the overhaul to be supported into release, or further in development.
+- Do not expect progress made by playing under the overhaul to be supported into release, or further in development: you may need to delete your persistent to play newer versions of JN before release.
 - Progress made by playing under the old distribution of Just Natsuki will not be supported in the overhaul.
 - Do not expect support if you are playing the old distribution of Just Natsuki. It is **discontinued**.
 
@@ -36,7 +43,18 @@ Please feel free to clone the repository, suggest new content by raising an issu
     1. For Windows, you can find it here: `%APPDATA%/Roaming/RenPy/JustNatsuki`
     2. For OSX, you can find it here: `~/Library/RenPy/JustNatsuki`
     3. For Linux, you can find it here: `~/.renpy/JustNatsuki`
-8. Finally, launch DDLC.exe.
+8. Finally, launch `DDLC.exe`.
+
+### FAQ
+
+- _How do I report a bug with the mod?_
+    - Please log a bug report through the _Issues_ on GitHub, clicking _New issue_, then selecting _Report Bug_.
+- _How do I request support for the mod?_
+    - Please log a support request through the _Issues_ on GitHub, clicking _New issue_, then selecting _Support Request_.
+- _Where can I make suggestions for the mod?_
+    - Please log a feature request through the _Issues_ on GitHub, clicking _New issue_, then selecting _Feature Request_. Please note we do not take suggestions from any other avenue of communication.
+- _Can I join the team?_
+    - Invitation to join our team is based on visible contributions to Just Natsuki and/or related DDLC mods, skillset, and participation in the DDLC community as judged by the team. Please do not ask to join directly!
 
 ### Community
 
