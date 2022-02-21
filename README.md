@@ -48,6 +48,12 @@ Please feel free to clone the repository, suggest new content by raising an issu
 
 ### FAQ
 
+- _I downloaded and installed the mod files, but the game is still vanilla DDLC._
+    - Double check your installation - remember that mod files must be extracted/unzipped, as well as the DDLC base game files.
+- _I downloaded and installed the mod files, but the game is nothing like the screenshots on the website._
+    - You may have installed the discontinued distribution of Just Natsuki: delete your installation and retry with the instructions above. Remember: the only official mod files are from GitHub!
+- _I downloaded and installed newer mod files, and now my game won't launch._
+    - You may need to delete your persistent file: make a copy and delete it, then try launching `DDLC.exe`.
 - _How do I report a bug with the mod?_
     - Please log a bug report through the _Issues_ on GitHub, clicking _New issue_, then selecting _Report Bug_.
 - _How do I request support for the mod?_
