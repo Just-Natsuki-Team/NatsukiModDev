@@ -3,107 +3,6 @@
 
 init offset = -1
 
-init python:
-    import random
-
-    # These dialogue sets are used on the Quit modal, where the indexes of each set are used as follows:
-    # [0]: Confirm prompt header
-    # [1]: Response on choosing to leave via Continue
-    # [2]: Response on choosing to stay via Go Back
-    QUIT_HIGH_AFFINITY_DIALOGUE = [
-        [
-            "Wait, you're leaving? You could at least say goodbye first, you know...",
-            "[player]...\n {0}".format(random.choice(jn_globals.DEFAULT_SAD_EMOTICONS)),
-            "Ehehe. Thanks, [player]~ \n{0}".format(random.choice(jn_globals.DEFAULT_HAPPY_EMOTICONS))
-        ],
-        [
-            "W-wait, what? Aren't you going to say goodbye first, [player]?",
-            "Come on, [player]...\n{0}".format(random.choice(jn_globals.DEFAULT_SAD_EMOTICONS)),
-            "Thanks, [player]! \n{0}".format(random.choice(jn_globals.DEFAULT_HAPPY_EMOTICONS))
-        ],
-        [
-            "Come on, [player]... at least say goodbye to me first?",
-            "Why, [player]...? \n{0}".format(random.choice(jn_globals.DEFAULT_SAD_EMOTICONS)),
-            "Thanks a bunch, [player]~ \n{0}".format(random.choice(jn_globals.DEFAULT_HAPPY_EMOTICONS)),
-        ]
-    ]
-
-    QUIT_MEDIUM_AFFINITY_DIALOGUE = [
-        [
-            "H-huh? You're leaving? You could at least say goodbye properly!",
-            "[player]! Come on...\n {0}".format(random.choice(jn_globals.DEFAULT_ANGRY_EMOTICONS)),
-            "Y-yeah! That's what I thought. Ahaha..."
-        ],
-        [
-            "W-wait, what? At least say goodbye if you're leaving, [player]!",
-            "Ugh... [player]...\n {0}".format(random.choice(jn_globals.DEFAULT_ANGRY_EMOTICONS)),
-            "G-good! Good..."
-        ],
-        [
-            "H-hey! You aren't just going to leave like that, are you?",
-            "...Really, [player]?\n {0}".format(random.choice(jn_globals.DEFAULT_ANGRY_EMOTICONS)),
-            "T-thanks, [player]."
-        ]
-    ]
-
-    QUIT_LOW_AFFINITY_DIALOGUE = [
-        [
-            "...Really? I don't even get a 'goodbye' now?",
-            "...Jerk.",
-            "...Thanks, [player]. I guess."
-        ],
-        [
-            "...You're not even going to bother saying goodbye?",
-            "Heh. Yeah. You have a {i}wonderful{/i} day too.",
-            "Thanks.",
-        ],
-        [
-            "...Is it really {i}that{/i} much effort to say goodbye properly?",
-            "Don't let the door hit you on the way out. \nJerk.",
-            "Thank you.",
-        ]
-    ]
-
-    QUIT_ZERO_AFFINITY_DIALOGUE = [
-        [
-            "...Going?",
-            "...Good riddance.",
-            "...Whatever."
-        ],
-        [
-            "...Oh. You're leaving.",
-            "...Maybe you shouldn't come back.",
-            "Uh huh.",
-        ],
-        [
-            "...Leaving?",
-            "Don't hurry back.",
-            "Whatever.",
-        ]
-    ]
-
-    def get_affinity_quit_dialogue():
-        """
-        Returns a list containing quit dialogue when exiting via game window/main menu quit option, where indexes:
-        0: Dialogue before selecting an option
-        1: Dialogue for choosing to quit
-        2: Dialogue for choosing to stay
-
-        OUT:
-            List containing quit dialogue
-        """
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            return random.choice(QUIT_HIGH_AFFINITY_DIALOGUE)
-
-        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-            return random.choice(QUIT_MEDIUM_AFFINITY_DIALOGUE)
-
-        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-            return random.choice(QUIT_LOW_AFFINITY_DIALOGUE)
-
-        else:
-            return random.choice(QUIT_ZERO_AFFINITY_DIALOGUE)
-
 ################################################################################
 ## Custom Screens
 ################################################################################
@@ -538,8 +437,6 @@ image input_caret:
 
 screen input(prompt):
     style_prefix "input"
-
-
     window:
         vbox:
             xalign .5
@@ -1751,91 +1648,6 @@ init python:
     def check_ingame_state_add_apology():
         if jn_globals.player_is_ingame:
             jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.cheated_game)
-
-label jn_quit_action:
-    # Override label
-    if (jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete
-        and jn_farewells.JNForceQuitStates(persistent.jn_player_force_quit_state) == jn_farewells.JNForceQuitStates.not_force_quit
-    ):
-        $ push("farewell_force_quit")
-        $ renpy.jump("call_next_topic")
-
-    elif not jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete:
-        $ renpy.jump("quit")
-
-    else:
-        call screen jn_confirm_quit
-
-    return
-
-screen jn_confirm_quit():
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
-    zorder 200
-    style_prefix "confirm"
-    add "gui/overlay/confirm.png"
-
-    frame:
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _(get_affinity_quit_dialogue()[0]):
-                style "confirm_prompt"
-                xalign 0.5
-
-            hbox:
-                xalign 0.5
-                spacing 100
-                textbutton _("Continue") action [Hide("jn_confirm_quit"), Show(screen="jn_acknowledge_quit_action", is_quitting=True)]
-                textbutton _("Go back") action [Hide("jn_confirm_quit"), Show(screen="jn_acknowledge_quit_action", is_quitting=False)]
-
-screen jn_acknowledge_quit_action(is_quitting):
-    modal True
-    zorder 300
-    style_prefix "confirm"
-    add "gui/overlay/confirm.png"
-
-    action Hide("confirm")
-
-    if is_quitting:
-        $ quit_label = get_affinity_quit_dialogue()[1]
-    else:
-        $ quit_label = get_affinity_quit_dialogue()[2]
-
-    frame:
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _(quit_label):
-                style "confirm_prompt"
-                xalign 0.5
-
-            hbox:
-                xalign 0.5
-                spacing 100
-
-                if is_quitting:
-                    textbutton _("...") action [
-                        # Player has decided to ditch Natsuki; add pending apology(s) then quit
-                        Function(jn_apologies.add_new_pending_apology, jn_apologies.TYPE_SUDDEN_LEAVE),
-                        Function(check_ingame_state_add_apology),
-                        SetField(persistent, "jn_player_apology_type_on_quit", jn_apologies.TYPE_SUDDEN_LEAVE),
-                        Function(jn_relationship, "affinity-"),
-                        Hide("jn_confirm_quit"),
-                        Hide("jn_acknowledge_quit_action"),
-                        Jump("quit")
-                    ]
-                else:
-                    textbutton _("OK") action [
-                        # Player is a decent person; hide the screens
-                        Hide("jn_confirm_quit"),
-                        Hide("jn_acknowledge_quit_action"),
-                        Return()
-                    ]
 
 screen confirm_editable(message, yes_text, no_text, yes_action, no_action):
 

@@ -13,6 +13,7 @@ image dim heavy = "mod_assets/backgrounds/classroom/dim_heavy.png"
 image glitch_garbled_a = "mod_assets/backgrounds/etc/glitch_garbled_a.png"
 image glitch_garbled_b = "mod_assets/backgrounds/etc/glitch_garbled_b.png"
 image glitch_garbled_c = "mod_assets/backgrounds/etc/glitch_garbled_c.png"
+image glitch_garbled_n = "mod_assets/backgrounds/etc/youdidthis.png"
 image glitch_garbled_red = "mod_assets/backgrounds/etc/glitch_garbled_red.png"
 
 image glitch_fuzzy:

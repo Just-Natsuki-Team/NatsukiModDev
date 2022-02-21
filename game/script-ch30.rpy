@@ -416,3 +416,106 @@ label extras_menu:
         $ renpy.jump(_return)
 
     jump ch30_loop
+
+label try_force_quit:
+    # Decision making that overrides the default Ren'Py quit behaviour
+    if (jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete
+        and jn_farewells.JNForceQuitStates(persistent.jn_player_force_quit_state) == jn_farewells.JNForceQuitStates.not_force_quit
+    ):
+        # Player hasn't force quit before, special dialogue
+        $ push("farewell_force_quit")
+        $ renpy.jump("call_next_topic")
+
+    elif not jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete:
+        # Player hasn't passed the intro sequence, just quit
+        $ renpy.jump("quit")
+
+    else:
+        # Standard quit behaviour
+        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+            n 1kplpo "W-{w=0.1}wait,{w=0.1} what?{w=0.2} Aren't you going to say goodbye first,{w=0.1} [player]?"
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+            n 1kskem "H-{w=0.1}hey!{w=0.2} You aren't just going to leave like that,{w=0.1} are you?"
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+            n 1fsqpu "...Really?{w=0.2} I don't even get a 'goodbye' now?"
+
+        else:
+            n 1fsqsf "...Oh.{w=0.2} You're leaving."
+
+        menu:
+            # Back out of quitting
+            "Nevermind.":
+                if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+                    n 1kllssl "T-{w=0.1}thanks,{w=0.1} [player].{w=1}{nw}"
+                    n 1tllss "Now,{w=0.1} where was I...?{w=1}{nw}"
+                    extend 1unmbo " Oh,{w=0.1} right.{w=1}{nw}"
+
+                elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+                    n 1flleml "G-{w=0.1}good!{w=1}{nw}"
+                    extend 1kllpol " Good...{w=1}{nw}"
+                    n 1tslpu "Now...{w=0.3} what was I saying again?{w=0.5}{nw}"
+                    extend 1nnmbo " Oh,{w=0.1} right.{w=1}{nw}"
+
+                elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+                    n 1fsqfr "...Thank you.{w=1}{nw}"
+                    n 1fslpu "As I was {i}saying{/i}...{w=1}{nw}"
+
+                else:
+                    n 1fcsfr "Whatever.{w=1}{nw}"
+                    n 1fsqsl "{cps=/2}As I was saying.{/cps}{w=1}{nw}"
+
+                return
+
+            # Continue force quit
+            "...":
+                hide screen hkb_overlay
+                if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+                    n 1kwmem "Come on,{w=0.2} [player]...{w=1}{nw}"
+                    play audio glitch_c
+                    stop music
+                    n 1kcsup "...!{nw}"
+
+                elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+                    n 1fwmun "...Really,{w=0.2} [player]?{w=1}{nw}"
+                    play audio glitch_c
+                    stop music
+                    n 1kcsfu "Hnnng-!{nw}"
+
+                elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+                    n 1fslun "Don't let the door hit you on the way out.{w=1}{nw}" 
+                    extend 1fsqem " Jerk.{w=1}{nw}"
+                    play audio glitch_c
+                    stop music
+                    n 1fcsan "Nnngg-!{nw}"
+
+                else:
+                    n 1fslun "Heh.{w=1}{nw}"
+                    extend 1fsqfr "...Maybe you {i}shouldn't{/i} come back.{w=1}{nw}"
+                    play audio glitch_c
+                    stop music
+                    n 1fcsfr "...{nw}"
+
+                    if (random.randint(0, 10) == 1):
+                        play sound glitch_d loop
+                        show glitch_garbled_red zorder 99 with vpunch
+                        $ renpy.pause(random.randint(4,13))
+                        stop sound
+                        play audio glitch_e
+                        show glitch_garbled_n zorder 99 with hpunch
+                        $ renpy.pause(0.025)
+                        hide glitch_garbled_n
+                        hide glitch_garbled_red
+
+                # Apply consequences for force quitting, then glitch quit out
+                $ jn_relationship("affinity-")
+                $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
+                if jn_globals.player_is_ingame:
+                    $ jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.cheated_game)
+
+                $ persistent.jn_player_apology_type_on_quit = jn_apologies.TYPE_SUDDEN_LEAVE
+                play audio static
+                show glitch_garbled_b zorder 99 with hpunch
+                hide glitch_garbled_b
+                $ renpy.jump("quit")

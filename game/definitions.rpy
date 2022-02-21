@@ -1161,6 +1161,8 @@ define audio.notification = "mod_assets/sfx/notification.ogg"
 define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
 define audio.glitch_b = "mod_assets/sfx/glitch_b.ogg"
 define audio.glitch_c = "mod_assets/sfx/glitch_c.ogg"
+define audio.glitch_d = "mod_assets/sfx/glitch_d.ogg"
+define audio.glitch_e = "mod_assets/sfx/glitch_e.ogg"
 define audio.interference = "mod_assets/sfx/interference.ogg"
 define audio.static = "mod_assets/sfx/glitch_static.ogg"
 
@@ -1205,6 +1207,13 @@ init -999 python:
         jn_globals.current_label = name
 
     config.label_callback = label_callback
+
+    def quit_input_check():
+        """
+        This checks to ensure an input or menu screen is not up before allowing a force quit, as these crash the game. Thanks, Tom.
+        """
+        if not renpy.get_screen("input") and not renpy.get_screen("choice"):
+            renpy.call("try_force_quit")
 
     class JNEvent(object):
         """
