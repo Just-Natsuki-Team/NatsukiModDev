@@ -125,7 +125,7 @@ init 0 python in jn_atmosphere:
             if store.persistent.jn_random_weather:
                 show_random_sky(with_transition=with_transition)
 
-            elif not jn_atmosphere.is_current_weather_sunny():
+            elif not is_current_weather_sunny():
                 show_sky(WEATHER_SUNNY, with_transition=with_transition)
 
     def show_random_sky(with_transition=True):
