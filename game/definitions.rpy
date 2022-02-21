@@ -1064,6 +1064,8 @@ init -999 python in jn_utils:
         return pygame.mouse.get_pos()
 
 init python in jn_utils:
+    import store
+    
     def get_current_session_length():
         """
         Returns a timedelta object representing the length of the current game session.
@@ -1129,6 +1131,16 @@ init python in jn_utils:
         Returns the validation state of the key.
         """
         return __KEY_VALID
+
+    def save_game():
+        """
+        Saves all game data.
+        """
+        #Save topic data
+        store.Topic._save_topic_data()
+
+        #Save background data
+        store.main_background.save()
 
 # Vanilla resources from base DDLC
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)

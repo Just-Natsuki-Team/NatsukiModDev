@@ -183,6 +183,7 @@ init python:
         """
         Runs every minute during breaks between topics
         """
+        jn_utils.save_game()
 
         # Run through all externally-registered minute check actions
         if len(jn_plugins.minute_check_calls) > 0:
@@ -511,10 +512,8 @@ label try_force_quit:
                 # Apply consequences for force quitting, then glitch quit out
                 $ jn_relationship("affinity-")
                 $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
-                if jn_globals.player_is_ingame:
-                    $ jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.cheated_game)
-
                 $ persistent.jn_player_apology_type_on_quit = jn_apologies.TYPE_SUDDEN_LEAVE
+
                 play audio static
                 show glitch_garbled_b zorder 99 with hpunch
                 hide glitch_garbled_b

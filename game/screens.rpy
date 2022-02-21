@@ -71,30 +71,29 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                 mousewheel True
                 arrowkeys True
                 vbox:
-                    if category_length != 1:
-                        if category_length == 0:
-                            textbutton _("Nevermind."):
-                                action [
-                                    Return(False),
-                                    Function(prev_adjustment.change, 0),
-                                    SetVariable("selected_category", None)
-                                ]
-                                hover_sound gui.hover_sound
-                                activate_sound gui.activate_sound
+                    if category_length == 0:
+                        textbutton _("Nevermind."):
+                            action [
+                                Return(False),
+                                Function(prev_adjustment.change, 0),
+                                SetVariable("selected_category", None)
+                            ]
+                            hover_sound gui.hover_sound
+                            activate_sound gui.activate_sound
 
-                        elif category_length > 1:
-                            python:
-                                import random
+                    else:
+                        python:
+                            import random
 
-                                go_back_text = "Go back"
-                                if random.randint(0, 999) == 999:
-                                    go_back_text = "Go baka"
+                            go_back_text = "Go back"
+                            if random.randint(0, 999) == 1:
+                                go_back_text = "Go baka"
 
-                            textbutton _(go_back_text):
-                                style "categorized_menu_button"
-                                action [ Return(-1), Function(prev_adjustment.change, 0) ]
-                                hover_sound gui.hover_sound
-                                activate_sound gui.activate_sound
+                        textbutton _(go_back_text):
+                            style "categorized_menu_button"
+                            action [ Return(-1), Function(prev_adjustment.change, 0) ]
+                            hover_sound gui.hover_sound
+                            activate_sound gui.activate_sound
 
                         null height 20
 

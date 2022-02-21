@@ -160,7 +160,7 @@ init -20 python:
             """
             return self.sunrise <= datetime.datetime.now().time() < self.sunset
 
-        def draw(self, dissolve_all=False, full_redraw=False, no_dissolve=False):
+        def draw(self, dissolve_all=False, full_redraw=False):
             """
             Draws the location
 

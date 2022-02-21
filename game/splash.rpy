@@ -235,11 +235,8 @@ label before_main_menu:
 
 label quit:
     python:
-        #Save topic data
-        Topic._save_topic_data()
-
-        #Save background data
-        main_background.save()
+        # Save game data
+        jn_utils.save_game()
 
         # Finally quit
         renpy.quit()
