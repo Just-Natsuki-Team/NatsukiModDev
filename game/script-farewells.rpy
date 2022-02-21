@@ -164,12 +164,12 @@ label farewell_option_sleep:
 
     elif jn_get_current_hour() > 22 or jn_get_current_hour() < 6:
         # Late night
-        n 1fnmaj "A-{w=0.1}and I should think so, too!{w=0.5}{nw}"
+        n 1fnmaj "A-{w=0.1}and I should think so,{w=0.1} too!{w=0.5}{nw}"
         extend 1tnmem " It took you that long to notice the time?!"
         n 1fllpo "Jeez...{w=0.5}{nw}"
         extend 1nllpo " but better late than never,{w=0.1} I guess."
         n 1fllsm "Ehehe.{w=0.5}{nw}"
-        extend 1fchsm " Sleep well, [player]!"
+        extend 1fchsm " Sleep well,{w=0.1} [player]!"
 
     elif jn_get_current_hour() >= 21:
         # Standard night
@@ -207,7 +207,7 @@ label farewell_option_sleep:
 
 label farewell_option_eat:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_HUNGRY:
-        n 1fcsgs "W-{w=0.1}well, yeah!{w=0.2} Go get something already,{w=0.1} dummy!"
+        n 1fcsgs "W-{w=0.1}well,{w=0.1} yeah!{w=0.2} Go get something already,{w=0.1} dummy!"
         n 1fllpo "Jeez..."
         n 1fnmpo "Just make it something healthy,{w=0.1} got it?"
         n 1fllsm "...Ehehe.{w=0.2}{nm}"
@@ -239,7 +239,7 @@ label farewell_option_eat:
     else:
         n 1unmaj "Oh?{w=0.2} You're gonna grab a bite to eat?"
         n 1nllaj "That's fine."
-        n 1nsqpo "You better not be filling up on junk though, [player]."
+        n 1nsqpo "You better not be filling up on junk though,{w=0.1} [player]."
         n 1fsqsm "...Ehehe.{w=0.5}{nw}"
         extend 1uchbg " Enjoy~!"
 
@@ -412,7 +412,7 @@ label farewell_option_school:
 
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
         $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
-        n 1uchbgf "Love you, [chosen_endearment]!"
+        n 1uchbgf "Love you,{w=0.1} [chosen_endearment]!"
 
     return { "quit": None }
 
@@ -437,7 +437,7 @@ label farewell_option_play:
     n 1fcssl "..."
     n 1uchgn "Well,{w=0.1} your loss!{w=0.5}{nw}"
     extend 1uchlg " Ahaha!"
-    n 1nllbg "No,{w=0.1} no.{w=0.2} It's fine.{w=0.2} You go do that, [player].{w=0.5}{nw}"
+    n 1nllbg "No,{w=0.1} no.{w=0.2} It's fine.{w=0.2} You go do that,{w=0.1} [player].{w=0.5}{nw}"
     extend 1nsqbg " Besides..."
     n 1usqct "You sure could use the practice,{w=0.1} huh?{w=0.5}{nw}"
     extend 1fchsm " Ehehe."
@@ -1110,7 +1110,7 @@ init 5 python:
 label farewell_short_session_ask:
     n 1uskwrl "What?{w=0.2} You're leaving?{w=0.2} But you've barely been here at all today,{w=0.1} [player]!"
     $ time_in_session_descriptor = jn_utils.get_time_in_session_descriptor()
-    n 1fnmpol "In fact, you've only been here for [time_in_session_descriptor]!"
+    n 1fnmpol "In fact,{w=0.1} you've only been here for [time_in_session_descriptor]!"
     menu:
         n "You're sure you can't stay just a little longer?"
 
@@ -1118,10 +1118,10 @@ label farewell_short_session_ask:
             n 1uchbsl "Yay{nw}!"
             n 1uskgsl "I-I mean...!"
             if jn_affinity.get_affinity_state() > jn_affinity.ENAMORED:
-                n 1kllssl "T-{w=0.1}thanks, [player]. It means a lot to me."
+                n 1kllssl "T-{w=0.1}thanks,{w=0.1} [player]. It means a lot to me."
                 $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
-                n 1kplssl "Really. Thank you, [chosen_endearment]."
-                n 1klrbgl "...A-anyway!"
+                n 1kplssl "Really.{w=0.2} Thank you,{w=0.1} [chosen_endearment]."
+                n 1klrbgl "...A-{w=0.1}anyway!"
 
             else:
                 n 1fnmbgl "Yeah!{w=0.2} That's what I thought!"
@@ -1224,10 +1224,10 @@ label farewell_short_session_ask_alt:
 
         "Fine, I guess.":
             n 1fbkwrf "You {i}guess{/i}?{w=0.2} What do you mean,{w=0.1} you guess?!"
-            n 1fnmpol "Jeez...{w=0.3} what's with the attitude today, [player]?"
-            n 1fllpof "Well, anyway...{w=0.3} Thanks for staying with me a little longer."
+            n 1fnmpol "Jeez...{w=0.3} what's with the attitude today,{w=0.1} [player]?"
+            n 1fllpof "Well,{w=0.1} anyway...{w=0.3} Thanks for staying with me a little longer."
             n 1fsgsgl "...{i}I guess{/i}."
-            n 1uchgnl "Ahaha!{w=0.2} Oh, lighten up, [player]!{w=0.2} I'm just messing with you!"
+            n 1uchgnl "Ahaha!{w=0.2} Oh,{w=0.1} lighten up,{w=0.1} [player]!{w=0.2} I'm just messing with you!"
             n 1tllsml "Ehehe.{w=0.2} Now,{w=0.1} where were we?"
             $ jn_globals.player_already_stayed_on_farewell = True
             $ jn_relationship("affinity+")
@@ -1308,7 +1308,7 @@ label farewell_pleading_ask:
             n 1knmajf "I-I mean...!"
             n 1kllslf "..."
             $ chosen_descriptor = random.choice(jn_globals.DEFAULT_PLAYER_DESCRIPTORS)
-            n 1kllnvf "T-thanks, [player].{w=0.1} You're [chosen_descriptor],{w=0.1} you know that?"
+            n 1kllnvf "T-{w=0.1}thanks,{w=0.1} [player].{w=0.1} You're [chosen_descriptor],{w=0.1} you know that?"
             n 1kplsmf "Really.{w=0.1} Thank you."
             n 1kllbgf "N-{w=0.1}now,{w=0.1} where were we? Heh..."
             $ jn_globals.player_already_stayed_on_farewell = True
@@ -1345,9 +1345,9 @@ label farewell_gentle_ask:
 
         "I can stay a little longer.":
             n 1kplsmf "[player]..."
-            n 1kchsmf "Thank you.{w=0.1} That really means a lot to me right now."
+            n 1kchsmf "Thank you.{w=0.2} That really means a lot to me right now."
             $ chosen_descriptor = random.choice(jn_globals.DEFAULT_PLAYER_DESCRIPTORS)
-            n 1kwmssf "Y-You're [chosen_descriptor], [player]."
+            n 1kwmssf "Y-{w=0.1}You're [chosen_descriptor],{w=0.1} [player]."
             n 1kcssmf "Truly.{w=0.1} Thanks..."
             n 1kcssmf "..."
             n 1kllbgf "Aha...{w=0.3} so what else did you wanna do today?"
@@ -1356,10 +1356,10 @@ label farewell_gentle_ask:
 
         "Sorry, I really have to go.":
             n 1kllsrf "Oh..."
-            n 1kplsmf "I'd be lying if I said I wasn't disappointed, but I understand."
-            n 1kwmsrf "Just be careful out there, okay?"
+            n 1kplsmf "I'd be lying if I said I wasn't disappointed,{w=0.1} but I understand."
+            n 1kwmsrf "Just be careful out there,{w=0.1} okay?"
             n 1kllsrf "..."
-            n 1kwmsmf "I-I love you,{w=0.1} [player]..."
+            n 1kwmsmf "I-{w=0.1}I love you,{w=0.1} [player]..."
             n 1kchsmf "I'll see you later."
             $ jn_farewells.try_trust_dialogue()
             return { "quit": None }
@@ -1425,7 +1425,7 @@ label farewell_early_morning_going_this_early:
     n 1uchgnl "Take care out there,{w=0.1} 'kay?{w=0.2} Don't do anything dumb!"
 
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-        n 1uchbsf "Love you, [player]~!"
+        n 1uchbsf "Love you,{w=0.1} [player]~!"
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
@@ -1458,7 +1458,7 @@ label farewell_morning_heading_off:
         n 1nchbgl "I hope your day is as great as you are."
 
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-            n 1nchsmf "Ehehe.{w=0.2} Love you, [player]~!"
+            n 1nchsmf "Ehehe.{w=0.2} Love you,{w=0.1} [player]~!"
 
         else:
             n 1uchsml "Later!"
