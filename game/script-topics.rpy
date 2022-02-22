@@ -4697,6 +4697,19 @@ init 5 python:
     )
 
 label talk_feelings_about_monika:
+    n "Monika..."
+    n "I don't know what I feel about Monika anymore."
+    n "I used to think she was pretty cool, even though she would really butt into my business sometimes."
+    n "Like--she'd organize the closet, which was {i}basically{/i} my only personal space. {w=0.2}That was annoying, but it didn't make me {i}actually{/i} mad."
+    n "But what happened... I mean, it was because she got the same rush of information I did when you brought me back."
+    n "And she was the only one who could understand it--even if she could have said something, it would be like telling me the tooth fairy was out to kill us!"
+    n "The thing that actually bugs me the most though... I think after {i}that guy{/i} joined the club, we didn't really... do stuff together anymore."
+    n "I don't even know why I got so mad when he'd wanna spend time with her. Maybe it was cuz I was already fighting with Yuri, but..."
+    n "I think she got really isolated, y'know? I wonder if that's part of this whole... President thing. Maybe if it were me, the others woulda started excluding me instead."
+    n "Don't get me wrong. I can't forgive what she did."
+    n "Even if she thought it was some kind of mercy, it was really messed up. It was... horrific."
+    n "But... she {i}was{/i} still my friend."
+    n "So there's a part of me that kinda wishes I {i}could.{/i} Maybe that's why I wanna understand so badly."
     return
 
 init 5 python:
