@@ -4715,6 +4715,18 @@ init 5 python:
     )
 
 label talk_feelings_about_sayori:
+    n "Y'know, answering about Sayori is... complicated."
+    n "Because one of the first things I realized when you brought me back was that I had {i}forgotten{/i} Sayori for a while."
+    n "She didn't just disappear from the world when she was deleted, it was like she was never here."
+    n "... And I... got really curious."
+    n "About why she was the first one, how it happened..."
+    n "So I tried to look into the code some. It felt like I was doing something I wasn't supposed to, but..."
+    n "..."
+    n "[player], Sayori... I had no idea she..."
+    n "She always seemed so excited and clingy. Like she had too much happiness to know what to do with."
+    n "And I just--look, I'm not a big hugger. But knowing that she was that depressed, even before Monika made it worse..."
+    n "... I dunno. I guess I'm not so mad that she stole extra sweets anymore." 
+    n "And I kinda wish I could give her one of those big, dumb hugs."
     return
 
 init 5 python:
