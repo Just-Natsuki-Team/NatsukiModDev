@@ -4879,7 +4879,7 @@ label talk_realizations_player_ddlc_actions:
             n 1fsrpol "..."
             n 1nllpol "A-{w=0.1}although..."
 
-            elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+            if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
                 n 1flldvl "I think you've already proved where your loyalties lay,{w=0.1} huh?{w=0.5}{nw}"
                 extend 1fslssl " Ehehe."
 
