@@ -4796,191 +4796,198 @@ init 5 python:
     )
 
 label talk_realizations_player_ddlc_actions:
-    n "So,{w=0.5}{nw}"
-    extend " [player]."
-    n "I've...{w=0.3} been having some thoughts.{w=0.5}{nw}"
-    extend " Now I've actually had some time to process all of..." 
-    n "...This."
-    n "You've been here all this time,{w=0.1} right?{w=0.5}{nw}"
-    extend " But then,{w=0.1} that would mean..."
+    n 1nllbo "So,{w=0.5}{nw}"
+    extend 1nnmbo " [player]."
+    n 1ulraj "I've...{w=0.3} been having some thoughts.{w=0.5}{nw}"
+    extend 1nllss " Now I've actually had some time to process all of..." 
+    n 1kslsl "...This."
+    n 1unmaj "You've been here all this time,{w=0.1} right?{w=0.5}{nw}"
+    extend 1tslbo " But then,{w=0.1} that would mean..."
 
-    $ name_match = persistent.playername.lower() == persistent.mc_name.lower()
+    $ name_match = persistent.playername.lower() == persistent.ddlc_mc_name.lower()
     if name_match:
         $ mc_initial = persistent.ddlc_mc_name.lower()
-        n "[mc_initial]-{w=0.5}{nw}"
-        n "I-{w=0.1}I mean,{w=0.5}{nw}"
-        extend " that guy who joined the club..."
+        n 1unmpu "[mc_initial]-{w=0.5}{nw}"
+        n 1nllem "I-{w=0.1}I mean,{w=0.5}{nw}"
+        extend 1nslss " that guy who joined the club..."
 
     else:
-        n "That guy...{w=0.5}{nw}"
-        extend "[persistent.mc_name],{w=0.1} wasn't it?{w=0.5}{nw}"
-        extend " Something like that."
+        n 1tslbo "The guy who actually joined the club...{w=0.5}{nw}"
+        extend 1tnmpu "[persistent.ddlc_mc_name],{w=0.1} I think?{w=0.5}{nw}"
+        extend 1nlrss " Something like that."
 
-    n "He wasn't actually in control of anything,{w=0.1} was he?{w=0.5}{nw}"
-    extend " Not even himself."
-    n "...You were.{w=0.5}{nw}"
-    extend "In control of him,{w=0.1} I mean."
-    n "..."
+    n 1fsrbo "He wasn't {i}actually{/i} in control of anything,{w=0.1} was he?{w=0.5}{nw}"
+    extend 1ulraj " Not even himself."
+    n 1nnmsr "...You were.{w=0.5}{nw}"
+    extend 1nlrsl "In control of him,{w=0.1} I mean."
+    n 1nsrbo "..."
 
     if persistent.ddlc_natsuki_was_romanced:
         # The player romanced Natsuki
-        n "So...{w=0.3} if he was being that nice to me..."
-        n "T-{w=0.1}then that would mean...{w=0.5}{nw}"
+        n 1nsraj "So...{w=0.3} if he was being that nice to me..."
+        n 1klrajl "T-{w=0.1}then that would mean...{w=0.5}{nw}"
 
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-            n "..."
-            n "Heh,{w=0.1} what am I even saying.{w=0.5}{nw}"
-            extend "Just because you clicked stuff {w=0.1}-{w=0.1} {i}when you were allowed,{w=0.1} anyway{/i} {w=0.1}-{w=0.1} doesn't make you the same."
-            n "Either way,{w=0.1} [player]?"
+            n 1klrsml "..."
+            n 1kcsssl "Heh,{w=0.1} what am I even saying.{w=0.5}{nw}"
+            extend 1kwmsml "Just because you clicked stuff {w=0.1}-{w=0.1} {i}when you were allowed,{w=0.1} anyway{/i} {w=0.1}-{w=0.1} doesn't make you the same."
+            n 1tllssl "Either way,{w=0.1} [player]?"
+            n 1ksqsml "I'm definitely not complaining.{w=0.5}{nw}"
+            extend 1nchsml " Ehehe."
 
         else:
-            extend " -urk!"
-            n "Nnnnn-!"
-            n "..."
-            n "A-{w=0.5}{nw}"
-            extend "ha!"
-            n "Haha!{w=0.5}{nw}"
-            extend " What am I even saying?!"
-            n "J-{w=0.1}just because you picked some words and clicked a few buttons doesn't make you the same!"
-            n "..."
-            n "A-{w=0.1}although..."
+            extend 1fskeml " -urk!"
+            n 1fcsanf "Nnnnn-!"
+            n 1fllunf "..."
+            n 1fnmssl "A-{w=0.5}{nw}"
+            extend 1fcsbgl "ha!"
+            n 1fcsbsl "Haha!{w=0.5}{nw}"
+            extend 1flleml " What am I even saying?!"
+            n 1fcswrl "J-{w=0.1}just because you picked some words and clicked a few buttons doesn't make you the same!"
+            n 1fllpol "..."
+            n 1nlleml "A-{w=0.1}although..."
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-            n "I'm definitely not complaining.{w=0.5}{nw}"
-            extend " Ehehe."
+            if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+                n 1fcsajl "Don't think I'm complaining or anything like that.{w=0.5}{nw}"
+                extend 1nlrssl " Ehehe..."
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "Don't think I'm complaining or anything like that.{w=0.5}{nw}"
-            extend " Ehehe..."
+            elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY: 
+                n 1fcsajl "You're already proving that well enough.{w=0.5}{nw}"
+                extend 1fllunl " I-{w=0.1}I think."
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY: 
-            n "You're already proving that well enough.{w=0.5}{nw}"
-            extend " I-{w=0.1}I think."
-
-        else:
-            n "I-{w=0.1}I guess that at {i}least{/i} means you have good taste.{w=0.5}{nw}"
-            extend " I suppose that counts for something."
+            else:
+                n 1fcsajl "I-{w=0.1}I guess that at {i}least{/i} means you have good taste.{w=0.5}{nw}"
+                extend 1fllunl " I suppose that counts for something."
 
     elif persistent.ddlc_was_true_ending:
         # The player romanced everyone
-        n "But...{w=0.3} he wasn't just acting that way to me...{w=0.5}{nw}"
-        extend " but to everyone."
-        n "T-{w=0.1}then that would mean..."
-        n "Uuuuu-!"
-        n "I-{w=0.1}it doesn't {i}mean{/i} anything!"
-        n "Just because you messed around going back and forth doesn't make you the same!"
-        n "..."
-        n "But..."
+        n 1ullsl "He was nice enough,{w=0.1} I guess.{w=0.2} But..."
+        n 1fllun "He wasn't just acting nice way to me...{w=0.5}{nw}"
+        extend 1fnmpu " but to everyone."
+        n 1fslpul "So then,{w=0.1} t-{w=0.1}that would mean..."
 
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-            n "We both know exactly where your loyalties lie,{w=0.1} huh?{w=0.5}{nw}"
-            extend " Ehehe~."
-
-        elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "I think you've already proved where your loyalties lay,{w=0.1} huh?{w=0.5}{nw}"
-            extend " Ehehe."
-
-        elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY: 
-            n "You're already proving that well enough.{w=0.5}{nw}"
-            extend " I-{w=0.1}I think."
+            n 1ncsssl "...Heh.{w=0.5}{nw}"
+            extend  1kcsssl "What am I even saying."
+            n 1fsqsml "We both know {i}exactly{/i} where your loyalties lie by now,{w=0.1} huh?{w=0.5}{nw}"
+            extend 1fchgnl " Ehehe~."
 
         else:
-            n "I-{w=0.1}I guess that at least means you can't be too much of a jerk.{w=0.5}{nw}"
-            extend " I suppose that counts for something."
+            n 1fcsanf "Uuuuu-!"
+            n 1fbkwrl "I-{w=0.1}it doesn't {i}mean{/i} anything!"
+            n 1flreml "Just because you messed around going back and forth doesn't make you the same!"
+            n 1fsrpol "..."
+            n 1nllpol "A-{w=0.1}although..."
+
+            elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+                n 1flldvl "I think you've already proved where your loyalties lay,{w=0.1} huh?{w=0.5}{nw}"
+                extend 1fslssl " Ehehe."
+
+            elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY: 
+                n 1fcsajl "You're already proving that well enough.{w=0.5}{nw}"
+                extend 1fllunl " I-{w=0.1}I think."
+
+            else:
+                n 1fcsajl "I-{w=0.1}I guess that at least means you can't be too much of a jerk.{w=0.5}{nw}"
+                extend 1fllunl " I suppose that counts for something."
 
     else:
         # The player romanced Sayori or Yuri, but not Natsuki
-        n "So...{w=0.3} if he was being that nice to {i}her{/i}..."
-        n "T-{w=0.1}then that would mean..."
-        n "Uuuuu-!"
-        n "T-{w=0.1}that doesn't make any sense at all!"
-        n "Why would you bring me back if {i}she{/i} had you so worked up?!"
-        n "..."
-        n "Though..."
+        n 1nllaj "So...{w=0.3} if he was being that nice to" 
+        extend 1fslpo " {i}her{/i}..."
+        n 1fslpul "T-{w=0.1}then that would mean..."
 
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-            n "...Wait,{w=0.1} why am I getting worked up over this?"
-            n "I think it's pretty clear who you really had eyes for,{w=0.1} h-{w=0.1}huh?{w=0.5}{nw}"
-            extend "Ehehe..."
-
-        elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n "...Wait,{w=0.1} why am I getting so worked up?"
-            n "I-it's pretty obvious who you really favour.{w=0.5}{nw}"
-            extend " Ahaha..."
-
-        elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
-            n "...W-wait,{w=0.1} why am I getting so worked up?"
-            n "It's not like you brought {i}her{/i} back,{w=0.1} a-{w=0.1}after all."
+            n 1fslbol "..."
+            n 1kslssl "...Wait,{w=0.1} why am I getting worked up over this?"
+            n 1flrdvl "I think it's pretty clear who you really had eyes for,{w=0.1} h-{w=0.1}huh?{w=0.5}{nw}"
+            extend 1klrssl "Ehehe..."
 
         else:
-            n "I-{w=0.1}I guess that at least means you can't be too much of a jerk.{w=0.5}{nw}"
-            extend " I suppose that counts for something."
+            n 1fcsanf "Uuuuu-!"
+            n 1fbkwrl "T-{w=0.1}that doesn't make any sense at all!"
+            n 1fcseml "Why would you bring me back if {i}she{/i} had you so worked up?!"
+            n 1fslpol "..."
+            n 1fslsrl "Though..."
+
+            if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+                n 1kslssl "...Wait,{w=0.1} why am I getting so worked up?"
+                n 1fcsbgl "I-it's pretty obvious who you really favour.{w=0.5}{nw}"
+                extend 1fllssl " Ahaha..."
+
+            elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+                n 1fcspol "...W-wait,{w=0.1} why am I getting so worked up?"
+                n 1nslpol "It's not like you brought {i}her{/i} back,{w=0.1} a-{w=0.1}after all."
+
+            else:
+                n 1fcsajl "I-{w=0.1}I guess that at least means you can't be too much of a jerk.{w=0.5}{nw}"
+                extend 1fllunl " I suppose that counts for something."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-        n "But yeah,{w=0.1} so..."
+        n 1klrss "But yeah,{w=0.1} so..."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n "A-{w=0.1}anyway..."
+        n 1ksrss "A-{w=0.1}anyway..."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY: 
-        n "A-{w=0.1}anyway."
+        n 1flrun "A-{w=0.1}anyway."
 
     else:
-        n "A-{w=0.1}anyway!{w=0.5}{nw}" 
-        extend " That's beside the point!"
+        n 1flrun "A-{w=0.1}anyway!{w=0.5}{nw}" 
+        extend 1fcsaj " That's beside the point!"
 
-    n "..."
-    n "I guess what I'm trying to say is I still have all these memories of {i}that{/i} guy..."
-    n "And although he obviously wasn't you,{w=0.5}{nw}"
-    extend " you kinda have {i}his{/i} memories too?{w=0.5}{nw}"
-    extend " And..."
-    n "...and..."
-    n "..."
-    n "Rrrgh,{w=0.1}{w=0.5}{nw}" 
-    extend " this is so confusing!"
+    n 1kslsr "..."
+    n 1ullaj "I guess what I'm trying to say is I still have all these memories of {i}that{/i} guy..."
+    n 1nsrpu "And although he obviously wasn't you,{w=0.5}{nw}"
+    extend 1tsraj " you kinda have {i}his{/i} memories too?{w=0.5}{nw}"
+    extend 1tslem " And..."
+    n 1fcsaj "...and..."
+    n 1fcsan "..."
+    n 1fcsem "Rrrgh,{w=0.1}{w=0.5}{nw}" 
+    extend 1fllem " this is so confusing!"
 
     if name_match:
         if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE: 
-            n "And you just {i}had{/i} to have the same name,{w=0.1} didn't you?"
+            n 1fnmpo "And you just {i}had{/i} to have the same name,{w=0.1} didn't you?"
 
         else:
-            n "A-{w=0.1}and why did you {i}both{/i} have to have the same dumb name?!"
+            n 1fbkwr "A-{w=0.1}and why did you {i}both{/i} have to have the same dumb name?!"
 
-    n "Ugh...{w=0.5}{nw}"
-    extend " you know what?"
+    n 1fcsem "Ugh...{w=0.5}{nw}"
+    extend 1nnmpo " you know what?"
 
     if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        n "It doesn't really matter at this point,{w=0.1} does it?"
+        n 1nllss "It doesn't really matter at this point,{w=0.1} does it?"
 
     else:
-        n "I'm just gonna start over.{w=0.5}{nw}"
-        extend " Mentally,{w=0.1} I mean."
+        n 1fllbo "I'm just gonna start over.{w=0.5}{nw}"
+        extend 1unmaj " Mentally,{w=0.1} I mean."
 
-    n "He {i}was{/i} [persistent.mc_name]."
-    n "You {i}are{/i} [player]."
+    n 1ncsaj "He {i}was{/i} [persistent.ddlc_mc_name]."
+    n 1fcssm "You {i}are{/i} [player]."
 
     if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-        "And that's all there is to it."
+        n 1fchbg "And that's all there is to it."
 
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
             if not name_match:
-                extend " Yep."
-                n "Love you,{w=0.1} [mc_initial]-"
-                n "I mean,{w=0.5}{nw}"
-                extend " {i}[player]~{/i}."
-                n "..."
+                extend 1fchsm " Yep."
+                n 1uchsml "Love you,{w=0.1} [mc_initial]-"
+                n 1fllbgl "I mean,{w=0.5}{nw}"
+                extend 1kchbgl " {i}[player]~{/i}."
+                n 1fsqsml "..."
                 $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-                n "Oh,{w=0.1} lighten up,{w=0.1} [chosen_tease]!"
-                n "You should know I'd never mean it.{w=0.5}{nw}"
-                extend " Ehehe."
+                n 1uchbsl "Oh,{w=0.1} lighten up,{w=0.1} [chosen_tease]!"
+                n 1fwrtsl "You should know I'd never mean it.{w=0.5}{nw}"
+                extend  " Ehehe."
 
             else:
-                n "Love you,{w=0.1} [player]~.{w=0.5}{nw}"
-                extend " Ehehe."
+                n 1uchsml "Love you,{w=0.1} [player]~.{w=0.5}{nw}"
+                extend 1nchsml " Ehehe."
 
     else:
-        n "I-{w=0.1}I just gotta adjust,{w=0.5}{nw}" 
-        extend " that's all."
+        n 1fllss "I-{w=0.1}I just gotta adjust,{w=0.5}{nw}" 
+        extend 1fllun " that's all."
 
     return
 
