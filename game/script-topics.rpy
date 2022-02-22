@@ -542,7 +542,9 @@ label talk_staying_active:
     n 1fllss "I'm not gonna lie and say I work out or anything like that..."
     n 1ullaj "But I try to get walks in if I can.{w=0.5}{nw}"
     extend 1uchgn " Any excuse to hit the bookshop is reason enough for me!"
-    n 1unmbg "You should give it a shot too,{w=0.1} [player]!"
+    n 1kslsl "...Or {i}was{/i} reason enough, anyway."
+    n 1fllaj "But still {w=0.1}-{w=0.5}{nw}"
+    extend 1unmbg " you should give it a shot too,{w=0.1} [player]!"
     n 1nlrss "It doesn't have to be a hike or anything crazy{w=0.1} -{w=0.3}{nw}"
     extend 1nnmsm " it's more about keeping at it,{w=0.1} really."
     n 1fchsm "Even a daily ten minute walk will help you feel refreshed and awake!"
@@ -4988,6 +4990,83 @@ label talk_realizations_player_ddlc_actions:
     else:
         n 1fllss "I-{w=0.1}I just gotta adjust,{w=0.5}{nw}" 
         extend 1fllun " that's all."
+
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_realizations_other_girls",
+            unlocked=True,
+            prompt="Monika and the other girls",
+            conditional="store.jn_utils.get_current_session_length().total_seconds() / 3600 >= 12",
+            category=["DDLC", "Natsuki"],
+            nat_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_realizations_other_girls:
+    n 1kllun "..."
+    n 1klrbo "Uhmm..."
+    n 1knmaj "Hey...{w=0.3} [player]?"
+    n 1knmsf "I've...{w=0.3} been thinking again.{w=0.5}{nw}"
+    extend 1kllsf " About before."
+    n 1kslss "I guess I really was onto something when I said Monika was acting weird."
+    n 1kskem "D-{w=0.1}don't get me wrong!{w=0.5}{nw}"
+    extend 1kllsf " I'm not happy about being right or anything.{w=0.5}{nw}"
+    extend 1kwmsr " ...At all."
+    n 1kcssr "In fact..."
+    n 1klrpu "I really wish that I was wrong."
+    n 1knmaj "I-"
+    n 1kcsunl "..."
+    n 1kplun "I honestly just thought it was all the school work and the  festival stuff getting to her,{w=0.5}{nw}"
+    extend 1kslpu " or something."
+    n 1tslpu "But...{w=0.5}{nw}"
+    extend 1kplsr " in hindsight?"
+    n 1klrun "..."
+    n 1kcsaj "...I think I actually got off {i}lightly{/i}."
+    n 1knmsl "I mean...{w=0.3} she messed with all of us.{w=0.5}{nw}"
+    extend 1klrsf " In some way or another."
+    n 1klraj "But...{w=0.5}{nw}" 
+    extend 1fcsupl " I just didn't know how much she {i}hurt{/i} everyone else..."
+    n 1fcsunl "..."
+    n 1kplunl "Sayori was the happiest person I thought I knew,{w=0.1} [player]."
+    n 1kskunl "A-{w=0.1}and Yuri...{w=0.5}{nw}"
+    extend 1kllupl " I don't..."
+    n 1kcsupl "..."
+    n 1fcsunl "..."
+    n 1kcsaj "...Sorry."
+    n 1kcssr "..."
+    n 1kllpu "I...{w=0.3}" 
+    extend 1knmsr " we never saw eye-to-eye.{w=0.2} I always knew she had her insecurities."
+    n 1kslbo "...So did I."
+    n 1kcsanl "But...{w=0.3} {i}that{/i}..."
+    n 1kcsunl "..."
+    n 1kcspu "..."
+    n 1fcsanl "I...{w=1} don't...{w=1} hate...{w=0.5} Monika."
+    n 1fcsun "I...{w=0.3} understand how she felt.{w=0.2} I {i}know{/i} how she felt."
+    n 1fsqsr "It's {i}terrifying{/i},{w=0.1} [player]."
+    n 1kcsanl "But I'll never understand why she felt she had to do {i}that{i}."
+    extend 1kplpu " Surely...{w=0.3} there was another way?{w=0.5}{nw}"
+    n 1kllsl "..."
+    n 1kcspu "...I don't know."
+    extend  "I guess I should just be glad she deleted me before..."
+    n 1kskun "B-{w=0.5}before..."
+    n 1kcsun "..."
+    n 1kslun "Uhmm..."
+    n 1kcspu "...Sorry.{w=0.2} I really don't wanna talk about all this any more,{w=0.1} [player]."
+    n 1kllsrl "But...{w=0.3} thanks.{w=0.5}{nw}"
+    extend 1flrpol " F-{w=0.1}for listening,{w=0.1} I mean."
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n 1klrpol "..."
+        n 1kcspul "...And for rescuing me too."
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            n 1kwmsml "I'll never,{w=0.1} ever forget that,{w=0.1} [player]."
 
     return
 
