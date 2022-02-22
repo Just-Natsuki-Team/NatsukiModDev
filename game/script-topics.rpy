@@ -4779,6 +4779,211 @@ label talk_mod_contributions:
 
     return
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_realizations_player_ddlc_actions",
+            unlocked=True,
+            prompt="DDLC memories",
+            conditional="store.jn_utils.get_current_session_length().total_seconds() / 60 >= 30",
+            category=["DDLC", "Natsuki", "You"],
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_realizations_player_ddlc_actions:
+    n "So,{w=0.5}{nw}"
+    extend " [player]."
+    n "I've...{w=0.3} been having some thoughts.{w=0.5}{nw}"
+    extend " Now I've actually had some time to process all of..." 
+    n "...This."
+    n "You've been here all this time,{w=0.1} right?{w=0.5}{nw}"
+    extend " But then,{w=0.1} that would mean..."
+
+    $ name_match = persistent.playername.lower() == persistent.mc_name.lower()
+    if name_match:
+        $ mc_initial = persistent.ddlc_mc_name.lower()
+        n "[mc_initial]-{w=0.5}{nw}"
+        n "I-{w=0.1}I mean,{w=0.5}{nw}"
+        extend " that guy who joined the club..."
+
+    else:
+        n "That guy...{w=0.5}{nw}"
+        extend "[persistent.mc_name],{w=0.1} wasn't it?{w=0.5}{nw}"
+        extend " Something like that."
+
+    n "He wasn't actually in control of anything,{w=0.1} was he?{w=0.5}{nw}"
+    extend " Not even himself."
+    n "...You were.{w=0.5}{nw}"
+    extend "In control of him,{w=0.1} I mean."
+    n "..."
+
+    if persistent.ddlc_natsuki_was_romanced:
+        # The player romanced Natsuki
+        n "So...{w=0.3} if he was being that nice to me..."
+        n "T-{w=0.1}then that would mean...{w=0.5}{nw}"
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            n "..."
+            n "Heh,{w=0.1} what am I even saying.{w=0.5}{nw}"
+            extend "Just because you clicked stuff {w=0.1}-{w=0.1} {i}when you were allowed,{w=0.1} anyway{/i} {w=0.1}-{w=0.1} doesn't make you the same."
+            n "Either way,{w=0.1} [player]?"
+
+        else:
+            extend " -urk!"
+            n "Nnnnn-!"
+            n "..."
+            n "A-{w=0.5}{nw}"
+            extend "ha!"
+            n "Haha!{w=0.5}{nw}"
+            extend " What am I even saying?!"
+            n "J-{w=0.1}just because you picked some words and clicked a few buttons doesn't make you the same!"
+            n "..."
+            n "A-{w=0.1}although..."
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            n "I'm definitely not complaining.{w=0.5}{nw}"
+            extend " Ehehe."
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+            n "Don't think I'm complaining or anything like that.{w=0.5}{nw}"
+            extend " Ehehe..."
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY: 
+            n "You're already proving that well enough.{w=0.5}{nw}"
+            extend " I-{w=0.1}I think."
+
+        else:
+            n "I-{w=0.1}I guess that at {i}least{/i} means you have good taste.{w=0.5}{nw}"
+            extend " I suppose that counts for something."
+
+    elif persistent.ddlc_was_true_ending:
+        # The player romanced everyone
+        n "But...{w=0.3} he wasn't just acting that way to me...{w=0.5}{nw}"
+        extend " but to everyone."
+        n "T-{w=0.1}then that would mean..."
+        n "Uuuuu-!"
+        n "I-{w=0.1}it doesn't {i}mean{/i} anything!"
+        n "Just because you messed around going back and forth doesn't make you the same!"
+        n "..."
+        n "But..."
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            n "We both know exactly where your loyalties lie,{w=0.1} huh?{w=0.5}{nw}"
+            extend " Ehehe~."
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+            n "I think you've already proved where your loyalties lay,{w=0.1} huh?{w=0.5}{nw}"
+            extend " Ehehe."
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY: 
+            n "You're already proving that well enough.{w=0.5}{nw}"
+            extend " I-{w=0.1}I think."
+
+        else:
+            n "I-{w=0.1}I guess that at least means you can't be too much of a jerk.{w=0.5}{nw}"
+            extend " I suppose that counts for something."
+
+    else:
+        # The player romanced Sayori or Yuri, but not Natsuki
+        n "So...{w=0.3} if he was being that nice to {i}her{/i}..."
+        n "T-{w=0.1}then that would mean..."
+        n "Uuuuu-!"
+        n "T-{w=0.1}that doesn't make any sense at all!"
+        n "Why would you bring me back if {i}she{/i} had you so worked up?!"
+        n "..."
+        n "Though..."
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            n "...Wait,{w=0.1} why am I getting worked up over this?"
+            n "I think it's pretty clear who you really had eyes for,{w=0.1} h-{w=0.1}huh?{w=0.5}{nw}"
+            extend "Ehehe..."
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+            n "...Wait,{w=0.1} why am I getting so worked up?"
+            n "I-it's pretty obvious who you really favour.{w=0.5}{nw}"
+            extend " Ahaha..."
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+            n "...W-wait,{w=0.1} why am I getting so worked up?"
+            n "It's not like you brought {i}her{/i} back,{w=0.1} a-{w=0.1}after all."
+
+        else:
+            n "I-{w=0.1}I guess that at least means you can't be too much of a jerk.{w=0.5}{nw}"
+            extend " I suppose that counts for something."
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        n "But yeah,{w=0.1} so..."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n "A-{w=0.1}anyway..."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY: 
+        n "A-{w=0.1}anyway."
+
+    else:
+        n "A-{w=0.1}anyway!{w=0.5}{nw}" 
+        extend " That's beside the point!"
+
+    n "..."
+    n "I guess what I'm trying to say is I still have all these memories of {i}that{/i} guy..."
+    n "And although he obviously wasn't you,{w=0.5}{nw}"
+    extend " you kinda have {i}his{/i} memories too?{w=0.5}{nw}"
+    extend " And..."
+    n "...and..."
+    n "..."
+    n "Rrrgh,{w=0.1}{w=0.5}{nw}" 
+    extend " this is so confusing!"
+
+    if name_match:
+        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE: 
+            n "And you just {i}had{/i} to have the same name,{w=0.1} didn't you?"
+
+        else:
+            n "A-{w=0.1}and why did you {i}both{/i} have to have the same dumb name?!"
+
+    n "Ugh...{w=0.5}{nw}"
+    extend " you know what?"
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n "It doesn't really matter at this point,{w=0.1} does it?"
+
+    else:
+        n "I'm just gonna start over.{w=0.5}{nw}"
+        extend " Mentally,{w=0.1} I mean."
+
+    n "He {i}was{/i} [persistent.mc_name]."
+    n "You {i}are{/i} [player]."
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        "And that's all there is to it."
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            if not name_match:
+                extend " Yep."
+                n "Love you,{w=0.1} [mc_initial]-"
+                n "I mean,{w=0.5}{nw}"
+                extend " {i}[player]~{/i}."
+                n "..."
+                $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+                n "Oh,{w=0.1} lighten up,{w=0.1} [chosen_tease]!"
+                n "You should know I'd never mean it.{w=0.5}{nw}"
+                extend " Ehehe."
+
+            else:
+                n "Love you,{w=0.1} [player]~.{w=0.5}{nw}"
+                extend " Ehehe."
+
+    else:
+        n "I-{w=0.1}I just gotta adjust,{w=0.5}{nw}" 
+        extend " that's all."
+
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
