@@ -4828,7 +4828,7 @@ label talk_realizations_player_ddlc_actions:
     n 1fsrbo "He wasn't {i}actually{/i} in control of anything,{w=0.1} was he?{w=0.5}{nw}"
     extend 1ulraj " Not even himself."
     n 1nnmsr "...You were.{w=0.5}{nw}"
-    extend 1nlrsl "In control of him,{w=0.1} I mean."
+    extend 1nlrsl " In control of him,{w=0.1} I mean."
     n 1nsrbo "..."
 
     # We assume the player romanced Natsuki, until we get import scripts
@@ -4838,7 +4838,7 @@ label talk_realizations_player_ddlc_actions:
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
         n 1klrsml "..."
         n 1kcsssl "Heh,{w=0.1} what am I even saying.{w=0.5}{nw}"
-        extend 1kwmsml "Just because you clicked stuff {w=0.1}-{w=0.1} {i}when you were allowed,{w=0.1} anyway{/i} {w=0.1}-{w=0.1} doesn't make you the same."
+        extend 1kwmsml " Just because you clicked stuff {w=0.1}-{w=0.1} {i}when you were allowed,{w=0.1} anyway{/i} {w=0.1}-{w=0.1} doesn't make you the same."
         n 1tllssl "Either way,{w=0.1} [player]?"
         n 1ksqsml "I'm definitely not complaining.{w=0.5}{nw}"
         extend 1nchsml " Ehehe."
@@ -4849,8 +4849,8 @@ label talk_realizations_player_ddlc_actions:
         n 1fllunf "..."
         n 1fnmssl "A-{w=0.5}{nw}"
         extend 1fcsbgl "ha!"
-        n 1fcsbsl "Haha!{w=0.5}{nw}"
-        extend 1flleml " What am I even saying?!"
+        n 1fcsbsl "Haha!{w=2}{nw}"
+        extend 1flleml "What am I even saying?!"
         n 1fcswrl "J-{w=0.1}just because you picked some words and clicked a few buttons doesn't make you the same!"
         n 1fllpol "..."
         n 1nlleml "A-{w=0.1}although..."
@@ -4983,11 +4983,11 @@ label talk_realizations_other_girls:
     n 1fcsanl "I...{w=1} don't...{w=1} hate...{w=0.5} Monika."
     n 1fcsun "I...{w=0.3} understand how she felt.{w=0.2} I {i}know{/i} how she felt."
     n 1fsqsr "It's {i}terrifying{/i},{w=0.1} [player]."
-    n 1kcsanl "But I'll never understand why she felt she had to do {i}that{i}.{w=1}{nw}"
-    extend 1kplpu " Surely...{w=0.3} there was another way?{w=0.5}{nw}"
+    n 1kcsanl "But I'll never understand why she felt she had to do {i}that{/i}.{w=1}{nw}"
+    extend 1kplpu " Surely...{w=0.3} there was another way?"
     n 1kllsl "..."
     n 1kcspu "...I don't know.{w=0.5}{nw}"
-    extend  "I guess I should just be glad she deleted me before..."
+    extend " I guess I should just be glad she deleted me before..."
     n 1kskun "B-{w=0.5}before..."
     n 1kcsun "..."
     n 1kslun "Uhmm..."
@@ -5002,6 +5002,54 @@ label talk_realizations_other_girls:
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
             n 1kwmsml "I'll never,{w=0.1} ever forget that,{w=0.1} [player]."
 
+    else:
+        n 1ncspu "..."
+
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_realizations_space_classroom",
+            unlocked=True,
+            prompt="Leaving the space classroom",
+            conditional="store.jn_utils.get_current_session_length().total_seconds() / 3600 >= 24",
+            category=["DDLC", "Natsuki", "You"],
+            nat_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_realizations_space_classroom:
+    n 1kllsr "Uhmm..."
+    n 1klrpu "So,{w=0.1} this room..."
+    n 1nsrss "I...{w=0.3} still haven't actually left it.{w=0.5}{nw}"
+    extend 1tnmsl " Since you brought me back and all."
+    n 1fllssl "I-{w=0.1}I mean,{w=0.5}{nw}"
+    extend 1fcseml " it's not like I can't!"
+    extend 1unmbo " I'm actually pretty sure I could."
+    n 1kllsf "It's just...{w=0.5}{nw}"
+    extend 1knmaj " I have no idea what would happen!"
+    n 1tllaj "Would I like...{w=0.3} break?{w=0.5}{nw}"
+    extend 1tnmun " Or just stop existing?"
+    extend 1kskem " Could I even {i}come{/i} back?!"
+    n 1klrun "..."
+    n 1kcspu "I miss my bed,{w=0.1} [player].{w=1}{nw}"
+    extend 1knmem " I miss having blankets and pillows!{w=1}{nw}"
+    extend 1ksrsr " And all my stuff."
+    n 1kcssr "Even if it doesn't exist anymore.{w=0.5}{nw}"
+    extend 1tslaj " Never existed at all?{w=0.5}{nw}"
+    extend 1kcsem " Whatever."
+    n 1kllsr "But..."
+    n 1ksqun "I really don't feel like taking a chance and finding out what would happen if I left.{w=0.5}{nw}"
+    extend 1flrsl " Not yet."
+    n 1kcssf "..."
+    n 1kcspu "Just...{w=0.5}{nw}"
+    extend 1fcsaj " give me some time,{w=0.1} alright?{w=0.5}{nw}"
+    extend 1fnmbo " I'll try and think of something soon."
+    n 1kllpo "I don't exactly wanna be stuck here either,{w=0.1} after all..."
     return
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
