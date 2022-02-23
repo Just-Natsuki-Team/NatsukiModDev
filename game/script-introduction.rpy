@@ -200,10 +200,9 @@ label introduction_first_meeting:
             length=15
         ).strip()
 
-        if len(player_input.replace(" ", "")) != 0:
+        if len(player_input) != 0:
             python:
                 persistent.playername = player_input
-                global player
                 player = persistent.playername
                 name_given = True
 

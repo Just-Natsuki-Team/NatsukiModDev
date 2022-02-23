@@ -1082,7 +1082,11 @@ init python in jn_utils:
         OUT:
             datetime.timedelta object representing the length of the total game time
         """
-        return datetime.datetime.now() - store.persistent.jn_first_visited_date
+        if store.persistent.jn_first_visited_date is not None:
+            return datetime.datetime.now() - store.persistent.jn_first_visited_date
+
+        else:
+            return datetime.datetime.now() - datetime.datetime.today()
 
     def get_time_in_session_descriptor():
         """

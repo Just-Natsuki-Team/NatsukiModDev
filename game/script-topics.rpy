@@ -195,7 +195,7 @@ label pet_options_a:
         "Cats":
             n 1uchsm "Yay!{w=0.2} Cats!"
             n 1uchgn "I really wish I had one,{w=0.1} I love seeing all the dumb situations they get into!"
-            n 1unmbs "I hope you didn't just say that because I like them,{w=0.1} though.{w=0.5}{nw}"
+            n 1unmbs "I hope you didn't just say that because {i}I{/i} like them,{w=0.1} though.{w=0.5}{nw}"
             extend 1uchsm " Ehehe."
             n 1tnmsm "Just don't pamper it too much,{w=0.1} [player]!"
             $ persistent.jn_player_pet = "cats"
