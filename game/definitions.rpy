@@ -1075,6 +1075,15 @@ init python in jn_utils:
         """
         return datetime.datetime.now() - store.jn_globals.current_session_start_time
 
+    def get_total_gameplay_length():
+        """
+        Returns a timedelta object representing the total time the player has spent with Natsuki.
+
+        OUT:
+            datetime.timedelta object representing the length of the total game time
+        """
+        return datetime.datetime.now() - store.persistent.jn_first_visited_date
+
     def get_time_in_session_descriptor():
         """
         Get a descriptor based on the number of minutes the player has spent in the session, up to 30 minutes

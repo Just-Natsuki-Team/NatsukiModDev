@@ -191,11 +191,24 @@ label introduction_first_meeting:
         "I'm...":
             pass
 
-    python:
-        # Name input
-        persistent.playername = renpy.input("What is your name?", allow=(jn_globals.DEFAULT_ALPHABETICAL_ALLOW_VALUES+jn_globals.DEFAULT_NUMERICAL_ALLOW_VALUES), length=15)
-        global player
-        player = persistent.playername
+    # Name input
+    $ name_given = False
+    while not name_given:
+        $ player_input = renpy.input(
+            "What is your name?",
+            allow=(jn_globals.DEFAULT_ALPHABETICAL_ALLOW_VALUES+jn_globals.DEFAULT_NUMERICAL_ALLOW_VALUES),
+            length=15
+        ).strip()
+
+        if len(player_input.replace(" ", "")) != 0:
+            python:
+                persistent.playername = player_input
+                global player
+                player = persistent.playername
+                name_given = True
+
+        else:
+            n 1kskem "P-{w=0.1}please!{w=0.5} Who are you?!"
 
     n 1kplun "..."
     n 1kplpu "...[player]?"

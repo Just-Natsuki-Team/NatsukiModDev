@@ -161,7 +161,7 @@ label talk_did_you_have_pets:
     else:
         n 1unmbs "What about you,{w=0.1} [player]?"
         menu:
-            n "Well?"
+            n "Did you get a new pet?"
 
             "Yes, I did.":
                 n 1uspaw "Ooh...{w=0.3} you gotta tell me!{w=0.2} What did you get?"
@@ -4806,7 +4806,7 @@ init 5 python:
             label="talk_realizations_player_ddlc_actions",
             unlocked=True,
             prompt="DDLC memories",
-            conditional="store.jn_utils.get_current_session_length().total_seconds() / 60 >= 30",
+            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 60 >= 30",
             category=["DDLC", "Natsuki", "You"],
             nat_says=True,
             affinity_range=(jn_affinity.NORMAL, None),
@@ -4934,7 +4934,7 @@ init 5 python:
             label="talk_realizations_other_girls",
             unlocked=True,
             prompt="Monika and the other girls",
-            conditional="store.jn_utils.get_current_session_length().total_seconds() / 3600 >= 12",
+            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 3600 >= 12",
             category=["DDLC", "Natsuki"],
             nat_says=True,
             affinity_range=(jn_affinity.NORMAL, None),
@@ -5015,7 +5015,7 @@ init 5 python:
             label="talk_realizations_space_classroom",
             unlocked=True,
             prompt="Leaving the space classroom",
-            conditional="store.jn_utils.get_current_session_length().total_seconds() / 3600 >= 24",
+            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 3600 >= 24",
             category=["DDLC", "Natsuki", "You"],
             nat_says=True,
             affinity_range=(jn_affinity.NORMAL, None),
