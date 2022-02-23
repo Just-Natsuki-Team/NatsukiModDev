@@ -4937,6 +4937,7 @@ init 5 python:
             conditional="store.jn_utils.get_current_session_length().total_seconds() / 3600 >= 12",
             category=["DDLC", "Natsuki"],
             nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -5017,6 +5018,7 @@ init 5 python:
             conditional="store.jn_utils.get_current_session_length().total_seconds() / 3600 >= 24",
             category=["DDLC", "Natsuki", "You"],
             nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -5050,6 +5052,7 @@ label talk_realizations_space_classroom:
     extend 1fcsaj " give me some time,{w=0.1} alright?{w=0.5}{nw}"
     extend 1fnmbo " I'll try and think of something soon."
     n 1kllpo "I don't exactly wanna be stuck here either,{w=0.1} after all..."
+
     return
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
