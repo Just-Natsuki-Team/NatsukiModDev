@@ -1,11 +1,6 @@
 default persistent.playername = ""
 default player = persistent.playername
 
-# DDLC import data (placeholder)
-default persistent.ddlc_mc_name = ""
-default persistent.ddlc_natsuki_was_romanced = True
-default persistent.ddlc_was_true_ending = False
-
 # Generic data
 default persistent.jn_total_visit_count = 0
 default persistent.jn_first_visited_date = datetime.datetime.now()
