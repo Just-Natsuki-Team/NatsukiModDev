@@ -105,7 +105,6 @@ init 0 python in jn_nicknames:
 
     # Natsuki dislikes these nicknames; no penalty given but name will not be permitted
     NICKNAME_DISLIKED_LIST = {
-        "baka",
         "dad",
         "daddy",
         "father",
@@ -677,11 +676,13 @@ init 0 python in jn_nicknames:
 
     NICKNAME_NOU_LIST = {
         "adorkable",
+        "baka",
         "booplicate",
         "booplic8",
         "booplik8",
         "boopliqeeb",
         "boopliqeb",
+        "dummy",
         "qab",
         "qeb",
         "qeeb",
@@ -689,9 +690,12 @@ init 0 python in jn_nicknames:
         "qebweb",
         "qib",
         "qob",
+        "qoob",
         "qub",
         "web",
-        "webqeb"
+        "webqeb",
+        "woob",
+        "wob"
     }
 
     """
@@ -730,4 +734,3 @@ init 0 python in jn_nicknames:
 
             else:
                 return TYPE_NEUTRAL
-                

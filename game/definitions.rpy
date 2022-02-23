@@ -975,6 +975,9 @@ init -990 python in jn_globals:
     # Alphabetical (excluding numbers) values allowed for text input
     DEFAULT_ALPHABETICAL_ALLOW_VALUES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-' "
 
+    # Numerical values allowed for text input
+    DEFAULT_NUMERICAL_ALLOW_VALUES = "1234567890"
+
     #The current label we're in
     current_label = None
 
@@ -1061,6 +1064,8 @@ init -999 python in jn_utils:
         return pygame.mouse.get_pos()
 
 init python in jn_utils:
+    import store
+    
     def get_current_session_length():
         """
         Returns a timedelta object representing the length of the current game session.
@@ -1103,6 +1108,15 @@ init python in jn_utils:
         else:
             return "a while"
 
+    def get_player_initial():
+        """
+        Returns the first letter of the player's name.
+
+        OUT:
+            First letter of the player's name.
+        """
+        return list(player)[0]
+
     # Key setup
     key_path = os.path.join(renpy.config.basedir, "game/dev/key.txt").replace("\\", "/")
     if not os.path.exists(key_path):
@@ -1117,6 +1131,16 @@ init python in jn_utils:
         Returns the validation state of the key.
         """
         return __KEY_VALID
+
+    def save_game():
+        """
+        Saves all game data.
+        """
+        #Save topic data
+        store.Topic._save_topic_data()
+
+        #Save background data
+        store.main_background.save()
 
 # Vanilla resources from base DDLC
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
@@ -1146,11 +1170,22 @@ define audio.smack = "mod_assets/sfx/smack.mp3"
 define audio.clothing_ruffle = "mod_assets/sfx/clothing_ruffle.mp3"
 define audio.notification = "mod_assets/sfx/notification.ogg"
 
+define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
+define audio.glitch_b = "mod_assets/sfx/glitch_b.ogg"
+define audio.glitch_c = "mod_assets/sfx/glitch_c.ogg"
+define audio.glitch_d = "mod_assets/sfx/glitch_d.ogg"
+define audio.glitch_e = "mod_assets/sfx/glitch_e.ogg"
+define audio.interference = "mod_assets/sfx/interference.ogg"
+define audio.static = "mod_assets/sfx/glitch_static.ogg"
+
 # Looped sound effects
 define audio.rain_muffled = "mod_assets/sfx/rain_muffled.mp3"
 
-# Music
-define audio.test_bgm = "mod_assets/bgm/background_test_music.ogg"
+# Music, vanilla DDLC
+define audio.space_classroom_bgm = "mod_assets/bgm/space_classroom.ogg"
+
+# Music, JN exclusive
+define audio.just_natsuki_bgm = "mod_assets/bgm/just_natsuki.ogg"
 
 # Voicing - we disable TTS
 define config.tts_voice = None
@@ -1184,6 +1219,13 @@ init -999 python:
         jn_globals.current_label = name
 
     config.label_callback = label_callback
+
+    def quit_input_check():
+        """
+        This checks to ensure an input or menu screen is not up before allowing a force quit, as these crash the game. Thanks, Tom.
+        """
+        if not renpy.get_screen("input") and not renpy.get_screen("choice"):
+            renpy.call("try_force_quit")
 
     class JNEvent(object):
         """

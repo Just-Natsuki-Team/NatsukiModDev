@@ -792,6 +792,30 @@ image natsuki idle min_affinity:
         pause 10
         repeat
 
+# Idle images for the introduction sequence, after Natsuki and the player are introduced
+image natsuki idle introduction:
+    block:
+        choice:
+            "natsuki 1kllsr"
+        choice:
+            "natsuki 1klrsr"
+        choice:
+            "natsuki 1klrpu"
+        choice:
+            "natsuki 1kllpu"
+        choice:
+            "natsuki 1kcspu"
+        choice:
+            "natsuki 1kcssr"
+        choice:
+            "natsuki 1kcsun"
+        choice:
+            "natsuki 1kllun"
+        choice:
+            "natsuki 1klrun"
+        pause 10
+        repeat
+
 init python:
     def show_natsuki_talk_menu():
         """

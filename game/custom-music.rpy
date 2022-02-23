@@ -112,7 +112,7 @@ label music_menu:
             custom_music_options.sort()
 
             # Add the default music as the first option
-            custom_music_options.insert(0, ("Default", "mod_assets/bgm/background_test_music.ogg"))
+            custom_music_options.insert(0, ("Default", "mod_assets/bgm/just_natsuki.ogg"))
 
             # Add random option if we have more than one potential track for Nat to pick
             if len(custom_music_options) > 1:

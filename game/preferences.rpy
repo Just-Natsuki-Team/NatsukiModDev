@@ -47,5 +47,9 @@ default persistent.jn_natsuki_repeat_topics = True
 # Wether you can deal with this depends on how well you can weather this joke
 default persistent.jn_random_weather = True
 
+# These determine when the sun rises/sets
+default persistent.jn_sunrise_hour = 6
+default persistent.jn_sunset_hour = 18
+
 # This determines if Natsuki should attempt to notify the user when starting a conversation
 default persistent.jn_notify_conversations = True
