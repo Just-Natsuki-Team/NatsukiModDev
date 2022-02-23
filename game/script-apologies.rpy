@@ -621,7 +621,7 @@ label apology_scare:
         $ jn_relationship("affinity+")
 
     else:
-        n 1fsqfu "Stick it, [player]."
+        n 1fsqfu "Stick it,{w=0.1} [player]."
         n 1fcsan "We both know you don't mean that."
 
     $ persistent.jn_player_pending_apologies.remove(jn_apologies.TYPE_SCARE)

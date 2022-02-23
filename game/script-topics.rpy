@@ -623,7 +623,7 @@ label talk_careful_spending:
     extend 1flrdvl " I spaced out!"
     n 1unmaj "I was just thinking..."
     n 1flrbo "It's so easy to spend more than you mean nowadays,{w=0.1} you know?"
-    n 1flrpu "Like...{w=0.3} it seems everywhere you go,{w=0.1} there's a sale,{w=0.1} or deals,{w=0.1} or some kind of limited offer..."
+    n 1flrpu "Like...{w=0.3} it seems everywhere you go,{w=0.1} there's a sale,{w=0.1} or deals,{w=0.1} or some kind of special offer..."
     n 1unmpu "And every place accepts all kinds of ways of paying,{w=0.1} too.{w=0.5}{nw}"
     extend 1fsrpo " They make it super convenient!"
     n 1fsrpo "I guess what I'm getting at is...{w=0.3} try to be careful of your spending habits,{w=0.1} okay?"
