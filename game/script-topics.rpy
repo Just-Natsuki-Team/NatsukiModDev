@@ -161,7 +161,7 @@ label talk_did_you_have_pets:
     else:
         n 1unmbs "What about you,{w=0.1} [player]?"
         menu:
-            n "Did you get another one?"
+            n "Well?"
 
             "Yes, I did.":
                 n 1uspaw "Ooh...{w=0.3} you gotta tell me!{w=0.2} What did you get?"
@@ -195,7 +195,7 @@ label pet_options_a:
         "Cats":
             n 1uchsm "Yay!{w=0.2} Cats!"
             n 1uchgn "I really wish I had one,{w=0.1} I love seeing all the dumb situations they get into!"
-            n 1unmbs "I hope you didn't just say that because I like them,{w=0.1} though.{w=0.2}{nw}"
+            n 1unmbs "I hope you didn't just say that because I like them,{w=0.1} though.{w=0.5}{nw}"
             extend 1uchsm " Ehehe."
             n 1tnmsm "Just don't pamper it too much,{w=0.1} [player]!"
             $ persistent.jn_player_pet = "cats"
@@ -209,7 +209,7 @@ label pet_options_a:
             $ persistent.jn_player_pet = "chameleons"
 
         "Dogs":
-            n 1uwdaj "Oh!{w=0.2} A dog?{w=0.2}{nw}"
+            n 1uwdaj "Oh!{w=0.2} A dog?{w=0.5}{nw}"
             extend 1uchbs " Awesome!"
             n 1nnmsm "I don't think a dog would be my first choice,{w=0.1} what with all the walks and all that."
             n 1uchbs "But I can't think of a more loving pet!"
@@ -219,7 +219,7 @@ label pet_options_a:
         "Ferrets":
             n 1unmlg "Oh!{w=0.2} A ferret?"
             n 1uchbs "That's {i}adorable{/i}!"
-            n 1tllbg "But...{w=0.3} I've always wondered.{w=0.2}{nw}"
+            n 1tllbg "But...{w=0.3} I've always wondered.{w=0.5}{nw}"
             n 1tchbg " Are they more like a cat,{w=0.1} or a dog?"
             n 1flrss "Well,{w=0.1} whatever.{w=0.2} Either way,{w=0.1} [player]..."
             n 1unmlg "You better take good care of the little guy!"
@@ -238,14 +238,14 @@ label pet_options_b:
             n 1unmaj "Ooh!{w=0.2} Fish are interesting!"
             n 1kllnv "I don't think I'd call them super affectionate personally..."
             n 1uchgn "But I think they're a neat way to relieve stress!{w=0.2} They must be calming to watch in their own little world."
-            n 1nsqsm "I bet you feel like you could lose yourself in that tank.{w=0.2}{nw}" 
+            n 1nsqsm "I bet you feel like you could lose yourself in that tank.{w=0.5}{nw}" 
             extend 1nchsm " Ehehe."
             $ persistent.jn_player_pet = "fish"
             
         "Frogs":
             n 1kspaw "Ooh!{w=0.2} Froggies!"
             extend 1kspbs " Cute!"
-            n 1fsqsm "I seriously can't get enough of their faces.{w=0.2}{nw}" 
+            n 1fsqsm "I seriously can't get enough of their faces.{w=0.5}{nw}" 
             extend 1fbkbs " They always look so confused!"
             n 1fllbg "Ehehe.{w=0.2} Well,{w=0.1} [player]..."
             n 1fchgn "You better {i}hop{/i} to it and take care of yours!"
@@ -299,7 +299,7 @@ label pet_options_c:
         "Insects":
             n 1twmsc "Ack-{nw}"
             n 1kslup "Nnnnn..."
-            n 1kwmsg "...I wish I could share your enthusiasm!{w=0.2}{nw}"
+            n 1kwmsg "...I wish I could share your enthusiasm!{w=0.5}{nw}"
             extend 1kllss " Ahaha..."
             n 1ksqun "I don't think I could stomach creepy crawlies myself."
             n 1ksrun "You've certainly got an...{w=0.3} interesting taste,{w=0.1} [player]."
@@ -309,7 +309,7 @@ label pet_options_c:
         "Lizards":
             n 1uchgn "Ooh!{w=0.2} Lizards,{w=0.1} huh?"
             n 1fsqss "...I trust you aren't just as cold-blooded yourself,{w=0.1} [player]."
-            n 1fchgn "...Pffffft!{w=0.2}{nw}"
+            n 1fchgn "...Pffffft!{w=0.5}{nw}"
             extend 1uchlg " I'm kidding, [player]!{w=0.2} I'm just kidding!"
             n 1unmbg "Cool looking critters though!{w=0.2}"
             extend 1tllbg " I think you'd actually be hard pressed to find a more varied kind of pet."
@@ -353,16 +353,16 @@ label pet_options_d:
             $ persistent.jn_player_pet = "rabbits"
             
         "Snakes":
-            n 1uskaj "H-{w=0.1}huh?"
+            n 1uskaj "H-{w=0.1}huh?{w=0.5}{nw}"
             extend 1uscem " S-{w=0.1}snakes?"
             n 1fcsun "Uuuuuu..."
-            n 1kcsaj "...Fine.{w=0.2} I'll just be straight with you, [player].{w=0.2}{nw}"
+            n 1kcsaj "...Fine.{w=0.2} I'll just be straight with you, [player].{w=0.5}{nw}"
             extend 1kllsl " I'm...{w=0.3} not great with those."
             n 1kllaj "S-{w=0.1}snakes,{w=0.1} I mean."
             n 1kllsl "They just...{w=0.3} don't really agree with me.{w=0.2} I don't know why."
-            n 1fcsgsl "B-{w=0.1}but that's not to say that they {i}can't{/i} be cute,{w=0.1} obviously!{w=0.2}{nw}" 
+            n 1fcsgsl "B-{w=0.1}but that's not to say that they {i}can't{/i} be cute,{w=0.1} obviously!{w=0.5}{nw}" 
             extend  1flrpo " Making that assumption would just be ignorant."
-            n 1ksrpo "...And they deserve care just like any other pet.{w=0.2}{nw}" 
+            n 1ksrpo "...And they deserve care just like any other pet.{w=0.5}{nw}" 
             extend 1flraj " So..."
             n 1fnmpo "You better not be flaking out on yours,{w=0.1} [player]!"
             $ persistent.jn_player_pet = "snakes"
@@ -404,9 +404,13 @@ label talk_service_animals:
         n 1unmbs "Some work in airports to keep people safe,{w=0.1} others help in rescues...{w=0.3} it's super cool!"
         n 1uwmsm "But there's one type that's especially awesome..."
         n 1uchgn "Emotional support animals!"
-        n "They're like really tame pets that are used to comfort people going through a bad time."
-        n "They come in all different shapes and sizes too!{w=0.2} Dogs and cats -{w=0.2} obviously -{w=0.2} but even horses sometimes!"
-        n "Isn't that amazing?"
+        n 1ullaj "They're like really tame pets that are used to comfort people going through a bad time."
+        n 1ulraj "They come in all different shapes and sizes too!{w=0.5}{nw}" 
+        n 1nnmpu " Dogs and cats -{w=0.5}{nw}" 
+        extend 1fslss " {i}obviously{/i}{w=0.5}{nw}"
+        extend 1uwdgs " -{w=0.2} but even horses sometimes!"
+        n 1fchbg "Awesome,{w=0.1} right?"
+        n 1kllss "..."
         n 1ulrbo "..."
         n 1uplaj "You know,{w=0.1} [player]..."
         n 1kcsaj "Sometimes I wonder if one could have helped Sayori..."
@@ -414,30 +418,35 @@ label talk_service_animals:
         n 1knmem "They {i}are{/i} great,{w=0.1} but they don't do miracles."
         n 1kwmem "[player]...{w=0.3} I really hope you never have to seek their help."
         n 1kwmnv "And on that note,{w=0.1} if you do need support?"
-        n "...I'd be happy to provide.{w=0.2} Remember that,{w=0.1} alright?"
 
         if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            n 1kwmnv "I really,{w=0.1} really care about you,{w=0.1} [player]."
-            n "I-{w=0.2}I want you to know that you can depend on me,{w=0.1} 'kay?"
+            n 1fcssrl "I-{w=0.2}I want you to know that you can depend on me,{w=0.1} 'kay?"
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-            n 1kwmnv "I love you,{w=0.1} [player]."
-            return
+            if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+                n 1kwmnv "I love you,{w=0.1} [player]."
+                return
+
+        else:
+            n 1fcssrl "Just...{w=0.5}{nw}"
+            extend 1fnmsl " don't be dumb about it,{w=0.1} [player].{w=0.5}{nw}"
+            extend 1kllss " I can listen if you need me to."
+            n 1fcsajl "I-{w=0.1}I'm not a jerk!{w=0.5}{nw}" 
+            extend 1flrpol " It's just the least anyone can do,{w=0.1} that's all."
 
     else:
         n 1unmbo "They work in a bunch of places.{w=0.2} Airports and rescues and stuff,{w=0.1} usually."
         n 1unmss "But I really like emotional support animals."
-        n "They're like specially tame pets that are used to comfort those having a bad time."
+        n 1nnmsl "They're like specially tame pets that are used to comfort those having a bad time."
         n 1nsgbo "..."
-        n 1nsgaj "You know, [player].{w=0.2} To be perfectly honest with you?"
-        n "Sometimes I feel like I could use one."
-        n 1nsrss "Aha..."
+        n 1nsgaj "And...{w=0.3} to be perfectly honest?"
+        n 1fcsun "Sometimes I feel like I could use one."
         return
 
     n 1ksrfr "..."
     n 1kwmfr "That got kinda heavy,{w=0.1} didn't it?"
     n 1kwmbg "Well,{w=0.1} enough of that.{w=0.2}"
-    extend 1uwmss " What else should we talk about?"
+    extend 1uwmss " What else do you wanna talk about?"
+
     return
 
 # Natsuki highlights her concern for her player using their computer for long periods of time, and offers her wisdom
@@ -537,10 +546,10 @@ label talk_staying_active:
     n 1nllsr "You should get out more."
     n 1fsqsm "..."
     n 1fchbg "Ahaha!{w=0.2} No,{w=0.1} really!{w=0.2} I'm serious!"
-    n 1ulraj "At school,{w=0.1} it's easy to get exercise since we gotta walk everywhere,{w=0.1} and we have sports and such..."
+    n 1ulraj "At school,{w=0.1} it was super easy to get exercise since we had to walk everywhere,{w=0.1} and we had sports and such..."
     n 1nsqsf "It's not so straightforward when you have a job and other stuff to worry about,{w=0.1} though."
-    n 1fllss "I'm not gonna lie and say I work out or anything like that..."
-    n 1ullaj "But I try to get walks in if I can.{w=0.5}{nw}"
+    n 1fllss "I'm not gonna lie and say I worked out or anything like that..."
+    n 1ullaj "But I tried to get some walks in when I could.{w=0.5}{nw}"
     extend 1uchgn " Any excuse to hit the bookshop is reason enough for me!"
     n 1kslsl "...Or {i}was{/i} reason enough, anyway."
     n 1fllaj "But still {w=0.1}-{w=0.5}{nw}"
@@ -556,7 +565,7 @@ label talk_staying_active:
         extend 1uchsm " Ehehe."
         return
 
-    n 1fchbg "I'm counting on you!"
+    n 1fchbg "It's the least you can do!"
     return
 
 # Natsuki discusses stress and offers ways she finds useful to deal with it
@@ -582,13 +591,15 @@ label talk_relieving_stress:
     n 1fnmss "I've been trying to work on that though,{w=0.3}{nw}"
     extend 1fchbg " and I'd love to share some of the ways I deal with stress!"
     n 1unmss "Personally,{w=0.1} I think the best way to deal with it if you can is to try and create some distance."
-    n 1nllss "If things get a little too much,{w=0.1} I just step outside if I can."
+    n 1nslss "Back before all of...{w=0.3} this,{w=0.5}{nw}"
+    extend 1nllss " if things got a little too much,{w=0.1} I just stepped outside if I could."
     n 1unmbo "Some fresh air and a change of scenery can really put things into context.{w=0.5}{nw}"
     extend 1fwdaj " It's crazy effective!"
-    n 1ulraj "Don't just create physical distance,{w=0.1} though.{w=0.5}{nw}"
+    n 1ulraj "But don't just create physical distance,{w=0.1} though.{w=0.5}{nw}"
     extend 1fnmpu " Distance yourself mentally too!"
     n 1ncssr "If something is stressing you out,{w=0.1} you need to starve it of attention."
-    n 1nllsf "If I can't go somewhere else,{w=0.1} I just read something,{w=0.1} or watch some dumb videos."
+    n 1fslpo "I can't really go outside now,{w=0.5}{nw}" 
+    extend 1nllsf " so I just read something,{w=0.1} or watch some dumb videos."
     n 1fchbg "But do whatever works for you; {w=0.1}we all have our own comfort zones!"
     n 1fslpo "A-{w=0.1}and of course,{w=0.1} you could always come see me,{w=0.1} you know..."
     n 1fchbgl "A-{w=0.1}anyway!"
@@ -623,7 +634,7 @@ label talk_careful_spending:
     extend 1flrdvl " I spaced out!"
     n 1unmaj "I was just thinking..."
     n 1flrbo "It's so easy to spend more than you mean nowadays,{w=0.1} you know?"
-    n 1flrpu "Like...{w=0.3} it seems everywhere you go,{w=0.1} there's a sale,{w=0.1} or deals,{w=0.1} or some kind of special offer..."
+    n 1flrpu "Like...{w=0.3} it seems everywhere you look,{w=0.1} there's a sale,{w=0.1} or deals,{w=0.1} or some kind of special offer..."
     n 1unmpu "And every place accepts all kinds of ways of paying,{w=0.1} too.{w=0.5}{nw}"
     extend 1fsrpo " They make it super convenient!"
     n 1fsrpo "I guess what I'm getting at is...{w=0.3} try to be careful of your spending habits,{w=0.1} okay?"
@@ -640,7 +651,7 @@ label talk_careful_spending:
 
     if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
         n 1nslbg "Besides..."
-        n 1fsqsm "Gotta save up all we can for when we hang out,{w=0.1} right?{w=0.5}{nw}"
+        n 1fsqsm "Gotta save up all we can for when we can hang out,{w=0.1} right?{w=0.5}{nw}"
         extend 1uchsm " Ehehe."
 
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
@@ -3149,7 +3160,7 @@ label talk_school_uniform:
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
         n 1nsraj "...Huh?{w=0.2} Oh,{w=0.1} the school uniform."
         n 1nsqsl "I...{w=0.3} don't know what you're expecting to hear from me,{w=0.1} [player]."
-        n 1fsqsl "I gotta wear it for school.{w=0.2} That's the point of a uniform,{w=0.1} if you hadn't realized."
+        n 1fsqsl "I had to wear it for school.{w=0.2} That's the point of a uniform,{w=0.1} if you hadn't realized."
         n 1fsrsf "It doesn't matter if I like it or not."
         n 1fsqbo "...And it matters even less if you do."
         return
@@ -3165,11 +3176,11 @@ label talk_school_uniform:
     n 1fllem "Who even thought someone needs that much clothing?!{w=0.2} For school,{w=0.1} of all places?!"
     n 1fbkwr "I mean...{w=0.3} do you even {i}know{/i} what wearing all of this in summer is like?!{w=0.2} It's horrible!"
     n 1flrpo "And the blazer...{w=0.3} ugh!{w=0.2} It's actually the worst thing ever."
-    n 1fsqpo "Like yeah,{w=0.1} I can take some off between class,{w=0.1} but I gotta put it all back on when I go back in."
-    n 1fllpo "...Or get told off.{w=0.2} {i}Again{/i}.{w=0.2} I honestly have no idea how Sayori gets away with hers being so scruffy."
+    n 1fsqpo "Like yeah,{w=0.1} I could take some off between class,{w=0.1} but I had to put it all back on when I go went in."
+    n 1fllpo "...Or get told off.{w=0.2} {i}Again{/i}.{w=0.2} I honestly have no idea how Sayori got away with hers being so scruffy."
     n 1fcsan "And all of this stuff is super expensive too!{w=0.2} Talk about a kick in the teeth!"
     n 1fslan "Jerks."
-    n 1fslsr "Ugh...{w=0.3} I seriously can't wait until I can wear whatever I like for what I'm doing."
+    n 1fslsr "Ugh...{w=0.3} I seriously wish uniforms were banned or something."
     n 1flrpo "It could be worse though,{w=0.1} I guess.{w=0.2} At least I never had to learn how to do a tie."
     n 1unmaj "What about you though, [player]?"
     menu:
@@ -3195,7 +3206,7 @@ label talk_school_uniform:
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
         n 1usrdvl "I-{w=0.1}if you don't mind it,{w=0.1} [player]?"
-        n 1fllbgl "I suppose it has that going for it too,{w=0.1} a-at least..."
+        n 1fllbgl "I suppose it has that going for it too,{w=0.1} a-{w=0.1}at least..."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n 1fchgn "I guess at least I'm warm and toasty for the winter,{w=0.1} right?{w=0.2} Ahaha."
@@ -3485,6 +3496,11 @@ label talk_how_do_you_feel_about_me:
         n 1uskeml "H-{w=0.1}huh?!"
         n 1fllbg "O-oh!"
         n 1unmaj "I mean...{w=0.3} you're alright...{w=0.3} I guess?"
+
+        if not persistent.jn_player_first_farewell_response:
+            n 1flleml "W-{w=0.1}what did you expect?{w=0.5}{nw}" 
+            extend 1fnmpol " We've {i}literally{/i} just met!"
+
         n 1nnmpu "That's about all I can say so far,{w=0.1} so...{w=0.3} yeah."
         n 1nllca "...{w=0.5}{nw}"
         n 1nlraj "So...{w=0.3} where were we?"
@@ -3862,7 +3878,7 @@ label talk_fried_squid:
         n 1klrssl "E-{w=0.1}especially not you.{w=0.2} Ehehe..."
 
     else:
-        n 1uchbg "But yeah -{w=0.1} you should really try it out if you haven't already,{w=0.1} [player]!"
+        n 1uchbg "But yeah {w=0.1}-{w=0.1} you should really try it out if you haven't already,{w=0.1} [player]!"
         n 1fchbg "I wouldn't want someone to miss out on that!{w=0.2} Ahaha."
 
     return
@@ -3896,12 +3912,12 @@ label talk_collectibles:
         n 1tnmpu "Huh?{w=0.2} You mean like figurines and all that stuff?"
         n 1tlrpu "Well...{w=0.3} no,{w=0.1} [player].{w=0.2} Not really."
         n 1knmsf "I couldn't justify spending so much on a hobby like that!"
-        n 1flrbo "Especially not when I have others things to worry about spending my money on first,{w=0.1} you know."
+        n 1flrbo "Especially not when I had other things to worry about spending my money on first,{w=0.1} you know."
         n 1unmaj "But anyway,{w=0.1} putting all that aside..."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
         n 1fsqsf "No,{w=0.1} [player]."
-        n 1fsqaj "Collectibles are way too expensive for me.{w=0.2} I can't justify wasting the money I {i}do{/i} have."
+        n 1fsqaj "Collectibles were way too expensive for me.{w=0.2} I couldn't justify wasting the money I {i}do{/i} have."
         n 1fnmsl "{i}Especially{/i} on stuff that'll just sit on a shelf that I'll forget about."
         n 1fsqsr "Yeah,{w=0.1} [player] -{w=0.1} believe it or not,{w=0.1} some of us {i}do{/i} have to think about how we spend our money."
         n 1fsqun "Shocker,{w=0.1} right?"
@@ -4461,16 +4477,18 @@ label talk_skateboarding:
         extend 1fcsan " Jerk."
         return
 
-    n 1tchbg "I'm a skater girl alright!"
+    n 1tchbg "I'm a skater girl alright!{w=0.5}{nw}"
+    extend 1tslbo " Or...{w=0.3} was?"
     n 1tllss "Though...{w=0.3} not really by choice.{w=0.5}{nw}"
     extend 1knmaj " Bikes are {i}expensive{/i}, [player]!"
     n 1kllun "And I could never rely on lifts from my...{w=0.3} folk,{w=0.3}{nw}" 
     extend 1kllss " so I saved up all I could and got a board the first chance I had!"
     n 1nsqaj "Seriously.{w=0.5}{nw}" 
     extend 1fllpu " You have no {i}idea{/i} how many lunches I skipped to earn that thing."
-    n 1unmbg "But it's actually super convenient!{w=0.5}{nw}"
-    extend 1flrbg " I don't have to worry about locking it up somewhere,{w=0.1} or some jerk damaging it..."
-    n 1fchsm "I can just pick it up and take it around with me,{w=0.1} or toss it in my locker."
+    n 1unmbg "But it was actually super convenient!{w=0.5}{nw}"
+    extend 1flrbg " I didn't have to worry about locking it up somewhere,{w=0.1} or some jerk damaging it..."
+    n 1fchsm "I could just pick it up and take it around with me,{w=0.1} or toss it in my locker."
+    n 1nslss "I mean...{w=0.3} I don't need it so much {i}now{/i},{w=0.1} but..."
     n 1fsqss "You gotta admit,{w=0.1} [player] {w=0.1}-{w=0.1} I'm nothing if not resourceful!{w=0.5}{nw}"
     extend 1fchsm " Ahaha."
     n 1fllss "I...{w=0.3} never really learned any tricks or anything though.{w=0.5}{nw}"
@@ -4622,9 +4640,9 @@ label talk_online_shopping:
         n 1fcsan "Sheesh."
 
     n 1fcsem "That aside..."
-    n 1kllsl "It...{w=0.3} also makes me kinda sad seeing all the closed stores when I do go out,{w=0.1} too."
+    n 1kllsl "It...{w=0.3} also made me kinda sad seeing all the closed stores when I went out,{w=0.1} too."
     n 1tnmsl "I suppose you could say that's just business,{w=0.1} and they lost out."
-    n 1flrsll "But that doesn't mean I {i}don't{/i} miss some of them."
+    n 1flrsll "But that doesn't mean I {i}didn't{/i} miss some of them."
     n 1ncsem "I don't know.{w=0.2} I guess what I'm saying is..."
     n 1fllpo "Don't just instantly write off anything you can't do or buy digitally,{w=0.1} [player]."
     n 1knmaj "There's still merit in getting your stuff physically!"
@@ -4632,7 +4650,7 @@ label talk_online_shopping:
 
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         n 1fsqbg "I don't really care how much you protest."
-        n 1fchgn "We're definitely hitting some {i}real{/i} bookstores {w=0.1}-{w=0.1} whether you like it or not!{w=0.5}{nw}"
+        n 1fchgn "We're definitely hitting some {i}real{/i} bookstores eventually {w=0.1}-{w=0.1} whether you like it or not!{w=0.5}{nw}"
         extend 1fchsm " Ehehe."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
@@ -4640,7 +4658,7 @@ label talk_online_shopping:
         extend 1nchbg " Ahaha."
 
     else:
-        n 1fchbg "If there's one thing I'm gonna teach you,{w=0.1} it's experiencing a {i}real{/i} bookstore!{w=0.5}{nw}"
+        n 1fchbg "If there's one thing I'm gonna teach you eventually,{w=0.1} it's experiencing a {i}real{/i} bookstore!{w=0.5}{nw}"
         extend 1fchsm " Ahaha."
 
     return
