@@ -208,7 +208,7 @@ init python:
                     nat_says=True,
                     location=main_background.location.id,
                     affinity=jn_affinity.get_affinity_state(),
-                    shown_count=0
+                    is_seen=False
                 )
 
             else:
