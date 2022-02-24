@@ -361,7 +361,7 @@ init 0 python:
             if not self.check_conditional():
                 return False
 
-            if shown_count is not None and not self.shown_count >= shown_count:
+            if shown_count is not None and self.shown_count == shown_count:
                 return False
 
             if includes_categories and len(set(includes_categories).intersection(set(self.category))) != len(includes_categories):
@@ -1065,7 +1065,7 @@ init -999 python in jn_utils:
 
 init python in jn_utils:
     import store
-    
+
     def get_current_session_length():
         """
         Returns a timedelta object representing the length of the current game session.

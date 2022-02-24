@@ -485,7 +485,7 @@ label try_force_quit:
                     n 1kcsfu "Hnnng-!{nw}"
 
                 elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-                    n 1fslun "Don't let the door hit you on the way out.{w=1}{nw}" 
+                    n 1fslun "Don't let the door hit you on the way out.{w=1}{nw}"
                     extend 1fsqem " Jerk.{w=1}{nw}"
                     play audio glitch_c
                     stop music
