@@ -347,7 +347,7 @@ label player_select_topic(is_repeat_topics=False):
                 unlocked=True,
                 location=main_background.location.id,
                 affinity=jn_affinity.get_affinity_state(),
-                shown_count=1
+                is_seen=True
             )
 
         else:
