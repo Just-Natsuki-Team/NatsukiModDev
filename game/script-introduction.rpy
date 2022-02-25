@@ -194,20 +194,25 @@ label introduction_first_meeting:
     # Name input
     $ name_given = False
     while not name_given:
-        $ player_input = renpy.input(
+        $ player_name = renpy.input(
             "What is your name?",
             allow=(jn_globals.DEFAULT_ALPHABETICAL_ALLOW_VALUES+jn_globals.DEFAULT_NUMERICAL_ALLOW_VALUES),
             length=15
         ).strip()
 
-        if len(player_input) != 0:
-            python:
-                persistent.playername = player_input
-                player = persistent.playername
-                name_given = True
+        if len(player_name) == 0:
+            n 1kskem "P-{w=0.3}please!{w=1} Who are you?!"
+
+        elif player_name.lower() in jn_globals.PROFANITY_LIST:
+            n 1fscem "E-{w=0.3}excuse me?!"
+            n 1fcsan "Quit playing around,{w=0.3} you jerk!{w=1}{nw}"
+            extend 1fcsup " I am {i}not{/i} calling you that!"
 
         else:
-            n 1kskem "P-{w=0.1}please!{w=0.5} Who are you?!"
+            python:
+                persistent.playername = player_name
+                player = persistent.playername
+                name_given = True
 
     n 1kplun "..."
     n 1kplpu "...[player]?"
