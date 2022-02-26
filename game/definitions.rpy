@@ -781,6 +781,7 @@ init 0 python:
 
 # Variables with cross-script utility specific to Just Natsuki
 init -990 python in jn_globals:
+    import re
     import store
 
     # Tracking; use these for data we might refer to/modify mid-session, or anything time sensitive
@@ -973,7 +974,7 @@ init -990 python in jn_globals:
     ]
 
     # Source courtest of: https://github.com/RobertJGabriel/Google-profanity-words, with some additions by us
-    PROFANITY_LIST = {
+    _PROFANITY_LIST = {
         "(?<![blmprs])ass(?!i)",
         "(^fag$|^fagg$)",
         "^ho$",
@@ -1006,7 +1007,7 @@ init -990 python in jn_globals:
         "breasts",
         "buceta",
         "bugger",
-        "bum(?!er|on)",
+        "^bum$",
         "bunnyfucker",
         "butt(?!er|on)",
         "c0ck",
@@ -1019,7 +1020,6 @@ init -990 python in jn_globals:
         "cnut",
         "(cock|cok|kock)",
         "^coon$",
-        "cox",
         "crap",
         "(cum|cunil|kum|kunil)",
         "cunt",
@@ -1075,7 +1075,7 @@ init -990 python in jn_globals:
         "mutha",
         "nazi",
         "(nigg|n1gg)",
-        "nob",
+        "^nob$",
         "numbnuts",
         "nutsack",
         "(orgasim|orgasm)",
@@ -1084,7 +1084,6 @@ init -990 python in jn_globals:
         "pecker",
         "pedo",
         "penis",
-        "penisfucker",
         "phonesex",
         "(phuck|phuk|phuq)",
         "pigfucker",
@@ -1101,7 +1100,7 @@ init -990 python in jn_globals:
         "s.o.b.",
         "sadist",
         "schlong",
-        "screwing",
+        "screw",
         "(scroat|scrote|scrotum)",
         "semen",
         "sex",
@@ -1134,8 +1133,6 @@ init -990 python in jn_globals:
         "xrated",
         "xxx"
     }
-
-    #TODO: compiled profanity regex str.
 
     # Alphabetical (excluding numbers) values allowed for text input
     DEFAULT_ALPHABETICAL_ALLOW_VALUES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-' "
@@ -1232,7 +1229,9 @@ init python in jn_utils:
     import re
     import store
     import store.jn_globals as jn_globals
-    
+
+    __PROFANITY_REGEX = re.compile('|'.join(jn_globals._PROFANITY_LIST), re.IGNORECASE)
+
     def get_current_session_length():
         """
         Returns a timedelta object representing the length of the current game session.
@@ -1307,9 +1306,8 @@ init python in jn_utils:
         OUT:
             - True if string contains profanity; otherwise False
         """
-        for regex in jn_globals.PROFANITY_LIST:
-            if re.search(regex, string.lower()):
-                return True
+        if re.search(__PROFANITY_REGEX, string.lower()):
+            return True
 
     # Key setup
     key_path = os.path.join(renpy.config.basedir, "game/dev/key.txt").replace("\\", "/")

@@ -168,6 +168,7 @@ init 0 python in jn_nicknames:
         "half-pint",
         "halfwit",
         "heartless",
+        "hellspawn",
         "hideous",
         "horrible",
         "horrid",
