@@ -5021,7 +5021,8 @@ init 5 python:
             conditional=(
                 "jn_utils.get_total_gameplay_length().total_seconds() / 3600 >= 24 "
                 "and get_topic('talk_realizations_player_ddlc_actions').shown_count > 0 "
-                "and get_topic('talk_realizations_other_girls').shown_count > 0"),
+                "and get_topic('talk_realizations_other_girls').shown_count > 0"
+            ),
             category=["DDLC", "Natsuki", "You"],
             nat_says=True,
             affinity_range=(jn_affinity.NORMAL, None),
