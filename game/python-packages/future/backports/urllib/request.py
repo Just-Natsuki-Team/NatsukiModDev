@@ -109,16 +109,10 @@ import re
 import socket
 import sys
 import time
+import collections
 import tempfile
 import contextlib
 import warnings
-
-from future.utils import PY2
-
-if PY2:
-    from collections import Iterable
-else:
-    from collections.abc import Iterable
 
 # check for SSL
 try:
@@ -1227,7 +1221,7 @@ class AbstractHTTPHandler(BaseHandler):
                         mv = memoryview(data)
                         size = len(mv) * mv.itemsize
                 except TypeError:
-                    if isinstance(data, Iterable):
+                    if isinstance(data, collections.Iterable):
                         raise ValueError("Content-Length should be specified "
                                 "for iterable data of type %r %r" % (type(data),
                                 data))

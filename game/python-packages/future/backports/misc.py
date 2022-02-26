@@ -16,6 +16,7 @@ from __future__ import absolute_import
 
 import subprocess
 from math import ceil as oldceil
+from collections import Mapping, MutableMapping
 
 from operator import itemgetter as _itemgetter, eq as _eq
 import sys
@@ -24,12 +25,7 @@ from _weakref import proxy as _proxy
 from itertools import repeat as _repeat, chain as _chain, starmap as _starmap
 from socket import getaddrinfo, SOCK_STREAM, error, socket
 
-from future.utils import iteritems, itervalues, PY2, PY26, PY3
-
-if PY2:
-    from collections import Mapping, MutableMapping
-else:
-    from collections.abc import Mapping, MutableMapping
+from future.utils import iteritems, itervalues, PY26, PY3
 
 
 def ceil(x):

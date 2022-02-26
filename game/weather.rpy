@@ -800,9 +800,9 @@ init -1 python:
     pass
 
 init -1 python in location:
-    import geocoder
     import store
     import webbrowser
+    import requests
 
     def open_maps(latitude, longitude):
         """
@@ -821,13 +821,13 @@ init -1 python in location:
         """
         #try to get coordinates
         try:
-            g = geocoder.ip('me')
+            response = requests.get("https://geolocation-db.com/json", verify=False)
+            json = response.json()
 
-            # if no exception occured but something still went wrong return None
-            if g.status != 'OK':
+            if response.status_code != 200:
                 return None
 
-            return (str(g.lat), str(g.lng))
+            return (str(json["latitude"]), str(json["longitude"]))
         #if an exception occurs, catch it and return None
         except:
             return None

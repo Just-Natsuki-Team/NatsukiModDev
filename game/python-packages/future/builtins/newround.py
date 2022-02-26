@@ -38,14 +38,11 @@ def newround(number, ndigits=None):
         if 'numpy' in repr(type(number)):
             number = float(number)
 
-    if isinstance(number, Decimal):
-        d = number
+    if not PY26:
+        d = Decimal.from_float(number).quantize(exponent,
+                                            rounding=ROUND_HALF_EVEN)
     else:
-        if not PY26:
-            d = Decimal.from_float(number).quantize(exponent,
-                                                rounding=ROUND_HALF_EVEN)
-        else:
-            d = from_float_26(number).quantize(exponent, rounding=ROUND_HALF_EVEN)
+        d = from_float_26(number).quantize(exponent, rounding=ROUND_HALF_EVEN)
 
     if return_int:
         return int(d)
