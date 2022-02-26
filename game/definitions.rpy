@@ -1306,8 +1306,7 @@ init python in jn_utils:
         OUT:
             - True if string contains profanity; otherwise False
         """
-        if re.search(__PROFANITY_REGEX, string.lower()):
-            return True
+        return re.search(__PROFANITY_REGEX, string.lower())
 
     # Key setup
     key_path = os.path.join(renpy.config.basedir, "game/dev/key.txt").replace("\\", "/")
