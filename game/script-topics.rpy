@@ -4936,7 +4936,8 @@ init 5 python:
             prompt="Monika and the other girls",
             conditional=(
                 "jn_utils.get_total_gameplay_length().total_seconds() / 3600 >= 12 "
-                "and get_topic('talk_realizations_player_ddlc_actions').shown_count > 0"),
+                "and get_topic('talk_realizations_player_ddlc_actions').shown_count > 0"
+            ),
             category=["DDLC", "Natsuki"],
             nat_says=True,
             affinity_range=(jn_affinity.NORMAL, None),
