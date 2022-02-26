@@ -986,14 +986,7 @@ init -990 python in jn_globals:
         "ar5e",
         "arrse",
         "arse",
-        "ass",
-        "asses",
-        "assfucker",
-        "ass-fucker",
-        "assfukka",
-        "asshole",
-        "assholes",
-        "asswhole",
+        "(?<![blmprs])ass(?!i)",
         "b!tch",
         "b00bs",
         "b17ch",
@@ -1023,21 +1016,13 @@ init -990 python in jn_globals:
         "bollock",
         "bollok",
         "boner",
-        "boob",
-        "boobs",
-        "booobs",
-        "boooobs",
-        "booooobs",
-        "booooooobs",
+        "boob(?!er|on)",
         "breasts",
         "buceta",
         "bugger",
-        "bum",
+        "bum(?!er|on)",
         "bunnyfucker",
-        "butt",
-        "butthole",
-        "buttmunch",
-        "buttplug",
+        "butt(?!er|on)",
         "c0ck",
         "c0cksucker",
         "carpetmuncher",
@@ -1524,8 +1509,10 @@ init -999 python in jn_utils:
         return pygame.mouse.get_pos()
 
 init python in jn_utils:
+    import re
     import store
-
+    import store.jn_globals as jn_globals
+    
     def get_current_session_length():
         """
         Returns a timedelta object representing the length of the current game session.
@@ -1589,6 +1576,20 @@ init python in jn_utils:
             First letter of the player's name.
         """
         return list(player)[0]
+
+    def get_string_contains_profanity(string):
+        """
+        Returns True if the given string contains a profanity, based on regex.
+
+        IN:
+            - string - The string to test
+
+        OUT:
+            - True if string contains profanity; otherwise False
+        """
+        for regex in jn_globals.PROFANITY_LIST:
+            if re.search(regex, string.lower()):
+                return True
 
     # Key setup
     key_path = os.path.join(renpy.config.basedir, "game/dev/key.txt").replace("\\", "/")

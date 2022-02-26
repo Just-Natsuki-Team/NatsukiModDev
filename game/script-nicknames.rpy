@@ -5,6 +5,7 @@ default persistent.jn_player_nicknames_bad_given_total = 0
 
 init 0 python in jn_nicknames:
     import store.jn_globals as jn_globals
+    import store.jn_utils as jn_utils
     
     # Nickname types
     TYPE_INVALID = 0
@@ -124,40 +125,53 @@ init 0 python in jn_nicknames:
     }
 
     # Natsuki hates these (non-profanity) nicknames; awarding them detracts affinity/trust
-    NICKNAME_HATED_LIST = {
+    NICKNAME_HATED_LIST={
         "arrogant",
-        "brat",
-        "bratty",
+        "beast",
         "bonebag",
         "bonehead",
+        "brat",
+        "bratty",
         "breadboard",
+        "bully",
+        "cheater",
         "child",
         "clown",
         "cuttingboard",
-        "dog",
-        "dunce",
-        "dumbo",
+        "demon",
         "dimwit",
+        "dirt",
         "disgusting",
+        "dog",
         "dumb",
         "dumbo",
+        "dumbo",
+        "dunce",
         "dwarf",
         "dweeb",
+        "egoist",
+        "egotistical",
+        "evil",
+        "failure",
+        "fake",
         "fat",
         "fatso",
         "fatty",
         "flat",
-        "flatty",
         "flatso",
+        "flatty",
+        "gilf",
         "gremlin",
+        "gross",
         "halfling",
-        "halfwit",
-        "half-pint",
         "halfpint",
+        "half-pint",
+        "halfwit",
+        "heartless",
+        "hideous",
         "horrible",
         "horrid",
         "hungry",
-        "gross",
         "idiot",
         "ignoramus",
         "ignorant",
@@ -165,43 +179,56 @@ init 0 python in jn_nicknames:
         "imp",
         "ironingboard",
         "kid",
+        "lesbian",
+        "lesbo",
         "midget",
         "moron",
+        "narcissist",
         "nasty",
         "neckcrack",
-        "necksnap",
         "neck-crack",
+        "necksnap",
         "neck-snap",
         "nerd",
         "nimrod",
         "nuisance",
         "pest",
+        "plaything"
         "punchbag",
         "punch-bag",
-        "punching-bag",
         "punchingbag",
+        "punching-bag",
+        "puppet",
         "putrid",
         "short",
-        "shorty",
         "shortstuff",
+        "shorty",
         "sick",
+        "simp",
         "simpleton",
         "skinny",
         "slave",
         "smelly",
+        "soil",
         "starved",
         "starving",
         "stinky",
+        "stuckup"
         "stuck-up",
         "stupid",
+        "teabag",
+        "thot",
         "tiny",
+        "toy",
         "twerp",
         "twit",
         "useless",
         "vendingmachine",
         "vomit",
         "washboard",
-        "wretch"
+        "witch",
+        "wretch",
+        "zombie"
     }
 
     # Natsuki finds these nicknames funny
@@ -272,7 +299,7 @@ init 0 python in jn_nicknames:
             elif nickname in NICKNAME_HATED_LIST:
                 return TYPE_HATED
 
-            elif nickname in jn_globals.PROFANITY_LIST:
+            elif jn_utils.get_string_contains_profanity(nickname):
                 return TYPE_PROFANITY
 
             elif nickname in NICKNAME_FUNNY_LIST:
