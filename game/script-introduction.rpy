@@ -1,3 +1,5 @@
+default persistent._jn_player_profanity_during_introduction = False
+
 init 0 python in jn_introduction:
     from Enum import Enum
     import random
@@ -191,11 +193,40 @@ label introduction_first_meeting:
         "I'm...":
             pass
 
-    python:
-        # Name input
-        persistent.playername = renpy.input("What is your name?", allow=(jn_globals.DEFAULT_ALPHABETICAL_ALLOW_VALUES+jn_globals.DEFAULT_NUMERICAL_ALLOW_VALUES), length=15)
-        global player
-        player = persistent.playername
+    # Name input
+    $ name_given = False
+    while not name_given:
+        $ player_name = renpy.input(
+            "What is your name?",
+            allow=(jn_globals.DEFAULT_ALPHABETICAL_ALLOW_VALUES+jn_globals.DEFAULT_NUMERICAL_ALLOW_VALUES),
+            length=15
+        ).strip()
+
+        if len(player_name) == 0:
+            n 1kskem "P-{w=0.3}please!{w=1} Who are you?!"
+
+        elif jn_utils.get_string_contains_profanity(player_name):
+            # We only apply penalty once here so we don't have to rewrite the whole sequence for diff aff/trust levels
+            if persistent._jn_player_profanity_during_introduction:
+                play audio static
+                show glitch_garbled_a zorder 99 with hpunch
+                hide glitch_garbled_a
+                n 1fscan "ENOUGH!{w=2}{nw}"
+                n 1fcsun "...{w=2}{nw}"
+                n 1fcsfu "Who{w=0.5} {i}are{/i}{w=0.5} you?!"
+
+            else:
+                n 1fscem "E-{w=0.3}excuse me?!"
+                n 1fcsan "Quit playing around,{w=0.3} you jerk!{w=1}{nw}"
+                extend 1fcsup " I am {i}not{/i} calling you that!"
+                $ persistent._jn_player_profanity_during_introduction = True
+                $ jn_relationship("trust-")
+
+        else:
+            python:
+                persistent.playername = player_name
+                player = persistent.playername
+                name_given = True
 
     n 1kplun "..."
     n 1kplpu "...[player]?"

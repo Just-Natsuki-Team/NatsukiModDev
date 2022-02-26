@@ -208,7 +208,7 @@ init python:
                     nat_says=True,
                     location=main_background.location.id,
                     affinity=jn_affinity.get_affinity_state(),
-                    shown_count=0
+                    is_seen=False
                 )
 
             else:
@@ -347,7 +347,7 @@ label player_select_topic(is_repeat_topics=False):
                 unlocked=True,
                 location=main_background.location.id,
                 affinity=jn_affinity.get_affinity_state(),
-                shown_count=1
+                is_seen=True
             )
 
         else:
@@ -485,7 +485,7 @@ label try_force_quit:
                     n 1kcsfu "Hnnng-!{nw}"
 
                 elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-                    n 1fslun "Don't let the door hit you on the way out.{w=1}{nw}" 
+                    n 1fslun "Don't let the door hit you on the way out.{w=1}{nw}"
                     extend 1fsqem " Jerk.{w=1}{nw}"
                     play audio glitch_c
                     stop music

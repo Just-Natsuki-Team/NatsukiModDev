@@ -361,7 +361,7 @@ init 0 python:
             if not self.check_conditional():
                 return False
 
-            if shown_count is not None and not self.shown_count >= shown_count:
+            if shown_count is not None and self.shown_count == shown_count:
                 return False
 
             if includes_categories and len(set(includes_categories).intersection(set(self.category))) != len(includes_categories):
@@ -781,6 +781,7 @@ init 0 python:
 
 # Variables with cross-script utility specific to Just Natsuki
 init -990 python in jn_globals:
+    import re
     import store
 
     # Tracking; use these for data we might refer to/modify mid-session, or anything time sensitive
@@ -972,6 +973,167 @@ init -990 python in jn_globals:
         "C.C"
     ]
 
+    # Source courtest of: https://github.com/RobertJGabriel/Google-profanity-words, with some additions by us
+    _PROFANITY_LIST = {
+        "(?<![blmprs])ass(?!i)",
+        "(^fag$|^fagg$)",
+        "^ho$",
+        "^hoe$",
+        "^tit$",
+        "4r5e",
+        "(5h1t|5hit)",
+        "(a_s_s|a55)",
+        "aids",
+        "anal",
+        "(anus|anu5)",
+        "(ar5e|arrse|^arse$)",
+        "b!tch",
+        "b[0o]+b(?!er|on)",
+        "ballbag",
+        "^balls$",
+        "ballsack",
+        "bastard",
+        "beastial",
+        "beastiality",
+        "bellend",
+        "bestial",
+        "bestiality",
+        "(bi+ch|bitch|biatch|l3i+ch|l3itch|b17ch|b1tch)",
+        "bloody",
+        "blowjob",
+        "boiolas",
+        "(bollock|bollok)",
+        "boner",
+        "breasts",
+        "buceta",
+        "bugger",
+        "^bum$",
+        "bunnyfucker",
+        "butt(?!er|on)",
+        "c0ck",
+        "c0cksucker",
+        "carpetmuncher",
+        "cawk",
+        "chink",
+        "cipa",
+        "clit|cl1t",
+        "cnut",
+        "(cock|cok|kock)",
+        "^coon$",
+        "crap",
+        "(cum|cunil|kum|kunil)",
+        "cunt",
+        "cyalis",
+        "cyberfuc*",
+        "damn",
+        "(^dick$|dickhead)",
+        "dildo",
+        "(^dink$|dirsa|dlck|d1ck)",
+        "dog-fucker",
+        "doggin",
+        "donkeyribber",
+        "(doosh|duche)",
+        "dyke",
+        "(ejac*|ejak*)",
+        "(f4nny|fanny|fanyy)",
+        "fatass",
+        "felching",
+        "fellat",
+        "flange",
+        "fudgepacker",
+        "(fuk|fuck|4uck|fook|fux|fcuk|feck|f_u_c_k)",
+        "gangbang",
+        "gaylord",
+        "gaysex",
+        "goatse",
+        "(god-dam|god-damned)",
+        "goddamn",
+        "h1tl3r",
+        "h1tler",
+        "hardcoresex",
+        "hell",
+        "heshe",
+        "hitler",
+        "(hoar|hoare|hoer|hore)",
+        "homo",
+        "(horniest|horny)",
+        "hotsex",
+        "(jack-off|jackoff)",
+        "jap",
+        "jerk-off",
+        "(jiz|jism)",
+        "kawk",
+        "knob",
+        "kondum",
+        "labia",
+        "lmfao",
+        "lust",
+        "(m45terbate|ma5terb8|ma5terbate|masochist|masterb8masterbat3|masterbate|master-bate|masterbation|masturbate)",
+        "(mo-fo|mof0|mofo|m0fo|m0f0)",
+        "(mothafuck|motherfuck|muthafeck|mutherfuck)",
+        "muff",
+        "mutha",
+        "nazi",
+        "(nigg|n1gg)",
+        "^nob$",
+        "numbnuts",
+        "nutsack",
+        "(orgasim|orgasm)",
+        "p0rn",
+        "pawn",
+        "pecker",
+        "pedo",
+        "penis",
+        "phonesex",
+        "(phuck|phuk|phuq)",
+        "pigfucker",
+        "pimpis",
+        "piss",
+        "poop",
+        "(porn|pron)",
+        "prick",
+        "pube",
+        "(pussi|pussy|pusse)",
+        "rectum",
+        "retard",
+        "(rimjaw|rimming)",
+        "s.o.b.",
+        "sadist",
+        "schlong",
+        "screw",
+        "(scroat|scrote|scrotum)",
+        "semen",
+        "sex",
+        "(sh!+|sh!t|sh1t|shit|shite|shi+|s_h_i_t)",
+        "shag",
+        "shemale",
+        "skank",
+        "slut",
+        "smegma",
+        "smut",
+        "snatch",
+        "son-of-a-bitch",
+        "spac",
+        "spunk",
+        "(tit|t1tt1e5|t1tties|teets|teez)",
+        "(testical|testicle)",
+        "tosser",
+        "turd",
+        "(tw4t|twat|twunt)",
+        "v14gra|v1gra",
+        "vagina",
+        "viagra",
+        "vulva",
+        "w00se",
+        "wang",
+        "wank",
+        "whoar",
+        "whore",
+        "(willies|willy)",
+        "xrated",
+        "xxx"
+    }
+
     # Alphabetical (excluding numbers) values allowed for text input
     DEFAULT_ALPHABETICAL_ALLOW_VALUES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-' "
 
@@ -1064,8 +1226,12 @@ init -999 python in jn_utils:
         return pygame.mouse.get_pos()
 
 init python in jn_utils:
+    import re
     import store
-    
+    import store.jn_globals as jn_globals
+
+    __PROFANITY_REGEX = re.compile('|'.join(jn_globals._PROFANITY_LIST), re.IGNORECASE)
+
     def get_current_session_length():
         """
         Returns a timedelta object representing the length of the current game session.
@@ -1074,6 +1240,19 @@ init python in jn_utils:
             datetime.timedelta object representing the length of the current game session
         """
         return datetime.datetime.now() - store.jn_globals.current_session_start_time
+
+    def get_total_gameplay_length():
+        """
+        Returns a timedelta object representing the total time the player has spent with Natsuki.
+
+        OUT:
+            datetime.timedelta object representing the length of the total game time
+        """
+        if store.persistent.jn_first_visited_date is not None:
+            return datetime.datetime.now() - store.persistent.jn_first_visited_date
+
+        else:
+            return datetime.datetime.now() - datetime.datetime.today()
 
     def get_time_in_session_descriptor():
         """
@@ -1116,6 +1295,18 @@ init python in jn_utils:
             First letter of the player's name.
         """
         return list(player)[0]
+
+    def get_string_contains_profanity(string):
+        """
+        Returns True if the given string contains a profanity, based on regex.
+
+        IN:
+            - string - The string to test
+
+        OUT:
+            - True if string contains profanity; otherwise False
+        """
+        return re.search(__PROFANITY_REGEX, string.lower())
 
     # Key setup
     key_path = os.path.join(renpy.config.basedir, "game/dev/key.txt").replace("\\", "/")
