@@ -1,4 +1,4 @@
-default persistent.jn_player_profanity_during_introduction = False
+default persistent.__jn_player_profanity_during_introduction = False
 
 init 0 python in jn_introduction:
     from Enum import Enum
@@ -207,7 +207,7 @@ label introduction_first_meeting:
 
         elif jn_utils.get_string_contains_profanity(player_name):
             # We only apply penalty once here so we don't have to rewrite the whole sequence for diff aff/trust levels
-            if persistent.jn_player_profanity_during_introduction:
+            if persistent.__jn_player_profanity_during_introduction:
                 play audio static
                 show glitch_garbled_a zorder 99 with hpunch
                 hide glitch_garbled_a
@@ -219,7 +219,7 @@ label introduction_first_meeting:
                 n 1fscem "E-{w=0.3}excuse me?!"
                 n 1fcsan "Quit playing around,{w=0.3} you jerk!{w=1}{nw}"
                 extend 1fcsup " I am {i}not{/i} calling you that!"
-                $ persistent.jn_player_profanity_during_introduction = True
+                $ persistent.__jn_player_profanity_during_introduction = True
                 $ jn_relationship("trust-")
 
         else:
