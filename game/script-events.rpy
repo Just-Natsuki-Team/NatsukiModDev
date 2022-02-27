@@ -1,10 +1,14 @@
 default persistent._event_database = dict()
 
+image poetry_attempt = "mod_assets/props/poetry_attempt.png"
+
 init python in jn_events:
     import random
     import store
     import store.jn_atmosphere as jn_atmosphere
     import store.jn_affinity as jn_affinity
+
+    JN_EVENT_PROP_ZORDER = 4
 
     EVENT_MAP = dict()
 
@@ -31,6 +35,7 @@ init python in jn_events:
     def display_visuals(natsuki_sprite_code):
         """
         Sets up the visuals/audio for an instant "pop-in" effect after a black scene opening.
+        Note that we start off from ch30_autoload with a black scene by default.
 
         IN:
             - natsuki_sprite_code - The sprite code to show Natsuki displaying before dialogue
@@ -58,6 +63,7 @@ init 5 python:
             persistent._event_database,
             label="event_caught_reading_manga",
             unlocked=True,
+            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 86400 >= 2",
             affinity_range=(jn_affinity.NORMAL, None)
         ),
         topic_group=TOPIC_TYPE_EVENT
@@ -79,8 +85,9 @@ label event_caught_reading_manga:
     extend " give me a break..."
 
     play audio page_turn
-    $ renpy.pause(4)
+    $ renpy.pause(5)
     play audio page_turn
+    $ renpy.pause(5)
 
     menu:
         "Enter...":
@@ -94,7 +101,8 @@ label event_caught_reading_manga:
     extend 1fcsan " C-{w=0.1}can you {i}believe{/i} this?"
     n 1fllfu "Parfait Girls got a new editor,{w=0.3}{nw}"
     extend 1fbkwr " and they have no {i}idea{/i} what they're doing!"
-    n 1flrwr "I mean,{w=0.1} have you {i}seen{/i} this crap?!"
+    n 1flrwr "I mean,{w=0.1} have you {i}seen{/i} this crap?!{w=0.5}{nw}"
+    extend 1fcsfu " Have they even read the series before?!"
     n 1fcsan "As {i}if{/i} Minori would ever stoop so low as to-!"
     n 1unmem "...!"
     n 1fllpol "..."
@@ -112,26 +120,67 @@ label event_caught_reading_manga:
 
     return
 
-# Natsuki is walked in on getting frustrated with her poetry.
+# Natsuki is walked in on getting frustrated with her poetry, and gets flustered.
 init 5 python:
     registerTopic(
         Topic(
             persistent._event_database,
             label="event_caught_writing_poetry",
             unlocked=True,
-            affinity_range=(jn_affinity.HAPPY, None)
+            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 86400 >= 7",
+            affinity_range=(jn_affinity.AFFECTIONATE, None)
         ),
         topic_group=TOPIC_TYPE_EVENT
     )
 
 label event_caught_writing_poetry:
-    #TODO: writing poetry event
-
     $ jn_globals.force_quit_enabled = False
-    # Crumpling paper, tossing it away
-    n "Black scene"
+    n "..."
+    n "Mmmm...{w=0.5}{nw}"
+    extend " ugh!"
+
+    play audio paper_crumple
+    $ renpy.pause(7)
+
+    n "..."
+    n "Nnnnnn-!"
+    n "I just can't {i}focus{/i}!{w=0.5}{nw}"
+    extend " Why is this {i}so{/i} hard now?"
+
+    play audio paper_crumple
+    $ renpy.pause(7)
+
+    n "Rrrrr...!"
+    n "Oh,{w=0.1} {i}forget it!{/i}"
+
+    play audio paper_crumple
+    $ renpy.pause(2)
+    play audio paper_throw
+    $ renpy.pause(5)
+
+    menu:
+        "Enter...":
+            pass
+
     $ jn_events.display_visuals("1fsrpo")
+    show poetry_attempt zorder jn_events.JN_EVENT_PROP_ZORDER
     $ jn_globals.force_quit_enabled = True
-    # Surprise, etc.
-    n "Visible"
+
+    n 1uskupl "...!"
+    $ player_initial = jn_utils.get_player_initial()
+    n 1uskgsf "[player_initial]-[player]?!{w=0.5}{nw}"
+    extend 1fbkwrl " How long have you been there?!"
+    n 1fllpol "..."
+    n 1uskeml "H-{w=0.1}huh? This?{w=0.5}{nw}"
+    extend 1fcswrl " I-{w=0.1}it's nothing!{w=0.5}{nw}"
+    extend 1flrpol " Nothing at all!"
+
+    play audio drawer
+    hide poetry_attempt
+    with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+
+    n 1nslpol "..."
+    n 1kslss "S-{w=0.1}so...{w=0.5}{nw}"
+    extend 1flldv " what's up,{w=0.1} [player]?"
+
     return

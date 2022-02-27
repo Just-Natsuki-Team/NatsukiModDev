@@ -1298,7 +1298,7 @@ init python in jn_utils:
         OUT:
             First letter of the player's name.
         """
-        return list(player)[0]
+        return list(store.player)[0]
 
     def get_string_contains_profanity(string):
         """
@@ -1365,6 +1365,8 @@ define audio.smack = "mod_assets/sfx/smack.mp3"
 define audio.clothing_ruffle = "mod_assets/sfx/clothing_ruffle.mp3"
 define audio.notification = "mod_assets/sfx/notification.ogg"
 define audio.page_turn = "mod_assets/sfx/page_turn.ogg"
+define audio.paper_crumple = "mod_assets/sfx/paper_crumple.ogg"
+define audio.paper_throw = "mod_assets/sfx/paper_throw.ogg"
 
 define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
 define audio.glitch_b = "mod_assets/sfx/glitch_b.ogg"
