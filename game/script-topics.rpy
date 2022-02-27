@@ -1,5 +1,8 @@
 default persistent._topic_database = dict()
 
+# Generic
+default persistent._jn_out_of_topics = False
+
 # Pet data
 default persistent.jn_player_pet = None
 
@@ -23,6 +26,59 @@ default persistent.jn_player_love_you_count = 0
 init python in topics:
     import store
     TOPIC_MAP = dict()
+
+# Special dialogue for when out of random topics
+label talk_out_of_topics:
+    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n 1kllpo "Uhmm..."
+        n 1knmaj "Hey...{w=0.5}{nw}"
+        extend 1knmss " [player]?"
+        n 1fslss "I'm...{w=0.3} kinda struggling to think of more stuff I wanna talk about."
+        n 1ulraj "So...{w=0.5}{nw}"
+        extend 1nsrss " I don't think I'm gonna talk much until I think of something else."
+        n 1nsrpo "..."
+        n 1tnmem "What?{w=0.5}{nw}" 
+        extend 1fllpol " I don't just talk because I like the sound of my own voice,{w=0.1} you know!"
+        n 1tllpu "But...{w=0.5}{nw}"
+        extend 1unmbo " I guess I {i}could{/i} just tell you about whatever comes to mind."
+        n 1nchbg "So...{w=0.3} how about it?"
+
+        menu:
+            n "Do you mind if I repeat some stuff?"
+
+            "Sure, I don't mind listening.":
+                $ persistent.jn_natsuki_repeat_topics = True
+                n 1uchgn "Okaaay!{w=0.5}{nw}"
+                extend 1tcsaj " Now,{w=0.1} let me think..."
+
+            "I'd rather wait.":
+                n 1tllaj "Well...{w=0.5}{nw}" 
+                extend 1tnmbo " if you're sure."
+
+                if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+                    n 1kwmpol "I'll try to come up with something soon,{w=0.5}{nw}"
+                    extend 1klrssl " 'kay?"
+
+                else:
+                    n 1flrpol "J-{w=0.1}just don't make the silence all awkward,{w=0.1} got it?!"
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n 1nllsf "..."
+        n 1fllaj "Yeah,{w=0.1} so.{w=0.5}{nw}"
+        extend 1fnmsl " I haven't got anything else to say."
+        n 1fsqpu "...Or stuff I want to tell {i}you{/i},{w=0.1} anyway."
+        n 1fslsr "So I'm just gonna shut up."
+        n 1fcsun "Heh.{w=0.5}{nw}"
+        extend 1fsqun " Not like that's a {i}problem{/i} for you,{w=0.1} huh?"
+
+    else:
+        n 1fslun "...{w=2}{nw}"
+        extend 1fsqem " What?"
+        n 1fcsan "You're the {i}last{/i} person I wanna think of more stuff to talk about with.{w=1}{nw}"
+        extend 1fsrem " Jerk."
+
+    $ persistent._jn_out_of_topics = True
+    return
 
 # Talk menu topics
 

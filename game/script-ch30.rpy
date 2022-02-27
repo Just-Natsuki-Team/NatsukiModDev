@@ -221,7 +221,15 @@ init python:
                 )
 
             if topic_pool:
+                if (not persistent.jn_natsuki_repeat_topics):
+                    # More random topics available, reset out of topics warning
+                    store.persistent._jn_out_of_topics = False
+
                 queue(random.choice(topic_pool).label)
+
+            elif not store.persistent.jn_natsuki_repeat_topics and not store.persistent._jn_out_of_topics:
+                # Out of random topics
+                queue("talk_out_of_topics")
 
         pass
 
