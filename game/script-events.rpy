@@ -51,6 +51,7 @@ init python in jn_events:
         renpy.show_screen("hkb_overlay")
         renpy.play(filename="mod_assets/bgm/just_natsuki.ogg", channel="music")
 
+# Natsuki is walked in on reading a new volume of Parfait Girls. She isn't impressed.
 init 5 python:
     registerTopic(
         Topic(
@@ -109,4 +110,28 @@ label event_caught_reading_manga:
     n 1ulraj "So..."
     n 1fchbg "What's new,{w=0.1} [player]?"
 
+    return
+
+# Natsuki is walked in on getting frustrated with her poetry.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_caught_writing_poetry",
+            unlocked=True,
+            affinity_range=(jn_affinity.HAPPY, None)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
+
+label event_caught_writing_poetry:
+    #TODO: writing poetry event
+
+    $ jn_globals.force_quit_enabled = False
+    # Crumpling paper, tossing it away
+    n "Black scene"
+    $ jn_events.display_visuals("1fsrpo")
+    $ jn_globals.force_quit_enabled = True
+    # Surprise, etc.
+    n "Visible"
     return
