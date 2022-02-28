@@ -184,3 +184,56 @@ label event_caught_writing_poetry:
     extend 1flldv " what's up,{w=0.1} [player]?"
 
     return
+
+# Natsuki is disillusioned with the relationship, and can't suppress her anger and frustration.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_relationship_doubts",
+            unlocked=True,
+            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 86400 >= 5",
+            affinity_range=(None, jn_affinity.DISTRESSED)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
+
+label event_relationship_doubts:
+    $ jn_globals.force_quit_enabled = False
+    n "..."
+    n "..."
+    n "What is even the {i}point{/i} of this..."
+    n "Just..."
+    n "..."
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n "I {w=2}{i}hate{/i}{w=2} this."
+
+    else:
+        n "I {w=2}{i}HATE{/i}{w=2} this."
+
+    n "I hate it.{w=1} I hate it.{w=1} I hate it.{w=1} I hate it.{w=1} I {w=2}{i}hate{/i}{w=2} it."
+    $ renpy.pause(5)
+
+    if jn_affinity.get_affinity_state() <= jn_affinity.RUINED and random.randint(0, 10) == 1:
+        play audio glitch_a
+        show glitch_garbled_red zorder 99 with vpunch
+        n "I {i}HATE{/i} IT!!{w=0.5}{nw}"
+        hide glitch_garbled_red
+        $ renpy.pause(5)
+
+    menu:
+        "Enter.":
+            pass
+
+    $ jn_events.display_visuals("1fcsupl")
+    show poetry_attempt zorder jn_events.JN_EVENT_PROP_ZORDER
+    $ jn_globals.force_quit_enabled = True
+
+    n 1fsqunl "..."
+    n 1fsqem "...Oh.{w=1}{nw}"
+    extend 1fsrsr " {i}You're{/i} here."
+    n 1ncsem "{i}Great{/i}..."
+    n 1fcsan "Yeah, that's {i}just{/i} what I need right now."
+
+    return
