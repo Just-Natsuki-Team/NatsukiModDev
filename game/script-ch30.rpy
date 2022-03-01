@@ -43,7 +43,6 @@ label ch30_init:
         persistent.jn_last_visited_date = datetime.datetime.now()
 
         # Pick a greeting or random event
-        #TODO: Clean up.
         if not jn_topic_in_event_list_pattern("^greeting_"):
             if (
                 random.randint(0, 10) == 1
@@ -78,7 +77,7 @@ label ch30_visual_setup:
     play music audio.just_natsuki_bgm
 
     #FALL THROUGH
-    
+
 #The main loop
 label ch30_loop:
     show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER

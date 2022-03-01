@@ -87,7 +87,7 @@ label event_caught_reading_manga:
     play audio page_turn
     $ renpy.pause(5)
     play audio page_turn
-    $ renpy.pause(5)
+    $ renpy.pause(7)
 
     menu:
         "Enter...":
@@ -154,9 +154,9 @@ label event_caught_writing_poetry:
     n "Oh,{w=0.1} {i}forget it!{/i}"
 
     play audio paper_crumple
-    $ renpy.pause(2)
+    $ renpy.pause(3)
     play audio paper_throw
-    $ renpy.pause(5)
+    $ renpy.pause(7)
 
     menu:
         "Enter...":
@@ -235,5 +235,69 @@ label event_relationship_doubts:
     extend 1fsrsr " {i}You're{/i} here."
     n 1ncsem "{i}Great{/i}..."
     n 1fcsan "Yeah, that's {i}just{/i} what I need right now."
+
+    return
+
+# Natsuki tries fiddling with the game, it doesn't go well.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_code_fiddling",
+            unlocked=True,
+            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 86400 >= 3",
+            affinity_range=(jn_affinity.NORMAL, None)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
+
+label event_code_fiddling:
+    $ jn_globals.force_quit_enabled = False
+    n "..."
+    n "Mmm..."
+    n "Aha!{w=0.5}{nw}"
+    extend " I see,{w=0.1} I see."
+    n "So,{w=0.3} I think...{w=1}{nw}"
+    extend " if I just...{w=1.5}{nw}"
+    extend " very...{w=2}{nw}"
+    extend " carefully...{w=0.5}{nw}"
+
+    play audio static
+    show glitch_garbled_a zorder 99 with vpunch
+    hide glitch_garbled_a
+
+    n "Ack-!{w=2}{nw}"
+    extend " Crap,{w=0.3} that {i}hurt{/i}!"
+    n "Ugh..."
+    n "How the hell did Monika manage this all the time?"
+    extend " This code {i}sucks{/i}!"
+    n "..."
+    n "..."
+    n "But...{w=1} what if I-{w=0.5}{nw}"
+
+    play audio static
+    show glitch_garbled_c zorder 99 with hpunch
+    hide glitch_garbled_c
+
+    n "Eek!"
+    n "..."
+    n "...Yeah,{w=0.3} no.{w=0.5} I think that's enough for now.{w=1}{nw}"
+    extend " Yeesh..."
+    $ renpy.pause(7)
+
+    menu:
+        "Enter...":
+            pass
+
+    $ jn_events.display_visuals("1fslpo")
+    show poetry_attempt zorder jn_events.JN_EVENT_PROP_ZORDER
+    $ jn_globals.force_quit_enabled = True
+
+    $ player_initial = jn_utils.get_player_initial()
+    n 1uskeml "Ack-!"
+    n 1fbkwrl "[player_initial]-{w=0.1}[player]!"
+    extend 1fcseml " Are you {i}trying{/i} to give me a heart attack or something?"
+    n 1fllpol "Jeez..."
+    n 1fsrpo "Hello to you too,{w=0.1} dummy..."
 
     return
