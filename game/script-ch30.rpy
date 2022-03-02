@@ -465,7 +465,7 @@ label try_force_quit:
 
                 else:
                     n 1fcsfr "Whatever.{w=1}{nw}"
-                    n 1fsqsl "{cps=/2}As I was saying.{/cps}{w=1}{nw}"
+                    n 1fsqsl "{cps=\7.5}As I was saying.{/cps}{w=1}{nw}"
 
                 return
 

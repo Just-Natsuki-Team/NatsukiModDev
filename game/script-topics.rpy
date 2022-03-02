@@ -5125,7 +5125,7 @@ label talk_fear_of_lightning:
 
     else:
         n 1fcsan "Oh,{w=1.5}{nw}"
-        extend 1fcsfu " {i}get lost{/i},{w=0.1} [player]."
+        extend 1fcsfu " {i}{cps=\7.5}get lost{/cps}{/i},{w=0.3} [player]."
         n 1fcsan "As if I'd want to talk about anything uncomfortable with {i}you{/i}."
 
         return
