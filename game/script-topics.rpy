@@ -5118,6 +5118,105 @@ label talk_realizations_space_classroom:
 
     return
 
+# Natsuki almost falls asleep, jolts awake and then discusses how to combat drowsiness
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_fighting_drowsiness",
+            unlocked=True,
+            prompt="Drowsiness",
+            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 3600 >= 12",
+            category=["Health"],
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_fighting_drowsiness:
+    n 1nllpu "...{w=2}{nw}"
+    n 1nslpu "...{w=3}{nw}"
+    n 1ncsbo "...{w=4}{nw}"
+    $ renpy.pause(7)
+    n 1fcsbo "..."
+    n 1nsqpu "Mmmmm...{w=0.5}{nw}"
+    extend 1tsqsr " mmmnn?"
+    n 1uskem "...!{w=0.5}{nw}"
+    n 1ullwrl "W-{w=0.1}woah!{w=0.5}{nw}"
+    extend 1flrss " Ahaha..."
+    n 1nsrss "I...{w=0.3} haven't been getting much sleep here,{w=0.1} as you can guess."
+    n 1kcsun "Uuuuuu...{w=0.5}{nw}"
+    extend 1kslpu " I gotta wake up..."
+    n 1kcssr "..."
+    n 1unmbo "You know what?{w=0.5}{nw}"
+    extend 1ullss " I'll just...{w=1}{nw}"
+    extend 1nslss " be right back...{w=1}{nw}"
+
+    play audio chair_out_in
+    with Fade(out_time=0.25,hold_time=5,in_time=0.25, color="#000000")
+
+    n 1nchbg "Okaaay!{w=0.5}{nw}"
+    extend 1fchsm " We're back in business!"
+    n 1nnmaj "I'll tell you,{w=0.1} [player].{w=0.5}{nw}"
+    extend 1fchbg " If there's one thing I know,{w=0.1} it's how to shake off the drowsiness!"
+    n 1fsqsm "..."
+    n 1fsqss "Oho?{w=0.5}{nw}"
+    extend 1tsqaj " And what's that I hear?{w=0.5}{nw}"
+    extend 1tllss " How do I do it,{w=0.1} you ask?"
+    n 1fsqsg "Ehehe.{w=0.5}{nw}"
+    extend 1usqsg " Well aren't {i}you{/i} in luck,{w=0.1} [player].{w=0.5} 'Cause..."
+    n 1uchgn "It's time for a Natsuki pro-tip!"
+    n 1fnmaj "So!{w=0.2} First order of business...{w=0.5}{nw}"
+    extend 1fcsbg " hydration,{w=0.1} obviously!"
+    n 1ullaj "It's actually pretty easy to forget how much fluid you need per day...{w=0.5}{nw}"
+    extend 1unmbo " and how {i}often{/i} you should be drinking!"
+    n 1tlrss "You should be taking in something like six to eight glasses of water a day,{w=0.3}{nw}"
+    extend 1fcsaj " but not all at once!"
+    n 1ullaj "It isn't hard to space it out through the whole day {w=0.1}-{w=0.1} just start early and keep at it.{w=0.5}{nw}"
+    extend 1fchsm " Easy peasy!"
+    n 1fnmaj "Next up: exercise!"
+    n 1tsqsm "Yeah,{w=0.1} yeah.{w=0.2} I know,{w=0.1} I know.{w=0.5}{nw}"
+    extend 1fslss " We all just {i}love it{/i},{w=0.1} don't we?"
+    n 1unmaj "Don't think you have to go crazy or anything though -{w=0.5}{nw}" 
+    extend 1flrbg " I sure don't!"
+    n 1unmbo "People {i}say{/i} an hour a day is good,{w=0.5}{nw}" 
+    extend 1fnmca " but honestly even a lap around the house trumps sitting on your butt,{w=0.1} [player]."
+    n 1fcsss "It's just about moving around and giving your muscles a stretch,{w=0.1} that's all."
+    n 1ulrpu "Lastly,{w=0.5}{nw}"
+    extend 1fsqsm " and I {i}know{/i} you'll like this one,{w=0.1} [player]..."
+    n 1fchgn "...Food!"
+    n 1fllem "Of course you're gonna feel like crap if you aren't eating enough!"
+    n 1kllsr "...And trust me on this one.{w=0.5}{nw}"
+    extend 1ksrpu " I would know."
+    n 1ksrun "..."
+    n 1fcsajl "A-{w=0.1}anyway!"
+    n 1fnmca "You wouldn't expect a car to run without fuel {w=0.1}-{w=0.1} and you're no different,{w=0.1} [player]."
+    n 1ullaj "Don't go crazy though.{w=0.5}{nw}"
+    extend 1nlrpu " Just grab an apple or something.{w=0.5}{nw}"
+    extend 1fsqpo " Don't cheap out on your body with processed crap all the time."
+    n 1tsqpo "...Or you'll feel like that too."
+    n 1fchbg "But...{w=0.3} yeah!{w=0.5}{nw}" 
+    extend 1fchsm " That just about covers it!"
+    n 1unmbg "So,{w=0.1} I-{w=0.5}{nw}"
+    n 1nnmss "I...{w=1}{nw}"
+    n 1nsqsr "...{w=2}{nw}"
+    n 1fsqaj "[player]."
+    n 1fsqpo "Were you actually listening?{w=0.5}{nw}"
+    extend 1fnmem " You {i}better{/i} not be dozing off on me!"
+    n 1fllpo "..."
+    n 1fsqss "...Or I really {i}will{/i} put you to sleep.{w=0.5}{nw}"
+    extend 1fchgn " Ehehe."
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        n 1uchtsl "Love you too,{w=0.1} [player]!~"
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n 1fchts "You're welcome,{w=0.1} [player]!~"
+
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
