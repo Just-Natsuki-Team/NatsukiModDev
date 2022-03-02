@@ -1,7 +1,7 @@
 default persistent._topic_database = dict()
 
 # Generic
-default persistent._jn_out_of_topics = False
+default persistent._jn_out_of_topics_warning_given = False
 
 # Pet data
 default persistent.jn_player_pet = None
@@ -77,7 +77,7 @@ label talk_out_of_topics:
         n 1fcsan "You're the {i}last{/i} person I wanna think of more stuff to talk about with.{w=1}{nw}"
         extend 1fsrem " Jerk."
 
-    $ persistent._jn_out_of_topics = True
+    $ persistent._jn_out_of_topics_warning_given = True
     return
 
 # Talk menu topics
