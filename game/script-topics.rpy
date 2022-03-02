@@ -5134,7 +5134,7 @@ label talk_fear_of_lightning:
     n 1fllun "..."
     n 1knmem "...What?{w=1}{nw}"
     extend 1fllpo " I'm serious!"
-    n 1knmun "Have you {i}seen{/i} the numbers on those things?"
+    n 1knmun "Have you {i}seen{/i} the numbers on lightning?"
     n 1nnmaj "A typical strike is like 300 {i}million{/i} volts!{w=0.5}{nw}"
     extend 1uwdaj " With about 30 thousand amps!{w=1.5}{nw}"
     extend 1nllan " Yeesh!"
