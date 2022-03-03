@@ -4880,7 +4880,7 @@ label talk_realizations_player_ddlc_actions:
     n 1unmaj "You've been here all this time,{w=0.1} right?{w=0.5}{nw}"
     extend 1tslbo " But then,{w=0.1} that would mean..."
     n 1tslbo "The guy who actually joined the club...{w=0.5}{nw}"
-    extend 1nlrss " Whatever his name was."
+    extend 1nlrss " whatever his name was."
     n 1fsrbo "He wasn't {i}actually{/i} in control of anything,{w=0.1} was he?{w=0.5}{nw}"
     extend 1ulraj " Not even himself."
     n 1nnmsr "...You were.{w=0.5}{nw}"
