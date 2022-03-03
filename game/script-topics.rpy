@@ -4962,16 +4962,15 @@ label talk_realizations_player_ddlc_actions:
         n 1fchbg "And that's all there is to it."
 
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-            if not name_match:
-                extend 1fchsm " Yep."
-                n 1uchsml "Love you,{w=0.1} [mc_initial]-"
-                n 1fllbgl "I mean,{w=0.5}{nw}"
-                extend 1kchbgl " {i}[player]~{/i}."
-                n 1fsqsml "..."
-                $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-                n 1uchbsl "Oh,{w=0.1} lighten up,{w=0.1} [chosen_tease]!"
-                n 1fwrtsl "You should know I'd never mean it.{w=0.5}{nw}"
-                extend  " Ehehe."
+            extend 1fchsm " Yep."
+            n 1uchsml "Love you,{w=0.1} generic protag-{w=0.3}{nw}"
+            n 1fllbgl "I mean,{w=0.5}{nw}"
+            extend 1kchbgl " {i}[player]~{/i}."
+            n 1fsqsml "..."
+            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            n 1uchbsl "Oh,{w=0.1} lighten up,{w=0.1} [chosen_tease]!"
+            n 1fwrtsl "You should know I'd never mean it.{w=0.5}{nw}"
+            extend  " Ehehe."
 
             else:
                 n 1uchsml "Love you,{w=0.1} [player]~.{w=0.5}{nw}"
