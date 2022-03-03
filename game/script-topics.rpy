@@ -4972,10 +4972,6 @@ label talk_realizations_player_ddlc_actions:
             n 1fwrtsl "You should know I'd never mean it.{w=0.5}{nw}"
             extend  " Ehehe."
 
-            else:
-                n 1uchsml "Love you,{w=0.1} [player]~.{w=0.5}{nw}"
-                extend 1nchsml " Ehehe."
-
     else:
         n 1fllss "I-{w=0.1}I just gotta adjust,{w=0.5}{nw}" 
         extend 1fllun " that's all."
