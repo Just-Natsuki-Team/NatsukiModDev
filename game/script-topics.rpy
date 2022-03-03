@@ -4906,7 +4906,7 @@ label talk_realizations_player_ddlc_actions:
         n 1fnmssl "A-{w=0.5}{nw}"
         extend 1fcsbgl "ha!"
         n 1fcsbsl "Haha!{w=2}{nw}"
-        extend 1flleml "What am I even saying?!"
+        extend 1flleml " What am I even saying?!"
         n 1fcswrl "J-{w=0.1}just because you picked some words and clicked a few buttons doesn't make you the same!"
         n 1fllpol "..."
         n 1nlleml "A-{w=0.1}although..."
