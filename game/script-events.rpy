@@ -1,6 +1,7 @@
 default persistent._event_database = dict()
 
 image poetry_attempt = "mod_assets/props/poetry_attempt.png"
+image parfait_manga_held = "mod_assets/props/parfait_manga_held.png"
 
 init python in jn_events:
     import random
@@ -94,6 +95,7 @@ label event_caught_reading_manga:
             pass
 
     $ jn_events.display_visuals("1fsrpo")
+    show parfait_manga_held zorder jn_events.JN_EVENT_PROP_ZORDER
     $ jn_globals.force_quit_enabled = True
     
     n 1uskem "...!"
@@ -113,6 +115,7 @@ label event_caught_reading_manga:
     extend 1nlrss " put this away."
 
     play audio drawer
+    hide parfait_manga_held
     with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
     n 1ulraj "So..."
