@@ -5355,7 +5355,6 @@ init 5 python:
             conditional="jn_utils.get_total_gameplay_length().total_seconds() / 3600 >= 24",
             category=["Animals", "Fears"],
             player_says=True,
-            affinity_range=(jn_affinity.NORMAL, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -5406,7 +5405,7 @@ label talk_fear_of_spiders:
     extend 1fnmaj " don't get me wrong!"
     n 1ksrem "I wouldn't want them like...{w=0.3} {i}crawling{/i} over me or anything.{w=0.5}{nw}"
     extend 1fcsfu " Ew!"
-    n 1fslun " I don't {i}even{/i} want to {i}imagine{/i} that."
+    n 1fslun " I don't even want to {i}imagine{/i} that."
     n 1unmss "But spiders are awesome little guys!{w=1.5}{nw}"
     extend 1nsrss " ...Mostly."
     n 1unmbo "They get rid of the really annoying sorts of bugs,{w=0.1} like ones that bite or fly around constantly."
@@ -5440,6 +5439,8 @@ label talk_fear_of_spiders:
             n 1uchtsl "Love you too,{w=0.1} [player]!"
 
     else:
+        n 1tnmss "You got your answer,{w=0.1} [player].{w=0.5}{nw}"
+        extend 1fllss " So..."
         n 1fllsm "I think that about{w=0.5}{nw}"
         extend 1fsqss " {i}wraps{/i}{w=1}{nw}"
         extend 1usqsm " up my thoughts on the subject."
