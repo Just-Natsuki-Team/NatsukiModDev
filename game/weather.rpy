@@ -803,6 +803,7 @@ init -1 python in location:
     import store
     import webbrowser
     import requests
+    import os
 
     def open_maps(latitude, longitude):
         """
@@ -821,13 +822,15 @@ init -1 python in location:
         """
         #try to get coordinates
         try:
-            response = requests.get("https://geolocation-db.com/json", verify=False)
-            json = response.json()
-
+            response = requests.get("http://ipinfo.io/json", verify=os.environ['SSL_CERT_FILE'])
             if response.status_code != 200:
                 return None
 
-            return (str(json["latitude"]), str(json["longitude"]))
+            json = response.json()
+            lat, lon = json["loc"].split(',')
+
+            return (lat, lon)
         #if an exception occurs, catch it and return None
-        except:
+        except Exception as e:
+            store.jn_utils.log("While fetching lat, lon info using ip, following error occured: "+ str(e), store.jn_utils.SEVERITY_ERR)
             return None
