@@ -223,7 +223,15 @@ init python:
                 )
 
             if topic_pool:
+                if (not persistent.jn_natsuki_repeat_topics):
+                    # More random topics available, reset out of topics warning
+                    store.persistent._jn_out_of_topics_warning_given = False
+
                 queue(random.choice(topic_pool).label)
+
+            elif not store.persistent.jn_natsuki_repeat_topics and not store.persistent._jn_out_of_topics_warning_given:
+                # Out of random topics
+                queue("talk_out_of_topics")
 
         pass
 
@@ -468,7 +476,7 @@ label try_force_quit:
 
                 else:
                     n 1fcsfr "Whatever.{w=1}{nw}"
-                    n 1fsqsl "{cps=/2}As I was saying.{/cps}{w=1}{nw}"
+                    n 1fsqsl "{cps=\7.5}As I was saying.{/cps}{w=1}{nw}"
 
                 return
 
