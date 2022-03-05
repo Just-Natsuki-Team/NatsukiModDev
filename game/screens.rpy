@@ -268,7 +268,7 @@ style button:
 style button_text is gui_text:
     properties gui.button_text_properties("button")
     yalign 0.5
-
+    size gui.button_text_size
 
 style label_text is gui_text:
     color gui.accent_color

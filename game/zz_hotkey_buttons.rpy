@@ -21,7 +21,7 @@ define gui.hkb_button_height = None
 define gui.hkb_button_tile = False
 define gui.hkb_button_borders = Borders(100, 5, 100, 5)
 define gui.hkb_button_text_font = gui.default_font
-define gui.hkb_button_text_size = gui.text_size
+define gui.hkb_button_text_size = gui.button_text_size
 define gui.hkb_button_text_xalign = 0.5
 define gui.hkb_button_text_idle_color = "#e2d1d1"
 define gui.hkb_button_text_hover_color = "#FF8ED0"
@@ -31,7 +31,7 @@ define gui.hkb_button_black_height = None
 define gui.hkb_button_black_tile = False
 define gui.hkb_button_black_borders = Borders(100, 5, 100, 5)
 define gui.hkb_button_black_text_font = gui.default_font
-define gui.hkb_button_black_text_size = gui.text_size
+define gui.hkb_button_black_text_size = gui.button_text_size
 define gui.hkb_button_black_text_xalign = 0.5
 define gui.hkb_button_black_text_idle_color = "#e2d1d1"
 define gui.hkb_button_black_text_hover_color = "#FF8ED0"
@@ -41,7 +41,7 @@ define gui.talk_button_height = None
 define gui.talk_button_tile = False
 define gui.talk_button_borders = Borders(100, 5, 100, 5)
 define gui.talk_button_text_font = gui.default_font
-define gui.talk_button_text_size = gui.text_size
+define gui.talk_button_text_size = gui.button_text_size
 define gui.talk_button_text_xalign = 0.5
 define gui.talk_button_text_idle_color = "#e2d1d1"
 define gui.talk_button_text_hover_color = "#FF8ED0"
@@ -125,7 +125,7 @@ style hkbd_button is default:
 style hkbd_button_text is default:
 
     font gui.default_font
-    size gui.text_size
+    size gui.button_text_size
     xalign 0.5
     idle_color "#e2d1d1"
     hover_color "#FF8ED0"
@@ -139,7 +139,7 @@ style hkbd_button_black is default:
 style hkbd_button_text_black is default:
 
     font gui.default_font
-    size gui.text_size
+    size gui.button_text_size
     xalign 0.5
     idle_color "#e2d1d1"
     hover_color "#FF8ED0"
@@ -163,7 +163,7 @@ style talkd_button is default:
 
 style talkd_button_text is default:
     font gui.default_font
-    size gui.text_size
+    size gui.button_text_size
     xalign 0.5
     idle_color "#e2d1d1"
     hover_color "#FF8ED0"
