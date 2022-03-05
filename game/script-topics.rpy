@@ -5377,7 +5377,7 @@ label talk_fear_of_spiders:
         n 1fcsem "..."
         n 1fcssr "No,{w=0.1} [player].{w=0.5}{nw}"
         extend 1fsqsr " I am not afraid of spiders."
-        n 1fsqem "...And might I ask why you feel entitled to know about my fears?"
+        n 1fsqem "...And might I ask {i}why{/i} you feel entitled to know about my fears?"
         n 1fcsan "Why the hell would I give you {i}more{/i} ammo to get on my nerves?"
         n 1fsrem "Ugh..."
         n 1fcssf "Yeah.{w=0.5}{nw}" 
@@ -5418,9 +5418,9 @@ label talk_fear_of_spiders:
     n 1tnmss "So...{w=0.3} overall?{w=0.5}{nw}"
     extend 1ncssm " I'd call that a win for the spiders!"
     n 1nslss "...Yeah,{w=0.1} yeah,{w=0.1} [player].{w=0.2} I know.{w=0.5}{nw}"
-    extend 1flrpo " I'm not totally naive!"
+    extend 1flrpo " I'm not naive!"
     n 1nllun "I know some places have some really nasty types.{w=0.5}{nw}"
-    extend 1uskem " And I wish I was kidding!"
+    extend 1uskem " And I {i}wish{/i} I was kidding!"
     n 1klrpu "Spiders are already sneaky,{w=0.1} so imagine living with ones that hide in your shoes,{w=0.1} or under your desk..."
     n 1kskgs "That can put you in {i}hospital{/i} too!{w=0.5}{nw}"
     extend 1kllan " Yeesh!"
@@ -5433,10 +5433,15 @@ label talk_fear_of_spiders:
         n 1usqsm "Are {i}you{/i} afraid of spiders?"
         n 1fsqsm "Better think through your answer carefully,{w=0.1} [player]."
         n 1fsldvl "You're already caught in {i}my{/i} web,{w=0.1} after all..."
-        n 1fchsml "Ahuhuhu.~"
+
+        if random.randint(0,10) == 1:
+            n 1fchsml "Ahuhuhu.~" # Yes, this is a Muffet reference
+
+        else:
+            n 1fsqsm "Ehehe."
 
         if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-            n 1uchtsl "Love you too,{w=0.1} [player]!"
+            n 1uchtsl "Love you,{w=0.1} [player]!~"
 
     else:
         n 1tnmss "You got your answer,{w=0.1} [player].{w=0.5}{nw}"
