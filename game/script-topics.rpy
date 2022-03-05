@@ -974,7 +974,7 @@ label talk_weather_setup_part2:
 
         n 1nnmss "Let's get down to business!"
         n 1nlrts "I'm just gonna look something up real quick..."
-        $ ip_latitude_longitude = location.get_coords_by_ip()
+        $ ip_latitude_longitude = jn_location.get_coords_by_ip()
 
         if not ip_latitude_longitude:
             # We couldn't get the coordinates via IP, so we have to prompt them via the player
@@ -994,7 +994,7 @@ label talk_weather_setup_part2:
                 # We do this as Ren'Py doesn't allow inline try/catch. Thanks, Tom
                 show_map_success = False
                 try:
-                    location.open_maps(ip_latitude_longitude[0], ip_latitude_longitude[1])
+                    jn_location.open_maps(ip_latitude_longitude[0], ip_latitude_longitude[1])
                     show_map_success = True
 
                 except Exception as exception:

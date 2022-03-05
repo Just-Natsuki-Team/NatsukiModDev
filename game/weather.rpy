@@ -799,7 +799,7 @@ init -1 python in jn_weather:
 init -1 python:
     pass
 
-init -1 python in location:
+init -1 python in jn_location:
     import store
     import webbrowser
     import requests
