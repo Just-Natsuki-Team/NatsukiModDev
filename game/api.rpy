@@ -46,6 +46,10 @@ init -2 python in api:
         if code == 200:
             store.jn_utils.log("API call to {0} resulted in response 200".format(api))
 
+        # BadRequest - log api call as well for debugging purposes
+        elif code == 400:
+            store.jn_utils.log("API call to {0} resulted in response 400 - BadRequest ({1})".format(api, url), store.jn_utils.SEVERITY_WARN)
+
         else:
             store.jn_utils.log("API call to {0} resulted in response {1}".format(api, code), store.jn_utils.SEVERITY_WARN)
 

@@ -940,6 +940,8 @@ label talk_weather_setup_part2:
                     n 1nlrss "I'll just put this somewhere safe..."
                     $ persistent.jn_weather_api_key = player_input
                     $ player_input_valid = True
+                    # restart the topic to promt the player for location
+                    jump talk_weather_setup_part2
 
                 else:
                     n 1nnmaj "No dice,{w=0.1} [player]...{w=0.3} that one didn't work either!"
