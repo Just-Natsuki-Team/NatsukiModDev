@@ -23,6 +23,9 @@ default persistent.jn_player_can_drive = None
 # Romance data
 default persistent.jn_player_love_you_count = 0
 
+# Preferences data
+default persistent.jn_player_tea_coffee_preference = None
+
 init python in topics:
     import store
     TOPIC_MAP = dict()
@@ -5341,6 +5344,135 @@ label talk_fighting_drowsiness:
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
         n 1fchts "You're welcome,{w=0.1} [player]!~"
+
+    return
+
+# Natsuki isn't a big tea drinker
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_thoughts_on_tea",
+            unlocked=True,
+            prompt="Do you drink much tea?",
+            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 3600 >= 36",
+            category=["Food"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_thoughts_on_tea:
+    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n 1tnmaj "Huh?{w=0.2} Do I drink tea?"
+        n 1fchgn "...Are you {i}sure{/i} you know who you're talking to?{w=0.5}{nw}"
+        extend 1fchbg " I literally never make it myself!"
+        n 1ullss "I mean,{w=0.5}{nw}"
+        extend 1unmbo " I had it a few times in the club,{w=0.1} sure."
+        n 1nlrpu "Yuri would prepare it for us all sometimes."
+        n 1tsrss "But I never asked for it or anything!"
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n 1fcsem "..."
+        n 1fsqsr "No,{w=0.5} [player]."
+        n 1fsqbo "I don't really care for it."
+        n 1fllpu "...I mean,{w=0.5}{nw}"
+        extend 1nllsf " I {i}guess{/i} I'd drink it if it was offered."
+        n 1nslsl "...From most people,{w=0.1} anyway."
+        n 1fsqbo "Somehow I doubt that'd be the case for {i}you{/i}."
+
+        return
+
+    else:
+        n 1fcsem "No,{w=2}{nw}"
+        extend 1fsqan " and I'm certainly not drinking any of {i}yours{/i}."
+        n 1fslem "Not like it'd be {i}just{/i} tea anyway,{w=0.1} knowing a jerk like {i}you{/i}."
+
+        return
+
+    n 1fllbo "..."
+    n 1fcseml "T-{w=0.1}that's not to mean I think it sucks,{w=0.1} or something like that!"
+    n 1nlrbo "I just have my own tastes."
+
+    if get_topic("talk_favourite_drink").shown_count > 0:
+        extend 1uspbg " Like hot chocolate!"
+
+    n 1ullaj "But...{w=0.5}{nw}"
+    extend 1nllbo " I guess I can see why people are into it so much."
+    n 1tnmca "Tea contains caffeine,{w=0.1} right?{w=0.5}{nw}"
+    extend 1tlrss " Not as much as coffee or anything,{w=0.1} but an edge is still an edge,{w=0.1} I guess."
+    n 1unmaj "It comes in a whole bunch of flavours too!{w=0.5}{nw}"
+    extend 1unmgs " I was actually kinda surprised at the variety!"
+    n 1ullss "You've got your regular old black tea{w=0.3}{nw}"
+    extend 1fslss " -{w=0.1} obviously -{w=0.3}{nw}" 
+    extend 1ulraj " but you've got green tea,{w=0.1} herbal tea..."
+    n 1uspgs "Even flavoured ones like cinnamon and peppermint!"
+    n 1nslss "We only ever had oolong tea in the clubroom though,{w=0.5}{nw}"
+    extend 1tnmss " so who knows?"
+    n 1ulrbo "Maybe I'd warm up to it if I tried some that sounded good."
+    n 1ulraj "But...{w=0.5}{nw}"
+    extend 1nslss " I've gone on enough." 
+    n 1unmbo "What about you,{w=0.1} [player]?"
+
+    if not persistent.jn_player_tea_coffee_preference:
+        menu:
+            n "What's your preference?"
+
+            "I prefer tea.":
+                $ persistent.jn_player_tea_coffee_preference = "tea"
+                n 1unmaj "Tea?{w=0.5}{nw}"
+                extend 1nllpu " Hmm..."
+                n 1unmbo "Yeah,{w=0.1} that's about what I expected."
+                n 1nlrbo "..."
+                n 1tnmbg "What?"
+                n 1tsqbg "Not like you raised a fuss about it earlier,{w=0.5}{nw}"
+                extend 1tsqsm " right?"
+                n 1kslsm "..."
+                n 1nslss "Though...{w=1.5}{nw}"
+                extend 1uslsr " not like you had much of a choice in it back then,{w=0.1} huh?"
+
+            "I prefer coffee.":
+                $ persistent.jn_player_tea_coffee_preference = "coffee"
+                n 1unmaj "Oh?{w=1.5}{nw}"
+                extend 1tnmss " You're a coffee drinker?"
+                n 1nllpu "Hmm..."
+                n 1nsqss "Then I guess the sessions in the club weren't your{w=0.5}{nw}"
+                extend 1fsqbg " {i}cup of tea{/i}{w=0.5}{nw},"
+                extend 1usqbg " huh?"
+                n 1uchgn "..."
+                n 1fchbg "Oh,{w=0.5}{nw}" 
+                extend 1fllbg " come on,{w=0.1} [player]!{w=0.2} Yeesh."
+                n 1fsqsm "No need to be all {w=0.3}{i}bitter{/i}{w=0.3} about it."
+                n 1fchsm "..."
+                n 1kchbg "Okay,{w=0.1} okay!{w=0.5} I'm done!"
+                n 1fsqsg "...For now."
+
+            "I don't like tea or coffee.":
+                $ persistent.jn_player_tea_coffee_preference = "neither"
+                n 1ullaj "That's...{w=1.5}{nw}"
+                extend 1nllbo " kinda surprising,{w=0.1} actually."
+                n 1fsrbo "Most people at {i}least{/i} like one or the other..."
+                n 1fsqpo "You aren't just pulling my leg,{w=0.5}{nw}" 
+                extend 1ksqpo " are you?"
+                n 1fslpol "I was being serious,{w=0.1} you know..."
+
+    else:
+        n 1fcsaj "A-{w=0.1}actually,{w=0.1} hold up a second...{w=1.5}{nw}"
+        extend 1tslpu " didn't we already talk about this?"
+        n 1fslpu "..."
+        n 1fnmbg "...Yeah,{w=0.1} we did!{w=0.5}{nw}"
+        extend 1unmaj " You said you liked [persistent.jn_player_tea_coffee_preference],{w=0.1} right?"
+    
+    n 1nllss "Well,{w=0.1} whatever.{w=0.5}{nw}"
+    extend 1fchbg " Not like hot drinks are the be-all and end-all anyway,{w=0.1} huh?"
+    n 1fllss "But man...{w=0.5}{nw}"
+    extend 1flrun " I'm actually pretty parched after all that talking."
+    n 1fsrpo "..."
+    n 1unmss "Hey,{w=0.1} [player]...{w=1.5}{nw}"
+    extend 1usqsm " do me a favour?"
+    n 1fchbg "...Stick the kettle on,{w=0.1} would you?"
+    n 1uchgn "Ehehe."
 
     return
 
