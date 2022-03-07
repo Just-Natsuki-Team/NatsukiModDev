@@ -60,7 +60,7 @@ init 0 python:
             self._headgear = outfit.headgear if outfit.headgear else None
             self._necklace = outfit.necklace if outfit.necklace else None
 
-        def is_wearing_outfit(outfit):
+        def is_wearing_outfit(self, outfit):
             """
             Returns True if Natsuki is wearing the specified jn_outfits.JNOutfitPreset outfit, otherwise False.
 
@@ -73,24 +73,27 @@ init 0 python:
             return self._outfit_name == outfit.reference_name
 
     class JNHolidays(Enum):
-        none = 0
-        new_years_day = 1
-        easter = 2
-        halloween = 3
-        christmas_eve = 4
-        christmas_day = 5
-        new_years_eve = 6
+        none = 1
+        new_years_day = 2
+        easter = 3
+        halloween = 4
+        christmas_eve = 5
+        christmas_day = 6
+        new_years_eve = 7
 
         def __str__(self):
             return self.name
 
     class JNTimeBlocks(Enum):
-        early_morning = 0
-        mid_morning = 1
-        late_morning = 2
-        afternoon = 3
-        evening = 4
-        night = 5
+        early_morning = 1
+        mid_morning = 2
+        late_morning = 3
+        afternoon = 4
+        evening = 5
+        night = 6
+
+        def __str__(self):
+            return self.name 
 
     #Constants for types. Add more here if we need more organizational areas
     TOPIC_TYPE_FAREWELL = "FAREWELL"
