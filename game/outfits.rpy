@@ -202,27 +202,6 @@ init python in jn_outfits:
         store.JNTimeBlocks.night: DEFAULT_OUTFIT_CASUAL_WEEKEND
     }
 
-    def set_outfit(outfit):
-        """
-        Sets Natsuki's appearance using the given outfit.
-
-        IN:
-            - outfit - JNOutfitPreset outfit for Natsuki to wear
-        """
-        global current_outfit_name
-        
-        if outfit.unlocked:
-            store.persistent.jn_natsuki_current_outfit = outfit.clothes
-            store.persistent.jn_natsuki_current_hairstyle = outfit.hairstyle
-            store.persistent.jn_natsuki_current_accessory = outfit.accessory
-            store.persistent.jn_natsuki_current_eyewear = outfit.eyewear
-            store.persistent.jn_natsuki_current_headgear = outfit.headgear
-            store.persistent.jn_natsuki_current_necklace = outfit.necklace
-            current_outfit_name = outfit.reference_name
-
-        else:
-            jn_utils.log("Cannot dress Natsuki in outfit {0}; outfit is locked".format(outfit.name))
-
     def get_outfit_for_time_block():
         """
         Returns the outfit corresponding to affinity, the current time block and whether or not is is a weekday.
@@ -248,31 +227,6 @@ init python in jn_outfits:
             else:
                 return DEFAULT_OUTFIT_SCHEDULE_WEEKEND_LOW_AFFINITY.get(store.jn_get_current_time_block())
 
-    def set_outfit_for_time_block():
-        """
-        Sets Natsuki's outfit based on the time of day, whether it is a weekday/weekend, and affinity.
-        """
-        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            if store.jn_is_weekday():
-                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_HIGH_AFFINITY.get(store.jn_get_current_time_block()))
-
-            else:
-                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKEND_HIGH_AFFINITY.get(store.jn_get_current_time_block()))
-        
-        elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
-            if store.jn_is_weekday():
-                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_MEDIUM_AFFINITY.get(store.jn_get_current_time_block()))
-
-            else:
-                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKEND_MEDIUM_AFFINITY.get(store.jn_get_current_time_block()))
-        
-        else:
-            if store.jn_is_weekday():
-                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_LOW_AFFINITY.get(store.jn_get_current_time_block()))
-
-            else:
-                set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKEND_LOW_AFFINITY.get(store.jn_get_current_time_block()))
-            
 label outfits_time_of_day_change:
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
         n 1uchbg "Oh!{w=0.2} I gotta change,{w=0.1} just give me a sec...{w=0.75}{nw}"
@@ -291,7 +245,7 @@ label outfits_time_of_day_change:
         n 1fsqsl "I'm changing.{w=0.75}{nw}"
 
     play audio clothing_ruffle
-    $ jn_outfits.set_outfit_for_time_block()
+    $ JN_NATSUKI.set_outfit(jn_outfits.get_outfit_for_time_block())
     with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
     
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:

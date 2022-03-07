@@ -30,6 +30,7 @@ label ch30_visual_setup:
 
 label ch30_init:
     python:
+        import store.jn_utils as jn_utils
 
         # Determine if the player should get a prolonged leave greeting
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
@@ -69,7 +70,7 @@ label ch30_init:
 
         # Outfit selection
         if persistent.jn_natsuki_auto_outfit_change_enabled:
-            jn_outfits.set_outfit_for_time_block()
+            JN_NATSUKI.set_outfit(jn_outfits.get_outfit_for_time_block())
 
     show screen hkb_overlay
     play music audio.just_natsuki_bgm
@@ -261,7 +262,7 @@ init python:
 
     def hour_check():
         """
-        Runs ever hour during breaks between topics
+        Runs every hour during breaks between topics
         """
 
         # Run through all externally-registered hour check actions
@@ -274,7 +275,7 @@ init python:
         jn_atmosphere.show_current_sky()
 
         # Update outfit
-        if jn_outfits.get_outfit_for_time_block().reference_name is not jn_outfits.current_outfit_name:
+        if not JN_NATSUKI.is_wearing_outfit(jn_outfits.get_outfit_for_time_block()):
 
             # We call here so we don't skip day_check, as call returns us to this point
             renpy.call("outfits_time_of_day_change")

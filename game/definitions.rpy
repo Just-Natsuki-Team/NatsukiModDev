@@ -27,6 +27,50 @@ init 0 python:
     from Enum import Enum
     import re
     import store.jn_affinity as jn_aff
+    import store.jn_outfits as jn_outfits
+
+    class JNNatsuki:
+        """
+        Class for general management of Natsuki.
+        """
+        def __init__(self, outfit):
+            """
+            Constructor.
+            """
+            self._outfit_name = outfit.reference_name
+            self._clothes = outfit.clothes
+            self._hairstyle = outfit.hairstyle
+            self._accessory = outfit.accessory if outfit.accessory else None
+            self._eyewear = outfit.eyewear if outfit.eyewear else None
+            self._headgear = outfit.headgear if outfit.headgear else None
+            self._necklace = outfit.necklace if outfit.necklace else None
+
+        def set_outfit(self, outfit):
+            """
+            Assigns the specified jn_outfits.JNOutfitPreset outfit to Natsuki.
+
+            IN:
+                - outfit - The jn_outfits.JNOutfitPreset outfit for Natsuki to wear.
+            """
+            self._outfit_name = outfit.reference_name
+            self._clothes = outfit.clothes
+            self._hairstyle = outfit.hairstyle
+            self._accessory = outfit.accessory if outfit.accessory else None
+            self._eyewear = outfit.eyewear if outfit.eyewear else None
+            self._headgear = outfit.headgear if outfit.headgear else None
+            self._necklace = outfit.necklace if outfit.necklace else None
+
+        def is_wearing_outfit(outfit):
+            """
+            Returns True if Natsuki is wearing the specified jn_outfits.JNOutfitPreset outfit, otherwise False.
+
+            IN: 
+                - outfit - The jn_outfits.JNOutfitPreset outfit to check if Natsuki is wearing
+
+            OUT:
+                - True if Natsuki is wearing the specified jn_outfits.JNOutfitPreset outfit, otherwise False
+            """
+            return self._outfit_name == outfit.reference_name
 
     class JNHolidays(Enum):
         none = 0
@@ -1406,6 +1450,9 @@ init python:
 
     else:
         n_name = "Natsuki"
+
+init 10 python:
+    JN_NATSUKI = JNNatsuki(jn_outfits.get_outfit_for_time_block())
 
 init -999 python:
     def label_callback(name, abnormal):

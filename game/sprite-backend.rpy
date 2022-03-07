@@ -1,5 +1,6 @@
 init python:
     import store
+    import store.jn_outfits as jn_outfits
     from Enum import Enum
 
     JN_NATSUKI_ZORDER = 3
@@ -136,64 +137,71 @@ init python:
         lc_args = [
             (1280, 720), # Anchor
             (0, 0), _BASE_SPRITE_PATH + "desk/chair-normal.png", # Chair
-            (0, 0), "{0}{1}/hair/[persistent.jn_natsuki_current_hairstyle]/back.png".format(_BASE_SPRITE_PATH, pose), # Hair back
+            (0, 0), "{0}{1}/hair/[JN_NATSUKI._hairstyle]/back.png".format(_BASE_SPRITE_PATH, pose), # Hair back
             (0, 0), "{0}{1}/base/body.png".format(_BASE_SPRITE_PATH, pose), # Body
-            (0, 0), "{0}{1}/clothes/[persistent.jn_natsuki_current_outfit]/body.png".format(_BASE_SPRITE_PATH, pose), # Outfit, body
+            (0, 0), "{0}{1}/clothes/[JN_NATSUKI._clothes]/body.png".format(_BASE_SPRITE_PATH, pose), # Outfit, body
         ]
 
-         #TODO: Fix this
-        # if store.persistent.jn_natsuki_current_necklace is not None:
-        #     lc_args.extend([
-        #         (0, 0), "{0}{1}/necklace/[persistent.jn_natsuki_current_necklace].png".format(_BASE_SPRITE_PATH, pose)
-        #     ])
-
+        # Necklace
+        necklace = "{0}{1}/necklace/[JN_NATSUKI._necklace].png".format(_BASE_SPRITE_PATH, pose) if JN_NATSUKI._necklace is not None else Null()
         lc_args.extend([
-            (0, 0), "{0}{1}/base/head.png".format(_BASE_SPRITE_PATH, pose), # Head
+            (0, 0), necklace
         ])
 
+        # Head
+        lc_args.extend([
+            (0, 0), "{0}{1}/base/head.png".format(_BASE_SPRITE_PATH, pose),
+        ])
+
+        # Blush
         if blush:
             lc_args.extend([
                 (0, 0), "{0}{1}/face/blush/{2}.png".format(_BASE_SPRITE_PATH, pose, blush)
             ])
 
+        # Mouth, nose, hair (front)
         lc_args.extend([
-            (0, 0), "{0}{1}/face/mouth/{2}.png".format(_BASE_SPRITE_PATH, pose, mouth), # Mouth
-            (0, 0), "{0}{1}/face/nose/nose.png".format(_BASE_SPRITE_PATH, pose), # Nose
-            (0, 0), "{0}{1}/hair/[persistent.jn_natsuki_current_hairstyle]/bangs.png".format(_BASE_SPRITE_PATH, pose), # Hair front
+            (0, 0), "{0}{1}/face/mouth/{2}.png".format(_BASE_SPRITE_PATH, pose, mouth),
+            (0, 0), "{0}{1}/face/nose/nose.png".format(_BASE_SPRITE_PATH, pose),
+            (0, 0), "{0}{1}/hair/[JN_NATSUKI._hairstyle]/bangs.png".format(_BASE_SPRITE_PATH, pose),
         ])
 
-        #TODO: Expand accessories and clothes into their own subsystems
-        if store.persistent.jn_natsuki_current_accessory is not None:
-            lc_args.extend([
-                (0, 0), "{0}{1}/accessories/[persistent.jn_natsuki_current_accessory].png".format(_BASE_SPRITE_PATH, pose)
-            ])
-
+        # Accessory
+        accessory = "{0}{1}/accessories/[JN_NATSUKI._accessory].png".format(_BASE_SPRITE_PATH, pose) if JN_NATSUKI._accessory is not None else Null()
         lc_args.extend([
-            (0, 0), "{0}{1}/face/eyes/{2}.png".format(_BASE_SPRITE_PATH, pose, eyes), # Eyes
+            (0, 0), accessory
         ])
 
+        # Eyes
+        lc_args.extend([
+            (0, 0), "{0}{1}/face/eyes/{2}.png".format(_BASE_SPRITE_PATH, pose, eyes), 
+        ])
+
+        # Tears
         if tears:
             lc_args.extend([
                 (0, 0), "{0}{1}/face/tears/{2}.png".format((_BASE_SPRITE_PATH, pose, blush))
             ])
 
-        #TODO: Fix this
-        # if store.persistent.jn_natsuki_current_headgear is not None:
-        #     lc_args.extend([
-        #         (0, 0), "{0}{1}/headgear/[persistent.jn_natsuki_current_headgear].png".format(_BASE_SPRITE_PATH, pose)
-        #     ])
+        # Headgear
+        headgear = "{0}{1}/headgear/[JN_NATSUKI._headgear].png".format(_BASE_SPRITE_PATH, pose) if JN_NATSUKI._headgear is not None else Null()
+        lc_args.extend([
+            (0, 0), headgear
+        ])
 
-         #TODO: Fix this
-        # if store.persistent.jn_natsuki_current_eyewear is not None:
-        #     lc_args.extend([
-        #         (0, 0), "{0}{1}/eyewear/[persistent.jn_natsuki_current_eyewear].png".format(_BASE_SPRITE_PATH, pose)
-        #     ])
+        # Eyewear
+        eyewear = "{0}{1}/eyewear/[JN_NATSUKI._eyewear].png".format(_BASE_SPRITE_PATH, pose) if JN_NATSUKI._eyewear is not None else Null()
+        lc_args.extend([
+            (0, 0), eyewear
+        ])
 
+        # Emotes
         if emote:
             lc_args.extend([
                 (0, 0), "{0}{1}/emote/{2}.png".format(_BASE_SPRITE_PATH, pose, emote)
             ])
 
+        # Brows
         lc_args.extend([
             (0, 0), "{0}{1}/face/eyebrows/{2}.png".format(_BASE_SPRITE_PATH, pose, eyebrows), # Brows
             (0, 0), _BASE_SPRITE_PATH + "/desk/table-normal.png" # Table
