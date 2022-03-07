@@ -5344,7 +5344,7 @@ label talk_fighting_drowsiness:
 
     return
 
-# Natsuki almost falls asleep, jolts awake and then discusses how to combat drowsiness
+# Natsuki doesn't hate spiders, contrary to her poem in DDLC
 init 5 python:
     registerTopic(
         Topic(
