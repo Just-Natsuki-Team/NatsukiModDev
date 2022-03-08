@@ -68,7 +68,8 @@ label ch30_init:
         ):
             jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
 
-        # Outfit selection
+        # Load outfits, select outfit if automatic outfit changes are enabled
+        jn_outfits.JNOutfit.load_all()
         if persistent.jn_natsuki_auto_outfit_change_enabled:
             JN_NATSUKI.set_outfit(jn_outfits.get_outfit_for_time_block())
 
@@ -336,6 +337,9 @@ label talk_menu:
         "I want to say sorry...":
             jump player_apologies_start
 
+        "About your outfits...":
+            jump outfits_menu
+
         "Goodbye..." if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
             jump farewell_menu
 
@@ -395,11 +399,26 @@ label player_select_topic(is_repeat_topics=False):
 label farewell_menu:
     python:
         # Sort the farewell options by their display name
-        avaliable_farewell_options = jn_farewells.get_farewell_options()
-        avaliable_farewell_options.sort(key = lambda option: option[0])
-        avaliable_farewell_options.append(("Goodbye.", "farewell_start"))
+        available_farewell_options = jn_farewells.get_farewell_options()
+        available_farewell_options.sort(key = lambda option: option[0])
+        available_farewell_options.append(("Goodbye.", "farewell_start"))
 
-    call screen scrollable_choice_menu(avaliable_farewell_options, ("Nevermind.", None))
+    call screen scrollable_choice_menu(available_farewell_options, ("Nevermind.", None))
+
+    if isinstance(_return, basestring):
+        show natsuki at jn_center
+        $ push(_return)
+        jump call_next_topic
+
+    jump ch30_loop
+
+label outfits_menu:
+    $ outfit_options = [
+        ("Can you wear an outfit for me?", "outfits_wear_outfit"),
+        ("Can I suggest a new outfit?", "outfits_suggest_outfit"),
+        ("Can I remove an outfit I suggested?", "outfits_remove_outfit")
+    ]
+    call screen scrollable_choice_menu(outfit_options, ("Nevermind.", None))
 
     if isinstance(_return, basestring):
         show natsuki at jn_center

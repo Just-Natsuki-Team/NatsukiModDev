@@ -389,7 +389,7 @@ init 5 python:
 
 label compliment_style:
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_STYLE:
-        if jn_outfits.current_outfit_name != "School uniform":
+        if not JN_NATSUKI.is_wearing_outfit(DEFAULT_OUTFIT_UNIFORM):
 
             # Non-uniform dialogue
             if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
@@ -422,7 +422,8 @@ label compliment_style:
 
     else:
 
-        if jn_outfits.current_outfit_name != "School uniform":
+        if not JN_NATSUKI.is_wearing_outfit(DEFAULT_OUTFIT_UNIFORM):
+
             # Non-uniform dialogue
             if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
                 n 1nchsml "Ehehe.{w=0.2} I'm just happy you like this outfit,{w=0.1} [player]!"

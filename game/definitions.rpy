@@ -47,10 +47,10 @@ init 0 python:
 
         def set_outfit(self, outfit):
             """
-            Assigns the specified jn_outfits.JNOutfitPreset outfit to Natsuki.
+            Assigns the specified jn_outfits.JNOutfit outfit to Natsuki.
 
             IN:
-                - outfit - The jn_outfits.JNOutfitPreset outfit for Natsuki to wear.
+                - outfit - The jn_outfits.JNOutfit outfit for Natsuki to wear.
             """
             self._outfit_name = outfit.reference_name
             self._clothes = outfit.clothes
@@ -62,13 +62,13 @@ init 0 python:
 
         def is_wearing_outfit(self, outfit):
             """
-            Returns True if Natsuki is wearing the specified jn_outfits.JNOutfitPreset outfit, otherwise False.
+            Returns True if Natsuki is wearing the specified jn_outfits.JNOutfit outfit, otherwise False.
 
             IN: 
-                - outfit - The jn_outfits.JNOutfitPreset outfit to check if Natsuki is wearing
+                - outfit - The jn_outfits.JNOutfit outfit to check if Natsuki is wearing
 
             OUT:
-                - True if Natsuki is wearing the specified jn_outfits.JNOutfitPreset outfit, otherwise False
+                - True if Natsuki is wearing the specified jn_outfits.JNOutfit outfit, otherwise False
             """
             return self._outfit_name == outfit.reference_name
 
@@ -1374,6 +1374,9 @@ init python in jn_utils:
         """
         Saves all game data.
         """
+        # Save outfit data
+        store.jn_outfits.JNOutfit.save_all()
+
         #Save topic data
         store.Topic._save_topic_data()
 
