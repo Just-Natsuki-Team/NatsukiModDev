@@ -93,6 +93,12 @@ init python in jn_outfits:
         """
         pass
 
+    class JNHeadgear(JNWearable):
+        """
+        Describes some headgear for Natsuki; a wearable with additional functionality specific to clothes.
+        """
+        pass
+
     class JNOutfit():
         """
         Describes a complete outfit for Natsuki to wear; including clothing, hairstyle, etc.
@@ -434,6 +440,18 @@ init python in jn_outfits:
         unlocked=False
     ))
 
+    # Default headgear
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_santa_hat",
+        display_name="Santa hat",
+        unlocked=False
+    ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_trainer_hat",
+        display_name="Trainer hat",
+        unlocked=False
+    ))
+
     # Default outfits
     __register_outfit(JNOutfit(
         reference_name="jn_school_uniform",
@@ -461,7 +479,7 @@ init python in jn_outfits:
     ))
 
 label outfits_wear_outfit:
-    n 1unmaj "Huh? You want me to put on another outfit?"
+    n 1unmaj "Huh?{w=0.2} You want me to put on another outfit?"
     n 1fchbg "Sure thing!{w=0.5}{nw}"
     extend 1unmbg " What do you want me to wear?{w=1.5}{nw}"
     show natsuki idle at jn_left
