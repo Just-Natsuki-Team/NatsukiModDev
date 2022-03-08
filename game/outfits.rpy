@@ -226,12 +226,6 @@ init python in jn_outfits:
 
     ALL_OUTFITS = []
 
-    if len(store.persistent.jn_outfits_list) == 0:
-        register_outfit(DEFAULT_OUTFIT_UNIFORM)
-        register_outfit(DEFAULT_OUTFIT_CASUAL_WEEKDAY)
-        register_outfit(DEFAULT_OUTFIT_NIGHT)
-        JNOutfit.save_all()
-
     # Default outfit schedules
     DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_HIGH_AFFINITY = {
         store.JNTimeBlocks.early_morning: DEFAULT_OUTFIT_MORNING_ALT if _use_alt_outfit else DEFAULT_OUTFIT_MORNING,
@@ -324,6 +318,12 @@ init python in jn_outfits:
                 return
 
         ALL_OUTFITS.append(outfit)
+
+    if len(store.persistent.jn_outfits_list) == 0:
+        register_outfit(DEFAULT_OUTFIT_UNIFORM)
+        register_outfit(DEFAULT_OUTFIT_CASUAL_WEEKDAY)
+        register_outfit(DEFAULT_OUTFIT_NIGHT)
+        JNOutfit.save_all()
 
 label outfits_time_of_day_change:
     if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
