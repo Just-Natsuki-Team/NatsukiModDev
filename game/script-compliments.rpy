@@ -422,7 +422,7 @@ label compliment_style:
 
     else:
 
-        if not JN_NATSUKI.is_wearing_outfit(DEFAULT_OUTFIT_UNIFORM):
+        if not JN_NATSUKI.is_wearing_outfit(jn_outfits.ALL_OUTFITS["jn_school_uniform"]):
 
             # Non-uniform dialogue
             if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:

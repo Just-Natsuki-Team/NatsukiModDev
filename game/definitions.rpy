@@ -1458,7 +1458,7 @@ init python:
         n_name = "Natsuki"
 
 init 10 python:
-    JN_NATSUKI = JNNatsuki(jn_outfits.get_outfit_for_time_block())
+    JN_NATSUKI = JNNatsuki(jn_outfits.ALL_OUTFITS["jn_school_uniform"])
 
 init -999 python:
     def label_callback(name, abnormal):

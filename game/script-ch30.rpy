@@ -69,9 +69,12 @@ label ch30_init:
             jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
 
         # Load outfits, select outfit if automatic outfit changes are enabled
+
+        jn_outfits.JNWearable.load_all()
         jn_outfits.JNOutfit.load_all()
-        if persistent.jn_natsuki_auto_outfit_change_enabled:
-            JN_NATSUKI.set_outfit(jn_outfits.get_outfit_for_time_block())
+        JN_NATSUKI.set_outfit(jn_outfits.ALL_OUTFITS["jn_school_uniform"])
+        # if persistent.jn_natsuki_auto_outfit_change_enabled:
+        #     JN_NATSUKI.set_outfit(jn_outfits.get_outfit_for_time_block())
 
     show screen hkb_overlay
     play music audio.just_natsuki_bgm
@@ -276,10 +279,10 @@ init python:
         jn_atmosphere.show_current_sky()
 
         # Update outfit
-        if not JN_NATSUKI.is_wearing_outfit(jn_outfits.get_outfit_for_time_block()):
+        # if not JN_NATSUKI.is_wearing_outfit(jn_outfits.get_outfit_for_time_block()):
 
-            # We call here so we don't skip day_check, as call returns us to this point
-            renpy.call("outfits_time_of_day_change")
+        #     # We call here so we don't skip day_check, as call returns us to this point
+        #     renpy.call("outfits_time_of_day_change")
 
         pass
 
