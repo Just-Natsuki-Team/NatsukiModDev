@@ -1,3 +1,5 @@
+# My ideas for this mod
+
 <p align="center">
     <img src="https://justnatsuki.club/img/jnlogo.png" height="500"/>
 </p>
