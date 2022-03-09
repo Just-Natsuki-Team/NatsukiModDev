@@ -13,12 +13,12 @@ init python in jn_outfits:
     import store.jn_utils as jn_utils
 
     # Wearables/outfits must be placed here to find them
-    CUSTOM_WEARABLES_DIRECTORY = os.path.join(renpy.config.basedir, "custom_wearables/").replace("\\", "/")
-    CUSTOM_OUTFITS_DIRECTORY = os.path.join(renpy.config.basedir, "custom_outfits/").replace("\\", "/")
+    __CUSTOM_WEARABLES_DIRECTORY = os.path.join(renpy.config.basedir, "custom_wearables/").replace("\\", "/")
+    __CUSTOM_OUTFITS_DIRECTORY = os.path.join(renpy.config.basedir, "custom_outfits/").replace("\\", "/")
 
     # Lists of all registered outfits/wearables
-    ALL_WEARABLES = {}
-    ALL_OUTFITS = {}
+    __ALL_WEARABLES = {}
+    __ALL_OUTFITS = {}
 
     # Wearables being registered via JSON must be one of the following types
     WEARABLE_CATEGORIES = [
@@ -49,8 +49,8 @@ init python in jn_outfits:
             """
             Loads all persisted data for each wearable from the persistent.
             """
-            global ALL_WEARABLES
-            for wearable in ALL_WEARABLES.itervalues():
+            global __ALL_WEARABLES
+            for wearable in __ALL_WEARABLES.itervalues():
                 wearable.__load()
 
         @staticmethod
@@ -58,8 +58,8 @@ init python in jn_outfits:
             """
             Saves all persistable data for each wearable to the persistent.
             """
-            global ALL_WEARABLES
-            for wearable in ALL_WEARABLES.itervalues():
+            global __ALL_WEARABLES
+            for wearable in __ALL_WEARABLES.itervalues():
                 wearable.__save()
 
         def as_dict(self):
@@ -162,8 +162,8 @@ init python in jn_outfits:
             """
             Loads all persisted data for each outfit from the persistent.
             """
-            global ALL_OUTFITS
-            for outfit in ALL_OUTFITS.itervalues():
+            global __ALL_OUTFITS
+            for outfit in __ALL_OUTFITS.itervalues():
                 outfit.__load()
 
         @staticmethod
@@ -171,8 +171,8 @@ init python in jn_outfits:
             """
             Saves all persistable data for each outfit to the persistent.
             """
-            global ALL_OUTFITS
-            for outfit in ALL_OUTFITS.itervalues():
+            global __ALL_OUTFITS
+            for outfit in __ALL_OUTFITS.itervalues():
                 outfit.__save()
 
         @staticmethod
@@ -289,12 +289,12 @@ init python in jn_outfits:
         IN:
             - outfit - the JNOutfit to register.
         """
-        global ALL_OUTFITS
-        if outfit.reference_name in ALL_OUTFITS:
+        global __ALL_OUTFITS
+        if outfit.reference_name in __ALL_OUTFITS:
             jn_utils.log("Cannot register outfit name: {0}, as an outfit with that name already exists.".format(outfit.reference_name))
 
         else:
-            ALL_OUTFITS[outfit.reference_name] = outfit
+            __ALL_OUTFITS[outfit.reference_name] = outfit
             if outfit.reference_name not in store.persistent.jn_outfit_list:
                 outfit.__save()
 
@@ -302,12 +302,12 @@ init python in jn_outfits:
         """
         Registers a new wearable in the list of all wearables, allowing in-game access and persistency.
         """
-        global ALL_WEARABLES
-        if wearable.reference_name in ALL_WEARABLES:
+        global __ALL_WEARABLES
+        if wearable.reference_name in __ALL_WEARABLES:
             jn_utils.log("Cannot register wearable name: {0}, as a wearable with that name already exists.".format(outfit.reference_name))
 
         else:
-            ALL_WEARABLES[wearable.reference_name] = wearable
+            __ALL_WEARABLES[wearable.reference_name] = wearable
             if wearable.reference_name not in store.persistent.jn_wearable_list:
                 wearable.__save()
 
@@ -402,27 +402,27 @@ init python in jn_outfits:
             return False
 
         # Sanity check components to make sure they exist as registered wearables
-        if not json["clothes"] in ALL_WEARABLES:
+        if not json["clothes"] in __ALL_WEARABLES:
             jn_utils.log("Cannot load outfit {0} as specified clothes do not exist.".format(json["reference_name"]))
             return False
 
-        elif not json["hairstyle"] in ALL_WEARABLES:
+        elif not json["hairstyle"] in __ALL_WEARABLES:
             jn_utils.log("Cannot load outfit {0} as specified hairstyle does not exist.".format(json["reference_name"]))
             return False
 
-        elif "accessory" in json and not json["accessory"] in ALL_WEARABLES:
+        elif "accessory" in json and not json["accessory"] in __ALL_WEARABLES:
             jn_utils.log("Cannot load outfit {0} as specified accessory does not exist.".format(json["reference_name"]))
             return False
 
-        elif "eyewear" in json and not json["eyewear"] in ALL_WEARABLES:
+        elif "eyewear" in json and not json["eyewear"] in __ALL_WEARABLES:
             jn_utils.log("Cannot load outfit {0} as specified eyewear does not exist.".format(json["reference_name"]))
             return False
 
-        elif "headgear" in json and not json["headgear"] in ALL_WEARABLES:
+        elif "headgear" in json and not json["headgear"] in __ALL_WEARABLES:
             jn_utils.log("Cannot load outfit {0} as specified headgear does not exist.".format(json["reference_name"]))
             return False
 
-        elif "necklace" in json and not json["necklace"] in ALL_WEARABLES:
+        elif "necklace" in json and not json["necklace"] in __ALL_WEARABLES:
             jn_utils.log("Cannot load outfit {0} as specified necklace does not exist.".format(json["reference_name"]))
             return False
 
@@ -431,12 +431,12 @@ init python in jn_outfits:
                 reference_name=json["reference_name"],
                 display_name=json["display_name"],
                 unlocked=json["unlocked"],
-                clothes=ALL_WEARABLES[json["clothes"]],
-                hairstyle=ALL_WEARABLES[json["hairstyle"]],
-                accessory=ALL_WEARABLES[json["accessory"]] if "accessory" in json else None,
-                eyewear=ALL_WEARABLES[json["eyewear"]] if "eyewear" in json else None,
-                headgear=ALL_WEARABLES[json["headgear"]] if "headgear" in json else None,
-                necklace=ALL_WEARABLES[json["necklace"]]  if "necklace" in json else None
+                clothes=__ALL_WEARABLES[json["clothes"]],
+                hairstyle=__ALL_WEARABLES[json["hairstyle"]],
+                accessory=__ALL_WEARABLES[json["accessory"]] if "accessory" in json else None,
+                eyewear=__ALL_WEARABLES[json["eyewear"]] if "eyewear" in json else None,
+                headgear=__ALL_WEARABLES[json["headgear"]] if "headgear" in json else None,
+                necklace=__ALL_WEARABLES[json["necklace"]]  if "necklace" in json else None
             )
 
             # Sanity check components to make sure the components are applicable to the slots they have been assigned to
@@ -490,11 +490,11 @@ init python in jn_outfits:
         """
         Loads the custom wearables from the game/outfits directory.
         """
-        if not jn_utils.get_directory_exists(CUSTOM_OUTFITS_DIRECTORY):
+        if not jn_utils.get_directory_exists(__CUSTOM_OUTFITS_DIRECTORY):
             jn_utils.log("Unable to load custom wearables as the directory does not exist, and was created.")
             return
 
-        outfit_files = jn_utils.get_all_directory_files(CUSTOM_OUTFITS_DIRECTORY, [".json"])
+        outfit_files = jn_utils.get_all_directory_files(__CUSTOM_OUTFITS_DIRECTORY, [".json"])
         success_count = 0
 
         for file_name, file_path in outfit_files:
@@ -524,7 +524,7 @@ init python in jn_outfits:
 
         OUT: True if it exists, otherwise False
         """
-        return outfit_name in ALL_OUTFITS
+        return outfit_name in __ALL_OUTFITS
 
     def wearable_exists(wearable_name):
         """
@@ -535,7 +535,7 @@ init python in jn_outfits:
 
         OUT: True if it exists, otherwise False
         """
-        return wearable_name in ALL_WEARABLES
+        return wearable_name in __ALL_WEARABLES
 
     def get_outfit(outfit_name):
         """
@@ -547,7 +547,7 @@ init python in jn_outfits:
         OUT: Corresponding JNOutfit if the outfit exists, otherwise None 
         """
         if outfit_exists(outfit_name):
-            return ALL_OUTFITS[outfit_name]
+            return __ALL_OUTFITS[outfit_name]
 
         return None
 
@@ -561,7 +561,7 @@ init python in jn_outfits:
         OUT: Corresponding JNWearable child if the wearable exists, otherwise None 
         """
         if wearable_exists(wearable_name):
-            return ALL_WEARABLES[wearable_name]
+            return __ALL_WEARABLES[wearable_name]
 
         return None
 
@@ -710,25 +710,25 @@ init python in jn_outfits:
         reference_name="jn_school_uniform",
         display_name="School uniform",
         unlocked=True,
-        clothes=ALL_WEARABLES["jn_clothes_school_uniform"],
-        hairstyle=ALL_WEARABLES["jn_hair_twintails"],
-        accessory=ALL_WEARABLES["jn_accessory_hairband_red"]
+        clothes=__ALL_WEARABLES["jn_clothes_school_uniform"],
+        hairstyle=__ALL_WEARABLES["jn_hair_twintails"],
+        accessory=__ALL_WEARABLES["jn_accessory_hairband_red"]
     ))
     __register_outfit(JNOutfit(
         reference_name="jn_casual_clothes",
         display_name="Casual clothes",
         unlocked=True,
-        clothes=ALL_WEARABLES["jn_clothes_casual"],
-        hairstyle=ALL_WEARABLES["jn_hair_bun"],
-        accessory=ALL_WEARABLES["jn_accessory_hairband_white"]
+        clothes=__ALL_WEARABLES["jn_clothes_casual"],
+        hairstyle=__ALL_WEARABLES["jn_hair_bun"],
+        accessory=__ALL_WEARABLES["jn_accessory_hairband_white"]
     ))
     __register_outfit(JNOutfit(
         reference_name="jn_star_pajamas",
         display_name="Star pajamas",
         unlocked=True,
-        clothes=ALL_WEARABLES["jn_clothes_star_pajamas"],
-        hairstyle=ALL_WEARABLES["jn_hair_down"],
-        accessory=ALL_WEARABLES["jn_accessory_hairband_hot_pink"]
+        clothes=__ALL_WEARABLES["jn_clothes_star_pajamas"],
+        hairstyle=__ALL_WEARABLES["jn_hair_down"],
+        accessory=__ALL_WEARABLES["jn_accessory_hairband_hot_pink"]
     ))
 
 label outfits_wear_outfit:
@@ -740,7 +740,7 @@ label outfits_wear_outfit:
     python:
         # Get unlocked outfits available for selection
         available_outfits = []
-        for outfit in jn_outfits.ALL_OUTFITS.itervalues():
+        for outfit in jn_outfits.__ALL_OUTFITS.itervalues():
             if outfit.unlocked:
                 available_outfits.append([outfit.display_name, outfit])
 
@@ -779,7 +779,7 @@ label outfits_wear_outfit:
         $ JN_NATSUKI.set_outfit(
             random.choice(
                 jn_outfits.JNOutfit.filter_outfits(
-                    outfit_list=jn_outfits.ALL_OUTFITS.itervalues(),
+                    outfit_list=jn_outfits.__ALL_OUTFITS.itervalues(),
                     unlocked=True,
                     not_reference_name=JN_NATSUKI._outfit_name)
             )

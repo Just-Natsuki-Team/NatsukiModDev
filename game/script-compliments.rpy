@@ -389,7 +389,7 @@ init 5 python:
 
 label compliment_style:
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_STYLE:
-        if not JN_NATSUKI.is_wearing_outfit(DEFAULT_OUTFIT_UNIFORM):
+        if not JN_NATSUKI.is_wearing_outfit(jn_outfits.get_outfit("jn_school_uniform")):
 
             # Non-uniform dialogue
             if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
@@ -422,7 +422,7 @@ label compliment_style:
 
     else:
 
-        if not JN_NATSUKI.is_wearing_outfit(jn_outfits.ALL_OUTFITS["jn_school_uniform"]):
+        if not JN_NATSUKI.is_wearing_outfit(jn_outfits.get_outfit("jn_school_uniform")):
 
             # Non-uniform dialogue
             if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:

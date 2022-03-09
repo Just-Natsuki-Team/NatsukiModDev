@@ -37,9 +37,11 @@ label introduction_progress_check:
         play audio static
         show glitch_garbled_a zorder 99 with vpunch
         hide glitch_garbled_a
-        $ JN_NATSUKI.set_outfit(jn_outfits.DEFAULT_OUTFIT_UNIFORM)
+
+        $ JN_NATSUKI.set_outfit(jn_outfits.get_outfit("jn_school_uniform"))
         $ main_background.appear()
         $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
+
         play music audio.space_classroom_bgm fadein 1
 
     $ renpy.jump(jn_introduction.INTRODUCTION_STATE_LABEL_MAP.get(jn_introduction.JNIntroductionStates(persistent.jn_introduction_state)))
@@ -112,7 +114,7 @@ label introduction_opening:
     hide glitch_garbled_a
 
     # Get the visuals ready
-    $ JN_NATSUKI.set_outfit(jn_outfits.DEFAULT_OUTFIT_UNIFORM)
+    $ JN_NATSUKI.set_outfit(jn_outfits.get_outfit("jn_school_uniform"))
     $ main_background.appear()
     $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
     play music audio.space_classroom_bgm fadein 1

@@ -19,16 +19,19 @@ label ch30_holiday_check:
         import store.jn_utils as jn_utils
 
         jn_utils.log("Holiday check: {0}".format(jn_get_holiday_for_date(datetime.datetime.now().date())))
+
     #Run holiday checks and push/setup holiday related things here
 
     #FALL THROUGH
 
 label ch30_visual_setup:
-    $ main_background.draw(True)
+    show black zorder 99
+    $ main_background.appear()
 
     #FALL THROUGH
 
 label ch30_init:
+    
     python:
         import store.jn_utils as jn_utils
 
@@ -56,9 +59,6 @@ label ch30_init:
         if persistent.jn_debug_open_watch_on_load:
             jn_debug.toggle_show_tracked_watch_items(True)
 
-        # Draw background
-        main_background.draw(full_redraw=True)
-
         if persistent.jn_random_weather and 6 < store.jn_get_current_hour() <= 18:
             jn_atmosphere.show_random_sky()
 
@@ -69,6 +69,7 @@ label ch30_init:
             jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
 
         # Load outfits, select outfit if automatic outfit changes are enabled
+        #TODO: auto change handling
         jn_outfits.load_custom_outfits()
         jn_outfits.JNWearable.load_all()
         jn_outfits.JNOutfit.load_all()
@@ -79,9 +80,8 @@ label ch30_init:
         else:
             JN_NATSUKI.set_outfit(jn_outfits.get_outfit("jn_school_uniform"))
 
-        # if persistent.jn_natsuki_auto_outfit_change_enabled:
-        #     JN_NATSUKI.set_outfit(jn_outfits.get_outfit_for_time_block())
-
+    # Prepare visuals
+    hide black with Dissolve(1.5) 
     show screen hkb_overlay
     play music audio.just_natsuki_bgm
 
