@@ -1272,6 +1272,40 @@ init -999 python in jn_utils:
         """
         return pygame.mouse.get_pos()
 
+    def get_directory_exists(path):
+        """
+        Checks to see if the specified directory exists, and creates it if not
+        Returns True/False based on whether the directory already existed
+
+        OUT:
+            - True/False based on if directory was existing (True) or had to be created (False)
+        """
+        if not os.path.exists(path):
+            os.makedirs(path)
+            return False
+
+        return True
+
+    def get_all_directory_files(path, extension_list=None):
+        """
+        Runs through the files in the specified directory, filtering files via extension check if specified
+        Returns a list containing tuples representing (file_name, file_path)
+
+        IN:
+            - path - the file path to search
+            - extension_list - optional list of file extensions; only files with these extensions will be returned
+
+        OUT:
+            - Tuple representing (file_name, file_path)
+        """
+        return_file_items = []
+
+        for file in os.listdir(path):
+            if (not extension_list or any(file_extension in file for file_extension in extension_list)):
+                return_file_items.append((file, os.path.join(path, file)))
+
+        return return_file_items
+
 init python in jn_utils:
     import re
     import store

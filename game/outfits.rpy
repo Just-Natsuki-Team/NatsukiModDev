@@ -5,10 +5,14 @@ default persistent.jn_wearable_list = {}
 
 init python in jn_outfits:
     import json
+    import os
     import random
     import store
     import store.jn_affinity as jn_affinity
     import store.jn_utils as jn_utils
+
+    # Tracks must be placed here for Natsuki to find them
+    CUSTOM_OUTFITS_DIRECTORY = os.path.join(renpy.config.basedir, "custom_outfits/").replace("\\", "/")
 
     ALL_OUTFITS = {}
     ALL_WEARABLES = {}
@@ -213,8 +217,32 @@ init python in jn_outfits:
         IN:
             - json - JSON object describing the wearable
         """
+        # Sanity check the structure to make sure minimum attributes are specified
+        if (
+            "reference_name" not in json
+            or "display_name" not in json
+            or "unlocked" not in json
+        ):
+            jn_utils.log("Cannot load wearable as one or more key attributes do not exist.")
+            return
 
-        pass
+        # Sanity check data types
+        if (
+            not isinstance(json["reference_name"], basestring)
+            or not isinstance(json["display_name"], basestring)
+            or not isinstance(json["unlocked"], bool)
+        ):
+            jn_utils.log("Cannot load wearable as one or more attributes are the wrong data type.")
+            return
+
+        else:
+            wearable = JNWearable(
+                reference_name=json["reference_name"],
+                display_name=json["display_name"],
+                unlocked=json["unlocked"]
+            )
+
+            __register_wearable(wearable)
 
     def _load_outfit_from_json(json):
         """
@@ -225,8 +253,8 @@ init python in jn_outfits:
         """
         # Sanity check the structure to make sure minimum attributes are specified
         if (
-            "display_name" not in json
-            or "reference_name" not in json
+            "reference_name" not in json
+            or "display_name" not in json
             or "unlocked" not in json
             or "clothes" not in json
             or "hairstyle" not in json
@@ -236,8 +264,8 @@ init python in jn_outfits:
 
         # Sanity check data types
         if (
-            not isinstance(json["display_name"], basestring)
-            or not isinstance(json["reference_name"], basestring)
+            not isinstance(json["reference_name"], basestring)
+            or not isinstance(json["display_name"], basestring)
             or not isinstance(json["unlocked"], bool)
             or not isinstance(json["clothes"], basestring)
             or not isinstance(json["hairstyle"], basestring)
@@ -275,8 +303,8 @@ init python in jn_outfits:
         
         else:
             outfit = JNOutfit(
-                display_name=json["display_name"],
                 reference_name=json["reference_name"],
+                display_name=json["display_name"],
                 unlocked=json["unlocked"],
                 clothes=ALL_WEARABLES[json["clothes"]],
                 hairstyle=ALL_WEARABLES[json["hairstyle"]],
@@ -286,19 +314,20 @@ init python in jn_outfits:
                 necklace=ALL_WEARABLES[json["necklace"]]  if "necklace" in json else None
             )
 
+            # Make sure locks aren't being bypassed with this outfit by locking the outfit if any components are locked
             if outfit.unlocked:
                 if (
                     not outfit.clothes.unlocked
                     or not outfit.hairstyle.unlocked
-                    or not outfit.accessory.unlocked
-                    or not outfit.eyewear.unlocked
-                    or not outfit.headgear.unlocked
-                    or not outfit.necklace.unlocked
+                    or outfit.accessory and not outfit.accessory.unlocked
+                    or outfit.eyewear and not outfit.eyewear.unlocked
+                    or outfit.headgear and not outfit.headgear.unlocked
+                    or outfit.necklace and not outfit.necklace.unlocked
                 ):
                     jn_utils.log("Outfit {0} contains one or more locked components; locking outfit.".format(outfit.reference_name))
                     outfit.unlocked = False
 
-            register_outfit(outfit)
+            __register_outfit(outfit)
 
     def load_custom_wearables():
         """
@@ -310,7 +339,24 @@ init python in jn_outfits:
         """
         Loads the custom wearables from the game/outfits directory.
         """
-        pass
+        if not jn_utils.get_directory_exists(CUSTOM_OUTFITS_DIRECTORY):
+            jn_utils.log("Unable to load custom wearables as the directory does not exist, and was created.")
+            return
+
+        outfit_files = jn_utils.get_all_directory_files(CUSTOM_OUTFITS_DIRECTORY, [".json"])
+        for file_name, file_path in outfit_files:
+            try:
+                with open(file_path) as outfit_data:
+                    _load_outfit_from_json(json.loads(outfit_data.read()))
+
+            except OSError:
+                jn_utils.log("Unable to read file {0}; file could not be found.".format(file_name))
+
+            except TypeError:
+                jn_utils.log("Unable to read file {0}; corrupt file or invalid JSON.".format(file_name))
+
+            except:
+                raise
 
     # Default hairstyles
     __register_wearable(JNHairstyle(
@@ -485,17 +531,20 @@ label outfits_wear_outfit:
     show natsuki idle at jn_left
 
     python:
+        # Get unlocked outfits available for selection
         available_outfits = []
         for outfit in jn_outfits.ALL_OUTFITS.itervalues():
             if outfit.unlocked:
                 available_outfits.append([outfit.display_name, outfit])
 
         available_outfits.sort(key = lambda option: option[0])
+        available_outfits.insert(0, ("You pick!", "random"))
 
     call screen scrollable_choice_menu(available_outfits, ("Nevermind.", None))
     show natsuki at jn_center
 
     if isinstance(_return, jn_outfits.JNOutfit):
+        # Wear the chosen outfit
         $ outfit_name = _return.display_name.lower()
         n 1unmaj "Oh?{w=0.2} You want me to wear my [outfit_name]?{w=0.5}{nw}"
         extend 1uchbg " Gotcha!"
@@ -509,7 +558,12 @@ label outfits_wear_outfit:
         n 1tnmsm "How do I look,{w=0.1} [player]?{w=0.5}{nw}"
         extend 1flldvl " Ehehe."
 
+    elif _return == "random":
+        #TODO: pick a random unlocked outfit
+        n 1fwlts "This isn't done yet."
+
     else:
+        # Nevermind
         n 1nnmbo "Oh.{w=1.5}{nw}"
         extend 1nllaj " Well, that's fine."
         n 1nsrpol "I didn't wanna change anyway."
