@@ -156,6 +156,45 @@ init python in jn_outfits:
             for outfit in ALL_OUTFITS.itervalues():
                 outfit.__save()
 
+        @staticmethod
+        def filter_outfits(
+            outfit_list,
+            not_reference_name=None,
+            unlocked=None,
+            has_accessory=None,
+            has_eyewear=None,
+            has_headgear=None,
+            has_necklace=None
+        ):
+            """
+            Returns a filtered list of outfits, given an outfit list and filter criteria.
+
+            IN:
+                - outfit_list - the list of JNOutfit outfits to query
+                - not_reference_name - list of reference_names the outfit must not have 
+                - unlocked - the boolean unlocked state to filter for
+                - has_accessory - the boolean has_accessory state to filter for
+                - has_eyewear - the boolean has_eyewear state to filter for
+                - has_headgear - the boolean has_headgear state to filter for
+                - has_necklace - the boolean has_necklace state to filter for
+
+            OUT:
+                - list of JNOutfit outfits matching the search criteria
+            """
+            return [
+                _outfit
+                for _outfit in outfit_list
+                if _outfit.__filter_outfit(
+                    unlocked,
+                    not_reference_name,
+                    has_accessory,
+                    has_eyewear,
+                    has_headgear,
+                    has_necklace
+                )
+            ]
+            pass
+
         def as_dict(self):
             """
             Exports a dict representation of this outfit.
@@ -179,6 +218,49 @@ init python in jn_outfits:
             Saves the persistable data for this outfit to the persistent.
             """
             store.persistent.jn_outfit_list[self.reference_name] = self.as_dict()
+
+        def __filter_outfit(
+            self,
+            unlocked=None,
+            not_reference_name=None,
+            has_accessory=None,
+            has_eyewear=None,
+            has_headgear=None,
+            has_necklace=None
+        ):
+            """
+            Returns True, if the outfit meets the filter criteria. Otherwise False.
+
+            IN:
+                - unlocked - the boolean unlocked state to filter for
+                - not_reference_name - list of reference_names the outfit must not have 
+                - has_accessory - the boolean has_accessory state to filter for
+                - has_eyewear - the boolean has_eyewear state to filter for
+                - has_headgear - the boolean has_headgear state to filter for
+                - has_necklace - the boolean has_necklace state to filter for
+
+            OUT:
+                - True, if the outfit meets the filter criteria. Otherwise False
+            """
+            if unlocked is not None and self.unlocked != unlocked:
+                return False
+
+            if not_reference_name is not None and self.reference_name in not_reference_name:
+                return False
+
+            elif has_accessory is not None and bool(self.has_accessory) != has_accessory:
+                return False
+
+            elif has_eyewear is not None and bool(self.has_eyewear) != has_eyewear:
+                return False
+
+            elif has_headgear is not None and bool(self.has_headgear) != has_headgear:
+                return False
+
+            elif has_necklace is not None and bool(self.has_necklace) != has_necklace:
+                return False
+
+            return True
 
     def __register_outfit(outfit):
         """
@@ -559,8 +641,26 @@ label outfits_wear_outfit:
         extend 1flldvl " Ehehe."
 
     elif _return == "random":
-        #TODO: pick a random unlocked outfit
-        n 1fwlts "This isn't done yet."
+        # Wear a random unlocked outfit
+        n 1fchbg "You got it!{w=1.5}{nw}"
+        extend 1fslss " Now what have we got here...{w=1.5}{nw}"
+        n 1ncssr "...{w=1.5}{nw}"
+        n 1fnmbg "Aha!{w=1.5}{nw}"
+        extend 1fchbg " This'll do.{w=1.5}{nw}"
+        extend 1uchsm " One second!"
+
+        play audio clothing_ruffle
+        $ JN_NATSUKI.set_outfit(
+            random.choice(
+                jn_outfits.JNOutfit.filter_outfits(
+                    outfit_list=jn_outfits.ALL_OUTFITS.itervalues(),
+                    unlocked=True,
+                    not_reference_name=JN_NATSUKI._outfit_name)
+            )
+        )
+        with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
+
+        n 1nchbg "All done!"
 
     else:
         # Nevermind
@@ -568,6 +668,10 @@ label outfits_wear_outfit:
         extend 1nllaj " Well, that's fine."
         n 1nsrpol "I didn't wanna change anyway."
 
+    return
+
+label outfits_load_from_json:
+    n 1fwlts "This isn't done yet."
     return
 
 label outfits_suggest_outfit:
