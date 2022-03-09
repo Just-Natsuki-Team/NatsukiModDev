@@ -4,7 +4,7 @@ default persistent.jn_natsuki_outfit_on_quit = "jn_school_uniform"
 default persistent.jn_outfit_list = {}
 default persistent.jn_wearable_list = {}
 
-init python in jn_outfits:
+init 0 python in jn_outfits:
     import json
     import os
     import random
@@ -12,9 +12,10 @@ init python in jn_outfits:
     import store.jn_affinity as jn_affinity
     import store.jn_utils as jn_utils
 
-    # Wearables/outfits must be placed here to find them
+    # Critical file paths
     __CUSTOM_WEARABLES_DIRECTORY = os.path.join(renpy.config.basedir, "custom_wearables/").replace("\\", "/")
     __CUSTOM_OUTFITS_DIRECTORY = os.path.join(renpy.config.basedir, "custom_outfits/").replace("\\", "/")
+    __WEARABLE_BASE_PATH = os.path.join(renpy.config.basedir, "game/mod_assets/natsuki/")
 
     # Lists of all registered outfits/wearables
     __ALL_WEARABLES = {}
@@ -311,6 +312,47 @@ init python in jn_outfits:
             if wearable.reference_name not in store.persistent.jn_wearable_list:
                 wearable.__save()
 
+    def _check_wearable_sprites(wearable):
+        """
+        Checks sprite paths based on wearable type to ensure all required assets exist.
+        IN:
+            - wearable - the wearable to test
+        """
+
+        WEARABLE_TYPE_PATH_MAP = {
+            JNHairstyle: "hair",
+            JNEyewear: "eyewear",
+            JNAccessory: "accessory",
+            JNClothes: "clothes",
+            JNHeadgear: "headgear",
+            JNNecklace: "necklace"
+        }
+
+        for pose in store.JNPose:
+            # Set up the base path, given by the pose
+            resource_path = os.path.join(
+                __WEARABLE_BASE_PATH,
+                pose.name,
+                WEARABLE_TYPE_PATH_MAP[type(wearable)],
+                wearable.reference_name
+            )
+
+            # Hairstyles have two sprites for a given pose (front and back), so we must check both exist
+            if isinstance(wearable, JNHairstyle):
+                if (
+                    not jn_utils.get_file_exists(os.path.join(resource_path, "back.png")) 
+                    or not jn_utils.get_file_exists(os.path.join(resource_path, "bangs.png"))
+                ):
+                    jn_utils.log("Missing sprite(s) for {0}: check {1}".format(wearable.reference_name, resource_path))
+                    return False
+
+            # Any other wearable only has one sprite for a given pose
+            elif not jn_utils.get_file_exists(os.path.join(resource_path, "{0}.png".format(pose.name))):
+                jn_utils.log("Missing sprite(s) for {0}: check {1}".format(wearable.reference_name, resource_path))
+                return False
+
+        return True
+
     def _load_wearable_from_json(json):
         """
         Attempts to load a wearable from a JSON object and register it.
@@ -326,7 +368,7 @@ init python in jn_outfits:
             or "category" not in json
         ):
             jn_utils.log("Cannot load wearable as one or more key attributes do not exist.")
-            return
+            return False
 
         # Sanity check data types
         if (
@@ -336,8 +378,8 @@ init python in jn_outfits:
             or not isinstance(json["category"], basestring)
             or not json["category"] in WEARABLE_CATEGORIES
         ):
-            jn_utils.log("Cannot load wearable as one or more attributes are the wrong data type.")
-            return
+            jn_utils.log("Cannot load wearable {0} as one or more attributes are the wrong data type.".format(json["reference_name"]))
+            return False
 
         else:
             # Register based on category
@@ -365,7 +407,13 @@ init python in jn_outfits:
             elif json["category"] == "necklace":
                 wearable = JNNecklace(**kwargs)
 
+            # Finally, make sure the resources necessary for this wearable exist
+            if not _check_wearable_sprites(wearable):
+                jn_utils.log("Cannot load wearable {0} as one or more sprites are missing.".format(wearable.reference_name))
+                return False
+
             __register_wearable(wearable)
+            return True
 
     def _load_outfit_from_json(json):
         """
@@ -484,14 +532,37 @@ init python in jn_outfits:
         """
         Loads the custom wearables from the game/wearables directory.
         """
-        pass
+        if not jn_utils.get_directory_exists(__CUSTOM_WEARABLES_DIRECTORY):
+            jn_utils.log("Unable to load custom wearables as the directory does not exist, and had to be created.")
+            return
+
+        wearable_files = jn_utils.get_all_directory_files(__CUSTOM_WEARABLES_DIRECTORY, [".json"])
+        success_count = 0
+
+        for file_name, file_path in wearable_files:
+            try:
+                with open(file_path) as wearable_data:
+                    if _load_wearable_from_json(json.loads(wearable_data.read())):
+                        success_count += 1
+
+            except OSError:
+                jn_utils.log("Unable to read file {0}; file could not be found.".format(file_name))
+
+            except TypeError:
+                jn_utils.log("Unable to read file {0}; corrupt file or invalid JSON.".format(file_name))
+
+            except:
+                raise
+
+        if not success_count == len(wearable_files):
+            renpy.notify("One or more wearables failed to load; please check log for more information.")
 
     def load_custom_outfits():
         """
         Loads the custom wearables from the game/outfits directory.
         """
         if not jn_utils.get_directory_exists(__CUSTOM_OUTFITS_DIRECTORY):
-            jn_utils.log("Unable to load custom wearables as the directory does not exist, and was created.")
+            jn_utils.log("Unable to load custom outfits as the directory does not exist, and had to be created.")
             return
 
         outfit_files = jn_utils.get_all_directory_files(__CUSTOM_OUTFITS_DIRECTORY, [".json"])

@@ -69,11 +69,12 @@ label ch30_init:
             jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
 
         # Load outfits, select outfit if automatic outfit changes are enabled
-        #TODO: auto change handling
+        jn_outfits.load_custom_wearables()
         jn_outfits.load_custom_outfits()
         jn_outfits.JNWearable.load_all()
         jn_outfits.JNOutfit.load_all()
 
+        #TODO: auto outfit changes
         if jn_outfits.outfit_exists(persistent.jn_natsuki_outfit_on_quit):
             JN_NATSUKI.set_outfit(jn_outfits.get_outfit(persistent.jn_natsuki_outfit_on_quit))
 

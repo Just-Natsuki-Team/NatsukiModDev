@@ -1274,6 +1274,17 @@ init -999 python in jn_utils:
         """
         return pygame.mouse.get_pos()
 
+    def get_file_exists(path):
+        """
+        Checks to see if the specified file exists.
+
+        OUT: True if the file exists, otherwise False
+        """
+        if os.path.isfile(path):
+            return True
+
+        return False
+
     def get_directory_exists(path):
         """
         Checks to see if the specified directory exists, and creates it if not
@@ -1282,7 +1293,7 @@ init -999 python in jn_utils:
         OUT:
             - True/False based on if directory was existing (True) or had to be created (False)
         """
-        if not os.path.exists(path):
+        if not os.path.exists(path) or os.path.isfile(path):
             os.makedirs(path)
             return False
 

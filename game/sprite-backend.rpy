@@ -1,4 +1,4 @@
-init python:
+init -50 python:
     import store
     import store.jn_outfits as jn_outfits
     from Enum import Enum
@@ -167,7 +167,7 @@ init python:
         ])
 
         # Accessory
-        accessory = "{0}{1}/accessories/[JN_NATSUKI._accessory.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose) if JN_NATSUKI._accessory is not None else Null()
+        accessory = "{0}{1}/accessory/[JN_NATSUKI._accessory.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose) if JN_NATSUKI._accessory is not None else Null()
         lc_args.extend([
             (0, 0), accessory
         ])
