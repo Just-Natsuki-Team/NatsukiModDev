@@ -1,6 +1,6 @@
 ---
 name: Report bug
-about: Report a bug for this project
+about: Report a bug for this project - only one bug per issue raised, please
 title: "[ BUG REPORT ] - "
 labels: Bug
 assignees: ''

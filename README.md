@@ -38,8 +38,8 @@ Please feel free to clone the repository, suggest new content by raising an issu
 2. Extract/unzip DDLC.
 3. Download the JN mod files: go to https://github.com/Just-Natsuki-Team/NatsukiModDev, then select the _Code_ tab and make sure the branch _master_ is selected. Click the green _Code_ button, and then select _download ZIP_.
 4. Extract/unzip the JN mod files.
-5. From the JN mod files, copy the `game` folder contents into the `game` folder of DDLC. If asked to replace files, select _Yes_.
-6. From the JN mod files, copy the `lib` folder contents into the `lib` folder of DDLC. If asked to replace files, select _Yes_.
+5. From the JN mod files, copy the `game` folder contents (all of it) into the `game` folder of DDLC. If asked to replace files, select _Yes_.
+6. From the JN mod files, copy the `lib` folder contents (all of it) into the `lib` folder of DDLC. If asked to replace files, select _Yes_.
 7. You may already have a persistent from the old version of JN - this must be deleted.
     1. For Windows, you can find it here: `%APPDATA%/Roaming/RenPy/JustNatsuki`
     2. For OSX, you can find it here: `~/Library/RenPy/JustNatsuki`
@@ -55,11 +55,11 @@ Please feel free to clone the repository, suggest new content by raising an issu
 - _I downloaded and installed newer mod files, and now my game won't launch._
     - You may need to delete your persistent file: make a copy and delete it, then try launching `DDLC.exe`.
 - _How do I report a bug with the mod?_
-    - Please log a bug report through the _Issues_ on GitHub, clicking _New issue_, then selecting _Report Bug_.
+    - Please log a bug report through the _Issues_ on GitHub, clicking _New issue_, then selecting _Report Bug_. Only one bug per report, please!
 - _How do I request support for the mod?_
-    - Please log a support request through the _Issues_ on GitHub, clicking _New issue_, then selecting _Support Request_.
+    - Please log a support request through the _Issues_ on GitHub, clicking _New issue_, then selecting _Support Request_. Only one item per request, please!
 - _Where can I make suggestions for the mod?_
-    - Please log a feature request through the _Issues_ on GitHub, clicking _New issue_, then selecting _Feature Request_. Please note we do not take suggestions from any other avenue of communication.
+    - Please log a feature request through the _Issues_ on GitHub, clicking _New issue_, then selecting _Feature Request_. Please note we do not take suggestions from any other avenue of communication. Only one suggestion per request, please!
 - _Can I join the team?_
     - Invitation to join our team is based on visible contributions to Just Natsuki and/or related DDLC mods, skillset, and participation in the DDLC community as judged by the team. Please do not ask to join directly!
 
