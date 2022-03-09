@@ -69,10 +69,16 @@ label ch30_init:
             jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
 
         # Load outfits, select outfit if automatic outfit changes are enabled
-
+        jn_outfits.load_custom_outfits()
         jn_outfits.JNWearable.load_all()
         jn_outfits.JNOutfit.load_all()
-        JN_NATSUKI.set_outfit(jn_outfits.ALL_OUTFITS["jn_school_uniform"])
+
+        if jn_outfits.outfit_exists(persistent.jn_natsuki_outfit_on_quit):
+            JN_NATSUKI.set_outfit(jn_outfits.get_outfit(persistent.jn_natsuki_outfit_on_quit))
+
+        else:
+            JN_NATSUKI.set_outfit(jn_outfits.get_outfit("jn_school_uniform"))
+
         # if persistent.jn_natsuki_auto_outfit_change_enabled:
         #     JN_NATSUKI.set_outfit(jn_outfits.get_outfit_for_time_block())
 
@@ -419,7 +425,7 @@ label outfits_menu:
     $ outfit_options = [
         ("Can you wear an outfit for me?", "outfits_wear_outfit"),
         ("Can I suggest a new outfit?", "outfits_suggest_outfit"),
-        ("Can I remove an outfit I suggested?", "outfits_remove_outfit")
+        ("Can I remove an outfit I suggested?", "outfits_remove_outfit"),
         ("Can you search again for new outfits?", "outfits_load_from_json")
     ]
     call screen scrollable_choice_menu(outfit_options, ("Nevermind.", None))

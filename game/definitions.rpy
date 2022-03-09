@@ -60,6 +60,8 @@ init 0 python:
             self._headgear = outfit.headgear if outfit.headgear else None
             self._necklace = outfit.necklace if outfit.necklace else None
 
+            store.persistent.jn_natsuki_outfit_on_quit = self._outfit_name
+
         def is_wearing_outfit(self, outfit):
             """
             Returns True if Natsuki is wearing the specified jn_outfits.JNOutfit outfit, otherwise False.
