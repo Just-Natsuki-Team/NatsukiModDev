@@ -5344,6 +5344,67 @@ label talk_fighting_drowsiness:
 
     return
 
+# Natsuki realizes she can change her clothes, unlocking the custom outfit functionality
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_custom_outfits_unlock",
+            unlocked=True,
+            prompt="Custom outfits",
+            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 3600 >= 48 and not persistent.jn_custom_outfits_unlocked",
+            category=["Fashion", "Natsuki"],
+            nat_says=True,
+            affinity_range=(jn_affinity.HAPPY, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_custom_outfits_unlock:
+    n 1nslpu "..."
+    n 1usceml "...!"
+    n 1uskeml "I've...{w=0.5}{nw}"
+    extend 1nllem " just realized something.{w=0.5}{nw}"
+    extend 1fslun " Something I {i}really{/i} don't like."
+    n 1fbkwr "...And that's exactly how {i}long{/i} I've been stuck in this uniform!{w=0.5}{nw}"
+    extend 1fcswr " G-{w=0.1}gross!"
+    n 1flrem "I mean..."
+    n 1fllsl "I guess I shouldn't be surprised that something made for school isn't comfy for long periods..."
+    n 1fcspol "But that doesn't mean I have to put up with it!"
+    n 1fsrpo "There's gotta be something I can do..."
+    n 1ncspu "..."
+    n 1uwdaj "...Wait!{w=1.5}{nw}"
+    extend 1fllbg " Duh!{w=1.5}{nw}"
+    extend 1fcsbs " Of course!"
+    n 1ulraj "It's not like I {i}never{/i} had any clothes other than my uniform!"
+    n 1fllss "I know I at {i}least{/i} had that casual outfit I wore...{w=1.5}{nw}"
+    extend 1kllsl " ...on {i}that{/i} weekend."
+    n 1ncssr "Hmm..."
+    n 1fchbg "Yeah,{w=0.1} okay!{w=1.5}{nw}"
+    extend 1nchsm " I think that should all work!"
+    n 1nsqsm "..."
+    n 1uwdaj "Oh!{w=0.2} Just to keep you in the loop,{w=0.1} [player]..."
+    n 1uchbg "I should be able to wear whatever I want now!"
+    n 1nllbg "I've got a couple of outfits in mind already,{w=0.5}{nw}"
+    extend 1flrbg " so it's not like I have a reason {i}not{/i} to."
+    n 1ulraj "So...{w=0.5}{nw}"
+    extend 1fcssm " don't be surprised if I wanna change my clothes from time to time,{w=0.1} alright?"
+    n 1fsqsrl "A-{w=0.1}and no.{w=0.5}{nw}"
+    extend 1flleml " You're {i}not{/i} gonna see {i}anything{/i}."
+    n 1fslpol "I'm making {i}sure{/i} of that."
+    n 1nslbo "..."
+    n 1uslaj "But..."
+    n 1unmbo "I guess I'd be open to suggestions."
+    n 1ncsem "Just...{w=0.3} nothing embarrassing.{w=0.5}{nw}"
+    extend 1nsqpo " Got it?"
+    n 1nsrss "'preciated!"
+    n 1ulrbo "Now...{w=0.5}{nw}"
+    extend 1tnmss " where were we?"
+
+    $ persistent.jn_custom_outfits_unlocked = True
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop

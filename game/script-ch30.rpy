@@ -347,7 +347,7 @@ label talk_menu:
         "I want to say sorry...":
             jump player_apologies_start
 
-        "About your outfits...":
+        "About your outfit..." if jn_affinity.get_affinity_state() >= jn_affinity.HAPPY and persistent.jn_custom_outfits_unlocked: 
             jump outfits_menu
 
         "Goodbye..." if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:

@@ -1,5 +1,6 @@
 
 default persistent.jn_natsuki_auto_outfit_change_enabled = True
+default persistent.jn_custom_outfits_unlocked = False
 default persistent.jn_natsuki_outfit_on_quit = "jn_school_uniform"
 default persistent.jn_outfit_list = {}
 default persistent.jn_wearable_list = {}
@@ -73,6 +74,14 @@ init 0 python in jn_outfits:
             return {
                 "unlocked": self.unlocked
             }
+
+        def unlock(self):
+            """
+            Unlocks this wearable, making it available to the player.
+            """
+            # Unlock the wearable
+            self.unlocked = True
+            self.__save()
 
         def __load(self):
             """
@@ -225,6 +234,33 @@ init 0 python in jn_outfits:
             return {
                 "unlocked": self.unlocked
             }
+
+        def unlock(self):
+            """
+            Unlocks this outfit, making it (and all constituent wearables) available to the player.
+            """
+            # Unlock the outfit
+            self.unlocked = True
+            self.__save()
+
+            # Unlock outfit components
+            if not self.clothes.unlocked:
+                self.clothes.unlock()
+
+            if not self.hairstyle.unlocked:
+                self.hairstyle.unlock()
+
+            if self.accessory and not self.accessory.unlocked:
+                self.accessory.unlock()
+
+            if self.eyewear and not self.eyewear.unlocked:
+                self.eyewear.unlock()
+
+            if self.headgear and not self.headgear.unlocked:
+                self.headgear.unlock()
+
+            if self.necklace and not self.necklace.unlocked:
+                self.necklace.unlock()
 
         def __load(self):
             """
@@ -731,6 +767,11 @@ init 0 python in jn_outfits:
         display_name="White hairband",
         unlocked=True
     ))
+    __register_wearable(JNAccessory(
+        reference_name="jn_accessory_purple_rose",
+        display_name="Purple rose",
+        unlocked=False
+    ))
 
     # Default clothes
     __register_wearable(JNClothes(
@@ -820,6 +861,24 @@ init 0 python in jn_outfits:
         clothes=__ALL_WEARABLES["jn_clothes_star_pajamas"],
         hairstyle=__ALL_WEARABLES["jn_hair_down"],
         accessory=__ALL_WEARABLES["jn_accessory_hairband_hot_pink"]
+    ))
+
+    # Unlockable default outfits
+    __register_outfit(JNOutfit(
+        reference_name="jn_formal_dress",
+        display_name="Formal dress",
+        unlocked=False,
+        clothes=__ALL_WEARABLES["jn_clothes_rose_lace_dress"],
+        hairstyle=__ALL_WEARABLES["jn_hair_ponytail"],
+        accessory=__ALL_WEARABLES["jn_accessory_purple_rose"]
+    ))
+    __register_outfit(JNOutfit(
+        reference_name="jn_low_cut_dress",
+        display_name="Low-cut dress",
+        unlocked=False,
+        clothes=__ALL_WEARABLES["jn_clothes_low_cut_dress"],
+        hairstyle=__ALL_WEARABLES["jn_hair_twin_buns"],
+        accessory=__ALL_WEARABLES["jn_accessory_hairband_white"]
     ))
 
 label outfits_wear_outfit:
