@@ -672,6 +672,26 @@ init 0 python in jn_outfits:
         display_name="Super messy",
         unlocked=True
     ))
+    __register_wearable(JNHairstyle(
+        reference_name="jn_hair_princess_braids",
+        display_name="Princess braids",
+        unlocked=True
+    ))
+    __register_wearable(JNHairstyle(
+        reference_name="jn_hair_low_bun",
+        display_name="Low bun",
+        unlocked=True
+    ))
+    __register_wearable(JNHairstyle(
+        reference_name="jn_hair_pigtails",
+        display_name="Pigtails",
+        unlocked=True
+    ))
+    __register_wearable(JNHairstyle(
+        reference_name="jn_hair_twin_buns",
+        display_name="Twin buns",
+        unlocked=True
+    ))
 
     # Default eyewear
     __register_wearable(JNEyewear(

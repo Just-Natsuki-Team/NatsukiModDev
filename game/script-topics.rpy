@@ -4840,7 +4840,7 @@ label talk_mod_contributions:
         extend 1fchbg " You didn't seriously expect me to not see what you're up to?{w=0.5}{nw}"
         extend 1nchgn " Ehehe."
         n 1tsqbg "Anyway -{w=0.1} if you're already into that kinda stuff,{w=0.1} [player]...{w=0.5}{nw}"
-        extend 1kchbg " Why not lend me a hand?"
+        extend 1kchbg " why not lend me a hand?"
 
     n 1kllbg "You don't even have to be super talented at code,{w=0.1} or anything like that!{w=0.5}{nw}"
     extend 1unmaj " Artwork,{w=0.1} writing,{w=0.1} or even just suggestions of things for us to talk about or do -{w=0.3}{nw}"
@@ -4854,10 +4854,10 @@ label talk_mod_contributions:
 
     if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
         $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
-        n 1nchtsl " Love you,{w=0.1} [chosen_endearment]!"
+        n 1nchtsl "Love you,{w=0.1} [chosen_endearment]!"
 
     else:
-        n 1fchbg " Thanks,{w=0.1} [player]!{w=0.2} 'preciate it!"
+        n 1fchbg "Thanks,{w=0.1} [player]!{w=0.2} 'preciate it!"
 
     return
 
