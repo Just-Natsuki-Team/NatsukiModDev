@@ -2,8 +2,9 @@
 name: Gen Contributors
 
 on:
-  #For now, we only run when specified
-  workflow_dispatch:
+    push:
+        branches:
+            - master
 
 jobs:
     get_contributors:
