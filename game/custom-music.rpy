@@ -154,7 +154,10 @@ label music_menu:
 
     elif _return == "random":
 
-        $ available_custom_music = jn_custom_music.get_all_custom_music()
+        $ available_custom_music = jn_utils.get_all_directory_files(
+            path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
+            extension_list=[".mp3",".wav",".ogg"]
+        )
 
         # Play a random track
         $ chosen_question_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_QUESTION_QUIPS))
