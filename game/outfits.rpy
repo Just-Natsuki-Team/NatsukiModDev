@@ -64,6 +64,35 @@ init 0 python in jn_outfits:
             for wearable in __ALL_WEARABLES.itervalues():
                 wearable.__save()
 
+        @staticmethod
+        def filter_wearables(
+            wearable_list,
+            unlocked=None,
+            not_reference_name=None,
+            wearable_type=None
+        ):
+            """
+            Returns a filtered list of wearables, given an wearable list and filter criteria.
+
+            IN:
+                - wearable_list - the list of JNWearable child wearables to query
+                - unlocked - the boolean unlocked state to filter for
+                - not_reference_name - list of reference_names the wearable must not have 
+                - wearable_type the wearable type to filter for
+
+            OUT:
+                - list of JNWearable child wearables matching the search criteria
+            """
+            return [
+                _wearable
+                for _wearable in wearable_list
+                if _wearable.__filter_wearable(
+                    unlocked,
+                    not_reference_name,
+                    wearable_type
+                )
+            ]
+
         def as_dict(self):
             """
             Exports a dict representation of this wearable.
@@ -95,6 +124,35 @@ init 0 python in jn_outfits:
             Saves the persistable data for this wearable to the persistent.
             """
             store.persistent.jn_wearable_list[self.reference_name] = self.as_dict()
+
+        def __filter_wearable(
+            self,
+            unlocked=None,
+            not_reference_name=None,
+            wearable_type=None
+        ):
+            """
+            Returns True, if the wearable meets the filter criteria. Otherwise False.
+
+            IN:
+                - wearable_list - the list of JNWearable child wearables to query
+                - unlocked - the boolean unlocked state to filter for
+                - not_reference_name - list of reference_names the wearable must not have 
+                - wearable_type the wearable type to filter for
+
+            OUT:
+                - True, if the wearable meets the filter criteria. Otherwise False
+            """
+            if unlocked is not None and self.unlocked != unlocked:
+                return False
+
+            elif not_reference_name is not None and self.reference_name in not_reference_name:
+                return False
+
+            elif wearable_type is not None and not isinstance(self, wearable_type):
+                return False
+
+            return True
 
     class JNHairstyle(JNWearable):
         """
@@ -188,8 +246,8 @@ init 0 python in jn_outfits:
         @staticmethod
         def filter_outfits(
             outfit_list,
-            not_reference_name=None,
             unlocked=None,
+            not_reference_name=None,
             has_accessory=None,
             has_eyewear=None,
             has_headgear=None,
@@ -200,8 +258,8 @@ init 0 python in jn_outfits:
 
             IN:
                 - outfit_list - the list of JNOutfit outfits to query
-                - not_reference_name - list of reference_names the outfit must not have 
                 - unlocked - the boolean unlocked state to filter for
+                - not_reference_name - list of reference_names the outfit must not have 
                 - has_accessory - the boolean has_accessory state to filter for
                 - has_eyewear - the boolean has_eyewear state to filter for
                 - has_headgear - the boolean has_headgear state to filter for
@@ -222,7 +280,6 @@ init 0 python in jn_outfits:
                     has_necklace
                 )
             ]
-            pass
 
         def as_dict(self):
             """
@@ -301,7 +358,7 @@ init 0 python in jn_outfits:
             if unlocked is not None and self.unlocked != unlocked:
                 return False
 
-            if not_reference_name is not None and self.reference_name in not_reference_name:
+            elif not_reference_name is not None and self.reference_name in not_reference_name:
                 return False
 
             elif has_accessory is not None and bool(self.has_accessory) != has_accessory:
@@ -673,6 +730,18 @@ init 0 python in jn_outfits:
 
         return None
 
+    def get_all_outfits():
+        """
+        Returns a list of all outfits.
+        """
+        return __ALL_OUTFITS.itervalues()
+
+    def get_all_wearables():
+        """
+        Returns a list of all outfits.
+        """
+        return __ALL_WEARABLES.itervalues()
+
     # Default hairstyles
     __register_wearable(JNHairstyle(
         reference_name="jn_hair_bedhead",
@@ -961,7 +1030,7 @@ label outfits_wear_outfit:
     python:
         # Get unlocked outfits available for selection
         available_outfits = []
-        for outfit in jn_outfits.__ALL_OUTFITS.itervalues():
+        for outfit in jn_outfits.get_all_outfits():
             if outfit.unlocked:
                 available_outfits.append([outfit.display_name, outfit])
 
@@ -1000,7 +1069,7 @@ label outfits_wear_outfit:
         $ JN_NATSUKI.set_outfit(
             random.choice(
                 jn_outfits.JNOutfit.filter_outfits(
-                    outfit_list=jn_outfits.__ALL_OUTFITS.itervalues(),
+                    outfit_list=jn_outfits.get_all_outfits(),
                     unlocked=True,
                     not_reference_name=JN_NATSUKI._outfit_name)
             )
@@ -1024,8 +1093,146 @@ label outfits_load_from_json:
 
 label outfits_suggest_outfit:
     n 1fwlts "This isn't done yet."
-    return
+    show natsuki idle at jn_left
+    call screen create_outfit
 
 label outfits_remove_outfit:
     n 1fwlts "This isn't done yet."
     return
+
+screen create_outfit:
+    python:
+        import store
+        import store.jn_outfits as jn_outfits
+
+        # Get the collections of all unlocked wearables for each type
+        unlocked_headgear = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNHeadgear)
+        unlocked_hairstyles = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNHairstyle)
+        unlocked_eyewear = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNEyewear)
+        unlocked_accessories = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNAccessory)
+        unlocked_necklaces = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNNecklace)
+        unlocked_clothes = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNClothes)
+
+    textbutton _("Quit"):
+        xpos 25
+        ypos 25
+        style "hkbd_button"
+        action Jump("ch30_loop")
+
+    # Outfit control
+    vbox:
+        # Scroll slot left
+        xpos 585
+        ypos 140
+        
+        textbutton _("<"):
+            style "hkbd_button"
+            action [
+                Function(renpy.notify, "action"),
+                SensitiveIf(len(unlocked_headgear) != 0)
+            ]
+
+        textbutton _("<"):
+            style "hkbd_button"
+            action [
+                Function(renpy.notify, "action"),
+                SensitiveIf(len(unlocked_hairstyles) != 0)
+            ]
+
+        textbutton _("<"):
+            style "hkbd_button"
+            action [
+                Function(renpy.notify, "action"),
+                SensitiveIf(len(unlocked_eyewear) != 0)
+            ]
+
+        textbutton _("<"):
+            style "hkbd_button"
+            action [
+                Function(renpy.notify, "action"),
+                SensitiveIf(len(unlocked_accessories) != 0)
+            ]
+
+        textbutton _("<"):
+            style "hkbd_button"
+            action [
+                Function(renpy.notify, "action"),
+                SensitiveIf(len(unlocked_necklaces) != 0)
+            ]
+
+        textbutton _("<"):
+            style "hkbd_button"
+            action [
+                Function(renpy.notify, "action"),
+                SensitiveIf(len(unlocked_clothes) != 0)
+            ]
+
+    vbox:
+        # Slots
+        xpos 725
+        ypos 140
+        
+        label _("Headgear"):
+            style "hkbd_label"
+
+        label _("Hairstyle"):
+            style "hkbd_label"
+
+        label _("Eyewear"):
+            style "hkbd_label"
+
+        label _("Accessory"):
+            style "hkbd_label"
+
+        label _("Necklace"):
+            style "hkbd_label"
+
+        label _("Clothes"):
+            style "hkbd_label"
+
+    vbox:
+        # Scroll slot right
+        xpos 1145
+        ypos 140
+        
+        textbutton _(">"):
+            style "hkbd_button"
+            action [
+                Function(renpy.notify, "action"),
+                SensitiveIf(len(unlocked_headgear) != 0)
+            ]
+
+        textbutton _(">"):
+            style "hkbd_button"
+            action [
+                Function(renpy.notify, "action"),
+                SensitiveIf(len(unlocked_hairstyles) != 0)
+            ]
+
+        textbutton _(">"):
+            style "hkbd_button"
+            action [
+                Function(renpy.notify, "action"),
+                SensitiveIf(len(unlocked_eyewear) != 0)
+            ]
+
+        textbutton _(">"):
+            style "hkbd_button"
+            action [
+                Function(renpy.notify, "action"),
+                SensitiveIf(len(unlocked_accessories) != 0)
+            ]
+
+        textbutton _(">"):
+            style "hkbd_button"
+            action [
+                Function(renpy.notify, "action"),
+                SensitiveIf(len(unlocked_necklaces) != 0)
+            ]
+
+        textbutton _(">"):
+            style "hkbd_button"
+            action [
+                Function(renpy.notify, "action"),
+                SensitiveIf(len(unlocked_clothes) != 0)
+            ]

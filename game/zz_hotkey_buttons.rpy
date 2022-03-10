@@ -16,6 +16,7 @@ init python:
 init -1 python in hkb_button:
     enabled = True
 
+# Standard hotkey
 define gui.hkb_button_width = 120
 define gui.hkb_button_height = None
 define gui.hkb_button_tile = False
@@ -26,6 +27,7 @@ define gui.hkb_button_text_xalign = 0.5
 define gui.hkb_button_text_idle_color = "#e2d1d1"
 define gui.hkb_button_text_hover_color = "#FF8ED0"
 
+# Black hotkey
 define gui.hkb_button_black_width = 120
 define gui.hkb_button_black_height = None
 define gui.hkb_button_black_tile = False
@@ -35,6 +37,16 @@ define gui.hkb_button_black_text_size = gui.button_text_size
 define gui.hkb_button_black_text_xalign = 0.5
 define gui.hkb_button_black_text_idle_color = "#e2d1d1"
 define gui.hkb_button_black_text_hover_color = "#FF8ED0"
+
+# Label
+define gui.hkb_label_width = 400
+define gui.hkb_label_height = None
+define gui.hkb_label_tile = False
+define gui.hkb_label_borders = Borders(100, 5, 100, 5)
+define gui.hkb_label_text_font = gui.default_font
+define gui.hkb_label_text_size = gui.button_text_size
+define gui.hkb_label_text_xalign = 0.5
+define gui.hkb_label_text_color = "#e2d1d1"
 
 define gui.talk_button_width = 120
 define gui.talk_button_height = None
@@ -47,8 +59,6 @@ define gui.talk_button_text_idle_color = "#e2d1d1"
 define gui.talk_button_text_hover_color = "#FF8ED0"
 default allow_boop = False
 
-
-
 style hkb_vbox is vbox
 style hkb_button is button
 style hkb_button_text is button_text
@@ -56,6 +66,10 @@ style hkb_button_text is button_text
 style hkb_vbox_black is vbox
 style hkb_button_black is button
 style hkb_button_black_text is button_text
+
+style hkb_vbox_label is vbox
+style hkb_label is label
+style hkb_label_text is label_text
 
 style talk_vbox is vbox
 style talk_button is button
@@ -83,12 +97,20 @@ style hkb_button_black is default:
     hover_sound gui.hover_sound
     activate_sound gui.activate_sound
 
+style hkb_label is default:
+    properties gui.button_properties("hkb_label")
+    background "mod_assets/buttons/choice_hover_blank.png"
+
 style hkb_button_text is default:
     properties gui.button_text_properties("hkb_button")
     outlines []
 
 style hkb_button_text_black is default:
     properties gui.button_text_properties("hkb_button_black")
+    outlines []
+
+style hkb_label_text is default:
+    properties gui.button_text_properties("hkb_label")
     outlines []
 
 style talk_vbox:
@@ -102,12 +124,11 @@ style talk_button is default:
     hover_sound gui.hover_sound
     activate_sound gui.activate_sound
 
-
 style talk_button_text is default:
     properties gui.button_text_properties("talk_button")
     outlines []
 
-style hkbd_vbox is vbox
+style hkbd_vbox is hkb_vbox
 style hkbd_button is button
 style hkbd_button_text is button_text
 
@@ -123,7 +144,6 @@ style hkbd_button is default:
     activate_sound gui.activate_sound
 
 style hkbd_button_text is default:
-
     font gui.default_font
     size gui.button_text_size
     xalign 0.5
@@ -137,12 +157,22 @@ style hkbd_button_black is default:
     hover_background "mod_assets/buttons/hkb_idle_background.png"
 
 style hkbd_button_text_black is default:
-
     font gui.default_font
     size gui.button_text_size
     xalign 0.5
     idle_color "#e2d1d1"
     hover_color "#FF8ED0"
+    outlines []
+
+style hkbd_label is default:
+    properties gui.button_properties("hkb_label")
+    background "mod_assets/buttons/choice_hover_blank.png"
+
+style hkbd_label_text is default:
+    font gui.default_font
+    size gui.button_text_size
+    xalign 0.5
+    color "#e2d1d1"
     outlines []
 
 style talkd_vbox is vbox
@@ -168,7 +198,6 @@ style talkd_button_text is default:
     idle_color "#e2d1d1"
     hover_color "#FF8ED0"
     outlines []
-
 
 screen hkb_overlay:
     zorder 50
