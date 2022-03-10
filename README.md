@@ -7,6 +7,55 @@
 
 An After-Story style mod for Natsuki from DDLC, focusing on building a post-game relationship between Natsuki and her player (you!).
 
+### Made possible thanks to our contributors:
+<!-- readme: contributors -start -->
+<table>
+<tr>
+    <td align="center">
+        <a href="https://github.com/Blizzardsev">
+            <img src="https://avatars.githubusercontent.com/u/57731669?v=4" width="100;" alt="Blizzardsev"/>
+            <br />
+            <sub><b>Blizzardsev</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/multimokia">
+            <img src="https://avatars.githubusercontent.com/u/22531674?v=4" width="100;" alt="multimokia"/>
+            <br />
+            <sub><b>multimokia</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/spaghetsie">
+            <img src="https://avatars.githubusercontent.com/u/64098288?v=4" width="100;" alt="spaghetsie"/>
+            <br />
+            <sub><b>spaghetsie</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/Edgarmods">
+            <img src="https://avatars.githubusercontent.com/u/68255592?v=4" width="100;" alt="Edgarmods"/>
+            <br />
+            <sub><b>Edgarmods</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/kkrosie123">
+            <img src="https://avatars.githubusercontent.com/u/52429850?v=4" width="100;" alt="kkrosie123"/>
+            <br />
+            <sub><b>Briar Young</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/Nemu-sus">
+            <img src="https://avatars.githubusercontent.com/u/43480604?v=4" width="100;" alt="Nemu-sus"/>
+            <br />
+            <sub><b>ALTER</b></sub>
+        </a>
+    </td></tr>
+</table>
+<!-- readme: contributors -end -->
+
 ### Contents
 
 1. [Disclaimer](#disclaimer)
