@@ -341,7 +341,7 @@ init 0 python in jn_outfits:
         """
         global __ALL_WEARABLES
         if wearable.reference_name in __ALL_WEARABLES:
-            jn_utils.log("Cannot register wearable name: {0}, as a wearable with that name already exists.".format(outfit.reference_name))
+            jn_utils.log("Cannot register wearable name: {0}, as a wearable with that name already exists.".format(wearable.reference_name))
 
         else:
             __ALL_WEARABLES[wearable.reference_name] = wearable
@@ -549,6 +549,7 @@ init 0 python in jn_outfits:
                 return False
 
             # Make sure locks aren't being bypassed with this outfit by locking the outfit if any components are locked
+            #TODO: figure out the point to persist here
             if outfit.unlocked:
                 if (
                     not outfit.clothes.unlocked
@@ -822,6 +823,76 @@ init 0 python in jn_outfits:
     __register_wearable(JNClothes(
         reference_name="jn_clothes_trainer_cosplay",
         display_name="Trainer cosplay",
+        unlocked=False
+    ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_lolita_christmas_dress",
+        display_name="Lolita Christmas dress",
+        unlocked=False
+    ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_lolita_dress",
+        display_name="Lolita dress",
+        unlocked=False
+    ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_lolita_school_uniform",
+        display_name="Lolita school uniform",
+        unlocked=False
+    ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_long_sleeved_shirt_nya",
+        display_name="Long-sleeved shirt",
+        unlocked=False
+    ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_pastel_goth_overalls",
+        display_name="Pastel goth overalls",
+        unlocked=False
+    ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_qeeb_sweater",
+        display_name="Qeeb sweater",
+        unlocked=False
+    ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_ruffled_swimsuit",
+        display_name="Ruffled swimsuit",
+        unlocked=False
+    ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_sleeveless_heart_sweater",
+        display_name="Sleeveless heart sweater",
+        unlocked=False
+    ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_sparkly_ballgown",
+        display_name="Sparkly ballgown",
+        unlocked=False
+    ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_square_bra",
+        display_name="Square bra",
+        unlocked=False
+    ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_striped_off_shoulder_sweater",
+        display_name="Off-shoulder sweater",
+        unlocked=False
+    ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_hoodie_not_cute",
+        display_name="'Not cute' hoodie",
+        unlocked=False
+    ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_hoodie_turtleneck",
+        display_name="Turtlebeck hoodie",
+        unlocked=False
+    ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_sugar_shirt",
+        display_name="Sugar shirt",
         unlocked=False
     ))
 
