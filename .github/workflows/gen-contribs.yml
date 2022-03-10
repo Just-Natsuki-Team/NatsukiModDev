@@ -1,5 +1,5 @@
 # This workflow runs CI checks for the Just Natsuki DDLC mod
-name: CI
+name: Gen Contributors
 
 on:
   #For now, we only run when specified
