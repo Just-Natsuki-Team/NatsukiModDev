@@ -6,12 +6,14 @@ default persistent.jn_outfit_list = {}
 default persistent.jn_wearable_list = {}
 
 init 0 python in jn_outfits:
+    from Enum import Enum
     import json
     import os
     import random
     import store
     import store.jn_affinity as jn_affinity
     import store.jn_utils as jn_utils
+    import time
 
     # Critical file paths
     __CUSTOM_WEARABLES_DIRECTORY = os.path.join(renpy.config.basedir, "custom_wearables/").replace("\\", "/")
@@ -21,6 +23,9 @@ init 0 python in jn_outfits:
     # Lists of all registered outfits/wearables
     __ALL_WEARABLES = {}
     __ALL_OUTFITS = {}
+
+    _PREVIEW_OUTFIT = None
+    _LAST_OUTFIT = None
 
     # Wearables being registered via JSON must be one of the following types
     WEARABLE_CATEGORIES = [
@@ -318,6 +323,34 @@ init 0 python in jn_outfits:
 
             if self.necklace and not self.necklace.unlocked:
                 self.necklace.unlock()
+
+        def to_json_string(self):
+            """
+            Returns this outfit as a JSON string.
+            """
+            # Core fields
+            outfit_dict = {
+                    "reference_name": self.reference_name,
+                    "display_name": self.display_name,
+                    "unlocked": True, # An outfit a user can create should never be locked by default
+                    "clothes": self.clothes.reference_name,
+                    "hairstyle": self.hairstyle.reference_name
+                }
+
+            # Optional fields
+            if self.headgear:
+                outfit_dict["headgear"] = self.headgear.reference_name
+
+            if self.eyewear:
+                outfit_dict["eyewear"] = self.eyewear.reference_name
+
+            if self.accessory:
+                outfit_dict["accessory"] = self.accessory.reference_name
+
+            if self.necklace:
+                outfit_dict["necklace"] = self.necklace.reference_name
+
+            return json.dumps(outfit_dict)
 
         def __load(self):
             """
@@ -742,6 +775,34 @@ init 0 python in jn_outfits:
         """
         return __ALL_WEARABLES.itervalues()
 
+    def save_custom_outfit(outfit):
+        """
+        Saves the given outfit as a JSON custom outfit file.
+
+        IN:
+            - outfit - the JNOutfit to save
+        """
+        outfit.reference_name = "{0}_{1}_{2}".format(
+            store.persistent.playername,
+            outfit.display_name.replace(" ", "_"),
+            int(time.time())
+        ).lower()
+
+        if not jn_utils.get_directory_exists(__CUSTOM_OUTFITS_DIRECTORY):
+            jn_utils.log("custom_outfits directory was not found and had to be created.")
+
+        if not jn_utils.write_file_to_directory(
+            path=os.path.join(__CUSTOM_OUTFITS_DIRECTORY, "{0}.json".format(outfit.reference_name)),
+            string_content=outfit.to_json_string()
+        ):
+            jn_utils.log("Failed to save outfit {0}, as a write operation was not possible.".format(outfit.display_name))
+
+        else:
+            __register_outfit(outfit)
+            store.JN_NATSUKI.set_outfit(outfit)
+
+        return
+
     # Default hairstyles
     __register_wearable(JNHairstyle(
         reference_name="jn_hair_bedhead",
@@ -796,6 +857,11 @@ init 0 python in jn_outfits:
     __register_wearable(JNHairstyle(
         reference_name="jn_hair_twin_buns",
         display_name="Twin buns",
+        unlocked=True
+    ))
+    __register_wearable(JNHairstyle(
+        reference_name="jn_hair_down_long",
+        display_name="Long hair down",
         unlocked=True
     ))
 
@@ -1034,7 +1100,7 @@ label outfits_wear_outfit:
             if outfit.unlocked:
                 available_outfits.append([outfit.display_name, outfit])
 
-        available_outfits.sort(key = lambda option: option[0])
+        available_outfits.sort(key = lambda option: option[-1])
         available_outfits.insert(0, ("You pick!", "random"))
 
     call screen scrollable_choice_menu(available_outfits, ("Nevermind.", None))
@@ -1092,147 +1158,274 @@ label outfits_load_from_json:
     return
 
 label outfits_suggest_outfit:
-    n 1fwlts "This isn't done yet."
+    n 1unmaj "Ooh!{w=1.5}{nw}"
+    extend 1fchbg " I'm always open to a suggestion!{w=0.5}{nw}"
+    extend 1unmss " What did you have in mind?"
+
+    $ jn_outfits._LAST_OUTFIT = jn_outfits.get_outfit(JN_NATSUKI._outfit_name)
+    $ jn_outfits._PREVIEW_OUTFIT = jn_outfits.get_outfit(JN_NATSUKI._outfit_name)
+
     show natsuki idle at jn_left
-    call screen create_outfit
+    jump outfit_create_menu
 
 label outfits_remove_outfit:
     n 1fwlts "This isn't done yet."
     return
 
-screen create_outfit:
+label outfit_create_menu:
+    call screen create_outfit
+
+label outfit_create_select_headgear:
     python:
-        import store
-        import store.jn_outfits as jn_outfits
+        unlocked_wearables = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNHeadgear)
+        wearable_options = []
 
-        # Get the collections of all unlocked wearables for each type
-        unlocked_headgear = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNHeadgear)
-        unlocked_hairstyles = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNHairstyle)
-        unlocked_eyewear = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNEyewear)
-        unlocked_accessories = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNAccessory)
-        unlocked_necklaces = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNNecklace)
-        unlocked_clothes = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNClothes)
+        for wearable in unlocked_wearables:
+            wearable_options.append((wearable.display_name, wearable))
 
+        wearable_options.sort(key = lambda option: option[-1])
+        wearable_options.insert(0, ("No headgear", "none"))
+
+    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+
+    if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNHeadgear):
+        python:
+            wearable_to_apply = None if _return == "none" else _return
+            jn_outfits._PREVIEW_OUTFIT.headgear = wearable_to_apply
+            JN_NATSUKI.set_outfit(jn_outfits._PREVIEW_OUTFIT)
+
+    jump outfit_create_menu
+
+label outfit_create_select_hairstyle:
+    python:
+        unlocked_wearables = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNHairstyle) 
+        wearable_options = []
+
+        for wearable in unlocked_wearables:
+            wearable_options.append((wearable.display_name, wearable))
+
+        wearable_options.sort(key = lambda option: option[-1])
+
+    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+
+    if isinstance(_return, jn_outfits.JNHairstyle):
+        python:
+            jn_outfits._PREVIEW_OUTFIT.hairstyle = _return
+            JN_NATSUKI.set_outfit(jn_outfits._PREVIEW_OUTFIT)
+
+    jump outfit_create_menu
+
+label outfit_create_select_eyewear:
+    python:
+        unlocked_wearables = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNEyewear)
+        wearable_options = []
+
+        for wearable in unlocked_wearables:
+            wearable_options.append((wearable.display_name, wearable))
+
+        wearable_options.sort(key = lambda option: option[-1])
+        wearable_options.insert(0, ("No eyewear", "none"))
+
+    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+
+    if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNEyewear):
+        python:
+            wearable_to_apply = None if _return == "none" else _return
+            jn_outfits._PREVIEW_OUTFIT.eyewear = wearable_to_apply
+            JN_NATSUKI.set_outfit(jn_outfits._PREVIEW_OUTFIT)
+
+    jump outfit_create_menu
+
+label outfit_create_select_accessory:
+    python:
+        unlocked_wearables = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNAccessory)
+        wearable_options = []
+
+        for wearable in unlocked_wearables:
+            wearable_options.append((wearable.display_name, wearable))
+
+        wearable_options.sort(key = lambda option: option[-1])
+        wearable_options.insert(0, ("No accessory", -1))
+
+    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+
+    if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNAccessory):
+        python:
+            wearable_to_apply = None if _return == "none" else _return
+            jn_outfits._PREVIEW_OUTFIT.accessory = wearable_to_apply
+            JN_NATSUKI.set_outfit(jn_outfits._PREVIEW_OUTFIT)
+
+    jump outfit_create_menu
+
+label outfit_create_select_necklace:
+    python:
+        unlocked_wearables = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNNecklace)
+        wearable_options = []
+
+        for wearable in unlocked_wearables:
+            wearable_options.append((wearable.display_name, wearable))
+
+        wearable_options.sort(key = lambda option: option[-1])
+        wearable_options.insert(0, ("No necklace", -1))
+
+    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+
+    if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNNecklace):
+        python:
+            wearable_to_apply = None if _return == "none" else _return
+            jn_outfits._PREVIEW_OUTFIT.necklace = wearable_to_apply
+            JN_NATSUKI.set_outfit(jn_outfits._PREVIEW_OUTFIT)
+
+    jump outfit_create_menu
+
+label outfit_create_select_clothes:
+    python:
+        unlocked_wearables = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNClothes)
+        wearable_options = []
+
+        for wearable in unlocked_wearables:
+            wearable_options.append((wearable.display_name, wearable))
+
+        wearable_options.sort(key = lambda option: option[-1])
+
+    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+
+    if isinstance(_return, jn_outfits.JNClothes):
+        python:
+            jn_outfits._PREVIEW_OUTFIT.clothes = _return
+            JN_NATSUKI.set_outfit(jn_outfits._PREVIEW_OUTFIT)
+
+    jump outfit_create_menu
+
+label outfit_create_quit:
+    $ JN_NATSUKI.set_outfit(jn_outfits._LAST_OUTFIT)
+    jump ch30_loop
+
+label outfit_create_save:
+    n 1fllaj "Well,{w=0.5} finally!"
+    n 1flrpo "If I'd known you were {i}this{/i} into dress-up,{w=0.3} I'd have set a timer!{w=1.5}{nw}"
+    extend 1fsqsm " Ehehe."
+    n 1ullaj "So..."
+    menu:
+        n "All finished, [player]?"
+
+        "Yes, I'd like to save this outfit.":
+            n 1fchbg "Gotcha!{w=1.5}{nw}"
+            extend 1unmsm " What did you wanna call it?"
+            
+            $ name_given = False
+            while not name_given:
+                $ outfit_name = renpy.input(
+                    "What is the name of this outfit?",
+                    allow=(jn_globals.DEFAULT_ALPHABETICAL_ALLOW_VALUES+jn_globals.DEFAULT_NUMERICAL_ALLOW_VALUES),
+                    length=30
+                ).strip()
+
+                if len(outfit_name) == 0:
+                    n 1knmpo "Come on,{w=0.3} [player]!{w=1.5}{nw}"
+                    extend 1fchbg " Any outfit worth wearing has a name,{w=0.1} dummy!"
+
+                elif jn_utils.get_string_contains_profanity(outfit_name):
+                    if persistent._jn_player_profanity_during_introduction:
+                        n 1fsqem "...Really,{w=0.5} [player]."
+                        n 1fsqsr "Come on.{w=1.5}{nw}"
+                        extend 1fllsr " Quit being a jerk."
+                        $ jn_relationship("affinity-")
+
+                else:
+                    python:
+                        jn_outfits._PREVIEW_OUTFIT.display_name = outfit_name
+                        name_given = True
+
+            n 1nchbg "Okaaay!{w=1.5}{nw}"
+            extend 1ncsss " Let me just take some notes...{w=1.5}{nw}"
+            n 1uchsm "...And done!"
+            n 1fchbg "Thanks,{w=0.1} [player]!{w=0.5}{nw}"
+            extend 1uchsm " Ehehe."
+
+            $ jn_outfits.save_custom_outfit(jn_outfits._PREVIEW_OUTFIT)
+            jump ch30_loop
+
+        "No, I'm not quite finished.":
+            n 1nslpo "I {i}knew{/i} I should have brought a book...{w=2}{nw}"
+            extend 1fsqsm " Ehehe."
+            n 1ulrss "Well,{w=0.1} whatever.{w=0.5}{nw}"
+            extend 1unmbo " What else did you have in mind,{w=0.1} [player]?"
+
+            jump outfit_create_menu
+
+screen create_outfit():
+    # Quit
     textbutton _("Quit"):
         xpos 25
         ypos 25
         style "hkbd_button"
-        action Jump("ch30_loop")
+        action Jump("outfit_create_quit")
 
-    # Outfit control
+    # Outfit controls
     vbox:
-        # Scroll slot left
-        xpos 585
+        xpos 600
         ypos 140
-        
-        textbutton _("<"):
-            style "hkbd_button"
-            action [
-                Function(renpy.notify, "action"),
-                SensitiveIf(len(unlocked_headgear) != 0)
-            ]
+        hbox:
+            textbutton _("Headgear"):
+                style "hkbd_option"
+                action Jump("outfit_create_select_headgear")
 
-        textbutton _("<"):
-            style "hkbd_button"
-            action [
-                Function(renpy.notify, "action"),
-                SensitiveIf(len(unlocked_hairstyles) != 0)
-            ]
+            label _(jn_outfits._PREVIEW_OUTFIT.headgear.display_name if jn_outfits._PREVIEW_OUTFIT.headgear is not None else "None"):
+                style "hkbd_label"
+                left_margin 10
 
-        textbutton _("<"):
-            style "hkbd_button"
-            action [
-                Function(renpy.notify, "action"),
-                SensitiveIf(len(unlocked_eyewear) != 0)
-            ]
+        hbox:
+            textbutton _("Hairstyles"):
+                style "hkbd_option"
+                action Jump("outfit_create_select_hairstyle")
 
-        textbutton _("<"):
-            style "hkbd_button"
-            action [
-                Function(renpy.notify, "action"),
-                SensitiveIf(len(unlocked_accessories) != 0)
-            ]
+            label _(jn_outfits._PREVIEW_OUTFIT.hairstyle.display_name):
+                style "hkbd_label"
+                left_margin 10
 
-        textbutton _("<"):
-            style "hkbd_button"
-            action [
-                Function(renpy.notify, "action"),
-                SensitiveIf(len(unlocked_necklaces) != 0)
-            ]
+        hbox:
+            textbutton _("Eyewear"):
+                style "hkbd_option"
+                action Jump("outfit_create_select_eyewear")
 
-        textbutton _("<"):
-            style "hkbd_button"
-            action [
-                Function(renpy.notify, "action"),
-                SensitiveIf(len(unlocked_clothes) != 0)
-            ]
+            label _(jn_outfits._PREVIEW_OUTFIT.eyewear.display_name if jn_outfits._PREVIEW_OUTFIT.eyewear is not None else "None"):
+                style "hkbd_label"
+                left_margin 10
+  
+        hbox:
+            textbutton _("Accessories"):
+                style "hkbd_option"
+                action Jump("outfit_create_select_accessory")
 
+            label _(jn_outfits._PREVIEW_OUTFIT.accessory.display_name if jn_outfits._PREVIEW_OUTFIT.accessory is not None else "None"):
+                style "hkbd_label"
+                left_margin 10
+
+        hbox:
+            textbutton _("Necklaces"):
+                style "hkbd_option"
+                action Jump("outfit_create_select_necklace")
+
+            label _(jn_outfits._PREVIEW_OUTFIT.necklace.display_name if jn_outfits._PREVIEW_OUTFIT.necklace is not None else "None"):
+                style "hkbd_label"
+                left_margin 10
+
+        hbox:
+            textbutton _("Clothes"):
+                style "hkbd_option"
+                action Jump("outfit_create_select_clothes")
+
+            label _(jn_outfits._PREVIEW_OUTFIT.clothes.display_name):
+                style "hkbd_label"
+                left_margin 10
+
+    # Save/reset
     vbox:
-        # Slots
-        xpos 725
-        ypos 140
-        
-        label _("Headgear"):
-            style "hkbd_label"
+        xpos 600
+        ypos 450
 
-        label _("Hairstyle"):
-            style "hkbd_label"
-
-        label _("Eyewear"):
-            style "hkbd_label"
-
-        label _("Accessory"):
-            style "hkbd_label"
-
-        label _("Necklace"):
-            style "hkbd_label"
-
-        label _("Clothes"):
-            style "hkbd_label"
-
-    vbox:
-        # Scroll slot right
-        xpos 1145
-        ypos 140
-        
-        textbutton _(">"):
-            style "hkbd_button"
-            action [
-                Function(renpy.notify, "action"),
-                SensitiveIf(len(unlocked_headgear) != 0)
-            ]
-
-        textbutton _(">"):
-            style "hkbd_button"
-            action [
-                Function(renpy.notify, "action"),
-                SensitiveIf(len(unlocked_hairstyles) != 0)
-            ]
-
-        textbutton _(">"):
-            style "hkbd_button"
-            action [
-                Function(renpy.notify, "action"),
-                SensitiveIf(len(unlocked_eyewear) != 0)
-            ]
-
-        textbutton _(">"):
-            style "hkbd_button"
-            action [
-                Function(renpy.notify, "action"),
-                SensitiveIf(len(unlocked_accessories) != 0)
-            ]
-
-        textbutton _(">"):
-            style "hkbd_button"
-            action [
-                Function(renpy.notify, "action"),
-                SensitiveIf(len(unlocked_necklaces) != 0)
-            ]
-
-        textbutton _(">"):
-            style "hkbd_button"
-            action [
-                Function(renpy.notify, "action"),
-                SensitiveIf(len(unlocked_clothes) != 0)
-            ]
+        hbox:
+            textbutton _("Save"):
+                style "hkbd_option"
+                action Jump("outfit_create_save")

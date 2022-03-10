@@ -1277,7 +1277,11 @@ init -999 python in jn_utils:
         """
         Checks to see if the specified file exists.
 
-        OUT: True if the file exists, otherwise False
+        IN:
+            path - The path to check
+
+        OUT: 
+            - True if the file exists, otherwise False
         """
         if os.path.isfile(path):
             return True
@@ -1289,12 +1293,36 @@ init -999 python in jn_utils:
         Checks to see if the specified directory exists, and creates it if not
         Returns True/False based on whether the directory already existed
 
+        IN:
+            path - The path to check
+
         OUT:
             - True/False based on if directory was existing (True) or had to be created (False)
         """
         if not os.path.exists(path) or os.path.isfile(path):
             os.makedirs(path)
             return False
+
+        return True
+
+    def write_file_to_directory(path, string_content, overwrite=False):
+        """
+        Attempts to write the given string_content to a file at the specified path.
+        If a file already exists, it is only overwritten if overwrite is set to True.
+
+        IN:
+            path - The path to create the file at (including file name and extension)
+            string_content - The string content to write to the file
+            overwrite - Whether or not to overwrite any existing file at the location
+
+        OUT: 
+            - True if the file was created/overwritten, otherwise False
+        """
+        if os.path.isfile(path) and not overwrite:
+            return False
+
+        with open(path, "w") as file:
+            file.write(string_content)
 
         return True
 

@@ -42,11 +42,22 @@ define gui.hkb_button_black_text_hover_color = "#FF8ED0"
 define gui.hkb_label_width = 400
 define gui.hkb_label_height = None
 define gui.hkb_label_tile = False
-define gui.hkb_label_borders = Borders(100, 5, 100, 5)
+define gui.hkb_label_borders = Borders(5, 7, 5, 7)
 define gui.hkb_label_text_font = gui.default_font
-define gui.hkb_label_text_size = gui.button_text_size
+define gui.hkb_label_text_size = 20
 define gui.hkb_label_text_xalign = 0.5
 define gui.hkb_label_text_color = "#e2d1d1"
+
+# Option hotkey
+define gui.hkb_option_width = 200
+define gui.hkb_option_height = None
+define gui.hkb_option_tile = False
+define gui.hkb_option_borders = Borders(5, 5, 5, 5)
+define gui.hkb_option_text_font = gui.default_font
+define gui.hkb_option_text_size = gui.button_text_size
+define gui.hkb_option_text_xalign = 0.5
+define gui.hkb_option_text_idle_color = "#e2d1d1"
+define gui.hkb_option_text_hover_color = "#FF8ED0"
 
 define gui.talk_button_width = 120
 define gui.talk_button_height = None
@@ -69,7 +80,10 @@ style hkb_button_black_text is button_text
 
 style hkb_vbox_label is vbox
 style hkb_label is label
-style hkb_label_text is label_text
+
+style hkb_vbox_option is vbox
+style hkb_option is button
+style hkb_option_text is button_text
 
 style talk_vbox is vbox
 style talk_button is button
@@ -101,6 +115,14 @@ style hkb_label is default:
     properties gui.button_properties("hkb_label")
     background "mod_assets/buttons/choice_hover_blank.png"
 
+style hkb_option is default:
+    properties gui.button_properties("hkb_option")
+    idle_background "mod_assets/buttons/option_hover_blank.png"
+    hover_background "mod_assets/buttons/option_hover_fold.png"
+
+    hover_sound gui.hover_sound
+    activate_sound gui.activate_sound
+
 style hkb_button_text is default:
     properties gui.button_text_properties("hkb_button")
     outlines []
@@ -111,6 +133,10 @@ style hkb_button_text_black is default:
 
 style hkb_label_text is default:
     properties gui.button_text_properties("hkb_label")
+    outlines []
+
+style hkb_option_text is default:
+    properties gui.button_text_properties("hkb_option")
     outlines []
 
 style talk_vbox:
@@ -170,10 +196,25 @@ style hkbd_label is default:
 
 style hkbd_label_text is default:
     font gui.default_font
-    size gui.button_text_size
+    size 20
     xalign 0.5
     color "#e2d1d1"
     outlines []
+
+style hkbd_option_text is default:
+    font gui.default_font
+    size gui.button_text_size
+    xalign 0.5
+    idle_color "#e2d1d1"
+    hover_color "#FF8ED0"
+    outlines []
+
+style hkbd_option is default:
+    properties gui.button_properties("hkb_option")
+    idle_background "mod_assets/buttons/option_hover_blank.png"
+    hover_background "mod_assets/buttons/option_hover_fold.png"
+    hover_sound gui.hover_sound
+    activate_sound gui.activate_sound
 
 style talkd_vbox is vbox
 style talkd_button is button
