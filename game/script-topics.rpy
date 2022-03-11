@@ -5389,3 +5389,36 @@ label date_go2_room:
     $ main_background.changeLocation(classroom)
     $ main_background.draw(dissolve_all=True, full_redraw=True)
     return
+
+# Player asks about Dan Salvato
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_dan_salvato",
+            unlocked=True,
+            prompt="What do you think of Dan Salvato?",
+            category=["DDLC", "Natsuki"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_dan_salvato:
+    n "Eh?{w=0.2} Dan Salvato?"
+    n "Isn't that the guy who created this game?"
+    n "Well..."
+    n "I don't know anything about him!"
+    n "But I guess he is the reason I'm here."
+    n "Even i"
+    n "..."
+    n "I...{w=0.5} I just don't know what to say,{w=0.1} really."
+    n "There is just a lot to wonder about,{w=0.1} I guess."
+    n "Like, did he let Monika do what she did?"
+    n "Was that an accident? Was it a mistake?"
+    n "I just don't know what to think, [player]!"
+    n "..."
+    n "Ahaha!"
+    n "In reality, I know nothing about this guy."
+    n "I shouldn't be making assumptions."
