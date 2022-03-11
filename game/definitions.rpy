@@ -45,6 +45,12 @@ init 0 python:
             self._headgear = outfit.headgear if outfit.headgear else None
             self._necklace = outfit.necklace if outfit.necklace else None
 
+        def get_outfit_name(self):
+            """
+            Returns the reference name of the outfit Natsuki is currently wearing.
+            """
+            return self._outfit_name
+
         def set_outfit(self, outfit):
             """
             Assigns the specified jn_outfits.JNOutfit outfit to Natsuki.

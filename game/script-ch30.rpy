@@ -31,7 +31,6 @@ label ch30_visual_setup:
     #FALL THROUGH
 
 label ch30_init:
-    
     python:
         import store.jn_utils as jn_utils
 
@@ -74,12 +73,18 @@ label ch30_init:
         jn_outfits.JNWearable.load_all()
         jn_outfits.JNOutfit.load_all()
 
-        #TODO: auto outfit changes
-        if jn_outfits.outfit_exists(persistent.jn_natsuki_outfit_on_quit):
-            JN_NATSUKI.set_outfit(jn_outfits.get_outfit(persistent.jn_natsuki_outfit_on_quit))
+        # Set the outfit
+        if persistent.jn_natsuki_auto_outfit_change_enabled:
+            # Real-time outfit selection
+            JN_NATSUKI.set_outfit(jn_outfits.get_realtime_outfit())
 
         else:
-            JN_NATSUKI.set_outfit(jn_outfits.get_outfit("jn_school_uniform"))
+            # Custom outfit/default outfit selection
+            if jn_outfits.outfit_exists(persistent.jn_natsuki_outfit_on_quit):
+                JN_NATSUKI.set_outfit(jn_outfits.get_outfit(persistent.jn_natsuki_outfit_on_quit))
+
+            else:
+                JN_NATSUKI.set_outfit(jn_outfits.get_outfit("jn_school_uniform"))
 
     # Prepare visuals
     hide black with Dissolve(1.5) 
@@ -285,11 +290,12 @@ init python:
         main_background.check_redraw()
         jn_atmosphere.show_current_sky()
 
-        # Update outfit
-        # if not JN_NATSUKI.is_wearing_outfit(jn_outfits.get_outfit_for_time_block()):
-
-        #     # We call here so we don't skip day_check, as call returns us to this point
-        #     renpy.call("outfits_time_of_day_change")
+        if (
+            persistent.jn_natsuki_auto_outfit_change_enabled
+            and not JN_NATSUKI.is_wearing_outfit(jn_outfits.get_realtime_outfit())
+        ):
+            # We call here so we don't skip day_check, as call returns us to this point
+            renpy.call("outfits_auto_change")
 
         pass
 
