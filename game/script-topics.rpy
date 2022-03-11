@@ -5457,8 +5457,8 @@ label talk_hygiene:
     n 1nllsm "...{w=0.5}Ehehe,{w=0.1} long spiel,{w=0.1} eh?"
         
     menu:
-        n 1nchsm "But seriously,{w=0.1} make sure you're doing those things,{w=0.1} okay [player]?{nw}"
-        
+        n "But seriously,{w=0.1} make sure you're doing those things,{w=0.1} okay [player]?"
+
         "I am.":
             n 1unmbs "You are?{w=0.2} I figured so." 
             n 1uchbs "Good!{w=0.2} I'm proud of you!"
