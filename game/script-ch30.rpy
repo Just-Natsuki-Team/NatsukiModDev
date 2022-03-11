@@ -433,7 +433,7 @@ label outfits_menu:
         ("Can you wear an outfit for me?", "outfits_wear_outfit"),
         ("Can I suggest a new outfit?", "outfits_suggest_outfit"),
         ("Can I remove an outfit I suggested?", "outfits_remove_outfit"),
-        ("Can you search again for new outfits?", "outfits_load_from_json")
+        ("Can you search again for new outfits?", "outfits_reload")
     ]
     call screen scrollable_choice_menu(outfit_options, ("Nevermind.", None))
 

@@ -806,19 +806,17 @@ init 0 python in jn_outfits:
         """
         Unloads all custom outfits from active memory.
         """
-        __ALL_OUTFITS = jn_outfits.JNOutfit.filter_outfits(
-            outfit_list=jn_outfits.get_all_outfits(),
-            unlocked=True,
-            is_jn_outfit=False)
+        __ALL_OUTFITS = JNOutfit.filter_outfits(
+            outfit_list=get_all_outfits(),
+            is_jn_outfit=True)
 
     def unload_custom_wearables():
         """
         Unloads all custom wearables from active memory.
         """
-        __ALL_WEARABLES = jn_outfits.JNWearable.filter_outfits(
-            wearable_list=jn_outfits.get_all_wearables(),
-            unlocked=True,
-            is_jn_wearable=False)
+        __ALL_WEARABLES = JNWearable.filter_wearables(
+            wearable_list=get_all_wearables(),
+            is_jn_wearable=True)
 
         return
 
@@ -1527,11 +1525,23 @@ label outfits_wear_outfit:
 
 # Asking Natsuki to reload outfits from disk
 label outfits_reload:
+    n 1fchbg "'Kay!{w=0.5}{nw}"
+    extend 1ncsss " Just give me a sec here...{w=1.5}{nw}"
+
     python:
+        # We have to unload outfits before wearables due to dependencies
+        jn_outfits.unload_custom_outfits()
+        jn_outfits.unload_custom_wearables()
+
+        # We have to load wearables before outfits due to dependencies
         jn_outfits.load_custom_wearables()
         jn_outfits.load_custom_outfits()
+
+        # Now we've loaded back into memory, reload the persisted data
         jn_outfits.JNWearable.load_all()
         jn_outfits.JNOutfit.load_all()
+
+    n 1fchsm "...And we're done!"
     return
 
 # Asking Natsuki to suggest a new outfit; leads to the outfit creator flow
