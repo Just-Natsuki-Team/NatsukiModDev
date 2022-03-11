@@ -37,19 +37,13 @@ init 0 python:
             """
             Constructor.
             """
-            self._outfit_name = outfit.reference_name
-            self._clothes = outfit.clothes
-            self._hairstyle = outfit.hairstyle
-            self._accessory = outfit.accessory if outfit.accessory else None
-            self._eyewear = outfit.eyewear if outfit.eyewear else None
-            self._headgear = outfit.headgear if outfit.headgear else None
-            self._necklace = outfit.necklace if outfit.necklace else None
+            self.outfit = outfit
 
         def get_outfit_name(self):
             """
             Returns the reference name of the outfit Natsuki is currently wearing.
             """
-            return self._outfit_name
+            return self.outfit.reference_name
 
         def set_outfit(self, outfit):
             """
@@ -58,15 +52,8 @@ init 0 python:
             IN:
                 - outfit - The jn_outfits.JNOutfit outfit for Natsuki to wear.
             """
-            self._outfit_name = outfit.reference_name
-            self._clothes = outfit.clothes
-            self._hairstyle = outfit.hairstyle
-            self._accessory = outfit.accessory if outfit.accessory else None
-            self._eyewear = outfit.eyewear if outfit.eyewear else None
-            self._headgear = outfit.headgear if outfit.headgear else None
-            self._necklace = outfit.necklace if outfit.necklace else None
-
-            store.persistent.jn_natsuki_outfit_on_quit = self._outfit_name
+            self.outfit = outfit
+            store.persistent.jn_natsuki_outfit_on_quit = self.outfit.reference_name
 
         def is_wearing_outfit(self, outfit):
             """
@@ -78,7 +65,7 @@ init 0 python:
             OUT:
                 - True if Natsuki is wearing the specified jn_outfits.JNOutfit outfit, otherwise False
             """
-            return self._outfit_name == outfit.reference_name
+            return self.outfit.reference_name == outfit.reference_name
 
     class JNHolidays(Enum):
         none = 1

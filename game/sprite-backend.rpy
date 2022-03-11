@@ -137,13 +137,13 @@ init -50 python:
         lc_args = [
             (1280, 720), # Anchor
             (0, 0), _BASE_SPRITE_PATH + "desk/chair-normal.png", # Chair
-            (0, 0), "{0}{1}/hair/[JN_NATSUKI._hairstyle.reference_name]/back.png".format(_BASE_SPRITE_PATH, pose), # Hair back
+            (0, 0), "{0}{1}/hair/[JN_NATSUKI.outfit.hairstyle.reference_name]/back.png".format(_BASE_SPRITE_PATH, pose), # Hair back
             (0, 0), "{0}{1}/base/body.png".format(_BASE_SPRITE_PATH, pose), # Body
-            (0, 0), "{0}{1}/clothes/[JN_NATSUKI._clothes.reference_name]/body.png".format(_BASE_SPRITE_PATH, pose), # Outfit, body
+            (0, 0), "{0}{1}/clothes/[JN_NATSUKI.outfit.clothes.reference_name]/body.png".format(_BASE_SPRITE_PATH, pose), # Outfit, body
         ]
 
         # Necklace
-        necklace = "{0}{1}/necklace/[JN_NATSUKI._necklace.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose) if JN_NATSUKI._necklace is not None else Null()
+        necklace = Null() if not JN_NATSUKI.outfit.necklace else "{0}{1}/necklace/[JN_NATSUKI.outfit.necklace.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose)
         lc_args.extend([
             (0, 0), necklace
         ])
@@ -163,11 +163,11 @@ init -50 python:
         lc_args.extend([
             (0, 0), "{0}{1}/face/mouth/{2}.png".format(_BASE_SPRITE_PATH, pose, mouth),
             (0, 0), "{0}{1}/face/nose/nose.png".format(_BASE_SPRITE_PATH, pose),
-            (0, 0), "{0}{1}/hair/[JN_NATSUKI._hairstyle.reference_name]/bangs.png".format(_BASE_SPRITE_PATH, pose),
+            (0, 0), "{0}{1}/hair/[JN_NATSUKI.outfit.hairstyle.reference_name]/bangs.png".format(_BASE_SPRITE_PATH, pose),
         ])
 
         # Accessory
-        accessory = "{0}{1}/accessory/[JN_NATSUKI._accessory.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose) if JN_NATSUKI._accessory is not None else Null()
+        accessory = Null() if not JN_NATSUKI.outfit.accessory else "{0}{1}/accessory/[JN_NATSUKI.outfit.accessory.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose)
         lc_args.extend([
             (0, 0), accessory
         ])
@@ -184,13 +184,13 @@ init -50 python:
             ])
 
         # Headgear
-        headgear = "{0}{1}/headgear/[JN_NATSUKI._headgear.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose) if JN_NATSUKI._headgear is not None else Null()
+        headgear = Null() if not JN_NATSUKI.outfit.headgear else "{0}{1}/headgear/[JN_NATSUKI.outfit.headgear.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose)
         lc_args.extend([
             (0, 0), headgear
         ])
 
         # Eyewear
-        eyewear = "{0}{1}/eyewear/[JN_NATSUKI._eyewear.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose) if JN_NATSUKI._eyewear is not None else Null()
+        eyewear = Null() if not JN_NATSUKI.outfit.eyewear else "{0}{1}/eyewear/[JN_NATSUKI.outfit.eyewear.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose)
         lc_args.extend([
             (0, 0), eyewear
         ])

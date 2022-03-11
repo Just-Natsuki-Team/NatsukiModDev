@@ -1707,7 +1707,7 @@ label outfits_create_select_accessory:
             wearable_options.append((wearable.display_name, wearable))
 
         wearable_options.sort(key = lambda option: option[1].display_name)
-        wearable_options.insert(0, ("No accessory", -1))
+        wearable_options.insert(0, ("No accessory", "none"))
 
     call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
 
@@ -1731,7 +1731,7 @@ label outfits_create_select_necklace:
             wearable_options.append((wearable.display_name, wearable))
 
         wearable_options.sort(key = lambda option: option[1].display_name)
-        wearable_options.insert(0, ("No necklace", -1))
+        wearable_options.insert(0, ("No necklace", "none"))
 
     call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
 
