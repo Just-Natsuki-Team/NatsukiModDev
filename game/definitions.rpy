@@ -1299,7 +1299,7 @@ init -999 python in jn_utils:
         OUT:
             - True/False based on if directory was existing (True) or had to be created (False)
         """
-        if not os.path.exists(path) or os.path.isfile(path):
+        if not os.path.exists(path) or get_file_exists(path):
             os.makedirs(path)
             return False
 
@@ -1318,13 +1318,29 @@ init -999 python in jn_utils:
         OUT: 
             - True if the file was created/overwritten, otherwise False
         """
-        if os.path.isfile(path) and not overwrite:
+        if get_file_exists(path) and not overwrite:
             return False
 
         with open(path, "w") as file:
             file.write(string_content)
 
         return True
+
+    def delete_file_from_directory(path):
+        """
+        Attempts to delete the file at the given path.
+
+        IN:
+            path - The path to delete the file at.
+
+        OUT:
+            - True if the file was deleted, otherwise False
+        """
+        if get_file_exists(path):
+            os.remove(path)
+            return True
+
+        return False
 
     def get_all_directory_files(path, extension_list=None):
         """
@@ -1487,6 +1503,9 @@ define audio.notification = "mod_assets/sfx/notification.ogg"
 define audio.chair_in = "mod_assets/sfx/chair_in.ogg"
 define audio.chair_out = "mod_assets/sfx/chair_out.ogg"
 define audio.chair_out_in = "mod_assets/sfx/chair_out_in.ogg"
+define audio.hair_brush = "mod_assets/sfx/hair_brush.ogg"
+define audio.hair_clip = "mod_assets/sfx/hair_clip.ogg"
+define audio.necklace_clip = "mod_assets/sfx/necklace_clip.ogg"
 
 define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
 define audio.glitch_b = "mod_assets/sfx/glitch_b.ogg"

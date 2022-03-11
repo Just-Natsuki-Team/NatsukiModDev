@@ -27,6 +27,8 @@ init 0 python in jn_outfits:
     _PREVIEW_OUTFIT = None
     _LAST_OUTFIT = None
 
+    _changes_made = False
+
     # Wearables being registered via JSON must be one of the following types
     WEARABLE_CATEGORIES = [
         "hairstyle",
@@ -205,6 +207,7 @@ init 0 python in jn_outfits:
             reference_name,
             display_name,
             unlocked,
+            is_jn_outfit,
             clothes,
             hairstyle,
             accessory=None,
@@ -223,6 +226,7 @@ init 0 python in jn_outfits:
             self.reference_name = reference_name
             self.display_name = display_name
             self.unlocked = unlocked
+            self.is_jn_outfit = is_jn_outfit
             self.clothes = clothes
             self.hairstyle = hairstyle
             self.accessory = accessory
@@ -252,6 +256,7 @@ init 0 python in jn_outfits:
         def filter_outfits(
             outfit_list,
             unlocked=None,
+            is_jn_outfit=None,
             not_reference_name=None,
             has_accessory=None,
             has_eyewear=None,
@@ -264,6 +269,7 @@ init 0 python in jn_outfits:
             IN:
                 - outfit_list - the list of JNOutfit outfits to query
                 - unlocked - the boolean unlocked state to filter for
+                - is_jn_outfit - the boolean is_jn_outfit state to filter for
                 - not_reference_name - list of reference_names the outfit must not have 
                 - has_accessory - the boolean has_accessory state to filter for
                 - has_eyewear - the boolean has_eyewear state to filter for
@@ -278,6 +284,7 @@ init 0 python in jn_outfits:
                 for _outfit in outfit_list
                 if _outfit.__filter_outfit(
                     unlocked,
+                    is_jn_outfit,
                     not_reference_name,
                     has_accessory,
                     has_eyewear,
@@ -326,7 +333,7 @@ init 0 python in jn_outfits:
 
         def to_json_string(self):
             """
-            Returns this outfit as a JSON string.
+            Returns this outfit as a JSON string for export use.
             """
             # Core fields
             outfit_dict = {
@@ -354,7 +361,7 @@ init 0 python in jn_outfits:
 
         def __load(self):
             """
-            Loads the persisted data for this outfit from the persistent.
+            Loads the persisted data for this outfit from the persistent, if it exists.
             """
             if store.persistent.jn_outfit_list[self.reference_name]:
                 self.unlocked = store.persistent.jn_outfit_list[self.reference_name]["unlocked"]
@@ -365,9 +372,17 @@ init 0 python in jn_outfits:
             """
             store.persistent.jn_outfit_list[self.reference_name] = self.as_dict()
 
+        def __delete_save(self):
+            """
+            Deletes the persistable data for this outfit from the persistent, if it exists.
+            """
+            if store.persistent.jn_outfit_list[self.reference_name]:
+                del store.persistent.jn_outfit_list[self.reference_name]
+
         def __filter_outfit(
             self,
             unlocked=None,
+            is_jn_outfit=None,
             not_reference_name=None,
             has_accessory=None,
             has_eyewear=None,
@@ -379,6 +394,7 @@ init 0 python in jn_outfits:
 
             IN:
                 - unlocked - the boolean unlocked state to filter for
+                - is_jn_outfit - the boolean is_jn_outfit state to filter for
                 - not_reference_name - list of reference_names the outfit must not have 
                 - has_accessory - the boolean has_accessory state to filter for
                 - has_eyewear - the boolean has_eyewear state to filter for
@@ -389,6 +405,9 @@ init 0 python in jn_outfits:
                 - True, if the outfit meets the filter criteria. Otherwise False
             """
             if unlocked is not None and self.unlocked != unlocked:
+                return False
+
+            elif is_jn_outfit is not None and self.is_jn_outfit != is_jn_outfit:
                 return False
 
             elif not_reference_name is not None and self.reference_name in not_reference_name:
@@ -437,6 +456,14 @@ init 0 python in jn_outfits:
             __ALL_WEARABLES[wearable.reference_name] = wearable
             if wearable.reference_name not in store.persistent.jn_wearable_list:
                 wearable.__save()
+
+    def __delete_outfit(outfit):
+        """
+        Deletes an outfit from the list of all outfits.
+        If the outfit has a corresponding persistent entry, it is deleted.
+        """
+        outfit.__delete_save()
+        del __ALL_OUTFITS[outfit.reference_name]
 
     def _check_wearable_sprites(wearable):
         """
@@ -605,6 +632,7 @@ init 0 python in jn_outfits:
                 reference_name=json["reference_name"],
                 display_name=json["display_name"],
                 unlocked=json["unlocked"],
+                is_jn_outfit=False,
                 clothes=__ALL_WEARABLES[json["clothes"]],
                 hairstyle=__ALL_WEARABLES[json["hairstyle"]],
                 accessory=__ALL_WEARABLES[json["accessory"]] if "accessory" in json else None,
@@ -782,26 +810,59 @@ init 0 python in jn_outfits:
         IN:
             - outfit - the JNOutfit to save
         """
+        # Generate the name, we make sure it is unique thanks to the timestamp
+        outfit.is_jn_outfit = False
         outfit.reference_name = "{0}_{1}_{2}".format(
             store.persistent.playername,
             outfit.display_name.replace(" ", "_"),
             int(time.time())
         ).lower()
 
+        # Create directory if it doesn't exist
         if not jn_utils.get_directory_exists(__CUSTOM_OUTFITS_DIRECTORY):
             jn_utils.log("custom_outfits directory was not found and had to be created.")
 
+        # Create the JSON file
         if not jn_utils.write_file_to_directory(
             path=os.path.join(__CUSTOM_OUTFITS_DIRECTORY, "{0}.json".format(outfit.reference_name)),
             string_content=outfit.to_json_string()
         ):
+            renpy.notify("Save failed; please check log for more information.")
             jn_utils.log("Failed to save outfit {0}, as a write operation was not possible.".format(outfit.display_name))
+            return False
 
         else:
+            # Finally register if the create op was successful
             __register_outfit(outfit)
             store.JN_NATSUKI.set_outfit(outfit)
+            renpy.notify("Outfit saved!")
+            return True
 
-        return
+    def delete_custom_outfit(outfit):
+        """
+        Removes the given outfit from the list of all outfits, and removes its persistent data.
+        You should check to make sure Natsuki isn't wearing the outfit first.
+
+        IN:
+            - outfit - the JNOutfit to delete
+        """
+        # Create directory if it doesn't exist
+        if not jn_utils.get_directory_exists(__CUSTOM_OUTFITS_DIRECTORY):
+            jn_utils.log("custom_outfits directory was not found and had to be created.")
+
+        # We can't delete the file for some reason, so abort the deletion process
+        elif not jn_utils.delete_file_from_directory(
+            path=os.path.join(__CUSTOM_OUTFITS_DIRECTORY, "{0}.json".format(outfit.reference_name))
+        ):
+            renpy.notify("Delete failed; please check log for more information.")
+            jn_utils.log("Failed to delete outfit {0}, as a remove operation was not possible.".format(outfit.display_name))
+            return False
+
+        else:
+            # We deleted the file; finally remove the outfit from runtime and persistent
+            __delete_outfit(outfit)
+            renpy.notify("Outfit deleted!")
+            return True
 
     # Default hairstyles
     __register_wearable(JNHairstyle(
@@ -1048,6 +1109,7 @@ init 0 python in jn_outfits:
         reference_name="jn_school_uniform",
         display_name="School uniform",
         unlocked=True,
+        is_jn_outfit=True,
         clothes=__ALL_WEARABLES["jn_clothes_school_uniform"],
         hairstyle=__ALL_WEARABLES["jn_hair_twintails"],
         accessory=__ALL_WEARABLES["jn_accessory_hairband_red"]
@@ -1056,6 +1118,7 @@ init 0 python in jn_outfits:
         reference_name="jn_casual_clothes",
         display_name="Casual clothes",
         unlocked=True,
+        is_jn_outfit=True,
         clothes=__ALL_WEARABLES["jn_clothes_casual"],
         hairstyle=__ALL_WEARABLES["jn_hair_bun"],
         accessory=__ALL_WEARABLES["jn_accessory_hairband_white"]
@@ -1064,6 +1127,7 @@ init 0 python in jn_outfits:
         reference_name="jn_star_pajamas",
         display_name="Star pajamas",
         unlocked=True,
+        is_jn_outfit=True,
         clothes=__ALL_WEARABLES["jn_clothes_star_pajamas"],
         hairstyle=__ALL_WEARABLES["jn_hair_down"],
         accessory=__ALL_WEARABLES["jn_accessory_hairband_hot_pink"]
@@ -1074,6 +1138,7 @@ init 0 python in jn_outfits:
         reference_name="jn_formal_dress",
         display_name="Formal dress",
         unlocked=False,
+        is_jn_outfit=True,
         clothes=__ALL_WEARABLES["jn_clothes_rose_lace_dress"],
         hairstyle=__ALL_WEARABLES["jn_hair_ponytail"],
         accessory=__ALL_WEARABLES["jn_accessory_purple_rose"]
@@ -1082,6 +1147,7 @@ init 0 python in jn_outfits:
         reference_name="jn_low_cut_dress",
         display_name="Low-cut dress",
         unlocked=False,
+        is_jn_outfit=True,
         clothes=__ALL_WEARABLES["jn_clothes_low_cut_dress"],
         hairstyle=__ALL_WEARABLES["jn_hair_twin_buns"],
         accessory=__ALL_WEARABLES["jn_accessory_hairband_white"]
@@ -1161,18 +1227,74 @@ label outfits_suggest_outfit:
     n 1unmaj "Ooh!{w=1.5}{nw}"
     extend 1fchbg " I'm always open to a suggestion!{w=0.5}{nw}"
     extend 1unmss " What did you have in mind?"
-
-    $ jn_outfits._LAST_OUTFIT = jn_outfits.get_outfit(JN_NATSUKI._outfit_name)
-    $ jn_outfits._PREVIEW_OUTFIT = jn_outfits.get_outfit(JN_NATSUKI._outfit_name)
+    python:
+        import copy
+        jn_outfits._LAST_OUTFIT = copy.copy(jn_outfits.get_outfit(JN_NATSUKI._outfit_name))
+        jn_outfits._PREVIEW_OUTFIT = copy.copy(jn_outfits.get_outfit(JN_NATSUKI._outfit_name))
+        jn_outfits._changes_made = False
 
     show natsuki idle at jn_left
     jump outfit_create_menu
 
 label outfits_remove_outfit:
-    n 1fwlts "This isn't done yet."
-    return
+    n 1unmpu "You want me to remove an outfit?{w=0.5}{nw}"
+    extend 1nllpu " I guess I can do that."
+    n 1nslss "But...{w=1.5}{nw}"
+    extend 1fsrpol " I'm keeping the ones I came up with."
+
+    python:
+        removable_outfits = jn_outfits.JNOutfit.filter_outfits(
+            outfit_list=jn_outfits.get_all_outfits(),
+            unlocked=True,
+            is_jn_outfit=False)
+        options = []
+
+        for outfit in removable_outfits:
+            options.append((outfit.display_name, outfit))
+
+        removable_outfits.sort(key = lambda option: option.display_name)
+
+    call screen scrollable_choice_menu(options, ("Nevermind.", None))
+
+    if isinstance(_return, jn_outfits.JNOutfit):
+        $ outfit_name = _return.display_name.lower()
+        n 1unmaj "Oh?{w=0.2} My [outfit_name]?"
+
+        menu:
+            n "You're sure you want me to remove it?"
+
+            "Yes, remove [outfit_name].":
+                if JN_NATSUKI.is_wearing_outfit(_return):
+                    # Change Natsuki out of the uniform to be removed, if she's wearing it
+                    n 1uwdaj "Oh! I totally forgot I'm wearing it already!"
+                    extend 1fslssl " Ehehe."
+
+                    play audio clothing_ruffle
+                    $ JN_NATSUKI.set_outfit(jn_outfits.get_outfit("jn_casual_clothes"))
+                    with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
+
+                n 1nchgn "Okaaay!{w=1.5}{nw}"
+                extend 1ncsbg " Just give me a second here...{w=1.5}{nw}"
+
+                if jn_outfits.delete_custom_outfit(_return):
+                    n 1fchsm "...And it's gone!"
+
+                else:
+                    n 1kllaj "...Oh."
+                    n 1klrun "Uhmm...{w=1.5}{nw}"
+                    extend 1knmpu " [player]?"
+                    n 1kllpo "I wasn't able to remove that for some reason."
+                    n 1kllss "Sorry..."
+
+            "Nevermind.":
+                n 1nnmbo "Oh."
+                n 1ullaj "Well...{w=1.5}{nw}"
+                extend 1nllca " okay then."
+
+    jump ch30_loop
 
 label outfit_create_menu:
+    show natsuki idle at jn_left
     call screen create_outfit
 
 label outfit_create_select_headgear:
@@ -1183,13 +1305,15 @@ label outfit_create_select_headgear:
         for wearable in unlocked_wearables:
             wearable_options.append((wearable.display_name, wearable))
 
-        wearable_options.sort(key = lambda option: option[-1])
+        wearable_options.sort(key = lambda option: option[1].display_name)
         wearable_options.insert(0, ("No headgear", "none"))
 
     call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
 
     if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNHeadgear):
+        play audio clothing_ruffle
         python:
+            jn_outfits._changes_made = True
             wearable_to_apply = None if _return == "none" else _return
             jn_outfits._PREVIEW_OUTFIT.headgear = wearable_to_apply
             JN_NATSUKI.set_outfit(jn_outfits._PREVIEW_OUTFIT)
@@ -1204,12 +1328,14 @@ label outfit_create_select_hairstyle:
         for wearable in unlocked_wearables:
             wearable_options.append((wearable.display_name, wearable))
 
-        wearable_options.sort(key = lambda option: option[-1])
+        wearable_options.sort(key = lambda option: option[1].display_name)
 
     call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
 
     if isinstance(_return, jn_outfits.JNHairstyle):
+        play audio hair_brush
         python:
+            jn_outfits._changes_made = True
             jn_outfits._PREVIEW_OUTFIT.hairstyle = _return
             JN_NATSUKI.set_outfit(jn_outfits._PREVIEW_OUTFIT)
 
@@ -1223,13 +1349,14 @@ label outfit_create_select_eyewear:
         for wearable in unlocked_wearables:
             wearable_options.append((wearable.display_name, wearable))
 
-        wearable_options.sort(key = lambda option: option[-1])
+        wearable_options.sort(key = lambda option: option[1].display_name)
         wearable_options.insert(0, ("No eyewear", "none"))
 
     call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
 
     if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNEyewear):
         python:
+            jn_outfits._changes_made = True
             wearable_to_apply = None if _return == "none" else _return
             jn_outfits._PREVIEW_OUTFIT.eyewear = wearable_to_apply
             JN_NATSUKI.set_outfit(jn_outfits._PREVIEW_OUTFIT)
@@ -1244,13 +1371,15 @@ label outfit_create_select_accessory:
         for wearable in unlocked_wearables:
             wearable_options.append((wearable.display_name, wearable))
 
-        wearable_options.sort(key = lambda option: option[-1])
+        wearable_options.sort(key = lambda option: option[1].display_name)
         wearable_options.insert(0, ("No accessory", -1))
 
     call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
 
     if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNAccessory):
+        play audio hair_clip
         python:
+            jn_outfits._changes_made = True
             wearable_to_apply = None if _return == "none" else _return
             jn_outfits._PREVIEW_OUTFIT.accessory = wearable_to_apply
             JN_NATSUKI.set_outfit(jn_outfits._PREVIEW_OUTFIT)
@@ -1265,13 +1394,15 @@ label outfit_create_select_necklace:
         for wearable in unlocked_wearables:
             wearable_options.append((wearable.display_name, wearable))
 
-        wearable_options.sort(key = lambda option: option[-1])
+        wearable_options.sort(key = lambda option: option[1].display_name)
         wearable_options.insert(0, ("No necklace", -1))
 
     call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
 
     if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNNecklace):
+        play audio necklace_clip
         python:
+            jn_outfits._changes_made = True
             wearable_to_apply = None if _return == "none" else _return
             jn_outfits._PREVIEW_OUTFIT.necklace = wearable_to_apply
             JN_NATSUKI.set_outfit(jn_outfits._PREVIEW_OUTFIT)
@@ -1286,20 +1417,47 @@ label outfit_create_select_clothes:
         for wearable in unlocked_wearables:
             wearable_options.append((wearable.display_name, wearable))
 
-        wearable_options.sort(key = lambda option: option[-1])
+        wearable_options.sort(key = lambda option: option[1].display_name)
 
     call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
 
     if isinstance(_return, jn_outfits.JNClothes):
+        play audio clothing_ruffle
         python:
+            jn_outfits._changes_made = True
             jn_outfits._PREVIEW_OUTFIT.clothes = _return
             JN_NATSUKI.set_outfit(jn_outfits._PREVIEW_OUTFIT)
 
     jump outfit_create_menu
 
 label outfit_create_quit:
-    $ JN_NATSUKI.set_outfit(jn_outfits._LAST_OUTFIT)
-    jump ch30_loop
+    if jn_outfits._changes_made:
+        n 1unmaj "Huh?{w=0.5}{nw}"
+        extend 1tnmbo " You're done already,{w=0.1} [player]?"
+        menu:
+            n "You're sure you don't want me to try more stuff on?"
+
+            "Yes, I'm not done yet.":
+                n 1fcsbg "Gotcha!"
+                extend 1tsqsm " What else have you got?"
+
+                jump outfit_create_menu
+
+            "No, we're done here.":
+                n 1nnmbo "Oh.{w=1.5}{nw}"
+                extend 1nllaj " Well...{w=0.3} okay."
+                n 1nsrpol "I was bored of changing anyway."
+
+                $ JN_NATSUKI.set_outfit(jn_outfits._LAST_OUTFIT)
+                jump ch30_loop 
+
+    else:
+        n 1tllaj "So...{w=1.5}{nw}"
+        extend 1tnmpo " you don't want me to change after all?"
+        n 1nlrbo "Huh."
+        n 1tnmss "Well,{w=0.1} if it ain't broke,{w=0.1} right?{w=0.5}{nw}"
+        extend 1fcssm " Ehehe."
+        jump ch30_loop 
 
 label outfit_create_save:
     n 1fllaj "Well,{w=0.5} finally!"
@@ -1339,13 +1497,24 @@ label outfit_create_save:
 
             n 1nchbg "Okaaay!{w=1.5}{nw}"
             extend 1ncsss " Let me just take some notes...{w=1.5}{nw}"
-            n 1uchsm "...And done!"
-            n 1fchbg "Thanks,{w=0.1} [player]!{w=0.5}{nw}"
-            extend 1uchsm " Ehehe."
 
-            $ jn_outfits.save_custom_outfit(jn_outfits._PREVIEW_OUTFIT)
-            jump ch30_loop
+            if jn_outfits.save_custom_outfit(jn_outfits._PREVIEW_OUTFIT):
+                n 1uchsm "...And done!"
+                n 1fchbg "Thanks,{w=0.1} [player]!{w=0.5}{nw}"
+                extend 1uchsm " Ehehe."
 
+                $ jn_outfits._changes_made = False
+                jump ch30_loop
+
+            else:
+                n 1kllaj "...Oh."
+                n 1klrun "Uhmm...{w=1.5}{nw}"
+                extend 1knmpu " [player]?"
+                n 1kllpo "I wasn't able to save that for some reason."
+                n 1kllss "Sorry..."
+
+                jump outfit_create_menu
+            
         "No, I'm not quite finished.":
             n 1nslpo "I {i}knew{/i} I should have brought a book...{w=2}{nw}"
             extend 1fsqsm " Ehehe."
@@ -1355,12 +1524,8 @@ label outfit_create_save:
             jump outfit_create_menu
 
 screen create_outfit():
-    # Quit
-    textbutton _("Quit"):
-        xpos 25
-        ypos 25
-        style "hkbd_button"
-        action Jump("outfit_create_quit")
+    if jn_outfits._changes_made:
+        text "Unsaved changes!" size 30 xpos 555 ypos 40 style "categorized_menu_button"
 
     # Outfit controls
     vbox:
@@ -1420,12 +1585,15 @@ screen create_outfit():
                 style "hkbd_label"
                 left_margin 10
 
-    # Save/reset
+    # Save/quit
     vbox:
         xpos 600
         ypos 450
 
-        hbox:
-            textbutton _("Save"):
-                style "hkbd_option"
-                action Jump("outfit_create_save")
+        textbutton _("Save"):
+            style "hkbd_option"
+            action Jump("outfit_create_save")
+
+        textbutton _("Quit"):
+            style "hkbd_option"
+            action Jump("outfit_create_quit")
