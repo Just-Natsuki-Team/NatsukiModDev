@@ -5397,7 +5397,7 @@ init 5 python:
             persistent._topic_database,
             label="talk_hygiene",
             unlocked=True,
-            prompt="Hygiene",
+            prompt="Proper Hygiene",
             category=["Health, You"],
             nat_says=True,
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
@@ -5407,64 +5407,70 @@ init 5 python:
     )
 
 label talk_hygiene:
-    n "..."
-    n "You know,{w=0.1} [player]..."
-    n "I've been wondering...{w=0.5} How well do you take care of yourself?"
+    n 1nllsl "..."
+    n 1nnmaj "You know,{w=0.1} [player]..."
+    n 1tnmaj "I've been wondering...{w=0.5} How well do you take care of yourself?"
     n "Like,{w=0.1} are you keeping up proper hygiene?"
-    n "It's really important,{w=0.1} you know!"
-    n "I'm not trying to be weird,{w=0.1} and I'm not gonna judge you..."
-    n "But if you’re struggling with mental health or something,{w=0.1} it can be hard to keep up with your needs."
-    n "..."
-    n "I...{w=0.5} I had to watch someone really close to me go through that."
-    n "You know...{w=0.5} Sayori?"
-    n "I don't want that to happen to you too,{w=0.1} [player]..."
-    n "So listen up,{w=0.1} okay?"
-    n "First of all,{w=0.1} make sure to shower as often as you can."
-    n "If you let it go for too long,{w=0.1} you'll start to feel gross and icky."
-    n "And you know what that leads to?"
-    n "Loss of motivation."
+    n 1fcupo "It's really important,{w=0.1} you know!"
+    n 1nslpo "I'm not trying to be weird,{w=0.1} and I'm not gonna judge you..."
+    n 1kplsr "But if you're struggling with mental health or something,{w=0.1} it can be hard to keep up with your needs."
+    n 1kcssr "..."
+    n 1kcsun "I...{w=0.5} I had to watch someone really close to me go through that."
+    n 1kcubo "You know...{w=0.5} Sayori?"
+    n 1fcsbo "I don't want that to happen to you too,{w=0.1} [player]..."
+    n 1fnmpo "So listen up,{w=0.1} okay?"
+    n 1nnmbg "First of all,{w=0.1} make sure to shower as often as you can."
+    n 1fplun "If you let it go for too long,{w=0.1} you'll start to feel gross and icky."
+    n 1tplpu "And you know what that leads to?"
+    n 1nsgbo "Loss of motivation."
     n "And you know what {i}that{/i} leads to?"
-    n "Not showering!"
-    n "So just take the time to do it, okay?"
-    n "You know I'd be totally willing to wait for you, ehehe."
-    n "Secondly, brush your hair!!"
+    n 1nwdsr "Not showering!"
+    n 1nnmsm "So just take the time to do it, okay?"
+    n 1nchgn "You know I'd be totally willing to wait for you,{w=0.1} ehehe."
+    n 1nnmbg "Secondly,{w=0.1} brush your hair!!"
     if persistent.jn_player_appearance_hair_length is None:
-        n "Hey,{w=0.1} wait a second..."
-        n "You don't have hair!"
-        n "Er...{w=0.5} Moving on!"
+        n 1nwdbo "Hey,{w=0.1} wait a second..."
+        n 1uwdaj "You don't have hair!"
+        n 1nslun "Er...{w=0.5} Moving on!"
     else:
         n "The longer you wait to brush it, the harder it is to do so!"
-        n "It gets so tangled and messy, and it can take hours if you leave it long enough!"
-        n "Worst-case scenario, you have to cut it all off!"
+        n 1ksgan "It gets so tangled and messy,{w=0.1} and it can take hours to get it back to normal if you leave it long enough!"
+        n "Worst-case scenario,{w=0.1} you have to cut it all off!"
+        n 1knmbg "I trust you won't let that happen."
+        n 1ncssm "Anyways..."
     $ already_discussed_teeth = get_topic("talk_natsukis_fang").shown_count > 0
     if already_discuseed_teeth:
-        n "Secondly, brush your teeth!"
-        n "But I'll spare you the lecture on this, since we've already talked about it."
+        n 1nchsm "Finally,{w=0.1} brush your teeth!"
+        n "But I'll spare you the lecture on this,{w=0.1} since we've already talked about it."
     else:
-        n "Finally,{w=0.1} brush your teeth twice a day for two minutes."
-        n "This will keep plaque from eating away at your teeth.{w=0.2} Cavities hurt!"
-        n "...{w=0.5}I should know."
-        n "You know I really like sweets!"
-        n "But y'know,{w=0.1} I thankfully learned the proper way to keep my teeth healthy before all of my adult teeth grew in."
-        n "Can you imagine the dental bills?!"
+        n 1nchsm "Finally,{w=0.1} brush your teeth twice a day for two minutes."
+        n 1ucuaj "This will keep plaque from eating away at your teeth.{w=0.2} Cavities hurt!"
+        n 1nslaj "...{w=0.5}I should know."
+        n 1unmbo "As you know,{w=0.1} I really like sweets!"
+        n 1unmsm "But even so,{w=0.1} I thankfully learned the proper way to keep my teeth healthy before all of my adult teeth grew in."
+        n 1ucuaj "Can you imagine the dental bills I would have had?!"
+        n 1nchgn "Either way, check out these pearly whites I got now!"
+        n 1uchgn "..."
+        n 1uchbs "Ahaha! I am pretty proud of my teeth."
+        n 1tnmsm "Take it from me: Brush your teeth!!"
         
-    n "...{w=0.5}Ehehe, long spiel, eh?"
+    n 1nllsm "...{w=0.5}Ehehe,{w=0.1} long spiel,{w=0.1} eh?"
         
     menu:
-        n "But seriously,{w=0.1} make sure you're doing those things,{w=0.1} okay [player]?{nw}"
+        n 1nchsm "But seriously,{w=0.1} make sure you're doing those things,{w=0.1} okay [player]?{nw}"
         "I am.":
-            n "You are?{w=0.2} I figured so." 
-            n "Good!{w=0.2} I'm proud of you!"
-            n "Thanks for taking care of yourself, ehehe!"
-    
+            n 1unmbs "You are?{w=0.2} I figured so." 
+            n 1uchbs "Good!{w=0.2} I'm proud of you!"
+            n 1uchgn "Thanks for taking care of yourself,{w=0.1} ehehe!"
+
         "I'll start.":
-            n "Really?"
-            n "Thanks for taking care of yourself for me,{w=0.1} [player]."
+            n 1uchsm "Really?"
+            n 1knmsm "Thanks for taking care of yourself for me,{w=0.1} [player]."
             n "It means a lot."
         
         "...":
-            n "...{w=0.5} Hey,{w=0.1} listen,{w=0.1} I really didn't mean to make you uncomfortable or anything."
-            n "But it really is important,{w=0.1} okay?"
-            n "Please consider it."
+            n 1knmbo "...{w=0.5} Hey,{w=0.1} listen,{w=0.1} I really didn't mean to make you uncomfortable or anything."
+            n 1knmaj "But it really is important,{w=0.1} okay?"
+            n "Please consider it.{w=0.2} For me?"
         
     return
