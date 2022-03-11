@@ -49,6 +49,14 @@ init 0 python in jn_outfits:
             display_name,
             unlocked,
         ):
+            """
+            Constructor.
+
+            IN:
+                - reference_name - The name used to uniquely identify this wearable and refer to it internally
+                - display_name - The name displayed to the user
+                - unlocked - Whether or not this wearable is selectable to the player on menus
+            """
             self.reference_name = reference_name
             self.display_name = display_name
             self.unlocked = unlocked
@@ -200,7 +208,7 @@ init 0 python in jn_outfits:
     class JNOutfit():
         """
         Describes a complete outfit for Natsuki to wear; including clothing, hairstyle, etc.
-        At minimum, an outfit must consist of clothes and a hairstyle
+        At minimum, an outfit must consist of clothes and a hairstyle.
         """
         def __init__(
             self,
@@ -215,10 +223,27 @@ init 0 python in jn_outfits:
             headgear=None,
             necklace=None
         ):
+            """
+            Constructor.
+
+            IN:
+                - reference_name - The name used to uniquely identify this outfit and refer to it internally
+                - display_name - The name displayed to the user
+                - unlocked - Whether or not this outfit is selectable to the player on menus
+                - is_jn_outfit - Whether or not this outfit is an official JN outfit. Official outfits cannot be deleted/modified.
+                - clothes - JNClothes associated with this outfit.
+                - hairstyle - JNHairstyle associated with this outfit.
+                - accessory - JNAccessory associated with this outfit. Optional.
+                - eyewear - JNEyewear associated with this outfit. Optional.
+                - headgear - JNHeadgear associated with this outfit. Optional.
+                - necklace - JNNecklace associated with this outfit. Optional.
+            """
+            # Clothes are required
             if clothes is None:
                 raise TypeError("Outfit clothing cannot be None")
                 return
 
+            # Hairstyle is required
             if hairstyle is None:
                 raise TypeError("Outfit hairstyle cannot be None")
                 return
@@ -1237,6 +1262,12 @@ label outfits_suggest_outfit:
     jump outfit_create_menu
 
 label outfits_remove_outfit:
+    if len(jn_outfits.get_all_outfits()) == 0:
+        # No outfits, no point proceeding
+        n 1tnmbo "Huh?{w=0.5}{nw}"
+        extend 1fchbg "I don't {i}have{/i} any outfit ideas from you, dummy!"
+        jump ch30_loop
+
     n 1unmpu "You want me to remove an outfit?{w=0.5}{nw}"
     extend 1nllpu " I guess I can do that."
     n 1nslss "But...{w=1.5}{nw}"
@@ -1437,18 +1468,22 @@ label outfit_create_quit:
         menu:
             n "You're sure you don't want me to try more stuff on?"
 
+            # Go back to editor
             "Yes, I'm not done yet.":
                 n 1fcsbg "Gotcha!"
                 extend 1tsqsm " What else have you got?"
 
                 jump outfit_create_menu
 
+            # Cancel, ditch the changes
             "No, we're done here.":
                 n 1nnmbo "Oh.{w=1.5}{nw}"
                 extend 1nllaj " Well...{w=0.3} okay."
                 n 1nsrpol "I was bored of changing anyway."
 
+                play audio clothing_ruffle
                 $ JN_NATSUKI.set_outfit(jn_outfits._LAST_OUTFIT)
+                with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
                 jump ch30_loop 
 
     else:
@@ -1532,6 +1567,7 @@ screen create_outfit():
         xpos 600
         ypos 140
         hbox:
+            # Headgear
             textbutton _("Headgear"):
                 style "hkbd_option"
                 action Jump("outfit_create_select_headgear")
@@ -1541,6 +1577,7 @@ screen create_outfit():
                 left_margin 10
 
         hbox:
+            # Hairstyles
             textbutton _("Hairstyles"):
                 style "hkbd_option"
                 action Jump("outfit_create_select_hairstyle")
@@ -1550,6 +1587,7 @@ screen create_outfit():
                 left_margin 10
 
         hbox:
+            # Eyewear
             textbutton _("Eyewear"):
                 style "hkbd_option"
                 action Jump("outfit_create_select_eyewear")
@@ -1559,6 +1597,7 @@ screen create_outfit():
                 left_margin 10
   
         hbox:
+            # Accessories
             textbutton _("Accessories"):
                 style "hkbd_option"
                 action Jump("outfit_create_select_accessory")
@@ -1568,6 +1607,7 @@ screen create_outfit():
                 left_margin 10
 
         hbox:
+            # Necklaces
             textbutton _("Necklaces"):
                 style "hkbd_option"
                 action Jump("outfit_create_select_necklace")
@@ -1577,6 +1617,7 @@ screen create_outfit():
                 left_margin 10
 
         hbox:
+            # Clothes
             textbutton _("Clothes"):
                 style "hkbd_option"
                 action Jump("outfit_create_select_clothes")
