@@ -48,6 +48,7 @@ init 0 python in jn_outfits:
             reference_name,
             display_name,
             unlocked,
+            is_jn_wearable
         ):
             """
             Constructor.
@@ -56,10 +57,12 @@ init 0 python in jn_outfits:
                 - reference_name - The name used to uniquely identify this wearable and refer to it internally
                 - display_name - The name displayed to the user
                 - unlocked - Whether or not this wearable is selectable to the player on menus
+                - is_jn_wearable - Whether or not this wearable is an official JN wearable. Official wearables cannot be deleted/modified.
             """
             self.reference_name = reference_name
             self.display_name = display_name
             self.unlocked = unlocked
+            self.is_jn_wearable = is_jn_wearable
 
         @staticmethod
         def load_all():
@@ -83,6 +86,7 @@ init 0 python in jn_outfits:
         def filter_wearables(
             wearable_list,
             unlocked=None,
+            is_jn_wearable=None,
             not_reference_name=None,
             wearable_type=None
         ):
@@ -92,6 +96,7 @@ init 0 python in jn_outfits:
             IN:
                 - wearable_list - the list of JNWearable child wearables to query
                 - unlocked - the boolean unlocked state to filter for
+                - is_jn_wearable - the boolean is_jn_wearable state to filter for
                 - not_reference_name - list of reference_names the wearable must not have 
                 - wearable_type the wearable type to filter for
 
@@ -103,6 +108,7 @@ init 0 python in jn_outfits:
                 for _wearable in wearable_list
                 if _wearable.__filter_wearable(
                     unlocked,
+                    is_jn_wearable,
                     not_reference_name,
                     wearable_type
                 )
@@ -110,7 +116,7 @@ init 0 python in jn_outfits:
 
         def as_dict(self):
             """
-            Exports a dict representation of this wearable.
+            Exports a dict representation of this wearable; this is for data we want to persist.
 
             OUT:
                 dictionary representation of the wearable object
@@ -143,6 +149,7 @@ init 0 python in jn_outfits:
         def __filter_wearable(
             self,
             unlocked=None,
+            is_jn_wearable=None,
             not_reference_name=None,
             wearable_type=None
         ):
@@ -152,6 +159,7 @@ init 0 python in jn_outfits:
             IN:
                 - wearable_list - the list of JNWearable child wearables to query
                 - unlocked - the boolean unlocked state to filter for
+                - is_jn_wearable - the boolean is_jn_wearable state to filter for
                 - not_reference_name - list of reference_names the wearable must not have 
                 - wearable_type the wearable type to filter for
 
@@ -159,6 +167,9 @@ init 0 python in jn_outfits:
                 - True, if the wearable meets the filter criteria. Otherwise False
             """
             if unlocked is not None and self.unlocked != unlocked:
+                return False
+
+            elif is_jn_wearable is not None and self.is_jn_wearable != is_jn_wearable:
                 return False
 
             elif not_reference_name is not None and self.reference_name in not_reference_name:
@@ -320,7 +331,7 @@ init 0 python in jn_outfits:
 
         def as_dict(self):
             """
-            Exports a dict representation of this outfit.
+            Exports a dict representation of this outfit; this is for data we want to persist.
 
             OUT:
                 dictionary representation of the outfit object
@@ -572,7 +583,8 @@ init 0 python in jn_outfits:
             kwargs = {
                 "reference_name": json["reference_name"],
                 "display_name": json["display_name"],
-                "unlocked": json["unlocked"]
+                "unlocked": json["unlocked"],
+                "is_jn_wearable": False
             }
 
             if json["category"] == "hairstyle":
@@ -962,282 +974,336 @@ init 0 python in jn_outfits:
     __register_wearable(JNHairstyle(
         reference_name="jn_hair_bedhead",
         display_name="Bedhead",
-        unlocked=True
+        unlocked=True,
+        is_jn_wearable=True,
     ))
     __register_wearable(JNHairstyle(
         reference_name="jn_hair_bun",
         display_name="Bun",
-        unlocked=True
+        unlocked=True,
+        is_jn_wearable=True
     ))
     __register_wearable(JNHairstyle(
         reference_name="jn_hair_twintails",
         display_name="Twintails",
-        unlocked=True
+        unlocked=True,
+        is_jn_wearable=True
     ))
     __register_wearable(JNHairstyle(
         reference_name="jn_hair_down",
         display_name="Down",
-        unlocked=True
+        unlocked=True,
+        is_jn_wearable=True
     ))
     __register_wearable(JNHairstyle(
         reference_name="jn_hair_messy_bun",
         display_name="Messy bun",
-        unlocked=True
+        unlocked=True,
+        is_jn_wearable=True
     ))
     __register_wearable(JNHairstyle(
         reference_name="jn_hair_ponytail",
         display_name="Ponytail",
-        unlocked=True
+        unlocked=True,
+        is_jn_wearable=True
     ))
     __register_wearable(JNHairstyle(
         reference_name="jn_hair_super_messy",
         display_name="Super messy",
-        unlocked=True
+        unlocked=True,
+        is_jn_wearable=True
     ))
     __register_wearable(JNHairstyle(
         reference_name="jn_hair_princess_braids",
         display_name="Princess braids",
-        unlocked=True
+        unlocked=True,
+        is_jn_wearable=True
     ))
     __register_wearable(JNHairstyle(
         reference_name="jn_hair_low_bun",
         display_name="Low bun",
-        unlocked=True
+        unlocked=True,
+        is_jn_wearable=True
     ))
     __register_wearable(JNHairstyle(
         reference_name="jn_hair_pigtails",
         display_name="Pigtails",
-        unlocked=True
+        unlocked=True,
+        is_jn_wearable=True
     ))
     __register_wearable(JNHairstyle(
         reference_name="jn_hair_twin_buns",
         display_name="Twin buns",
-        unlocked=True
+        unlocked=True,
+        is_jn_wearable=True
     ))
     __register_wearable(JNHairstyle(
         reference_name="jn_hair_down_long",
         display_name="Long hair down",
-        unlocked=True
+        unlocked=True,
+        is_jn_wearable=True
     ))
 
     # Official JN eyewear
     __register_wearable(JNEyewear(
         reference_name="jn_eyewear_circles",
         display_name="Circle glasses",
-        unlocked=True
+        unlocked=True,
+        is_jn_wearable=True
     ))
 
     # Official JN accessories
     __register_wearable(JNAccessory(
         reference_name="jn_accessory_hairband_gray",
         display_name="Gray hairband",
-        unlocked=True
+        unlocked=True,
+        is_jn_wearable=True
     ))
     __register_wearable(JNAccessory(
         reference_name="jn_accessory_hairband_green",
         display_name="Green hairband",
-        unlocked=True
+        unlocked=True,
+        is_jn_wearable=True
     ))
     __register_wearable(JNAccessory(
         reference_name="jn_accessory_hairband_hot_pink",
         display_name="Hot pink hairband",
-        unlocked=True
+        unlocked=True,
+        is_jn_wearable=True
     ))
     __register_wearable(JNAccessory(
         reference_name="jn_accessory_hairband_purple",
         display_name="Purple hairband",
-        unlocked=True
+        unlocked=True,
+        is_jn_wearable=True
     ))
     __register_wearable(JNAccessory(
         reference_name="jn_accessory_hairband_red",
         display_name="Red hairband",
-        unlocked=True
+        unlocked=True,
+        is_jn_wearable=True
     ))
     __register_wearable(JNAccessory(
         reference_name="jn_accessory_hairband_white",
         display_name="White hairband",
-        unlocked=True
+        unlocked=True,
+        is_jn_wearable=True
     ))
     __register_wearable(JNAccessory(
         reference_name="jn_accessory_purple_rose",
         display_name="Purple rose",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
 
     # Official JN clothes
     __register_wearable(JNClothes(
         reference_name="jn_clothes_school_uniform",
         display_name="School uniform",
-        unlocked=True
+        unlocked=True,
+        is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_casual",
         display_name="Casual clothes",
-        unlocked=True
+        unlocked=True,
+        is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_heart_sweater",
         display_name="Heart sweater",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_low_cut_dress",
         display_name="Low-cut dress",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_magical_girl",
         display_name="Magical girl cosplay",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_red_rose_lace_dress",
         display_name="Valentine's dress",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_rose_lace_dress",
         display_name="Rose lace dress",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_sango_cosplay",
         display_name="Sango cosplay",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_star_pajamas",
         display_name="Star pajamas",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_trainer_cosplay",
         display_name="Trainer cosplay",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_lolita_christmas_dress",
         display_name="Lolita Christmas dress",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_lolita_dress",
         display_name="Lolita dress",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_lolita_school_uniform",
         display_name="Lolita school uniform",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_long_sleeved_shirt_nya",
         display_name="Long-sleeved shirt",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_pastel_goth_overalls",
         display_name="Pastel goth overalls",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_qeeb_sweater",
         display_name="Qeeb sweater",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_ruffled_swimsuit",
         display_name="Ruffled swimsuit",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_sleeveless_heart_sweater",
         display_name="Sleeveless heart sweater",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_sparkly_ballgown",
         display_name="Sparkly ballgown",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_square_bra",
         display_name="Square bra",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_striped_off_shoulder_sweater",
         display_name="Off-shoulder sweater",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_hoodie_not_cute",
         display_name="'Not cute' hoodie",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_hoodie_turtleneck",
         display_name="Turtleneck hoodie",
-        unlocked=True
+        unlocked=True,
+        is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_sugar_shirt",
         display_name="Sugar shirt",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
 
     # Official JN headgear
     __register_wearable(JNHeadgear(
         reference_name="jn_headgear_santa_hat",
         display_name="Santa hat",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNHeadgear(
         reference_name="jn_headgear_trainer_hat",
         display_name="Trainer hat",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNHeadgear(
         reference_name="jn_headgear_cat_ears",
         display_name="Cat ears",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNHeadgear(
         reference_name="jn_headgear_fox_ears",
         display_name="Fox ears",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNHeadgear(
         reference_name="jn_headgear_lolita_hat",
         display_name="Lolita hat",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
 
     # Official JN necklaces
     __register_wearable(JNNecklace(
         reference_name="jn_necklace_bell_collar",
         display_name="Bell collar",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNNecklace(
         reference_name="jn_necklace_plain_choker",
         display_name="Plain choker",
-        unlocked=True
+        unlocked=True,
+        is_jn_wearable=True
     ))
     __register_wearable(JNNecklace(
         reference_name="jn_necklace_pink_scarf",
         display_name="Pink scarf",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNNecklace(
         reference_name="jn_necklace_spiked_choker",
         display_name="Bell collar",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
     __register_wearable(JNNecklace(
         reference_name="jn_necklace_thin_choker",
         display_name="Thin choker",
-        unlocked=False
+        unlocked=False,
+        is_jn_wearable=True
     ))
 
     # Starter official JN outfits
