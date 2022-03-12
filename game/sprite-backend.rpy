@@ -393,6 +393,9 @@ init 1 python:
         If this method can't find an image and it follows the pattern of Natsuki's sprites, it'll try to generate one.
 
         Main change to this function is the ability to auto generate displayables
+
+        IN:
+            - self - Reference to the calling narration statement, so we can access its args (name and spritecode)
         """
         name = self.name
 
@@ -400,11 +403,25 @@ init 1 python:
             self.target = name
             return True
 
+        # Name is a tuple of (character_name, spritecode); we use these to determine displayable
         if not isinstance(name, tuple):
             name = tuple(name.split())
 
         def error(msg):
-            self.target = renpy.text.text.Text(msg, color=(255, 0, 0, 255), xanchor=0, xpos=0, yanchor=0, ypos=0)
+            """
+            Sets the image target to a displayable (text) for a missing image.
+
+            IN:
+                - msg - The message to display for the fallback displayable
+            """
+            self.target = renpy.text.text.Text(
+                msg,
+                color=(255, 0, 0, 255),
+                xanchor=0,
+                xpos=0,
+                yanchor=0,
+                ypos=0
+            )
 
             if renpy.config.debug:
                 raise Exception(msg)
@@ -412,6 +429,10 @@ init 1 python:
         args = [ ]
 
         while name:
+            # Here, we are iterating through the characters of the spritecode and trying to find a 
+            # pre-existing image for it to save generating every time, stopping if we find one.
+            #
+            # This also lets us check to make sure the narration isn't trying to use a hardcoded image
             target = renpy.display.image.images.get(name, None)
 
             if target is not None:
@@ -421,6 +442,7 @@ init 1 python:
             name = name[:-1]
 
         if not name:
+            # We didn't find an image corresponding to the spritecode, or a hardcoded image, so we generate a new one
             if (
                 isinstance(self.name, tuple)
                 and len(self.name) == 2
@@ -434,6 +456,7 @@ init 1 python:
                 target = renpy.display.image.images[name]
 
             else:
+                # Image couldn't be generated
                 error("Image '%s' not found." % ' '.join(self.name))
                 return False
 
@@ -461,6 +484,7 @@ init 1 python:
 
         return True
 
+    # Finally, feed back to Ren'Py the image we actually want to display for the narration
     renpy.display.image.ImageReference.find_target = _find_target_override
 
 # Sprite code format:
