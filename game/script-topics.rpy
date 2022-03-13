@@ -5395,7 +5395,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_hygiene",
+            label="talk_maintaining_proper_hygiene",
             unlocked=True,
             prompt="Proper hygiene",
             category=["Health, You"],
