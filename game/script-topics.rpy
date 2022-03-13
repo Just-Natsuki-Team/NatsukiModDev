@@ -5400,7 +5400,7 @@ init 5 python:
             prompt="Proper Hygiene",
             category=["Health, You"],
             nat_says=True,
-            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
