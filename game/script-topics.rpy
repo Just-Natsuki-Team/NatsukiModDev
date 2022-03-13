@@ -5344,6 +5344,39 @@ label talk_fighting_drowsiness:
 
     return
 
+#Unclench your jaw, player
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_relax_jaw",
+            unlocked=True,
+            prompt="Unclench your jaw",
+            category=["Health"],
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_relax_jaw:
+    n 1unmaj "Hey.{w=0.3}{nw}"
+    extend 1nllca" I was just thinking..."
+    n 1tllsr "There's this bad habit I have, and maybe you do it too."
+    n 1tnmsr "When you're just resting, or doing whatever,{w=0.2} do you keep your jaw clenched?"
+    n 1nnmss "I bet if you do, you don't even notice you're doing it half the time.{w=0.2} Maybe it even feels like the most natural way to sit."
+    n 1klrbg "I have to remind myself all the time,{w=0.2} 'relax your freaking jaw!'"
+    n 1kcsem "{i}Especially{/i} if I'm going through something stressful. Then it's hard to even stop!"
+    n 1ksgsr "You might not think something as tiny as that would really matter, but I've heard it can cause you a lot of pain down the line."
+    n 1knmaj "I'd bet you already know you can wear down joints from strain in your knees and stuff,{w=0.2}{nw}"
+    extend 1kskaw "but you can even get joint pain in your {i}face,{/i}{w=0.1} [player]!"
+    n 1fchem "That sounds like it's just the {i}worst!{/i}"
+    n 1fnmun "And it's from the same thing I'm talking about--clenching your jaw all the time.{w=0.3} So I'm doing my best to stop."
+    n 1fchsm "So, not to be the Posture Police or anything, but...{w=0.2} just do your best to remember. You'll thank me later."
+
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
