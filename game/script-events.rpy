@@ -230,7 +230,6 @@ label event_relationship_doubts:
             pass
 
     $ jn_events.display_visuals("1fcsupl")
-    show poetry_attempt zorder jn_events.JN_EVENT_PROP_ZORDER
     $ jn_globals.force_quit_enabled = True
 
     n 1fsqunl "..."
@@ -293,7 +292,6 @@ label event_code_fiddling:
             pass
 
     $ jn_events.display_visuals("1fslpo")
-    show poetry_attempt zorder jn_events.JN_EVENT_PROP_ZORDER
     $ jn_globals.force_quit_enabled = True
 
     $ player_initial = jn_utils.get_player_initial()
