@@ -97,6 +97,7 @@ init 0 python:
     TOPIC_TYPE_ADMISSION = "ADMISSION"
     TOPIC_TYPE_COMPLIMENT = "COMPLIMENT"
     TOPIC_TYPE_APOLOGY = "APOLOGY"
+    TOPIC_TYPE_EVENT = "EVENT"
 
     TOPIC_LOCKED_PROP_BASE_MAP = {
         #Things which shouldn't change
@@ -840,6 +841,9 @@ init -990 python in jn_globals:
     # Tracks whether the player is or is not currently in some topic flow
     player_is_in_conversation = False
 
+    # Tracks if the player is permitted to force quit; use this to block force quits during sequences
+    force_quit_enabled = True
+
     # Constants; use these for anything we only want defined once and used in a read-only context
 
     # Endearments Natsuki may use at the highest levels of affinity to refer to her player
@@ -1424,7 +1428,7 @@ init python in jn_utils:
         OUT:
             First letter of the player's name.
         """
-        return list(player)[0]
+        return list(store.player)[0]
 
     def get_string_contains_profanity(string):
         """
@@ -1482,7 +1486,7 @@ define audio.t4g = "<loop 1.000>bgm/4g.ogg"
 
 # JN resources
 
-# Single-play sound effects
+# Singleton sound effects
 define audio.camera_shutter = "mod_assets/sfx/camera_shutter.mp3"
 define audio.select_hover = "mod_assets/sfx/select_hover.mp3"
 define audio.select_confirm = "mod_assets/sfx/select_confirm.mp3"
@@ -1493,6 +1497,9 @@ define audio.drawer = "mod_assets/sfx/drawer.mp3"
 define audio.smack = "mod_assets/sfx/smack.mp3"
 define audio.clothing_ruffle = "mod_assets/sfx/clothing_ruffle.mp3"
 define audio.notification = "mod_assets/sfx/notification.ogg"
+define audio.page_turn = "mod_assets/sfx/page_turn.ogg"
+define audio.paper_crumple = "mod_assets/sfx/paper_crumple.ogg"
+define audio.paper_throw = "mod_assets/sfx/paper_throw.ogg"
 define audio.chair_in = "mod_assets/sfx/chair_in.ogg"
 define audio.chair_out = "mod_assets/sfx/chair_out.ogg"
 define audio.chair_out_in = "mod_assets/sfx/chair_out_in.ogg"
@@ -1557,7 +1564,11 @@ init -999 python:
         """
         This checks to ensure an input or menu screen is not up before allowing a force quit, as these crash the game. Thanks, Tom.
         """
-        if not renpy.get_screen("input") and not renpy.get_screen("choice"):
+        if (
+            not renpy.get_screen("input") 
+            and not renpy.get_screen("choice")
+            and jn_globals.force_quit_enabled
+        ):
             renpy.call("try_force_quit")
 
     class JNEvent(object):

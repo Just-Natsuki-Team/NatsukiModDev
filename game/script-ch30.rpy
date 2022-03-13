@@ -25,14 +25,25 @@ label ch30_holiday_check:
     #FALL THROUGH
 
 label ch30_visual_setup:
+    # Hide everything so we can set up behind the scenes
     show black zorder 99
+
+    # Draw background
     $ main_background.appear()
+
+    # Draw sky
+    if main_background.is_day():
+        if persistent.jn_random_weather:
+            $ jn_atmosphere.show_random_sky() 
+
+        else:
+            $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
 
     #FALL THROUGH
 
 label ch30_init:
     python:
-        import store.jn_utils as jn_utils
+        import random
 
         # Determine if the player should get a prolonged leave greeting
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
@@ -45,54 +56,47 @@ label ch30_init:
         persistent.jn_total_visit_count += 1
         persistent.jn_last_visited_date = datetime.datetime.now()
 
-        # Let's pick a greeting
-        if not jn_topic_in_event_list_pattern("^greeting_"):
-            push(greetings.select_greeting())
-
-        # Do all var-sets, resets, and sanity checks prior to entering the loop here
-
-        # Reset the previous admission/apology, now that Natsuki will have picked a greeting
-        persistent.jn_player_admission_type_on_quit = None
-        persistent.jn_player_apology_type_on_quit = None
-
-        if persistent.jn_debug_open_watch_on_load:
-            jn_debug.toggle_show_tracked_watch_items(True)
-
-        if persistent.jn_random_weather and 6 < store.jn_get_current_hour() <= 18:
-            jn_atmosphere.show_random_sky()
-
-        elif (
-            store.jn_get_current_hour() > 6 and store.jn_get_current_hour() <= 18
-            and not jn_atmosphere.is_current_weather_sunny()
-        ):
-            jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
-
-        # Load outfits, select outfit if automatic outfit changes are enabled
+        # Load outfits from disk and corresponding persistent data
         jn_outfits.load_custom_wearables()
         jn_outfits.load_custom_outfits()
         jn_outfits.JNWearable.load_all()
         jn_outfits.JNOutfit.load_all()
 
-        # Set the outfit
+        # Set Natsuki's outfit
         if persistent.jn_natsuki_auto_outfit_change_enabled:
             # Real-time outfit selection
             JN_NATSUKI.set_outfit(jn_outfits.get_realtime_outfit())
 
         else:
-            # Custom outfit/default outfit selection
             if jn_outfits.outfit_exists(persistent.jn_natsuki_outfit_on_quit):
+                # Custom outfit/default outfit selection
                 JN_NATSUKI.set_outfit(jn_outfits.get_outfit(persistent.jn_natsuki_outfit_on_quit))
 
             else:
+                # Fallback to Natsuki's school uniform
                 JN_NATSUKI.set_outfit(jn_outfits.get_outfit("jn_school_uniform"))
+
+        # Pick a greeting or random event
+        if not jn_topic_in_event_list_pattern("^greeting_"):
+            if (
+                random.randint(0, 2) == 1
+                and (not persistent.jn_player_admission_type_on_quit and not persistent.jn_player_apology_type_on_quit)
+                and jn_events.select_event()
+            ):
+                push(jn_events.select_event())
+                renpy.call("call_next_topic", False)
+
+            else:
+                push(greetings.select_greeting())
+                persistent.jn_player_admission_type_on_quit = None
+                persistent.jn_player_apology_type_on_quit = None
 
     # Prepare visuals
     hide black with Dissolve(1.5) 
     show screen hkb_overlay
     play music audio.just_natsuki_bgm
 
-    #And finally, we head into the loop
-    jump ch30_loop
+    #FALL THROUGH
 
 #The main loop
 label ch30_loop:
@@ -135,8 +139,9 @@ label ch30_wait:
     jump ch30_loop
 
 #Other labels
-label call_next_topic:
-    show natsuki at jn_center
+label call_next_topic(show_natsuki=True):
+    if show_natsuki:
+        show natsuki at jn_center
 
     if persistent._event_list:
         $ _topic = persistent._event_list.pop(0)
@@ -465,7 +470,8 @@ label extras_menu:
 
 label try_force_quit:
     # Decision making that overrides the default Ren'Py quit behaviour
-    if (jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete
+    if (
+        jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete
         and jn_farewells.JNForceQuitStates(persistent.jn_player_force_quit_state) == jn_farewells.JNForceQuitStates.not_force_quit
     ):
         # Player hasn't force quit before, special dialogue
