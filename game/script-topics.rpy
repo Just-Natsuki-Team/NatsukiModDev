@@ -5386,7 +5386,7 @@ label talk_fear_of_spiders:
         return
 
     else:
-        n 1fcsan "...Are {i}you{/i} afraid of asking me dumb questions,{w=0.1} that you're the {i}last{/i} person I'd want to answer them for?!"
+        n 1fcsan "...Are {i}you{/i} afraid of asking me dumb questions,{w=0.1} since you're the {i}last{/i} person I'd want to answer them for?!"
         n 1fsqun "..."
         n 1fslpu "Yeah.{w=2}{nw}"
         extend 1fsqsr " Apparently not,{w=0.1} huh?"
