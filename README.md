@@ -22,14 +22,14 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
         <a href="https://github.com/multimokia">
             <img src="https://avatars.githubusercontent.com/u/22531674?v=4" width="100;" alt="multimokia"/>
             <br />
-            <sub><b>multimokia</b></sub>
+            <sub><b>Multimokia</b></sub>
         </a>
     </td>
     <td align="center">
         <a href="https://github.com/spaghetsie">
             <img src="https://avatars.githubusercontent.com/u/64098288?v=4" width="100;" alt="spaghetsie"/>
             <br />
-            <sub><b>spaghetsie</b></sub>
+            <sub><b>Spaghetsie</b></sub>
         </a>
     </td>
     <td align="center">
