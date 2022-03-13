@@ -27,6 +27,52 @@ init python in topics:
     import store
     TOPIC_MAP = dict()
 
+label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
+    n "Okay!"
+    jump ch30_loop
+
+#---------------date_menu_topics--------------------
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="date_go2_beach",
+            unlocked=True,
+            prompt="Wanna go to the beach?",
+            player_says=True,
+            category=["date"]
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label date_go2_beach:
+    n "I love the beach"
+    n "Let's go!"
+    $ main_background.changeLocation(beach)
+    $ main_background.draw(full_redraw=True)
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="date_go2_room",
+            unlocked=True,
+            prompt="Let's return",
+            player_says=True,
+            category=["date"]
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label date_go2_room:
+    n "Heading back then?"
+    n "Alright!"
+    $ main_background.changeLocation(classroom)
+    $ main_background.draw(dissolve_all=True, full_redraw=True)
+    return
+
 # Special dialogue for when out of random topics
 label talk_out_of_topics:
     if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
@@ -5403,52 +5449,6 @@ label talk_custom_outfits_unlock:
     extend 1tnmss " where were we?"
 
     $ persistent.jn_custom_outfits_unlocked = True
-    return
-
-label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
-    n "Okay!"
-    jump ch30_loop
-
-#---------------date_menu_topics--------------------
-
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="date_go2_beach",
-            unlocked=True,
-            prompt="Wanna go to the beach?",
-            player_says=True,
-            category=["date"]
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-label date_go2_beach:
-    n "I love the beach"
-    n "Let's go!"
-    $ main_background.changeLocation(beach)
-    $ main_background.draw(full_redraw=True)
-    return
-
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="date_go2_room",
-            unlocked=True,
-            prompt="Let's return",
-            player_says=True,
-            category=["date"]
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-label date_go2_room:
-    n "Heading back then?"
-    n "Alright!"
-    $ main_background.changeLocation(classroom)
-    $ main_background.draw(dissolve_all=True, full_redraw=True)
     return
 
 # Natsuki talks about her opinion and advice proper hygiene.
