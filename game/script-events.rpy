@@ -22,7 +22,7 @@ init python in jn_events:
             EVENT_MAP.values(),
             unlocked=True,
             affinity=jn_affinity.get_affinity_state(),
-            is_seen=False,
+            is_seen=True,
             **kwargs
         )
 
@@ -41,19 +41,8 @@ init python in jn_events:
         IN:
             - natsuki_sprite_code - The sprite code to show Natsuki displaying before dialogue
         """
-        # Draw background, with Natsuki using the given sprite code
-        store.main_background.appear(natsuki_sprite_code)
-
-        if store.persistent.jn_random_weather and 6 < store.jn_get_current_hour() <= 18:
-            jn_atmosphere.show_random_sky()
-
-        elif (
-            store.jn_get_current_hour() > 6 and store.jn_get_current_hour() <= 18
-            and not jn_atmosphere.is_current_weather_sunny()
-        ):
-            jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
-
-        # UI, music
+        renpy.show("natsuki {0}".format(natsuki_sprite_code))
+        renpy.hide("black")
         renpy.show_screen("hkb_overlay")
         renpy.play(filename="mod_assets/bgm/just_natsuki.ogg", channel="music")
 
