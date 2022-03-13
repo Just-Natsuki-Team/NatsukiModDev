@@ -5397,7 +5397,7 @@ init 5 python:
             persistent._topic_database,
             label="talk_hygiene",
             unlocked=True,
-            prompt="Proper Hygiene",
+            prompt="Proper hygiene",
             category=["Health, You"],
             nat_says=True,
             affinity_range=(jn_affinity.AFFECTIONATE, None),
