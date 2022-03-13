@@ -5398,7 +5398,7 @@ init 5 python:
             label="talk_maintaining_proper_hygiene",
             unlocked=True,
             prompt="Proper hygiene",
-            category=["Health, You"],
+            category=["Health", "You"],
             nat_says=True,
             affinity_range=(jn_affinity.AFFECTIONATE, None),
             location="classroom"
