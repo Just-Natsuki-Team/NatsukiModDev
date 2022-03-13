@@ -7,6 +7,55 @@
 
 An After-Story style mod for Natsuki from DDLC, focusing on building a post-game relationship between Natsuki and her player (you!).
 
+### Made possible thanks to our contributors:
+<!-- readme: contributors -start -->
+<table>
+<tr>
+    <td align="center">
+        <a href="https://github.com/Blizzardsev">
+            <img src="https://avatars.githubusercontent.com/u/57731669?v=4" width="100;" alt="Blizzardsev"/>
+            <br />
+            <sub><b>Blizzardsev</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/multimokia">
+            <img src="https://avatars.githubusercontent.com/u/22531674?v=4" width="100;" alt="multimokia"/>
+            <br />
+            <sub><b>multimokia</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/spaghetsie">
+            <img src="https://avatars.githubusercontent.com/u/64098288?v=4" width="100;" alt="spaghetsie"/>
+            <br />
+            <sub><b>spaghetsie</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/Edgarmods">
+            <img src="https://avatars.githubusercontent.com/u/68255592?v=4" width="100;" alt="Edgarmods"/>
+            <br />
+            <sub><b>Edgarmods</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/kkrosie123">
+            <img src="https://avatars.githubusercontent.com/u/52429850?v=4" width="100;" alt="kkrosie123"/>
+            <br />
+            <sub><b>Briar Young</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/Nemu-sus">
+            <img src="https://avatars.githubusercontent.com/u/43480604?v=4" width="100;" alt="Nemu-sus"/>
+            <br />
+            <sub><b>ALTER</b></sub>
+        </a>
+    </td></tr>
+</table>
+<!-- readme: contributors -end -->
+
 ### Contents
 
 1. [Disclaimer](#disclaimer)
@@ -38,8 +87,8 @@ Please feel free to clone the repository, suggest new content by raising an issu
 2. Extract/unzip DDLC.
 3. Download the JN mod files: go to https://github.com/Just-Natsuki-Team/NatsukiModDev, then select the _Code_ tab and make sure the branch _master_ is selected. Click the green _Code_ button, and then select _download ZIP_.
 4. Extract/unzip the JN mod files.
-5. From the JN mod files, copy the `game` folder contents into the `game` folder of DDLC. If asked to replace files, select _Yes_.
-6. From the JN mod files, copy the `lib` folder contents into the `lib` folder of DDLC. If asked to replace files, select _Yes_.
+5. From the JN mod files, copy the `game` folder contents (all of it) into the `game` folder of DDLC. If asked to replace files, select _Yes_.
+6. From the JN mod files, copy the `lib` folder contents (all of it) into the `lib` folder of DDLC. If asked to replace files, select _Yes_.
 7. You may already have a persistent from the old version of JN - this must be deleted.
     1. For Windows, you can find it here: `%APPDATA%/Roaming/RenPy/JustNatsuki`
     2. For OSX, you can find it here: `~/Library/RenPy/JustNatsuki`
@@ -55,11 +104,11 @@ Please feel free to clone the repository, suggest new content by raising an issu
 - _I downloaded and installed newer mod files, and now my game won't launch._
     - You may need to delete your persistent file: make a copy and delete it, then try launching `DDLC.exe`.
 - _How do I report a bug with the mod?_
-    - Please log a bug report through the _Issues_ on GitHub, clicking _New issue_, then selecting _Report Bug_.
+    - Please log a bug report through the _Issues_ on GitHub, clicking _New issue_, then selecting _Report Bug_. Only one bug per report, please!
 - _How do I request support for the mod?_
-    - Please log a support request through the _Issues_ on GitHub, clicking _New issue_, then selecting _Support Request_.
+    - Please log a support request through the _Issues_ on GitHub, clicking _New issue_, then selecting _Support Request_. Only one item per request, please!
 - _Where can I make suggestions for the mod?_
-    - Please log a feature request through the _Issues_ on GitHub, clicking _New issue_, then selecting _Feature Request_. Please note we do not take suggestions from any other avenue of communication.
+    - Please log a feature request through the _Issues_ on GitHub, clicking _New issue_, then selecting _Feature Request_. Please note we do not take suggestions from any other avenue of communication. Only one suggestion per request, please!
 - _Can I join the team?_
     - Invitation to join our team is based on visible contributions to Just Natsuki and/or related DDLC mods, skillset, and participation in the DDLC community as judged by the team. Please do not ask to join directly!
 

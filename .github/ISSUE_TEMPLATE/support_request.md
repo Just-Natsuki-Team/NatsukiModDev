@@ -1,6 +1,6 @@
 ---
 name: Support request
-about: Request support for this project
+about: Request support for this project - only one item per issue raised, please
 title: "[ SUPPORT REQUEST ] - "
 labels: Help wanted
 assignees: ''

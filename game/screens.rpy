@@ -796,7 +796,7 @@ screen navigation():
         if renpy.variant("pc"):
 
             ## Help isn't necessary or relevant to mobile devices.
-            textbutton _("Help") action Help("README.html")
+            textbutton _("Help") action Help("README.md")
 
             ## The quit button is banned on iOS and unnecessary on Android.
             python:
