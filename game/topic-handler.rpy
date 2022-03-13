@@ -10,7 +10,8 @@ init python in topic_handler:
         store.TOPIC_TYPE_NORMAL: store.topics.TOPIC_MAP,
         store.TOPIC_TYPE_ADMISSION: store.jn_admissions.ADMISSION_MAP,
         store.TOPIC_TYPE_COMPLIMENT: store.jn_compliments.COMPLIMENT_MAP,
-        store.TOPIC_TYPE_APOLOGY: store.jn_apologies.APOLOGY_MAP
+        store.TOPIC_TYPE_APOLOGY: store.jn_apologies.APOLOGY_MAP,
+        store.TOPIC_TYPE_EVENT: store.jn_events.EVENT_MAP
     }
 
 init 6 python in topic_handler:

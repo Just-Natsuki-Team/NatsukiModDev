@@ -134,7 +134,7 @@ init python:
         """
         """
         lc_args = [
-            (1280, 720), # Anchor
+            (1280, 740), # Anchor
             (0, 0), _BASE_SPRITE_PATH + "desk/chair-normal.png", # Chair
             (0, 0), "{0}{1}/hair/[persistent.jn_natsuki_current_hairstyle]/back.png".format(_BASE_SPRITE_PATH, pose), # Hair back
             (0, 0), "{0}{1}/base/body.png".format(_BASE_SPRITE_PATH, pose), # Body
