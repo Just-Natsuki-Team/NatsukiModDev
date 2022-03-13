@@ -79,7 +79,7 @@ label ch30_init:
         # Pick a greeting or random event
         if not jn_topic_in_event_list_pattern("^greeting_"):
             if (
-                random.randint(0, 2) == 1
+                random.randint(1, 10) == 1
                 and (not persistent.jn_player_admission_type_on_quit and not persistent.jn_player_apology_type_on_quit)
                 and jn_events.select_event()
             ):

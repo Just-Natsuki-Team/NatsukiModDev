@@ -22,7 +22,7 @@ init python in jn_events:
             EVENT_MAP.values(),
             unlocked=True,
             affinity=jn_affinity.get_affinity_state(),
-            is_seen=True,
+            is_seen=False,
             **kwargs
         )
 
