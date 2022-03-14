@@ -5,7 +5,6 @@ init python in jn_random_music:
     import store
     import store.jn_affinity as jn_affinity
     import store.jn_custom_music as jn_custom_music
-    import store.jn_plugins as jn_plugins
     import store.jn_utils as jn_utils
 
     _NEW_TRACK_QUIPS = [

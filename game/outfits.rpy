@@ -381,16 +381,16 @@ init 0 python in jn_outfits:
                 }
 
             # Optional fields
-            if self.headgear:
+            if self.headgear and isinstance(self.headgear, JNHeadgear):
                 outfit_dict["headgear"] = self.headgear.reference_name
 
-            if self.eyewear:
+            if self.eyewear and isinstance(self.eyewear, JNEyewear):
                 outfit_dict["eyewear"] = self.eyewear.reference_name
 
-            if self.accessory:
+            if self.accessory and isinstance(self.accessory, JNAccessory):
                 outfit_dict["accessory"] = self.accessory.reference_name
 
-            if self.necklace:
+            if self.necklace and isinstance(self.necklace, JNNecklace):
                 outfit_dict["necklace"] = self.necklace.reference_name
 
             return json.dumps(outfit_dict)
@@ -476,6 +476,18 @@ init 0 python in jn_outfits:
             jn_utils.log("Cannot register outfit name: {0}, as an outfit with that name already exists.".format(outfit.reference_name))
 
         else:
+            if not outfit.accessory:
+                outfit.accessory = get_wearable("jn_none")
+
+            if not outfit.eyewear:
+                outfit.eyewear = get_wearable("jn_none")
+
+            if not outfit.headgear:
+                outfit.headgear = get_wearable("jn_none")
+
+            if not outfit.necklace:
+                outfit.necklace = get_wearable("jn_none")
+
             __ALL_OUTFITS[outfit.reference_name] = outfit
             if outfit.reference_name not in store.persistent.jn_outfit_list:
                 outfit.__save()
@@ -967,6 +979,14 @@ init 0 python in jn_outfits:
 
             else:
                 return _OUTFIT_SCHEDULE_WEEKEND_LOW_AFFINITY.get(store.jn_get_current_time_block())
+
+    # Placeholder
+    __register_wearable(JNWearable(
+        reference_name="jn_none",
+        display_name="None",
+        unlocked=False,
+        is_jn_wearable=True,
+    ))
 
     # Official JN hairstyles
     __register_wearable(JNHairstyle(
@@ -1561,7 +1581,7 @@ label outfits_suggest_outfit:
 
 # Asking Natsuki to remove an existing outfit
 label outfits_remove_outfit:
-    if len(jn_outfits.get_all_outfits()) == 0:
+    if len(list(jn_outfits.get_all_outfits())) == 0:
         # No outfits, no point proceeding
         n 1tnmbo "Huh?{w=0.5}{nw}"
         extend 1fchbg "I don't {i}have{/i} any outfit ideas from you, dummy!"
@@ -1646,7 +1666,7 @@ label outfits_create_select_headgear:
         play audio clothing_ruffle
         python:
             jn_outfits._changes_made = True
-            wearable_to_apply = None if _return == "none" else _return
+            wearable_to_apply = jn_outfits.get_wearable("jn_none") if _return == "none" else _return
             jn_outfits._PREVIEW_OUTFIT.headgear = wearable_to_apply
             JN_NATSUKI.set_outfit(jn_outfits._PREVIEW_OUTFIT)
 
@@ -1691,7 +1711,7 @@ label outfits_create_select_eyewear:
     if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNEyewear):
         python:
             jn_outfits._changes_made = True
-            wearable_to_apply = None if _return == "none" else _return
+            wearable_to_apply = jn_outfits.get_wearable("jn_none") if _return == "none" else _return
             jn_outfits._PREVIEW_OUTFIT.eyewear = wearable_to_apply
             JN_NATSUKI.set_outfit(jn_outfits._PREVIEW_OUTFIT)
 
@@ -1715,7 +1735,7 @@ label outfits_create_select_accessory:
         play audio hair_clip
         python:
             jn_outfits._changes_made = True
-            wearable_to_apply = None if _return == "none" else _return
+            wearable_to_apply = jn_outfits.get_wearable("jn_none") if _return == "none" else _return
             jn_outfits._PREVIEW_OUTFIT.accessory = wearable_to_apply
             JN_NATSUKI.set_outfit(jn_outfits._PREVIEW_OUTFIT)
 
@@ -1739,7 +1759,7 @@ label outfits_create_select_necklace:
         play audio necklace_clip
         python:
             jn_outfits._changes_made = True
-            wearable_to_apply = None if _return == "none" else _return
+            wearable_to_apply = jn_outfits.get_wearable("jn_none") if _return == "none" else _return
             jn_outfits._PREVIEW_OUTFIT.necklace = wearable_to_apply
             JN_NATSUKI.set_outfit(jn_outfits._PREVIEW_OUTFIT)
 
@@ -1920,7 +1940,7 @@ screen create_outfit():
                 style "hkbd_option"
                 action Jump("outfits_create_select_headgear")
 
-            label _(jn_outfits._PREVIEW_OUTFIT.headgear.display_name if jn_outfits._PREVIEW_OUTFIT.headgear is not None else "None"):
+            label _(jn_outfits._PREVIEW_OUTFIT.headgear.display_name if isinstance(jn_outfits._PREVIEW_OUTFIT.headgear, jn_outfits.JNHeadgear) else "None"):
                 style "hkbd_label"
                 left_margin 10
 
@@ -1940,7 +1960,7 @@ screen create_outfit():
                 style "hkbd_option"
                 action Jump("outfits_create_select_eyewear")
 
-            label _(jn_outfits._PREVIEW_OUTFIT.eyewear.display_name if jn_outfits._PREVIEW_OUTFIT.eyewear is not None else "None"):
+            label _(jn_outfits._PREVIEW_OUTFIT.eyewear.display_name if isinstance(jn_outfits._PREVIEW_OUTFIT.eyewear, jn_outfits.JNEyewear) else "None"):
                 style "hkbd_label"
                 left_margin 10
   
@@ -1950,7 +1970,7 @@ screen create_outfit():
                 style "hkbd_option"
                 action Jump("outfits_create_select_accessory")
 
-            label _(jn_outfits._PREVIEW_OUTFIT.accessory.display_name if jn_outfits._PREVIEW_OUTFIT.accessory is not None else "None"):
+            label _(jn_outfits._PREVIEW_OUTFIT.accessory.display_name if isinstance(jn_outfits._PREVIEW_OUTFIT.accessory, jn_outfits.JNAccessory) else "None"):
                 style "hkbd_label"
                 left_margin 10
 
@@ -1960,7 +1980,7 @@ screen create_outfit():
                 style "hkbd_option"
                 action Jump("outfits_create_select_necklace")
 
-            label _(jn_outfits._PREVIEW_OUTFIT.necklace.display_name if jn_outfits._PREVIEW_OUTFIT.necklace is not None else "None"):
+            label _(jn_outfits._PREVIEW_OUTFIT.necklace.display_name if isinstance(jn_outfits._PREVIEW_OUTFIT.necklace, jn_outfits.JNNecklace) else "None"):
                 style "hkbd_label"
                 left_margin 10
 
