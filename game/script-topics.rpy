@@ -5409,7 +5409,7 @@ init 5 python:
 label talk_maintaining_proper_hygiene:
     n 1nllsl "..."
     n 1ullaj "You know,{w=0.1} [player]..."
-    n 1nllbo "I've been wondering...{w=0.5}{nw}" 
+    n 1nllbo "I've been wondering...{w=0.5}{nw}"
     extend 1tnmpu " are you actually taking care of yourself?"
     n 1nsqsr "Like...{w=0.3} are you keeping up with proper hygiene?"
     n 1fnmpo "It's super important,{w=0.1} you know!"
@@ -5423,11 +5423,11 @@ label talk_maintaining_proper_hygiene:
     n 1kcssr "...And we both know how she felt."
     n 1kllun "..."
     n 1fcseml "A-{w=0.1}anyway!{w=1}{nw}"
-    extend 1fnmpo " This is about {i}you{/i},{w=0.1} [player] -{w=0.5}{nw}" 
+    extend 1fnmpo " This is about {i}you{/i},{w=0.1} [player] -{w=0.5}{nw}"
     extend 1fnmaj " so listen up!"
     n 1fcsbg "This is gonna be a Natsuki special on taking care of yourself!{w=0.5}{nw}"
     extend 1fcssm " Ehehe."
-    n 1fcsaj "First of all,{w=0.1} shower {w=0.1}-{w=0.3}{nw}" 
+    n 1fcsaj "First of all,{w=0.1} shower {w=0.1}-{w=0.3}{nw}"
     extend 1fnmaj " and {i}regularly{/i}!"
     n 1fllsl "If you skip showers,{w=0.1} you'll just constantly feel all gross and nasty.{w=0.5}{nw}"
     extend 1tnmsr " And you know what that leads to?"
@@ -5435,7 +5435,7 @@ label talk_maintaining_proper_hygiene:
     n 1fnmaj "And you know what {i}that{/i} leads to?"
     n 1fcsem "...Not showering!{w=0.5}{nw}"
     extend 1knmpo " See where I'm going here?"
-    n 1nllaj "So...{w=0.5}{nw}" 
+    n 1nllaj "So...{w=0.5}{nw}"
     extend 1fnmsl " just take the time to do it properly,{w=0.1} okay?"
     n 1fllss "It doesn't {i}need{/i} to be some kind of spa ritual,{w=0.1} just whatever gets you clean."
 
@@ -5498,7 +5498,7 @@ label talk_maintaining_proper_hygiene:
         n 1ksqsm "Who doesn't want a {i}blinding{/i} smile like me?"
         n 1uchgn "You won't get {i}that{/i} with tooth decay!"
 
-    n 1kllss "But seriously,{w=0.1} [player].{w=0.5}{nw}" 
+    n 1kllss "But seriously,{w=0.1} [player].{w=0.5}{nw}"
     extend 1nsqsr " I {i}really{/i} don't want you flaking out on taking care of yourself,{w=0.1} [player]."
     n 1fsqsr "I mean it.{w=1.5}{nw}"
     extend 1ksrpo " You deserve to feel and look good too."
@@ -5513,7 +5513,7 @@ label talk_maintaining_proper_hygiene:
         "...":
             n 1nsqsr "..."
             n 1tsqss "You...{w=0.3} really don't get how this all works,{w=0.1} do you?"
-            n 1fcssm "Now,{w=0.1} repeat after me:{w=0.5}{nw}" 
+            n 1fcssm "Now,{w=0.1} repeat after me:{w=0.5}{nw}"
             extend 1fcsbg " 'I deserve to feel and look good too.'."
 
             menu:
@@ -5546,3 +5546,35 @@ label talk_maintaining_proper_hygiene:
         n 1nchgn "Ahaha!"
 
     return
+
+# Player asks Natsuki why she is so short
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_why_so_short",
+            unlocked=True,
+            prompt="Why are you so short?",
+            category=["Natsuki"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_why_so_short:
+    n "Urgg-{w=0.1} Hey!{w=0.2} You did not just say that!"
+    if jn_player_appearance_height_cm < 149:
+        n "You're shorter than me anyways,{w=0.1} you dork!"
+        n "Who's the short one now,{w=0.1} huh?"
+    if jn_player_appearance_height_cm = 149:
+        n "We're the same height!"
+        n "Are you calling yourself short,{w=0.1} huh?"
+    else:
+        n "Just because you're taller than me doesn't mean anything!"
+    n "I'm just a late bloomer,{w=0.1} that's all!"
+    n "Maybe it's genetics?"
+    n "Gh! W-Well!!"
+    n "Even if I am short,{w=0.1} it's not like it's a bad thing!"
+    n "Plenty of people are shorter than me!"
+    n ""
