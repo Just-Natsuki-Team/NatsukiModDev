@@ -59,9 +59,10 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
 ### Contents
 
 1. [Disclaimer](#disclaimer)
-2. [Installation](#installation)
-3. [FAQ](#faq)
-4. [Community](#community)
+2. [What to expect from Just Natsuki](#what-to-expect-from-just-natsuki)
+3. [Installation](#installation)
+4. [FAQ](#faq)
+5. [Community](#community)
 
 ### Disclaimer
 
@@ -102,7 +103,7 @@ To this end, Just Natsuki has no endgame, end goal or ending - we strive to deli
     2. For OSX, you can find it here: `~/Library/RenPy/JustNatsuki`
     3. For Linux, you can find it here: `~/.renpy/JustNatsuki`
 8. Finally, launch `DDLC.exe`.
-    1. If you are on OSX, you may have to review your security settings for the game to launch properly; please see the guidance listed <a href="https://github.com/Just-Natsuki-Team/NatsukiModDev/issues/221">here</a>.
+    1. If you are on OSX, you may have to review your security settings for the game to launch properly; please see the guidance listed [here](https://github.com/Just-Natsuki-Team/NatsukiModDev/issues/221).
 
 ### FAQ
 
