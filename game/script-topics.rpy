@@ -2967,7 +2967,7 @@ label talk_natsukis_hairstyle:
             n 1ulrpo "I just thought twintails would look kinda cute on me."
 
         else:
-            n 1ulrpo "I know I'm not showing them off now,{w=0.1} but I just thought twintails would look kinda cute on me."
+            n 1ulrpo "I just thought this hairstyle would look kinda cute on me."
 
         n 1fsqpo "...Yeah,{w=0.1} yeah.{w=0.2} I know what you're thinking,{w=0.1} [player]."
 
@@ -2980,7 +2980,7 @@ label talk_natsukis_hairstyle:
             n 1nnmsl "I guess I just liked the idea of twintails."
 
         else:
-            n 1nnmsl "Not like I'm showing it now,{w=0.1} but I guess I just liked the idea of twintails."
+            n 1nnmsl "I guess I just liked the idea of this hairstyle."
 
     n 1ulraj "As for the bangs,{w=0.1} I...{w=0.3} always found it difficult to get my hair cut."
 

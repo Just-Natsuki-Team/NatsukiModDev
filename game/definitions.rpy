@@ -1506,6 +1506,8 @@ define audio.chair_out_in = "mod_assets/sfx/chair_out_in.ogg"
 define audio.hair_brush = "mod_assets/sfx/hair_brush.ogg"
 define audio.hair_clip = "mod_assets/sfx/hair_clip.ogg"
 define audio.necklace_clip = "mod_assets/sfx/necklace_clip.ogg"
+define audio.cassette_open = "mod_assets/sfx/cassette_open.ogg"
+define audio.cassette_close = "mod_assets/sfx/cassette_close.ogg"
 
 define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
 define audio.glitch_b = "mod_assets/sfx/glitch_b.ogg"
