@@ -81,6 +81,14 @@ Please feel free to clone the repository, suggest new content by raising an issu
 - Progress made by playing under the old distribution of Just Natsuki will not be supported in the overhaul.
 - Do not expect support if you are playing the old distribution of Just Natsuki. It is **discontinued**.
 
+### What to expect from Just Natsuki
+
+Just Natsuki canonically takes place following the events of DDLC+ and DDLC, and focuses on fostering and developing a relationship between a restored Natsuki and the player responsible for bringing her back from her deletion.
+
+As you spend time with Natsuki and grow closer, new things to talk about and new features will become available: we stress that players enjoy the journey, rather than focus on the destination! As an effective dating simulator, the focus is on the adventure of the relationship as opposed to simply trying to unlock features as fast as possible - enjoy what you find as you find it!
+
+To this end, Just Natsuki has no endgame, end goal or ending - we strive to deliver regular updates so there's always a reason to spend more time with your favourite tsundere.
+
 ### Installation
 
 1. Download a fresh copy of DDLC from https://ddlc.moe.
@@ -94,6 +102,7 @@ Please feel free to clone the repository, suggest new content by raising an issu
     2. For OSX, you can find it here: `~/Library/RenPy/JustNatsuki`
     3. For Linux, you can find it here: `~/.renpy/JustNatsuki`
 8. Finally, launch `DDLC.exe`.
+    1. If you are on OSX, you may have to review your security settings for the game to launch properly; please see the guidance listed <a href="https://github.com/Just-Natsuki-Team/NatsukiModDev/issues/221">here</a>.
 
 ### FAQ
 
@@ -111,6 +120,8 @@ Please feel free to clone the repository, suggest new content by raising an issu
     - Please log a feature request through the _Issues_ on GitHub, clicking _New issue_, then selecting _Feature Request_. Please note we do not take suggestions from any other avenue of communication. Only one suggestion per request, please!
 - _Can I join the team?_
     - Invitation to join our team is based on visible contributions to Just Natsuki and/or related DDLC mods, skillset, and participation in the DDLC community as judged by the team. Please do not ask to join directly!
+- _How do I progress in the mod/unlock a specific feature?_
+    - Simply put, all good things take time. Spend plenty of time with Natsuki, explore your options and most importantly, treat her well!
 
 ### Community
 
