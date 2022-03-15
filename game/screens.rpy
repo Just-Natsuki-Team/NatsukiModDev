@@ -1346,7 +1346,7 @@ style check_vbox:
 
 style check_button:
     properties gui.button_properties("check_button")
-    foreground "gui/button/check_[prefix_]foreground.png"
+    foreground "mod_assets/buttons/check_[prefix_]foreground.png"
 
 style check_button_text:
     properties gui.button_text_properties("check_button")
