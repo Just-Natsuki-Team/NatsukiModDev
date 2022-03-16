@@ -5401,6 +5401,7 @@ init 5 python:
             conditional="jn_utils.get_total_gameplay_length().total_seconds() / 3600 >= 48",
             category=["DDLC", "Natsuki"],
             player_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
