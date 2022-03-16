@@ -5395,7 +5395,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_dan_salvato",
+            label="talk_thoughts_on_dan_salvato",
             unlocked=True,
             prompt="What do you think of Dan Salvato?",
             category=["DDLC", "Natsuki"],
