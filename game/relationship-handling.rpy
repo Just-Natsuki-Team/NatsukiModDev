@@ -1,44 +1,8 @@
 default persistent.trust = 10.0
 default persistent.affinity = 25.0
 
-init 0 python:
-    def jn_relationship(change, multiplier=1):
-        def __affinity_increase(multiplier=1):
-            if persistent.trust > 0:
-                persistent.affinity += multiplier*(persistent.trust/20)
-
-        def __affinity_decrease(multiplier=1):
-            if persistent.trust-50 > 0:
-                persistent.affinity -= multiplier*(5 - (persistent.trust-50)/25)
-            else:
-                persistent.affinity -= multiplier*5
-
-        def __trust_increase(multiplier=1):
-            if persistent.trust < 100:
-                persistent.trust += multiplier*0.8*(round(math.tanh((persistent.affinity-75)/30)+1, 4)+1)
-            if persistent.trust > 100:
-                persistent.trust = 100
-
-        def __trust_decrease(multiplier=1):
-            if persistent.trust > -100:
-                persistent.trust -= multiplier*2*(3 - round(math.tanh((persistent.affinity-75)/30)+1, 4))
-            if persistent.trust < -100:
-                persistent.trust = -100
-
-        if change == "affinity+":
-            __affinity_increase(multiplier)
-
-        elif change == "affinity-":
-            __affinity_decrease(multiplier)
-
-        elif change == "trust+":
-            __trust_increase(multiplier)
-
-        elif change == "trust-":
-            __trust_decrease(multiplier)
-
-        else:
-            raise Exception(change+" is not a valid argument!")
+default persistent.affinity_daily_gain = 5
+default persistent.affinity_gain_reset_date = None
 
 init -2 python in jn_trust_affinity_common:
     def _is_state_valid(state, state_order_list):
@@ -69,7 +33,21 @@ init -2 python in jn_trust_affinity_common:
 
 init -1 python in jn_affinity:
     import store
+    import store.jn_utils as jn_utils
     import random
+
+    def get_relationship_length_multiplier():
+        """
+        Gets the multiplier for affinity changes, based on the length of the relationship in months.
+
+        OUT:
+            - relationship multiplier value, capped at 1.5
+        """
+        relationship_length_multiplier = 1 + (jn_utils.get_total_gameplay_months() / 10)
+        if relationship_length_multiplier > 1.5:
+            relationship_length_multiplier = 1.5
+
+        return relationship_length_multiplier
 
     # Affinity levels, highest to lowest
     THRESHOLD_LOVE = 1000

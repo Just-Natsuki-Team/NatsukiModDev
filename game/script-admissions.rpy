@@ -63,7 +63,7 @@ init 5 python:
             prompt="Angry",
             label="admission_angry",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_ADMISSION
     )
@@ -101,7 +101,7 @@ init 5 python:
             prompt="Anxious",
             label="admission_anxious",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_ADMISSION
     )
@@ -149,7 +149,7 @@ init 5 python:
             prompt="Ashamed",
             label="admission_ashamed",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_ADMISSION
     )
@@ -194,7 +194,7 @@ init 5 python:
             prompt="Bored",
             label="admission_bored",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_ADMISSION
     )
@@ -292,7 +292,7 @@ init 5 python:
             prompt="Confident",
             label="admission_confident",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_ADMISSION
     )
@@ -339,7 +339,7 @@ init 5 python:
             prompt="Excited",
             label="admission_excited",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_ADMISSION
     )
@@ -364,7 +364,7 @@ init 5 python:
             prompt="Happy",
             label="admission_happy",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_ADMISSION
     )
@@ -414,7 +414,7 @@ init 5 python:
             prompt="Hungry",
             label="admission_hungry",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_ADMISSION
     )
@@ -460,7 +460,7 @@ init 5 python:
             prompt="Insecure",
             label="admission_insecure",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_ADMISSION
     )
@@ -512,7 +512,7 @@ init 5 python:
             prompt="Proud",
             label="admission_proud",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_ADMISSION
     )
@@ -541,7 +541,7 @@ init 5 python:
             prompt="Sad",
             label="admission_sad",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_ADMISSION
     )
@@ -599,7 +599,7 @@ init 5 python:
             prompt="Sick",
             label="admission_sick",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_ADMISSION
     )
@@ -710,7 +710,7 @@ init 5 python:
             prompt="Tired",
             label="admission_tired",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_ADMISSION
     )

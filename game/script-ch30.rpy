@@ -27,6 +27,9 @@ label ch30_init:
     python:
         import random
 
+        # Check the daily affinity cap and reset if need be
+        Natsuki.check_reset_daily_affinity_gain()
+
         # Outfit selection
         if persistent.jn_natsuki_auto_outfit_change_enabled:
             jn_outfits.set_outfit_for_time_block()
@@ -36,7 +39,7 @@ label ch30_init:
             persistent.last_apology_type = jn_apologies.TYPE_PROLONGED_LEAVE
 
         elif not persistent.last_apology_type == jn_apologies.TYPE_SUDDEN_LEAVE:
-            jn_relationship("affinity+")
+            Natsuki.calculated_affinity_gain()
 
         # Add to the total visits counter and set the last visit date
         persistent.jn_total_visit_count += 1
@@ -186,6 +189,9 @@ init python:
         Runs every minute during breaks between topics
         """
         jn_utils.save_game()
+
+        # Check the daily affinity cap and reset if need be
+        Natsuki.check_reset_daily_affinity_gain()
 
         # Run through all externally-registered minute check actions
         if len(jn_plugins.minute_check_calls) > 0:
@@ -521,7 +527,7 @@ label try_force_quit:
                         hide glitch_garbled_red
 
                 # Apply consequences for force quitting, then glitch quit out
-                $ jn_relationship("affinity-")
+                $ Natsuki.calculated_affinity_loss()
                 $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
                 $ persistent.jn_player_apology_type_on_quit = jn_apologies.TYPE_SUDDEN_LEAVE
 

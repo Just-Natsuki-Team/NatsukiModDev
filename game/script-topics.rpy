@@ -166,7 +166,7 @@ init 5 python:
             prompt="Did you ever have any pets?",
             category=["Life", "Animals", "Family"],
             player_says=True,
-            affinity_range=(jn_aff.NORMAL, None),
+            affinity_range=(jn_affinity.NORMAL, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -1901,8 +1901,7 @@ label talk_give_nickname:
 
         # Apply penalty and pending apology
         $ jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.bad_nickname)
-        $ jn_relationship(change="affinity-", multiplier=2)
-        $ jn_relationship(change="trust-", multiplier=2)
+        $ Natsuki.calculated_affinity_loss(base=2)
 
     elif persistent.jn_player_nicknames_bad_given_total == 2:
         n 1fsqsl "I can't believe you did that again to me,{w=0.1} [player]."
@@ -1914,8 +1913,7 @@ label talk_give_nickname:
 
         # Apply penalty and pending apology
         $ jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.bad_nickname)
-        $ jn_relationship(change="affinity-", multiplier=2)
-        $ jn_relationship(change="trust-", multiplier=2)
+        $ Natsuki.calculated_affinity_loss(base=2)
 
     elif persistent.jn_player_nicknames_bad_given_total == 3:
         n 1fsqan "You are honestly unbelievable,{w=0.1} [player]."
@@ -1930,8 +1928,7 @@ label talk_give_nickname:
                 n 1fsqan "...Then start acting like it,{w=0.1} [player]."
                 n 1fslsl "Thanks."
 
-                $ jn_relationship(change="affinity-", multiplier=2)
-                $ jn_relationship(change="trust-", multiplier=2)
+                $ Natsuki.calculated_affinity_loss(base=2)
 
             "...":
                 n 1fcssl "Look.{w=0.2} I'm not kidding around,{w=0.1} [player]."
@@ -1939,8 +1936,7 @@ label talk_give_nickname:
                 n 1fsqem "It's toxic."
                 n 1fsqsr "I don't care if you're trying to pull my leg.{w=0.2} Quit it."
 
-                $ jn_relationship(change="affinity-", multiplier=3)
-                $ jn_relationship(change="trust-", multiplier=3)
+                $ Natsuki.calculated_affinity_loss(base=3)
 
         # Apply penalty and pending apology
         $ jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.bad_nickname)
@@ -1955,8 +1951,7 @@ label talk_give_nickname:
         n 1fsqsr "I warned you,{w=0.1} [player].{w=0.2} Remember that."
 
         # Apply affinity/trust penalties, then revoke nickname priveleges and finally apply pending apology
-        $ jn_relationship(change="affinity-", multiplier=5)
-        $ jn_relationship(change="trust-", multiplier=5)
+        $ Natsuki.calculated_affinity_loss(base=5)
         $ persistent.jn_player_nicknames_allowed = False
         $ persistent.jn_player_nicknames_current_nickname = None
         $ n_name = "Natsuki"
@@ -2534,7 +2529,7 @@ label talk_i_love_you:
             n 1kllsmf "..."
             n 1kllssf "S-{w=0.1}so..."
             n 1kplssf "Where were we?{w=0.2} Ehehe..."
-            $ jn_relationship(change="affinity+", multiplier=3)
+            $ Natsuki.calculated_affinity_gain(base=3, bypass=True)
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n 1uscgsf "[player_initial]-{w=0.2}[player]!"
@@ -2551,7 +2546,7 @@ label talk_i_love_you:
             n 1flrbol "N-{w=0.1}never mind..."
             n 1fcseml "Forget I said anything."
             n 1kllbof "..."
-            $ jn_relationship(change="affinity+", multiplier=2)
+            $ Natsuki.calculated_affinity_gain(base=2, bypass=True)
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
             n 1uskwrf "W-{w=0.1}w-{w=0.1}what?"
@@ -2567,7 +2562,7 @@ label talk_i_love_you:
             n 1fcsanf "Uuuuu..."
             n 1fcsajf "F-{w=0.1}forget it!{w=0.2} I-{w=0.1}it's nothing..."
             n 1kslslf "..."
-            $ jn_relationship("affinity+")
+            $ Natsuki.calculated_affinity_gain(bypass=True)
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
             n 1fsqdvl "Pffffft!"
@@ -2605,7 +2600,7 @@ label talk_i_love_you:
             n 1fsqsr "We're done with this."
             n 1fsqpu "And if you {i}really{/i} feel that way?"
             n 1fsqsf "...Then why aren't {i}you{/i} trying to make this work,{w=0.1} [player]?"
-            $ jn_relationship("affinity-")
+            $ Natsuki.calculated_affinity_loss(base=3, bypass=True)
 
         else:
             # :(
@@ -2628,7 +2623,7 @@ label talk_i_love_you:
             n 1fcsan "..."
             n 1fsqfu "Go!"
             n 1fscsc "{i}Just leave me alone!{/i}{nw}"
-            $ jn_relationship(change="affinity-", multiplier=10)
+            $ Natsuki.percentage_affinity_loss(25)
             return { "quit": None }
 
         $ persistent.jn_player_love_you_count += 1
@@ -2644,7 +2639,7 @@ label talk_i_love_you:
             if random_response_index == 0:
                 n 1unmbgf "Ehehe.{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
                 n 1uchsmf "You're always [chosen_descriptor] to me."
-                $ jn_relationship("affinity+")
+                $ Natsuki.calculated_affinity_gain()
                 return
 
             elif random_response_index == 1:
@@ -2653,13 +2648,13 @@ label talk_i_love_you:
                 $ chosen_endearment = chosen_endearment.capitalize()
                 n 1kwmbgf "[chosen_endearment],{w=0.1} I love you too!"
                 n 1fcsbgf "I'll always be here to stick up for you."
-                $ jn_relationship("affinity+")
+                $ Natsuki.calculated_affinity_gain()
                 return
 
             elif random_response_index == 2:
                 n 1uchsmf "Aww,{w=0.1} [chosen_endearment]!{w=0.2} I love you too!"
                 n 1klrbgf "You're the best thing that's ever happened to me."
-                $ jn_relationship("affinity+")
+                $ Natsuki.calculated_affinity_gain()
                 return
 
             elif random_response_index == 3:
@@ -2667,7 +2662,7 @@ label talk_i_love_you:
                 n 1fsqsmf "Well,{w=0.1} I'd be happy to oblige!"
                 n 1uchsmf "I love you too,{w=0.1} [chosen_endearment]!"
                 n 1fchbgf "Keep on smiling for me,{w=0.1} 'kay?"
-                $ jn_relationship("affinity+")
+                $ Natsuki.calculated_affinity_gain()
                 return
 
             elif random_response_index == 4:
@@ -2675,7 +2670,7 @@ label talk_i_love_you:
                 n 1usqssf "Ehehe.{w=0.2} Don't worry,{w=0.1} I'm not complaining!"
                 n 1uchbgf "I love you too,{w=0.1} [chosen_endearment]!"
                 n 1fcssmf "It's just us two against the world!"
-                $ jn_relationship("affinity+")
+                $ Natsuki.calculated_affinity_gain()
                 return
 
             elif random_response_index == 5:
@@ -2700,7 +2695,7 @@ label talk_i_love_you:
                         n 1fchsmf "Well,{w=0.1} whatever.{w=0.2} I'm just glad you accept the truth."
                         n 1uchsmf "Ehehe."
 
-                $ jn_relationship("affinity+")
+                $ Natsuki.calculated_affinity_gain()
                 return
 
             elif random_response_index == 6:
@@ -2708,7 +2703,7 @@ label talk_i_love_you:
                 n 1usqsmf "...And I think I can guess you like hearing it just as much."
                 n 1uchbgf "I love you too,{w=0.1} [chosen_endearment]!"
                 n 1nchsmf "I don't need anyone else~."
-                $ jn_relationship("affinity+")
+                $ Natsuki.calculated_affinity_gain()
                 return
 
             elif random_response_index == 7:
@@ -2718,7 +2713,7 @@ label talk_i_love_you:
                 n 1fchbgf "...But just the kind of gross I'm down with.{w=0.2} Ehehe."
                 n 1uchbgf "I love you too,{w=0.1} [chosen_endearment]!"
                 n 1unmsmf "I'll always have your back."
-                $ jn_relationship("affinity+")
+                $ Natsuki.calculated_affinity_gain()
                 return
 
             elif random_response_index == 8:
@@ -2726,7 +2721,7 @@ label talk_i_love_you:
                 n 1nchssf "I..."
                 n 1uchbsf "Looooooooove you too,{w=0.1} [player]!"
                 n 1kwmsmf "You'll always be my rock."
-                $ jn_relationship("affinity+")
+                $ Natsuki.calculated_affinity_gain()
                 return
 
             elif random_response_index == 9:
@@ -2811,14 +2806,14 @@ label talk_i_love_you:
                             if wrong_response_count >= 10:
                                 n 1nsqsml "Nice try,{w=0.1} though~!"
 
-                            $ jn_relationship("affinity+")
+                            $ Natsuki.calculated_affinity_gain()
                             return
 
             elif random_response_index == 10:
                 n 1ksqsml "Ehehe.{w=0.2} I'll never get tired of hearing that from you,{w=0.1} [player]."
                 n 1uchsmf "I love you too!"
                 n 1uchbgf "You're my numero uno~."
-                $ jn_relationship("affinity+")
+                $ Natsuki.calculated_affinity_gain()
                 return
 
             else:
@@ -2826,7 +2821,7 @@ label talk_i_love_you:
                 n 1uslsmf "You're such a softie,{w=0.1} [player].{w=0.2} Ehehe."
                 n 1uchbgf "But...{w=0.3} I'm not gonna complain!{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
                 n 1uchsmf "You always make me feel tall."
-                $ jn_relationship("affinity+")
+                $ Natsuki.calculated_affinity_gain()
                 return
 
             return
@@ -2838,7 +2833,7 @@ label talk_i_love_you:
             n 1flremf "Let's just talk about something,{w=0.1} alright?"
             n 1flrpof "Y-{w=0.1}you can fawn over me in your {i}own{/i} time!"
             n 1klrpof "Dummy..."
-            $ jn_relationship("affinity+")
+            $ Natsuki.calculated_affinity_gain()
             return
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
@@ -2862,7 +2857,7 @@ label talk_i_love_you:
             n 1fsqsr "Talk is cheap,{w=0.1} [player]."
             n 1fsqaj "If you {i}really{/i} care about me..."
             n 1fsqpu "Then {i}prove{/i} it."
-            $ jn_relationship("affinity-")
+            $ Natsuki.calculated_affinity_loss()
             return
 
         else:
@@ -2872,7 +2867,7 @@ label talk_i_love_you:
             n 1fcsfu "..."
             n 1fcspu "You know what?{w=0.2} Whatever.{w=0.2} I don't care anymore."
             n 1fsqfu "Say what you like,{w=0.1} [player].{w=0.2} It's all crap,{w=0.1} just like everything else from you."
-            $ jn_relationship("affinity-")
+            $ Natsuki.calculated_affinity_loss()
             return
 
     return
@@ -3732,7 +3727,7 @@ init 5 python:
             prompt="Why do you like me?",
             category=["Natsuki", "Romance", "You"],
             player_says=True,
-            affinity_range=(jn_aff.AFFECTIONATE, None),
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -3885,7 +3880,7 @@ init 5 python:
             prompt="Fried squid",
             category=["DDLC", "Food"],
             nat_says=True,
-            affinity_range=(jn_aff.HAPPY, None),
+            affinity_range=(jn_affinity.HAPPY, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -5508,7 +5503,7 @@ label talk_maintaining_proper_hygiene:
 
         "Yes, I deserve to feel and look good too.":
             n 1fchbg "Now {i}that's{/i} what I like to hear!"
-            $ jn_relationship("affinity+")
+            $ Natsuki.calculated_affinity_gain()
 
         "...":
             n 1nsqsr "..."
@@ -5521,7 +5516,7 @@ label talk_maintaining_proper_hygiene:
                     n 1uchbg "See?{w=0.5}{nw}"
                     extend 1ksqsg " Was that {i}so{/i} hard?"
                     n 1fcssm "Ehehe."
-                    $ jn_relationship("affinity+")
+                    $ Natsuki.calculated_affinity_gain()
 
     n 1ullss "But anyway,{w=0.1} yeah!{w=0.5}{nw}"
     extend 1nnmss " That's about all I had to say."

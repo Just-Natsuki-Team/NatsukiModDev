@@ -71,13 +71,6 @@ init python in jn_farewells:
 
         return random.choice(farewell_pool).label
 
-    def try_trust_dialogue():
-        """
-        Coinflip decision on whether to additionally call trust-based dialogue on farewell
-        """
-        if random.choice([True, False]):
-            renpy.call_in_new_context("farewell_extra_trust")
-
 label farewell_start:
     $ push(jn_farewells.select_farewell())
     jump call_next_topic
@@ -95,7 +88,7 @@ label farewell_first_time:
     menu:
         "I'll be back.":
             $ persistent.jn_player_first_farewell_response = int(jn_farewells.JNFirstLeaveTypes.will_be_back)
-            $ jn_relationship("affinity+")
+            $ Natsuki.calculated_affinity_gain(bypass=True)
             n 1unmeml "...!{w=0.5}{nw}"
             n 1flleml "Y-{w=0.1}yeah!{w=0.5}{nw}"
             extend 1fsqpol " You better."
@@ -502,7 +495,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_you_mean_the_world_to_me",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
+            affinity_range=(jn_affinity.LOVE, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -511,7 +504,7 @@ label farewell_love_you_mean_the_world_to_me:
     n 1kplsfl "Aww...{w=0.3} you're leaving now,{w=0.1} [player]?{w=0.2} Well,{w=0.1} okay..."
     n 1knmsfl "Y-{w=0.2}you know I'll miss you,{w=0.1} right?"
     n 1knmssf "Take care,{w=0.1} [player]!{w=0.2} You mean the world to me!"
-    $ jn_farewells.try_trust_dialogue()
+    
     return { "quit": None }
 
 init 5 python:
@@ -520,7 +513,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_dont_like_saying_goodbye",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
+            affinity_range=(jn_affinity.LOVE, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -530,7 +523,7 @@ label farewell_love_dont_like_saying_goodbye:
     n 1ncssll "..."
     n 1kplsml "I'll be okay!{w=0.2} Just come back soon,{w=0.1} alright?"
     n 1kchbgf "Stay safe,{w=0.1} dummy!{w=0.2} I love you!"
-    $ jn_farewells.try_trust_dialogue()
+    
     return { "quit": None }
 
 init 5 python:
@@ -539,7 +532,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_counting_on_you",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
+            affinity_range=(jn_affinity.LOVE, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -549,7 +542,7 @@ label farewell_love_counting_on_you:
     n 1knmsml "But I guess it can't be helped,{w=0.1} [player]."
     $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
     n 1uchbgf "Take care of yourself out there,{w=0.1} [chosen_endearment]!{w=0.2} I'm counting on you!"
-    $ jn_farewells.try_trust_dialogue()
+    
     return { "quit": None }
 
 init 5 python:
@@ -558,7 +551,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_do_your_best",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
+            affinity_range=(jn_affinity.LOVE, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -569,7 +562,7 @@ label farewell_love_do_your_best:
     n 1kplsml "I'll really miss you,{w=0.1} [player]."
     $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
     n 1uchsmf "Do your best,{w=0.1} [chosen_endearment]!"
-    $ jn_farewells.try_trust_dialogue()
+    
     return { "quit": None }
 
 init 5 python:
@@ -578,7 +571,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_rooting_for_you",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
+            affinity_range=(jn_affinity.LOVE, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -590,7 +583,7 @@ label farewell_love_rooting_for_you:
     n 1kcssml "...But I know you'll always be back for me,{w=0.1} [chosen_endearment]."
     n 1unmbgl "Well...{w=0.1} I'm rooting for you!"
     n 1uchbgf "Make me proud,{w=0.1} [player]!{w=0.2} I love you!"
-    $ jn_farewells.try_trust_dialogue()
+    
     return { "quit": None }
 
 init 5 python:
@@ -599,7 +592,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_me_to_deal_with",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
+            affinity_range=(jn_affinity.LOVE, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -609,7 +602,7 @@ label farewell_love_me_to_deal_with:
     n 1fllpol "Awww...{w=0.3} well okay."
     n 1knmssl "You take care of yourself,{w=0.1} got it? Or you'll have me to deal with!"
     n 1uchbgf "Bye now!{w=0.2} I love you!"
-    $ jn_farewells.try_trust_dialogue()
+    
     return { "quit": None }
 
 init 5 python:
@@ -618,7 +611,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_wish_you_could_stay_forever",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
+            affinity_range=(jn_affinity.LOVE, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -629,7 +622,7 @@ label farewell_love_wish_you_could_stay_forever:
     n 1knmsml "But I understand you've got stuff to do."
     $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
     n 1uchbgf "Goodbye,{w=0.1} [chosen_endearment]!"
-    $ jn_farewells.try_trust_dialogue()
+    
     return { "quit": None }
 
 # AFFECTIONATE/ENAMORED farewells
@@ -640,7 +633,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_affectionate_enamored_was_having_fun",
             unlocked=True,
-            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -651,7 +644,7 @@ label farewell_affectionate_enamored_was_having_fun:
     n 1kllpol "And I was having fun,{w=0.1} too..."
     n 1unmbgl "Well,{w=0.1} if you gotta go,{w=0.1} you gotta go!"
     n 1uchbgl "Take care,{w=0.1} [player]!{w=0.2} Make me proud!"
-    $ jn_farewells.try_trust_dialogue()
+    
     return { "quit": None }
 
 init 5 python:
@@ -660,7 +653,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_affectionate_enamored_waiting_for_you",
             unlocked=True,
-            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -671,7 +664,7 @@ label farewell_affectionate_enamored_waiting_for_you:
     n 1knmpol "Hurry back if you can,{w=0.1} alright?"
     n 1nnmsml "I'll be waiting for you!"
     n 1nchbgl "Goodbye,{w=0.1} [player]!"
-    $ jn_farewells.try_trust_dialogue()
+    
     return { "quit": None }
 
 init 5 python:
@@ -680,7 +673,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_affectionate_enamored_ill_be_okay",
             unlocked=True,
-            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -691,7 +684,7 @@ label farewell_affectionate_enamored_ill_be_okay:
     n 1kcssll "That's fine...{w=0.3} I'll be okay..."
     n 1fplcaf "You better come back soon,{w=0.1} alright [player]?"
     n 1kchsml "Goodbye!{w=0.2} I'll be waiting!"
-    $ jn_farewells.try_trust_dialogue()
+    
     return { "quit": None }
 
 init 5 python:
@@ -700,7 +693,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_affectionate_enamored_dont_make_me_find_you",
             unlocked=True,
-            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -711,7 +704,7 @@ label farewell_affectionate_enamored_dont_make_me_find_you:
     n 1knmssl "But I get that you have things to do."
     n 1knmajl "You better come see me later,{w=0.1} promise?"
     n 1fchdvl "Don't make me come find you!{w=0.2} Ehehe."
-    $ jn_farewells.try_trust_dialogue()
+    
     return { "quit": None }
 
 init 5 python:
@@ -720,7 +713,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_affectionate_enamored_take_care_for_both",
             unlocked=True,
-            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -731,7 +724,7 @@ label farewell_affectionate_enamored_take_care_for_both:
     n 1nllnvl "Well,{w=0.2} I'll be okay!"
     n 1fnmcaf "Take care of yourself,{w=0.1} [player]!{w=0.2} A-{w=0.1}and not just for your sake,{w=0.1} got it?"
     n 1kchbgl "See you later!"
-    $ jn_farewells.try_trust_dialogue()
+    
     return { "quit": None }
 
 init 5 python:
@@ -740,7 +733,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_affectionate_enamored_enjoy_our_time_together",
             unlocked=True,
-            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -750,7 +743,7 @@ label farewell_affectionate_enamored_enjoy_our_time_together:
     n 1fllcal "Nnnnnn...{w=0.3} alright."
     n 1knmcaf "You better be back later,{w=0.1} okay?{w=0.2} I...{w=0.3} enjoy our time together."
     n 1kllsmf "See you soon,{w=0.1} [player]!"
-    $ jn_farewells.try_trust_dialogue()
+    
     return { "quit": None }
 
 init 5 python:
@@ -759,7 +752,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_affectionate_enamored_see_me_soon",
             unlocked=True,
-            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -768,7 +761,7 @@ label farewell_affectionate_enamored_see_me_soon:
     n 1fllcal "Well,{w=0.1} I guess you had to leave eventually."
     n 1fnmpol "Doesn't mean I have to like it,{w=0.1} though..."
     n 1kplpol "Come see me soon,{w=0.1} 'kay?"
-    $ jn_farewells.try_trust_dialogue()
+    
     return { "quit": None }
 
 # HAPPY/AFFECTIONATE farewells
@@ -779,14 +772,14 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_happy_affectionate_going_now",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.AFFECTIONATE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
 label farewell_happy_affectionate_going_now:
     n 1unmsm "Going now,{w=0.1} [player]?{w=0.2} I'll see you later!"
-    $ jn_farewells.try_trust_dialogue()
+    
     return { "quit": None }
 
 init 5 python:
@@ -795,7 +788,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_happy_affectionate_heading_off",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.AFFECTIONATE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -803,7 +796,7 @@ init 5 python:
 label farewell_happy_affectionate_heading_off:
     n 1unmaj "Heading off now,{w=0.1} [player]?"
     n 1nnmsm "Alright!{w=0.2} Take care!"
-    $ jn_farewells.try_trust_dialogue()
+    
     return { "quit": None }
 
 init 5 python:
@@ -812,7 +805,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_happy_affectionate_stay_safe",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.AFFECTIONATE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -820,7 +813,7 @@ init 5 python:
 label farewell_happy_affectionate_stay_safe:
     n 1nchss "Okaaay!{w=0.2} I'll be waiting for you!"
     n 1nnmsm "Stay safe,{w=0.1} [player]!"
-    $ jn_farewells.try_trust_dialogue()
+    
     return { "quit": None }
 
 init 5 python:
@@ -829,7 +822,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_happy_affectionate_take_care",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.AFFECTIONATE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -837,7 +830,7 @@ init 5 python:
 label farewell_happy_affectionate_take_care:
     n 1nnmbg "See you later,{w=0.1} [player]!"
     n 1nchsm "Take care!"
-    $ jn_farewells.try_trust_dialogue()
+    
     return { "quit": None }
 
 init 5 python:
@@ -846,7 +839,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_happy_affectionate_see_me_soon",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.AFFECTIONATE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -854,7 +847,7 @@ init 5 python:
 label farewell_happy_affectionate_see_me_soon:
     n 1nchbg "Goodbye,{w=0.1} [player]!"
     n 1nchsm "Come see me soon,{w=0.1} alright?"
-    $ jn_farewells.try_trust_dialogue()
+    
     return { "quit": None }
 
 # NORMAL/HAPPY farewells
@@ -865,7 +858,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_normal_happy_see_you_later",
             unlocked=True,
-            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY)
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -880,14 +873,14 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_normal_happy_later",
             unlocked=True,
-            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY)
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
 label farewell_normal_happy_later:
     n 1nnmss "Later,{w=0.1} [player]!"
-    $ jn_farewells.try_trust_dialogue()
+    
     return { "quit": None }
 
 init 5 python:
@@ -896,14 +889,14 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_normal_happy_goodbye",
             unlocked=True,
-            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY)
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
 label farewell_normal_happy_goodbye:
     n 1nchsm "Goodbye,{w=0.1} [player]!"
-    $ jn_farewells.try_trust_dialogue()
+    
     return { "quit": None }
 
 init 5 python:
@@ -912,14 +905,14 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_normal_happy_kay",
             unlocked=True,
-            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY)
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
 label farewell_normal_happy_kay:
     n 1nwmss "'kay!{w=0.2} Bye for now!"
-    $ jn_farewells.try_trust_dialogue()
+    
     return { "quit": None }
 
 init 5 python:
@@ -928,14 +921,14 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_normal_happy_see_ya",
             unlocked=True,
-            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY)
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
 label farewell_normal_happy_see_ya:
     n 1nchbg "See ya,{w=0.1} [player]!"
-    $ jn_farewells.try_trust_dialogue()
+    
     return { "quit": None }
 
 # UPSET/DISTRESSED farewells
@@ -945,7 +938,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_upset_distressed_bye",
             unlocked=True,
-            affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET)
+            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -960,7 +953,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_upset_distressed_later",
             unlocked=True,
-            affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET)
+            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -975,7 +968,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_upset_distressed_kay",
             unlocked=True,
-            affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET)
+            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -990,7 +983,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_upset_distressed_goodbye",
             unlocked=True,
-            affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET)
+            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1005,7 +998,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_upset_distressed_see_you_around",
             unlocked=True,
-            affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET)
+            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1022,7 +1015,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_broken_ruined_yeah",
             unlocked=True,
-            affinity_range=(None, jn_aff.BROKEN)
+            affinity_range=(None, jn_affinity.BROKEN)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1037,7 +1030,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_broken_ruined_yep",
             unlocked=True,
-            affinity_range=(None, jn_aff.BROKEN)
+            affinity_range=(None, jn_affinity.BROKEN)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1052,7 +1045,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_broken_ruined_uh_huh",
             unlocked=True,
-            affinity_range=(None, jn_aff.BROKEN)
+            affinity_range=(None, jn_affinity.BROKEN)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1067,7 +1060,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_broken_ruined_nothing_to_say",
             unlocked=True,
-            affinity_range=(None, jn_aff.BROKEN)
+            affinity_range=(None, jn_affinity.BROKEN)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1083,7 +1076,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_broken_ruined_kay",
             unlocked=True,
-            affinity_range=(None, jn_aff.BROKEN)
+            affinity_range=(None, jn_affinity.BROKEN)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1102,7 +1095,7 @@ init 5 python:
             label="farewell_short_session_ask",
             unlocked=True,
             conditional="not jn_globals.player_already_stayed_on_farewell and jn_utils.get_current_session_length().total_seconds() / 60 < 30",
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1149,15 +1142,14 @@ label farewell_short_session_ask:
                     else:
                         n 1nlrcaf "Thanks,{w=0.1} [player].{w=0.2} It means a lot."
 
-                    $ jn_relationship("affinity+")
-                    $ jn_relationship("trust+")
+                    $ Natsuki.calculated_affinity_gain()
                     $ jn_globals.player_already_stayed_on_farewell = True
 
                 "No, I have to go.":
                     n 1knmcal "Well...{w=0.3} okay,{w=0.1} [player]."
                     n 1knmpol "Take care out there,{w=0.1} alright?"
                     n 1uchsml "See you later!"
-                    $ jn_farewells.try_trust_dialogue()
+                    
                     return { "quit": None }
 
         "Sorry, [n_name]. I really have to leave.":
@@ -1166,7 +1158,7 @@ label farewell_short_session_ask:
             n 1klrsll "Well...{w=0.3} okay."
             n 1kllpol "Just don't take too long,{w=0.1} alright?"
             n 1knmsml "See you later,{w=0.1} [player]!"
-            $ jn_farewells.try_trust_dialogue()
+            
             return { "quit": None }
 
     return
@@ -1179,7 +1171,7 @@ init 5 python:
             label="farewell_short_session_ask_alt",
             unlocked=True,
             conditional="not jn_globals.player_already_stayed_on_farewell and jn_utils.get_current_session_length().total_seconds() / 60 < 30",
-            affinity_range=(jn_aff.HAPPY, jn_aff.ENAMORED)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1219,8 +1211,7 @@ label farewell_short_session_ask_alt:
 
             n 1nchsml "So...{w=0.3} what else did you wanna do today?"
             $ jn_globals.player_already_stayed_on_farewell = True
-            $ jn_relationship("affinity+")
-            $ jn_relationship("trust+")
+            $ Natsuki.calculated_affinity_gain()
 
         "Fine, I guess.":
             n 1fbkwrf "You {i}guess{/i}?{w=0.2} What do you mean,{w=0.1} you guess?!"
@@ -1230,15 +1221,14 @@ label farewell_short_session_ask_alt:
             n 1uchgnl "Ahaha!{w=0.2} Oh,{w=0.1} lighten up,{w=0.1} [player]!{w=0.2} I'm just messing with you!"
             n 1tllsml "Ehehe.{w=0.2} Now,{w=0.1} where were we?"
             $ jn_globals.player_already_stayed_on_farewell = True
-            $ jn_relationship("affinity+")
-            $ jn_relationship("trust+")
+            $ Natsuki.calculated_affinity_gain()
 
         "Sorry [n_name], I can't right now.":
             n 1fcsunf "Uuuu-"
             n 1kllcaf "Well,{w=0.1} I guess that's fine.{w=0.2} It can't be helped,{w=0.1} after all."
             n 1fnmajf "But you gotta make it up to me,{w=0.1} alright?"
             n 1kchbgl "Stay safe,{w=0.1} [player]!{w=0.2} I'll see you later!"
-            $ jn_farewells.try_trust_dialogue()
+            
             return { "quit": None }
     return
 
@@ -1250,7 +1240,7 @@ init 5 python:
             label="farewell_fake_confidence_ask",
             unlocked=True,
             conditional="not jn_globals.player_already_stayed_on_farewell",
-            affinity_range=(jn_aff.HAPPY, jn_aff.AFFECTIONATE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.AFFECTIONATE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1270,15 +1260,14 @@ label farewell_fake_confidence_ask:
             n 1fcswrf "J-{w=0.1}jeez!{w=0.2} Let's just get back to it already..."
             n 1fllajf "Now,{w=0.1} where were we?"
             $ jn_globals.player_already_stayed_on_farewell = True
-            $ jn_relationship("affinity+")
-            $ jn_relationship("trust+")
+            $ Natsuki.calculated_affinity_gain()
 
         "Sorry, I really need to go.":
             n 1fllbgf "O-{w=0.1}oh...{w=0.3} aha..."
             n 1fllpol "That's fine,{w=0.1} I guess..."
             n 1fnmbg "I'll see you later then,{w=0.1} [player]!"
             n 1knmpo "Don't keep me waiting,{w=0.1} alright?"
-            $ jn_farewells.try_trust_dialogue()
+            
             return { "quit": None }
     return
 
@@ -1290,7 +1279,7 @@ init 5 python:
             label="farewell_pleading_ask",
             unlocked=True,
             conditional="not jn_globals.player_already_stayed_on_farewell",
-            affinity_range=(jn_aff.ENAMORED, jn_aff.LOVE)
+            affinity_range=(jn_affinity.ENAMORED, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1312,7 +1301,7 @@ label farewell_pleading_ask:
             n 1kplsmf "Really.{w=0.1} Thank you."
             n 1kllbgf "N-{w=0.1}now,{w=0.1} where were we? Heh..."
             $ jn_globals.player_already_stayed_on_farewell = True
-            $ jn_relationship("affinity+")
+            $ Natsuki.calculated_affinity_gain()
 
         "I can't right now.":
             n 1kllsff "Oh..."
@@ -1320,7 +1309,7 @@ label farewell_pleading_ask:
             n 1kplpol "Come back soon,{w=0.1} alright?"
             n 1klrsmf "Or you'll have to make it up to me...{w=0.3} ahaha..."
             n 1knmsmf "Stay safe,{w=0.1} [player]!"
-            $ jn_farewells.try_trust_dialogue()
+            
             return { "quit": None }
     return
 
@@ -1332,7 +1321,7 @@ init 5 python:
             label="farewell_gentle_ask",
             unlocked=True,
             conditional="not jn_globals.player_already_stayed_on_farewell",
-            affinity_range=(jn_aff.LOVE, jn_aff.LOVE)
+            affinity_range=(jn_affinity.LOVE, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1352,7 +1341,7 @@ label farewell_gentle_ask:
             n 1kcssmf "..."
             n 1kllbgf "Aha...{w=0.3} so what else did you wanna do today?"
             $ jn_globals.player_already_stayed_on_farewell = True
-            $ jn_relationship("affinity+")
+            $ Natsuki.calculated_affinity_gain()
 
         "Sorry, I really have to go.":
             n 1kllsrf "Oh..."
@@ -1361,37 +1350,9 @@ label farewell_gentle_ask:
             n 1kllsrf "..."
             n 1kwmsmf "I-{w=0.1}I love you,{w=0.1} [player]..."
             n 1kchsmf "I'll see you later."
-            $ jn_farewells.try_trust_dialogue()
+            
             return { "quit": None }
     return
-
-# Trust dialogue; chance to call upon farewell completing and prior to the game closing
-label farewell_extra_trust:
-    # ABSOLUTE+
-    if jn_trust.get_trust_state() >= jn_trust.ABSOLUTE:
-        n 1uchbgf "My [player]...{w=0.3} I'll be waiting..."
-
-    # FULL+
-    elif jn_trust.get_trust_state() >= jn_trust.FULL:
-        n 1kchssf "I'll be waiting..."
-
-    # PARTIAL+
-    elif jn_trust.get_trust_state() >= jn_trust.PARTIAL:
-        n 1kwmsr "You'll be back...{w=0.3} right?"
-
-    # SCEPTICAL+
-    elif jn_trust.get_trust_state() >= jn_trust.SCEPTICAL:
-        n 1kplsr "I'll be okay...{w=0.3} I'll be okay..."
-
-    # DIMINISHED+
-    elif jn_trust.get_trust_state() >= jn_trust.DIMINISHED:
-        n 1kplsr "...?"
-
-    # SHATTERED+
-    else:
-        n 1kplsr "..."
-
-    return { "quit": None }
 
 # Time-of-day based farewells
 
@@ -1405,7 +1366,7 @@ init 5 python:
             label="farewell_early_morning_going_this_early",
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(3, 4)",
-            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1446,7 +1407,7 @@ init 5 python:
             label="farewell_morning_heading_off",
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(5, 11)",
-            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1478,7 +1439,7 @@ init 5 python:
             label="farewell_afternoon_come_visit_soon",
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(12, 17)",
-            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1506,7 +1467,7 @@ init 5 python:
             label="farewell_evening_good_evening",
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(18, 21)",
-            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1531,7 +1492,7 @@ init 5 python:
             label="farewell_night_good_night",
             unlocked=True,
             conditional="store.jn_get_current_hour() >= 22 or store.jn_get_current_hour() <= 2",
-            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )

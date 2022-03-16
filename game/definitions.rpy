@@ -24,9 +24,85 @@ define JN_NEW_YEARS_EVE = datetime.date(datetime.date.today().year, 12, 31)
 
 init 0 python:
     from collections import OrderedDict
+    import datetime
     from Enum import Enum
     import re
-    import store.jn_affinity as jn_aff
+    import store.jn_affinity as jn_affinity
+    import store.jn_utils as jn_utils
+
+    class Natsuki():
+        """
+        Qeeb class for the management of data/functionality related to Natsuki herself such as affinity, clothing, etc.
+        """
+        @staticmethod
+        def calculated_affinity_gain(base=1, bypass=False):
+            """
+            Adds a calculated amount to affinity, based on the player's relationship with Natsuki and daily cap state.
+            
+            IN:
+                - base - The base amount to use for the calculation
+                - bypass - If the daily cap should be bypassed for things like one-time gifts, events, etc.
+            """
+            to_add = base * jn_affinity.get_relationship_length_multiplier()
+            if bypass:
+                # Ignore the daily gain and just award the full affinity
+                persistent.affinity += to_add
+
+            elif persistent.affinity_daily_gain > 0:
+                # Award the full affinity if any cap remains
+                persistent.affinity_daily_gain -= to_add
+                persistent.affinity += to_add
+
+                if persistent.affinity_daily_gain < 0:
+                    persistent.affinity_daily_gain = 0
+
+            else:
+                jn_utils.log("Daily affinity cap reached!")
+
+        @staticmethod
+        def calculated_affinity_loss(base=1):
+            """
+            Subtracts a calculated amount from affinity, based on the player's relationship with Natsuki.
+
+            IN:
+                - base - The base amount to use for the calculation
+            """
+            persistent.affinity -= base * jn_get_relationship_length_multiplier()
+
+        @staticmethod
+        def percentage_affinity_gain(percentage_gain):
+            """
+            Adds a percentage amount to affinity, with the percentage based on the existing affinity value.
+
+            IN:
+                - percentage_gain - The integer percentage the affinity should increase by
+            """
+            persistent.affinity += persistent.affinity * (percentage_gain / 100)
+
+        @staticmethod
+        def percentage_affinity_loss(percentage_loss):
+            """
+            Subtracts a percentage amount to affinity, with the percentage based on the existing affinity value.
+            
+            IN:
+                - percentage_loss - The integer percentage the affinity should decrease by
+            """
+            persistent.affinity += persistent.affinity * (percentage_loss / 100)
+
+        @staticmethod
+        def check_reset_daily_affinity_gain():
+            """
+            Resets the daily affinity cap, if 24 hours has elapsed.
+            """
+            current_date = datetime.datetime.now()
+
+            if not persistent.affinity_gain_reset_date:
+                persistent.affinity_gain_reset_date = current_date
+
+            elif current_date.day is not persistent.affinity_gain_reset_date.day:
+                persistent.affinity_daily_gain = 5 * jn_affinity.get_relationship_length_multiplier()
+                persistent.affinity_gain_reset_date = current_date
+                jn_utils.log("Daily affinity cap reset; new cap is: {0}".format(persistent.affinity_daily_gain))
 
     class JNHolidays(Enum):
         none = 0
@@ -1256,6 +1332,51 @@ init python in jn_utils:
 
         else:
             return datetime.datetime.now() - datetime.datetime.today()
+
+    def get_total_gameplay_seconds():
+        """
+        Returns the number of seconds the player has spent with Natsuki in total.
+
+        OUT:
+            - Seconds spent with Natsuki since starting JN
+        """
+        return get_total_gameplay_length().total_seconds()
+
+    def get_total_gameplay_minutes():
+        """
+        Returns the number of minutes the player has spent with Natsuki in total.
+
+        OUT:
+            - Minutes spent with Natsuki since starting JN
+        """
+        return get_total_gameplay_length().total_seconds() / 60
+
+    def get_total_gameplay_hours():
+        """
+        Returns the number of hours the player has spent with Natsuki in total.
+
+        OUT:
+            - Hours spent with Natsuki since starting JN
+        """
+        return get_total_gameplay_length().total_seconds() / 3600
+
+    def get_total_gameplay_days():
+        """
+        Returns the number of days the player has spent with Natsuki in total.
+
+        OUT:
+            - Days spent with Natsuki since starting JN
+        """
+        return get_total_gameplay_length().total_seconds() / 86400
+
+    def get_total_gameplay_months():
+        """
+        Returns the number of months the player has spent with Natsuki in total.
+
+        OUT:
+            - Months spent with Natsuki since starting JN
+        """
+        return get_total_gameplay_length().total_seconds() / 2628000
 
     def get_time_in_session_descriptor():
         """

@@ -55,12 +55,13 @@ init 5 python:
             prompt="I think you're amazing!",
             label="compliment_amazing",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_COMPLIMENT
     )
 
 label compliment_amazing:
+    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_amazing").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_AMAZING:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
@@ -87,8 +88,6 @@ label compliment_amazing:
             if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
                 n 1kwmsmf "Love you,{w=0.1} [player]..."
 
-            $ jn_relationship("affinity+")
-
         else:
             n 1flrbsl "O-{w=0.1}oh!{w=0.2} Aha!{w=0.2} I knew you'd admit it eventually!"
             n 1nchgnl "W-{w=0.1}well,{w=0.1} I'm just glad both of us agree on that."
@@ -98,8 +97,6 @@ label compliment_amazing:
                 n 1fwmpul "But...{w=0.3} don't think that means you don't have something going for you too!"
                 n 1fllssl "You're...{w=0.3} pretty awesome too,{w=0.1} [player].{w=0.2} You better remember that,{w=0.1} 'kay?"
                 n 1klrbgl "Ahaha..."
-
-            $ jn_relationship("affinity+")
 
     $ jn_compliments.last_compliment_type = jn_compliments.TYPE_AMAZING
     return
@@ -111,12 +108,14 @@ init 5 python:
             prompt="I think you're beautiful!",
             label="compliment_beautiful",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_COMPLIMENT
     )
 
 label compliment_beautiful:
+    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_beautiful").shown_count == 0)
+
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_BEAUTIFUL:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n 1uskwrf "J-{w=0.1}jeez,{w=0.1} [player]...!"
@@ -157,8 +156,6 @@ label compliment_beautiful:
             if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
                 n 1kwmsmf "...I love you,{w=0.1} [player]...{w=0.3} Ahaha..."
 
-            $ jn_relationship("affinity+")
-
         else:
             n 1uscemf "W{w=0.1}-w{w=0.1}-what?"
             n 1fskwrf "W-{w=0.1}what did you say?!"
@@ -172,8 +169,6 @@ label compliment_beautiful:
                 n 1fcsanl "Uuuuuu...{w=0.3} just stop it for now,{w=0.1} okay?"
                 n 1fllpof "You're making this all super awkward..."
 
-            $ jn_relationship("affinity+")
-
     $ jn_compliments.last_compliment_type = jn_compliments.TYPE_BEAUTIFUL
     return
 
@@ -184,12 +179,14 @@ init 5 python:
             prompt="I love how confident you are!",
             label="compliment_confident",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_COMPLIMENT
     )
 
 label compliment_confident:
+    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_confident").shown_count == 0)
+
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_CONFIDENT:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n 1fchbg "Ehehe.{w=0.2} I'm glad you still think so,{w=0.1} [player]!"
@@ -208,7 +205,6 @@ label compliment_confident:
             n 1fcssr "I...{w=0.3} really...{w=0.3} wish I could say it was {i}all{/i} genuine."
             n 1kllsr "But having you here with me...{w=0.3} it helps,{w=0.1} you know.{w=0.2} A lot."
             n 1klrss "So...{w=0.3} thanks,{w=0.1} [player].{w=0.2} Really."
-            $ jn_relationship("affinity+")
 
         else:
             n 1uskajl "H-{w=0.1}huh?"
@@ -220,8 +216,6 @@ label compliment_confident:
                 n 1uchgnl "Oh,{w=0.1} who am I kidding.{w=0.2} Of course you do."
                 n 1uchbsl "Ahaha!"
 
-            $ jn_relationship("affinity+")
-
     $ jn_compliments.last_compliment_type = jn_compliments.TYPE_CONFIDENT
     return
 
@@ -232,12 +226,14 @@ init 5 python:
             prompt="I think you're cute!",
             label="compliment_cute",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_COMPLIMENT
     )
 
 label compliment_cute:
+    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_cute").shown_count == 0)
+
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_CUTE:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n 1fskwrl "..."
@@ -294,12 +290,14 @@ init 5 python:
             prompt="I love your sense of humour!",
             label="compliment_hilarious",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_COMPLIMENT
     )
 
 label compliment_hilarious:
+    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_hilarious").shown_count == 0)
+  
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_HILARIOUS:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n 1uchgn "Ehehe. Thanks, [player]!{w=0.2} I pride myself on that,{w=0.1} you know."
@@ -320,14 +318,12 @@ label compliment_hilarious:
             n 1flrssl "That'd be super lame."
             n 1kllbol "So...{w=0.3} thanks for telling me that,{w=0.1} [player].{w=0.2} Truly."
             n 1klrssl "It means a lot."
-            $ jn_relationship("affinity+")
 
         else:
             n 1fcsbgl "O-{w=0.1}Oh?{w=0.2} Aha!{w=0.2} Well,{w=0.1} I'm glad to hear it!"
             n 1fsqsm "You know what that means,{w=0.1} right?"
             n 1fchgn "It means you have great taste,{w=0.1} [player]!"
             n 1uchbs "Ahaha!"
-            $ jn_relationship("affinity+")
 
     $ jn_compliments.last_compliment_type = jn_compliments.TYPE_HILARIOUS
     return
@@ -339,12 +335,14 @@ init 5 python:
             prompt="You're an inspiration to me!",
             label="compliment_inspirational",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_COMPLIMENT
     )
 
 label compliment_inspirational:
+    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_inspirational").shown_count == 0)
+
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_INSPIRATIONAL:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n 1fchbg "Ahaha.{w=0.2} Thanks again for that,{w=0.1} [player]."
@@ -361,7 +359,6 @@ label compliment_inspirational:
             n 1fllbgl "Ahaha...{w=0.3} well...{w=0.3} of course I am!"
             n 1kllsr "..."
             n 1kllssl "Though I'm glad to hear it,{w=0.1} all the same."
-            $ jn_relationship("affinity+")
 
         else:
             n 1fskeml "H-{w=0.1}huh?{w=0.2} I'm an inspiration to you?"
@@ -370,7 +367,6 @@ label compliment_inspirational:
             n 1uchgn "Why,{w=0.1} I'm practically an idol,{w=0.1} right?{w=0.2} Ahaha!"
             n 1nllss "..."
             n 1knmss "...Right?"
-            $ jn_relationship("affinity+")
 
     $ jn_compliments.last_compliment_type = jn_compliments.TYPE_INSPIRATIONAL
     return
@@ -382,12 +378,14 @@ init 5 python:
             prompt="I love your sense of style!",
             label="compliment_style",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_COMPLIMENT
     )
 
 label compliment_style:
+    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_style").shown_count == 0)
+
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_STYLE:
         if jn_outfits.current_outfit_name != "School uniform":
 
@@ -462,12 +460,14 @@ init 5 python:
             prompt="I love how thoughtful you are!",
             label="compliment_thoughtful",
             unlocked=True,
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE)
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE)
         ),
         topic_group=TOPIC_TYPE_COMPLIMENT
     )
 
 label compliment_thoughtful:
+    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_thoughtful").shown_count == 0)
+
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_THOUGHTFUL:
         if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
             n 1fcsanl "Nnnnn-!{w=0.2} what did I tell you,{w=0.1} [player]?"
@@ -499,8 +499,6 @@ label compliment_thoughtful:
             n 1fllssl "It's nothing,{w=0.1} honestly!"
             n 1knmpol "I-{w=0.1}I'm just trying to be friendly,{w=0.1} you know?"
             n 1fcsbgl "Yeah!{w=0.2} Totally no special treatment going on here.{w=0.2} Nope!"
-
-        $ jn_relationship("affinity+")
 
     $ jn_compliments.last_compliment_type = jn_compliments.TYPE_THOUGHTFUL
     return
