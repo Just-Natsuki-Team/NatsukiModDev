@@ -5398,6 +5398,7 @@ init 5 python:
             label="talk_thoughts_on_dan_salvato",
             unlocked=True,
             prompt="What do you think of Dan Salvato?",
+            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 3600 >= 48",
             category=["DDLC", "Natsuki"],
             player_says=True,
             location="classroom"
