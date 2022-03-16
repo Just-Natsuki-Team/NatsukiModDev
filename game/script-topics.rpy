@@ -5405,7 +5405,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label talk_dan_salvato:
+label talk_thoughts_on_dan_salvato:
     n 1tnmaj "Dan...?{w=1}{nw}"
     extend "Dan...{w=0.5} Salvato..."
     n "Why...{w=0.3} is that name so...{w=0.5} familiar?"
