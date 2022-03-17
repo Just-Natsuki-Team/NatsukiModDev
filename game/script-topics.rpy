@@ -5546,3 +5546,114 @@ label talk_maintaining_proper_hygiene:
         n 1nchgn "Ahaha!"
 
     return
+
+# Natsuki talks about her opinion and advice proper hygiene.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_how_to_make_friends",
+            unlocked=True,
+            prompt="How do I make friends?",
+            category=["Life", "Society", "You"],
+            player_says=True,
+            affinity_range=(jn_affinity.HAPPY, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_how_to_make_friends:
+    n 1tnmpu "Huh?{w=1}{nw}"
+    extend 1tnmsr " You wanna know how to make {i}friends{/i}?"
+    n 1tllbo "..."
+    n 1ncsaj "Well.{w=1}{nw}"
+    extend 1nlraj " I gotta say,{w=0.1} [player]."
+    n 1fchgn "That's pretty up there in the weirdest questions you've asked me so far!"
+    n 1fllss "But...{w=1}{nw}" 
+    extend 1ullaj " in all seriousness?"
+    n 1tnmsf "{w=0.5}...Why?{w=1.5}{nw}"
+    extend 1nlrss " Like why're you asking {i}me{/i},{w=0.3} I mean."
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        n 1kslbgl "You've basically mastered getting to know me!{w=0.5}{nw}"
+        extend 1fcspol " N-{w=0.1}not that I just let you,{w=0.1} obviously."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n 1ullaj "It's just...{w=1}{nw}"
+        extend 1tnmssl " I {i}seriously{/i} doubt it's something you'd struggle with,{w=0.5}{nw}" 
+        extend 1nsrssl " of all people."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n 1ksqpol "Are we not {i}already{/i} friends,{w=0.1} [player]?"
+
+    else:
+        n 1nsrpo "I thought we were getting along okay,{w=0.1} at least..."
+
+    n 1nsrpo "..."
+    n 1ulraj "Well,{w=0.5}{nw}"
+    extend 1nlrss " anyway..."
+    n 1nchbs "Sure!{w=1}{nw}"
+    extend 1fchbg " I can show you the ropes!"
+    n 1fnmaj "Right!{w=0.5}{nw}"
+    extend 1ncsaj " So..."
+    n 1unmbo "I think the most important thing is to have {i}something{/i} in common.{w=1}{nw}"
+    extend 1flrss " You probably knew that much,{w=0.1} at least."
+    n 1fnmpu "But I think people overthink what that actually {i}means{/i}!"
+    n 1flrpu "You don't have to share hobbies,{w=0.5}{nw}"
+    extend 1nlraj " or a ton of interests or anything like that."
+    n 1ulrbo "I mean,{w=0.5}{nw}"
+    extend 1fcsbg " just look at Yuri and me!{w=1}{nw}"
+    extend 1uchgn " Classic example!"
+    n 1ullaj "Sure,{w=0.1} we disagreed on literature.{w=1}{nw}"
+    extend 1fnmaj " But we went to the same school {w=0.1}-{w=0.5}{nw}"
+    extend 1fchbg " and we were members of the same club!"
+    n 1fcssm "I guess what I'm getting at is that having {i}places{/i} in common is just as key as tastes!"
+    n 1tllbo "If anything,{w=0.5}{nw}" 
+    extend 1tnmss " it actually makes it even easier if you {i}know{/i} you're gonna see them again!"
+    n 1fcsaj "So {w=0.1}-{w=0.1} once you've got something in common,{w=0.5}{nw}"
+    extend 1fchbg " it's all just a matter of contact!"
+    n 1fsqsm "Now here's where you gotta use your brain,{w=0.1} [player]."
+    n 1ullaj "Just...{w=1.5}{nw}" 
+    extend 1tnmca " {i}think{/i} a little about the situation and what to say,{w=0.1} you know?"
+    n 1ullpu "Like,{w=0.5}{nw}"
+    extend 1nnmaj " say you just started a new job in an office."
+    n 1flrem "Don't just assume they're into manga or whatever {w=0.1}-{w=0.5}{nw}"
+    extend 1kchbg " ease into it!{w=1}{nw}"
+    extend 1fchbg " Lean into 'em with a coffee or something!"
+    n 1fsqaj "Don't be fooled though,{w=0.1} [player]."
+    n 1nslsl "You can't just expect to talk to someone once and be done...{w=0.5}{nw}"
+    extend 1fnmss " you gotta keep at it,{w=0.1} too!"
+    n 1ullbo "Physical talks,{w=0.1} online messaging,{w=0.5}{nw}" 
+    extend 1unmaj " whatever works."
+    n 1uwdem "It's {i}super{/i} easy for a friendship -{w=0.5}{nw}"
+    extend 1fllun " even an old one {w=0.1}-{w=0.5}{nw}"
+    extend 1knmsl " to fizzle out because nobody is making an effort."
+    n 1uskem "B-{w=0.1}but that's not to say you gotta go all out all the time though!"
+    n 1fcsaj "It's all about striking a balance.{w=1}{nw}"
+    extend 1fchbg " People need downtime too!"
+    n 1fslsr "{w=0.3}...And you shouldn't be the one putting in {i}everything{/i} to make it work."
+    n 1fnmpu "Remember {w=0.1}-{w=0.1} a friendship has two sides."
+    extend 1fchsm " You {i}know{/i} you've got a winner if they're doing their part too!"
+    n 1nllss "But that all being said,{w=0.1} [player]..."
+    n 1nnmsl "There's one thing more important than {cps=\10}{i}anything{/i}{/cps} else.{w=1.5}{nw}"
+    extend 1fsqsr " Respect."
+    n 1fsrem "Friends don't trash each other,{w=0.5}{nw}"
+    extend 1fcsem " or give them crap for their interests!"
+    n 1fsqsr "...And that goes {i}both{/i} ways,{w=0.1} [player]."
+    n 1fsrbo "Someone being a 'friend' is {i}no{/i} excuse for them to act like a jerk whenever they want {w=0.1}-{w=0.5}{nw}"
+    extend 1fsqpu " trust me."
+    n 1fnmpu "I've {i}been{/i} there.{w=0.5}{nw}"
+    extend 1kllsf " And it took a good friend to help me realize that."
+    n 1ncsss "Heh."
+    n 1ullpu "But...{w=1.5}{nw}"
+    extend 1fchbg " yeah!"
+    n 1tnmsm "I wouldn't get all stressed out about it,{w=0.1} [player].{w=1}{nw}"
+    extend 1fcssm " Friendships are {i}formed{/i},{w=0.1} not forced."
+    n 1fcsss "So take your time,{w=0.1} and just go with the flow.{w=1}{nw}"
+    extend 1kllbg " That's all I'm saying!"
+    n 1fsqsm "And besides..."
+    n 1tsqsg "It's worked out for us so far,{w=0.1} huh?{w=0.5}{nw}"
+    extend 1nchgnl " Ehehe."
+
+    return
