@@ -87,6 +87,7 @@ init 0 python in jn_outfits:
             wearable_list,
             unlocked=None,
             is_jn_wearable=None,
+            reference_name=None,
             not_reference_name=None,
             wearable_type=None
         ):
@@ -97,6 +98,7 @@ init 0 python in jn_outfits:
                 - wearable_list - the list of JNWearable child wearables to query
                 - unlocked - the boolean unlocked state to filter for
                 - is_jn_wearable - the boolean is_jn_wearable state to filter for
+                - reference_name - list of reference_names the wearable must have 
                 - not_reference_name - list of reference_names the wearable must not have 
                 - wearable_type the wearable type to filter for
 
@@ -109,6 +111,7 @@ init 0 python in jn_outfits:
                 if _wearable.__filter_wearable(
                     unlocked,
                     is_jn_wearable,
+                    reference_name,
                     not_reference_name,
                     wearable_type
                 )
@@ -150,6 +153,7 @@ init 0 python in jn_outfits:
             self,
             unlocked=None,
             is_jn_wearable=None,
+            reference_name=None,
             not_reference_name=None,
             wearable_type=None
         ):
@@ -160,6 +164,7 @@ init 0 python in jn_outfits:
                 - wearable_list - the list of JNWearable child wearables to query
                 - unlocked - the boolean unlocked state to filter for
                 - is_jn_wearable - the boolean is_jn_wearable state to filter for
+                - reference_name - list of reference_names the wearable must have 
                 - not_reference_name - list of reference_names the wearable must not have 
                 - wearable_type the wearable type to filter for
 
@@ -170,6 +175,9 @@ init 0 python in jn_outfits:
                 return False
 
             elif is_jn_wearable is not None and self.is_jn_wearable != is_jn_wearable:
+                return False
+
+            elif reference_name is not None and not self.reference_name in reference_name:
                 return False
 
             elif not_reference_name is not None and self.reference_name in not_reference_name:
@@ -1028,7 +1036,7 @@ init 0 python in jn_outfits:
     __register_wearable(JNHairstyle(
         reference_name="jn_hair_super_messy",
         display_name="Super messy",
-        unlocked=True,
+        unlocked=False,
         is_jn_wearable=True
     ))
     __register_wearable(JNHairstyle(
@@ -1058,6 +1066,12 @@ init 0 python in jn_outfits:
     __register_wearable(JNHairstyle(
         reference_name="jn_hair_down_long",
         display_name="Long hair down",
+        unlocked=True,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHairstyle(
+        reference_name="jn_hair_pixie_cut",
+        display_name="Pixie cut",
         unlocked=True,
         is_jn_wearable=True
     ))
@@ -1261,6 +1275,8 @@ init 0 python in jn_outfits:
     ))
 
     # Official JN headgear
+
+    # Hats
     __register_wearable(JNHeadgear(
         reference_name="jn_headgear_santa_hat",
         display_name="Santa hat",
@@ -1288,6 +1304,50 @@ init 0 python in jn_outfits:
     __register_wearable(JNHeadgear(
         reference_name="jn_headgear_lolita_hat",
         display_name="Lolita hat",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+
+    # Ahoges
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_ahoge_curly",
+        display_name="Ahoge (curly)",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_ahoge_small",
+        display_name="Ahoge (small)",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_ahoge_swoop",
+        display_name="Ahoge (swoop)",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_ahoge_double",
+        display_name="Ahoge (double)",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_ahoge_simple",
+        display_name="Ahoge (simple)",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_ahoge_heart",
+        display_name="Ahoge (heart)",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_ahoge_swirl",
+        display_name="Ahoge (swirl)",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1419,6 +1479,18 @@ init 0 python in jn_outfits:
         is_jn_outfit=True,
         clothes=get_wearable("jn_clothes_ruffled_swimsuit"),
         hairstyle=get_wearable("jn_hair_down")
+    ))
+
+    # Internal outfits; used for events, etc.
+
+    # Outfit used for ahoge unlock event
+    __register_outfit(JNOutfit(
+        reference_name="jn_ahoge_unlock",
+        display_name="Ahoge unlock",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_star_pajamas"),
+        hairstyle=get_wearable("jn_hair_super_messy")
     ))
 
     # Outfit schedules
@@ -1847,11 +1919,10 @@ label outfits_create_save:
                     extend 1fchbg " Any outfit worth wearing has a name,{w=0.1} dummy!"
 
                 elif jn_utils.get_string_contains_profanity(outfit_name):
-                    if persistent._jn_player_profanity_during_introduction:
-                        n 1fsqem "...Really,{w=0.5} [player]."
-                        n 1fsqsr "Come on.{w=1.5}{nw}"
-                        extend 1fllsr " Quit being a jerk."
-                        $ jn_relationship("affinity-")
+                    n 1fsqem "...Really,{w=0.5} [player]."
+                    n 1fsqsr "Come on.{w=1.5}{nw}"
+                    extend 1fllsr " Quit being a jerk."
+                    $ jn_relationship("affinity-")
 
                 else:
                     python:

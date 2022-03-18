@@ -291,3 +291,78 @@ label event_code_fiddling:
     n 1fsrpo "Hello to you too,{w=0.1} dummy..."
 
     return
+
+# Natsuki isn't quite ready for the day...
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_not_ready_yet",
+            unlocked=True,
+            conditional=(
+                "((jn_is_time_block_early_morning() or jn_is_time_block_mid_morning()) and jn_is_weekday())"
+                " or (jn_is_time_block_late_morning and not jn_is_weekday())"
+            ),
+            affinity_range=(jn_affinity.HAPPY, None)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
+
+label event_not_ready_yet:
+    python:
+        import random
+        jn_globals.force_quit_enabled = False
+
+        # Unlock the starter ahoges
+        unlocked_ahoges = [
+            jn_outfits.get_wearable("jn_headgear_ahoge_curly"),
+            jn_outfits.get_wearable("jn_headgear_ahoge_small"),
+            jn_outfits.get_wearable("jn_headgear_ahoge_swoop")
+        ]
+        for ahoge in unlocked_ahoges:
+            ahoge.unlock()
+
+        # Unlock the super-messy hairstyle
+        super_messy_hairstyle = jn_outfits.get_wearable("jn_hair_super_messy").unlock()
+
+        # Make note of the loaded outfit, then assign Natsuki a hidden one to show off hair/ahoge
+        outfit_to_restore = JN_NATSUKI.get_outfit_name()
+        ahoge_outfit = jn_outfits.get_outfit("jn_ahoge_unlock")
+        ahoge_outfit.headgear = random.choice(unlocked_ahoges)
+        JN_NATSUKI.set_outfit(ahoge_outfit)
+
+    $ renpy.pause(5)
+    n "Uuuuuu...{w=2}{nw}"
+    extend " man..."
+    $ renpy.pause(3)
+    n "It's too {i}early{/i} for thiiis!"
+    play audio chair_out_in
+    $ renpy.pause(5)
+    n "Ugh...{w=1}{nw}"
+    extend " I gotta get to bed earlier..."
+    $ renpy.pause(7)
+
+    menu:
+        "Enter...":
+            pass
+
+    $ jn_events.display_visuals("1uskeml")
+    $ jn_globals.force_quit_enabled = True
+
+    n 1uskeml "H-{w=0.3}huh?{w=1.5}{nw}"
+    extend 1uskwrl " [player]?!{w=1}{nw}"
+    extend 1klleml " You're here already?!"
+    n 1flrunl "..."
+    n 1uskemf "I-{w=0.3}I gotta get ready!"
+
+    play audio clothing_ruffle
+    $ JN_NATSUKI.set_outfit(jn_outfits.get_outfit(outfit_to_restore))
+    with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
+
+    n 1fcsem "Jeez...{w=1.5}{nw}"
+    extend 1nslpo  " I really gotta get an alarm clock or something.{w=1}{nw}"
+    extend 1nsrss " Heh."
+    n 1flldv "So...{w=1}{nw}"
+    extend 1fcsbgl " what's up,{w=0.1} [player]?"
+
+    return
