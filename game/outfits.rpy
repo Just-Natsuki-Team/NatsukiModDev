@@ -1079,8 +1079,14 @@ init 0 python in jn_outfits:
     # Official JN eyewear
     __register_wearable(JNEyewear(
         reference_name="jn_eyewear_circles",
-        display_name="Circle glasses",
+        display_name="Black circle glasses",
         unlocked=True,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNEyewear(
+        reference_name="jn_eyewear_heart_frames",
+        display_name="Pink heart glasses",
+        unlocked=False,
         is_jn_wearable=True
     ))
 
@@ -1124,6 +1130,12 @@ init 0 python in jn_outfits:
     __register_wearable(JNAccessory(
         reference_name="jn_accessory_purple_rose",
         display_name="Purple rose",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNAccessory(
+        reference_name="jn_accessory_pink_heart_hairpin",
+        display_name="Pink heart hairpin",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1276,7 +1288,7 @@ init 0 python in jn_outfits:
 
     # Official JN headgear
 
-    # Hats
+    # Hats/hairbands/ears
     __register_wearable(JNHeadgear(
         reference_name="jn_headgear_santa_hat",
         display_name="Santa hat",
@@ -1304,6 +1316,30 @@ init 0 python in jn_outfits:
     __register_wearable(JNHeadgear(
         reference_name="jn_headgear_lolita_hat",
         display_name="Lolita hat",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_basic_white_headband",
+        display_name="Basic white headband",
+        unlocked=True,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_cat_headband",
+        display_name="Cat headband",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_purple_rose_headband",
+        display_name="Purple rose headband",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_spiked_headband",
+        display_name="Spiked headband",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1481,7 +1517,7 @@ init 0 python in jn_outfits:
         hairstyle=get_wearable("jn_hair_down")
     ))
 
-    # Internal outfits; used for events, etc.
+    # Internal outfits; used for events, etc. These shouldn't be unlocked!
 
     # Outfit used for ahoge unlock event
     __register_outfit(JNOutfit(
