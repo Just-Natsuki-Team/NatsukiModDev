@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
+about: Suggest an idea for this project - only one idea per issue raised, please
 title: "[ FEATURE REQUEST ] - "
 labels: Potential Feature Addition
 assignees: ''

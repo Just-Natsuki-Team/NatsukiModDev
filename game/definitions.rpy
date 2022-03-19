@@ -55,6 +55,7 @@ init 0 python:
     TOPIC_TYPE_ADMISSION = "ADMISSION"
     TOPIC_TYPE_COMPLIMENT = "COMPLIMENT"
     TOPIC_TYPE_APOLOGY = "APOLOGY"
+    TOPIC_TYPE_EVENT = "EVENT"
 
     TOPIC_LOCKED_PROP_BASE_MAP = {
         #Things which shouldn't change
@@ -798,6 +799,9 @@ init -990 python in jn_globals:
     # Tracks whether the player is or is not currently in some topic flow
     player_is_in_conversation = False
 
+    # Tracks if the player is permitted to force quit; use this to block force quits during sequences
+    force_quit_enabled = True
+
     # Constants; use these for anything we only want defined once and used in a read-only context
 
     # Endearments Natsuki may use at the highest levels of affinity to refer to her player
@@ -976,21 +980,53 @@ init -990 python in jn_globals:
     # Source courtest of: https://github.com/RobertJGabriel/Google-profanity-words, with some additions by us
     _PROFANITY_LIST = {
         "(?<![blmprs])ass(?!i)",
-        "(^fag$|^fagg$)",
+        "(^d[il1]ck$|d[il1]ckhead)",
+        "(^dink$|dirsa)",
+        "^fag{1,2}$",
+        "[s5]h[i1]t",
+        "(a_s_s|a55)",
+        "anu[s5]",
+        "(ar5e|arrse|^arse$)",
+        "((b|l3)[i1]a?[t+7]ch)",
+        "(bolloc?k)",
+        "([ck]ock|cok)",
+        "([ck]um|cunil|kunil)",
+        "(doosh|duche)",
+        "eja[ck]ul.*",
+        "(f4nny|fanny|fanyy)",
+        "([4f](uc?|oo|ec|cu)[kx]|f_u_c_k)",
+        "god-dam",
+        "(hoare?|hoer|hore)",
+        "(horniest|horny)",
+        "jack-?off",
+        "ji[sz]m",
+        "(m[a4][s5]t[eu]r-?b[a8][t+]?[e3]?|masochist)",
+        "m[o0]-?f[o0]",
+        "n[1i]gg",
+        "orgasi?m",
+        "phuc?[kq]",
+        "(porn|pron)",
+        "puss[eiy]",
+        "(rimjaw|rimming)",
+        "(scroat|scrote|scrotum)",
+        "(sh[i\!1][t+]e?|s_h_i_t)",
+        "(testical|testicle)",
+        "(^tit$|t[1i]tt[1i]e[5s]|teets|teez)",
+        "(tw[4a]t|twunt)",
+        "(willies|willy)",
+        "^balls$",
+        "^bum$",
+        "^coon$",
         "^ho$",
         "^hoe$",
+        "^nob$",
         "^tit$",
         "4r5e",
-        "(5h1t|5hit)",
-        "(a_s_s|a55)",
         "aids",
         "anal",
-        "(anus|anu5)",
-        "(ar5e|arrse|^arse$)",
         "b!tch",
         "b[0o]+b(?!er|on)",
         "ballbag",
-        "^balls$",
         "ballsack",
         "bastard",
         "beastial",
@@ -998,16 +1034,13 @@ init -990 python in jn_globals:
         "bellend",
         "bestial",
         "bestiality",
-        "(bi+ch|bitch|biatch|l3i+ch|l3itch|b17ch|b1tch)",
         "bloody",
         "blowjob",
         "boiolas",
-        "(bollock|bollok)",
         "boner",
         "breasts",
         "buceta",
         "bugger",
-        "^bum$",
         "bunnyfucker",
         "butt(?!er|on)",
         "c0ck",
@@ -1018,35 +1051,25 @@ init -990 python in jn_globals:
         "cipa",
         "clit|cl1t",
         "cnut",
-        "(cock|cok|kock)",
-        "^coon$",
         "crap",
-        "(cum|cunil|kum|kunil)",
         "cunt",
         "cyalis",
         "cyberfuc*",
         "damn",
-        "(^dick$|dickhead)",
         "dildo",
-        "(^dink$|dirsa|dlck|d1ck)",
         "dog-fucker",
         "doggin",
         "donkeyribber",
-        "(doosh|duche)",
         "dyke",
-        "(ejac*|ejak*)",
-        "(f4nny|fanny|fanyy)",
         "fatass",
         "felching",
         "fellat",
         "flange",
         "fudgepacker",
-        "(fuk|fuck|4uck|fook|fux|fcuk|feck|f_u_c_k)",
         "gangbang",
         "gaylord",
         "gaysex",
         "goatse",
-        "(god-dam|god-damned)",
         "goddamn",
         "h1tl3r",
         "h1tler",
@@ -1054,57 +1077,41 @@ init -990 python in jn_globals:
         "hell",
         "heshe",
         "hitler",
-        "(hoar|hoare|hoer|hore)",
         "homo",
-        "(horniest|horny)",
         "hotsex",
-        "(jack-off|jackoff)",
         "jap",
         "jerk-off",
-        "(jiz|jism)",
         "kawk",
         "knob",
         "kondum",
         "labia",
         "lmfao",
         "lust",
-        "(m45terbate|ma5terb8|ma5terbate|masochist|masterb8masterbat3|masterbate|master-bate|masterbation|masturbate)",
-        "(mo-fo|mof0|mofo|m0fo|m0f0)",
-        "(mothafuck|motherfuck|muthafeck|mutherfuck)",
         "muff",
         "mutha",
         "nazi",
-        "(nigg|n1gg)",
-        "^nob$",
         "numbnuts",
         "nutsack",
-        "(orgasim|orgasm)",
         "p0rn",
         "pawn",
         "pecker",
         "pedo",
         "penis",
         "phonesex",
-        "(phuck|phuk|phuq)",
         "pigfucker",
         "pimpis",
         "piss",
         "poop",
-        "(porn|pron)",
         "prick",
         "pube",
-        "(pussi|pussy|pusse)",
         "rectum",
         "retard",
-        "(rimjaw|rimming)",
         "s.o.b.",
         "sadist",
         "schlong",
         "screw",
-        "(scroat|scrote|scrotum)",
         "semen",
         "sex",
-        "(sh!+|sh!t|sh1t|shit|shite|shi+|s_h_i_t)",
         "shag",
         "shemale",
         "skank",
@@ -1115,11 +1122,8 @@ init -990 python in jn_globals:
         "son-of-a-bitch",
         "spac",
         "spunk",
-        "(tit|t1tt1e5|t1tties|teets|teez)",
-        "(testical|testicle)",
         "tosser",
         "turd",
-        "(tw4t|twat|twunt)",
         "v14gra|v1gra",
         "vagina",
         "viagra",
@@ -1129,7 +1133,6 @@ init -990 python in jn_globals:
         "wank",
         "whoar",
         "whore",
-        "(willies|willy)",
         "xrated",
         "xxx"
     }
@@ -1294,7 +1297,7 @@ init python in jn_utils:
         OUT:
             First letter of the player's name.
         """
-        return list(player)[0]
+        return list(store.player)[0]
 
     def get_string_contains_profanity(string):
         """
@@ -1349,7 +1352,7 @@ define audio.t4g = "<loop 1.000>bgm/4g.ogg"
 
 # JN resources
 
-# Single-play sound effects
+# Singleton sound effects
 define audio.camera_shutter = "mod_assets/sfx/camera_shutter.mp3"
 define audio.select_hover = "mod_assets/sfx/select_hover.mp3"
 define audio.select_confirm = "mod_assets/sfx/select_confirm.mp3"
@@ -1360,6 +1363,9 @@ define audio.drawer = "mod_assets/sfx/drawer.mp3"
 define audio.smack = "mod_assets/sfx/smack.mp3"
 define audio.clothing_ruffle = "mod_assets/sfx/clothing_ruffle.mp3"
 define audio.notification = "mod_assets/sfx/notification.ogg"
+define audio.page_turn = "mod_assets/sfx/page_turn.ogg"
+define audio.paper_crumple = "mod_assets/sfx/paper_crumple.ogg"
+define audio.paper_throw = "mod_assets/sfx/paper_throw.ogg"
 define audio.chair_in = "mod_assets/sfx/chair_in.ogg"
 define audio.chair_out = "mod_assets/sfx/chair_out.ogg"
 define audio.chair_out_in = "mod_assets/sfx/chair_out_in.ogg"
@@ -1418,7 +1424,11 @@ init -999 python:
         """
         This checks to ensure an input or menu screen is not up before allowing a force quit, as these crash the game. Thanks, Tom.
         """
-        if not renpy.get_screen("input") and not renpy.get_screen("choice"):
+        if (
+            not renpy.get_screen("input") 
+            and not renpy.get_screen("choice")
+            and jn_globals.force_quit_enabled
+        ):
             renpy.call("try_force_quit")
 
     class JNEvent(object):
