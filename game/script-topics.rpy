@@ -5344,6 +5344,115 @@ label talk_fighting_drowsiness:
 
     return
 
+# Natsuki doesn't hate spiders, contrary to her poem in DDLC
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_fear_of_spiders",
+            unlocked=True,
+            prompt="Are you afraid of spiders?",
+            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 3600 >= 24",
+            category=["Animals", "Fears"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_fear_of_spiders:
+    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n 1tnmbo "Huh?{w=0.5} Spiders?"
+        n 1tslss "I mean...{w=0.5}{nw}"
+        extend 1tnmss " not...{w=1} really?"
+        n 1nchgn "Pffff-!"
+        n 1fchbg "What?"
+        n 1ullaj "You thought that because I wrote a poem about them being nasty and gross,{w=0.5}{nw}"
+        extend 1tnmaj " that I'd {i}actually{/i} think that?"
+        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        n 1fslpo "I even {w=0.3}{i}said{/i}{w=0.3} the spider thing was a metaphor,{w=0.1} [chosen_tease]!{w=0.5}{nw}"
+        extend 1fsqts " Remember?"
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n 1fcsem "..."
+        n 1fcssr "No,{w=0.1} [player].{w=0.5}{nw}"
+        extend 1fsqsr " I am not afraid of spiders."
+        n 1fsqem "...And might I ask {i}why{/i} you feel entitled to know about my fears?"
+        n 1fcsan "Why the hell would I give you {i}more{/i} ammo to get on my nerves?"
+        n 1fsrem "Ugh..."
+        n 1fcssf "Yeah.{w=0.5}{nw}" 
+        extend 1fsqpu " We're done talking here,{w=0.1} {i}[player]{/i}."
+
+        return
+
+    else:
+        n 1fcsan "...Are {i}you{/i} afraid of asking me dumb questions,{w=0.1} since you're the {i}last{/i} person I'd want to answer them for?!"
+        n 1fsqun "..."
+        n 1fslpu "Yeah.{w=2}{nw}"
+        extend 1fsqsr " Apparently not,{w=0.1} huh?"
+        n 1fslan "Jerk."
+
+        return
+
+    if get_topic("talk_fear_of_lightning").shown_count > 0:
+        n 1tslpu "And actually...{w=0.3} come to think of it..."
+        n 1tnmbo "This isn't the {i}first{/i} time you've randomly asked me if I'm scared of stuff."
+        n 1tsqsl "...Are you planning some dumb prank or something?"
+
+    n 1fsqsm "Ehehe.{w=1.5}{nw}"
+    extend 1nllss " Well,{w=0.1} whatever."
+    n 1ullaj "I mean,{w=0.5}{nw}"
+    extend 1fnmaj " don't get me wrong!"
+    n 1ksrem "I wouldn't want them like...{w=0.3} {i}crawling{/i} over me or anything.{w=0.5}{nw}"
+    extend 1fcsfu " Ew!"
+    n 1fslun " I don't even want to {i}imagine{/i} that."
+    n 1unmss "But spiders are awesome little guys!{w=1.5}{nw}"
+    extend 1nsrss " ...Mostly."
+    n 1unmbo "They get rid of the really annoying sorts of bugs,{w=0.1} like ones that bite or fly around constantly."
+    n 1nnmaj "And some of them -{w=0.5}{nw}" 
+    extend 1nslss " as weird as it feels to say -{w=0.5}{nw}"
+    extend 1ncspu " are{w=1} freaking{w=1.5}{nw}"
+    extend 1fspgs " {i}adorable{/i}!"
+    n 1uwdaj "Seriously!{w=1.5}{nw}"
+    extend 1uchbg " Jumping spiders are cuuuute!"
+    n 1tnmss "So...{w=0.3} overall?{w=0.5}{nw}"
+    extend 1ncssm " I'd call that a win for the spiders!"
+    n 1nslss "...Yeah,{w=0.1} yeah,{w=0.1} [player].{w=0.2} I know.{w=0.5}{nw}"
+    extend 1flrpo " I'm not naive!"
+    n 1nllun "I know some places have some really nasty types.{w=0.5}{nw}"
+    extend 1uskem " And I {i}wish{/i} I was kidding!"
+    n 1klrpu "Spiders are already sneaky,{w=0.1} so imagine living with ones that hide in your shoes,{w=0.1} or under your desk..."
+    n 1kskgs "That can put you in {i}hospital{/i} too!{w=0.5}{nw}"
+    extend 1kllan " Yeesh!"
+    n 1ulrss "But...{w=0.5} they're in the minority,{w=0.1} at least.{w=1.5}{nw}"
+    extend 1nslun " Isn't {i}that{/i} a relief?"
+    n 1ullaj "Well,{w=0.1} anyway."
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n 1nsqss "I guess that just leaves you,{w=0.1} then."
+        n 1usqsm "Are {i}you{/i} afraid of spiders?"
+        n 1fsqsm "Better think through your answer carefully,{w=0.1} [player]."
+        n 1fsldvl "You're already caught in {i}my{/i} web,{w=0.1} after all..."
+
+        if random.randint(0,10) == 1:
+            n 1fchsml "Ahuhuhu.~" # Yes, this is a Muffet reference
+
+        else:
+            n 1fsqsm "Ehehe."
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            n 1uchtsl "Love you,{w=0.1} [player]!~"
+
+    else:
+        n 1tnmss "You got your answer,{w=0.1} [player].{w=0.5}{nw}"
+        extend 1fllss " So..."
+        n 1fllsm "I think that about{w=0.5}{nw}"
+        extend 1fsqss " {i}wraps{/i}{w=1}{nw}"
+        extend 1usqsm " up my thoughts on the subject."
+        n 1uchgn "Ehehe."
+
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
