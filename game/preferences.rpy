@@ -11,10 +11,10 @@ init python in jn_preferences.random_topic_frequency:
 
     _RANDOM_TOPIC_FREQUENCY_COOLDOWN_MAP = {
         0: 999,
-        1: 60,
-        2: 30,
-        3: 10,
-        4: 5,
+        1: 30,
+        2: 15,
+        3: 5,
+        4: 2,
     }
 
     _RANDOM_TOPIC_FREQUENCY_DESC_MAP = {
