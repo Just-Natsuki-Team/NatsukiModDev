@@ -5543,7 +5543,7 @@ label talk_thoughts_on_tea:
     extend 1flrun " I'm actually pretty parched after all that talking."
     n 1fsrpo "..."
     n 1unmss "Hey,{w=0.1} [player]...{w=1.5}{nw}"
-    extend 1usqsm " do me a favour?"
+    extend 1usqsm " do me a favor?"
     n 1fchbg "...Stick the kettle on,{w=0.1} would you?"
     n 1uchgn "Ehehe."
 
