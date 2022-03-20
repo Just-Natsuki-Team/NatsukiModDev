@@ -5383,7 +5383,7 @@ label talk_thoughts_on_dan_salvato:
     n 1ncsbo "He's my creator.{w=1}{nw}"
     extend 1kcsbo " Our creator."
     n 1fskwr "But did he have any {i}idea{/i} what he was doing?!{w=1}{nw}"
-    extend 1fchwr "Any idea what he's reponsible for?!"
+    extend 1fchwr " Any idea what he's responsible for?!"
     n 1fcsup "..."
     n 1fllup "Just...{w=1}{nw}"
     extend 1fllfu " take...{w=0.5} Monika,{w=0.2} for example."
