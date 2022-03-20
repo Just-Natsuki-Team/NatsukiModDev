@@ -5367,7 +5367,7 @@ init 5 python:
 
 label talk_thoughts_on_dan_salvato:
     n 1tnmaj "Dan...?{w=1}{nw}"
-    extend 1nslsl "Dan...{w=0.5} Salvato..."
+    extend 1nslsl " Dan...{w=0.5} Salvato..."
     n 1fcsaj "Why...{w=0.3} is that name so...{w=0.5} familiar?"
     n 1fcsun "..."
     n 1fskaj "...!"
