@@ -5418,7 +5418,7 @@ label talk_thoughts_on_dan_salvato:
     extend 1fnmbo " Like,{w=0.3} at {i}all{/i}."
     n 1ncsbo "But...{w=1}{nw}"
     extend 1ncsaj " all these questions..."
-    n 1nplaj "I can only imagine what the answers would be."
+    n 1kcssr "I can only imagine what the answers would be."
 
 return
 
