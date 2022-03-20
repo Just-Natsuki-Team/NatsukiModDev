@@ -5373,7 +5373,7 @@ label talk_thoughts_on_dan_salvato:
     n 1fskaj "...!"
     n 1fsgaj "Oh..."
     n 1nllpu "Heh.{w=0.3} Yeah...{w=1.5}{nw}"
-    extend 1fslan "{i}him{/i}."
+    extend 1fslan " {i}him{/i}."
     n 1fcsbo "..."
     n 1fplaj "I...{w=1}{nw}"
     extend 1fcsan " I just don't understand him, [player]."
