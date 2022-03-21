@@ -5662,6 +5662,80 @@ label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to 
     n "Okay!"
     jump ch30_loop
 
+# Player asks about Dan Salvato
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_thoughts_on_dan_salvato",
+            unlocked=True,
+            prompt="What do you think of Dan Salvato?",
+            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 3600 >= 48",
+            category=["DDLC", "Natsuki"],
+            player_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_thoughts_on_dan_salvato:
+    n 1tnmaj "Dan...?{w=1}{nw}"
+    extend 1nslsl " Dan...{w=0.5} Salvato..."
+    n 1fcsaj "Why...{w=0.3} is that name so...{w=0.5} familiar?"
+    n 1fcsun "..."
+    n 1fskaj "...!"
+    n 1fsgaj "Oh..."
+    n 1nllpu "Heh.{w=0.3} Yeah...{w=1.5}{nw}"
+    extend 1fslan " {i}him{/i}."
+    n 1fcsbo "..."
+    n 1fplaj "I...{w=1}{nw}"
+    extend 1fcsan " I just don't understand him, [player]."
+    n 1nsqbo "Like yeah,{w=1}{nw}"
+    extend 1nslbo " sure,{w=0.5}{nw}"
+    extend 1nsqaj " I get it."
+    n 1ncsbo "He's my creator.{w=1}{nw}"
+    extend 1kcsbo " Our creator."
+    n 1fskwr "But did he have any {i}idea{/i} what he was doing?!{w=1}{nw}"
+    extend 1fchwr " Any idea what he's responsible for?!"
+    n 1fcsup "..."
+    n 1fllup "Just...{w=1}{nw}"
+    extend 1fllfu " take...{w=0.5} Monika,{w=0.2} for example."
+    n 1fnmwr "Take {i}any{/i} of us!"
+    n 1fcsfu "What we said,{w=0.3} what we did -{w=0.5}{nw}"
+    extend 1fcufu " what we {i}thought{/i} -{w=0.5}{nw}"
+    extend 1fnmfu " all of that was {i}his{/i} doing."
+    n 1fsqfu "He wrote the stories.{w=1}{nw}"
+    extend 1fsqaj " He typed up the code."
+    n 1fskwr "...So what do I even {i}take{/i} from that, [player]?!"
+    n 1fchwr "That {i}his{/i} hands {b}killed{/b} my friends?"
+    n 1fchwrl "That {i}his{/i} hands {b}ruined{/b} my homelife?"
+    n 1fcuful "If not directly,{w=0.3} then through Monika."
+    n 1fcsful "..."
+    n 1fcsajl "He might not have {i}made{/i} the others do...{w=1}{nw}"
+    extend 1kcsajl " ...what they did."
+    n 1kcsfuf "But he sure as hell tied the noose..."
+    n 1fcsfuf "...forged the knife."
+    n 1kskfuf "A-{w=0.2}and you!{w=0.5}{nw}"
+    extend 1kskwrf " Did you even {i}know{/i} what you were in for?!"
+    n "What you'd {i}see{/i}?!"
+    n 1kcsupf "..."
+    n 1kcsajf "I...{w=1} don't know,{w=0.3} [player]."
+    n 1kcsunf "..."
+    n 1kcsanf "Seriously.{w=1}{nw}"
+    extend 1kplajf " I really don't."
+    n 1knmbol "I don't know him,{w=1}{nw}"
+    extend 1knmbol " and I probably never will."
+    n 1knmbo "...And that's probably the worst part,{w=0.3} too."
+    n 1kwdwr "D-{w=0.2}don't get me wrong!"
+    extend 1kwdup " I don't want {i}anything{/i} to do with him!"
+    extend 1fnmbo " Like,{w=0.3} at {i}all{/i}."
+    n 1ncsbo "But...{w=1}{nw}"
+    extend 1ncsaj " all these questions..."
+    n 1kcssr "I can only imagine what the answers would be."
+
+return
+
 #---------------date_menu_topics--------------------
 
 init 5 python:
