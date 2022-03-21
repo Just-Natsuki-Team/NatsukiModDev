@@ -5344,9 +5344,192 @@ label talk_fighting_drowsiness:
 
     return
 
+# Natsuki doesn't hate spiders, contrary to her poem in DDLC
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_fear_of_spiders",
+            unlocked=True,
+            prompt="Are you afraid of spiders?",
+            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 3600 >= 24",
+            category=["Animals", "Fears"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_fear_of_spiders:
+    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n 1tnmbo "Huh?{w=0.5} Spiders?"
+        n 1tslss "I mean...{w=0.5}{nw}"
+        extend 1tnmss " not...{w=1} really?"
+        n 1nchgn "Pffff-!"
+        n 1fchbg "What?"
+        n 1ullaj "You thought that because I wrote a poem about them being nasty and gross,{w=0.5}{nw}"
+        extend 1tnmaj " that I'd {i}actually{/i} think that?"
+        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        n 1fslpo "I even {w=0.3}{i}said{/i}{w=0.3} the spider thing was a metaphor,{w=0.1} [chosen_tease]!{w=0.5}{nw}"
+        extend 1fsqts " Remember?"
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n 1fcsem "..."
+        n 1fcssr "No,{w=0.1} [player].{w=0.5}{nw}"
+        extend 1fsqsr " I am not afraid of spiders."
+        n 1fsqem "...And might I ask {i}why{/i} you feel entitled to know about my fears?"
+        n 1fcsan "Why the hell would I give you {i}more{/i} ammo to get on my nerves?"
+        n 1fsrem "Ugh..."
+        n 1fcssf "Yeah.{w=0.5}{nw}" 
+        extend 1fsqpu " We're done talking here,{w=0.1} {i}[player]{/i}."
+
+        return
+
+    else:
+        n 1fcsan "...Are {i}you{/i} afraid of asking me dumb questions,{w=0.1} since you're the {i}last{/i} person I'd want to answer them for?!"
+        n 1fsqun "..."
+        n 1fslpu "Yeah.{w=2}{nw}"
+        extend 1fsqsr " Apparently not,{w=0.1} huh?"
+        n 1fslan "Jerk."
+
+        return
+
+    if get_topic("talk_fear_of_lightning").shown_count > 0:
+        n 1tslpu "And actually...{w=0.3} come to think of it..."
+        n 1tnmbo "This isn't the {i}first{/i} time you've randomly asked me if I'm scared of stuff."
+        n 1tsqsl "...Are you planning some dumb prank or something?"
+
+    n 1fsqsm "Ehehe.{w=1.5}{nw}"
+    extend 1nllss " Well,{w=0.1} whatever."
+    n 1ullaj "I mean,{w=0.5}{nw}"
+    extend 1fnmaj " don't get me wrong!"
+    n 1ksrem "I wouldn't want them like...{w=0.3} {i}crawling{/i} over me or anything.{w=0.5}{nw}"
+    extend 1fcsfu " Ew!"
+    n 1fslun " I don't even want to {i}imagine{/i} that."
+    n 1unmss "But spiders are awesome little guys!{w=1.5}{nw}"
+    extend 1nsrss " ...Mostly."
+    n 1unmbo "They get rid of the really annoying sorts of bugs,{w=0.1} like ones that bite or fly around constantly."
+    n 1nnmaj "And some of them -{w=0.5}{nw}" 
+    extend 1nslss " as weird as it feels to say -{w=0.5}{nw}"
+    extend 1ncspu " are{w=1} freaking{w=1.5}{nw}"
+    extend 1fspgs " {i}adorable{/i}!"
+    n 1uwdaj "Seriously!{w=1.5}{nw}"
+    extend 1uchbg " Jumping spiders are cuuuute!"
+    n 1tnmss "So...{w=0.3} overall?{w=0.5}{nw}"
+    extend 1ncssm " I'd call that a win for the spiders!"
+    n 1nslss "...Yeah,{w=0.1} yeah,{w=0.1} [player].{w=0.2} I know.{w=0.5}{nw}"
+    extend 1flrpo " I'm not naive!"
+    n 1nllun "I know some places have some really nasty types.{w=0.5}{nw}"
+    extend 1uskem " And I {i}wish{/i} I was kidding!"
+    n 1klrpu "Spiders are already sneaky,{w=0.1} so imagine living with ones that hide in your shoes,{w=0.1} or under your desk..."
+    n 1kskgs "That can put you in {i}hospital{/i} too!{w=0.5}{nw}"
+    extend 1kllan " Yeesh!"
+    n 1ulrss "But...{w=0.5} they're in the minority,{w=0.1} at least.{w=1.5}{nw}"
+    extend 1nslun " Isn't {i}that{/i} a relief?"
+    n 1ullaj "Well,{w=0.1} anyway."
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n 1nsqss "I guess that just leaves you,{w=0.1} then."
+        n 1usqsm "Are {i}you{/i} afraid of spiders?"
+        n 1fsqsm "Better think through your answer carefully,{w=0.1} [player]."
+        n 1fsldvl "You're already caught in {i}my{/i} web,{w=0.1} after all..."
+
+        if random.randint(0,10) == 1:
+            n 1fchsml "Ahuhuhu.~" # Yes, this is a Muffet reference
+
+        else:
+            n 1fsqsm "Ehehe."
+
+        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            n 1uchtsl "Love you,{w=0.1} [player]!~"
+
+    else:
+        n 1tnmss "You got your answer,{w=0.1} [player].{w=0.5}{nw}"
+        extend 1fllss " So..."
+        n 1fllsm "I think that about{w=0.5}{nw}"
+        extend 1fsqss " {i}wraps{/i}{w=1}{nw}"
+        extend 1usqsm " up my thoughts on the subject."
+        n 1uchgn "Ehehe."
+
+    return
+
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
     jump ch30_loop
+
+# Player asks about Dan Salvato
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_thoughts_on_dan_salvato",
+            unlocked=True,
+            prompt="What do you think of Dan Salvato?",
+            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 3600 >= 48",
+            category=["DDLC", "Natsuki"],
+            player_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_thoughts_on_dan_salvato:
+    n 1tnmaj "Dan...?{w=1}{nw}"
+    extend 1nslsl " Dan...{w=0.5} Salvato..."
+    n 1fcsaj "Why...{w=0.3} is that name so...{w=0.5} familiar?"
+    n 1fcsun "..."
+    n 1fskaj "...!"
+    n 1fsgaj "Oh..."
+    n 1nllpu "Heh.{w=0.3} Yeah...{w=1.5}{nw}"
+    extend 1fslan " {i}him{/i}."
+    n 1fcsbo "..."
+    n 1fplaj "I...{w=1}{nw}"
+    extend 1fcsan " I just don't understand him, [player]."
+    n 1nsqbo "Like yeah,{w=1}{nw}"
+    extend 1nslbo " sure,{w=0.5}{nw}"
+    extend 1nsqaj " I get it."
+    n 1ncsbo "He's my creator.{w=1}{nw}"
+    extend 1kcsbo " Our creator."
+    n 1fskwr "But did he have any {i}idea{/i} what he was doing?!{w=1}{nw}"
+    extend 1fchwr " Any idea what he's responsible for?!"
+    n 1fcsup "..."
+    n 1fllup "Just...{w=1}{nw}"
+    extend 1fllfu " take...{w=0.5} Monika,{w=0.2} for example."
+    n 1fnmwr "Take {i}any{/i} of us!"
+    n 1fcsfu "What we said,{w=0.3} what we did -{w=0.5}{nw}"
+    extend 1fcufu " what we {i}thought{/i} -{w=0.5}{nw}"
+    extend 1fnmfu " all of that was {i}his{/i} doing."
+    n 1fsqfu "He wrote the stories.{w=1}{nw}"
+    extend 1fsqaj " He typed up the code."
+    n 1fskwr "...So what do I even {i}take{/i} from that, [player]?!"
+    n 1fchwr "That {i}his{/i} hands {b}killed{/b} my friends?"
+    n 1fchwrl "That {i}his{/i} hands {b}ruined{/b} my homelife?"
+    n 1fcuful "If not directly,{w=0.3} then through Monika."
+    n 1fcsful "..."
+    n 1fcsajl "He might not have {i}made{/i} the others do...{w=1}{nw}"
+    extend 1kcsajl " ...what they did."
+    n 1kcsfuf "But he sure as hell tied the noose..."
+    n 1fcsfuf "...forged the knife."
+    n 1kskfuf "A-{w=0.2}and you!{w=0.5}{nw}"
+    extend 1kskwrf " Did you even {i}know{/i} what you were in for?!"
+    n "What you'd {i}see{/i}?!"
+    n 1kcsupf "..."
+    n 1kcsajf "I...{w=1} don't know,{w=0.3} [player]."
+    n 1kcsunf "..."
+    n 1kcsanf "Seriously.{w=1}{nw}"
+    extend 1kplajf " I really don't."
+    n 1knmbol "I don't know him,{w=1}{nw}"
+    extend 1knmbol " and I probably never will."
+    n 1knmbo "...And that's probably the worst part,{w=0.3} too."
+    n 1kwdwr "D-{w=0.2}don't get me wrong!"
+    extend 1kwdup " I don't want {i}anything{/i} to do with him!"
+    extend 1fnmbo " Like,{w=0.3} at {i}all{/i}."
+    n 1ncsbo "But...{w=1}{nw}"
+    extend 1ncsaj " all these questions..."
+    n 1kcssr "I can only imagine what the answers would be."
+
+return
 
 #---------------date_menu_topics--------------------
 
