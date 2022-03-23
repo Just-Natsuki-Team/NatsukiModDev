@@ -1075,6 +1075,18 @@ init 0 python in jn_outfits:
         unlocked=True,
         is_jn_wearable=True
     ))
+    __register_wearable(JNHairstyle(
+        reference_name="jn_hair_low_hoops",
+        display_name="Low hoops",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHairstyle(
+        reference_name="jn_hair_high_hoops",
+        display_name="High hoops",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
 
     # Official JN eyewear
     __register_wearable(JNEyewear(
@@ -1340,6 +1352,12 @@ init 0 python in jn_outfits:
     __register_wearable(JNHeadgear(
         reference_name="jn_headgear_spiked_headband",
         display_name="Spiked headband",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_heargear_bee_headband",
+        display_name="Bee headband",
         unlocked=False,
         is_jn_wearable=True
     ))
