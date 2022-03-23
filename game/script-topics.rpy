@@ -5773,7 +5773,7 @@ label talk_impressions_of_the_other_girls:
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
         n 1knmpu "..."
-        n 1knmem "...Why on Earth would I want do {i}that{/i}?"
+        n 1knmem "...Why on {i}Earth{/i} would I want do {i}that{/i}?"
         n 1kllpu "A-{w=0.3}and more importantly,{w=1}{nw}"
         extend 1fcsem " why would you even think to {i}ask{/i} me that,{w=0.1} [player]?"
         n 1ksqem "Do you have any {i}idea{/i} how much I think about them,{w=0.1} still?"
@@ -5788,7 +5788,8 @@ label talk_impressions_of_the_other_girls:
         extend 1fcssr " get...{w=1}" 
         extend 1fcsem " that you were just trying to have fun."
         n 1fsqsr "But I am {i}not{/i} making jokes about my friends."
-        n 1fslunl "Some things are just off-limits."
+        n 1fcssr "Sorry,{w=0.1} [player]."
+        n 1fslunl "But some things are just off-limits."
 
     elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
         n 1fskem "...E-{w=0.3}excuse me?!"
