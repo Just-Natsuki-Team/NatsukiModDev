@@ -13,6 +13,7 @@ image sky day overcast = "mod_assets/backgrounds/classroom/sky_day_overcast.png"
 image sky day rain = "mod_assets/backgrounds/classroom/sky_day_rain.png"
 image sky day sunny = "mod_assets/backgrounds/classroom/sky_day_sunny.png"
 image sky day thunder = "mod_assets/backgrounds/classroom/sky_day_thunder.png"
+image sky day snow = "mod_assets/backgrounds/classroom/sky_day_snow.png"
 
 image sky night overcast = "mod_assets/backgrounds/classroom/sky_night_overcast.png"
 image sky night rain = "mod_assets/backgrounds/classroom/sky_night_rain.png"
@@ -53,8 +54,12 @@ image clouds day thunder:
     "mod_assets/backgrounds/classroom/clouds_day_thunder.png"
     cloud_scroll
 
-image clouds night:
-    "mod_assets/backgrounds/classroom/clouds_night.png"
+image clouds night light:
+    "mod_assets/backgrounds/classroom/clouds_night_light.png"
+    cloud_scroll
+
+image clouds night heavy:
+    "mod_assets/backgrounds/classroom/clouds_night_heavy.png"
     cloud_scroll
 
 transform cloud_scroll:
@@ -73,6 +78,7 @@ init 0 python in jn_atmosphere:
     from Enum import Enum
     import os
     import random
+    import re
     import requests
     import store
     import store.jn_preferences as jn_preferences
@@ -92,6 +98,7 @@ init 0 python in jn_atmosphere:
         sunny = 3
         thunder = 4
         glitch = 5
+        snow = 6
 
     class JNWeather():
         def __init__(
@@ -130,7 +137,7 @@ init 0 python in jn_atmosphere:
         night_sky="sky night overcast",
         dim_image="dim light",
         day_clouds="clouds day heavy",
-        night_clouds="clouds night",
+        night_clouds="clouds night heavy",
     )
 
     WEATHER_RAIN = JNWeather(
@@ -139,7 +146,7 @@ init 0 python in jn_atmosphere:
         night_sky="sky night rain",
         dim_image="dim medium",
         day_clouds="clouds day heavy",
-        night_clouds="clouds night",
+        night_clouds="clouds night heavy",
         weather_sfx="mod_assets/sfx/rain_muffled.mp3"
     )
 
@@ -149,15 +156,25 @@ init 0 python in jn_atmosphere:
         night_sky="sky night thunder",
         dim_image="dim heavy",
         day_clouds="clouds day thunder",
-        night_clouds="clouds night",
+        night_clouds="clouds night heavy",
         weather_sfx="mod_assets/sfx/rain_muffled.mp3"
+    )
+
+    WEATHER_SNOW = JNWeather(
+        weather_type=JNWeatherTypes.snow,
+        day_sky="sky day snow",
+        night_sky="sky night overcast",
+        dim_image="dim light",
+        day_clouds="clouds day light",
+        night_clouds="clouds night light",
     )
 
     WEATHER_SUNNY = JNWeather(
         weather_type=JNWeatherTypes.sunny,
         day_sky="sky day sunny",
         night_sky="sky night sunny",
-        day_clouds="clouds day light"
+        day_clouds="clouds day light",
+        night_clouds="clouds night light"
     )
 
     WEATHER_GLITCH = JNWeather(
@@ -169,7 +186,7 @@ init 0 python in jn_atmosphere:
         ("^2[0-9][0-9]$"): WEATHER_THUNDER, # Thunder
         ("^3[0-9][0-9]$"): WEATHER_RAIN, # Drizzle
         ("^5[0-9][0-9]$"): WEATHER_RAIN, # Rain
-        ("^6[0-9][0-9]$"): WEATHER_OVERCAST, # Snow
+        ("^6[0-9][0-9]$"): WEATHER_SNOW, # Snow
         ("^7[0-9][0-9]$"): WEATHER_OVERCAST, # Misc (mist, tornado, sandstorms, etc.)
         ("(800|801|802)"): WEATHER_SUNNY, # Clear/light clouds
         ("(803|804)"): WEATHER_OVERCAST, # Clouds
@@ -261,9 +278,9 @@ init 0 python in jn_atmosphere:
         # Get the response from the OpenWeatherMap api
         weather_response = requests.get(
             url="https://api.openweathermap.org/data/2.5/onecall?lat={0}&lon={1}&units=metric&exclude=current,minutely,daily,alerts&appid={2}".format(
-                persistent.jn_player_latitude,
-                persistent.jn_player_longitude,
-                persistent.jn_weather_api_key
+                store.persistent.jn_player_latitude,
+                store.persistent.jn_player_longitude,
+                store.persistent.jn_weather_api_key
             ),
             verify=os.environ['SSL_CERT_FILE'])
 
@@ -275,7 +292,7 @@ init 0 python in jn_atmosphere:
         # We got a response, so find out the weather and return if it exists in the map
         weather_data = weather_response.json()["hourly"][0]
 
-        for regex, weather in WEATHER_CODE_REGEX_TYPE_MAP.items():
+        for regex, weather in __WEATHER_CODE_REGEX_TYPE_MAP.items():
             if re.search(regex, str(weather_data["weather"][0]["id"])):
                 return weather
 

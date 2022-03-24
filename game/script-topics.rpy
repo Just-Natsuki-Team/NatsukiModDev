@@ -882,7 +882,7 @@ label talk_weather_setup_main:
 
                 # Reset configuration state
                 $ persistent.jn_weather_api_configured = False
-                $ persistent.jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.random)
+                $ persistent.jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
 
                 jump talk_weather_setup_api_key
 
@@ -894,7 +894,7 @@ label talk_weather_setup_main:
                 
                 # Reset configuration state
                 $ persistent.jn_weather_api_configured = False
-                $ persistent.jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.random)
+                $ persistent.jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
 
                 jump talk_weather_setup_location
 
@@ -1053,9 +1053,11 @@ label talk_weather_setup_location:
                     menu:
                         "Yes, you found me.":
                             n 1fcsbg "Like a pro!"
-                            extend 1fcssm "Ehehe."
+                            extend 1fcssm " Ehehe."
                             n 1fllss "I'll just note those down real quick..."
+
                             $ persistent.jn_player_latitude, persistent.jn_player_longitude = ip_latitude_longitude
+                            jump talk_weather_setup_verify
 
                         "No, that's not right.":
                             n 1fnmgs "What?{w=0.2} Are you kidding me!?"
@@ -1166,7 +1168,7 @@ label talk_weather_setup_manual_coords:
     extend 1fcssm " I'll take care of that!"
     n 1ullss "We'll start off with your {b}latitude{/b} first."
     n 1fchsm "So...{w=0.3} take it away!"
-    $ player_latitude = renpy.input(prompt="Enter your latitude:", allow="0123456789.")
+    $ player_latitude = renpy.input(prompt="Enter your {b}latitude{/b}:", allow="0123456789.")
 
     # Get the longitude
 
@@ -1174,7 +1176,7 @@ label talk_weather_setup_manual_coords:
     extend 1nchsm " Now finally,{w=0.1} I just need your {b}longitude{/b}!"
     n 1fcssm "Just like last time,{w=0.1} I can figure it out without any positive or negative symbols."
     n 1fchsm "Take it away,{w=0.1} [player]!"
-    $ player_longitude = renpy.input("Enter your longitude:", allow="0123456789.")
+    $ player_longitude = renpy.input("Enter your {b}longitude{/b}:", allow="0123456789.")
 
     # Final checks and prompt
 
@@ -1192,7 +1194,7 @@ label talk_weather_setup_manual_coords:
         # Try to show the map, and come back with the result to drive dialogue
         show_map_success = False
         try:
-            open_maps(ip_latitude_longitude[0], ip_latitude_longitude[1])
+            jn_open_google_maps(ip_latitude_longitude[0], ip_latitude_longitude[1])
             show_map_success = True
 
         except Exception as exception:
@@ -1232,6 +1234,8 @@ label talk_weather_setup_manual_coords:
             "Yes, that's right.":
                 n 1fcsem "Finally!{w=1}{nw}" 
                 extend 1kslpo " Jeez..."
+                $ persistent.jn_player_latitude = player_latitude
+                $ persistent.jn_player_longitude = player_longitude
 
                 jump talk_weather_setup_verify
 

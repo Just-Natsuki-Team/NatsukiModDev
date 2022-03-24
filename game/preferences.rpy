@@ -61,7 +61,7 @@ default persistent.jn_weather_setting = int(jn_preferences.weather.JNWeatherSett
 
 # These determine when the sun rises/sets
 default persistent.jn_sunrise_hour = 6
-default persistent.jn_sunset_hour = 18
+default persistent.jn_sunset_hour = 19
 
 # This determines if Natsuki should attempt to notify the user when starting a conversation
 default persistent.jn_notify_conversations = True
