@@ -1,6 +1,10 @@
 #Start off in the clubroom
 default persistent._current_location = "classroom"
 
+# These determine when the sun rises/sets
+default persistent.jn_sunrise_hour = 6
+default persistent.jn_sunset_hour = 19
+
 init python in locations:
     import store
     LOCATION_MAP = dict()
