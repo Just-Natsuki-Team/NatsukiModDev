@@ -780,126 +780,139 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_weather_setup",
+            label="talk_weather_setup_main",
             unlocked=True,
+            prompt="Setting up the weather",
+            category=["Weather"],
             nat_says=True,
-            affinity_range=(jn_affinity.HAPPY, None),
-            category=["Weather"]
+            affinity_range=(jn_affinity.HAPPY, None)
         ),
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label talk_weather_setup:
-    $ already_discussed_setup = get_topic("talk_weather_setup").shown_count > 0
-
-    if not already_discussed_setup:
+label talk_weather_setup_main:
+    if get_topic("talk_weather_setup_main").shown_count == 0:
         # Introduction
-        n 1fnmun "..."
-        n 1fnman "Urgh...{w=0.3} so annoying!"
-        n 1fllbo "Why is this so hard to get right...?"
-        n 1fllpo "Stupid...{w=0.3} Nnnnnn-!"
+        n 1fslbo "..."
+        n 1fcsem "Urgh...{w=1.5}{nw}" 
+        extend 1fsrem " so annoying!"
+        n 1fbkwr "Why is this so hard to get right...?!"
+        n 1fllpo "Stupid...{w=0.5}{nw}" 
+        extend 1fcsan " Nnnnnn-!"
+
         menu:
             "What's the matter, Natsuki?":
-                n 1uwdpu "Huh?"
-                n 1uwdaj "Oh!{w=0.2} [player]!"
-                n 1fllbg "I'm glad you asked!"
+                n 1uwdpu "Huh?{w=0.5}{nw}"
+                extend 1uwdaj " Oh!{w=0.5} [player]!{w=1}{nw}"
+                extend 1fllbg " I'm glad you asked!"
 
             "What're you complaining about?":
-                n 1fsgts "Well,{w=0.1} your attitude,{w=0.1} for one thing!"
-                n 1nllbg "Anyway..."
+                n 1fsgts "Well,{w=0.1} your attitude,{w=0.1} for one thing!{w=1}{nw}"
+                extend 1nllbg "Anyway..."
 
-            "...":
-                n 1uwdaj "O-{w=0.1}oh!{w=0.2} [player]!"
-                n 1nchbg "Sorry,{w=0.1} sorry!{w=0.2} Don't worry{w=0.1} -{w=0.1} it's nothing you did wrong.{w=0.2} I promise!"
-
-        n 1nllss "So...{w=0.3} I'm not really one to just sit around and admire the view."
-        n 1fsgpo "But honestly...{w=0.3} it's super boring out there!{w=0.2} Outside the room,{w=0.1} I mean."
-        n 1fsgaj "Nothing ever changes!"
-        n 1nnmbg "But...{w=0.3} I've been doing a little tinkering,{w=0.1} and I think I found a way to make things a little more dynamic!"
-        n 1nwmsl "I just can't quite get it to work..."
-        n 1klrpu "It's just...{w=0.3} it's really bugging me.{w=0.2} I hate it when I can't get stuff to go right."
+        n 1ullaj "So...{w=0.5}{nw}"
+        extend 1flrss " I'm not really one to just sit around and admire the view."
+        n 1nsqbo "But seriously,{w=0.1} [player]...{w=1}{nw}" 
+        extend 1fllpo " it's super boring out there!"
+        n 1nsqpo "Outside the room,{w=0.1} I mean.{w=1}{nw}"
+        extend 1fbkwr " Nothing ever changes!"
+        n 1ulraj "But...{w=1}{nw}" 
+        extend 1fchbg " I've been doing a little tinkering,{w=0.1} and I think I found a way to make things a little more dynamic!"
+        n 1fslsr "I just can't get it all to work properly..."
+        n 1fcsem "It's just...{w=1}{nw}" 
+        extend 1fcssr " it's really bugging me.{w=1}{nw}" 
+        extend 1fslan " I hate it when I can't get stuff to go right!"
 
         menu:
             "Perhaps I could help?":
-                n 1uwdbg "Huh?{w=0.2} Really?!{w=0.2} Thanks,{w=0.1} [player]!"
-                n 1nllaw "N-{w=0.1}not that I was totally waiting for your help,{w=0.1} obviously!{w=0.2} Ahaha..."
+                n 1unmpu "Huh?{w=0.5}{nw}" 
+                extend 1unmbg " Really?!{w=0.5}{nw}" 
+                extend 1uchbs " Thanks,{w=0.1} [player]!"
+                n 1fllssl "N-{w=0.3}not that I was totally waiting for your help,{w=0.1} obviously!"
 
             "What do I have to do?":
-                n 1kwmaj "Jeez,{w=0.1} [player]...{w=0.3} what's with the attitude today?"
-                n 1kcspu "I'm trying to do something nice for us here..."
+                n 1fcsem "Jeez,{w=0.1} [player]...{w=0.3}" 
+                extend 1fsqpo " what's with the attitude today?"
+                n 1kslpo "I'm {i}trying{/i} to do something nice here..."
 
-            "...":
-                n 1kwdsl "..."
-                n 1kwmaj "You know,{w=0.1} [player]..."
-                n 1kllsl "If you want to help,{w=0.1} you could just say so."
-                n 1knmsf "I'm not scary or anything,{w=0.1} am I?"
+        n 1ullaj "Well,{w=0.1} anyway..."
+        n 1fllss "What I'm {i}trying{/i} to do is add some atmosphere to this place,{w=1}{nw}"
+        extend 1fsqsm " and what better way to do that than..."
+        n 1fchbg "Some actual weather!"
+        n 1ulraj "I wanna set things up so the weather here matches what it's like where you are,{w=0.1} [player]."
+        n 1fcsbg "I know{w=0.1} -{w=0.5}{nw}" 
+        extend 1fchbg " awesome,{w=0.1} right?"
+        n 1ullaj "But...{w=1}{nw}"
+        extend 1nnmbo " I need you to go to this website I found."
+        n 1kchbg "Don't worry,{w=0.1} I won't make you go search for it.{w=1}{nw}" 
+        extend 1uchgn " I'm not {i}that{/i} mean!"
+        n 1unmss "It's called OpenWeatherMap,{w=0.5}{nw}" 
+        extend 1uchbg " and it's {i}super{/i} cool!{w=1}{nw}" 
+        extend 1fcssm " It's just what I need to make this work."
+        n 1fllss "I'll need a little time to get this all set up,{w=0.1} though.{w=1}{nw}" 
+        extend 1ulraj " So..."
 
-        n 1nlrss "Well,{w=0.1} anyway..."
-        n 1nnmsm "What I'm trying to do is add some atmosphere to this place,{w=0.1} and what better way to do that than..."
-        n 1uchbg "Weather!"
-        n 1nnmss "I wanna set things up so the weather here matches what it's like where you are,{w=0.1} [player]."
-        n 1flrbg "I know{w=0.1} -{w=0.1} awesome,{w=0.1} right?"
-        n 1nnmss "But...{w=0.2} I need you to go to this website I found."
-        n 1nchbg "Don't worry,{w=0.1} I won't make you go search for it{w=0.1} -{w=0.1} even I'm not that mean!{w=0.2} Ehehe."
-        n 1nwmss "It's called OpenWeatherMap,{w=0.1} and it's super cool!{w=0.2} It's just what I need to make this work."
-        n 1nlraj "I'll need a little time to get this all set up,{w=0.1} though.{w=0.2} So..."
-        n 1nwmbg "Are you okay if we get started now,{w=0.1} [player]?"
         menu:
+            n "Are you okay if we get started now,{w=0.1} [player]?"
+
             "Sure.":
-                n 1nwdbs "Yes!{w=0.2} Thanks a bunch,{w=0.1} [player]!"
-                n 1nwlts "This'll all be worth it{w=0.1} -{w=0.1} I promise!"
+                n 1uchbg "Alright!"
+                jump talk_weather_setup_api_key
 
             "I can't right now.":
-                n 1knmpu "Oh...{w=0.3} well, okay..."
-                n 1nnmsm "Just let me know whenever you have the time,{w=0.1} okay?"
-                n 1nwmbg"I promise,{w=0.1} it'll be super worth it!"
-                return
-
-            "I don't want to.":
-                n 1knmsf "Huh?{w=0.2} You don't want to?"
-                n 1kllsf "..."
-                n 1kwmpu "Well,{w=0.1} I won't make you do anything you don't want to,{w=0.1} [player]."
-                n 1klraj "I'm a little bummed out,{w=0.1} though..."
-                n 1kcssf"..."
-                n 1knmaj "Well...{w=0.3} I guess just let me know if you change your mind,{w=0.1} alright?"
+                n 1nnmbo "Oh.{w=1.5}{nw}"
+                extend 1nllss " Well..."
+                n 1nllaj "Just let me know when you have the time,{w=0.1} 'kay?"
+                n 1fcsbg "It'll be {i}super{/i} worth it!"
                 return
 
     else:
-        # Natsuki and the player have already discussed this, so we skip the intro
+        # Player has already done at least some of the setup process, so offer range of options
+        n 1unmaj "Oh!{w=1}{nw}" 
+        extend 1fcsbg " Yeah,{w=0.1} I remember!"
+        n 1ulraj "So..."
+        menu:
+            n "What did you wanna start from,{w=0.1} [player]?"
 
-        if not persistent.jn_weather_api_key:
-            # We assume the player backed out for whatever reason, as we have no key set
-            n 1nwdbg "Oh!{w=0.2} Yeah,{w=0.1} I remember!"
-            n 1nnmss "Did you want to continue setting everything up for the weather,{w=0.1} [player]?"
-            menu:
-                "Yes, I want to continue.":
-                    n 1nwlts "Awesome!{w=0.2} You won't regret this,{w=0.1} [player]!"
-                    n 1nlrss"Now,{w=0.1} where were we..."
+            "I want to give you an API key.":
+                # API key
+                n 1unmaj "You wanna give me an API key?{w=1}{nw}"
+                extend 1fchbg " Sure!"
+                n 1nchbg "I'll just walk you through it just in case,{w=0.1} 'kay?"
 
-                "No, not right now.":
-                    n 1unmaj "Huh?{w=0.2} You changed your mind already?"
-                    n 1nllss "Fine,{w=0.1} fine."
-                    n 1nwmsm "Just let me know when you want to get this set up,{w=0.1} 'kay?"
-                    return
+                # Reset configuration state
+                $ persistent.jn_weather_api_configured = False
+                $ persistent.jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.random)
 
-        else:
-            # We assume the player made an oopsie, and wants to give Natsuki another key
-            n 1unmaj "Huh?{w=0.2} It looks like you've already got an API key set up,{w=0.1} [player]."
-            n 1nnmss "Did you wanna give me a new one?"
-            menu:
-                "Yes.":
-                    n 1nchbg "Alright!{w=0.2} I'll just walk you through it again just in case,{w=0.1} 'kay?"
+                jump talk_weather_setup_api_key
 
-                "No.":
-                    n 1nnmpu "Oh...{w=0.3} well,{w=0.1} okay."
-                    n 1nllss "Just let me know if you wanna give me another!"
-                    return
+            "I want to give you my location." if persistent.jn_weather_api_key:
+                # Location
+                n 1unmaj "You wanna go through your location?{w=1}{nw}"
+                extend 1fchbg " Sure!"
+                n 1nchbg "I'll just walk you through it just in case,{w=0.1} 'kay?"
+                
+                # Reset configuration state
+                $ persistent.jn_weather_api_configured = False
+                $ persistent.jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.random)
 
+                jump talk_weather_setup_location
+
+            "Nevermind.":
+                # Cancel
+                n 1tsqpu "Uh..."
+                extend 1tsrpu " huh."
+                n 1fchbg "Well,{w=0.1} your loss,{w=0.3} [player]!"
+                extend 1fchsm " Ehehe."
+
+                return
+
+label talk_weather_setup_api_key:
     # Direct the player to the website
     n 1nwdbg "Okaaay!{w=0.2} Let's get started!"
     n 1nnmss "So like I said{w=0.1} -{w=0.1} the website is called OpenWeatherMap.{w=0.2} You can get there from {a=[store.jn_globals.LINK_OPEN_WEATHER_MAP_HOME]}here{/a}!"
     n 1nlrsm "..."
-    n 1nnmss "Did you get there okay, [player]?"
+    n 1nnmss "Did you get there okay,{w=0.1} [player]?"
 
     menu:
         "Yes, I have the website open.":
@@ -909,7 +922,8 @@ label talk_weather_setup:
             n 1tnmpu "Huh?{w=0.2} Why not?{w=0.2} Is it down or something?"
             n 1nnmss "Well, anyway...{w=0.3} maybe we can try this again later?"
             n 1nnmbg "Just let me know when you're ready,{w=0.1} 'kay?"
-            return
+
+            jump ch30_loop
 
     # Prompt the player to create an account
     n 1nnmss "'Kay!{w=0.2} Now for step two!"
@@ -926,24 +940,21 @@ label talk_weather_setup:
 
     menu:
         "Yes, I have an account set up.":
-            n 1nchbg "Nice work,{w=0.1} [player]!"
+            n 1nchbg "Awsesome!"
             n 1nnmss "You'll probably want to make sure you save your login details somewhere secure,{w=0.1} just in case."
             n 1nnmaj "I hope you didn't forget to confirm your email address too!"
             n 1nnmss "Alright!{w=0.2} Now here's the challenging part."
 
         "I already had an account set up.":
-            n 1nsqbg "Oh?{w=0.2} I didn't realise you were such a pro at this,{w=0.1} [player]!{w=0.2} Ehehe."
-
-            if already_discussed_setup:
-                n 1nlrdv "Or maybe we went through this before,{w=0.1} hmm?" #Not quite sure with this expression
-
-            n 1nsgts "Well, anyway.{w=0.2} The rest of this should be a piece of cake then!"
+            n 1nsgts "Awesome!{w=0.5}{nw}" 
+            extend " The rest of this should be a piece of cake then!"
 
         "Nevermind.":
             n 1tnmpu "Huh?{w=0.2} You don't wanna continue?"
             n 1nlraj "That's fine,{w=0.1} I guess."
             n 1nnmss "Just let me know when you're ready,{w=0.1} 'kay?"
-            return
+
+            jump ch30_loop
 
     # API Key
 
@@ -958,237 +969,127 @@ label talk_weather_setup:
     n 1nchbg "Okaaay!{w=0.2} Take it away,{w=0.1} [player]!"
 
     $ player_input_valid = False
-    $ player_input_count = 0
 
     # Process the player's input
     while not player_input_valid:
 
-        if player_input_count >= 3:
-            # Escape route if we somehow get stuck
-            n 1kllaj "I...{w=0.3} don't think we're getting anywhere with this,{w=0.1} [player]."
-            n 1nnmss "Maybe we should just try again later?"
-            return
-
-        else:
-            $ player_input = renpy.input("Enter your API key (or type Nevermind to go back):")
+        $ player_input = renpy.input("Enter your API key (or type Nevermind to go back):")
 
         if not player_input or player_input == "":
             n 1nlraj "Uh...{w=0.3} Did you actually type anything,{w=0.1} [player]?"
             n 1nwmss "I didn't get that...{w=0.3} can you try again for me?"
-            $ player_input_count += 1
 
         elif player_input.replace(" ", "").lower() == "nevermind":
             # Allow the player to back out
             n 1knmaj"Huh?{w=0.2} You don't wanna continue?"
             n 1nwmpu "That's fine,{w=0.1} I guess."
             n 1nnmss "Just let me know when you're ready,{w=0.1} 'kay?"
-            return
+
+            jump ch30_loop
 
         else:
             # Get ready to lead in to the next stage of setup
-            $ player_input_valid = True # Kill the loop!
+            $ player_input_valid = True
             $ persistent.jn_weather_api_key = player_input
             n 1nchlg "Alright!{w=0.2} I got it!"
 
-    # Latitude, longitude
+            jump talk_weather_setup_location
 
-    # Prompt the player for latitude, longitude
-    
+label talk_weather_setup_location:
+    n 1fsqbg "Now for the final piece of the puzzle..."
+    n 1uchbg "...Your location,{w=0.1} obviously!"
+    n 1ullaj "There's a couple ways to do this,{w=1}{nw}"
+    extend 1nnmsm " but I thought it'd be best to just ask.{w=1}{nw}"
+    extend 1ulraj "So..."
 
+    menu:
+        n "How do you wanna tell me, [player]?"
 
+        "Can you try locating me through the Internet?":
+            n 1fchsm "Sure, I can give it a shot!{w=1}{nw}"
+            extend 1fcssm " Just give me a second here...{w=1}{nw}"
 
-    return
+            $ ip_latitude_longitude = jn_atmosphere.get_latitude_longitude_by_ip_address()
+            if not ip_latitude_longitude:
+                # We couldn't get the coordinates via IP, so we have to prompt them via the player
+                n 1fslpu "...Huh."
+                n 1knmpo "I {i}tried{/i} to look you up, but I couldn't find anything!"
+                n 1flrpo "..."
+                n 1tlraj "Well..."
+                extend 1tllbg " looks like we're gonna have to do things the old-fashioned way,{w=0.1} [player]."
 
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="talk_weather_setup_b",
-            unlocked=False,
-            nat_says=True,
-            category=["weather"]
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-label talk_weather_setup_b:
-
-    # API key isn't valid; we prompt the player for another
-    #TODO: work through this, split stages into labels
-    if True:
-        n 1nlrss "Hey...{w=0.3} [player]?"
-        n 1nnmaj "You know how we went through the weather stuff?{w=0.2} With the API key and all that."
-        n 1nnmpu "Well...{w=0.3} it's been a while,{w=0.1} and it still isn't working!"
-        n 1nwmss "Did you wanna try giving me the API key again?"
-        menu:
-            "Sure.":
-                n 1nnmbg "Okay!{w=0.2} Let's try and get it working, [player]!"
-                n 1nlrss "Do you remember how to find your API keys for that website?"
-                n 1nchgn "Fear not!{w=0.2} Natsuki is here to save the day once again!{w=0.2} Ehehe."
-                n 1nnmss "You can find yours {a=[store.jn_globals.LINK_OPEN_WEATHER_MAP_API_KEYS]}here{/a}."
-
-            "No, not right now.":
-                n 1nnmpu "Oh..."
-                n 1nllaj "Well...{w=0.3} that's okay, I guess."
-                n 1nnmss "Just let me know whenever you're ready,{w=0.1} [player]."
-                return
-
-        $ player_input_valid = False
-        $ player_input_count = 0
-
-        n 1nnmss "..."
-        n 1nwmbg "All set,{w=0.1} [player]?{w=0.2} Then take it away!"
-
-        while not player_input_valid:
-
-            if player_input_count >= 3:
-                # Escape route if we somehow get stuck
-                n 1kllaj "This really is going nowhere fast,{w=0.1} huh [player]?"
-                n 1nnmss "I think we should just try again later..."
-                return
+                jump talk_weather_setup_manual_coords
 
             else:
-                $ player_input = renpy.input("Enter your API key (or type Nevermind to go back):")
+                # Success, confirm with player
+                n 1nwdbg "Aha!{w=0.2} I think I got it!"
+                n 1nwlbg "Now...{w=0.3} wanna see something awesome, [player]?{w=0.2} I know you do!"
+                n 1nnmsm "...{w=1}{nw}"
 
-            if not player_input or player_input == "":
-                n 1nlraj "Uhmm...{w=0.3} Did you actually type anything,{w=0.1} [player]?"
-                n 1nwmss "I didn't get that...{w=0.3} can you try again for me?"
+                python:
+                    # Try to show the map, and come back with the result to drive dialogue
+                    show_map_success = False
+                    try:
+                        jn_location.open_maps(ip_latitude_longitude[0], ip_latitude_longitude[1])
+                        show_map_success = True
 
-            elif player_input.replace(" ", "").lower() == "nevermind":
-                # Allow the player to back out
-                n 1knmaj "Huh?{w=0.2} You don't wanna continue?"
-                n 1nlraj "That's fine,{w=0.1} I guess."
-                n 1nwmsm "Just let me know when you're ready,{w=0.1} 'kay?"
-                return
+                    except Exception as exception:
+                        store.jn_utils.log(exception.message, jn_utils.SEVERITY_ERR)
 
-            else:
-                if jn_weather.is_api_key_valid(player_input):
-                    # Save the new API key, since we know it works!
-                    n 1nwdbg "Ooh!{w=0.2} I can use this one!{w=0.2} Nice work,{w=0.1} [player]!"
-                    n 1nlrss "I'll just put this somewhere safe..."
-                    $ persistent.jn_weather_api_key = player_input
-                    $ player_input_valid = True
-                    # restart the topic to promt the player for location
-                    jump talk_weather_setup_part2
+                if show_map_success:
+                    n 1nchbg "Ta-da!"
+                    n 1nwdgn "Well?{w=0.2} Am I right?{w=0.2} Am I right, [player]?{w=0.2} I bet I am!"
+                    menu:
+                        "Yes, you found me.":
+                            n 1nsgbg "Yes!{w=0.2} Am I good or what?"
+                            n 1nchbg "Ahaha!"
+                            n 1nnmts "I'll just note those down real quick..."
+                            $ persistent.jn_player_latitude, persistent.jn_player_longitude = ip_latitude_longitude
+
+                        "No, that's not right.":
+                            n 1fnmgs "What?{w=0.2} Are you kidding me!?"
+                            n 1flrsl "Ugh..."
+                            n 1nlrpu "And I was so proud of myself for figuring that out,{w=0.1} too..."
+                            n 1nnmss "Well,{w=0.1} it looks like we're gonna have to do things the old-fashioned way."
+                            
+                            jump talk_weather_setup_manual_coords
 
                 else:
-                    n 1nnmaj "No dice,{w=0.1} [player]...{w=0.3} that one didn't work either!"
-            $ player_input_count += 1
+                    n 1fnmaj "Eh?{w=0.2} What the...?"
+                    n 1nnmpu "Huh.{w=0.2} Weird."
+                    n 1nlrss "Well,{w=0.1} I {i}was{/i} gonna show you something neat,{w=0.1} but it looks like something messed up..."
+                    n 1nnmsm "Hey, [player]...{w=0.3} could you look these coordinates up and tell me if I got it right?"
+                    n 1nnmss "You should be able to search them up to find a location{w=0.1} -{w=0.1} then you can just tell me if that's correct!"
+                    n 1nllaj "I'm pretty sure your latitude is [ip_latitude_longitude[0]],{w=0.1} and your longitude is [ip_latitude_longitude[1]].{w=0.2} Just talk to me again when you're ready,{w=0.1} 'kay?"
+                    n 1nnmnv "..."
+                    n 1nlrss "Well,{w=0.1} [player]?{w=0.2} How're we looking?"
+                    menu:
+                        "Yes, that looks good to me.":
+                            n 1nwdbg "Good!{w=0.2} Good.{w=0.2} That's a relief!"
+                            n 1nchsm "I was worried I'd have to get a little more creative.{w=0.2} Ehehe."
+                            
+                            $ persistent.jn_player_latitude, persistent.jn_player_longitude = ip_latitude_longitude
+                            jump talk_weather_setup_verify
 
-    # API key is valid, now we need the player's location!
-    else:
-        n 1nnmaj "Huh?{w=0.2} For real?"
-        n 1nlrpu "It looks like we aren't out of the woods yet,{w=0.1} [player]..."
-        n 1nnmaj "Because...{w=0.3} I just realized something."
-        n 1nnmss "So {w=0.1}-{w=0.1} I can use that website and the API key to find out what the weather is like anywhere in the world,{w=0.1} right?"
-        n 1nllaj "But I have no idea {i}where{/i} in the world you actually are!"
-        n 1nnmss "I don't think I'll get much further without that.{w=0.2} Oops!"
-        n 1nlraj "I could {i}probably{/i} find out myself,{w=0.1} but I think that'd be kinda rude."
-        n 1nllaj "So...{w=0.3} how about it,{w=0.1} [player]?"
-        n 1nwdss "Would you mind if I tried to find out where you are?"
-        n 1nchbg "Don't worry!{w=0.2} This'll be strictly between you and me.{w=0.2} So..."
-        menu:
-            n "How about it?"
+                        "No, that's not right.":
+                            n 1nllpo "Uuuuuuu..."
+                            n 1nlrbo "Fine.{w=0.2} It looks like we're gonna have to do things the old-fashioned way."
+                            
+                            jump talk_weather_setup_manual_coords
 
-            "I don't mind telling you my location.":
-                n 1nwdbs "Really?{w=0.2} Awesome!{w=0.2}"
-                n 1nnmbg "Thanks a ton,{w=0.1} [player]!{w=0.2} We're getting so close!"
-                n 1nskbgf "T-{w=0.1}to this being done,{w=0.1} I mean!"
-                n 1nsknvf "..."
-                n 1nllbgf "A-{w=0.1}anyway..."
+        "I want to tell you where I am myself.":
+            n 1uchgn "Well, you're the boss!"
 
-            "I don't want to tell you my location.":
-                n 1nplss "Aww...{w=0.3} well, okay."
-                n 1nnmbg "Just let me know if you change your mind,{w=0.1} [player]."
-                return
+            jump talk_weather_setup_manual_coords
 
-        n 1nnmss "Let's get down to business!"
-        n 1nlrts "I'm just gonna look something up real quick..."
-        $ ip_latitude_longitude = jn_location.get_coords_by_ip()
+        "Nevermind.":
+            n 1fllpo "Well...{w=1}{nw}"
+            extend 1nslpo " fine."
+            n 1fchbg "Just let me know when you wanna go through all this again,{w=0.1} 'kay?"
 
-        if not ip_latitude_longitude:
-            # We couldn't get the coordinates via IP, so we have to prompt them via the player
-            n 1nnmpu "Huh...{w=0.3} I wasn't actually expecting that."
-            n 1nllaj "I was gonna try and find out where you are myself..."
-            n 1nnmss "But it looks like we're gonna have to do things the old-fashioned way."
-            call weather_setup_manual_coords
+            jump ch30_loop
 
-        else:
-            # Target acquired
-            n 1nwdbg "Aha!{w=0.2} I think I got it!"
-            n 1nwlbg "Now...{w=0.3} wanna see something awesome, [player]?{w=0.2} I know you do!"
-            n 1nnmsm "..."
-
-            python:
-                # Try to show the map, and come back with the result to drive dialogue
-                # We do this as Ren'Py doesn't allow inline try/catch. Thanks, Tom
-                show_map_success = False
-                try:
-                    jn_location.open_maps(ip_latitude_longitude[0], ip_latitude_longitude[1])
-                    show_map_success = True
-
-                except Exception as exception:
-                    store.jn_utils.log(exception.message, jn_utils.SEVERITY_ERR)
-
-            if show_map_success:
-                n 1nchbg "Ta-da!"
-                n 1nwdgn "Well?{w=0.2} Am I right?{w=0.2} Am I right, [player]?{w=0.2} I bet I am!"
-                menu:
-                    "Yes, you found me.":
-                        # Natsuki is clearly a pro at hide and seek
-                        n 1nsgbg "Yes!{w=0.2} Am I good or what?"
-                        n 1nchbg "Ahaha!"
-                        n 1nnmts "I'll just note those down real quick..."
-                        $ persistent.jn_player_latitude, persistent.jn_player_longitude = ip_latitude_longitude
-
-                    "No, that's not right.":
-                        # We couldn't get the coordinates via IP, so we have to prompt them via the player
-                        n 1fnmgs "What?{w=0.2} Are you kidding me!?"
-                        n 1flrsl "Ugh..."
-                        n 1nlrpu "And I was so proud of myself for figuring that out,{w=0.1} too..."
-                        n 1nnmss "Well,{w=0.1} it looks like we're gonna have to do things the old-fashioned way."
-                        call weather_setup_manual_coords
-
-            else:
-                n 1fnmaj "Eh?{w=0.2} What the...?"
-                n 1nnmpu "Huh.{w=0.2} Weird."
-                n 1nlrss "Well,{w=0.1} I {i}was{/i} gonna show you something neat,{w=0.1} but it looks like something messed up..."
-                n 1nnmsm "Hey, [player]...{w=0.3} could you look these coordinates up and tell me if I got it right?"
-                n 1nnmss "You should be able to search them up to find a location{w=0.1} -{w=0.1} then you can just tell me if that's correct!"
-                n 1nllaj "I'm pretty sure your latitude is [ip_latitude_longitude[0]],{w=0.1} and your longitude is [ip_latitude_longitude[1]].{w=0.2} Just talk to me again when you're ready,{w=0.1} 'kay?"
-                n 1nnmnv "..."
-                n 1nlrss "Well,{w=0.1} [player]?{w=0.2} How're we looking?"
-                menu:
-                    "Yes, that looks good to me.":
-                        n 1nwdbg "Good!{w=0.2} Good.{w=0.2} That's a relief!"
-                        n 1nchsm "I was worried I'd have to get a little more creative.{w=0.2} Ehehe."
-                        $ persistent.jn_player_latitude, persistent.jn_player_longitude = ip_latitude_longitude
-
-                    "No, that's not right.":
-                        n 1nllpo "Uuuuuuu..."
-                        n 1nlrbo "Fine.{w=0.2} It looks like we're gonna have to do things the old-fashioned way."
-                        call weather_setup_manual_coords
-
-            $ persistent.jn_weather_api_configured = True
-            n 1nwdbg "Okaaay!{w=0.2} It looks like we're finally good to go!"
-            n 1nllsml "Thanks again for all your help,{w=0.1} [player]."
-            n 1nchbgl "I can't wait to see something different out of that window for a change!"
-
-    return
-
-label weather_setup_manual_coords:
-
-    # Determine if the player already went through any part of the setup here
-
-    $ already_discussed_setup = False
-    if get_topic("weather_setup_manual_coords"):
-        $ already_discussed_setup = get_topic("weather_setup_manual_coords").shown_count > 0
-
-    if not already_discussed_setup:
-        n 1nllgn "Well,{w=0.1} fortunately for you,{w=0.1} I happen to have studied Geography so this is right up my alley!"
-
-    # Get the hemispheres
-
+label talk_weather_setup_manual_coords:
     n 1nnmaj "So,{w=0.1} I'm going to need to know a few things to find out where you are."
     n 1nnmss "Let's start off with the basics{w=0.1} -{w=0.1} Hemispheres!"
     n 1nllaj "Do you live in the {b}Northern{/b} or {b}Southern{/b} Hemisphere?"
@@ -1286,14 +1187,16 @@ label weather_setup_manual_coords:
                 n 1nchbgl "I can't wait to see something different out of that window for a change!"
                 $ persistent.jn_player_latitude = player_latitude
                 $ persistent.jn_player_longitude = player_longitude
-                return
+
+                jump talk_weather_setup_verify
 
             "No, that's not right at all.":
                 n 1fnmaj "What?{w=0.2} Really?!"
                 n 1fllbo "Nnnnnn...!"
                 n 1nlrsl "That's annoying..."
                 n 1nwmss "Let's try again,{w=0.1} alright?{w=0.2} I really wanna get this working!"
-                jump weather_setup_manual_coords
+
+                jump talk_weather_setup_manual_coords
 
     else:
         n 1fllaj "Urgh...{w=0.3} really?{w=0.2} This is such a pain!"
@@ -1305,16 +1208,55 @@ label weather_setup_manual_coords:
 
             "Yes, that's right.":
                 n 1nnmbg "Finally!{w=0.2} Jeez...{w=0.3} Now we can actually wrap things up here!"
-                n 1nchts "Thanks a bunch for helping me out with this [player]!"
-                return
+                n 1nchts "Thanks for helping me out with this,{w=0.1} [player]!"
+
+                jump talk_weather_setup_verify
 
             "No, that's still not right.":
-                # >_>
                 n 1nunpu "Wow.{w=0.2} For real?"
                 n 1nlrsl "..."
                 n 1nchss "Let's try that one more time,{w=0.1} alright?"
-                jump weather_setup_manual_coords
 
+                jump talk_weather_setup_manual_coords
+
+            "Nevermind.":
+                n 1fllpo "Jeez...{w=1}{nw}"
+                extend 1tlrss " what a mess,{w=0.1} huh?"
+                n 1fcspo "..."
+                n 1nllaj "Well,{w=0.1} thanks anyway.{w=1}{nw}"
+                extend 1nnmaj "We can always try again later,{w=0.5}{nw}" 
+                extend 1tnmss " right?"
+
+                jump ch30_loop
+
+label talk_weather_setup_verify:
+    n  "Okaaay!"
+    extend  " I think we're almost done now, [player]!"
+    n  "Let me just check everything is in order here...{w=1.5}{nw}"
+
+    if jn_atmosphere.get_weather_from_api():
+        n 1fchbg "Yes!"
+        extend 1uchbs " It's working,{w=0.5} it's working!"
+        extend 1nchsml " Ehehe."
+        n 1nchbgl "Thanks a bunch,{w=0.1} [player]!"
+        extend 1uchgnl " This is gonna be {i}super{/i} awesome!"
+
+        python:
+            persistent.jn_weather_api_configured = True
+            persistent.jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.real_time)
+            jn_atmosphere.update_sky()
+
+    else:
+        n 1fcsaj "Oh,{w=0.5}{nw}" 
+        extend 1fllan " come {i}on!{/i}"
+        n 1fcsem "Ugh..."
+        n 1fslem "And I was so stoked about it,{w=0.1} too..."
+        n 1fcsem "I'm sorry,{w=0.1} [player]."
+        extend 1knmem " I can't get it all to work!"
+        n 1fsrem "Talk about a disappointment..."
+        n 1knmpo "Maybe we could try again later?"
+
+    jump ch30_loop
 
 # Natsuki discusses her favourite season with the player, and asks the player theirs
 init 5 python:

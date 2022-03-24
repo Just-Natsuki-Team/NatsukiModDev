@@ -71,6 +71,7 @@ define dim_change_transition = Dissolve(0.25)
 
 init 0 python in jn_atmosphere:
     from Enum import Enum
+    import os
     import random
     import requests
     import store
@@ -128,7 +129,7 @@ init 0 python in jn_atmosphere:
         day_sky="sky day overcast",
         night_sky="sky night overcast",
         dim_image="dim light",
-        day_clouds="day_clouds heavy",
+        day_clouds="clouds day heavy",
         night_clouds="clouds night",
     )
 
@@ -137,7 +138,7 @@ init 0 python in jn_atmosphere:
         day_sky="sky day rain",
         night_sky="sky night rain",
         dim_image="dim medium",
-        day_clouds="day_clouds heavy",
+        day_clouds="clouds day heavy",
         night_clouds="clouds night",
         weather_sfx="mod_assets/sfx/rain_muffled.mp3"
     )
@@ -147,7 +148,7 @@ init 0 python in jn_atmosphere:
         day_sky="sky day thunder",
         night_sky="sky night thunder",
         dim_image="dim heavy",
-        day_clouds="day_clouds thunder",
+        day_clouds="clouds day thunder",
         night_clouds="clouds night",
         weather_sfx="mod_assets/sfx/rain_muffled.mp3"
     )
@@ -156,7 +157,7 @@ init 0 python in jn_atmosphere:
         weather_type=JNWeatherTypes.sunny,
         day_sky="sky day sunny",
         night_sky="sky night sunny",
-        day_clouds="day_clouds light"
+        day_clouds="clouds day light"
     )
 
     WEATHER_GLITCH = JNWeather(
@@ -239,7 +240,7 @@ init 0 python in jn_atmosphere:
                 renpy.with_statement(trans=store.weather_change_transition)
 
         else:
-            renpy.hide("dim")
+            renpy.hide("clouds")
 
         # Add the dimming effect, if defined
         if weather.dim_image:
@@ -248,7 +249,7 @@ init 0 python in jn_atmosphere:
                 renpy.with_statement(trans=store.dim_change_transition)
 
         else:
-            renpy.hide("clouds")
+            renpy.hide("dim")
 
         global current_weather
         current_weather = weather.weather_type
