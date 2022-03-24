@@ -1,9 +1,6 @@
 # Weather data
 default persistent.jn_weather_api_key = None
-default persistent.jn_weather_validate_apikey_in_time = None
-default persistent.jn_weather_is_tracking_set_up = False
-default persistent.jn_current_weather_type = jn_weather.TYPE_CLEAR
-default persistent.jn_current_weather_long = dict()
+default persistent.jn_weather_api_configured = False
 
 # Location data
 default persistent.jn_player_latitude = None

@@ -1014,7 +1014,8 @@ init 5 python:
 label talk_weather_setup_b:
 
     # API key isn't valid; we prompt the player for another
-    if not jn_weather.is_api_key_valid():
+    #TODO: work through this, split stages into labels
+    if True:
         n 1nlrss "Hey...{w=0.3} [player]?"
         n 1nnmaj "You know how we went through the weather stuff?{w=0.2} With the API key and all that."
         n 1nnmpu "Well...{w=0.3} it's been a while,{w=0.1} and it still isn't working!"
@@ -1168,7 +1169,7 @@ label talk_weather_setup_b:
                         n 1nlrbo "Fine.{w=0.2} It looks like we're gonna have to do things the old-fashioned way."
                         call weather_setup_manual_coords
 
-            $ persistent.jn_weather_is_tracking_set_up = True
+            $ persistent.jn_weather_api_configured = True
             n 1nwdbg "Okaaay!{w=0.2} It looks like we're finally good to go!"
             n 1nllsml "Thanks again for all your help,{w=0.1} [player]."
             n 1nchbgl "I can't wait to see something different out of that window for a change!"
