@@ -57,7 +57,7 @@ default persistent.jn_natsuki_random_topic_frequency = jn_preferences.random_top
 default persistent.jn_natsuki_repeat_topics = True
 
 # This determines if the game should use realtime weather
-default persistent.jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
+default persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
 
 # This determines if Natsuki should attempt to notify the user when starting a conversation
 default persistent.jn_notify_conversations = True

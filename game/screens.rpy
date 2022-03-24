@@ -1189,23 +1189,24 @@ screen preferences():
 
                         textbutton _("Disabled") action SetField(
                             object=persistent,
-                            field="jn_weather_setting",
+                            field="_jn_weather_setting",
                             value=int(jn_preferences.weather.JNWeatherSettings.disabled)
                         )
 
                         textbutton _("Random") action SetField(
                             object=persistent,
-                            field="jn_weather_setting",
+                            field="_jn_weather_setting",
                             value=int(jn_preferences.weather.JNWeatherSettings.random)
                         )
-                        if persistent.jn_weather_api_configured:
+
+                        if persistent._jn_weather_api_configured:
                             textbutton _("Real-time") action [
                                 SetField(
                                     object=persistent,
-                                    field="jn_weather_setting",
+                                    field="_jn_weather_setting",
                                     value=int(jn_preferences.weather.JNWeatherSettings.real_time)
                                 ),
-                                SensitiveIf(persistent.jn_weather_api_configured)
+                                SensitiveIf(persistent._jn_weather_api_configured)
                             ]
 
                     vbox:

@@ -881,20 +881,20 @@ label talk_weather_setup_main:
                 n 1nchbg "I'll just walk you through it just in case,{w=0.1} 'kay?"
 
                 # Reset configuration state
-                $ persistent.jn_weather_api_configured = False
-                $ persistent.jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
+                $ persistent._jn_weather_api_configured = False
+                $ persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
 
                 jump talk_weather_setup_api_key
 
-            "I want to give you my location." if persistent.jn_weather_api_key:
+            "I want to give you my location." if persistent._jn_weather_api_key:
                 # Location
                 n 1unmaj "You wanna go through your location?{w=1}{nw}"
                 extend 1fchbg " Sure!"
                 n 1nchbg "I'll just walk you through it just in case,{w=0.1} 'kay?"
                 
                 # Reset configuration state
-                $ persistent.jn_weather_api_configured = False
-                $ persistent.jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
+                $ persistent._jn_weather_api_configured = False
+                $ persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
 
                 jump talk_weather_setup_location
 
@@ -997,7 +997,7 @@ label talk_weather_setup_api_key:
         else:
             # Get ready to lead in to the next stage of setup
             $ player_input_valid = True
-            $ persistent.jn_weather_api_key = player_input
+            $ persistent._jn_weather_api_key = player_input
             n 1uchbg "Alright!{w=0.2} I got it!"
 
             jump talk_weather_setup_location
@@ -1056,7 +1056,7 @@ label talk_weather_setup_location:
                             extend 1fcssm " Ehehe."
                             n 1fllss "I'll just note those down real quick..."
 
-                            $ persistent.jn_player_latitude, persistent.jn_player_longitude = ip_latitude_longitude
+                            $ persistent._jn_player_latitude_longitude = ip_latitude_longitude
                             jump talk_weather_setup_verify
 
                         "No, that's not right.":
@@ -1084,7 +1084,7 @@ label talk_weather_setup_location:
                             n 1kchbg "Phew!"
                             extend 1nsldv "I was kinda worried I'd have to get a little more creative..."
                             
-                            $ persistent.jn_player_latitude, persistent.jn_player_longitude = ip_latitude_longitude
+                            $ persistent._jn_player_latitude_longitude = ip_latitude_longitude
                             jump talk_weather_setup_verify
 
                         "No, that's not right.":
@@ -1141,7 +1141,7 @@ label talk_weather_setup_manual_coords:
 
         "The Eastern half.":
             $ player_in_western_hemisphere = False
-            $ persistent.jn_hemisphere_east_west = "East"
+            $ persistent._jn_hemisphere_east_west = "East"
 
             if not player_in_southern_hemisphere:
                 n 1unmbg "Wow!{w=1}{nw}" 
@@ -1153,7 +1153,7 @@ label talk_weather_setup_manual_coords:
 
         "The Western half.":
             $ player_in_western_hemisphere = True
-            $ persistent.jn_hemisphere_east_west = "West"
+            $ persistent._jn_hemisphere_east_west = "West"
 
             n 1fchbg "The Western half.{w=0.5} Gotcha!"
 
@@ -1179,12 +1179,15 @@ label talk_weather_setup_manual_coords:
     $ player_longitude = renpy.input("Enter your {b}longitude{/b}:", allow="0123456789.")
 
     # Final checks and prompt
+    python:
+        if player_in_southern_hemisphere:
+            player_latitude = "-" + player_latitude
 
-    if player_in_southern_hemisphere:
-        $ player_latitude = "-" + player_latitude
+        if player_in_western_hemisphere:
+            player_longitude = "-" + player_longitude
 
-    if player_in_western_hemisphere:
-        $ player_longitude = "-" + player_longitude
+        player_latitude = float(player_latitude)
+        player_longitude = float(player_longitude)
 
     n 1fcssm "'Kay!"
     extend 1fchsm " I think we're nearly there now,{w=0.1} [player]!"
@@ -1194,7 +1197,7 @@ label talk_weather_setup_manual_coords:
         # Try to show the map, and come back with the result to drive dialogue
         show_map_success = False
         try:
-            jn_open_google_maps(ip_latitude_longitude[0], ip_latitude_longitude[1])
+            jn_open_google_maps(player_latitude, player_longitude)
             show_map_success = True
 
         except Exception as exception:
@@ -1210,9 +1213,8 @@ label talk_weather_setup_manual_coords:
             "Yes, that's close enough.":
                 n 1fchbg "Finally!{w=1}{nw}"
                 extend 1nchsm " I'll just note all that down real quick..."
-                $ persistent.jn_player_latitude = player_latitude
-                $ persistent.jn_player_longitude = player_longitude
 
+                $ persistent._jn_player_latitude_longitude = (player_latitude, player_longitude)
                 jump talk_weather_setup_verify
 
             "No, that's not right at all.":
@@ -1234,9 +1236,8 @@ label talk_weather_setup_manual_coords:
             "Yes, that's right.":
                 n 1fcsem "Finally!{w=1}{nw}" 
                 extend 1kslpo " Jeez..."
-                $ persistent.jn_player_latitude = player_latitude
-                $ persistent.jn_player_longitude = player_longitude
 
+                $ persistent._jn_player_latitude_longitude = (player_latitude, player_longitude)
                 jump talk_weather_setup_verify
 
             "No, that's still not right.":
@@ -1271,8 +1272,8 @@ label talk_weather_setup_verify:
         $ jn_relationship("affinity+")
 
         python:
-            persistent.jn_weather_api_configured = True
-            persistent.jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.real_time)
+            persistent._jn_weather_api_configured = True
+            persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.real_time)
             jn_atmosphere.update_sky()
 
     else:
