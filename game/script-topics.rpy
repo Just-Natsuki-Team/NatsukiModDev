@@ -807,8 +807,8 @@ label talk_weather_setup_main:
                 extend 1fllbg " I'm glad you asked!"
 
             "What're you complaining about?":
-                n 1fsgts "Well,{w=0.1} your attitude,{w=0.1} for one thing!{w=1}{nw}"
-                extend 1nllbg "Anyway..."
+                n 1fsqpo "Well,{w=0.1} your attitude,{w=0.1} for one thing!{w=1}{nw}"
+                extend 1nllaj "Anyway..."
 
         n 1ullaj "So...{w=0.5}{nw}"
         extend 1flrss " I'm not really one to just sit around and admire the view."
@@ -828,7 +828,7 @@ label talk_weather_setup_main:
                 n 1unmpu "Huh?{w=0.5}{nw}" 
                 extend 1unmbg " Really?!{w=0.5}{nw}" 
                 extend 1uchbs " Thanks,{w=0.1} [player]!"
-                n 1fllssl "N-{w=0.3}not that I was totally waiting for your help,{w=0.1} obviously!"
+                n 1fllssl "N-{w=0.3}not that I was {i}waiting{/i} for help,{w=0.1} {i}obviously{/i}!"
 
             "What do I have to do?":
                 n 1fcsem "Jeez,{w=0.1} [player]...{w=0.3}" 
@@ -1029,7 +1029,7 @@ label talk_weather_setup_location:
 
             else:
                 # Success, confirm with player
-                n 1nwdbg "Aha!{w=0.5}" 
+                n 1nwdbg "Aha!{w=0.5}{nw}" 
                 extend 1uchbg " I think I got it!"
                 n 1nwlbg "Now...{w=0.3} wanna see something awesome, [player]?{w=1}{nw}" 
                 extend 1fsqsm " I know you do."
@@ -1105,7 +1105,7 @@ label talk_weather_setup_location:
             jump ch30_loop
 
 label talk_weather_setup_manual_coords:
-    n 1ulraj "So,{w=0.1}" 
+    n 1ulraj "So,{w=0.3}{nw}" 
     extend 1nnmbo " I'm going to need to know a few things to find out where you are."
     n 1flrss "Let's start off with the basics{w=0.1} -{w=0.5}{nw}" 
     extend 1fchsm " Hemispheres!"
@@ -1147,30 +1147,33 @@ label talk_weather_setup_manual_coords:
                 n 1tslss "It really is a small world,{w=0.1} huh?"
 
             else:
-                n 1nwdbg "Ooh!{w=0.2} Just like me!"
+                n 1fchbg "Well hey!{w=0.5} Just like me!"
 
         "The Western half.":
             $ player_in_western_hemisphere = True
             $ persistent.jn_hemisphere_east_west = "West"
 
-            n 1nnmsm "The Western half...{w=0.3} gotcha!"
+            n 1fchbg "The Western half.{w=0.5} Gotcha!"
 
     # Get the latitude
 
-    n 1nwmbg "Now with that out of the way,{w=0.1} I just need your coordinates!"
-    n 1nllss "And by those,{w=0.1} I mean your {b}latitude{/b} and {b}longitude{/b},{w=0.1} of course!"
-    n 1nlraj "I always used {a=[store.jn_globals.LINK_LAT_LONG_HOME]}this{/a} website to look mine up for homework,{w=0.1} but you can use your phone or whatever too."
-    n 1nchss "Oh,{w=0.1} and don't worry about making it positive or negative.{w=0.2} I'll take care of that!"
-    n 1nnmsm "We'll start off with your {b}latitude{/b} first."
-    n 1nnmaj "So...{w=0.3} hit me,{w=0.1} [player]!"
+    n 1fllss "Now with that out of the way,{w=0.1} I just need your coordinates!"
+    n 1fsqss "And by those,{w=0.5}{nw}" 
+    extend 1fchsm " I mean your {b}latitude{/b} and {b}longitude{/b}!"
+    n 1ullaj "I always used {a=[store.jn_globals.LINK_LAT_LONG_HOME]}this{/a} website to look mine up for homework,{w=0.1} but you can use your phone or whatever too."
+    n 1unmaj "Oh,{w=0.3}{nw}" 
+    extend 1fnmbo " and don't worry about making it positive or negative.{w=1}{nw}"
+    extend 1fcssm " I'll take care of that!"
+    n 1ullss "We'll start off with your {b}latitude{/b} first."
+    n 1fchsm "So...{w=0.3} take it away!"
     $ player_latitude = renpy.input(prompt="Enter your latitude:", allow="0123456789.")
 
     # Get the longitude
 
-    n 1nchss "Thanks,{w=0.1} [player]!{w=0.2} I'll just note that down..."
-    n 1nnmaj "Alright!{w=0.1} Now finally,{w=0.1} I just need your {b}longitude{/b},{w=0.1} 'kay?"
-    n 1nwrss "Just like last time,{w=0.1} I can figure it out without any positive or negative symbols."
-    n 1nnmbg"Take it away,{w=0.1} [player]!"
+    n 1fchbg "Alright!{w=0.5}{nw}" 
+    extend 1nchsm " Now finally,{w=0.1} I just need your {b}longitude{/b}!"
+    n 1fcssm "Just like last time,{w=0.1} I can figure it out without any positive or negative symbols."
+    n 1fchsm "Take it away,{w=0.1} [player]!"
     $ player_longitude = renpy.input("Enter your longitude:", allow="0123456789.")
 
     # Final checks and prompt
@@ -1181,9 +1184,9 @@ label talk_weather_setup_manual_coords:
     if player_in_western_hemisphere:
         $ player_longitude = "-" + player_longitude
 
-    n 1nwdbg "Hey{w=0.1} -{w=0.1} I think we're nearly there now,{w=0.1} [player]!"
-    n 1nlrts "Let me just open up a map real quick..."
-    n 1nchsm "..."
+    n 1fcssm "'Kay!"
+    extend 1fchsm " I think we're nearly there now,{w=0.1} [player]!"
+    extend 1fcsbg " Let me just open up a map real quick...{w=1}{nw}"
 
     python:
         # Try to show the map, and come back with the result to drive dialogue
@@ -1196,29 +1199,30 @@ label talk_weather_setup_manual_coords:
             store.jn_utils.log(exception.message, store.jn_utils.SEVERITY_ERR)
 
     if show_map_success:
-        n 1nwdbs "Ta-da!"
-        n 1nllbg "How about it,{w=0.1} [player]?{w=0.2} Close enough,{w=0.1} right?"
+        n 1uchgn "Ta-da!"
+        n 1fnmbg "How about it,{w=0.1} [player]?{w=1}{nw}" 
+        
         menu:
+            n "Close enough,{w=0.1} right?"
+
             "Yes, that's close enough.":
-                n 1nchbg "Yay!{w=0.2} Finally!"
-                n 1nwmsm "I'll just note all that down real quick..."
-                n 1nchssl "And again,{w=0.2} thanks a bunch [player]."
-                n 1nchbgl "I can't wait to see something different out of that window for a change!"
+                n 1fchbg "Finally!{w=1}{nw}"
+                extend 1nchsm " I'll just note all that down real quick..."
                 $ persistent.jn_player_latitude = player_latitude
                 $ persistent.jn_player_longitude = player_longitude
 
                 jump talk_weather_setup_verify
 
             "No, that's not right at all.":
-                n 1fnmaj "What?{w=0.2} Really?!"
-                n 1fllbo "Nnnnnn...!"
-                n 1nlrsl "That's annoying..."
-                n 1nwmss "Let's try again,{w=0.1} alright?{w=0.2} I really wanna get this working!"
+                n 1tnmem "What?{w=0.2} Really?!"
+                n 1fcsem "Ugh..."
+                n 1fcsaj "Let's...{0.5} try again,{w=0.1} alright?{w=1}{nw}" 
+                extend 1fnmpo " I really wanna get this working!"
 
                 jump talk_weather_setup_manual_coords
 
     else:
-        n 1fllaj "Urgh...{w=0.3} really?{w=0.2} This is such a pain!"
+        n 1fllaj "Urgh...{w=0.3} really?{w=0.2} This is {i}such{/i} a pain!"
         n 1nlrsl "I can't seem to show you where I think you are on a map,{w=0.1} so I'll just ask to make sure."
         n 1nnmss "I've done some checks to work out the coordinates,{w=0.1} and from what you said..."
         n 1nnmaj "Your overall latitude would be [player_latitude],{w=0.1} and your overall longitude would be [player_longitude]."
@@ -1226,15 +1230,16 @@ label talk_weather_setup_manual_coords:
             n "Is [player_latitude], [player_longitude] correct?"
 
             "Yes, that's right.":
-                n 1nnmbg "Finally!{w=0.2} Jeez...{w=0.3} Now we can actually wrap things up here!"
-                n 1nchts "Thanks for helping me out with this,{w=0.1} [player]!"
+                n 1fcsem "Finally!{w=1}{nw}" 
+                extend 1kslpo " Jeez..."
 
                 jump talk_weather_setup_verify
 
             "No, that's still not right.":
-                n 1nunpu "Wow.{w=0.2} For real?"
-                n 1nlrsl "..."
-                n 1nchss "Let's try that one more time,{w=0.1} alright?"
+                n 1tnmem "What?{w=0.2} Really?!"
+                n 1fcsem "Ugh..."
+                n 1fcsaj "Let's...{0.5} try again,{w=0.1} alright?{w=1}{nw}" 
+                extend 1fnmpo " I really wanna get this working!"
 
                 jump talk_weather_setup_manual_coords
 
@@ -1249,16 +1254,17 @@ label talk_weather_setup_manual_coords:
                 jump ch30_loop
 
 label talk_weather_setup_verify:
-    n  "Okaaay!"
-    extend  " I think we're almost done now, [player]!"
-    n  "Let me just check everything is in order here...{w=1.5}{nw}"
+    n 1nchbg "Okaaay!{w=1}{nw}"
+    extend 1fnmsm " I think we're almost done now,{w=0.1} [player]!"
+    n 1ncsbo "Let me just check everything is in order here...{w=1.5}{nw}"
 
     if jn_atmosphere.get_weather_from_api():
         n 1fchbg "Yes!"
-        extend 1uchbs " It's working,{w=0.5} it's working!"
+        extend 1uchbs " It's working,{w=0.5} it's working!{w=1}{nw}"
         extend 1nchsml " Ehehe."
-        n 1nchbgl "Thanks a bunch,{w=0.1} [player]!"
+        n 1nchbgl "Thanks a bunch,{w=0.1} [player]!{w=1}{nw}"
         extend 1uchgnl " This is gonna be {i}super{/i} awesome!"
+        $ jn_relationship("affinity+")
 
         python:
             persistent.jn_weather_api_configured = True
@@ -1270,7 +1276,7 @@ label talk_weather_setup_verify:
         extend 1fllan " come {i}on!{/i}"
         n 1fcsem "Ugh..."
         n 1fslem "And I was so stoked about it,{w=0.1} too..."
-        n 1fcsem "I'm sorry,{w=0.1} [player]."
+        n 1fcsem "I'm sorry,{w=0.1} [player].{w=1}{nw}"
         extend 1knmem " I can't get it all to work!"
         n 1fsrem "Talk about a disappointment..."
         n 1knmpo "Maybe we could try again later?"
