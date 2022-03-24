@@ -6060,7 +6060,7 @@ init 5 python:
 label date_go2_beach:
     n "I love the beach"
     n "Let's go!"
-    $ main_background.changeLocation(beach)
+    $ main_background.change_location(beach)
     $ main_background.draw(full_redraw=True)
     return
 
@@ -6080,7 +6080,7 @@ init 5 python:
 label date_go2_room:
     n "Heading back then?"
     n "Alright!"
-    $ main_background.changeLocation(classroom)
+    $ main_background.change_location(classroom)
     $ main_background.draw(dissolve_all=True, full_redraw=True)
     return
 
