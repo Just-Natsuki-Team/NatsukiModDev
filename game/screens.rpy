@@ -1169,14 +1169,12 @@ screen preferences():
                     if renpy.variant("pc"):
 
                         vbox:
-                            # Display options
                             style_prefix "radio"
                             label _("Display")
                             textbutton _("Window") action Preference("display", "window")
                             textbutton _("Fullscreen") action Preference("display", "fullscreen")
 
                     vbox:
-                        # Text options
                         style_prefix "check"
                         label _("Skip")
                         textbutton _("Unseen Text") action Preference("skip", "toggle")
@@ -1210,7 +1208,6 @@ screen preferences():
                             ]
 
                     vbox:
-                        # Outfit options
                         style_prefix "check"
                         label _("Outfits")
                         textbutton _("Auto Change") action [
@@ -1222,7 +1219,6 @@ screen preferences():
                         ]
 
                     vbox:
-                        # Topic options
                         style_prefix "check"
                         label _("Topics")
                         textbutton _("Repeat seen") action [
@@ -1234,7 +1230,6 @@ screen preferences():
                         ]
 
                     vbox:
-                        # Notification options
                         style_prefix "check"
                         label _("Notifications")
                         textbutton _("Conversations") action [
