@@ -110,8 +110,8 @@ init -20 python:
             """
             self.location = None
             self.deco = dict()
-            self.sunrise = datetime.time(store.persistent.jn_sunrise_hour)
-            self.sunset = datetime.time(store.persistent.jn_sunset_hour)
+            self.sunrise = datetime.time(int(store.persistent.jn_sunrise_hour))
+            self.sunset = datetime.time(int(store.persistent.jn_sunset_hour))
 
             #States
             self.__is_showing_day_image = self.is_day()
