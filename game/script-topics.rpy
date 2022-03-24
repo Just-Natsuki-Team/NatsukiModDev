@@ -984,7 +984,7 @@ label talk_weather_setup_api_key:
 
         if not player_input or player_input == "":
             n 1tsqsm "I {i}thought{/i} I asked for an {i}API key{/i},{w=0.1} [player]?"
-            extend 1fchts " Try again!"
+            extend 1fchbl " Try again!"
 
         elif player_input.replace(" ", "").lower() == "nevermind":
             # Allow the player to back out
