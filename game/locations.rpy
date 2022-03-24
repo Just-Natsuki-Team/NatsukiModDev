@@ -190,6 +190,7 @@ init -20 python:
 
             # dissolving everything means dissolve last
             if dissolve_all or full_redraw:
+                renpy.hide("black")
                 renpy.with_statement(Dissolve(1.0))
             return
 
@@ -221,7 +222,7 @@ init -20 python:
             #If it's day and we're showing the night room, we should full redraw to show day room again
             if self.is_day() and self.__is_showing_day_image is False:
                 self.__is_showing_day_image = True
-                self.draw(full_redraw=True)
+                self.draw(dissolve_all=True)
 
                 #Run events
                 self.night_to_day_event()
@@ -229,7 +230,7 @@ init -20 python:
             #If it's night and we're showing the day room, we should do a full redraw to show the night room
             elif not self.is_day() and self.__is_showing_day_image is True:
                 self.__is_showing_day_image = False
-                self.draw(full_redraw=True)
+                self.draw(dissolve_all=True)
 
                 #Run events
                 self.day_to_night_event()
@@ -241,6 +242,7 @@ init -20 python:
             persistent._current_location = self.location.id
 
 init python:
+
     main_background = JNRoom(
         sunrise_hour=int(store.persistent.jn_sunrise_hour),
         sunset_hour=int(store.persistent.jn_sunset_hour)
@@ -276,6 +278,8 @@ init python:
         main_background.night_to_day_event()
     else:
         main_background.day_to_night_event()
+
+    
 
     if persistent._current_location in locations.LOCATION_MAP:
         main_background.change_location(persistent._current_location)
