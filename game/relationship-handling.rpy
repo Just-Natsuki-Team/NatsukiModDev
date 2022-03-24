@@ -1,5 +1,5 @@
-default persistent.trust = 1.0
-default persistent.affinity = 1.0
+default persistent.trust = 10.0
+default persistent.affinity = 25.0
 
 init 0 python:
     def jn_relationship(change, multiplier=1):

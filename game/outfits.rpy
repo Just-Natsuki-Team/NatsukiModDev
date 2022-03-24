@@ -138,6 +138,15 @@ init python in jn_outfits:
         headgear="natsu_claus_hat"
     )
 
+    DEFAULT_OUTFIT_VALENTINE = JNOutfitPreset(
+        display_name="Valentine Dress",
+        reference_name="jn_valentine",
+        unlocked=True,
+        clothes="red_rose_lace_dress",
+        hairstyle="messy_bun",
+        accessory="hairbands/white"
+    )
+
     # Default outfit schedules
     DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_HIGH_AFFINITY = {
         store.JNTimeBlocks.early_morning: DEFAULT_OUTFIT_MORNING_ALT if _use_alt_outfit else DEFAULT_OUTFIT_MORNING,

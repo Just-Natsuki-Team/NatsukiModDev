@@ -3,107 +3,6 @@
 
 init offset = -1
 
-init python:
-    import random
-
-    # These dialogue sets are used on the Quit modal, where the indexes of each set are used as follows:
-    # [0]: Confirm prompt header
-    # [1]: Response on choosing to leave via Continue
-    # [2]: Response on choosing to stay via Go Back
-    QUIT_HIGH_AFFINITY_DIALOGUE = [
-        [
-            "Wait, you're leaving? You could at least say goodbye first, you know...",
-            "[player]...\n {0}".format(random.choice(jn_globals.DEFAULT_SAD_EMOTICONS)),
-            "Ehehe. Thanks, [player]~ \n{0}".format(random.choice(jn_globals.DEFAULT_HAPPY_EMOTICONS))
-        ],
-        [
-            "W-wait, what? Aren't you going to say goodbye first, [player]?",
-            "Come on, [player]...\n{0}".format(random.choice(jn_globals.DEFAULT_SAD_EMOTICONS)),
-            "Thanks, [player]! \n{0}".format(random.choice(jn_globals.DEFAULT_HAPPY_EMOTICONS))
-        ],
-        [
-            "Come on, [player]... at least say goodbye to me first?",
-            "Why, [player]...? \n{0}".format(random.choice(jn_globals.DEFAULT_SAD_EMOTICONS)),
-            "Thanks a bunch, [player]~ \n{0}".format(random.choice(jn_globals.DEFAULT_HAPPY_EMOTICONS)),
-        ]
-    ]
-
-    QUIT_MEDIUM_AFFINITY_DIALOGUE = [
-        [
-            "H-huh? You're leaving? You could at least say goodbye properly!",
-            "[player]! Come on...\n {0}".format(random.choice(jn_globals.DEFAULT_ANGRY_EMOTICONS)),
-            "Y-yeah! That's what I thought. Ahaha..."
-        ],
-        [
-            "W-wait, what? At least say goodbye if you're leaving, [player]!",
-            "Ugh... [player]...\n {0}".format(random.choice(jn_globals.DEFAULT_ANGRY_EMOTICONS)),
-            "G-good! Good..."
-        ],
-        [
-            "H-hey! You aren't just going to leave like that, are you?",
-            "...Really, [player]?\n {0}".format(random.choice(jn_globals.DEFAULT_ANGRY_EMOTICONS)),
-            "T-thanks, [player]."
-        ]
-    ]
-
-    QUIT_LOW_AFFINITY_DIALOGUE = [
-        [
-            "...Really? I don't even get a 'goodbye' now?",
-            "...Jerk.",
-            "...Thanks, [player]. I guess."
-        ],
-        [
-            "...You're not even going to bother saying goodbye?",
-            "Heh. Yeah. You have a {i}wonderful{/i} day too.",
-            "Thanks.",
-        ],
-        [
-            "...Is it really {i}that{/i} much effort to say goodbye properly?",
-            "Don't let the door hit you on the way out. \nJerk.",
-            "Thank you.",
-        ]
-    ]
-
-    QUIT_ZERO_AFFINITY_DIALOGUE = [
-        [
-            "...Going?",
-            "...Good riddance.",
-            "...Whatever."
-        ],
-        [
-            "...Oh. You're leaving.",
-            "...Maybe you shouldn't come back.",
-            "Uh huh.",
-        ],
-        [
-            "...Leaving?",
-            "Don't hurry back.",
-            "Whatever.",
-        ]
-    ]
-
-    def get_affinity_quit_dialogue():
-        """
-        Returns a list containing quit dialogue when exiting via game window/main menu quit option, where indexes:
-        0: Dialogue before selecting an option
-        1: Dialogue for choosing to quit
-        2: Dialogue for choosing to stay
-
-        OUT:
-            List containing quit dialogue
-        """
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            return random.choice(QUIT_HIGH_AFFINITY_DIALOGUE)
-
-        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
-            return random.choice(QUIT_MEDIUM_AFFINITY_DIALOGUE)
-
-        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
-            return random.choice(QUIT_LOW_AFFINITY_DIALOGUE)
-
-        else:
-            return random.choice(QUIT_ZERO_AFFINITY_DIALOGUE)
-
 ################################################################################
 ## Custom Screens
 ################################################################################
@@ -172,26 +71,29 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                 mousewheel True
                 arrowkeys True
                 vbox:
-                    if category_length != 1:
-                        if category_length == 0:
-                            textbutton _("Nevermind."):
-                                action [
-                                    Return(False),
-                                    Function(prev_adjustment.change, 0),
-                                    SetVariable("selected_category", None)
-                                ]
+                    if category_length == 0:
+                        textbutton _("Nevermind."):
+                            action [
+                                Return(False),
+                                Function(prev_adjustment.change, 0),
+                                SetVariable("selected_category", None)
+                            ]
+                            hover_sound gui.hover_sound
+                            activate_sound gui.activate_sound
 
-                        elif category_length > 1:
-                            python:
-                                import random
+                    else:
+                        python:
+                            import random
 
-                                go_back_text = "Go back"
-                                if random.randint(0, 999) == 999:
-                                    go_back_text = "Go baka"
+                            go_back_text = "Go back"
+                            if random.randint(0, 999) == 1:
+                                go_back_text = "Go baka"
 
-                            textbutton _(go_back_text):
-                                style "categorized_menu_button"
-                                action [ Return(-1), Function(prev_adjustment.change, 0) ]
+                        textbutton _(go_back_text):
+                            style "categorized_menu_button"
+                            action [ Return(-1), Function(prev_adjustment.change, 0) ]
+                            hover_sound gui.hover_sound
+                            activate_sound gui.activate_sound
 
                         null height 20
 
@@ -200,6 +102,8 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                             style "categorized_menu_button"
                             #Set the selected category
                             action SetVariable("selected_category", button_name)
+                            hover_sound gui.hover_sound
+                            activate_sound gui.activate_sound
 
                         null height 5
 
@@ -231,6 +135,8 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                                 Function(prev_adjustment.change, 0),
                                 SetVariable("selected_category", None)
                             ]
+                            hover_sound gui.hover_sound
+                            activate_sound gui.activate_sound
 
                         null height 20
 
@@ -240,6 +146,8 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                                 style "categorized_menu_button"
                                 #Return the label so it can be called
                                 action [ Return(_topic.label), Function(prev_adjustment.change, 0), SetVariable("selected_category", None) ]
+                                hover_sound gui.hover_sound
+                                activate_sound gui.activate_sound
 
                             null height 5
 
@@ -256,6 +164,8 @@ screen scrollable_choice_menu(items, last_item=None):
                     style "categorized_menu_button"
                     xsize 560
                     action Return(last_item[1])
+                    hover_sound gui.hover_sound
+                    activate_sound gui.activate_sound
 
                 null height 20
 
@@ -270,6 +180,8 @@ screen scrollable_choice_menu(items, last_item=None):
                             style "categorized_menu_button"
                             xsize 560
                             action Return(_value)
+                            hover_sound gui.hover_sound
+                            activate_sound gui.activate_sound
 
                         null height 5
 
@@ -316,8 +228,8 @@ style normal is default:
     text_align gui.text_xalign
     layout ("subtitle" if gui.text_xalign else "tex")
 
-    line_overlap_split -3
-    line_spacing 3
+    line_overlap_split -8
+    line_spacing 8
 
 style input:
     color gui.accent_color
@@ -326,7 +238,6 @@ style hyperlink_text:
     color gui.accent_color
     hover_color gui.hover_color
     hover_underline True
-    underline True
 
 style splash_text:
     size 24
@@ -357,7 +268,7 @@ style button:
 style button_text is gui_text:
     properties gui.button_text_properties("button")
     yalign 0.5
-
+    size gui.button_text_size
 
 style label_text is gui_text:
     color gui.accent_color
@@ -494,6 +405,8 @@ style say_dialogue:
 
     text_align gui.text_xalign
     layout ("subtitle" if gui.text_xalign else "tex")
+    line_overlap_split -8
+    line_spacing 8
 
 image ctc:
     xalign 0.81 yalign 0.98 xoffset -5 alpha 0.0 subpixel True
@@ -523,8 +436,6 @@ image input_caret:
 
 screen input(prompt):
     style_prefix "input"
-
-
     window:
         vbox:
             xalign .5
@@ -554,14 +465,40 @@ style input:
 ##
 ## http://www.renpy.org/doc/html/screen_special.html#choice
 
+# Default choice screen; this is offset so it doesn't get in front of Natsuki's face during dialogue
 screen choice(items, scroll="viewport"):
     style_prefix "choice"
 
     vbox:
         xalign 0.9
         for i in items:
-            textbutton i.caption action i.action
+            textbutton i.caption:
+                action i.action
+                hover_sound gui.hover_sound
+                activate_sound gui.activate_sound
 
+# Identical to choice, but not offset - use this for menu options when Natsuki isn't present
+screen choice_centred(items, scroll="viewport"):
+    style_prefix "choice"
+
+    vbox:
+        for i in items:
+            textbutton i.caption:
+                action i.action
+                hover_sound gui.hover_sound
+                activate_sound gui.activate_sound
+
+# Identical to choice_centred, but without hover/activate sounds - use this for menu options when Natsuki isn't present,
+# and when we need silence for atmospheric reasons (like the intro sequence)
+screen choice_centred_mute(items, scroll="viewport"):
+    style_prefix "choice"
+
+    vbox:
+        for i in items:
+            textbutton i.caption:
+                action i.action
+                hover_sound None
+                activate_sound None
 
 ## When this is true, menu captions will be spoken by the narrator. When false,
 ## menu captions will be displayed as empty buttons.
@@ -583,7 +520,6 @@ style choice_scrollbar:
     thumb Frame("gui/scrollbar/horizontal_poem_thumb.png", top=6, right=6, tile=True)
     unscrollable "hide"
     bar_invert True
-
 
 style choice_vscrollbar:
     xsize 18
@@ -741,23 +677,34 @@ screen quick_menu():
                         yes_action=Jump("ch30_autoload"),
                         no_action=Jump("restart")
                     )
+                    hover_sound gui.hover_sound
+                    activate_sound gui.activate_sound
+
 
             textbutton _("History"):
                 text_style "quickmenu_text"
                 action ShowMenu('history')
+                hover_sound gui.hover_sound
+                activate_sound gui.activate_sound
 
             textbutton _("Skip"):
                 text_style "quickmenu_text"
                 action Skip()
                 alternate Skip(fast=True, confirm=True)
+                hover_sound gui.hover_sound
+                activate_sound gui.activate_sound
 
             textbutton _("Auto"):
                 text_style "quickmenu_text"
                 action Preference("auto-forward", "toggle")
+                hover_sound gui.hover_sound
+                activate_sound gui.activate_sound
 
             textbutton _("Settings"):
                 text_style "quickmenu_text"
                 action ShowMenu('preferences')
+                hover_sound gui.hover_sound
+                activate_sound gui.activate_sound
 
 default quick_menu = True
 
@@ -850,7 +797,7 @@ screen navigation():
         if renpy.variant("pc"):
 
             ## Help isn't necessary or relevant to mobile devices.
-            textbutton _("Help") action Help("README.html")
+            textbutton _("Help") action Help("README.md")
 
             ## The quit button is banned on iOS and unnecessary on Android.
             python:
@@ -867,19 +814,7 @@ screen navigation():
                 else:
                     quit_message = "...Going?"
 
-            #textbutton _("Quit") action Show(screen="quit", message=quit_message, ok_action=Hide(screen="quit", transition=None))
-
-
-        textbutton _("Credits") action Show(screen="credits", message="Credits:\nWriting: Edgar.\nArt: u/Aida_Hwedo.\nBeach Art: etched\nBeach Background: Kimagure After Background Material Storage\nPark and Manga Store Background: mugenjohncel (On LemmaSoft forums)\nBakery, Clothes Store and Mall Background: u/SovietSpartan\nTypo and Bug Reporting: Willie\nNatsuki clothing store outfit #1: Eg85_MkWii\nCat Ears: DearWolf\nPriceVille Gallery: Flower\nClipart Library: Cake\nJMO: Original Clothing Art\nJparnaud: Sprite Editing\nKevin Macleod: Spooky Music(Day of Chaos)\nPinclpart: Bats\nNatsuki Low Affinity Beach Outfit: -Http_Bxbygirl-(Reddit)\nNatsuki High Affinity Beach Outfit: Huniepop (Rizky Prahesa)\nNatsuki White Tank: DestinyPveGal\nGlasses: Unknown as of now", ok_action=Hide(screen="credits", transition=None))
-
-        #textbutton _("Latest Update") action OpenURL("https://justnatsukidev.wixsite.com/justnatsuki/latest")
-
-        #if not main_menu and not persistent.prologue:
-        #    textbutton _("DLC") action Function(DLC)
-
-        #else:
-        #    timer 1.75 action Start("autoload_yurikill")
-
+        textbutton _("GitHub") action OpenURL("https://github.com/Just-Natsuki-Team/NatsukiModDev")
 
 style navigation_button is gui_button
 style navigation_button_text is gui_button_text
@@ -1276,6 +1211,17 @@ screen preferences():
                                 false_value=False)
                         ]
 
+                    vbox:
+                        style_prefix "check"
+                        label _("Notifications")
+                        textbutton _("Conversations") action [
+                            ToggleField(
+                                object=persistent,
+                                field="jn_notify_conversations",
+                                true_value=True,
+                                false_value=False)
+                        ]
+
                     ## Additional vboxes of type "radio_pref" or "check_pref" can be
                     ## added here, to add additional creator-defined preferences.
 
@@ -1387,7 +1333,7 @@ style radio_vbox:
 
 style radio_button:
     properties gui.button_properties("radio_button")
-    foreground "gui/button/check_[prefix_]foreground.png"
+    foreground "mod_assets/buttons/check_[prefix_]foreground.png"
 
 style radio_button_text:
     properties gui.button_text_properties("radio_button")
@@ -1401,7 +1347,7 @@ style check_vbox:
 
 style check_button:
     properties gui.button_properties("check_button")
-    foreground "gui/button/check_[prefix_]foreground.png"
+    foreground "mod_assets/buttons/check_[prefix_]foreground.png"
 
 style check_button_text:
     properties gui.button_text_properties("check_button")
@@ -1619,33 +1565,33 @@ screen reload(message, ok_action):
 
                 textbutton _("I'll do it myself") action Hide("reload")
 
-screen quit(message, ok_action):
+# screen quit(message, ok_action):
 
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
+#     ## Ensure other screens do not get input while this screen is displayed.
+#     modal True
 
-    zorder 200
+#     zorder 200
 
-    style_prefix "confirm"
+#     style_prefix "confirm"
 
-    add "gui/overlay/confirm.png"
+#     add "gui/overlay/confirm.png"
 
-    frame:
+#     frame:
 
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
+#         vbox:
+#             xalign .5
+#             yalign .5
+#             spacing 30
 
-            label _(message):
-                style "confirm_prompt"
-                xalign 0.5
+#             label _(message):
+#                 style "confirm_prompt"
+#                 xalign 0.5
 
-            hbox:
-                xalign 0.5
-                spacing 100
+#             hbox:
+#                 xalign 0.5
+#                 spacing 100
 
-                textbutton _("No") action ok_action
+#                 textbutton _("No") action ok_action
 
 screen endgame(message): # No spoilers, promise!
 
@@ -1695,142 +1641,12 @@ screen credits(message, ok_action):
                 xalign 0.5
                 spacing 100
 
-                textbutton _("Good work!") action ok_action
-
-screen credits2(message, ok_action):
-
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
-
-    zorder 200
-
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
-
-    frame:
-
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _(message):
-                style "confirm_prompt"
-                xalign 0.5
-
-            hbox:
-                xalign 0.5
-                spacing 100
-
-                textbutton _("FAJNCAKJ") action ok_action
-
-image confirm_glitch:
-    "gui/overlay/confirm_glitch.png"
-    pause 0.02
-    "gui/overlay/confirm_glitch2.png"
-    pause 0.02
-    repeat
-
-screen confirm(message, yes_action, no_action):
-
-    # If this is a quit confirmation, begin personification so we can work Natsuki into this
-    if message == layout.QUIT:
-        python:
-            confirm_is_quit = True
-            quit_dialogue = get_affinity_quit_dialogue()
-            message = quit_dialogue[0]
-
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
-
-    zorder 200
-
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
-
-    frame:
-
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _(message):
-                style "confirm_prompt"
-                xalign 0.5
-
-            hbox:
-                xalign 0.5
-                spacing 100
-
-                if confirm_is_quit:
-                    textbutton _("Continue") action [Hide("confirm"), Show(screen="confirm_quit", is_quitting=True)]
-
-                    textbutton _("Go back") action [Hide("confirm"), Show(screen="confirm_quit", is_quitting=False)]
-
-                else:
-                    textbutton _("Yes") action yes_action
-                    textbutton _("No") action no_action
-
-    ## Right-click and escape answer "no".
-    #key "game_menu" action no_action
+                textbutton _("Done") action ok_action
 
 init python:
-
     def check_ingame_state_add_apology():
         if jn_globals.player_is_ingame:
             jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.cheated_game)
-
-screen confirm_quit(is_quitting):
-    modal True
-
-    zorder 300
-
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
-
-    action Hide("confirm")
-
-    if is_quitting:
-        $ quit_label = get_affinity_quit_dialogue()[1]
-    else:
-        $ quit_label = get_affinity_quit_dialogue()[2]
-
-    frame:
-
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _(quit_label):
-                style "confirm_prompt"
-                xalign 0.5
-
-            hbox:
-                xalign 0.5
-                spacing 100
-
-                if is_quitting:
-                    textbutton _("...") action [
-                        # Player has decided to ditch Natsuki; add pending apology(s) then quit
-                        Function(jn_apologies.add_new_pending_apology, jn_apologies.TYPE_SUDDEN_LEAVE),
-                        Function(check_ingame_state_add_apology),
-                        SetField(persistent, "jn_player_apology_type_on_quit", jn_apologies.TYPE_SUDDEN_LEAVE),
-                        jn_relationship("affinity-"),
-                        Hide("confirm"),
-                        Hide("confirm_quit"),
-                        Jump("quit")
-                    ]
-                else:
-                    textbutton _("OK") action [
-                        # Player is a decent person; hide the screens
-                        Hide("confirm"),
-                        Hide("confirm_quit")
-                    ]
 
 screen confirm_editable(message, yes_text, no_text, yes_action, no_action):
 

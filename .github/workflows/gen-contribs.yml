@@ -1,0 +1,17 @@
+# This workflow runs CI checks for the Just Natsuki DDLC mod
+name: Gen Contributors
+
+on:
+    push:
+        branches:
+            - master
+
+jobs:
+    get_contributors:
+        runs-on: ubuntu-latest
+        name: A job to automate contrib in readme
+        steps:
+            - name: Contribute List
+              uses: akhilmhdh/contributors-readme-action@v2.3.4
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

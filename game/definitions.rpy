@@ -27,6 +27,7 @@ init 0 python:
     from Enum import Enum
     import re
     import store.jn_affinity as jn_aff
+    import webbrowser
 
     class JNHolidays(Enum):
         none = 0
@@ -55,6 +56,7 @@ init 0 python:
     TOPIC_TYPE_ADMISSION = "ADMISSION"
     TOPIC_TYPE_COMPLIMENT = "COMPLIMENT"
     TOPIC_TYPE_APOLOGY = "APOLOGY"
+    TOPIC_TYPE_EVENT = "EVENT"
 
     TOPIC_LOCKED_PROP_BASE_MAP = {
         #Things which shouldn't change
@@ -368,7 +370,7 @@ init 0 python:
             if not self.check_conditional():
                 return False
 
-            if shown_count is not None and not self.shown_count >= shown_count:
+            if shown_count is not None and self.shown_count == shown_count:
                 return False
 
             if includes_categories and len(set(includes_categories).intersection(set(self.category))) != len(includes_categories):
@@ -786,15 +788,20 @@ init 0 python:
         """
         return jn_get_current_hour() in range(22, 3)
 
-    def open_txt(file):
+    def jn_open_google_maps(latitude, longitude):
         """
-            Opens a txt file in default txt editor
+        Opens Google Maps in a new tab/window in the default browser centred on the given latitude and longitude.
+        
+        IN:
+            - latitude - The latitude to centre the map on.
+            - longitude - The longitude to centre the map on.
         """
-        os.startfile(file)
-
+        url = "https://www.google.com/maps/place/{0},{1}".format(latitude, longitude)
+        webbrowser.open(url)
 
 # Variables with cross-script utility specific to Just Natsuki
 init -990 python in jn_globals:
+    import re
     import store
 
     # Tracking; use these for data we might refer to/modify mid-session, or anything time sensitive
@@ -810,6 +817,12 @@ init -990 python in jn_globals:
 
     # Tracks whether the player is or is not currently in some topic flow
     player_is_in_conversation = False
+
+    # Tracks if the player is permitted to force quit; use this to block force quits during sequences
+    force_quit_enabled = True
+
+    # List of weather to push
+    weather_stack = []
 
     # Constants; use these for anything we only want defined once and used in a read-only context
 
@@ -950,7 +963,8 @@ init -990 python in jn_globals:
         ">:/",
         ">:(",
         "(;>_>)",
-        "(-_-)"
+        "(-_-)",
+        "||-_-"
     ]
 
     DEFAULT_SAD_EMOTICONS = [
@@ -981,8 +995,185 @@ init -990 python in jn_globals:
         ">;)"
     ]
 
+    DEFAULT_CONFUSED_EMOTICONS = [
+        "o.o",
+        "o.o;",
+        "O.O",
+        "T.T",
+        "T_T",
+        "@_@",
+        "@.@",
+        "0.0?",
+        "C-C",
+        "C_C",
+        "C.C"
+    ]
+
+    # Source courtest of: https://github.com/RobertJGabriel/Google-profanity-words, with some additions by us
+    _PROFANITY_LIST = {
+        "(?<![blmprs])ass(?!i)",
+        "(^d[il1]ck$|d[il1]ckhead)",
+        "(^dink$|dirsa)",
+        "^fag{1,2}$",
+        "[s5]h[i1]t",
+        "(a_s_s|a55)",
+        "anu[s5]",
+        "(ar5e|arrse|^arse$)",
+        "((b|l3)[i1]a?[t+7]ch)",
+        "(bolloc?k)",
+        "([ck]ock|cok)",
+        "([ck]um|cunil|kunil)",
+        "(doosh|duche)",
+        "eja[ck]ul.*",
+        "(f4nny|fanny|fanyy)",
+        "([4f](uc?|oo|ec|cu)[kx]|f_u_c_k)",
+        "god-dam",
+        "(hoare?|hoer|hore)",
+        "(horniest|horny)",
+        "jack-?off",
+        "ji[sz]m",
+        "(m[a4][s5]t[eu]r-?b[a8][t+]?[e3]?|masochist)",
+        "m[o0]-?f[o0]",
+        "n[1i]gg",
+        "orgasi?m",
+        "phuc?[kq]",
+        "(porn|pron)",
+        "puss[eiy]",
+        "(rimjaw|rimming)",
+        "(scroat|scrote|scrotum)",
+        "(sh[i\!1][t+]e?|s_h_i_t)",
+        "(testical|testicle)",
+        "(^tit$|t[1i]tt[1i]e[5s]|teets|teez)",
+        "(tw[4a]t|twunt)",
+        "(willies|willy)",
+        "^balls$",
+        "^bum$",
+        "^coon$",
+        "^ho$",
+        "^hoe$",
+        "^nob$",
+        "^tit$",
+        "4r5e",
+        "aids",
+        "anal",
+        "b!tch",
+        "b[0o]+b(?!er|on)",
+        "ballbag",
+        "ballsack",
+        "bastard",
+        "beastial",
+        "beastiality",
+        "bellend",
+        "bestial",
+        "bestiality",
+        "bloody",
+        "blowjob",
+        "boiolas",
+        "boner",
+        "breasts",
+        "buceta",
+        "bugger",
+        "bunnyfucker",
+        "butt(?!er|on)",
+        "c0ck",
+        "c0cksucker",
+        "carpetmuncher",
+        "cawk",
+        "chink",
+        "cipa",
+        "clit|cl1t",
+        "cnut",
+        "crap",
+        "cunt",
+        "cyalis",
+        "cyberfuc*",
+        "damn",
+        "dildo",
+        "dog-fucker",
+        "doggin",
+        "donkeyribber",
+        "dyke",
+        "fatass",
+        "felching",
+        "fellat",
+        "flange",
+        "fudgepacker",
+        "gangbang",
+        "gaylord",
+        "gaysex",
+        "goatse",
+        "goddamn",
+        "h1tl3r",
+        "h1tler",
+        "hardcoresex",
+        "hell",
+        "heshe",
+        "hitler",
+        "homo",
+        "hotsex",
+        "jap",
+        "jerk-off",
+        "kawk",
+        "knob",
+        "kondum",
+        "labia",
+        "lmfao",
+        "lust",
+        "muff",
+        "mutha",
+        "nazi",
+        "numbnuts",
+        "nutsack",
+        "p0rn",
+        "pawn",
+        "pecker",
+        "pedo",
+        "penis",
+        "phonesex",
+        "pigfucker",
+        "pimpis",
+        "piss",
+        "poop",
+        "prick",
+        "pube",
+        "rectum",
+        "retard",
+        "s.o.b.",
+        "sadist",
+        "schlong",
+        "screw",
+        "semen",
+        "sex",
+        "shag",
+        "shemale",
+        "skank",
+        "slut",
+        "smegma",
+        "smut",
+        "snatch",
+        "son-of-a-bitch",
+        "spac",
+        "spunk",
+        "tosser",
+        "turd",
+        "v14gra|v1gra",
+        "vagina",
+        "viagra",
+        "vulva",
+        "w00se",
+        "wang",
+        "wank",
+        "whoar",
+        "whore",
+        "xrated",
+        "xxx"
+    }
+
     # Alphabetical (excluding numbers) values allowed for text input
     DEFAULT_ALPHABETICAL_ALLOW_VALUES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-' "
+
+    # Numerical values allowed for text input
+    DEFAULT_NUMERICAL_ALLOW_VALUES = "1234567890"
 
     #The current label we're in
     current_label = None
@@ -1070,6 +1261,11 @@ init -999 python in jn_utils:
         return pygame.mouse.get_pos()
 
 init python in jn_utils:
+    import re
+    import store
+    import store.jn_globals as jn_globals
+
+    __PROFANITY_REGEX = re.compile('|'.join(jn_globals._PROFANITY_LIST), re.IGNORECASE)
 
     def get_current_session_length():
         """
@@ -1079,6 +1275,19 @@ init python in jn_utils:
             datetime.timedelta object representing the length of the current game session
         """
         return datetime.datetime.now() - store.jn_globals.current_session_start_time
+
+    def get_total_gameplay_length():
+        """
+        Returns a timedelta object representing the total time the player has spent with Natsuki.
+
+        OUT:
+            datetime.timedelta object representing the length of the total game time
+        """
+        if store.persistent.jn_first_visited_date is not None:
+            return datetime.datetime.now() - store.persistent.jn_first_visited_date
+
+        else:
+            return datetime.datetime.now() - datetime.datetime.today()
 
     def get_time_in_session_descriptor():
         """
@@ -1113,6 +1322,27 @@ init python in jn_utils:
         else:
             return "a while"
 
+    def get_player_initial():
+        """
+        Returns the first letter of the player's name.
+
+        OUT:
+            First letter of the player's name.
+        """
+        return list(store.player)[0]
+
+    def get_string_contains_profanity(string):
+        """
+        Returns True if the given string contains a profanity, based on regex.
+
+        IN:
+            - string - The string to test
+
+        OUT:
+            - True if string contains profanity; otherwise False
+        """
+        return re.search(__PROFANITY_REGEX, string.lower())
+
     # Key setup
     key_path = os.path.join(renpy.config.basedir, "game/dev/key.txt").replace("\\", "/")
     if not os.path.exists(key_path):
@@ -1128,103 +1358,15 @@ init python in jn_utils:
         """
         return __KEY_VALID
 
-init -999 python in jn_utils:
-    import datetime
-    # Kinda obsessed with decorators right now, tell me in case I should stop using them everywhere
-    def coroutine_loop(t):
+    def save_game():
         """
-            a decorator used for calling a function periodically
-            is not exact because function cannot be called while Natsuki is talking
-            because of this you should always assume the function will be called later than it should be
-            but never earlier
-
-            IN:
-                t - <datetime.timedelta> how often to call function
-
-            also adds subfunctions to the function
-                start() - starts looping and calls the function
-                stop() - stops looping
-                next_call(t) - set next call time to
-                    t - <timedelta> this is a one time thing, regular loop time doesn't change
-                        if function is continued to loop afterwards depends on if it's been started or not
-
-            NOTE: loop times are not maintained in-between sessions
+        Saves all game data.
         """
-        # check if we got timedelta as argument
-        if not isinstance(t, datetime.timedelta):
-            raise Exception("decorator coroutine_loop accepts only datetime.timedelta object ({0} given)".format(type(t)))
+        #Save topic data
+        store.Topic._save_topic_data()
 
-        # if not yet defined, create a dictionary with all functions to loop
-        # and put it under .all attribute
-        if not hasattr(coroutine_loop, "all"):
-            coroutine_loop.all = dict()
-
-        def register(func):
-            def stop(self=func):
-                """
-                    stops looping of this func
-                """
-                coroutine_loop.all[self]["next"] = None
-                coroutine_loop.all[self]["looping"] = False
-
-            def start(self=func):
-                """
-                    start looping of this func and calls it
-                """
-                coroutine_loop.all[self]["next"] = coroutine_loop.all[self]["loop_time"] + datetime.datetime.now()
-                coroutine_loop.all[self]["looping"] = True
-                func()
-
-            def next_call(t, self=func):
-                """
-                    sets the next time the func should be called, this is a one time thing only and does not affect
-                    regular looping time
-                """
-                if not isinstance(t, datetime.timedelta):
-                    raise Exception("{0}.next_call expected timedelta instead of {1}".format(func, type(t)))
-
-                coroutine_loop.all[self]["next"] = datetime.datetime.now() + t
-
-            setattr(func, "stop", stop)
-            setattr(func, "start", start)
-            setattr(func, "next_call", next_call)
-
-            #NOTE: check might not be neccessary?
-            if func not in coroutine_loop.all:
-                coroutine_loop.all[func] = {"next":None,"loop_time":t, "looping" : False}
-
-            return func
-        return register
-
-    def coroutine_check():
-        """
-        Runs through all functions with @coroutine_loop and checks if they should be called
-        """
-        for func, info in store.jn_utils.coroutine_loop.all.items():
-            if info["next"] is None:
-                continue
-
-            if info["next"] <= datetime.datetime.now():
-                log("called function {0} using coroutine_loop".format(func.__name__))
-                func()
-
-                if info["looping"]:
-                    store.jn_utils.coroutine_loop.all[func]["next"] = info["loop_time"]+datetime.datetime.now()
-
-#after console is instantiated
-init 1702 python in jn_utils:
-    def console_print(message):
-        """
-            prints to renpy's console
-
-            NOTE: keep in mind this is defined fairly late on init 1702
-        """
-        if not isinstance(message, basestring):
-            message = message.__str__()
-
-        #add new history entry to console with ´message´
-        he = store._console.ConsoleHistoryEntry(None, message)
-        store._console.console.history.append(he)
+        #Save background data
+        store.main_background.save()
 
 # Vanilla resources from base DDLC
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
@@ -1242,7 +1384,7 @@ define audio.t4g = "<loop 1.000>bgm/4g.ogg"
 
 # JN resources
 
-# Single-play sound effects
+# Singleton sound effects
 define audio.camera_shutter = "mod_assets/sfx/camera_shutter.mp3"
 define audio.select_hover = "mod_assets/sfx/select_hover.mp3"
 define audio.select_confirm = "mod_assets/sfx/select_confirm.mp3"
@@ -1252,12 +1394,30 @@ define audio.card_place = "mod_assets/sfx/card_place.mp3"
 define audio.drawer = "mod_assets/sfx/drawer.mp3"
 define audio.smack = "mod_assets/sfx/smack.mp3"
 define audio.clothing_ruffle = "mod_assets/sfx/clothing_ruffle.mp3"
+define audio.notification = "mod_assets/sfx/notification.ogg"
+define audio.page_turn = "mod_assets/sfx/page_turn.ogg"
+define audio.paper_crumple = "mod_assets/sfx/paper_crumple.ogg"
+define audio.paper_throw = "mod_assets/sfx/paper_throw.ogg"
+define audio.chair_in = "mod_assets/sfx/chair_in.ogg"
+define audio.chair_out = "mod_assets/sfx/chair_out.ogg"
+define audio.chair_out_in = "mod_assets/sfx/chair_out_in.ogg"
+
+define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
+define audio.glitch_b = "mod_assets/sfx/glitch_b.ogg"
+define audio.glitch_c = "mod_assets/sfx/glitch_c.ogg"
+define audio.glitch_d = "mod_assets/sfx/glitch_d.ogg"
+define audio.glitch_e = "mod_assets/sfx/glitch_e.ogg"
+define audio.interference = "mod_assets/sfx/interference.ogg"
+define audio.static = "mod_assets/sfx/glitch_static.ogg"
 
 # Looped sound effects
 define audio.rain_muffled = "mod_assets/sfx/rain_muffled.mp3"
 
-# Music
-define audio.test_bgm = "mod_assets/bgm/background_test_music.ogg"
+# Music, vanilla DDLC
+define audio.space_classroom_bgm = "mod_assets/bgm/space_classroom.ogg"
+
+# Music, JN exclusive
+define audio.just_natsuki_bgm = "mod_assets/bgm/just_natsuki.ogg"
 
 # Voicing - we disable TTS
 define config.tts_voice = None
@@ -1291,3 +1451,36 @@ init -999 python:
         jn_globals.current_label = name
 
     config.label_callback = label_callback
+
+    def quit_input_check():
+        """
+        This checks to ensure an input or menu screen is not up before allowing a force quit, as these crash the game. Thanks, Tom.
+        """
+        if (
+            not renpy.get_screen("input") 
+            and not renpy.get_screen("choice")
+            and jn_globals.force_quit_enabled
+        ):
+            renpy.call("try_force_quit")
+
+    class JNEvent(object):
+        """
+        Pythonic equivalent of C#'s event type
+
+        Events are added and removed via `+=` to add a listener, and `-=` to remove a listener.
+        To call all handlers, simply call the instance of the event class
+        """
+        def __init__(self):
+            self.__eventhandlers = []
+
+        def __iadd__(self, handler):
+            self.__eventhandlers.append(handler)
+            return self
+
+        def __isub__(self, handler):
+            self.__eventhandlers.remove(handler)
+            return self
+
+        def __call__(self, *args, **keywargs):
+            for eventhandler in self.__eventhandlers:
+                eventhandler(*args, **keywargs)

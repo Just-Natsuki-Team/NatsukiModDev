@@ -10,8 +10,6 @@ label ch30_autoload:
         config.allow_skipping = False
 
     #Do all the things here for initial setup/flow hijacking
-    python:
-        pass
 
     #FALL THROUGH
 
@@ -25,56 +23,60 @@ label ch30_holiday_check:
 
     #FALL THROUGH
 
-label ch30_visual_setup:
-    $ main_background.draw(True)
-
-    #FALL THROUGH
-
 label ch30_init:
     python:
+        import random
+
+        # Outfit selection
+        if persistent.jn_natsuki_auto_outfit_change_enabled:
+            jn_outfits.set_outfit_for_time_block()
 
         # Determine if the player should get a prolonged leave greeting
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
             persistent.last_apology_type = jn_apologies.TYPE_PROLONGED_LEAVE
 
-        else:
+        elif not persistent.last_apology_type == jn_apologies.TYPE_SUDDEN_LEAVE:
             jn_relationship("affinity+")
 
         # Add to the total visits counter and set the last visit date
         persistent.jn_total_visit_count += 1
         persistent.jn_last_visited_date = datetime.datetime.now()
 
-        # Let's pick a greeting
+        # Pick a greeting or random event
         if not jn_topic_in_event_list_pattern("^greeting_"):
-            push(greetings.select_greeting())
+            if (
+                random.randint(0, 10) == 1
+                and (not persistent.jn_player_admission_type_on_quit and not persistent.jn_player_apology_type_on_quit)
+                and jn_events.select_event()
+            ):
+                push(jn_events.select_event())
+                renpy.call("call_next_topic", False)
 
-        # Do all var-sets, resets, and sanity checks prior to entering the loop here
+            else:
+                push(greetings.select_greeting())
+                persistent.jn_player_admission_type_on_quit = None
+                persistent.jn_player_apology_type_on_quit = None
 
-        # Reset the previous admission/apology, now that Natsuki will have picked a greeting
-        persistent.jn_player_admission_type_on_quit = None
-        persistent.jn_player_apology_type_on_quit = None
+    #FALL THROUGH
 
-        if persistent.jn_debug_open_watch_on_load:
-            jn_debug.toggle_show_tracked_watch_items(True)
-
+label ch30_visual_setup:
+    python:
         # Draw background
         main_background.draw(full_redraw=True)
 
-        if persistent.jn_weather_is_tracking_set_up and 6 < store.jn_get_current_hour() <= 18:
-            # Weather tracking is setup so we start it
-            jn_weather.Weather.get_weather_detail.start()
+        if persistent.jn_random_weather and 6 < store.jn_get_current_hour() <= 18:
+            jn_atmosphere.show_random_sky()
 
-        jn_atmosphere.show_random_weather_background()
-
-        # Outfit selection
-        if persistent.jn_natsuki_auto_outfit_change_enabled:
-            jn_outfits.set_outfit_for_time_block()
+        elif (
+            store.jn_get_current_hour() > 6 and store.jn_get_current_hour() <= 18
+            and not jn_atmosphere.is_current_weather_sunny()
+        ):
+            jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
 
     show screen hkb_overlay
-    play music audio.test_bgm
+    play music audio.just_natsuki_bgm
 
-    #And finally, we head into the loop
-    jump ch30_loop
+    #FALL THROUGH
 
 #The main loop
 label ch30_loop:
@@ -84,8 +86,6 @@ label ch30_loop:
     #Run our checks
     python:
         _now = datetime.datetime.now()
-
-        store.jn_utils.coroutine_check()
 
         if LAST_MINUTE_CHECK.minute is not _now.minute:
             minute_check()
@@ -119,13 +119,21 @@ label ch30_wait:
     jump ch30_loop
 
 #Other labels
-label call_next_topic:
-    show natsuki at jn_center
+label call_next_topic(show_natsuki=True):
+    if show_natsuki:
+        show natsuki at jn_center
 
     if persistent._event_list:
         $ _topic = persistent._event_list.pop(0)
 
         if renpy.has_label(_topic):
+            # Notify if the window isn't currently active
+            if (persistent.jn_notify_conversations
+                and jn_utils.get_current_session_length().total_seconds() > 60
+                and not jn_activity.get_jn_window_active()):
+                    play audio notification
+                    $ jn_activity.taskbar_flash()
+
             # Call the pending topic, and disable the UI
             $ jn_globals.player_is_in_conversation = True
             call expression _topic
@@ -145,10 +153,7 @@ label call_next_topic:
 
             #Now manage return keys
             if "derandom" in return_keys:
-                topic_obj.derandom()
-
-            if "lock" in return_keys:
-                topic_obj.unlocked = False
+                topic_obj.random = False
 
     #This topic might quit
     if "quit" in return_keys:
@@ -180,11 +185,15 @@ init python:
         """
         Runs every minute during breaks between topics
         """
+        jn_utils.save_game()
 
         # Run through all externally-registered minute check actions
         if len(jn_plugins.minute_check_calls) > 0:
             for action in jn_plugins.minute_check_calls:
                 eval(action.statement)
+
+        # Check what the player is currently doing
+        jn_activity.get_current_activity()
 
         # Push a new topic every couple of minutes
         # TODO: Move to a wait/has-waited system to allow some more flexibility
@@ -201,7 +210,7 @@ init python:
                     nat_says=True,
                     location=main_background.location.id,
                     affinity=jn_affinity.get_affinity_state(),
-                    shown_count=0
+                    is_seen=False
                 )
 
             else:
@@ -214,7 +223,15 @@ init python:
                 )
 
             if topic_pool:
+                if (not persistent.jn_natsuki_repeat_topics):
+                    # More random topics available, reset out of topics warning
+                    store.persistent._jn_out_of_topics_warning_given = False
+
                 queue(random.choice(topic_pool).label)
+
+            elif not store.persistent.jn_natsuki_repeat_topics and not store.persistent._jn_out_of_topics_warning_given:
+                # Out of random topics
+                queue("talk_out_of_topics")
 
         pass
 
@@ -246,7 +263,7 @@ init python:
 
     def hour_check():
         """
-        Runs every hour during breaks between topics
+        Runs ever hour during breaks between topics
         """
 
         # Run through all externally-registered hour check actions
@@ -256,8 +273,7 @@ init python:
 
         # Draw background
         main_background.check_redraw()
-
-        jn_atmosphere.show_random_weather_background()
+        jn_atmosphere.show_current_sky()
 
         # Update outfit
         if jn_outfits.get_outfit_for_time_block().reference_name is not jn_outfits.current_outfit_name:
@@ -277,9 +293,7 @@ init python:
             for action in jn_plugins.day_check_calls:
                 eval(action.statement)
 
-        # everyday check if OWM apikey somehow wasn't invalidated
-        if persistent.jn_weather_is_tracking_set_up and not jn_weather.is_api_key_valid():
-            jn_utils.log("API key for OpenWeatherMap is no longer valid", store.jn_utils.SEVERITY_ERR)
+        pass
 
 label talk_menu:
     python:
@@ -343,7 +357,7 @@ label player_select_topic(is_repeat_topics=False):
                 unlocked=True,
                 location=main_background.location.id,
                 affinity=jn_affinity.get_affinity_state(),
-                shown_count=1
+                is_seen=True
             )
 
         else:
@@ -413,3 +427,105 @@ label extras_menu:
         $ renpy.jump(_return)
 
     jump ch30_loop
+
+label try_force_quit:
+    # Decision making that overrides the default Ren'Py quit behaviour
+    if (
+        jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete
+        and jn_farewells.JNForceQuitStates(persistent.jn_player_force_quit_state) == jn_farewells.JNForceQuitStates.not_force_quit
+    ):
+        # Player hasn't force quit before, special dialogue
+        $ push("farewell_force_quit")
+        $ renpy.jump("call_next_topic")
+
+    elif not jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete:
+        # Player hasn't passed the intro sequence, just quit
+        $ renpy.jump("quit")
+
+    else:
+        # Standard quit behaviour
+        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+            n 1kplpo "W-{w=0.1}wait,{w=0.1} what?{w=0.2} Aren't you going to say goodbye first,{w=0.1} [player]?"
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+            n 1kskem "H-{w=0.1}hey!{w=0.2} You aren't just going to leave like that,{w=0.1} are you?"
+
+        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+            n 1fsqpu "...Really?{w=0.2} I don't even get a 'goodbye' now?"
+
+        else:
+            n 1fsqsf "...Oh.{w=0.2} You're leaving."
+
+        menu:
+            # Back out of quitting
+            "Nevermind.":
+                if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+                    n 1kllssl "T-{w=0.1}thanks,{w=0.1} [player].{w=1}{nw}"
+                    n 1tllss "Now,{w=0.1} where was I...?{w=1}{nw}"
+                    extend 1unmbo " Oh,{w=0.1} right.{w=1}{nw}"
+
+                elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+                    n 1flleml "G-{w=0.1}good!{w=1}{nw}"
+                    extend 1kllpol " Good...{w=1}{nw}"
+                    n 1tslpu "Now...{w=0.3} what was I saying again?{w=0.5}{nw}"
+                    extend 1nnmbo " Oh,{w=0.1} right.{w=1}{nw}"
+
+                elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+                    n 1fsqfr "...Thank you.{w=1}{nw}"
+                    n 1fslpu "As I was {i}saying{/i}...{w=1}{nw}"
+
+                else:
+                    n 1fcsfr "Whatever.{w=1}{nw}"
+                    n 1fsqsl "{cps=\7.5}As I was saying.{/cps}{w=1}{nw}"
+
+                return
+
+            # Continue force quit
+            "...":
+                hide screen hkb_overlay
+                if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+                    n 1kwmem "Come on,{w=0.2} [player]...{w=1}{nw}"
+                    play audio glitch_c
+                    stop music
+                    n 1kcsup "...!{nw}"
+
+                elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+                    n 1fwmun "...Really,{w=0.2} [player]?{w=1}{nw}"
+                    play audio glitch_c
+                    stop music
+                    n 1kcsfu "Hnnng-!{nw}"
+
+                elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+                    n 1fslun "Don't let the door hit you on the way out.{w=1}{nw}"
+                    extend 1fsqem " Jerk.{w=1}{nw}"
+                    play audio glitch_c
+                    stop music
+                    n 1fcsan "Nnngg-!{nw}"
+
+                else:
+                    n 1fslun "Heh.{w=1}{nw}"
+                    extend 1fsqfr "...Maybe you {i}shouldn't{/i} come back.{w=1}{nw}"
+                    play audio glitch_c
+                    stop music
+                    n 1fcsfr "...{nw}"
+
+                    if (random.randint(0, 10) == 1):
+                        play sound glitch_d loop
+                        show glitch_garbled_red zorder 99 with vpunch
+                        $ renpy.pause(random.randint(4,13))
+                        stop sound
+                        play audio glitch_e
+                        show glitch_garbled_n zorder 99 with hpunch
+                        $ renpy.pause(0.025)
+                        hide glitch_garbled_n
+                        hide glitch_garbled_red
+
+                # Apply consequences for force quitting, then glitch quit out
+                $ jn_relationship("affinity-")
+                $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
+                $ persistent.jn_player_apology_type_on_quit = jn_apologies.TYPE_SUDDEN_LEAVE
+
+                play audio static
+                show glitch_garbled_b zorder 99 with hpunch
+                hide glitch_garbled_b
+                $ renpy.jump("quit")
