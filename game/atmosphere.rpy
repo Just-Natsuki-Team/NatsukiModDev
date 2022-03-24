@@ -8,11 +8,16 @@ default persistent.jn_player_longitude = None
 default persistent.jn_hemisphere_north_south = None
 default persistent.jn_hemisphere_east_west = None
 
-# Sky types for the classroom
-image sky_day overcast = "mod_assets/backgrounds/classroom/sky_day_overcast.png"
-image sky_day rain = "mod_assets/backgrounds/classroom/sky_day_rain.png"
-image sky_day sunny = "mod_assets/backgrounds/classroom/sky_day_sunny.png"
-image sky_day thunder = "mod_assets/backgrounds/classroom/sky_day_thunder.png"
+# Sky types
+image sky day overcast = "mod_assets/backgrounds/classroom/sky_day_overcast.png"
+image sky day rain = "mod_assets/backgrounds/classroom/sky_day_rain.png"
+image sky day sunny = "mod_assets/backgrounds/classroom/sky_day_sunny.png"
+image sky day thunder = "mod_assets/backgrounds/classroom/sky_day_thunder.png"
+
+image sky night overcast = "mod_assets/backgrounds/classroom/sky_night_overcast.png"
+image sky night rain = "mod_assets/backgrounds/classroom/sky_night_rain.png"
+image sky night sunny = "mod_assets/backgrounds/classroom/sky_night_sunny.png"
+image sky night thunder = "mod_assets/backgrounds/classroom/sky_night_thunder.png"
 
 # Dimming effects; used with various weather conditions
 image dim light = "mod_assets/backgrounds/classroom/dim_light.png"
@@ -35,6 +40,31 @@ image glitch_fuzzy:
     pause 0.25
     repeat
 
+# Clouds
+image clouds day light:
+    "mod_assets/backgrounds/classroom/clouds_day_light.png"
+    cloud_scroll
+
+image clouds day heavy:
+    "mod_assets/backgrounds/classroom/clouds_day_heavy.png"
+    cloud_scroll
+
+image clouds day thunder:
+    "mod_assets/backgrounds/classroom/clouds_day_thunder.png"
+    cloud_scroll
+
+image clouds night:
+    "mod_assets/backgrounds/classroom/clouds_night.png"
+    cloud_scroll
+
+transform cloud_scroll:
+    subpixel True
+    topleft
+    parallel:
+        xoffset 0 yoffset 0
+        linear 30 xoffset 0 xoffset -1280
+        repeat
+
 # Transitions
 define weather_change_transition = Dissolve(1.5)
 define dim_change_transition = Dissolve(0.25)
@@ -44,11 +74,13 @@ init 0 python in jn_atmosphere:
     import random
     import requests
     import store
+    import store.jn_preferences as jn_preferences
     import store.jn_utils as jn_utils
 
     # Draw Z indexes
-    _DIM_Z_INDEX = 1
-    _SKY_Z_INDEX = 0
+    _DIM_Z_INDEX = 2
+    _CLOUDS_Z_INDEX = -1
+    _SKY_Z_INDEX = -2
 
     class JNWeatherTypes(Enum):
         """
@@ -64,9 +96,11 @@ init 0 python in jn_atmosphere:
         def __init__(
             self,
             weather_type,
-            day_image,
-            night_image=None,
+            day_sky,
+            night_sky,
             dim_image=None,
+            day_clouds=None,
+            night_clouds=None,
             weather_sfx=None
         ):
             """
@@ -74,45 +108,61 @@ init 0 python in jn_atmosphere:
 
             IN:
                 - weather_type - JNWeatherTypes type describing this weather
-                - day_image - Name of the image to show for this weather during the day
-                - night_image - Name of the image to show for this weather during the night
+                - day_sky - Name of the image to show for this weather during the day
+                - night_sky - Name of the image to show for this weather during the night
                 - dim_image - Name of the dimming effect to use, or None
+                - day_clouds - Name of the clouds to use for this weather during the day, or None
+                - night_clouds - Name of the clouds to use for this weather during the day, or None
                 - weather_sfx - File path of the weather sound effect to use, or None
             """
             self.weather_type = weather_type
-            self.day_image = day_image
-            self.night_image = night_image
+            self.day_sky = day_sky
+            self.night_sky = night_sky
             self.dim_image = dim_image
+            self.day_clouds = day_clouds
+            self.night_clouds = night_clouds
             self.weather_sfx = weather_sfx
 
     WEATHER_OVERCAST = JNWeather(
         weather_type=JNWeatherTypes.overcast,
-        day_image="sky_day overcast",
-        dim_image="dim light"
+        day_sky="sky day overcast",
+        night_sky="sky night overcast",
+        dim_image="dim light",
+        day_clouds="day_clouds heavy",
+        night_clouds="clouds night",
     )
 
     WEATHER_RAIN = JNWeather(
         weather_type=JNWeatherTypes.rain,
-        day_image="sky_day rain",
+        day_sky="sky day rain",
+        night_sky="sky night rain",
         dim_image="dim medium",
+        day_clouds="day_clouds heavy",
+        night_clouds="clouds night",
         weather_sfx="mod_assets/sfx/rain_muffled.mp3"
     )
 
     WEATHER_THUNDER = JNWeather(
         weather_type=JNWeatherTypes.thunder,
-        day_image="sky_day thunder",
+        day_sky="sky day thunder",
+        night_sky="sky night thunder",
         dim_image="dim heavy",
+        day_clouds="day_clouds thunder",
+        night_clouds="clouds night",
         weather_sfx="mod_assets/sfx/rain_muffled.mp3"
     )
 
     WEATHER_SUNNY = JNWeather(
         weather_type=JNWeatherTypes.sunny,
-        day_image="sky_day sunny"
+        day_sky="sky day sunny",
+        night_sky="sky night sunny",
+        day_clouds="day_clouds light"
     )
 
     WEATHER_GLITCH = JNWeather(
         weather_type=JNWeatherTypes.glitch,
-        day_image="glitch_fuzzy")
+        day_sky="glitch_fuzzy",
+        night_sky="glitch fuzzy")
 
     __WEATHER_CODE_REGEX_TYPE_MAP = {
         ("^2[0-9][0-9]$"): WEATHER_THUNDER, # Thunder
@@ -124,51 +174,48 @@ init 0 python in jn_atmosphere:
         ("(803|804)"): WEATHER_OVERCAST, # Clouds
     }
 
-    __WEATHER_API_URL = "https://api.openweathermap.org/data/2.5/onecall?lat={WEATHER_LAT}&lon={WEATHER_LONG}&units=metric&exclude=current,minutely,daily,alerts&appid={WEATHER_API_KEY}"
-
     current_weather = None
 
-    def show_current_sky(with_transition=True):
+    def update_sky(with_transition=True):
         """
         Shows the sky based on the sunrise/sunset times specified under the persistent.
 
         IN:
             with_transition - If True, will visually fade in the new weather
         """
-        if (store.jn_get_current_hour() > store.persistent.jn_sunrise_hour 
-            and store.jn_get_current_hour() <= store.persistent.jn_sunset_hour ):
-            if store.persistent.jn_random_weather:
-                show_random_sky(with_transition=with_transition)
-
-            elif not is_current_weather_sunny():
+        # API-based weather
+        if jn_preferences.weather.JNWeatherSettings(store.persistent.jn_weather_setting) == jn_preferences.weather.JNWeatherSettings.real_time:
+            # Attempt to display weather based on API, otherwise default
+            api_weather_result = get_weather_from_api()
+            if not api_weather_result:
+                jn_utils.log("Unable to retrieve weather from API; defaulting to Sunny.")
                 show_sky(WEATHER_SUNNY, with_transition=with_transition)
 
-    def show_random_sky(with_transition=True):
+            else:
+                show_sky(weather=api_weather_result, with_transition=with_transition)
+
+        # Random weather
+        elif jn_preferences.weather.JNWeatherSettings(store.persistent.jn_weather_setting) == jn_preferences.weather.JNWeatherSettings.random:
+            weather = show_sky(random.choice([
+                WEATHER_OVERCAST,
+                WEATHER_RAIN,
+                WEATHER_THUNDER,
+                WEATHER_SUNNY
+            ]),
+            with_transition=with_transition)
+
+        # Default weather
+        else:
+            show_sky(WEATHER_SUNNY, with_transition=with_transition)
+
+    def show_sky(weather, with_transition=True):
         """
-        Shows a random sky with associated dimming effect
+        Shows the specified sky with related clouds and dimming effect (if defined), based on time of day.
 
         IN:
+            weather - JNWeather to set
             with_transition - If True, will visually fade in the new weather
         """
-        # Select the sky
-        weather = random.choice([
-            jn_atmosphere.WEATHER_OVERCAST,
-            jn_atmosphere.WEATHER_RAIN,
-            jn_atmosphere.WEATHER_THUNDER,
-            jn_atmosphere.WEATHER_SUNNY
-        ])
-
-        # Show the sky
-        renpy.show(name=weather.day_image, zorder=_SKY_Z_INDEX)
-        if with_transition:
-            renpy.with_statement(trans=store.weather_change_transition)
-
-        # Add the dimming effect, if defined
-        if weather.dim_image:
-            renpy.show(name=weather.dim_image, zorder=_DIM_Z_INDEX)
-            if with_transition:
-                renpy.with_statement(trans=store.dim_change_transition)
-
         # Play rain sfx if the chosen weather is rainy
         if weather.weather_sfx:
             renpy.music.play(filenames=weather.weather_sfx, channel="weather_loop", fadein=3.0)
@@ -176,31 +223,32 @@ init 0 python in jn_atmosphere:
         else:
             renpy.music.stop(channel="weather_loop", fadeout=5.0)
 
-        global current_weather
-        current_weather = weather.weather_type
+        # Get images to show based on day/night state
+        sky_to_show = weather.day_sky if store.jn_is_day() else weather.night_sky
+        clouds_to_show = weather.day_clouds if store.jn_is_day() else weather.night_clouds
 
-    def show_sky(weather, with_transition=True):
-        """
-        Shows the specified sky placeholder with associated dimming effect.
-
-        IN:
-            weather - JNWeather to set
-            with_transition - If True, will visually fade in the new weather
-        """
-        if weather.weather_sfx:
-            renpy.music.play(filenames=weather_sfx, channel="weather_loop", fadein=3.0)
-
-        else:
-            renpy.music.stop(channel="weather_loop", fadeout=5.0)
-
-        renpy.show(name=weather.day_image, zorder=_SKY_Z_INDEX)
+        # Show the selected sky
+        renpy.show(name=sky_to_show, zorder=_SKY_Z_INDEX)
         if with_transition:
             renpy.with_statement(trans=store.weather_change_transition)
 
+        # Add the clouds, if defined
+        if clouds_to_show:
+            renpy.show(name=clouds_to_show, zorder=_CLOUDS_Z_INDEX)
+            if with_transition:
+                renpy.with_statement(trans=store.weather_change_transition)
+
+        else:
+            renpy.hide("dim")
+
+        # Add the dimming effect, if defined
         if weather.dim_image:
             renpy.show(name=weather.dim_image, zorder=_DIM_Z_INDEX)
             if with_transition:
                 renpy.with_statement(trans=store.dim_change_transition)
+
+        else:
+            renpy.hide("clouds")
 
         global current_weather
         current_weather = weather.weather_type
@@ -222,13 +270,13 @@ init 0 python in jn_atmosphere:
             # Invalid response, can't do anything here so log and return
             jn_utils.log("Unable to fetch weather from OpenWeatherMap; API response was: {0}".format(weather_response.status_code))
             return None
-        
+
         # We got a response, so find out the weather and return if it exists in the map
         weather_data = weather_response.json()["hourly"][0]
 
         for regex, weather in WEATHER_CODE_REGEX_TYPE_MAP.items():
             if re.search(regex, str(weather_data["weather"][0]["id"])):
-                return weather.weather_type
+                return weather
 
         # No map entries, fallback
         return None

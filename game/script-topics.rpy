@@ -821,7 +821,7 @@ label talk_weather_setup:
 
         menu:
             "Perhaps I could help?":
-                n 1uwdbg "Huh?{w=0.2} Really?!{w=0.2} Thanks, [player]!"
+                n 1uwdbg "Huh?{w=0.2} Really?!{w=0.2} Thanks,{w=0.1} [player]!"
                 n 1nllaw "N-{w=0.1}not that I was totally waiting for your help,{w=0.1} obviously!{w=0.2} Ahaha..."
 
             "What do I have to do?":

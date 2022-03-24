@@ -23,6 +23,18 @@ label ch30_holiday_check:
 
     #FALL THROUGH
 
+label ch30_visual_setup:
+    # Hide everything so we can set up behind the scenes
+    show black zorder 99
+
+    # Draw background
+    $ main_background.appear()
+
+    # Draw sky
+    $ jn_atmosphere.update_sky()
+
+    #FALL THROUGH
+
 label ch30_init:
     python:
         import random
@@ -57,22 +69,8 @@ label ch30_init:
                 persistent.jn_player_admission_type_on_quit = None
                 persistent.jn_player_apology_type_on_quit = None
 
-    #FALL THROUGH
-
-label ch30_visual_setup:
-    python:
-        # Draw background
-        main_background.draw(full_redraw=True)
-
-        if persistent.jn_random_weather and 6 < store.jn_get_current_hour() <= 18:
-            jn_atmosphere.show_random_sky()
-
-        elif (
-            store.jn_get_current_hour() > 6 and store.jn_get_current_hour() <= 18
-            and not jn_atmosphere.is_current_weather_sunny()
-        ):
-            jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
-
+    # Prepare visuals
+    hide black with Dissolve(1.5) 
     show screen hkb_overlay
     play music audio.just_natsuki_bgm
 
@@ -273,7 +271,7 @@ init python:
 
         # Draw background
         main_background.check_redraw()
-        jn_atmosphere.show_current_sky()
+        jn_atmosphere.update_sky()
 
         # Update outfit
         if jn_outfits.get_outfit_for_time_block().reference_name is not jn_outfits.current_outfit_name:

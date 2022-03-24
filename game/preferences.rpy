@@ -1,6 +1,19 @@
 default persistent.jn_ui_style = "default"
 
+init python in jn_preferences.weather:
+    from Enum import Enum
+    import store
+
+    class JNWeatherSettings(Enum):
+        disabled = 1
+        random = 2
+        real_time = 3
+
+        def __int__(self):
+            return self.value
+
 init python in jn_preferences.random_topic_frequency:
+    from Enum import Enum
     import store
 
     NEVER = 0
@@ -43,9 +56,8 @@ default persistent.jn_natsuki_random_topic_frequency = jn_preferences.random_top
 # This determines if Natsuki should talk about topics randomly that she has already spoken about
 default persistent.jn_natsuki_repeat_topics = True
 
-# This determines whether the weather must be randomly weathered by the player
-# Wether you can deal with this depends on how well you can weather this joke
-default persistent.jn_random_weather = True
+# This determines if the game should use realtime weather
+default persistent.jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.random)
 
 # These determine when the sun rises/sets
 default persistent.jn_sunrise_hour = 6

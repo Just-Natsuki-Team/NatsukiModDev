@@ -726,6 +726,8 @@ init 0 python:
     def jn_get_current_time_block():
         """
         Returns a type describing the current time of day as a segment.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         current_hour = jn_get_current_hour()
         if current_hour in range(3, 5):
@@ -749,44 +751,64 @@ init 0 python:
     def jn_is_time_block_early_morning():
         """
         Returns True if the current time is judged to be early morning.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         return jn_get_current_hour() in range(3, 5)
 
     def jn_is_time_block_mid_morning():
         """
         Returns True if the current time is judged to be mid morning.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         return jn_get_current_hour() in range(5, 9)
 
     def jn_is_time_block_late_morning():
         """
         Returns True if the current time is judged to be late morning.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         return jn_get_current_hour() in range(9, 12)
 
     def jn_is_time_block_morning():
         """
         Returns True if the current time is judged to be morning generally, and not a specific time of morning.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         return jn_get_current_hour() in range(3, 12)
 
     def jn_is_time_block_afternoon():
         """
         Returns True if the current time is judged to be afternoon.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         return jn_get_current_hour() in range(12, 18)
 
     def jn_is_time_block_evening():
         """
         Returns True if the current time is judged to be evening.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         return jn_get_current_hour() in range(18, 22)
 
     def jn_is_time_block_night():
         """
         Returns True if the current time is judged to be night.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         return jn_get_current_hour() in range(22, 3)
+
+    def jn_is_day():
+        """
+        Returns True if the current time is judged to be day, taking into account user preferences on sunrise/sunset.
+        """
+        return datetime.time(persistent.jn_sunrise_hour) <= datetime.datetime.now().time() < datetime.time(persistent.jn_sunset_hour)
 
     def jn_open_google_maps(latitude, longitude):
         """
