@@ -6022,3 +6022,89 @@ label talk_how_to_make_friends:
     extend 1nchgnl " Ehehe."
 
     return
+
+# Natsuki doesn't appreciate being asked to make funny impressions of her friends.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_impressions_of_the_other_girls",
+            unlocked=True,
+            prompt="Can you do any impressions of the other girls?",
+            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 3600 >= 48",
+            category=["DDLC"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_impressions_of_the_other_girls:
+    $ has_discussed_other_girls = get_topic("talk_realizations_other_girls").shown_count > 0
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n 1fcsem "..."
+        n 1fcssr "...No,{w=0.1} [player].{w=1}{nw}"
+        extend 1kcssr " I can't."
+        n 1fllun "..."
+        n 1fcsem "...Okay,{w=1}{nw}" 
+        extend 1nnmsl " look."
+        n 1fllsl "It's not that I {i}couldn't{/i} do impressions of them.{w=1}{nw}"
+        extend 1kllsr " I knew them well enough."
+        n 1kllpu "But...{w=1.5}{nw}" 
+        extend 1knmpu " that's exactly why I don't {i}want{/i} to,{w=0.1} [player]."
+        n 1klrsf "Knowing how they felt,{w=0.5} what they thought..."
+
+        if has_discussed_other_girls:
+            n 1ksrpu "...How much I {i}miss{/i} them..."
+
+        n 1knmem "What kind of person would make jokes out of {i}that{/i}?"
+        n 1klrsl "So...{w=1}{nw}"
+        extend 1nnmsf " I'm sorry,{w=0.1} [player].{w=1.5}{nw}"
+        extend 1nslsf " But it's a no."
+        n 1kcspu "...And probably always will be."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        n 1knmpu "..."
+        n 1knmem "...Why on {i}Earth{/i} would I want do {i}that{/i}?"
+        n 1kllpu "A-{w=0.3}and more importantly,{w=1}{nw}"
+        extend 1fcsem " why would you even think to {i}ask{/i} me that,{w=0.1} [player]?"
+        n 1ksqem "Do you have any {i}idea{/i} how much I think about them,{w=0.1} still?"
+
+        if has_discussed_other_girls:
+            n 1fcseml "I even {i}told{/i} you how much I miss them,{w=0.1} [player]!"
+
+        n 1kcspu "..."
+        n 1ncspu "...Alright,{w=0.5}{nw}" 
+        extend 1ncssr " look."
+        n 1fcsem "I...{w=1}{nw}"
+        extend 1fcssr " get...{w=1}" 
+        extend 1fcsem " that you were just trying to have fun."
+        n 1fsqsr "But I am {i}not{/i} making jokes about my friends."
+        n 1fcssr "Sorry,{w=0.1} [player]."
+        n 1fslunl "But some things are just off-limits."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        n 1fskem "...E-{w=0.3}excuse me?!"
+        n 1fsqan "Are you {i}seriously{/i} asking me to make fun of my {i}friends{/i}?{w=1}{nw}"
+        extend 1fsqwr "Knowing {i}{cps=\7.5}full well{/cps}{/i} what happened to them?!"
+
+        if has_discussed_other_girls:
+            extend 1fcsfu "Knowing how much I {i}miss{/i} them?!"
+
+        n 1fcspu "..."
+        n 1fsqem "Your sense of humour {i}{cps=\7.5}sucks{/cps}{/i},{w=0.1} [player].{w=1}{nw}"
+        extend 1fcsan " Do {b}not{/b} try my patience again.{w=1.5}{nw}"
+        extend 1fsqan " Jerk."
+
+        $ jn_relationship("affinity-")
+
+    else:
+        n 1fsqan "...What is {i}{cps=\7.5}wrong{/cps}{/i} with you?{w=1.5}{nw}"
+        extend 1fnmfu " Like,{w=0.1} what the {i}hell{/i} is wrong with your {i}head{/i}?!"
+        n 1fcsan "I am {b}NOT{/b} doing that,{w=0.1} let alone for a piece of work like{w=0.5}{nw}"
+        extend 1fslan " {i}you{/i}!"
+
+        $ jn_relationship("affinity-")
+
+    return
