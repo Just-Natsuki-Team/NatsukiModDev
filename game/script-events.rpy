@@ -1,7 +1,8 @@
 default persistent._event_database = dict()
 
-image poetry_attempt = "mod_assets/props/poetry_attempt.png"
-image parfait_manga_held = "mod_assets/props/parfait_manga_held.png"
+image prop_poetry_attempt = "mod_assets/props/poetry_attempt.png"
+image prop_parfait_manga_held = "mod_assets/props/parfait_manga_held.png"
+image prop_a_la_mode_manga_held = "mod_assets/props/a_la_mode_manga_held.png"
 
 init python in jn_events:
     import random
@@ -94,8 +95,8 @@ label event_caught_reading_manga:
         "Enter...":
             pass
 
+    show prop_parfait_manga_held zorder jn_events.JN_EVENT_PROP_ZORDER
     $ jn_events.display_visuals("1fsrpo")
-    show parfait_manga_held zorder jn_events.JN_EVENT_PROP_ZORDER
     $ jn_globals.force_quit_enabled = True
     
     n 1uskem "...!"
@@ -115,7 +116,7 @@ label event_caught_reading_manga:
     extend 1nlrss " put this away."
 
     play audio drawer
-    hide parfait_manga_held
+    hide prop_parfait_manga_held
     with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
     n 1ulraj "So..."
@@ -165,8 +166,8 @@ label event_caught_writing_poetry:
         "Enter...":
             pass
 
+    show prop_poetry_attempt zorder jn_events.JN_EVENT_PROP_ZORDER
     $ jn_events.display_visuals("1fsrpo")
-    show poetry_attempt zorder jn_events.JN_EVENT_PROP_ZORDER
     $ jn_globals.force_quit_enabled = True
 
     n 1uskupl "...!"
@@ -179,7 +180,7 @@ label event_caught_writing_poetry:
     extend 1flrpol " Nothing at all!"
 
     play audio drawer
-    hide poetry_attempt
+    hide prop_poetry_attempt
     with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
     n 1nslpol "..."
@@ -300,5 +301,68 @@ label event_code_fiddling:
     extend 1fcseml " Are you {i}trying{/i} to give me a heart attack or something?"
     n 1fllpol "Jeez..."
     n 1fsrpo "Hello to you too,{w=0.1} dummy..."
+
+    return
+
+# Natsuki tries out a new fashion manga.
+# Prop courtesy of Almay @ https://twitter.com/art_almay
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_reading_a_la_mode",
+            unlocked=True,
+            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 86400 >= 5",
+            affinity_range=(jn_affinity.HAPPY, None)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
+
+label event_reading_a_la_mode:
+    $ jn_globals.force_quit_enabled = False
+    n "..."
+    n "..."
+    play audio page_turn
+    $ renpy.pause(5)
+
+    n "Oh man...{w=1}{nw}"
+    extend " this artwork..."
+    n "It's so {i}{cps=\7.5}pretty{/cps}{/i}!"
+    n "How the hell do they get so good at this?!"
+
+    $ renpy.pause(3)
+    play audio page_turn
+    $ renpy.pause(5)
+
+    n "Pffffft-!"
+    n "The heck is {i}that{/i}?{w=1}{nw}"
+    extend " What were you {i}thinking{/i}?!"
+    n "This is {i}exactly{/i} why you leave the outfit design to the pros!"
+
+    $ renpy.pause(1)
+    play audio page_turn
+    $ renpy.pause(7)
+
+    menu:
+        "Enter...":
+            pass
+    
+    show prop_a_la_mode_manga_held zorder jn_events.JN_EVENT_PROP_ZORDER
+    $ jn_events.display_visuals("1unmajl")
+    $ jn_globals.force_quit_enabled = True
+
+    n 1unmgsl "Oh!{w=1}{nw}"
+    extend 1fllbgl " H-{w=0.1}hey,{w=0.1} [player]!"
+    n 1nsrss "I was just catching up on some reading time..."
+    n 1fspaj "Who'd have guessed slice of life and fashion go so well together?"
+    n 1fchbg "I gotta continue this one later!{w=1}{nw}"
+    extend 1fchsm " I'm just gonna mark my place real quick,{w=0.1} one sec..."
+
+    play audio drawer
+    hide prop_a_la_mode_manga_held
+    with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+
+    n 1nchbg "Aaaand we're good to go!{w=1}{nw}"
+    extend 1fwlsm " What's new,{w=0.1} [player]?"
 
     return

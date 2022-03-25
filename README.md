@@ -52,6 +52,13 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
             <br />
             <sub><b>ALTER</b></sub>
         </a>
+    </td>
+    <td align="center">
+        <a href="https://twitter.com/art_almay">
+            <img src="https://justnatsuki.club/img/portraits/almay.jpg" width="100;" alt="Almay_art"/>
+            <br />
+            <sub><b>Almay_art</b></sub>
+        </a>
     </td></tr>
 </table>
 <!-- readme: contributors -end -->
