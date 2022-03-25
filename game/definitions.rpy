@@ -1369,6 +1369,8 @@ define audio.paper_throw = "mod_assets/sfx/paper_throw.ogg"
 define audio.chair_in = "mod_assets/sfx/chair_in.ogg"
 define audio.chair_out = "mod_assets/sfx/chair_out.ogg"
 define audio.chair_out_in = "mod_assets/sfx/chair_out_in.ogg"
+define audio.glass_move = "mod_assets/sfx/glass_move.ogg"
+define audio.straw_sip = "mod_assets/sfx/straw_sip.ogg"
 
 define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
 define audio.glitch_b = "mod_assets/sfx/glitch_b.ogg"
