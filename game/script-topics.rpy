@@ -5681,10 +5681,6 @@ label talk_thoughts_on_tea:
 
     return
 
-label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
-    n "Okay!"
-    jump ch30_loop
-
 # Player asks about Dan Salvato
 init 5 python:
     registerTopic(
@@ -5757,7 +5753,7 @@ label talk_thoughts_on_dan_salvato:
     extend 1ncsaj " all these questions..."
     n 1kcssr "I can only imagine what the answers would be."
 
-return
+    return
 
 # Natsuki talks about her opinion and advice on proper hygiene.
 init 5 python:
