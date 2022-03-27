@@ -258,9 +258,9 @@ init python:
     ## Files matching documentation patterns are duplicated in a mac app build,
     ## so they appear in both the app and the zip file.
 
-    build.classify('README.html',build.name)
+    build.classify('README.md',build.name)
 
-    build.documentation('README.html')
+    build.documentation('README.md')
 
     build.include_old_themes = False
 

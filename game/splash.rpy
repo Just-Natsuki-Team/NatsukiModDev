@@ -130,9 +130,8 @@ image warning:
     "white" with Dissolve(0.5, alpha=True)
     0.5
 
-image tos = "bg/warning.png"
-image tos2 = "bg/warning2.png"
-
+image tos_a = "mod_assets/backgrounds/menu/tos_a.png"
+image tos_b = "mod_assets/backgrounds/menu/tos_b.png"
 
 label splashscreen:
     #If this is the first time the game has been run, show a disclaimer
@@ -142,22 +141,23 @@ label splashscreen:
         scene white
         $ quick_menu = False
         pause 0.5
-        scene tos
+        scene tos_a
         with Dissolve(1.0)
         pause 1.0
         "[config.name] is a Doki Doki Literature Club fan mod that is not affiliated with Team Salvato."
         "It is designed to be played only after the official game has been completed, and contains spoilers for the official game."
         "Game files for Doki Doki Literature Club are required to play this mod and can be downloaded for free at: http://ddlc.moe"
-        menu:
-            "By playing [config.name] you agree that you have completed Doki Doki Literature Club and accept any spoilers contained within."
-            "I agree.":
-                pass
-        scene tos2
-        with Dissolve(0.25)
+        $ narrator(
+            "By playing [config.name] you agree that you have completed Doki Doki Literature Club and accept any spoilers contained within.",
+            interact=False
+        )
+        $ renpy.display_menu(items=[ ("I agree.", True)], screen="choice_centred")
+        scene tos_b
+        with Dissolve(1)
         pause 1.0
 
-        scene white
-        with Dissolve(0.25)
+        scene black
+        with Dissolve(1)
 
         ##Optional, load a copy of DDLC save data
         #if not persistent.has_merged:
@@ -171,30 +171,7 @@ label splashscreen:
     if not persistent.jn_first_visited_date:
         $ persistent.jn_first_visited_date = datetime.datetime.now()
 
-    #autoload handling
-    #Use persistent.autoload if you want to bypass the splashscreen on startup for some reason
-    if persistent.has_launched_before and not persistent.playername is "" and not _restart:
-        jump autoload
-
-    # Start splash logic
-    $ config.allow_skipping = True
-
-    # Splash screen
-    show white
-    $ persistent.ghost_menu = False #Handling for easter egg from DDLC
-    show intro with Dissolve(0.5, alpha=True)
-    pause 2.5
-    hide intro with Dissolve(0.5, alpha=True)
-    show splash_warning "[splash_message]" with Dissolve(0.5, alpha=True)
-    pause 2.0
-    hide splash_warning with Dissolve(0.25, alpha=True)
-    $ config.allow_skipping = False
-    return
-
-label warningscreen:
-    hide intro
-    show warning
-    pause 3.0
+    jump autoload
 
 label after_load:
     $ config.allow_skipping = False
@@ -233,16 +210,19 @@ label autoload:
     # Prevent the player's menu hotkey from defaulting to Save/Load
     $ store._game_menu_screen  = "preferences"
 
-    # explicity remove keymaps we dont want
+    # Explicity remove keymaps we dont want
     $ config.keymap["debug_voicing"] = list()
     $ config.keymap["choose_renderer"] = list()
 
     # Pop the _splashscreen label which has _confirm_quit as False and other stuff
     $ renpy.pop_call()
 
-    #jump expression persistent.autoload
-    # NOTE: we should always jump to ch30 instead
-    jump ch30_autoload
+    # Load the appropriate introduction sequence stage, or go straight to ch30 if already completed introduction
+    if not jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete:
+        jump introduction_progress_check
+
+    else:
+        jump ch30_autoload
 
 label before_main_menu:
     if persistent.playername != "":
@@ -255,11 +235,8 @@ label before_main_menu:
 
 label quit:
     python:
-        #Save topic data
-        Topic._save_topic_data()
-
-        #Save background data
-        main_background.save()
+        # Save game data
+        jn_utils.save_game()
 
         # Finally quit
         renpy.quit()

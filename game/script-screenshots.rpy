@@ -184,7 +184,10 @@ label take_screenshot:
 # Handles dialogue and mechanics related to screenshots
 label screenshot_dialogue:
 
-    if jn_screenshots.are_screenshots_blocked():
+    if (
+        jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) != jn_introduction.JNIntroductionStates.complete
+        or jn_screenshots.are_screenshots_blocked()
+    ):
         return
 
     $ jn_screenshots.disable_screenshots()
@@ -357,7 +360,7 @@ init 5 python:
             label="talk_get_picture_permission",
             unlocked=True,
             prompt="Can I take a picture of you?",
-            conditional="persistent._jn_first_screenshot_taken != None",
+            conditional="persistent.jn_first_screenshot_taken is not None",
             category=["You", "Photography"],
             player_says=True,
             location="classroom"
