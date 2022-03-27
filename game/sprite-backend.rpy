@@ -134,7 +134,7 @@ init python:
         """
         """
         lc_args = [
-            (1280, 720), # Anchor
+            (1280, 740), # Anchor
             (0, 0), _BASE_SPRITE_PATH + "desk/chair-normal.png", # Chair
             (0, 0), "{0}{1}/hair/[persistent.jn_natsuki_current_hairstyle]/back.png".format(_BASE_SPRITE_PATH, pose), # Hair back
             (0, 0), "{0}{1}/base/body.png".format(_BASE_SPRITE_PATH, pose), # Body
@@ -789,6 +789,30 @@ image natsuki idle min_affinity:
         choice:
             "natsuki 1fcsup"
 
+        pause 10
+        repeat
+
+# Idle images for the introduction sequence, after Natsuki and the player are introduced
+image natsuki idle introduction:
+    block:
+        choice:
+            "natsuki 1kllsr"
+        choice:
+            "natsuki 1klrsr"
+        choice:
+            "natsuki 1klrpu"
+        choice:
+            "natsuki 1kllpu"
+        choice:
+            "natsuki 1kcspu"
+        choice:
+            "natsuki 1kcssr"
+        choice:
+            "natsuki 1kcsun"
+        choice:
+            "natsuki 1kllun"
+        choice:
+            "natsuki 1klrun"
         pause 10
         repeat
 

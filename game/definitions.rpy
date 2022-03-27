@@ -55,6 +55,7 @@ init 0 python:
     TOPIC_TYPE_ADMISSION = "ADMISSION"
     TOPIC_TYPE_COMPLIMENT = "COMPLIMENT"
     TOPIC_TYPE_APOLOGY = "APOLOGY"
+    TOPIC_TYPE_EVENT = "EVENT"
 
     TOPIC_LOCKED_PROP_BASE_MAP = {
         #Things which shouldn't change
@@ -361,7 +362,7 @@ init 0 python:
             if not self.check_conditional():
                 return False
 
-            if shown_count is not None and not self.shown_count >= shown_count:
+            if shown_count is not None and self.shown_count == shown_count:
                 return False
 
             if includes_categories and len(set(includes_categories).intersection(set(self.category))) != len(includes_categories):
@@ -781,6 +782,7 @@ init 0 python:
 
 # Variables with cross-script utility specific to Just Natsuki
 init -990 python in jn_globals:
+    import re
     import store
 
     # Tracking; use these for data we might refer to/modify mid-session, or anything time sensitive
@@ -796,6 +798,9 @@ init -990 python in jn_globals:
 
     # Tracks whether the player is or is not currently in some topic flow
     player_is_in_conversation = False
+
+    # Tracks if the player is permitted to force quit; use this to block force quits during sequences
+    force_quit_enabled = True
 
     # Constants; use these for anything we only want defined once and used in a read-only context
 
@@ -926,7 +931,8 @@ init -990 python in jn_globals:
         ">:/",
         ">:(",
         "(;>_>)",
-        "(-_-)"
+        "(-_-)",
+        "||-_-"
     ]
 
     DEFAULT_SAD_EMOTICONS = [
@@ -957,8 +963,185 @@ init -990 python in jn_globals:
         ">;)"
     ]
 
+    DEFAULT_CONFUSED_EMOTICONS = [
+        "o.o",
+        "o.o;",
+        "O.O",
+        "T.T",
+        "T_T",
+        "@_@",
+        "@.@",
+        "0.0?",
+        "C-C",
+        "C_C",
+        "C.C"
+    ]
+
+    # Source courtest of: https://github.com/RobertJGabriel/Google-profanity-words, with some additions by us
+    _PROFANITY_LIST = {
+        "(?<![blmprs])ass(?!i)",
+        "(^d[il1]ck$|d[il1]ckhead)",
+        "(^dink$|dirsa)",
+        "^fag{1,2}$",
+        "[s5]h[i1]t",
+        "(a_s_s|a55)",
+        "anu[s5]",
+        "(ar5e|arrse|^arse$)",
+        "((b|l3)[i1]a?[t+7]ch)",
+        "(bolloc?k)",
+        "([ck]ock|cok)",
+        "([ck]um|cunil|kunil)",
+        "(doosh|duche)",
+        "eja[ck]ul.*",
+        "(f4nny|fanny|fanyy)",
+        "([4f](uc?|oo|ec|cu)[kx]|f_u_c_k)",
+        "god-dam",
+        "(hoare?|hoer|hore)",
+        "(horniest|horny)",
+        "jack-?off",
+        "ji[sz]m",
+        "(m[a4][s5]t[eu]r-?b[a8][t+]?[e3]?|masochist)",
+        "m[o0]-?f[o0]",
+        "n[1i]gg",
+        "orgasi?m",
+        "phuc?[kq]",
+        "(porn|pron)",
+        "puss[eiy]",
+        "(rimjaw|rimming)",
+        "(scroat|scrote|scrotum)",
+        "(sh[i\!1][t+]e?|s_h_i_t)",
+        "(testical|testicle)",
+        "(^tit$|t[1i]tt[1i]e[5s]|teets|teez)",
+        "(tw[4a]t|twunt)",
+        "(willies|willy)",
+        "^balls$",
+        "^bum$",
+        "^coon$",
+        "^ho$",
+        "^hoe$",
+        "^nob$",
+        "^tit$",
+        "4r5e",
+        "aids",
+        "anal",
+        "b!tch",
+        "b[0o]+b(?!er|on)",
+        "ballbag",
+        "ballsack",
+        "bastard",
+        "beastial",
+        "beastiality",
+        "bellend",
+        "bestial",
+        "bestiality",
+        "bloody",
+        "blowjob",
+        "boiolas",
+        "boner",
+        "breasts",
+        "buceta",
+        "bugger",
+        "bunnyfucker",
+        "butt(?!er|on)",
+        "c0ck",
+        "c0cksucker",
+        "carpetmuncher",
+        "cawk",
+        "chink",
+        "cipa",
+        "clit|cl1t",
+        "cnut",
+        "crap",
+        "cunt",
+        "cyalis",
+        "cyberfuc*",
+        "damn",
+        "dildo",
+        "dog-fucker",
+        "doggin",
+        "donkeyribber",
+        "dyke",
+        "fatass",
+        "felching",
+        "fellat",
+        "flange",
+        "fudgepacker",
+        "gangbang",
+        "gaylord",
+        "gaysex",
+        "goatse",
+        "goddamn",
+        "h1tl3r",
+        "h1tler",
+        "hardcoresex",
+        "hell",
+        "heshe",
+        "hitler",
+        "homo",
+        "hotsex",
+        "jap",
+        "jerk-off",
+        "kawk",
+        "knob",
+        "kondum",
+        "labia",
+        "lmfao",
+        "lust",
+        "muff",
+        "mutha",
+        "nazi",
+        "numbnuts",
+        "nutsack",
+        "p0rn",
+        "pawn",
+        "pecker",
+        "pedo",
+        "penis",
+        "phonesex",
+        "pigfucker",
+        "pimpis",
+        "piss",
+        "poop",
+        "prick",
+        "pube",
+        "rectum",
+        "retard",
+        "s.o.b.",
+        "sadist",
+        "schlong",
+        "screw",
+        "semen",
+        "sex",
+        "shag",
+        "shemale",
+        "skank",
+        "slut",
+        "smegma",
+        "smut",
+        "snatch",
+        "son-of-a-bitch",
+        "spac",
+        "spunk",
+        "tosser",
+        "turd",
+        "v14gra|v1gra",
+        "vagina",
+        "viagra",
+        "vulva",
+        "w00se",
+        "wang",
+        "wank",
+        "whoar",
+        "whore",
+        "xrated",
+        "xxx"
+    }
+
     # Alphabetical (excluding numbers) values allowed for text input
     DEFAULT_ALPHABETICAL_ALLOW_VALUES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-' "
+
+    # Numerical values allowed for text input
+    DEFAULT_NUMERICAL_ALLOW_VALUES = "1234567890"
 
     #The current label we're in
     current_label = None
@@ -1046,6 +1229,12 @@ init -999 python in jn_utils:
         return pygame.mouse.get_pos()
 
 init python in jn_utils:
+    import re
+    import store
+    import store.jn_globals as jn_globals
+
+    __PROFANITY_REGEX = re.compile('|'.join(jn_globals._PROFANITY_LIST), re.IGNORECASE)
+
     def get_current_session_length():
         """
         Returns a timedelta object representing the length of the current game session.
@@ -1054,6 +1243,19 @@ init python in jn_utils:
             datetime.timedelta object representing the length of the current game session
         """
         return datetime.datetime.now() - store.jn_globals.current_session_start_time
+
+    def get_total_gameplay_length():
+        """
+        Returns a timedelta object representing the total time the player has spent with Natsuki.
+
+        OUT:
+            datetime.timedelta object representing the length of the total game time
+        """
+        if store.persistent.jn_first_visited_date is not None:
+            return datetime.datetime.now() - store.persistent.jn_first_visited_date
+
+        else:
+            return datetime.datetime.now() - datetime.datetime.today()
 
     def get_time_in_session_descriptor():
         """
@@ -1088,6 +1290,27 @@ init python in jn_utils:
         else:
             return "a while"
 
+    def get_player_initial():
+        """
+        Returns the first letter of the player's name.
+
+        OUT:
+            First letter of the player's name.
+        """
+        return list(store.player)[0]
+
+    def get_string_contains_profanity(string):
+        """
+        Returns True if the given string contains a profanity, based on regex.
+
+        IN:
+            - string - The string to test
+
+        OUT:
+            - True if string contains profanity; otherwise False
+        """
+        return re.search(__PROFANITY_REGEX, string.lower())
+
     # Key setup
     key_path = os.path.join(renpy.config.basedir, "game/dev/key.txt").replace("\\", "/")
     if not os.path.exists(key_path):
@@ -1102,6 +1325,16 @@ init python in jn_utils:
         Returns the validation state of the key.
         """
         return __KEY_VALID
+
+    def save_game():
+        """
+        Saves all game data.
+        """
+        #Save topic data
+        store.Topic._save_topic_data()
+
+        #Save background data
+        store.main_background.save()
 
 # Vanilla resources from base DDLC
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
@@ -1119,7 +1352,7 @@ define audio.t4g = "<loop 1.000>bgm/4g.ogg"
 
 # JN resources
 
-# Single-play sound effects
+# Singleton sound effects
 define audio.camera_shutter = "mod_assets/sfx/camera_shutter.mp3"
 define audio.select_hover = "mod_assets/sfx/select_hover.mp3"
 define audio.select_confirm = "mod_assets/sfx/select_confirm.mp3"
@@ -1129,12 +1362,30 @@ define audio.card_place = "mod_assets/sfx/card_place.mp3"
 define audio.drawer = "mod_assets/sfx/drawer.mp3"
 define audio.smack = "mod_assets/sfx/smack.mp3"
 define audio.clothing_ruffle = "mod_assets/sfx/clothing_ruffle.mp3"
+define audio.notification = "mod_assets/sfx/notification.ogg"
+define audio.page_turn = "mod_assets/sfx/page_turn.ogg"
+define audio.paper_crumple = "mod_assets/sfx/paper_crumple.ogg"
+define audio.paper_throw = "mod_assets/sfx/paper_throw.ogg"
+define audio.chair_in = "mod_assets/sfx/chair_in.ogg"
+define audio.chair_out = "mod_assets/sfx/chair_out.ogg"
+define audio.chair_out_in = "mod_assets/sfx/chair_out_in.ogg"
+
+define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
+define audio.glitch_b = "mod_assets/sfx/glitch_b.ogg"
+define audio.glitch_c = "mod_assets/sfx/glitch_c.ogg"
+define audio.glitch_d = "mod_assets/sfx/glitch_d.ogg"
+define audio.glitch_e = "mod_assets/sfx/glitch_e.ogg"
+define audio.interference = "mod_assets/sfx/interference.ogg"
+define audio.static = "mod_assets/sfx/glitch_static.ogg"
 
 # Looped sound effects
 define audio.rain_muffled = "mod_assets/sfx/rain_muffled.mp3"
 
-# Music
-define audio.test_bgm = "mod_assets/bgm/background_test_music.ogg"
+# Music, vanilla DDLC
+define audio.space_classroom_bgm = "mod_assets/bgm/space_classroom.ogg"
+
+# Music, JN exclusive
+define audio.just_natsuki_bgm = "mod_assets/bgm/just_natsuki.ogg"
 
 # Voicing - we disable TTS
 define config.tts_voice = None
@@ -1168,6 +1419,17 @@ init -999 python:
         jn_globals.current_label = name
 
     config.label_callback = label_callback
+
+    def quit_input_check():
+        """
+        This checks to ensure an input or menu screen is not up before allowing a force quit, as these crash the game. Thanks, Tom.
+        """
+        if (
+            not renpy.get_screen("input") 
+            and not renpy.get_screen("choice")
+            and jn_globals.force_quit_enabled
+        ):
+            renpy.call("try_force_quit")
 
     class JNEvent(object):
         """

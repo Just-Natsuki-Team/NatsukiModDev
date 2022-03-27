@@ -135,7 +135,7 @@ label random_music_disable:
     extend 1nchsm " I'll just put it back to the regular music."
 
     stop music fadeout 3
-    play music audio.test_bgm fadein 3
+    play music audio.just_natsuki_bgm fadein 3
 
     n 1nwlbg "...And there we go!"
 
