@@ -5689,7 +5689,7 @@ init 5 python:
             prompt="How do you feel about Monika?",
             category=["DDLC"],
             player_says=True,
-            affinity_range=(jn_aff.AFFECTIONATE, None),
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -5758,7 +5758,7 @@ init 5 python:
             prompt="How do you feel about Yuri?",
             category=["DDLC"],
             player_says=True,
-            affinity_range=(jn_aff.AFFECTIONATE, None),
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -5840,7 +5840,7 @@ init 5 python:
             prompt="How do you feel about Sayori?",
             category=["DDLC"],
             player_says=True,
-            affinity_range=(jn_aff.AFFECTIONATE, None),
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
