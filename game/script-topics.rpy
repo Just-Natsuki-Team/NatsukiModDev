@@ -5453,10 +5453,6 @@ label talk_fear_of_spiders:
 
     return
 
-label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
-    n "Okay!"
-    jump ch30_loop
-
 # Player asks about Dan Salvato
 init 5 python:
     registerTopic(
@@ -5530,48 +5526,6 @@ label talk_thoughts_on_dan_salvato:
     n 1kcssr "I can only imagine what the answers would be."
 
 return
-
-#---------------date_menu_topics--------------------
-
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="date_go2_beach",
-            unlocked=True,
-            prompt="Wanna go to the beach?",
-            player_says=True,
-            category=["date"]
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-label date_go2_beach:
-    n "I love the beach"
-    n "Let's go!"
-    $ main_background.changeLocation(beach)
-    $ main_background.draw(full_redraw=True)
-    return
-
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="date_go2_room",
-            unlocked=True,
-            prompt="Let's return",
-            player_says=True,
-            category=["date"]
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-label date_go2_room:
-    n "Heading back then?"
-    n "Alright!"
-    $ main_background.changeLocation(classroom)
-    $ main_background.draw(dissolve_all=True, full_redraw=True)
-    return
 
 # Natsuki talks about her opinion and advice proper hygiene.
 init 5 python:
@@ -5727,5 +5681,73 @@ label talk_maintaining_proper_hygiene:
         extend 1fsqss " {i}clear{/i}{w=0.5}{nw}"
         extend 1usqsm " that up?"
         n 1nchgn "Ahaha!"
+
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_feelings_about_monika",
+            unlocked=True,
+            prompt="How do you feel about Monika?",
+            category=["DDLC"],
+            player_says=True,
+            affinity_range=(jn_aff.AFFECTIONATE, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_feelings_about_monika:
+    n 1fslsr "Monika."
+    n 1kcsem "..."
+    n 1knmsl "...Honestly?"
+    n 1nllsl "I...{w=1} don't know {i}how{/i} I feel about Monika.{w=1}{nw}"
+    extend 1kslpu " Not anymore."
+    n 1nnmsl "I mean,{w=0.5}{nw}"
+    extend 1knmpu " what do I even {i}say{/i},{w=0.1} [player]?"
+    n 1flrpu "Yeah,{w=0.1} she would butt into my business sometimes.{w=1}{nw}"
+    extend 1fsrsf " I didn't like when she would be all high and mighty...{w=1}{nw}"
+    extend 1fslem " {i}or{/i} when she kept messing around with my stuff."
+    n 1nllpu "But like...{w=0.5}{nw}"
+    extend 1knmpu " I was never actually {i}mad{/i} or anything..."
+    n 1fcsfr "Annoyed,{w=0.3} frustrated,{w=0.3} sure.{w=1}{nw}"
+    extend 1fllpu " Anyone would be!"
+    n 1kplem "But I looked up to her,{w=0.1} [player]!{w=1.5}{nw}"
+    extend 1kllun " We {i}all{/i} did..."
+    n 1kcsun "..."
+    n 1fcsun "She wasn't {i}just{/i} the club president,{w=0.1} or smart."
+    n 1fnmun "She was a role model.{w=1.5}{nw}"
+    extend 1klrpu " ...And my friend."
+    n 1ksrpu "But...{w=0.5}{nw}"
+    extend 1knmem " that just makes it harder for me to understand,{w=0.1} [player]."
+    n 1fcssl "I mean...{w=0.5}{nw}"
+    extend 1fcsan " I...{w=1} know...{w=1} what she was dealing with.{w=1.5}{nw}"
+    extend 1kslun " {i}I'm{/i} dealing with it right now!"
+    n 1kwdem "But...{w=0.3} did she seriously have to {i}torture{/i} us?"
+    n 1fcsem "I...{w=0.3} know...{w=0.3} we wouldn't have understood.{w=0.5}{nw}"
+    extend 1kslsr " {i}Couldn't{/i} have understood."
+    n 1fcsan "Especially when Yuri and I were wrapped up in those stupid fights..."
+    n 1fnmsr "{i}I get that{/i}."
+    n 1klrpu "But if she was that desperate...{w=0.5}{nw}"
+    extend 1kcspu " couldn't she have just removed us all right from the start?{w=0.5}{nw}"
+    extend 1knmem " Or literally {i}anything{/i} else?"
+    n 1fcsfr "..."
+    n 1kcspu "I don't know,{w=0.1} [player].{w=1.5}{nw}"
+    extend 1knmca " I really don't."
+    n 1ncssr "..."
+    n 1nllpu "I guess..{w=1}{nw}"
+    extend 1tnmpu " maybe it was the isolation?"
+    n 1nlrsl "She was always getting excluded from everything since you turned up...{w=1}{nw}"
+    extend 1nsrsr " I don't think she even {i}had{/i} a choice."
+    n 1knmsl "...Maybe the same thing would've happened to me?"
+    n 1fcseml "D-{w=0.1}don't get me wrong though!{w=0.5}{nw}"
+    extend 1flrem " I'm never gonna forget what she did...{w=0.5}{nw}"
+    extend 1fsrpu " forgive what she did."
+    n 1nlrpu "But...{w=1}{nw}" 
+    extend 1knmsr " she {i}was{/i} still my friend."
+    n 1kllpu "So there's always gonna be a part of me that kinda wishes I {i}could{/i} forgive her."
+    n 1kllbol "...Maybe that's why I wanna understand her actions so badly."
 
     return
