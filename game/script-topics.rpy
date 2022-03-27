@@ -5437,7 +5437,307 @@ label talk_fear_of_spiders:
 
     return
 
-# Natsuki isn't a big tea drinker
+# Player asks about Dan Salvato
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_thoughts_on_dan_salvato",
+            unlocked=True,
+            prompt="What do you think of Dan Salvato?",
+            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 3600 >= 48",
+            category=["DDLC", "Natsuki"],
+            player_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_thoughts_on_dan_salvato:
+    n 1tnmaj "Dan...?{w=1}{nw}"
+    extend 1nslsl " Dan...{w=0.5} Salvato..."
+    n 1fcsaj "Why...{w=0.3} is that name so...{w=0.5} familiar?"
+    n 1fcsun "..."
+    n 1fskaj "...!"
+    n 1fsgaj "Oh..."
+    n 1nllpu "Heh.{w=0.3} Yeah...{w=1.5}{nw}"
+    extend 1fslan " {i}him{/i}."
+    n 1fcsbo "..."
+    n 1fplaj "I...{w=1}{nw}"
+    extend 1fcsan " I just don't understand him, [player]."
+    n 1nsqbo "Like yeah,{w=1}{nw}"
+    extend 1nslbo " sure,{w=0.5}{nw}"
+    extend 1nsqaj " I get it."
+    n 1ncsbo "He's my creator.{w=1}{nw}"
+    extend 1kcsbo " Our creator."
+    n 1fskwr "But did he have any {i}idea{/i} what he was doing?!{w=1}{nw}"
+    extend 1fchwr " Any idea what he's responsible for?!"
+    n 1fcsup "..."
+    n 1fllup "Just...{w=1}{nw}"
+    extend 1fllfu " take...{w=0.5} Monika,{w=0.2} for example."
+    n 1fnmwr "Take {i}any{/i} of us!"
+    n 1fcsfu "What we said,{w=0.3} what we did -{w=0.5}{nw}"
+    extend 1fcufu " what we {i}thought{/i} -{w=0.5}{nw}"
+    extend 1fnmfu " all of that was {i}his{/i} doing."
+    n 1fsqfu "He wrote the stories.{w=1}{nw}"
+    extend 1fsqaj " He typed up the code."
+    n 1fskwr "...So what do I even {i}take{/i} from that, [player]?!"
+    n 1fchwr "That {i}his{/i} hands {b}killed{/b} my friends?"
+    n 1fchwrl "That {i}his{/i} hands {b}ruined{/b} my homelife?"
+    n 1fcuful "If not directly,{w=0.3} then through Monika."
+    n 1fcsful "..."
+    n 1fcsajl "He might not have {i}made{/i} the others do...{w=1}{nw}"
+    extend 1kcsajl " ...what they did."
+    n 1kcsfuf "But he sure as hell tied the noose..."
+    n 1fcsfuf "...forged the knife."
+    n 1kskfuf "A-{w=0.2}and you!{w=0.5}{nw}"
+    extend 1kskwrf " Did you even {i}know{/i} what you were in for?!"
+    n "What you'd {i}see{/i}?!"
+    n 1kcsupf "..."
+    n 1kcsajf "I...{w=1} don't know,{w=0.3} [player]."
+    n 1kcsunf "..."
+    n 1kcsanf "Seriously.{w=1}{nw}"
+    extend 1kplajf " I really don't."
+    n 1knmbol "I don't know him,{w=1}{nw}"
+    extend 1knmbol " and I probably never will."
+    n 1knmbo "...And that's probably the worst part,{w=0.3} too."
+    n 1kwdwr "D-{w=0.2}don't get me wrong!"
+    extend 1kwdup " I don't want {i}anything{/i} to do with him!"
+    extend 1fnmbo " Like,{w=0.3} at {i}all{/i}."
+    n 1ncsbo "But...{w=1}{nw}"
+    extend 1ncsaj " all these questions..."
+    n 1kcssr "I can only imagine what the answers would be."
+
+return
+
+# Natsuki talks about her opinion and advice proper hygiene.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_maintaining_proper_hygiene",
+            unlocked=True,
+            prompt="Proper hygiene",
+            category=["Health", "You"],
+            nat_says=True,
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_maintaining_proper_hygiene:
+    n 1nllsl "..."
+    n 1ullaj "You know,{w=0.1} [player]..."
+    n 1nllbo "I've been wondering...{w=0.5}{nw}" 
+    extend 1tnmpu " are you actually taking care of yourself?"
+    n 1nsqsr "Like...{w=0.3} are you keeping up with proper hygiene?"
+    n 1fnmpo "It's super important,{w=0.1} you know!"
+    extend 1nslem " ...And not just because it's {i}actually{/i} gross if you don't."
+    n 1ulraj "It isn't just about being physically healthy,"
+    extend 1fnmaj " but it actually helps with your mental health too!{w=1}{nw}"
+    n 1fllpo "I'm {i}serious{/i}!"
+    n 1klrss "If you're already having a hard time in the old braincase,{w=0.5}{nw}"
+    extend 1ksrsr " feeling gross physically as well as mentally isn't gonna help at all."
+    n 1knmpu "We {i}both{/i} know someone who always looked scruffy,{w=0.1} [player].{w=1.5}{nw}"
+    n 1kcssr "...And we both know how she felt."
+    n 1kllun "..."
+    n 1fcseml "A-{w=0.1}anyway!{w=1}{nw}"
+    extend 1fnmpo " This is about {i}you{/i},{w=0.1} [player] -{w=0.5}{nw}" 
+    extend 1fnmaj " so listen up!"
+    n 1fcsbg "This is gonna be a Natsuki special on taking care of yourself!{w=0.5}{nw}"
+    extend 1fcssm " Ehehe."
+    n 1fcsaj "First of all,{w=0.1} shower {w=0.1}-{w=0.3}{nw}" 
+    extend 1fnmaj " and {i}regularly{/i}!"
+    n 1fllsl "If you skip showers,{w=0.1} you'll just constantly feel all gross and nasty.{w=0.5}{nw}"
+    extend 1tnmsr " And you know what that leads to?"
+    n 1nsgbo "Loss of motivation."
+    n 1fnmaj "And you know what {i}that{/i} leads to?"
+    n 1fcsem "...Not showering!{w=0.5}{nw}"
+    extend 1knmpo " See where I'm going here?"
+    n 1nllaj "So...{w=0.5}{nw}" 
+    extend 1fnmsl " just take the time to do it properly,{w=0.1} okay?"
+    n 1fllss "It doesn't {i}need{/i} to be some kind of spa ritual,{w=0.1} just whatever gets you clean."
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        n 1fslss "And besides,{w=0.5}{nw}"
+        extend 1fsrssl "I don't wanna get snug with you if you're all stinky."
+        n 1fnmpo "So you better stick at it,{w=0.1} [player]!"
+
+    if persistent.jn_player_appearance_hair_length == "None":
+        n 1fcsaj "Next up,{w=0.1} your head!"
+        n 1ullpu "I know you said you didn't have any hair...{w=0.5}{nw}"
+        extend 1fsqbg " but that doesn't mean you can just slack off up top!"
+        n 1ulraj "You gotta make sure you keep your skin clean up there.{w=0.5}{nw}"
+        extend 1nsqun "Even if you don't have hair,{w=0.1} oil and all that stuff builds up."
+        n 1fcsem "Gross!"
+        n 1ullaj "But at least it's easy to solve if you're showering regularly,{w=0.5}{nw}"
+        extend 1nnmbo "like I just said."
+
+    else:
+        n 1fcsaj "Next up,{w=0.1} your hair!"
+
+        if not persistent.jn_player_appearance_hair_length:
+            n 1tllss "Assuming you {i}have{/i} any,{w=0.1} that is."
+
+        n 1nsqbo "You're {i}not{/i} gonna feel good about your appearance if your hair constantly looks like a used mop."
+        n 1fchbg "So keep it clean,{w=0.1} and make sure you brush!{w=0.5}{nw}"
+        extend 1ullss " Or do whatever else your usual hairstyle needs {w=0.1}-{w=0.3}{nw}"
+        extend 1nnmbo " comb,{w=0.1} hairgel,{w=0.1} whatever."
+        n 1tnmpu "Remember what I just said about showering,{w=0.1} [player]?"
+        n 1fcsbo "The more you put it off,{w=0.1} the harder it is to do!{w=0.5}{nw}"
+        extend 1fnmem " And if it gets too gummed up,{w=0.1} you might even have to shave it off!"
+        n 1fsrbg "I don't wanna see you walking around like you just got an electric shock...{w=0.5}{nw}"
+        extend 1fchgn " ...or as bald as an egg!"
+
+        if persistent.jn_player_appearance_hair_length == "Long":
+            n 1fspaj "And {i}especially{/i} since you've got such awesome long hair!{w=0.5}{nw}"
+            extend 1fllan " What a waste!"
+
+        n 1ulraj "So...{w=1}{nw}"
+        extend 1fnmbo " take care of your hair too,{w=0.1} got it?"
+        n 1fcssm "It's {i}just{/i} as important as the rest of you!"
+
+    if get_topic("talk_natsukis_fang").shown_count > 0:
+        n 1fcsaj "Finally,{w=0.1} brush your teeth!"
+        n 1ullaj "I'll spare you the lecture this time,{w=0.5}{nw}"
+        extend 1nnmbo " since we already talked about it and all."
+        n 1nsqpu "...But you better not have forgotten about flossing,{w=0.1} [player]...{w=1.5}{nw}"
+        extend 1fsqsm " 'Cause I sure haven't!"
+
+    else:
+        n 1fcsaj "Finally,{w=0.1} your teeth!{w=0.5}{nw}"
+        extend 1fsqpu " Now those are something you {i}really{/i} don't wanna skip out on,{w=0.1} [player]."
+        n 1kslan "Not only will your breath be {i}ghastly{/i}..."
+        n 1fbkwr "But you'll lose your teeth too!{w=0.5}{nw}"
+        extend 1flrun " Or at least end up with a bunch of fillings...{w=1}{nw}"
+        extend 1ksqem " Expensive fillings!{w=1}{nw}"
+        extend 1fsran " Yeesh!"
+        n 1fsqpo "You'd {i}really{/i} have to be a dummy to prefer expensive treatments and a world of pain over a couple minutes of effort."
+        n 1flrss "And besides..."
+        n 1ksqsm "Who doesn't want a {i}blinding{/i} smile like me?"
+        n 1uchgn "You won't get {i}that{/i} with tooth decay!"
+
+    n 1kllss "But seriously,{w=0.1} [player].{w=0.5}{nw}" 
+    extend 1nsqsr " I {i}really{/i} don't want you flaking out on taking care of yourself,{w=0.1} [player]."
+    n 1fsqsr "I mean it.{w=1.5}{nw}"
+    extend 1ksrpo " You deserve to feel and look good too."
+
+    menu:
+        n "Got it?"
+
+        "Yes, I deserve to feel and look good too.":
+            n 1fchbg "Now {i}that's{/i} what I like to hear!"
+            $ jn_relationship("affinity+")
+
+        "...":
+            n 1nsqsr "..."
+            n 1tsqss "You...{w=0.3} really don't get how this all works,{w=0.1} do you?"
+            n 1fcssm "Now,{w=0.1} repeat after me:{w=0.5}{nw}" 
+            extend 1fcsbg " 'I deserve to feel and look good too.'."
+
+            menu:
+                "I deserve to feel and look good too.":
+                    n 1uchbg "See?{w=0.5}{nw}"
+                    extend 1ksqsg " Was that {i}so{/i} hard?"
+                    n 1fcssm "Ehehe."
+                    $ jn_relationship("affinity+")
+
+    n 1ullss "But anyway,{w=0.1} yeah!{w=0.5}{nw}"
+    extend 1nnmss " That's about all I had to say."
+
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        n 1nsqss "And remember...{w=0.5}{nw}"
+        extend 1nsldvl " I'll love you forever if you keep it up!~"
+        n 1fchsml "Ehehe."
+        $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+        extend 1uchbgl "Thanks,{w=0.1} [chosen_endearment]!"
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n 1nslbgl "I {i}really{/i} like people who take care of themselves."
+        n 1fsqpol "You'd do well to remember that, [player]."
+
+    else:
+        n 1fchbg "Thanks for hearing me out,{w=0.1} [player]!"
+        n 1uslsg "...Or should I say..."
+        n 1usqbg "Thanks for letting me{w=0.5}{nw}"
+        extend 1fsqss " {i}clear{/i}{w=0.5}{nw}"
+        extend 1usqsm " that up?"
+        n 1nchgn "Ahaha!"
+
+    return
+
+# Natsuki gives her thoughts on Monika.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_feelings_about_monika",
+            unlocked=True,
+            prompt="How do you feel about Monika?",
+            category=["DDLC"],
+            player_says=True,
+            affinity_range=(jn_aff.AFFECTIONATE, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_feelings_about_monika:
+    n 1fslsr "Monika."
+    n 1kcsem "..."
+    n 1knmsl "...Honestly?"
+    n 1nllsl "I...{w=1} don't know {i}how{/i} I feel about Monika.{w=1}{nw}"
+    extend 1kslpu " Not anymore."
+    n 1nnmsl "I mean,{w=0.5}{nw}"
+    extend 1knmpu " what do I even {i}say{/i},{w=0.1} [player]?"
+    n 1flrpu "Yeah,{w=0.1} she would butt into my business sometimes.{w=1}{nw}"
+    extend 1fsrsf " I didn't like when she would be all high and mighty...{w=1}{nw}"
+    extend 1fslem " {i}or{/i} when she kept messing around with my stuff."
+    n 1nllpu "But like...{w=0.5}{nw}"
+    extend 1knmpu " I was never actually {i}mad{/i} or anything..."
+    n 1fcsfr "Annoyed,{w=0.3} frustrated,{w=0.3} sure.{w=1}{nw}"
+    extend 1fllpu " Anyone would be!"
+    n 1kplem "But I looked up to her,{w=0.1} [player]!{w=1.5}{nw}"
+    extend 1kllun " We {i}all{/i} did..."
+    n 1kcsun "..."
+    n 1fcsun "She wasn't {i}just{/i} the club president,{w=0.1} or smart."
+    n 1fnmun "She was a role model.{w=1.5}{nw}"
+    extend 1klrpu " ...And my friend."
+    n 1ksrpu "But...{w=0.5}{nw}"
+    extend 1knmem " that just makes it harder for me to understand,{w=0.1} [player]."
+    n 1fcssl "I mean...{w=0.5}{nw}"
+    extend 1fcsan " I...{w=1} know...{w=1} what she was dealing with.{w=1.5}{nw}"
+    extend 1kslun " {i}I'm{/i} dealing with it right now!"
+    n 1kwdem "But...{w=0.3} did she seriously have to {i}torture{/i} us?"
+    n 1fcsem "I...{w=0.3} know...{w=0.3} we wouldn't have understood.{w=0.5}{nw}"
+    extend 1kslsr " {i}Couldn't{/i} have understood."
+    n 1fcsan "Especially when Yuri and I were wrapped up in those stupid fights..."
+    n 1fnmsr "{i}I get that{/i}."
+    n 1klrpu "But if she was that desperate...{w=0.5}{nw}"
+    extend 1kcspu " couldn't she have just removed us all right from the start?{w=0.5}{nw}"
+    extend 1knmem " Or literally {i}anything{/i} else?"
+    n 1fcsfr "..."
+    n 1kcspu "I don't know,{w=0.1} [player].{w=1.5}{nw}"
+    extend 1knmca " I really don't."
+    n 1ncssr "..."
+    n 1nllpu "I guess..{w=1}{nw}"
+    extend 1tnmpu " maybe it was the isolation?"
+    n 1nlrsl "She was always getting excluded from everything since you turned up...{w=1}{nw}"
+    extend 1nsrsr " I don't think she even {i}had{/i} a choice."
+    n 1knmsl "...Maybe the same thing would've happened to me?"
+    n 1fcseml "D-{w=0.1}don't get me wrong though!{w=0.5}{nw}"
+    extend 1flrem " I'm never gonna forget what she did...{w=0.5}{nw}"
+    extend 1fsrpu " forgive what she did."
+    n 1nlrpu "But...{w=1}{nw}" 
+    extend 1knmsr " she {i}was{/i} still my friend."
+    n 1kllpu "So there's always gonna be a part of me that kinda wishes I {i}could{/i} forgive her."
+    n 1kllbol "...Maybe that's why I wanna understand her actions so badly."
+
+    return
+
+# Natsuki isn't a big tea drinker.
 init 5 python:
     registerTopic(
         Topic(
@@ -5636,237 +5936,6 @@ label talk_thoughts_on_tea:
     extend 1usqsm " do me a favor?"
     n 1fchbg "...Stick the kettle on,{w=0.1} would you?"
     n 1uchgn "Ehehe."
-
-    return
-
-# Player asks about Dan Salvato
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="talk_thoughts_on_dan_salvato",
-            unlocked=True,
-            prompt="What do you think of Dan Salvato?",
-            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 3600 >= 48",
-            category=["DDLC", "Natsuki"],
-            player_says=True,
-            affinity_range=(jn_affinity.NORMAL, None),
-            location="classroom"
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-label talk_thoughts_on_dan_salvato:
-    n 1tnmaj "Dan...?{w=1}{nw}"
-    extend 1nslsl " Dan...{w=0.5} Salvato..."
-    n 1fcsaj "Why...{w=0.3} is that name so...{w=0.5} familiar?"
-    n 1fcsun "..."
-    n 1fskaj "...!"
-    n 1fsgaj "Oh..."
-    n 1nllpu "Heh.{w=0.3} Yeah...{w=1.5}{nw}"
-    extend 1fslan " {i}him{/i}."
-    n 1fcsbo "..."
-    n 1fplaj "I...{w=1}{nw}"
-    extend 1fcsan " I just don't understand him, [player]."
-    n 1nsqbo "Like yeah,{w=1}{nw}"
-    extend 1nslbo " sure,{w=0.5}{nw}"
-    extend 1nsqaj " I get it."
-    n 1ncsbo "He's my creator.{w=1}{nw}"
-    extend 1kcsbo " Our creator."
-    n 1fskwr "But did he have any {i}idea{/i} what he was doing?!{w=1}{nw}"
-    extend 1fchwr " Any idea what he's responsible for?!"
-    n 1fcsup "..."
-    n 1fllup "Just...{w=1}{nw}"
-    extend 1fllfu " take...{w=0.5} Monika,{w=0.2} for example."
-    n 1fnmwr "Take {i}any{/i} of us!"
-    n 1fcsfu "What we said,{w=0.3} what we did -{w=0.5}{nw}"
-    extend 1fcufu " what we {i}thought{/i} -{w=0.5}{nw}"
-    extend 1fnmfu " all of that was {i}his{/i} doing."
-    n 1fsqfu "He wrote the stories.{w=1}{nw}"
-    extend 1fsqaj " He typed up the code."
-    n 1fskwr "...So what do I even {i}take{/i} from that, [player]?!"
-    n 1fchwr "That {i}his{/i} hands {b}killed{/b} my friends?"
-    n 1fchwrl "That {i}his{/i} hands {b}ruined{/b} my homelife?"
-    n 1fcuful "If not directly,{w=0.3} then through Monika."
-    n 1fcsful "..."
-    n 1fcsajl "He might not have {i}made{/i} the others do...{w=1}{nw}"
-    extend 1kcsajl " ...what they did."
-    n 1kcsfuf "But he sure as hell tied the noose..."
-    n 1fcsfuf "...forged the knife."
-    n 1kskfuf "A-{w=0.2}and you!{w=0.5}{nw}"
-    extend 1kskwrf " Did you even {i}know{/i} what you were in for?!"
-    n "What you'd {i}see{/i}?!"
-    n 1kcsupf "..."
-    n 1kcsajf "I...{w=1} don't know,{w=0.3} [player]."
-    n 1kcsunf "..."
-    n 1kcsanf "Seriously.{w=1}{nw}"
-    extend 1kplajf " I really don't."
-    n 1knmbol "I don't know him,{w=1}{nw}"
-    extend 1knmbol " and I probably never will."
-    n 1knmbo "...And that's probably the worst part,{w=0.3} too."
-    n 1kwdwr "D-{w=0.2}don't get me wrong!"
-    extend 1kwdup " I don't want {i}anything{/i} to do with him!"
-    extend 1fnmbo " Like,{w=0.3} at {i}all{/i}."
-    n 1ncsbo "But...{w=1}{nw}"
-    extend 1ncsaj " all these questions..."
-    n 1kcssr "I can only imagine what the answers would be."
-
-    return
-
-# Natsuki talks about her opinion and advice on proper hygiene.
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="talk_maintaining_proper_hygiene",
-            unlocked=True,
-            prompt="Proper hygiene",
-            category=["Health", "You"],
-            nat_says=True,
-            affinity_range=(jn_affinity.AFFECTIONATE, None),
-            location="classroom"
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-label talk_maintaining_proper_hygiene:
-    n 1nllsl "..."
-    n 1ullaj "You know,{w=0.1} [player]..."
-    n 1nllbo "I've been wondering...{w=0.5}{nw}" 
-    extend 1tnmpu " are you actually taking care of yourself?"
-    n 1nsqsr "Like...{w=0.3} are you keeping up with proper hygiene?"
-    n 1fnmpo "It's super important,{w=0.1} you know!"
-    extend 1nslem " ...And not just because it's {i}actually{/i} gross if you don't."
-    n 1ulraj "It isn't just about being physically healthy,"
-    extend 1fnmaj " but it actually helps with your mental health too!{w=1}{nw}"
-    n 1fllpo "I'm {i}serious{/i}!"
-    n 1klrss "If you're already having a hard time in the old braincase,{w=0.5}{nw}"
-    extend 1ksrsr " feeling gross physically as well as mentally isn't gonna help at all."
-    n 1knmpu "We {i}both{/i} know someone who always looked scruffy,{w=0.1} [player].{w=1.5}{nw}"
-    n 1kcssr "...And we both know how she felt."
-    n 1kllun "..."
-    n 1fcseml "A-{w=0.1}anyway!{w=1}{nw}"
-    extend 1fnmpo " This is about {i}you{/i},{w=0.1} [player] -{w=0.5}{nw}" 
-    extend 1fnmaj " so listen up!"
-    n 1fcsbg "This is gonna be a Natsuki special on taking care of yourself!{w=0.5}{nw}"
-    extend 1fcssm " Ehehe."
-    n 1fcsaj "First of all,{w=0.1} shower {w=0.1}-{w=0.3}{nw}" 
-    extend 1fnmaj " and {i}regularly{/i}!"
-    n 1fllsl "If you skip showers,{w=0.1} you'll just constantly feel all gross and nasty.{w=0.5}{nw}"
-    extend 1tnmsr " And you know what that leads to?"
-    n 1nsgbo "Loss of motivation."
-    n 1fnmaj "And you know what {i}that{/i} leads to?"
-    n 1fcsem "...Not showering!{w=0.5}{nw}"
-    extend 1knmpo " See where I'm going here?"
-    n 1nllaj "So...{w=0.5}{nw}" 
-    extend 1fnmsl " just take the time to do it properly,{w=0.1} okay?"
-    n 1fllss "It doesn't {i}need{/i} to be some kind of spa ritual,{w=0.1} just whatever gets you clean."
-
-    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-        n 1fslss "And besides,{w=0.5}{nw}"
-        extend 1fsrssl "I don't wanna get snug with you if you're all stinky."
-        n 1fnmpo "So you better stick at it,{w=0.1} [player]!"
-
-    if persistent.jn_player_appearance_hair_length == "None":
-        n 1fcsaj "Next up,{w=0.1} your head!"
-        n 1ullpu "I know you said you didn't have any hair...{w=0.5}{nw}"
-        extend 1fsqbg " but that doesn't mean you can just slack off up top!"
-        n 1ulraj "You gotta make sure you keep your skin clean up there.{w=0.5}{nw}"
-        extend 1nsqun "Even if you don't have hair,{w=0.1} oil and all that stuff builds up."
-        n 1fcsem "Gross!"
-        n 1ullaj "But at least it's easy to solve if you're showering regularly,{w=0.5}{nw}"
-        extend 1nnmbo "like I just said."
-
-    else:
-        n 1fcsaj "Next up,{w=0.1} your hair!"
-
-        if not persistent.jn_player_appearance_hair_length:
-            n 1tllss "Assuming you {i}have{/i} any,{w=0.1} that is."
-
-        n 1nsqbo "You're {i}not{/i} gonna feel good about your appearance if your hair constantly looks like a used mop."
-        n 1fchbg "So keep it clean,{w=0.1} and make sure you brush!{w=0.5}{nw}"
-        extend 1ullss " Or do whatever else your usual hairstyle needs {w=0.1}-{w=0.3}{nw}"
-        extend 1nnmbo " comb,{w=0.1} hairgel,{w=0.1} whatever."
-        n 1tnmpu "Remember what I just said about showering,{w=0.1} [player]?"
-        n 1fcsbo "The more you put it off,{w=0.1} the harder it is to do!{w=0.5}{nw}"
-        extend 1fnmem " And if it gets too gummed up,{w=0.1} you might even have to shave it off!"
-        n 1fsrbg "I don't wanna see you walking around like you just got an electric shock...{w=0.5}{nw}"
-        extend 1fchgn " ...or as bald as an egg!"
-
-        if persistent.jn_player_appearance_hair_length == "Long":
-            n 1fspaj "And {i}especially{/i} since you've got such awesome long hair!{w=0.5}{nw}"
-            extend 1fllan " What a waste!"
-
-        n 1ulraj "So...{w=1}{nw}"
-        extend 1fnmbo " take care of your hair too,{w=0.1} got it?"
-        n 1fcssm "It's {i}just{/i} as important as the rest of you!"
-
-    if get_topic("talk_natsukis_fang").shown_count > 0:
-        n 1fcsaj "Finally,{w=0.1} brush your teeth!"
-        n 1ullaj "I'll spare you the lecture this time,{w=0.5}{nw}"
-        extend 1nnmbo " since we already talked about it and all."
-        n 1nsqpu "...But you better not have forgotten about flossing,{w=0.1} [player]...{w=1.5}{nw}"
-        extend 1fsqsm " 'Cause I sure haven't!"
-
-    else:
-        n 1fcsaj "Finally,{w=0.1} your teeth!{w=0.5}{nw}"
-        extend 1fsqpu " Now those are something you {i}really{/i} don't wanna skip out on,{w=0.1} [player]."
-        n 1kslan "Not only will your breath be {i}ghastly{/i}..."
-        n 1fbkwr "But you'll lose your teeth too!{w=0.5}{nw}"
-        extend 1flrun " Or at least end up with a bunch of fillings...{w=1}{nw}"
-        extend 1ksqem " Expensive fillings!{w=1}{nw}"
-        extend 1fsran " Yeesh!"
-        n 1fsqpo "You'd {i}really{/i} have to be a dummy to prefer expensive treatments and a world of pain over a couple minutes of effort."
-        n 1flrss "And besides..."
-        n 1ksqsm "Who doesn't want a {i}blinding{/i} smile like me?"
-        n 1uchgn "You won't get {i}that{/i} with tooth decay!"
-
-    n 1kllss "But seriously,{w=0.1} [player].{w=0.5}{nw}" 
-    extend 1nsqsr " I {i}really{/i} don't want you flaking out on taking care of yourself,{w=0.1} [player]."
-    n 1fsqsr "I mean it.{w=1.5}{nw}"
-    extend 1ksrpo " You deserve to feel and look good too."
-
-    menu:
-        n "Got it?"
-
-        "Yes, I deserve to feel and look good too.":
-            n 1fchbg "Now {i}that's{/i} what I like to hear!"
-            $ jn_relationship("affinity+")
-
-        "...":
-            n 1nsqsr "..."
-            n 1tsqss "You...{w=0.3} really don't get how this all works,{w=0.1} do you?"
-            n 1fcssm "Now,{w=0.1} repeat after me:{w=0.5}{nw}" 
-            extend 1fcsbg " 'I deserve to feel and look good too.'."
-
-            menu:
-                "I deserve to feel and look good too.":
-                    n 1uchbg "See?{w=0.5}{nw}"
-                    extend 1ksqsg " Was that {i}so{/i} hard?"
-                    n 1fcssm "Ehehe."
-                    $ jn_relationship("affinity+")
-
-    n 1ullss "But anyway,{w=0.1} yeah!{w=0.5}{nw}"
-    extend 1nnmss " That's about all I had to say."
-
-    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-        n 1nsqss "And remember...{w=0.5}{nw}"
-        extend 1nsldvl " I'll love you forever if you keep it up!~"
-        n 1fchsml "Ehehe."
-        $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
-        extend 1uchbgl "Thanks,{w=0.1} [chosen_endearment]!"
-
-    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-        n 1nslbgl "I {i}really{/i} like people who take care of themselves."
-        n 1fsqpol "You'd do well to remember that, [player]."
-
-    else:
-        n 1fchbg "Thanks for hearing me out,{w=0.1} [player]!"
-        n 1uslsg "...Or should I say..."
-        n 1usqbg "Thanks for letting me{w=0.5}{nw}"
-        extend 1fsqss " {i}clear{/i}{w=0.5}{nw}"
-        extend 1usqsm " that up?"
-        n 1nchgn "Ahaha!"
 
     return
 
