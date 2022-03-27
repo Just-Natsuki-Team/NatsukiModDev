@@ -5852,8 +5852,8 @@ init 5 python:
     )
 
 label talk_feelings_about_sayori:
-    n 1nsrss "Heh.{w=1.5}{nw}"
-    extend 1ksrss "Sayori..."
+    n 1nsrss "Heh.{w=1}{nw}"
+    extend 1ksrss " Sayori..."
     n 1kcspu "..."
     n 1fcsunl "I...{w=0.5}{nw}"
     extend 1fcsem " still get mad at myself sometimes,{w=0.1} you know."
