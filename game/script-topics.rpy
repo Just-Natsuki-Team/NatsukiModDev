@@ -83,48 +83,6 @@ label talk_out_of_topics:
     $ persistent._jn_out_of_topics_warning_given = True
     return
 
-#---------------date_menu_topics--------------------
-
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="date_go2_beach",
-            unlocked=True,
-            prompt="Wanna go to the beach?",
-            player_says=True,
-            category=["date"]
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-label date_go2_beach:
-    n "I love the beach"
-    n "Let's go!"
-    $ main_background.changeLocation(beach)
-    $ main_background.draw(full_redraw=True)
-    return
-
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="date_go2_room",
-            unlocked=True,
-            prompt="Let's return",
-            player_says=True,
-            category=["date"]
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-label date_go2_room:
-    n "Heading back then?"
-    n "Alright!"
-    $ main_background.changeLocation(classroom)
-    $ main_background.draw(dissolve_all=True, full_redraw=True)
-    return
-
 # Talk menu topics
 
 # Natsuki's thoughts on having her picture taken via the ingame screenshot system
