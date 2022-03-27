@@ -69,6 +69,7 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
 1. [Disclaimer](#disclaimer)
 2. [What to expect from Just Natsuki](#what-to-expect-from-just-natsuki)
 3. [Installation](#installation)
+4. [Updating](#updating)
 4. [FAQ](#faq)
 5. [Community](#community)
 
@@ -113,6 +114,16 @@ To this end, Just Natsuki has no endgame, end goal or ending - we strive to deli
 8. Finally, launch `DDLC.exe`.
     1. If you are on OSX, you may have to review your security settings for the game to launch properly; please see the guidance listed [here](https://github.com/Just-Natsuki-Team/NatsukiModDev/issues/221).
 
+### Updating
+
+Please note that until automatic updates are implemented, any updates released must be installed manually using the following instructions:
+
+1. Download the new JN mod files: go to https://github.com/Just-Natsuki-Team/NatsukiModDev, then select the _Code_ tab and make sure the branch _master_ is selected. Click the green _Code_ button, and then select _download ZIP_.
+2. Extract/unzip the new JN mod files.
+3. From the JN mod files, copy the `game` folder contents (all of it) into the `game` folder of your JN installation. If asked to replace files, select _Yes_.
+4. From the JN mod files, copy the `lib` folder contents (all of it) into the `lib` folder of your JN installation. If asked to replace files, select _Yes_.
+5. Finally, launch `DDLC.exe`.
+
 ### FAQ
 
 - _I downloaded and installed the mod files, but the game is still vanilla DDLC._
@@ -131,6 +142,8 @@ To this end, Just Natsuki has no endgame, end goal or ending - we strive to deli
     - Invitation to join our team is based on visible contributions to Just Natsuki and/or related DDLC mods, skillset, and participation in the DDLC community as judged by the team. Please do not ask to join directly!
 - _How do I progress in the mod/unlock a specific feature?_
     - Simply put, all good things take time. Spend plenty of time with Natsuki, explore your options and most importantly, treat her well!
+- _How do I update the game?_
+    - Please refer to the instructions listed [here](#updating). 
 
 ### Community
 
