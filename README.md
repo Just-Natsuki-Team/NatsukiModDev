@@ -26,6 +26,13 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/kkrosie123">
+            <img src="https://avatars.githubusercontent.com/u/52429850?v=4" width="100;" alt="kkrosie123"/>
+            <br />
+            <sub><b>Briar Young</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/spaghetsie">
             <img src="https://avatars.githubusercontent.com/u/64098288?v=4" width="100;" alt="spaghetsie"/>
             <br />
@@ -40,12 +47,13 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/kkrosie123">
-            <img src="https://avatars.githubusercontent.com/u/52429850?v=4" width="100;" alt="kkrosie123"/>
+        <a href="https://github.com/lunulae">
+            <img src="https://avatars.githubusercontent.com/u/45501964?v=4" width="100;" alt="lunulae"/>
             <br />
-            <sub><b>Briar Young</b></sub>
+            <sub><b>lunulae</b></sub>
         </a>
-    </td>
+    </td></tr>
+<tr>
     <td align="center">
         <a href="https://github.com/Nemu-sus">
             <img src="https://avatars.githubusercontent.com/u/43480604?v=4" width="100;" alt="Nemu-sus"/>
