@@ -5834,3 +5834,53 @@ label talk_feelings_about_yuri:
     n 1ksrpu "...I'm not sure it ever {i}won't{/i}."
 
     return
+
+# Natsuki gives her thoughts on Sayori.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_feelings_about_sayori",
+            unlocked=True,
+            prompt="How do you feel about Sayori?",
+            category=["DDLC"],
+            player_says=True,
+            affinity_range=(jn_aff.AFFECTIONATE, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_feelings_about_sayori:
+    n 1nsrss "Heh.{w=1}{nw}"
+    extend 1ksrss " Sayori..."
+    n 1kcspu "..."
+    n 1fcsunl "I...{w=0.5}{nw}"
+    extend 1fcsem " still get mad at myself sometimes,{w=0.1} you know."
+    n 1klrpu "I just can't {i}believe{/i} how I wrote off how she was feeling so easily."
+    n 1kplun "...And how I forgot she even {i}existed{/i}."
+    n 1fcsanl "If I'd have just {i}known{/i} how bad her mental health was...{w=1}{nw}"
+    extend 1fcsupl " how much she was {i}hurting{/i}..."
+    n 1fcsunl "..."
+    n 1kcsem "..."
+    n 1kslpu "It's...{w=1.5}{nw}" 
+    extend 1kplem " it's still just such a system shock,{w=0.1} you know?"
+    n 1fcsem "She was always so...{w=1} so...{w=0.5}{nw}"
+    extend 1ksrpo " just...{w=1} super excited and clingy!"
+    n 1ksrss "Like she was just {i}vibrating{/i} with happiness!"
+    n 1ksrun "..."
+    n 1kplpul "...So can you even {i}imagine{/i} how it feels?"
+    n 1fcsun "Knowing she was just wearing a mask,{w=1}{nw}"
+    extend 1fcsfu " then dancing like a puppet under Monika's hand?"
+    n 1ksrbol "...While her own mind was beating the absolute {i}crap{/i} out of her."
+    n 1kcspu "..."
+    n 1ncsss "Heh.{w=1}{nw}"
+    extend 1nsqss " You know what?"
+    n 1ncspu "I don't care about my cookie she took a giant bite out of."
+    n 1nlrpu "I don't care about the dumb songs she'd sing,{w=1}{nw}"
+    extend 1nslssl " or her...{w=0.3} awkward...{w=0.3} compliments."
+    n 1tnmsr "At this point?"
+    n 1ksrsrl "I think I'd do {i}anything{/i} just to see a genuine Sayori smile again..."
+    n 1kcsssf "...And give her one of those big,{w=0.1} dumb hugs she liked so much."
+
+    return
