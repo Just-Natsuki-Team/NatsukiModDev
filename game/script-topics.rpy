@@ -5965,10 +5965,6 @@ label talk_fear_of_spiders:
 
     return
 
-label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
-    n "Okay!"
-    jump ch30_loop
-
 # Player asks about Dan Salvato
 init 5 python:
     registerTopic(
@@ -6042,48 +6038,6 @@ label talk_thoughts_on_dan_salvato:
     n 1kcssr "I can only imagine what the answers would be."
 
 return
-
-#---------------date_menu_topics--------------------
-
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="date_go2_beach",
-            unlocked=True,
-            prompt="Wanna go to the beach?",
-            player_says=True,
-            category=["date"]
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-label date_go2_beach:
-    n "I love the beach"
-    n "Let's go!"
-    $ main_background.change_location(beach)
-    $ main_background.draw(full_redraw=True)
-    return
-
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="date_go2_room",
-            unlocked=True,
-            prompt="Let's return",
-            player_says=True,
-            category=["date"]
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-label date_go2_room:
-    n "Heading back then?"
-    n "Alright!"
-    $ main_background.change_location(classroom)
-    $ main_background.draw(dissolve_all=True, full_redraw=True)
-    return
 
 # Natsuki talks about her opinion and advice proper hygiene.
 init 5 python:
@@ -6239,5 +6193,206 @@ label talk_maintaining_proper_hygiene:
         extend 1fsqss " {i}clear{/i}{w=0.5}{nw}"
         extend 1usqsm " that up?"
         n 1nchgn "Ahaha!"
+
+    return
+
+# Natsuki gives her thoughts on Monika.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_feelings_about_monika",
+            unlocked=True,
+            prompt="How do you feel about Monika?",
+            category=["DDLC"],
+            player_says=True,
+            affinity_range=(jn_aff.AFFECTIONATE, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_feelings_about_monika:
+    n 1fslsr "Monika."
+    n 1kcsem "..."
+    n 1knmsl "...Honestly?"
+    n 1nllsl "I...{w=1} don't know {i}how{/i} I feel about Monika.{w=1}{nw}"
+    extend 1kslpu " Not anymore."
+    n 1nnmsl "I mean,{w=0.5}{nw}"
+    extend 1knmpu " what do I even {i}say{/i},{w=0.1} [player]?"
+    n 1flrpu "Yeah,{w=0.1} she would butt into my business sometimes.{w=1}{nw}"
+    extend 1fsrsf " I didn't like when she would be all high and mighty...{w=1}{nw}"
+    extend 1fslem " {i}or{/i} when she kept messing around with my stuff."
+    n 1nllpu "But like...{w=0.5}{nw}"
+    extend 1knmpu " I was never actually {i}mad{/i} or anything..."
+    n 1fcsfr "Annoyed,{w=0.3} frustrated,{w=0.3} sure.{w=1}{nw}"
+    extend 1fllpu " Anyone would be!"
+    n 1kplem "But I looked up to her,{w=0.1} [player]!{w=1.5}{nw}"
+    extend 1kllun " We {i}all{/i} did..."
+    n 1kcsun "..."
+    n 1fcsun "She wasn't {i}just{/i} the club president,{w=0.1} or smart."
+    n 1fnmun "She was a role model.{w=1.5}{nw}"
+    extend 1klrpu " ...And my friend."
+    n 1ksrpu "But...{w=0.5}{nw}"
+    extend 1knmem " that just makes it harder for me to understand,{w=0.1} [player]."
+    n 1fcssl "I mean...{w=0.5}{nw}"
+    extend 1fcsan " I...{w=1} know...{w=1} what she was dealing with.{w=1.5}{nw}"
+    extend 1kslun " {i}I'm{/i} dealing with it right now!"
+    n 1kwdem "But...{w=0.3} did she seriously have to {i}torture{/i} us?"
+    n 1fcsem "I...{w=0.3} know...{w=0.3} we wouldn't have understood.{w=0.5}{nw}"
+    extend 1kslsr " {i}Couldn't{/i} have understood."
+    n 1fcsan "Especially when Yuri and I were wrapped up in those stupid fights..."
+    n 1fnmsr "{i}I get that{/i}."
+    n 1klrpu "But if she was that desperate...{w=0.5}{nw}"
+    extend 1kcspu " couldn't she have just removed us all right from the start?{w=0.5}{nw}"
+    extend 1knmem " Or literally {i}anything{/i} else?"
+    n 1fcsfr "..."
+    n 1kcspu "I don't know,{w=0.1} [player].{w=1.5}{nw}"
+    extend 1knmca " I really don't."
+    n 1ncssr "..."
+    n 1nllpu "I guess..{w=1}{nw}"
+    extend 1tnmpu " maybe it was the isolation?"
+    n 1nlrsl "She was always getting excluded from everything since you turned up...{w=1}{nw}"
+    extend 1nsrsr " I don't think she even {i}had{/i} a choice."
+    n 1knmsl "...Maybe the same thing would've happened to me?"
+    n 1fcseml "D-{w=0.1}don't get me wrong though!{w=0.5}{nw}"
+    extend 1flrem " I'm never gonna forget what she did...{w=0.5}{nw}"
+    extend 1fsrpu " forgive what she did."
+    n 1nlrpu "But...{w=1}{nw}" 
+    extend 1knmsr " she {i}was{/i} still my friend."
+    n 1kllpu "So there's always gonna be a part of me that kinda wishes I {i}could{/i} forgive her."
+    n 1kllbol "...Maybe that's why I wanna understand her actions so badly."
+
+    return
+
+# Natsuki gives her thoughts on Yuri.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_feelings_about_yuri",
+            unlocked=True,
+            prompt="How do you feel about Yuri?",
+            category=["DDLC"],
+            player_says=True,
+            affinity_range=(jn_aff.AFFECTIONATE, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_feelings_about_yuri:
+    n 1kllpul "...Oh man,{w=1} Yuri..."
+    n 1kcsun "..."
+    n 1ncspu "...I won't lie,{w=0.3} [player].{w=1.5}{nw}"
+    extend 1ksqfr " I really,{w=0.5} {i}really{/i} didn't want to think about...{w=1} {i}that{/i} again."
+    n 1kcssl "..."
+    n 1ksrpu "How do I even {i}explain{/i} this..."
+    n 1ncsem "Yuri and I were...{w=0.3} complicated.{w=1}{nw}"
+    extend 1kllss " Even {i}before{/i} you joined the club."
+    n 1nnmbo "We never fully saw eye-to-eye,{w=0.1} [player].{w=1.5}{nw}"
+    extend 1nslca " You probably guessed that already anyway."
+    n 1kwmpu "But we had an {i}understanding{/i},{w=0.1} you know?"
+    n 1kllpul "She was...{w=1}{nw}"
+    extend 1kcsunl " there...{w=1}{nw}"
+    extend 1fcsunl " for me."
+    n 1fsrunl "When I needed someone there the most.{w=1}{nw}"
+    extend 1fnmem " When nobody else would get it...{w=1}{nw}"
+    extend 1kslpu " Could even {i}hope{/i} to get it."
+    n 1kwmpu "...{w=0.5}Do you even know how much that meant to me?"
+    n 1knmsl "She just had a way of understanding you like nobody else could.{w=1}{nw}"
+    extend 1fslem " Not {i}Monika{/i}.{w=1.5}{nw}" 
+    extend 1kslsrl " Not even {i}Sayori{/i}."
+    n 1kllpu "But..."
+    n 1fcssr "She just {i}changed{/i},{w=0.1} [player].{w=0.5}{nw}"
+    extend 1klrsl " When you showed up,{w=0.1} I mean."
+    n 1knmem "We {i}never{/i} had fights like that..."
+    n 1tnmsr "Arguments?{w=0.5}{nw}"
+    extend 1tllss " Well...{w=1} yeah!{w=1}{nw}"
+    extend 1knmss " What kind of friends don't?"
+    n 1klrsm "And we were always super different,{w=0.1} too."
+    n 1nsrpo "She always had that prim and proper vibe.{w=1}{nw}"
+    extend 1ncsaj " Refined...{w=1}{nw}"
+    extend 1ncsss " elegant."
+    n 1nslss "...{w=0.5}And I was just Natsuki.{w=1}{nw}"
+    extend 1ncsss " Heh."
+    n 1knmpu "But I never had the feeling before then that she just {i}didn't like me{/i}!"
+    n 1fcsan "We were both just so caught up in that {i}stupid{/i} rivalry..."
+    n 1fllan "It just took over everything!"
+    n 1kllpu "And then when she started getting all possessive...{w=1}{nw}"
+    extend 1knmsl " you know,{w=0.1} after Monika messed her all up."
+    n 1kplem "...Do you know how {i}scary{/i} that was to me?{w=1.5}{nw}"
+    extend 1kwdwr " Hearing those {i}words{/i} coming out of {i}her{/i} mouth?"
+    n 1klrem "And the worst part?{w=1.5}{nw}"
+    extend 1kcsem " I just...{w=0.3} went...{w=0.3} along with it.{w=1}{nw}"
+    extend 1kplup " I had no {i}choice{/i},{w=0.1} [player]!"
+    n 1fcsup "...Neither of us did."
+    n 1fcsanl "Even when I {i}begged{/i} you for help,{w=0.1} I..."
+    n 1kcsanl "I-..."
+    n 1kcsupl "..."
+    n 1fcsunl "..."
+    n 1kcseml "...Sorry,{w=0.1} [player]."
+    n 1ksrunl "I really don't think it's good for me to keep talking about this.{w=1}{nw}"
+    extend 1ksqpul " ...About her."
+    n 1fcssrl "I just...{w=1}{nw}"
+    n 1kcseml "..."
+    n 1fwmsrl "...I miss my friend.{w=1}{nw}"
+    extend 1kllsr " I miss how she used to be."
+    n 1kllaj "So...{w=0.3} remembering what happened?{w=0.5}{nw}"
+    extend 1kskem " What she {i}became{/i}?"
+    n 1fcsem "It...{w=1} just hurts,{w=0.1} [player].{w=1.5}{nw}"
+    extend 1fcsunl " It hurts a lot."
+    n 1fsqun "...And to be honest?"
+    n 1ksrpu "...I'm not sure it ever {i}won't{/i}."
+
+    return
+
+# Natsuki gives her thoughts on Sayori.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_feelings_about_sayori",
+            unlocked=True,
+            prompt="How do you feel about Sayori?",
+            category=["DDLC"],
+            player_says=True,
+            affinity_range=(jn_aff.AFFECTIONATE, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_feelings_about_sayori:
+    n 1nsrss "Heh.{w=1}{nw}"
+    extend 1ksrss " Sayori..."
+    n 1kcspu "..."
+    n 1fcsunl "I...{w=0.5}{nw}"
+    extend 1fcsem " still get mad at myself sometimes,{w=0.1} you know."
+    n 1klrpu "I just can't {i}believe{/i} how I wrote off how she was feeling so easily."
+    n 1kplun "...And how I forgot she even {i}existed{/i}."
+    n 1fcsanl "If I'd have just {i}known{/i} how bad her mental health was...{w=1}{nw}"
+    extend 1fcsupl " how much she was {i}hurting{/i}..."
+    n 1fcsunl "..."
+    n 1kcsem "..."
+    n 1kslpu "It's...{w=1.5}{nw}" 
+    extend 1kplem " it's still just such a system shock,{w=0.1} you know?"
+    n 1fcsem "She was always so...{w=1} so...{w=0.5}{nw}"
+    extend 1ksrpo " just...{w=1} super excited and clingy!"
+    n 1ksrss "Like she was just {i}vibrating{/i} with happiness!"
+    n 1ksrun "..."
+    n 1kplpul "...So can you even {i}imagine{/i} how it feels?"
+    n 1fcsun "Knowing she was just wearing a mask,{w=1}{nw}"
+    extend 1fcsfu " then dancing like a puppet under Monika's hand?"
+    n 1ksrbol "...While her own mind was beating the absolute {i}crap{/i} out of her."
+    n 1kcspu "..."
+    n 1ncsss "Heh.{w=1}{nw}"
+    extend 1nsqss " You know what?"
+    n 1ncspu "I don't care about my cookie she took a giant bite out of."
+    n 1nlrpu "I don't care about the dumb songs she'd sing,{w=1}{nw}"
+    extend 1nslssl " or her...{w=0.3} awkward...{w=0.3} compliments."
+    n 1tnmsr "At this point?"
+    n 1ksrsrl "I think I'd do {i}anything{/i} just to see a genuine Sayori smile again..."
+    n 1kcsssf "...And give her one of those big,{w=0.1} dumb hugs she liked so much."
 
     return
