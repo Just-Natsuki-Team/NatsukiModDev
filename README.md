@@ -7,6 +7,8 @@
 
 An After-Story style mod for Natsuki from DDLC, focusing on building a post-game relationship between Natsuki and her player (you!).
 
+Please read this document thoroughly before downloading and installing the mod!
+
 ### Made possible thanks to our contributors:
 <!-- readme: contributors -start -->
 <table>
