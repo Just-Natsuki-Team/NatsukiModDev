@@ -141,7 +141,7 @@ Please note that until automatic updates are implemented, any updates released m
 - _Can I join the team?_
     - Invitation to join our team is based on visible contributions to Just Natsuki and/or related DDLC mods, skillset, and participation in the DDLC community as judged by the team. Please do not ask to join directly!
 - _How do I progress in the mod/unlock a specific feature?_
-    - Simply put, all good things take time. Spend plenty of time with Natsuki, explore your options and most importantly, treat her well!
+    - Simply put, all good things take time. Visit Natsuki often, explore your options and most importantly, treat her well! Please remember - this is a *long-term* mod, with relationship progression happening over weeks and months: so check in and update often!
 - _How do I update the game?_
     - Please refer to the instructions listed [here](#updating). 
 
