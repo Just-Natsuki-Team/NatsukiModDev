@@ -373,7 +373,11 @@ label player_select_topic(is_repeat_topics=False):
         # Present the topic options grouped by category to the player
         menu_items = menu_dict(_topics)
 
-    call screen categorized_menu(menu_items,(1020, 70, 250, 572), (740, 70, 250, 572), len(_topics))
+    call screen categorized_menu(
+        menu_items=menu_items,
+        category_pane_space=(1020, 70, 250, 572),
+        option_list_space=(740, 70, 250, 572),
+        category_length=len(_topics))
 
     $ _choice = _return
 

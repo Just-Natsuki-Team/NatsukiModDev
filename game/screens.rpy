@@ -43,6 +43,11 @@ style categorized_menu_button_text is choice_button_text:
     align (0.0, 0.0)
     text_align 0.0
 
+style categorized_menu_button_italic is categorized_menu_button
+
+style categorized_menu_button_text_italic is categorized_menu_button_text:
+    italic True
+
 screen categorized_menu(menu_items, category_pane_space, option_list_space, category_length):
     at categorized_menu_slide_in_right
     style_prefix "categorized_menu"
@@ -141,8 +146,9 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                         null height 20
 
                         for _topic in menu_items.get(selected_category):
+                            $ display_text = _topic.prompt if (_topic.shown_count > 0 or _topic.nat_says) else "{i}[_topic.prompt]{/i}"
                             #NOTE: This should be preprocessed such that Topics without prompts aren't passed into this menu
-                            textbutton _topic.prompt:
+                            textbutton display_text:
                                 style "categorized_menu_button"
                                 #Return the label so it can be called
                                 action [ Return(_topic.label), Function(prev_adjustment.change, 0), SetVariable("selected_category", None) ]
@@ -150,7 +156,6 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                                 activate_sound gui.activate_sound
 
                             null height 5
-
 
 screen scrollable_choice_menu(items, last_item=None):
     fixed:
