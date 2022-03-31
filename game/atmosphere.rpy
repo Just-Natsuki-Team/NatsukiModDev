@@ -8,21 +8,21 @@ default persistent._jn_hemisphere_north_south = None
 default persistent._jn_hemisphere_east_west = None
 
 # Sky types
-image sky day overcast = "mod_assets/backgrounds/classroom/sky_day_overcast.png"
-image sky day rain = "mod_assets/backgrounds/classroom/sky_day_rain.png"
-image sky day sunny = "mod_assets/backgrounds/classroom/sky_day_sunny.png"
-image sky day thunder = "mod_assets/backgrounds/classroom/sky_day_thunder.png"
-image sky day snow = "mod_assets/backgrounds/classroom/sky_day_snow.png"
+image sky day overcast = "mod_assets/backgrounds/atmosphere/sky/sky_day_overcast.png"
+image sky day rain = "mod_assets/backgrounds/atmosphere/sky/sky_day_rain.png"
+image sky day sunny = "mod_assets/backgrounds/atmosphere/sky/sky_day_sunny.png"
+image sky day thunder = "mod_assets/backgrounds/atmosphere/sky/sky_day_thunder.png"
+image sky day snow = "mod_assets/backgrounds/atmosphere/sky/sky_day_snow.png"
 
-image sky night overcast = "mod_assets/backgrounds/classroom/sky_night_overcast.png"
-image sky night rain = "mod_assets/backgrounds/classroom/sky_night_rain.png"
-image sky night sunny = "mod_assets/backgrounds/classroom/sky_night_sunny.png"
-image sky night thunder = "mod_assets/backgrounds/classroom/sky_night_thunder.png"
+image sky night overcast = "mod_assets/backgrounds/atmosphere/sky/sky_night_overcast.png"
+image sky night rain = "mod_assets/backgrounds/atmosphere/sky/sky_night_rain.png"
+image sky night sunny = "mod_assets/backgrounds/atmosphere/sky/sky_night_sunny.png"
+image sky night thunder = "mod_assets/backgrounds/atmosphere/sky/sky_night_thunder.png"
 
 # Dimming effects; used with various weather conditions
-image dim light = "mod_assets/backgrounds/classroom/dim_light.png"
-image dim medium = "mod_assets/backgrounds/classroom/dim_medium.png"
-image dim heavy = "mod_assets/backgrounds/classroom/dim_heavy.png"
+image dim light = "mod_assets/backgrounds/atmosphere/dim/dim_light.png"
+image dim medium = "mod_assets/backgrounds/atmosphere/dim/dim_medium.png"
+image dim heavy = "mod_assets/backgrounds/atmosphere/dim/dim_heavy.png"
 
 # Glitch effects
 image glitch_garbled_a = "mod_assets/backgrounds/etc/glitch_garbled_a.png"
@@ -42,35 +42,62 @@ image glitch_fuzzy:
 
 # Clouds
 image clouds day light:
-    "mod_assets/backgrounds/classroom/clouds_day_light.png"
+    "mod_assets/backgrounds/atmosphere/clouds/clouds_day_light.png"
     cloud_scroll
 
 image clouds day heavy:
-    "mod_assets/backgrounds/classroom/clouds_day_heavy.png"
+    "mod_assets/backgrounds/atmosphere/clouds/clouds_day_heavy.png"
     cloud_scroll
 
 image clouds day thunder:
-    "mod_assets/backgrounds/classroom/clouds_day_thunder.png"
+    "mod_assets/backgrounds/atmosphere/clouds/clouds_day_thunder.png"
     cloud_scroll
 
 image clouds night light:
-    "mod_assets/backgrounds/classroom/clouds_night_light.png"
+    "mod_assets/backgrounds/atmosphere/clouds/clouds_night_light.png"
     cloud_scroll
 
 image clouds night heavy:
-    "mod_assets/backgrounds/classroom/clouds_night_heavy.png"
+    "mod_assets/backgrounds/atmosphere/clouds/clouds_night_heavy.png"
     cloud_scroll
 
+# Particles
+image particles rain:
+    "mod_assets/backgrounds/atmosphere/particles/rain.png"
+    rain_scroll
+
+image particles snow:
+    "mod_assets/backgrounds/atmosphere/particles/snow.png"
+    snow_scroll
+
+# Transforms
 transform cloud_scroll:
+    # Clouds shift from left to right
     subpixel True
     topleft
     parallel:
         xoffset 0 yoffset 0
-        linear 30 xoffset 0 xoffset -1280
+        linear 30 xoffset -1280
+        repeat
+
+transform snow_scroll:
+    subpixel True
+    right
+    parallel:
+        xoffset 0 yoffset 0
+        linear 60 xoffset 220  yoffset 1280
+        repeat
+
+transform rain_scroll:
+    subpixel True
+    right
+    parallel:
+        xoffset 0 yoffset 0
+        linear 2 xoffset 220  yoffset 1280
         repeat
 
 # Transitions
-define weather_change_transition = Dissolve(1.5)
+define weather_change_transition = Dissolve(0.75)
 define dim_change_transition = Dissolve(0.25)
 
 init 0 python in jn_atmosphere:
@@ -83,10 +110,19 @@ init 0 python in jn_atmosphere:
     import store.jn_preferences as jn_preferences
     import store.jn_utils as jn_utils
 
-    # Draw Z indexes
+    # Zorder indexes
+    # Complete order is:
+    # v PROPS 
+    # v NATSUKI
+    # v BACKGROUND
+    # v DIM
+    # v PARTICLES
+    # v CLOUDS
+    #   SKY
     _DIM_Z_INDEX = 2
-    _CLOUDS_Z_INDEX = -1
-    _SKY_Z_INDEX = -2
+    _PARTICLES_Z_INDEX = -1
+    _CLOUDS_Z_INDEX = -2
+    _SKY_Z_INDEX = -3
 
     class JNWeatherTypes(Enum):
         """
@@ -108,6 +144,8 @@ init 0 python in jn_atmosphere:
             dim_image=None,
             day_clouds_image=None,
             night_clouds_image=None,
+            day_particles_image=None,
+            night_particles_image=None,
             weather_sfx=None
         ):
             """
@@ -119,7 +157,9 @@ init 0 python in jn_atmosphere:
                 - night_sky_image - Name of the image to show for this weather during the night
                 - dim_image - Name of the dimming effect to use, or None
                 - day_clouds_image - Name of the clouds to use for this weather during the day, or None
-                - night_clouds_image - Name of the clouds to use for this weather during the day, or None
+                - night_clouds_image - Name of the clouds to use for this weather during the night, or None
+                - day_particles_image - Name of the particles to use for this weather during the day, or None
+                - night_particles_image - Name of the particles to use for this weather during the night, or None
                 - weather_sfx - File path of the weather sound effect to use, or None
             """
             self.weather_type = weather_type
@@ -128,6 +168,8 @@ init 0 python in jn_atmosphere:
             self.dim_image = dim_image
             self.day_clouds_image = day_clouds_image
             self.night_clouds_image = night_clouds_image
+            self.day_particles_image = day_particles_image
+            self.night_particles_image = night_particles_image
             self.weather_sfx = weather_sfx
 
     WEATHER_OVERCAST = JNWeather(
@@ -146,6 +188,8 @@ init 0 python in jn_atmosphere:
         dim_image="dim medium",
         day_clouds_image="clouds day heavy",
         night_clouds_image="clouds night heavy",
+        day_particles_image="particles rain",
+        night_particles_image="particles rain",
         weather_sfx="mod_assets/sfx/rain_muffled.mp3"
     )
 
@@ -156,6 +200,8 @@ init 0 python in jn_atmosphere:
         dim_image="dim heavy",
         day_clouds_image="clouds day thunder",
         night_clouds_image="clouds night heavy",
+        day_particles_image="particles rain",
+        night_particles_image="particles rain",
         weather_sfx="mod_assets/sfx/rain_muffled.mp3"
     )
 
@@ -166,6 +212,8 @@ init 0 python in jn_atmosphere:
         dim_image="dim light",
         day_clouds_image="clouds day light",
         night_clouds_image="clouds night light",
+        day_particles_image="particles snow",
+        night_particles_image="particles snow",
     )
 
     WEATHER_SUNNY = JNWeather(
@@ -263,6 +311,20 @@ init 0 python in jn_atmosphere:
         else:
             renpy.hide("clouds")
 
+        # Add the particles, if defined
+        if weather.day_particles_image or weather.night_particles_image:
+            if store.jn_is_day() and weather.day_particles_image:
+                renpy.show(name=weather.day_particles_image, zorder=_PARTICLES_Z_INDEX)
+
+            elif weather.night_particles_image:
+                renpy.show(name=weather.night_particles_image, zorder=_PARTICLES_Z_INDEX)
+
+            if with_transition:
+                renpy.with_statement(trans=store.weather_change_transition)
+
+        else:
+            renpy.hide("particles")
+
         # Add the dimming effect, if defined
         if weather.dim_image:
             renpy.show(name=weather.dim_image, zorder=_DIM_Z_INDEX)
@@ -306,7 +368,7 @@ init 0 python in jn_atmosphere:
     def get_latitude_longitude_by_ip_address():
         """
         Returns (latitude, longitude) tuple based on the player's IP address.
-        Please note this will be affected by any VPNs, etc active on the host.
+        Please note this will be affected by any VPNs, etc. in use by the host computer/network.
 
         OUT:
             - Tuple of (latitude, longitude), or None
@@ -346,6 +408,12 @@ init 0 python in jn_atmosphere:
         Returns True if the current weather is thunder, otherwise False
         """
         return current_weather == JNWeatherTypes.thunder
+
+    def is_current_weather_snow():
+        """
+        Returns True if the current weather is snow, otherwise False
+        """
+        return current_weather == JNWeatherTypes.snow
 
     def is_current_weather_glitch():
         """
