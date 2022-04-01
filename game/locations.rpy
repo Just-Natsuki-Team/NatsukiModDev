@@ -179,7 +179,7 @@ init -20 python:
 
             room = None
 
-            if full_redraw:
+            if dissolve_all or full_redraw:
                 room = self.location.get_current_room_image()
 
             #Draw the room if we're not showing it already
@@ -276,10 +276,9 @@ init python:
     #If it's day now, we need to run night to day, and vice versa
     if main_background.is_day():
         main_background.night_to_day_event()
+
     else:
         main_background.day_to_night_event()
-
-    
 
     if persistent._current_location in locations.LOCATION_MAP:
         main_background.change_location(persistent._current_location)
