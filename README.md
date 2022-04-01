@@ -52,7 +52,7 @@ Please read this document thoroughly before downloading and installing the mod!
         <a href="https://github.com/lunulae">
             <img src="https://avatars.githubusercontent.com/u/45501964?v=4" width="100;" alt="lunulae"/>
             <br />
-            <sub><b>lunulae</b></sub>
+            <sub><b>Lunulae</b></sub>
         </a>
     </td></tr>
 <tr>
