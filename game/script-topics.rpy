@@ -6267,3 +6267,69 @@ label talk_impressions_of_the_other_girls:
         $ jn_relationship("affinity-")
 
     return
+
+# Natsuki muses on the school newspaper and bias in media.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_newspapers_and_bias",
+            unlocked=True,
+            prompt="Newspapers and bias",
+            category=["Literature"],
+            nat_says=True,
+            affinity_range=(jn_aff.HAPPY, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_newspapers_and_bias:
+    n 1nllpu "...Huh.{w=1}{nw}"
+    extend 1unmaj " You know,{w=0.1} [player]..."
+    n 1tllaj "It's actually kinda weird,{w=0.1} looking back."
+    n 1fllss "At the club,{w=0.3} I mean.{w=0.5}{nw}"
+    extend 1tsqpu " You {i}do{/i} remember what kind of club it was,{w=0.1} right?"
+    n 1tnmpu "...So don't you think it's weird how {i}few{/i} kinds of literature we actually looked at?"
+    n 1nllaj "Yuri was always nose-deep in her books.{w=0.5}{nw}"
+    extend 1nsqss " And we {i}all{/i} looked at poetry,{w=0.5}{nw}" 
+    extend 1fsrss " obviously."
+    n 1knmaj "But we barely had anything in that room apart from textbooks!{w=0.5}{nw}"
+    extend 1fllpo " We didn't even have the school newspaper in there!"
+    n 1tsrss "Kind of a misnomer,{w=0.1} huh?"
+    n 1tlrpu "But...{w=0.5}{nw}"
+    extend 1tnmca " talking of newspapers..."
+    n 1fnmca "It's actually super important to read into them properly,{w=0.1} you know."
+    n 1knmaj "What?{w=0.5}{nw}"
+    extend 1fsqpo " I'm being serious!"
+    n 1fllss "Newspapers really {i}aren't{/i} just news anymore,{w=0.1} [player]...{w=1}{nw}"
+    extend 1fcsaj " and they haven't been for a long time!"
+    n 1flrpu "It's tricky,{w=0.5}{nw}" 
+    extend 1fnmca " but you gotta think a little whenever you open one up."
+    n 1fchbg "They aren't owned and run by robots!{w=0.5}{nw}"
+    extend 1fcsss " There's {i}always{/i} gonna be opinion that finds its way in somehow."
+    n 1ullaj "I mean...{w=1}{nw}"
+    extend 1fnmaj " take the school newspaper we had!"
+    n 1tsqss "Do you {i}really{/i} think a paper run by {i}students{/i} is gonna be completely fair about the school?"
+    n 1nlraj "Let's say the newspaper wanted more funding to print more copies or something,{w=0.5}{nw}"
+    extend 1fnmbo " and needed a student vote to make that happen."
+    n 1tnmpu "Are they seriously just gonna leave the fate of their paper up to {i}chance{/i}?"
+    n 1fchts "Duh!{w=0.5}{nw}"
+    extend 1fchgn " Of course not!{w=1}{nw}"
+    extend 1fsqss " They'd fight for it!"
+    n 1ulraj "Maybe they'd run extra articles to advertise it,{w=0.5}{nw}"
+    extend 1fsqsm " and {i}only{/i} interview people who supported the paper!"
+    n 1tlrss "Or just {i}happen{/i} to forget to mention all the funds they got last semester?"
+    n 1fcsbg "That's just one example,{w=0.1} obviously."
+    n 1fnmaj "But the same thinking applies to any kind of journalism!{w=1}{nw}"
+    extend 1nllca " Papers,{w=0.1} online articles,{w=0.5}{nw}" 
+    extend 1fnmca " whatever it is."
+    n 1fcsbg "It's {i}all{/i} subject to bias!"
+    n 1nllaj "So...{w=1}{nw}"
+    extend 1tnmss " where am I going with this,{w=0.3} you ask?"
+    n 1fcssm "Ehehe.{w=0.5}{nw}"
+    extend 1fsqsm " I think it's pretty obvious."
+    n 1fllss "I know I call you it a bunch already,{w=0.1} [player]..."
+    n 1fsqsm "But only {i}real{/i} dummies believe {i}everything{/i} they read!"
+
+    return
