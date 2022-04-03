@@ -64,6 +64,9 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
 </table>
 <!-- readme: contributors -end -->
 
+### Special thanks
+- Snow, rain graphics thanks to Monika After Story team @ https://github.com/Monika-After-Story/MonikaModDev
+
 ### Contents
 
 1. [Disclaimer](#disclaimer)

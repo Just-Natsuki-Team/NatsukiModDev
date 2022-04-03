@@ -62,6 +62,8 @@ image clouds night heavy:
     cloud_scroll
 
 # Particles
+# Credit for rain, snow graphics goes to Monika After Story @ https://github.com/Monika-After-Story/MonikaModDev
+# Thanks for allowing us to use these!
 image particles rain:
     "mod_assets/backgrounds/atmosphere/particles/rain.png"
     rain_scroll
