@@ -501,6 +501,7 @@ label snap_quip(is_player_snap, is_correct_snap):
 
                 $ _player_win_streak = 0
                 $ persistent.jn_snap_player_is_cheater = True
+                $ Natsuki.percentage_affinity_loss(1)
                 $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_CHEATED_GAME)
 
                 # Hide all the UI

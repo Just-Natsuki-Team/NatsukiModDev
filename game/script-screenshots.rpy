@@ -234,7 +234,7 @@ label screenshot_dialogue:
                     n 1fcssr "Whatever.{w=0.1} I don't care.{w=0.1} I'm turning that off."
 
             $ jn_screenshots.unblock_screenshots()
-            $ Natsuki.calculated_affinity_loss()
+            $ Natsuki.percentage_affinity_loss(1.5)
 
         else:
             n 1fscem "..."
@@ -242,7 +242,7 @@ label screenshot_dialogue:
             n 1kcsfrl "...No.{w=0.2} I-{w=0.1}I can't.{w=0.2} No."
             n 1fcsunl "I don't give a crap.{w=0.2} It's going off."
             $ jn_screenshots.unblock_screenshots()
-            $ Natsuki.calculated_affinity_loss()
+            $ Natsuki.percentage_affinity_loss(1)
 
     # Positive screenshot route, as we have Natsuki's permission
     elif jn_screenshots.is_allowed_to_take_screenshot():
@@ -309,7 +309,7 @@ label screenshot_dialogue:
             n 1knmbo "So...{w=0.3} just please remember to ask next time,{w=0.1} alright?"
             n 1klrbg "I won't bite...{w=0.3} Ahaha..."
             n 1klrsl "Now,{w=0.2} where were we?"
-            $ Natsuki.calculated_affinity_loss()
+            $ Natsuki.percentage_affinity_loss(2.5)
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
             # Pick the reaction and response; Natsuki is irritated
@@ -321,7 +321,7 @@ label screenshot_dialogue:
             n 1fllem "Hmph...{w=0.3} could you at least give me some warning next time?"
             n 1fllsl "Thanks..."
             n 1fnmsl "Now,{w=0.2} where were we?"
-            $ Natsuki.calculated_affinity_loss()
+            $ Natsuki.percentage_affinity_loss(2)
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
 
@@ -333,13 +333,13 @@ label screenshot_dialogue:
             n 1fnmfu "[chosen_response]"
             n 1fsqan "Don't do that again."
             n 1fcssr "Now,{w=0.2} where were we?"
-            $ Natsuki.calculated_affinity_loss()
+            $ Natsuki.percentage_affinity_loss(1.5)
 
         else:
             # Natsuki isn't putting up with this
             n 1fcsan "You know what,{w=0.1} [player]?{w=0.2} No.{w=0.1} We're not doing this."
             n 1fcssr "I'm just gonna turn this off.{w=0.1} {i}Not like you'd listen to me if I complained again.{/i}"
-            $ Natsuki.calculated_affinity_loss()
+            $ Natsuki.percentage_affinity_loss(1)
             $ jn_screenshots.revoke_screenshot_permission(block=True)
 
     #Enable screenshots again

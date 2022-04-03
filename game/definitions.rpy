@@ -67,7 +67,7 @@ init 0 python:
             IN:
                 - base - The base amount to use for the calculation
             """
-            persistent.affinity -= base * jn_get_relationship_length_multiplier()
+            persistent.affinity -= base * jn_affinity.get_relationship_length_multiplier()
 
         @staticmethod
         def percentage_affinity_gain(percentage_gain):
@@ -77,7 +77,7 @@ init 0 python:
             IN:
                 - percentage_gain - The integer percentage the affinity should increase by
             """
-            persistent.affinity += persistent.affinity * (percentage_gain / 100)
+            persistent.affinity += persistent.affinity * (float(percentage_gain) / 100)
 
         @staticmethod
         def percentage_affinity_loss(percentage_loss):
@@ -87,7 +87,7 @@ init 0 python:
             IN:
                 - percentage_loss - The integer percentage the affinity should decrease by
             """
-            persistent.affinity += persistent.affinity * (percentage_loss / 100)
+            persistent.affinity -= persistent.affinity * (float(percentage_loss) / 100)
 
         @staticmethod
         def check_reset_daily_affinity_gain():

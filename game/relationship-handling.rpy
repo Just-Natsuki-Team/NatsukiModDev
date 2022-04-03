@@ -4,33 +4,6 @@ default persistent.affinity = 25.0
 default persistent.affinity_daily_gain = 5
 default persistent.affinity_gain_reset_date = None
 
-init -2 python in jn_trust_affinity_common:
-    def _is_state_valid(state, state_order_list):
-        """
-        Checks if the given state is valid (mapped in the state_order_list)
-
-        IN:
-            state - the integer representing the state we wish to check is valid
-
-        OUT:
-            True if valid state otherwise False
-        """
-        return (
-            state in state_order_list
-            or state is None
-        )
-
-    def _compare_thresholds(value, threshold):
-        """
-        Generic compareto function for values
-        """
-        if value < threshold:
-            return -1
-        elif value == threshold:
-            return 0
-        else:
-            return 1
-
 init -1 python in jn_affinity:
     import store
     import store.jn_utils as jn_utils
@@ -92,6 +65,32 @@ init -1 python in jn_affinity:
         LOVE
     ]
 
+    def _is_state_valid(state, state_order_list):
+        """
+        Checks if the given state is valid (mapped in the state_order_list)
+
+        IN:
+            state - the integer representing the state we wish to check is valid
+
+        OUT:
+            True if valid state otherwise False
+        """
+        return (
+            state in state_order_list
+            or state is None
+        )
+
+    def _compare_thresholds(value, threshold):
+        """
+        Generic compareto function for values
+        """
+        if value < threshold:
+            return -1
+        elif value == threshold:
+            return 0
+        else:
+            return 1
+
     def _is_aff_state_valid(state):
         """
         Checks if the given state is valid (mapped in the _AFF_STATE_ORDER)
@@ -102,7 +101,7 @@ init -1 python in jn_affinity:
         OUT:
             True if valid state otherwise False
         """
-        return store.jn_trust_affinity_common._is_state_valid(state, _AFF_STATE_ORDER)
+        return _is_state_valid(state, _AFF_STATE_ORDER)
 
     def _compare_affinity_states(state_1, state_2):
         """
@@ -246,7 +245,7 @@ init -1 python in jn_affinity:
         ]:
             #if affinity is higher than threshold return it's state
             #else check lower threshold
-            if store.jn_trust_affinity_common._compare_thresholds(store.persistent.affinity, threshold) >= 0:
+            if _compare_thresholds(store.persistent.affinity, threshold) >= 0:
                 return _AFF_STATE_ORDER[-i]
 
             # We can't go any further beyond ruined; return it
@@ -256,7 +255,6 @@ init -1 python in jn_affinity:
             i += 1
 
     def get_affinity_tier_name():
-
         affinity_state = get_affinity_state()
         if affinity_state == LOVE:
             return "LOVE"
@@ -288,131 +286,6 @@ init -1 python in jn_affinity:
         else:
             store.jn_utils.log(
                 message="Unable to get tier name for affinity {0}; affinity_state was {1}".format(store.persistent.affinity, get_affinity_state()),
-                logseverity=store.jn_utils.SEVERITY_WARN
-            )
-            return "UNKNOWN"
-
-init -1 python in jn_trust:
-    import store
-    
-    # Trust levels, highest to lowest
-    TRUST_ABSOLUTE = 100
-    TRUST_COMPLETE = 75
-    TRUST_FULL = 50
-    TRUST_PARTIAL = 25
-    TRUST_NEUTRAL = 0
-    TRUST_SCEPTICAL = -25
-    TRUST_DIMINISHED = -50
-    TRUST_DISBELIEF = -75
-    TRUST_SHATTERED = -100
-
-    #Trust States (non-prefixed as these are used for trust_range)
-    # SHATTERED - Natsuki doesn't know what to believe any more.
-    # DISBELIEF - Natsuki has no reason to believe her player, and doubts that trust can be regained.
-    # DIMINISHED - Natsuki has serious doubts about whether she can trust her player at all.
-    # SCEPTICAL - Natsuki has some doubts about whether she can trust her player, especially with sensitive topics.
-    # NEUTRAL - Natsuki has no particular reason to trust - or distrust - her player.
-    # PARTIAL - Natsuki feels more inclined to trust her player, but with considerable caution.
-    # FULL - Natsuki generally trusts her player.
-    # COMPLETE - Natsuki highly trusts her player, with all but her biggest sensitivities unknown.
-    # ABSOLUTE - Natsuki's trust is absolute; her heart is completely open to her player.
-    SHATTERED = 1
-    DISBELIEF = 2
-    DIMINISHED = 3
-    SCEPTICAL = 4
-    NEUTRAL = 5
-    PARTIAL = 6
-    FULL = 7
-    COMPLETE = 8
-    ABSOLUTE = 9
-
-    _TRUST_STATE_ORDER = [
-        SHATTERED,
-        DISBELIEF,
-        DIMINISHED,
-        SCEPTICAL,
-        NEUTRAL,
-        PARTIAL,
-        FULL,
-        COMPLETE,
-        ABSOLUTE
-    ]
-
-    def get_trust_state():
-        """
-            returns current trust state
-
-            states:
-                SHATTERED = 1
-                DISBELIEF = 2
-                DIMINISHED = 3
-                SCEPTICAL = 4
-                NEUTRAL = 5
-                PARTIAL = 6
-                FULL = 7
-                COMPLETE = 8
-                ABSOLUTE = 9
-
-            OUT:
-                current trust state
-        """
-        #iterate through all thresholds
-        i = 1
-        for threshold in [
-            TRUST_ABSOLUTE,
-            TRUST_COMPLETE,
-            TRUST_FULL,
-            TRUST_PARTIAL,
-            TRUST_NEUTRAL,
-            TRUST_SCEPTICAL,
-            TRUST_DIMINISHED,
-            TRUST_DISBELIEF,
-            TRUST_SHATTERED
-        ]:
-            #if trust is higher than threshold return it's state
-            #else check lower threshold
-            if store.jn_trust_affinity_common._compare_thresholds(store.persistent.trust, threshold) >= 0:
-                return _TRUST_STATE_ORDER[-i]
-
-            # We can't go any further beyond shattered; return it
-            if threshold == TRUST_SHATTERED:
-                return _TRUST_STATE_ORDER[0]
-
-            i += 1
-
-    def get_trust_tier_name():
-        trust_state = get_trust_state()
-
-        if trust_state == ABSOLUTE:
-            return "ABSOLUTE"
-
-        elif trust_state == COMPLETE:
-            return "COMPLETE"
-
-        elif trust_state == FULL:
-            return "FULL"
-
-        elif trust_state == PARTIAL:
-            return "PARTIAL"
-
-        elif trust_state == NEUTRAL:
-            return "NEUTRAL"
-
-        elif trust_state == SCEPTICAL:
-            return "SCEPTICAL"
-
-        elif trust_state == DIMINISHED:
-            return "DIMINISHED"
-
-        elif trust_state == DISBELIEF:
-            return "DISBELIEF"
-
-        elif trust_state == SHATTERED:
-            return "SHATTERED"
-
-        else:
-            store.jn_utils.log(
-                message="Unable to get tier name for trust {0}; trust_state was {1}".format(store.persistent.trust, get_trust_state()),
                 logseverity=store.jn_utils.SEVERITY_WARN
             )
             return "UNKNOWN"

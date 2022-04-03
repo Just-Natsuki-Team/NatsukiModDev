@@ -266,26 +266,26 @@ label apology_default:
             n 1knmaj "Just apologize properly,{w=0.1} alright?"
             n 1kllbo "I won't get mad."
             n 1kcsbo "I just wanna move on."
-            $ Natsuki.calculated_affinity_loss()
+            $ Natsuki.percentage_affinity_loss(2.5)
 
         elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
             n 1fnmsf "Come on,{w=0.1} [player]."
             n 1fnmaj "You know what you did."
             n 1nllsl "Just apologize properly so we can both move on."
-            $ Natsuki.calculated_affinity_loss()
+            $ Natsuki.percentage_affinity_loss(2)
             
         elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
             n 1fcsan "Ugh..."
             n 1fnman "Really,{w=0.1} [player].{w=0.2} Haven't you screwed with me enough?"
             n 1fsqfu "If you're gonna apologize,{w=0.1} have the guts to do it properly."
             n 1fsqsf "You owe me that much,{w=0.1} at least."
-            $ Natsuki.calculated_affinity_loss()
+            $ Natsuki.percentage_affinity_loss(1.5)
 
         else:
             n 1fsqfu "...Do you even know how you sound?"
             n 1fnmfu "Do you even {i}listen{/i} to yourself?"
             n 1fcsfu "Apologize properly or don't bother."
-            $ Natsuki.calculated_affinity_loss()
+            $ Natsuki.percentage_affinity_loss(1)
 
     return
 
