@@ -1900,7 +1900,7 @@ label talk_give_nickname:
         n 1fsqsl "That really hurt,{w=0.1} [player].{w=0.2} Don't abuse my trust."
 
         # Apply penalty and pending apology
-        $ jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.bad_nickname)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
         $ jn_relationship(change="affinity-", multiplier=2)
         $ jn_relationship(change="trust-", multiplier=2)
 
@@ -1913,7 +1913,7 @@ label talk_give_nickname:
         n 1fsqsr "Don't test my patience like this.{w=0.2} You're better than that."
 
         # Apply penalty and pending apology
-        $ jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.bad_nickname)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
         $ jn_relationship(change="affinity-", multiplier=2)
         $ jn_relationship(change="trust-", multiplier=2)
 
@@ -1943,7 +1943,7 @@ label talk_give_nickname:
                 $ jn_relationship(change="trust-", multiplier=3)
 
         # Apply penalty and pending apology
-        $ jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.bad_nickname)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
 
     elif persistent.jn_player_nicknames_bad_given_total == 4:
         # Player is locked out of nicknaming; this is why we can't have nice things
@@ -1960,7 +1960,7 @@ label talk_give_nickname:
         $ persistent.jn_player_nicknames_allowed = False
         $ persistent.jn_player_nicknames_current_nickname = None
         $ n_name = "Natsuki"
-        $ jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.bad_nickname)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
 
     return
 
@@ -4051,27 +4051,31 @@ init 5 python:
 
 label talk_play_snap:
     if persistent.jn_snap_player_is_cheater:
-        n 1fnmem "[player]...{w=0.3} if you aren't even sorry you cheated,{w=0.1} why should I play with you again?"
-        n 1kllpo "Come on...{w=0.3} it's not hard to apologize,{w=0.1} is it?"
-        return
-
-    else:
-        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-            n 1uchbg "Of course I do,{w=0.1} dummy!{w=0.2} Ehehe."
-
-        elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n 1fchbg "Of course I'll play some with you,{w=0.1} dummy!"
-
-        elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            n 1fchsm "Well,{w=0.1} duh!{w=0.2} Of course I'm up for a game!"
+        # Unlock Snap if the player somehow is labelled as a cheater with no option to apologize
+        if jn_apologies.TYPE_CHEATED_GAME not in persistent.jn_player_pending_apologies:
+            $ persistent.jn_snap_player_is_cheater = False
 
         else:
-            n 1nnmss "You wanna play Snap?{w=0.2} Sure!"
+            n 1fnmem "[player]...{w=0.3} if you aren't even sorry you cheated,{w=0.1} why should I play with you again?"
+            n 1kllpo "Come on...{w=0.3} it's not hard to apologize,{w=0.1} is it?"
+            return
 
-        n 1unmsm "Let me just get the cards out real quick,{w=0.1} alright?"
-        play audio drawer
-        with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
-        jump snap_intro
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        n 1uchbg "Of course I do,{w=0.1} dummy!{w=0.2} Ehehe."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n 1fchbg "Of course I'll play some with you,{w=0.1} dummy!"
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n 1fchsm "Well,{w=0.1} duh!{w=0.2} Of course I'm up for a game!"
+
+    else:
+        n 1nnmss "You wanna play Snap?{w=0.2} Sure!"
+
+    n 1unmsm "Let me just get the cards out real quick,{w=0.1} alright?"
+    play audio drawer
+    with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+    jump snap_intro
 
 # Natsuki goes over the rules of snap again, for if the player has already heard the explanation pre-game
 init 5 python:
