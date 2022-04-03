@@ -11,6 +11,7 @@ define popup_hide_transition = Dissolve(0.75)
 init 0 python in jn_snap:
     import random
     import store
+    import store.jn_apologies as jn_apologies
     import time
 
     # Card config
@@ -482,7 +483,7 @@ label snap_quip(is_player_snap, is_correct_snap):
 
             # Cheating warning
             if jn_snap._player_failed_snap_streak == 3 and not persistent.jn_snap_player_is_cheater:
-                $ cheat_check = turn_indicator_player
+                $ cheat_check = True
                 n 1fnmaj "[player]!"
                 n 1fnmsf "You're just calling Snap whenever it's your turn!"
                 n 1fnmpo "That's not how you play at all!"
@@ -500,7 +501,7 @@ label snap_quip(is_player_snap, is_correct_snap):
 
                 $ _player_win_streak = 0
                 $ persistent.jn_snap_player_is_cheater = True
-                $ jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.cheated_game)
+                $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_CHEATED_GAME)
 
                 # Hide all the UI
                 hide player_natsuki_hands

@@ -7,6 +7,8 @@ init python in jn_activity:
     import store
     import store.jn_utils as jn_utils
 
+    ACTIVITY_SYSTEM_ENABLED = True
+
     if renpy.windows:
         import pygetwindow
         sys.path.append(renpy.config.gamedir + '\\python-packages\\')
@@ -14,8 +16,20 @@ init python in jn_activity:
         import win32gui
 
     elif renpy.linux:
-        import Xlib
-        import Xlib.display
+        import os
+
+        #NOTE: On linux, there are different types of desktop sessions. Xlib will ONLY work with X11 sessions.
+        if (os.environ.get('DISPLAY') is None) or (os.environ.get('DISPLAY') == ''):
+            store.jn_utils.log("DISPLAY is not set. Cannot use Xlib.")
+            #Set a flag indicating this should be disabled.
+            ACTIVITY_SYSTEM_ENABLED = False
+
+        else:
+            import Xlib
+            import Xlib.display
+
+    elif renpy.macintosh:
+        ACTIVITY_SYSTEM_ENABLED = False
 
     class JNWindowFoundException(Exception):
         """
@@ -78,7 +92,7 @@ init python in jn_activity:
         try:
             # Iterate through all windows, comparing titles to find the JN game window
             win32gui.EnumWindows(check_jn_window, None)
-        
+
         except JNWindowFoundException as exception:
             return exception.hwnd
 
@@ -95,18 +109,14 @@ init python in jn_activity:
         OUT:
             - str representing the title of the currently active window
         """
-        if renpy.windows:
-            if pygetwindow.getActiveWindow():
+        if ACTIVITY_SYSTEM_ENABLED:
+            if renpy.windows and pygetwindow.getActiveWindow():
                 return pygetwindow.getActiveWindow().title
 
-            return ""
-            
-        elif renpy.linux:
-            return Xlib.display.Display().get_input_focus().focus.get_wm_name()
+            elif renpy.linux:
+                return Xlib.display.Display().get_input_focus().focus.get_wm_name()
 
-        else:
-            # We don't currently support Mac OS
-            return ""
+        return ""
 
     def get_current_activity(delay=0):
         """
@@ -127,7 +137,7 @@ init python in jn_activity:
                 if re.search(regex, window_name):
                     if not has_player_done_activity(int(activity)):
                         store.persistent.jn_activity_used_programs.append(int(activity))
-                    
+
                     return activity
 
         return JNActivities.unknown

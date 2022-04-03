@@ -1900,8 +1900,8 @@ label talk_give_nickname:
         n 1fsqsl "That really hurt,{w=0.1} [player].{w=0.2} Don't abuse my trust."
 
         # Apply penalty and pending apology
-        $ jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.bad_nickname)
-        $ Natsuki.calculated_affinity_loss(base=2)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
+        $ Natsuki.percentage_affinity_loss(1)
 
     elif persistent.jn_player_nicknames_bad_given_total == 2:
         n 1fsqsl "I can't believe you did that again to me,{w=0.1} [player]."
@@ -1912,8 +1912,8 @@ label talk_give_nickname:
         n 1fsqsr "Don't test my patience like this.{w=0.2} You're better than that."
 
         # Apply penalty and pending apology
-        $ jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.bad_nickname)
-        $ Natsuki.calculated_affinity_loss(base=2)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
+        $ Natsuki.percentage_affinity_loss(2.5)
 
     elif persistent.jn_player_nicknames_bad_given_total == 3:
         n 1fsqan "You are honestly unbelievable,{w=0.1} [player]."
@@ -1928,7 +1928,7 @@ label talk_give_nickname:
                 n 1fsqan "...Then start acting like it,{w=0.1} [player]."
                 n 1fslsl "Thanks."
 
-                $ Natsuki.calculated_affinity_loss(base=2)
+                $ Natsuki.percentage_affinity_loss(3)
 
             "...":
                 n 1fcssl "Look.{w=0.2} I'm not kidding around,{w=0.1} [player]."
@@ -1936,10 +1936,10 @@ label talk_give_nickname:
                 n 1fsqem "It's toxic."
                 n 1fsqsr "I don't care if you're trying to pull my leg.{w=0.2} Quit it."
 
-                $ Natsuki.calculated_affinity_loss(base=3)
+                $ Natsuki.percentage_affinity_loss(5)
 
         # Apply penalty and pending apology
-        $ jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.bad_nickname)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
 
     elif persistent.jn_player_nicknames_bad_given_total == 4:
         # Player is locked out of nicknaming; this is why we can't have nice things
@@ -1951,11 +1951,11 @@ label talk_give_nickname:
         n 1fsqsr "I warned you,{w=0.1} [player].{w=0.2} Remember that."
 
         # Apply affinity/trust penalties, then revoke nickname priveleges and finally apply pending apology
-        $ Natsuki.calculated_affinity_loss(base=5)
+        $ Natsuki.percentage_affinity_loss(10)
         $ persistent.jn_player_nicknames_allowed = False
         $ persistent.jn_player_nicknames_current_nickname = None
         $ n_name = "Natsuki"
-        $ jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.bad_nickname)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
 
     return
 
@@ -2600,7 +2600,7 @@ label talk_i_love_you:
             n 1fsqsr "We're done with this."
             n 1fsqpu "And if you {i}really{/i} feel that way?"
             n 1fsqsf "...Then why aren't {i}you{/i} trying to make this work,{w=0.1} [player]?"
-            $ Natsuki.calculated_affinity_loss(base=3, bypass=True)
+            $ Natsuki.percentage_affinity_loss(10)
 
         else:
             # :(
@@ -2857,7 +2857,7 @@ label talk_i_love_you:
             n 1fsqsr "Talk is cheap,{w=0.1} [player]."
             n 1fsqaj "If you {i}really{/i} care about me..."
             n 1fsqpu "Then {i}prove{/i} it."
-            $ Natsuki.calculated_affinity_loss()
+            $ Natsuki.percentage_affinity_loss(2.5)
             return
 
         else:
@@ -2867,7 +2867,7 @@ label talk_i_love_you:
             n 1fcsfu "..."
             n 1fcspu "You know what?{w=0.2} Whatever.{w=0.2} I don't care anymore."
             n 1fsqfu "Say what you like,{w=0.1} [player].{w=0.2} It's all crap,{w=0.1} just like everything else from you."
-            $ Natsuki.calculated_affinity_loss()
+            $ Natsuki.percentage_affinity_loss(2)
             return
 
     return
@@ -4046,27 +4046,31 @@ init 5 python:
 
 label talk_play_snap:
     if persistent.jn_snap_player_is_cheater:
-        n 1fnmem "[player]...{w=0.3} if you aren't even sorry you cheated,{w=0.1} why should I play with you again?"
-        n 1kllpo "Come on...{w=0.3} it's not hard to apologize,{w=0.1} is it?"
-        return
-
-    else:
-        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-            n 1uchbg "Of course I do,{w=0.1} dummy!{w=0.2} Ehehe."
-
-        elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n 1fchbg "Of course I'll play some with you,{w=0.1} dummy!"
-
-        elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            n 1fchsm "Well,{w=0.1} duh!{w=0.2} Of course I'm up for a game!"
+        # Unlock Snap if the player somehow is labelled as a cheater with no option to apologize
+        if jn_apologies.TYPE_CHEATED_GAME not in persistent.jn_player_pending_apologies:
+            $ persistent.jn_snap_player_is_cheater = False
 
         else:
-            n 1nnmss "You wanna play Snap?{w=0.2} Sure!"
+            n 1fnmem "[player]...{w=0.3} if you aren't even sorry you cheated,{w=0.1} why should I play with you again?"
+            n 1kllpo "Come on...{w=0.3} it's not hard to apologize,{w=0.1} is it?"
+            return
 
-        n 1unmsm "Let me just get the cards out real quick,{w=0.1} alright?"
-        play audio drawer
-        with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
-        jump snap_intro
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        n 1uchbg "Of course I do,{w=0.1} dummy!{w=0.2} Ehehe."
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        n 1fchbg "Of course I'll play some with you,{w=0.1} dummy!"
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n 1fchsm "Well,{w=0.1} duh!{w=0.2} Of course I'm up for a game!"
+
+    else:
+        n 1nnmss "You wanna play Snap?{w=0.2} Sure!"
+
+    n 1unmsm "Let me just get the cards out real quick,{w=0.1} alright?"
+    play audio drawer
+    with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+    jump snap_intro
 
 # Natsuki goes over the rules of snap again, for if the player has already heard the explanation pre-game
 init 5 python:
@@ -4798,7 +4802,10 @@ init 5 python:
             label="talk_mod_contributions",
             unlocked=True,
             prompt="Contributions",
-            conditional="renpy.macintosh or jn_activity.has_player_done_activity(jn_activity.JNActivities.coding)",
+            conditional=(
+                "not jn_activity.ACTIVITY_SYSTEM_ENABLED "
+                "or jn_activity.has_player_done_activity(jn_activity.JNActivities.coding)"
+            ),
             category=["Mod"],
             nat_says=True,
             affinity_range=(jn_affinity.AFFECTIONATE, None),
@@ -4825,7 +4832,7 @@ label talk_mod_contributions:
     n 1ulraj "So...{w=0.3} where am I going with this,{w=0.1} you ask?{w=0.5}{nw}"
     extend 1tslsm " Well..."
 
-    if renpy.macintosh:
+    if not jn_activity.ACTIVITY_SYSTEM_ENABLED:
         n 1tllss "I don't know if you're into that sort of thing yourself,{w=0.1} [player]..."
         n 1fchbg "But why not lend me a hand?"
 
@@ -5375,7 +5382,7 @@ label talk_fear_of_spiders:
         n 1fsqem "...And might I ask {i}why{/i} you feel entitled to know about my fears?"
         n 1fcsan "Why the hell would I give you {i}more{/i} ammo to get on my nerves?"
         n 1fsrem "Ugh..."
-        n 1fcssf "Yeah.{w=0.5}{nw}" 
+        n 1fcssf "Yeah.{w=0.5}{nw}"
         extend 1fsqpu " We're done talking here,{w=0.1} {i}[player]{/i}."
 
         return
@@ -5404,7 +5411,7 @@ label talk_fear_of_spiders:
     n 1unmss "But spiders are awesome little guys!{w=1.5}{nw}"
     extend 1nsrss " ...Mostly."
     n 1unmbo "They get rid of the really annoying sorts of bugs,{w=0.1} like ones that bite or fly around constantly."
-    n 1nnmaj "And some of them -{w=0.5}{nw}" 
+    n 1nnmaj "And some of them -{w=0.5}{nw}"
     extend 1nslss " as weird as it feels to say -{w=0.5}{nw}"
     extend 1ncspu " are{w=1} freaking{w=1.5}{nw}"
     extend 1fspgs " {i}adorable{/i}!"
@@ -5541,7 +5548,7 @@ init 5 python:
 label talk_maintaining_proper_hygiene:
     n 1nllsl "..."
     n 1ullaj "You know,{w=0.1} [player]..."
-    n 1nllbo "I've been wondering...{w=0.5}{nw}" 
+    n 1nllbo "I've been wondering...{w=0.5}{nw}"
     extend 1tnmpu " are you actually taking care of yourself?"
     n 1nsqsr "Like...{w=0.3} are you keeping up with proper hygiene?"
     n 1fnmpo "It's super important,{w=0.1} you know!"
@@ -5555,11 +5562,11 @@ label talk_maintaining_proper_hygiene:
     n 1kcssr "...And we both know how she felt."
     n 1kllun "..."
     n 1fcseml "A-{w=0.1}anyway!{w=1}{nw}"
-    extend 1fnmpo " This is about {i}you{/i},{w=0.1} [player] -{w=0.5}{nw}" 
+    extend 1fnmpo " This is about {i}you{/i},{w=0.1} [player] -{w=0.5}{nw}"
     extend 1fnmaj " so listen up!"
     n 1fcsbg "This is gonna be a Natsuki special on taking care of yourself!{w=0.5}{nw}"
     extend 1fcssm " Ehehe."
-    n 1fcsaj "First of all,{w=0.1} shower {w=0.1}-{w=0.3}{nw}" 
+    n 1fcsaj "First of all,{w=0.1} shower {w=0.1}-{w=0.3}{nw}"
     extend 1fnmaj " and {i}regularly{/i}!"
     n 1fllsl "If you skip showers,{w=0.1} you'll just constantly feel all gross and nasty.{w=0.5}{nw}"
     extend 1tnmsr " And you know what that leads to?"
@@ -5567,7 +5574,7 @@ label talk_maintaining_proper_hygiene:
     n 1fnmaj "And you know what {i}that{/i} leads to?"
     n 1fcsem "...Not showering!{w=0.5}{nw}"
     extend 1knmpo " See where I'm going here?"
-    n 1nllaj "So...{w=0.5}{nw}" 
+    n 1nllaj "So...{w=0.5}{nw}"
     extend 1fnmsl " just take the time to do it properly,{w=0.1} okay?"
     n 1fllss "It doesn't {i}need{/i} to be some kind of spa ritual,{w=0.1} just whatever gets you clean."
 
@@ -5630,7 +5637,7 @@ label talk_maintaining_proper_hygiene:
         n 1ksqsm "Who doesn't want a {i}blinding{/i} smile like me?"
         n 1uchgn "You won't get {i}that{/i} with tooth decay!"
 
-    n 1kllss "But seriously,{w=0.1} [player].{w=0.5}{nw}" 
+    n 1kllss "But seriously,{w=0.1} [player].{w=0.5}{nw}"
     extend 1nsqsr " I {i}really{/i} don't want you flaking out on taking care of yourself,{w=0.1} [player]."
     n 1fsqsr "I mean it.{w=1.5}{nw}"
     extend 1ksrpo " You deserve to feel and look good too."
@@ -5645,7 +5652,7 @@ label talk_maintaining_proper_hygiene:
         "...":
             n 1nsqsr "..."
             n 1tsqss "You...{w=0.3} really don't get how this all works,{w=0.1} do you?"
-            n 1fcssm "Now,{w=0.1} repeat after me:{w=0.5}{nw}" 
+            n 1fcssm "Now,{w=0.1} repeat after me:{w=0.5}{nw}"
             extend 1fcsbg " 'I deserve to feel and look good too.'."
 
             menu:
@@ -5741,7 +5748,7 @@ label talk_feelings_about_monika:
     n 1fcseml "D-{w=0.1}don't get me wrong though!{w=0.5}{nw}"
     extend 1flrem " I'm never gonna forget what she did...{w=0.5}{nw}"
     extend 1fsrpu " forgive what she did."
-    n 1nlrpu "But...{w=1}{nw}" 
+    n 1nlrpu "But...{w=1}{nw}"
     extend 1knmsr " she {i}was{/i} still my friend."
     n 1kllpu "So there's always gonna be a part of me that kinda wishes I {i}could{/i} forgive her."
     n 1kllbol "...Maybe that's why I wanna understand her actions so badly."
@@ -5784,7 +5791,7 @@ label talk_feelings_about_yuri:
     extend 1kslpu " Could even {i}hope{/i} to get it."
     n 1kwmpu "...{w=0.5}Do you even know how much that meant to me?"
     n 1knmsl "She just had a way of understanding you like nobody else could.{w=1}{nw}"
-    extend 1fslem " Not {i}Monika{/i}.{w=1.5}{nw}" 
+    extend 1fslem " Not {i}Monika{/i}.{w=1.5}{nw}"
     extend 1kslsrl " Not even {i}Sayori{/i}."
     n 1kllpu "But..."
     n 1fcssr "She just {i}changed{/i},{w=0.1} [player].{w=0.5}{nw}"
@@ -5858,7 +5865,7 @@ label talk_feelings_about_sayori:
     extend 1fcsupl " how much she was {i}hurting{/i}..."
     n 1fcsunl "..."
     n 1kcsem "..."
-    n 1kslpu "It's...{w=1.5}{nw}" 
+    n 1kslpu "It's...{w=1.5}{nw}"
     extend 1kplem " it's still just such a system shock,{w=0.1} you know?"
     n 1fcsem "She was always so...{w=1} so...{w=0.5}{nw}"
     extend 1ksrpo " just...{w=1} super excited and clingy!"
