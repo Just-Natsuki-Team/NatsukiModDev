@@ -4803,7 +4803,10 @@ init 5 python:
             label="talk_mod_contributions",
             unlocked=True,
             prompt="Contributions",
-            conditional="renpy.macintosh or jn_activity.has_player_done_activity(jn_activity.JNActivities.coding)",
+            conditional=(
+                "not jn_activity.ACTIVITY_SYSTEM_ENABLED "
+                "or jn_activity.has_player_done_activity(jn_activity.JNActivities.coding)"
+            ),
             category=["Mod"],
             nat_says=True,
             affinity_range=(jn_affinity.AFFECTIONATE, None),
@@ -4830,7 +4833,7 @@ label talk_mod_contributions:
     n 1ulraj "So...{w=0.3} where am I going with this,{w=0.1} you ask?{w=0.5}{nw}"
     extend 1tslsm " Well..."
 
-    if renpy.macintosh:
+    if not jn_activity.ACTIVITY_SYSTEM_ENABLED:
         n 1tllss "I don't know if you're into that sort of thing yourself,{w=0.1} [player]..."
         n 1fchbg "But why not lend me a hand?"
 
@@ -5380,7 +5383,7 @@ label talk_fear_of_spiders:
         n 1fsqem "...And might I ask {i}why{/i} you feel entitled to know about my fears?"
         n 1fcsan "Why the hell would I give you {i}more{/i} ammo to get on my nerves?"
         n 1fsrem "Ugh..."
-        n 1fcssf "Yeah.{w=0.5}{nw}" 
+        n 1fcssf "Yeah.{w=0.5}{nw}"
         extend 1fsqpu " We're done talking here,{w=0.1} {i}[player]{/i}."
 
         return
@@ -5409,7 +5412,7 @@ label talk_fear_of_spiders:
     n 1unmss "But spiders are awesome little guys!{w=1.5}{nw}"
     extend 1nsrss " ...Mostly."
     n 1unmbo "They get rid of the really annoying sorts of bugs,{w=0.1} like ones that bite or fly around constantly."
-    n 1nnmaj "And some of them -{w=0.5}{nw}" 
+    n 1nnmaj "And some of them -{w=0.5}{nw}"
     extend 1nslss " as weird as it feels to say -{w=0.5}{nw}"
     extend 1ncspu " are{w=1} freaking{w=1.5}{nw}"
     extend 1fspgs " {i}adorable{/i}!"
@@ -5546,7 +5549,7 @@ init 5 python:
 label talk_maintaining_proper_hygiene:
     n 1nllsl "..."
     n 1ullaj "You know,{w=0.1} [player]..."
-    n 1nllbo "I've been wondering...{w=0.5}{nw}" 
+    n 1nllbo "I've been wondering...{w=0.5}{nw}"
     extend 1tnmpu " are you actually taking care of yourself?"
     n 1nsqsr "Like...{w=0.3} are you keeping up with proper hygiene?"
     n 1fnmpo "It's super important,{w=0.1} you know!"
@@ -5560,11 +5563,11 @@ label talk_maintaining_proper_hygiene:
     n 1kcssr "...And we both know how she felt."
     n 1kllun "..."
     n 1fcseml "A-{w=0.1}anyway!{w=1}{nw}"
-    extend 1fnmpo " This is about {i}you{/i},{w=0.1} [player] -{w=0.5}{nw}" 
+    extend 1fnmpo " This is about {i}you{/i},{w=0.1} [player] -{w=0.5}{nw}"
     extend 1fnmaj " so listen up!"
     n 1fcsbg "This is gonna be a Natsuki special on taking care of yourself!{w=0.5}{nw}"
     extend 1fcssm " Ehehe."
-    n 1fcsaj "First of all,{w=0.1} shower {w=0.1}-{w=0.3}{nw}" 
+    n 1fcsaj "First of all,{w=0.1} shower {w=0.1}-{w=0.3}{nw}"
     extend 1fnmaj " and {i}regularly{/i}!"
     n 1fllsl "If you skip showers,{w=0.1} you'll just constantly feel all gross and nasty.{w=0.5}{nw}"
     extend 1tnmsr " And you know what that leads to?"
@@ -5572,7 +5575,7 @@ label talk_maintaining_proper_hygiene:
     n 1fnmaj "And you know what {i}that{/i} leads to?"
     n 1fcsem "...Not showering!{w=0.5}{nw}"
     extend 1knmpo " See where I'm going here?"
-    n 1nllaj "So...{w=0.5}{nw}" 
+    n 1nllaj "So...{w=0.5}{nw}"
     extend 1fnmsl " just take the time to do it properly,{w=0.1} okay?"
     n 1fllss "It doesn't {i}need{/i} to be some kind of spa ritual,{w=0.1} just whatever gets you clean."
 
@@ -5635,7 +5638,7 @@ label talk_maintaining_proper_hygiene:
         n 1ksqsm "Who doesn't want a {i}blinding{/i} smile like me?"
         n 1uchgn "You won't get {i}that{/i} with tooth decay!"
 
-    n 1kllss "But seriously,{w=0.1} [player].{w=0.5}{nw}" 
+    n 1kllss "But seriously,{w=0.1} [player].{w=0.5}{nw}"
     extend 1nsqsr " I {i}really{/i} don't want you flaking out on taking care of yourself,{w=0.1} [player]."
     n 1fsqsr "I mean it.{w=1.5}{nw}"
     extend 1ksrpo " You deserve to feel and look good too."
@@ -5650,7 +5653,7 @@ label talk_maintaining_proper_hygiene:
         "...":
             n 1nsqsr "..."
             n 1tsqss "You...{w=0.3} really don't get how this all works,{w=0.1} do you?"
-            n 1fcssm "Now,{w=0.1} repeat after me:{w=0.5}{nw}" 
+            n 1fcssm "Now,{w=0.1} repeat after me:{w=0.5}{nw}"
             extend 1fcsbg " 'I deserve to feel and look good too.'."
 
             menu:
@@ -5746,7 +5749,7 @@ label talk_feelings_about_monika:
     n 1fcseml "D-{w=0.1}don't get me wrong though!{w=0.5}{nw}"
     extend 1flrem " I'm never gonna forget what she did...{w=0.5}{nw}"
     extend 1fsrpu " forgive what she did."
-    n 1nlrpu "But...{w=1}{nw}" 
+    n 1nlrpu "But...{w=1}{nw}"
     extend 1knmsr " she {i}was{/i} still my friend."
     n 1kllpu "So there's always gonna be a part of me that kinda wishes I {i}could{/i} forgive her."
     n 1kllbol "...Maybe that's why I wanna understand her actions so badly."
@@ -5789,7 +5792,7 @@ label talk_feelings_about_yuri:
     extend 1kslpu " Could even {i}hope{/i} to get it."
     n 1kwmpu "...{w=0.5}Do you even know how much that meant to me?"
     n 1knmsl "She just had a way of understanding you like nobody else could.{w=1}{nw}"
-    extend 1fslem " Not {i}Monika{/i}.{w=1.5}{nw}" 
+    extend 1fslem " Not {i}Monika{/i}.{w=1.5}{nw}"
     extend 1kslsrl " Not even {i}Sayori{/i}."
     n 1kllpu "But..."
     n 1fcssr "She just {i}changed{/i},{w=0.1} [player].{w=0.5}{nw}"
@@ -5863,7 +5866,7 @@ label talk_feelings_about_sayori:
     extend 1fcsupl " how much she was {i}hurting{/i}..."
     n 1fcsunl "..."
     n 1kcsem "..."
-    n 1kslpu "It's...{w=1.5}{nw}" 
+    n 1kslpu "It's...{w=1.5}{nw}"
     extend 1kplem " it's still just such a system shock,{w=0.1} you know?"
     n 1fcsem "She was always so...{w=1} so...{w=0.5}{nw}"
     extend 1ksrpo " just...{w=1} super excited and clingy!"
