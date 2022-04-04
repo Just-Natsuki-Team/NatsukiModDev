@@ -326,10 +326,10 @@ label event_not_ready_yet:
         super_messy_hairstyle = jn_outfits.get_wearable("jn_hair_super_messy").unlock()
 
         # Make note of the loaded outfit, then assign Natsuki a hidden one to show off hair/ahoge
-        outfit_to_restore = Natsuki.get_outfit_name()
+        outfit_to_restore = Natsuki.getOutfitName()
         ahoge_outfit = jn_outfits.get_outfit("jn_ahoge_unlock")
         ahoge_outfit.headgear = random.choice(unlocked_ahoges)
-        Natsuki.set_outfit(ahoge_outfit)
+        Natsuki.setOutfit(ahoge_outfit)
 
     $ renpy.pause(5)
     n "Uuuuuu...{w=2}{nw}"
@@ -356,7 +356,7 @@ label event_not_ready_yet:
     n 1uskemf "I-{w=0.3}I gotta get ready!"
 
     play audio clothing_ruffle
-    $ Natsuki.set_outfit(jn_outfits.get_outfit(outfit_to_restore))
+    $ Natsuki.setOutfit(jn_outfits.get_outfit(outfit_to_restore))
     with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
 
     n 1fcsem "Jeez...{w=1.5}{nw}"

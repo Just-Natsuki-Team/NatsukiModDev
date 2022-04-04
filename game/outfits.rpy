@@ -1,9 +1,10 @@
 
-default persistent.jn_natsuki_auto_outfit_change_enabled = True
-default persistent.jn_custom_outfits_unlocked = False
-default persistent.jn_natsuki_outfit_on_quit = "jn_school_uniform"
-default persistent.jn_outfit_list = {}
-default persistent.jn_wearable_list = {}
+init -2:
+    default persistent.jn_natsuki_auto_outfit_change_enabled = True
+    default persistent.jn_custom_outfits_unlocked = False
+    default persistent.jn_natsuki_outfit_on_quit = "jn_school_uniform"
+    default persistent.jn_outfit_list = {}
+    default persistent.jn_wearable_list = {}
 
 init -1 python in jn_outfits:
     from Enum import Enum
@@ -933,7 +934,7 @@ init -1 python in jn_outfits:
         else:
             # Finally register if the create op was successful
             __register_outfit(outfit)
-            store.Natsuki.set_outfit(outfit)
+            store.Natsuki.setOutfit(outfit)
             renpy.notify("Outfit saved!")
             return True
 
@@ -1630,7 +1631,7 @@ label outfits_wear_outfit:
         n 1nchsm "Just give me a second...{w=2}{nw}"
 
         play audio clothing_ruffle
-        $ Natsuki.set_outfit(_return)
+        $ Natsuki.setOutfit(_return)
         with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
 
         n 1nchbg "Okaaay!"
@@ -1648,12 +1649,12 @@ label outfits_wear_outfit:
         extend 1uchsm " One second!"
 
         play audio clothing_ruffle
-        $ Natsuki.set_outfit(
+        $ Natsuki.setOutfit(
             random.choice(
                 jn_outfits.JNOutfit.filter_outfits(
                     outfit_list=jn_outfits.get_all_outfits(),
                     unlocked=True,
-                    not_reference_name=Natsuki.get_outfit_name())
+                    not_reference_name=Natsuki.getOutfitName())
             )
         )
         with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
@@ -1698,8 +1699,8 @@ label outfits_suggest_outfit:
     python:
         # We copy these specifically so we can alter them without modifying the outfits in the master list
         import copy
-        jn_outfits._LAST_OUTFIT = copy.copy(jn_outfits.get_outfit(Natsuki.get_outfit_name()))
-        jn_outfits._PREVIEW_OUTFIT = copy.copy(jn_outfits.get_outfit(Natsuki.get_outfit_name()))
+        jn_outfits._LAST_OUTFIT = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
+        jn_outfits._PREVIEW_OUTFIT = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
         jn_outfits._changes_made = False
 
     show natsuki idle at jn_left
@@ -1740,13 +1741,13 @@ label outfits_remove_outfit:
             n "You're sure you want me to remove it?"
 
             "Yes, remove [outfit_name].":
-                if Natsuki.is_wearing_outfit(_return):
+                if Natsuki.isWearingOutfit(_return.reference_name):
                     # Change Natsuki out of the uniform to be removed, if she's wearing it
                     n 1uwdaj "Oh! I totally forgot I'm wearing it already!"
                     extend 1fslssl " Ehehe."
 
                     play audio clothing_ruffle
-                    $ Natsuki.set_outfit(jn_outfits.get_outfit("jn_casual_clothes"))
+                    $ Natsuki.setOutfit(jn_outfits.get_outfit("jn_casual_clothes"))
                     with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
 
                 n 1nchgn "Okaaay!{w=1.5}{nw}"
@@ -1794,7 +1795,7 @@ label outfits_create_select_headgear:
             jn_outfits._changes_made = True
             wearable_to_apply = jn_outfits.get_wearable("jn_none") if _return == "none" else _return
             jn_outfits._PREVIEW_OUTFIT.headgear = wearable_to_apply
-            Natsuki.set_outfit(jn_outfits._PREVIEW_OUTFIT)
+            Natsuki.setOutfit(jn_outfits._PREVIEW_OUTFIT)
 
     jump outfits_create_menu
 
@@ -1816,7 +1817,7 @@ label outfits_create_select_hairstyle:
         python:
             jn_outfits._changes_made = True
             jn_outfits._PREVIEW_OUTFIT.hairstyle = _return
-            Natsuki.set_outfit(jn_outfits._PREVIEW_OUTFIT)
+            Natsuki.setOutfit(jn_outfits._PREVIEW_OUTFIT)
 
     jump outfits_create_menu
 
@@ -1839,7 +1840,7 @@ label outfits_create_select_eyewear:
             jn_outfits._changes_made = True
             wearable_to_apply = jn_outfits.get_wearable("jn_none") if _return == "none" else _return
             jn_outfits._PREVIEW_OUTFIT.eyewear = wearable_to_apply
-            Natsuki.set_outfit(jn_outfits._PREVIEW_OUTFIT)
+            Natsuki.setOutfit(jn_outfits._PREVIEW_OUTFIT)
 
     jump outfits_create_menu
 
@@ -1863,7 +1864,7 @@ label outfits_create_select_accessory:
             jn_outfits._changes_made = True
             wearable_to_apply = jn_outfits.get_wearable("jn_none") if _return == "none" else _return
             jn_outfits._PREVIEW_OUTFIT.accessory = wearable_to_apply
-            Natsuki.set_outfit(jn_outfits._PREVIEW_OUTFIT)
+            Natsuki.setOutfit(jn_outfits._PREVIEW_OUTFIT)
 
     jump outfits_create_menu
 
@@ -1887,7 +1888,7 @@ label outfits_create_select_necklace:
             jn_outfits._changes_made = True
             wearable_to_apply = jn_outfits.get_wearable("jn_none") if _return == "none" else _return
             jn_outfits._PREVIEW_OUTFIT.necklace = wearable_to_apply
-            Natsuki.set_outfit(jn_outfits._PREVIEW_OUTFIT)
+            Natsuki.setOutfit(jn_outfits._PREVIEW_OUTFIT)
 
     jump outfits_create_menu
 
@@ -1909,7 +1910,7 @@ label outfits_create_select_clothes:
         python:
             jn_outfits._changes_made = True
             jn_outfits._PREVIEW_OUTFIT.clothes = _return
-            Natsuki.set_outfit(jn_outfits._PREVIEW_OUTFIT)
+            Natsuki.setOutfit(jn_outfits._PREVIEW_OUTFIT)
 
     jump outfits_create_menu
 
@@ -1935,7 +1936,7 @@ label outfits_create_quit:
                 n 1nsrpol "I was bored of changing anyway."
 
                 play audio clothing_ruffle
-                $ Natsuki.set_outfit(jn_outfits._LAST_OUTFIT)
+                $ Natsuki.setOutfit(jn_outfits._LAST_OUTFIT)
                 with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
                 jump ch30_loop 
 
@@ -2030,7 +2031,7 @@ label outfits_auto_change:
         n 1fsqsl "I'm changing.{w=0.75}{nw}"
 
     play audio clothing_ruffle
-    $ Natsuki.set_outfit(jn_outfits.get_realtime_outfit())
+    $ Natsuki.setOutfit(jn_outfits.get_realtime_outfit())
     with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
 
     if Natsuki.isAffectionate(higher=True):

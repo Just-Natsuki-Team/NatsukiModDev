@@ -387,7 +387,7 @@ label compliment_style:
     $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_style").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_STYLE:
-        if not Natsuki.is_wearing_outfit(jn_outfits.get_outfit("jn_school_uniform")):
+        if not Natsuki.isWearingOutfit("jn_school_uniform"):
 
             # Non-uniform dialogue
             if Natsuki.isEnamored(higher=True):
@@ -420,7 +420,7 @@ label compliment_style:
 
     else:
 
-        if not Natsuki.is_wearing_outfit(jn_outfits.get_outfit("jn_school_uniform")):
+        if not Natsuki.isWearingOutfit("jn_school_uniform"):
 
             # Non-uniform dialogue
             if Natsuki.isEnamored(higher=True):

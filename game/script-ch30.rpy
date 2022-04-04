@@ -69,16 +69,16 @@ label ch30_init:
         # Set Natsuki's outfit
         if persistent.jn_natsuki_auto_outfit_change_enabled:
             # Real-time outfit selection
-            Natsuki.set_outfit(jn_outfits.get_realtime_outfit())
+            Natsuki.setOutfit(jn_outfits.get_realtime_outfit())
 
         else:
             if jn_outfits.outfit_exists(persistent.jn_natsuki_outfit_on_quit):
                 # Custom outfit/default outfit selection
-                Natsuki.set_outfit(jn_outfits.get_outfit(persistent.jn_natsuki_outfit_on_quit))
+                Natsuki.setOutfit(jn_outfits.get_outfit(persistent.jn_natsuki_outfit_on_quit))
 
             else:
                 # Fallback to Natsuki's school uniform
-                Natsuki.set_outfit(jn_outfits.get_outfit("jn_school_uniform"))
+                Natsuki.setOutfit(jn_outfits.get_outfit("jn_school_uniform"))
 
         jn_utils.log("Outfit set.")
 
@@ -306,7 +306,7 @@ init python:
 
         if (
             persistent.jn_natsuki_auto_outfit_change_enabled
-            and not Natsuki.is_wearing_outfit(jn_outfits.get_realtime_outfit())
+            and not Natsuki.isWearingOutfit(jn_outfits.get_realtime_outfit().reference_name)
         ):
             # We call here so we don't skip day_check, as call returns us to this point
             renpy.call("outfits_auto_change")

@@ -38,7 +38,7 @@ label introduction_progress_check:
         show glitch_garbled_a zorder 99 with vpunch
         hide glitch_garbled_a
 
-        $ Natsuki.set_outfit(jn_outfits.get_outfit("jn_school_uniform"))
+        $ Natsuki.setOutfit(jn_outfits.get_outfit("jn_school_uniform"))
         $ main_background.appear()
         $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
 
@@ -114,7 +114,7 @@ label introduction_opening:
     hide glitch_garbled_a
 
     # Get the visuals ready
-    $ Natsuki.set_outfit(jn_outfits.get_outfit("jn_school_uniform"))
+    $ Natsuki.setOutfit(jn_outfits.get_outfit("jn_school_uniform"))
     $ main_background.appear()
     $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
     play music audio.space_classroom_bgm fadein 1
