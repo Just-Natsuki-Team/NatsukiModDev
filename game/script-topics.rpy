@@ -5567,14 +5567,45 @@ label talk_why_so_short:
     if jn_player_appearance_height_cm < 149:
         n "You're shorter than me anyways,{w=0.1} you dork!"
         n "Who's the short one now,{w=0.1} huh?"
-    if jn_player_appearance_height_cm = 149:
+    elif jn_player_appearance_height_cm = 149:
         n "We're the same height!"
         n "Are you calling yourself short,{w=0.1} huh?"
     else:
         n "Just because you're taller than me doesn't mean anything!"
     n "I'm just a late bloomer,{w=0.1} that's all!"
     n "Maybe it's genetics?"
-    n "Gh! W-Well!!"
+    n "Gh!{w=0.5} W-Well!!"
     n "Even if I am short,{w=0.1} it's not like it's a bad thing!"
     n "Plenty of people are shorter than me!"
-    n ""
+    n "Y'know,{w=0.1} average height is different for different places!"
+    n "Even If I'm...{w=0.5}"
+    extend " Below Average..."
+    n "Yeah, that's it!{w=0.2} I'm not short!{w=0.2} I'm...{w=0.5} {i}slightly{/i} below average!"
+    n "{i}Slightly.{/i}"
+    menu:
+        "You're at a perfect height."
+            n "{i}Oh- I- You-{/i}"
+            n "...!"
+            n "Uuu-"
+            n "S-So..."
+            n "P-Perfect height, huh?"
+            n "Y-Yeah! That's more like it!"
+
+
+        "You're short and adorable.":
+            n "!!!"
+            n "Adorable? {i}me?{/i}??"
+            extend " You've gotta be kidding me!"
+            n "I am {i}not{/i} cute!"
+            n "A-And I'm not short!"
+
+        "You're a gremlin.":
+            n "Gremlin??"
+            n "Me- a gremlin??"
+            n "How {i}dare{/i} you??"
+            n
+
+        "...":
+            n "...No argument,{w=0.1} huh?"
+            n "So basically,{w=0.1} I win!"
+            n "I'm not short,{w=0.1} got it?"
