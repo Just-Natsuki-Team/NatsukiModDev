@@ -220,7 +220,6 @@ label introduction_first_meeting:
                 n 1fcsan "Quit playing around,{w=0.3} you jerk!{w=1}{nw}"
                 extend 1fcsup " I am {i}not{/i} calling you that!"
                 $ persistent._jn_player_profanity_during_introduction = True
-                $ jn_relationship("trust-")
 
         else:
             python:
@@ -331,8 +330,7 @@ label introduction_calmed_down:
     extend 1kcsanl " it's just like..."
     menu:
         "Take your time, Natsuki.":
-            $ jn_relationship("affinity+")
-            $ jn_relationship("trust+")
+            $ Natsuki.calculated_affinity_gain()
             n 1fcssrl "..."
             n 1kcseml "...Thanks."
             n 1ncspu "...{w=5}{nw}"

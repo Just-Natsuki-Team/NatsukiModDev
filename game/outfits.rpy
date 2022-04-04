@@ -14,6 +14,8 @@ init python in jn_outfits:
     import store.jn_affinity as jn_affinity
     import store.jn_utils as jn_utils
 
+    from store import Natsuki
+
     current_outfit_name = None
     _use_alt_outfit = random.choice(range(1, 3)) == 1
 
@@ -210,7 +212,7 @@ init python in jn_outfits:
             - outfit - JNOutfitPreset outfit for Natsuki to wear
         """
         global current_outfit_name
-        
+
         if outfit.unlocked:
             store.persistent.jn_natsuki_current_outfit = outfit.clothes
             store.persistent.jn_natsuki_current_hairstyle = outfit.hairstyle
@@ -227,20 +229,20 @@ init python in jn_outfits:
         """
         Returns the outfit corresponding to affinity, the current time block and whether or not is is a weekday.
         """
-        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        if Natsuki.isAffectionate(higher=True):
             if store.jn_is_weekday():
                 return DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_HIGH_AFFINITY.get(store.jn_get_current_time_block())
 
             else:
                 return DEFAULT_OUTFIT_SCHEDULE_WEEKEND_HIGH_AFFINITY.get(store.jn_get_current_time_block())
-        
-        elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
+
+        elif Natsuki.isUpset(lower=True):
             if store.jn_is_weekday():
                 return DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_MEDIUM_AFFINITY.get(store.jn_get_current_time_block())
 
             else:
                 return DEFAULT_OUTFIT_SCHEDULE_WEEKEND_MEDIUM_AFFINITY.get(store.jn_get_current_time_block())
-        
+
         else:
             if store.jn_is_weekday():
                 return DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_LOW_AFFINITY.get(store.jn_get_current_time_block())
@@ -252,39 +254,39 @@ init python in jn_outfits:
         """
         Sets Natsuki's outfit based on the time of day, whether it is a weekday/weekend, and affinity.
         """
-        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        if Natsuki.isAffectionate(higher=True):
             if store.jn_is_weekday():
                 set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_HIGH_AFFINITY.get(store.jn_get_current_time_block()))
 
             else:
                 set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKEND_HIGH_AFFINITY.get(store.jn_get_current_time_block()))
-        
-        elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
+
+        elif Natsuki.isUpset(lower=True):
             if store.jn_is_weekday():
                 set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_MEDIUM_AFFINITY.get(store.jn_get_current_time_block()))
 
             else:
                 set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKEND_MEDIUM_AFFINITY.get(store.jn_get_current_time_block()))
-        
+
         else:
             if store.jn_is_weekday():
                 set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKDAY_LOW_AFFINITY.get(store.jn_get_current_time_block()))
 
             else:
                 set_outfit(DEFAULT_OUTFIT_SCHEDULE_WEEKEND_LOW_AFFINITY.get(store.jn_get_current_time_block()))
-            
+
 label outfits_time_of_day_change:
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1uchbg "Oh!{w=0.2} I gotta change,{w=0.1} just give me a sec...{w=0.75}{nw}"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+    elif Natsuki.isHappy():
         n 1unmpu "Oh!{w=0.2} I should probably change,{w=0.1} one second..."
         n 1flrpol "A-{w=0.1}and no peeking,{w=0.1} got it?!{w=0.75}{nw}"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal():
         n 1unmpu "Oh -{w=0.1} I gotta get changed.{w=0.2} I'll be back in a sec.{w=0.75}{nw}"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1nnmsl "Back in a second.{w=0.75}{nw}"
 
     else:
@@ -293,17 +295,17 @@ label outfits_time_of_day_change:
     play audio clothing_ruffle
     $ jn_outfits.set_outfit_for_time_block()
     with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
-    
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+
+    if Natsuki.isAffectionate(higher=True):
         n 1uchgn "Ta-da!{w=0.2} There we go!{w=0.2} Ehehe.{w=0.75}{nw}"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+    elif Natsuki.isHappy():
         n 1nchbg "Okaaay!{w=0.2} I'm back!{w=0.75}{nw}"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal():
         n 1nnmsm "And...{w=0.3} all done.{w=0.75}{nw}"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1nllsl "I'm back.{w=0.75}{nw}"
 
     else:
