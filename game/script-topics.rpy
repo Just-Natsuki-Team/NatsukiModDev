@@ -6280,7 +6280,7 @@ init 5 python:
             prompt="Newspapers and bias",
             category=["Literature"],
             nat_says=True,
-            affinity_range=(jn_aff.HAPPY, None),
+            affinity_range=(jn_affinity.HAPPY, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
