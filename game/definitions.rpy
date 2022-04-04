@@ -22,50 +22,13 @@ define JN_CHRISTMAS_EVE = datetime.date(datetime.date.today().year, 12, 24)
 define JN_CHRISTMAS_DAY = datetime.date(datetime.date.today().year, 12, 25)
 define JN_NEW_YEARS_EVE = datetime.date(datetime.date.today().year, 12, 31)
 
-init 0 python:
+init -3 python:
     from collections import OrderedDict
+    import datetime
     from Enum import Enum
     import re
-    import store.jn_affinity as jn_aff
-    import store.jn_outfits as jn_outfits
-
-    class JNNatsuki:
-        """
-        Class for general management of Natsuki.
-        """
-        def __init__(self, outfit):
-            """
-            Constructor.
-            """
-            self.outfit = outfit
-
-        def get_outfit_name(self):
-            """
-            Returns the reference name of the outfit Natsuki is currently wearing.
-            """
-            return self.outfit.reference_name
-
-        def set_outfit(self, outfit):
-            """
-            Assigns the specified jn_outfits.JNOutfit outfit to Natsuki.
-
-            IN:
-                - outfit - The jn_outfits.JNOutfit outfit for Natsuki to wear.
-            """
-            self.outfit = outfit
-            store.persistent.jn_natsuki_outfit_on_quit = self.outfit.reference_name
-
-        def is_wearing_outfit(self, outfit):
-            """
-            Returns True if Natsuki is wearing the specified jn_outfits.JNOutfit outfit, otherwise False.
-
-            IN: 
-                - outfit - The jn_outfits.JNOutfit outfit to check if Natsuki is wearing
-
-            OUT:
-                - True if Natsuki is wearing the specified jn_outfits.JNOutfit outfit, otherwise False
-            """
-            return self.outfit.reference_name == outfit.reference_name
+    import store.jn_affinity as jn_affinity
+    import store.jn_utils as jn_utils
 
     class JNHolidays(Enum):
         none = 1
@@ -185,7 +148,7 @@ init 0 python:
                 raise Exception("Label {0} does not exist.".format(label))
 
             #Validate the affinity range prior to it
-            if not store.jn_affinity.is_affinity_range_valid(affinity_range):
+            if not jn_affinity._isAffRangeValid(affinity_range):
                 raise Exception("Affinity range: {0} is invalid.".format(affinity_range))
 
             #First, we'll add all of the items here which which shouldn't change from the persisted data
@@ -285,18 +248,9 @@ init 0 python:
                 True if the current affinity is within range. False otherwise
             """
             if not affinity_state:
-                affinity_state = jn_affinity.get_affinity_state()
+                affinity_state = jn_affinity._getAffinityState()
 
-            return store.jn_affinity.is_state_within_range(affinity_state, self.affinity_range)
-
-        def evaluate_trust_range(self, trust_state):
-            """
-            Checks if the current affinity is within this topic's affinity_range
-
-            OUT:
-                True if the current affinity is within range. False otherwise
-            """
-            return None #TODO: THIS
+            return jn_affinity._isAffStateWithinRange(affinity_state, self.affinity_range)
 
         def __load(self):
             """
@@ -1116,7 +1070,7 @@ init -990 python in jn_globals:
         "h1tl3r",
         "h1tler",
         "hardcoresex",
-        "hell",
+        "(^hell$|^hellspawn$)",
         "heshe",
         "hitler",
         "homo",
@@ -1128,7 +1082,7 @@ init -990 python in jn_globals:
         "kondum",
         "labia",
         "lmfao",
-        "lust",
+        "^lust$",
         "muff",
         "mutha",
         "nazi",
@@ -1388,6 +1342,51 @@ init python in jn_utils:
         else:
             return datetime.datetime.now() - datetime.datetime.today()
 
+    def get_total_gameplay_seconds():
+        """
+        Returns the number of seconds the player has spent with Natsuki in total.
+
+        OUT:
+            - Seconds spent with Natsuki since starting JN
+        """
+        return get_total_gameplay_length().total_seconds()
+
+    def get_total_gameplay_minutes():
+        """
+        Returns the number of minutes the player has spent with Natsuki in total.
+
+        OUT:
+            - Minutes spent with Natsuki since starting JN
+        """
+        return get_total_gameplay_length().total_seconds() / 60
+
+    def get_total_gameplay_hours():
+        """
+        Returns the number of hours the player has spent with Natsuki in total.
+
+        OUT:
+            - Hours spent with Natsuki since starting JN
+        """
+        return get_total_gameplay_length().total_seconds() / 3600
+
+    def get_total_gameplay_days():
+        """
+        Returns the number of days the player has spent with Natsuki in total.
+
+        OUT:
+            - Days spent with Natsuki since starting JN
+        """
+        return get_total_gameplay_length().total_seconds() / 86400
+
+    def get_total_gameplay_months():
+        """
+        Returns the number of months the player has spent with Natsuki in total.
+
+        OUT:
+            - Months spent with Natsuki since starting JN
+        """
+        return get_total_gameplay_length().total_seconds() / 2628000
+
     def get_time_in_session_descriptor():
         """
         Get a descriptor based on the number of minutes the player has spent in the session, up to 30 minutes
@@ -1552,9 +1551,6 @@ init python:
     else:
         n_name = "Natsuki"
 
-init 10 python:
-    JN_NATSUKI = JNNatsuki(jn_outfits.get_outfit("jn_school_uniform"))
-
 init -999 python:
     def label_callback(name, abnormal):
         jn_globals.last_label = jn_globals.current_label
@@ -1567,7 +1563,7 @@ init -999 python:
         This checks to ensure an input or menu screen is not up before allowing a force quit, as these crash the game. Thanks, Tom.
         """
         if (
-            not renpy.get_screen("input") 
+            not renpy.get_screen("input")
             and not renpy.get_screen("choice")
             and jn_globals.force_quit_enabled
         ):

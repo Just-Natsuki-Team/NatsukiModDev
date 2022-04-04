@@ -21,7 +21,7 @@ init python in jn_events:
         event_list = store.Topic.filter_topics(
             EVENT_MAP.values(),
             unlocked=True,
-            affinity=jn_affinity.get_affinity_state(),
+            affinity=Natsuki._getAffinityState(),
             is_seen=False,
             **kwargs
         )
@@ -29,7 +29,7 @@ init python in jn_events:
         # Events are one-time only, so we sanity check here
         if len(event_list) > 0:
             return random.choice(event_list).label
-        
+
         else:
             return None
 
@@ -71,7 +71,7 @@ label event_caught_reading_manga:
     n "I seriously can't believe...!"
     n "Ugh...{w=0.5}{nw}"
     extend " {i}this{/i} is what I had to look forward to?"
-    n "Come on...{w=0.5}{nw}" 
+    n "Come on...{w=0.5}{nw}"
     extend " give me a break..."
 
     play audio page_turn
@@ -86,7 +86,7 @@ label event_caught_reading_manga:
     $ jn_events.display_visuals("1fsrpo")
     show parfait_manga_held zorder jn_events.JN_EVENT_PROP_ZORDER
     $ jn_globals.force_quit_enabled = True
-    
+
     n 1uskem "...!"
     n 1uskeml "[player]!{w=0.5}{nw}"
     extend 1fcsan " C-{w=0.1}can you {i}believe{/i} this?"
@@ -198,7 +198,7 @@ label event_relationship_doubts:
     n "Just..."
     n "..."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    if Natsuki.isDistressed(higher=True):
         n "I {w=2}{i}hate{/i}{w=2} this."
 
     else:
@@ -207,7 +207,7 @@ label event_relationship_doubts:
     n "I hate it.{w=1} I hate it.{w=1} I hate it.{w=1} I hate it.{w=1} I {w=2}{i}hate{/i}{w=2} it."
     $ renpy.pause(5)
 
-    if jn_affinity.get_affinity_state() <= jn_affinity.RUINED and random.randint(0, 10) == 1:
+    if Natsuki.isRuined() and random.randint(0, 10) == 1:
         play audio glitch_a
         show glitch_garbled_red zorder 99 with vpunch
         n "I {i}HATE{/i} IT!!{w=0.5}{nw}"
@@ -326,10 +326,10 @@ label event_not_ready_yet:
         super_messy_hairstyle = jn_outfits.get_wearable("jn_hair_super_messy").unlock()
 
         # Make note of the loaded outfit, then assign Natsuki a hidden one to show off hair/ahoge
-        outfit_to_restore = JN_NATSUKI.get_outfit_name()
+        outfit_to_restore = Natsuki.get_outfit_name()
         ahoge_outfit = jn_outfits.get_outfit("jn_ahoge_unlock")
         ahoge_outfit.headgear = random.choice(unlocked_ahoges)
-        JN_NATSUKI.set_outfit(ahoge_outfit)
+        Natsuki.set_outfit(ahoge_outfit)
 
     $ renpy.pause(5)
     n "Uuuuuu...{w=2}{nw}"
@@ -356,7 +356,7 @@ label event_not_ready_yet:
     n 1uskemf "I-{w=0.3}I gotta get ready!"
 
     play audio clothing_ruffle
-    $ JN_NATSUKI.set_outfit(jn_outfits.get_outfit(outfit_to_restore))
+    $ Natsuki.set_outfit(jn_outfits.get_outfit(outfit_to_restore))
     with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
 
     n 1fcsem "Jeez...{w=1.5}{nw}"

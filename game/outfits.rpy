@@ -5,7 +5,7 @@ default persistent.jn_natsuki_outfit_on_quit = "jn_school_uniform"
 default persistent.jn_outfit_list = {}
 default persistent.jn_wearable_list = {}
 
-init 0 python in jn_outfits:
+init -1 python in jn_outfits:
     from Enum import Enum
     import json
     import os
@@ -933,7 +933,7 @@ init 0 python in jn_outfits:
         else:
             # Finally register if the create op was successful
             __register_outfit(outfit)
-            store.JN_NATSUKI.set_outfit(outfit)
+            store.Natsuki.set_outfit(outfit)
             renpy.notify("Outfit saved!")
             return True
 
@@ -967,14 +967,14 @@ init 0 python in jn_outfits:
         """
         Returns an outfit based on the time of day, weekday/weekend and affinity.
         """
-        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        if store.Natsuki.isAffectionate(higher=True):
             if store.jn_is_weekday():
                 return _OUTFIT_SCHEDULE_WEEKDAY_HIGH_AFFINITY.get(store.jn_get_current_time_block())
 
             else:
                 return _OUTFIT_SCHEDULE_WEEKEND_HIGH_AFFINITY.get(store.jn_get_current_time_block())
         
-        elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
+        elif store.Natsuki.isUpset(higher=True):
             if store.jn_is_weekday():
                 return _OUTFIT_SCHEDULE_WEEKDAY_MEDIUM_AFFINITY.get(store.jn_get_current_time_block())
 
@@ -1630,7 +1630,7 @@ label outfits_wear_outfit:
         n 1nchsm "Just give me a second...{w=2}{nw}"
 
         play audio clothing_ruffle
-        $ JN_NATSUKI.set_outfit(_return)
+        $ Natsuki.set_outfit(_return)
         with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
 
         n 1nchbg "Okaaay!"
@@ -1648,12 +1648,12 @@ label outfits_wear_outfit:
         extend 1uchsm " One second!"
 
         play audio clothing_ruffle
-        $ JN_NATSUKI.set_outfit(
+        $ Natsuki.set_outfit(
             random.choice(
                 jn_outfits.JNOutfit.filter_outfits(
                     outfit_list=jn_outfits.get_all_outfits(),
                     unlocked=True,
-                    not_reference_name=JN_NATSUKI.get_outfit_name())
+                    not_reference_name=Natsuki.get_outfit_name())
             )
         )
         with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
@@ -1698,8 +1698,8 @@ label outfits_suggest_outfit:
     python:
         # We copy these specifically so we can alter them without modifying the outfits in the master list
         import copy
-        jn_outfits._LAST_OUTFIT = copy.copy(jn_outfits.get_outfit(JN_NATSUKI.get_outfit_name()))
-        jn_outfits._PREVIEW_OUTFIT = copy.copy(jn_outfits.get_outfit(JN_NATSUKI.get_outfit_name()))
+        jn_outfits._LAST_OUTFIT = copy.copy(jn_outfits.get_outfit(Natsuki.get_outfit_name()))
+        jn_outfits._PREVIEW_OUTFIT = copy.copy(jn_outfits.get_outfit(Natsuki.get_outfit_name()))
         jn_outfits._changes_made = False
 
     show natsuki idle at jn_left
@@ -1740,13 +1740,13 @@ label outfits_remove_outfit:
             n "You're sure you want me to remove it?"
 
             "Yes, remove [outfit_name].":
-                if JN_NATSUKI.is_wearing_outfit(_return):
+                if Natsuki.is_wearing_outfit(_return):
                     # Change Natsuki out of the uniform to be removed, if she's wearing it
                     n 1uwdaj "Oh! I totally forgot I'm wearing it already!"
                     extend 1fslssl " Ehehe."
 
                     play audio clothing_ruffle
-                    $ JN_NATSUKI.set_outfit(jn_outfits.get_outfit("jn_casual_clothes"))
+                    $ Natsuki.set_outfit(jn_outfits.get_outfit("jn_casual_clothes"))
                     with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
 
                 n 1nchgn "Okaaay!{w=1.5}{nw}"
@@ -1794,7 +1794,7 @@ label outfits_create_select_headgear:
             jn_outfits._changes_made = True
             wearable_to_apply = jn_outfits.get_wearable("jn_none") if _return == "none" else _return
             jn_outfits._PREVIEW_OUTFIT.headgear = wearable_to_apply
-            JN_NATSUKI.set_outfit(jn_outfits._PREVIEW_OUTFIT)
+            Natsuki.set_outfit(jn_outfits._PREVIEW_OUTFIT)
 
     jump outfits_create_menu
 
@@ -1816,7 +1816,7 @@ label outfits_create_select_hairstyle:
         python:
             jn_outfits._changes_made = True
             jn_outfits._PREVIEW_OUTFIT.hairstyle = _return
-            JN_NATSUKI.set_outfit(jn_outfits._PREVIEW_OUTFIT)
+            Natsuki.set_outfit(jn_outfits._PREVIEW_OUTFIT)
 
     jump outfits_create_menu
 
@@ -1839,7 +1839,7 @@ label outfits_create_select_eyewear:
             jn_outfits._changes_made = True
             wearable_to_apply = jn_outfits.get_wearable("jn_none") if _return == "none" else _return
             jn_outfits._PREVIEW_OUTFIT.eyewear = wearable_to_apply
-            JN_NATSUKI.set_outfit(jn_outfits._PREVIEW_OUTFIT)
+            Natsuki.set_outfit(jn_outfits._PREVIEW_OUTFIT)
 
     jump outfits_create_menu
 
@@ -1863,7 +1863,7 @@ label outfits_create_select_accessory:
             jn_outfits._changes_made = True
             wearable_to_apply = jn_outfits.get_wearable("jn_none") if _return == "none" else _return
             jn_outfits._PREVIEW_OUTFIT.accessory = wearable_to_apply
-            JN_NATSUKI.set_outfit(jn_outfits._PREVIEW_OUTFIT)
+            Natsuki.set_outfit(jn_outfits._PREVIEW_OUTFIT)
 
     jump outfits_create_menu
 
@@ -1887,7 +1887,7 @@ label outfits_create_select_necklace:
             jn_outfits._changes_made = True
             wearable_to_apply = jn_outfits.get_wearable("jn_none") if _return == "none" else _return
             jn_outfits._PREVIEW_OUTFIT.necklace = wearable_to_apply
-            JN_NATSUKI.set_outfit(jn_outfits._PREVIEW_OUTFIT)
+            Natsuki.set_outfit(jn_outfits._PREVIEW_OUTFIT)
 
     jump outfits_create_menu
 
@@ -1909,7 +1909,7 @@ label outfits_create_select_clothes:
         python:
             jn_outfits._changes_made = True
             jn_outfits._PREVIEW_OUTFIT.clothes = _return
-            JN_NATSUKI.set_outfit(jn_outfits._PREVIEW_OUTFIT)
+            Natsuki.set_outfit(jn_outfits._PREVIEW_OUTFIT)
 
     jump outfits_create_menu
 
@@ -1935,7 +1935,7 @@ label outfits_create_quit:
                 n 1nsrpol "I was bored of changing anyway."
 
                 play audio clothing_ruffle
-                $ JN_NATSUKI.set_outfit(jn_outfits._LAST_OUTFIT)
+                $ Natsuki.set_outfit(jn_outfits._LAST_OUTFIT)
                 with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
                 jump ch30_loop 
 
@@ -2013,36 +2013,36 @@ label outfits_create_save:
 
 # Natsuki's automatic outfit changes based on time of day, weekday/weekend, affinity
 label outfits_auto_change:
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1uchbg "Oh!{w=0.2} I gotta change,{w=0.1} just give me a sec...{w=0.75}{nw}"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+    elif Natsuki.isHappy(higher=True):
         n 1unmpu "Oh!{w=0.2} I should probably change,{w=0.1} one second...{w=0.75}{nw}"
         n 1flrpol "A-{w=0.1}and no peeking,{w=0.1} got it?!{w=0.75}{nw}"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1unmpu "Oh -{w=0.1} I gotta get changed.{w=0.2} I'll be back in a sec.{w=0.75}{nw}"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1nnmsl "Back in a second.{w=0.75}{nw}"
 
     else:
         n 1fsqsl "I'm changing.{w=0.75}{nw}"
 
     play audio clothing_ruffle
-    $ JN_NATSUKI.set_outfit(jn_outfits.get_realtime_outfit())
+    $ Natsuki.set_outfit(jn_outfits.get_realtime_outfit())
     with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
-    
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+
+    if Natsuki.isAffectionate(higher=True):
         n 1uchgn "Ta-da!{w=0.2} There we go!{w=0.2} Ehehe.{w=0.75}{nw}"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+    elif Natsuki.isHappy(higher=True):
         n 1nchbg "Okaaay!{w=0.2} I'm back!{w=0.75}{nw}"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1nnmsm "And...{w=0.3} all done.{w=0.75}{nw}"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1nllsl "I'm back.{w=0.75}{nw}"
 
     else:

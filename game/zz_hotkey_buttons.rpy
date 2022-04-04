@@ -259,7 +259,7 @@ screen hkb_overlay:
 
             style "hkbd_button"
 
-        if persistent.jn_custom_music_explanation_given and jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+        if persistent.jn_custom_music_explanation_given and Natsuki.isHappy(higher=True):
             textbutton _("Music"):
                 action [
                     Jump("music_menu"),

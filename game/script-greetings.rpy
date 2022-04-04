@@ -39,7 +39,7 @@ init python in greetings:
         return random.choice(
             store.Topic.filter_topics(
                 GREETING_MAP.values(),
-                affinity=store.jn_affinity.get_affinity_state(),
+                affinity=store.Natsuki._getAffinityState(),
                 **kwargs
             )
         ).label
@@ -47,8 +47,7 @@ init python in greetings:
 # Only chosen for the first time the player returns after bringing Natsuki back
 label greeting_first_time:
     if jn_farewells.JNFirstLeaveTypes(persistent.jn_player_first_farewell_response) == jn_farewells.JNFirstLeaveTypes.will_be_back:
-        $ jn_relationship("affinity+")
-        $ jn_relationship("trust+")
+        $ Natsuki.calculated_affinity_gain(bypass=True)
         n 1uskem "[player]!{w=0.5}{nw}"
         extend 1uskwr " Y-{w=0.1}you're back!"
         n 1flleml "I mean...{w=0.5}{nw}"
@@ -64,7 +63,7 @@ label greeting_first_time:
         extend 1unmaj " what did you wanna talk about?"
 
     elif jn_farewells.JNFirstLeaveTypes(persistent.jn_player_first_farewell_response) == jn_farewells.JNFirstLeaveTypes.dont_know:
-        $ jn_relationship("affinity+")
+        $ Natsuki.calculated_affinity_gain(bypass=True)
         n 1uskaj "[player]?{w=0.5}{nw}"
         extend 1uskem " Y-{w=0.1}you came back?"
         n 1fcsun "..."
@@ -91,7 +90,7 @@ label greeting_first_time:
 
 # Only chosen for the first time the player leaves and returns after force quit
 label greeting_first_force_quit:
-    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    if Natsuki.isNormal(higher=True):
         n 1kcsun "Uuuuuuu...{w=2}{nw}"
         extend 1kslem " my...{w=0.3} h-{w=0.1}head..."
         n 1kcsun "..."
@@ -110,7 +109,7 @@ label greeting_first_force_quit:
         n 1knmpu "Just remember for next time,{w=0.1} [player].{w=0.5}{nw}"
         extend 1knmsr " Please."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1fcsun "Hnnnngg..."
         n 1fsqun "..."
         n 1fsqan "..."
@@ -144,7 +143,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_today_is_gonna_be_great",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, None)
+            affinity_range=(jn_affinity.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -160,7 +159,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_world_revolves_around_you",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, None)
+            affinity_range=(jn_affinity.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -181,7 +180,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_make_today_amazing",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, None)
+            affinity_range=(jn_affinity.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -198,7 +197,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_always_welcome_here",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, None)
+            affinity_range=(jn_affinity.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -216,7 +215,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_lovestruck",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, None)
+            affinity_range=(jn_affinity.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -241,7 +240,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_looking_for_me",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, None)
+            affinity_range=(jn_affinity.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -262,7 +261,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_dull_moment",
             unlocked=True,
-            affinity_range=(jn_aff.LOVE, None)
+            affinity_range=(jn_affinity.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -284,7 +283,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_affectionate_enamored_good_to_see_you",
             unlocked=True,
-            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -301,7 +300,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_affectionate_enamored_couldnt_resist",
             unlocked=True,
-            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -318,7 +317,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_affectionate_enamored_just_cant_stay_away",
             unlocked=True,
-            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -336,7 +335,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_affectionate_enamored_have_so_much_fun",
             unlocked=True,
-            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -353,7 +352,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_affectionate_enamored_everything_is_fine",
             unlocked=True,
-            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.ENAMORED)
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -372,7 +371,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_normal_happy_whats_up",
             unlocked=True,
-            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY)
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -388,7 +387,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_normal_happy_glad_to_see_you",
             unlocked=True,
-            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY)
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -404,7 +403,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_normal_happy_spacing_out",
             unlocked=True,
-            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY)
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -423,7 +422,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_normal_happy_heya",
             unlocked=True,
-            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY)
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -439,7 +438,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_normal_happy_knew_youd_be_back",
             unlocked=True,
-            affinity_range=(jn_aff.NORMAL, jn_aff.HAPPY)
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -458,7 +457,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_distressed_upset_oh_its_you",
             unlocked=True,
-            affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET)
+            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -474,7 +473,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_distressed_upset_hi",
             unlocked=True,
-            affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET)
+            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -489,7 +488,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_distressed_upset_welcome_back_i_guess",
             unlocked=True,
-            affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET)
+            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -504,7 +503,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_distressed_upset_better_be_good",
             unlocked=True,
-            affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET)
+            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -520,7 +519,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_distressed_upset_oh_you_came_back",
             unlocked=True,
-            affinity_range=(jn_aff.DISTRESSED, jn_aff.UPSET)
+            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -538,7 +537,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_broken_minus_oh_its_you",
             unlocked=True,
-            affinity_range=(None, jn_aff.BROKEN)
+            affinity_range=(None, jn_affinity.BROKEN)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -554,7 +553,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_broken_minus_nothing_to_say",
             unlocked=True,
-            affinity_range=(None, jn_aff.BROKEN)
+            affinity_range=(None, jn_affinity.BROKEN)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -570,7 +569,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_broken_minus_why",
             unlocked=True,
-            affinity_range=(None, jn_aff.BROKEN)
+            affinity_range=(None, jn_affinity.BROKEN)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -586,7 +585,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_broken_minus_enough_on_my_mind",
             unlocked=True,
-            affinity_range=(None, jn_aff.BROKEN)
+            affinity_range=(None, jn_affinity.BROKEN)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -603,7 +602,7 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_broken_minus_leave_me_be",
             unlocked=True,
-            affinity_range=(None, jn_aff.BROKEN)
+            affinity_range=(None, jn_affinity.BROKEN)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -623,7 +622,7 @@ init 5 python:
             label="greeting_feeling_better_sick",
             unlocked=True,
             category=["Admission"],
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
             additional_properties={
                 "admission_type": jn_admissions.TYPE_SICK,
             }
@@ -668,7 +667,7 @@ init 5 python:
             label="greeting_feeling_better_tired",
             unlocked=True,
             category=["Admission"],
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
             additional_properties={
                 "admission_type": jn_admissions.TYPE_TIRED,
             }
@@ -723,7 +722,7 @@ init 5 python:
     )
 
 label greeting_sudden_leave:
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1kwmsrl "..."
         n 1kwmsrl "[player]."
         n 1knmsll "Come on.{w=0.2} You're better than that."
@@ -732,14 +731,14 @@ label greeting_sudden_leave:
         n 1knmssl "It'd mean a lot to me."
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1kwmsr "..."
         n 1fplsf "[player]!{w=0.2} Do you know how scary it is when you just vanish like that?"
         n 1knmsf "Please...{w=0.3} just remember to say goodbye properly when you gotta leave."
         n 1knmss "It's not much to ask...{w=0.3} is it?"
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1fsqsf "..."
         n 1fsqaj "You know I hate that,{w=0.1} [player]."
         n 1fsqsl "Knock it off,{w=0.1} will you?"
@@ -772,7 +771,7 @@ init 5 python:
 label greeting_prolonged_leave:
     $ player_initial = list(player)[0]
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1uwdwrf "[player_initial]-{w=0.1}[player]!"
         n 1fbkwrf "W-{w=0.1}where were you?!{w=0.2} I was so worried that something had happened!"
         n 1kcsunl "..."
@@ -781,7 +780,7 @@ label greeting_prolonged_leave:
         n 1kcssll "I hate having my heart played with like that..."
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_PROLONGED_LEAVE)
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1uwdwr "[player_initial]-{w=0.1}[player]!"
         n 1fnman "What the hell?!{w=0.2} Where have you been?{w=0.2} I was worried sick!"
         n 1fcsupl "J-{w=0.1}just as a friend,{w=0.1} but still!"
@@ -790,7 +789,7 @@ label greeting_prolonged_leave:
         n 1knmaj "Just...{w=0.3} don't leave it so long next time,{w=0.1} alright?{w=0.2} Jeez..."
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_PROLONGED_LEAVE)
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1fsqaj "[player_initial]-{w=0.1}[player]?"
         n 1fsqsl "...You're back."
         n 1kcssf "I...{w=0.3} don't know how I feel about that."
@@ -816,7 +815,7 @@ init 5 python:
             label="greeting_early_morning_why_are_you_here",
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(3, 4)",
-            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -840,7 +839,7 @@ init 5 python:
             label="greeting_morning_starshine",
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(5, 11)",
-            affinity_range=(jn_aff.ENAMORED, jn_aff.LOVE),
+            affinity_range=(jn_affinity.ENAMORED, jn_affinity.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -865,7 +864,7 @@ init 5 python:
             label="greeting_morning_waiting_for_you",
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(5, 11)",
-            affinity_range=(jn_aff.AFFECTIONATE, jn_aff.LOVE),
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -885,7 +884,7 @@ init 5 python:
             label="greeting_morning_lazy",
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(10, 11)",
-            affinity_range=(jn_aff.HAPPY, jn_aff.LOVE),
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -908,7 +907,7 @@ init 5 python:
             label="greeting_morning_top_of_the_mornin",
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(8, 11)",
-            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -931,7 +930,7 @@ init 5 python:
             label="greeting_afternoon_keeping_well",
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(12, 17)",
-            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -949,7 +948,7 @@ init 5 python:
             label="greeting_afternoon_how_are_you",
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(12, 17)",
-            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -969,7 +968,7 @@ init 5 python:
             label="greeting_evening_long_day",
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(18, 21)",
-            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -988,7 +987,7 @@ init 5 python:
             label="greeting_evening_took_long_enough",
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(18, 21)",
-            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -1012,7 +1011,7 @@ init 5 python:
             label="greeting_night_up_late",
             unlocked=True,
             conditional="store.jn_get_current_hour() >= 22 or store.jn_get_current_hour() <= 2",
-            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -1031,7 +1030,7 @@ init 5 python:
             label="greeting_night_night_owl",
             unlocked=True,
             conditional="store.jn_get_current_hour() >= 22 or store.jn_get_current_hour() <= 2",
-            affinity_range=(jn_aff.NORMAL, jn_aff.LOVE),
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
         ),
         topic_group=TOPIC_TYPE_GREETING
     )

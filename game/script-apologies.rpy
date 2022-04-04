@@ -31,7 +31,7 @@ init 0 python in jn_apologies:
         """
         return store.Topic.filter_topics(
             APOLOGY_MAP.values(),
-            affinity=store.jn_affinity.get_affinity_state(),
+            affinity=store.Natsuki._getAffinityState(),
             unlocked=True
         )
 
@@ -92,24 +92,24 @@ label apology_bad_nickname:
 
     if persistent.jn_player_nicknames_allowed:
         # The player is still capable of nicknaming Natsuki
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             n 1kcssf "..."
             n 1knmsf "That hurt,{w=0.1} [player].{w=0.2} What you did."
             n 1kplsf "That really hurt me."
             n 1kcssf "..."
             n 1kplss "I'm...{w=0.3} glad you've chosen to apologize."
             n 1knmsr "Just please...{w=0.3} try to consider my feelings next time,{w=0.1} alright?"
-            $ jn_relationship("affinity+")
+            $ Natsuki.calculated_affinity_gain()
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        elif Natsuki.isNormal(higher=True):
             n 1fcssr "..."
             n 1fnmsl "...Fine.{w=0.2} I accept your apology, okay?"
             n 1uplsl "Just please knock it off,{w=0.1} [player]."
             n 1uplaj "It isn't funny.{w=0.2} It isn't a joke."
             n 1fllsl "...And I know you're better than that."
-            $ jn_relationship("affinity+")
+            $ Natsuki.calculated_affinity_gain()
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        elif Natsuki.isDistressed(higher=True):
             n 1fsqsl "...Are you sure,{w=0.1} [player]?"
             n 1fllaj "I mean...{w=0.3} if you actually cared about my feelings..."
             n 1fsqan "Why would you even think about doing that in the first place?"
@@ -118,7 +118,7 @@ label apology_bad_nickname:
             n 1fcssr "..."
             n 1fllsr "...Thanks,{w=0.1} I guess.{w=0.2} For the apology."
             n 1fsqsl "Just quit while you're ahead,{w=0.1} understand?"
-            $ jn_relationship("affinity+")
+            $ Natsuki.calculated_affinity_gain()
 
         else:
             n 1fcsan "...I honestly don't know what I find more gross about you,{w=0.1} [player]."
@@ -130,7 +130,7 @@ label apology_bad_nickname:
 
     else:
         # The player has been barred from nicknaming Natsuki, and even an apology won't change that
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             n 1fcsfr "...[player]."
             n 1fplsr "I warned you."
             n 1kplsl "I warned you so many times."
@@ -140,21 +140,21 @@ label apology_bad_nickname:
             n 1kplsr "I appreciate your apology,{w=0.1} okay?{w=0.2} I do."
             n 1kllsr "But...{w=0.3} it's just like I said.{w=0.2} Actions have consequences."
             n 1kcssr "I hope you can understand."
-            $ jn_relationship("affinity+")
+            $ Natsuki.calculated_affinity_gain()
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        elif Natsuki.isNormal(higher=True):
             n 1fcssr "...[player]."
             n 1fsqsr "Look.{w=0.2} You're sorry,{w=0.1} I get it.{w=0.2} I'm sure you mean it too."
             n 1fcssl "But...{w=0.3} it's like I said.{w=0.1} Actions have consequences."
             n 1kcssl "I hope you can understand."
-            $ jn_relationship("affinity+")
+            $ Natsuki.calculated_affinity_gain()
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        elif Natsuki.isDistressed(higher=True):
             n 1fsqfu "Ugh...{w=0.3} really,{w=0.1} [player]?"
             n 1fcsan "..."
             n 1fsqfr "I {i}said{/i} actions have consequences."
             n 1fcsfr "I appreciate the apology.{w=0.2} But that's all you're getting."
-            $ jn_relationship("affinity+")
+            $ Natsuki.calculated_affinity_gain()
 
         else:
             n 1kcsfr "...Wow.{w=0.2} Just wow."
@@ -180,25 +180,25 @@ init 5 python:
     )
 
 label apology_cheated_game:
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1kchbg "Ehehe.{w=0.2} It's fine,{w=0.1} [player]."
         n 1nllsm "We all get a little too competitive sometimes,{w=0.1} right?"
         n 1nsqsm "Just remember though."
         n 1fsqbg "Two can play at that game!"
-        $ jn_relationship("affinity+")
+        $ Natsuki.calculated_affinity_gain()
         $ persistent.jn_snap_player_is_cheater = False
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1fsqbg "Huh?{w=0.2} Oh,{w=0.1} that."
         n 1nnmaj "Yeah,{w=0.1} yeah.{w=0.2} It's fine."
         n 1nllsl "Just play fair next time,{w=0.1} 'kay?"
-        $ jn_relationship("affinity+")
+        $ Natsuki.calculated_affinity_gain()
         $ persistent.jn_snap_player_is_cheater = False
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1fcssl "Whatever,{w=0.1} [player]."
         n 1fsqsl "But thanks for the apology,{w=0.1} I guess."
-        $ jn_relationship("affinity+")
+        $ Natsuki.calculated_affinity_gain()
         $ persistent.jn_snap_player_is_cheater = False
 
     else:
@@ -223,7 +223,7 @@ init 5 python:
 label apology_default:
     if len(persistent.jn_player_pending_apologies) == 0:
         # The player has nothing to be sorry to Natsuki for; prompt them to do better
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             n 1tnmaj "Huh?{w=0.2} You're sorry?"
             n 1tllaj "I...{w=0.3} don't get it,{w=0.1} [player].{w=0.2} You haven't done anything to upset me..."
             n 1tnmsl "Did you upset someone else or something?"
@@ -236,7 +236,7 @@ label apology_default:
             n 1fchbg "You have my vote of confidence,{w=0.1} [chosen_tease] -{w=0.1} now do your best!"
             n 1uchsm "Ehehe."
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        elif Natsuki.isNormal(higher=True):
             n 1tnmaj "Eh?{w=0.2} You're sorry?"
             n 1nllaj "What for,{w=0.1} [player]?{w=0.2} I don't remember you getting on my nerves lately..."
             n 1fnmcal "Did you do something dumb that I don't know about?"
@@ -244,7 +244,7 @@ label apology_default:
             n 1knmpu "Well,{w=0.1} whatever it was -{w=0.1} it's not like it's unfixable,{w=0.1} you know?"
             n 1fcsbg "Now get out there and put things right,{w=0.1} [player]!{w=0.2} I believe in you!"
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        elif Natsuki.isDistressed(higher=True):
             n 1fsqbo "...You're sorry,{w=0.1} are you?"
             n 1fsqan "Did you hurt someone besides me,{w=0.1} this time?"
             n 1fcssl "..."
@@ -260,32 +260,32 @@ label apology_default:
 
     else:
         # The player is avoiding a direct apology to Natsuki; call them out on it
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             n 1kplsr "...[player].{w=0.2} Come on."
             n 1knmsr "You know what you did wrong."
             n 1knmaj "Just apologize properly,{w=0.1} alright?"
             n 1kllbo "I won't get mad."
             n 1kcsbo "I just wanna move on."
-            $ jn_relationship("affinity-")
+            $ Natsuki.percentage_affinity_loss(2.5)
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        elif Natsuki.isNormal(higher=True):
             n 1fnmsf "Come on,{w=0.1} [player]."
             n 1fnmaj "You know what you did."
             n 1nllsl "Just apologize properly so we can both move on."
-            $ jn_relationship("affinity-")
-            
-        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+            $ Natsuki.percentage_affinity_loss(2)
+
+        elif Natsuki.isDistressed(higher=True):
             n 1fcsan "Ugh..."
             n 1fnman "Really,{w=0.1} [player].{w=0.2} Haven't you screwed with me enough?"
             n 1fsqfu "If you're gonna apologize,{w=0.1} have the guts to do it properly."
             n 1fsqsf "You owe me that much,{w=0.1} at least."
-            $ jn_relationship("affinity-")
+            $ Natsuki.percentage_affinity_loss(1.5)
 
         else:
             n 1fsqfu "...Do you even know how you sound?"
             n 1fnmfu "Do you even {i}listen{/i} to yourself?"
             n 1fcsfu "Apologize properly or don't bother."
-            $ jn_relationship("affinity-")
+            $ Natsuki.percentage_affinity_loss(1)
 
     return
 
@@ -303,7 +303,7 @@ init 5 python:
     )
 
 label apology_prolonged_leave:
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1kcssl "...[player]."
         n 1knmsl "We've been together a while now,{w=0.1} haven't we?"
         n 1kllsll "I...{w=0.3} really...{w=0.3} like spending time with you.{w=0.2} Why do you think I'm always here when you drop in?"
@@ -317,9 +317,9 @@ label apology_prolonged_leave:
         n 1kplsm "Thanks,{w=0.1} [player].{w=0.2} I accept your apology."
         n 1kplbo "Just...{w=0.3} some notice would be nice next time,{w=0.1} is all."
         n 1kllbo "That isn't too much to ask...{w=0.3} right?"
-        $ jn_relationship("affinity+")
+        $ Natsuki.calculated_affinity_gain()
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1fcsunl "[player]..."
         n 1fbkwrl "What were you thinking?!{w=0.2} Just vanishing like that!"
         n 1fwmunl "I waited so long for you...{w=0.3} I was starting to wonder if something bad happened!"
@@ -327,9 +327,9 @@ label apology_prolonged_leave:
         n 1fllunl "..."
         n 1fllpo "I'm...{w=0.3} grateful for your apology,{w=0.1} [player]."
         n 1fnmpo "Just...{w=0.3} no more disappearing acts,{w=0.1} alright?"
-        $ jn_relationship("affinity+")
+        $ Natsuki.calculated_affinity_gain()
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1fcsbo "[player]."
         n 1fnmbo "I know we haven't exactly been seeing eye-to-eye lately."
         n 1knmaj "But do you know how {i}scary{/i} it is to me when you just disappear like that?"
@@ -337,7 +337,7 @@ label apology_prolonged_leave:
         n 1fcssl "..."
         n 1fsqsl "Thanks for the apology,{w=0.1} I guess."
         n 1fsqbo "Just don't do that again."
-        $ jn_relationship("affinity+")
+        $ Natsuki.calculated_affinity_gain()
 
     else:
         n 1kcspu "...Ha...{w=0.3} ah...{w=0.3} haha..."
@@ -362,7 +362,7 @@ init 5 python:
     )
 
 label apology_rude:
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1kcsbo "...[player]."
         n 1knmbo "I know I give as good as I get.{w=0.2} Maybe I'm a little snappy sometimes,{w=0.1} too."
         n 1kplsl "But that was really,{w=0.1} really rude,{w=0.1} [player]."
@@ -371,9 +371,9 @@ label apology_rude:
         n 1kplss "Thanks for the apology,{w=0.1} [player].{w=0.2} I really do appreciate it."
         n 1kllaj "Just...{w=0.3} try not to do that again,{w=0.1} 'kay?"
         n 1kplsll "It would mean a lot to me."
-        $ jn_relationship("affinity+")
+        $ Natsuki.calculated_affinity_gain()
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1fcssl "[player]..."
         n 1fnmsl "I'm glad you're apologizing for what you did,{w=0.1} but you gotta understand."
         n 1fcswr "You can't just treat people like that!"
@@ -381,23 +381,23 @@ label apology_rude:
         n 1fcssf "..."
         n 1fllsf "Let's just move on and forget about this,{w=0.1} alright?"
         n 1nllsf "Thanks,{w=0.1} [player]."
-        $ jn_relationship("affinity+")
+        $ Natsuki.calculated_affinity_gain()
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1fcsan "..."
         n 1fsqfu "I gotta ask,{w=0.1} [player].{w=0.2} Are you like that on purpose,{w=0.1} or are you making a special effort?"
         n 1fsqan "Because I honestly can't tell anymore."
         n 1fcssr "..."
         n 1fsqaj "...Fine.{w=0.2} I guess I should accept your apology."
         n 1fsqan "I just hope you don't treat others how you're treating me."
-        $ jn_relationship("affinity+")
+        $ Natsuki.calculated_affinity_gain()
 
     else:
-        n 1kcsan "Ha...{w=0.3} aha..." 
+        n 1kcsan "Ha...{w=0.3} aha..."
         n 1fsqan "You're apologizing...{w=0.3} to me? Why?"
         n 1fsqpu "I don't expect any better from you."
         n 1fcsun "..."
-        n 1fsqfu "You can stick your apology,{w=0.1} [player]." 
+        n 1fsqfu "You can stick your apology,{w=0.1} [player]."
         n 1fcsfu "It means nothing to me."
 
     $ persistent.jn_player_pending_apologies.remove(jn_apologies.TYPE_RUDE)
@@ -418,7 +418,7 @@ init 5 python:
 
 label apology_screenshots:
     # The player has been barred from taking more screenshots
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1kcsbol "...[player]."
         n 1fnmaj "I told you so many times to knock it off."
         n 1knmsl "Why didn't you listen to me?"
@@ -433,9 +433,9 @@ label apology_screenshots:
             n 1klrsl "But...{w=0.3} I'm going to keep the camera switched off -{w=0.1} at least for now."
             n 1kplsl "I hope you can understand why."
 
-        $ jn_relationship("affinity+")
+        $ Natsuki.calculated_affinity_gain()
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1fcssl "[player]..."
         n 1fsqsl "I told you again and again not to do that."
         n 1fnmsl "Why did you keep ignoring me?"
@@ -447,9 +447,9 @@ label apology_screenshots:
             n 1fnmaj "But...{w=0.3} the camera is staying off for now."
             n 1flrbo "Thanks for understanding."
 
-        $ jn_relationship("affinity+")
+        $ Natsuki.calculated_affinity_gain()
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1fsqsf "...You're apologizing to me {i}now{/i},{w=0.1} [player]?"
         n 1fsqan "And after I gave you so many chances to quit it?"
         n 1fcssf "..."
@@ -462,7 +462,7 @@ label apology_screenshots:
         else:
             n 1fsqbo "This time,{w=0.1} anyway."
 
-        $ jn_relationship("affinity+")
+        $ Natsuki.calculated_affinity_gain()
 
     else:
         n 1fcsan "...No,{w=0.1} [player].{w=0.2} Please."
@@ -487,7 +487,7 @@ init 5 python:
     )
 
 label apology_without_goodbye:
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1fcsunl "[player]..."
         n 1knmunl "Do you know how much it hurts when you do that?"
         n 1kcsunl "It's like you're just slamming a door in my face."
@@ -496,30 +496,30 @@ label apology_without_goodbye:
         n 1kcssl "..."
         n 1knmss "I'm grateful for the apology,{w=0.1} but please..."
         n 1knmsm "You can at least spare the time to say goodbye properly to me,{w=0.1} right?"
-        $ jn_relationship("affinity+")
+        $ Natsuki.calculated_affinity_gain()
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1fllsl "..."
         n 1fnmsl "Hey,{w=0.1} [player]."
         n 1fnmaj "Have you ever had a conversation where one person just walks away?"
         n 1fsqaj "No 'goodbye',{w=0.1} no 'see you later',{w=0.1} nothing?{w=0.2} They just leave?"
-        n 1fsqbo "How would that make you feel?" 
+        n 1fsqbo "How would that make you feel?"
         n 1ksqaj "Unwanted?{w=0.2} Not worth the manners?"
         n 1fllsl "Because that's just how you made me feel,{w=0.1} [player]."
         n 1fcssl "..."
         n 1flraj "I accept the apology,{w=0.1} okay?"
         n 1knmaj "Just...{w=0.3} remember to at least say goodbye to me properly."
         n 1nnmsl "You can do that much,{w=0.1} right?"
-        $ jn_relationship("affinity+")
+        $ Natsuki.calculated_affinity_gain()
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1fsqsl "[player]."
         n 1fsqan "Do you even {i}care{/i} how rude that is?"
         n 1fsqfu "To just vanish mid-conversation with someone?"
         n 1fcssr "..."
         n 1fsqsr "Look,{w=0.1} fine.{w=0.2} Apology accepted,{w=0.1} for now."
         n 1fsqaj "But really,{w=0.1} [player].{w=0.2} I expected better -{w=0.1} even from you."
-        $ jn_relationship("affinity+")
+        $ Natsuki.calculated_affinity_gain()
 
     else:
         n 1fcsan "...Heh.{w=0.2} Honestly?"
@@ -543,7 +543,7 @@ init 5 python:
     )
 
 label apology_unhealthy:
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1kcssml "[player],{w=0.1} [player],{w=0.1} [player]..."
         n 1knmajl "What am I gonna do with you?"
         n 1kllsll "Honestly..."
@@ -553,9 +553,9 @@ label apology_unhealthy:
         n 1knmss "Thanks,{w=0.1} [player].{w=0.2} I accept your apology."
         n 1knmbo "Just please...{w=0.3} take better care of yourself,{w=0.1} alright?"
         n 1kllbol "I'll get mad if you don't.{w=0.2} For real,{w=0.1} this time."
-        $ jn_relationship("affinity+")
+        $ Natsuki.calculated_affinity_gain()
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1fcsbol "Ugh...{w=0.3} [player]."
         n 1fnmbo "Look.{w=0.2} I accept your apology."
         n 1knmaj "But you gotta take better care of yourself!"
@@ -563,16 +563,16 @@ label apology_unhealthy:
         n 1fnmem "A-{w=0.1}and it's not like I'm making an exception for you,{w=0.1} by the way!"
         n 1nlrbo "I just care about all my friends like this,{w=0.1} so...{w=0.3} yeah."
         n 1knmsl "Try and make more of an effort to look after yourself,{w=0.1} 'kay?"
-        $ jn_relationship("affinity+")
+        $ Natsuki.calculated_affinity_gain()
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1fcssl "...Look.{w=0.2} [player]."
         n 1flrsl "Firstly,{w=0.1} thanks for the apology.{w=0.2} If you even meant it,{w=0.1} anyway."
         n 1fcsaj "But I'm really struggling to see why I should care."
         n 1fcssl "..."
         n 1fnmsl "Just...{w=0.3} take more care of yourself."
         n 1fsqsl "...And while you're at it, perhaps try taking better care of me.{w=0.2} Thanks."
-        $ jn_relationship("affinity+")
+        $ Natsuki.calculated_affinity_gain()
 
     else:
         n 1kcsun "...Heh."
@@ -595,30 +595,30 @@ init 5 python:
     )
 
 label apology_scare:
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1fskwrf "A-{w=0.1}and I should think so too,{w=0.1} [player] -{w=0.1} jeez!"
         n 1fwmpof "Are you trying to give me a heart attack or what?"
         n 1fcspol "..."
         n 1kllbol "Thank you,{w=0.1} [player].{w=0.2} I accept your apology."
         n 1kplbol "Just please...{w=0.3} no more surprises like that,{w=0.1} okay?{w=0.1} For me?"
-        $ jn_relationship("affinity+")
+        $ Natsuki.calculated_affinity_gain()
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1fbkwrl "A-{w=0.1}and you're right {i}to{/i} be sorry,{w=0.1} [player]!"
         n 1flleml "I {i}hate{/i} being made to feel like that!{w=0.2} Dummy..."
         n 1fcspo "..."
         n 1fnmpo "Alright,{w=0.1} look.{w=0.1} I accept your apology,{w=0.1} okay?"
         n 1knmaj "Just don't do stuff like that to me.{w=0.2} Please?"
         n 1flrsl "I'm not messing around,{w=0.1} [player]."
-        $ jn_relationship("affinity+")
+        $ Natsuki.calculated_affinity_gain()
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1fsqsl "...Look,{w=0.1} [player].{w=0.2} I'm already upset.{w=0.2} Why are you trying to make me feel even worse?"
         n 1fsqfu "Did you think it was funny?{w=0.2} Or are you trying to piss me off?"
         n 1fcsan "..."
         n 1fcssl "Whatever.{w=0.2} Fine.{w=0.2} Apology accepted,{w=0.1} if you even meant it."
         n 1fsqsf "Just knock it off."
-        $ jn_relationship("affinity+")
+        $ Natsuki.calculated_affinity_gain()
 
     else:
         n 1fsqfu "Stick it,{w=0.1} [player]."

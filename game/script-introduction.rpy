@@ -38,7 +38,7 @@ label introduction_progress_check:
         show glitch_garbled_a zorder 99 with vpunch
         hide glitch_garbled_a
 
-        $ JN_NATSUKI.set_outfit(jn_outfits.get_outfit("jn_school_uniform"))
+        $ Natsuki.set_outfit(jn_outfits.get_outfit("jn_school_uniform"))
         $ main_background.appear()
         $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
 
@@ -114,7 +114,7 @@ label introduction_opening:
     hide glitch_garbled_a
 
     # Get the visuals ready
-    $ JN_NATSUKI.set_outfit(jn_outfits.get_outfit("jn_school_uniform"))
+    $ Natsuki.set_outfit(jn_outfits.get_outfit("jn_school_uniform"))
     $ main_background.appear()
     $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
     play music audio.space_classroom_bgm fadein 1
@@ -224,7 +224,6 @@ label introduction_first_meeting:
                 n 1fcsan "Quit playing around,{w=0.3} you jerk!{w=1}{nw}"
                 extend 1fcsup " I am {i}not{/i} calling you that!"
                 $ persistent._jn_player_profanity_during_introduction = True
-                $ jn_relationship("trust-")
 
         else:
             python:
@@ -335,8 +334,7 @@ label introduction_calmed_down:
     extend 1kcsanl " it's just like..."
     menu:
         "Take your time, Natsuki.":
-            $ jn_relationship("affinity+")
-            $ jn_relationship("trust+")
+            $ Natsuki.calculated_affinity_gain()
             n 1fcssrl "..."
             n 1kcseml "...Thanks."
             n 1ncspu "...{w=5}{nw}"

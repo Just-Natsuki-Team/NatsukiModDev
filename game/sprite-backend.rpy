@@ -1,6 +1,7 @@
 init -50 python:
     import store
     import store.jn_outfits as jn_outfits
+    import store.jn_utils as jn_utils
     from Enum import Enum
 
     JN_NATSUKI_ZORDER = 3
@@ -133,17 +134,19 @@ init -50 python:
         emote=None
     ):
         """
+        Generates sprites for Natsuki based on outfit, expression, pose, etc.
         """
+        jn_utils.log("Type of Natsuki outfit: {0}".format(type(Natsuki._outfit)))
         lc_args = [
             (1280, 740), # Anchor
             (0, 0), _BASE_SPRITE_PATH + "desk/chair-normal.png", # Chair
-            (0, 0), "{0}{1}/hair/[JN_NATSUKI.outfit.hairstyle.reference_name]/back.png".format(_BASE_SPRITE_PATH, pose), # Hair back
+            (0, 0), "{0}{1}/hair/[Natsuki._outfit.hairstyle.reference_name]/back.png".format(_BASE_SPRITE_PATH, pose), # Hair back
             (0, 0), "{0}{1}/base/body.png".format(_BASE_SPRITE_PATH, pose), # Body
-            (0, 0), "{0}{1}/clothes/[JN_NATSUKI.outfit.clothes.reference_name]/body.png".format(_BASE_SPRITE_PATH, pose), # Outfit, body
+            (0, 0), "{0}{1}/clothes/[Natsuki._outfit.clothes.reference_name]/body.png".format(_BASE_SPRITE_PATH, pose), # Outfit, body
         ]
 
         # Necklace
-        necklace = Null() if not JN_NATSUKI.outfit.necklace else "{0}{1}/necklace/[JN_NATSUKI.outfit.necklace.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose)
+        necklace = Null() if not Natsuki._outfit.necklace else "{0}{1}/necklace/[Natsuki._outfit.necklace.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose)
         lc_args.extend([
             (0, 0), necklace
         ])
@@ -163,11 +166,11 @@ init -50 python:
         lc_args.extend([
             (0, 0), "{0}{1}/face/mouth/{2}.png".format(_BASE_SPRITE_PATH, pose, mouth),
             (0, 0), "{0}{1}/face/nose/nose.png".format(_BASE_SPRITE_PATH, pose),
-            (0, 0), "{0}{1}/hair/[JN_NATSUKI.outfit.hairstyle.reference_name]/bangs.png".format(_BASE_SPRITE_PATH, pose),
+            (0, 0), "{0}{1}/hair/[Natsuki._outfit.hairstyle.reference_name]/bangs.png".format(_BASE_SPRITE_PATH, pose),
         ])
 
         # Accessory
-        accessory = Null() if not JN_NATSUKI.outfit.accessory else "{0}{1}/accessory/[JN_NATSUKI.outfit.accessory.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose)
+        accessory = Null() if not Natsuki._outfit.accessory else "{0}{1}/accessory/[Natsuki._outfit.accessory.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose)
         lc_args.extend([
             (0, 0), accessory
         ])
@@ -184,13 +187,13 @@ init -50 python:
             ])
 
         # Headgear
-        headgear = Null() if not JN_NATSUKI.outfit.headgear else "{0}{1}/headgear/[JN_NATSUKI.outfit.headgear.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose)
+        headgear = Null() if not Natsuki._outfit.headgear else "{0}{1}/headgear/[Natsuki._outfit.headgear.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose)
         lc_args.extend([
             (0, 0), headgear
         ])
 
         # Eyewear
-        eyewear = Null() if not JN_NATSUKI.outfit.eyewear else "{0}{1}/eyewear/[JN_NATSUKI.outfit.eyewear.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose)
+        eyewear = Null() if not Natsuki._outfit.eyewear else "{0}{1}/eyewear/[Natsuki._outfit.eyewear.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose)
         lc_args.extend([
             (0, 0), eyewear
         ])
@@ -717,10 +720,10 @@ image natsuki 1uwlgn = jn_generate_natsuki_sprite(
 
 # This selects which idle image to show based on current affinity state
 image natsuki idle = ConditionSwitch(
-    "jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED", "natsuki idle max_affinity",
-    "jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE", "natsuki idle high_affinity",
-    "jn_affinity.get_affinity_state() >= jn_affinity.NORMAL", "natsuki idle medium_affinity",
-    "jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED", "natsuki idle low_affinity",
+    "Natsuki.isEnamored(higher=True)", "natsuki idle max_affinity",
+    "Natsuki.isAffectionate(higher=True)", "natsuki idle high_affinity",
+    "Natsuki.isNormal(higher=True)", "natsuki idle medium_affinity",
+    "Natsuki.isDistressed(higher=True)", "natsuki idle low_affinity",
     "True", "natsuki idle min_affinity",
     predict_all = True
 )
@@ -853,16 +856,16 @@ init python:
         """
         Hack to work around renpy issue where the sprite is not refreshed when showing again
         """
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             renpy.show("natsuki talk_menu_max_affinity", at_list=[jn_left])
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        elif Natsuki.isAffectionate(higher=True):
             renpy.show("natsuki talk_menu_high_affinity", at_list=[jn_left])
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        elif Natsuki.isNormal(higher=True):
             renpy.show("natsuki talk_menu_medium_affinity", at_list=[jn_left])
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        elif Natsuki.isDistressed(higher=True):
             renpy.show("natsuki talk_menu_low_affinity", at_list=[jn_left])
 
         else:
