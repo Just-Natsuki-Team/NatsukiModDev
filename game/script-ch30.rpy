@@ -27,6 +27,9 @@ label ch30_init:
     python:
         import random
 
+        # Check the daily affinity cap and reset if need be
+        Natsuki.check_reset_daily_affinity_gain()
+
         # Outfit selection
         if persistent.jn_natsuki_auto_outfit_change_enabled:
             jn_outfits.set_outfit_for_time_block()
@@ -36,7 +39,7 @@ label ch30_init:
             persistent.last_apology_type = jn_apologies.TYPE_PROLONGED_LEAVE
 
         elif not persistent.last_apology_type == jn_apologies.TYPE_SUDDEN_LEAVE:
-            jn_relationship("affinity+")
+            Natsuki.calculated_affinity_gain()
 
         # Add to the total visits counter and set the last visit date
         persistent.jn_total_visit_count += 1
@@ -187,6 +190,9 @@ init python:
         """
         jn_utils.save_game()
 
+        # Check the daily affinity cap and reset if need be
+        Natsuki.check_reset_daily_affinity_gain()
+
         # Run through all externally-registered minute check actions
         if len(jn_plugins.minute_check_calls) > 0:
             for action in jn_plugins.minute_check_calls:
@@ -209,7 +215,7 @@ init python:
                     unlocked=True,
                     nat_says=True,
                     location=main_background.location.id,
-                    affinity=jn_affinity.get_affinity_state(),
+                    affinity=Natsuki._getAffinityState(),
                     is_seen=False
                 )
 
@@ -219,7 +225,7 @@ init python:
                     unlocked=True,
                     nat_says=True,
                     location=main_background.location.id,
-                    affinity=jn_affinity.get_affinity_state()
+                    affinity=Natsuki._getAffinityState()
                 )
 
             if topic_pool:
@@ -298,13 +304,13 @@ init python:
 label talk_menu:
     python:
         # Get the flavor text for the talk menu, based on affinity state
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_LOVE_ENAMORED)
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        elif Natsuki.isNormal(higher=True):
             _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_AFFECTIONATE_NORMAL)
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        elif Natsuki.isDistressed(higher=True):
             _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_UPSET_DISTRESSED)
 
         else:
@@ -324,23 +330,23 @@ label talk_menu:
         "Tell me again about...":
             call player_select_topic(is_repeat_topics=True)
 
-        "I love you, [n_name]!" if jn_affinity.get_affinity_state() >= jn_affinity.LOVE and persistent.jn_player_love_you_count > 0:
+        "I love you, [n_name]!" if Natsuki.isLove() and persistent.jn_player_love_you_count > 0:
             $ push("talk_i_love_you")
             jump call_next_topic
 
-        "I feel..." if jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+        "I feel..." if Natsuki.isHappy(higher=True):
             jump player_admissions_start
 
-        "I want to tell you something..." if jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+        "I want to tell you something..." if Natsuki.isHappy(higher=True):
             jump player_compliments_start
 
         "I want to say sorry...":
             jump player_apologies_start
 
-        "Goodbye..." if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        "Goodbye..." if Natsuki.isAffectionate(higher=True):
             jump farewell_menu
 
-        "Goodbye." if jn_affinity.get_affinity_state() < jn_affinity.AFFECTIONATE:
+        "Goodbye." if Natsuki.isHappy(lower=True):
             jump farewell_start
 
         "Nevermind.":
@@ -356,7 +362,7 @@ label player_select_topic(is_repeat_topics=False):
                 nat_says=True,
                 unlocked=True,
                 location=main_background.location.id,
-                affinity=jn_affinity.get_affinity_state(),
+                affinity=Natsuki._getAffinityState(),
                 is_seen=True
             )
 
@@ -366,7 +372,7 @@ label player_select_topic(is_repeat_topics=False):
                 player_says=True,
                 unlocked=True,
                 location=main_background.location.id,
-                affinity=jn_affinity.get_affinity_state()
+                affinity=Natsuki._getAffinityState()
             )
 
         # Sort the topics we can pick by prompt for a cleaner appearance
@@ -444,13 +450,13 @@ label try_force_quit:
 
     else:
         # Standard quit behaviour
-        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        if Natsuki.isAffectionate(higher=True):
             n 1kplpo "W-{w=0.1}wait,{w=0.1} what?{w=0.2} Aren't you going to say goodbye first,{w=0.1} [player]?"
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        elif Natsuki.isNormal(higher=True):
             n 1kskem "H-{w=0.1}hey!{w=0.2} You aren't just going to leave like that,{w=0.1} are you?"
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        elif Natsuki.isDistressed(higher=True):
             n 1fsqpu "...Really?{w=0.2} I don't even get a 'goodbye' now?"
 
         else:
@@ -459,18 +465,18 @@ label try_force_quit:
         menu:
             # Back out of quitting
             "Nevermind.":
-                if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+                if Natsuki.isAffectionate(higher=True):
                     n 1kllssl "T-{w=0.1}thanks,{w=0.1} [player].{w=1}{nw}"
                     n 1tllss "Now,{w=0.1} where was I...?{w=1}{nw}"
                     extend 1unmbo " Oh,{w=0.1} right.{w=1}{nw}"
 
-                elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+                elif Natsuki.isNormal(higher=True):
                     n 1flleml "G-{w=0.1}good!{w=1}{nw}"
                     extend 1kllpol " Good...{w=1}{nw}"
                     n 1tslpu "Now...{w=0.3} what was I saying again?{w=0.5}{nw}"
                     extend 1nnmbo " Oh,{w=0.1} right.{w=1}{nw}"
 
-                elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+                elif Natsuki.isDistressed(higher=True):
                     n 1fsqfr "...Thank you.{w=1}{nw}"
                     n 1fslpu "As I was {i}saying{/i}...{w=1}{nw}"
 
@@ -483,19 +489,19 @@ label try_force_quit:
             # Continue force quit
             "...":
                 hide screen hkb_overlay
-                if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+                if Natsuki.isAffectionate(higher=True):
                     n 1kwmem "Come on,{w=0.2} [player]...{w=1}{nw}"
                     play audio glitch_c
                     stop music
                     n 1kcsup "...!{nw}"
 
-                elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+                elif Natsuki.isNormal(higher=True):
                     n 1fwmun "...Really,{w=0.2} [player]?{w=1}{nw}"
                     play audio glitch_c
                     stop music
                     n 1kcsfu "Hnnng-!{nw}"
 
-                elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+                elif Natsuki.isDistressed(higher=True):
                     n 1fslun "Don't let the door hit you on the way out.{w=1}{nw}"
                     extend 1fsqem " Jerk.{w=1}{nw}"
                     play audio glitch_c
@@ -521,7 +527,7 @@ label try_force_quit:
                         hide glitch_garbled_red
 
                 # Apply consequences for force quitting, then glitch quit out
-                $ jn_relationship("affinity-")
+                $ Natsuki.calculated_affinity_loss()
                 $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
                 $ persistent.jn_player_apology_type_on_quit = jn_apologies.TYPE_SUDDEN_LEAVE
 
