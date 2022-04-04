@@ -39,7 +39,7 @@ init python in greetings:
         return random.choice(
             store.Topic.filter_topics(
                 GREETING_MAP.values(),
-                affinity=store.jn_affinity.get_affinity_state(),
+                affinity=store.Natsuki._getAffinityState(),
                 **kwargs
             )
         ).label
@@ -90,7 +90,7 @@ label greeting_first_time:
 
 # Only chosen for the first time the player leaves and returns after force quit
 label greeting_first_force_quit:
-    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    if Natsuki.isNormal(higher=True):
         n 1kcsun "Uuuuuuu...{w=2}{nw}"
         extend 1kslem " my...{w=0.3} h-{w=0.1}head..."
         n 1kcsun "..."
@@ -109,7 +109,7 @@ label greeting_first_force_quit:
         n 1knmpu "Just remember for next time,{w=0.1} [player].{w=0.5}{nw}"
         extend 1knmsr " Please."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1fcsun "Hnnnngg..."
         n 1fsqun "..."
         n 1fsqan "..."
@@ -722,7 +722,7 @@ init 5 python:
     )
 
 label greeting_sudden_leave:
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1kwmsrl "..."
         n 1kwmsrl "[player]."
         n 1knmsll "Come on.{w=0.2} You're better than that."
@@ -731,14 +731,14 @@ label greeting_sudden_leave:
         n 1knmssl "It'd mean a lot to me."
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1kwmsr "..."
         n 1fplsf "[player]!{w=0.2} Do you know how scary it is when you just vanish like that?"
         n 1knmsf "Please...{w=0.3} just remember to say goodbye properly when you gotta leave."
         n 1knmss "It's not much to ask...{w=0.3} is it?"
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1fsqsf "..."
         n 1fsqaj "You know I hate that,{w=0.1} [player]."
         n 1fsqsl "Knock it off,{w=0.1} will you?"
@@ -771,7 +771,7 @@ init 5 python:
 label greeting_prolonged_leave:
     $ player_initial = list(player)[0]
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1uwdwrf "[player_initial]-{w=0.1}[player]!"
         n 1fbkwrf "W-{w=0.1}where were you?!{w=0.2} I was so worried that something had happened!"
         n 1kcsunl "..."
@@ -780,7 +780,7 @@ label greeting_prolonged_leave:
         n 1kcssll "I hate having my heart played with like that..."
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_PROLONGED_LEAVE)
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1uwdwr "[player_initial]-{w=0.1}[player]!"
         n 1fnman "What the hell?!{w=0.2} Where have you been?{w=0.2} I was worried sick!"
         n 1fcsupl "J-{w=0.1}just as a friend,{w=0.1} but still!"
@@ -789,7 +789,7 @@ label greeting_prolonged_leave:
         n 1knmaj "Just...{w=0.3} don't leave it so long next time,{w=0.1} alright?{w=0.2} Jeez..."
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_PROLONGED_LEAVE)
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1fsqaj "[player_initial]-{w=0.1}[player]?"
         n 1fsqsl "...You're back."
         n 1kcssf "I...{w=0.3} don't know how I feel about that."

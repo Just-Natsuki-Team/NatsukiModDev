@@ -168,7 +168,7 @@ init python in jn_screenshots:
 
 # Attempt to produce a screenshot, render associated effects
 label take_screenshot:
-    if jn_affinity.get_affinity_state() >= jn_affinity.BROKEN:
+    if Natsuki.isBroken(higher=True):
         $ renpy.screenshot("{0}/screenshot_{1}.png".format(jn_screenshots._screenshot_dir, datetime.datetime.now().strftime(r"%d-%m-%Y_%H-%M-%S")))
         $ jn_utils.log("Screenshot taken by player at {0}".format(datetime.datetime.now().strftime(r"%d/%m/%Y, %H:%M")))
 
@@ -197,7 +197,7 @@ label screenshot_dialogue:
         $ persistent.jn_first_screenshot_taken = datetime.datetime.now()
         call take_screenshot
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        if Natsuki.isNormal(higher=True):
             n 1uskajl "H-huh?{w=0.2} What was that flash I just saw?"
             n 1fskanl "Don't tell me...{w=0.3} was that a camera?!{w=0.2} There's a camera here?!"
             n 1fcssr "..."
@@ -213,13 +213,13 @@ label screenshot_dialogue:
                 "I'm not sure.":
                     n 1tllpu "That's...{w=0.3} a little worrying..."
                     n 1tnmpu "..."
-                    
+
             n 1nnmpu "Well...{w=0.3} anyway.{w=0.1} The truth is,{w=0.1} I've never been very comfortable with having my picture taken without my permission."
             n 1klrbol "I just...{w=0.3} really,{w=0.1} really don't like it."
             n 1klraj "So for the future,{w=0.1} could you please just let me know if you want to take pictures?"
             n 1klrbo "I'd really appreciate it,{w=0.1} [player]."
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        elif Natsuki.isDistressed(higher=True):
             n 1fskpu "..."
             n 1fsqpu "You're taking pictures of me,{w=0.1} aren't you?"
             menu:
@@ -249,10 +249,10 @@ label screenshot_dialogue:
         $ persistent.jn_screenshot_good_shots_total += 1
         n 1unmaj "Huh?{w=0.2} You're taking that picture now?"
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             n 1uchbg "Ahaha!{w=0.2} Sure!"
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+        elif Natsuki.isHappy(higher=True):
             n 1kllpu "Well...{w=0.2} alright."
 
         else:
@@ -261,7 +261,7 @@ label screenshot_dialogue:
         call take_screenshot
 
         # Retract the permission Natsuki gave, as the picture has been taken
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             n 1uchsml "Okaaay!{w=0.2} Just ask me again if you wanna take another,{w=0.1} alright?"
 
         else:
@@ -291,14 +291,14 @@ label screenshot_dialogue:
         $ jn_screenshots.bad_screenshot_streak += 1
 
         call take_screenshot
-        $ jn_utils.log("Curr aff state: {0}".format(jn_affinity.get_affinity_state()))
+        $ jn_utils.log("Curr aff state: {0}".format(Natsuki._getAffinityState()))
 
         show natsuki 1fsqsr zorder 3
 
         # Add pending apology
         $ jn_apologies.add_new_pending_apology(store.jn_apologies.TYPE_SCREENSHOT)
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
 
             # Pick the reaction and response; Natsuki is surprised but not angry
             $ chosen_reaction = renpy.substitute(renpy.random.choice(jn_screenshots.love_enamored_reactions))
@@ -311,7 +311,7 @@ label screenshot_dialogue:
             n 1klrsl "Now,{w=0.2} where were we?"
             $ Natsuki.percentage_affinity_loss(2.5)
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        elif Natsuki.isNormal(higher=True):
             # Pick the reaction and response; Natsuki is irritated
             $ chosen_reaction = renpy.substitute(renpy.random.choice(jn_screenshots.affectionate_normal_reactions))
             $ chosen_response = renpy.substitute(renpy.random.choice(jn_screenshots.affectionate_normal_responses))
@@ -323,7 +323,7 @@ label screenshot_dialogue:
             n 1fnmsl "Now,{w=0.2} where were we?"
             $ Natsuki.percentage_affinity_loss(2)
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        elif Natsuki.isDistressed(higher=True):
 
             # Pick the reaction and response; Natsuki is clearly upset
             $ chosen_reaction = renpy.substitute(renpy.random.choice(jn_screenshots.upset_minus_reactions))
@@ -368,7 +368,7 @@ label talk_get_picture_permission:
         n 1fsqpu "Uh...{w=0.3} no,{w=0.1} I'm not turning the camera back on,{w=0.1} [player]."
         return
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         if jn_screenshots.is_allowed_to_take_screenshot():
             n 1uchgn "Ahaha!{w=0.2} I already said you could,{w=0.1} dummy!"
             n 1unmbg "I'm ready,{w=0.1} so take one whenever!"
@@ -377,7 +377,7 @@ label talk_get_picture_permission:
             n 1unmbg "Eh?{w=0.2} A picture?{w=0.2} Of course!"
             $ jn_screenshots.grant_screenshot_permission()
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    elif Natsuki.isAffectionate(higher=True):
         if jn_screenshots.is_allowed_to_take_screenshot():
             n 1tnmpu "Huh?{w=0.2} Didn't you ask me that already?"
             n 1fllpol "It's fine,{w=0.1} so go ahead!"
@@ -386,7 +386,7 @@ label talk_get_picture_permission:
             n 1nllss "Oh?{w=0.2} You wanna take a picture?{w=0.2} Alright!"
             $ jn_screenshots.grant_screenshot_permission()
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+    elif Natsuki.isHappy(higher=True):
         if jn_screenshots.is_allowed_to_take_screenshot():
             n 1nllss "Hmm?{w=0.2} A picture?{w=0.2} Well,{w=0.1} okay."
             $ jn_screenshots.grant_screenshot_permission()
@@ -395,7 +395,7 @@ label talk_get_picture_permission:
             n 1fcspol "Uuuu...{w=0.3} I just said you could,{w=0.1} [player]."
             n 1knmpo "Just take it soon,{w=0.1} alright?"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
+    elif Natsuki.isUpset(higher=True):
         if jn_screenshots.is_allowed_to_take_screenshot():
             n 1fnmpu "I {i}already{/i} said you could,{w=0.1} [player]."
 
@@ -414,7 +414,7 @@ label talk_get_picture_permission:
                 n 1fcsbo "Sorry.{w=0.2} I don't want my picture taken right now."
                 $ jn_screenshots.revoke_screenshot_permission()
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1fsqfr "No.{w=0.1} I {b}don't{/b} want my picture taken."
         $ jn_screenshots.revoke_screenshot_permission()
 

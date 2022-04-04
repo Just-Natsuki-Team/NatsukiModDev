@@ -795,24 +795,8 @@ screen navigation():
         textbutton _("Settings") action [ShowMenu("preferences"), SensitiveIf(renpy.get_screen("preferences") == None)]
 
         if renpy.variant("pc"):
-
             ## Help isn't necessary or relevant to mobile devices.
             textbutton _("Help") action Help("README.md")
-
-            ## The quit button is banned on iOS and unnecessary on Android.
-            python:
-                # Quit message based on affinity
-                if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-                    quit_message = "Wait, you're leaving? You could at least say goodbye first, you know..."
-
-                elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-                    quit_message = "H-huh? You're leaving? You could at least say goodbye properly!"
-
-                elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-                    quit_message = "...Really? I don't even get a 'goodbye' now?"
-
-                else:
-                    quit_message = "...Going?"
 
         textbutton _("GitHub") action OpenURL("https://github.com/Just-Natsuki-Team/NatsukiModDev")
 

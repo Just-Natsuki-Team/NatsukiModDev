@@ -30,7 +30,7 @@ init 0 python:
     import store.jn_affinity as jn_affinity
     import store.jn_utils as jn_utils
 
-    class Natsuki():
+    class Natsuki(object):
         """
         Qeeb class for the management of data/functionality related to Natsuki herself such as affinity, clothing, etc.
         """
@@ -38,7 +38,7 @@ init 0 python:
         def calculated_affinity_gain(base=1, bypass=False):
             """
             Adds a calculated amount to affinity, based on the player's relationship with Natsuki and daily cap state.
-            
+
             IN:
                 - base - The base amount to use for the calculation
                 - bypass - If the daily cap should be bypassed for things like one-time gifts, events, etc.
@@ -83,7 +83,7 @@ init 0 python:
         def percentage_affinity_loss(percentage_loss):
             """
             Subtracts a percentage amount to affinity, with the percentage based on the existing affinity value.
-            
+
             IN:
                 - percentage_loss - The integer percentage the affinity should decrease by
             """
@@ -103,6 +103,253 @@ init 0 python:
                 persistent.affinity_daily_gain = 5 * jn_affinity.get_relationship_length_multiplier()
                 persistent.affinity_gain_reset_date = current_date
                 jn_utils.log("Daily affinity cap reset; new cap is: {0}".format(persistent.affinity_daily_gain))
+
+        @staticmethod
+        def __isStateGreaterThan(aff_state):
+            """
+            Internal method to check if Natsuki's current affinity state is greater than the given amount
+            """
+            return jn_affinity._isAffStateWithinRange(
+                Natsuki._getAffinityState(),
+                (aff_state, None)
+            )
+
+        @staticmethod
+        def __isStateLessThan(aff_state):
+            """
+            Internal method to check if Natsuki's current affinity state is less than or equal to the given amount
+            """
+            return jn_affinity._isAffStateWithinRange(
+                Natsuki._getAffinityState(),
+                (None, aff_state)
+            )
+
+        @staticmethod
+        def __isAff(aff_state, higher=False, lower=False):
+            """
+            Internal comparison to check if Natsuki's current affection matches the given state,
+            or is lower/higher as specified by arguments
+
+            IN:
+                aff_state - The affection state to check if Natsuki is at
+                higher - bool, if Natsuki's affection can be greater than the current state
+                    (Default: False)
+                lower - bool, if Natsuki's affection can be less than the current state
+                    (Default: False)
+            """
+            #For completion, if both higher and lower are true, we should just return True as
+            #The given aff_state must be within the range
+            if higher and lower:
+                return True
+
+            if higher:
+                return Natsuki.__isStateGreaterThan(aff_state)
+
+            elif lower:
+                return Natsuki.__isStateLessThan(aff_state)
+
+            return Natsuki._getAffinityState() == aff_state
+
+        #START: Natsuki's Affection State checks
+        @staticmethod
+        def isRuined(higher=False, lower=False):
+            """
+            Checks if Natsuki's affection state is ruined, or is lower/higher as specified by arguments
+
+            IN:
+                higher - bool, if Natsuki's affection can be greater than the current state
+                    (Default: False)
+                lower - bool, if Natsuki's affection can be less than the current state
+                    (Default: False)
+            """
+            return Natsuki.__isAff(jn_affinity.RUINED, higher, lower)
+
+        @staticmethod
+        def isBroken(higher=False, lower=False):
+            """
+            Checks if Natsuki's affection state is broken, or is lower/higher as specified by arguments
+
+            IN:
+                higher - bool, if Natsuki's affection can be greater than the current state
+                    (Default: False)
+                lower - bool, if Natsuki's affection can be less than the current state
+                    (Default: False)
+            """
+            return Natsuki.__isAff(jn_affinity.BROKEN, higher, lower)
+
+        @staticmethod
+        def isDistressed(higher=False, lower=False):
+            """
+            Checks if Natsuki's affection state is distressed, or is lower/higher as specified by arguments
+
+            IN:
+                higher - bool, if Natsuki's affection can be greater than the current state
+                    (Default: False)
+                lower - bool, if Natsuki's affection can be less than the current state
+                    (Default: False)
+            """
+            return Natsuki.__isAff(jn_affinity.DISTRESSED, higher, lower)
+
+        @staticmethod
+        def isUpset(higher=False, lower=False):
+            """
+            Checks if Natsuki's affection state is upset, or is lower/higher as specified by arguments
+
+            IN:
+                higher - bool, if Natsuki's affection can be greater than the current state
+                    (Default: False)
+                lower - bool, if Natsuki's affection can be less than the current state
+                    (Default: False)
+            """
+            return Natsuki.__isAff(jn_affinity.UPSET, higher, lower)
+
+        @staticmethod
+        def isNormal(higher=False, lower=False):
+            """
+            Checks if Natsuki's affection state is normal, or is lower/higher as specified by arguments
+
+            IN:
+                higher - bool, if Natsuki's affection can be greater than the current state
+                    (Default: False)
+                lower - bool, if Natsuki's affection can be less than the current state
+                    (Default: False)
+            """
+            return Natsuki.__isAff(jn_affinity.NORMAL, higher, lower)
+
+        @staticmethod
+        def isHappy(higher=False, lower=False):
+            """
+            Checks if Natsuki's affection state is happy, or is lower/higher as specified by arguments
+
+            IN:
+                higher - bool, if Natsuki's affection can be greater than the current state
+                    (Default: False)
+                lower - bool, if Natsuki's affection can be less than the current state
+                    (Default: False)
+            """
+            return Natsuki.__isAff(jn_affinity.HAPPY, higher, lower)
+
+        @staticmethod
+        def isAffectionate(higher=False, lower=False):
+            """
+            Checks if Natsuki's affection state is affectionate, or is lower/higher as specified by arguments
+
+            IN:
+                higher - bool, if Natsuki's affection can be greater than the current state
+                    (Default: False)
+                lower - bool, if Natsuki's affection can be less than the current state
+                    (Default: False)
+            """
+            return Natsuki.__isAff(jn_affinity.AFFECTIONATE, higher, lower)
+
+        @staticmethod
+        def isEnamored(higher=False, lower=False):
+            """
+            Checks if Natsuki's affection state is enamored, or is lower/higher as specified by arguments
+
+            IN:
+                higher - bool, if Natsuki's affection can be greater than the current state
+                    (Default: False)
+                lower - bool, if Natsuki's affection can be less than the current state
+                    (Default: False)
+            """
+            return Natsuki.__isAff(jn_affinity.ENAMORED, higher, lower)
+
+        @staticmethod
+        def isLove(higher=False, lower=False):
+            """
+            Checks if Natsuki's affection state is love, or is lower/higher as specified by arguments
+
+            IN:
+                higher - bool, if Natsuki's affection can be greater than the current state
+                    (Default: False)
+                lower - bool, if Natsuki's affection can be less than the current state
+                    (Default: False)
+            """
+            return Natsuki.__isAff(jn_affinity.LOVE, higher, lower)
+
+        @staticmethod
+        def _getAffinityState():
+            """
+                returns current affinity state
+
+                states:
+                    RUINED = 1
+                    BROKEN = 2
+                    DISTRESSED = 3
+                    UPSET = 4
+                    NORMAL = 5
+                    HAPPY = 6
+                    AFFECTIONATE = 7
+                    ENAMORED = 8
+                    LOVE = 9
+
+                OUT:
+                    current affinity state
+            """
+            #iterate through all thresholds
+            i = 1
+            for threshold in [
+                jn_affinity.AFF_THRESHOLD_LOVE,
+                jn_affinity.AFF_THRESHOLD_ENAMORED,
+                jn_affinity.AFF_THRESHOLD_AFFECTIONATE,
+                jn_affinity.AFF_THRESHOLD_HAPPY,
+                jn_affinity.AFF_THRESHOLD_NORMAL,
+                jn_affinity.AFF_THRESHOLD_UPSET,
+                jn_affinity.AFF_THRESHOLD_DISTRESSED,
+                jn_affinity.AFF_THRESHOLD_BROKEN,
+                jn_affinity.AFF_THRESHOLD_RUINED
+            ]:
+                #if affinity is higher than threshold return it's state
+                #else check lower threshold
+                if jn_affinity._compareAffThresholds(persistent.affinity, threshold) >= 0:
+                    return jn_affinity._AFF_STATE_ORDER[-i]
+
+                # We can't go any further beyond ruined; return it
+                if threshold == jn_affinity.AFF_THRESHOLD_RUINED:
+                    return jn_affinity._AFF_STATE_ORDER[0]
+
+                i += 1
+
+        def _getAffinityTierName():
+            affinity_state = Natsuki._getAffinityState()
+            if affinity_state == jn_affinity.ENAMORED:
+                return "LOVE"
+
+            elif affinity_state == jn_affinity.ENAMORED:
+                return "ENAMORED"
+
+            elif affinity_state == jn_affinity.AFFECTIONATE:
+                return "AFFECTIONATE"
+
+            elif affinity_state == jn_affinity.HAPPY:
+                return "HAPPY"
+
+            elif affinity_state == jn_affinity.NORMAL:
+                return "NORMAL"
+
+            elif affinity_state == jn_affinity.UPSET:
+                return "UPSET"
+
+            elif affinity_state == jn_affinity.DISTRESSED:
+                return "DISTRESSED"
+
+            elif affinity_state == jn_affinity.BROKEN:
+                return "BROKEN"
+
+            elif affinity_state == jn_affinity.RUINED:
+                return "RUINED"
+
+            else:
+                store.jn_utils.log(
+                    message="Unable to get tier name for affinity {0}; affinity_state was {1}".format(
+                        store.persistent.affinity,
+                        Natsuki._getAffinityState()
+                    ),
+                    logseverity=store.jn_utils.SEVERITY_WARN
+                )
+                return "UNKNOWN"
+
 
     class JNHolidays(Enum):
         none = 0
@@ -219,7 +466,7 @@ init 0 python:
                 raise Exception("Label {0} does not exist.".format(label))
 
             #Validate the affinity range prior to it
-            if not store.jn_affinity.is_affinity_range_valid(affinity_range):
+            if not jn_affinity._isAffRangeValid(affinity_range):
                 raise Exception("Affinity range: {0} is invalid.".format(affinity_range))
 
             #First, we'll add all of the items here which which shouldn't change from the persisted data
@@ -319,18 +566,9 @@ init 0 python:
                 True if the current affinity is within range. False otherwise
             """
             if not affinity_state:
-                affinity_state = jn_affinity.get_affinity_state()
+                affinity_state = jn_affinity._getAffinityState()
 
-            return store.jn_affinity.is_state_within_range(affinity_state, self.affinity_range)
-
-        def evaluate_trust_range(self, trust_state):
-            """
-            Checks if the current affinity is within this topic's affinity_range
-
-            OUT:
-                True if the current affinity is within range. False otherwise
-            """
-            return None #TODO: THIS
+            return jn_affinity._isAffStateWithinRange(affinity_state, self.affinity_range)
 
         def __load(self):
             """
@@ -1546,7 +1784,7 @@ init -999 python:
         This checks to ensure an input or menu screen is not up before allowing a force quit, as these crash the game. Thanks, Tom.
         """
         if (
-            not renpy.get_screen("input") 
+            not renpy.get_screen("input")
             and not renpy.get_screen("choice")
             and jn_globals.force_quit_enabled
         ):

@@ -36,7 +36,7 @@ init 0 python in jn_admissions:
         """
         return store.Topic.filter_topics(
             ADMISSION_MAP.values(),
-            affinity=store.jn_affinity.get_affinity_state(),
+            affinity=store.Natsuki._getAffinityState(),
             unlocked=True
         )
 
@@ -78,7 +78,7 @@ label admission_angry:
         n 1kllca "I don't want you storming off and getting hurt,{w=0.1} or doing something you'll regret."
         n 1knmbo "Can you do that for me,{w=0.2} [player]?"
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             n 1kplbol "It really upsets me hearing you worked up like this,{w=0.1} you know..."
             n 1knmbol "So please, [player]. Stay calm{w=0.1} -{w=0.1} for me?"
 
@@ -132,10 +132,10 @@ label admission_anxious:
         n 1knmbo "So...{w=0.3} try and put your mind at rest,{w=0.1} okay?"
         n 1knmaj "I know it's tough...{w=0.3} but just try,{w=0.1} alright?"
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        if Natsuki.isAffectionate(higher=True):
             n 1kwmsm "I'll always have your back."
 
-        if jn_affinity.get_affinity_state() == jn_affinity.LOVE:
+        if Natsuki.isLove():
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
             n 1kchsml "I love you, [chosen_endearment]."
 
@@ -207,10 +207,10 @@ label admission_bored:
         n 1fnmbg "Well,{w=0.1} you could try phoning around!{w=0.2} You gotta have friends or family you can visit,{w=0.1} right?"
         n 1nllbg "Or...{w=0.3} perhaps you could try reading,{w=0.1} or picking up something new?"
         n 1fsqsm "I guess what I'm trying to say is..."
-        n 1fsqbg "There's no shortage of stuff to do,{w=0.1} [player]." 
+        n 1fsqbg "There's no shortage of stuff to do,{w=0.1} [player]."
         n 1fchgn "You just gotta find it!"
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             n 1uchbg "Now,{w=0.1} go!{w=0.2} And make sure you tell me all about it later,{w=0.1} 'kay?"
 
         else:
@@ -222,7 +222,7 @@ label admission_bored:
         n 1unmaj "You're bored,{w=0.1} huh?"
         n 1nlrpo "Well,{w=0.1} now that you mention it...{w=0.3} there isn't {i}exactly{/i} a whole lot going on here."
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             n 1fllssl "Besides me,{w=0.1} anyway.{w=0.2} Ehehe."
 
         n 1flrpo "Hmm...{w=0.3} there's gotta be something else..."
@@ -230,7 +230,7 @@ label admission_bored:
         n 1fllpu "..."
         n 1fsgbg "Aha!{w=0.2} I think I got it!{w=0.2} Let me just check something real quick..."
 
-        play audio drawer 
+        play audio drawer
         with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
         n 1fchgn "Yes!{w=0.2} It's still here!"
@@ -240,7 +240,7 @@ label admission_bored:
         n 1kllsll "...Uhmm."
         n 1nnmsl "Hey...{w=0.3} [player]?{w=0.2} Don't judge me for it,{w=0.1} but..."
         n 1nlrun "I...{w=0.3} never really learned all the really fancy card game rules or anything like that."
-        n 1ullaj "So...{w=0.3} we're playing Snap." 
+        n 1ullaj "So...{w=0.3} we're playing Snap."
         n 1fllssl "...At least until I do some reading up,{w=0.1} anyway."
         $ persistent.jn_snap_unlocked = True
         n 1nnmss "So..."
@@ -255,14 +255,14 @@ label admission_bored:
                 n 1fllpo "Aww...{w=0.3} but I already got the cards out and everything!"
                 n 1unmpo "Well...{w=0.3} whatever."
                 n 1nnmsm "Just let me know whenever you feel like a game then."
-                
-                play audio drawer 
+
+                play audio drawer
                 with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
     else:
         n 1tnmaj "Huh?{w=0.2} You're bored?"
         n 1fnmaj "And just what is that supposed to mean,{w=0.1} [player]?"
-        n 1fsqpo "Am I not fun enough to be with?" 
+        n 1fsqpo "Am I not fun enough to be with?"
         n 1fbkwr "Are you not entertained?!"
         n 1flrpo "..."
         n 1fsqsm "..."
@@ -274,7 +274,7 @@ label admission_bored:
         n 1tsqbg "And if that isn't enough,{w=0.1} there's an even bigger one right at your fingertips!"
         n 1fsqss "Or you could,{w=0.1} you know."
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             n 1kwmsgl "Spend more time with yours truly?"
             n 1knmpol "I'm not that dull...{w=0.3} right?"
 
@@ -302,7 +302,7 @@ label admission_confident:
         n 1fsgsm "Still full of confidence,{w=0.1} I see?"
         n 1nchbg "Well,{w=0.1} I'm glad to hear it!"
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             n 1kwlsml "You've got a lot to be confident of,{w=0.1} [player]."
             n 1fchsml "You better remember that!"
 
@@ -311,14 +311,14 @@ label admission_confident:
         n 1kllss "I was hoping you'd snap out of those feelings sooner rather than later."
         n 1klrpo "I don't like when you talk like that,{w=0.1} you know..."
 
-        if jn_affinity.get_affinity_state() == jn_affinity.AFFECTIONATE:
+        if Natsuki.isAffectionate():
             n 1fcspol "N-{w=0.1}not that I care {i}that{/i} much, o-{w=0.1}of course!"
             n 1fllsll "But...{w=0.3} I'm glad to know you're okay now,{w=0.1} [player]. That's what matters."
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        elif Natsuki.isEnamored(higher=True):
             n 1kllsll "I'm just really glad to know you're better now,{w=0.1} [player]."
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        if Natsuki.isLove():
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
             n 1knmssf "I love you, [chosen_endearment].{w=0.2} Please don't forget that,{w=0.1} alright?"
             n 1klrpof "I'll get mad if you do.{w=0.2} Ahaha..."
@@ -379,7 +379,7 @@ label admission_happy:
         n 1kwmss "Feeling better now,{w=0.1} [player]?"
         n 1kllbg "That's...{w=0.3} a relief,{w=0.1} ahaha..."
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        if Natsuki.isAffectionate(higher=True):
             n 1kllunl "..."
             n 1klrbgl "S-{w=0.1}so...{w=0.3} where were we?"
 
@@ -401,7 +401,7 @@ label admission_happy:
         n 1usqbg "Oh?{w=0.1} Someone's in a good mood today!"
         n 1fchbg "Good for you,{w=0.1} [player]!"
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        if Natsuki.isAffectionate(higher=True):
             n 1uchsm "If you're happy,{w=0.1} I'm happy!"
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_HAPPY
@@ -426,7 +426,7 @@ label admission_hungry:
         n 1fchgn "Well...{w=0.3} either way,{w=0.1} get off your butt and go get something then!"
         n 1fllpol "Jeez,{w=0.1} [player]...{w=0.3} I'm not your babysitter!"
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             n 1fsqsml "A-{w=0.1}as much as you probably wish I was,{w=0.1} right?{w=0.2} Ahaha!"
             n 1uchbs "Now get going already!{w=0.2} Bon appetit,{w=0.1} [player]!"
 
@@ -436,7 +436,7 @@ label admission_hungry:
         n 1knmpu "You might feel a little better...{w=0.3} but it won't fix what made you sad."
         n 1knmsm "Try to enjoy your meal,{w=0.1} alright?"
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        if Natsuki.isAffectionate(higher=True):
             n 1kwmsml "I'm here for you if you need me,{w=0.1} [player]."
 
     else:
@@ -446,7 +446,7 @@ label admission_hungry:
         n 1fcspo "Honestly...{w=0.3} what am I going to do with you,{w=0.1} [player]?"
         n 1fchbg "Now go make something already!{w=0.2} Just don't fill yourself up on junk!"
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             n 1fsqbg "I want you fighting fit for when we hang out,{w=0.1} 'kay?"
             n 1uchgn "We're gonna have so much to do together,{w=0.1} after all!"
 
@@ -489,7 +489,7 @@ label admission_insecure:
             "Okay.":
                 n 1fnmsl "...Good.{w=0.2} Or you'll have me to deal with too."
                 n 1kllsm "..."
-                if jn_affinity.get_affinity_state() <= jn_affinity.AFFECTIONATE:
+                if Natsuki.isAffectionate(lower=True):
                     n 1flrajl "Message received?{w=0.2} T{w=0.1}-then let's get back to it already!"
                     n 1flrpol "Jeez..."
 
@@ -497,7 +497,7 @@ label admission_insecure:
                     n 1kwmpul "...You know I meant every single word I said,{w=0.1} right?"
                     n 1kcssll "So please...{w=0.3} don't give up.{w=0.2} We both need you to win,{w=0.1} [player]."
 
-                    if jn_affinity.get_affinity_state() == jn_affinity.LOVE:
+                    if Natsuki.isLove():
                         $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
                         n 1kwmsmf "I really do love you, [chosen_endearment]."
                         n 1kchbgf "You know I'll always have your back,{w=0.1} dummy..."
@@ -562,14 +562,14 @@ label admission_sad:
                 n 1ncssf "That's...{w=0.3} not what I was hoping to hear,{w=0.1} honestly."
                 n 1kllsr "I'm sorry to hear that,{w=0.1} [player].{w=0.2} Truly."
                 n 1nnmpu "But know this."
-                n 1knmsr "You've got my support,{w=0.1} okay?" 
+                n 1knmsr "You've got my support,{w=0.1} okay?"
                 n 1klrpol "I-if that helps,{w=0.1} I mean."
 
             "They already know.":
                 n 1kcspu "Good! Good..."
                 n 1knmpo "I just hope they were supportive of you,{w=0.1} [player].{w=0.2} You at least deserve that much."
 
-        if jn_affinity.get_affinity_state() == jn_affinity.LOVE:
+        if Natsuki.isLove():
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
             n 1kchnvf "I love you,{w=0.1} [chosen_endearment]."
 
@@ -581,7 +581,7 @@ label admission_sad:
         n 1ncssr "..."
         n 1nwmpu "It's...{w=0.3} okay,{w=0.1} [player].{w=0.2} Everything is gonna be okay."
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             n 1knmpu "Now,{w=0.1} take some deep breaths for me,{w=0.1} alright?"
             n 1uchsm "That's it,{w=0.1} [player].{w=0.2} Keep breathing."
 
@@ -613,7 +613,7 @@ label admission_sick:
                 n 1kllsr "That's...{w=0.3} not great to hear,{w=0.1} [player]."
                 n 1tnmsr "Perhaps you should get some rest soon{w=0.1} -{w=0.1} hopefully you'll feel better."
 
-                if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+                if Natsuki.isEnamored(higher=True):
                     n 1knmsl "Let me know if it keeps up,{w=0.1} okay?"
 
             "A few days.":
@@ -646,13 +646,13 @@ label admission_sick:
                 n 1knmpu "I just hope you feel better soon."
                 n 1knmsl "Take it easy,{w=0.1} alright?"
 
-                if jn_affinity.get_affinity_state() == jn_affinity.AFFECTIONATE:
+                if Natsuki.isAffectionate():
                     n 1kllcal "I hate seeing you unwell like this..."
 
-                elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+                elif Natsuki.isEnamored(higher=True):
                     n 1kllsfl "It really hurts me seeing you unwell like this..."
 
-                if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+                if Natsuki.isLove():
                     n 1kcssff "I love you,{w=0.1} [player].{w=0.2} Please get well soon."
 
                 # Add pending apology
@@ -673,19 +673,19 @@ label admission_sick:
                 n 1knmsl "Even something small like some candy or whatever.{w=0.2} Just to get your energy level up."
                 n 1kllpo "That's not much to ask,{w=0.1} is it?"
 
-                if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+                if Natsuki.isEnamored(higher=True):
                     n 1kllss "Now go get something already, silly! Ahaha..."
 
     else:
         n 1knmsl "Feeling under the weather,{w=0.1} [player]?"
-        
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+
+        if Natsuki.isEnamored(higher=True):
             n 1kllsl "I wish there was something I could do to help..."
 
         n 1fwmsl "You aren't straining yourself by being here,{w=0.1} are you?"
         n 1klrsl "I don't wanna get in the way of you feeling better."
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             n 1kwmsll "Your health has to come first over our time together."
 
         else:
@@ -693,11 +693,11 @@ label admission_sick:
 
         n 1knmpo "So...{w=0.3} promise you'll leave and rest if you have to,{w=0.1} got it?"
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        if Natsuki.isLove():
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
             n 1knmssl "I love you,{w=0.1} [chosen_endearment].{w=0.2} I...{w=0.3} really hope you get better soon..."
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        elif Natsuki.isAffectionate(higher=True):
             n 1knmbol "I hope you feel better soon,{w=0.1} [player]..."
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_SICK
@@ -726,11 +726,11 @@ label admission_tired:
         n 1klrsm "So...{w=0.3} go to bed, alright?"
         n 1nchbg "I'll see you later,{w=0.1} [player]!"
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        if Natsuki.isLove():
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
             n 1nchsml "Love you,{w=0.1} [chosen_endearment]!"
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        elif Natsuki.isAffectionate(higher=True):
             n 1fsqsml "Don't let the bed bugs bite!{w=0.2} Ehehe."
 
         $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_TIRED
@@ -744,9 +744,9 @@ label admission_tired:
             "Yes, I will.":
                 n 1fcssm "Good...{w=0.3} you'll feel better soon,{w=0.1} okay?"
 
-                if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+                if Natsuki.isAffectionate(higher=True):
                     n 1nwmsm "I promise."
-                    
+
                 n 1nchbg "Sleep well,{w=0.1} [player]!"
 
                 $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_TIRED
@@ -783,10 +783,10 @@ label admission_tired:
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
         n 1unmbg "Sleep well,{w=0.1} [chosen_tease]!"
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        if Natsuki.isLove():
             n 1uchsml "Love you~!"
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        elif Natsuki.isAffectionate(higher=True):
             n 1nllsml "Sweet dreams! Ehehe."
 
         # Add pending apology
@@ -802,10 +802,10 @@ label admission_tired:
         n 1fllpo "You need to get some sleep...{w=0.3} you're gonna be all cranky later at this rate!"
         n 1kllpo "I appreciate the company but make sure you turn in soon,{w=0.1} alright?"
 
-        if 1knmpul jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        if 1knmpul Natsuki.isLove():
             n 1klrpul "You know I don't like it when you don't take care of yourself like this..."
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        elif Natsuki.isAffectionate(higher=True):
             n 1fcspol "You should know better than to treat yourself like this by now,{w=0.1} [player]..."
 
         n 1fllsfl "Don't let me down,{w=0.1} got it?"
@@ -823,7 +823,7 @@ label admission_tired:
         n 1flrpol "And neither do you,{w=0.1} I'm sure."
         n 1kcspo "Just...{w=0.3} try to get to bed soon,{w=0.1} okay?{w=0.2} {i}Before{/i} your keyboard becomes your pillow."
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        if Natsuki.isLove():
             n 1ksqpol "Besides...{w=0.3} you do know I'm not actually strong enough to carry you to bed myself...{w=0.3} right?"
 
         n 1kllssl "Ahaha..."
