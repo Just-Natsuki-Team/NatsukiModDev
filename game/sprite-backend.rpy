@@ -687,10 +687,10 @@ image natsuki 1uwlgn = jn_generate_natsuki_sprite(
 
 # This selects which idle image to show based on current affinity state
 image natsuki idle = ConditionSwitch(
-    "jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED", "natsuki idle max_affinity",
-    "jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE", "natsuki idle high_affinity",
-    "jn_affinity.get_affinity_state() >= jn_affinity.NORMAL", "natsuki idle medium_affinity",
-    "jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED", "natsuki idle low_affinity",
+    "Natsuki.isEnamored(higher=True)", "natsuki idle max_affinity",
+    "Natsuki.isAffectionate(higher=True)", "natsuki idle high_affinity",
+    "Natsuki.isNormal(higher=True)", "natsuki idle medium_affinity",
+    "Natsuki.isDistressed(higher=True)", "natsuki idle low_affinity",
     "True", "natsuki idle min_affinity",
     predict_all = True
 )
@@ -823,16 +823,16 @@ init python:
         """
         Hack to work around renpy issue where the sprite is not refreshed when showing again
         """
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             renpy.show("natsuki talk_menu_max_affinity", at_list=[jn_left])
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        elif Natsuki.isAffectionate(higher=True):
             renpy.show("natsuki talk_menu_high_affinity", at_list=[jn_left])
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        elif Natsuki.isNormal(higher=True):
             renpy.show("natsuki talk_menu_medium_affinity", at_list=[jn_left])
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        elif Natsuki.isDistressed(higher=True):
             renpy.show("natsuki talk_menu_low_affinity", at_list=[jn_left])
 
         else:

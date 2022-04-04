@@ -29,7 +29,7 @@ init python in topics:
 
 # Special dialogue for when out of random topics
 label talk_out_of_topics:
-    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    if Natsuki.isNormal(higher=True):
         n 1kllpo "Uhmm..."
         n 1knmaj "Hey...{w=0.5}{nw}"
         extend 1knmss " [player]?"
@@ -55,14 +55,14 @@ label talk_out_of_topics:
                 n 1tllaj "Well...{w=0.5}{nw}"
                 extend 1tnmbo " if you're sure."
 
-                if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+                if Natsuki.isAffectionate(higher=True):
                     n 1kwmpol "I'll try to come up with something soon,{w=0.5}{nw}"
                     extend 1klrssl " 'kay?"
 
                 else:
                     n 1flrpol "J-{w=0.1}just don't make the silence all awkward,{w=0.1} got it?!"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1nllsf "..."
         n 1fllaj "Yeah,{w=0.1} so.{w=0.5}{nw}"
         extend 1fnmsl " I haven't got anything else to say."
@@ -109,13 +109,13 @@ label talk_having_pictures_taken:
         n 1kllsf "I hope you can understand."
 
     else:
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             n 1tnmsf "Hmm?{w=0.2} Pictures of me?"
             n 1nllsl "Honestly,{w=0.1} I don't think I'll ever be completely comfortable with them..."
             n 1unmss "But I trust you to make a good shot!"
             n 1fcsbg "As long as you ask,{w=0.1} I've got no problem with it!"
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        elif Natsuki.isNormal(higher=True):
             if jn_screenshots.are_screenshots_blocked():
                 n 1fsqpu "Really,{w=0.1} [player]?{w=0.1} You're asking me about this {i}now{/i}?"
                 n 1fslaj "You know {i}perfectly well{/i} how I feel about this."
@@ -146,7 +146,7 @@ label talk_having_pictures_taken:
                         n 1fnmaj "[player].{w=0.2} This isn't funny."
                         n 1fllsl "Just make sure you ask."
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        elif Natsuki.isDistressed(higher=True):
             n 1fsqsl "...Pictures,{w=0.1} [player]?{w=0.2} Really?"
             n 1fsqaj "I don't think I want to have you taking my picture,{w=0.1} [player]."
             n 1fslfr "Let's talk about something else."
@@ -166,7 +166,7 @@ init 5 python:
             prompt="Did you ever have any pets?",
             category=["Life", "Animals", "Family"],
             player_says=True,
-            affinity_range=(jn_aff.NORMAL, None),
+            affinity_range=(jn_affinity.NORMAL, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -232,7 +232,7 @@ label talk_did_you_have_pets:
                 n 1knmaj "Oh...{w=0.3} oh jeez..."
                 n 1knmfr "I'm so sorry,{w=0.1} [player].{w=0.2} Are you okay?"
                 n 1kllbo "Maybe we should talk about something else to keep your mind off things..."
-                if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+                if Natsuki.isAffectionate(higher=True):
                     n 1knmbo "I'm here for you,{w=0.1} [player]."
 
     return
@@ -456,7 +456,7 @@ label talk_service_animals:
     n 1unmaj "Hey [player],{w=0.1} have you ever heard of service animals?"
     n 1unmbg "They're like animals people train up specially to do jobs that humans can't do easily."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    if Natsuki.isNormal(higher=True):
         n 1unmbs "Some work in airports to keep people safe,{w=0.1} others help in rescues...{w=0.3} it's super cool!"
         n 1uwmsm "But there's one type that's especially awesome..."
         n 1uchgn "Emotional support animals!"
@@ -475,10 +475,10 @@ label talk_service_animals:
         n 1kwmem "[player]...{w=0.3} I really hope you never have to seek their help."
         n 1kwmnv "And on that note,{w=0.1} if you do need support?"
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        if Natsuki.isAffectionate(higher=True):
             n 1fcssrl "I-{w=0.2}I want you to know that you can depend on me,{w=0.1} 'kay?"
 
-            if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            if Natsuki.isLove():
                 n 1kwmnv "I love you,{w=0.1} [player]."
                 return
 
@@ -563,11 +563,11 @@ label talk_using_computers_healthily:
     n 1ullaj "Wow...{w=0.3} I rambled on a while,{w=0.1} didn't I?{w=0.2}"
     extend 1klrbgl " Sorry,{w=0.1} sorry!{w=0.2} Ehehe."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1kwmsml "But you know I only do these things because I really care about you,{w=0.1} [player]...{w=0.3} right?"
         n 1kwmnvl "So please...{w=0.3} take care of yourself, okay?{w=0.2} I don't want you hurting because of me."
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        if Natsuki.isLove():
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
             n 1kwmsml "I love you,{w=0.1} [chosen_endearment]."
             n 1kwmnvl "..."
@@ -616,7 +616,7 @@ label talk_staying_active:
     n 1ullaj "So...{w=0.5}{nw}"
     extend 1fnmss " make sure you get out soon,{w=0.1} [player]."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1fchbg "I wanna see you fighting fit!{w=0.5}{nw}"
         extend 1uchsm " Ehehe."
         return
@@ -705,12 +705,12 @@ label talk_careful_spending:
     extend 1tnmsg " Just try to think a little before you spend,{w=0.1} [player]{w=0.1} -{w=0.3}{nw}"
     extend 1uchbs " that's all I'm saying!"
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    if Natsuki.isAffectionate(higher=True):
         n 1nslbg "Besides..."
         n 1fsqsm "Gotta save up all we can for when we can hang out,{w=0.1} right?{w=0.5}{nw}"
         extend 1uchsm " Ehehe."
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        if Natsuki.isLove():
             n 1uchbgl "Love you,{w=0.1} [player]~!"
 
     return
@@ -762,13 +762,13 @@ label talk_eating_well:
     n 1usqsm "Your bank balance and your body will thank you.{w=0.5}{nw}"
     extend 1nchsm " Ehehe."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    if Natsuki.isAffectionate(higher=True):
         n 1fsqsm "And besides..."
         n 1usqss "I gotta get you into good habits by yourself before I'm there to make you."
         n 1fchgn "Ahaha!{w=0.2} I'm kidding,{w=0.1} [player]!{w=0.2} I'm kidding!"
         n 1fsqsm "...Mostly."
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             n 1uchsm "Love you, [player]~!{w=0.2} Ehehe."
             return
 
@@ -1406,7 +1406,7 @@ label talk_favourite_season:
                     $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
                     n 1fcsem "Jeez...{w=0.5}{nw}"
                     extend 1fnmpo " you're such a wind-up sometimes,{w=0.1} [chosen_tease]!"
-                    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+                    if Natsuki.isAffectionate(higher=True):
                         n 1flrpol "N-{w=0.1}not that I {i}dislike{/i} that side of you,{w=0.1} o-{w=0.1}or anything."
 
                     else:
@@ -1488,7 +1488,7 @@ label talk_time_management:
     n 1fslbg "Though I should remind you...{w=0.3} the key word here is {i}balance{/i}."
     n 1fsqsr "I'm not gonna be impressed if you work too much...{w=0.5}{nw}"
     extend 1fnmpo " Or just slack off!"
-    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    if Natsuki.isAffectionate(higher=True):
         n 1ullbo "Although...{w=0.3} now that I think about it..."
         n 1tsqsm "Perhaps I should timebox our time together,{w=0.1} [player]."
         extend 1uchbs " Ahaha!"
@@ -1515,12 +1515,12 @@ label talk_sweet_tooth:
     n 1unmbo "Huh?{w=0.2} Do I have a sweet tooth?"
 
     # Opening response
-    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    if Natsuki.isAffectionate(higher=True):
         n 1fspbg "You bet I do!"
         n 1nsqts "What else were you expecting,{w=0.1} [player]?"
         extend 1fchsm "{w=0.2} Ehehe."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1fllss "Well,{w=0.1} yeah.{w=0.2} Of course I do!"
 
     else:
@@ -1530,7 +1530,7 @@ label talk_sweet_tooth:
     n 1ullaj "But to be completely honest,{w=0.1} if I had a choice?{w=0.5}{nw}"
     extend 1unmbo " Just give me a bunch of candy every time."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    if Natsuki.isNormal(higher=True):
         n 1uwdaj "There's so much more variety!{w=0.2} Like...{w=0.3} there's always something for whatever I feel like!"
         n 1tllss "I think if I had to pick a favourite though,{w=0.3}{nw}"
         extend 1fllss " it'd be those fizzy ones."
@@ -1545,13 +1545,13 @@ label talk_sweet_tooth:
         extend 1fchsm " Ahaha."
 
     # Closing thoughts
-    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    if Natsuki.isAffectionate(higher=True):
         n 1fsqsm "Though I have to say,{w=0.1} [player]."
         n 1fsqssl "I'm pretty sure you have a sweet tooth too."
         n 1fsrbgl "It'd explain why you're spending so much time with me,{w=0.1} a-{w=0.1}after all."
         n 1fchbgl "Ahaha!"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1fllbg "I could go for some candy right now,{w=0.1} actually.{w=0.5}{nw}"
         extend 1fslss " But...{w=0.3} I think I'll hold back."
         n 1usqbg "Someone's gotta be a role model to you,{w=0.1} [player].{w=0.2} Am I right?"
@@ -1878,7 +1878,7 @@ label talk_player_appearance:
     n 1fllbg "I know it wasn't a lot,{w=0.3}{nw}"
     extend 1uchgn " but I feel like I know you so much better now!"
 
-    if jn_affinity.get_affinity_state() == jn_affinity.LOVE:
+    if Natsuki.isLove():
         n 1flldvl "You know,{w=0.1} [player]?{w=0.2} I can just picture it now."
         n 1fnmssl "Meeting you in person somewhere out there,{w=0.1} for the first time..."
         python:
@@ -1921,7 +1921,7 @@ label talk_player_appearance:
         n 1kllsml "Really.{w=0.2} Thank you,{w=0.1} [chosen_endearment]."
         n 1kcsbgl "This seriously meant a lot to me."
 
-    elif jn_affinity.get_affinity_state() == jn_affinity.ENAMORED:
+    elif Natsuki.isEnamored():
         n 1fsldvl "...And now I know exactly who I should be watching out for."
         n 1fsqssl "So you better watch out,{w=0.1} [player]."
         n 1fcsbgl "Ehehe."
@@ -1975,7 +1975,7 @@ label talk_drinking_alcohol:
     n 1unmsr "It's all in the past now,{w=0.1} obviously.{w=0.5}{nw}"
     extend 1kslsr " But...{w=0.3} that doesn't mean I don't still feel bad about it sometimes."
     n 1kcssr "..."
-    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    if Natsuki.isAffectionate(higher=True):
         n 1kllsr "Hey...{w=0.5}{nw}"
         extend 1knmpu " [player]?"
         n 1klrsr "Can you promise me something?"
@@ -1989,7 +1989,7 @@ label talk_drinking_alcohol:
         n 1kslsr "...Firsthand."
         n 1ksqsl "You deserve better than that,{w=0.1} [player].{w=0.5}{nw}"
         extend 1kslun " You {i}are{/i} better than that."
-        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        if Natsuki.isLove():
             n 1kcsun "..."
             n 1ksqsml "I love you,{w=0.1} [player]."
             n 1fcssrl "I'm {w=0.3}{i}never{/i}{w=0.3} going to let a bottle get between us."
@@ -2058,7 +2058,7 @@ label talk_driving:
                 extend 1nchsm " I'm just messing with you."
                 n 1unmbg "That's awesome though{w=0.1} -{w=0.1} you just can't beat the convenience of a car,{w=0.1} right?"
 
-                if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+                if Natsuki.isAffectionate(higher=True):
                     n 1fllbg "But I should probably warn you..."
                     n 1fsgsm "I'm picking the songs for our driving playlist."
                     extend 1uchbg " Ahaha!"
@@ -2076,7 +2076,7 @@ label talk_driving:
                 n 1nnmsm "Well,{w=0.1} I'm not one to judge.{w=0.2} I'm sure you manage just fine."
                 n 1flrss "Besides,{w=0.1} you're helping the environment too,{w=0.1} right?"
 
-                if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+                if Natsuki.isAffectionate(higher=True):
                     n 1fsgsm "Thoughtful as always,{w=0.1} [player]."
                     extend 1nchsm " Ehehe."
 
@@ -2091,7 +2091,7 @@ label talk_driving:
                 extend 1fsgsm " I'll teach you how to use the bus!"
                 n 1uchsm "Ehehe."
 
-                if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+                if Natsuki.isEnamored(higher=True):
                     n 1fllsm "And besides..."
                     n 1fllssl "That just means we can huddle up on the seat together,{w=0.1} [player]."
                     n 1fcsbgl "A dream come true for you,{w=0.1} right?"
@@ -2141,14 +2141,14 @@ label talk_driving:
                 extend 1fchbg " Nice,{w=0.1} [player]!"
                 n 1fchsm "Don't sweat the test,{w=0.1} alright?{w=0.2} I'm sure you'll do fine!"
 
-                if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+                if Natsuki.isAffectionate(higher=True):
                     n 1uchsm "I believe in you,{w=0.1} [player]!"
 
             "I passed my test!":
                 n 1uskgs "No kidding?{w=0.5}{nw}"
                 extend 1uchbs " Yaaay!{w=0.2} Congrats,{w=0.1} [player]!"
 
-                if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+                if Natsuki.isLove():
                     n 1kwmsm "I knew you could do it,{w=0.1} you big dummy!"
                     extend 1kchsm " Ehehe."
 
@@ -2189,7 +2189,7 @@ label talk_sustainable_fashion:
     n 1nnmaj "Hey,{w=0.1} [player]..."
     n 1nllaj "This is kinda random,{w=0.1} but..."
     extend 1unmpu " are you into fashion?"
-    if jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+    if Natsuki.isHappy(higher=True):
         n 1fcsbg "I know I am!{w=0.2} Can you tell?"
         extend 1nchsm " Ehehe."
 
@@ -2198,7 +2198,7 @@ label talk_sustainable_fashion:
 
     n 1fllpu "But what caught me by surprise is just how much waste there is."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    if Natsuki.isNormal(higher=True):
         n 1uwdgs "Seriously,{w=0.1} [player] {w=0.1}-{w=0.1} it's insane!"
         n 1ullaj "People throw away a {i}lot{/i} of clothing...{w=0.5}{nw}"
         extend 1flrem " it's estimated that we toss out around 90{w=0.3} {i}million{/i}{w=0.3} tonnes every year."
@@ -2212,7 +2212,7 @@ label talk_sustainable_fashion:
     n 1fsrem "And we haven't even began to talk about the amount of water used for washing and plastic used for packaging too."
     n 1ksrsr "...Or the conditions some of the workers making our clothes have to put up with."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    if Natsuki.isNormal(higher=True):
         n 1fcssm "It's actually one of the reasons I began learning how to sew!"
         n 1klrsr "I've...{w=0.3} never had tons of money to buy more clothes anyway,{w=0.1} so I try to reuse and fix up what I can."
         n 1fchbg "But you'd be surprised at what you can pull off with a little creativity!"
@@ -2223,12 +2223,12 @@ label talk_sustainable_fashion:
     n 1nllpu "But...{w=0.3} the next time you're out shopping for clothes,{w=0.1} or looking through some catalogues online?"
     n 1unmpu "Just spare a thought for the environment,{w=0.1} would you?"
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    if Natsuki.isAffectionate(higher=True):
         n 1kllssl "For me?"
         n 1nchbg "Ahaha.{w=0.5}{nw}"
         extend 1uchsm " Thanks,{w=0.1} [player]!"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1nchbg "Ahaha.{w=0.5}{nw}"
         extend 1uchsm " Thanks,{w=0.1} [player]!"
 
@@ -2412,9 +2412,8 @@ label talk_give_nickname:
         n 1fsqsl "That really hurt,{w=0.1} [player].{w=0.2} Don't abuse my trust."
 
         # Apply penalty and pending apology
-        $ jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.bad_nickname)
-        $ jn_relationship(change="affinity-", multiplier=2)
-        $ jn_relationship(change="trust-", multiplier=2)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
+        $ Natsuki.percentage_affinity_loss(1)
 
     elif persistent.jn_player_nicknames_bad_given_total == 2:
         n 1fsqsl "I can't believe you did that again to me,{w=0.1} [player]."
@@ -2425,9 +2424,8 @@ label talk_give_nickname:
         n 1fsqsr "Don't test my patience like this.{w=0.2} You're better than that."
 
         # Apply penalty and pending apology
-        $ jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.bad_nickname)
-        $ jn_relationship(change="affinity-", multiplier=2)
-        $ jn_relationship(change="trust-", multiplier=2)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
+        $ Natsuki.percentage_affinity_loss(2.5)
 
     elif persistent.jn_player_nicknames_bad_given_total == 3:
         n 1fsqan "You are honestly unbelievable,{w=0.1} [player]."
@@ -2442,8 +2440,7 @@ label talk_give_nickname:
                 n 1fsqan "...Then start acting like it,{w=0.1} [player]."
                 n 1fslsl "Thanks."
 
-                $ jn_relationship(change="affinity-", multiplier=2)
-                $ jn_relationship(change="trust-", multiplier=2)
+                $ Natsuki.percentage_affinity_loss(3)
 
             "...":
                 n 1fcssl "Look.{w=0.2} I'm not kidding around,{w=0.1} [player]."
@@ -2451,11 +2448,10 @@ label talk_give_nickname:
                 n 1fsqem "It's toxic."
                 n 1fsqsr "I don't care if you're trying to pull my leg.{w=0.2} Quit it."
 
-                $ jn_relationship(change="affinity-", multiplier=3)
-                $ jn_relationship(change="trust-", multiplier=3)
+                $ Natsuki.percentage_affinity_loss(5)
 
         # Apply penalty and pending apology
-        $ jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.bad_nickname)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
 
     elif persistent.jn_player_nicknames_bad_given_total == 4:
         # Player is locked out of nicknaming; this is why we can't have nice things
@@ -2467,12 +2463,11 @@ label talk_give_nickname:
         n 1fsqsr "I warned you,{w=0.1} [player].{w=0.2} Remember that."
 
         # Apply affinity/trust penalties, then revoke nickname priveleges and finally apply pending apology
-        $ jn_relationship(change="affinity-", multiplier=5)
-        $ jn_relationship(change="trust-", multiplier=5)
+        $ Natsuki.percentage_affinity_loss(10)
         $ persistent.jn_player_nicknames_allowed = False
         $ persistent.jn_player_nicknames_current_nickname = None
         $ n_name = "Natsuki"
-        $ jn_apologies.add_new_pending_apology(jn_apologies.JNApologyTypes.bad_nickname)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
 
     return
 
@@ -2602,17 +2597,17 @@ label talk_aging:
     n 1nllbg "But anyway...{w=0.3} I think we got side-tracked."
     n 1unmss "I don't really care how old you are,{w=0.1} [player]."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+    if Natsuki.isLove():
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
         n 1klrpol "Y-{w=0.1}you better know that I love you all the same,{w=0.1} [chosen_tease]."
         n 1knmpol "Don't forget that,{w=0.1} 'kay?"
         n 1flrpol "I'll get mad if you do.{w=0.5}{nw}"
         extend 1klrbgl " Ahaha..."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    elif Natsuki.isEnamored(higher=True):
         n 1fllbgl "You've been pretty awesome to me all the same."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+    elif Natsuki.isHappy(higher=True):
         n 1fchbgl "You're always fun to hang around with!"
 
     else:
@@ -2638,7 +2633,7 @@ init 5 python:
     )
 
 label talk_work_life_balance:
-    if jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
+    if Natsuki.isUpset(higher=True):
         n 1ullaj "You know,{w=0.1} [player]..."
 
     n 1nnmaj "I think it's pretty easy to let your academic or work life creep into your personal time nowadays."
@@ -2647,7 +2642,7 @@ label talk_work_life_balance:
     n 1flrbo "And like...{w=0.3} if there's already that connection,{w=0.1} then what's to stop work from bugging you during your time off?"
     n 1fsrbo "Or classmates asking for help at the last possible minute?"
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
+    if Natsuki.isUpset(higher=True):
         n 1fcsem "It just gets annoying -{w=0.1} like everyone expects you to always be around to chip in a little more,{w=0.1} or get something done!"
         n 1fnmpo "Overwhelming,{w=0.1} right?"
         n 1fllaj "Huh.{w=0.2} Actually...{w=0.3} now that I think about it..."
@@ -2664,19 +2659,19 @@ label talk_work_life_balance:
         extend 1fsqan " Often not even paid."
         n 1fslem "Or even students studying late into the night until they collapse..."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    if Natsuki.isNormal(higher=True):
         n 1kcsem "Ugh...{w=0.3} I just wish people would value their own time more."
         n 1klrsr "..."
         n 1unmaj "Hey,{w=0.1} [player]..."
         n 1nllaj "I don't know if you're working,{w=0.1} or studying,{w=0.1} or what..."
         n 1fnmsf "But you better not be letting whatever it is take over your life.{w=0.2} Understand?"
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             n 1knmpu "You are {i}more{/i} than your career,{w=0.1} or your education.{w=0.2} You have your own wants and needs that matter too."
             n 1kllun "I don't want some dumb job or stupid assignment to take over your life."
             n 1fcsun "You're...{w=0.3} way more important than either of those,{w=0.1} [player].{w=0.2} Trust me."
 
-            if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            if Natsuki.isLove():
                 n 1fllun "Besides..."
                 n 1fllssl "You and your time are mine first, [player]."
                 n 1flldvl "I already called dibs,{w=0.1} a-{w=0.1}after all.{w=0.5}{nw}"
@@ -2686,7 +2681,7 @@ label talk_work_life_balance:
             $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
             n 1kllpo "People are more than what they do for a living,{w=0.1} after all.{w=0.2} And that includes you too, [chosen_tease]!"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1fllsr "Makes me wish people would value their own time more."
         n 1fnmsr "...I guess that includes you too,{w=0.1} [player]."
         n 1fllpu "You've got better things to do."
@@ -2766,14 +2761,14 @@ init 5 python:
 
 label talk_thoughts_on_horror:
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    if Natsuki.isNormal(higher=True):
         n 1unmaj "You know,{w=0.1} [player]..."
         n 1tllaj "I don't think I ever actually explained why I dislike horror so much."
         n 1tlrss "I know I mentioned it before,{w=0.1} but I was kinda caught off guard at the time."
         n 1unmaj "Honestly?"
         n 1nnmsm "Everyone has their tastes,{w=0.1} right? And I can get why people enjoy it."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1nllbo "I don't think I explained why I dislike horror."
         n 1nnmsl "I get everyone has their tastes,{w=0.1} but I don't care for it."
 
@@ -2786,7 +2781,7 @@ label talk_thoughts_on_horror:
         n 1fcsun "Being stuck here with {i}you{/i} is horror enough."
         return
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    if Natsuki.isNormal(higher=True):
         n 1fchbg "Like Yuri!"
         n 1fcsss "It's suspenseful,{w=0.1} and fears are a super powerful motivator for characters!"
         n 1ullpu "So don't get me wrong{w=0.1} -{w=0.1} I can totally appreciate the effort that goes into it."
@@ -2806,16 +2801,16 @@ label talk_thoughts_on_horror:
     n 1fcssl "..."
     n 1nnmaj "So...{w=0.3} yeah.{w=0.1} That's about all I had to say about it."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    if Natsuki.isAffectionate(higher=True):
         n 1unmss "Though...{w=0.3} if you want to put something on,{w=0.1} [player]?{w=0.2} Go ahead."
         n 1fllssl "If it's you,{w=0.1} I {i}think{/i} I can deal with it."
         n 1flrpol "But...{w=0.3} we're keeping the volume low.{w=0.2} Got it?"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1nnmaj "Don't mind me though,{w=0.1} [player].{w=0.2} If you wanna watch something,{w=0.1} go for it."
         n 1flrcal "But you're watching it solo."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1flrsl "..."
         n 1fnmpu "I {i}would{/i} ask that if you were gonna watch something like that,{w=0.1} then to warn me first."
         n 1fsqsr "But you wouldn't listen to me anyway,{w=0.1} would you?"
@@ -2838,7 +2833,7 @@ init 5 python:
     )
 
 label talk_gaming:
-    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    if Natsuki.isNormal(higher=True):
         n 1unmaj "Gaming?"
         n 1fcsbg "Well...{w=0.3} duh!"
         n 1fnmbg "You bet I'm into gaming,{w=0.1} [player]!"
@@ -2872,7 +2867,7 @@ label talk_gaming:
                 n 1ncsaj "...Well then."
                 n 1fnmbg "It looks like I've got a lot to teach you,{w=0.1} [player]!"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1nnmsl "Huh?{w=0.2} Video games?"
         n 1nslsl "Yeah,{w=0.1} I guess.{w=0.2} For what that's worth to you."
 
@@ -2885,7 +2880,7 @@ label talk_gaming:
         n 1fslaj "...I don't wanna talk about this any more.{w=0.2} We're done here."
         return
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    if Natsuki.isNormal(higher=True):
         n 1ullaj "Anyway,{w=0.1} putting that aside..."
         n 1nsgbg "When it comes to my preferences?{w=0.2} I want challenge in my games!"
         n 1fcsbg "I play for the win{w=0.1} -{w=0.1} it's me versus the developers,{w=0.1} and they're not around to stop me!"
@@ -2901,11 +2896,11 @@ label talk_gaming:
         if persistent.jn_player_gaming_frequency == "High":
             n 1fchgn "There's still plenty I can teach you!"
 
-            if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+            if Natsuki.isEnamored(higher=True):
                 n 1ksqsml "And I bet you'd like that too,{w=0.1} huh?"
                 n 1nchbg "Ahaha."
 
-            elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+            elif Natsuki.isAffectionate(higher=True):
                 n 1fchbg "And I'm not gonna take 'No' for an answer!"
 
         elif persistent.jn_player_gaming_frequency == "Medium":
@@ -2972,17 +2967,17 @@ label talk_natsukis_fang:
     n 1fsgsm "Remember,{w=0.1} [player] -{w=0.1} if you ignore them,{w=0.1} they'll go away~."
     n 1nllss "But no, seriously."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+    if Natsuki.isLove():
         $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
         n 1kllss "Smiles look good on you,{w=0.1} [chosen_endearment]."
         n 1fnmsm "Let's keep them looking that way."
         n 1uchsml "Ehehe.{w=0.2} Love you,{w=0.1} [player]~!"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    elif Natsuki.isEnamored(higher=True):
         n 1fnmsml "I think smiles look good on you,{w=0.1} [player]."
         n 1fchbgl "Let's keep them looking that way!"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    elif Natsuki.isAffectionate(higher=True):
         n 1usqbg "The right smile can make all the difference,{w=0.1} you know.{w=0.2} Just look at mine!"
         n 1uchgn "Ehehe."
 
@@ -3000,10 +2995,10 @@ init 5 python:
             label="talk_i_love_you",
             unlocked=True,
             prompt="I love you, {0}!".format(n_name),
-            conditional="jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED",
             category=["Natsuki", "Romance"],
             player_says=True,
-            location="classroom"
+            location="classroom",
+            affinity_range=(jn_affinity.ENAMORED, None)
         ),
         topic_group=TOPIC_TYPE_NORMAL
     )
@@ -3019,7 +3014,7 @@ label talk_i_love_you:
     # and therefore may have any affection level
     if persistent.jn_player_love_you_count == 0:
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        if Natsuki.isLove():
             n 1uscemf "O-{w=0.1}o-{w=0.1}oh my gosh..."
             n 1uskemf "[player_initial]-{w=0.2}[player]...{w=0.3} y-{w=0.1}you...!"
             n 1fcsanf "Nnnnnnn-!"
@@ -3046,9 +3041,9 @@ label talk_i_love_you:
             n 1kllsmf "..."
             n 1kllssf "S-{w=0.1}so..."
             n 1kplssf "Where were we?{w=0.2} Ehehe..."
-            $ jn_relationship(change="affinity+", multiplier=3)
+            $ Natsuki.calculated_affinity_gain(base=3, bypass=True)
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        elif Natsuki.isEnamored(higher=True):
             n 1uscgsf "[player_initial]-{w=0.2}[player]!"
             n 1fskgsf "Y-{w=0.1}you...!"
             n 1fcsanf "Nnnnn-!"
@@ -3063,9 +3058,9 @@ label talk_i_love_you:
             n 1flrbol "N-{w=0.1}never mind..."
             n 1fcseml "Forget I said anything."
             n 1kllbof "..."
-            $ jn_relationship(change="affinity+", multiplier=2)
+            $ Natsuki.calculated_affinity_gain(base=2, bypass=True)
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        elif Natsuki.isAffectionate(higher=True):
             n 1uskwrf "W-{w=0.1}w-{w=0.1}what?"
             n 1fwdwrf "D-{w=0.1}did you just...?"
             n 1fcsanf "Nnnnnnnnn-!"
@@ -3079,9 +3074,9 @@ label talk_i_love_you:
             n 1fcsanf "Uuuuu..."
             n 1fcsajf "F-{w=0.1}forget it!{w=0.2} I-{w=0.1}it's nothing..."
             n 1kslslf "..."
-            $ jn_relationship("affinity+")
+            $ Natsuki.calculated_affinity_gain(bypass=True)
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+        elif Natsuki.isHappy(higher=True):
             n 1fsqdvl "Pffffft!"
             n 1uchbsl "Ahaha!"
             n 1tllbgl "You can't be serious,{w=0.1} [player]!{w=0.2} You're just messing with me!{w=0.2} Right?"
@@ -3095,7 +3090,7 @@ label talk_i_love_you:
             n 1fcsajl "Just...{w=0.3} think a little before you just blurt stuff out!{w=0.2} Sheesh."
             n 1fllslf "[chosen_tease.capitalize()]..."
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        elif Natsuki.isNormal(higher=True):
             n 1fscgsf "Urk-!"
             n 1fskanf "W-{w=0.1}what did you..."
             n 1fwdanf "Did you just...?"
@@ -3106,7 +3101,7 @@ label talk_i_love_you:
             n 1fllssf "I-{w=0.1}I mean,{w=0.1} I'm just glad you have some good taste."
             n 1fllunf "Yeah..."
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
+        elif Natsuki.isUpset(higher=True):
             n 1fcsan "..."
             n 1fnmfu "Seriously,{w=0.1} [player]?{w=0.2} You're really going to say that to me {i}now{/i}?"
             n 1fsqfu "The first time you choose to say it...{w=0.3} and you say it {i}now{/i}?"
@@ -3117,7 +3112,7 @@ label talk_i_love_you:
             n 1fsqsr "We're done with this."
             n 1fsqpu "And if you {i}really{/i} feel that way?"
             n 1fsqsf "...Then why aren't {i}you{/i} trying to make this work,{w=0.1} [player]?"
-            $ jn_relationship("affinity-")
+            $ Natsuki.percentage_affinity_loss(10)
 
         else:
             # :(
@@ -3140,7 +3135,7 @@ label talk_i_love_you:
             n 1fcsan "..."
             n 1fsqfu "Go!"
             n 1fscsc "{i}Just leave me alone!{/i}{nw}"
-            $ jn_relationship(change="affinity-", multiplier=10)
+            $ Natsuki.percentage_affinity_loss(25)
             return { "quit": None }
 
         $ persistent.jn_player_love_you_count += 1
@@ -3148,7 +3143,7 @@ label talk_i_love_you:
     # Standard flows
     else:
         $ persistent.jn_player_love_you_count += 1
-        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        if Natsuki.isLove():
 
             # At this point, Natsuki is super comfortable with her player, so we can be open and vary things!
             $ random_response_index = random.randint(0, 11)
@@ -3156,7 +3151,7 @@ label talk_i_love_you:
             if random_response_index == 0:
                 n 1unmbgf "Ehehe.{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
                 n 1uchsmf "You're always [chosen_descriptor] to me."
-                $ jn_relationship("affinity+")
+                $ Natsuki.calculated_affinity_gain()
                 return
 
             elif random_response_index == 1:
@@ -3165,13 +3160,13 @@ label talk_i_love_you:
                 $ chosen_endearment = chosen_endearment.capitalize()
                 n 1kwmbgf "[chosen_endearment],{w=0.1} I love you too!"
                 n 1fcsbgf "I'll always be here to stick up for you."
-                $ jn_relationship("affinity+")
+                $ Natsuki.calculated_affinity_gain()
                 return
 
             elif random_response_index == 2:
                 n 1uchsmf "Aww,{w=0.1} [chosen_endearment]!{w=0.2} I love you too!"
                 n 1klrbgf "You're the best thing that's ever happened to me."
-                $ jn_relationship("affinity+")
+                $ Natsuki.calculated_affinity_gain()
                 return
 
             elif random_response_index == 3:
@@ -3179,7 +3174,7 @@ label talk_i_love_you:
                 n 1fsqsmf "Well,{w=0.1} I'd be happy to oblige!"
                 n 1uchsmf "I love you too,{w=0.1} [chosen_endearment]!"
                 n 1fchbgf "Keep on smiling for me,{w=0.1} 'kay?"
-                $ jn_relationship("affinity+")
+                $ Natsuki.calculated_affinity_gain()
                 return
 
             elif random_response_index == 4:
@@ -3187,7 +3182,7 @@ label talk_i_love_you:
                 n 1usqssf "Ehehe.{w=0.2} Don't worry,{w=0.1} I'm not complaining!"
                 n 1uchbgf "I love you too,{w=0.1} [chosen_endearment]!"
                 n 1fcssmf "It's just us two against the world!"
-                $ jn_relationship("affinity+")
+                $ Natsuki.calculated_affinity_gain()
                 return
 
             elif random_response_index == 5:
@@ -3212,7 +3207,7 @@ label talk_i_love_you:
                         n 1fchsmf "Well,{w=0.1} whatever.{w=0.2} I'm just glad you accept the truth."
                         n 1uchsmf "Ehehe."
 
-                $ jn_relationship("affinity+")
+                $ Natsuki.calculated_affinity_gain()
                 return
 
             elif random_response_index == 6:
@@ -3220,7 +3215,7 @@ label talk_i_love_you:
                 n 1usqsmf "...And I think I can guess you like hearing it just as much."
                 n 1uchbgf "I love you too,{w=0.1} [chosen_endearment]!"
                 n 1nchsmf "I don't need anyone else~."
-                $ jn_relationship("affinity+")
+                $ Natsuki.calculated_affinity_gain()
                 return
 
             elif random_response_index == 7:
@@ -3230,7 +3225,7 @@ label talk_i_love_you:
                 n 1fchbgf "...But just the kind of gross I'm down with.{w=0.2} Ehehe."
                 n 1uchbgf "I love you too,{w=0.1} [chosen_endearment]!"
                 n 1unmsmf "I'll always have your back."
-                $ jn_relationship("affinity+")
+                $ Natsuki.calculated_affinity_gain()
                 return
 
             elif random_response_index == 8:
@@ -3238,7 +3233,7 @@ label talk_i_love_you:
                 n 1nchssf "I..."
                 n 1uchbsf "Looooooooove you too,{w=0.1} [player]!"
                 n 1kwmsmf "You'll always be my rock."
-                $ jn_relationship("affinity+")
+                $ Natsuki.calculated_affinity_gain()
                 return
 
             elif random_response_index == 9:
@@ -3323,14 +3318,14 @@ label talk_i_love_you:
                             if wrong_response_count >= 10:
                                 n 1nsqsml "Nice try,{w=0.1} though~!"
 
-                            $ jn_relationship("affinity+")
+                            $ Natsuki.calculated_affinity_gain()
                             return
 
             elif random_response_index == 10:
                 n 1ksqsml "Ehehe.{w=0.2} I'll never get tired of hearing that from you,{w=0.1} [player]."
                 n 1uchsmf "I love you too!"
                 n 1uchbgf "You're my numero uno~."
-                $ jn_relationship("affinity+")
+                $ Natsuki.calculated_affinity_gain()
                 return
 
             else:
@@ -3338,29 +3333,29 @@ label talk_i_love_you:
                 n 1uslsmf "You're such a softie,{w=0.1} [player].{w=0.2} Ehehe."
                 n 1uchbgf "But...{w=0.3} I'm not gonna complain!{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
                 n 1uchsmf "You always make me feel tall."
-                $ jn_relationship("affinity+")
+                $ Natsuki.calculated_affinity_gain()
                 return
 
             return
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        elif Natsuki.isEnamored(higher=True):
             n 1fbkwrf "G-{w=0.1}gah!{w=0.2} [player]!"
             n 1fllwrf "What did I say about making things awkward?{w=0.2} Now it's twice as awkward!"
             n 1fcsemf "Jeez..."
             n 1flremf "Let's just talk about something,{w=0.1} alright?"
             n 1flrpof "Y-{w=0.1}you can fawn over me in your {i}own{/i} time!"
             n 1klrpof "Dummy..."
-            $ jn_relationship("affinity+")
+            $ Natsuki.calculated_affinity_gain()
             return
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+        elif Natsuki.isHappy(higher=True):
             n 1fskemf "H-{w=0.1}hey! I thought I told you not to just come out with stuff like that!"
             n 1fllemf "Jeez..."
             n 1fcsemf "I-{w=0.1}I don't know if you're trying to win me over,{w=0.1} or what..."
             n 1fcspof "But you're gonna have to try a lot harder than that!"
             return
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        elif Natsuki.isNormal(higher=True):
             n 1fskemf "G-{w=0.1}gah!"
             n 1fbkwrf "[player_initial]-{w=0.1}[player]!"
             n 1fnmanl "Stop being gross!"
@@ -3369,12 +3364,12 @@ label talk_i_love_you:
             n 1fsqaj "But it really isn't funny to me,{w=0.1} [player]."
             return
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
+        elif Natsuki.isUpset(higher=True):
             n 1fcssr "..."
             n 1fsqsr "Talk is cheap,{w=0.1} [player]."
             n 1fsqaj "If you {i}really{/i} care about me..."
             n 1fsqpu "Then {i}prove{/i} it."
-            $ jn_relationship("affinity-")
+            $ Natsuki.percentage_affinity_loss(2.5)
             return
 
         else:
@@ -3384,7 +3379,7 @@ label talk_i_love_you:
             n 1fcsfu "..."
             n 1fcspu "You know what?{w=0.2} Whatever.{w=0.2} I don't care anymore."
             n 1fsqfu "Say what you like,{w=0.1} [player].{w=0.2} It's all crap,{w=0.1} just like everything else from you."
-            $ jn_relationship("affinity-")
+            $ Natsuki.percentage_affinity_loss(2)
             return
 
     return
@@ -3405,17 +3400,17 @@ init 5 python:
     )
 
 label talk_natsukis_hairstyle:
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1unmaj "Hmm?{w=0.2} My hairstyle?"
         n 1fsgsg "Why do you ask,{w=0.1} [player]?{w=0.2} Looking for a stylist?"
         n 1fchsm "Ehehe."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1unmaj "Huh?{w=0.2} My hairstyle?"
         n 1fsqaj "Wait...{w=0.3} are you messing with me?{w=0.2} What do you mean?"
         n 1fllpo "You better not be teasing me,{w=0.1} [player]..."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1nnmsl "...Huh?{w=0.2} Oh.{w=0.2} My hair."
         n 1flrsl "I'm...{w=0.3} surprised you care enough to ask about that."
 
@@ -3428,7 +3423,7 @@ label talk_natsukis_hairstyle:
     n 1nnmpu "Well,{w=0.1} anyway."
     n 1ullpu "I never really thought about it that much,{w=0.1} honestly."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    if Natsuki.isNormal(higher=True):
         if persistent.jn_natsuki_current_hairstyle == "default":
             n 1ulrpo "I just thought twintails would look kinda cute on me."
 
@@ -3437,7 +3432,7 @@ label talk_natsukis_hairstyle:
 
         n 1fsqpo "...Yeah,{w=0.1} yeah.{w=0.2} I know what you're thinking,{w=0.1} [player]."
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             n 1ksqsm "Was I wrong...?"
             n 1fchbg "Ehehe.{w=0.2} I thought not."
 
@@ -3450,7 +3445,7 @@ label talk_natsukis_hairstyle:
 
     n 1ulraj "As for the bangs,{w=0.1} I...{w=0.3} always found it difficult to get my hair cut."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    if Natsuki.isNormal(higher=True):
         n 1flraj "It just costs so much,{w=0.1} you know?{w=0.2} It's super dumb!"
         n 1fnman "Like...{w=0.3} I don't get it at all!"
         n 1fllan "And the annoying thing is that if I were a guy,{w=0.1} it'd be way cheaper!{w=0.2} What's up with that?"
@@ -3466,7 +3461,7 @@ label talk_natsukis_hairstyle:
     else:
         n 1ullaj "I'm not wearing it now,{w=0.1} but the hairclip is just to keep my hair out of my eyes."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    if Natsuki.isNormal(higher=True):
         n 1fllss "Looking good is a bonus,{w=0.1} but I mostly just got tired of brushing my hair out of my face."
         n 1nsrca "Especially with bangs this long!"
         n 1unmaj "Anyway..."
@@ -3476,13 +3471,13 @@ label talk_natsukis_hairstyle:
     if persistent.jn_natsuki_current_hairstyle != "default":
         n 1ullbo "I think that kinda speaks for itself,{w=0.1} really.{w=0.2} I {i}am{/i} trying out a different one..."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
         n 1usgss "Either way though,{w=0.1} [player]..."
         n 1fcssml "I'm pretty sure I already let my hair down around you,{w=0.1} [chosen_tease].{w=0.2} That qualifies, right?"
         n 1uchgnl "Ahaha!"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1unmaj "You know what they say,{w=0.1} [player]."
         n 1fnmbg "If it ain't broke,{w=0.1} don't fix it!"
         n 1uchgn "Ehehe."
@@ -3532,14 +3527,14 @@ label talk_integrity:
     n 1flrsl "I just don't like the idea of people being pushed into what isn't right for them."
     n 1nnmpu "That being said,{w=0.1} [player]..."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1ksqsm "I'm pretty sure we both know what's right for each other by now,{w=0.1} huh?"
         n 1fcsbgl "Ahaha."
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        if Natsuki.isLove():
             n 1uchsml "Love you,{w=0.1} [player]~!"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    elif Natsuki.isAffectionate(higher=True):
         n 1ksqsm "I'm pretty sure I know what's right for you..."
         n 1fcsbgl "Spending more time with me!{w=0.2} Ahaha."
 
@@ -3566,7 +3561,7 @@ init 5 python:
     )
 
 label talk_favourite_animal:
-    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    if Natsuki.isNormal(higher=True):
         n 1fsqsr "Hammies."
         n 1fcssm "That's barely even a question for me,{w=0.1} [player]."
         n 1uwdaj "Like...{w=0.3} if you've seen them,{w=0.1} can you blame me?"
@@ -3586,15 +3581,15 @@ label talk_favourite_animal:
         n 1ucssm "I don't mind taking care of it."
         n 1fchgn "...But you're in charge of the supplies!"
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             n 1fchbg "Oh,{w=0.1} and relax -{w=0.1} I'll make sure it'll be well tamed!"
             n 1uslbg "Or..."
             n 1usqts "At least about as tame as you,{w=0.1} huh [player]?{w=0.2} Ahaha!"
 
-            if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            if Natsuki.isLove():
                 n 1uchbg "Love you~!"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1fsqpu "Hamsters,{w=0.1} if it matters."
         n 1fllpu "Why?{w=0.2} I don't know.{w=0.2} I just think they're cute."
         n 1nllbo "I think people actually underestimate how expressive they can be,{w=0.1} too."
@@ -3627,13 +3622,13 @@ init 5 python:
     )
 
 label talk_favourite_drink:
-    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    if Natsuki.isAffectionate(higher=True):
         n 1unmbg "Ooooh!{w=0.2} My favourite drink?"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1unmaj "Mmm?{w=0.2} My favourite drink?"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1nllbo "Huh?{w=0.2} Oh.{w=0.1} My favourite drink."
 
     else:
@@ -3643,20 +3638,20 @@ label talk_favourite_drink:
         n 1fcsan "Now just go away..."
         return
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    if Natsuki.isNormal(higher=True):
         n 1ullaj "I gotta say...{w=0.3} it depends on the weather more than anything."
         n 1tnmaj "I mean...{w=0.3} what kind of dope would order an iced drink in the middle of winter?!"
         n 1fllss "But anyway..."
         n 1fcsbg "If it's cold out,{w=0.1} then hot chocolate.{w=0.2} No questions,{w=0.1} no doubts."
         n 1uchgn "In the depths of winter,{w=0.1} you definitely won't get a better option than that!"
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        if Natsuki.isAffectionate(higher=True):
             n 1fcsbg "And yeah,{w=0.1} [player] -{w=0.1} whipped cream,{w=0.1} marshmallows -{w=0.1} all of it.{w=0.2} The complete works."
             n 1uchgn "...And I wouldn't accept anything less!"
             n 1fllbg "I mean,{w=0.1} think about it -{w=0.1} if you're getting hot chocolate,{w=0.1} you've already kinda lost on the health front."
             n 1uchgn "So you might as well go all in,{w=0.1} right?{w=0.2} Ahaha."
 
-            if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            if Natsuki.isLove():
                 n 1fcsdvl "Besides,{w=0.2} I'm not too worried -{w=0.1} we'll just share the calories,{w=0.1} [player]~."
 
         n 1unmaj "As for warmer weather...{w=0.3} that's a little trickier,{w=0.1} actually."
@@ -3669,7 +3664,7 @@ label talk_favourite_drink:
         n 1fllss "Well...{w=0.3} as long as it blends,{w=0.1} anyway."
         n 1ncssm "All kinds of sweets,{w=0.1} any type of milk..."
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        if Natsuki.isAffectionate(higher=True):
             n 1ucssm "Though if I had to pick a favourite?"
             n 1fcsbg "It's gotta be strawberries and cream,{w=0.1} obviously."
             n 1fllbgl "And...{w=0.3} maybe with just a dash of chocolate too?{w=0.2} Ehehe."
@@ -3705,7 +3700,7 @@ init 5 python:
     )
 
 label talk_school_uniform:
-    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+    if Natsuki.isLove():
         n 1fsqctl "Oho?{w=0.2} Does [player] like a girl in uniform?"
         n 1ksqaj "Wow...{w=0.3} you're even {i}more{/i} gross than I thought."
         n 1fsqsm "..."
@@ -3713,7 +3708,7 @@ label talk_school_uniform:
         n 1uchgn "Oh come on,{w=0.1} [chosen_tease]!{w=0.2} You always get all sulky when I call you that!{w=0.2} I just can't resist."
         n 1fchsm "Ehehe.{w=0.2} So anyway..."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    elif Natsuki.isAffectionate(higher=True):
         n 1unmaj "Huh?{w=0.2} My school uniform?"
         n 1fsqsm "...Ehehe."
         n 1fcsbgl "Why do you ask,{w=0.1} [player]?{w=0.2} Did {i}you{/i} wanna wear it or something?"
@@ -3721,11 +3716,11 @@ label talk_school_uniform:
         n 1uchbs "I bet I could make you look so cute~.{w=0.1} Ahaha!"
         n 1nllss "Well anyway,{w=0.1} putting jokes aside..."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1tnmaj "My school uniform?{w=0.2} That's...{w=0.3} kind of a weird thing to ask me about,{w=0.1} huh?"
         n 1nslaj "Well,{w=0.1} whatever.{w=0.2} I'll let it slide...{w=0.3} this time."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1nsraj "...Huh?{w=0.2} Oh,{w=0.1} the school uniform."
         n 1nsqsl "I...{w=0.3} don't know what you're expecting to hear from me,{w=0.1} [player]."
         n 1fsqsl "I had to wear it for school.{w=0.2} That's the point of a uniform,{w=0.1} if you hadn't realized."
@@ -3767,16 +3762,16 @@ label talk_school_uniform:
 
     n 1ullss "Well,{w=0.1} anyway..."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+    if Natsuki.isLove():
         n 1fllss "I still don't particularly {i}like{/i} wearing it..."
         n 1uslbgl "But...{w=0.3} I think I can put up with it.{w=0.2} Just for you,{w=0.1} [player]~."
         n 1usrdvl "Ehehe."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    elif Natsuki.isAffectionate(higher=True):
         n 1usrdvl "I-{w=0.1}if you don't mind it,{w=0.1} [player]?"
         n 1fllbgl "I suppose it has that going for it too,{w=0.1} a-{w=0.1}at least..."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1fchgn "I guess at least I'm warm and toasty for the winter,{w=0.1} right?{w=0.2} Ahaha."
 
     return
@@ -3797,21 +3792,21 @@ init 5 python:
     )
 
 label talk_flying:
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1uwdbg "Ooh!{w=0.2} Flying?{w=0.2} Like on a plane?"
         n 1fllun "Nnn...{w=0.3} I wish I could say I have,{w=0.1} [player]..."
         n 1fchbg "Don't get me wrong though!{w=0.2} I'd {i}totally{/i} fly somewhere new if I could!"
         n 1fslsl "It's just...{w=0.3} the price of it all,{w=0.1} you know?"
         n 1kllsl "I've never had a passport,{w=0.1} but it's mainly the tickets and everything beyond that..."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+    elif Natsuki.isHappy(higher=True):
         n 1unmaj "Huh?{w=0.2} Flying?{w=0.2} Like on a plane or something?"
         n 1kllaj "I...{w=0.3} wish I could say I have,{w=0.1} [player]."
         n 1fnmbg "Don't get me wrong though!{w=0.2} I'd love to jet off somewhere.{w=0.2} Like for a vacation or something!"
         n 1flrpo "It's just the cost that stops me, you know?"
         n 1fcspo "Even if I had a passport, there's just so many things to pay out for..."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1unmaj "Oh?{w=0.2} Like flying on a plane or whatever?"
         n 1kllbo "Uhmm..."
         n 1klraj "I...{w=0.3} never really had the opportunity to fly anywhere,{w=0.1} [player]."
@@ -3819,7 +3814,7 @@ label talk_flying:
         n 1nsraj "It isn't like tickets are...{w=0.3} affordable,{w=0.1} if you know what I mean?"
         n 1nslpo "Especially to someone in my...{w=0.3} position."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1nnmbo "Flying?{w=0.2} Like...{w=0.3} on a plane?"
         n 1fnmsf "No,{w=0.1} [player].{w=0.2} I haven't."
         n 1fllsf "I've never owned a passport,{w=0.1} and it's way too expensive anyway."
@@ -3848,10 +3843,10 @@ label talk_flying:
             n 1fnmaj "Just try to avoid racking up too many miles,{w=0.1} [player]."
             n 1fllss "You gotta think about the planet too,{w=0.1} you know..."
 
-            if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+            if Natsuki.isEnamored(higher=True):
                 n 1fslnvf "E-{w=0.1}especially if people we really care about are in it.{w=0.2} Ahaha..."
 
-            elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+            elif Natsuki.isHappy(higher=True):
                 n 1fchgn "No excuses,{w=0.1} [player]! Ehehe."
 
         "I fly sometimes.":
@@ -3860,11 +3855,11 @@ label talk_flying:
             n 1fcsbg "Well,{w=0.1} good for you,{w=0.1} [player]!{w=0.2} Everyone should get the chance to explore the world."
             n 1kslss "Hopefully I'll get the chance someday too."
 
-            if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+            if Natsuki.isEnamored(higher=True):
                 n 1fsqsg "I hope you'll be available when that happens,{w=0.1} [player]."
                 n 1fchgnl "You're gonna be my tour guide,{w=0.1} whether you like it or not!"
 
-            elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+            elif Natsuki.isHappy(higher=True):
                 n 1fsqsm "You better be handy when that happens,{w=0.1} [player]..."
                 n 1fchgn "We'll see how good a guide you are!"
 
@@ -3909,12 +3904,12 @@ label talk_are_you_into_cars:
 
     if already_discussed_driving:
         # Natsuki has already established she can't drive at some point
-        if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        if Natsuki.isNormal(higher=True):
             n 1unmaj "Eh?{w=0.2} Cars?"
             n 1fchgn "Jeez,{w=0.1} you know I can't drive,{w=0.1} dummy!{w=0.2} I don't have a reason to be into cars!"
             n 1nlrbg "Well,{w=0.1} anyway..."
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        elif Natsuki.isDistressed(higher=True):
             n 1fcssl 1nnmsl "[player].{w=0.2} You know I can't drive.{w=0.2} Why would you think I'd be into cars,{w=0.1} of all things?"
             n 1fllsl 1nllsl "...Fine.{w=0.2} Whatever."
 
@@ -3926,14 +3921,14 @@ label talk_are_you_into_cars:
 
     else:
         # Natsuki hasn't stated she can't drive before
-        if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+        if Natsuki.isNormal(higher=True):
             n 1unmaj "Huh?{w=0.1} Am I into cars?"
             n 1fllnv "Well...{w=0.3} to tell you the truth,{w=0.1} [player]?"
             n 1unmaj "...I've never actually owned a license."
             n 1flrpo "I don't even think I could afford to learn!"
             n 1nnmaj "So I've never really been drawn to them honestly."
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+        elif Natsuki.isDistressed(higher=True):
             n 1fnmsr "I can't drive,{w=0.1} [player].{w=0.2} I don't have a license either;{w=0.1} learning was always too expensive."
             n 1fnmpu "So...{w=0.3} why would I be into that?{w=0.1} I literally can't {i}afford{/i} to be."
 
@@ -3943,7 +3938,7 @@ label talk_are_you_into_cars:
             n 1fcspu "...Heh.{w=0.2} Yeah,{w=0.1} I thought so.{w=0.2} We're done here,{w=0.1} [player]."
             return
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    if Natsuki.isNormal(higher=True):
         n 1unmsm "I can appreciate the talent that goes into them -{w=0.1} I think it's actually pretty cool how expressive they can be!"
         n 1nllss "Like...{w=0.3} the design languages of all the different brands,{w=0.1} the engineering that goes into them and all that."
         n 1fchbg "It's pretty insane how much work goes into it;{w=0.1} and that's definitely something I have respect for!"
@@ -4011,7 +4006,7 @@ init 5 python:
     )
 
 label talk_how_do_you_feel_about_me:
-    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+    if Natsuki.isLove():
 
         if persistent.jn_player_love_you_count > 0:
             n 1kwmpof "[player]...{w=0.3} isn't it obvious? You know I love you already,{w=0.1} right?"
@@ -4032,7 +4027,7 @@ label talk_how_do_you_feel_about_me:
 
         return
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    elif Natsuki.isEnamored(higher=True):
         n 1fcsanf "Uuuuuu-!"
         n 1fskwrf "A-{w=0.1}are you trying to put me on the spot or something,{w=0.1} [player]?"
         n 1fllemf "Jeez...{w=0.5}{nw}"
@@ -4044,7 +4039,7 @@ label talk_how_do_you_feel_about_me:
         n 1kllsrl "Sheesh..."
         return
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    elif Natsuki.isAffectionate(higher=True):
         n 1fskemf "H-{w=0.1}huh? How do I feel about you?"
         n 1fbkwrf "W-{w=0.1}what're you asking me about that for?!"
         n 1fllpol "Sheesh,{w=0.1} [player]...{w=0.3} you'll make things all awkward at this rate..."
@@ -4052,7 +4047,7 @@ label talk_how_do_you_feel_about_me:
         n 1flrunl "Jeez..."
         return
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+    elif Natsuki.isHappy(higher=True):
         n 1uskemf "H-huh?!"
         n 1fllbgl "O-oh! Ahaha..."
         n 1nllaj "Well,{w=0.1} I mean...{w=0.5}{nw}"
@@ -4060,7 +4055,7 @@ label talk_how_do_you_feel_about_me:
         n 1fllnvl "So...{w=0.3} yeah...."
         return
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1uskeml "H-{w=0.1}huh?!"
         n 1fllbg "O-oh!"
         n 1unmaj "I mean...{w=0.3} you're alright...{w=0.3} I guess?"
@@ -4074,7 +4069,7 @@ label talk_how_do_you_feel_about_me:
         n 1nlraj "So...{w=0.3} where were we?"
         return
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.UPSET:
+    elif Natsuki.isUpset(higher=True):
         n 1fsqaj "...{w=0.3}Oh? That matters to you now,{w=0.1} does it?"
         n 1fsqbo "Then tell me,{w=0.1} [player]."
         n 1fnmun "Why did you keep hurting my feelings like that?"
@@ -4084,7 +4079,7 @@ label talk_how_do_you_feel_about_me:
         n 1fsqsr "Thanks."
         return
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1fsqsr "...{w=0.3}Let's just cut the crap."
         n 1fcsan "You've hurt me,{w=0.1} [player].{w=0.2} You've hurt me again,{w=0.1} and again."
         n 1fnmfu "You've done it so many times now."
@@ -4094,7 +4089,7 @@ label talk_how_do_you_feel_about_me:
         n 1fsqan "You're on thin ice,{w=0.1} [player].{w=0.2} Got it?"
         return
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.BROKEN:
+    elif Natsuki.isBroken():
         $ already_discussed_relationship = get_topic("talk_how_do_you_feel_about_me").shown_count > 0
         if already_discussed_relationship:
             n 1fsqpu "...Wow.{w=0.2} Really?"
@@ -4132,7 +4127,7 @@ label talk_are_you_into_cosplay:
     # Check to see if Natsuki has already revealed she can sew/seamstress in this/previous topic(s)
     $ already_mentioned_sewing = get_topic("talk_sustainable_fashion").shown_count > 0 or get_topic("talk_are_you_into_cosplay").shown_count > 0
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1unmbg "Ooh!{w=0.2} Cosplay,{w=0.1} you say?"
         n 1fllbg "Honestly,{w=0.1} I've never really done any cosplaying or anything..."
         n 1nnmss "But I've actually thought about it a lot since I got into manga and all that stuff more!"
@@ -4156,11 +4151,11 @@ label talk_are_you_into_cosplay:
         n 1fchgn "Ahaha!"
         return
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        if Natsuki.isLove():
             n 1uchtsl "Love you,{w=0.1} [player]~!"
             return
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+    elif Natsuki.isHappy(higher=True):
         n 1tsrpu "...Why did I get the feeling you'd bring this up sooner or later,{w=0.1} [player]?"
         n 1fnmpo "What?{w=0.2} Did you think I'd {i}automatically{/i} be into it because I read manga from time to time?"
         n 1fsqpo "Huh?{w=0.2} Is that it?"
@@ -4187,13 +4182,13 @@ label talk_are_you_into_cosplay:
         n 1fchsm "Oh -{w=0.1} don't worry -{w=0.1} you'll get your chance to see them too.{w=0.2} I'll need a second opinion after all."
         n 1uchbg "That's what friends are for,{w=0.1} right?{w=0.2} Ehehe."
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        if Natsuki.isAffectionate(higher=True):
             n 1fsqbg "Besides,{w=0.1} [player].{w=0.2} You seem to have pretty good taste."
             n 1fsqsml "I think I can trust your judgement..."
 
         return
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1unmaj "Cosplay,{w=0.1} huh?"
         n 1ulraj "Well...{w=0.3} I mean,{w=0.1} I've considered it,{w=0.1} if that's what you're asking."
         n 1nnmbo "I never really thought about it that much until I got more into manga and things like that."
@@ -4216,7 +4211,7 @@ label talk_are_you_into_cosplay:
         n 1flrsml "Well...{w=0.3} we'll see,{w=0.1} but no promises!"
         return
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1nnmpu "Huh?{w=0.2} Cosplay?"
         n 1fsqsr "...Why,{w=0.1} [player]?"
         n 1fsqpu "So you can make fun of my clothes too?"
@@ -4244,14 +4239,14 @@ init 5 python:
             prompt="Why do you like me?",
             category=["Natsuki", "Romance", "You"],
             player_says=True,
-            affinity_range=(jn_aff.AFFECTIONATE, None),
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
     )
 
 label talk_why_do_you_like_me:
-    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+    if Natsuki.isLove():
         if jn_admissions.last_admission_type == jn_admissions.TYPE_INSECURE:
             n 1kwmsl "[player]..."
             n 1kwmsf "You aren't asking me this because of what you told me earlier...{w=0.3} right?"
@@ -4323,7 +4318,7 @@ label talk_why_do_you_like_me:
             n 1klrssl "I doubt you want that."
             return
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    elif Natsuki.isEnamored(higher=True):
         if jn_admissions.last_admission_type == jn_admissions.TYPE_INSECURE:
             n 1knmaj "...Hey,{w=0.1} [player]..."
             n 1klrpu "This isn't by chance because of what you said earlier...{w=0.3} right?"
@@ -4397,7 +4392,7 @@ init 5 python:
             prompt="Fried squid",
             category=["DDLC", "Food"],
             nat_says=True,
-            affinity_range=(jn_aff.HAPPY, None),
+            affinity_range=(jn_affinity.HAPPY, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -4432,7 +4427,7 @@ label talk_fried_squid:
     n 1unmbg "You could even be all fancy if you wanted to and order it by the culinary name!"
     n 1fnmbg "Ten points if you can guess what that is.{w=0.2} Ehehe."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+    if Natsuki.isLove():
         n 1flrsg "Hmm..."
         n 1fnmbg "Actually...{w=0.3} you know what?"
         n 1fchbg "We should just get a bowl of calamari to share.{w=0.2} That's fair,{w=0.1} right?"
@@ -4440,7 +4435,7 @@ label talk_fried_squid:
         n 1fchgn "I'm not handing over the last piece without a fight!"
         n 1nchsml "Ehehe."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    elif Natsuki.isEnamored(higher=True):
         n 1uchbg "But yeah -{w=0.1} you should really give it a try if you haven't already,{w=0.1} [player]!"
         n 1fchbg "I wouldn't want someone to miss out on that!"
         n 1klrssl "E-{w=0.1}especially not you.{w=0.2} Ehehe..."
@@ -4467,7 +4462,7 @@ init 5 python:
     )
 
 label talk_collectibles:
-    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    if Natsuki.isAffectionate(higher=True):
         n 1unmpu "Collectibles?{w=0.2} You mean like figurines and plushies and such?"
         n 1flrpu "Mmm...{w=0.3} not really.{w=0.2} Collecting is an expensive hobby,{w=0.1} [player]!"
         n 1klrpo "I mean,{w=0.1} it all depends on exactly what you collect,{w=0.1} but it feels like places that sell them prey on that."
@@ -4476,14 +4471,14 @@ label talk_collectibles:
         n 1kllbo "And for people in my...{w=0.3} uhmm...{w=0.3} {i}position{/i},{w=0.1} it's a big barrier to entry."
         n 1unmaj "But anyway..."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1tnmpu "Huh?{w=0.2} You mean like figurines and all that stuff?"
         n 1tlrpu "Well...{w=0.3} no,{w=0.1} [player].{w=0.2} Not really."
         n 1knmsf "I couldn't justify spending so much on a hobby like that!"
         n 1flrbo "Especially not when I had other things to worry about spending my money on first,{w=0.1} you know."
         n 1unmaj "But anyway,{w=0.1} putting all that aside..."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1fsqsf "No,{w=0.1} [player]."
         n 1fsqaj "Collectibles were way too expensive for me.{w=0.2} I couldn't justify wasting the money I {i}do{/i} have."
         n 1fnmsl "{i}Especially{/i} on stuff that'll just sit on a shelf that I'll forget about."
@@ -4513,7 +4508,7 @@ label talk_collectibles:
             n 1fsqbg "Oho!"
             n 1fchbg "So I suppose I am something of a collector,{w=0.1} after all!"
 
-            if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+            if Natsuki.isLove():
                 n 1uchsm "I guess that all makes sense.{w=0.2} After all..."
                 n 1fllsmf "I'd like to think you're in my collection too,{w=0.1} [player]~."
                 n 1uchsmf "Ehehe."
@@ -4563,27 +4558,31 @@ init 5 python:
 
 label talk_play_snap:
     if persistent.jn_snap_player_is_cheater:
-        n 1fnmem "[player]...{w=0.3} if you aren't even sorry you cheated,{w=0.1} why should I play with you again?"
-        n 1kllpo "Come on...{w=0.3} it's not hard to apologize,{w=0.1} is it?"
-        return
-
-    else:
-        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
-            n 1uchbg "Of course I do,{w=0.1} dummy!{w=0.2} Ehehe."
-
-        elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
-            n 1fchbg "Of course I'll play some with you,{w=0.1} dummy!"
-
-        elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
-            n 1fchsm "Well,{w=0.1} duh!{w=0.2} Of course I'm up for a game!"
+        # Unlock Snap if the player somehow is labelled as a cheater with no option to apologize
+        if jn_apologies.TYPE_CHEATED_GAME not in persistent.jn_player_pending_apologies:
+            $ persistent.jn_snap_player_is_cheater = False
 
         else:
-            n 1nnmss "You wanna play Snap?{w=0.2} Sure!"
+            n 1fnmem "[player]...{w=0.3} if you aren't even sorry you cheated,{w=0.1} why should I play with you again?"
+            n 1kllpo "Come on...{w=0.3} it's not hard to apologize,{w=0.1} is it?"
+            return
 
-        n 1unmsm "Let me just get the cards out real quick,{w=0.1} alright?"
-        play audio drawer
-        with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
-        jump snap_intro
+    if Natsuki.isLove():
+        n 1uchbg "Of course I do,{w=0.1} dummy!{w=0.2} Ehehe."
+
+    elif Natsuki.isEnamored(higher=True):
+        n 1fchbg "Of course I'll play some with you,{w=0.1} dummy!"
+
+    elif Natsuki.isAffectionate(higher=True):
+        n 1fchsm "Well,{w=0.1} duh!{w=0.2} Of course I'm up for a game!"
+
+    else:
+        n 1nnmss "You wanna play Snap?{w=0.2} Sure!"
+
+    n 1unmsm "Let me just get the cards out real quick,{w=0.1} alright?"
+    play audio drawer
+    with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+    jump snap_intro
 
 # Natsuki goes over the rules of snap again, for if the player has already heard the explanation pre-game
 init 5 python:
@@ -4610,14 +4609,14 @@ label talk_remind_snap_rules:
         return
 
     else:
-        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        if Natsuki.isLove():
             n 1nchbg "Ahaha.{w=0.2} You're so forgetful sometimes,{w=0.1} [player]."
             n 1nsqbg "Sure,{w=0.1} I'll go over it again!{w=0.2} Juuust for you~."
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        elif Natsuki.isEnamored(higher=True):
             n 1nchbg "Of course I can!"
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        elif Natsuki.isAffectionate(higher=True):
             n 1fchsm "You bet I can!"
 
         else:
@@ -4653,12 +4652,12 @@ label talk_windup_chewing_gum:
     n 1flrpu "Jeez...{w=0.3} makes me want to track them down and stick that crap back in their stupid mouths."
     n 1nnmsl "I don't really care if you chew gum yourself,{w=0.1} [player]."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+    if Natsuki.isLove():
         n 1kllca "Just make sure you dispose of it properly,{w=0.1} 'kay?"
         n 1kllss "I'm sure you do anyway,{w=0.1} but...{w=0.3} just in case."
         n 1kchsml "Love you,{w=0.1} [player]~!"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    elif Natsuki.isAffectionate(higher=True):
         n 1nllca "But please,{w=0.1} just get rid of it properly when you're done."
         n 1nchsm "Thanks,{w=0.1} [player]~!"
 
@@ -4702,12 +4701,12 @@ label talk_windup_smoking_vaping_indoors:
     n 1fnmbo "But the least they can do is respect the decision of everyone who {i}doesn't{/i},{w=0.1} you know?"
     n 1fcssl "..."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+    if Natsuki.isLove():
         n 1nnmsl "I know you,{w=0.1} [player].{w=0.2} I highly doubt you'd be the kind of person to be a jerk like that."
         n 1klrss "Just...{w=0.3} don't prove me wrong,{w=0.1} alright?"
         n 1uchgn "'preciate it!{w=0.2} Ahaha."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    elif Natsuki.isAffectionate(higher=True):
         n 1kllpo "I doubt you'd be a jerk like that even if you do smoke,{w=0.1} [player]."
         n 1fsqpo "But...{w=0.3} try not to prove me wrong,{w=0.1} 'kay?{w=0.2} I like you more as not a jerk."
         n 1uchsm "Thanks!"
@@ -4752,7 +4751,7 @@ label talk_windup_unwashed_hands:
     n 1nnmpu "I really hope you keep your hands spick and span.{w=0.2} And not just when you visit the restroom."
     n 1fnmpu "Before you prepare food,{w=0.1} after you've handled trash...{w=0.3} just think about where you've been,{w=0.1} alright?"
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+    if Natsuki.isLove():
         n 1kchbg "Don't get me wrong though!{w=0.2} I'm pretty sure you at least try to do the right thing!"
         n 1nnmbg "Just...{w=0.3} keep up the good work,{w=0.1} alright?{w=0.2} For everyone."
         n 1nchsm "Thanks,{w=0.1} [player]!"
@@ -4800,13 +4799,13 @@ label talk_windup_litter:
     n 1fllbo "..."
     n 1fnmbo "[player]."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1ksqbo "I know you.{w=0.2} In fact,{w=0.1} I daresay I know you {i}very{/i} well by now."
         n 1knmbo "I don't think you're the sort to do that at all..."
         n 1klraj "I'm not wrong...{w=0.3} am I?"
         n 1klrss "I don't wanna have to be.{w=0.2} Ahaha..."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    elif Natsuki.isAffectionate(higher=True):
         n 1unmaj "I don't think you're like that,{w=0.1} [player]."
         n 1ullsl "Or...{w=0.3} at least you don't {i}try{/i} to be anyway."
 
@@ -4817,10 +4816,10 @@ label talk_windup_litter:
     n 1nnmsl "...If you're a litterbug already,{w=0.1} I'll forgive you this one time."
     n 1klrpo "Just...{w=0.3} make sure you clean up your act,{w=0.1} okay?"
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+    if Natsuki.isLove():
         n 1uchsml "Ehehe.{w=0.2} Love you,{w=0.1} [player]~."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    elif Natsuki.isAffectionate(higher=True):
         n 1nlrpol "It'd...{w=0.3} mean a lot."
 
     else:
@@ -4944,7 +4943,7 @@ init 5 python:
     )
 
 label talk_vtubers:
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1tllss "VTubers,{w=0.1} huh?{w=0.2} You're asking {i}me{/i}?"
         n 1fnmsm "...Wow,{w=0.1} [player].{w=0.2} I'm impressed."
         n 1fsqsm "Yet again,{w=0.1} you've proved you're even more of a nerd than I am!"
@@ -4952,17 +4951,17 @@ label talk_vtubers:
         n 1klrbg "Relax!{w=0.2} Relax,{w=0.1} jeez!{w=0.2} You know I'd never seriously judge your hobbies,{w=0.1} you dummy."
         n 1unmaj "But yeah,{w=0.1} anyway..."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+    elif Natsuki.isHappy(higher=True):
         n 1unmbg "Yeah!{w=0.2} I think I know those!"
         n 1tnmpu "They're those people with the anime avatars that stream stuff online for people,{w=0.1} right?"
         n 1tllpu "Well..."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1unmpu "Huh?{w=0.2} VTubers?{w=0.2} Like those people with the anime-style avatars that play games and stuff online for people to watch?"
         n 1tnmpu "That {i}is{/i} what you mean,{w=0.1} right?"
         n 1tllpu "Well..."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1fsqpu "No,{w=0.1} I do not.{w=0.2} I'd rather be playing the game myself than watching someone play it for me."
         n 1fsqbo "If you follow any,{w=0.1} good for you."
         n 1flrbo "{i}Some{/i} of us don't have the time to sit around on our butt for hours..."
@@ -5008,24 +5007,24 @@ init 5 python:
     )
 
 label talk_skateboarding:
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1fchbs "You bet I am,{w=0.1} [player]!{w=0.5}{nw}"
         extend 1fchsm " Ehehe."
         n 1tllbg "But how'd you guess?{w=0.5}{nw}"
         extend 1tnmbg " Do I look the type or something?"
         n 1tlrsm "Well,{w=0.1} whatever."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+    elif Natsuki.isHappy(higher=True):
         n 1uchsm "Ehehe.{w=0.5}{nw}"
         extend 1fchbg " You bet!"
         n 1uwlbg "Good guess,{w=0.1} [player]!"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1ullaj "I...{w=0.3} am,{w=0.1} actually.{w=0.5}{nw}"
         extend 1tllss " How'd you guess?"
         n 1unmss "Well,{w=0.1} anyway."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1fcsaj "Ugh..."
         n 1fnmbo "Yes,{w=0.1} [player].{w=0.2} I'm a skateboarder.{w=0.2} I skateboard.{w=0.5}{nw}"
         extend 1fsqsf " Is that a problem or something?"
@@ -5089,7 +5088,7 @@ init 5 python:
     )
 
 label talk_sports:
-    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    if Natsuki.isAffectionate(higher=True):
         n 1unmaj "Huh?{w=0.2} Sports?"
         n 1fllss "I...{w=0.3} don't like to have to break it to you,{w=0.1} [player]..."
         n 1fchgn "But what kind of sports do you think I can play in a single room?{w=0.2} By myself?{w=0.2} With no gear?"
@@ -5097,13 +5096,13 @@ label talk_sports:
         extend 1tnmss " you're such a dope sometimes,{w=0.1} [player]."
         n 1ullbg "Well,{w=0.1} anyway."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1unmpu "Eh?{w=0.2} Sports?"
         n 1tnmdv "You...{w=0.3} do know it's kinda hard to stay active in a single room,{w=0.1} right?"
         n 1fcsss "Ehehe.{w=0.5}{nw}"
         extend 1ullss " Well,{w=0.1} anyway."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1nsqpu "Yeah,{w=0.1} no.{w=0.5}{nw}"
         extend 1fsqsl " I don't {i}now{/i},{w=0.1} if that's what you're asking."
         n 1fllpu "..."
@@ -5173,7 +5172,7 @@ init 5 python:
     )
 
 label talk_online_shopping:
-    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    if Natsuki.isNormal(higher=True):
         n 1ullaj "You know,{w=0.1} it's kinda crazy how common online shopping is nowadays."
         n 1uwdaj "I mean,{w=0.1} don't get me wrong!{w=0.5}{nw}"
         extend 1fcsbg " It's super convenient!{w=0.2} You don't even need to leave your house!"
@@ -5220,12 +5219,12 @@ label talk_online_shopping:
     n 1knmaj "There's still merit in getting your stuff physically!"
     n 1fnmss "And to be completely honest?"
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1fsqbg "I don't really care how much you protest."
         n 1fchgn "We're definitely hitting some {i}real{/i} bookstores eventually {w=0.1}-{w=0.1} whether you like it or not!{w=0.5}{nw}"
         extend 1fchsm " Ehehe."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+    elif Natsuki.isHappy(higher=True):
         n 1fchgn "You gotta be kidding if you think I'm letting you miss out on {i}real{/i} bookstores!{w=0.5}{nw}"
         extend 1nchbg " Ahaha."
 
@@ -5289,10 +5288,10 @@ label talk_windup_subscriptions:
     extend 1unmpu " what about you though,{w=0.1} [player]?{w=0.5}{nw}"
     extend 1fsqsm " Actually,{w=0.1} I can tell you one thing."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    if Natsuki.isAffectionate(higher=True):
         n 1fsqssl "A-{w=0.1}at least you have {i}one{/i} subscription you don't have to worry about paying for!"
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        if Natsuki.isLove():
             n 1fchsml "Ehehe.{w=0.5}{nw}"
             extend 1uchbgf " Love you,{w=0.1} dork!"
 
@@ -5315,7 +5314,10 @@ init 5 python:
             label="talk_mod_contributions",
             unlocked=True,
             prompt="Contributions",
-            conditional="renpy.macintosh or jn_activity.has_player_done_activity(jn_activity.JNActivities.coding)",
+            conditional=(
+                "not jn_activity.ACTIVITY_SYSTEM_ENABLED "
+                "or jn_activity.has_player_done_activity(jn_activity.JNActivities.coding)"
+            ),
             category=["Mod"],
             nat_says=True,
             affinity_range=(jn_affinity.AFFECTIONATE, None),
@@ -5342,7 +5344,7 @@ label talk_mod_contributions:
     n 1ulraj "So...{w=0.3} where am I going with this,{w=0.1} you ask?{w=0.5}{nw}"
     extend 1tslsm " Well..."
 
-    if renpy.macintosh:
+    if not jn_activity.ACTIVITY_SYSTEM_ENABLED:
         n 1tllss "I don't know if you're into that sort of thing yourself,{w=0.1} [player]..."
         n 1fchbg "But why not lend me a hand?"
 
@@ -5364,7 +5366,7 @@ label talk_mod_contributions:
     n 1nsqbg "A little look can't hurt,{w=0.1} right?{w=0.5}{nw}"
     extend 1nchsm " Ahaha."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+    if Natsuki.isLove():
         $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
         n 1nchtsl " Love you,{w=0.1} [chosen_endearment]!"
 
@@ -5410,7 +5412,7 @@ label talk_realizations_player_ddlc_actions:
     n 1nsraj "So...{w=0.3} if he was being that nice to me..."
     n 1klrajl "T-{w=0.1}then that would mean...{w=0.5}{nw}"
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+    if Natsuki.isLove():
         n 1klrsml "..."
         n 1kcsssl "Heh,{w=0.1} what am I even saying.{w=0.5}{nw}"
         extend 1kwmsml " Just because you clicked stuff {w=0.1}-{w=0.1} {i}when you were allowed,{w=0.1} anyway{/i} {w=0.1}-{w=0.1} doesn't make you the same."
@@ -5430,11 +5432,11 @@ label talk_realizations_player_ddlc_actions:
         n 1fllpol "..."
         n 1nlleml "A-{w=0.1}although..."
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+        if Natsuki.isEnamored(higher=True):
             n 1fcsajl "Don't think I'm complaining or anything like that.{w=0.5}{nw}"
             extend 1nlrssl " Ehehe..."
 
-        elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+        elif Natsuki.isHappy(higher=True):
             n 1fcsajl "You're already proving that well enough.{w=0.5}{nw}"
             extend 1fllunl " I-{w=0.1}I think."
 
@@ -5442,13 +5444,13 @@ label talk_realizations_player_ddlc_actions:
             n 1fcsajl "I-{w=0.1}I guess that at {i}least{/i} means you have good taste.{w=0.5}{nw}"
             extend 1fllunl " I suppose that counts for something."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+    if Natsuki.isLove():
         n 1klrss "But yeah,{w=0.1} so..."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    elif Natsuki.isEnamored(higher=True):
         n 1ksrss "A-{w=0.1}anyway..."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.HAPPY:
+    elif Natsuki.isHappy(higher=True):
         n 1flrun "A-{w=0.1}anyway."
 
     else:
@@ -5467,7 +5469,7 @@ label talk_realizations_player_ddlc_actions:
     n 1fcsem "Ugh...{w=0.5}{nw}"
     extend 1nnmpo " you know what?"
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    if Natsuki.isAffectionate(higher=True):
         n 1nllss "It doesn't really matter at this point,{w=0.1} does it?"
 
     else:
@@ -5477,10 +5479,10 @@ label talk_realizations_player_ddlc_actions:
     n 1ncsaj "He was here {i}then{/i}."
     n 1fcssm "You are here {i}now{/i}."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    if Natsuki.isAffectionate(higher=True):
         n 1fchbg "And that's all there is to it."
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        if Natsuki.isLove():
             extend 1fchsm " Yep."
             n 1uchsml "Love you,{w=0.1} generic protag-{w=0.3}{nw}"
             n 1fllbgl "I mean,{w=0.5}{nw}"
@@ -5570,11 +5572,11 @@ label talk_realizations_other_girls:
     n 1kllsrl "But...{w=0.3} thanks.{w=0.5}{nw}"
     extend 1flrpol " F-{w=0.1}for listening,{w=0.1} I mean."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    if Natsuki.isAffectionate(higher=True):
         n 1klrpol "..."
         n 1kcspul "...And for rescuing me too."
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        if Natsuki.isLove():
             n 1kwmsml "I'll never,{w=0.1} ever forget that,{w=0.1} [player]."
 
     else:
@@ -5650,14 +5652,14 @@ init 5 python:
     )
 
 label talk_fear_of_lightning:
-    if jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    if Natsuki.isAffectionate(higher=True):
         n 1fllpol "..."
         n 1fllajl "...So?"
         n 1fcseml "I-{w=0.1}I mean,{w=0.5}{nw}"
         extend 1flreml " I'm {i}obviously{/i} not,{w=0.5}{nw}"
         extend 1knmpol " but so what even if I was?"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    elif Natsuki.isNormal(higher=True):
         n 1fllwrl "N-{w=0.1}no!{w=0.5}{nw}"
         extend 1fcspol " Where'd you get that idea from?"
         n 1kslpol "I'm not afraid of lightning..."
@@ -5674,7 +5676,7 @@ label talk_fear_of_lightning:
 
         n 1nlraj "But I mean,{w=0.1} putting all that aside..."
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1fllpu "...And even if I {i}was{/i},{w=0.5}{nw}"
         extend 1fsqsr " do you {i}really{/i} think I'd want to share that with {i}you{/i} right now?"
         n 1fsqem "Like,{w=0.1} {i}seriously{/i} [player]?{w=0.5}{nw}"
@@ -5848,10 +5850,10 @@ label talk_fighting_drowsiness:
     n 1fsqss "...Or I really {i}will{/i} put you to sleep.{w=0.5}{nw}"
     extend 1fchgn " Ehehe."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+    if Natsuki.isLove():
         n 1uchtsl "Love you too,{w=0.1} [player]!~"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+    elif Natsuki.isAffectionate(higher=True):
         n 1fchts "You're welcome,{w=0.1} [player]!~"
 
     return
@@ -5873,7 +5875,7 @@ init 5 python:
     )
 
 label talk_fear_of_spiders:
-    if jn_affinity.get_affinity_state() >= jn_affinity.NORMAL:
+    if Natsuki.isNormal(higher=True):
         n 1tnmbo "Huh?{w=0.5} Spiders?"
         n 1tslss "I mean...{w=0.5}{nw}"
         extend 1tnmss " not...{w=1} really?"
@@ -5885,14 +5887,14 @@ label talk_fear_of_spiders:
         n 1fslpo "I even {w=0.3}{i}said{/i}{w=0.3} the spider thing was a metaphor,{w=0.1} [chosen_tease]!{w=0.5}{nw}"
         extend 1fsqts " Remember?"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.DISTRESSED:
+    elif Natsuki.isDistressed(higher=True):
         n 1fcsem "..."
         n 1fcssr "No,{w=0.1} [player].{w=0.5}{nw}"
         extend 1fsqsr " I am not afraid of spiders."
         n 1fsqem "...And might I ask {i}why{/i} you feel entitled to know about my fears?"
         n 1fcsan "Why the hell would I give you {i}more{/i} ammo to get on my nerves?"
         n 1fsrem "Ugh..."
-        n 1fcssf "Yeah.{w=0.5}{nw}" 
+        n 1fcssf "Yeah.{w=0.5}{nw}"
         extend 1fsqpu " We're done talking here,{w=0.1} {i}[player]{/i}."
 
         return
@@ -5921,7 +5923,7 @@ label talk_fear_of_spiders:
     n 1unmss "But spiders are awesome little guys!{w=1.5}{nw}"
     extend 1nsrss " ...Mostly."
     n 1unmbo "They get rid of the really annoying sorts of bugs,{w=0.1} like ones that bite or fly around constantly."
-    n 1nnmaj "And some of them -{w=0.5}{nw}" 
+    n 1nnmaj "And some of them -{w=0.5}{nw}"
     extend 1nslss " as weird as it feels to say -{w=0.5}{nw}"
     extend 1ncspu " are{w=1} freaking{w=1.5}{nw}"
     extend 1fspgs " {i}adorable{/i}!"
@@ -5940,7 +5942,7 @@ label talk_fear_of_spiders:
     extend 1nslun " Isn't {i}that{/i} a relief?"
     n 1ullaj "Well,{w=0.1} anyway."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    if Natsuki.isEnamored(higher=True):
         n 1nsqss "I guess that just leaves you,{w=0.1} then."
         n 1usqsm "Are {i}you{/i} afraid of spiders?"
         n 1fsqsm "Better think through your answer carefully,{w=0.1} [player]."
@@ -5952,7 +5954,7 @@ label talk_fear_of_spiders:
         else:
             n 1fsqsm "Ehehe."
 
-        if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        if Natsuki.isLove():
             n 1uchtsl "Love you,{w=0.1} [player]!~"
 
     else:
@@ -6058,7 +6060,7 @@ init 5 python:
 label talk_maintaining_proper_hygiene:
     n 1nllsl "..."
     n 1ullaj "You know,{w=0.1} [player]..."
-    n 1nllbo "I've been wondering...{w=0.5}{nw}" 
+    n 1nllbo "I've been wondering...{w=0.5}{nw}"
     extend 1tnmpu " are you actually taking care of yourself?"
     n 1nsqsr "Like...{w=0.3} are you keeping up with proper hygiene?"
     n 1fnmpo "It's super important,{w=0.1} you know!"
@@ -6072,11 +6074,11 @@ label talk_maintaining_proper_hygiene:
     n 1kcssr "...And we both know how she felt."
     n 1kllun "..."
     n 1fcseml "A-{w=0.1}anyway!{w=1}{nw}"
-    extend 1fnmpo " This is about {i}you{/i},{w=0.1} [player] -{w=0.5}{nw}" 
+    extend 1fnmpo " This is about {i}you{/i},{w=0.1} [player] -{w=0.5}{nw}"
     extend 1fnmaj " so listen up!"
     n 1fcsbg "This is gonna be a Natsuki special on taking care of yourself!{w=0.5}{nw}"
     extend 1fcssm " Ehehe."
-    n 1fcsaj "First of all,{w=0.1} shower {w=0.1}-{w=0.3}{nw}" 
+    n 1fcsaj "First of all,{w=0.1} shower {w=0.1}-{w=0.3}{nw}"
     extend 1fnmaj " and {i}regularly{/i}!"
     n 1fllsl "If you skip showers,{w=0.1} you'll just constantly feel all gross and nasty.{w=0.5}{nw}"
     extend 1tnmsr " And you know what that leads to?"
@@ -6084,11 +6086,11 @@ label talk_maintaining_proper_hygiene:
     n 1fnmaj "And you know what {i}that{/i} leads to?"
     n 1fcsem "...Not showering!{w=0.5}{nw}"
     extend 1knmpo " See where I'm going here?"
-    n 1nllaj "So...{w=0.5}{nw}" 
+    n 1nllaj "So...{w=0.5}{nw}"
     extend 1fnmsl " just take the time to do it properly,{w=0.1} okay?"
     n 1fllss "It doesn't {i}need{/i} to be some kind of spa ritual,{w=0.1} just whatever gets you clean."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+    if Natsuki.isLove():
         n 1fslss "And besides,{w=0.5}{nw}"
         extend 1fsrssl "I don't wanna get snug with you if you're all stinky."
         n 1fnmpo "So you better stick at it,{w=0.1} [player]!"
@@ -6147,7 +6149,7 @@ label talk_maintaining_proper_hygiene:
         n 1ksqsm "Who doesn't want a {i}blinding{/i} smile like me?"
         n 1uchgn "You won't get {i}that{/i} with tooth decay!"
 
-    n 1kllss "But seriously,{w=0.1} [player].{w=0.5}{nw}" 
+    n 1kllss "But seriously,{w=0.1} [player].{w=0.5}{nw}"
     extend 1nsqsr " I {i}really{/i} don't want you flaking out on taking care of yourself,{w=0.1} [player]."
     n 1fsqsr "I mean it.{w=1.5}{nw}"
     extend 1ksrpo " You deserve to feel and look good too."
@@ -6157,12 +6159,12 @@ label talk_maintaining_proper_hygiene:
 
         "Yes, I deserve to feel and look good too.":
             n 1fchbg "Now {i}that's{/i} what I like to hear!"
-            $ jn_relationship("affinity+")
+            $ Natsuki.calculated_affinity_gain()
 
         "...":
             n 1nsqsr "..."
             n 1tsqss "You...{w=0.3} really don't get how this all works,{w=0.1} do you?"
-            n 1fcssm "Now,{w=0.1} repeat after me:{w=0.5}{nw}" 
+            n 1fcssm "Now,{w=0.1} repeat after me:{w=0.5}{nw}"
             extend 1fcsbg " 'I deserve to feel and look good too.'."
 
             menu:
@@ -6170,19 +6172,19 @@ label talk_maintaining_proper_hygiene:
                     n 1uchbg "See?{w=0.5}{nw}"
                     extend 1ksqsg " Was that {i}so{/i} hard?"
                     n 1fcssm "Ehehe."
-                    $ jn_relationship("affinity+")
+                    $ Natsuki.calculated_affinity_gain()
 
     n 1ullss "But anyway,{w=0.1} yeah!{w=0.5}{nw}"
     extend 1nnmss " That's about all I had to say."
 
-    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+    if Natsuki.isLove():
         n 1nsqss "And remember...{w=0.5}{nw}"
         extend 1nsldvl " I'll love you forever if you keep it up!~"
         n 1fchsml "Ehehe."
         $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
         extend 1uchbgl "Thanks,{w=0.1} [chosen_endearment]!"
 
-    elif jn_affinity.get_affinity_state() >= jn_affinity.ENAMORED:
+    elif Natsuki.isEnamored(higher=True):
         n 1nslbgl "I {i}really{/i} like people who take care of themselves."
         n 1fsqpol "You'd do well to remember that, [player]."
 
@@ -6206,7 +6208,7 @@ init 5 python:
             prompt="How do you feel about Monika?",
             category=["DDLC"],
             player_says=True,
-            affinity_range=(jn_aff.AFFECTIONATE, None),
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -6258,7 +6260,7 @@ label talk_feelings_about_monika:
     n 1fcseml "D-{w=0.1}don't get me wrong though!{w=0.5}{nw}"
     extend 1flrem " I'm never gonna forget what she did...{w=0.5}{nw}"
     extend 1fsrpu " forgive what she did."
-    n 1nlrpu "But...{w=1}{nw}" 
+    n 1nlrpu "But...{w=1}{nw}"
     extend 1knmsr " she {i}was{/i} still my friend."
     n 1kllpu "So there's always gonna be a part of me that kinda wishes I {i}could{/i} forgive her."
     n 1kllbol "...Maybe that's why I wanna understand her actions so badly."
@@ -6275,7 +6277,7 @@ init 5 python:
             prompt="How do you feel about Yuri?",
             category=["DDLC"],
             player_says=True,
-            affinity_range=(jn_aff.AFFECTIONATE, None),
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -6301,7 +6303,7 @@ label talk_feelings_about_yuri:
     extend 1kslpu " Could even {i}hope{/i} to get it."
     n 1kwmpu "...{w=0.5}Do you even know how much that meant to me?"
     n 1knmsl "She just had a way of understanding you like nobody else could.{w=1}{nw}"
-    extend 1fslem " Not {i}Monika{/i}.{w=1.5}{nw}" 
+    extend 1fslem " Not {i}Monika{/i}.{w=1.5}{nw}"
     extend 1kslsrl " Not even {i}Sayori{/i}."
     n 1kllpu "But..."
     n 1fcssr "She just {i}changed{/i},{w=0.1} [player].{w=0.5}{nw}"
@@ -6357,7 +6359,7 @@ init 5 python:
             prompt="How do you feel about Sayori?",
             category=["DDLC"],
             player_says=True,
-            affinity_range=(jn_aff.AFFECTIONATE, None),
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -6375,7 +6377,7 @@ label talk_feelings_about_sayori:
     extend 1fcsupl " how much she was {i}hurting{/i}..."
     n 1fcsunl "..."
     n 1kcsem "..."
-    n 1kslpu "It's...{w=1.5}{nw}" 
+    n 1kslpu "It's...{w=1.5}{nw}"
     extend 1kplem " it's still just such a system shock,{w=0.1} you know?"
     n 1fcsem "She was always so...{w=1} so...{w=0.5}{nw}"
     extend 1ksrpo " just...{w=1} super excited and clingy!"

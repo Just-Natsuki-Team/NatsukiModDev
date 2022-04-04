@@ -24,9 +24,11 @@ define JN_NEW_YEARS_EVE = datetime.date(datetime.date.today().year, 12, 31)
 
 init 0 python:
     from collections import OrderedDict
+    import datetime
     from Enum import Enum
     import re
-    import store.jn_affinity as jn_aff
+    import store.jn_affinity as jn_affinity
+    import store.jn_utils as jn_utils
     import webbrowser
 
     class JNHolidays(Enum):
@@ -144,7 +146,7 @@ init 0 python:
                 raise Exception("Label {0} does not exist.".format(label))
 
             #Validate the affinity range prior to it
-            if not store.jn_affinity.is_affinity_range_valid(affinity_range):
+            if not jn_affinity._isAffRangeValid(affinity_range):
                 raise Exception("Affinity range: {0} is invalid.".format(affinity_range))
 
             #First, we'll add all of the items here which which shouldn't change from the persisted data
@@ -244,18 +246,9 @@ init 0 python:
                 True if the current affinity is within range. False otherwise
             """
             if not affinity_state:
-                affinity_state = jn_affinity.get_affinity_state()
+                affinity_state = jn_affinity._getAffinityState()
 
-            return store.jn_affinity.is_state_within_range(affinity_state, self.affinity_range)
-
-        def evaluate_trust_range(self, trust_state):
-            """
-            Checks if the current affinity is within this topic's affinity_range
-
-            OUT:
-                True if the current affinity is within range. False otherwise
-            """
-            return None #TODO: THIS
+            return jn_affinity._isAffStateWithinRange(affinity_state, self.affinity_range)
 
         def __load(self):
             """
@@ -1128,7 +1121,7 @@ init -990 python in jn_globals:
         "h1tl3r",
         "h1tler",
         "hardcoresex",
-        "hell",
+        "(^hell$|^hellspawn$)",
         "heshe",
         "hitler",
         "homo",
@@ -1140,7 +1133,7 @@ init -990 python in jn_globals:
         "kondum",
         "labia",
         "lmfao",
-        "lust",
+        "^lust$",
         "muff",
         "mutha",
         "nazi",
@@ -1311,6 +1304,51 @@ init python in jn_utils:
         else:
             return datetime.datetime.now() - datetime.datetime.today()
 
+    def get_total_gameplay_seconds():
+        """
+        Returns the number of seconds the player has spent with Natsuki in total.
+
+        OUT:
+            - Seconds spent with Natsuki since starting JN
+        """
+        return get_total_gameplay_length().total_seconds()
+
+    def get_total_gameplay_minutes():
+        """
+        Returns the number of minutes the player has spent with Natsuki in total.
+
+        OUT:
+            - Minutes spent with Natsuki since starting JN
+        """
+        return get_total_gameplay_length().total_seconds() / 60
+
+    def get_total_gameplay_hours():
+        """
+        Returns the number of hours the player has spent with Natsuki in total.
+
+        OUT:
+            - Hours spent with Natsuki since starting JN
+        """
+        return get_total_gameplay_length().total_seconds() / 3600
+
+    def get_total_gameplay_days():
+        """
+        Returns the number of days the player has spent with Natsuki in total.
+
+        OUT:
+            - Days spent with Natsuki since starting JN
+        """
+        return get_total_gameplay_length().total_seconds() / 86400
+
+    def get_total_gameplay_months():
+        """
+        Returns the number of months the player has spent with Natsuki in total.
+
+        OUT:
+            - Months spent with Natsuki since starting JN
+        """
+        return get_total_gameplay_length().total_seconds() / 2628000
+
     def get_time_in_session_descriptor():
         """
         Get a descriptor based on the number of minutes the player has spent in the session, up to 30 minutes
@@ -1479,7 +1517,7 @@ init -999 python:
         This checks to ensure an input or menu screen is not up before allowing a force quit, as these crash the game. Thanks, Tom.
         """
         if (
-            not renpy.get_screen("input") 
+            not renpy.get_screen("input")
             and not renpy.get_screen("choice")
             and jn_globals.force_quit_enabled
         ):

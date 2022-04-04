@@ -35,10 +35,10 @@ init python in jn_random_music:
 
         if (store.persistent.jn_custom_music_unlocked
             and store.persistent.jn_random_music_enabled
-            and jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE
+            and Natsuki.isAffectionate(higher=True)
             and store.preferences.get_volume("music") > 0
             and len(jn_custom_music.get_all_custom_music()) >= 2):
-            
+
             store.push("random_music_change")
             renpy.jump("call_next_topic")
 
