@@ -1887,7 +1887,6 @@ label talk_give_nickname:
         return
 
     elif nickname_type == jn_nicknames.TYPE_NOU:
-        show natsuki 1uwlgn zorder JN_NATSUKI_ZORDER
         n 1usqsg "No you~."
         return
 
@@ -4451,7 +4450,7 @@ label talk_custom_music_explanation:
         n 1nchbg "Let me just take a look,{w=0.1} one sec..."
         n 1ncssr "..."
 
-    if jn_utils.get_directory_exists(jn_custom_music.CUSTOM_MUSIC_DIRECTORY):
+    if not jn_utils.createDirectoryIfNotExists(jn_custom_music.CUSTOM_MUSIC_DIRECTORY):
         n 1tnmbg "Well,{w=0.1} hey!{w=0.2} It's already there!{w=0.2} I must have set it up earlier and forgot."
         n 1uchgn "No complaints from me!"
 

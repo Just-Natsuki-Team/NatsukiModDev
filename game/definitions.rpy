@@ -1201,7 +1201,7 @@ init -999 python in jn_utils:
             ).format(datetime.datetime.now(), message)
         )
 
-    def pretty_print(object, indent=1, width=150):
+    def prettyPrint(object, indent=1, width=150):
         """
         Returns a PrettyPrint-formatted representation of an object as a dict.
 
@@ -1215,7 +1215,7 @@ init -999 python in jn_utils:
         """
         return pprint.pformat(object.__dict__, indent, width)
 
-    def get_mouse_position():
+    def getMousePosition():
         """
         Returns a tuple representing the mouse's current position in the game window.
 
@@ -1224,7 +1224,7 @@ init -999 python in jn_utils:
         """
         return pygame.mouse.get_pos()
 
-    def get_file_exists(path):
+    def getFileExists(path):
         """
         Checks to see if the specified file exists.
 
@@ -1234,50 +1234,26 @@ init -999 python in jn_utils:
         OUT: 
             - True if the file exists, otherwise False
         """
-        if os.path.isfile(path):
-            return True
+        return os.path.isfile(path)
 
-        return False
-
-    def get_directory_exists(path):
+    def createDirectoryIfNotExists(path):
         """
         Checks to see if the specified directory exists, and creates it if not
-        Returns True/False based on whether the directory already existed
+        Returns True if a directory was created, otherwise False
 
         IN:
             path - The path to check
 
         OUT:
-            - True/False based on if directory was existing (True) or had to be created (False)
+            - True if a directory was created, otherwise False
         """
-        if not os.path.exists(path) or get_file_exists(path):
+        if not os.path.exists(path) or getFileExists(path):
             os.makedirs(path)
-            return False
+            return True
 
-        return True
+        return False
 
-    def write_file_to_directory(path, string_content, overwrite=False):
-        """
-        Attempts to write the given string_content to a file at the specified path.
-        If a file already exists, it is only overwritten if overwrite is set to True.
-
-        IN:
-            path - The path to create the file at (including file name and extension)
-            string_content - The string content to write to the file
-            overwrite - Whether or not to overwrite any existing file at the location
-
-        OUT: 
-            - True if the file was created/overwritten, otherwise False
-        """
-        if get_file_exists(path) and not overwrite:
-            return False
-
-        with open(path, "w") as file:
-            file.write(string_content)
-
-        return True
-
-    def delete_file_from_directory(path):
+    def deleteFileFromDirectory(path):
         """
         Attempts to delete the file at the given path.
 
@@ -1287,13 +1263,18 @@ init -999 python in jn_utils:
         OUT:
             - True if the file was deleted, otherwise False
         """
-        if get_file_exists(path):
-            os.remove(path)
-            return True
+        if getFileExists(path):
+            try:
+                os.remove(path)
+                return True
+
+            except Exception as exception:
+                log("Failed to delete file on path {0}; {1}".format(path, exception.message))
+                return False
 
         return False
 
-    def get_all_directory_files(path, extension_list=None):
+    def getAllDirectoryFiles(path, extension_list=None):
         """
         Runs through the files in the specified directory, filtering files via extension check if specified
         Returns a list containing tuples representing (file_name, file_path)
@@ -1308,7 +1289,8 @@ init -999 python in jn_utils:
         return_file_items = []
 
         for file in os.listdir(path):
-            if (not extension_list or any(file_extension in file for file_extension in extension_list)):
+            log(file.rpartition("."))
+            if (not extension_list or any(file_extension == file.rpartition(".")[-1] for file_extension in extension_list)):
                 return_file_items.append((file, os.path.join(path, file)))
 
         return return_file_items

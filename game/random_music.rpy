@@ -37,7 +37,7 @@ init python in jn_random_music:
             and store.persistent.jn_random_music_enabled
             and Natsuki.isAffectionate(higher=True)
             and store.preferences.get_volume("music") > 0
-            and len(jn_utils.get_all_directory_files(
+            and len(jn_utils.getAllDirectoryFiles(
                 path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
                 extension_list=[".mp3",".wav",".ogg"]
                 )
@@ -61,7 +61,7 @@ label random_music_change:
         music_title_and_file = random.choice(
             filter(
                 lambda track: (jn_custom_music._now_playing not in track),
-                jn_utils.get_all_directory_files(
+                jn_utils.getAllDirectoryFiles(
                     path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
                     extension_list=[".mp3",".wav",".ogg"]
                 )
@@ -103,7 +103,7 @@ label random_music_enable:
     extend 1fllbg " I almost forgot {w=0.1}-{w=0.1} let me just check there's actually any music for me to play first."
     n 1ncsbo "..."
 
-    if len(jn_utils.get_all_directory_files(
+    if len(jn_utils.getAllDirectoryFiles(
             path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
             extension_list=[".mp3",".wav",".ogg"]
         )) >= 2:

@@ -98,7 +98,8 @@ label ch30_init:
                 persistent.jn_player_apology_type_on_quit = None
 
     # Prepare visuals
-    hide black with Dissolve(1.5) 
+    show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
+    hide black with Dissolve(1) 
     show screen hkb_overlay
     play music audio.just_natsuki_bgm
 
@@ -147,7 +148,7 @@ label ch30_wait:
 #Other labels
 label call_next_topic(show_natsuki=True):
     if show_natsuki:
-        show natsuki at jn_center
+        show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
 
     if persistent._event_list:
         $ _topic = persistent._event_list.pop(0)
@@ -436,7 +437,7 @@ label farewell_menu:
     call screen scrollable_choice_menu(available_farewell_options, ("Nevermind.", None))
 
     if isinstance(_return, basestring):
-        show natsuki at jn_center
+        show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
         $ push(_return)
         jump call_next_topic
 
@@ -452,7 +453,7 @@ label outfits_menu:
     call screen scrollable_choice_menu(outfit_options, ("Nevermind.", None))
 
     if isinstance(_return, basestring):
-        show natsuki at jn_center
+        show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
         $ push(_return)
         jump call_next_topic
 

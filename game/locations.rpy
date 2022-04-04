@@ -183,14 +183,14 @@ init -20 python:
             if room is not None and not renpy.showing("main_bg"):
                 renpy.show(room, tag="main_bg", zorder=1)
 
-            renpy.show("natsuki idle", at_list=[jn_center], zorder=3)
+            #renpy.show("natsuki idle", at_list=[jn_center], zorder=3)
 
             # dissolving everything means dissolve last
             if dissolve_all or full_redraw:
                 renpy.with_statement(Dissolve(1.0))
             return
 
-        def appear(self, natsuki_sprite_code=""):
+        def appear(self):
             """
             Draws the location without any transition/scene effects.
 
@@ -201,8 +201,6 @@ init -20 python:
             if room is not None and not renpy.showing("main_bg"):
                 renpy.show(room, tag="main_bg", zorder=1)
             
-            natsuki_sprite = "natsuki {0}".format(natsuki_sprite_code) if natsuki_sprite_code else "natsuki idle"
-            renpy.show(natsuki_sprite, at_list=[jn_center], zorder=3)
             return
 
         def is_showing_day_room(self):

@@ -480,7 +480,7 @@ init -1 python in jn_outfits:
         IN:
             - outfit - the JNOutfit to register.
         """
-        global __ALL_OUTFITS
+        #global __ALL_OUTFITS
         if outfit.reference_name in __ALL_OUTFITS:
             jn_utils.log("Cannot register outfit name: {0}, as an outfit with that name already exists.".format(outfit.reference_name))
 
@@ -505,7 +505,7 @@ init -1 python in jn_outfits:
         """
         Registers a new wearable in the list of all wearables, allowing in-game access and persistency.
         """
-        global __ALL_WEARABLES
+        #global __ALL_WEARABLES
         if wearable.reference_name in __ALL_WEARABLES:
             jn_utils.log("Cannot register wearable name: {0}, as a wearable with that name already exists.".format(wearable.reference_name))
 
@@ -553,14 +553,14 @@ init -1 python in jn_outfits:
             # Hairstyles have two sprites for a given pose (front and back), so we must check both exist
             if isinstance(wearable, JNHairstyle):
                 if (
-                    not jn_utils.get_file_exists(os.path.join(resource_path, "back.png")) 
-                    or not jn_utils.get_file_exists(os.path.join(resource_path, "bangs.png"))
+                    not jn_utils.getFileExists(os.path.join(resource_path, "back.png")) 
+                    or not jn_utils.getFileExists(os.path.join(resource_path, "bangs.png"))
                 ):
                     jn_utils.log("Missing sprite(s) for {0}: check {1}".format(wearable.reference_name, resource_path))
                     return False
 
             # Any other wearable only has one sprite for a given pose
-            elif not jn_utils.get_file_exists(os.path.join(resource_path, "{0}.png".format(pose.name))):
+            elif not jn_utils.getFileExists(os.path.join(resource_path, "{0}.png".format(pose.name))):
                 jn_utils.log("Missing sprite(s) for {0}: check {1}".format(wearable.reference_name, resource_path))
                 return False
 
@@ -769,11 +769,11 @@ init -1 python in jn_outfits:
         """
         Loads the custom wearables from the game/outfits directory.
         """
-        if not jn_utils.get_directory_exists(__CUSTOM_OUTFITS_DIRECTORY):
+        if jn_utils.createDirectoryIfNotExists(__CUSTOM_OUTFITS_DIRECTORY):
             jn_utils.log("Unable to load custom outfits as the directory does not exist, and had to be created.")
             return
 
-        outfit_files = jn_utils.get_all_directory_files(__CUSTOM_OUTFITS_DIRECTORY, [".json"])
+        outfit_files = jn_utils.getAllDirectoryFiles(__CUSTOM_OUTFITS_DIRECTORY, ["json"])
         success_count = 0
 
         for file_name, file_path in outfit_files:
@@ -798,11 +798,11 @@ init -1 python in jn_outfits:
         """
         Loads the custom wearables from the game/wearables directory.
         """
-        if not jn_utils.get_directory_exists(__CUSTOM_WEARABLES_DIRECTORY):
+        if jn_utils.createDirectoryIfNotExists(__CUSTOM_WEARABLES_DIRECTORY):
             jn_utils.log("Unable to load custom wearables as the directory does not exist, and had to be created.")
             return
 
-        wearable_files = jn_utils.get_all_directory_files(__CUSTOM_WEARABLES_DIRECTORY, [".json"])
+        wearable_files = jn_utils.getAllDirectoryFiles(__CUSTOM_WEARABLES_DIRECTORY, ["json"])
         success_count = 0
 
         for file_name, file_path in wearable_files:
@@ -919,25 +919,25 @@ init -1 python in jn_outfits:
         ).lower()
 
         # Create directory if it doesn't exist
-        if not jn_utils.get_directory_exists(__CUSTOM_OUTFITS_DIRECTORY):
+        if jn_utils.createDirectoryIfNotExists(__CUSTOM_OUTFITS_DIRECTORY):
             jn_utils.log("custom_outfits directory was not found and had to be created.")
 
-        # Create the JSON file
-        if not jn_utils.write_file_to_directory(
-            path=os.path.join(__CUSTOM_OUTFITS_DIRECTORY, "{0}.json".format(outfit.reference_name)),
-            string_content=outfit.to_json_string()
-        ):
-            renpy.notify("Save failed; please check log for more information.")
-            jn_utils.log("Failed to save outfit {0}, as a write operation was not possible.".format(outfit.display_name))
-            return False
-
-        else:
-            # Finally register if the create op was successful
+        try:
+            # Create the JSON file
+            with open(os.path.join(__CUSTOM_OUTFITS_DIRECTORY, "{0}.json".format(outfit.reference_name)), "w") as file:
+                file.write(outfit.to_json_string())
+            
+            # Finally register the new outfit
             __register_outfit(outfit)
             store.Natsuki.setOutfit(outfit)
             renpy.notify("Outfit saved!")
             return True
 
+        except Exception as exception:
+            renpy.notify("Save failed; please check log for more information.")
+            jn_utils.log("Failed to save outfit {0}, as a write operation was not possible.".format(outfit.display_name))
+            return False
+  
     def delete_custom_outfit(outfit):
         """
         Removes the given outfit from the list of all outfits, and removes its persistent data.
@@ -947,11 +947,11 @@ init -1 python in jn_outfits:
             - outfit - the JNOutfit to delete
         """
         # Create directory if it doesn't exist
-        if not jn_utils.get_directory_exists(__CUSTOM_OUTFITS_DIRECTORY):
+        if jn_utils.createDirectoryIfNotExists(__CUSTOM_OUTFITS_DIRECTORY):
             jn_utils.log("custom_outfits directory was not found and had to be created.")
 
         # We can't delete the file for some reason, so abort the deletion process
-        elif not jn_utils.delete_file_from_directory(
+        elif not jn_utils.deleteFileFromDirectory(
             path=os.path.join(__CUSTOM_OUTFITS_DIRECTORY, "{0}.json".format(outfit.reference_name))
         ):
             renpy.notify("Delete failed; please check log for more information.")
@@ -2049,7 +2049,7 @@ label outfits_auto_change:
     else:
         n 1fsqsl "...{w=0.75}{nw}"
 
-    show natsuki idle
+    show natsuki idle at jn_center
     return
 
 screen create_outfit():

@@ -59,7 +59,7 @@ init 0 python:
 
         # Start: Outfit functionality
 
-        _outfit = jn_outfits.get_outfit("jn_school_uniform")
+        _outfit = None
 
         @staticmethod
         def getOutfitName():
@@ -118,6 +118,7 @@ init 0 python:
             """
             return Natsuki._outfit.hairstyle.reference_name == reference_name
 
+        #TODO: Adjust these functions in a proper acs system
         @staticmethod
         def isWearingAccessory(reference_name):
             """

@@ -71,10 +71,10 @@ label music_menu:
     python:
         success = False
 
-        if jn_utils.get_directory_exists(jn_custom_music.CUSTOM_MUSIC_DIRECTORY):
+        if not jn_utils.createDirectoryIfNotExists(jn_custom_music.CUSTOM_MUSIC_DIRECTORY):
 
             # Get the user's music, then sort the options for presentation
-            custom_music_options = jn_utils.get_all_directory_files(
+            custom_music_options = jn_utils.getAllDirectoryFiles(
                 path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
                 extension_list=jn_custom_music._VALID_FILE_EXTENSIONS
             )
@@ -154,7 +154,7 @@ label music_menu:
 
     elif _return == "random":
 
-        $ available_custom_music = jn_utils.get_all_directory_files(
+        $ available_custom_music = jn_utils.getAllDirectoryFiles(
             path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
             extension_list=[".mp3",".wav",".ogg"]
         )
@@ -163,7 +163,7 @@ label music_menu:
         $ chosen_question_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_QUESTION_QUIPS))
         n 1unmajl "[chosen_question_quip]"
 
-        show natsuki 1uchbg zorder JN_NATSUKI_ZORDER
+        show natsuki 1uchbg
 
         $ chosen_answer_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_ANSWER_QUIPS))
         n 1uchbsl "[chosen_answer_quip]"

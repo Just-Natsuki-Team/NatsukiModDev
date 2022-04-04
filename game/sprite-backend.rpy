@@ -136,7 +136,6 @@ init -50 python:
         """
         Generates sprites for Natsuki based on outfit, expression, pose, etc.
         """
-        jn_utils.log("Type of Natsuki outfit: {0}".format(type(Natsuki._outfit)))
         lc_args = [
             (1280, 740), # Anchor
             (0, 0), _BASE_SPRITE_PATH + "desk/chair-normal.png", # Chair
