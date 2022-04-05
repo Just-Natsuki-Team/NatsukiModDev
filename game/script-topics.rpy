@@ -5426,7 +5426,7 @@ label talk_why_so_short:
     n "Yeah, that's it!{w=0.2} I'm not short!{w=0.2} I'm...{w=0.5} {i}slightly{/i} below average!"
     n "{i}Slightly.{/i}"
     menu:
-        "You're at a perfect height."
+        "You're at a perfect height.":
             n "{i}Oh- I- You-{/i}"
             n "...!"
             n "Uuu-"
