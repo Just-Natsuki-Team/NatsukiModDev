@@ -38,7 +38,7 @@ label introduction_progress_check:
         show glitch_garbled_a zorder 99 with vpunch
 
         $ Natsuki.setOutfit(jn_outfits.get_outfit("jn_school_uniform"))
-        $ main_background.appear()
+        $ main_background.show()
         $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
         show natsuki idle zorder JN_NATSUKI_ZORDER
         hide glitch_garbled_a
@@ -114,7 +114,7 @@ label introduction_opening:
 
     # Get the visuals ready
     $ Natsuki.setOutfit(jn_outfits.get_outfit("jn_school_uniform"))
-    $ main_background.appear()
+    $ main_background.show()
     $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
     show natsuki idle zorder JN_NATSUKI_ZORDER
     hide glitch_garbled_a

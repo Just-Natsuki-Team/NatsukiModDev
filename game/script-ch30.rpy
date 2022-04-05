@@ -29,7 +29,7 @@ label ch30_visual_setup:
     show black zorder 99
 
     # Draw background
-    $ main_background.appear()
+    $ main_background.show()
 
     # Draw sky
     if main_background.is_day():
