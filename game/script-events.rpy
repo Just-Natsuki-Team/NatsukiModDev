@@ -21,7 +21,7 @@ init python in jn_events:
         event_list = store.Topic.filter_topics(
             EVENT_MAP.values(),
             unlocked=True,
-            affinity=Natsuki._getAffinityState(),
+            affinity=store.Natsuki._getAffinityState(),
             is_seen=False,
             **kwargs
         )
@@ -41,7 +41,7 @@ init python in jn_events:
         IN:
             - natsuki_sprite_code - The sprite code to show Natsuki displaying before dialogue
         """
-        renpy.show("natsuki {0}".format(natsuki_sprite_code))
+        renpy.show("natsuki {0}".format(natsuki_sprite_code), at_list=[store.jn_center], zorder=store.JN_NATSUKI_ZORDER)
         renpy.hide("black")
         renpy.show_screen("hkb_overlay")
         renpy.play(filename="mod_assets/bgm/just_natsuki.ogg", channel="music")

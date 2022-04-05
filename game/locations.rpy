@@ -186,8 +186,6 @@ init -20 python:
             if room is not None and not renpy.showing("main_bg"):
                 renpy.show(room, tag="main_bg", zorder=JN_LOCATION_ZORDER)
 
-            #renpy.show("natsuki idle", at_list=[jn_center], zorder=3)
-
             # dissolving everything means dissolve last
             if dissolve_all or full_redraw:
                 renpy.with_statement(Dissolve(1.0))
