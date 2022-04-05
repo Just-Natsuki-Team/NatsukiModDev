@@ -5590,6 +5590,7 @@ label talk_why_so_short:
             n "S-So..."
             n "P-Perfect height, huh?"
             n "Y-Yeah! That's more like it!"
+            n "I am the perfect height!"
 
 
         "You're short and adorable.":
@@ -5598,14 +5599,28 @@ label talk_why_so_short:
             extend " You've gotta be kidding me!"
             n "I am {i}not{/i} cute!"
             n "A-And I'm not short!"
+            n "But most of all, I'm not cute!"
+            n "..."
 
         "You're a gremlin.":
             n "Gremlin??"
             n "Me- a gremlin??"
-            n "How {i}dare{/i} you??"
-            n
+            n "Are you serious?"
+            n "You're so mean, [player]!"
+            n "..."
+            n "Gremlin, huh."
+            n "..."
 
         "...":
             n "...No argument,{w=0.1} huh?"
             n "So basically,{w=0.1} I win!"
             n "I'm not short,{w=0.1} got it?"
+            n "But listen here!"
+
+    n "You better not go teasing me like that again, dummy."
+    n "If I {i}was{/i} short, you'd get your ankles bitten off!"
+    n "Ehehe!"
+    n "So watch out, [player]!"
+    n "You'll never see it coming!"
+
+return
