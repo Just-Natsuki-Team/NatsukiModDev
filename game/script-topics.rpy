@@ -5466,7 +5466,7 @@ label talk_why_so_short:
     n "So watch out, [player]!"
     n "You'll never see it coming!"
 
-return
+    return
 
 # Natsuki talks about her opinion and advice proper hygiene.
 init 5 python:
