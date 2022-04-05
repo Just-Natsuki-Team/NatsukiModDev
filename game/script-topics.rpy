@@ -5390,6 +5390,84 @@ label date_go2_room:
     $ main_background.draw(dissolve_all=True, full_redraw=True)
     return
 
+# Player asks Natsuki why she is so short
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_why_so_short",
+            unlocked=True,
+            prompt="Why are you so short?",
+            category=["Natsuki"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_why_so_short:
+    n "Urgg-{w=0.1} Hey!{w=0.2} You did not just say that!"
+    if jn_player_appearance_height_cm < 149:
+        n "You're shorter than me anyways,{w=0.1} you dork!"
+        n "Who's the short one now,{w=0.1} huh?"
+    elif jn_player_appearance_height_cm = 149:
+        n "We're the same height!"
+        n "Are you calling yourself short,{w=0.1} huh?"
+    else:
+        n "Just because you're taller than me doesn't mean anything!"
+    n "I'm just a late bloomer,{w=0.1} that's all!"
+    n "Maybe it's genetics?"
+    n "Gh!{w=0.5} W-Well!!"
+    n "Even if I am short,{w=0.1} it's not like it's a bad thing!"
+    n "Plenty of people are shorter than me!"
+    n "Y'know,{w=0.1} average height is different for different places!"
+    n "Even If I'm...{w=0.5}"
+    extend " Below Average..."
+    n "Yeah, that's it!{w=0.2} I'm not short!{w=0.2} I'm...{w=0.5} {i}slightly{/i} below average!"
+    n "{i}Slightly.{/i}"
+    menu:
+        "You're at a perfect height."
+            n "{i}Oh- I- You-{/i}"
+            n "...!"
+            n "Uuu-"
+            n "S-So..."
+            n "P-Perfect height, huh?"
+            n "Y-Yeah! That's more like it!"
+            n "I am the perfect height!"
+
+
+        "You're short and adorable.":
+            n "!!!"
+            n "Adorable? {i}me?{/i}??"
+            extend " You've gotta be kidding me!"
+            n "I am {i}not{/i} cute!"
+            n "A-And I'm not short!"
+            n "But most of all, I'm not cute!"
+            n "..."
+
+        "You're a gremlin.":
+            n "Gremlin??"
+            n "Me- a gremlin??"
+            n "Are you serious?"
+            n "You're so mean, [player]!"
+            n "..."
+            n "Gremlin, huh."
+            n "..."
+
+        "...":
+            n "...No argument,{w=0.1} huh?"
+            n "So basically,{w=0.1} I win!"
+            n "I'm not short,{w=0.1} got it?"
+            n "But listen here!"
+
+    n "You better not go teasing me like that again, dummy."
+    n "If I {i}was{/i} short, you'd get your ankles bitten off!"
+    n "Ehehe!"
+    n "So watch out, [player]!"
+    n "You'll never see it coming!"
+
+return
+
 # Natsuki talks about her opinion and advice proper hygiene.
 init 5 python:
     registerTopic(
@@ -5546,81 +5624,3 @@ label talk_maintaining_proper_hygiene:
         n 1nchgn "Ahaha!"
 
     return
-
-# Player asks Natsuki why she is so short
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="talk_why_so_short",
-            unlocked=True,
-            prompt="Why are you so short?",
-            category=["Natsuki"],
-            player_says=True,
-            location="classroom"
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-label talk_why_so_short:
-    n "Urgg-{w=0.1} Hey!{w=0.2} You did not just say that!"
-    if jn_player_appearance_height_cm < 149:
-        n "You're shorter than me anyways,{w=0.1} you dork!"
-        n "Who's the short one now,{w=0.1} huh?"
-    elif jn_player_appearance_height_cm = 149:
-        n "We're the same height!"
-        n "Are you calling yourself short,{w=0.1} huh?"
-    else:
-        n "Just because you're taller than me doesn't mean anything!"
-    n "I'm just a late bloomer,{w=0.1} that's all!"
-    n "Maybe it's genetics?"
-    n "Gh!{w=0.5} W-Well!!"
-    n "Even if I am short,{w=0.1} it's not like it's a bad thing!"
-    n "Plenty of people are shorter than me!"
-    n "Y'know,{w=0.1} average height is different for different places!"
-    n "Even If I'm...{w=0.5}"
-    extend " Below Average..."
-    n "Yeah, that's it!{w=0.2} I'm not short!{w=0.2} I'm...{w=0.5} {i}slightly{/i} below average!"
-    n "{i}Slightly.{/i}"
-    menu:
-        "You're at a perfect height."
-            n "{i}Oh- I- You-{/i}"
-            n "...!"
-            n "Uuu-"
-            n "S-So..."
-            n "P-Perfect height, huh?"
-            n "Y-Yeah! That's more like it!"
-            n "I am the perfect height!"
-
-
-        "You're short and adorable.":
-            n "!!!"
-            n "Adorable? {i}me?{/i}??"
-            extend " You've gotta be kidding me!"
-            n "I am {i}not{/i} cute!"
-            n "A-And I'm not short!"
-            n "But most of all, I'm not cute!"
-            n "..."
-
-        "You're a gremlin.":
-            n "Gremlin??"
-            n "Me- a gremlin??"
-            n "Are you serious?"
-            n "You're so mean, [player]!"
-            n "..."
-            n "Gremlin, huh."
-            n "..."
-
-        "...":
-            n "...No argument,{w=0.1} huh?"
-            n "So basically,{w=0.1} I win!"
-            n "I'm not short,{w=0.1} got it?"
-            n "But listen here!"
-
-    n "You better not go teasing me like that again, dummy."
-    n "If I {i}was{/i} short, you'd get your ankles bitten off!"
-    n "Ehehe!"
-    n "So watch out, [player]!"
-    n "You'll never see it coming!"
-
-return
