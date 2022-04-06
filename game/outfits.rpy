@@ -1205,7 +1205,7 @@ init -1 python in jn_outfits:
     __register_wearable(JNClothes(
         reference_name="jn_clothes_star_pajamas",
         display_name="Star pajamas",
-        unlocked=False,
+        unlocked=True,
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
@@ -1235,7 +1235,7 @@ init -1 python in jn_outfits:
     __register_wearable(JNClothes(
         reference_name="jn_clothes_long_sleeved_shirt_nya",
         display_name="Long-sleeved shirt",
-        unlocked=False,
+        unlocked=True,
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
@@ -1627,7 +1627,7 @@ label outfits_wear_outfit:
         for outfit in available_outfits:
             options.append((outfit.display_name, outfit))
 
-        available_outfits.insert(0, ("You pick!", "random"))
+        options.insert(0, ("You pick!", "random"))
 
     call screen scrollable_choice_menu(options, ("Nevermind.", None))
     show natsuki at jn_center
@@ -1725,7 +1725,7 @@ label outfits_remove_outfit:
 
     n 1unmpu "You want me to remove an outfit?{w=0.5}{nw}"
     extend 1nllpu " I guess I can do that."
-    n 1nslss "But...{w=1.5}{nw}"
+    n 1nslss "But...{w=1}{nw}"
     extend 1fsrpol " I'm keeping the ones I came up with."
 
     python:
@@ -1777,6 +1777,10 @@ label outfits_remove_outfit:
                 n 1nnmbo "Oh."
                 n 1ullaj "Well...{w=1.5}{nw}"
                 extend 1nllca " okay then."
+
+    else:
+        n 1nnmbo "Oh.{w=1}{nw}"
+        extend 1nchgn " Well,{w=0.1} suits me!"
 
     jump ch30_loop
 
