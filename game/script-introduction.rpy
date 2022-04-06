@@ -117,6 +117,7 @@ label introduction_opening:
     $ main_background.show()
     $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
     show natsuki idle zorder JN_NATSUKI_ZORDER
+    hide black
     hide glitch_garbled_a
     play music audio.space_classroom_bgm fadein 1
 
