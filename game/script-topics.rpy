@@ -30,6 +30,52 @@ init python in topics:
     import store
     TOPIC_MAP = dict()
 
+label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
+    n "Okay!"
+    jump ch30_loop
+
+#---------------date_menu_topics--------------------
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="date_go2_beach",
+            unlocked=True,
+            prompt="Wanna go to the beach?",
+            player_says=True,
+            category=["date"]
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label date_go2_beach:
+    n "I love the beach"
+    n "Let's go!"
+    $ main_background.changeLocation(beach)
+    $ main_background.draw(full_redraw=True)
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="date_go2_room",
+            unlocked=True,
+            prompt="Let's return",
+            player_says=True,
+            category=["date"]
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label date_go2_room:
+    n "Heading back then?"
+    n "Alright!"
+    $ main_background.changeLocation(classroom)
+    $ main_background.draw(dissolve_all=True, full_redraw=True)
+    return
+
 # Special dialogue for when out of random topics
 label talk_out_of_topics:
     if Natsuki.isNormal(higher=True):
@@ -1825,7 +1871,6 @@ label talk_give_nickname:
         return
 
     elif nickname_type == jn_nicknames.TYPE_NOU:
-        show natsuki 1uwlgn zorder JN_NATSUKI_ZORDER
         n 1usqsg "No you~."
         return
 
@@ -2896,11 +2941,11 @@ label talk_natsukis_hairstyle:
     n 1ullpu "I never really thought about it that much,{w=0.1} honestly."
 
     if Natsuki.isNormal(higher=True):
-        if persistent.jn_natsuki_current_hairstyle == "default":
+        if Natsuki.isWearingHairstyle("jn_hair_twintails"):
             n 1ulrpo "I just thought twintails would look kinda cute on me."
 
         else:
-            n 1ulrpo "I know I'm not showing them off now,{w=0.1} but I just thought twintails would look kinda cute on me."
+            n 1ulrpo "I think this hairstyle looks kinda cute on me."
 
         n 1fsqpo "...Yeah,{w=0.1} yeah.{w=0.2} I know what you're thinking,{w=0.1} [player]."
 
@@ -2909,11 +2954,11 @@ label talk_natsukis_hairstyle:
             n 1fchbg "Ehehe.{w=0.2} I thought not."
 
     else:
-        if persistent.jn_natsuki_current_hairstyle == "default":
+        if Natsuki.isWearingHairstyle("jn_hair_twintails"):
             n 1nnmsl "I guess I just liked the idea of twintails."
 
         else:
-            n 1nnmsl "Not like I'm showing it now,{w=0.1} but I guess I just liked the idea of twintails."
+            n 1nnmsl "I guess I just like this hairstyle."
 
     n 1ulraj "As for the bangs,{w=0.1} I...{w=0.3} always found it difficult to get my hair cut."
 
@@ -2927,36 +2972,44 @@ label talk_natsukis_hairstyle:
         n 1nlrsl "I was always kinda short when it came to getting it cut."
         n 1fsqsl "...And no,{w=0.1} {i}not{/i} in the physical sense."
 
-    if persistent.jn_natsuki_current_accessory is not None:
-        n 1ullaj "As for my hairclip?{w=0.2} It's just to keep my hair out of my eyes."
+    if Natsuki.isWearingAccessory(jn_outfits.get_wearable("jn_accessory_hairband_red")):
+        n 1ullaj "As for my hairband?{w=0.2} It's just to keep my hair out of my eyes."
 
     else:
-        n 1ullaj "I'm not wearing it now,{w=0.1} but the hairclip is just to keep my hair out of my eyes."
+        n 1ullaj "I'm not wearing it now,{w=0.1} but my old hairband was just to keep my hair out of my eyes."
 
     if Natsuki.isNormal(higher=True):
         n 1fllss "Looking good is a bonus,{w=0.1} but I mostly just got tired of brushing my hair out of my face."
-        n 1nsrca "Especially with bangs this long!"
+        n 1nsrca "Especially with those bangs!"
         n 1unmaj "Anyway..."
 
     n 1tllaj "Have I thought about other hairstyles?{w=0.2} Well..."
 
-    if persistent.jn_natsuki_current_hairstyle != "default":
-        n 1ullbo "I think that kinda speaks for itself,{w=0.1} really.{w=0.2} I {i}am{/i} trying out a different one..."
+    if not Natsuki.isWearingHairstyle("jn_hair_twintails"):
+        if Natsuki.isEnamored(higher=True):
+            n 1tsqsml "Is that not what I'm doing right now?"
+            extend 1fchsml " Ehehe."
 
-    if Natsuki.isEnamored(higher=True):
-        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-        n 1usgss "Either way though,{w=0.1} [player]..."
-        n 1fcssml "I'm pretty sure I already let my hair down around you,{w=0.1} [chosen_tease].{w=0.2} That qualifies, right?"
-        n 1uchgnl "Ahaha!"
+        elif Natsuki.isNormal(higher=True):
+            n 1ullbo "I think that kinda speaks for itself,{w=0.1} really.{w=0.2} I {i}am{/i} trying out a different one..."
 
-    elif Natsuki.isNormal(higher=True):
-        n 1unmaj "You know what they say,{w=0.1} [player]."
-        n 1fnmbg "If it ain't broke,{w=0.1} don't fix it!"
-        n 1uchgn "Ehehe."
+        else:
+            n 1nsqsl "...Go figure,{w=0.1} [player]."
 
     else:
-        n 1fslaj "...At this point,{w=0.1} [player]?{w=0.2} I'd rather you stayed {i}out{/i} of my hair."
-        n 1fsqbo "Thanks."
+        if Natsuki.isEnamored(higher=True):
+            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            n 1fcssml "I'm pretty sure I already let my hair down around you,{w=0.1} [chosen_tease].{w=0.2} That qualifies, right?"
+            n 1uchgnl "Ahaha!"
+
+        elif Natsuki.isNormal(higher=True):
+            n 1unmaj "You know what they say,{w=0.1} [player]."
+            n 1fnmbg "If it ain't broke,{w=0.1} don't fix it!"
+            n 1uchgn "Ehehe."
+
+        else:
+            n 1fslaj "...At this point,{w=0.1} [player]?{w=0.2} I'd rather you stayed {i}out{/i} of my hair."
+            n 1fsqbo "Thanks."
 
     return
 
@@ -3209,15 +3262,21 @@ label talk_school_uniform:
     n 1nsqsr "But Oh.{w=0.2} My.{w=0.2} Gosh.{w=0.2} [player]."
     n 1fcsan "The layers.{w=0.2} So many layers."
     n 1fllem "Who even thought someone needs that much clothing?!{w=0.2} For school,{w=0.1} of all places?!"
-    n 1fbkwr "I mean...{w=0.3} do you even {i}know{/i} what wearing all of this in summer is like?!{w=0.2} It's horrible!"
+    n 1fbkwr "I mean...{w=0.3} do you even {i}know{/i} what wearing all that clothing in summer is like?!{w=0.2} It's {i}horrible{/i}!"
     n 1flrpo "And the blazer...{w=0.3} ugh!{w=0.2} It's actually the worst thing ever."
     n 1fsqpo "Like yeah,{w=0.1} I could take some off between class,{w=0.1} but I had to put it all back on when I go went in."
     n 1fllpo "...Or get told off.{w=0.2} {i}Again{/i}.{w=0.2} I honestly have no idea how Sayori got away with hers being so scruffy."
-    n 1fcsan "And all of this stuff is super expensive too!{w=0.2} Talk about a kick in the teeth!"
+    n 1fcsan "And all of the uniform stuff is super expensive too!{w=0.2} Talk about a kick in the teeth!"
     n 1fslan "Jerks."
     n 1fslsr "Ugh...{w=0.3} I seriously wish uniforms were banned or something."
-    n 1flrpo "It could be worse though,{w=0.1} I guess.{w=0.2} At least I never had to learn how to do a tie."
-    n 1unmaj "What about you though, [player]?"
+    n 1flrpo "It could be worse though,{w=0.1} I guess.{w=0.2} At suppose it kept me warm when it mattered."
+
+    if not Natsuki.isWearingClothes("jn_school_uniform"):
+        n 1nchgn "...And I'm not wearing it now,{w=0.1} at least!{w=1}{nw}"
+        extend 1fcsbg " Always a plus."
+        n 1ullaj "That being said..."
+
+    n 1unmaj "What about you though,{w=0.1} [player]?"
     menu:
         n "Did you have to wear uniform at school?"
 
@@ -3244,7 +3303,8 @@ label talk_school_uniform:
         n 1fllbgl "I suppose it has that going for it too,{w=0.1} a-{w=0.1}at least..."
 
     elif Natsuki.isNormal(higher=True):
-        n 1fchgn "I guess at least I'm warm and toasty for the winter,{w=0.1} right?{w=0.2} Ahaha."
+        n 1fcsbg "I guess at least I never had to learn how to do a tie!"
+        extend 1nchgn " Ehehe."
 
     return
 
@@ -4374,7 +4434,7 @@ label talk_custom_music_explanation:
         n 1nchbg "Let me just take a look,{w=0.1} one sec..."
         n 1ncssr "..."
 
-    if jn_custom_music.get_directory_exists():
+    if not jn_utils.createDirectoryIfNotExists(jn_custom_music.CUSTOM_MUSIC_DIRECTORY):
         n 1tnmbg "Well,{w=0.1} hey!{w=0.2} It's already there!{w=0.2} I must have set it up earlier and forgot."
         n 1uchgn "No complaints from me!"
 
@@ -4826,7 +4886,7 @@ label talk_mod_contributions:
         extend 1fchbg " You didn't seriously expect me to not see what you're up to?{w=0.5}{nw}"
         extend 1nchgn " Ehehe."
         n 1tsqbg "Anyway -{w=0.1} if you're already into that kinda stuff,{w=0.1} [player]...{w=0.5}{nw}"
-        extend 1kchbg " Why not lend me a hand?"
+        extend 1kchbg " why not lend me a hand?"
 
     n 1kllbg "You don't even have to be super talented at code,{w=0.1} or anything like that!{w=0.5}{nw}"
     extend 1unmaj " Artwork,{w=0.1} writing,{w=0.1} or even just suggestions of things for us to talk about or do -{w=0.3}{nw}"
@@ -4840,10 +4900,10 @@ label talk_mod_contributions:
 
     if Natsuki.isLove():
         $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
-        n 1nchtsl " Love you,{w=0.1} [chosen_endearment]!"
+        n 1nchtsl "Love you,{w=0.1} [chosen_endearment]!"
 
     else:
-        n 1fchbg " Thanks,{w=0.1} [player]!{w=0.2} 'preciate it!"
+        n 1fchbg "Thanks,{w=0.1} [player]!{w=0.2} 'preciate it!"
 
     return
 
@@ -5512,6 +5572,65 @@ label talk_thoughts_on_dan_salvato:
     n 1kcssr "I can only imagine what the answers would be."
 
 return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_custom_outfits_unlock",
+            unlocked=True,
+            prompt="Custom outfits",
+            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 3600 >= 48 and not persistent.jn_custom_outfits_unlocked",
+            nat_says=True,
+            affinity_range=(jn_affinity.HAPPY, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_custom_outfits_unlock:
+    n 1nslpu "..."
+    n 1usceml "...!"
+    n 1uskeml "I've...{w=0.5}{nw}"
+    extend 1nllem " just realized something.{w=0.5}{nw}"
+    extend 1fslun " Something I {i}really{/i} don't like."
+    n 1fbkwr "...And that's exactly how {i}long{/i} I've been stuck in this uniform!{w=0.5}{nw}"
+    extend 1fcswr " G-{w=0.1}gross!"
+    n 1flrem "I mean..."
+    n 1fllsl "I guess I shouldn't be surprised that something made for school isn't comfy for long periods..."
+    n 1fcspol "But that doesn't mean I have to put up with it!"
+    n 1fsrpo "There's gotta be something I can do..."
+    n 1ncspu "..."
+    n 1uwdaj "...Wait!{w=1.5}{nw}"
+    extend 1fllbg " Duh!{w=1.5}{nw}"
+    extend 1fcsbs " Of course!"
+    n 1ulraj "It's not like I {i}never{/i} had any clothes other than my uniform!"
+    n 1fllss "I know I at {i}least{/i} had that casual outfit I wore...{w=1.5}{nw}"
+    extend 1kllsl " ...on {i}that{/i} weekend."
+    n 1ncssr "Hmm..."
+    n 1fchbg "Yeah,{w=0.1} okay!{w=1.5}{nw}"
+    extend 1nchsm " I think that should all work!"
+    n 1nsqsm "..."
+    n 1uwdaj "Oh!{w=0.2} Just to keep you in the loop,{w=0.1} [player]..."
+    n 1uchbg "I should be able to wear whatever I want now!"
+    n 1nllbg "I've got a couple of outfits in mind already,{w=0.5}{nw}"
+    extend 1flrbg " so it's not like I have a reason {i}not{/i} to."
+    n 1ulraj "So...{w=0.5}{nw}"
+    extend 1fcssm " don't be surprised if I wanna change my clothes from time to time,{w=0.1} alright?"
+    n 1fsqsrl "A-{w=0.1}and no.{w=0.5}{nw}"
+    extend 1flleml " You're {i}not{/i} gonna see {i}anything{/i}."
+    n 1fslpol "I'm making {i}sure{/i} of that."
+    n 1nslbo "..."
+    n 1uslaj "But..."
+    n 1unmbo "I guess I'd be open to suggestions."
+    n 1ncsem "Just...{w=0.3} nothing embarrassing.{w=0.5}{nw}"
+    extend 1nsqpo " Got it?"
+    n 1nsrss "'preciated!"
+    n 1ulrbo "Now...{w=0.5}{nw}"
+    extend 1tnmss " where were we?"
+
+    $ persistent.jn_custom_outfits_unlocked = True
+    return
 
 # Natsuki talks about her opinion and advice proper hygiene.
 init 5 python:

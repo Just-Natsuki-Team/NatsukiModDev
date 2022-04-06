@@ -387,7 +387,7 @@ label compliment_style:
     $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_style").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_STYLE:
-        if jn_outfits.current_outfit_name != "School uniform":
+        if not Natsuki.isWearingOutfit("jn_school_uniform"):
 
             # Non-uniform dialogue
             if Natsuki.isEnamored(higher=True):
@@ -420,7 +420,8 @@ label compliment_style:
 
     else:
 
-        if jn_outfits.current_outfit_name != "School uniform":
+        if not Natsuki.isWearingOutfit("jn_school_uniform"):
+
             # Non-uniform dialogue
             if Natsuki.isEnamored(higher=True):
                 n 1nchsml "Ehehe.{w=0.2} I'm just happy you like this outfit,{w=0.1} [player]!"

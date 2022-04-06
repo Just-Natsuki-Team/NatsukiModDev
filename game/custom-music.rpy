@@ -63,41 +63,7 @@ init python in jn_custom_music:
     # Tracks what is currently playing to avoid repetition with random music picks
     _now_playing = None
 
-    def get_directory_exists():
-        """
-        Checks to see if the custom_music directory exists, and creates it if not
-        Returns True/False based on whether the directory already existed
-
-        OUT:
-            - True/False based on if directory was existing (True) or had to be created (False)
-        """
-        if not os.path.exists(CUSTOM_MUSIC_DIRECTORY):
-            os.makedirs(CUSTOM_MUSIC_DIRECTORY)
-            return False
-
-        return True
-
-    def get_all_custom_music():
-        """
-        Runs through the files in the custom_music directory, identifying supported music files via extension check
-        Returns a tuple representing (file_name, file_path_for_renpy_playback)
-
-        OUT:
-            - Tuple representing (file_name, file_path_for_renpy_playback)
-        """
-        global CUSTOM_MUSIC_DIRECTORY
-        return_file_items = []
-
-        for file in os.listdir(CUSTOM_MUSIC_DIRECTORY):
-            if any(file_extension in file for file_extension in _VALID_FILE_EXTENSIONS):
-
-                # Valid audio track - return displayed prompt and file name
-                return_file_items.append((file, os.path.join(CUSTOM_MUSIC_DIRECTORY, file)))
-
-        return return_file_items
-
 label music_menu:
-
     $ jn_globals.player_is_in_conversation = True
     $ music_title = "Error, this should have changed"
 
@@ -105,10 +71,13 @@ label music_menu:
     python:
         success = False
 
-        if jn_custom_music.get_directory_exists():
+        if not jn_utils.createDirectoryIfNotExists(jn_custom_music.CUSTOM_MUSIC_DIRECTORY):
 
             # Get the user's music, then sort the options for presentation
-            custom_music_options = jn_custom_music.get_all_custom_music()
+            custom_music_options = jn_utils.getAllDirectoryFiles(
+                path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
+                extension_list=jn_custom_music._VALID_FILE_EXTENSIONS
+            )
             custom_music_options.sort()
 
             # Add the default music as the first option
@@ -151,6 +120,7 @@ label music_menu:
                 n 1fcsbg "And there we are!"
                 n 1ullss "So...{w=0.5}{nw}"
                 extend 1unmaj " What did you wanna listen to?"
+                show natsuki idle at jn_left
 
             "No.":
                 n 1fcsbg "The sound of silence it is,{w=0.1} then!{w=0.5}{nw}"
@@ -184,13 +154,16 @@ label music_menu:
 
     elif _return == "random":
 
-        $ available_custom_music = jn_custom_music.get_all_custom_music()
+        $ available_custom_music = jn_utils.getAllDirectoryFiles(
+            path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
+            extension_list=[".mp3",".wav",".ogg"]
+        )
 
         # Play a random track
         $ chosen_question_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_QUESTION_QUIPS))
         n 1unmajl "[chosen_question_quip]"
 
-        show natsuki 1uchbg zorder JN_NATSUKI_ZORDER
+        show natsuki 1uchbg
 
         $ chosen_answer_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_ANSWER_QUIPS))
         n 1uchbsl "[chosen_answer_quip]"

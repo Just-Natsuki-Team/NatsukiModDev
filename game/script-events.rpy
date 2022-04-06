@@ -24,7 +24,7 @@ init python in jn_events:
         event_list = store.Topic.filter_topics(
             EVENT_MAP.values(),
             unlocked=True,
-            affinity=Natsuki._getAffinityState(),
+            affinity=store.Natsuki._getAffinityState(),
             is_seen=False,
             **kwargs
         )
@@ -44,19 +44,8 @@ init python in jn_events:
         IN:
             - natsuki_sprite_code - The sprite code to show Natsuki displaying before dialogue
         """
-        # Draw background, with Natsuki using the given sprite code
-        store.main_background.appear(natsuki_sprite_code)
-
-        if store.persistent.jn_random_weather and 6 < store.jn_get_current_hour() <= 18:
-            jn_atmosphere.show_random_sky()
-
-        elif (
-            store.jn_get_current_hour() > 6 and store.jn_get_current_hour() <= 18
-            and not jn_atmosphere.is_current_weather_sunny()
-        ):
-            jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
-
-        # UI, music
+        renpy.show("natsuki {0}".format(natsuki_sprite_code), at_list=[store.jn_center], zorder=store.JN_NATSUKI_ZORDER)
+        renpy.hide("black")
         renpy.show_screen("hkb_overlay")
         renpy.play(filename="mod_assets/bgm/just_natsuki.ogg", channel="music")
 
@@ -303,6 +292,81 @@ label event_code_fiddling:
     extend 1fcseml " Are you {i}trying{/i} to give me a heart attack or something?"
     n 1fllpol "Jeez..."
     n 1fsrpo "Hello to you too,{w=0.1} dummy..."
+
+    return
+
+# Natsuki isn't quite ready for the day...
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_not_ready_yet",
+            unlocked=True,
+            conditional=(
+                "((jn_is_time_block_early_morning() or jn_is_time_block_mid_morning()) and jn_is_weekday())"
+                " or (jn_is_time_block_late_morning and not jn_is_weekday())"
+            ),
+            affinity_range=(jn_affinity.HAPPY, None)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
+
+label event_not_ready_yet:
+    python:
+        import random
+        jn_globals.force_quit_enabled = False
+
+        # Unlock the starter ahoges
+        unlocked_ahoges = [
+            jn_outfits.get_wearable("jn_headgear_ahoge_curly"),
+            jn_outfits.get_wearable("jn_headgear_ahoge_small"),
+            jn_outfits.get_wearable("jn_headgear_ahoge_swoop")
+        ]
+        for ahoge in unlocked_ahoges:
+            ahoge.unlock()
+
+        # Unlock the super-messy hairstyle
+        super_messy_hairstyle = jn_outfits.get_wearable("jn_hair_super_messy").unlock()
+
+        # Make note of the loaded outfit, then assign Natsuki a hidden one to show off hair/ahoge
+        outfit_to_restore = Natsuki.getOutfitName()
+        ahoge_outfit = jn_outfits.get_outfit("jn_ahoge_unlock")
+        ahoge_outfit.headgear = random.choice(unlocked_ahoges)
+        Natsuki.setOutfit(ahoge_outfit)
+
+    $ renpy.pause(5)
+    n "Uuuuuu...{w=2}{nw}"
+    extend " man..."
+    $ renpy.pause(3)
+    n "It's too {i}early{/i} for thiiis!"
+    play audio chair_out_in
+    $ renpy.pause(5)
+    n "Ugh...{w=1}{nw}"
+    extend " I gotta get to bed earlier..."
+    $ renpy.pause(7)
+
+    menu:
+        "Enter...":
+            pass
+
+    $ jn_events.display_visuals("1uskeml")
+    $ jn_globals.force_quit_enabled = True
+
+    n 1uskeml "H-{w=0.3}huh?{w=1.5}{nw}"
+    extend 1uskwrl " [player]?!{w=1}{nw}"
+    extend 1klleml " You're here already?!"
+    n 1flrunl "..."
+    n 1uskemf "I-{w=0.3}I gotta get ready!"
+
+    play audio clothing_ruffle
+    $ Natsuki.setOutfit(jn_outfits.get_outfit(outfit_to_restore))
+    with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
+
+    n 1fcsem "Jeez...{w=1.5}{nw}"
+    extend 1nslpo  " I really gotta get an alarm clock or something.{w=1}{nw}"
+    extend 1nsrss " Heh."
+    n 1flldv "So...{w=1}{nw}"
+    extend 1fcsbgl " what's up,{w=0.1} [player]?"
 
     return
 

@@ -151,7 +151,6 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
 
                             null height 5
 
-
 screen scrollable_choice_menu(items, last_item=None):
     fixed:
         area (680, 40, 560, 440)
