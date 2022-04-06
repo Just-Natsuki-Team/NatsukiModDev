@@ -23,6 +23,9 @@ default persistent.jn_player_can_drive = None
 # Romance data
 default persistent.jn_player_love_you_count = 0
 
+# Preferences data
+default persistent.jn_player_tea_coffee_preference = None
+
 init python in topics:
     import store
     TOPIC_MAP = dict()
@@ -219,11 +222,33 @@ init 5 python:
     )
 
 label talk_did_you_have_pets:
+    python:
+        # Generate pet options
+        pet_options = [
+            ("Birds", "birds"),
+            ("Cats", "cats"),
+            ("Chameleons", "chameleons"),
+            ("Dogs", "dogs"),
+            ("Ferrets", "ferrets"),
+            ("Fish", "fish"),
+            ("Frogs", "frogs"),
+            ("Geckos", "geckos"),
+            ("Gerbils", "gerbils"),
+            ("Guinea pigs", "guinea_pigs"),
+            ("Hamsters", "hamsters"),
+            ("Horses", "horses"),
+            ("Insects", "insects"),
+            ("Lizards", "lizards"),
+            ("Mice", "mice"),
+            ("Rats", "rats"),
+            ("Rabbits", "rabbits"),
+            ("Snakes", "snakes"),
+            ("Something else", "something_else")
+        ]
 
-    # Check to see if the player and Natsuki have already discussed this
-    $ already_discussed_pets = get_topic("talk_did_you_have_pets").shown_count > 0
+        pet_options.sort()
 
-    if already_discussed_pets:
+    if get_topic("talk_did_you_have_pets").shown_count > 0:
         n 1tnmsl "Wait...{w=0.3} didn't we talk about this before,{w=0.1} [player]?"
         n 1unmsl "Well anyway,{w=0.1} not much has changed."
         n 1ullsl "I still don't have a pet,{w=0.1} as much as I wish I did."
@@ -246,12 +271,14 @@ label talk_did_you_have_pets:
             "Yes, I do.":
                 n 1uspaw "Oh!{w=0.2} Oh oh oh!{w=0.2} You gotta tell me,{w=0.1} [player]!"
                 n 1uspbs "What do you have?{w=0.2} What do you have?"
-                call pet_options_a
+                show natsuki 1uspbs at jn_left
+                call screen scrollable_choice_menu(pet_options)
 
             "No, I don't.":
                 n 1usgem "Aww...{w=0.3} I'll admit,{w=0.1} I'm a little disappointed."
                 n 1nchbg "Well,{w=0.1} then you gotta let me know if you get one,{w=0.1} [player]!"
                 n 1uchgn "I wanna hear all about it!"
+                return
 
             "I used to.":
                 n 1kplaj "Oh...{w=0.3} oh gosh."
@@ -259,6 +286,7 @@ label talk_did_you_have_pets:
                 n 1knmbo "I hope you're managing okay now."
                 n 1kcsbo "..."
                 n 1knmbo "I...{w=0.3} think we should talk about something else, alright?"
+                return
 
     else:
         n 1unmbs "What about you,{w=0.1} [player]?"
@@ -267,219 +295,175 @@ label talk_did_you_have_pets:
 
             "Yes, I did.":
                 n 1uspaw "Ooh...{w=0.3} you gotta tell me!{w=0.2} What did you get?"
-                call pet_options_a
+                show natsuki 1uspaw at jn_left
+                call screen scrollable_choice_menu(pet_options)
 
             "No, I didn't.":
                 n 1usgem "Aww...{w=0.3} I'll admit,{w=0.1} I'm a little disappointed."
                 n 1nchbg "Well,{w=0.1} then you gotta let me know if you get one,{w=0.1} [player]!"
                 n 1uchgn "I wanna hear all about it!"
+                return
 
             "I lost one.":
                 n 1knmaj "Oh...{w=0.3} oh jeez..."
-                n 1knmfr "I'm so sorry,{w=0.1} [player].{w=0.2} Are you okay?"
+                n 1knmfr "Sorry,{w=0.1} [player].{w=0.2} A-{w=0.1}are you okay?"
                 n 1kllbo "Maybe we should talk about something else to keep your mind off things..."
+
                 if Natsuki.isAffectionate(higher=True):
-                    n 1knmbo "I'm here for you,{w=0.1} [player]."
+                    n 1knmbo "I'm...{w=0.5} here {w=0.3}for you,{w=0.1} [player]."
+
+                return
+
+    if isinstance(_return, basestring):
+        show natsuki at jn_center
+        $ persistent.jn_player_pet = _return
+
+    if _return == "birds":
+        n 1uchgn "Oh!{w=0.2} Neat!"
+        n 1nnmsm "I don't think I'd keep birds myself,{w=0.1} but they brighten up rooms for sure!"
+        n 1tnmaj "It doesn't get too noisy for you,{w=0.1} I hope?"
+        n 1uchsm "I'm sure yours appreciate your company though."
+
+    elif _return == "cats":
+        n 1uchsm "Yay!{w=0.2} Cats!"
+        n 1uchgn "I really wish I had one,{w=0.1} I love seeing all the dumb situations they get into!"
+        n 1unmbs "I hope you didn't just say that because {i}I{/i} like them,{w=0.1} though.{w=0.5}{nw}"
+        extend 1uchsm " Ehehe."
+        n 1tnmsm "Just don't pamper it too much,{w=0.1} [player]!"
+
+    elif _return == "chameleons":
+        n 1unmaj "Oh!{w=0.2} Chameleons!"
+        n 1uchgn "That's super cool,{w=0.1} [player]!"
+        n 1unmbg "The colour changing is crazy enough,{w=0.1} but those eyes too{w=0.1} -{w=0.1} it's like someone just made them up!"
+        n 1uchgn "Still{w=0.1} -{w=0.1} that's awesome!"
+        n 1unmbg "You better take good care of it,{w=0.1} okay?"
+        
+    elif _return == "dogs":
+        n 1uwdaj "Oh!{w=0.2} A dog?{w=0.5}{nw}"
+        extend 1uchbs " Awesome!"
+        n 1nnmsm "I don't think a dog would be my first choice,{w=0.1} what with all the walks and all that."
+        n 1uchbs "But I can't think of a more loving pet!"
+        n "I hope yours looks after you as much as you look after it!"
+
+    elif _return == "ferrets":
+        n 1unmlg "Oh!{w=0.2} A ferret?"
+        n 1uchbs "That's {i}adorable{/i}!"
+        n 1tllbg "But...{w=0.3} I've always wondered.{w=0.5}{nw}"
+        n 1tchbg " Are they more like a cat,{w=0.1} or a dog?"
+        n 1flrss "Well,{w=0.1} whatever.{w=0.2} Either way,{w=0.1} [player]..."
+        n 1unmlg "You better take good care of the little guy!"
+
+    elif _return == "fish":
+        n 1unmaj "Ooh!{w=0.2} Fish are interesting!"
+        n 1kllnv "I don't think I'd call them super affectionate personally..."
+        n 1uchgn "But I think they're a neat way to relieve stress!{w=0.2} They must be calming to watch in their own little world."
+        n 1nsqsm "I bet you feel like you could lose yourself in that tank.{w=0.5}{nw}"
+        extend 1nchsm " Ehehe."
+
+    elif _return == "frogs":
+        n 1kspaw "Ooh!{w=0.2} Froggies!"
+        extend 1kspbs " Cute!"
+        n 1fsqsm "I seriously can't get enough of their faces.{w=0.5}{nw}"
+        extend 1fbkbs " They always look so confused!"
+        n 1fllbg "Ehehe.{w=0.2} Well,{w=0.1} [player]..."
+        n 1fchgn "You better {i}hop{/i} to it and take care of yours!"
+
+    elif _return == "geckos":
+        n 1uchbg "Awww!{w=0.5}{nw}"
+        extend 1uchsm " Geckies!{w=1} Cute!"
+        n 1kllsm "They're like goofy little lizards!{w=0.5}{nw}"
+        extend 1nchsm " Ehehe."
+        n 1nsqsr "Just a warning though,{w=0.1} [player]..."
+        n 1fsqpo "I better not hear about any tails falling off on your watch!"
+
+    elif _return == "gerbils":
+        n 1kspaw "Awww!{w=0.2} I like gerbils!"
+        n 1uchbs "It's so cute how they live in little groups to keep each other company."
+        n 1unmbs "They're good at digging,{w=0.1} too{w=0.1} -{w=0.1} like seriously good!"
+        n "Take good care of yours for me,{w=0.1} okay?"
+        
+    elif _return == "guinea_pigs":
+        n 1unmaj "Ooh!{w=0.2} I like guinea pigs!"
+        n 1uchbs "I don't know much about them,{w=0.1} but I love the little sounds they make."
+        n "It's like they're always having a conversation!"
+        n 1unmbs "Take good care of yours for me,{w=0.1} okay?"
+
+    elif _return == "hamsters":
+        n 1uspbs "Oh my gosh!{w=0.2} Hammies!"
+        n 1uchbs "Aaaaaah!{w=0.2} I love them so much!"
+        n 1uspbs "I love their little tails,{w=0.1} and their little paws,{w=0.1} and their little whiskers,{w=0.2} and-"
+        n "And!{w=0.2} And..."
+        n 1uwdbol "..."
+        n 1uchbsl "A-{w=0.1}ahaha!{w=0.2} It would appear I got a little carried away..."
+        n 1uchgnf "..."
+        n 1fllgnf "You better take good care of yours for me,{w=0.1} alright?"
+
+    elif _return == "horses":
+        n 1uspaw "W-{w=0.1}wow!{w=0.2} You aren't just messing with me,{w=0.1} right?!"
+        n 1uspbs "Horses?!{w=0.2} That's amazing,{w=0.1} [player]!"
+        n 1uchbs "You totally gotta teach me how to ride some day!"
+        n 1uchbs "Make sure you visit yours often,{w=0.1} alright?"
+        n 1unmlg "Oh -{w=0.2} and wear a helmet if you ride!"
+
+    elif _return == "insects":
+        n 1twmsc "Ack-{nw}"
+        n 1kslup "Nnnnn..."
+        n 1kwmsg "...I wish I could share your enthusiasm!{w=0.5}{nw}"
+        extend 1kllss " Ahaha..."
+        n 1ksqun "I don't think I could stomach creepy crawlies myself."
+        n 1ksrun "You've certainly got an...{w=0.3} interesting taste,{w=0.1} [player]."
+        n 1kwmss "But I'm sure you take great care of yours!"
+
+    elif _return == "lizards":
+        n 1uchgn "Ooh!{w=0.2} Lizards,{w=0.1} huh?"
+        n 1fsqss "...I trust you aren't just as cold-blooded yourself,{w=0.1} [player]."
+        n 1fchgn "...Pffffft!{w=0.5}{nw}"
+        extend 1uchlg " I'm kidding, [player]!{w=0.2} I'm just kidding!"
+        n 1unmbg "Cool looking critters though!{w=0.2}"
+        extend 1tllbg " I think you'd actually be hard pressed to find a more varied kind of pet."
+        n 1uchgn "You better keep yours nice and toasty,{w=0.1} [player]!"
+        
+    elif _return == "mice":
+        n 1uchgn "Ehehe.{w=0.2} Mice are adorable!"
+        n 1nllaj "I'm still not sure how I feel about the tail..."
+        n 1unmbg "But they're so curious and sociable!{w=0.2} I love watching them play together."
+        n 1uchgn  "Make sure you take care of yours for me,{w=0.1} okay?"
+
+    elif _return == "rats":
+        n 1unmbs "Rats,{w=0.1} huh?"
+        n 1fsgsg "Were you expecting me to be grossed out?"
+        n 1uchbs "Ahaha!"
+        n 1unmsm "Rats are fine.{w=0.2} They're surprisingly intelligent,{w=0.1} too!"
+        n 1uchgn "Are you perhaps training yours,{w=0.1} [player]?{w=0.2} Ehehe."
+        n 1unmbs "Make sure you take care of yours for me,{w=0.1} okay?"
+
+    elif _return == "rabbits":
+        n 1kspaw "Awwwwww!{w=0.2} Bunnies!"
+        n 1kcuaw "They're so cuuute!{w=0.2} I love them!"
+        n 1uchbs "Especially the ones with the floppy ears,{w=0.1} they look so cuddly!"
+        n 1knmbo "It's a shame they need so much space,{w=0.1} though."
+        n 1uchgn "But I'm sure yours have plenty of room to roam!{w=0.2} Ehehe."
+
+    elif _return == "snakes":
+        n 1uskaj "H-{w=0.1}huh?{w=0.5}{nw}"
+        extend 1uscem " S-{w=0.1}snakes?"
+        n 1fcsun "Uuuuuu..."
+        n 1kcsaj "...Fine.{w=0.2} I'll just be straight with you, [player].{w=0.5}{nw}"
+        extend 1kllsl " I'm...{w=0.3} not great with those."
+        n 1kllaj "S-{w=0.1}snakes,{w=0.1} I mean."
+        n 1kllsl "They just...{w=0.3} don't really agree with me.{w=0.2} I don't know why."
+        n 1fcsgsl "B-{w=0.1}but that's not to say that they {i}can't{/i} be cute,{w=0.1} obviously!{w=0.5}{nw}"
+        extend  1flrpo " Making that assumption would just be ignorant."
+        n 1ksrpo "...And they deserve care just like any other pet.{w=0.5}{nw}"
+        extend 1flraj " So..."
+        n 1fnmpo "You better not be flaking out on yours,{w=0.1} [player]!"
+
+    elif _return == "something_else":
+        n 1unmaj "Ooh!{w=0.2} An exotic owner, are we?"
+        n 1tsgsg "I wonder if that says something about the rest of your tastes?{w=0.2} Ehehe."
+        n 1uchgn "I trust you take good care of yours.{w=0.1} Uncommon pets can be pretty demanding!"
 
     return
-
-label pet_options_a:
-    menu:
-        n "What did you get?"
-
-        "Birds":
-            n 1uchgn "Oh!{w=0.2} Neat!"
-            n 1nnmsm "I don't think I'd keep birds myself,{w=0.1} but they brighten up rooms for sure!"
-            n 1tnmaj "It doesn't get too noisy for you,{w=0.1} I hope?"
-            n 1uchsm "I'm sure yours appreciate your company though."
-            $ persistent.jn_player_pet = "birds"
-
-        "Cats":
-            n 1uchsm "Yay!{w=0.2} Cats!"
-            n 1uchgn "I really wish I had one,{w=0.1} I love seeing all the dumb situations they get into!"
-            n 1unmbs "I hope you didn't just say that because {i}I{/i} like them,{w=0.1} though.{w=0.5}{nw}"
-            extend 1uchsm " Ehehe."
-            n 1tnmsm "Just don't pamper it too much,{w=0.1} [player]!"
-            $ persistent.jn_player_pet = "cats"
-
-        "Chameleons":
-            n 1unmaj "Oh!{w=0.2} Chameleons!"
-            n 1uchgn "That's super cool,{w=0.1} [player]!"
-            n 1unmbg "The colour changing is crazy enough,{w=0.1} but those eyes too{w=0.1} -{w=0.1} it's like someone just made them up!"
-            n 1uchgn "Still{w=0.1} -{w=0.1} that's awesome!"
-            n 1unmbg "You better take good care of it,{w=0.1} okay?"
-            $ persistent.jn_player_pet = "chameleons"
-
-        "Dogs":
-            n 1uwdaj "Oh!{w=0.2} A dog?{w=0.5}{nw}"
-            extend 1uchbs " Awesome!"
-            n 1nnmsm "I don't think a dog would be my first choice,{w=0.1} what with all the walks and all that."
-            n 1uchbs "But I can't think of a more loving pet!"
-            n "I hope yours looks after you as much as you look after it!"
-            $ persistent.jn_player_pet = "dogs"
-
-        "Ferrets":
-            n 1unmlg "Oh!{w=0.2} A ferret?"
-            n 1uchbs "That's {i}adorable{/i}!"
-            n 1tllbg "But...{w=0.3} I've always wondered.{w=0.5}{nw}"
-            n 1tchbg " Are they more like a cat,{w=0.1} or a dog?"
-            n 1flrss "Well,{w=0.1} whatever.{w=0.2} Either way,{w=0.1} [player]..."
-            n 1unmlg "You better take good care of the little guy!"
-            $ persistent.jn_player_pet = "ferrets"
-
-        "More...":
-            call pet_options_b
-
-    return
-
-label pet_options_b:
-    menu:
-        n "What did you get?"
-
-        "Fish":
-            n 1unmaj "Ooh!{w=0.2} Fish are interesting!"
-            n 1kllnv "I don't think I'd call them super affectionate personally..."
-            n 1uchgn "But I think they're a neat way to relieve stress!{w=0.2} They must be calming to watch in their own little world."
-            n 1nsqsm "I bet you feel like you could lose yourself in that tank.{w=0.5}{nw}"
-            extend 1nchsm " Ehehe."
-            $ persistent.jn_player_pet = "fish"
-
-        "Frogs":
-            n 1kspaw "Ooh!{w=0.2} Froggies!"
-            extend 1kspbs " Cute!"
-            n 1fsqsm "I seriously can't get enough of their faces.{w=0.5}{nw}"
-            extend 1fbkbs " They always look so confused!"
-            n 1fllbg "Ehehe.{w=0.2} Well,{w=0.1} [player]..."
-            n 1fchgn "You better {i}hop{/i} to it and take care of yours!"
-            $ persistent.jn_player_pet = "frogs"
-
-        "Gerbils":
-            n 1kspaw "Awww!{w=0.2} I like gerbils!"
-            n 1uchbs "It's so cute how they live in little groups to keep each other company."
-            n 1unmbs "They're good at digging,{w=0.1} too{w=0.1} -{w=0.1} like seriously good!"
-            n "Take good care of yours for me,{w=0.1} okay?"
-            $ persistent.jn_player_pet = "gerbils"
-
-        "Guinea pigs":
-            n 1unmaj "Ooh!{w=0.2} I like guinea pigs!"
-            n 1uchbs "I don't know much about them,{w=0.1} but I love the little sounds they make."
-            n "It's like they're always having a conversation!"
-            n 1unmbs "Take good care of yours for me,{w=0.1} okay?"
-            $ persistent.jn_player_pet = "guinea pigs"
-
-        "Hamsters":
-            n 1uspbs "Oh my gosh!{w=0.2} Hammies!"
-            n 1uchbs "Aaaaaah!{w=0.2} I love them so much!"
-            n 1uspbs "I love their little tails,{w=0.1} and their little paws,{w=0.1} and their little whiskers,{w=0.2} and-"
-            n "And!{w=0.2} And..."
-            n 1uwdbol "..."
-            n 1uchbsl "A-{w=0.1}ahaha!{w=0.2} It would appear I got a little carried away..."
-            n 1uchgnf "..."
-            n 1fllgnf "You better take good care of yours for me,{w=0.1} alright?"
-            $ persistent.jn_player_pet = "hamsters"
-
-        "More...":
-            call pet_options_c
-
-        "Back...":
-            call pet_options_a
-
-    return
-
-label pet_options_c:
-    menu:
-        n "What did you get?"
-
-        "Horses":
-            n 1uspaw "W-{w=0.1}wow!{w=0.2} You aren't just messing with me,{w=0.1} right?!"
-            n 1uspbs "Horses?!{w=0.2} That's amazing,{w=0.1} [player]!"
-            n 1uchbs "You totally gotta teach me how to ride some day!"
-            n 1uchbs "Make sure you visit yours often,{w=0.1} alright?"
-            n 1unmlg "Oh -{w=0.2} and wear a helmet if you ride!"
-            $ persistent.jn_player_pet = "horses"
-
-        "Insects":
-            n 1twmsc "Ack-{nw}"
-            n 1kslup "Nnnnn..."
-            n 1kwmsg "...I wish I could share your enthusiasm!{w=0.5}{nw}"
-            extend 1kllss " Ahaha..."
-            n 1ksqun "I don't think I could stomach creepy crawlies myself."
-            n 1ksrun "You've certainly got an...{w=0.3} interesting taste,{w=0.1} [player]."
-            n 1kwmss "But I'm sure you take great care of yours!"
-            $ persistent.jn_player_pet = "insects"
-
-        "Lizards":
-            n 1uchgn "Ooh!{w=0.2} Lizards,{w=0.1} huh?"
-            n 1fsqss "...I trust you aren't just as cold-blooded yourself,{w=0.1} [player]."
-            n 1fchgn "...Pffffft!{w=0.5}{nw}"
-            extend 1uchlg " I'm kidding, [player]!{w=0.2} I'm just kidding!"
-            n 1unmbg "Cool looking critters though!{w=0.2}"
-            extend 1tllbg " I think you'd actually be hard pressed to find a more varied kind of pet."
-            n 1uchgn "You better keep yours nice and toasty,{w=0.1} [player]!"
-            $ persistent.jn_player_pet = "lizards"
-
-        "Mice":
-            n 1uchgn "Ehehe.{w=0.2} Mice are adorable!"
-            n 1nllaj "I'm still not sure how I feel about the tail..."
-            n 1unmbg "But they're so curious and sociable!{w=0.2} I love watching them play together."
-            n 1uchgn  "Make sure you take care of yours for me,{w=0.1} okay?"
-            $ persistent.jn_player_pet = "mice"
-
-        "Rats":
-            n 1unmbs "Rats,{w=0.1} huh?"
-            n 1fsgsg "Were you expecting me to be grossed out?"
-            n 1uchbs "Ahaha!"
-            n 1unmsm "Rats are fine.{w=0.2} They're surprisingly intelligent,{w=0.1} too!"
-            n 1uchgn "Are you perhaps training yours,{w=0.1} [player]?{w=0.2} Ehehe."
-            n 1unmbs "Make sure you take care of yours for me,{w=0.1} okay?"
-            $ persistent.jn_player_pet = "rats"
-
-        "More...":
-            call pet_options_d
-
-        "Back...":
-            call pet_options_b
-
-    return
-
-label pet_options_d:
-    menu:
-        n "What did you get?"
-
-        "Rabbits":
-            n 1kspaw "Awwwwww!{w=0.2} Bunnies!"
-            n 1kcuaw "They're so cuuute!{w=0.2} I love them!"
-            n 1uchbs "Especially the ones with the floppy ears,{w=0.1} they look so cuddly!"
-            n 1knmbo "It's a shame they need so much space,{w=0.1} though."
-            n 1uchgn "But I'm sure yours have plenty of room to roam!{w=0.2} Ehehe."
-            $ persistent.jn_player_pet = "rabbits"
-
-        "Snakes":
-            n 1uskaj "H-{w=0.1}huh?{w=0.5}{nw}"
-            extend 1uscem " S-{w=0.1}snakes?"
-            n 1fcsun "Uuuuuu..."
-            n 1kcsaj "...Fine.{w=0.2} I'll just be straight with you, [player].{w=0.5}{nw}"
-            extend 1kllsl " I'm...{w=0.3} not great with those."
-            n 1kllaj "S-{w=0.1}snakes,{w=0.1} I mean."
-            n 1kllsl "They just...{w=0.3} don't really agree with me.{w=0.2} I don't know why."
-            n 1fcsgsl "B-{w=0.1}but that's not to say that they {i}can't{/i} be cute,{w=0.1} obviously!{w=0.5}{nw}"
-            extend  1flrpo " Making that assumption would just be ignorant."
-            n 1ksrpo "...And they deserve care just like any other pet.{w=0.5}{nw}"
-            extend 1flraj " So..."
-            n 1fnmpo "You better not be flaking out on yours,{w=0.1} [player]!"
-            $ persistent.jn_player_pet = "snakes"
-
-        "Something else":
-            n 1unmaj "Ooh!{w=0.2} An exotic owner, are we?"
-            n 1tsgsg "I wonder if that says something about the rest of your tastes?{w=0.2} Ehehe."
-            n 1uchgn "I trust you take good care of yours.{w=0.1} Uncommon pets can be pretty demanding!"
-            $ persistent.jn_player_pet = "something_else"
-
-        "Back...":
-            call pet_options_c
-
-    return
-
 
 # Natsuki discusses service animals with the player, in particular emotional support animals
 init 5 python:
@@ -3200,7 +3184,7 @@ label talk_favourite_drink:
         n 1fsrsr "..."
         n 1fchbs "Aha!{w=0.2} I got it!"
         n 1unmbg "It's gotta be those milkshakes,{w=0.1} but from one of those places where you get to choose what goes in it!"
-        n 1fsqsm "I don't just mean picking a flavour,{w=0.1} [player]..."
+        n 1fsqsm "I don't just mean picking a flavor,{w=0.1} [player]..."
         n 1fchgn "I mean where you can pick any combination of ingredients you want!"
         n 1fllss "Well...{w=0.3} as long as it blends,{w=0.1} anyway."
         n 1ncssm "All kinds of sweets,{w=0.1} any type of milk..."
@@ -3963,7 +3947,7 @@ label talk_fried_squid:
     n 1fcssm "Especially with sauce to spice things up a bit!"
     n 1fnmss "By the way -{w=0.1} wanna know how you can tell you're dining on some top-notch squiddy goodness?"
     n 1uchbs "The texture,{w=0.1} of course!"
-    n 1fllaj "Overcooked squid becomes all rubbery and nasty,{w=0.1} and even worse -{w=0.1} it loses all of its flavour too!"
+    n 1fllaj "Overcooked squid becomes all rubbery and nasty,{w=0.1} and even worse -{w=0.1} it loses all of its flavor too!"
     n 1fsqsr "Imagine biting through the batter,{w=0.1} only to find you're basically chewing on a bunch of rubber bands."
     n 1fsqem "Ugh!{w=0.2} Gross!{w=0.2} Talk about a disappointment."
     n 1unmaj "Don't let that put you off though,{w=0.1} [player] -{w=0.1} next time you see some,{w=0.1} why not give it a shot?"
@@ -6003,5 +5987,470 @@ label talk_feelings_about_sayori:
     n 1tnmsr "At this point?"
     n 1ksrsrl "I think I'd do {i}anything{/i} just to see a genuine Sayori smile again..."
     n 1kcsssf "...And give her one of those big,{w=0.1} dumb hugs she liked so much."
+
+    return
+
+# Natsuki isn't a big tea drinker.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_thoughts_on_tea",
+            unlocked=True,
+            prompt="Do you drink much tea?",
+            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 3600 >= 36",
+            category=["Food"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_thoughts_on_tea:
+    $ already_discussed_tea_thoughts = persistent.jn_player_tea_coffee_preference is not None
+
+    if Natsuki.isNormal(higher=True):
+        if already_discussed_tea_thoughts:
+            n 1fcsaj "A-{w=0.1}actually,{w=0.1} hold up a second...{w=1.5}{nw}"
+            extend 1tslpu " didn't we already talk about this?"
+
+        else:
+            n 1tnmaj "Huh?{w=0.2} Do I drink tea?"
+            n 1fchgn "...Are you {i}sure{/i} you know who you're talking to?{w=0.5}{nw}"
+            extend 1fchbg " I literally never make it myself!"
+            n 1ullss "I mean,{w=0.5}{nw}"
+            extend 1unmbo " I had it a few times in the club,{w=0.1} sure."
+            n 1nlrpu "Yuri would prepare it for us all sometimes."
+            n 1tsrss "But I never asked for it or anything!"
+
+    elif Natsuki.isDistressed(higher=True):
+        n 1fcsem "..."
+        n 1fsqsr "No,{w=0.5} [player]."
+        n 1fsqbo "I don't really care for it."
+        n 1fllpu "...I mean,{w=0.5}{nw}"
+        extend 1nllsf " I {i}guess{/i} I'd drink it if it was offered."
+        n 1nslsl "...From most people,{w=0.1} anyway."
+        n 1fsqbo "Somehow I doubt that'd be the case for {i}you{/i}."
+
+        return
+
+    else:
+        n 1fcsem "No,{w=2}{nw}"
+        extend 1fsqan " and I'm certainly not drinking any of {i}yours{/i}."
+        n 1fslem "Not like it'd be {i}just{/i} tea anyway,{w=0.1} knowing a jerk like {i}you{/i}."
+
+        return
+
+    if already_discussed_tea_thoughts:
+        n 1ullaj "Well,{w=0.1} whatever.{w=0.5}{nw}"
+        extend 1unmbo " I wouldn't say my opinion has changed much."
+        n 1nlraj "I get why people are into it,{w=0.1} though."
+
+    else:
+        n 1fllbo "..."
+        n 1fcseml "T-{w=0.1}that's not to mean I think it sucks,{w=0.1} or something like that!"
+        n 1nlrbo "I just have my own tastes."
+
+        if get_topic("talk_favourite_drink").shown_count > 0:
+            extend 1uspbg " Like hot chocolate!"
+
+        n 1ullaj "But...{w=0.5}{nw}"
+        extend 1nllbo " I guess I can see why people are into it so much."
+
+    n 1tnmca "Tea contains caffeine,{w=0.1} right?{w=0.5}{nw}"
+    extend 1tlrss " Not as much as coffee or anything,{w=0.1} but an edge is still an edge,{w=0.1} I guess."
+    n 1unmaj "It comes in a whole bunch of flavors too!{w=0.5}{nw}"
+    extend 1unmgs " I was actually kinda surprised at the variety!"
+    n 1ullss "You've got your regular old black tea{w=0.3}{nw}"
+    extend 1fslss " -{w=0.1} obviously -{w=0.3}{nw}" 
+    extend 1ulraj " but you've got green tea,{w=0.1} herbal tea..."
+    n 1uspgs "Even flavored ones like cinnamon and peppermint!"
+    n 1nslss "We only ever had oolong tea in the clubroom though,{w=0.5}{nw}"
+    extend 1tnmss " so who knows?"
+    n 1ulrbo "Maybe I'd warm up to it if I tried some that sounded good."
+
+    if get_topic("talk_sleeping_well").shown_count > 0:
+        n 1unmaj "Apparently some tea even helps you sleep!{w=1.5}{nw}"
+        extend 1nsrss " ...Maybe I should've mentioned that earlier,{w=0.1} huh?"
+
+    n 1ulraj "But...{w=0.5}{nw}"
+    extend 1nslss " I've gone on enough." 
+    n 1unmbo "What about you,{w=0.1} [player]?"
+    $ menu_opening = "Drinking something else now?" if already_discussed_tea_thoughts else "What's your preference?"
+
+    menu:
+        n "[menu_opening]"
+
+        "I prefer tea.":
+            if already_discussed_tea_thoughts:
+                if persistent.jn_player_tea_coffee_preference == "tea":
+                    n 1nnmss "Well,{w=0.5}{nw}"
+                    extend 1tnmss " some things never change,{w=0.1} huh?"
+                    n 1fchsm "Ehehe."
+
+                else:
+                    n 1tnmsm "A tea drinker now,{w=0.1} huh?{w=0.5}{nw}"
+                    extend 1fchsm " Fair enough!"
+
+            else:
+                n 1unmaj "Tea?{w=0.5}{nw}"
+                extend 1nllpu " Hmm..."
+                n 1unmbo "Yeah,{w=0.1} that's about what I expected."
+                n 1nlrbo "..."
+                n 1tnmbg "What?"
+                n 1tsqbg "Not like you raised a fuss about it earlier,{w=0.5}{nw}"
+                extend 1tsqsm " right?"
+                n 1kslsm "..."
+                n 1nslss "Though...{w=1.5}{nw}"
+                extend 1uslsr " not like you had much of a choice in it back then,{w=0.1} huh?"
+            
+            $ persistent.jn_player_tea_coffee_preference = "tea"
+
+        "I prefer coffee.":
+            if already_discussed_tea_thoughts:
+                if persistent.jn_player_tea_coffee_preference == "coffee":
+                    n 1nnmss "Well,{w=0.5}{nw}"
+                    extend 1tnmss " some things never change,{w=0.1} huh?"
+                    n 1fchsm "Ehehe."
+
+                else:
+                    n 1tnmsm "A coffee drinker now,{w=0.1} huh?{w=0.5}{nw}"
+                    extend 1fchsm " Fair enough!"
+
+            else:
+                n 1unmaj "Oh?{w=1.5}{nw}"
+                extend 1tnmss " You're a coffee drinker?"
+                n 1nllpu "Hmm..."
+                n 1nsqss "Then I guess the sessions in the club weren't your{w=0.5}{nw}"
+                extend 1fsqbg " {i}cup of tea{/i}{w=0.5}{nw},"
+                extend 1usqbg " huh?"
+                n 1uchgn "..."
+                n 1fchbg "Oh,{w=0.5}{nw}" 
+                extend 1fllbg " come on,{w=0.1} [player]!{w=0.2} Yeesh."
+                n 1fsqsm "No need to be all {w=0.3}{i}bitter{/i}{w=0.3} about it."
+                n 1fchsm "..."
+                n 1kchbg "Okay,{w=0.1} okay!{w=0.5} I'm done!"
+                n 1fsqsg "...For now."
+
+            $ persistent.jn_player_tea_coffee_preference = "coffee"
+
+        "I like both!":
+            if already_discussed_tea_thoughts:
+                if persistent.jn_player_tea_coffee_preference == "both":
+                    n 1nnmss "Well,{w=0.5}{nw}"
+                    extend 1tnmss " some things never change,{w=0.1} huh?"
+                    n 1fchsm "Ehehe."
+
+                else:
+                    n 1tnmaj "Oh?{w=0.5}{nw}"
+                    extend 1tnmss " You like {i}both{/i} now?"
+                    n 1tsqbg "...Are you {i}sure{/i} you aren't just a caffeine junkie,{w=0.1} [player]?{w=0.5}{nw}"
+                    extend 1nchgn " Ehehe."
+
+            else:
+                n 1tslaj "...Huh.{w=1}{nw}"
+                extend 1tnmss " Really?"
+                n 1nsrss "That's...{w=0.3} kinda weird,{w=0.1} actually."
+                n 1fchbg "Most people like at least {i}one{/i} of the two more!"
+                n 1fsqsg "Are you {i}sure{/i} you aren't just a caffeine junkie,{w=0.1} [player]?{w=0.5}{nw}"
+
+            $ persistent.jn_player_tea_coffee_preference = "both"
+
+        "I don't like tea or coffee.":
+            if already_discussed_tea_thoughts:
+                if persistent.jn_player_tea_coffee_preference == "neither":
+                    n 1tsqpu "Still not a fan,{w=0.1} huh?{w=0.5}{nw}"
+                    extend 1fnmaj " You need to keep trying new stuff!"
+                    n 1fsqpo "Where's your sense of adventure,{w=0.1} [player]?{w=0.5}{nw}"
+                    extend 1fchts " Ehehe."
+
+                else:
+                    n 1tnmaj "Huh?{w=0.3} You don't like tea {i}or{/i} coffee now?{w=0.5}{nw}"
+                    extend 1tsqun " Did I miss something?"
+                    n 1tlrbo "...Or maybe you're just trying to sleep better?{w=0.5}{nw}"
+                    extend 1tsrpu " Huh."
+
+            else:
+                n 1ullaj "That's...{w=1.5}{nw}"
+                extend 1nllbo " kinda surprising,{w=0.1} actually."
+                n 1fsrbo "Most people at {i}least{/i} like one or the other..."
+                n 1fsqpo "You aren't just pulling my leg,{w=0.5}{nw}" 
+                extend 1ksqpo " are you?"
+                n 1fslpol "I was being serious,{w=0.1} you know..."
+
+            $ persistent.jn_player_tea_coffee_preference = "neither"
+
+    n 1nllss "Well,{w=0.1} whatever.{w=0.5}{nw}"
+    extend 1fchbg " Not like hot drinks are the be-all and end-all anyway,{w=0.1} huh?"
+    n 1fllss "But man...{w=0.5}{nw}"
+    extend 1flrun " I'm actually pretty parched after all that talking."
+    n 1fsrpo "..."
+    n 1unmss "Hey,{w=0.1} [player]...{w=1.5}{nw}"
+    extend 1usqsm " do me a favor?"
+    n 1fchbg "...Stick the kettle on,{w=0.1} would you?"
+    n 1uchgn "Ehehe."
+
+    return
+
+# Natsuki gives her advice on how to make friends with other people.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_how_to_make_friends",
+            unlocked=True,
+            prompt="How do I make friends?",
+            category=["Life", "Society", "You"],
+            player_says=True,
+            affinity_range=(jn_affinity.HAPPY, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_how_to_make_friends:
+    n 1tnmpu "Huh?{w=1}{nw}"
+    extend 1tnmsr " You wanna know how to make {i}friends{/i}?"
+    n 1tllbo "..."
+    n 1ncsaj "Well.{w=1}{nw}"
+    extend 1nlraj " I gotta say,{w=0.1} [player]."
+    n 1fchgn "That's pretty up there in the weirdest questions you've asked me so far!"
+    n 1fllss "But...{w=1}{nw}" 
+    extend 1ullaj " in all seriousness?"
+    n 1tnmsf "{w=0.5}...Why?{w=1.5}{nw}"
+    extend 1nlrss " Like why're you asking {i}me{/i},{w=0.3} I mean."
+
+    if Natsuki.isLove(higher=True):
+        n 1kslbgl "You've basically mastered getting to know me!{w=0.5}{nw}"
+        extend 1fcspol " N-{w=0.1}not that I just let you,{w=0.1} obviously."
+
+    elif Natsuki.isEnamored(higher=True):
+        n 1ullaj "It's just...{w=1}{nw}"
+        extend 1tnmssl " I {i}seriously{/i} doubt it's something you'd struggle with,{w=0.5}{nw}" 
+        extend 1nsrssl " of all people."
+
+    elif Natsuki.isAffectionate(higher=True):
+        n 1ksqpol "Are we not {i}already{/i} friends,{w=0.1} [player]?"
+
+    else:
+        n 1nsrpo "I thought we were getting along okay,{w=0.1} at least..."
+
+    n 1nsrpo "..."
+    n 1ulraj "Well,{w=0.5}{nw}"
+    extend 1nlrss " anyway..."
+    n 1nchbs "Sure!{w=1}{nw}"
+    extend 1fchbg " I can show you the ropes!"
+    n 1fnmaj "Right!{w=0.5}{nw}"
+    extend 1ncsaj " So..."
+    n 1unmbo "I think the most important thing is to have {i}something{/i} in common.{w=1}{nw}"
+    extend 1flrss " You probably knew that much,{w=0.1} at least."
+    n 1fnmpu "But I think people overthink what that actually {i}means{/i}!"
+    n 1flrpu "You don't have to share hobbies,{w=0.5}{nw}"
+    extend 1nlraj " or a ton of interests or anything like that."
+    n 1ulrbo "I mean,{w=0.5}{nw}"
+    extend 1fcsbg " just look at Yuri and me!{w=1}{nw}"
+    extend 1uchgn " Classic example!"
+    n 1ullaj "Sure,{w=0.1} we disagreed on literature.{w=1}{nw}"
+    extend 1fnmaj " But we went to the same school {w=0.1}-{w=0.5}{nw}"
+    extend 1fchbg " and we were members of the same club!"
+    n 1fcssm "I guess what I'm getting at is that having {i}places{/i} in common is just as key as tastes!"
+    n 1tllbo "If anything,{w=0.5}{nw}" 
+    extend 1tnmss " it actually makes it even easier if you {i}know{/i} you're gonna see them again!"
+    n 1fcsaj "So {w=0.1}-{w=0.1} once you've got something in common,{w=0.5}{nw}"
+    extend 1fchbg " it's all just a matter of contact!"
+    n 1fsqsm "Now here's where you gotta use your brain,{w=0.1} [player]."
+    n 1ullaj "Just...{w=1.5}{nw}" 
+    extend 1tnmca " {i}think{/i} a little about the situation and what to say,{w=0.1} you know?"
+    n 1ullpu "Like,{w=0.5}{nw}"
+    extend 1nnmaj " say you just started a new job in an office."
+    n 1flrem "Don't just assume they're into manga or whatever {w=0.1}-{w=0.5}{nw}"
+    extend 1kchbg " ease into it!{w=1}{nw}"
+    extend 1fchbg " Lean into 'em with a coffee or something!"
+    n 1fsqaj "Don't be fooled though,{w=0.1} [player]."
+    n 1nslsl "You can't just expect to talk to someone once and be done...{w=0.5}{nw}"
+    extend 1fnmss " you gotta keep at it,{w=0.1} too!"
+    n 1ullbo "Physical talks,{w=0.1} online messaging,{w=0.5}{nw}" 
+    extend 1unmaj " whatever works."
+    n 1uwdem "It's {i}super{/i} easy for a friendship -{w=0.5}{nw}"
+    extend 1fllun " even an old one {w=0.1}-{w=0.5}{nw}"
+    extend 1knmsl " to fizzle out because nobody is making an effort."
+    n 1uskem "B-{w=0.1}but that's not to say you gotta go all out all the time though!"
+    n 1fcsaj "It's all about striking a balance.{w=1}{nw}"
+    extend 1fchbg " People need downtime too!"
+    n 1fslsr "{w=0.3}...And you shouldn't be the one putting in {i}everything{/i} to make it work."
+    n 1fnmpu "Remember {w=0.1}-{w=0.1} a friendship has two sides."
+    extend 1fchsm " You {i}know{/i} you've got a winner if they're doing their part too!"
+    n 1nllss "But that all being said,{w=0.1} [player]..."
+    n 1nnmsl "There's one thing more important than {cps=\10}{i}anything{/i}{/cps} else.{w=1.5}{nw}"
+    extend 1fsqsr " Respect."
+    n 1fsrem "Friends don't trash each other,{w=0.5}{nw}"
+    extend 1fcsem " or give them crap for their interests!"
+    n 1fsqsr "...And that goes {i}both{/i} ways,{w=0.1} [player]."
+    n 1fsrbo "Someone being a 'friend' is {i}no{/i} excuse for them to act like a jerk whenever they want {w=0.1}-{w=0.5}{nw}"
+    extend 1fsqpu " trust me."
+    n 1fnmpu "I've {i}been{/i} there.{w=0.5}{nw}"
+    extend 1kllsf " And it took a good friend to help me realize that."
+    n 1ncsss "Heh."
+    n 1ullpu "But...{w=1.5}{nw}"
+    extend 1fchbg " yeah!"
+    n 1tnmsm "I wouldn't get all stressed out about it,{w=0.1} [player].{w=1}{nw}"
+    extend 1fcssm " Friendships are {i}formed{/i},{w=0.1} not forced."
+    n 1fcsss "So take your time,{w=0.1} and just go with the flow.{w=1}{nw}"
+    extend 1kllbg " That's all I'm saying!"
+    n 1fsqsm "And besides..."
+    n 1tsqsg "It's worked out for us so far,{w=0.1} huh?{w=0.5}{nw}"
+    extend 1nchgnl " Ehehe."
+
+    return
+
+# Natsuki doesn't appreciate being asked to make funny impressions of her friends.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_impressions_of_the_other_girls",
+            unlocked=True,
+            prompt="Can you do any impressions of the other girls?",
+            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 3600 >= 48",
+            category=["DDLC"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_impressions_of_the_other_girls:
+    $ has_discussed_other_girls = get_topic("talk_realizations_other_girls").shown_count > 0
+
+    if Natsuki.isAffectionate(higher=True):
+        n 1fcsem "..."
+        n 1fcssr "...No,{w=0.1} [player].{w=1}{nw}"
+        extend 1kcssr " I can't."
+        n 1fllun "..."
+        n 1fcsem "...Okay,{w=1}{nw}" 
+        extend 1nnmsl " look."
+        n 1fllsl "It's not that I {i}couldn't{/i} do impressions of them.{w=1}{nw}"
+        extend 1kllsr " I knew them well enough."
+        n 1kllpu "But...{w=1.5}{nw}" 
+        extend 1knmpu " that's exactly why I don't {i}want{/i} to,{w=0.1} [player]."
+        n 1klrsf "Knowing how they felt,{w=0.5} what they thought..."
+
+        if has_discussed_other_girls:
+            n 1ksrpu "...How much I {i}miss{/i} them..."
+
+        n 1knmem "What kind of person would make jokes out of {i}that{/i}?"
+        n 1klrsl "So...{w=1}{nw}"
+        extend 1nnmsf " I'm sorry,{w=0.1} [player].{w=1.5}{nw}"
+        extend 1nslsf " But it's a no."
+        n 1kcspu "...And probably always will be."
+
+    elif Natsuki.isNormal(higher=True):
+        n 1knmpu "..."
+        n 1knmem "...Why on {i}Earth{/i} would I want do {i}that{/i}?"
+        n 1kllpu "A-{w=0.3}and more importantly,{w=1}{nw}"
+        extend 1fcsem " why would you even think to {i}ask{/i} me that,{w=0.1} [player]?"
+        n 1ksqem "Do you have any {i}idea{/i} how much I think about them,{w=0.1} still?"
+
+        if has_discussed_other_girls:
+            n 1fcseml "I even {i}told{/i} you how much I miss them,{w=0.1} [player]!"
+
+        n 1kcspu "..."
+        n 1ncspu "...Alright,{w=0.5}{nw}" 
+        extend 1ncssr " look."
+        n 1fcsem "I...{w=1}{nw}"
+        extend 1fcssr " get...{w=1}" 
+        extend 1fcsem " that you were just trying to have fun."
+        n 1fsqsr "But I am {i}not{/i} making jokes about my friends."
+        n 1fcssr "Sorry,{w=0.1} [player]."
+        n 1fslunl "But some things are just off-limits."
+
+    elif Natsuki.isDistressed(higher=True):
+        n 1fskem "...E-{w=0.3}excuse me?!"
+        n 1fsqan "Are you {i}seriously{/i} asking me to make fun of my {i}friends{/i}?{w=1}{nw}"
+        extend 1fsqwr "Knowing {i}{cps=\7.5}full well{/cps}{/i} what happened to them?!"
+
+        if has_discussed_other_girls:
+            extend 1fcsfu "Knowing how much I {i}miss{/i} them?!"
+
+        n 1fcspu "..."
+        n 1fsqem "Your sense of humour {i}{cps=\7.5}sucks{/cps}{/i},{w=0.1} [player].{w=1}{nw}"
+        extend 1fcsan " Do {b}not{/b} try my patience again.{w=1.5}{nw}"
+        extend 1fsqan " Jerk."
+
+        $ Natsuki.calculated_affinity_loss(2)
+
+    else:
+        n 1fsqan "...What is {i}{cps=\7.5}wrong{/cps}{/i} with you?{w=1.5}{nw}"
+        extend 1fnmfu " Like,{w=0.1} what the {i}hell{/i} is wrong with your {i}head{/i}?!"
+        n 1fcsan "I am {b}NOT{/b} doing that,{w=0.1} let alone for a piece of work like{w=0.5}{nw}"
+        extend 1fslan " {i}you{/i}!"
+
+        $ Natsuki.calculated_affinity_loss(1)
+
+    return
+
+# Natsuki muses on the school newspaper and bias in media.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_newspapers_and_bias",
+            unlocked=True,
+            prompt="Newspapers and bias",
+            category=["Literature"],
+            nat_says=True,
+            affinity_range=(jn_affinity.HAPPY, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_newspapers_and_bias:
+    n 1nllpu "...Huh.{w=1}{nw}"
+    extend 1unmaj " You know,{w=0.1} [player]..."
+    n 1tllaj "It's actually kinda weird,{w=0.1} looking back."
+    n 1fllss "At the club,{w=0.3} I mean.{w=0.5}{nw}"
+    extend 1tsqpu " You {i}do{/i} remember what kind of club it was,{w=0.1} right?"
+    n 1tnmpu "...So don't you think it's weird how {i}few{/i} kinds of literature we actually looked at?"
+    n 1nllaj "Yuri was always nose-deep in her books.{w=0.5}{nw}"
+    extend 1nsqss " And we {i}all{/i} looked at poetry,{w=0.5}{nw}" 
+    extend 1fsrss " obviously."
+    n 1knmaj "But we barely had anything in that room apart from textbooks!{w=0.5}{nw}"
+    extend 1fllpo " We didn't even have the school newspaper in there!"
+    n 1tsrss "Kind of a misnomer,{w=0.1} huh?"
+    n 1tlrpu "But...{w=0.5}{nw}"
+    extend 1tnmca " talking of newspapers..."
+    n 1fnmca "It's actually super important to read into them properly,{w=0.1} you know."
+    n 1knmaj "What?{w=0.5}{nw}"
+    extend 1fsqpo " I'm being serious!"
+    n 1fllss "Newspapers really {i}aren't{/i} just news anymore,{w=0.1} [player]...{w=1}{nw}"
+    extend 1fcsaj " and they haven't been for a long time!"
+    n 1flrpu "It's tricky,{w=0.5}{nw}" 
+    extend 1fnmca " but you gotta think a little whenever you open one up."
+    n 1fchbg "They aren't owned and run by robots!{w=0.5}{nw}"
+    extend 1fcsss " There's {i}always{/i} gonna be opinion that finds its way in somehow."
+    n 1ullaj "I mean...{w=1}{nw}"
+    extend 1fnmaj " take the school newspaper we had!"
+    n 1tsqss "Do you {i}really{/i} think a paper run by {i}students{/i} is gonna be completely fair about the school?"
+    n 1nlraj "Let's say the newspaper wanted more funding to print more copies or something,{w=0.5}{nw}"
+    extend 1fnmbo " and needed a student vote to make that happen."
+    n 1tnmpu "Are they seriously just gonna leave the fate of their paper up to {i}chance{/i}?"
+    n 1fchts "Duh!{w=0.5}{nw}"
+    extend 1fchgn " Of course not!{w=1}{nw}"
+    extend 1fsqss " They'd fight for it!"
+    n 1ulraj "Maybe they'd run extra articles to advertise it,{w=0.5}{nw}"
+    extend 1fsqsm " and {i}only{/i} interview people who supported the paper!"
+    n 1tlrss "Or just {i}happen{/i} to forget to mention all the funds they got last semester?"
+    n 1fcsbg "That's just one example,{w=0.1} obviously."
+    n 1fnmaj "But the same thinking applies to any kind of journalism!{w=1}{nw}"
+    extend 1nllca " Papers,{w=0.1} online articles,{w=0.5}{nw}" 
+    extend 1fnmca " whatever it is."
+    n 1fcsbg "It's {i}all{/i} subject to bias!"
+    n 1nllaj "So...{w=1}{nw}"
+    extend 1tnmss " where am I going with this,{w=0.3} you ask?"
+    n 1fcssm "Ehehe.{w=0.5}{nw}"
+    extend 1fsqsm " I think it's pretty obvious."
+    n 1fllss "I know I call you it a bunch already,{w=0.1} [player]..."
+    n 1fsqsm "But only {i}real{/i} dummies believe {i}everything{/i} they read!"
 
     return

@@ -57,6 +57,7 @@ init -50 python:
         uneasy = 33
         upset = 34
         worried = 35
+        drink = 37
 
         def __str__(self):
             return self.name
@@ -260,6 +261,7 @@ init 1 python:
         "bo": JNMouth.bored,
         "ca": JNMouth.caret,
         "ct": JNMouth.catty,
+        "dr": JNMouth.drink,
         "dv": JNMouth.devious,
         "em": JNMouth.embarrassed,
         "fr": JNMouth.frown,
