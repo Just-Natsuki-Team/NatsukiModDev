@@ -22,7 +22,7 @@ define JN_CHRISTMAS_EVE = datetime.date(datetime.date.today().year, 12, 24)
 define JN_CHRISTMAS_DAY = datetime.date(datetime.date.today().year, 12, 25)
 define JN_NEW_YEARS_EVE = datetime.date(datetime.date.today().year, 12, 31)
 
-init 0 python:
+init -3 python:
     from collections import OrderedDict
     import datetime
     from Enum import Enum
@@ -32,24 +32,27 @@ init 0 python:
     import webbrowser
 
     class JNHolidays(Enum):
-        none = 0
-        new_years_day = 1
-        easter = 2
-        halloween = 3
-        christmas_eve = 4
-        christmas_day = 5
-        new_years_eve = 6
+        none = 1
+        new_years_day = 2
+        easter = 3
+        halloween = 4
+        christmas_eve = 5
+        christmas_day = 6
+        new_years_eve = 7
 
         def __str__(self):
             return self.name
 
     class JNTimeBlocks(Enum):
-        early_morning = 0
-        mid_morning = 1
-        late_morning = 2
-        afternoon = 3
-        evening = 4
-        night = 5
+        early_morning = 1
+        mid_morning = 2
+        late_morning = 3
+        afternoon = 4
+        evening = 5
+        night = 6
+
+        def __str__(self):
+            return self.name 
 
     #Constants for types. Add more here if we need more organizational areas
     TOPIC_TYPE_FAREWELL = "FAREWELL"
@@ -1069,8 +1072,8 @@ init -990 python in jn_globals:
         "^nob$",
         "^tit$",
         "4r5e",
-        "aids",
-        "anal",
+        "^aids$",
+        "^anal$",
         "b!tch",
         "b[0o]+b(?!er|on)",
         "ballbag",
@@ -1126,7 +1129,7 @@ init -990 python in jn_globals:
         "hitler",
         "homo",
         "hotsex",
-        "jap",
+        "^jap$",
         "jerk-off",
         "kawk",
         "knob",
@@ -1252,7 +1255,7 @@ init -999 python in jn_utils:
             ).format(datetime.datetime.now(), message)
         )
 
-    def pretty_print(object, indent=1, width=150):
+    def prettyPrint(object, indent=1, width=150):
         """
         Returns a PrettyPrint-formatted representation of an object as a dict.
 
@@ -1266,7 +1269,7 @@ init -999 python in jn_utils:
         """
         return pprint.pformat(object.__dict__, indent, width)
 
-    def get_mouse_position():
+    def getMousePosition():
         """
         Returns a tuple representing the mouse's current position in the game window.
 
@@ -1274,6 +1277,77 @@ init -999 python in jn_utils:
             - mouse position as a tuple in format (x,y)
         """
         return pygame.mouse.get_pos()
+
+    def getFileExists(path):
+        """
+        Checks to see if the specified file exists.
+
+        IN:
+            path - The path to check
+
+        OUT: 
+            - True if the file exists, otherwise False
+        """
+        return os.path.isfile(path)
+
+    def createDirectoryIfNotExists(path):
+        """
+        Checks to see if the specified directory exists, and creates it if not
+        Returns True if a directory was created, otherwise False
+
+        IN:
+            path - The path to check
+
+        OUT:
+            - True if a directory was created, otherwise False
+        """
+        if not os.path.exists(path) or getFileExists(path):
+            os.makedirs(path)
+            return True
+
+        return False
+
+    def deleteFileFromDirectory(path):
+        """
+        Attempts to delete the file at the given path.
+
+        IN:
+            path - The path to delete the file at.
+
+        OUT:
+            - True if the file was deleted, otherwise False
+        """
+        if getFileExists(path):
+            try:
+                os.remove(path)
+                return True
+
+            except Exception as exception:
+                log("Failed to delete file on path {0}; {1}".format(path, exception.message))
+                return False
+
+        return False
+
+    def getAllDirectoryFiles(path, extension_list=None):
+        """
+        Runs through the files in the specified directory, filtering files via extension check if specified
+        Returns a list containing tuples representing (file_name, file_path)
+
+        IN:
+            - path - the file path to search
+            - extension_list - optional list of file extensions; only files with these extensions will be returned
+
+        OUT:
+            - Tuple representing (file_name, file_path)
+        """
+        return_file_items = []
+
+        for file in os.listdir(path):
+            log(file.rpartition("."))
+            if (not extension_list or any(file_extension == file.rpartition(".")[-1] for file_extension in extension_list)):
+                return_file_items.append((file, os.path.join(path, file)))
+
+        return return_file_items
 
 init python in jn_utils:
     import re
@@ -1422,6 +1496,9 @@ init python in jn_utils:
         """
         Saves all game data.
         """
+        # Save outfit data
+        store.jn_outfits.JNOutfit.save_all()
+
         #Save topic data
         store.Topic._save_topic_data()
 
@@ -1461,6 +1538,13 @@ define audio.paper_throw = "mod_assets/sfx/paper_throw.ogg"
 define audio.chair_in = "mod_assets/sfx/chair_in.ogg"
 define audio.chair_out = "mod_assets/sfx/chair_out.ogg"
 define audio.chair_out_in = "mod_assets/sfx/chair_out_in.ogg"
+define audio.hair_brush = "mod_assets/sfx/hair_brush.ogg"
+define audio.hair_clip = "mod_assets/sfx/hair_clip.ogg"
+define audio.necklace_clip = "mod_assets/sfx/necklace_clip.ogg"
+define audio.cassette_open = "mod_assets/sfx/cassette_open.ogg"
+define audio.cassette_close = "mod_assets/sfx/cassette_close.ogg"
+define audio.glass_move = "mod_assets/sfx/glass_move.ogg"
+define audio.straw_sip = "mod_assets/sfx/straw_sip.ogg"
 
 define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
 define audio.glitch_b = "mod_assets/sfx/glitch_b.ogg"

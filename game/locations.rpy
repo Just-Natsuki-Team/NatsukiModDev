@@ -11,6 +11,9 @@ init python in locations:
 
 init -20 python:
     import os
+
+    JN_LOCATION_ZORDER = 1
+
     class Location(object):
         """
         PROPERTIES:
@@ -184,9 +187,7 @@ init -20 python:
 
             #Draw the room if we're not showing it already
             if room is not None and not renpy.showing("main_bg"):
-                renpy.show(room, tag="main_bg", zorder=1)
-
-            renpy.show("natsuki idle", at_list=[jn_center], zorder=3)
+                renpy.show(room, tag="main_bg", zorder=JN_LOCATION_ZORDER)
 
             # dissolving everything means dissolve last
             if dissolve_all or full_redraw:
@@ -194,19 +195,14 @@ init -20 python:
                 renpy.with_statement(Dissolve(1.0))
             return
 
-        def appear(self, natsuki_sprite_code=""):
+        def show(self):
             """
             Draws the location without any transition/scene effects.
-
-            IN:
-                - natsuki_sprite_code - Optional sprite code for Natsuki
             """
             room = self.location.get_current_room_image()
             if room is not None and not renpy.showing("main_bg"):
-                renpy.show(room, tag="main_bg", zorder=1)
+                renpy.show(room, tag="main_bg", zorder=JN_LOCATION_ZORDER)
             
-            natsuki_sprite = "natsuki {0}".format(natsuki_sprite_code) if natsuki_sprite_code else "natsuki idle"
-            renpy.show(natsuki_sprite, at_list=[jn_center], zorder=3)
             return
 
         def is_showing_day_room(self):

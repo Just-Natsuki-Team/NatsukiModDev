@@ -19,6 +19,7 @@ label ch30_holiday_check:
         import store.jn_utils as jn_utils
 
         jn_utils.log("Holiday check: {0}".format(jn_get_holiday_for_date(datetime.datetime.now().date())))
+
     #Run holiday checks and push/setup holiday related things here
 
     #FALL THROUGH
@@ -28,7 +29,7 @@ label ch30_visual_setup:
     show black zorder 99
 
     # Draw background
-    $ main_background.appear()
+    $ main_background.show()
 
     # Draw sky
     $ jn_atmosphere.update_sky()
@@ -42,10 +43,6 @@ label ch30_init:
         # Check the daily affinity cap and reset if need be
         Natsuki.check_reset_daily_affinity_gain()
 
-        # Outfit selection
-        if persistent.jn_natsuki_auto_outfit_change_enabled:
-            jn_outfits.set_outfit_for_time_block()
-
         # Determine if the player should get a prolonged leave greeting
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
             persistent.last_apology_type = jn_apologies.TYPE_PROLONGED_LEAVE
@@ -58,10 +55,33 @@ label ch30_init:
         persistent.jn_total_visit_count += 1
         persistent.jn_last_visited_date = datetime.datetime.now()
 
+        # Load outfits from disk and corresponding persistent data
+        jn_outfits.load_custom_wearables()
+        jn_outfits.load_custom_outfits()
+        jn_outfits.JNWearable.load_all()
+        jn_outfits.JNOutfit.load_all()
+        jn_utils.log("Outfit data loaded.")
+
+        # Set Natsuki's outfit
+        if persistent.jn_natsuki_auto_outfit_change_enabled:
+            # Real-time outfit selection
+            Natsuki.setOutfit(jn_outfits.get_realtime_outfit())
+
+        else:
+            if jn_outfits.outfit_exists(persistent.jn_natsuki_outfit_on_quit):
+                # Custom outfit/default outfit selection
+                Natsuki.setOutfit(jn_outfits.get_outfit(persistent.jn_natsuki_outfit_on_quit))
+
+            else:
+                # Fallback to Natsuki's school uniform
+                Natsuki.setOutfit(jn_outfits.get_outfit("jn_school_uniform"))
+
+        jn_utils.log("Outfit set.")
+
         # Pick a greeting or random event
         if not jn_topic_in_event_list_pattern("^greeting_"):
             if (
-                random.randint(0, 10) == 1
+                random.randint(1, 10) == 1
                 and (not persistent.jn_player_admission_type_on_quit and not persistent.jn_player_apology_type_on_quit)
                 and jn_events.select_event()
             ):
@@ -74,7 +94,8 @@ label ch30_init:
                 persistent.jn_player_apology_type_on_quit = None
 
     # Prepare visuals
-    hide black with Dissolve(1.5) 
+    show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
+    hide black with Dissolve(2) 
     show screen hkb_overlay
     play music audio.just_natsuki_bgm
 
@@ -123,7 +144,7 @@ label ch30_wait:
 #Other labels
 label call_next_topic(show_natsuki=True):
     if show_natsuki:
-        show natsuki at jn_center
+        show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
 
     if persistent._event_list:
         $ _topic = persistent._event_list.pop(0)
@@ -268,7 +289,7 @@ init python:
 
     def hour_check():
         """
-        Runs ever hour during breaks between topics
+        Runs every hour during breaks between topics
         """
 
         # Run through all externally-registered hour check actions
@@ -280,11 +301,12 @@ init python:
         main_background.check_redraw()
         jn_atmosphere.update_sky()
 
-        # Update outfit
-        if jn_outfits.get_outfit_for_time_block().reference_name is not jn_outfits.current_outfit_name:
-
+        if (
+            persistent.jn_natsuki_auto_outfit_change_enabled
+            and not Natsuki.isWearingOutfit(jn_outfits.get_realtime_outfit().reference_name)
+        ):
             # We call here so we don't skip day_check, as call returns us to this point
-            renpy.call("outfits_time_of_day_change")
+            renpy.call("outfits_auto_change")
 
         pass
 
@@ -341,6 +363,9 @@ label talk_menu:
 
         "I want to say sorry...":
             jump player_apologies_start
+
+        "About your outfit..." if Natsuki.isHappy(higher=True) and persistent.jn_custom_outfits_unlocked: 
+            jump outfits_menu
 
         "Goodbye..." if Natsuki.isAffectionate(higher=True):
             jump farewell_menu
@@ -405,14 +430,30 @@ label player_select_topic(is_repeat_topics=False):
 label farewell_menu:
     python:
         # Sort the farewell options by their display name
-        avaliable_farewell_options = jn_farewells.get_farewell_options()
-        avaliable_farewell_options.sort(key = lambda option: option[0])
-        avaliable_farewell_options.append(("Goodbye.", "farewell_start"))
+        available_farewell_options = jn_farewells.get_farewell_options()
+        available_farewell_options.sort(key = lambda option: option[0])
+        available_farewell_options.append(("Goodbye.", "farewell_start"))
 
-    call screen scrollable_choice_menu(avaliable_farewell_options, ("Nevermind.", None))
+    call screen scrollable_choice_menu(available_farewell_options, ("Nevermind.", None))
 
     if isinstance(_return, basestring):
-        show natsuki at jn_center
+        show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
+        $ push(_return)
+        jump call_next_topic
+
+    jump ch30_loop
+
+label outfits_menu:
+    $ outfit_options = [
+        ("Can you wear an outfit for me?", "outfits_wear_outfit"),
+        ("Can I suggest a new outfit?", "outfits_suggest_outfit"),
+        ("Can I remove an outfit I suggested?", "outfits_remove_outfit"),
+        ("Can you search again for new outfits?", "outfits_reload")
+    ]
+    call screen scrollable_choice_menu(outfit_options, ("Nevermind.", None))
+
+    if isinstance(_return, basestring):
+        show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
         $ push(_return)
         jump call_next_topic
 
