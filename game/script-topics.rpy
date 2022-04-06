@@ -6910,7 +6910,7 @@ init 5 python:
             label="talk_newspapers_and_bias",
             unlocked=True,
             prompt="Newspapers and bias",
-            category=["Literature"],
+            category=["Literature", "Media", "Society"],
             nat_says=True,
             affinity_range=(jn_affinity.HAPPY, None),
             location="classroom"

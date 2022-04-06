@@ -186,8 +186,11 @@ init -20 python:
                 room = self.location.get_current_room_image()
 
             #Draw the room if we're not showing it already
-            if room is not None and not renpy.showing("main_bg"):
+            if room is not None:
                 renpy.show(room, tag="main_bg", zorder=JN_LOCATION_ZORDER)
+
+            else:
+                jn_utils.log("Unable to draw room: no room image was found.")
 
             # dissolving everything means dissolve last
             if dissolve_all or full_redraw:
@@ -200,8 +203,11 @@ init -20 python:
             Draws the location without any transition/scene effects.
             """
             room = self.location.get_current_room_image()
-            if room is not None and not renpy.showing("main_bg"):
+            if room is not None:
                 renpy.show(room, tag="main_bg", zorder=JN_LOCATION_ZORDER)
+
+            else:
+                jn_utils.log("Unable to show room: no room image was found.")
             
             return
 
