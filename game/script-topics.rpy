@@ -475,7 +475,7 @@ init 5 python:
             prompt="Service animals",
             category=["Animals"],
             nat_says=True,
-            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.DISTRESSED, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -546,7 +546,7 @@ init 5 python:
             conditional="store.jn_utils.get_current_session_length().total_seconds() / 3600 >= 8",
             category=["Life", "You", "Health"],
             nat_says=True,
-            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.HAPPY, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -621,7 +621,7 @@ init 5 python:
             conditional="persistent.jn_total_visit_count >= 10",
             category=["Life", "You", "Health"],
             nat_says=True,
-            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.HAPPY, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -664,7 +664,7 @@ init 5 python:
             prompt="Relieving stress",
             category=["Life", "You", "Health"],
             nat_says=True,
-            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.HAPPY, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -705,7 +705,7 @@ init 5 python:
             prompt="Careful spending",
             category=["Life", "You", "Health", "Society"],
             nat_says=True,
-            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.HAPPY, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -755,7 +755,7 @@ init 5 python:
             prompt="Eating well",
             category=["Life", "You", "Health", "Food"],
             nat_says=True,
-            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.HAPPY, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -813,9 +813,10 @@ init 5 python:
             label="talk_weather_setup_main",
             unlocked=True,
             prompt="Setting up the weather",
-            category=["Weather"],
+            category=["Setup", "Weather"],
             nat_says=True,
-            affinity_range=(jn_affinity.HAPPY, None)
+            affinity_range=(jn_affinity.HAPPY, None),
+            location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
     )
@@ -1328,7 +1329,7 @@ init 5 python:
             prompt="What's your favourite season?",
             category=["Weather", "Nature"],
             player_says=True,
-            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.NORMAL, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -1488,7 +1489,7 @@ init 5 python:
             prompt="Time management",
             category=["Life"],
             nat_says=True,
-            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -1535,7 +1536,7 @@ init 5 python:
             prompt="Do you have a sweet tooth?",
             category=["Health", "Food"],
             player_says=True,
-            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.DISTRESSED, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -1605,7 +1606,7 @@ init 5 python:
             prompt="My appearance",
             category=["You"],
             player_says=True,
-            affinity_range=(jn_affinity.ENAMORED, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.ENAMORED, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -1968,7 +1969,7 @@ init 5 python:
             prompt="Do you drink alcohol?",
             category=["Food", "Health"],
             player_says=True,
-            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.NORMAL, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -2044,7 +2045,7 @@ init 5 python:
             prompt="Can you drive?",
             category=["Transport"],
             player_says=True,
-            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.NORMAL, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -2209,7 +2210,7 @@ init 5 python:
             prompt="Sustainable fashion",
             category=["Environment", "Fashion"],
             nat_says=True,
-            affinity_range=(jn_affinity.UPSET, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.UPSET, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -2278,7 +2279,7 @@ init 5 python:
             conditional="persistent.jn_player_nicknames_allowed",
             category=["Natsuki"],
             player_says=True,
-            affinity_range=(jn_affinity.ENAMORED, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.ENAMORED, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -2511,7 +2512,7 @@ init 5 python:
             conditional="persistent.jn_total_visit_count >= 5",
             category=["Health", "You"],
             nat_says=True,
-            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.NORMAL, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -2587,7 +2588,7 @@ init 5 python:
             prompt="Aging",
             category=["Life"],
             nat_says=True,
-            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.NORMAL, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -2734,7 +2735,7 @@ init 5 python:
             prompt="Using headphones carefully",
             category=["Health", "Music", "Technology"],
             nat_says=True,
-            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.NORMAL, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -2962,7 +2963,7 @@ init 5 python:
             prompt="[n_name]'s fang",
             category=["Natsuki"],
             nat_says=True,
-            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.HAPPY, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -3535,7 +3536,7 @@ init 5 python:
             prompt="Having integrity",
             category=["Society", "You"],
             nat_says=True,
-            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.HAPPY, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL

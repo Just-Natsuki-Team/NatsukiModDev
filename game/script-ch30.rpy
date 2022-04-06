@@ -245,7 +245,8 @@ init python:
                     unlocked=True,
                     nat_says=True,
                     location=main_background.location.id,
-                    affinity=Natsuki._getAffinityState()
+                    affinity=Natsuki._getAffinityState(),
+                    excludes_categories=["Setup"]
                 )
 
             if topic_pool:
