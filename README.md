@@ -73,6 +73,9 @@ Please read this document thoroughly before downloading and installing the mod!
 </table>
 <!-- readme: contributors -end -->
 
+### Special thanks
+- Snow, rain graphics thanks to Monika After Story team @ https://github.com/Monika-After-Story/MonikaModDev
+
 ### Contents
 
 1. [Disclaimer](#disclaimer)

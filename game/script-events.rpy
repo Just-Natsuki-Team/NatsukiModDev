@@ -49,6 +49,9 @@ init python in jn_events:
         renpy.show_screen("hkb_overlay")
         renpy.play(filename="mod_assets/bgm/just_natsuki.ogg", channel="music")
 
+        # Reveal
+        renpy.hide("black")
+
 # Natsuki is walked in on reading a new volume of Parfait Girls. She isn't impressed.
 init 5 python:
     registerTopic(

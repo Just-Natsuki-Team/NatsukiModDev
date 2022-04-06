@@ -48,7 +48,7 @@ label introduction_progress_check:
 
 label introduction_opening:
     $ config.allow_skipping = False
-    scene black
+    show black zorder 99
     $ renpy.pause(5)
 
     # Restore attempt #1..
@@ -408,7 +408,7 @@ label introduction_acceptance:
     extend 1fcsem " Ugh!{w=1}{nw}"
 
     stop music fadeout 3
-    $ jn_atmosphere.show_current_sky()
+    $ jn_atmosphere.update_sky()
     $ renpy.pause(1)
 
     n 1uwdbo "..."

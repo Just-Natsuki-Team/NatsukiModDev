@@ -29,6 +29,7 @@ init -3 python:
     import re
     import store.jn_affinity as jn_affinity
     import store.jn_utils as jn_utils
+    import webbrowser
 
     class JNHolidays(Enum):
         none = 1
@@ -298,6 +299,13 @@ init -3 python:
 
             return self.additional_properties[property_key] is property_value
 
+        def derandom(self):
+            """
+                makes topic unable to be randomly brought up by Nat
+                also makes it available through talk_menu
+            """
+            self.nat_says = False
+            self.player_says = True
 
         def _filter_topic(
             self,
@@ -714,6 +722,8 @@ init -3 python:
     def jn_get_current_time_block():
         """
         Returns a type describing the current time of day as a segment.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         current_hour = jn_get_current_hour()
         if current_hour in range(3, 5):
@@ -737,44 +747,75 @@ init -3 python:
     def jn_is_time_block_early_morning():
         """
         Returns True if the current time is judged to be early morning.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         return jn_get_current_hour() in range(3, 5)
 
     def jn_is_time_block_mid_morning():
         """
         Returns True if the current time is judged to be mid morning.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         return jn_get_current_hour() in range(5, 9)
 
     def jn_is_time_block_late_morning():
         """
         Returns True if the current time is judged to be late morning.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         return jn_get_current_hour() in range(9, 12)
 
     def jn_is_time_block_morning():
         """
         Returns True if the current time is judged to be morning generally, and not a specific time of morning.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         return jn_get_current_hour() in range(3, 12)
 
     def jn_is_time_block_afternoon():
         """
         Returns True if the current time is judged to be afternoon.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         return jn_get_current_hour() in range(12, 18)
 
     def jn_is_time_block_evening():
         """
         Returns True if the current time is judged to be evening.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         return jn_get_current_hour() in range(18, 22)
 
     def jn_is_time_block_night():
         """
         Returns True if the current time is judged to be night.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         return jn_get_current_hour() in range(22, 3)
+
+    def jn_is_day():
+        """
+        Returns True if the current time is judged to be day, taking into account user preferences on sunrise/sunset.
+        """
+        return datetime.time(persistent.jn_sunrise_hour) <= datetime.datetime.now().time() < datetime.time(persistent.jn_sunset_hour)
+
+    def jn_open_google_maps(latitude, longitude):
+        """
+        Opens Google Maps in a new tab/window in the default browser centred on the given latitude and longitude.
+        
+        IN:
+            - latitude - The latitude to centre the map on.
+            - longitude - The longitude to centre the map on.
+        """
+        url = "https://www.google.com/maps/place/{0},{1}".format(latitude, longitude)
+        webbrowser.open(url)
 
 # Variables with cross-script utility specific to Just Natsuki
 init -990 python in jn_globals:
@@ -797,6 +838,9 @@ init -990 python in jn_globals:
 
     # Tracks if the player is permitted to force quit; use this to block force quits during sequences
     force_quit_enabled = True
+
+    # List of weather to push
+    weather_stack = []
 
     # Constants; use these for anything we only want defined once and used in a read-only context
 
@@ -833,6 +877,16 @@ init -990 python in jn_globals:
         "you donut",
         "you dope"
     ]
+
+    # Links
+
+    # OpenWeatherMap; used for setting up weather in-game
+    LINK_OPEN_WEATHER_MAP_HOME = "https://openweathermap.org"
+    LINK_OPEN_WEATHER_MAP_SIGN_UP = "https://home.openweathermap.org/users/sign_up"
+    LINK_OPEN_WEATHER_MAP_API_KEYS = "https://home.openweathermap.org/api_keys"
+
+    # LatLong.net; used for helping the player find their coordinates when setting up location manually
+    LINK_LAT_LONG_HOME = "https://www.latlong.net"
 
     # Names Natsuki may use at the lowest levels of affinity to insult her player with
     DEFAULT_PLAYER_INSULT_NAMES = [
@@ -1281,7 +1335,7 @@ init -999 python in jn_utils:
 
         IN:
             - path - the file path to search
-            - extension_list - optional list of file extensions; only files with these extensions will be returned
+            - extension_list - optional list of file extensions; only files with these extensions will be returned. These must be supplied without "."
 
         OUT:
             - Tuple representing (file_name, file_path)

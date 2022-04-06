@@ -32,12 +32,7 @@ label ch30_visual_setup:
     $ main_background.show()
 
     # Draw sky
-    if main_background.is_day():
-        if persistent.jn_random_weather:
-            $ jn_atmosphere.show_random_sky() 
-
-        else:
-            $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_SUNNY)
+    $ jn_atmosphere.update_sky()
 
     #FALL THROUGH
 
@@ -52,7 +47,8 @@ label ch30_init:
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
             persistent.last_apology_type = jn_apologies.TYPE_PROLONGED_LEAVE
 
-        elif not persistent.last_apology_type == jn_apologies.TYPE_SUDDEN_LEAVE:
+        # Repeat visits have a small affinity gain
+        elif not persistent.last_apology_type:
             Natsuki.calculated_affinity_gain()
 
         # Add to the total visits counter and set the last visit date
@@ -99,7 +95,7 @@ label ch30_init:
 
     # Prepare visuals
     show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
-    hide black with Dissolve(1) 
+    hide black with Dissolve(2) 
     show screen hkb_overlay
     play music audio.just_natsuki_bgm
 
@@ -303,7 +299,7 @@ init python:
 
         # Draw background
         main_background.check_redraw()
-        jn_atmosphere.show_current_sky()
+        jn_atmosphere.update_sky()
 
         if (
             persistent.jn_natsuki_auto_outfit_change_enabled
@@ -409,7 +405,11 @@ label player_select_topic(is_repeat_topics=False):
         # Present the topic options grouped by category to the player
         menu_items = menu_dict(_topics)
 
-    call screen categorized_menu(menu_items,(1020, 70, 250, 572), (740, 70, 250, 572), len(_topics))
+    call screen categorized_menu(
+        menu_items=menu_items,
+        category_pane_space=(1020, 70, 250, 572),
+        option_list_space=(740, 70, 250, 572),
+        category_length=len(_topics))
 
     $ _choice = _return
 

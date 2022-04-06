@@ -3,7 +3,7 @@ init 0 python:
 
     class Natsuki(object):
         """
-        Class for handling actions related to Natsuki such as affinity checks/gains/losses, clothing, etc.
+        Qeeb class for handling actions related to Natsuki such as affinity checks/gains/losses, clothing, etc.
 
         NNNNNNXK0OOKXNXXKKK0000O00KKKKK000OO0Okxooooodoollccc:;;:ok000000K00000OOO00Kkl::oxkxl,,:oOK00KKKKKK
         NNNNNNNK00XXXXKK000000000O00KK0000O00000KKKKKKKKK0000OOkxddk0000000K00000OOOOkxxo:cdkko:,ckKOk0KKKKK
@@ -57,7 +57,7 @@ init 0 python:
         ::::cccccccclxkxddddxxdddxxdxkkOOOxoollccc::::;;,;;;,,,,,,,,,,;d0xccldkodKWWWWWWNNNNNNNWN0oclddddddo
         """
 
-        # Start: Outfit functionality
+        # START: Outfit functionality
 
         _outfit = None
 

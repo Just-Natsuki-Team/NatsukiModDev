@@ -1,6 +1,10 @@
 #Start off in the clubroom
 default persistent._current_location = "classroom"
 
+# These determine when the sun rises/sets
+default persistent.jn_sunrise_hour = 6
+default persistent.jn_sunset_hour = 19
+
 init python in locations:
     import store
     LOCATION_MAP = dict()
@@ -93,7 +97,7 @@ init -20 python:
             self.on_entry = on_entry
             self.on_exit = on_exit
 
-        def getCurrentRoomImage(self):
+        def get_current_room_image(self):
             """
             Gets the current room image
             """
@@ -105,7 +109,7 @@ init -20 python:
         """
         The main representation of the room.
         """
-        def __init__(self):
+        def __init__(self, sunrise_hour, sunset_hour):
             """
             Room constructor
 
@@ -113,9 +117,8 @@ init -20 python:
             """
             self.location = None
             self.deco = dict()
-            #TODO: make this dynamic (probably hook in with menus)
-            self.sunrise = datetime.time(6)
-            self.sunset = datetime.time(19)
+            self.sunrise = datetime.time(sunrise_hour)
+            self.sunset = datetime.time(sunset_hour)
 
             #States
             self.__is_showing_day_image = self.is_day()
@@ -124,7 +127,7 @@ init -20 python:
             self.day_to_night_event = JNEvent()
             self.night_to_day_event = JNEvent()
 
-        def setLocation(self, new_location, **kwargs):
+        def set_location(self, new_location, **kwargs):
             """
             Sets the location. Does NOT run exit prog points for the current location
 
@@ -140,7 +143,7 @@ init -20 python:
 
             self.location = new_location
 
-        def changeLocation(self, new_location, **kwargs):
+        def change_location(self, new_location, **kwargs):
             """
             Changes the location
 
@@ -151,7 +154,7 @@ init -20 python:
             if self.location.on_exit is not None:
                 self.location.on_exit(new_location, **kwargs)
 
-            self.setLocation(new_location, **kwargs)
+            self.set_location(new_location, **kwargs)
 
         def is_day(self):
             """
@@ -179,8 +182,8 @@ init -20 python:
 
             room = None
 
-            if full_redraw:
-                room = self.location.getCurrentRoomImage()
+            if dissolve_all or full_redraw:
+                room = self.location.get_current_room_image()
 
             #Draw the room if we're not showing it already
             if room is not None and not renpy.showing("main_bg"):
@@ -188,6 +191,7 @@ init -20 python:
 
             # dissolving everything means dissolve last
             if dissolve_all or full_redraw:
+                renpy.hide("black")
                 renpy.with_statement(Dissolve(1.0))
             return
 
@@ -195,7 +199,7 @@ init -20 python:
             """
             Draws the location without any transition/scene effects.
             """
-            room = self.location.getCurrentRoomImage()
+            room = self.location.get_current_room_image()
             if room is not None and not renpy.showing("main_bg"):
                 renpy.show(room, tag="main_bg", zorder=JN_LOCATION_ZORDER)
             
@@ -214,7 +218,7 @@ init -20 python:
             #If it's day and we're showing the night room, we should full redraw to show day room again
             if self.is_day() and self.__is_showing_day_image is False:
                 self.__is_showing_day_image = True
-                self.draw(full_redraw=True)
+                self.draw(dissolve_all=True)
 
                 #Run events
                 self.night_to_day_event()
@@ -222,7 +226,7 @@ init -20 python:
             #If it's night and we're showing the day room, we should do a full redraw to show the night room
             elif not self.is_day() and self.__is_showing_day_image is True:
                 self.__is_showing_day_image = False
-                self.draw(full_redraw=True)
+                self.draw(dissolve_all=True)
 
                 #Run events
                 self.day_to_night_event()
@@ -234,7 +238,11 @@ init -20 python:
             persistent._current_location = self.location.id
 
 init python:
-    main_background = JNRoom()
+
+    main_background = JNRoom(
+        sunrise_hour=int(store.persistent.jn_sunrise_hour),
+        sunset_hour=int(store.persistent.jn_sunset_hour)
+    )
 
     classroom = Location(
         id="classroom",
@@ -246,7 +254,7 @@ init python:
         image_dir="beach"
     )
 
-    main_background.setLocation(classroom)
+    main_background.set_location(classroom)
 
     #Register the event handlers to handle button sounds
     def __change_to_night_button_sounds():
@@ -264,8 +272,9 @@ init python:
     #If it's day now, we need to run night to day, and vice versa
     if main_background.is_day():
         main_background.night_to_day_event()
+
     else:
         main_background.day_to_night_event()
 
     if persistent._current_location in locations.LOCATION_MAP:
-        main_background.changeLocation(persistent._current_location)
+        main_background.change_location(persistent._current_location)

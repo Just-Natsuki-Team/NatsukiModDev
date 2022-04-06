@@ -1605,22 +1605,31 @@ init -1 python in jn_outfits:
 
 # Asking Natsuki to wear an outfit
 label outfits_wear_outfit:
+    if len(list(jn_outfits.get_all_outfits())) == 0:
+        # No outfits, no point proceeding
+        n 1tnmbo "Huh?{w=0.5}{nw}"
+        extend 1fchbg "I don't {i}have{/i} any other outfits, dummy!"
+        jump ch30_loop
+
     n 1unmaj "Huh?{w=0.2} You want me to put on another outfit?"
     n 1fchbg "Sure thing!{w=0.5}{nw}"
     extend 1unmbg " What do you want me to wear?{w=1.5}{nw}"
     show natsuki idle at jn_left
 
     python:
-        # Get unlocked outfits available for selection
-        available_outfits = []
-        for outfit in jn_outfits.get_all_outfits():
-            if outfit.unlocked:
-                available_outfits.append([outfit.display_name, outfit])
+        # Get unlocked outfits, sort them and generate player options
+        options = []
+        available_outfits = jn_outfits.JNOutfit.filter_outfits(
+            outfit_list=jn_outfits.get_all_outfits(),
+            unlocked=True)
+        available_outfits.sort(key = lambda option: option.display_name)
 
-        available_outfits.sort(key = lambda option: option[-1])
+        for outfit in available_outfits:
+            options.append((outfit.display_name, outfit))
+
         available_outfits.insert(0, ("You pick!", "random"))
 
-    call screen scrollable_choice_menu(available_outfits, ("Nevermind.", None))
+    call screen scrollable_choice_menu(options, ("Nevermind.", None))
     show natsuki at jn_center
 
     if isinstance(_return, jn_outfits.JNOutfit):
@@ -1720,22 +1729,23 @@ label outfits_remove_outfit:
     extend 1fsrpol " I'm keeping the ones I came up with."
 
     python:
+        # Get unlocked custom outfits, sort them and generate player options
+        options = []
         removable_outfits = jn_outfits.JNOutfit.filter_outfits(
             outfit_list=jn_outfits.get_all_outfits(),
             unlocked=True,
             is_jn_outfit=False)
-        options = []
+
+        removable_outfits.sort(key = lambda option: option.display_name)
 
         for outfit in removable_outfits:
             options.append((outfit.display_name, outfit))
-
-        removable_outfits.sort(key = lambda option: option.display_name)
 
     call screen scrollable_choice_menu(options, ("Nevermind.", None))
 
     if isinstance(_return, jn_outfits.JNOutfit):
         $ outfit_name = _return.display_name.lower()
-        n 1unmaj "Oh?{w=0.2} My [outfit_name]?"
+        n 1unmaj "Oh?{w=0.2} [outfit_name]?{w=0.2} That outfit?"
 
         menu:
             n "You're sure you want me to remove it?"

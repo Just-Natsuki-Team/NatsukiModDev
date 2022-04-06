@@ -10,7 +10,7 @@ init python in jn_custom_music:
     CUSTOM_MUSIC_DIRECTORY = os.path.join(renpy.config.basedir, "custom_music/").replace("\\", "/")
 
     # The file extensions we (Ren'Py) support
-    _VALID_FILE_EXTENSIONS = [".mp3", ".ogg", ".wav"]
+    _VALID_FILE_EXTENSIONS = ["mp3", "ogg", "wav"]
 
     # Variety in dialogue :)
     _CHOOSE_PLAY_MUSIC_QUIPS = [
