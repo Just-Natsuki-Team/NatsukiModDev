@@ -1335,7 +1335,7 @@ init -999 python in jn_utils:
 
         IN:
             - path - the file path to search
-            - extension_list - optional list of file extensions; only files with these extensions will be returned
+            - extension_list - optional list of file extensions; only files with these extensions will be returned. These must be supplied without "."
 
         OUT:
             - Tuple representing (file_name, file_path)
