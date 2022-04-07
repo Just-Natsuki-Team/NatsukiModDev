@@ -5592,8 +5592,7 @@ label talk_natsuki_veganism:
             n "Or maybe you have a different reason?"
 
     n "Either way, thanks for listening!"
-
-return
+    return
 
 # Natsuki talks about her opinion and advice proper hygiene.
 init 5 python:
