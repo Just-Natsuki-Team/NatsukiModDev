@@ -5587,7 +5587,7 @@ label talk_natsuki_veganism:
             n "Hehe, great!"
 
         "I'm not.":
-            $ persistent.jn_player_eats_meat = True
+            $ persistent._jn_player_eats_meat = True
             n "Hehe, then we can agree, huh?"
             n "Or maybe you have a different reason?"
 
