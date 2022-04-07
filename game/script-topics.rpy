@@ -5581,7 +5581,7 @@ label talk_natsuki_veganism:
             n "I'll figure out some sweet treat to make you!"
 
         "I'm Vegetarian.":
-            $ persistent.jn_player_eats_meat = False
+            $ persistent._jn_player_eats_meat = False
             n "Cool!"
             n "So you'll still eat my cakes, huh?"
             n "Hehe, great!"
