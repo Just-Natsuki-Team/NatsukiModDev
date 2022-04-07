@@ -5529,6 +5529,72 @@ label talk_thoughts_on_dan_salvato:
 
 return
 
+# Player asks Natsuki about her opinion on veganism
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_natsuki_veganism",
+            unlocked=True,
+            prompt="What do you think of Veganism?",
+            category=["Health"],
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_natsuki_veganism:
+    n "Veganism, huh?"
+    n "Hmm...{w=0.5}"
+    n extend " wasn't Monika vegetarian?"
+    n "Two different concepts, I know -"
+    n extend " vegans don't use or eat animal products at all."
+    n "I can't imagine giving up the milk and eggs in my cupcakes!"
+    n "Vegans must be really dedicated."
+    n "Although, being a vegetarian is probably healthier."
+    n "How do you build muscle mass without protein like eggs and fish?"
+    n "I couldn't imagine how tired I would feel."
+    n "In general, I think it's an easy diet to follow in concept -"
+    n extend " no looking so much at labels anymore."
+    n "Grab the vegetables and go, cook at home and learn recipes online."
+    n "But how do you make a cake without animal products?"
+    n "I don't know how easy it would be for me to give up baking."
+    n "Cooking is fun too, but..."
+    n "Frosting! Little candy toppers and sprinkles!"
+    n "Fun colors, like pink and purple!"
+    n "And it tastes amazing!"
+    n "Heh, funnily enough, I think I heard somewhere that vegans are made fun of a lot online."
+    n "I doubt most people would have the discipline to go on a diet so strict, though!"
+    n "Hmm... Maybe it's because it's a stereotype for them to be all about animal rights and stuff."
+    n "I don't think Monika was like that."
+    n "Either way, there's nothing wrong with thinking things like that as long as you aren't pushy about it."
+    n "Now I'm curious, though."
+    menu:
+        n "Are you vegan or vegetarian?"
+
+        "I'm Vegan.":
+            $ persistent.jn_player_eats_meat = False
+            n "Aww, you can't eat my cupcakes, can you?"
+            n "Hehe, I'm just teasing you, silly."
+            n "I'll figure out some sweet treat to make you!"
+
+        "I'm Vegetarian.":
+            $ persistent.jn_player_eats_meat = False
+            n "Cool!"
+            n "So you'll still eat my cakes, huh?"
+            n "Hehe, great!"
+
+        "I'm not.":
+            $ persistent.jn_player_eats_meat = True
+            n "Hehe, then we can agree, huh?"
+            n "Or maybe you have a different reason?"
+
+    n "Either way, thanks for listening!"
+
+return
+
 # Natsuki talks about her opinion and advice proper hygiene.
 init 5 python:
     registerTopic(
