@@ -5537,7 +5537,7 @@ init 5 python:
             label="talk_natsuki_veganism",
             unlocked=True,
             prompt="What do you think of Veganism?",
-            category=["Health"],
+            category=["Health", "Food"],
             nat_says=True,
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
             location="classroom"
