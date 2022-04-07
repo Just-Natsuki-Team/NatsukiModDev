@@ -5575,7 +5575,7 @@ label talk_natsuki_veganism:
         n "Are you vegan or vegetarian?"
 
         "I'm Vegan.":
-            $ persistent.jn_player_eats_meat = False
+            $ persistent._jn_player_eats_meat = False
             n "Aww, you can't eat my cupcakes, can you?"
             n "Hehe, I'm just teasing you, silly."
             n "I'll figure out some sweet treat to make you!"
