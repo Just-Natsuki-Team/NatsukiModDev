@@ -196,14 +196,6 @@ init python:
     LAST_HOUR_CHECK = LAST_MINUTE_CHECK.hour
     LAST_DAY_CHECK = LAST_MINUTE_CHECK.day
 
-    _NAT_SAYS = 0
-    _PLAYER_SAYS = 1
-
-    _SAYS_RANGE = [
-        _NAT_SAYS,
-        _PLAYER_SAYS
-    ]
-
     def minute_check():
         """
         Runs every minute during breaks between topics
@@ -272,6 +264,7 @@ init python:
             for action in jn_plugins.quarter_hour_check_calls:
                 eval(action.statement)
 
+        jn_atmosphere.update_sky()
         jn_random_music.random_music_change_check()
 
         pass
@@ -300,7 +293,6 @@ init python:
 
         # Draw background
         main_background.check_redraw()
-        jn_atmosphere.update_sky()
 
         if (
             persistent.jn_natsuki_auto_outfit_change_enabled
@@ -572,7 +564,7 @@ label try_force_quit:
                         hide glitch_garbled_red
 
                 # Apply consequences for force quitting, then glitch quit out
-                $ Natsuki.calculated_affinity_loss()
+                $ Natsuki.percentage_affinity_loss(2)
                 $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
                 $ persistent.jn_player_apology_type_on_quit = jn_apologies.TYPE_SUDDEN_LEAVE
 
