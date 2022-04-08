@@ -1343,7 +1343,6 @@ init -999 python in jn_utils:
         return_file_items = []
 
         for file in os.listdir(path):
-            log(file.rpartition("."))
             if (not extension_list or any(file_extension == file.rpartition(".")[-1] for file_extension in extension_list)):
                 return_file_items.append((file, os.path.join(path, file)))
 

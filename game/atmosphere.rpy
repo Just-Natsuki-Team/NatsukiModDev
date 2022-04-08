@@ -260,6 +260,7 @@ init 0 python in jn_atmosphere:
             api_weather_result = get_weather_from_api()
             if not api_weather_result:
                 jn_utils.log("Unable to retrieve weather from API; defaulting to Sunny.")
+                renpy.notify("Failed to update weather; please check log for more information.")
                 show_sky(WEATHER_SUNNY, with_transition=with_transition)
 
             else:
@@ -344,13 +345,19 @@ init 0 python in jn_atmosphere:
         Gets the current weather from the OpenWeatherMap API, assuming it is set up.
         """
         # Get the response from the OpenWeatherMap api
-        weather_response = requests.get(
-            url="https://api.openweathermap.org/data/2.5/onecall?lat={0}&lon={1}&units=metric&exclude=current,minutely,daily,alerts&appid={2}".format(
-                store.persistent._jn_player_latitude_longitude[0],
-                store.persistent._jn_player_latitude_longitude[1],
-                store.persistent._jn_weather_api_key
-            ),
-            verify=os.environ['SSL_CERT_FILE'])
+        try:
+            weather_response = requests.get(
+                url="https://api.openweathermap.org/data/2.5/onecall?lat={0}&lon={1}&units=metric&exclude=current,minutely,daily,alerts&appid={2}".format(
+                    store.persistent._jn_player_latitude_longitude[0],
+                    store.persistent._jn_player_latitude_longitude[1],
+                    store.persistent._jn_weather_api_key
+                ),
+                verify=os.environ['SSL_CERT_FILE'])
+
+        except Exception as exception:
+            # Something went wrong that meant no response was returned at all; so log and return
+            jn_utils.log("Unable to fetch weather from OpenWeatherMap as an exception occurred; {0}".format(exception.message))
+            return None
 
         if not weather_response.status_code == 200:
             # Invalid response, can't do anything here so log and return
