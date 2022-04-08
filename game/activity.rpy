@@ -47,7 +47,7 @@ init python in jn_activity:
         coding = 1
         discord = 2
         music_applications = 3
-        gaming  = 4
+        gaming = 4
         youtube = 5
         github_jn = 6
         artwork = 7
@@ -56,23 +56,34 @@ init python in jn_activity:
         twitter = 10
         deviantart = 11
         manga = 12
+        fourchan = 13
+        monika_after_story = 14
+        just_yuri = 15
+        forever_and_ever = 16
+        social_media = 17
 
         def __int__(self):
             return self.value
 
+    # Handy: https://pythex.org
     WINDOW_NAME_REGEX_ACTIVITY_MAP = {
         "(- visual studio|- notepad/+/+|- atom|- brackets|vim|eclipse)": JNActivities.coding,
-        "(- discord)": JNActivities.discord,
-        "(spotify|groove|zune|itunes)": JNActivities.music_applications,
-        "(steam|origin|battle.net)": JNActivities.gaming,
-        "(- youtube)": JNActivities.youtube,
+        "- discord": JNActivities.discord,
+        "(^spotify$|^groove$|^zune$|^itunes$)": JNActivities.music_applications,
+        "(^steam$|^origin$|^battle.net$|^runelite$|^runescape$)": JNActivities.gaming,
+        "- youtube": JNActivities.youtube,
         "(just-natsuki-team/natsukimoddev)": JNActivities.github_jn,
         "(clip studio paint|photoshop|krita|gimp|paint.net)": JNActivities.artwork,
-        "(crunchyroll)": JNActivities.anime_streaming,
-        "(word|excel|powerpoint|openoffice|libreoffice)": JNActivities.work_applications,
-        "(/ twitter)": JNActivities.twitter,
+        "(^crunchyroll$)": JNActivities.anime_streaming,
+        "(^word$|^excel$|^powerpoint$|^openoffice$|^libreoffice$)": JNActivities.work_applications,
+        "/ twitter": JNActivities.twitter,
         "(deviantart - |\| deviantart)": JNActivities.deviantart,
-        "(- mangadex|- mangasee|- mangakot)": JNActivities.manga
+        "(- mangadex|- mangasee|- mangakot)": JNActivities.manga,
+        "(- 4chan|^4chan$)": JNActivities.fourchan,
+        "^monika after story$": JNActivities.monika_after_story,
+        "(^just yuri$|^just yuri \(beta\)$)": JNActivities.just_yuri,
+        "^forever & ever$": JNActivities.forever_and_ever,
+        "(^facebook$|on myspace|reddit - )": JNActivities.social_media
     }
 
     def __get_jn_window_hwnd():
