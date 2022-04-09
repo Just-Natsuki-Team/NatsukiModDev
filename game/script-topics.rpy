@@ -5538,7 +5538,7 @@ init 5 python:
             unlocked=True,
             prompt="What do you think of Veganism?",
             category=["Health", "Food"],
-            nat_says=True,
+            player_says=True,
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
             location="classroom"
         ),
