@@ -152,7 +152,7 @@ init python:
             (0, 0), "{0}{1}/clothes/[persistent.jn_natsuki_current_outfit]/body.png".format(_BASE_SPRITE_PATH, pose), # Outfit, body
         ]
 
-         #TODO: Fix this
+        #TODO: Fix this
         # if store.persistent.jn_natsuki_current_necklace is not None:
         #     lc_args.extend([
         #         (0, 0), "{0}{1}/necklace/[persistent.jn_natsuki_current_necklace].png".format(_BASE_SPRITE_PATH, pose)
@@ -185,7 +185,7 @@ init python:
 
         if tears:
             lc_args.extend([
-                (0, 0), "{0}{1}/face/tears/{2}.png".format((_BASE_SPRITE_PATH, pose, tears))
+                (0, 0), "{0}{1}/face/tears/{2}.png".format(_BASE_SPRITE_PATH, pose, tears)
             ])
 
         #TODO: Fix this
@@ -194,7 +194,7 @@ init python:
         #         (0, 0), "{0}{1}/headgear/[persistent.jn_natsuki_current_headgear].png".format(_BASE_SPRITE_PATH, pose)
         #     ])
 
-         #TODO: Fix this
+        #TODO: Fix this
         # if store.persistent.jn_natsuki_current_eyewear is not None:
         #     lc_args.extend([
         #         (0, 0), "{0}{1}/eyewear/[persistent.jn_natsuki_current_eyewear].png".format(_BASE_SPRITE_PATH, pose)
@@ -497,7 +497,7 @@ init 1 python:
 #   blush: 1 character
 #   tears: 3 characters
 #   emote: 3 characters
-#   
+#
 #
 # Sprite code values:
 # <pose> - The current pose Natsuki is resting in
