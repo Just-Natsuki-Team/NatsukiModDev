@@ -377,6 +377,12 @@ init 1 python:
                     emote = exp_code[:3]
                     exp_code = exp_code[3:]
 
+                #To avoid an infinite loop, we'll raise another ValueError to note this format is invalid
+                else:
+                    raise ValueError(
+                        "Invalid optional expression part: '{0}'. (All optional parts must follow mandatory ones)".format(exp_code)
+                    )
+
         if tears:
             store.jn_utils.log("tears: " + tears)
 
