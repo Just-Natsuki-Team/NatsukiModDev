@@ -1052,7 +1052,7 @@ init 5 python:
     )
 
 label farewell_broken_ruined_uh_huh:
-    n 1fsqsl "Uh huh."
+    n 1fsqsltsb "Uh huh."
     return { "quit": None }
 
 init 5 python:
@@ -1067,8 +1067,8 @@ init 5 python:
     )
 
 label farewell_broken_ruined_nothing_to_say:
-    n 1fcssf "..."
-    n 1kcsup "..."
+    n 1fcssftsa "..."
+    n 1kcsuptsa "..."
     return { "quit": None }
 
 init 5 python:
@@ -1083,7 +1083,7 @@ init 5 python:
     )
 
 label farewell_broken_ruined_kay:
-    n "'kay."
+    n 1fslsrtsb "'kay."
     return { "quit": None }
 
 # Farewells that allow the player to choose to stay
@@ -1104,9 +1104,9 @@ init 5 python:
 label farewell_short_session_ask:
     n 1uskwrl "What?{w=0.2} You're leaving?{w=0.2} But you've barely been here at all today,{w=0.1} [player]!"
     $ time_in_session_descriptor = jn_utils.get_time_in_session_descriptor()
-    n 1fnmpol "In fact,{w=0.1} you've only been here for [time_in_session_descriptor]!"
+    n 1fnmpol "You've literally only been here for [time_in_session_descriptor]!"
     menu:
-        n "You're sure you can't stay just a little longer?"
+        n "You really can't stay just a little longer?"
 
         "Sure, I can stay a little longer.":
             n 1uchbsl "Yay{nw}!"

@@ -89,7 +89,6 @@ init 5 python:
     )
 
 label apology_bad_nickname:
-
     if persistent.jn_player_nicknames_allowed:
         # The player is still capable of nicknaming Natsuki
         if Natsuki.isEnamored(higher=True):
@@ -121,12 +120,12 @@ label apology_bad_nickname:
             $ Natsuki.calculated_affinity_gain()
 
         else:
-            n 1fcsan "...I honestly don't know what I find more gross about you,{w=0.1} [player]."
+            n 1fcsan "...I honestly don't know what I find more {i}gross{/i} about you,{w=0.1} [player]."
             n 1fcsaj "The fact you even did it in the first place..."
             n 1fsqfu "...Or that you think a simple apology makes all that a-okay."
             n 1fcssr "..."
-            n 1fcsan "Don't think this changes a thing,{w=0.1} [player]."
-            n 1fsqsr "Because it doesn't."
+            n 1fcsantsa "Don't think this changes a thing,{w=0.1} [player]."
+            n 1fsqsrtsb "Because it doesn't."
 
     else:
         # The player has been barred from nicknaming Natsuki, and even an apology won't change that
@@ -159,9 +158,9 @@ label apology_bad_nickname:
         else:
             n 1kcsfr "...Wow.{w=0.2} Just wow."
             n 1fcsfu "{i}Now{/i} you choose to apologize?"
-            n 1kcssr "..."
-            n 1fsqfu "Whatever.{w=0.2} I literally don't care."
-            n 1fcsan "This changes nothing,{w=0.1} [player]."
+            n 1kcssrtsa "..."
+            n 1fsqfutsb "Whatever.{w=0.2} I literally don't care."
+            n 1fcsantsa "This changes {i}nothing{/i},{w=0.1} [player]."
 
     $ persistent.jn_player_pending_apologies.remove(jn_apologies.TYPE_BAD_NICKNAME)
     return
@@ -203,7 +202,7 @@ label apology_cheated_game:
 
     else:
         n 1fcsan "Whatever.{w=0.2} I don't care."
-        n 1fsqan "As if I could expect much better from you,{w=0.1} anyway..."
+        n 1fsqantsa "As if I could expect much better from {i}you{/i},{w=0.1} anyway."
 
     $ persistent.jn_player_pending_apologies.remove(jn_apologies.TYPE_CHEATED_GAME)
     return
@@ -256,7 +255,7 @@ label apology_default:
             n 1fcsan "...Huh.{w=0.2} Wow."
             n 1fsqan "So you {i}do{/i} actually feel remorse,{w=0.1} then."
             n 1fcssl "..."
-            n 1fsqfu "Whatever.{w=0.2} It isn't me you should be apologizing to,{w=0.1} anyway."
+            n 1fsqfutsb "Whatever.{w=0.2} It isn't {i}me{/i} you should be apologizing to,{w=0.1} anyway."
 
     else:
         # The player is avoiding a direct apology to Natsuki; call them out on it
@@ -283,8 +282,8 @@ label apology_default:
 
         else:
             n 1fsqfu "...Do you even know how you sound?"
-            n 1fnmfu "Do you even {i}listen{/i} to yourself?"
-            n 1fcsfu "Apologize properly or don't bother."
+            n 1fnmfutsf "Do you even {i}listen{/i} to yourself?"
+            n 1fcsfutsa "Apologize properly or don't bother."
             $ Natsuki.percentage_affinity_loss(1)
 
     return
@@ -343,7 +342,7 @@ label apology_prolonged_leave:
         n 1kcspu "...Ha...{w=0.3} ah...{w=0.3} haha..."
         n 1fsqan "Y-{w=0.1}you're apologizing to me?{w=0.2} For not being here?"
         n 1kcssl "...Heh..."
-        n 1fsqfu "You should be apologizing that you {i}came back{/i}."
+        n 1fsqfutsb "You should be apologizing that you {i}came back{/i}."
 
     $ persistent.jn_player_pending_apologies.remove(jn_apologies.TYPE_PROLONGED_LEAVE)
     return
@@ -394,11 +393,11 @@ label apology_rude:
 
     else:
         n 1kcsan "Ha...{w=0.3} aha..."
-        n 1fsqan "You're apologizing...{w=0.3} to me? Why?"
-        n 1fsqpu "I don't expect any better from you."
+        n 1fsqan "You're apologizing...{w=0.3} to me?{w=1} Why?"
+        n 1fsqpu "I don't expect {i}any{/i} better from you."
         n 1fcsun "..."
-        n 1fsqfu "You can stick your apology,{w=0.1} [player]."
-        n 1fcsfu "It means nothing to me."
+        n 1fsqfutsb "You can {i}stick{/i} your apology,{w=0.1} [player]."
+        n 1fcsfutsa "It means nothing to me."
 
     $ persistent.jn_player_pending_apologies.remove(jn_apologies.TYPE_RUDE)
     return
@@ -465,10 +464,10 @@ label apology_screenshots:
         $ Natsuki.calculated_affinity_gain()
 
     else:
-        n 1fcsan "...No,{w=0.1} [player].{w=0.2} Please."
-        n 1fsqfu "Don't even {i}try{/i} to pretend like you care now."
-        n 1fcsfu "..."
-        n 1fcssf "...Keep your pathetic apology.{w=0.2} I don't want it."
+        n 1fcsan "...No,{w=0.1} [player]."
+        n 1fsqfutsb "Don't even {i}try{/i} to pretend like you care now."
+        n 1fcsfutsa "..."
+        n 1fcssftsa "...Keep your {i}pathetic{/i} apology.{w=0.2} I don't want it."
 
     $ persistent.jn_player_pending_apologies.remove(jn_apologies.TYPE_SCREENSHOT)
     return
@@ -523,8 +522,8 @@ label apology_without_goodbye:
 
     else:
         n 1fcsan "...Heh.{w=0.2} Honestly?"
-        n 1fsqan "Whatever.{w=0.2} I don't care.{w=0.2} Keep your apology."
-        n 1fsqsf "You've so many other things to be sorry for.{w=0.2} What's another on the pile,{w=0.1} right?"
+        n 1fsqantsb "Whatever.{w=0.2} I don't care.{w=0.2} Keep your apology."
+        n 1fsqsftse "You've so many other things to be sorry for.{w=0.2} What's another on the pile,{w=0.1} right?"
 
     $ persistent.jn_player_pending_apologies.remove(jn_apologies.TYPE_SUDDEN_LEAVE)
     return
@@ -576,7 +575,7 @@ label apology_unhealthy:
 
     else:
         n 1kcsun "...Heh."
-        n 1fcsan "At least you care that {i}you{/i} aren't being treated right."
+        n 1fcsantsa "At least you care that {i}you{/i} aren't being treated right."
 
     $ persistent.jn_player_pending_apologies.remove(jn_apologies.TYPE_UNHEALTHY)
     return
@@ -622,7 +621,7 @@ label apology_scare:
 
     else:
         n 1fsqfu "Stick it,{w=0.1} [player]."
-        n 1fcsan "We both know you don't mean that."
+        n 1fcsantsa "We both know you don't mean that."
 
     $ persistent.jn_player_pending_apologies.remove(jn_apologies.TYPE_SCARE)
     return

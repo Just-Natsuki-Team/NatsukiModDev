@@ -359,8 +359,6 @@ init 1 python:
 
         #If we still have an expcode, we know we have optional portions to process
         while exp_code:
-            store.jn_utils.log("exp_code is " + exp_code)
-
             if exp_code[0] in BLUSH_MAP:
                 exp_part = exp_code[0]
                 exp_code = exp_code[1:]
@@ -368,12 +366,10 @@ init 1 python:
 
             else:
                 if exp_code[:3] in TEARS_MAP:
-                    store.jn_utils.log("found tears")
                     tears = exp_code[:3]
                     exp_code = exp_code[3:]
 
                 elif exp_code[:3] in EMOTE_MAP:
-                    store.jn_utils.log("found emote")
                     emote = exp_code[:3]
                     exp_code = exp_code[3:]
 
@@ -382,12 +378,6 @@ init 1 python:
                     raise ValueError(
                         "Invalid optional expression part: '{0}'. (All optional parts must follow mandatory ones)".format(exp_code)
                     )
-
-        if tears:
-            store.jn_utils.log("tears: " + tears)
-
-        if emote:
-            store.jn_utils.log("emote: " + emote)
 
         return {
             "pose": POSE_MAP[pose],
@@ -495,6 +485,8 @@ init 1 python:
 # Sprite code format:
 # <pose><eyebrows><eyes><mouth><blush><tears><emote>
 #
+# Pose, eyebrows, eyes and mouth are compulsary. Any others are optional.
+#
 # Some notes regarding lengths of each part:
 #   pose: 1 character
 #   eyebrows: 1 character
@@ -504,98 +496,7 @@ init 1 python:
 #   tears: 3 characters
 #   emote: 3 characters
 #
-#
-# Sprite code values:
-# <pose> - The current pose Natsuki is resting in
-# 1 - upright
-#
-# <eyebrows> - The eyebrows Natsuki is currently showing
-# n - normal
-# u - up
-# k - knit
-# f - furrowed
-# t - think
-#
-# <eyes> - The eyes Natsuki is currently showing
-# bk - baka
-# ct - circle/cartoon tears
-# ch - closed happy
-# cs - closed sad
-# cu - cute
-# ll - lookleft
-# lr - lookright
-# nm - normal
-# pl - pleading
-# sc - scared
-# sk - shocked
-# sg - smug
-# sp - sparkle
-# sq - squint
-# sl - squint, left
-# sr - squint, right
-# un - unamused
-# wm - warm
-# wd - wide
-# wl - winking, left
-# wr - winking, right
-#
-# <mouth> - The mouth shape Natsuki is currently making
-# aj - ajar
-# an - angry
-# aw - awe
-# bg - big
-# bs - big smile
-# bo - bored
-# ca - caret
-# ct - catty
-# dv - devious
-# em - embarrassed
-# fr - frown
-# fu - furious
-# gs - gasp
-# gn - grin
-# lg - laugh
-# nv - nervous
-# po - pout
-# pu - pursed
-# sc - scream
-# sr - serious
-# sk - shock
-# sl - slant
-# sm - smile
-# sf - small frown
-# ss - small smile
-# sg - smug
-# ts - tease
-# tr - triangle
-# un - uneasy
-# up - upset
-# wr - worried
-#
-# <tears> - The tears Natsuki is currently showing
-# h - heavy
-# p - pooled
-#
-# <blush> - The amount of blush on Natsuki's face
-# f - full
-# l - light
-#
-# <emote> - Emotion effects around Natsuki, E.G lightbulb representing an idea, etc.
-# f - affection
-# n - anger
-# z - dazzle
-# d - dread
-# e - exclamation
-# i - idea
-# m - merry
-# q - questionmark
-# s - sad
-# h - sigh
-# k - shock
-# l - sleepy
-# o - somber
-# p - speech
-# u - surprise
+# For spritecode construction, use the previewer @ https://just-natsuki-team.github.io/Expression-Previewer/
 
 # This selects which idle image to show based on current affinity state
 image natsuki idle = ConditionSwitch(
@@ -691,17 +592,19 @@ image natsuki idle low_affinity:
 image natsuki idle min_affinity:
     block:
         choice:
-            "natsuki 1fcsun"
+            "natsuki 1fcsuntsa"
         choice:
-            "natsuki 1kcssr"
+            "natsuki 1fcsantsa"
         choice:
-            "natsuki 1fsqup"
+            "natsuki 1fslantsb"
         choice:
-            "natsuki 1fsqun"
+            "natsuki 1fcssrtsa"
         choice:
-            "natsuki 1kcsup"
+            "natsuki 1kcssrtsa"
         choice:
-            "natsuki 1fcsup"
+            "natsuki 1ksrsrtsb"
+        choice:
+            "natsuki 1fsrantse"
 
         pause 10
         repeat
@@ -794,9 +697,9 @@ image natsuki talk_menu_medium_affinity:
 image natsuki talk_menu_low_affinity:
     block:
         choice:
-            "natsuki 1fnmaj"
+            "natsuki 1fcsun"
         choice:
-            "natsuki 1fslaj"
+            "natsuki 1fslun"
         choice:
             "natsuki 1fsrbo"
         choice:
@@ -808,12 +711,10 @@ image natsuki talk_menu_low_affinity:
 image natsuki talk_menu_min_affinity:
     block:
         choice:
-            "natsuki 1fcsan"
+            "natsuki 1fcsantsb"
         choice:
-            "natsuki 1fslem"
+            "natsuki 1fsluntse"
         choice:
-            "natsuki 1fsrsf"
+            "natsuki 1fcssrtse"
         choice:
-            "natsuki 1fcssf"
-        choice:
-            "natsuki 1kcsan"
+            "natsuki 1fnmantdr"

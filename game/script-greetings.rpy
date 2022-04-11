@@ -125,10 +125,10 @@ label greeting_first_force_quit:
         extend 1fsqsf "Thanks."
 
     else:
-        n "..."
-        n "That.{w=1} Freaking.{w=1} Hurt."
-        n "I don't know what you did,{w=0.1} but cut{w=0.3} it{w=0.3} out.{w=0.5}{nw}"
-        extend " Now."
+        n 1fsquntsb "..."
+        n 1fsqantsb "That.{w=1} Freaking.{w=1} Hurt."
+        n 1fcsan "I don't know what you did,{w=0.1} but cut{w=0.3} it{w=0.3} out.{w=0.5}{nw}"
+        extend 1fsqfutsb " Now."
 
     $ persistent.jn_player_force_quit_state = int(jn_farewells.JNForceQuitStates.previously_force_quit)
 
@@ -543,8 +543,8 @@ init 5 python:
     )
 
 label greeting_broken_minus_oh_its_you:
-    n 1kplsr "...?"
-    n 1kcssr "Oh...{w=0.3} it's you."
+    n 1kplsrtsc "...?"
+    n 1kcssrtsa "Oh...{w=0.3} it's you."
     return
 
 init 5 python:
@@ -559,8 +559,8 @@ init 5 python:
     )
 
 label greeting_broken_minus_nothing_to_say:
-    n 1kcssr "..."
-    n 1kplsr "..."
+    n 1kcssrtsa "..."
+    n 1kplsrtsc "..."
     return
 
 init 5 python:
@@ -576,7 +576,7 @@ init 5 python:
 
 label greeting_broken_minus_why:
     n 1fplaj "...Why?"
-    n 1fcsup "Why did you come back,{w=0.1} [player]?"
+    n 1fcsuptsa "Why did you come back,{w=0.1} [player]?"
     return
 
 init 5 python:
@@ -593,7 +593,7 @@ init 5 python:
 label greeting_broken_minus_enough_on_my_mind:
     $ player_initial = list(player)[0]
     n 1fskem "[player_initial]-{w=0.1}[player]...?"
-    n 1fcsup "As if I didn't have enough on my mind..."
+    n 1fcsuptsa "As if I didn't have enough on my mind..."
     return
 
 init 5 python:
@@ -610,7 +610,7 @@ init 5 python:
 label greeting_broken_minus_leave_me_be:
     $ player_initial = list(player)[0]
     n 1fcsfu "...Why, [player]?{w=0.2} Why do you keep coming back?"
-    n 1kcsup "Why can't you just leave me be..."
+    n 1kcsuptsa "Why can't you just leave me be..."
     return
 
 # Admission-locked greetings; used when Natsuki made the player leave due to tiredness, etc.
@@ -746,10 +746,10 @@ label greeting_sudden_leave:
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
 
     else:
-        n 1fcsun "..."
-        n 1fsqun "Heh.{w=0.2} Yeah."
+        n 1fcsuntsa "..."
+        n 1fsquntsb "Heh.{w=0.2} Yeah."
         $ chosen_insult = random.choice(jn_globals.DEFAULT_PLAYER_INSULT_NAMES).capitalize()
-        n 1fcsup "Welcome back to you,{w=0.1} too.{w=0.2} [chosen_insult]."
+        n 1fcsuptsa "Welcome back to you,{w=0.1} too.{w=0.2} [chosen_insult]."
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
 
     return
@@ -797,8 +797,8 @@ label greeting_prolonged_leave:
 
     else:
         n 1kcssf "...Heh."
-        n 1fcssl "So you came back."
-        n 1fcsup "{i}Great{/i}."
+        n 1fcssltsa "So you came back."
+        n 1fcsuptsa "{i}Great{/i}."
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_PROLONGED_LEAVE)
 
     return

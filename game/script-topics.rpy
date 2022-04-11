@@ -2592,37 +2592,37 @@ label talk_i_love_you:
         elif Natsuki.isUpset(higher=True):
             n 1fcsan "..."
             n 1fnmfu "Seriously,{w=0.1} [player]?{w=0.2} You're really going to say that to me {i}now{/i}?"
-            n 1fsqfu "The first time you choose to say it...{w=0.3} and you say it {i}now{/i}?"
+            n 1fsqfutsb "The first time you choose to say it...{w=0.3} and you say it {i}now{/i}?"
             n 1fcspu "..."
             n 1fwman "...And you really think I'm gonna buy that {i}now{/i},{w=0.1} [player]?"
             n 1fcsfu "..."
             n 1fcssr "..."
             n 1fsqsr "We're done with this."
             n 1fsqpu "And if you {i}really{/i} feel that way?"
-            n 1fsqsf "...Then why aren't {i}you{/i} trying to make this work,{w=0.1} [player]?"
+            n 1fsqsftsb "...Then why aren't {i}you{/i} trying to make this work,{w=0.1} [player]?"
             $ Natsuki.percentage_affinity_loss(10)
 
         else:
             # :(
-            n 1fsqpu "..."
-            n 1fcsun "Y-{w=0.1}you..."
-            n 1fcsan "You...{w=0.3} h-{w=0.1}how...!"
+            n 1fsqputsb "..."
+            n 1fcsuntsa "Y-{w=0.1}you..."
+            n 1fcsantsa "You...{w=0.3} h-{w=0.1}how...!"
             n 1fscwr "H-{w=0.1}how {i}dare{/i} you tell me that now!"
             n 1fscfu "{i}How {w=0.3} dare {w=0.3} you.{/i}"
             n 1fcsfu "..."
             n 1fcssr "..."
             n 1fsqsr "You knew how I felt,{w=0.1} [player]..."
             n 1fcsan "You knew for such a long time..."
-            n 1fsqfu "And now?{w=0.2} {i}Now{/i} is when you tell me?"
-            n 1fsqup "For the {i}first time{/i}?"
-            n 1fcsup "..."
+            n 1fsqfutsb "And now?{w=0.2} {i}Now{/i} is when you tell me?"
+            n 1fsquptse "For the {i}first time{/i}?"
+            n 1fcsuptsa "..."
             n 1kplan "I...{w=0.3} I c-{w=0.1}can't do this right now."
-            n 1kcsan "It...{w=0.5} it hurts..."
-            n 1kcsfu "..."
-            n 1fcspu "Get out of my sight,{w=0.1} [player]."
-            n 1fcsan "..."
-            n 1fsqfu "Go!"
-            n 1fscsc "{i}Just leave me alone!{/i}{nw}"
+            n 1kcsantsd "It...{w=0.5} it hurts..."
+            n 1kcsfutsd "..."
+            n 1fcsputsd "Get out of my sight,{w=0.1} [player]."
+            n 1fcsantsd "..."
+            n 1fsqfutse "Go!"
+            n 1fscsctdc "{i}JUST LEAVE ME ALONE!{/i}{nw}"
             $ Natsuki.percentage_affinity_loss(25)
             return { "quit": None }
 
@@ -3580,17 +3580,17 @@ label talk_how_do_you_feel_about_me:
     elif Natsuki.isBroken():
         $ already_discussed_relationship = get_topic("talk_how_do_you_feel_about_me").shown_count > 0
         if already_discussed_relationship:
-            n 1fsqpu "...Wow.{w=0.2} Really?"
+            n 1fsqputsb "...Wow.{w=0.2} Really?"
 
         else:
-            n 1fsqpu "...{w=0.3}I have no words for how I feel about {i}you{/i}."
-            n 1fsqfu "Don't freaking test me, {i}[player]{/i}."
+            n 1fsqputsb "...{w=0.3}I have no words for how I feel about {i}you{/i}."
+            n 1fsqfutsb "Don't freaking test me, {i}[player]{/i}."
 
         return
 
     else:
-        n 1fcsun "...{w=0.3}...{w=0.5}{nw}"
-        n 1fcsan "...{w=0.3}...{w=0.5}{nw}"
+        n 1fcsuntsa "...{w=1}...{w=1}{nw}"
+        n 1fcsantsa "...{w=1}..."
         return
 
     return

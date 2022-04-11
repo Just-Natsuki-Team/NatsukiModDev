@@ -861,10 +861,9 @@ init -990 python in jn_globals:
         "What's on your mind?",
         "What's happening?",
         "Something on your mind?",
-        "Oh?{w=0.2} You wanna talk to me?",
+        "Oh?{w=0.2} You wanna talk?",
         "Huh?{w=0.2} What's up?",
         "You wanna share something?",
-        "Hey!{w=0.2} What's up?",
         "What's new,{w=0.1} [player]?",
         "'Sup,{w=0.1} [player]?"
     ]
@@ -873,16 +872,13 @@ init -990 python in jn_globals:
     DEFAULT_TALK_FLAVOR_TEXT_UPSET_DISTRESSED = [
         "What do you want?",
         "What is it?",
-        "Can I help you?",
-        "Do you need me?",
         "Make it quick.",
         "What now?",
-        "Yes?",
         "What do you want now?",
         "What is it this time?",
         "Yeah?{w=0.2} What?",
-        "What is it now?",
-        "This had better be good."
+        "What now?",
+        "This better be good."
     ]
 
     # Flavor text for the talk menu at minimum affinity
@@ -892,7 +888,11 @@ init -990 python in jn_globals:
         "What?",
         "Just talk already.",
         "Spit it out.",
-        "Start talking."
+        "Start talking.",
+        "Get it over with.",
+        "What do {i}you{/i} want?",
+        "Get on with it.",
+        "Talk."
     ]
 
     # Emoticon sets for where we can't express Natsuki's emotions directly (I.E modals)
