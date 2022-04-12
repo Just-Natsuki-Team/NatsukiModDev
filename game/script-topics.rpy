@@ -715,7 +715,7 @@ label talk_careful_spending:
     n 1tllsr "..."
     n 1fllsr "..."
     n 1tnmpu "Hmm...?"
-    n 1uwdgs "O-{w=0.1}oh!{w=0.5}{nw} "
+    n 1uwdgsesu "O-{w=0.1}oh!{w=0.5}{nw} "
     extend 1flrbg " A-{w=0.1}aha!{w=0.5}{nw}"
     extend 1flrdvl " I spaced out!"
     n 1unmaj "I was just thinking..."
@@ -1300,7 +1300,7 @@ label talk_weather_setup_verify:
         extend 1nchsml " Ehehe."
         n 1nchbgl "Thanks a bunch,{w=0.1} [player]!{w=1}{nw}"
         extend 1uchgnl " This is gonna be {i}super{/i} awesome!"
-        $ jn_relationship("affinity+")
+        $ Natsuki.calculated_affinity_gain()
 
         python:
             persistent._jn_weather_api_configured = True
@@ -1983,7 +1983,8 @@ label talk_drinking_alcohol:
     n 1kcspu "But...{w=0.3} I'd...{w=0.3} really rather not get into that,{w=0.1} [player]."
     n 1ncssr "Sorry."
     n 1tlrpu "..."
-    n 1unmaj "Oh!{w=0.2} That reminds me,{w=0.1} actually!"
+    n 1uwdajesu "Oh!{w=0.5}{nw}" 
+    extend 1fllss " That reminds me,{w=0.1} actually!"
     n 1fnmbg "I bet you didn't know,{w=0.1} but guess who just randomly brought some into the club one day?"
     n 1fchgn "...Yuri!"
     n 1tnmbg "Surprised?{w=0.5}{nw}"
@@ -2690,7 +2691,7 @@ label talk_work_life_balance:
         n 1fslem "Or even students studying late into the night until they collapse..."
 
     if Natsuki.isNormal(higher=True):
-        n 1kcsem "Ugh...{w=0.3} I just wish people would value their own time more."
+        n 1kcsemesi "Ugh...{w=1} I just wish people would value their own time more."
         n 1klrsr "..."
         n 1unmaj "Hey,{w=0.1} [player]..."
         n 1nllaj "I don't know if you're working,{w=0.1} or studying,{w=0.1} or what..."
@@ -3134,37 +3135,37 @@ label talk_i_love_you:
         elif Natsuki.isUpset(higher=True):
             n 1fcsan "..."
             n 1fnmfu "Seriously,{w=0.1} [player]?{w=0.2} You're really going to say that to me {i}now{/i}?"
-            n 1fsqfu "The first time you choose to say it...{w=0.3} and you say it {i}now{/i}?"
+            n 1fsqfutsb "The first time you choose to say it...{w=0.3} and you say it {i}now{/i}?"
             n 1fcspu "..."
             n 1fwman "...And you really think I'm gonna buy that {i}now{/i},{w=0.1} [player]?"
             n 1fcsfu "..."
             n 1fcssr "..."
             n 1fsqsr "We're done with this."
             n 1fsqpu "And if you {i}really{/i} feel that way?"
-            n 1fsqsf "...Then why aren't {i}you{/i} trying to make this work,{w=0.1} [player]?"
+            n 1fsqsftsb "...Then why aren't {i}you{/i} trying to make this work,{w=0.1} [player]?"
             $ Natsuki.percentage_affinity_loss(10)
 
         else:
             # :(
-            n 1fsqpu "..."
-            n 1fcsun "Y-{w=0.1}you..."
-            n 1fcsan "You...{w=0.3} h-{w=0.1}how...!"
+            n 1fsqputsb "..."
+            n 1fcsuntsa "Y-{w=0.1}you..."
+            n 1fcsantsa "You...{w=0.3} h-{w=0.1}how...!"
             n 1fscwr "H-{w=0.1}how {i}dare{/i} you tell me that now!"
             n 1fscfu "{i}How {w=0.3} dare {w=0.3} you.{/i}"
             n 1fcsfu "..."
             n 1fcssr "..."
             n 1fsqsr "You knew how I felt,{w=0.1} [player]..."
             n 1fcsan "You knew for such a long time..."
-            n 1fsqfu "And now?{w=0.2} {i}Now{/i} is when you tell me?"
-            n 1fsqup "For the {i}first time{/i}?"
-            n 1fcsup "..."
+            n 1fsqfutsb "And now?{w=0.2} {i}Now{/i} is when you tell me?"
+            n 1fsquptse "For the {i}first time{/i}?"
+            n 1fcsuptsa "..."
             n 1kplan "I...{w=0.3} I c-{w=0.1}can't do this right now."
-            n 1kcsan "It...{w=0.5} it hurts..."
-            n 1kcsfu "..."
-            n 1fcspu "Get out of my sight,{w=0.1} [player]."
-            n 1fcsan "..."
-            n 1fsqfu "Go!"
-            n 1fscsc "{i}Just leave me alone!{/i}{nw}"
+            n 1kcsantsd "It...{w=0.5} it hurts..."
+            n 1kcsfutsd "..."
+            n 1fcsputsd "Get out of my sight,{w=0.1} [player]."
+            n 1fcsantsd "..."
+            n 1fsqfutse "Go!"
+            n 1fscsctdc "{i}JUST LEAVE ME ALONE!{/i}{nw}"
             $ Natsuki.percentage_affinity_loss(25)
             return { "quit": None }
 
@@ -3479,7 +3480,7 @@ label talk_natsukis_hairstyle:
         n 1flraj "It just costs so much,{w=0.1} you know?{w=0.2} It's super dumb!"
         n 1fnman "Like...{w=0.3} I don't get it at all!"
         n 1fllan "And the annoying thing is that if I were a guy,{w=0.1} it'd be way cheaper!{w=0.2} What's up with that?"
-        n 1ncssl "Ugh...{w=0.3} but yeah."
+        n 1ncsslesi "Ugh...{w=0.5} but yeah."
 
     else:
         n 1nlrsl "I was always kinda short when it came to getting it cut."
@@ -3604,7 +3605,7 @@ label talk_favourite_animal:
         n 1fcssm "That's barely even a question for me,{w=0.1} [player]."
         n 1uwdaj "Like...{w=0.3} if you've seen them,{w=0.1} can you blame me?"
         n 1fcspu "They're...{w=0.5}{nw}"
-        n 1fspgs "{i}Adorable{/i}!!"
+        n 1fspgsedz "{i}Adorable{/i}!!"
         n 1fbkbsl "I just love everything about them...{w=0.3} the little paws,{w=0.1} the bright eyes, those puffy cheeks..."
         n 1fspbgl "And that tiny little tail...{w=0.3} oh my gosh!{w=0.2} It's just precious!"
         n 1fllan "It really winds me up when people call them boring,{w=0.1} or unaffectionate though.{w=0.2} Like...{w=0.3} have you ever watched one?"
@@ -4064,7 +4065,7 @@ label talk_how_do_you_feel_about_me:
             n 1fcsanf "Nnnnnnn-!"
             n 1fnmanf "C-{w=0.1}come on! Isn't it obvious by now? Jeez...{w=0.5}{nw}"
             n 1fllpof "Do I really have to spell it out for you,{w=0.1} [player]?"
-            n 1fcspol "Ugh...{w=0.5}{nw}"
+            n 1fcspolesi "Ugh...{w=0.5}{nw}"
             n 1fsqssl "Heh.{w=0.2} Actually,{w=0.1} you know what?"
             n 1fsqbgl "I'll let you figure it out."
             n 1fslajl "And no,{w=0.1} before you ask -{w=0.1} you've had enough hints already."
@@ -4137,17 +4138,17 @@ label talk_how_do_you_feel_about_me:
     elif Natsuki.isBroken():
         $ already_discussed_relationship = get_topic("talk_how_do_you_feel_about_me").shown_count > 0
         if already_discussed_relationship:
-            n 1fsqpu "...Wow.{w=0.2} Really?"
+            n 1fsqputsb "...Wow.{w=0.2} Really?"
 
         else:
-            n 1fsqpu "...{w=0.3}I have no words for how I feel about {i}you{/i}."
-            n 1fsqfu "Don't freaking test me, {i}[player]{/i}."
+            n 1fsqputsb "...{w=0.3}I have no words for how I feel about {i}you{/i}."
+            n 1fsqfutsb "Don't freaking test me, {i}[player]{/i}."
 
         return
 
     else:
-        n 1fcsun "...{w=0.3}...{w=0.5}{nw}"
-        n 1fcsan "...{w=0.3}...{w=0.5}{nw}"
+        n 1fcsuntsa "...{w=1}...{w=1}{nw}"
+        n 1fcsantsa "...{w=1}..."
         return
 
     return
@@ -4451,7 +4452,7 @@ label talk_fried_squid:
     n 1flrpu "...Huh."
     n 1tnmpu "You know,{w=0.1} in hindsight?{w=0.2} That joke really wasn't funny the first time round."
     n 1tllpo "I've...{w=0.3} no idea why it'd be funny this time,{w=0.1} to be honest."
-    n 1uspgs "Oh!"
+    n 1uspgsesu "Oh!"
     n 1fchbg "But fried squid is no joke at all,{w=0.1} [player]!{w=0.2} Have you ever tried it?"
     n 1uchbs "It's {i}delicious{/i}!{w=0.2} I love it!"
     n 1fsqsm "Not just boring old fried seafood though -{w=0.1} it's gotta have the crap battered out of it first!"
@@ -4905,7 +4906,7 @@ label talk_custom_music_introduction:
     n 1fchbs "Aha!{w=0.2} Yes!"
     n 1nchsm "..."
     n 1uwdbg "Oh!{w=0.2} [player]!{w=0.2} [player]!"
-    n 1uchgn "Guess what I fooound!{w=0.2} Ehehe."
+    n 1uchgn "Guess what I fooound!{w=0.5} Ehehe."
     n 1nchbs "It's...{w=0.3} a music player!{w=0.2} Neat,{w=0.1} right?"
     n 1tlrbg "Well...{w=0.3} kinda.{w=0.2} It's not exactly...{w=0.3} {i}modern{/i},{w=0.1} but it'll do the job!"
     n 1tllpo "Come to think of it...{w=0.3} I don't really even know who it belongs to."
@@ -5317,7 +5318,7 @@ label talk_windup_subscriptions:
     n 1fcsan "I've had to skip out on so many programs because they want me to pay for a whole bunch of crap in a package I don't care about!"
     n 1fllan "Like...{w=0.3} come {i}on{/i}!{w=0.5}{nw}"
     extend 1fllfr " Just let me pay for what I need!"
-    n 1kcsem "Ugh..."
+    n 1kcsemesi "Ugh..."
     n 1fnmsl "The worst part is that it all adds up too!{w=0.5}{nw}"
     extend 1fllpu " It's super easy to lose track of what you're paying for each month..."
     n 1fnmpu "And then before you know it,{w=0.3}{nw}"
@@ -5511,7 +5512,7 @@ label talk_realizations_player_ddlc_actions:
     n 1fcsan "..."
     n 1fcsem "Rrrgh,{w=0.1}{w=0.5}{nw}"
     extend 1fllem " this is so confusing!"
-    n 1fcsem "Ugh...{w=0.5}{nw}"
+    n 1fcsemesi "Ugh...{w=0.5}{nw}"
     extend 1nnmpo " you know what?"
 
     if Natsuki.isAffectionate(higher=True):
@@ -5825,11 +5826,15 @@ label talk_fighting_drowsiness:
     n 1nllpu "...{w=2}{nw}"
     n 1nslpu "...{w=3}{nw}"
     n 1ncsbo "...{w=4}{nw}"
-    $ renpy.pause(7)
+    n 1ncsemesl "...{w=2}{nw}"
+    n 1ncsajesl "...{w=2}{nw}"
+    n 1ncsemesl "...{w=2}{nw}"
+    n 1ncsajesl "...{w=2}{nw}"
+    $ renpy.pause(4)
     n 1fcsbo "..."
     n 1nsqpu "Mmmmm...{w=0.5}{nw}"
     extend 1tsqsr " mmmnn?"
-    n 1uskem "...!{w=0.5}{nw}"
+    n 1uskemesh "...!{w=0.5}{nw}"
     n 1ullwrl "W-{w=0.1}woah!{w=0.5}{nw}"
     extend 1flrss " Ahaha..."
     n 1nsrss "I...{w=0.3} haven't been getting much sleep here,{w=0.1} as you can guess."
@@ -5971,7 +5976,7 @@ label talk_fear_of_spiders:
     n 1nnmaj "And some of them -{w=0.5}{nw}"
     extend 1nslss " as weird as it feels to say -{w=0.5}{nw}"
     extend 1ncspu " are{w=1} freaking{w=1.5}{nw}"
-    extend 1fspgs " {i}adorable{/i}!"
+    extend 1fspgsedz " {i}adorable{/i}!"
     n 1uwdaj "Seriously!{w=1.5}{nw}"
     extend 1uchbg " Jumping spiders are cuuuute!"
     n 1tnmss "So...{w=0.3} overall?{w=0.5}{nw}"
@@ -6363,7 +6368,7 @@ label talk_feelings_about_monika:
     n 1knmsl "...Maybe the same thing would've happened to me?"
     n 1fcseml "D-{w=0.1}don't get me wrong though!{w=0.5}{nw}"
     extend 1flrem " I'm never gonna forget what she did...{w=0.5}{nw}"
-    extend 1fsrpu " forgive what she did."
+    extend 1fsrputsb " forgive what she did."
     n 1nlrpu "But...{w=1}{nw}"
     extend 1knmsr " she {i}was{/i} still my friend."
     n 1kllpu "So there's always gonna be a part of me that kinda wishes I {i}could{/i} forgive her."
@@ -6389,7 +6394,7 @@ init 5 python:
 
 label talk_feelings_about_yuri:
     n 1kllpul "...Oh man,{w=1} Yuri..."
-    n 1kcsun "..."
+    n 1kcsuntsb "..."
     n 1ncspu "...I won't lie,{w=0.3} [player].{w=1.5}{nw}"
     extend 1ksqfr " I really,{w=0.5} {i}really{/i} didn't want to think about...{w=1} {i}that{/i} again."
     n 1kcssl "..."
@@ -6400,9 +6405,9 @@ label talk_feelings_about_yuri:
     extend 1nslca " You probably guessed that already anyway."
     n 1kwmpu "But we had an {i}understanding{/i},{w=0.1} you know?"
     n 1kllpul "She was...{w=1}{nw}"
-    extend 1kcsunl " there...{w=1}{nw}"
-    extend 1fcsunl " for me."
-    n 1fsrunl "When I needed someone there the most.{w=1}{nw}"
+    extend 1kcsunltsa " there...{w=1}{nw}"
+    extend 1fcsunltsa " for me."
+    n 1fsrunltsb "When I needed someone there the most.{w=1}{nw}"
     extend 1fnmem " When nobody else would get it...{w=1}{nw}"
     extend 1kslpu " Could even {i}hope{/i} to get it."
     n 1kwmpu "...{w=0.5}Do you even know how much that meant to me?"
@@ -6434,9 +6439,9 @@ label talk_feelings_about_yuri:
     extend 1kplup " I had no {i}choice{/i},{w=0.1} [player]!"
     n 1fcsup "...Neither of us did."
     n 1fcsanl "Even when I {i}begged{/i} you for help,{w=0.1} I..."
-    n 1kcsanl "I-..."
-    n 1kcsupl "..."
-    n 1fcsunl "..."
+    n 1kcsanltsa "I-..."
+    n 1kcsupltsd "..."
+    n 1fcsunltsa "..."
     n 1kcseml "...Sorry,{w=0.1} [player]."
     n 1ksrunl "I really don't think it's good for me to keep talking about this.{w=1}{nw}"
     extend 1ksqpul " ...About her."
@@ -6444,10 +6449,10 @@ label talk_feelings_about_yuri:
     n 1kcseml "..."
     n 1fwmsrl "...I miss my friend.{w=1}{nw}"
     extend 1kllsr " I miss how she used to be."
-    n 1kllaj "So...{w=0.3} remembering what happened?{w=0.5}{nw}"
+    n 1kllaj "So...{w=0.5} remembering what happened?{w=0.5}{nw}"
     extend 1kskem " What she {i}became{/i}?"
     n 1fcsem "It...{w=1} just hurts,{w=0.1} [player].{w=1.5}{nw}"
-    extend 1fcsunl " It hurts a lot."
+    extend 1fcsunltsa " It hurts a lot."
     n 1fsqun "...And to be honest?"
     n 1ksrpu "...I'm not sure it ever {i}won't{/i}."
 
@@ -6491,14 +6496,14 @@ label talk_feelings_about_sayori:
     n 1fcsun "Knowing she was just wearing a mask,{w=1}{nw}"
     extend 1fcsfu " then dancing like a puppet under Monika's hand?"
     n 1ksrbol "...While her own mind was beating the absolute {i}crap{/i} out of her."
-    n 1kcspu "..."
+    n 1kcspuesi "..."
     n 1ncsss "Heh.{w=1}{nw}"
     extend 1nsqss " You know what?"
     n 1ncspu "I don't care about my cookie she took a giant bite out of."
     n 1nlrpu "I don't care about the dumb songs she'd sing,{w=1}{nw}"
     extend 1nslssl " or her...{w=0.3} awkward...{w=0.3} compliments."
     n 1tnmsr "At this point?"
-    n 1ksrsrl "I think I'd do {i}anything{/i} just to see a genuine Sayori smile again..."
+    n 1ksrsrltsb "I think I'd do {i}anything{/i} just to see a genuine Sayori smile again..."
     n 1kcsssf "...And give her one of those big,{w=0.1} dumb hugs she liked so much."
 
     return

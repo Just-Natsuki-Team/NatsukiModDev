@@ -93,7 +93,7 @@ label event_caught_reading_manga:
     $ jn_events.display_visuals("1fsrpo")
     $ jn_globals.force_quit_enabled = True
 
-    n 1uskem "...!"
+    n 1uskemesh "...!"
     n 1uskeml "[player]!{w=0.5}{nw}"
     extend 1fcsan " C-{w=0.1}can you {i}believe{/i} this?"
     n 1fllfu "Parfait Girls got a new editor,{w=0.3}{nw}"
@@ -164,7 +164,7 @@ label event_caught_writing_poetry:
     $ jn_events.display_visuals("1fsrpo")
     $ jn_globals.force_quit_enabled = True
 
-    n 1uskupl "...!"
+    n 1uskuplesh "...!"
     $ player_initial = jn_utils.get_player_initial()
     n 1uskgsf "[player_initial]-[player]?!{w=0.5}{nw}"
     extend 1fbkwrl " How long have you been there?!"
@@ -227,11 +227,11 @@ label event_relationship_doubts:
     $ jn_events.display_visuals("1fcsupl")
     $ jn_globals.force_quit_enabled = True
 
-    n 1fsqunl "..."
-    n 1fsqem "...Oh.{w=1}{nw}"
+    n 1fsqunltsb "..."
+    n 1fsqemtsb "...Oh.{w=1}{nw}"
     extend 1fsrsr " {i}You're{/i} here."
     n 1ncsem "{i}Great{/i}..."
-    n 1fcsan "Yeah, that's {i}just{/i} what I need right now."
+    n 1fcsantsa "Yeah, that's {i}just{/i} what I need right now."
 
     return
 
@@ -290,7 +290,7 @@ label event_code_fiddling:
     $ jn_globals.force_quit_enabled = True
 
     $ player_initial = jn_utils.get_player_initial()
-    n 1uskeml "Ack-!"
+    n 1uskemlesh "Ack-!"
     n 1fbkwrl "[player_initial]-{w=0.1}[player]!"
     extend 1fcseml " Are you {i}trying{/i} to give me a heart attack or something?"
     n 1fllpol "Jeez..."

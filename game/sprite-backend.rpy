@@ -27,7 +27,7 @@ init -50 python:
         angry = 3
         awe = 4
         big = 5
-        bigsmile = 6
+        big_smile = 6
         bored = 7
         caret = 8
         catty = 9
@@ -47,8 +47,8 @@ init -50 python:
         shock = 23
         slant = 24
         small = 25
-        smallfrown = 26
-        smallsmile = 27
+        small_frown = 26
+        small_smile = 27
         smile = 28
         smirk = 29
         smug = 30
@@ -65,9 +65,9 @@ init -50 python:
 
     class JNEyes(Enum):
         baka = 1
-        circletears = 2
-        closedhappy = 3
-        closedsad = 4
+        circle_tears = 2
+        closed_happy = 3
+        closed_sad = 4
         cute = 5
         normal = 6
         pleading = 7
@@ -79,12 +79,12 @@ init -50 python:
         unamused = 13
         warm = 14
         wide = 15
-        winkleft = 16
-        winkright = 17
-        lookleft = 18
-        lookright = 19
-        squintleft = 20
-        squintright = 21
+        wink_left = 16
+        wink_right = 17
+        look_left = 18
+        look_right = 19
+        squint_left = 20
+        squint_right = 21
 
         def __str__(self):
             return self.name
@@ -100,8 +100,19 @@ init -50 python:
             return self.name
 
     class JNTears(Enum):
-        heavy = 1
-        pooled = 2
+        double_stream_closed = 1
+        double_stream_narrow = 2
+        double_stream_regular = 3
+        dried = 4
+        single_pooled_closed = 5
+        single_pooled_narrow = 6
+        single_pooled_regular = 7
+        single_stream_closed = 8
+        single_stream_narrow = 9
+        single_stream_regular = 10
+        spritz = 11
+        wink_pooled_left = 12
+        wink_pooled_right = 13
 
         def __str__(self):
             return self.name
@@ -114,7 +125,7 @@ init -50 python:
         exclamation = 5
         idea = 6
         merry = 7
-        questionmark = 8
+        question_mark = 8
         sad = 9
         sigh = 10
         shock = 11
@@ -184,7 +195,7 @@ init -50 python:
         # Tears
         if tears:
             lc_args.extend([
-                (0, 0), "{0}{1}/face/tears/{2}.png".format((_BASE_SPRITE_PATH, pose, blush))
+                (0, 0), "{0}{1}/face/tears/{2}.png".format(_BASE_SPRITE_PATH, pose, tears)
             ])
 
         # Headgear
@@ -231,12 +242,12 @@ init 1 python:
 
     EYE_MAP = {
         "bk": JNEyes.baka,
-        "ct": JNEyes.circletears,
-        "ch": JNEyes.closedhappy,
-        "cs": JNEyes.closedsad,
+        "ct": JNEyes.circle_tears,
+        "ch": JNEyes.closed_happy,
+        "cs": JNEyes.closed_sad,
         "cu": JNEyes.cute,
-        "ll": JNEyes.lookleft,
-        "lr": JNEyes.lookright,
+        "ll": JNEyes.look_left,
+        "lr": JNEyes.look_right,
         "nm": JNEyes.normal,
         "pl": JNEyes.pleading,
         "sc": JNEyes.scared,
@@ -244,13 +255,13 @@ init 1 python:
         "sg": JNEyes.smug,
         "sp": JNEyes.sparkle,
         "sq": JNEyes.squint,
-        "sl": JNEyes.squintleft,
-        "sr": JNEyes.squintright,
+        "sl": JNEyes.squint_left,
+        "sr": JNEyes.squint_right,
         "un": JNEyes.unamused,
         "wm": JNEyes.warm,
         "wd": JNEyes.wide,
-        "wl": JNEyes.winkleft,
-        "wr": JNEyes.winkright,
+        "wl": JNEyes.wink_left,
+        "wr": JNEyes.wink_right,
     }
 
     MOUTH_MAP = {
@@ -258,7 +269,7 @@ init 1 python:
         "an": JNMouth.angry,
         "aw": JNMouth.awe,
         "bg": JNMouth.big,
-        "bs": JNMouth.bigsmile,
+        "bs": JNMouth.big_smile,
         "bl": JNMouth.blep,
         "bo": JNMouth.bored,
         "ca": JNMouth.caret,
@@ -279,8 +290,8 @@ init 1 python:
         "sk": JNMouth.shock,
         "sl": JNMouth.slant,
         "sm": JNMouth.smile,
-        "sf": JNMouth.smallfrown,
-        "ss": JNMouth.smallsmile,
+        "sf": JNMouth.small_frown,
+        "ss": JNMouth.small_smile,
         "sg": JNMouth.smug,
         "ts": JNMouth.tease,
         "tr": JNMouth.triangle,
@@ -289,32 +300,43 @@ init 1 python:
         "wr": JNMouth.worried,
     }
 
-    TEARS_MAP = {
-        "h": JNTears.heavy,
-        "p": JNTears.pooled,
-    }
-
     BLUSH_MAP = {
         "f": JNBlush.full,
         "l": JNBlush.light,
     }
 
+    TEARS_MAP = {
+        "tda": JNTears.double_stream_closed,
+        "tdb": JNTears.double_stream_narrow,
+        "tdc": JNTears.double_stream_regular,
+        "tdr": JNTears.dried,
+        "tsa": JNTears.single_pooled_closed,
+        "tsb": JNTears.single_pooled_narrow,
+        "tsc": JNTears.single_pooled_regular,
+        "tsd": JNTears.single_stream_closed,
+        "tse": JNTears.single_stream_narrow,
+        "tsf": JNTears.single_stream_regular,
+        "tsz": JNTears.spritz,
+        "twl": JNTears.wink_pooled_left,
+        "twr": JNTears.wink_pooled_right
+    }
+
     EMOTE_MAP = {
-        "f": JNEmote.affection,
-        "n": JNEmote.anger,
-        "z": JNEmote.dazzle,
-        "d": JNEmote.dread,
-        "e": JNEmote.exclamation,
-        "i": JNEmote.idea,
-        "m": JNEmote.merry,
-        "q": JNEmote.questionmark,
-        "s": JNEmote.sad,
-        "h": JNEmote.sigh,
-        "k": JNEmote.shock,
-        "l": JNEmote.sleepy,
-        "o": JNEmote.somber,
-        "p": JNEmote.speech,
-        "u": JNEmote.surprise
+        "eaf": JNEmote.affection,
+        "ean": JNEmote.anger,
+        "edz": JNEmote.dazzle,
+        "edr": JNEmote.dread,
+        "eex": JNEmote.exclamation,
+        "eid": JNEmote.idea,
+        "eme": JNEmote.merry,
+        "eqm": JNEmote.question_mark,
+        "esd": JNEmote.sad,
+        "esi": JNEmote.sigh,
+        "esh": JNEmote.shock,
+        "esl": JNEmote.sleepy,
+        "eso": JNEmote.somber,
+        "esp": JNEmote.speech,
+        "esu": JNEmote.surprise
     }
 
     def _parse_exp_code(exp_code):
@@ -349,30 +371,35 @@ init 1 python:
         tears = None
         emote = None
 
-        #If we still have an expcode, we know we have either tears, blush, or both
+        #If we still have an expcode, we know we have optional portions to process
         while exp_code:
-            exp_part = exp_code[0]
-            exp_code = exp_code[1:]
-
-            #Check if part is a tear
-            if exp_part in TEARS_MAP:
-                tears = exp_part
-
-            #Otherwise it might be a blush
-            elif exp_part in BLUSH_MAP:
+            if exp_code[0] in BLUSH_MAP:
+                exp_part = exp_code[0]
+                exp_code = exp_code[1:]
                 blush = exp_part
 
-            # Finally, emote
-            elif exp_part in EMOTE_MAP:
-                emote = exp_part
+            else:
+                if exp_code[:3] in TEARS_MAP:
+                    tears = exp_code[:3]
+                    exp_code = exp_code[3:]
+
+                elif exp_code[:3] in EMOTE_MAP:
+                    emote = exp_code[:3]
+                    exp_code = exp_code[3:]
+
+                #To avoid an infinite loop, we'll raise another ValueError to note this format is invalid
+                else:
+                    raise ValueError(
+                        "Invalid optional expression part: '{0}'. (All optional parts must follow mandatory ones)".format(exp_code)
+                    )
 
         return {
             "pose": POSE_MAP[pose],
             "eyebrows": EYEBROW_MAP[eyebrows],
             "eyes": EYE_MAP[eyes],
             "mouth": MOUTH_MAP[mouth],
-            "tears": TEARS_MAP.get(tears),
             "blush": BLUSH_MAP.get(blush),
+            "tears": TEARS_MAP.get(tears),
             "emote": EMOTE_MAP.get(emote)
         }
 
@@ -494,107 +521,20 @@ init 1 python:
     renpy.display.image.ImageReference.find_target = _find_target_override
 
 # Sprite code format:
-# <pose><eyebrows><eyes><mouth><tears><blush><emote>
+# <pose><eyebrows><eyes><mouth><blush><tears><emote>
+#
+# Pose, eyebrows, eyes and mouth are compulsary. Any others are optional.
 #
 # Some notes regarding lengths of each part:
 #   pose: 1 character
 #   eyebrows: 1 character
 #   eyes: 2 characters
 #   mouth: 2 characters
-#   tears: 1 character
 #   blush: 1 character
+#   tears: 3 characters
+#   emote: 3 characters
 #
-# Sprite code values:
-# <pose> - The current pose Natsuki is resting in
-# 1 - upright
-#
-# <eyebrows> - The eyebrows Natsuki is currently showing
-# n - normal
-# u - up
-# k - knit
-# f - furrowed
-# t - think
-#
-# <eyes> - The eyes Natsuki is currently showing
-# bk - baka
-# ct - circle/cartoon tears
-# ch - closed happy
-# cs - closed sad
-# cu - cute
-# ll - lookleft
-# lr - lookright
-# nm - normal
-# pl - pleading
-# sc - scared
-# sk - shocked
-# sg - smug
-# sp - sparkle
-# sq - squint
-# sl - squint, left
-# sr - squint, right
-# un - unamused
-# wm - warm
-# wd - wide
-# wl - winking, left
-# wr - winking, right
-#
-# <mouth> - The mouth shape Natsuki is currently making
-# aj - ajar
-# an - angry
-# aw - awe
-# bg - big
-# bs - big smile
-# bo - bored
-# ca - caret
-# ct - catty
-# dv - devious
-# em - embarrassed
-# fr - frown
-# fu - furious
-# gs - gasp
-# gn - grin
-# lg - laugh
-# nv - nervous
-# po - pout
-# pu - pursed
-# sc - scream
-# sr - serious
-# sk - shock
-# sl - slant
-# sm - smile
-# sf - small frown
-# ss - small smile
-# sg - smug
-# ts - tease
-# tr - triangle
-# un - uneasy
-# up - upset
-# wr - worried
-#
-# <tears> - The tears Natsuki is currently showing
-# h - heavy
-# p - pooled
-#
-# <blush> - The amount of blush on Natsuki's face
-# f - full
-# l - light
-#
-# <emote> - Emotion effects around Natsuki, E.G lightbulb representing an idea, etc.
-# f - affection
-# n - anger
-# z - dazzle
-# d - dread
-# e - exclamation
-# i - idea
-# m - merry
-# q - questionmark
-# s - sad
-# h - sigh
-# k - shock
-# l - sleepy
-# o - somber
-# p - speech
-# u - surprise
+# For spritecode construction, use the previewer @ https://just-natsuki-team.github.io/Expression-Previewer/
 
 # This selects which idle image to show based on current affinity state
 image natsuki idle = ConditionSwitch(
@@ -690,17 +630,19 @@ image natsuki idle low_affinity:
 image natsuki idle min_affinity:
     block:
         choice:
-            "natsuki 1fcsun"
+            "natsuki 1fcsuntsa"
         choice:
-            "natsuki 1kcssr"
+            "natsuki 1fcsantsa"
         choice:
-            "natsuki 1fsqup"
+            "natsuki 1fslantsb"
         choice:
-            "natsuki 1fsqun"
+            "natsuki 1fcssrtsa"
         choice:
-            "natsuki 1kcsup"
+            "natsuki 1kcssrtsa"
         choice:
-            "natsuki 1fcsup"
+            "natsuki 1ksrsrtsb"
+        choice:
+            "natsuki 1fsrantse"
 
         pause 10
         repeat
@@ -793,9 +735,9 @@ image natsuki talk_menu_medium_affinity:
 image natsuki talk_menu_low_affinity:
     block:
         choice:
-            "natsuki 1fnmaj"
+            "natsuki 1fcsun"
         choice:
-            "natsuki 1fslaj"
+            "natsuki 1fslun"
         choice:
             "natsuki 1fsrbo"
         choice:
@@ -807,12 +749,10 @@ image natsuki talk_menu_low_affinity:
 image natsuki talk_menu_min_affinity:
     block:
         choice:
-            "natsuki 1fcsan"
+            "natsuki 1fcsantsb"
         choice:
-            "natsuki 1fslem"
+            "natsuki 1fsluntse"
         choice:
-            "natsuki 1fsrsf"
+            "natsuki 1fcssrtse"
         choice:
-            "natsuki 1fcssf"
-        choice:
-            "natsuki 1kcsan"
+            "natsuki 1fnmantdr"
