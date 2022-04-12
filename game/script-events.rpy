@@ -355,7 +355,7 @@ label event_not_ready_yet:
     $ jn_events.display_visuals("1uskeml")
     $ jn_globals.force_quit_enabled = True
 
-    n 1uskeml "H-{w=0.3}huh?{w=1.5}{nw}"
+    n 1uskemlesh "H-{w=0.3}huh?{w=1.5}{nw}"
     extend 1uskwrl " [player]?!{w=1}{nw}"
     extend 1klleml " You're here already?!"
     n 1flrunl "..."
@@ -431,7 +431,7 @@ label event_renpy_for_dummies:
     $ jn_events.display_visuals("1fcspo")
     $ jn_globals.force_quit_enabled = True
 
-    n 1uskem "O-{w=0.3}oh!"
+    n 1uskemesh "O-{w=0.3}oh!"
     extend 1fllbgl " H-{w=0.3}hey,{w=0.1} [player]!"
     n 1ullss "I was just...{w=1.5}{nw}"
     extend 1nslss " doing...{w=1.5}{nw}"
@@ -495,7 +495,7 @@ label event_reading_a_la_mode:
     $ jn_events.display_visuals("1unmajl")
     $ jn_globals.force_quit_enabled = True
 
-    n 1unmgsl "Oh!{w=1}{nw}"
+    n 1unmgslesu "Oh!{w=1}{nw}"
     extend 1fllbgl " H-{w=0.1}hey,{w=0.1} [player]!"
     n 1nsrss "I was just catching up on some reading time..."
     n 1fspaj "Who'd have guessed slice of life and fashion go so well together?"
@@ -556,7 +556,7 @@ label event_drinking_strawberry_milkshake:
     n 1nchdr "..."
     play audio straw_sip
     n 1nsqdr "..."
-    n 1uskdrl "...!"
+    n 1uskdrlesh "...!"
     $ player_initial = jn_utils.get_player_initial()
     n 1fbkwrl "[player_initial]-{w=0.3}[player]!{w=1}{nw}"
     extend 1flleml " I wish you'd stop just {i}appearing{/i} like that..."
