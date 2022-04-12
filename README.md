@@ -54,7 +54,8 @@ Please read this document thoroughly before downloading and installing the mod!
             <br />
             <sub><b>Lunulae</b></sub>
         </a>
-    </td></tr>
+    </td>
+</tr>
 <tr>
     <td align="center">
         <a href="https://github.com/Nemu-sus">
@@ -62,9 +63,19 @@ Please read this document thoroughly before downloading and installing the mod!
             <br />
             <sub><b>ALTER</b></sub>
         </a>
+    </td>
+    <td align="center">
+        <a href="https://twitter.com/art_almay">
+            <img src="https://justnatsuki.club/img/portraits/almay.jpg" width="100;" alt="Almay_art"/>
+            <br />
+            <sub><b>Almay_art</b></sub>
+        </a>
     </td></tr>
 </table>
 <!-- readme: contributors -end -->
+
+### Special thanks
+- Snow, rain graphics thanks to Monika After Story team @ https://github.com/Monika-After-Story/MonikaModDev
 
 ### Contents
 
@@ -72,7 +83,7 @@ Please read this document thoroughly before downloading and installing the mod!
 2. [What to expect from Just Natsuki](#what-to-expect-from-just-natsuki)
 3. [Installation](#installation)
 4. [Updating](#updating)
-4. [FAQ](#faq)
+4. [Frequently Asked Questions](#frequently-asked-questions)
 5. [Community](#community)
 
 ### Disclaimer
@@ -126,26 +137,9 @@ Please note that until automatic updates are implemented, any updates released m
 4. From the JN mod files, copy the `lib` folder contents (all of it) into the `lib` folder of your JN installation. If asked to replace files, select _Yes_.
 5. Finally, launch `DDLC.exe`.
 
-### FAQ
+### Frequently Asked Questions
 
-- _I downloaded and installed the mod files, but the game is still vanilla DDLC._
-    - Double check your installation - remember that mod files must be extracted/unzipped, as well as the DDLC base game files.
-- _I downloaded and installed the mod files, but the game is nothing like the screenshots on the website._
-    - You may have installed the discontinued distribution of Just Natsuki: delete your installation and retry with the instructions above. Remember: the only official mod files are from GitHub!
-- _I downloaded and installed newer mod files, and now my game won't launch._
-    - You may need to delete your persistent file: make a copy and delete it, then try launching `DDLC.exe`.
-- _How do I report a bug with the mod?_
-    - Please log a bug report through the _Issues_ on GitHub, clicking _New issue_, then selecting _Report Bug_. Only one bug per report, please!
-- _How do I request support for the mod?_
-    - Please log a support request through the _Issues_ on GitHub, clicking _New issue_, then selecting _Support Request_. Only one item per request, please!
-- _Where can I make suggestions for the mod?_
-    - Please log a feature request through the _Issues_ on GitHub, clicking _New issue_, then selecting _Feature Request_. Please note we do not take suggestions from any other avenue of communication. Only one suggestion per request, please!
-- _Can I join the team?_
-    - Invitation to join our team is based on visible contributions to Just Natsuki and/or related DDLC mods, skillset, and participation in the DDLC community as judged by the team. Please do not ask to join directly!
-- _How do I progress in the mod/unlock a specific feature?_
-    - Simply put, all good things take time. Visit Natsuki often, explore your options and most importantly, treat her well! Please remember - this is a *long-term* mod, with relationship progression happening over weeks and months: so check in and update often!
-- _How do I update the game?_
-    - Please refer to the instructions listed [here](#updating). 
+Please refer to the full article on the wiki [here](https://github.com/Just-Natsuki-Team/NatsukiModDev/wiki/Home).
 
 ### Community
 

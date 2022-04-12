@@ -1,5 +1,7 @@
-init python:
+init -50 python:
     import store
+    import store.jn_outfits as jn_outfits
+    import store.jn_utils as jn_utils
     from Enum import Enum
 
     JN_NATSUKI_ZORDER = 3
@@ -55,6 +57,8 @@ init python:
         uneasy = 33
         upset = 34
         worried = 35
+        blep = 36
+        drink = 37
 
         def __str__(self):
             return self.name
@@ -143,68 +147,76 @@ init python:
         emote=None
     ):
         """
+        Generates sprites for Natsuki based on outfit, expression, pose, etc.
         """
         lc_args = [
             (1280, 740), # Anchor
             (0, 0), _BASE_SPRITE_PATH + "desk/chair-normal.png", # Chair
-            (0, 0), "{0}{1}/hair/[persistent.jn_natsuki_current_hairstyle]/back.png".format(_BASE_SPRITE_PATH, pose), # Hair back
+            (0, 0), "{0}{1}/hair/[Natsuki._outfit.hairstyle.reference_name]/back.png".format(_BASE_SPRITE_PATH, pose), # Hair back
             (0, 0), "{0}{1}/base/body.png".format(_BASE_SPRITE_PATH, pose), # Body
-            (0, 0), "{0}{1}/clothes/[persistent.jn_natsuki_current_outfit]/body.png".format(_BASE_SPRITE_PATH, pose), # Outfit, body
+            (0, 0), "{0}{1}/clothes/[Natsuki._outfit.clothes.reference_name]/body.png".format(_BASE_SPRITE_PATH, pose), # Outfit, body
         ]
 
-        #TODO: Fix this
-        # if store.persistent.jn_natsuki_current_necklace is not None:
-        #     lc_args.extend([
-        #         (0, 0), "{0}{1}/necklace/[persistent.jn_natsuki_current_necklace].png".format(_BASE_SPRITE_PATH, pose)
-        #     ])
-
+        # Necklace
+        necklace = Null() if not Natsuki._outfit.necklace else "{0}{1}/necklace/[Natsuki._outfit.necklace.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose)
         lc_args.extend([
-            (0, 0), "{0}{1}/base/head.png".format(_BASE_SPRITE_PATH, pose), # Head
+            (0, 0), necklace
         ])
 
+        # Head
+        lc_args.extend([
+            (0, 0), "{0}{1}/base/head.png".format(_BASE_SPRITE_PATH, pose),
+        ])
+
+        # Blush
         if blush:
             lc_args.extend([
                 (0, 0), "{0}{1}/face/blush/{2}.png".format(_BASE_SPRITE_PATH, pose, blush)
             ])
 
+        # Mouth, nose, hair (front)
         lc_args.extend([
-            (0, 0), "{0}{1}/face/mouth/{2}.png".format(_BASE_SPRITE_PATH, pose, mouth), # Mouth
-            (0, 0), "{0}{1}/face/nose/nose.png".format(_BASE_SPRITE_PATH, pose), # Nose
-            (0, 0), "{0}{1}/hair/[persistent.jn_natsuki_current_hairstyle]/bangs.png".format(_BASE_SPRITE_PATH, pose), # Hair front
+            (0, 0), "{0}{1}/face/mouth/{2}.png".format(_BASE_SPRITE_PATH, pose, mouth),
+            (0, 0), "{0}{1}/face/nose/nose.png".format(_BASE_SPRITE_PATH, pose),
+            (0, 0), "{0}{1}/hair/[Natsuki._outfit.hairstyle.reference_name]/bangs.png".format(_BASE_SPRITE_PATH, pose),
         ])
 
-        #TODO: Expand accessories and clothes into their own subsystems
-        if store.persistent.jn_natsuki_current_accessory is not None:
-            lc_args.extend([
-                (0, 0), "{0}{1}/accessories/[persistent.jn_natsuki_current_accessory].png".format(_BASE_SPRITE_PATH, pose)
-            ])
-
+        # Accessory
+        accessory = Null() if not Natsuki._outfit.accessory else "{0}{1}/accessory/[Natsuki._outfit.accessory.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose)
         lc_args.extend([
-            (0, 0), "{0}{1}/face/eyes/{2}.png".format(_BASE_SPRITE_PATH, pose, eyes) # Eyes
+            (0, 0), accessory
         ])
 
+        # Eyes
+        lc_args.extend([
+            (0, 0), "{0}{1}/face/eyes/{2}.png".format(_BASE_SPRITE_PATH, pose, eyes), 
+        ])
+
+        # Tears
         if tears:
             lc_args.extend([
                 (0, 0), "{0}{1}/face/tears/{2}.png".format(_BASE_SPRITE_PATH, pose, tears)
             ])
 
-        #TODO: Fix this
-        # if store.persistent.jn_natsuki_current_headgear is not None:
-        #     lc_args.extend([
-        #         (0, 0), "{0}{1}/headgear/[persistent.jn_natsuki_current_headgear].png".format(_BASE_SPRITE_PATH, pose)
-        #     ])
+        # Headgear
+        headgear = Null() if not Natsuki._outfit.headgear else "{0}{1}/headgear/[Natsuki._outfit.headgear.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose)
+        lc_args.extend([
+            (0, 0), headgear
+        ])
 
-        #TODO: Fix this
-        # if store.persistent.jn_natsuki_current_eyewear is not None:
-        #     lc_args.extend([
-        #         (0, 0), "{0}{1}/eyewear/[persistent.jn_natsuki_current_eyewear].png".format(_BASE_SPRITE_PATH, pose)
-        #     ])
+        # Eyewear
+        eyewear = Null() if not Natsuki._outfit.eyewear else "{0}{1}/eyewear/[Natsuki._outfit.eyewear.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose)
+        lc_args.extend([
+            (0, 0), eyewear
+        ])
 
+        # Emotes
         if emote:
             lc_args.extend([
                 (0, 0), "{0}{1}/emote/{2}.png".format(_BASE_SPRITE_PATH, pose, emote)
             ])
 
+        # Brows
         lc_args.extend([
             (0, 0), "{0}{1}/face/eyebrows/{2}.png".format(_BASE_SPRITE_PATH, pose, eyebrows), # Brows
             (0, 0), _BASE_SPRITE_PATH + "/desk/table-normal.png" # Table
@@ -258,9 +270,11 @@ init 1 python:
         "aw": JNMouth.awe,
         "bg": JNMouth.big,
         "bs": JNMouth.big_smile,
+        "bl": JNMouth.blep,
         "bo": JNMouth.bored,
         "ca": JNMouth.caret,
         "ct": JNMouth.catty,
+        "dr": JNMouth.drink,
         "dv": JNMouth.devious,
         "em": JNMouth.embarrassed,
         "fr": JNMouth.frown,
@@ -412,6 +426,9 @@ init 1 python:
         If this method can't find an image and it follows the pattern of Natsuki's sprites, it'll try to generate one.
 
         Main change to this function is the ability to auto generate displayables
+
+        IN:
+            - self - Reference to the calling narration statement, so we can access its args (name and spritecode)
         """
         name = self.name
 
@@ -419,11 +436,25 @@ init 1 python:
             self.target = name
             return True
 
+        # Name is a tuple of (character_name, spritecode); we use these to determine displayable
         if not isinstance(name, tuple):
             name = tuple(name.split())
 
         def error(msg):
-            self.target = renpy.text.text.Text(msg, color=(255, 0, 0, 255), xanchor=0, xpos=0, yanchor=0, ypos=0)
+            """
+            Sets the image target to a displayable (text) for a missing image.
+
+            IN:
+                - msg - The message to display for the fallback displayable
+            """
+            self.target = renpy.text.text.Text(
+                msg,
+                color=(255, 0, 0, 255),
+                xanchor=0,
+                xpos=0,
+                yanchor=0,
+                ypos=0
+            )
 
             if renpy.config.debug:
                 raise Exception(msg)
@@ -431,6 +462,10 @@ init 1 python:
         args = [ ]
 
         while name:
+            # Here, we are iterating through the characters of the spritecode and trying to find a 
+            # pre-existing image for it to save generating every time, stopping if we find one.
+            #
+            # This also lets us check to make sure the narration isn't trying to use a hardcoded image
             target = renpy.display.image.images.get(name, None)
 
             if target is not None:
@@ -440,6 +475,7 @@ init 1 python:
             name = name[:-1]
 
         if not name:
+            # We didn't find an image corresponding to the spritecode, or a hardcoded image, so we generate a new one
             if (
                 isinstance(self.name, tuple)
                 and len(self.name) == 2
@@ -453,6 +489,7 @@ init 1 python:
                 target = renpy.display.image.images[name]
 
             else:
+                # Image couldn't be generated
                 error("Image '%s' not found." % ' '.join(self.name))
                 return False
 
@@ -480,6 +517,7 @@ init 1 python:
 
         return True
 
+    # Finally, feed back to Ren'Py the image we actually want to display for the narration
     renpy.display.image.ImageReference.find_target = _find_target_override
 
 # Sprite code format:

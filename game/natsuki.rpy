@@ -1,7 +1,9 @@
 init 0 python:
+    import store.jn_outfits as jn_outfits
+
     class Natsuki(object):
         """
-        Class for handling actions related to Natsuki such as affinity checks/gains/losses, clothing, etc.
+        Qeeb class for handling actions related to Natsuki such as affinity checks/gains/losses, clothing, etc.
 
         NNNNNNXK0OOKXNXXKKK0000O00KKKKK000OO0Okxooooodoollccc:;;:ok000000K00000OOO00Kkl::oxkxl,,:oOK00KKKKKK
         NNNNNNNK00XXXXKK000000000O00KK0000O00000KKKKKKKKK0000OOkxddk0000000K00000OOOOkxxo:cdkko:,ckKOk0KKKKK
@@ -54,6 +56,123 @@ init 0 python:
         ::::ccccccclk0kddxxddddddddddxkO00Okxollcc::;;;;,,,,,,,,,,,,,,,lOKOxolddo0NWWWWWNNNNNNNWWNXkoloddddo
         ::::cccccccclxkxddddxxdddxxdxkkOOOxoollccc::::;;,;;;,,,,,,,,,,;d0xccldkodKWWWWWWNNNNNNNWN0oclddddddo
         """
+
+        # START: Outfit functionality
+
+        _outfit = None
+
+        @staticmethod
+        def getOutfitName():
+            """
+            Returns the reference name of the outfit Natsuki is currently wearing.
+            """
+            return Natsuki._outfit.reference_name
+
+        @staticmethod
+        def setOutfit(outfit):
+            """
+            Assigns the specified jn_outfits.JNOutfit outfit to Natsuki.
+
+            IN:
+                - outfit - The jn_outfits.JNOutfit outfit for Natsuki to wear.
+            """
+            Natsuki._outfit = outfit
+            store.persistent.jn_natsuki_outfit_on_quit = Natsuki._outfit.reference_name
+
+        @staticmethod
+        def isWearingOutfit(reference_name):
+            """
+            Returns True if Natsuki is wearing the specified outfit, otherwise False.
+
+            IN: 
+                - reference_name - outfit reference name to check if Natsuki is wearing
+
+            OUT:
+                - True if Natsuki is wearing the specified outfit, otherwise False
+            """
+            return Natsuki._outfit.reference_name == reference_name
+
+        @staticmethod
+        def isWearingClothes(reference_name):
+            """
+            Returns True if Natsuki is wearing the specified clothes, otherwise False.
+
+            IN: 
+                - reference_name - The clothes reference name to check if Natsuki is wearing
+
+            OUT:
+                - True if Natsuki is wearing the specified clothes, otherwise False
+            """
+            return Natsuki._outfit.clothes.reference_name == reference_name
+
+        @staticmethod
+        def isWearingHairstyle(reference_name):
+            """
+            Returns True if Natsuki is wearing the specified hairstyle, otherwise False.
+
+            IN: 
+                - reference_name - The hairstyle reference name to check if Natsuki is wearing
+
+            OUT:
+                - True if Natsuki is wearing the specified hairstyle, otherwise False
+            """
+            return Natsuki._outfit.hairstyle.reference_name == reference_name
+
+        #TODO: Adjust these functions in a proper acs system
+        @staticmethod
+        def isWearingAccessory(reference_name):
+            """
+            Returns True if Natsuki is wearing the specified accessory, otherwise False.
+
+            IN: 
+                - reference_name - The accessory reference name to check if Natsuki is wearing
+
+            OUT:
+                - True if Natsuki is wearing the specified accessory, otherwise False
+            """
+            return Natsuki._outfit.accessory.reference_name == reference_name
+
+        @staticmethod
+        def isWearingEyewear(reference_name):
+            """
+            Returns True if Natsuki is wearing the specified eyewear, otherwise False.
+
+            IN: 
+                - reference_name - The eyewear reference name to check if Natsuki is wearing
+
+            OUT:
+                - True if Natsuki is wearing the specified eyewear, otherwise False
+            """
+            return Natsuki._outfit.eyewear.reference_name == reference_name
+
+        @staticmethod
+        def isWearingHeadgear(reference_name):
+            """
+            Returns True if Natsuki is wearing the specified headgear, otherwise False.
+
+            IN: 
+                - reference_name - The headgear reference name to check if Natsuki is wearing
+
+            OUT:
+                - True if Natsuki is wearing the specified headgear, otherwise False
+            """
+            return Natsuki._outfit.headgear.reference_name == reference_name
+
+        @staticmethod
+        def isWearingNecklace(reference_name):
+            """
+            Returns True if Natsuki is wearing the specified necklace, otherwise False.
+
+            IN: 
+                - reference_name - The necklace reference name to check if Natsuki is wearing
+
+            OUT:
+                - True if Natsuki is wearing the specified necklace, otherwise False
+            """
+            return Natsuki._outfit.necklace.reference_name == reference_name
+
+        # Start: Relationship functionality
+
         @staticmethod
         def calculated_affinity_gain(base=1, bypass=False):
             """
