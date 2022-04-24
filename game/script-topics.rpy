@@ -6981,7 +6981,7 @@ init 5 python:
             label="talk_what_do_you_think_about_fanart",
             unlocked=True,
             prompt="What do you think about fanart?",
-            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 3600 >= 72",
+            conditional="jn_utils.get_total_gameplay_days() >= 3",
             category=["Art", "Media"],
             player_says=True,
             location="classroom"
@@ -7070,6 +7070,7 @@ label talk_what_do_you_think_about_fanart:
 
     if jn_activity.has_player_done_activity(jn_activity.JNActivities.artwork):
         n 1fchsmleme "Probably~."
+
     n 1fnmpo "But you better not be letting people push you around over yours!"
     n 1fsqpo "...Or be giving people a hard time over theirs."
     n 1fcsbg "...Because that's where I {i}draw{/i} the line!{w=1}{nw}"
