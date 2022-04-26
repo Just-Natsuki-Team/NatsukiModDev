@@ -6993,7 +6993,7 @@ init 5 python:
 
 label talk_players_birthday_intro:
     # Player has already discussed their birthday with Natsuki
-    if get_topic("talk_players_birthday").shown_count > 0:
+    if get_topic("talk_players_birthday_intro").shown_count > 0:
         n 1tnmbo "Huh?{w=0.2} Your birthday?"
 
         if persistent._jn_player_birthday_day_month:
@@ -7050,13 +7050,13 @@ label talk_players_birthday_intro:
         extend 1nnmsr " something just hit me.{w=1}{nw}"
         extend 1nsqca " Something important."
         n 1uskem "...And that's that I have literally no idea when your {i}birthday{/i} is!{w=1}{nw}"
-        extend 1fbkwr "I never even thought to {i}ask{/i}!"
-        n 1kcsemesi "Man...{w=0.5}{nw}"
+        extend 1fbkwr " I never even thought to {i}ask{/i}!"
+        n 1kcsemesi "Man...{w=1}{nw}"
         extend 1fslpol " I can't {i}believe{/i} I never brought that up earlier..."
         n 1fsqpo "And come on.{w=0.5}{nw}" 
         extend 1nsqpo " Let's be real,{w=0.1} here."
         n 1fcswr "What kind of a friend misses birthdays?!"
-        n 1kllbo "...Especially when there's only {i}one{/i} birthday to remember nowdays."
+        n 1kllbo "...Especially when there's only {i}one{/i} birthday to remember nowadays."
         n 1ksrsl "..."
         n 1fcseml "A-{w=0.3}anyway!"
         n 1flrpo "I'd have to be a real jerk not to {i}at least{/i} ask."
@@ -7133,17 +7133,18 @@ label talk_players_birthday_input:
     # Process the player's input
     while not player_input_valid:
         $ import calendar
-        $ player_input = int(renpy.input(
+        $ player_input = renpy.input(
             prompt="What day were you born on?",
             allow=jn_globals.DEFAULT_NUMERICAL_ALLOW_VALUES, length=2
-        ))
+        )
+        $ player_input = int(player_input) if player_input.isdigit() else None
 
         if not player_input or player_input == 0:
             n 1tsqpueqm "Huh?{w=1}{nw}"
             extend 1fnmpo " Come on,{w=0.1} [player]!{w=0.2} You gotta tell me what day!"
 
-        # We use 2020 here,{w=0.1} as it is a leapyear
-        elif player_input not in calendar.monthrange(2020, player_birthday_month):
+        # We use 2020 here, as it is a leapyear
+        elif not calendar.monthrange(2020, player_birthday_month)[0] <= player_input <= calendar.monthrange(2020, player_birthday_month)[1]:
             n 1fsqsr "[player].{w=0.2} Please.{w=1}{nw}"
             extend 1nsqpo "Take this seriously."
 
@@ -7196,7 +7197,19 @@ label talk_players_birthday_outro:
         n 1unmem "Huh?{w=1}{nw}"
         extend 1knmem " I missed it already?{w=1.5}{nw}"
         extend 1nsrpo " Aww..."
-        n 1fsqss "Well...{w=1} you better prepare yourself,{w=0.1} [player]."
+        n 1nllpo "Well...{w=1}"
+        extend 1nllss " thanks anyway."
+        extend 1nlrss " For sharing,{w=0.1} I mean."
+        n 1nsrpo "..."
+        n 1nsraj "I...{w=0.5}{nw}" 
+        extend 1tnmss " guess I better return the favour,{w=0.1} huh?"
+        n 1nslcal "Just promise you won't make it all awkward."
+        n 1ncsemlesi "..."
+        n 1nsrssl "It's May 1st.{w=1}{nw}"
+        extend 1nsqpol " Don't make me say it twice."
+        n 1nllpu "And..."
+        extend 1tnmbo " [player]?"
+        n 1fsqss "I hope you know that you better prepare yourself."
         n 1fcsbg "'Cause I'm going all out next time!{w=1}{nw}"
         extend 1nchgn " Ehehe."
 
