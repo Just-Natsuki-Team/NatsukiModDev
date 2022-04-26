@@ -1455,6 +1455,22 @@ init python in jn_utils:
         else:
             return "a while"
 
+    def get_number_ordinal(value):
+        """
+        Returns the ordinal (trailing characters) for a given numerical value.
+        """
+        if value % 10 == 1:
+            return "st"
+
+        elif value % 10 == 2:
+            return "nd"
+
+        elif value % 10 == 3:
+            return "rd"
+
+        else:
+            return "th"
+
     def get_player_initial():
         """
         Returns the first letter of the player's name.
@@ -1544,6 +1560,7 @@ define audio.cassette_open = "mod_assets/sfx/cassette_open.ogg"
 define audio.cassette_close = "mod_assets/sfx/cassette_close.ogg"
 define audio.glass_move = "mod_assets/sfx/glass_move.ogg"
 define audio.straw_sip = "mod_assets/sfx/straw_sip.ogg"
+define audio.light_switch = "mod_assets/sfx/light_switch.ogg"
 
 define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
 define audio.glitch_b = "mod_assets/sfx/glitch_b.ogg"
@@ -1561,6 +1578,7 @@ define audio.space_classroom_bgm = "mod_assets/bgm/space_classroom.ogg"
 
 # Music, JN exclusive
 define audio.just_natsuki_bgm = "mod_assets/bgm/just_natsuki.ogg"
+define audio.happy_birthday_bgm = "mod_assets/bgm/happy_birthday.ogg"
 
 # Voicing - we disable TTS
 define config.tts_voice = None
