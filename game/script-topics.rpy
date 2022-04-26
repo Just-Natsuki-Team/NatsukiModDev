@@ -6980,7 +6980,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_players_birthday",
+            label="talk_players_birthday_intro",
             unlocked=True,
             prompt="My birthday",
             category=["Setup", "You"],
@@ -7094,10 +7094,11 @@ label talk_players_birthday_intro:
                 return
 
     n 1nchbg "Alright!"
+    jump talk_players_birthday_input 
 
 label talk_players_birthday_input:
-    n  "So...{w=1}{nw}"
-    extend  " what {b}month{/b} were you born in,{w=0.1} [player]?"
+    n 1fsqsm "So...{w=1}{nw}"
+    extend 1tsqsm " what {b}month{/b} were you born in,{w=0.1} [player]?"
     show natsuki at jn_left
 
     python:
@@ -7123,10 +7124,9 @@ label talk_players_birthday_input:
         $ player_birthday_month = _return
 
     $ response_month = datetime.date(datetime.date.today().year, player_birthday_month, 1).strftime("%B")
-    n  "[response_month],{w=0.1} huh?{w=1}{nw}" 
-    extend  " Gotcha!"
-    n  "Just the day left now.{w=1}{nw}"
-    extend " So..."
+    n 1unmbo "[response_month],{w=0.1} huh?{w=1}{nw}" 
+    extend 1nchbg " Gotcha!"
+    n 1unmss "And what about the day?"
 
     $ player_input_valid = False
 
@@ -7139,13 +7139,13 @@ label talk_players_birthday_input:
         ))
 
         if not player_input or player_input == 0:
-            n  "Huh?{w=1}{nw}"
-            extend  " Come on,{w=0.1} [player]!{w=0.2} You gotta tell me what day!"
+            n 1tsqpueqm "Huh?{w=1}{nw}"
+            extend 1fnmpo " Come on,{w=0.1} [player]!{w=0.2} You gotta tell me what day!"
 
         # We use 2020 here,{w=0.1} as it is a leapyear
         elif player_input not in calendar.monthrange(2020, player_birthday_month):
-            n  "[player].{w=0.2} Please.{w=1}{nw}"
-            extend  "Take this seriously."
+            n 1fsqsr "[player].{w=0.2} Please.{w=1}{nw}"
+            extend 1nsqpo "Take this seriously."
 
         else:
             # Get ready to lead in to the next stage of setup
@@ -7153,8 +7153,8 @@ label talk_players_birthday_input:
             $ persistent._jn_player_birthday_day_month = (player_input, player_birthday_month)
             jump talk_players_birthday_outro
 
-    n  "Alright!{w=0.5}{nw}"
-    extend  " So just to double check..."
+    n 1nchsm "Oki-doki!{w=0.5}{nw}"
+    extend 1ullaj " So just to double check..."
     $ birthday_formatted = "{0}{1}{2}".format(
         persistent._jn_player_birthday_day_month[1],
         persistent._jn_player_birthday_day_month[0],
@@ -7167,25 +7167,25 @@ label talk_players_birthday_input:
             jump talk_players_birthday_outro
 
         "No, that's not right.":
-            n  "Huh?{w=1}{nw}"
-            extend  " Really?"
-            n  "Let's try that again."
+            n 1tsqpueqm "Huh?{w=1}{nw}"
+            extend 1nsqpo " Really?"
+            n 1nsrss "Let's...{w=1} try that again."
             jump talk_players_birthday_input
 
 label talk_players_birthday_outro:
     if persistent._jn_player_birthday_day_month == (datetime.date.today().day, datetime.date.today().month):
         # It's the player's birthday today
-        n  "Okaaay!{w=0.2} So I think that's-"
-        n  "...!"
-        n  "Oh,{w=1}{nw}" 
-        extend  " CRAP!"
-        n  "[player]!{w=0.2} It's TODAY?!{w=0.5}{nw}"
-        extend  "Why didn't you say anything?!"
-        n  "Uuuuuu..."
-        n  "Now I really do look like a total jerk..."
-        n  "..."
-        n  "Right!"
-        extend " Then there's only one thing for it!"
+        n 1nchbg "Okaaay!{w=0.2} So I think that's-"
+        n 1uskemesh "...!"
+        n 1uskajl "Oh,{w=1.5}{nw}" 
+        extend 1kbkwrl " {b}CRAP{/b}!"
+        n 1knmeml "[player]!{w=0.2} It's TODAY?!{w=0.5}{nw}"
+        extend 1flleml " Why didn't you {i}say{/i} anything?!"
+        n 1nsrunl "Uuuuuu..."
+        n 1kcsemedr "Now I really do look like a total jerk..."
+        n 1ncsemesi "..."
+        n 1fcsem "Right!"
+        extend 1fcswr " Then there's only one thing for it!"
 
         play audio light_switch
         show black zorder 99
@@ -7193,11 +7193,11 @@ label talk_players_birthday_outro:
 
     else:
         # Player's birthday was missed
-        n  "Huh?{w=1}{nw}"
-        extend  " I missed it already?{w=1.5}{nw}"
-        extend  " Aww..."
-        n  "Well,{w=0.1} you better prepare yourself,{w=0.1} [player]."
-        n  "'Cause I'm going all out next time!{w=1}{nw}"
-        extend  " Ehehe."
+        n 1unmem "Huh?{w=1}{nw}"
+        extend 1knmem " I missed it already?{w=1.5}{nw}"
+        extend 1nsrpo " Aww..."
+        n 1fsqss "Well...{w=1} you better prepare yourself,{w=0.1} [player]."
+        n 1fcsbg "'Cause I'm going all out next time!{w=1}{nw}"
+        extend 1nchgn " Ehehe."
 
     return
