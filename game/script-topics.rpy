@@ -7127,7 +7127,7 @@ label talk_players_birthday_input:
     $ response_month = datetime.date(datetime.date.today().year, player_birthday_month, 1).strftime("%B")
     n 1unmbo "[response_month],{w=0.1} huh?{w=1}{nw}" 
     extend 1nchbg " Gotcha!"
-    n 1unmss "And what about the day?"
+    n 1unmss "And what about the {b}day{/b}?"
 
     $ player_input_valid = False
 
@@ -7177,19 +7177,21 @@ label talk_players_birthday_input:
 label talk_players_birthday_outro:
     if persistent._jn_player_birthday_day_month == (datetime.date.today().day, datetime.date.today().month):
         # It's the player's birthday today
-        n 1nchbg "Okaaay!{w=0.2} So I think that's-"
-        n 1uskemesh "...!"
+        n 1nchbg "Okaaay!{w=0.2} So I think that's-{w=0.5}{nw}"
+        n 1uskemesh "...!{w=1}{nw}"
         n 1uskajl "Oh,{w=1.5}{nw}" 
         extend 1kbkwrl " {b}CRAP{/b}!"
-        n 1knmeml "[player]!{w=0.2} It's TODAY?!{w=0.5}{nw}"
+        $ player_initial = jn_utils.get_player_initial()
+        n 1knmeml "[player_initial]-{w=0.3}[player]!{w=0.2} It's TODAY?!{w=0.5}{nw}"
         extend 1flleml " Why didn't you {i}say{/i} anything?!"
-        n 1nsrunl "Uuuuuu..."
-        n 1kcsemedr "Now I really do look like a total jerk..."
-        n 1ncsemesi "..."
-        n 1fcsem "Right!"
-        extend 1fcswr " Then there's only one thing for it!"
-        $ renpy.pause(1)
-
+        n 1nsrunl "Uuuuuu...{w=1}{nw}"
+        extend 1kcsemedr " now I really look like a total jerk..."
+        n 1ncsemesi "...{w=0.5}{nw}"
+        n 1fcsem "Right!{w=1}{nw}"
+        extend 1fcswr " Then there's only one thing for it!{w=1.5}{nw}"
+        
+        $ jn_globals.force_quit_enabled = False
+        stop music
         play audio light_switch
         show black zorder 99
         jump player_birthday_intro

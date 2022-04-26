@@ -19,7 +19,7 @@ init python in jn_birthdays:
         renpy.show("natsuki {0}".format(natsuki_sprite_code), at_list=[store.jn_center], zorder=store.JN_NATSUKI_ZORDER)
         renpy.show_screen("hkb_overlay")
         renpy.play(filename="mod_assets/sfx/light_switch.ogg", channel="audio")
-        renpy.pause(2)
+        renpy.pause(5)
         renpy.hide("black")
         renpy.play(filename="mod_assets/bgm/happy_birthday.ogg", channel="music")
 
@@ -27,10 +27,10 @@ init python in jn_birthdays:
 label player_birthday_intro:
     show deco balloons zorder jn_birthdays.JN_BIRTHDAY_PROP_ZORDER
     show prop cake unlit zorder jn_birthdays.JN_BIRTHDAY_PROP_ZORDER
-    $ jn_birthdays.display_visuals("")
+    $ jn_birthdays.display_visuals("1uchgnl")
     $ jn_globals.force_quit_enabled = True
-
-    n  "Happy birthday, [player]!"
+    $ player_name_capitalized = persistent.playername.upper()
+    n 1uchlgl "HAPPY BIRTHDAY, [player_name_capitalized]!"
     n  "Betcha' didn't think I had something planned all along, did you?"
     extend  " Ehehe."
     n  "Don't lie!"
@@ -49,6 +49,7 @@ label player_birthday_intro:
     extend  " No way!"
     n  "..."
     n  "But..."
+
     #TODO: Finish up writing; add poems as gifts? Unlock outfit?
 
     jump player_birthday_outro
