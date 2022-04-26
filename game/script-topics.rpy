@@ -7101,8 +7101,7 @@ label talk_players_birthday_intro:
 label talk_players_birthday_input:
     n 1fsqsm "So...{w=1}{nw}"
     extend 1tsqsm " what {b}month{/b} were you born in,{w=0.1} [player]?"
-    show natsuki at jn_left
-
+    show natsuki 1tsqsm at jn_left
     python:
         # Generate month options
         month_options = [

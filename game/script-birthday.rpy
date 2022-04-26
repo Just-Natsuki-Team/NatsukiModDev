@@ -23,6 +23,7 @@ init python in jn_birthdays:
         renpy.hide("black")
         renpy.play(filename="mod_assets/bgm/happy_birthday.ogg", channel="music")
 
+# Natsuki wishes the player a happy birthday!
 label player_birthday_intro:
     show deco balloons zorder jn_birthdays.JN_BIRTHDAY_PROP_ZORDER
     show prop cake unlit zorder jn_birthdays.JN_BIRTHDAY_PROP_ZORDER
@@ -48,6 +49,7 @@ label player_birthday_intro:
     extend  " No way!"
     n  "..."
     n  "But..."
+    #TODO: Finish up writing; add poems as gifts? Unlock outfit?
 
     jump player_birthday_outro
 
