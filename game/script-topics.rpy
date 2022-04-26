@@ -6997,14 +6997,16 @@ label talk_players_birthday_intro:
         n 1tnmbo "Huh?{w=0.2} Your birthday?"
 
         if persistent._jn_player_birthday_day_month:
-            n 1fslaj "Wait..."
-            extend 1fsrpu " Didn't you already share that with me?"
-            n 1fskajesh "..."
+            n 1fslaj "Wait...{w=1}{nw}"
+            extend 1fsrpu " didn't you already share that with me?"
+            n 1fskajesh "...{w=0.5}{nw}"
             n 1fnmem "H-{w=0.3}hey!"
             n 1fsqsm "Nice try,{w=0.1} [player].{w=1}{nw}"
             extend 1fcsbg " But you're not getting anything early!"
             n 1tsqsg "I guess you're just gonna have to wait~."
             n 1fchsm "Ehehe."
+            
+            return
 
         else:
             n 1unmaj "Oh,{w=0.1} right!{w=1}{nw}"
