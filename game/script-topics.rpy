@@ -7005,7 +7005,7 @@ label talk_players_birthday_intro:
             extend 1fcsbg " But you're not getting anything early!"
             n 1tsqsg "I guess you're just gonna have to wait~."
             n 1fchsm "Ehehe."
-            
+
             return
 
         else:
@@ -7189,6 +7189,7 @@ label talk_players_birthday_outro:
         n 1ncsemesi "..."
         n 1fcsem "Right!"
         extend 1fcswr " Then there's only one thing for it!"
+        $ renpy.pause(1)
 
         play audio light_switch
         show black zorder 99
@@ -7196,11 +7197,11 @@ label talk_players_birthday_outro:
 
     else:
         # Player's birthday was missed
-        n 1unmem "Huh?{w=1}{nw}"
+        n 1unmem "Wait,{w=0.5} seriously?{w=1}{nw}"
         extend 1knmem " I missed it already?{w=1.5}{nw}"
         extend 1nsrpo " Aww..."
-        n 1nllpo "Well...{w=1}"
-        extend 1nllss " thanks anyway."
+        n 1nllpo "Well...{w=1}{nw}"
+        extend 1nllss " thanks anyway.{w=1}{nw}"
         extend 1nlrss " For sharing,{w=0.1} I mean."
         n 1nsrpo "..."
         n 1nsraj "I...{w=0.5}{nw}" 
@@ -7209,10 +7210,13 @@ label talk_players_birthday_outro:
         n 1ncsemlesi "..."
         n 1nsrssl "It's May 1st.{w=1}{nw}"
         extend 1nsqpol " Don't make me say it twice."
-        n 1nllpu "And..."
+        n 1nllpu "And...{w=1}{nw}"
         extend 1tnmbo " [player]?"
         n 1fsqss "I hope you know that you better prepare yourself."
         n 1fcsbg "'Cause I'm going all out next time!{w=1}{nw}"
         extend 1nchgn " Ehehe."
+        
+        if Natsuki.isLove():
+            n 1fchblleaf "Love you,{w=0.1} [player]~!"
 
     return

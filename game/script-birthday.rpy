@@ -21,7 +21,7 @@ init python in jn_birthdays:
         renpy.play(filename="mod_assets/sfx/light_switch.ogg", channel="audio")
         renpy.pause(2)
         renpy.hide("black")
-        #renpy.play(filename="mod_assets/bgm/birthday.ogg", channel="music")
+        renpy.play(filename="mod_assets/bgm/happy_birthday.ogg", channel="music")
 
 label player_birthday_intro:
     show deco balloons zorder jn_birthdays.JN_BIRTHDAY_PROP_ZORDER
@@ -29,25 +29,25 @@ label player_birthday_intro:
     $ jn_birthdays.display_visuals("")
     $ jn_globals.force_quit_enabled = True
 
-    n "Happy birthday, [player]!"
-    n "Betcha' didn't think I had something planned all along, did you?"
-    extend " Ehehe."
-    n "Don't lie!"
-    extend " I know I got you {i}real{/i} good this time!"
-    n "Well, whatever."
-    extend " We both know what you're waiting for, huh?"
-    n "Yeah, yeah."
-    extend " I got you covered, [player]."
+    n  "Happy birthday, [player]!"
+    n  "Betcha' didn't think I had something planned all along, did you?"
+    extend  " Ehehe."
+    n  "Don't lie!"
+    extend  " I know I got you {i}real{/i} good this time!"
+    n  "Well, whatever."
+    extend  " We both know what you're waiting for, huh?"
+    n  "Yeah, yeah."
+    extend  " I got you covered, [player]."
 
     show prop cake lit zorder jn_birthdays.JN_BIRTHDAY_PROP_ZORDER
     play audio necklace_clip
 
-    n "..."
-    n "What?!"
-    extend " You don't {i}seriously{/i} expect me to sing all by myself?"
-    extend " No way!"
-    n "..."
-    n "But..."
+    n  "..."
+    n  "What?!"
+    extend  " You don't {i}seriously{/i} expect me to sing all by myself?"
+    extend  " No way!"
+    n  "..."
+    n  "But..."
 
     jump player_birthday_outro
 
