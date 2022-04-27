@@ -21,7 +21,7 @@ init python in jn_events:
         event_list = store.Topic.filter_topics(
             EVENT_MAP.values(),
             unlocked=True,
-            affinity=Natsuki._getAffinityState(),
+            affinity=store.Natsuki._getAffinityState(),
             is_seen=False,
             **kwargs
         )
