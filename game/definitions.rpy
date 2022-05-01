@@ -16,7 +16,9 @@ init -990 python:
     _easter = easter.easter(datetime.datetime.today().year)
 
 define JN_NEW_YEARS_DAY = datetime.date(datetime.date.today().year, 1, 1)
+define JN_VALENTINES_DAY = datetime.date(datetime.date.today().year, 2, 14)
 define JN_EASTER = datetime.date(_easter.year, _easter.month, _easter.day)
+define JN_NATSUKI_BIRTHDAY = datetime.date(datetime.date.today().year, 5, 1)
 define JN_HALLOWEEN = datetime.date(datetime.date.today().year, 10, 31)
 define JN_CHRISTMAS_EVE = datetime.date(datetime.date.today().year, 12, 24)
 define JN_CHRISTMAS_DAY = datetime.date(datetime.date.today().year, 12, 25)
@@ -30,18 +32,6 @@ init -3 python:
     import store.jn_affinity as jn_affinity
     import store.jn_utils as jn_utils
     import webbrowser
-
-    class JNHolidays(Enum):
-        none = 1
-        new_years_day = 2
-        easter = 3
-        halloween = 4
-        christmas_eve = 5
-        christmas_day = 6
-        new_years_eve = 7
-
-        def __str__(self):
-            return self.name
 
     class JNTimeBlocks(Enum):
         early_morning = 1
@@ -461,7 +451,7 @@ init -3 python:
 
     def push(topic_label):
         """
-        Pushes a topic to the topic stack
+        Pushes a topic to the topic stack, adding it to the front of the list
 
         IN:
             topic_label - Topic.label of the topic you wish to push
@@ -470,10 +460,10 @@ init -3 python:
 
     def queue(topic_label):
         """
-        Queues a topic to the topic stack
+        Queues a topic to the topic stack, adding it to the back of the list
 
         IN:
-            topic_label - Topic.label of the topic you wish you queue
+            topic_label - Topic.label of the topic you wish to queue
         """
         persistent._event_list.append(topic_label)
 
@@ -590,116 +580,6 @@ init -3 python:
                 ordered_menu_items[category].append(topic)
 
         return ordered_menu_items
-
-    def jn_is_new_years_day(input_date=None):
-        """
-        Returns True if the current date is New Year's Day; otherwise False
-
-        IN:
-            - input_date - datetime object to test against. Defaults to the current date.
-        """
-        if input_date is None:
-            input_date = datetime.datetime.today()
-
-        return input_date == store.JN_NEW_YEARS_DAY
-
-    def jn_is_easter(input_date=None):
-        """
-        Returns True if the current date is Easter; otherwise False
-
-        IN:
-            - input_date - datetime object to test against. Defaults to the current date.
-        """
-        if input_date is None:
-            input_date = datetime.datetime.today()
-
-        return input_date == store.JN_EASTER
-
-    def jn_is_halloween(input_date=None):
-        """
-        Returns True if the current date is Halloween; otherwise False
-
-        IN:
-            - input_date - datetime object to test against. Defaults to the current date.
-        """
-        if input_date is None:
-            input_date = datetime.datetime.today()
-
-        return input_date == store.JN_HALLOWEEN
-
-    def jn_is_christmas_eve(input_date=None):
-        """
-        Returns True if the current date is Christmas Eve; otherwise False
-
-        IN:
-            - input_date - datetime object to test against. Defaults to the current date.
-        """
-        if input_date is None:
-            input_date = datetime.datetime.today()
-
-        return input_date == store.JN_CHRISTMAS_EVE
-
-    def jn_is_christmas_day(input_date=None):
-        """
-        Returns True if the current date is Christmas Day; otherwise False
-
-        IN:
-            - input_date - datetime object to test against. Defaults to the current date.
-        """
-        if input_date is None:
-            input_date = datetime.datetime.today()
-
-        return input_date == store.JN_CHRISTMAS_DAY
-
-    def jn_is_new_years_eve(input_date=None):
-        """
-        Returns True if the current date is New Year's Eve; otherwise False
-
-        IN:
-            - input_date - datetime object to test against. Defaults to the current date.
-        """
-        if input_date is None:
-            input_date = datetime.datetime.today()
-
-        return input_date == store.JN_NEW_YEARS_EVE
-
-    def jn_get_holiday_for_date(input_date=None):
-        """
-        Gets the holiday - if any - corresponding to the supplied date, or the current date by default.
-
-        IN:
-            - input_date - datetime object to test against. Defaults to the current date.
-
-        OUT:
-            - JNHoliday representing the holiday for the supplied date.
-        """
-
-        if input_date is None:
-            input_date = datetime.datetime.today()
-
-        elif not isinstance(input_date, datetime.date):
-            raise TypeError("input_date for holiday check must be of type date; type given was {0}".format(type(input_date)))
-
-        if jn_is_new_years_day(input_date):
-            return JNHolidays.new_years_day
-
-        elif jn_is_easter(input_date):
-            return JNHolidays.easter
-
-        elif jn_is_halloween(input_date):
-            return JNHolidays.halloween
-
-        elif jn_is_christmas_eve(input_date):
-            return JNHolidays.christmas_eve
-
-        elif jn_is_christmas_day(input_date):
-            return JNHolidays.christmas_day
-
-        elif jn_is_christmas_eve(input_date):
-            return JNHolidays.new_years_eve
-
-        else:
-            return JNHolidays.none
 
     def jn_get_current_hour():
         """
@@ -1513,6 +1393,9 @@ init python in jn_utils:
         """
         # Save outfit data
         store.jn_outfits.JNOutfit.save_all()
+
+        # Save holiday data
+        store.jn_events.JNHoliday.save_all()
 
         #Save topic data
         store.Topic._save_topic_data()

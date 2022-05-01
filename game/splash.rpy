@@ -178,14 +178,6 @@ label after_load:
     $ _dismiss_pause = config.developer
     $ persistent.ghost_menu = False #Handling for easter egg from DDLC
     $ style.say_dialogue = style.normal
-    #Check if the save has been tampered with
-    if anticheat != persistent.anticheat:
-        stop music
-        scene black
-        "The save file could not be loaded."
-        "Are you trying to cheat?"
-        #Handle however you want, default is to force reset all save data
-        $ renpy.utter_restart()
     return
 
 label autoload:

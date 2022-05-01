@@ -1,24 +1,420 @@
 default persistent._event_database = dict()
+default persistent._jn_holiday_list = dict()
 
+# Background decorations
+image deco balloons = "mod_assets/deco/balloons.png"
+
+# Foreground props
 image prop poetry_attempt = "mod_assets/props/poetry_attempt.png"
 image prop parfait_manga_held = "mod_assets/props/parfait_manga_held.png"
 image prop renpy_for_dummies_book_held = "mod_assets/props/renpy_for_dummies_book_held.png"
 image prop a_la_mode_manga_held = "mod_assets/props/a_la_mode_manga_held.png"
 image prop strawberry_milkshake = "mod_assets/props/strawberry_milkshake.png"
+image prop cake lit = "mod_assets/props/cake_lit.png"
+image prop cake unlit = "mod_assets/props/cake_unlit.png"
 
 init python in jn_events:
+    import datetime
+    from Enum import Enum
     import random
     import store
+    import store.audio as audio
     import store.jn_atmosphere as jn_atmosphere
     import store.jn_affinity as jn_affinity
+    import store.jn_utils as jn_utils
 
+    JN_EVENT_DECO_ZORDER = 2
     JN_EVENT_PROP_ZORDER = 4
 
     EVENT_MAP = dict()
 
+    _ALL_HOLIDAYS = {}
+
+    class JNHolidayTypes(Enum):
+        none = 1
+        new_years_day = 2
+        easter = 3
+        halloween = 4
+        christmas_eve = 5
+        christmas_day = 6
+        new_years_eve = 7
+        natsuki_birthday = 8
+        player_birthday = 9
+        anniversary = 10
+        valentines_day = 11
+        test = 99
+
+        def __str__(self):
+            return self.name
+
+    class JNHoliday():
+        """
+        Describes a holiday event that a user can experience, once per year.
+        """
+        def __init__(
+            self,
+            label,
+            holiday_type,
+            conditional,
+            affinity_range,
+            natsuki_sprite_code,
+            bgm=None,
+            deco_list=[],
+            prop_list=[],
+            priority=0
+        ):
+            """
+            Constructor.
+
+            IN:
+                - label - The name used to uniquely identify this wearable and refer to it internally
+                - holiday_type - The JNHolidayTypes type of this holiday
+                - conditional - Python statement that must evaluate to True for this holiday to be picked when filtering
+                - affinity_range - The affinity range that must be satisfied for this holiday to be picked when filtering
+                - natsuki_sprite_code - The sprite code to show for Natsuki when the holiday is revealed
+                - bgm - The optional music to play when the holiday is revealed 
+                - deco_list - Optional list of deco images to show when setting up
+                - prop_list - Optional list of prop images to show when setting up
+                - priority - Optional priority value; holidays with lower values are shown first
+            """
+            self.label = label
+            self.is_seen = False
+            self.holiday_type = holiday_type
+            self.conditional = conditional
+            self.affinity_range = affinity_range
+            self.natsuki_sprite_code = natsuki_sprite_code
+            self.bgm = bgm
+            self.deco_list = deco_list
+            self.prop_list = prop_list
+            self.priority = priority
+
+        @staticmethod
+        def load_all():
+            """
+            Loads all persisted data for each holiday from the persistent.
+            """
+            global _ALL_HOLIDAYS
+            for holiday in _ALL_HOLIDAYS.itervalues():
+                holiday.__load()
+
+        @staticmethod
+        def save_all():
+            """
+            Saves all persistable data for each holiday to the persistent.
+            """
+            global _ALL_HOLIDAYS
+            for holiday in _ALL_HOLIDAYS.itervalues():
+                holiday.__save()
+
+        @staticmethod
+        def filter_holidays(
+            holiday_list,
+            holiday_types,
+            affinity
+        ):
+            """
+            Returns a filtered list of holidays, given an holiday list and filter criteria.
+
+            IN:
+                - holiday_list - the list of JNHoliday objects to query
+                - holiday_types - list of JNHolidayTypes the holiday must be in
+                - affinity - minimum affinity state the holiday must have
+
+            OUT:
+                - list of JNWearable child wearables matching the search criteria
+            """
+            return [
+                _holiday
+                for _holiday in holiday_list
+                if _holiday.__filter_holiday(
+                    holiday_types,
+                    affinity
+                )
+            ]
+
+        def as_dict(self):
+            """
+            Exports a dict representation of this holiday; this is for data we want to persist.
+
+            OUT:
+                dictionary representation of the holiday object
+            """
+            return {
+                "is_seen": self.is_seen
+            }
+
+        def curr_affinity_in_affinity_range(self, affinity_state=None):
+            """
+            Checks if the current affinity is within this holidays's affinity_range
+
+            IN:
+                affinity_state - Affinity state to test if the holidays can be shown in. If None, the current affinity state is used.
+                    (Default: None)
+            OUT:
+                True if the current affinity is within range. False otherwise
+            """
+            if not affinity_state:
+                affinity_state = jn_affinity._getAffinityState()
+
+            return jn_affinity._isAffStateWithinRange(affinity_state, self.affinity_range)
+
+        def __load(self):
+            """
+            Loads the persisted data for this holiday from the persistent.
+            """
+            if store.persistent._jn_holiday_list[self.label]:
+                self.is_seen = store.persistent._jn_holiday_list[self.label]["is_seen"]
+
+        def __save(self):
+            """
+            Saves the persistable data for this holiday to the persistent.
+            """
+            store.persistent._jn_holiday_list[self.label] = self.as_dict()
+
+        def __filter_holiday(
+            self,
+            holiday_types=None,
+            affinity=None
+        ):
+            """
+            Returns True, if the holiday meets the filter criteria. Otherwise False.
+
+            IN:
+                - holiday_types - list of JNHolidayTypes the holiday must be in
+                - affinity - minimum affinity state the holiday must have
+
+            OUT:
+                - True, if the holiday meets the filter criteria. Otherwise False
+            """
+            if self.is_seen:
+                return False
+
+            elif holiday_types and not self.holiday_type in holiday_types:
+                return False
+
+            elif affinity and not self.curr_affinity_in_affinity_range(affinity):
+                return False
+
+            elif not eval(self.conditional):
+                return False
+
+            return True
+
+        def run(self):
+            """
+            Sets up all visuals for this holiday, before revealing everything to the player.
+            """
+            for prop in self.prop_list:
+                renpy.show(name="prop {0}".format(prop), zorder=JN_EVENT_PROP_ZORDER)
+
+            for deco in self.deco_list:
+                renpy.show(name="deco {0}".format(deco), zorder=JN_EVENT_DECO_ZORDER)
+
+            kwargs = {
+                "natsuki_sprite_code": self.natsuki_sprite_code
+            }
+            if self.bgm:
+                kwargs.update({"bgm": self.bgm})
+
+            self.is_seen = True
+            self.__save()
+
+            display_visuals(**kwargs)
+
+    def __register_holiday(holiday):
+        """
+        Registers a new holiday in the list of all holidays, allowing in-game access and persistency.
+        """
+        if holiday.label in _ALL_HOLIDAYS:
+            jn_utils.log("Cannot register holiday name: {0}, as a holiday with that name already exists.".format(holiday.reference_name))
+
+        else:
+            _ALL_HOLIDAYS[holiday.label] = holiday
+            if holiday.label not in store.persistent._jn_holiday_list:
+                holiday.__save()
+
+            else:
+                holiday.__load()
+
+    def get_holiday(holiday_name):
+        """
+        Returns the holiday for the given name, if it exists.
+
+        IN:
+            - holiday_name - str outfit name to fetch
+
+        OUT: Corresponding JNHoliday if the holiday exists, otherwise None 
+        """
+        if holiday_name in _ALL_HOLIDAYS:
+            return _ALL_HOLIDAYS[holiday_name]
+
+        return None
+
+    def is_new_years_day(input_date=None):
+        """
+        Returns True if the input_date is New Year's Day; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_NEW_YEARS_DAY
+
+    def is_valentines_day(input_date=None):
+        """
+        Returns True if the input_date is Valentine's Day; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_VALENTINES_DAY
+
+    def is_easter(input_date=None):
+        """
+        Returns True if the input_date is Easter; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_EASTER
+
+    def is_halloween(input_date=None):
+        """
+        Returns True if the input_date is Halloween; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_HALLOWEEN
+
+    def is_christmas_eve(input_date=None):
+        """
+        Returns True if the input_date is Christmas Eve; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_CHRISTMAS_EVE
+
+    def is_christmas_day(input_date=None):
+        """
+        Returns True if the input_date is Christmas Day; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_CHRISTMAS_DAY
+
+    def is_new_years_eve(input_date=None):
+        """
+        Returns True if the input_date is New Year's Eve; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_NEW_YEARS_EVE
+
+    def is_natsuki_birthday(input_date=None):
+        """
+        Returns True if the input_date is Natsuki's birthday; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_NATSUKI_BIRTHDAY
+
+    def is_player_birthday(input_date=None):
+        """
+        Returns True if the input_date is the player's birthday; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if not store.persistent._jn_player_birthday_day_month:
+            return False
+
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        player_birthday = datetime.date(
+            2020, # We use 2020 as it is a leap year
+            store.persistent._jn_player_birthday_day_month[1],
+            store.persistent._jn_player_birthday_day_month[0]
+        )
+
+        return (input_date.month == player_birthday.month and input_date.day == player_birthday.day)
+
+    def get_holidays_for_date(input_date=None):
+        """
+        Gets the holidays - if any - corresponding to the supplied date, or the current date by default.
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+
+        OUT:
+            - JNHoliday representing the holiday for the supplied date.
+        """
+
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        elif not isinstance(input_date, datetime.date):
+            raise TypeError("input_date for holiday check must be of type date; type given was {0}".format(type(input_date)))
+
+        holidays = []
+
+        if is_new_years_day(input_date):
+            holidays.append(JNHolidays.new_years_day)
+            
+        if is_easter(input_date):
+            holidays.append(JNHolidays.easter)
+
+        if is_halloween(input_date):
+            holidays.append(JNHolidays.halloween)
+
+        if is_christmas_eve(input_date):
+            holidays.append(JNHolidays.christmas_eve)
+
+        if is_christmas_day(input_date):
+            holidays.append(JNHolidays.christmas_day)
+
+        if is_christmas_eve(input_date):
+            holidays.append(JNHolidays.new_years_eve)
+
+        if is_natsuki_birthday(input_date):
+            holidays.append(JNHolidays.natsuki_birthday)
+
+        if is_player_birthday(input_date):
+            holidays.append(JNHolidays.player_birthday)
+
+        return holidays
+
     def select_event():
         """
-        Picks and returns a random event, or None if no events are left.
+        Picks and returns a single random event, or None if no events are left.
         """
         kwargs = dict()
         event_list = store.Topic.filter_topics(
@@ -36,21 +432,93 @@ init python in jn_events:
         else:
             return None
 
-    def display_visuals(natsuki_sprite_code):
+    def select_holidays():
+        """
+        Returns a list of all holidays that apply for the current date, or None if no holidays apply
+        """
+        holiday_list = JNHoliday.filter_holidays(
+            holiday_list=_ALL_HOLIDAYS.values(),
+            holiday_types=get_holidays_for_date(),
+            affinity=store.Natsuki._getAffinityState(),
+        )
+
+        if len(holiday_list) > 0:
+            return holiday_list
+
+        else:
+            return None
+
+    def display_visuals(
+        natsuki_sprite_code,
+        bgm="mod_assets/bgm/just_natsuki.ogg"
+    ):
         """
         Sets up the visuals/audio for an instant "pop-in" effect after a black scene opening.
         Note that we start off from ch30_autoload with a black scene by default.
 
         IN:
             - natsuki_sprite_code - The sprite code to show Natsuki displaying before dialogue
+            - music_file_path - The str file path of the music to play upon revealing Natsuki; defaults to standard bgm
         """
         renpy.show("natsuki {0}".format(natsuki_sprite_code), at_list=[store.jn_center], zorder=store.JN_NATSUKI_ZORDER)
         renpy.hide("black")
         renpy.show_screen("hkb_overlay")
-        renpy.play(filename="mod_assets/bgm/just_natsuki.ogg", channel="music")
+        renpy.play(filename=audio.light_switch, channel="audio")
+        renpy.play(filename=bgm, channel="music")
 
         # Reveal
         renpy.hide("black")
+
+    __register_holiday(JNHoliday(
+        label="event_player_birthday",
+        holiday_type=JNHolidayTypes.player_birthday,
+        conditional="store.jn_events.is_player_birthday()",
+        affinity_range=(jn_affinity.AFFECTIONATE, None),
+        natsuki_sprite_code="1uchgnl",
+        bgm=audio.happy_birthday_bgm,
+        deco_list=["balloons"],
+        prop_list=["cake lit"],
+        priority=99
+    ))
+
+    __register_holiday(JNHoliday(
+        label="event_test_holiday_1",
+        holiday_type=JNHolidayTypes.test,
+        conditional="True",
+        affinity_range=(jn_affinity.AFFECTIONATE, None),
+        natsuki_sprite_code="1nchsm",
+        deco_list=["balloons"],
+        prop_list=["cake lit"]
+    ))
+
+    __register_holiday(JNHoliday(
+        label="event_test_holiday_2",
+        holiday_type=JNHolidayTypes.test,
+        conditional="True",
+        affinity_range=(jn_affinity.AFFECTIONATE, None),
+        natsuki_sprite_code="1nchsm",
+        prop_list=["poetry_attempt"],
+    ))
+
+# Used to handle multiple events in a single day by cleaning/setting up inbetween events
+label event_interlude:
+    n 1fllpueqm "...I feel like I'm forgetting something else."
+    n 1fsrpu "...{w=1}{nw}"
+    n 1uskemlesh "...!{w=0.5}{nw}"
+    n 1fbkwrl "J-{w=0.3}just a second!{w=1}{nw}"
+    extend 1flrpol " Don't go anywhere!{w=1}{nw}"
+
+    hide screen hkb_overlay
+    show black zorder 99
+    hide prop
+    hide deco
+    play audio light_switch
+
+    $ renpy.pause(3)
+
+    return
+
+# RANDOM INTRO EVENTS
 
 # Natsuki is walked in on reading a new volume of Parfait Girls. She isn't impressed.
 init 5 python:
@@ -306,8 +774,8 @@ init 5 python:
             label="event_not_ready_yet",
             unlocked=True,
             conditional=(
-                "((jn_is_time_block_early_morning() or jn_is_time_block_mid_morning()) and jn_is_weekday())"
-                " or (jn_is_time_block_late_morning and not jn_is_weekday())"
+                "((is_time_block_early_morning() or is_time_block_mid_morning()) and is_weekday())"
+                " or (is_time_block_late_morning and not is_weekday())"
             ),
             affinity_range=(jn_affinity.HAPPY, None)
         ),
@@ -573,5 +1041,72 @@ label event_drinking_strawberry_milkshake:
     n 1fsqbg "And now I'm all refreshed...{w=1}{nw}"
     extend 1tsqsm " what's happening, [player]?{w=1}{nw}"
     extend 1fchsm " Ehehe."
+
+    return
+
+# HOLIDAY EVENTS
+ 
+# Natsuki wishes the player a happy birthday!
+label event_player_birthday():
+    python:
+        import datetime
+        jn_globals.force_quit_enabled = True
+        player_name_capitalized = persistent.playername.upper()
+        jn_events.display_visuals(
+            natsuki_sprite_code="1uchgnl",
+            music_file_path="mod_assets/bgm/happy_birthday.ogg")
+
+    n 1uchlgl "HAPPY BIRTHDAY, [player_name_capitalized]!"
+    n  "Betcha' didn't think I had something planned all along, did you?"
+    extend  " Ehehe."
+    n  "Don't lie!"
+    extend  " I know I got you {i}real{/i} good this time!"
+    n  "Well, whatever."
+    extend  " We both know what you're waiting for, huh?"
+    n  "Yeah, yeah."
+    extend  " I got you covered, [player]."
+
+    show prop cake lit zorder jn_birthdays.JN_BIRTHDAY_PROP_ZORDER
+    play audio necklace_clip
+
+    #TODO: Finish up writing; add poems as gifts? Unlock outfit?
+
+    n  "..."
+    n  "What?!"
+    extend  " You don't {i}seriously{/i} expect me to sing all by myself?"
+    extend  " No way!"
+    n  "..."
+    n  "But..."
+    n "Yeah! Happy birthday!"
+    extend " Ehehe."
+
+    n "Oh, I'll just put this away."
+    extend " One sec."
+    hide prop cake
+    with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
+
+    return
+
+label event_valentines_day:
+    #TODO: writing
+    $ jn_events.display_visuals(natsuki_sprite_code="1nchsm")
+    n "This isn't done yet, but happy valentine's day!"
+    return
+
+label event_anniversary:
+    #TODO: writing
+    $ jn_events.display_visuals(natsuki_sprite_code="1nchsm")
+    n "This isn't done yet, but happy anniversary!"
+    return
+
+label event_test_holiday_1:
+    $ jn_events.get_holiday("event_test_holiday_1").run()
+    n 1nwlbl "This is test holiday 1~!"
+
+    return
+
+label event_test_holiday_2:
+    $ jn_events.get_holiday("event_test_holiday_2").run()
+    n 1fwrbl "This is test holiday 2~!"
 
     return

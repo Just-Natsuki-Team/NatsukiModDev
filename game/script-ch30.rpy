@@ -13,17 +13,6 @@ label ch30_autoload:
 
     #FALL THROUGH
 
-label ch30_holiday_check:
-    python:
-        import datetime
-        import store.jn_utils as jn_utils
-
-        jn_utils.log("Holiday check: {0}".format(jn_get_holiday_for_date(datetime.datetime.now().date())))
-
-    #Run holiday checks and push/setup holiday related things here
-
-    #FALL THROUGH
-
 label ch30_visual_setup:
     # Hide everything so we can set up behind the scenes
     show black zorder 99
@@ -78,8 +67,28 @@ label ch30_init:
 
         jn_utils.log("Outfit set.")
 
-        # Pick a greeting or random event
-        if not jn_topic_in_event_list_pattern("^greeting_"):
+        # Load holidays from disk and corresponding persistent data
+        jn_events.JNHoliday.load_all()
+        jn_utils.log("Holidays loaded.")
+
+        # Check for holidays, push each one that occurs today
+        holiday_list = jn_events.select_holidays()
+        if holiday_list:
+            holiday_list.sort(key = lambda holiday: holiday.priority)
+            while len(holiday_list) > 0:
+                holiday = holiday_list.pop()
+                queue(holiday.label)
+
+                if len(holiday_list) > 0:
+                    queue("event_interlude")
+
+                else:
+                    queue("ch30_loop")
+
+            renpy.jump("call_next_topic")
+
+        # No holiday, so pick a greeting or random event
+        elif not jn_topic_in_event_list_pattern("^greeting_"):
             if (
                 random.randint(1, 10) == 1
                 and (not persistent.jn_player_admission_type_on_quit and not persistent.jn_player_apology_type_on_quit)
