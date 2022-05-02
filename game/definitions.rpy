@@ -1397,6 +1397,9 @@ init python in jn_utils:
         # Save holiday data
         store.jn_events.JNHoliday.save_all()
 
+        # Save poem data
+        store.jn_poems.JNPoem.save_all()
+
         #Save topic data
         store.Topic._save_topic_data()
 
@@ -1507,6 +1510,7 @@ init -999 python:
         if (
             not renpy.get_screen("input")
             and not renpy.get_screen("choice")
+            and not renpy.get_screen("poem_view")
             and jn_globals.force_quit_enabled
         ):
             renpy.call("try_force_quit")

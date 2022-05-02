@@ -1,0 +1,215 @@
+default persistent.jn_poem_list = dict()
+
+image paper default = "mod_assets/poems/default.png"
+
+init python in jn_poems:
+    import store
+    import store.jn_events as jn_events
+    import store.jn_utils as jn_utils
+
+    __ALL_POEMS = {}
+
+    class JNPoem:
+        """
+        Describes a poem object that players can unlock and read.
+        """
+        def __init__(
+            self,
+            reference_name,
+            display_name,
+            holiday_type,
+            poem,
+            paper="default"
+        ):
+            """
+            Constructor.
+
+            IN:
+                reference_name - The name used to uniquely identify this poem and refer to it internally
+                display_name - The name displayed to the user
+                holiday_type - The JNHoliday type associated with this player, allowing a poem to be associated with a holiday
+                poem - The actual poem content
+                paper - The paper image that is associated with this poem. Defaults to a standard notepad page
+            """
+            self.reference_name = reference_name
+            self.display_name = display_name
+            self.unlocked = False
+            self.holiday_type = holiday_type
+            self.poem = poem
+            self.paper = paper
+
+        @staticmethod
+        def load_all():
+            """
+            Loads all persisted data for each poem from the persistent.
+            """
+            global __ALL_POEMS
+            for poem in __ALL_POEMS.itervalues():
+                poem.__load()
+
+        @staticmethod
+        def save_all():
+            """
+            Saves all persistable data for each poem to the persistent.
+            """
+            global __ALL_POEMS
+            for poem in __ALL_POEMS.itervalues():
+                poem.__save()
+
+        @staticmethod
+        def filter_poems(
+            poem_list,
+            unlocked=None,
+            reference_name=None,
+            holiday_types=None
+        ):
+            """
+            Returns a filtered list of poems, given an poem list and filter criteria.
+
+            IN:
+                - poem_list - the list of JNpoem child poems to query
+                - unlocked - the boolean unlocked state to filter for
+                - reference_name - list of reference_names the poem must have 
+                - holiday_types - list of the JNHolidayTypes the poem must be in
+
+            OUT:
+                - list of poems matching the search criteria
+            """
+            return [
+                _poem
+                for _poem in poem_list
+                if _poem.__filter_poem(
+                    unlocked,
+                    reference_name,
+                    holiday_types
+                )
+            ]
+
+        def as_dict(self):
+            """
+            Exports a dict representation of this poem; this is for data we want to persist.
+
+            OUT:
+                dictionary representation of the poem object
+            """
+            return {
+                "unlocked": self.unlocked
+            }
+
+        def unlock(self):
+            """
+            Unlocks this poem, making it available to the player.
+            """
+            # Unlock the poem
+            self.unlocked = True
+            self.__save()
+
+        def __load(self):
+            """
+            Loads the persisted data for this poem from the persistent.
+            """
+            if store.persistent.jn_poem_list[self.reference_name]:
+                self.unlocked = store.persistent.jn_poem_list[self.reference_name]["unlocked"]
+
+        def __save(self):
+            """
+            Saves the persistable data for this poem to the persistent.
+            """
+            store.persistent.jn_poem_list[self.reference_name] = self.as_dict()
+
+        def __filter_poem(
+            self,
+            unlocked=None,
+            reference_name=None,
+            holiday_types=None
+        ):
+            """
+            Returns True, if the poem meets the filter criteria. Otherwise False.
+
+            IN:
+                - poem_list - the list of JNpoem child poems to query
+                - unlocked - the boolean unlocked state to filter for
+                - reference_name - list of reference_names the poem must have 
+                - holiday_types - list of the JNHolidayTypes the poem must be in
+
+            OUT:
+                - True, if the poem meets the filter criteria. Otherwise False
+            """
+            if unlocked is not None and self.unlocked != unlocked:
+                return False
+
+            elif reference_name is not None and not self.reference_name in reference_name:
+                return False
+
+            elif holiday_type is not None and not self.holiday_type in holiday_types:
+                return False
+
+            return True
+
+    def __register_poem(poem):
+        """
+        Registers a new poem in the list of all poems, allowing in-game access and persistency.
+        If the poem has no existing corresponding persistent entry, it is saved.
+
+        IN:
+            - poem - the JNPoem to register.
+        """
+        if poem.reference_name in __ALL_POEMS:
+            jn_utils.log("Cannot register poem name: {0}, as an poem with that name already exists.".format(poem.reference_name))
+
+        else:
+            __ALL_POEMS[poem.reference_name] = poem
+            if poem.reference_name not in store.persistent.jn_poem_list:
+                poem.__save()
+
+    def get_poem(poem_name):
+        """
+        Returns the poem for the given name, if it exists.
+
+        IN:
+            - poem_name - str poem name to fetch
+
+        OUT: Corresponding JNPoem if the poem exists, otherwise None 
+        """
+        if poem_name in __ALL_POEMS:
+            return __ALL_POEMS[poem_name]
+
+        return None
+
+    __register_poem(JNPoem(
+        reference_name="jn_test_poem",
+        display_name="Test Poem",
+        holiday_type=jn_events.JNHolidayTypes.test,
+        poem="This is a test poem"
+    ))
+
+screen poem_view(poem):
+    style_prefix "poem"
+    vbox:
+        xalign 0.5
+        add "paper [poem.paper]"
+
+    viewport id "poem_viewport":
+        child_size (710, None)
+        mousewheel True
+        draggable True
+        xanchor 0
+        xsize 720
+        xpos 280
+        has vbox
+        null height 40
+        text "[poem.poem]" style "poem_text"
+
+    vbar value YScrollValue(viewport="poem_viewport") style "poem_vbar"
+
+style poem_vbar is vscrollbar:
+    xpos 1000
+    yalign 0.5
+    ysize 700
+
+style poem_text:
+    font "mod_assets/fonts/natsuki.ttf"
+    size 28
+    color "#000"
+    outlines []
+    line_leading 1

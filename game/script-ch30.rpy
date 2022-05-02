@@ -67,6 +67,10 @@ label ch30_init:
 
         jn_utils.log("Outfit set.")
 
+        # Load poems from disk and corresponding persistent data
+        jn_poems.JNPoem.load_all()
+        jn_utils.log("Poems loaded.")
+
         # Load holidays from disk and corresponding persistent data
         jn_events.JNHoliday.load_all()
         jn_utils.log("Holidays loaded.")
