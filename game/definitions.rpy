@@ -1419,17 +1419,19 @@ define audio.t4g = "<loop 1.000>bgm/4g.ogg"
 
 # JN resources
 
-# Singleton sound effects
-define audio.camera_shutter = "mod_assets/sfx/camera_shutter.mp3"
+# UI sound effects
 define audio.select_hover = "mod_assets/sfx/select_hover.mp3"
 define audio.select_confirm = "mod_assets/sfx/select_confirm.mp3"
+define audio.notification = "mod_assets/sfx/notification.ogg"
+
+# Generic sound effects
+define audio.camera_shutter = "mod_assets/sfx/camera_shutter.mp3"
 define audio.coin_flip = "mod_assets/sfx/coin_flip.mp3"
 define audio.card_shuffle = "mod_assets/sfx/card_shuffle.mp3"
 define audio.card_place = "mod_assets/sfx/card_place.mp3"
 define audio.drawer = "mod_assets/sfx/drawer.mp3"
 define audio.smack = "mod_assets/sfx/smack.mp3"
 define audio.clothing_ruffle = "mod_assets/sfx/clothing_ruffle.mp3"
-define audio.notification = "mod_assets/sfx/notification.ogg"
 define audio.page_turn = "mod_assets/sfx/page_turn.ogg"
 define audio.paper_crumple = "mod_assets/sfx/paper_crumple.ogg"
 define audio.paper_throw = "mod_assets/sfx/paper_throw.ogg"
@@ -1444,7 +1446,9 @@ define audio.cassette_close = "mod_assets/sfx/cassette_close.ogg"
 define audio.glass_move = "mod_assets/sfx/glass_move.ogg"
 define audio.straw_sip = "mod_assets/sfx/straw_sip.ogg"
 define audio.light_switch = "mod_assets/sfx/light_switch.ogg"
+define audio.blow = "mod_assets/sfx/blow.ogg"
 
+# Glitch sound effects
 define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
 define audio.glitch_b = "mod_assets/sfx/glitch_b.ogg"
 define audio.glitch_c = "mod_assets/sfx/glitch_c.ogg"

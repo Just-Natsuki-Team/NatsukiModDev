@@ -28,7 +28,7 @@ init python in jn_events:
 
     EVENT_MAP = dict()
 
-    _ALL_HOLIDAYS = {}
+    __ALL_HOLIDAYS = {}
 
     class JNHolidayTypes(Enum):
         none = 1
@@ -93,8 +93,8 @@ init python in jn_events:
             """
             Loads all persisted data for each holiday from the persistent.
             """
-            global _ALL_HOLIDAYS
-            for holiday in _ALL_HOLIDAYS.itervalues():
+            global __ALL_HOLIDAYS
+            for holiday in __ALL_HOLIDAYS.itervalues():
                 holiday.__load()
 
         @staticmethod
@@ -102,8 +102,8 @@ init python in jn_events:
             """
             Saves all persistable data for each holiday to the persistent.
             """
-            global _ALL_HOLIDAYS
-            for holiday in _ALL_HOLIDAYS.itervalues():
+            global __ALL_HOLIDAYS
+            for holiday in __ALL_HOLIDAYS.itervalues():
                 holiday.__save()
 
         @staticmethod
@@ -219,17 +219,18 @@ init python in jn_events:
             self.is_seen = True
             self.__save()
 
+            jn_globals.force_quit_enabled = True
             display_visuals(**kwargs)
 
     def __register_holiday(holiday):
         """
         Registers a new holiday in the list of all holidays, allowing in-game access and persistency.
         """
-        if holiday.label in _ALL_HOLIDAYS:
+        if holiday.label in __ALL_HOLIDAYS:
             jn_utils.log("Cannot register holiday name: {0}, as a holiday with that name already exists.".format(holiday.reference_name))
 
         else:
-            _ALL_HOLIDAYS[holiday.label] = holiday
+            __ALL_HOLIDAYS[holiday.label] = holiday
             if holiday.label not in store.persistent._jn_holiday_list:
                 holiday.__save()
 
@@ -245,8 +246,8 @@ init python in jn_events:
 
         OUT: Corresponding JNHoliday if the holiday exists, otherwise None 
         """
-        if holiday_name in _ALL_HOLIDAYS:
-            return _ALL_HOLIDAYS[holiday_name]
+        if holiday_name in __ALL_HOLIDAYS:
+            return __ALL_HOLIDAYS[holiday_name]
 
         return None
 
@@ -367,6 +368,27 @@ init python in jn_events:
 
         return (input_date.month == player_birthday.month and input_date.day == player_birthday.day)
 
+    def is_anniversary(input_date=None):
+        """
+        Returns True if the input_date is the player and Natsuki's anniversary; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if not store.persistent._jn_player_anniversary_day_month:
+            return False
+
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        anniversary_date = datetime.date(
+            2020, # We use 2020 as it is a leap year
+            store.persistent._jn_player_anniversary_day_month[1],
+            store.persistent._jn_player_anniversary_day_month[0]
+        )
+
+        return (input_date.month == anniversary_date.month and input_date.day == anniversary_date.day)
+
     def get_holidays_for_date(input_date=None):
         """
         Gets the holidays - if any - corresponding to the supplied date, or the current date by default.
@@ -388,7 +410,10 @@ init python in jn_events:
 
         if is_new_years_day(input_date):
             holidays.append(JNHolidays.new_years_day)
-            
+
+        if is_valentines_day(input_date):
+            holidays.append(JNHolidays.valentines_day)
+
         if is_easter(input_date):
             holidays.append(JNHolidays.easter)
 
@@ -409,6 +434,9 @@ init python in jn_events:
 
         if is_player_birthday(input_date):
             holidays.append(JNHolidays.player_birthday)
+
+        if is_anniversary(input_date):
+            holidays.append(JNHolidays.anniversary)
 
         return holidays
 
@@ -437,7 +465,7 @@ init python in jn_events:
         Returns a list of all holidays that apply for the current date, or None if no holidays apply
         """
         holiday_list = JNHoliday.filter_holidays(
-            holiday_list=_ALL_HOLIDAYS.values(),
+            holiday_list=__ALL_HOLIDAYS.values(),
             holiday_types=get_holidays_for_date(),
             affinity=store.Natsuki._getAffinityState(),
         )
@@ -479,25 +507,6 @@ init python in jn_events:
         deco_list=["balloons"],
         prop_list=["cake lit"],
         priority=99
-    ))
-
-    __register_holiday(JNHoliday(
-        label="event_test_holiday_1",
-        holiday_type=JNHolidayTypes.test,
-        conditional="True",
-        affinity_range=(jn_affinity.AFFECTIONATE, None),
-        natsuki_sprite_code="1nchsm",
-        deco_list=["balloons"],
-        prop_list=["cake lit"]
-    ))
-
-    __register_holiday(JNHoliday(
-        label="event_test_holiday_2",
-        holiday_type=JNHolidayTypes.test,
-        conditional="True",
-        affinity_range=(jn_affinity.AFFECTIONATE, None),
-        natsuki_sprite_code="1nchsm",
-        prop_list=["poetry_attempt"],
     ))
 
 # Used to handle multiple events in a single day by cleaning/setting up inbetween events
@@ -1048,65 +1057,75 @@ label event_drinking_strawberry_milkshake:
  
 # Natsuki wishes the player a happy birthday!
 label event_player_birthday():
-    python:
-        import datetime
-        jn_globals.force_quit_enabled = True
-        player_name_capitalized = persistent.playername.upper()
-        jn_events.display_visuals(
-            natsuki_sprite_code="1uchgnl",
-            music_file_path="mod_assets/bgm/happy_birthday.ogg")
-
+    $ jn_events.get_holiday("event_player_birthday").run()
+    $ player_name_capitalized = persistent.playername.upper()
     n 1uchlgl "HAPPY BIRTHDAY, [player_name_capitalized]!"
-    n  "Betcha' didn't think I had something planned all along, did you?"
-    extend  " Ehehe."
-    n  "Don't lie!"
-    extend  " I know I got you {i}real{/i} good this time!"
-    n  "Well, whatever."
-    extend  " We both know what you're waiting for, huh?"
-    n  "Yeah, yeah."
-    extend  " I got you covered, [player]."
+    n 1fcsbg "Betcha' didn't think I had something planned all along, did you?"
+    extend 1nchsml " Ehehe."
+    n 1fnmaj "Don't lie!"
+    extend 1fchbl " I know I got you {i}real{/i} good this time."
+    n 1ullss "Well, whatever."
+    extend 1tsqsm " We both know what {i}you're{/i} waiting for, huh?"
+    n 1fcsss "Yeah, yeah."
+    extend 1fchsm " I got you covered, [player]."
 
     show prop cake lit zorder jn_birthdays.JN_BIRTHDAY_PROP_ZORDER
     play audio necklace_clip
 
-    #TODO: Finish up writing; add poems as gifts? Unlock outfit?
+    n 1fnmpu "..."
+    n 1fbkwr "What?!"
+    extend 1fllpol " You don't {i}seriously{/i} expect me to sing all by myself?"
+    extend 1fcseml " No way!"
+    n 1nlrpol "..."
+    n 1nlrpu "But..."
+    n 1nchbs "Yeah! Happy birthday!"
+    extend 1nchsml " Ehehe."
+    n 1tsqsm "Well, [player]?"
+    extend 1tsqss " Aren't you gonna make a wish?"
+    n 1tlrpu "...Better come up with one soon, actually."
+    extend 1uskemlesh " I gotta put this out before the wax ruins all the icing!"
+    n 1nllpo "..."
+    n 1tsqpu "All set?"
+    extend 1fsrpo " About time."
+    extend 1fchbg " Let's put these out already!"
 
-    n  "..."
-    n  "What?!"
-    extend  " You don't {i}seriously{/i} expect me to sing all by myself?"
-    extend  " No way!"
-    n  "..."
-    n  "But..."
-    n "Yeah! Happy birthday!"
-    extend " Ehehe."
+    n 1ncsaj "..."
+    show prop cake unlit zorder jn_birthdays.JN_BIRTHDAY_PROP_ZORDER
+    play audio blow
 
-    n "Oh, I'll just put this away."
-    extend " One sec."
+    n 1nchsm "..."
+    n 1tsgss "Well?"
+    extend 1tnmaj " What're you waiting for, [player]?"
+    extend 1flrcal " Dig in already!"
+    n 1nsqsll "Don't tell me I went all out on this for nothing."
+    n 1fsqsr "..."
+    n 1uskajesu "...Oh."
+    extend 1fllssl " Ehehe."
+    extend 1fslssl " Right."
+    n 1flrssl "I..."
+    extend 1fsrdvl " kinda forgot about {i}that{/i} aspect."
+    n 1fslpol "And I don't really feel like smearing cake all over your screen."
+    extend 1ullaj " So..."
+    n 1nsrss "I'm just gonna just save this for later."
+    n 1fnmajl "Hey!"
+    extend 1fllbgl " It's the thought that counts, right?"
+
+    play audio glass_move
     hide prop cake
     with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
+
+    #TODO: Gifts?
 
     return
 
 label event_valentines_day:
     #TODO: writing
-    $ jn_events.display_visuals(natsuki_sprite_code="1nchsm")
+    $ jn_events.get_holiday("event_valentines_day").run()
     n "This isn't done yet, but happy valentine's day!"
     return
 
 label event_anniversary:
     #TODO: writing
-    $ jn_events.display_visuals(natsuki_sprite_code="1nchsm")
+    $ jn_events.get_holiday("event_anniversary").run()
     n "This isn't done yet, but happy anniversary!"
-    return
-
-label event_test_holiday_1:
-    $ jn_events.get_holiday("event_test_holiday_1").run()
-    n 1nwlbl "This is test holiday 1~!"
-
-    return
-
-label event_test_holiday_2:
-    $ jn_events.get_holiday("event_test_holiday_2").run()
-    n 1fwrbl "This is test holiday 2~!"
-
     return

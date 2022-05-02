@@ -17,6 +17,7 @@ default persistent.jn_player_appearance_hair_colour = None
 default persistent.jn_player_appearance_height_cm = None
 
 default persistent._jn_player_birthday_day_month = None # Format (day, month)
+default persistent._jn_player_anniversary_date = None
 
 # Hobby data
 default persistent.jn_player_gaming_frequency = None
