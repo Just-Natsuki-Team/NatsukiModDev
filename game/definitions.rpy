@@ -1507,12 +1507,17 @@ init -999 python:
         """
         This checks to ensure an input or menu screen is not up before allowing a force quit, as these crash the game. Thanks, Tom.
         """
-        if (
-            not renpy.get_screen("input")
-            and not renpy.get_screen("choice")
-            and not renpy.get_screen("poem_view")
-            and jn_globals.force_quit_enabled
-        ):
+        blocked_screens = (
+            "input",
+            "choice",
+            "poem_view",
+            "preferences"
+        )
+        for blocked_screen in blocked_screens:
+            if renpy.get_screen(blocked_screen):
+                return
+
+        if jn_globals.force_quit_enabled:
             renpy.call("try_force_quit")
 
     class JNEvent(object):

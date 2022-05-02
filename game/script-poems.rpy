@@ -1,9 +1,11 @@
 default persistent.jn_poem_list = dict()
 
 image paper default = "mod_assets/poems/default.png"
+image paper pink_floral = "mod_assets/poems/pink_floral.png"
 
 init python in jn_poems:
     import store
+    import store.jn_affinity as jn_affinity
     import store.jn_events as jn_events
     import store.jn_utils as jn_utils
 
@@ -18,6 +20,7 @@ init python in jn_poems:
             reference_name,
             display_name,
             holiday_type,
+            affinity_range,
             poem,
             paper="default"
         ):
@@ -28,6 +31,7 @@ init python in jn_poems:
                 reference_name - The name used to uniquely identify this poem and refer to it internally
                 display_name - The name displayed to the user
                 holiday_type - The JNHoliday type associated with this player, allowing a poem to be associated with a holiday
+                affinity_range - The affinity range that must be satisfied for this holiday to be picked when filtering
                 poem - The actual poem content
                 paper - The paper image that is associated with this poem. Defaults to a standard notepad page
             """
@@ -35,6 +39,7 @@ init python in jn_poems:
             self.display_name = display_name
             self.unlocked = False
             self.holiday_type = holiday_type
+            self.affinity_range = affinity_range
             self.poem = poem
             self.paper = paper
 
@@ -61,7 +66,8 @@ init python in jn_poems:
             poem_list,
             unlocked=None,
             reference_name=None,
-            holiday_types=None
+            holiday_types=None,
+            affinity=None
         ):
             """
             Returns a filtered list of poems, given an poem list and filter criteria.
@@ -71,6 +77,7 @@ init python in jn_poems:
                 - unlocked - the boolean unlocked state to filter for
                 - reference_name - list of reference_names the poem must have 
                 - holiday_types - list of the JNHolidayTypes the poem must be in
+                - affinity - minimum affinity state the poem must have
 
             OUT:
                 - list of poems matching the search criteria
@@ -81,7 +88,8 @@ init python in jn_poems:
                 if _poem.__filter_poem(
                     unlocked,
                     reference_name,
-                    holiday_types
+                    holiday_types,
+                    affinity
                 )
             ]
 
@@ -95,6 +103,21 @@ init python in jn_poems:
             return {
                 "unlocked": self.unlocked
             }
+
+        def curr_affinity_in_affinity_range(self, affinity_state=None):
+            """
+            Checks if the current affinity is within this poem's affinity_range
+
+            IN:
+                affinity_state - Affinity state to test if the poems can be shown in. If None, the current affinity state is used.
+                    (Default: None)
+            OUT:
+                True if the current affinity is within range. False otherwise
+            """
+            if not affinity_state:
+                affinity_state = jn_affinity._getAffinityState()
+
+            return jn_affinity._isAffStateWithinRange(affinity_state, self.affinity_range)
 
         def unlock(self):
             """
@@ -121,7 +144,8 @@ init python in jn_poems:
             self,
             unlocked=None,
             reference_name=None,
-            holiday_types=None
+            holiday_types=None,
+            affinity=None
         ):
             """
             Returns True, if the poem meets the filter criteria. Otherwise False.
@@ -131,6 +155,7 @@ init python in jn_poems:
                 - unlocked - the boolean unlocked state to filter for
                 - reference_name - list of reference_names the poem must have 
                 - holiday_types - list of the JNHolidayTypes the poem must be in
+                - affinity - minimum affinity state the poem must have
 
             OUT:
                 - True, if the poem meets the filter criteria. Otherwise False
@@ -142,6 +167,9 @@ init python in jn_poems:
                 return False
 
             elif holiday_type is not None and not self.holiday_type in holiday_types:
+                return False
+
+            elif affinity and not self.curr_affinity_in_affinity_range(affinity):
                 return False
 
             return True
@@ -177,30 +205,59 @@ init python in jn_poems:
         return None
 
     __register_poem(JNPoem(
-        reference_name="jn_test_poem",
-        display_name="Test Poem",
-        holiday_type=jn_events.JNHolidayTypes.test,
-        poem="This is a test poem"
+        reference_name="jn_birthday_cakes_candles",
+        display_name="Cakes and Candles",
+        holiday_type=jn_events.JNHolidayTypes.player_birthday,
+        affinity_range=(jn_affinity.AFFECTIONATE, None),
+        poem="""
+        Another cake, another candle
+        Another year that you've just handled
+        Some people dread this special day
+        And push the thought so far away
+        But I don't think it's bad!
+
+        Another gift, another guest
+        Another year you've tried your best
+        Some people cherish this special day
+        Talk, dance, party and play
+        How could you think that's sad?
+
+        So throw away the doubts and fears
+        Ignore the numbers, forget the years
+        This poem is your birthday cheers
+        Now grab yourself a plate!
+        """,
+        paper="pink_floral"
     ))
 
 screen poem_view(poem):
-    style_prefix "poem"
     vbox:
         xalign 0.5
         add "paper [poem.paper]"
 
+    # Scrolling poem view
     viewport id "poem_viewport":
         child_size (710, None)
         mousewheel True
         draggable True
         xanchor 0
-        xsize 720
+        xsize 600
         xpos 280
         has vbox
-        null height 40
+        null height 100
         text "[poem.poem]" style "poem_text"
 
     vbar value YScrollValue(viewport="poem_viewport") style "poem_vbar"
+
+    # Menu
+    vbox:
+        xpos 1056
+        ypos 10
+        textbutton _("Done"):
+            style "hkbd_button"
+            action [
+                Hide("poem_view")
+            ]
 
 style poem_vbar is vscrollbar:
     xpos 1000
@@ -212,4 +269,4 @@ style poem_text:
     size 28
     color "#000"
     outlines []
-    line_leading 1
+    line_leading 5
