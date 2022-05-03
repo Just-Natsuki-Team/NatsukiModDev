@@ -44,7 +44,6 @@ init python in jn_events:
         player_birthday = 9
         anniversary = 10
         valentines_day = 11
-        test = 99
 
         def __str__(self):
             return self.name
@@ -218,11 +217,18 @@ init python in jn_events:
             if self.bgm:
                 kwargs.update({"bgm": self.bgm})
 
-            #self.is_seen = True
-            #self.__save()
+            
 
             jn_globals.force_quit_enabled = True
             display_visuals(**kwargs)
+
+        def complete(self):
+            """
+            Marks this holiday as complete, preventing it from being seen again until marked as unseen again.
+            This should be run after a holiday has concluded, so a crash/quit after starting the holiday doesn't lock progression.
+            """
+            self.is_seen = True
+            self.__save()
 
     def __register_holiday(holiday):
         """
@@ -521,6 +527,7 @@ label event_interlude:
 
     hide screen hkb_overlay
     show black zorder 99
+    stop music
     hide prop
     hide deco
     play audio light_switch
@@ -1082,7 +1089,7 @@ label event_player_birthday():
     extend 1fcseml " No way!"
     n 1nlrpol "..."
     n 1nlrpu "But..."
-    n 1nchbs "Yeah!{w=0.2} Happy birthday!{w=0.5}{nw}"
+    n 1nchbs "Yeah!{w=0.2} Here you go!{w=0.5}{nw}"
     extend 1nchsml " Ehehe."
     n 1tsqsm "So,{w=0.1} [player]?{w=1}{nw}"
     extend 1tsqss " Aren't you gonna make a wish?"
@@ -1146,7 +1153,6 @@ label event_player_birthday():
             n 1fcsemf "J-{w=0.2}just hurry up and read it.{w=1}{nw}"
             extend 1fslbof " I'm not gonna read it to you."
 
-        #$ birthday_poem.unlock()
         call show_poem(birthday_poem)
 
         if Natsuki.isEnamored(higher=True):
@@ -1156,6 +1162,8 @@ label event_player_birthday():
             n 1fcseml "A-{w=0.2}and I meant every word,{w=1}{nw}" 
             extend 1kllbof " so..."
             n 1klrssf "...Yeah."
+            n 1flldvl "I'll..."
+            extend 1fslssl " just put that poem back in my desk for now."
 
         else:
             n 1nsqpul "All done?{w=1}{nw}"
@@ -1186,6 +1194,11 @@ label event_player_birthday():
 
     else:
         n 1fcsbgf "You're welcome!"
+
+    if birthday_poem:
+        $ birthday_poem.unlock()
+
+    $ jn_events.get_holiday("event_player_birthday").complete()
 
     return
 

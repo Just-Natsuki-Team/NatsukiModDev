@@ -241,6 +241,7 @@ label show_poem(poem):
     show screen poem_view(poem)
     with Dissolve(1)
     $ renpy.pause(hard=True)
+    $ renpy.pause(2)
     return
 
 screen poem_view(poem):
@@ -269,7 +270,10 @@ screen poem_view(poem):
         textbutton _("Done"):
             style "hkbd_button"
             action [
-                Hide("poem_view"),
+                Hide(
+                    screen="poem_view",
+                    transition=Dissolve(1.5)
+                ),
                 Return()
             ]
 
