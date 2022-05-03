@@ -32,7 +32,7 @@ label ch30_init:
         # Check the daily affinity cap and reset if need be
         Natsuki.check_reset_daily_affinity_gain()
 
-        # Determine if the player should get a prolonged leave greeting
+        # Determine if the player should get a prolonged leave apology added
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
             persistent.last_apology_type = jn_apologies.TYPE_PROLONGED_LEAVE
 
@@ -69,11 +69,16 @@ label ch30_init:
 
         # Load poems from disk and corresponding persistent data
         jn_poems.JNPoem.load_all()
-        jn_utils.log("Poems loaded.")
+        jn_utils.log("Poem data loaded.")
 
         # Load holidays from disk and corresponding persistent data
         jn_events.JNHoliday.load_all()
-        jn_utils.log("Holidays loaded.")
+        jn_utils.log("Holiday data loaded.")
+
+        # Determine if the year has changed, in which case we reset all holidays so they can be celebrated again
+        if (datetime.datetime.now().year != persistent.jn_last_visited_date.year):
+            jn_events.reset_holidays()
+            jn_utils.log("Holiday completion states reset.")
 
         # Check for holidays, push each one that occurs today
         holiday_list = jn_events.select_holidays()
@@ -325,6 +330,8 @@ init python:
         if len(jn_plugins.day_check_calls) > 0:
             for action in jn_plugins.day_check_calls:
                 eval(action.statement)
+
+        persistent.jn_last_visited_date = datetime.datetime.now()
 
         # Check for holidays, push each one that occurs today
         holiday_list = jn_events.select_holidays()

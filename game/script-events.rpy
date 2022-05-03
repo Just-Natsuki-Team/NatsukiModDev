@@ -1,5 +1,6 @@
 default persistent._event_database = dict()
 default persistent._jn_holiday_list = dict()
+default persistent._jn_holiday_completion_states = dict()
 
 # Background decorations
 image deco balloons = "mod_assets/deco/balloons.png"
@@ -33,17 +34,16 @@ init python in jn_events:
     __ALL_HOLIDAYS = {}
 
     class JNHolidayTypes(Enum):
-        none = 1
-        new_years_day = 2
-        easter = 3
-        halloween = 4
-        christmas_eve = 5
-        christmas_day = 6
-        new_years_eve = 7
-        natsuki_birthday = 8
-        player_birthday = 9
-        anniversary = 10
-        valentines_day = 11
+        new_years_day = 1
+        easter = 2
+        halloween = 3
+        christmas_eve = 4
+        christmas_day = 5
+        new_years_eve = 6
+        natsuki_birthday = 7
+        player_birthday = 8
+        anniversary = 9
+        valentines_day = 10
 
         def __str__(self):
             return self.name
@@ -110,8 +110,9 @@ init python in jn_events:
         @staticmethod
         def filter_holidays(
             holiday_list,
-            holiday_types,
-            affinity
+            holiday_types=None,
+            affinity=None,
+            holiday_completion_state=None
         ):
             """
             Returns a filtered list of holidays, given an holiday list and filter criteria.
@@ -120,6 +121,7 @@ init python in jn_events:
                 - holiday_list - the list of JNHoliday objects to query
                 - holiday_types - list of JNHolidayTypes the holiday must be in
                 - affinity - minimum affinity state the holiday must have
+                - holiday_completion_state - boolean state the completion state corresponding to each holiday must be
 
             OUT:
                 - list of JNWearable child wearables matching the search criteria
@@ -129,7 +131,8 @@ init python in jn_events:
                 for _holiday in holiday_list
                 if _holiday.__filter_holiday(
                     holiday_types,
-                    affinity
+                    affinity,
+                    holiday_completion_state
                 )
             ]
 
@@ -175,7 +178,8 @@ init python in jn_events:
         def __filter_holiday(
             self,
             holiday_types=None,
-            affinity=None
+            affinity=None,
+            holiday_completion_state=None
         ):
             """
             Returns True, if the holiday meets the filter criteria. Otherwise False.
@@ -194,6 +198,12 @@ init python in jn_events:
                 return False
 
             elif affinity and not self.curr_affinity_in_affinity_range(affinity):
+                return False
+
+            elif (
+                holiday_completion_state
+                and store.persistent._jn_holiday_completion_states[str(self.holiday_type)]
+            ):
                 return False
 
             elif not eval(self.conditional):
@@ -217,8 +227,6 @@ init python in jn_events:
             if self.bgm:
                 kwargs.update({"bgm": self.bgm})
 
-            
-
             jn_globals.force_quit_enabled = True
             display_visuals(**kwargs)
 
@@ -229,6 +237,7 @@ init python in jn_events:
             """
             self.is_seen = True
             self.__save()
+            store.persistent._jn_holiday_completion_states[str(self.holiday_type)]
 
     def __register_holiday(holiday):
         """
@@ -448,6 +457,12 @@ init python in jn_events:
 
         return holidays
 
+    def get_all_holidays():
+        """
+        Returns a list of all holidays.
+        """
+        return __ALL_HOLIDAYS.itervalues()
+
     def select_event():
         """
         Picks and returns a single random event, or None if no events are left.
@@ -470,12 +485,13 @@ init python in jn_events:
 
     def select_holidays():
         """
-        Returns a list of all holidays that apply for the current date, or None if no holidays apply
+        Returns a list of all holidays with a corresponding incomplete persistent entry that apply for the current date, or None if no holidays apply
         """
         holiday_list = JNHoliday.filter_holidays(
-            holiday_list=__ALL_HOLIDAYS.values(),
+            holiday_list=get_all_holidays(),
             holiday_types=get_holidays_for_date(),
             affinity=store.Natsuki._getAffinityState(),
+            holiday_completion_state=False
         )
 
         if len(holiday_list) > 0:
@@ -483,6 +499,17 @@ init python in jn_events:
 
         else:
             return None
+
+    def reset_holidays():
+        """
+        Resets the is_seen state and corresponding completion state for all holidays.
+        """
+        for holiday in get_all_holidays():
+            holiday.is_seen = False
+
+        for holiday_type in JNHolidayTypes:
+            if str(holiday_type) in store.persistent._jn_holiday_completion_states:
+                store.persistent._jn_holiday_completion_states[str(holiday_type)] = False
 
     def display_visuals(
         natsuki_sprite_code,
@@ -505,6 +532,12 @@ init python in jn_events:
         # Reveal
         renpy.hide("black")
 
+    # Handle the holiday completion states on the persistent
+    for holiday_type in JNHolidayTypes:
+        if not str(holiday_type) in store.persistent._jn_holiday_completion_states:
+            store.persistent._jn_holiday_completion_states[str(holiday_type)] = False
+
+    # Holiday registration
     __register_holiday(JNHoliday(
         label="event_player_birthday",
         holiday_type=JNHolidayTypes.player_birthday,
@@ -1125,12 +1158,13 @@ label event_player_birthday():
     hide prop cake unlit
     with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
 
-    $ birthday_poem = random.choice(jn_poems.JNPoem.filter_poems(
+    $ unlocked_poem_pool = jn_poems.JNPoem.filter_poems(
         poem_list=jn_poems.get_all_poems(),
         unlocked=False,
         holiday_types=[jn_events.JNHolidayTypes.player_birthday],
         affinity=Natsuki._getAffinityState()
-    ))
+    )
+    $ birthday_poem = random.choice(unlocked_poem_pool) if len(unlocked_poem_pool) > 0 else None   
 
     if birthday_poem:
         if Natsuki.isEnamored(higher=True):
