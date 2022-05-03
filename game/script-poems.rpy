@@ -73,7 +73,7 @@ init python in jn_poems:
             Returns a filtered list of poems, given an poem list and filter criteria.
 
             IN:
-                - poem_list - the list of JNpoem child poems to query
+                - poem_list - the list of JNpoem child poems to query. Defaults to all poems
                 - unlocked - the boolean unlocked state to filter for
                 - reference_name - list of reference_names the poem must have 
                 - holiday_types - list of the JNHolidayTypes the poem must be in
@@ -166,7 +166,7 @@ init python in jn_poems:
             elif reference_name is not None and not self.reference_name in reference_name:
                 return False
 
-            elif holiday_type is not None and not self.holiday_type in holiday_types:
+            elif holiday_types is not None and not self.holiday_type in holiday_types:
                 return False
 
             elif affinity and not self.curr_affinity_in_affinity_range(affinity):
@@ -204,6 +204,12 @@ init python in jn_poems:
 
         return None
 
+    def get_all_poems():
+        """
+        Returns a list of all poems.
+        """
+        return __ALL_POEMS.itervalues()
+
     __register_poem(JNPoem(
         reference_name="jn_birthday_cakes_candles",
         display_name="Cakes and Candles",
@@ -229,6 +235,13 @@ init python in jn_poems:
         """,
         paper="pink_floral"
     ))
+
+label show_poem(poem):
+    play audio page_turn
+    show screen poem_view(poem)
+    with Dissolve(1)
+    $ renpy.pause(hard=True)
+    return
 
 screen poem_view(poem):
     vbox:
@@ -256,7 +269,8 @@ screen poem_view(poem):
         textbutton _("Done"):
             style "hkbd_button"
             action [
-                Hide("poem_view")
+                Hide("poem_view"),
+                Return()
             ]
 
 style poem_vbar is vscrollbar:

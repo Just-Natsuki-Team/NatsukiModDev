@@ -326,6 +326,22 @@ init python:
             for action in jn_plugins.day_check_calls:
                 eval(action.statement)
 
+        # Check for holidays, push each one that occurs today
+        holiday_list = jn_events.select_holidays()
+        if holiday_list:
+            holiday_list.sort(key = lambda holiday: holiday.priority)
+            while len(holiday_list) > 0:
+                holiday = holiday_list.pop()
+                queue(holiday.label)
+
+                if len(holiday_list) > 0:
+                    queue("event_interlude")
+
+                else:
+                    queue("ch30_loop")
+
+            renpy.jump("call_next_topic")
+
         pass
 
 label talk_menu:

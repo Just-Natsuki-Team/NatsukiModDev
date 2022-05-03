@@ -21,10 +21,12 @@ init python in jn_events:
     import store.audio as audio
     import store.jn_atmosphere as jn_atmosphere
     import store.jn_affinity as jn_affinity
+    import store.jn_globals as jn_globals
     import store.jn_utils as jn_utils
 
     JN_EVENT_DECO_ZORDER = 2
     JN_EVENT_PROP_ZORDER = 4
+    JN_EVENT_FADE_ZORDER = 10
 
     EVENT_MAP = dict()
 
@@ -216,8 +218,8 @@ init python in jn_events:
             if self.bgm:
                 kwargs.update({"bgm": self.bgm})
 
-            self.is_seen = True
-            self.__save()
+            #self.is_seen = True
+            #self.__save()
 
             jn_globals.force_quit_enabled = True
             display_visuals(**kwargs)
@@ -409,34 +411,34 @@ init python in jn_events:
         holidays = []
 
         if is_new_years_day(input_date):
-            holidays.append(JNHolidays.new_years_day)
+            holidays.append(JNHolidayTypes.new_years_day)
 
         if is_valentines_day(input_date):
-            holidays.append(JNHolidays.valentines_day)
+            holidays.append(JNHolidayTypes.valentines_day)
 
         if is_easter(input_date):
-            holidays.append(JNHolidays.easter)
+            holidays.append(JNHolidayTypes.easter)
 
         if is_halloween(input_date):
-            holidays.append(JNHolidays.halloween)
+            holidays.append(JNHolidayTypes.halloween)
 
         if is_christmas_eve(input_date):
-            holidays.append(JNHolidays.christmas_eve)
+            holidays.append(JNHolidayTypes.christmas_eve)
 
         if is_christmas_day(input_date):
-            holidays.append(JNHolidays.christmas_day)
+            holidays.append(JNHolidayTypes.christmas_day)
 
         if is_christmas_eve(input_date):
-            holidays.append(JNHolidays.new_years_eve)
+            holidays.append(JNHolidayTypes.new_years_eve)
 
         if is_natsuki_birthday(input_date):
-            holidays.append(JNHolidays.natsuki_birthday)
+            holidays.append(JNHolidayTypes.natsuki_birthday)
 
         if is_player_birthday(input_date):
-            holidays.append(JNHolidays.player_birthday)
+            holidays.append(JNHolidayTypes.player_birthday)
 
         if is_anniversary(input_date):
-            holidays.append(JNHolidays.anniversary)
+            holidays.append(JNHolidayTypes.anniversary)
 
         return holidays
 
@@ -505,7 +507,7 @@ init python in jn_events:
         natsuki_sprite_code="1uchgnl",
         bgm=audio.happy_birthday_bgm,
         deco_list=["balloons"],
-        prop_list=["cake lit"],
+        prop_list=["cake unlit"],
         priority=99
     ))
 
@@ -1059,62 +1061,131 @@ label event_drinking_strawberry_milkshake:
 label event_player_birthday():
     $ jn_events.get_holiday("event_player_birthday").run()
     $ player_name_capitalized = persistent.playername.upper()
-    n 1uchlgl "HAPPY BIRTHDAY, [player_name_capitalized]!"
-    n 1fcsbg "Betcha' didn't think I had something planned all along, did you?"
+    n 1uchlgl "HAPPY BIRTHDAY,{w=0.1} [player_name_capitalized]!"
+    n 1fcsbg "Betcha' didn't think I had something planned all along,{w=0.1} did you?{w=0.5}{nw}"
     extend 1nchsml " Ehehe."
-    n 1fnmaj "Don't lie!"
+    n 1fnmaj "Don't lie!{w=1}{nw}"
     extend 1fchbl " I know I got you {i}real{/i} good this time."
-    n 1ullss "Well, whatever."
-    extend 1tsqsm " We both know what {i}you're{/i} waiting for, huh?"
-    n 1fcsss "Yeah, yeah."
-    extend 1fchsm " I got you covered, [player]."
+    n 1ullss "Well,{w=0.1} whatever.{w=1}{nw}"
+    extend 1tsqsm " We both know what {i}you're{/i} waiting for,{w=0.1} huh?"
+    n 1fcsss "Yeah,{w=0.1} yeah.{w=0.5}{nw}"
+    extend 1fchsm " I got you covered,{w=0.1} [player]."
 
-    show prop cake lit zorder jn_birthdays.JN_BIRTHDAY_PROP_ZORDER
+    show prop cake lit zorder jn_events.JN_EVENT_PROP_ZORDER
     play audio necklace_clip
 
+    n 1uchgn "Ta-{w=0.3}da!"
+    $ renpy.pause(3)
     n 1fnmpu "..."
-    n 1fbkwr "What?!"
-    extend 1fllpol " You don't {i}seriously{/i} expect me to sing all by myself?"
+    n 1fbkwr "What?!{w=1}{nw}"
+    extend 1fllpol " You don't {i}seriously{/i} expect me to sing all by myself?{w=1}{nw}"
     extend 1fcseml " No way!"
     n 1nlrpol "..."
     n 1nlrpu "But..."
-    n 1nchbs "Yeah! Happy birthday!"
+    n 1nchbs "Yeah!{w=0.2} Happy birthday!{w=0.5}{nw}"
     extend 1nchsml " Ehehe."
-    n 1tsqsm "Well, [player]?"
+    n 1tsqsm "So,{w=0.1} [player]?{w=1}{nw}"
     extend 1tsqss " Aren't you gonna make a wish?"
-    n 1tlrpu "...Better come up with one soon, actually."
+    n 1tlrpu "...Better come up with one soon,{w=0.1} actually.{w=1}{nw}"
     extend 1uskemlesh " I gotta put this out before the wax ruins all the icing!"
     n 1nllpo "..."
-    n 1tsqpu "All set?"
-    extend 1fsrpo " About time."
+    n 1tsqpu "All set?{w=0.5}{nw}"
+    extend 1fsrpo " About time.{w=1}{nw}"
     extend 1fchbg " Let's put these out already!"
 
-    n 1ncsaj "..."
-    show prop cake unlit zorder jn_birthdays.JN_BIRTHDAY_PROP_ZORDER
+    n 1ncsaj "...{w=0.5}{nw}"
+    show prop cake unlit zorder jn_events.JN_EVENT_PROP_ZORDER
     play audio blow
 
     n 1nchsm "..."
-    n 1tsgss "Well?"
-    extend 1tnmaj " What're you waiting for, [player]?"
+    n 1tsgss "Well?{w=0.75}{nw}"
+    extend 1tnmaj " What're you waiting for,{w=0.1} [player]?{w=1}{nw}"
     extend 1flrcal " Dig in already!"
     n 1nsqsll "Don't tell me I went all out on this for nothing."
     n 1fsqsr "..."
-    n 1uskajesu "...Oh."
-    extend 1fllssl " Ehehe."
+    n 1uskajesu "...Oh.{w=0.5}{nw}"
+    extend 1fllssl " Ehehe.{w=1}{nw}"
     extend 1fslssl " Right."
-    n 1flrssl "I..."
+    n 1flrssl "I...{w=1.5}{nw}"
     extend 1fsrdvl " kinda forgot about {i}that{/i} aspect."
-    n 1fslpol "And I don't really feel like smearing cake all over your screen."
+    n 1fslpol "And I don't really feel like smearing cake all over your screen.{w=1}{nw}"
     extend 1ullaj " So..."
     n 1nsrss "I'm just gonna just save this for later."
-    n 1fnmajl "Hey!"
-    extend 1fllbgl " It's the thought that counts, right?"
+    n 1fnmajl "Hey!{w=0.5}{nw}"
+    extend 1fllbgl " It's the thought that counts,{w=0.1} right?"
 
     play audio glass_move
-    hide prop cake
+    hide prop cake unlit
     with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
 
-    #TODO: Gifts?
+    $ birthday_poem = random.choice(jn_poems.JNPoem.filter_poems(
+        poem_list=jn_poems.get_all_poems(),
+        unlocked=False,
+        holiday_types=[jn_events.JNHolidayTypes.player_birthday],
+        affinity=Natsuki._getAffinityState()
+    ))
+
+    if birthday_poem:
+        if Natsuki.isEnamored(higher=True):
+            n 1kllcal "..."
+            n 1knmpul "...I wrote you something too,{w=0.1} you know."
+            n 1fcseml "I-{w=0.2}I know it's not some {i}fancy{/i} gift,{w=1}{nw}" 
+            extend 1klrsrl " but..."
+            n 1fsrsrl "..."
+            n 1fcsunl "Uuuuu..."
+            n 1fcspul "Just...{w=1}{nw}"
+            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            extend 1klrpol " read it already,{w=0.1} [chosen_tease]."
+
+        else:
+            n 1fllunl "..."
+            n 1fnmcal "I-{w=0.2}I hope you didn't think I'd just leave you with nothing."
+            n 1nsrpol "I'm not {i}that{/i} much of a jerk."
+            n 1nsrajl "So...{w=1}{nw}"
+            extend 1fnmcal " here you go."
+            n 1fcsemf "J-{w=0.2}just hurry up and read it.{w=1}{nw}"
+            extend 1fslbof " I'm not gonna read it to you."
+
+        #$ birthday_poem.unlock()
+        call show_poem(birthday_poem)
+
+        if Natsuki.isEnamored(higher=True):
+            n 1knmbol "Hey...{w=1}{nw}"
+            extend 1knmpul " you {i}did{/i} read it,{w=0.1} right?"
+            n 1fslbol "I worked a lot on that,{w=0.1} you know."
+            n 1fcseml "A-{w=0.2}and I meant every word,{w=1}{nw}" 
+            extend 1kllbof " so..."
+            n 1klrssf "...Yeah."
+
+        else:
+            n 1nsqpul "All done?{w=1}{nw}"
+            extend 1fcseml " {i}Finally{/i}.{w=1}{nw}"
+            extend 1fslcal " Jeez..."
+            n 1fslunl "..."
+            n 1fcsajl "I guess I'll just keep it in my desk for now.{w=1}{nw}"
+            extend 1fsrssl " I-{w=0.2}in case you wanted to reference my writing skills later,{w=0.1} {i}obviously{/i}."
+
+        play audio drawer
+        with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+
+    if Natsuki.isLove(higher=True):
+        n 1klrssl "And...{w=1.5}{nw}"
+        extend 1knmsml " [player]?"
+
+        show black zorder jn_events.JN_EVENT_FADE_ZORDER with Dissolve(0.5)
+        $ renpy.pause(0.5)
+        play audio kiss
+        $ renpy.pause(0.25)
+        hide black with Dissolve(1.25) 
+
+        n 1kwmssf "H-{w=0.2}happy birthday.{w=1}{nw}"
+        extend 1kchsmf " Ehehe."
+
+    elif Natsuki.isEnamored(higher=True):
+        n 1kwmssf "H-{w=0.2}happy birthday."
+
+    else:
+        n 1fcsbgf "You're welcome!"
 
     return
 

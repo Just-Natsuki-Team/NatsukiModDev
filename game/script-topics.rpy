@@ -7195,7 +7195,7 @@ label talk_players_birthday_outro:
         stop music
         play audio light_switch
         show black zorder 99
-        jump player_birthday_intro
+        jump event_player_birthday
 
     else:
         # Player's birthday was missed

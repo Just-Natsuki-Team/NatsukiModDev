@@ -1450,6 +1450,7 @@ define audio.glass_move = "mod_assets/sfx/glass_move.ogg"
 define audio.straw_sip = "mod_assets/sfx/straw_sip.ogg"
 define audio.light_switch = "mod_assets/sfx/light_switch.ogg"
 define audio.blow = "mod_assets/sfx/blow.ogg"
+define audio.kiss = "mod_assets/sfx/kiss.ogg"
 
 # Glitch sound effects
 define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
