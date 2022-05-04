@@ -7222,3 +7222,106 @@ label talk_players_birthday_outro:
             n 1fchblleaf "Love you,{w=0.1} [player]~!"
 
     return
+
+# Natsuki allows the player to see any poems she's written for them previously.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_can_i_see_a_poem",
+            unlocked=True,
+            prompt="Can I see a poem you've written me?",
+            conditional=(
+                "len(jn_poems.JNPoem.filter_poems("
+                    "jn_poems.get_all_poems(),"
+                    "unlocked=True"
+                ")) > 0"
+            ),
+            category=["Literature"],
+            player_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_can_i_see_a_poem:
+    if Natsuki.isEnamored(higher=True):
+        n 1fcsbg "Duh!{w=0.5}{nw}"
+        extend 1nchgnl " Of course you can!"
+        n 1fsqpol "I'd be offended if you {i}didn't{/i} wanna see them again.{w=1}{nw}"
+        extend 1fsqsml " Ehehe."
+        show natsuki 1klrsml at jn_left
+
+    elif Natsuki.isAffectionate(higher=True):
+        n 1unmajl "Huh?{w=1}{nw}"
+        extend 1fllssl " Oh,{w=0.1} those."
+        n 1fchbgl "Sure thing!{w=0.5}{nw}"
+        extend 1tsqbgl " Just can't get enough of my amazing writing skills,{w=0.1} huh?"
+        show natsuki 1flrsml at jn_left
+
+    else:
+        n 1unmajl "Huh?{w=1}{nw}"
+        extend 1nllbo " Oh,{w=0.1} my poems."
+        n 1unmbo "Sure,{w=0.1} I guess.{w=1}{nw}"
+        extend 1tnmaj " Which one did you wanna see again?"
+        show natsuki 1ulrbo at jn_left
+
+    python:
+        poem_options = []
+        for poem in jn_poems.JNPoem.filter_poems(jn_poems.get_all_poems(), unlocked=True):
+            poem_options.append((poem.display_name, poem))
+
+        poem_options.sort(key = lambda option: option[0])
+
+    call screen scrollable_choice_menu(poem_options, ("Nevermind.", None))
+
+    if isinstance(_return, jn_poems.JNPoem):
+        show natsuki at jn_center
+
+        if Natsuki.isEnamored(higher=True):
+            n 1unmaj "[_return.display_name]?{w=0.5}{nw}" 
+            extend 1nchsm " Okaaay!"
+            n 1uchsml "Just a second,{w=0.1} [player]..."
+
+            play audio drawer
+            with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+
+            n 1unmbg "Here we are!{w=0.5}{nw}"
+            extend 1nchsml " Ehehe."
+
+        elif Natsuki.isAffectionate(higher=True):
+            n 1unmaj "[_return.display_name]?{w=0.2} That one?{w=0.5}{nw}"
+            extend 1fchbg " Gotcha!"
+            n 1fchsml "Just give me a second here..."
+
+            play audio drawer
+            with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+
+            n 1fchbgl "Found it!"
+
+        else:
+            n 1unmaj "That one?{w=0.5}{nw}"
+            extend 1nnmss " Alright."
+            n 1nllss "Just let me get it out..."
+
+            play audio drawer
+            with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+
+            n 1ullaj "Well,{w=0.5}{nw}" 
+            extend 1nlrbol " here you go."
+
+        call show_poem(_return)
+
+    else:
+        show natsuki at jn_center
+        n 1nnmbo "Oh."
+
+        if Natsuki.isAffectionate(higher=True) and random.randint(0, 10) == 1:
+            extend 1nlrpol " Well,{w=0.1} okay then.{w=1}{nw}"
+            extend 1fsqbll " Spoilsport.{w=0.5}{nw}"
+
+        else:
+            extend 1nlrpol " Well,{w=0.1} okay then."
+
+    return

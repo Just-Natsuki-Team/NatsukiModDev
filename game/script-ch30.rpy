@@ -331,6 +331,11 @@ init python:
             for action in jn_plugins.day_check_calls:
                 eval(action.statement)
 
+        # Check for a year change, reset holidays if so
+        if persistent.jn_last_visited_date.year != datetime.datetime.now().year:
+            jn_events.reset_holidays()
+
+        # Update the last visited date, so extended periods spent with Natsuki open aren't penalised
         persistent.jn_last_visited_date = datetime.datetime.now()
 
         # Check for holidays, push each one that occurs today
@@ -387,7 +392,7 @@ label talk_menu:
         "I feel..." if Natsuki.isHappy(higher=True):
             jump player_admissions_start
 
-        "I want to tell you something..." if Natsuki.isHappy(higher=True):
+        "I want to tell you..." if Natsuki.isHappy(higher=True):
             jump player_compliments_start
 
         "I want to say sorry...":
