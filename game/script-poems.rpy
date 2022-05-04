@@ -214,7 +214,7 @@ init python in jn_poems:
         reference_name="jn_birthday_cakes_candles",
         display_name="Cakes and Candles",
         holiday_type=jn_events.JNHolidayTypes.player_birthday,
-        affinity_range=(jn_affinity.AFFECTIONATE, None),
+        affinity_range=(jn_affinity.HAPPY, None),
         poem=(
             "Another cake, another candle\n"
             "Another year that you've just handled\n"
@@ -228,9 +228,10 @@ init python in jn_poems:
             "Talk, dance, party and play\n"
             "How could you think that's sad?\n"
             "\n"
-            "So throw away the doubts and fears\n"
+            "No more doubts, no more fears"
             "Ignore the numbers, forget the years\n"
             "This poem is your birthday cheers\n"
+            "\n"
             "Now grab yourself a plate!"
         ),
         paper="pink_floral"
