@@ -215,24 +215,24 @@ init python in jn_poems:
         display_name="Cakes and Candles",
         holiday_type=jn_events.JNHolidayTypes.player_birthday,
         affinity_range=(jn_affinity.AFFECTIONATE, None),
-        poem="""
-        Another cake, another candle
-        Another year that you've just handled
-        Some people dread this special day
-        And push the thought so far away
-        But I don't think it's bad!
-
-        Another gift, another guest
-        Another year you've tried your best
-        Some people cherish this special day
-        Talk, dance, party and play
-        How could you think that's sad?
-
-        So throw away the doubts and fears
-        Ignore the numbers, forget the years
-        This poem is your birthday cheers
-        Now grab yourself a plate!
-        """,
+        poem=(
+            "Another cake, another candle\n"
+            "Another year that you've just handled\n"
+            "Some people dread this special day\n"
+            "And push the thought so far away\n"
+            "But I don't think it's bad!\n"
+            "\n"
+            "Another gift, another guest\n"
+            "Another year you've tried your best\n"
+            "Some people cherish this special day\n"
+            "Talk, dance, party and play\n"
+            "How could you think that's sad?\n"
+            "\n"
+            "So throw away the doubts and fears\n"
+            "Ignore the numbers, forget the years\n"
+            "This poem is your birthday cheers\n"
+            "Now grab yourself a plate!"
+        ),
         paper="pink_floral"
     ))
 
@@ -256,9 +256,11 @@ screen poem_view(poem):
         draggable True
         xanchor 0
         xsize 600
-        xpos 280
+        xpos 360
         has vbox
         null height 100
+        text "[poem.display_name]" style "poem_text"
+        null height 30
         text "[poem.poem]" style "poem_text"
 
     vbar value YScrollValue(viewport="poem_viewport") style "poem_vbar"
@@ -272,7 +274,7 @@ screen poem_view(poem):
             action [
                 Hide(
                     screen="poem_view",
-                    transition=Dissolve(1.5)
+                    transition=Dissolve(1)
                 ),
                 Return()
             ]
