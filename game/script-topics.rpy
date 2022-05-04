@@ -7289,6 +7289,10 @@ label talk_can_i_see_a_poem:
 
             n 1unmbg "Here we are!{w=0.5}{nw}"
             extend 1nchsml " Ehehe."
+            call show_poem(_return)
+
+            n 1tnmsml "All done?{w=0.5}{nw}"
+            extend 1nlrssl " I'll just put that back."
 
         elif Natsuki.isAffectionate(higher=True):
             n 1unmaj "[_return.display_name]?{w=0.2} That one?{w=0.5}{nw}"
@@ -7299,6 +7303,10 @@ label talk_can_i_see_a_poem:
             with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
             n 1fchbgl "Found it!"
+            call show_poem(_return)
+
+            n 1tnmssl "All done?{w=0.5}{nw}"
+            extend 1flrdvl " Ehehe."
 
         else:
             n 1unmaj "That one?{w=0.5}{nw}"
@@ -7310,8 +7318,13 @@ label talk_can_i_see_a_poem:
 
             n 1ullaj "Well,{w=0.5}{nw}" 
             extend 1nlrbol " here you go."
+            call show_poem(_return)
 
-        call show_poem(_return)
+            n 1tnmbol "All done?{w=0.5}{nw}"
+            extend 1nslssl "I'll just put that back."
+
+        play audio drawer
+        with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
     else:
         show natsuki at jn_center

@@ -228,11 +228,11 @@ init python in jn_poems:
             "Talk, dance, party and play\n"
             "How could you think that's sad?\n"
             "\n"
-            "No more doubts, no more fears"
+            "No more doubts, no more fears\n"
             "Ignore the numbers, forget the years\n"
             "This poem is your birthday cheers\n"
             "\n"
-            "Now grab yourself a plate!"
+            "Now grab yourself a plate!\n"
         ),
         paper="pink_floral"
     ))
