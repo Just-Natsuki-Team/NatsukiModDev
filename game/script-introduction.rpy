@@ -40,7 +40,7 @@ label introduction_progress_check:
         $ Natsuki.setOutfit(jn_outfits.get_outfit("jn_school_uniform"))
         $ main_background.show()
         $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
-        show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
+        show natsuki idle introduction at jn_center zorder JN_NATSUKI_ZORDER
         hide glitch_garbled_a
         play music audio.space_classroom_bgm fadein 1
 
@@ -116,7 +116,7 @@ label introduction_opening:
     $ Natsuki.setOutfit(jn_outfits.get_outfit("jn_school_uniform"))
     $ main_background.show()
     $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
-    show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
+    show natsuki idle introduction at jn_center zorder JN_NATSUKI_ZORDER
     hide black
     hide glitch_garbled_a
     play music audio.space_classroom_bgm fadein 1
@@ -237,7 +237,7 @@ label introduction_first_meeting:
     n 1kplpu "...[player]?"
     n 1kwmss "You're...{w=0.3} [player]?"
 
-    show natsuki idle introduction
+    show natsuki idle introduction at jn_center
     $ renpy.pause(10)
 
     jump introduction_collecting_thoughts
@@ -312,7 +312,7 @@ label introduction_collecting_thoughts:
     n 1kllsr "You understand...{w=1.5}{nw}"
     extend 1kplpu " right?"
 
-    show natsuki idle introduction
+    show natsuki idle introduction at jn_center
     $ renpy.pause(30)
 
     jump introduction_calmed_down
@@ -378,7 +378,7 @@ label introduction_calmed_down:
     n 1kcspul "...I don't know,{w=0.1} [player].{w=3}{nw}"
     extend 1kcssrl " I just don't know anymore..."
 
-    show natsuki idle introduction
+    show natsuki idle introduction at jn_center
     $ renpy.pause(60)
 
     jump introduction_acceptance
