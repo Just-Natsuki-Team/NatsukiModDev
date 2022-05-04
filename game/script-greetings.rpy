@@ -169,7 +169,7 @@ label greeting_love_plus_world_revolves_around_you:
     n 1fnmajl "You think my entire world revolves around you or something?"
     n 1fnmsll "..."
     n 1fsqsml "..."
-    n 1uchlgl "Ahaha!{w=0.2} Did I get you,{w=0.1} [player]?{w=0.2} Don't lie!"
+    n 1uchlglelg "Ahaha!{w=0.2} Did I get you,{w=0.1} [player]?{w=0.2} Don't lie!"
     $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
     n 1uchsml "Well, anyway.{w=0.2} You're here now, [chosen_endearment]!{w=0.2} Welcome back!"
     return
@@ -324,7 +324,8 @@ init 5 python:
 
 label greeting_affectionate_enamored_just_cant_stay_away:
     n 1usqbgl "Well, well, well.{w=0.2} What do we have here?"
-    n 1fsqbgl "You just can't stay away from me,{w=0.1} can you?{w=0.2} Ahaha!"
+    n 1fsqbgl "You just can't stay away from me,{w=0.1} can you?{w=0.5}{nw}" 
+    extend 1fchbslelg "Ahaha!"
     n 1kchbgl "Not that I'm complaining too much!"
     n 1unmsml "So...{w=0.3} what do you wanna talk about?"
     return

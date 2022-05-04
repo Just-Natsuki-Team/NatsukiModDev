@@ -603,7 +603,7 @@ label snap_end:
 
         if jn_snap._natsuki_win_streak == 10:
             n 1fchbsl "Jeez,{w=0.1} [player]...{w=0.3} are you having a bad day or what?"
-            n 1fchbs "Ahaha!"
+            n 1fchbselg "Ahaha!"
             n 1nchsm "So long as you're having fun though,{w=0.1} right?"
 
         elif jn_snap._natsuki_win_streak == 5:

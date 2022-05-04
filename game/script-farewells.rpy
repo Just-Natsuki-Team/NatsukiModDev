@@ -430,7 +430,7 @@ label farewell_option_play:
     extend 1fsqsf " than chill out with me?"
     n 1fcssl "..."
     n 1uchgn "Well,{w=0.1} your loss!{w=0.5}{nw}"
-    extend 1uchlg " Ahaha!"
+    extend 1uchlgelg " Ahaha!"
     n 1nllbg "No,{w=0.1} no.{w=0.2} It's fine.{w=0.2} You go do that,{w=0.1} [player].{w=0.5}{nw}"
     extend 1nsqbg " Besides..."
     n 1usqct "You sure could use the practice,{w=0.1} huh?{w=0.5}{nw}"
@@ -1203,7 +1203,7 @@ label farewell_short_session_ask_alt:
                     $ player_was_snarky = True
                     n 1fsqbgf "Ehehe.{w=0.2} What's wrong,{w=0.1} [player]?"
                     n 1tsqdvf "A little too close to the truth?"
-                    n 1uchbsf "Ahaha!"
+                    n 1uchbsfelg "Ahaha!"
 
             n 1nllbgl "Well,{w=0.1} either way,{w=0.1} I'm glad you can stay a little longer!"
 
@@ -1219,7 +1219,7 @@ label farewell_short_session_ask_alt:
             n 1fnmpol "Jeez...{w=0.3} what's with the attitude today,{w=0.1} [player]?"
             n 1fllpof "Well,{w=0.1} anyway...{w=0.3} Thanks for staying with me a little longer."
             n 1fsgsgl "...{i}I guess{/i}."
-            n 1uchgnl "Ahaha!{w=0.2} Oh,{w=0.1} lighten up,{w=0.1} [player]!{w=0.2} I'm just messing with you!"
+            n 1uchgnlelg "Ahaha!{w=0.2} Oh,{w=0.1} lighten up,{w=0.1} [player]!{w=0.2} I'm just messing with you!"
             n 1tllsml "Ehehe.{w=0.2} Now,{w=0.1} where were we?"
             $ jn_globals.player_already_stayed_on_farewell = True
             $ Natsuki.calculated_affinity_gain()

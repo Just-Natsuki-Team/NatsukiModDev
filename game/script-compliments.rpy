@@ -214,7 +214,7 @@ label compliment_confident:
 
             if Natsuki.isEnamored(higher=True):
                 n 1uchgnl "Oh,{w=0.1} who am I kidding.{w=0.2} Of course you do."
-                n 1uchbsl "Ahaha!"
+                n 1uchbslelg "Ahaha!"
 
     $ jn_compliments.last_compliment_type = jn_compliments.TYPE_CONFIDENT
     return
@@ -323,7 +323,7 @@ label compliment_hilarious:
             n 1fcsbgl "O-{w=0.1}Oh?{w=0.2} Aha!{w=0.2} Well,{w=0.1} I'm glad to hear it!"
             n 1fsqsm "You know what that means,{w=0.1} right?"
             n 1fchgn "It means you have great taste,{w=0.1} [player]!"
-            n 1uchbs "Ahaha!"
+            n 1uchbselg "Ahaha!"
 
     $ jn_compliments.last_compliment_type = jn_compliments.TYPE_HILARIOUS
     return
@@ -397,7 +397,7 @@ label compliment_style:
                 if Natsuki.isLove():
                     $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
                     n 1fllbgl "D-{w=0.1}don't think I just dress for me though,{w=0.1} [chosen_tease]~."
-                    n 1nchsml "Ahaha!"
+                    n 1nchsmleaf "Ahaha!"
 
             else:
                 n 1tsgssl "Oh?{w=0.2} Someone could stand to take a few points,{w=0.1} huh?"
