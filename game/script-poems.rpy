@@ -44,7 +44,7 @@ init python in jn_poems:
             self.paper = paper
 
         @staticmethod
-        def load_all():
+        def loadAll():
             """
             Loads all persisted data for each poem from the persistent.
             """
@@ -53,7 +53,7 @@ init python in jn_poems:
                 poem.__load()
 
         @staticmethod
-        def save_all():
+        def saveAll():
             """
             Saves all persistable data for each poem to the persistent.
             """
@@ -62,7 +62,7 @@ init python in jn_poems:
                 poem.__save()
 
         @staticmethod
-        def filter_poems(
+        def filterPoems(
             poem_list,
             unlocked=None,
             reference_name=None,
@@ -85,7 +85,7 @@ init python in jn_poems:
             return [
                 _poem
                 for _poem in poem_list
-                if _poem.__filter_poem(
+                if _poem.__filterPoem(
                     unlocked,
                     reference_name,
                     holiday_types,
@@ -93,7 +93,7 @@ init python in jn_poems:
                 )
             ]
 
-        def as_dict(self):
+        def asDict(self):
             """
             Exports a dict representation of this poem; this is for data we want to persist.
 
@@ -104,7 +104,7 @@ init python in jn_poems:
                 "unlocked": self.unlocked
             }
 
-        def curr_affinity_in_affinity_range(self, affinity_state=None):
+        def currAffinityInAffinityRange(self, affinity_state=None):
             """
             Checks if the current affinity is within this poem's affinity_range
 
@@ -138,9 +138,9 @@ init python in jn_poems:
             """
             Saves the persistable data for this poem to the persistent.
             """
-            store.persistent.jn_poem_list[self.reference_name] = self.as_dict()
+            store.persistent.jn_poem_list[self.reference_name] = self.asDict()
 
-        def __filter_poem(
+        def __filterPoem(
             self,
             unlocked=None,
             reference_name=None,
@@ -169,12 +169,12 @@ init python in jn_poems:
             elif holiday_types is not None and not self.holiday_type in holiday_types:
                 return False
 
-            elif affinity and not self.curr_affinity_in_affinity_range(affinity):
+            elif affinity and not self.currAffinityInAffinityRange(affinity):
                 return False
 
             return True
 
-    def __register_poem(poem):
+    def __registerPoem(poem):
         """
         Registers a new poem in the list of all poems, allowing in-game access and persistency.
         If the poem has no existing corresponding persistent entry, it is saved.
@@ -190,7 +190,7 @@ init python in jn_poems:
             if poem.reference_name not in store.persistent.jn_poem_list:
                 poem.__save()
 
-    def get_poem(poem_name):
+    def getPoem(poem_name):
         """
         Returns the poem for the given name, if it exists.
 
@@ -204,13 +204,13 @@ init python in jn_poems:
 
         return None
 
-    def get_all_poems():
+    def getAllPoems():
         """
         Returns a list of all poems.
         """
         return __ALL_POEMS.itervalues()
 
-    __register_poem(JNPoem(
+    __registerPoem(JNPoem(
         reference_name="jn_birthday_cakes_candles",
         display_name="Cakes and Candles",
         holiday_type=jn_events.JNHolidayTypes.player_birthday,

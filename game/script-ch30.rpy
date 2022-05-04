@@ -68,20 +68,20 @@ label ch30_init:
         jn_utils.log("Outfit set.")
 
         # Load poems from disk and corresponding persistent data
-        jn_poems.JNPoem.load_all()
+        jn_poems.JNPoem.loadAll()
         jn_utils.log("Poem data loaded.")
 
         # Load holidays from disk and corresponding persistent data
-        jn_events.JNHoliday.load_all()
+        jn_events.JNHoliday.loadAll()
         jn_utils.log("Holiday data loaded.")
 
         # Determine if the year has changed, in which case we reset all holidays so they can be celebrated again
         if (datetime.datetime.now().year != persistent.jn_last_visited_date.year):
-            jn_events.reset_holidays()
+            jn_events.resetHolidays()
             jn_utils.log("Holiday completion states reset.")
 
         # Check for holidays, push each one that occurs today
-        holiday_list = jn_events.select_holidays()
+        holiday_list = jn_events.selectHolidays()
         if holiday_list:
             holiday_list.sort(key = lambda holiday: holiday.priority)
             while len(holiday_list) > 0:
@@ -101,9 +101,9 @@ label ch30_init:
             if (
                 random.randint(1, 10) == 1
                 and (not persistent.jn_player_admission_type_on_quit and not persistent.jn_player_apology_type_on_quit)
-                and jn_events.select_event()
+                and jn_events.selectEvent()
             ):
-                push(jn_events.select_event())
+                push(jn_events.selectEvent())
                 renpy.call("call_next_topic", False)
 
             else:
@@ -333,13 +333,13 @@ init python:
 
         # Check for a year change, reset holidays if so
         if persistent.jn_last_visited_date.year != datetime.datetime.now().year:
-            jn_events.reset_holidays()
+            jn_events.resetHolidays()
 
         # Update the last visited date, so extended periods spent with Natsuki open aren't penalised
         persistent.jn_last_visited_date = datetime.datetime.now()
 
         # Check for holidays, push each one that occurs today
-        holiday_list = jn_events.select_holidays()
+        holiday_list = jn_events.selectHolidays()
         if holiday_list:
             holiday_list.sort(key = lambda holiday: holiday.priority)
             while len(holiday_list) > 0:

@@ -90,7 +90,7 @@ init python in jn_events:
             self.priority = priority
 
         @staticmethod
-        def load_all():
+        def loadAll():
             """
             Loads all persisted data for each holiday from the persistent.
             """
@@ -99,7 +99,7 @@ init python in jn_events:
                 holiday.__load()
 
         @staticmethod
-        def save_all():
+        def saveAll():
             """
             Saves all persistable data for each holiday to the persistent.
             """
@@ -108,7 +108,7 @@ init python in jn_events:
                 holiday.__save()
 
         @staticmethod
-        def filter_holidays(
+        def filterHolidays(
             holiday_list,
             holiday_types=None,
             affinity=None,
@@ -129,14 +129,14 @@ init python in jn_events:
             return [
                 _holiday
                 for _holiday in holiday_list
-                if _holiday.__filter_holiday(
+                if _holiday.__filterHoliday(
                     holiday_types,
                     affinity,
                     holiday_completion_state
                 )
             ]
 
-        def as_dict(self):
+        def asDict(self):
             """
             Exports a dict representation of this holiday; this is for data we want to persist.
 
@@ -147,7 +147,7 @@ init python in jn_events:
                 "is_seen": self.is_seen
             }
 
-        def curr_affinity_in_affinity_range(self, affinity_state=None):
+        def currAffinityInAffinityRange(self, affinity_state=None):
             """
             Checks if the current affinity is within this holidays's affinity_range
 
@@ -173,9 +173,9 @@ init python in jn_events:
             """
             Saves the persistable data for this holiday to the persistent.
             """
-            store.persistent._jn_holiday_list[self.label] = self.as_dict()
+            store.persistent._jn_holiday_list[self.label] = self.asDict()
 
-        def __filter_holiday(
+        def __filterHoliday(
             self,
             holiday_types=None,
             affinity=None,
@@ -197,7 +197,7 @@ init python in jn_events:
             elif holiday_types and not self.holiday_type in holiday_types:
                 return False
 
-            elif affinity and not self.curr_affinity_in_affinity_range(affinity):
+            elif affinity and not self.currAffinityInAffinityRange(affinity):
                 return False
 
             elif (
@@ -228,7 +228,7 @@ init python in jn_events:
                 kwargs.update({"bgm": self.bgm})
 
             jn_globals.force_quit_enabled = True
-            display_visuals(**kwargs)
+            displayVisuals(**kwargs)
 
         def complete(self):
             """
@@ -239,7 +239,7 @@ init python in jn_events:
             self.__save()
             store.persistent._jn_holiday_completion_states[str(self.holiday_type)]
 
-    def __register_holiday(holiday):
+    def __registerHoliday(holiday):
         """
         Registers a new holiday in the list of all holidays, allowing in-game access and persistency.
         """
@@ -254,7 +254,7 @@ init python in jn_events:
             else:
                 holiday.__load()
 
-    def get_holiday(holiday_name):
+    def getHoliday(holiday_name):
         """
         Returns the holiday for the given name, if it exists.
 
@@ -268,7 +268,7 @@ init python in jn_events:
 
         return None
 
-    def is_new_years_day(input_date=None):
+    def isNewYearsDay(input_date=None):
         """
         Returns True if the input_date is New Year's Day; otherwise False
 
@@ -280,7 +280,7 @@ init python in jn_events:
 
         return input_date == store.JN_NEW_YEARS_DAY
 
-    def is_valentines_day(input_date=None):
+    def isValentinesDay(input_date=None):
         """
         Returns True if the input_date is Valentine's Day; otherwise False
 
@@ -292,7 +292,7 @@ init python in jn_events:
 
         return input_date == store.JN_VALENTINES_DAY
 
-    def is_easter(input_date=None):
+    def isEaster(input_date=None):
         """
         Returns True if the input_date is Easter; otherwise False
 
@@ -304,7 +304,7 @@ init python in jn_events:
 
         return input_date == store.JN_EASTER
 
-    def is_halloween(input_date=None):
+    def isHalloween(input_date=None):
         """
         Returns True if the input_date is Halloween; otherwise False
 
@@ -316,7 +316,7 @@ init python in jn_events:
 
         return input_date == store.JN_HALLOWEEN
 
-    def is_christmas_eve(input_date=None):
+    def isChristmasEve(input_date=None):
         """
         Returns True if the input_date is Christmas Eve; otherwise False
 
@@ -328,7 +328,7 @@ init python in jn_events:
 
         return input_date == store.JN_CHRISTMAS_EVE
 
-    def is_christmas_day(input_date=None):
+    def isChristmasDay(input_date=None):
         """
         Returns True if the input_date is Christmas Day; otherwise False
 
@@ -340,7 +340,7 @@ init python in jn_events:
 
         return input_date == store.JN_CHRISTMAS_DAY
 
-    def is_new_years_eve(input_date=None):
+    def isNewYearsEve(input_date=None):
         """
         Returns True if the input_date is New Year's Eve; otherwise False
 
@@ -352,7 +352,7 @@ init python in jn_events:
 
         return input_date == store.JN_NEW_YEARS_EVE
 
-    def is_natsuki_birthday(input_date=None):
+    def isNatsukiBirthday(input_date=None):
         """
         Returns True if the input_date is Natsuki's birthday; otherwise False
 
@@ -364,7 +364,7 @@ init python in jn_events:
 
         return input_date == store.JN_NATSUKI_BIRTHDAY
 
-    def is_player_birthday(input_date=None):
+    def isPlayerBirthday(input_date=None):
         """
         Returns True if the input_date is the player's birthday; otherwise False
 
@@ -385,7 +385,7 @@ init python in jn_events:
 
         return (input_date.month == player_birthday.month and input_date.day == player_birthday.day)
 
-    def is_anniversary(input_date=None):
+    def isAnniversary(input_date=None):
         """
         Returns True if the input_date is the player and Natsuki's anniversary; otherwise False
 
@@ -406,7 +406,7 @@ init python in jn_events:
 
         return (input_date.month == anniversary_date.month and input_date.day == anniversary_date.day)
 
-    def get_holidays_for_date(input_date=None):
+    def getHolidaysForDate(input_date=None):
         """
         Gets the holidays - if any - corresponding to the supplied date, or the current date by default.
 
@@ -425,45 +425,45 @@ init python in jn_events:
 
         holidays = []
 
-        if is_new_years_day(input_date):
+        if isNewYearsDay(input_date):
             holidays.append(JNHolidayTypes.new_years_day)
 
-        if is_valentines_day(input_date):
+        if isValentinesDay(input_date):
             holidays.append(JNHolidayTypes.valentines_day)
 
-        if is_easter(input_date):
+        if isEaster(input_date):
             holidays.append(JNHolidayTypes.easter)
 
-        if is_halloween(input_date):
+        if isHalloween(input_date):
             holidays.append(JNHolidayTypes.halloween)
 
-        if is_christmas_eve(input_date):
+        if isChristmasEve(input_date):
             holidays.append(JNHolidayTypes.christmas_eve)
 
-        if is_christmas_day(input_date):
+        if isChristmasDay(input_date):
             holidays.append(JNHolidayTypes.christmas_day)
 
-        if is_christmas_eve(input_date):
+        if isChristmasEve(input_date):
             holidays.append(JNHolidayTypes.new_years_eve)
 
-        if is_natsuki_birthday(input_date):
+        if isNatsukiBirthday(input_date):
             holidays.append(JNHolidayTypes.natsuki_birthday)
 
-        if is_player_birthday(input_date):
+        if isPlayerBirthday(input_date):
             holidays.append(JNHolidayTypes.player_birthday)
 
-        if is_anniversary(input_date):
+        if isAnniversary(input_date):
             holidays.append(JNHolidayTypes.anniversary)
 
         return holidays
 
-    def get_all_holidays():
+    def getAllHolidays():
         """
         Returns a list of all holidays.
         """
         return __ALL_HOLIDAYS.itervalues()
 
-    def select_event():
+    def selectEvent():
         """
         Picks and returns a single random event, or None if no events are left.
         """
@@ -483,13 +483,13 @@ init python in jn_events:
         else:
             return None
 
-    def select_holidays():
+    def selectHolidays():
         """
         Returns a list of all holidays with a corresponding incomplete persistent entry that apply for the current date, or None if no holidays apply
         """
-        holiday_list = JNHoliday.filter_holidays(
-            holiday_list=get_all_holidays(),
-            holiday_types=get_holidays_for_date(),
+        holiday_list = JNHoliday.filterHolidays(
+            holiday_list=getAllHolidays(),
+            holiday_types=getHolidaysForDate(),
             affinity=store.Natsuki._getAffinityState(),
             holiday_completion_state=False
         )
@@ -500,18 +500,18 @@ init python in jn_events:
         else:
             return None
 
-    def reset_holidays():
+    def resetHolidays():
         """
         Resets the is_seen state and corresponding completion state for all holidays.
         """
-        for holiday in get_all_holidays():
+        for holiday in getAllHolidays():
             holiday.is_seen = False
 
         for holiday_type in JNHolidayTypes:
             if str(holiday_type) in store.persistent._jn_holiday_completion_states:
                 store.persistent._jn_holiday_completion_states[str(holiday_type)] = False
 
-    def display_visuals(
+    def displayVisuals(
         natsuki_sprite_code,
         bgm="mod_assets/bgm/just_natsuki.ogg"
     ):
@@ -538,10 +538,10 @@ init python in jn_events:
             store.persistent._jn_holiday_completion_states[str(holiday_type)] = False
 
     # Holiday registration
-    __register_holiday(JNHoliday(
+    __registerHoliday(JNHoliday(
         label="event_player_birthday",
         holiday_type=JNHolidayTypes.player_birthday,
-        conditional="store.jn_events.is_player_birthday()",
+        conditional="store.jn_events.isPlayerBirthday()",
         affinity_range=(jn_affinity.AFFECTIONATE, None),
         natsuki_sprite_code="1uchgnl",
         bgm=audio.happy_birthday_bgm,
@@ -609,7 +609,7 @@ label event_caught_reading_manga:
             pass
 
     show prop parfait_manga_held zorder jn_events.JN_EVENT_PROP_ZORDER
-    $ jn_events.display_visuals("1fsrpo")
+    $ jn_events.displayVisuals("1fsrpo")
     $ jn_globals.force_quit_enabled = True
 
     n 1uskemesh "...!"
@@ -680,7 +680,7 @@ label event_caught_writing_poetry:
             pass
 
     show prop poetry_attempt zorder jn_events.JN_EVENT_PROP_ZORDER
-    $ jn_events.display_visuals("1fsrpo")
+    $ jn_events.displayVisuals("1fsrpo")
     $ jn_globals.force_quit_enabled = True
 
     n 1uskuplesh "...!"
@@ -743,7 +743,7 @@ label event_relationship_doubts:
         "Enter.":
             pass
 
-    $ jn_events.display_visuals("1fcsupl")
+    $ jn_events.displayVisuals("1fcsupl")
     $ jn_globals.force_quit_enabled = True
 
     n 1fsqunltsb "..."
@@ -805,7 +805,7 @@ label event_code_fiddling:
         "Enter...":
             pass
 
-    $ jn_events.display_visuals("1fslpo")
+    $ jn_events.displayVisuals("1fslpo")
     $ jn_globals.force_quit_enabled = True
 
     $ player_initial = jn_utils.get_player_initial()
@@ -871,7 +871,7 @@ label event_not_ready_yet:
         "Enter...":
             pass
 
-    $ jn_events.display_visuals("1uskeml")
+    $ jn_events.displayVisuals("1uskeml")
     $ jn_globals.force_quit_enabled = True
 
     n 1uskemlesh "H-{w=0.3}huh?{w=1.5}{nw}"
@@ -947,7 +947,7 @@ label event_renpy_for_dummies:
             pass
 
     show prop renpy_for_dummies_book_held zorder jn_events.JN_EVENT_PROP_ZORDER
-    $ jn_events.display_visuals("1fcspo")
+    $ jn_events.displayVisuals("1fcspo")
     $ jn_globals.force_quit_enabled = True
 
     n 1uskemesh "O-{w=0.3}oh!"
@@ -1011,7 +1011,7 @@ label event_reading_a_la_mode:
             pass
     
     show prop a_la_mode_manga_held zorder jn_events.JN_EVENT_PROP_ZORDER
-    $ jn_events.display_visuals("1unmajl")
+    $ jn_events.displayVisuals("1unmajl")
     $ jn_globals.force_quit_enabled = True
 
     n 1unmgslesu "Oh!{w=1}{nw}"
@@ -1069,7 +1069,7 @@ label event_drinking_strawberry_milkshake:
             pass
 
     show prop strawberry_milkshake zorder jn_events.JN_EVENT_PROP_ZORDER
-    $ jn_events.display_visuals("1nchdr")
+    $ jn_events.displayVisuals("1nchdr")
     $ jn_globals.force_quit_enabled = True
 
     n 1nchdr "..."
@@ -1099,7 +1099,7 @@ label event_drinking_strawberry_milkshake:
  
 # Natsuki wishes the player a happy birthday!
 label event_player_birthday():
-    $ jn_events.get_holiday("event_player_birthday").run()
+    $ jn_events.getHoliday("event_player_birthday").run()
     $ player_name_capitalized = persistent.playername.upper()
     n 1uchlgl "HAPPY BIRTHDAY,{w=0.1} [player_name_capitalized]!"
     n 1fcsbg "Betcha' didn't think I had something planned all along,{w=0.1} did you?{w=0.5}{nw}"
@@ -1158,8 +1158,8 @@ label event_player_birthday():
     hide prop cake unlit
     with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
 
-    $ unlocked_poem_pool = jn_poems.JNPoem.filter_poems(
-        poem_list=jn_poems.get_all_poems(),
+    $ unlocked_poem_pool = jn_poems.JNPoem.filterPoems(
+        poem_list=jn_poems.getAllPoems(),
         unlocked=False,
         holiday_types=[jn_events.JNHolidayTypes.player_birthday],
         affinity=Natsuki._getAffinityState()
@@ -1232,18 +1232,18 @@ label event_player_birthday():
     if birthday_poem:
         $ birthday_poem.unlock()
 
-    $ jn_events.get_holiday("event_player_birthday").complete()
+    $ jn_events.getHoliday("event_player_birthday").complete()
 
     return
 
 label event_valentines_day:
     #TODO: writing
-    $ jn_events.get_holiday("event_valentines_day").run()
+    $ jn_events.getHoliday("event_valentines_day").run()
     n "This isn't done yet, but happy valentine's day!"
     return
 
 label event_anniversary:
     #TODO: writing
-    $ jn_events.get_holiday("event_anniversary").run()
+    $ jn_events.getHoliday("event_anniversary").run()
     n "This isn't done yet, but happy anniversary!"
     return

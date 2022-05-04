@@ -1395,10 +1395,10 @@ init python in jn_utils:
         store.jn_outfits.JNOutfit.save_all()
 
         # Save holiday data
-        store.jn_events.JNHoliday.save_all()
+        store.jn_events.JNHoliday.saveAll()
 
         # Save poem data
-        store.jn_poems.JNPoem.save_all()
+        store.jn_poems.JNPoem.saveAll()
 
         #Save topic data
         store.Topic._save_topic_data()

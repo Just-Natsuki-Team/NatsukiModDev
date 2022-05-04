@@ -7232,8 +7232,8 @@ init 5 python:
             unlocked=True,
             prompt="Can I see a poem you've written me?",
             conditional=(
-                "len(jn_poems.JNPoem.filter_poems("
-                    "jn_poems.get_all_poems(),"
+                "len(jn_poems.JNPoem.filterPoems("
+                    "jn_poems.getAllPoems(),"
                     "unlocked=True"
                 ")) > 0"
             ),
@@ -7269,7 +7269,7 @@ label talk_can_i_see_a_poem:
 
     python:
         poem_options = []
-        for poem in jn_poems.JNPoem.filter_poems(jn_poems.get_all_poems(), unlocked=True):
+        for poem in jn_poems.JNPoem.filterPoems(jn_poems.getAllPoems(), unlocked=True):
             poem_options.append((poem.display_name, poem))
 
         poem_options.sort(key = lambda option: option[0])
@@ -7281,7 +7281,7 @@ label talk_can_i_see_a_poem:
 
         if Natsuki.isEnamored(higher=True):
             n 1unmaj "[_return.display_name]?{w=0.5}{nw}" 
-            extend 1nchsm " Okaaay!"
+            extend 1nchsmeme " Okaaay!"
             n 1uchsml "Just a second,{w=0.1} [player]..."
 
             play audio drawer
@@ -7328,11 +7328,11 @@ label talk_can_i_see_a_poem:
 
     else:
         show natsuki at jn_center
-        n 1nnmbo "Oh."
+        n 1nnmbo "Oh.{w=1}{nw}"
 
         if Natsuki.isAffectionate(higher=True) and random.randint(0, 10) == 1:
             extend 1nlrpol " Well,{w=0.1} okay then.{w=1}{nw}"
-            extend 1fsqbll " Spoilsport.{w=0.5}{nw}"
+            extend 1fsqbll " Spoilsport.{w=0.75}{nw}"
 
         else:
             extend 1nlrpol " Well,{w=0.1} okay then."
