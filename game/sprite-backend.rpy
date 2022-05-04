@@ -133,6 +133,7 @@ init -50 python:
         somber = 13
         speech = 14
         surprise = 15
+        laughter = 16
 
         def __str__(self):
             return self.name
@@ -328,6 +329,7 @@ init 1 python:
         "edr": JNEmote.dread,
         "eex": JNEmote.exclamation,
         "eid": JNEmote.idea,
+        "elg": JNEmote.laughter,
         "eme": JNEmote.merry,
         "eqm": JNEmote.question_mark,
         "esd": JNEmote.sad,
