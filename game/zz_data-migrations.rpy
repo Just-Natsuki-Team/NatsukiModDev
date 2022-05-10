@@ -1,7 +1,7 @@
 python early in jn_data_migrations:
     from enum import Enum
     import re
-    from renpy.store import persistent
+    import store
 
     # dict mapping a from_version -> to_version, including the function used to migrate between those versions
     # form:
@@ -40,10 +40,10 @@ python early in jn_data_migrations:
         """
         def wrap(_function):
             registerUpdateFunction(
-                _function,
-                from_versions,
-                to_version,
-                during_runtime
+                _callable=_function,
+                from_versions=from_versions,
+                to_version=to_version,
+                runtime=runtime
             )
             return _function
         return wrap
@@ -65,7 +65,7 @@ python early in jn_data_migrations:
 
             UPDATE_FUNCS[from_version][runtime] = (_callable, to_version)
 
-    def ver_string_to_ver_list(ver_str):
+    def verStrToVerList(ver_str):
         """
         Converts a version string to a list of integers representing the version.
         """
@@ -76,7 +76,7 @@ python early in jn_data_migrations:
         ver_list = match.group("ver").split(".")
         return [int(x) for x in ver_list]
 
-    def compare_versions(ver_str1, ver_str2):
+    def compareVersions(ver_str1, ver_str2):
         """
         Compares two version strings.
         """
@@ -86,8 +86,8 @@ python early in jn_data_migrations:
         if not match1 or not match2:
             raise ValueError("Invalid version string.")
 
-        ver1 = ver_string_to_ver_list(match1.group("ver"))
-        ver2 = ver_string_to_ver_list(match2.group("ver"))
+        ver1 = verStrToVerList(match1.group("ver"))
+        ver2 = verStrToVerList(match2.group("ver"))
 
         #Check the lengths of the versions, we'll pad the shorter one with zeros
         if len(ver1) > len(ver2):
@@ -110,16 +110,16 @@ python early in jn_data_migrations:
         Runs init time migration functions. Must be run after init 0
         """
         #We do nothing here if the version isn't in the dict
-        if persistent._jn_version not in UPDATE_FUNCS:
+        if store.persistent._jn_version not in UPDATE_FUNCS:
             return
 
         #Set to_version to the version we're migrating from
-        to_version = persistent._jn_version
+        to_version = store.persistent._jn_version
 
-        while compare_versions(to_version, renpy.config.version) < 0:
+        while compareVersions(to_version, renpy.config.version) < 0:
             #First, check if there's a late migration we need to run
-            if MigrationRuntimes.RUNTIME in UPDATE_FUNCS[persistent._jn_version]:
-                LATE_UPDATES.append(UPDATE_FUNCS[persistent._jn_version][MigrationRuntimes.RUNTIME])
+            if MigrationRuntimes.RUNTIME in UPDATE_FUNCS[store.persistent._jn_version]:
+                LATE_UPDATES.append(UPDATE_FUNCS[store.persistent._jn_version][MigrationRuntimes.RUNTIME])
 
             #We're below the latest version, so we need to migrate to the next one in the chain
             _callable, to_version = UPDATE_FUNCS[to_version][MigrationRuntimes.RUNTIME]
@@ -139,3 +139,6 @@ init 10 python:
     jn_data_migrations.runInitMigrations()
 
 init python in jn_data_migrations:
+    @migration(["0.0.0"], "0.0.1")
+    def v0_0_0_to_0_0_1():
+        pass
