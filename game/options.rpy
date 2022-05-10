@@ -13,7 +13,7 @@
 ## The _() surrounding the string marks it as eligible for translation.
 
 define config.name = "Just Natsuki"
-
+define config.window_title = _("Just Natsuki - BETA")
 
 ## Determines if the title given above is shown on the main menu screen. Set
 ## this to False to hide the title.
@@ -23,7 +23,7 @@ define gui.show_name = False
 
 ## The version of the game.
 
-define config.version = "4.1.0"
+define config.version = "0.0.1"
 
 
 ## Text that is placed on the game's about screen. To insert a blank line
