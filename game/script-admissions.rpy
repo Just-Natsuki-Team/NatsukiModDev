@@ -813,7 +813,7 @@ label admission_tired:
         # Add pending apology
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
 
-    elif jn_utils.jn_get_current_hour() > 21 or jn_utils.jn_get_current_hour() < 3:
+    elif jn_get_current_hour() > 21 or jn_get_current_hour() < 3:
         n 1fskem "[player]!"
         n 1fnmem "I'm not surprised you're tired!{w=0.2} Have you even seen the time?!"
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
