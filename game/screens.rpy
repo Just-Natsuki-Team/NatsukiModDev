@@ -753,26 +753,6 @@ init python:
         renpy.hide_screen("name_input")
         renpy.jump_out_of_context("start")
 
-    def DLC():
-        renpy.jump_out_of_context("dlcmenu")
-
-    def FinishEnterAge():
-        if not age: return
-        return
-
-    def FinishEnterMonth():
-        if not month: return
-        persistent.bday_month = month
-        renpy.hide_screen("month_input")
-
-    def FinishEnterDay():
-        if not day: return
-        persistent.bday_day = day
-        renpy.hide_screen("day_input")
-
-    def DeleteName():
-        persistent.playername = ""
-
 screen navigation():
     vbox:
         style_prefix "navigation"

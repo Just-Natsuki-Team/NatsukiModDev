@@ -9,12 +9,15 @@ default persistent.jn_player_pet = None
 # Seasonal data
 default persistent.jn_player_favourite_season = None
 
-# Appearance data
+# Personal data
 default persistent.jn_player_appearance_declined_share = False
 default persistent.jn_player_appearance_eye_colour = None
 default persistent.jn_player_appearance_hair_length = None
 default persistent.jn_player_appearance_hair_colour = None
 default persistent.jn_player_appearance_height_cm = None
+
+default persistent._jn_player_birthday_day_month = None # Format (day, month)
+default persistent._jn_player_anniversary_date = None
 
 # Hobby data
 default persistent.jn_player_gaming_frequency = None
@@ -6971,5 +6974,368 @@ label talk_newspapers_and_bias:
     extend 1fsqsm " I think it's pretty obvious."
     n 1fllss "I know I call you it a bunch already,{w=0.1} [player]..."
     n 1fsqsm "But only {i}real{/i} dummies believe {i}everything{/i} they read!"
+
+    return
+
+# Natsuki asks about the player's birthday.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_players_birthday_intro",
+            unlocked=True,
+            prompt="My birthday",
+            category=["Setup", "You"],
+            player_says=True,
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_players_birthday_intro:
+    # Player has already discussed their birthday with Natsuki
+    if get_topic("talk_players_birthday_intro").shown_count > 0:
+        n 1tnmbo "Huh?{w=0.2} Your birthday?"
+
+        if persistent._jn_player_birthday_day_month:
+            n 1fslaj "Wait...{w=1}{nw}"
+            extend 1fsrpu " didn't you already share that with me?"
+            n 1fskajesh "...{w=0.5}{nw}"
+            n 1fnmem "H-{w=0.3}hey!"
+            n 1fsqsm "Nice try,{w=0.1} [player].{w=1}{nw}"
+            extend 1fcsbg " But you're not getting anything early!"
+            n 1tsqsg "I guess you're just gonna have to wait~."
+            n 1fchsm "Ehehe."
+
+            return
+
+        else:
+            n 1unmaj "Oh,{w=0.1} right!{w=1}{nw}"
+            extend 1tnmss " You never actually {i}told{/i} me,{w=0.1} did you?{w=0.5}{nw}"
+            extend 1tllss " Duh!"
+            n 1ullaj "So..."
+
+        menu:
+            n "Did you wanna share your birthday with me now,{w=0.1} [player]?"
+
+            "Of course!":
+                n 1fcssm "Ehehe.{w=0.5}{nw}"
+                extend 1fcsbg " I knew you'd come around!"
+                n 1usgsgl "I guess you really just can't say 'No' to a pretty girl,{w=0.1} huh?{w=1}{nw}"
+                extend 1fllbgl " Ahaha."
+                n 1uskajesh "Oh!{w=0.5}{nw}"
+                extend 1nllss " Right,{w=0.1} before I forget."
+                n 1fnmpu "Not that I'd {i}expect{/i} you to get it wrong,{w=0.1} but I wanna make a {b}permanent{/b} record of this."
+                n 1ullbo "So...{w=1}{nw}"
+                extend 1nsqpo " no messing around,{w=0.1} alright?{w=1}{nw}"
+                extend 1nchgn " 'Preciated!"
+                # Continue to input
+
+            "I still don't feel comfortable sharing that.":
+                n 1kwmsr "[player]...{w=1.5}{nw}"
+                extend 1ksrbo " come on..."
+                n 1kslca "I'm not gonna tease you about it,{w=0.1} or anything..."
+
+                return
+
+    else:
+        n 1nslbo "...Huh."
+        n 1tnmbo "You know,{w=0.1} [player].{w=1}{nw}"
+        extend 1unmaj " I actually think I'm kinda getting to know you a little more now."
+        n 1flrbg "We've already been talking a bunch,{w=0.1} after all."
+        
+        if persistent.jn_player_appearance_eye_colour:
+            n 1ulraj "I mean,{w=0.5}{nw}"
+            extend 1nchbg " I even know what you {i}look{/i} like now!"
+            n 1fchsmeme "If {i}that{/i} isn't a sign of trust,{w=0.1} I'm not sure what is."
+
+        n 1nllpu "But...{w=1}{nw}"
+        extend 1nnmsr " something just hit me.{w=1}{nw}"
+        extend 1nsqca " Something important."
+        n 1uskem "...And that's that I have literally no idea when your {i}birthday{/i} is!{w=1}{nw}"
+        extend 1fbkwr " I never even thought to {i}ask{/i}!"
+        n 1kcsemesi "Man...{w=1}{nw}"
+        extend 1fslpol " I can't {i}believe{/i} I never brought that up earlier..."
+        n 1fsqpo "And come on.{w=0.5}{nw}" 
+        extend 1nsqpo " Let's be real,{w=0.1} here."
+        n 1fcswr "What kind of a friend misses birthdays?!"
+        n 1kllbo "...Especially when there's only {i}one{/i} birthday to remember nowadays."
+        n 1ksrsl "..."
+        n 1fcseml "A-{w=0.3}anyway!"
+        n 1flrpo "I'd have to be a real jerk not to {i}at least{/i} ask."
+
+        if get_topic("talk_aging").shown_count > 0:
+            n 1nllaj "I think I mentioned before how I don't really care how old you are,{w=1}{nw}"
+            extend 1nllpol " I just wanna make sure I don't miss the date."
+            n 1fcsbg "I'm not counting candles for anybody's cake!{w=0.5}{nw}"
+            extend 1fcssm " Ahaha."
+
+        n 1unmaj "So...{w=0.3} how about it,{w=0.1} [player]?"
+
+        menu:
+            n "Did you wanna share your birthday with me?"
+
+            "Sure!":
+                n 1fcsbgl "Y-yeah!{w=0.5}{nw}"
+                extend 1fcssml " I knew you would!"
+                n 1ullaj "I know I asked what kind of friend would miss a birthday..."
+                n 1flrpo "But you can't miss something you didn't know about!"
+                n 1uskajesh "Oh!{w=0.5}{nw}"
+                extend 1nllss " Right,{w=0.1} before I forget."
+                n 1fnmpu "Not that I'd {i}expect{/i} you to get it wrong,{w=0.1} but I wanna make a {b}permanent{/b} record of this."
+                n 1ullbo "So...{w=1}{nw}"
+                extend 1nsqpo " no messing around,{w=0.1} alright?{w=1}{nw}"
+                extend 1nchgn " 'Preciated!"
+                # Continue to input
+
+            "I'm not comfortable sharing that.":
+                n 1nnmbo "...Oh."
+                n 1fcseml "W-{w=0.3}well,{w=0.1} that's fine,{w=0.5}{nw}"
+                extend 1flrpo " I guess."
+                n 1nsqpo "Just let me know if you change your mind then,{w=0.1} 'kay?"
+                
+                return
+
+    n 1nchbg "Alright!"
+    jump talk_players_birthday_input 
+
+label talk_players_birthday_input:
+    n 1fsqsm "So...{w=1}{nw}"
+    extend 1tsqsm " what {b}month{/b} were you born in,{w=0.1} [player]?"
+    show natsuki 1tsqsm at jn_left
+    python:
+        # Generate month options
+        month_options = [
+            ("January", 1),
+            ("Feburary", 2),
+            ("March", 3),
+            ("April", 4),
+            ("May", 5),
+            ("June", 6),
+            ("July", 7),
+            ("August", 8),
+            ("September", 9),
+            ("October", 10),
+            ("November", 11),
+            ("December", 12),
+        ]
+    call screen scrollable_choice_menu(month_options)
+
+    if isinstance(_return, int):
+        show natsuki at jn_center
+        $ player_birthday_month = _return
+
+    $ response_month = datetime.date(datetime.date.today().year, player_birthday_month, 1).strftime("%B")
+    n 1unmbo "[response_month],{w=0.1} huh?{w=1}{nw}" 
+    extend 1nchbg " Gotcha!"
+    n 1unmss "And what about the {b}day{/b}?"
+
+    $ player_input_valid = False
+
+    # Process the player's input
+    while not player_input_valid:
+        $ import calendar
+        $ player_input = renpy.input(
+            prompt="What day were you born on?",
+            allow=jn_globals.DEFAULT_NUMERICAL_ALLOW_VALUES, length=2
+        )
+        $ player_input = int(player_input) if player_input.isdigit() else None
+
+        if not player_input or player_input == 0:
+            n 1tsqpueqm "Huh?{w=1}{nw}"
+            extend 1fnmpo " Come on,{w=0.1} [player]!{w=0.2} You gotta tell me what day!"
+
+        # We use 2020 here, as it is a leapyear
+        elif not calendar.monthrange(2020, player_birthday_month)[0] <= player_input <= calendar.monthrange(2020, player_birthday_month)[1]:
+            n 1fsqsr "[player].{w=0.2} Please.{w=1}{nw}"
+            extend 1nsqpo "Take this seriously."
+
+        else:
+            # Get ready to lead in to the next stage of setup
+            $ player_input_valid = True
+            $ persistent._jn_player_birthday_day_month = (player_input, player_birthday_month)
+            jump talk_players_birthday_outro
+
+    n 1nchsm "Oki-doki!{w=0.5}{nw}"
+    extend 1ullaj " So just to double check..."
+    $ birthday_formatted = "{0}{1}{2}".format(
+        persistent._jn_player_birthday_day_month[1],
+        persistent._jn_player_birthday_day_month[0],
+        jn_utils.get_number_ordinal(persistent._jn_player_birthday_day_month[0])
+    )
+    menu:
+        n "Your birthday was [birthday_formatted],{w=0.1} right?"
+
+        "Yes, that's right.":
+            jump talk_players_birthday_outro
+
+        "No, that's not right.":
+            n 1tsqpueqm "Huh?{w=1}{nw}"
+            extend 1nsqpo " Really?"
+            n 1nsrss "Let's...{w=1} try that again."
+            jump talk_players_birthday_input
+
+label talk_players_birthday_outro:
+    if persistent._jn_player_birthday_day_month == (datetime.date.today().day, datetime.date.today().month):
+        # It's the player's birthday today
+        n 1nchbg "Okaaay!{w=0.2} So I think that's-{w=0.5}{nw}"
+        n 1uskemesh "...!{w=1}{nw}"
+        n 1uskajl "Oh,{w=1.5}{nw}" 
+        extend 1kbkwrl " {b}CRAP{/b}!"
+        $ player_initial = jn_utils.get_player_initial()
+        n 1knmeml "[player_initial]-{w=0.3}[player]!{w=0.2} It's TODAY?!{w=0.5}{nw}"
+        extend 1flleml " Why didn't you {i}say{/i} anything?!"
+        n 1nsrunl "Uuuuuu...{w=1}{nw}"
+        extend 1kcsemedr " now I really look like a total jerk..."
+        n 1ncsemesi "...{w=0.5}{nw}"
+        n 1fcsem "Right!{w=1}{nw}"
+        extend 1fcswr " Then there's only one thing for it!{w=1.5}{nw}"
+        
+        $ jn_globals.force_quit_enabled = False
+        stop music
+        play audio light_switch
+        show black zorder 99
+        jump event_player_birthday
+
+    else:
+        # Player's birthday was missed
+        n 1unmem "Wait,{w=0.5} seriously?{w=1}{nw}"
+        extend 1knmem " I missed it already?{w=1.5}{nw}"
+        extend 1nsrpo " Aww..."
+        n 1nllpo "Well...{w=1}{nw}"
+        extend 1nllss " thanks anyway.{w=1}{nw}"
+        extend 1nlrss " For sharing,{w=0.1} I mean."
+        n 1nsrpo "..."
+        n 1nsraj "I...{w=0.5}{nw}" 
+        extend 1tnmss " guess I better return the favour,{w=0.1} huh?"
+        n 1nslcal "Just promise you won't make it all awkward."
+        n 1ncsemlesi "..."
+        n 1nsrssl "It's May 1st.{w=1}{nw}"
+        extend 1nsqpol " Don't make me say it twice."
+        n 1nllpu "And...{w=1}{nw}"
+        extend 1tnmbo " [player]?"
+        n 1fsqss "I hope you know that you better prepare yourself."
+        n 1fcsbg "'Cause I'm going all out next time!{w=1}{nw}"
+        extend 1nchgn " Ehehe."
+        
+        if Natsuki.isLove():
+            n 1fchblleaf "Love you,{w=0.1} [player]~!"
+
+    return
+
+# Natsuki allows the player to see any poems she's written for them previously.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_can_i_see_a_poem",
+            unlocked=True,
+            prompt="Can I see a poem you've written me?",
+            conditional=(
+                "len(jn_poems.JNPoem.filterPoems("
+                    "jn_poems.getAllPoems(),"
+                    "unlocked=True"
+                ")) > 0"
+            ),
+            category=["Literature"],
+            player_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_can_i_see_a_poem:
+    if Natsuki.isEnamored(higher=True):
+        n 1fcsbg "Duh!{w=0.5}{nw}"
+        extend 1nchgnl " Of course you can!"
+        n 1fsqpol "I'd be offended if you {i}didn't{/i} wanna see them again.{w=1}{nw}"
+        extend 1fsqsml " Ehehe."
+        show natsuki 1klrsml at jn_left
+
+    elif Natsuki.isAffectionate(higher=True):
+        n 1unmajl "Huh?{w=1}{nw}"
+        extend 1fllssl " Oh,{w=0.1} those."
+        n 1fchbgl "Sure thing!{w=0.5}{nw}"
+        extend 1tsqbgl " Just can't get enough of my amazing writing skills,{w=0.1} huh?"
+        show natsuki 1flrsml at jn_left
+
+    else:
+        n 1unmajl "Huh?{w=1}{nw}"
+        extend 1nllbo " Oh,{w=0.1} my poems."
+        n 1unmbo "Sure,{w=0.1} I guess.{w=1}{nw}"
+        extend 1tnmaj " Which one did you wanna see again?"
+        show natsuki 1ulrbo at jn_left
+
+    python:
+        poem_options = []
+        for poem in jn_poems.JNPoem.filterPoems(jn_poems.getAllPoems(), unlocked=True):
+            poem_options.append((poem.display_name, poem))
+
+        poem_options.sort(key = lambda option: option[0])
+
+    call screen scrollable_choice_menu(poem_options, ("Nevermind.", None))
+
+    if isinstance(_return, jn_poems.JNPoem):
+        show natsuki at jn_center
+
+        if Natsuki.isEnamored(higher=True):
+            n 1unmaj "[_return.display_name]?{w=0.5}{nw}" 
+            extend 1nchsmeme " Okaaay!"
+            n 1uchsml "Just a second,{w=0.1} [player]..."
+
+            play audio drawer
+            with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+
+            n 1unmbg "Here we are!{w=0.5}{nw}"
+            extend 1nchsml " Ehehe."
+            call show_poem(_return)
+
+            n 1tnmsml "All done?{w=0.5}{nw}"
+            extend 1nlrssl " I'll just put that back."
+
+        elif Natsuki.isAffectionate(higher=True):
+            n 1unmaj "[_return.display_name]?{w=0.2} That one?{w=0.5}{nw}"
+            extend 1fchbg " Gotcha!"
+            n 1fchsml "Just give me a second here..."
+
+            play audio drawer
+            with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+
+            n 1fchbgl "Found it!"
+            call show_poem(_return)
+
+            n 1tnmssl "All done?{w=0.5}{nw}"
+            extend 1flrdvl " Ehehe."
+
+        else:
+            n 1unmaj "That one?{w=0.5}{nw}"
+            extend 1nnmss " Alright."
+            n 1nllss "Just let me get it out..."
+
+            play audio drawer
+            with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+
+            n 1ullaj "Well,{w=0.5}{nw}" 
+            extend 1nlrbol " here you go."
+            call show_poem(_return)
+
+            n 1tnmbol "All done?{w=0.5}{nw}"
+            extend 1nslssl "I'll just put that back."
+
+        play audio drawer
+        with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+
+    else:
+        show natsuki at jn_center
+        n 1nnmbo "Oh.{w=1}{nw}"
+
+        if Natsuki.isAffectionate(higher=True) and random.randint(0, 10) == 1:
+            extend 1nlrpol " Well,{w=0.1} okay then.{w=1}{nw}"
+            extend 1fsqbll " Spoilsport.{w=0.75}{nw}"
+
+        else:
+            extend 1nlrpol " Well,{w=0.1} okay then."
 
     return

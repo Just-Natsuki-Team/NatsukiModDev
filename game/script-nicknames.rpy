@@ -128,6 +128,7 @@ init 0 python in jn_nicknames:
     NICKNAME_HATED_LIST={
         "arrogant",
         "beast",
+        "badonkers",
         "bonebag",
         "bonehead",
         "brat",

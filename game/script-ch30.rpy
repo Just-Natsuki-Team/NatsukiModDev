@@ -13,17 +13,6 @@ label ch30_autoload:
 
     #FALL THROUGH
 
-label ch30_holiday_check:
-    python:
-        import datetime
-        import store.jn_utils as jn_utils
-
-        jn_utils.log("Holiday check: {0}".format(jn_get_holiday_for_date(datetime.datetime.now().date())))
-
-    #Run holiday checks and push/setup holiday related things here
-
-    #FALL THROUGH
-
 label ch30_visual_setup:
     # Hide everything so we can set up behind the scenes
     show black zorder 99
@@ -43,7 +32,7 @@ label ch30_init:
         # Check the daily affinity cap and reset if need be
         Natsuki.check_reset_daily_affinity_gain()
 
-        # Determine if the player should get a prolonged leave greeting
+        # Determine if the player should get a prolonged leave apology added
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
             persistent.last_apology_type = jn_apologies.TYPE_PROLONGED_LEAVE
 
@@ -78,14 +67,43 @@ label ch30_init:
 
         jn_utils.log("Outfit set.")
 
-        # Pick a greeting or random event
-        if not jn_topic_in_event_list_pattern("^greeting_"):
+        # Load poems from disk and corresponding persistent data
+        jn_poems.JNPoem.loadAll()
+        jn_utils.log("Poem data loaded.")
+
+        # Load holidays from disk and corresponding persistent data
+        jn_events.JNHoliday.loadAll()
+        jn_utils.log("Holiday data loaded.")
+
+        # Determine if the year has changed, in which case we reset all holidays so they can be celebrated again
+        if (datetime.datetime.now().year != persistent.jn_last_visited_date.year):
+            jn_events.resetHolidays()
+            jn_utils.log("Holiday completion states reset.")
+
+        # Check for holidays, push each one that occurs today
+        holiday_list = jn_events.selectHolidays()
+        if holiday_list:
+            holiday_list.sort(key = lambda holiday: holiday.priority)
+            while len(holiday_list) > 0:
+                holiday = holiday_list.pop()
+                queue(holiday.label)
+
+                if len(holiday_list) > 0:
+                    queue("event_interlude")
+
+                else:
+                    queue("ch30_loop")
+
+            renpy.jump("call_next_topic")
+
+        # No holiday, so pick a greeting or random event
+        elif not jn_topic_in_event_list_pattern("^greeting_"):
             if (
                 random.randint(1, 10) == 1
                 and (not persistent.jn_player_admission_type_on_quit and not persistent.jn_player_apology_type_on_quit)
-                and jn_events.select_event()
+                and jn_events.selectEvent()
             ):
-                push(jn_events.select_event())
+                push(jn_events.selectEvent())
                 renpy.call("call_next_topic", False)
 
             else:
@@ -313,6 +331,29 @@ init python:
             for action in jn_plugins.day_check_calls:
                 eval(action.statement)
 
+        # Check for a year change, reset holidays if so
+        if persistent.jn_last_visited_date.year != datetime.datetime.now().year:
+            jn_events.resetHolidays()
+
+        # Update the last visited date, so extended periods spent with Natsuki open aren't penalised
+        persistent.jn_last_visited_date = datetime.datetime.now()
+
+        # Check for holidays, push each one that occurs today
+        holiday_list = jn_events.selectHolidays()
+        if holiday_list:
+            holiday_list.sort(key = lambda holiday: holiday.priority)
+            while len(holiday_list) > 0:
+                holiday = holiday_list.pop()
+                queue(holiday.label)
+
+                if len(holiday_list) > 0:
+                    queue("event_interlude")
+
+                else:
+                    queue("ch30_loop")
+
+            renpy.jump("call_next_topic")
+
         pass
 
 label talk_menu:
@@ -351,7 +392,7 @@ label talk_menu:
         "I feel..." if Natsuki.isHappy(higher=True):
             jump player_admissions_start
 
-        "I want to tell you something..." if Natsuki.isHappy(higher=True):
+        "I want to tell you..." if Natsuki.isHappy(higher=True):
             jump player_compliments_start
 
         "I want to say sorry...":
