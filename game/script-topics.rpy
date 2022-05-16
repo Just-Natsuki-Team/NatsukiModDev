@@ -6973,3 +6973,106 @@ label talk_newspapers_and_bias:
     n 1fsqsm "But only {i}real{/i} dummies believe {i}everything{/i} they read!"
 
     return
+
+# Natsuki gives her advice on interviewing for jobs, etc.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_how_to_interview_properly",
+            unlocked=True,
+            prompt="How to interview properly",
+            conditional="jn_utils.get_total_gameplay_days() >= 3",
+            category=["Life", "Society"],
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_how_to_interview_properly:
+    #TODO: Tags, expressions
+    n "Hmm..."
+    n "Hey, "
+    extend " [player]."
+    n "It's kinda out of the blue,"
+    extend " but I was curious."
+    n "When was the last time you interviewed for something?"
+    n "Or now that I think about it..."
+    extend " have you interviewed for {i}anything{/i} before?"
+    extend " Like, at all?"
+    n "Because if there's one thing I've heard..."
+    extend " it's how anxious everyone seems to get over interviewing!"
+    n "I'm being serious!"
+    extend " People just get so worked up over it all."
+    extend " Like it's rocket science or something."
+    n "I mean..."
+    extend " I've never had to interview for anything super important myself."
+    n "We had some practice interviews at school, obviously."
+    extend " I was too busy with studies to try at getting a part-time job or anything."
+    n "...But who says that doesn't mean I can teach you a thing or two?"
+    extend " Ehehe."
+    n "You know what time it is..."
+    n "...So listen up, [player]!"
+    n "You're about to learn how to ace your interviews from a pro!"
+
+    n "So!"
+    extend " The first order of business..."
+    n "Research,"
+    extend " duh!"
+    n "If there's one thing you gotta know before going to interview for something,"
+    extend " it's what you're actually interviewing {i}for{/i}!"
+    n "You wouldn't skimp out on revising before a big test,"
+    extend " and this really isn't much different when you think about it."
+    n "Interviewing for some big-shot company?"
+    extend " Check them out online and take notes!"
+    n "Obviously you'll want to read up on what they do and where they actually are,"
+    extend " but don't underestimate the power of trivia!"
+    n "Even just knowing random stuff like when the company was founded,"
+    extend " or what awards they won recently - "
+    extend " it all shows the effort you're putting in."
+    n "And when it comes down to the wire?"
+    n "Even something tiny like that can just about tip the scales."
+
+    n "Next up..."
+    extend " Revision!"
+    n "It doesn't matter if you're trying to get a job,"
+    extend " or land a new position on some sort of council."
+    n "Whatever it is..."
+    extend " you gotta be able to prove you know what you're talking about!"
+    n "Some kind of programming job?"
+    extend " Refresh yourself on all your weird terminology and techniques!"
+    extend " Joining the history club?"
+    extend " Read up on some common trivia questions!"
+    n "And trust me,"
+    extend " the {i}last{/i} thing you wanna do is embarrass yourself over simple stuff you forgot..."
+    n "...Or something you mentioned on your application."
+    n "So..."
+    extend " study up, 'kay?"
+
+    n "Now..."
+    n "Keeping up so far, [player]?"
+    n "You better be..."
+    extend " 'cause we're almost done here!"
+    n "Next on the list - "
+    extend " and probably the most important of all..."
+    n "Presentation!"
+    n "You can have the best credentials in the world,"
+    extend " but that isn't gonna help much if you're mumbling everything - "
+    extend " or if you look ridiculous."
+    n "So!"
+    n "Make sure you dress properly for whatever it is."
+    extend "If there's a dress code, {i}follow it{/i}."
+    n "...And don't flake out on your clothes!"
+    extend " Iron them if they're all creased, that kind of thing."
+    n "Just don't forget the basics!"
+    n "Be punctual, be polite. Remember - "
+    extend " people want someone they can {i}like{/i},"
+    extend " not just get the job done!"
+    
+    #TODO: Finish this off, point reg. honesty? And conclusion to topic
+    n "...Oh, and [player]?"
+    n ""
+
+    return
