@@ -47,7 +47,7 @@ init python in greetings:
 # Only chosen for the first time the player returns after bringing Natsuki back
 label greeting_first_time:
     if jn_farewells.JNFirstLeaveTypes(persistent.jn_player_first_farewell_response) == jn_farewells.JNFirstLeaveTypes.will_be_back:
-        $ Natsuki.calculated_affinity_gain(bypass=True)
+        $ Natsuki.calculatedAffinityGain(bypass=True)
         n 1uskem "[player]!{w=0.5}{nw}"
         extend 1uskwr " Y-{w=0.1}you're back!"
         n 1flleml "I mean...{w=0.5}{nw}"
@@ -63,7 +63,7 @@ label greeting_first_time:
         extend 1unmaj " what did you wanna talk about?"
 
     elif jn_farewells.JNFirstLeaveTypes(persistent.jn_player_first_farewell_response) == jn_farewells.JNFirstLeaveTypes.dont_know:
-        $ Natsuki.calculated_affinity_gain(bypass=True)
+        $ Natsuki.calculatedAffinityGain(bypass=True)
         n 1uskaj "[player]?{w=0.5}{nw}"
         extend 1uskem " Y-{w=0.1}you came back?"
         n 1fcsun "..."

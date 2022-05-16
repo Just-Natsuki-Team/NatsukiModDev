@@ -41,7 +41,7 @@ label ch30_init:
         import random
 
         # Check the daily affinity cap and reset if need be
-        Natsuki.check_reset_daily_affinity_gain()
+        Natsuki.checkResetDailyAffinityGain()
 
         # Determine if the player should get a prolonged leave greeting
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
@@ -49,7 +49,7 @@ label ch30_init:
 
         # Repeat visits have a small affinity gain
         elif not persistent.last_apology_type:
-            Natsuki.calculated_affinity_gain()
+            Natsuki.calculatedAffinityGain()
 
         # Add to the total visits counter and set the last visit date
         persistent.jn_total_visit_count += 1
@@ -203,7 +203,7 @@ init python:
         jn_utils.save_game()
 
         # Check the daily affinity cap and reset if need be
-        Natsuki.check_reset_daily_affinity_gain()
+        Natsuki.checkResetDailyAffinityGain()
 
         # Run through all externally-registered minute check actions
         if len(jn_plugins.minute_check_calls) > 0:
@@ -246,6 +246,7 @@ init python:
                     # More random topics available, reset out of topics warning
                     store.persistent._jn_out_of_topics_warning_given = False
 
+                Natsuki.calculatedAffinityGain()
                 queue(random.choice(topic_pool).label)
 
             elif not store.persistent.jn_natsuki_repeat_topics and not store.persistent._jn_out_of_topics_warning_given:
@@ -564,7 +565,7 @@ label try_force_quit:
                         hide glitch_garbled_red
 
                 # Apply consequences for force quitting, then glitch quit out
-                $ Natsuki.percentage_affinity_loss(2)
+                $ Natsuki.percentageAffinityLoss(2)
                 $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
                 $ persistent.jn_player_apology_type_on_quit = jn_apologies.TYPE_SUDDEN_LEAVE
 

@@ -174,7 +174,7 @@ init 0 python:
         # Start: Relationship functionality
 
         @staticmethod
-        def calculated_affinity_gain(base=1, bypass=False):
+        def calculatedAffinityGain(base=1, bypass=False):
             """
             Adds a calculated amount to affinity, based on the player's relationship with Natsuki and daily cap state.
 
@@ -199,7 +199,7 @@ init 0 python:
                 jn_utils.log("Daily affinity cap reached!")
 
         @staticmethod
-        def calculated_affinity_loss(base=1):
+        def calculatedAffinityLoss(base=1):
             """
             Subtracts a calculated amount from affinity, based on the player's relationship with Natsuki.
 
@@ -209,7 +209,7 @@ init 0 python:
             persistent.affinity -= base * jn_affinity.get_relationship_length_multiplier()
 
         @staticmethod
-        def percentage_affinity_gain(percentage_gain):
+        def percentageAffinityGain(percentage_gain):
             """
             Adds a percentage amount to affinity, with the percentage based on the existing affinity value.
 
@@ -219,7 +219,7 @@ init 0 python:
             persistent.affinity += persistent.affinity * (float(percentage_gain) / 100)
 
         @staticmethod
-        def percentage_affinity_loss(percentage_loss):
+        def percentageAffinityLoss(percentage_loss):
             """
             Subtracts a percentage amount to affinity, with the percentage based on the existing affinity value.
 
@@ -229,7 +229,7 @@ init 0 python:
             persistent.affinity -= persistent.affinity * (float(percentage_loss) / 100)
 
         @staticmethod
-        def check_reset_daily_affinity_gain():
+        def checkResetDailyAffinityGain():
             """
             Resets the daily affinity cap, if 24 hours has elapsed.
             """
