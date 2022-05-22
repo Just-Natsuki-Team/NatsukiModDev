@@ -320,6 +320,7 @@ label talk_menu:
         _talk_flavor_text = renpy.substitute(_talk_flavor_text)
 
     $ show_natsuki_talk_menu()
+    $ jn_globals.player_is_in_conversation = True
 
     menu:
         n "[_talk_flavor_text]"
@@ -417,6 +418,7 @@ label farewell_menu:
 
 label extras_menu:
     python:
+        jn_globals.player_is_in_conversation = True
         avaliable_extras_options = []
 
         # Since conditions can change, we check each time if each option is now avaliable due to context changes (E.G affinity is now higher)
