@@ -3432,14 +3432,16 @@ init 5 python:
 
 label talk_natsukis_hairstyle:
     if Natsuki.isEnamored(higher=True):
-        n 1unmaj "Hmm?{w=0.2} My hairstyle?"
-        n 1fsgsg "Why do you ask,{w=0.1} [player]?{w=0.2} Looking for a stylist?"
+        n 1tnmaj "Hmm?{w=0.2} My hairstyle?"
+        n 1fsqss "Why do you ask,{w=0.1} [player]?{w=0.5}{nw}"
+        extend 1fsgsg " Looking for a stylist?"
         n 1fchsm "Ehehe."
 
     elif Natsuki.isNormal(higher=True):
-        n 1unmaj "Huh?{w=0.2} My hairstyle?"
-        n 1fsqaj "Wait...{w=0.3} are you messing with me?{w=0.2} What do you mean?"
-        n 1fllpo "You better not be teasing me,{w=0.1} [player]..."
+        n 1tnmpu "Huh?{w=0.2} My hairstyle?"
+        n 1fsqaj "Wait...{w=0.75}{nw}" 
+        extend 1fnmeml " a-{w=0.1}are you messing with me?{w=0.2} What do you mean?"
+        n 1fslpo "You better not be teasing me,{w=0.1} [player]..."
 
     elif Natsuki.isDistressed(higher=True):
         n 1nnmsl "...Huh?{w=0.2} Oh.{w=0.2} My hair."
@@ -3467,9 +3469,15 @@ label talk_natsukis_hairstyle:
             n 1ksqsm "Was I wrong...?"
             n 1fchbg "Ehehe.{w=0.2} I thought not."
 
+        if Natsuki.isWearingHairstyle("jn_hair_twintails"):
+            n 1ullaj "Besides,{w=0.1} I had a whole bunch of ribbon lying around from my craft stuff {w=0.1}-{w=0.5}{nw}"
+            extend 1fcsbg " so it isn't like I had to go {i}buy{/i} anything new to try twintails out."
+
     else:
         if Natsuki.isWearingHairstyle("jn_hair_twintails"):
             n 1nnmsl "I guess I just liked the idea of twintails."
+            n 1nlrpu "Besides,{w=0.1} I had some spare ribbons lying around anyways.{w=0.5}{nw}"
+            extend 1nsrsr " Not like I had to {i}buy{/i} anything to try doing twintails."
 
         else:
             n 1nnmsl "I guess I just like this hairstyle."
@@ -3479,8 +3487,10 @@ label talk_natsukis_hairstyle:
     if Natsuki.isNormal(higher=True):
         n 1flraj "It just costs so much,{w=0.1} you know?{w=0.2} It's super dumb!"
         n 1fnman "Like...{w=0.3} I don't get it at all!"
-        n 1fllan "And the annoying thing is that if I were a guy,{w=0.1} it'd be way cheaper!{w=0.2} What's up with that?"
-        n 1ncsslesi "Ugh...{w=0.5} but yeah."
+        n 1fllan "And the annoying thing is that if I were a guy,{w=0.1} it'd be {i}way{/i} cheaper!{w=0.5}{nw}"
+        extend 1fbkwrean " What's up with that?!"
+        n 1fcspuesi "Ugh...{w=1}{nw}" 
+        extend 1nsrpo " but yeah."
 
     else:
         n 1nlrsl "I was always kinda short when it came to getting it cut."
