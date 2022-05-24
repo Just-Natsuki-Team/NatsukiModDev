@@ -35,7 +35,7 @@ init python in jn_random_music:
 
         if (store.persistent.jn_custom_music_unlocked
             and store.persistent.jn_random_music_enabled
-            and Natsuki.isAffectionate(higher=True)
+            and store.Natsuki.isAffectionate(higher=True)
             and store.preferences.get_volume("music") > 0
             and len(jn_custom_music.get_all_custom_music()) >= 2):
 
