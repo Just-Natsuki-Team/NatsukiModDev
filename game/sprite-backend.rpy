@@ -212,7 +212,6 @@ init -50 python:
 
         # Sweat
         if sweat:
-            renpy.notify("hit")
             lc_args.extend([
                 (0, 0), "{0}{1}/face/sweat/{2}.png".format(_BASE_SPRITE_PATH, pose, sweat)
             ])
