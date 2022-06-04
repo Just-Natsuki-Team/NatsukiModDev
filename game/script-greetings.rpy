@@ -450,6 +450,45 @@ label greeting_normal_happy_knew_youd_be_back:
     n 1fcssml "You'd have to have no taste to not visit again! Ahaha!"
     return
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_normal_happy_sup_player",
+            unlocked=True,
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_normal_happy_sup_player:
+    n 1unmboesu "Eh?{w=0.5}{nw}"
+    n 1unmaj "Oh.{w=0.5}{nw}"
+    extend 1tnmaj " Hey,{w=0.1} player."
+    n 1tllss "What's up?"
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_normal_happy_wake_up_nat",
+            unlocked=True,
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_normal_happy_wake_up_nat:
+    n 1ncsemesl "..."
+    n 1kcsemesl "Mmm...{w=1}{nw}"
+    extend 1kwlemesl " nnnn?"
+    n 1uskwrleex "O-{w=0.3}Oh!{w=0.5}{nw}"
+    extend 1fllbglsbl " [player]!"
+    n 1flrbgesssbr "H-{w=0.3}hey!{w=0.5}{nw}"
+    extemd 1tnmsssbl " What did I miss?"
+    return
+
 # DISTRESSED/UPSET greetings
 
 init 5 python:
@@ -465,7 +504,7 @@ init 5 python:
 
 label greeting_distressed_upset_oh_its_you:
     n 1nnmaj "Oh.{w=0.2} It's you."
-    n 1nnmsl "Hello,{w=0.1} [player]."
+    n 1nnmsl "Hello,{w=0.1} {i}[player]{/i}."
     return
 
 init 5 python:
@@ -480,7 +519,7 @@ init 5 python:
     )
 
 label greeting_distressed_upset_hi:
-    n 1nplsl "[player].{w=0.2} Hi."
+    n 1nplsl "{i}[player]{/i}.{w=0.2} Hi."
     return
 
 init 5 python:
