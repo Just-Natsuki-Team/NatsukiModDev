@@ -19,6 +19,7 @@ default persistent.jn_player_appearance_height_cm = None
 # Hobby data
 default persistent.jn_player_gaming_frequency = None
 default persistent.jn_player_can_drive = None
+default persistent._jn_player_has_flown = None
 
 # Romance data
 default persistent.jn_player_love_you_count = 0
@@ -3895,6 +3896,8 @@ label talk_flying:
             elif Natsuki.isHappy(higher=True):
                 n 1fchgn "No excuses,{w=0.1} [player]! Ehehe."
 
+            $ persistent._jn_player_has_flown = True
+
         "I fly sometimes.":
             n 1unmss "Ooh,{w=0.1} okay!{w=0.2} So the odd vacation or family flight then?"
             n 1fslsm "I see,{w=0.1} I see..."
@@ -3909,17 +3912,23 @@ label talk_flying:
                 n 1fsqsm "You better be handy when that happens,{w=0.1} [player]..."
                 n 1fchgn "We'll see how good a guide you are!"
 
+            $ persistent._jn_player_has_flown = True
+
         "I've flown before.":
             n 1fsqct "Oh?{w=0.2} So you've already earned your wings,{w=0.1} huh?"
             n 1tllaj "Hmm...{w=0.3} I wonder where you went?"
             n 1fnmaj "You gotta promise to tell me if you fly again,{w=0.1} 'kay?"
             n 1fchgn "I wanna hear all about it!"
 
+            $ persistent._jn_player_has_flown = True
+
         "I've never flown.":
             n 1fcsbg "Then that's just another thing we have in common,{w=0.1} [player]!"
             n 1fsqss "I guess you could say..."
             n 1fsqdv "We're both just {i}well grounded{/i} people,{w=0.1} huh?"
             n 1fchgnelg "Ahaha!"
+
+            $ persistent._jn_player_has_flown = False
 
     return
 
@@ -6971,5 +6980,102 @@ label talk_newspapers_and_bias:
     extend 1fsqsm " I think it's pretty obvious."
     n 1fllss "I know I call you it a bunch already,{w=0.1} [player]..."
     n 1fsqsm "But only {i}real{/i} dummies believe {i}everything{/i} they read!"
+
+    return
+
+# Natsuki isn't afraid of flying, despite having never flown before
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_fear_of_flying",
+            unlocked=True,
+            prompt="Are you afraid of flying?",
+            conditional="jn_utils.get_total_gameplay_days() >= 7",
+            category=["Fears", "Transport"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_fear_of_flying:
+    if Natsuki.isNormal(higher=True):
+        n 1tnmbo "Flying,{w=0.1} huh?"
+        n 1tllaj "...You know,{w=1}{nw}"
+        extend 1ulraj " it's actually kinda weird,{w=0.75}{nw}" 
+        extend 1unmbo " when you think about it."
+        n 1fllss "How people can be afraid of things they've never {i}actually{/i} experienced before,{w=0.1} I mean."
+        n 1ullaj "It's pretty crazy how people have these kinds of built-{w=0.1}in fears,{w=0.5}{nw}"
+        extend 1tnmss " huh?"
+
+        if get_topic("talk_flying").shown_count > 0 or get_topic("talk_fear_of_flying").shown_count > 0:
+            n 1ulraj "I mean,{w=0.5}{nw}"
+            extend 1nsrss " like I told you before -{w=0.5}{nw}"
+            extend 1tnmbo " I've never flown anywhere myself or anything."
+
+        else:
+            n 1ulraj "I mean,{w=0.5}{nw}"
+            extend 1tnmbo " I've never flown anywhere myself or anything."
+
+        n 1uskemlesh "B-{w=0.3}but that's not to say {i}I'm{/i} afraid of flying,{w=0.5}{nw}" 
+        extend 1fcspol " obviously!{w=0.75}{nw}"
+        extend 1unmaj " I actually don't think it'd bother me all that much."
+        n 1tlrpu "Though...{w=0.75}{nw}"
+        extend 1unmbo " I guess I can see {i}why{/i} it would spook someone out."
+        n 1fllbo "There's all the noise,{w=0.5}{nw}"
+        extend 1fslem " the turbulence,{w=0.5}{nw}"
+        extend 1ksqfr " plus the stress of being packed in a tube with a whole bunch of strangers."
+        n 1klrss "And it isn't like you can {i}ignore{/i} crashes when they happen!{w=0.75}{nw}"
+        extend 1klrsl " They're...{w=1}{nw}"
+        extend 1kslsr " not...{w=0.5} pretty."
+        n 1unmpu "So yeah,{w=0.1} I can totally see it from that angle.{w=0.5}{nw}"
+        extend 1flrpu " But..."
+        n 1fnmbo "I think people forget just how {i}safe{/i} air travel is!"
+        n 1ullaj "I get that their feelings -{w=0.5}{nw}" 
+        extend 1fslem " {i}and the news{/i} -{w=0.5}{nw}" 
+        extend 1unmbo " tell them otherwise.{w=0.75}{nw}"
+        extend 1flrss " But it isn't like the statistics {i}lie{/i}!"
+        n 1unmaj "Some studies have put the likelihood of biting the big one in a plane crash at one in 11{w=0.5}{nw}"
+        extend 1uwdaj " {b}million{/b}."
+        n 1fslss "Or,{w=0.1} to put it another way..."
+        n 1unmem "You're more than {i}2,000{/i} times more likely to kick the bucket from a car accident than from a plane crash!"
+        n 1tsqss "...And the list doesn't stop there,{w=0.1} either!"
+        n 1ullss "Lightning strikes,{w=0.5}{nw}"
+        extend 1ulraj " riding a bike,{w=0.5}{nw}"
+        extend 1nsqsl " falling off something..."
+        n 1fllss "They're all way riskier than any flight you {i}should{/i} be stepping on!"
+        n 1nllsl "..."
+        n 1fcspu "...I know,{w=0.1} I know.{w=0.5}{nw}"
+        extend 1fsrpo " I'm not {i}totally{/i} blind to the risks,{w=0.1} [player]."
+        n 1nllpu "It's just like anything."
+        n 1unmpu "Things can go wrong.{w=1}{nw}"
+        extend 1ksrpu " They {i}do{/i} go wrong."
+        n 1kcsemesi "And that {i}is{/i} scary."
+        n 1tlrpu "But...{w=0.75}{nw}" 
+        extend 1tnmss " honestly?"
+        n 1fsqsm "It {i}is{/i} pretty reassuring to know that when I get the chance to jet off somewhere,{w=0.1} the most I'll realistically have to fear..."
+        n 1fchgnelg "...Is probably gonna be the airline food!"
+        n 1fcsbg "Now that's a {i}real{/i} horror,{w=0.1} if I know one.{w=0.75}{nw}"
+        
+        if persistent._jn_player_has_flown:
+            n 1usqsg "Wouldn't {i}you{/i} agree,{w=0.3} [player]?"
+
+        extend 1fsqsmeme " Ehehe."
+
+    elif Natsuki.isDistressed(higher=True):
+        n 1fcsemesi "Ugh..."
+        n 1fsqem "No,{w=0.1} [player].{w=0.75}{nw}"
+        extend 1fsqfr "I'm not afraid of flying either."
+        n 1fcsan "What exactly do you take me for?{w=0.75}{nw}"
+        extend 1fsqan " And even if I {i}was{/i}..."
+        n 1fnmfu "Why the hell would I wanna share that with {i}you{/i}?"
+        n 1fsqfuean "You're just lucky I haven't given you a reason to be scared of flying."
+
+    else:
+        n 1fcsem "Oh,{w=1}{nw}"
+        extend 1fsqwr " {cps=\7.5}shut {b}up{/b}{/cps},{w=0.1} [player]."
+        n 1fcsan "As {i}if{/i} I'd be dumb enough to share any fears I have with a complete loser like{w=0.75}{nw}" 
+        extend 1fcswrtsa " {i}you{/i}."
 
     return
