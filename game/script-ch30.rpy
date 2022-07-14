@@ -27,6 +27,12 @@ label ch30_init:
     python:
         import random
 
+        #Run runtime data migrations here
+        jn_data_migrations.runRuntimeMigrations()
+
+        #Now adjust the stored version number
+        persistent._jn_version = config.version
+
         # Check the daily affinity cap and reset if need be
         Natsuki.check_reset_daily_affinity_gain()
 
