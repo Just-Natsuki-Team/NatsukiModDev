@@ -113,16 +113,18 @@ python early in jn_data_migrations:
         if store.persistent._jn_version not in UPDATE_FUNCS:
             return
 
-        #Set to_version to the version we're migrating from
-        to_version = store.persistent._jn_version
+        #Set from_version to the version we're migrating from
+        from_version = store.persistent._jn_version
 
-        while compareVersions(to_version, renpy.config.version) < 0:
+        #If the current version (config.version) is greater than the version we've got stored (or migrating from)
+        #We should loop until we've caught up
+        while compareVersions(from_version, renpy.config.version) < 0:
             #First, check if there's a late migration we need to run
             if MigrationRuntimes.RUNTIME in UPDATE_FUNCS[store.persistent._jn_version]:
                 LATE_UPDATES.append(UPDATE_FUNCS[store.persistent._jn_version][MigrationRuntimes.RUNTIME])
 
             #We're below the latest version, so we need to migrate to the next one in the chain
-            _callable, to_version = UPDATE_FUNCS[to_version][MigrationRuntimes.RUNTIME]
+            _callable, from_version = UPDATE_FUNCS[from_version][MigrationRuntimes.RUNTIME]
 
             #Migrate
             _callable()
@@ -138,7 +140,11 @@ python early in jn_data_migrations:
 init 10 python:
     jn_data_migrations.runInitMigrations()
 
+
+#All migration scripts go here
 init python in jn_data_migrations:
-    @migration(["0.0.0"], "0.0.1")
-    def v0_0_0_to_0_0_1():
+    #This runs a migration from version 0.0.0 to 0.0.1
+    #This script serves an example and hence, does nothing. All arguments are present however "runtime" is not necessary
+    @migration(["0.0.0"], "0.0.1", runtime=MigrationRuntimes.INIT)
+    def to_0_0_1():
         pass
