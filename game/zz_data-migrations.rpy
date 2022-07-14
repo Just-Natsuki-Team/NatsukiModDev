@@ -124,7 +124,7 @@ python early in jn_data_migrations:
                 LATE_UPDATES.append(UPDATE_FUNCS[store.persistent._jn_version][MigrationRuntimes.RUNTIME])
 
             #We're below the latest version, so we need to migrate to the next one in the chain
-            _callable, from_version = UPDATE_FUNCS[from_version][MigrationRuntimes.RUNTIME]
+            _callable, from_version = UPDATE_FUNCS[from_version][MigrationRuntimes.INIT]
 
             #Migrate
             _callable()
@@ -143,8 +143,15 @@ init 10 python:
 
 #All migration scripts go here
 init python in jn_data_migrations:
+    DID_DO_UPDATE = False
+
     #This runs a migration from version 0.0.0 to 0.0.1
     #This script serves an example and hence, does nothing. All arguments are present however "runtime" is not necessary
     @migration(["0.0.0"], "0.0.1", runtime=MigrationRuntimes.INIT)
     def to_0_0_1():
         pass
+
+    @migration(["0.0.1"], "0.0.2")
+    def to_0_0_2():
+        global DID_DO_UPDATE
+        DID_DO_UPDATE = True
