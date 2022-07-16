@@ -61,7 +61,7 @@ init 5 python:
     )
 
 label compliment_amazing:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_amazing").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_amazing").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_AMAZING:
         if Natsuki.isEnamored(higher=True):
@@ -114,7 +114,7 @@ init 5 python:
     )
 
 label compliment_beautiful:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_beautiful").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_beautiful").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_BEAUTIFUL:
         if Natsuki.isEnamored(higher=True):
@@ -185,7 +185,7 @@ init 5 python:
     )
 
 label compliment_confident:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_confident").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_confident").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_CONFIDENT:
         if Natsuki.isEnamored(higher=True):
@@ -214,7 +214,7 @@ label compliment_confident:
 
             if Natsuki.isEnamored(higher=True):
                 n 1uchgnl "Oh,{w=0.1} who am I kidding.{w=0.2} Of course you do."
-                n 1uchbsl "Ahaha!"
+                n 1uchbslelg "Ahaha!"
 
     $ jn_compliments.last_compliment_type = jn_compliments.TYPE_CONFIDENT
     return
@@ -232,7 +232,7 @@ init 5 python:
     )
 
 label compliment_cute:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_cute").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_cute").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_CUTE:
         if Natsuki.isEnamored(higher=True):
@@ -296,7 +296,7 @@ init 5 python:
     )
 
 label compliment_hilarious:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_hilarious").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_hilarious").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_HILARIOUS:
         if Natsuki.isEnamored(higher=True):
@@ -323,7 +323,7 @@ label compliment_hilarious:
             n 1fcsbgl "O-{w=0.1}Oh?{w=0.2} Aha!{w=0.2} Well,{w=0.1} I'm glad to hear it!"
             n 1fsqsm "You know what that means,{w=0.1} right?"
             n 1fchgn "It means you have great taste,{w=0.1} [player]!"
-            n 1uchbs "Ahaha!"
+            n 1uchbselg "Ahaha!"
 
     $ jn_compliments.last_compliment_type = jn_compliments.TYPE_HILARIOUS
     return
@@ -341,7 +341,7 @@ init 5 python:
     )
 
 label compliment_inspirational:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_inspirational").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_inspirational").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_INSPIRATIONAL:
         if Natsuki.isEnamored(higher=True):
@@ -384,7 +384,7 @@ init 5 python:
     )
 
 label compliment_style:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_style").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_style").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_STYLE:
         if not Natsuki.isWearingOutfit("jn_school_uniform"):
@@ -397,7 +397,7 @@ label compliment_style:
                 if Natsuki.isLove():
                     $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
                     n 1fllbgl "D-{w=0.1}don't think I just dress for me though,{w=0.1} [chosen_tease]~."
-                    n 1nchsml "Ahaha!"
+                    n 1nchsmleaf "Ahaha!"
 
             else:
                 n 1tsgssl "Oh?{w=0.2} Someone could stand to take a few points,{w=0.1} huh?"
@@ -467,7 +467,7 @@ init 5 python:
     )
 
 label compliment_thoughtful:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_thoughtful").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_thoughtful").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_THOUGHTFUL:
         if Natsuki.isEnamored(higher=True):

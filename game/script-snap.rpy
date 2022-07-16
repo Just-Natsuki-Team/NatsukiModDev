@@ -501,7 +501,7 @@ label snap_quip(is_player_snap, is_correct_snap):
 
                 $ _player_win_streak = 0
                 $ persistent.jn_snap_player_is_cheater = True
-                $ Natsuki.percentage_affinity_loss(1)
+                $ Natsuki.percentageAffinityLoss(1)
                 $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_CHEATED_GAME)
 
                 # Hide all the UI
@@ -603,7 +603,7 @@ label snap_end:
 
         if jn_snap._natsuki_win_streak == 10:
             n 1fchbsl "Jeez,{w=0.1} [player]...{w=0.3} are you having a bad day or what?"
-            n 1fchbs "Ahaha!"
+            n 1fchbselg "Ahaha!"
             n 1nchsm "So long as you're having fun though,{w=0.1} right?"
 
         elif jn_snap._natsuki_win_streak == 5:
@@ -633,7 +633,7 @@ label snap_end:
         n 1nchgn "Well,{w=0.1} I guess that's fine.{w=0.2} Let me just chalk up another win for me,{w=0.1} then.{w=0.2} Ehehe."
 
     # Award affinity for playing to completion with best girl
-    $ Natsuki.calculated_affinity_gain()
+    $ Natsuki.calculatedAffinityGain()
 
     if jn_snap._player_win_streak >= 3:
         n 1fcsanl "Uuuuuu-!"

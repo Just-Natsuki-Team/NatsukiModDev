@@ -27,6 +27,9 @@ init python in jn_random_music:
         "Let me see..."
     ]
 
+    # The file extensions we (Ren'Py) support
+    _VALID_FILE_EXTENSIONS = ["mp3", "ogg", "wav"]
+
     def random_music_change_check():
         """
         Determines if Natsuki should pick a new song to play in the background.
@@ -35,11 +38,11 @@ init python in jn_random_music:
         if (
             store.persistent.jn_custom_music_unlocked
             and store.persistent.jn_random_music_enabled
-            and Natsuki.isAffectionate(higher=True)
+            and store.Natsuki.isAffectionate(higher=True)
             and store.preferences.get_volume("music") > 0
             and len(jn_utils.getAllDirectoryFiles(
                 path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
-                extension_list=[".mp3",".wav",".ogg"]
+                extension_list=_VALID_FILE_EXTENSIONS
                 )
             ) >= 2
         ):
@@ -63,7 +66,7 @@ label random_music_change:
                 lambda track: (jn_custom_music._now_playing not in track),
                 jn_utils.getAllDirectoryFiles(
                     path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
-                    extension_list=[".mp3",".wav",".ogg"]
+                    extension_list=["mp3","wav","ogg"]
                 )
             )
         )

@@ -19,6 +19,7 @@ default persistent.jn_player_appearance_height_cm = None
 # Hobby data
 default persistent.jn_player_gaming_frequency = None
 default persistent.jn_player_can_drive = None
+default persistent._jn_player_has_flown = None
 
 # Romance data
 default persistent.jn_player_love_you_count = 0
@@ -432,7 +433,7 @@ label talk_did_you_have_pets:
     elif _return == "rats":
         n 1unmbs "Rats,{w=0.1} huh?"
         n 1fsgsg "Were you expecting me to be grossed out?"
-        n 1uchbs "Ahaha!"
+        n 1uchbselg "Ahaha!"
         n 1unmsm "Rats are fine.{w=0.2} They're surprisingly intelligent,{w=0.1} too!"
         n 1uchgn "Are you perhaps training yours,{w=0.1} [player]?{w=0.2} Ehehe."
         n 1unmbs "Make sure you take care of yours for me,{w=0.1} okay?"
@@ -730,7 +731,7 @@ label talk_careful_spending:
     extend 1flrssl " You deserve cool stuff too!"
     n 1flrss "Money can't buy happiness...{w=0.5}{nw}"
     extend 1fchgn " but it sure as hell makes finding it easier.{w=0.5}{nw}"
-    extend 1uchbs " Ahaha!"
+    extend 1uchbselg " Ahaha!"
     n 1nllss "Well,{w=0.1} anyway.{w=0.5}{nw}"
     extend 1tnmsg " Just try to think a little before you spend,{w=0.1} [player]{w=0.1} -{w=0.3}{nw}"
     extend 1uchbs " that's all I'm saying!"
@@ -795,7 +796,7 @@ label talk_eating_well:
     if Natsuki.isAffectionate(higher=True):
         n 1fsqsm "And besides..."
         n 1usqss "I gotta get you into good habits by yourself before I'm there to make you."
-        n 1fchgn "Ahaha!{w=0.2} I'm kidding,{w=0.1} [player]!{w=0.2} I'm kidding!"
+        n 1fchgnelg "Ahaha!{w=0.2} I'm kidding,{w=0.1} [player]!{w=0.2} I'm kidding!"
         n 1fsqsm "...Mostly."
 
         if Natsuki.isEnamored(higher=True):
@@ -1300,7 +1301,7 @@ label talk_weather_setup_verify:
         extend 1nchsml " Ehehe."
         n 1nchbgl "Thanks a bunch,{w=0.1} [player]!{w=1}{nw}"
         extend 1uchgnl " This is gonna be {i}super{/i} awesome!"
-        $ Natsuki.calculated_affinity_gain()
+        $ Natsuki.calculatedAffinityGain()
 
         python:
             persistent._jn_weather_api_configured = True
@@ -1522,7 +1523,7 @@ label talk_time_management:
     if Natsuki.isAffectionate(higher=True):
         n 1ullbo "Although...{w=0.3} now that I think about it..."
         n 1tsqsm "Perhaps I should timebox our time together,{w=0.1} [player]."
-        extend 1uchbs " Ahaha!"
+        extend 1uchbselg " Ahaha!"
 
     return
 
@@ -1776,7 +1777,7 @@ label talk_player_appearance:
             n 1fnmaj "Hey{w=0.1} -{w=0.1} nothing wrong with that!{nw}"
             extend 1fsqbg "{w=0.2} You wanna know why?"
             n 1fchgn "Because it just means you're aerodynamic,{w=0.1} [player].{w=0.5}{nw}"
-            extend 1uchsm " Ahaha!"
+            extend 1uchsmelg " Ahaha!"
             $ persistent.jn_player_appearance_hair_length = "None"
 
     n 1uchbs "Okay!{w=0.5}{nw}"
@@ -1810,7 +1811,7 @@ label talk_player_appearance:
             "Blond":
                 n 1fnmbg "Aha!{w=0.2} A blond,{w=0.1} are we?{w=0.5}{nw}"
                 extend 1fsqts " {w=0.3}...That explains a lot."
-                n 1fchgn "Ahaha!"
+                n 1fchgnelg "Ahaha!"
                 n 1uchbs "I'm kidding,{w=0.1} [player]!{w=0.2} I'm just kidding!"
                 n 1fllbg "I'm actually a little jealous.{w=0.5}{nw}"
                 extend 1fsqsm " Just a little."
@@ -2057,7 +2058,7 @@ label talk_driving:
     $ already_discussed_driving = get_topic("talk_driving").shown_count > 0 or get_topic("talk_are_you_into_cars").shown_count > 0
 
     n 1fchdv "Pffft!{w=0.5}{nw}"
-    extend 1uchbs " Ahaha!"
+    extend 1uchbselg " Ahaha!"
     n 1fchgn "What kind of a question is that,{w=0.1} [player]?"
     $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
 
@@ -2093,7 +2094,7 @@ label talk_driving:
                 if Natsuki.isAffectionate(higher=True):
                     n 1fllbg "But I should probably warn you..."
                     n 1fsgsm "I'm picking the songs for our driving playlist."
-                    extend 1uchbg " Ahaha!"
+                    extend 1uchbgelg " Ahaha!"
 
                 else:
                     n 1fllbg "Just remember,{w=0.1} [player]..."
@@ -2374,7 +2375,7 @@ label talk_give_nickname:
 
     elif nickname_type == jn_nicknames.TYPE_FUNNY:
         n 1nbkdv "Pffft!"
-        n 1uchbs "Ahaha!"
+        n 1uchbselg "Ahaha!"
         n 1fbkbs "[nickname]?!{w=0.2} What was that meant to be,{w=0.1} [player]?"
         n 1fbkbs "Well...{w=0.3} you're just lucky I have a healthy sense of humour."
         n 1fsgbg "[nickname] it is,{w=0.1} I guess!{w=0.5}{nw}"
@@ -2444,7 +2445,7 @@ label talk_give_nickname:
 
         # Apply penalty and pending apology
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
-        $ Natsuki.percentage_affinity_loss(1)
+        $ Natsuki.percentageAffinityLoss(1)
 
     elif persistent.jn_player_nicknames_bad_given_total == 2:
         n 1fsqsl "I can't believe you did that again to me,{w=0.1} [player]."
@@ -2456,7 +2457,7 @@ label talk_give_nickname:
 
         # Apply penalty and pending apology
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
-        $ Natsuki.percentage_affinity_loss(2.5)
+        $ Natsuki.percentageAffinityLoss(2.5)
 
     elif persistent.jn_player_nicknames_bad_given_total == 3:
         n 1fsqan "You are honestly unbelievable,{w=0.1} [player]."
@@ -2471,7 +2472,7 @@ label talk_give_nickname:
                 n 1fsqan "...Then start acting like it,{w=0.1} [player]."
                 n 1fslsl "Thanks."
 
-                $ Natsuki.percentage_affinity_loss(3)
+                $ Natsuki.percentageAffinityLoss(3)
 
             "...":
                 n 1fcssl "Look.{w=0.2} I'm not kidding around,{w=0.1} [player]."
@@ -2479,7 +2480,7 @@ label talk_give_nickname:
                 n 1fsqem "It's toxic."
                 n 1fsqsr "I don't care if you're trying to pull my leg.{w=0.2} Quit it."
 
-                $ Natsuki.percentage_affinity_loss(5)
+                $ Natsuki.percentageAffinityLoss(5)
 
         # Apply penalty and pending apology
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
@@ -2494,7 +2495,7 @@ label talk_give_nickname:
         n 1fsqsr "I warned you,{w=0.1} [player].{w=0.2} Remember that."
 
         # Apply affinity/trust penalties, then revoke nickname priveleges and finally apply pending apology
-        $ Natsuki.percentage_affinity_loss(10)
+        $ Natsuki.percentageAffinityLoss(10)
         $ persistent.jn_player_nicknames_allowed = False
         $ persistent.jn_player_nicknames_current_nickname = None
         $ n_name = "Natsuki"
@@ -2644,7 +2645,7 @@ label talk_aging:
     else:
         n 1fllbg "But...{w=0.3} just in case?"
         n 1fsqsg "We're only having one candle on your birthday cake.{w=0.2} Sorry.{w=0.5}{nw}"
-        extend 1uchbg " Ahaha!"
+        extend 1uchbgelg " Ahaha!"
 
     return
 
@@ -2878,7 +2879,7 @@ label talk_gaming:
                 $ persistent.jn_player_gaming_frequency = "High"
                 n 1fcsbg "Yep!{w=0.2} Just as I suspected..."
                 n 1uchgn "[player] is a mega-dork."
-                n 1uchbs "Ahaha!"
+                n 1uchbselg "Ahaha!"
                 n 1uchsm "Relax,{w=0.1} [player]!"
                 n 1fllssl "I'm not much better,{w=0.1} after all."
 
@@ -2990,7 +2991,7 @@ label talk_natsukis_fang:
     n 1fsgss "Yeah.{w=0.2} We both know what's coming,{w=0.2} don't we?"
     n 1fsqbg "When's the last time {i}you{/i} flossed,{w=0.1} [player]?{w=0.2} Be honest."
     n 1tsqsm "..."
-    n 1fchbg "Ahaha!{w=0.2} Did I call you out?"
+    n 1fchbgelg "Ahaha!{w=0.2} Did I call you out?"
     n 1nlrss "Well,{w=0.1} whatever.{w=0.2} I'm just gonna assume you'll go do that later."
     n 1fcsaw "Seriously though.{w=0.2} You better make sure you take care of your teeth!"
     n 1fnmaj "Regular brushing and flossing is important,{w=0.1} but watch your diet too."
@@ -3072,7 +3073,7 @@ label talk_i_love_you:
             n 1kllsmf "..."
             n 1kllssf "S-{w=0.1}so..."
             n 1kplssf "Where were we?{w=0.2} Ehehe..."
-            $ Natsuki.calculated_affinity_gain(base=3, bypass=True)
+            $ Natsuki.calculatedAffinityGain(base=3, bypass=True)
 
         elif Natsuki.isEnamored(higher=True):
             n 1uscgsf "[player_initial]-{w=0.2}[player]!"
@@ -3089,7 +3090,7 @@ label talk_i_love_you:
             n 1flrbol "N-{w=0.1}never mind..."
             n 1fcseml "Forget I said anything."
             n 1kllbof "..."
-            $ Natsuki.calculated_affinity_gain(base=2, bypass=True)
+            $ Natsuki.calculatedAffinityGain(base=2, bypass=True)
 
         elif Natsuki.isAffectionate(higher=True):
             n 1uskwrf "W-{w=0.1}w-{w=0.1}what?"
@@ -3105,11 +3106,11 @@ label talk_i_love_you:
             n 1fcsanf "Uuuuu..."
             n 1fcsajf "F-{w=0.1}forget it!{w=0.2} I-{w=0.1}it's nothing..."
             n 1kslslf "..."
-            $ Natsuki.calculated_affinity_gain(bypass=True)
+            $ Natsuki.calculatedAffinityGain(bypass=True)
 
         elif Natsuki.isHappy(higher=True):
             n 1fsqdvl "Pffffft!"
-            n 1uchbsl "Ahaha!"
+            n 1uchbslelg "Ahaha!"
             n 1tllbgl "You can't be serious,{w=0.1} [player]!{w=0.2} You're just messing with me!{w=0.2} Right?"
             n 1knmbgl "Right,{w=0.1} [player]?"
             n 1knmajf "R-{w=0.1}right...?"
@@ -3143,7 +3144,7 @@ label talk_i_love_you:
             n 1fsqsr "We're done with this."
             n 1fsqpu "And if you {i}really{/i} feel that way?"
             n 1fsqsftsb "...Then why aren't {i}you{/i} trying to make this work,{w=0.1} [player]?"
-            $ Natsuki.percentage_affinity_loss(10)
+            $ Natsuki.percentageAffinityLoss(10)
 
         else:
             # :(
@@ -3166,7 +3167,7 @@ label talk_i_love_you:
             n 1fcsantsd "..."
             n 1fsqfutse "Go!"
             n 1fscsctdc "{i}JUST LEAVE ME ALONE!{/i}{nw}"
-            $ Natsuki.percentage_affinity_loss(25)
+            $ Natsuki.percentageAffinityLoss(25)
             return { "quit": None }
 
         $ persistent.jn_player_love_you_count += 1
@@ -3182,22 +3183,22 @@ label talk_i_love_you:
             if random_response_index == 0:
                 n 1unmbgf "Ehehe.{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
                 n 1uchsmf "You're always [chosen_descriptor] to me."
-                $ Natsuki.calculated_affinity_gain()
+                $ Natsuki.calculatedAffinityGain()
                 return
 
             elif random_response_index == 1:
                 n 1tsqssl "Aww,{w=0.1} you don't say?"
-                n 1uchbsl "Ahaha!"
+                n 1uchbslelg "Ahaha!"
                 $ chosen_endearment = chosen_endearment.capitalize()
                 n 1kwmbgf "[chosen_endearment],{w=0.1} I love you too!"
                 n 1fcsbgf "I'll always be here to stick up for you."
-                $ Natsuki.calculated_affinity_gain()
+                $ Natsuki.calculatedAffinityGain()
                 return
 
             elif random_response_index == 2:
                 n 1uchsmf "Aww,{w=0.1} [chosen_endearment]!{w=0.2} I love you too!"
                 n 1klrbgf "You're the best thing that's ever happened to me."
-                $ Natsuki.calculated_affinity_gain()
+                $ Natsuki.calculatedAffinityGain()
                 return
 
             elif random_response_index == 3:
@@ -3205,7 +3206,7 @@ label talk_i_love_you:
                 n 1fsqsmf "Well,{w=0.1} I'd be happy to oblige!"
                 n 1uchsmf "I love you too,{w=0.1} [chosen_endearment]!"
                 n 1fchbgf "Keep on smiling for me,{w=0.1} 'kay?"
-                $ Natsuki.calculated_affinity_gain()
+                $ Natsuki.calculatedAffinityGain()
                 return
 
             elif random_response_index == 4:
@@ -3213,7 +3214,7 @@ label talk_i_love_you:
                 n 1usqssf "Ehehe.{w=0.2} Don't worry,{w=0.1} I'm not complaining!"
                 n 1uchbgf "I love you too,{w=0.1} [chosen_endearment]!"
                 n 1fcssmf "It's just us two against the world!"
-                $ Natsuki.calculated_affinity_gain()
+                $ Natsuki.calculatedAffinityGain()
                 return
 
             elif random_response_index == 5:
@@ -3233,12 +3234,12 @@ label talk_i_love_you:
                                 n 1nchbgf "I looooove you,{w=0.1} [player]~!"
 
                     "Okay.":
-                        n 1uchgnl "Pfffft!{w=0.2} Ahaha!"
+                        n 1uchgnlelg "Pfffft!{w=0.2} Ahaha!"
                         n 1fwltsf "Come on,{w=0.1} [player]!{w=0.2} Where's your fighting spirit?"
                         n 1fchsmf "Well,{w=0.1} whatever.{w=0.2} I'm just glad you accept the truth."
                         n 1uchsmf "Ehehe."
 
-                $ Natsuki.calculated_affinity_gain()
+                $ Natsuki.calculatedAffinityGain()
                 return
 
             elif random_response_index == 6:
@@ -3246,7 +3247,7 @@ label talk_i_love_you:
                 n 1usqsmf "...And I think I can guess you like hearing it just as much."
                 n 1uchbgf "I love you too,{w=0.1} [chosen_endearment]!"
                 n 1nchsmf "I don't need anyone else~."
-                $ Natsuki.calculated_affinity_gain()
+                $ Natsuki.calculatedAffinityGain()
                 return
 
             elif random_response_index == 7:
@@ -3256,7 +3257,7 @@ label talk_i_love_you:
                 n 1fchbgf "...But just the kind of gross I'm down with.{w=0.2} Ehehe."
                 n 1uchbgf "I love you too,{w=0.1} [chosen_endearment]!"
                 n 1unmsmf "I'll always have your back."
-                $ Natsuki.calculated_affinity_gain()
+                $ Natsuki.calculatedAffinityGain()
                 return
 
             elif random_response_index == 8:
@@ -3264,7 +3265,7 @@ label talk_i_love_you:
                 n 1nchssf "I..."
                 n 1uchbsf "Looooooooove you too,{w=0.1} [player]!"
                 n 1kwmsmf "You'll always be my rock."
-                $ Natsuki.calculated_affinity_gain()
+                $ Natsuki.calculatedAffinityGain()
                 return
 
             elif random_response_index == 9:
@@ -3349,14 +3350,14 @@ label talk_i_love_you:
                             if wrong_response_count >= 10:
                                 n 1nsqsml "Nice try,{w=0.1} though~!"
 
-                            $ Natsuki.calculated_affinity_gain()
+                            $ Natsuki.calculatedAffinityGain()
                             return
 
             elif random_response_index == 10:
                 n 1ksqsml "Ehehe.{w=0.2} I'll never get tired of hearing that from you,{w=0.1} [player]."
                 n 1uchsmf "I love you too!"
                 n 1uchbgf "You're my numero uno~."
-                $ Natsuki.calculated_affinity_gain()
+                $ Natsuki.calculatedAffinityGain()
                 return
 
             else:
@@ -3364,7 +3365,7 @@ label talk_i_love_you:
                 n 1uslsmf "You're such a softie,{w=0.1} [player].{w=0.2} Ehehe."
                 n 1uchbgf "But...{w=0.3} I'm not gonna complain!{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
                 n 1uchsmf "You always make me feel tall."
-                $ Natsuki.calculated_affinity_gain()
+                $ Natsuki.calculatedAffinityGain()
                 return
 
             return
@@ -3376,7 +3377,7 @@ label talk_i_love_you:
             n 1flremf "Let's just talk about something,{w=0.1} alright?"
             n 1flrpof "Y-{w=0.1}you can fawn over me in your {i}own{/i} time!"
             n 1klrpof "Dummy..."
-            $ Natsuki.calculated_affinity_gain()
+            $ Natsuki.calculatedAffinityGain()
             return
 
         elif Natsuki.isHappy(higher=True):
@@ -3400,7 +3401,7 @@ label talk_i_love_you:
             n 1fsqsr "Talk is cheap,{w=0.1} [player]."
             n 1fsqaj "If you {i}really{/i} care about me..."
             n 1fsqpu "Then {i}prove{/i} it."
-            $ Natsuki.percentage_affinity_loss(2.5)
+            $ Natsuki.percentageAffinityLoss(2.5)
             return
 
         else:
@@ -3410,7 +3411,7 @@ label talk_i_love_you:
             n 1fcsfu "..."
             n 1fcspu "You know what?{w=0.2} Whatever.{w=0.2} I don't care anymore."
             n 1fsqfu "Say what you like,{w=0.1} [player].{w=0.2} It's all crap,{w=0.1} just like everything else from you."
-            $ Natsuki.percentage_affinity_loss(2)
+            $ Natsuki.percentageAffinityLoss(2)
             return
 
     return
@@ -3514,7 +3515,7 @@ label talk_natsukis_hairstyle:
         if Natsuki.isEnamored(higher=True):
             $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
             n 1fcssml "I'm pretty sure I already let my hair down around you,{w=0.1} [chosen_tease].{w=0.2} That qualifies, right?"
-            n 1uchgnl "Ahaha!"
+            n 1uchgnlelg "Ahaha!"
 
         elif Natsuki.isNormal(higher=True):
             n 1unmaj "You know what they say,{w=0.1} [player]."
@@ -3752,7 +3753,7 @@ label talk_school_uniform:
         n 1fsqsm "...Ehehe."
         n 1fcsbgl "Why do you ask,{w=0.1} [player]?{w=0.2} Did {i}you{/i} wanna wear it or something?"
         n 1fchgn "Oh!{w=0.2} We can play dress-up!{w=0.2} Wouldn't you like that,{w=0.1} [player]?{w=0.2} It'll be so much fun!"
-        n 1uchbs "I bet I could make you look so cute~.{w=0.1} Ahaha!"
+        n 1uchbselg "I bet I could make you look so cute~.{w=0.1} Ahaha!"
         n 1nllss "Well anyway,{w=0.1} putting jokes aside..."
 
     elif Natsuki.isNormal(higher=True):
@@ -3895,6 +3896,8 @@ label talk_flying:
             elif Natsuki.isHappy(higher=True):
                 n 1fchgn "No excuses,{w=0.1} [player]! Ehehe."
 
+            $ persistent._jn_player_has_flown = True
+
         "I fly sometimes.":
             n 1unmss "Ooh,{w=0.1} okay!{w=0.2} So the odd vacation or family flight then?"
             n 1fslsm "I see,{w=0.1} I see..."
@@ -3909,17 +3912,23 @@ label talk_flying:
                 n 1fsqsm "You better be handy when that happens,{w=0.1} [player]..."
                 n 1fchgn "We'll see how good a guide you are!"
 
+            $ persistent._jn_player_has_flown = True
+
         "I've flown before.":
             n 1fsqct "Oh?{w=0.2} So you've already earned your wings,{w=0.1} huh?"
             n 1tllaj "Hmm...{w=0.3} I wonder where you went?"
             n 1fnmaj "You gotta promise to tell me if you fly again,{w=0.1} 'kay?"
             n 1fchgn "I wanna hear all about it!"
 
+            $ persistent._jn_player_has_flown = True
+
         "I've never flown.":
             n 1fcsbg "Then that's just another thing we have in common,{w=0.1} [player]!"
             n 1fsqss "I guess you could say..."
             n 1fsqdv "We're both just {i}well grounded{/i} people,{w=0.1} huh?"
-            n 1fchgn "Ahaha!"
+            n 1fchgnelg "Ahaha!"
+
+            $ persistent._jn_player_has_flown = False
 
     return
 
@@ -4188,13 +4197,13 @@ label talk_are_you_into_cosplay:
         n 1ulrss "And materials aren't really that expensive either -{w=0.1} besides props and wigs,{w=0.1} anyway."
         n 1nnmsm "So it seems like a pretty awesome way to show my appreciation for characters I like..."
         n 1fsqbg "...And show my {i}limitless{/i} talent while I'm at it."
-        n 1fchgn "Ahaha!"
-        n 1uchgn "And who knows?"
+        n 1nchgn "Ehehe."
+        n 1uchgn "And anyway,{w=0.1} who knows?"
         n 1uchsm "Maybe you'll get to see some of my handiwork some day,{w=0.1} [player]."
         n 1fsqbg "I bet you'd like that,{w=0.1} huh?{w=0.2} Ehehe."
         n 1fsgsg "No need to be shy,{w=0.1} [player] -{w=0.1} I can read you like a book."
         n 1fsqsgl "A gross book,{w=0.1} but a book nonetheless~."
-        n 1fchgn "Ahaha!"
+        n 1fchgnelg "Ahaha!"
         return
 
         if Natsuki.isLove():
@@ -4208,7 +4217,8 @@ label talk_are_you_into_cosplay:
         n 1fnmaj "Well?"
         n 1fsqsg "Speak up,{w=0.1} [player]!{w=0.2} I can't hear you~!"
         n 1fslpo "..."
-        n 1fchgn "Ahaha!{w=0.2} Nah,{w=0.1} it's fine."
+        n 1fchgnelg "Ahaha!{w=0.75}{nw}" 
+        extend 1ullss " Nah,{w=0.1} it's fine."
         n 1ulraj "I've thought about it a bunch,{w=0.1} honestly -{w=0.1} like since I got into manga and all that a while ago."
         n 1nnmaj "I haven't {i}actually{/i} gone and dressed up yet,{w=0.1} though."
         n 1fnmaj "But there really isn't much stopping me,{w=0.1} [player]."
@@ -4970,7 +4980,7 @@ label talk_custom_music_explanation:
     n 1nchbg "...And that's about it!"
     n 1nsqbg "A word of warning though,{w=0.1} [player]..."
     n 1usqsg "You better have good taste."
-    n 1uchgn "Ahaha!"
+    n 1uchgnelg "Ahaha!"
     return
 
 # Natsuki's thoughts on VTubers
@@ -5034,7 +5044,7 @@ label talk_vtubers:
     n 1unmaj "What about you,{w=0.1} [player]?{w=0.2} Are you into that sort of stuff?"
     n 1fcssm "Wait,{w=0.1} wait!{w=0.2} Don't bother answering that."
     n 1tsqsm "You {i}did{/i} ask me about them,{w=0.1} after all -{w=0.1} I think that speaks for itself,{w=0.1} wouldn't you agree?"
-    n 1uchbs "Ahaha!"
+    n 1uchbselg "Ahaha!"
     return
 
 # Natsuki discusses her skateboarding past, and why she used to use one
@@ -6268,7 +6278,7 @@ label talk_maintaining_proper_hygiene:
 
         "Yes, I deserve to feel and look good too.":
             n 1fchbg "Now {i}that's{/i} what I like to hear!"
-            $ Natsuki.calculated_affinity_gain()
+            $ Natsuki.calculatedAffinityGain()
 
         "...":
             n 1nsqsr "..."
@@ -6281,7 +6291,7 @@ label talk_maintaining_proper_hygiene:
                     n 1uchbg "See?{w=0.5}{nw}"
                     extend 1ksqsg " Was that {i}so{/i} hard?"
                     n 1fcssm "Ehehe."
-                    $ Natsuki.calculated_affinity_gain()
+                    $ Natsuki.calculatedAffinityGain()
 
     n 1ullss "But anyway,{w=0.1} yeah!{w=0.5}{nw}"
     extend 1nnmss " That's about all I had to say."
@@ -6303,7 +6313,7 @@ label talk_maintaining_proper_hygiene:
         n 1usqbg "Thanks for letting me{w=0.5}{nw}"
         extend 1fsqss " {i}clear{/i}{w=0.5}{nw}"
         extend 1usqsm " that up?"
-        n 1nchgn "Ahaha!"
+        n 1nchgnelg "Ahaha!"
 
     return
 
@@ -6895,7 +6905,7 @@ label talk_impressions_of_the_other_girls:
         extend 1fcsan " Do {b}not{/b} try my patience again.{w=1.5}{nw}"
         extend 1fsqan " Jerk."
 
-        $ Natsuki.calculated_affinity_loss(2)
+        $ Natsuki.calculatedAffinityLoss(2)
 
     else:
         n 1fsqan "...What is {i}{cps=\7.5}wrong{/cps}{/i} with you?{w=1.5}{nw}"
@@ -6903,7 +6913,7 @@ label talk_impressions_of_the_other_girls:
         n 1fcsan "I am {b}NOT{/b} doing that,{w=0.1} let alone for a piece of work like{w=0.5}{nw}"
         extend 1fslan " {i}you{/i}!"
 
-        $ Natsuki.calculated_affinity_loss(1)
+        $ Natsuki.calculatedAffinityLoss(1)
 
     return
 
@@ -6970,6 +6980,103 @@ label talk_newspapers_and_bias:
     extend 1fsqsm " I think it's pretty obvious."
     n 1fllss "I know I call you it a bunch already,{w=0.1} [player]..."
     n 1fsqsm "But only {i}real{/i} dummies believe {i}everything{/i} they read!"
+
+    return
+
+# Natsuki isn't afraid of flying, despite having never flown before
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_fear_of_flying",
+            unlocked=True,
+            prompt="Are you afraid of flying?",
+            conditional="jn_utils.get_total_gameplay_days() >= 7",
+            category=["Fears", "Transport"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_fear_of_flying:
+    if Natsuki.isNormal(higher=True):
+        n 1tnmbo "Flying,{w=0.1} huh?"
+        n 1tllaj "...You know,{w=1}{nw}"
+        extend 1ulraj " it's actually kinda weird,{w=0.75}{nw}" 
+        extend 1unmbo " when you think about it."
+        n 1fllss "How people can be afraid of things they've never {i}actually{/i} experienced before,{w=0.1} I mean."
+        n 1ullaj "It's pretty crazy how people have these kinds of built-{w=0.1}in fears,{w=0.5}{nw}"
+        extend 1tnmss " huh?"
+
+        if get_topic("talk_flying").shown_count > 0 or get_topic("talk_fear_of_flying").shown_count > 0:
+            n 1ulraj "I mean,{w=0.5}{nw}"
+            extend 1nsrss " like I told you before -{w=0.5}{nw}"
+            extend 1tnmbo " I've never flown anywhere myself or anything."
+
+        else:
+            n 1ulraj "I mean,{w=0.5}{nw}"
+            extend 1tnmbo " I've never flown anywhere myself or anything."
+
+        n 1uskemlesh "B-{w=0.3}but that's not to say {i}I'm{/i} afraid of flying,{w=0.5}{nw}" 
+        extend 1fcspol " obviously!{w=0.75}{nw}"
+        extend 1unmaj " I actually don't think it'd bother me all that much."
+        n 1tlrpu "Though...{w=0.75}{nw}"
+        extend 1unmbo " I guess I can see {i}why{/i} it would spook someone out."
+        n 1fllbo "There's all the noise,{w=0.5}{nw}"
+        extend 1fslem " the turbulence,{w=0.5}{nw}"
+        extend 1ksqfr " plus the stress of being packed in a tube with a whole bunch of strangers."
+        n 1klrss "And it isn't like you can {i}ignore{/i} crashes when they happen!{w=0.75}{nw}"
+        extend 1klrsl " They're...{w=1}{nw}"
+        extend 1kslsr " not...{w=0.5} pretty."
+        n 1unmpu "So yeah,{w=0.1} I can totally see it from that angle.{w=0.5}{nw}"
+        extend 1flrpu " But..."
+        n 1fnmbo "I think people forget just how {i}safe{/i} air travel is!"
+        n 1ullaj "I get that their feelings -{w=0.5}{nw}" 
+        extend 1fslem " {i}and the news{/i} -{w=0.5}{nw}" 
+        extend 1unmbo " tell them otherwise.{w=0.75}{nw}"
+        extend 1flrss " But it isn't like the statistics {i}lie{/i}!"
+        n 1unmaj "Some studies have put the likelihood of biting the big one in a plane crash at one in 11{w=0.5}{nw}"
+        extend 1uwdaj " {b}million{/b}."
+        n 1fslss "Or,{w=0.1} to put it another way..."
+        n 1unmem "You're more than {i}2,000{/i} times more likely to kick the bucket from a car accident than from a plane crash!"
+        n 1tsqss "...And the list doesn't stop there,{w=0.1} either!"
+        n 1ullss "Lightning strikes,{w=0.5}{nw}"
+        extend 1ulraj " riding a bike,{w=0.5}{nw}"
+        extend 1nsqsl " falling off something..."
+        n 1fllss "They're all way riskier than any flight you {i}should{/i} be stepping on!"
+        n 1nllsl "..."
+        n 1fcspu "...I know,{w=0.1} I know.{w=0.5}{nw}"
+        extend 1fsrpo " I'm not {i}totally{/i} blind to the risks,{w=0.1} [player]."
+        n 1nllpu "It's just like anything."
+        n 1unmpu "Things can go wrong.{w=1}{nw}"
+        extend 1ksrpu " They {i}do{/i} go wrong."
+        n 1kcsemesi "And that {i}is{/i} scary."
+        n 1tlrpu "But...{w=0.75}{nw}" 
+        extend 1tnmss " honestly?"
+        n 1fsqsm "It {i}is{/i} pretty reassuring to know that when I get the chance to jet off somewhere,{w=0.1} the most I'll realistically have to fear..."
+        n 1fchgnelg "...Is probably gonna be the airline food!"
+        n 1fcsbg "Now that's a {i}real{/i} horror,{w=0.1} if I know one.{w=0.75}{nw}"
+        
+        if persistent._jn_player_has_flown:
+            n 1usqsg "Wouldn't {i}you{/i} agree,{w=0.3} [player]?"
+
+        extend 1fsqsmeme " Ehehe."
+
+    elif Natsuki.isDistressed(higher=True):
+        n 1fcsemesi "Ugh..."
+        n 1fsqem "No,{w=0.1} [player].{w=0.75}{nw}"
+        extend 1fsqfr "I'm not afraid of flying either."
+        n 1fcsan "What exactly do you take me for?{w=0.75}{nw}"
+        extend 1fsqan " And even if I {i}was{/i}..."
+        n 1fnmfu "Why the hell would I wanna share that with {i}you{/i}?"
+        n 1fsqfuean "You're just lucky I haven't given you a reason to be scared of flying."
+
+    else:
+        n 1fcsem "Oh,{w=1}{nw}"
+        extend 1fsqwr " {cps=\7.5}shut {b}up{/b}{/cps},{w=0.1} [player]."
+        n 1fcsan "As {i}if{/i} I'd be dumb enough to share any fears I have with a complete loser like{w=0.75}{nw}" 
+        extend 1fcswrtsa " {i}you{/i}."
 
     return
 
