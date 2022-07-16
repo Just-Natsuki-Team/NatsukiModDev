@@ -186,6 +186,7 @@ init 0 python:
             if bypass:
                 # Ignore the daily gain and just award the full affinity
                 persistent.affinity += to_add
+                jn_utils.log("Affinity+")
 
             elif persistent.affinity_daily_gain > 0:
                 # Award the full affinity if any cap remains
@@ -194,6 +195,8 @@ init 0 python:
 
                 if persistent.affinity_daily_gain < 0:
                     persistent.affinity_daily_gain = 0
+                
+                jn_utils.log("Affinity+")
 
             else:
                 jn_utils.log("Daily affinity cap reached!")
@@ -207,6 +210,7 @@ init 0 python:
                 - base - The base amount to use for the calculation
             """
             persistent.affinity -= base * jn_affinity.get_relationship_length_multiplier()
+            jn_utils.log("Affinity-")
 
         @staticmethod
         def percentageAffinityGain(percentage_gain):
@@ -217,6 +221,7 @@ init 0 python:
                 - percentage_gain - The integer percentage the affinity should increase by
             """
             persistent.affinity += persistent.affinity * (float(percentage_gain) / 100)
+            jn_utils.log("Affinity+")
 
         @staticmethod
         def percentageAffinityLoss(percentage_loss):
@@ -227,6 +232,7 @@ init 0 python:
                 - percentage_loss - The integer percentage the affinity should decrease by
             """
             persistent.affinity -= persistent.affinity * (float(percentage_loss) / 100)
+            jn_utils.log("Affinity-")
 
         @staticmethod
         def checkResetDailyAffinityGain():
