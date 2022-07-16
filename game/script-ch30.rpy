@@ -40,6 +40,12 @@ label ch30_init:
     python:
         import random
 
+        #Run runtime data migrations here
+        jn_data_migrations.runRuntimeMigrations()
+
+        #Now adjust the stored version number
+        persistent._jn_version = config.version
+
         # Check the daily affinity cap and reset if need be
         Natsuki.checkResetDailyAffinityGain()
 
@@ -335,6 +341,7 @@ label talk_menu:
         _talk_flavor_text = renpy.substitute(_talk_flavor_text)
 
     $ show_natsuki_talk_menu()
+    $ jn_globals.player_is_in_conversation = True
 
     menu:
         n "[_talk_flavor_text]"
@@ -455,6 +462,7 @@ label outfits_menu:
 
 label extras_menu:
     python:
+        jn_globals.player_is_in_conversation = True
         avaliable_extras_options = []
 
         # Since conditions can change, we check each time if each option is now avaliable due to context changes (E.G affinity is now higher)
