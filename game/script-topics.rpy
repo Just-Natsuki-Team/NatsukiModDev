@@ -7079,3 +7079,108 @@ label talk_fear_of_flying:
         extend 1fcswrtsa " {i}you{/i}."
 
     return
+
+# Natsuki enjoys fanart and appreciates the effort that goes into creating it.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_what_do_you_think_about_fanart",
+            unlocked=True,
+            prompt="What do you think about fanart?",
+            conditional="jn_utils.get_total_gameplay_days() >= 3",
+            category=["Art", "Media"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_what_do_you_think_about_fanart:
+    if Natsuki.isAffectionate(higher=True):
+        n 1fsqaj "Are you {i}kidding{/i},{w=0.1} [player]?{w=1.5}{nw}"
+        extend 1uchbsedz " I {i}love{/i} fanart!"
+
+    elif Natsuki.isNormal(higher=True):
+        n 1unmaj "Ooh!{w=1}{nw}"
+        extend 1unmbg " Fanart?"
+        n 1fllbg "Well,{w=0.1} duh!{w=1.5}{nw}"
+        extend 1fcsbg " I'm {i}totally{/i} all for it!"
+
+    elif Natsuki.isDistressed(higher=True):
+        n 1fcssf "Ugh...{w=1.5}{nw}"
+        extend 1fsqsl " what now?"
+        n 1tsqbo "...Fanart?"
+        n 1nsrpu "..."
+        n 1nllbo "Yeah,{w=0.3} fanart is fine.{w=1}{nw}"
+        extend 1fslpu " I guess."
+        n 1ncssf "I can appreciate the passion and effort that people put into their love of something."
+        n 1nlrpu "Like...{w=1}{nw}"
+        extend 1ncsaj " even if the artwork isn't the best,{w=0.5}{nw}"
+        extend 1nllsr " or the music needs some practice,{w=0.5}{nw}"
+        extend 1nnmsl " someone's effort still went into it."
+        n 1tnmpu "And even if I don't exactly like who the fanart is for?"
+        n 1fllsl "I can still admire the work that went into it."
+        n 1fcssr "...Heh.{w=1}{nw}"
+        extend 1fsqsr " And speaking of things that need work..."
+        n 1fsqpu "I don't know if you're a creator or not,{w=0.1} [player]."
+        n 1fsqfr "But I can tell this relationship isn't where {i}your{/i} work goes,{w=0.3} is it?{w=1}{nw}"
+        extend 1fsran " Jerk."
+        return
+
+    else:
+        n 1fcsantsa "Oh,{w=0.1} for-{w=0.3}{nw}"
+        n 1fcsun "..."
+        n 1fsqfutsb "Fanart?{w=1}{nw}"
+        extend 1fsquptsb " Really,{w=0.1} [player]?"
+        n 1fcsuptsa "..."
+        n 1fcssstsa "...Heh."
+        n 1fsqupltse "Why would {i}you{/i} bring up something people put so much work and love into?"
+        n 1fcsemltsd "You {i}obviously{/i} don't care about either of those things,{w=0.1} do you?"
+        return
+
+    n 1ullss "I mean...{w=1}{nw}"
+    extend 1fchgn " what's not to love?{w=1}{nw}"
+    extend 1uchgnedz " Fanart is {i}awesome{/i}!{w=0.5}{nw}"
+    extend 1fspajedz " And it comes in so many forms,{w=0.1} too!"
+    n 1ulraj "Like sure,{w=0.1} people show their support for something in a bunch of ways.{w=0.5}{nw}"
+    extend 1nllbo " Sharing posts,{w=0.1} attending events,{w=0.5}{nw}"
+    extend 1nnmsm " all those kinds of stuff."
+    n 1fcsbg "But I think it takes some real guts to stand up and create something new!"
+    n 1uskajesh "T-{w=0.1}that's not to say those who don't make any aren't {i}real{/i} fans or anything like that!"
+    n 1flleml "Of course not!{w=1}{nw}"
+    extend 1flrpol " That's just being dumb."
+    n 1ulraj "But...{w=1}{nw}"
+    extend 1unmaj " I just think it's a super neat way to show how much you appreciate something."
+    n 1fnmss "Plus with how active creators are on social media now,{w=0.5}{nw}"
+    extend 1fchbg " it's super easy to reach out and share your work!"
+    n 1fsldv "Not just with your favourite director,{w=0.1} or manga writer or whatever either,{w=0.5}{nw}"
+    extend 1fspajedz " but with other fans too!"
+    n 1fcsbg "Everybody wins,{w=0.1} right?{w=0.5}{nw}"
+    extend 1nllbg " Ahaha..."
+    n 1kllss "Well...{w=0.5}{nw}" 
+    extend 1nllsl " almost."
+    n 1fsqpu "What I {i}really{/i} hate is when people look at something someone made,{w=0.5}{nw}"
+    extend 1fcswr " and then just give them a bunch of grief over it!"
+    n 1flrem "Like if the creator is learning and made a mistake,{w=0.1} or if they had another take on something.{w=1}{nw}"
+    extend 1fcsan " It's so stupid!"
+    n 1fcsaj "I get {i}constructive{/i} criticism,{w=1}{nw}"
+    extend 1fsqan " but just being a jerk because it isn't {i}exactly{/i} how {i}you{/i} want it?{w=1}{nw}"
+    extend 1fcsem " Come {b}on{/b}!"
+    n 1fsrem "Get a grip."
+    n 1fcsemesi "..."
+    n 1fslsl "Hard to believe people can be so {i}entitled{/i} over something others do for free,{w=0.1} huh?{w=0.5}{nw}"
+    extend 1fslpo " Jerks."
+    n 1nllpo "Well,{w=0.1} anyway.{w=1}{nw}"
+    extend 1nslpo " Enough about people like {i}that{/i}."
+    n 1nlrbo "I don't know if you do any fanart or anything,{w=0.1} [player]..."
+
+    if jn_activity.has_player_done_activity(jn_activity.JNActivities.artwork):
+        n 1fchsmleme "Probably~."
+
+    n 1fnmpo "But you better not be letting people push you around over yours!"
+    n 1fsqpo "...Or be giving people a hard time over theirs."
+    n 1fcsbg "...Because that's where I {i}draw{/i} the line!{w=1}{nw}"
+    extend 1fsqsm " Ehehe."
+
+    return
