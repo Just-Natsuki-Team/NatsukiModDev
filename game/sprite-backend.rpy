@@ -585,20 +585,82 @@ image natsuki idle max_affinity:
     block:
         choice:
             "natsuki 1nchsmf"
+            pause 10
+
         choice:
             "natsuki 1kwmsmf"
+            pause 5
+            "natsuki 1kcssmf"
+            pause 0.1
+            "natsuki 1kwmsmf"
+            pause 5
+            "natsuki 1kcssmf"
+            pause 0.1
+
         choice:
             "natsuki 1kllsmf"
+            pause 5
+            "natsuki 1kcssmf"
+            pause 0.1
+            "natsuki 1kllsmf"
+            pause 5
+            "natsuki 1kcssmf"
+            pause 0.1
+
         choice:
             "natsuki 1klrsmf"
+            pause 5
+            "natsuki 1kcssmf"
+            pause 0.1
+            "natsuki 1klrsmf"
+            pause 5
+            "natsuki 1kcssmf"
+            pause 0.1
+
         choice:
             "natsuki 1knmsmf"
+            pause 5
+            "natsuki 1kcssmf"
+            pause 0.1
+            "natsuki 1knmsmf"
+            pause 5
+            "natsuki 1kcssmf"
+            pause 0.1
+
         choice:
             "natsuki 1kcssmf"
+            pause 10
+
         choice:
             "natsuki 1kcssgf"
+            pause 10
 
-        pause 10
+        choice:
+            "natsuki 1kllsmf"
+            pause 2
+            "natsuki 1kcssmf"
+            pause 0.1
+            "natsuki 1knmsmf"
+            pause 3
+            "natsuki 1fsqsmf"
+            pause 3
+            "natsuki 1fchblf"
+            pause 1
+            "natsuki 1fchgnf"
+            pause 2
+            "natsuki 1klrsmf"
+            pause 2
+            "natsuki 1kcssmf"
+            pause 0.1
+
+        choice:
+            "natsuki 1kcssmf"
+            pause 3
+            "natsuki 1kcsssf"
+            pause 3
+            "natsuki 1kcssmf"
+            pause 5
+            
         repeat
 
 # Idle images for AFFECTIONATE+
@@ -606,14 +668,64 @@ image natsuki idle high_affinity:
     block:
         choice:
             "natsuki 1ullsml"
+            pause 5
+            "natsuki 1ucssml"
+            pause 0.1
+            "natsuki 1ullsml"
+            pause 5
+            "natsuki 1ucssml"
+            pause 0.1
+
         choice:
             "natsuki 1ulrsml"
+            pause 5
+            "natsuki 1ucssml"
+            pause 0.1
+            "natsuki 1ulrsml"
+            pause 5
+            "natsuki 1ucssml"
+            pause 0.1
+
         choice:
             "natsuki 1unmsml"
+            pause 5
+            "natsuki 1ucssml"
+            pause 0.1
+            "natsuki 1unmsml"
+            pause 5
+            "natsuki 1ucssml"
+            pause 0.1
+
         choice:
             "natsuki 1nnmsgl"
+            pause 5
+            "natsuki 1ucssml"
+            pause 0.1
+            "natsuki 1nnmsgl"
+            pause 5
+            "natsuki 1ucssml"
+            pause 0.1
 
-        pause 10
+        choice:
+            "natsuki 1nllbol"
+            pause 4
+            "natsuki 1fllbol"
+            pause 4
+            "natsuki 1fcsbol"
+            pause 0.1
+            "natsuki 1tnmbol"
+            pause 4
+            "natsuki 1tcsbol"
+            pause 0.1
+            "natsuki 1fsqsml"
+            pause 4
+            "natsuki 1fwlsml"
+            pause 0.5
+            "natsuki 1flldvl"
+            pause 2
+            "natsuki 1fcsdvl"
+            pause 0.1
+
         repeat
 
 # Idle images for NORMAL+
@@ -621,20 +733,84 @@ image natsuki idle medium_affinity:
     block:
         choice:
             "natsuki 1nllbo"
+            pause 4
+            "natsuki 1ncsbo"
+            pause 0.1
+            "natsuki 1nllbo"
+            pause 4
+            "natsuki 1ncsbo"
+            pause 0.1
+
         choice:
             "natsuki 1nlrbo"
+            pause 4
+            "natsuki 1ncsbo"
+            pause 0.1
+            "natsuki 1nlrbo"
+            pause 4
+            "natsuki 1ncsbo"
+            pause 0.1
+
         choice:
             "natsuki 1nllpu"
+            pause 4
+            "natsuki 1ncspu"
+            pause 0.1
+            "natsuki 1nllpu"
+            pause 4
+            "natsuki 1ncspu"
+            pause 0.1
+
         choice:
             "natsuki 1nlrpu"
+            pause 4
+            "natsuki 1ncspu"
+            pause 0.1
+            "natsuki 1nlrpu"
+            pause 4
+            "natsuki 1ncspu"
+            pause 0.1
+
         choice:
             "natsuki 1nllca"
+            pause 4
+            "natsuki 1ncsca"
+            pause 0.1
+            "natsuki 1nllca"
+            pause 4
+            "natsuki 1ncsca"
+            pause 0.1
+
         choice:
             "natsuki 1nlrca"
+            pause 4
+            "natsuki 1ncsca"
+            pause 0.1
+            "natsuki 1nlrca"
+            pause 4
+            "natsuki 1ncsca"
+            pause 0.1
+
         choice:
             "natsuki 1nnmca"
+            pause 4
+            "natsuki 1ncsca"
+            pause 0.1
+            "natsuki 1nnmca"
+            pause 4
+            "natsuki 1ncsca"
+            pause 0.1
 
-        pause 10
+        choice:
+            "natsuki 1nllpu"
+            pause 4
+            "natsuki 1ncspu"
+            pause 0.1
+            "natsuki 1nlrpu"
+            pause 4
+            "natsuki 1ncspu"
+            pause 0.1
+
         repeat
 
 # Idle images for DISTRESSED+
@@ -642,22 +818,46 @@ image natsuki idle low_affinity:
     block:
         choice:
             "natsuki 1fllsl"
+            pause 3
+            "natsuki 1fcssl"
+            pause 0.1
+
         choice:
-            "natsuki 1klrsl"
+            "natsuki 1flrsl"
+            pause 3
+            "natsuki 1fcssl"
+            pause 0.1
+
         choice:
             "natsuki 1kcssl"
+            pause 8
+
         choice:
             "natsuki 1kcssf"
+            pause 8
+
         choice:
             "natsuki 1fcssf"
+            pause 8
+
         choice:
             "natsuki 1fllsf"
+            pause 3
+            "natsuki 1fcssf"
+            pause 0.1
+
         choice:
             "natsuki 1flrsf"
+            pause 3
+            "natsuki 1fcssf"
+            pause 0.1
+
         choice:
             "natsuki 1fsqca"
+            pause 3
+            "natsuki 1fcsca"
+            pause 0.1
 
-        pause 10
         repeat
 
 # Idle images for RUINED+
@@ -678,7 +878,7 @@ image natsuki idle min_affinity:
         choice:
             "natsuki 1fsrantse"
 
-        pause 10
+        pause 4
         repeat
 
 # Idle images for the introduction sequence, after Natsuki and the player are introduced
