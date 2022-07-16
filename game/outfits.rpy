@@ -11,6 +11,7 @@ init -1 python in jn_outfits:
     import json
     import os
     import random
+    import re
     import store
     import store.jn_affinity as jn_affinity
     import store.jn_utils as jn_utils
@@ -20,6 +21,9 @@ init -1 python in jn_outfits:
     __CUSTOM_WEARABLES_DIRECTORY = os.path.join(renpy.config.basedir, "custom_wearables/").replace("\\", "/")
     __CUSTOM_OUTFITS_DIRECTORY = os.path.join(renpy.config.basedir, "custom_outfits/").replace("\\", "/")
     __WEARABLE_BASE_PATH = os.path.join(renpy.config.basedir, "game/mod_assets/natsuki/")
+
+    # Ignore the syntax highlighting - "it just works"
+    __RESTRICTED_CHARACTERS_REGEX = "((\.)|(\[)|(\])|(\})|(\{)|(,)|(\!))"
 
     # Lists of all registered outfits/wearables
     __ALL_WEARABLES = {}
@@ -599,6 +603,11 @@ init -1 python in jn_outfits:
             jn_utils.log("Cannot load wearable {0} as the reference name contains a reserved namespace.".format(json["reference_name"]))
             return False
 
+        # Prevent use of Ren'Py interpolation characters
+        elif re.search(__RESTRICTED_CHARACTERS_REGEX, json["reference_name"]):
+            jn_utils.log("Cannot load wearable {0} as the reference name contains one or more restricted characters.".format(json["reference_name"]))
+            return False
+
         else:
             # Register based on category
             kwargs = {
@@ -671,6 +680,11 @@ init -1 python in jn_outfits:
         # Prevent use of the jn_ namespace
         elif "jn_" in json["reference_name"]:
             jn_utils.log("Cannot load outfit {0} as the reference name contains a reserved namespace.".format(json["reference_name"]))
+            return False
+
+        # Prevent use of Ren'Py interpolation characters
+        elif re.search(__RESTRICTED_CHARACTERS_REGEX, json["reference_name"]):
+            jn_utils.log("Cannot load outfit {0} as the reference name contains one or more restricted characters.".format(json["reference_name"]))
             return False
 
         # Sanity check components to make sure they exist as registered wearables
@@ -1625,7 +1639,7 @@ label outfits_wear_outfit:
         available_outfits.sort(key = lambda option: option.display_name)
 
         for outfit in available_outfits:
-            options.append((outfit.display_name, outfit))
+            options.append((jn_utils.escapeRenpySubstitutionString(outfit.display_name), outfit))
 
         options.insert(0, ("You pick!", "random"))
 
@@ -1739,7 +1753,7 @@ label outfits_remove_outfit:
         removable_outfits.sort(key = lambda option: option.display_name)
 
         for outfit in removable_outfits:
-            options.append((outfit.display_name, outfit))
+            options.append((jn_utils.escapeRenpySubstitutionString(outfit.display_name), outfit))
 
     call screen scrollable_choice_menu(options, ("Nevermind.", None))
 
@@ -1796,7 +1810,7 @@ label outfits_create_select_headgear:
         wearable_options = []
 
         for wearable in unlocked_wearables:
-            wearable_options.append((wearable.display_name, wearable))
+            wearable_options.append((jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable))
 
         wearable_options.sort(key = lambda option: option[1].display_name)
         wearable_options.insert(0, ("No headgear", "none"))
@@ -1820,7 +1834,7 @@ label outfits_create_select_hairstyle:
         wearable_options = []
 
         for wearable in unlocked_wearables:
-            wearable_options.append((wearable.display_name, wearable))
+            wearable_options.append((jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable))
 
         wearable_options.sort(key = lambda option: option[1].display_name)
 
@@ -1842,7 +1856,7 @@ label outfits_create_select_eyewear:
         wearable_options = []
 
         for wearable in unlocked_wearables:
-            wearable_options.append((wearable.display_name, wearable))
+            wearable_options.append((jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable))
 
         wearable_options.sort(key = lambda option: option[1].display_name)
         wearable_options.insert(0, ("No eyewear", "none"))
@@ -1865,7 +1879,7 @@ label outfits_create_select_accessory:
         wearable_options = []
 
         for wearable in unlocked_wearables:
-            wearable_options.append((wearable.display_name, wearable))
+            wearable_options.append((jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable))
 
         wearable_options.sort(key = lambda option: option[1].display_name)
         wearable_options.insert(0, ("No accessory", "none"))
@@ -1889,7 +1903,7 @@ label outfits_create_select_necklace:
         wearable_options = []
 
         for wearable in unlocked_wearables:
-            wearable_options.append((wearable.display_name, wearable))
+            wearable_options.append((jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable))
 
         wearable_options.sort(key = lambda option: option[1].display_name)
         wearable_options.insert(0, ("No necklace", "none"))
@@ -1913,7 +1927,7 @@ label outfits_create_select_clothes:
         wearable_options = []
 
         for wearable in unlocked_wearables:
-            wearable_options.append((wearable.display_name, wearable))
+            wearable_options.append((jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable))
 
         wearable_options.sort(key = lambda option: option[1].display_name)
 
@@ -2080,7 +2094,7 @@ screen create_outfit():
                 style "hkbd_option"
                 action Jump("outfits_create_select_headgear")
 
-            label _(jn_outfits._PREVIEW_OUTFIT.headgear.display_name if isinstance(jn_outfits._PREVIEW_OUTFIT.headgear, jn_outfits.JNHeadgear) else "None"):
+            label _(jn_utils.escapeRenpySubstitutionString(jn_outfits._PREVIEW_OUTFIT.headgear.display_name) if isinstance(jn_outfits._PREVIEW_OUTFIT.headgear, jn_outfits.JNHeadgear) else "None"):
                 style "hkbd_label"
                 left_margin 10
 
@@ -2090,7 +2104,7 @@ screen create_outfit():
                 style "hkbd_option"
                 action Jump("outfits_create_select_hairstyle")
 
-            label _(jn_outfits._PREVIEW_OUTFIT.hairstyle.display_name):
+            label _(jn_utils.escapeRenpySubstitutionString(jn_outfits._PREVIEW_OUTFIT.hairstyle.display_name)):
                 style "hkbd_label"
                 left_margin 10
 
@@ -2100,7 +2114,7 @@ screen create_outfit():
                 style "hkbd_option"
                 action Jump("outfits_create_select_eyewear")
 
-            label _(jn_outfits._PREVIEW_OUTFIT.eyewear.display_name if isinstance(jn_outfits._PREVIEW_OUTFIT.eyewear, jn_outfits.JNEyewear) else "None"):
+            label _(jn_utils.escapeRenpySubstitutionString(jn_outfits._PREVIEW_OUTFIT.eyewear.display_name) if isinstance(jn_outfits._PREVIEW_OUTFIT.eyewear, jn_outfits.JNEyewear) else "None"):
                 style "hkbd_label"
                 left_margin 10
   
@@ -2110,7 +2124,7 @@ screen create_outfit():
                 style "hkbd_option"
                 action Jump("outfits_create_select_accessory")
 
-            label _(jn_outfits._PREVIEW_OUTFIT.accessory.display_name if isinstance(jn_outfits._PREVIEW_OUTFIT.accessory, jn_outfits.JNAccessory) else "None"):
+            label _(jn_utils.escapeRenpySubstitutionString(jn_outfits._PREVIEW_OUTFIT.accessory.display_name) if isinstance(jn_outfits._PREVIEW_OUTFIT.accessory, jn_outfits.JNAccessory) else "None"):
                 style "hkbd_label"
                 left_margin 10
 
@@ -2120,7 +2134,7 @@ screen create_outfit():
                 style "hkbd_option"
                 action Jump("outfits_create_select_necklace")
 
-            label _(jn_outfits._PREVIEW_OUTFIT.necklace.display_name if isinstance(jn_outfits._PREVIEW_OUTFIT.necklace, jn_outfits.JNNecklace) else "None"):
+            label _(jn_utils.escapeRenpySubstitutionString(jn_outfits._PREVIEW_OUTFIT.necklace.display_name) if isinstance(jn_outfits._PREVIEW_OUTFIT.necklace, jn_outfits.JNNecklace) else "None"):
                 style "hkbd_label"
                 left_margin 10
 
@@ -2130,7 +2144,7 @@ screen create_outfit():
                 style "hkbd_option"
                 action Jump("outfits_create_select_clothes")
 
-            label _(jn_outfits._PREVIEW_OUTFIT.clothes.display_name):
+            label _(jn_utils.escapeRenpySubstitutionString(jn_outfits._PREVIEW_OUTFIT.clothes.display_name)):
                 style "hkbd_label"
                 left_margin 10
 
