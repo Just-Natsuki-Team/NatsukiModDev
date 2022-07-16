@@ -134,6 +134,16 @@ init -50 python:
         speech = 14
         surprise = 15
         laughter = 16
+        sweat_drop = 17
+        sweat_spritz = 18
+        sweat_small = 19
+
+        def __str__(self):
+            return self.name
+
+    class JNSweat(Enum):
+        bead_left = 1
+        bead_right = 2
 
         def __str__(self):
             return self.name
@@ -145,7 +155,8 @@ init -50 python:
         mouth,
         blush=None,
         tears=None,
-        emote=None
+        emote=None,
+        sweat=None
     ):
         """
         Generates sprites for Natsuki based on outfit, expression, pose, etc.
@@ -199,6 +210,12 @@ init -50 python:
                 (0, 0), "{0}{1}/face/tears/{2}.png".format(_BASE_SPRITE_PATH, pose, tears)
             ])
 
+        # Sweat
+        if sweat:
+            lc_args.extend([
+                (0, 0), "{0}{1}/face/sweat/{2}.png".format(_BASE_SPRITE_PATH, pose, sweat)
+            ])
+
         # Headgear
         headgear = Null() if not Natsuki._outfit.headgear else "{0}{1}/headgear/[Natsuki._outfit.headgear.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose)
         lc_args.extend([
@@ -230,7 +247,7 @@ init -50 python:
 
 init 1 python:
     POSE_MAP = {
-        "1": JNPose.sitting,
+        "1": JNPose.sitting
     }
 
     EYEBROW_MAP = {
@@ -238,7 +255,7 @@ init 1 python:
         "u": JNEyebrows.up,
         "k": JNEyebrows.knit,
         "f": JNEyebrows.furrowed,
-        "t": JNEyebrows.think,
+        "t": JNEyebrows.think
     }
 
     EYE_MAP = {
@@ -262,7 +279,7 @@ init 1 python:
         "wm": JNEyes.warm,
         "wd": JNEyes.wide,
         "wl": JNEyes.wink_left,
-        "wr": JNEyes.wink_right,
+        "wr": JNEyes.wink_right
     }
 
     MOUTH_MAP = {
@@ -298,12 +315,12 @@ init 1 python:
         "tr": JNMouth.triangle,
         "un": JNMouth.uneasy,
         "up": JNMouth.upset,
-        "wr": JNMouth.worried,
+        "wr": JNMouth.worried
     }
 
     BLUSH_MAP = {
         "f": JNBlush.full,
-        "l": JNBlush.light,
+        "l": JNBlush.light
     }
 
     TEARS_MAP = {
@@ -338,7 +355,15 @@ init 1 python:
         "esl": JNEmote.sleepy,
         "eso": JNEmote.somber,
         "esp": JNEmote.speech,
-        "esu": JNEmote.surprise
+        "esu": JNEmote.surprise,
+        "esd": JNEmote.sweat_drop,
+        "esz": JNEmote.sweat_spritz,
+        "ess": JNEmote.sweat_small
+    }
+
+    SWEAT_MAP = {
+        "sbl": JNSweat.bead_left,
+        "sbr": JNSweat.bead_right
     }
 
     def _parse_exp_code(exp_code):
@@ -372,6 +397,7 @@ init 1 python:
         blush = None
         tears = None
         emote = None
+        sweat = None
 
         #If we still have an expcode, we know we have optional portions to process
         while exp_code:
@@ -389,6 +415,10 @@ init 1 python:
                     emote = exp_code[:3]
                     exp_code = exp_code[3:]
 
+                elif exp_code[:3] in SWEAT_MAP:
+                    sweat = exp_code[:3]
+                    exp_code = exp_code[3:] 
+
                 #To avoid an infinite loop, we'll raise another ValueError to note this format is invalid
                 else:
                     raise ValueError(
@@ -402,7 +432,8 @@ init 1 python:
             "mouth": MOUTH_MAP[mouth],
             "blush": BLUSH_MAP.get(blush),
             "tears": TEARS_MAP.get(tears),
-            "emote": EMOTE_MAP.get(emote)
+            "emote": EMOTE_MAP.get(emote),
+            "sweat": SWEAT_MAP.get(sweat)
         }
 
     def _generate_image(exp_code):
@@ -523,7 +554,7 @@ init 1 python:
     renpy.display.image.ImageReference.find_target = _find_target_override
 
 # Sprite code format:
-# <pose><eyebrows><eyes><mouth><blush><tears><emote>
+# <pose><eyebrows><eyes><mouth><blush><tears><emote><sweat>
 #
 # Pose, eyebrows, eyes and mouth are compulsary. Any others are optional.
 #
@@ -533,8 +564,9 @@ init 1 python:
 #   eyes: 2 characters
 #   mouth: 2 characters
 #   blush: 1 character
-#   tears: 3 characters
-#   emote: 3 characters
+#   tears: 3 characters, t-prefix
+#   emote: 3 characters, e-prefix
+#   sweat: 3 characters, s-prefix
 #
 # For spritecode construction, use the previewer @ https://just-natsuki-team.github.io/Expression-Previewer/
 

@@ -19,6 +19,7 @@ default persistent.jn_player_appearance_height_cm = None
 # Hobby data
 default persistent.jn_player_gaming_frequency = None
 default persistent.jn_player_can_drive = None
+default persistent._jn_player_has_flown = None
 
 # Romance data
 default persistent.jn_player_love_you_count = 0
@@ -1300,7 +1301,7 @@ label talk_weather_setup_verify:
         extend 1nchsml " Ehehe."
         n 1nchbgl "Thanks a bunch,{w=0.1} [player]!{w=1}{nw}"
         extend 1uchgnl " This is gonna be {i}super{/i} awesome!"
-        $ Natsuki.calculated_affinity_gain()
+        $ Natsuki.calculatedAffinityGain()
 
         python:
             persistent._jn_weather_api_configured = True
@@ -2444,7 +2445,7 @@ label talk_give_nickname:
 
         # Apply penalty and pending apology
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
-        $ Natsuki.percentage_affinity_loss(1)
+        $ Natsuki.percentageAffinityLoss(1)
 
     elif persistent.jn_player_nicknames_bad_given_total == 2:
         n 1fsqsl "I can't believe you did that again to me,{w=0.1} [player]."
@@ -2456,7 +2457,7 @@ label talk_give_nickname:
 
         # Apply penalty and pending apology
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
-        $ Natsuki.percentage_affinity_loss(2.5)
+        $ Natsuki.percentageAffinityLoss(2.5)
 
     elif persistent.jn_player_nicknames_bad_given_total == 3:
         n 1fsqan "You are honestly unbelievable,{w=0.1} [player]."
@@ -2471,7 +2472,7 @@ label talk_give_nickname:
                 n 1fsqan "...Then start acting like it,{w=0.1} [player]."
                 n 1fslsl "Thanks."
 
-                $ Natsuki.percentage_affinity_loss(3)
+                $ Natsuki.percentageAffinityLoss(3)
 
             "...":
                 n 1fcssl "Look.{w=0.2} I'm not kidding around,{w=0.1} [player]."
@@ -2479,7 +2480,7 @@ label talk_give_nickname:
                 n 1fsqem "It's toxic."
                 n 1fsqsr "I don't care if you're trying to pull my leg.{w=0.2} Quit it."
 
-                $ Natsuki.percentage_affinity_loss(5)
+                $ Natsuki.percentageAffinityLoss(5)
 
         # Apply penalty and pending apology
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
@@ -2494,7 +2495,7 @@ label talk_give_nickname:
         n 1fsqsr "I warned you,{w=0.1} [player].{w=0.2} Remember that."
 
         # Apply affinity/trust penalties, then revoke nickname priveleges and finally apply pending apology
-        $ Natsuki.percentage_affinity_loss(10)
+        $ Natsuki.percentageAffinityLoss(10)
         $ persistent.jn_player_nicknames_allowed = False
         $ persistent.jn_player_nicknames_current_nickname = None
         $ n_name = "Natsuki"
@@ -3072,7 +3073,7 @@ label talk_i_love_you:
             n 1kllsmf "..."
             n 1kllssf "S-{w=0.1}so..."
             n 1kplssf "Where were we?{w=0.2} Ehehe..."
-            $ Natsuki.calculated_affinity_gain(base=3, bypass=True)
+            $ Natsuki.calculatedAffinityGain(base=3, bypass=True)
 
         elif Natsuki.isEnamored(higher=True):
             n 1uscgsf "[player_initial]-{w=0.2}[player]!"
@@ -3089,7 +3090,7 @@ label talk_i_love_you:
             n 1flrbol "N-{w=0.1}never mind..."
             n 1fcseml "Forget I said anything."
             n 1kllbof "..."
-            $ Natsuki.calculated_affinity_gain(base=2, bypass=True)
+            $ Natsuki.calculatedAffinityGain(base=2, bypass=True)
 
         elif Natsuki.isAffectionate(higher=True):
             n 1uskwrf "W-{w=0.1}w-{w=0.1}what?"
@@ -3105,7 +3106,7 @@ label talk_i_love_you:
             n 1fcsanf "Uuuuu..."
             n 1fcsajf "F-{w=0.1}forget it!{w=0.2} I-{w=0.1}it's nothing..."
             n 1kslslf "..."
-            $ Natsuki.calculated_affinity_gain(bypass=True)
+            $ Natsuki.calculatedAffinityGain(bypass=True)
 
         elif Natsuki.isHappy(higher=True):
             n 1fsqdvl "Pffffft!"
@@ -3143,7 +3144,7 @@ label talk_i_love_you:
             n 1fsqsr "We're done with this."
             n 1fsqpu "And if you {i}really{/i} feel that way?"
             n 1fsqsftsb "...Then why aren't {i}you{/i} trying to make this work,{w=0.1} [player]?"
-            $ Natsuki.percentage_affinity_loss(10)
+            $ Natsuki.percentageAffinityLoss(10)
 
         else:
             # :(
@@ -3166,7 +3167,7 @@ label talk_i_love_you:
             n 1fcsantsd "..."
             n 1fsqfutse "Go!"
             n 1fscsctdc "{i}JUST LEAVE ME ALONE!{/i}{nw}"
-            $ Natsuki.percentage_affinity_loss(25)
+            $ Natsuki.percentageAffinityLoss(25)
             return { "quit": None }
 
         $ persistent.jn_player_love_you_count += 1
@@ -3182,7 +3183,7 @@ label talk_i_love_you:
             if random_response_index == 0:
                 n 1unmbgf "Ehehe.{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
                 n 1uchsmf "You're always [chosen_descriptor] to me."
-                $ Natsuki.calculated_affinity_gain()
+                $ Natsuki.calculatedAffinityGain()
                 return
 
             elif random_response_index == 1:
@@ -3191,13 +3192,13 @@ label talk_i_love_you:
                 $ chosen_endearment = chosen_endearment.capitalize()
                 n 1kwmbgf "[chosen_endearment],{w=0.1} I love you too!"
                 n 1fcsbgf "I'll always be here to stick up for you."
-                $ Natsuki.calculated_affinity_gain()
+                $ Natsuki.calculatedAffinityGain()
                 return
 
             elif random_response_index == 2:
                 n 1uchsmf "Aww,{w=0.1} [chosen_endearment]!{w=0.2} I love you too!"
                 n 1klrbgf "You're the best thing that's ever happened to me."
-                $ Natsuki.calculated_affinity_gain()
+                $ Natsuki.calculatedAffinityGain()
                 return
 
             elif random_response_index == 3:
@@ -3205,7 +3206,7 @@ label talk_i_love_you:
                 n 1fsqsmf "Well,{w=0.1} I'd be happy to oblige!"
                 n 1uchsmf "I love you too,{w=0.1} [chosen_endearment]!"
                 n 1fchbgf "Keep on smiling for me,{w=0.1} 'kay?"
-                $ Natsuki.calculated_affinity_gain()
+                $ Natsuki.calculatedAffinityGain()
                 return
 
             elif random_response_index == 4:
@@ -3213,7 +3214,7 @@ label talk_i_love_you:
                 n 1usqssf "Ehehe.{w=0.2} Don't worry,{w=0.1} I'm not complaining!"
                 n 1uchbgf "I love you too,{w=0.1} [chosen_endearment]!"
                 n 1fcssmf "It's just us two against the world!"
-                $ Natsuki.calculated_affinity_gain()
+                $ Natsuki.calculatedAffinityGain()
                 return
 
             elif random_response_index == 5:
@@ -3238,7 +3239,7 @@ label talk_i_love_you:
                         n 1fchsmf "Well,{w=0.1} whatever.{w=0.2} I'm just glad you accept the truth."
                         n 1uchsmf "Ehehe."
 
-                $ Natsuki.calculated_affinity_gain()
+                $ Natsuki.calculatedAffinityGain()
                 return
 
             elif random_response_index == 6:
@@ -3246,7 +3247,7 @@ label talk_i_love_you:
                 n 1usqsmf "...And I think I can guess you like hearing it just as much."
                 n 1uchbgf "I love you too,{w=0.1} [chosen_endearment]!"
                 n 1nchsmf "I don't need anyone else~."
-                $ Natsuki.calculated_affinity_gain()
+                $ Natsuki.calculatedAffinityGain()
                 return
 
             elif random_response_index == 7:
@@ -3256,7 +3257,7 @@ label talk_i_love_you:
                 n 1fchbgf "...But just the kind of gross I'm down with.{w=0.2} Ehehe."
                 n 1uchbgf "I love you too,{w=0.1} [chosen_endearment]!"
                 n 1unmsmf "I'll always have your back."
-                $ Natsuki.calculated_affinity_gain()
+                $ Natsuki.calculatedAffinityGain()
                 return
 
             elif random_response_index == 8:
@@ -3264,7 +3265,7 @@ label talk_i_love_you:
                 n 1nchssf "I..."
                 n 1uchbsf "Looooooooove you too,{w=0.1} [player]!"
                 n 1kwmsmf "You'll always be my rock."
-                $ Natsuki.calculated_affinity_gain()
+                $ Natsuki.calculatedAffinityGain()
                 return
 
             elif random_response_index == 9:
@@ -3349,14 +3350,14 @@ label talk_i_love_you:
                             if wrong_response_count >= 10:
                                 n 1nsqsml "Nice try,{w=0.1} though~!"
 
-                            $ Natsuki.calculated_affinity_gain()
+                            $ Natsuki.calculatedAffinityGain()
                             return
 
             elif random_response_index == 10:
                 n 1ksqsml "Ehehe.{w=0.2} I'll never get tired of hearing that from you,{w=0.1} [player]."
                 n 1uchsmf "I love you too!"
                 n 1uchbgf "You're my numero uno~."
-                $ Natsuki.calculated_affinity_gain()
+                $ Natsuki.calculatedAffinityGain()
                 return
 
             else:
@@ -3364,7 +3365,7 @@ label talk_i_love_you:
                 n 1uslsmf "You're such a softie,{w=0.1} [player].{w=0.2} Ehehe."
                 n 1uchbgf "But...{w=0.3} I'm not gonna complain!{w=0.2} I love you too,{w=0.1} [chosen_endearment]!"
                 n 1uchsmf "You always make me feel tall."
-                $ Natsuki.calculated_affinity_gain()
+                $ Natsuki.calculatedAffinityGain()
                 return
 
             return
@@ -3376,7 +3377,7 @@ label talk_i_love_you:
             n 1flremf "Let's just talk about something,{w=0.1} alright?"
             n 1flrpof "Y-{w=0.1}you can fawn over me in your {i}own{/i} time!"
             n 1klrpof "Dummy..."
-            $ Natsuki.calculated_affinity_gain()
+            $ Natsuki.calculatedAffinityGain()
             return
 
         elif Natsuki.isHappy(higher=True):
@@ -3400,7 +3401,7 @@ label talk_i_love_you:
             n 1fsqsr "Talk is cheap,{w=0.1} [player]."
             n 1fsqaj "If you {i}really{/i} care about me..."
             n 1fsqpu "Then {i}prove{/i} it."
-            $ Natsuki.percentage_affinity_loss(2.5)
+            $ Natsuki.percentageAffinityLoss(2.5)
             return
 
         else:
@@ -3410,7 +3411,7 @@ label talk_i_love_you:
             n 1fcsfu "..."
             n 1fcspu "You know what?{w=0.2} Whatever.{w=0.2} I don't care anymore."
             n 1fsqfu "Say what you like,{w=0.1} [player].{w=0.2} It's all crap,{w=0.1} just like everything else from you."
-            $ Natsuki.percentage_affinity_loss(2)
+            $ Natsuki.percentageAffinityLoss(2)
             return
 
     return
@@ -3432,14 +3433,16 @@ init 5 python:
 
 label talk_natsukis_hairstyle:
     if Natsuki.isEnamored(higher=True):
-        n 1unmaj "Hmm?{w=0.2} My hairstyle?"
-        n 1fsgsg "Why do you ask,{w=0.1} [player]?{w=0.2} Looking for a stylist?"
+        n 1tnmaj "Hmm?{w=0.2} My hairstyle?"
+        n 1fsqss "Why do you ask,{w=0.1} [player]?{w=0.5}{nw}"
+        extend 1fsgsg " Looking for a stylist?"
         n 1fchsm "Ehehe."
 
     elif Natsuki.isNormal(higher=True):
-        n 1unmaj "Huh?{w=0.2} My hairstyle?"
-        n 1fsqaj "Wait...{w=0.3} are you messing with me?{w=0.2} What do you mean?"
-        n 1fllpo "You better not be teasing me,{w=0.1} [player]..."
+        n 1tnmpu "Huh?{w=0.2} My hairstyle?"
+        n 1fsqaj "Wait...{w=0.75}{nw}" 
+        extend 1fnmeml " a-{w=0.1}are you messing with me?{w=0.2} What do you mean?"
+        n 1fslpo "You better not be teasing me,{w=0.1} [player]..."
 
     elif Natsuki.isDistressed(higher=True):
         n 1nnmsl "...Huh?{w=0.2} Oh.{w=0.2} My hair."
@@ -3467,9 +3470,15 @@ label talk_natsukis_hairstyle:
             n 1ksqsm "Was I wrong...?"
             n 1fchbg "Ehehe.{w=0.2} I thought not."
 
+        if Natsuki.isWearingHairstyle("jn_hair_twintails"):
+            n 1ullaj "Besides,{w=0.1} I had a whole bunch of ribbon lying around from my craft stuff {w=0.1}-{w=0.5}{nw}"
+            extend 1fcsbg " so it isn't like I had to go {i}buy{/i} anything new to try twintails out."
+
     else:
         if Natsuki.isWearingHairstyle("jn_hair_twintails"):
             n 1nnmsl "I guess I just liked the idea of twintails."
+            n 1nlrpu "Besides,{w=0.1} I had some spare ribbons lying around anyways.{w=0.5}{nw}"
+            extend 1nsrsr " Not like I had to {i}buy{/i} anything to try doing twintails."
 
         else:
             n 1nnmsl "I guess I just like this hairstyle."
@@ -3479,8 +3488,10 @@ label talk_natsukis_hairstyle:
     if Natsuki.isNormal(higher=True):
         n 1flraj "It just costs so much,{w=0.1} you know?{w=0.2} It's super dumb!"
         n 1fnman "Like...{w=0.3} I don't get it at all!"
-        n 1fllan "And the annoying thing is that if I were a guy,{w=0.1} it'd be way cheaper!{w=0.2} What's up with that?"
-        n 1ncsslesi "Ugh...{w=0.5} but yeah."
+        n 1fllan "And the annoying thing is that if I were a guy,{w=0.1} it'd be {i}way{/i} cheaper!{w=0.5}{nw}"
+        extend 1fbkwrean " What's up with that?!"
+        n 1fcspuesi "Ugh...{w=1}{nw}" 
+        extend 1nsrpo " but yeah."
 
     else:
         n 1nlrsl "I was always kinda short when it came to getting it cut."
@@ -3895,6 +3906,8 @@ label talk_flying:
             elif Natsuki.isHappy(higher=True):
                 n 1fchgn "No excuses,{w=0.1} [player]! Ehehe."
 
+            $ persistent._jn_player_has_flown = True
+
         "I fly sometimes.":
             n 1unmss "Ooh,{w=0.1} okay!{w=0.2} So the odd vacation or family flight then?"
             n 1fslsm "I see,{w=0.1} I see..."
@@ -3909,17 +3922,23 @@ label talk_flying:
                 n 1fsqsm "You better be handy when that happens,{w=0.1} [player]..."
                 n 1fchgn "We'll see how good a guide you are!"
 
+            $ persistent._jn_player_has_flown = True
+
         "I've flown before.":
             n 1fsqct "Oh?{w=0.2} So you've already earned your wings,{w=0.1} huh?"
             n 1tllaj "Hmm...{w=0.3} I wonder where you went?"
             n 1fnmaj "You gotta promise to tell me if you fly again,{w=0.1} 'kay?"
             n 1fchgn "I wanna hear all about it!"
 
+            $ persistent._jn_player_has_flown = True
+
         "I've never flown.":
             n 1fcsbg "Then that's just another thing we have in common,{w=0.1} [player]!"
             n 1fsqss "I guess you could say..."
             n 1fsqdv "We're both just {i}well grounded{/i} people,{w=0.1} huh?"
             n 1fchgnelg "Ahaha!"
+
+            $ persistent._jn_player_has_flown = False
 
     return
 
@@ -6269,7 +6288,7 @@ label talk_maintaining_proper_hygiene:
 
         "Yes, I deserve to feel and look good too.":
             n 1fchbg "Now {i}that's{/i} what I like to hear!"
-            $ Natsuki.calculated_affinity_gain()
+            $ Natsuki.calculatedAffinityGain()
 
         "...":
             n 1nsqsr "..."
@@ -6282,7 +6301,7 @@ label talk_maintaining_proper_hygiene:
                     n 1uchbg "See?{w=0.5}{nw}"
                     extend 1ksqsg " Was that {i}so{/i} hard?"
                     n 1fcssm "Ehehe."
-                    $ Natsuki.calculated_affinity_gain()
+                    $ Natsuki.calculatedAffinityGain()
 
     n 1ullss "But anyway,{w=0.1} yeah!{w=0.5}{nw}"
     extend 1nnmss " That's about all I had to say."
@@ -6896,7 +6915,7 @@ label talk_impressions_of_the_other_girls:
         extend 1fcsan " Do {b}not{/b} try my patience again.{w=1.5}{nw}"
         extend 1fsqan " Jerk."
 
-        $ Natsuki.calculated_affinity_loss(2)
+        $ Natsuki.calculatedAffinityLoss(2)
 
     else:
         n 1fsqan "...What is {i}{cps=\7.5}wrong{/cps}{/i} with you?{w=1.5}{nw}"
@@ -6904,7 +6923,7 @@ label talk_impressions_of_the_other_girls:
         n 1fcsan "I am {b}NOT{/b} doing that,{w=0.1} let alone for a piece of work like{w=0.5}{nw}"
         extend 1fslan " {i}you{/i}!"
 
-        $ Natsuki.calculated_affinity_loss(1)
+        $ Natsuki.calculatedAffinityLoss(1)
 
     return
 
@@ -6974,136 +6993,204 @@ label talk_newspapers_and_bias:
 
     return
 
-# Natsuki gives her advice on interviewing for jobs, etc.
+# Natsuki isn't afraid of flying, despite having never flown before
 init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_how_to_interview_properly",
+            label="talk_fear_of_flying",
             unlocked=True,
-            prompt="How to interview properly",
-            conditional="jn_utils.get_total_gameplay_days() >= 5",
-            category=["Life", "Society"],
-            nat_says=True,
-            affinity_range=(jn_affinity.NORMAL, None),
+            prompt="Are you afraid of flying?",
+            conditional="jn_utils.get_total_gameplay_days() >= 7",
+            category=["Fears", "Transport"],
+            player_says=True,
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label talk_how_to_interview_properly:
-    n 1fllbo "Hmm..."
-    n 1tllbo "Hey,{w=0.5}{nw}"
-    extend 1tnmpu " [player]."
-    n 1tlrbo "It's kinda out of the blue,{w=0.5}{nw}"
-    extend 1nsrss " but I was curious."
-    n 1tnmaj "When was the last time you interviewed for something?"
-    n 1tlrbo "Or...{w=0.5} now that I think about it...{w=1}{nw}"
-    extend 1tnmpu " have you interviewed for {i}anything{/i} before?{w=1}{nw}"
-    extend 1unmaj " Like,{w=0.1} at all?"
-    n 1fslss "Because if there's one thing I've heard...{w=1}{nw}"
-    extend 1fnmpo " it's how anxious everyone seems to get over interviewing!"
-    n 1ksqpo "I'm being serious!{w=0.5}{nw}"
-    extend 1fllem " People just get so worked up over it all.{w=1}{nw}"
-    extend 1fcsem " Like it's rocket science or something."
-    n 1flraj "I mean...{w=1}{nw}"
-    extend 1unmca " I've never had to interview for anything super important myself."
-    n 1ulraj "We had some practice interviews at school,{w=0.1} obviously.{w=1}{nw}"
-    extend 1nslss " I was too busy with studies to try at getting a part-time job or anything."
-    n 1fsqsg "...But who says that doesn't mean I can teach you a thing or two?{w=0.75}{nw}"
-    extend 1fchgn " Ehehe."
-    n 1fsqsm "You should know what time it is by now..."
-    n 1fcsbg "...So listen up,{w=0.1} [player]!"
-    n 1fcssmedz "You're about to learn how to ace your interviews from a pro!"
+label talk_fear_of_flying:
+    if Natsuki.isNormal(higher=True):
+        n 1tnmbo "Flying,{w=0.1} huh?"
+        n 1tllaj "...You know,{w=1}{nw}"
+        extend 1ulraj " it's actually kinda weird,{w=0.75}{nw}" 
+        extend 1unmbo " when you think about it."
+        n 1fllss "How people can be afraid of things they've never {i}actually{/i} experienced before,{w=0.1} I mean."
+        n 1ullaj "It's pretty crazy how people have these kinds of built-{w=0.1}in fears,{w=0.5}{nw}"
+        extend 1tnmss " huh?"
 
-    n 1fnmbg "So!{w=0.75}{nw}"
-    extend 1fsqsm " The first order of business..."
-    n 1fllbg "Research,{w=0.5}{nw}"
-    extend 1tsqss " duh!"
-    n 1usqaj "If there's one thing you gotta know before going to interview for something,{w=0.5}{nw}"
-    extend 1fchgnelg " it's what you're actually interviewing {i}for{/i}!"
-    n 1fllaj "You wouldn't skimp out on revising before a big test,{w=1}{nw}"
-    extend 1tnmsl " and interviews really aren't much different when you think about it."
-    n 1fnmss "Interviewing for some big-shot company?{w=1}{nw}"
-    extend 1fcsbg " Check them out online and take notes!"
-    n 1ullaj "Obviously you need to read up on what they do and where they actually {i}are{/i},{w=1}{nw}"
-    extend 1fnmaj " but don't underestimate the power of trivia!"
-    n 1ullpu "Even just knowing random stuff like when they were founded,{w=1}{nw}"
-    extend 1nlrss " or what awards they won recently {w=0.1}-{w=0.5}{nw}"
-    extend 1fcsss " it all shows the effort you're putting in."
-    n 1tsqss "And when it comes down to the wire?"
-    n 1fwlsm "Even something tiny like that can just about tip the scales."
+        if get_topic("talk_flying").shown_count > 0 or get_topic("talk_fear_of_flying").shown_count > 0:
+            n 1ulraj "I mean,{w=0.5}{nw}"
+            extend 1nsrss " like I told you before -{w=0.5}{nw}"
+            extend 1tnmbo " I've never flown anywhere myself or anything."
 
-    n 1fcsss "Next up...{w=0.5}{nw}"
-    extend 1fnmca " revision!"
-    n 1ullaj "It doesn't matter if you're trying to get a job,{w=1}{nw}"
-    extend 1nlrbo " or land a new position on some sort of council."
-    n 1nsqpu "Whatever it is...{w=0.5}{nw}"
-    extend 1fchlgelg " you gotta be able to {i}prove{/i} you know what you're even talking about!"
-    n 1ulraj "Of course, the revision totally depends on what you're going for."
-    n 1usqss "Some kind of programming job?{w=0.5}{nw}"
-    extend 1fchbg " Refresh yourself on all your weird terminology and techniques!"
-    n 1tsgsm "Joining the history club?{w=1}{nw}"
-    extend 1fcsss " Read up on some common history questions!"
-    n 1nsqpu "And trust me,{w=0.75}{nw}"
-    extend 1nsqsr " the {i}last{/i} thing you wanna do is embarrass yourself over simple stuff you should {i}really{/i} know..."
-    n 1nllun "...Or something you forgot you mentioned on your application."
-    extend 1fchbl " Oops!"
-    n 1nllaj "So...{w=0.5}{nw}"
-    extend 1fcsss " study up,{w=0.1} 'kay?"
-
-    n 1fchbg "Alright!{w=0.75}{nw}"
-    extend 1tsqss " Keeping up so far,{w=0.1} [player]?"
-    n 1fsqsm "You better be...{w=1}{nw}"
-    extend 1fchgn " 'cause we're almost done here!"
-    n 1unmaj "So,{w=0.1} next on the list -{w=0.5}{nw}"
-    extend 1nsrss " and probably the most important of all..."
-    n 1fspajedz "Presentation!"
-    n 1fllaj "You can have the best credentials in the world,{w=1}{nw}"
-    extend 1fsqsr " but that isn't gonna help much if you're mumbling everything {w=0.1}-{w=0.5}{nw}"
-    extend 1fchlgelg " or if you just look ridiculous!"
-    n 1fnmsr "So!"
-    n 1fcspo "Make sure you dress properly for whatever it is.{w=1}{nw}"
-    extend 1fllpu " If there's a dress code,{w=0.1} {i}follow it{/i}."
-    n 1fsqpo "...And {i}don't{/i} flake out on your clothes.{w=1}{nw}"
-    extend 1nlrbo " Iron them if they're all creased,{w=0.1} buy new ones if you need to.{w=0.2} That kind of thing."
-    n 1tnmpu "But most of all,{w=0.1} [player]?"
-    n 1fsqaj "{cps=\10}{i}Never{/i}{/cps} forget the basics."
-    n 1ullss "Be punctual,{w=0.1} be polite.{w=0.2} Remember {w=0.1}-{w=0.5}{nw}"
-    extend 1fsqss " people want someone they can {i}like{/i},{w=0.75}{nw}"
-    extend 1fsrpo " not just someone who can get the job done!"
-    
-    n 1unmajesu "...Oh,{w=0.5}{nw}"
-    extend 1tnmpu " and [player]?"
-    n 1fcspu "Just...{w=1}{nw}"
-    extend 1knmsrl " be honest too,{w=0.1} alright?"
-    n 1fllsrl "It isn't a fault to admit when you don't know something."
-    n 1tnmpu "And when you actually stop to think about it from their perspective,{w=1}{nw}"
-    extend 1tnmem " if someone is prepared to just lie to your face at an interview..."
-    n 1tsqem "...Then what {i}else{/i} are they gonna lie about?"
-    n 1tllss "Just some food for thought."
-
-    n 1ncspuesi "..."
-    n 1nlrss "...Wow,{w=0.5}{nw}"
-    extend 1fchbgelg " I gotta learn when to stop rambling on!{w=0.2} Jeez!"
-    n 1fsrssl "That was almost like an interview speech itself,{w=0.1} huh?"
-
-    if Natsuki.isEnamored(higher=True):
-        n 1ullpu "Or...{w=1}{nw}"
-        extend 1nsrssl " I guess more like an induction,{w=0.1} really."
-        n 1fsqdvf "You already got the job with me,{w=0.1} a-{w=0.3}after all."
-
-        if Natsuki.isLove(higher=True):
-            n 1fchsml "Ehehe.{w=1}{nw}"
-            extend 1nchbll " Love you,{w=0.1} [player]~!"
-        
         else:
-            n 1fsrsml "Ehehe..."
+            n 1ulraj "I mean,{w=0.5}{nw}"
+            extend 1tnmbo " I've never flown anywhere myself or anything."
+
+        n 1uskemlesh "B-{w=0.3}but that's not to say {i}I'm{/i} afraid of flying,{w=0.5}{nw}" 
+        extend 1fcspol " obviously!{w=0.75}{nw}"
+        extend 1unmaj " I actually don't think it'd bother me all that much."
+        n 1tlrpu "Though...{w=0.75}{nw}"
+        extend 1unmbo " I guess I can see {i}why{/i} it would spook someone out."
+        n 1fllbo "There's all the noise,{w=0.5}{nw}"
+        extend 1fslem " the turbulence,{w=0.5}{nw}"
+        extend 1ksqfr " plus the stress of being packed in a tube with a whole bunch of strangers."
+        n 1klrss "And it isn't like you can {i}ignore{/i} crashes when they happen!{w=0.75}{nw}"
+        extend 1klrsl " They're...{w=1}{nw}"
+        extend 1kslsr " not...{w=0.5} pretty."
+        n 1unmpu "So yeah,{w=0.1} I can totally see it from that angle.{w=0.5}{nw}"
+        extend 1flrpu " But..."
+        n 1fnmbo "I think people forget just how {i}safe{/i} air travel is!"
+        n 1ullaj "I get that their feelings -{w=0.5}{nw}" 
+        extend 1fslem " {i}and the news{/i} -{w=0.5}{nw}" 
+        extend 1unmbo " tell them otherwise.{w=0.75}{nw}"
+        extend 1flrss " But it isn't like the statistics {i}lie{/i}!"
+        n 1unmaj "Some studies have put the likelihood of biting the big one in a plane crash at one in 11{w=0.5}{nw}"
+        extend 1uwdaj " {b}million{/b}."
+        n 1fslss "Or,{w=0.1} to put it another way..."
+        n 1unmem "You're more than {i}2,000{/i} times more likely to kick the bucket from a car accident than from a plane crash!"
+        n 1tsqss "...And the list doesn't stop there,{w=0.1} either!"
+        n 1ullss "Lightning strikes,{w=0.5}{nw}"
+        extend 1ulraj " riding a bike,{w=0.5}{nw}"
+        extend 1nsqsl " falling off something..."
+        n 1fllss "They're all way riskier than any flight you {i}should{/i} be stepping on!"
+        n 1nllsl "..."
+        n 1fcspu "...I know,{w=0.1} I know.{w=0.5}{nw}"
+        extend 1fsrpo " I'm not {i}totally{/i} blind to the risks,{w=0.1} [player]."
+        n 1nllpu "It's just like anything."
+        n 1unmpu "Things can go wrong.{w=1}{nw}"
+        extend 1ksrpu " They {i}do{/i} go wrong."
+        n 1kcsemesi "And that {i}is{/i} scary."
+        n 1tlrpu "But...{w=0.75}{nw}" 
+        extend 1tnmss " honestly?"
+        n 1fsqsm "It {i}is{/i} pretty reassuring to know that when I get the chance to jet off somewhere,{w=0.1} the most I'll realistically have to fear..."
+        n 1fchgnelg "...Is probably gonna be the airline food!"
+        n 1fcsbg "Now that's a {i}real{/i} horror,{w=0.1} if I know one.{w=0.75}{nw}"
+        
+        if persistent._jn_player_has_flown:
+            n 1usqsg "Wouldn't {i}you{/i} agree,{w=0.3} [player]?"
+
+        extend 1fsqsmeme " Ehehe."
+
+    elif Natsuki.isDistressed(higher=True):
+        n 1fcsemesi "Ugh..."
+        n 1fsqem "No,{w=0.1} [player].{w=0.75}{nw}"
+        extend 1fsqfr "I'm not afraid of flying either."
+        n 1fcsan "What exactly do you take me for?{w=0.75}{nw}"
+        extend 1fsqan " And even if I {i}was{/i}..."
+        n 1fnmfu "Why the hell would I wanna share that with {i}you{/i}?"
+        n 1fsqfuean "You're just lucky I haven't given you a reason to be scared of flying."
 
     else:
-        n 1ullpu "Or...{w=1}{nw}"
-        extend 1tnmbo " since we're both stuck here?"
-        n 1fsqsm "...More like an induction,{w=0.1} actually."
-        n 1fchgn " Ehehe."
+        n 1fcsem "Oh,{w=1}{nw}"
+        extend 1fsqwr " {cps=\7.5}shut {b}up{/b}{/cps},{w=0.1} [player]."
+        n 1fcsan "As {i}if{/i} I'd be dumb enough to share any fears I have with a complete loser like{w=0.75}{nw}" 
+        extend 1fcswrtsa " {i}you{/i}."
+
+    return
+
+# Natsuki enjoys fanart and appreciates the effort that goes into creating it.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_what_do_you_think_about_fanart",
+            unlocked=True,
+            prompt="What do you think about fanart?",
+            conditional="jn_utils.get_total_gameplay_days() >= 3",
+            category=["Art", "Media"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_what_do_you_think_about_fanart:
+    if Natsuki.isAffectionate(higher=True):
+        n 1fsqaj "Are you {i}kidding{/i},{w=0.1} [player]?{w=1.5}{nw}"
+        extend 1uchbsedz " I {i}love{/i} fanart!"
+
+    elif Natsuki.isNormal(higher=True):
+        n 1unmaj "Ooh!{w=1}{nw}"
+        extend 1unmbg " Fanart?"
+        n 1fllbg "Well,{w=0.1} duh!{w=1.5}{nw}"
+        extend 1fcsbg " I'm {i}totally{/i} all for it!"
+
+    elif Natsuki.isDistressed(higher=True):
+        n 1fcssf "Ugh...{w=1.5}{nw}"
+        extend 1fsqsl " what now?"
+        n 1tsqbo "...Fanart?"
+        n 1nsrpu "..."
+        n 1nllbo "Yeah,{w=0.3} fanart is fine.{w=1}{nw}"
+        extend 1fslpu " I guess."
+        n 1ncssf "I can appreciate the passion and effort that people put into their love of something."
+        n 1nlrpu "Like...{w=1}{nw}"
+        extend 1ncsaj " even if the artwork isn't the best,{w=0.5}{nw}"
+        extend 1nllsr " or the music needs some practice,{w=0.5}{nw}"
+        extend 1nnmsl " someone's effort still went into it."
+        n 1tnmpu "And even if I don't exactly like who the fanart is for?"
+        n 1fllsl "I can still admire the work that went into it."
+        n 1fcssr "...Heh.{w=1}{nw}"
+        extend 1fsqsr " And speaking of things that need work..."
+        n 1fsqpu "I don't know if you're a creator or not,{w=0.1} [player]."
+        n 1fsqfr "But I can tell this relationship isn't where {i}your{/i} work goes,{w=0.3} is it?{w=1}{nw}"
+        extend 1fsran " Jerk."
+        return
+
+    else:
+        n 1fcsantsa "Oh,{w=0.1} for-{w=0.3}{nw}"
+        n 1fcsun "..."
+        n 1fsqfutsb "Fanart?{w=1}{nw}"
+        extend 1fsquptsb " Really,{w=0.1} [player]?"
+        n 1fcsuptsa "..."
+        n 1fcssstsa "...Heh."
+        n 1fsqupltse "Why would {i}you{/i} bring up something people put so much work and love into?"
+        n 1fcsemltsd "You {i}obviously{/i} don't care about either of those things,{w=0.1} do you?"
+        return
+
+    n 1ullss "I mean...{w=1}{nw}"
+    extend 1fchgn " what's not to love?{w=1}{nw}"
+    extend 1uchgnedz " Fanart is {i}awesome{/i}!{w=0.5}{nw}"
+    extend 1fspajedz " And it comes in so many forms,{w=0.1} too!"
+    n 1ulraj "Like sure,{w=0.1} people show their support for something in a bunch of ways.{w=0.5}{nw}"
+    extend 1nllbo " Sharing posts,{w=0.1} attending events,{w=0.5}{nw}"
+    extend 1nnmsm " all those kinds of stuff."
+    n 1fcsbg "But I think it takes some real guts to stand up and create something new!"
+    n 1uskajesh "T-{w=0.1}that's not to say those who don't make any aren't {i}real{/i} fans or anything like that!"
+    n 1flleml "Of course not!{w=1}{nw}"
+    extend 1flrpol " That's just being dumb."
+    n 1ulraj "But...{w=1}{nw}"
+    extend 1unmaj " I just think it's a super neat way to show how much you appreciate something."
+    n 1fnmss "Plus with how active creators are on social media now,{w=0.5}{nw}"
+    extend 1fchbg " it's super easy to reach out and share your work!"
+    n 1fsldv "Not just with your favourite director,{w=0.1} or manga writer or whatever either,{w=0.5}{nw}"
+    extend 1fspajedz " but with other fans too!"
+    n 1fcsbg "Everybody wins,{w=0.1} right?{w=0.5}{nw}"
+    extend 1nllbg " Ahaha..."
+    n 1kllss "Well...{w=0.5}{nw}" 
+    extend 1nllsl " almost."
+    n 1fsqpu "What I {i}really{/i} hate is when people look at something someone made,{w=0.5}{nw}"
+    extend 1fcswr " and then just give them a bunch of grief over it!"
+    n 1flrem "Like if the creator is learning and made a mistake,{w=0.1} or if they had another take on something.{w=1}{nw}"
+    extend 1fcsan " It's so stupid!"
+    n 1fcsaj "I get {i}constructive{/i} criticism,{w=1}{nw}"
+    extend 1fsqan " but just being a jerk because it isn't {i}exactly{/i} how {i}you{/i} want it?{w=1}{nw}"
+    extend 1fcsem " Come {b}on{/b}!"
+    n 1fsrem "Get a grip."
+    n 1fcsemesi "..."
+    n 1fslsl "Hard to believe people can be so {i}entitled{/i} over something others do for free,{w=0.1} huh?{w=0.5}{nw}"
+    extend 1fslpo " Jerks."
+    n 1nllpo "Well,{w=0.1} anyway.{w=1}{nw}"
+    extend 1nslpo " Enough about people like {i}that{/i}."
+    n 1nlrbo "I don't know if you do any fanart or anything,{w=0.1} [player]..."
+
+    if jn_activity.has_player_done_activity(jn_activity.JNActivities.artwork):
+        n 1fchsmleme "Probably~."
+
+    n 1fnmpo "But you better not be letting people push you around over yours!"
+    n 1fsqpo "...Or be giving people a hard time over theirs."
+    n 1fcsbg "...Because that's where I {i}draw{/i} the line!{w=1}{nw}"
+    extend 1fsqsm " Ehehe."
 
     return

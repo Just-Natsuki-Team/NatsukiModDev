@@ -89,7 +89,7 @@ label farewell_first_time:
     menu:
         "I'll be back.":
             $ persistent.jn_player_first_farewell_response = int(jn_farewells.JNFirstLeaveTypes.will_be_back)
-            $ Natsuki.calculated_affinity_gain(bypass=True)
+            $ Natsuki.calculatedAffinityGain(bypass=True)
             n 1unmeml "...!{w=0.5}{nw}"
             n 1flleml "Y-{w=0.1}yeah!{w=0.5}{nw}"
             extend 1fsqpol " You better."
@@ -1143,7 +1143,7 @@ label farewell_short_session_ask:
                     else:
                         n 1nlrcaf "Thanks,{w=0.1} [player].{w=0.2} It means a lot."
 
-                    $ Natsuki.calculated_affinity_gain()
+                    $ Natsuki.calculatedAffinityGain()
                     $ jn_globals.player_already_stayed_on_farewell = True
 
                 "No, I have to go.":
@@ -1212,7 +1212,7 @@ label farewell_short_session_ask_alt:
 
             n 1nchsml "So...{w=0.3} what else did you wanna do today?"
             $ jn_globals.player_already_stayed_on_farewell = True
-            $ Natsuki.calculated_affinity_gain()
+            $ Natsuki.calculatedAffinityGain()
 
         "Fine, I guess.":
             n 1fbkwrf "You {i}guess{/i}?{w=0.2} What do you mean,{w=0.1} you guess?!"
@@ -1222,7 +1222,7 @@ label farewell_short_session_ask_alt:
             n 1uchgnlelg "Ahaha!{w=0.2} Oh,{w=0.1} lighten up,{w=0.1} [player]!{w=0.2} I'm just messing with you!"
             n 1tllsml "Ehehe.{w=0.2} Now,{w=0.1} where were we?"
             $ jn_globals.player_already_stayed_on_farewell = True
-            $ Natsuki.calculated_affinity_gain()
+            $ Natsuki.calculatedAffinityGain()
 
         "Sorry [n_name], I can't right now.":
             n 1fcsunf "Uuuu-"
@@ -1261,7 +1261,7 @@ label farewell_fake_confidence_ask:
             n 1fcswrf "J-{w=0.1}jeez!{w=0.2} Let's just get back to it already..."
             n 1fllajf "Now,{w=0.1} where were we?"
             $ jn_globals.player_already_stayed_on_farewell = True
-            $ Natsuki.calculated_affinity_gain()
+            $ Natsuki.calculatedAffinityGain()
 
         "Sorry, I really need to go.":
             n 1fllbgf "O-{w=0.1}oh...{w=0.3} aha..."
@@ -1302,7 +1302,7 @@ label farewell_pleading_ask:
             n 1kplsmf "Really.{w=0.1} Thank you."
             n 1kllbgf "N-{w=0.1}now,{w=0.1} where were we? Heh..."
             $ jn_globals.player_already_stayed_on_farewell = True
-            $ Natsuki.calculated_affinity_gain()
+            $ Natsuki.calculatedAffinityGain()
 
         "I can't right now.":
             n 1kllsff "Oh..."
@@ -1342,7 +1342,7 @@ label farewell_gentle_ask:
             n 1kcssmf "..."
             n 1kllbgf "Aha...{w=0.3} so what else did you wanna do today?"
             $ jn_globals.player_already_stayed_on_farewell = True
-            $ Natsuki.calculated_affinity_gain()
+            $ Natsuki.calculatedAffinityGain()
 
         "Sorry, I really have to go.":
             n 1kllsrf "Oh..."

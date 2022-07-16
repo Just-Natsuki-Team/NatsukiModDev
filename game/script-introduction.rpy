@@ -336,7 +336,7 @@ label introduction_calmed_down:
     extend 1kcsanl " it's just like..."
     menu:
         "Take your time, Natsuki.":
-            $ Natsuki.calculated_affinity_gain()
+            $ Natsuki.calculatedAffinityGain()
             n 1fcssrl "..."
             n 1kcseml "...Thanks."
             n 1ncspu "...{w=5}{nw}"

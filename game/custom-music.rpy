@@ -5,6 +5,7 @@ default persistent.jn_custom_music_explanation_given = False
 init python in jn_custom_music:
     import os
     import store
+    import store.jn_utils as jn_utils
 
     # Tracks must be placed here for Natsuki to find them
     CUSTOM_MUSIC_DIRECTORY = os.path.join(renpy.config.basedir, "custom_music/").replace("\\", "/")
@@ -156,7 +157,7 @@ label music_menu:
 
         $ available_custom_music = jn_utils.getAllDirectoryFiles(
             path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
-            extension_list=[".mp3",".wav",".ogg"]
+            extension_list=jn_custom_music._VALID_FILE_EXTENSIONS
         )
 
         # Play a random track
@@ -180,7 +181,7 @@ label music_menu:
 
     elif _return is not None:
         # Play the selected specific track
-        $ music_title = _return.split('/')[-1]
+        $ music_title = store.jn_utils.escapeRenpySubstitutionString(_return.split('/')[-1])
         $ renpy.play(filename=_return, channel="music")
 
     # Pop a cheeky notify with the Nat for visual confirmation :)
