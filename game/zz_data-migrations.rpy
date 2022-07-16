@@ -150,8 +150,3 @@ init python in jn_data_migrations:
     @migration(["0.0.0"], "0.0.1", runtime=MigrationRuntimes.INIT)
     def to_0_0_1():
         pass
-
-    @migration(["0.0.1"], "0.0.2")
-    def to_0_0_2():
-        global DID_DO_UPDATE
-        DID_DO_UPDATE = True

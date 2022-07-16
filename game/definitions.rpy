@@ -1374,6 +1374,18 @@ init python in jn_utils:
         #Save background data
         store.main_background.save()
 
+    def escapeRenpySubstitutionString(string):
+        """
+        Escapes a string to account for Ren'Py substitution.
+        Use this when displaying names of items that may contain the Ren'Py substitution characters, such as file names from users.
+        
+        IN:
+            - string - The string to escape and return
+        OUT:
+            - string with Ren'Py substition characters handled
+        """
+        return string.replace("[", "[[").replace("{", "{{")
+
 # Vanilla resources from base DDLC
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
 define audio.t2 = "<loop 4.499>bgm/2.ogg"   #Sayori theme
