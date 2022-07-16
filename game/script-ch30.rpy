@@ -49,6 +49,8 @@ label ch30_init:
         # Check the daily affinity cap and reset if need be
         Natsuki.checkResetDailyAffinityGain()
 
+        jn_globals.player_is_in_conversation = True
+
         # Determine if the player should get a prolonged leave greeting
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
             persistent.last_apology_type = jn_apologies.TYPE_PROLONGED_LEAVE
