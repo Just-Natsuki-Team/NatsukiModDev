@@ -416,58 +416,44 @@ init 5 python:
     )
 
 label apology_screenshots:
-    # The player has been barred from taking more screenshots
     if Natsuki.isEnamored(higher=True):
-        n 1kcsbol "...[player]."
-        n 1fnmaj "I told you so many times to knock it off."
-        n 1knmsl "Why didn't you listen to me?"
-        n 1kllbo "You know how I feel about having my picture taken..."
-        n 1kcsun "So it really hurts when you just ignore me like that."
-        n 1ksqun "And not just once,{w=0.1} [player]."
-        n 1fsqun "Again.{w=0.2} And again.{w=0.2} And again."
-        n 1fcsun "..."
-        n 1knmsl "Thanks for the apology,{w=0.1} [player].{w=0.2} I appreciate it."
-
-        if jn_screenshots.are_screenshots_blocked():
-            n 1klrsl "But...{w=0.3} I'm going to keep the camera switched off -{w=0.1} at least for now."
-            n 1kplsl "I hope you can understand why."
+        n 1tsqaj "Huh?{w=1}{nw}"
+        extend 1unmajesu " Oh!{w=0.5}{nw}" 
+        extend 1fllbgsbl " Aha!{w=0.5}{nw}"
+        extend 1fsrbgsbl " That."
+        n 1ulraj "I'm...{w=1}{nw}"
+        extend 1nslss " kinda starting to get over it,{w=0.1} I guess."
+        n 1ullbo "So...{w=1}{nw}" 
+        extend 1nnmaj " you're off the hook,{w=0.1} [player]."
+        n 1fsqss "...This time.{w=1}{nw}"
+        extend 1fchsml " Ehehe."
 
         $ Natsuki.calculatedAffinityGain()
 
     elif Natsuki.isNormal(higher=True):
-        n 1fcssl "[player]..."
-        n 1fsqsl "I told you again and again not to do that."
-        n 1fnmsl "Why did you keep ignoring me?"
-        n 1fnman "...Especially after I told you I don't like it."
-        n 1fcssl  "..."
-        n 1nllbo "Thanks for coming clean to me,{w=0.1} [player].{w=0.2} I appreciate it."
-
-        if jn_screenshots.are_screenshots_blocked():
-            n 1fnmaj "But...{w=0.3} the camera is staying off for now."
-            n 1flrbo "Thanks for understanding."
+        n 1tsqsl "Eh?{w=1}{nw}"
+        extend 1nnmaj " Oh,{w=0.1} right.{w=1}{nw}"
+        extend 1nsrss " That."
+        n 1ulraj "I...{w=1}{nw}"
+        extend 1nslem " kinda overreacted."
+        extend 1nslssl " Heh."
+        n 1ullbo "So...{w=0.5}{nw}" 
+        extend 1nnmaj " I guess you're off the hook,{w=0.1} [player]."
+        n 1fsqss "...This time."
 
         $ Natsuki.calculatedAffinityGain()
 
     elif Natsuki.isDistressed(higher=True):
-        n 1fsqsf "...You're apologizing to me {i}now{/i},{w=0.1} [player]?"
-        n 1fsqan "And after I gave you so many chances to quit it?"
-        n 1fcssf "..."
-        n 1fsqaj "...Fine.{w=0.2} I suppose I'll accept your apology..."
-
-        if jn_screenshots.are_screenshots_blocked():
-            n 1fnmsl "But the camera stays off."
-            n 1fsqbo "I don't think I need to explain why."
-
-        else:
-            n 1fsqbo "This time,{w=0.1} anyway."
-
-        $ Natsuki.calculatedAffinityGain()
+        n 1tsqsf "...Huh?{w=1}{nw}"
+        extend 1nsqbo " Oh.{w=1}{nw}"
+        extend 1fsqbo " {i}That{/i}."
+        n 1fcsbo "..."
+        n 1fslem "...Whatever,{w=0.1} [player]."
+        n 1fsqan "I'm {i}already{/i} past caring."
 
     else:
-        n 1fcsan "...No,{w=0.1} [player]."
-        n 1fsqfutsb "Don't even {i}try{/i} to pretend like you care now."
-        n 1fcsfutsa "..."
-        n 1fcssftsa "...Keep your {i}pathetic{/i} apology.{w=0.2} I don't want it."
+        n 1fsqan "..."
+        n 1fcsan "{i}Tch{/i}."
 
     $ persistent.jn_player_pending_apologies.remove(jn_apologies.TYPE_SCREENSHOT)
     return
