@@ -671,31 +671,9 @@ screen quick_menu():
             xalign 0.5
             yalign 0.995
 
-            if jn_utils.get_key_valid():
-                textbutton _("Restart"):
-                    text_style "quickmenu_text"
-                    action Show(
-                        screen="confirm_editable_closable",
-                        message="Do you want to RELOAD or RESET?",
-                        yes_text="Reload",
-                        no_text="Reset",
-                        yes_action=Jump("ch30_autoload"),
-                        no_action=Jump("restart")
-                    )
-                    hover_sound gui.hover_sound
-                    activate_sound gui.activate_sound
-
-
             textbutton _("History"):
                 text_style "quickmenu_text"
                 action ShowMenu('history')
-                hover_sound gui.hover_sound
-                activate_sound gui.activate_sound
-
-            textbutton _("Skip"):
-                text_style "quickmenu_text"
-                action Skip()
-                alternate Skip(fast=True, confirm=True)
                 hover_sound gui.hover_sound
                 activate_sound gui.activate_sound
 
@@ -1537,69 +1515,6 @@ screen dialog(message, ok_action):
 
                 textbutton _("OK") action ok_action
 
-screen reload(message, ok_action):
-
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
-
-    zorder 200
-
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
-
-    frame:
-
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _(message):
-                style "confirm_prompt"
-                xalign 0.5
-
-            hbox:
-                xalign 0.5
-                spacing 50
-
-                textbutton _("Restart") action Quit(confirm=True)
-
-
-            hbox:
-                xalign 0.5
-                spacing 50
-
-                textbutton _("I'll do it myself") action Hide("reload")
-
-# screen quit(message, ok_action):
-
-#     ## Ensure other screens do not get input while this screen is displayed.
-#     modal True
-
-#     zorder 200
-
-#     style_prefix "confirm"
-
-#     add "gui/overlay/confirm.png"
-
-#     frame:
-
-#         vbox:
-#             xalign .5
-#             yalign .5
-#             spacing 30
-
-#             label _(message):
-#                 style "confirm_prompt"
-#                 xalign 0.5
-
-#             hbox:
-#                 xalign 0.5
-#                 spacing 100
-
-#                 textbutton _("No") action ok_action
-
 screen endgame(message): # No spoilers, promise!
 
     ## Ensure other screens do not get input while this screen is displayed.
@@ -1747,33 +1662,6 @@ style confirm_button:
 style confirm_button_text is choice_button_text:
     properties gui.button_text_properties("confirm_button")
 
-
-## Skip indicator screen #######################################################
-##
-## The skip_indicator screen is displayed to indicate that skipping is in
-## progress.
-##
-## https://www.renpy.org/doc/html/screen_special.html#skip-indicator
-screen fake_skip_indicator():
-    use skip_indicator
-
-screen skip_indicator():
-
-    zorder 100
-    style_prefix "skip"
-
-    frame:
-
-        hbox:
-            spacing 6
-
-            text _("Skipping")
-
-            text "▸" at delayed_blink(0.0, 1.0) style "skip_triangle"
-            text "▸" at delayed_blink(0.2, 1.0) style "skip_triangle"
-            text "▸" at delayed_blink(0.4, 1.0) style "skip_triangle"
-
-
 ## This transform is used to blink the arrows one after another.
 transform delayed_blink(delay, cycle):
     alpha .5
@@ -1786,7 +1674,6 @@ transform delayed_blink(delay, cycle):
         linear .2 alpha 0.5
         pause (cycle - .4)
         repeat
-
 
 style skip_frame is empty
 style skip_text is gui_text

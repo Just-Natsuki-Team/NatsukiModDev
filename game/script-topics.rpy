@@ -7328,3 +7328,95 @@ label talk_how_to_interview_properly:
         n 1fchgn " Ehehe."
 
     return
+
+# Natsuki gives the player her dim view on bullying, and bullies generally.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_windup_bullying",
+            unlocked=True,
+            prompt="Bullying",
+            category=["Society", "Wind-ups"],
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_windup_bullying:
+    n 1fslpu "..."
+    n 1fcspuean "Tch!"
+    n 1fsran "..."
+    n 1tnmaj "Eh?{w=0.5}{nw}"
+    extend 1uskemesh " O-{w=0.3}oh!{w=0.5}{nw}"
+    extend 1uwdaj " [player].{w=1}{nw}"
+    extend 1flrbgl " Ahaha."
+    n 1fllbg "I...{w=0.5} was kinda just thinking out loud again."
+    n 1ullpu "And,{w=0.75}{nw}" 
+    extend 1nslpu " well..."
+    n 1nsqpu "I just had something else come to mind.{w=1}{nw}"
+    extend 1fcsem " Something I {i}really{/i} can't stand."
+    n 1fsqsr "Bullies.{w=1}{nw}"
+    extend 1fcsfu " I can't think of anything I {i}hate{/i} more!"
+    n 1flrem "Like,{w=0.5}{nw}"
+    extend 1fsqfu " have you ever had the {i}pleasure{/i} of dealing with one?"
+    n 1fcsan "It takes a {i}real{/i} piece of work to go out and mess with people on purpose."
+    n 1fllwr "You don't even need to be {i}doing{/i} anything!"
+    n 1flrem "Just looking the 'wrong' way,{w=0.3}{nw}"
+    extend 1fllan " enjoying the 'wrong' thing {w=0.1}-{w=0.3}{nw}"
+    extend 1fsqfu " any so-{w=0.1}called {i}excuse{/i},{w=0.1} they'll take."
+    n 1fcsem "And when I say mess with people...{w=1}{nw}"
+    extend 1fsqem " I don't just mean physically,{w=0.1} either!"
+    n 1fllem "Bullies can do their dirty work in so many different ways,{w=0.1} especially with social media being what is is now.{w=1}{nw}"
+    extend 1fcsfu " But they're all just as toxic!"
+    n 1fsqan "And worse yet,{w=0.5}{nw}"
+    extend 1tsqem " if you try to stick up for yourself?{w=1}{nw}"
+    extend 1fsrem " When you're exhausted of dealing with all of their crap?"    
+    n 1fcswrean "People get so high and mighty about it!{w=0.75}{nw}"
+    extend 1flrem " Like {i}you're{/i} the reason there's a problem!"
+    n 1fllaj "'Stop being so dramatic!'{w=0.5}{nw}" 
+    extend 1flrwr " 'You're just overreacting!'{w=0.5}{nw}"
+    extend 1fcsemesi " Ugh."
+    n 1tsqem "At this point?{w=0.75}{nw}" 
+    extend 1flrbo " I've heard it all."
+    n 1fsrbo "{i}...Not like that makes it any less annoying.{/i}"
+    n 1nllaj "But...{w=1}{nw}"
+    extend 1nsqbo " one thing I {i}will{/i} tell you right now,{w=0.1} [player]."
+    n 1fsqbol "Do {b}not{/b} let what others say stop you from dealing with it."
+    n 1fllbol "It isn't {i}their{/i} problem {w=0.1}-{w=0.3}{nw}"
+    extend 1fsqpul " and from experience?"
+    n 1fsqsr "There's nothing a bully likes {i}more{/i} than someone who tries to ignore them,{w=0.1} or walk away."
+    n 1uskemesu "...T-{w=0.3}that's not to say you gotta freak out or anything crazy like that!{w=0.75}{nw}"
+    extend 1fcsem " Just..."
+    n 1ksqpo "Read the room,{w=0.1} you know?{w=0.75}{nw}"
+    extend 1fllpo " Context matters!"
+    n 1fcsaj "Always make sure you use the best tools you have to get any jerks off your back."
+    n 1fsrss "A school bully doesn't exactly have a manager they report to..."
+    n 1fchgnelg "...And work is the {i}last{/i} place for a brawl!{w=0.75}{nw}"
+    extend 1fslpol " As {i}boring{/i} as that is."
+    n 1nllaj "So...{w=0.5}{nw}"
+    extend 1fsrpol " stick up for yourself,{w=0.1} got it?"
+    n 1fllss "And make sure you use your brain when you do.{w=1}{nw}"
+    extend 1fchgn " That's all I'm saying!"
+
+    if Natsuki.isEnamored(higher=True):
+        n 1knmpo "You owe yourself that much,{w=0.1} right?{w=0.75}{nw}"
+        extend 1fsqss " Besides,{w=0.1} [player]..."
+        n 1fsrssl "I kinda like someone who can show a little guts.{w=0.75}{nw}"
+
+        if Natsuki.isLove(higher=True):
+            extend 1fsqsml " Ehehe."
+
+        else:
+            extend 1fsldvl " Ehehe..."
+
+    elif Natsuki.isHappy(higher=True):
+        n 1kslpo "You owe yourself that much...{w=0.75}{nw}"
+        extend 1ksqpol " right?"
+
+    else:
+        n 1fsrpol "You owe yourself {i}that{/i} much,{w=0.1} at least."
+
+    return
