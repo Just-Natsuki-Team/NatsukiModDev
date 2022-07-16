@@ -7194,3 +7194,137 @@ label talk_what_do_you_think_about_fanart:
     extend 1fsqsm " Ehehe."
 
     return
+
+# Natsuki gives her advice on interviewing for jobs, etc.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_how_to_interview_properly",
+            unlocked=True,
+            prompt="How to interview properly",
+            conditional="jn_utils.get_total_gameplay_days() >= 5",
+            category=["Life", "Society"],
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_how_to_interview_properly:
+    n 1fllbo "Hmm..."
+    n 1tllbo "Hey,{w=0.5}{nw}"
+    extend 1tnmpu " [player]."
+    n 1tlrbo "It's kinda out of the blue,{w=0.5}{nw}"
+    extend 1nsrss " but I was curious."
+    n 1tnmaj "When was the last time you interviewed for something?"
+    n 1tlrbo "Or...{w=0.5} now that I think about it...{w=1}{nw}"
+    extend 1tnmpu " have you interviewed for {i}anything{/i} before?{w=1}{nw}"
+    extend 1unmaj " Like,{w=0.1} at all?"
+    n 1fslss "Because if there's one thing I've heard...{w=1}{nw}"
+    extend 1fnmpo " it's how anxious everyone seems to get over interviewing!"
+    n 1ksqpo "I'm being serious!{w=0.5}{nw}"
+    extend 1fllem " People just get so worked up over it all.{w=1}{nw}"
+    extend 1fcsem " Like it's rocket science or something."
+    n 1flraj "I mean...{w=1}{nw}"
+    extend 1unmca " I've never had to interview for anything super important myself."
+    n 1ulraj "We had some practice interviews at school,{w=0.1} obviously.{w=1}{nw}"
+    extend 1nslss " I was too busy with studies to try at getting a part-time job or anything."
+    n 1fsqsg "...But who says that doesn't mean I can teach you a thing or two?{w=0.75}{nw}"
+    extend 1fchgn " Ehehe."
+    n 1fsqsm "You should know what time it is by now..."
+    n 1fcsbg "...So listen up,{w=0.1} [player]!"
+    n 1fcssmedz "You're about to learn how to ace your interviews from a pro!"
+
+    n 1fnmbg "So!{w=0.75}{nw}"
+    extend 1fsqsm " The first order of business..."
+    n 1fllbg "Research,{w=0.5}{nw}"
+    extend 1tsqss " duh!"
+    n 1usqaj "If there's one thing you gotta know before going to interview for something,{w=0.5}{nw}"
+    extend 1fchgnelg " it's what you're actually interviewing {i}for{/i}!"
+    n 1fllaj "You wouldn't skimp out on revising before a big test,{w=1}{nw}"
+    extend 1tnmsl " and interviews really aren't much different when you think about it."
+    n 1fnmss "Interviewing for some big-shot company?{w=1}{nw}"
+    extend 1fcsbg " Check them out online and take notes!"
+    n 1ullaj "Obviously you need to read up on what they do and where they actually {i}are{/i},{w=1}{nw}"
+    extend 1fnmaj " but don't underestimate the power of trivia!"
+    n 1ullpu "Even just knowing random stuff like when they were founded,{w=1}{nw}"
+    extend 1nlrss " or what awards they won recently {w=0.1}-{w=0.5}{nw}"
+    extend 1fcsss " it all shows the effort you're putting in."
+    n 1tsqss "And when it comes down to the wire?"
+    n 1fwlsm "Even something tiny like that can just about tip the scales."
+
+    n 1fcsss "Next up...{w=0.5}{nw}"
+    extend 1fnmca " revision!"
+    n 1ullaj "It doesn't matter if you're trying to get a job,{w=1}{nw}"
+    extend 1nlrbo " or land a new position on some sort of council."
+    n 1nsqpu "Whatever it is...{w=0.5}{nw}"
+    extend 1fchlgelg " you gotta be able to {i}prove{/i} you know what you're even talking about!"
+    n 1ulraj "Of course, the revision totally depends on what you're going for."
+    n 1usqss "Some kind of programming job?{w=0.5}{nw}"
+    extend 1fchbg " Refresh yourself on all your weird terminology and techniques!"
+    n 1tsgsm "Joining the history club?{w=1}{nw}"
+    extend 1fcsss " Read up on some common history questions!"
+    n 1nsqpu "And trust me,{w=0.75}{nw}"
+    extend 1nsqsr " the {i}last{/i} thing you wanna do is embarrass yourself over simple stuff you should {i}really{/i} know..."
+    n 1nllun "...Or something you forgot you mentioned on your application."
+    extend 1fchbl " Oops!"
+    n 1nllaj "So...{w=0.5}{nw}"
+    extend 1fcsss " study up,{w=0.1} 'kay?"
+
+    n 1fchbg "Alright!{w=0.75}{nw}"
+    extend 1tsqss " Keeping up so far,{w=0.1} [player]?"
+    n 1fsqsm "You better be...{w=1}{nw}"
+    extend 1fchgn " 'cause we're almost done here!"
+    n 1unmaj "So,{w=0.1} next on the list -{w=0.5}{nw}"
+    extend 1nsrss " and probably the most important of all..."
+    n 1fspajedz "Presentation!"
+    n 1fllaj "You can have the best credentials in the world,{w=1}{nw}"
+    extend 1fsqsr " but that isn't gonna help much if you're mumbling everything {w=0.1}-{w=0.5}{nw}"
+    extend 1fchlgelg " or if you just look ridiculous!"
+    n 1fnmsr "So!"
+    n 1fcspo "Make sure you dress properly for whatever it is.{w=1}{nw}"
+    extend 1fllpu " If there's a dress code,{w=0.1} {i}follow it{/i}."
+    n 1fsqpo "...And {i}don't{/i} flake out on your clothes.{w=1}{nw}"
+    extend 1nlrbo " Iron them if they're all creased,{w=0.1} buy new ones if you need to.{w=0.2} That kind of thing."
+    n 1tnmpu "But most of all,{w=0.1} [player]?"
+    n 1fsqaj "{cps=\10}{i}Never{/i}{/cps} forget the basics."
+    n 1ullss "Be punctual,{w=0.1} be polite.{w=0.2} Remember {w=0.1}-{w=0.5}{nw}"
+    extend 1fsqss " people want someone they can {i}like{/i},{w=0.75}{nw}"
+    extend 1fsrpo " not just someone who can get the job done!"
+    
+    n 1unmajesu "...Oh,{w=0.5}{nw}"
+    extend 1tnmpu " and [player]?"
+    n 1fcspu "Just...{w=1}{nw}"
+    extend 1knmsrl " be honest too,{w=0.1} alright?"
+    n 1fllsrl "It isn't a fault to admit when you don't know something."
+    n 1tnmpu "And when you actually stop to think about it from their perspective,{w=1}{nw}"
+    extend 1tnmem " if someone is prepared to just lie to your face at an interview..."
+    n 1tsqem "...Then what {i}else{/i} are they gonna lie about?"
+    n 1tllss "Just some food for thought."
+
+    n 1ncspuesi "..."
+    n 1nlrss "...Wow,{w=0.5}{nw}"
+    extend 1fchbgelg " I gotta learn when to stop rambling on!{w=0.2} Jeez!"
+    n 1fsrssl "That was almost like an interview speech itself,{w=0.1} huh?"
+
+    if Natsuki.isEnamored(higher=True):
+        n 1ullpu "Or...{w=1}{nw}"
+        extend 1nsrssl " I guess more like an induction,{w=0.1} really."
+        n 1fsqdvf "You already got the job with me,{w=0.1} a-{w=0.3}after all."
+
+        if Natsuki.isLove(higher=True):
+            n 1fchsml "Ehehe.{w=1}{nw}"
+            extend 1nchbll " Love you,{w=0.1} [player]~!"
+        
+        else:
+            n 1fsrsml "Ehehe..."
+
+    else:
+        n 1ullpu "Or...{w=1}{nw}"
+        extend 1tnmbo " since we're both stuck here?"
+        n 1fsqsm "...More like an induction,{w=0.1} actually."
+        n 1fchgn " Ehehe."
+
+    return
