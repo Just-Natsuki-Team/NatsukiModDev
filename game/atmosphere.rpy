@@ -240,8 +240,8 @@ init 0 python in jn_atmosphere:
         ("^5[0-9][0-9]$"): WEATHER_RAIN, # Rain
         ("^6[0-9][0-9]$"): WEATHER_SNOW, # Snow
         ("^7[0-9][0-9]$"): WEATHER_OVERCAST, # Misc (mist, tornado, sandstorms, etc.)
-        ("(800|801|802)"): WEATHER_SUNNY, # Clear/light clouds
-        ("(803|804)"): WEATHER_OVERCAST, # Clouds
+        ("(800|801|802|803)"): WEATHER_SUNNY, # Clear/light clouds
+        ("(804)"): WEATHER_OVERCAST, # Clouds
     }
 
     current_weather = None
