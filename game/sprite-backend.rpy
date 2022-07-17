@@ -166,7 +166,7 @@ init -50 python:
             (0, 0), _BASE_SPRITE_PATH + "desk/chair-normal.png", # Chair
             (0, 0), "{0}{1}/hair/[Natsuki._outfit.hairstyle.reference_name]/back.png".format(_BASE_SPRITE_PATH, pose), # Hair back
             (0, 0), "{0}{1}/base/body.png".format(_BASE_SPRITE_PATH, pose), # Body
-            (0, 0), "{0}{1}/clothes/[Natsuki._outfit.clothes.reference_name]/body.png".format(_BASE_SPRITE_PATH, pose), # Outfit, body
+            (0, 0), "{0}{1}/clothes/[Natsuki._outfit.clothes.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose), # Outfit, body
         ]
 
         # Necklace
@@ -682,6 +682,10 @@ image natsuki idle high_affinity:
             "natsuki 1ucssml"
             pause 0.1
             "natsuki 1ulrsml"
+            pause 0.25
+            "natsuki 1ucssml"
+            pause 0.1
+            "natsuki 1ulrsml"
             pause 5
             "natsuki 1ucssml"
             pause 0.1
@@ -699,11 +703,11 @@ image natsuki idle high_affinity:
         choice:
             "natsuki 1nnmsgl"
             pause 5
-            "natsuki 1ucssml"
+            "natsuki 1ncssgl"
             pause 0.1
             "natsuki 1nnmsgl"
             pause 5
-            "natsuki 1ucssml"
+            "natsuki 1ncssgl"
             pause 0.1
 
         choice:
@@ -723,6 +727,24 @@ image natsuki idle high_affinity:
             pause 0.5
             "natsuki 1flldvl"
             pause 2
+            "natsuki 1fcsdvl"
+            pause 0.1
+
+        choice:
+            "natsuki 1nllpul"
+            pause 3
+            "natsuki 1ncspul"
+            pause 0.1
+            "natsuki 1fllpul"
+            pause 5
+            "natsuki 1ncspul"
+            pause 0.1
+            "natsuki 1tnmpul"
+            pause 4
+            "natsuki 1tcspul"
+            pause 0.1
+            "natsuki 1flrdvless"
+            pause 4
             "natsuki 1fcsdvl"
             pause 0.1
 

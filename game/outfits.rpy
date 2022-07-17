@@ -560,7 +560,7 @@ init -1 python in jn_outfits:
                     not jn_utils.getFileExists(os.path.join(resource_path, "back.png")) 
                     or not jn_utils.getFileExists(os.path.join(resource_path, "bangs.png"))
                 ):
-                    jn_utils.log("Missing sprite(s) for {0}: check {1}".format(wearable.reference_name, resource_path))
+                    jn_utils.log("Missing back/bangs sprite(s) for {0}: check {1}".format(wearable.reference_name, resource_path))
                     return False
 
             # Any other wearable only has one sprite for a given pose
@@ -1267,12 +1267,6 @@ init -1 python in jn_outfits:
     __register_wearable(JNClothes(
         reference_name="jn_clothes_ruffled_swimsuit",
         display_name="Ruffled swimsuit",
-        unlocked=False,
-        is_jn_wearable=True
-    ))
-    __register_wearable(JNClothes(
-        reference_name="jn_clothes_sleeveless_heart_sweater",
-        display_name="Sleeveless heart sweater",
         unlocked=False,
         is_jn_wearable=True
     ))
