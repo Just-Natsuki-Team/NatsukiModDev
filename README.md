@@ -64,17 +64,24 @@ Please read this document thoroughly before downloading and installing the mod!
             <sub><b>ALTER</b></sub>
         </a>
     </td>
-    <td align="center">
-        <a href="https://twitter.com/art_almay">
-            <img src="https://justnatsuki.club/img/portraits/almay.jpg" width="100;" alt="Almay_art"/>
-            <br />
-            <sub><b>Almay_art</b></sub>
-        </a>
-    </td></tr>
+</tr>
 </table>
 <!-- readme: contributors -end -->
 
-### Special thanks
+### With thanks to our guest artists:
+<table>
+    <tr>
+        <td align="center">
+            <a href="https://twitter.com/art_almay">
+                <img src="https://justnatsuki.club/img/portraits/almay.jpg" width="100;" alt="Almay_art"/>
+                <br />
+                <sub><b>Almay_art</b></sub>
+            </a>
+        </td>
+    </tr>
+</table>  
+
+### Special thanks:
 - Snow, rain graphics thanks to Monika After Story team @ https://github.com/Monika-After-Story/MonikaModDev
 
 ### Contents
