@@ -267,13 +267,13 @@ init python:
         """
         Runs every fifteen minutes during breaks between topics
         """
+        jn_atmosphere.update_sky()
 
         # Run through all externally-registered quarter-hour check actions
         if len(jn_plugins.quarter_hour_check_calls) > 0:
             for action in jn_plugins.quarter_hour_check_calls:
                 eval(action.statement)
 
-        jn_atmosphere.update_sky()
         jn_random_music.random_music_change_check()
 
         pass
@@ -282,6 +282,7 @@ init python:
         """
         Runs every thirty minutes during breaks between topics
         """
+        jn_atmosphere.update_sky()
 
         # Run through all externally-registered half-hour check actions
         if len(jn_plugins.half_hour_check_calls) > 0:
@@ -294,6 +295,7 @@ init python:
         """
         Runs every hour during breaks between topics
         """
+        jn_atmosphere.update_sky()
 
         # Run through all externally-registered hour check actions
         if len(jn_plugins.hour_check_calls) > 0:
@@ -316,6 +318,7 @@ init python:
         """
         Runs every day during breaks between topics
         """
+        jn_atmosphere.update_sky()
 
         # Run through all externally-registered day check actions
         if len(jn_plugins.day_check_calls) > 0:
