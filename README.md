@@ -68,7 +68,7 @@ Please read this document thoroughly before downloading and installing the mod!
 </table>
 <!-- readme: contributors -end -->
 
-### With thanks to our guest artists:
+### With thanks to our amazing guest artists:
 <table>
     <tr>
         <td align="center">
@@ -78,11 +78,20 @@ Please read this document thoroughly before downloading and installing the mod!
                 <sub><b>Almay_art</b></sub>
             </a>
         </td>
+        <td align="center">
+            <a href="https://twitter.com/TheShunBun">
+                <img src="https://justnatsuki.club/img/portraits/shunbun.png" width="100;" alt="Almay_art"/>
+                <br />
+                <sub><b>TheShunBun</b></sub>
+            </a>
+        </td>
     </tr>
 </table>  
 
-### Special thanks:
+### And extra special thanks to:
 - Snow, rain graphics thanks to Monika After Story team @ https://github.com/Monika-After-Story/MonikaModDev
+
+**You're all awesome!**
 
 ### Contents
 
