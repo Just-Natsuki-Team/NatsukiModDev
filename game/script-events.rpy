@@ -577,7 +577,8 @@ label event_drinking_strawberry_milkshake:
 
     return
 
-# Natsuki is walked in on reading a new volume of Parfait Girls. She isn't impressed.
+# Natsuki is walked in on reading a manga aimed at/themed around self-help. She *totally* didn't need the self-help, -obviously-.
+# Prop courtesy of TheShunBun @ https://twitter.com/TheShunBun
 init 5 python:
     registerTopic(
         Topic(
