@@ -11,6 +11,7 @@ image prop parfait_manga_held = "mod_assets/props/parfait_manga_held.png"
 image prop renpy_for_dummies_book_held = "mod_assets/props/renpy_for_dummies_book_held.png"
 image prop a_la_mode_manga_held = "mod_assets/props/a_la_mode_manga_held.png"
 image prop strawberry_milkshake = "mod_assets/props/strawberry_milkshake.png"
+image prop step_by_step_manga_held = "mod_assets/props/step_by_step_manga_held.png"
 image prop cake lit = "mod_assets/props/cake_lit.png"
 image prop cake unlit = "mod_assets/props/cake_unlit.png"
 
@@ -1092,6 +1093,94 @@ label event_drinking_strawberry_milkshake:
     n 1fsqbg "And now I'm all refreshed...{w=1}{nw}"
     extend 1tsqsm " what's happening, [player]?{w=1}{nw}"
     extend 1fchsm " Ehehe."
+
+    return
+
+# Natsuki is walked in on reading a manga aimed at/themed around self-help. She *totally* didn't need the self-help, -obviously-.
+# Prop courtesy of TheShunBun @ https://twitter.com/TheShunBun
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_step_by_step_manga",
+            unlocked=True,
+            conditional="jn_utils.get_total_gameplay_days() >= 14",
+            affinity_range=(jn_affinity.AFFECTIONATE, None)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
+
+label event_step_by_step_manga:
+    $ jn_globals.force_quit_enabled = False
+    n "..."
+    n "..."
+    play audio page_turn
+    $ renpy.pause(2)
+    n "Jeez..."
+    n "Who {i}drew{/i} this?!"
+    n "I feel like I'm gonna vomit rainbows or something!"
+    $ renpy.pause(3)
+    play audio page_turn
+    $ renpy.pause(2)
+    play audio page_turn
+    $ renpy.pause(1)
+    n "Man..."
+    n "A-{w=0.3}alright,{w=0.1} enough drooling over the art!{w=1.5}{nw}"
+    extend " You got this thing for a reason,{w=0.1} Natsuki..."
+    n "Step by step..."
+    n "Improve my daily confidence,{w=0.3} huh?{w=1.5}{nw}"
+    extend " Okaaay..."
+
+    $ renpy.pause(1)
+    play audio page_turn
+    $ renpy.pause(5)
+    play audio page_turn
+    $ renpy.pause(7)
+
+    menu:
+        "Enter...":
+            pass
+
+    show prop step_by_step_manga_held zorder jn_events.JN_EVENT_PROP_ZORDER
+    $ jn_events.display_visuals("1uskemfesh")
+    $ jn_globals.force_quit_enabled = True
+
+    n 1uskemesh "...!"
+    $ player_initial = jn_utils.get_player_initial()
+    n 1fbkwrf "[player_initial]-{w=0.3}[player]!{w=0.2} Again?!{w=1}{nw}"
+    extend 1fbkwrf " D-{w=0.3}do you really have to barge in like that {i}every{/i} time?"
+    n 1flrunfess "Yeesh...{w=1}{nw}"
+    extend 1fsremfess " I swear you're gonna be the death of me one of these days..."
+    n 1fslpol "..."
+    n 1tsqsll "...Huh?"
+    n 1tnmpul "What?{w=0.2} Is something on my face?"
+    n 1tllpuleqm "..."
+    n 1uskajlesu "O-{w=0.3}oh!{w=0.75}{nw}"
+    extend 1flrbgl " The book!"
+    n 1fcsbglsbl "I was just..."
+    n 1fllunl "I was..."
+    n 1fcsunf "Nnnnnn-!"
+    n 1fcswrl "I-{w=0.2}I just like the artwork!{w=1}{nw}"
+    extend 1fllemlsbl " That's all it is!"
+    n 1fcswrl "I'm {i}super{/i} confident already!"
+    n 1fllunlsbl "..."
+    n 1fcsemlsbr "A-{w=0.2}and besides,{w=1}{nw}"
+    extend 1fllpol " even if I {i}was{/i} reading it for the self-{w=0.1}help stuff..."
+    n 1kllsll "..."
+    n 1kwmpul "...What'd be wrong with that?"
+    n 1fcsbol "It takes real guts to admit to yourself that you can do better.{w=1}{nw}"
+    extend 1fnmbol " Can {i}be{/i} better."
+    n 1fsrbol "...And only a real jerk would tease someone for trying."
+    n 1fcsajl "Never forget that."
+
+    play audio drawer
+    hide prop step_by_step_manga_held
+    with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+
+    n 1nllpol "..."
+    n 1ulrbol "So..."
+    n 1tnmsslsbr "What's new,{w=0.1} [player]?{w=1}{nw}"
+    extend 1fllsslsbl " Ahaha..."
 
     return
 

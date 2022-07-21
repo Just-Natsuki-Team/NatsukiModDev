@@ -134,6 +134,16 @@ init -50 python:
         speech = 14
         surprise = 15
         laughter = 16
+        sweat_drop = 17
+        sweat_spritz = 18
+        sweat_small = 19
+
+        def __str__(self):
+            return self.name
+
+    class JNSweat(Enum):
+        bead_left = 1
+        bead_right = 2
 
         def __str__(self):
             return self.name
@@ -145,7 +155,8 @@ init -50 python:
         mouth,
         blush=None,
         tears=None,
-        emote=None
+        emote=None,
+        sweat=None
     ):
         """
         Generates sprites for Natsuki based on outfit, expression, pose, etc.
@@ -155,7 +166,7 @@ init -50 python:
             (0, 0), _BASE_SPRITE_PATH + "desk/chair-normal.png", # Chair
             (0, 0), "{0}{1}/hair/[Natsuki._outfit.hairstyle.reference_name]/back.png".format(_BASE_SPRITE_PATH, pose), # Hair back
             (0, 0), "{0}{1}/base/body.png".format(_BASE_SPRITE_PATH, pose), # Body
-            (0, 0), "{0}{1}/clothes/[Natsuki._outfit.clothes.reference_name]/body.png".format(_BASE_SPRITE_PATH, pose), # Outfit, body
+            (0, 0), "{0}{1}/clothes/[Natsuki._outfit.clothes.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose), # Outfit, body
         ]
 
         # Necklace
@@ -199,6 +210,12 @@ init -50 python:
                 (0, 0), "{0}{1}/face/tears/{2}.png".format(_BASE_SPRITE_PATH, pose, tears)
             ])
 
+        # Sweat
+        if sweat:
+            lc_args.extend([
+                (0, 0), "{0}{1}/face/sweat/{2}.png".format(_BASE_SPRITE_PATH, pose, sweat)
+            ])
+
         # Headgear
         headgear = Null() if not Natsuki._outfit.headgear else "{0}{1}/headgear/[Natsuki._outfit.headgear.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose)
         lc_args.extend([
@@ -230,7 +247,7 @@ init -50 python:
 
 init 1 python:
     POSE_MAP = {
-        "1": JNPose.sitting,
+        "1": JNPose.sitting
     }
 
     EYEBROW_MAP = {
@@ -238,7 +255,7 @@ init 1 python:
         "u": JNEyebrows.up,
         "k": JNEyebrows.knit,
         "f": JNEyebrows.furrowed,
-        "t": JNEyebrows.think,
+        "t": JNEyebrows.think
     }
 
     EYE_MAP = {
@@ -262,7 +279,7 @@ init 1 python:
         "wm": JNEyes.warm,
         "wd": JNEyes.wide,
         "wl": JNEyes.wink_left,
-        "wr": JNEyes.wink_right,
+        "wr": JNEyes.wink_right
     }
 
     MOUTH_MAP = {
@@ -298,12 +315,12 @@ init 1 python:
         "tr": JNMouth.triangle,
         "un": JNMouth.uneasy,
         "up": JNMouth.upset,
-        "wr": JNMouth.worried,
+        "wr": JNMouth.worried
     }
 
     BLUSH_MAP = {
         "f": JNBlush.full,
-        "l": JNBlush.light,
+        "l": JNBlush.light
     }
 
     TEARS_MAP = {
@@ -338,7 +355,15 @@ init 1 python:
         "esl": JNEmote.sleepy,
         "eso": JNEmote.somber,
         "esp": JNEmote.speech,
-        "esu": JNEmote.surprise
+        "esu": JNEmote.surprise,
+        "esd": JNEmote.sweat_drop,
+        "esz": JNEmote.sweat_spritz,
+        "ess": JNEmote.sweat_small
+    }
+
+    SWEAT_MAP = {
+        "sbl": JNSweat.bead_left,
+        "sbr": JNSweat.bead_right
     }
 
     def _parse_exp_code(exp_code):
@@ -372,6 +397,7 @@ init 1 python:
         blush = None
         tears = None
         emote = None
+        sweat = None
 
         #If we still have an expcode, we know we have optional portions to process
         while exp_code:
@@ -389,6 +415,10 @@ init 1 python:
                     emote = exp_code[:3]
                     exp_code = exp_code[3:]
 
+                elif exp_code[:3] in SWEAT_MAP:
+                    sweat = exp_code[:3]
+                    exp_code = exp_code[3:] 
+
                 #To avoid an infinite loop, we'll raise another ValueError to note this format is invalid
                 else:
                     raise ValueError(
@@ -402,7 +432,8 @@ init 1 python:
             "mouth": MOUTH_MAP[mouth],
             "blush": BLUSH_MAP.get(blush),
             "tears": TEARS_MAP.get(tears),
-            "emote": EMOTE_MAP.get(emote)
+            "emote": EMOTE_MAP.get(emote),
+            "sweat": SWEAT_MAP.get(sweat)
         }
 
     def _generate_image(exp_code):
@@ -523,7 +554,7 @@ init 1 python:
     renpy.display.image.ImageReference.find_target = _find_target_override
 
 # Sprite code format:
-# <pose><eyebrows><eyes><mouth><blush><tears><emote>
+# <pose><eyebrows><eyes><mouth><blush><tears><emote><sweat>
 #
 # Pose, eyebrows, eyes and mouth are compulsary. Any others are optional.
 #
@@ -533,8 +564,9 @@ init 1 python:
 #   eyes: 2 characters
 #   mouth: 2 characters
 #   blush: 1 character
-#   tears: 3 characters
-#   emote: 3 characters
+#   tears: 3 characters, t-prefix
+#   emote: 3 characters, e-prefix
+#   sweat: 3 characters, s-prefix
 #
 # For spritecode construction, use the previewer @ https://just-natsuki-team.github.io/Expression-Previewer/
 
@@ -553,20 +585,82 @@ image natsuki idle max_affinity:
     block:
         choice:
             "natsuki 1nchsmf"
+            pause 10
+
         choice:
             "natsuki 1kwmsmf"
+            pause 5
+            "natsuki 1kcssmf"
+            pause 0.1
+            "natsuki 1kwmsmf"
+            pause 5
+            "natsuki 1kcssmf"
+            pause 0.1
+
         choice:
             "natsuki 1kllsmf"
+            pause 5
+            "natsuki 1kcssmf"
+            pause 0.1
+            "natsuki 1kllsmf"
+            pause 5
+            "natsuki 1kcssmf"
+            pause 0.1
+
         choice:
             "natsuki 1klrsmf"
+            pause 5
+            "natsuki 1kcssmf"
+            pause 0.1
+            "natsuki 1klrsmf"
+            pause 5
+            "natsuki 1kcssmf"
+            pause 0.1
+
         choice:
             "natsuki 1knmsmf"
+            pause 5
+            "natsuki 1kcssmf"
+            pause 0.1
+            "natsuki 1knmsmf"
+            pause 5
+            "natsuki 1kcssmf"
+            pause 0.1
+
         choice:
             "natsuki 1kcssmf"
+            pause 10
+
         choice:
             "natsuki 1kcssgf"
+            pause 10
 
-        pause 10
+        choice:
+            "natsuki 1kllsmf"
+            pause 2
+            "natsuki 1kcssmf"
+            pause 0.1
+            "natsuki 1knmsmf"
+            pause 3
+            "natsuki 1fsqsmf"
+            pause 3
+            "natsuki 1fchblf"
+            pause 1
+            "natsuki 1fchgnf"
+            pause 2
+            "natsuki 1klrsmf"
+            pause 2
+            "natsuki 1kcssmf"
+            pause 0.1
+
+        choice:
+            "natsuki 1kcssmf"
+            pause 3
+            "natsuki 1kcsssf"
+            pause 3
+            "natsuki 1kcssmf"
+            pause 5
+            
         repeat
 
 # Idle images for AFFECTIONATE+
@@ -574,14 +668,86 @@ image natsuki idle high_affinity:
     block:
         choice:
             "natsuki 1ullsml"
+            pause 5
+            "natsuki 1ucssml"
+            pause 0.1
+            "natsuki 1ullsml"
+            pause 5
+            "natsuki 1ucssml"
+            pause 0.1
+
         choice:
             "natsuki 1ulrsml"
+            pause 5
+            "natsuki 1ucssml"
+            pause 0.1
+            "natsuki 1ulrsml"
+            pause 0.25
+            "natsuki 1ucssml"
+            pause 0.1
+            "natsuki 1ulrsml"
+            pause 5
+            "natsuki 1ucssml"
+            pause 0.1
+
         choice:
             "natsuki 1unmsml"
+            pause 5
+            "natsuki 1ucssml"
+            pause 0.1
+            "natsuki 1unmsml"
+            pause 5
+            "natsuki 1ucssml"
+            pause 0.1
+
         choice:
             "natsuki 1nnmsgl"
+            pause 5
+            "natsuki 1ncssgl"
+            pause 0.1
+            "natsuki 1nnmsgl"
+            pause 5
+            "natsuki 1ncssgl"
+            pause 0.1
 
-        pause 10
+        choice:
+            "natsuki 1nllbol"
+            pause 4
+            "natsuki 1fllbol"
+            pause 4
+            "natsuki 1fcsbol"
+            pause 0.1
+            "natsuki 1tnmbol"
+            pause 4
+            "natsuki 1tcsbol"
+            pause 0.1
+            "natsuki 1fsqsml"
+            pause 4
+            "natsuki 1fwlsml"
+            pause 0.5
+            "natsuki 1flldvl"
+            pause 2
+            "natsuki 1fcsdvl"
+            pause 0.1
+
+        choice:
+            "natsuki 1nllpul"
+            pause 3
+            "natsuki 1ncspul"
+            pause 0.1
+            "natsuki 1fllpul"
+            pause 5
+            "natsuki 1ncspul"
+            pause 0.1
+            "natsuki 1tnmpul"
+            pause 4
+            "natsuki 1tcspul"
+            pause 0.1
+            "natsuki 1flrdvless"
+            pause 4
+            "natsuki 1fcsdvl"
+            pause 0.1
+
         repeat
 
 # Idle images for NORMAL+
@@ -589,20 +755,84 @@ image natsuki idle medium_affinity:
     block:
         choice:
             "natsuki 1nllbo"
+            pause 4
+            "natsuki 1ncsbo"
+            pause 0.1
+            "natsuki 1nllbo"
+            pause 4
+            "natsuki 1ncsbo"
+            pause 0.1
+
         choice:
             "natsuki 1nlrbo"
+            pause 4
+            "natsuki 1ncsbo"
+            pause 0.1
+            "natsuki 1nlrbo"
+            pause 4
+            "natsuki 1ncsbo"
+            pause 0.1
+
         choice:
             "natsuki 1nllpu"
+            pause 4
+            "natsuki 1ncspu"
+            pause 0.1
+            "natsuki 1nllpu"
+            pause 4
+            "natsuki 1ncspu"
+            pause 0.1
+
         choice:
             "natsuki 1nlrpu"
+            pause 4
+            "natsuki 1ncspu"
+            pause 0.1
+            "natsuki 1nlrpu"
+            pause 4
+            "natsuki 1ncspu"
+            pause 0.1
+
         choice:
             "natsuki 1nllca"
+            pause 4
+            "natsuki 1ncsca"
+            pause 0.1
+            "natsuki 1nllca"
+            pause 4
+            "natsuki 1ncsca"
+            pause 0.1
+
         choice:
             "natsuki 1nlrca"
+            pause 4
+            "natsuki 1ncsca"
+            pause 0.1
+            "natsuki 1nlrca"
+            pause 4
+            "natsuki 1ncsca"
+            pause 0.1
+
         choice:
             "natsuki 1nnmca"
+            pause 4
+            "natsuki 1ncsca"
+            pause 0.1
+            "natsuki 1nnmca"
+            pause 4
+            "natsuki 1ncsca"
+            pause 0.1
 
-        pause 10
+        choice:
+            "natsuki 1nllpu"
+            pause 4
+            "natsuki 1ncspu"
+            pause 0.1
+            "natsuki 1nlrpu"
+            pause 4
+            "natsuki 1ncspu"
+            pause 0.1
+
         repeat
 
 # Idle images for DISTRESSED+
@@ -610,22 +840,46 @@ image natsuki idle low_affinity:
     block:
         choice:
             "natsuki 1fllsl"
+            pause 3
+            "natsuki 1fcssl"
+            pause 0.1
+
         choice:
-            "natsuki 1klrsl"
+            "natsuki 1flrsl"
+            pause 3
+            "natsuki 1fcssl"
+            pause 0.1
+
         choice:
             "natsuki 1kcssl"
+            pause 8
+
         choice:
             "natsuki 1kcssf"
+            pause 8
+
         choice:
             "natsuki 1fcssf"
+            pause 8
+
         choice:
             "natsuki 1fllsf"
+            pause 3
+            "natsuki 1fcssf"
+            pause 0.1
+
         choice:
             "natsuki 1flrsf"
+            pause 3
+            "natsuki 1fcssf"
+            pause 0.1
+
         choice:
             "natsuki 1fsqca"
+            pause 3
+            "natsuki 1fcsca"
+            pause 0.1
 
-        pause 10
         repeat
 
 # Idle images for RUINED+
@@ -646,7 +900,7 @@ image natsuki idle min_affinity:
         choice:
             "natsuki 1fsrantse"
 
-        pause 10
+        pause 4
         repeat
 
 # Idle images for the introduction sequence, after Natsuki and the player are introduced

@@ -29,8 +29,16 @@ label ch30_init:
     python:
         import random
 
+        #Run runtime data migrations here
+        jn_data_migrations.runRuntimeMigrations()
+
+        #Now adjust the stored version number
+        persistent._jn_version = config.version
+
         # Check the daily affinity cap and reset if need be
-        Natsuki.check_reset_daily_affinity_gain()
+        Natsuki.checkResetDailyAffinityGain()
+
+        jn_globals.player_is_in_conversation = True
 
         # Determine if the player should get a prolonged leave apology added
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
@@ -38,7 +46,7 @@ label ch30_init:
 
         # Repeat visits have a small affinity gain
         elif not persistent.last_apology_type:
-            Natsuki.calculated_affinity_gain()
+            Natsuki.calculatedAffinityGain()
 
         # Add to the total visits counter and set the last visit date
         persistent.jn_total_visit_count += 1
@@ -221,7 +229,7 @@ init python:
         jn_utils.save_game()
 
         # Check the daily affinity cap and reset if need be
-        Natsuki.check_reset_daily_affinity_gain()
+        Natsuki.checkResetDailyAffinityGain()
 
         # Run through all externally-registered minute check actions
         if len(jn_plugins.minute_check_calls) > 0:
@@ -264,6 +272,7 @@ init python:
                     # More random topics available, reset out of topics warning
                     store.persistent._jn_out_of_topics_warning_given = False
 
+                Natsuki.calculatedAffinityGain()
                 queue(random.choice(topic_pool).label)
 
             elif not store.persistent.jn_natsuki_repeat_topics and not store.persistent._jn_out_of_topics_warning_given:
@@ -276,13 +285,13 @@ init python:
         """
         Runs every fifteen minutes during breaks between topics
         """
+        jn_atmosphere.update_sky()
 
         # Run through all externally-registered quarter-hour check actions
         if len(jn_plugins.quarter_hour_check_calls) > 0:
             for action in jn_plugins.quarter_hour_check_calls:
                 eval(action.statement)
 
-        jn_atmosphere.update_sky()
         jn_random_music.random_music_change_check()
 
         pass
@@ -291,6 +300,7 @@ init python:
         """
         Runs every thirty minutes during breaks between topics
         """
+        jn_atmosphere.update_sky()
 
         # Run through all externally-registered half-hour check actions
         if len(jn_plugins.half_hour_check_calls) > 0:
@@ -303,6 +313,7 @@ init python:
         """
         Runs every hour during breaks between topics
         """
+        jn_atmosphere.update_sky()
 
         # Run through all externally-registered hour check actions
         if len(jn_plugins.hour_check_calls) > 0:
@@ -325,6 +336,7 @@ init python:
         """
         Runs every day during breaks between topics
         """
+        jn_atmosphere.update_sky()
 
         # Run through all externally-registered day check actions
         if len(jn_plugins.day_check_calls) > 0:
@@ -375,6 +387,7 @@ label talk_menu:
         _talk_flavor_text = renpy.substitute(_talk_flavor_text)
 
     $ show_natsuki_talk_menu()
+    $ jn_globals.player_is_in_conversation = True
 
     menu:
         n "[_talk_flavor_text]"
@@ -495,6 +508,7 @@ label outfits_menu:
 
 label extras_menu:
     python:
+        jn_globals.player_is_in_conversation = True
         avaliable_extras_options = []
 
         # Since conditions can change, we check each time if each option is now avaliable due to context changes (E.G affinity is now higher)
@@ -605,7 +619,7 @@ label try_force_quit:
                         hide glitch_garbled_red
 
                 # Apply consequences for force quitting, then glitch quit out
-                $ Natsuki.percentage_affinity_loss(2)
+                $ Natsuki.percentageAffinityLoss(2)
                 $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
                 $ persistent.jn_player_apology_type_on_quit = jn_apologies.TYPE_SUDDEN_LEAVE
 

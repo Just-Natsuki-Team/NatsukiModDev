@@ -61,7 +61,7 @@ init 5 python:
     )
 
 label compliment_amazing:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_amazing").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_amazing").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_AMAZING:
         if Natsuki.isEnamored(higher=True):
@@ -114,7 +114,7 @@ init 5 python:
     )
 
 label compliment_beautiful:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_beautiful").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_beautiful").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_BEAUTIFUL:
         if Natsuki.isEnamored(higher=True):
@@ -185,7 +185,7 @@ init 5 python:
     )
 
 label compliment_confident:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_confident").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_confident").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_CONFIDENT:
         if Natsuki.isEnamored(higher=True):
@@ -232,7 +232,7 @@ init 5 python:
     )
 
 label compliment_cute:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_cute").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_cute").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_CUTE:
         if Natsuki.isEnamored(higher=True):
@@ -296,7 +296,7 @@ init 5 python:
     )
 
 label compliment_hilarious:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_hilarious").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_hilarious").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_HILARIOUS:
         if Natsuki.isEnamored(higher=True):
@@ -341,7 +341,7 @@ init 5 python:
     )
 
 label compliment_inspirational:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_inspirational").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_inspirational").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_INSPIRATIONAL:
         if Natsuki.isEnamored(higher=True):
@@ -384,7 +384,7 @@ init 5 python:
     )
 
 label compliment_style:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_style").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_style").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_STYLE:
         if not Natsuki.isWearingOutfit("jn_school_uniform"):
@@ -467,7 +467,7 @@ init 5 python:
     )
 
 label compliment_thoughtful:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_thoughtful").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_thoughtful").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_THOUGHTFUL:
         if Natsuki.isEnamored(higher=True):

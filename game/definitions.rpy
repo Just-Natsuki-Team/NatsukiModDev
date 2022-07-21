@@ -1208,6 +1208,18 @@ init -999 python in jn_utils:
 
         return False
 
+    def escapeRenpySubstitutionString(string):
+        """
+        Escapes a string to account for Ren'Py substitution.
+        Use this when displaying names of items that may contain the Ren'Py substitution characters, such as file names from users.
+        
+        IN:
+            - string - The string to escape and return
+        OUT:
+            - string with Ren'Py substition characters handled
+        """
+        return string.replace("[", "[[").replace("{", "{{")
+
     def getAllDirectoryFiles(path, extension_list=None):
         """
         Runs through the files in the specified directory, filtering files via extension check if specified
@@ -1224,7 +1236,7 @@ init -999 python in jn_utils:
 
         for file in os.listdir(path):
             if (not extension_list or any(file_extension == file.rpartition(".")[-1] for file_extension in extension_list)):
-                return_file_items.append((file, os.path.join(path, file)))
+                return_file_items.append((escapeRenpySubstitutionString(file), os.path.join(path, file)))
 
         return return_file_items
 

@@ -174,7 +174,7 @@ init 0 python:
         # Start: Relationship functionality
 
         @staticmethod
-        def calculated_affinity_gain(base=1, bypass=False):
+        def calculatedAffinityGain(base=1, bypass=False):
             """
             Adds a calculated amount to affinity, based on the player's relationship with Natsuki and daily cap state.
 
@@ -186,6 +186,7 @@ init 0 python:
             if bypass:
                 # Ignore the daily gain and just award the full affinity
                 persistent.affinity += to_add
+                jn_utils.log("Affinity+")
 
             elif persistent.affinity_daily_gain > 0:
                 # Award the full affinity if any cap remains
@@ -194,12 +195,14 @@ init 0 python:
 
                 if persistent.affinity_daily_gain < 0:
                     persistent.affinity_daily_gain = 0
+                
+                jn_utils.log("Affinity+")
 
             else:
                 jn_utils.log("Daily affinity cap reached!")
 
         @staticmethod
-        def calculated_affinity_loss(base=1):
+        def calculatedAffinityLoss(base=1):
             """
             Subtracts a calculated amount from affinity, based on the player's relationship with Natsuki.
 
@@ -207,9 +210,10 @@ init 0 python:
                 - base - The base amount to use for the calculation
             """
             persistent.affinity -= base * jn_affinity.get_relationship_length_multiplier()
+            jn_utils.log("Affinity-")
 
         @staticmethod
-        def percentage_affinity_gain(percentage_gain):
+        def percentageAffinityGain(percentage_gain):
             """
             Adds a percentage amount to affinity, with the percentage based on the existing affinity value.
 
@@ -217,9 +221,10 @@ init 0 python:
                 - percentage_gain - The integer percentage the affinity should increase by
             """
             persistent.affinity += persistent.affinity * (float(percentage_gain) / 100)
+            jn_utils.log("Affinity+")
 
         @staticmethod
-        def percentage_affinity_loss(percentage_loss):
+        def percentageAffinityLoss(percentage_loss):
             """
             Subtracts a percentage amount to affinity, with the percentage based on the existing affinity value.
 
@@ -227,9 +232,10 @@ init 0 python:
                 - percentage_loss - The integer percentage the affinity should decrease by
             """
             persistent.affinity -= persistent.affinity * (float(percentage_loss) / 100)
+            jn_utils.log("Affinity-")
 
         @staticmethod
-        def check_reset_daily_affinity_gain():
+        def checkResetDailyAffinityGain():
             """
             Resets the daily affinity cap, if 24 hours has elapsed.
             """
