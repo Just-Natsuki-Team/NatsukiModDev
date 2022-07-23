@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://justnatsuki.club/img/jnlogo.png" height="500"/>
+    <img src="https://justnatsuki.club/img/jnlogo.png" height="300"/>
 </p>
 <br>
 
