@@ -1208,119 +1208,120 @@ label event_new_years_day:
         Natsuki.setOutfit(new_years_hat_outfit)
         jn_events.getHoliday("event_new_years_day").run()
     
-    n "FIVE!"
-    n "FOUR!"
-    n "THREE!"
-    n "TWO!"
-    n "ON-"
-    n "...!"
-    n "Uuuuuuuu-!"
-    n "Are you "
-    extend " {cps=\7.5}freaking{/cps}"
-    extend " {i}kidding{/i} me?!"
-    extend " I missed it?!"
-    extend "{b}AGAIN?!{/b}"
-    n "Ugh!"
-    extend " I can't {i}believe{/i} I was so off with the timing!"
+    n 1uchbs "FIVE!"
+    n 1uchbg "FOUR!"
+    n 1uchbs "THREE!"
+    n 1uchbg "TWO!"
+    n 1unmajesu "ON-"
+    n 1fskemesh "...!"
+    n 1fcsanless "Uuuuuuuu-!"
+    n 1fcsemless "Are you "
+    extend 1fcswrl " {cps=\7.5}freaking{/cps}"
+    extend 1fbkwrlean " {i}kidding{/i} me?!"
+    extend 1kskem " I missed it?!"
+    extend 1kskwr " {b}AGAIN?!{/b}"
+    n 1fcsfu "Ugh!"
+    extend 1kslfreso " I can't {i}believe{/i} I was so off with the timing!"
 
     if jn_utils.jn_is_day():
-        n "...Really off, actually."
-        extend " Almost impressively."
-        n "Jeez..."
-        n "You could have at least woken me up sooner,"
-        extend " you jerk."
-        n "But..."
-        extend " I suppose I can't give you too much of a hard time for it, [player]."
-        n " The hangover can do that for me!"
-        extend " Anyway!"
+        n 1tnmpu "...Really off,{w=0.1} actually.{w=0.5} Now that I look at the time."
+        extend 1nsrpo " Almost impressively."
+        n 1kcsemedr "Jeez..."
+        n 1fslajl "You could have at least woken me up sooner,"
+        extend 1fsqpol " you jerk."
+        n 1nslpu "But..."
+        extend 1tsqsl " I suppose I can't give you too much of a hard time for it,{w=0.1} [player]."
+        n 1fcsbg " Your hangover can do that for me!"
+        extend 1fcsajsbr " Anyway!"
 
         play audio page_turn
         $ Natsuki.setOutfit(previous_outfit)
         with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
 
     else:
-        n "..."
-        n "Now that's gonna bug me from the rest of the day..."
-        extend " way to start the year, huh?"
-        n "Well, whatever!"
+        n 1kcsemedr "Man..."
+        n 1fsrpu "Now that's gonna bug me from the rest of the day..."
+        extend 1tsqss " way to start the year,{w=0.1} huh?"
+        n 1fcspo "..."
+        n 1fcsajsbr "Well,{w=0.1} whatever!"
 
-    n "Missing the new year?"
-    extend " A-a minor setback!"
-    n "Besides,"
-    extend " it's not like we're gonna run out of years to count!"
-    extend " Probably."
+    n 1flldvlsbr "Missing the new year?"
+    extend 1flrbgsbl " M-{w=0.3}merely a minor setback!"
+    n 1fcsajsbr "Besides,"
+    extend 1flrbgsbr " it's not like we're gonna run out of years to count!"
+    extend 1nsrsssbr " Probably."
 
-    n "But..."
-    extend " in all seriousness, [player]?"
-    n "I know I've kinda already trashed my clean start..."
-    n "But that doesn't mean you're off the hook."
-    n "Yeah, yeah."
-    extend " I'm not gonna give you a whole lecture on fresh starts,"
-    extend " hitting the gym"
-    extend " or anything like that."
+    n 1unmsl "In all seriousness though,{w=0.1} [player]?"
+    n 1nslss "I know I've kinda already trashed my clean start..."
+    n 1fnmbol "But that doesn't mean you're off the hook."
+    n 1fcsss "Yeah,{w=0.1} yeah.{w=0.5} I know."
+    n 1fslss "I'm not gonna give you a whole lecture on fresh starts,"
+    extend 1tlrbo " hitting the gym"
+    extend 1tnmss " or anything like that."
 
     if jn_utils.jn_is_day():
-        n "{i}Something{/i} tells me you wouldn't appreciate the extra headache!"
+        n 1fchgn "{i}Something{/i} tells me you wouldn't appreciate the extra headache!"
 
-    n "But..." 
-    extend " there is one thing I wanna say."
-    n "Just..."
-    n "..."
+    n 1tllaj "But..." 
+    extend 1tnmsl " there actually is one thing I wanna say."
+    n 1ncssl "..."
+    n 1ucspu "Just..."
 
     if Natsuku.isAffectionate(higher=True):
-        extend " promise me something, [player]."
-        extend " Please?"
+        extend 1fnmpul " promise me something,{w=0.1} [player]."
+        extend 1knmbol " Please?"
     
     else:
-        extend " do one thing for me."
-        extend " Please?"
+        extend 1fnmpu " do one thing for me."
+        extend 1knmbol " Please?"
 
-    n "..."
-    n "Reach out to someone."
-    extend " A-and I don't mean me."
+    n 1kslbol "..."
+    n 1kplpulsbl "Reach out to someone today."
+    extend 1fcsajfesssbl " A-{w=0.2}and I don't mean me."
 
     if Natsuki.isEnamored(higher=True):
-        extend " This time."
+        extend 1fslssfesssbl " This time."
     
-    n "..."
-    n "Not everyone has the luxury of friends or family."
-    extend " And trust me when I say not everyone looks forward to a new year..."
-    n "But the right message really {i}can{/i} make all the difference."
-    n "...And you never know if you'll always have the chance to send it."
-    n "Some family you don't get along with,"
-    extend " a friend you've drifted away from..."
-    n "They won't..."
-    extend " always"
-    extend " be there."
-    n "And remembering the people around you is just as important as any stupid resolution."
-    n "I don't care {i}how{/i} you do it."
-    extend "Text message, phone call, whatever."
-    n "Just..."
-    extend " do something, alright?"
-    extend " For yourself just as much as them."
+    n 1fcsun "Just..." 
+    extend 1fcspul " hear me out,{w=0.1} alright?"
+    n 1kllun "Not everyone has the luxury of friends or family."
+    extend 1ksqpu " And trust me when I say not everyone looks forward to a new year..."
+    n 1knmsl "But the right message really {i}can{/i} make all the difference."
+    n 1klrsl "...And you never know if you'll always have the chance to send it."
+    n 1ncspu "Some family you don't get along with,"
+    extend 1nllsr " a friend you've drifted away from..."
+    n 1knmpu "They won't..."
+    extend 1kllpu " be there"
+    extend 1fslunl " forever."
+    n 1fcsajl "And remembering the people around you is just as important as any stupid resolution."
+    n 1fnmsrl "So I don't care {i}how{/i} you do it."
+    extend 1fllpul "Text message,{w=0.1} phone call,{w=0.1} whatever."
+    n 1fcspul "Just..."
+    extend 1kllsrl " do something,{w=0.1} alright?"
+    extend 1fnmbol " For yourself just as much as them."
 
-    n "..."
-    n "Oh,"
-    extend " jeez."
+    n 1nlrunl "..."
+    n 1ncsajl "Oh,"
+    extend 1nsleml " jeez."
     $ current_year = datetime.date.today().year
-    n "We're barely into [current_year] and I'm already making things all serious..."
-    n "Heh."
-    extend " So much for a lighthearted celebration, huh?"
-    n "But [player]?"
-    n "..."
+    n 1fllunlsbr "We're barely into [current_year] and I'm already making things all serious..."
+    n 1fslsslsbr "Heh."
+    extend 1tsqpu " So much for a lighthearted celebration,{w=0.1} huh?"
+    n 1tnmpu "But [player]?"
+    n 1kllsl "..."
 
     if Natsuki.isEnamored(higher=True):
-        n "...Thank you."
-        n "For this year, I mean."
-        n "I-I know I don't show it a lot!"
-        extend " But... just taking time out of your day to visit me,"
-        extend " listening to all my nonsense,"
-        extend " dealing with my crap sometimes..."
-        n "...It matters."
-        n "It really does, heh."
-        extend " A lot."
-        n "And..."
-        extend "one last thing?"
+        n 1knmsll "...Thank you."
+        n  "For this year,{w=0.1} I mean."
+        n  "I-{w=0.2}I know I don't show it a lot!"
+        extend  " But...{w=0.3} just taking time out of your day to visit me,"
+        extend  " listening to all my nonsense,"
+        extend  " dealing with my crap sometimes..."
+        n  "...It matters."
+        n  "It really does,{w=0.1} heh."
+        extend  " A lot."
+        n  "And..."
+        extend  " one last thing?"
 
         show black zorder 4 with Dissolve(0.5)
         play audio clothing_ruffle
@@ -1332,36 +1333,36 @@ label event_new_years_day:
             pause 3
             hide black with Dissolve(1.25)
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
-            n "...Happy new year, [chosen_endearment]."
+            n  "...Happy new year,{w=0.1} [chosen_endearment]."
+            extend  " Ehehe."
 
         else:
             show natsuki "" at jn_center zorder JN_NATSUKI_ZORDER
             $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-            n "Heh."
-            n "...Happy new year, [chosen_tease]."
-
-    elif Natsuki.isAffectionate(higher=True):
-        n ""
+            n  "Heh."
+            n  "...Happy new year,{w=0.1} [chosen_tease]."
 
     else:
-        n "...Thanks."
-        extend " F-for this year, I mean."
-        n "I..."
-        extend " really appreciate that you've spent so much time with me already."
-        n "Even if I am stuck in some magical space classroom."
-        n "Seriously! I do!"
-        n "It's..."
-        n "..."
-        n "I-it just means a lot to me, okay?"
-        n "And..."
-        extend " one last thing?"
+        n 1knmsll "...Thanks."
+        extend  " F-{w=0.2}for this year,{w=0.1} I mean."
+        n  "I..."
+        extend  " really appreciate that you've spent so much time with me already."
+        n  "Even if I {i}am{/i} just a grouchy girl stuck in some" 
+        extend  " magical space classroom."
+        n  "Seriously!{w=0.2} I do!"
+        n  "It's..."
+        n  "..."
+        n  "I-{w=0.3}it just means a lot to me,{w=0.1} okay?"
+        n  "And..."
+        extend  " one last thing?"
 
         show black zorder 4 with Dissolve(0.5)
         play audio clothing_ruffle
         pause 5
         hide black with Dissolve(1.25)
 
-        n "...Happy new year, dummy."
+        n  "...H-{w=0.2}happy new year,{w=0.1} dummy."
+        extend  " Ehehe."
 
     $ jn_events.getHoliday("event_new_years_day").complete()
 
