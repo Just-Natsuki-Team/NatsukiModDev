@@ -89,18 +89,25 @@ label ch30_init:
             jn_utils.log("Holiday completion states reset.")
 
         # Check for holidays, push each one that occurs today
-        holiday_list = jn_events.selectHolidays()
-        if holiday_list:
-            holiday_list.sort(key = lambda holiday: holiday.priority)
-            while len(holiday_list) > 0:
-                holiday = holiday_list.pop()
-                queue(holiday.label)
+        available_holiday_list = jn_events.selectHolidays()
 
-                if len(holiday_list) > 0:
-                    queue("event_interlude")
+        if available_holiday_list:
+            available_holiday_list.sort(key = lambda holiday: holiday.priority)
+            queued_holiday_types = list()
 
-                else:
-                    queue("ch30_loop")
+            while len(available_holiday_list) > 0:
+                holiday = available_holiday_list.pop()
+
+                # Since we can have multiple events for a holiday, ensure no dupes are pushed
+                if not holiday.holiday_type in queued_holiday_types:
+                    queued_holiday_types.append(holiday.holiday_type)
+                    queue(holiday.label)
+
+                    if len(available_holiday_list) > 0:
+                        queue("event_interlude")
+
+                    else:
+                        queue("ch30_loop")
 
             renpy.jump("call_next_topic")
 

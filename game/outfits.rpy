@@ -1365,8 +1365,14 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
     __register_wearable(JNHeadgear(
-        reference_name="jn_heargear_bee_headband",
+        reference_name="jn_headgear_bee_headband",
         display_name="Bee headband",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_classic_party_hat",
+        display_name="Classic party hat",
         unlocked=False,
         is_jn_wearable=True
     ))

@@ -6844,7 +6844,7 @@ label talk_impressions_of_the_other_girls:
         extend 1fcsan " Do {b}not{/b} try my patience again.{w=1.5}{nw}"
         extend 1fsqan " Jerk."
 
-        $ Natsuki.calculatedAffinityLoss(2)
+        $ Natsuki.percentageAffinityLoss(3.33)
 
     else:
         n 1fsqan "...What is {i}{cps=\7.5}wrong{/cps}{/i} with you?{w=1.5}{nw}"
@@ -6852,7 +6852,7 @@ label talk_impressions_of_the_other_girls:
         n 1fcsan "I am {b}NOT{/b} doing that,{w=0.1} let alone for a piece of work like{w=0.5}{nw}"
         extend 1fslan " {i}you{/i}!"
 
-        $ Natsuki.calculatedAffinityLoss(1)
+        $ Natsuki.percentageAffinityLoss(5)
 
     return
 

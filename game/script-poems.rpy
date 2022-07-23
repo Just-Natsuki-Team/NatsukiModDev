@@ -119,6 +119,14 @@ init python in jn_poems:
 
             return jn_affinity._isAffStateWithinRange(affinity_state, self.affinity_range)
 
+        def lock(self):
+            """
+            Locks this poem, making it unavailable to the player.
+            """
+            # Unlock the poem
+            self.unlocked = False
+            self.__save()
+
         def unlock(self):
             """
             Unlocks this poem, making it available to the player.

@@ -539,6 +539,8 @@ init python in jn_events:
             store.persistent._jn_holiday_completion_states[str(holiday_type)] = False
 
     # Holiday registration
+
+    # Player's birthday
     __registerHoliday(JNHoliday(
         label="event_player_birthday",
         holiday_type=JNHolidayTypes.player_birthday,
@@ -549,6 +551,17 @@ init python in jn_events:
         deco_list=["balloons"],
         prop_list=["cake unlit"],
         priority=99
+    ))
+
+    # New year's day
+    __registerHoliday(JNHoliday(
+        label="event_new_years_day",
+        holiday_type=JNHolidayTypes.new_years_day,
+        conditional="store.jn_events.isNewYearsDay()",
+        affinity_range=(jn_affinity.HAPPY, None),
+        natsuki_sprite_code="1uchgneme",
+        deco_list=["balloons"],
+        priority=1
     ))
 
 # Used to handle multiple events in a single day by cleaning/setting up inbetween events
@@ -1185,7 +1198,222 @@ label event_step_by_step_manga:
     return
 
 # HOLIDAY EVENTS
- 
+
+label event_new_years_day:
+    python:
+        # Give Natsuki a party hat, using whatever she's currently wearing as a base
+        previous_outfit = Natsuki.getOutfitName()
+        new_years_hat_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
+        new_years_hat_outfit.headgear = jn_outfits.get_wearable("jn_headgear_classic_party_hat")
+        Natsuki.setOutfit(new_years_hat_outfit)
+        jn_events.getHoliday("event_new_years_day").run()
+    
+    n "FIVE!"
+    n "FOUR!"
+    n "THREE!"
+    n "TWO!"
+    n "ON-"
+    n "...!"
+    n "Uuuuuuuu-!"
+    n "Are you "
+    extend " {cps=\7.5}freaking{/cps}"
+    extend " {i}kidding{/i} me?!"
+    extend " I missed it?!"
+    extend "{b}AGAIN?!{/b}"
+    n "Ugh!"
+    extend " I can't {i}believe{/i} I was so off with the timing!"
+
+    if jn_utils.jn_is_day():
+        n "...Really off, actually."
+        extend " Almost impressively."
+        n "Jeez..."
+        n "You could have at least woken me up sooner,"
+        extend " you jerk."
+        n "But..."
+        extend " I suppose I can't give you too much of a hard time for it, [player]."
+        n " The hangover can do that for me!"
+        extend " Anyway!"
+
+        play audio page_turn
+        $ Natsuki.setOutfit(previous_outfit)
+        with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
+
+    else:
+        n "..."
+        n "Now that's gonna bug me from the rest of the day..."
+        extend " way to start the year, huh?"
+        n "Well, whatever!"
+
+    n "Missing the new year?"
+    extend " A-a minor setback!"
+    n "Besides,"
+    extend " it's not like we're gonna run out of years to count!"
+    extend " Probably."
+
+    n "But..."
+    extend " in all seriousness, [player]?"
+    n "I know I've kinda already trashed my clean start..."
+    n "But that doesn't mean you're off the hook."
+    n "Yeah, yeah."
+    extend " I'm not gonna give you a whole lecture on fresh starts,"
+    extend " hitting the gym"
+    extend " or anything like that."
+
+    if jn_utils.jn_is_day():
+        n "{i}Something{/i} tells me you wouldn't appreciate the extra headache!"
+
+    n "But..." 
+    extend " there is one thing I wanna say."
+    n "Just..."
+    n "..."
+
+    if Natsuku.isAffectionate(higher=True):
+        extend " promise me something, [player]."
+        extend " Please?"
+    
+    else:
+        extend " do one thing for me."
+        extend " Please?"
+
+    n "..."
+    n "Reach out to someone."
+    extend " A-and I don't mean me."
+
+    if Natsuki.isEnamored(higher=True):
+        extend " This time."
+    
+    n "..."
+    n "Not everyone has the luxury of friends or family."
+    extend " And trust me when I say not everyone looks forward to a new year..."
+    n "But the right message really {i}can{/i} make all the difference."
+    n "...And you never know if you'll always have the chance to send it."
+    n "Some family you don't get along with,"
+    extend " a friend you've drifted away from..."
+    n "They won't..."
+    extend " always"
+    extend " be there."
+    n "And remembering the people around you is just as important as any stupid resolution."
+    n "I don't care {i}how{/i} you do it."
+    extend "Text message, phone call, whatever."
+    n "Just..."
+    extend " do something, alright?"
+    extend " For yourself just as much as them."
+
+    n "..."
+    n "Oh,"
+    extend " jeez."
+    $ current_year = datetime.date.today().year
+    n "We're barely into [current_year] and I'm already making things all serious..."
+    n "Heh."
+    extend " So much for a lighthearted celebration, huh?"
+    n "But [player]?"
+    n "..."
+
+    if Natsuki.isEnamored(higher=True):
+        n "...Thank you."
+        n "For this year, I mean."
+        n "I-I know I don't show it a lot!"
+        extend " But... just taking time out of your day to visit me,"
+        extend " listening to all my nonsense,"
+        extend " dealing with my crap sometimes..."
+        n "...It matters."
+        n "It really does, heh."
+        extend " A lot."
+        n "And..."
+        extend "one last thing?"
+
+        show black zorder 4 with Dissolve(0.5)
+        play audio clothing_ruffle
+        pause 5
+
+        if Natsuki.isLove(higher=True):
+            show natsuki "" at jn_center zorder JN_NATSUKI_ZORDER
+            play audio kiss
+            pause 3
+            hide black with Dissolve(1.25)
+            $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+            n "...Happy new year, [chosen_endearment]."
+
+        else:
+            show natsuki "" at jn_center zorder JN_NATSUKI_ZORDER
+            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            n "Heh."
+            n "...Happy new year, [chosen_tease]."
+
+    elif Natsuki.isAffectionate(higher=True):
+        n ""
+
+    else:
+        n "...Thanks."
+        extend " F-for this year, I mean."
+        n "I..."
+        extend " really appreciate that you've spent so much time with me already."
+        n "Even if I am stuck in some magical space classroom."
+        n "Seriously! I do!"
+        n "It's..."
+        n "..."
+        n "I-it just means a lot to me, okay?"
+        n "And..."
+        extend " one last thing?"
+
+        show black zorder 4 with Dissolve(0.5)
+        play audio clothing_ruffle
+        pause 5
+        hide black with Dissolve(1.25)
+
+        n "...Happy new year, dummy."
+
+    $ jn_events.getHoliday("event_new_years_day").complete()
+
+    return
+
+label event_valentines_day:
+    #TODO: writing
+    $ jn_events.getHoliday("event_valentines_day").run()
+
+    $ jn_events.getHoliday("event_valentines_day").complete()
+
+    return
+
+label event_easter:
+    #TODO: writing
+    $ jn_events.getHoliday("event_easter").run()
+    $ jn_events.getHoliday("event_easter").complete()
+
+    return
+
+label event_halloween:
+    #TODO: writing
+    $ jn_events.getHoliday("event_halloween").run()
+
+    $ jn_events.getHoliday("event_halloween").complete()
+
+    return
+
+label event_christmas_eve:
+    #TODO: writing
+    $ jn_events.getHoliday("event_christmas_eve").run()
+
+    $ jn_events.getHoliday("event_christmas_eve").complete()
+
+    return
+
+label event_christmas_day:
+    #TODO: writing
+    $ jn_events.getHoliday("event_christmas_day").run()
+
+    $ jn_events.getHoliday("event_christmas_day").complete()
+
+    return
+
+label event_new_years_eve:
+    #TODO: writing
+    $ jn_events.getHoliday("event_new_years_eve").run()
+
+    $ jn_events.getHoliday("event_new_years_eve").complete()
+
+    return
+
 # Natsuki wishes the player a happy birthday!
 label event_player_birthday():
     $ jn_events.getHoliday("event_player_birthday").run()
@@ -1325,14 +1553,11 @@ label event_player_birthday():
 
     return
 
-label event_valentines_day:
-    #TODO: writing
-    $ jn_events.getHoliday("event_valentines_day").run()
-    n "This isn't done yet, but happy valentine's day!"
-    return
-
 label event_anniversary:
     #TODO: writing
     $ jn_events.getHoliday("event_anniversary").run()
     n "This isn't done yet, but happy anniversary!"
+    
+    $ jn_events.getHoliday("event_anniversary").complete()
+    
     return
