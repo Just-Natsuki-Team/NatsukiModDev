@@ -91,7 +91,12 @@ label ch30_init:
         # Check for holidays, push each one that occurs today
         available_holiday_list = jn_events.selectHolidays()
 
-        renpy.jump("event_new_years_day")
+        # TODO: TEST CODE - REMOVE
+        queue("event_new_years_day")
+        queue("event_interlude")
+        queue("event_player_birthday")
+        queue("ch30_loop")
+        renpy.jump("call_next_topic")
 
         if available_holiday_list:
             available_holiday_list.sort(key = lambda holiday: holiday.priority)

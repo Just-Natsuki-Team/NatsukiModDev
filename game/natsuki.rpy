@@ -69,15 +69,18 @@ init 0 python:
             return Natsuki._outfit.reference_name
 
         @staticmethod
-        def setOutfit(outfit):
+        def setOutfit(outfit, persist=True):
             """
             Assigns the specified jn_outfits.JNOutfit outfit to Natsuki.
 
             IN:
                 - outfit - The jn_outfits.JNOutfit outfit for Natsuki to wear.
+                - persist - True if the outfit should be remembered so Natsuki will be wearing it on next boot
             """
             Natsuki._outfit = outfit
-            store.persistent.jn_natsuki_outfit_on_quit = Natsuki._outfit.reference_name
+
+            if persist:
+                store.persistent.jn_natsuki_outfit_on_quit = Natsuki._outfit.reference_name
 
         @staticmethod
         def isWearingOutfit(reference_name):

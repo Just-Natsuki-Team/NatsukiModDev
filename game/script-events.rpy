@@ -24,6 +24,7 @@ init python in jn_events:
     import store.jn_atmosphere as jn_atmosphere
     import store.jn_affinity as jn_affinity
     import store.jn_globals as jn_globals
+    import store.jn_outfits as jn_outfits
     import store.jn_utils as jn_utils
 
     JN_EVENT_DECO_ZORDER = 2
@@ -33,6 +34,7 @@ init python in jn_events:
     EVENT_MAP = dict()
 
     __ALL_HOLIDAYS = {}
+    EVENT_RETURN_OUTFIT = jn_outfits.get_outfit(store.persistent.jn_natsuki_outfit_on_quit)
 
     class JNHolidayTypes(Enum):
         new_years_day = 1
@@ -561,12 +563,14 @@ init python in jn_events:
         affinity_range=(jn_affinity.HAPPY, None),
         natsuki_sprite_code="1uchgneme",
         deco_list=["balloons"],
-        priority=1
+        priority=10
     ))
 
 # Used to handle multiple events in a single day by cleaning/setting up inbetween events
 label event_interlude:
-    n 1fllpueqm "...I feel like I'm forgetting something else."
+    n 1fllbo "..."
+    n 1tllpu "You know..."
+    n 1tnmpueqm "I feel like I'm forgetting something else."
     n 1fsrpu "...{w=1}{nw}"
     n 1uskemlesh "...!{w=0.5}{nw}"
     n 1fbkwrl "J-{w=0.3}just a second!{w=1}{nw}"
@@ -577,9 +581,9 @@ label event_interlude:
     stop music
     hide prop
     hide deco
+    $ Natsuki.setOutfit(jn_outfits.get_outfit(jn_events.EVENT_RETURN_OUTFIT))
     play audio light_switch
-
-    $ renpy.pause(3)
+    pause 3
 
     return
 
@@ -868,7 +872,7 @@ label event_not_ready_yet:
         outfit_to_restore = Natsuki.getOutfitName()
         ahoge_outfit = jn_outfits.get_outfit("jn_ahoge_unlock")
         ahoge_outfit.headgear = random.choice(unlocked_ahoges)
-        Natsuki.setOutfit(ahoge_outfit)
+        Natsuki.setOutfit(ahoge_outfit, False)
 
     $ renpy.pause(5)
     n "Uuuuuu...{w=2}{nw}"
@@ -1206,7 +1210,7 @@ label event_new_years_day:
         previous_outfit = Natsuki.getOutfitName()
         new_years_hat_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
         new_years_hat_outfit.headgear = jn_outfits.get_wearable("jn_headgear_classic_party_hat")
-        Natsuki.setOutfit(new_years_hat_outfit)
+        Natsuki.setOutfit(new_years_hat_outfit, False)
         jn_events.getHoliday("event_new_years_day").run()
     
     n 1uchbs "FIVE!"
@@ -1243,7 +1247,7 @@ label event_new_years_day:
     else:
         n 1kcsemedr "Man..."
         n 1fsrpu "Now that's gonna bug me from the rest of the day..."
-        n 1tsqss "Way to start the new year,{w=0.1} huh?"
+        n 1fslsrl "Way to start the new year,{w=0.1} huh?"
         n 1fcspoesi "..."
         n 1fcsajsbr "Well,{w=0.1} whatever!"
 
@@ -1252,12 +1256,12 @@ label event_new_years_day:
     n 1fcsajsbr "Besides,{w=0.5}{nw}"
     extend 1fllbgsbr " it's not like we're gonna run out of years to count!{w=1}{nw}"
     extend 1nsrsssbr " Probably."
-    n 1nllpusbr "It's..."
+    n 1nllpusbr "It's...{w=1}{nw}"
     extend 1nsqsssbl " kinda getting harder to tell these days, huh?"
     n 1kllbosbl "..."
 
     n 1unmsl "In all seriousness though,{w=0.1} [player]?"
-    n 1nslss "I know I've kinda already trashed my clean start..."
+    n 1nslss "I know I've already kinda trashed my clean start..."
     n 1fnmbol "But that doesn't mean you're off the hook."
     n 1fcsss "Yeah,{w=0.1} yeah.{w=0.5} I know."
     n 1fslss "I'm not gonna give you a whole lecture on fresh starts,{w=1}{nw}"
@@ -1290,9 +1294,9 @@ label event_new_years_day:
     else:
         extend 1fcsajfesssbl " A-{w=0.2}and I don't mean me.{w=0.5}{nw}"
     
-    n 1fcsun "Just...{w=1}{nw}" 
+    n 1fcsun "Please...{w=1}{nw}" 
     extend 1fcspul " hear me out,{w=0.1} alright?"
-    n 1kllun "Not everyone has the luxury of friends or family.{w=0.5}{nw}"
+    n 1kllun "Not everyone has the luxury of friends or family.{w=1}{nw}"
     extend 1ksqpu " And trust me when I say not everyone looks forward to a new year..."
     n 1knmsl "But the right message really {i}can{/i} make all the difference."
     n 1klrsl "...And you never know if you'll always have the chance to send it."
@@ -1301,7 +1305,8 @@ label event_new_years_day:
     n 1knmpu "They won't...{w=0.5}{nw}"
     extend 1kllpu " be there{w=0.5}{nw}"
     extend 1fslunl " forever."
-    n 1fcsajl "And remembering the people around you is just as important as any stupid resolution."
+    n 1kslunltsb "...Just like my friends,{w=0.3} [player]."
+    n 1fcsajftsa "A-{w=0.1}and remembering the people around you is just as important as any stupid resolution."
     n 1fnmsrl "So I don't care {i}how{/i} you do it.{w=1}{nw}"
     extend 1fllpul " Text message,{w=0.35} phone call,{w=0.35} whatever."
     n 1fcspul "But please...{w=0.5}{nw}"
@@ -1314,7 +1319,7 @@ label event_new_years_day:
     $ current_year = datetime.date.today().year
     n 1fllunlsbr "We're barely into [current_year] and I'm already making things all serious..."
     n 1fslsslsbr "Heh.{w=0.5}{nw}"
-    extend 1tsqpu " So much for a lighthearted celebration,{w=0.1} huh?"
+    extend 1tsqpu " So much for a lighthearted celebration,{w=0.1} right?"
     n 1tnmpu "But [player]?"
     n 1kllsl "..."
 
