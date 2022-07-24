@@ -32,9 +32,9 @@ init python in jn_events:
     JN_EVENT_FADE_ZORDER = 10
 
     EVENT_MAP = dict()
+    EVENT_RETURN_OUTFIT = None
 
     __ALL_HOLIDAYS = {}
-    EVENT_RETURN_OUTFIT = jn_outfits.get_outfit(store.persistent.jn_natsuki_outfit_on_quit)
 
     class JNHolidayTypes(Enum):
         new_years_day = 1
@@ -542,17 +542,14 @@ init python in jn_events:
 
     # Holiday registration
 
-    # Player's birthday
+    # New year's eve
     __registerHoliday(JNHoliday(
-        label="event_player_birthday",
-        holiday_type=JNHolidayTypes.player_birthday,
-        conditional="store.jn_events.isPlayerBirthday()",
-        affinity_range=(jn_affinity.AFFECTIONATE, None),
-        natsuki_sprite_code="1uchgnl",
-        bgm=audio.happy_birthday_bgm,
-        deco_list=["balloons"],
-        prop_list=["cake unlit"],
-        priority=99
+        label="event_new_years_eve",
+        holiday_type=JNHolidayTypes.new_years_day,
+        conditional="store.jn_events.isNewYearsEve()",
+        affinity_range=(jn_affinity.HAPPY, None),
+        natsuki_sprite_code="1uchgneme",
+        priority=10
     ))
 
     # New year's day
@@ -564,6 +561,19 @@ init python in jn_events:
         natsuki_sprite_code="1uchgneme",
         deco_list=["balloons"],
         priority=10
+    ))
+
+    # Player's birthday
+    __registerHoliday(JNHoliday(
+        label="event_player_birthday",
+        holiday_type=JNHolidayTypes.player_birthday,
+        conditional="store.jn_events.isPlayerBirthday()",
+        affinity_range=(jn_affinity.AFFECTIONATE, None),
+        natsuki_sprite_code="1uchgnl",
+        bgm=audio.happy_birthday_bgm,
+        deco_list=["balloons"],
+        prop_list=["cake unlit"],
+        priority=99
     ))
 
 # Used to handle multiple events in a single day by cleaning/setting up inbetween events
@@ -1430,6 +1440,65 @@ label event_christmas_day:
 label event_new_years_eve:
     #TODO: writing
     $ jn_events.getHoliday("event_new_years_eve").run()
+    n "[player]!"
+    n "[player]!{w=0.3} [player]!"
+    n "Look at the date!"
+    extend " Do you even know what day it is?!"
+    extend " It's almost the new year!"
+    n "Man..."
+    extend " and about time too, huh?"
+    n "Ehehe."
+    n "I don't know about you [player]..."
+    $ current_year = datetime.date.today().year
+    extend " but I can't wait to tell [current_year] just where to stick it!"
+    n "And what better way to do that..." 
+    extend " than a crap ton of explosions and snacks?"
+    n "Ahaha."
+
+    if Natsuki.isEnamored(higher=True):
+        n "..."
+        n "But..."
+        extend " in all seriousness, [player]?"
+        n "..."
+        n "I'd..."
+        extend " really like to spend it with you."
+        n "..."
+        n "...I'd like that a lot."
+        n "I-if you didn't have anything planned, anyway."
+        extend " I'm not gonna be a jerk about it if you already had stuff to do."
+        n "Though..."
+        extend " if you didn't?"
+        extend " Well..."
+        n "You know where to find me."
+        extend " Ehehe."
+
+        if Natsuki.isLove(higher=True):
+            n "Love you~!"
+
+    elif Natsuki.isAffectionate(higher=True):
+        n "..."
+        extend "...I'm not gonna expect you to drop all your plans to come see me,"
+        extend " you know."
+        n "I know you already have..."
+        extend " a life."
+        extend " Out there."
+        n "I'm not gonna be a complete jerk about it."
+        extend " I'm way better than that."
+        n "But..."
+        extend " [player]?"
+        n "..."
+        n "...It isn't like I'd say {i}no{/i} to your company, you know."
+        extend " S-so long as you don't make it all gross, anyway."
+        n "Ehehe."
+
+    else:
+        n "Just a word of warning though, [player]..."
+        n "I {i}fully{/i} expect to see you here for it."
+        extend " No excuses!"
+        n "A-and besides,"
+        extend " you {i}did{/i} bring me back to experience things like this."
+        n "It's the least you can do..."
+        extend " right?"
 
     $ jn_events.getHoliday("event_new_years_eve").complete()
 

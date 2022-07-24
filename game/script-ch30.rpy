@@ -92,6 +92,7 @@ label ch30_init:
         available_holiday_list = jn_events.selectHolidays()
 
         # TODO: TEST CODE - REMOVE
+        jn_events.EVENT_RETURN_OUTFIT = jn_outfits.get_outfit(store.persistent.jn_natsuki_outfit_on_quit)
         # queue("event_new_years_day")
         # queue("event_interlude")
         # queue("event_player_birthday")
@@ -99,6 +100,7 @@ label ch30_init:
         # renpy.jump("call_next_topic")
 
         if available_holiday_list:
+            jn_events.EVENT_RETURN_OUTFIT = jn_outfits.get_outfit(store.persistent.jn_natsuki_outfit_on_quit)
             available_holiday_list.sort(key = lambda holiday: holiday.priority)
             queued_holiday_types = list()
 
