@@ -53,10 +53,10 @@ label ch30_init:
 
         # Determine if the player should get a prolonged leave greeting
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
-            persistent.last_apology_type = jn_apologies.TYPE_PROLONGED_LEAVE
+            persistent.jn_player_apology_type_on_quit = jn_apologies.TYPE_PROLONGED_LEAVE
 
         # Repeat visits have a small affinity gain
-        elif not persistent.last_apology_type:
+        elif not persistent.jn_player_apology_type_on_quit:
             Natsuki.calculatedAffinityGain()
 
         # Add to the total visits counter and set the last visit date

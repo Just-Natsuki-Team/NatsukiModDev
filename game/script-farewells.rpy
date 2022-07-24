@@ -204,19 +204,19 @@ label farewell_option_eat:
         n 1fcsgs "W-{w=0.1}well,{w=0.1} yeah!{w=0.2} Go get something already,{w=0.1} dummy!"
         n 1fllpo "Jeez..."
         n 1fnmpo "Just make it something healthy,{w=0.1} got it?"
-        n 1fllsm "...Ehehe.{w=0.2}{nm}"
+        n 1fllsm "...Ehehe.{w=0.2}{nw}"
         extend 1fchbg " Enjoy,{w=0.1} [player]!"
 
     elif jn_get_current_hour() in (7, 8):
         n 1fnmaj "You better!{w=0.5}{nw}"
         extend 1fslca " You {i}do{/i} know what they say about breakfast,{w=0.1} right?"
-        n 1fllsm "...Ehehe.{w=0.2}{nm}"
+        n 1fllsm "...Ehehe.{w=0.2}{nw}"
         n 1fchbg "Bon appetit,{w=0.1} [player]!"
 
     elif jn_get_current_hour() in (12, 13):
         n 1unmaj "Heading out for lunch,{w=0.1} [player]?"
         n 1nlrpu "That's cool,{w=0.1} that's cool."
-        n 1nsqsm "Just remember though...{w=0.3}{nm}"
+        n 1nsqsm "Just remember though...{w=0.3}{nw}"
         extend 1fsqss " you are what you eat~."
         n 1fchsm "...Ehehe.{w=0.5}{nw}"
         extend 1uchsm " Enjoy!"
