@@ -279,3 +279,4 @@ screen hkb_overlay:
             activate_sound gui.activate_sound
 
             style "hkbd_button"
+
