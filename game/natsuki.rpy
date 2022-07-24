@@ -1,3 +1,7 @@
+default persistent.trust = 10.0
+default persistent.affinity = 25.0
+default persistent._jn_player_confession_accepted = False
+
 init 0 python:
     import store.jn_outfits as jn_outfits
 
@@ -183,6 +187,16 @@ init 0 python:
                 - bypass - If the daily cap should be bypassed for things like one-time gifts, events, etc.
             """
             to_add = base * jn_affinity.get_relationship_length_multiplier()
+
+            if (
+                not persistent._jn_player_confession_accepted 
+                and (persistent.affinity + to_add) > (jn_affinity.AFF_THRESHOLD_LOVE -1)
+            ):
+                # Player cannot reach LOVE without having confessed to Natsuki successfully
+                persistent.affinity = jn_affinity.AFF_THRESHOLD_LOVE -1
+                jn_utils.log("Affinity blocked - CN!")
+                return
+
             if bypass:
                 # Ignore the daily gain and just award the full affinity
                 persistent.affinity += to_add
@@ -216,12 +230,20 @@ init 0 python:
         def percentageAffinityGain(percentage_gain):
             """
             Adds a percentage amount to affinity, with the percentage based on the existing affinity value.
+            This bypasses the usual check, so this should only be used for one-off big gains.
 
             IN:
                 - percentage_gain - The integer percentage the affinity should increase by
             """
-            persistent.affinity += persistent.affinity * (float(percentage_gain) / 100)
-            jn_utils.log("Affinity+")
+            to_add = persistent.affinity * (float(percentage_gain) / 100)
+            if (not persistent._jn_player_confession_accepted and (persistent.affinity + to_add) > (jn_affinity.AFF_THRESHOLD_LOVE -1)):
+                # Player cannot reach LOVE without having confessed to Natsuki successfully
+                persistent.affinity = jn_affinity.AFF_THRESHOLD_LOVE -1
+                jn_utils.log("Affinity blocked - CN!")
+
+            else:
+                persistent.affinity += to_add
+                jn_utils.log("Affinity+")
 
         @staticmethod
         def percentageAffinityLoss(percentage_loss):
