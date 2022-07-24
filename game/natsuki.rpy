@@ -181,6 +181,11 @@ init 0 python:
             """
             Adds a calculated amount to affinity, based on the player's relationship with Natsuki and daily cap state.
 
+            NOTE:
+                If the player has not confessed to Natsuki via the talk_i_love_you topic, further affinity gain is not possible
+                until the confession has been made! This is to prevent players having Natsuki tell them she loves them unwarranted
+                by accidentally crossing the boundary into LOVE.
+
             IN:
                 - base - The base amount to use for the calculation
                 - bypass - If the daily cap should be bypassed for things like one-time gifts, events, etc.
@@ -230,6 +235,11 @@ init 0 python:
             """
             Adds a percentage amount to affinity, with the percentage based on the existing affinity value.
             This bypasses the usual check, so this should only be used for one-off big gains.
+
+            NOTE:
+                If the player has not confessed to Natsuki via the talk_i_love_you topic, further affinity gain is not possible
+                until the confession has been made! This is to prevent players having Natsuki tell them she loves them unwarranted
+                by accidentally crossing the boundary into LOVE.
 
             IN:
                 - percentage_gain - The integer percentage the affinity should increase by
