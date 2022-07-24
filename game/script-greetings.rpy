@@ -769,36 +769,43 @@ init 5 python:
     )
 
 label greeting_prolonged_leave:
-    $ player_initial = list(player)[0]
+    $ player_initial = jn_utils.get_player_initial()
 
     if Natsuki.isEnamored(higher=True):
         n 1uwdwrf "[player_initial]-{w=0.1}[player]!"
-        n 1fbkwrf "W-{w=0.1}where were you?!{w=0.2} I was so worried that something had happened!"
+        n 1fbkwrf "W-{w=0.3}where were you?!{w=0.5}{nw}" 
+        extend 1kllemlsbl " You had me worried {i}sick{/i}!"
         n 1kcsunl "..."
-        n 1kplunl "I'm...{w=0.3} glad...{w=0.3} you're back,{w=0.1} [player]."
-        n 1kplsfl "Just...{w=0.3} some warning next time,{w=0.1} please?"
-        n 1kcssll "I hate having my heart played with like that..."
+        n 1fcsunl "I'm...{w=0.5}{nw}"
+        extend 1kplunl " glad...{w=0.3} you're back,{w=0.1} [player]."
+        extend 1kcseml " Just..."
+        n 1klrsflsbl "...Don't just suddenly disappear for so long."
+        n 1fcsunf "I hate having my heart played with like that..."
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_PROLONGED_LEAVE)
 
     elif Natsuki.isNormal(higher=True):
         n 1uwdwr "[player_initial]-{w=0.1}[player]!"
-        n 1fnman "What the hell?!{w=0.2} Where have you been?{w=0.2} I was worried sick!"
-        n 1fcsupl "J-{w=0.1}just as a friend,{w=0.1} but still!"
-        n 1fcsun "..."
-        n 1knmun "...Welcome back,{w=0.1} [player]."
-        n 1knmaj "Just...{w=0.3} don't leave it so long next time,{w=0.1} alright?{w=0.2} Jeez..."
+        n 1fnman "What the hell?!{w=0.5}{nw}"
+        extend 1fnmfu " Where have you been?!{w=0.5}{nw}" 
+        extend 1fbkwrless " I was worried sick!"
+        n 1fcsupl "J-{w=0.3}just as a friend,{w=0.5} but still!"
+        n 1fcsun "...{w=1.5}{nw}"
+        n 1kcspu "..."
+        n 1fllunlsbl "...Welcome back,{w=0.1} [player]."
+        n  "Just...{w=1.25}{nw}"
+        extend 1knmaj " don't leave it so long next time,{w=0.1} alright?"
+        n 1fsrunl "You know I don't exactly get many visitors..."
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_PROLONGED_LEAVE)
 
     elif Natsuki.isDistressed(higher=True):
-        n 1fsqaj "[player_initial]-{w=0.1}[player]?"
-        n 1fsqsl "...You're back."
-        n 1kcssf "I...{w=0.3} don't know how I feel about that."
+        n 1fsqputsb "[player_initial]-{w=0.1}[player]?"
+        n 1fsqsltsb "...You're back."
+        n 1fcsfutsb "Just {i}perfect{/i}."
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_PROLONGED_LEAVE)
 
     else:
-        n 1kcssf "...Heh."
-        n 1fcssl "So you came back."
-        n 1fcsup "{i}Great{/i}."
+        n 1fsquptdr "..."
+        n 1fcsfutsd "...."
         $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_PROLONGED_LEAVE)
 
     return
