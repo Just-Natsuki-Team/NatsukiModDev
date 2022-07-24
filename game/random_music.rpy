@@ -5,54 +5,77 @@ init python in jn_random_music:
     import store
     import store.jn_affinity as jn_affinity
     import store.jn_custom_music as jn_custom_music
-    import store.jn_plugins as jn_plugins
     import store.jn_utils as jn_utils
 
     _NEW_TRACK_QUIPS = [
         "Alright!{w=0.2} About time for a different tune,{w=0.1} I think!",
-        "Okay!{w=0.2} Time for another song!",
+        "Okaaay!{w=0.2} Time for another song!",
         "I think I'm about done with this song.",
-        "That's about enough of that track,{w=0.1} I think.",
+        "'Kay, that's enough of that.",
         "New song time!",
-        "That's about enough of that song!",
+        "That's about enough of that number!",
         "I wanna listen to something else...",
         "Time to change things up!"
     ]
 
     _NEW_TRACK_FOLLOWUPS = [
-        "Now, let's see...",
-        "Now, what have we got...",
-        "Let's see here..."
+        "Now,{w=0.1} let's see...",
+        "Now,{w=0.1} what have we got...",
+        "Let's see here...",
         "What else have we got...",
         "Aha!{w=0.2} Let's try this one!",
         "Let me see..."
     ]
+
+    # The file extensions we (Ren'Py) support
+    _VALID_FILE_EXTENSIONS = ["mp3", "ogg", "wav"]
 
     def random_music_change_check():
         """
         Determines if Natsuki should pick a new song to play in the background.
         """
 
-        if (store.persistent.jn_custom_music_unlocked
+        if (
+            store.persistent.jn_custom_music_unlocked
             and store.persistent.jn_random_music_enabled
             and store.Natsuki.isAffectionate(higher=True)
             and store.preferences.get_volume("music") > 0
-            and len(jn_custom_music.get_all_custom_music()) >= 2):
-
+            and len(jn_utils.getAllDirectoryFiles(
+                path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
+                extension_list=_VALID_FILE_EXTENSIONS
+                )
+            ) >= 2
+        ):
             store.push("random_music_change")
             renpy.jump("call_next_topic")
 
 label random_music_change:
     $ track_quip = random.choice(jn_random_music._NEW_TRACK_QUIPS)
     n 1nchbg "[track_quip]{w=2}{nw}"
+
+    stop music fadeout 2
+    $ renpy.pause(2)
+    play audio cassette_open
+
     $ track_followup = random.choice(jn_random_music._NEW_TRACK_FOLLOWUPS)
     n 1unmbgl "[track_followup]{w=2}{nw}"
-    stop music fadeout 3
 
     python:
-        music_title_and_file = random.choice(filter(lambda track: (jn_custom_music._now_playing not in track), jn_custom_music.get_all_custom_music()))
+        music_title_and_file = random.choice(
+            filter(
+                lambda track: (jn_custom_music._now_playing not in track),
+                jn_utils.getAllDirectoryFiles(
+                    path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
+                    extension_list=["mp3","wav","ogg"]
+                )
+            )
+        )
         music_title = music_title_and_file[0]
-        renpy.play(filename=music_title_and_file[1], channel="music", fadein=3)
+
+    play audio cassette_close
+    python:
+        renpy.pause(2)
+        renpy.play(filename=music_title_and_file[1], channel="music", fadein=2)
         jn_custom_music._now_playing = music_title
         renpy.notify("Now playing: {0}".format(jn_custom_music._now_playing))
 
@@ -83,7 +106,10 @@ label random_music_enable:
     extend 1fllbg " I almost forgot {w=0.1}-{w=0.1} let me just check there's actually any music for me to play first."
     n 1ncsbo "..."
 
-    if len(jn_custom_music.get_all_custom_music()) >= 2:
+    if len(jn_utils.getAllDirectoryFiles(
+            path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
+            extension_list=["mp3","wav","ogg"]
+        )) >= 2:
         # Proceed if we have at least two tracks
         n 1uchgn "Okaaay!{w=0.2} I think I've got enough to work with here!{w=0.5}{nw}"
         extend 1nchsm " Ehehe."
@@ -134,8 +160,13 @@ label random_music_disable:
     n 1uchbg "I'm just messing with you.{w=0.2} Sure thing!{w=0.5}{nw}"
     extend 1nchsm " I'll just put it back to the regular music."
 
-    stop music fadeout 3
-    play music audio.just_natsuki_bgm fadein 3
+    stop music fadeout 2
+    $ renpy.pause(2)
+    play audio cassette_open
+    $ renpy.pause(1.5)
+    play audio cassette_close
+    $ renpy.pause(2)
+    play music audio.just_natsuki_bgm fadein 2
 
     n 1nwlbg "...And there we go!"
 

@@ -43,6 +43,11 @@ style categorized_menu_button_text is choice_button_text:
     align (0.0, 0.0)
     text_align 0.0
 
+style categorized_menu_button_italic is categorized_menu_button
+
+style categorized_menu_button_text_italic is categorized_menu_button_text:
+    italic True
+
 screen categorized_menu(menu_items, category_pane_space, option_list_space, category_length):
     at categorized_menu_slide_in_right
     style_prefix "categorized_menu"
@@ -141,8 +146,9 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                         null height 20
 
                         for _topic in menu_items.get(selected_category):
+                            $ display_text = _topic.prompt if (_topic.shown_count > 0 or _topic.nat_says) else "{i}[_topic.prompt]{/i}"
                             #NOTE: This should be preprocessed such that Topics without prompts aren't passed into this menu
-                            textbutton _topic.prompt:
+                            textbutton display_text:
                                 style "categorized_menu_button"
                                 #Return the label so it can be called
                                 action [ Return(_topic.label), Function(prev_adjustment.change, 0), SetVariable("selected_category", None) ]
@@ -150,7 +156,6 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                                 activate_sound gui.activate_sound
 
                             null height 5
-
 
 screen scrollable_choice_menu(items, last_item=None):
     fixed:
@@ -666,31 +671,9 @@ screen quick_menu():
             xalign 0.5
             yalign 0.995
 
-            if jn_utils.get_key_valid():
-                textbutton _("Restart"):
-                    text_style "quickmenu_text"
-                    action Show(
-                        screen="confirm_editable_closable",
-                        message="Do you want to RELOAD or RESET?",
-                        yes_text="Reload",
-                        no_text="Reset",
-                        yes_action=Jump("ch30_autoload"),
-                        no_action=Jump("restart")
-                    )
-                    hover_sound gui.hover_sound
-                    activate_sound gui.activate_sound
-
-
             textbutton _("History"):
                 text_style "quickmenu_text"
                 action ShowMenu('history')
-                hover_sound gui.hover_sound
-                activate_sound gui.activate_sound
-
-            textbutton _("Skip"):
-                text_style "quickmenu_text"
-                action Skip()
-                alternate Skip(fast=True, confirm=True)
                 hover_sound gui.hover_sound
                 activate_sound gui.activate_sound
 
@@ -1165,13 +1148,31 @@ screen preferences():
                         textbutton _("After Choices") action Preference("after choices", "toggle")
 
                     vbox:
-                        style_prefix "check"
+                        # Weather options
+                        style_prefix "radio"
                         label _("Weather")
-                        textbutton _("Random") action ToggleField(
+
+                        textbutton _("Disabled") action SetField(
                             object=persistent,
-                            field="jn_random_weather",
-                            true_value=True,
-                            false_value=False)
+                            field="_jn_weather_setting",
+                            value=int(jn_preferences.weather.JNWeatherSettings.disabled)
+                        )
+
+                        textbutton _("Random") action SetField(
+                            object=persistent,
+                            field="_jn_weather_setting",
+                            value=int(jn_preferences.weather.JNWeatherSettings.random)
+                        )
+
+                        if persistent._jn_weather_api_configured:
+                            textbutton _("Real-time") action [
+                                SetField(
+                                    object=persistent,
+                                    field="_jn_weather_setting",
+                                    value=int(jn_preferences.weather.JNWeatherSettings.real_time)
+                                ),
+                                SensitiveIf(persistent._jn_weather_api_configured)
+                            ]
 
                     vbox:
                         style_prefix "check"
@@ -1514,69 +1515,6 @@ screen dialog(message, ok_action):
 
                 textbutton _("OK") action ok_action
 
-screen reload(message, ok_action):
-
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
-
-    zorder 200
-
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
-
-    frame:
-
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _(message):
-                style "confirm_prompt"
-                xalign 0.5
-
-            hbox:
-                xalign 0.5
-                spacing 50
-
-                textbutton _("Restart") action Quit(confirm=True)
-
-
-            hbox:
-                xalign 0.5
-                spacing 50
-
-                textbutton _("I'll do it myself") action Hide("reload")
-
-# screen quit(message, ok_action):
-
-#     ## Ensure other screens do not get input while this screen is displayed.
-#     modal True
-
-#     zorder 200
-
-#     style_prefix "confirm"
-
-#     add "gui/overlay/confirm.png"
-
-#     frame:
-
-#         vbox:
-#             xalign .5
-#             yalign .5
-#             spacing 30
-
-#             label _(message):
-#                 style "confirm_prompt"
-#                 xalign 0.5
-
-#             hbox:
-#                 xalign 0.5
-#                 spacing 100
-
-#                 textbutton _("No") action ok_action
-
 screen endgame(message): # No spoilers, promise!
 
     ## Ensure other screens do not get input while this screen is displayed.
@@ -1724,33 +1662,6 @@ style confirm_button:
 style confirm_button_text is choice_button_text:
     properties gui.button_text_properties("confirm_button")
 
-
-## Skip indicator screen #######################################################
-##
-## The skip_indicator screen is displayed to indicate that skipping is in
-## progress.
-##
-## https://www.renpy.org/doc/html/screen_special.html#skip-indicator
-screen fake_skip_indicator():
-    use skip_indicator
-
-screen skip_indicator():
-
-    zorder 100
-    style_prefix "skip"
-
-    frame:
-
-        hbox:
-            spacing 6
-
-            text _("Skipping")
-
-            text "▸" at delayed_blink(0.0, 1.0) style "skip_triangle"
-            text "▸" at delayed_blink(0.2, 1.0) style "skip_triangle"
-            text "▸" at delayed_blink(0.4, 1.0) style "skip_triangle"
-
-
 ## This transform is used to blink the arrows one after another.
 transform delayed_blink(delay, cycle):
     alpha .5
@@ -1763,7 +1674,6 @@ transform delayed_blink(delay, cycle):
         linear .2 alpha 0.5
         pause (cycle - .4)
         repeat
-
 
 style skip_frame is empty
 style skip_text is gui_text

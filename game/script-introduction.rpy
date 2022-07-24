@@ -36,16 +36,19 @@ label introduction_progress_check:
     if not jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.new_game:
         play audio static
         show glitch_garbled_a zorder 99 with vpunch
-        hide glitch_garbled_a
-        $ main_background.appear()
+
+        $ Natsuki.setOutfit(jn_outfits.get_outfit("jn_school_uniform"))
+        $ main_background.show()
         $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
+        show natsuki idle introduction at jn_center zorder JN_NATSUKI_ZORDER
+        hide glitch_garbled_a
         play music audio.space_classroom_bgm fadein 1
 
     $ renpy.jump(jn_introduction.INTRODUCTION_STATE_LABEL_MAP.get(jn_introduction.JNIntroductionStates(persistent.jn_introduction_state)))
 
 label introduction_opening:
     $ config.allow_skipping = False
-    scene black
+    show black zorder 99
     $ renpy.pause(5)
 
     # Restore attempt #1..
@@ -108,11 +111,14 @@ label introduction_opening:
     hide glitch_fuzzy
     play audio static
     show glitch_garbled_a zorder 99 with vpunch
-    hide glitch_garbled_a
 
     # Get the visuals ready
-    $ main_background.appear()
+    $ Natsuki.setOutfit(jn_outfits.get_outfit("jn_school_uniform"))
+    $ main_background.show()
     $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
+    show natsuki idle introduction at jn_center zorder JN_NATSUKI_ZORDER
+    hide black
+    hide glitch_garbled_a
     play music audio.space_classroom_bgm fadein 1
 
     jump introduction_first_meeting
@@ -231,7 +237,7 @@ label introduction_first_meeting:
     n 1kplpu "...[player]?"
     n 1kwmss "You're...{w=0.3} [player]?"
 
-    show natsuki idle introduction
+    show natsuki idle introduction at jn_center
     $ renpy.pause(10)
 
     jump introduction_collecting_thoughts
@@ -306,7 +312,7 @@ label introduction_collecting_thoughts:
     n 1kllsr "You understand...{w=1.5}{nw}"
     extend 1kplpu " right?"
 
-    show natsuki idle introduction
+    show natsuki idle introduction at jn_center
     $ renpy.pause(30)
 
     jump introduction_calmed_down
@@ -330,7 +336,7 @@ label introduction_calmed_down:
     extend 1kcsanl " it's just like..."
     menu:
         "Take your time, Natsuki.":
-            $ Natsuki.calculated_affinity_gain()
+            $ Natsuki.calculatedAffinityGain()
             n 1fcssrl "..."
             n 1kcseml "...Thanks."
             n 1ncspu "...{w=5}{nw}"
@@ -372,7 +378,7 @@ label introduction_calmed_down:
     n 1kcspul "...I don't know,{w=0.1} [player].{w=3}{nw}"
     extend 1kcssrl " I just don't know anymore..."
 
-    show natsuki idle introduction
+    show natsuki idle introduction at jn_center
     $ renpy.pause(60)
 
     jump introduction_acceptance
@@ -403,7 +409,7 @@ label introduction_acceptance:
     extend 1fcsem " Ugh!{w=1}{nw}"
 
     stop music fadeout 3
-    $ jn_atmosphere.show_current_sky()
+    $ jn_atmosphere.update_sky()
     $ renpy.pause(1)
 
     n 1uwdbo "..."
@@ -429,7 +435,6 @@ label introduction_exit:
         style.say_dialogue = style.normal
         allow_skipping = True
         config.allow_skipping = False
-        jn_outfits.current_outfit_name = "jn_school_uniform"
 
     play music audio.just_natsuki_bgm fadein 3
     show screen hkb_overlay
