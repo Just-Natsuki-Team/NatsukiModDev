@@ -42,10 +42,10 @@ label ch30_init:
 
         # Determine if the player should get a prolonged leave apology added
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
-            persistent.last_apology_type = jn_apologies.TYPE_PROLONGED_LEAVE
+            persistent.jn_player_apology_type_on_quit = jn_apologies.TYPE_PROLONGED_LEAVE
 
         # Repeat visits have a small affinity gain
-        elif not persistent.last_apology_type:
+        elif not persistent.jn_player_apology_type_on_quit:
             Natsuki.calculatedAffinityGain()
 
         # Add to the total visits counter and set the last visit date
@@ -84,7 +84,7 @@ label ch30_init:
         jn_utils.log("Holiday data loaded.")
 
         # Determine if the year has changed, in which case we reset all holidays so they can be celebrated again
-        if (datetime.datetime.now().year != persistent.jn_last_visited_date.year):
+        if (datetime.datetime.now().year > persistent.jn_last_visited_date.year):
             jn_events.resetHolidays()
             jn_utils.log("Holiday completion states reset.")
 
@@ -92,11 +92,11 @@ label ch30_init:
         available_holiday_list = jn_events.selectHolidays()
 
         # TODO: TEST CODE - REMOVE
-        queue("event_new_years_day")
-        queue("event_interlude")
-        queue("event_player_birthday")
-        queue("ch30_loop")
-        renpy.jump("call_next_topic")
+        # queue("event_new_years_day")
+        # queue("event_interlude")
+        # queue("event_player_birthday")
+        # queue("ch30_loop")
+        # renpy.jump("call_next_topic")
 
         if available_holiday_list:
             available_holiday_list.sort(key = lambda holiday: holiday.priority)
