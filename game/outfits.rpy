@@ -32,6 +32,8 @@ init -1 python in jn_outfits:
     _PREVIEW_OUTFIT = None
     _LAST_OUTFIT = None
 
+    _SESSION_NEW_UNLOCKS = list()
+
     _changes_made = False
 
     # Wearables being registered via JSON must be one of the following types
@@ -484,7 +486,6 @@ init -1 python in jn_outfits:
         IN:
             - outfit - the JNOutfit to register.
         """
-        #global __ALL_OUTFITS
         if outfit.reference_name in __ALL_OUTFITS:
             jn_utils.log("Cannot register outfit name: {0}, as an outfit with that name already exists.".format(outfit.reference_name))
 
@@ -505,11 +506,14 @@ init -1 python in jn_outfits:
             if outfit.reference_name not in store.persistent.jn_outfit_list:
                 outfit.__save()
 
+                # If this is the first time adding it to the list, and it isn't JN, it's a new unlock
+                if not "jn_" in outfit.reference_name:
+                    _SESSION_NEW_UNLOCKS.append(outfit)
+
     def __register_wearable(wearable):
         """
         Registers a new wearable in the list of all wearables, allowing in-game access and persistency.
         """
-        #global __ALL_WEARABLES
         if wearable.reference_name in __ALL_WEARABLES:
             jn_utils.log("Cannot register wearable name: {0}, as a wearable with that name already exists.".format(wearable.reference_name))
 
@@ -517,6 +521,10 @@ init -1 python in jn_outfits:
             __ALL_WEARABLES[wearable.reference_name] = wearable
             if wearable.reference_name not in store.persistent.jn_wearable_list:
                 wearable.__save()
+
+                # If this is the first time adding it to the list, and it isn't JN, it's a new unlock
+                if not "jn_" in wearable.reference_name:
+                    _SESSION_NEW_UNLOCKS.append(wearable)
 
             else:
                 wearable.__load()
@@ -2072,6 +2080,65 @@ label outfits_auto_change:
         n 1fsqsl "...{w=0.75}{nw}"
 
     show natsuki idle at jn_center
+    return
+
+label new_wearables_outfits_unlocked():
+    #TODO: Opening dialogue
+    if Natsuki.isEnamored(higher=True):
+        n ""
+        
+    elif Natsuki.isAffectionate(higher=True):
+        n ""
+
+    else:
+        n ""
+
+    for unlock in jn_outfits._SESSION_NEW_UNLOCKS:
+        #TODO: react based on type
+        if type(unlock) is jn_outfits.JNHairstyle:
+            n ""
+
+        elif type(unlock) is jn_outfits.JNEyewear:
+            n ""
+
+        elif type(unlock) is jn_outfits.JNAccessory:
+            n ""
+
+        elif type(unlock) is jn_outfits.JNClothes:
+            n ""
+
+        elif type(unlock) is jn_outfits.JNHeadgear:
+            n ""
+
+        elif type(unlock) is jn_outfits.JNNecklace:
+            n ""
+            
+        elif type(unlock) is jn_outfits.JNOutfit:
+            n ""
+
+        jn_outfits._SESSION_NEW_UNLOCKS.pop()
+        if len(jn_outfits._SESSION_NEW_UNLOCKS) > 0:
+            # TODO: Bridge dialogue
+            if Natsuki.isEnamored(higher=True):
+                n ""
+
+            elif Natsuki.isAffectionate(higher=True):
+                n ""
+                
+            else:
+                n ""
+
+        else:
+            #TODO: Conclusion dialogue
+            if Natsuki.isEnamored(higher=True):
+                n ""
+
+            elif Natsuki.isAffectionate(higher=True):
+                n ""
+                
+            else:
+                n ""
+
     return
 
 screen create_outfit():

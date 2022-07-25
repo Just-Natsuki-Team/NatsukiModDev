@@ -64,8 +64,10 @@ label ch30_init:
         persistent.jn_last_visited_date = datetime.datetime.now()
 
         # Load outfits from disk and corresponding persistent data
-        jn_outfits.load_custom_wearables()
-        jn_outfits.load_custom_outfits()
+        if Natsuki.isHappy(higher=True) and persistent.jn_custom_outfits_unlocked:
+            jn_outfits.load_custom_wearables()
+            jn_outfits.load_custom_outfits()
+
         jn_outfits.JNWearable.load_all()
         jn_outfits.JNOutfit.load_all()
         jn_utils.log("Outfit data loaded.")
@@ -221,9 +223,16 @@ init python:
         # Check what the player is currently doing
         jn_activity.get_current_activity()
 
+        if (
+            Natsuki.isHappy(higher=True)
+            and persistent.jn_custom_outfits_unlocked
+            and len(jn_outfits._SESSION_NEW_UNLOCKS) 
+        ):
+            queue("new_wearables_outfits_unlocked")
+
         # Push a new topic every couple of minutes
         # TODO: Move to a wait/has-waited system to allow some more flexibility
-        if (
+        elif (
             persistent.jn_natsuki_random_topic_frequency is not jn_preferences.random_topic_frequency.NEVER
             and datetime.datetime.now() > LAST_TOPIC_CALL + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown())
             and not persistent._event_list

@@ -6099,7 +6099,21 @@ label talk_custom_outfits_unlock:
     n 1ulrbo "Now...{w=0.5}{nw}"
     extend 1tnmss " where were we?"
 
-    $ persistent.jn_custom_outfits_unlocked = True
+    python:
+        persistent.jn_custom_outfits_unlocked = True
+
+        # We have to unload outfits before wearables due to dependencies
+        jn_outfits.unload_custom_outfits()
+        jn_outfits.unload_custom_wearables()
+
+        # We have to load wearables before outfits due to dependencies
+        jn_outfits.load_custom_wearables()
+        jn_outfits.load_custom_outfits()
+
+        # Now we've loaded back into memory, reload the persisted data
+        jn_outfits.JNWearable.load_all()
+        jn_outfits.JNOutfit.load_all()
+
     return
 
 # Natsuki talks about her opinion and advice proper hygiene.
