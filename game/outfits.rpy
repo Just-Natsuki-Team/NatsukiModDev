@@ -2085,23 +2085,73 @@ label outfits_auto_change:
 label new_wearables_outfits_unlocked():
     #TODO: Opening dialogue
     if Natsuki.isEnamored(higher=True):
-        n ""
-        
+        n "...!"
+        $ player_initial = jn_utils.get_player_initial()
+        n "..."
+        n "[player]..."
+        extend " y-you {i}do{/i} know you don't have to get me stuff just so I like you..."
+        n "Right?"
+        n "I-it's not that I don't appreciate it!"
+        extend " Don't get me wrong!"
+        extend " I totally do!"
+        n "I just..."
+        n "..."
+        n "I... know..."
+        extend " I can't exactly return the favour."
+        n "A-and you've already done a lot for me, so..."
+        n "..."
+        n "...Fine."
+        extend " I'll take a look."
+        extend " But I still kinda feel like a jerk about it..."
+
     elif Natsuki.isAffectionate(higher=True):
         n ""
 
     else:
-        n ""
+        n "H-huh?"
+        n "[player]?"
+        extend " D-did you {i}seriously{/i} just get me all this stuff?!"
+        n "..."
+        n "Uuuuuuuuu-!"
+        n "Why would you do thaaat?!"
+        extend " I-I didn't even {i}ask{/i} for anything!"
+        n "..."
+        n "Jeez..."
+        extend " and now I look like a total jerk for not even having anything to give back..."
+        extend " I hope you're happy, [player]."
+        n "..."
+        n "...Alright."
+        extend " J-just a quick look..."
 
     for unlock in jn_outfits._SESSION_NEW_UNLOCKS:
         #TODO: react based on type
+        n "..."
+
         if type(unlock) is jn_outfits.JNHairstyle:
-            n ""
+            n "..."
+            n "Eh?"
+            extend " What's this note doing here...?"
+            n "..."
+            n "W-woah!"
+            n "Heh."
+            extend " I gotta admit."
+            extend " I never even thought of trying {i}that{/i} with my hair..."
+            n "[unlock.display_name], huh?"
+            n "Okaaay!"
+            extend " Ehehe..."
 
         elif type(unlock) is jn_outfits.JNEyewear:
-            n ""
+            n "...!"
+            n "Some new eyewear?"
+            extend " Sweet!"
+            extend " Ehehe."
+            n "[unlock.display_name], I think these are called?"
+            extend " D-definitely keeping 'em."
 
         elif type(unlock) is jn_outfits.JNAccessory:
+            n "Huh?"
+            extend " What's this?"
+            extend " Some kind of accessory...?"
             n ""
 
         elif type(unlock) is jn_outfits.JNClothes:
