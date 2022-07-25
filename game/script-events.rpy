@@ -1439,8 +1439,8 @@ label event_christmas_day:
 
 label event_new_years_eve:
     $ jn_events.getHoliday("event_new_years_eve").run()
-    n 1nchbselg "[player]!{w=0.5}{nw}"
-    n 1uchlgelg "[player]!{w=0.3} [player]!"
+    n 1nchbselg "[player]!{w=1}{nw}"
+    n 1uchlgelg "[player]!{w=0.5} [player]!"
     n 1fspaj "Look at the date!{w=0.5}{nw}"
     extend 1unmbg " Do you even know what day it is?!{w=1}{nw}"
     extend 1fspgsedz " It's almost the new year!"
@@ -1448,10 +1448,10 @@ label event_new_years_eve:
     extend 1fchgn " and about time too,{w=0.1} huh?"
     n 1ullaj "I don't know about you,{w=0.1} [player]...{w=1}{nw}"
     $ current_year = datetime.date.today().year
-    extend 1fchbleme " but I can't wait to tell [current_year] where to stick it!"
+    extend 1fchbleme " but I can't {i}WAIT{/i} to tell [current_year] where to stick it!"
     n 1fsqsm "And what better way to do that...{w=0.75}{nw}" 
     extend 1fchgnedz " than a crap ton of explosions and snacks?"
-    n 1fchsml "Ehehe.{w=0.5}"
+    n 1fchsml "Ehehe.{w=0.5}{nw}"
     extend 1fchbglelg " It's gonna be great!"
 
     if Natsuki.isEnamored(higher=True):
@@ -1461,8 +1461,8 @@ label event_new_years_eve:
         n 1klrbol "..."
         n 1fcspul "I'd...{w=1}{nw}"
         extend 1knmpol " really like to spend it with you."
-        n 1kllpol "..."
-        n 1kslunl "...I'd like that a lot."
+        n 1kllpof "..."
+        n 1kslunf "...I'd like that a lot."
         n 1fcsemf "I-{w=0.3}if you didn't have anything planned,{w=0.1} anyway.{w=1}{nw}"
         extend 1nwmpol " I'm not gonna be a jerk about it if you already had stuff to do."
         n 1nlrpul "Though...{w=1}{nw}"
@@ -1472,7 +1472,7 @@ label event_new_years_eve:
         extend 1flldvfsbl " Ehehe."
 
         if Natsuki.isLove(higher=True):
-            n 1uchsmfeaf "Love you~!"
+            n 1uchsmfeaf "Love you,{w=0.1} [player]~!"
 
     elif Natsuki.isAffectionate(higher=True):
         n 1kllsll "..."
