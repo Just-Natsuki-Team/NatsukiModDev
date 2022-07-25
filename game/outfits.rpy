@@ -2082,7 +2082,7 @@ label outfits_auto_change:
     show natsuki idle at jn_center
     return
 
-label new_wearables_outfits_unlocked():
+label new_wearables_outfits_unlocked:
     #TODO: Opening dialogue
     if Natsuki.isEnamored(higher=True):
         n "...!"
@@ -2093,7 +2093,7 @@ label new_wearables_outfits_unlocked():
         n "Right?"
         n "I-it's not that I don't appreciate it!"
         extend " Don't get me wrong!"
-        extend " I totally do!"
+        extend " I-I totally do!"
         n "I just..."
         n "..."
         n "I... know..."
@@ -2117,13 +2117,13 @@ label new_wearables_outfits_unlocked():
         extend " I-I didn't even {i}ask{/i} for anything!"
         n "..."
         n "Jeez..."
-        extend " and now I look like a total jerk for not even having anything to give back..."
+        extend " and now I look like a total {i}jerk{/i} for not even having anything to give back..."
         extend " I hope you're happy, [player]."
         n "..."
         n "...Alright."
         extend " J-just a quick look..."
 
-    for unlock in jn_outfits._SESSION_NEW_UNLOCKS:
+    $ for unlock in jn_outfits._SESSION_NEW_UNLOCKS:
         #TODO: react based on type
         n "..."
 
@@ -2144,9 +2144,9 @@ label new_wearables_outfits_unlocked():
             n "...!"
             n "Some new eyewear?"
             extend " Sweet!"
-            extend " Ehehe."
-            n "[unlock.display_name], I think these are called?"
+            n "[unlock.display_name], right?"
             extend " D-definitely keeping 'em."
+            extend " Ehehe."
 
         elif type(unlock) is jn_outfits.JNAccessory:
             n "Huh?"
