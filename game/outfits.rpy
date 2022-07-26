@@ -2313,6 +2313,7 @@ label new_wearables_outfits_unlocked:
             extend 1fslsmfsbr " Ehehe."
 
     elif Natsuki.isAffectionate(higher=True):
+        #TODO: Spritecode
         n  "...Is that it?{w=0.75}{nw}"
         extend  " Is that everything?"
         n  "Jeez..."
@@ -2334,6 +2335,7 @@ label new_wearables_outfits_unlocked:
         n  "T-{w=0.2}thanks."
         
     else:
+        #TODO: Spritecode
         n  "Man...{w=1}{nw}"
         extend  " is that all of it?{w=0.5}{nw}"
         extend  " Jeez..."
