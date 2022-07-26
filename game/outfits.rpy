@@ -2083,111 +2083,292 @@ label outfits_auto_change:
     return
 
 label new_wearables_outfits_unlocked:
-    #TODO: Opening dialogue
     if Natsuki.isEnamored(higher=True):
-        n "...!"
-        $ player_initial = jn_utils.get_player_initial()
-        n "..."
-        n "[player]..."
-        extend " y-you {i}do{/i} know you don't have to get me stuff just so I like you..."
-        n "Right?"
-        n "I-it's not that I don't appreciate it!"
-        extend " Don't get me wrong!"
-        extend " I-I totally do!"
-        n "I just..."
-        n "..."
-        n "I... know..."
-        extend " I can't exactly return the favour."
-        n "A-and you've already done a lot for me, so..."
-        n "..."
-        n "...Fine."
-        extend " I'll take a look."
-        extend " But I still kinda feel like a jerk about it..."
+        n 1uskemleex "...!"
+        n 1ksrunlsbl "..."
+        n 1knmpulsbl "[player]...{w=1.25}{nw}"
+        extend 1kllpulsbl " y-{w=0.2}you {i}do{/i} know you don't have to get me stuff just so I like you..."
+        n 1knmsllsbr "Right?"
+        n 1uskemlesusbr "I-{w=0.2}it's not that I don't appreciate it!{w=0.5}{nw}"
+        extend 1fcsemless " Don't get me wrong!{w=1}"
+        extend 1knmpoless " I-{w=0.2}I totally do!"
+        n 1kllemless "I just..."
+        n 1ksrunlsbl "..."
+        n 1fcsunl "I...{w=0.3} know...{w=1}{nw}"
+        extend 1ksrpolsbr " I can't exactly return the favour."
+        n 1fcsajlsbl "A-{w=0.2}and you've already done a lot for me,{w=0.5}{nw}" 
+        extend 1kslbolsbl " so..."
+        n 1kcsbolsbl "..."
+        n 1kcsemlesi "...Fine.{w=0.75}{nw}"
+        extend 1ksrsl " I'll take a look.{w=1.25}{nw}"
+        extend 1kslpo " But I still kinda feel like a jerk about it..."
 
     elif Natsuki.isAffectionate(higher=True):
-        n ""
+        n 1uskeml "H-{w=0.2}huh?"
+        n  "[player]?{w=1}{nw}"
+        extend  " D-{w=0.2}did you {i}seriously{/i} just get me all this stuff?!"
+        n  "..."
+        n  "Uuuuuuuuu-!"
+        n  "Why would you do thaaat?!{w=1}{nw}"
+        extend  " I-{w=0.2}I didn't even {i}ask{/i} for anything!"
+        n  "..."
+        n  "Jeez...{w=0.5}{nw}"
+        extend  " and now I look like a total {i}jerk{/i} for not even having anything to give back...{w=1}{nw}"
+        extend  " I hope you're happy,{w=0.1} [player]."
+        n  "..."
+        n  "...Alright.{w=0.75}{nw}"
+        extend  " J-{w=0.2}just a quick look..."
 
     else:
-        n "H-huh?"
-        n "[player]?"
-        extend " D-did you {i}seriously{/i} just get me all this stuff?!"
-        n "..."
-        n "Uuuuuuuuu-!"
-        n "Why would you do thaaat?!"
-        extend " I-I didn't even {i}ask{/i} for anything!"
-        n "..."
-        n "Jeez..."
-        extend " and now I look like a total {i}jerk{/i} for not even having anything to give back..."
-        extend " I hope you're happy, [player]."
-        n "..."
-        n "...Alright."
-        extend " J-just a quick look..."
+        n 1uwdeml "...Eh?"
+        n  "What even..."
+        n  "...!"
+        $ player_initial = jn_utils.get_player_initial()
+        n  "[player_initial]-{w=0.2}[player]!"
+        n  "What even {i}is{/i} all this?!"
+        n  "Y-{w=0.2}you better not be trying to win me over with gifts or something!{w=1}{nw}"
+        extend  " Yeesh!"
+        n  "I-{w=0.2}I'll have you know I'm a {i}lot{/i} deeper than that!"
+        n  "I swear it's like you're trying to embarrass me sometimes...{w=1}{nw}"
+        extend  " you jerk."
+        n  "You {i}know{/i} I can't exactly give anything {i}back{/i},{w=0.1} either..."
+        n  "..."
+        n  "..."
+        n  "...Fine.{w=1}{nw}"
+        extend  " Fine!{w=0.75}{nw}"
+        extend  " I'll look at it!{w=1}{nw}"
+        extend  " ...But only because you put the effort in."
 
-    $ for unlock in jn_outfits._SESSION_NEW_UNLOCKS:
-        #TODO: react based on type
-        n "..."
+        $ jn_outfits._SESSION_NEW_UNLOCKS.append(jn_outfits.get_outfit("jn_hair_twin_buns")) 
+        $ jn_outfits._SESSION_NEW_UNLOCKS.append(jn_outfits.get_outfit("jn_clothes_ruffled_swimsuit")) 
+        $ jn_outfits._SESSION_NEW_UNLOCKS.append(jn_outfits.get_outfit("jn_necklace_thin_choker")) 
+        
+        $ alt_dialogue = False
 
-        if type(unlock) is jn_outfits.JNHairstyle:
+        while len(jn_outfits._SESSION_NEW_UNLOCKS) > 0:
+            $ unlock = random.choice(jn_outfits._SESSION_NEW_UNLOCKS)
+            n  "..."
+
+            # You can't really gift a hairstyle,{w=0.1} so instead Natsuki is given an idea through a note/picture
+            if type(unlock) is jn_outfits.JNHairstyle:
+                if alt_dialogue:
+                    n  "Mmm?{w=1}{nw}"
+                    extend  " A...{w=0.3} note...?"
+                    n  "..."
+                    n  "...Oh!{w=1}{nw}"
+                    extend  " You wanted me to try my hair like that?{w=0.2} [unlock.display_name]?"
+                    n  "..."
+                    n  "Well...{w=1}{nw}"
+                    extend  " okay."
+
+                    if Natsuki.isEnamored(higher=True):
+                        n  "I {i}suppose{/i} I can give that a shot later."
+                        n  "I bet {i}someone{/i} would like that,{w=0.1} huh?{w=0.5}{nw}"
+                        extend  " Ehehe..."
+
+                    elif Natsuki.isAffectionate(higher=True):
+                        n  "I {i}suppose{/i} I can give that a shot later."
+                        extend  " Ehehe..."
+
+                    else:
+                        n  "I {i}suppose{/i} I can give that a shot later."
+                        n  "B-but only because I want to though,{w=0.75}{nw}" 
+                        extend  " obviously." 
+
+                else:
+                    n  "Eh?{w=1}{nw}"
+                    extend  " What's this note doing here...?"
+                    n  "..."
+                    n  "W-{w=0.2}woah!"
+                    n  "Heh.{w=0.5}{nw}"
+                    extend  " I gotta admit.{w=1}{nw}"
+                    extend  " I never even thought of trying {i}that{/i} with my hair..."
+                    n  "[unlock.display_name],{w=0.1} huh?"
+                    n  "I {i}guess{/i} it might be worth a try..."
+
+                    if Natsuki.isEnamored(higher=True):
+                        n  "I wonder who'd like that,{w=0.1} though?{w=0.5}{nw}"
+                        extend  " Ehehe..."
+
+                    elif Natsuki.isAffectionate(higher=True):
+                        n  "Ahaha..."
+
+                    else:
+                        n  "B-{w=0.2}but only out of curiosity!{w=1}{nw}"
+                        extend  " Got it?"
+
+            else:
+                if Natsuki.isEnamored(higher=True):
+                    if alt_dialogue:
+                        n  "Jeez...{w=1}{nw}"
+                        extend  " why are you trying to spoil me so much?"
+                        n  "You know I hate being showered in flashy stuff..."
+                        n  "..."
+                        n  "...Especially things like this."
+                        n  "[unlock.display_name],{w=0.1} I think?"
+                        n  "I'm...{w=1}{nw}"
+                        extend  " just going to keep that too."
+                        n  "...Thanks."
+
+                    else:
+                        n  "...!"
+                        n  "...Heh.{w=1}{nw}"
+                        extend  " You really {i}are{/i} trying to win me over with all this stuff,{w=0.1} huh?"
+                        n  "..."
+                        n  "It's...{w=1}{nw}"
+                        extend  " really nice.{w=0.75}{nw}"
+                        extend  " Okay?"
+                        n  "[unlock.display_name],{w=0.1} right?"
+                        n  "I'm...{w=1}{nw}" 
+                        extend  " just gonna put this aside.{w=0.2} For now."
+                        n  "..."
+                        n  "Thanks..."
+
+                elif Natsuki.isAffectionate(higher=True):
+                    if alt_dialogue:
+                        n  "Heh.{w=1}{nw}"
+                        extend  " Another good choice,{w=0.5}{nw}"
+                        extend  " I hate to admit."
+                        n  "..."
+                        n  "...Thanks,{w=0.1} [player]."
+                        n  "For the [unlock.display_name],{w=0.5}{nw}"
+                        extend  " I-{w=0.2}I mean."
+                        n  "It's...{w=1}{nw}"
+                        extend  " really cool."
+                        n "...Thanks."
+
+                    else:
+                        n  "...!"
+                        n  "..."
+                        n  "Heh,{w=1}{nw}"
+                        extend  " a-{w=0.2}and here I was thinking I'd have to teach you {i}everything{/i} about style!"
+                        n  "[unlock.display_name],{w=0.1} huh?{w=0.75}{nw}"
+                        extend  " Alright,{w=0.1} [player]."
+                        n  "I guess you get a pass for that one.{w=1}{nw}"
+                        extend  " This time."
+
+                else:
+                    if alt_dialogue:
+                        n  "...!"
+                        n  "Nnnnnnn-!"
+                        n  "Y-{w=0.2}you're just lucky you're good at picking out gifts,{w=0.5}{nw}"
+                        extend  " you jerk."
+                        n  "I guess I'll {i}have{/i} to keep this [unlock.display_name] now.{w=0.75}{nw}"
+                        extend  "I-I hope you're pleased with yourself."
+                        
+                    else:
+                        n  "W-{w=0.2}woah!"
+                        n  "...!"
+                        n  "What?!{w=1}{nw}"
+                        extend  " Don't look at me like that!"
+                        n  "I-{w=0.2}I'm glad to see you have {i}some{/i} taste after all."
+                        n  "[unlock.display_name],{w=0.1} huh?{w=1}{nw}"
+                        extend  " I-{w=0.2}I guess I'll keep it around."
+                        n  "Juuuust in case."
+
+            $ alt_dialogue = not alt_dialogue
+            $ jn_outfits._SESSION_NEW_UNLOCKS.pop()
+
+            if len(jn_outfits._SESSION_NEW_UNLOCKS) > 0:
+                if Natsuki.isEnamored(higher=True):
+                    n  "...I can't believe there's even more.{w=1}{nw}"
+                    extend  " Jeez,{w=0.1} [player]..."
+                    n  "...Okay.{w=1}{nw}"
+                    extend  " Let's see what's next..."
+
+                elif Natsuki.isAffectionate(higher=True):
+                    n  "Uuuuuuu...{w=1}{nw}"
+                    extend  " there's {i}still{/i} more?!"
+                    n  "Jeez..."
+                    
+                else:
+                    n  "H-{w=0.2}how much {i}is{/i} there here,{w=0.1} [player]{w=1}{nw}?"
+                    extend  " Jeez!"
+                    n  "You're gonna bury me in stuff!"
+                    n  "..."
+                    n  "...Yeah,{w=0.1} yeah.{w=0.5}{nw}"
+                    extend  " I know.{w=1}{nw}"
+                    extend  " I'll keep going..."
+
+        if Natsuki.isEnamored(higher=True):
+            n  "Heh.{w=1}{nw}"
+            extend  " Finally ran out of things to throw at me,{w=0.5}{nw}" 
+            extend  " huh?"
             n "..."
-            n "Eh?"
-            extend " What's this note doing here...?"
-            n "..."
-            n "W-woah!"
-            n "Heh."
-            extend " I gotta admit."
-            extend " I never even thought of trying {i}that{/i} with my hair..."
-            n "[unlock.display_name], huh?"
-            n "Okaaay!"
-            extend " Ehehe..."
+            n  "I...{w=1}{nw}"
+            extend  " really wish you didn't do that,{w=0.1} you know."
+            n  "..."
+            n  "But...{w=0.75}{nw}"
+            extend  " [player]?"
+            n  "..."
 
-        elif type(unlock) is jn_outfits.JNEyewear:
-            n "...!"
-            n "Some new eyewear?"
-            extend " Sweet!"
-            n "[unlock.display_name], right?"
-            extend " D-definitely keeping 'em."
-            extend " Ehehe."
+            show black zorder 4 with Dissolve(0.5)
+            play audio clothing_ruffle
+            pause 3.5
 
-        elif type(unlock) is jn_outfits.JNAccessory:
-            n "Huh?"
-            extend " What's this?"
-            extend " Some kind of accessory...?"
-            n ""
+            if Natsuki.isLove(higher=True):
+                show natsuki 1fsldvlsbl at jn_center zorder JN_NATSUKI_ZORDER
+                play audio kiss
+                pause 1.5
+                hide black with Dissolve(1.25)
+                $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+                n  "...Thanks,{w=0.1} [chosen_tease]."
+                n  "Ehehe."
 
-        elif type(unlock) is jn_outfits.JNClothes:
-            n ""
+            else:
+                hide black with Dissolve(1.25)
+                n  "...Thanks.{w=0.75}{nw}"
+                extend  " Ehehe."
 
-        elif type(unlock) is jn_outfits.JNHeadgear:
-            n ""
+        elif Natsuki.isAffectionate(higher=True):
+            n  "...Is that it?{w=0.75}{nw}"
+            extend  " Is that everything?"
+            n  "Jeez..."
+            n  "You really need to stop giving away so much stuff,{w=0.1} [player].{w=1}{nw}"
+            extend  " I don't want you getting into a dumb habit!"
+            n  "Especially when I can't do anything nice back..."
+            n  "..."
+            n  "But...{w=0.75}{nw}"
+            extend  " [player]?"
+            n  "..."
 
-        elif type(unlock) is jn_outfits.JNNecklace:
-            n ""
+            show black zorder 4 with Dissolve(0.5)
+            show natsuki 1fsldvlsbl at jn_center zorder JN_NATSUKI_ZORDER
+            play audio clothing_ruffle
+            pause 2
+            hide black with Dissolve(1.25)
+
+            n  "..."
+            n  "T-{w=0.2}thanks."
             
-        elif type(unlock) is jn_outfits.JNOutfit:
-            n ""
-
-        jn_outfits._SESSION_NEW_UNLOCKS.pop()
-        if len(jn_outfits._SESSION_NEW_UNLOCKS) > 0:
-            # TODO: Bridge dialogue
-            if Natsuki.isEnamored(higher=True):
-                n ""
-
-            elif Natsuki.isAffectionate(higher=True):
-                n ""
-                
-            else:
-                n ""
-
         else:
-            #TODO: Conclusion dialogue
-            if Natsuki.isEnamored(higher=True):
-                n ""
+            n  "Man...{w=1}{nw}"
+            extend  " is that all of it?{w=0.5}{nw}"
+            extend  " Jeez..."
+            n  "I...{w=0.75}{nw}"
+            extend  " suppose I better go put all this away now."
+            n  "Showing me up," 
+            extend  " {i}and{/i} giving me a workout?"
+            extend  " So much for chivalry."
+            n  "..."
+            n  "But..."
+            extend  " [player]?"
+            n  "..."
+            n  "I..." 
+            extend  " really appreciate the stuff you got me."
+            n  "..."
+            n  "T-{w=0.2}thanks."
 
-            elif Natsuki.isAffectionate(higher=True):
-                n ""
-                
-            else:
-                n ""
+        show black zorder 4 with Dissolve(0.5)
+        play audio chair_out
+        pause(3)
+        play audio clothing_ruffle
+        pause(1)
+        play audio drawer
+        pause(1)
+        pause(3)
+        play audio chair_in
+        hide black with Dissolve(1.25)
 
     return
 
