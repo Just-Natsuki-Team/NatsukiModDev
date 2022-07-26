@@ -1556,6 +1556,7 @@ define audio.cassette_open = "mod_assets/sfx/cassette_open.ogg"
 define audio.cassette_close = "mod_assets/sfx/cassette_close.ogg"
 define audio.glass_move = "mod_assets/sfx/glass_move.ogg"
 define audio.straw_sip = "mod_assets/sfx/straw_sip.ogg"
+define audio.kiss = "mod_assets/sfx/kiss.ogg"
 
 define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
 define audio.glitch_b = "mod_assets/sfx/glitch_b.ogg"
