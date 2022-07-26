@@ -2147,148 +2147,142 @@ label new_wearables_outfits_unlocked:
 
         while len(jn_outfits._SESSION_NEW_UNLOCKS) > 0:
             $ unlock = random.choice(jn_outfits._SESSION_NEW_UNLOCKS)
-            n  "..."
+            n 1tlrbo "..."
 
             # You can't really gift a hairstyle,{w=0.1} so instead Natsuki is given an idea through a note/picture
             if type(unlock) is jn_outfits.JNHairstyle:
                 if alt_dialogue:
-                    n  "Mmm?{w=1}{nw}"
-                    extend  " A...{w=0.3} note...?"
-                    n  "..."
-                    n  "...Oh!{w=1}{nw}"
-                    extend  " You wanted me to try my hair like that?{w=0.2} [unlock.display_name]?"
-                    n  "..."
-                    n  "Well...{w=1}{nw}"
-                    extend  " okay."
+                    n 1unmpuesu "Mmm?{w=1}{nw}"
+                    extend 1tnmajeqm " A...{w=0.3} note...?"
+                    n 1tslpu "..."
+                    n 1unmgsesu "...Oh!{w=1}{nw}"
+                    extend 1unmbol " You wanted me to try my hair like that?{w=0.5} [unlock.display_name]?"
+                    n 1nllunl "..."
+                    n 1nllajl "Well...{w=1}{nw}"
+                    extend 1nnmajl " okay."
 
                     if Natsuki.isEnamored(higher=True):
-                        n  "I {i}suppose{/i} I can give that a shot later."
-                        n  "I bet {i}someone{/i} would like that,{w=0.1} huh?{w=0.5}{nw}"
-                        extend  " Ehehe..."
+                        n 1nlrssl "I {i}suppose{/i} I can give that a shot later."
+                        n 1fsqsslsbl "I bet {i}someone{/i} would like that,{w=0.1} huh?{w=0.5}{nw}"
+                        extend 1fsldvlsbl " Ehehe..."
 
                     elif Natsuki.isAffectionate(higher=True):
-                        n  "I {i}suppose{/i} I can give that a shot later."
-                        extend  " Ehehe..."
+                        n 1nlrpol "I {i}suppose{/i} I can give that a shot later."
+                        extend 1nlrsslsbr " Ehehe..."
 
                     else:
-                        n  "I {i}suppose{/i} I can give that a shot later."
-                        n  "B-but only because I want to though,{w=0.75}{nw}" 
-                        extend  " obviously." 
+                        n 1fcspol "I {i}suppose{/i} I can give that a shot later."
+                        n 1flrajl "B-but only because I want to though,{w=0.75}{nw}" 
+                        extend 1fsrpol " obviously." 
 
                 else:
-                    n  "Eh?{w=1}{nw}"
-                    extend  " What's this note doing here...?"
-                    n  "..."
-                    n  "W-{w=0.2}woah!"
-                    n  "Heh.{w=0.5}{nw}"
-                    extend  " I gotta admit.{w=1}{nw}"
-                    extend  " I never even thought of trying {i}that{/i} with my hair..."
-                    n  "[unlock.display_name],{w=0.1} huh?"
-                    n  "I {i}guess{/i} it might be worth a try..."
+                    n 1tnmpueqm "Eh?{w=1}{nw}"
+                    extend 1tlrpueqm " What's this note doing here...?"
+                    n 1tllbo "..."
+                    n 1unmgsesu "W-{w=0.2}woah!"
+                    n 1flldvl "Heh.{w=0.5}{nw}"
+                    extend 1fllsslsbr " I gotta admit.{w=1}{nw}"
+                    extend 1fsrnvlsbr " I never even thought of trying {i}that{/i} with my hair..."
+                    n 1unmbo "[unlock.display_name],{w=0.1} huh?"
+                    n 1nllajl "I {i}guess{/i} it might be worth a try..."
 
                     if Natsuki.isEnamored(higher=True):
-                        n  "I wonder who'd like that,{w=0.1} though?{w=0.5}{nw}"
-                        extend  " Ehehe..."
+                        n 1fsqsslsbr "I wonder who'd like {i}that{/i},{w=0.1} though?{w=0.5}{nw}"
+                        extend 1fsqsmlsbr " Ehehe..."
 
                     elif Natsuki.isAffectionate(higher=True):
-                        n  "Ahaha..."
+                        n 1nlrsslsbr "We'll see."
 
                     else:
-                        n  "B-{w=0.2}but only out of curiosity!{w=1}{nw}"
-                        extend  " Got it?"
+                        n 1fcsgsl "B-{w=0.2}but only out of curiosity!{w=1}{nw}"
+                        extend 1fsqpol " Got it?"
 
             else:
                 if Natsuki.isEnamored(higher=True):
                     if alt_dialogue:
-                        n  "Jeez...{w=1}{nw}"
-                        extend  " why are you trying to spoil me so much?"
-                        n  "You know I hate being showered in flashy stuff..."
-                        n  "..."
-                        n  "...Especially things like this."
-                        n  "[unlock.display_name],{w=0.1} I think?"
-                        n  "I'm...{w=1}{nw}"
-                        extend  " just going to keep that too."
-                        n  "...Thanks."
+                        n 1kcsemlesi "Jeez...{w=1}{nw}"
+                        extend 1knmpol " why are you trying to spoil me so much?"
+                        n 1fllpol "You know I hate being showered in flashy stuff..."
+                        n 1kslsrl "..."
+                        n 1ksqsrlsbl "...Especially things like this [unlock.display_name]."
+                        extend 1kslsslsbl " Even if it is pretty awesome."
+                        n 1kslsrl "..."
+                        n 1nllajl "I'm...{w=1}{nw}"
+                        extend 1ksrpol " just going to keep that too."
+                        n 1nsrdvf "...Thanks."
 
                     else:
-                        n  "...!"
-                        n  "...Heh.{w=1}{nw}"
-                        extend  " You really {i}are{/i} trying to win me over with all this stuff,{w=0.1} huh?"
-                        n  "..."
-                        n  "It's...{w=1}{nw}"
-                        extend  " really nice.{w=0.75}{nw}"
-                        extend  " Okay?"
-                        n  "[unlock.display_name],{w=0.1} right?"
-                        n  "I'm...{w=1}{nw}" 
-                        extend  " just gonna put this aside.{w=0.2} For now."
-                        n  "..."
-                        n  "Thanks..."
+                        n 1uskgsfesu "...!"
+                        n 1fsldvl "...Heh.{w=1}{nw}"
+                        extend 1tsqpufsbl " You really {i}are{/i} trying to win me over with all this stuff,{w=0.1} huh?"
+                        n 1kslsllsbl "..."
+                        n 1fcspulsbl "The [unlock.display_name]...{w=1}{nw}"
+                        m 1knmpulsbr "It's...{w=0.5} really nice.{w=0.75}{nw}"
+                        extend 1kllsrlsbr " Okay?"
+                        n 1kslunlesssbr "Thanks..."
 
                 elif Natsuki.isAffectionate(higher=True):
                     if alt_dialogue:
-                        n  "Heh.{w=1}{nw}"
-                        extend  " Another good choice,{w=0.5}{nw}"
-                        extend  " I hate to admit."
-                        n  "..."
-                        n  "...Thanks,{w=0.1} [player]."
-                        n  "For the [unlock.display_name],{w=0.5}{nw}"
-                        extend  " I-{w=0.2}I mean."
-                        n  "It's...{w=1}{nw}"
-                        extend  " really cool."
-                        n "...Thanks."
+                        n 1uwdajlesu "...!"
+                        n 1fcsemlesssbl "A-{w=0.1}ahem!{w=1}{nw}"
+                        extend 1fslpol " Another good choice,{w=0.5}{nw}"
+                        extend 1fsqpolsbr " I hate to admit."
+                        n 1klrbolsbr "..."
+                        n 1fcsunlsbr "...Thanks,{w=0.1} [player]."
+                        n 1fllunlsbr "For the [unlock.display_name],{w=0.5}{nw}"
+                        extend 1fnmpulsbl " I-{w=0.2}I mean."
+                        n 1kslpulsbl "It's...{w=1}{nw}"
+                        extend 1kslsslsbl " really cool."
+                        n 1fslpofsbl "...Thanks."
 
                     else:
-                        n  "...!"
-                        n  "..."
-                        n  "Heh,{w=1}{nw}"
-                        extend  " a-{w=0.2}and here I was thinking I'd have to teach you {i}everything{/i} about style!"
-                        n  "[unlock.display_name],{w=0.1} huh?{w=0.75}{nw}"
-                        extend  " Alright,{w=0.1} [player]."
-                        n  "I guess you get a pass for that one.{w=1}{nw}"
-                        extend  " This time."
+                        n 1uwdajledz "...!"
+                        n 1fcsunlesdsbl "..."
+                        n 1fcssslsbl "Heh,{w=1}{nw}"
+                        extend 1fllbglesssbr " a-{w=0.2}and here I was thinking I'd have to teach you {i}everything{/i} about style!"
+                        n 1kllsllsbr "..."
+                        n 1knmbolsbr "...But thanks,{w=0.3} [player].{w=1}"
+                        extend 1flrunlsbr "For the [unlock.display_name]."
+                        n 1fcsunlsbr "I...{w=0.75}{nw}"
+                        extend 1ksrunfsbl " really appreciate it."
 
                 else:
                     if alt_dialogue:
-                        n  "...!"
-                        n  "Nnnnnnn-!"
-                        n  "Y-{w=0.2}you're just lucky you're good at picking out gifts,{w=0.5}{nw}"
-                        extend  " you jerk."
-                        n  "I guess I'll {i}have{/i} to keep this [unlock.display_name] now.{w=0.75}{nw}"
-                        extend  "I-I hope you're pleased with yourself."
+                        n 1uskgslesh "...!"
+                        n 1fslanfess "Nnnnnnn-!"
+                        n 1fcsemfesssbl "Y-{w=0.2}you're just lucky you're good at picking out gifts,{w=0.5}{nw}"
+                        extend 1fsqpofesssbl " you jerk."
+                        n 1fslpofesssbr "I guess I'll {i}have{/i} to keep this [unlock.display_name] now.{w=0.75}{nw}"
+                        extend 1fnmpofesssbl "I-{w=0.2}I hope you're happy."
                         
                     else:
-                        n  "W-{w=0.2}woah!"
-                        n  "...!"
-                        n  "What?!{w=1}{nw}"
-                        extend  " Don't look at me like that!"
-                        n  "I-{w=0.2}I'm glad to see you have {i}some{/i} taste after all."
-                        n  "[unlock.display_name],{w=0.1} huh?{w=1}{nw}"
-                        extend  " I-{w=0.2}I guess I'll keep it around."
-                        n  "Juuuust in case."
+                        n 1fspgsledz "W-{w=0.2}woah!"
+                        n 1uskemfesh "...!"
+                        n 1fbkwrf "What?!{w=1}{nw}"
+                        extend 1fllwrfeszsbl " Don't look at me like that!"
+                        n 1fcseml "I-{w=0.2}I'm glad to see you have {i}some{/i} taste after all to have found this."
+                        n 1fllcal "[unlock.display_name],{w=0.1} huh?{w=1}{nw}"
+                        extend 1fcscal " I-{w=0.2}I guess I'll keep it around."
+                        n 1fcspofess "Juuuust in case."
 
             $ alt_dialogue = not alt_dialogue
             $ jn_outfits._SESSION_NEW_UNLOCKS.pop()
 
             if len(jn_outfits._SESSION_NEW_UNLOCKS) > 0:
                 if Natsuki.isEnamored(higher=True):
-                    n  "...I can't believe there's even more.{w=1}{nw}"
-                    extend  " Jeez,{w=0.1} [player]..."
-                    n  "...Okay.{w=1}{nw}"
-                    extend  " Let's see what's next..."
+                    n 1klrpul "...I can't believe there's even more.{w=1}{nw}"
+                    extend 1fcspul " Jeez,{w=0.1} [player]..."
+                    n 1kcspul "...Okay.{w=1}{nw}"
+                    extend 1fslssl " Let's see what's next..."
 
                 elif Natsuki.isAffectionate(higher=True):
-                    n  "Uuuuuuu...{w=1}{nw}"
-                    extend  " there's {i}still{/i} more?!"
-                    n  "Jeez..."
+                    n 1ksrunl "Uuuuuuu...{w=1}{nw}"
+                    extend 1ksremlesd " there's {i}still{/i} more?!"
+                    n 1kcsemlesisbl "Jeez..."
                     
                 else:
-                    n  "H-{w=0.2}how much {i}is{/i} there here,{w=0.1} [player]{w=1}{nw}?"
-                    extend  " Jeez!"
-                    n  "You're gonna bury me in stuff!"
-                    n  "..."
-                    n  "...Yeah,{w=0.1} yeah.{w=0.5}{nw}"
-                    extend  " I know.{w=1}{nw}"
-                    extend  " I'll keep going..."
+                    n 1fnmpol "H-{w=0.2}how much {i}is{/i} there here,{w=0.1} [player]{w=1}{nw}?"
+                    extend 1fslpofesssbr " Jeez..."
 
         if Natsuki.isEnamored(higher=True):
             n  "Heh.{w=1}{nw}"
