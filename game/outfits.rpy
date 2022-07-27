@@ -2313,56 +2313,52 @@ label new_wearables_outfits_unlocked:
             extend 1fslsmfsbr " Ehehe."
 
     elif Natsuki.isAffectionate(higher=True):
-        #TODO: Spritecode
-        n  "...Is that it?{w=0.75}{nw}"
-        extend  " Is that everything?"
-        n  "Jeez..."
-        n  "You really need to stop giving away so much stuff,{w=0.1} [player].{w=1}{nw}"
-        extend  " I don't want you getting into a dumb habit!"
-        n  "Especially when I can't do anything nice back..."
-        n  "..."
-        n  "But...{w=0.75}{nw}"
-        extend  " [player]?"
-        n  "..."
+        n 1fllun "...Is that it?{w=0.75}{nw}"
+        extend 1flrunl " Is that everything?"
+        n 1fcsemlesi "Jeez..."
+        n 1fnmtrl "You really need to stop giving away so much stuff,{w=0.1} [player].{w=1}{nw}"
+        extend 1fsqcal " I don't want you getting into a dumb habit!"
+        n 1fslunlsbl "Especially when I can't do anything nice back..."
+        n 1kslunlsbl "..."
+        n 1kslpulsbl "But...{w=0.75}{nw}"
+        extend 1knmsllsbr " [player]?"
+        n 1fsrunfsbr "..."
 
         show black zorder 4 with Dissolve(0.5)
-        show natsuki 1fsldvlsbl at jn_center zorder JN_NATSUKI_ZORDER
+        show natsuki 1flrcafsbr at jn_center zorder JN_NATSUKI_ZORDER
         play audio clothing_ruffle
         pause 2
         hide black with Dissolve(1.25)
 
-        n  "..."
-        n  "T-{w=0.2}thanks."
+        n 1ksrcafsbr "..."
+        n 1fcstrlsbl "T-{w=0.2}thanks."
         
     else:
-        #TODO: Spritecode
-        n  "Man...{w=1}{nw}"
-        extend  " is that all of it?{w=0.5}{nw}"
-        extend  " Jeez..."
-        n  "I...{w=0.75}{nw}"
-        extend  " suppose I better go put all this away now."
-        n  "Showing me up," 
-        extend  " {i}and{/i} giving me a workout?"
-        extend  " So much for chivalry."
-        n  "..."
-        n  "But..."
-        extend  " [player]?"
-        n  "..."
-        n  "I..." 
-        extend  " really appreciate the stuff you got me."
-        n  "..."
-        n  "T-{w=0.2}thanks."
+        n 1kslemlesi "Man...{w=1}{nw}"
+        extend 1flrtrl " is that all of it?{w=0.5}{nw}"
+        extend 1fcspulsbl " Jeez..."
+        n 1fslunlsbr "..."
+        n 1nslajlsbr "I...{w=0.75}{nw}"
+        extend 1nsqajlsbl " suppose I better go put all this away now."
+        n 1kslunlsbr "..."
+        n 1kslpulsbl "But..."
+        extend 1knmsllsbr " [player]?"
+        n 1fsrunlsbr "..."
+        n 1fsrajlsbr "I..." 
+        extend 1ksrcafsbr " really appreciate the stuff you got me."
+        n 1kllcalsbr "..."
+        n 1fcstrlsbl "T-{w=0.2}thanks."
 
-        show black zorder 4 with Dissolve(0.5)
-        play audio chair_out
-        pause(3)
-        play audio clothing_ruffle
-        pause(1)
-        play audio drawer
-        pause(1)
-        pause(3)
-        play audio chair_in
-        hide black with Dissolve(1.25)
+    show black zorder 4 with Dissolve(0.5)
+    play audio chair_out
+    pause(3)
+    play audio clothing_ruffle
+    pause(1)
+    play audio drawer
+    pause(1)
+    pause(3)
+    play audio chair_in
+    hide black with Dissolve(1.25)
 
     return
 
