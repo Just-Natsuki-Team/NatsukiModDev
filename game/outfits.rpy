@@ -2139,16 +2139,16 @@ label new_wearables_outfits_unlocked:
         extend 1flremlsbr " I'll look at it!{w=1}{nw}"
         extend 1fsrpolsbr " ...But only because you put the effort in."
 
-    $ jn_outfits._SESSION_NEW_UNLOCKS.append(jn_outfits.get_wearable("jn_hair_twin_buns")) 
-    $ jn_outfits._SESSION_NEW_UNLOCKS.append(jn_outfits.get_wearable("jn_clothes_ruffled_swimsuit")) 
-    $ jn_outfits._SESSION_NEW_UNLOCKS.append(jn_outfits.get_wearable("jn_necklace_thin_choker")) 
-    $ alt_dialogue = False
+    python:
+        import random
+        alt_dialogue = False
+        random.shuffle(jn_outfits._SESSION_NEW_UNLOCKS)
 
     while len(jn_outfits._SESSION_NEW_UNLOCKS) > 0:
-        $ unlock = random.choice(jn_outfits._SESSION_NEW_UNLOCKS)
+        $ unlock = jn_outfits._SESSION_NEW_UNLOCKS.pop()
         n 1tlrbo "..."
 
-        # You can't really gift a hairstyle,{w=0.1} so instead Natsuki is given an idea through a note/picture
+        # You can't really gift a hairstyle, so instead Natsuki is given an idea through a note/picture
         if type(unlock) is jn_outfits.JNHairstyle:
             if alt_dialogue:
                 n 1unmpuesu "Mmm?{w=1}{nw}"
@@ -2216,7 +2216,7 @@ label new_wearables_outfits_unlocked:
                     extend 1tsqpufsbl " You really {i}are{/i} trying to win me over with all this stuff,{w=0.1} huh?"
                     n 1kslsllsbl "..."
                     n 1fcspulsbl "The [unlock.display_name]...{w=1}{nw}"
-                    m 1knmpulsbr "It's...{w=0.5} really nice.{w=0.75}{nw}"
+                    n 1knmpulsbr "It's...{w=0.5} really nice.{w=0.75}{nw}"
                     extend 1kllsrlsbr " Okay?"
                     n 1kslunlesssbr "Thanks..."
 
@@ -2265,7 +2265,6 @@ label new_wearables_outfits_unlocked:
                     n 1fcspofess "Juuuust in case."
 
         $ alt_dialogue = not alt_dialogue
-        $ jn_outfits._SESSION_NEW_UNLOCKS.pop()
 
         if len(jn_outfits._SESSION_NEW_UNLOCKS) > 0:
             if Natsuki.isEnamored(higher=True):
@@ -2358,7 +2357,12 @@ label new_wearables_outfits_unlocked:
     pause(1)
     pause(3)
     play audio chair_in
+    pause(3)
     hide black with Dissolve(1.25)
+
+    n 1ullajl "So..."
+    n 1tnmsslsbl "Where we we?{w=1}{nw}"
+    extend 1fslsslsbr " Ehehe..."
 
     return
 
