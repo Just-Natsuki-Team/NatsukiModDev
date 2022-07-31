@@ -32,6 +32,8 @@ init -1 python in jn_outfits:
     _PREVIEW_OUTFIT = None
     _LAST_OUTFIT = None
 
+    _SESSION_NEW_UNLOCKS = list()
+
     _changes_made = False
 
     # Wearables being registered via JSON must be one of the following types
@@ -484,7 +486,6 @@ init -1 python in jn_outfits:
         IN:
             - outfit - the JNOutfit to register.
         """
-        #global __ALL_OUTFITS
         if outfit.reference_name in __ALL_OUTFITS:
             jn_utils.log("Cannot register outfit name: {0}, as an outfit with that name already exists.".format(outfit.reference_name))
 
@@ -505,11 +506,14 @@ init -1 python in jn_outfits:
             if outfit.reference_name not in store.persistent.jn_outfit_list:
                 outfit.__save()
 
+                # If this is the first time adding it to the list, and it isn't JN, it's a new unlock
+                if not "jn_" in outfit.reference_name:
+                    _SESSION_NEW_UNLOCKS.append(outfit)
+
     def __register_wearable(wearable):
         """
         Registers a new wearable in the list of all wearables, allowing in-game access and persistency.
         """
-        #global __ALL_WEARABLES
         if wearable.reference_name in __ALL_WEARABLES:
             jn_utils.log("Cannot register wearable name: {0}, as a wearable with that name already exists.".format(wearable.reference_name))
 
@@ -517,6 +521,10 @@ init -1 python in jn_outfits:
             __ALL_WEARABLES[wearable.reference_name] = wearable
             if wearable.reference_name not in store.persistent.jn_wearable_list:
                 wearable.__save()
+
+                # If this is the first time adding it to the list, and it isn't JN, it's a new unlock
+                if not "jn_" in wearable.reference_name:
+                    _SESSION_NEW_UNLOCKS.append(wearable)
 
             else:
                 wearable.__load()
@@ -2072,6 +2080,290 @@ label outfits_auto_change:
         n 1fsqsl "...{w=0.75}{nw}"
 
     show natsuki idle at jn_center
+    return
+
+label new_wearables_outfits_unlocked:
+    if Natsuki.isEnamored(higher=True):
+        n 1uskemleex "...!"
+        n 1ksrunlsbl "..."
+        n 1knmpulsbl "[player]...{w=1.25}{nw}"
+        extend 1kllpulsbl " y-{w=0.2}you {i}do{/i} know you don't have to get me stuff just so I like you..."
+        n 1knmsllsbr "Right?"
+        n 1uskemlesusbr "I-{w=0.2}it's not that I don't appreciate it!{w=0.5}{nw}"
+        extend 1fcsemless " Don't get me wrong!{w=1}{nw}"
+        extend 1knmpoless " I-{w=0.2}I totally do!"
+        n 1kllemless "I just..."
+        n 1ksrunlsbl "..."
+        n 1fcsunl "I...{w=0.3} know...{w=1}{nw}"
+        extend 1ksrpolsbr " I can't exactly return the favour."
+        n 1fcsajlsbl "A-{w=0.2}and you've already done a lot for me,{w=0.5}{nw}" 
+        extend 1kslbolsbl " so..."
+        n 1kcsbolsbl "..."
+        n 1kcsemlesi "...Fine.{w=0.75}{nw}"
+        extend 1ksrsl " I'll take a look.{w=1.25}{nw}"
+        extend 1kslpo " But I still kinda feel like a jerk about it..."
+
+    elif Natsuki.isAffectionate(higher=True):
+        n 1uskeml "H-{w=0.2}huh?"
+        n 1uskwrl "[player]?{w=1}{nw}"
+        extend 1knmwrl " D-{w=0.2}did you {i}seriously{/i} just get me all this stuff?!"
+        n 1fslunl "..."
+        n 1fcsanl "Uuuuuuuuu-!"
+        n 1fbkwrledr "Why would you do thaaat?!{w=1}{nw}"
+        extend 1fbkgsless " I-{w=0.2}I didn't even {i}ask{/i} for anything!"
+        n 1fslunl "..."
+        n 1fcseml "Jeez...{w=0.5}{nw}"
+        extend 1flrsrf " and now I look like a total {i}jerk{/i} for not even having anything to give back...{w=1}{nw}"
+        extend 1fsqsrfsbr " I hope you're happy,{w=0.1} [player]."
+        n 1fcsemlesisbr "..."
+        n 1kcsbolsbr "...Alright.{w=0.75}{nw}"
+        extend 1fslpolsbr " J-{w=0.2}just a quick look..."
+
+    else:
+        n 1uwdeml "...Eh?"
+        n 1ulreml "What even..."
+        n 1uskemfeex "...!"
+        $ player_initial = jn_utils.get_player_initial()
+        n 1fbkwrf "[player_initial]-{w=0.2}[player]!"
+        n 1kbkwrf "What even {i}is{/i} all this?!"
+        n 1fllemlesssbl "Y-{w=0.2}you better not be trying to win me over with gifts or something!{w=1}{nw}"
+        extend 1fcsemlsbr " Yeesh!"
+        n 1flremlsbl "I-{w=0.2}I'll have you know I'm a {i}lot{/i} deeper than that!"
+        n 1fsqpulsbl "I swear it's like you're trying to embarrass me sometimes...{w=1}{nw}"
+        extend 1fslpolsbl " you jerk."
+        n 1ksrcalsbl "You {i}know{/i} I can't exactly give anything {i}back{/i},{w=0.1} either..."
+        n 1fcscalesssbl "..."
+        n 1kcsemlesi "..."
+        n 1fslsll "...Fine.{w=1}{nw}"
+        extend 1fcseml " Fine!{w=0.75}{nw}"
+        extend 1flremlsbr " I'll look at it!{w=1}{nw}"
+        extend 1fsrpolsbr " ...But only because you put the effort in."
+
+    python:
+        import random
+        alt_dialogue = False
+        random.shuffle(jn_outfits._SESSION_NEW_UNLOCKS)
+
+    while len(jn_outfits._SESSION_NEW_UNLOCKS) > 0:
+        $ unlock = jn_outfits._SESSION_NEW_UNLOCKS.pop()
+        n 1tlrbo "..."
+
+        # You can't really gift a hairstyle, so instead Natsuki is given an idea through a note/picture
+        if type(unlock) is jn_outfits.JNHairstyle:
+            if alt_dialogue:
+                n 1unmpuesu "Mmm?{w=1}{nw}"
+                extend 1tnmajeqm " A...{w=0.3} note...?"
+                n 1tslpu "..."
+                n 1unmgsesu "...Oh!{w=1}{nw}"
+                extend 1unmbol " You wanted me to try my hair like that?{w=0.5} [unlock.display_name]?"
+                n 1nllunl "..."
+                n 1nllajl "Well...{w=1}{nw}"
+                extend 1nnmajl " okay."
+
+                if Natsuki.isEnamored(higher=True):
+                    n 1nlrssl "I {i}suppose{/i} I can give that a shot later."
+                    n 1fsqsslsbl "I bet {i}someone{/i} would like that,{w=0.1} huh?{w=0.5}{nw}"
+                    extend 1fsldvlsbl " Ehehe..."
+
+                elif Natsuki.isAffectionate(higher=True):
+                    n 1nlrpol "I {i}suppose{/i} I can give that a shot later."
+                    extend 1nlrsslsbr " Ehehe..."
+
+                else:
+                    n 1fcspol "I {i}suppose{/i} I can give that a shot later."
+                    n 1flrajl "B-but only because I want to though,{w=0.75}{nw}" 
+                    extend 1fsrpol " obviously." 
+
+            else:
+                n 1tnmpueqm "Eh?{w=1}{nw}"
+                extend 1tlrpueqm " What's this note doing here...?"
+                n 1tllbo "..."
+                n 1unmgsesu "W-{w=0.2}woah!"
+                n 1flldvl "Heh.{w=0.5}{nw}"
+                extend 1fllsslsbr " I gotta admit.{w=1}{nw}"
+                extend 1fsrnvlsbr " I never even thought of trying {i}that{/i} with my hair..."
+                n 1unmbo "[unlock.display_name],{w=0.1} huh?"
+                n 1nllajl "I {i}guess{/i} it might be worth a try..."
+
+                if Natsuki.isEnamored(higher=True):
+                    n 1fsqsslsbr "I wonder who'd like {i}that{/i},{w=0.1} though?{w=0.5}{nw}"
+                    extend 1fsqsmlsbr " Ehehe..."
+
+                elif Natsuki.isAffectionate(higher=True):
+                    n 1nlrsslsbr "We'll see."
+
+                else:
+                    n 1fcsgsl "B-{w=0.2}but only out of curiosity!{w=1}{nw}"
+                    extend 1fsqpol " Got it?"
+
+        else:
+            if Natsuki.isEnamored(higher=True):
+                if alt_dialogue:
+                    n 1kcsemlesi "Jeez...{w=1}{nw}"
+                    extend 1knmpol " why are you trying to spoil me so much?"
+                    n 1fllpol "You know I hate being showered in flashy stuff..."
+                    n 1kslsrl "..."
+                    n 1ksqsrlsbl "...Especially things like this [unlock.display_name]."
+                    extend 1kslsslsbl " Even if it is pretty awesome."
+                    n 1kslsrl "..."
+                    n 1nllajl "I'm...{w=1}{nw}"
+                    extend 1ksrpol " just going to keep that too."
+                    n 1nsrdvf "...Thanks."
+
+                else:
+                    n 1uskgsfesu "...!"
+                    n 1fsldvl "...Heh.{w=1}{nw}"
+                    extend 1tsqpufsbl " You really {i}are{/i} trying to win me over with all this stuff,{w=0.1} huh?"
+                    n 1kslsllsbl "..."
+                    n 1fcspulsbl "The [unlock.display_name]...{w=1}{nw}"
+                    n 1knmpulsbr "It's...{w=0.5} really nice.{w=0.75}{nw}"
+                    extend 1kllsrlsbr " Okay?"
+                    n 1kslunlesssbr "Thanks..."
+
+            elif Natsuki.isAffectionate(higher=True):
+                if alt_dialogue:
+                    n 1uwdajlesu "...!"
+                    n 1fcsemlesssbl "A-{w=0.1}ahem!{w=1}{nw}"
+                    extend 1fslpol " Another good choice,{w=0.5}{nw}"
+                    extend 1fsqpolsbr " I hate to admit."
+                    n 1klrbolsbr "..."
+                    n 1fcsunlsbr "...Thanks,{w=0.1} [player]."
+                    n 1fllunlsbr "For the [unlock.display_name],{w=0.5}{nw}"
+                    extend 1fnmpulsbl " I-{w=0.2}I mean."
+                    n 1kslpulsbl "It's...{w=1}{nw}"
+                    extend 1kslsslsbl " really cool."
+                    n 1fslpofsbl "...Thanks."
+
+                else:
+                    n 1uwdajledz "...!"
+                    n 1fcsunlesdsbl "..."
+                    n 1fcssslsbl "Heh,{w=1}{nw}"
+                    extend 1fllbglesssbr " a-{w=0.2}and here I was thinking I'd have to teach you {i}everything{/i} about style!"
+                    n 1kllsllsbr "..."
+                    n 1knmbolsbr "...But thanks,{w=0.3} [player].{w=1}"
+                    extend 1flrunlsbr "For the [unlock.display_name]."
+                    n 1fcsunlsbr "I...{w=0.75}{nw}"
+                    extend 1ksrunfsbl " really appreciate it."
+
+            else:
+                if alt_dialogue:
+                    n 1uskgslesh "...!"
+                    n 1fslanfess "Nnnnnnn-!"
+                    n 1fcsemfesssbl "Y-{w=0.2}you're just lucky you're good at picking out gifts,{w=0.5}{nw}"
+                    extend 1fsqpofesssbl " you jerk."
+                    n 1fslpofesssbr "I guess I'll {i}have{/i} to keep this [unlock.display_name] now.{w=0.75}{nw}"
+                    extend 1fnmpofesssbl "I-{w=0.2}I hope you're happy."
+                    
+                else:
+                    n 1fspgsledz "W-{w=0.2}woah!"
+                    n 1uskemfesh "...!"
+                    n 1fbkwrf "What?!{w=1}{nw}"
+                    extend 1fllwrfeszsbl " Don't look at me like that!"
+                    n 1fcseml "I-{w=0.2}I'm glad to see you have {i}some{/i} taste after all to have found this."
+                    n 1fllcal "[unlock.display_name],{w=0.1} huh?{w=1}{nw}"
+                    extend 1fcscal " I-{w=0.2}I guess I'll keep it around."
+                    n 1fcspofess "Juuuust in case."
+
+        $ alt_dialogue = not alt_dialogue
+
+        if len(jn_outfits._SESSION_NEW_UNLOCKS) > 0:
+            if Natsuki.isEnamored(higher=True):
+                n 1klrpul "...I can't believe there's even more.{w=1}{nw}"
+                extend 1fcspul " Jeez,{w=0.1} [player]..."
+                n 1kcspul "...Okay.{w=1}{nw}"
+                extend 1fslssl " Let's see what's next..."
+
+            elif Natsuki.isAffectionate(higher=True):
+                n 1ksrunl "Uuuuuuu...{w=1}{nw}"
+                extend 1ksremlesd " there's {i}still{/i} more?!"
+                n 1kcsemlesisbl "Jeez..."
+                
+            else:
+                n 1fnmpol "H-{w=0.2}how much {i}is{/i} there here,{w=0.1} [player]{w=1}{nw}?"
+                extend 1fslpofesssbr " Jeez..."
+
+    if Natsuki.isEnamored(higher=True):
+        n 1fcsssl "Finally ran out of things to throw at me,{w=0.5}{nw}" 
+        extend 1fllsslsbl " huh?"
+        n 1kllbolsbl "..."
+        n 1ksrpulsbl "I...{w=1}{nw}"
+        extend 1ksqsrlsbl " really wish you didn't do that,{w=0.1} you know."
+        n 1kllbolsbl "..."
+        n 1kllpulsbr "But...{w=0.75}{nw}"
+        extend 1knmsslsbr " [player]?"
+        n 1fsrunfsbr "..."
+
+        show black zorder 4 with Dissolve(0.5)
+        play audio clothing_ruffle
+        pause 3.5
+
+        if Natsuki.isLove(higher=True):
+            show natsuki 1nslunfsbl at jn_center zorder JN_NATSUKI_ZORDER
+            play audio kiss
+            pause 1.5
+            hide black with Dissolve(1.25)
+            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            n 1knmssf "...Thanks,{w=0.1} [chosen_tease]."
+            n 1klrsmfeme "Ehehe."
+
+        else:
+            hide black with Dissolve(1.25)
+            n 1fslunf "...Thanks.{w=0.75}{nw}"
+            extend 1fslsmfsbr " Ehehe."
+
+    elif Natsuki.isAffectionate(higher=True):
+        n 1fllun "...Is that it?{w=0.75}{nw}"
+        extend 1flrunl " Is that everything?"
+        n 1fcsemlesi "Jeez..."
+        n 1fnmtrl "You really need to stop giving away so much stuff,{w=0.1} [player].{w=1}{nw}"
+        extend 1fsqcal " I don't want you getting into a dumb habit!"
+        n 1fslunlsbl "Especially when I can't do anything nice back..."
+        n 1kslunlsbl "..."
+        n 1kslpulsbl "But...{w=0.75}{nw}"
+        extend 1knmsllsbr " [player]?"
+        n 1fsrunfsbr "..."
+
+        show black zorder 4 with Dissolve(0.5)
+        show natsuki 1flrcafsbr at jn_center zorder JN_NATSUKI_ZORDER
+        play audio clothing_ruffle
+        pause 2
+        hide black with Dissolve(1.25)
+
+        n 1ksrcafsbr "..."
+        n 1fcstrlsbl "T-{w=0.2}thanks."
+        
+    else:
+        n 1kslemlesi "Man...{w=1}{nw}"
+        extend 1flrtrl " is that all of it?{w=0.5}{nw}"
+        extend 1fcspulsbl " Jeez..."
+        n 1fslunlsbr "..."
+        n 1nslajlsbr "I...{w=0.75}{nw}"
+        extend 1nsqajlsbl " suppose I better go put all this away now."
+        n 1kslunlsbr "..."
+        n 1kslpulsbl "But..."
+        extend 1knmsllsbr " [player]?"
+        n 1fsrunlsbr "..."
+        n 1fsrajlsbr "I..." 
+        extend 1ksrcafsbr " really appreciate the stuff you got me."
+        n 1kllcalsbr "..."
+        n 1fcstrlsbl "T-{w=0.2}thanks."
+
+    show black zorder 4 with Dissolve(0.5)
+    play audio chair_out
+    pause(3)
+    play audio clothing_ruffle
+    pause(1)
+    play audio drawer
+    pause(1)
+    pause(3)
+    play audio chair_in
+    pause(3)
+    hide black with Dissolve(1.25)
+
+    n 1ullajl "So..."
+    n 1tnmsslsbl "Where we we?{w=1}{nw}"
+    extend 1fslsslsbr " Ehehe..."
+
     return
 
 screen create_outfit():
