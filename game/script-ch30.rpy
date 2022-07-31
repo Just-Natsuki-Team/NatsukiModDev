@@ -109,6 +109,14 @@ label ch30_init:
     show screen hkb_overlay
     play music audio.just_natsuki_bgm
 
+    # Random sticker chance
+    if Natsuki.isAffectionate(higher=True):
+        if (
+            (not persistent._jn_natsuki_chibi_seen and persistent.jn_total_visit_count > 50) 
+            or (random.randint(1, 1000) == 1)
+        ):
+            $ jn_stickers.stickerWindowPeekUp()
+
     #FALL THROUGH
 
 #The main loop

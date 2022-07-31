@@ -121,10 +121,10 @@ init 0 python in jn_atmosphere:
     # v PARTICLES
     # v CLOUDS
     #   SKY
-    _DIM_Z_INDEX = 2
-    _PARTICLES_Z_INDEX = -1
-    _CLOUDS_Z_INDEX = -2
-    _SKY_Z_INDEX = -3
+    _DIM_Z_INDEX = 4
+    _PARTICLES_Z_INDEX = -3
+    _CLOUDS_Z_INDEX = -6
+    _SKY_Z_INDEX = -8
 
     class JNWeatherTypes(Enum):
         """
