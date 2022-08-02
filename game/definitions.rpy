@@ -1151,7 +1151,7 @@ init -990 python in jn_globals:
         "pigfucker",
         "pimpis",
         "piss",
-        "poop",
+        "poo|poop",
         "prick",
         "pube",
         "rectum",
@@ -1169,7 +1169,7 @@ init -990 python in jn_globals:
         "smegma",
         "smut",
         "snatch",
-        "son-of-a-bitch",
+        "son-of-a-bitch|sonofabitch",
         "spac",
         "spunk",
         "tosser",
@@ -1185,6 +1185,93 @@ init -990 python in jn_globals:
         "whore",
         "xrated",
         "xxx"
+    }
+
+    _INSULT_LIST = {
+        "arrogant",
+        "beast",
+        "bonebag",
+        "bonehead",
+        "brat|bratty",
+        "breadboard",
+        "bully",
+        "cheater",
+        "child",
+        "clown",
+        "cuttingboard",
+        "demon",
+        "dimwit",
+        "dirt",
+        "disgusting",
+        "^dog$",
+        "dumb|dumbo",
+        "dunce",
+        "dwarf",
+        "dweeb",
+        "egoist|egotistical",
+        "evil",
+        "failure",
+        "fake",
+        "(^fat$|fatso|fatty)",
+        "(flat|flatso|flatty)",
+        "gilf",
+        "gremlin",
+        "gross",
+        "halfling|halfpint|half-pint",
+        "halfwit",
+        "heartless",
+        "hellspawn",
+        "hideous",
+        "horrid|horrible",
+        "hungry",
+        "idiot",
+        "ignoramus",
+        "ignorant",
+        "imbecile",
+        "^imp$",
+        "ironingboard",
+        "(^kid$|kiddo|kiddy|kiddie)",
+        "l[e3]sbian",
+        "l[e3]sb[o0]",
+        "midget",
+        "moron",
+        "narcissist",
+        "nasty",
+        "neckcrack|neck-crack",
+        "necksnap|neck-snap",
+        "nimrod",
+        "nuisance",
+        "^pest$",
+        "pathetic",
+        "plaything",
+        "punchbag|punch-bag|punchingbag|punching-bag",
+        "puppet",
+        "putrid",
+        "^short$|shortstuff|shorty",
+        "^sick$",
+        "^simp$",
+        "simpleton",
+        "skinny",
+        "slave",
+        "smelly",
+        "^soil$",
+        "starved|starving",
+        "stinky",
+        "^(stuckup|stuck-up)$"
+        "stupid",
+        "^teabag$",
+        "^th[o0]t$",
+        "^tiny$",
+        "^toy$",
+        "^twerp$",
+        "^twit$",
+        "^useless$",
+        "^vendingmachine$",
+        "vomit",
+        "^washboard$",
+        "^witch$",
+        "^wretch$",
+        "^zombie$",
     }
 
     # Alphabetical (excluding numbers) values allowed for text input
@@ -1365,7 +1452,8 @@ init python in jn_utils:
     import store
     import store.jn_globals as jn_globals
 
-    __PROFANITY_REGEX = re.compile('|'.join(jn_globals._PROFANITY_LIST), re.IGNORECASE)
+    PROFANITY_REGEX = re.compile('|'.join(jn_globals._PROFANITY_LIST), re.IGNORECASE)
+    INSULT_REGEX = re.compile('|'.join(jn_globals._INSULT_LIST), re.IGNORECASE)
 
     def get_current_session_length():
         """
@@ -1486,7 +1574,19 @@ init python in jn_utils:
         OUT:
             - True if string contains profanity; otherwise False
         """
-        return re.search(__PROFANITY_REGEX, string.lower())
+        return re.search(PROFANITY_REGEX, string.lower())
+
+    def get_string_contains_insult(string):
+        """
+        Returns True if the given string contains an insult, based on regex.
+
+        IN:
+            - string - The string to test
+
+        OUT:
+            - True if string contains an insult; otherwise False
+        """
+        return re.search(INSULT_REGEX, string.lower())
 
     # Key setup
     key_path = os.path.join(renpy.config.basedir, "game/dev/key.txt").replace("\\", "/")

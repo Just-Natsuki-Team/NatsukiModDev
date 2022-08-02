@@ -2204,7 +2204,7 @@ init 5 python:
             label="talk_give_nickname",
             unlocked=True,
             prompt="Can I give you a nickname?",
-            conditional="persistent.jn_player_nicknames_allowed",
+            conditional="persistent._jn_nicknames_natsuki_allowed",
             category=["Natsuki"],
             player_says=True,
             affinity_range=(jn_affinity.ENAMORED, None),
@@ -2258,13 +2258,13 @@ label talk_give_nickname:
     else:
         $ nickname_type = jn_nicknames.get_nickname_type(nickname)
 
-    if nickname_type == jn_nicknames.TYPE_INVALID:
+    if nickname_type == jn_nicknames.NicknameTypes.invalid:
         n 1tlraj "Uhmm...{w=0.3} [player]?"
         n 1tnmaj "I don't think that's a nickname at all."
         n 1tllss "I'll...{w=0.3} just stick with what I have now,{w=0.1} thanks."
         return
 
-    elif nickname_type == jn_nicknames.TYPE_LOVED:
+    elif nickname_type == jn_nicknames.NicknameTypes.loved:
         $ persistent.jn_player_nicknames_current_nickname = nickname
         $ n_name = persistent.jn_player_nicknames_current_nickname
         n 1uskgsl "O-{w=0.1}oh!{w=0.2} [player]!"
@@ -2274,14 +2274,14 @@ label talk_give_nickname:
         extend 1uchsml " Ehehe."
         return
 
-    elif nickname_type == jn_nicknames.TYPE_DISLIKED:
+    elif nickname_type == jn_nicknames.NicknameTypes.disliked:
         n 1fsqbo "Come on,{w=0.1} [player]...{w=0.3} really?"
         n 1fllsl "You knew I'm not gonna be comfortable being called that."
         n 1fcssl "..."
         n 1nlraj "I'm...{w=0.3} just going to pretend you didn't say that,{w=0.1} alright?"
         return
 
-    elif nickname_type == jn_nicknames.TYPE_HATED:
+    elif nickname_type == jn_nicknames.NicknameTypes.hated:
         n 1fskem "W-{w=0.1}what?{w=0.5}{nw}"
         extend 1fscwr " What did you just call me?!"
         n 1fcsan "[player]!{w=0.2} I can't believe you!"
@@ -2290,7 +2290,7 @@ label talk_give_nickname:
         n 1fcspu "..."
         $ persistent.jn_player_nicknames_bad_given_total += 1
 
-    elif nickname_type == jn_nicknames.TYPE_PROFANITY:
+    elif nickname_type == jn_nicknames.NicknameTypes.profanity:
         n 1fskpu "E-{w=0.1}excuse me?!"
         n 1fskfu "What the hell did you just call me,{w=0.1} [player]?!"
         n 1fcsan "..."
@@ -2299,7 +2299,7 @@ label talk_give_nickname:
         n 1fcspu "..."
         $ persistent.jn_player_nicknames_bad_given_total += 1
 
-    elif nickname_type == jn_nicknames.TYPE_FUNNY:
+    elif nickname_type == jn_nicknames.NicknameTypes.funny:
         n 1nbkdv "Pffft!"
         n 1uchbselg "Ahaha!"
         n 1fbkbs "[nickname]?!{w=0.2} What was that meant to be,{w=0.1} [player]?"
@@ -2311,7 +2311,7 @@ label talk_give_nickname:
         $ n_name = persistent.jn_player_nicknames_current_nickname
         return
 
-    elif nickname_type == jn_nicknames.TYPE_NOU:
+    elif nickname_type == jn_nicknames.NicknameTypes.nou:
         n 1usqsg "No you~."
         return
 
