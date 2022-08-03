@@ -1695,11 +1695,18 @@ init python:
     y_name = "Yuri"
 
     # Assign Natsuki the chosen nickname (defaulted to Natsuki)
-    if persistent.jn_player_nicknames_current_nickname:
-        n_name = persistent.jn_player_nicknames_current_nickname
+    if persistent._jn_nicknames_natsuki_current_nickname:
+        n_name = persistent._jn_nicknames_natsuki_current_nickname
 
     else:
         n_name = "Natsuki"
+
+    # Assign the player their chosen nickname (defaulted to the name they gave in the intro)
+    if persistent._jn_nicknames_player_current_nickname:
+        player = persistent._jn_nicknames_player_current_nickname
+
+    else:
+        player = persistent.playername
 
 init -999 python:
     def label_callback(name, abnormal):

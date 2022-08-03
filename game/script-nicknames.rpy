@@ -5,7 +5,7 @@ default persistent._jn_nicknames_natsuki_bad_given_total = 0
 
 # Player nickname data
 default persistent._jn_nicknames_player_allowed = True
-default persistent._jn_nicknames_player_current_nickname = None
+default persistent._jn_nicknames_player_current_nickname = persistent.playername
 default persistent._jn_nicknames_player_bad_given_total = 0
 
 init 0 python in jn_nicknames:
@@ -149,6 +149,7 @@ init 0 python in jn_nicknames:
         "^geek$",
         "^girl$",
         "^boy$",
+        "thiccsuki"
     }
 
     NATSUKI_LOVED_NICKNAME_REGEX = re.compile('|'.join(__NATSUKI_NICKNAME_LOVED_LIST), re.IGNORECASE)
@@ -175,8 +176,11 @@ init 0 python in jn_nicknames:
         
         else:
             nickname = nickname.lower().replace(" ", "")
+
+            if nickname == "":
+                return NicknameTypes.invalid
             
-            if re.search(NATSUKI_LOVED_NICKNAME_REGEX, nickname):
+            elif re.search(NATSUKI_LOVED_NICKNAME_REGEX, nickname):
                 return NicknameTypes.loved
 
             elif re.search(NATSUKI_FUNNY_NICKNAME_REGEX, nickname):
@@ -213,6 +217,9 @@ init 0 python in jn_nicknames:
         
         else:
             nickname = nickname.lower().replace(" ", "")
+
+            if nickname == "":
+                return NicknameTypes.invalid
 
             if re.search(PLAYER_FUNNY_NICKNAME_REGEX, nickname):
                 return NicknameTypes.funny

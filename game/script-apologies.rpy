@@ -21,6 +21,7 @@ init 0 python in jn_apologies:
     TYPE_SUDDEN_LEAVE = 6
     TYPE_UNHEALTHY = 7
     TYPE_SCARE = 8
+    TYPE_BAD_PLAYER_NAME = 9
 
     def get_all_apologies():
         """
