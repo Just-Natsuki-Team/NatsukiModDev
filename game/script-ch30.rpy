@@ -46,6 +46,14 @@ label ch30_init:
         #Now adjust the stored version number
         persistent._jn_version = config.version
 
+        # Assign Natsuki her nickname, if permitted and defined
+        if persistent._jn_nicknames_natsuki_allowed and persistent._jn_nicknames_natsuki_current_nickname:
+            n_name = persistent._jn_nicknames_natsuki_current_nickname
+
+        # Assign the player their chosen nickname, if permitted and defined
+        if persistent._jn_nicknames_player_allowed and persistent._jn_nicknames_player_current_nickname:
+            player = persistent._jn_nicknames_player_current_nickname
+
         # Check the daily affinity cap and reset if need be
         Natsuki.checkResetDailyAffinityGain()
 

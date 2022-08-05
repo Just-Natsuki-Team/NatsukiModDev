@@ -90,7 +90,7 @@ init 5 python:
     )
 
 label apology_bad_nickname:
-    if persistent.jn_player_nicknames_allowed:
+    if persistent._jn_nicknames_natsuki_allowed:
         # The player is still capable of nicknaming Natsuki
         if Natsuki.isEnamored(higher=True):
             n 1kcssf "..."
@@ -611,4 +611,133 @@ label apology_scare:
         n 1fcsantsa "We both know you don't mean that."
 
     $ persistent.jn_player_pending_apologies.remove(jn_apologies.TYPE_SCARE)
+    return
+
+# Apology for giving Natsuki a bad nickname
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._apology_database,
+            prompt="For asking you to call me a bad name.",
+            label="apology_bad_player_name",
+            unlocked=True,
+            conditional="jn_apologies.get_apology_type_pending(jn_apologies.TYPE_BAD_PLAYER_NAME)"
+        ),
+        topic_group=TOPIC_TYPE_APOLOGY
+    )
+
+label apology_bad_player_name:
+    if persistent._jn_nicknames_player_allowed:
+        # The player is still capable of nicknaming Natsuki
+        if Natsuki.isEnamored(higher=True):
+            n 1ncspuesi "..."
+            n 1nllsl "...It's fine,{w=0.1} [player]."
+            n 1ncsaj "Just..."
+            n 1ksrsl "..."
+            n 1kcstr "I really hate when I try to do something nice...{w=1}{nw}"
+            extend 1ksqsr " and it just gets thrown back in my face,{w=0.1} you know?"
+            n 1fcstr "I didn't {i}have{/i} to listen to what you wanted."
+            n 1knmsrl "...So do you seriously think saying stuff like that {i}makes{/i} me want to do that again in the future?"
+            n 1fllsrl "Because it {i}doesn't{/i},{w=0.1} [player]."
+            n 1fcssrl "..."
+            n 1kcsajsbl "...Look.{w=1}{nw}"
+            extend 1nllpul " It's all water under the bridge,{w=0.1} okay?{w=0.75}{nw}"
+            extend 1fllpol " I accept your apology."
+            n 1fnmpol "Just use your noggin next time.{w=0.75}{nw}"
+            extend 1fcspol " I {i}know{/i} there's one on your shoulders somewhere."
+            n 1fsrunl "...Just don't start trying to prove me wrong on that.{w=0.75}{nw}"
+            extend 1ksqpol " Please?"
+            $ Natsuki.calculatedAffinityGain()
+
+        elif Natsuki.isNormal(higher=True):
+            n 1tnmpueqm "...Huh?{w=1}{nw}"
+            extend 1nnmsl " Oh,{w=0.3} right.{w=0.75}{nw}"
+            extend 1fslbol " The whole name thing."
+            n 1ncspuesi "..."
+            n 1fsqca "...That was still a jerkish thing to do,{w=0.5}{nw}"
+            extend 1fslca " you know."
+            n 1fcsemlsbl "You're just lucky I don't keep pointless grudges forever." 
+            extend 1fcsca " I'm a bigger person than that."
+            n 1nllaj "So...{w=1}{nw}"
+            extend 1nnmsl " you're forgiven.{w=0.75}{nw}"
+            extend 1nsrbo " I guess."
+            n 1fnmcal "Just think about what you come out with.{w=0.5}{nw}"
+            extend 1ksrcalsbr " It really isn't hard,{w=0.1} is it?"
+            $ Natsuki.calculatedAffinityGain()
+
+        elif Natsuki.isDistressed(higher=True):
+            n 1fcsan "...You are just unbelievable,{w=0.1} [player]."
+            n 1fsqfu "Did it {i}seriously{/i} take you this long to admit you were wrong to say that?"
+            n 1flrem "Like,{w=0.5}{nw}"
+            extend 1fnmsc " are you {i}trying{/i} to be funny?"
+            n 1fsqup "...Or are you really just {b}that{/b} arrogant?"
+            n 1fcsan "..."
+            n 1fsqanean "...You know what?{w=0.5}{nw}"
+            extend 1fcsfuean " Fine.{w=1}{nw}"
+            extend 1fllwr " Who cares?{w=0.75}{nw}"
+            extend 1fsqfultsb " You clearly don't."
+            n 1fcsfrtsa "I'll accept your half-baked {i}attempt{/i} at an apology."
+            n 1fsqfutsb "But only because it's less effort than getting angry about it."
+
+        else:
+            n 1fsquntdr "Heh.{w=0.75}{nw}"
+            extend 1fsqantsb " {i}Now{/i} you apologize,{w=0.1} huh?"
+            n 1fnmanltsfean "After all this time?"
+            n 1fcsanltsd "..."
+            n 1fcsfultsa "You know what?{w=1}{nw}"
+            extend 1fsqfultsb " Maybe I {i}should{/i} just call you that name."
+            n 1fskscftdc "Why not?!{w=1}{nw}"
+            extend 1fskfuftdc " Not like you {i}aren't{/i} acting like it."
+            extend 1fcsanltsd " Jerk."
+
+    else:
+        # The player has been barred from nicknaming Natsuki,{w=0.1} and even an apology won't change that
+        if Natsuki.isEnamored(higher=True):
+            n 1nllsl "..."
+            n 1knmsl "[player]."
+            n 1knmaj "...Exactly how many times did I warn you?"
+            n 1fnmem "How many times did I {i}forgive{/i} you?{w=1}{nw}"
+            extend 1fcsemean " Because I honestly lost count."
+            n 1kcsfresi "..."
+            n 1nsqsr "Sorry,{w=0.1} [player].{w=0.5}{nw}"
+            extend 1flltr " Every joke runs its course."
+            n 1fsqunl "And I am {i}not{/i} going to be the butt of this one again."
+            n 1fcsajl "So."
+            n 1fllcal "Fine.{w=0.5} I'll accept your apology..."
+            n 1fsqcalesi "...And you're going to accept the consequences."
+            n 1fcstrl "Sorry,{w=0.3} [player]."
+            extend 1fsqbol " But we're done with names here."
+            $ Natsuki.calculatedAffinityGain()
+
+        elif Natsuki.isNormal(higher=True):
+            n 1fcsemesi "...You've got to be kidding me,{w=0.5} right?"
+            n 1fllaj "You were a jerk so many times to me about that..."
+            n 1fsqan "...And you leave it this long to even {i}apologize{/i}?"
+            n 1fcsemesi "..."
+            n 1fsqtr "You're just lucky I'm not one for holding dumb grudges."
+            n 1fcsaj "So,{w=0.3} [player]."
+            n 1fslpo "I guess I'll accept the apology."
+            n 1fnmfr "...But you can {i}forget{/i} about me accepting any more of your nicknames."
+            n 1fsqtr "I'm done being messed around."
+            $ Natsuki.calculatedAffinityGain()
+
+        elif Natsuki.isDistressed(higher=True):
+            n 1fcsan "{i}Wow{/i}.{w=1}{nw}"
+            extend 1fcsfu " I would say I'm speechless,{w=0.3} if it were literally {i}anyone{/i} else."
+            n 1fsqfuean "But {i}you{/i}?"
+            n 1fcsem "I've about come to {i}expect{/i} this sort of crap from you."
+            n 1fsqwrean "So you know what?{w=0.75}{nw}"
+            extend 1fcssclean " Screw this,{w=0.75}{nw}"
+            extend 1fskscltsc " and screw your apology!"
+            n 1fcsscltsa "If {i}you{/i} aren't gonna listen,{w=0.5}{nw}"
+            extend 1fllscltsc " then you can tell me why I {b}should{/b}!"
+
+        else:
+            n 1fcsfultdrean "Oh,{w=1}{nw}"
+            extend 1fcsscltsaean " take a hike,{w=0.5}{nw}"
+            extend 1fsqscltsbean " [player]!"
+            n 1fcswrltsd "You {i}need{/i} a walk if you {i}seriously{/i} think after all of your crap,{w=0.75}{nw}"
+            extend 1fskwrftdcean " I'm gonna be the one listening to {b}you{/b}!"
+
+    $ persistent.jn_player_pending_apologies.remove(jn_apologies.TYPE_BAD_PLAYER_NAME)
     return
