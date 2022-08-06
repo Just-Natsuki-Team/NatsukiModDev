@@ -60,10 +60,10 @@ label ch30_init:
 
         # Determine if the player should get a prolonged leave greeting
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
-            persistent.jn_player_apology_type_on_quit = jn_apologies.ApologyTypes.prolonged_leave
+            Natsuki.setQuitApology(jn_apologies.ApologyTypes.prolonged_leave)
 
         # Repeat visits have a small affinity gain
-        elif not persistent.jn_player_apology_type_on_quit:
+        elif not persistent._jn_player_apology_type_on_quit:
             Natsuki.calculatedAffinityGain()
 
         # Add to the total visits counter and set the last visit date
@@ -99,7 +99,7 @@ label ch30_init:
         if not jn_topic_in_event_list_pattern("^greeting_"):
             if (
                 random.randint(1, 10) == 1
-                and (not persistent.jn_player_admission_type_on_quit and not persistent.jn_player_apology_type_on_quit)
+                and (not persistent.jn_player_admission_type_on_quit and not persistent._jn_player_apology_type_on_quit)
                 and jn_events.select_event()
             ):
                 push(jn_events.select_event())
@@ -108,7 +108,7 @@ label ch30_init:
             else:
                 push(greetings.select_greeting())
                 persistent.jn_player_admission_type_on_quit = None
-                persistent.jn_player_apology_type_on_quit = None
+                persistent._jn_player_apology_type_on_quit = None
 
     # Prepare visuals
     show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
@@ -602,9 +602,10 @@ label try_force_quit:
                         hide glitch_garbled_red
 
                 # Apply consequences for force quitting, then glitch quit out
-                $ Natsuki.percentageAffinityLoss(2)
-                $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.sudden_leave)
-                $ persistent.jn_player_apology_type_on_quit = jn_apologies.ApologyTypes.sudden_leave
+                python:
+                    Natsuki.percentageAffinityLoss(2)
+                    Natsuki.addApology(jn_apologies.ApologyTypes.sudden_leave)
+                    Natsuki.setQuitApology(jn_apologies.ApologyTypes.sudden_leave)
 
                 play audio static
                 show glitch_garbled_b zorder 99 with hpunch

@@ -548,6 +548,17 @@ init 0 python:
             """
             store.persistent._jn_player_apology_type_on_quit = int(apology_type)
 
+        @staticmethod
+        def removeApology(apology_type):
+            """
+            Removes an apology from the list of pending apologies, if it exists.
+
+            IN:
+                apology_type - The jn_apologies.ApologyTypes type to add.
+            """
+            if int(apology_type) in store.persistent._jn_player_pending_apologies:
+                store.persistent._jn_player_pending_apologies.remove(int(apology_type))
+
 # KWWWMMMMMMMWNNNNNNXXXKKKKK00KKXXKKK0KK0000KKKKKK000Okkxdoodk0KKKKKXKKKK0000KOxoccdkko;,cOX00XXXXXXXX
 # KNWWWWWMMWWNNNNNXXXXXXXXKKKKKXXXXXXKKKKXXXXXXXKKKXXKKKKKKXKKKXXK00KKKKKKK000OxOOdclxOx:;kXOxKXXXXXKK
 # KNWWWWWWNXKXNNNNNNNNNNXXXXXXXXXXXXXXXXXXXXXXXXXKKKXKKKKKKXXKXXXXXKKKKKKKKKK00Ok0KOo:oxddOXkdOXXXXXKK

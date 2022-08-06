@@ -47,17 +47,6 @@ init 0 python in jn_apologies:
 
         return return_apologies
 
-    def add_new_pending_apology(apology_type):
-        """
-        Adds a new apology possiblity to the list of pending apologies.
-        If the apology type is already present in the list, ignore it.
-
-        IN:
-            Apology type to add.
-        """
-        if not apology_type in store.persistent._jn_player_pending_apologies:
-            store.persistent._jn_player_pending_apologies.append(int(apology_type))
-
 # Returns all apologies that the player qualifies for, based on wrongdoings
 label player_apologies_start:
     python:
@@ -161,7 +150,7 @@ label apology_bad_nickname:
             n 1fsqfutsb "Whatever.{w=0.2} I literally don't care."
             n 1fcsantsa "This changes {i}nothing{/i},{w=0.1} [player]."
 
-    $ persistent._jn_player_pending_apologies.remove(jn_apologies.ApologyTypes.bad_nickname)
+    $ Natsuki.removeApology(jn_apologies.ApologyTypes.bad_nickname)
     return
 
 # Apology for cheating in a minigame
@@ -202,7 +191,7 @@ label apology_cheated_game:
         n 1fcsan "Whatever.{w=0.2} I don't care."
         n 1fsqantsa "As if I could expect much better from {i}you{/i},{w=0.1} anyway."
 
-    $ persistent._jn_player_pending_apologies.remove(jn_apologies.ApologyTypes.cheated_game)
+    $ Natsuki.removeApology(jn_apologies.ApologyTypes.cheated_game)
     return
 
 # Generic apology
@@ -341,7 +330,7 @@ label apology_prolonged_leave:
         n 1kcssl "...Heh..."
         n 1fsqfutsb "You should be apologizing that you {i}came back{/i}."
 
-    $ persistent._jn_player_pending_apologies.remove(jn_apologies.ApologyTypes.prolonged_leave)
+    $ Natsuki.removeApology(jn_apologies.ApologyTypes.prolonged_leave)
     return
 
 # Apology for generally being rude to Natsuki outside of nicknames
@@ -395,7 +384,7 @@ label apology_rude:
         n 1fsqfutsb "You can {i}stick{/i} your apology,{w=0.1} [player]."
         n 1fcsfutsa "It means nothing to me."
 
-    $ persistent._jn_player_pending_apologies.remove(jn_apologies.ApologyTypes.rude)
+    $ Natsuki.removeApology(jn_apologies.ApologyTypes.rude)
     return
 
 # Apology for leaving without saying "Goodbye" properly.
@@ -450,7 +439,7 @@ label apology_sudden_leave:
         n 1fsqantsb "Whatever.{w=0.2} I don't care.{w=0.2} Keep your apology."
         n 1fsqsftse "You've so many other things to be sorry for.{w=0.2} What's another on the pile,{w=0.1} right?"
 
-    $ persistent._jn_player_pending_apologies.remove(jn_apologies.ApologyTypes.sudden_leave)
+    $ Natsuki.removeApology(jn_apologies.ApologyTypes.sudden_leave)
     return
 
 # Apology for failing to follow Natsuki's advice when she is concerned about the player's health
@@ -501,7 +490,7 @@ label apology_unhealthy:
         n 1kcsun "...Heh."
         n 1fcsantsa "At least you care that {i}you{/i} aren't being treated right."
 
-    $ persistent._jn_player_pending_apologies.remove(jn_apologies.ApologyTypes.unhealthy)
+    $ Natsuki.removeApology(jn_apologies.ApologyTypes.unhealthy)
     return
 
 # Apology for giving Natsuki a fright
@@ -546,7 +535,7 @@ label apology_scare:
         n 1fsqfu "Stick it,{w=0.1} [player]."
         n 1fcsantsa "We both know you don't mean that."
 
-    $ persistent._jn_player_pending_apologies.remove(jn_apologies.ApologyTypes.scare)
+    $ Natsuki.removeApology(jn_apologies.ApologyTypes.scare)
     return
 
 # Apology for giving Natsuki a bad nickname
@@ -674,5 +663,5 @@ label apology_bad_player_name:
             n 1fcswrltsd "You {i}need{/i} a walk if you {i}seriously{/i} think after all of your crap,{w=0.75}{nw}"
             extend 1fskwrftdcean " I'm gonna be the one listening to {b}you{/b}!"
 
-    $ persistent._jn_player_pending_apologies.remove(jn_apologies.ApologyTypes.bad_player_name)
+    $ Natsuki.removeApology(jn_apologies.ApologyTypes.bad_player_name)
     return
