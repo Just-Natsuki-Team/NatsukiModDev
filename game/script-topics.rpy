@@ -4560,7 +4560,7 @@ init 5 python:
 label talk_play_snap:
     if persistent.jn_snap_player_is_cheater:
         # Unlock Snap if the player somehow is labelled as a cheater with no option to apologize
-        if jn_apologies.ApologyTypes.cheated_game not in persistent._jn_player_pending_apologies:
+        if not int(jn_apologies.ApologyTypes.cheated_game) in persistent._jn_player_pending_apologies:
             $ persistent.jn_snap_player_is_cheater = False
 
         else:
