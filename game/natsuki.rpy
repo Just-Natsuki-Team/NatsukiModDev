@@ -526,6 +526,12 @@ init 0 python:
                 )
                 return "UNKNOWN"
 
+        def addApology(apology_label="apology_default"):
+            """
+            """
+            return ""
+
+
 
 # KWWWMMMMMMMWNNNNNNXXXKKKKK00KKXXKKK0KK0000KKKKKK000Okkxdoodk0KKKKKXKKKK0000KOxoccdkko;,cOX00XXXXXXXX
 # KNWWWWWMMWWNNNNNXXXXXXXXKKKKKXXXXXXKKKKXXXXXXXKKKXXKKKKKKXKKKXXK00KKKKKKK000OxOOdclxOx:;kXOxKXXXXXKK

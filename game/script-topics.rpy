@@ -2421,11 +2421,14 @@ label talk_give_nickname:
         n 1fsqsr "I warned you,{w=0.1} [player].{w=0.2} Remember that."
 
         # Apply affinity/trust penalties, then revoke nickname priveleges and finally apply pending apology
-        $ Natsuki.percentageAffinityLoss(10)
-        $ persistent._jn_nicknames_natsuki_allowed = False
-        $ persistent._jn_nicknames_natsuki_current_nickname = None
-        $ n_name = "Natsuki"
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
+        python:
+            get_topic("talk_give_nickname").lock()
+            Natsuki.percentageAffinityLoss(10)
+            persistent._jn_nicknames_natsuki_allowed = False
+            persistent._jn_nicknames_natsuki_current_nickname = None
+            n_name = "Natsuki"
+            jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
+
 
     return
 
@@ -4833,7 +4836,7 @@ init 5 python:
             persistent._topic_database,
             label="talk_custom_music_introduction",
             unlocked=True,
-            prompt="Discovering custom music",
+            prompt="Music player",
             conditional="not persistent.jn_custom_music_unlocked",
             nat_says=True,
             affinity_range=(jn_affinity.HAPPY, None),
@@ -4868,6 +4871,7 @@ label talk_custom_music_introduction:
     n 1tsqpo "I guess they never will now,{w=0.1} huh?"
     n 1uchbg "Well,{w=0.1} whatever.{w=0.2} The point is we can play whatever music we want now!"
     n 1fchbg "I think I figured out a way to let you send me whatever you want me to put on,{w=0.1} so listen up,{w=0.1} 'kay?"
+    $ get_topic("talk_custom_music_introduction").lock()
     jump talk_custom_music_explanation
 
 # Natsuki explains how the custom music functionality works
@@ -4889,12 +4893,17 @@ init 5 python:
     )
 
 label talk_custom_music_explanation:
+    # Unlock early in case of crash/quit
+    $ persistent.jn_custom_music_unlocked = True
+
     if persistent.jn_custom_music_explanation_given:
+        $ persistent.jn_custom_music_explanation_given = True
         n 1unmaj "Huh?{w=0.2} You want me to explain how custom music works again?"
         n 1uchbg "Sure,{w=0.1} I can do that!"
         n 1nnmsm "First things first,{w=0.1} let me just check for the {i}custom_music{/i} folder..."
 
     else:
+        $ persistent.jn_custom_music_explanation_given = True
         n 1unmbg "Alright!{w=0.2} So...{w=0.3} it's actually pretty simple,{w=0.1} [player]."
         n 1nnmsm "There should be a folder called {i}custom_music{/i} somewhere around here..."
         n 1nchbg "Let me just take a look,{w=0.1} one sec..."
@@ -4916,8 +4925,6 @@ label talk_custom_music_explanation:
     n 1ullss "If you don't know how to check,{w=0.1} then just look at the letters after the period in the file name."
     n 1unmss "You should also be able to see those in the file {i}properties{/i} if they don't appear on the screen at first."
     n 1flrbg "Like I said -{w=0.1} this thing isn't {i}exactly{/i} super modern,{w=0.1} so it won't work with any fancy newer formats,{w=0.1} or weird old ones."
-    $ persistent.jn_custom_music_unlocked = True
-    $ persistent.jn_custom_music_explanation_given = True
     n 1nnmaj "Once you've done that,{w=0.1} just click the {i}Music{/i} button,{w=0.1} and I'll check that it's all done right."
     n 1nchbg "...And that's about it!"
     n 1nsqbg "A word of warning though,{w=0.1} [player]..."
@@ -6059,6 +6066,7 @@ init 5 python:
     )
 
 label talk_custom_outfits_unlock:
+    $ persistent.jn_custom_outfits_unlocked = True
     n 1nslpu "..."
     n 1usceml "...!"
     n 1uskeml "I've...{w=0.5}{nw}"
@@ -6100,7 +6108,7 @@ label talk_custom_outfits_unlock:
     extend 1tnmss " where were we?"
 
     python:
-        persistent.jn_custom_outfits_unlocked = True
+        get_topic("talk_custom_outfits_unlock").lock()
 
         # We have to unload outfits before wearables due to dependencies
         jn_outfits.unload_custom_outfits()
@@ -7593,10 +7601,12 @@ label talk_player_change_name:
         extend 1fsrsr " Jerk."
 
         # Apply affinity/trust penalties, then revoke nickname priveleges and finally apply pending apology
-        $ Natsuki.percentageAffinityLoss(10)
-        $ persistent._jn_nicknames_player_allowed = False
-        $ persistent._jn_nicknames_player_current_nickname = persistent.playername
-        $ player = persistent.playername
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_PLAYER_NAME)
+        python:
+            get_topic("talk_player_change_name").lock()
+            Natsuki.percentageAffinityLoss(10)
+            persistent._jn_nicknames_player_allowed = False
+            persistent._jn_nicknames_player_current_nickname = persistent.playername
+            player = persistent.playername
+            jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_PLAYER_NAME)
 
     return

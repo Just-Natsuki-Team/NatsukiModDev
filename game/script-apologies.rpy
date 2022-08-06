@@ -1,40 +1,57 @@
 default persistent._apology_database = dict()
 
 # Retain the last apology made on quitting the game, so Natsuki can react on boot
-default persistent.jn_player_apology_type_on_quit = None
+default persistent._jn_player_apology_type_on_quit = None
 
 # List of pending apologies the player has yet to make
-default persistent.jn_player_pending_apologies = list()
+default persistent._jn_player_pending_apologies = list()
 
 init 0 python in jn_apologies:
+    from Enum import Enum
     import store
 
     APOLOGY_MAP = dict()
 
-    # Apology types
-    TYPE_BAD_NICKNAME = 0
-    TYPE_CHEATED_GAME = 1
-    TYPE_DEFAULT = 2
-    TYPE_PROLONGED_LEAVE = 3
-    TYPE_RUDE = 4
-    TYPE_SCREENSHOT = 5
-    TYPE_SUDDEN_LEAVE = 6
-    TYPE_UNHEALTHY = 7
-    TYPE_SCARE = 8
-    TYPE_BAD_PLAYER_NAME = 9
+    class ApologyTypes(Enum):
+        """
+        Identifiers for different nickname types.
+        """
+        bad_nickname = 1
+        cheated_game = 2
+        generic = 3
+        prolonged_leave = 4
+        rude = 5
+        sudden_leave = 6
+        unhealthy = 7
+        scare = 8
+        bad_player_name = 9
 
     def get_all_apologies():
         """
         Gets all apology topics which are available
 
         OUT:
-            List<Topic> of apologies which are unlocked and available at the current affinity
+            List<Topic> of pending apologies which are unlocked and available at the current affinity
         """
-        return store.Topic.filter_topics(
-            APOLOGY_MAP.values(),
-            affinity=store.Natsuki._getAffinityState(),
-            unlocked=True
-        )
+        apology_type_label_map = {
+            TYPE_BAD_NICKNAME: "apology_bad_nickname",
+            TYPE_CHEATED_GAME: "apology_cheated_game",
+            TYPE_DEFAULT: "apology_default",
+            TYPE_PROLONGED_LEAVE: "apology_prolonged_leave",
+            TYPE_RUDE: "apology_rude",
+            TYPE_SCREENSHOT: "apology_screenshots",
+            TYPE_SUDDEN_LEAVE: "apology_without_goodbye",
+            TYPE_UNHEALTHY: "apology_unhealthy",
+            TYPE_SCARE: "apology_scare",
+            TYPE_BAD_PLAYER_NAME: "apology_bad_player_name"
+        }
+        
+        return_apologies = list()
+        for apology_type in store.persistent.jn_player_pending_apologies:
+            if apology_type in apology_type_label_map:
+                return_apologies.append(store.get_topic(apology_type_label_map.get(apology_type)))
+
+        return return_apologies
 
     def get_apology_type_pending(apology_type):
         """
@@ -84,7 +101,6 @@ init 5 python:
             prompt="For calling you a hurtful name.",
             label="apology_bad_nickname",
             unlocked=True,
-            conditional="jn_apologies.get_apology_type_pending(jn_apologies.TYPE_BAD_NICKNAME)"
         ),
         topic_group=TOPIC_TYPE_APOLOGY
     )
@@ -174,7 +190,6 @@ init 5 python:
             prompt="For cheating during our games.",
             label="apology_cheated_game",
             unlocked=True,
-            conditional="jn_apologies.get_apology_type_pending(jn_apologies.TYPE_CHEATED_GAME)"
         ),
         topic_group=TOPIC_TYPE_APOLOGY
     )
@@ -297,7 +312,6 @@ init 5 python:
             prompt="For abandoning you.",
             label="apology_prolonged_leave",
             unlocked=True,
-            conditional="jn_apologies.get_apology_type_pending(jn_apologies.TYPE_PROLONGED_LEAVE)"
         ),
         topic_group=TOPIC_TYPE_APOLOGY
     )
@@ -356,7 +370,6 @@ init 5 python:
             prompt="For being rude to you.",
             label="apology_rude",
             unlocked=True,
-            conditional="jn_apologies.get_apology_type_pending(jn_apologies.TYPE_RUDE)"
         ),
         topic_group=TOPIC_TYPE_APOLOGY
     )
@@ -411,7 +424,6 @@ init 5 python:
             prompt="For taking pictures of you without permission.",
             label="apology_screenshots",
             unlocked=True,
-            conditional="jn_apologies.get_apology_type_pending(jn_apologies.TYPE_SCREENSHOT)"
         ),
         topic_group=TOPIC_TYPE_APOLOGY
     )
@@ -467,7 +479,6 @@ init 5 python:
             prompt="For leaving without saying goodbye.",
             label="apology_without_goodbye",
             unlocked=True,
-            conditional="jn_apologies.get_apology_type_pending(jn_apologies.TYPE_SUDDEN_LEAVE)"
         ),
         topic_group=TOPIC_TYPE_APOLOGY
     )
@@ -523,7 +534,6 @@ init 5 python:
             prompt="For not taking care of myself properly.",
             label="apology_unhealthy",
             unlocked=True,
-            conditional="jn_apologies.get_apology_type_pending(jn_apologies.TYPE_UNHEALTHY)"
         ),
         topic_group=TOPIC_TYPE_APOLOGY
     )
@@ -575,7 +585,6 @@ init 5 python:
             prompt="For scaring you.",
             label="apology_scare",
             unlocked=True,
-            conditional="jn_apologies.get_apology_type_pending(jn_apologies.TYPE_SCARE)"
         ),
         topic_group=TOPIC_TYPE_APOLOGY
     )
@@ -621,7 +630,6 @@ init 5 python:
             prompt="For asking you to call me a bad name.",
             label="apology_bad_player_name",
             unlocked=True,
-            conditional="jn_apologies.get_apology_type_pending(jn_apologies.TYPE_BAD_PLAYER_NAME)"
         ),
         topic_group=TOPIC_TYPE_APOLOGY
     )
