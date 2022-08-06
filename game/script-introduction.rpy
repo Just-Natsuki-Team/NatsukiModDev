@@ -211,7 +211,7 @@ label introduction_first_meeting:
         if len(player_name) == 0:
             n 1kskem "P-{w=0.3}please!{w=1} Who are you?!"
 
-        elif jn_utils.get_string_contains_profanity(player_name):
+        elif jn_utils.get_string_contains_profanity(player_name) or jn_utils.get_string_contains_insult(player_name):
             # We only apply penalty once here so we don't have to rewrite the whole sequence for diff aff/trust levels
             if persistent._jn_player_profanity_during_introduction:
                 play audio static
