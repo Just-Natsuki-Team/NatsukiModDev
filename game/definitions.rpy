@@ -311,14 +311,14 @@ init -3 python:
             """
             Locks this topic, so it cannot be selected or brought up in random dialogue.
             """
-            self.locked = True
+            self.unlocked = False
             self.__save()
 
         def unlock(self):
             """
             Unlocks this topic.
             """
-            self.locked = False
+            self.unlocked = True
             self.__save()
 
         def _filter_topic(
