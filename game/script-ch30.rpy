@@ -46,7 +46,7 @@ label ch30_init:
         #Now adjust the stored version number
         persistent._jn_version = config.version
 
-        # TODO: weird visual bug, like Nat's sprite sometimes doesn't load for the first line, but fine after?
+        # Assign Natsuki and player nicknames
         if persistent._jn_nicknames_natsuki_allowed and persistent._jn_nicknames_natsuki_current_nickname:
             n_name = persistent._jn_nicknames_natsuki_current_nickname
 
