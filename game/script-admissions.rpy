@@ -638,7 +638,7 @@ label admission_sick:
                         n 1klrpol "Your health...{w=0.3} matters to me, you know."
 
                         # Add pending apology
-                        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
+                        $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.unhealthy)
 
             "Longer.":
                 n 1knmpo "..."
@@ -656,7 +656,7 @@ label admission_sick:
                     n 1kcssff "I love you,{w=0.1} [player].{w=0.2} Please get well soon."
 
                 # Add pending apology
-                $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
+                $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.unhealthy)
 
 
     elif jn_admissions.last_admission_type == jn_admissions.TYPE_HUNGRY:
@@ -763,7 +763,7 @@ label admission_tired:
         n 1knmsm "Take it easy,{w=0.1} [player]!"
 
         # Add pending apology
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.unhealthy)
 
         $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_SICK
         return { "quit": None }
@@ -790,7 +790,7 @@ label admission_tired:
             n 1nllsml "Sweet dreams! Ehehe."
 
         # Add pending apology
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.unhealthy)
 
         $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_TIRED
         return { "quit": None }
@@ -811,7 +811,7 @@ label admission_tired:
         n 1fllsfl "Don't let me down,{w=0.1} got it?"
 
         # Add pending apology
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.unhealthy)
 
     elif jn_get_current_hour() > 21 or jn_get_current_hour() < 3:
         n 1fskem "[player]!"
@@ -829,7 +829,7 @@ label admission_tired:
         n 1kllssl "Ahaha..."
 
         # Add pending apology
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.unhealthy)
 
     else:
         n 1knmsl "Feeling tired,{w=0.1} [player]?"

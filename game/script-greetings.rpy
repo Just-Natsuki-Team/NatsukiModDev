@@ -687,7 +687,7 @@ label greeting_feeling_better_sick:
             n 1nchbg "Anyway...{w=0.3} welcome back,{w=0.1} [player]!"
 
             # Add pending apology, reset the admission
-            $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
+            $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.unhealthy)
             $ jn_admissions.last_admission_type = jn_admissions.TYPE_SICK
 
         "Still unwell.":
@@ -696,7 +696,7 @@ label greeting_feeling_better_sick:
             n 1kplsl "I don't want you making yourself worse for my sake..."
 
             # Add pending apology, reset the admission
-            $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
+            $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.unhealthy)
             $ jn_admissions.last_admission_type = jn_admissions.TYPE_SICK
     return
 
@@ -732,7 +732,7 @@ label greeting_feeling_better_tired:
             n 1uchbg "A nice glass of water or some bitter coffee should perk you up in no time!"
 
             # Add pending apology, reset the admission
-            $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
+            $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.unhealthy)
             $ jn_admissions.last_admission_type = jn_admissions.TYPE_TIRED
 
         "Still tired.":
@@ -741,7 +741,7 @@ label greeting_feeling_better_tired:
             n 1knmbg "I don't want you face-planting your desk for my sake..."
 
             # Add pending apology, reset the admission
-            $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_UNHEALTHY)
+            $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.unhealthy)
             $ jn_admissions.last_admission_type = jn_admissions.TYPE_TIRED
     return
 
@@ -755,7 +755,7 @@ init 5 python:
             unlocked=True,
             category=["Apology"],
             additional_properties={
-                "apology_type": jn_apologies.TYPE_SUDDEN_LEAVE,
+                "apology_type": jn_apologies.ApologyTypes.sudden_leave,
             }
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -769,28 +769,28 @@ label greeting_sudden_leave:
         n 1knmajl "I don't know if something happened or what,{w=0.1} but please..."
         n 1knmsll "Try to remember to say goodbye properly next time,{w=0.1} 'kay?"
         n 1knmssl "It'd mean a lot to me."
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.sudden_leave)
 
     elif Natsuki.isNormal(higher=True):
         n 1kwmsr "..."
         n 1fplsf "[player]!{w=0.2} Do you know how scary it is when you just vanish like that?"
         n 1knmsf "Please...{w=0.3} just remember to say goodbye properly when you gotta leave."
         n 1knmss "It's not much to ask...{w=0.3} is it?"
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.sudden_leave)
 
     elif Natsuki.isDistressed(higher=True):
         n 1fsqsf "..."
         n 1fsqaj "You know I hate that,{w=0.1} [player]."
         n 1fsqsl "Knock it off,{w=0.1} will you?"
         n 1fsqsf "Thanks."
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.sudden_leave)
 
     else:
         n 1fcsuntsa "..."
         n 1fsquntsb "Heh.{w=0.2} Yeah."
         $ chosen_insult = random.choice(jn_globals.DEFAULT_PLAYER_INSULT_NAMES).capitalize()
         n 1fcsuptsa "Welcome back to you,{w=0.1} too.{w=0.2} [chosen_insult]."
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.sudden_leave)
 
     return
 
@@ -802,7 +802,7 @@ init 5 python:
             unlocked=True,
             category=["Apology"],
             additional_properties={
-                "apology_type": jn_apologies.TYPE_PROLONGED_LEAVE,
+                "apology_type": jn_apologies.ApologyTypes.prolonged_leave,
             }
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -821,7 +821,7 @@ label greeting_prolonged_leave:
         extend 1kcseml " Just..."
         n 1klrsflsbl "...Don't just suddenly disappear for so long."
         n 1fcsunf "I hate having my heart played with like that..."
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_PROLONGED_LEAVE)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.prolonged_leave)
 
     elif Natsuki.isNormal(higher=True):
         n 1uwdwr "[player_initial]-{w=0.1}[player]!"
@@ -835,18 +835,18 @@ label greeting_prolonged_leave:
         n  "Just...{w=1.25}{nw}"
         extend 1knmaj " don't leave it so long next time,{w=0.1} alright?"
         n 1fsrunl "You know I don't exactly get many visitors..."
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_PROLONGED_LEAVE)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.prolonged_leave)
 
     elif Natsuki.isDistressed(higher=True):
         n 1fsqputsb "[player_initial]-{w=0.1}[player]?"
         n 1fsqsltsb "...You're back."
         n 1fcsfutsb "Just {i}perfect{/i}."
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_PROLONGED_LEAVE)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.prolonged_leave)
 
     else:
         n 1fsquptdr "..."
         n 1fcsfutsd "...."
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_PROLONGED_LEAVE)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.prolonged_leave)
 
     return
 

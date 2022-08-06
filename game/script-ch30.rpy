@@ -60,7 +60,7 @@ label ch30_init:
 
         # Determine if the player should get a prolonged leave greeting
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
-            persistent.jn_player_apology_type_on_quit = jn_apologies.TYPE_PROLONGED_LEAVE
+            persistent.jn_player_apology_type_on_quit = jn_apologies.ApologyTypes.prolonged_leave
 
         # Repeat visits have a small affinity gain
         elif not persistent.jn_player_apology_type_on_quit:
@@ -603,8 +603,8 @@ label try_force_quit:
 
                 # Apply consequences for force quitting, then glitch quit out
                 $ Natsuki.percentageAffinityLoss(2)
-                $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_SUDDEN_LEAVE)
-                $ persistent.jn_player_apology_type_on_quit = jn_apologies.TYPE_SUDDEN_LEAVE
+                $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.sudden_leave)
+                $ persistent.jn_player_apology_type_on_quit = jn_apologies.ApologyTypes.sudden_leave
 
                 play audio static
                 show glitch_garbled_b zorder 99 with hpunch

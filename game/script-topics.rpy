@@ -2370,7 +2370,7 @@ label talk_give_nickname:
         n 1fsqsl "That really hurt,{w=0.1} [player].{w=0.2} Don't abuse my trust."
 
         # Apply penalty and pending apology
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.bad_nickname)
         $ Natsuki.percentageAffinityLoss(1)
 
     elif persistent._jn_nicknames_natsuki_bad_given_total == 2:
@@ -2382,7 +2382,7 @@ label talk_give_nickname:
         n 1fsqsr "Don't test my patience like this.{w=0.2} You're better than that."
 
         # Apply penalty and pending apology
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.bad_nickname)
         $ Natsuki.percentageAffinityLoss(2.5)
 
     elif persistent._jn_nicknames_natsuki_bad_given_total == 3:
@@ -2409,7 +2409,7 @@ label talk_give_nickname:
                 $ Natsuki.percentageAffinityLoss(5)
 
         # Apply penalty and pending apology
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.bad_nickname)
 
     elif persistent._jn_nicknames_natsuki_bad_given_total == 4:
         # Player is locked out of nicknaming; this is why we can't have nice things
@@ -2427,7 +2427,7 @@ label talk_give_nickname:
             persistent._jn_nicknames_natsuki_allowed = False
             persistent._jn_nicknames_natsuki_current_nickname = None
             n_name = "Natsuki"
-            jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_NICKNAME)
+            jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.bad_nickname)
 
 
     return
@@ -4560,7 +4560,7 @@ init 5 python:
 label talk_play_snap:
     if persistent.jn_snap_player_is_cheater:
         # Unlock Snap if the player somehow is labelled as a cheater with no option to apologize
-        if jn_apologies.TYPE_CHEATED_GAME not in persistent.jn_player_pending_apologies:
+        if jn_apologies.ApologyTypes.cheated_game not in persistent._jn_player_pending_apologies:
             $ persistent.jn_snap_player_is_cheater = False
 
         else:
@@ -7542,7 +7542,7 @@ label talk_player_change_name:
         n 1fslsl "I really {i}don't{/i} see the humour."
 
         # Apply penalty and pending apology
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_PLAYER_NAME)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.bad_player_name)
         $ Natsuki.percentageAffinityLoss(1)
 
     elif persistent._jn_nicknames_player_bad_given_total == 2:
@@ -7558,7 +7558,7 @@ label talk_player_change_name:
         extend 1fsrunl " to like you when you behave like {i}that{/i}."
 
         # Apply penalty and pending apology
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_PLAYER_NAME)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.bad_player_name)
         $ Natsuki.percentageAffinityLoss(2.5)
 
     elif persistent._jn_nicknames_player_bad_given_total == 3:
@@ -7589,7 +7589,7 @@ label talk_player_change_name:
                 $ Natsuki.percentageAffinityLoss(5)
 
         # Apply penalty and pending apology
-        $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_PLAYER_NAME)
+        $ jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.bad_player_name)
 
     elif persistent._jn_nicknames_player_bad_given_total == 4:
         # Player is locked out of nicknaming themselves
@@ -7607,6 +7607,6 @@ label talk_player_change_name:
             persistent._jn_nicknames_player_allowed = False
             persistent._jn_nicknames_player_current_nickname = persistent.playername
             player = persistent.playername
-            jn_apologies.add_new_pending_apology(jn_apologies.TYPE_BAD_PLAYER_NAME)
+            jn_apologies.add_new_pending_apology(jn_apologies.ApologyTypes.bad_player_name)
 
     return
