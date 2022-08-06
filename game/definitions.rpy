@@ -1693,8 +1693,8 @@ init python:
     s_name = "Sayori"
     m_name = "Monika"
     y_name = "Yuri"
+    
     n_name = "Natsuki"
-
     player = persistent.playername
 
 init -999 python:
