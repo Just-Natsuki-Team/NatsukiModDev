@@ -526,6 +526,38 @@ init 0 python:
                 )
                 return "UNKNOWN"
 
+        @staticmethod
+        def addApology(apology_type):
+            """
+            Adds a new apology possiblity to the list of pending apologies.
+            If the apology type is already present in the list, ignore it.
+
+            IN:
+                apology_type - The jn_apologies.ApologyTypes type to add.
+            """
+            if not int(apology_type) in store.persistent._jn_player_pending_apologies:
+                store.persistent._jn_player_pending_apologies.append(int(apology_type))
+
+        @staticmethod
+        def setQuitApology(apology_type):
+            """
+            Sets the jn_apologies.ApologyTypes type to be checked on loading the game after quitting.
+
+            IN:
+                apology_type - The jn_apologies.ApologyTypes type to add.
+            """
+            store.persistent._jn_player_apology_type_on_quit = int(apology_type)
+
+        @staticmethod
+        def removeApology(apology_type):
+            """
+            Removes an apology from the list of pending apologies, if it exists.
+
+            IN:
+                apology_type - The jn_apologies.ApologyTypes type to add.
+            """
+            if int(apology_type) in store.persistent._jn_player_pending_apologies:
+                store.persistent._jn_player_pending_apologies.remove(int(apology_type))
 
 # KWWWMMMMMMMWNNNNNNXXXKKKKK00KKXXKKK0KK0000KKKKKK000Okkxdoodk0KKKKKXKKKK0000KOxoccdkko;,cOX00XXXXXXXX
 # KNWWWWWMMWWNNNNNXXXXXXXXKKKKKXXXXXXKKKKXXXXXXXKKKXXKKKKKKXKKKXXK00KKKKKKK000OxOOdclxOx:;kXOxKXXXXXKK

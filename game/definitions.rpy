@@ -307,6 +307,20 @@ init -3 python:
             self.nat_says = False
             self.player_says = True
 
+        def lock(self):
+            """
+            Locks this topic, so it cannot be selected or brought up in random dialogue.
+            """
+            self.unlocked = False
+            self.__save()
+
+        def unlock(self):
+            """
+            Unlocks this topic.
+            """
+            self.unlocked = True
+            self.__save()
+
         def _filter_topic(
             self,
             unlocked=None,
