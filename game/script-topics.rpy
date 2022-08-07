@@ -3731,7 +3731,7 @@ label talk_school_uniform:
     n 1fslsr "Ugh...{w=0.3} I seriously wish uniforms were banned or something."
     n 1flrpo "It could be worse though,{w=0.1} I guess.{w=0.2} At suppose it kept me warm when it mattered."
 
-    if not Natsuki.isWearingClothes("jn_school_uniform"):
+    if not Natsuki.isWearingClothes("jn_clothes_school_uniform"):
         n 1nchgn "...And I'm not wearing it now,{w=0.1} at least!{w=1}{nw}"
         extend 1fcsbg " Always a plus."
         n 1ullaj "That being said..."
