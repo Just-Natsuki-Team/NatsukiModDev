@@ -180,7 +180,53 @@ label call_next_topic(show_natsuki=True):
                 and jn_utils.get_current_session_length().total_seconds() > 60
                 and not jn_activity.get_jn_window_active()):
                     play audio notification
-                    $ jn_activity.taskbar_flash()
+                    python:
+                        jn_activity.taskbar_flash()
+
+                        if Natsuki.isNormal(higher=True):
+                            if Natsuki.isEnamored(higher=True):
+                                notify_message = random.choice([
+                                    "[player]! [player]! Wanna talk? {0}".format(random.choice(jn_globals.DEFAULT_HAPPY_EMOTICONS)),
+                                    "Hey! You got a sec? {0}".format(random.choice(jn_globals.DEFAULT_HAPPY_EMOTICONS)),
+                                    "Wanna talk? {0}".format(random.choice(jn_globals.DEFAULT_HAPPY_EMOTICONS)),
+                                    "[player]! I got something! {0}".format(random.choice(jn_globals.DEFAULT_HAPPY_EMOTICONS)),
+                                    "Heeey! Wanna talk?",
+                                    "Talk to meeee! {0}".format(random.choice(jn_globals.DEFAULT_ANGRY_EMOTICONS)),
+                                    "I'm talking to you, dummy! {0}".format(random.choice(jn_globals.DEFAULT_TEASE_EMOTICONS))
+                                ])
+
+                            elif Natsuki.isAffectionate(higher=True):
+                                notify_message = random.choice([
+                                    "Wanna talk?",
+                                    "[player]! You wanna talk?",
+                                    "Hey! Hey! Talk to me! {0}".format(random.choice(jn_globals.DEFAULT_ANGRY_EMOTICONS)),
+                                    "Hey dummy! I'm talking to you!",
+                                    "[player]! I just thought of something! {0}".format(random.choice(jn_globals.DEFAULT_CONFUSED_EMOTICONS)),
+                                    "[player]! I wanna talk to you!",
+                                    "I just thought of something, [player]!"
+                                ])
+
+                            elif Natsuki.isHappy(higher=True):
+                                notify_message = random.choice([
+                                    "[player]! Did you have a sec?",
+                                    "[player]? Can I borrow you?",
+                                    "Hey! Come here a sec?",
+                                    "Hey! I wanna talk!",
+                                    "You there, [player]?"
+                                ])
+
+                            else:
+                                notify_message = random.choice([
+                                    "You wanna talk?",
+                                    "Hey... are you busy?",
+                                    "[player]? Did you have a sec?",
+                                    "Can I borrow you for a sec?",
+                                    "You there, [player]?",
+                                    "Hey... you still there?",
+                                    "[player]? Are you there?"
+                                ])
+
+                            jn_activity.notifyPopup(notify_message)
 
             # Call the pending topic, and disable the UI
             $ jn_globals.player_is_in_conversation = True
