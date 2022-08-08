@@ -10,12 +10,14 @@ init python in jn_activity:
     ACTIVITY_SYSTEM_ENABLED = True
 
     if renpy.windows:
+        from plyer import notification
         import pygetwindow
         sys.path.append(renpy.config.gamedir + '\\python-packages\\')
         import win32api
         import win32gui
 
     elif renpy.linux:
+        from plyer import notification
         import os
 
         #NOTE: On linux, there are different types of desktop sessions. Xlib will ONLY work with X11 sessions.
@@ -173,3 +175,20 @@ init python in jn_activity:
         """
         if renpy.windows:
             win32gui.FlashWindowEx(__get_jn_window_hwnd(), 6, flash_count, flash_frequency_milliseconds)
+
+    def notifyPopup(message):
+        """
+        Displays a toast-style popup (Windows and Linux only).
+
+        IN:
+            - title - The title to display on the window
+            - message - The message to display in the window
+        """
+        if renpy.windows or renpy.linux:
+            notification.notify(
+                title="Natsuki",
+                message=message,
+                app_name=store.config.window_title,
+                app_icon=(renpy.config.gamedir + '/mod_assets/jnlogo.ico'),
+                timeout=5
+            )
