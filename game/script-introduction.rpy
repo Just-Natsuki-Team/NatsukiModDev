@@ -246,7 +246,7 @@ label introduction_first_meeting:
 label introduction_collecting_thoughts:
     # Natsuki tries to get to grips with her new state
     $ persistent.jn_introduction_state = int(jn_introduction.JNIntroductionStates.collecting_thoughts)
-    $ jn_activity.taskbar_flash()
+    $ jn_activity.taskbarFlash()
 
     n 1kllun "..."
     n 1kllpu "S-{w=0.3}so...{w=0.3} I'm not alone...?"
@@ -321,7 +321,7 @@ label introduction_collecting_thoughts:
 label introduction_calmed_down:
     # Natsuki is calm enough to begin talking about how she feels
     $ persistent.jn_introduction_state = int(jn_introduction.JNIntroductionStates.calmed_down)
-    $ jn_activity.taskbar_flash()
+    $ jn_activity.taskbarFlash()
 
     n 1kllsr "..."
     n 1kllun "Uhmm...{w=2}{nw}"
@@ -387,7 +387,7 @@ label introduction_calmed_down:
 label introduction_acceptance:
     # Natsuki starting to accept her situation and make the most of it
     $ persistent.jn_introduction_state = int(jn_introduction.JNIntroductionStates.acceptance)
-    $ jn_activity.taskbar_flash()
+    $ jn_activity.taskbarFlash()
     
     n 1nllsl "..."
     n 1nllaj "So...{w=2}{nw}"

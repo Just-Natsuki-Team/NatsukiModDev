@@ -176,12 +176,13 @@ label call_next_topic(show_natsuki=True):
 
         if renpy.has_label(_topic):
             # Notify if the window isn't currently active
-            if (persistent.jn_notify_conversations
+            if (persistent._jn_notify_conversations
                 and jn_utils.get_current_session_length().total_seconds() > 60
-                and not jn_activity.get_jn_window_active()):
+                and not jn_activity.getJNWindowActive()):
+                    
                     play audio notification
                     python:
-                        jn_activity.taskbar_flash()
+                        jn_activity.taskbarFlash()
 
                         if Natsuki.isNormal(higher=True):
                             if Natsuki.isEnamored(higher=True):
@@ -282,7 +283,7 @@ init python:
                 eval(action.statement)
 
         # Check what the player is currently doing
-        jn_activity.get_current_activity()
+        current_activity = jn_activity.getCurrentActivity()
 
         if (
             Natsuki.isHappy(higher=True)
@@ -330,6 +331,18 @@ init python:
             elif not store.persistent.jn_natsuki_repeat_topics and not store.persistent._jn_out_of_topics_warning_given:
                 # Out of random topics
                 queue("talk_out_of_topics")
+
+        elif (
+            persistent._jn_notify_activity
+            and Natsuki.isAffectionate(higher=True)
+            and current_activity != jn_activity.LAST_ACTIVITY
+            and random.randint(1, 20) == 1
+        ):
+            # Activity check for notif
+            jn_activity.LAST_ACTIVITY = current_activity
+            quote = jn_activity.getActivityNotifyQuote(current_activity)
+            if quote:
+                jn_activity.notifyPopup(quote)
 
         pass
 

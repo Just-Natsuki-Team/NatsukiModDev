@@ -60,7 +60,7 @@ default persistent.jn_natsuki_repeat_topics = True
 default persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
 
 # This determines if Natsuki should attempt to notify the user when starting a conversation
-default persistent.jn_notify_conversations = True
+default persistent._jn_notify_conversations = True
 
 # This determines if Natsuki should attempt to notify the user when she spots them doing something she's interested in
 default persistent._jn_notify_activity = True
