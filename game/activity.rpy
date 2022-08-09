@@ -71,15 +71,15 @@ init python in jn_activity:
             return self.value
 
     __WINDOW_NAME_REGEX_ACTIVITY_MAP = {
-        "(- visual studio|- notepad/+/+|- atom|- brackets|vim|eclipse)": JNActivities.coding,
+        "(- visual studio|- notepad/+/+|- atom|- brackets|vim|eclipse|^github desktop$|^sourcetree$)": JNActivities.coding,
         "(- discord)": JNActivities.discord,
-        "(spotify|groove|zune|itunes)": JNActivities.music_applications,
-        "(steam|origin|battle.net)": JNActivities.gaming,
+        "(^spotify$|^spotify premium$|^groove$|^zune$|^itunes$)": JNActivities.music_applications,
+        "(^steam$|^origin$|^battle.net$)": JNActivities.gaming,
         "(- youtube)": JNActivities.youtube,
         "(just-natsuki-team/natsukimoddev)": JNActivities.github_jn,
         "(clip studio paint|photoshop|krita|gimp|paint.net|paint tool sai|medibang)": JNActivities.artwork,
-        "(crunchyroll)": JNActivities.anime_streaming,
-        "(word|excel|powerpoint|openoffice|libreoffice)": JNActivities.work_applications,
+        "(^crunchyroll$)": JNActivities.anime_streaming,
+        "(- word| - excel| - powerpoint|openoffice|libreoffice)": JNActivities.work_applications,
         "(/ twitter)": JNActivities.twitter,
         "(deviantart - |\| deviantart)": JNActivities.deviantart,
         "(- mangadex|- mangasee|- mangakot)": JNActivities.manga,
@@ -326,6 +326,6 @@ init python in jn_activity:
             - Random quote matching the given activity, or None if the activity isn't defined
         """
         if activity in __ACTIVITY_NOTIFY_MESSAGE_MAP:
-            return random.choice(__ACTIVITY_NOTIFY_MESSAGE_MAP.get(activity))
+            return renpy.substitute(random.choice(__ACTIVITY_NOTIFY_MESSAGE_MAP.get(activity)))
         
         return None
