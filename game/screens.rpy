@@ -1207,6 +1207,14 @@ screen preferences():
                                 false_value=False)
                         ]
 
+                        textbutton _("Activity") action [
+                            ToggleField(
+                                object=persistent,
+                                field="_jn_notify_activity",
+                                true_value=True,
+                                false_value=False)
+                        ]
+
                     ## Additional vboxes of type "radio_pref" or "check_pref" can be
                     ## added here, to add additional creator-defined preferences.
 

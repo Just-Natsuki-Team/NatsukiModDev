@@ -485,9 +485,9 @@ label talk_using_computers_healthily:
     n 1unmsf "You gotta be at your computer to talk to me,{w=0.1} right?"
     n 1ullsf "And you've been here a while already..."
 
-    if (jn_activity.has_player_done_activity(jn_activity.JNActivities.work_applications)
-        or jn_activity.has_player_done_activity(JNActivities.artwork)
-        or jn_activity.has_player_done_activity(JNActivities.coding)):
+    if (jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.work_applications)
+        or jn_activity.hasPlayerDoneActivity(JNActivities.artwork)
+        or jn_activity.hasPlayerDoneActivity(JNActivities.coding)):
             n 1knmaj "In fact, I've even {i}seen{/i} you working on a lot of stuff myself!"
             n 1kllsl "..."
 
@@ -2489,7 +2489,7 @@ label talk_sleeping_well:
     n 1unmsl "No screen means no bright lights or distractions to keep you up,{w=0.1} obviously."
     n 1fnmpu "If you're tired then the last thing you need is something beaming whatever at you."
 
-    if jn_activity.has_player_done_activity(jn_activity.JNActivities.anime_streaming):
+    if jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.anime_streaming):
         n 1tsqsr "And no, [player] {w=0.1}-{w=0.3}{nw}"
         extend 1fnmpo "No late-night anime binging sessions either."
         n 1nchgn "Sorry~!"
@@ -2696,7 +2696,7 @@ label talk_using_headphones_carefully:
     n 1flrsr "...Take them off every once and a while,{w=0.1} will you?{w=0.2} For other people,{w=0.1} I mean."
     n 1ncsbo "I get it -{w=0.1} if you just wanna listen to something in peace,{w=0.1} or give yourself some room,{w=0.1} that's okay."
 
-    if jn_activity.has_player_done_activity(jn_activity.JNActivities.music_applications):
+    if jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.music_applications):
         n 1kslbg "I know you like your music streaming."
 
     n 1nsqbo "But don't use them to barricade yourself away from everyone and everything."
@@ -2822,7 +2822,7 @@ label talk_gaming:
                 n 1tnmaj "Huh?{w=0.2} Really?"
                 n 1tllaj "Not even the odd casual game?"
 
-                if jn_activity.has_player_done_activity(jn_activity.JNActivities.gaming):
+                if jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.gaming):
                     n 1fsqts "Liar.{nw}"
 
                 n 1ncsaj "...Well then."
@@ -2869,7 +2869,7 @@ label talk_gaming:
             n 1fchbg "I {i}am{/i} a professional,{w=0.1} after all!"
 
         else:
-            if jn_activity.has_player_done_activity(jn_activity.JNActivities.gaming):
+            if jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.gaming):
                 n 1fsqts "Liar.{nw}"
 
             n 1ullaj "Well then...{w=0.5}{nw}"
@@ -4519,7 +4519,7 @@ label talk_collectibles:
                 n 1nchbg "Just let me know if you ever feel like a tour!"
                 n 1nchgn "You won't find a better collection!{w=0.2} Ehehe."
 
-                if jn_activity.has_player_done_activity(jn_activity.JNActivities.manga):
+                if jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.manga):
                     n 1fllss "Or,{w=0.1} at least...{w=0.5}{nw}"
                     extend 1fsqss " a better...{w=0.3} {i}physical{/i} one."
                     n 1fsqsm "Right,{w=0.5}{nw}"
@@ -5321,7 +5321,7 @@ init 5 python:
             prompt="Contributions",
             conditional=(
                 "not jn_activity.ACTIVITY_SYSTEM_ENABLED "
-                "or jn_activity.has_player_done_activity(jn_activity.JNActivities.coding)"
+                "or jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.coding)"
             ),
             category=["Mod"],
             nat_says=True,
@@ -7139,7 +7139,7 @@ label talk_what_do_you_think_about_fanart:
     extend 1nslpo " Enough about people like {i}that{/i}."
     n 1nlrbo "I don't know if you do any fanart or anything,{w=0.1} [player]..."
 
-    if jn_activity.has_player_done_activity(jn_activity.JNActivities.artwork):
+    if jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.artwork):
         n 1fchsmleme "Probably~."
 
     n 1fnmpo "But you better not be letting people push you around over yours!"
