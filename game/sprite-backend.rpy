@@ -85,6 +85,10 @@ init -50 python:
         look_right = 19
         squint_left = 20
         squint_right = 21
+        doubt = 22
+        down = 23
+        pained = 24
+        up = 25
 
         def __str__(self):
             return self.name
@@ -264,9 +268,12 @@ init 1 python:
         "ch": JNEyes.closed_happy,
         "cs": JNEyes.closed_sad,
         "cu": JNEyes.cute,
+        "dt": JNEyes.doubt,
+        "dw": JNEyes.down,
         "ll": JNEyes.look_left,
         "lr": JNEyes.look_right,
         "nm": JNEyes.normal,
+        "pa": JNEyes.pained,
         "pl": JNEyes.pleading,
         "sc": JNEyes.scared,
         "sk": JNEyes.shocked,
@@ -276,6 +283,7 @@ init 1 python:
         "sl": JNEyes.squint_left,
         "sr": JNEyes.squint_right,
         "un": JNEyes.unamused,
+        "up": JNEyes.up,
         "wm": JNEyes.warm,
         "wd": JNEyes.wide,
         "wl": JNEyes.wink_left,
