@@ -61,6 +61,11 @@ init python in jn_activity:
         twitter = 10
         deviantart = 11
         manga = 12
+        ddlc_moe = 13
+        takeaway_food = 14
+        instagram = 15
+        music_creation = 16
+        reddit = 17
 
         def __int__(self):
             return self.value
@@ -72,12 +77,20 @@ init python in jn_activity:
         "(steam|origin|battle.net)": JNActivities.gaming,
         "(- youtube)": JNActivities.youtube,
         "(just-natsuki-team/natsukimoddev)": JNActivities.github_jn,
-        "(clip studio paint|photoshop|krita|gimp|paint.net)": JNActivities.artwork,
+        "(clip studio paint|photoshop|krita|gimp|paint.net|paint tool sai|medibang)": JNActivities.artwork,
         "(crunchyroll)": JNActivities.anime_streaming,
         "(word|excel|powerpoint|openoffice|libreoffice)": JNActivities.work_applications,
         "(/ twitter)": JNActivities.twitter,
         "(deviantart - |\| deviantart)": JNActivities.deviantart,
-        "(- mangadex|- mangasee|- mangakot)": JNActivities.manga
+        "(- mangadex|- mangasee|- mangakot)": JNActivities.manga,
+        "(Doki Doki Literature Club! -)": JNActivities.ddlc_moe,
+        (
+            "((Uber Eats[a-zA-Z]*| Food delivery)|( - Uber Eats)|(Deliveroo - Takeaway Food Delivery)"
+            "|(\| Domino's Pizza)|(\| Pizza Hut)|(\| GrubHub)|(DoorDash Food Delivery & Takeout -))"
+        ): JNActivities.takeaway_food,
+        "(• Instagram photos and videos)": JNActivities.instagram,
+        "(cubase|fl studio|reaper|mixcraft|studio one|logic pro|garageband|cakewalk|pro tools)": JNActivities.music_creation,
+        "(Reddit - Dive into anything)": JNActivities.reddit
     }
 
     __ACTIVITY_NOTIFY_MESSAGE_MAP = {
@@ -91,7 +104,7 @@ init python in jn_activity:
         JNActivities.discord: [
             "Someone's a social butterfly, huh?",
             "Yeah, yeah. Chat it up, [player]~",
-            "Man... I wish I had some emotes...",
+            "Man... I wish I had some emotes... {0}".format(random.choice(jn_globals.DEFAULT_SAD_EMOTICONS)),
             "Maybe I should start a server...",
             "Huh? Did someone message you?",
         ],
@@ -119,35 +132,39 @@ init python in jn_activity:
             "Hey! I know this place!",
             "I knew you'd help me out! Ehehe.",
             "Oh! Oh! It's my website!",
-            "I heard only absolute geeks come here... {0}".format(random.choice(jn_globals.DEFAULT_TEASE_EMOTICONS)),
+            "I heard only complete nerds come here... {0}".format(random.choice(jn_globals.DEFAULT_TEASE_EMOTICONS)),
             "Ehehe. Thanks for stopping by!",
+            "Hey! It's geek-hub! {0}".format(random.choice(jn_globals.DEFAULT_TEASE_EMOTICONS)),
         ],
         JNActivities.artwork: [
             "Draw for me, [player]! Ehehe.",
             "I was never any good at artwork... {0}".format(random.choice(jn_globals.DEFAULT_SAD_EMOTICONS)),
-            "You're drawing?! {0}".format(random.choice(jn_globals.DEFAULT_CONFUSED_EMOTICONS)),
+            "You're drawing? {0}".format(random.choice(jn_globals.DEFAULT_CONFUSED_EMOTICONS)),
             "Oh! Oh! What're you drawing?",
             "Eh? What're you drawing? {0}".format(random.choice(jn_globals.DEFAULT_CONFUSED_EMOTICONS)),
+            "Draw me! Draw me!!",
         ],
         JNActivities.anime_streaming: [
             "What's the flavor of the month?",
             "So many options...",
             "I still don't see Parfait Girls anywhere...",
             "Infinite choices! Ehehe.",
+            "I could waste DAYS here... {0}".format(random.choice(jn_globals.DEFAULT_CONFUSED_EMOTICONS)),
         ],
         JNActivities.work_applications: [
             "Ew... work...",
             "You're sure you gotta do this now, [player]? {0}".format(random.choice(jn_globals.DEFAULT_CONFUSED_EMOTICONS)),
             "Ugh... reminds me of my school assignments...",
             "Great... now I'm getting flashbacks of my group projects.",
-            "Booo-ring! Ehehe."
+            "Booo-ring! Ehehe.",
+            "Reminds me of schoolwork... {0}".format(random.choice(jn_globals.DEFAULT_ANGRY_EMOTICONS)),
         ],
         JNActivities.twitter: [
             "There's so much cool art here!",
             "I swear I could waste hours just scrolling here...",
             "Oh! Oh! Am I trending?",
             "I should probably check my Twitter, huh?",
-            "Oh man! I gotta check on my feed!",
+            "Oh man! I gotta check on my feed! {0}".format(random.choice(jn_globals.DEFAULT_CONFUSED_EMOTICONS)),
         ],
         JNActivities.deviantart: [
             "So. Much. Art.",
@@ -160,6 +177,36 @@ init python in jn_activity:
             "No Parfait Girls here... {0}".format(random.choice(jn_globals.DEFAULT_SAD_EMOTICONS)),
             "Oh! What're you reading? {0}".format(random.choice(jn_globals.DEFAULT_HAPPY_EMOTICONS)),
             "Looking for an EXPERT opinion? Ehehe.",
+        ],
+        JNActivities.ddlc_moe: [
+            "...",
+            "I... don't like this website.",
+            "Uuuuuu... do you HAVE to visit this place?",
+        ],
+        JNActivities.takeaway_food: [
+            "H-hey! Less of the junk! {0}".format(random.choice(jn_globals.DEFAULT_ANGRY_EMOTICONS)),
+            "Cooking isn't THAT hard, you know... {0}".format(random.choice(jn_globals.DEFAULT_ANGRY_EMOTICONS)),
+            "You better not be making a habit of that...",
+            "[player]! Think of your wallet! Jeez... {0}".format(random.choice(jn_globals.DEFAULT_CONFUSED_EMOTICONS)),
+            "[player]... come on... {0}".format(random.choice(jn_globals.DEFAULT_SAD_EMOTICONS)),
+            "Just... don't make a habit of this. {0} Please?".format(random.choice(jn_globals.DEFAULT_ANGRY_EMOTICONS)),
+        ],
+        JNActivities.instagram: [
+            "So who are YOU stalking, huh? {0}".format(random.choice(jn_globals.DEFAULT_TEASE_EMOTICONS)),
+            "Huh? Do you post here, [player]?",
+            "You post here much, [player]?",
+        ],
+        JNActivities.music_creation: [
+            "Ooooh! You're making beats?",
+            "Making some tunes? {0}".format(random.choice(jn_globals.DEFAULT_CONFUSED_EMOTICONS)),
+            "...Should I start taking NOTES? Ehehe.",
+            "Oh! Oh! I GOTTA listen to this!",
+        ],
+        JNActivities.reddit: [
+            "I hope you don't believe everything you read...",
+            "Eh? What's in the news?",
+            "Huh? Did something happen?",
+            "You making a post, [player]? {0}".format(random.choice(jn_globals.DEFAULT_CONFUSED_EMOTICONS)),
         ]
     }
 

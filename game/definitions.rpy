@@ -1012,7 +1012,8 @@ init -990 python in jn_globals:
         ":-(",
         "</3",
         "<|3",
-        ":<"
+        ":<",
+        ">:",
     ]
 
     DEFAULT_TEASE_EMOTICONS = [
