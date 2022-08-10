@@ -121,7 +121,7 @@ init 0 python in jn_atmosphere:
     # v PARTICLES
     # v CLOUDS
     #   SKY
-    _DIM_Z_INDEX = 4
+    _DIM_Z_INDEX = 6
     _PARTICLES_Z_INDEX = -3
     _CLOUDS_Z_INDEX = -6
     _SKY_Z_INDEX = -8
@@ -248,7 +248,7 @@ init 0 python in jn_atmosphere:
 
     def update_sky(with_transition=True):
         """
-        Shows the sky based on the sunrise/sunset times specified under the persistent.
+        Shows the sky based on the sunrise/sunset times specified under the persistent, and affinity.
 
         IN:
             with_transition - If True, will visually fade in the new weather
@@ -268,18 +268,75 @@ init 0 python in jn_atmosphere:
 
         # Random weather
         elif store.persistent._jn_weather_setting == int(jn_preferences.weather.JNWeatherSettings.random):
-            weather = show_sky(random.choice([
-                WEATHER_OVERCAST,
-                WEATHER_RAIN,
-                WEATHER_THUNDER,
-                WEATHER_SUNNY,
-                WEATHER_SNOW
-            ]),
-            with_transition=with_transition)
+
+            # Flex based on affinity. An upset Natsuki will result in more rain, etc.
+            if Natsuki.isEnamored(higher=True):
+                show_sky(random.choice([
+                    WEATHER_OVERCAST,
+                    WEATHER_RAIN,
+                    WEATHER_THUNDER,
+                    WEATHER_SUNNY,
+                    WEATHER_SUNNY,
+                    WEATHER_SUNNY,
+                    WEATHER_SNOW,
+                    WEATHER_SNOW
+                ]),
+                with_transition=with_transition)
+
+            elif Natsuki.isAffectionate(higher=True):
+                show_sky(random.choice([
+                    WEATHER_OVERCAST,
+                    WEATHER_RAIN,
+                    WEATHER_THUNDER,
+                    WEATHER_SUNNY,
+                    WEATHER_SUNNY,
+                    WEATHER_SUNNY,
+                    WEATHER_SNOW
+                ]),
+                with_transition=with_transition)
+
+            elif Natsuki.isNormal(higher=True):
+                show_sky(random.choice([
+                    WEATHER_OVERCAST,
+                    WEATHER_RAIN,
+                    WEATHER_THUNDER,
+                    WEATHER_SUNNY,
+                    WEATHER_SNOW
+                ]),
+                with_transition=with_transition)
+
+            elif Natsuki.isDistressed(higher=True):
+                show_sky(random.choice([
+                    WEATHER_OVERCAST,
+                    WEATHER_OVERCAST,
+                    WEATHER_RAIN,
+                    WEATHER_RAIN,
+                    WEATHER_RAIN,
+                    WEATHER_THUNDER
+                ]),
+                with_transition=with_transition)
+
+            else:
+                show_sky(random.choice([
+                    WEATHER_OVERCAST,
+                    WEATHER_RAIN,
+                    WEATHER_RAIN,
+                    WEATHER_THUNDER,
+                    WEATHER_THUNDER,
+                    WEATHER_THUNDER
+                ]),
+                with_transition=with_transition)
 
         # Default weather
         else:
-            show_sky(WEATHER_SUNNY, with_transition=with_transition)
+            if Natsuki.isNormal(higher=True):
+                show_sky(WEATHER_SUNNY, with_transition=with_transition)
+
+            elif Natsuki.isDistressed(higher=True):
+                show_sky(WEATHER_OVERCAST, with_transition=with_transition)
+
+            else:
+                show_sky(WEATHER_RAIN, with_transition=with_transition)
 
     def show_sky(weather, with_transition=True):
         """

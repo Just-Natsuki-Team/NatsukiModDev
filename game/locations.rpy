@@ -5,6 +5,8 @@ default persistent._current_location = "classroom"
 default persistent.jn_sunrise_hour = 6
 default persistent.jn_sunset_hour = 19
 
+image furniture pink_beanbag = "mod_assets/furniture/classroom/pink_beanbag.png"
+
 init python in locations:
     import store
     LOCATION_MAP = dict()

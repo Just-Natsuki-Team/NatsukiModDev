@@ -110,6 +110,13 @@ label ch30_init:
                 persistent.jn_player_admission_type_on_quit = None
                 persistent._jn_player_apology_type_on_quit = None
 
+        if (
+            random.randint(1,7) 
+            and Natsuki.isAffectionate(higher=True)
+            and jn_is_day()
+        ):
+            renpy.show(name="furniture pink_beanbag", zorder=2)
+
     # Prepare visuals
     show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
     hide black with Dissolve(2) 
