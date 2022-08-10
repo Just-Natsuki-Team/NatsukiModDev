@@ -442,8 +442,10 @@ label admission_hungry:
     else:
         n 1unmpu "Huh?{w=0.1} You're hungry?"
         $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-        n 1kchbg "Then what're you telling me for?{w=0.2} Go get something to eat,{w=0.1} [chosen_tease]!"
-        n 1fcspo "Honestly...{w=0.3} what am I going to do with you,{w=0.1} [player]?"
+        n 1fupem "Then what're you telling {i}me{/i} for?{w=0.5}{nw}" 
+        extend 1fchgnelg " Go get something to eat,{w=0.1} [chosen_tease]!"
+        n 1fllaj "Honestly...{w=0.75}{nw}" 
+        extend 1fcspo " what am I going to do with you,{w=0.1} [player]?"
         n 1fchbg "Now go make something already!{w=0.2} Just don't fill yourself up on junk!"
 
         if Natsuki.isEnamored(higher=True):

@@ -2109,7 +2109,7 @@ label new_wearables_outfits_unlocked:
         extend 1knmwrl " D-{w=0.2}did you {i}seriously{/i} just get me all this stuff?!"
         n 1fslunl "..."
         n 1fcsanl "Uuuuuuuuu-!"
-        n 1fbkwrledr "Why would you do thaaat?!{w=1}{nw}"
+        n 1fpawrledr "Why would you do thaaat?!{w=1}{nw}"
         extend 1fbkgsless " I-{w=0.2}I didn't even {i}ask{/i} for anything!"
         n 1fslunl "..."
         n 1fcseml "Jeez...{w=0.5}{nw}"
@@ -2248,7 +2248,7 @@ label new_wearables_outfits_unlocked:
             else:
                 if alt_dialogue:
                     n 1uskgslesh "...!"
-                    n 1fslanfess "Nnnnnnn-!"
+                    n 1fdwanfess "Nnnnnnn-!"
                     n 1fcsemfesssbl "Y-{w=0.2}you're just lucky you're good at picking out gifts,{w=0.5}{nw}"
                     extend 1fsqpofesssbl " you jerk."
                     n 1fslpofesssbr "I guess I'll {i}have{/i} to keep this [unlock.display_name] now.{w=0.75}{nw}"

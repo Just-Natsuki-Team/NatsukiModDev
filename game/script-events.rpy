@@ -493,7 +493,7 @@ label event_reading_a_la_mode:
             pass
     
     show prop a_la_mode_manga_held zorder jn_events.JN_EVENT_PROP_ZORDER
-    $ jn_events.display_visuals("1unmajl")
+    $ jn_events.display_visuals("1fdwca")
     $ jn_globals.force_quit_enabled = True
 
     n 1unmgslesu "Oh!{w=1}{nw}"
@@ -628,7 +628,7 @@ label event_step_by_step_manga:
 
     n 1uskemesh "...!"
     $ player_initial = jn_utils.get_player_initial()
-    n 1fbkwrf "[player_initial]-{w=0.3}[player]!{w=0.2} Again?!{w=1}{nw}"
+    n 1fpawrf "[player_initial]-{w=0.3}[player]!{w=0.2} Again?!{w=1}{nw}"
     extend 1fbkwrf " D-{w=0.3}do you really have to barge in like that {i}every{/i} time?"
     n 1flrunfess "Yeesh...{w=1}{nw}"
     extend 1fsremfess " I swear you're gonna be the death of me one of these days..."
@@ -637,7 +637,7 @@ label event_step_by_step_manga:
     n 1tnmpul "What?{w=0.2} Is something on my face?"
     n 1tllpuleqm "..."
     n 1uskajlesu "O-{w=0.3}oh!{w=0.75}{nw}"
-    extend 1flrbgl " The book!"
+    extend 1fdwbgl " The book!"
     n 1fcsbglsbl "I was just..."
     n 1fllunl "I was..."
     n 1fcsunf "Nnnnnn-!"

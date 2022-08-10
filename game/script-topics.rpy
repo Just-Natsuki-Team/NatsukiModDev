@@ -2651,8 +2651,8 @@ label talk_work_life_balance:
     else:
         n 1fslbo "People need to value their own time more,{w=0.1} I guess."
         n 1fcssl "...Heh."
-        n 1fcsun "Maybe I should follow my own advice..."
-        n 1fsqfu "Because {i}clearly{/i} being here is a waste of my time too."
+        n 1fcsunl "Maybe I should follow my own advice..."
+        n 1fsqanltsb "Because {i}clearly{/i} being here is a waste of my time too."
 
     return
 
@@ -2735,11 +2735,13 @@ label talk_thoughts_on_horror:
 
     else:
         n 1kslsl "..."
-        n 1fsqaj "...I was about to share some of my thoughts on horror with you."
-        n 1fsrsl "Or at least,{w=0.1} I was thinking about it."
-        n 1fnmaj "...But then do you know what I realized,{w=0.1} [player]?"
-        n 1fsqsf "I hate horror -{w=0.1} not that you'd care -{w=0.1} and honestly?"
-        n 1fcsun "Being stuck here with {i}you{/i} is horror enough."
+        n 1fsqun "...I was about to share some of my thoughts on horror with you.{w=1}{nw}"
+        extend 1fsrsl " Or at least,{w=0.1} I was thinking about it."
+        n 1fsqem "...But then do you know what I realized,{w=0.1} [player]?"
+        n 1fsqan "I hate horror -{w=0.5}{nw}" 
+        extend 1fllem " not that you'd care -{w=0.3}{nw}" 
+        extend 1fnmful " and honestly?"
+        n 1fcsanltsa "Being stuck here with {i}you{/i} is horror enough."
         return
 
     if Natsuki.isNormal(higher=True):
@@ -2774,7 +2776,7 @@ label talk_thoughts_on_horror:
     elif Natsuki.isDistressed(higher=True):
         n 1flrsl "..."
         n 1fnmpu "I {i}would{/i} ask that if you were gonna watch something like that,{w=0.1} then to warn me first."
-        n 1fsqsr "But you wouldn't listen to me anyway,{w=0.1} would you?"
+        n 1fsqsrtsb "But you wouldn't listen to me anyway,{w=0.1} would you?"
 
     return
 
@@ -2834,11 +2836,11 @@ label talk_gaming:
 
     else:
         n 1nsqsl "Video games...?"
-        n 1fsqsl "...Heh.{w=0.2} Why,{w=0.1} [player]?"
-        n 1fcsan "Was stomping all over my feelings not enough?"
-        n 1fsqfu "Or were you looking to see if you can stomp all over me in games too?"
-        n 1fslsl "..."
-        n 1fslaj "...I don't wanna talk about this any more.{w=0.2} We're done here."
+        n 1fsqsltsb "...Heh.{w=0.2} Why,{w=0.3} [player]?{w=1}{nw}"
+        extend 1fcsantsa " Was stomping all over my feelings not enough?"
+        n 1fsqfultsb "Or were you looking to see if you can stomp all over me in games too?"
+        n 1fcsfrltsa "..."
+        n 1fcsupl "...I don't wanna talk about this any more.{w=0.2} We're {i}done{/i} here."
         return
 
     if Natsuki.isNormal(higher=True):
@@ -3384,9 +3386,11 @@ label talk_natsukis_hairstyle:
         n 1flrsl "I'm...{w=0.3} surprised you care enough to ask about that."
 
     else:
-        n 1fsqsl "Because I like it that way.{w=0.2} Is that good enough for you?"
-        n 1fsqan "Why would you even care anyway?{w=0.2} You haven't cared about me so far."
-        n 1fslpu "Jerk."
+        n 1fsqfu "Because I {i}like{/i} it that way.{w=0.75}{nw}" 
+        extend 1fnman " That good enough for you,{w=0.3} {i}[player]{/i}?"
+        n 1fsqantsb "And why would you even {i}care{/i} anyway?{w=1}{nw}" 
+        extend 1fsqupltsb " You haven't cared about me so far."
+        n 1fcsanltsa "Jerk."
         return
 
     n 1nnmpu "Well,{w=0.1} anyway."
@@ -3514,19 +3518,21 @@ label talk_integrity:
 
     if Natsuki.isEnamored(higher=True):
         n 1ksqsm "I'm pretty sure we both know what's right for each other by now,{w=0.1} huh?"
-        n 1fcsbgl "Ahaha."
+        n 1fcsbglesssbl "Ahaha."
 
         if Natsuki.isLove():
             n 1uchsml "Love you,{w=0.1} [player]~!"
 
     elif Natsuki.isAffectionate(higher=True):
         n 1ksqsm "I'm pretty sure I know what's right for you..."
-        n 1fcsbgl "Spending more time with me!{w=0.2} Ahaha."
+        n 1fcsbgledz "Spending more time with me!"
+        extend 1nchgnedz " Ehehe."
 
     else:
         n 1unmss "I'm sure I can help you find what's right for you."
         n 1fllss "That's what friends are for,{w=0.1} right?"
-        n 1fcsbg "Especially ones like me!{w=0.2} Ehehe."
+        n 1fcsbg "{i}Especially{/i} ones like me!{w=0.5}{nw}" 
+        extend 1nchgnedz " Ehehe."
 
     return
 
@@ -3587,7 +3593,7 @@ label talk_favourite_animal:
 
     else:
         n 1fsqpu "Heh.{w=0.2} Really?{w=0.2} My favourite animal...?"
-        n 1fcsan "Not you,{w=0.1} [player].{w=0.2} That's for sure."
+        n 1fcsantsa "Not you,{w=0.1} [player].{w=0.2} That's for sure."
 
     return
 
@@ -3620,7 +3626,7 @@ label talk_favourite_drink:
         n 1fslsf "...I can't understand why you'd care,{w=0.1} [player]."
         n 1fsqsf "So...{w=0.3} why should I?"
         n 1fsqan "Water.{w=0.2} There's an answer for you.{w=0.2} Happy?"
-        n 1fcsan "Now just go away..."
+        n 1fcsanltsa "Now just go away..."
         return
 
     if Natsuki.isNormal(higher=True):
@@ -3813,12 +3819,12 @@ label talk_flying:
         n 1fnmaj "I don't really like the idea of the environmental impact either."
         n 1fsqaj "...But something tells me you don't really care about that last point,{w=0.2} do you?"
         n 1flrca "You know...{w=0.3} just going by my experience so far."
-        n 1fsqca "...Am I wrong?"
+        n 1fsqca "...Am I {i}wrong{/i}?"
         return
 
     else:
-        n 1fsqan "No,{w=0.1} [player].{w=0.2} I haven't.{w=0.2} And I probably never will."
-        n 1fcsan "Gloat all you want.{w=0.2} I don't give a crap if you have."
+        n 1fsqanean "No,{w=0.1} [player].{w=0.2} I haven't.{w=0.2} And I probably never will."
+        n 1fcsanltsa "Gloat all you want.{w=0.2} I don't give a crap if you have."
         return
 
     n 1ullaj "Besides,{w=0.1} I try not to feel too bad about it.{w=0.2} It's way better for the environment if I don't,{w=0.1} anyway!"
@@ -3915,8 +3921,8 @@ label talk_are_you_into_cars:
 
         else:
             n 1fsqpu "...Really?"
-            n 1fsqaj "You know I can't drive.{w=0.2} So I'm not even going to {i}pretend{/i} I care if you're into that,{w=0.1} [player]."
-            n 1fsqan "Besides...{w=0.3} I bet you'd {i}never{/i} treat your dream car like you treat me,{w=0.1} would you?"
+            n 1fsqan "You know I can't drive.{w=0.2} So I'm not even going to {i}pretend{/i} I care if you're into that,{w=0.1} [player]."
+            n 1fnmfultsc "Besides...{w=0.3} I bet you'd {i}never{/i} treat your {i}precious{/i} car like you treat me,{w=0.1} huh?"
             return
 
     else:
@@ -4092,17 +4098,17 @@ label talk_how_do_you_feel_about_me:
     elif Natsuki.isBroken():
         $ already_discussed_relationship = get_topic("talk_how_do_you_feel_about_me").shown_count > 0
         if already_discussed_relationship:
-            n 1fsqputsb "...Wow.{w=0.2} Really?"
+            n 1fsqpultse "...Wow.{w=0.2} Really?"
 
         else:
             n 1fsqputsb "...{w=0.3}I have no words for how I feel about {i}you{/i}."
-            n 1fsqfutsb "Don't freaking test me, {i}[player]{/i}."
+            n 1fsqfultseean "Don't freaking test me, {i}[player]{/i}."
 
         return
 
     else:
-        n 1fcsuntsa "...{w=1}...{w=1}{nw}"
-        n 1fcsantsa "...{w=1}..."
+        n 1fsqunltse "...{w=1}...{w=1}{nw}"
+        n 1fcsanltda "...{w=1}..."
         return
 
     return
@@ -4205,8 +4211,10 @@ label talk_are_you_into_cosplay:
 
         n 1nlrpu "The rest of it is just shopping around for materials,{w=0.1} which are usually pretty cheap anyway."
         n 1unmpu "Props and wigs and all that are a little more annoying,{w=0.1} but not exactly undoable."
-        n 1fllsr "Hmm..."
-        n 1fllbg "The more I think about it,{w=0.1} the more I like the idea!"
+        n 1tupbo "Hmm..."
+        n 1tllpu "You know,{w=0.75}{nw}"
+        extend 1fllss " the more I think about it...{w=1}{nw}"
+        extend 1nchgnedz " the more I like the idea!"
         n 1fnmbg "What about you,{w=0.1} [player]?{w=0.2} I bet you'd love to see my skills at work,{w=0.1} right?"
         n 1nnmsm "Ahaha."
         n 1flrsml "Well...{w=0.3} we'll see,{w=0.1} but no promises!"
@@ -4222,10 +4230,10 @@ label talk_are_you_into_cosplay:
         return
 
     else:
-        n 1fsqsr "Heh.{w=0.2} Why?"
-        n 1fcsan "So you have something else to make me feel awful about?"
-        n 1kcssr "...Yeah.{w=0.2} No thanks."
-        n 1fcsan "I'm done talking to you about this."
+        n 1fsqsr "Heh.{w=0.5} Why?"
+        n 1fcsantsa "So you have something else to make me feel awful about?"
+        n 1fcssrltsa "...Yeah.{w=0.75} No thanks."
+        n 1fcsanltsd "I'm done talking to you about this."
         return
 
     return
@@ -4464,30 +4472,30 @@ init 5 python:
 
 label talk_collectibles:
     if Natsuki.isAffectionate(higher=True):
-        n 1unmpu "Collectibles?{w=0.2} You mean like figurines and plushies and such?"
+        n 1unmpueqm "Collectibles?{w=0.2} You mean like figurines and plushies and such?"
         n 1flrpu "Mmm...{w=0.3} not really.{w=0.2} Collecting is an expensive hobby,{w=0.1} [player]!"
         n 1klrpo "I mean,{w=0.1} it all depends on exactly what you collect,{w=0.1} but it feels like places that sell them prey on that."
         n 1flraj "Like...{w=0.3} the urge to complete a collection -{w=0.1} so they jack up the prices!"
-        n 1fcsbo "Ugh..."
-        n 1kllbo "And for people in my...{w=0.3} uhmm...{w=0.3} {i}position{/i},{w=0.1} it's a big barrier to entry."
+        n 1fcsboesi "Ugh..."
+        n 1kllbosbl "And for people in my...{w=0.3} uhmm...{w=0.3} {i}position{/i},{w=0.1} it's a big barrier to entry."
         n 1unmaj "But anyway..."
 
     elif Natsuki.isNormal(higher=True):
-        n 1tnmpu "Huh?{w=0.2} You mean like figurines and all that stuff?"
+        n 1tnmpueqm "Huh?{w=0.2} You mean like figurines and all that stuff?"
         n 1tlrpu "Well...{w=0.3} no,{w=0.1} [player].{w=0.2} Not really."
         n 1knmsf "I couldn't justify spending so much on a hobby like that!"
         n 1flrbo "Especially not when I had other things to worry about spending my money on first,{w=0.1} you know."
         n 1unmaj "But anyway,{w=0.1} putting all that aside..."
 
     elif Natsuki.isDistressed(higher=True):
-        n 1fsqsf "No,{w=0.1} [player]."
+        n 1fsqsfsbl "No,{w=0.1} [player]."
         n 1fsqaj "Collectibles were way too expensive for me.{w=0.2} I couldn't justify wasting the money I {i}do{/i} have."
         n 1fnmsl "{i}Especially{/i} on stuff that'll just sit on a shelf that I'll forget about."
         n 1fsqsr "Yeah,{w=0.1} [player] -{w=0.1} believe it or not,{w=0.1} some of us {i}do{/i} have to think about how we spend our money."
         n 1fsqun "Shocker,{w=0.1} right?"
         n 1fcsun "..."
         n 1fnmaj "Well?{w=0.2} Satisfied with your answer?"
-        n 1fsqaj "We're done here."
+        n 1fsqsl "We're done here."
         return
 
     else:
@@ -4495,7 +4503,7 @@ label talk_collectibles:
         n 1fsqan "But why should I tell {i}you{/i} if I do or not?"
         n 1fcsan "You'd probably just trash them."
         n 1fcsun "Heh.{w=0.2} After all."
-        n 1fsqup "You've proven great at trashing things so far,{w=0.1} {i}haven't you{/i}?{w=0.2} Jerk."
+        n 1fsqupltsa "You've proven great at trashing things so far,{w=0.1} {i}haven't you{/i}?{w=0.2} Jerk."
         return
 
     n 1ullbo "..."
@@ -4972,13 +4980,13 @@ label talk_vtubers:
         n 1flrbo "{i}Some{/i} of us don't have the time to sit around on our butt for hours..."
         n 1fsqaj "...Or the money to just give it away to strangers."
         n 1fsqpu "[player]."
-        n 1fsqsr"How much are we betting you aren't {i}nearly{/i} as toxic to {i}them{/i} as you are to me, huh?"
+        n 1fsqsrtsb "How much are we betting you aren't {i}nearly{/i} as toxic to {i}them{/i} as you are to me, huh?"
         return
 
     else:
-        n 1fsqan "No.{w=0.2} And I couldn't give less of a crap if you did,{w=0.1} either."
-        n 1fnmpu "...And hey,{w=0.1} newsflash,{w=0.1} idiot."
-        n 1fsqpu "Throwing money at a stranger hiding behind a cutesy picture doesn't make you any less of a jerk."
+        n 1fsqantsb "No.{w=0.2} And I couldn't give less of a crap if you did,{w=0.1} either."
+        n 1fnmpultsf "...And hey,{w=0.1} newsflash,{w=0.1} idiot."
+        n 1fsqupltse "Throwing money at a stranger hiding behind a cutesy picture doesn't make you any less of a {b}jerk{/b}."
         return
 
     n 1nchsm "It's definitely a cool idea!{w=0.2} It lets people share their passions and experiences with others behind a completely clean persona..."
@@ -5030,7 +5038,7 @@ label talk_skateboarding:
         n 1unmss "Well,{w=0.1} anyway."
 
     elif Natsuki.isDistressed(higher=True):
-        n 1fcsaj "Ugh..."
+        n 1fupemesi "Ugh..."
         n 1fnmbo "Yes,{w=0.1} [player].{w=0.2} I'm a skateboarder.{w=0.2} I skateboard.{w=0.5}{nw}"
         extend 1fsqsf " Is that a problem or something?"
         n 1fllpu "It's just a convenient way to get around.{w=0.5}{nw}"
@@ -5039,16 +5047,16 @@ label talk_skateboarding:
         n 1flraj "...Yeah.{w=0.2} I don't have much else to say about it.{w=0.5}{nw}"
         extend 1fnmbo " But hey."
         n 1fsgaj "Not like you'd really care to listen anyway...{w=0.5}{nw}"
-        extend 1fsqsf " isn't that right,{w=0.1} {i}[player]{/i}?"
+        extend 1fsqsftsa " isn't that right,{w=0.1} {i}[player]{/i}?"
         return
 
     else:
-        n 1fsqan "...And since when did {i}you{/i} give a crap about my hobbies and interests?"
+        n 1fsqanean "...And since when did {i}you{/i} give a crap about my hobbies and interests?"
         n 1fcsan "..."
         n 1fnmsf "Yes,{w=0.1} [player].{w=0.5}{nw}"
-        extend 1fsqsf " I {i}do{/i} enjoy skateboarding."
-        n 1fsqup "And I'd rather be doing that than be stuck here talking to {i}you{/i}.{w=0.5}{nw}"
-        extend 1fcsan " Jerk."
+        extend 1fsqsftsb " I {i}do{/i} enjoy skateboarding."
+        n 1fsqupltsb "And I'd rather be doing that than be stuck here talking to {i}you{/i}.{w=0.5}{nw}"
+        extend 1fcsanltsa " Jerk."
         return
 
     n 1tchbg "I'm a skater girl alright!{w=0.5}{nw}"
@@ -5118,11 +5126,11 @@ label talk_sports:
         return
 
     else:
-        n 1fsqan "I don't {i}now{/i},{w=0.1} if you somehow hadn't already noticed."
+        n 1fsqan "I don't {i}now{/i},{w=0.1} if you {i}somehow{/i} hadn't already noticed."
         n 1fslsl "..."
         n 1fsqpu "..."
-        n 1fcsun "...Do I even want to know why you asked?"
-        n 1fcsan "...No.{w=0.2} I {i}don't{/i}."
+        n 1fcsemtsa "...Do I even want to know why you asked?"
+        n 1fcsanltsd "...No.{w=0.75} I {i}don't{/i}."
         return
 
     n 1nnmaj "I try to keep up how I can.{w=0.2} I can't do laps or anything,{w=0.5}{nw}"
@@ -5695,8 +5703,8 @@ label talk_fear_of_lightning:
 
     else:
         n 1fcsan "Oh,{w=1.5}{nw}"
-        extend 1fcsfu " {i}{cps=\7.5}get lost{/cps}{/i},{w=0.3} [player]."
-        n 1fcsan "As if I'd want to talk about anything uncomfortable with {i}you{/i}."
+        extend 1fcsfultsaean " {i}{cps=\7.5}get lost{/cps}{/i},{w=0.3} [player]."
+        n 1fsqanltseean "As if I'd want to talk about anything uncomfortable with the likes of {b}you{/b}!"
 
         return
 
@@ -5911,9 +5919,9 @@ label talk_fear_of_spiders:
     else:
         n 1fcsan "...Are {i}you{/i} afraid of asking me dumb questions,{w=0.1} since you're the {i}last{/i} person I'd want to answer them for?!"
         n 1fsqun "..."
-        n 1fslpu "Yeah.{w=2}{nw}"
-        extend 1fsqsr " Apparently not,{w=0.1} huh?"
-        n 1fslan "Jerk."
+        n 1fslem "Yeah.{w=2}{nw}"
+        extend 1fsqemtsb " Apparently not,{w=0.1} huh?"
+        n 1fslanltsb "Jerk."
 
         return
 
@@ -6478,7 +6486,7 @@ label talk_feelings_about_sayori:
     extend 1nslssl " or her...{w=0.3} awkward...{w=0.3} compliments."
     n 1tnmsr "At this point?"
     n 1ksrsrltsb "I think I'd do {i}anything{/i} just to see a genuine Sayori smile again..."
-    n 1kcsssf "...And give her one of those big,{w=0.1} dumb hugs she liked so much."
+    n 1kcsssftsa "...And give her one of those big,{w=0.1} dumb hugs she liked so much."
 
     return
 
@@ -6529,7 +6537,7 @@ label talk_thoughts_on_tea:
     else:
         n 1fcsem "No,{w=2}{nw}"
         extend 1fsqan " and I'm certainly not drinking any of {i}yours{/i}."
-        n 1fslem "Not like it'd be {i}just{/i} tea anyway,{w=0.1} knowing a jerk like {i}you{/i}."
+        n 1fslemltsb "Not like it'd be {i}just{/i} tea anyway,{w=0.1} knowing a jerk like {i}you{/i}."
 
         return
 
@@ -6872,10 +6880,10 @@ label talk_impressions_of_the_other_girls:
         $ Natsuki.calculatedAffinityLoss(2)
 
     else:
-        n 1fsqan "...What is {i}{cps=\7.5}wrong{/cps}{/i} with you?{w=1.5}{nw}"
-        extend 1fnmfu " Like,{w=0.1} what the {i}hell{/i} is wrong with your {i}head{/i}?!"
-        n 1fcsan "I am {b}NOT{/b} doing that,{w=0.1} let alone for a piece of work like{w=0.5}{nw}"
-        extend 1fslan " {i}you{/i}!"
+        n 1fnmantsc "...What is {i}{cps=\7.5}wrong{/cps}{/i} with you?{w=1.5}{nw}"
+        extend 1fnmscltsf " Like,{w=0.1} what the {i}hell{/i} is wrong with your {i}head{/i}?!"
+        n 1fcsanltsd "I am {b}NOT{/b} doing that,{w=0.1} let alone for a piece of work like{w=0.5}{nw}"
+        extend 1fskwrftdc " {i}you{/i}!"
 
         $ Natsuki.calculatedAffinityLoss(1)
 
@@ -7039,8 +7047,8 @@ label talk_fear_of_flying:
     else:
         n 1fcsem "Oh,{w=1}{nw}"
         extend 1fsqwr " {cps=\7.5}shut {b}up{/b}{/cps},{w=0.1} [player]."
-        n 1fcsan "As {i}if{/i} I'd be dumb enough to share any fears I have with a complete loser like{w=0.75}{nw}" 
-        extend 1fcswrtsa " {i}you{/i}."
+        n 1fcsantsa "As {i}if{/i} I'd be dumb enough to share any fears I have with a complete loser like{w=0.75}{nw}" 
+        extend 1fcswrltsa " {i}you{/i}."
 
     return
 

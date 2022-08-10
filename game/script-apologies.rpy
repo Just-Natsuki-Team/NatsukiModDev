@@ -137,7 +137,7 @@ label apology_bad_nickname:
             $ Natsuki.calculatedAffinityGain()
 
         elif Natsuki.isDistressed(higher=True):
-            n 1fsqfu "Ugh...{w=0.3} really,{w=0.1} [player]?"
+            n 1fupfu "Ugh...{w=0.3} really,{w=0.1} [player]?"
             n 1fcsan "..."
             n 1fsqfr "I {i}said{/i} actions have consequences."
             n 1fcsfr "I appreciate the apology.{w=0.2} But that's all you're getting."
@@ -261,7 +261,7 @@ label apology_generic:
             $ Natsuki.percentageAffinityLoss(2)
 
         elif Natsuki.isDistressed(higher=True):
-            n 1fcsan "Ugh..."
+            n 1fupem "Ugh..."
             n 1fnman "Really,{w=0.1} [player].{w=0.2} Haven't you screwed with me enough?"
             n 1fsqfu "If you're gonna apologize,{w=0.1} have the guts to do it properly."
             n 1fsqsf "You owe me that much,{w=0.1} at least."
@@ -468,7 +468,7 @@ label apology_unhealthy:
         $ Natsuki.calculatedAffinityGain()
 
     elif Natsuki.isNormal(higher=True):
-        n 1fcsbol "Ugh...{w=0.3} [player]."
+        n 1fupbol "Ugh...{w=0.3} [player]."
         n 1fnmbo "Look.{w=0.2} I accept your apology."
         n 1knmaj "But you gotta take better care of yourself!"
         n 1fllpo "I'm not always gonna be here to babysit you,{w=0.1} you know..."
