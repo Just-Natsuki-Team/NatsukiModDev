@@ -668,7 +668,35 @@ image natsuki idle max_affinity:
             pause 3
             "natsuki 1kcssmf"
             pause 5
-            
+
+        choice:
+            "natsuki 1nlrpul"
+            pause 3
+            "natsuki 1ncspul"
+            pause 0.1
+            "natsuki 1flrpul"
+            pause 3
+            "natsuki 1ncspul"
+            pause 0.1
+            "natsuki 1tnmpul"
+            pause 1
+            "natsuki 1unmpulesu"
+            pause 1.5
+            "natsuki 1fcspul"
+            pause 0.1
+            "natsuki 1flldvfsbl"
+            pause 4
+            "natsuki 1fcsdvf"
+            pause 0.1
+
+        choice:
+            "natsuki 1uchsmfedz"
+            pause 7
+
+        choice:
+            "natsuki 1nchsmfeme"
+            pause 7
+
         repeat
 
 # Idle images for AFFECTIONATE+

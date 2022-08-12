@@ -66,6 +66,10 @@ init python in jn_activity:
         instagram = 15
         music_creation = 16
         reddit = 17
+        fourchan = 18
+        monika_after_story = 19
+        just_yuri = 20
+        forever_and_ever = 21
 
         def __int__(self):
             return self.value
@@ -90,7 +94,11 @@ init python in jn_activity:
         ): JNActivities.takeaway_food,
         "(• Instagram photos and videos)": JNActivities.instagram,
         "(cubase|fl studio|reaper|mixcraft|studio one|logic pro|garageband|cakewalk|pro tools)": JNActivities.music_creation,
-        "(Reddit - Dive into anything)": JNActivities.reddit
+        "(Reddit - Dive into anything)": JNActivities.reddit,
+        "(- 4chan|^4chan$)": JNActivities.fourchan,
+        "^monika after story$": JNActivities.monika_after_story,
+        "(^just yuri$|^just yuri \(beta\)$)": JNActivities.just_yuri,
+        "^forever & ever$": JNActivities.forever_and_ever,
     }
 
     __ACTIVITY_NOTIFY_MESSAGE_MAP = {
