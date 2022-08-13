@@ -60,8 +60,15 @@ init 0 python:
         ::::cccccccclxkxddddxxdddxxdxkkOOOxoollccc::::;;,;;;,,,,,,,,,,;d0xccldkodKWWWWWWNNNNNNNWN0oclddddddo
         """
 
+        # Tracks whether Natsuki is currently in some topic flow
+        __is_in_conversation = False
+
+        # Tracks whether Natsuki is currently playing a game
+        __is_in_game = False
+
         # START: Outfit functionality
 
+        # Tracks Natsuki's currently worn outfit
         _outfit = None
 
         @staticmethod
@@ -535,6 +542,9 @@ init 0 python:
             IN:
                 apology_type - The jn_apologies.ApologyTypes type to add.
             """
+            if not isinstance(apology_type, int) and not isinstance(apology_type, jn_apologies.ApologyTypes):
+                raise TypeError("apology_type must be of types int or jn_apologies.ApologyTypes")
+
             if not int(apology_type) in store.persistent._jn_player_pending_apologies:
                 store.persistent._jn_player_pending_apologies.append(int(apology_type))
 
@@ -546,6 +556,9 @@ init 0 python:
             IN:
                 apology_type - The jn_apologies.ApologyTypes type to add.
             """
+            if not isinstance(apology_type, int) and not isinstance(apology_type, jn_apologies.ApologyTypes):
+                raise TypeError("apology_type must be of types int or jn_apologies.ApologyTypes")
+
             store.persistent._jn_player_apology_type_on_quit = int(apology_type)
 
         @staticmethod
@@ -556,8 +569,61 @@ init 0 python:
             IN:
                 apology_type - The jn_apologies.ApologyTypes type to add.
             """
+            if not isinstance(apology_type, int) and not isinstance(apology_type, jn_apologies.ApologyTypes):
+                raise TypeError("apology_type must be of types int or jn_apologies.ApologyTypes")
+
             if int(apology_type) in store.persistent._jn_player_pending_apologies:
                 store.persistent._jn_player_pending_apologies.remove(int(apology_type))
+
+        @staticmethod
+        def setInConversation(is_in_conversation):
+            """
+            Marks Natsuki as being in a conversation with the player, or another dialogue flow.
+            While in conversation, the hotkey buttons are disabled.
+
+            IN:
+                - is_in_conversation - The bool in conversation flag to set
+            """
+            if not isinstance(is_in_conversation, bool):
+                raise TypeError("is_in_conversation must be of type bool")
+
+            Natsuki.__is_in_conversation = is_in_conversation
+
+        @staticmethod
+        def setInGame(is_in_game):
+            """
+            Marks Natsuki as being in a game with the player.
+            While in a game, the player is marked as a cheater if they force quit, and can later apologize for it.
+
+            IN:
+                - is_in_game - The bool in game flag to set
+            """
+            if not isinstance(is_in_game, bool):
+                raise TypeError("is_in_game must be of type bool")
+
+            Natsuki.__is_in_game = is_in_game
+
+        @staticmethod
+        def isInConversation():
+            """
+            Gets whether Natsuki is or is not currently in a conversation.
+            While in conversation, the hotkey buttons are disabled.
+            
+            OUT:
+                - True if in conversation, otherwise False
+            """
+            return Natsuki.__is_in_conversation
+
+        @staticmethod
+        def isInGame():
+            """
+            Gets whether Natsuki is or is not currently playing a game.
+            While in a game, the player is marked as a cheater if they force quit, and can later apologize for it.
+            
+            OUT:
+                - True if in game, otherwise False
+            """
+            return Natsuki.__is_in_game
 
 # KWWWMMMMMMMWNNNNNNXXXKKKKK00KKXXKKK0KK0000KKKKKK000Okkxdoodk0KKKKKXKKKK0000KOxoccdkko;,cOX00XXXXXXXX
 # KNWWWWWMMWWNNNNNXXXXXXXXKKKKKXXXXXXKKKKXXXXXXXKKKXXKKKKKKXKKKXXK00KKKKKKK000OxOOdclxOx:;kXOxKXXXXXKK

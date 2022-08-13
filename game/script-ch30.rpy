@@ -56,7 +56,7 @@ label ch30_init:
         # Check the daily affinity cap and reset if need be
         Natsuki.checkResetDailyAffinityGain()
 
-        jn_globals.player_is_in_conversation = True
+        Natsuki.setInConversation(True)
 
         # Determine if the player should get a prolonged leave greeting
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
@@ -160,7 +160,7 @@ label ch30_loop:
             day_check()
             LAST_DAY_CHECK = _now.day
 
-        jn_globals.player_is_in_conversation = False
+        Natsuki.setInConversation(False)
 
     #Now, as long as there's something in the queue, we should go for it
     while persistent._event_list:
@@ -237,7 +237,7 @@ label call_next_topic(show_natsuki=True):
                             jn_activity.notifyPopup(renpy.substitute(notify_message))
 
             # Call the pending topic, and disable the UI
-            $ jn_globals.player_is_in_conversation = True
+            $ Natsuki.setInConversation(True)
             call expression _topic
 
     python:
@@ -265,7 +265,7 @@ label call_next_topic(show_natsuki=True):
     python:
         global LAST_TOPIC_CALL
         LAST_TOPIC_CALL = datetime.datetime.now()
-        jn_globals.player_is_in_conversation = False
+        Natsuki.setInConversation(False)
 
     jump ch30_loop
 
@@ -436,7 +436,7 @@ label talk_menu:
         _talk_flavor_text = renpy.substitute(_talk_flavor_text)
 
     $ show_natsuki_talk_menu()
-    $ jn_globals.player_is_in_conversation = True
+    $ Natsuki.setInConversation(True)
 
     menu:
         n "[_talk_flavor_text]"
@@ -557,7 +557,7 @@ label outfits_menu:
 
 label extras_menu:
     python:
-        jn_globals.player_is_in_conversation = True
+        Natsuki.setInConversation(True)
         avaliable_extras_options = []
 
         # Since conditions can change, we check each time if each option is now avaliable due to context changes (E.G affinity is now higher)

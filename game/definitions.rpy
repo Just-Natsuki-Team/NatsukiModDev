@@ -844,12 +844,6 @@ init -990 python in jn_globals:
     # Tracks whether the player opted to stay for longer when Natsuki asked them to when quitting; True if so, otherwise False
     player_already_stayed_on_farewell = False
 
-    # Tracks whether the player is or is not currently playing a game
-    player_is_ingame = False
-
-    # Tracks whether the player is or is not currently in some topic flow
-    player_is_in_conversation = False
-
     # Tracks if the player is permitted to force quit; use this to block force quits during sequences
     force_quit_enabled = True
 

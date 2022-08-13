@@ -400,7 +400,7 @@ label snap_start:
     else:
         n 1flrpol "Hmph...{w=0.3} you got lucky this time.{w=0.2} Looks like I'm first,{w=0.1} [player]."
 
-    $ jn_globals.player_is_ingame = True
+    $ Natsuki.setInGame(True)
     $ jn_snap._controls_enabled = True
     jump snap_main_loop
 
@@ -516,7 +516,7 @@ label snap_quip(is_player_snap, is_correct_snap):
                 with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
                 # Reset the ingame flag, then hop back to ch30 as getting here has lost context
-                $ jn_globals.player_is_ingame = False
+                $ Natsuki.setInGame(False)
                 jump ch30_loop
 
             # Generic incorrect quip/tease
@@ -675,7 +675,7 @@ label snap_end:
             with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
             # Reset the ingame flag, then hop back to ch30 as getting here has lost context
-            $ jn_globals.player_is_ingame = False
+            $ Natsuki.setInGame(False)
             jump ch30_loop
 
 label snap_forfeit:
@@ -705,7 +705,7 @@ label snap_forfeit:
             with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
             # Reset the ingame flag, then hop back to ch30 as getting here has lost context
-            $ jn_globals.player_is_ingame = False
+            $ Natsuki.setInGame(False)
             jump ch30_loop
 
         "In your dreams!":

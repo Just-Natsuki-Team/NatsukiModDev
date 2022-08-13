@@ -1575,7 +1575,7 @@ screen credits(message, ok_action):
 
 init python:
     def check_ingame_state_add_apology():
-        if jn_globals.player_is_ingame:
+        if Natsuki.isInGame():
             Natsuki.addApology(jn_apologies.ApologyTypes.cheated_game)
 
 screen confirm_editable(message, yes_text, no_text, yes_action, no_action):

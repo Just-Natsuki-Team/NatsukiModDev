@@ -252,7 +252,7 @@ screen hkb_overlay:
         textbutton _("Talk"):
             action [
                 Jump("talk_menu"),
-                SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)
+                SensitiveIf(not Natsuki.isInConversation() and not Natsuki.isInGame())
             ]
             hover_sound gui.hover_sound
             activate_sound gui.activate_sound
@@ -263,7 +263,7 @@ screen hkb_overlay:
             textbutton _("Music"):
                 action [
                     Jump("music_menu"),
-                    SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)
+                    SensitiveIf(not Natsuki.isInConversation() and not Natsuki.isInGame())
                 ]
                 hover_sound gui.hover_sound
                 activate_sound gui.activate_sound
@@ -273,7 +273,7 @@ screen hkb_overlay:
         textbutton _("Extras"):
             action [
                 Jump("extras_menu"),
-                SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)
+                SensitiveIf(not Natsuki.isInConversation() and not Natsuki.isInGame())
             ]
             hover_sound gui.hover_sound
             activate_sound gui.activate_sound
