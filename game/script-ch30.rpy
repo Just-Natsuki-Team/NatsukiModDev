@@ -111,7 +111,7 @@ label ch30_init:
                 persistent._jn_player_apology_type_on_quit = None
 
         if (
-            random.randint(1,7) 
+            random.randint(1,7) == 1
             and Natsuki.isAffectionate(higher=True)
             and jn_is_day()
         ):
@@ -234,7 +234,7 @@ label call_next_topic(show_natsuki=True):
                                     "[player]? Are you there?"
                                 ])
 
-                            jn_activity.notifyPopup(notify_message)
+                            jn_activity.notifyPopup(renpy.substitute(notify_message))
 
             # Call the pending topic, and disable the UI
             $ jn_globals.player_is_in_conversation = True
