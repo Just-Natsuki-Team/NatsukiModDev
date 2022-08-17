@@ -698,7 +698,7 @@ init 5 python:
             label="greeting_feeling_better_sick",
             unlocked=True,
             category=["Admission"],
-            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.HAPPY, None),
             additional_properties={
                 "admission_type": jn_admissions.TYPE_SICK,
             }
@@ -747,7 +747,7 @@ init 5 python:
             label="greeting_feeling_better_tired",
             unlocked=True,
             category=["Admission"],
-            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.HAPPY, None),
             additional_properties={
                 "admission_type": jn_admissions.TYPE_TIRED,
             }
@@ -756,20 +756,25 @@ init 5 python:
     )
 
 label greeting_feeling_better_tired:
-    n 1uchbg "Ah!{w=0.2} [player]!{w=0.2} Hi!"
+    n 1unmajesu "Ah!{w=0.5}{nw}"
+    extend 1uchbg " [player]!{w=0.2} Hi!"
     menu:
-        n "I hope you got enough sleep.{w=0.2} How're you feeling?"
+        n "How're you feeling? Any less tired?"
 
         "Much better, thanks!":
-            n 1nchsm "Great!{w=0.2} Nothing like a good night's sleep,{w=0.1} am I right?"
-            n 1usqsg "Now then -{w=0.1} seeing as you're finally awake and alert..."
-            n 1nchbg "What better opportunity to spend some more time with me?{w=0.2} Ehehe."
+            n 1nchsm "Ehehe.{w=0.5}{nw}" 
+            extend 1usqsm " Nothing like a good night's sleep,{w=0.2} am I right?"
+            n 1fcsbg "Now then!{w=1}{nw}" 
+            extend 1fsqbg " Seeing as you're finally awake and alert..."
+            n 1fchsmledz "It's time for some more fun with yours truly!"
             $ persistent.jn_player_admission_type_on_quit = None
 
         "A little tired.":
-            n 1knmsl "Oh...{w=0.3} well,{w=0.1} that's not quite what I was hoping to hear."
-            n 1knmaj "If you aren't feeling too tired,{w=0.1} perhaps you could grab something to wake up a little?"
-            n 1uchbg "A nice glass of water or some bitter coffee should perk you up in no time!"
+            n 1knmsl "Oh...{w=1}{nw}" 
+            extend 1kllajsbr " that's not exactly what I was {i}hoping{/i} to hear,{w=0.2} I'll be honest."
+            n 1fcsslsbr "Mmm..."
+            n 1knmaj "Then...{w=0.3} perhaps you could grab something to wake up a little?"
+            n 1kchbgsbl "A nice glass of water or some bitter coffee should perk you up in no time!"
 
             # Add pending apology, reset the admission
             $ Natsuki.addApology(jn_apologies.ApologyTypes.unhealthy)
@@ -777,8 +782,9 @@ label greeting_feeling_better_tired:
 
         "Still tired.":
             n 1knmsl "Still struggling with your sleep,{w=0.2} [player]?"
-            n 1knmaj "I don't mind you being here...{w=0.3} but don't strain yourself,{w=0.1} alright?"
-            n 1knmbg "I don't want you face-planting your desk for my sake..."
+            n 1kllaj "I don't {i}mind{/i} you being here...{w=1}{nw}" 
+            extend 1knmsl " but don't strain yourself,{w=0.1} alright?"
+            n 1kslbosbl "I don't want you face-planting your desk for my sake..."
 
             # Add pending apology, reset the admission
             $ Natsuki.addApology(jn_apologies.ApologyTypes.unhealthy)
@@ -902,18 +908,20 @@ init 5 python:
             label="greeting_early_morning_why_are_you_here",
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(3, 4)",
-            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.NORMAL, None),
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_early_morning_why_are_you_here:
-    n 1uskgsl "H-{w=0.1}huh?{w=0.2} [player]?!"
-    n 1tnmpul "What the heck are you doing here so early?"
-    n 1knmpo "Did you have a nightmare or something?"
-    n 1tnmsl "Or...{w=0.3} maybe you never slept?{w=0.2} Huh."
+    n 1uwdajlesh "H-{w=0.1}huh?{w=0.5}{nw}" 
+    extend 1tnmeml " [player]?!"
+    n 1fnmpuleqm "What the heck are you doing here so early?"
+    n 1tnmpu "Did you have a nightmare or something?"
+    n 1tsqsl "Or...{w=0.3} maybe you never slept?{w=0.5}{nw}" 
+    extend 1tsrpu " Huh."
     n 1tnmbg "Well,{w=0.1} anyway..."
-    n 1kchbgl "Morning,{w=0.1} I guess!{w=0.2} Ehehe."
+    n 1kchbglsbr "Morning?{w=0.3} I guess?"
     return
 
 # Morning
