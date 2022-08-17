@@ -1624,7 +1624,7 @@ label outfits_wear_outfit:
     if len(list(jn_outfits.get_all_outfits())) == 0:
         # No outfits, no point proceeding
         n 1tnmbo "Huh?{w=0.5}{nw}"
-        extend 1fchbg "I don't {i}have{/i} any other outfits, dummy!"
+        extend 1fchbg " I don't {i}have{/i} any other outfits, dummy!"
         jump ch30_loop
 
     n 1unmaj "Huh?{w=0.2} You want me to put on another outfit?"
@@ -1736,7 +1736,7 @@ label outfits_remove_outfit:
     if len(list(jn_outfits.get_all_outfits())) == 0:
         # No outfits, no point proceeding
         n 1tnmbo "Huh?{w=0.5}{nw}"
-        extend 1fchbg "I don't {i}have{/i} any outfit ideas from you, dummy!"
+        extend 1fchbg " I don't {i}have{/i} any outfit ideas from you, dummy!"
         jump ch30_loop
 
     n 1unmpu "You want me to remove an outfit?{w=0.5}{nw}"
@@ -2123,7 +2123,7 @@ label new_wearables_outfits_unlocked:
         n 1uwdeml "...Eh?"
         n 1ulreml "What even..."
         n 1uskemfeex "...!"
-        $ player_initial = jn_utils.get_player_initial()
+        $ player_initial = jn_utils.getPlayerInitial()
         n 1fbkwrf "[player_initial]-{w=0.2}[player]!"
         n 1kbkwrf "What even {i}is{/i} all this?!"
         n 1fllemlesssbl "Y-{w=0.2}you better not be trying to win me over with gifts or something!{w=1}{nw}"
@@ -2241,7 +2241,7 @@ label new_wearables_outfits_unlocked:
                     extend 1fllbglesssbr " a-{w=0.2}and here I was thinking I'd have to teach you {i}everything{/i} about style!"
                     n 1kllsllsbr "..."
                     n 1knmbolsbr "...But thanks,{w=0.3} [player].{w=1}"
-                    extend 1flrunlsbr "For the [unlock.display_name]."
+                    extend 1flrunlsbr " For the [unlock.display_name]."
                     n 1fcsunlsbr "I...{w=0.75}{nw}"
                     extend 1ksrunfsbl " really appreciate it."
 
@@ -2252,7 +2252,7 @@ label new_wearables_outfits_unlocked:
                     n 1fcsemfesssbl "Y-{w=0.2}you're just lucky you're good at picking out gifts,{w=0.5}{nw}"
                     extend 1fsqpofesssbl " you jerk."
                     n 1fslpofesssbr "I guess I'll {i}have{/i} to keep this [unlock.display_name] now.{w=0.75}{nw}"
-                    extend 1fnmpofesssbl "I-{w=0.2}I hope you're happy."
+                    extend 1fnmpofesssbl " I-{w=0.2}I hope you're happy."
                     
                 else:
                     n 1fspgsledz "W-{w=0.2}woah!"
@@ -2302,7 +2302,7 @@ label new_wearables_outfits_unlocked:
             play audio kiss
             pause 1.5
             hide black with Dissolve(1.25)
-            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            $ chosen_tease = jn_utils.getRandomTease()
             n 1knmssf "...Thanks,{w=0.1} [chosen_tease]."
             n 1klrsmfeme "Ehehe."
 

@@ -1457,6 +1457,7 @@ init -999 python in jn_utils:
         return return_file_items
 
 init python in jn_utils:
+    import random
     import re
     import store
     import store.jn_globals as jn_globals
@@ -1564,7 +1565,7 @@ init python in jn_utils:
         else:
             return "a while"
 
-    def get_player_initial():
+    def getPlayerInitial():
         """
         Returns the first letter of the player's name.
 
@@ -1596,6 +1597,30 @@ init python in jn_utils:
             - True if string contains an insult; otherwise False
         """
         return re.search(INSULT_REGEX, string.lower())
+
+    def getRandomTease():
+        """
+        Returns a random tease from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+
+    def getRandomEndearment():
+        """
+        Returns a random endearment from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+
+    def getRandomDescriptor():
+        """
+        Returns a random positive descriptor from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_PLAYER_DESCRIPTORS)
+
+    def getRandomInsult():
+        """
+        Returns a random insult from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_PLAYER_INSULT_NAMES)
 
     # Key setup
     key_path = os.path.join(renpy.config.basedir, "game/dev/key.txt").replace("\\", "/")

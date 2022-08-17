@@ -525,7 +525,7 @@ label talk_using_computers_healthily:
         n 1kwmnvl "So please...{w=0.3} take care of yourself, okay?{w=0.2} I don't want you hurting because of me."
 
         if Natsuki.isLove():
-            $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+            $ chosen_endearment = jn_utils.getRandomEndearment()
             n 1kwmsml "I love you,{w=0.1} [chosen_endearment]."
             n 1kwmnvl "..."
             return
@@ -766,7 +766,7 @@ label talk_weather_setup_main:
 
             "What're you complaining about?":
                 n 1fsqpo "Well,{w=0.1} your attitude,{w=0.1} for one thing!{w=1}{nw}"
-                extend 1nllaj "Anyway..."
+                extend 1nllaj " Anyway..."
 
         n 1ullaj "So...{w=0.5}{nw}"
         extend 1flrss " I'm not really one to just sit around and admire the view."
@@ -1040,7 +1040,7 @@ label talk_weather_setup_location:
 
                         "Yes, that looks good to me.":
                             n 1kchbg "Phew!"
-                            extend 1nsldv "I was kinda worried I'd have to get a little more creative..."
+                            extend 1nsldv " I was kinda worried I'd have to get a little more creative..."
                             
                             $ persistent._jn_player_latitude_longitude = ip_latitude_longitude
                             jump talk_weather_setup_verify
@@ -1211,7 +1211,7 @@ label talk_weather_setup_manual_coords:
                 extend 1tlrss " what a mess,{w=0.1} huh?"
                 n 1fcspo "..."
                 n 1nllaj "Well,{w=0.1} thanks anyway.{w=1}{nw}"
-                extend 1nnmaj "We can always try again later,{w=0.5}{nw}" 
+                extend 1nnmaj " We can always try again later,{w=0.5}{nw}" 
                 extend 1tnmss " right?"
 
                 jump ch30_loop
@@ -1361,7 +1361,7 @@ label talk_favourite_season:
                     n 1fnmgs "Hey!{w=0.2} [player]!"
                     n 1fsqpo "I thought you said you'd changed your mind?"
                     n 1fllem "You haven't changed your mind at all!{w=0.2} You said [persistent.jn_player_favourite_season] last time,{w=0.1} too!"
-                    $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+                    $ chosen_tease = jn_utils.getRandomTease()
                     n 1fcsem "Jeez...{w=0.5}{nw}"
                     extend 1fnmpo " you're such a wind-up sometimes,{w=0.1} [chosen_tease]!"
                     if Natsuki.isAffectionate(higher=True):
@@ -1875,7 +1875,7 @@ label talk_player_appearance:
         n 1fchunl "Uuuuuu..."
         n 1fsqunl "...{w=0.5}{nw}"
         extend 1fllajl " A-ahem!{w=0.2} Anyway..."
-        $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+        $ chosen_endearment = jn_utils.getRandomEndearment()
         n 1kllsml "Really.{w=0.2} Thank you,{w=0.1} [chosen_endearment]."
         n 1kcsbgl "This seriously meant a lot to me."
 
@@ -1986,7 +1986,7 @@ label talk_driving:
     n 1fchdv "Pffft!{w=0.5}{nw}"
     extend 1uchbselg " Ahaha!"
     n 1fchgn "What kind of a question is that,{w=0.1} [player]?"
-    $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+    $ chosen_tease = jn_utils.getRandomTease()
 
     if already_discussed_driving:
         n 1tllss "I already told you I can't drive,{w=0.1} [chosen_tease]!{w=0.5}{nw}"
@@ -2322,7 +2322,7 @@ label talk_give_nickname:
         if nickname.lower() == "natsuki":
             n 1fllss "Uhmm...{w=0.5}{nw}"
             extend 1tnmdv " [player]?"
-            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            $ chosen_tease = jn_utils.getRandomTease()
             n 1fchbg "That's just my normal name,{w=0.1} [chosen_tease]!"
             n 1fcsca "Honestly...{w=0.5}{nw}"
             extend 1ksgsg " sometimes I wonder why I bother."
@@ -2491,7 +2491,7 @@ label talk_sleeping_well:
 
     if jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.anime_streaming):
         n 1tsqsr "And no, [player] {w=0.1}-{w=0.3}{nw}"
-        extend 1fnmpo "No late-night anime binging sessions either."
+        extend 1fnmpo " No late-night anime binging sessions either."
         n 1nchgn "Sorry~!"
 
     n 1fcsbg "Moving on, next is temperature!{w=0.2} If it's hot,{w=0.1} use thinner sheets and vice versa."
@@ -2559,7 +2559,7 @@ label talk_aging:
     n 1unmss "I don't really care how old you are,{w=0.1} [player]."
 
     if Natsuki.isLove():
-        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        $ chosen_tease = jn_utils.getRandomTease()
         n 1klrpol "Y-{w=0.1}you better know that I love you all the same,{w=0.1} [chosen_tease]."
         n 1knmpol "Don't forget that,{w=0.1} 'kay?"
         n 1flrpol "I'll get mad if you do.{w=0.5}{nw}"
@@ -2639,7 +2639,7 @@ label talk_work_life_balance:
                 extend 1fchsml " Ehehe..."
 
         else:
-            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            $ chosen_tease = jn_utils.getRandomTease()
             n 1kllpo "People are more than what they do for a living,{w=0.1} after all.{w=0.2} And that includes you too, [chosen_tease]!"
 
     elif Natsuki.isDistressed(higher=True):
@@ -2931,7 +2931,7 @@ label talk_natsukis_fang:
     n 1nllss "But no, seriously."
 
     if Natsuki.isLove():
-        $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+        $ chosen_endearment = jn_utils.getRandomEndearment()
         n 1kllss "Smiles look good on you,{w=0.1} [chosen_endearment]."
         n 1fnmsm "Let's keep them looking that way."
         n 1uchsml "Ehehe.{w=0.2} Love you,{w=0.1} [player]~!"
@@ -2968,10 +2968,10 @@ init 5 python:
 
 label talk_i_love_you:
     # We use these a lot here, so we define them in a higher scope
-    $ player_initial = player[0]
-    $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-    $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
-    $ chosen_descriptor = random.choice(jn_globals.DEFAULT_PLAYER_DESCRIPTORS)
+    $ player_initial = jn_utils.getPlayerInitial()
+    $ chosen_tease = jn_utils.getRandomTease()
+    $ chosen_endearment = jn_utils.getRandomEndearment()
+    $ chosen_descriptor = jn_utils.getRandomDescriptor()
 
     # De facto confession
     if (
@@ -3462,7 +3462,7 @@ label talk_natsukis_hairstyle:
 
     else:
         if Natsuki.isEnamored(higher=True):
-            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            $ chosen_tease = jn_utils.getRandomTease()
             n 1fcssml "I'm pretty sure I already let my hair down around you,{w=0.1} [chosen_tease].{w=0.2} That qualifies, right?"
             n 1uchgnlelg "Ahaha!"
 
@@ -3695,7 +3695,7 @@ label talk_school_uniform:
         n 1fsqctl "Oho?{w=0.2} Does [player] like a girl in uniform?"
         n 1ksqaj "Wow...{w=0.3} you're even {i}more{/i} gross than I thought."
         n 1fsqsm "..."
-        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        $ chosen_tease = jn_utils.getRandomTease()
         n 1uchgn "Oh come on,{w=0.1} [chosen_tease]!{w=0.2} You always get all sulky when I call you that!{w=0.2} I just can't resist."
         n 1fchsm "Ehehe.{w=0.2} So anyway..."
 
@@ -4265,7 +4265,7 @@ label talk_why_do_you_like_me:
             n 1nnmpu "What people {i}say{/i} you are -{w=0.1} or {i}aren't{/i} capable of -{w=0.1} isn't important to me either."
             n 1fnmpu "Neither is what people say about you."
             n 1knmsr "[player]."
-            $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+            $ chosen_endearment = jn_utils.getRandomEndearment()
             n 1klrpu "I...{w=0.3} feel about you the way I do because of how you've treated me,{w=0.1} [chosen_endearment].{w=0.2} Can you not see that?"
             n 1klrss "You've spent so much time with me,{w=0.1} day after day..."
             n 1kwmss "You've listened to my problems,{w=0.1} and you've told me yours..."
@@ -5380,7 +5380,7 @@ label talk_mod_contributions:
     extend 1nchsm " Ahaha."
 
     if Natsuki.isLove():
-        $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+        $ chosen_endearment = jn_utils.getRandomEndearment()
         n 1nchtsl "Love you,{w=0.1} [chosen_endearment]!"
 
     else:
@@ -5501,7 +5501,7 @@ label talk_realizations_player_ddlc_actions:
             n 1fllbgl "I mean,{w=0.5}{nw}"
             extend 1kchbgl " {i}[player]~{/i}."
             n 1fsqsml "..."
-            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            $ chosen_tease = jn_utils.getRandomTease()
             n 1uchbsl "Oh,{w=0.1} lighten up,{w=0.1} [chosen_tease]!"
             n 1fwrtsl "You should know I'd never mean it.{w=0.5}{nw}"
             extend  " Ehehe."
@@ -5900,7 +5900,7 @@ label talk_fear_of_spiders:
         n 1fchbg "What?"
         n 1ullaj "You thought that because I wrote a poem about them being nasty and gross,{w=0.5}{nw}"
         extend 1tnmaj " that I'd {i}actually{/i} think that?"
-        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        $ chosen_tease = jn_utils.getRandomTease()
         n 1fslpo "I even {w=0.3}{i}said{/i}{w=0.3} the spider thing was a metaphor,{w=0.1} [chosen_tease]!{w=0.5}{nw}"
         extend 1fsqts " Remember?"
 
@@ -6183,7 +6183,7 @@ label talk_maintaining_proper_hygiene:
 
     if Natsuki.isLove():
         n 1fslss "And besides,{w=0.5}{nw}"
-        extend 1fsrssl "I don't wanna get snug with you if you're all stinky."
+        extend 1fsrssl " I don't wanna get snug with you if you're all stinky."
         n 1fnmpo "So you better stick at it,{w=0.1} [player]!"
 
     if persistent.jn_player_appearance_hair_length == "None":
@@ -6191,10 +6191,10 @@ label talk_maintaining_proper_hygiene:
         n 1ullpu "I know you said you didn't have any hair...{w=0.5}{nw}"
         extend 1fsqbg " but that doesn't mean you can just slack off up top!"
         n 1ulraj "You gotta make sure you keep your skin clean up there.{w=0.5}{nw}"
-        extend 1nsqun "Even if you don't have hair,{w=0.1} oil and all that stuff builds up."
+        extend 1nsqun " Even if you don't have hair,{w=0.1} oil and all that stuff builds up."
         n 1fcsem "Gross!"
         n 1ullaj "But at least it's easy to solve if you're showering regularly,{w=0.5}{nw}"
-        extend 1nnmbo "like I just said."
+        extend 1nnmbo " like I just said."
 
     else:
         n 1fcsaj "Next up,{w=0.1} your hair!"
@@ -6241,7 +6241,7 @@ label talk_maintaining_proper_hygiene:
         n 1uchgn "You won't get {i}that{/i} with tooth decay!"
 
     n 1kllss "But seriously,{w=0.1} [player].{w=0.5}{nw}"
-    extend 1nsqsr " I {i}really{/i} don't want you flaking out on taking care of yourself,{w=0.1} [player]."
+    extend 1nsqsr " I {i}really{/i} don't want you flaking out on taking care of yourself."
     n 1fsqsr "I mean it.{w=1.5}{nw}"
     extend 1ksrpo " You deserve to feel and look good too."
 
@@ -6272,8 +6272,8 @@ label talk_maintaining_proper_hygiene:
         n 1nsqss "And remember...{w=0.5}{nw}"
         extend 1nsldvl " I'll love you forever if you keep it up!~"
         n 1fchsml "Ehehe."
-        $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
-        extend 1uchbgl "Thanks,{w=0.1} [chosen_endearment]!"
+        $ chosen_endearment = jn_utils.getRandomEndearment()
+        extend 1uchbgl " Thanks,{w=0.1} [chosen_endearment]!"
 
     elif Natsuki.isEnamored(higher=True):
         n 1nslbgl "I {i}really{/i} like people who take care of themselves."
@@ -6867,10 +6867,10 @@ label talk_impressions_of_the_other_girls:
     elif Natsuki.isDistressed(higher=True):
         n 1fskem "...E-{w=0.3}excuse me?!"
         n 1fsqan "Are you {i}seriously{/i} asking me to make fun of my {i}friends{/i}?{w=1}{nw}"
-        extend 1fsqwr "Knowing {i}{cps=\7.5}full well{/cps}{/i} what happened to them?!"
+        extend 1fsqwr " Knowing {i}{cps=\7.5}full well{/cps}{/i} what happened to them?!"
 
         if has_discussed_other_girls:
-            extend 1fcsfu "Knowing how much I {i}miss{/i} them?!"
+            extend 1fcsfu " Knowing how much I {i}miss{/i} them?!"
 
         n 1fcspu "..."
         n 1fsqem "Your sense of humour {i}{cps=\7.5}sucks{/cps}{/i},{w=0.1} [player].{w=1}{nw}"
@@ -7038,7 +7038,7 @@ label talk_fear_of_flying:
     elif Natsuki.isDistressed(higher=True):
         n 1fcsemesi "Ugh..."
         n 1fsqem "No,{w=0.1} [player].{w=0.75}{nw}"
-        extend 1fsqfr "I'm not afraid of flying either."
+        extend 1fsqfr " I'm not afraid of flying either."
         n 1fcsan "What exactly do you take me for?{w=0.75}{nw}"
         extend 1fsqan " And even if I {i}was{/i}..."
         n 1fnmfu "Why the hell would I wanna share that with {i}you{/i}?"
@@ -7482,7 +7482,7 @@ label talk_player_change_name:
 
     elif nickname_type == jn_nicknames.NicknameTypes.hated:
         n 1fskwrlesh "...E-{w=0.2}excuse me?!"
-        $ player_initial = jn_utils.get_player_initial()
+        $ player_initial = jn_utils.getPlayerInitial()
         n 1fnmwr "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
         extend 1fnmfu " That's an {b}awful{/b} name!"
         n 1fcsan "...And I'd be even {i}more{/i} awful to use it!"

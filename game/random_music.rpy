@@ -131,7 +131,7 @@ label random_music_enable:
         extend 1tnmca " You haven't exactly given me a lot to work with here."
         n 1unmaj "Can you give me at least a couple of tracks?{w=0.5}{nw}"
         extend 1tnmpo " You {i}do{/i} remember how do to that,{w=0.1} right?"
-        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        $ chosen_tease = jn_utils.getRandomTease()
         n 1uchbg "Just add them to the custom music folder,{w=0.1} [chosen_tease]!"
 
     jump ch30_loop

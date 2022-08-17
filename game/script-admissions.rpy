@@ -136,7 +136,7 @@ label admission_anxious:
             n 1kwmsm "I'll always have your back."
 
         if Natsuki.isLove():
-            $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+            $ chosen_endearment = jn_utils.getRandomEndearment()
             n 1kchsml "I love you, [chosen_endearment]."
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_ANXIOUS
@@ -268,7 +268,7 @@ label admission_bored:
         n 1fsqsm "..."
         n 1uchgn "Relax!{w=0.2} Relax,{w=0.1} [player], jeez!"
         n 1ullaj "Well,{w=0.1} if you're bored..."
-        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        $ chosen_tease = jn_utils.getRandomTease()
         n 1uchbs "Then get up off your butt and do something about it,{w=0.1} [chosen_tease]!"
         n 1tlrbg "Jeez,{w=0.1} [player]...{w=0.3} there's a big, wide world out there just waiting for you!"
         n 1tsqbg "And if that isn't enough,{w=0.1} there's an even bigger one right at your fingertips!"
@@ -319,7 +319,7 @@ label admission_confident:
             n 1kllsll "I'm just really glad to know you're better now,{w=0.1} [player]."
 
         if Natsuki.isLove():
-            $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+            $ chosen_endearment = jn_utils.getRandomEndearment()
             n 1knmssf "I love you, [chosen_endearment].{w=0.2} Please don't forget that,{w=0.1} alright?"
             n 1klrpof "I'll get mad if you do.{w=0.2} Ahaha..."
 
@@ -441,7 +441,7 @@ label admission_hungry:
 
     else:
         n 1unmpu "Huh?{w=0.1} You're hungry?"
-        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        $ chosen_tease = jn_utils.getRandomTease()
         n 1fupem "Then what're you telling {i}me{/i} for?{w=0.5}{nw}" 
         extend 1fchgnelg " Go get something to eat,{w=0.1} [chosen_tease]!"
         n 1fllaj "Honestly...{w=0.75}{nw}" 
@@ -500,7 +500,7 @@ label admission_insecure:
                     n 1kcssll "So please...{w=0.3} don't give up.{w=0.2} We both need you to win,{w=0.1} [player]."
 
                     if Natsuki.isLove():
-                        $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+                        $ chosen_endearment = jn_utils.getRandomEndearment()
                         n 1kwmsmf "I really do love you, [chosen_endearment]."
                         n 1kchbgf "You know I'll always have your back,{w=0.1} dummy..."
 
@@ -572,7 +572,7 @@ label admission_sad:
                 n 1knmpo "I just hope they were supportive of you,{w=0.1} [player].{w=0.2} You at least deserve that much."
 
         if Natsuki.isLove():
-            $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+            $ chosen_endearment = jn_utils.getRandomEndearment()
             n 1kchnvf "I love you,{w=0.1} [chosen_endearment]."
 
         n 1kllpu "I hope you start to feel better soon!"
@@ -696,7 +696,7 @@ label admission_sick:
         n 1knmpo "So...{w=0.3} promise you'll leave and rest if you have to,{w=0.1} got it?"
 
         if Natsuki.isLove():
-            $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+            $ chosen_endearment = jn_utils.getRandomEndearment()
             n 1knmssl "I love you,{w=0.1} [chosen_endearment].{w=0.2} I...{w=0.3} really hope you get better soon..."
 
         elif Natsuki.isAffectionate(higher=True):
@@ -729,7 +729,7 @@ label admission_tired:
         n 1nchbg "I'll see you later,{w=0.1} [player]!"
 
         if Natsuki.isLove():
-            $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+            $ chosen_endearment = jn_utils.getRandomEndearment()
             n 1nchsml "Love you,{w=0.1} [chosen_endearment]!"
 
         elif Natsuki.isAffectionate(higher=True):
@@ -782,7 +782,7 @@ label admission_tired:
         n 1fnmpo "You better get some sleep right now!{w=0.2} And I don't wanna see you come back until you've slept!"
         n 1fcspo "Sheesh..."
         n 1knmpo "Now get going,{w=0.1} [player]!{w=0.2} I'll see you later,{w=0.1} 'kay?"
-        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        $ chosen_tease = jn_utils.getRandomTease()
         n 1unmbg "Sleep well,{w=0.1} [chosen_tease]!"
 
         if Natsuki.isLove():
@@ -799,7 +799,7 @@ label admission_tired:
 
     elif total_hours_in_session >= 12:
         n 1fbkwr "[player]!"
-        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        $ chosen_tease = jn_utils.getRandomTease()
         n 1fnmpo "I'm not surprised you're feeling tired{w=0.1} -{w=0.1} you've been here ages,{w=0.1} [chosen_tease]!"
         n 1fllpo "You need to get some sleep...{w=0.3} you're gonna be all cranky later at this rate!"
         n 1kllpo "I appreciate the company but make sure you turn in soon,{w=0.1} alright?"
@@ -818,7 +818,7 @@ label admission_tired:
     elif jn_get_current_hour() > 21 or jn_get_current_hour() < 3:
         n 1fskem "[player]!"
         n 1fnmem "I'm not surprised you're tired!{w=0.2} Have you even seen the time?!"
-        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        $ chosen_tease = jn_utils.getRandomTease()
         n 1knmpu "It's the middle of the night,{w=0.1} [chosen_tease]!"
         n 1fcsanl "Nnnn...{w=0.3} you should really turn in soon,{w=0.1} you know..."
         n 1fnmpol "I don't want you to be all cranky later because you didn't get enough sleep."

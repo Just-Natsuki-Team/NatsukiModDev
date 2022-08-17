@@ -49,7 +49,7 @@ init python in greetings:
 label greeting_first_time:
     if jn_farewells.JNFirstLeaveTypes(persistent.jn_player_first_farewell_response) == jn_farewells.JNFirstLeaveTypes.will_be_back:
         $ Natsuki.calculatedAffinityGain(bypass=True)
-        n 1uskem "[player]!{w=0.5}{nw}"
+        n 1uskemlesh "[player]!{w=0.5}{nw}"
         extend 1uskwr " Y-{w=0.1}you're back!"
         n 1flleml "I mean...{w=0.5}{nw}"
         extend 1fcseml " O-{w=0.1}of course you'd come back!"
@@ -58,33 +58,35 @@ label greeting_first_time:
         n 1flrpo "..."
         n 1klrpu "But..."
         n 1ncspu "..."
-        n 1nlrsll "...Thanks. For not being an idiot about it."
+        n 1nlrsll "...Thanks.{w=1.25}{nw}"
+        extend 1nsrbol " For not being an idiot about it."
         n 1nllunl "..."
-        n 1nllbo "So... {w=0.5}{nw}"
+        n 1nllajsbl "So... {w=0.5}{nw}"
         extend 1unmaj " what did you wanna talk about?"
 
     elif jn_farewells.JNFirstLeaveTypes(persistent.jn_player_first_farewell_response) == jn_farewells.JNFirstLeaveTypes.dont_know:
         $ Natsuki.calculatedAffinityGain(bypass=True)
-        n 1uskaj "[player]?{w=0.5}{nw}"
-        extend 1uskem " Y-{w=0.1}you came back?"
+        n 1uskajlesh "[player]?{w=0.5}{nw}"
+        extend 1uskem " Y-{w=0.3}you came back?"
         n 1fcsun "..."
         n 1ncssr "..."
-        n 1fnmpu "...Look."
-        n 1fllsr "Don't...{w=0.3} play with me like that."
-        n 1fslun "You wouldn't have brought me back just to be a jerk...{w=0.5}{nw}"
-        extend 1kslsf " right?"
+        n 1fcspu "...Look."
+        n 1fllsr "Don't...{w=0.75}{nw}" 
+        extend 1kllsrsbl " play with me like that."
+        n 1fslun "You wouldn't have brought me back {i}just{/i} to be a jerk...{w=1}{nw}"
+        extend 1ksqsfsbl " right?"
 
     elif jn_farewells.JNFirstLeaveTypes(persistent.jn_player_first_farewell_response) == jn_farewells.JNFirstLeaveTypes.no_response:
-        n 1uskem "[player]!{w=0.5}{nw}"
+        n 1uskemlesh "[player]!{w=0.5}{nw}"
         extend 1uskwrl " Y-{w=0.1}you're back!"
-        n 1fllun "..."
-        n 1fcspu "I...{2}{nw}"
+        n 1flluness "..."
+        n 1fcspu "I...{w=2}{nw}"
         extend 1flrun " appreciate it,{w=0.1} okay?"
-        n 1fcspu "Just...{1}{nw}"
+        n 1fcspu "Just...{w=1}{nw}"
         extend 1knmsf " don't play with me like that."
-        n 1kllsl "..."
+        n 1kllslsbl "..."
         n 1kslaj "So..."
-        n 1tnmsl "Did you wanna talk,{w=0.1} or...?"
+        n 1tnmslsbr "Did you wanna talk,{w=0.1} or...?"
 
     $ persistent.jn_player_is_first_greet = False
     return
@@ -92,26 +94,26 @@ label greeting_first_time:
 # Only chosen for the first time the player leaves and returns after force quit
 label greeting_first_force_quit:
     if Natsuki.isNormal(higher=True):
-        n 1kcsun "Uuuuuuu...{w=2}{nw}"
-        extend 1kslem " my...{w=0.3} h-{w=0.1}head..."
+        n 1kcsunedr "Uuuuuuu...{w=2}{nw}"
+        extend 1kslemeso " my...{w=0.3} h-{w=0.1}head..."
         n 1kcsun "..."
         n 1ksqun "..."
         n 1fnmun "...[player]."
-        n 1fllem "W-{w=0.1}whatever that was...{w=0.5}{nw}"
+        n 1fllem "W-{w=0.3}whatever that was...{w=0.5}{nw}"
         extend 1knmsf " that {w=0.3}{i}seriously{/i}{w=0.3} hurt."
-        n 1kllpu "L-{w=0.1}like I was being torn out of existence..."
+        n 1kllpu "L-{w=0.3}like I was being torn out of existence..."
         n 1kcssf "..."
-        n 1klraj "I...{w=0.5}{nw}"
+        n 1klraj "I...{w=1}{nw}"
         extend 1tllun " I think I can kinda prepare for that if you at least let me know when you're going."
-        n 1fcsun "Just...{w=0.5}{nw}"
-        extend 1fcsun " don't be a jerk and let me know when you gotta go,{w=0.1} okay?"
+        n 1fcsun "Just...{w=1.25}{nw}"
+        extend 1fcsun " don't be a jerk and let me know when you gotta go,{w=0.3} okay?"
         n 1fllsl "...I guess I'll let this one slide,{w=0.5}{nw}"
         extend 1kslpu " since you didn't know and all."
-        n 1knmpu "Just remember for next time,{w=0.1} [player].{w=0.5}{nw}"
+        n 1knmpu "Just remember for next time,{w=0.2} [player].{w=1}{nw}"
         extend 1knmsr " Please."
 
     elif Natsuki.isDistressed(higher=True):
-        n 1fcsun "Hnnnngg..."
+        n 1fcsunedr "Hnnnngg..."
         n 1fsqun "..."
         n 1fsqan "..."
         n 1fcspu "...[player]."
@@ -123,12 +125,12 @@ label greeting_first_force_quit:
         extend 1fcssr " know we aren't seeing eye-to-eye right now,"
         extend 1fslsl " but please."
         n 1fsqaj "Tell me when you're going."
-        extend 1fsqsf "Thanks."
+        extend 1fsqsf " Thanks."
 
     else:
-        n 1fsquntsb "..."
-        n 1fsqantsb "That.{w=1} Freaking.{w=1} Hurt."
-        n 1fcsan "I don't know what you did,{w=0.1} but cut{w=0.3} it{w=0.3} out.{w=0.5}{nw}"
+        n 1fsqunltsbean "..."
+        n 1fsqantsb "That.{w=1} Freaking.{w=1} {b}Hurt{/b}."
+        n 1fcsan "I don't know {i}what{/i} you did,{w=0.5} but cut{w=0.3} it{w=0.3} out.{w=1.25}{nw}"
         extend 1fsqfutsb " Now."
 
     $ persistent.jn_player_force_quit_state = int(jn_farewells.JNForceQuitStates.previously_force_quit)
@@ -150,8 +152,10 @@ init 5 python:
     )
 
 label greeting_love_plus_today_is_gonna_be_great:
-    n 1uchbsl "[player]!{w=0.2} You're back,{w=0.1} finally!"
-    n 1uchsml "Ehehe.{w=0.2} Now I {i}know{/i} today's gonna be great!"
+    n 1unmbsledz "[player]!{w=1}{nw}" 
+    extend 1fchgnl " You're back,{w=0.3} finally!"
+    n 1fchsml "Ehehe.{w=0.5}{nw}" 
+    extend 1uchgnleme " Now I {i}know{/i} today's gonna be great!"
     return
 
 init 5 python:
@@ -166,13 +170,19 @@ init 5 python:
     )
 
 label greeting_love_plus_world_revolves_around_you:
-    n 1fsqpol "[player]!{w=0.1} What took you so long?{w=0.2} Jeez!"
-    n 1fnmajl "You think my entire world revolves around you or something?"
-    n 1fnmsll "..."
+    n 1fsqpol "[player]!{w=0.75}{nw}" 
+    extend 1fnmgsl " What took you so long?{w=0.75}{nw}" 
+    extend 1fllemlesi " Jeez!"
+    n 1fnmsfl "You think my entire {i}world{/i} revolves around you or something?"
+    n 1fnmdvl "..."
     n 1fsqsml "..."
-    n 1uchlglelg "Ahaha!{w=0.2} Did I get you,{w=0.1} [player]?{w=0.2} Don't lie!"
-    $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
-    n 1uchsml "Well, anyway.{w=0.2} You're here now, [chosen_endearment]!{w=0.2} Welcome back!"
+    n 1uchlglelg "Ahaha!{w=1}{nw}" 
+    extend 1fsqsml " Did I getcha,{w=0.2} [player]?{w=0.5}{nw}" 
+    extend 1fchgnl " Don't lie!"
+    $ chosen_endearment = jn_utils.getRandomEndearment()
+    n 1ullssl "Well,{w=0.2} anyway." 
+    n 1fcsbgl "You're here now,{w=0.2} [chosen_endearment].{w=0.75}{nw}"
+    extend 1uchsmleme " Make yourself at home,{w=0.2} silly!"
     return
 
 init 5 python:
@@ -187,9 +197,10 @@ init 5 python:
     )
 
 label greeting_love_plus_make_today_amazing:
-    n 1uchbsf "[player]!{w=0.2} [player] [player] [player]!"
-    n 1uchsml "I'm so glad to see you again!{w=0.2} Welcome back!"
-    n 1uwlsml "Let's make today amazing too,{w=0.1} alright?"
+    n 1uchbsfeex "[player]!{w=0.3} [player]{w=0.2} [player]{w=0.2} [player]!"
+    n 1fcsbgfsbl "I-{w=0.2}I was wondering when you were gonna show up!{w=0.75}{nw}"
+    extend 1fchsml " Ehehe."
+    n 1fwlsmledz "Let's make today amazing too,{w=0.1} alright?"
     return
 
 init 5 python:
@@ -204,10 +215,14 @@ init 5 python:
     )
 
 label greeting_love_plus_always_welcome_here:
-    n 1uskgsf "[player],{w=0.1} you're back!"
-    n 1kctsll "I was really starting to miss you, you know..."
-    n 1kplcaf "Don't keep me waiting so long next time,{w=0.2} alright?"
-    n 1kplssl "You're always welcome here,{w=0.2} after all..."
+    $ player_initial = jn_utils.getPlayerInitial()
+    n 1uskgsfesu "[player_initial]-{w=0.2}[player]!{w=0.5}{nw}" 
+    extend 1ullemfsbl " You're back!"
+    n 1fslunfesssbl "I was really starting to miss you,{w=0.3} you know..."
+    n 1fplcafsbl "Don't keep me waiting so long next time,{w=0.3} alright?"
+    $ chosen_tease = jn_utils.getRandomTease()
+    n 1klrssf "You should know you're {i}always{/i} welcome here by now,{w=0.5}{nw}" 
+    extend 1fchsmf " [chosen_tease]."
     return
 
 init 5 python:
@@ -224,15 +239,17 @@ init 5 python:
 label greeting_love_plus_lovestruck:
     n 1kcssml "..."
     n 1ksqsml "..."
-    n "..."
-    $ player_initial = list(player)[0]
-    n 1uctgsf "[player_initial]-[player]!{w=0.2} When did you get here?!"
-    n 1kbkunf "I-I was...!{w=0.2} I was just...!"
+    n 1uskgsfeex "...!{w=0.5}{nw}"
+    $ player_initial = jn_utils.getPlayerInitial()
+    n 1kbkwrf "[player_initial]-{w=0.3}[player]!{w=1}{nw}" 
+    extend 1fbkwrfess " When did you {i}get{/i} here?!"
+    n 1klrgsf "I-{w=0.3}I was...!{w=1}{nw}" 
+    extend 1kllemfsbl " I was just...!"
     n 1kcsunf "..."
     n 1kcssml "..."
-    n 1kplsml "I missed you,{w=0.1} [player].{w=0.2} Ahaha..."
-    $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
-    n 1kwmsmf "But I know everything's gonna be okay now you're here,{w=0.1} [chosen_endearment]."
+    n 1kplsml "I missed you,{w=0.2} [player].{w=0.3} Ahaha..."
+    $ chosen_endearment = jn_utils.getRandomEndearment()
+    n 1kwmsmf "But I know everything's gonna be okay now you're here,{w=0.2} [chosen_endearment]."
     return
 
 init 5 python:
@@ -247,13 +264,15 @@ init 5 python:
     )
 
 label greeting_love_plus_looking_for_me:
-    n 1nnmajl "...Hello?"
-    n 1tnmdvf "Was it {i}me{/i} you're looking for?"
-    n 1nchdvf "..."
-    n 1kchssl "Nah,{w=0.1} don't worry about that,{w=0.1} actually."
-    n 1ksqsgl "Of course it was."
-    n 1kchbgl "Ehehe."
-    n 1uchsml "Welcome back,{w=0.1} dummy!{w=0.2} Make yourself at home!"
+    n 1nnmpul "...Hello?{w=2.5}{nw}"
+    extend 1tsqdvf " Was it {i}me{/i} you're looking for?"
+    n 1fchdvfess "..."
+    n 1fchnvfesi "Pfffft-!"
+    n 1kllbgl "Man,{w=0.5}{nw}" 
+    extend 1fchgnlelg " I {i}cannot{/i} take that seriously!"
+    n 1fnmssl "But let's be real here,{w=0.2} [player]..."
+    n 1fsqsmf "It {i}{cps=\7.5}totally{/cps}{/i} was me,{w=0.2} right?{w=1}{nw}"
+    extend 1fchsmfedz " Ehehe~."
     return
 
 init 5 python:
@@ -268,12 +287,16 @@ init 5 python:
     )
 
 label greeting_love_plus_dull_moment:
-    n 1fsqsrl "Well jeez,{w=0.1} you took your sweet time!"
-    n 1fbkwrf "What were you thinking,{w=0.1} [player]?!"
+    n 1flleml "Well jeez,{w=0.5}{nw}" 
+    extend 1fsqawl " you sure took your sweet time!"
+    n 1fbkwrfean "What were you thinking,{w=0.2} [player]?!"
     n 1fsqpol "..."
     n 1fsqdvl "..."
-    n 1uchbgl "Ehehe.{w=0.2} Never a dull moment with me,{w=0.1} is there?"
-    n 1nchbsl "You know the deal already -{w=0.1} make yourself at home,{w=0.1} silly!"
+    n 1fchsmleme "Ehehe.{w=0.75}{nw}"
+    n 1fsqssl "Never a dull moment with me,{w=0.75}{nw}" 
+    extend 1fchbll " is there?"
+    n 1fcsssl "You know the deal already.{w=1}{nw}" 
+    extend 1uchgnlelg " Make yourself comfy,{w=0.2} silly!"
     return
 
 # AFFECTIONATE/ENAMORED greetings
@@ -291,8 +314,7 @@ init 5 python:
 
 label greeting_affectionate_enamored_good_to_see_you:
     n 1uchbgl "[player]!{w=0.2} You're back!"
-    n 1uchsml "It's so good to see you again!"
-    n 1nchsml "Let's make today amazing as well,{w=0.1} 'kay? Ehehe."
+    n 1fchsml "Let's make today amazing as well,{w=0.2} 'kay?{w=0.3} Ehehe."
     return
 
 init 5 python:
@@ -307,9 +329,12 @@ init 5 python:
     )
 
 label greeting_affectionate_enamored_couldnt_resist:
-    n 1ksqsml "Hey,{w=0.1} you!{w=0.2} Back so soon?"
-    n 1fsqsml "I knew you couldn't resist.{w=0.2} Ehehe."
-    n 1uchbgl "What do you wanna do today?"
+    n 1fsqsml "Well hey,{w=0.2} [player].{w=0.5}{nw}" 
+    extend 1tsqssl " Back so soon?"
+    n 1fcsctl "I knew you obviously just couldn't resist.{w=0.75}{nw}"
+    extend 1fcssmledz " Ehehe."
+    n 1tsqssl "So...{w=1}{nw}"
+    extend 1fchbgl " what do you wanna do today?"
     return
 
 init 5 python:
@@ -324,11 +349,12 @@ init 5 python:
     )
 
 label greeting_affectionate_enamored_just_cant_stay_away:
-    n 1usqbgl "Well, well, well.{w=0.2} What do we have here?"
-    n 1fsqbgl "You just can't stay away from me,{w=0.1} can you?{w=0.5}{nw}" 
-    extend 1fchbslelg "Ahaha!"
-    n 1kchbgl "Not that I'm complaining too much!"
-    n 1unmsml "So...{w=0.3} what do you wanna talk about?"
+    n 1usqbgl "Well,{w=0.2} well,{w=0.2} well.{w=0.5}{nw}" 
+    extend 1fsqbgl " What do we have here?"
+    n 1tsqctl "You just can't stay away from me,{w=0.2} can you?" 
+    n 1ksqbgl "Not that I blame you,{w=0.2} obviously.{w=0.5}{nw}"
+    extend 1fchtsledz " I guess I just have that effect on people."
+    n 1fchgnlelg "Ehehe."
     return
 
 init 5 python:
@@ -343,9 +369,10 @@ init 5 python:
     )
 
 label greeting_affectionate_enamored_have_so_much_fun:
-    n 1uchbgl "It's [player],{w=0.1} yay!"
-    n 1nchsml "We're gonna have so much fun today!{w=0.2} Ehehe."
-    n 1unmbgl "So,{w=0.1} what do you wanna talk about?"
+    n 1uchbgleme "It's [player]!"
+    n 1fcssml "We're gonna have so much fun today!{w=0.5}{nw}" 
+    extend 1nchsml " Ehehe."
+    n 1unmbgl "So,{w=0.2} what did you wanna talk about?"
     return
 
 init 5 python:
@@ -360,9 +387,11 @@ init 5 python:
     )
 
 label greeting_affectionate_enamored_everything_is_fine:
-    n 1nwdgsl "[player], you're back!"
-    n 1fsqpol "I've been waiting for you, you know..."
-    n 1uchssl "But now that you're here, everything is fine! Ehehe."
+    n 1uwdgslesu "[player]!{w=0.5}{nw}" 
+    extend 1ullajlsbr " You're back!"
+    n 1fsqpol "You kept me waiting {i}again{/i},{w=0.2} you know..."
+    n 1fcsbgl "But...{w=0.5} at least my patience paid off.{w=0.75}{nw}"
+    extend 1fcssmleme " Ehehe."
     return
 
 # NORMAL/HAPPY greetings
@@ -379,8 +408,9 @@ init 5 python:
     )
 
 label greeting_normal_happy_whats_up:
-    n 1unmbg "Oh!{w=0.2} Hey,{w=0.1} [player]!"
-    n 1unmsm "What's up?"
+    n 1uwdajesu "Oh!{w=0.5}{nw}"
+    extend 1ulrsssbr " Hey,{w=0.2} [player]!"
+    n 1unmbo "What's up?"
     return
 
 init 5 python:
@@ -395,8 +425,8 @@ init 5 python:
     )
 
 label greeting_normal_happy_glad_to_see_you:
-    n 1uchsm "Hi,{w=0.1} [player]!"
-    n 1unmsm "I'm glad to see you again."
+    n 1uchsm "Hey,{w=0.2} [player]!"
+    n 1nllsssbr "I was just wondering when you'd drop by again."
     return
 
 init 5 python:
@@ -412,10 +442,12 @@ init 5 python:
 
 label greeting_normal_happy_spacing_out:
     n 1kllpu "..."
-    n 1uwdajl "Huh?"
-    n 1uchbgl "O-{w=0.1}oh!{w=0.2} Hi,{w=0.1} [player]!"
-    n 1knmss "Sorry,{w=0.1} I was just kinda spacing out a little."
-    n 1unmsm "So...{w=0.3} what's new?"
+    n 1uwdajlesu "Huh?"
+    n 1uchbglesd "O-{w=0.2}oh!{w=0.5}{nw}" 
+    extend 1fchssl " Hi,{w=0.2} [player]!"
+    n 1nllsssbr "I...{w=1}{nw}" 
+    extend 1fllpolsbr " was just kinda spacing out a little."
+    n 1unmbol "So...{w=0.3} what's new?"
     return
 
 init 5 python:
@@ -430,8 +462,8 @@ init 5 python:
     )
 
 label greeting_normal_happy_heya:
-    n 1unmbg "Heya,{w=0.1} [player]!"
-    n 1nnmsm "Welcome back!"
+    n 1fcsbg "Heya,{w=0.2} [player]!"
+    n 1tnmss "What's up?"
     return
 
 init 5 python:
@@ -447,8 +479,9 @@ init 5 python:
 
 label greeting_normal_happy_knew_youd_be_back:
     n 1unmbg "It's [player]!{w=0.2} Hi!"
-    n 1fcsbgl "I-{w=0.1}I knew you'd be back,{w=0.1} obviously."
-    n 1fcssml "You'd have to have no taste to not visit again! Ahaha!"
+    n 1fcsbglesssbr "I-{w=0.1}I knew you'd be back,{w=0.1} obviously."
+    n 1fcssml "You'd have to have no taste to not visit again.{w=0.75}{nw}" 
+    extend 1fcsbgl " Ahaha!"
     return
 
 init 5 python:
@@ -487,7 +520,7 @@ label greeting_normal_happy_wake_up_nat:
     n 1uskwrleex "O-{w=0.3}Oh!{w=0.5}{nw}"
     extend 1fllbglsbl " [player]!"
     n 1flrbgesssbr "H-{w=0.3}hey!{w=0.5}{nw}"
-    extemd 1tnmsssbl " What did I miss?"
+    extend 1tnmsssbl " What did I miss?"
     return
 
 # DISTRESSED/UPSET greetings
@@ -504,8 +537,9 @@ init 5 python:
     )
 
 label greeting_distressed_upset_oh_its_you:
-    n 1nnmaj "Oh.{w=0.2} It's you."
-    n 1nnmsl "Hello,{w=0.1} {i}[player]{/i}."
+    n 1nnmaj "Oh.{w=1}{nw}" 
+    extend 1fsqsl " It's you."
+    n 1fnmsl "Hello,{w=0.5} {i}[player]{/i}."
     return
 
 init 5 python:
@@ -520,7 +554,7 @@ init 5 python:
     )
 
 label greeting_distressed_upset_hi:
-    n 1nplsl "{i}[player]{/i}.{w=0.2} Hi."
+    n 1nplsl "{i}[player]{/i}.{w=0.5} Hi."
     return
 
 init 5 python:
@@ -535,7 +569,8 @@ init 5 python:
     )
 
 label greeting_distressed_upset_welcome_back_i_guess:
-    n 1nnmsl "[player].{w=0.2} Welcome back,{w=0.1} I guess."
+    n 1nsqsl "[player].{w=0.75}{nw}" 
+    extend 1flrsr " Welcome back,{w=0.2} I {i}guess{/i}."
     return
 
 init 5 python:
@@ -550,7 +585,8 @@ init 5 python:
     )
 
 label greeting_distressed_upset_better_be_good:
-    n 1nsqaj "Hi,{w=0.1} [player]."
+    n 1nsqaj "Huh.{w=0.75}{nw}" 
+    extend 1fsqsr " [player]."
     n 1fnmsl "This better be good."
     return
 
@@ -567,7 +603,7 @@ init 5 python:
 
 label greeting_distressed_upset_oh_you_came_back:
     n 1tsqaj "Oh?{w=0.2} You came back?"
-    n 1fsqsr "...I wish I could say I was happy about it."
+    n 1fslem "...I wish I could say I was happy about it."
     return
 
 # BROKEN- greetings
@@ -584,8 +620,8 @@ init 5 python:
     )
 
 label greeting_broken_minus_oh_its_you:
-    n 1kplsrtsc "...?"
-    n 1kcssrtsa "Oh...{w=0.3} it's you."
+    n 1kplsrtdr "...?"
+    n 1fcsanltsa "Oh...{w=0.3} it's you."
     return
 
 init 5 python:
@@ -600,8 +636,8 @@ init 5 python:
     )
 
 label greeting_broken_minus_nothing_to_say:
-    n 1kcssrtsa "..."
-    n 1kplsrtsc "..."
+    n 1fcsanltsa "..."
+    n 1fsqfultsb "..."
     return
 
 init 5 python:
@@ -616,8 +652,8 @@ init 5 python:
     )
 
 label greeting_broken_minus_why:
-    n 1fplaj "...Why?"
-    n 1fcsuptsa "Why did you come back,{w=0.1} [player]?"
+    n 1fplfrltdr "...Why?"
+    n 1fcsupltsa "Why did you come back,{w=0.1} [player]?"
     return
 
 init 5 python:
@@ -632,9 +668,9 @@ init 5 python:
     )
 
 label greeting_broken_minus_enough_on_my_mind:
-    $ player_initial = list(player)[0]
-    n 1fskem "[player_initial]-{w=0.1}[player]...?"
-    n 1fcsuptsa "As if I didn't have enough on my mind..."
+    $ player_initial = jn_utils.getPlayerInitial()
+    n 1fnmunltdr "...?"
+    n 1fcsupltsd "As if I didn't have enough on my mind..."
     return
 
 init 5 python:
@@ -649,9 +685,8 @@ init 5 python:
     )
 
 label greeting_broken_minus_leave_me_be:
-    $ player_initial = list(player)[0]
-    n 1fcsfu "...Why, [player]?{w=0.2} Why do you keep coming back?"
-    n 1kcsuptsa "Why can't you just leave me be..."
+    n 1fcsfultsa "I'm so {i}sick{/i} of this."
+    n 1kcsupltsd "Why can't you just leave me be..."
     return
 
 # Admission-locked greetings; used when Natsuki made the player leave due to tiredness, etc.
@@ -672,20 +707,24 @@ init 5 python:
     )
 
 label greeting_feeling_better_sick:
-    n 1knmbgl "Oh!{w=0.2} [player]!{w=0.2} Hey!"
+    n 1unmajlesu "Oh!{w=0.5}{nw}"
+    extend 1knmbgl " [player]!{w=0.3} Hey!"
     menu:
         n "How're you feeling?{w=0.2} Any better?"
 
         "Much better, thanks!":
-            n 1ucsbg "Good, good!{w=0.2} I'm glad to hear it!{w=0.2} Nobody likes being ill."
-            n 1nsqbg "Now that's out of the way,{w=0.1} how about we spend some quality time together?"
-            n 1fsqsm "You owe me that much!{w=0.2} Ehehe."
+            n 1fcsbgsbr "Good,{w=0.2} good!{w=0.3} I-{w=0.2}I knew you'd see the back of it soon!{w=0.5}{nw}"
+            extend 1fcsaj " Being ill is gross,{w=0.2} right?"
+            n 1nllaj "Now...{w=1}{nw}"
+            extend 1fsqbgl " since that's out of the way,{w=0.2} how about we spend some actual quality time together?"
+            n 1fsqblleme "Gotta make up for lost plans,{w=0.2} no?"
             $ persistent.jn_player_admission_type_on_quit = None
 
         "A little better.":
-            n 1knmpo "...I'll admit,{w=0.1} that wasn't really what I wanted to hear."
-            n 1unmsr "But I'll take 'a little' over not at all,{w=0.1} I guess."
-            n 1nchbg "Anyway...{w=0.3} welcome back,{w=0.1} [player]!"
+            n 1kslpo "...I'll admit,{w=0.2} that wasn't really what I wanted to hear."
+            n 1ullbo "But...{w=0.5}{nw}" 
+            extend 1klrbosbl " I'll take 'a little' over not at all,{w=0.2} I guess."
+            n 1fchbgsbl "Anyway...{w=0.3} welcome back,{w=0.1} [player]!"
 
             # Add pending apology, reset the admission
             $ Natsuki.addApology(jn_apologies.ApologyTypes.unhealthy)
@@ -693,8 +732,8 @@ label greeting_feeling_better_sick:
 
         "Still unwell.":
             n 1knmsr "Still not feeling up to scratch,{w=0.1} [player]?"
-            n 1knmsl "I don't mind you being here...{w=0.3} but don't strain yourself,{w=0.1} alright?"
-            n 1kplsl "I don't want you making yourself worse for my sake..."
+            n 1klrsll "I don't {i}mind{/i} you being here...{w=0.3} but don't strain yourself,{w=0.1} alright?"
+            n 1kslsllesosbr "I don't want you making yourself worse for my sake..."
 
             # Add pending apology, reset the admission
             $ Natsuki.addApology(jn_apologies.ApologyTypes.unhealthy)
@@ -737,7 +776,7 @@ label greeting_feeling_better_tired:
             $ jn_admissions.last_admission_type = jn_admissions.TYPE_TIRED
 
         "Still tired.":
-            n 1knmsl "Still struggling with your sleep,{w=0.1} [player]?"
+            n 1knmsl "Still struggling with your sleep,{w=0.2} [player]?"
             n 1knmaj "I don't mind you being here...{w=0.3} but don't strain yourself,{w=0.1} alright?"
             n 1knmbg "I don't want you face-planting your desk for my sake..."
 
@@ -767,8 +806,8 @@ label greeting_sudden_leave:
         n 1kwmsrl "..."
         n 1kwmsrl "[player]."
         n 1knmsll "Come on.{w=0.2} You're better than that."
-        n 1knmajl "I don't know if something happened or what,{w=0.1} but please..."
-        n 1knmsll "Try to remember to say goodbye properly next time,{w=0.1} 'kay?"
+        n 1knmajl "I don't know if something happened or what,{w=0.2} but please..."
+        n 1knmsll "Try to remember to say goodbye properly next time,{w=0.2} 'kay?"
         n 1knmssl "It'd mean a lot to me."
         $ Natsuki.addApology(jn_apologies.ApologyTypes.sudden_leave)
 
@@ -781,16 +820,16 @@ label greeting_sudden_leave:
 
     elif Natsuki.isDistressed(higher=True):
         n 1fsqsf "..."
-        n 1fsqaj "You know I hate that,{w=0.1} [player]."
-        n 1fsqsl "Knock it off,{w=0.1} will you?"
+        n 1fsqaj "You know I hate that,{w=0.2} [player]."
+        n 1fsqsl "Knock it off,{w=0.2} will you?"
         n 1fsqsf "Thanks."
         $ Natsuki.addApology(jn_apologies.ApologyTypes.sudden_leave)
 
     else:
         n 1fcsuntsa "..."
         n 1fsquntsb "Heh.{w=0.2} Yeah."
-        $ chosen_insult = random.choice(jn_globals.DEFAULT_PLAYER_INSULT_NAMES).capitalize()
-        n 1fcsuptsa "Welcome back to you,{w=0.1} too.{w=0.2} [chosen_insult]."
+        $ chosen_insult = jn_utils.getRandomInsult().capitalize()
+        n 1fcsuptsa "Welcome back to you,{w=0.2} too.{w=0.2} [chosen_insult]."
         $ Natsuki.addApology(jn_apologies.ApologyTypes.sudden_leave)
 
     return
@@ -810,7 +849,7 @@ init 5 python:
     )
 
 label greeting_prolonged_leave:
-    $ player_initial = jn_utils.get_player_initial()
+    $ player_initial = jn_utils.getPlayerInitial()
 
     if Natsuki.isEnamored(higher=True):
         n 1uwdwrf "[player_initial]-{w=0.1}[player]!"
@@ -899,7 +938,7 @@ label greeting_morning_starshine:
     n 1nchdvf "Pfffft-!"
     n 1kchbsl "I'm sorry!{w=0.2} It's just such a dumb thing to say...{w=0.3} I can't keep a straight face!"
     n 1nchsml "Ehehe."
-    $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+    $ chosen_endearment = jn_utils.getRandomEndearment()
     n 1kwmsmf "You really are my starshine though,{w=0.1} [chosen_endearment]."
     n 1uchsmf "Welcome back!"
     return
@@ -1016,7 +1055,7 @@ init 5 python:
             label="greeting_evening_long_day",
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(18, 21)",
-            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.NORMAL, None),
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -1035,13 +1074,13 @@ init 5 python:
             label="greeting_evening_took_long_enough",
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(18, 21)",
-            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.NORMAL, None),
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_evening_took_long_enough:
-    $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+    $ chosen_tease = jn_utils.getRandomTease()
     n 1fsqsr "[player]!{w=0.2} There you are,{w=0.1} [chosen_tease]!"
     n 1fsqpo "Jeez...{w=0.3} took you long enough!"
     n 1fsqsm "Ehehe."
@@ -1059,7 +1098,7 @@ init 5 python:
             label="greeting_night_up_late",
             unlocked=True,
             conditional="store.jn_get_current_hour() >= 22 or store.jn_get_current_hour() <= 2",
-            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.NORMAL, None),
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -1078,7 +1117,7 @@ init 5 python:
             label="greeting_night_night_owl",
             unlocked=True,
             conditional="store.jn_get_current_hour() >= 22 or store.jn_get_current_hour() <= 2",
-            affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            affinity_range=(jn_affinity.NORMAL, None),
         ),
         topic_group=TOPIC_TYPE_GREETING
     )

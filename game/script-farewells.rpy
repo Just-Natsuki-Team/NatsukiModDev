@@ -334,11 +334,11 @@ label farewell_option_work:
         n 1fchbg "Take it easy,{w=0.1} [player]!{w=0.2} Don't let anyone push you around!"
 
     if Natsuki.isLove():
-        $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+        $ chosen_endearment = jn_utils.getRandomEndearment()
         n 1uchbgf "You got this,{w=0.1} [chosen_endearment]!{w=0.2} Love you~!"
 
     elif Natsuki.isEnamored(higher=True):
-        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        $ chosen_tease = jn_utils.getRandomTease()
         n 1uchbgl "I believe in you,{w=0.1} [chosen_tease]!"
 
     return { "quit": None }
@@ -360,7 +360,7 @@ label farewell_option_school:
             n 1fskgsl "...And on New Year's Eve,{w=0.1} too?!"
 
         if not jn_is_weekday():
-            extend 1uskwr "A-{w=0.1}and on a {i}weekend{/i} too?!"
+            extend 1uskwr " A-{w=0.1}and on a {i}weekend{/i} too?!"
 
         n 1fbkgs "What the hell kind of school is thaaaat?!"
         n 1kllpo "Jeez.{w=0.5}{nw}"
@@ -368,7 +368,7 @@ label farewell_option_school:
         n 1kcspu "Just...{w=0.5}{nw}"
         extend 1knmpu " take care getting there,{w=0.1} alright?"
         $ time_concern = "late" if jn_get_current_hour() >= 20 else "early"
-        extend 1fllsr "It's really [time_concern],{w=0.1} after all."
+        extend 1fllsr " It's really [time_concern],{w=0.1} after all."
         n 1kllss "Study hard,{w=0.1} [player]!"
 
     else:
@@ -405,7 +405,7 @@ label farewell_option_school:
         n 1fchbg "No slacking off,{w=0.1} [player]!{w=0.2} I'll see you later!"
 
     if Natsuki.isLove():
-        $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+        $ chosen_endearment = jn_utils.getRandomEndearment()
         n 1uchbgf "Love you,{w=0.1} [chosen_endearment]!"
 
     return { "quit": None }
@@ -435,7 +435,7 @@ label farewell_option_play:
     extend 1nsqbg " Besides..."
     n 1usqct "You sure could use the practice,{w=0.1} huh?{w=0.5}{nw}"
     extend 1fchsm " Ehehe."
-    $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+    $ chosen_tease = jn_utils.getRandomTease()
     n 1fchbg "Catch you later,{w=0.1} [chosen_tease]!"
 
     return { "quit": None }
@@ -541,7 +541,7 @@ init 5 python:
 label farewell_love_counting_on_you:
     n 1fllpol "Uuuu...{w=0.3} I never like saying goodbye to you..."
     n 1knmsml "But I guess it can't be helped,{w=0.1} [player]."
-    $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+    $ chosen_endearment = jn_utils.getRandomEndearment()
     n 1uchbgf "Take care of yourself out there,{w=0.1} [chosen_endearment]!{w=0.2} I'm counting on you!"
 
     return { "quit": None }
@@ -561,7 +561,7 @@ label farewell_love_do_your_best:
     n 1unmajl "Oh?{w=0.2} You're heading out now?"
     n 1flrpol "That's fine,{w=0.1} I guess..."
     n 1kplsml "I'll really miss you,{w=0.1} [player]."
-    $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+    $ chosen_endearment = jn_utils.getRandomEndearment()
     n 1uchsmf "Do your best,{w=0.1} [chosen_endearment]!"
 
     return { "quit": None }
@@ -580,7 +580,7 @@ init 5 python:
 label farewell_love_rooting_for_you:
     n 1unmajl "Huh?{w=0.2} You're leaving now?"
     n 1fcssll "I always hate it when you have to go somewhere..."
-    $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+    $ chosen_endearment = jn_utils.getRandomEndearment()
     n 1kcssml "...But I know you'll always be back for me,{w=0.1} [chosen_endearment]."
     n 1unmbgl "Well...{w=0.1} I'm rooting for you!"
     n 1uchbgf "Make me proud,{w=0.1} [player]!{w=0.2} I love you!"
@@ -621,7 +621,7 @@ label farewell_love_wish_you_could_stay_forever:
     n 1kplsml "Time to go,{w=0.1} [player]?"
     n 1kllssl "Sometimes I wish you could just stay forever...{w=0.3} Ehehe."
     n 1knmsml "But I understand you've got stuff to do."
-    $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+    $ chosen_endearment = jn_utils.getRandomEndearment()
     n 1uchbgf "Goodbye,{w=0.1} [chosen_endearment]!"
 
     return { "quit": None }
@@ -1113,7 +1113,7 @@ label farewell_short_session_ask:
             n 1uskgsl "I-I mean...!"
             if Natsuki.isLove():
                 n 1kllssl "T-{w=0.1}thanks,{w=0.1} [player]. It means a lot to me."
-                $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+                $ chosen_endearment = jn_utils.getRandomEndearment()
                 n 1kplssl "Really.{w=0.2} Thank you,{w=0.1} [chosen_endearment]."
                 n 1klrbgl "...A-{w=0.1}anyway!"
 
@@ -1137,7 +1137,7 @@ label farewell_short_session_ask:
                     n 1knmpol "Well,{w=0.1} if you're sure."
                     n 1kllcal "I just want to make sure I don't sound all naggy."
                     if Natsuki.isEnamored(higher=True):
-                        $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+                        $ chosen_endearment = jn_utils.getRandomEndearment()
                         n 1knmssl "Thanks,{w=0.1} [chosen_endearment]. You know it means a lot to me."
 
                     else:
@@ -1297,7 +1297,7 @@ label farewell_pleading_ask:
             n 1kchbsf "Yes!{nw}"
             n 1knmajf "I-I mean...!"
             n 1kllslf "..."
-            $ chosen_descriptor = random.choice(jn_globals.DEFAULT_PLAYER_DESCRIPTORS)
+            $ chosen_descriptor = jn_utils.getRandomDescriptor()
             n 1kllnvf "T-{w=0.1}thanks,{w=0.1} [player].{w=0.1} You're [chosen_descriptor],{w=0.1} you know that?"
             n 1kplsmf "Really.{w=0.1} Thank you."
             n 1kllbgf "N-{w=0.1}now,{w=0.1} where were we? Heh..."
@@ -1336,7 +1336,7 @@ label farewell_gentle_ask:
         "I can stay a little longer.":
             n 1kplsmf "[player]..."
             n 1kchsmf "Thank you.{w=0.2} That really means a lot to me right now."
-            $ chosen_descriptor = random.choice(jn_globals.DEFAULT_PLAYER_DESCRIPTORS)
+            $ chosen_descriptor = jn_utils.getRandomDescriptor()
             n 1kwmssf "Y-{w=0.1}You're [chosen_descriptor],{w=0.1} [player]."
             n 1kcssmf "Truly.{w=0.1} Thanks..."
             n 1kcssmf "..."
@@ -1390,7 +1390,7 @@ label farewell_early_morning_going_this_early:
         n 1uchbsf "Love you,{w=0.1} [player]~!"
 
     elif Natsuki.isAffectionate(higher=True):
-        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        $ chosen_tease = jn_utils.getRandomTease()
         n 1uchbgl "See you later,{w=0.1} [chosen_tease]!"
 
     else:

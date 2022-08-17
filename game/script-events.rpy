@@ -166,7 +166,7 @@ label event_caught_writing_poetry:
     $ jn_globals.force_quit_enabled = True
 
     n 1uskuplesh "...!"
-    $ player_initial = jn_utils.get_player_initial()
+    $ player_initial = jn_utils.getPlayerInitial()
     n 1uskgsf "[player_initial]-[player]?!{w=0.5}{nw}"
     extend 1fbkwrl " How long have you been there?!"
     n 1fllpol "..."
@@ -290,7 +290,7 @@ label event_code_fiddling:
     $ jn_events.display_visuals("1fslpo")
     $ jn_globals.force_quit_enabled = True
 
-    $ player_initial = jn_utils.get_player_initial()
+    $ player_initial = jn_utils.getPlayerInitial()
     n 1uskemlesh "Ack-!"
     n 1fbkwrl "[player_initial]-{w=0.1}[player]!"
     extend 1fcseml " Are you {i}trying{/i} to give me a heart attack or something?"
@@ -558,7 +558,7 @@ label event_drinking_strawberry_milkshake:
     play audio straw_sip
     n 1nsqdr "..."
     n 1uskdrlesh "...!"
-    $ player_initial = jn_utils.get_player_initial()
+    $ player_initial = jn_utils.getPlayerInitial()
     n 1fbkwrl "[player_initial]-{w=0.3}[player]!{w=1}{nw}"
     extend 1flleml " I wish you'd stop just {i}appearing{/i} like that..."
     n 1fcseml "Jeez...{w=1}{nw}"
@@ -627,7 +627,7 @@ label event_step_by_step_manga:
     $ jn_globals.force_quit_enabled = True
 
     n 1uskemesh "...!"
-    $ player_initial = jn_utils.get_player_initial()
+    $ player_initial = jn_utils.getPlayerInitial()
     n 1fpawrf "[player_initial]-{w=0.3}[player]!{w=0.2} Again?!{w=1}{nw}"
     extend 1fbkwrf " D-{w=0.3}do you really have to barge in like that {i}every{/i} time?"
     n 1flrunfess "Yeesh...{w=1}{nw}"
