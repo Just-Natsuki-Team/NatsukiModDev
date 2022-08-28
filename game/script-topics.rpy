@@ -974,7 +974,7 @@ label talk_weather_setup_location:
             n 1fchsm "Sure, I can give it a shot!{w=1}{nw}"
             extend 1fcssm " Just give me a second here...{w=1}{nw}"
 
-            $ ip_latitude_longitude = jn_atmosphere.get_latitude_longitude_by_ip_address()
+            $ ip_latitude_longitude = jn_atmosphere.getLatitudeLongitudeByIpAddress()
             if not ip_latitude_longitude:
                 # We couldn't get the coordinates via IP, so we have to prompt them via the player
                 n 1fslpu "...Huh."
@@ -1221,7 +1221,7 @@ label talk_weather_setup_verify:
     extend 1fnmsm " I think we're almost done now,{w=0.1} [player]!"
     n 1ncsbo "Let me just check everything is in order here...{w=1.5}{nw}"
 
-    if jn_atmosphere.get_weather_from_api():
+    if jn_atmosphere.getWeatherFromApi():
         n 1fchbg "Yes!"
         extend 1uchbs " It's working,{w=0.5} it's working!{w=1}{nw}"
         extend 1nchsml " Ehehe."
@@ -1232,7 +1232,7 @@ label talk_weather_setup_verify:
         python:
             persistent._jn_weather_api_configured = True
             persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.real_time)
-            jn_atmosphere.update_sky()
+            jn_atmosphere.updateSky()
 
     else:
         n 1fcsaj "Oh,{w=0.5}{nw}" 

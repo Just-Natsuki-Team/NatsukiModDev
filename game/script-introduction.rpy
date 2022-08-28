@@ -40,7 +40,7 @@ label introduction_progress_check:
         show glitch_garbled_a zorder 99 with vpunch
 
         $ main_background.show()
-        $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
+        $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
         show natsuki idle introduction at jn_center zorder JN_NATSUKI_ZORDER
         hide glitch_garbled_a
         play music audio.space_classroom_bgm fadein 1
@@ -116,7 +116,7 @@ label introduction_opening:
     # Get the visuals ready
     $ Natsuki.setOutfit(jn_outfits.get_outfit("jn_school_uniform"))
     $ main_background.show()
-    $ jn_atmosphere.show_sky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
+    $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
     show natsuki idle introduction at jn_center zorder JN_NATSUKI_ZORDER
     hide black
     hide glitch_garbled_a
@@ -410,7 +410,7 @@ label introduction_acceptance:
     extend 1fcsem " Ugh!{w=1}{nw}"
 
     stop music fadeout 3
-    $ jn_atmosphere.update_sky()
+    $ jn_atmosphere.updateSky()
     $ renpy.pause(1)
 
     n 1uwdboesu "..."

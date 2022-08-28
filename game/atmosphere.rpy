@@ -143,6 +143,7 @@ init 0 python in jn_atmosphere:
             weather_type,
             day_sky_image,
             night_sky_image,
+            notify_text=list(),
             dim_image=None,
             day_clouds_image=None,
             night_clouds_image=None,
@@ -157,6 +158,7 @@ init 0 python in jn_atmosphere:
                 - weather_type - JNWeatherTypes type describing this weather
                 - day_sky_image - Name of the image to show for this weather during the day
                 - night_sky_image - Name of the image to show for this weather during the night
+                - notify_text - The text to show via popup if the weather changes, and Natsuki decides to react
                 - dim_image - Name of the dimming effect to use, or None
                 - day_clouds_image - Name of the clouds to use for this weather during the day, or None
                 - night_clouds_image - Name of the clouds to use for this weather during the night, or None
@@ -167,12 +169,23 @@ init 0 python in jn_atmosphere:
             self.weather_type = weather_type
             self.day_sky_image = day_sky_image
             self.night_sky_image = night_sky_image
+            self.notify_text = notify_text
             self.dim_image = dim_image
             self.day_clouds_image = day_clouds_image
             self.night_clouds_image = night_clouds_image
             self.day_particles_image = day_particles_image
             self.night_particles_image = night_particles_image
             self.weather_sfx = weather_sfx
+
+        
+        def getNotifyText(self):
+            """
+            Gets a random notification string for this weather to be used in a popup
+            """
+            if self.notify_text and len(self.notify_text) > 0:
+                return random.choice(self.notify_text)
+
+            return None
 
     WEATHER_OVERCAST = JNWeather(
         weather_type=JNWeatherTypes.overcast,
@@ -187,6 +200,12 @@ init 0 python in jn_atmosphere:
         weather_type=JNWeatherTypes.rain,
         day_sky_image="sky day rain",
         night_sky_image="sky night rain",
+        notify_text=[
+            "Ugh... raining again. {0}".format(jn_utils.getRandomAngryEmoticon()),
+            "Ew. Rain. {0}".format(jn_utils.getRandomAngryEmoticon()),
+            "Man... why does it have to rain so much?",
+            "Huh? It's raining? Gross... {0}".format(jn_utils.getRandomAngryEmoticon()),
+        ],
         dim_image="dim medium",
         day_clouds_image="clouds day heavy",
         night_clouds_image="clouds night heavy",
@@ -199,6 +218,12 @@ init 0 python in jn_atmosphere:
         weather_type=JNWeatherTypes.thunder,
         day_sky_image="sky day thunder",
         night_sky_image="sky night thunder",
+        notify_text=[
+            "Those clouds look really dark, huh? :<",
+            "It was a dark and stormy night...",
+            "Ugh... I hate storms... {0}".format(jn_utils.getRandomAngryEmoticon()),
+            "Hey... is it stormy over there too? :/",
+        ],
         dim_image="dim heavy",
         day_clouds_image="clouds day thunder",
         night_clouds_image="clouds night heavy",
@@ -211,6 +236,11 @@ init 0 python in jn_atmosphere:
         weather_type=JNWeatherTypes.snow,
         day_sky_image="sky day snow",
         night_sky_image="sky night overcast",
+        notify_text=[
+            "[player]! [player]! It's snowing! {0}".format(jn_utils.getRandomHappyEmoticon()),
+            "It's snowing! It's snowing! {0}".format(jn_utils.getRandomHappyEmoticon()),
+            "[player]! Is it snowing for you too?! {0}".format(jn_utils.getRandomHappyEmoticon()),
+        ],
         dim_image="dim light",
         day_clouds_image="clouds day light",
         night_clouds_image="clouds night light",
@@ -246,7 +276,7 @@ init 0 python in jn_atmosphere:
 
     current_weather = None
 
-    def update_sky(with_transition=True):
+    def updateSky(with_transition=True):
         """
         Shows the sky based on the sunrise/sunset times specified under the persistent, and affinity.
 
@@ -257,21 +287,21 @@ init 0 python in jn_atmosphere:
         if store.persistent._jn_weather_setting == int(jn_preferences.weather.JNWeatherSettings.real_time):
 
             # Attempt to display weather based on API, otherwise default
-            api_weather_result = get_weather_from_api()
+            api_weather_result = getWeatherFromApi()
             if not api_weather_result:
                 jn_utils.log("Unable to retrieve weather from API; defaulting to Sunny.")
                 renpy.notify("Failed to update weather; please check log for more information.")
-                show_sky(WEATHER_SUNNY, with_transition=with_transition)
+                showSky(WEATHER_SUNNY, with_transition=with_transition)
 
             else:
-                show_sky(weather=api_weather_result, with_transition=with_transition)
+                showSky(weather=api_weather_result, with_transition=with_transition)
 
         # Random weather
         elif store.persistent._jn_weather_setting == int(jn_preferences.weather.JNWeatherSettings.random):
 
             # Flex based on affinity. An upset Natsuki will result in more rain, etc.
             if Natsuki.isEnamored(higher=True):
-                show_sky(random.choice([
+                showSky(random.choice([
                     WEATHER_OVERCAST,
                     WEATHER_RAIN,
                     WEATHER_THUNDER,
@@ -284,7 +314,7 @@ init 0 python in jn_atmosphere:
                 with_transition=with_transition)
 
             elif Natsuki.isAffectionate(higher=True):
-                show_sky(random.choice([
+                showSky(random.choice([
                     WEATHER_OVERCAST,
                     WEATHER_RAIN,
                     WEATHER_THUNDER,
@@ -296,7 +326,7 @@ init 0 python in jn_atmosphere:
                 with_transition=with_transition)
 
             elif Natsuki.isNormal(higher=True):
-                show_sky(random.choice([
+                showSky(random.choice([
                     WEATHER_OVERCAST,
                     WEATHER_RAIN,
                     WEATHER_THUNDER,
@@ -306,7 +336,7 @@ init 0 python in jn_atmosphere:
                 with_transition=with_transition)
 
             elif Natsuki.isDistressed(higher=True):
-                show_sky(random.choice([
+                showSky(random.choice([
                     WEATHER_OVERCAST,
                     WEATHER_OVERCAST,
                     WEATHER_RAIN,
@@ -317,7 +347,7 @@ init 0 python in jn_atmosphere:
                 with_transition=with_transition)
 
             else:
-                show_sky(random.choice([
+                showSky(random.choice([
                     WEATHER_OVERCAST,
                     WEATHER_RAIN,
                     WEATHER_RAIN,
@@ -330,15 +360,15 @@ init 0 python in jn_atmosphere:
         # Default weather
         else:
             if Natsuki.isNormal(higher=True):
-                show_sky(WEATHER_SUNNY, with_transition=with_transition)
+                showSky(WEATHER_SUNNY, with_transition=with_transition)
 
             elif Natsuki.isDistressed(higher=True):
-                show_sky(WEATHER_OVERCAST, with_transition=with_transition)
+                showSky(WEATHER_OVERCAST, with_transition=with_transition)
 
             else:
-                show_sky(WEATHER_RAIN, with_transition=with_transition)
+                showSky(WEATHER_RAIN, with_transition=with_transition)
 
-    def show_sky(weather, with_transition=True):
+    def showSky(weather, with_transition=True):
         """
         Shows the specified sky with related clouds and dimming effect (if defined), based on time of day.
 
@@ -395,9 +425,9 @@ init 0 python in jn_atmosphere:
             renpy.hide("dim")
 
         global current_weather
-        current_weather = weather.weather_type
+        current_weather = weather
 
-    def get_weather_from_api():
+    def getWeatherFromApi():
         """
         Gets the current weather from the OpenWeatherMap API, assuming it is set up.
         """
@@ -431,7 +461,7 @@ init 0 python in jn_atmosphere:
         # No map entries, fallback
         return None
 
-    def get_latitude_longitude_by_ip_address():
+    def getLatitudeLongitudeByIpAddress():
         """
         Returns (latitude, longitude) tuple based on the player's IP address.
         Please note this will be affected by any VPNs, etc. in use by the host computer/network.
@@ -451,38 +481,112 @@ init 0 python in jn_atmosphere:
             jn_utils.log("Failed to retrieve user latitude, longitude via IP address: {}".format(exception))
             return None
 
-    def is_current_weather_overcast():
+    def isCurrentWeatherOvercast():
         """
         Returns True if the current weather is overcast, otherwise False
         """
-        return current_weather == JNWeatherTypes.overcast
+        return current_weather.weather_type == JNWeatherTypes.overcast
 
-    def is_current_weather_rain():
+    def isCurrentWeatherRain():
         """
         Returns True if the current weather is rain, otherwise False
         """
-        return current_weather == JNWeatherTypes.rain
+        return current_weather.weather_type == JNWeatherTypes.rain
 
-    def is_current_weather_sunny():
+    def isCurrentWeatherSunny():
         """
         Returns True if the current weather is sunny, otherwise False
         """
-        return current_weather == JNWeatherTypes.sunny
+        return current_weather.weather_type == JNWeatherTypes.sunny
 
-    def is_current_weather_thunder():
+    def isCurrentWeatherThunder():
         """
         Returns True if the current weather is thunder, otherwise False
         """
-        return current_weather == JNWeatherTypes.thunder
+        return current_weather.weather_type == JNWeatherTypes.thunder
 
-    def is_current_weather_snow():
+    def isCurrentWeatherSnow():
         """
         Returns True if the current weather is snow, otherwise False
         """
-        return current_weather == JNWeatherTypes.snow
+        return current_weather.weather_type == JNWeatherTypes.snow
 
-    def is_current_weather_glitch():
+    def isCurrentWeatherGlitch():
         """
         Returns True if the current weather is glitchy, otherwise False
         """
-        return current_weather == JNWeatherTypes.glitch
+        return current_weather.weather_type == JNWeatherTypes.glitch
+
+label weather_change:
+    $ previous_weather = jn_atmosphere.current_weather
+    $ jn_atmosphere.updateSky()
+
+    if (
+        Natsuki.isAffectionate(higher=True) 
+        and random.randint(1, 4) == 1
+        and previous_weather.weather_type != jn_atmosphere.current_weather.weather_type
+    ):
+        # Check for window react
+        if persistent._jn_notify_activity and not jn_activity.getJNWindowActive() and jn_atmosphere.current_weather.getNotifyText():
+            $ jn_activity.notifyPopup(renpy.substitute(jn_atmosphere.current_weather.getNotifyText()))
+            return
+
+        # Check for in-game dialogue
+        else:
+            $ alt_dialogue = random.choice([True, False])
+            if jn_atmosphere.isCurrentWeatherSunny():
+                if previous_weather.weather_type == JNWeatherTypes.rain:
+                    n 1fcsaj "Well,{w=1}{nw}"
+                    extend 1fllgs " about time all that rain buzzed off!{w=1}{nw}"
+                    n 1nchgn "Much better.{w=3}{nw}"
+
+                elif previous_weather.weather_type == JNWeatherTypes.thunder:
+                    n 1tllpu "Huh?{w=1.25}{nw}"
+                    extend 1ullajeex "Oh,{w=0.2} the storm passed.{w=1}{nw}"
+                    n 1fcsajsbl "Good riddance.{w=3}{nw}"
+
+                elif previous_weather.weather_type == JNWeatherTypes.snow:
+                    n 1kllpu "Aww...{w=1.5}{nw}"
+                    extend 1kllpol " it stopped snowing...{w=3}{nw}"
+
+                else:
+                    n 1ulraj "Oh,{w=0.2} hey.{w=1}{nw}"
+                    extend 1ulrbo " It just cleared up outside.{w=3}{nw}"
+
+            if jn_atmosphere.isCurrentWeatherRain():
+                # Rain
+                if alt_dialogue:
+                    n 1kcsemesi "Man...{w=1.25}{nw}"
+                    extend 1kllsl " rain {i}again{/i}?{w=1}{nw}"
+                    extend 1fsrbo " Lame...{w=3}{nw}"
+
+                else:
+                    n 1fcsem "Ugh...{w=1.5}{nw}"
+                    extend 1fslpol " I'll never {i}not{/i} find rain gross.{w=3}{nw}"
+                
+            elif jn_atmosphere.isCurrentWeatherThunder():
+                # Thunder
+                if alt_dialogue:
+                    n 1unmboesu "...{w=1}{nw}"
+                    n 1nllem "I gotta say,{w=0.75}{nw}"
+                    extend 1ksqsr " I am {i}not{/i} liking the look of those clouds.{w=1}{nw}"
+                    extend 1nsrupesd " Yeesh...{w=3}{nw}"
+
+                else:
+                    n 1ulremesu "Woah...{w=1}{nw}"
+                    extend 1ullpu " now those are some clouds,{w=0.5}{nw}"
+                    extend 1tnmbo " huh?{w=3}{nw}"
+
+            elif jn_atmosphere.isCurrentWeatherSnow():
+                # Snow
+                if alt_dialogue:
+                    n 1uwdajeex "Woah!{w=1}{nw}"
+                    n 1ullgs "[player],{w=0.2} look!{w=0.5}{nw}"
+                    extend 1uchbgledz " It's snowing!{w=3}{nw}"
+
+                else:
+                    n 1uwdajeex "...!{w=1}{nw}"
+                    n 1ullbg "Heeey!{w=0.75}{nw}"
+                    extend 1uchgnledz " It's snowing!{w=3}{nw}"
+
+            return

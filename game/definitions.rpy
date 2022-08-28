@@ -1456,7 +1456,7 @@ init -999 python in jn_utils:
 
         return return_file_items
 
-init python in jn_utils:
+init -100 python in jn_utils:
     import random
     import re
     import store
@@ -1621,6 +1621,36 @@ init python in jn_utils:
         Returns a random insult from Natsuki for the player from the list.
         """
         return random.choice(jn_globals.DEFAULT_PLAYER_INSULT_NAMES)
+
+    def getRandomHappyEmoticon():
+        """
+        Returns a random happy emoticon from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_HAPPY_EMOTICONS)
+
+    def getRandomAngryEmoticon():
+        """
+        Returns a random angry emoticon from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_ANGRY_EMOTICONS)
+
+    def getRandomSadEmoticon():
+        """
+        Returns a random sad emoticon from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_SAD_EMOTICONS)
+
+    def getRandomTeaseEmoticon():
+        """
+        Returns a random teasing emoticon from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_TEASE_EMOTICONS)
+
+    def getRandomConfusedEmoticon():
+        """
+        Returns a random confused emoticon from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_CONFUSED_EMOTICONS)
 
     # Key setup
     key_path = os.path.join(renpy.config.basedir, "game/dev/key.txt").replace("\\", "/")

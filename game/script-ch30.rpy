@@ -32,7 +32,7 @@ label ch30_visual_setup:
     $ main_background.show()
 
     # Draw sky
-    $ jn_atmosphere.update_sky()
+    $ jn_atmosphere.updateSky()
 
     #FALL THROUGH
 
@@ -185,7 +185,8 @@ label call_next_topic(show_natsuki=True):
             # Notify if the window isn't currently active
             if (persistent._jn_notify_conversations
                 and jn_utils.get_current_session_length().total_seconds() > 60
-                and not jn_activity.getJNWindowActive()):
+                and not jn_activity.getJNWindowActive()
+                and not _topic in ["random_music_change", "weather_change"]):
                     
                     play audio notification
                     python:
@@ -194,22 +195,22 @@ label call_next_topic(show_natsuki=True):
                         if Natsuki.isNormal(higher=True):
                             if Natsuki.isEnamored(higher=True):
                                 notify_message = random.choice([
-                                    "[player]! [player]! Wanna talk? {0}".format(random.choice(jn_globals.DEFAULT_HAPPY_EMOTICONS)),
-                                    "Hey! You got a sec? {0}".format(random.choice(jn_globals.DEFAULT_HAPPY_EMOTICONS)),
-                                    "Wanna talk? {0}".format(random.choice(jn_globals.DEFAULT_HAPPY_EMOTICONS)),
-                                    "[player]! I got something! {0}".format(random.choice(jn_globals.DEFAULT_HAPPY_EMOTICONS)),
+                                    "[player]! [player]! Wanna talk? {0}".format(jn_utils.getRandomHappyEmoticon()),
+                                    "Hey! You got a sec? {0}".format(jn_utils.getRandomHappyEmoticon()),
+                                    "Wanna talk? {0}".format(jn_utils.getRandomHappyEmoticon()),
+                                    "[player]! I got something! {0}".format(jn_utils.getRandomHappyEmoticon()),
                                     "Heeey! Wanna talk?",
-                                    "Talk to meeee! {0}".format(random.choice(jn_globals.DEFAULT_ANGRY_EMOTICONS)),
-                                    "I'm talking to you, dummy! {0}".format(random.choice(jn_globals.DEFAULT_TEASE_EMOTICONS))
+                                    "Talk to meeee! {0}".format(jn_utils.getRandomAngryEmoticon()),
+                                    "I'm talking to you, dummy! {0}".format(jn_utils.getRandomTeaseEmoticon())
                                 ])
 
                             elif Natsuki.isAffectionate(higher=True):
                                 notify_message = random.choice([
                                     "Wanna talk?",
                                     "[player]! You wanna talk?",
-                                    "Hey! Hey! Talk to me! {0}".format(random.choice(jn_globals.DEFAULT_ANGRY_EMOTICONS)),
+                                    "Hey! Hey! Talk to me! {0}".format(jn_utils.getRandomAngryEmoticon()),
                                     "Hey dummy! I'm talking to you!",
-                                    "[player]! I just thought of something! {0}".format(random.choice(jn_globals.DEFAULT_CONFUSED_EMOTICONS)),
+                                    "[player]! I just thought of something! {0}".format(jn_utils.getRandomConfusedEmoticon()),
                                     "[player]! I wanna talk to you!",
                                     "I just thought of something, [player]!"
                                 ])
@@ -357,14 +358,14 @@ init python:
         """
         Runs every fifteen minutes during breaks between topics
         """
-        jn_atmosphere.update_sky()
 
         # Run through all externally-registered quarter-hour check actions
         if len(jn_plugins.quarter_hour_check_calls) > 0:
             for action in jn_plugins.quarter_hour_check_calls:
                 eval(action.statement)
-
-        jn_random_music.random_music_change_check()
+        
+        queue("weather_change")
+        queue("random_music_change")
 
         pass
 
@@ -372,7 +373,6 @@ init python:
         """
         Runs every thirty minutes during breaks between topics
         """
-        jn_atmosphere.update_sky()
 
         # Run through all externally-registered half-hour check actions
         if len(jn_plugins.half_hour_check_calls) > 0:
@@ -385,12 +385,13 @@ init python:
         """
         Runs every hour during breaks between topics
         """
-        jn_atmosphere.update_sky()
 
         # Run through all externally-registered hour check actions
         if len(jn_plugins.hour_check_calls) > 0:
             for action in jn_plugins.hour_check_calls:
                 eval(action.statement)
+
+        queue("weather_change")
 
         # Draw background
         main_background.check_redraw()
@@ -408,12 +409,13 @@ init python:
         """
         Runs every day during breaks between topics
         """
-        jn_atmosphere.update_sky()
 
         # Run through all externally-registered day check actions
         if len(jn_plugins.day_check_calls) > 0:
             for action in jn_plugins.day_check_calls:
                 eval(action.statement)
+
+        queue("weather_change")
 
         pass
 
