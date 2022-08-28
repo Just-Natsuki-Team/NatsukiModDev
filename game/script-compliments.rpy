@@ -85,7 +85,7 @@ label compliment_amazing:
             n 1kwmnvl "Really.{w=0.2} Thank you.{w=0.2} You're honestly [chosen_descriptor]."
             n 1klrnvl "..."
 
-            if Natsuki.isLove():
+            if Natsuki.isLove(higher=True):
                 n 1kwmsmf "Love you,{w=0.1} [player]..."
 
         else:
@@ -153,7 +153,7 @@ label compliment_beautiful:
             n 1klrssf "...I...{w=0.3} believe you,{w=0.1} though.{w=0.2} Just don't make me regret saying that,{w=0.1} okay?"
             n 1klrbgl "T-{w=0.1}thanks,{w=0.1} [player]."
 
-            if Natsuki.isLove():
+            if Natsuki.isLove(higher=True):
                 n 1kwmsmf "...I love you,{w=0.1} [player]...{w=0.3} Ahaha..."
 
         else:
@@ -250,7 +250,7 @@ label compliment_cute:
             n 1flrpof "Jeez..."
             n 1fnmpof "I swear,{w=0.1} you're such a goofball sometimes..."
 
-            if Natsuki.isLove():
+            if Natsuki.isLove(higher=True):
                 n 1fcsbgf "Besides,{w=0.1} I'm not even the cutest here,{w=0.1} a-{w=0.1}anyhow..."
                 $ chosen_tease = jn_utils.getRandomTease()
                 n 1fcssmf "I guess I'll let you figure out the rest,{w=0.1} [chosen_tease].{w=0.2} Ehehe."
@@ -394,7 +394,7 @@ label compliment_style:
                 n 1fchgn "Ehehe.{w=0.2} Still awestruck by my sense of fashion,{w=0.1} [player]?"
                 n 1fwlbg "You can't deny I'm a snappy dresser!"
 
-                if Natsuki.isLove():
+                if Natsuki.isLove(higher=True):
                     $ chosen_tease = jn_utils.getRandomTease()
                     n 1fllbgl "D-{w=0.1}don't think I just dress for me though,{w=0.1} [chosen_tease]~."
                     n 1nchsmleaf "Ahaha!"
@@ -478,7 +478,7 @@ label compliment_thoughtful:
             n 1klrpo "[chosen_tease]..."
             n 1klrpu "But...{w=0.3} I'm just really glad you appreciate it,{w=0.1} [player]."
 
-            if Natsuki.isLove():
+            if Natsuki.isLove(higher=True):
                 n 1knmsml "You're totally worth the effort."
 
         else:

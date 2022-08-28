@@ -1112,9 +1112,12 @@ init 5 python:
     )
 
 label greeting_night_up_late:
-    n 1uchbg 1unmbg "Oh!{w=0.2} Hey,{w=0.1} [player]."
-    n 1unmss "Late night for you too,{w=0.1} huh?"
-    n 1uchsm "Well...{w=0.3} I'm not complaining!{w=0.2} Welcome back!"
+    n 1unmajeex "Oh!{w=0.75}{nw}"
+    extend 1fchbgsbl " Hey,{w=0.2} [player]."
+    n 1tnmss "Late night for you too,{w=0.2} huh?"
+    n 1ullss "Well...{w=0.75}{nw}" 
+    extend 1nchgn " I'm not complaining!" 
+    n 1fchsm "Welcome back!"
     return
 
 # Natsuki is also a night owl
@@ -1131,6 +1134,8 @@ init 5 python:
     )
 
 label greeting_night_night_owl:
-    n 1uchbg "Oh,{w=0.1} [player]!{w=0.2} You're a night owl too,{w=0.1} are you?"
-    n 1nnmsm "Not that I have a problem with that,{w=0.1} of course -{w=0.1} welcome back!"
+    n 1unmajesu "Oh!{w=0.3} [player]!{w=1}{nw}"
+    extend 1fllsslsbl " You're a night owl too,{w=0.2} huh?"
+    n 1fcsbg "N-{w=0.2}not that I have a problem with that,{w=0.2} obviously." 
+    extend 1nchgnl " Welcome back!"
     return

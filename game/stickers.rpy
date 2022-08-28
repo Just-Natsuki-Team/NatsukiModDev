@@ -4,7 +4,8 @@ image sticker blank = "mod_assets/sticker/blank.png"
 image sticker blank_cheer = "mod_assets/sticker/blank_cheer.png"
 image sticker normal = "mod_assets/sticker/normal.png"
 
-transform jn_sticker_peek_up_down:
+# Peeks the sticker up from the left classroom window
+transform jn_sticker_peek_up_down_left:
     subpixel True
     topleft
     xpos 226
@@ -12,6 +13,16 @@ transform jn_sticker_peek_up_down:
     easein 3 ypos 337
     pause 1.0
     easeout 2 ypos 400
+
+# Peeks the sticker up from the right classroom window
+transform jn_sticker_peek_up_down_right:
+    subpixel True
+    topleft
+    xpos 1022
+    ypos 400
+    easein 3 ypos 337
+    pause 1.0
+    easeout 2 ypos 400   
 
 init 0 python in jn_stickers:
     from Enum import Enum
@@ -33,20 +44,22 @@ init 0 python in jn_stickers:
 
     _WINDOW_STICKER_Z_INDEX = -1
 
-    def stickerWindowPeekUp(sticker_type=StickerTypes.blank):
+    def stickerWindowPeekUp(sticker_type=StickerTypes.blank, at_right=False):
         """
-        Shows Natsuki sticker peeking up and in from the left-side classroom window, before going back down.
+        Shows Natsuki sticker peeking up and in from the classroom window (left by default), before going back down.
         If the player hasn't seen a chibi before, the _jn_natsuki_chibi_seen flag is set to True.
 
         IN:
             - sticker_type - The StickerTypes sticker to perform the peek for.
+            - at_right - If True, display the sticker at the right-side window
         """
         if (sticker_type not in _STICKER_TYPE_IMAGE_MAP):
             raise ValueError("Sticker type {0} is not a valid type, or has no corresponding image".format(sticker_type))
 
         renpy.hide("sticker")
+        at_list = [store.jn_sticker_peek_up_down_right] if at_right else [store.jn_sticker_peek_up_down_left]
         renpy.show(
             name=_STICKER_TYPE_IMAGE_MAP.get(sticker_type),
-            at_list=[store.jn_sticker_peek_up_down],
+            at_list=at_list,
             zorder=_WINDOW_STICKER_Z_INDEX)
         store.persistent._jn_natsuki_chibi_seen = True

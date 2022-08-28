@@ -135,7 +135,7 @@ label admission_anxious:
         if Natsuki.isAffectionate(higher=True):
             n 1kwmsm "I'll always have your back."
 
-        if Natsuki.isLove():
+        if Natsuki.isLove(higher=True):
             $ chosen_endearment = jn_utils.getRandomEndearment()
             n 1kchsml "I love you, [chosen_endearment]."
 
@@ -318,7 +318,7 @@ label admission_confident:
         elif Natsuki.isEnamored(higher=True):
             n 1kllsll "I'm just really glad to know you're better now,{w=0.1} [player]."
 
-        if Natsuki.isLove():
+        if Natsuki.isLove(higher=True):
             $ chosen_endearment = jn_utils.getRandomEndearment()
             n 1knmssf "I love you, [chosen_endearment].{w=0.2} Please don't forget that,{w=0.1} alright?"
             n 1klrpof "I'll get mad if you do.{w=0.2} Ahaha..."
@@ -499,7 +499,7 @@ label admission_insecure:
                     n 1kwmpul "...You know I meant every single word I said,{w=0.1} right?"
                     n 1kcssll "So please...{w=0.3} don't give up.{w=0.2} We both need you to win,{w=0.1} [player]."
 
-                    if Natsuki.isLove():
+                    if Natsuki.isLove(higher=True):
                         $ chosen_endearment = jn_utils.getRandomEndearment()
                         n 1kwmsmf "I really do love you, [chosen_endearment]."
                         n 1kchbgf "You know I'll always have your back,{w=0.1} dummy..."
@@ -571,7 +571,7 @@ label admission_sad:
                 n 1kcspu "Good! Good..."
                 n 1knmpo "I just hope they were supportive of you,{w=0.1} [player].{w=0.2} You at least deserve that much."
 
-        if Natsuki.isLove():
+        if Natsuki.isLove(higher=True):
             $ chosen_endearment = jn_utils.getRandomEndearment()
             n 1kchnvf "I love you,{w=0.1} [chosen_endearment]."
 
@@ -654,7 +654,7 @@ label admission_sick:
                 elif Natsuki.isEnamored(higher=True):
                     n 1kllsfl "It really hurts me seeing you unwell like this..."
 
-                if Natsuki.isLove():
+                if Natsuki.isLove(higher=True):
                     n 1kcssff "I love you,{w=0.1} [player].{w=0.2} Please get well soon."
 
                 # Add pending apology
@@ -695,7 +695,7 @@ label admission_sick:
 
         n 1knmpo "So...{w=0.3} promise you'll leave and rest if you have to,{w=0.1} got it?"
 
-        if Natsuki.isLove():
+        if Natsuki.isLove(higher=True):
             $ chosen_endearment = jn_utils.getRandomEndearment()
             n 1knmssl "I love you,{w=0.1} [chosen_endearment].{w=0.2} I...{w=0.3} really hope you get better soon..."
 
@@ -728,7 +728,7 @@ label admission_tired:
         n 1klrsm "So...{w=0.3} go to bed, alright?"
         n 1nchbg "I'll see you later,{w=0.1} [player]!"
 
-        if Natsuki.isLove():
+        if Natsuki.isLove(higher=True):
             $ chosen_endearment = jn_utils.getRandomEndearment()
             n 1nchsml "Love you,{w=0.1} [chosen_endearment]!"
 
@@ -785,7 +785,7 @@ label admission_tired:
         $ chosen_tease = jn_utils.getRandomTease()
         n 1unmbg "Sleep well,{w=0.1} [chosen_tease]!"
 
-        if Natsuki.isLove():
+        if Natsuki.isLove(higher=True):
             n 1uchsml "Love you~!"
 
         elif Natsuki.isAffectionate(higher=True):
@@ -804,7 +804,7 @@ label admission_tired:
         n 1fllpo "You need to get some sleep...{w=0.3} you're gonna be all cranky later at this rate!"
         n 1kllpo "I appreciate the company but make sure you turn in soon,{w=0.1} alright?"
 
-        if 1knmpul Natsuki.isLove():
+        if 1knmpul Natsuki.isLove(higher=True):
             n 1klrpul "You know I don't like it when you don't take care of yourself like this..."
 
         elif Natsuki.isAffectionate(higher=True):
@@ -825,7 +825,7 @@ label admission_tired:
         n 1flrpol "And neither do you,{w=0.1} I'm sure."
         n 1kcspo "Just...{w=0.3} try to get to bed soon,{w=0.1} okay?{w=0.2} {i}Before{/i} your keyboard becomes your pillow."
 
-        if Natsuki.isLove():
+        if Natsuki.isLove(higher=True):
             n 1ksqpol "Besides...{w=0.3} you do know I'm not actually strong enough to carry you to bed myself...{w=0.3} right?"
 
         n 1kllssl "Ahaha..."

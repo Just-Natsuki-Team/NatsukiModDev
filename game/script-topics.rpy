@@ -435,7 +435,7 @@ label talk_service_animals:
         if Natsuki.isAffectionate(higher=True):
             n 1fcssrl "I-{w=0.2}I want you to know that you can depend on me,{w=0.1} 'kay?"
 
-            if Natsuki.isLove():
+            if Natsuki.isLove(higher=True):
                 n 1kwmnv "I love you,{w=0.1} [player]."
                 return
 
@@ -524,7 +524,7 @@ label talk_using_computers_healthily:
         n 1kwmsml "But you know I only do these things because I really care about you,{w=0.1} [player]...{w=0.3} right?"
         n 1kwmnvl "So please...{w=0.3} take care of yourself, okay?{w=0.2} I don't want you hurting because of me."
 
-        if Natsuki.isLove():
+        if Natsuki.isLove(higher=True):
             $ chosen_endearment = jn_utils.getRandomEndearment()
             n 1kwmsml "I love you,{w=0.1} [chosen_endearment]."
             n 1kwmnvl "..."
@@ -667,7 +667,7 @@ label talk_careful_spending:
         n 1fsqsm "Gotta save up all we can for when we can hang out,{w=0.1} right?{w=0.5}{nw}"
         extend 1uchsm " Ehehe."
 
-        if Natsuki.isLove():
+        if Natsuki.isLove(higher=True):
             n 1uchbgl "Love you,{w=0.1} [player]~!"
 
     return
@@ -1836,7 +1836,7 @@ label talk_player_appearance:
     n 1fllbg "I know it wasn't a lot,{w=0.3}{nw}"
     extend 1uchgn " but I feel like I know you so much better now!"
 
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         n 1flldvl "You know,{w=0.1} [player]?{w=0.2} I can just picture it now."
         n 1fnmssl "Meeting you in person somewhere out there,{w=0.1} for the first time..."
         python:
@@ -1948,7 +1948,7 @@ label talk_drinking_alcohol:
         n 1kslsr "...Firsthand."
         n 1ksqsl "You deserve better than that,{w=0.1} [player].{w=0.5}{nw}"
         extend 1kslun " You {i}are{/i} better than that."
-        if Natsuki.isLove():
+        if Natsuki.isLove(higher=True):
             n 1kcsun "..."
             n 1ksqsml "I love you,{w=0.1} [player]."
             n 1fcssrl "I'm {w=0.3}{i}never{/i}{w=0.3} going to let a bottle get between us."
@@ -2107,7 +2107,7 @@ label talk_driving:
                 n 1uskgs "No kidding?{w=0.5}{nw}"
                 extend 1uchbs " Yaaay!{w=0.2} Congrats,{w=0.1} [player]!"
 
-                if Natsuki.isLove():
+                if Natsuki.isLove(higher=True):
                     n 1kwmsm "I knew you could do it,{w=0.1} you big dummy!"
                     extend 1kchsm " Ehehe."
 
@@ -2558,7 +2558,7 @@ label talk_aging:
     n 1nllbg "But anyway...{w=0.3} I think we got side-tracked."
     n 1unmss "I don't really care how old you are,{w=0.1} [player]."
 
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         $ chosen_tease = jn_utils.getRandomTease()
         n 1klrpol "Y-{w=0.1}you better know that I love you all the same,{w=0.1} [chosen_tease]."
         n 1knmpol "Don't forget that,{w=0.1} 'kay?"
@@ -2632,7 +2632,7 @@ label talk_work_life_balance:
             n 1kllun "I don't want some dumb job or stupid assignment to take over your life."
             n 1fcsun "You're...{w=0.3} way more important than either of those,{w=0.1} [player].{w=0.2} Trust me."
 
-            if Natsuki.isLove():
+            if Natsuki.isLove(higher=True):
                 n 1fllun "Besides..."
                 n 1fllssl "You and your time are mine first, [player]."
                 n 1flldvl "I already called dibs,{w=0.1} a-{w=0.1}after all.{w=0.5}{nw}"
@@ -2930,7 +2930,7 @@ label talk_natsukis_fang:
     n 1fsgsm "Remember,{w=0.1} [player] -{w=0.1} if you ignore them,{w=0.1} they'll go away~."
     n 1nllss "But no, seriously."
 
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         $ chosen_endearment = jn_utils.getRandomEndearment()
         n 1kllss "Smiles look good on you,{w=0.1} [chosen_endearment]."
         n 1fnmsm "Let's keep them looking that way."
@@ -3112,7 +3112,7 @@ label talk_i_love_you:
     # Player may or may not have confessed, and Natsuki has been told this before
     else:
         $ persistent.jn_player_love_you_count += 1
-        if Natsuki.isLove():
+        if Natsuki.isLove(higher=True):
 
             # At this point, Natsuki is super comfortable with her player, so we can be open and vary things!
             $ random_response_index = random.randint(0, 11)
@@ -3520,7 +3520,7 @@ label talk_integrity:
         n 1ksqsm "I'm pretty sure we both know what's right for each other by now,{w=0.1} huh?"
         n 1fcsbglesssbl "Ahaha."
 
-        if Natsuki.isLove():
+        if Natsuki.isLove(higher=True):
             n 1uchsml "Love you,{w=0.1} [player]~!"
 
     elif Natsuki.isAffectionate(higher=True):
@@ -3577,7 +3577,7 @@ label talk_favourite_animal:
             n 1uslbg "Or..."
             n 1usqts "At least about as tame as you,{w=0.1} huh [player]?{w=0.2} Ahaha!"
 
-            if Natsuki.isLove():
+            if Natsuki.isLove(higher=True):
                 n 1uchbg "Love you~!"
 
     elif Natsuki.isDistressed(higher=True):
@@ -3642,7 +3642,7 @@ label talk_favourite_drink:
             n 1fllbg "I mean,{w=0.1} think about it -{w=0.1} if you're getting hot chocolate,{w=0.1} you've already kinda lost on the health front."
             n 1uchgn "So you might as well go all in,{w=0.1} right?{w=0.2} Ahaha."
 
-            if Natsuki.isLove():
+            if Natsuki.isLove(higher=True):
                 n 1fcsdvl "Besides,{w=0.2} I'm not too worried -{w=0.1} we'll just share the calories,{w=0.1} [player]~."
 
         n 1unmaj "As for warmer weather...{w=0.3} that's a little trickier,{w=0.1} actually."
@@ -3691,7 +3691,7 @@ init 5 python:
     )
 
 label talk_school_uniform:
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         n 1fsqctl "Oho?{w=0.2} Does [player] like a girl in uniform?"
         n 1ksqaj "Wow...{w=0.3} you're even {i}more{/i} gross than I thought."
         n 1fsqsm "..."
@@ -3759,7 +3759,7 @@ label talk_school_uniform:
 
     n 1ullss "Well,{w=0.1} anyway..."
 
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         n 1fllss "I still don't particularly {i}like{/i} wearing it..."
         n 1uslbgl "But...{w=0.3} I think I can put up with it.{w=0.2} Just for you,{w=0.1} [player]~."
         n 1usrdvl "Ehehe."
@@ -4012,7 +4012,7 @@ init 5 python:
     )
 
 label talk_how_do_you_feel_about_me:
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
 
         if persistent.jn_player_love_you_count > 0:
             n 1kwmpof "[player]...{w=0.3} isn't it obvious? You know I love you already,{w=0.1} right?"
@@ -4157,7 +4157,7 @@ label talk_are_you_into_cosplay:
         n 1fchgnelg "Ahaha!"
         return
 
-        if Natsuki.isLove():
+        if Natsuki.isLove(higher=True):
             n 1uchtsl "Love you,{w=0.1} [player]~!"
             return
 
@@ -4255,7 +4255,7 @@ init 5 python:
     )
 
 label talk_why_do_you_like_me:
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         if jn_admissions.last_admission_type == jn_admissions.TYPE_INSECURE:
             n 1kwmsl "[player]..."
             n 1kwmsf "You aren't asking me this because of what you told me earlier...{w=0.3} right?"
@@ -4436,7 +4436,7 @@ label talk_fried_squid:
     n 1unmbg "You could even be all fancy if you wanted to and order it by the culinary name!"
     n 1fnmbg "Ten points if you can guess what that is.{w=0.2} Ehehe."
 
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         n 1flrsg "Hmm..."
         n 1fnmbg "Actually...{w=0.3} you know what?"
         n 1fchbg "We should just get a bowl of calamari to share.{w=0.2} That's fair,{w=0.1} right?"
@@ -4517,7 +4517,7 @@ label talk_collectibles:
             n 1fsqbg "Oho!"
             n 1fchbg "So I suppose I am something of a collector,{w=0.1} after all!"
 
-            if Natsuki.isLove():
+            if Natsuki.isLove(higher=True):
                 n 1uchsm "I guess that all makes sense.{w=0.2} After all..."
                 n 1fllsmf "I'd like to think you're in my collection too,{w=0.1} [player]~."
                 n 1uchsmf "Ehehe."
@@ -4576,7 +4576,7 @@ label talk_play_snap:
             n 1kllpo "Come on...{w=0.3} it's not hard to apologize,{w=0.1} is it?"
             return
 
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         n 1uchbg "Of course I do,{w=0.1} dummy!{w=0.2} Ehehe."
 
     elif Natsuki.isEnamored(higher=True):
@@ -4618,7 +4618,7 @@ label talk_remind_snap_rules:
         return
 
     else:
-        if Natsuki.isLove():
+        if Natsuki.isLove(higher=True):
             n 1nchbg "Ahaha.{w=0.2} You're so forgetful sometimes,{w=0.1} [player]."
             n 1nsqbg "Sure,{w=0.1} I'll go over it again!{w=0.2} Juuust for you~."
 
@@ -4661,7 +4661,7 @@ label talk_windup_chewing_gum:
     n 1flrpu "Jeez...{w=0.3} makes me want to track them down and stick that crap back in their stupid mouths."
     n 1nnmsl "I don't really care if you chew gum yourself,{w=0.1} [player]."
 
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         n 1kllca "Just make sure you dispose of it properly,{w=0.1} 'kay?"
         n 1kllss "I'm sure you do anyway,{w=0.1} but...{w=0.3} just in case."
         n 1kchsml "Love you,{w=0.1} [player]~!"
@@ -4710,7 +4710,7 @@ label talk_windup_smoking_vaping_indoors:
     n 1fnmbo "But the least they can do is respect the decision of everyone who {i}doesn't{/i},{w=0.1} you know?"
     n 1fcssl "..."
 
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         n 1nnmsl "I know you,{w=0.1} [player].{w=0.2} I highly doubt you'd be the kind of person to be a jerk like that."
         n 1klrss "Just...{w=0.3} don't prove me wrong,{w=0.1} alright?"
         n 1uchgn "'preciate it!{w=0.2} Ahaha."
@@ -4760,7 +4760,7 @@ label talk_windup_unwashed_hands:
     n 1nnmpu "I really hope you keep your hands spick and span.{w=0.2} And not just when you visit the restroom."
     n 1fnmpu "Before you prepare food,{w=0.1} after you've handled trash...{w=0.3} just think about where you've been,{w=0.1} alright?"
 
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         n 1kchbg "Don't get me wrong though!{w=0.2} I'm pretty sure you at least try to do the right thing!"
         n 1nnmbg "Just...{w=0.3} keep up the good work,{w=0.1} alright?{w=0.2} For everyone."
         n 1nchsm "Thanks,{w=0.1} [player]!"
@@ -4825,7 +4825,7 @@ label talk_windup_litter:
     n 1nnmsl "...If you're a litterbug already,{w=0.1} I'll forgive you this one time."
     n 1klrpo "Just...{w=0.3} make sure you clean up your act,{w=0.1} okay?"
 
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         n 1uchsml "Ehehe.{w=0.2} Love you,{w=0.1} [player]~."
 
     elif Natsuki.isAffectionate(higher=True):
@@ -5304,7 +5304,7 @@ label talk_windup_subscriptions:
     if Natsuki.isAffectionate(higher=True):
         n 1fsqssl "A-{w=0.1}at least you have {i}one{/i} subscription you don't have to worry about paying for!"
 
-        if Natsuki.isLove():
+        if Natsuki.isLove(higher=True):
             n 1fchsml "Ehehe.{w=0.5}{nw}"
             extend 1uchbgf " Love you,{w=0.1} dork!"
 
@@ -5379,7 +5379,7 @@ label talk_mod_contributions:
     n 1nsqbg "A little look can't hurt,{w=0.1} right?{w=0.5}{nw}"
     extend 1nchsm " Ahaha."
 
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         $ chosen_endearment = jn_utils.getRandomEndearment()
         n 1nchtsl "Love you,{w=0.1} [chosen_endearment]!"
 
@@ -5425,7 +5425,7 @@ label talk_realizations_player_ddlc_actions:
     n 1nsraj "So...{w=0.3} if he was being that nice to me..."
     n 1klrajl "T-{w=0.1}then that would mean...{w=0.5}{nw}"
 
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         n 1klrsml "..."
         n 1kcsssl "Heh,{w=0.1} what am I even saying.{w=0.5}{nw}"
         extend 1kwmsml " Just because you clicked stuff {w=0.1}-{w=0.1} {i}when you were allowed,{w=0.1} anyway{/i} {w=0.1}-{w=0.1} doesn't make you the same."
@@ -5457,7 +5457,7 @@ label talk_realizations_player_ddlc_actions:
             n 1fcsajl "I-{w=0.1}I guess that at {i}least{/i} means you have good taste.{w=0.5}{nw}"
             extend 1fllunl " I suppose that counts for something."
 
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         n 1klrss "But yeah,{w=0.1} so..."
 
     elif Natsuki.isEnamored(higher=True):
@@ -5495,7 +5495,7 @@ label talk_realizations_player_ddlc_actions:
     if Natsuki.isAffectionate(higher=True):
         n 1fchbg "And that's all there is to it."
 
-        if Natsuki.isLove():
+        if Natsuki.isLove(higher=True):
             extend 1fchsm " Yep."
             n 1uchsml "Love you,{w=0.1} generic protag-{w=0.3}{nw}"
             n 1fllbgl "I mean,{w=0.5}{nw}"
@@ -5589,7 +5589,7 @@ label talk_realizations_other_girls:
         n 1klrpol "..."
         n 1kcspul "...And for rescuing me too."
 
-        if Natsuki.isLove():
+        if Natsuki.isLove(higher=True):
             n 1kwmsml "I'll never,{w=0.1} ever forget that,{w=0.1} [player]."
 
     else:
@@ -5867,7 +5867,7 @@ label talk_fighting_drowsiness:
     n 1fsqss "...Or I really {i}will{/i} put you to sleep.{w=0.5}{nw}"
     extend 1fchgn " Ehehe."
 
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         n 1uchtsl "Love you too,{w=0.1} [player]!~"
 
     elif Natsuki.isAffectionate(higher=True):
@@ -5971,7 +5971,7 @@ label talk_fear_of_spiders:
         else:
             n 1fsqsm "Ehehe."
 
-        if Natsuki.isLove():
+        if Natsuki.isLove(higher=True):
             n 1uchtsl "Love you,{w=0.1} [player]!~"
 
     else:
@@ -6181,7 +6181,7 @@ label talk_maintaining_proper_hygiene:
     extend 1fnmsl " just take the time to do it properly,{w=0.1} okay?"
     n 1fllss "It doesn't {i}need{/i} to be some kind of spa ritual,{w=0.1} just whatever gets you clean."
 
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         n 1fslss "And besides,{w=0.5}{nw}"
         extend 1fsrssl " I don't wanna get snug with you if you're all stinky."
         n 1fnmpo "So you better stick at it,{w=0.1} [player]!"
@@ -6268,7 +6268,7 @@ label talk_maintaining_proper_hygiene:
     n 1ullss "But anyway,{w=0.1} yeah!{w=0.5}{nw}"
     extend 1nnmss " That's about all I had to say."
 
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         n 1nsqss "And remember...{w=0.5}{nw}"
         extend 1nsldvl " I'll love you forever if you keep it up!~"
         n 1fchsml "Ehehe."

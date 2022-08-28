@@ -70,6 +70,7 @@ init python in jn_activity:
         monika_after_story = 19
         just_yuri = 20
         forever_and_ever = 21
+        video_applications = 22
 
         def __int__(self):
             return self.value
@@ -99,6 +100,7 @@ init python in jn_activity:
         "^monika after story$": JNActivities.monika_after_story,
         "(^just yuri$|^just yuri \(beta\)$)": JNActivities.just_yuri,
         "^forever & ever$": JNActivities.forever_and_ever,
+        "(- VLC media player)": JNActivities.video_applications
     }
 
     __ACTIVITY_NOTIFY_MESSAGE_MAP = {
@@ -198,6 +200,7 @@ init python in jn_activity:
             "[player]! Think of your wallet! Jeez... {0}".format(jn_utils.getRandomConfusedEmoticon()),
             "[player]... come on... {0}".format(jn_utils.getRandomSadEmoticon()),
             "Just... don't make a habit of this. {0} Please?".format(jn_utils.getRandomAngryEmoticon()),
+            "Ew... junk food...",
         ],
         JNActivities.instagram: [
             "So who are YOU stalking, huh? {0}".format(jn_utils.getRandomTeaseEmoticon()),
@@ -215,6 +218,11 @@ init python in jn_activity:
             "Eh? What's in the news?",
             "Huh? Did something happen?",
             "You making a post, [player]? {0}".format(jn_utils.getRandomConfusedEmoticon()),
+        ],
+        JNActivities.video_applications: [
+            "What're you watching, [player]? {0}".format(jn_utils.getRandomConfusedEmoticon()),
+            "You watching something, [player]? {0}".format(jn_utils.getRandomConfusedEmoticon()),
+            "Oh hey! Any funny video clips? {0}".format(jn_utils.getRandomTeaseEmoticon()),
         ]
     }
 

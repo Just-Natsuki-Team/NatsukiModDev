@@ -129,7 +129,8 @@ label ch30_init:
             (not persistent._jn_natsuki_chibi_seen and persistent.jn_total_visit_count > 50) 
             or (random.randint(1, 1000) == 1)
         ):
-            $ jn_stickers.stickerWindowPeekUp()
+            $ import random
+            $ jn_stickers.stickerWindowPeekUp(at_right=random.choice([True, False]))
 
     #FALL THROUGH
 
@@ -170,7 +171,14 @@ label ch30_loop:
 
 label ch30_wait:
     window hide
-    $ renpy.pause(delay=5.0, hard=True)
+    python:
+        import random
+
+        if (random.randint(1, 10000) == 1):
+            jn_stickers.stickerWindowPeekUp(at_right=random.choice([True, False]))
+
+        renpy.pause(delay=5.0, hard=True)
+    
     jump ch30_loop
 
 #Other labels
@@ -449,7 +457,7 @@ label talk_menu:
         "Tell me again about...":
             call player_select_topic(is_repeat_topics=True)
 
-        "I love you, [n_name]!" if Natsuki.isLove() and persistent.jn_player_love_you_count > 0:
+        "I love you, [n_name]!" if Natsuki.isLove(higher=True) and persistent.jn_player_love_you_count > 0:
             $ push("talk_i_love_you")
             jump call_next_topic
 

@@ -79,21 +79,21 @@ label farewell_start:
 # Only chosen for the first time the player chooses to say Goodbye
 label farewell_first_time:
     n 1uskem "W-{w=0.1}wait,{w=0.1} you're leaving?"
-    n 1fskwrl "[player]!{w=0.2} H-{w=0.1}hang on!{w=0.5}{nw}"
-    extend 1fbkwrl " Wait just a second!"
-    n 1fskeml "..."
-    n 1klleml "..."
+    n 1fskwrlsbr "[player]!{w=0.2} H-{w=0.1}hang on!{w=0.5}{nw}"
+    extend 1fbkwrleexsbr " Wait just a second!"
+    n 1fskemlsbl "..."
+    n 1kllemlsbl "..."
     n 1kplpu "...Y-{w=0.1}you are coming back,{w=0.1} right?"
-    n 1kllun "..."
-    n 1kwmem "...Right?"
+    n 1kllunsbl "..."
+    n 1kwmemesssbr "...Right?"
     menu:
         "I'll be back.":
             $ persistent.jn_player_first_farewell_response = int(jn_farewells.JNFirstLeaveTypes.will_be_back)
             $ Natsuki.calculatedAffinityGain(bypass=True)
-            n 1unmeml "...!{w=0.5}{nw}"
-            n 1flleml "Y-{w=0.1}yeah!{w=0.5}{nw}"
-            extend 1fsqpol " You better."
-            n 1flreml "Y-{w=0.1}you are reponsible for this,{w=0.1} like I said.{w=0.5}{nw}"
+            n 1unmemlesu "...!{w=0.5}{nw}"
+            n 1fllemless "Y-{w=0.1}yeah!{w=0.5}{nw}"
+            extend 1fsqpolsbr " You better."
+            n 1flremlsbl "Y-{w=0.1}you are reponsible for this,{w=0.1} like I said.{w=0.5}{nw}"
             extend 1flrpol " So..."
             n 1kllpol "..."
 
@@ -102,20 +102,20 @@ label farewell_first_time:
             n 1kskem "..."
             n 1kskwr "N-{w=0.5}no!"
             n 1kcsan "You can't do this to me!{w=0.5}{nw}"
-            extend 1fcsup " N-{w=0.1}not now..."
-            n 1kcsun "..."
-            n 1ksqun "..."
-            n 1kplpu "Please,{w=0.1} [player]...{w=0.5}{nw}"
+            extend 1fcsuptsa " N-{w=0.1}not now..."
+            n 1kcsunltsa "..."
+            n 1ksqunl "..."
+            n 1kplpul "Please,{w=0.1} [player]...{w=0.5}{nw}"
             extend 1kllpu " it isn't much to ask for...{w=2}{nw}"
-            extend 1kwmem " right?"
+            extend 1kwmemsbr " right?"
 
         "...":
             $ persistent.jn_player_first_farewell_response = int(jn_farewells.JNFirstLeaveTypes.no_response)
-            n 1knmem "[player],{w=0.1} c-{w=0.5}come on..."
+            n 1knmemsbr "[player],{w=0.1} c-{w=0.5}come on..."
             n 1kllpu "If this is a joke,{w=0.5}{nw}"
-            extend 1fnmpu " it really isn't funny!{w=2}{nw}"
-            extend 1knmem " I-{w=0.1}I'm serious!"
-            n 1kllun "..."
+            extend 1fnmgs " it really isn't funny!{w=2}{nw}"
+            extend 1knmgssbl " I-{w=0.1}I'm serious!"
+            n 1kllunsbl "..."
             n 1knmaj "Please,{w=0.1} [player]...{w=0.5}{nw}"
             extend 1kllpu " it isn't much to ask for...{w=2}{nw}"
             extend 1kwmem " right?"
@@ -136,6 +136,7 @@ label farewell_force_quit:
 
     n 1uskem "H-{w=0.3}huh?{w=1}{nw}"
     extend 1uscwr " N-{w=0.3}no!{w=0.2} Wait!!{w=0.2} PLEASE-{w=0.3}{nw}"
+    show natsuki 1kchupltsa
 
     play audio static
     show glitch_garbled_b zorder 99 with hpunch
@@ -149,73 +150,101 @@ label farewell_option_sleep:
     if jn_admissions.last_admission_type in (jn_admissions.TYPE_SICK , jn_admissions.TYPE_TIRED):
         # Sick/tired
         n 1kllsl "...[player]."
-        n 1knmpu "I...{w=0.3} think that'd be a good idea.{w=0.2} You know."
+        n 1knmpu "I...{w=0.75}{nw}" 
+        extend 1klrpu " think that'd be a good idea.{w=0.5} You know."
         $ feeling_like = "feeling sick" if jn_admissions.last_admission_type == jn_admissions.TYPE_SICK else "feeling tired"
-        n 1klrpu "Given what you said earlier and all about [feeling_like].{w=0.5}{nw}"
-        extend 1knmss " Go get some rest,{w=0.1} 'kay?{w=0.2} We can always talk later anyway."
-        n 1kllbg "Right?"
-        n 1kchsm "Sleep well,{w=0.1} [player]!"
+        n 1klrpu "With what you said earlier about [feeling_like] and all."
+        n 1ulraj "So...{w=0.75}{nw}"
+        extend 1knmpo " go get some rest,{w=0.1} alright?{w=1}{nw}" 
+        extend 1fcspol " We can just talk later anyway."
+        n 1fnmgsl "Now get going,{w=0.1} [player]!"
+        extend 1fchsml " Ehehe."
+
+        if Natsuki.isEnamored(higher=True):
+            n 1fchbgl "Don't let the bedbugs bite!"
+
+        elif Natsuki.isLove(higher=True):
+            n 1fchblledz "Love you too~!"
 
     elif jn_get_current_hour() > 22 or jn_get_current_hour() < 6:
         # Late night
-        n 1fnmaj "A-{w=0.1}and I should think so,{w=0.1} too!{w=0.5}{nw}"
-        extend 1tnmem " It took you that long to notice the time?!"
-        n 1fllpo "Jeez...{w=0.5}{nw}"
+        n 1fwdajesh "A-{w=0.2}and I should think so,{w=0.1} too!{w=0.5}{nw}"
+        extend 1tnmem " It seriously took you {i}that{/i} long to notice the time?!"
+        n 1fllposbl "Jeez...{w=0.5}{nw}"
         extend 1nllpo " but better late than never,{w=0.1} I guess."
         n 1fllsm "Ehehe.{w=0.5}{nw}"
         extend 1fchsm " Sleep well,{w=0.1} [player]!"
+
+        if Natsuki.isEnamored(higher=True):
+            n 1fchbll "See you soon~!"
+
+        elif Natsuki.isLove(higher=True):
+            n 1nchsml "Love you~!"
 
     elif jn_get_current_hour() >= 21:
         # Standard night
         n 1unmaj "About ready to turn in,{w=0.1} huh?"
         n 1ullaj "That's fine...{w=0.5}{nw}"
-        extend 1fslaj " I guess."
-        n 1fcssm "...Ehehe."
-        n 1uchbg "No worries!{w=0.2} Sleep well,{w=0.1} [player]!"
+        extend 1fslca " I guess."
+        n 1fcsct "I know you need your beauty sleep and all."
+        n 1fsqsm "...Ehehe."
 
+        if Natsuki.isLove(higher=True):
+            $ chosen_tease = jn_utils.getRandomTease()
+            n 1fchbll "Sleep tight,{w=0.2} [chosen_tease]!{w=0.5}{nw}"
+            extend 1uchsmledz " See you tomorrow~!"
+
+        else:
+            n 1fchbgl "No worries!{w=0.2} Sleep well,{w=0.1} [player]!"
+        
     elif jn_get_current_hour() >= 19:
         # Early night
-        n 1unmaj "Huh?{w=0.2} You're taking an early night?"
-        n 1ullaj "That's fine.{w=0.2} I suppose."
-        n 1fsqpo "You better stay up with me later though.{w=0.5}{nw}"
-        extend 1fchsg " Ehehe."
-        n 1fchbg "Night,{w=0.1} [player]!"
+        n 1unmaj "Huh?{w=0.75}{nw}" 
+        extend 1tnmaj " You're taking an early night?"
+        n 1nnmbo "Oh.{w=0.5}{nw}" 
+        extend 1nllpu " Well..."
+        n 1ullaj "That's fine.{w=0.75}{nw}" 
+        extend 1nslpo " I suppose."
+        n 1fsqcal "You better stay up with me later though.{w=0.75}{nw}"
+        extend 1fsrtrl " You know."
+        n 1fsqbglsbl "To make up for lost time and all."
+        n 1fchbll "Night,{w=0.1} [player]!"
 
     else:
         # Nap
-        n 1tnmpu "Huh?{w=0.2} You're taking naps now?{w=0.5}{nw}"
-        extend 1tsqca " ...Really?"
-        n 1fllca "Jeez...{w=0.3} I swear I'm gonna be feeding you next at this rate..."
-        n 1fsqsm "..."
-        n 1fchbg "Ehehe.{w=0.2} I'm kidding,{w=0.1} I'm kidding!{w=0.5}{nw}"
-        extend 1ullbg " Sheesh."
-        n 1uchbg "See you later,{w=0.1} [player]~!"
+        n 1tnmbo "Huh?{w=1}{nw}" 
+        extend 1tnmpu " You're taking naps now?"
+        n 1tsqcaesd " ...Really?"
+        n 1ncsemesi "Jeez...{w=1}{nw}" 
+        extend 1fllca " I swear I'm gonna be feeding you next at this rate..."
+        n 1fsqdv "..."
+        n 1fchbg "Oh,{w=0.3} relax!"
+        n 1nchgnelg "I'm kidding,{w=0.1} I'm kidding!{w=0.5}{nw}"
+        extend 1tllss " Sheesh."
+        n 1fchbg "See you later,{w=0.1} [player]~!"
 
-    if Natsuki.isEnamored(higher=True):
-        n 1fchbgl "Don't let the bedbugs bite!"
-
-    if Natsuki.isLove():
-        n 1uchbgf "Love you~!"
+        if Natsuki.isLove(higher=True):
+            n 1uchbgf "Love you~!"
 
     return { "quit": None }
 
 label farewell_option_eat:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_HUNGRY:
-        n 1fcsgs "W-{w=0.1}well,{w=0.1} yeah!{w=0.2} Go get something already,{w=0.1} dummy!"
-        n 1fllpo "Jeez..."
-        n 1fnmpo "Just make it something healthy,{w=0.1} got it?"
-        n 1fllsm "...Ehehe.{w=0.2}{nw}"
-        extend 1fchbg " Enjoy,{w=0.1} [player]!"
+        n 1fcsgs "W-{w=0.1}well,{w=0.1} duh!{w=0.5} You {i}said{/i} you were starving!"
+        n 1fllpoesi "Jeez..."
+        n 1fdtposbr "Just make it something healthy,{w=0.1} got it?"
+        n 1fsqsm "...Ehehe."
+        n 1fchbg "Enjoy,{w=0.1} [player]!"
 
     elif jn_get_current_hour() in (7, 8):
-        n 1fnmaj "You better!{w=0.5}{nw}"
-        extend 1fslca " You {i}do{/i} know what they say about breakfast,{w=0.1} right?"
-        n 1fllsm "...Ehehe.{w=0.2}{nw}"
+        n 1fnmgs "Yeah!{w=0.3} You better!{w=0.5}{nw}"
+        extend 1fsqtr " You {i}do{/i} know what they say about breakfast,{w=0.1} right?"
+        n 1fsqsml "...Ehehe."
         n 1fchbg "Bon appetit,{w=0.1} [player]!"
 
     elif jn_get_current_hour() in (12, 13):
         n 1unmaj "Heading out for lunch,{w=0.1} [player]?"
-        n 1nlrpu "That's cool,{w=0.1} that's cool."
+        n 1ulrbo "That's cool,{w=0.3} that's cool."
         n 1nsqsm "Just remember though...{w=0.3}{nw}"
         extend 1fsqss " you are what you eat~."
         n 1fchsm "...Ehehe.{w=0.5}{nw}"
@@ -225,7 +254,7 @@ label farewell_option_eat:
         n 1unmaj "Dinner time,{w=0.1} huh?{w=0.5}{nw}"
         extend 1unmbg " No probs!"
         n 1nlrpu "Just...{w=0.5}{nw}"
-        extend 1flrpo " make sure it isn't a ready meal.{w=0.5}{nw}"
+        extend 1fdtposbr " make sure it isn't a ready meal.{w=0.5}{nw}"
         extend 1fsqpo " Got it?"
         n 1fsqsm "...Ehehe."
         n 1fchbg "Enjoy,{w=0.1} [player]~!"
@@ -284,10 +313,10 @@ label farewell_option_going_out:
 
     else:
         n 1unmaj "Oh?{w=0.2} You're heading out,{w=0.1} [player]?"
-        n 1fchbg "No worries!{w=0.2} I'll see you later then,{w=0.1} 'kay?"
-        n 1nchbg "Bye-{w=0.1}bye,{w=0.1} [player]!"
+        n 1fchbg "No worries!{w=0.2} I'll catch you later!"
+        n 1nchbg "Toodles~!"
 
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         n 1uchbgf "Love you~!"
 
     return { "quit": None }
@@ -296,15 +325,23 @@ label farewell_option_work:
     if jn_get_current_hour() >= 20 or jn_get_current_hour() <= 4:
         n 1knmaj "H-{w=0.1}huh?{w=0.2} You're going to work now?"
         $ time_concern = "late" if jn_get_current_hour() >= 20 else "early"
-        n 1kllaj "But...{w=0.3} it's super [time_concern] though,{w=0.1} [player]..."
-        n 1kllun "..."
-        n 1fnmun "Just...{w=0.3} be careful,{w=0.1} alright?"
-        extend 1fsqpo " And you {i}better{/i} come visit when you get back."
-        n 1fllsm "...Ehehe."
-        n 1fchbg "Do your best,{w=0.1} [player]!"
+        n 1kllajsbr "But...{w=0.5}{nw}" 
+        extend 1knmgssbr " it's super [time_concern] though,{w=0.1} [player]..."
+        n 1kllsll "..."
+        n 1fcspusbr "Just...{w=1}{nw}" 
+        extend 1kllsl " be careful,{w=0.2} alright?"
+        n 1fsqpol "And you {i}better{/i} come visit when you get back."
+
+        if Natsuki.isLove(higher=True):
+            n 1fnmcal "Take care,{w=0.1} [player]!"
+
+        else:
+            n 1fnmcal "Take care,{w=0.1} [player]!{w=1}{nw}"
+            extend 1kchsmleaf " I love you!"
+            n 1kllcalsbr "..."
 
     else:
-        n 1unmaj "Oh?{w=0.2} You're working today?"
+        n 1unmajesu "Oh?{w=0.2} You're working today?"
 
         if jn_is_easter():
             n 1uskgs "...And on Easter,{w=0.1} of all days?{w=0.5}{nw}"
@@ -312,49 +349,50 @@ label farewell_option_work:
 
         elif jn_is_christmas_eve():
             n 1fskgsl "...On Christmas Eve?{w=0.5}{nw}"
-            extend 1fcseml " You've gotta be kidding me..."
+            extend 1kcsemledr " You've gotta be kidding me..."
 
         elif jn_is_christmas_day():
             n 1fskwrl "...On {i}Christmas{/i}?!{w=0.5}{nw}"
-            extend 1fcseml " Ugh..."
+            extend 1kcsemledr " Ugh..."
             n 1fslpol "..."
             n 1fslajl "Well..."
 
         elif jn_is_new_years_eve():
             n 1fskgsl "...And on New Year's Eve,{w=0.1} too?!{w=0.5}{nw}"
-            extend 1fcseml " Jeez..."
+            extend 1kcsemledr " Jeez..."
 
         elif not jn_is_weekday():
             n 1uwdaj "A-{w=0.1}and on a weekend,{w=0.1} too?{w=0.5}{nw}"
-            extend 1fslpu " Man..."
+            extend 1kslpu " Man..."
 
         n 1nlrpo "It sucks that you've gotta work,{w=0.1} but I get it.{w=0.2} I guess."
         n 1fnmpo "...You better come finish when you visit though."
         n 1fsqsm "Ehehe."
         n 1fchbg "Take it easy,{w=0.1} [player]!{w=0.2} Don't let anyone push you around!"
 
-    if Natsuki.isLove():
-        $ chosen_endearment = jn_utils.getRandomEndearment()
-        n 1uchbgf "You got this,{w=0.1} [chosen_endearment]!{w=0.2} Love you~!"
+        if Natsuki.isLove(higher=True):
+            $ chosen_endearment = jn_utils.getRandomEndearment()
+            n 1uchbgf "You got this,{w=0.1} [chosen_endearment]!{w=0.2} Love you~!"
 
-    elif Natsuki.isEnamored(higher=True):
-        $ chosen_tease = jn_utils.getRandomTease()
-        n 1uchbgl "I believe in you,{w=0.1} [chosen_tease]!"
+        elif Natsuki.isEnamored(higher=True):
+            $ chosen_tease = jn_utils.getRandomTease()
+            n 1uchbgl "I believe in you,{w=0.1} [chosen_tease]!"
 
     return { "quit": None }
 
 label farewell_option_school:
     if jn_get_current_hour() >= 20 or jn_get_current_hour() <= 4:
-        n 1twdem "...School?{w=0.2} At this hour?"
+        n 1tnmem "...School?{w=1}{nw}" 
+        extend 1fskgsesh " A-{w=0.1}At this hour?"
 
         if jn_is_easter():
-            n 1uskgs "...And on Easter,{w=0.1} of all days?}"
+            n 1kwdgs "...And on {i}Easter{/i},{w=0.1} of all days?}"
 
         elif jn_is_christmas_eve():
-            n 1fskgsl "...On Christmas Eve?"
+            n 1fskgsl "...And on {i}Christmas Eve{/i}?"
 
         elif jn_is_christmas_day():
-            n 1fskwrl "...On {i}Christmas{/i}?!"
+            n 1fskwrl "...And on {i}Christmas{/i}?!"
 
         elif jn_is_new_years_eve():
             n 1fskgsl "...And on New Year's Eve,{w=0.1} too?!"
@@ -362,13 +400,13 @@ label farewell_option_school:
         if not jn_is_weekday():
             extend 1uskwr " A-{w=0.1}and on a {i}weekend{/i} too?!"
 
-        n 1fbkgs "What the hell kind of school is thaaaat?!"
+        n 1fbkwrean "What the hell kind of school is thaaaat?!"
         n 1kllpo "Jeez.{w=0.5}{nw}"
-        extend 1fllpo " And I thought my school experience was bad enough."
+        extend 1fslsr " And I thought my school experience was bad enough."
         n 1kcspu "Just...{w=0.5}{nw}"
         extend 1knmpu " take care getting there,{w=0.1} alright?"
         $ time_concern = "late" if jn_get_current_hour() >= 20 else "early"
-        extend 1fllsr " It's really [time_concern],{w=0.1} after all."
+        extend 1fllsrsbl " It's really [time_concern],{w=0.1} after all."
         n 1kllss "Study hard,{w=0.1} [player]!"
 
     else:
@@ -404,9 +442,9 @@ label farewell_option_school:
         extend 1fchsm " Ehehe."
         n 1fchbg "No slacking off,{w=0.1} [player]!{w=0.2} I'll see you later!"
 
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         $ chosen_endearment = jn_utils.getRandomEndearment()
-        n 1uchbgf "Love you,{w=0.1} [chosen_endearment]!"
+        n 1uchbgf "Love you!"
 
     return { "quit": None }
 
@@ -419,18 +457,18 @@ label farewell_option_misc_activity:
     extend 1klrpo "{w=0.2} Got it?"
     n 1kllpo "See you soon,{w=0.1} [player]!"
 
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         n 1kllssf "Love you!"
 
     return { "quit": None }
 
 label farewell_option_play:
     n 1fsqaj "...Really,{w=0.5} [player]?"
-    n 1nslpu "You'd seriously rather play a {i}game{/i}...{w=0.5}{nw}"
-    extend 1fsqsf " than chill out with me?"
+    n 1nslpu "You'd seriously rather play some {i}game{/i}...{w=0.5}{nw}"
+    extend 1fsqsf " than hang out with {i}me{/i}?"
     n 1fcssl "..."
-    n 1uchgn "Well,{w=0.1} your loss!{w=0.5}{nw}"
-    extend 1uchlgelg " Ahaha!"
+    n 1uchgneme "Well,{w=0.1} your loss!{w=0.5}{nw}"
+    extend 1fchbgelg " Ahaha!"
     n 1nllbg "No,{w=0.1} no.{w=0.2} It's fine.{w=0.2} You go do that,{w=0.1} [player].{w=0.5}{nw}"
     extend 1nsqbg " Besides..."
     n 1usqct "You sure could use the practice,{w=0.1} huh?{w=0.5}{nw}"
@@ -441,17 +479,17 @@ label farewell_option_play:
     return { "quit": None }
 
 label farewell_option_studying:
-    $ player_initial = list(player)[0]
-    n 1fskgsl "[player_initial]-{w=0.1}[player]!"
-    n 1fllanl "If I'd known you were meant to be studying I'd have thrown you out myself!{w=0.5}{nw}"
-    extend 1fllpo " Geez..."
-    n 1fnmpo "I really hope you don't have exams tomorrow or something like that..."
+    $ player_initial = jn_utils.getPlayerInitial()
+    n 1fskgs "[player_initial]-{w=0.1}[player]!"
+    n 1fllansbr "If I'd known you were meant to be studying I'd have thrown you out myself!{w=0.5}{nw}"
+    extend 1fcspoesi " Geez..."
+    n 1nsqposbl "I really hope you don't have exams tomorrow or something like that..."
     n 1flrpo "But either way,{w=0.1} you'll be fine.{w=0.2} Just go!{w=0.5}{nw}"
     extend 1fwdaj " Go!"
     n 1fchgn "...Shoo,{w=0.1} you dummy!{w=0.2} Ehehe.{w=0.5}{nw}"
     extend " We'll talk later!"
 
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         n 1uchbgf "Love you~!"
 
     return { "quit": None }
@@ -466,7 +504,7 @@ label farewell_option_chores:
         n 1ullss "Well,{w=0.1} whatever.{w=0.5}{nw}"
         extend 1tnmss " Just hurry up and go sleep,{w=0.1} 'kay?"
 
-        if Natsuki.isLove():
+        if Natsuki.isLove(higher=True):
             n 1uchbg "Later,{w=0.1} [player]!"
             extend 1uchbgf " Love you~!"
 
@@ -478,7 +516,7 @@ label farewell_option_chores:
         n 1nchsm "Ehehe.{w=0.2} Yeah,{w=0.1} that's fine.{w=0.5}{nw}"
         extend 1fchgn " You go take care of your clean streak!"
 
-        if Natsuki.isLove():
+        if Natsuki.isLove(higher=True):
             n 1uchbg "Later,{w=0.1} [player]!{w=0.5}{nw}"
             extend 1uchbgf " Love you~!"
 
@@ -496,15 +534,18 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_you_mean_the_world_to_me",
             unlocked=True,
-            affinity_range=(jn_affinity.LOVE, jn_affinity.LOVE)
+            affinity_range=(jn_affinity.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
 label farewell_love_you_mean_the_world_to_me:
-    n 1kplsfl "Aww...{w=0.3} you're leaving now,{w=0.1} [player]?{w=0.2} Well,{w=0.1} okay..."
-    n 1knmsfl "Y-{w=0.2}you know I'll miss you,{w=0.1} right?"
-    n 1knmssf "Take care,{w=0.1} [player]!{w=0.2} You mean the world to me!"
+    n 1kllpul "Aww...{w=1}{nw}"
+    extend 1kplsfl " you're leaving now,{w=0.2} [player]?" 
+    n 1klrcal "Well...{w=1}" 
+    extend 1ksrcal " okay."
+    n 1fnmtrf "Y-{w=0.2}you better take care,{w=0.2} [player]!{w=0.5}" 
+    extend 1kchssfeaf " You mean the world to me!"
 
     return { "quit": None }
 
@@ -514,16 +555,18 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_dont_like_saying_goodbye",
             unlocked=True,
-            affinity_range=(jn_affinity.LOVE, jn_affinity.LOVE)
+            affinity_range=(jn_affinity.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
 label farewell_love_dont_like_saying_goodbye:
-    n 1fplpol "You know I don't like saying goodbye,{w=0.1} [player]..."
-    n 1ncssll "..."
-    n 1kplsml "I'll be okay!{w=0.2} Just come back soon,{w=0.1} alright?"
-    n 1kchbgf "Stay safe,{w=0.1} dummy!{w=0.2} I love you!"
+    n 1fsqtrl "You know I don't like saying goodbye,{w=0.1} [player]..."
+    n 1kcssllesi "..."
+    n 1fcsgsfess "I-{w=0.2}I'll be okay!{w=1}{nw}"
+    extend 1fcsajf "Just..."
+    n 1knmpof "...get back here soon,{w=0.2} alright?"
+    n 1kchssfeaf "I-{w=0.2}I love you,{w=0.2} [player]!"
 
     return { "quit": None }
 
@@ -533,16 +576,22 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_counting_on_you",
             unlocked=True,
-            affinity_range=(jn_affinity.LOVE, jn_affinity.LOVE)
+            affinity_range=(jn_affinity.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
 label farewell_love_counting_on_you:
-    n 1fllpol "Uuuu...{w=0.3} I never like saying goodbye to you..."
-    n 1knmsml "But I guess it can't be helped,{w=0.1} [player]."
+    n 1fcsunl "Uuuu...{w=0.75}{nw}" 
+    extend 1fslpol " I never like saying goodbye to you..."
+    n 1kslbol "But...{w=0.5}{nw}" 
+    extend 1kslssl " I guess it can't be helped sometimes."
     $ chosen_endearment = jn_utils.getRandomEndearment()
-    n 1uchbgf "Take care of yourself out there,{w=0.1} [chosen_endearment]!{w=0.2} I'm counting on you!"
+    n 1fcsajl "S-{w=0.2}so!"
+    n 1fsqtrf "You better take care of yourself out there,{w=0.1} [chosen_endearment]." 
+    n 1fchgnl "...'Cuz I'm counting on you!"
+    $ chosen_tease = jn_utils.getRandomTease()
+    n 1fchblleaf "Later,{w=0.2} [chosen_tease]!"
 
     return { "quit": None }
 
@@ -552,17 +601,20 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_do_your_best",
             unlocked=True,
-            affinity_range=(jn_affinity.LOVE, jn_affinity.LOVE)
+            affinity_range=(jn_affinity.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
 label farewell_love_do_your_best:
     n 1unmajl "Oh?{w=0.2} You're heading out now?"
-    n 1flrpol "That's fine,{w=0.1} I guess..."
-    n 1kplsml "I'll really miss you,{w=0.1} [player]."
+    n 1flrpol "That's...{w=0.5} fine.{w=0.75}{nw}" 
+    extend 1fsrsll " I guess."
+    n 1kplcal "...You know I'll really miss you,{w=0.1} [player]."
     $ chosen_endearment = jn_utils.getRandomEndearment()
-    n 1uchsmf "Do your best,{w=0.1} [chosen_endearment]!"
+    n 1flrssfsbr "S-{w=0.2}so you better do your best for me,{w=0.1} [chosen_endearment]!"
+    n 1fchsmf "Ehehe.{w=0.75}{nw}"
+    extend 1uchsmfeaf " See you soon!"
 
     return { "quit": None }
 
@@ -572,7 +624,7 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_rooting_for_you",
             unlocked=True,
-            affinity_range=(jn_affinity.LOVE, jn_affinity.LOVE)
+            affinity_range=(jn_affinity.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -582,8 +634,9 @@ label farewell_love_rooting_for_you:
     n 1fcssll "I always hate it when you have to go somewhere..."
     $ chosen_endearment = jn_utils.getRandomEndearment()
     n 1kcssml "...But I know you'll always be back for me,{w=0.1} [chosen_endearment]."
-    n 1unmbgl "Well...{w=0.1} I'm rooting for you!"
-    n 1uchbgf "Make me proud,{w=0.1} [player]!{w=0.2} I love you!"
+    n 1fllssfsbl "N-{w=0.2}not like you {i}have{/i} a choice,{w=0.2} obviously!"
+    n 1fsqsmf " Ehehe."
+    n 1fchblfeaf "Make me proud,{w=0.2} [player]!{w=0.3} I'm rooting for you!"
 
     return { "quit": None }
 
@@ -593,16 +646,19 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_me_to_deal_with",
             unlocked=True,
-            affinity_range=(jn_affinity.LOVE, jn_affinity.LOVE)
+            affinity_range=(jn_affinity.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
 label farewell_love_me_to_deal_with:
     n 1unmajl "You're leaving now,{w=0.1} [player]?"
-    n 1fllpol "Awww...{w=0.3} well okay."
-    n 1knmssl "You take care of yourself,{w=0.1} got it? Or you'll have me to deal with!"
-    n 1uchbgf "Bye now!{w=0.2} I love you!"
+    n 1kllpul "Awww...{w=0.75}{nw}" 
+    extend 1kllpol " well okay."
+    n 1fnmcal "You take care of yourself,{w=0.2} got it?" 
+    extend 1fcsssl " Or you'll have me to deal with!"
+    n 1fsqsml "Ehehe."
+    n 1fchbgfeaf "Bye now!{w=0.5} I love you~!"
 
     return { "quit": None }
 
@@ -612,17 +668,19 @@ init 5 python:
             persistent._farewell_database,
             label="farewell_love_wish_you_could_stay_forever",
             unlocked=True,
-            affinity_range=(jn_affinity.LOVE, jn_affinity.LOVE)
+            affinity_range=(jn_affinity.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
 
 label farewell_love_wish_you_could_stay_forever:
-    n 1kplsml "Time to go,{w=0.1} [player]?"
-    n 1kllssl "Sometimes I wish you could just stay forever...{w=0.3} Ehehe."
-    n 1knmsml "But I understand you've got stuff to do."
+    n 1kwmpol "Time to go,{w=0.1} [player]?"
+    n 1kllssl "Sometimes I wish you could just stay forever..."
+    n 1fcsajf "But I understand you've got stuff to do."
+    n 1fslssfsbl "...Even if it isn't as important as me."
+    extend 1nchgnl " Ehehe."
     $ chosen_endearment = jn_utils.getRandomEndearment()
-    n 1uchbgf "Goodbye,{w=0.1} [chosen_endearment]!"
+    n 1fchbgf "Later,{w=0.2} [chosen_endearment]!"
 
     return { "quit": None }
 
@@ -1111,7 +1169,7 @@ label farewell_short_session_ask:
         "Sure, I can stay a little longer.":
             n 1uchbsl "Yay{nw}!"
             n 1uskgsl "I-I mean...!"
-            if Natsuki.isLove():
+            if Natsuki.isLove(higher=True):
                 n 1kllssl "T-{w=0.1}thanks,{w=0.1} [player]. It means a lot to me."
                 $ chosen_endearment = jn_utils.getRandomEndearment()
                 n 1kplssl "Really.{w=0.2} Thank you,{w=0.1} [chosen_endearment]."
@@ -1322,7 +1380,7 @@ init 5 python:
             label="farewell_gentle_ask",
             unlocked=True,
             conditional="not jn_globals.player_already_stayed_on_farewell",
-            affinity_range=(jn_affinity.LOVE, jn_affinity.LOVE)
+            affinity_range=(jn_affinity.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_FAREWELL
     )
@@ -1386,7 +1444,7 @@ label farewell_early_morning_going_this_early:
 
     n 1uchgnl "Take care out there,{w=0.1} 'kay?{w=0.2} Don't do anything dumb!"
 
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         n 1uchbsf "Love you,{w=0.1} [player]~!"
 
     elif Natsuki.isAffectionate(higher=True):
@@ -1419,7 +1477,7 @@ label farewell_morning_heading_off:
     if Natsuki.isEnamored(higher=True):
         n 1nchbgl "I hope your day is as great as you are."
 
-        if Natsuki.isLove():
+        if Natsuki.isLove(higher=True):
             n 1nchsmf "Ehehe.{w=0.2} Love you,{w=0.1} [player]~!"
 
         else:
