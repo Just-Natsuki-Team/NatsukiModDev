@@ -478,13 +478,14 @@ init -1 python in jn_outfits:
 
             return True
 
-    def __register_outfit(outfit):
+    def __register_outfit(outfit, player_created=False):
         """
         Registers a new outfit in the list of all outfits, allowing in-game access and persistency.
         If the outfit has no existing corresponding persistent entry, it is saved.
 
         IN:
             - outfit - the JNOutfit to register.
+            - player_created - Boolean flag describing whether this outfit was defined by the current player via the new outfit creation flow
         """
         if outfit.reference_name in __ALL_OUTFITS:
             jn_utils.log("Cannot register outfit name: {0}, as an outfit with that name already exists.".format(outfit.reference_name))
@@ -506,8 +507,8 @@ init -1 python in jn_outfits:
             if outfit.reference_name not in store.persistent.jn_outfit_list:
                 outfit.__save()
 
-                # If this is the first time adding it to the list, and it isn't JN, it's a new unlock
-                if not "jn_" in outfit.reference_name:
+                # If this is the first time adding it to the list, and it isn't JN or created by this player in the session, it's a new unlock
+                if not "jn_" in outfit.reference_name and not player_created:
                     _SESSION_NEW_UNLOCKS.append(outfit)
 
     def __register_wearable(wearable):
@@ -950,7 +951,7 @@ init -1 python in jn_outfits:
                 file.write(outfit.to_json_string())
             
             # Finally register the new outfit
-            __register_outfit(outfit)
+            __register_outfit(outfit=outfit, player_created=True)
             store.Natsuki.setOutfit(outfit)
             renpy.notify("Outfit saved!")
             return True
