@@ -110,6 +110,9 @@ init python in jn_activity:
             "How do you even read all that stuff?!",
             "Well? Does it work? {0}".format(jn_utils.getRandomTeaseEmoticon()),
             "What even IS that mumbo jumbo...",
+            "I don't even know where I'd start with coding stuff...",
+            "More programming stuff?",
+            "I see, I see. You're on nerd duty today! {0}".format(jn_utils.getRandomTeaseEmoticon()),
         ],
         JNActivities.discord: [
             "Someone's a social butterfly, huh?",
@@ -117,12 +120,16 @@ init python in jn_activity:
             "Man... I wish I had some emotes... {0}".format(jn_utils.getRandomSadEmoticon()),
             "Maybe I should start a server...",
             "Huh? Did someone message you?",
+            "Eh? Did someone just ping you? {0}".format(jn_utils.getRandomConfusedEmoticon()),
+            "Don't just spend all day yapping away on there! {0}".format(jn_utils.getRandomAngryEmoticon()),
+            "I'm not THAT boring to talk to, am I? {0}".format(jn_utils.getRandomSadEmoticon()),
         ],
         JNActivities.music_applications: [
             "You better play something good!",
             "New playlist, [player]?",
             "Play some tunes, [player]!",
             "When do I get to pick something, huh? {0}".format(jn_utils.getRandomAngryEmoticon()),
+            "Hit it, [player]! {0}".format(jn_utils.getRandomTeaseEmoticon()),
         ],
         JNActivities.gaming: [
             "You better not be spending all day on that! {0}".format(jn_utils.getRandomAngryEmoticon()),
@@ -130,6 +137,7 @@ init python in jn_activity:
             "Gonna play something?",
             "You could have just said if you were bored... {0}".format(jn_utils.getRandomSadEmoticon()),
             "You better not play anything weird...",
+            "Game time, huh?",
         ],
         JNActivities.youtube: [
             "YouTube, huh? I think Sayori uploaded something once...",
