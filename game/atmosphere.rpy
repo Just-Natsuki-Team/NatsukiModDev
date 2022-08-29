@@ -535,17 +535,17 @@ label weather_change:
         else:
             $ alt_dialogue = random.choice([True, False])
             if jn_atmosphere.isCurrentWeatherSunny():
-                if previous_weather.weather_type == JNWeatherTypes.rain:
+                if previous_weather.weather_type == jn_atmosphere.JNWeatherTypes.rain:
                     n 1fcsaj "Well,{w=1}{nw}"
                     extend 1fllgs " about time all that rain buzzed off!{w=1}{nw}"
                     n 1nchgn "Much better.{w=3}{nw}"
 
-                elif previous_weather.weather_type == JNWeatherTypes.thunder:
+                elif previous_weather.weather_type == jn_atmosphere.JNWeatherTypes.thunder:
                     n 1tllpu "Huh?{w=1.25}{nw}"
                     extend 1ullajeex "Oh,{w=0.2} the storm passed.{w=1}{nw}"
                     n 1fcsajsbl "Good riddance.{w=3}{nw}"
 
-                elif previous_weather.weather_type == JNWeatherTypes.snow:
+                elif previous_weather.weather_type == jn_atmosphere.JNWeatherTypes.snow:
                     n 1kllpu "Aww...{w=1.5}{nw}"
                     extend 1kllpol " it stopped snowing...{w=3}{nw}"
 
