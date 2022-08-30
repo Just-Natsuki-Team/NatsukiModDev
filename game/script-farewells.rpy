@@ -1281,57 +1281,90 @@ init 5 python:
     )
 
 label farewell_short_session_ask_alt:
-    n 1knmgsl "N-{w=0.1}now wait just one second,{w=0.1} [player]!{w=0.2} This isn't fair at all!"
+    n 1knmajl "N-{w=0.2}now wait just one second,{w=0.2} [player]!{w=1}{nw}"
+    extend 1fcsgsl " T-{w=0.2}this isn't fair at all!"
     $ time_in_session_descriptor = jn_utils.get_time_in_session_descriptor()
-    n 1knmpol "You've barely been here [time_in_session_descriptor],{w=0.1} and you're already going?"
+    n 1flleml "You've barely been here [time_in_session_descriptor],{w=0.75}{nw}" 
+    extend 1fnmajl " and you're {i}already{/i} going?"
+    show natsuki 1fcsgslsbl
     menu:
-        n "Come on!{w=0.2} You'll stay a little longer,{w=0.1} won't you?"
+        n "Come on!{w=0.2} You'll stay a little longer,{w=0.2} won't you?"
 
         "Sure, I can stay a while.":
-            n 1fcsbsl "H-{w=0.1}Ha!{w=0.2} I knew it."
-            n 1fsqdvl "Ehehe.{w=0.1} Looks like I win again,{w=0.1} [player]!"
+            n 1fcsbsl "H-{w=0.3}Ha!{w=0.75}{nw}" 
+            extend 1fsqsslsbr " I knew it."
+            n 1fsqsml "Ehehe.{w=0.5}{nw}" 
+            extend 1fsqbgleme " Looks like I win again,{w=0.1} [player]!"
+            show natsuki 1fcsbgledzsbl
+
             menu:
-                n "O-or maybe you just can't bring yourself to leave my side?"
+                n "O-or maybe you just couldn't bring yourself to leave someone as {i}awesome{/i} as me?"
 
                 "You got me, [n_name]. I couldn't leave you even if I tried.":
-                    $ player_was_snarky = False
-                    n 1uscwrf "W-{w=0.2}wha...?"
-                    n 1fcsunf "Nnnnnnn-!"
-                    $ player_initial = list(player)[0]
-                    n 1fbkwrf "[player_initial]-{w=0.2}[player]!"
-                    n 1fllwrf "Don't just come out with stuff like that!"
-                    n 1fllpof "Jeez...{w=0.3} you're such a dummy sometimes..."
+                    n 1uskwrfesh "W-{w=0.3}wha...?"
+                    n 1fcsanf "Nnnnnnn-!"
+                    $ player_initial = jn_utils.getPlayerInitial()
+                    n 1fbkwrfess "[player_initial]-{w=0.3}[player]!{w=0.75}{nw}"
+                    extend 1fllwrf " Don't just come out with stuff like that!"
+                    n 1fcspofesi "Yeesh..."
 
-                "Yeah, yeah.":
+                    if Natsuki.isEnamored():
+                        extend 1flrpof " I swear you take things way too far sometimes."
+                        n 1fsrunfess "..."
+                        n 1fcsemlsbr "A-{w=0.2}anyway!"
+
+                    elif Natsuki.isAffectionate():
+                        extend 1fsqpolsbl " are you {i}trying{/i} to give me a heart attack or something?"
+                        n 1fcsajlsbl "A-{w=0.2}anyway."
+
+                    else:
+                        extend 1fslsslsbl " your comedy routine {i}definitely{/i} needs more work,{w=0.2} I'll tell you that much!"
+                        n 1fcsbolsbl "Well,{w=0.2} anyway..."
+
+                "Whatever, Natsuki.":
                     $ player_was_snarky = True
-                    n 1fsqbgf "Ehehe.{w=0.2} What's wrong,{w=0.1} [player]?"
-                    n 1tsqdvf "A little too close to the truth?"
-                    n 1uchbsfelg "Ahaha!"
+                    n 1tsqssl "Oh?{w=0.75}{nw}" 
+                    extend 1fcsbgl " What's wrong,{w=0.1} [player]?"
+                    n 1fsqbgleme "A little {i}too{/i} close to the truth?"
+                    extend 1nchgnl " Ehehe."
+                    n 1nllssl "Well,{w=0.2} either way."
 
-            n 1nllbgl "Well,{w=0.1} either way,{w=0.1} I'm glad you can stay a little longer!"
+            n 1fcsbglsbl "I'm just glad you saw the light."
+            extend 1fchbll " Even if did take a little persuasion."
+            n 1ullaj "So...{w=0.75}{nw}" 
+            extend 1unmaj " is there something else you wanna talk about?"
 
-            if player_was_snarky:
-                n 1nsqbgf "Or...{w=0.3} perhaps you should be thanking {i}me{/i}?{w=0.2} Ehehe."
-
-            n 1nchsml "So...{w=0.3} what else did you wanna do today?"
             $ jn_globals.player_already_stayed_on_farewell = True
             $ Natsuki.calculatedAffinityGain()
 
         "Fine, I guess.":
-            n 1fbkwrf "You {i}guess{/i}?{w=0.2} What do you mean,{w=0.1} you guess?!"
-            n 1fnmpol "Jeez...{w=0.3} what's with the attitude today,{w=0.1} [player]?"
-            n 1fllpof "Well,{w=0.1} anyway...{w=0.3} Thanks for staying with me a little longer."
-            n 1fsgsgl "...{i}I guess{/i}."
-            n 1uchgnlelg "Ahaha!{w=0.2} Oh,{w=0.1} lighten up,{w=0.1} [player]!{w=0.2} I'm just messing with you!"
-            n 1tllsml "Ehehe.{w=0.2} Now,{w=0.1} where were we?"
+            n 1fsqpu "...You {i}guess{/i}?"
+            n 1fnmgsl "What do you mean,{w=0.2} {i}you guess{/i}?!"
+            n 1fcspolesi "Jeez...{w=1}{nw}"
+            extend 1kslcal " you make it sound like I chained you to the desk or something..."
+            n 1fcsajl "Well,{w=0.2} anyway."
+            n 1nllbo "I suppose some thanks are in order then."
+            n 1nsqbo "..."
+            n 1flrem "...{i}I guess{/i}."
+            n 1fsgsm "..."
+            n 1uchgnlelg "Oh,{w=0.2} lighten up,{w=0.2} [player]!"
+            extend 1fchbglelg " Man!"
+            n 1fchgnl "You should {i}know{/i} by now I give as good as I get!"
+            n 1fchsml "Ehehe."
+            n 1tllss "Now,{w=0.2} where were we?"
+
             $ jn_globals.player_already_stayed_on_farewell = True
             $ Natsuki.calculatedAffinityGain()
 
         "Sorry [n_name], I can't right now.":
-            n 1fcsunf "Uuuu-"
-            n 1kllcaf "Well,{w=0.1} I guess that's fine.{w=0.2} It can't be helped,{w=0.1} after all."
-            n 1fnmajf "But you gotta make it up to me,{w=0.1} alright?"
-            n 1kchbgl "Stay safe,{w=0.1} [player]!{w=0.2} I'll see you later!"
+            n 1fcsunl "Uuuu-"
+            n 1kcspulesi "..."
+            n 1fslsll "...I guess that's fine."
+            n 1fcsbol "You've got things to do.{w=0.5}{nw}" 
+            extend 1fsrcal " I get it."
+            n 1fnmtrl "But you're {i}definitely{/i} gonna come visit later."
+            n 1kllcal "..."
+            n 1knmcasbl "Right?"
 
             return { "quit": None }
     return
