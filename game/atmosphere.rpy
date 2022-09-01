@@ -300,7 +300,7 @@ init 0 python in jn_atmosphere:
         elif store.persistent._jn_weather_setting == int(jn_preferences.weather.JNWeatherSettings.random):
 
             # Flex based on affinity. An upset Natsuki will result in more rain, etc.
-            if Natsuki.isEnamored(higher=True):
+            if store.Natsuki.isEnamored(higher=True):
                 showSky(random.choice([
                     WEATHER_OVERCAST,
                     WEATHER_RAIN,
@@ -313,7 +313,7 @@ init 0 python in jn_atmosphere:
                 ]),
                 with_transition=with_transition)
 
-            elif Natsuki.isAffectionate(higher=True):
+            elif store.Natsuki.isAffectionate(higher=True):
                 showSky(random.choice([
                     WEATHER_OVERCAST,
                     WEATHER_RAIN,
@@ -325,7 +325,7 @@ init 0 python in jn_atmosphere:
                 ]),
                 with_transition=with_transition)
 
-            elif Natsuki.isNormal(higher=True):
+            elif store.Natsuki.isNormal(higher=True):
                 showSky(random.choice([
                     WEATHER_OVERCAST,
                     WEATHER_RAIN,
@@ -335,7 +335,7 @@ init 0 python in jn_atmosphere:
                 ]),
                 with_transition=with_transition)
 
-            elif Natsuki.isDistressed(higher=True):
+            elif store.Natsuki.isDistressed(higher=True):
                 showSky(random.choice([
                     WEATHER_OVERCAST,
                     WEATHER_OVERCAST,
@@ -359,10 +359,10 @@ init 0 python in jn_atmosphere:
 
         # Default weather
         else:
-            if Natsuki.isNormal(higher=True):
+            if store.Natsuki.isNormal(higher=True):
                 showSky(WEATHER_SUNNY, with_transition=with_transition)
 
-            elif Natsuki.isDistressed(higher=True):
+            elif store.Natsuki.isDistressed(higher=True):
                 showSky(WEATHER_OVERCAST, with_transition=with_transition)
 
             else:

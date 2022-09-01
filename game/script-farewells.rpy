@@ -1288,7 +1288,7 @@ label farewell_short_session_ask_alt:
     extend 1fnmajl " and you're {i}already{/i} going?"
     show natsuki 1fcsgslsbl
     menu:
-        n "Come on!{w=0.2} You'll stay a little longer,{w=0.2} won't you?"
+        n "Come on!{w=0.5} You'll stay a little longer,{w=0.2} won't you?"
 
         "Sure, I can stay a while.":
             n 1fcsbsl "H-{w=0.3}Ha!{w=0.75}{nw}" 
@@ -1308,12 +1308,12 @@ label farewell_short_session_ask_alt:
                     extend 1fllwrf " Don't just come out with stuff like that!"
                     n 1fcspofesi "Yeesh..."
 
-                    if Natsuki.isEnamored():
+                    if Natsuki.isEnamored(higher=True):
                         extend 1flrpof " I swear you take things way too far sometimes."
                         n 1fsrunfess "..."
                         n 1fcsemlsbr "A-{w=0.2}anyway!"
 
-                    elif Natsuki.isAffectionate():
+                    elif Natsuki.isAffectionate(higher=True):
                         extend 1fsqpolsbl " are you {i}trying{/i} to give me a heart attack or something?"
                         n 1fcsajlsbl "A-{w=0.2}anyway."
 

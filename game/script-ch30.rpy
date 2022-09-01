@@ -115,7 +115,9 @@ label ch30_init:
             and Natsuki.isAffectionate(higher=True)
             and jn_is_day()
         ):
-            renpy.show(name="furniture pink_beanbag", zorder=2)
+            pass
+            #renpy.show(name="furniture pink_beanbag", zorder=2)
+            #TODO: beanbag
 
     # Prepare visuals
     show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER

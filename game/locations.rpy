@@ -5,7 +5,8 @@ default persistent._current_location = "classroom"
 default persistent.jn_sunrise_hour = 6
 default persistent.jn_sunset_hour = 19
 
-image furniture pink_beanbag = "mod_assets/furniture/classroom/pink_beanbag.png"
+image furniture beanbag day = "mod_assets/furniture/classroom/beanbag_day.png"
+image furniture beanbag night = "mod_assets/furniture/classroom/beanbag_night.png"
 
 init python in locations:
     import store
