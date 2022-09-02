@@ -207,14 +207,6 @@ style default:
     line_overlap_split 1.25
     line_spacing 1.25
 
-# style default:
-#     font gui.default_font
-#     size gui.text_size
-#     color gui.text_color
-#     outlines [(2, "#000000aa", 0, 0)]
-#     line_overlap_split 1
-#     line_spacing 1
-
 style default_monika is normal:
     slow_cps 30
 
@@ -415,6 +407,7 @@ style say_dialogue:
     xanchor gui.text_xalign
     xsize gui.text_width
     ypos gui.text_ypos
+    size gui.say_text_size
 
     text_align gui.text_xalign
     layout ("subtitle" if gui.text_xalign else "tex")

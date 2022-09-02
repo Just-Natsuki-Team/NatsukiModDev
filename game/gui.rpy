@@ -70,7 +70,10 @@ define gui.name_font = "mod_assets/fonts/natsuki.ttf"
 define gui.interface_font = "mod_assets/fonts/natsuki.ttf"
 
 ## The size of normal dialogue text.
-define gui.text_size = 23
+define gui.text_size = 22
+
+## The size of say/textbox text.
+define gui.say_text_size = 23
 
 ## The size of button text.
 define gui.button_text_size = 24
