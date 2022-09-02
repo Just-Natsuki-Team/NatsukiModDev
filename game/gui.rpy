@@ -70,7 +70,7 @@ define gui.name_font = "mod_assets/fonts/natsuki.ttf"
 define gui.interface_font = "mod_assets/fonts/natsuki.ttf"
 
 ## The size of normal dialogue text.
-define gui.text_size = 22
+define gui.text_size = 23
 
 ## The size of button text.
 define gui.button_text_size = 24
@@ -144,7 +144,8 @@ define gui.namebox_tile = False
 ## number of pixels relative to the left or top side of the textbox, or 0.5 to
 ## center.
 define gui.text_xpos = 268
-define gui.text_ypos = 62
+# define gui.text_ypos = 62
+define gui.text_ypos = 54
 
 ## The maximum width of dialogue text, in pixels.
 define gui.text_width = 744

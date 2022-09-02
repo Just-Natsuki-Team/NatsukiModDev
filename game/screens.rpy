@@ -203,9 +203,17 @@ style default:
     font gui.default_font
     size gui.text_size
     color gui.text_color
-    outlines [(2, "#000000aa", 0, 0)]
-    line_overlap_split 1
-    line_spacing 1
+    outlines [(3, "#000000aa", 0, 0)]
+    line_overlap_split 1.25
+    line_spacing 1.25
+
+# style default:
+#     font gui.default_font
+#     size gui.text_size
+#     color gui.text_color
+#     outlines [(2, "#000000aa", 0, 0)]
+#     line_overlap_split 1
+#     line_spacing 1
 
 style default_monika is normal:
     slow_cps 30
