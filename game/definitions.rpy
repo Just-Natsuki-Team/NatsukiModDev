@@ -1680,6 +1680,9 @@ init -100 python in jn_utils:
         #Save background data
         store.main_background.save()
 
+        # Save furniture data
+        store.jn_locations.JNFurniture.save_all()
+
 # Vanilla resources from base DDLC
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
 define audio.t2 = "<loop 4.499>bgm/2.ogg"   #Sayori theme

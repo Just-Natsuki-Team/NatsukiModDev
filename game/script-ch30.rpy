@@ -28,12 +28,6 @@ label ch30_visual_setup:
     # Hide everything so we can set up behind the scenes
     show black zorder 99
 
-    # Draw background
-    $ main_background.show()
-
-    # Draw sky
-    $ jn_atmosphere.updateSky()
-
     #FALL THROUGH
 
 label ch30_init:
@@ -95,6 +89,16 @@ label ch30_init:
 
         jn_utils.log("Outfit set.")
 
+
+        # Load furniture
+        jn_locations.JNFurniture.load_all()
+
+        # Draw background
+        main_background.show()
+
+        # Draw sky
+        jn_atmosphere.updateSky()
+
         # Pick a greeting or random event
         if not jn_topic_in_event_list_pattern("^greeting_"):
             if (
@@ -109,15 +113,6 @@ label ch30_init:
                 push(greetings.select_greeting())
                 persistent.jn_player_admission_type_on_quit = None
                 persistent._jn_player_apology_type_on_quit = None
-
-        if (
-            random.randint(1,7) == 1
-            and Natsuki.isAffectionate(higher=True)
-            and jn_is_day()
-        ):
-            pass
-            #renpy.show(name="furniture pink_beanbag", zorder=2)
-            #TODO: beanbag
 
     # Prepare visuals
     show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER

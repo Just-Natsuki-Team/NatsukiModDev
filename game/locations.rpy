@@ -11,6 +11,7 @@ init -20 python in jn_locations:
     import datetime
     import os
     import store
+    import store.jn_utils as jn_utils
 
     LOCATION_MAP = dict()
     __LOCATION_ZORDER = 1
@@ -199,7 +200,7 @@ init -20 python in jn_locations:
             # dissolving everything means dissolve last
             if dissolve_all or full_redraw:
                 renpy.hide("black")
-                renpy.with_statement(Dissolve(1.0))
+                renpy.with_statement(store.Dissolve(1.0))
             return
 
         def show(self):
@@ -318,6 +319,13 @@ init -20 python in jn_locations:
                 "unlocked": self.unlocked
             }
 
+        def lock(self):
+            """
+            Locks this furniture item, making it unavailable to the player.
+            """
+            self.unlocked = False
+            self.__save()
+
         def unlock(self):
             """
             Unlocks this furniture item, making it available to the player.
@@ -347,8 +355,9 @@ init -20 python in jn_locations:
             Shows this furniture in the room.
             """
             self.hide(location)
-            time_tag = "day" if store.jn_is_day() else "night"
-            renpy.show(name="furniture {0} {1} {2}".format(self.reference_name, location, time_tag), zorder=__FURNITURE_ZORDER)
+            if self.unlocked:
+                time_tag = "day" if store.jn_is_day() else "night"
+                renpy.show(name="furniture {0} {1} {2}".format(self.reference_name, location, time_tag), zorder=__FURNITURE_ZORDER)
 
         def hide(self, location):
             """
@@ -402,7 +411,7 @@ init -20 python in jn_locations:
     __register_furniture(JNFurniture(
         reference_name="jn_malta_beanbag",
         display_name="Malta beanbag",
-        unlocked=True
+        unlocked=False
     ))
 
 init python:
