@@ -349,8 +349,8 @@ init -20 python in jn_locations:
             if not renpy.loadable(night_image_path):
                 raise Exception("[ERROR]: Night image ('{0}') is not loadable.".format(night_image_path))
 
-            day_image_tag = "furniture {0} {1} day".format(self.reference_name, location)
-            night_image_tag = "furniture {0} {1} night".format(self.reference_name, location)
+            day_image_tag = "furniture_{0} {1} day".format(self.reference_name, location)
+            night_image_tag = "furniture_{0} {1} night".format(self.reference_name, location)
             renpy.image(day_image_tag, store.Image(day_image_path))
             renpy.image(night_image_tag, store.Image(night_image_path))
 
@@ -361,13 +361,13 @@ init -20 python in jn_locations:
             self.hide(location)
             if self.unlocked:
                 time_tag = "day" if store.jn_is_day() else "night"
-                renpy.show(name="furniture {0} {1} {2}".format(self.reference_name, location, time_tag), zorder=__FURNITURE_ZORDER)
+                renpy.show(name="furniture_{0} {1} {2}".format(self.reference_name, location, time_tag), zorder=__FURNITURE_ZORDER)
 
         def hide(self, location):
             """
             Hides this furniture in the room.
             """
-            renpy.hide("furniture {0}".format(self.reference_name))
+            renpy.hide("furniture_{0}".format(self.reference_name))
 
     def __register_furniture(furniture):
         """
