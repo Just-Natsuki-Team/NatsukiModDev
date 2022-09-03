@@ -334,6 +334,12 @@ init -20 python in jn_locations:
             self.__save()
 
         def register_images_for_location(self, location):
+            """
+            For a given location, create the images for this piece of furniture for day and night.
+
+            IN:
+                - location - The location id to create images for
+            """
             day_image_path = "mod_assets/furniture/{0}/{1}/day.png".format(self.reference_name, location)
             night_image_path = "mod_assets/furniture/{0}/{1}/night.png".format(self.reference_name, location)
 
@@ -345,8 +351,6 @@ init -20 python in jn_locations:
 
             day_image_tag = "furniture {0} {1} day".format(self.reference_name, location)
             night_image_tag = "furniture {0} {1} night".format(self.reference_name, location)
-
-            store.jn_utils.log("Registering {0} as {1}".format(day_image_tag, day_image_path))
             renpy.image(day_image_tag, store.Image(day_image_path))
             renpy.image(night_image_tag, store.Image(night_image_path))
 
@@ -413,6 +417,11 @@ init -20 python in jn_locations:
         display_name="Malta beanbag",
         unlocked=False
     ))
+    __register_furniture(JNFurniture(
+        reference_name="jn_pink_bookcase",
+        display_name="Pink bookcase",
+        unlocked=False
+    ))
 
 init python:
     import datetime
@@ -427,7 +436,8 @@ init python:
         id="classroom",
         image_dir="classroom",
         furniture=[
-            jn_locations.get_furniture("jn_malta_beanbag")
+            jn_locations.get_furniture("jn_malta_beanbag"),
+            jn_locations.get_furniture("jn_pink_bookcase"),
         ]
     )
 
