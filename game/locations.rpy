@@ -11,6 +11,7 @@ init -20 python in jn_locations:
     import datetime
     import os
     import store
+    import store.jn_affinity as jn_affinity
     import store.jn_utils as jn_utils
 
     LOCATION_MAP = dict()
@@ -258,6 +259,7 @@ init -20 python in jn_locations:
             reference_name,
             display_name,
             unlocked,
+            affinity_range=None,
             marked_interactive=False,
             label=None
         ):
@@ -274,6 +276,7 @@ init -20 python in jn_locations:
             self.reference_name = reference_name
             self.display_name = display_name
             self.unlocked = unlocked
+            self.affinity_range = affinity_range
             self.marked_interactive = marked_interactive
             self.label = label
 
@@ -359,7 +362,7 @@ init -20 python in jn_locations:
             Shows this furniture in the room.
             """
             self.hide(location)
-            if self.unlocked:
+            if self.unlocked and self.curr_affinity_in_affinity_range():
                 time_tag = "day" if store.jn_is_day() else "night"
                 renpy.show(name="furniture_{0} {1} {2}".format(self.reference_name, location, time_tag), zorder=__FURNITURE_ZORDER)
 
@@ -369,6 +372,21 @@ init -20 python in jn_locations:
             """
             renpy.hide("furniture_{0}".format(self.reference_name))
 
+        def curr_affinity_in_affinity_range(self, affinity_state=None):
+            """
+            Checks if the current affinity is within this furniture's affinity_range
+
+            IN:
+                affinity_state - Affinity state to test if the furniture can be shown in. If None, the current affinity state is used.
+                    (Default: None)
+            OUT:
+                True if the current affinity is within range. False otherwise
+            """
+            if not affinity_state:
+                affinity_state = store.Natsuki._getAffinityState()
+
+            return jn_affinity._isAffStateWithinRange(affinity_state, self.affinity_range)
+
     def __register_furniture(furniture):
         """
         Registers a new furniture item in the list of all furniture, allowing in-game access and persistency.
@@ -377,8 +395,6 @@ init -20 python in jn_locations:
         IN:
             - furniture - the JNFurniture to register.
         """
-        store.jn_utils.log("type of store.persistent._jn_furniture_list is {0}".format(type(store.persistent._jn_furniture_list)))
-
         if furniture.reference_name in __ALL_FURNITURE:
             jn_utils.log("Cannot register furniture name: {0}, as an furniture item with that name already exists.".format(furniture.reference_name))
 
@@ -415,12 +431,14 @@ init -20 python in jn_locations:
     __register_furniture(JNFurniture(
         reference_name="jn_malta_beanbag",
         display_name="Malta beanbag",
-        unlocked=False
+        unlocked=False,
+        affinity_range=(jn_affinity.HAPPY, None)
     ))
     __register_furniture(JNFurniture(
         reference_name="jn_pink_bookcase",
         display_name="Pink bookcase",
-        unlocked=False
+        unlocked=False,
+        affinity_range=(jn_affinity.HAPPY, None)
     ))
 
 init python:

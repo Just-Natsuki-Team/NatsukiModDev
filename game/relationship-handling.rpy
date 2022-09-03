@@ -1,7 +1,7 @@
 default persistent.affinity_daily_gain = 5
 default persistent.affinity_gain_reset_date = None
 
-init -2 python in jn_affinity:
+init -50 python in jn_affinity:
     import store
     import store.jn_utils as jn_utils
     import random

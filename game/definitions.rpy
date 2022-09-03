@@ -249,7 +249,7 @@ init -3 python:
                 True if the current affinity is within range. False otherwise
             """
             if not affinity_state:
-                affinity_state = jn_affinity._getAffinityState()
+                affinity_state = Natsuki._getAffinityState()
 
             return jn_affinity._isAffStateWithinRange(affinity_state, self.affinity_range)
 
