@@ -47,10 +47,10 @@ label ch30_init:
         persistent._jn_version = config.version
 
         # Assign Natsuki and player nicknames
-        if persistent._jn_nicknames_natsuki_allowed and persistent._jn_nicknames_natsuki_current_nickname:
+        if Natsuki.isEnamored(higher=True) and persistent._jn_nicknames_natsuki_allowed and persistent._jn_nicknames_natsuki_current_nickname:
             n_name = persistent._jn_nicknames_natsuki_current_nickname
 
-        if persistent._jn_nicknames_player_allowed and persistent._jn_nicknames_player_current_nickname:
+        if Natsuki.isEnamored(higher=True) and persistent._jn_nicknames_player_allowed and persistent._jn_nicknames_player_current_nickname:
             player = persistent._jn_nicknames_player_current_nickname
 
         # Check the daily affinity cap and reset if need be
