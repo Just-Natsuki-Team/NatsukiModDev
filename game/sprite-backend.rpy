@@ -573,7 +573,7 @@ init 1 python:
     elif Natsuki.isAffectionate(higher=True):
         _JN_TABLE_SPRITE = "table_affectionate"
 
-    elif Natsuki.isNormal(higher=True):
+    elif Natsuki.isUpset(higher=True):
         _JN_TABLE_SPRITE = "table_normal"
 
     elif Natsuki.isDistressed(higher=True):
