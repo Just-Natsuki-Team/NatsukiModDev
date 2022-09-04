@@ -6,7 +6,8 @@ init -50 python:
 
     JN_NATSUKI_ZORDER = 3
 
-    _BASE_SPRITE_PATH = "mod_assets/natsuki/"
+    _JN_NATSUKI_BASE_SPRITE_PATH = "mod_assets/natsuki/"
+    _JN_TABLE_SPRITE = "table_normal"
 
     class JNPose(Enum):
         sitting = 1
@@ -167,67 +168,67 @@ init -50 python:
         """
         lc_args = [
             (1280, 740), # Anchor
-            (0, 0), _BASE_SPRITE_PATH + "desk/chair-normal.png", # Chair
-            (0, 0), "{0}{1}/hair/[Natsuki._outfit.hairstyle.reference_name]/back.png".format(_BASE_SPRITE_PATH, pose), # Hair back
-            (0, 0), "{0}{1}/base/body.png".format(_BASE_SPRITE_PATH, pose), # Body
-            (0, 0), "{0}{1}/clothes/[Natsuki._outfit.clothes.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose), # Outfit, body
+            (0, 0), _JN_NATSUKI_BASE_SPRITE_PATH + "desk/chair_normal.png", # Chair
+            (0, 0), "{0}{1}/hair/[Natsuki._outfit.hairstyle.reference_name]/back.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose), # Hair back
+            (0, 0), "{0}{1}/base/body.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose), # Body
+            (0, 0), "{0}{1}/clothes/[Natsuki._outfit.clothes.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose), # Outfit, body
         ]
 
         # Necklace
-        necklace = Null() if not Natsuki._outfit.necklace else "{0}{1}/necklace/[Natsuki._outfit.necklace.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose)
+        necklace = Null() if not Natsuki._outfit.necklace else "{0}{1}/necklace/[Natsuki._outfit.necklace.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose)
         lc_args.extend([
             (0, 0), necklace
         ])
 
         # Head
         lc_args.extend([
-            (0, 0), "{0}{1}/base/head.png".format(_BASE_SPRITE_PATH, pose),
+            (0, 0), "{0}{1}/base/head.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose),
         ])
 
         # Blush
         if blush:
             lc_args.extend([
-                (0, 0), "{0}{1}/face/blush/{2}.png".format(_BASE_SPRITE_PATH, pose, blush)
+                (0, 0), "{0}{1}/face/blush/{2}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose, blush)
             ])
 
         # Mouth, nose, hair (front)
         lc_args.extend([
-            (0, 0), "{0}{1}/face/mouth/{2}.png".format(_BASE_SPRITE_PATH, pose, mouth),
-            (0, 0), "{0}{1}/face/nose/nose.png".format(_BASE_SPRITE_PATH, pose),
-            (0, 0), "{0}{1}/hair/[Natsuki._outfit.hairstyle.reference_name]/bangs.png".format(_BASE_SPRITE_PATH, pose),
+            (0, 0), "{0}{1}/face/mouth/{2}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose, mouth),
+            (0, 0), "{0}{1}/face/nose/nose.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose),
+            (0, 0), "{0}{1}/hair/[Natsuki._outfit.hairstyle.reference_name]/bangs.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose),
         ])
 
         # Accessory
-        accessory = Null() if not Natsuki._outfit.accessory else "{0}{1}/accessory/[Natsuki._outfit.accessory.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose)
+        accessory = Null() if not Natsuki._outfit.accessory else "{0}{1}/accessory/[Natsuki._outfit.accessory.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose)
         lc_args.extend([
             (0, 0), accessory
         ])
 
         # Eyes
         lc_args.extend([
-            (0, 0), "{0}{1}/face/eyes/{2}.png".format(_BASE_SPRITE_PATH, pose, eyes), 
+            (0, 0), "{0}{1}/face/eyes/{2}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose, eyes), 
         ])
 
         # Tears
         if tears:
             lc_args.extend([
-                (0, 0), "{0}{1}/face/tears/{2}.png".format(_BASE_SPRITE_PATH, pose, tears)
+                (0, 0), "{0}{1}/face/tears/{2}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose, tears)
             ])
 
         # Sweat
         if sweat:
             lc_args.extend([
-                (0, 0), "{0}{1}/face/sweat/{2}.png".format(_BASE_SPRITE_PATH, pose, sweat)
+                (0, 0), "{0}{1}/face/sweat/{2}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose, sweat)
             ])
 
         # Headgear
-        headgear = Null() if not Natsuki._outfit.headgear else "{0}{1}/headgear/[Natsuki._outfit.headgear.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose)
+        headgear = Null() if not Natsuki._outfit.headgear else "{0}{1}/headgear/[Natsuki._outfit.headgear.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose)
         lc_args.extend([
             (0, 0), headgear
         ])
 
         # Eyewear
-        eyewear = Null() if not Natsuki._outfit.eyewear else "{0}{1}/eyewear/[Natsuki._outfit.eyewear.reference_name]/{1}.png".format(_BASE_SPRITE_PATH, pose)
+        eyewear = Null() if not Natsuki._outfit.eyewear else "{0}{1}/eyewear/[Natsuki._outfit.eyewear.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose)
         lc_args.extend([
             (0, 0), eyewear
         ])
@@ -235,13 +236,13 @@ init -50 python:
         # Emotes
         if emote:
             lc_args.extend([
-                (0, 0), "{0}{1}/emote/{2}.png".format(_BASE_SPRITE_PATH, pose, emote)
+                (0, 0), "{0}{1}/emote/{2}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose, emote)
             ])
 
         # Brows
         lc_args.extend([
-            (0, 0), "{0}{1}/face/eyebrows/{2}.png".format(_BASE_SPRITE_PATH, pose, eyebrows), # Brows
-            (0, 0), _BASE_SPRITE_PATH + "/desk/table-normal.png" # Table
+            (0, 0), "{0}{1}/face/eyebrows/{2}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose, eyebrows), # Brows
+            (0, 0), _JN_NATSUKI_BASE_SPRITE_PATH + "/desk/{0}.png".format(_JN_TABLE_SPRITE) # Table
         ])
 
         # Generate and return the sprite
@@ -250,6 +251,8 @@ init -50 python:
         )
 
 init 1 python:
+    import store
+
     POSE_MAP = {
         "1": JNPose.sitting
     }
@@ -560,6 +563,27 @@ init 1 python:
 
     # Finally, feed back to Ren'Py the image we actually want to display for the narration
     renpy.display.image.ImageReference.find_target = _find_target_override
+
+    if Natsuki.isLove(higher=True):
+        _JN_TABLE_SPRITE = "table_love"
+        
+    elif Natsuki.isEnamored(higher=True):
+        _JN_TABLE_SPRITE = "table_enamored"
+
+    elif Natsuki.isAffectionate(higher=True):
+        _JN_TABLE_SPRITE = "table_affectionate"
+
+    elif Natsuki.isUpset(higher=True):
+        _JN_TABLE_SPRITE = "table_normal"
+
+    elif Natsuki.isDistressed(higher=True):
+        _JN_TABLE_SPRITE = "table_distressed"
+
+    elif Natsuki.isBroken(higher=True):
+        _JN_TABLE_SPRITE = "table_broken"
+
+    elif Natsuki.isRuined(higher=True):
+        _JN_TABLE_SPRITE = "table_ruined"
 
 # Sprite code format:
 # <pose><eyebrows><eyes><mouth><blush><tears><emote><sweat>
