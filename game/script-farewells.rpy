@@ -542,7 +542,7 @@ init 5 python:
 label farewell_love_you_mean_the_world_to_me:
     n 1kllpul "Aww...{w=1}{nw}"
     extend 1kplsfl " you're leaving now,{w=0.2} [player]?" 
-    n 1klrcal "Well...{w=1}" 
+    n 1klrcal "Well...{w=1}{nw}" 
     extend 1ksrcal " okay."
     n 1fnmtrf "Y-{w=0.2}you better take care,{w=0.2} [player]!{w=0.5}" 
     extend 1kchssfeaf " You mean the world to me!"
@@ -1173,6 +1173,21 @@ label farewell_broken_ruined_kay:
     n 1fslsrltsb "'kay."
     return { "quit": None }
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_broken_ruined_good",
+            unlocked=True,
+            affinity_range=(None, jn_affinity.BROKEN)
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
+
+label farewell_broken_ruined_good:
+    n 1fsqanltse "{i}Good{/i}."
+    return { "quit": None }
+
 # Farewells that allow the player to choose to stay
 
 # Natsuki calls the player out on how long they've been here, and asks for more time together
@@ -1383,27 +1398,41 @@ init 5 python:
     )
 
 label farewell_fake_confidence_ask:
-    n 1knmaj "Huh?{w=0.2} You don't really have to leave already,{w=0.1} do you?"
-    n 1fllsf "It feels like you've barely been here!"
-    n 1flldv "I-{w=0.1}I totally bet you can hang out with me a little longer!{w=0.2} Right,{w=0.1} [player]?"
+    n 1unmboesu "Huh?{w=0.75}{nw}" 
+    extend 1knmaj " You don't really {i}have{/i} to leave already,{w=0.1} do you?"
+    n 1fcsgsl "I mean,{w=0.5}{nw}"
+    extend 1fllgslsbr " come on!{w=1}{nw}"
+    extend 1fnmsf " It feels like you've barely been here!"
+    n 1fcseml "I-{w=0.2}in fact,{w=0.75}{nw}"
+    extend 1fcsgslsbl " I bet you could {i}easily{/i} hang out with me a little longer!"
+    n 1fnmajlsbl "Right,{w=0.2} [player]?"
+    n 1fllunlsbr "..."
+    show natsuki 1knmbolsbr
     menu:
-        n "{w=0.3}...right?"
+        n "...Right?"
 
         "Right!":
-            n 1fcsbgl "A-Aha!{w=0.2} I knew it!"
-            n 1fllbg "I-{w=0.1}I totally don't need you here,{w=0.1} or anything dumb like that!"
-            n 1flldvl "You'd have to be pretty lonely to be {i}that{/i} dependent on someone else...{w=0.3} ahaha..."
-            n 1klrsll "..."
-            n 1fcswrf "J-{w=0.1}jeez!{w=0.2} Let's just get back to it already..."
-            n 1fllajf "Now,{w=0.1} where were we?"
+            n 1fcsbgfsbl "A-{w=0.3}Aha!{w=0.75}{nw}" 
+            extend 1flrsslsbl " I knew it!"
+            n 1fcsgsl "N-{w=0.2}not like I needed you here, or anything dumb like that.{w=1.25}{nw}"
+            extend 1fcspolesi " {i}Obviously{/i}."
+            n 1fslemlsbr "You'd have to be pretty lonely to be {i}that{/i} dependent on someone else."
+            n 1kslsllsbr "..."
+            n 1fcswrfesh "Well,{w=0.2} a-{w=0.2}anyway!{w=1}{nw}"
+            extend 1fcspol " Enough of that!"
+            n 1fllajl "You already said you were staying,{w=0.2} so..."
+            n 1fsldvlsbr "..."
             $ jn_globals.player_already_stayed_on_farewell = True
             $ Natsuki.calculatedAffinityGain()
 
         "Sorry, I really need to go.":
-            n 1fllbgf "O-{w=0.1}oh...{w=0.3} aha..."
-            n 1fllpol "That's fine,{w=0.1} I guess..."
-            n 1fnmbg "I'll see you later then,{w=0.1} [player]!"
-            n 1knmpo "Don't keep me waiting,{w=0.1} alright?"
+            n 1fllsll "...Heh.{w=1}{nw}"
+            extend 1fslcal " Right."
+            n 1fslunl "..."
+            n 1fcswrlsbr "W-{w=0.2}well,{w=0.2} that's fine!"
+            n 1flrpolesi "I guess that means I'll just have to test your obedience another time.{w=1}{nw}"
+            extend 1fsrdvless " Ehehe."
+            n 1fcsbgless "L-{w=0.2}later,{w=0.2} [player]!"
 
             return { "quit": None }
     return
