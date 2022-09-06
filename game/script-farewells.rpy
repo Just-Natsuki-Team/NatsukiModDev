@@ -136,7 +136,7 @@ label farewell_force_quit:
 
     n 1uskem "H-{w=0.3}huh?{w=1}{nw}"
     extend 1uscwr " N-{w=0.3}no!{w=0.2} Wait!!{w=0.2} PLEASE-{w=0.3}{nw}"
-    show natsuki 1kchupltsa
+    show natsuki 1kchupltsa at jn_center zorder JN_NATSUKI_ZORDER
 
     play audio static
     show glitch_garbled_b zorder 99 with hpunch
@@ -1210,7 +1210,7 @@ label farewell_short_session_ask:
     $ time_in_session_descriptor = jn_utils.get_time_in_session_descriptor()
     n 1fcsgslsbr "I mean,{w=0.75}{nw}"
     extend 1fnmpol " You've literally only been here for [time_in_session_descriptor]!"
-    show natsuki 1knmpol
+    show natsuki 1knmpol at jn_center zorder JN_NATSUKI_ZORDER
     menu:
         n "You seriously can't stay just a little longer?"
 
@@ -1242,7 +1242,7 @@ label farewell_short_session_ask:
             extend 1knmpulsbl " right?"
             n 1ksrsrlsbl "..."
             n 1ksrbolsbl "So..."
-            show natsuki 1ksqsrlsbl
+            show natsuki 1ksqsrlsbl at jn_center zorder JN_NATSUKI_ZORDER
             menu:
                 n "Are you sure you wanna stay?"
 
@@ -1301,7 +1301,7 @@ label farewell_short_session_ask_alt:
     $ time_in_session_descriptor = jn_utils.get_time_in_session_descriptor()
     n 1flleml "You've barely been here [time_in_session_descriptor],{w=0.75}{nw}" 
     extend 1fnmajl " and you're {i}already{/i} going?"
-    show natsuki 1fcsgslsbl
+    show natsuki 1fcsgslsbl at jn_center zorder JN_NATSUKI_ZORDER
     menu:
         n "Come on!{w=0.5} You'll stay a little longer,{w=0.2} won't you?"
 
@@ -1310,7 +1310,7 @@ label farewell_short_session_ask_alt:
             extend 1fsqsslsbr " I knew it."
             n 1fsqsml "Ehehe.{w=0.5}{nw}" 
             extend 1fsqbgleme " Looks like I win again,{w=0.1} [player]!"
-            show natsuki 1fcsbgledzsbl
+            show natsuki 1fcsbgledzsbl at jn_center zorder JN_NATSUKI_ZORDER
 
             menu:
                 n "O-or maybe you just couldn't bring yourself to leave someone as {i}awesome{/i} as me?"
@@ -1407,7 +1407,8 @@ label farewell_fake_confidence_ask:
     extend 1fcsgslsbl " I bet you could {i}easily{/i} hang out with me a little longer!"
     n 1fnmajlsbl "Right,{w=0.2} [player]?"
     n 1fllunlsbr "..."
-    show natsuki 1knmbolsbr
+    show natsuki 1knmbolsbr at jn_center zorder JN_NATSUKI_ZORDER
+
     menu:
         n "...Right?"
 
@@ -1451,30 +1452,57 @@ init 5 python:
     )
 
 label farewell_pleading_ask:
-    n 1kskwrf "N-no!{w=0.2} You can't leave yet!"
-    n 1kllupf "..."
-    n 1kcssfl "[player]..."
-    n 1klrsff "{w=0.3} I...{w=0.3} really...{w=0.3} want you here right now."
+    n 1kskwrfesh "N-{w=0.3}no!{w=0.5}{nw}" 
+    extend 1fbkwrfess " You can't leave yet!"
+    n 1klluplsbr "..."
+    n 1fcsunl "..."
+    n 1fcspulesi "..."
+    n 1fnmcal "[player]..."
+    n 1fcsemfsbr "I...{w=0.75}{nw} " 
+    extend 1fcsunfesssbr " really...{w=1}{nw}" 
+    extend 1kslunfesssbr " want you here right now."
+    show natsuki 1ksqslfsbl at jn_center zorder JN_NATSUKI_ZORDER
+
     menu:
-        n "Just stay with me a little longer...{w=0.3} please?"
+        n "Just a few more minutes?{w=0.5} Please?"
 
         "Of course!":
-            n 1kchbsf "Yes!{nw}"
-            n 1knmajf "I-I mean...!"
-            n 1kllslf "..."
+            n 1kchbsf "Yes!{w=0.66}{nw}"
+            n 1fllwrfesh "I-{w=0.2}I mean...!"
+            n 1kllslfsbl "..."
             $ chosen_descriptor = jn_utils.getRandomDescriptor()
-            n 1kllnvf "T-{w=0.1}thanks,{w=0.1} [player].{w=0.1} You're [chosen_descriptor],{w=0.1} you know that?"
-            n 1kplsmf "Really.{w=0.1} Thank you."
-            n 1kllbgf "N-{w=0.1}now,{w=0.1} where were we? Heh..."
+            n 1kllcaf "T-{w=0.2}thanks,{w=0.1} [player].{w=3}{nw}" 
+            extend 1fcspofess " You're [chosen_descriptor],{w=0.3} you know that?"
+            n 1kllssf "Really.{w=1.5}{nw}" 
+            extend 1kslssf " Thank you."
+            n 1fcsajfsbr "N-{w=0.2}now,{w=0.75}{nw}" 
+            extend 1tnmssfsbr " where were we?"
+            n 1flrdvfsbr "Heh..."
             $ jn_globals.player_already_stayed_on_farewell = True
             $ Natsuki.calculatedAffinityGain()
 
         "I can't right now.":
-            n 1kllsff "Oh..."
-            n 1knmajl "Well,{w=0.1} if you gotta go,{w=0.1} it can't be helped,{w=0.1} I guess..."
-            n 1kplpol "Come back soon,{w=0.1} alright?"
-            n 1klrsmf "Or you'll have to make it up to me...{w=0.3} ahaha..."
-            n 1knmsmf "Stay safe,{w=0.1} [player]!"
+            n 1kslbof "...Oh."
+            n 1fcsajlsbl "Well,{w=0.3} if you gotta go,{w=0.3} it can't be helped,{w=0.75}{nw}" 
+            extend 1ksrcal " I guess..."
+            n 1ksqsll "Just come back soon,{w=0.3} alright?"
+            n 1kslpul "..."
+            n 1knmbol "...And [player]?"
+            n 1ksqbof "..."
+            
+            if Natsuki.isLove(higher=True):
+                show natsuki 1kslsgf at jn_center zorder JN_NATSUKI_ZORDER
+                show black zorder 3 with Dissolve(0.5)
+                play audio clothing_ruffle
+                pause 3.5
+                play audio kiss
+                pause 2.5
+                n "L-{w=0.2}love you!"
+
+            else:
+                n 1kcsunfess "...I'll miss you.{w=0.75}{nw}"
+                show natsuki 1kllunfess
+                pause 1.5
 
             return { "quit": None }
     return
