@@ -1521,29 +1521,51 @@ init 5 python:
     )
 
 label farewell_gentle_ask:
-    n 1knmsrf "[player]...{w=0.3} do you really have to leave now?"
-    n 1kplsrf "I know you have stuff to do,{w=0.1} but I...{w=0.3} really...{w=0.3} wanna spend more time with you."
+    n 1kllsrf "[player]...{w=0.75}{nw}" 
+    extend 1knmsrf " do you really have to leave now?"
+    n 1kcsbof "I know you have stuff to do,{w=0.5} but..."
+    show natsuki 1knmpuf at jn_center zorder JN_NATSUKI_ZORDER
+
     menu:
-        n "Are you sure you have to go?"
+        n "You're sure you can't stay even a little longer?"
 
         "I can stay a little longer.":
-            n 1kplsmf "[player]..."
-            n 1kchsmf "Thank you.{w=0.2} That really means a lot to me right now."
-            $ chosen_descriptor = jn_utils.getRandomDescriptor()
-            n 1kwmssf "Y-{w=0.1}You're [chosen_descriptor],{w=0.1} [player]."
-            n 1kcssmf "Truly.{w=0.1} Thanks..."
-            n 1kcssmf "..."
-            n 1kllbgf "Aha...{w=0.3} so what else did you wanna do today?"
+            n 1kwmssfeaf "[player]..."
+            n 1fcsbofesssbr "T-{w=0.2}thanks.{w=0.75}{nw}"
+            extend 1ksrsgf " That...{w=0.5} really means a lot to me."
+            n 1ksqcaf "Truly.{w=0.5} Thanks..."
+            n 1ksrcaf "..."
+
+            show natsuki 1fbkcaf at jn_center zorder JN_NATSUKI_ZORDER
+            show black zorder 3 with Dissolve(0.5)
+            play audio clothing_ruffle
+            pause 3.5
+            show natsuki 1ncspuf at jn_center zorder JN_NATSUKI_ZORDER
+            hide black with Dissolve(1.25)
+
+            n 1kslsmfsbl "..."
+            n 1kslssfsbl "So..."
+            extend 1knmsslsbr " where were we?"
+
             $ jn_globals.player_already_stayed_on_farewell = True
             $ Natsuki.calculatedAffinityGain()
 
         "Sorry, I really have to go.":
             n 1kllsrf "Oh..."
-            n 1kplsmf "I'd be lying if I said I wasn't disappointed,{w=0.1} but I understand."
+            n 1fcsemf "I'd be lying if I said I wasn't disappointed...{w=1.5}{nw}" 
+            extend 1kslcaf " but I understand."
             n 1kwmsrf "Just be careful out there,{w=0.1} okay?"
             n 1kllsrf "..."
             n 1kwmsmf "I-{w=0.1}I love you,{w=0.1} [player]..."
-            n 1kchsmf "I'll see you later."
+            n 1kchssfsbl "I'll see you later."
+
+            if (random.choice([True, False])):
+                show natsuki 1ksrsgfsbl at jn_center zorder JN_NATSUKI_ZORDER
+                show black zorder 3 with Dissolve(0.5)
+                play audio clothing_ruffle
+                pause 3.5
+                play audio kiss
+                pause 2.5
 
             return { "quit": None }
     return
