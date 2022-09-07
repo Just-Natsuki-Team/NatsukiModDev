@@ -2084,6 +2084,16 @@ label outfits_auto_change:
     return
 
 label new_wearables_outfits_unlocked:
+    python:
+        giftbox = random.choice([
+            jn_gifts.GIFT_BLUE,
+            jn_gifts.GIFT_GREEN,
+            jn_gifts.GIFT_PINK,
+            jn_gifts.GIFT_PURPLE,
+        ])
+        giftbox.present()
+    pause 2
+
     if Natsuki.isEnamored(higher=True):
         n 1uskemleex "...!"
         n 1ksrunlsbl "..."
