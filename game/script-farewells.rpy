@@ -1659,15 +1659,18 @@ init 5 python:
     )
 
 label farewell_afternoon_come_visit_soon:
-    n 1unmaj "Oh?{w=0.2} Leaving a little later today,{w=0.1} [player]?"
-    n 1ullaj "I guess that's fine...{w=0.3} just remember to come visit soon,{w=0.1} 'kay?"
+    n 1unmaj "Oh?{w=0.75}{nw}" 
+    extend 1unmbo " Leaving a little later today,{w=0.1} [player]?"
+    n 1ullaj "I guess that's fine...{w=1}{nw}" 
+    extend 1fnmca " just remember to come visit soon,{w=0.2} 'kay?"
 
     if Natsuki.isAffectionate(higher=True):
-        n 1fnmcal "I'll be mad if you don't."
-        n 1uchbgl "Ehehe.{w=0.2} Stay safe,{w=0.1} [player]!"
+        n 1fsqcal "I'll be mad if you don't."
+        n 1fsqsml "Ehehe.{w=0.75}{nw}" 
+        extend 1nchgnlelg " Stay safe,{w=0.2} [player]!"
 
     else:
-        n 1nnmsm "Stay safe!"
+        n 1fchsmlsbl "Stay safe!"
 
     return { "quit": None }
 
@@ -1687,12 +1690,18 @@ init 5 python:
     )
 
 label farewell_evening_good_evening:
-    n 1unmaj "Huh?{w=0.2} You're heading off now,{w=0.1} [player]?"
-    n 1ullaj "Well...{w=0.3} alright."
-    n 1nchsm "Have a good evening!"
+    n 1unmboesu "Eh?{w=0.75}{nw}" 
+    extend 1unmaj " You're heading off now,{w=0.1} [player]?"
+    n 1ullaj "Well...{w=1}{nw}" 
+    extend 1nslcal " alright."
+    n 1fchsmlsbl "Have a good evening!"
 
     if Natsuki.isAffectionate(higher=True):
-        n 1kwmsml "Come see me soon,{w=0.1} 'kay?"
+        n 1kslsllsbl "..."
+        n 1kwmbol "...And come see me soon,{w=0.2} alright?"
+
+        if Natsuki.isLove(higher=True):
+            n 1kchsmleafsbl "L-{w=0.2}love you!"
 
     return { "quit": None }
 
@@ -1712,9 +1721,12 @@ init 5 python:
     )
 
 label farewell_night_good_night:
-    n 1unmaj "Oh?{w=0.2} Are you turning in now?"
-    n 1nnmbg "Well...{w=0.3} I can't say I blame you."
-    n 1uchsm "Good night,{w=0.1} [player]!"
+    n 1unmaj "Oh?{w=0.75}{nw}" 
+    extend 1tnmsl " Are you turning in now?"
+    n 1ulraj "Well...{w=1}{nw}" 
+    extend 1nlrca " I can't say I blame you.{w=1.25}{nw}"
+    extend 1fsqsm " Ehehe."
+    n 1uchsm "Good night,{w=0.2} [player]!"
 
     if Natsuki.isAffectionate(higher=True):
         n 1uchbgl "Sweet dreams!"
