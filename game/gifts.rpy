@@ -11,6 +11,11 @@ init -5 python in jn_gifts:
     class JNGift():
         def __init__(self, color, zorder):
             """
+            Initialises a new instance of JNGift.
+
+            IN:
+                - color - The str color of the gift; matching open/closed/empty assets must exist in mod_assets/props/gifts
+                - zorder - The int zorder in which to display the gift for its animations
             """
             self.color = color
             self.zorder = zorder
@@ -26,7 +31,9 @@ init -5 python in jn_gifts:
 
         def present(self):
             """
+            Presents the gift by sliding it slowly up from the bottom of the screen, onto Natsuki's desk.
             """
+            renpy.play("mod_assets/sfx/gift_slide.ogg")
             renpy.show(
                 name=self.closed_tag,
                 at_list=[store.jn_gift_slide_up],
@@ -35,7 +42,9 @@ init -5 python in jn_gifts:
 
         def open(self):
             """
+            Shows the gift in an open state, with the lid on one side.
             """
+            renpy.play("mod_assets/sfx/gift_open.ogg")
             renpy.show(
                 name=self.open_tag,
                 at_list=[],
@@ -44,6 +53,7 @@ init -5 python in jn_gifts:
 
         def empty(self):
             """
+            Shows the gift in an empty state.
             """
             renpy.show(
                 name=self.empty_tag,
@@ -51,24 +61,36 @@ init -5 python in jn_gifts:
                 zorder=self.zorder
             )
 
+        def close(self):
+            """
+            Shows the gift with its lid back on.
+            """
+            renpy.play("mod_assets/sfx/gift_close.ogg")
+            renpy.show(
+                name=self.closed_tag,
+                at_list=[],
+                zorder=self.zorder
+            )
+
         def hide(self):
             """
+            Hides the gift entirely.
             """
             renpy.hide("gift_{0}".format(self.color))
 
     GIFT_BLUE = JNGift(
         color="blue",
-        zorder=4
+        zorder=_GIFT_ZORDER
     )
     GIFT_GREEN = JNGift(
         color="green",
-        zorder=4
+        zorder=_GIFT_ZORDER
     )
     GIFT_PINK = JNGift(
         color="pink",
-        zorder=4
+        zorder=_GIFT_ZORDER
     )
     GIFT_PURPLE = JNGift(
         color="purple",
-        zorder=4
+        zorder=_GIFT_ZORDER
     )
