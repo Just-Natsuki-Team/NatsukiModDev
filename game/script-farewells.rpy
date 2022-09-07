@@ -136,7 +136,7 @@ label farewell_force_quit:
 
     n 1uskem "H-{w=0.3}huh?{w=1}{nw}"
     extend 1uscwr " N-{w=0.3}no!{w=0.2} Wait!!{w=0.2} PLEASE-{w=0.3}{nw}"
-    show natsuki 1kchupltsa
+    show natsuki 1kchupltsa at jn_center zorder JN_NATSUKI_ZORDER
 
     play audio static
     show glitch_garbled_b zorder 99 with hpunch
@@ -542,7 +542,7 @@ init 5 python:
 label farewell_love_you_mean_the_world_to_me:
     n 1kllpul "Aww...{w=1}{nw}"
     extend 1kplsfl " you're leaving now,{w=0.2} [player]?" 
-    n 1klrcal "Well...{w=1}" 
+    n 1klrcal "Well...{w=1}{nw}" 
     extend 1ksrcal " okay."
     n 1fnmtrf "Y-{w=0.2}you better take care,{w=0.2} [player]!{w=0.5}" 
     extend 1kchssfeaf " You mean the world to me!"
@@ -1173,6 +1173,21 @@ label farewell_broken_ruined_kay:
     n 1fslsrltsb "'kay."
     return { "quit": None }
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_broken_ruined_good",
+            unlocked=True,
+            affinity_range=(None, jn_affinity.BROKEN)
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
+
+label farewell_broken_ruined_good:
+    n 1fsqanltse "{i}Good{/i}."
+    return { "quit": None }
+
 # Farewells that allow the player to choose to stay
 
 # Natsuki calls the player out on how long they've been here, and asks for more time together
@@ -1195,7 +1210,7 @@ label farewell_short_session_ask:
     $ time_in_session_descriptor = jn_utils.get_time_in_session_descriptor()
     n 1fcsgslsbr "I mean,{w=0.75}{nw}"
     extend 1fnmpol " You've literally only been here for [time_in_session_descriptor]!"
-    show natsuki 1knmpol
+    show natsuki 1knmpol at jn_center zorder JN_NATSUKI_ZORDER
     menu:
         n "You seriously can't stay just a little longer?"
 
@@ -1227,7 +1242,7 @@ label farewell_short_session_ask:
             extend 1knmpulsbl " right?"
             n 1ksrsrlsbl "..."
             n 1ksrbolsbl "So..."
-            show natsuki 1ksqsrlsbl
+            show natsuki 1ksqsrlsbl at jn_center zorder JN_NATSUKI_ZORDER
             menu:
                 n "Are you sure you wanna stay?"
 
@@ -1286,7 +1301,7 @@ label farewell_short_session_ask_alt:
     $ time_in_session_descriptor = jn_utils.get_time_in_session_descriptor()
     n 1flleml "You've barely been here [time_in_session_descriptor],{w=0.75}{nw}" 
     extend 1fnmajl " and you're {i}already{/i} going?"
-    show natsuki 1fcsgslsbl
+    show natsuki 1fcsgslsbl at jn_center zorder JN_NATSUKI_ZORDER
     menu:
         n "Come on!{w=0.5} You'll stay a little longer,{w=0.2} won't you?"
 
@@ -1295,7 +1310,7 @@ label farewell_short_session_ask_alt:
             extend 1fsqsslsbr " I knew it."
             n 1fsqsml "Ehehe.{w=0.5}{nw}" 
             extend 1fsqbgleme " Looks like I win again,{w=0.1} [player]!"
-            show natsuki 1fcsbgledzsbl
+            show natsuki 1fcsbgledzsbl at jn_center zorder JN_NATSUKI_ZORDER
 
             menu:
                 n "O-or maybe you just couldn't bring yourself to leave someone as {i}awesome{/i} as me?"
@@ -1383,27 +1398,42 @@ init 5 python:
     )
 
 label farewell_fake_confidence_ask:
-    n 1knmaj "Huh?{w=0.2} You don't really have to leave already,{w=0.1} do you?"
-    n 1fllsf "It feels like you've barely been here!"
-    n 1flldv "I-{w=0.1}I totally bet you can hang out with me a little longer!{w=0.2} Right,{w=0.1} [player]?"
+    n 1unmboesu "Huh?{w=0.75}{nw}" 
+    extend 1knmaj " You don't really {i}have{/i} to leave already,{w=0.1} do you?"
+    n 1fcsgsl "I mean,{w=0.5}{nw}"
+    extend 1fllgslsbr " come on!{w=1}{nw}"
+    extend 1fnmsf " It feels like you've barely been here!"
+    n 1fcseml "I-{w=0.2}in fact,{w=0.75}{nw}"
+    extend 1fcsgslsbl " I bet you could {i}easily{/i} hang out with me a little longer!"
+    n 1fnmajlsbl "Right,{w=0.2} [player]?"
+    n 1fllunlsbr "..."
+    show natsuki 1knmbolsbr at jn_center zorder JN_NATSUKI_ZORDER
+
     menu:
-        n "{w=0.3}...right?"
+        n "...Right?"
 
         "Right!":
-            n 1fcsbgl "A-Aha!{w=0.2} I knew it!"
-            n 1fllbg "I-{w=0.1}I totally don't need you here,{w=0.1} or anything dumb like that!"
-            n 1flldvl "You'd have to be pretty lonely to be {i}that{/i} dependent on someone else...{w=0.3} ahaha..."
-            n 1klrsll "..."
-            n 1fcswrf "J-{w=0.1}jeez!{w=0.2} Let's just get back to it already..."
-            n 1fllajf "Now,{w=0.1} where were we?"
+            n 1fcsbgfsbl "A-{w=0.3}Aha!{w=0.75}{nw}" 
+            extend 1flrsslsbl " I knew it!"
+            n 1fcsgsl "N-{w=0.2}not like I needed you here, or anything dumb like that.{w=1.25}{nw}"
+            extend 1fcspolesi " {i}Obviously{/i}."
+            n 1fslemlsbr "You'd have to be pretty lonely to be {i}that{/i} dependent on someone else."
+            n 1kslsllsbr "..."
+            n 1fcswrfesh "Well,{w=0.2} a-{w=0.2}anyway!{w=1}{nw}"
+            extend 1fcspol " Enough of that!"
+            n 1fllajl "You already said you were staying,{w=0.2} so..."
+            n 1fsldvlsbr "..."
             $ jn_globals.player_already_stayed_on_farewell = True
             $ Natsuki.calculatedAffinityGain()
 
         "Sorry, I really need to go.":
-            n 1fllbgf "O-{w=0.1}oh...{w=0.3} aha..."
-            n 1fllpol "That's fine,{w=0.1} I guess..."
-            n 1fnmbg "I'll see you later then,{w=0.1} [player]!"
-            n 1knmpo "Don't keep me waiting,{w=0.1} alright?"
+            n 1fllsll "...Heh.{w=1}{nw}"
+            extend 1fslcal " Right."
+            n 1fslunl "..."
+            n 1fcswrlsbr "W-{w=0.2}well,{w=0.2} that's fine!"
+            n 1flrpolesi "I guess that means I'll just have to test your obedience another time.{w=1}{nw}"
+            extend 1fsrdvless " Ehehe."
+            n 1fcsbgless "L-{w=0.2}later,{w=0.2} [player]!"
 
             return { "quit": None }
     return
@@ -1422,30 +1452,57 @@ init 5 python:
     )
 
 label farewell_pleading_ask:
-    n 1kskwrf "N-no!{w=0.2} You can't leave yet!"
-    n 1kllupf "..."
-    n 1kcssfl "[player]..."
-    n 1klrsff "{w=0.3} I...{w=0.3} really...{w=0.3} want you here right now."
+    n 1kskwrfesh "N-{w=0.3}no!{w=0.5}{nw}" 
+    extend 1fbkwrfess " You can't leave yet!"
+    n 1klluplsbr "..."
+    n 1fcsunl "..."
+    n 1fcspulesi "..."
+    n 1fnmcal "[player]..."
+    n 1fcsemfsbr "I...{w=0.75}{nw} " 
+    extend 1fcsunfesssbr " really...{w=1}{nw}" 
+    extend 1kslunfesssbr " want you here right now."
+    show natsuki 1ksqslfsbl at jn_center zorder JN_NATSUKI_ZORDER
+
     menu:
-        n "Just stay with me a little longer...{w=0.3} please?"
+        n "Just a few more minutes?{w=0.5} Please?"
 
         "Of course!":
-            n 1kchbsf "Yes!{nw}"
-            n 1knmajf "I-I mean...!"
-            n 1kllslf "..."
+            n 1kchbsf "Yes!{w=0.66}{nw}"
+            n 1fllwrfesh "I-{w=0.2}I mean...!"
+            n 1kllslfsbl "..."
             $ chosen_descriptor = jn_utils.getRandomDescriptor()
-            n 1kllnvf "T-{w=0.1}thanks,{w=0.1} [player].{w=0.1} You're [chosen_descriptor],{w=0.1} you know that?"
-            n 1kplsmf "Really.{w=0.1} Thank you."
-            n 1kllbgf "N-{w=0.1}now,{w=0.1} where were we? Heh..."
+            n 1kllcaf "T-{w=0.2}thanks,{w=0.1} [player].{w=3}{nw}" 
+            extend 1fcspofess " You're [chosen_descriptor],{w=0.3} you know that?"
+            n 1kllssf "Really.{w=1.5}{nw}" 
+            extend 1kslssf " Thank you."
+            n 1fcsajfsbr "N-{w=0.2}now,{w=0.75}{nw}" 
+            extend 1tnmssfsbr " where were we?"
+            n 1flrdvfsbr "Heh..."
             $ jn_globals.player_already_stayed_on_farewell = True
             $ Natsuki.calculatedAffinityGain()
 
         "I can't right now.":
-            n 1kllsff "Oh..."
-            n 1knmajl "Well,{w=0.1} if you gotta go,{w=0.1} it can't be helped,{w=0.1} I guess..."
-            n 1kplpol "Come back soon,{w=0.1} alright?"
-            n 1klrsmf "Or you'll have to make it up to me...{w=0.3} ahaha..."
-            n 1knmsmf "Stay safe,{w=0.1} [player]!"
+            n 1kslbof "...Oh."
+            n 1fcsajlsbl "Well,{w=0.3} if you gotta go,{w=0.3} it can't be helped,{w=0.75}{nw}" 
+            extend 1ksrcal " I guess..."
+            n 1ksqsll "Just come back soon,{w=0.3} alright?"
+            n 1kslpul "..."
+            n 1knmbol "...And [player]?"
+            n 1ksqbof "..."
+            
+            if Natsuki.isLove(higher=True):
+                show natsuki 1kslsgf at jn_center zorder JN_NATSUKI_ZORDER
+                show black zorder 3 with Dissolve(0.5)
+                play audio clothing_ruffle
+                pause 3.5
+                play audio kiss
+                pause 2.5
+                n "L-{w=0.2}love you!"
+
+            else:
+                n 1kcsunfess "...I'll miss you.{w=0.75}{nw}"
+                show natsuki 1kllunfess
+                pause 1.5
 
             return { "quit": None }
     return
@@ -1464,29 +1521,51 @@ init 5 python:
     )
 
 label farewell_gentle_ask:
-    n 1knmsrf "[player]...{w=0.3} do you really have to leave now?"
-    n 1kplsrf "I know you have stuff to do,{w=0.1} but I...{w=0.3} really...{w=0.3} wanna spend more time with you."
+    n 1kllsrf "[player]...{w=0.75}{nw}" 
+    extend 1knmsrf " do you really have to leave now?"
+    n 1kcsbof "I know you have stuff to do,{w=0.5} but..."
+    show natsuki 1knmpuf at jn_center zorder JN_NATSUKI_ZORDER
+
     menu:
-        n "Are you sure you have to go?"
+        n "You're sure you can't stay even a little longer?"
 
         "I can stay a little longer.":
-            n 1kplsmf "[player]..."
-            n 1kchsmf "Thank you.{w=0.2} That really means a lot to me right now."
-            $ chosen_descriptor = jn_utils.getRandomDescriptor()
-            n 1kwmssf "Y-{w=0.1}You're [chosen_descriptor],{w=0.1} [player]."
-            n 1kcssmf "Truly.{w=0.1} Thanks..."
-            n 1kcssmf "..."
-            n 1kllbgf "Aha...{w=0.3} so what else did you wanna do today?"
+            n 1kwmssfeaf "[player]..."
+            n 1fcsbofesssbr "T-{w=0.2}thanks.{w=0.75}{nw}"
+            extend 1ksrsgf " That...{w=0.5} really means a lot to me."
+            n 1ksqcaf "Truly.{w=0.5} Thanks..."
+            n 1ksrcaf "..."
+
+            show natsuki 1fbkcaf at jn_center zorder JN_NATSUKI_ZORDER
+            show black zorder 3 with Dissolve(0.5)
+            play audio clothing_ruffle
+            pause 3.5
+            show natsuki 1ncspuf at jn_center zorder JN_NATSUKI_ZORDER
+            hide black with Dissolve(1.25)
+
+            n 1kslsmfsbl "..."
+            n 1kslssfsbl "So..."
+            extend 1knmsslsbr " where were we?"
+
             $ jn_globals.player_already_stayed_on_farewell = True
             $ Natsuki.calculatedAffinityGain()
 
         "Sorry, I really have to go.":
             n 1kllsrf "Oh..."
-            n 1kplsmf "I'd be lying if I said I wasn't disappointed,{w=0.1} but I understand."
+            n 1fcsemf "I'd be lying if I said I wasn't disappointed...{w=1.5}{nw}" 
+            extend 1kslcaf " but I understand."
             n 1kwmsrf "Just be careful out there,{w=0.1} okay?"
             n 1kllsrf "..."
             n 1kwmsmf "I-{w=0.1}I love you,{w=0.1} [player]..."
-            n 1kchsmf "I'll see you later."
+            n 1kchssfsbl "I'll see you later."
+
+            if (random.choice([True, False])):
+                show natsuki 1ksrsgfsbl at jn_center zorder JN_NATSUKI_ZORDER
+                show black zorder 3 with Dissolve(0.5)
+                play audio clothing_ruffle
+                pause 3.5
+                play audio kiss
+                pause 2.5
 
             return { "quit": None }
     return
@@ -1509,28 +1588,24 @@ init 5 python:
     )
 
 label farewell_early_morning_going_this_early:
-    n 1tnmaj "H-{w=0.1}huh?{w=0.2} You're going this early?"
-    n 1kllsl "...Oh."
-
-    if Natsuki.isEnamored(higher=True):
-        n 1klrssl "I...{w=0.3} was hoping we could hang out longer...{w=0.3} but if you gotta go,{w=0.1} then you gotta go."
-        n 1unmbgl "Thanks for stopping by though,{w=0.1} [player].{w=0.2} I really appreciate it."
-        n 1knmssl "Just don't rush things for my sake,{w=0.1} alright?"
-
-    else:
-        n 1fchbgf "I-{w=0.1}I mean,{w=0.1} it was cool of you to drop by,{w=0.1} [player]!"
-
-    n 1uchgnl "Take care out there,{w=0.1} 'kay?{w=0.2} Don't do anything dumb!"
+    n 1unmpuesu "Eh?{w=1}{nw}"
+    extend 1nllsl " Oh."
+    n 1nllaj "Well...{w=0.75}{nw}"
+    extend 1tnmss " I guess I shouldn't really be surprised.{w=1}{nw}"
+    extend 1nlrpol " You must have had a reason to be up this early."
+    n 1nsrsslsbr "...I'd hope,{w=0.2} anyway."
+    n 1fcssslsbr "Take care out there,{w=0.1} alright?{w=1}{nw}" 
+    extend 1nchgnlelg " Don't do anything dumb!"
 
     if Natsuki.isLove(higher=True):
-        n 1uchbsf "Love you,{w=0.1} [player]~!"
+        n 1fchsmfeaf "Love you,{w=0.2} [player]~!"
 
     elif Natsuki.isAffectionate(higher=True):
         $ chosen_tease = jn_utils.getRandomTease()
-        n 1uchbgl "See you later,{w=0.1} [chosen_tease]!"
+        n 1fchbll "See you later,{w=0.2} [chosen_tease]!"
 
     else:
-        n 1uchsml "See ya!"
+        n 1fchsml "See ya!"
 
     return { "quit": None }
 
@@ -1550,19 +1625,21 @@ init 5 python:
     )
 
 label farewell_morning_heading_off:
-    n 1nnmbg "Heading off now,{w=0.1} [player]?{w=0.2} No worries!"
+    n 1unmaj "Heading off now,{w=0.2} [player]?{w=1}{nw}" 
+    extend 1fchbg " No worries!"
 
     if Natsuki.isEnamored(higher=True):
-        n 1nchbgl "I hope your day is as great as you are."
+        n 1fchbglsbr "I hope your day is as awesome as you are!"
 
         if Natsuki.isLove(higher=True):
-            n 1nchsmf "Ehehe.{w=0.2} Love you,{w=0.1} [player]~!"
+            n 1nchsmf "Ehehe.{w=0.75}{nw}" 
+            extend 1fchbgfeaf " Love you,{w=0.1} [player]~!"
 
         else:
             n 1uchsml "Later!"
 
     else:
-        n 1unmbg "See ya!"
+        n 1fchsml "See 'ya!"
 
     return { "quit": None }
 
@@ -1582,15 +1659,18 @@ init 5 python:
     )
 
 label farewell_afternoon_come_visit_soon:
-    n 1unmaj "Oh?{w=0.2} Leaving a little later today,{w=0.1} [player]?"
-    n 1ullaj "I guess that's fine...{w=0.3} just remember to come visit soon,{w=0.1} 'kay?"
+    n 1unmaj "Oh?{w=0.75}{nw}" 
+    extend 1unmbo " Leaving a little later today,{w=0.1} [player]?"
+    n 1ullaj "I guess that's fine...{w=1}{nw}" 
+    extend 1fnmca " just remember to come visit soon,{w=0.2} 'kay?"
 
     if Natsuki.isAffectionate(higher=True):
-        n 1fnmcal "I'll be mad if you don't."
-        n 1uchbgl "Ehehe.{w=0.2} Stay safe,{w=0.1} [player]!"
+        n 1fsqcal "I'll be mad if you don't."
+        n 1fsqsml "Ehehe.{w=0.75}{nw}" 
+        extend 1nchgnlelg " Stay safe,{w=0.2} [player]!"
 
     else:
-        n 1nnmsm "Stay safe!"
+        n 1fchsmlsbl "Stay safe!"
 
     return { "quit": None }
 
@@ -1610,12 +1690,18 @@ init 5 python:
     )
 
 label farewell_evening_good_evening:
-    n 1unmaj "Huh?{w=0.2} You're heading off now,{w=0.1} [player]?"
-    n 1ullaj "Well...{w=0.3} alright."
-    n 1nchsm "Have a good evening!"
+    n 1unmboesu "Eh?{w=0.75}{nw}" 
+    extend 1unmaj " You're heading off now,{w=0.1} [player]?"
+    n 1ullaj "Well...{w=1}{nw}" 
+    extend 1nslcal " alright."
+    n 1fchsmlsbl "Have a good evening!"
 
     if Natsuki.isAffectionate(higher=True):
-        n 1kwmsml "Come see me soon,{w=0.1} 'kay?"
+        n 1kslsllsbl "..."
+        n 1kwmbol "...And come see me soon,{w=0.2} alright?"
+
+        if Natsuki.isLove(higher=True):
+            n 1kchsmleafsbl "L-{w=0.2}love you!"
 
     return { "quit": None }
 
@@ -1635,9 +1721,12 @@ init 5 python:
     )
 
 label farewell_night_good_night:
-    n 1unmaj "Oh?{w=0.2} Are you turning in now?"
-    n 1nnmbg "Well...{w=0.3} I can't say I blame you."
-    n 1uchsm "Good night,{w=0.1} [player]!"
+    n 1unmaj "Oh?{w=0.75}{nw}" 
+    extend 1tnmsl " Are you turning in now?"
+    n 1ulraj "Well...{w=1}{nw}" 
+    extend 1nlrca " I can't say I blame you.{w=1.25}{nw}"
+    extend 1fsqsm " Ehehe."
+    n 1uchsm "Good night,{w=0.2} [player]!"
 
     if Natsuki.isAffectionate(higher=True):
         n 1uchbgl "Sweet dreams!"

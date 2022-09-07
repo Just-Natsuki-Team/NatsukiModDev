@@ -2991,8 +2991,19 @@ label talk_i_love_you:
         n 1kwdemf "[player]!{w=0.2} I love you too!"
         n 1kchbsf "I-{w=0.1}I love...{w=0.3} you too..."
         n 1kplbgf "I...{w=0.3} I..."
+        n 1fcsunfsbl "..."
+
+        show natsuki 1kcspuf at jn_center zorder JN_NATSUKI_ZORDER
+        show black zorder 3 with Dissolve(0.5)
+        play audio clothing_ruffle
+        pause 3.5
+        play audio kiss
+        show natsuki 1ksrsmfsbr at jn_center zorder JN_NATSUKI_ZORDER
+        pause 1.5
+        hide black with Dissolve(1.25)
+
         n 1kchsmf "..."
-        n 1kwmsmf "I love you,{w=0.1} [player]..."
+        n 1kwmsmf "I love you,{w=0.3} [player]..."
         n 1kllsml "..."
         n 1kskemf "S-{w=0.1}sorry...!"
         n 1klrunf "I...{w=0.3} think I got a little carried away..."
