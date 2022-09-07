@@ -1588,28 +1588,24 @@ init 5 python:
     )
 
 label farewell_early_morning_going_this_early:
-    n 1tnmaj "H-{w=0.1}huh?{w=0.2} You're going this early?"
-    n 1kllsl "...Oh."
-
-    if Natsuki.isEnamored(higher=True):
-        n 1klrssl "I...{w=0.3} was hoping we could hang out longer...{w=0.3} but if you gotta go,{w=0.1} then you gotta go."
-        n 1unmbgl "Thanks for stopping by though,{w=0.1} [player].{w=0.2} I really appreciate it."
-        n 1knmssl "Just don't rush things for my sake,{w=0.1} alright?"
-
-    else:
-        n 1fchbgf "I-{w=0.1}I mean,{w=0.1} it was cool of you to drop by,{w=0.1} [player]!"
-
-    n 1uchgnl "Take care out there,{w=0.1} 'kay?{w=0.2} Don't do anything dumb!"
+    n 1unmpuesu "Eh?{w=1}{nw}"
+    extend 1nllsl " Oh."
+    n 1nllaj "Well...{w=0.75}{nw}"
+    extend 1tnmss " I guess I shouldn't really be surprised.{w=1}{nw}"
+    extend 1nlrpol " You must have had a reason to be up this early."
+    n 1nsrsslsbr "...I'd hope,{w=0.2} anyway."
+    n 1fcssslsbr "Take care out there,{w=0.1} alright?{w=1}{nw}" 
+    extend 1nchgnlelg " Don't do anything dumb!"
 
     if Natsuki.isLove(higher=True):
-        n 1uchbsf "Love you,{w=0.1} [player]~!"
+        n 1fchsmfeaf "Love you,{w=0.2} [player]~!"
 
     elif Natsuki.isAffectionate(higher=True):
         $ chosen_tease = jn_utils.getRandomTease()
-        n 1uchbgl "See you later,{w=0.1} [chosen_tease]!"
+        n 1fchbll "See you later,{w=0.2} [chosen_tease]!"
 
     else:
-        n 1uchsml "See ya!"
+        n 1fchsml "See ya!"
 
     return { "quit": None }
 
@@ -1629,19 +1625,21 @@ init 5 python:
     )
 
 label farewell_morning_heading_off:
-    n 1nnmbg "Heading off now,{w=0.1} [player]?{w=0.2} No worries!"
+    n 1unmaj "Heading off now,{w=0.2} [player]?{w=1}{nw}" 
+    extend 1fchbg " No worries!"
 
     if Natsuki.isEnamored(higher=True):
-        n 1nchbgl "I hope your day is as great as you are."
+        n 1fchbglsbr "I hope your day is as awesome as you are!"
 
         if Natsuki.isLove(higher=True):
-            n 1nchsmf "Ehehe.{w=0.2} Love you,{w=0.1} [player]~!"
+            n 1nchsmf "Ehehe.{w=0.75}{nw}" 
+            extend 1fchbgfeaf " Love you,{w=0.1} [player]~!"
 
         else:
             n 1uchsml "Later!"
 
     else:
-        n 1unmbg "See ya!"
+        n 1fchsml "See 'ya!"
 
     return { "quit": None }
 
