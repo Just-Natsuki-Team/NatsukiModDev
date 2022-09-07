@@ -2092,7 +2092,12 @@ label new_wearables_outfits_unlocked:
             jn_gifts.GIFT_PURPLE,
         ])
         giftbox.present()
-    pause 2
+    pause(2.25)
+    #TODO: REMOVE THIS TEST CODE!
+    python:
+        jn_outfits._SESSION_NEW_UNLOCKS.append(jn_outfits.get_wearable("jn_hair_princess_braids"))
+        jn_outfits._SESSION_NEW_UNLOCKS.append(jn_outfits.get_outfit("jn_ruffled_swimsuit"))
+        jn_outfits._SESSION_NEW_UNLOCKS.append(jn_outfits.get_wearable("jn_accessory_hairband_gray"))
 
     if Natsuki.isEnamored(higher=True):
         n 1uskemleex "...!"
@@ -2154,9 +2159,14 @@ label new_wearables_outfits_unlocked:
         import random
         alt_dialogue = False
         random.shuffle(jn_outfits._SESSION_NEW_UNLOCKS)
+        giftbox.open()
 
     while len(jn_outfits._SESSION_NEW_UNLOCKS) > 0:
+        play audio gift_rustle
         $ unlock = jn_outfits._SESSION_NEW_UNLOCKS.pop()
+        if (len(jn_outfits._SESSION_NEW_UNLOCKS) == 0):
+            $ giftbox.empty()
+
         n 1tlrbo "..."
 
         # You can't really gift a hairstyle, so instead Natsuki is given an idea through a note/picture
@@ -2360,6 +2370,9 @@ label new_wearables_outfits_unlocked:
         n 1fcstrlsbl "T-{w=0.2}thanks."
 
     show black zorder 4 with Dissolve(0.5)
+    $ giftbox.close()
+    $ giftbox.hide()
+    pause(2)
     play audio chair_out
     pause(3)
     play audio clothing_ruffle
