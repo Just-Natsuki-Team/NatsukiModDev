@@ -2084,20 +2084,14 @@ label outfits_auto_change:
     return
 
 label new_wearables_outfits_unlocked:
-    python:
-        giftbox = random.choice([
-            jn_gifts.GIFT_BLUE,
-            jn_gifts.GIFT_GREEN,
-            jn_gifts.GIFT_PINK,
-            jn_gifts.GIFT_PURPLE,
-        ])
-        giftbox.present()
+    $ giftbox = random.choice([
+        jn_gifts.GIFT_BLUE,
+        jn_gifts.GIFT_GREEN,
+        jn_gifts.GIFT_PINK,
+        jn_gifts.GIFT_PURPLE,
+    ])
+    $ giftbox.present()
     pause(2.25)
-    #TODO: REMOVE THIS TEST CODE!
-    python:
-        jn_outfits._SESSION_NEW_UNLOCKS.append(jn_outfits.get_wearable("jn_hair_princess_braids"))
-        jn_outfits._SESSION_NEW_UNLOCKS.append(jn_outfits.get_outfit("jn_ruffled_swimsuit"))
-        jn_outfits._SESSION_NEW_UNLOCKS.append(jn_outfits.get_wearable("jn_accessory_hairband_gray"))
 
     if Natsuki.isEnamored(higher=True):
         n 1uskemleex "...!"
