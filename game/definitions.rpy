@@ -1574,6 +1574,19 @@ init -100 python in jn_utils:
         """
         return list(store.player)[0]
 
+    def getPlayerFinal(repeat_times=0):
+        """
+        Returns the last letter of the player's name.
+
+        OUT:
+            Last letter of the player's name
+        """
+        player_final = list(store.player)[len(store.player) - 1]
+        for i in range(repeat_times):
+            player_final += list(store.player)[len(store.player) - 1]
+
+        return player_final
+
     def get_string_contains_profanity(string):
         """
         Returns True if the given string contains a profanity, based on regex.

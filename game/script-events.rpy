@@ -732,6 +732,8 @@ label event_wintendo_twitch_battery_dead:
 
     n  "Nnnnnn...!"
     n  "Uuuuuuu-!"
+    n  "..."
+    n  "Mmmmmm...!"
     n 1uchbsedz "YES!{w=1.25}{nw}"
     extend 1uchgnedz " FINALLY!"
     n 1kcsbgesisbl "Haah..."
@@ -794,19 +796,24 @@ label event_wintendo_twitch_game_over:
     $ jn_globals.force_quit_enabled = False
     n "..."
     n "Ehehe..."
+    n "Oh yeah.{w=0.5} Uh huh."
     
     pause 2
 
-    n "Yeah! Now THAT's what I'm talking about!"
-    n "Three hits!"
-    extend " Four hits!"
+    n "Ugh!{w=0.5}{nw}"
+    extend "Get up!{w=0.75} Get UP!"
+    n "Counter,{w=0.2} you idiot!"
+
+    n "Yeah!{w=0.75} Now THAT's what I'm talking about!"
+    n "Three hits!{w=0.5}{nw}"
+    extend " Four hits!{w=0.3}{nw}"
     extend " Five hits!"
-    n "You're on {i}fire{/i}, Natsuki!"
+    n "You're on {i}fire{/i},{w=0.2} Natsuki!"
 
     pause 3
 
-    n "Oh man, I'm ACING this!"
-    n "Yeah!"
+    n "Oh man,{w=0.2} I'm ACING this!"
+    n "Yeah!{w=0.75}{nw}"
     extend "Yeah! Come on!"
     n "Just a few more hits...!"
 
@@ -818,6 +825,36 @@ label event_wintendo_twitch_game_over:
     $ jn_events.display_visuals("")
     $ jn_globals.force_quit_enabled = True
 
-    n ""
+    n 1unmemesu "...!"
+    $ player_initial = jn_utils.getPlayerInitial()
+    n 1fnmgs "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
+    extend 1fllemlsbr " H-{w=0.2}how many times do I gotta tell y-"
+    n 1nskemlsbr "..."
+    n 1fdwemsbl "..."
+    n 1fcsansbl "..."
+    n 1fcsemsbl "Are.{w=0.75}{nw}"
+    extend 1fcsfusbr " You.{w=0.75}{nw}"
+    extend 1fbkwrleansbr " KIDDING ME?!"
+    $ player_final = jn_utils.getPlayerFinal(repeat_times=2)
+    n 1kbkwrlsbr "[player][player_final]!{w=1}{nw}"
+    extend 1fllgslsbr "Come on!"
+    n 1fcswrlsbr "Y-{w=0.2}you totally threw off my groove!{w=0.75}{nw}"
+    extend 1fsqpolsbl " You big jerk!"
+    n 1kcsemesisbl "..."
+    n 1kdwwr "...And now I gotta do {i}that{/i} all over again?{w=1}{nw}"
+    extend 1kcspu " Man..."
+    n 1fslsl "..."
+    n 1flrtr "I guess I'll just do that later."
+    n 1fsqcal "{b}Again{/b}."
+
+    play audio chair_out_in
+    with Fade(out_time=0.25,hold_time=5,in_time=0.25, color="#000000")
+
+    n 1nsrcal "..."
+    n 1nnmtrl "Well,{w=0.2} [player]."
+    n 1nsqtrl "I hope you're buckled up."
+    n 1nsrpol "...'Cause now you owe me {i}twice{/i} as much fun to make up for that."
+    n 1nsqbol "..."
+    n 1nsqssl "...Dummy."
     
     return
