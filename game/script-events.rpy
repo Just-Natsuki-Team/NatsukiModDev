@@ -7,6 +7,23 @@ image prop a_la_mode_manga_held = "mod_assets/props/a_la_mode_manga_held.png"
 image prop strawberry_milkshake = "mod_assets/props/strawberry_milkshake.png"
 image prop step_by_step_manga_held = "mod_assets/props/step_by_step_manga_held.png"
 
+image prop wintendo_twitch_held = "mod_assets/props/wintendo_twitch_held.png"
+image prop wintendo_twitch_battery_dead = "mod_assets/props/wintendo_twitch_battery_dead.png"
+image prop wintendo_twitch_playing:
+    "mod_assets/props/wintendo_twitch_playing_a.png"
+    pause 1
+    "mod_assets/props/wintendo_twitch_playing_b.png"
+    pause 0.5
+    "mod_assets/props/wintendo_twitch_playing_c.png"
+    repeat
+
+image prop wintendo_twitch_battery_low:
+    "mod_assets/props/wintendo_twitch_battery_low_a.png"
+    pause 1
+    "mod_assets/props/wintendo_twitch_battery_low_b.png"
+    pause 1
+    repeat
+
 init python in jn_events:
     import random
     import store
@@ -663,4 +680,144 @@ label event_step_by_step_manga:
     n 1tnmsslsbr "What's new,{w=0.1} [player]?{w=1}{nw}"
     extend 1fllsslsbl " Ahaha..."
 
+    return
+
+# Natsuki learns why you should always have a charging cable on hand...
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_wintendo_twitch_battery_dead",
+            unlocked=True,
+            conditional="jn_utils.get_total_gameplay_days() >= 14",
+            affinity_range=(jn_affinity.AFFECTIONATE, None)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
+
+label event_wintendo_twitch_battery_dead:
+    $ jn_globals.force_quit_enabled = False
+    n "..."
+    n "...Ha!"
+    n "..."
+
+    pause 3
+
+    n "Oh,{w=0.3} come {i}on{/i}!{w=1.25}{nw}"
+    extend " As {i}if{/i} that hit me!"
+
+    pause 2
+
+    n "Nnnng-!"
+    n "G-{w=0.1}get OFF me!{w=0.5}{nw}"
+    extend " Jeez!"
+    n "I HATE these enemies!"
+    n "Did they {i}have{/i} to add so many?!"
+
+    pause 3
+
+    n "Get out of my way!{w=0.75}{nw}"
+    extend " It's right there!{w=0.75}{nw}"
+    extend " I'm SO {i}close{/i}!"
+    n "Come on...{w=1}{nw}"
+    extend " {i}come on{/i}...!"
+
+    menu:
+        "Enter...":
+            pass
+
+    show prop wintendo_twitch_battery_dead zorder jn_events.JN_EVENT_PROP_ZORDER
+    $ jn_events.display_visuals("")
+    $ jn_globals.force_quit_enabled = True
+
+    n  "Nnnnnn...!"
+    n  "Uuuuuuu-!"
+    n 1uchbsedz "YES!{w=1.25}{nw}"
+    extend 1uchgnedz " FINALLY!"
+    n 1kcsbgesisbl "Haah..."
+    n 1fcsbgemesbr "Stick {i}that{/i} in your pipe and smoke it!"
+    n 1kcsssemesbr "..."
+    n 1ksqsmsbl "...{w=0.75}{nw}"
+    n 1uskemleshsbl "...!"
+    n 1fllbglsbl "A-{w=0.2}ah!"
+    extend 1fchbglsbr " H-{w=0.2}hey,{w=0.2} [player]!"
+    extend 1tchbglsbr " What's up?"
+    n 1kcssssbl "Man..."
+    n 1fsldvsbl "Sorry,"
+    extend 1fcsgssbl " but you have no {i}IDEA{/i} how long I was trying to beat that stage!"
+    n 1fnmpol "Seriously!"
+    n 1fcsajl "I mean," 
+    extend 1fsrajlsbl " it's not like I was getting {i}upset{/i} or anything..."
+    n 1fcsbglsbr "I'm {i}way{/i} past getting vexed over games,{w=0.2} of all things."
+    n 1fslbglsbr "T-{w=0.2}they're just lucky I {i}chose{/i} not to go all out.{w=1}{nw}"
+    extend 1fcsajlsbr " That's all.{w=1}{nw}"
+    extend 1nchgnl " Ehehe."
+    n 1nchsmleme "..."
+    n 1tnmbo "Eh?"
+    extend 1klrbgesssbl " Oh,{w=0.2} right!{w=0.75}" 
+    extend 1fchbgesssbr " Sorry!"
+    extend 1flrdvlsbr " I'm almost done anyway."
+    n 1ucssslsbr "All I gotta do is save,{w=0.5}{nw}" 
+    extend " and I'll be right-{w=1.25}{nw}"
+    n 1udwssl "..."
+    n 1ndwbo "..."
+    n 1fdwanl "..."
+    n 1fcsful "..."
+    n 1fcsunl "..."
+
+    play audio chair_out_in
+    with Fade(out_time=0.25,hold_time=5,in_time=0.25, color="#000000")
+    
+    n 1ndtbo "..."
+    n 1nslbo "..."
+    n 1ndtca "..."
+    n 1fdteml "This stays between us."
+    n 1fsqfrlsbl "Got it?"
+    n 1nsrpolsbl "..."
+
+    return
+
+# Natsuki jumps at the player entering the room, right as she's about to win a game... uh oh.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_wintendo_twitch_game_over",
+            unlocked=True,
+            conditional="jn_utils.get_total_gameplay_days() >= 21",
+            affinity_range=(jn_affinity.AFFECTIONATE, None)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
+
+label event_wintendo_twitch_game_over:
+    $ jn_globals.force_quit_enabled = False
+    n "..."
+    n "Ehehe..."
+    
+    pause 2
+
+    n "Yeah! Now THAT's what I'm talking about!"
+    n "Three hits!"
+    extend " Four hits!"
+    extend " Five hits!"
+    n "You're on {i}fire{/i}, Natsuki!"
+
+    pause 3
+
+    n "Oh man, I'm ACING this!"
+    n "Yeah!"
+    extend "Yeah! Come on!"
+    n "Just a few more hits...!"
+
+    menu:
+        "Enter...":
+            pass
+
+    show prop step_by_step_manga_held zorder jn_events.JN_EVENT_PROP_ZORDER
+    $ jn_events.display_visuals("")
+    $ jn_globals.force_quit_enabled = True
+
+    n ""
+    
     return
