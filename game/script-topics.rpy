@@ -4409,8 +4409,8 @@ label talk_custom_music_explanation:
     n 1uwdaj "Oh,{w=0.75}{nw}"
     extend 1nlrpu " and if you gotta convert it first,{w=1}{nw}"
     extend 1nsqpo " don't just rename it."
-    n 1fcsbg "Use a proper converter!"
-    extend 1fsrbg " Unless you {i}like{/i} hearing your music being all warped and nasty,{w=0.3} anyway."
+    n 1fcsbg "Use a proper converter!{w=1}{nw}"
+    extend 1fsrbg " Unless you {i}enjoy{/i} hearing your music being all warped and nasty,{w=0.3} anyway."
     $ persistent.jn_custom_music_unlocked = True
     $ persistent.jn_custom_music_explanation_given = True
     n 1nnmaj "Once you've done that,{w=0.1} just click the {i}Music{/i} button,{w=0.1} and I'll check that it's all done right."
