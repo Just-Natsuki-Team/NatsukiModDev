@@ -730,10 +730,10 @@ label event_wintendo_twitch_battery_dead:
     $ jn_events.display_visuals("")
     $ jn_globals.force_quit_enabled = True
 
-    n  "Nnnnnn...!"
-    n  "Uuuuuuu-!"
-    n  "..."
-    n  "Mmmmmm...!"
+    n 1fdwanl "Nnnnnn...!"
+    n 1fdwpoless "Uuuuuuu-!"
+    n 1fdwfo "..."
+    n 1fdwfoesssbl "Mmmmmm...!"
     n 1uchbsedz "YES!{w=1.25}{nw}"
     extend 1uchgnedz " FINALLY!"
     n 1kcsbgesisbl "Haah..."
