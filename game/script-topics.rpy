@@ -27,7 +27,7 @@ init python in topics:
     import store
     TOPIC_MAP = dict()
 
-    if get_topic("talk_i_love_you").conditional is not None:
+    if store.get_topic("talk_i_love_you").conditional is not None:
         persistent._topic_database["talk_i_love_you"]["conditional"] = None
 
 # Special dialogue for when out of random topics
