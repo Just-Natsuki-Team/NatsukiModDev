@@ -27,6 +27,9 @@ init python in topics:
     import store
     TOPIC_MAP = dict()
 
+    if get_topic("talk_i_love_you").conditional is not None:
+        persistent._topic_database["talk_i_love_you"]["conditional"] = None
+
 # Special dialogue for when out of random topics
 label talk_out_of_topics:
     if Natsuki.isNormal(higher=True):
@@ -4406,6 +4409,11 @@ label talk_custom_music_explanation:
     n 1ullss "If you don't know how to check,{w=0.1} then just look at the letters after the period in the file name."
     n 1unmss "You should also be able to see those in the file {i}properties{/i} if they don't appear on the screen at first."
     n 1flrbg "Like I said -{w=0.1} this thing isn't {i}exactly{/i} super modern,{w=0.1} so it won't work with any fancy newer formats,{w=0.1} or weird old ones."
+    n 1uwdaj "Oh,{w=0.75}{nw}"
+    extend 1nlrpu " and if you gotta convert it first,{w=1}{nw}"
+    extend 1nsqpo " don't just rename it."
+    n 1fcsbg "Use a proper converter!"
+    extend 1fsrbg " Unless you {i}like{/i} hearing your music being all warped and nasty,{w=0.3} anyway."
     $ persistent.jn_custom_music_unlocked = True
     $ persistent.jn_custom_music_explanation_given = True
     n 1nnmaj "Once you've done that,{w=0.1} just click the {i}Music{/i} button,{w=0.1} and I'll check that it's all done right."
