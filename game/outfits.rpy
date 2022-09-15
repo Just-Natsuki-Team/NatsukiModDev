@@ -1244,12 +1244,6 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
-        reference_name="jn_clothes_lolita_dress",
-        display_name="Lolita dress",
-        unlocked=False,
-        is_jn_wearable=True
-    ))
-    __register_wearable(JNClothes(
         reference_name="jn_clothes_lolita_school_uniform",
         display_name="Lolita school uniform",
         unlocked=False,
@@ -1340,12 +1334,6 @@ init -1 python in jn_outfits:
     __register_wearable(JNHeadgear(
         reference_name="jn_headgear_fox_ears",
         display_name="Fox ears",
-        unlocked=False,
-        is_jn_wearable=True
-    ))
-    __register_wearable(JNHeadgear(
-        reference_name="jn_headgear_lolita_hat",
-        display_name="Lolita hat",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1522,16 +1510,6 @@ init -1 python in jn_outfits:
         hairstyle=get_wearable("jn_hair_down"),
         accessory=get_wearable("jn_accessory_hairband_white"),
         headgear=get_wearable("jn_headgear_santa_hat")
-    ))
-    __register_outfit(JNOutfit(
-        reference_name="jn_lolita_cosplay",
-        display_name="Lolita cosplay",
-        unlocked=False,
-        is_jn_outfit=True,
-        clothes=get_wearable("jn_clothes_lolita_dress"),
-        hairstyle=get_wearable("jn_hair_twintails"),
-        accessory=get_wearable("jn_accessory_hairband_hot_pink"),
-        headgear=get_wearable("jn_headgear_lolita_hat")
     ))
     __register_outfit(JNOutfit(
         reference_name="jn_trainer_cosplay",
