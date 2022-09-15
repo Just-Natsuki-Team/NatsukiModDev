@@ -1196,20 +1196,8 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
-        reference_name="jn_clothes_low_cut_dress",
-        display_name="Low-cut dress",
-        unlocked=False,
-        is_jn_wearable=True
-    ))
-    __register_wearable(JNClothes(
         reference_name="jn_clothes_magical_girl",
         display_name="Magical girl cosplay",
-        unlocked=False,
-        is_jn_wearable=True
-    ))
-    __register_wearable(JNClothes(
-        reference_name="jn_clothes_red_rose_lace_dress",
-        display_name="Valentine's dress",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1276,12 +1264,6 @@ init -1 python in jn_outfits:
     __register_wearable(JNClothes(
         reference_name="jn_clothes_sparkly_ballgown",
         display_name="Sparkly ballgown",
-        unlocked=False,
-        is_jn_wearable=True
-    ))
-    __register_wearable(JNClothes(
-        reference_name="jn_clothes_square_bra",
-        display_name="Square bra",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1491,15 +1473,6 @@ init -1 python in jn_outfits:
         clothes=get_wearable("jn_clothes_rose_lace_dress"),
         hairstyle=get_wearable("jn_hair_ponytail"),
         accessory=get_wearable("jn_accessory_purple_rose")
-    ))
-    __register_outfit(JNOutfit(
-        reference_name="jn_low_cut_dress",
-        display_name="Low-cut dress",
-        unlocked=False,
-        is_jn_outfit=True,
-        clothes=get_wearable("jn_clothes_low_cut_dress"),
-        hairstyle=get_wearable("jn_hair_twin_buns"),
-        accessory=get_wearable("jn_accessory_hairband_white")
     ))
     __register_outfit(JNOutfit(
         reference_name="jn_christmas_outfit",
