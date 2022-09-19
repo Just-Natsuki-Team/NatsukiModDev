@@ -333,12 +333,12 @@ label farewell_option_work:
         n 1fsqpol "And you {i}better{/i} come visit when you get back."
 
         if Natsuki.isLove(higher=True):
-            n 1fnmcal "Take care,{w=0.1} [player]!"
-
-        else:
             n 1fnmcal "Take care,{w=0.1} [player]!{w=1}{nw}"
             extend 1kchsmleaf " I love you!"
             n 1kllcalsbr "..."
+
+        else:
+            n 1fnmcal "Take care,{w=0.1} [player]!"
 
     else:
         n 1unmajesu "Oh?{w=0.2} You're working today?"
