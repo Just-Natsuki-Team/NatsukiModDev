@@ -1238,8 +1238,8 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
-        reference_name="jn_clothes_long_sleeved_shirt_nya",
-        display_name="Long-sleeved shirt",
+        reference_name="jn_clothes_nya_sweater",
+        display_name="Nya! sweater",
         unlocked=True,
         is_jn_wearable=True
     ))
