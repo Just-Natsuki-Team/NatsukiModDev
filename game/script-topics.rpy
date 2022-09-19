@@ -7629,9 +7629,3 @@ label talk_player_change_name:
             Natsuki.addApology(jn_apologies.ApologyTypes.bad_player_name)
 
     return
-
-label gaming_test:
-    show prop wintendo_twitch_playing zorder 4
-    show natsuki gaming at jn_center zorder JN_NATSUKI_ZORDER
-    n "..."
-    jump ch30_loop

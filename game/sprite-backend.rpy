@@ -604,20 +604,35 @@ init 1 python:
 #
 # For spritecode construction, use the previewer @ https://just-natsuki-team.github.io/Expression-Previewer/
 
+# Idle images for Natsuki playing her Twitch
 image natsuki gaming:
-    choice:
-        "natsuki 1fdwfosbl"
+    block:
+        choice:
+            "natsuki 1fdwfosbl"
+            pause 3
+            "natsuki 1fcsfosbl"
+            pause 0.1
 
-    choice:
-        "natsuki 1fdwpusbr"
+        choice:
+            "natsuki 1fdwpusbr"
+            pause 3
 
-    choice:
-        "natsuki 1fdwslsbl"
+        choice:
+            "natsuki 1fdwslsbl"
+            pause 3
+            "natsuki 1fcsslsbl"
+            pause 0.1
 
-    choice:
-        "natsuki 1fdwcaesssbl"
+        choice:
+            "natsuki 1fdwcaesssbr"
+            pause 3
+            
+        choice:
+            "natsuki 1fdwsssbl"
+            pause 3
+            "natsuki 1fcssssbl"
+            pause 0.1
 
-    pause 3
     repeat
 
 # This selects which idle image to show based on current affinity state
