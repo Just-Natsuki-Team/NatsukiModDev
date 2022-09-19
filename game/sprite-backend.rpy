@@ -604,6 +604,22 @@ init 1 python:
 #
 # For spritecode construction, use the previewer @ https://just-natsuki-team.github.io/Expression-Previewer/
 
+image natsuki gaming:
+    choice:
+        "natsuki 1fdwfosbl"
+
+    choice:
+        "natsuki 1fdwpusbr"
+
+    choice:
+        "natsuki 1fdwslsbl"
+
+    choice:
+        "natsuki 1fdwcaesssbl"
+
+    pause 3
+    repeat
+
 # This selects which idle image to show based on current affinity state
 image natsuki idle = ConditionSwitch(
     "Natsuki.isEnamored(higher=True)", "natsuki idle max_affinity",

@@ -8,19 +8,55 @@ image prop strawberry_milkshake = "mod_assets/props/strawberry_milkshake.png"
 image prop step_by_step_manga_held = "mod_assets/props/step_by_step_manga_held.png"
 
 image prop wintendo_twitch_held = "mod_assets/props/wintendo_twitch_held.png"
-image prop wintendo_twitch_battery_dead = "mod_assets/props/wintendo_twitch_battery_dead.png"
 image prop wintendo_twitch_playing:
-    "mod_assets/props/wintendo_twitch_playing_a.png"
+    "mod_assets/props/twitch/gaming/wintendo_twitch_playing_a.png"
     pause 1
-    "mod_assets/props/wintendo_twitch_playing_b.png"
-    pause 0.5
-    "mod_assets/props/wintendo_twitch_playing_c.png"
+
+    "mod_assets/props/twitch/gaming/wintendo_twitch_playing_b.png"
+    pause 0.15
+
+    "mod_assets/props/twitch/gaming/wintendo_twitch_playing_a.png"
+    pause 2
+
+    "mod_assets/props/twitch/gaming/wintendo_twitch_playing_c.png"
+    pause 0.15
+
+    "mod_assets/props/twitch/gaming/wintendo_twitch_playing_a.png"
+    pause 1.5
+
+    choice:
+        "mod_assets/props/twitch/gaming/wintendo_twitch_playing_b.png"
+        pause 0.1
+
+        "mod_assets/props/twitch/gaming/wintendo_twitch_playing_a.png"
+        pause 0.3
+
+        "mod_assets/props/twitch/gaming/wintendo_twitch_playing_b.png"
+        pause 0.1
+
+    choice:
+        "mod_assets/props/twitch/gaming/wintendo_twitch_playing_c.png"
+        pause 0.15
+
+        "mod_assets/props/twitch/gaming/wintendo_twitch_playing_a.png"
+        pause 0.25
+
+        "mod_assets/props/twitch/gaming/wintendo_twitch_playing_c.png"
+        pause 0.15
+
     repeat
 
 image prop wintendo_twitch_battery_low:
-    "mod_assets/props/wintendo_twitch_battery_low_a.png"
+    "mod_assets/props/twitch/low_battery/wintendo_twitch_battery_low_a.png"
     pause 1
-    "mod_assets/props/wintendo_twitch_battery_low_b.png"
+    "mod_assets/props/twitch/low_battery/wintendo_twitch_battery_low_b.png"
+    pause 1
+    repeat
+
+image prop wintendo_twitch_dead:
+    "mod_assets/props/twitch/dead/wintendo_twitch_dead_a.png"
+    pause 1
+    "mod_assets/props/twitch/dead/wintendo_twitch_dead_b.png"
     pause 1
     repeat
 
