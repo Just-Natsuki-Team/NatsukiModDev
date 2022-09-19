@@ -60,6 +60,7 @@ init -50 python:
         worried = 35
         blep = 36
         drink = 37
+        focus = 38
 
         def __str__(self):
             return self.name
@@ -292,7 +293,7 @@ init 1 python:
         "wl": JNEyes.wink_left,
         "wr": JNEyes.wink_right
     }
-
+    
     MOUTH_MAP = {
         "aj": JNMouth.ajar,
         "an": JNMouth.angry,
@@ -306,6 +307,7 @@ init 1 python:
         "dr": JNMouth.drink,
         "dv": JNMouth.devious,
         "em": JNMouth.embarrassed,
+        "fo": JNMouth.focus,
         "fr": JNMouth.frown,
         "fu": JNMouth.furious,
         "gs": JNMouth.gasp,
@@ -328,7 +330,7 @@ init 1 python:
         "up": JNMouth.upset,
         "wr": JNMouth.worried
     }
-
+    
     BLUSH_MAP = {
         "f": JNBlush.full,
         "l": JNBlush.light
