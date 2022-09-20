@@ -201,49 +201,58 @@ label call_next_topic(show_natsuki=True):
                     play audio notification
                     python:
                         jn_activity.taskbarFlash()
+                        HAPPY_EMOTE = jn_utils.getRandomHappyEmoticon()
+                        ANGRY_EMOTE = jn_utils.getRandomAngryEmoticon()
+                        TEASE_EMOTE = jn_utils.getRandomTeaseEmoticon()
+                        CONFUSED_EMOTE = jn_utils.getRandomConfusedEmoticon()
+
+                        ENAMORED_NOTIFY_MESSAGES = [
+                            "[player]! [player]! Wanna talk? [HAPPY_EMOTE]",
+                            "Hey! You got a sec? [HAPPY_EMOTE]",
+                            "Wanna talk? {0}",
+                            "[player]! I got something! [HAPPY_EMOTE]",
+                            "Heeey! Wanna talk?",
+                            "Talk to meeee! [ANGRY_EMOTE]",
+                            "I'm talking to you, dummy! [TEASE_EMOTE]"
+                        ]
+                        AFFECTIONATE_NOTIFY_MESSAGES = [
+                            "Wanna talk?",
+                            "[player]! You wanna talk?",
+                            "Hey! Hey! Talk to me! [ANGRY_EMOTE]",
+                            "Hey dummy! I'm talking to you!",
+                            "[player]! I just thought of something! [CONFUSED_EMOTE]",
+                            "[player]! I wanna talk to you!",
+                            "I just thought of something, [player]!"
+                        ]
+                        HAPPY_NOTIFY_MESSAGES = [
+                            "[player]! Did you have a sec?",
+                            "[player]? Can I borrow you?",
+                            "Hey! Come here a sec?",
+                            "Hey! I wanna talk!",
+                            "You there, [player]?"
+                        ]
+                        NORMAL_NOTIFY_MESSAGES = [
+                            "You wanna talk?",
+                            "Hey... are you busy?",
+                            "[player]? Did you have a sec?",
+                            "Can I borrow you for a sec?",
+                            "You there, [player]?",
+                            "Hey... you still there?",
+                            "[player]? Are you there?"
+                        ]
 
                         if Natsuki.isNormal(higher=True):
                             if Natsuki.isEnamored(higher=True):
-                                notify_message = random.choice([
-                                    "[player]! [player]! Wanna talk? {0}".format(jn_utils.getRandomHappyEmoticon()),
-                                    "Hey! You got a sec? {0}".format(jn_utils.getRandomHappyEmoticon()),
-                                    "Wanna talk? {0}".format(jn_utils.getRandomHappyEmoticon()),
-                                    "[player]! I got something! {0}".format(jn_utils.getRandomHappyEmoticon()),
-                                    "Heeey! Wanna talk?",
-                                    "Talk to meeee! {0}".format(jn_utils.getRandomAngryEmoticon()),
-                                    "I'm talking to you, dummy! {0}".format(jn_utils.getRandomTeaseEmoticon())
-                                ])
+                                notify_message = random.choice(ENAMORED_NOTIFY_MESSAGES)
 
                             elif Natsuki.isAffectionate(higher=True):
-                                notify_message = random.choice([
-                                    "Wanna talk?",
-                                    "[player]! You wanna talk?",
-                                    "Hey! Hey! Talk to me! {0}".format(jn_utils.getRandomAngryEmoticon()),
-                                    "Hey dummy! I'm talking to you!",
-                                    "[player]! I just thought of something! {0}".format(jn_utils.getRandomConfusedEmoticon()),
-                                    "[player]! I wanna talk to you!",
-                                    "I just thought of something, [player]!"
-                                ])
+                                notify_message = random.choice(AFFECTIONATE_NOTIFY_MESSAGES)
 
                             elif Natsuki.isHappy(higher=True):
-                                notify_message = random.choice([
-                                    "[player]! Did you have a sec?",
-                                    "[player]? Can I borrow you?",
-                                    "Hey! Come here a sec?",
-                                    "Hey! I wanna talk!",
-                                    "You there, [player]?"
-                                ])
+                                notify_message = random.choice(HAPPY_NOTIFY_MESSAGES)
 
                             else:
-                                notify_message = random.choice([
-                                    "You wanna talk?",
-                                    "Hey... are you busy?",
-                                    "[player]? Did you have a sec?",
-                                    "Can I borrow you for a sec?",
-                                    "You there, [player]?",
-                                    "Hey... you still there?",
-                                    "[player]? Are you there?"
-                                ])
+                                notify_message = random.choice(NORMAL_NOTIFY_MESSAGES)
 
                             jn_activity.notifyPopup(renpy.substitute(notify_message))
 

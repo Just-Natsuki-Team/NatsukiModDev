@@ -234,7 +234,7 @@ init python in jn_activity:
         ]
     }
 
-    def __getJNWindowHwnd():
+    def _getJNWindowHwnd():
         """
         Gets the hwnd of the JN game window (Windows only).
 
@@ -320,7 +320,7 @@ init python in jn_activity:
             - flash_frequency_milliseconds - The amount of time to wait between each flash, in milliseconds
         """
         if renpy.windows:
-            win32gui.FlashWindowEx(__getJNWindowHwnd(), 6, flash_count, flash_frequency_milliseconds)
+            win32gui.FlashWindowEx(_getJNWindowHwnd(), 6, flash_count, flash_frequency_milliseconds)
 
     def notifyPopup(message):
         """
