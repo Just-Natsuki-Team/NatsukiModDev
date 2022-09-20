@@ -97,12 +97,6 @@ label ch30_init:
 
         # Pick a greeting or random event
         if not jn_topic_in_event_list_pattern("^greeting_"):
-
-            # test code - REMOVE
-            push("event_wintendo_twitch_battery_dead")
-            #push("event_wintendo_twitch_game_over")
-            renpy.call("call_next_topic", False)
-
             if (
                 random.randint(1, 10) == 1
                 and (not persistent.jn_player_admission_type_on_quit and not persistent._jn_player_apology_type_on_quit)
@@ -115,15 +109,6 @@ label ch30_init:
                 push(greetings.select_greeting())
                 persistent.jn_player_admission_type_on_quit = None
                 persistent._jn_player_apology_type_on_quit = None
-
-        if (
-            random.randint(1,7) == 1
-            and Natsuki.isAffectionate(higher=True)
-            and jn_is_day()
-        ):
-            pass
-            #renpy.show(name="furniture pink_beanbag", zorder=2)
-            #TODO: beanbag
 
     # Prepare visuals
     show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
