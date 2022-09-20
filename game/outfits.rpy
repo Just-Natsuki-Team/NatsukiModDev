@@ -814,7 +814,7 @@ init -1 python in jn_outfits:
             except:
                 raise
 
-        if not success_count == len(outfit_files):
+        if success_count != len(outfit_files):
             renpy.notify("One or more outfits failed to load; please check log for more information.")
 
     def load_custom_wearables():
@@ -843,7 +843,7 @@ init -1 python in jn_outfits:
             except:
                 raise
 
-        if not success_count == len(wearable_files):
+        if success_count != len(wearable_files):
             renpy.notify("One or more wearables failed to load; please check log for more information.")
 
     def unload_custom_outfits():

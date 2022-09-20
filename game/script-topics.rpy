@@ -1855,7 +1855,7 @@ label talk_player_appearance:
                 hair_colour_descriptor = persistent.jn_player_appearance_hair_colour.lower()
 
         # Comment on hair length and colour, if the player has hair
-        if not persistent.jn_player_appearance_hair_length == "None":
+        if persistent.jn_player_appearance_hair_length != "None":
             $ hair_length_descriptor = persistent.jn_player_appearance_hair_length.lower()
             n 1fsqsml "Spotting your [hair_length_descriptor] [hair_colour_descriptor] hair in the distance and hunting you down..."
 

@@ -446,7 +446,7 @@ init 0 python in jn_atmosphere:
             jn_utils.log("Unable to fetch weather from OpenWeatherMap as an exception occurred; {0}".format(exception.message))
             return None
 
-        if not weather_response.status_code == 200:
+        if weather_response.status_code != 200:
             # Invalid response, can't do anything here so log and return
             jn_utils.log("Unable to fetch weather from OpenWeatherMap; API response was: {0}".format(weather_response.status_code))
             return None
@@ -472,7 +472,7 @@ init 0 python in jn_atmosphere:
         try:
             # Attempt to fetch the player's latitude and longitude, then return both
             response = requests.get("http://ipinfo.io/json", verify=os.environ['SSL_CERT_FILE'])
-            if not response.status_code == 200:
+            if response.status_code != 200:
                 return None
 
             return (response.json()["loc"].split(','))
