@@ -918,13 +918,13 @@ init -1 python in jn_outfits:
         """
         Returns a list of all outfits.
         """
-        return __ALL_OUTFITS.itervalues()
+        return __ALL_OUTFITS.values()
 
     def get_all_wearables():
         """
         Returns a list of all outfits.
         """
-        return __ALL_WEARABLES.itervalues()
+        return __ALL_WEARABLES.values()
 
     def save_custom_outfit(outfit):
         """
@@ -1622,7 +1622,7 @@ init -1 python in jn_outfits:
 
 # Asking Natsuki to wear an outfit
 label outfits_wear_outfit:
-    if len(list(jn_outfits.get_all_outfits())) == 0:
+    if not jn_outfits.get_all_outfits():
         # No outfits, no point proceeding
         n 1tnmbo "Huh?{w=0.5}{nw}"
         extend 1fchbg " I don't {i}have{/i} any other outfits, dummy!"
@@ -1734,7 +1734,7 @@ label outfits_suggest_outfit:
 
 # Asking Natsuki to remove an existing outfit
 label outfits_remove_outfit:
-    if len(list(jn_outfits.get_all_outfits())) == 0:
+    if not jn_outfits.get_all_outfits():
         # No outfits, no point proceeding
         n 1tnmbo "Huh?{w=0.5}{nw}"
         extend 1fchbg " I don't {i}have{/i} any outfit ideas from you, dummy!"
@@ -1810,11 +1810,7 @@ label outfits_create_menu:
 label outfits_create_select_headgear:
     python:
         unlocked_wearables = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNHeadgear)
-        wearable_options = []
-
-        for wearable in unlocked_wearables:
-            wearable_options.append((jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable))
-
+        wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
         wearable_options.sort(key = lambda option: option[1].display_name)
         wearable_options.insert(0, ("No headgear", "none"))
 
@@ -1834,11 +1830,7 @@ label outfits_create_select_headgear:
 label outfits_create_select_hairstyle:
     python:
         unlocked_wearables = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNHairstyle) 
-        wearable_options = []
-
-        for wearable in unlocked_wearables:
-            wearable_options.append((jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable))
-
+        wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
         wearable_options.sort(key = lambda option: option[1].display_name)
 
     call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
@@ -1856,11 +1848,7 @@ label outfits_create_select_hairstyle:
 label outfits_create_select_eyewear:
     python:
         unlocked_wearables = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNEyewear)
-        wearable_options = []
-
-        for wearable in unlocked_wearables:
-            wearable_options.append((jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable))
-
+        wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
         wearable_options.sort(key = lambda option: option[1].display_name)
         wearable_options.insert(0, ("No eyewear", "none"))
 
@@ -1879,11 +1867,7 @@ label outfits_create_select_eyewear:
 label outfits_create_select_accessory:
     python:
         unlocked_wearables = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNAccessory)
-        wearable_options = []
-
-        for wearable in unlocked_wearables:
-            wearable_options.append((jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable))
-
+        wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
         wearable_options.sort(key = lambda option: option[1].display_name)
         wearable_options.insert(0, ("No accessory", "none"))
 
@@ -1903,11 +1887,7 @@ label outfits_create_select_accessory:
 label outfits_create_select_necklace:
     python:
         unlocked_wearables = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNNecklace)
-        wearable_options = []
-
-        for wearable in unlocked_wearables:
-            wearable_options.append((jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable))
-
+        wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
         wearable_options.sort(key = lambda option: option[1].display_name)
         wearable_options.insert(0, ("No necklace", "none"))
 
@@ -1927,11 +1907,7 @@ label outfits_create_select_necklace:
 label outfits_create_select_clothes:
     python:
         unlocked_wearables = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNClothes)
-        wearable_options = []
-
-        for wearable in unlocked_wearables:
-            wearable_options.append((jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable))
-
+        wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
         wearable_options.sort(key = lambda option: option[1].display_name)
 
     call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
