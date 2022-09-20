@@ -1274,7 +1274,7 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
-        reference_name="jn_clothes_striped_off_shoulder_sweater",
+        reference_name="jn_clothes_striped_off_shoulder_sweater_bee",
         display_name="Off-shoulder sweater bee",
         unlocked=True,
         is_jn_wearable=True
