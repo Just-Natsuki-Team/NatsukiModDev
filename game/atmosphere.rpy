@@ -126,6 +126,8 @@ init 0 python in jn_atmosphere:
     _CLOUDS_Z_INDEX = -6
     _SKY_Z_INDEX = -8
 
+    _OPENWEATHERMAP_API_BASE_URL = "https://api.openweathermap.org/data/2.5/onecall"
+
     class JNWeatherTypes(Enum):
         """
         Identifiers for different weather objects, used for sanity checks when changing weather.
@@ -265,11 +267,11 @@ init 0 python in jn_atmosphere:
     # key: Regex matching the weather code as a string, allowing ranged captures (returned from OpenWeatherMap)
     # value: JNWeather associated with the weather code range
     __WEATHER_CODE_REGEX_TYPE_MAP = {
-        ("^2[0-9][0-9]$"): WEATHER_THUNDER, # Thunder
-        ("^3[0-9][0-9]$"): WEATHER_RAIN, # Drizzle
-        ("^5[0-9][0-9]$"): WEATHER_RAIN, # Rain
-        ("^6[0-9][0-9]$"): WEATHER_SNOW, # Snow
-        ("^7[0-9][0-9]$"): WEATHER_OVERCAST, # Misc (mist, tornado, sandstorms, etc.)
+        ("^2\d{2}$"): WEATHER_THUNDER, # Thunder
+        ("^3\d{2}$"): WEATHER_RAIN, # Drizzle
+        ("^5\d{2}$"): WEATHER_RAIN, # Rain
+        ("^6\d{2}$"): WEATHER_SNOW, # Snow
+        ("^7\d{2}$"): WEATHER_OVERCAST, # Misc (mist, tornado, sandstorms, etc.)
         ("(800|801|802|803)"): WEATHER_SUNNY, # Clear/light clouds
         ("(804)"): WEATHER_OVERCAST, # Clouds
     }
@@ -427,6 +429,27 @@ init 0 python in jn_atmosphere:
         global current_weather
         current_weather = weather
 
+    def getWeatherApiUrl(latitude, longitude, units, app_id, exclude=[]):
+        """
+        Builds the OpenWeatherMap API URL, given parameters.
+
+        IN:
+            - latitude - The latitude to use for the request URL
+            - longitude - The longitude to use for the request URL
+            - units - The str units of measurement (metric/imperial) to use for the request URL
+            - app_id - The API key to use
+            - exclude - Optional str list of units to exclude
+        """
+        exclude_string = "" if len(exclude) == 0 else "&exclude={0}".format(",".join(exclude))
+        return "{0}?lat={1}&lon={2}&units={3}{4}&appid={5}".format(
+            _OPENWEATHERMAP_API_BASE_URL,
+            latitude,
+            longitude,
+            units,
+            exclude_string,
+            app_id
+        )
+
     def getWeatherFromApi():
         """
         Gets the current weather from the OpenWeatherMap API, assuming it is set up.
@@ -434,10 +457,12 @@ init 0 python in jn_atmosphere:
         # Get the response from the OpenWeatherMap api
         try:
             weather_response = requests.get(
-                url="https://api.openweathermap.org/data/2.5/onecall?lat={0}&lon={1}&units=metric&exclude=current,minutely,daily,alerts&appid={2}".format(
-                    store.persistent._jn_player_latitude_longitude[0],
-                    store.persistent._jn_player_latitude_longitude[1],
-                    store.persistent._jn_weather_api_key
+                url=getWeatherApiUrl(
+                    latitude=store.persistent._jn_player_latitude_longitude[0],
+                    longitude=store.persistent._jn_player_latitude_longitude[1],
+                    units="metric",
+                    app_id=store.persistent._jn_weather_api_key,
+                    exclude=["current", "minutely", "daily", "alerts"]
                 ),
                 verify=os.environ['SSL_CERT_FILE'])
 
