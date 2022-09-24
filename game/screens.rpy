@@ -1448,16 +1448,6 @@ style history_label:
 style history_label_text:
     xalign 0.5
 
-################################################################################
-## Additional screens
-################################################################################
-
-screen flower:
-    imagebutton:
-        idle "mod_assets/JustNatsuki/flower.png"
-        hover "mod_assets/JustNatsuki/flower.png"
-        action [If(allow_dialogue, true=Jump("ch30_flower"))]
-
 ## Confirm screen ##############################################################
 ##
 ## The confirm screen is called when Ren'Py wants to ask the player a yes or no

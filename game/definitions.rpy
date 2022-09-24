@@ -1779,6 +1779,8 @@ init -999 python:
         if (
             not renpy.get_screen("input")
             and not renpy.get_screen("choice")
+            and not renpy.get_screen("preferences")
+            and not renpy.get_screen("history")
             and jn_globals.force_quit_enabled
         ):
             renpy.call("try_force_quit")

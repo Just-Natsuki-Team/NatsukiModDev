@@ -309,8 +309,8 @@ init python:
             for action in jn_plugins.minute_check_calls:
                 eval(action.statement)
 
-        # Check what the player is currently doing
-        current_activity = jn_activity.getCurrentActivity()
+        # Capture the last activity the player made
+        current_activity = jn_activity.ACTIVITY_MANAGER.getCurrentActivity()
 
         if (
             Natsuki.isHappy(higher=True)
@@ -362,14 +362,13 @@ init python:
         elif (
             persistent._jn_notify_activity
             and Natsuki.isAffectionate(higher=True)
-            and current_activity != jn_activity.LAST_ACTIVITY
+            and current_activity.activity_type != jn_activity.ACTIVITY_MANAGER.last_activity.activity_type
             and random.randint(1, 20) == 1
         ):
             # Activity check for notif
-            jn_activity.LAST_ACTIVITY = current_activity
-            quote = jn_activity.getActivityNotifyQuote(current_activity)
-            if quote:
-                jn_activity.notifyPopup(quote)
+            jn_activity.ACTIVITY_MANAGER.last_activity = current_activity
+            if jn_activity.ACTIVITY_MANAGER.last_activity.getRandomNotifyText():
+                jn_activity.notifyPopup(jn_activity.ACTIVITY_MANAGER.last_activity.getRandomNotifyText())
 
         pass
 
