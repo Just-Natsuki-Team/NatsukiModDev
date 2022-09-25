@@ -1113,7 +1113,7 @@ init -1 python in jn_outfits:
     ))
     __register_wearable(JNHairstyle(
         reference_name="jn_hair_twintails_long",
-        display_name="Long Hair with twintails",
+        display_name="Long hair with twintails",
         unlocked=True,
         is_jn_wearable=True
     ))
