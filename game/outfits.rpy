@@ -1373,7 +1373,7 @@ init -1 python in jn_outfits:
         unlocked=False,
         is_jn_wearable=True
     ))
-        __register_wearable(JNHeadgear(
+    __register_wearable(JNHeadgear(
         reference_name="jn_headgear_black_beanie",
         display_name="Black beanie",
         unlocked=True,
