@@ -1300,7 +1300,7 @@ init -1 python in jn_outfits:
     __register_wearable(JNClothes(
         reference_name="jn_clothes_hoodie_not_cute",
         display_name="'Not cute' hoodie",
-        unlocked=False,
+        unlocked=True,
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
@@ -1371,6 +1371,12 @@ init -1 python in jn_outfits:
         reference_name="jn_headgear_bee_headband",
         display_name="Bee headband",
         unlocked=False,
+        is_jn_wearable=True
+    ))
+        __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_black_beanie",
+        display_name="Black beanie",
+        unlocked=True,
         is_jn_wearable=True
     ))
 
@@ -1447,6 +1453,12 @@ init -1 python in jn_outfits:
         reference_name="jn_necklace_thin_choker",
         display_name="Thin choker",
         unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNNecklace(
+        reference_name="jn_necklace_black_choker",
+        display_name="Black choker",
+        unlocked=True,
         is_jn_wearable=True
     ))
 
