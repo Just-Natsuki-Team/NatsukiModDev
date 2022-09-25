@@ -1256,7 +1256,7 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
-        reference_name="jn_clothes_QT_sweater",
+        reference_name="jn_clothes_qt_sweater",
         display_name="QT sweater",
         unlocked=False,
         is_jn_wearable=True
@@ -1274,26 +1274,26 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
-        reference_name="jn_clothes_striped_off_shoulder_sweater_bee",
-        display_name="Off-shoulder sweater bee",
+        reference_name="jn_clothes_bee_off_shoulder_sweater",
+        display_name="Bee off-shoulder sweater",
         unlocked=True,
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
-        reference_name="jn_clothes_striped_off_shoulder_sweater_autumn",
-        display_name="Off-shoulder sweater autumn",
+        reference_name="jn_clothes_autumn_off_shoulder_sweater",
+        display_name="Autumn off-shoulder sweater",
         unlocked=True,
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
-        reference_name="jn_clothes_striped_off_shoulder_sweater_creamsicle",
-        display_name="Off-shoulder sweater creamsicle",
+        reference_name="jn_clothes_creamsicle_off_shoulder_sweater",
+        display_name="Creamsicle off-shoulder sweater",
         unlocked=False,
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
-        reference_name="jn_clothes_striped_off_shoulder_sweater_nightbloom",
-        display_name="Off-shoulder sweater nightbloom",
+        reference_name="jn_clothes_nightbloom_off_shoulder_sweater",
+        display_name="Nightbloom off-shoulder sweater",
         unlocked=False,
         is_jn_wearable=True
     ))
