@@ -635,7 +635,7 @@ label farewell_love_rooting_for_you:
     $ chosen_endearment = jn_utils.getRandomEndearment()
     n 1kcssml "...But I know you'll always be back for me,{w=0.1} [chosen_endearment]."
     n 1fllssfsbl "N-{w=0.2}not like you {i}have{/i} a choice,{w=0.2} obviously!"
-    n 1fsqsmf " Ehehe."
+    n 1fsqsmf "Ehehe."
     n 1fchblfeaf "Make me proud,{w=0.2} [player]!{w=0.3} I'm rooting for you!"
 
     return { "quit": None }
