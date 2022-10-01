@@ -278,7 +278,7 @@ init -3 python:
             """
             Saves all topics
             """
-            for topic in store.topic_handler.ALL_TOPIC_MAP.itervalues():
+            for topic in store.topic_handler.ALL_TOPIC_MAP.values():
                 topic.__save()
 
         def has_additional_property_with_value(self, property_key, property_value):

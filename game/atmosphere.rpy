@@ -185,7 +185,12 @@ init 0 python in jn_atmosphere:
             Gets a random notification string for this weather to be used in a popup
             """
             if self.notify_text and len(self.notify_text) > 0:
-                return random.choice(self.notify_text)
+                store.happy_emote = jn_utils.getRandomHappyEmoticon()
+                store.angry_emote = jn_utils.getRandomAngryEmoticon()
+                store.sad_emote = jn_utils.getRandomSadEmoticon()
+                store.tease_emote = jn_utils.getRandomTeaseEmoticon()
+                store.confused_emote = jn_utils.getRandomConfusedEmoticon()
+                return renpy.substitute(random.choice(self.notify_text))
 
             return None
 
@@ -203,10 +208,10 @@ init 0 python in jn_atmosphere:
         day_sky_image="sky day rain",
         night_sky_image="sky night rain",
         notify_text=[
-            "Ugh... raining again. {0}".format(jn_utils.getRandomAngryEmoticon()),
-            "Ew. Rain. {0}".format(jn_utils.getRandomAngryEmoticon()),
+            "Ugh... raining again. [angry_emote]",
+            "Ew. Rain. [angry_emote]",
             "Man... why does it have to rain so much?",
-            "Huh? It's raining? Gross... {0}".format(jn_utils.getRandomAngryEmoticon()),
+            "Huh? It's raining? Gross... [angry_emote]",
         ],
         dim_image="dim medium",
         day_clouds_image="clouds day heavy",
@@ -223,7 +228,7 @@ init 0 python in jn_atmosphere:
         notify_text=[
             "Those clouds look really dark, huh? :<",
             "It was a dark and stormy night...",
-            "Ugh... I hate storms... {0}".format(jn_utils.getRandomAngryEmoticon()),
+            "Ugh... I hate storms... [angry_emote]",
             "Hey... is it stormy over there too? :/",
         ],
         dim_image="dim heavy",
@@ -239,9 +244,9 @@ init 0 python in jn_atmosphere:
         day_sky_image="sky day snow",
         night_sky_image="sky night overcast",
         notify_text=[
-            "[player]! [player]! It's snowing! {0}".format(jn_utils.getRandomHappyEmoticon()),
-            "It's snowing! It's snowing! {0}".format(jn_utils.getRandomHappyEmoticon()),
-            "[player]! Is it snowing for you too?! {0}".format(jn_utils.getRandomHappyEmoticon()),
+            "[player]! [player]! It's snowing! [happy_emote]",
+            "It's snowing! It's snowing! [happy_emote]",
+            "[player]! Is it snowing for you too?! [happy_emote]",
         ],
         dim_image="dim light",
         day_clouds_image="clouds day light",

@@ -77,7 +77,7 @@ init -1 python in jn_outfits:
             Loads all persisted data for each wearable from the persistent.
             """
             global __ALL_WEARABLES
-            for wearable in __ALL_WEARABLES.itervalues():
+            for wearable in __ALL_WEARABLES.values():
                 wearable.__load()
 
         @staticmethod
@@ -86,7 +86,7 @@ init -1 python in jn_outfits:
             Saves all persistable data for each wearable to the persistent.
             """
             global __ALL_WEARABLES
-            for wearable in __ALL_WEARABLES.itervalues():
+            for wearable in __ALL_WEARABLES.values():
                 wearable.__save()
 
         @staticmethod
@@ -291,7 +291,7 @@ init -1 python in jn_outfits:
             Loads all persisted data for each outfit from the persistent.
             """
             global __ALL_OUTFITS
-            for outfit in __ALL_OUTFITS.itervalues():
+            for outfit in __ALL_OUTFITS.values():
                 outfit.__load()
 
         @staticmethod
@@ -300,7 +300,7 @@ init -1 python in jn_outfits:
             Saves all persistable data for each outfit to the persistent.
             """
             global __ALL_OUTFITS
-            for outfit in __ALL_OUTFITS.itervalues():
+            for outfit in __ALL_OUTFITS.values():
                 outfit.__save()
 
         @staticmethod

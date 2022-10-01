@@ -201,26 +201,27 @@ label call_next_topic(show_natsuki=True):
                     play audio notification
                     python:
                         jn_activity.taskbarFlash()
-                        HAPPY_EMOTE = jn_utils.getRandomHappyEmoticon()
-                        ANGRY_EMOTE = jn_utils.getRandomAngryEmoticon()
-                        TEASE_EMOTE = jn_utils.getRandomTeaseEmoticon()
-                        CONFUSED_EMOTE = jn_utils.getRandomConfusedEmoticon()
+                        store.happy_emote = jn_utils.getRandomHappyEmoticon()
+                        store.angry_emote = jn_utils.getRandomAngryEmoticon()
+                        store.sad_emote = jn_utils.getRandomSadEmoticon()
+                        store.tease_emote = jn_utils.getRandomTeaseEmoticon()
+                        store.confused_emote = jn_utils.getRandomConfusedEmoticon()
 
                         ENAMORED_NOTIFY_MESSAGES = [
-                            "[player]! [player]! Wanna talk? [HAPPY_EMOTE]",
-                            "Hey! You got a sec? [HAPPY_EMOTE]",
+                            "[player]! [player]! Wanna talk? [happy_emote]",
+                            "Hey! You got a sec? [happy_emote]",
                             "Wanna talk? {0}",
-                            "[player]! I got something! [HAPPY_EMOTE]",
+                            "[player]! I got something! [happy_emote]",
                             "Heeey! Wanna talk?",
-                            "Talk to meeee! [ANGRY_EMOTE]",
-                            "I'm talking to you, dummy! [TEASE_EMOTE]"
+                            "Talk to meeee! [angry_emote]",
+                            "I'm talking to you, dummy! [tease_emote]"
                         ]
                         AFFECTIONATE_NOTIFY_MESSAGES = [
                             "Wanna talk?",
                             "[player]! You wanna talk?",
-                            "Hey! Hey! Talk to me! [ANGRY_EMOTE]",
+                            "Hey! Hey! Talk to me! [angry_emote]",
                             "Hey dummy! I'm talking to you!",
-                            "[player]! I just thought of something! [CONFUSED_EMOTE]",
+                            "[player]! I just thought of something! [confused_emote]",
                             "[player]! I wanna talk to you!",
                             "I just thought of something, [player]!"
                         ]

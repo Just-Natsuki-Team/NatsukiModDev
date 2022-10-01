@@ -101,7 +101,7 @@ init python in jn_activity:
             """
             Returns the substituted reaction text for this activity.
             """
-            if self.notify_text:
+            if self.notify_text and len(self.notify_text) > 0:
                 store.happy_emote = jn_utils.getRandomHappyEmoticon()
                 store.angry_emote = jn_utils.getRandomAngryEmoticon()
                 store.sad_emote = jn_utils.getRandomSadEmoticon()
