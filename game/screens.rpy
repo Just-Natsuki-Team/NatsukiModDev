@@ -241,6 +241,7 @@ style input:
 
 style hyperlink_text:
     color gui.accent_color
+    underline True
     hover_color gui.hover_color
     hover_underline True
 
