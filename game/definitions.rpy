@@ -220,7 +220,7 @@ init -3 python:
             """
             return {
                 key:value
-                for key, value in self.__dict__.iteritems()
+                for key, value in self.__dict__.items()
                 if key != "_m1_definitions__persistent_db"
             }
 
@@ -269,7 +269,7 @@ init -3 python:
 
             NOTE: Will raise a KeyError of the lock map doesn't have the persist key in it
             """
-            for persist_key, value in self.as_dict().iteritems():
+            for persist_key, value in self.as_dict().items():
                 if TOPIC_LOCKED_PROP_BASE_MAP[persist_key]:
                     self.__persistent_db[self.label][persist_key] = value
 

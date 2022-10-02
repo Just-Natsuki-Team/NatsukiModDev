@@ -102,7 +102,7 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
 
                         null height 20
 
-                    for button_name in menu_items.iterkeys():
+                    for button_name in menu_items.keys():
                         textbutton button_name:
                             style "categorized_menu_button"
                             #Set the selected category
