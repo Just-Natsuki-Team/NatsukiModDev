@@ -110,15 +110,6 @@ label ch30_init:
                 persistent.jn_player_admission_type_on_quit = None
                 persistent._jn_player_apology_type_on_quit = None
 
-        if (
-            random.randint(1,7) == 1
-            and Natsuki.isAffectionate(higher=True)
-            and jn_is_day()
-        ):
-            pass
-            #renpy.show(name="furniture pink_beanbag", zorder=2)
-            #TODO: beanbag
-
     # Prepare visuals
     show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
     hide black with Dissolve(2) 
@@ -210,7 +201,7 @@ label call_next_topic(show_natsuki=True):
                         ENAMORED_NOTIFY_MESSAGES = [
                             "[player]! [player]! Wanna talk? [happy_emote]",
                             "Hey! You got a sec? [happy_emote]",
-                            "Wanna talk? {0}",
+                            "Wanna talk? [happy_emote]",
                             "[player]! I got something! [happy_emote]",
                             "Heeey! Wanna talk?",
                             "Talk to meeee! [angry_emote]",
@@ -371,7 +362,7 @@ init python:
             if jn_activity.ACTIVITY_MANAGER.last_activity.getRandomNotifyText():
                 jn_activity.notifyPopup(jn_activity.ACTIVITY_MANAGER.last_activity.getRandomNotifyText())
 
-        pass
+        return
 
     def quarter_hour_check():
         """
@@ -386,7 +377,7 @@ init python:
         queue("weather_change")
         queue("random_music_change")
 
-        pass
+        return
 
     def half_hour_check():
         """
@@ -398,7 +389,7 @@ init python:
             for action in jn_plugins.half_hour_check_calls:
                 eval(action.statement)
 
-        pass
+        return
 
     def hour_check():
         """
@@ -422,7 +413,7 @@ init python:
             # We call here so we don't skip day_check, as call returns us to this point
             renpy.call("outfits_auto_change")
 
-        pass
+        return
 
     def day_check():
         """
@@ -436,7 +427,7 @@ init python:
 
         queue("weather_change")
 
-        pass
+        return
 
 label talk_menu:
     python:
