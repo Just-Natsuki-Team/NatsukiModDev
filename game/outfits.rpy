@@ -77,7 +77,7 @@ init -1 python in jn_outfits:
             Loads all persisted data for each wearable from the persistent.
             """
             global __ALL_WEARABLES
-            for wearable in __ALL_WEARABLES.itervalues():
+            for wearable in __ALL_WEARABLES.values():
                 wearable.__load()
 
         @staticmethod
@@ -86,7 +86,7 @@ init -1 python in jn_outfits:
             Saves all persistable data for each wearable to the persistent.
             """
             global __ALL_WEARABLES
-            for wearable in __ALL_WEARABLES.itervalues():
+            for wearable in __ALL_WEARABLES.values():
                 wearable.__save()
 
         @staticmethod
@@ -291,7 +291,7 @@ init -1 python in jn_outfits:
             Loads all persisted data for each outfit from the persistent.
             """
             global __ALL_OUTFITS
-            for outfit in __ALL_OUTFITS.itervalues():
+            for outfit in __ALL_OUTFITS.values():
                 outfit.__load()
 
         @staticmethod
@@ -300,7 +300,7 @@ init -1 python in jn_outfits:
             Saves all persistable data for each outfit to the persistent.
             """
             global __ALL_OUTFITS
-            for outfit in __ALL_OUTFITS.itervalues():
+            for outfit in __ALL_OUTFITS.values():
                 outfit.__save()
 
         @staticmethod
@@ -1113,7 +1113,7 @@ init -1 python in jn_outfits:
     ))
     __register_wearable(JNHairstyle(
         reference_name="jn_hair_twintails_long",
-        display_name="Twintails long",
+        display_name="Long hair with twintails",
         unlocked=True,
         is_jn_wearable=True
     ))
@@ -1202,20 +1202,8 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
-        reference_name="jn_clothes_low_cut_dress",
-        display_name="Low-cut dress",
-        unlocked=False,
-        is_jn_wearable=True
-    ))
-    __register_wearable(JNClothes(
         reference_name="jn_clothes_magical_girl",
         display_name="Magical girl cosplay",
-        unlocked=False,
-        is_jn_wearable=True
-    ))
-    __register_wearable(JNClothes(
-        reference_name="jn_clothes_red_rose_lace_dress",
-        display_name="Valentine's dress",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1250,20 +1238,14 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
-        reference_name="jn_clothes_lolita_dress",
-        display_name="Lolita dress",
-        unlocked=False,
-        is_jn_wearable=True
-    ))
-    __register_wearable(JNClothes(
         reference_name="jn_clothes_lolita_school_uniform",
         display_name="Lolita school uniform",
         unlocked=False,
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
-        reference_name="jn_clothes_long_sleeved_shirt_nya",
-        display_name="Long-sleeved shirt",
+        reference_name="jn_clothes_nya_sweater",
+        display_name="Nya! sweater",
         unlocked=True,
         is_jn_wearable=True
     ))
@@ -1280,6 +1262,12 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
+        reference_name="jn_clothes_qt_sweater",
+        display_name="QT sweater",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNClothes(
         reference_name="jn_clothes_ruffled_swimsuit",
         display_name="Ruffled swimsuit",
         unlocked=False,
@@ -1292,21 +1280,33 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
-        reference_name="jn_clothes_square_bra",
-        display_name="Square bra",
+        reference_name="jn_clothes_bee_off_shoulder_sweater",
+        display_name="Bee off-shoulder sweater",
+        unlocked=True,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_autumn_off_shoulder_sweater",
+        display_name="Autumn off-shoulder sweater",
+        unlocked=True,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_creamsicle_off_shoulder_sweater",
+        display_name="Creamsicle off-shoulder sweater",
         unlocked=False,
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
-        reference_name="jn_clothes_striped_off_shoulder_sweater",
-        display_name="Off-shoulder sweater",
+        reference_name="jn_clothes_nightbloom_off_shoulder_sweater",
+        display_name="Nightbloom off-shoulder sweater",
         unlocked=False,
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_hoodie_not_cute",
         display_name="'Not cute' hoodie",
-        unlocked=False,
+        unlocked=True,
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
@@ -1350,12 +1350,6 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
     __register_wearable(JNHeadgear(
-        reference_name="jn_headgear_lolita_hat",
-        display_name="Lolita hat",
-        unlocked=False,
-        is_jn_wearable=True
-    ))
-    __register_wearable(JNHeadgear(
         reference_name="jn_headgear_basic_white_headband",
         display_name="Basic white headband",
         unlocked=True,
@@ -1383,6 +1377,12 @@ init -1 python in jn_outfits:
         reference_name="jn_headgear_bee_headband",
         display_name="Bee headband",
         unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_black_beanie",
+        display_name="Black beanie",
+        unlocked=True,
         is_jn_wearable=True
     ))
 
@@ -1461,6 +1461,12 @@ init -1 python in jn_outfits:
         unlocked=False,
         is_jn_wearable=True
     ))
+    __register_wearable(JNNecklace(
+        reference_name="jn_necklace_black_choker",
+        display_name="Black choker",
+        unlocked=True,
+        is_jn_wearable=True
+    ))
 
     # Starter official JN outfits
     __register_outfit(JNOutfit(
@@ -1511,15 +1517,6 @@ init -1 python in jn_outfits:
         accessory=get_wearable("jn_accessory_purple_rose")
     ))
     __register_outfit(JNOutfit(
-        reference_name="jn_low_cut_dress",
-        display_name="Low-cut dress",
-        unlocked=False,
-        is_jn_outfit=True,
-        clothes=get_wearable("jn_clothes_low_cut_dress"),
-        hairstyle=get_wearable("jn_hair_twin_buns"),
-        accessory=get_wearable("jn_accessory_hairband_white")
-    ))
-    __register_outfit(JNOutfit(
         reference_name="jn_christmas_outfit",
         display_name="Christmas outfit",
         unlocked=False,
@@ -1528,16 +1525,6 @@ init -1 python in jn_outfits:
         hairstyle=get_wearable("jn_hair_down"),
         accessory=get_wearable("jn_accessory_hairband_white"),
         headgear=get_wearable("jn_headgear_santa_hat")
-    ))
-    __register_outfit(JNOutfit(
-        reference_name="jn_lolita_cosplay",
-        display_name="Lolita cosplay",
-        unlocked=False,
-        is_jn_outfit=True,
-        clothes=get_wearable("jn_clothes_lolita_dress"),
-        hairstyle=get_wearable("jn_hair_twintails"),
-        accessory=get_wearable("jn_accessory_hairband_hot_pink"),
-        headgear=get_wearable("jn_headgear_lolita_hat")
     ))
     __register_outfit(JNOutfit(
         reference_name="jn_trainer_cosplay",
