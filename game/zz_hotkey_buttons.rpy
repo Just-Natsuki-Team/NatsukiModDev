@@ -252,7 +252,7 @@ screen hkb_overlay:
     
     key "m" action [
                 Jump("music_menu"),
-                SensitiveIf(persistent.jn_custom_music_explanation_given and Natsuki.isHappy(higher=True) not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)
+                SensitiveIf(persistent.jn_custom_music_explanation_given and Natsuki.isHappy(higher=True) and not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)
                 ]
     key "e" action [
         Jump("extras_menu"),
