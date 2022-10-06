@@ -95,20 +95,26 @@ label ch30_init:
 
         jn_utils.log("Outfit set.")
 
-        # Pick a greeting or random event
-        if not jn_topic_in_event_list_pattern("^greeting_"):
-            if (
-                random.randint(1, 10) == 1
-                and (not persistent.jn_player_admission_type_on_quit and not persistent._jn_player_apology_type_on_quit)
-                and jn_events.select_event()
-            ):
-                push(jn_events.select_event())
-                renpy.call("call_next_topic", False)
+        # TEST  
+        push("event_eyewear_problems")
+        renpy.call("call_next_topic", False)
 
-            else:
-                push(greetings.select_greeting())
-                persistent.jn_player_admission_type_on_quit = None
-                persistent._jn_player_apology_type_on_quit = None
+        #
+
+        # Pick a greeting or random event
+        # if not jn_topic_in_event_list_pattern("^greeting_"):
+        #     if (
+        #         random.randint(1, 10) == 1
+        #         and (not persistent.jn_player_admission_type_on_quit and not persistent._jn_player_apology_type_on_quit)
+        #         and jn_events.select_event()
+        #     ):
+        #         push(jn_events.select_event())
+        #         renpy.call("call_next_topic", False)
+
+        #     else:
+        #         push(greetings.select_greeting())
+        #         persistent.jn_player_admission_type_on_quit = None
+        #         persistent._jn_player_apology_type_on_quit = None
 
     # Prepare visuals
     show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER

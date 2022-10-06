@@ -1120,14 +1120,38 @@ init -1 python in jn_outfits:
 
     # Official JN eyewear
     __register_wearable(JNEyewear(
-        reference_name="jn_eyewear_circles",
-        display_name="Black circle glasses",
-        unlocked=True,
+        reference_name="jn_eyewear_round_glasses_black",
+        display_name="Black round glasses",
+        unlocked=False,
         is_jn_wearable=True
     ))
     __register_wearable(JNEyewear(
-        reference_name="jn_eyewear_heart_frames",
-        display_name="Pink heart glasses",
+        reference_name="jn_eyewear_round_glasses_red",
+        display_name="Red round glasses",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNEyewear(
+        reference_name="jn_eyewear_round_glasses_brown",
+        display_name="Brown round glasses",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNEyewear(
+        reference_name="jn_eyewear_round_sunglasses",
+        display_name="Round sunglasses",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNEyewear(
+        reference_name="jn_eyewear_rectangular_glasses_black",
+        display_name="Black rectangular glasses",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNEyewear(
+        reference_name="jn_eyewear_rectangular_glasses_red",
+        display_name="Red rectangular glasses",
         unlocked=False,
         is_jn_wearable=True
     ))
