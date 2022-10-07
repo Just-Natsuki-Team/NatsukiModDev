@@ -245,6 +245,20 @@ screen hkb_overlay:
 
     style_prefix "hkb"
 
+    key "t" action [ Jump("talk_menu"),
+                SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame) 
+            ]
+
+    
+    key "m" action [
+                Jump("music_menu"),
+                SensitiveIf(persistent.jn_custom_music_explanation_given and Natsuki.isHappy(higher=True) and not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)
+                ]
+    key "e" action [
+        Jump("extras_menu"),
+        SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)
+    ]
+
     vbox:
         xalign 0.09
         yalign 0.97
@@ -252,7 +266,7 @@ screen hkb_overlay:
         textbutton _("Talk"):
             action [
                 Jump("talk_menu"),
-                SensitiveIf(not Natsuki.isInConversation() and not Natsuki.isInGame())
+                SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)
             ]
             hover_sound gui.hover_sound
             activate_sound gui.activate_sound
@@ -263,7 +277,7 @@ screen hkb_overlay:
             textbutton _("Music"):
                 action [
                     Jump("music_menu"),
-                    SensitiveIf(not Natsuki.isInConversation() and not Natsuki.isInGame())
+                    SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)
                 ]
                 hover_sound gui.hover_sound
                 activate_sound gui.activate_sound
@@ -273,10 +287,9 @@ screen hkb_overlay:
         textbutton _("Extras"):
             action [
                 Jump("extras_menu"),
-                SensitiveIf(not Natsuki.isInConversation() and not Natsuki.isInGame())
+                SensitiveIf(not jn_globals.player_is_in_conversation and not jn_globals.player_is_ingame)
             ]
             hover_sound gui.hover_sound
             activate_sound gui.activate_sound
 
             style "hkbd_button"
-
