@@ -28,7 +28,7 @@ screen qab():
                     label _("General")
                     spacing 10
                     text _("Music")
-                    text _("Play")
+                    text _("Extras")
                     text _("Talk")
                     text _("Bookmark")
                     text _("Fullscreen")
@@ -39,7 +39,7 @@ screen qab():
                     label _("")
                     spacing 10
                     text _("M")
-                    text _("P")
+                    text _("E")
                     text _("T")
                     text _("F")
                     text _("S")
