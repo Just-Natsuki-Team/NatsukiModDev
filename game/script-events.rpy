@@ -747,9 +747,9 @@ label event_eyewear_problems:
     pause 0.5
 
     n "I just don't get it!{w=1}{nw}"
-    extend " It's not like anyone's even {i}here{/i} to mess around with my stuff any more!"
+    extend " It's not like anyone's even {i}here{/i} to mess around with my things any more!"
     n "Ugh...{w=1.25}{nw}"
-    extend " I {i}knew{/i} I shouldn't have thrown the case out..."
+    extend " I {i}knew{/i} I shouldn't have let Sayori borrow my desk for all the club stuff..."
     n "Reeeeal smooth,{w=0.5} Natsuki..."
 
     pause 2.5
@@ -757,9 +757,9 @@ label event_eyewear_problems:
     pause 1
 
     n "And are these...{w=1} {i}candy wrappers{/i}?!"
-    n "Uuuuuuu-!"
-    n "I don't remember ever saying my desk was a{w=0.25}{nw}"
-    extend " {b}trash{/b}{w=0.5}{nw}"
+    n "That's funny..."
+    n "I don't remember ever saying my desk was a{w=0.1}{nw}"
+    extend " {b}trash{/b}{w=0.33}{nw}"
     extend " {b}basket!{/b}"
 
     play audio gift_rustle
@@ -781,12 +781,14 @@ label event_eyewear_problems:
     pause 1.75
     play audio drawer
 
-    n "I can just about reach the back..."
+    n "I can...{w=0.5} just about...{w=0.5} reach the back...!"
     play audio chair_in
+    pause 1.5
     n "Nnnnnng-!"
 
     pause 2
     play audio gift_close
+    pause 0.25
     
     n "...!"
     n "T-{w=0.2}they're here?!{w=1}{nw}"
@@ -821,7 +823,7 @@ label event_eyewear_problems:
     n 1tllbgl "Did I do something with my hair?{w=1}{nw}"
     extend 1fcssml " Ehehe."
     n 1nchgnleme "Nope!{w=0.5}{nw}" 
-    extend 1fcsbgl " I-"
+    extend 1fcsbgl " I-{w=0.75}{nw}"
     n 1nsqbol "..."
 
     show natsuki 1fsqbof at jn_center zorder JN_NATSUKI_ZORDER
@@ -833,7 +835,7 @@ label event_eyewear_problems:
     n 1fcsbglsbl "N-{w=0.2}nope!{w=0.75}{nw}" 
     show overlay slipping_glasses zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_glasses_slide_down
     extend 1fchbglsbr " I-{w=0.2}it's not my hair,{w=0.2} [player]!"
-    n 1tsqsmlsbr "What else did you-"
+    n 1tsqsmlsbr "What else did you-{w=1}{nw}"
     n 1fsranlsbl "..."
     n 1fcsanf "Nnnnn...!"
 
@@ -846,18 +848,72 @@ label event_eyewear_problems:
     show overlay slipping_glasses zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_glasses_slide_down_faster
     extend 1fsqbglesssbr " What else did you noti-{w=1}{nw}"
     n 1fslanlsbl "Uuuuuuuuu-!"
+    
+    menu:
+        "Natsuki...":
+            pass
+
     n 1fbkwrlesssbl "Alright!{w=0.75}{nw}"
     extend 1flrwrlesssbl" Alright!"
     n 1fcsgslsbr "I know,{w=0.33} okay?!"
     extend 1fsremlsbr " The glasses don't fit properly!"
     n 1fslsrl "They {i}never{/i} have."
-    n 1kcsemlesi "..."
     n 1ksrbol "And to think I wasted all that time trying to find them,{w=0.2} too..."
-    n 1fslcal "..."
+    n 1kcsemlesi "..."
+
+    menu:
+        "I think glasses suit you, Natsuki!":
+            $ Natsuki.calculatedAffinityGain()
+            if Natsuki.isEnamored(higher=True):
+                n 1knmsll "..."
+                n 1kllpul "...You really think so,{w=0.75}{nw}" 
+                extend 1knmpul " [player]?"
+                n 1ksrunlsbl "..."
+                n 1fcssslsbl "Heh."
+                n 1fsldvlsbr "...Then I guess that at least wasn't a {i}total{/i} waste of time."
+                n 1fcsajlsbr "Not that I {i}don't{/i} think I look good in them too,{w=0.5}{nw}" 
+                extend 1fcssmfsbl " obviously."
+            
+            elif Natsuki.isAffectionate(higher=True):
+                n 1uskemfeshsbl "...!{w=0.5}{nw}"
+                n 1fcsgsfsbl "W-{w=0.3}well,{w=0.2} of course they do,{w=0.2} [player]!{w=1}{nw}"
+                extend 1flrpolsbl " I {i}did{/i} pick them,{w=0.2} after all."
+                n 1ksrsllsbl "..."
+
+            else:
+                n 1fcsgslsbl "W-{w=0.2}well,{w=0.5}{nw}"
+                extend 1fllgslsbl " duh!"
+                n 1fcsbglsbr "Of course they suit me,{w=0.2} [player]!"
+                n 1fcsemlsbr "I mean,{w=0.75}{nw}"
+                extend 1fllemlsbr " You didn't seriously think I'd pick something that {i}wouldn't{/i} show off my sense of style,{w=0.75}{nw}" 
+                extend 1fnmpolsbr " did you?"
+                n 1fcsemlsbl "Yeesh..."
+
+        "Yeah, that was a waste of time.":
+            $ Natsuki.percentageAffinityLoss(2)
+            if Natsuki.isAffectionate(higher=True):
+                n 1fskemlesh "H-{w=0.3}hey!{w=1}{nw}"
+                extend 1fsqwrl " And listening to you being so rude {i}isn't{/i}?"
+                n 1flreml "Yeesh..."
+                n 1fsreml "{i}Someone{/i} woke up on the wrong side of the bed..."
+                n 1fsrsll "..."
+
+            else:
+                n 1fskwrlesh "H-{w=0.2}hey!{w=0.5}{nw}"
+                extend 1fnmgsl " What was that for?!"
+                n 1fnmwrl "And as if you acting like a jerk {i}isn't{/i}?"
+                n 1fsrsllean "..."
+
+        "...":
+            n 1fllsll "..."
+            n 1knmeml "...What?"
+            extend 1fsqemlsbr " The silent act {i}definitely{/i} isn't helping," 
+            extend 1fsrpolsbl " you jerk..."
+
     n 1fcsajl "Well,{w=0.3} whatever.{w=1}{nw}"
     extend 1fllsll " At least I know where they are now,"
     extend 1fslbol " I suppose."
-    n 1fcseml "...Wearing them all high up like that was dorky,{w=0.75}{nw}" 
+    n 1fcseml "...Wearing them all high up like that was dorky,{w=0.5}{nw}" 
     extend 1fcspol " a-{w=0.2}anyway."
 
     show black zorder 6 with Dissolve(0.5)

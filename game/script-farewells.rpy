@@ -1209,7 +1209,7 @@ label farewell_short_session_ask:
     extend 1fnmgslsbl " B-{w=0.1}but you've {i}barely{/i} even been here at all today,{w=0.2} [player]!"
     $ time_in_session_descriptor = jn_utils.get_time_in_session_descriptor()
     n 1fcsgslsbr "I mean,{w=0.75}{nw}"
-    extend 1fnmpol " You've literally only been here for [time_in_session_descriptor]!"
+    extend 1fnmpol " you've literally only been here for [time_in_session_descriptor]!"
     show natsuki 1knmpol at jn_center zorder JN_NATSUKI_ZORDER
     menu:
         n "You seriously can't stay just a little longer?"
@@ -1221,7 +1221,7 @@ label farewell_short_session_ask:
                 n 1kllssl "T-{w=0.1}thanks,{w=0.1} [player]. It means a lot to me."
                 $ chosen_endearment = jn_utils.getRandomEndearment()
                 n 1kplssl "Really.{w=0.2} Thank you,{w=0.1} [chosen_endearment]."
-                n 1klrbgl "...A-{w=0.1}anyway."
+                n 1ksrunl "..."
 
             else:
                 n 1fnmbgl "Y-{w=0.2}yeah!{w=0.5}{nw}" 
