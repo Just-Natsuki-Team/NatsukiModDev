@@ -736,6 +736,7 @@ label event_eyewear_problems:
     extend " come {i}on{/i}!{w=1}{nw}"
     play audio stationary_rustle_c
     extend " I {i}know{/i} I left them here!"
+    n "I just know it!"
 
     pause 3
     play audio drawer
@@ -757,23 +758,42 @@ label event_eyewear_problems:
 
     n "And are these...{w=1} {i}candy wrappers{/i}?!"
     n "Uuuuuuu-!"
-    n "I never said my desk was a {b}trash basket!{/b}"
-    n "Yeesh..."
+    n "I don't remember ever saying my desk was a{w=0.25}{nw}"
+    extend " {b}trash{/b}{w=0.5}{nw}"
+    extend " {b}basket!{/b}"
+
+    play audio gift_rustle
+    pause 3.5
+
+    n "...Great.{w=0.75} And now my drawer is all sticky."
+    n "Gross..."
 
     play audio paper_crumple
     pause 2.5
+    play audio paper_throw
+    pause 3
+
+    n "Come on..."
+
     play audio stationary_rustle_b
     pause 1.5
     play audio stationary_rustle_c
     pause 1.75
     play audio drawer
+
+    n "I can just about reach the back..."
+    play audio chair_in
+    n "Nnnnnng-!"
+
     pause 2
+    play audio gift_close
     
     n "...!"
     n "T-{w=0.2}they're here?!{w=1}{nw}"
     extend " They're here!"
     n "Man,{w=0.2} that's a relief..."
     n "..."
+    play audio glasses_case_open
     n "...I wonder if they still..."
     pause 3.5
 
@@ -832,11 +852,13 @@ label event_eyewear_problems:
     extend 1fsremlsbr " The glasses don't fit properly!"
     n 1fslsrl "They {i}never{/i} have."
     n 1kcsemlesi "..."
-    n 1ksrbol "And to think I wasted all that time trying to find them, too..."
+    n 1ksrbol "And to think I wasted all that time trying to find them,{w=0.2} too..."
     n 1fslcal "..."
     n 1fcsajl "Well,{w=0.3} whatever.{w=1}{nw}"
     extend 1fllsll " At least I know where they are now,"
     extend 1fslbol " I suppose."
+    n 1fcseml "...Wearing them all high up like that was dorky,{w=0.75}{nw}" 
+    extend 1fcspol " a-{w=0.2}anyway."
 
     show black zorder 6 with Dissolve(0.5)
     pause 0.5
@@ -844,6 +866,8 @@ label event_eyewear_problems:
     hide overlay
     $ Natsuki.setOutfit(jn_outfits.get_outfit(outfit_to_restore))
     show natsuki 1fcsbol at jn_center zorder JN_NATSUKI_ZORDER
+    play audio glasses_case_close
+    pause 0.75
     play audio drawer
     pause 3
     hide black with Dissolve(2)

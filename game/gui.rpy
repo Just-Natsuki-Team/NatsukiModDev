@@ -17,8 +17,8 @@ init python:
 # GUI Configuration Variables
 ################################################################################
 
-define gui.hover_sound = "mod_assets/sfx/select_hover.mp3"
-define gui.activate_sound = "mod_assets/sfx/select_confirm.mp3"
+define gui.hover_sound = "mod_assets/sfx/select_hover.ogg"
+define gui.activate_sound = "mod_assets/sfx/select_confirm.ogg"
 define gui.activate_sound_glitch = "gui/sfx/select_glitch.ogg"
 
 ## Colors ######################################################################

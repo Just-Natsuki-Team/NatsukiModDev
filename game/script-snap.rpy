@@ -192,14 +192,14 @@ init 0 python in jn_snap:
             if (len(_player_hand) > 0):
                 new_card = _player_hand.pop(0)
                 _cards_on_table.append(new_card)
-                renpy.play("mod_assets/sfx/card_place.mp3")
+                renpy.play("mod_assets/sfx/card_place.ogg")
                 _is_player_turn = False
 
         else:
             if (len(_natsuki_hand) > 0):
                 new_card = _natsuki_hand.pop(0)
                 _cards_on_table.append(new_card)
-                renpy.play("mod_assets/sfx/card_place.mp3")
+                renpy.play("mod_assets/sfx/card_place.ogg")
                 _is_player_turn = True
 
         update_turn_indicator()
@@ -258,7 +258,7 @@ init 0 python in jn_snap:
 
             # Clear the cards on the table
             del _cards_on_table[:]
-            renpy.play("mod_assets/sfx/card_shuffle.mp3")
+            renpy.play("mod_assets/sfx/card_shuffle.ogg")
             draw_card_onscreen()
 
             # Use of renpy.call here is a stopgap and will be reworked, as renpy.call risks breaking label flow if not carefully applied.
