@@ -2003,6 +2003,17 @@ label outfits_create_save:
                 n 1kllss "Sorry..."
 
                 jump outfits_create_menu
+
+        "Yes, but don't worry about saving this outfit.":
+            n 1tnmpueqm "Eh?{w=0.75}{nw}"
+            extend 1tnmaj " You {i}don't{/i} want me to remember this one?"
+            n 1ullaj "Well...{w=0.75}{nw}"
+            extend 1tnmss " if you insist."
+            extend 1nchgneme " Less note taking for me!"
+
+            $ jn_outfits._changes_made = False
+            $ store.persistent.jn_natsuki_outfit_on_quit = "jn_school_uniform"
+            jump ch30_loop
             
         "No, I'm not quite finished.":
             n 1nslpo "I {i}knew{/i} I should have brought a book...{w=2}{nw}"
@@ -2426,7 +2437,7 @@ screen create_outfit():
         xpos 600
         ypos 450
 
-        textbutton _("Save"):
+        textbutton _("Finished"):
             style "hkbd_option"
             action Jump("outfits_create_save")
 
