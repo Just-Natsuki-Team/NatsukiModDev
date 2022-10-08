@@ -7,50 +7,51 @@ init offset = -1
 ## Custom Screens
 ################################################################################
 
-# QAB (Quick-Access-Buttons)
+# Hotkey display
+style hotkeys_text:
+    font gui.interface_font
+    size gui.interface_text_size
+    color "#e2d1d1"
+    line_overlap_split 1.25
+    line_spacing 1.25
+    outlines [(3, "#000000aa", 0, 0)]
+    xalign 0.0
+    yalign 0.5
 
-# Explains each button and what the hotkey is.
-
-screen qab():
+screen hotkeys():
     tag menu
-
-    use game_menu(("Hotkeys"), scroll="viewport"):
-
-        default tooltip = GetTooltip("")
-
-        # making each indivual list a vbox essentially lets us auto-align
-        vbox:
-            spacing 25
-
-            hbox:
-                style_prefix "check"
-                vbox:
-                    label _("General")
+    use game_menu(("Hotkeys")):
+        viewport id "hotkeys":
+            vbox:
+                label _("All hotkeys") style "check_label"
+                xoffset 100
+                yoffset 40
+                null height 20
+                style_prefix "hotkeys"
+                grid 2 7:
+                    xoffset 20                
                     spacing 10
-                    text _("Music")
-                    text _("Extras")
+
                     text _("Talk")
-                    text _("Bookmark")
-                    text _("Fullscreen")
-                    text _("Screenshot")
-                    text _("Settings")
-
-                vbox:
-                    label _("")
-                    spacing 10
-                    text _("M")
-                    text _("E")
                     text _("T")
+
+                    text _("Music")
+                    text _("M")
+
+                    text _("Extras")
+                    text _("E")
+
+                    text _("Fullscreen")
                     text _("F")
+
+                    text _("Screenshot")
                     text _("S")
+
+                    text _("Settings")
                     text _("Esc")
 
-    # there are lesser used hotkeys in Help that aren't needed here
-    text "Click 'Help' for the complete list.":
-        xalign 1.0 yalign 0.0
-        xoffset -10
-        style "main_menu_version"
-
+                    null width 175 height 30
+                    null width 175 height 0
 
 # Categorized menu
 ## Similar to MAS' twopane_scrollable menu.
@@ -147,7 +148,7 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
 
                         null height 20
 
-                    for button_name in menu_items.iterkeys():
+                    for button_name in menu_items.keys():
                         textbutton button_name:
                             style "categorized_menu_button"
                             #Set the selected category
@@ -248,9 +249,9 @@ style default:
     font gui.default_font
     size gui.text_size
     color gui.text_color
-    outlines [(2, "#000000aa", 0, 0)]
-    line_overlap_split 1
-    line_spacing 1
+    outlines [(3, "#000000aa", 0, 0)]
+    line_overlap_split 1.25
+    line_spacing 1.25
 
 style default_monika is normal:
     slow_cps 30
@@ -286,6 +287,7 @@ style input:
 
 style hyperlink_text:
     color gui.accent_color
+    underline True
     hover_color gui.hover_color
     hover_underline True
 
@@ -452,6 +454,7 @@ style say_dialogue:
     xanchor gui.text_xalign
     xsize gui.text_width
     ypos gui.text_ypos
+    size gui.say_text_size
 
     text_align gui.text_xalign
     layout ("subtitle" if gui.text_xalign else "tex")
@@ -765,17 +768,6 @@ screen indicator(message):
         style "return_button"
         xpos 10 ypos 70
 
-init python:
-    def FinishEnterName():
-        global player
-
-        if not player:
-            return
-
-        persistent.playername = player
-        renpy.hide_screen("name_input")
-        renpy.jump_out_of_context("start")
-
 screen navigation():
     vbox:
         style_prefix "navigation"
@@ -800,9 +792,9 @@ screen navigation():
         else:
             textbutton _("History") action [ShowMenu("history"), SensitiveIf(renpy.get_screen("history") == None)]
 
-        textbutton _("Settings") action [ShowMenu("preferences"), SensitiveIf(renpy.get_screen("preferences") == None)]
+        textbutton _("Hotkeys") action [ShowMenu("hotkeys"), SensitiveIf(renpy.get_screen("hotkeys") == None)]
 
-        textbutton _("QABs") action [ShowMenu("qab"), SensitiveIf(renpy.get_screen("qab") == None)]
+        textbutton _("Settings") action [ShowMenu("preferences"), SensitiveIf(renpy.get_screen("preferences") == None)]
 
         if renpy.variant("pc"):
             ## Help isn't necessary or relevant to mobile devices.
@@ -1234,6 +1226,14 @@ screen preferences():
                                 false_value=False)
                         ]
 
+                        textbutton _("Activity") action [
+                            ToggleField(
+                                object=persistent,
+                                field="_jn_notify_activity",
+                                true_value=True,
+                                false_value=False)
+                        ]
+
                     ## Additional vboxes of type "radio_pref" or "check_pref" can be
                     ## added here, to add additional creator-defined preferences.
 
@@ -1466,16 +1466,6 @@ style history_label:
 style history_label_text:
     xalign 0.5
 
-################################################################################
-## Additional screens
-################################################################################
-
-screen flower:
-    imagebutton:
-        idle "mod_assets/JustNatsuki/flower.png"
-        hover "mod_assets/JustNatsuki/flower.png"
-        action [If(allow_dialogue, true=Jump("ch30_flower"))]
-
 ## Confirm screen ##############################################################
 ##
 ## The confirm screen is called when Ren'Py wants to ask the player a yes or no
@@ -1594,8 +1584,8 @@ screen credits(message, ok_action):
 
 init python:
     def check_ingame_state_add_apology():
-        if jn_globals.player_is_ingame:
-            jn_apologies.add_new_pending_apology(jn_apologies.TYPE_CHEATED_GAME)
+        if Natsuki.isInGame():
+            Natsuki.addApology(jn_apologies.ApologyTypes.cheated_game)
 
 screen confirm_editable(message, yes_text, no_text, yes_action, no_action):
 
