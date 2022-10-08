@@ -245,6 +245,22 @@ screen hkb_overlay:
 
     style_prefix "hkb"
 
+    key "t" action [
+        If(not Natsuki.isInConversation() and not Natsuki.isInGame(), Jump("talk_menu")) 
+    ]
+    key "m" action [
+        If(
+            persistent.jn_custom_music_explanation_given
+            and Natsuki.isHappy(higher=True)
+            and not Natsuki.isInConversation()
+            and not Natsuki.isInGame(),
+            Jump("music_menu")
+        )
+    ]
+    key "e" action [
+        If(not Natsuki.isInConversation() and not Natsuki.isInGame(), Jump("extras_menu"))
+    ]
+
     vbox:
         xalign 0.09
         yalign 0.97
@@ -279,4 +295,3 @@ screen hkb_overlay:
             activate_sound gui.activate_sound
 
             style "hkbd_button"
-

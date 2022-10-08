@@ -7,6 +7,52 @@ init offset = -1
 ## Custom Screens
 ################################################################################
 
+# Hotkey display
+style hotkeys_text:
+    font gui.interface_font
+    size gui.interface_text_size
+    color "#e2d1d1"
+    line_overlap_split 1.25
+    line_spacing 1.25
+    outlines [(3, "#000000aa", 0, 0)]
+    xalign 0.0
+    yalign 0.5
+
+screen hotkeys():
+    tag menu
+    use game_menu(("Hotkeys")):
+        viewport id "hotkeys":
+            vbox:
+                label _("All hotkeys") style "check_label"
+                xoffset 100
+                yoffset 40
+                null height 20
+                style_prefix "hotkeys"
+                grid 2 7:
+                    xoffset 20                
+                    spacing 10
+
+                    text _("Talk")
+                    text _("T")
+
+                    text _("Music")
+                    text _("M")
+
+                    text _("Extras")
+                    text _("E")
+
+                    text _("Fullscreen")
+                    text _("F")
+
+                    text _("Screenshot")
+                    text _("S")
+
+                    text _("Settings")
+                    text _("Esc")
+
+                    null width 175 height 30
+                    null width 175 height 0
+
 # Categorized menu
 ## Similar to MAS' twopane_scrollable menu.
 ## NOTE: This is meant to be called within a loop so long as the user hasn't clicked `Nevermind`
@@ -722,37 +768,6 @@ screen indicator(message):
         style "return_button"
         xpos 10 ypos 70
 
-init python:
-    def FinishEnterName():
-        global player
-
-        if not player:
-            return
-
-        persistent.playername = player
-        renpy.hide_screen("name_input")
-        renpy.jump_out_of_context("start")
-
-    def DLC():
-        renpy.jump_out_of_context("dlcmenu")
-
-    def FinishEnterAge():
-        if not age: return
-        return
-
-    def FinishEnterMonth():
-        if not month: return
-        persistent.bday_month = month
-        renpy.hide_screen("month_input")
-
-    def FinishEnterDay():
-        if not day: return
-        persistent.bday_day = day
-        renpy.hide_screen("day_input")
-
-    def DeleteName():
-        persistent.playername = ""
-
 screen navigation():
     vbox:
         style_prefix "navigation"
@@ -776,6 +791,8 @@ screen navigation():
 
         else:
             textbutton _("History") action [ShowMenu("history"), SensitiveIf(renpy.get_screen("history") == None)]
+
+        textbutton _("Hotkeys") action [ShowMenu("hotkeys"), SensitiveIf(renpy.get_screen("hotkeys") == None)]
 
         textbutton _("Settings") action [ShowMenu("preferences"), SensitiveIf(renpy.get_screen("preferences") == None)]
 
