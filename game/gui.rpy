@@ -190,7 +190,6 @@ define gui.button_text_insensitive_color = gui.insensitive_color
 # 1.0 is right).
 define gui.button_text_xalign = 0.0
 
-
 ## These variables override settings for different kinds of buttons. Please see
 ## the gui documentation for the kinds of buttons available, and what each is
 ## used for.
