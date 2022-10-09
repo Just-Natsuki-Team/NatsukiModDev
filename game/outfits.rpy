@@ -926,6 +926,19 @@ init -1 python in jn_outfits:
         """
         return __ALL_WEARABLES.values()
 
+    def save_temporary_outfit(outfit):
+        """
+        """
+        temporary_outfit = get_outfit("jn_temporary_outfit")
+        temporary_outfit.clothes = _PREVIEW_OUTFIT.clothes
+        temporary_outfit.hairstyle = _PREVIEW_OUTFIT.hairstyle
+        temporary_outfit.accessory = _PREVIEW_OUTFIT.accessory
+        temporary_outfit.eyewear = _PREVIEW_OUTFIT.eyewear
+        temporary_outfit.headgear = _PREVIEW_OUTFIT.headgear
+        temporary_outfit.necklace = _PREVIEW_OUTFIT.necklace
+        store.Natsuki.setOutfit(temporary_outfit)
+        return True
+
     def save_custom_outfit(outfit):
         """
         Saves the given outfit as a JSON custom outfit file.
@@ -1547,6 +1560,17 @@ init -1 python in jn_outfits:
     ))
 
     # Internal outfits; used for events, etc. These shouldn't be unlocked!
+    
+    # Temporary outfit; used when we don't want to visibly save an outfit
+    __register_outfit(JNOutfit(
+        reference_name="jn_temporary_outfit",
+        display_name="Temporary outfit",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_school_uniform"),
+        hairstyle=get_wearable("jn_hair_twintails"),
+        accessory=get_wearable("jn_accessory_hairband_red")
+    ))
 
     # Outfit used for ahoge unlock event
     __register_outfit(JNOutfit(
@@ -2012,7 +2036,7 @@ label outfits_create_save:
             n 1nchgneme "Less note taking for me!"
 
             $ jn_outfits._changes_made = False
-            $ store.persistent.jn_natsuki_outfit_on_quit = "jn_school_uniform"
+            $ jn_outfits.save_temporary_outfit(jn_outfits._PREVIEW_OUTFIT)
             jump ch30_loop
             
         "No, I'm not quite finished.":

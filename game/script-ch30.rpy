@@ -80,18 +80,20 @@ label ch30_init:
         jn_utils.log("Outfit data loaded.")
 
         # Set Natsuki's outfit
-        if persistent.jn_natsuki_auto_outfit_change_enabled:
-            # Real-time outfit selection
+        if (
+            persistent.jn_natsuki_auto_outfit_change_enabled
+            or persistent.jn_natsuki_outfit_on_quit == "jn_temporary_outfit"
+        ):
+            # Real-time outfit selection, or last outfit was temporary
             Natsuki.setOutfit(jn_outfits.get_realtime_outfit())
 
-        else:
-            if jn_outfits.outfit_exists(persistent.jn_natsuki_outfit_on_quit):
-                # Custom outfit/default outfit selection
-                Natsuki.setOutfit(jn_outfits.get_outfit(persistent.jn_natsuki_outfit_on_quit))
+        elif jn_outfits.outfit_exists(persistent.jn_natsuki_outfit_on_quit):
+            # Custom outfit/default outfit selection
+            Natsuki.setOutfit(jn_outfits.get_outfit(persistent.jn_natsuki_outfit_on_quit))
 
-            else:
-                # Fallback to Natsuki's school uniform
-                Natsuki.setOutfit(jn_outfits.get_outfit("jn_school_uniform"))
+        else:
+            # Fallback to Natsuki's school uniform
+            Natsuki.setOutfit(jn_outfits.get_outfit("jn_school_uniform"))
 
         jn_utils.log("Outfit set.")
 
