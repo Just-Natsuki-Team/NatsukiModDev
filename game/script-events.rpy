@@ -26,6 +26,7 @@ image prop renpy_for_dummies_book_held = "mod_assets/props/renpy_for_dummies_boo
 image prop a_la_mode_manga_held = "mod_assets/props/a_la_mode_manga_held.png"
 image prop strawberry_milkshake = "mod_assets/props/strawberry_milkshake.png"
 image prop step_by_step_manga_held = "mod_assets/props/step_by_step_manga_held.png"
+image prop glasses_case = "mod_assets/props/glasses_case.png"
 
 # Overlays are displayed over the top of Natsuki, but behind any props
 image overlay slipping_glasses = "mod_assets/overlays/slipping_glasses.png"
@@ -803,6 +804,7 @@ label event_eyewear_problems:
         "Enter...":
             pass
 
+    show prop glasses_case zorder jn_events.JN_EVENT_PROP_ZORDER
     show overlay slipping_glasses zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_glasses_pre_slide
     $ jn_events.display_visuals("1fcssmesi")
     $ jn_globals.force_quit_enabled = True
@@ -919,6 +921,7 @@ label event_eyewear_problems:
     show black zorder 6 with Dissolve(0.5)
     pause 0.5
     # Hide glasses overlay and restore old outfit
+    hide prop
     hide overlay
     $ Natsuki.setOutfit(jn_outfits.get_outfit(outfit_to_restore))
     show natsuki 1fcsbol at jn_center zorder JN_NATSUKI_ZORDER
