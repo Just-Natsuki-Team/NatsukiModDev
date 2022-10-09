@@ -2009,7 +2009,7 @@ label outfits_create_save:
             extend 1tnmaj " You {i}don't{/i} want me to remember this one?"
             n 1ullaj "Well...{w=0.75}{nw}"
             extend 1tnmss " if you insist."
-            extend 1nchgneme " Less note taking for me!"
+            n 1nchgneme "Less note taking for me!"
 
             $ jn_outfits._changes_made = False
             $ store.persistent.jn_natsuki_outfit_on_quit = "jn_school_uniform"
