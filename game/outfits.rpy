@@ -928,6 +928,11 @@ init -1 python in jn_outfits:
 
     def save_temporary_outfit(outfit):
         """
+        Saves the given outfit as the designated temporary outfit.
+        The temporary outfit is not persisted between game exit/reload.
+
+        IN:
+            - outfit - the JNOutfit to use as the base for the temporary outfit
         """
         temporary_outfit = get_outfit("jn_temporary_outfit")
         temporary_outfit.clothes = _PREVIEW_OUTFIT.clothes
