@@ -54,7 +54,6 @@ init python in jn_events:
             is_seen=False,
             **kwargs
         )
-        return None
         # Events are one-time only, so we sanity check here
         if len(event_list) > 0:
             return random.choice(event_list).label
