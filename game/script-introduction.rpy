@@ -42,6 +42,7 @@ label introduction_progress_check:
         $ main_background.show()
         $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
         show natsuki idle introduction at jn_center zorder JN_NATSUKI_ZORDER
+        pause 0.25
         hide glitch_garbled_a
         play music audio.space_classroom_bgm fadein 1
 
@@ -118,6 +119,7 @@ label introduction_opening:
     $ main_background.show()
     $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
     show natsuki idle introduction at jn_center zorder JN_NATSUKI_ZORDER
+    pause 0.25
     hide black
     hide glitch_garbled_a
     play music audio.space_classroom_bgm fadein 1
