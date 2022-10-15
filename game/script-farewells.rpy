@@ -93,7 +93,7 @@ label farewell_first_time:
             n 1unmemlesu "...!{w=0.5}{nw}"
             n 1fllemless "Y-{w=0.1}yeah!{w=0.5}{nw}"
             extend 1fsqpolsbr " You better."
-            n 1flremlsbl "Y-{w=0.1}you are reponsible for this,{w=0.1} like I said.{w=0.5}{nw}"
+            n 1flremlsbl "Y-{w=0.1}you are responsible for this,{w=0.1} like I said.{w=0.5}{nw}"
             extend 1flrpol " So..."
             n 1kllpol "..."
 

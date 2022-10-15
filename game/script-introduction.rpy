@@ -36,6 +36,7 @@ label introduction_progress_check:
 
     # Handling for if player decides to quit during the introduction sequence so we don't skip unseen segments
     if not jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.new_game:
+        $ config.allow_skipping = False
         play audio static
         show glitch_garbled_a zorder 99 with vpunch
 
@@ -214,8 +215,7 @@ label introduction_first_meeting:
         if len(player_name) == 0:
             n 1kskem "P-{w=0.3}please!{w=1} Who are you?!"
 
-        elif jn_utils.get_string_contains_profanity(player_name) or jn_utils.get_string_contains_insult(player_name):
-            # We only apply penalty once here so we don't have to rewrite the whole sequence for diff aff/trust levels
+        elif jn_nicknames.get_player_nickname_type(player_name) != jn_nicknames.NicknameTypes.neutral:            # We only apply penalty once here so we don't have to rewrite the whole sequence for diff aff/trust levels
             if persistent._jn_player_profanity_during_introduction:
                 play audio static
                 show glitch_garbled_a zorder 99 with hpunch

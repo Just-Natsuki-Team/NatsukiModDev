@@ -1221,7 +1221,7 @@ screen preferences():
                         textbutton _("Conversations") action [
                             ToggleField(
                                 object=persistent,
-                                field="jn_notify_conversations",
+                                field="_jn_notify_conversations",
                                 true_value=True,
                                 false_value=False)
                         ]
