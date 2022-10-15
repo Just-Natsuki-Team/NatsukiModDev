@@ -269,7 +269,12 @@ init 0 python:
             IN:
                 - percentage_loss - The integer percentage the affinity should decrease by
             """
-            persistent.affinity -= persistent.affinity * (float(percentage_loss) / 100)
+            if persistent.affinity == 0:
+                persistent.affinity -= (float(percentage_loss) / 10)
+
+            else:
+                persistent.affinity -= abs(persistent.affinity * (float(percentage_loss) / 100))
+            
             jn_utils.log("Affinity-")
 
         @staticmethod
