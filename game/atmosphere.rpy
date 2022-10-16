@@ -31,7 +31,7 @@ image glitch_garbled_c = "mod_assets/backgrounds/etc/glitch_garbled_c.png"
 image glitch_garbled_n = "mod_assets/backgrounds/etc/youdidthis.png"
 image glitch_garbled_red = "mod_assets/backgrounds/etc/glitch_garbled_red.png"
 
-image glitch_fuzzy:
+image sky glitch_fuzzy:
     "mod_assets/backgrounds/etc/glitch_fuzzy_a.png"
     pause 0.25
     "mod_assets/backgrounds/etc/glitch_fuzzy_b.png"
@@ -265,8 +265,8 @@ init 0 python in jn_atmosphere:
 
     WEATHER_GLITCH = JNWeather(
         weather_type=JNWeatherTypes.glitch,
-        day_sky_image="glitch_fuzzy",
-        night_sky_image="glitch_fuzzy")
+        day_sky_image="sky glitch_fuzzy",
+        night_sky_image="sky glitch_fuzzy")
 
     # Weather code -> JNWeather map
     # key: Regex matching the weather code as a string, allowing ranged captures (returned from OpenWeatherMap)

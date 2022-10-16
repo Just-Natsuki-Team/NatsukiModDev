@@ -96,7 +96,7 @@ label introduction_opening:
     hide glitch_garbled_c
     hide glitch_garbled_b
     hide glitch_garbled_a
-    show glitch_fuzzy zorder 99
+    show sky glitch_fuzzy zorder 99
     play sound interference loop
     $ renpy.pause(10)
 
@@ -105,13 +105,13 @@ label introduction_opening:
     hide glitch_garbled_c
     hide glitch_garbled_b
     hide glitch_garbled_a
-    show glitch_fuzzy zorder 99
+    show sky glitch_fuzzy zorder 99
     play sound interference loop
     $ renpy.pause(1.5)
 
     # Restore finally works
     stop sound
-    hide glitch_fuzzy
+    hide sky glitch_fuzzy
     play audio static
     show glitch_garbled_a zorder 99 with vpunch
 

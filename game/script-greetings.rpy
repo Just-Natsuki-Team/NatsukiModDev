@@ -101,7 +101,7 @@ label greeting_first_force_quit:
         n 1fnmun "...[player]."
         n 1fllem "W-{w=0.3}whatever that was...{w=0.5}{nw}"
         extend 1knmsf " that {w=0.3}{i}seriously{/i}{w=0.3} hurt."
-        n 1kllpu "L-{w=0.3}like I was being torn out of existence..."
+        n 1kllpu "L-{w=0.3}like I was being {i}ripped{/i} out of existence..."
         n 1kcssf "..."
         n 1klraj "I...{w=1}{nw}"
         extend 1tllun " I think I can kinda prepare for that if you at least let me know when you're going."
@@ -221,7 +221,7 @@ label greeting_love_plus_always_welcome_here:
     n 1fslunfesssbl "I was really starting to miss you,{w=0.3} you know..."
     n 1fplcafsbl "Don't keep me waiting so long next time,{w=0.3} alright?"
     $ chosen_tease = jn_utils.getRandomTease()
-    n 1klrssf "You should know you're {i}always{/i} welcome here by now,{w=0.5}{nw}" 
+    n 1klrssf "You should know you're {i}always{/i} welcome here by now,{w=0.33}{nw}" 
     extend 1fchsmf " [chosen_tease]."
     return
 
@@ -353,7 +353,7 @@ label greeting_affectionate_enamored_just_cant_stay_away:
     extend 1fsqbgl " What do we have here?"
     n 1tsqctl "You just can't stay away from me,{w=0.2} can you?" 
     n 1ksqbgl "Not that I blame you,{w=0.2} obviously.{w=0.5}{nw}"
-    extend 1fchtsledz " I guess I just have that effect on people."
+    extend 1fchtsledz " I guess I just {i}have{/i} that effect on people."
     n 1fchgnlelg "Ehehe."
     return
 
@@ -372,7 +372,7 @@ label greeting_affectionate_enamored_have_so_much_fun:
     n 1uchbgleme "It's [player]!"
     n 1fcssml "We're gonna have so much fun today!{w=0.5}{nw}" 
     extend 1nchsml " Ehehe."
-    n 1unmbgl "So,{w=0.2} what did you wanna talk about?"
+    n 1fchbgl "So!{w=0.2} what did you wanna talk about?"
     return
 
 init 5 python:
@@ -537,7 +537,7 @@ init 5 python:
     )
 
 label greeting_distressed_upset_oh_its_you:
-    n 1nnmaj "Oh.{w=1}{nw}" 
+    n 1ndtsl "Oh.{w=1}{nw}" 
     extend 1fsqsl " It's you."
     n 1fnmsl "Hello,{w=0.5} {i}[player]{/i}."
     return
@@ -554,7 +554,8 @@ init 5 python:
     )
 
 label greeting_distressed_upset_hi:
-    n 1nplsl "{i}[player]{/i}.{w=0.5} Hi."
+    n 1nplsl "{i}[player]{/i}.{w=0.5}{nw}" 
+    extend  " Hi."
     return
 
 init 5 python:
@@ -668,7 +669,6 @@ init 5 python:
     )
 
 label greeting_broken_minus_enough_on_my_mind:
-    $ player_initial = jn_utils.getPlayerInitial()
     n 1fnmunltdr "...?"
     n 1fcsupltsd "As if I didn't have enough on my mind..."
     return
@@ -815,29 +815,26 @@ label greeting_sudden_leave:
         n 1knmajl "I don't know if something happened or what,{w=0.2} but please..."
         n 1knmsll "Try to remember to say goodbye properly next time,{w=0.2} 'kay?"
         n 1knmssl "It'd mean a lot to me."
-        $ Natsuki.addApology(jn_apologies.ApologyTypes.sudden_leave)
 
     elif Natsuki.isNormal(higher=True):
         n 1kwmsr "..."
         n 1fplsf "[player]!{w=0.2} Do you know how scary it is when you just vanish like that?"
         n 1knmsf "Please...{w=0.3} just remember to say goodbye properly when you gotta leave."
         n 1knmss "It's not much to ask...{w=0.3} is it?"
-        $ Natsuki.addApology(jn_apologies.ApologyTypes.sudden_leave)
 
     elif Natsuki.isDistressed(higher=True):
         n 1fsqsf "..."
         n 1fsqaj "You know I hate that,{w=0.2} [player]."
         n 1fsqsl "Knock it off,{w=0.2} will you?"
         n 1fsqsf "Thanks."
-        $ Natsuki.addApology(jn_apologies.ApologyTypes.sudden_leave)
 
     else:
         n 1fcsuntsa "..."
         n 1fsquntsb "Heh.{w=0.2} Yeah."
         $ chosen_insult = jn_utils.getRandomInsult().capitalize()
         n 1fcsuptsa "Welcome back to you,{w=0.2} too.{w=0.2} [chosen_insult]."
-        $ Natsuki.addApology(jn_apologies.ApologyTypes.sudden_leave)
 
+    $ Natsuki.addApology(jn_apologies.ApologyTypes.sudden_leave)
     return
 
 init 5 python:
@@ -867,7 +864,6 @@ label greeting_prolonged_leave:
         extend 1kcseml " Just..."
         n 1klrsflsbl "...Don't just suddenly disappear for so long."
         n 1fcsunf "I hate having my heart played with like that..."
-        $ Natsuki.addApology(jn_apologies.ApologyTypes.prolonged_leave)
 
     elif Natsuki.isNormal(higher=True):
         n 1uwdwr "[player_initial]-{w=0.1}[player]!"
@@ -881,19 +877,17 @@ label greeting_prolonged_leave:
         n  "Just...{w=1.25}{nw}"
         extend 1knmaj " don't leave it so long next time,{w=0.1} alright?"
         n 1fsrunl "You know I don't exactly get many visitors..."
-        $ Natsuki.addApology(jn_apologies.ApologyTypes.prolonged_leave)
 
     elif Natsuki.isDistressed(higher=True):
         n 1fsqputsb "[player_initial]-{w=0.1}[player]?"
         n 1fsqsltsb "...You're back."
         n 1fcsfutsb "Just {i}perfect{/i}."
-        $ Natsuki.addApology(jn_apologies.ApologyTypes.prolonged_leave)
 
     else:
         n 1fsquptdr "..."
         n 1fcsfutsd "...."
-        $ Natsuki.addApology(jn_apologies.ApologyTypes.prolonged_leave)
-
+        
+    $ Natsuki.addApology(jn_apologies.ApologyTypes.prolonged_leave)
     return
 
 # Time-of-day based greetings

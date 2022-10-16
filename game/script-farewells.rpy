@@ -98,7 +98,7 @@ label farewell_first_time:
             n 1kllpol "..."
 
         "I don't know.":
-            $ persistent.jn_player_first_farewell_response = int(jn_farewells.JNFirstLeaveTypes.unknown)
+            $ persistent.jn_player_first_farewell_response = int(jn_farewells.JNFirstLeaveTypes.dont_know)
             n 1kskem "..."
             n 1kskwr "N-{w=0.5}no!"
             n 1kcsan "You can't do this to me!{w=0.5}{nw}"
@@ -106,8 +106,8 @@ label farewell_first_time:
             n 1kcsunltsa "..."
             n 1ksqunl "..."
             n 1kplpul "Please,{w=0.1} [player]...{w=0.5}{nw}"
-            extend 1kllpu " it isn't much to ask for...{w=2}{nw}"
-            extend 1kwmemsbr " right?"
+            extend 1kllpu " it isn't much to ask for..."
+            n 1kwmemsbr "Right?"
 
         "...":
             $ persistent.jn_player_first_farewell_response = int(jn_farewells.JNFirstLeaveTypes.no_response)
@@ -117,8 +117,8 @@ label farewell_first_time:
             extend 1knmgssbl " I-{w=0.1}I'm serious!"
             n 1kllunsbl "..."
             n 1knmaj "Please,{w=0.1} [player]...{w=0.5}{nw}"
-            extend 1kllpu " it isn't much to ask for...{w=2}{nw}"
-            extend 1kwmem " right?"
+            extend 1kllpu " it isn't much to ask for..."
+            n 1kwmem "Right?"
 
     return { "quit": None }
 
@@ -213,7 +213,7 @@ label farewell_option_sleep:
     else:
         # Nap
         n 1tnmbo "Huh?{w=1}{nw}" 
-        extend 1tnmpu " You're taking naps now?"
+        extend 1tnmpu " You're taking {i}naps{/i} now?"
         n 1tsqcaesd " ...Really?"
         n 1ncsemesi "Jeez...{w=1}{nw}" 
         extend 1fllca " I swear I'm gonna be feeding you next at this rate..."
@@ -1209,7 +1209,7 @@ label farewell_short_session_ask:
     extend 1fnmgslsbl " B-{w=0.1}but you've {i}barely{/i} even been here at all today,{w=0.2} [player]!"
     $ time_in_session_descriptor = jn_utils.get_time_in_session_descriptor()
     n 1fcsgslsbr "I mean,{w=0.75}{nw}"
-    extend 1fnmpol " You've literally only been here for [time_in_session_descriptor]!"
+    extend 1fnmpol " you've literally only been here for [time_in_session_descriptor]!"
     show natsuki 1knmpol at jn_center zorder JN_NATSUKI_ZORDER
     menu:
         n "You seriously can't stay just a little longer?"
