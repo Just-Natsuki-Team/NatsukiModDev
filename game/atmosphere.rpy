@@ -619,4 +619,6 @@ label weather_change:
                     n 1ullbg "Heeey!{w=0.75}{nw}"
                     extend 1uchgnledz " It's snowing!{w=3}{nw}"
 
+            pause 1
+            show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
             return
