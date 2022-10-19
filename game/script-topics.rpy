@@ -3741,19 +3741,25 @@ label talk_school_uniform:
     n 1fllem "Who even thought someone needs that much clothing?!{w=0.2} For school,{w=0.1} of all places?!"
     n 1fbkwr "I mean...{w=0.3} do you even {i}know{/i} what wearing all that clothing in summer is like?!{w=0.2} It's {i}horrible{/i}!"
     n 1flrpo "And the blazer...{w=0.3} ugh!{w=0.2} It's actually the worst thing ever."
-    n 1fsqpo "Like yeah,{w=0.1} I could take some off between class,{w=0.1} but I had to put it all back on when I go went in."
+    n 1fsqpo "Like yeah,{w=0.1} I could take some off between class,{w=0.1} but I had to put it all back on when I went in."
     n 1fllpo "...Or get told off.{w=0.2} {i}Again{/i}.{w=0.2} I honestly have no idea how Sayori got away with hers being so scruffy."
     n 1fcsan "And all of the uniform stuff is super expensive too!{w=0.2} Talk about a kick in the teeth!"
     n 1fslan "Jerks."
     n 1fslsr "Ugh...{w=0.3} I seriously wish uniforms were banned or something."
-    n 1flrpo "It could be worse though,{w=0.1} I guess.{w=0.2} At suppose it kept me warm when it mattered."
+    n 1flrpo "I guess it could be worse.{w=0.5}{nw}"
+    extend 1ksrsl  " At least it kept me warm when it mattered."
 
     if not Natsuki.isWearingClothes("jn_clothes_school_uniform"):
         n 1nchgn "...And I'm not wearing it now,{w=0.1} at least!{w=1}{nw}"
         extend 1fcsbg " Always a plus."
-        n 1ullaj "That being said..."
+        n 1ullaj "That being said...{w=0.75}{nw}"
+    
+    else:
+        n 1ulraj "But...{w=0.75}{nw}"
 
-    n 1unmaj "What about you though,{w=0.1} [player]?"
+    extend 1unmbo " what about you,{w=0.1} [player]?"
+    show natsuki 1tnmpu at jn_center
+
     menu:
         n "Did you have to wear uniform at school?"
 
@@ -7348,7 +7354,7 @@ label talk_windup_bullying:
     n 1fcsem "And when I say mess with people...{w=1}{nw}"
     extend 1fsqem " I don't just mean physically,{w=0.1} either!"
     n 1fllem "Bullies can do their dirty work in so many different ways,{w=0.1} especially with social media being what is is now.{w=1}{nw}"
-    extend 1fcsfu " But they're all just as toxic!"
+    extend 1fcsfu " But they're just as toxic!"
     n 1fsqan "And worse yet,{w=0.5}{nw}"
     extend 1tsqem " if you try to stick up for yourself?{w=1}{nw}"
     extend 1fsrem " When you're exhausted of dealing with all of their crap?"    
