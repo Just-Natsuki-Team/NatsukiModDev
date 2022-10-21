@@ -7531,8 +7531,14 @@ label talk_player_change_name:
     else:
         $ neutral_nickname_permitted = False
 
+        if nickname.lower() == player.lower():
+            n 1tslsssbl "..."
+            n 1tnmsssbl "...Business as usual then,{w=0.2} [player]?{w=0.75}{nw}"
+            extend 1fsqsm " Ehehe."
+            n 1fchbl "Well,{w=0.2} whatever you say!"
+
         # A player might actually be named Natsuki, so we don't block it
-        if nickname.lower() == n_name.lower() and n_name.lower() is not "natsuki":
+        elif nickname.lower() == n_name.lower() and n_name.lower() != "natsuki":
             n 1nllaj "You...{w=1}{nw}" 
             extend 1tsqbo " really {i}didn't{/i} think this one through,{w=0.1} did you?"
             n 1tsqpueqm "Do you even know how confusing that'd be?"

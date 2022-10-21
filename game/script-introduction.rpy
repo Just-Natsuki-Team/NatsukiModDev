@@ -439,6 +439,9 @@ label introduction_exit:
         allow_skipping = True
         config.allow_skipping = False
 
+        global LAST_TOPIC_CALL
+        LAST_TOPIC_CALL = datetime.datetime.now()
+
     play music audio.just_natsuki_bgm fadein 3
     show screen hkb_overlay
 
