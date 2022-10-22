@@ -485,9 +485,9 @@ label talk_using_computers_healthily:
     n 1unmsf "You gotta be at your computer to talk to me,{w=0.1} right?"
     n 1ullsf "And you've been here a while already..."
 
-    if (jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.work_applications)
-        or jn_activity.hasPlayerDoneActivity(JNActivities.artwork)
-        or jn_activity.hasPlayerDoneActivity(JNActivities.coding)):
+    if (jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.work_applications)
+        or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(JNActivities.artwork)
+        or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(JNActivities.coding)):
             n 1knmaj "In fact, I've even {i}seen{/i} you working on a lot of stuff myself!"
             n 1kllsl "..."
 
@@ -1982,18 +1982,19 @@ init 5 python:
 label talk_driving:
     # Check to see if the player and Natsuki have already discussed if Nat can drive in this topic, or the "are you into cars?" topic
     $ already_discussed_driving = get_topic("talk_driving").shown_count > 0 or get_topic("talk_are_you_into_cars").shown_count > 0
-
-    n 1fchdv "Pffft!{w=0.5}{nw}"
-    extend 1uchbselg " Ahaha!"
-    n 1fchgn "What kind of a question is that,{w=0.1} [player]?"
     $ chosen_tease = jn_utils.getRandomTease()
 
     if already_discussed_driving:
-        n 1tllss "I already told you I can't drive,{w=0.1} [chosen_tease]!{w=0.5}{nw}"
-        extend 1fchgn " I don't even have a license!"
-        n 1kllpo "And even if I wanted to,{w=0.1} I don't think I could afford it..."
+        n 1tnmboeqm "...Huh?{w=0.75}{nw}"
+        extend 1tllsssbr " I already told you I can't drive,{w=0.2} [chosen_tease]!"
+        n 1fchgnelg "I still don't have a license,{w=0.2} remember?"
+        n 1tllaj "And even if I wanted to,{w=0.5}{nw}" 
+        extend 1nslposbl " I don't think I could afford it..."
 
     else:
+        n 1fchdvesi "Pffft!{w=0.5}{nw}"
+        extend 1uchbselg " Ahaha!"
+        n 1fchgn "What kind of a question is that,{w=0.1} [player]?"
         n 1tllss "Of course I can't drive,{w=0.1} [chosen_tease]!{w=0.5}{nw}"
         extend 1fchgn " I don't even have a license!"
         n 1kllpo "I mean...{w=0.3} even if I wanted to learn,{w=0.1} I don't think I could afford it."
@@ -2003,6 +2004,7 @@ label talk_driving:
     extend 1fsqaj " it's actually pretty gross how fast it all adds up."
     n 1nlraj "I think I'd rather stick to public transport and my own two feet."
     n 1unmaj "But what about you,{w=0.1} [player]?"
+    show natsuki 1tnmss at jn_center
 
     # Player has never confirmed if they can/cannot drive
     if persistent.jn_player_can_drive is None:
@@ -2115,8 +2117,8 @@ label talk_driving:
                 $ persistent.jn_player_can_drive = True
 
             "I can drive again!":
-                n 1uchbg "Hey!{w=0.2} Nice going,{w=0.1} [player]!"
-                n 1uwlsm "Drive safe!"
+                n 1uchbgedz "Hey!{w=0.2} Nice going,{w=0.1} [player]!"
+                n 1fchbl "Drive safe!"
                 $ persistent.jn_player_can_drive = True
 
             "Nope, nothing new.":
@@ -2489,7 +2491,7 @@ label talk_sleeping_well:
     n 1unmsl "No screen means no bright lights or distractions to keep you up,{w=0.1} obviously."
     n 1fnmpu "If you're tired then the last thing you need is something beaming whatever at you."
 
-    if jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.anime_streaming):
+    if jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.anime_streaming):
         n 1tsqsr "And no, [player] {w=0.1}-{w=0.3}{nw}"
         extend 1fnmpo " No late-night anime binging sessions either."
         n 1nchgn "Sorry~!"
@@ -2696,7 +2698,7 @@ label talk_using_headphones_carefully:
     n 1flrsr "...Take them off every once and a while,{w=0.1} will you?{w=0.2} For other people,{w=0.1} I mean."
     n 1ncsbo "I get it -{w=0.1} if you just wanna listen to something in peace,{w=0.1} or give yourself some room,{w=0.1} that's okay."
 
-    if jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.music_applications):
+    if jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.music_applications):
         n 1kslbg "I know you like your music streaming."
 
     n 1nsqbo "But don't use them to barricade yourself away from everyone and everything."
@@ -2824,7 +2826,7 @@ label talk_gaming:
                 n 1tnmaj "Huh?{w=0.2} Really?"
                 n 1tllaj "Not even the odd casual game?"
 
-                if jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.gaming):
+                if jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.gaming):
                     n 1fsqts "Liar.{nw}"
 
                 n 1ncsaj "...Well then."
@@ -2871,7 +2873,7 @@ label talk_gaming:
             n 1fchbg "I {i}am{/i} a professional,{w=0.1} after all!"
 
         else:
-            if jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.gaming):
+            if jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.gaming):
                 n 1fsqts "Liar.{nw}"
 
             n 1ullaj "Well then...{w=0.5}{nw}"
@@ -4544,7 +4546,7 @@ label talk_collectibles:
                 n 1nchbg "Just let me know if you ever feel like a tour!"
                 n 1nchgn "You won't find a better collection!{w=0.2} Ehehe."
 
-                if jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.manga):
+                if jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.manga):
                     n 1fllss "Or,{w=0.1} at least...{w=0.5}{nw}"
                     extend 1fsqss " a better...{w=0.3} {i}physical{/i} one."
                     n 1fsqsm "Right,{w=0.5}{nw}"
@@ -5086,21 +5088,29 @@ label talk_skateboarding:
     n 1tllss "Though...{w=0.3} not really by choice.{w=0.5}{nw}"
     extend 1knmaj " Bikes are {i}expensive{/i}, [player]!"
     n 1kllun "And I could never rely on lifts from my...{w=0.3} folk,{w=0.3}{nw}"
-    extend 1kllss " so I saved up all I could and got a board the first chance I had!"
-    n 1nsqaj "Seriously.{w=0.5}{nw}"
-    extend 1fllpu " You have no {i}idea{/i} how many lunches I skipped to earn that thing."
+    extend 1kllss " so I saved up all I could,{w=0.3}{nw}" 
+    extend 1fcsbg " and got a board the first chance I had!"
+    n 1nsqaj "Seriously.{w=0.75}{nw}"
+    extend 1fllpusbr " You have no {i}idea{/i} how many lunches I skipped to earn that thing."
     n 1unmbg "But it was actually super convenient!{w=0.5}{nw}"
     extend 1flrbg " I didn't have to worry about locking it up somewhere,{w=0.1} or some jerk damaging it..."
     n 1fchsm "I could just pick it up and take it around with me,{w=0.1} or toss it in my locker."
-    n 1nslss "I mean...{w=0.3} I don't need it so much {i}now{/i},{w=0.1} but..."
+    n 1nslsssbl "I mean...{w=0.3} I don't need it so much {i}now{/i},{w=0.1} but..."
     n 1fsqss "You gotta admit,{w=0.1} [player] {w=0.1}-{w=0.1} I'm nothing if not resourceful!{w=0.5}{nw}"
     extend 1fchsm " Ahaha."
-    n 1fllss "I...{w=0.3} never really learned any tricks or anything though.{w=0.5}{nw}"
-    extend 1kscwr " I couldn't stand the thought of breaking it by accident {w=0.1}-{w=0.3}{nw}"
-    extend 1kllun " not after all that effort!"
-    n 1kcsaj "...Yeah,{w=0.1} yeah.{w=0.5}{nw}"
+
+    n 1fllss "I...{w=0.75}{nw}" 
+    extend 1nslsl " never really got super into tricks or anything though."
+    n 1fwdgsesh "D-{w=0.2}don't get me wrong!{w=1}{nw}"
+    extend 1fcsgsl " It isn't like I couldn't ace them!"
+    n 1fcstrlesi "I totally could!{w=1}{nw}"
+    extend 1kslcal " But..."
+    n 1knmemsbl "I don't think I could {i}stand{/i} the thought of breaking it by accident."
+    n 1kslunsbr "Not after all that effort."
+
+    n 1kcsaj "...Yeah,{w=0.2} yeah.{w=0.5}{nw}"
     extend 1fcspo " Not very {i}radical{/i} of me,{w=0.1} huh?"
-    n 1ullpo "But...{w=0.3} enough of that for now.{w=0.5}{nw}"
+    n 1ullpo "But...{w=0.5} enough of that for now.{w=0.5}{nw}"
     extend 1fnmsm " Besides,{w=0.1} [player]..."
     n 1fsqss "I can tell when you're getting...{w=0.3} {i}board{/i}."
     n 1fchsm "Ehehe.{w=0.5}{nw}"
@@ -5351,7 +5361,7 @@ init 5 python:
             prompt="Contributions",
             conditional=(
                 "not jn_activity.ACTIVITY_SYSTEM_ENABLED "
-                "or jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.coding)"
+                "or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.coding)"
             ),
             category=["Mod"],
             nat_says=True,
@@ -7169,7 +7179,7 @@ label talk_what_do_you_think_about_fanart:
     extend 1nslpo " Enough about people like {i}that{/i}."
     n 1nlrbo "I don't know if you do any fanart or anything,{w=0.1} [player]..."
 
-    if jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.artwork):
+    if jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.artwork):
         n 1fchsmleme "Probably~."
 
     n 1fnmpo "But you better not be letting people push you around over yours!"
