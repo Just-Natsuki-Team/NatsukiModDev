@@ -217,12 +217,15 @@ label talk_did_you_have_pets:
 
     else:
         n 1unmbs "What about you,{w=0.1} [player]?"
+        show natsuki 1fspgs at jn_center
         menu:
             n "Did you get a new pet?"
 
             "Yes, I did.":
-                n 1uspaw "Ooh...{w=0.3} you gotta tell me!{w=0.2} What did you get?"
-                show natsuki 1uspaw at jn_left
+                n 1uwdgsesu "!{w=0.5}{nw}"
+                n 1uspaw "Y-{w=0.2}you gotta tell me!{w=0.75}{nw}" 
+                extend 1fspgsedz " What did you get?{w=0.3} What did you get?"
+                show natsuki 1fspca at jn_left
                 call screen scrollable_choice_menu(pet_options)
 
             "No, I didn't.":
@@ -321,9 +324,9 @@ label talk_did_you_have_pets:
         n 1uspbs "I love their little tails,{w=0.1} and their little paws,{w=0.1} and their little whiskers,{w=0.2} and-"
         n "And!{w=0.2} And..."
         n 1uwdbol "..."
-        n 1uchbsl "A-{w=0.1}ahaha!{w=0.2} It would appear I got a little carried away..."
-        n 1uchgnf "..."
-        n 1fllgnf "You better take good care of yours for me,{w=0.1} alright?"
+        n 1uchbsl "A-{w=0.1}ahaha!{w=0.2} I'm...{w=0.5}" 
+        extend 1fslsslsbl " getting a little carried away."
+        n 1fcspof "Y-{w=0.2}you better take good care of yours for me,{w=0.1} alright?"
 
     elif _return == "horses":
         n 1uspaw "W-{w=0.1}wow!{w=0.2} You aren't just messing with me,{w=0.1} right?!"
@@ -333,13 +336,17 @@ label talk_did_you_have_pets:
         n 1unmlg "Oh -{w=0.2} and wear a helmet if you ride!"
 
     elif _return == "insects":
-        n 1twmsc "Ack-{nw}"
-        n 1kslup "Nnnnn..."
+        n 1twmsc "Ack-{w=0.5}{nw}"
+        n 1kslupsbl "Nnnnn..."
         n 1kwmsg "...I wish I could share your enthusiasm!{w=0.5}{nw}"
         extend 1kllss " Ahaha..."
+        n 1nslunsbl "..."
+        n 1nnmemleshsbl "I-{w=0.2}I mean,{w=0.75}{nw}"
+        extend 1fcstrlsbr " it's cool that's something you're into!{w=0.75}{nw}"
+        extend 1ksrcalsbr " But..."
         n 1ksqun "I don't think I could stomach creepy crawlies myself."
-        n 1ksrun "You've certainly got an...{w=0.3} interesting taste,{w=0.1} [player]."
-        n 1kwmss "But I'm sure you take great care of yours!"
+        n 1ksrunsbr "You've certainly got an...{w=0.3} interesting taste,{w=0.1} [player]."
+        n 1fchsssbr "...Though I'm sure you take great care of yours!"
 
     elif _return == "lizards":
         n 1uchgn "Ooh!{w=0.2} Lizards,{w=0.1} huh?"
@@ -1917,15 +1924,15 @@ label talk_drinking_alcohol:
     n 1tnmbg "Surprised?{w=0.5}{nw}"
     extend 1fcsss " I know,{w=0.1} right?"
     n 1tllss "I mean...{w=0.3} it was just completely out of the blue!"
-    n 1uchbs "She just produced it from her bag like it was a book or something."
+    n 1uchbs "She just slipped it out from her bag like it was a book or something."
     n 1unmbo "It wasn't even just some random supermarket stuff either...{w=0.5}{nw}"
     extend 1uwdaj " it looked super expensive too!"
     n 1kllss "Honestly,{w=0.1} I couldn't help myself.{w=0.2} I just burst into laughter."
-    n 1ullun "I think it was just how non-chalant it all was,{w=0.1} really."
+    n 1ullun "I think it was just how non-chalant she was being about it all,{w=0.1} really."
     n 1nnmsl "Monika didn't look impressed,{w=0.1} though..."
     n 1klrsl "And Sayori...{w=0.3} she just got really upset.{w=0.5}{nw}"
     extend 1klrpu " She was shouting and everything!"
-    n 1kcspu "It looked like Yuri put a lot of thought into picking something out,{w=0.1} but she just got yelled at for it..."
+    n 1kcspu "It looked like Yuri put a lot of thought into picking something out,{w=0.1} but she was just given a hard time over for it..."
     n 1kcssr "I mean...{w=0.5}{nw}"
     extend 1kllsr " I know we shouldn't have had it in there at all,{w=0.1} and Yuri should have known better."
     n 1fslsr "But she didn't deserve all of...{w=0.5}{nw}"
@@ -4502,9 +4509,9 @@ label talk_collectibles:
     elif Natsuki.isNormal(higher=True):
         n 1tnmpueqm "Huh?{w=0.2} You mean like figurines and all that stuff?"
         n 1tlrpu "Well...{w=0.3} no,{w=0.1} [player].{w=0.2} Not really."
-        n 1knmsf "I couldn't justify spending so much on a hobby like that!"
-        n 1flrbo "Especially not when I had other things to worry about spending my money on first,{w=0.1} you know."
-        n 1unmaj "But anyway,{w=0.1} putting all that aside..."
+        n 1knmsf "I couldn't justify spending so much just on hobbies like that!"
+        n 1flrbo "...Especially not when I had {i}other{/i} things to worry about spending my money on first."
+        n 1unmaj "B-{w=0.2}but anyway,{w=0.1} putting all that aside..."
 
     elif Natsuki.isDistressed(higher=True):
         n 1fsqsfsbl "No,{w=0.1} [player]."
@@ -5013,7 +5020,7 @@ label talk_vtubers:
         n 1fsqupltse "Throwing money at a stranger hiding behind a cutesy picture doesn't make you any less of a {b}jerk{/b}."
         return
 
-    n 1nchsm "It's definitely a cool idea!{w=0.2} It lets people share their passions and experiences with others behind a completely clean persona..."
+    n 1nchsm "It's definitely a cool idea!{w=0.2} It lets people share their passions and experiences with others behind a new persona..."
     n 1fllpo "Without having to worry about baggage following them into their personal lives,{w=0.1} or people being creeps,{w=0.1} or stuff like that."
     n 1uwdem "A lot of them even make full-blown careers out of it: merchandise,{w=0.1} song releases and everything -{w=0.1} just like idols!{w=0.2} It's crazy!"
     n 1tllem "That being said..."
@@ -5167,9 +5174,9 @@ label talk_sports:
 
     n 1nnmaj "I try to keep up how I can.{w=0.2} I can't do laps or anything,{w=0.5}{nw}"
     extend 1fcsbg " but I can easily get some stretches and jumping jacks in!"
-    n 1ullpu "Of course school was always a lot more varied,{w=0.1} but...{w=0.5}{nw}"
-    extend 1tllsr " I always kinda struggled to keep up."
-    n 1tllss "I guess...{w=0.3} I just don't have much stamina?"
+    n 1ullpu "Of course school was always a lot more varied with activities,{w=0.2} but...{w=0.5}{nw}"
+    n 1tllsr "I always kinda struggled to keep up,{w=0.2} I guess."
+    n 1nslsssbr "...Maybe I just don't have much stamina."
 
     # Check to see if the player and Natsuki have discussed how she skipped lunches to save money
     $ already_discussed_skateboarding = get_topic("talk_skateboarding").shown_count > 0
@@ -5177,7 +5184,7 @@ label talk_sports:
         n 1nslpo "Probably didn't help myself saving for that skateboard..."
 
     n 1ullaj "Well,{w=0.1} whatever.{w=0.5}{nw}"
-    extend 1nnmbo " I wasn't {i}really{/i} that into it anyway."
+    extend 1nnmbo " I wasn't {i}really{/i} that into sports anyway."
     n 1nlrca "..."
     n 1unmbs "Oh!{w=0.2} Oh!{w=0.2} But you know who was?{w=0.5}{nw}"
     extend 1fsqbg " I bet you do,{w=0.1} huh?{w=0.5}{nw}"
