@@ -6546,11 +6546,12 @@ init 5 python:
     )
 
 label talk_thoughts_on_tea:
-    $ already_discussed_tea_thoughts = persistent.jn_player_tea_coffee_preference is not None
+    $ already_discussed_thoughts_on_tea = get_topic("talk_thoughts_on_tea").shown_count > 0
+    $ player_tea_coffee_preference_known = persistent.jn_player_tea_coffee_preference is not None
 
     if Natsuki.isNormal(higher=True):
-        if already_discussed_tea_thoughts:
-            n 1fcsaj "A-{w=0.1}actually,{w=0.1} hold up a second...{w=1.5}{nw}"
+        if already_discussed_thoughts_on_tea:
+            n 1fcsaj "A-{w=0.1}actually,{w=0.2} hold up a second...{w=1}{nw}"
             extend 1tslpu " didn't we already talk about this?"
 
         else:
@@ -6558,9 +6559,9 @@ label talk_thoughts_on_tea:
             n 1fchgn "...Are you {i}sure{/i} you know who you're talking to?{w=0.5}{nw}"
             extend 1fchbg " I literally never make it myself!"
             n 1ullss "I mean,{w=0.5}{nw}"
-            extend 1unmbo " I had it a few times in the club,{w=0.1} sure."
+            extend 1unmbo " I had it a few times in the club,{w=0.2} sure."
             n 1nlrpu "Yuri would prepare it for us all sometimes."
-            n 1tsrss "But I never asked for it or anything!"
+            n 1tsrss "But it was never like I asked for it or anything!"
 
     elif Natsuki.isDistressed(higher=True):
         n 1fcsem "..."
@@ -6568,7 +6569,7 @@ label talk_thoughts_on_tea:
         n 1fsqbo "I don't really care for it."
         n 1fllpu "...I mean,{w=0.5}{nw}"
         extend 1nllsf " I {i}guess{/i} I'd drink it if it was offered."
-        n 1nslsl "...From most people,{w=0.1} anyway."
+        n 1nslsl "...From most people,{w=0.2} anyway."
         n 1fsqbo "Somehow I doubt that'd be the case for {i}you{/i}."
 
         return
@@ -6576,85 +6577,92 @@ label talk_thoughts_on_tea:
     else:
         n 1fcsem "No,{w=2}{nw}"
         extend 1fsqan " and I'm certainly not drinking any of {i}yours{/i}."
-        n 1fslemltsb "Not like it'd be {i}just{/i} tea anyway,{w=0.1} knowing a jerk like {i}you{/i}."
+        n 1fslemltsb "Not like it'd be {i}just{/i} tea anyway,{w=0.2} knowing a jerk like {i}you{/i}."
 
         return
 
-    if already_discussed_tea_thoughts:
-        n 1ullaj "Well,{w=0.1} whatever.{w=0.5}{nw}"
+    if already_discussed_thoughts_on_tea:
+        n 1ullaj "Well,{w=0.2} anyway.{w=0.5}{nw}"
         extend 1unmbo " I wouldn't say my opinion has changed much."
-        n 1nlraj "I get why people are into it,{w=0.1} though."
+        n 1nlraj "I get why people are into it,{w=0.2} though."
 
     else:
         n 1fllbo "..."
-        n 1fcseml "T-{w=0.1}that's not to mean I think it sucks,{w=0.1} or something like that!"
-        n 1nlrbo "I just have my own tastes."
+        n 1fcseml "T-{w=0.2}that's not to mean I think it sucks,{w=0.2} or something like that!"
 
         if get_topic("talk_favourite_drink").shown_count > 0:
+            n 1nlrbo "I just have my own tastes.{w=0.75}{nw}"
             extend 1uspbg " Like hot chocolate!"
+
+        else:
+            n 1nlrbo "I just have my own tastes."
 
         n 1ullaj "But...{w=0.5}{nw}"
         extend 1nllbo " I guess I can see why people are into it so much."
 
-    n 1tnmca "Tea contains caffeine,{w=0.1} right?{w=0.5}{nw}"
-    extend 1tlrss " Not as much as coffee or anything,{w=0.1} but an edge is still an edge,{w=0.1} I guess."
+    n 1tnmca "Tea contains caffeine,{w=0.2} right?{w=0.5}{nw}"
+    extend 1tlrss " Not as much as coffee or anything,{w=0.2} but an edge is still an edge,{w=0.2} I guess."
     n 1unmaj "It comes in a whole bunch of flavors too!{w=0.5}{nw}"
     extend 1unmgs " I was actually kinda surprised at the variety!"
     n 1ullss "You've got your regular old black tea{w=0.3}{nw}"
     extend 1fslss " -{w=0.1} obviously -{w=0.3}{nw}" 
-    extend 1ulraj " but you've got green tea,{w=0.1} herbal tea..."
+    extend 1ulraj " but you've got green tea,{w=0.2} herbal tea..."
     n 1uspgs "Even flavored ones like cinnamon and peppermint!"
     n 1nslss "We only ever had oolong tea in the clubroom though,{w=0.5}{nw}"
     extend 1tnmss " so who knows?"
     n 1ulrbo "Maybe I'd warm up to it if I tried some that sounded good."
 
     if get_topic("talk_sleeping_well").shown_count > 0:
-        n 1unmaj "Apparently some tea even helps you sleep!{w=1.5}{nw}"
-        extend 1nsrss " ...Maybe I should've mentioned that earlier,{w=0.1} huh?"
+        n 1unmaj "Apparently some tea even helps you sleep!{w=0.75}{nw}"
+        extend 1nsrss " ...Maybe I should've mentioned that in my sleeping tips.{w=0.5}{nw}"
+        extend 1fchblesd " Oops~!"
 
     n 1ulraj "But...{w=0.5}{nw}"
     extend 1nslss " I've gone on enough." 
-    n 1unmbo "What about you,{w=0.1} [player]?"
-    $ menu_opening = "Drinking something else now?" if already_discussed_tea_thoughts else "What's your preference?"
+    n 1unmbo "What about you,{w=0.2} [player]?"
+    show natsuki 1tsqss
+    $ menu_opening = "Drinking something else now?" if player_tea_coffee_preference_known else "What's your pick?"
 
     menu:
         n "[menu_opening]"
 
         "I prefer tea.":
-            if already_discussed_tea_thoughts:
+            if player_tea_coffee_preference_known:
                 if persistent.jn_player_tea_coffee_preference == "tea":
                     n 1nnmss "Well,{w=0.5}{nw}"
-                    extend 1tnmss " some things never change,{w=0.1} huh?"
+                    extend 1tnmss " some things never change,{w=0.2} huh?"
                     n 1fchsm "Ehehe."
 
                 else:
-                    n 1tnmsm "A tea drinker now,{w=0.1} huh?{w=0.5}{nw}"
+                    n 1tnmsm "A tea drinker now,{w=0.2} huh?{w=0.5}{nw}"
                     extend 1fchsm " Fair enough!"
 
             else:
                 n 1unmaj "Tea?{w=0.5}{nw}"
                 extend 1nllpu " Hmm..."
-                n 1unmbo "Yeah,{w=0.1} that's about what I expected."
+                n 1unmbo "Yeah,{w=0.2} that's about what I expected."
                 n 1nlrbo "..."
                 n 1tnmbg "What?"
                 n 1tsqbg "Not like you raised a fuss about it earlier,{w=0.5}{nw}"
                 extend 1tsqsm " right?"
                 n 1kslsm "..."
                 n 1nslss "Though...{w=1.5}{nw}"
-                extend 1uslsr " not like you had much of a choice in it back then,{w=0.1} huh?"
-            
+                extend 1uslsr " not like you had much of a choice in it back then,{w=0.2} right?"
+
             $ persistent.jn_player_tea_coffee_preference = "tea"
 
         "I prefer coffee.":
-            if already_discussed_tea_thoughts:
+            if player_tea_coffee_preference_known:
                 if persistent.jn_player_tea_coffee_preference == "coffee":
                     n 1nnmss "Well,{w=0.5}{nw}"
-                    extend 1tnmss " some things never change,{w=0.1} huh?"
+                    extend 1tnmss " some things never change,{w=0.2} huh?"
                     n 1fchsm "Ehehe."
 
                 else:
-                    n 1tnmsm "A coffee drinker now,{w=0.1} huh?{w=0.5}{nw}"
-                    extend 1fchsm " Fair enough!"
+                    n 1tsqct "Oho?{w=0.5}{nw}"
+                    extend 1tsqbg " Coffee now,{w=0.2} huh?"
+                    n 1fsrsm "Wow,{w=0.2} [player]."
+                    n 1fchgnelg "Since when did you get so {i}bitter{/i}?"
 
             else:
                 n 1unmaj "Oh?{w=1.5}{nw}"
@@ -6665,42 +6673,42 @@ label talk_thoughts_on_tea:
                 extend 1usqbg " huh?"
                 n 1uchgn "..."
                 n 1fchbg "Oh,{w=0.5}{nw}" 
-                extend 1fllbg " come on,{w=0.1} [player]!{w=0.2} Yeesh."
+                extend 1fllbg " come on,{w=0.2} [player]!{w=0.3} Yeesh."
                 n 1fsqsm "No need to be all {w=0.3}{i}bitter{/i}{w=0.3} about it."
                 n 1fchsm "..."
-                n 1kchbg "Okay,{w=0.1} okay!{w=0.5} I'm done!"
+                n 1kchbg "Okay,{w=0.2} okay!{w=0.5} I'm done!"
                 n 1fsqsg "...For now."
 
             $ persistent.jn_player_tea_coffee_preference = "coffee"
 
         "I like both!":
-            if already_discussed_tea_thoughts:
+            if player_tea_coffee_preference_known:
                 if persistent.jn_player_tea_coffee_preference == "both":
                     n 1nnmss "Well,{w=0.5}{nw}"
-                    extend 1tnmss " some things never change,{w=0.1} huh?"
+                    extend 1tnmss " some things never change,{w=0.2} huh?"
                     n 1fchsm "Ehehe."
 
                 else:
                     n 1tnmaj "Oh?{w=0.5}{nw}"
                     extend 1tnmss " You like {i}both{/i} now?"
-                    n 1tsqbg "...Are you {i}sure{/i} you aren't just a caffeine junkie,{w=0.1} [player]?{w=0.5}{nw}"
+                    n 1tsqbg "...Are you {i}sure{/i} you aren't just a caffeine junkie,{w=0.2} [player]?{w=0.5}{nw}"
                     extend 1nchgn " Ehehe."
 
             else:
-                n 1tslaj "...Huh.{w=1}{nw}"
+                n 1tslajeqm "...Huh.{w=0.75}{nw}"
                 extend 1tnmss " Really?"
-                n 1nsrss "That's...{w=0.3} kinda weird,{w=0.1} actually."
+                n 1nsrss "That's...{w=0.3} kinda weird,{w=0.2} actually."
                 n 1fchbg "Most people like at least {i}one{/i} of the two more!"
-                n 1fsqsg "Are you {i}sure{/i} you aren't just a caffeine junkie,{w=0.1} [player]?{w=0.5}{nw}"
+                n 1fsqsg "Are you {i}sure{/i} you aren't just a caffeine junkie,{w=0.2} [player]?{w=0.5}{nw}"
 
             $ persistent.jn_player_tea_coffee_preference = "both"
 
         "I don't like tea or coffee.":
-            if already_discussed_tea_thoughts:
+            if player_tea_coffee_preference_known:
                 if persistent.jn_player_tea_coffee_preference == "neither":
-                    n 1tsqpu "Still not a fan,{w=0.1} huh?{w=0.5}{nw}"
+                    n 1tsqpu "Still not a fan,{w=0.2} huh?{w=0.5}{nw}"
                     extend 1fnmaj " You need to keep trying new stuff!"
-                    n 1fsqpo "Where's your sense of adventure,{w=0.1} [player]?{w=0.5}{nw}"
+                    n 1fsqpo "Where's your sense of adventure,{w=0.2} [player]?{w=0.5}{nw}"
                     extend 1fchts " Ehehe."
 
                 else:
@@ -6710,24 +6718,25 @@ label talk_thoughts_on_tea:
                     extend 1tsrpu " Huh."
 
             else:
-                n 1ullaj "That's...{w=1.5}{nw}"
-                extend 1nllbo " kinda surprising,{w=0.1} actually."
-                n 1fsrbo "Most people at {i}least{/i} like one or the other..."
-                n 1fsqpo "You aren't just pulling my leg,{w=0.5}{nw}" 
+                n 1ullaj "That's...{w=0.75}{nw}"
+                extend 1tllbo " kinda surprising,{w=0.2} actually."
+                n 1fsrpu "Most people at {i}least{/i} like one or the other..."
+                n 1fsqpo "You aren't just pulling my leg,{w=0.3}{nw}" 
                 extend 1ksqpo " are you?"
-                n 1fslpol "I was being serious,{w=0.1} you know..."
+                n 1fslpol "I was being serious..."
 
             $ persistent.jn_player_tea_coffee_preference = "neither"
 
-    n 1nllss "Well,{w=0.1} whatever.{w=0.5}{nw}"
-    extend 1fchbg " Not like hot drinks are the be-all and end-all anyway,{w=0.1} huh?"
-    n 1fllss "But man...{w=0.5}{nw}"
-    extend 1flrun " I'm actually pretty parched after all that talking."
+    n 1nllss "Well,{w=0.2} whatever.{w=0.5}{nw}"
+    extend 1fchbg " Not like hot drinks are the be-all and end-all anyway."
+    n 1fllss "But that being said...{w=0.3}{nw}"
+    extend 1nsremsbl " I'm actually pretty parched after all that talking."
     n 1fsrpo "..."
-    n 1unmss "Hey,{w=0.1} [player]...{w=1.5}{nw}"
+    n 1unmss "Hey,{w=0.2} [player]...{w=1}{nw}"
     extend 1usqsm " do me a favor?"
-    n 1fchbg "...Stick the kettle on,{w=0.1} would you?"
-    n 1uchgn "Ehehe."
+    n 1fsqsg "..."
+    n 1fchbg "...Stick the kettle on,{w=0.2} would you?"
+    n 1uchgnelg "Ahaha."
 
     return
 
@@ -6749,14 +6758,14 @@ init 5 python:
 
 label talk_how_to_make_friends:
     n 1tnmpu "Huh?{w=1}{nw}"
-    extend 1tnmsr " You wanna know how to make {i}friends{/i}?"
+    extend 1tnmsleqm " You wanna know how to make {i}friends{/i}?"
     n 1tllbo "..."
     n 1ncsaj "Well.{w=1}{nw}"
     extend 1nlraj " I gotta say,{w=0.1} [player]."
-    n 1fchgn "That's pretty up there in the weirdest questions you've asked me so far!"
+    n 1fchgnelg "That's pretty up there in the weirdest questions you've asked me so far!"
     n 1fllss "But...{w=1}{nw}" 
     extend 1ullaj " in all seriousness?"
-    n 1tnmsf "{w=0.5}...Why?{w=1.5}{nw}"
+    n 1tnmsf "{w=0.3}...Why?{w=1}{nw}"
     extend 1nlrss " Like why're you asking {i}me{/i},{w=0.3} I mean."
 
     if Natsuki.isLove(higher=True):
@@ -6765,7 +6774,7 @@ label talk_how_to_make_friends:
 
     elif Natsuki.isEnamored(higher=True):
         n 1ullaj "It's just...{w=1}{nw}"
-        extend 1tnmssl " I {i}seriously{/i} doubt it's something you'd struggle with,{w=0.5}{nw}" 
+        extend 1tnmssl " I {i}seriously{/i} doubt it's something {i}you'd{/i} struggle with,{w=0.5}{nw}" 
         extend 1nsrssl " of all people."
 
     elif Natsuki.isAffectionate(higher=True):
@@ -6778,7 +6787,7 @@ label talk_how_to_make_friends:
     n 1ulraj "Well,{w=0.5}{nw}"
     extend 1nlrss " anyway..."
     n 1nchbs "Sure!{w=1}{nw}"
-    extend 1fchbg " I can show you the ropes!"
+    extend 1fwlbgedz " I can show you the ropes!"
     n 1fnmaj "Right!{w=0.5}{nw}"
     extend 1ncsaj " So..."
     n 1unmbo "I think the most important thing is to have {i}something{/i} in common.{w=1}{nw}"
@@ -6815,7 +6824,7 @@ label talk_how_to_make_friends:
     extend 1knmsl " to fizzle out because nobody is making an effort."
     n 1uskem "B-{w=0.1}but that's not to say you gotta go all out all the time though!"
     n 1fcsaj "It's all about striking a balance.{w=1}{nw}"
-    extend 1fchbg " People need downtime too!"
+    extend 1fchbgsbl " People need downtime too!"
     n 1fslsr "{w=0.3}...And you shouldn't be the one putting in {i}everything{/i} to make it work."
     n 1fnmpu "Remember {w=0.1}-{w=0.1} a friendship has two sides."
     extend 1fchsm " You {i}know{/i} you've got a winner if they're doing their part too!"
@@ -6830,7 +6839,7 @@ label talk_how_to_make_friends:
     n 1fnmpu "I've {i}been{/i} there.{w=0.5}{nw}"
     extend 1kllsf " And it took a good friend to help me realize that."
     n 1ncsss "Heh."
-    n 1ullpu "But...{w=1.5}{nw}"
+    n 1ullpu "But...{w=1}{nw}"
     extend 1fchbg " yeah!"
     n 1tnmsm "I wouldn't get all stressed out about it,{w=0.1} [player].{w=1}{nw}"
     extend 1fcssm " Friendships are {i}formed{/i},{w=0.1} not forced."
