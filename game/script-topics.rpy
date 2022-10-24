@@ -7004,7 +7004,7 @@ label talk_newspapers_and_bias:
     n 1tlrpu "But...{w=0.5}{nw}"
     extend 1tnmca " talking of newspapers..."
     n 1fnmca "It's actually super important to read into them properly,{w=0.1} you know."
-    n 1knmaj "What?{w=0.5}{nw}"
+    n 1knmajsbl "What?{w=0.5}{nw}"
     extend 1fsqpo " I'm being serious!"
     n 1fllss "Newspapers really {i}aren't{/i} just news anymore,{w=0.1} [player]...{w=1}{nw}"
     extend 1fcsaj " and they haven't been for a long time!"
@@ -7022,8 +7022,9 @@ label talk_newspapers_and_bias:
     extend 1fchgn " Of course not!{w=1}{nw}"
     extend 1fsqss " They'd fight for it!"
     n 1ulraj "Maybe they'd run extra articles to advertise it,{w=0.5}{nw}"
-    extend 1fsqsm " and {i}only{/i} interview people who supported the paper!"
-    n 1tlrss "Or just {i}happen{/i} to forget to mention all the funds they got last semester?"
+    extend 1fsqsmeme " and {i}only{/i} interview people who supported the paper!"
+    n 1tlrss "Or just {i}happen{/i} to forget to mention all the funds they got last semester?{w=1}{nw}"
+    extend 1kchblesd " How {i}convenient{/i}~!"
     n 1fcsbg "That's just one example,{w=0.1} obviously."
     n 1fnmaj "But the same thinking applies to any kind of journalism!{w=1}{nw}"
     extend 1nllca " Papers,{w=0.1} online articles,{w=0.5}{nw}" 
@@ -7034,7 +7035,8 @@ label talk_newspapers_and_bias:
     n 1fcssm "Ehehe.{w=0.5}{nw}"
     extend 1fsqsm " I think it's pretty obvious."
     n 1fllss "I know I call you it a bunch already,{w=0.1} [player]..."
-    n 1fsqsm "But only {i}real{/i} dummies believe {i}everything{/i} they read!"
+    n 1fcsss "But take it from me."
+    n 1fsqsm "Only {i}real{/i} dummies believe {i}everything{/i} they read!"
 
     return
 
