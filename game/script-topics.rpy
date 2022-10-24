@@ -6868,72 +6868,107 @@ init 5 python:
     )
 
 label talk_impressions_of_the_other_girls:
-    $ has_discussed_other_girls = get_topic("talk_realizations_other_girls").shown_count > 0
+    $ already_discussed_realizations_of_others = get_topic("talk_realizations_other_girls").shown_count > 0
+    $ already_discussed_impressions_of_others = get_topic("talk_impressions_of_the_other_girls").shown_count > 0
 
     if Natsuki.isAffectionate(higher=True):
-        n 1fcsem "..."
-        n 1fcssr "...No,{w=0.1} [player].{w=1}{nw}"
+        if already_discussed_realizations_of_others:
+            n 1fcsem "Oh,{w=0.75}{nw}"
+            extend 1kslemesisbl " come {i}on{/i}..."
+            n 1knmemsbl "This again?{w=0.75}{nw}"
+            extend 1ksqemsbr " Seriously?"
+
+        else:
+            n 1fcsemesi "...{w=1}{nw}"
+
+        n 1fcssrsbr "...No,{w=0.1} [player].{w=1}{nw}"
         extend 1kcssr " I can't."
         n 1fllun "..."
-        n 1fcsem "...Okay,{w=1}{nw}" 
-        extend 1nnmsl " look."
+        n 1fcsemsbl "...Okay,{w=1}{nw}" 
+        extend 1fnmsll " look."
+        n 1fcspul "..."
         n 1fllsl "It's not that I {i}couldn't{/i} do impressions of them.{w=1}{nw}"
         extend 1kllsr " I knew them well enough."
-        n 1kllpu "But...{w=1.5}{nw}" 
-        extend 1knmpu " that's exactly why I don't {i}want{/i} to,{w=0.1} [player]."
+        n 1knmpu "...But that's exactly why I don't {i}want{/i} to,{w=0.1} [player]."
         n 1klrsf "Knowing how they felt,{w=0.5} what they thought..."
 
-        if has_discussed_other_girls:
-            n 1ksrpu "...How much I {i}miss{/i} them..."
+        if already_discussed_realizations_of_others:
+            n 1ksrputsb "...How much I {i}miss{/i} them..."
+        
+        else:
+            n 1ksrputsb "...How much they {i}hurt{/i}..."
 
-        n 1knmem "What kind of person would make jokes out of {i}that{/i}?"
-        n 1klrsl "So...{w=1}{nw}"
+        n 1knmemtsc "What kind of a sick jerk would I be to make jokes out of {i}that{/i}?"
+        n 1fcsunltsa "..."
+        n 1kcssl "So...{w=1}{nw}"
         extend 1nnmsf " I'm sorry,{w=0.1} [player].{w=1.5}{nw}"
-        extend 1nslsf " But it's a no."
-        n 1kcspu "...And probably always will be."
+        extend 1fslsf " But it's a no."
+        n 1fcsunl "...And it always {i}will{/i} be."
 
     elif Natsuki.isNormal(higher=True):
-        n 1knmpu "..."
-        n 1knmem "...Why on {i}Earth{/i} would I want do {i}that{/i}?"
+        if already_discussed_realizations_of_others:
+            n 1knmaw "[player]...{w=0.5}{nw}"
+            extend 1knmwr " really?"
+            n 1kslemlsbr "This {w=0.2}{i}again{/i}?"
+
+        else:
+            n 1knmpu "..."
+
+        n 1knmemtsc "...Why on {i}Earth{/i} would I want do {i}that{/i}?"
         n 1kllpu "A-{w=0.3}and more importantly,{w=1}{nw}"
         extend 1fcsem " why would you even think to {i}ask{/i} me that,{w=0.1} [player]?"
         n 1ksqem "Do you have any {i}idea{/i} how much I think about them,{w=0.1} still?"
 
-        if has_discussed_other_girls:
+        if already_discussed_realizations_of_others:
             n 1fcseml "I even {i}told{/i} you how much I miss them,{w=0.1} [player]!"
 
-        n 1kcspu "..."
+        n 1kcsunltsa "..."
         n 1ncspu "...Alright,{w=0.5}{nw}" 
-        extend 1ncssr " look."
+        extend 1fcsun " look."
         n 1fcsem "I...{w=1}{nw}"
-        extend 1fcssr " get...{w=1}" 
+        extend 1fcssr " get...{w=1}{nw}" 
         extend 1fcsem " that you were just trying to have fun."
+
+        if already_discussed_realizations_of_others:
+            n 1fsrun "...I {i}hope{/i},{w=0.2} at least."
+
         n 1fsqsr "But I am {i}not{/i} making jokes about my friends."
         n 1fcssr "Sorry,{w=0.1} [player]."
         n 1fslunl "But some things are just off-limits."
 
+        if already_discussed_realizations_of_others:
+            n 1fsqunl "And you {i}better{/i} respect that sooner rather than later."
+
     elif Natsuki.isDistressed(higher=True):
-        n 1fskem "...E-{w=0.3}excuse me?!"
-        n 1fsqan "Are you {i}seriously{/i} asking me to make fun of my {i}friends{/i}?{w=1}{nw}"
-        extend 1fsqwr " Knowing {i}{cps=\7.5}full well{/cps}{/i} what happened to them?!"
+        n 1fskeml "...E-{w=0.3}excuse me?!"
+        n 1fsqanltsb "Are you {i}seriously{/i} asking me to make fun of my {i}friends{/i}?"
+        n 1fsqwrltsbean "Knowing {w=0.2}{i}full {w=0.2}well{/i}{w=0.2} what happened to them?!"
 
-        if has_discussed_other_girls:
-            extend 1fcsfu " Knowing how much I {i}miss{/i} them?!"
+        if already_discussed_realizations_of_others:
+            extend 1fcsfultsa " Knowing how much I {i}miss{/i} them?!"
 
-        n 1fcspu "..."
-        n 1fsqem "Your sense of humour {i}{cps=\7.5}sucks{/cps}{/i},{w=0.1} [player].{w=1}{nw}"
-        extend 1fcsan " Do {b}not{/b} try my patience again.{w=1.5}{nw}"
-        extend 1fsqan " Jerk."
+        n 1fcsunl "..."
+        n 1fsqem "Your sense of humour {i}{w=0.2}blows{w=0.2}{/i},{w=0.2} [player]."
 
-        $ Natsuki.calculatedAffinityLoss(2)
+        if already_discussed_realizations_of_others:
+            n 1fsqanl "Now knock.{w=0.3}{nw}"
+            extend 1fcsanl " It.{w=0.3}{nw}"
+            extend 1fsqful " {i}Off{/i}."
+            $ Natsuki.percentageAffinityLoss(5)
+
+        else:
+            n 1fcsan "Do {b}not{/b} try my patience again.{w=1.5}{nw}"
+            extend 1fsqan " Jerk."
+            $ Natsuki.calculatedAffinityLoss(2)
 
     else:
-        n 1fnmantsc "...What is {i}{cps=\7.5}wrong{/cps}{/i} with you?{w=1.5}{nw}"
-        extend 1fnmscltsf " Like,{w=0.1} what the {i}hell{/i} is wrong with your {i}head{/i}?!"
-        n 1fcsanltsd "I am {b}NOT{/b} doing that,{w=0.1} let alone for a piece of work like{w=0.5}{nw}"
+        n 1fnmantsc "...What is {i}{w=0.3}wrong{w=0.3}{/i} with you?{w=1.5}{nw}"
+        extend 1fnmscltsf " Like,{w=0.1} what the {i}hell{/i} is wrong with your {w=0.2}{i}head{/i}?!"
+        n 1fcsanltsd "I am {b}NOT{/b} doing that,{w=0.3}{nw}" 
+        extend 1fcsfultsd " let alone for a piece of work like{w=0.25}{nw}"
         extend 1fskwrftdc " {i}you{/i}!"
 
-        $ Natsuki.calculatedAffinityLoss(1)
+        $ Natsuki.calculatedAffinityLoss(3)
 
     return
 
