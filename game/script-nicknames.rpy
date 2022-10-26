@@ -132,7 +132,9 @@ init 0 python in jn_nicknames:
         "^(salvato|dansalvato)$",
         "^metaverse$",
         "(playboy|playgirl)",
-        "nerd"
+        "^nerd$",
+        "^trash$",
+        "^junk$",
     }
 
     # Natsuki finds these nicknames funny

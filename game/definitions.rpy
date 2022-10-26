@@ -1198,7 +1198,7 @@ init -990 python in jn_globals:
 
     _INSULT_LIST = {
         "arrogant",
-        "beast",
+        "^(beast|beastly)$",
         "bonebag",
         "bonehead",
         "brat|bratty",
@@ -1224,6 +1224,7 @@ init -990 python in jn_globals:
         "(^fat$|fatso|fatty|fattie)",
         "(flat|flatso|flatty|flattie)",
         "gilf",
+        "^(ghast|ghastly)$"
         "gremlin",
         "gross",
         "halfling|halfpint|half-pint",
@@ -1248,7 +1249,7 @@ init -990 python in jn_globals:
         "nasty",
         "neckcrack|neck-crack",
         "necksnap|neck-snap",
-        "nimrod",
+        "^nimrod$",
         "nuisance",
         "^pest$",
         "pathetic",
@@ -1276,7 +1277,8 @@ init -990 python in jn_globals:
         "^twit$",
         "^useless$",
         "^vendingmachine$",
-        "vomit",
+        "^(virgin|turbovirgin)$",
+        "^vomit$",
         "^washboard$",
         "^witch$",
         "^wretch$",

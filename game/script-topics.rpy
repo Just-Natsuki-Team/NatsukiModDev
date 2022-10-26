@@ -7490,7 +7490,10 @@ init 5 python:
 
 label talk_player_change_name:
     # The player hasn't been nicknamed before, or is rocking their normal name
-    if persistent._jn_nicknames_player_allowed and persistent._jn_nicknames_player_current_nickname == persistent.playername:
+    if (
+        persistent._jn_nicknames_player_allowed 
+        and persistent._jn_nicknames_player_current_nickname == persistent.playername
+    ):
         n 1unmaj "Huh?{w=0.5}{nw}"
         extend 1tnmbo " You want me to call you something else?"
         n 1ulraj "...I mean,{w=1}{nw}"
@@ -7597,11 +7600,20 @@ label talk_player_change_name:
     else:
         $ neutral_nickname_permitted = False
 
+        # Player going with what they're already called
         if nickname.lower() == player.lower():
             n 1tslsssbl "..."
             n 1tnmsssbl "...Business as usual then,{w=0.2} [player]?{w=0.75}{nw}"
             extend 1fsqsm " Ehehe."
             n 1fchbl "Well,{w=0.2} whatever you say!"
+
+        # Player going back to the name they gave when starting JN originally
+        elif nickname.lower() == persistent.playername.lower():
+            n 1tsgct "Oho?{w=0.75}{nw}"
+            extend 1tsqsg " Finally getting bored of all the nicknames,{w=0.1} are we?"
+            n 1fchsm "Ehehe."
+            n 1fchbgeme "Right-o!{w=0.75}{nw}"
+            extend 1fwlbl " Good old [nickname] it is!"
 
         # A player might actually be named Natsuki, so we don't block it
         elif nickname.lower() == n_name.lower() and n_name.lower() != "natsuki":
@@ -7620,7 +7632,7 @@ label talk_player_change_name:
 
             if nickname.lower() == "natsuki":
                 n 1nslsssbl "...Heh."
-                n 1nsldvsbl "Natsuki."
+                n 1nsldvsbl "{i}Natsuki{/i}."
 
             $ neutral_nickname_permitted = True
 
@@ -7637,7 +7649,7 @@ label talk_player_change_name:
         extend 1tnmem " who woke {i}you{/i} up on the wrong side of the bed this morning?"
         n 1fllsl "..."
         n 1fcsslesi "...Look,{w=0.1} [player]."
-        n 1fnmsl " I get it.{w=0.75}{nw}"
+        n 1fnmsl "I get it.{w=0.75}{nw}"
         extend 1flrbo " Maybe you thought you were being funny or something."
         n 1fnmfr "Just knock it off,{w=0.1} alright?{w=1}{nw}"
         extend 1tsqpu " Because honestly?"
@@ -7665,7 +7677,7 @@ label talk_player_change_name:
 
     elif persistent._jn_nicknames_player_bad_given_total == 3:
         n 1fcsful "You are just {i}unreal{/i},{w=0.1} [player]."
-        n 1fsqscean  "{i}How many times{/i} do I have to give you crap over this to get you to wise up?!"
+        n 1fsqscean "{i}How many times{/i} do I have to give you crap over this to get you to wise up?!"
         n 1fsqwrean "Are you {i}trying{/i} to earn a smack?"
         n 1fcsfuesi "..."
         n 1fcsan "Well,{w=0.3} you know what?{w=1}{nw}"
