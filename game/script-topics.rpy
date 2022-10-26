@@ -7274,7 +7274,7 @@ label talk_how_to_interview_properly:
     extend 1unmaj " Like,{w=0.1} at all?"
     n 1fslss "Because if there's one thing I've heard...{w=1}{nw}"
     extend 1fnmpo " it's how anxious everyone seems to get over interviewing!"
-    n 1ksqpo "I'm being serious!{w=0.5}{nw}"
+    n 1ksqposbl "I'm being serious!{w=0.5}{nw}"
     extend 1fllem " People just get so worked up over it all.{w=1}{nw}"
     extend 1fcsem " Like it's rocket science or something."
     n 1flraj "I mean...{w=1}{nw}"
@@ -7319,7 +7319,7 @@ label talk_how_to_interview_properly:
     n 1nsqpu "And trust me,{w=0.75}{nw}"
     extend 1nsqsr " the {i}last{/i} thing you wanna do is embarrass yourself over simple stuff you should {i}really{/i} know..."
     n 1nllun "...Or something you forgot you mentioned on your application."
-    extend 1fchbl " Oops!"
+    extend 1kchblesd " Oops!"
     n 1nllaj "So...{w=0.5}{nw}"
     extend 1fcsss " study up,{w=0.1} 'kay?"
 
@@ -7339,7 +7339,7 @@ label talk_how_to_interview_properly:
     n 1fsqpo "...And {i}don't{/i} flake out on your clothes.{w=1}{nw}"
     extend 1nlrbo " Iron them if they're all creased,{w=0.1} buy new ones if you need to.{w=0.2} That kind of thing."
     n 1tnmpu "But most of all,{w=0.1} [player]?"
-    n 1fsqaj "{cps=\10}{i}Never{/i}{/cps} forget the basics."
+    n 1fsqaj "{i}Never{/i}{w=0.2} forget the basics."
     n 1ullss "Be punctual,{w=0.1} be polite.{w=0.2} Remember {w=0.1}-{w=0.5}{nw}"
     extend 1fsqss " people want someone they can {i}like{/i},{w=0.75}{nw}"
     extend 1fsrpo " not just someone who can get the job done!"
@@ -7347,12 +7347,12 @@ label talk_how_to_interview_properly:
     n 1unmajesu "...Oh,{w=0.5}{nw}"
     extend 1tnmpu " and [player]?"
     n 1fcspu "Just...{w=1}{nw}"
-    extend 1knmsrl " be honest too,{w=0.1} alright?"
+    extend 1knmsrlsbl " be honest too,{w=0.1} alright?"
     n 1fllsrl "It isn't a fault to admit when you don't know something."
     n 1tnmpu "And when you actually stop to think about it from their perspective,{w=1}{nw}"
     extend 1tnmem " if someone is prepared to just lie to your face at an interview..."
     n 1tsqem "...Then what {i}else{/i} are they gonna lie about?"
-    n 1tllss "Just some food for thought."
+    n 1tllsssbl "Just some food for thought."
 
     n 1ncspuesi "..."
     n 1nlrss "...Wow,{w=0.5}{nw}"
@@ -7375,7 +7375,7 @@ label talk_how_to_interview_properly:
         n 1ullpu "Or...{w=1}{nw}"
         extend 1tnmbo " since we're both stuck here?"
         n 1fsqsm "...More like an induction,{w=0.1} actually."
-        n 1fchgn " Ehehe."
+        n 1fchgn "Ehehe."
 
     return
 
@@ -7402,7 +7402,7 @@ label talk_windup_bullying:
     n 1tnmaj "Eh?{w=0.5}{nw}"
     extend 1uskemesh " O-{w=0.3}oh!{w=0.5}{nw}"
     extend 1uwdaj " [player].{w=1}{nw}"
-    extend 1flrbgl " Ahaha."
+    extend 1flrbglsbl " Ahaha."
     n 1fllbg "I...{w=0.5} was kinda just thinking out loud again."
     n 1ullpu "And,{w=0.75}{nw}" 
     extend 1nslpu " well..."
@@ -7420,7 +7420,7 @@ label talk_windup_bullying:
     n 1fcsem "And when I say mess with people...{w=1}{nw}"
     extend 1fsqem " I don't just mean physically,{w=0.1} either!"
     n 1fllem "Bullies can do their dirty work in so many different ways,{w=0.1} especially with social media being what is is now.{w=1}{nw}"
-    extend 1fcsfu " But they're just as toxic!"
+    extend 1fcsfu " But that's just as toxic!"
     n 1fsqan "And worse yet,{w=0.5}{nw}"
     extend 1tsqem " if you try to stick up for yourself?{w=1}{nw}"
     extend 1fsrem " When you're exhausted of dealing with all of their crap?"    
@@ -7431,7 +7431,7 @@ label talk_windup_bullying:
     extend 1fcsemesi " Ugh."
     n 1tsqem "At this point?{w=0.75}{nw}" 
     extend 1flrbo " I've heard it all."
-    n 1fsrbo "{i}...Not like that makes it any less annoying.{/i}"
+    n 1fsrbosbl "{i}...Not like that makes it any less annoying.{/i}"
     n 1nllaj "But...{w=1}{nw}"
     extend 1nsqbo " one thing I {i}will{/i} tell you right now,{w=0.1} [player]."
     n 1fsqbol "Do {b}not{/b} let what others say stop you from dealing with it."
@@ -7457,17 +7457,17 @@ label talk_windup_bullying:
         n 1fsrssl "I kinda like someone who can show a little guts.{w=0.75}{nw}"
 
         if Natsuki.isLove(higher=True):
-            extend 1fsqsml " Ehehe."
+            extend 1fwlsml " Ehehe."
 
         else:
-            extend 1fsldvl " Ehehe..."
+            extend 1fsldvless " Ehehe..."
 
     elif Natsuki.isHappy(higher=True):
         n 1kslpo "You owe yourself that much...{w=0.75}{nw}"
-        extend 1ksqpol " right?"
+        extend 1ksqpolsbl " right?"
 
     else:
-        n 1fsrpol "You owe yourself {i}that{/i} much,{w=0.1} at least."
+        n 1fsrpolsbl "You owe yourself {i}that{/i} much,{w=0.1} at least."
 
     return
 
