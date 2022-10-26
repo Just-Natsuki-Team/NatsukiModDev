@@ -7158,17 +7158,17 @@ init 5 python:
 
 label talk_what_do_you_think_about_fanart:
     if Natsuki.isAffectionate(higher=True):
-        n 1fsqaj "Are you {i}kidding{/i},{w=0.1} [player]?{w=1.5}{nw}"
+        n 1fsqaj "Are you {i}kidding{/i},{w=0.1} [player]?{w=1}{nw}"
         extend 1uchbsedz " I {i}love{/i} fanart!"
 
     elif Natsuki.isNormal(higher=True):
         n 1unmaj "Ooh!{w=1}{nw}"
         extend 1unmbg " Fanart?"
-        n 1fllbg "Well,{w=0.1} duh!{w=1.5}{nw}"
+        n 1fllbg "Well,{w=0.1} duh!{w=1}{nw}"
         extend 1fcsbg " I'm {i}totally{/i} all for it!"
 
     elif Natsuki.isDistressed(higher=True):
-        n 1fcssf "Ugh...{w=1.5}{nw}"
+        n 1fcssf "Ugh...{w=1}{nw}"
         extend 1fsqsl " what now?"
         n 1tsqbo "...Fanart?"
         n 1nsrpu "..."
@@ -7189,7 +7189,7 @@ label talk_what_do_you_think_about_fanart:
         return
 
     else:
-        n 1fcsantsa "Oh,{w=0.1} for-{w=0.3}{nw}"
+        n 1fcsantsa "Oh,{w=0.1} for-{w=0.5}{nw}"
         n 1fcsun "..."
         n 1fsqfutsb "Fanart?{w=1}{nw}"
         extend 1fsquptsb " Really,{w=0.1} [player]?"
