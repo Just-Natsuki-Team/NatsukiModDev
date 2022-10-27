@@ -2053,6 +2053,7 @@ label outfits_auto_change:
     return
 
 label new_wearables_outfits_unlocked:
+    $ jn_globals.force_quit_enabled = False
     $ giftbox = random.choice([
         jn_gifts.GIFT_BLUE,
         jn_gifts.GIFT_GREEN,
@@ -2350,6 +2351,7 @@ label new_wearables_outfits_unlocked:
     n 1ullajl "So..."
     n 1tnmsslsbl "Where we we?{w=1}{nw}"
     extend 1fslsslsbr " Ehehe..."
+    $ jn_globals.force_quit_enabled = True
 
     return
 

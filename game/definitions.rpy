@@ -888,6 +888,9 @@ init -990 python in jn_globals:
 
     # Links
 
+    # GitHub
+    LINK_JN_GITHUB = "https://github.com/Just-Natsuki-Team/NatsukiModDev"
+
     # OpenWeatherMap; used for setting up weather in-game
     LINK_OPEN_WEATHER_MAP_HOME = "https://openweathermap.org"
     LINK_OPEN_WEATHER_MAP_SIGN_UP = "https://home.openweathermap.org/users/sign_up"

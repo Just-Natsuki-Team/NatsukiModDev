@@ -1,4 +1,5 @@
 # Weather data
+default persistent._jn_weather_setup_started = False
 default persistent._jn_weather_api_key = None
 default persistent._jn_weather_api_configured = False
 

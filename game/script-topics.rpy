@@ -264,7 +264,7 @@ label talk_did_you_have_pets:
     elif _return == "chameleons":
         n 1unmaj "Oh!{w=0.2} Chameleons!"
         n 1uchgn "That's super cool,{w=0.1} [player]!"
-        n 1unmbg "The colour changing is crazy enough,{w=0.1} but those eyes too{w=0.1} -{w=0.1} it's like someone just made them up!"
+        n 1unmbg "The color changing is crazy enough,{w=0.1} but those eyes too{w=0.1} -{w=0.1} it's like someone just made them up!"
         n 1uchgn "Still{w=0.1} -{w=0.1} that's awesome!"
         n 1unmbg "You better take good care of it,{w=0.1} okay?"
         
@@ -756,7 +756,64 @@ init 5 python:
     )
 
 label talk_weather_setup_main:
-    if get_topic("talk_weather_setup_main").shown_count == 0:
+    if persistent._jn_weather_api_key:
+        $ persistent._jn_weather_setup_started = True
+
+    if persistent._jn_weather_setup_started:
+        # Player has already done at least some of the setup process, so offer range of options
+        n 1unmajesu "Oh!{w=1}{nw}" 
+        extend 1fcsbg " Yeah,{w=0.1} I remember!"
+        n 1ulraj "So..."
+        show natsuki 1unmbg at jn_center
+
+        menu:
+            n "Where did you wanna start from,{w=0.1} [player]?"
+
+            "I want to give you an API key.":
+                # API key
+                n 1unmaj "You wanna give me an API key?{w=1}{nw}"
+                extend 1fchbg " Sure!"
+                n 1nchbg "I'll just walk you through it just in case,{w=0.1} 'kay?"
+
+                # Reset configuration state
+                $ persistent._jn_weather_api_configured = False
+                $ persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
+
+                jump talk_weather_setup_api_key
+
+            "I want to give you my location." if persistent._jn_weather_api_key:
+                # Location
+                n 1unmaj "You wanna go through your location?{w=1}{nw}"
+                extend 1fchbg " Sure!"
+                n 1nchbg "I'll just walk you through it just in case,{w=0.1} 'kay?"
+                
+                # Reset configuration state
+                $ persistent._jn_weather_api_configured = False
+                $ persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
+
+                jump talk_weather_setup_location
+
+            "Can you try testing everything I've told you again?" if persistent._jn_weather_api_key and persistent._jn_player_latitude_longitude:
+                # Retry verification
+                n 1unmaj "You just want me to try testing it all again?{w=0.75}{nw}"
+                extend 1fchbgeme " Right-o!"
+
+                # Reset configuration state
+                $ persistent._jn_weather_api_configured = False
+                $ persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
+
+                jump talk_weather_setup_verify
+
+            "Nevermind.":
+                # Cancel
+                n 1tsqpu "Uh...{w=0.5}{nw}"
+                extend 1tsrpu " huh."
+                n 1fchbg "Well,{w=0.1} your loss,{w=0.3} [player]!"
+                extend 1fchsm " Ehehe."
+
+                return
+
+    else:
         # Introduction
         n 1fslbo "..."
         n 1fcsem "Urgh...{w=1.5}{nw}" 
@@ -767,13 +824,14 @@ label talk_weather_setup_main:
 
         menu:
             "What's the matter, Natsuki?":
-                n 1uwdpu "Huh?{w=0.5}{nw}"
-                extend 1uwdaj " Oh!{w=0.5} [player]!{w=1}{nw}"
-                extend 1fllbg " I'm glad you asked!"
+                n 1uwdpueqm "Huh?{w=0.5}{nw}"
+                extend 1uwdajesu " Oh!{w=0.5} [player]!{w=1}{nw}"
+                extend 1fllbgsbr " I'm glad you asked!"
 
             "What're you complaining about?":
-                n 1fsqpo "Well,{w=0.1} your attitude,{w=0.1} for one thing!{w=1}{nw}"
-                extend 1nllaj " Anyway..."
+                n 1fwdemesh "...!{w=0.5}{nw}"
+                n 1fcsgs "Well,{w=0.1} your attitude,{w=0.1} for one thing!{w=1}{nw}"
+                extend 1fslca " Anyway..."
 
         n 1ullaj "So...{w=0.5}{nw}"
         extend 1flrss " I'm not really one to just sit around and admire the view."
@@ -804,6 +862,7 @@ label talk_weather_setup_main:
         n 1fllss "What I'm {i}trying{/i} to do is add some atmosphere to this place,{w=1}{nw}"
         extend 1fsqsm " and what better way to do that than..."
         n 1fchbg "Some actual weather!"
+        n 1nsqsl "And not {i}just{/i} some randomly changing thing..."
         n 1ulraj "I wanna set things up so the weather here matches what it's like where you are,{w=0.1} [player]."
         n 1fcsbg "I know{w=0.1} -{w=0.5}{nw}" 
         extend 1fchbg " awesome,{w=0.1} right?"
@@ -822,6 +881,7 @@ label talk_weather_setup_main:
 
             "Sure.":
                 n 1uchbg "Alright!"
+                $ persistent._jn_weather_setup_started = True
                 jump talk_weather_setup_api_key
 
             "I can't right now.":
@@ -829,47 +889,6 @@ label talk_weather_setup_main:
                 extend 1nllss " Well..."
                 n 1nllaj "Just let me know when you have the time,{w=0.1} 'kay?"
                 n 1fcsbg "It'll be {i}super{/i} worth it!"
-                return
-
-    else:
-        # Player has already done at least some of the setup process, so offer range of options
-        n 1unmaj "Oh!{w=1}{nw}" 
-        extend 1fcsbg " Yeah,{w=0.1} I remember!"
-        n 1ulraj "So..."
-        menu:
-            n "What did you wanna start from,{w=0.1} [player]?"
-
-            "I want to give you an API key.":
-                # API key
-                n 1unmaj "You wanna give me an API key?{w=1}{nw}"
-                extend 1fchbg " Sure!"
-                n 1nchbg "I'll just walk you through it just in case,{w=0.1} 'kay?"
-
-                # Reset configuration state
-                $ persistent._jn_weather_api_configured = False
-                $ persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
-
-                jump talk_weather_setup_api_key
-
-            "I want to give you my location." if persistent._jn_weather_api_key:
-                # Location
-                n 1unmaj "You wanna go through your location?{w=1}{nw}"
-                extend 1fchbg " Sure!"
-                n 1nchbg "I'll just walk you through it just in case,{w=0.1} 'kay?"
-                
-                # Reset configuration state
-                $ persistent._jn_weather_api_configured = False
-                $ persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
-
-                jump talk_weather_setup_location
-
-            "Nevermind.":
-                # Cancel
-                n 1tsqpu "Uh..."
-                extend 1tsrpu " huh."
-                n 1fchbg "Well,{w=0.1} your loss,{w=0.3} [player]!"
-                extend 1fchsm " Ehehe."
-
                 return
 
 label talk_weather_setup_api_key:
@@ -972,7 +991,7 @@ label talk_weather_setup_location:
     n 1uchbg "...Your location,{w=0.1} obviously!"
     n 1ullaj "There's a couple ways to do this,{w=1}{nw}"
     extend 1nnmsm " but I thought it'd be best to just ask."
-    n 1ulraj " So..."
+    n 1ulraj "So..."
 
     menu:
         n "How do you wanna tell me, [player]?"
@@ -1079,6 +1098,7 @@ label talk_weather_setup_manual_coords:
     n 1unmaj "Do you live in the {b}Northern{/b} or {b}Southern{/b} Hemisphere?"
     n 1nllss "Just in case you didn't know,{w=0.1} it basically just means if you live {b}North{/b} or {b}South{/b} of the {b}equator{/b}."
     n 1nllaj "So..."
+    show natsuki 1tsqsm at jn_center
     menu:
         n "Which do you live in,{w=0.1} [player]?"
 
@@ -1101,6 +1121,7 @@ label talk_weather_setup_manual_coords:
     n 1tnmss "Do you live in the {b}Eastern{/b} or {b}Western{/b} Hemisphere?"
     n 1ulraj "This one's a little more tricky,{w=0.1} but I find it helps to think of it this way:"
     n 1nnmbo "If we took a world map and cut it in half {b}vertically{/b} down the middle..."
+    show natsuki 1unmaj at jn_center
     menu:
         n "Would you live in the {b}Eastern half{/b},{w=0.1} or the {b}Western half{/b}?"
 
@@ -1123,7 +1144,6 @@ label talk_weather_setup_manual_coords:
             n 1fchbg "The Western half.{w=0.5} Gotcha!"
 
     # Get the latitude
-
     n 1fllss "Now with that out of the way,{w=0.1} I just need your coordinates!"
     n 1fsqss "And by those,{w=0.5}{nw}" 
     extend 1fchsm " I mean your {b}latitude{/b} and {b}longitude{/b}!"
@@ -1136,7 +1156,6 @@ label talk_weather_setup_manual_coords:
     $ player_latitude = renpy.input(prompt="Enter your {b}latitude{/b}:", allow="0123456789.")
 
     # Get the longitude
-
     n 1fchbg "Alright!{w=0.5}{nw}" 
     extend 1nchsm " Now finally,{w=0.1} I just need your {b}longitude{/b}!"
     n 1fcssm "Just like last time,{w=0.1} I can figure it out without any positive or negative symbols."
@@ -1233,7 +1252,7 @@ label talk_weather_setup_verify:
         extend 1uchbs " It's working,{w=0.5} it's working!{w=1}{nw}"
         extend 1nchsml " Ehehe."
         n 1nchbgl "Thanks a bunch,{w=0.1} [player]!{w=1}{nw}"
-        extend 1uchgnl " This is gonna be {i}super{/i} awesome!"
+        extend 1uchgnledz " This is gonna be {i}super{/i} awesome!"
         $ Natsuki.calculatedAffinityGain()
 
         python:
@@ -1247,9 +1266,55 @@ label talk_weather_setup_verify:
         n 1fcsem "Ugh..."
         n 1fslem "And I was so stoked about it,{w=0.1} too..."
         n 1fcsem "I'm sorry,{w=0.1} [player].{w=1}{nw}"
-        extend 1knmem " I can't get it all to work!"
+        extend 1knmemsbl " I can't get it all to work!"
         n 1fsrem "Talk about a disappointment..."
-        n 1knmpo "Maybe we could try again later?"
+        n 1nsrposbl "..."
+        n 1unmgsesu "Ah!{w=0.5}{nw}"
+        extend 1fnmgs " I just thought of something!"
+        n 1tnmpueqm "Did you have to make a new account for OpenWeatherMap,{w=0.2} [player]?{w=0.75}{nw}"
+        extend 1tslbo " Or like,{w=0.2} did you make a new API key?"
+        n 1tnmss "I...{w=1}{nw}"
+        extend 1fsrdvsbr " kinda spaced out a little when you told me before.{w=0.75}{nw}"
+        extend 1nlrajsbr " So..."
+        show natsuki 1tnmslsbr at jn_center
+
+        menu:
+            n "Do you remember?{w=0.3} Like,{w=0.2} at all?"
+            
+            "I created a new account.":
+                $ new_account_or_key = True
+
+            "I created a new API key.":
+                $ new_account_or_key = True
+
+            "I already had an account, and used an existing API key.":
+                $ new_account_or_key = False
+                n 1tslpusbr "...Huh."
+                n 1tslsr "I'm...{w=0.75}{nw}"
+                extend 1kcsemesisbl " kinda stumped then,{w=0.2} actually."
+                n 1tsrsl "I mean..."
+                n 1tnmpueqm "Maybe you just gave me the wrong key...?"
+                extend 1fchbgsbl " Or your internet just isn't feeling it today?"
+                n 1nslsssbl "I don't know."
+                n 1fllsssbl "Just...{w=0.5}{nw}"
+                extend 1knmsssbr " let me know when if you wanna try again,{w=0.2} 'kay?"
+                n 1knmcaesssbr "It'll be awesome!{w=0.5}{nw}"
+                extend 1knmpolesssbr " I-{w=0.3}I promise!"
+
+        if new_account_or_key:
+            n 1tslbo "So you did,{w=0.2} huh..."
+            n 1fslpuesp "..."
+            n 1unmgsesu "Oh!{w=0.5}{nw}"
+            extend 1fsrdvsbl " Right!"
+            n 1fsrsssbl "I forgot to say..."
+            n 1fsldvsbr "It might take a day or so for your API key to actually {i}activate{/i} so I can use it..."
+            n 1kchsssbr "Ehehe.{w=0.5}{nw}"
+            extend 1fchblsbl " Oops!"
+            n 1fllsssbl "Just...{w=0.5}{nw}"
+            extend 1knmsssbr " let me know when you wanna try again,{w=0.2} 'kay?"
+            n 1fnmcasbr "I really wanna get this all working!"
+            n 1fcstr "Because when I do,{w=0.2} you bet it's gonna be{w=0.3}{nw}" 
+            extend 1fspgsledz " {i}awesome{/i}!"
 
     jump ch30_loop
 
@@ -5414,7 +5479,7 @@ label talk_mod_contributions:
     n 1tsqbg "Does that sound like your thing,{w=0.1} [player]?{w=0.5}{nw}"
     extend 1uchsm " Of course it does!{w=0.2} Ehehe."
     n 1unmbg "Well,{w=0.1} don't let me hold you back!{w=0.5}{nw}"
-    extend 1uchbgl " You can check out my website {a=https://github.com/Just-Natsuki-Team/NatsukiModDev}here{/a}!"
+    extend 1uchbgl " You can check out my website {a=[jn_globals.LINK_JN_GITHUB]}here{/a}!"
     n 1nsqbg "A little look can't hurt,{w=0.1} right?{w=0.5}{nw}"
     extend 1nchsm " Ahaha."
 
@@ -6120,9 +6185,9 @@ label talk_custom_outfits_unlock:
     extend 1nllem " just realized something.{w=0.5}{nw}"
     extend 1fslun " Something I {i}really{/i} don't like."
     n 1fbkwr "...And that's exactly how {i}long{/i} I've been stuck in this uniform!{w=0.5}{nw}"
-    extend 1fcswr " G-{w=0.1}gross!"
+    extend 1fcswr " G-{w=0.2}gross!"
     n 1flrem "I mean..."
-    n 1fllsl "I guess I shouldn't be surprised that something made for school isn't comfy for long periods..."
+    n 1fllsl "I {i}guess{/i} I shouldn't be surprised that something made for school isn't comfy for long periods..."
     n 1fcspol "But that doesn't mean I have to put up with it!"
     n 1fsrpo "There's gotta be something I can do..."
     n 1ncspu "..."
@@ -6132,14 +6197,17 @@ label talk_custom_outfits_unlock:
     n 1ulraj "It's not like I {i}never{/i} had any clothes other than my uniform!"
     n 1fllss "I know I at {i}least{/i} had that casual outfit I wore...{w=1.5}{nw}"
     extend 1kllsl " ...on {i}that{/i} weekend."
+    n 1nllpu "And with the closet here too...{w=0.75}{nw}"
+    extend 1fllpu " plus the extra clothes in my locker..."
     n 1ncssr "Hmm..."
     n 1fchbg "Yeah,{w=0.1} okay!{w=1.5}{nw}"
     extend 1nchsm " I think that should all work!"
     n 1nsqsm "..."
-    n 1uwdaj "Oh!{w=0.2} Just to keep you in the loop,{w=0.1} [player]..."
-    n 1uchbg "I should be able to wear whatever I want now!"
+    n 1uwdajesu "Oh!{w=0.3}{nw}"
+    extend 1unmca " Just to keep you in the loop,{w=0.1} [player]..."
+    n 1uchsmeme "I should be able to wear whatever I want now!"
     n 1nllbg "I've got a couple of outfits in mind already,{w=0.5}{nw}"
-    extend 1flrbg " so it's not like I have a reason {i}not{/i} to."
+    extend 1fcsbgedz " so it's not like I have a reason {i}not{/i} to."
     n 1ulraj "So...{w=0.5}{nw}"
     extend 1fcssm " don't be surprised if I wanna change my clothes from time to time,{w=0.1} alright?"
     n 1fsqsrl "A-{w=0.1}and no.{w=0.5}{nw}"
