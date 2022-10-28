@@ -127,7 +127,7 @@ init 0 python in jn_atmosphere:
     _CLOUDS_Z_INDEX = -6
     _SKY_Z_INDEX = -8
 
-    _OPENWEATHERMAP_API_BASE_URL = "https://api.openweathermap.org/data/2.5/onecall"
+    _OPENWEATHERMAP_API_BASE_URL = "https://api.openweathermap.org/data/2.5/weather"
 
     class JNWeatherTypes(Enum):
         """
@@ -483,12 +483,16 @@ init 0 python in jn_atmosphere:
             return None
 
         # We got a response, so find out the weather and return if it exists in the map
-        weather_data = weather_response.json()["hourly"][0]
+        try:
+            weather_data = weather_response.json()["weather"][0]
 
-        for regex, weather in __WEATHER_CODE_REGEX_TYPE_MAP.items():
-            if re.search(regex, str(weather_data["weather"][0]["id"])):
-                return weather
+            for regex, weather in __WEATHER_CODE_REGEX_TYPE_MAP.items():
+                if re.search(regex, str(weather_data["id"])):
+                    return weather
 
+        except Exception as exception:
+            jn_utils.log("Unable to fetch weather from OpenWeatherMap as an exception occurred; {0}".format(exception.message))
+        
         # No map entries, fallback
         return None
 
