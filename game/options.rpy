@@ -218,20 +218,30 @@ init python:
     ## This is the archive of data for your mod
     #build.archive(build.name, "all")
 
+    build.classify("game/mod_assets/**", build.name)# "mod_assets all")
+    build.classify("game/**.rpyc", build.name)#"scripts all")
+    build.classify("game/gui/**", build.name)
+    build.classify("game/python-packages/**", build.name)
+    build.classify('README.html', build.name)
+    build.classify("game/RPASongMetadata.json", build.name)
+    build.classify('**~', build.name)
+    build.classify('**/.**', build.name)
+    build.classify('**/#**', build.name)
+
 
     ## These files get put into your data file
     build.package(build.directory_name + "Mod",'zip',build.name,description='DDLC Compatible Mod')
 
     # Declare archives
-    build.archive("scripts",build.name)
-    build.archive("mod_assets",build.name)
-    build.archive("submods",build.name)
+    #build.archive("scripts",build.name)
+    #build.archive("mod_assets",build.name)
+    #build.archive("submods",build.name)
 #    build.archive("images",build.name)
 
     #Choose files for archives
-    build.classify("game/mod_assets/**","mod_assets")
-    build.classify("game/submods/**","submods")
-    build.classify('game/**.rpyc',"scripts")
+    #build.classify("game/mod_assets/**","mod_assets")
+    #build.classify("game/submods/**","submods")
+    #build.classify('game/**.rpyc',"scripts")
 #    build.classify("game/images/**","images")
     build.classify('game/advanced_scripts/**.rpyc',"scripts")
     build.classify('game/advanced_scripts/poemwords.txt',"scripts")
