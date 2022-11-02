@@ -143,10 +143,57 @@ init 10 python:
 
 #All migration scripts go here
 init python in jn_data_migrations:
-    DID_DO_UPDATE = False
+    import store.jn_utils as jn_utils
 
     #This runs a migration from version 0.0.0 to 0.0.1
     #This script serves an example and hence, does nothing. All arguments are present however "runtime" is not necessary
     @migration(["0.0.0"], "0.0.1", runtime=MigrationRuntimes.INIT)
     def to_0_0_1():
         pass
+
+    @migration(["0.0.0", "0.0.1", "0.0.2"], "1.0.0", runtime=MigrationRuntimes.INIT)
+    def to_1_0_0():
+        # Nickname persistent migration
+        if (
+            persistent.jn_player_nicknames_allowed is not None
+            and not persistent.jn_player_nicknames_allowed
+        ):
+            persistent._jn_nicknames_natsuki_allowed = False
+
+        # Natsuki nickname variable was renamed; migrate
+        if (
+            persistent.jn_player_nicknames_current_nickname is not None
+            and persistent.jn_player_nicknames_current_nickname != "Natsuki"
+            and persistent._jn_nicknames_natsuki_allowed
+        ):
+            persistent._jn_nicknames_natsuki_current_nickname = persistent.jn_player_nicknames_current_nickname
+
+        if (
+            persistent.jn_player_nicknames_bad_given_total is not None
+            and persistent.jn_player_nicknames_bad_given_total > 0
+        ):
+            persistent._jn_nicknames_natsuki_bad_given_total = persistent.jn_player_nicknames_bad_given_total
+
+        # Allow players who haven't told Natsuki they love her yet to confess
+        if Natsuki.isLove(higher=True) and persistent.jn_player_love_you_count == 0:
+            persistent.affinity = jn_affinity.AFF_THRESHOLD_LOVE -1
+
+        # Topic conditional migrations
+        persistent._apology_database = dict()
+        persistent._topic_database["talk_i_love_you"]["conditional"] = None
+        persistent._topic_database["talk_mod_contributions"]["conditional"] = (
+            "not jn_activity.ACTIVITY_SYSTEM_ENABLED "
+            "or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.coding)"
+        )
+
+        # Misc migrations
+        if (
+            persistent.jn_activity_used_programs is not None
+            and len(persistent.jn_activity_used_programs) > len(persistent._jn_activity_used_programs)
+        ):
+            persistent._jn_activity_used_programs = persistent.jn_activity_used_programs
+
+        if persistent.jn_notify_conversations is not None:
+            persistent._jn_notify_conversations = persistent.jn_notify_conversations
+        
+        jn_utils.save_game()
