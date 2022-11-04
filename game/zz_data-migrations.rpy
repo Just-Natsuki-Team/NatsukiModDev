@@ -2,6 +2,7 @@ python early in jn_data_migrations:
     from enum import Enum
     import re
     import store
+    import store.jn_utils as jn_utils
 
     # dict mapping a from_version -> to_version, including the function used to migrate between those versions
     # form:
@@ -127,6 +128,7 @@ python early in jn_data_migrations:
             _callable, from_version = UPDATE_FUNCS[from_version][MigrationRuntimes.INIT]
 
             #Migrate
+            jn_utils.log("Performing migrations for {0}".format(str(_callable)))
             _callable()
 
     def runRuntimeMigrations():
@@ -140,9 +142,9 @@ python early in jn_data_migrations:
 init 10 python:
     jn_data_migrations.runInitMigrations()
 
-
 #All migration scripts go here
 init python in jn_data_migrations:
+    import store
     import store.jn_utils as jn_utils
 
     #This runs a migration from version 0.0.0 to 0.0.1
@@ -153,47 +155,59 @@ init python in jn_data_migrations:
 
     @migration(["0.0.0", "0.0.1", "0.0.2"], "1.0.0", runtime=MigrationRuntimes.INIT)
     def to_1_0_0():
+        jn_utils.log("Migration to 1.0.0 START")
         # Nickname persistent migration
         if (
-            persistent.jn_player_nicknames_allowed is not None
-            and not persistent.jn_player_nicknames_allowed
+            store.persistent.jn_player_nicknames_allowed is not None
+            and not store.persistent.jn_player_nicknames_allowed
         ):
-            persistent._jn_nicknames_natsuki_allowed = False
+            store.persistent._jn_nicknames_natsuki_allowed = False
+            jn_utils.log("Migrated: persistent.jn_player_nicknames_allowed")
 
         # Natsuki nickname variable was renamed; migrate
         if (
-            persistent.jn_player_nicknames_current_nickname is not None
-            and persistent.jn_player_nicknames_current_nickname != "Natsuki"
-            and persistent._jn_nicknames_natsuki_allowed
+            store.persistent.jn_player_nicknames_current_nickname is not None
+            and store.persistent.jn_player_nicknames_current_nickname != "Natsuki"
+            and store.persistent._jn_nicknames_natsuki_allowed
         ):
-            persistent._jn_nicknames_natsuki_current_nickname = persistent.jn_player_nicknames_current_nickname
+            store.persistent._jn_nicknames_natsuki_current_nickname = store.persistent.jn_player_nicknames_current_nickname
+            store.n_name = store.persistent._jn_nicknames_natsuki_current_nickname
+            jn_utils.log("Migrated: persistent.jn_player_nicknames_current_nickname")
 
         if (
-            persistent.jn_player_nicknames_bad_given_total is not None
-            and persistent.jn_player_nicknames_bad_given_total > 0
+            store.persistent.jn_player_nicknames_bad_given_total is not None
+            and store.persistent.jn_player_nicknames_bad_given_total > 0
         ):
-            persistent._jn_nicknames_natsuki_bad_given_total = persistent.jn_player_nicknames_bad_given_total
+            store.persistent._jn_nicknames_natsuki_bad_given_total = store.persistent.jn_player_nicknames_bad_given_total
+            jn_utils.log("Migrated: persistent.jn_player_nicknames_bad_given_total")
 
         # Allow players who haven't told Natsuki they love her yet to confess
-        if Natsuki.isLove(higher=True) and persistent.jn_player_love_you_count == 0:
-            persistent.affinity = jn_affinity.AFF_THRESHOLD_LOVE -1
+        if store.Natsuki.isLove(higher=True) and store.persistent.jn_player_love_you_count == 0:
+            store.persistent.affinity = jn_affinity.AFF_THRESHOLD_LOVE -1
 
         # Topic conditional migrations
-        persistent._apology_database = dict()
-        persistent._topic_database["talk_i_love_you"]["conditional"] = None
-        persistent._topic_database["talk_mod_contributions"]["conditional"] = (
+        store.persistent._apology_database = dict()
+        store.persistent._topic_database["talk_i_love_you"]["conditional"] = None
+        store.persistent._topic_database["talk_mod_contributions"]["conditional"] = (
             "not jn_activity.ACTIVITY_SYSTEM_ENABLED "
             "or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.coding)"
         )
+        jn_utils.log("Migrated: store.persistent._apology_database")
+        jn_utils.log("""Migrated: store.persistent._topic_database["talk_i_love_you"]["conditional"]""")
+        jn_utils.log("""Migrated: store.persistent._topic_database["talk_mod_contributions"]["conditional"]""")
 
         # Misc migrations
         if (
-            persistent.jn_activity_used_programs is not None
-            and len(persistent.jn_activity_used_programs) > len(persistent._jn_activity_used_programs)
+            store.persistent.jn_activity_used_programs is not None
+            and len(store.persistent.jn_activity_used_programs) > len(store.persistent._jn_activity_used_programs)
         ):
-            persistent._jn_activity_used_programs = persistent.jn_activity_used_programs
+            store.persistent._jn_activity_used_programs = store.persistent.jn_activity_used_programs
+            jn_utils.log("Migrated: persistent.jn_activity_used_programs")
 
-        if persistent.jn_notify_conversations is not None:
-            persistent._jn_notify_conversations = persistent.jn_notify_conversations
+        if store.persistent.jn_notify_conversations is not None:
+            store.persistent._jn_notify_conversations = store.persistent.jn_notify_conversations
+            jn_utils.log("Migrated: persistent.jn_player_nicknames_bad_given_total")
         
+        store.persistent._jn_version = "1.0.0"
         jn_utils.save_game()
+        jn_utils.log("Migration to 1.0.0 DONE")
