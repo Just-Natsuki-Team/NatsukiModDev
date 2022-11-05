@@ -110,6 +110,7 @@ python early in jn_data_migrations:
         """
         Runs init time migration functions. Must be run after init 0
         """
+        jn_utils.log("runInitMigrations START")
         #We do nothing here if the version isn't in the dict
         if store.persistent._jn_version not in UPDATE_FUNCS:
             return
@@ -128,13 +129,13 @@ python early in jn_data_migrations:
             _callable, from_version = UPDATE_FUNCS[from_version][MigrationRuntimes.INIT]
 
             #Migrate
-            jn_utils.log("Performing migrations for {0}".format(str(_callable)))
             _callable()
 
     def runRuntimeMigrations():
         """
         Runs the runtime migration functions.
         """
+        jn_utils.log("runRuntimeMigrations START")
         for _callable in LATE_UPDATES:
             _callable()
 
@@ -162,6 +163,7 @@ init python in jn_data_migrations:
             and not store.persistent.jn_player_nicknames_allowed
         ):
             store.persistent._jn_nicknames_natsuki_allowed = False
+            del store.persistent.jn_player_nicknames_allowed
             jn_utils.log("Migrated: persistent.jn_player_nicknames_allowed")
 
         # Natsuki nickname variable was renamed; migrate
@@ -172,6 +174,7 @@ init python in jn_data_migrations:
         ):
             store.persistent._jn_nicknames_natsuki_current_nickname = store.persistent.jn_player_nicknames_current_nickname
             store.n_name = store.persistent._jn_nicknames_natsuki_current_nickname
+            del store.persistent.jn_player_nicknames_current_nickname
             jn_utils.log("Migrated: persistent.jn_player_nicknames_current_nickname")
 
         if (
@@ -179,6 +182,7 @@ init python in jn_data_migrations:
             and store.persistent.jn_player_nicknames_bad_given_total > 0
         ):
             store.persistent._jn_nicknames_natsuki_bad_given_total = store.persistent.jn_player_nicknames_bad_given_total
+            del store.persistent.jn_player_nicknames_bad_given_total
             jn_utils.log("Migrated: persistent.jn_player_nicknames_bad_given_total")
 
         # Allow players who haven't told Natsuki they love her yet to confess
@@ -202,10 +206,12 @@ init python in jn_data_migrations:
             and len(store.persistent.jn_activity_used_programs) > len(store.persistent._jn_activity_used_programs)
         ):
             store.persistent._jn_activity_used_programs = store.persistent.jn_activity_used_programs
+            del store.persistent.jn_activity_used_programs
             jn_utils.log("Migrated: persistent.jn_activity_used_programs")
 
         if store.persistent.jn_notify_conversations is not None:
             store.persistent._jn_notify_conversations = store.persistent.jn_notify_conversations
+            del store.persistent.jn_notify_conversations
             jn_utils.log("Migrated: persistent.jn_player_nicknames_bad_given_total")
         
         store.persistent._jn_version = "1.0.0"
