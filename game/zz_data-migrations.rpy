@@ -1,3 +1,5 @@
+default persistent._jn_version = "0.0.1"
+
 python early in jn_data_migrations:
     from enum import Enum
     import re
@@ -148,12 +150,6 @@ init python in jn_data_migrations:
     import store
     import store.jn_utils as jn_utils
 
-    #This runs a migration from version 0.0.0 to 0.0.1
-    #This script serves an example and hence, does nothing. All arguments are present however "runtime" is not necessary
-    @migration(["0.0.0"], "0.0.1", runtime=MigrationRuntimes.INIT)
-    def to_0_0_1():
-        pass
-
     @migration(["0.0.0", "0.0.1", "0.0.2"], "1.0.0", runtime=MigrationRuntimes.INIT)
     def to_1_0_0():
         jn_utils.log("Migration to 1.0.0 START")
@@ -217,3 +213,4 @@ init python in jn_data_migrations:
         store.persistent._jn_version = "1.0.0"
         jn_utils.save_game()
         jn_utils.log("Migration to 1.0.0 DONE")
+        return
