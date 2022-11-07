@@ -1252,10 +1252,14 @@ label farewell_short_session_ask:
                     n 1fllcal "I just want to make sure I'm not being a jerk about it."
                     n 1kllpul "But..."
 
-                    if Natsuki.isEnamored(higher=True):
+                    if Natsuki.isLove(higher=True):
                         $ chosen_endearment = jn_utils.getRandomEndearment()
                         n 1knmssl "Thanks,{w=0.2} [chosen_endearment].{w=0.75}{nw}" 
                         extend 1kchsslsbl " I really appreciate it."
+
+                    elif Natsuki.isEnamored(higher=True):
+                        n 1knmssl "Thanks,{w=0.2} [player].{w=0.75}{nw}" 
+                        extend 1kchsslsbl " I...{w=0.3} really appreciate it."
 
                     else:
                         n 1flrcaf "Thanks,{w=0.2} [player].{w=0.75}{nw}" 

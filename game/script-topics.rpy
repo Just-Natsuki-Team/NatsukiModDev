@@ -6182,21 +6182,24 @@ label talk_custom_outfits_unlock:
     n 1nslpu "..."
     n 1usceml "...!"
     n 1uskeml "I've...{w=0.5}{nw}"
-    extend 1nllem " just realized something.{w=0.5}{nw}"
+    extend 1nllem " just realized something.{w=1}{nw}"
     extend 1fslun " Something I {i}really{/i} don't like."
-    n 1fbkwr "...And that's exactly how {i}long{/i} I've been stuck in this uniform!{w=0.5}{nw}"
+    n 1fbkwr "...And that's exactly how {i}long{/i} I've been stuck wearing the same bunch of clothing!{w=0.5}{nw}"
     extend 1fcswr " G-{w=0.2}gross!"
-    n 1flrem "I mean..."
-    n 1fllsl "I {i}guess{/i} I shouldn't be surprised that something made for school isn't comfy for long periods..."
-    n 1fcspol "But that doesn't mean I have to put up with it!"
+    n 1flrem "I mean...{w=1}{nw}"
+    extend 1fsqemsbl " would {i}you{/i} feel comfortable wearing the same clothes basically every single day?"
+    n 1kslansbl "Yeesh!"
+    n 1fcsposbr "..."
+    n 1fcsajsbr "Well,{w=0.3}{nw}"
+    extend 1fnmemsbr " you know what?{w=0.75}{nw}"
+    extend 1fcsgs " I'm done!"
+    n 1fcspol "I don't have to put up with this!"
     n 1fsrpo "There's gotta be something I can do..."
     n 1ncspu "..."
     n 1uwdaj "...Wait!{w=1.5}{nw}"
     extend 1fllbg " Duh!{w=1.5}{nw}"
     extend 1fcsbs " Of course!"
-    n 1ulraj "It's not like I {i}never{/i} had any clothes other than my uniform!"
-    n 1fllss "I know I at {i}least{/i} had that casual outfit I wore...{w=1.5}{nw}"
-    extend 1kllsl " ...on {i}that{/i} weekend."
+    n 1ulraj "It's not like I {i}never{/i} had any clothes other than what I had in my bag!"
     n 1nllpu "And with the closet here too...{w=0.75}{nw}"
     extend 1fllpu " plus the extra clothes in my locker..."
     n 1ncssr "Hmm..."
@@ -6207,7 +6210,7 @@ label talk_custom_outfits_unlock:
     extend 1unmca " Just to keep you in the loop,{w=0.1} [player]..."
     n 1uchsmeme "I should be able to wear whatever I want now!"
     n 1nllbg "I've got a couple of outfits in mind already,{w=0.5}{nw}"
-    extend 1fcsbgedz " so it's not like I have a reason {i}not{/i} to."
+    extend 1fcsbgedz " so it's not like I have any reason {i}not{/i} to show off some style."
     n 1ulraj "So...{w=0.5}{nw}"
     extend 1fcssm " don't be surprised if I wanna change my clothes from time to time,{w=0.1} alright?"
     n 1fsqsrl "A-{w=0.1}and no.{w=0.5}{nw}"
@@ -7675,6 +7678,8 @@ label talk_player_change_name:
             extend 1fsqsm " Ehehe."
             n 1fchbl "Well,{w=0.2} whatever you say!"
 
+            $ neutral_nickname_permitted = True
+
         # Player going back to the name they gave when starting JN originally
         elif nickname.lower() == persistent.playername.lower():
             n 1tsgct "Oho?{w=0.75}{nw}"
@@ -7682,6 +7687,8 @@ label talk_player_change_name:
             n 1fchsm "Ehehe."
             n 1fchbgeme "Right-o!{w=0.75}{nw}"
             extend 1fwlbl " Good old [nickname] it is!"
+            
+            $ neutral_nickname_permitted = True
 
         # A player might actually be named Natsuki, so we don't block it
         elif nickname.lower() == n_name.lower() and n_name.lower() != "natsuki":
