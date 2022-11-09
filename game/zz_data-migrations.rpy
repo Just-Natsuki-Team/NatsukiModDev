@@ -187,11 +187,13 @@ init python in jn_data_migrations:
 
         # Topic conditional migrations
         store.persistent._apology_database = dict()
+
         store.persistent._topic_database["talk_i_love_you"]["conditional"] = None
-        store.persistent._topic_database["talk_mod_contributions"]["conditional"] = (
-            "not jn_activity.ACTIVITY_SYSTEM_ENABLED "
-            "or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.coding)"
-        )
+        store.get_topic("talk_i_love_you").conditional = None
+
+        store.persistent._topic_database["talk_mod_contributions"]["conditional"] = "not jn_activity.ACTIVITY_SYSTEM_ENABLED or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.coding)"
+        store.get_topic("talk_mod_contributions").conditional = "not jn_activity.ACTIVITY_SYSTEM_ENABLED or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.coding)"
+
         jn_utils.log("Migrated: store.persistent._apology_database")
         jn_utils.log("""Migrated: store.persistent._topic_database["talk_i_love_you"]["conditional"]""")
         jn_utils.log("""Migrated: store.persistent._topic_database["talk_mod_contributions"]["conditional"]""")
