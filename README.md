@@ -146,7 +146,7 @@ Please note that we do **not** officially support installations using mod manage
 5. From the JN mod files, copy the `game` folder contents (all of it) into the `game` folder of DDLC. If asked to replace files, select _Yes_.
 6. From the JN mod files, copy the `lib` folder contents (all of it) into the `lib` folder of DDLC. If asked to replace files, select _Yes_.
 7. From the JN mod files, copy the `update` folder into the DDLC folder.
-8. You may already have a persistent from the old version of JN - this must be deleted.
+8. **This only applies if you have not installed Just Natsuki before, wish to completely reset your progress, or if you are running the discontinued build from Wix/Google Drive**: You may already have a persistent from the old version of JN - this must be deleted.
     1. For Windows, you can find it here: `%APPDATA%/Roaming/RenPy/JustNatsuki`
     2. For OSX, you can find it here: `~/Library/RenPy/JustNatsuki`
     3. For Linux, you can find it here: `~/.renpy/JustNatsuki`
