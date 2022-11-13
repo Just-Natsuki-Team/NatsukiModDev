@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://justnatsuki.club/img/jnlogo.png" height="500"/>
+    <img src="https://justnatsuki.club/img/logos/jn_1-0-0_logo.png" height="300"/>
 </p>
 <br>
 
@@ -7,7 +7,7 @@
 
 An After-Story style mod for Natsuki from DDLC, focusing on building a post-game relationship between Natsuki and her player (you!).
 
-Please read this document thoroughly before downloading and installing the mod!
+**Please read this document thoroughly before downloading and installing the mod!**
 
 ### Made possible thanks to our contributors:
 <!-- readme: contributors -start -->
@@ -54,7 +54,8 @@ Please read this document thoroughly before downloading and installing the mod!
             <br />
             <sub><b>Lunulae</b></sub>
         </a>
-    </td></tr>
+    </td>
+</tr>
 <tr>
     <td align="center">
         <a href="https://github.com/Nemu-sus">
@@ -62,9 +63,38 @@ Please read this document thoroughly before downloading and installing the mod!
             <br />
             <sub><b>ALTER</b></sub>
         </a>
-    </td></tr>
+    </td>
+</tr>
 </table>
 <!-- readme: contributors -end -->
+
+### With thanks to our amazing guest artists:
+<table>
+    <tr>
+        <td align="center">
+            <a href="https://twitter.com/art_almay">
+                <img src="https://justnatsuki.club/img/portraits/almay.jpg" width="100;" alt="Almay_art"/>
+                <br />
+                <sub><b>Almay_art</b></sub>
+            </a>
+        </td>
+        <td align="center">
+            <a href="https://twitter.com/TheShunBun">
+                <img src="https://justnatsuki.club/img/portraits/shunbun.png" width="100;" alt="Almay_art"/>
+                <br />
+                <sub><b>TheShunBun</b></sub>
+            </a>
+        </td>
+    </tr>
+</table>  
+
+### And extra special thanks to:
+- Snow, rain graphics thanks to Monika After Story team @ https://github.com/Monika-After-Story/MonikaModDev
+- Our community, for being so patient despite our delays
+
+**You're all awesome!**
+
+---
 
 ### Contents
 
@@ -72,86 +102,101 @@ Please read this document thoroughly before downloading and installing the mod!
 2. [What to expect from Just Natsuki](#what-to-expect-from-just-natsuki)
 3. [Installation](#installation)
 4. [Updating](#updating)
-4. [FAQ](#faq)
+4. [Frequently Asked Questions](#frequently-asked-questions)
 5. [Community](#community)
 
-### Disclaimer
-
-Please note that as Just Natsuki is currently undergoing a complete overhaul, any/all mod content under the overhaul is liable to change or be removed without prior warning.
-
-In addition, we unfortunately no longer offer support to those running the (now-outdated) older version of Just Natsuki, as we are focusing our efforts on a version that will completely supercede the old distribution.
-
-If you are looking for a complete mod experience, this is not something we are ready to offer just yet: please rest assured that announcements will be made when the time comes, and we make every attempt to keep our community updated through our official communication channels (GitHub, Twitter and Discord).
-
-However, if you are interested in helping to making Just Natsuki the best it can be, we welcome your support!
-Please feel free to clone the repository, suggest new content by raising an issue, or try out the mod yourself and let us know about any problems by raising bug reports.
-
-#### In short
-
-- Do not expect a complete, polished experience at this stage in development.
-- Do not expect progress made by playing under the overhaul to be supported into release, or further in development: you may need to delete your persistent to play newer versions of JN before release.
-- Progress made by playing under the old distribution of Just Natsuki will not be supported in the overhaul.
-- Do not expect support if you are playing the old distribution of Just Natsuki. It is **discontinued**.
+---
 
 ### What to expect from Just Natsuki
 
 Just Natsuki canonically takes place following the events of DDLC+ and DDLC, and focuses on fostering and developing a relationship between a restored Natsuki and the player responsible for bringing her back from her deletion.
 
-As you spend time with Natsuki and grow closer, new things to talk about and new features will become available: we stress that players enjoy the journey, rather than focus on the destination! As an effective dating simulator, the focus is on the adventure of the relationship as opposed to simply trying to unlock features as fast as possible - enjoy what you find as you find it!
+Enjoy finally spending some quality time with Natsuki, and explore her personality and thoughts like you've never experienced before: with unlockable games, extra features and hours of conversational topics, there's never a dull moment spent with your favourite tsundere!
 
-To this end, Just Natsuki has no endgame, end goal or ending - we strive to deliver regular updates so there's always a reason to spend more time with your favourite tsundere.
+Our mod has no endgame, end goal or ending - and we strive to deliver regular updates whenever we can so there's always something new to look forward to.
+
+Well, what's the hold up?
+
+It's rude to keep someone waiting, you know...
+
+---
 
 ### Installation
 
-1. Download a fresh copy of DDLC from https://ddlc.moe.
+Please note that we do **not** officially support installations using mod management software, nor do we support installations from sources other than our official GitHub.
+
+**Read the instructions carefully.**
+
+1. Download a fresh copy of DDLC from https://ddlc.moe. **Do not use a Steam installation**.
 2. Extract/unzip DDLC.
-3. Download the JN mod files: go to https://github.com/Just-Natsuki-Team/NatsukiModDev, then select the _Code_ tab and make sure the branch _master_ is selected. Click the green _Code_ button, and then select _download ZIP_.
+3. Download the JN mod files: go to https://github.com/Just-Natsuki-Team/NatsukiModDev, then select the most recent release under _Releases_.
 4. Extract/unzip the JN mod files.
 5. From the JN mod files, copy the `game` folder contents (all of it) into the `game` folder of DDLC. If asked to replace files, select _Yes_.
 6. From the JN mod files, copy the `lib` folder contents (all of it) into the `lib` folder of DDLC. If asked to replace files, select _Yes_.
-7. You may already have a persistent from the old version of JN - this must be deleted.
+7. From the JN mod files, copy the `update` folder into the DDLC folder.
+8. You may already have a persistent from the old version of JN - this must be deleted.
     1. For Windows, you can find it here: `%APPDATA%/Roaming/RenPy/JustNatsuki`
     2. For OSX, you can find it here: `~/Library/RenPy/JustNatsuki`
     3. For Linux, you can find it here: `~/.renpy/JustNatsuki`
-8. Finally, launch `DDLC.exe`.
+9. Finally, launch `DDLC.exe`.
     1. If you are on OSX, you may have to review your security settings for the game to launch properly; please see the guidance listed [here](https://github.com/Just-Natsuki-Team/NatsukiModDev/issues/221).
+
+---
 
 ### Updating
 
-Please note that until automatic updates are implemented, any updates released must be installed manually using the following instructions:
+Please note that until automatic updates are implemented, any updates released must be installed manually.
 
-1. Download the new JN mod files: go to https://github.com/Just-Natsuki-Team/NatsukiModDev, then select the _Code_ tab and make sure the branch _master_ is selected. Click the green _Code_ button, and then select _download ZIP_.
-2. Extract/unzip the new JN mod files.
-3. From the JN mod files, copy the `game` folder contents (all of it) into the `game` folder of your JN installation. If asked to replace files, select _Yes_.
-4. From the JN mod files, copy the `lib` folder contents (all of it) into the `lib` folder of your JN installation. If asked to replace files, select _Yes_.
-5. Finally, launch `DDLC.exe`.
+**Read the instructions carefully and follow the steps that apply to your current setup.**
 
-### FAQ
+#### Updating from the BETA to a RELEASE (1.0.0 onwards)
 
-- _I downloaded and installed the mod files, but the game is still vanilla DDLC._
-    - Double check your installation - remember that mod files must be extracted/unzipped, as well as the DDLC base game files.
-- _I downloaded and installed the mod files, but the game is nothing like the screenshots on the website._
-    - You may have installed the discontinued distribution of Just Natsuki: delete your installation and retry with the instructions above. Remember: the only official mod files are from GitHub!
-- _I downloaded and installed newer mod files, and now my game won't launch._
-    - You may need to delete your persistent file: make a copy and delete it, then try launching `DDLC.exe`.
-- _How do I report a bug with the mod?_
-    - Please log a bug report through the _Issues_ on GitHub, clicking _New issue_, then selecting _Report Bug_. Only one bug per report, please!
-- _How do I request support for the mod?_
-    - Please log a support request through the _Issues_ on GitHub, clicking _New issue_, then selecting _Support Request_. Only one item per request, please!
-- _Where can I make suggestions for the mod?_
-    - Please log a feature request through the _Issues_ on GitHub, clicking _New issue_, then selecting _Feature Request_. Please note we do not take suggestions from any other avenue of communication. Only one suggestion per request, please!
-- _Can I join the team?_
-    - Invitation to join our team is based on visible contributions to Just Natsuki and/or related DDLC mods, skillset, and participation in the DDLC community as judged by the team. Please do not ask to join directly!
-- _How do I progress in the mod/unlock a specific feature?_
-    - Simply put, all good things take time. Visit Natsuki often, explore your options and most importantly, treat her well! Please remember - this is a *long-term* mod, with relationship progression happening over weeks and months: so check in and update often!
-- _How do I update the game?_
-    - Please refer to the instructions listed [here](#updating). 
+*Use these instructions if you have a BETA version of JN you are updating to a RELEASE.*
+
+1. **Back up your persistent**: instructions on how to do so may be found [here](https://github.com/Just-Natsuki-Team/NatsukiModDev/wiki/04:-FAQ#can-i-back-up-my-save-data--how-do-i-find-my-persistent).
+2. Download a fresh copy of DDLC from https://ddlc.moe. **Do not use a Steam installation**.
+3. Extract/unzip DDLC.
+4. Download the release: go to https://github.com/Just-Natsuki-Team/NatsukiModDev, then select the most recent release under _Releases_.
+5. Extract/unzip the release files.
+6. **Delete** the `game` and `lib` folders from your **JN installation**.
+7. **Copy** the `game` and `lib` folders from your **fresh DDLC folder** into your JN installation.
+8. From the release files, copy the `game` folder contents (all of it) into the `game` folder of your JN installation. If asked to replace files, select _Yes_.
+9. From the release files, copy the `lib` folder contents (all of it) into the `lib` folder of your JN installation. If asked to replace files, select _Yes_.
+10. From the release files, copy the `update` folder into your JN installation.
+11. Finally, launch `DDLC.exe`.
+
+#### Updating from the a RELEASE (1.0.0) onwards
+
+*Use these instructions if you have a RELEASE version of JN you are updating to a later version.*
+
+1. **Back up your persistent**: instructions on how to do so may be found [here](https://github.com/
+2. Download the release files: go to https://github.com/Just-Natsuki-Team/NatsukiModDev, then select the most recent release under _Releases_.
+3. Extract/unzip the new release files.
+4. From the release files, copy the `game` folder contents (all of it) into the `game` folder of your JN installation. If asked to replace files, select _Yes_.
+5. From the release files, copy the `lib` folder contents (all of it) into the `lib` folder of your JN installation. If asked to replace files, select _Yes_.
+6. From the release files, copy the `update` folder contents (all of it) into the `update` folder of your JN installation. If asked to replace files, select _Yes_.
+7. Finally, launch `DDLC.exe`.
+
+#### Reporting bugs and requesting support
+
+To report bugs or request support with the mod, please raise a new issue [here](https://github.com/Just-Natsuki-Team/NatsukiModDev/issues/new/choose).
+
+---
+
+### Frequently Asked Questions
+
+Please refer to the full article on the wiki [here](https://github.com/Just-Natsuki-Team/NatsukiModDev/wiki/Home).
+
+---
 
 ### Community
 
-Interested in taking part in a growing community of Natsuki fans just like you, or looking to chat with some of the team?
+Interested in taking part in a growing community of Natsuki fans just like you, or looking for a casual chat with some of the team?
 
 If so, then please consider joining us on Discord: we'd love to see you there!
+
+Please note that all technical support, bugs and feature suggestions are **not** considered on Discord.
+
 <br>
 <p align="center">
     <a href="https://discord.gg/sFxdsCBh94">

@@ -61,7 +61,7 @@ init 5 python:
     )
 
 label compliment_amazing:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_amazing").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_amazing").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_AMAZING:
         if Natsuki.isEnamored(higher=True):
@@ -81,11 +81,11 @@ label compliment_amazing:
             n 1kllsrl "..."
             n 1fcssrl "I-{w=0.1}I don't like to admit it,{w=0.1} you know."
             n 1klrssl "But...{w=0.3} that means...{w=0.3} a lot to me,{w=0.1} [player]."
-            $ chosen_descriptor = random.choice(jn_globals.DEFAULT_PLAYER_DESCRIPTORS)
+            $ chosen_descriptor = jn_utils.getRandomDescriptor()
             n 1kwmnvl "Really.{w=0.2} Thank you.{w=0.2} You're honestly [chosen_descriptor]."
             n 1klrnvl "..."
 
-            if Natsuki.isLove():
+            if Natsuki.isLove(higher=True):
                 n 1kwmsmf "Love you,{w=0.1} [player]..."
 
         else:
@@ -114,7 +114,7 @@ init 5 python:
     )
 
 label compliment_beautiful:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_beautiful").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_beautiful").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_BEAUTIFUL:
         if Natsuki.isEnamored(higher=True):
@@ -125,13 +125,13 @@ label compliment_beautiful:
             n 1klrpol "..."
             n 1klrpul "...I-I'll take it,{w=0.1} though."
             n 1fllsll "The compliment,{w=0.1} I mean."
-            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            $ chosen_tease = jn_utils.getRandomTease()
             n 1kllssl "T-{w=0.1}thanks again,{w=0.1} [chosen_tease]."
 
         else:
             n 1fskwrf "E-{w=0.1}excuse me?!"
             n 1fbkwrf "[player]!{w=0.2} What did I tell you?!"
-            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            $ chosen_tease = jn_utils.getRandomTease()
             n 1fcsanf "Seriously...{w=0.3} are you trying to give me a heart attack or something,{w=0.1} [chosen_tease]?!"
             n 1fllpof "..."
 
@@ -153,7 +153,7 @@ label compliment_beautiful:
             n 1klrssf "...I...{w=0.3} believe you,{w=0.1} though.{w=0.2} Just don't make me regret saying that,{w=0.1} okay?"
             n 1klrbgl "T-{w=0.1}thanks,{w=0.1} [player]."
 
-            if Natsuki.isLove():
+            if Natsuki.isLove(higher=True):
                 n 1kwmsmf "...I love you,{w=0.1} [player]...{w=0.3} Ahaha..."
 
         else:
@@ -185,7 +185,7 @@ init 5 python:
     )
 
 label compliment_confident:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_confident").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_confident").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_CONFIDENT:
         if Natsuki.isEnamored(higher=True):
@@ -214,7 +214,7 @@ label compliment_confident:
 
             if Natsuki.isEnamored(higher=True):
                 n 1uchgnl "Oh,{w=0.1} who am I kidding.{w=0.2} Of course you do."
-                n 1uchbsl "Ahaha!"
+                n 1uchbslelg "Ahaha!"
 
     $ jn_compliments.last_compliment_type = jn_compliments.TYPE_CONFIDENT
     return
@@ -232,7 +232,7 @@ init 5 python:
     )
 
 label compliment_cute:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_cute").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_cute").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_CUTE:
         if Natsuki.isEnamored(higher=True):
@@ -250,9 +250,9 @@ label compliment_cute:
             n 1flrpof "Jeez..."
             n 1fnmpof "I swear,{w=0.1} you're such a goofball sometimes..."
 
-            if Natsuki.isLove():
+            if Natsuki.isLove(higher=True):
                 n 1fcsbgf "Besides,{w=0.1} I'm not even the cutest here,{w=0.1} a-{w=0.1}anyhow..."
-                $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+                $ chosen_tease = jn_utils.getRandomTease()
                 n 1fcssmf "I guess I'll let you figure out the rest,{w=0.1} [chosen_tease].{w=0.2} Ehehe."
 
         else:
@@ -296,7 +296,7 @@ init 5 python:
     )
 
 label compliment_hilarious:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_hilarious").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_hilarious").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_HILARIOUS:
         if Natsuki.isEnamored(higher=True):
@@ -323,7 +323,7 @@ label compliment_hilarious:
             n 1fcsbgl "O-{w=0.1}Oh?{w=0.2} Aha!{w=0.2} Well,{w=0.1} I'm glad to hear it!"
             n 1fsqsm "You know what that means,{w=0.1} right?"
             n 1fchgn "It means you have great taste,{w=0.1} [player]!"
-            n 1uchbs "Ahaha!"
+            n 1uchbselg "Ahaha!"
 
     $ jn_compliments.last_compliment_type = jn_compliments.TYPE_HILARIOUS
     return
@@ -341,7 +341,7 @@ init 5 python:
     )
 
 label compliment_inspirational:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_inspirational").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_inspirational").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_INSPIRATIONAL:
         if Natsuki.isEnamored(higher=True):
@@ -384,20 +384,20 @@ init 5 python:
     )
 
 label compliment_style:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_style").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_style").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_STYLE:
-        if jn_outfits.current_outfit_name != "School uniform":
+        if not Natsuki.isWearingOutfit("jn_school_uniform"):
 
             # Non-uniform dialogue
             if Natsuki.isEnamored(higher=True):
                 n 1fchgn "Ehehe.{w=0.2} Still awestruck by my sense of fashion,{w=0.1} [player]?"
                 n 1fwlbg "You can't deny I'm a snappy dresser!"
 
-                if Natsuki.isLove():
-                    $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+                if Natsuki.isLove(higher=True):
+                    $ chosen_tease = jn_utils.getRandomTease()
                     n 1fllbgl "D-{w=0.1}don't think I just dress for me though,{w=0.1} [chosen_tease]~."
-                    n 1nchsml "Ahaha!"
+                    n 1nchsmleaf "Ahaha!"
 
             else:
                 n 1tsgssl "Oh?{w=0.2} Someone could stand to take a few points,{w=0.1} huh?"
@@ -414,13 +414,14 @@ label compliment_style:
 
             else:
                 n 1tlrpul "Uh...{w=0.3} well...{w=0.3} thanks again,{w=0.1} ...I think?"
-                $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+                $ chosen_tease = jn_utils.getRandomTease()
                 n 1fllpol "You could at least save the compliments for my own clothes though,{w=0.1} [chosen_tease]..."
                 n 1nlrbg "But...{w=0.3} I guess I appreciate the sentiment.{w=0.2} Ahaha."
 
     else:
 
-        if jn_outfits.current_outfit_name != "School uniform":
+        if not Natsuki.isWearingOutfit("jn_school_uniform"):
+
             # Non-uniform dialogue
             if Natsuki.isEnamored(higher=True):
                 n 1nchsml "Ehehe.{w=0.2} I'm just happy you like this outfit,{w=0.1} [player]!"
@@ -447,7 +448,7 @@ label compliment_style:
                 n 1tnmaj "A-{w=0.1}are you saying I look good in {i}uniform{/i}?"
                 n 1fskemf "..."
                 n 1fbkwrf "A-{w=0.1}ah!{w=0.2} Gross!{w=0.2} I don't like where this is going at all!{w=0.2} That's enough!"
-                $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+                $ chosen_tease = jn_utils.getRandomTease()
                 n 1flremf "Jeez,{w=0.1} [chosen_tease]..."
 
     $ jn_compliments.last_compliment_type = jn_compliments.TYPE_STYLE
@@ -466,25 +467,25 @@ init 5 python:
     )
 
 label compliment_thoughtful:
-    $ Natsuki.calculated_affinity_gain(bypass=get_topic("compliment_thoughtful").shown_count == 0)
+    $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_thoughtful").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_THOUGHTFUL:
         if Natsuki.isEnamored(higher=True):
             n 1fcsanl "Nnnnn-!{w=0.2} what did I tell you,{w=0.1} [player]?"
             n 1kllpol "I'm just...{w=0.3} giving as good as I get,{w=0.1} alright?"
             n 1knmpol "Jeez...{w=0.3} are you trying to put me on the spot or what?"
-            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES).capitalize()
+            $ chosen_tease = jn_utils.getRandomTease().capitalize()
             n 1klrpo "[chosen_tease]..."
             n 1klrpu "But...{w=0.3} I'm just really glad you appreciate it,{w=0.1} [player]."
 
-            if Natsuki.isLove():
+            if Natsuki.isLove(higher=True):
                 n 1knmsml "You're totally worth the effort."
 
         else:
             n 1fcsanl "Uuuuu...{w=0.3} jeez,{w=0.1} [player]..."
             n 1fbkeml "I already said it was nothing!{w=0.2} Are you trying to put me on the spot?"
             n 1fllpol "It's fine,{w=0.1} so...{w=0.3} don't worry about it,{w=0.1} alright?"
-            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES).capitalize()
+            $ chosen_tease = jn_utils.getRandomTease().capitalize()
             n 1flrpol "[chosen_tease]..."
 
     else:

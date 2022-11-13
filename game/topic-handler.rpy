@@ -18,7 +18,7 @@ init 6 python in topic_handler:
     ALL_TOPIC_MAP = dict()
 
     #Add everything to the all-in-one map
-    for topic_map in TOPIC_CODE_MAP.itervalues():
+    for topic_map in TOPIC_CODE_MAP.values():
         ALL_TOPIC_MAP.update(topic_map)
 
 init 6 python:

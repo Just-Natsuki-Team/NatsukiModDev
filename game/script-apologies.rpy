@@ -1,62 +1,51 @@
 default persistent._apology_database = dict()
 
 # Retain the last apology made on quitting the game, so Natsuki can react on boot
-default persistent.jn_player_apology_type_on_quit = None
+default persistent._jn_player_apology_type_on_quit = None
 
 # List of pending apologies the player has yet to make
-default persistent.jn_player_pending_apologies = list()
+default persistent._jn_player_pending_apologies = list()
 
 init 0 python in jn_apologies:
+    from Enum import Enum
     import store
 
     APOLOGY_MAP = dict()
 
-    # Apology types
-    TYPE_BAD_NICKNAME = 0
-    TYPE_CHEATED_GAME = 1
-    TYPE_DEFAULT = 2
-    TYPE_PROLONGED_LEAVE = 3
-    TYPE_RUDE = 4
-    TYPE_SCREENSHOT = 5
-    TYPE_SUDDEN_LEAVE = 6
-    TYPE_UNHEALTHY = 7
-    TYPE_SCARE = 8
+    class ApologyTypes(Enum):
+        """
+        Identifiers for different nickname types.
+        """
+        bad_nickname = 1
+        cheated_game = 2
+        generic = 3
+        prolonged_leave = 4
+        rude = 5
+        sudden_leave = 6
+        unhealthy = 7
+        scare = 8
+        bad_player_name = 9
+
+        def __str__(self):
+            return self.name
+
+        def __int__(self):
+            return self.value
 
     def get_all_apologies():
         """
-        Gets all apology topics which are available
+        Gets all apology topics for the currently pending apologies, as well as the generic
 
         OUT:
-            List<Topic> of apologies which are unlocked and available at the current affinity
+            List<Topic> for all current pending apologies
         """
-        return store.Topic.filter_topics(
-            APOLOGY_MAP.values(),
-            affinity=store.Natsuki._getAffinityState(),
-            unlocked=True
-        )
+        return_apologies = [
+            store.get_topic("apology_generic")
+        ]
+        for apology_type in store.persistent._jn_player_pending_apologies:
+            return_apologies.append(store.get_topic(str("apology_{0}".format(ApologyTypes(apology_type)))))
 
-    def get_apology_type_pending(apology_type):
-        """
-        Checks whether the given apology type is in the list of pending apologies.
-
-        IN:
-            Apology type to check.
-
-        OUT:
-            True if present, otherwise False.
-        """
-        return apology_type in store.persistent.jn_player_pending_apologies
-
-    def add_new_pending_apology(apology_type):
-        """
-        Adds a new apology possiblity to the list of pending apologies.
-        If the apology type is already present in the list, ignore it.
-
-        IN:
-            Apology type to add.
-        """
-        if not apology_type in store.persistent.jn_player_pending_apologies:
-            store.persistent.jn_player_pending_apologies.append(apology_type)
+        return return_apologies
 
 # Returns all apologies that the player qualifies for, based on wrongdoings
 label player_apologies_start:
@@ -83,14 +72,12 @@ init 5 python:
             prompt="For calling you a hurtful name.",
             label="apology_bad_nickname",
             unlocked=True,
-            conditional="jn_apologies.get_apology_type_pending(jn_apologies.TYPE_BAD_NICKNAME)"
         ),
         topic_group=TOPIC_TYPE_APOLOGY
     )
 
 label apology_bad_nickname:
-
-    if persistent.jn_player_nicknames_allowed:
+    if persistent._jn_nicknames_natsuki_allowed:
         # The player is still capable of nicknaming Natsuki
         if Natsuki.isEnamored(higher=True):
             n 1kcssf "..."
@@ -99,7 +86,7 @@ label apology_bad_nickname:
             n 1kcssf "..."
             n 1kplss "I'm...{w=0.3} glad you've chosen to apologize."
             n 1knmsr "Just please...{w=0.3} try to consider my feelings next time,{w=0.1} alright?"
-            $ Natsuki.calculated_affinity_gain()
+            $ Natsuki.calculatedAffinityGain()
 
         elif Natsuki.isNormal(higher=True):
             n 1fcssr "..."
@@ -107,7 +94,7 @@ label apology_bad_nickname:
             n 1uplsl "Just please knock it off,{w=0.1} [player]."
             n 1uplaj "It isn't funny.{w=0.2} It isn't a joke."
             n 1fllsl "...And I know you're better than that."
-            $ Natsuki.calculated_affinity_gain()
+            $ Natsuki.calculatedAffinityGain()
 
         elif Natsuki.isDistressed(higher=True):
             n 1fsqsl "...Are you sure,{w=0.1} [player]?"
@@ -118,15 +105,15 @@ label apology_bad_nickname:
             n 1fcssr "..."
             n 1fllsr "...Thanks,{w=0.1} I guess.{w=0.2} For the apology."
             n 1fsqsl "Just quit while you're ahead,{w=0.1} understand?"
-            $ Natsuki.calculated_affinity_gain()
+            $ Natsuki.calculatedAffinityGain()
 
         else:
-            n 1fcsan "...I honestly don't know what I find more gross about you,{w=0.1} [player]."
+            n 1fcsan "...I honestly don't know what I find more {i}gross{/i} about you,{w=0.1} [player]."
             n 1fcsaj "The fact you even did it in the first place..."
             n 1fsqfu "...Or that you think a simple apology makes all that a-okay."
             n 1fcssr "..."
-            n 1fcsan "Don't think this changes a thing,{w=0.1} [player]."
-            n 1fsqsr "Because it doesn't."
+            n 1fcsantsa "Don't think this changes a thing,{w=0.1} [player]."
+            n 1fsqsrtsb "Because it doesn't."
 
     else:
         # The player has been barred from nicknaming Natsuki, and even an apology won't change that
@@ -140,30 +127,30 @@ label apology_bad_nickname:
             n 1kplsr "I appreciate your apology,{w=0.1} okay?{w=0.2} I do."
             n 1kllsr "But...{w=0.3} it's just like I said.{w=0.2} Actions have consequences."
             n 1kcssr "I hope you can understand."
-            $ Natsuki.calculated_affinity_gain()
+            $ Natsuki.calculatedAffinityGain()
 
         elif Natsuki.isNormal(higher=True):
             n 1fcssr "...[player]."
             n 1fsqsr "Look.{w=0.2} You're sorry,{w=0.1} I get it.{w=0.2} I'm sure you mean it too."
             n 1fcssl "But...{w=0.3} it's like I said.{w=0.1} Actions have consequences."
             n 1kcssl "I hope you can understand."
-            $ Natsuki.calculated_affinity_gain()
+            $ Natsuki.calculatedAffinityGain()
 
         elif Natsuki.isDistressed(higher=True):
-            n 1fsqfu "Ugh...{w=0.3} really,{w=0.1} [player]?"
+            n 1fupfu "Ugh...{w=0.3} really,{w=0.1} [player]?"
             n 1fcsan "..."
             n 1fsqfr "I {i}said{/i} actions have consequences."
             n 1fcsfr "I appreciate the apology.{w=0.2} But that's all you're getting."
-            $ Natsuki.calculated_affinity_gain()
+            $ Natsuki.calculatedAffinityGain()
 
         else:
             n 1kcsfr "...Wow.{w=0.2} Just wow."
             n 1fcsfu "{i}Now{/i} you choose to apologize?"
-            n 1kcssr "..."
-            n 1fsqfu "Whatever.{w=0.2} I literally don't care."
-            n 1fcsan "This changes nothing,{w=0.1} [player]."
+            n 1kcssrtsa "..."
+            n 1fsqfutsb "Whatever.{w=0.2} I literally don't care."
+            n 1fcsantsa "This changes {i}nothing{/i},{w=0.1} [player]."
 
-    $ persistent.jn_player_pending_apologies.remove(jn_apologies.TYPE_BAD_NICKNAME)
+    $ Natsuki.removeApology(jn_apologies.ApologyTypes.bad_nickname)
     return
 
 # Apology for cheating in a minigame
@@ -174,7 +161,6 @@ init 5 python:
             prompt="For cheating during our games.",
             label="apology_cheated_game",
             unlocked=True,
-            conditional="jn_apologies.get_apology_type_pending(jn_apologies.TYPE_CHEATED_GAME)"
         ),
         topic_group=TOPIC_TYPE_APOLOGY
     )
@@ -185,27 +171,28 @@ label apology_cheated_game:
         n 1nllsm "We all get a little too competitive sometimes,{w=0.1} right?"
         n 1nsqsm "Just remember though."
         n 1fsqbg "Two can play at that game!"
-        $ Natsuki.calculated_affinity_gain()
+        $ Natsuki.calculatedAffinityGain()
         $ persistent.jn_snap_player_is_cheater = False
 
     elif Natsuki.isNormal(higher=True):
         n 1fsqbg "Huh?{w=0.2} Oh,{w=0.1} that."
         n 1nnmaj "Yeah,{w=0.1} yeah.{w=0.2} It's fine."
         n 1nllsl "Just play fair next time,{w=0.1} 'kay?"
-        $ Natsuki.calculated_affinity_gain()
+        $ Natsuki.calculatedAffinityGain()
         $ persistent.jn_snap_player_is_cheater = False
 
     elif Natsuki.isDistressed(higher=True):
         n 1fcssl "Whatever,{w=0.1} [player]."
         n 1fsqsl "But thanks for the apology,{w=0.1} I guess."
-        $ Natsuki.calculated_affinity_gain()
+        $ Natsuki.calculatedAffinityGain()
         $ persistent.jn_snap_player_is_cheater = False
 
     else:
         n 1fcsan "Whatever.{w=0.2} I don't care."
-        n 1fsqan "As if I could expect much better from you,{w=0.1} anyway..."
+        n 1fsqantsa "As if I could expect much better from {i}you{/i},{w=0.1} anyway."
+        $ persistent.jn_snap_player_is_cheater = False
 
-    $ persistent.jn_player_pending_apologies.remove(jn_apologies.TYPE_CHEATED_GAME)
+    $ Natsuki.removeApology(jn_apologies.ApologyTypes.cheated_game)
     return
 
 # Generic apology
@@ -214,14 +201,14 @@ init 5 python:
         Topic(
             persistent._apology_database,
             prompt="For something.",
-            label="apology_default",
+            label="apology_generic",
             unlocked=True
         ),
         topic_group=TOPIC_TYPE_APOLOGY
     )
 
-label apology_default:
-    if len(persistent.jn_player_pending_apologies) == 0:
+label apology_generic:
+    if len(persistent._jn_player_pending_apologies) == 0:
         # The player has nothing to be sorry to Natsuki for; prompt them to do better
         if Natsuki.isEnamored(higher=True):
             n 1tnmaj "Huh?{w=0.2} You're sorry?"
@@ -232,7 +219,7 @@ label apology_default:
             n 1unmsm "You're gonna make things right,{w=0.1} [player]. 'Kay?"
             n 1kchbg "And no -{w=0.1} this isn't up for discussion."
             n 1fchsm "Whatever you did,{w=0.1} you'll fix things up and that's all there is to it."
-            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            $ chosen_tease = jn_utils.getRandomTease()
             n 1fchbg "You have my vote of confidence,{w=0.1} [chosen_tease] -{w=0.1} now do your best!"
             n 1uchsm "Ehehe."
 
@@ -256,7 +243,7 @@ label apology_default:
             n 1fcsan "...Huh.{w=0.2} Wow."
             n 1fsqan "So you {i}do{/i} actually feel remorse,{w=0.1} then."
             n 1fcssl "..."
-            n 1fsqfu "Whatever.{w=0.2} It isn't me you should be apologizing to,{w=0.1} anyway."
+            n 1fsqfutsb "Whatever.{w=0.2} It isn't {i}me{/i} you should be apologizing to,{w=0.1} anyway."
 
     else:
         # The player is avoiding a direct apology to Natsuki; call them out on it
@@ -266,26 +253,26 @@ label apology_default:
             n 1knmaj "Just apologize properly,{w=0.1} alright?"
             n 1kllbo "I won't get mad."
             n 1kcsbo "I just wanna move on."
-            $ Natsuki.percentage_affinity_loss(2.5)
+            $ Natsuki.percentageAffinityLoss(2.5)
 
         elif Natsuki.isNormal(higher=True):
             n 1fnmsf "Come on,{w=0.1} [player]."
             n 1fnmaj "You know what you did."
             n 1nllsl "Just apologize properly so we can both move on."
-            $ Natsuki.percentage_affinity_loss(2)
+            $ Natsuki.percentageAffinityLoss(2)
 
         elif Natsuki.isDistressed(higher=True):
-            n 1fcsan "Ugh..."
+            n 1fupem "Ugh..."
             n 1fnman "Really,{w=0.1} [player].{w=0.2} Haven't you screwed with me enough?"
             n 1fsqfu "If you're gonna apologize,{w=0.1} have the guts to do it properly."
             n 1fsqsf "You owe me that much,{w=0.1} at least."
-            $ Natsuki.percentage_affinity_loss(1.5)
+            $ Natsuki.percentageAffinityLoss(1.5)
 
         else:
             n 1fsqfu "...Do you even know how you sound?"
-            n 1fnmfu "Do you even {i}listen{/i} to yourself?"
-            n 1fcsfu "Apologize properly or don't bother."
-            $ Natsuki.percentage_affinity_loss(1)
+            n 1fnmfutsf "Do you even {i}listen{/i} to yourself?"
+            n 1fcsfutsa "Apologize properly or don't bother."
+            $ Natsuki.percentageAffinityLoss(1)
 
     return
 
@@ -297,7 +284,6 @@ init 5 python:
             prompt="For abandoning you.",
             label="apology_prolonged_leave",
             unlocked=True,
-            conditional="jn_apologies.get_apology_type_pending(jn_apologies.TYPE_PROLONGED_LEAVE)"
         ),
         topic_group=TOPIC_TYPE_APOLOGY
     )
@@ -317,7 +303,7 @@ label apology_prolonged_leave:
         n 1kplsm "Thanks,{w=0.1} [player].{w=0.2} I accept your apology."
         n 1kplbo "Just...{w=0.3} some notice would be nice next time,{w=0.1} is all."
         n 1kllbo "That isn't too much to ask...{w=0.3} right?"
-        $ Natsuki.calculated_affinity_gain()
+        $ Natsuki.calculatedAffinityGain()
 
     elif Natsuki.isNormal(higher=True):
         n 1fcsunl "[player]..."
@@ -327,7 +313,7 @@ label apology_prolonged_leave:
         n 1fllunl "..."
         n 1fllpo "I'm...{w=0.3} grateful for your apology,{w=0.1} [player]."
         n 1fnmpo "Just...{w=0.3} no more disappearing acts,{w=0.1} alright?"
-        $ Natsuki.calculated_affinity_gain()
+        $ Natsuki.calculatedAffinityGain()
 
     elif Natsuki.isDistressed(higher=True):
         n 1fcsbo "[player]."
@@ -337,15 +323,15 @@ label apology_prolonged_leave:
         n 1fcssl "..."
         n 1fsqsl "Thanks for the apology,{w=0.1} I guess."
         n 1fsqbo "Just don't do that again."
-        $ Natsuki.calculated_affinity_gain()
+        $ Natsuki.calculatedAffinityGain()
 
     else:
         n 1kcspu "...Ha...{w=0.3} ah...{w=0.3} haha..."
         n 1fsqan "Y-{w=0.1}you're apologizing to me?{w=0.2} For not being here?"
         n 1kcssl "...Heh..."
-        n 1fsqfu "You should be apologizing that you {i}came back{/i}."
+        n 1fsqfutsb "You should be apologizing that you {i}came back{/i}."
 
-    $ persistent.jn_player_pending_apologies.remove(jn_apologies.TYPE_PROLONGED_LEAVE)
+    $ Natsuki.removeApology(jn_apologies.ApologyTypes.prolonged_leave)
     return
 
 # Apology for generally being rude to Natsuki outside of nicknames
@@ -356,7 +342,6 @@ init 5 python:
             prompt="For being rude to you.",
             label="apology_rude",
             unlocked=True,
-            conditional="jn_apologies.get_apology_type_pending(jn_apologies.TYPE_RUDE)"
         ),
         topic_group=TOPIC_TYPE_APOLOGY
     )
@@ -371,7 +356,7 @@ label apology_rude:
         n 1kplss "Thanks for the apology,{w=0.1} [player].{w=0.2} I really do appreciate it."
         n 1kllaj "Just...{w=0.3} try not to do that again,{w=0.1} 'kay?"
         n 1kplsll "It would mean a lot to me."
-        $ Natsuki.calculated_affinity_gain()
+        $ Natsuki.calculatedAffinityGain()
 
     elif Natsuki.isNormal(higher=True):
         n 1fcssl "[player]..."
@@ -381,7 +366,7 @@ label apology_rude:
         n 1fcssf "..."
         n 1fllsf "Let's just move on and forget about this,{w=0.1} alright?"
         n 1nllsf "Thanks,{w=0.1} [player]."
-        $ Natsuki.calculated_affinity_gain()
+        $ Natsuki.calculatedAffinityGain()
 
     elif Natsuki.isDistressed(higher=True):
         n 1fcsan "..."
@@ -390,87 +375,17 @@ label apology_rude:
         n 1fcssr "..."
         n 1fsqaj "...Fine.{w=0.2} I guess I should accept your apology."
         n 1fsqan "I just hope you don't treat others how you're treating me."
-        $ Natsuki.calculated_affinity_gain()
+        $ Natsuki.calculatedAffinityGain()
 
     else:
         n 1kcsan "Ha...{w=0.3} aha..."
-        n 1fsqan "You're apologizing...{w=0.3} to me? Why?"
-        n 1fsqpu "I don't expect any better from you."
+        n 1fsqan "You're apologizing...{w=0.3} to me?{w=1} Why?"
+        n 1fsqpu "I don't expect {i}any{/i} better from you."
         n 1fcsun "..."
-        n 1fsqfu "You can stick your apology,{w=0.1} [player]."
-        n 1fcsfu "It means nothing to me."
+        n 1fsqfutsb "You can {i}stick{/i} your apology,{w=0.1} [player]."
+        n 1fcsfutsa "It means nothing to me."
 
-    $ persistent.jn_player_pending_apologies.remove(jn_apologies.TYPE_RUDE)
-    return
-
-# Apology for taking pictures without Natsuki's permission
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._apology_database,
-            prompt="For taking pictures of you without permission.",
-            label="apology_screenshots",
-            unlocked=True,
-            conditional="jn_apologies.get_apology_type_pending(jn_apologies.TYPE_SCREENSHOT)"
-        ),
-        topic_group=TOPIC_TYPE_APOLOGY
-    )
-
-label apology_screenshots:
-    # The player has been barred from taking more screenshots
-    if Natsuki.isEnamored(higher=True):
-        n 1kcsbol "...[player]."
-        n 1fnmaj "I told you so many times to knock it off."
-        n 1knmsl "Why didn't you listen to me?"
-        n 1kllbo "You know how I feel about having my picture taken..."
-        n 1kcsun "So it really hurts when you just ignore me like that."
-        n 1ksqun "And not just once,{w=0.1} [player]."
-        n 1fsqun "Again.{w=0.2} And again.{w=0.2} And again."
-        n 1fcsun "..."
-        n 1knmsl "Thanks for the apology,{w=0.1} [player].{w=0.2} I appreciate it."
-
-        if jn_screenshots.are_screenshots_blocked():
-            n 1klrsl "But...{w=0.3} I'm going to keep the camera switched off -{w=0.1} at least for now."
-            n 1kplsl "I hope you can understand why."
-
-        $ Natsuki.calculated_affinity_gain()
-
-    elif Natsuki.isNormal(higher=True):
-        n 1fcssl "[player]..."
-        n 1fsqsl "I told you again and again not to do that."
-        n 1fnmsl "Why did you keep ignoring me?"
-        n 1fnman "...Especially after I told you I don't like it."
-        n 1fcssl  "..."
-        n 1nllbo "Thanks for coming clean to me,{w=0.1} [player].{w=0.2} I appreciate it."
-
-        if jn_screenshots.are_screenshots_blocked():
-            n 1fnmaj "But...{w=0.3} the camera is staying off for now."
-            n 1flrbo "Thanks for understanding."
-
-        $ Natsuki.calculated_affinity_gain()
-
-    elif Natsuki.isDistressed(higher=True):
-        n 1fsqsf "...You're apologizing to me {i}now{/i},{w=0.1} [player]?"
-        n 1fsqan "And after I gave you so many chances to quit it?"
-        n 1fcssf "..."
-        n 1fsqaj "...Fine.{w=0.2} I suppose I'll accept your apology..."
-
-        if jn_screenshots.are_screenshots_blocked():
-            n 1fnmsl "But the camera stays off."
-            n 1fsqbo "I don't think I need to explain why."
-
-        else:
-            n 1fsqbo "This time,{w=0.1} anyway."
-
-        $ Natsuki.calculated_affinity_gain()
-
-    else:
-        n 1fcsan "...No,{w=0.1} [player].{w=0.2} Please."
-        n 1fsqfu "Don't even {i}try{/i} to pretend like you care now."
-        n 1fcsfu "..."
-        n 1fcssf "...Keep your pathetic apology.{w=0.2} I don't want it."
-
-    $ persistent.jn_player_pending_apologies.remove(jn_apologies.TYPE_SCREENSHOT)
+    $ Natsuki.removeApology(jn_apologies.ApologyTypes.rude)
     return
 
 # Apology for leaving without saying "Goodbye" properly.
@@ -479,14 +394,13 @@ init 5 python:
         Topic(
             persistent._apology_database,
             prompt="For leaving without saying goodbye.",
-            label="apology_without_goodbye",
+            label="apology_sudden_leave",
             unlocked=True,
-            conditional="jn_apologies.get_apology_type_pending(jn_apologies.TYPE_SUDDEN_LEAVE)"
         ),
         topic_group=TOPIC_TYPE_APOLOGY
     )
 
-label apology_without_goodbye:
+label apology_sudden_leave:
     if Natsuki.isEnamored(higher=True):
         n 1fcsunl "[player]..."
         n 1knmunl "Do you know how much it hurts when you do that?"
@@ -496,7 +410,7 @@ label apology_without_goodbye:
         n 1kcssl "..."
         n 1knmss "I'm grateful for the apology,{w=0.1} but please..."
         n 1knmsm "You can at least spare the time to say goodbye properly to me,{w=0.1} right?"
-        $ Natsuki.calculated_affinity_gain()
+        $ Natsuki.calculatedAffinityGain()
 
     elif Natsuki.isNormal(higher=True):
         n 1fllsl "..."
@@ -510,7 +424,7 @@ label apology_without_goodbye:
         n 1flraj "I accept the apology,{w=0.1} okay?"
         n 1knmaj "Just...{w=0.3} remember to at least say goodbye to me properly."
         n 1nnmsl "You can do that much,{w=0.1} right?"
-        $ Natsuki.calculated_affinity_gain()
+        $ Natsuki.calculatedAffinityGain()
 
     elif Natsuki.isDistressed(higher=True):
         n 1fsqsl "[player]."
@@ -519,14 +433,14 @@ label apology_without_goodbye:
         n 1fcssr "..."
         n 1fsqsr "Look,{w=0.1} fine.{w=0.2} Apology accepted,{w=0.1} for now."
         n 1fsqaj "But really,{w=0.1} [player].{w=0.2} I expected better -{w=0.1} even from you."
-        $ Natsuki.calculated_affinity_gain()
+        $ Natsuki.calculatedAffinityGain()
 
     else:
         n 1fcsan "...Heh.{w=0.2} Honestly?"
-        n 1fsqan "Whatever.{w=0.2} I don't care.{w=0.2} Keep your apology."
-        n 1fsqsf "You've so many other things to be sorry for.{w=0.2} What's another on the pile,{w=0.1} right?"
+        n 1fsqantsb "Whatever.{w=0.2} I don't care.{w=0.2} Keep your apology."
+        n 1fsqsftse "You've so many other things to be sorry for.{w=0.2} What's another on the pile,{w=0.1} right?"
 
-    $ persistent.jn_player_pending_apologies.remove(jn_apologies.TYPE_SUDDEN_LEAVE)
+    $ Natsuki.removeApology(jn_apologies.ApologyTypes.sudden_leave)
     return
 
 # Apology for failing to follow Natsuki's advice when she is concerned about the player's health
@@ -537,7 +451,6 @@ init 5 python:
             prompt="For not taking care of myself properly.",
             label="apology_unhealthy",
             unlocked=True,
-            conditional="jn_apologies.get_apology_type_pending(jn_apologies.TYPE_UNHEALTHY)"
         ),
         topic_group=TOPIC_TYPE_APOLOGY
     )
@@ -553,17 +466,17 @@ label apology_unhealthy:
         n 1knmss "Thanks,{w=0.1} [player].{w=0.2} I accept your apology."
         n 1knmbo "Just please...{w=0.3} take better care of yourself,{w=0.1} alright?"
         n 1kllbol "I'll get mad if you don't.{w=0.2} For real,{w=0.1} this time."
-        $ Natsuki.calculated_affinity_gain()
+        $ Natsuki.calculatedAffinityGain()
 
     elif Natsuki.isNormal(higher=True):
-        n 1fcsbol "Ugh...{w=0.3} [player]."
+        n 1fupbol "Ugh...{w=0.3} [player]."
         n 1fnmbo "Look.{w=0.2} I accept your apology."
         n 1knmaj "But you gotta take better care of yourself!"
         n 1fllpo "I'm not always gonna be here to babysit you,{w=0.1} you know..."
         n 1fnmem "A-{w=0.1}and it's not like I'm making an exception for you,{w=0.1} by the way!"
         n 1nlrbo "I just care about all my friends like this,{w=0.1} so...{w=0.3} yeah."
         n 1knmsl "Try and make more of an effort to look after yourself,{w=0.1} 'kay?"
-        $ Natsuki.calculated_affinity_gain()
+        $ Natsuki.calculatedAffinityGain()
 
     elif Natsuki.isDistressed(higher=True):
         n 1fcssl "...Look.{w=0.2} [player]."
@@ -572,13 +485,13 @@ label apology_unhealthy:
         n 1fcssl "..."
         n 1fnmsl "Just...{w=0.3} take more care of yourself."
         n 1fsqsl "...And while you're at it, perhaps try taking better care of me.{w=0.2} Thanks."
-        $ Natsuki.calculated_affinity_gain()
+        $ Natsuki.calculatedAffinityGain()
 
     else:
         n 1kcsun "...Heh."
-        n 1fcsan "At least you care that {i}you{/i} aren't being treated right."
+        n 1fcsantsa "At least you care that {i}you{/i} aren't being treated right."
 
-    $ persistent.jn_player_pending_apologies.remove(jn_apologies.TYPE_UNHEALTHY)
+    $ Natsuki.removeApology(jn_apologies.ApologyTypes.unhealthy)
     return
 
 # Apology for giving Natsuki a fright
@@ -589,7 +502,6 @@ init 5 python:
             prompt="For scaring you.",
             label="apology_scare",
             unlocked=True,
-            conditional="jn_apologies.get_apology_type_pending(jn_apologies.TYPE_SCARE)"
         ),
         topic_group=TOPIC_TYPE_APOLOGY
     )
@@ -601,7 +513,7 @@ label apology_scare:
         n 1fcspol "..."
         n 1kllbol "Thank you,{w=0.1} [player].{w=0.2} I accept your apology."
         n 1kplbol "Just please...{w=0.3} no more surprises like that,{w=0.1} okay?{w=0.1} For me?"
-        $ Natsuki.calculated_affinity_gain()
+        $ Natsuki.calculatedAffinityGain()
 
     elif Natsuki.isNormal(higher=True):
         n 1fbkwrl "A-{w=0.1}and you're right {i}to{/i} be sorry,{w=0.1} [player]!"
@@ -610,7 +522,7 @@ label apology_scare:
         n 1fnmpo "Alright,{w=0.1} look.{w=0.1} I accept your apology,{w=0.1} okay?"
         n 1knmaj "Just don't do stuff like that to me.{w=0.2} Please?"
         n 1flrsl "I'm not messing around,{w=0.1} [player]."
-        $ Natsuki.calculated_affinity_gain()
+        $ Natsuki.calculatedAffinityGain()
 
     elif Natsuki.isDistressed(higher=True):
         n 1fsqsl "...Look,{w=0.1} [player].{w=0.2} I'm already upset.{w=0.2} Why are you trying to make me feel even worse?"
@@ -618,11 +530,139 @@ label apology_scare:
         n 1fcsan "..."
         n 1fcssl "Whatever.{w=0.2} Fine.{w=0.2} Apology accepted,{w=0.1} if you even meant it."
         n 1fsqsf "Just knock it off."
-        $ Natsuki.calculated_affinity_gain()
+        $ Natsuki.calculatedAffinityGain()
 
     else:
         n 1fsqfu "Stick it,{w=0.1} [player]."
-        n 1fcsan "We both know you don't mean that."
+        n 1fcsantsa "We both know you don't mean that."
 
-    $ persistent.jn_player_pending_apologies.remove(jn_apologies.TYPE_SCARE)
+    $ Natsuki.removeApology(jn_apologies.ApologyTypes.scare)
+    return
+
+# Apology for giving Natsuki a bad nickname
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._apology_database,
+            prompt="For asking you to call me a bad name.",
+            label="apology_bad_player_name",
+            unlocked=True,
+        ),
+        topic_group=TOPIC_TYPE_APOLOGY
+    )
+
+label apology_bad_player_name:
+    if persistent._jn_nicknames_player_allowed:
+        # The player is still capable of nicknaming Natsuki
+        if Natsuki.isEnamored(higher=True):
+            n 1ncspuesi "..."
+            n 1nllsl "...It's fine,{w=0.1} [player]."
+            n 1ncsaj "Just..."
+            n 1ksrsl "..."
+            n 1kcstr "I really hate when I try to do something nice...{w=1}{nw}"
+            extend 1ksqsr " and it just gets thrown back in my face,{w=0.1} you know?"
+            n 1fcstr "I didn't {i}have{/i} to listen to what you wanted."
+            n 1knmsrl "...So do you seriously think saying stuff like that {i}makes{/i} me want to do that again in the future?"
+            n 1fllsrl "Because it {i}doesn't{/i},{w=0.1} [player]."
+            n 1fcssrl "..."
+            n 1kcsajsbl "...Look.{w=1}{nw}"
+            extend 1nllpul " It's all water under the bridge,{w=0.1} okay?{w=0.75}{nw}"
+            extend 1fllpol " I accept your apology."
+            n 1fnmpol "Just use your noggin next time.{w=0.75}{nw}"
+            extend 1fcspol " I {i}know{/i} there's one on your shoulders somewhere."
+            n 1fsrunl "...Just don't start trying to prove me wrong on that.{w=0.75}{nw}"
+            extend 1ksqpol " Please?"
+            $ Natsuki.calculatedAffinityGain()
+
+        elif Natsuki.isNormal(higher=True):
+            n 1tnmpueqm "...Huh?{w=1}{nw}"
+            extend 1nnmsl " Oh,{w=0.3} right.{w=0.75}{nw}"
+            extend 1fslbol " The whole name thing."
+            n 1ncspuesi "..."
+            n 1fsqca "...That was still a jerkish thing to do,{w=0.5}{nw}"
+            extend 1fslca " you know."
+            n 1fcsemlsbl "You're just lucky I don't keep pointless grudges forever." 
+            extend 1fcsca " I'm a bigger person than that."
+            n 1nllaj "So...{w=1}{nw}"
+            extend 1nnmsl " you're forgiven.{w=0.75}{nw}"
+            extend 1nsrbo " I guess."
+            n 1fnmcal "Just think about what you come out with.{w=0.5}{nw}"
+            extend 1ksrcalsbr " It really isn't hard,{w=0.1} is it?"
+            $ Natsuki.calculatedAffinityGain()
+
+        elif Natsuki.isDistressed(higher=True):
+            n 1fcsan "...You are just unbelievable,{w=0.1} [player]."
+            n 1fsqfu "Did it {i}seriously{/i} take you this long to admit you were wrong to say that?"
+            n 1flrem "Like,{w=0.5}{nw}"
+            extend 1fnmsc " are you {i}trying{/i} to be funny?"
+            n 1fsqup "...Or are you really just {b}that{/b} arrogant?"
+            n 1fcsan "..."
+            n 1fsqanean "...You know what?{w=0.5}{nw}"
+            extend 1fcsfuean " Fine.{w=1}{nw}"
+            extend 1fllwr " Who cares?{w=0.75}{nw}"
+            extend 1fsqfultsb " You clearly don't."
+            n 1fcsfrtsa "I'll accept your half-baked {i}attempt{/i} at an apology."
+            n 1fsqfutsb "But only because it's less effort than getting angry about it."
+
+        else:
+            n 1fsquntdr "Heh.{w=0.75}{nw}"
+            extend 1fsqantsb " {i}Now{/i} you apologize,{w=0.1} huh?"
+            n 1fnmanltsfean "After all this time?"
+            n 1fcsanltsd "..."
+            n 1fcsfultsa "You know what?{w=1}{nw}"
+            extend 1fsqfultsb " Maybe I {i}should{/i} just call you that name."
+            n 1fskscftdc "Why not?!{w=1}{nw}"
+            extend 1fskfuftdc " Not like you {i}aren't{/i} acting like it."
+            extend 1fcsanltsd " Jerk."
+
+    else:
+        # The player has been barred from nicknaming Natsuki, and even an apology won't change that
+        if Natsuki.isEnamored(higher=True):
+            n 1nllsl "..."
+            n 1knmsl "[player]."
+            n 1knmaj "...Exactly how many times did I warn you?"
+            n 1fnmem "How many times did I {i}forgive{/i} you?{w=1}{nw}"
+            extend 1fcsemean " Because I honestly lost count."
+            n 1kcsfresi "..."
+            n 1nsqsr "Sorry,{w=0.1} [player].{w=0.5}{nw}"
+            extend 1flltr " Every joke runs its course."
+            n 1fsqunl "And I am {i}not{/i} going to be the butt of this one again."
+            n 1fcsajl "So."
+            n 1fllcal "Fine.{w=0.5} I'll accept your apology..."
+            n 1fsqcalesi "...And you're going to accept the consequences."
+            n 1fcstrl "Sorry,{w=0.3} [player]."
+            extend 1fsqbol " But we're done with names here."
+            $ Natsuki.calculatedAffinityGain()
+
+        elif Natsuki.isNormal(higher=True):
+            n 1fcsemesi "...You've got to be kidding me,{w=0.5} right?"
+            n 1fllaj "You were a jerk so many times to me about that..."
+            n 1fsqan "...And you leave it this long to even {i}apologize{/i}?"
+            n 1fcsemesi "..."
+            n 1fsqtr "You're just lucky I'm not one for holding dumb grudges."
+            n 1fcsaj "So,{w=0.3} [player]."
+            n 1fslpo "I guess I'll accept the apology."
+            n 1fnmfr "...But you can {i}forget{/i} about me accepting any more of your nicknames."
+            n 1fsqtr "I'm done being messed around."
+            $ Natsuki.calculatedAffinityGain()
+
+        elif Natsuki.isDistressed(higher=True):
+            n 1fcsan "{i}Wow{/i}.{w=1}{nw}"
+            extend 1fcsfu " I would say I'm speechless,{w=0.3} if it were literally {i}anyone{/i} else."
+            n 1fsqfuean "But {i}you{/i}?"
+            n 1fcsem "I've about come to {i}expect{/i} this sort of crap from you."
+            n 1fsqwrean "So you know what?{w=0.75}{nw}"
+            extend 1fcssclean " Screw this,{w=0.75}{nw}"
+            extend 1fskscltsc " and screw your apology!"
+            n 1fcsscltsa "If {i}you{/i} aren't gonna listen,{w=0.5}{nw}"
+            extend 1fllscltsc " then you can tell me why I {b}should{/b}!"
+
+        else:
+            n 1fcsfultdrean "Oh,{w=1}{nw}"
+            extend 1fcsscltsaean " take a hike,{w=0.5}{nw}"
+            extend 1fsqscltsbean " [player]!"
+            n 1fcswrltsd "You {i}need{/i} a walk if you {i}seriously{/i} think after all of your crap,{w=0.75}{nw}"
+            extend 1fskwrftdcean " I'm gonna be the one listening to {b}you{/b}!"
+
+    $ Natsuki.removeApology(jn_apologies.ApologyTypes.bad_player_name)
     return

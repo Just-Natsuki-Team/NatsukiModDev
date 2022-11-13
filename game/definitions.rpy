@@ -22,33 +22,37 @@ define JN_CHRISTMAS_EVE = datetime.date(datetime.date.today().year, 12, 24)
 define JN_CHRISTMAS_DAY = datetime.date(datetime.date.today().year, 12, 25)
 define JN_NEW_YEARS_EVE = datetime.date(datetime.date.today().year, 12, 31)
 
-init 0 python:
+init -3 python:
     from collections import OrderedDict
     import datetime
     from Enum import Enum
     import re
     import store.jn_affinity as jn_affinity
     import store.jn_utils as jn_utils
+    import webbrowser
 
     class JNHolidays(Enum):
-        none = 0
-        new_years_day = 1
-        easter = 2
-        halloween = 3
-        christmas_eve = 4
-        christmas_day = 5
-        new_years_eve = 6
+        none = 1
+        new_years_day = 2
+        easter = 3
+        halloween = 4
+        christmas_eve = 5
+        christmas_day = 6
+        new_years_eve = 7
 
         def __str__(self):
             return self.name
 
     class JNTimeBlocks(Enum):
-        early_morning = 0
-        mid_morning = 1
-        late_morning = 2
-        afternoon = 3
-        evening = 4
-        night = 5
+        early_morning = 1
+        mid_morning = 2
+        late_morning = 3
+        afternoon = 4
+        evening = 5
+        night = 6
+
+        def __str__(self):
+            return self.name 
 
     #Constants for types. Add more here if we need more organizational areas
     TOPIC_TYPE_FAREWELL = "FAREWELL"
@@ -216,7 +220,7 @@ init 0 python:
             """
             return {
                 key:value
-                for key, value in self.__dict__.iteritems()
+                for key, value in self.__dict__.items()
                 if key != "_m1_definitions__persistent_db"
             }
 
@@ -265,7 +269,7 @@ init 0 python:
 
             NOTE: Will raise a KeyError of the lock map doesn't have the persist key in it
             """
-            for persist_key, value in self.as_dict().iteritems():
+            for persist_key, value in self.as_dict().items():
                 if TOPIC_LOCKED_PROP_BASE_MAP[persist_key]:
                     self.__persistent_db[self.label][persist_key] = value
 
@@ -274,7 +278,7 @@ init 0 python:
             """
             Saves all topics
             """
-            for topic in store.topic_handler.ALL_TOPIC_MAP.itervalues():
+            for topic in store.topic_handler.ALL_TOPIC_MAP.values():
                 topic.__save()
 
         def has_additional_property_with_value(self, property_key, property_value):
@@ -295,6 +299,27 @@ init 0 python:
 
             return self.additional_properties[property_key] is property_value
 
+        def derandom(self):
+            """
+                makes topic unable to be randomly brought up by Nat
+                also makes it available through talk_menu
+            """
+            self.nat_says = False
+            self.player_says = True
+
+        def lock(self):
+            """
+            Locks this topic, so it cannot be selected or brought up in random dialogue.
+            """
+            self.unlocked = False
+            self.__save()
+
+        def unlock(self):
+            """
+            Unlocks this topic.
+            """
+            self.unlocked = True
+            self.__save()
 
         def _filter_topic(
             self,
@@ -711,6 +736,8 @@ init 0 python:
     def jn_get_current_time_block():
         """
         Returns a type describing the current time of day as a segment.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         current_hour = jn_get_current_hour()
         if current_hour in range(3, 5):
@@ -734,44 +761,75 @@ init 0 python:
     def jn_is_time_block_early_morning():
         """
         Returns True if the current time is judged to be early morning.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         return jn_get_current_hour() in range(3, 5)
 
     def jn_is_time_block_mid_morning():
         """
         Returns True if the current time is judged to be mid morning.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         return jn_get_current_hour() in range(5, 9)
 
     def jn_is_time_block_late_morning():
         """
         Returns True if the current time is judged to be late morning.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         return jn_get_current_hour() in range(9, 12)
 
     def jn_is_time_block_morning():
         """
         Returns True if the current time is judged to be morning generally, and not a specific time of morning.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         return jn_get_current_hour() in range(3, 12)
 
     def jn_is_time_block_afternoon():
         """
         Returns True if the current time is judged to be afternoon.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         return jn_get_current_hour() in range(12, 18)
 
     def jn_is_time_block_evening():
         """
         Returns True if the current time is judged to be evening.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         return jn_get_current_hour() in range(18, 22)
 
     def jn_is_time_block_night():
         """
         Returns True if the current time is judged to be night.
+
+        Time blocks are absolute, and not modified by user preferences on sunrise/sunset.
         """
         return jn_get_current_hour() in range(22, 3)
+
+    def jn_is_day():
+        """
+        Returns True if the current time is judged to be day, taking into account user preferences on sunrise/sunset.
+        """
+        return datetime.time(persistent.jn_sunrise_hour) <= datetime.datetime.now().time() < datetime.time(persistent.jn_sunset_hour)
+
+    def jn_open_google_maps(latitude, longitude):
+        """
+        Opens Google Maps in a new tab/window in the default browser centred on the given latitude and longitude.
+        
+        IN:
+            - latitude - The latitude to centre the map on.
+            - longitude - The longitude to centre the map on.
+        """
+        url = "https://www.google.com/maps/place/{0},{1}".format(latitude, longitude)
+        webbrowser.open(url)
 
 # Variables with cross-script utility specific to Just Natsuki
 init -990 python in jn_globals:
@@ -786,14 +844,11 @@ init -990 python in jn_globals:
     # Tracks whether the player opted to stay for longer when Natsuki asked them to when quitting; True if so, otherwise False
     player_already_stayed_on_farewell = False
 
-    # Tracks whether the player is or is not currently playing a game
-    player_is_ingame = False
-
-    # Tracks whether the player is or is not currently in some topic flow
-    player_is_in_conversation = False
-
     # Tracks if the player is permitted to force quit; use this to block force quits during sequences
     force_quit_enabled = True
+
+    # List of weather to push
+    weather_stack = []
 
     # Constants; use these for anything we only want defined once and used in a read-only context
 
@@ -831,6 +886,19 @@ init -990 python in jn_globals:
         "you dope"
     ]
 
+    # Links
+
+    # GitHub
+    LINK_JN_GITHUB = "https://github.com/Just-Natsuki-Team/NatsukiModDev"
+
+    # OpenWeatherMap; used for setting up weather in-game
+    LINK_OPEN_WEATHER_MAP_HOME = "https://openweathermap.org"
+    LINK_OPEN_WEATHER_MAP_SIGN_UP = "https://home.openweathermap.org/users/sign_up"
+    LINK_OPEN_WEATHER_MAP_API_KEYS = "https://home.openweathermap.org/api_keys"
+
+    # LatLong.net; used for helping the player find their coordinates when setting up location manually
+    LINK_LAT_LONG_HOME = "https://www.latlong.net"
+
     # Names Natsuki may use at the lowest levels of affinity to insult her player with
     DEFAULT_PLAYER_INSULT_NAMES = [
         "jerk",
@@ -861,10 +929,9 @@ init -990 python in jn_globals:
         "What's on your mind?",
         "What's happening?",
         "Something on your mind?",
-        "Oh?{w=0.2} You wanna talk to me?",
+        "Oh?{w=0.2} You wanna talk?",
         "Huh?{w=0.2} What's up?",
         "You wanna share something?",
-        "Hey!{w=0.2} What's up?",
         "What's new,{w=0.1} [player]?",
         "'Sup,{w=0.1} [player]?"
     ]
@@ -873,16 +940,13 @@ init -990 python in jn_globals:
     DEFAULT_TALK_FLAVOR_TEXT_UPSET_DISTRESSED = [
         "What do you want?",
         "What is it?",
-        "Can I help you?",
-        "Do you need me?",
         "Make it quick.",
         "What now?",
-        "Yes?",
         "What do you want now?",
         "What is it this time?",
         "Yeah?{w=0.2} What?",
-        "What is it now?",
-        "This had better be good."
+        "What now?",
+        "This better be good."
     ]
 
     # Flavor text for the talk menu at minimum affinity
@@ -892,7 +956,11 @@ init -990 python in jn_globals:
         "What?",
         "Just talk already.",
         "Spit it out.",
-        "Start talking."
+        "Start talking.",
+        "Get it over with.",
+        "What do {i}you{/i} want?",
+        "Get on with it.",
+        "Talk."
     ]
 
     # Emoticon sets for where we can't express Natsuki's emotions directly (I.E modals)
@@ -941,7 +1009,8 @@ init -990 python in jn_globals:
         ":-(",
         "</3",
         "<|3",
-        ":<"
+        ":<",
+        ">:",
     ]
 
     DEFAULT_TEASE_EMOTICONS = [
@@ -1015,8 +1084,8 @@ init -990 python in jn_globals:
         "^nob$",
         "^tit$",
         "4r5e",
-        "aids",
-        "anal",
+        "^aids$",
+        "^anal$",
         "b!tch",
         "b[0o]+b(?!er|on)",
         "ballbag",
@@ -1072,7 +1141,7 @@ init -990 python in jn_globals:
         "hitler",
         "homo",
         "hotsex",
-        "jap",
+        "^jap$",
         "jerk-off",
         "kawk",
         "knob",
@@ -1094,7 +1163,7 @@ init -990 python in jn_globals:
         "pigfucker",
         "pimpis",
         "piss",
-        "poop",
+        "poo|poop",
         "prick",
         "pube",
         "rectum",
@@ -1112,7 +1181,7 @@ init -990 python in jn_globals:
         "smegma",
         "smut",
         "snatch",
-        "son-of-a-bitch",
+        "son-of-a-bitch|sonofabitch",
         "spac",
         "spunk",
         "tosser",
@@ -1128,6 +1197,95 @@ init -990 python in jn_globals:
         "whore",
         "xrated",
         "xxx"
+    }
+
+    _INSULT_LIST = {
+        "arrogant",
+        "^(beast|beastly)$",
+        "bonebag",
+        "bonehead",
+        "brat|bratty",
+        "breadboard",
+        "bully",
+        "cheater",
+        "child",
+        "clown",
+        "cuttingboard",
+        "demon",
+        "dimwit",
+        "dirt",
+        "disgusting",
+        "^dog$",
+        "dumb|dumbo",
+        "dunce",
+        "dwarf",
+        "dweeb",
+        "egoist|egotistical",
+        "evil",
+        "^(fail|failure)$",
+        "fake",
+        "(^fat$|fatso|fatty|fattie)",
+        "(flat|flatso|flatty|flattie)",
+        "gilf",
+        "^(ghast|ghastly)$"
+        "gremlin",
+        "gross",
+        "halfling|halfpint|half-pint",
+        "halfwit",
+        "heartless",
+        "hellspawn",
+        "hideous",
+        "horrid|horrible",
+        "hungry",
+        "idiot",
+        "ignoramus",
+        "ignorant",
+        "imbecile",
+        "^imp$",
+        "ironingboard",
+        "(^kid$|kiddo|kiddy|kiddie)",
+        "l[e3]sbian",
+        "l[e3]sb[o0]",
+        "midget",
+        "moron",
+        "narcissist",
+        "nasty",
+        "neckcrack|neck-crack",
+        "necksnap|neck-snap",
+        "^nimrod$",
+        "nuisance",
+        "^pest$",
+        "pathetic",
+        "plaything",
+        "punchbag|punch-bag|punchingbag|punching-bag",
+        "puppet",
+        "putrid",
+        "^short$|shortstuff|shorty",
+        "^sick$",
+        "^simp$",
+        "simpleton",
+        "skinny",
+        "slave",
+        "smelly",
+        "^soil$",
+        "starved|starving",
+        "stinky",
+        "^(stuckup|stuck-up)$"
+        "stupid",
+        "^teabag$",
+        "^th[o0]t$",
+        "^tiny$",
+        "^toy$",
+        "^twerp$",
+        "^twit$",
+        "^useless$",
+        "^vendingmachine$",
+        "^(virgin|turbovirgin)$",
+        "^vomit$",
+        "^washboard$",
+        "^witch$",
+        "^wretch$",
+        "^zombie$",
     }
 
     # Alphabetical (excluding numbers) values allowed for text input
@@ -1198,7 +1356,7 @@ init -999 python in jn_utils:
             ).format(datetime.datetime.now(), message)
         )
 
-    def pretty_print(object, indent=1, width=150):
+    def prettyPrint(object, indent=1, width=150):
         """
         Returns a PrettyPrint-formatted representation of an object as a dict.
 
@@ -1212,7 +1370,7 @@ init -999 python in jn_utils:
         """
         return pprint.pformat(object.__dict__, indent, width)
 
-    def get_mouse_position():
+    def getMousePosition():
         """
         Returns a tuple representing the mouse's current position in the game window.
 
@@ -1221,12 +1379,96 @@ init -999 python in jn_utils:
         """
         return pygame.mouse.get_pos()
 
-init python in jn_utils:
+    def getFileExists(path):
+        """
+        Checks to see if the specified file exists.
+
+        IN:
+            path - The path to check
+
+        OUT: 
+            - True if the file exists, otherwise False
+        """
+        return os.path.isfile(path)
+
+    def createDirectoryIfNotExists(path):
+        """
+        Checks to see if the specified directory exists, and creates it if not
+        Returns True if a directory was created, otherwise False
+
+        IN:
+            path - The path to check
+
+        OUT:
+            - True if a directory was created, otherwise False
+        """
+        if not os.path.exists(path) or getFileExists(path):
+            os.makedirs(path)
+            return True
+
+        return False
+
+    def deleteFileFromDirectory(path):
+        """
+        Attempts to delete the file at the given path.
+
+        IN:
+            path - The path to delete the file at.
+
+        OUT:
+            - True if the file was deleted, otherwise False
+        """
+        if getFileExists(path):
+            try:
+                os.remove(path)
+                return True
+
+            except Exception as exception:
+                log("Failed to delete file on path {0}; {1}".format(path, exception.message))
+                return False
+
+        return False
+
+    def escapeRenpySubstitutionString(string):
+        """
+        Escapes a string to account for Ren'Py substitution.
+        Use this when displaying names of items that may contain the Ren'Py substitution characters, such as file names from users.
+        
+        IN:
+            - string - The string to escape and return
+        OUT:
+            - string with Ren'Py substition characters handled
+        """
+        return string.replace("[", "[[").replace("{", "{{")
+
+    def getAllDirectoryFiles(path, extension_list=None):
+        """
+        Runs through the files in the specified directory, filtering files via extension check if specified
+        Returns a list containing tuples representing (file_name, file_path)
+
+        IN:
+            - path - the file path to search
+            - extension_list - optional list of file extensions; only files with these extensions will be returned. These must be supplied without "."
+
+        OUT:
+            - Tuple representing (file_name, file_path)
+        """
+        return_file_items = []
+
+        for file in os.listdir(path):
+            if (not extension_list or any(file_extension == file.rpartition(".")[-1] for file_extension in extension_list)):
+                return_file_items.append((escapeRenpySubstitutionString(file), os.path.join(path, file)))
+
+        return return_file_items
+
+init -100 python in jn_utils:
+    import random
     import re
     import store
     import store.jn_globals as jn_globals
 
-    __PROFANITY_REGEX = re.compile('|'.join(jn_globals._PROFANITY_LIST), re.IGNORECASE)
+    PROFANITY_REGEX = re.compile('|'.join(jn_globals._PROFANITY_LIST), re.IGNORECASE)
+    INSULT_REGEX = re.compile('|'.join(jn_globals._INSULT_LIST), re.IGNORECASE)
 
     def get_current_session_length():
         """
@@ -1328,7 +1570,7 @@ init python in jn_utils:
         else:
             return "a while"
 
-    def get_player_initial():
+    def getPlayerInitial():
         """
         Returns the first letter of the player's name.
 
@@ -1347,7 +1589,73 @@ init python in jn_utils:
         OUT:
             - True if string contains profanity; otherwise False
         """
-        return re.search(__PROFANITY_REGEX, string.lower())
+        return re.search(PROFANITY_REGEX, string.lower())
+
+    def get_string_contains_insult(string):
+        """
+        Returns True if the given string contains an insult, based on regex.
+
+        IN:
+            - string - The string to test
+
+        OUT:
+            - True if string contains an insult; otherwise False
+        """
+        return re.search(INSULT_REGEX, string.lower())
+
+    def getRandomTease():
+        """
+        Returns a random tease from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+
+    def getRandomEndearment():
+        """
+        Returns a random endearment from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+
+    def getRandomDescriptor():
+        """
+        Returns a random positive descriptor from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_PLAYER_DESCRIPTORS)
+
+    def getRandomInsult():
+        """
+        Returns a random insult from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_PLAYER_INSULT_NAMES)
+
+    def getRandomHappyEmoticon():
+        """
+        Returns a random happy emoticon from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_HAPPY_EMOTICONS)
+
+    def getRandomAngryEmoticon():
+        """
+        Returns a random angry emoticon from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_ANGRY_EMOTICONS)
+
+    def getRandomSadEmoticon():
+        """
+        Returns a random sad emoticon from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_SAD_EMOTICONS)
+
+    def getRandomTeaseEmoticon():
+        """
+        Returns a random teasing emoticon from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_TEASE_EMOTICONS)
+
+    def getRandomConfusedEmoticon():
+        """
+        Returns a random confused emoticon from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_CONFUSED_EMOTICONS)
 
     # Key setup
     key_path = os.path.join(renpy.config.basedir, "game/dev/key.txt").replace("\\", "/")
@@ -1368,23 +1676,14 @@ init python in jn_utils:
         """
         Saves all game data.
         """
+        # Save outfit data
+        store.jn_outfits.JNOutfit.save_all()
+
         #Save topic data
         store.Topic._save_topic_data()
 
         #Save background data
         store.main_background.save()
-
-    def escapeRenpySubstitutionString(string):
-        """
-        Escapes a string to account for Ren'Py substitution.
-        Use this when displaying names of items that may contain the Ren'Py substitution characters, such as file names from users.
-        
-        IN:
-            - string - The string to escape and return
-        OUT:
-            - string with Ren'Py substition characters handled
-        """
-        return string.replace("[", "[[").replace("{", "{{")
 
 # Vanilla resources from base DDLC
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
@@ -1419,6 +1718,18 @@ define audio.paper_throw = "mod_assets/sfx/paper_throw.ogg"
 define audio.chair_in = "mod_assets/sfx/chair_in.ogg"
 define audio.chair_out = "mod_assets/sfx/chair_out.ogg"
 define audio.chair_out_in = "mod_assets/sfx/chair_out_in.ogg"
+define audio.hair_brush = "mod_assets/sfx/hair_brush.ogg"
+define audio.hair_clip = "mod_assets/sfx/hair_clip.ogg"
+define audio.necklace_clip = "mod_assets/sfx/necklace_clip.ogg"
+define audio.cassette_open = "mod_assets/sfx/cassette_open.ogg"
+define audio.cassette_close = "mod_assets/sfx/cassette_close.ogg"
+define audio.glass_move = "mod_assets/sfx/glass_move.ogg"
+define audio.straw_sip = "mod_assets/sfx/straw_sip.ogg"
+define audio.kiss = "mod_assets/sfx/kiss.ogg"
+define audio.gift_slide = "mod_assets/sfx/gift_slide.ogg"
+define audio.gift_open = "mod_assets/sfx/gift_open.ogg"
+define audio.gift_close = "mod_assets/sfx/gift_close.ogg"
+define audio.gift_rustle = "mod_assets/sfx/gift_rustle.ogg"
 
 define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
 define audio.glitch_b = "mod_assets/sfx/glitch_b.ogg"
@@ -1455,13 +1766,9 @@ init python:
     s_name = "Sayori"
     m_name = "Monika"
     y_name = "Yuri"
-
-    # Assign Natsuki the chosen nickname (defaulted to Natsuki)
-    if persistent.jn_player_nicknames_current_nickname:
-        n_name = persistent.jn_player_nicknames_current_nickname
-
-    else:
-        n_name = "Natsuki"
+    
+    n_name = "Natsuki"
+    player = persistent.playername
 
 init -999 python:
     def label_callback(name, abnormal):
@@ -1477,6 +1784,8 @@ init -999 python:
         if (
             not renpy.get_screen("input")
             and not renpy.get_screen("choice")
+            and not renpy.get_screen("preferences")
+            and not renpy.get_screen("history")
             and jn_globals.force_quit_enabled
         ):
             renpy.call("try_force_quit")

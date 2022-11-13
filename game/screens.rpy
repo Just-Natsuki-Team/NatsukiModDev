@@ -7,6 +7,52 @@ init offset = -1
 ## Custom Screens
 ################################################################################
 
+# Hotkey display
+style hotkeys_text:
+    font gui.interface_font
+    size gui.interface_text_size
+    color "#e2d1d1"
+    line_overlap_split 1.25
+    line_spacing 1.25
+    outlines [(3, "#000000aa", 0, 0)]
+    xalign 0.0
+    yalign 0.5
+
+screen hotkeys():
+    tag menu
+    use game_menu(("Hotkeys")):
+        viewport id "hotkeys":
+            vbox:
+                label _("All hotkeys") style "check_label"
+                xoffset 100
+                yoffset 40
+                null height 20
+                style_prefix "hotkeys"
+                grid 2 7:
+                    xoffset 20                
+                    spacing 10
+
+                    text _("Talk")
+                    text _("T")
+
+                    text _("Music")
+                    text _("M")
+
+                    text _("Extras")
+                    text _("E")
+
+                    text _("Fullscreen")
+                    text _("F")
+
+                    text _("Screenshot")
+                    text _("S")
+
+                    text _("Settings")
+                    text _("Esc")
+
+                    null width 175 height 30
+                    null width 175 height 0
+
 # Categorized menu
 ## Similar to MAS' twopane_scrollable menu.
 ## NOTE: This is meant to be called within a loop so long as the user hasn't clicked `Nevermind`
@@ -42,6 +88,11 @@ style categorized_menu_button is choice_button:
 style categorized_menu_button_text is choice_button_text:
     align (0.0, 0.0)
     text_align 0.0
+
+style categorized_menu_button_italic is categorized_menu_button
+
+style categorized_menu_button_text_italic is categorized_menu_button_text:
+    italic True
 
 screen categorized_menu(menu_items, category_pane_space, option_list_space, category_length):
     at categorized_menu_slide_in_right
@@ -97,7 +148,7 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
 
                         null height 20
 
-                    for button_name in menu_items.iterkeys():
+                    for button_name in menu_items.keys():
                         textbutton button_name:
                             style "categorized_menu_button"
                             #Set the selected category
@@ -141,8 +192,9 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                         null height 20
 
                         for _topic in menu_items.get(selected_category):
+                            $ display_text = _topic.prompt if (_topic.shown_count > 0 or _topic.nat_says) else "{i}[_topic.prompt]{/i}"
                             #NOTE: This should be preprocessed such that Topics without prompts aren't passed into this menu
-                            textbutton _topic.prompt:
+                            textbutton display_text:
                                 style "categorized_menu_button"
                                 #Return the label so it can be called
                                 action [ Return(_topic.label), Function(prev_adjustment.change, 0), SetVariable("selected_category", None) ]
@@ -150,7 +202,6 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                                 activate_sound gui.activate_sound
 
                             null height 5
-
 
 screen scrollable_choice_menu(items, last_item=None):
     fixed:
@@ -198,9 +249,9 @@ style default:
     font gui.default_font
     size gui.text_size
     color gui.text_color
-    outlines [(2, "#000000aa", 0, 0)]
-    line_overlap_split 1
-    line_spacing 1
+    outlines [(3, "#000000aa", 0, 0)]
+    line_overlap_split 1.25
+    line_spacing 1.25
 
 style default_monika is normal:
     slow_cps 30
@@ -236,6 +287,7 @@ style input:
 
 style hyperlink_text:
     color gui.accent_color
+    underline True
     hover_color gui.hover_color
     hover_underline True
 
@@ -402,6 +454,7 @@ style say_dialogue:
     xanchor gui.text_xalign
     xsize gui.text_width
     ypos gui.text_ypos
+    size gui.say_text_size
 
     text_align gui.text_xalign
     layout ("subtitle" if gui.text_xalign else "tex")
@@ -666,31 +719,9 @@ screen quick_menu():
             xalign 0.5
             yalign 0.995
 
-            if jn_utils.get_key_valid():
-                textbutton _("Restart"):
-                    text_style "quickmenu_text"
-                    action Show(
-                        screen="confirm_editable_closable",
-                        message="Do you want to RELOAD or RESET?",
-                        yes_text="Reload",
-                        no_text="Reset",
-                        yes_action=Jump("ch30_autoload"),
-                        no_action=Jump("restart")
-                    )
-                    hover_sound gui.hover_sound
-                    activate_sound gui.activate_sound
-
-
             textbutton _("History"):
                 text_style "quickmenu_text"
                 action ShowMenu('history')
-                hover_sound gui.hover_sound
-                activate_sound gui.activate_sound
-
-            textbutton _("Skip"):
-                text_style "quickmenu_text"
-                action Skip()
-                alternate Skip(fast=True, confirm=True)
                 hover_sound gui.hover_sound
                 activate_sound gui.activate_sound
 
@@ -737,37 +768,6 @@ screen indicator(message):
         style "return_button"
         xpos 10 ypos 70
 
-init python:
-    def FinishEnterName():
-        global player
-
-        if not player:
-            return
-
-        persistent.playername = player
-        renpy.hide_screen("name_input")
-        renpy.jump_out_of_context("start")
-
-    def DLC():
-        renpy.jump_out_of_context("dlcmenu")
-
-    def FinishEnterAge():
-        if not age: return
-        return
-
-    def FinishEnterMonth():
-        if not month: return
-        persistent.bday_month = month
-        renpy.hide_screen("month_input")
-
-    def FinishEnterDay():
-        if not day: return
-        persistent.bday_day = day
-        renpy.hide_screen("day_input")
-
-    def DeleteName():
-        persistent.playername = ""
-
 screen navigation():
     vbox:
         style_prefix "navigation"
@@ -792,13 +792,15 @@ screen navigation():
         else:
             textbutton _("History") action [ShowMenu("history"), SensitiveIf(renpy.get_screen("history") == None)]
 
+        textbutton _("Hotkeys") action [ShowMenu("hotkeys"), SensitiveIf(renpy.get_screen("hotkeys") == None)]
+
         textbutton _("Settings") action [ShowMenu("preferences"), SensitiveIf(renpy.get_screen("preferences") == None)]
 
         if renpy.variant("pc"):
             ## Help isn't necessary or relevant to mobile devices.
             textbutton _("Help") action Help("README.md")
 
-        textbutton _("GitHub") action OpenURL("https://github.com/Just-Natsuki-Team/NatsukiModDev")
+        textbutton _("GitHub") action OpenURL(jn_globals.LINK_JN_GITHUB)
 
 style navigation_button is gui_button
 style navigation_button_text is gui_button_text
@@ -1165,13 +1167,31 @@ screen preferences():
                         textbutton _("After Choices") action Preference("after choices", "toggle")
 
                     vbox:
-                        style_prefix "check"
+                        # Weather options
+                        style_prefix "radio"
                         label _("Weather")
-                        textbutton _("Random") action ToggleField(
+
+                        textbutton _("Disabled") action SetField(
                             object=persistent,
-                            field="jn_random_weather",
-                            true_value=True,
-                            false_value=False)
+                            field="_jn_weather_setting",
+                            value=int(jn_preferences.weather.JNWeatherSettings.disabled)
+                        )
+
+                        textbutton _("Random") action SetField(
+                            object=persistent,
+                            field="_jn_weather_setting",
+                            value=int(jn_preferences.weather.JNWeatherSettings.random)
+                        )
+
+                        if persistent._jn_weather_api_configured:
+                            textbutton _("Real-time") action [
+                                SetField(
+                                    object=persistent,
+                                    field="_jn_weather_setting",
+                                    value=int(jn_preferences.weather.JNWeatherSettings.real_time)
+                                ),
+                                SensitiveIf(persistent._jn_weather_api_configured)
+                            ]
 
                     vbox:
                         style_prefix "check"
@@ -1201,7 +1221,15 @@ screen preferences():
                         textbutton _("Conversations") action [
                             ToggleField(
                                 object=persistent,
-                                field="jn_notify_conversations",
+                                field="_jn_notify_conversations",
+                                true_value=True,
+                                false_value=False)
+                        ]
+
+                        textbutton _("Activity") action [
+                            ToggleField(
+                                object=persistent,
+                                field="_jn_notify_activity",
                                 true_value=True,
                                 false_value=False)
                         ]
@@ -1438,16 +1466,6 @@ style history_label:
 style history_label_text:
     xalign 0.5
 
-################################################################################
-## Additional screens
-################################################################################
-
-screen flower:
-    imagebutton:
-        idle "mod_assets/JustNatsuki/flower.png"
-        hover "mod_assets/JustNatsuki/flower.png"
-        action [If(allow_dialogue, true=Jump("ch30_flower"))]
-
 ## Confirm screen ##############################################################
 ##
 ## The confirm screen is called when Ren'Py wants to ask the player a yes or no
@@ -1514,69 +1532,6 @@ screen dialog(message, ok_action):
 
                 textbutton _("OK") action ok_action
 
-screen reload(message, ok_action):
-
-    ## Ensure other screens do not get input while this screen is displayed.
-    modal True
-
-    zorder 200
-
-    style_prefix "confirm"
-
-    add "gui/overlay/confirm.png"
-
-    frame:
-
-        vbox:
-            xalign .5
-            yalign .5
-            spacing 30
-
-            label _(message):
-                style "confirm_prompt"
-                xalign 0.5
-
-            hbox:
-                xalign 0.5
-                spacing 50
-
-                textbutton _("Restart") action Quit(confirm=True)
-
-
-            hbox:
-                xalign 0.5
-                spacing 50
-
-                textbutton _("I'll do it myself") action Hide("reload")
-
-# screen quit(message, ok_action):
-
-#     ## Ensure other screens do not get input while this screen is displayed.
-#     modal True
-
-#     zorder 200
-
-#     style_prefix "confirm"
-
-#     add "gui/overlay/confirm.png"
-
-#     frame:
-
-#         vbox:
-#             xalign .5
-#             yalign .5
-#             spacing 30
-
-#             label _(message):
-#                 style "confirm_prompt"
-#                 xalign 0.5
-
-#             hbox:
-#                 xalign 0.5
-#                 spacing 100
-
-#                 textbutton _("No") action ok_action
-
 screen endgame(message): # No spoilers, promise!
 
     ## Ensure other screens do not get input while this screen is displayed.
@@ -1629,8 +1584,8 @@ screen credits(message, ok_action):
 
 init python:
     def check_ingame_state_add_apology():
-        if jn_globals.player_is_ingame:
-            jn_apologies.add_new_pending_apology(jn_apologies.TYPE_CHEATED_GAME)
+        if Natsuki.isInGame():
+            Natsuki.addApology(jn_apologies.ApologyTypes.cheated_game)
 
 screen confirm_editable(message, yes_text, no_text, yes_action, no_action):
 
@@ -1724,33 +1679,6 @@ style confirm_button:
 style confirm_button_text is choice_button_text:
     properties gui.button_text_properties("confirm_button")
 
-
-## Skip indicator screen #######################################################
-##
-## The skip_indicator screen is displayed to indicate that skipping is in
-## progress.
-##
-## https://www.renpy.org/doc/html/screen_special.html#skip-indicator
-screen fake_skip_indicator():
-    use skip_indicator
-
-screen skip_indicator():
-
-    zorder 100
-    style_prefix "skip"
-
-    frame:
-
-        hbox:
-            spacing 6
-
-            text _("Skipping")
-
-            text "▸" at delayed_blink(0.0, 1.0) style "skip_triangle"
-            text "▸" at delayed_blink(0.2, 1.0) style "skip_triangle"
-            text "▸" at delayed_blink(0.4, 1.0) style "skip_triangle"
-
-
 ## This transform is used to blink the arrows one after another.
 transform delayed_blink(delay, cycle):
     alpha .5
@@ -1763,7 +1691,6 @@ transform delayed_blink(delay, cycle):
         linear .2 alpha 0.5
         pause (cycle - .4)
         repeat
-
 
 style skip_frame is empty
 style skip_text is gui_text
