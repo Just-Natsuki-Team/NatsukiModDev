@@ -1282,13 +1282,13 @@ init -1 python in jn_outfits:
     __register_wearable(JNClothes(
         reference_name="jn_clothes_bee_off_shoulder_sweater",
         display_name="Bee off-shoulder sweater",
-        unlocked=True,
+        unlocked=False,
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_autumn_off_shoulder_sweater",
         display_name="Autumn off-shoulder sweater",
-        unlocked=True,
+        unlocked=False,
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
