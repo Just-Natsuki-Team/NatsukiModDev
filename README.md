@@ -28,13 +28,6 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/kkrosie123">
-            <img src="https://avatars.githubusercontent.com/u/52429850?v=4" width="100;" alt="kkrosie123"/>
-            <br />
-            <sub><b>Briar Young</b></sub>
-        </a>
-    </td>
-    <td align="center">
         <a href="https://github.com/spaghetsie">
             <img src="https://avatars.githubusercontent.com/u/64098288?v=4" width="100;" alt="spaghetsie"/>
             <br />
@@ -42,10 +35,32 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/kkrosie123">
+            <img src="https://avatars.githubusercontent.com/u/52429850?v=4" width="100;" alt="kkrosie123"/>
+            <br />
+            <sub><b>Briar Young</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/RaionArt">
+            <img src="https://avatars.githubusercontent.com/u/112613077?v=4" width="100;" alt="RaionArt"/>
+            <br />
+            <sub><b>RaionArt</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/Edgarmods">
             <img src="https://avatars.githubusercontent.com/u/68255592?v=4" width="100;" alt="Edgarmods"/>
             <br />
             <sub><b>Edgarmods</b></sub>
+        </a>
+    </td></tr>
+<tr>
+    <td align="center">
+        <a href="https://github.com/TRIDENT1313">
+            <img src="https://avatars.githubusercontent.com/u/86646365?v=4" width="100;" alt="TRIDENT1313"/>
+            <br />
+            <sub><b>Nathan</b></sub>
         </a>
     </td>
     <td align="center">
@@ -55,16 +70,13 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
             <sub><b>Lunulae</b></sub>
         </a>
     </td>
-</tr>
-<tr>
     <td align="center">
         <a href="https://github.com/Nemu-sus">
             <img src="https://avatars.githubusercontent.com/u/43480604?v=4" width="100;" alt="Nemu-sus"/>
             <br />
             <sub><b>ALTER</b></sub>
         </a>
-    </td>
-</tr>
+    </td></tr>
 </table>
 <!-- readme: contributors -end -->
 
