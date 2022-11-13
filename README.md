@@ -165,7 +165,7 @@ Please note that until automatic updates are implemented, any updates released m
 10. From the release files, copy the `update` folder into your JN installation.
 11. Finally, launch `DDLC.exe`.
 
-#### Updating from the a RELEASE (1.0.0) onwards
+#### Updating from the RELEASE (1.0.0) onwards
 
 *Use these instructions if you have a RELEASE version of JN you are updating to a later version.*
 
