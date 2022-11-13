@@ -181,7 +181,7 @@ Please note that until automatic updates are implemented, any updates released m
 
 *Use these instructions if you have a RELEASE version of JN you are updating to a later version.*
 
-1. **Back up your persistent**: instructions on how to do so may be found [here](https://github.com/
+1. **Back up your persistent**: instructions on how to do so may be found [here](https://github.com/)
 2. Download the release files: go to https://github.com/Just-Natsuki-Team/NatsukiModDev, then select the most recent release under _Releases_. Select the ZIP file starting with `jn` (I.E `jn-1.0.0.zip`).
 3. Extract/unzip the new release files.
 4. From the release files, copy the `game` folder contents (all of it) into the `game` folder of your JN installation. If asked to replace files, select _Yes_.
