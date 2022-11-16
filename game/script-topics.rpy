@@ -5901,7 +5901,7 @@ label talk_fighting_drowsiness:
     n 1ncsajesl "...{w=2}{nw}"
     n 1ncsemesl "...{w=2}{nw}"
     n 1ncsajesl "...{w=2}{nw}"
-    $ renpy.pause(4)
+    $ renpy.pause(4, hard=True)
     n 1fcsbo "..."
     n 1nsqpu "Mmmmm...{w=0.5}{nw}"
     extend 1tsqsr " mmmnn?"

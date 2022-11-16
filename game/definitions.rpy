@@ -605,6 +605,20 @@ init -3 python:
 
         return ordered_menu_items
 
+    def jnNoDismissDialogue(event, interact=True, **kwargs):
+        """
+        Callback for whenever Natsuki talks.
+        """
+        if event == "show" or event == "begin":
+            # Prevent skip before dialogue
+            global allow_dismiss
+            allow_dismiss = False
+
+        elif event == "slow_done":
+            # Allow skip after dialogue
+            global allow_dismiss
+            allow_dismiss = True
+
     def jn_is_new_years_day(input_date=None):
         """
         Returns True if the current date is New Year's Day; otherwise False

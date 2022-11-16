@@ -48,7 +48,7 @@ label random_music_change:
     n 1nchbg "[track_quip]{w=2}{nw}"
 
     stop music fadeout 2
-    $ renpy.pause(2)
+    $ renpy.pause(2, hard=True)
     play audio cassette_open
 
     $ track_followup = random.choice(jn_random_music._NEW_TRACK_FOLLOWUPS)
@@ -68,7 +68,7 @@ label random_music_change:
 
     play audio cassette_close
     python:
-        renpy.pause(2)
+        renpy.pause(2, hard=True)
         renpy.play(filename=music_title_and_file[1], channel="music", fadein=2)
         jn_custom_music._now_playing = music_title
         renpy.notify("Now playing: {0}".format(jn_custom_music._now_playing))
@@ -155,11 +155,11 @@ label random_music_disable:
     extend 1nchsm " I'll just put it back to the regular music."
 
     stop music fadeout 2
-    $ renpy.pause(2)
+    $ renpy.pause(2, hard=True)
     play audio cassette_open
-    $ renpy.pause(1.5)
+    $ renpy.pause(1.5, hard=True)
     play audio cassette_close
-    $ renpy.pause(2)
+    $ renpy.pause(2, hard=True)
     play music audio.just_natsuki_bgm fadein 2
 
     n 1nwlbg "...And there we go!"
