@@ -43,11 +43,11 @@ label ch30_init:
         import random
 
         #Run runtime data migrations here
-        jn_utils.log("Current persisted version is: {0}".format(store.persistent._jn_version))
         jn_data_migrations.runRuntimeMigrations()
 
         #Now adjust the stored version number
         persistent._jn_version = config.version
+        jn_utils.log("Current persisted version post-mig check: {0}".format(store.persistent._jn_version))
 
         # Assign Natsuki and player nicknames
         if Natsuki.isEnamored(higher=True) and persistent._jn_nicknames_natsuki_allowed and persistent._jn_nicknames_natsuki_current_nickname:
