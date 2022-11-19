@@ -45,7 +45,7 @@ label introduction_progress_check:
         $ main_background.show()
         $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
         show natsuki idle introduction at jn_center zorder JN_NATSUKI_ZORDER
-        $ renpy.pause(0.25, hard=True)
+        $ jnPause(0.25, hard=True)
         hide glitch_garbled_a
         play music audio.space_classroom_bgm fadein 1
 
@@ -57,7 +57,7 @@ label introduction_opening:
     $ n.display_args["callback"] = jnNoDismissDialogue
     $ n.what_args["slow_abortable"] = False
     show black zorder 99
-    $ renpy.pause(5, hard=True)
+    $ jnPause(5, hard=True)
 
     # Restore attempt #1..
     # NOTE: We use non-standard menus in this sequence, as the default menu is offset and we need these centred.
@@ -66,34 +66,34 @@ label introduction_opening:
     play audio static
     show glitch_garbled_a zorder 99 with vpunch
     hide glitch_garbled_a
-    $ renpy.pause(5, hard=True)
+    $ jnPause(5, hard=True)
 
     # Restore attempt #2..
     $ renpy.display_menu(items=[ ("Restore natsuki.chr", True)], screen="choice_centred_mute")
     play audio static
     show glitch_garbled_b zorder 99 with vpunch
-    $ renpy.pause(0.25, hard=True)
+    $ jnPause(0.25, hard=True)
     play audio static
     show glitch_garbled_a zorder 99 with hpunch
-    $ renpy.pause(0.5, hard=True)
+    $ jnPause(0.5, hard=True)
     play audio glitch_c
     hide glitch_garbled_b
     hide glitch_garbled_a
-    $ renpy.pause(7, hard=True)
+    $ jnPause(7, hard=True)
     
     # Restore attempt #3..
     $ renpy.display_menu(items=[ ("Restore natsuki.chr", True)], screen="choice_centred_mute")
     play audio static
     show glitch_garbled_c zorder 99 with vpunch
-    $ renpy.pause(0.25, hard=True)
+    $ jnPause(0.25, hard=True)
     play audio glitch_b
     show glitch_garbled_b zorder 99 with hpunch
-    $ renpy.pause(0.5, hard=True)
+    $ jnPause(0.5, hard=True)
 
     if random.randint(0,10) == 1:
         play audio glitch_a
         show glitch_garbled_red zorder 99 with hpunch
-        $ renpy.pause(1, hard=True)
+        $ jnPause(1, hard=True)
         hide glitch_garbled_red
 
     play audio static
@@ -103,7 +103,7 @@ label introduction_opening:
     hide glitch_garbled_a
     show sky glitch_fuzzy zorder 99
     play sound interference loop
-    $ renpy.pause(10, hard=True)
+    $ jnPause(10, hard=True)
 
     play audio static
     show glitch_garbled_a zorder 99 with hpunch
@@ -112,7 +112,7 @@ label introduction_opening:
     hide glitch_garbled_a
     show sky glitch_fuzzy zorder 99
     play sound interference loop
-    $ renpy.pause(1.5, hard=True)
+    $ jnPause(1.5, hard=True)
 
     # Restore finally works
     stop sound
@@ -148,7 +148,7 @@ label introduction_first_meeting:
     play audio static
     show glitch_garbled_b zorder 99 with vpunch
     hide glitch_garbled_b
-    $ renpy.pause(0.5, hard=True)
+    $ jnPause(0.5, hard=True)
     play audio glitch_c
     show glitch_garbled_c zorder 99 with vpunch
     hide glitch_garbled_c
@@ -246,7 +246,7 @@ label introduction_first_meeting:
     n 1kwmss "You're...{w=0.3} [player]?"
 
     show natsuki idle introduction at jn_center
-    $ renpy.pause(10, hard=True)
+    $ jnPause(10, hard=True)
 
     jump introduction_collecting_thoughts
 
@@ -321,7 +321,7 @@ label introduction_collecting_thoughts:
     extend 1kplpusbr " right?"
 
     show natsuki idle introduction at jn_center
-    $ renpy.pause(30, hard=True)
+    $ jnPause(30, hard=True)
 
     jump introduction_calmed_down
 
@@ -387,7 +387,7 @@ label introduction_calmed_down:
     extend 1kcssrl " I just don't know anymore..."
 
     show natsuki idle introduction at jn_center
-    $ renpy.pause(60, hard=True)
+    $ jnPause(60, hard=True)
 
     jump introduction_acceptance
 
@@ -418,7 +418,7 @@ label introduction_acceptance:
 
     stop music fadeout 3
     $ jn_atmosphere.updateSky()
-    $ renpy.pause(1, hard=True)
+    $ jnPause(1, hard=True)
 
     n 1uwdboesu "..."
     n 1fllss "...Okay,{w=1}{nw}"

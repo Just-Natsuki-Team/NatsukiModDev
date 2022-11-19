@@ -2280,12 +2280,12 @@ label new_wearables_outfits_unlocked:
 
         show black zorder 4 with Dissolve(0.5)
         play audio clothing_ruffle
-        $ renpy.pause(3.5, hard=True)
+        $ jnPause(3.5, hard=True)
 
         if Natsuki.isLove(higher=True):
             show natsuki 1nslunfsbl at jn_center zorder JN_NATSUKI_ZORDER
             play audio kiss
-            $ renpy.pause(1.5, hard=True)
+            $ jnPause(1.5, hard=True)
             hide black with Dissolve(1.25)
             $ chosen_tease = jn_utils.getRandomTease()
             n 1knmssf "...Thanks,{w=0.1} [chosen_tease]."
@@ -2311,7 +2311,7 @@ label new_wearables_outfits_unlocked:
         show black zorder 4 with Dissolve(0.5)
         show natsuki 1flrcafsbr at jn_center zorder JN_NATSUKI_ZORDER
         play audio clothing_ruffle
-        $ renpy.pause(2, hard=True)
+        $ jnPause(2, hard=True)
         hide black with Dissolve(1.25)
 
         n 1ksrcafsbr "..."
@@ -2336,16 +2336,16 @@ label new_wearables_outfits_unlocked:
     show black zorder 4 with Dissolve(0.5)
     $ giftbox.close()
     $ giftbox.hide()
-    $ renpy.pause(2, hard=True)
+    $ jnPause(2, hard=True)
     play audio chair_out
-    $ renpy.pause(3, hard=True)
+    $ jnPause(3, hard=True)
     play audio clothing_ruffle
-    $ renpy.pause(1, hard=True)
+    $ jnPause(1, hard=True)
     play audio drawer
-    $ renpy.pause(1, hard=True)
-    $ renpy.pause(3, hard=True)
+    $ jnPause(1, hard=True)
+    $ jnPause(3, hard=True)
     play audio chair_in
-    $ renpy.pause(3, hard=True)
+    $ jnPause(3, hard=True)
     hide black with Dissolve(1.25)
 
     n 1ullajl "So..."

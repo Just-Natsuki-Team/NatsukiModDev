@@ -144,7 +144,7 @@ init python in jn_activity:
                 - JNPlayerActivity type for the active window, or None
             """
             if delay is not 0:
-                renpy.pause(delay, hard=True)
+                jnPause(delay, hard=True)
 
             window_name = getCurrentWindowName()
             if window_name is not None:

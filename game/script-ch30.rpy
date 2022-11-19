@@ -173,7 +173,7 @@ label ch30_wait:
         if (random.randint(1, 10000) == 1):
             jn_stickers.stickerWindowPeekUp(at_right=random.choice([True, False]))
 
-        renpy.pause(delay=5.0, hard=True)
+        jnPause(delay=5.0, hard=True)
     
     jump ch30_loop
 
@@ -674,11 +674,11 @@ label try_force_quit:
                     if (random.randint(0, 10) == 1):
                         play sound glitch_d loop
                         show glitch_garbled_red zorder 99 with vpunch
-                        $ renpy.pause(random.randint(4,13), hard=True)
+                        $ jnPause(random.randint(4,13), hard=True)
                         stop sound
                         play audio glitch_e
                         show glitch_garbled_n zorder 99 with hpunch
-                        $ renpy.pause(0.025, hard=True)
+                        $ jnPause(0.025, hard=True)
                         hide glitch_garbled_n
                         hide glitch_garbled_red
 
