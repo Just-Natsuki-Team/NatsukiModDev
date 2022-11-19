@@ -3848,6 +3848,10 @@ label talk_school_uniform:
             n 1fchgn "Then you have my condolences,{w=0.1} [player]!{w=0.2} Ahaha."
             n 1fcsbg "Good to know we're on the same page,{w=0.1} though."
 
+        "I don't have to wear uniform now.":
+            n 1fslsr "..."
+            n 1fsqsr "...Lucky."
+
     n 1ullss "Well,{w=0.1} anyway..."
 
     if Natsuki.isLove(higher=True):
