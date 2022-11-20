@@ -178,7 +178,7 @@ label ch30_wait:
             jn_stickers.stickerWindowPeekUp(at_right=random.choice([True, False]))
 
         jnPause(delay=5.0, hard=True)
-    
+
     jump ch30_loop
 
 #Other labels
