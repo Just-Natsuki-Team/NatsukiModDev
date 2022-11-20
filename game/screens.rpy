@@ -800,7 +800,7 @@ screen navigation():
             ## Help isn't necessary or relevant to mobile devices.
             textbutton _("Help") action Help("README.md")
 
-        textbutton _("GitHub") action OpenURL("https://github.com/Just-Natsuki-Team/NatsukiModDev")
+        textbutton _("GitHub") action OpenURL(jn_globals.LINK_JN_GITHUB)
 
 style navigation_button is gui_button
 style navigation_button_text is gui_button_text
@@ -1221,7 +1221,7 @@ screen preferences():
                         textbutton _("Conversations") action [
                             ToggleField(
                                 object=persistent,
-                                field="jn_notify_conversations",
+                                field="_jn_notify_conversations",
                                 true_value=True,
                                 false_value=False)
                         ]

@@ -41,6 +41,7 @@ label ch30_init:
         import random
 
         #Run runtime data migrations here
+        jn_utils.log("Current persisted version is: {0}".format(store.persistent._jn_version))
         jn_data_migrations.runRuntimeMigrations()
 
         #Now adjust the stored version number

@@ -217,12 +217,15 @@ label talk_did_you_have_pets:
 
     else:
         n 1unmbs "What about you,{w=0.1} [player]?"
+        show natsuki 1fspgs at jn_center
         menu:
             n "Did you get a new pet?"
 
             "Yes, I did.":
-                n 1uspaw "Ooh...{w=0.3} you gotta tell me!{w=0.2} What did you get?"
-                show natsuki 1uspaw at jn_left
+                n 1uwdgsesu "!{w=0.5}{nw}"
+                n 1uspaw "Y-{w=0.2}you gotta tell me!{w=0.75}{nw}" 
+                extend 1fspgsedz " What did you get?{w=0.3} What did you get?"
+                show natsuki 1fspca at jn_left
                 call screen scrollable_choice_menu(pet_options)
 
             "No, I didn't.":
@@ -261,7 +264,7 @@ label talk_did_you_have_pets:
     elif _return == "chameleons":
         n 1unmaj "Oh!{w=0.2} Chameleons!"
         n 1uchgn "That's super cool,{w=0.1} [player]!"
-        n 1unmbg "The colour changing is crazy enough,{w=0.1} but those eyes too{w=0.1} -{w=0.1} it's like someone just made them up!"
+        n 1unmbg "The color changing is crazy enough,{w=0.1} but those eyes too{w=0.1} -{w=0.1} it's like someone just made them up!"
         n 1uchgn "Still{w=0.1} -{w=0.1} that's awesome!"
         n 1unmbg "You better take good care of it,{w=0.1} okay?"
         
@@ -321,9 +324,9 @@ label talk_did_you_have_pets:
         n 1uspbs "I love their little tails,{w=0.1} and their little paws,{w=0.1} and their little whiskers,{w=0.2} and-"
         n "And!{w=0.2} And..."
         n 1uwdbol "..."
-        n 1uchbsl "A-{w=0.1}ahaha!{w=0.2} It would appear I got a little carried away..."
-        n 1uchgnf "..."
-        n 1fllgnf "You better take good care of yours for me,{w=0.1} alright?"
+        n 1uchbsl "A-{w=0.1}ahaha!{w=0.2} I'm...{w=0.5}" 
+        extend 1fslsslsbl " getting a little carried away."
+        n 1fcspof "Y-{w=0.2}you better take good care of yours for me,{w=0.1} alright?"
 
     elif _return == "horses":
         n 1uspaw "W-{w=0.1}wow!{w=0.2} You aren't just messing with me,{w=0.1} right?!"
@@ -333,13 +336,17 @@ label talk_did_you_have_pets:
         n 1unmlg "Oh -{w=0.2} and wear a helmet if you ride!"
 
     elif _return == "insects":
-        n 1twmsc "Ack-{nw}"
-        n 1kslup "Nnnnn..."
+        n 1twmsc "Ack-{w=0.5}{nw}"
+        n 1kslupsbl "Nnnnn..."
         n 1kwmsg "...I wish I could share your enthusiasm!{w=0.5}{nw}"
         extend 1kllss " Ahaha..."
+        n 1nslunsbl "..."
+        n 1nnmemleshsbl "I-{w=0.2}I mean,{w=0.75}{nw}"
+        extend 1fcstrlsbr " it's cool that's something you're into!{w=0.75}{nw}"
+        extend 1ksrcalsbr " But..."
         n 1ksqun "I don't think I could stomach creepy crawlies myself."
-        n 1ksrun "You've certainly got an...{w=0.3} interesting taste,{w=0.1} [player]."
-        n 1kwmss "But I'm sure you take great care of yours!"
+        n 1ksrunsbr "You've certainly got an...{w=0.3} interesting taste,{w=0.1} [player]."
+        n 1fchsssbr "...Though I'm sure you take great care of yours!"
 
     elif _return == "lizards":
         n 1uchgn "Ooh!{w=0.2} Lizards,{w=0.1} huh?"
@@ -485,9 +492,9 @@ label talk_using_computers_healthily:
     n 1unmsf "You gotta be at your computer to talk to me,{w=0.1} right?"
     n 1ullsf "And you've been here a while already..."
 
-    if (jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.work_applications)
-        or jn_activity.hasPlayerDoneActivity(JNActivities.artwork)
-        or jn_activity.hasPlayerDoneActivity(JNActivities.coding)):
+    if (jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.work_applications)
+        or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(JNActivities.artwork)
+        or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(JNActivities.coding)):
             n 1knmaj "In fact, I've even {i}seen{/i} you working on a lot of stuff myself!"
             n 1kllsl "..."
 
@@ -749,7 +756,64 @@ init 5 python:
     )
 
 label talk_weather_setup_main:
-    if get_topic("talk_weather_setup_main").shown_count == 0:
+    if persistent._jn_weather_api_key:
+        $ persistent._jn_weather_setup_started = True
+
+    if persistent._jn_weather_setup_started:
+        # Player has already done at least some of the setup process, so offer range of options
+        n 1unmajesu "Oh!{w=1}{nw}" 
+        extend 1fcsbg " Yeah,{w=0.1} I remember!"
+        n 1ulraj "So..."
+        show natsuki 1unmbg at jn_center
+
+        menu:
+            n "Where did you wanna start from,{w=0.1} [player]?"
+
+            "I want to give you an API key.":
+                # API key
+                n 1unmaj "You wanna give me an API key?{w=1}{nw}"
+                extend 1fchbg " Sure!"
+                n 1nchbg "I'll just walk you through it just in case,{w=0.1} 'kay?"
+
+                # Reset configuration state
+                $ persistent._jn_weather_api_configured = False
+                $ persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
+
+                jump talk_weather_setup_api_key
+
+            "I want to give you my location." if persistent._jn_weather_api_key:
+                # Location
+                n 1unmaj "You wanna go through your location?{w=1}{nw}"
+                extend 1fchbg " Sure!"
+                n 1nchbg "I'll just walk you through it just in case,{w=0.1} 'kay?"
+                
+                # Reset configuration state
+                $ persistent._jn_weather_api_configured = False
+                $ persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
+
+                jump talk_weather_setup_location
+
+            "Can you try testing everything I've told you again?" if persistent._jn_weather_api_key and persistent._jn_player_latitude_longitude:
+                # Retry verification
+                n 1unmaj "You just want me to try testing it all again?{w=0.75}{nw}"
+                extend 1fchbgeme " Right-o!"
+
+                # Reset configuration state
+                $ persistent._jn_weather_api_configured = False
+                $ persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
+
+                jump talk_weather_setup_verify
+
+            "Nevermind.":
+                # Cancel
+                n 1tsqpu "Uh...{w=0.5}{nw}"
+                extend 1tsrpu " huh."
+                n 1fchbg "Well,{w=0.1} your loss,{w=0.3} [player]!"
+                extend 1fchsm " Ehehe."
+
+                return
+
+    else:
         # Introduction
         n 1fslbo "..."
         n 1fcsem "Urgh...{w=1.5}{nw}" 
@@ -760,13 +824,14 @@ label talk_weather_setup_main:
 
         menu:
             "What's the matter, Natsuki?":
-                n 1uwdpu "Huh?{w=0.5}{nw}"
-                extend 1uwdaj " Oh!{w=0.5} [player]!{w=1}{nw}"
-                extend 1fllbg " I'm glad you asked!"
+                n 1uwdpueqm "Huh?{w=0.5}{nw}"
+                extend 1uwdajesu " Oh!{w=0.5} [player]!{w=1}{nw}"
+                extend 1fllbgsbr " I'm glad you asked!"
 
             "What're you complaining about?":
-                n 1fsqpo "Well,{w=0.1} your attitude,{w=0.1} for one thing!{w=1}{nw}"
-                extend 1nllaj " Anyway..."
+                n 1fwdemesh "...!{w=0.5}{nw}"
+                n 1fcsgs "Well,{w=0.1} your attitude,{w=0.1} for one thing!{w=1}{nw}"
+                extend 1fslca " Anyway..."
 
         n 1ullaj "So...{w=0.5}{nw}"
         extend 1flrss " I'm not really one to just sit around and admire the view."
@@ -797,6 +862,7 @@ label talk_weather_setup_main:
         n 1fllss "What I'm {i}trying{/i} to do is add some atmosphere to this place,{w=1}{nw}"
         extend 1fsqsm " and what better way to do that than..."
         n 1fchbg "Some actual weather!"
+        n 1nsqsl "And not {i}just{/i} some randomly changing thing..."
         n 1ulraj "I wanna set things up so the weather here matches what it's like where you are,{w=0.1} [player]."
         n 1fcsbg "I know{w=0.1} -{w=0.5}{nw}" 
         extend 1fchbg " awesome,{w=0.1} right?"
@@ -815,6 +881,7 @@ label talk_weather_setup_main:
 
             "Sure.":
                 n 1uchbg "Alright!"
+                $ persistent._jn_weather_setup_started = True
                 jump talk_weather_setup_api_key
 
             "I can't right now.":
@@ -822,47 +889,6 @@ label talk_weather_setup_main:
                 extend 1nllss " Well..."
                 n 1nllaj "Just let me know when you have the time,{w=0.1} 'kay?"
                 n 1fcsbg "It'll be {i}super{/i} worth it!"
-                return
-
-    else:
-        # Player has already done at least some of the setup process, so offer range of options
-        n 1unmaj "Oh!{w=1}{nw}" 
-        extend 1fcsbg " Yeah,{w=0.1} I remember!"
-        n 1ulraj "So..."
-        menu:
-            n "What did you wanna start from,{w=0.1} [player]?"
-
-            "I want to give you an API key.":
-                # API key
-                n 1unmaj "You wanna give me an API key?{w=1}{nw}"
-                extend 1fchbg " Sure!"
-                n 1nchbg "I'll just walk you through it just in case,{w=0.1} 'kay?"
-
-                # Reset configuration state
-                $ persistent._jn_weather_api_configured = False
-                $ persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
-
-                jump talk_weather_setup_api_key
-
-            "I want to give you my location." if persistent._jn_weather_api_key:
-                # Location
-                n 1unmaj "You wanna go through your location?{w=1}{nw}"
-                extend 1fchbg " Sure!"
-                n 1nchbg "I'll just walk you through it just in case,{w=0.1} 'kay?"
-                
-                # Reset configuration state
-                $ persistent._jn_weather_api_configured = False
-                $ persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
-
-                jump talk_weather_setup_location
-
-            "Nevermind.":
-                # Cancel
-                n 1tsqpu "Uh..."
-                extend 1tsrpu " huh."
-                n 1fchbg "Well,{w=0.1} your loss,{w=0.3} [player]!"
-                extend 1fchsm " Ehehe."
-
                 return
 
 label talk_weather_setup_api_key:
@@ -965,7 +991,7 @@ label talk_weather_setup_location:
     n 1uchbg "...Your location,{w=0.1} obviously!"
     n 1ullaj "There's a couple ways to do this,{w=1}{nw}"
     extend 1nnmsm " but I thought it'd be best to just ask."
-    n 1ulraj " So..."
+    n 1ulraj "So..."
 
     menu:
         n "How do you wanna tell me, [player]?"
@@ -1072,6 +1098,7 @@ label talk_weather_setup_manual_coords:
     n 1unmaj "Do you live in the {b}Northern{/b} or {b}Southern{/b} Hemisphere?"
     n 1nllss "Just in case you didn't know,{w=0.1} it basically just means if you live {b}North{/b} or {b}South{/b} of the {b}equator{/b}."
     n 1nllaj "So..."
+    show natsuki 1tsqsm at jn_center
     menu:
         n "Which do you live in,{w=0.1} [player]?"
 
@@ -1094,6 +1121,7 @@ label talk_weather_setup_manual_coords:
     n 1tnmss "Do you live in the {b}Eastern{/b} or {b}Western{/b} Hemisphere?"
     n 1ulraj "This one's a little more tricky,{w=0.1} but I find it helps to think of it this way:"
     n 1nnmbo "If we took a world map and cut it in half {b}vertically{/b} down the middle..."
+    show natsuki 1unmaj at jn_center
     menu:
         n "Would you live in the {b}Eastern half{/b},{w=0.1} or the {b}Western half{/b}?"
 
@@ -1116,7 +1144,6 @@ label talk_weather_setup_manual_coords:
             n 1fchbg "The Western half.{w=0.5} Gotcha!"
 
     # Get the latitude
-
     n 1fllss "Now with that out of the way,{w=0.1} I just need your coordinates!"
     n 1fsqss "And by those,{w=0.5}{nw}" 
     extend 1fchsm " I mean your {b}latitude{/b} and {b}longitude{/b}!"
@@ -1129,7 +1156,6 @@ label talk_weather_setup_manual_coords:
     $ player_latitude = renpy.input(prompt="Enter your {b}latitude{/b}:", allow="0123456789.")
 
     # Get the longitude
-
     n 1fchbg "Alright!{w=0.5}{nw}" 
     extend 1nchsm " Now finally,{w=0.1} I just need your {b}longitude{/b}!"
     n 1fcssm "Just like last time,{w=0.1} I can figure it out without any positive or negative symbols."
@@ -1226,7 +1252,7 @@ label talk_weather_setup_verify:
         extend 1uchbs " It's working,{w=0.5} it's working!{w=1}{nw}"
         extend 1nchsml " Ehehe."
         n 1nchbgl "Thanks a bunch,{w=0.1} [player]!{w=1}{nw}"
-        extend 1uchgnl " This is gonna be {i}super{/i} awesome!"
+        extend 1uchgnledz " This is gonna be {i}super{/i} awesome!"
         $ Natsuki.calculatedAffinityGain()
 
         python:
@@ -1240,9 +1266,55 @@ label talk_weather_setup_verify:
         n 1fcsem "Ugh..."
         n 1fslem "And I was so stoked about it,{w=0.1} too..."
         n 1fcsem "I'm sorry,{w=0.1} [player].{w=1}{nw}"
-        extend 1knmem " I can't get it all to work!"
+        extend 1knmemsbl " I can't get it all to work!"
         n 1fsrem "Talk about a disappointment..."
-        n 1knmpo "Maybe we could try again later?"
+        n 1nsrposbl "..."
+        n 1unmgsesu "Ah!{w=0.5}{nw}"
+        extend 1fnmgs " I just thought of something!"
+        n 1tnmpueqm "Did you have to make a new account for OpenWeatherMap,{w=0.2} [player]?{w=0.75}{nw}"
+        extend 1tslbo " Or like,{w=0.2} did you make a new API key?"
+        n 1tnmss "I...{w=1}{nw}"
+        extend 1fsrdvsbr " kinda spaced out a little when you told me before.{w=0.75}{nw}"
+        extend 1nlrajsbr " So..."
+        show natsuki 1tnmslsbr at jn_center
+
+        menu:
+            n "Do you remember?{w=0.3} Like,{w=0.2} at all?"
+            
+            "I created a new account.":
+                $ new_account_or_key = True
+
+            "I created a new API key.":
+                $ new_account_or_key = True
+
+            "I already had an account, and used an existing API key.":
+                $ new_account_or_key = False
+                n 1tslpusbr "...Huh."
+                n 1tslsr "I'm...{w=0.75}{nw}"
+                extend 1kcsemesisbl " kinda stumped then,{w=0.2} actually."
+                n 1tsrsl "I mean..."
+                n 1tnmpueqm "Maybe you just gave me the wrong key...?"
+                extend 1fchbgsbl " Or your internet just isn't feeling it today?"
+                n 1nslsssbl "I don't know."
+                n 1fllsssbl "Just...{w=0.5}{nw}"
+                extend 1knmsssbr " let me know when if you wanna try again,{w=0.2} 'kay?"
+                n 1knmcaesssbr "It'll be awesome!{w=0.5}{nw}"
+                extend 1knmpolesssbr " I-{w=0.3}I promise!"
+
+        if new_account_or_key:
+            n 1tslbo "So you did,{w=0.2} huh..."
+            n 1fslpuesp "..."
+            n 1unmgsesu "Oh!{w=0.5}{nw}"
+            extend 1fsrdvsbl " Right!"
+            n 1fsrsssbl "I forgot to say..."
+            n 1fsldvsbr "It might take a day or so for your API key to actually {i}activate{/i} so I can use it..."
+            n 1kchsssbr "Ehehe.{w=0.5}{nw}"
+            extend 1fchblsbl " Oops!"
+            n 1fllsssbl "Just...{w=0.5}{nw}"
+            extend 1knmsssbr " let me know when you wanna try again,{w=0.2} 'kay?"
+            n 1fnmcasbr "I really wanna get this all working!"
+            n 1fcstr "Because when I do,{w=0.2} you bet it's gonna be{w=0.3}{nw}" 
+            extend 1fspgsledz " {i}awesome{/i}!"
 
     jump ch30_loop
 
@@ -1917,15 +1989,15 @@ label talk_drinking_alcohol:
     n 1tnmbg "Surprised?{w=0.5}{nw}"
     extend 1fcsss " I know,{w=0.1} right?"
     n 1tllss "I mean...{w=0.3} it was just completely out of the blue!"
-    n 1uchbs "She just produced it from her bag like it was a book or something."
+    n 1uchbs "She just slipped it out from her bag like it was a book or something."
     n 1unmbo "It wasn't even just some random supermarket stuff either...{w=0.5}{nw}"
     extend 1uwdaj " it looked super expensive too!"
     n 1kllss "Honestly,{w=0.1} I couldn't help myself.{w=0.2} I just burst into laughter."
-    n 1ullun "I think it was just how non-chalant it all was,{w=0.1} really."
+    n 1ullun "I think it was just how non-chalant she was being about it all,{w=0.1} really."
     n 1nnmsl "Monika didn't look impressed,{w=0.1} though..."
     n 1klrsl "And Sayori...{w=0.3} she just got really upset.{w=0.5}{nw}"
     extend 1klrpu " She was shouting and everything!"
-    n 1kcspu "It looked like Yuri put a lot of thought into picking something out,{w=0.1} but she just got yelled at for it..."
+    n 1kcspu "It looked like Yuri put a lot of thought into picking something out,{w=0.1} but she was just given a hard time over for it..."
     n 1kcssr "I mean...{w=0.5}{nw}"
     extend 1kllsr " I know we shouldn't have had it in there at all,{w=0.1} and Yuri should have known better."
     n 1fslsr "But she didn't deserve all of...{w=0.5}{nw}"
@@ -1982,18 +2054,19 @@ init 5 python:
 label talk_driving:
     # Check to see if the player and Natsuki have already discussed if Nat can drive in this topic, or the "are you into cars?" topic
     $ already_discussed_driving = get_topic("talk_driving").shown_count > 0 or get_topic("talk_are_you_into_cars").shown_count > 0
-
-    n 1fchdv "Pffft!{w=0.5}{nw}"
-    extend 1uchbselg " Ahaha!"
-    n 1fchgn "What kind of a question is that,{w=0.1} [player]?"
     $ chosen_tease = jn_utils.getRandomTease()
 
     if already_discussed_driving:
-        n 1tllss "I already told you I can't drive,{w=0.1} [chosen_tease]!{w=0.5}{nw}"
-        extend 1fchgn " I don't even have a license!"
-        n 1kllpo "And even if I wanted to,{w=0.1} I don't think I could afford it..."
+        n 1tnmboeqm "...Huh?{w=0.75}{nw}"
+        extend 1tllsssbr " I already told you I can't drive,{w=0.2} [chosen_tease]!"
+        n 1fchgnelg "I still don't have a license,{w=0.2} remember?"
+        n 1tllaj "And even if I wanted to,{w=0.5}{nw}" 
+        extend 1nslposbl " I don't think I could afford it..."
 
     else:
+        n 1fchdvesi "Pffft!{w=0.5}{nw}"
+        extend 1uchbselg " Ahaha!"
+        n 1fchgn "What kind of a question is that,{w=0.1} [player]?"
         n 1tllss "Of course I can't drive,{w=0.1} [chosen_tease]!{w=0.5}{nw}"
         extend 1fchgn " I don't even have a license!"
         n 1kllpo "I mean...{w=0.3} even if I wanted to learn,{w=0.1} I don't think I could afford it."
@@ -2003,6 +2076,7 @@ label talk_driving:
     extend 1fsqaj " it's actually pretty gross how fast it all adds up."
     n 1nlraj "I think I'd rather stick to public transport and my own two feet."
     n 1unmaj "But what about you,{w=0.1} [player]?"
+    show natsuki 1tnmss at jn_center
 
     # Player has never confirmed if they can/cannot drive
     if persistent.jn_player_can_drive is None:
@@ -2115,8 +2189,8 @@ label talk_driving:
                 $ persistent.jn_player_can_drive = True
 
             "I can drive again!":
-                n 1uchbg "Hey!{w=0.2} Nice going,{w=0.1} [player]!"
-                n 1uwlsm "Drive safe!"
+                n 1uchbgedz "Hey!{w=0.2} Nice going,{w=0.1} [player]!"
+                n 1fchbl "Drive safe!"
                 $ persistent.jn_player_can_drive = True
 
             "Nope, nothing new.":
@@ -2489,7 +2563,7 @@ label talk_sleeping_well:
     n 1unmsl "No screen means no bright lights or distractions to keep you up,{w=0.1} obviously."
     n 1fnmpu "If you're tired then the last thing you need is something beaming whatever at you."
 
-    if jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.anime_streaming):
+    if jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.anime_streaming):
         n 1tsqsr "And no, [player] {w=0.1}-{w=0.3}{nw}"
         extend 1fnmpo " No late-night anime binging sessions either."
         n 1nchgn "Sorry~!"
@@ -2549,8 +2623,8 @@ label talk_aging:
     n 1flraj "What does wind me up though is how immature people can be about it."
     n 1fnmaj "Especially when it comes to relationships between different ages!"
     n 1fslsf "People just get so preachy about it..."
-    n 1fllaj "Like...{w=0.3} as long as they're both happy,{w=0.3}{nw}"
-    extend 1fnmem " and nobody is being hurt or made uncomfortable,{w=0.1} who actually cares?"
+    n 1fllaj "Like...{w=0.3} as long as they're both happy,{w=0.2} it's all legal,{w=0.3}{nw}"
+    extend 1fnmem " and nobody is being hurt or made uncomfortable,{w=0.1} who {i}actually{/i} cares?"
     n 1nlrpu "It's just like most stuff,{w=0.1} really."
     n 1unmaj "Besides,{w=0.1} it's not like being a certain age means you {i}have{/i} to be a certain way."
     n 1fchbg "I mean...{w=0.3} look at Yuri!"
@@ -2696,7 +2770,7 @@ label talk_using_headphones_carefully:
     n 1flrsr "...Take them off every once and a while,{w=0.1} will you?{w=0.2} For other people,{w=0.1} I mean."
     n 1ncsbo "I get it -{w=0.1} if you just wanna listen to something in peace,{w=0.1} or give yourself some room,{w=0.1} that's okay."
 
-    if jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.music_applications):
+    if jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.music_applications):
         n 1kslbg "I know you like your music streaming."
 
     n 1nsqbo "But don't use them to barricade yourself away from everyone and everything."
@@ -2824,7 +2898,7 @@ label talk_gaming:
                 n 1tnmaj "Huh?{w=0.2} Really?"
                 n 1tllaj "Not even the odd casual game?"
 
-                if jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.gaming):
+                if jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.gaming):
                     n 1fsqts "Liar.{nw}"
 
                 n 1ncsaj "...Well then."
@@ -2871,7 +2945,7 @@ label talk_gaming:
             n 1fchbg "I {i}am{/i} a professional,{w=0.1} after all!"
 
         else:
-            if jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.gaming):
+            if jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.gaming):
                 n 1fsqts "Liar.{nw}"
 
             n 1ullaj "Well then...{w=0.5}{nw}"
@@ -3741,19 +3815,25 @@ label talk_school_uniform:
     n 1fllem "Who even thought someone needs that much clothing?!{w=0.2} For school,{w=0.1} of all places?!"
     n 1fbkwr "I mean...{w=0.3} do you even {i}know{/i} what wearing all that clothing in summer is like?!{w=0.2} It's {i}horrible{/i}!"
     n 1flrpo "And the blazer...{w=0.3} ugh!{w=0.2} It's actually the worst thing ever."
-    n 1fsqpo "Like yeah,{w=0.1} I could take some off between class,{w=0.1} but I had to put it all back on when I go went in."
+    n 1fsqpo "Like yeah,{w=0.1} I could take some off between class,{w=0.1} but I had to put it all back on when I went in."
     n 1fllpo "...Or get told off.{w=0.2} {i}Again{/i}.{w=0.2} I honestly have no idea how Sayori got away with hers being so scruffy."
     n 1fcsan "And all of the uniform stuff is super expensive too!{w=0.2} Talk about a kick in the teeth!"
     n 1fslan "Jerks."
     n 1fslsr "Ugh...{w=0.3} I seriously wish uniforms were banned or something."
-    n 1flrpo "It could be worse though,{w=0.1} I guess.{w=0.2} At suppose it kept me warm when it mattered."
+    n 1flrpo "I guess it could be worse.{w=0.5}{nw}"
+    extend 1ksrsl  " At least it kept me warm when it mattered."
 
     if not Natsuki.isWearingClothes("jn_clothes_school_uniform"):
         n 1nchgn "...And I'm not wearing it now,{w=0.1} at least!{w=1}{nw}"
         extend 1fcsbg " Always a plus."
-        n 1ullaj "That being said..."
+        n 1ullaj "That being said...{w=0.75}{nw}"
+    
+    else:
+        n 1ulraj "But...{w=0.75}{nw}"
 
-    n 1unmaj "What about you though,{w=0.1} [player]?"
+    extend 1unmbo " what about you,{w=0.1} [player]?"
+    show natsuki 1tnmpu at jn_center
+
     menu:
         n "Did you have to wear uniform at school?"
 
@@ -4494,9 +4574,9 @@ label talk_collectibles:
     elif Natsuki.isNormal(higher=True):
         n 1tnmpueqm "Huh?{w=0.2} You mean like figurines and all that stuff?"
         n 1tlrpu "Well...{w=0.3} no,{w=0.1} [player].{w=0.2} Not really."
-        n 1knmsf "I couldn't justify spending so much on a hobby like that!"
-        n 1flrbo "Especially not when I had other things to worry about spending my money on first,{w=0.1} you know."
-        n 1unmaj "But anyway,{w=0.1} putting all that aside..."
+        n 1knmsf "I couldn't justify spending so much just on hobbies like that!"
+        n 1flrbo "...Especially not when I had {i}other{/i} things to worry about spending my money on first."
+        n 1unmaj "B-{w=0.2}but anyway,{w=0.1} putting all that aside..."
 
     elif Natsuki.isDistressed(higher=True):
         n 1fsqsfsbl "No,{w=0.1} [player]."
@@ -4538,7 +4618,7 @@ label talk_collectibles:
                 n 1nchbg "Just let me know if you ever feel like a tour!"
                 n 1nchgn "You won't find a better collection!{w=0.2} Ehehe."
 
-                if jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.manga):
+                if jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.manga):
                     n 1fllss "Or,{w=0.1} at least...{w=0.5}{nw}"
                     extend 1fsqss " a better...{w=0.3} {i}physical{/i} one."
                     n 1fsqsm "Right,{w=0.5}{nw}"
@@ -5005,7 +5085,7 @@ label talk_vtubers:
         n 1fsqupltse "Throwing money at a stranger hiding behind a cutesy picture doesn't make you any less of a {b}jerk{/b}."
         return
 
-    n 1nchsm "It's definitely a cool idea!{w=0.2} It lets people share their passions and experiences with others behind a completely clean persona..."
+    n 1nchsm "It's definitely a cool idea!{w=0.2} It lets people share their passions and experiences with others behind a new persona..."
     n 1fllpo "Without having to worry about baggage following them into their personal lives,{w=0.1} or people being creeps,{w=0.1} or stuff like that."
     n 1uwdem "A lot of them even make full-blown careers out of it: merchandise,{w=0.1} song releases and everything -{w=0.1} just like idols!{w=0.2} It's crazy!"
     n 1tllem "That being said..."
@@ -5080,21 +5160,29 @@ label talk_skateboarding:
     n 1tllss "Though...{w=0.3} not really by choice.{w=0.5}{nw}"
     extend 1knmaj " Bikes are {i}expensive{/i}, [player]!"
     n 1kllun "And I could never rely on lifts from my...{w=0.3} folk,{w=0.3}{nw}"
-    extend 1kllss " so I saved up all I could and got a board the first chance I had!"
-    n 1nsqaj "Seriously.{w=0.5}{nw}"
-    extend 1fllpu " You have no {i}idea{/i} how many lunches I skipped to earn that thing."
+    extend 1kllss " so I saved up all I could,{w=0.3}{nw}" 
+    extend 1fcsbg " and got a board the first chance I had!"
+    n 1nsqaj "Seriously.{w=0.75}{nw}"
+    extend 1fllpusbr " You have no {i}idea{/i} how many lunches I skipped to earn that thing."
     n 1unmbg "But it was actually super convenient!{w=0.5}{nw}"
     extend 1flrbg " I didn't have to worry about locking it up somewhere,{w=0.1} or some jerk damaging it..."
     n 1fchsm "I could just pick it up and take it around with me,{w=0.1} or toss it in my locker."
-    n 1nslss "I mean...{w=0.3} I don't need it so much {i}now{/i},{w=0.1} but..."
+    n 1nslsssbl "I mean...{w=0.3} I don't need it so much {i}now{/i},{w=0.1} but..."
     n 1fsqss "You gotta admit,{w=0.1} [player] {w=0.1}-{w=0.1} I'm nothing if not resourceful!{w=0.5}{nw}"
     extend 1fchsm " Ahaha."
-    n 1fllss "I...{w=0.3} never really learned any tricks or anything though.{w=0.5}{nw}"
-    extend 1kscwr " I couldn't stand the thought of breaking it by accident {w=0.1}-{w=0.3}{nw}"
-    extend 1kllun " not after all that effort!"
-    n 1kcsaj "...Yeah,{w=0.1} yeah.{w=0.5}{nw}"
+
+    n 1fllss "I...{w=0.75}{nw}" 
+    extend 1nslsl " never really got super into tricks or anything though."
+    n 1fwdgsesh "D-{w=0.2}don't get me wrong!{w=1}{nw}"
+    extend 1fcsgsl " It isn't like I couldn't ace them!"
+    n 1fcstrlesi "I totally could!{w=1}{nw}"
+    extend 1kslcal " But..."
+    n 1knmemsbl "I don't think I could {i}stand{/i} the thought of breaking it by accident."
+    n 1kslunsbr "Not after all that effort."
+
+    n 1kcsaj "...Yeah,{w=0.2} yeah.{w=0.5}{nw}"
     extend 1fcspo " Not very {i}radical{/i} of me,{w=0.1} huh?"
-    n 1ullpo "But...{w=0.3} enough of that for now.{w=0.5}{nw}"
+    n 1ullpo "But...{w=0.5} enough of that for now.{w=0.5}{nw}"
     extend 1fnmsm " Besides,{w=0.1} [player]..."
     n 1fsqss "I can tell when you're getting...{w=0.3} {i}board{/i}."
     n 1fchsm "Ehehe.{w=0.5}{nw}"
@@ -5151,9 +5239,9 @@ label talk_sports:
 
     n 1nnmaj "I try to keep up how I can.{w=0.2} I can't do laps or anything,{w=0.5}{nw}"
     extend 1fcsbg " but I can easily get some stretches and jumping jacks in!"
-    n 1ullpu "Of course school was always a lot more varied,{w=0.1} but...{w=0.5}{nw}"
-    extend 1tllsr " I always kinda struggled to keep up."
-    n 1tllss "I guess...{w=0.3} I just don't have much stamina?"
+    n 1ullpu "Of course school was always a lot more varied with activities,{w=0.2} but...{w=0.5}{nw}"
+    n 1tllsr "I always kinda struggled to keep up,{w=0.2} I guess."
+    n 1nslsssbr "...Maybe I just don't have much stamina."
 
     # Check to see if the player and Natsuki have discussed how she skipped lunches to save money
     $ already_discussed_skateboarding = get_topic("talk_skateboarding").shown_count > 0
@@ -5161,7 +5249,7 @@ label talk_sports:
         n 1nslpo "Probably didn't help myself saving for that skateboard..."
 
     n 1ullaj "Well,{w=0.1} whatever.{w=0.5}{nw}"
-    extend 1nnmbo " I wasn't {i}really{/i} that into it anyway."
+    extend 1nnmbo " I wasn't {i}really{/i} that into sports anyway."
     n 1nlrca "..."
     n 1unmbs "Oh!{w=0.2} Oh!{w=0.2} But you know who was?{w=0.5}{nw}"
     extend 1fsqbg " I bet you do,{w=0.1} huh?{w=0.5}{nw}"
@@ -5345,7 +5433,7 @@ init 5 python:
             prompt="Contributions",
             conditional=(
                 "not jn_activity.ACTIVITY_SYSTEM_ENABLED "
-                "or jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.coding)"
+                "or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.coding)"
             ),
             category=["Mod"],
             nat_says=True,
@@ -5391,7 +5479,7 @@ label talk_mod_contributions:
     n 1tsqbg "Does that sound like your thing,{w=0.1} [player]?{w=0.5}{nw}"
     extend 1uchsm " Of course it does!{w=0.2} Ehehe."
     n 1unmbg "Well,{w=0.1} don't let me hold you back!{w=0.5}{nw}"
-    extend 1uchbgl " You can check out my website {a=https://github.com/Just-Natsuki-Team/NatsukiModDev}here{/a}!"
+    extend 1uchbgl " You can check out my website {a=[jn_globals.LINK_JN_GITHUB]}here{/a}!"
     n 1nsqbg "A little look can't hurt,{w=0.1} right?{w=0.5}{nw}"
     extend 1nchsm " Ahaha."
 
@@ -6094,29 +6182,35 @@ label talk_custom_outfits_unlock:
     n 1nslpu "..."
     n 1usceml "...!"
     n 1uskeml "I've...{w=0.5}{nw}"
-    extend 1nllem " just realized something.{w=0.5}{nw}"
+    extend 1nllem " just realized something.{w=1}{nw}"
     extend 1fslun " Something I {i}really{/i} don't like."
-    n 1fbkwr "...And that's exactly how {i}long{/i} I've been stuck in this uniform!{w=0.5}{nw}"
-    extend 1fcswr " G-{w=0.1}gross!"
-    n 1flrem "I mean..."
-    n 1fllsl "I guess I shouldn't be surprised that something made for school isn't comfy for long periods..."
-    n 1fcspol "But that doesn't mean I have to put up with it!"
+    n 1fbkwr "...And that's exactly how {i}long{/i} I've been stuck wearing the same bunch of clothing!{w=0.5}{nw}"
+    extend 1fcswr " G-{w=0.2}gross!"
+    n 1flrem "I mean...{w=1}{nw}"
+    extend 1fsqemsbl " would {i}you{/i} feel comfortable wearing the same clothes basically every single day?"
+    n 1kslansbl "Yeesh!"
+    n 1fcsposbr "..."
+    n 1fcsajsbr "Well,{w=0.3}{nw}"
+    extend 1fnmemsbr " you know what?{w=0.75}{nw}"
+    extend 1fcsgs " I'm done!"
+    n 1fcspol "I don't have to put up with this!"
     n 1fsrpo "There's gotta be something I can do..."
     n 1ncspu "..."
     n 1uwdaj "...Wait!{w=1.5}{nw}"
     extend 1fllbg " Duh!{w=1.5}{nw}"
     extend 1fcsbs " Of course!"
-    n 1ulraj "It's not like I {i}never{/i} had any clothes other than my uniform!"
-    n 1fllss "I know I at {i}least{/i} had that casual outfit I wore...{w=1.5}{nw}"
-    extend 1kllsl " ...on {i}that{/i} weekend."
+    n 1ulraj "It's not like I {i}never{/i} had any clothes other than what I had in my bag!"
+    n 1nllpu "And with the closet here too...{w=0.75}{nw}"
+    extend 1fllpu " plus the extra clothes in my locker..."
     n 1ncssr "Hmm..."
     n 1fchbg "Yeah,{w=0.1} okay!{w=1.5}{nw}"
     extend 1nchsm " I think that should all work!"
     n 1nsqsm "..."
-    n 1uwdaj "Oh!{w=0.2} Just to keep you in the loop,{w=0.1} [player]..."
-    n 1uchbg "I should be able to wear whatever I want now!"
+    n 1uwdajesu "Oh!{w=0.3}{nw}"
+    extend 1unmca " Just to keep you in the loop,{w=0.1} [player]..."
+    n 1uchsmeme "I should be able to wear whatever I want now!"
     n 1nllbg "I've got a couple of outfits in mind already,{w=0.5}{nw}"
-    extend 1flrbg " so it's not like I have a reason {i}not{/i} to."
+    extend 1fcsbgedz " so it's not like I have any reason {i}not{/i} to show off some style."
     n 1ulraj "So...{w=0.5}{nw}"
     extend 1fcssm " don't be surprised if I wanna change my clothes from time to time,{w=0.1} alright?"
     n 1fsqsrl "A-{w=0.1}and no.{w=0.5}{nw}"
@@ -6523,11 +6617,12 @@ init 5 python:
     )
 
 label talk_thoughts_on_tea:
-    $ already_discussed_tea_thoughts = persistent.jn_player_tea_coffee_preference is not None
+    $ already_discussed_thoughts_on_tea = get_topic("talk_thoughts_on_tea").shown_count > 0
+    $ player_tea_coffee_preference_known = persistent.jn_player_tea_coffee_preference is not None
 
     if Natsuki.isNormal(higher=True):
-        if already_discussed_tea_thoughts:
-            n 1fcsaj "A-{w=0.1}actually,{w=0.1} hold up a second...{w=1.5}{nw}"
+        if already_discussed_thoughts_on_tea:
+            n 1fcsaj "A-{w=0.1}actually,{w=0.2} hold up a second...{w=1}{nw}"
             extend 1tslpu " didn't we already talk about this?"
 
         else:
@@ -6535,9 +6630,9 @@ label talk_thoughts_on_tea:
             n 1fchgn "...Are you {i}sure{/i} you know who you're talking to?{w=0.5}{nw}"
             extend 1fchbg " I literally never make it myself!"
             n 1ullss "I mean,{w=0.5}{nw}"
-            extend 1unmbo " I had it a few times in the club,{w=0.1} sure."
+            extend 1unmbo " I had it a few times in the club,{w=0.2} sure."
             n 1nlrpu "Yuri would prepare it for us all sometimes."
-            n 1tsrss "But I never asked for it or anything!"
+            n 1tsrss "But it was never like I asked for it or anything!"
 
     elif Natsuki.isDistressed(higher=True):
         n 1fcsem "..."
@@ -6545,7 +6640,7 @@ label talk_thoughts_on_tea:
         n 1fsqbo "I don't really care for it."
         n 1fllpu "...I mean,{w=0.5}{nw}"
         extend 1nllsf " I {i}guess{/i} I'd drink it if it was offered."
-        n 1nslsl "...From most people,{w=0.1} anyway."
+        n 1nslsl "...From most people,{w=0.2} anyway."
         n 1fsqbo "Somehow I doubt that'd be the case for {i}you{/i}."
 
         return
@@ -6553,85 +6648,92 @@ label talk_thoughts_on_tea:
     else:
         n 1fcsem "No,{w=2}{nw}"
         extend 1fsqan " and I'm certainly not drinking any of {i}yours{/i}."
-        n 1fslemltsb "Not like it'd be {i}just{/i} tea anyway,{w=0.1} knowing a jerk like {i}you{/i}."
+        n 1fslemltsb "Not like it'd be {i}just{/i} tea anyway,{w=0.2} knowing a jerk like {i}you{/i}."
 
         return
 
-    if already_discussed_tea_thoughts:
-        n 1ullaj "Well,{w=0.1} whatever.{w=0.5}{nw}"
+    if already_discussed_thoughts_on_tea:
+        n 1ullaj "Well,{w=0.2} anyway.{w=0.5}{nw}"
         extend 1unmbo " I wouldn't say my opinion has changed much."
-        n 1nlraj "I get why people are into it,{w=0.1} though."
+        n 1nlraj "I get why people are into it,{w=0.2} though."
 
     else:
         n 1fllbo "..."
-        n 1fcseml "T-{w=0.1}that's not to mean I think it sucks,{w=0.1} or something like that!"
-        n 1nlrbo "I just have my own tastes."
+        n 1fcseml "T-{w=0.2}that's not to mean I think it sucks,{w=0.2} or something like that!"
 
         if get_topic("talk_favourite_drink").shown_count > 0:
+            n 1nlrbo "I just have my own tastes.{w=0.75}{nw}"
             extend 1uspbg " Like hot chocolate!"
+
+        else:
+            n 1nlrbo "I just have my own tastes."
 
         n 1ullaj "But...{w=0.5}{nw}"
         extend 1nllbo " I guess I can see why people are into it so much."
 
-    n 1tnmca "Tea contains caffeine,{w=0.1} right?{w=0.5}{nw}"
-    extend 1tlrss " Not as much as coffee or anything,{w=0.1} but an edge is still an edge,{w=0.1} I guess."
+    n 1tnmca "Tea contains caffeine,{w=0.2} right?{w=0.5}{nw}"
+    extend 1tlrss " Not as much as coffee or anything,{w=0.2} but an edge is still an edge,{w=0.2} I guess."
     n 1unmaj "It comes in a whole bunch of flavors too!{w=0.5}{nw}"
     extend 1unmgs " I was actually kinda surprised at the variety!"
     n 1ullss "You've got your regular old black tea{w=0.3}{nw}"
     extend 1fslss " -{w=0.1} obviously -{w=0.3}{nw}" 
-    extend 1ulraj " but you've got green tea,{w=0.1} herbal tea..."
+    extend 1ulraj " but you've got green tea,{w=0.2} herbal tea..."
     n 1uspgs "Even flavored ones like cinnamon and peppermint!"
     n 1nslss "We only ever had oolong tea in the clubroom though,{w=0.5}{nw}"
     extend 1tnmss " so who knows?"
     n 1ulrbo "Maybe I'd warm up to it if I tried some that sounded good."
 
     if get_topic("talk_sleeping_well").shown_count > 0:
-        n 1unmaj "Apparently some tea even helps you sleep!{w=1.5}{nw}"
-        extend 1nsrss " ...Maybe I should've mentioned that earlier,{w=0.1} huh?"
+        n 1unmaj "Apparently some tea even helps you sleep!{w=0.75}{nw}"
+        extend 1nsrss " ...Maybe I should've mentioned that in my sleeping tips.{w=0.5}{nw}"
+        extend 1fchblesd " Oops~!"
 
     n 1ulraj "But...{w=0.5}{nw}"
     extend 1nslss " I've gone on enough." 
-    n 1unmbo "What about you,{w=0.1} [player]?"
-    $ menu_opening = "Drinking something else now?" if already_discussed_tea_thoughts else "What's your preference?"
+    n 1unmbo "What about you,{w=0.2} [player]?"
+    show natsuki 1tsqss
+    $ menu_opening = "Drinking something else now?" if player_tea_coffee_preference_known else "What's your pick?"
 
     menu:
         n "[menu_opening]"
 
         "I prefer tea.":
-            if already_discussed_tea_thoughts:
+            if player_tea_coffee_preference_known:
                 if persistent.jn_player_tea_coffee_preference == "tea":
                     n 1nnmss "Well,{w=0.5}{nw}"
-                    extend 1tnmss " some things never change,{w=0.1} huh?"
+                    extend 1tnmss " some things never change,{w=0.2} huh?"
                     n 1fchsm "Ehehe."
 
                 else:
-                    n 1tnmsm "A tea drinker now,{w=0.1} huh?{w=0.5}{nw}"
+                    n 1tnmsm "A tea drinker now,{w=0.2} huh?{w=0.5}{nw}"
                     extend 1fchsm " Fair enough!"
 
             else:
                 n 1unmaj "Tea?{w=0.5}{nw}"
                 extend 1nllpu " Hmm..."
-                n 1unmbo "Yeah,{w=0.1} that's about what I expected."
+                n 1unmbo "Yeah,{w=0.2} that's about what I expected."
                 n 1nlrbo "..."
                 n 1tnmbg "What?"
                 n 1tsqbg "Not like you raised a fuss about it earlier,{w=0.5}{nw}"
                 extend 1tsqsm " right?"
                 n 1kslsm "..."
                 n 1nslss "Though...{w=1.5}{nw}"
-                extend 1uslsr " not like you had much of a choice in it back then,{w=0.1} huh?"
-            
+                extend 1uslsr " not like you had much of a choice in it back then,{w=0.2} right?"
+
             $ persistent.jn_player_tea_coffee_preference = "tea"
 
         "I prefer coffee.":
-            if already_discussed_tea_thoughts:
+            if player_tea_coffee_preference_known:
                 if persistent.jn_player_tea_coffee_preference == "coffee":
                     n 1nnmss "Well,{w=0.5}{nw}"
-                    extend 1tnmss " some things never change,{w=0.1} huh?"
+                    extend 1tnmss " some things never change,{w=0.2} huh?"
                     n 1fchsm "Ehehe."
 
                 else:
-                    n 1tnmsm "A coffee drinker now,{w=0.1} huh?{w=0.5}{nw}"
-                    extend 1fchsm " Fair enough!"
+                    n 1tsqct "Oho?{w=0.5}{nw}"
+                    extend 1tsqbg " Coffee now,{w=0.2} huh?"
+                    n 1fsrsm "Wow,{w=0.2} [player]."
+                    n 1fchgnelg "Since when did you get so {i}bitter{/i}?"
 
             else:
                 n 1unmaj "Oh?{w=1.5}{nw}"
@@ -6642,42 +6744,42 @@ label talk_thoughts_on_tea:
                 extend 1usqbg " huh?"
                 n 1uchgn "..."
                 n 1fchbg "Oh,{w=0.5}{nw}" 
-                extend 1fllbg " come on,{w=0.1} [player]!{w=0.2} Yeesh."
+                extend 1fllbg " come on,{w=0.2} [player]!{w=0.3} Yeesh."
                 n 1fsqsm "No need to be all {w=0.3}{i}bitter{/i}{w=0.3} about it."
                 n 1fchsm "..."
-                n 1kchbg "Okay,{w=0.1} okay!{w=0.5} I'm done!"
+                n 1kchbg "Okay,{w=0.2} okay!{w=0.5} I'm done!"
                 n 1fsqsg "...For now."
 
             $ persistent.jn_player_tea_coffee_preference = "coffee"
 
         "I like both!":
-            if already_discussed_tea_thoughts:
+            if player_tea_coffee_preference_known:
                 if persistent.jn_player_tea_coffee_preference == "both":
                     n 1nnmss "Well,{w=0.5}{nw}"
-                    extend 1tnmss " some things never change,{w=0.1} huh?"
+                    extend 1tnmss " some things never change,{w=0.2} huh?"
                     n 1fchsm "Ehehe."
 
                 else:
                     n 1tnmaj "Oh?{w=0.5}{nw}"
                     extend 1tnmss " You like {i}both{/i} now?"
-                    n 1tsqbg "...Are you {i}sure{/i} you aren't just a caffeine junkie,{w=0.1} [player]?{w=0.5}{nw}"
+                    n 1tsqbg "...Are you {i}sure{/i} you aren't just a caffeine junkie,{w=0.2} [player]?{w=0.5}{nw}"
                     extend 1nchgn " Ehehe."
 
             else:
-                n 1tslaj "...Huh.{w=1}{nw}"
+                n 1tslajeqm "...Huh.{w=0.75}{nw}"
                 extend 1tnmss " Really?"
-                n 1nsrss "That's...{w=0.3} kinda weird,{w=0.1} actually."
+                n 1nsrss "That's...{w=0.3} kinda weird,{w=0.2} actually."
                 n 1fchbg "Most people like at least {i}one{/i} of the two more!"
-                n 1fsqsg "Are you {i}sure{/i} you aren't just a caffeine junkie,{w=0.1} [player]?{w=0.5}{nw}"
+                n 1fsqsg "Are you {i}sure{/i} you aren't just a caffeine junkie,{w=0.2} [player]?{w=0.5}{nw}"
 
             $ persistent.jn_player_tea_coffee_preference = "both"
 
         "I don't like tea or coffee.":
-            if already_discussed_tea_thoughts:
+            if player_tea_coffee_preference_known:
                 if persistent.jn_player_tea_coffee_preference == "neither":
-                    n 1tsqpu "Still not a fan,{w=0.1} huh?{w=0.5}{nw}"
+                    n 1tsqpu "Still not a fan,{w=0.2} huh?{w=0.5}{nw}"
                     extend 1fnmaj " You need to keep trying new stuff!"
-                    n 1fsqpo "Where's your sense of adventure,{w=0.1} [player]?{w=0.5}{nw}"
+                    n 1fsqpo "Where's your sense of adventure,{w=0.2} [player]?{w=0.5}{nw}"
                     extend 1fchts " Ehehe."
 
                 else:
@@ -6687,24 +6789,25 @@ label talk_thoughts_on_tea:
                     extend 1tsrpu " Huh."
 
             else:
-                n 1ullaj "That's...{w=1.5}{nw}"
-                extend 1nllbo " kinda surprising,{w=0.1} actually."
-                n 1fsrbo "Most people at {i}least{/i} like one or the other..."
-                n 1fsqpo "You aren't just pulling my leg,{w=0.5}{nw}" 
+                n 1ullaj "That's...{w=0.75}{nw}"
+                extend 1tllbo " kinda surprising,{w=0.2} actually."
+                n 1fsrpu "Most people at {i}least{/i} like one or the other..."
+                n 1fsqpo "You aren't just pulling my leg,{w=0.3}{nw}" 
                 extend 1ksqpo " are you?"
-                n 1fslpol "I was being serious,{w=0.1} you know..."
+                n 1fslpol "I was being serious..."
 
             $ persistent.jn_player_tea_coffee_preference = "neither"
 
-    n 1nllss "Well,{w=0.1} whatever.{w=0.5}{nw}"
-    extend 1fchbg " Not like hot drinks are the be-all and end-all anyway,{w=0.1} huh?"
-    n 1fllss "But man...{w=0.5}{nw}"
-    extend 1flrun " I'm actually pretty parched after all that talking."
+    n 1nllss "Well,{w=0.2} whatever.{w=0.5}{nw}"
+    extend 1fchbg " Not like hot drinks are the be-all and end-all anyway."
+    n 1fllss "But that being said...{w=0.3}{nw}"
+    extend 1nsremsbl " I'm actually pretty parched after all that talking."
     n 1fsrpo "..."
-    n 1unmss "Hey,{w=0.1} [player]...{w=1.5}{nw}"
+    n 1unmss "Hey,{w=0.2} [player]...{w=1}{nw}"
     extend 1usqsm " do me a favor?"
-    n 1fchbg "...Stick the kettle on,{w=0.1} would you?"
-    n 1uchgn "Ehehe."
+    n 1fsqsg "..."
+    n 1fchbg "...Stick the kettle on,{w=0.2} would you?"
+    n 1uchgnelg "Ahaha."
 
     return
 
@@ -6726,14 +6829,14 @@ init 5 python:
 
 label talk_how_to_make_friends:
     n 1tnmpu "Huh?{w=1}{nw}"
-    extend 1tnmsr " You wanna know how to make {i}friends{/i}?"
+    extend 1tnmsleqm " You wanna know how to make {i}friends{/i}?"
     n 1tllbo "..."
     n 1ncsaj "Well.{w=1}{nw}"
     extend 1nlraj " I gotta say,{w=0.1} [player]."
-    n 1fchgn "That's pretty up there in the weirdest questions you've asked me so far!"
+    n 1fchgnelg "That's pretty up there in the weirdest questions you've asked me so far!"
     n 1fllss "But...{w=1}{nw}" 
     extend 1ullaj " in all seriousness?"
-    n 1tnmsf "{w=0.5}...Why?{w=1.5}{nw}"
+    n 1tnmsf "{w=0.3}...Why?{w=1}{nw}"
     extend 1nlrss " Like why're you asking {i}me{/i},{w=0.3} I mean."
 
     if Natsuki.isLove(higher=True):
@@ -6742,7 +6845,7 @@ label talk_how_to_make_friends:
 
     elif Natsuki.isEnamored(higher=True):
         n 1ullaj "It's just...{w=1}{nw}"
-        extend 1tnmssl " I {i}seriously{/i} doubt it's something you'd struggle with,{w=0.5}{nw}" 
+        extend 1tnmssl " I {i}seriously{/i} doubt it's something {i}you'd{/i} struggle with,{w=0.5}{nw}" 
         extend 1nsrssl " of all people."
 
     elif Natsuki.isAffectionate(higher=True):
@@ -6755,7 +6858,7 @@ label talk_how_to_make_friends:
     n 1ulraj "Well,{w=0.5}{nw}"
     extend 1nlrss " anyway..."
     n 1nchbs "Sure!{w=1}{nw}"
-    extend 1fchbg " I can show you the ropes!"
+    extend 1fwlbgedz " I can show you the ropes!"
     n 1fnmaj "Right!{w=0.5}{nw}"
     extend 1ncsaj " So..."
     n 1unmbo "I think the most important thing is to have {i}something{/i} in common.{w=1}{nw}"
@@ -6792,7 +6895,7 @@ label talk_how_to_make_friends:
     extend 1knmsl " to fizzle out because nobody is making an effort."
     n 1uskem "B-{w=0.1}but that's not to say you gotta go all out all the time though!"
     n 1fcsaj "It's all about striking a balance.{w=1}{nw}"
-    extend 1fchbg " People need downtime too!"
+    extend 1fchbgsbl " People need downtime too!"
     n 1fslsr "{w=0.3}...And you shouldn't be the one putting in {i}everything{/i} to make it work."
     n 1fnmpu "Remember {w=0.1}-{w=0.1} a friendship has two sides."
     extend 1fchsm " You {i}know{/i} you've got a winner if they're doing their part too!"
@@ -6807,7 +6910,7 @@ label talk_how_to_make_friends:
     n 1fnmpu "I've {i}been{/i} there.{w=0.5}{nw}"
     extend 1kllsf " And it took a good friend to help me realize that."
     n 1ncsss "Heh."
-    n 1ullpu "But...{w=1.5}{nw}"
+    n 1ullpu "But...{w=1}{nw}"
     extend 1fchbg " yeah!"
     n 1tnmsm "I wouldn't get all stressed out about it,{w=0.1} [player].{w=1}{nw}"
     extend 1fcssm " Friendships are {i}formed{/i},{w=0.1} not forced."
@@ -6836,72 +6939,107 @@ init 5 python:
     )
 
 label talk_impressions_of_the_other_girls:
-    $ has_discussed_other_girls = get_topic("talk_realizations_other_girls").shown_count > 0
+    $ already_discussed_realizations_of_others = get_topic("talk_realizations_other_girls").shown_count > 0
+    $ already_discussed_impressions_of_others = get_topic("talk_impressions_of_the_other_girls").shown_count > 0
 
     if Natsuki.isAffectionate(higher=True):
-        n 1fcsem "..."
-        n 1fcssr "...No,{w=0.1} [player].{w=1}{nw}"
+        if already_discussed_realizations_of_others:
+            n 1fcsem "Oh,{w=0.75}{nw}"
+            extend 1kslemesisbl " come {i}on{/i}..."
+            n 1knmemsbl "This again?{w=0.75}{nw}"
+            extend 1ksqemsbr " Seriously?"
+
+        else:
+            n 1fcsemesi "...{w=1}{nw}"
+
+        n 1fcssrsbr "...No,{w=0.1} [player].{w=1}{nw}"
         extend 1kcssr " I can't."
         n 1fllun "..."
-        n 1fcsem "...Okay,{w=1}{nw}" 
-        extend 1nnmsl " look."
+        n 1fcsemsbl "...Okay,{w=1}{nw}" 
+        extend 1fnmsll " look."
+        n 1fcspul "..."
         n 1fllsl "It's not that I {i}couldn't{/i} do impressions of them.{w=1}{nw}"
         extend 1kllsr " I knew them well enough."
-        n 1kllpu "But...{w=1.5}{nw}" 
-        extend 1knmpu " that's exactly why I don't {i}want{/i} to,{w=0.1} [player]."
+        n 1knmpu "...But that's exactly why I don't {i}want{/i} to,{w=0.1} [player]."
         n 1klrsf "Knowing how they felt,{w=0.5} what they thought..."
 
-        if has_discussed_other_girls:
-            n 1ksrpu "...How much I {i}miss{/i} them..."
+        if already_discussed_realizations_of_others:
+            n 1ksrputsb "...How much I {i}miss{/i} them..."
+        
+        else:
+            n 1ksrputsb "...How much they {i}hurt{/i}..."
 
-        n 1knmem "What kind of person would make jokes out of {i}that{/i}?"
-        n 1klrsl "So...{w=1}{nw}"
+        n 1knmemtsc "What kind of a sick jerk would I be to make jokes out of {i}that{/i}?"
+        n 1fcsunltsa "..."
+        n 1kcssl "So...{w=1}{nw}"
         extend 1nnmsf " I'm sorry,{w=0.1} [player].{w=1.5}{nw}"
-        extend 1nslsf " But it's a no."
-        n 1kcspu "...And probably always will be."
+        extend 1fslsf " But it's a no."
+        n 1fcsunl "...And it always {i}will{/i} be."
 
     elif Natsuki.isNormal(higher=True):
-        n 1knmpu "..."
-        n 1knmem "...Why on {i}Earth{/i} would I want do {i}that{/i}?"
+        if already_discussed_realizations_of_others:
+            n 1knmaw "[player]...{w=0.5}{nw}"
+            extend 1knmwr " really?"
+            n 1kslemlsbr "This {w=0.2}{i}again{/i}?"
+
+        else:
+            n 1knmpu "..."
+
+        n 1knmemtsc "...Why on {i}Earth{/i} would I want do {i}that{/i}?"
         n 1kllpu "A-{w=0.3}and more importantly,{w=1}{nw}"
         extend 1fcsem " why would you even think to {i}ask{/i} me that,{w=0.1} [player]?"
         n 1ksqem "Do you have any {i}idea{/i} how much I think about them,{w=0.1} still?"
 
-        if has_discussed_other_girls:
+        if already_discussed_realizations_of_others:
             n 1fcseml "I even {i}told{/i} you how much I miss them,{w=0.1} [player]!"
 
-        n 1kcspu "..."
+        n 1kcsunltsa "..."
         n 1ncspu "...Alright,{w=0.5}{nw}" 
-        extend 1ncssr " look."
+        extend 1fcsun " look."
         n 1fcsem "I...{w=1}{nw}"
-        extend 1fcssr " get...{w=1}" 
+        extend 1fcssr " get...{w=1}{nw}" 
         extend 1fcsem " that you were just trying to have fun."
+
+        if already_discussed_realizations_of_others:
+            n 1fsrun "...I {i}hope{/i},{w=0.2} at least."
+
         n 1fsqsr "But I am {i}not{/i} making jokes about my friends."
         n 1fcssr "Sorry,{w=0.1} [player]."
         n 1fslunl "But some things are just off-limits."
 
+        if already_discussed_realizations_of_others:
+            n 1fsqunl "And you {i}better{/i} respect that sooner rather than later."
+
     elif Natsuki.isDistressed(higher=True):
-        n 1fskem "...E-{w=0.3}excuse me?!"
-        n 1fsqan "Are you {i}seriously{/i} asking me to make fun of my {i}friends{/i}?{w=1}{nw}"
-        extend 1fsqwr " Knowing {i}{cps=\7.5}full well{/cps}{/i} what happened to them?!"
+        n 1fskeml "...E-{w=0.3}excuse me?!"
+        n 1fsqanltsb "Are you {i}seriously{/i} asking me to make fun of my {i}friends{/i}?"
+        n 1fsqwrltsbean "Knowing {w=0.2}{i}full {w=0.2}well{/i}{w=0.2} what happened to them?!"
 
-        if has_discussed_other_girls:
-            extend 1fcsfu " Knowing how much I {i}miss{/i} them?!"
+        if already_discussed_realizations_of_others:
+            extend 1fcsfultsa " Knowing how much I {i}miss{/i} them?!"
 
-        n 1fcspu "..."
-        n 1fsqem "Your sense of humour {i}{cps=\7.5}sucks{/cps}{/i},{w=0.1} [player].{w=1}{nw}"
-        extend 1fcsan " Do {b}not{/b} try my patience again.{w=1.5}{nw}"
-        extend 1fsqan " Jerk."
+        n 1fcsunl "..."
+        n 1fsqem "Your sense of humour {i}{w=0.2}blows{w=0.2}{/i},{w=0.2} [player]."
 
-        $ Natsuki.calculatedAffinityLoss(2)
+        if already_discussed_realizations_of_others:
+            n 1fsqanl "Now knock.{w=0.3}{nw}"
+            extend 1fcsanl " It.{w=0.3}{nw}"
+            extend 1fsqful " {i}Off{/i}."
+            $ Natsuki.percentageAffinityLoss(5)
+
+        else:
+            n 1fcsan "Do {b}not{/b} try my patience again.{w=1.5}{nw}"
+            extend 1fsqan " Jerk."
+            $ Natsuki.calculatedAffinityLoss(2)
 
     else:
-        n 1fnmantsc "...What is {i}{cps=\7.5}wrong{/cps}{/i} with you?{w=1.5}{nw}"
-        extend 1fnmscltsf " Like,{w=0.1} what the {i}hell{/i} is wrong with your {i}head{/i}?!"
-        n 1fcsanltsd "I am {b}NOT{/b} doing that,{w=0.1} let alone for a piece of work like{w=0.5}{nw}"
+        n 1fnmantsc "...What is {i}{w=0.3}wrong{w=0.3}{/i} with you?{w=1.5}{nw}"
+        extend 1fnmscltsf " Like,{w=0.1} what the {i}hell{/i} is wrong with your {w=0.2}{i}head{/i}?!"
+        n 1fcsanltsd "I am {b}NOT{/b} doing that,{w=0.3}{nw}" 
+        extend 1fcsfultsd " let alone for a piece of work like{w=0.25}{nw}"
         extend 1fskwrftdc " {i}you{/i}!"
 
-        $ Natsuki.calculatedAffinityLoss(1)
+        $ Natsuki.calculatedAffinityLoss(3)
 
     return
 
@@ -6937,7 +7075,7 @@ label talk_newspapers_and_bias:
     n 1tlrpu "But...{w=0.5}{nw}"
     extend 1tnmca " talking of newspapers..."
     n 1fnmca "It's actually super important to read into them properly,{w=0.1} you know."
-    n 1knmaj "What?{w=0.5}{nw}"
+    n 1knmajsbl "What?{w=0.5}{nw}"
     extend 1fsqpo " I'm being serious!"
     n 1fllss "Newspapers really {i}aren't{/i} just news anymore,{w=0.1} [player]...{w=1}{nw}"
     extend 1fcsaj " and they haven't been for a long time!"
@@ -6955,8 +7093,9 @@ label talk_newspapers_and_bias:
     extend 1fchgn " Of course not!{w=1}{nw}"
     extend 1fsqss " They'd fight for it!"
     n 1ulraj "Maybe they'd run extra articles to advertise it,{w=0.5}{nw}"
-    extend 1fsqsm " and {i}only{/i} interview people who supported the paper!"
-    n 1tlrss "Or just {i}happen{/i} to forget to mention all the funds they got last semester?"
+    extend 1fsqsmeme " and {i}only{/i} interview people who supported the paper!"
+    n 1tlrss "Or just {i}happen{/i} to forget to mention all the funds they got last semester?{w=1}{nw}"
+    extend 1kchblesd " How {i}convenient{/i}~!"
     n 1fcsbg "That's just one example,{w=0.1} obviously."
     n 1fnmaj "But the same thinking applies to any kind of journalism!{w=1}{nw}"
     extend 1nllca " Papers,{w=0.1} online articles,{w=0.5}{nw}" 
@@ -6967,7 +7106,8 @@ label talk_newspapers_and_bias:
     n 1fcssm "Ehehe.{w=0.5}{nw}"
     extend 1fsqsm " I think it's pretty obvious."
     n 1fllss "I know I call you it a bunch already,{w=0.1} [player]..."
-    n 1fsqsm "But only {i}real{/i} dummies believe {i}everything{/i} they read!"
+    n 1fcsss "But take it from me."
+    n 1fsqsm "Only {i}real{/i} dummies believe {i}everything{/i} they read!"
 
     return
 
@@ -7007,17 +7147,18 @@ label talk_fear_of_flying:
             extend 1tnmbo " I've never flown anywhere myself or anything."
 
         n 1uskemlesh "B-{w=0.3}but that's not to say {i}I'm{/i} afraid of flying,{w=0.5}{nw}" 
-        extend 1fcspol " obviously!{w=0.75}{nw}"
-        extend 1unmaj " I actually don't think it'd bother me all that much."
+        extend 1fcspol " obviously!"
+        n 1unmaj "I actually don't think it'd bother me all that much."
         n 1tlrpu "Though...{w=0.75}{nw}"
         extend 1unmbo " I guess I can see {i}why{/i} it would spook someone out."
         n 1fllbo "There's all the noise,{w=0.5}{nw}"
         extend 1fslem " the turbulence,{w=0.5}{nw}"
         extend 1ksqfr " plus the stress of being packed in a tube with a whole bunch of strangers."
         n 1klrss "And it isn't like you can {i}ignore{/i} crashes when they happen!{w=0.75}{nw}"
-        extend 1klrsl " They're...{w=1}{nw}"
+        extend 1klrsl " They're...{w=0.75}{nw}"
         extend 1kslsr " not...{w=0.5} pretty."
-        n 1unmpu "So yeah,{w=0.1} I can totally see it from that angle.{w=0.5}{nw}"
+        n 1kslslsbl "...And an easy way to fill a front page."
+        n 1unmpu "So yeah,{w=0.2} I can totally see it from that angle.{w=0.5}{nw}"
         extend 1flrpu " But..."
         n 1fnmbo "I think people forget just how {i}safe{/i} air travel is!"
         n 1ullaj "I get that their feelings -{w=0.5}{nw}" 
@@ -7025,7 +7166,7 @@ label talk_fear_of_flying:
         extend 1unmbo " tell them otherwise.{w=0.75}{nw}"
         extend 1flrss " But it isn't like the statistics {i}lie{/i}!"
         n 1unmaj "Some studies have put the likelihood of biting the big one in a plane crash at one in 11{w=0.5}{nw}"
-        extend 1uwdaj " {b}million{/b}."
+        extend 1uwdaj " {i}million{/i}."
         n 1fslss "Or,{w=0.1} to put it another way..."
         n 1unmem "You're more than {i}2,000{/i} times more likely to kick the bucket from a car accident than from a plane crash!"
         n 1tsqss "...And the list doesn't stop there,{w=0.1} either!"
@@ -7044,26 +7185,28 @@ label talk_fear_of_flying:
         extend 1tnmss " honestly?"
         n 1fsqsm "It {i}is{/i} pretty reassuring to know that when I get the chance to jet off somewhere,{w=0.1} the most I'll realistically have to fear..."
         n 1fchgnelg "...Is probably gonna be the airline food!"
-        n 1fcsbg "Now that's a {i}real{/i} horror,{w=0.1} if I know one.{w=0.75}{nw}"
-        
+
         if persistent._jn_player_has_flown:
-            n 1usqsg "Wouldn't {i}you{/i} agree,{w=0.3} [player]?"
+            n 1fcsbg "Now that's a {i}real{/i} horror,{w=0.1} if I know one."
+            n 1usqsg "Wouldn't {i}you{/i} agree,{w=0.3} [player]?{w=0.75}{nw}"
+
+        else:
+            n 1fcsbg "Now that's a {i}real{/i} horror,{w=0.1} if I know one.{w=0.75}{nw}"
 
         extend 1fsqsmeme " Ehehe."
 
     elif Natsuki.isDistressed(higher=True):
         n 1fcsemesi "Ugh..."
-        n 1fsqem "No,{w=0.1} [player].{w=0.75}{nw}"
+        n 1fsqem "No,{w=0.2} [player].{w=0.75}{nw}"
         extend 1fsqfr " I'm not afraid of flying either."
         n 1fcsan "What exactly do you take me for?{w=0.75}{nw}"
         extend 1fsqan " And even if I {i}was{/i}..."
-        n 1fnmfu "Why the hell would I wanna share that with {i}you{/i}?"
-        n 1fsqfuean "You're just lucky I haven't given you a reason to be scared of flying."
+        n 1fnmfu "Do you {i}seriously{/i} think I'd be dumb enough to share that with someone like {i}you{/i}?"
 
     else:
         n 1fcsem "Oh,{w=1}{nw}"
-        extend 1fsqwr " {cps=\7.5}shut {b}up{/b}{/cps},{w=0.1} [player]."
-        n 1fcsantsa "As {i}if{/i} I'd be dumb enough to share any fears I have with a complete loser like{w=0.75}{nw}" 
+        extend 1fsqwr " {w=0.2}shut {w=0.2}{b}up{/b},{w=0.2} [player]."
+        n 1fcsantsa "As {i}if{/i} I'd be dumb enough to share any fears I have with a complete loser like{w=0.2}{nw}" 
         extend 1fcswrltsa " {i}you{/i}."
 
     return
@@ -7086,17 +7229,17 @@ init 5 python:
 
 label talk_what_do_you_think_about_fanart:
     if Natsuki.isAffectionate(higher=True):
-        n 1fsqaj "Are you {i}kidding{/i},{w=0.1} [player]?{w=1.5}{nw}"
+        n 1fsqaj "Are you {i}kidding{/i},{w=0.1} [player]?{w=1}{nw}"
         extend 1uchbsedz " I {i}love{/i} fanart!"
 
     elif Natsuki.isNormal(higher=True):
         n 1unmaj "Ooh!{w=1}{nw}"
         extend 1unmbg " Fanart?"
-        n 1fllbg "Well,{w=0.1} duh!{w=1.5}{nw}"
+        n 1fllbg "Well,{w=0.1} duh!{w=1}{nw}"
         extend 1fcsbg " I'm {i}totally{/i} all for it!"
 
     elif Natsuki.isDistressed(higher=True):
-        n 1fcssf "Ugh...{w=1.5}{nw}"
+        n 1fcssf "Ugh...{w=1}{nw}"
         extend 1fsqsl " what now?"
         n 1tsqbo "...Fanart?"
         n 1nsrpu "..."
@@ -7117,7 +7260,7 @@ label talk_what_do_you_think_about_fanart:
         return
 
     else:
-        n 1fcsantsa "Oh,{w=0.1} for-{w=0.3}{nw}"
+        n 1fcsantsa "Oh,{w=0.1} for-{w=0.5}{nw}"
         n 1fcsun "..."
         n 1fsqfutsb "Fanart?{w=1}{nw}"
         extend 1fsquptsb " Really,{w=0.1} [player]?"
@@ -7163,7 +7306,7 @@ label talk_what_do_you_think_about_fanart:
     extend 1nslpo " Enough about people like {i}that{/i}."
     n 1nlrbo "I don't know if you do any fanart or anything,{w=0.1} [player]..."
 
-    if jn_activity.hasPlayerDoneActivity(jn_activity.JNActivities.artwork):
+    if jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.artwork):
         n 1fchsmleme "Probably~."
 
     n 1fnmpo "But you better not be letting people push you around over yours!"
@@ -7202,7 +7345,7 @@ label talk_how_to_interview_properly:
     extend 1unmaj " Like,{w=0.1} at all?"
     n 1fslss "Because if there's one thing I've heard...{w=1}{nw}"
     extend 1fnmpo " it's how anxious everyone seems to get over interviewing!"
-    n 1ksqpo "I'm being serious!{w=0.5}{nw}"
+    n 1ksqposbl "I'm being serious!{w=0.5}{nw}"
     extend 1fllem " People just get so worked up over it all.{w=1}{nw}"
     extend 1fcsem " Like it's rocket science or something."
     n 1flraj "I mean...{w=1}{nw}"
@@ -7247,7 +7390,7 @@ label talk_how_to_interview_properly:
     n 1nsqpu "And trust me,{w=0.75}{nw}"
     extend 1nsqsr " the {i}last{/i} thing you wanna do is embarrass yourself over simple stuff you should {i}really{/i} know..."
     n 1nllun "...Or something you forgot you mentioned on your application."
-    extend 1fchbl " Oops!"
+    extend 1kchblesd " Oops!"
     n 1nllaj "So...{w=0.5}{nw}"
     extend 1fcsss " study up,{w=0.1} 'kay?"
 
@@ -7267,7 +7410,7 @@ label talk_how_to_interview_properly:
     n 1fsqpo "...And {i}don't{/i} flake out on your clothes.{w=1}{nw}"
     extend 1nlrbo " Iron them if they're all creased,{w=0.1} buy new ones if you need to.{w=0.2} That kind of thing."
     n 1tnmpu "But most of all,{w=0.1} [player]?"
-    n 1fsqaj "{cps=\10}{i}Never{/i}{/cps} forget the basics."
+    n 1fsqaj "{i}Never{/i}{w=0.2} forget the basics."
     n 1ullss "Be punctual,{w=0.1} be polite.{w=0.2} Remember {w=0.1}-{w=0.5}{nw}"
     extend 1fsqss " people want someone they can {i}like{/i},{w=0.75}{nw}"
     extend 1fsrpo " not just someone who can get the job done!"
@@ -7275,12 +7418,12 @@ label talk_how_to_interview_properly:
     n 1unmajesu "...Oh,{w=0.5}{nw}"
     extend 1tnmpu " and [player]?"
     n 1fcspu "Just...{w=1}{nw}"
-    extend 1knmsrl " be honest too,{w=0.1} alright?"
+    extend 1knmsrlsbl " be honest too,{w=0.1} alright?"
     n 1fllsrl "It isn't a fault to admit when you don't know something."
     n 1tnmpu "And when you actually stop to think about it from their perspective,{w=1}{nw}"
     extend 1tnmem " if someone is prepared to just lie to your face at an interview..."
     n 1tsqem "...Then what {i}else{/i} are they gonna lie about?"
-    n 1tllss "Just some food for thought."
+    n 1tllsssbl "Just some food for thought."
 
     n 1ncspuesi "..."
     n 1nlrss "...Wow,{w=0.5}{nw}"
@@ -7303,7 +7446,7 @@ label talk_how_to_interview_properly:
         n 1ullpu "Or...{w=1}{nw}"
         extend 1tnmbo " since we're both stuck here?"
         n 1fsqsm "...More like an induction,{w=0.1} actually."
-        n 1fchgn " Ehehe."
+        n 1fchgn "Ehehe."
 
     return
 
@@ -7330,7 +7473,7 @@ label talk_windup_bullying:
     n 1tnmaj "Eh?{w=0.5}{nw}"
     extend 1uskemesh " O-{w=0.3}oh!{w=0.5}{nw}"
     extend 1uwdaj " [player].{w=1}{nw}"
-    extend 1flrbgl " Ahaha."
+    extend 1flrbglsbl " Ahaha."
     n 1fllbg "I...{w=0.5} was kinda just thinking out loud again."
     n 1ullpu "And,{w=0.75}{nw}" 
     extend 1nslpu " well..."
@@ -7348,7 +7491,7 @@ label talk_windup_bullying:
     n 1fcsem "And when I say mess with people...{w=1}{nw}"
     extend 1fsqem " I don't just mean physically,{w=0.1} either!"
     n 1fllem "Bullies can do their dirty work in so many different ways,{w=0.1} especially with social media being what is is now.{w=1}{nw}"
-    extend 1fcsfu " But they're all just as toxic!"
+    extend 1fcsfu " But that's just as toxic!"
     n 1fsqan "And worse yet,{w=0.5}{nw}"
     extend 1tsqem " if you try to stick up for yourself?{w=1}{nw}"
     extend 1fsrem " When you're exhausted of dealing with all of their crap?"    
@@ -7359,7 +7502,7 @@ label talk_windup_bullying:
     extend 1fcsemesi " Ugh."
     n 1tsqem "At this point?{w=0.75}{nw}" 
     extend 1flrbo " I've heard it all."
-    n 1fsrbo "{i}...Not like that makes it any less annoying.{/i}"
+    n 1fsrbosbl "{i}...Not like that makes it any less annoying.{/i}"
     n 1nllaj "But...{w=1}{nw}"
     extend 1nsqbo " one thing I {i}will{/i} tell you right now,{w=0.1} [player]."
     n 1fsqbol "Do {b}not{/b} let what others say stop you from dealing with it."
@@ -7385,17 +7528,17 @@ label talk_windup_bullying:
         n 1fsrssl "I kinda like someone who can show a little guts.{w=0.75}{nw}"
 
         if Natsuki.isLove(higher=True):
-            extend 1fsqsml " Ehehe."
+            extend 1fwlsml " Ehehe."
 
         else:
-            extend 1fsldvl " Ehehe..."
+            extend 1fsldvless " Ehehe..."
 
     elif Natsuki.isHappy(higher=True):
         n 1kslpo "You owe yourself that much...{w=0.75}{nw}"
-        extend 1ksqpol " right?"
+        extend 1ksqpolsbl " right?"
 
     else:
-        n 1fsrpol "You owe yourself {i}that{/i} much,{w=0.1} at least."
+        n 1fsrpolsbl "You owe yourself {i}that{/i} much,{w=0.1} at least."
 
     return
 
@@ -7418,7 +7561,10 @@ init 5 python:
 
 label talk_player_change_name:
     # The player hasn't been nicknamed before, or is rocking their normal name
-    if persistent._jn_nicknames_player_allowed and persistent._jn_nicknames_player_current_nickname == persistent.playername:
+    if (
+        persistent._jn_nicknames_player_allowed 
+        and persistent._jn_nicknames_player_current_nickname == persistent.playername
+    ):
         n 1unmaj "Huh?{w=0.5}{nw}"
         extend 1tnmbo " You want me to call you something else?"
         n 1ulraj "...I mean,{w=1}{nw}"
@@ -7525,8 +7671,27 @@ label talk_player_change_name:
     else:
         $ neutral_nickname_permitted = False
 
+        # Player going with what they're already called
+        if nickname.lower() == player.lower():
+            n 1tslsssbl "..."
+            n 1tnmsssbl "...Business as usual then,{w=0.2} [player]?{w=0.75}{nw}"
+            extend 1fsqsm " Ehehe."
+            n 1fchbl "Well,{w=0.2} whatever you say!"
+
+            $ neutral_nickname_permitted = True
+
+        # Player going back to the name they gave when starting JN originally
+        elif nickname.lower() == persistent.playername.lower():
+            n 1tsgct "Oho?{w=0.75}{nw}"
+            extend 1tsqsg " Finally getting bored of all the nicknames,{w=0.1} are we?"
+            n 1fchsm "Ehehe."
+            n 1fchbgeme "Right-o!{w=0.75}{nw}"
+            extend 1fwlbl " Good old [nickname] it is!"
+            
+            $ neutral_nickname_permitted = True
+
         # A player might actually be named Natsuki, so we don't block it
-        if nickname.lower() == n_name.lower() and n_name.lower() is not "natsuki":
+        elif nickname.lower() == n_name.lower() and n_name.lower() != "natsuki":
             n 1nllaj "You...{w=1}{nw}" 
             extend 1tsqbo " really {i}didn't{/i} think this one through,{w=0.1} did you?"
             n 1tsqpueqm "Do you even know how confusing that'd be?"
@@ -7542,7 +7707,7 @@ label talk_player_change_name:
 
             if nickname.lower() == "natsuki":
                 n 1nslsssbl "...Heh."
-                n 1nsldvsbl "Natsuki."
+                n 1nsldvsbl "{i}Natsuki{/i}."
 
             $ neutral_nickname_permitted = True
 
@@ -7559,7 +7724,7 @@ label talk_player_change_name:
         extend 1tnmem " who woke {i}you{/i} up on the wrong side of the bed this morning?"
         n 1fllsl "..."
         n 1fcsslesi "...Look,{w=0.1} [player]."
-        n 1fnmsl " I get it.{w=0.75}{nw}"
+        n 1fnmsl "I get it.{w=0.75}{nw}"
         extend 1flrbo " Maybe you thought you were being funny or something."
         n 1fnmfr "Just knock it off,{w=0.1} alright?{w=1}{nw}"
         extend 1tsqpu " Because honestly?"
@@ -7587,7 +7752,7 @@ label talk_player_change_name:
 
     elif persistent._jn_nicknames_player_bad_given_total == 3:
         n 1fcsful "You are just {i}unreal{/i},{w=0.1} [player]."
-        n 1fsqscean  "{i}How many times{/i} do I have to give you crap over this to get you to wise up?!"
+        n 1fsqscean "{i}How many times{/i} do I have to give you crap over this to get you to wise up?!"
         n 1fsqwrean "Are you {i}trying{/i} to earn a smack?"
         n 1fcsfuesi "..."
         n 1fcsan "Well,{w=0.3} you know what?{w=1}{nw}"

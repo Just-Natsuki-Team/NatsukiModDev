@@ -1,4 +1,5 @@
 # Weather data
+default persistent._jn_weather_setup_started = False
 default persistent._jn_weather_api_key = None
 default persistent._jn_weather_api_configured = False
 
@@ -31,7 +32,7 @@ image glitch_garbled_c = "mod_assets/backgrounds/etc/glitch_garbled_c.png"
 image glitch_garbled_n = "mod_assets/backgrounds/etc/youdidthis.png"
 image glitch_garbled_red = "mod_assets/backgrounds/etc/glitch_garbled_red.png"
 
-image glitch_fuzzy:
+image sky glitch_fuzzy:
     "mod_assets/backgrounds/etc/glitch_fuzzy_a.png"
     pause 0.25
     "mod_assets/backgrounds/etc/glitch_fuzzy_b.png"
@@ -126,7 +127,7 @@ init 0 python in jn_atmosphere:
     _CLOUDS_Z_INDEX = -6
     _SKY_Z_INDEX = -8
 
-    _OPENWEATHERMAP_API_BASE_URL = "https://api.openweathermap.org/data/2.5/onecall"
+    _OPENWEATHERMAP_API_BASE_URL = "https://api.openweathermap.org/data/2.5/weather"
 
     class JNWeatherTypes(Enum):
         """
@@ -265,8 +266,8 @@ init 0 python in jn_atmosphere:
 
     WEATHER_GLITCH = JNWeather(
         weather_type=JNWeatherTypes.glitch,
-        day_sky_image="glitch_fuzzy",
-        night_sky_image="glitch_fuzzy")
+        day_sky_image="sky glitch_fuzzy",
+        night_sky_image="sky glitch_fuzzy")
 
     # Weather code -> JNWeather map
     # key: Regex matching the weather code as a string, allowing ranged captures (returned from OpenWeatherMap)
@@ -482,12 +483,16 @@ init 0 python in jn_atmosphere:
             return None
 
         # We got a response, so find out the weather and return if it exists in the map
-        weather_data = weather_response.json()["hourly"][0]
+        try:
+            weather_data = weather_response.json()["weather"][0]
 
-        for regex, weather in __WEATHER_CODE_REGEX_TYPE_MAP.items():
-            if re.search(regex, str(weather_data["weather"][0]["id"])):
-                return weather
+            for regex, weather in __WEATHER_CODE_REGEX_TYPE_MAP.items():
+                if re.search(regex, str(weather_data["id"])):
+                    return weather
 
+        except Exception as exception:
+            jn_utils.log("Unable to fetch weather from OpenWeatherMap as an exception occurred; {0}".format(exception.message))
+        
         # No map entries, fallback
         return None
 
@@ -619,4 +624,6 @@ label weather_change:
                     n 1ullbg "Heeey!{w=0.75}{nw}"
                     extend 1uchgnledz " It's snowing!{w=3}{nw}"
 
+            pause 1
+            show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
             return

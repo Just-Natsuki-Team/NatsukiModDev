@@ -1282,13 +1282,13 @@ init -1 python in jn_outfits:
     __register_wearable(JNClothes(
         reference_name="jn_clothes_bee_off_shoulder_sweater",
         display_name="Bee off-shoulder sweater",
-        unlocked=True,
+        unlocked=False,
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_autumn_off_shoulder_sweater",
         display_name="Autumn off-shoulder sweater",
-        unlocked=True,
+        unlocked=False,
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
@@ -2074,6 +2074,7 @@ label outfits_auto_change:
     return
 
 label new_wearables_outfits_unlocked:
+    $ jn_globals.force_quit_enabled = False
     $ giftbox = random.choice([
         jn_gifts.GIFT_BLUE,
         jn_gifts.GIFT_GREEN,
@@ -2371,6 +2372,7 @@ label new_wearables_outfits_unlocked:
     n 1ullajl "So..."
     n 1tnmsslsbl "Where we we?{w=1}{nw}"
     extend 1fslsslsbr " Ehehe..."
+    $ jn_globals.force_quit_enabled = True
 
     return
 

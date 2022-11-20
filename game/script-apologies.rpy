@@ -190,6 +190,7 @@ label apology_cheated_game:
     else:
         n 1fcsan "Whatever.{w=0.2} I don't care."
         n 1fsqantsa "As if I could expect much better from {i}you{/i},{w=0.1} anyway."
+        $ persistent.jn_snap_player_is_cheater = False
 
     $ Natsuki.removeApology(jn_apologies.ApologyTypes.cheated_game)
     return
@@ -615,7 +616,7 @@ label apology_bad_player_name:
             extend 1fcsanltsd " Jerk."
 
     else:
-        # The player has been barred from nicknaming Natsuki,{w=0.1} and even an apology won't change that
+        # The player has been barred from nicknaming Natsuki, and even an apology won't change that
         if Natsuki.isEnamored(higher=True):
             n 1nllsl "..."
             n 1knmsl "[player]."
