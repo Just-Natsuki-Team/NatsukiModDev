@@ -1221,7 +1221,7 @@ label farewell_short_session_ask:
                 n 1kllssl "T-{w=0.1}thanks,{w=0.1} [player]. It means a lot to me."
                 $ chosen_endearment = jn_utils.getRandomEndearment()
                 n 1kplssl "Really.{w=0.2} Thank you,{w=0.1} [chosen_endearment]."
-                n 1klrbgl "...A-{w=0.1}anyway."
+                n 1ksrunl "..."
 
             else:
                 n 1fnmbgl "Y-{w=0.2}yeah!{w=0.5}{nw}" 

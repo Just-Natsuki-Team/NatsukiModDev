@@ -219,7 +219,7 @@ init 0 python in jn_atmosphere:
         night_clouds_image="clouds night heavy",
         day_particles_image="particles rain",
         night_particles_image="particles rain",
-        weather_sfx="mod_assets/sfx/rain_muffled.mp3"
+        weather_sfx="mod_assets/sfx/rain_muffled.ogg"
     )
 
     WEATHER_THUNDER = JNWeather(
@@ -237,7 +237,7 @@ init 0 python in jn_atmosphere:
         night_clouds_image="clouds night heavy",
         day_particles_image="particles rain",
         night_particles_image="particles rain",
-        weather_sfx="mod_assets/sfx/rain_muffled.mp3"
+        weather_sfx="mod_assets/sfx/rain_muffled.ogg"
     )
 
     WEATHER_SNOW = JNWeather(
