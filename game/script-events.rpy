@@ -815,12 +815,12 @@ label event_warm_package:
         n "Oh man...{w=1} JACKPOT!{w=0.75} Ehehe."
 
     # TODO: replace with actual sounds and adjust $ jnPause(timing
-    play audio kettle_click
-    $ jnPause(1)
+    play audio switch_flip
+    $ jnPause(2)
     play audio kettle_boil
-    $ jnPause(1)
-    play audio kettle_pour
-    $ jnPause(1)
+    $ jnPause(4)
+    play audio drink_pour
+    $ jnPause(4)
     play audio chair_in
 
     $ jnPause(3)
