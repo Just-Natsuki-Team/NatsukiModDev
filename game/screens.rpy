@@ -7,6 +7,52 @@ init offset = -1
 ## Custom Screens
 ################################################################################
 
+# Hotkey display
+style hotkeys_text:
+    font gui.interface_font
+    size gui.interface_text_size
+    color "#e2d1d1"
+    line_overlap_split 1.25
+    line_spacing 1.25
+    outlines [(3, "#000000aa", 0, 0)]
+    xalign 0.0
+    yalign 0.5
+
+screen hotkeys():
+    tag menu
+    use game_menu(("Hotkeys")):
+        viewport id "hotkeys":
+            vbox:
+                label _("All hotkeys") style "check_label"
+                xoffset 100
+                yoffset 40
+                null height 20
+                style_prefix "hotkeys"
+                grid 2 7:
+                    xoffset 20                
+                    spacing 10
+
+                    text _("Talk")
+                    text _("T")
+
+                    text _("Music")
+                    text _("M")
+
+                    text _("Extras")
+                    text _("E")
+
+                    text _("Fullscreen")
+                    text _("F")
+
+                    text _("Screenshot")
+                    text _("S")
+
+                    text _("Settings")
+                    text _("Esc")
+
+                    null width 175 height 30
+                    null width 175 height 0
+
 # Categorized menu
 ## Similar to MAS' twopane_scrollable menu.
 ## NOTE: This is meant to be called within a loop so long as the user hasn't clicked `Nevermind`
@@ -102,7 +148,7 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
 
                         null height 20
 
-                    for button_name in menu_items.iterkeys():
+                    for button_name in menu_items.keys():
                         textbutton button_name:
                             style "categorized_menu_button"
                             #Set the selected category
@@ -241,6 +287,7 @@ style input:
 
 style hyperlink_text:
     color gui.accent_color
+    underline True
     hover_color gui.hover_color
     hover_underline True
 
@@ -721,37 +768,6 @@ screen indicator(message):
         style "return_button"
         xpos 10 ypos 70
 
-init python:
-    def FinishEnterName():
-        global player
-
-        if not player:
-            return
-
-        persistent.playername = player
-        renpy.hide_screen("name_input")
-        renpy.jump_out_of_context("start")
-
-    def DLC():
-        renpy.jump_out_of_context("dlcmenu")
-
-    def FinishEnterAge():
-        if not age: return
-        return
-
-    def FinishEnterMonth():
-        if not month: return
-        persistent.bday_month = month
-        renpy.hide_screen("month_input")
-
-    def FinishEnterDay():
-        if not day: return
-        persistent.bday_day = day
-        renpy.hide_screen("day_input")
-
-    def DeleteName():
-        persistent.playername = ""
-
 screen navigation():
     vbox:
         style_prefix "navigation"
@@ -776,13 +792,15 @@ screen navigation():
         else:
             textbutton _("History") action [ShowMenu("history"), SensitiveIf(renpy.get_screen("history") == None)]
 
+        textbutton _("Hotkeys") action [ShowMenu("hotkeys"), SensitiveIf(renpy.get_screen("hotkeys") == None)]
+
         textbutton _("Settings") action [ShowMenu("preferences"), SensitiveIf(renpy.get_screen("preferences") == None)]
 
         if renpy.variant("pc"):
             ## Help isn't necessary or relevant to mobile devices.
             textbutton _("Help") action Help("README.md")
 
-        textbutton _("GitHub") action OpenURL("https://github.com/Just-Natsuki-Team/NatsukiModDev")
+        textbutton _("GitHub") action OpenURL(jn_globals.LINK_JN_GITHUB)
 
 style navigation_button is gui_button
 style navigation_button_text is gui_button_text
@@ -1203,7 +1221,7 @@ screen preferences():
                         textbutton _("Conversations") action [
                             ToggleField(
                                 object=persistent,
-                                field="jn_notify_conversations",
+                                field="_jn_notify_conversations",
                                 true_value=True,
                                 false_value=False)
                         ]
@@ -1447,16 +1465,6 @@ style history_label:
 
 style history_label_text:
     xalign 0.5
-
-################################################################################
-## Additional screens
-################################################################################
-
-screen flower:
-    imagebutton:
-        idle "mod_assets/JustNatsuki/flower.png"
-        hover "mod_assets/JustNatsuki/flower.png"
-        action [If(allow_dialogue, true=Jump("ch30_flower"))]
 
 ## Confirm screen ##############################################################
 ##

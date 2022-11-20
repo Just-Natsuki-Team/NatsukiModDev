@@ -1,4 +1,5 @@
 # Weather data
+default persistent._jn_weather_setup_started = False
 default persistent._jn_weather_api_key = None
 default persistent._jn_weather_api_configured = False
 
@@ -31,7 +32,7 @@ image glitch_garbled_c = "mod_assets/backgrounds/etc/glitch_garbled_c.png"
 image glitch_garbled_n = "mod_assets/backgrounds/etc/youdidthis.png"
 image glitch_garbled_red = "mod_assets/backgrounds/etc/glitch_garbled_red.png"
 
-image glitch_fuzzy:
+image sky glitch_fuzzy:
     "mod_assets/backgrounds/etc/glitch_fuzzy_a.png"
     pause 0.25
     "mod_assets/backgrounds/etc/glitch_fuzzy_b.png"
@@ -126,6 +127,8 @@ init 0 python in jn_atmosphere:
     _CLOUDS_Z_INDEX = -6
     _SKY_Z_INDEX = -8
 
+    _OPENWEATHERMAP_API_BASE_URL = "https://api.openweathermap.org/data/2.5/weather"
+
     class JNWeatherTypes(Enum):
         """
         Identifiers for different weather objects, used for sanity checks when changing weather.
@@ -183,7 +186,12 @@ init 0 python in jn_atmosphere:
             Gets a random notification string for this weather to be used in a popup
             """
             if self.notify_text and len(self.notify_text) > 0:
-                return random.choice(self.notify_text)
+                store.happy_emote = jn_utils.getRandomHappyEmoticon()
+                store.angry_emote = jn_utils.getRandomAngryEmoticon()
+                store.sad_emote = jn_utils.getRandomSadEmoticon()
+                store.tease_emote = jn_utils.getRandomTeaseEmoticon()
+                store.confused_emote = jn_utils.getRandomConfusedEmoticon()
+                return renpy.substitute(random.choice(self.notify_text))
 
             return None
 
@@ -201,10 +209,10 @@ init 0 python in jn_atmosphere:
         day_sky_image="sky day rain",
         night_sky_image="sky night rain",
         notify_text=[
-            "Ugh... raining again. {0}".format(jn_utils.getRandomAngryEmoticon()),
-            "Ew. Rain. {0}".format(jn_utils.getRandomAngryEmoticon()),
+            "Ugh... raining again. [angry_emote]",
+            "Ew. Rain. [angry_emote]",
             "Man... why does it have to rain so much?",
-            "Huh? It's raining? Gross... {0}".format(jn_utils.getRandomAngryEmoticon()),
+            "Huh? It's raining? Gross... [angry_emote]",
         ],
         dim_image="dim medium",
         day_clouds_image="clouds day heavy",
@@ -221,7 +229,7 @@ init 0 python in jn_atmosphere:
         notify_text=[
             "Those clouds look really dark, huh? :<",
             "It was a dark and stormy night...",
-            "Ugh... I hate storms... {0}".format(jn_utils.getRandomAngryEmoticon()),
+            "Ugh... I hate storms... [angry_emote]",
             "Hey... is it stormy over there too? :/",
         ],
         dim_image="dim heavy",
@@ -237,9 +245,9 @@ init 0 python in jn_atmosphere:
         day_sky_image="sky day snow",
         night_sky_image="sky night overcast",
         notify_text=[
-            "[player]! [player]! It's snowing! {0}".format(jn_utils.getRandomHappyEmoticon()),
-            "It's snowing! It's snowing! {0}".format(jn_utils.getRandomHappyEmoticon()),
-            "[player]! Is it snowing for you too?! {0}".format(jn_utils.getRandomHappyEmoticon()),
+            "[player]! [player]! It's snowing! [happy_emote]",
+            "It's snowing! It's snowing! [happy_emote]",
+            "[player]! Is it snowing for you too?! [happy_emote]",
         ],
         dim_image="dim light",
         day_clouds_image="clouds day light",
@@ -258,18 +266,18 @@ init 0 python in jn_atmosphere:
 
     WEATHER_GLITCH = JNWeather(
         weather_type=JNWeatherTypes.glitch,
-        day_sky_image="glitch_fuzzy",
-        night_sky_image="glitch_fuzzy")
+        day_sky_image="sky glitch_fuzzy",
+        night_sky_image="sky glitch_fuzzy")
 
     # Weather code -> JNWeather map
     # key: Regex matching the weather code as a string, allowing ranged captures (returned from OpenWeatherMap)
     # value: JNWeather associated with the weather code range
     __WEATHER_CODE_REGEX_TYPE_MAP = {
-        ("^2[0-9][0-9]$"): WEATHER_THUNDER, # Thunder
-        ("^3[0-9][0-9]$"): WEATHER_RAIN, # Drizzle
-        ("^5[0-9][0-9]$"): WEATHER_RAIN, # Rain
-        ("^6[0-9][0-9]$"): WEATHER_SNOW, # Snow
-        ("^7[0-9][0-9]$"): WEATHER_OVERCAST, # Misc (mist, tornado, sandstorms, etc.)
+        ("^2\d{2}$"): WEATHER_THUNDER, # Thunder
+        ("^3\d{2}$"): WEATHER_RAIN, # Drizzle
+        ("^5\d{2}$"): WEATHER_RAIN, # Rain
+        ("^6\d{2}$"): WEATHER_SNOW, # Snow
+        ("^7\d{2}$"): WEATHER_OVERCAST, # Misc (mist, tornado, sandstorms, etc.)
         ("(800|801|802|803)"): WEATHER_SUNNY, # Clear/light clouds
         ("(804)"): WEATHER_OVERCAST, # Clouds
     }
@@ -427,6 +435,27 @@ init 0 python in jn_atmosphere:
         global current_weather
         current_weather = weather
 
+    def getWeatherApiUrl(latitude, longitude, units, app_id, exclude=[]):
+        """
+        Builds the OpenWeatherMap API URL, given parameters.
+
+        IN:
+            - latitude - The latitude to use for the request URL
+            - longitude - The longitude to use for the request URL
+            - units - The str units of measurement (metric/imperial) to use for the request URL
+            - app_id - The API key to use
+            - exclude - Optional str list of units to exclude
+        """
+        exclude_string = "" if len(exclude) == 0 else "&exclude={0}".format(",".join(exclude))
+        return "{0}?lat={1}&lon={2}&units={3}{4}&appid={5}".format(
+            _OPENWEATHERMAP_API_BASE_URL,
+            latitude,
+            longitude,
+            units,
+            exclude_string,
+            app_id
+        )
+
     def getWeatherFromApi():
         """
         Gets the current weather from the OpenWeatherMap API, assuming it is set up.
@@ -434,10 +463,12 @@ init 0 python in jn_atmosphere:
         # Get the response from the OpenWeatherMap api
         try:
             weather_response = requests.get(
-                url="https://api.openweathermap.org/data/2.5/onecall?lat={0}&lon={1}&units=metric&exclude=current,minutely,daily,alerts&appid={2}".format(
-                    store.persistent._jn_player_latitude_longitude[0],
-                    store.persistent._jn_player_latitude_longitude[1],
-                    store.persistent._jn_weather_api_key
+                url=getWeatherApiUrl(
+                    latitude=store.persistent._jn_player_latitude_longitude[0],
+                    longitude=store.persistent._jn_player_latitude_longitude[1],
+                    units="metric",
+                    app_id=store.persistent._jn_weather_api_key,
+                    exclude=["current", "minutely", "daily", "alerts"]
                 ),
                 verify=os.environ['SSL_CERT_FILE'])
 
@@ -446,18 +477,22 @@ init 0 python in jn_atmosphere:
             jn_utils.log("Unable to fetch weather from OpenWeatherMap as an exception occurred; {0}".format(exception.message))
             return None
 
-        if not weather_response.status_code == 200:
+        if weather_response.status_code != 200:
             # Invalid response, can't do anything here so log and return
             jn_utils.log("Unable to fetch weather from OpenWeatherMap; API response was: {0}".format(weather_response.status_code))
             return None
 
         # We got a response, so find out the weather and return if it exists in the map
-        weather_data = weather_response.json()["hourly"][0]
+        try:
+            weather_data = weather_response.json()["weather"][0]
 
-        for regex, weather in __WEATHER_CODE_REGEX_TYPE_MAP.items():
-            if re.search(regex, str(weather_data["weather"][0]["id"])):
-                return weather
+            for regex, weather in __WEATHER_CODE_REGEX_TYPE_MAP.items():
+                if re.search(regex, str(weather_data["id"])):
+                    return weather
 
+        except Exception as exception:
+            jn_utils.log("Unable to fetch weather from OpenWeatherMap as an exception occurred; {0}".format(exception.message))
+        
         # No map entries, fallback
         return None
 
@@ -472,7 +507,7 @@ init 0 python in jn_atmosphere:
         try:
             # Attempt to fetch the player's latitude and longitude, then return both
             response = requests.get("http://ipinfo.io/json", verify=os.environ['SSL_CERT_FILE'])
-            if not response.status_code == 200:
+            if response.status_code != 200:
                 return None
 
             return (response.json()["loc"].split(','))
@@ -589,4 +624,6 @@ label weather_change:
                     n 1ullbg "Heeey!{w=0.75}{nw}"
                     extend 1uchgnledz " It's snowing!{w=3}{nw}"
 
+            pause 1
+            show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
             return

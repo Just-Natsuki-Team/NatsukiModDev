@@ -41,6 +41,7 @@ label ch30_init:
         import random
 
         #Run runtime data migrations here
+        jn_utils.log("Current persisted version is: {0}".format(store.persistent._jn_version))
         jn_data_migrations.runRuntimeMigrations()
 
         #Now adjust the stored version number
@@ -192,49 +193,59 @@ label call_next_topic(show_natsuki=True):
                     play audio notification
                     python:
                         jn_activity.taskbarFlash()
+                        store.happy_emote = jn_utils.getRandomHappyEmoticon()
+                        store.angry_emote = jn_utils.getRandomAngryEmoticon()
+                        store.sad_emote = jn_utils.getRandomSadEmoticon()
+                        store.tease_emote = jn_utils.getRandomTeaseEmoticon()
+                        store.confused_emote = jn_utils.getRandomConfusedEmoticon()
+
+                        ENAMORED_NOTIFY_MESSAGES = [
+                            "[player]! [player]! Wanna talk? [happy_emote]",
+                            "Hey! You got a sec? [happy_emote]",
+                            "Wanna talk? [happy_emote]",
+                            "[player]! I got something! [happy_emote]",
+                            "Heeey! Wanna talk?",
+                            "Talk to meeee! [angry_emote]",
+                            "I'm talking to you, dummy! [tease_emote]"
+                        ]
+                        AFFECTIONATE_NOTIFY_MESSAGES = [
+                            "Wanna talk?",
+                            "[player]! You wanna talk?",
+                            "Hey! Hey! Talk to me! [angry_emote]",
+                            "Hey dummy! I'm talking to you!",
+                            "[player]! I just thought of something! [confused_emote]",
+                            "[player]! I wanna talk to you!",
+                            "I just thought of something, [player]!"
+                        ]
+                        HAPPY_NOTIFY_MESSAGES = [
+                            "[player]! Did you have a sec?",
+                            "[player]? Can I borrow you?",
+                            "Hey! Come here a sec?",
+                            "Hey! I wanna talk!",
+                            "You there, [player]?"
+                        ]
+                        NORMAL_NOTIFY_MESSAGES = [
+                            "You wanna talk?",
+                            "Hey... are you busy?",
+                            "[player]? Did you have a sec?",
+                            "Can I borrow you for a sec?",
+                            "You there, [player]?",
+                            "Hey... you still there?",
+                            "[player]? Are you there?"
+                        ]
 
                         if Natsuki.isNormal(higher=True):
                             if Natsuki.isEnamored(higher=True):
-                                notify_message = random.choice([
-                                    "[player]! [player]! Wanna talk? {0}".format(jn_utils.getRandomHappyEmoticon()),
-                                    "Hey! You got a sec? {0}".format(jn_utils.getRandomHappyEmoticon()),
-                                    "Wanna talk? {0}".format(jn_utils.getRandomHappyEmoticon()),
-                                    "[player]! I got something! {0}".format(jn_utils.getRandomHappyEmoticon()),
-                                    "Heeey! Wanna talk?",
-                                    "Talk to meeee! {0}".format(jn_utils.getRandomAngryEmoticon()),
-                                    "I'm talking to you, dummy! {0}".format(jn_utils.getRandomTeaseEmoticon())
-                                ])
+                                notify_message = random.choice(ENAMORED_NOTIFY_MESSAGES)
 
                             elif Natsuki.isAffectionate(higher=True):
-                                notify_message = random.choice([
-                                    "Wanna talk?",
-                                    "[player]! You wanna talk?",
-                                    "Hey! Hey! Talk to me! {0}".format(jn_utils.getRandomAngryEmoticon()),
-                                    "Hey dummy! I'm talking to you!",
-                                    "[player]! I just thought of something! {0}".format(jn_utils.getRandomConfusedEmoticon()),
-                                    "[player]! I wanna talk to you!",
-                                    "I just thought of something, [player]!"
-                                ])
+                                notify_message = random.choice(AFFECTIONATE_NOTIFY_MESSAGES)
 
                             elif Natsuki.isHappy(higher=True):
-                                notify_message = random.choice([
-                                    "[player]! Did you have a sec?",
-                                    "[player]? Can I borrow you?",
-                                    "Hey! Come here a sec?",
-                                    "Hey! I wanna talk!",
-                                    "You there, [player]?"
-                                ])
+                                notify_message = random.choice(HAPPY_NOTIFY_MESSAGES)
 
                             else:
-                                notify_message = random.choice([
-                                    "You wanna talk?",
-                                    "Hey... are you busy?",
-                                    "[player]? Did you have a sec?",
-                                    "Can I borrow you for a sec?",
-                                    "You there, [player]?",
-                                    "Hey... you still there?",
-                                    "[player]? Are you there?"
-                                ])
+                                notify_message = random.choice(NORMAL_NOTIFY_MESSAGES)
 
                             jn_activity.notifyPopup(renpy.substitute(notify_message))
 
@@ -291,8 +302,8 @@ init python:
             for action in jn_plugins.minute_check_calls:
                 eval(action.statement)
 
-        # Check what the player is currently doing
-        current_activity = jn_activity.getCurrentActivity()
+        # Capture the last activity the player made
+        current_activity = jn_activity.ACTIVITY_MANAGER.getCurrentActivity()
 
         if (
             Natsuki.isHappy(higher=True)
@@ -344,16 +355,15 @@ init python:
         elif (
             persistent._jn_notify_activity
             and Natsuki.isAffectionate(higher=True)
-            and current_activity != jn_activity.LAST_ACTIVITY
+            and current_activity.activity_type != jn_activity.ACTIVITY_MANAGER.last_activity.activity_type
             and random.randint(1, 20) == 1
         ):
             # Activity check for notif
-            jn_activity.LAST_ACTIVITY = current_activity
-            quote = jn_activity.getActivityNotifyQuote(current_activity)
-            if quote:
-                jn_activity.notifyPopup(quote)
+            jn_activity.ACTIVITY_MANAGER.last_activity = current_activity
+            if jn_activity.ACTIVITY_MANAGER.last_activity.getRandomNotifyText():
+                jn_activity.notifyPopup(jn_activity.ACTIVITY_MANAGER.last_activity.getRandomNotifyText())
 
-        pass
+        return
 
     def quarter_hour_check():
         """
@@ -368,7 +378,7 @@ init python:
         queue("weather_change")
         queue("random_music_change")
 
-        pass
+        return
 
     def half_hour_check():
         """
@@ -380,7 +390,7 @@ init python:
             for action in jn_plugins.half_hour_check_calls:
                 eval(action.statement)
 
-        pass
+        return
 
     def hour_check():
         """
@@ -404,7 +414,7 @@ init python:
             # We call here so we don't skip day_check, as call returns us to this point
             renpy.call("outfits_auto_change")
 
-        pass
+        return
 
     def day_check():
         """
@@ -418,7 +428,7 @@ init python:
 
         queue("weather_change")
 
-        pass
+        return
 
 label talk_menu:
     python:

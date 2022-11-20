@@ -36,12 +36,14 @@ label introduction_progress_check:
 
     # Handling for if player decides to quit during the introduction sequence so we don't skip unseen segments
     if not jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.new_game:
+        $ config.allow_skipping = False
         play audio static
         show glitch_garbled_a zorder 99 with vpunch
 
         $ main_background.show()
         $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
         show natsuki idle introduction at jn_center zorder JN_NATSUKI_ZORDER
+        pause 0.25
         hide glitch_garbled_a
         play music audio.space_classroom_bgm fadein 1
 
@@ -94,7 +96,7 @@ label introduction_opening:
     hide glitch_garbled_c
     hide glitch_garbled_b
     hide glitch_garbled_a
-    show glitch_fuzzy zorder 99
+    show sky glitch_fuzzy zorder 99
     play sound interference loop
     $ renpy.pause(10)
 
@@ -103,13 +105,13 @@ label introduction_opening:
     hide glitch_garbled_c
     hide glitch_garbled_b
     hide glitch_garbled_a
-    show glitch_fuzzy zorder 99
+    show sky glitch_fuzzy zorder 99
     play sound interference loop
     $ renpy.pause(1.5)
 
     # Restore finally works
     stop sound
-    hide glitch_fuzzy
+    hide sky glitch_fuzzy
     play audio static
     show glitch_garbled_a zorder 99 with vpunch
 
@@ -118,6 +120,7 @@ label introduction_opening:
     $ main_background.show()
     $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
     show natsuki idle introduction at jn_center zorder JN_NATSUKI_ZORDER
+    pause 0.25
     hide black
     hide glitch_garbled_a
     play music audio.space_classroom_bgm fadein 1
@@ -212,8 +215,7 @@ label introduction_first_meeting:
         if len(player_name) == 0:
             n 1kskem "P-{w=0.3}please!{w=1} Who are you?!"
 
-        elif jn_utils.get_string_contains_profanity(player_name) or jn_utils.get_string_contains_insult(player_name):
-            # We only apply penalty once here so we don't have to rewrite the whole sequence for diff aff/trust levels
+        elif jn_nicknames.get_player_nickname_type(player_name) != jn_nicknames.NicknameTypes.neutral:            # We only apply penalty once here so we don't have to rewrite the whole sequence for diff aff/trust levels
             if persistent._jn_player_profanity_during_introduction:
                 play audio static
                 show glitch_garbled_a zorder 99 with hpunch
@@ -436,6 +438,9 @@ label introduction_exit:
         style.say_dialogue = style.normal
         allow_skipping = True
         config.allow_skipping = False
+
+        global LAST_TOPIC_CALL
+        LAST_TOPIC_CALL = datetime.datetime.now()
 
     play music audio.just_natsuki_bgm fadein 3
     show screen hkb_overlay

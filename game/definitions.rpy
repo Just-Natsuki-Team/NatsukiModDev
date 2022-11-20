@@ -220,7 +220,7 @@ init -3 python:
             """
             return {
                 key:value
-                for key, value in self.__dict__.iteritems()
+                for key, value in self.__dict__.items()
                 if key != "_m1_definitions__persistent_db"
             }
 
@@ -269,7 +269,7 @@ init -3 python:
 
             NOTE: Will raise a KeyError of the lock map doesn't have the persist key in it
             """
-            for persist_key, value in self.as_dict().iteritems():
+            for persist_key, value in self.as_dict().items():
                 if TOPIC_LOCKED_PROP_BASE_MAP[persist_key]:
                     self.__persistent_db[self.label][persist_key] = value
 
@@ -278,7 +278,7 @@ init -3 python:
             """
             Saves all topics
             """
-            for topic in store.topic_handler.ALL_TOPIC_MAP.itervalues():
+            for topic in store.topic_handler.ALL_TOPIC_MAP.values():
                 topic.__save()
 
         def has_additional_property_with_value(self, property_key, property_value):
@@ -888,6 +888,9 @@ init -990 python in jn_globals:
 
     # Links
 
+    # GitHub
+    LINK_JN_GITHUB = "https://github.com/Just-Natsuki-Team/NatsukiModDev"
+
     # OpenWeatherMap; used for setting up weather in-game
     LINK_OPEN_WEATHER_MAP_HOME = "https://openweathermap.org"
     LINK_OPEN_WEATHER_MAP_SIGN_UP = "https://home.openweathermap.org/users/sign_up"
@@ -1198,7 +1201,7 @@ init -990 python in jn_globals:
 
     _INSULT_LIST = {
         "arrogant",
-        "beast",
+        "^(beast|beastly)$",
         "bonebag",
         "bonehead",
         "brat|bratty",
@@ -1219,11 +1222,12 @@ init -990 python in jn_globals:
         "dweeb",
         "egoist|egotistical",
         "evil",
-        "failure",
+        "^(fail|failure)$",
         "fake",
-        "(^fat$|fatso|fatty)",
-        "(flat|flatso|flatty)",
+        "(^fat$|fatso|fatty|fattie)",
+        "(flat|flatso|flatty|flattie)",
         "gilf",
+        "^(ghast|ghastly)$"
         "gremlin",
         "gross",
         "halfling|halfpint|half-pint",
@@ -1248,7 +1252,7 @@ init -990 python in jn_globals:
         "nasty",
         "neckcrack|neck-crack",
         "necksnap|neck-snap",
-        "nimrod",
+        "^nimrod$",
         "nuisance",
         "^pest$",
         "pathetic",
@@ -1276,7 +1280,8 @@ init -990 python in jn_globals:
         "^twit$",
         "^useless$",
         "^vendingmachine$",
-        "vomit",
+        "^(virgin|turbovirgin)$",
+        "^vomit$",
         "^washboard$",
         "^witch$",
         "^wretch$",
@@ -1800,6 +1805,8 @@ init -999 python:
         if (
             not renpy.get_screen("input")
             and not renpy.get_screen("choice")
+            and not renpy.get_screen("preferences")
+            and not renpy.get_screen("history")
             and jn_globals.force_quit_enabled
         ):
             renpy.call("try_force_quit")

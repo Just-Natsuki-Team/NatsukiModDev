@@ -153,7 +153,7 @@ init 5 python:
             persistent._event_database,
             label="event_caught_reading_manga",
             unlocked=True,
-            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 86400 >= 2",
+            conditional="jn_utils.get_total_gameplay_days() >= 2",
             affinity_range=(jn_affinity.NORMAL, None)
         ),
         topic_group=TOPIC_TYPE_EVENT
@@ -219,7 +219,7 @@ init 5 python:
             persistent._event_database,
             label="event_caught_writing_poetry",
             unlocked=True,
-            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 86400 >= 7",
+            conditional="jn_utils.get_total_gameplay_days() >= 7",
             affinity_range=(jn_affinity.AFFECTIONATE, None)
         ),
         topic_group=TOPIC_TYPE_EVENT
@@ -284,7 +284,7 @@ init 5 python:
             persistent._event_database,
             label="event_relationship_doubts",
             unlocked=True,
-            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 86400 >= 5",
+            conditional="jn_utils.get_total_gameplay_days() >= 5",
             affinity_range=(None, jn_affinity.DISTRESSED)
         ),
         topic_group=TOPIC_TYPE_EVENT
@@ -336,7 +336,7 @@ init 5 python:
             persistent._event_database,
             label="event_code_fiddling",
             unlocked=True,
-            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 86400 >= 3",
+            conditional="jn_utils.get_total_gameplay_days() >= 3",
             affinity_range=(jn_affinity.NORMAL, None)
         ),
         topic_group=TOPIC_TYPE_EVENT
@@ -474,7 +474,7 @@ init 5 python:
             persistent._event_database,
             label="event_renpy_for_dummies",
             unlocked=True,
-            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 86400 >= 5",
+            conditional="jn_utils.get_total_gameplay_days() >= 5",
             affinity_range=(jn_affinity.NORMAL, None)
         ),
         topic_group=TOPIC_TYPE_EVENT
@@ -550,7 +550,7 @@ init 5 python:
             persistent._event_database,
             label="event_reading_a_la_mode",
             unlocked=True,
-            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 86400 >= 5",
+            conditional="jn_utils.get_total_gameplay_days() >= 5",
             affinity_range=(jn_affinity.HAPPY, None)
         ),
         topic_group=TOPIC_TYPE_EVENT
@@ -612,7 +612,7 @@ init 5 python:
             persistent._event_database,
             label="event_drinking_strawberry_milkshake",
             unlocked=True,
-            conditional="jn_utils.get_total_gameplay_length().total_seconds() / 86400 >= 5",
+            conditional="jn_utils.get_total_gameplay_days() >= 5",
             affinity_range=(jn_affinity.HAPPY, None)
         ),
         topic_group=TOPIC_TYPE_EVENT
