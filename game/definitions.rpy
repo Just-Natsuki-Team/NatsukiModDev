@@ -1603,6 +1603,19 @@ init -100 python in jn_utils:
         """
         return list(store.player)[0]
 
+    def getPlayerFinal(repeat_times=0):
+        """
+        Returns the last letter of the player's name.
+
+        OUT:
+            Last letter of the player's name
+        """
+        player_final = list(store.player)[len(store.player) - 1]
+        for i in range(repeat_times):
+            player_final += list(store.player)[len(store.player) - 1]
+
+        return player_final
+
     def get_string_contains_profanity(string):
         """
         Returns True if the given string contains a profanity, based on regex.
@@ -1759,6 +1772,14 @@ define audio.stationary_rustle_b = "mod_assets/sfx/stationary_rustle_a.ogg"
 define audio.stationary_rustle_c = "mod_assets/sfx/stationary_rustle_a.ogg"
 define audio.glasses_case_open = "mod_assets/sfx/glasses_case_open.ogg"
 define audio.glasses_case_close = "mod_assets/sfx/glasses_case_close.ogg"
+define audio.button_tap_a = "mod_assets/sfx/button_tap_a.ogg"
+define audio.button_tap_b = "mod_assets/sfx/button_tap_b.ogg"
+define audio.button_tap_c = "mod_assets/sfx/button_tap_c.ogg"
+define audio.button_mashing_a = "mod_assets/sfx/button_mashing_a.ogg"
+define audio.button_mashing_b = "mod_assets/sfx/button_mashing_b.ogg"
+define audio.button_mashing_c = "mod_assets/sfx/button_mashing_c.ogg"
+define audio.twitch_die = "mod_assets/sfx/twitch_die.ogg"
+define audio.twitch_you_lose = "mod_assets/sfx/twitch_you_lose.ogg"
 
 define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
 define audio.glitch_b = "mod_assets/sfx/glitch_b.ogg"

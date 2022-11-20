@@ -19,6 +19,97 @@ transform jn_glasses_readjust:
     ypos 20
     easein 0.75 ypos 0
 
+image prop wintendo_twitch_held free = "mod_assets/props/twitch/held/wintendo_twitch_held_free.png"
+image prop wintendo_twitch_held charging = "mod_assets/props/twitch/held/wintendo_twitch_held_charging.png"
+image prop wintendo_twitch_playing free:
+    "mod_assets/props/twitch/gaming/free/wintendo_twitch_playing_a.png"
+    pause 1
+
+    "mod_assets/props/twitch/gaming/free/wintendo_twitch_playing_b.png"
+    pause 0.15
+
+    "mod_assets/props/twitch/gaming/free/wintendo_twitch_playing_a.png"
+    pause 2
+
+    "mod_assets/props/twitch/gaming/free/wintendo_twitch_playing_c.png"
+    pause 0.15
+
+    "mod_assets/props/twitch/gaming/free/wintendo_twitch_playing_a.png"
+    pause 1.5
+
+    choice:
+        "mod_assets/props/twitch/gaming/free/wintendo_twitch_playing_b.png"
+        pause 0.1
+
+        "mod_assets/props/twitch/gaming/free/wintendo_twitch_playing_a.png"
+        pause 0.3
+
+        "mod_assets/props/twitch/gaming/free/wintendo_twitch_playing_b.png"
+        pause 0.1
+
+    choice:
+        "mod_assets/props/twitch/gaming/free/wintendo_twitch_playing_c.png"
+        pause 0.15
+
+        "mod_assets/props/twitch/gaming/free/wintendo_twitch_playing_a.png"
+        pause 0.25
+
+        "mod_assets/props/twitch/gaming/free/wintendo_twitch_playing_c.png"
+        pause 0.15
+
+    repeat
+image prop wintendo_twitch_playing charging:
+    "mod_assets/props/twitch/gaming/charging/wintendo_twitch_playing_a.png"
+    pause 1
+
+    "mod_assets/props/twitch/gaming/charging/wintendo_twitch_playing_b.png"
+    pause 0.15
+
+    "mod_assets/props/twitch/gaming/charging/wintendo_twitch_playing_a.png"
+    pause 2
+
+    "mod_assets/props/twitch/gaming/charging/wintendo_twitch_playing_c.png"
+    pause 0.15
+
+    "mod_assets/props/twitch/gaming/charging/wintendo_twitch_playing_a.png"
+    pause 1.5
+
+    choice:
+        "mod_assets/props/twitch/gaming/charging/wintendo_twitch_playing_b.png"
+        pause 0.1
+
+        "mod_assets/props/twitch/gaming/charging/wintendo_twitch_playing_a.png"
+        pause 0.3
+
+        "mod_assets/props/twitch/gaming/charging/wintendo_twitch_playing_b.png"
+        pause 0.1
+
+    choice:
+        "mod_assets/props/twitch/gaming/charging/wintendo_twitch_playing_c.png"
+        pause 0.15
+
+        "mod_assets/props/twitch/gaming/charging/wintendo_twitch_playing_a.png"
+        pause 0.25
+
+        "mod_assets/props/twitch/gaming/charging/wintendo_twitch_playing_c.png"
+        pause 0.15
+
+    repeat
+
+image prop wintendo_twitch_battery_low:
+    "mod_assets/props/twitch/low_battery/wintendo_twitch_battery_low_a.png"
+    pause 1
+    "mod_assets/props/twitch/low_battery/wintendo_twitch_battery_low_b.png"
+    pause 1
+    repeat
+
+image prop wintendo_twitch_dead:
+    "mod_assets/props/twitch/dead/wintendo_twitch_dead_a.png"
+    pause 1
+    "mod_assets/props/twitch/dead/wintendo_twitch_dead_b.png"
+    pause 1
+    repeat
+
 # Props are displayed on the desk, in front of Natsuki
 image prop poetry_attempt = "mod_assets/props/poetry_attempt.png"
 image prop parfait_manga_held = "mod_assets/props/parfait_manga_held.png"
@@ -942,5 +1033,241 @@ label event_eyewear_problems:
     extend 1nsqbglsbr " huh?"
     n 1nsrsslsbr "So..."
     n 1kchsslesd "W-{w=0.2}what's new,{w=0.2} [player]?"
+    
+    return
+
+# Natsuki learns why you should always have a charging cable on hand...
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_wintendo_twitch_battery_dead",
+            unlocked=True,
+            conditional="jn_utils.get_total_gameplay_days() >= 14",
+            affinity_range=(jn_affinity.AFFECTIONATE, None)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
+
+label event_wintendo_twitch_battery_dead:
+    $ jn_globals.force_quit_enabled = False
+    play audio button_mashing_a
+    n "..."
+    n "...Ha!"
+    play audio button_tap_b
+    n "..."
+
+    play audio button_mashing_b
+    pause 3
+    play audio button_mashing_a
+
+    n "Oh,{w=0.3} come {i}on{/i}!{w=1.25}{nw}"
+    extend " As {i}if{/i} that hit me!"
+    play audio button_mashing_c
+
+    pause 2
+    play audio button_mashing_b
+
+    n "Nnnng-!"
+    n "G-{w=0.1}get OFF me!{w=0.5}{nw}"
+    extend " Jeez!"
+    play audio button_mashing_a
+    n "I HATE these enemies!"
+    n "Did they {i}have{/i} to add so many?!"
+
+    pause 3
+    play audio button_mashing_b
+
+    n "Get out of my way!{w=0.75}{nw}"
+    play audio button_tap_b
+    extend " It's right there!{w=0.75}{nw}"
+    extend " I'm SO {i}close{/i}!"
+    play audio button_tap_a
+    n "Come on...{w=1}{nw}"
+    play audio button_mashing_c
+    extend " {i}come on{/i}...!"
+
+    menu:
+        "Enter...":
+            pass
+
+    show prop wintendo_twitch_playing free zorder jn_events.JN_EVENT_PROP_ZORDER
+    show natsuki gaming at jn_center zorder JN_NATSUKI_ZORDER
+    $ jn_events.display_visuals()
+    $ jn_globals.force_quit_enabled = True
+    pause 3
+
+    n 1fdwanl "Nnnnnn...!"
+    play audio button_mashing_a 
+    n 1fdwpoless "Uuuuuuu-!"
+    n 1fdwfo "..."
+    play audio button_mashing_c
+    n 1fdwfoesssbl "Mmmmmm...!"
+
+    show prop wintendo_twitch_held free zorder jn_events.JN_EVENT_PROP_ZORDER
+    
+    n 1uchbsedz "YES!{w=1.25}{nw}"
+    extend 1uchgnedz " FINALLY!"
+    n 1kcsbgesisbl "Haah..."
+    n 1fcsbgemesbr "Stick {i}that{/i} in your pipe and smoke it!"
+
+    show prop wintendo_twitch_battery_low zorder jn_events.JN_EVENT_PROP_ZORDER
+
+    n 1kcsssemesbr "..."
+    n 1ksqsmsbl "...{w=0.75}{nw}"
+    n 1uskemleshsbl "...!"
+    n 1fllbglsbl "A-{w=0.2}ah!"
+    extend 1fchbglsbr " H-{w=0.2}hey,{w=0.2} [player]!"
+    extend 1tchbglsbr " What's up?"
+    n 1kcssssbl "Man..."
+    n 1fsldvsbl "Sorry,"
+    extend 1fcsgssbl " but you have no {i}IDEA{/i} how long I was trying to beat that stage!"
+    n 1fnmpol "Seriously!"
+    n 1fcsajl "I mean,{w=1}{nw}" 
+    extend 1fsrajlsbl " it's not like I was getting {i}upset{/i} or anything..."
+    n 1fcsbglsbr "I'm {i}way{/i} past getting vexed over games,{w=0.2} of all things."
+    n 1fslbglsbr "T-{w=0.2}they're just lucky I {i}chose{/i} not to go all out.{w=1}{nw}"
+    extend 1fcsajlsbr " That's all.{w=1}{nw}"
+    extend 1nchgnl " Ehehe."
+    n 1nchsmleme "..."
+    n 1tnmbo "Eh?"
+    extend 1klrbgesssbl " Oh,{w=0.2} right!{w=0.75}{nw}" 
+    extend 1fchbgesssbr " Sorry!{w=0.75}{nw}"
+    extend 1flrdvlsbr " I'm almost done anyway."
+    n 1ucssslsbr "All I gotta do is save,{w=0.5}{nw}"
+
+    show prop wintendo_twitch_dead zorder jn_events.JN_EVENT_PROP_ZORDER
+
+    extend " and I'll be right-{w=1.25}{nw}"
+    n 1udwssl "..."
+    n 1ndwbo "..."
+    n 1fdwem "...But I..."
+    n 1fdwwr "I-{w=0.2}I just...{w=0.5}{nw}"
+    extend 1fdwun " charged..."
+    n 1fdwanl "..."
+    n 1fcsful "..."
+    n 1fcsunl "..."
+
+    show black zorder 4 with Dissolve(0.5)
+    pause 0.5
+    hide prop
+    play audio chair_out_in
+    pause 5
+    hide black with Dissolve(2)
+
+    n 1ndtbo "..."
+    n 1nslbo "..."
+    n 1ndtca "..."
+    n 1fdteml "This stays between us."
+    n 1fsqfrlsbl "Got it?"
+    n 1nsrpolsbl "..."
+    n 1nsrajlsbl "...So.{w=1}{nw}"
+    extend 1tsqsllsbl " What's new,{w=0.2} [player]?"
+
+    return
+
+# Natsuki jumps at the player entering the room, right as she's about to win a game... uh oh.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_wintendo_twitch_game_over",
+            unlocked=True,
+            conditional="jn_utils.get_total_gameplay_days() >= 21",
+            affinity_range=(jn_affinity.AFFECTIONATE, None)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
+
+label event_wintendo_twitch_game_over:
+    $ jn_globals.force_quit_enabled = False
+    play audio button_mashing_b
+    n "..."
+    n "Ehehe..."
+    play audio button_mashing_a
+    n "Oh yeah.{w=0.5} Uh huh."
+    
+    play audio button_mashing_b
+    pause 2
+    play audio button_mashing_a
+    pause 2
+
+    n "Ugh!{w=0.5}{nw}"
+    play audio button_mashing_c
+    extend " Get up!{w=0.75} Get UP!"
+    n "Counter,{w=0.2} you idiot!"
+
+    play audio button_mashing_b
+    pause 1
+
+    n "Yeah!{w=0.75} Now THAT's what I'm talking about!"
+    play audio button_mashing_c
+    n "Three hits!{w=0.5}{nw}"
+    extend " Four hits!{w=0.3}{nw}"
+    extend " Five hits!"
+    n "You're on {i}fire{/i},{w=0.2} Natsuki!"
+
+    play audio button_mashing_b
+    pause 3
+    play audio button_mashing_a
+
+    n "Oh man,{w=0.2} I'm ACING this!"
+    play audio button_tap_b
+    n "Yeah!{w=0.75}{nw}"
+    play audio button_tap_a
+    extend " Yeah! Come on!"
+    play audio button_mashing_c
+    n "Just a few more hits...!"
+
+    menu:
+        "Enter...":
+            pass
+
+    show prop wintendo_twitch_playing charging zorder jn_events.JN_EVENT_PROP_ZORDER
+    show natsuki gaming at jn_center zorder JN_NATSUKI_ZORDER
+    $ jn_events.display_visuals()
+    $ jn_globals.force_quit_enabled = True
+    pause 1.5
+
+    show prop wintendo_twitch_held charging
+    n 1unmemesu "...!"
+    $ player_initial = jn_utils.getPlayerInitial()
+    n 1fnmgs "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
+    extend 1fllemlsbr " H-{w=0.2}how many times do I gotta tell y-{w=0.25}{nw}"
+    play audio twitch_die
+    n 1nskemlsbr "...{w=0.5}{nw}"
+    play audio twitch_you_lose
+    n 1fdwemsbl "..."
+    n 1fcsansbl "..."
+    n 1fcsemsbl "Are.{w=0.75}{nw}"
+    extend 1fcsfusbr " You.{w=0.75}{nw}"
+    extend 1fbkwrleansbr " KIDDING ME?!"
+    $ player_final = jn_utils.getPlayerFinal(repeat_times=2)
+    n 1kbkwrlsbr "[player][player_final]!{w=1}{nw}"
+    extend 1fllgslsbr " Come on!"
+    n 1fcswrlsbr "Y-{w=0.2}you totally threw off my groove!{w=0.75}{nw}"
+    extend 1fsqpolsbl " You big jerk!"
+    n 1kcsemesisbl "..."
+    n 1kdwwr "...And now I gotta do {i}that{/i} all over again?{w=1}{nw}"
+    extend 1kcspu " Man..."
+    n 1fslsl "..."
+    n 1flrtr "I guess I'll just do that later."
+    n 1fsqcal "{b}Again{/b}."
+
+    show black zorder 4 with Dissolve(0.5)
+    pause 0.5
+    hide prop
+    play audio chair_out_in
+    pause 5
+    hide black with Dissolve(2)
+
+    n 1nsrcal "..."
+    n 1nnmtrl "Well,{w=0.2} [player]."
+    n 1nsqtrl "I hope you're buckled up."
+    n 1nsrpol "...'Cause now you owe me {i}twice{/i} as much fun today to make up for that."
+    n 1nsqbol "..."
+    n 1fsqajl "Well?{w=0.5}{nw}"
+    extend 1fcspolesi " Get to it then,{w=0.2} [player]!"
+    n 1fsqsml " Ehehe."
     
     return
