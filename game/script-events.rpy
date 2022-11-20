@@ -1,11 +1,23 @@
 default persistent._event_database = dict()
 
-image prop poetry_attempt = "mod_assets/props/poetry_attempt.png"
-image prop parfait_manga_held = "mod_assets/props/parfait_manga_held.png"
-image prop renpy_for_dummies_book_held = "mod_assets/props/renpy_for_dummies_book_held.png"
-image prop a_la_mode_manga_held = "mod_assets/props/a_la_mode_manga_held.png"
-image prop strawberry_milkshake = "mod_assets/props/strawberry_milkshake.png"
-image prop step_by_step_manga_held = "mod_assets/props/step_by_step_manga_held.png"
+transform jn_glasses_pre_slide:
+    subpixel True
+    ypos 0
+
+transform jn_glasses_slide_down:
+    subpixel True
+    ypos 0
+    easeout 5 ypos 20
+
+transform jn_glasses_slide_down_faster:
+    subpixel True
+    ypos 0
+    easeout 3 ypos 20
+
+transform jn_glasses_readjust:
+    subpixel True
+    ypos 20
+    easein 0.75 ypos 0
 
 image prop wintendo_twitch_held free = "mod_assets/props/twitch/held/wintendo_twitch_held_free.png"
 image prop wintendo_twitch_held charging = "mod_assets/props/twitch/held/wintendo_twitch_held_charging.png"
@@ -98,13 +110,26 @@ image prop wintendo_twitch_dead:
     pause 1
     repeat
 
+# Props are displayed on the desk, in front of Natsuki
+image prop poetry_attempt = "mod_assets/props/poetry_attempt.png"
+image prop parfait_manga_held = "mod_assets/props/parfait_manga_held.png"
+image prop renpy_for_dummies_book_held = "mod_assets/props/renpy_for_dummies_book_held.png"
+image prop a_la_mode_manga_held = "mod_assets/props/a_la_mode_manga_held.png"
+image prop strawberry_milkshake = "mod_assets/props/strawberry_milkshake.png"
+image prop step_by_step_manga_held = "mod_assets/props/step_by_step_manga_held.png"
+image prop glasses_case = "mod_assets/props/glasses_case.png"
+
+# Overlays are displayed over the top of Natsuki, but behind any props
+image overlay slipping_glasses = "mod_assets/overlays/slipping_glasses.png"
+
 init python in jn_events:
     import random
     import store
     import store.jn_atmosphere as jn_atmosphere
     import store.jn_affinity as jn_affinity
 
-    JN_EVENT_PROP_ZORDER = 4
+    JN_EVENT_PROP_ZORDER = 5
+    JN_EVENT_OVERLAY_ZORDER = 4
 
     EVENT_MAP = dict()
 
@@ -120,7 +145,6 @@ init python in jn_events:
             is_seen=False,
             **kwargs
         )
-
         # Events are one-time only, so we sanity check here
         if len(event_list) > 0:
             return random.choice(event_list).label
@@ -128,7 +152,7 @@ init python in jn_events:
         else:
             return None
 
-    def display_visuals(natsuki_sprite_code=None):
+    def display_visuals(natsuki_sprite_code):
         """
         Sets up the visuals/audio for an instant "pop-in" effect after a black scene opening.
         Note that we start off from ch30_autoload with a black scene by default.
@@ -136,9 +160,8 @@ init python in jn_events:
         IN:
             - natsuki_sprite_code - The sprite code to show Natsuki displaying before dialogue
         """
-        if natsuki_sprite_code:
-            renpy.show("natsuki {0}".format(natsuki_sprite_code), at_list=[store.jn_center], zorder=store.JN_NATSUKI_ZORDER)
-        
+        renpy.show("natsuki {0}".format(natsuki_sprite_code), at_list=[store.jn_center], zorder=store.JN_NATSUKI_ZORDER)
+        renpy.pause(0.1)
         renpy.hide("black")
         renpy.show_screen("hkb_overlay")
         renpy.play(filename="mod_assets/bgm/just_natsuki.ogg", channel="music")
@@ -756,6 +779,261 @@ label event_step_by_step_manga:
     n 1tnmsslsbr "What's new,{w=0.1} [player]?{w=1}{nw}"
     extend 1fllsslsbl " Ahaha..."
 
+    return
+
+# Natsuki finds her glasses in her drawer! They don't fit as well as she remembers...
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_eyewear_problems",
+            unlocked=True,
+            conditional="jn_utils.get_total_gameplay_days() >= 21 and persistent.jn_custom_outfits_unlocked",
+            affinity_range=(jn_affinity.HAPPY, None)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
+
+label event_eyewear_problems:
+    python:
+        import copy
+        import random
+        
+        jn_globals.force_quit_enabled = False
+
+        # Unlock the starter glasses
+        unlocked_eyewear = [
+            jn_outfits.get_wearable("jn_eyewear_round_glasses_black"),
+            jn_outfits.get_wearable("jn_eyewear_round_glasses_red"),
+            jn_outfits.get_wearable("jn_eyewear_round_glasses_brown"),
+            jn_outfits.get_wearable("jn_eyewear_round_sunglasses"),
+            jn_outfits.get_wearable("jn_eyewear_rectangular_glasses_black"),
+            jn_outfits.get_wearable("jn_eyewear_rectangular_glasses_red"),
+        ]
+        for eyewear in unlocked_eyewear:
+            eyewear.unlock()
+
+        # Make note of the loaded outfit, then give Natsuki a copy without eyewear so we can show off the new ones!
+        outfit_to_restore = Natsuki.getOutfitName()
+        eyewear_outfit = copy.copy(jn_outfits.get_outfit(outfit_to_restore))
+        eyewear_outfit.eyewear = jn_outfits.get_wearable("jn_none")
+        Natsuki.setOutfit(eyewear_outfit)
+
+    n "..."
+    play audio drawer
+    pause 2 
+
+    n "Oh,{w=0.75}{nw}" 
+    extend " come {i}on{/i}!{w=1}{nw}"
+    play audio stationary_rustle_c
+    extend " I {i}know{/i} I left them here!"
+    n "I just know it!"
+
+    pause 3
+    play audio drawer
+    pause 2.25
+    play audio drawer
+    pause 1.5
+    play audio stationary_rustle_a
+    pause 0.5
+
+    n "I just don't get it!{w=1}{nw}"
+    extend " It's not like anyone's even {i}here{/i} to mess around with my things any more!"
+    n "Ugh...{w=1.25}{nw}"
+    extend " I {i}knew{/i} I shouldn't have let Sayori borrow my desk for all the club stuff..."
+    n "Reeeeal smooth,{w=0.5} Natsuki..."
+
+    pause 2.5
+    play audio paper_crumple
+    pause 1
+
+    n "And are these...{w=1} {i}candy wrappers{/i}?!"
+    n "That's funny..."
+    n "I don't remember ever saying my desk was a{w=0.1}{nw}"
+    extend " {b}trash{/b}{w=0.33}{nw}"
+    extend " {b}basket!{/b}"
+
+    play audio gift_rustle
+    pause 3.5
+
+    n "...Great.{w=0.75} And now my drawer is all sticky."
+    n "Gross..."
+
+    play audio paper_crumple
+    pause 2.5
+    play audio paper_throw
+    pause 3
+
+    n "Come on..."
+
+    play audio stationary_rustle_b
+    pause 1.5
+    play audio stationary_rustle_c
+    pause 1.75
+    play audio drawer
+
+    n "I can...{w=0.5} just about...{w=0.5} reach the back...!"
+    play audio chair_in
+    pause 1.5
+    n "Nnnnnng-!"
+
+    pause 2
+    play audio gift_close
+    pause 0.25
+    
+    n "...!"
+    n "T-{w=0.2}they're here?!{w=1}{nw}"
+    extend " They're here!"
+    n "Man,{w=0.2} that's a relief..."
+    n "..."
+    play audio glasses_case_open
+    n "...I wonder if they still..."
+    pause 3.5
+
+    menu:
+        "Enter...":
+            pass
+
+    show prop glasses_case zorder jn_events.JN_EVENT_PROP_ZORDER
+    show overlay slipping_glasses zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_glasses_pre_slide
+    $ jn_events.display_visuals("1fcssmesi")
+    $ jn_globals.force_quit_enabled = True
+
+    n 1uskgsesu "...!"
+    n 1ullajl "O-{w=0.2}oh!{w=1}{nw}"
+    extend 1fllbglsbl " [player]!"
+    n 1fcssslsbl "Heh."
+    n 1fcsbglsbr "Well,{w=0.5}{nw}" 
+    extend 1fsqsglsbr " didn't {i}you{/i} pick a fine time to show up."
+    n 1fcssglsbr "..."
+    n 1tsqsslsbr "...So,{w=0.3} [player]?{w=1}{nw}"
+    extend 1fchgnledzsbr " Notice anything different?"
+    n 1tsqsmledz "...Mmm?"
+    n 1usqctleme "Oho?{w=1}{nw}"
+    extend 1fcsctl " What's that?"
+    show overlay slipping_glasses zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_glasses_slide_down
+    n 1tllbgl "Did I do something with my hair?{w=1}{nw}"
+    extend 1fcssml " Ehehe."
+    n 1nchgnleme "Nope!{w=0.5}{nw}" 
+    extend 1fcsbgl " I-{w=0.75}{nw}"
+    n 1nsqbol "..."
+
+    show natsuki 1fsqbof at jn_center zorder JN_NATSUKI_ZORDER
+    show overlay slipping_glasses zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_glasses_readjust
+    pause 1
+
+    n 1fcspol "..."
+    n 1fcsemfsbl "Ahem!"
+    n 1fcsbglsbl "N-{w=0.2}nope!{w=0.75}{nw}" 
+    show overlay slipping_glasses zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_glasses_slide_down
+    extend 1fchbglsbr " I-{w=0.2}it's not my hair,{w=0.2} [player]!"
+    n 1tsqsmlsbr "What else did you-{w=1}{nw}"
+    n 1fsranlsbl "..."
+    n 1fcsanf "Nnnnn...!"
+
+    show natsuki 1fcsunf at jn_center zorder JN_NATSUKI_ZORDER
+    show overlay slipping_glasses zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_glasses_readjust
+    pause 1.15
+
+    n 1fcsemlesi "..."
+    n 1fcstrlsbr "So!"
+    show overlay slipping_glasses zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_glasses_slide_down_faster
+    extend 1fsqbglesssbr " What else did you noti-{w=1}{nw}"
+    n 1fslanlsbl "Uuuuuuuuu-!"
+    
+    menu:
+        "Natsuki...":
+            pass
+
+    n 1fbkwrlesssbl "Alright!{w=0.75}{nw}"
+    extend 1flrwrlesssbl" Alright!"
+    n 1fcsgslsbr "I know,{w=0.33} okay?!"
+    extend 1fsremlsbr " The glasses don't fit properly!"
+    n 1fslsrl "They {i}never{/i} have."
+    n 1ksrbol "And to think I wasted all that time trying to find them,{w=0.2} too..."
+    n 1kcsemlesi "..."
+
+    menu:
+        "I think glasses suit you, Natsuki!":
+            $ Natsuki.calculatedAffinityGain()
+            if Natsuki.isEnamored(higher=True):
+                n 1knmsll "..."
+                n 1kllpul "...You really think so,{w=0.75}{nw}" 
+                extend 1knmpul " [player]?"
+                n 1ksrunlsbl "..."
+                n 1fcssslsbl "Heh."
+                n 1fsldvlsbr "...Then I guess that at least wasn't a {i}total{/i} waste of time."
+                n 1fcsajlsbr "Not that I {i}don't{/i} think I look good in them too,{w=0.5}{nw}" 
+                extend 1fcssmfsbl " obviously."
+            
+            elif Natsuki.isAffectionate(higher=True):
+                n 1uskemfeshsbl "...!{w=0.5}{nw}"
+                n 1fcsgsfsbl "W-{w=0.3}well,{w=0.2} of course they do,{w=0.2} [player]!{w=1}{nw}"
+                extend 1flrpolsbl " I {i}did{/i} pick them,{w=0.2} after all."
+                n 1ksrsllsbl "..."
+
+            else:
+                n 1fcsgslsbl "W-{w=0.2}well,{w=0.5}{nw}"
+                extend 1fllgslsbl " duh!"
+                n 1fcsbglsbr "Of course they suit me,{w=0.2} [player]!"
+                n 1fcsemlsbr "I mean,{w=0.75}{nw}"
+                extend 1fllemlsbr " You didn't seriously think I'd pick something that {i}wouldn't{/i} show off my sense of style,{w=0.75}{nw}" 
+                extend 1fnmpolsbr " did you?"
+                n 1fcsemlsbl "Yeesh..."
+
+        "Yeah, that was a waste of time.":
+            $ Natsuki.percentageAffinityLoss(2)
+            if Natsuki.isAffectionate(higher=True):
+                n 1fskemlesh "H-{w=0.3}hey!{w=1}{nw}"
+                extend 1fsqwrl " And listening to you being so rude {i}isn't{/i}?"
+                n 1flreml "Yeesh..."
+                n 1fsreml "{i}Someone{/i} woke up on the wrong side of the bed..."
+                n 1fsrsll "..."
+
+            else:
+                n 1fskwrlesh "H-{w=0.2}hey!{w=0.5}{nw}"
+                extend 1fnmgsl " What was that for?!"
+                n 1fnmwrl "And as if you acting like a jerk {i}isn't{/i}?"
+                n 1fsrsllean "..."
+
+        "...":
+            n 1fllsll "..."
+            n 1knmeml "...What?"
+            extend 1fsqemlsbr " The silent act {i}definitely{/i} isn't helping," 
+            extend 1fsrpolsbl " you jerk..."
+
+    n 1fcsajl "Well,{w=0.3} whatever.{w=1}{nw}"
+    extend 1fllsll " At least I know where they are now,"
+    extend 1fslbol " I suppose."
+    n 1fcseml "...Wearing them all high up like that was dorky,{w=0.5}{nw}" 
+    extend 1fcspol " a-{w=0.2}anyway."
+
+    show black zorder 6 with Dissolve(0.5)
+    pause 0.5
+    # Hide glasses overlay and restore old outfit
+    hide prop
+    hide overlay
+    $ Natsuki.setOutfit(jn_outfits.get_outfit(outfit_to_restore))
+    show natsuki 1fcsbol at jn_center zorder JN_NATSUKI_ZORDER
+    play audio glasses_case_close
+    pause 0.75
+    play audio drawer
+    pause 3
+    hide black with Dissolve(2)
+
+    n 1nsrcal "..."
+    n 1nsrajl "I...{w=0.75}{nw}"
+    extend 1nsrsslsbl " guess I should apologize for all of...{w=1.25}{nw}" 
+    extend 1nslsllsbl " that."
+    n 1nsrpolsbl "Not exactly rolling out the red carpet here,{w=0.2} am I?{w=0.75}{nw}"
+    extend 1nslsslsbl " Heh."
+    n 1fcsajlsbr "A-{w=0.2}and besides."
+    n 1fslsslsbr "I think that's about enough of that{w=0.75}{nw}"
+    extend 1fsqbglsbr " {i}spectacle{/i},{w=1}{nw}"
+    extend 1nsqbglsbr " huh?"
+    n 1nsrsslsbr "So..."
+    n 1kchsslesd "W-{w=0.2}what's new,{w=0.2} [player]?"
+    
     return
 
 # Natsuki learns why you should always have a charging cable on hand...
