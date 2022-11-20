@@ -5361,21 +5361,56 @@ init 5 python:
     )
 
 label talk_relax_jaw:
-    n 1unmaj "Hey.{w=0.3}{nw}"
-    extend 1nllca" I was just thinking..."
-    n 1tllsr "There's this bad habit I have, and maybe you do it too."
-    n 1tnmsr "When you're just resting, or doing whatever,{w=0.2} do you keep your jaw clenched?"
-    n 1nnmss "I bet if you do, you don't even notice you're doing it half the time.{w=0.2} Maybe it even feels like the most natural way to sit."
-    n 1klrbg "I have to remind myself all the time,{w=0.2} 'relax your freaking jaw!'"
-    n 1kcsem "{i}Especially{/i} if I'm going through something stressful. Then it's hard to even stop!"
-    n 1ksgsr "You might not think something as tiny as that would really matter, but I've heard it can cause you a lot of pain down the line."
-    n 1knmaj "I'd bet you already know you can wear down joints from strain in your knees and stuff,{w=0.2}{nw}"
-    extend 1kskaw "but you can even get joint pain in your {i}face,{/i}{w=0.1} [player]!"
-    n 1fchem "That sounds like it's just the {i}worst!{/i}"
-    n 1fnmun "And it's from the same thing I'm talking about--clenching your jaw all the time.{w=0.3} So I'm doing my best to stop."
-    n 1fchsm "So, not to be the Posture Police or anything, but...{w=0.2} just do your best to remember. You'll thank me later."
+    n 1ullpu "Hey...{w=1}{nw}"
+    extend 1unmaj " [player]?"
+    n 1fslss "It's kinda random,{w=0.3} but...{w=1}{nw}"
+    extend 1nslpo " I've been thinking."
+    n 1tnmss "What kinda bad habits do you have?"
+    n 1fcsan "I've got this {i}super{/i} annoying one I just can't shake off!{w=0.5}{nw}"
+    extend 1fbkwr " It's annoying the crap out of me!"
+    n 1fsrem "I have no idea why...{w=1}{nw}"
+    extend 1fnmsl " but whenever I'm just sitting around,{w=0.5}{nw}"
+    extend 1flraj " or resting, or whatever?"
+    n 1fcsan "I just keep clenching my jaw!"
+    n 1fslfu "Like,{w=0.1} I just keep catching myself doing it!{w=1}{nw}"
+    extend 1fbkwr " It's all subconscious!{w=0.5}{nw}"
+    extend 1fcsem " Gah!"
+    n 1fsqpo "It can't be just {i}me{/i} that does that,{w=0.1} can it?"
+    n 1fcsan "But it just feels like the {i}natural{/i} thing to do!{w=0.5}{nw}"
+    extend 1ksrsr " Especially if I'm feeling all stressed..."
+    n 1fcsem "Ugh."
+    n 1fllem "I mean,{w=0.1} jeez..."
+    n 1fsqsf "Even right now,{w=0.1} you're probably just thinking,"
+    extend 1nsltr " '{i}Oh, she's just overreacting.{w=1}{nw}"
+    extend 1nsrtr " It isn't that bad.{/i}'"
+    n 1fspgs "But it is!{w=1.5}{nw}"
+    extend 1fwdem " ...Really!{w=0.5}{nw}" 
+    extend 1fsqpo " I'm {i}serious{/i}, [player]!"
+    n 1knmem "You can actually wear down your jaw joints doing that!"
+    n 1nllaj "People already say regular joint pain is the worst...{w=0.5}{nw}" 
+    extend 1nsqsl " you know,{w=0.1} like in your knees and such."
+    n 1fskem "{w=0.3}...So how about joint pain in your {i}face{/i}?"
+    n 1fslup "Yeesh!{w=1.5}{nw}"
+    extend 1fcsem " No {i}thanks{/i}!"
+    n 1fnmpol "Hey,{w=0.1} don't get me wrong!{w=0.5}{nw}"
+    extend 1fslpo " I'm at least {i}trying{/i} to knock it off.{w=1.5}{nw}"
+    extend 1fslss " {i}Trying{/i} being the key word here."
+    n 1nnmaj "And I don't know if you already do the same thing too, [player]..."
+    n 1fsqaj "But you better cut it out if you do!"
+    n 1fsqss "{w=0.3}...Or I'll {i}really{/i} give you something to clench your jaw about."
 
-    return
+    if jn_affinity.get_affinity_state() >= jn_affinity.LOVE:
+        n 1fchsm "Ehehe.{w=1}{nw}"
+        extend 1fchbgl " Love you too,{w=0.1} [player]!~"
+
+    elif jn_affinity.get_affinity_state() >= jn_affinity.AFFECTIONATE:
+        n 1fchsm "Ehehe.{w=1}{nw}"
+        extend 1fchbg " You're welcome,{w=0.1} [player]!~"
+
+    else:
+        n 1fchsm "Ehehe."
+
+return
 
 label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
     n "Okay!"
