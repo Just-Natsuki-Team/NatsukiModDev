@@ -5901,7 +5901,7 @@ label talk_fighting_drowsiness:
     n 1ncsajesl "...{w=2}{nw}"
     n 1ncsemesl "...{w=2}{nw}"
     n 1ncsajesl "...{w=2}{nw}"
-    $ renpy.pause(4)
+    $ jnPause(4, hard=True)
     n 1fcsbo "..."
     n 1nsqpu "Mmmmm...{w=0.5}{nw}"
     extend 1tsqsr " mmmnn?"
@@ -6943,7 +6943,7 @@ label talk_impressions_of_the_other_girls:
     $ already_discussed_impressions_of_others = get_topic("talk_impressions_of_the_other_girls").shown_count > 0
 
     if Natsuki.isAffectionate(higher=True):
-        if already_discussed_realizations_of_others:
+        if already_discussed_impressions_of_others:
             n 1fcsem "Oh,{w=0.75}{nw}"
             extend 1kslemesisbl " come {i}on{/i}..."
             n 1knmemsbl "This again?{w=0.75}{nw}"
@@ -6977,7 +6977,7 @@ label talk_impressions_of_the_other_girls:
         n 1fcsunl "...And it always {i}will{/i} be."
 
     elif Natsuki.isNormal(higher=True):
-        if already_discussed_realizations_of_others:
+        if already_discussed_impressions_of_others:
             n 1knmaw "[player]...{w=0.5}{nw}"
             extend 1knmwr " really?"
             n 1kslemlsbr "This {w=0.2}{i}again{/i}?"
@@ -7000,14 +7000,14 @@ label talk_impressions_of_the_other_girls:
         extend 1fcssr " get...{w=1}{nw}" 
         extend 1fcsem " that you were just trying to have fun."
 
-        if already_discussed_realizations_of_others:
+        if already_discussed_impressions_of_others:
             n 1fsrun "...I {i}hope{/i},{w=0.2} at least."
 
         n 1fsqsr "But I am {i}not{/i} making jokes about my friends."
         n 1fcssr "Sorry,{w=0.1} [player]."
         n 1fslunl "But some things are just off-limits."
 
-        if already_discussed_realizations_of_others:
+        if already_discussed_impressions_of_others:
             n 1fsqunl "And you {i}better{/i} respect that sooner rather than later."
 
     elif Natsuki.isDistressed(higher=True):
@@ -7021,7 +7021,7 @@ label talk_impressions_of_the_other_girls:
         n 1fcsunl "..."
         n 1fsqem "Your sense of humour {i}{w=0.2}blows{w=0.2}{/i},{w=0.2} [player]."
 
-        if already_discussed_realizations_of_others:
+        if already_discussed_impressions_of_others:
             n 1fsqanl "Now knock.{w=0.3}{nw}"
             extend 1fcsanl " It.{w=0.3}{nw}"
             extend 1fsqful " {i}Off{/i}."

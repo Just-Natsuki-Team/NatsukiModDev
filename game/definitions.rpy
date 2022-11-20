@@ -605,6 +605,20 @@ init -3 python:
 
         return ordered_menu_items
 
+    def jnNoDismissDialogue(event, interact=True, **kwargs):
+        """
+        Callback for whenever Natsuki talks.
+        """
+        if event == "show" or event == "begin":
+            # Prevent skip before dialogue
+            global allow_dismiss
+            allow_dismiss = False
+
+        elif event == "slow_done":
+            # Allow skip after dialogue
+            global allow_dismiss
+            allow_dismiss = True
+
     def jn_is_new_years_day(input_date=None):
         """
         Returns True if the current date is New Year's Day; otherwise False
@@ -830,6 +844,16 @@ init -3 python:
         """
         url = "https://www.google.com/maps/place/{0},{1}".format(latitude, longitude)
         webbrowser.open(url)
+
+    def jnPause(delay, hard=True):
+        """
+        Equivalent to jnPause, but we assume a hard pause so players cannot skip.
+
+        IN:
+            - delay - int/decimal amount of time in seconds to wait for
+            - hard - bool flag for whether the player can skip the pause or not. Defaults to true, as in not skippable.
+        """
+        renpy.pause(delay=delay, hard=hard)
 
 # Variables with cross-script utility specific to Just Natsuki
 init -990 python in jn_globals:
@@ -1579,6 +1603,19 @@ init -100 python in jn_utils:
         """
         return list(store.player)[0]
 
+    def getPlayerFinal(repeat_times=0):
+        """
+        Returns the last letter of the player's name.
+
+        OUT:
+            Last letter of the player's name
+        """
+        player_final = list(store.player)[len(store.player) - 1]
+        for i in range(repeat_times):
+            player_final += list(store.player)[len(store.player) - 1]
+
+        return player_final
+
     def get_string_contains_profanity(string):
         """
         Returns True if the given string contains a profanity, based on regex.
@@ -1702,15 +1739,15 @@ define audio.t4g = "<loop 1.000>bgm/4g.ogg"
 # JN resources
 
 # Singleton sound effects
-define audio.camera_shutter = "mod_assets/sfx/camera_shutter.mp3"
-define audio.select_hover = "mod_assets/sfx/select_hover.mp3"
-define audio.select_confirm = "mod_assets/sfx/select_confirm.mp3"
-define audio.coin_flip = "mod_assets/sfx/coin_flip.mp3"
-define audio.card_shuffle = "mod_assets/sfx/card_shuffle.mp3"
-define audio.card_place = "mod_assets/sfx/card_place.mp3"
-define audio.drawer = "mod_assets/sfx/drawer.mp3"
-define audio.smack = "mod_assets/sfx/smack.mp3"
-define audio.clothing_ruffle = "mod_assets/sfx/clothing_ruffle.mp3"
+define audio.camera_shutter = "mod_assets/sfx/camera_shutter.ogg"
+define audio.select_hover = "mod_assets/sfx/select_hover.ogg"
+define audio.select_confirm = "mod_assets/sfx/select_confirm.ogg"
+define audio.coin_flip = "mod_assets/sfx/coin_flip.ogg"
+define audio.card_shuffle = "mod_assets/sfx/card_shuffle.ogg"
+define audio.card_place = "mod_assets/sfx/card_place.ogg"
+define audio.drawer = "mod_assets/sfx/drawer.ogg"
+define audio.smack = "mod_assets/sfx/smack.ogg"
+define audio.clothing_ruffle = "mod_assets/sfx/clothing_ruffle.ogg"
 define audio.notification = "mod_assets/sfx/notification.ogg"
 define audio.page_turn = "mod_assets/sfx/page_turn.ogg"
 define audio.paper_crumple = "mod_assets/sfx/paper_crumple.ogg"
@@ -1730,10 +1767,22 @@ define audio.gift_slide = "mod_assets/sfx/gift_slide.ogg"
 define audio.gift_open = "mod_assets/sfx/gift_open.ogg"
 define audio.gift_close = "mod_assets/sfx/gift_close.ogg"
 define audio.gift_rustle = "mod_assets/sfx/gift_rustle.ogg"
-# TODO: replace with actual sounds
 define audio.switch_flip = "mod_assets/sfx/switch_flip.ogg"
 define audio.kettle_boil = "mod_assets/sfx/kettle_boil.ogg"
 define audio.drink_pour = "mod_assets/sfx/drink_pour.ogg"
+define audio.stationary_rustle_a = "mod_assets/sfx/stationary_rustle_a.ogg"
+define audio.stationary_rustle_b = "mod_assets/sfx/stationary_rustle_a.ogg"
+define audio.stationary_rustle_c = "mod_assets/sfx/stationary_rustle_a.ogg"
+define audio.glasses_case_open = "mod_assets/sfx/glasses_case_open.ogg"
+define audio.glasses_case_close = "mod_assets/sfx/glasses_case_close.ogg"
+define audio.button_tap_a = "mod_assets/sfx/button_tap_a.ogg"
+define audio.button_tap_b = "mod_assets/sfx/button_tap_b.ogg"
+define audio.button_tap_c = "mod_assets/sfx/button_tap_c.ogg"
+define audio.button_mashing_a = "mod_assets/sfx/button_mashing_a.ogg"
+define audio.button_mashing_b = "mod_assets/sfx/button_mashing_b.ogg"
+define audio.button_mashing_c = "mod_assets/sfx/button_mashing_c.ogg"
+define audio.twitch_die = "mod_assets/sfx/twitch_die.ogg"
+define audio.twitch_you_lose = "mod_assets/sfx/twitch_you_lose.ogg"
 
 define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
 define audio.glitch_b = "mod_assets/sfx/glitch_b.ogg"
@@ -1744,7 +1793,7 @@ define audio.interference = "mod_assets/sfx/interference.ogg"
 define audio.static = "mod_assets/sfx/glitch_static.ogg"
 
 # Looped sound effects
-define audio.rain_muffled = "mod_assets/sfx/rain_muffled.mp3"
+define audio.rain_muffled = "mod_assets/sfx/rain_muffled.ogg"
 
 # Music, vanilla DDLC
 define audio.space_classroom_bgm = "mod_assets/bgm/space_classroom.ogg"

@@ -143,6 +143,7 @@ python early in jn_data_migrations:
 
 #Init time migrations are run at init 10
 init 10 python:
+    jn_utils.log("Current persisted version pre-mig check: {0}".format(store.persistent._jn_version))
     jn_data_migrations.runInitMigrations()
 
 #All migration scripts go here
@@ -215,4 +216,9 @@ init python in jn_data_migrations:
         store.persistent._jn_version = "1.0.0"
         jn_utils.save_game()
         jn_utils.log("Migration to 1.0.0 DONE")
+        return
+
+    @migration(["1.0.0"], "1.0.1", runtime=MigrationRuntimes.INIT)
+    def to_1_0_1():
+        jn_utils.log("No data migration needed for 1.0.1")
         return
