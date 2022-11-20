@@ -1725,6 +1725,10 @@ define audio.gift_slide = "mod_assets/sfx/gift_slide.ogg"
 define audio.gift_open = "mod_assets/sfx/gift_open.ogg"
 define audio.gift_close = "mod_assets/sfx/gift_close.ogg"
 define audio.gift_rustle = "mod_assets/sfx/gift_rustle.ogg"
+# TODO: replace with actual sounds
+define audio.kettle_click = "mod_assets/sfx/gift_rustle.ogg"
+define audio.kettle_boil = "mod_assets/sfx/gift_rustle.ogg"
+define audio.kettle_pour = "mod_assets/sfx/gift_rustle.ogg"
 
 define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
 define audio.glitch_b = "mod_assets/sfx/glitch_b.ogg"

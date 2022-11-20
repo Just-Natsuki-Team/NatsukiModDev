@@ -6,6 +6,7 @@ image prop renpy_for_dummies_book_held = "mod_assets/props/renpy_for_dummies_boo
 image prop a_la_mode_manga_held = "mod_assets/props/a_la_mode_manga_held.png"
 image prop strawberry_milkshake = "mod_assets/props/strawberry_milkshake.png"
 image prop step_by_step_manga_held = "mod_assets/props/step_by_step_manga_held.png"
+image prop hot_chocolate = "mod_assets/props/hot_chocolate.png"
 
 init python in jn_events:
     import random
@@ -565,9 +566,13 @@ label event_drinking_strawberry_milkshake:
     extend 1fsqpo " you almost made me spill it!"
     n 1flrpo "At least let me finish up here real quick..."
 
-    play audio glass_move
+    show black zorder 6 with Dissolve(0.5)
+    pause 0.5
     hide prop strawberry_milkshake
-    with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+    play audio glass_move
+    show natsuki 1ncssm at jn_center zorder JN_NATSUKI_ZORDER
+    pause 3
+    hide black with Dissolve(2)
 
     n 1ncsss "Ah..."
     n 1uchgn "Man,{w=0.1} that hit the spot!"
@@ -662,5 +667,207 @@ label event_step_by_step_manga:
     n 1ulrbol "So..."
     n 1tnmsslsbr "What's new,{w=0.1} [player]?{w=1}{nw}"
     extend 1fllsslsbl " Ahaha..."
+
+    return
+
+# Natsuki shares tips how to stay warm at chilly days
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_warm_package",
+            unlocked=True,
+            conditional="jn_utils.get_total_gameplay_days() >= 21 and persistent.jn_custom_outfits_unlocked",
+            affinity_range=(jn_affinity.HAPPY, None)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
+
+label event_warm_package:
+    $ jn_globals.force_quit_enabled = False
+    $ teddy_cardigan_outfit = jn_outfits.get_outfit("jn_teddy_cardigan_outfit")
+    $ teddy_cardigan_outfit.unlock()
+    $ Natsuki.setOutfit(teddy_cardigan_outfit)
+
+    if jn_atmosphere.isCurrentWeatherRain() or jn_atmosphere.isCurrentWeatherThunder():
+        n "..."
+        n "Uuuuuuu-!"
+        n "You have {i}got{/i} to be kidding me."
+        n "Rain?!{w=0.75} {i}Again?!{/i}"
+        n "It's always freezing here when it does that!{w=1}{nw}"
+        extend " I don't even {i}have{/i} a radiator to turn on!"
+        pause 3
+        n "Ugh..."
+        n "You know what? Screw this!"
+        play audio chair_out
+        n "Someone {i}had{/i} to have left a coat or...{w=0.5} {i}something{/i} lying around..."
+        pause 3
+
+        play audio clothing_ruffle
+        pause 2
+        play audio clothing_ruffle
+        
+        n "..."
+        n "Jeez..."
+        n "How is this not enough?" 
+        extend " I'm {i}still{/i} freezing my butt off!"
+        n "There's gotta be something else in here..."
+        extend " I just know it!"
+
+        # Sounds of Natsuki rummaging through the cupboard
+        pause 3
+        play audio gift_slide
+        pause 1
+        play audio gift_open
+
+        # Natsuki mumbling about Monika as she continues searching
+        n "...Heh."
+        n "You'd think the {i}star{/i} of the debate club would have at least {i}tried{/i} to talk our way into a warm clubroom."
+        n "Uuuuu... I can barely feel my toes..."
+
+        pause 2
+        play audio chair_out
+
+        n "Ugh..."
+        n "I need to step up my game."
+        n "So annoying..."
+        extend " Now {i}I{/i} gotta pick up on that!"
+        n "Why does it have to be so cold {b}and{/b} gross anyway?!"
+        n "This rain is heavier than Sayori's tears when I couldn't borrow her money for a hot chocolate."
+        n "...wait a second{w=0.5}"
+        n "..."
+        n "That reminds me..."
+        extend " This would be the perfect great opportunity for..."
+        n "I wonder if it still is..."
+        extend " It has to be!"
+
+        pause 2
+        play audio drawer
+
+    elif jn_atmosphere.isCurrentWeatherSnow():
+        n ""
+
+    else:
+        n "..."
+        n "Ugh...{w=0.75}{nw}"
+        extend "I {i}seriously{/i} cannot believe my luck sometimes."
+        n "Out of all the places I could have been stuck in literally forever..."
+        n "Did it {i}really{/i} have to be the one classroom {i}without{/i} central heating?!"
+        n "Come {i}on{/i}..."
+
+        pause 3
+
+        n "...Wait."
+        n "..."
+        n "Didn't I...?{w=1}{nw}"
+        extend " I'm sure I did..."
+
+        play audio chair_out
+        pause 3
+
+        play audio clothing_ruffle
+        pause 2
+        play audio clothing_ruffle
+
+        n "Man,{w=0.2} I honestly forgot just how much junk is back here..."
+        n "No wonder the teacher got all antsy about my books."
+
+        pause 2
+        play audio clothing_ruffle
+
+        n "Yuri's...{w=0.75} Yuri's...{w=0.75} Yuri's..."
+        play audio clothing_ruffle
+        n "Monika's..."
+        n "..."
+        n "...{b}Definitely{/b}{w=0.25} Yuri's."
+        n "..."
+        n "Aha!{w=0.2} I knew it!"
+        extend " Take {i}that{/i},{w=0.2} academy uniform guidelines!"
+        play audio gift_open
+        n "...Eh?{w=0.2} And is this...?"
+        n "I-{w=0.2}it is!"
+        n "Oh man..."
+        extend " JACKPOT!"
+        extend " Ehehe."
+
+    # TODO: replace with actual sounds and adjust pause timing
+    play audio kettle_click
+    pause 1
+    play audio kettle_boil
+    pause 1
+    play audio kettle_pour
+    pause 1
+    play audio chair_in
+    
+    pause 3
+
+    menu:
+        "Enter...":
+            pass
+    
+    show prop hot_chocolate zorder jn_events.JN_EVENT_PROP_ZORDER
+    $ jn_events.display_visuals("")
+    $ jn_globals.force_quit_enabled = True
+
+    n "Mhhhm~"
+    n "This was a great idea!"
+    extend " You are a {i}genius{/i} after all,{w=0.1} Natsuki."
+    n "And the marshmallows..."
+    extend " sooo chewy,{w=0.3} yum!"
+
+    n "Well, hello {player}!"
+    n "Hoho,{w=0.1} are we jealous?"
+    extend " I would be,{w=0.1} ehehe."
+    n "And you know what?"
+    n "The chocolate isn't the only hot thing!{nw}"
+    n "No, {w=0.1} I meant..."
+    n "..."
+    n "Jeez"
+    n "I-{w=0.1}I was talking about me.{nw}"
+    n "No"
+    n "Nnnnnn-!"
+    n "I{w=0.5}... wait{w=0.5}"
+    n "..."
+    n "I meant the clothes,{w=0.1}"
+    extend " you see?"
+
+    n "They are the best!"
+    n "Warm and comfy,{w=0.1}"
+    extend " perfect for chilly weather!"
+    n "You should learn a few tricks from me."
+    extend " I'm somewhat of a pro, {w=0.1} staying warm and such."
+    n "Step 1:{w=0.3} Layer like an onion!"
+    extend " You want to protect your body from the cold"
+    n "In this case you wanna build an armor.{w=0.3}"
+    extend " Don't forget to warm up your hands and feet too!"
+    n "Next step: {w=0.3} Try to eat or drink something warm. Warm yourself from the inside."
+    n "Bonus points if you bake. The oven can heat your whole apartment.{w=0.5}"
+    n "I used to do that...{w=0.5} {i}a lot{/i} actually,{w=0.1}"
+    extend " ahaha..."
+    n "Anyway,{w=0.1} last step!{w=0.3} Do some excercises!"
+    n "I know, I know.{w=0.3}"
+    extend " It's not what you wanted to hear,{w=0.1}"
+    extend " but it really does wonders."
+    n "By moving your body it {i}produces{/i} heat!"
+    n "It doesn't matter if you are doing some chores or if you wanna dance."
+    extend " Just get these bones moving!{w=0.3} Ahaha."
+
+    n "From all the talking I've got pretty heat up too."
+    n "Let me destroy this hot chocolate real quick though."
+
+# Just here!
+    show black zorder 6 with Dissolve(0.5)
+    pause 0.5
+    hide prop hot_chocolate
+    play audio straw_sip
+    pause 1
+    play audio glass_move
+    show natsuki  at jn_center zorder JN_NATSUKI_ZORDER
+    pause 3
+    hide black with Dissolve(2)
+
+    n "There we go,{w=0.1}"
+    extend " all cleaned up."
+    n "So what do you wanna do today,{w=0,1} {player}?"
 
     return
