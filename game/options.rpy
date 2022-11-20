@@ -12,7 +12,7 @@
 ##
 ## The _() surrounding the string marks it as eligible for translation.
 
-define config.version = "1.0.0"
+define config.version = "1.0.1"
 define config.name = "Just Natsuki"
 define config.window_title = _("Just Natsuki - {0}".format(config.version))
 
@@ -149,7 +149,8 @@ define config.window_icon = "mod_assets/jnlogo.png"
 
 define config.developer = False
 define config.console = False
-define config.allow_skipping = True
+define config.allow_skipping = False
+define config.skipping = False
 define config.has_autosave = False
 define config.autosave_on_quit = False
 define config.autosave_slots = 0

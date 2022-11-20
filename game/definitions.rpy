@@ -605,6 +605,20 @@ init -3 python:
 
         return ordered_menu_items
 
+    def jnNoDismissDialogue(event, interact=True, **kwargs):
+        """
+        Callback for whenever Natsuki talks.
+        """
+        if event == "show" or event == "begin":
+            # Prevent skip before dialogue
+            global allow_dismiss
+            allow_dismiss = False
+
+        elif event == "slow_done":
+            # Allow skip after dialogue
+            global allow_dismiss
+            allow_dismiss = True
+
     def jn_is_new_years_day(input_date=None):
         """
         Returns True if the current date is New Year's Day; otherwise False
@@ -830,6 +844,16 @@ init -3 python:
         """
         url = "https://www.google.com/maps/place/{0},{1}".format(latitude, longitude)
         webbrowser.open(url)
+
+    def jnPause(delay, hard=True):
+        """
+        Equivalent to jnPause, but we assume a hard pause so players cannot skip.
+
+        IN:
+            - delay - int/decimal amount of time in seconds to wait for
+            - hard - bool flag for whether the player can skip the pause or not. Defaults to true, as in not skippable.
+        """
+        renpy.pause(delay=delay, hard=hard)
 
 # Variables with cross-script utility specific to Just Natsuki
 init -990 python in jn_globals:
