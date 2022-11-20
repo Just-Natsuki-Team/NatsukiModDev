@@ -6,8 +6,10 @@ label ch30_autoload:
         quick_menu = True
         style.say_dialogue = style.normal
         in_sayori_kill = None
-        allow_skipping = True
+        config.skipping = False
         config.allow_skipping = False
+        n.display_args["callback"] = jnNoDismissDialogue
+        n.what_args["slow_abortable"] = False
 
     #Do all the things here for initial setup/flow hijacking
 
@@ -41,11 +43,11 @@ label ch30_init:
         import random
 
         #Run runtime data migrations here
-        jn_utils.log("Current persisted version is: {0}".format(store.persistent._jn_version))
         jn_data_migrations.runRuntimeMigrations()
 
         #Now adjust the stored version number
         persistent._jn_version = config.version
+        jn_utils.log("Current persisted version post-mig check: {0}".format(store.persistent._jn_version))
 
         # Assign Natsuki and player nicknames
         if Natsuki.isEnamored(higher=True) and persistent._jn_nicknames_natsuki_allowed and persistent._jn_nicknames_natsuki_current_nickname:
@@ -171,7 +173,7 @@ label ch30_wait:
         if (random.randint(1, 10000) == 1):
             jn_stickers.stickerWindowPeekUp(at_right=random.choice([True, False]))
 
-        renpy.pause(delay=5.0, hard=True)
+        jnPause(delay=5.0, hard=True)
     
     jump ch30_loop
 
@@ -672,11 +674,11 @@ label try_force_quit:
                     if (random.randint(0, 10) == 1):
                         play sound glitch_d loop
                         show glitch_garbled_red zorder 99 with vpunch
-                        $ renpy.pause(random.randint(4,13))
+                        $ jnPause(random.randint(4,13), hard=True)
                         stop sound
                         play audio glitch_e
                         show glitch_garbled_n zorder 99 with hpunch
-                        $ renpy.pause(0.025)
+                        $ jnPause(0.025, hard=True)
                         hide glitch_garbled_n
                         hide glitch_garbled_red
 

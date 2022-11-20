@@ -164,7 +164,7 @@ label event_caught_reading_manga:
     n "..."
     n "..."
     play audio page_turn
-    $ renpy.pause(2)
+    $ jnPause(2, hard=True)
     n "W-{w=0.1}wait...{w=0.3} what?!"
     n "M-{w=0.1}Minori!{w=0.5}{nw}"
     extend " You {i}idiot{/i}!"
@@ -175,9 +175,9 @@ label event_caught_reading_manga:
     extend " give me a break..."
 
     play audio page_turn
-    $ renpy.pause(5)
+    $ jnPause(5, hard=True)
     play audio page_turn
-    $ renpy.pause(7)
+    $ jnPause(7, hard=True)
 
     menu:
         "Enter...":
@@ -232,7 +232,7 @@ label event_caught_writing_poetry:
     extend " ugh!"
 
     play audio paper_crumple
-    $ renpy.pause(7)
+    $ jnPause(7, hard=True)
 
     n "..."
     n "Nnnnnn-!"
@@ -240,15 +240,15 @@ label event_caught_writing_poetry:
     extend " Why is this {i}so{/i} hard now?"
 
     play audio paper_crumple
-    $ renpy.pause(7)
+    $ jnPause(7, hard=True)
 
     n "Rrrrr...!"
     n "Oh,{w=0.1} {i}forget it!{/i}"
 
     play audio paper_crumple
-    $ renpy.pause(3)
+    $ jnPause(3, hard=True)
     play audio paper_throw
-    $ renpy.pause(7)
+    $ jnPause(7, hard=True)
 
     menu:
         "Enter...":
@@ -305,14 +305,14 @@ label event_relationship_doubts:
         n "I {w=2}{i}HATE{/i}{w=2} this."
 
     n "I hate it.{w=1} I hate it.{w=1} I hate it.{w=1} I hate it.{w=1} I {w=2}{i}hate{/i}{w=2} it."
-    $ renpy.pause(5)
+    $ jnPause(5, hard=True)
 
     if Natsuki.isRuined() and random.randint(0, 10) == 1:
         play audio glitch_a
         show glitch_garbled_red zorder 99 with vpunch
         n "I {i}HATE{/i} IT!!{w=0.5}{nw}"
         hide glitch_garbled_red
-        $ renpy.pause(5)
+        $ jnPause(5, hard=True)
 
     menu:
         "Enter.":
@@ -374,7 +374,7 @@ label event_code_fiddling:
     n "..."
     n "...Yeah,{w=0.3} no.{w=0.5} I think that's enough for now.{w=1}{nw}"
     extend " Yeesh..."
-    $ renpy.pause(7)
+    $ jnPause(7, hard=True)
 
     menu:
         "Enter...":
@@ -431,16 +431,16 @@ label event_not_ready_yet:
         ahoge_outfit.headgear = random.choice(unlocked_ahoges)
         Natsuki.setOutfit(ahoge_outfit)
 
-    $ renpy.pause(5)
+    $ jnPause(5, hard=True)
     n "Uuuuuu...{w=2}{nw}"
     extend " man..."
-    $ renpy.pause(3)
+    $ jnPause(3, hard=True)
     n "It's too {i}early{/i} for thiiis!"
     play audio chair_out_in
-    $ renpy.pause(5)
+    $ jnPause(5, hard=True)
     n "Ugh...{w=1}{nw}"
     extend " I gotta get to bed earlier..."
-    $ renpy.pause(7)
+    $ jnPause(7, hard=True)
 
     menu:
         "Enter...":
@@ -486,20 +486,20 @@ label event_renpy_for_dummies:
     n "..."
 
     play audio page_turn
-    $ renpy.pause(2)
+    $ jnPause(2, hard=True)
 
     n "Labels...{w=1.5}{nw}"
     extend " labels exist as program points to be called or jumped to,{w=1.5}{nw}"
     extend " either from Ren'Py script,{w=0.3} Python functions,{w=0.3} or from screens."
     n "..."
-    $ renpy.pause(1)
+    $ jnPause(1, hard=True)
     n "...What?"
-    $ renpy.pause(1)
+    $ jnPause(1, hard=True)
 
     play audio page_turn
-    $ renpy.pause(5)
+    $ jnPause(5, hard=True)
     play audio page_turn
-    $ renpy.pause(2)
+    $ jnPause(2, hard=True)
 
     n "..."
     n "Labels can be local or global...{w=1.5}{nw}"
@@ -508,14 +508,14 @@ label event_renpy_for_dummies:
     n "..."
     n "I see!{w=1.5}{nw}"
     extend " I see."
-    $ renpy.pause(5)
+    $ jnPause(5, hard=True)
 
     n "..."
     n "Yep!{w=1.5}{nw}"
     extend " I have no idea what I'm doing!"
     n "Can't believe I thought {i}this{/i} would help me...{w=1.5}{nw}"
     extend " '{i}award winning{/i}',{w=0.1} my butt."
-    $ renpy.pause(7)
+    $ jnPause(7, hard=True)
 
     menu:
         "Enter...":
@@ -561,25 +561,25 @@ label event_reading_a_la_mode:
     n "..."
     n "..."
     play audio page_turn
-    $ renpy.pause(5)
+    $ jnPause(5, hard=True)
 
     n "Oh man...{w=1}{nw}"
     extend " this artwork..."
     n "It's so {i}{cps=\7.5}pretty{/cps}{/i}!"
     n "How the hell do they get so good at this?!"
 
-    $ renpy.pause(3)
+    $ jnPause(3, hard=True)
     play audio page_turn
-    $ renpy.pause(5)
+    $ jnPause(5, hard=True)
 
     n "Pffffft-!"
     n "The heck is {i}that{/i}?{w=1}{nw}"
     extend " What were you {i}thinking{/i}?!"
     n "This is {i}exactly{/i} why you leave the outfit design to the pros!"
 
-    $ renpy.pause(1)
+    $ jnPause(1, hard=True)
     play audio page_turn
-    $ renpy.pause(7)
+    $ jnPause(7, hard=True)
 
     menu:
         "Enter...":
@@ -623,21 +623,21 @@ label event_drinking_strawberry_milkshake:
     n "..."
 
     play audio straw_sip
-    $ renpy.pause(3)
+    $ jnPause(3, hard=True)
 
     n "Man...{w=1}{nw}"
     extend " {i}sho good{/i}!"
 
     play audio straw_sip
-    $ renpy.pause(3)
+    $ jnPause(3, hard=True)
 
     n "Wow,{w=0.3} I've missed these...{w=1}{nw}"
     extend " why didn't I think of this before?!"
 
     play audio straw_sip
-    $ renpy.pause(2)
+    $ jnPause(2, hard=True)
     play audio straw_sip
-    $ renpy.pause(7)
+    $ jnPause(7, hard=True)
 
     menu:
         "Enter...":
@@ -689,15 +689,15 @@ label event_step_by_step_manga:
     n "..."
     n "..."
     play audio page_turn
-    $ renpy.pause(2)
+    $ jnPause(2, hard=True)
     n "Jeez..."
     n "Who {i}drew{/i} this?!"
     n "I feel like I'm gonna vomit rainbows or something!"
-    $ renpy.pause(3)
+    $ jnPause(3, hard=True)
     play audio page_turn
-    $ renpy.pause(2)
+    $ jnPause(2, hard=True)
     play audio page_turn
-    $ renpy.pause(1)
+    $ jnPause(1, hard=True)
     n "Man..."
     n "A-{w=0.3}alright,{w=0.1} enough drooling over the art!{w=1.5}{nw}"
     extend " You got this thing for a reason,{w=0.1} Natsuki..."
@@ -705,11 +705,11 @@ label event_step_by_step_manga:
     n "Improve my daily confidence,{w=0.3} huh?{w=1.5}{nw}"
     extend " Okaaay..."
 
-    $ renpy.pause(1)
+    $ jnPause(1, hard=True)
     play audio page_turn
-    $ renpy.pause(5)
+    $ jnPause(5, hard=True)
     play audio page_turn
-    $ renpy.pause(7)
+    $ jnPause(7, hard=True)
 
     menu:
         "Enter...":
