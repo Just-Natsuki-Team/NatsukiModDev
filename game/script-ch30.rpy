@@ -10,6 +10,8 @@ label ch30_autoload:
         config.allow_skipping = False
         n.display_args["callback"] = jnNoDismissDialogue
         n.what_args["slow_abortable"] = False
+        n.display_args["callback"] = jnNoDismissDialogue
+        n.what_args["slow_abortable"] = False
 
     #Do all the things here for initial setup/flow hijacking
 
