@@ -100,10 +100,6 @@ label ch30_init:
 
         jn_utils.log("Outfit set.")
 
-        # TEST
-        push("event_warm_package")
-        renpy.call("call_next_topic", False)
-
         # Pick a greeting or random event
         # if not jn_topic_in_event_list_pattern("^greeting_"):
         #     if (
