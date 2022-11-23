@@ -1308,7 +1308,7 @@ label event_warm_package:
         n "Ugh..."
         n "You know what?{w=0.75} Screw this!"
         play audio chair_out
-        n "Someone {i}had{/i} to have left a coat or...{w=0.5} {i}something{/i} lying around..."
+        n "Someone {i}had{/i} to have left a coat or...{w=0.75} {i}something{/i}{w=0.5} lying around..."
         $ jnPause(3)
 
         play audio clothing_ruffle
@@ -1340,7 +1340,7 @@ label event_warm_package:
         n "..."
         n "...Doesn't matter.{w=0.75} Too cold to question it.{w=1} Now where did they leave the kettle last time..."
         n "Aha!{w=0.75} Right!{w=0.3} Just gotta plug it in there,{w=0.2} and..."
-        $ jnPause(3)
+        $ jnPause(2)
 
     elif test_int_condition == 1:
     #elif jn_atmosphere.isCurrentWeatherSnow():
@@ -1348,7 +1348,7 @@ label event_warm_package:
         n "Uuuuuuu...!"
         n "As if being stuck here wasn't enough of a cold shoulder..."
         n "Now the {i}weather{/i} is giving me one!{w=1} Literally!"
-        n "Forget frostbite!{w=0.5} I'm getting frost-{w=0.2}{i}butt{/i}! I am {i}so{/i} done with this..."
+        n "Forget frostbite!{w=0.3} I'm getting frost-{w=0.5}{i}butt{/i}!{w=1} I am {i}so{/i} done with this..."
         n "..."
         n "Oh, screw it!{w=0.75} I'm a girl of action!"
         n "I don't have to stand for this!"
@@ -1380,15 +1380,18 @@ label event_warm_package:
 
         n "...Eh?{w=0.75} What do we have here...?"
         play audio gift_open
-        n "...!{w=0.5} SCORE!{w=1} Natsuki,{w=0.2} you've done it once again!"
-        n "Alright...{w=0.5} now,{w=0.2} where did she put the kettle..."
+        n "...!"
+        n "SCORE!"
+        n "Natsuki,{w=0.2} you've done it again!"
+        n "Alright...{w=1.25} now,{w=0.2} where did she put the kettle..."
         play audio gift_slide
-        n "Aha!{w=0.5} There we go.{w=0.75} Come to mama..."
+        $ jnPause(2)
+        n "Aha!{w=0.75} There we go.{w=1} Come to mama..."
 
     else:
         n "..."
         n "Ugh...{w=0.75} I {i}seriously{/i} cannot believe my luck sometimes."
-        n "Out of all the places I could have been stuck in literally forever..."
+        n "Out of all the places I could have been stuck inside for {i}literally forever...{/i}"
         n "Did it {i}really{/i} have to be the one classroom {i}without{/i} central heating?!"
         n "Come {i}on{/i}..."
 
@@ -1418,6 +1421,8 @@ label event_warm_package:
         n "...{b}Definitely{/b}{w=0.25} Yuri's."
         n "..."
         n "Aha!{w=0.2} I knew it!{w=1} Take {i}that{/i},{w=0.2} academy uniform guidelines!"
+        play audio clothing_ruffle
+        $ jnPause(3)
         play audio gift_open
         n "...Eh?{w=0.2} And is this...?"
         n "I-{w=0.2}it is!"
@@ -1426,9 +1431,9 @@ label event_warm_package:
     play audio switch_flip
     $ jnPause(2)
     play audio kettle_boil
-    $ jnPause(4)
+    $ jnPause(5)
     play audio drink_pour
-    $ jnPause(4)
+    $ jnPause(7)
     play audio chair_in
     $ jnPause(3)
 
