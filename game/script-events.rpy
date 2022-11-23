@@ -1290,7 +1290,7 @@ init 5 python:
 label event_warm_package:
     python:
         jn_globals.force_quit_enabled = False
-        teddy_cardigan_outfit = jn_outfits.get_outfit("jn_teddy_cardigan_outfit")
+        teddy_cardigan_outfit = jn_outfits.get_outfit("jn_cosy_cardigan_outfit")
         teddy_cardigan_outfit.unlock()
         Natsuki.setOutfit(teddy_cardigan_outfit)
 
@@ -1452,7 +1452,7 @@ label event_warm_package:
     n 1tsqsml "...?"
     n 1tsqctl "Oho?"
     n 1nchts "Is that a hint of {i}jealousy{/i} I spy there,{w=0.2} [player]?{w=1}{nw}"
-    extend 1fsqsmleme "Ehehe."
+    extend 1fsqsmleme " Ehehe."
     n 1uchgn "Well,{w=0.2} can't say I blame you!"
     n 1fllbg "I mean...{w=0.5}{nw}" 
     extend 1fspgsedz " have you {i}seen{/i} this right here?"
@@ -1464,7 +1464,7 @@ label event_warm_package:
     extend 1fchsml " Ehehe."
     n 1fllgs "Seriously,{w=0.2} hot chocolate just wouldn't {i}be{/i} hot chocolate without {i}all{/i} the extras!"
     n 1fcsgs "Cream?{w=0.3} Check!{w=0.3} Marshmallows?{w=0.3} Check!"
-    n 1fsqcal "...My special panda mug?"
+    n 1fsqcal "...My special panda mug?{w=1.25}{nw}"
     extend 1fcssml " Check again!"
     n 1fchbgl "Perfection!{w=0.75}{nw}"
     extend 1fcstsl " If I do say so myself~."
@@ -1480,34 +1480,34 @@ label event_warm_package:
     n 1fcsaj "As you can see,{w=0.75}{nw}"
     extend 1fcstr " it isn't exactly hard to stay nice and toasty if you know what you're doing..."
     n 1fchsm "...And it all begins with what you wear!"
-    n 1fllpu "Think of it as a fight:{w=0.75}"
-    extend 1flrem " The cold is your opponent,{w=1}"
+    n 1fllpu "Think of it as a fight:{w=0.75}{nw}"
+    extend 1flrem " The cold is your opponent,{w=1}{nw}"
     extend 1fcspoesi " and your clothing is your armor!"
 
-    n 1nslsselg "Now{w=0.2} -{w=0.2} obviously,{w=0.2} you're gonna want to start with layers.{w=0.75}{nw}"
-    extend 1tsqsselg " You probably knew that much already."
+    n 1ullaj "Now{w=0.2} -{w=0.2} obviously,{w=0.2} you're gonna want to start with layers.{w=0.75}{nw}"
+    extend 1nsrss " You probably knew that much already."
     n 1fnmgs "But that doesn't mean you should just throw on {i}anything{/i} you can find!"
     n 1fcspo "You really gotta {i}think{/i} about what exactly you're putting on -{w=1}{nw}"
     extend 1unmaj " like the material!"
     n 1fslaj "If your clothes aren't breathable,{w=0.75}{nw}"
     extend 1fsqpu " then you'll just end up getting all sticky and sweaty under all that fabric..."
     n 1fcsan "...And wet clothes are useless at keeping the heat in!"
-    n 1fnmgs "The last thing you want is being freezing cold {i}and{/i} stinky..."
-    n 1fcsbo "So pick your layers{w=0.75}{nw}"
-    extend 1fsqss " - and how many of them -{w=0.75}{nw}"
+    n 1ksqup "The last thing you want is being freezing cold {i}and{/i} stinky..."
+    n 1fcsaj "So pick your layers{w=0.75}{nw}"
+    extend 1fslpu " -{w=0.5} and how many of them -{w=0.5}{nw}"
     extend 1fchsm " wisely!"
 
-    n 1fnmss "Next up: ditch the tight clothes!"
-    n 1fsktr "You {i}really{/i} want stuff that gives you at least some kind of gap between your skin and the fabric."
-    n 1fchsm "That way,{w=0.2} all the heat from your body stays trapped around you -{w=0.75}{nw}"
-    extend 1fnmgn " like a little toasty shield!"
-    n 1fsgss "If you just wear something like leggings,{w=1}{nw}"
-    extend 1fnmpo " then all that warmth goes straight from your body,{w=0.2} into the cloth..."
-    n 1fsqpu "...And then the air just snatches it away,{w=0.2} like a professional freeloader!{w=0.75}{nw}"
-    extend 1fbkem " What a waste!"
+    n 1fcsgs "Next up: ditch the tight clothes!"
+    n 1nsqem "You {i}really{/i} want stuff that gives you at least some kind of gap between your skin and the fabric."
+    n 1ullaj "That way,{w=0.2} all the heat from your body stays trapped around you -{w=0.75}{nw}"
+    extend 1fchgn " like a little toasty shield!"
+    n 1flrsl "If you just wear something like leggings,{w=0.5}{nw}"
+    extend 1fsqsl " then all that warmth goes straight from your body,{w=0.2} into the cloth..."
+    n 1fllem  "...And then the air just snatches it away,{w=0.2} like a professional freeloader!{w=0.75}{nw}"
+    extend 1fcswr " What a waste!"
     n 1fslss "Besides,{w=0.2} unless you're a professional cyclist or something,{w=1}{nw}"
-    extend 1tsqss " I {i}highly{/i} doubt you need the aerodynamics..."
-    n 1nnmss "So keep 'em nice and baggy,{w=0.2} [player]!{w=0.75}{nw}"
+    extend 1fsqss " I {i}highly{/i} doubt you need the aerodynamics..."
+    n 1fchbg "So keep 'em nice and baggy,{w=0.2} [player]!{w=0.75}{nw}"
     extend 1nchgn " Easy peasy!"
 
     n 1uwdaj "Oh -{w=0.5}{nw}"
@@ -1517,52 +1517,53 @@ label event_warm_package:
     n 1nslss "I mean,{w=0.2} I get it -{w=0.5}{nw}"
     extend 1ksqss " sometimes you just have things that {i}need{/i} to be done out there.{w=0.75}{nw}"
     extend 1ksrsm " It happens.{w=1}{nw}"
-    extend 1uwdaj " But..."
-    n 1fwdpo "...Just know your limits.{w=0.5} Warm up {i}properly{/i} if you've spent ages in crappy weather."
-    n 1fslnv "Decent shelter,{w=0.2} hot drinks,{w=0.5}{nw}"
+    extend 1ksrsl " But..."
+    n 1ksqbo "...Just know your limits.{w=0.5}{nw}" 
+    extend 1ksqpo " Warm up {i}properly{/i} if you've spent ages in crappy weather,{w=0.5}{nw}"
+    extend 1fslpo " or nasty old buildings..."
+    n 1fcsaj "Decent shelter,{w=0.2} hot drinks,{w=0.5}{nw}"
 
 
     if Natsuki.isLove(higher=True):
         extend 1tslss " warm food..."
-        n 1nwlbgleaf "Some quality time with your favourite girl~.{w=0.75}{nw}"
-        extend 1nchbgf " Ehehe."
-        n 1fnmss "It all counts!"
+        n 1nsldvleafsbl "Some quality time with your favourite girl..."
+        n 1fchsmlsbl "I-{w=0.2}it all counts!"
 
     elif Natsuki.isAffectionate(higher=True):
         extend 1tslss " warm food..."
-        n 1ksrsmf "S-{w=0.2}some quality time with a certain someone..."
-        n 1fnmssl "I-{w=0.2}it all counts!"
+        n 1fsrdvl "S-{w=0.2}some quality time with a certain someone..."
+        n 1fcssslsbr "I-{w=0.2}it all counts!"
 
     else:
         extend 1tslss " warm food...{w=0.5}{nw}"
         extend 1unmaj " you'd be surprised how much a little baking can turn up the heat!"
-        n 1kslsslsbr "...Speaking from experience."
-        n 1kslunlsbr "..."
-        n 1unmsslesz "B-{w=0.2}but yeah!"
+        n 1fslslsbr "...Speaking from experience."
+        n 1kslsl "..."
+        n 1fcsbgsbr "B-{w=0.2}but yeah!"
 
     n 1nchsm "And that about {i}wraps{/i} things up!{w=0.75}"
     extend 1nllss " I-"
     n 1unmsf "..."
     n 1udwemeshsbl "...!"
-    n 1fchemsbl "M-{w=0.2}my drink!{w=1}"
-    extend 1kctpu " I-{w=0.2}it's already getting cold!{w=0.75}{nw}"
+    n 1uskemsbl "M-{w=0.2}my drink!{w=1}"
+    extend 1kbkwresssbr " I-{w=0.2}it's getting all cold!{w=0.75}{nw}"
 
     show black zorder 6 with Dissolve(0.5)
     $ jnPause(1)
     hide prop hot_chocolate
     play audio straw_sip
-    $ jnPause(1)
+    $ jnPause(2)
     play audio glass_move
-    show natsuki 1fsqbl at jn_center zorder JN_NATSUKI_ZORDER
+    show natsuki 1kcsss at jn_center zorder JN_NATSUKI_ZORDER
     $ jnPause(3)
     hide black with Dissolve(2)
 
-    n 1uchbgelg "Haaah...{w=1.25}"
+    n 1kcsbgesi "Haaah...{w=1.25}{nw}"
     extend 1nchtseme " much better!"
-    n 1nslss "Now,{w=0.2} [player]..."
-    n 1fsqss "...How about {i}you{/i} warm up that conversational muscle of yours?"
-    extend 1fchgn " Ehehe."
-    n 1tsqss "Well?{w=0.75{nw}"
-    extend 1fchctelg " I'm waiting!"
+    n 1fsqsm "Now that's out of the way,{w=0.2} [player]..."
+    n 1usqbg "...How about {i}you{/i} warm up that conversational muscle of yours?{w=1}{nw}"
+    extend 1fsqsmeme " Ehehe."
+    n 1tsqss "Well?{w=0.75}{nw}"
+    extend 1fchbl " I'm waiting!"
 
     return
