@@ -1346,8 +1346,8 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
-        reference_name="jn_clothes_teddy_cardigan",
-        display_name="Teddy cardigan",
+        reference_name="jn_clothes_cosy_cardigan",
+        display_name="Cosy cardigan",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1582,11 +1582,11 @@ init -1 python in jn_outfits:
         hairstyle=get_wearable("jn_hair_down")
     ))
     __register_outfit(JNOutfit(
-        reference_name="jn_teddy_cardigan_outfit",
-        display_name="Teddy cardigan outfit",
+        reference_name="jn_cosy_cardigan_outfit",
+        display_name="Cosy cardigan outfit",
         unlocked=False,
         is_jn_outfit=True,
-        clothes=get_wearable("jn_clothes_teddy_cardigan"),
+        clothes=get_wearable("jn_clothes_cosy_cardigan"),
         headgear=get_wearable("jn_headgear_teddy_hairpins"),
         hairstyle=get_wearable("jn_hair_twintails")
     ))
