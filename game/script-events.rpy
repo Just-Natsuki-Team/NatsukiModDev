@@ -120,7 +120,7 @@ image prop strawberry_milkshake = "mod_assets/props/strawberry_milkshake.png"
 image prop step_by_step_manga_held = "mod_assets/props/step_by_step_manga_held.png"
 image prop glasses_case = "mod_assets/props/glasses_case.png"
 image prop hot_chocolate = "mod_assets/props/hot_chocolate.png"
-image prop hot_chocolate = "mod_assets/props/hot_chocolate_cold.png"
+image prop hot_chocolate_cold = "mod_assets/props/hot_chocolate_cold.png"
 
 # Overlays are displayed over the top of Natsuki, but behind any props
 image overlay slipping_glasses = "mod_assets/overlays/slipping_glasses.png"
@@ -1519,7 +1519,7 @@ label event_warm_package:
     extend 1ksqss " sometimes you just have things that {i}need{/i} to be done out there.{w=0.75}{nw}"
     extend 1ksrsm " It happens.{w=1}{nw}"
     extend 1ksrsl " But..."
-    n 1ksqbo "...Just know your limits.{w=0.5}{nw}" 
+    n 1ksqbo "...Just know your limits.{w=0.5}{nw}"
     extend 1ksqpo " Warm up {i}properly{/i} if you've spent ages in crappy weather,{w=0.5}{nw}"
     extend 1fslpo " or nasty old buildings..."
     n 1fcsaj "Decent shelter,{w=0.2} hot drinks,{w=0.5}{nw}"
