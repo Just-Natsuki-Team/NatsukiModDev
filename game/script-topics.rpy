@@ -4220,71 +4220,133 @@ init 5 python:
     )
 
 label talk_are_you_into_cosplay:
-
-    # Check to see if Natsuki has already revealed she can sew/seamstress in this/previous topic(s)
-    $ already_mentioned_sewing = get_topic("talk_sustainable_fashion").shown_count > 0 or get_topic("talk_are_you_into_cosplay").shown_count > 0
+    $ already_unlocked_cosplay_outfits = jn_outfits.get_outfit("jn_trainer_cosplay").unlocked and jn_outfits.get_outfit("jn_sango_cosplay").unlocked
 
     if Natsuki.isEnamored(higher=True):
-        n 1unmbg "Ooh!{w=0.2} Cosplay,{w=0.1} you say?"
-        n 1fllbg "Honestly,{w=0.1} I've never really done any cosplaying or anything..."
-        n 1nnmss "But I've actually thought about it a lot since I got into manga and all that stuff more!"
-        n 1flrbg "Plus I mean,{w=0.1} why shouldn't I?{w=0.2} There isn't a whole lot stopping me."
+        if already_unlocked_cosplay_outfits:
+            n  "Eh?"
+            extend  " Cosplay {i}again{/i}, [player]?"
+            n  "Yeesh..."
 
-        if already_mentioned_sewing:
-            n 1fcssm "Like I think I mentioned before -{w=0.1} I'm already pretty handy with a needle and thread,{w=0.1} if I say so myself!"
+            if Natsuki.isWearingClothes("jn_clothes_trainer_cosplay") or Natsuki.isWearingClothes("jn_clothes_sango_cosplay"):
+                n  "As if having me {i}wearing{/i} cosplay wasn't already enough for you..."
+                n  "It's all you wanna {i}talk{/i} about too!"
+                n  "I'm not your own personal dress-up doll,"
+                extend  " you know..."
 
-        else:
-            n 1fwlsm "I'm actually pretty handy with the old needle and thread,{w=0.1} you know!"
+            else:
+                n  "You know,"
+                extend  " if you wanted me wearing it {i}that{/i} badly..."
+                n  "You do realize you could have just {i}asked{/i}, right?"
 
-        n 1ulrss "And materials aren't really that expensive either -{w=0.1} besides props and wigs,{w=0.1} anyway."
-        n 1nnmsm "So it seems like a pretty awesome way to show my appreciation for characters I like..."
-        n 1fsqbg "...And show my {i}limitless{/i} talent while I'm at it."
-        n 1nchgn "Ehehe."
-        n 1uchgn "And anyway,{w=0.1} who knows?"
-        n 1uchsm "Maybe you'll get to see some of my handiwork some day,{w=0.1} [player]."
-        n 1fsqbg "I bet you'd like that,{w=0.1} huh?{w=0.2} Ehehe."
-        n 1fsgsg "No need to be shy,{w=0.1} [player] -{w=0.1} I can read you like a book."
-        n 1fsqsgl "A gross book,{w=0.1} but a book nonetheless~."
-        n 1fchgnelg "Ahaha!"
-        return
+            n  "Ehehe."
+            n  "Well, anyway."
+            extend  " In all seriousness?"
+            n  "I can't say too much has changed, honestly."
+            n  "Don't get me wrong!"
+            n  "I totally wanna get into cosplaying more!"
+            extend  " Any excuse to break out my sewing cut and show off my style {i}and{/i} needlework."
+            n  "But..."
+            extend  " Well."
+            n  "I don't suppose {i}you{/i} saw any crafts shops around here, did you?"
+            n  "..."
+            n  "Heh."
+            extend  " Yeah, I thought not."
+            n  "I really gotta figure something out for that,"
+            extend  " huh?"
+            n  "..."
+            n  "Well, if there's one thing I'm not short of here,"
+            extend  " it's ideas!"
+            extend  " So don't you worry about a thing, [player]..."
+            n  "'Cause there's no shortage of that {i}material{/i}!"
+            extend  "Ehehe."
 
-        if Natsuki.isLove(higher=True):
-            n 1uchtsl "Love you,{w=0.1} [player]~!"
             return
 
-    elif Natsuki.isHappy(higher=True):
-        n 1tsrpu "...Why did I get the feeling you'd bring this up sooner or later,{w=0.1} [player]?"
-        n 1fnmpo "What?{w=0.2} Did you think I'd {i}automatically{/i} be into it because I read manga from time to time?"
-        n 1fsqpo "Huh?{w=0.2} Is that it?"
-        n 1fnmaj "Well?"
-        n 1fsqsg "Speak up,{w=0.1} [player]!{w=0.2} I can't hear you~!"
-        n 1fslpo "..."
-        n 1fchgnelg "Ahaha!{w=0.75}{nw}" 
-        extend 1ullss " Nah,{w=0.1} it's fine."
-        n 1ulraj "I've thought about it a bunch,{w=0.1} honestly -{w=0.1} like since I got into manga and all that a while ago."
-        n 1nnmaj "I haven't {i}actually{/i} gone and dressed up yet,{w=0.1} though."
-        n 1fnmaj "But there really isn't much stopping me,{w=0.1} [player]."
-
-        if already_mentioned_sewing:
-            n 1ullbo "Like I said -{w=0.1} I already fix up and make my own normal clothes,{w=0.1} so a costume isn't much of a leap."
-
         else:
-            n 1flrbg "You could say I'm something of a pro with a needle and thread,{w=0.1} so it's right up my alley!"
+            n 1unmbg "Oho?{w=0.2}" 
+            extend  " Cosplay,{w=0.2} you say?"
+            n "..."
+            n 1fllbg "Honestly?{w=0.3}"
+            extend  " I've never really done any {i}serious{/i} cosplaying or anything..."
+            n 1nnmss "But I've actually thought about it a lot more since I got into manga and all that stuff a bunch!"
+            n 1flrbg "Plus I mean,{w=0.1} why shouldn't I?"
+            extend  " I {w=0.2}{i}love{/i}{w=0.2} thinking up new ideas for outfits!"
+            n "Besides,{w=0.2} I know my way around a needle and thread!"
+            extend  " I've had to use them often enough."
+            n 1ulrss "And materials aren't really that expensive either -{w=0.1} besides props and wigs,{w=0.1} anyway."
+            n 1nnmsm "So I think it seems like a pretty awesome way to show my appreciation for characters I like..."
+            n 1fsqbg "...And show my {i}limitless{/i} talent while I'm at it."
+            n 1nchgn "Ehehe."
+            n 1uchgn "And anyway,{w=0.1} who knows?"
+            n 1uchsm "Maybe you'll get to see some of my handiwork some day,{w=0.1} [player]."
+            n 1fsqbg "I bet you'd like that,{w=0.1} huh?{w=0.2} Ehehe."
 
-        n 1unmaj "Besides,{w=0.1} I've done the math on materials -{w=0.1} it's actually pretty affordable,{w=0.1} so that's all good."
-        n 1nllaj "Well,{w=0.1} besides wigs and props and stuff.{w=0.2} Those can be kinda pricey,{w=0.1} but not exactly unaffordable -{w=0.1} just gotta shop around!"
-        n 1fllsl "That being said...{w=0.3} hmm..."
-        n 1fllsm "You know what,{w=0.1} [player]?"
-        n 1fnmbg "Perhaps I might just give it a shot...{w=0.3} yeah!"
-        n 1fchgn "Man,{w=0.1} I've got so many awesome ideas buzzing around in my head now!"
-        n 1fchsm "Oh -{w=0.1} don't worry -{w=0.1} you'll get your chance to see them too.{w=0.2} I'll need a second opinion after all."
-        n 1uchbg "That's what friends are for,{w=0.1} right?{w=0.2} Ehehe."
+            # Continue to unlock dialogue
 
-        if Natsuki.isAffectionate(higher=True):
-            n 1fsqbg "Besides,{w=0.1} [player].{w=0.2} You seem to have pretty good taste."
-            n 1fsqsml "I think I can trust your judgement..."
+    elif Natsuki.isHappy(higher=True):
+        if already_unlocked_cosplay_outfits:
+            n  "Huh?"
+            extend  " Cosplay {i}again{/i}, [player]?"
 
-        return
+            if Natsuki.isWearingClothes("jn_clothes_trainer_cosplay") or Natsuki.isWearingClothes("jn_clothes_sango_cosplay"):
+                n  "...Was {i}wearing{/i} it seriously not enough already?"
+                n  "Or did I somehow awaken some kind of hidden nerdiness in you?"
+                n  "Ehehe."
+
+            else:
+                n  "I gotta say, I'm impressed."
+                n  "Sucking up to my interest in manga, bugging me about cosplay..."
+                n  "You absorb nerdiness pretty fast, huh?"
+                extend  " Like a little dorky sponge!"
+                n  "Ehehe."
+
+            n  "Well, whatever."
+            extend  " Putting your weird obsession aside..."
+            n  "I actually wouldn't be {i}against{/i} doing a little more cosplay at all."
+            n  "I mean, "
+            extend  " I've already got most of what I need."
+            n  "{i}Amazing{/i} ideas?"
+            extend  " Check!"
+            extend  " Sewing kit?"
+            extend  " Check!"
+            n  "{i}Unmatched{/i} handiwork with a needle and threat?"
+            extend  " Oh, you bet."
+            extend  " It's just..."
+            n  "I don't exactly have much {i}material{/i} to work with here, you know?"
+            n  "...And no,"
+            extend  " the curtains aren't gonna work."
+            n  "W-well, I'll figure something out!"
+            extend  " I always do, a-anyway."
+            n  "So you better look forward to it, [player]..."
+            n  "'Cause you ain't seen nothing yet!"
+            extend  " Ehehe."
+
+            return
+            
+        else:
+            n 1tsrpu "...Why did I get the feeling you'd bring this up sooner or later,{w=0.1} [player]?"
+            n 1fnmpo "What?{w=0.2} Did you think I'd {i}automatically{/i} be into it because I read manga from time to time?"
+            n 1fsqpo "Huh?{w=0.2} Is that it?"
+            n 1fnmaj "Well?"
+            n 1fsqsg "Speak up,{w=0.1} [player]!{w=0.2} I can't hear you~!"
+            n 1fslpo "..."
+            n 1fchgnelg "Ahaha!{w=0.75}{nw}" 
+            extend 1ullss " Nah,{w=0.1} it's fine."
+            n 1ulraj "I've thought about it a bunch,{w=0.1} honestly -{w=0.1} like since I got into manga and all that a while ago."
+            n 1nnmaj "I haven't {i}actually{/i} gone and dressed up yet,{w=0.1} though."
+            n 1fnmaj "But there really isn't much stopping me,{w=0.1} [player]."
+            n 1flrbg "I'm something of a pro with a needle and thread,{w=0.1} so it's right up my alley!"
+            n 1unmaj "Besides,{w=0.1} I've done the math on materials -{w=0.1} it's actually pretty affordable,{w=0.1} so that's all good."
+            n 1nllaj "Well,{w=0.1} besides wigs and props and stuff.{w=0.2} Those can be kinda pricey,{w=0.1} but not exactly unaffordable -{w=0.1} just gotta shop around!"
+            n 1fllsl "That being said...{w=0.3} hmm..."
+            n 1fllsm "You know what,{w=0.1} [player]?"
+            n 1fnmbg "Perhaps I might just give it a shot...{w=0.3} yeah!"
+            n 1fchgn "Man,{w=0.1} I've got so many awesome ideas buzzing around in my head now!"
+            n 1fchsm "Oh -{w=0.1} don't worry -{w=0.1} you'll get your chance to see them too.{w=0.2} I'll need a second opinion after all."
+            n 1uchbg "That's what friends are for,{w=0.1} right?{w=0.2} Ehehe."
+
+            # Continue to unlock dialogue
 
     elif Natsuki.isNormal(higher=True):
         n 1unmaj "Cosplay,{w=0.1} huh?"
@@ -4326,6 +4388,52 @@ label talk_are_you_into_cosplay:
         n 1fcssrltsa "...Yeah.{w=0.75} No thanks."
         n 1fcsanltsd "I'm done talking to you about this."
         return
+
+    # Show Natsuki in cosplay and unlock cosplay outfits, if custom outfits unlocked
+    if (
+        Natsuki.isHappy(higher=True)
+        and persistent.jn_custom_outfits_unlocked
+        and not already_unlocked_cosplay_outfits
+    ):
+        n "...Actually,"
+        extend " now that I think about it..."
+        n "I {i}swear{/i} I ended up bringing something in for Sayori once..."
+        n "...Did I ever even take it home?"
+        n "...Huh."
+        n "I wonder..."
+        n "..."
+        n "You know what?"
+        extend " Just give me a sec here..."
+
+        show black zorder 4 with Dissolve(0.5)
+        $ renpy.pause(2, hard=True)
+        play audio chair_out
+
+        $ renpy.pause(1.5, hard=True)
+        play audio drawer
+        $ renpy.pause(3, hard=True)
+        n "...!"
+        play audio clothing_ruffle
+        $ renpy.pause(1, hard=True)
+        play audio zipper
+
+        $ jn_outfits.get_outfit("jn_trainer_cosplay").unlock()
+        $ jn_outfits.get_outfit("jn_sango_cosplay").unlock()
+        $ Natsuki.setOutfit(jn_outfits.get_outfit(random.choice(["jn_trainer_cosplay", "jn_sango_cosplay"])))
+
+        play audio chair_in
+        $ renpy.pause(3, hard=True)
+        show natsuki 1fsldvlesssbr at jn_center
+        hide black with Dissolve(1.25)
+
+        n "..."
+        n "W-well?"
+        n "..."
+        n "..."
+        n "...It just doesn't feel the same now, you know?"
+        extend " Wearing this, I mean."
+        # TODO: link back into Sayori 
+        n "It "
 
     return
 

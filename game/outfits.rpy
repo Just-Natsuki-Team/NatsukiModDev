@@ -1538,6 +1538,15 @@ init -1 python in jn_outfits:
         necklace=get_wearable("jn_necklace_pink_scarf")
     ))
     __register_outfit(JNOutfit(
+        reference_name="jn_sango_cosplay",
+        display_name="Sango cosplay",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_sango_cosplay"),
+        hairstyle=get_wearable("jn_hair_twintails"),
+        accessory=get_wearable("jn_accessory_hairband_purple")
+    ))
+    __register_outfit(JNOutfit(
         reference_name="jn_ruffled_swimsuit",
         display_name="Beach outfit",
         unlocked=False,
