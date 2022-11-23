@@ -1294,7 +1294,7 @@ label event_warm_package:
         teddy_cardigan_outfit.unlock()
         Natsuki.setOutfit(teddy_cardigan_outfit)
 
-    #if jn_atmosphere.isCurrentWeatherRain() or jn_atmosphere.isCurrentWeatherThunder():
+    if jn_atmosphere.isCurrentWeatherRain() or jn_atmosphere.isCurrentWeatherThunder():
         n "..."
         n "Uuuuuuu-!"
         n "You've {w=0.2}{i}got{/i}{w=0.2} to be kidding me."
@@ -1335,7 +1335,7 @@ label event_warm_package:
         n "Aha!{w=0.75} Right!{w=0.3} Just gotta plug it in there,{w=0.2} and..."
         $ jnPause(2)
 
-    #elif jn_atmosphere.isCurrentWeatherSnow():
+    elif jn_atmosphere.isCurrentWeatherSnow():
         n "..."
         n "Uuuuuuu...!"
         n "As if being stuck here wasn't enough of a cold shoulder..."
