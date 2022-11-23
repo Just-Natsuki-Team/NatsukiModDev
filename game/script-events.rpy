@@ -120,6 +120,7 @@ image prop strawberry_milkshake = "mod_assets/props/strawberry_milkshake.png"
 image prop step_by_step_manga_held = "mod_assets/props/step_by_step_manga_held.png"
 image prop glasses_case = "mod_assets/props/glasses_case.png"
 image prop hot_chocolate = "mod_assets/props/hot_chocolate.png"
+image prop hot_chocolate = "mod_assets/props/hot_chocolate_cold.png"
 
 # Overlays are displayed over the top of Natsuki, but behind any props
 image overlay slipping_glasses = "mod_assets/overlays/slipping_glasses.png"
@@ -1443,7 +1444,7 @@ label event_warm_package:
     extend 1fchsmedz " perfecto!"
     n 1fcsbg "Who {i}needs{/i} working heating when you have hot chocolate?"
     n 1fcssmlesisbl "{i}And{/i} I didn't even burn my tongue this time!"
-    
+
     n 1ndwsm "..."
     n 1uwdgseex "...!"
     n 1fllbglsbl "W-{w=0.2}well,{w=0.75}{nw}"
@@ -1454,7 +1455,7 @@ label event_warm_package:
     n 1nchts "Is that a hint of {i}jealousy{/i} I spy there,{w=0.2} [player]?{w=1}{nw}"
     extend 1fsqsmleme "Ehehe."
     n 1uchgn "Well,{w=0.2} can't say I blame you!"
-    n 1fllbg "I mean...{w=0.5}{nw}" 
+    n 1fllbg "I mean...{w=0.5}{nw}"
     extend 1fspgsedz " have you {i}seen{/i} this right here?"
     n 1ncsajsbl "...And no,{w=0.5}{nw}"
     extend 1fslpo " I don't care how unhealthy it is."
@@ -1469,7 +1470,7 @@ label event_warm_package:
     n 1fchbgl "Perfection!{w=0.75}{nw}"
     extend 1fcstsl " If I do say so myself~."
 
-    n 1ullss "Well,{w=0.5}{nw}" 
+    n 1ullss "Well,{w=0.5}{nw}"
     extend 1fsqss " as much as I'm sure you'd {i}love{/i} to share me with this,{w=0.2} [player]..."
     n 1fcscaesi "There's some things I just can't allow.{w=0.75}{nw}"
     extend 1fsqsm " Ehehe."
@@ -1540,6 +1541,9 @@ label event_warm_package:
         n 1kslunlsbr "..."
         n 1unmsslesz "B-{w=0.2}but yeah!"
 
+    hide prop hot_chocolate
+    show prob hot_chocolate_cold
+
     n 1nchsm "And that about {i}wraps{/i} things up!{w=0.75}"
     extend 1nllss " I-"
     n 1unmsf "..."
@@ -1549,7 +1553,7 @@ label event_warm_package:
 
     show black zorder 6 with Dissolve(0.5)
     $ jnPause(1)
-    hide prop hot_chocolate
+    hide prop hot_chocolate_cold
     play audio straw_sip
     $ jnPause(1)
     play audio glass_move
