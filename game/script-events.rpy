@@ -162,7 +162,7 @@ init python in jn_events:
             - natsuki_sprite_code - The sprite code to show Natsuki displaying before dialogue
         """
         renpy.show("natsuki {0}".format(natsuki_sprite_code), at_list=[store.jn_center], zorder=store.JN_NATSUKI_ZORDER)
-        jnPause(0.1)
+        store.jnPause(0.1)
         renpy.hide("black")
         renpy.show_screen("hkb_overlay")
         renpy.play(filename="mod_assets/bgm/just_natsuki.ogg", channel="music")
