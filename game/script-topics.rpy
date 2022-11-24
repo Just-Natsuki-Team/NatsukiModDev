@@ -4293,7 +4293,7 @@ label talk_are_you_into_cosplay:
 
             # Continue to unlock dialogue
 
-    elif Natsuki.isHappy(higher=True):
+    elif Natsuki.isAffectionate(higher=True):
         if already_unlocked_cosplay_outfits:
             n 1tsqpu "Huh?{w=0.5}{nw}"
             extend 1tsqsf " Cosplay {i}again{/i}, [player]?"
@@ -4353,7 +4353,7 @@ label talk_are_you_into_cosplay:
             n 1ulraj "I've thought about it a bunch,{w=0.2} honestly -{w=0.3}{nw}" 
             extend 1unmbo " like since I got into manga and all that a while ago."
             n 1nslsssbr "I haven't {i}actually{/i} gone dressed up to a convention or anything yet..."
-            n 1fcswrlsbl "B-{w=0.2}but that doesn't mean I wouldn't {i}enjoy{/i} it!"
+            n 1fcswrlsbl "B-{w=0.2}but that doesn't mean I haven't done it at all!"
             n 1fcsbgsbl "I {i}am{/i} something of a pro with a needle and thread,{w=0.75}{nw}" 
             extend 1fcssmeme " so it's right up my alley!"
             n 1tslsl "..."
@@ -4415,51 +4415,86 @@ label talk_are_you_into_cosplay:
 
     # Show Natsuki in cosplay and unlock cosplay outfits, if custom outfits unlocked
     if (
-        Natsuki.isHappy(higher=True)
+        Natsuki.isAffectionate(higher=True)
         and persistent.jn_custom_outfits_unlocked
         and not already_unlocked_cosplay_outfits
     ):
-        n "...Actually,"
-        extend " now that I think about it..."
-        n "I {i}swear{/i} I ended up bringing something in for Sayori once..."
-        n "...Did I ever even take it home?"
-        n "...Huh."
-        n "I wonder..."
-        n "..."
-        n "You know what?"
-        extend " Just give me a sec here..."
+        n 1tslbo "...Actually,{w=0.5}{nw}"
+        extend 1tslpu " now that I think about it..."
+        n 1tlrsl "I wonder..."
+        n 1fcssl "..."
+        n 1nnmaj "You know what?{w=0.75}{nw}"
+        extend 1nllaj " Just...{w=0.75}{nw}" 
+        extend 1nslunl " give me a sec here...{w=1}{nw}"
 
         show black zorder 4 with Dissolve(0.5)
-        $ jnPause(2, hard=True)
+        $ jnPause(2)
         play audio chair_out
 
-        $ jnPause(1.5, hard=True)
+        $ jnPause(1.5)
         play audio drawer
         $ jnPause(2)
         play audio gift_open
-        $ jnPause(3, hard=True)
+        $ jnPause(3)
         n "...!"
         play audio clothing_ruffle
-        $ jnPause(1, hard=True)
+        $ jnPause(1)
         play audio zipper
+        $ jnPause(5)
 
+        $ outfit_name_to_restore = Natsuki.getOutfitName()
         $ jn_outfits.get_outfit("jn_trainer_cosplay").unlock()
         $ jn_outfits.get_outfit("jn_sango_cosplay").unlock()
         $ Natsuki.setOutfit(jn_outfits.get_outfit(random.choice(["jn_trainer_cosplay", "jn_sango_cosplay"])))
 
         play audio chair_in
-        $ jnPause(3, hard=True)
+        $ jnPause(3)
         show natsuki 1fsldvlesssbr at jn_center
         hide black with Dissolve(1.25)
 
-        n "..."
-        n "W-well?"
-        n "..."
-        n "..."
-        n "...It just doesn't feel the same now, you know?"
-        extend " Wearing this, I mean."
-        # TODO: link back into Sayori 
-        n "It "
+        n 1fchsslesssbr "T-{w=0.5}ta-da!{w=0.5}{nw}"
+        extend 1fchsml " Ehehe..."
+        n 1fsqsll "..."
+        n 1fslunl "..."
+        n 1fcsemlsbl "W-{w=0.2}well?{w=0.75}{nw}"
+        extend 1fcsgslsbl " I {i}did{/i} say I was good with a needle and thread!"
+        n 1fllsslsbl "S-{w=0.3}so of course I had to {i}prove{/i} it!"
+        n 1nslsslsbl "..."
+        n 1kslsll "..."
+        n 1kcspul "This...{w=1}{nw}" 
+        extend 1ksrsfl " wasn't actually {i}meant{/i} for me,{w=0.2} you know."
+        n 1kcspulesi "..."
+        n 1ksqbol "...I made it for Sayori."
+        n 1fcseml "I-{w=0.2}it was meant to be for some kind of party after the festival she insisted on,{w=0.2} but...{w=1}{nm}"
+        extend 1kcssll " yeah."
+        n 1kslslltsb "..."
+        n 1fcsunltsb "I'm..."
+        extend 1ksrsrl " just gonna go put this away now."
+
+        show black zorder 4 with Dissolve(0.5)
+        $ jnPause(2)
+        play audio chair_out
+
+        $ jnPause(3)
+        play audio drawer
+        $ jnPause(2)
+        play audio clothing_ruffle
+        $ jnPause(2)
+        play audio gift_close
+
+        play audio chair_in
+        $ jnPause(3)
+        $ Natsuki.setOutfit(outfit_name_to_restore)
+        show natsuki 1ncspul at jn_center
+        hide black with Dissolve(1.25)
+
+        n 1kslsll "..."
+        n 1kslpul "...I know I can't just throw that away.{w=1.25}{nw}"
+        extend 1kcsajl " It just...{w=0.5} wouldn't be right."
+        n 1knmsll "...So I guess the best thing I can do now is to make some happy memories with it myself instead."
+        n 1ksrajl "It's what she would have done, a-{w=0.2}after all."
+        n 1ksrsll "..."
+        n 1ksqbol "...Right?"
 
     return
 
