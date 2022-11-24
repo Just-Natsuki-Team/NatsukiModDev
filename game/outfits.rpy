@@ -1312,13 +1312,13 @@ init -1 python in jn_outfits:
     __register_wearable(JNClothes(
         reference_name="jn_clothes_qeeb_sweater",
         display_name="Qeeb sweater",
-        unlocked=False,
+        unlocked=True,
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_qt_sweater",
         display_name="QT sweater",
-        unlocked=False,
+        unlocked=True,
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
@@ -1370,12 +1370,6 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
-        reference_name="jn_clothes_sugar_shirt",
-        display_name="Sugar shirt",
-        unlocked=False,
-        is_jn_wearable=True
-    ))
-    __register_wearable(JNClothes(
         reference_name="jn_clothes_teddy_cardigan",
         display_name="Teddy cardigan",
         unlocked=False,
@@ -1418,7 +1412,7 @@ init -1 python in jn_outfits:
     __register_wearable(JNHeadgear(
         reference_name="jn_headgear_cat_headband",
         display_name="Cat headband",
-        unlocked=False,
+        unlocked=True,
         is_jn_wearable=True
     ))
     __register_wearable(JNHeadgear(
@@ -1506,7 +1500,7 @@ init -1 python in jn_outfits:
     __register_wearable(JNNecklace(
         reference_name="jn_necklace_bell_collar",
         display_name="Bell collar",
-        unlocked=False,
+        unlocked=True,
         is_jn_wearable=True
     ))
     __register_wearable(JNNecklace(
@@ -1523,7 +1517,7 @@ init -1 python in jn_outfits:
     ))
     __register_wearable(JNNecklace(
         reference_name="jn_necklace_spiked_choker",
-        display_name="Bell collar",
+        display_name="Spiked choker",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1576,6 +1570,17 @@ init -1 python in jn_outfits:
         clothes=get_wearable("jn_clothes_hoodie_turtleneck"),
         hairstyle=get_wearable("jn_hair_bedhead"),
         accessory=get_wearable("jn_accessory_hairband_purple")
+    ))
+    __register_outfit(JNOutfit(
+        reference_name="jn_nyatsuki_outfit",
+        display_name="Nya! sweater getup",
+        unlocked=True,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_nya_sweater"),
+        hairstyle=get_wearable("jn_hair_twintails"),
+        headgear=get_wearable("jn_headgear_cat_headband"),
+        accessory=get_wearable("jn_accessory_hairband_cat"),
+        necklace=get_wearable("jn_necklace_bell_collar")
     ))
 
     # Unlockable official JN default outfits
