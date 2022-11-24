@@ -1787,10 +1787,16 @@ label outfits_remove_outfit:
         $ jn_rm_topic_from_event_list("new_wearables_outfits_unlocked")
         jump new_wearables_outfits_unlocked
 
-    elif not jn_outfits.get_all_outfits() or len(jn_outfits.get_all_outfits()) == 0:
+    elif (
+        not jn_outfits.get_all_outfits() 
+        or len(jn_outfits.JNOutfit.filter_outfits(
+            outfit_list=jn_outfits.get_all_outfits(),
+            unlocked=True,
+            is_jn_outfit=False)) == 0
+    ):
         # No outfits, no point proceeding
         n 1tnmbo "Huh?{w=0.5}{nw}"
-        extend 1fchbg " I don't {i}have{/i} any outfit ideas from you, dummy!"
+        extend 1fchbg " I don't {i}have{/i} any outfit ideas from you to get rid of, dummy!"
 
         jump ch30_loop
 
