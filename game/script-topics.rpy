@@ -3070,10 +3070,10 @@ label talk_i_love_you:
         show natsuki 1kcspuf at jn_center zorder JN_NATSUKI_ZORDER
         show black zorder 3 with Dissolve(0.5)
         play audio clothing_ruffle
-        pause 3.5
+        $ jnPause(3.5)
         play audio kiss
         show natsuki 1ksrsmfsbr at jn_center zorder JN_NATSUKI_ZORDER
-        pause 1.5
+        $ jnPause(1.5)
         hide black with Dissolve(1.25)
 
         n 1kchsmf "..."
@@ -4380,7 +4380,7 @@ label talk_are_you_into_cosplay:
         n 1fcspolesi "I'm basically a pro with a needle and thread,{w=0.75}{nw} " 
         extend 1fchsml " so I've already got the hardest part done!"
         n 1fcsaj "The rest of it is just finding materials,{w=0.2} which are usually pretty easy to come by anyway."
-        n 1fslcasbl "Props and wigs and all that are a little more annoying,{w=0.2} but not exactly undoable."
+        n 1fslcasbl "Props and wigs and all that are a little more annoying,{w=0.2} but not exactly {i}undoable{/i}."
         extend 1fcssmeme " Especially with a little ingenuity."
         n 1tcssl "..."
         n 1tupbo "Mmmm..."
@@ -4430,15 +4430,17 @@ label talk_are_you_into_cosplay:
         extend " Just give me a sec here..."
 
         show black zorder 4 with Dissolve(0.5)
-        $ renpy.pause(2, hard=True)
+        $ jnPause(2, hard=True)
         play audio chair_out
 
-        $ renpy.pause(1.5, hard=True)
+        $ jnPause(1.5, hard=True)
         play audio drawer
-        $ renpy.pause(3, hard=True)
+        $ jnPause(2)
+        play audio gift_open
+        $ jnPause(3, hard=True)
         n "...!"
         play audio clothing_ruffle
-        $ renpy.pause(1, hard=True)
+        $ jnPause(1, hard=True)
         play audio zipper
 
         $ jn_outfits.get_outfit("jn_trainer_cosplay").unlock()
@@ -4446,7 +4448,7 @@ label talk_are_you_into_cosplay:
         $ Natsuki.setOutfit(jn_outfits.get_outfit(random.choice(["jn_trainer_cosplay", "jn_sango_cosplay"])))
 
         play audio chair_in
-        $ renpy.pause(3, hard=True)
+        $ jnPause(3, hard=True)
         show natsuki 1fsldvlesssbr at jn_center
         hide black with Dissolve(1.25)
 
@@ -6033,7 +6035,7 @@ label talk_fighting_drowsiness:
     n 1ncsajesl "...{w=2}{nw}"
     n 1ncsemesl "...{w=2}{nw}"
     n 1ncsajesl "...{w=2}{nw}"
-    $ renpy.pause(4)
+    $ jnPause(4)
     n 1fcsbo "..."
     n 1nsqpu "Mmmmm...{w=0.5}{nw}"
     extend 1tsqsr " mmmnn?"
