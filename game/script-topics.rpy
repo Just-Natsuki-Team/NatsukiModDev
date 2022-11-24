@@ -4268,7 +4268,7 @@ label talk_are_you_into_cosplay:
             extend 1fchbgedz " it's ideas!{w=0.5}{nw}"
             extend 1fsqsm " So don't you worry about a thing,{w=0.2} [player]..."
             n 1fwrbg "'Cause there's no shortage of that {i}material{/i}!{w=0.75}{nw}"
-            extend 1nchgnl "Ehehe."
+            extend 1nchgnl " Ehehe."
 
             return
 
@@ -4350,45 +4350,49 @@ label talk_are_you_into_cosplay:
             n 1fchdvesi "Pfffft!"
             n 1fchsm "Ehehe.{w=0.5}{nw}"
             extend 1ullss " Nah,{w=0.2} it's fine."
-            #TODO
-            n 1ulraj "I've thought about it a bunch,{w=0.2} honestly -{w=0.2} like since I got into manga and all that a while ago."
-            n 1nnmaj "I haven't {i}actually{/i} gone and dressed up yet,{w=0.2} though."
-            n 1fnmaj "But there really isn't much stopping me,{w=0.2} [player]."
-            n 1flrbg "I'm something of a pro with a needle and thread,{w=0.2} so it's right up my alley!"
-            n 1unmaj "Besides,{w=0.2} I've done the math on materials -{w=0.2} it's actually pretty affordable,{w=0.2} so that's all good."
-            n 1nllaj "Well,{w=0.2} besides wigs and props and stuff.{w=0.2} Those can be kinda pricey,{w=0.2} but not exactly unaffordable -{w=0.2} just gotta shop around!"
-            n 1fllsl "That being said...{w=0.3} hmm..."
-            n 1fllsm "You know what,{w=0.2} [player]?"
-            n 1fnmbg "Perhaps I might just give it a shot...{w=0.3} yeah!"
-            n 1fchgn "Man,{w=0.2} I've got so many awesome ideas buzzing around in my head now!"
-            n 1fchsm "Oh -{w=0.2} don't worry -{w=0.2} you'll get your chance to see them too.{w=0.2} I'll need a second opinion after all."
-            n 1uchbg "That's what friends are for,{w=0.2} right?{w=0.2} Ehehe."
+            n 1ulraj "I've thought about it a bunch,{w=0.2} honestly -{w=0.3}{nw}" 
+            extend 1unmbo " like since I got into manga and all that a while ago."
+            n 1nslsssbr "I haven't {i}actually{/i} gone dressed up to a convention or anything yet..."
+            n 1fcswrlsbl "B-{w=0.2}but that doesn't mean I wouldn't {i}enjoy{/i} it!"
+            n 1fcsbgsbl "I {i}am{/i} something of a pro with a needle and thread,{w=0.75}{nw}" 
+            extend 1fcssmeme " so it's right up my alley!"
+            n 1tslsl "..."
+            n 1tslss "Actually...{w=1}{nw}"
+            extend 1fsqbg " you know what,{w=0.2} [player]?"
+            n 1fsrsm "Perhaps I {i}might{/i} just give it a shot...{w=0.5}{nw}" 
+            extend 1fchbg " yeah!"
+            n 1fcsss "Man,{w=0.5}{nw}" 
+            extend 1fchgnedz " I've got so many awesome ideas buzzing around in my head now!"
+            n 1fsqss "You better be prepared,{w=0.2} [player]..."
+            n 1fchbg "'Cause I'm gonna need some second opinions when I do!"
+            n 1fwlbll "That's what friends are for,{w=0.2} right?"
 
             # Continue to unlock dialogue
 
     elif Natsuki.isNormal(higher=True):
-        n 1unmaj "Cosplay,{w=0.1} huh?"
-        n 1ulraj "Well...{w=0.3} I mean,{w=0.1} I've considered it,{w=0.1} if that's what you're asking."
-        n 1nnmbo "I never really thought about it that much until I got more into manga and things like that."
-        n 1flrbg "It kinda feels like once you start getting into that stuff,{w=0.1} you discover tons more at once!"
-        n 1nnmaj "But anyway,{w=0.1} I've never actually gone out and cosplayed myself."
-        n 1flleml "T-{w=0.1}that isn't to say there's anything stopping me,{w=0.1} of course!"
-
-        if already_mentioned_sewing:
-            n 1fllss "I told you already that I'm pretty good with a needle and thread,{w=0.1} so that's a-{w=0.1}okay!"
-
-        else:
-            n 1fcsbg "I'm basically a pro with a needle and thread,{w=0.1} so that's the hard part already mastered!"
-
-        n 1nlrpu "The rest of it is just shopping around for materials,{w=0.1} which are usually pretty cheap anyway."
-        n 1unmpu "Props and wigs and all that are a little more annoying,{w=0.1} but not exactly undoable."
-        n 1tupbo "Hmm..."
+        n 1unmbo "Cosplay,{w=0.2} huh?"
+        n 1ulraj "Well...{w=0.5}{nw}" 
+        extend 1tnmbo " I mean,{w=0.2} I've considered it,{w=0.2} if that's what you're asking."
+        n 1tllpu "I never really thought about it that much until I got more into manga and things like that."
+        n 1flrbg "It kinda feels like once you start getting into that stuff,{w=0.2} you discover tons more at once!"
+        n 1nslsssbr "I've never really gone out and cosplayed myself though..."
+        n 1fcsgslsbr "B-{w=0.2}but that isn't I couldn't try it out,{w=0.2} you know!"
+        n 1fcspolesi "I'm basically a pro with a needle and thread,{w=0.75}{nw} " 
+        extend 1fchsml " so I've already got the hardest part done!"
+        n 1fcsaj "The rest of it is just finding materials,{w=0.2} which are usually pretty easy to come by anyway."
+        n 1fslcasbl "Props and wigs and all that are a little more annoying,{w=0.2} but not exactly undoable."
+        extend 1fcssmeme " Especially with a little ingenuity."
+        n 1tcssl "..."
+        n 1tupbo "Mmmm..."
         n 1tllpu "You know,{w=0.75}{nw}"
         extend 1fllss " the more I think about it...{w=1}{nw}"
         extend 1nchgnedz " the more I like the idea!"
-        n 1fnmbg "What about you,{w=0.1} [player]?{w=0.2} I bet you'd love to see my skills at work,{w=0.1} right?"
-        n 1nnmsm "Ahaha."
-        n 1flrsml "Well...{w=0.3} we'll see,{w=0.1} but no promises!"
+        n 1fnmbg "What about you,{w=0.2} [player]?{w=0.5}{nw}" 
+        extend 1usqbg " I bet you'd love to see my skills at work,{w=0.2} right?"
+        n 1fsrbgl "Well...{w=1}{nw}" 
+        extend 1fsqsm " we'll see." 
+        n 1fcsgssbl "B-{w=0.2}but no promises!"
+
         return
 
     elif Natsuki.isDistressed(higher=True):
@@ -4398,6 +4402,7 @@ label talk_are_you_into_cosplay:
         n 1fslsr "..."
         n 1fsqpu "No,{w=0.1} [player].{w=0.2} I've never cosplayed.{w=0.2} I could,{w=0.1} but I haven't."
         n 1fsqan "Does that answer your question?"
+
         return
 
     else:
@@ -4405,6 +4410,7 @@ label talk_are_you_into_cosplay:
         n 1fcsantsa "So you have something else to make me feel awful about?"
         n 1fcssrltsa "...Yeah.{w=0.75} No thanks."
         n 1fcsanltsd "I'm done talking to you about this."
+
         return
 
     # Show Natsuki in cosplay and unlock cosplay outfits, if custom outfits unlocked
