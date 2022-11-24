@@ -44,6 +44,9 @@ screen hotkeys():
                     text _("Fullscreen")
                     text _("F")
 
+                    text _("Hide UI")
+                    text _("H")
+
                     text _("Screenshot")
                     text _("S")
 

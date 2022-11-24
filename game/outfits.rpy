@@ -143,6 +143,14 @@ init -1 python in jn_outfits:
             self.unlocked = True
             self.__save()
 
+        def lock(self):
+            """
+            Locks this wearable, making it unavailable to the player.
+            """
+            # Unlock the wearable
+            self.unlocked = False
+            self.__save()
+
         def __load(self):
             """
             Loads the persisted data for this wearable from the persistent.
@@ -381,6 +389,14 @@ init -1 python in jn_outfits:
 
             if self.necklace and not self.necklace.unlocked:
                 self.necklace.unlock()
+
+        def lock(self):
+            """
+            Locks this outfit, making it unavailable to the player.
+            Any constituent wearables remain unlocked however, as these can be used in custom outfits/other JN outfits.
+            """
+            self.unlocked = False
+            self.__save()
 
         def to_json_string(self):
             """
@@ -1939,7 +1955,11 @@ label outfits_create_select_clothes:
     call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
 
     if isinstance(_return, jn_outfits.JNClothes):
-        play audio clothing_ruffle
+        if (random.choice([True, False])):
+            play audio clothing_ruffle
+        else:
+            play audio zipper
+            
         python:
             jn_outfits._changes_made = True
             jn_outfits._PREVIEW_OUTFIT.clothes = _return

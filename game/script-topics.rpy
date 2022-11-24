@@ -4283,7 +4283,6 @@ label talk_are_you_into_cosplay:
             extend 1fspgsedz " I {w=0.2}{i}love{/i}{w=0.2} thinking up new ideas for outfits!"
             n 1fcsbg "Besides,{w=0.2} I know my way around a needle and thread!{w=0.75}{nw}"
             extend 1nsrsssbr " I've had to use them often enough before."
-            n 1ksrsllsbr "..."
             n 1fcsajlsbr "B-{w=0.2}but I think it seems like a pretty awesome way to show my appreciation for characters I like..."
             n 1fsqbg "...And show my {i}limitless{/i} talent while I'm at it."
             n 1usqsm "Anyway,{w=0.2} who knows?"
@@ -4419,8 +4418,9 @@ label talk_are_you_into_cosplay:
         and persistent.jn_custom_outfits_unlocked
         and not already_unlocked_cosplay_outfits
     ):
-        n 1tslbo "...Actually,{w=0.5}{nw}"
-        extend 1tslpu " now that I think about it..."
+        n 1tllbo "..."
+        n 1tslpu "...Actually,{w=0.5}{nw}"
+        extend 1tslaj " now that I think about it..."
         n 1tlrsl "I wonder..."
         n 1fcssl "..."
         n 1nnmaj "You know what?{w=0.75}{nw}"
@@ -4442,7 +4442,7 @@ label talk_are_you_into_cosplay:
         play audio zipper
         $ jnPause(5)
 
-        $ outfit_name_to_restore = Natsuki.getOutfitName()
+        $ outfit_to_restore = Natsuki._outfit
         $ jn_outfits.get_outfit("jn_trainer_cosplay").unlock()
         $ jn_outfits.get_outfit("jn_sango_cosplay").unlock()
         $ Natsuki.setOutfit(jn_outfits.get_outfit(random.choice(["jn_trainer_cosplay", "jn_sango_cosplay"])))
@@ -4456,9 +4456,13 @@ label talk_are_you_into_cosplay:
         extend 1fchsml " Ehehe..."
         n 1fsqsll "..."
         n 1fslunl "..."
-        n 1fcsemlsbl "W-{w=0.2}well?{w=0.75}{nw}"
-        extend 1fcsgslsbl " I {i}did{/i} say I was good with a needle and thread!"
-        n 1fllsslsbl "S-{w=0.3}so of course I had to {i}prove{/i} it!"
+        n 1fcsemlsbl "W-{w=0.2}well?"
+        n 1fcsbglsbl "What do you think,{w=0.2} [player]?{w=0.75}{nw}"
+        extend 1fchsmlsbr " I made it all myself,{w=0.2} too!"
+        n 1fsqsrlsbr "..."
+        n 1fnmemlsbr "What?"
+        n 1fcsgslsbl "I {i}did{/i} say I was good with a needle and thread!"
+        n 1fllsslsbl "S-{w=0.3}so of course I {i}had{/i} to prove it!"
         n 1nslsslsbl "..."
         n 1kslsll "..."
         n 1kcspul "This...{w=1}{nw}" 
@@ -4477,10 +4481,11 @@ label talk_are_you_into_cosplay:
 
         $ jnPause(3)
         play audio drawer
-        $ jnPause(2)
+        $ jnPause(3)
         play audio clothing_ruffle
-        $ jnPause(2)
+        $ jnPause(4)
         play audio gift_close
+        $ jnPause(3)
 
         play audio chair_in
         $ jnPause(3)
