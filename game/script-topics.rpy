@@ -4320,7 +4320,7 @@ label talk_are_you_into_cosplay:
             extend 1fcsbg " Check!{w=0.75}{nw}"
             extend 1tsqsm " Tons of experience?{w=0.75}{nw}"
             extend 1fchbg " Check!"
-            n 1usqgn "{i}Unmatched{/i} handiwork with a needle and threat?{w=1}{nw}"
+            n 1usqgn "{i}Unmatched{/i} handiwork with a needle and thread?{w=1}{nw}"
             extend 1fcsbg " Oh,{w=0.2} you bet."
             n 1fllpu "It's just..."
             n 1kslsl "..."
