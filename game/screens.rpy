@@ -28,7 +28,7 @@ screen hotkeys():
                 yoffset 40
                 null height 20
                 style_prefix "hotkeys"
-                grid 2 7:
+                grid 2 8:
                     xoffset 20                
                     spacing 10
 
