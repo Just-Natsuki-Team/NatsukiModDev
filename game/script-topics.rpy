@@ -4428,10 +4428,10 @@ label talk_are_you_into_cosplay:
         extend 1nslunl " give me a sec here...{w=1}{nw}"
 
         show black zorder 4 with Dissolve(0.5)
-        $ jnPause(2)
+        $ jnPause(1)
         play audio chair_out
 
-        $ jnPause(1.5)
+        $ jnPause(3)
         play audio drawer
         $ jnPause(2)
         play audio gift_open
@@ -4465,7 +4465,7 @@ label talk_are_you_into_cosplay:
         extend 1ksrsfl " wasn't actually {i}meant{/i} for me,{w=0.2} you know."
         n 1kcspulesi "..."
         n 1ksqbol "...I made it for Sayori."
-        n 1fcseml "I-{w=0.2}it was meant to be for some kind of party after the festival she insisted on,{w=0.2} but...{w=1}{nm}"
+        n 1fcseml "I-{w=0.2}it was meant to be for some kind of party after the festival she insisted on,{w=0.2} but...{w=1}{nw}"
         extend 1kcssll " yeah."
         n 1kslslltsb "..."
         n 1fcsunltsb "I'm..."
