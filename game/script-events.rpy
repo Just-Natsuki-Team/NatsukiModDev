@@ -1295,6 +1295,9 @@ label event_warm_package:
         teddy_cardigan_outfit.unlock()
         Natsuki.setOutfit(teddy_cardigan_outfit)
 
+    image prob hot_chocholate hot = "mod_assets/props/hot_chocolate.png"
+    image prob hot_chocolate cold = "mod_assets/probs/hot_chocolate_cold.png"
+
     if jn_atmosphere.isCurrentWeatherRain() or jn_atmosphere.isCurrentWeatherThunder():
         n "..."
         n "Uuuuuuu-!"
@@ -1436,7 +1439,7 @@ label event_warm_package:
         "Enter...":
             pass
 
-    show prop hot_chocolate zorder jn_events.JN_EVENT_PROP_ZORDER
+    show prop hot_chocolate hot zorder jn_events.JN_EVENT_PROP_ZORDER
     $ jn_events.display_visuals("1fsqbl")
     $ jn_globals.force_quit_enabled = True
 
@@ -1542,8 +1545,7 @@ label event_warm_package:
         n 1kslsl "..."
         n 1fcsbgsbr "B-{w=0.2}but yeah!"
 
-    hide prop hot_chocolate
-    show prob hot_chocolate_cold
+    show prob hot_chocolate cold
 
     n 1nchsm "And that about {i}wraps{/i} things up!{w=0.75}"
     extend 1nllss " I-"
@@ -1554,7 +1556,7 @@ label event_warm_package:
 
     show black zorder 6 with Dissolve(0.5)
     $ jnPause(1)
-    hide prop hot_chocolate_cold
+    hide prop hot_chocolate
     play audio straw_sip
     $ jnPause(2)
     play audio glass_move
