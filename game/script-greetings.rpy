@@ -498,7 +498,7 @@ init 5 python:
 label greeting_normal_happy_sup_player:
     n 1unmboesu "Eh?{w=0.5}{nw}"
     n 1unmaj "Oh.{w=0.5}{nw}"
-    extend 1tnmaj " Hey,{w=0.1} player."
+    extend 1tnmaj " Hey,{w=0.1} [player]."
     n 1tllss "What's up?"
     return
 

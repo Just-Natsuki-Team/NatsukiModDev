@@ -192,14 +192,14 @@ init 0 python in jn_snap:
             if (len(_player_hand) > 0):
                 new_card = _player_hand.pop(0)
                 _cards_on_table.append(new_card)
-                renpy.play("mod_assets/sfx/card_place.mp3")
+                renpy.play("mod_assets/sfx/card_place.ogg")
                 _is_player_turn = False
 
         else:
             if (len(_natsuki_hand) > 0):
                 new_card = _natsuki_hand.pop(0)
                 _cards_on_table.append(new_card)
-                renpy.play("mod_assets/sfx/card_place.mp3")
+                renpy.play("mod_assets/sfx/card_place.ogg")
                 _is_player_turn = True
 
         update_turn_indicator()
@@ -258,7 +258,7 @@ init 0 python in jn_snap:
 
             # Clear the cards on the table
             del _cards_on_table[:]
-            renpy.play("mod_assets/sfx/card_shuffle.mp3")
+            renpy.play("mod_assets/sfx/card_shuffle.ogg")
             draw_card_onscreen()
 
             # Use of renpy.call here is a stopgap and will be reworked, as renpy.call risks breaking label flow if not carefully applied.
@@ -428,7 +428,7 @@ label snap_main_loop:
         $ jn_snap.last_game_result = jn_snap.RESULT_PLAYER_WIN
         jump snap_end
 
-    $ renpy.pause(delay=max(0.33, (3.0 - (jn_snap._natsuki_skill_level * 0.5))))
+    $ jnPause(delay=max(0.33, (3.0 - (jn_snap._natsuki_skill_level * 0.5))), hard=True)
 
     # Natsuki's snap logic
 
@@ -448,7 +448,7 @@ label snap_main_loop:
 
         # If Natsuki only has one card left, she'll try to see if she can snap before admitting defeat
         if len(jn_snap._natsuki_hand) == 0:
-            $ renpy.pause(delay=max(0.33, (1.25 - (jn_snap._natsuki_skill_level * 0.5))))
+            $ jnPause(delay=max(0.33, (1.25 - (jn_snap._natsuki_skill_level * 0.5))), hard=True)
 
             if jn_snap._get_snap_result():
                 $ jn_snap._call_snap()

@@ -60,6 +60,7 @@ init -50 python:
         worried = 35
         blep = 36
         drink = 37
+        focus = 38
 
         def __str__(self):
             return self.name
@@ -292,7 +293,7 @@ init 1 python:
         "wl": JNEyes.wink_left,
         "wr": JNEyes.wink_right
     }
-
+    
     MOUTH_MAP = {
         "aj": JNMouth.ajar,
         "an": JNMouth.angry,
@@ -306,6 +307,7 @@ init 1 python:
         "dr": JNMouth.drink,
         "dv": JNMouth.devious,
         "em": JNMouth.embarrassed,
+        "fo": JNMouth.focus,
         "fr": JNMouth.frown,
         "fu": JNMouth.furious,
         "gs": JNMouth.gasp,
@@ -328,7 +330,7 @@ init 1 python:
         "up": JNMouth.upset,
         "wr": JNMouth.worried
     }
-
+    
     BLUSH_MAP = {
         "f": JNBlush.full,
         "l": JNBlush.light
@@ -601,6 +603,37 @@ init 1 python:
 #   sweat: 3 characters, s-prefix
 #
 # For spritecode construction, use the previewer @ https://just-natsuki-team.github.io/Expression-Previewer/
+
+# Idle images for Natsuki playing her Twitch
+image natsuki gaming:
+    block:
+        choice:
+            "natsuki 1fdwfosbl"
+            pause 3
+            "natsuki 1fcsfosbl"
+            pause 0.1
+
+        choice:
+            "natsuki 1fdwpusbr"
+            pause 3
+
+        choice:
+            "natsuki 1fdwslsbl"
+            pause 3
+            "natsuki 1fcsslsbl"
+            pause 0.1
+
+        choice:
+            "natsuki 1fdwcaesssbr"
+            pause 3
+            
+        choice:
+            "natsuki 1fdwsssbl"
+            pause 3
+            "natsuki 1fcssssbl"
+            pause 0.1
+
+    repeat
 
 # This selects which idle image to show based on current affinity state
 image natsuki idle = ConditionSwitch(

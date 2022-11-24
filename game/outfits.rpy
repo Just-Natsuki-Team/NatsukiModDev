@@ -1120,14 +1120,38 @@ init -1 python in jn_outfits:
 
     # Official JN eyewear
     __register_wearable(JNEyewear(
-        reference_name="jn_eyewear_circles",
-        display_name="Black circle glasses",
-        unlocked=True,
+        reference_name="jn_eyewear_round_glasses_black",
+        display_name="Black round glasses",
+        unlocked=False,
         is_jn_wearable=True
     ))
     __register_wearable(JNEyewear(
-        reference_name="jn_eyewear_heart_frames",
-        display_name="Pink heart glasses",
+        reference_name="jn_eyewear_round_glasses_red",
+        display_name="Red round glasses",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNEyewear(
+        reference_name="jn_eyewear_round_glasses_brown",
+        display_name="Brown round glasses",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNEyewear(
+        reference_name="jn_eyewear_round_sunglasses",
+        display_name="Round sunglasses",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNEyewear(
+        reference_name="jn_eyewear_rectangular_glasses_black",
+        display_name="Black rectangular glasses",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNEyewear(
+        reference_name="jn_eyewear_rectangular_glasses_red",
+        display_name="Red rectangular glasses",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -2070,7 +2094,7 @@ label new_wearables_outfits_unlocked:
         jn_gifts.GIFT_PURPLE,
     ])
     $ giftbox.present()
-    pause(2.25)
+    pause(2.25, hard=True)
 
     if Natsuki.isEnamored(higher=True):
         n 1uskemleex "...!"
@@ -2289,12 +2313,12 @@ label new_wearables_outfits_unlocked:
 
         show black zorder 4 with Dissolve(0.5)
         play audio clothing_ruffle
-        pause 3.5
+        $ jnPause(3.5, hard=True)
 
         if Natsuki.isLove(higher=True):
             show natsuki 1nslunfsbl at jn_center zorder JN_NATSUKI_ZORDER
             play audio kiss
-            pause 1.5
+            $ jnPause(1.5, hard=True)
             hide black with Dissolve(1.25)
             $ chosen_tease = jn_utils.getRandomTease()
             n 1knmssf "...Thanks,{w=0.1} [chosen_tease]."
@@ -2320,7 +2344,7 @@ label new_wearables_outfits_unlocked:
         show black zorder 4 with Dissolve(0.5)
         show natsuki 1flrcafsbr at jn_center zorder JN_NATSUKI_ZORDER
         play audio clothing_ruffle
-        pause 2
+        $ jnPause(2, hard=True)
         hide black with Dissolve(1.25)
 
         n 1ksrcafsbr "..."
@@ -2345,16 +2369,16 @@ label new_wearables_outfits_unlocked:
     show black zorder 4 with Dissolve(0.5)
     $ giftbox.close()
     $ giftbox.hide()
-    pause(2)
+    $ jnPause(2, hard=True)
     play audio chair_out
-    pause(3)
+    $ jnPause(3, hard=True)
     play audio clothing_ruffle
-    pause(1)
+    $ jnPause(1, hard=True)
     play audio drawer
-    pause(1)
-    pause(3)
+    $ jnPause(1, hard=True)
+    $ jnPause(3, hard=True)
     play audio chair_in
-    pause(3)
+    $ jnPause(3, hard=True)
     hide black with Dissolve(1.25)
 
     n 1ullajl "So..."
