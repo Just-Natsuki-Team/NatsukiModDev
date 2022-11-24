@@ -4220,7 +4220,11 @@ init 5 python:
     )
 
 label talk_are_you_into_cosplay:
-    $ already_unlocked_cosplay_outfits = jn_outfits.get_outfit("jn_trainer_cosplay").unlocked and jn_outfits.get_outfit("jn_sango_cosplay").unlocked
+    $ already_unlocked_cosplay_outfits = (
+        persistent.jn_custom_outfits_unlocked
+        and jn_outfits.get_outfit("jn_trainer_cosplay").unlocked 
+        and jn_outfits.get_outfit("jn_sango_cosplay").unlocked
+    )
 
     if Natsuki.isEnamored(higher=True):
         if already_unlocked_cosplay_outfits:
