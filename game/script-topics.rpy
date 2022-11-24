@@ -4489,7 +4489,7 @@ label talk_are_you_into_cosplay:
 
         play audio chair_in
         $ jnPause(3)
-        $ Natsuki.setOutfit(outfit_name_to_restore)
+        $ Natsuki.setOutfit(outfit_to_restore)
         show natsuki 1ncspul at jn_center
         hide black with Dissolve(1.25)
 
