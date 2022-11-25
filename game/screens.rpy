@@ -28,7 +28,7 @@ screen hotkeys():
                 yoffset 40
                 null height 20
                 style_prefix "hotkeys"
-                grid 2 7:
+                grid 2 8:
                     xoffset 20                
                     spacing 10
 
@@ -43,6 +43,9 @@ screen hotkeys():
 
                     text _("Fullscreen")
                     text _("F")
+
+                    text _("Hide UI")
+                    text _("H")
 
                     text _("Screenshot")
                     text _("S")

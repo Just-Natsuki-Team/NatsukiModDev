@@ -143,6 +143,14 @@ init -1 python in jn_outfits:
             self.unlocked = True
             self.__save()
 
+        def lock(self):
+            """
+            Locks this wearable, making it unavailable to the player.
+            """
+            # Unlock the wearable
+            self.unlocked = False
+            self.__save()
+
         def __load(self):
             """
             Loads the persisted data for this wearable from the persistent.
@@ -382,6 +390,14 @@ init -1 python in jn_outfits:
             if self.necklace and not self.necklace.unlocked:
                 self.necklace.unlock()
 
+        def lock(self):
+            """
+            Locks this outfit, making it unavailable to the player.
+            Any constituent wearables remain unlocked however, as these can be used in custom outfits/other JN outfits.
+            """
+            self.unlocked = False
+            self.__save()
+
         def to_json_string(self):
             """
             Returns this outfit as a JSON string for export use.
@@ -608,7 +624,7 @@ init -1 python in jn_outfits:
             return False
 
         # Prevent use of the jn_ namespace
-        elif "jn_" in json["reference_name"]:
+        elif re.search("^jn_.", json["reference_name"].lower()):
             jn_utils.log("Cannot load wearable {0} as the reference name contains a reserved namespace.".format(json["reference_name"]))
             return False
 
@@ -687,7 +703,7 @@ init -1 python in jn_outfits:
             return False
 
         # Prevent use of the jn_ namespace
-        elif "jn_" in json["reference_name"]:
+        elif re.search("^jn_.", json["reference_name"].lower()):
             jn_utils.log("Cannot load outfit {0} as the reference name contains a reserved namespace.".format(json["reference_name"]))
             return False
 
@@ -1562,6 +1578,15 @@ init -1 python in jn_outfits:
         necklace=get_wearable("jn_necklace_pink_scarf")
     ))
     __register_outfit(JNOutfit(
+        reference_name="jn_sango_cosplay",
+        display_name="Sango cosplay",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_sango_cosplay"),
+        hairstyle=get_wearable("jn_hair_twintails"),
+        accessory=get_wearable("jn_accessory_hairband_purple")
+    ))
+    __register_outfit(JNOutfit(
         reference_name="jn_ruffled_swimsuit",
         display_name="Beach outfit",
         unlocked=False,
@@ -1732,6 +1757,7 @@ label outfits_reload:
         jn_outfits.JNOutfit.load_all()
 
     n 1fchsm "...And we're done!"
+
     return
 
 # Asking Natsuki to suggest a new outfit; leads to the outfit creator flow
@@ -1751,10 +1777,27 @@ label outfits_suggest_outfit:
 
 # Asking Natsuki to remove an existing outfit
 label outfits_remove_outfit:
-    if not jn_outfits.get_all_outfits():
+
+    if len(jn_outfits._SESSION_NEW_UNLOCKS):
+        # Prevent the player telling Natsuki to delete something she could be about to gift by popping it early, and removing from event list
+        n 1nsqpu "...Wait.{w=1}{nw}"
+        extend 1fnmpo " Are you trying to hide something?"
+        n 1fcspolesi "At least show me what it is first!"
+
+        $ jn_rm_topic_from_event_list("new_wearables_outfits_unlocked")
+        jump new_wearables_outfits_unlocked
+
+    elif (
+        not jn_outfits.get_all_outfits() 
+        or len(jn_outfits.JNOutfit.filter_outfits(
+            outfit_list=jn_outfits.get_all_outfits(),
+            unlocked=True,
+            is_jn_outfit=False)) == 0
+    ):
         # No outfits, no point proceeding
         n 1tnmbo "Huh?{w=0.5}{nw}"
-        extend 1fchbg " I don't {i}have{/i} any outfit ideas from you, dummy!"
+        extend 1fchbg " I don't {i}have{/i} any outfit ideas from you to get rid of, dummy!"
+
         jump ch30_loop
 
     n 1unmpu "You want me to remove an outfit?{w=0.5}{nw}"
@@ -1930,7 +1973,11 @@ label outfits_create_select_clothes:
     call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
 
     if isinstance(_return, jn_outfits.JNClothes):
-        play audio clothing_ruffle
+        if (random.choice([True, False])):
+            play audio clothing_ruffle
+        else:
+            play audio zipper
+
         python:
             jn_outfits._changes_made = True
             jn_outfits._PREVIEW_OUTFIT.clothes = _return
@@ -1993,17 +2040,28 @@ label outfits_create_save:
                     length=30
                 ).strip()
 
-                if len(outfit_name) == 0:
+                # Outfit name cannot be empty or None
+                if len(outfit_name) == 0 or outfit_name is None:
                     n 1knmpo "Come on,{w=0.3} [player]!{w=1.5}{nw}"
-                    extend 1fchbg " Any outfit worth wearing has a name,{w=0.1} dummy!"
+                    extend 1fchbg " Any outfit worth wearing has a {i}name{/i},{w=0.1} dummy!"
 
-                elif jn_utils.get_string_contains_profanity(outfit_name):
+                # Outfit name cannot contain the jn_ namespace, though this should never happen
+                elif re.search("^jn_.", outfit_name.lower()):
+                    n 1tsqsssbl "...Is that some kind of robot name or something?"
+                    n 1fchbl "Try harder,{w=0.2} [player]!"
+
+                # Outfit cannot be an insult or profanity
+                elif(
+                    jn_utils.get_string_contains_profanity(outfit_name.lower())
+                    or jn_utils.get_string_contains_insult(outfit_name.lower())
+                ):
                     n 1fsqem "...Really,{w=0.5} [player]."
-                    n 1fsqsr "Come on.{w=1.5}{nw}"
+                    n 1fsqsr "Come on.{w=1}{nw}"
                     extend 1fllsr " Quit being a jerk."
-                    $ jn_relationship("affinity-")
+                    $ Natsuki.percentageAffinityLoss(2)
 
                 else:
+                    # It's allowed!
                     python:
                         jn_outfits._PREVIEW_OUTFIT.display_name = outfit_name
                         name_given = True
@@ -2077,15 +2135,16 @@ label outfits_auto_change:
     return
 
 label new_wearables_outfits_unlocked:
-    $ jn_globals.force_quit_enabled = False
-    $ giftbox = random.choice([
-        jn_gifts.GIFT_BLUE,
-        jn_gifts.GIFT_GREEN,
-        jn_gifts.GIFT_PINK,
-        jn_gifts.GIFT_PURPLE,
-    ])
-    $ giftbox.present()
-    pause(2.25, hard=True)
+    python:
+        jn_globals.force_quit_enabled = False
+        giftbox = random.choice([
+            jn_gifts.GIFT_BLUE,
+            jn_gifts.GIFT_GREEN,
+            jn_gifts.GIFT_PINK,
+            jn_gifts.GIFT_PURPLE,
+        ])
+        giftbox.present()
+        jnPause(2.25)
 
     if Natsuki.isEnamored(higher=True):
         n 1uskemleex "...!"
@@ -2377,7 +2436,7 @@ label new_wearables_outfits_unlocked:
     extend 1fslsslsbr " Ehehe..."
     $ jn_globals.force_quit_enabled = True
 
-    return
+    jump ch30_loop
 
 screen create_outfit():
     if jn_outfits._changes_made:
