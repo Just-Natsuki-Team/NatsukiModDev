@@ -271,7 +271,7 @@ label greeting_love_plus_looking_for_me:
     n 1kllbgl "Man,{w=0.5}{nw}" 
     extend 1fchgnlelg " I {i}cannot{/i} take that seriously!"
     n 1fnmssl "But let's be real here,{w=0.2} [player]..."
-    n 1fsqsmf "It {i}{cps=\7.5}totally{/cps}{/i} was me,{w=0.2} right?{w=1}{nw}"
+    n 1fsqsmf "It {i}{w=0.2}totally{w=0.2}{/i} was me,{w=0.2} right?{w=1}{nw}"
     extend 1fchsmfedz " Ehehe~."
     return
 
