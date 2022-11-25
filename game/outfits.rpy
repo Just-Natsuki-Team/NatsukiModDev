@@ -1595,7 +1595,7 @@ init -1 python in jn_outfits:
         is_jn_outfit=True,
         clothes=get_wearable("jn_clothes_sango_cosplay"),
         hairstyle=get_wearable("jn_hair_twintails"),
-        necklace=get_wearable("jn_necklace_sango_choker")
+        necklace=get_wearable("jn_necklace_sango_choker"),
         accessory=get_wearable("jn_accessory_hairband_purple")
     ))
 
