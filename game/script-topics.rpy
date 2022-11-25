@@ -1410,12 +1410,13 @@ label talk_favourite_season:
             n "Still rooting for [persistent.jn_player_favourite_season]?"
             "Yes.":
                 n 1fcsbg "Ehehe.{w=0.2} I thought as much,{w=0.1} [player]."
+                
                 if persistent.jn_player_favourite_season == "Summer":
                     n 1uchbg "You already picked the best season,{w=0.1} after all!"
-                    return
-
-                n 1fllss "Well...{w=0.3} I'm afraid you're not gonna sway me!{w=0.5}{nw}"
-                extend 1uchbg " Ahaha!"
+                    
+                else:
+                    n 1fllss "Well...{w=0.3} I'm afraid you're not gonna sway me!{w=0.5}{nw}"
+                    extend 1uchbg " Ahaha!"
 
             "No.":
                 n 1tsgbg "Oh?{w=0.2} Changed our mind,{w=0.1} have we?"
@@ -1484,14 +1485,21 @@ label talk_favourite_season:
                     n 1fsqsm "Then you better not be slacking on your reading,{w=0.1} [player]!{w=0.5}{nw}"
                     extend 1fchsm " Ehehe."
 
-    # Unlock the seasonal off-shoulder sweaters, if not already unlocked and custom outfits unlocked.
+    # Unlock the seasonal off-shoulder sweaters, if all not already unlocked and custom outfits unlocked.
     # Some special dialogue based off the chosen season.
+
+    python:
+        spring_sweater = jn_outfits.get_wearable("jn_clothes_bee_off_shoulder_sweater")
+        summer_sweater = jn_outfits.get_wearable("jn_clothes_creamsicle_off_shoulder_sweater")
+        autumn_sweater = jn_outfits.get_wearable("jn_clothes_autumn_off_shoulder_sweater")
+        winter_sweater = jn_outfits.get_wearable("jn_clothes_nightbloom_off_shoulder_sweater")
+
     if (
         (
-            not jn_outfits.get_outfit("jn_clothes_bee_off_shoulder_sweater").unlocked
-            or not jn_outfits.get_outfit("jn_clothes_autumn_off_shoulder_sweater").unlocked
-            or not jn_outfits.get_outfit("jn_clothes_creamsicle_off_shoulder_sweater").unlocked
-            or not jn_outfits.get_outfit("jn_clothes_nightbloom_off_shoulder_sweater").unlocked
+            not spring_sweater.unlocked
+            or not summer_sweater.unlocked
+            or not autumn_sweater.unlocked
+            or not winter_sweater.unlocked
         )
         and Natsuki.isHappy(higher=True) 
         and persistent.jn_custom_outfits_unlocked
@@ -1508,23 +1516,41 @@ label talk_favourite_season:
         $ jnPause(2)
 
         python:
-            jn_outfits.get_wearable("jn_clothes_bee_off_shoulder_sweater").unlock()
-            jn_outfits.get_wearable("jn_clothes_autumn_off_shoulder_sweater").unlock()
-            jn_outfits.get_wearable("jn_clothes_creamsicle_off_shoulder_sweater").unlock()
-            jn_outfits.get_wearable("jn_clothes_nightbloom_off_shoulder_sweater").unlock()
+            import copy
+
+            spring_sweater.unlock()
+            summer_sweater.unlock()
+            autumn_sweater.unlock()
+            winter_sweater.unlock()
+            temporary_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
+
+            if persistent.jn_player_favourite_season == "Spring":
+                temporary_outfit.clothes = spring_sweater
+            
+            elif persistent.jn_player_favourite_season == "Summer":
+                temporary_outfit.clothes = summer_sweater
+            
+            elif persistent.jn_player_favourite_season == "Autumn":
+                temporary_outfit.clothes = autumn_sweater
+            
+            else:
+                temporary_outfit.clothes = winter_sweater
+
+            jn_outfits.save_temporary_outfit(temporary_outfit)
 
         play audio clothing_ruffle
         $ jnPause(2)
         play audio zipper
         $ jnPause(1)
-        show natsuki 1fsldvlesssbr at jn_center
+        show natsuki 1fsqsm at jn_center
         hide black with Dissolve(1.25)
 
-        n "...Well, [player]?"
-        extend " You gotta admit..."
-        n "Whatever your preference..."
-        n "My fashion is {i}always{/i} in-season."
-        n "Ehehe."
+        n 1fsqsm "..."
+        n 1tsqssl "...Well,{w=0.2} [player]?{w=1}{nw}"
+        extend 1tcsssl " You gotta admit..."
+        n 1fsqss "Whatever your preference?"
+        n 1fcsbgedz "My fashion is {i}always{/i} in-season."
+        n 1fchsml "Ehehe."
 
     return
 
