@@ -1051,7 +1051,7 @@ init -1 python in jn_outfits:
     ))
     __register_wearable(JNHairstyle(
         reference_name="jn_hair_twintails",
-        display_name="Twintails",
+        display_name="Twintails with red ribbons",
         unlocked=True,
         is_jn_wearable=True
     ))
@@ -1131,6 +1131,12 @@ init -1 python in jn_outfits:
         reference_name="jn_hair_twintails_long",
         display_name="Long hair with twintails",
         unlocked=True,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHairstyle(
+        reference_name="jn_hair_twintails_white_ribbons",
+        display_name="Twintails with white ribbons",
+        unlocked=False,
         is_jn_wearable=True
     ))
 
@@ -1218,6 +1224,12 @@ init -1 python in jn_outfits:
     __register_wearable(JNAccessory(
         reference_name="jn_accessory_pink_heart_hairpin",
         display_name="Pink heart hairpin",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNAccessory(
+        reference_name="jn_accessory_double_white_hairbands",
+        display_name="Double white hairbands",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1356,8 +1368,8 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
-        reference_name="jn_clothes_sugar_shirt",
-        display_name="Sugar shirt",
+        reference_name="jn_clothes_skater_shirt",
+        display_name="Skater shirt",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1507,6 +1519,12 @@ init -1 python in jn_outfits:
         unlocked=True,
         is_jn_wearable=True
     ))
+    __register_wearable(JNNecklace(
+        reference_name="jn_necklace_twirled_choker",
+        display_name="Twirled choker",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
 
     # Starter official JN outfits
     __register_outfit(JNOutfit(
@@ -1593,6 +1611,16 @@ init -1 python in jn_outfits:
         is_jn_outfit=True,
         clothes=get_wearable("jn_clothes_ruffled_swimsuit"),
         hairstyle=get_wearable("jn_hair_down")
+    ))
+    __register_outfit(JNOutfit(
+        reference_name="jn_skater_outfit",
+        display_name="Skater outfit",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_skater_shirt"),
+        hairstyle=get_wearable("jn_hair_twintails_white_ribbons"),
+        accessory=get_wearable("jn_accessory_double_white_hairbands"),
+        necklace=get_wearable("jn_necklace_twirled_choker")
     ))
 
     # Internal outfits; used for events, etc. These shouldn't be unlocked!
