@@ -1224,12 +1224,6 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
     __register_wearable(JNAccessory(
-        reference_name="jn_accessory_doubleband",
-        display_name="Doubleband",
-        unlocked=False,
-        is_jn_wearable=True
-    ))
-    __register_wearable(JNAccessory(
         reference_name="jn_accessory_hairband_cat",
         display_name="Cat hairband",
         unlocked=False,
