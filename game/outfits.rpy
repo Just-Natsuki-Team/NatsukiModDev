@@ -1533,6 +1533,12 @@ init -1 python in jn_outfits:
         unlocked=True,
         is_jn_wearable=True
     ))
+    __register_wearable(JNNecklace(
+        reference_name="jn_necklace_sango_choker",
+        display_name="Sango choker",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
 
     # Starter official JN outfits
     __register_outfit(JNOutfit(
@@ -1581,6 +1587,16 @@ init -1 python in jn_outfits:
         headgear=get_wearable("jn_headgear_cat_headband"),
         accessory=get_wearable("jn_accessory_hairband_cat"),
         necklace=get_wearable("jn_necklace_bell_collar")
+    ))
+    __register_outfit(JNOutfit(
+        reference_name="jn_sango_cosplay",
+        display_name="Sango cosplay",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_sango_cosplay"),
+        hairstyle=get_wearable("jn_hair_twintails"),
+        necklace=get_wearable("jn_necklace_sango_choker")
+        accessory=get_wearable("jn_accessory_hairband_purple")
     ))
 
     # Unlockable official JN default outfits
