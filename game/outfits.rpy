@@ -1228,8 +1228,8 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
     __register_wearable(JNAccessory(
-        reference_name="jn_accessory_double_white_hairpins",
-        display_name="Double white hairpins",
+        reference_name="jn_accessory_double_white_hairbands",
+        display_name="Double white hairbands",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1619,7 +1619,7 @@ init -1 python in jn_outfits:
         is_jn_outfit=True,
         clothes=get_wearable("jn_clothes_skater_shirt"),
         hairstyle=get_wearable("jn_hair_twintails_white_ribbons"),
-        accessory=get_wearable("jn_accessory_double_white_hairpins"),
+        accessory=get_wearable("jn_accessory_double_white_hairbands"),
         necklace=get_wearable("jn_necklace_twirled_choker")
     ))
 
