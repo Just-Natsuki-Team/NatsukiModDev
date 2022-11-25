@@ -1335,6 +1335,8 @@ init 5 python:
     )
 label talk_favourite_season:
     n 1unmbo "Huh?{w=0.2} My favourite season?"
+
+    # Player hasn't given their favourite season before
     if not persistent.jn_player_favourite_season:
         n 1tllss "That's a little random,{w=0.1} isn't it?"
         n 1tnmss "Well...{w=0.3} anyway.{w=0.3}{nw}"
@@ -1363,6 +1365,7 @@ label talk_favourite_season:
                 n 1fsqan "But the rain!{w=0.2} Jeez!{w=0.5}{nw}"
                 extend 1fcspu " It just never stops!"
                 n 1fllpo "Roll on summer,{w=0.1} I say."
+
                 $ persistent.jn_player_favourite_season = "Spring"
 
             "Summer":
@@ -1370,6 +1373,7 @@ label talk_favourite_season:
                 n 1fsqbg "Nobody can resist some fun in the sun,{w=0.1} am I right?"
                 n 1fnmbg "I'm glad we both agree,{w=0.1} [player].{w=0.5}{nw}"
                 extend 1fchsm " Ehehe."
+
                 $ persistent.jn_player_favourite_season = "Summer"
 
             "Autumn":
@@ -1382,6 +1386,7 @@ label talk_favourite_season:
                 extend 1fsrsr " it's all ruined when the rain comes,{w=0.1} you know?"
                 n 1fsqsr "Trudging through all those sloppy leaves is just gross.{w=0.5}{nw}"
                 extend 1fcssf " No thanks!"
+
                 $ persistent.jn_player_favourite_season = "Autumn"
 
             "Winter":
@@ -1390,8 +1395,10 @@ label talk_favourite_season:
                 n 1tlrbo "Though...{w=0.3} I get it, kinda."
                 n 1fcsbg "It's the perfect time of year to get super snug and spend some quality reading time!"
                 n 1fslss "Especially since there's not much you can do outside,{w=0.1} anyway."
+
                 $ persistent.jn_player_favourite_season = "Winter"
 
+    # Player has already shared their favourite season
     else:
         n 1tllbo "Hang on...{w=0.5}{nw}"
         extend 1tnmss " didn't we talk about this before,{w=0.1} [player]?"
@@ -1429,6 +1436,7 @@ label talk_favourite_season:
                     "Winter":
                         $ new_favourite_season = "Winter"
 
+                $ season_preference_changed = False
                 if persistent.jn_player_favourite_season == new_favourite_season:
                     n 1fnmgs "Hey!{w=0.2} [player]!"
                     n 1fsqpo "I thought you said you'd changed your mind?"
@@ -1436,6 +1444,7 @@ label talk_favourite_season:
                     $ chosen_tease = jn_utils.getRandomTease()
                     n 1fcsem "Jeez...{w=0.5}{nw}"
                     extend 1fnmpo " you're such a wind-up sometimes,{w=0.1} [chosen_tease]!"
+
                     if Natsuki.isAffectionate(higher=True):
                         n 1flrpol "N-{w=0.1}not that I {i}dislike{/i} that side of you,{w=0.1} o-{w=0.1}or anything."
 
@@ -1443,12 +1452,11 @@ label talk_favourite_season:
                         n 1fsqsm "But...{w=0.3} I think I can {i}weather{/i} it."
                         n 1fsrss "For now."
 
-                    return
-
                 else:
                     $ persistent.jn_player_favourite_season = new_favourite_season
+                    $ season_preference_changed = True
 
-                if persistent.jn_player_favourite_season == "Spring":
+                if season_preference_changed and persistent.jn_player_favourite_season == "Spring":
                     n 1usqss "Ooh?{w=0.2} Favouring Spring now,{w=0.1} [player]?"
                     n 1nlrbo "I could do without all the rain,{w=0.1} but I get it."
                     n 1flrpu "Hmm...{w=0.3} Spring..."
@@ -1456,25 +1464,67 @@ label talk_favourite_season:
                     extend 1tnmss " do you grow anything,{w=0.1} [player]?"
                     n 1fchsm "Ahaha."
 
-                elif persistent.jn_player_favourite_season == "Summer":
+                elif season_preference_changed and persistent.jn_player_favourite_season == "Summer":
                     n 1fchbs "Aha!{w=0.2} See?"
                     n 1fsqbs "You knew I was right all along,{w=0.1} didn't you?"
                     n 1usqsg "Don't even try to deny it,{w=0.1} [player].{w=0.5}{nw}"
                     extend 1fchbg " Summer is the best!"
                     n 1uchsm "I'm just glad you came around.{w=0.2} That's the important thing!"
 
-                elif persistent.jn_player_favourite_season == "Autumn":
+                elif season_preference_changed and persistent.jn_player_favourite_season == "Autumn":
                     n 1usqsm "Oh?{w=0.2} You've taken the {i}fall{/i} for Autumn,{w=0.1} have you?"
                     n 1fchsm "Ehehe."
                     n 1ullss "I'll admit,{w=0.1} it's a pretty season,{w=0.1} with all the golden leaves and stuff..."
                     n 1nslss "So long as the weather stays warm,{w=0.1} anyway."
 
-                elif persistent.jn_player_favourite_season == "Winter":
+                elif season_preference_changed and persistent.jn_player_favourite_season == "Winter":
                     n 1tllss "Winter,{w=0.1} huh?{w=0.2} I wasn't expecting that."
                     n 1tnmbo "Do you prefer being indoors now or something,{w=0.1} [player]?"
                     n 1flrss "Well,{w=0.1} if you prefer being all cosy inside..."
                     n 1fsqsm "Then you better not be slacking on your reading,{w=0.1} [player]!{w=0.5}{nw}"
                     extend 1fchsm " Ehehe."
+
+    # Unlock the seasonal off-shoulder sweaters, if not already unlocked and custom outfits unlocked.
+    # Some special dialogue based off the chosen season.
+    if (
+        (
+            not jn_outfits.get_outfit("jn_clothes_bee_off_shoulder_sweater").unlocked
+            or not jn_outfits.get_outfit("jn_clothes_autumn_off_shoulder_sweater").unlocked
+            or not jn_outfits.get_outfit("jn_clothes_creamsicle_off_shoulder_sweater").unlocked
+            or not jn_outfits.get_outfit("jn_clothes_nightbloom_off_shoulder_sweater").unlocked
+        )
+        and Natsuki.isHappy(higher=True) 
+        and persistent.jn_custom_outfits_unlocked
+    ):
+        n 1flrpu "..."
+        n 1ulraj "Actually,{w=0.3}{nw}" 
+        extend 1fnmss " you know what?"
+        n 1fcsss "Give me a sec here.{w=0.75}{nw}"
+        extend 1uchgnl " I've got {i}just{/i} the thing!{w=1}{nw}"
+
+        show black zorder 4 with Dissolve(0.5)
+        $ jnPause(1)
+        play audio zipper
+        $ jnPause(2)
+
+        python:
+            jn_outfits.get_wearable("jn_clothes_bee_off_shoulder_sweater").unlock()
+            jn_outfits.get_wearable("jn_clothes_autumn_off_shoulder_sweater").unlock()
+            jn_outfits.get_wearable("jn_clothes_creamsicle_off_shoulder_sweater").unlock()
+            jn_outfits.get_wearable("jn_clothes_nightbloom_off_shoulder_sweater").unlock()
+
+        play audio clothing_ruffle
+        $ jnPause(2)
+        play audio zipper
+        $ jnPause(1)
+        show natsuki 1fsldvlesssbr at jn_center
+        hide black with Dissolve(1.25)
+
+        n "...Well, [player]?"
+        extend " You gotta admit..."
+        n "Whatever your preference..."
+        n "My fashion is {i}always{/i} in-season."
+        n "Ehehe."
 
     return
 
