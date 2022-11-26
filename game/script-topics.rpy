@@ -5377,25 +5377,25 @@ init 5 python:
 
 label talk_skateboarding:
     if Natsuki.isEnamored(higher=True):
-        n 1fchbs "You bet I am,{w=0.1} [player]!{w=0.5}{nw}"
+        n 1fchbs "You bet I am,{w=0.2} [player]!{w=0.5}{nw}"
         extend 1fchsm " Ehehe."
         n 1tllbg "But how'd you guess?{w=0.5}{nw}"
         extend 1tnmbg " Do I look the type or something?"
-        n 1tlrsm "Well,{w=0.1} whatever."
+        n 1tlrsm "Well,{w=0.2} whatever."
 
     elif Natsuki.isHappy(higher=True):
         n 1uchsm "Ehehe.{w=0.5}{nw}"
         extend 1fchbg " You bet!"
-        n 1uwlbg "Good guess,{w=0.1} [player]!"
+        n 1uwlbg "Good guess,{w=0.2} [player]!"
 
     elif Natsuki.isNormal(higher=True):
-        n 1ullaj "I...{w=0.3} am,{w=0.1} actually.{w=0.5}{nw}"
+        n 1ullaj "I...{w=0.3} am,{w=0.2} actually.{w=0.5}{nw}"
         extend 1tllss " How'd you guess?"
-        n 1unmss "Well,{w=0.1} anyway."
+        n 1unmss "Well,{w=0.2} anyway."
 
     elif Natsuki.isDistressed(higher=True):
         n 1fupemesi "Ugh..."
-        n 1fnmbo "Yes,{w=0.1} [player].{w=0.2} I'm a skateboarder.{w=0.2} I skateboard.{w=0.5}{nw}"
+        n 1fnmbo "Yes,{w=0.2} [player].{w=0.2} I'm a skateboarder.{w=0.2} I skateboard.{w=0.5}{nw}"
         extend 1fsqsf " Is that a problem or something?"
         n 1fllpu "It's just a convenient way to get around.{w=0.5}{nw}"
         extend 1fsqpu " An {i}affordable{/i} way."
@@ -5403,13 +5403,13 @@ label talk_skateboarding:
         n 1flraj "...Yeah.{w=0.2} I don't have much else to say about it.{w=0.5}{nw}"
         extend 1fnmbo " But hey."
         n 1fsgaj "Not like you'd really care to listen anyway...{w=0.5}{nw}"
-        extend 1fsqsftsa " isn't that right,{w=0.1} {i}[player]{/i}?"
+        extend 1fsqsftsa " isn't that right,{w=0.2} {i}[player]{/i}?"
         return
 
     else:
         n 1fsqanean "...And since when did {i}you{/i} give a crap about my hobbies and interests?"
         n 1fcsan "..."
-        n 1fnmsf "Yes,{w=0.1} [player].{w=0.5}{nw}"
+        n 1fnmsf "Yes,{w=0.2} [player].{w=0.5}{nw}"
         extend 1fsqsftsb " I {i}do{/i} enjoy skateboarding."
         n 1fsqupltsb "And I'd rather be doing that than be stuck here talking to {i}you{/i}.{w=0.5}{nw}"
         extend 1fcsanltsa " Jerk."
@@ -5418,17 +5418,17 @@ label talk_skateboarding:
     n 1tchbg "I'm a skater girl alright!{w=0.5}{nw}"
     extend 1tslbo " Or...{w=0.3} was?"
     n 1tllss "Though...{w=0.3} not really by choice.{w=0.5}{nw}"
-    extend 1knmaj " Bikes are {i}expensive{/i}, [player]!"
+    extend 1knmaj " Bikes are {i}expensive{/i},{w=0.2} [player]!"
     n 1kllun "And I could never rely on lifts from my...{w=0.3} folk,{w=0.3}{nw}"
     extend 1kllss " so I saved up all I could,{w=0.3}{nw}" 
     extend 1fcsbg " and got a board the first chance I had!"
     n 1nsqaj "Seriously.{w=0.75}{nw}"
     extend 1fllpusbr " You have no {i}idea{/i} how many lunches I skipped to earn that thing."
     n 1unmbg "But it was actually super convenient!{w=0.5}{nw}"
-    extend 1flrbg " I didn't have to worry about locking it up somewhere,{w=0.1} or some jerk damaging it..."
-    n 1fchsm "I could just pick it up and take it around with me,{w=0.1} or toss it in my locker."
-    n 1nslsssbl "I mean...{w=0.3} I don't need it so much {i}now{/i},{w=0.1} but..."
-    n 1fsqss "You gotta admit,{w=0.1} [player] {w=0.1}-{w=0.1} I'm nothing if not resourceful!{w=0.5}{nw}"
+    extend 1flrbg " I didn't have to worry about locking it up somewhere,{w=0.2} or some jerk damaging it..."
+    n 1fchsm "I could just pick it up and take it around with me,{w=0.2} or toss it in my locker."
+    n 1nslsssbl "I mean...{w=0.3} I don't need it so much {i}now{/i},{w=0.2} but..."
+    n 1fsqss "You gotta admit,{w=0.2} [player] {w=0.2}-{w=0.2} I'm nothing if not resourceful!{w=0.5}{nw}"
     extend 1fchsm " Ahaha."
 
     n 1fllss "I...{w=0.75}{nw}" 
@@ -5441,12 +5441,43 @@ label talk_skateboarding:
     n 1kslunsbr "Not after all that effort."
 
     n 1kcsaj "...Yeah,{w=0.2} yeah.{w=0.5}{nw}"
-    extend 1fcspo " Not very {i}radical{/i} of me,{w=0.1} huh?"
-    n 1ullpo "But...{w=0.5} enough of that for now.{w=0.5}{nw}"
-    extend 1fnmsm " Besides,{w=0.1} [player]..."
-    n 1fsqss "I can tell when you're getting...{w=0.3} {i}board{/i}."
-    n 1fchsm "Ehehe.{w=0.5}{nw}"
-    extend 1uchgn " No regrets,{w=0.1} [player]!"
+    extend 1fcspo " Not very {i}radical{/i} of me,{w=0.2} huh?"
+
+    if (
+        not jn_outfits.get_outfit("jn_skater_outfit").unlocked
+        and Natsuki.isAffectionate(higher=True) 
+        and persistent.jn_custom_outfits_unlocked
+    ):
+        # Unlock skater outfit, if custom outfits unlocked
+        n 1tslsl "..."
+        n 1uwdajesu "Oh!{w=0.5}{nw}"
+        extend 1fsqbs " But you know what {i}totally{/i} was,{w=0.2} [player]?{w=1}{nw}"
+        extend 1fllbgsbl " Radical,{w=0.2} I mean."
+        n 1uchgn "...My favourite skateboarding outfit,{w=0.2} of course!"
+        n 1tllss "In fact,{w=0.75}{nw}"
+        extend 1fchbg " I probably still have it around here somewhere too!{w=0.75}{nw}"
+        extend 1ullaj " I usually brought it around with me anyways."
+        n 1fcsajsbl "O-{w=0.2}only for going back and forth from school though!{w=0.75}{nw}"
+        extend 1nslsssbl " It isn't exactly following the dress code..."
+        n 1nslbosbl "But...{w=0.75}{nw}" 
+        extend 1tsqem " I wasn't exactly gonna make my uniform all sweaty for rest of the day either."
+        n 1fsrpu "...Ew."
+        n 1ulrpu "Well,{w=0.2} anyway.{w=1}{nw}"
+        extend 1unmaj " I'm not gonna go look for it now though,{w=0.75}{nw}"
+        extend 1nnmpu " but I think we can both agree."
+        n 1fcsss "If you're gonna skateboard..."
+        n 1uchgn "You gotta follow {w=0.2}{i}all{/i}{w=0.2} the rules of cool!{w=0.75}{nw}"
+        extend 1fchsmeme " Ehehe."
+
+        $ jn_outfits.get_outfit("jn_skater_outfit").unlock()
+
+    else:
+        n 1ullpo "But...{w=0.5} enough of that for now.{w=0.5}{nw}"
+        extend 1fnmsm " Besides,{w=0.2} [player]..."
+        n 1fsqss "I can tell when you're getting...{w=0.3} {i}board{/i}."
+        n 1fchsm "Ehehe.{w=0.5}{nw}"
+        extend 1uchgn " No regrets,{w=0.2} [player]!"
+        
     return
 
 # Natsuki describes her experiences with sports at school

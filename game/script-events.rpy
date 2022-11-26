@@ -119,6 +119,8 @@ image prop a_la_mode_manga_held = "mod_assets/props/a_la_mode_manga_held.png"
 image prop strawberry_milkshake = "mod_assets/props/strawberry_milkshake.png"
 image prop step_by_step_manga_held = "mod_assets/props/step_by_step_manga_held.png"
 image prop glasses_case = "mod_assets/props/glasses_case.png"
+image prop hot_chocolate hot = "mod_assets/props/hot_chocolate.png"
+image prop hot_chocolate cold = "mod_assets/props/hot_chocolate_cold.png"
 
 # Overlays are displayed over the top of Natsuki, but behind any props
 image overlay slipping_glasses = "mod_assets/overlays/slipping_glasses.png"
@@ -608,7 +610,7 @@ label event_reading_a_la_mode:
     menu:
         "Enter...":
             pass
-    
+
     show prop a_la_mode_manga_held zorder jn_events.JN_EVENT_PROP_ZORDER
     $ jn_events.display_visuals("1fdwca")
     $ jn_globals.force_quit_enabled = True
@@ -799,7 +801,7 @@ label event_eyewear_problems:
     python:
         import copy
         import random
-        
+
         jn_globals.force_quit_enabled = False
 
         # Unlock the starter glasses
@@ -824,7 +826,7 @@ label event_eyewear_problems:
     play audio drawer
     $ jnPause(2)
 
-    n "Oh,{w=0.75}{nw}" 
+    n "Oh,{w=0.75}{nw}"
     extend " come {i}on{/i}!{w=1}{nw}"
     play audio stationary_rustle_c
     extend " I {i}know{/i} I left them here!"
@@ -881,7 +883,7 @@ label event_eyewear_problems:
     $ jnPause(2)
     play audio gift_close
     $ jnPause(0.25)
-    
+
     n "...!"
     n "T-{w=0.2}they're here?!{w=1}{nw}"
     extend " They're here!"
@@ -904,7 +906,7 @@ label event_eyewear_problems:
     n 1ullajl "O-{w=0.2}oh!{w=1}{nw}"
     extend 1fllbglsbl " [player]!"
     n 1fcssslsbl "Heh."
-    n 1fcsbglsbr "Well,{w=0.5}{nw}" 
+    n 1fcsbglsbr "Well,{w=0.5}{nw}"
     extend 1fsqsglsbr " didn't {i}you{/i} pick a fine time to show up."
     n 1fcssglsbr "..."
     n 1tsqsslsbr "...So,{w=0.3} [player]?{w=1}{nw}"
@@ -915,7 +917,7 @@ label event_eyewear_problems:
     show overlay slipping_glasses zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_glasses_slide_down
     n 1tllbgl "Did I do something with my hair?{w=1}{nw}"
     extend 1fcssml " Ehehe."
-    n 1nchgnleme "Nope!{w=0.5}{nw}" 
+    n 1nchgnleme "Nope!{w=0.5}{nw}"
     extend 1fcsbgl " I-{w=0.75}{nw}"
     n 1nsqbol "..."
 
@@ -925,7 +927,7 @@ label event_eyewear_problems:
 
     n 1fcspol "..."
     n 1fcsemfsbl "Ahem!"
-    n 1fcsbglsbl "N-{w=0.2}nope!{w=0.75}{nw}" 
+    n 1fcsbglsbl "N-{w=0.2}nope!{w=0.75}{nw}"
     show overlay slipping_glasses zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_glasses_slide_down
     extend 1fchbglsbr " I-{w=0.2}it's not my hair,{w=0.2} [player]!"
     n 1tsqsmlsbr "What else did you-{w=1}{nw}"
@@ -941,7 +943,7 @@ label event_eyewear_problems:
     show overlay slipping_glasses zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_glasses_slide_down_faster
     extend 1fsqbglesssbr " What else did you noti-{w=1}{nw}"
     n 1fslanlsbl "Uuuuuuuuu-!"
-    
+
     menu:
         "Natsuki...":
             pass
@@ -959,14 +961,14 @@ label event_eyewear_problems:
             $ Natsuki.calculatedAffinityGain()
             if Natsuki.isEnamored(higher=True):
                 n 1knmsll "..."
-                n 1kllpul "...You really think so,{w=0.75}{nw}" 
+                n 1kllpul "...You really think so,{w=0.75}{nw}"
                 extend 1knmpul " [player]?"
                 n 1ksrunlsbl "..."
                 n 1fcssslsbl "Heh."
                 n 1fsldvlsbr "...Then I guess that at least wasn't a {i}total{/i} waste of time."
-                n 1fcsajlsbr "Not that I {i}don't{/i} think I look good in them too,{w=0.5}{nw}" 
+                n 1fcsajlsbr "Not that I {i}don't{/i} think I look good in them too,{w=0.5}{nw}"
                 extend 1fcssmfsbl " obviously."
-            
+
             elif Natsuki.isAffectionate(higher=True):
                 n 1uskemfeshsbl "...!{w=0.5}{nw}"
                 n 1fcsgsfsbl "W-{w=0.3}well,{w=0.2} of course they do,{w=0.2} [player]!{w=1}{nw}"
@@ -978,7 +980,7 @@ label event_eyewear_problems:
                 extend 1fllgslsbl " duh!"
                 n 1fcsbglsbr "Of course they suit me,{w=0.2} [player]!"
                 n 1fcsemlsbr "I mean,{w=0.75}{nw}"
-                extend 1fllemlsbr " You didn't seriously think I'd pick something that {i}wouldn't{/i} show off my sense of style,{w=0.75}{nw}" 
+                extend 1fllemlsbr " You didn't seriously think I'd pick something that {i}wouldn't{/i} show off my sense of style,{w=0.75}{nw}"
                 extend 1fnmpolsbr " did you?"
                 n 1fcsemlsbl "Yeesh..."
 
@@ -1000,13 +1002,13 @@ label event_eyewear_problems:
         "...":
             n 1fllsll "..."
             n 1knmeml "...What?"
-            extend 1fsqemlsbr " The silent act {i}definitely{/i} isn't helping," 
+            extend 1fsqemlsbr " The silent act {i}definitely{/i} isn't helping,"
             extend 1fsrpolsbl " you jerk..."
 
     n 1fcsajl "Well,{w=0.3} whatever.{w=1}{nw}"
     extend 1fllsll " At least I know where they are now,"
     extend 1fslbol " I suppose."
-    n 1fcseml "...Wearing them all high up like that was dorky,{w=0.5}{nw}" 
+    n 1fcseml "...Wearing them all high up like that was dorky,{w=0.5}{nw}"
     extend 1fcspol " a-{w=0.2}anyway."
 
     show black zorder 6 with Dissolve(0.5)
@@ -1024,7 +1026,7 @@ label event_eyewear_problems:
 
     n 1nsrcal "..."
     n 1nsrajl "I...{w=0.75}{nw}"
-    extend 1nsrsslsbl " guess I should apologize for all of...{w=1.25}{nw}" 
+    extend 1nsrsslsbl " guess I should apologize for all of...{w=1.25}{nw}"
     extend 1nslsllsbl " that."
     n 1nsrpolsbl "Not exactly rolling out the red carpet here,{w=0.2} am I?{w=0.75}{nw}"
     extend 1nslsslsbl " Heh."
@@ -1034,7 +1036,7 @@ label event_eyewear_problems:
     extend 1nsqbglsbr " huh?"
     n 1nsrsslsbr "So..."
     n 1kchsslesd "W-{w=0.2}what's new,{w=0.2} [player]?"
-    
+
     return
 
 # Natsuki learns why you should always have a charging cable on hand...
@@ -1094,19 +1096,19 @@ label event_wintendo_twitch_battery_dead:
 
     show prop wintendo_twitch_playing free zorder jn_events.JN_EVENT_PROP_ZORDER
     show natsuki gaming at jn_center zorder JN_NATSUKI_ZORDER
-    $ jn_events.display_visuals()
+    $ jn_events.display_visuals("1fdwfol")
     $ jn_globals.force_quit_enabled = True
     $ jnPause(3)
 
     n 1fdwanl "Nnnnnn...!"
-    play audio button_mashing_a 
+    play audio button_mashing_a
     n 1fdwpoless "Uuuuuuu-!"
     n 1fdwfo "..."
     play audio button_mashing_c
     n 1fdwfoesssbl "Mmmmmm...!"
 
     show prop wintendo_twitch_held free zorder jn_events.JN_EVENT_PROP_ZORDER
-    
+
     n 1uchbsedz "YES!{w=1.25}{nw}"
     extend 1uchgnedz " FINALLY!"
     n 1kcsbgesisbl "Haah..."
@@ -1124,7 +1126,7 @@ label event_wintendo_twitch_battery_dead:
     n 1fsldvsbl "Sorry,"
     extend 1fcsgssbl " but you have no {i}IDEA{/i} how long I was trying to beat that stage!"
     n 1fnmpol "Seriously!"
-    n 1fcsajl "I mean,{w=1}{nw}" 
+    n 1fcsajl "I mean,{w=1}{nw}"
     extend 1fsrajlsbl " it's not like I was getting {i}upset{/i} or anything..."
     n 1fcsbglsbr "I'm {i}way{/i} past getting vexed over games,{w=0.2} of all things."
     n 1fslbglsbr "T-{w=0.2}they're just lucky I {i}chose{/i} not to go all out.{w=1}{nw}"
@@ -1132,7 +1134,7 @@ label event_wintendo_twitch_battery_dead:
     extend 1nchgnl " Ehehe."
     n 1nchsmleme "..."
     n 1tnmbo "Eh?"
-    extend 1klrbgesssbl " Oh,{w=0.2} right!{w=0.75}{nw}" 
+    extend 1klrbgesssbl " Oh,{w=0.2} right!{w=0.75}{nw}"
     extend 1fchbgesssbr " Sorry!{w=0.75}{nw}"
     extend 1flrdvlsbr " I'm almost done anyway."
     n 1ucssslsbr "All I gotta do is save,{w=0.5}{nw}"
@@ -1187,7 +1189,7 @@ label event_wintendo_twitch_game_over:
     n "Ehehe..."
     play audio button_mashing_a
     n "Oh yeah.{w=0.5} Uh huh."
-    
+
     play audio button_mashing_b
     $ jnPause(2)
     play audio button_mashing_a
@@ -1226,7 +1228,7 @@ label event_wintendo_twitch_game_over:
 
     show prop wintendo_twitch_playing charging zorder jn_events.JN_EVENT_PROP_ZORDER
     show natsuki gaming at jn_center zorder JN_NATSUKI_ZORDER
-    $ jn_events.display_visuals()
+    $ jn_events.display_visuals("1unmpu")
     $ jn_globals.force_quit_enabled = True
     $ jnPause(1.5)
 
@@ -1270,5 +1272,301 @@ label event_wintendo_twitch_game_over:
     n 1fsqajl "Well?{w=0.5}{nw}"
     extend 1fcspolesi " Get to it then,{w=0.2} [player]!"
     n 1fsqsml " Ehehe."
-    
+
+    return
+
+# Natsuki shares tips how to stay warm at chilly days
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_warm_package",
+            unlocked=True,
+            conditional="jn_utils.get_total_gameplay_days() >= 21 and persistent.jn_custom_outfits_unlocked",
+            affinity_range=(jn_affinity.HAPPY, None)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
+
+label event_warm_package:
+    python:
+        jn_globals.force_quit_enabled = False
+        teddy_cardigan_outfit = jn_outfits.get_outfit("jn_cosy_cardigan_outfit")
+        teddy_cardigan_outfit.unlock()
+        Natsuki.setOutfit(teddy_cardigan_outfit)
+
+    if jn_atmosphere.isCurrentWeatherRain() or jn_atmosphere.isCurrentWeatherThunder():
+        n "..."
+        n "Uuuuuuu-!"
+        n "You've {w=0.2}{i}got{/i}{w=0.2} to be kidding me."
+        n "Rain?!{w=0.75} {i}Again?!{/i}"
+        n "It's always freezing here when it does that!{w=1} I don't even {i}have{/i} a radiator to turn on!"
+        $ jnPause(3)
+        n "Ugh..."
+        n "You know what?{w=0.75} Screw this!"
+        play audio chair_out
+        n "Someone {i}had{/i} to have left a coat or...{w=0.75} {i}something{/i}{w=0.5} lying around..."
+        $ jnPause(3)
+
+        play audio clothing_ruffle
+        $ jnPause(2)
+        play audio clothing_ruffle
+
+        n "..."
+        n "Jeez..."
+        n "How is this not enough?{w=1} I'm {i}still{/i} freezing my butt off!"
+
+        $ jnPause(3)
+        play audio gift_slide
+        $ jnPause(1)
+        play audio gift_open
+
+        n "Uuuuu..."
+        n "You'd think the {i}star{/i} of the debate club would have at least {i}tried{/i} to talk our way into a warm clubroom."
+        n "I can barely feel my toes..."
+
+        $ jnPause(3)
+        play audio gift_open
+
+        n "...!"
+        n "Oh man,{w=0.2} am I glad to see you {i}here{/i}!"
+        n "...Wait.{w=1} How did {i}you{/i} survive being in a classroom with Sayori around...?"
+        n "..."
+        n "...Doesn't matter.{w=0.75} Too cold to question it.{w=1} Now where did they leave the kettle last time..."
+        n "Aha!{w=0.75} Right!{w=0.3} Just gotta plug it in there,{w=0.2} and..."
+        $ jnPause(2)
+
+    elif jn_atmosphere.isCurrentWeatherSnow():
+        n "..."
+        n "Uuuuuuu...!"
+        n "As if being stuck here wasn't enough of a cold shoulder..."
+        n "Now the {i}weather{/i} is giving me one!{w=1} Literally!"
+        n "Forget frostbite!{w=0.3} I'm getting frost-{w=0.5}{i}butt{/i}!{w=1} I am {i}so{/i} done with this..."
+        n "..."
+        n "Oh, screw it!{w=0.75} I'm a girl of action!"
+        n "I don't have to stand for this!"
+
+        play audio chair_out
+        $ jnPause(3)
+        play audio clothing_ruffle
+        $ jnPause(2)
+        play audio clothing_ruffle
+
+        n "Man...{w=0.75} I {i}really{/i} should've tidied all this up before..."
+        n "Look at all this junk!{w=0.75} Sheesh..."
+        n "...No wonder all my stuff kept getting lost in here."
+        $ jnPause(3)
+        n "..."
+        n "...!"
+        n "H-{w=0.2}how did {i}you{/i} end up here?{w=0.75} I thought you were gone forever!"
+
+        play audio clothing_ruffle
+        $ jnPause(3)
+
+        n "Come on...{w=0.75} what else...{w=0.5} what else..."
+        n "..."
+        n "Ugh...{w=1} now my fingers are all numb..."
+
+        $ jnPause(3)
+        play audio gift_slide
+        $ jnPause(2)
+
+        n "...Eh?{w=0.75} What do we have here...?"
+        play audio gift_open
+        n "...!"
+        n "SCORE!"
+        n "Natsuki,{w=0.2} you've done it again!"
+        n "Alright...{w=1.25} now,{w=0.2} where did she put the kettle..."
+        play audio gift_slide
+        $ jnPause(2)
+        n "Aha!{w=0.75} There we go.{w=1} Come to mama..."
+
+    else:
+        n "..."
+        n "Ugh...{w=0.75} I {i}seriously{/i} cannot believe my luck sometimes."
+        n "Out of all the places I could have been stuck inside for {i}literally forever...{/i}"
+        n "Did it {i}really{/i} have to be the one classroom {i}without{/i} central heating?!"
+        n "Come {i}on{/i}..."
+
+        $ jnPause(3)
+
+        n "...Wait."
+        n "..."
+        n "Didn't I...?{w=1} I'm sure I did..."
+
+        play audio chair_out
+        $ jnPause(3)
+
+        play audio clothing_ruffle
+        $ jnPause(2)
+        play audio clothing_ruffle
+
+        n "Man,{w=0.2} I honestly forgot just how much junk is back here..."
+        n "No wonder the teacher got all antsy about my books."
+
+        $ jnPause(2)
+        play audio clothing_ruffle
+
+        n "Yuri's...{w=0.75} Yuri's...{w=0.75} Yuri's..."
+        play audio clothing_ruffle
+        n "Monika's..."
+        play audio clothing_ruffle
+        $ jnPause(2)
+        n "..."
+        n "...{b}Definitely{/b}{w=0.25} Yuri's."
+        n "..."
+        n "Aha!{w=0.2} I knew it!{w=1} Take {i}that{/i},{w=0.2} academy uniform guidelines!"
+        play audio clothing_ruffle
+        $ jnPause(3)
+        play audio gift_open
+        n "...Eh?{w=0.2} And is this...?"
+        n "I-{w=0.2}it is!"
+        n "Oh man...{w=1} JACKPOT!{w=0.75} Ehehe."
+
+    play audio switch_flip
+    $ jnPause(2)
+    play audio kettle_boil
+    $ jnPause(5)
+    play audio drink_pour
+    $ jnPause(7)
+    play audio chair_in
+    $ jnPause(3)
+
+    menu:
+        "Enter...":
+            pass
+
+    show prop hot_chocolate hot zorder jn_events.JN_EVENT_PROP_ZORDER
+    $ jn_events.display_visuals("1fsqbl")
+    $ jn_globals.force_quit_enabled = True
+
+    n 1kcsbsesi "Haah...{w=1.5}{nw}"
+    extend 1fchsmedz " perfecto!"
+    n 1fcsbg "Who {i}needs{/i} working heating when you have hot chocolate?"
+    n 1fcssmlesisbl "{i}And{/i} I didn't even burn my tongue this time!"
+
+    n 1ndwsm "..."
+    n 1uwdgseex "...!"
+    n 1fllbglsbl "W-{w=0.2}well,{w=0.75}{nw}"
+    extend 1fcsbglsbl " hello [player]!"
+    n 1fllsmlsbl "..."
+    n 1tsqsml "...?"
+    n 1tsqctl "Oho?"
+    n 1nchts "Is that a hint of {i}jealousy{/i} I spy there,{w=0.2} [player]?{w=1}{nw}"
+    extend 1fsqsmleme " Ehehe."
+    n 1uchgn "Well,{w=0.2} can't say I blame you!"
+    n 1fllbg "I mean...{w=0.5}{nw}"
+    extend 1fspgsedz " have you {i}seen{/i} this right here?"
+    n 1ncsajsbl "...And no,{w=0.5}{nw}"
+    extend 1fslpo " I don't care how unhealthy it is."
+    n 1fsqcaesi "I {i}always{/i} make an exception for hot chocolate."
+    n 1fcstr "Besides,{w=0.2} you know what they say."
+    n 1fchgn "...Go big or go home,{w=0.3} right?{w=0.75}{nw}"
+    extend 1fchsml " Ehehe."
+    n 1fllgs "Seriously,{w=0.2} hot chocolate just wouldn't {i}be{/i} hot chocolate without {i}all{/i} the extras!"
+    n 1fcsgs "Cream?{w=0.3} Check!{w=0.3} Marshmallows?{w=0.3} Check!"
+    n 1fsqcal "...My special panda mug?{w=1.25}{nw}"
+    extend 1fcssml " Check again!"
+    n 1fchbgl "Perfection!{w=0.75}{nw}"
+    extend 1fcstsl " If I do say so myself~."
+
+    n 1ullss "Well,{w=0.5}{nw}"
+    extend 1fsqss " as much as I'm sure you'd {i}love{/i} to share me with this,{w=0.2} [player]..."
+    n 1fcscaesi "There's some things I just can't allow.{w=0.75}{nw}"
+    extend 1fsqsm " Ehehe."
+    n 1fsqbg "So!{w=0.5} Prepare yourself."
+    n 1fchbg "...'Cause I'm gonna share some pretty {i}hot{/i} tips of my own instead!"
+    n 1fsqbg "That's right,{w=0.2} [player].{w=1}{nw}"
+    extend 1fchbledz " You've got front row seats to another lesson from yours truly~!"
+    n 1fcsaj "As you can see,{w=0.75}{nw}"
+    extend 1fcstr " it isn't exactly hard to stay nice and toasty if you know what you're doing..."
+    n 1fchsm "...And it all begins with what you wear!"
+    n 1fllpu "Think of it as a fight:{w=0.75}{nw}"
+    extend 1flrem " the cold is your opponent,{w=1}{nw}"
+    extend 1fcspoesi " and your clothing is your armor!"
+
+    n 1ullaj "Now{w=0.2} -{w=0.2} obviously,{w=0.2} you're gonna want to start with layers.{w=0.75}{nw}"
+    extend 1nsrss " You probably knew that much already."
+    n 1fnmgs "But that doesn't mean you should just throw on {i}anything{/i} you can find!"
+    n 1fcspo "You really gotta {i}think{/i} about what exactly you're putting on -{w=1}{nw}"
+    extend 1unmaj " like the material!"
+    n 1fslaj "If your clothes aren't breathable,{w=0.75}{nw}"
+    extend 1fsqpu " then you'll just end up getting all sticky and sweaty under all that fabric..."
+    n 1fcsan "...And wet clothes are useless at keeping the heat in!"
+    n 1ksqup "The last thing you want is being freezing cold {i}and{/i} stinky..."
+    n 1fcsaj "So pick your layers{w=0.75}{nw}"
+    extend 1fslpu " -{w=0.5} and how many of them -{w=0.5}{nw}"
+    extend 1fchsm " wisely!"
+
+    n 1fcsgs "Next up: ditch the tight clothes!"
+    n 1nsqem "You {i}really{/i} want stuff that gives you at least some kind of gap between your skin and the fabric."
+    n 1ullaj "That way,{w=0.2} all the heat from your body stays trapped around you -{w=0.75}{nw}"
+    extend 1fchgn " like a little toasty shield!"
+    n 1flrsl "If you just wear something like leggings,{w=0.5}{nw}"
+    extend 1fsqsl " then all that warmth goes straight from your body,{w=0.2} into the cloth..."
+    n 1fllem  "...And then the air just snatches it away,{w=0.2} like a professional freeloader!{w=0.75}{nw}"
+    extend 1fcswr " What a waste!"
+    n 1fslss "Besides,{w=0.2} unless you're a professional cyclist or something,{w=1}{nw}"
+    extend 1fsqss " I {i}highly{/i} doubt you need the aerodynamics..."
+    n 1fchbg "So keep 'em nice and baggy,{w=0.2} [player]!{w=0.75}{nw}"
+    extend 1nchgn " Easy peasy!"
+
+    n 1uwdaj "Oh -{w=0.5}{nw}"
+    extend 1nllaj " right,{w=0.2} and most of all?"
+    n 1ncssr "..."
+    n 1nsqaj "...Just don't be a dork about going outside,{w=0.2} alright?"
+    n 1nslss "I mean,{w=0.2} I get it -{w=0.5}{nw}"
+    extend 1ksqss " sometimes you just have things that {i}need{/i} to be done out there.{w=0.75}{nw}"
+    extend 1ksrsm " It happens.{w=1}{nw}"
+    extend 1ksrsl " But..."
+    n 1ksqbo "...Just know your limits.{w=0.5}{nw}"
+    extend 1ksqpo " Warm up {i}properly{/i} if you've spent ages in crappy weather,{w=0.5}{nw}"
+    extend 1fslpo " or nasty old buildings..."
+    n 1fcsaj "Decent shelter,{w=0.2} hot drinks,{w=0.5}{nw}"
+
+
+    if Natsuki.isLove(higher=True):
+        extend 1tslss " warm food..."
+        n 1nsldvleafsbl "Some quality time with your favourite girl..."
+        n 1fchsmlsbl "I-{w=0.2}it all counts!"
+
+    elif Natsuki.isAffectionate(higher=True):
+        extend 1tslss " warm food..."
+        n 1fsrdvl "S-{w=0.2}some quality time with a certain someone..."
+        n 1fcssslsbr "I-{w=0.2}it all counts!"
+
+    else:
+        extend 1tslss " warm food...{w=0.5}{nw}"
+        extend 1unmaj " you'd be surprised how much a little baking can turn up the heat!"
+        n 1fslslsbr "...Speaking from experience."
+        n 1kslsl "..."
+        n 1fcsbgsbr "B-{w=0.2}but yeah!"
+
+    show prop hot_chocolate cold
+
+    n 1nchsm "And that about {i}wraps{/i} things up!{w=0.75}"
+    extend 1nllss " I-"
+    n 1unmsf "..."
+    n 1udwemeshsbl "...!"
+    n 1uskemsbl "M-{w=0.2}my drink!{w=1}{nw}"
+    extend 1kbkwresssbr " I-{w=0.2}it's getting all cold!{w=0.75}{nw}"
+
+    show black zorder 6 with Dissolve(0.5)
+    $ jnPause(1)
+    hide prop hot_chocolate
+    play audio straw_sip
+    $ jnPause(2)
+    play audio glass_move
+    show natsuki 1kcsss at jn_center zorder JN_NATSUKI_ZORDER
+    $ jnPause(3)
+    hide black with Dissolve(2)
+
+    n 1kcsbgesi "Haaah...{w=1.25}{nw}"
+    extend 1nchtseme " much better!"
+    n 1fsqsm "Now that's out of the way,{w=0.2} [player]..."
+    n 1usqbg "...How about {i}you{/i} warm up that conversational muscle of yours?{w=1}{nw}"
+    extend 1fsqsmeme " Ehehe."
+    n 1tsqss "Well?{w=0.75}{nw}"
+    extend 1fchbl " I'm waiting!"
+
     return

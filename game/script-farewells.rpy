@@ -544,7 +544,7 @@ label farewell_love_you_mean_the_world_to_me:
     extend 1kplsfl " you're leaving now,{w=0.2} [player]?" 
     n 1klrcal "Well...{w=1}{nw}" 
     extend 1ksrcal " okay."
-    n 1fnmtrf "Y-{w=0.2}you better take care,{w=0.2} [player]!{w=0.5}" 
+    n 1fnmtrf "Y-{w=0.2}you better take care,{w=0.2} [player]!{w=0.5}{nw}" 
     extend 1kchssfeaf " You mean the world to me!"
 
     return { "quit": None }

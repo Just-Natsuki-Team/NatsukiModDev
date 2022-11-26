@@ -105,8 +105,8 @@ init -1 python in jn_outfits:
                 - wearable_list - the list of JNWearable child wearables to query
                 - unlocked - the boolean unlocked state to filter for
                 - is_jn_wearable - the boolean is_jn_wearable state to filter for
-                - reference_name - list of reference_names the wearable must have 
-                - not_reference_name - list of reference_names the wearable must not have 
+                - reference_name - list of reference_names the wearable must have
+                - not_reference_name - list of reference_names the wearable must not have
                 - wearable_type the wearable type to filter for
 
             OUT:
@@ -179,8 +179,8 @@ init -1 python in jn_outfits:
                 - wearable_list - the list of JNWearable child wearables to query
                 - unlocked - the boolean unlocked state to filter for
                 - is_jn_wearable - the boolean is_jn_wearable state to filter for
-                - reference_name - list of reference_names the wearable must have 
-                - not_reference_name - list of reference_names the wearable must not have 
+                - reference_name - list of reference_names the wearable must have
+                - not_reference_name - list of reference_names the wearable must not have
                 - wearable_type the wearable type to filter for
 
             OUT:
@@ -208,7 +208,7 @@ init -1 python in jn_outfits:
         Describes a hairstyle for Natsuki; a wearable with additional functionality specific to hairstyles.
         """
         pass
-    
+
     class JNEyewear(JNWearable):
         """
         Describes eyewear for Natsuki; a wearable with additional functionality specific to eyewear.
@@ -329,7 +329,7 @@ init -1 python in jn_outfits:
                 - outfit_list - the list of JNOutfit outfits to query
                 - unlocked - the boolean unlocked state to filter for
                 - is_jn_outfit - the boolean is_jn_outfit state to filter for
-                - not_reference_name - list of reference_names the outfit must not have 
+                - not_reference_name - list of reference_names the outfit must not have
                 - has_accessory - the boolean has_accessory state to filter for
                 - has_eyewear - the boolean has_eyewear state to filter for
                 - has_headgear - the boolean has_headgear state to filter for
@@ -462,7 +462,7 @@ init -1 python in jn_outfits:
             IN:
                 - unlocked - the boolean unlocked state to filter for
                 - is_jn_outfit - the boolean is_jn_outfit state to filter for
-                - not_reference_name - list of reference_names the outfit must not have 
+                - not_reference_name - list of reference_names the outfit must not have
                 - has_accessory - the boolean has_accessory state to filter for
                 - has_eyewear - the boolean has_eyewear state to filter for
                 - has_headgear - the boolean has_headgear state to filter for
@@ -582,7 +582,7 @@ init -1 python in jn_outfits:
             # Hairstyles have two sprites for a given pose (front and back), so we must check both exist
             if isinstance(wearable, JNHairstyle):
                 if (
-                    not jn_utils.getFileExists(os.path.join(resource_path, "back.png")) 
+                    not jn_utils.getFileExists(os.path.join(resource_path, "back.png"))
                     or not jn_utils.getFileExists(os.path.join(resource_path, "bangs.png"))
                 ):
                     jn_utils.log("Missing back/bangs sprite(s) for {0}: check {1}".format(wearable.reference_name, resource_path))
@@ -909,7 +909,7 @@ init -1 python in jn_outfits:
         IN:
             - outfit_name - str outfit name to fetch
 
-        OUT: Corresponding JNOutfit if the outfit exists, otherwise None 
+        OUT: Corresponding JNOutfit if the outfit exists, otherwise None
         """
         if outfit_exists(outfit_name):
             return __ALL_OUTFITS[outfit_name]
@@ -923,7 +923,7 @@ init -1 python in jn_outfits:
         IN:
             - wearable_name - str wearable name to fetch
 
-        OUT: Corresponding JNWearable child if the wearable exists, otherwise None 
+        OUT: Corresponding JNWearable child if the wearable exists, otherwise None
         """
         if wearable_exists(wearable_name):
             return __ALL_WEARABLES[wearable_name]
@@ -1003,7 +1003,7 @@ init -1 python in jn_outfits:
             renpy.notify("Save failed; please check log for more information.")
             jn_utils.log("Failed to save outfit {0}, as a write operation was not possible.".format(new_custom_outfit.display_name))
             return False
-  
+
     def delete_custom_outfit(outfit):
         """
         Removes the given outfit from the list of all outfits, and removes its persistent data.
@@ -1040,14 +1040,14 @@ init -1 python in jn_outfits:
 
             else:
                 return _OUTFIT_SCHEDULE_WEEKEND_HIGH_AFFINITY.get(store.jn_get_current_time_block())
-        
+
         elif store.Natsuki.isUpset(higher=True):
             if store.jn_is_weekday():
                 return _OUTFIT_SCHEDULE_WEEKDAY_MEDIUM_AFFINITY.get(store.jn_get_current_time_block())
 
             else:
                 return _OUTFIT_SCHEDULE_WEEKEND_MEDIUM_AFFINITY.get(store.jn_get_current_time_block())
-        
+
         else:
             if store.jn_is_weekday():
                 return _OUTFIT_SCHEDULE_WEEKDAY_LOW_AFFINITY.get(store.jn_get_current_time_block())
@@ -1078,7 +1078,7 @@ init -1 python in jn_outfits:
     ))
     __register_wearable(JNHairstyle(
         reference_name="jn_hair_twintails",
-        display_name="Twintails",
+        display_name="Twintails with red ribbons",
         unlocked=True,
         is_jn_wearable=True
     ))
@@ -1158,6 +1158,12 @@ init -1 python in jn_outfits:
         reference_name="jn_hair_twintails_long",
         display_name="Long hair with twintails",
         unlocked=True,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHairstyle(
+        reference_name="jn_hair_twintails_white_ribbons",
+        display_name="Twintails with white ribbons",
+        unlocked=False,
         is_jn_wearable=True
     ))
 
@@ -1248,6 +1254,36 @@ init -1 python in jn_outfits:
         unlocked=False,
         is_jn_wearable=True
     ))
+    __register_wearable(JNAccessory(
+        reference_name="jn_accessory_gold_star_hairpin",
+        display_name="Gold star hairpin",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNAccessory(
+        reference_name="jn_accessory_pink_star_hairpin",
+        display_name="Pink star hairpin",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNAccessory(
+        reference_name="jn_accessory_hairband_stars",
+        display_name="Stars hairband",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNAccessory(
+        reference_name="jn_accessory_hairband_cat",
+        display_name="Cat hairband",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNAccessory(
+        reference_name="jn_accessory_double_white_hairbands",
+        display_name="Double white hairbands",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
 
     # Official JN clothes
     __register_wearable(JNClothes(
@@ -1325,13 +1361,13 @@ init -1 python in jn_outfits:
     __register_wearable(JNClothes(
         reference_name="jn_clothes_qeeb_sweater",
         display_name="Qeeb sweater",
-        unlocked=False,
+        unlocked=True,
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
         reference_name="jn_clothes_qt_sweater",
         display_name="QT sweater",
-        unlocked=False,
+        unlocked=True,
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
@@ -1383,8 +1419,14 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
-        reference_name="jn_clothes_sugar_shirt",
-        display_name="Sugar shirt",
+        reference_name="jn_clothes_skater_shirt",
+        display_name="Skater shirt",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_cosy_cardigan",
+        display_name="Cosy cardigan",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1425,7 +1467,7 @@ init -1 python in jn_outfits:
     __register_wearable(JNHeadgear(
         reference_name="jn_headgear_cat_headband",
         display_name="Cat headband",
-        unlocked=False,
+        unlocked=True,
         is_jn_wearable=True
     ))
     __register_wearable(JNHeadgear(
@@ -1450,6 +1492,18 @@ init -1 python in jn_outfits:
         reference_name="jn_headgear_black_beanie",
         display_name="Black beanie",
         unlocked=True,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_hairtie",
+        display_name="Hairtie",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_teddy_hairpins",
+        display_name="Teddy hairpins",
+        unlocked=False,
         is_jn_wearable=True
     ))
 
@@ -1501,7 +1555,7 @@ init -1 python in jn_outfits:
     __register_wearable(JNNecklace(
         reference_name="jn_necklace_bell_collar",
         display_name="Bell collar",
-        unlocked=False,
+        unlocked=True,
         is_jn_wearable=True
     ))
     __register_wearable(JNNecklace(
@@ -1518,7 +1572,7 @@ init -1 python in jn_outfits:
     ))
     __register_wearable(JNNecklace(
         reference_name="jn_necklace_spiked_choker",
-        display_name="Bell collar",
+        display_name="Spiked choker",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1532,6 +1586,18 @@ init -1 python in jn_outfits:
         reference_name="jn_necklace_black_choker",
         display_name="Black choker",
         unlocked=True,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNNecklace(
+        reference_name="jn_necklace_sango_choker",
+        display_name="Sango choker",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNNecklace(
+        reference_name="jn_necklace_twirled_choker",
+        display_name="Twirled choker",
+        unlocked=False,
         is_jn_wearable=True
     ))
 
@@ -1572,6 +1638,17 @@ init -1 python in jn_outfits:
         hairstyle=get_wearable("jn_hair_bedhead"),
         accessory=get_wearable("jn_accessory_hairband_purple")
     ))
+    __register_outfit(JNOutfit(
+        reference_name="jn_nyatsuki_outfit",
+        display_name="Nya! sweater getup",
+        unlocked=True,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_nya_sweater"),
+        hairstyle=get_wearable("jn_hair_twintails"),
+        headgear=get_wearable("jn_headgear_cat_headband"),
+        accessory=get_wearable("jn_accessory_hairband_cat"),
+        necklace=get_wearable("jn_necklace_bell_collar")
+    ))
 
     # Unlockable official JN default outfits
     __register_outfit(JNOutfit(
@@ -1611,6 +1688,7 @@ init -1 python in jn_outfits:
         is_jn_outfit=True,
         clothes=get_wearable("jn_clothes_sango_cosplay"),
         hairstyle=get_wearable("jn_hair_twintails"),
+        necklace=get_wearable("jn_necklace_sango_choker"),
         accessory=get_wearable("jn_accessory_hairband_purple")
     ))
     __register_outfit(JNOutfit(
@@ -1620,6 +1698,26 @@ init -1 python in jn_outfits:
         is_jn_outfit=True,
         clothes=get_wearable("jn_clothes_ruffled_swimsuit"),
         hairstyle=get_wearable("jn_hair_down")
+    ))
+    __register_outfit(JNOutfit(
+        reference_name="jn_skater_outfit",
+        display_name="Skater outfit",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_skater_shirt"),
+        hairstyle=get_wearable("jn_hair_twintails_white_ribbons"),
+        accessory=get_wearable("jn_accessory_double_white_hairbands"),
+        necklace=get_wearable("jn_necklace_twirled_choker")
+    ))
+    __register_outfit(JNOutfit(
+        reference_name="jn_cosy_cardigan_outfit",
+        display_name="Cosy cardigan outfit",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_cosy_cardigan"),
+        accessory=get_wearable("jn_accessory_hairband_red"),
+        headgear=get_wearable("jn_headgear_teddy_hairpins"),
+        hairstyle=get_wearable("jn_hair_twintails")
     ))
 
     # Internal outfits; used for events, etc. These shouldn't be unlocked!
@@ -1927,7 +2025,7 @@ label outfits_create_select_headgear:
 # Hairstyle selection for outfit creator flow
 label outfits_create_select_hairstyle:
     python:
-        unlocked_wearables = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNHairstyle) 
+        unlocked_wearables = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNHairstyle)
         wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
         wearable_options.sort(key = lambda option: option[1].display_name)
 
@@ -2047,7 +2145,7 @@ label outfits_create_quit:
                 play audio clothing_ruffle
                 $ Natsuki.setOutfit(jn_outfits._LAST_OUTFIT)
                 with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
-                jump ch30_loop 
+                jump ch30_loop
 
     else:
         n 1tllaj "So...{w=1.5}{nw}"
@@ -2055,7 +2153,7 @@ label outfits_create_quit:
         n 1nlrbo "Huh."
         n 1tnmss "Well,{w=0.1} if it ain't broke,{w=0.1} right?{w=0.5}{nw}"
         extend 1fcssm " Ehehe."
-        jump ch30_loop 
+        jump ch30_loop
 
 # Save sequence from the outfit creator flow
 label outfits_create_save:
@@ -2069,7 +2167,7 @@ label outfits_create_save:
         "Yes, I'd like to save this outfit.":
             n 1fchbg "Gotcha!{w=1.5}{nw}"
             extend 1unmsm " What did you wanna call it?"
-            
+
             $ name_given = False
             while not name_given:
                 $ outfit_name = renpy.input(
@@ -2208,7 +2306,7 @@ label new_wearables_outfits_unlocked:
         n 1ksrunlsbl "..."
         n 1fcsunl "I...{w=0.3} know...{w=1}{nw}"
         extend 1ksrpolsbr " I can't exactly return the favour."
-        n 1fcsajlsbl "A-{w=0.2}and you've already done a lot for me,{w=0.5}{nw}" 
+        n 1fcsajlsbl "A-{w=0.2}and you've already done a lot for me,{w=0.5}{nw}"
         extend 1kslbolsbl " so..."
         n 1kcsbolsbl "..."
         n 1kcsemlesi "...Fine.{w=0.75}{nw}"
@@ -2288,8 +2386,8 @@ label new_wearables_outfits_unlocked:
 
                 else:
                     n 1fcspol "I {i}suppose{/i} I can give that a shot later."
-                    n 1flrajl "B-but only because I want to though,{w=0.75}{nw}" 
-                    extend 1fsrpol " obviously." 
+                    n 1flrajl "B-but only because I want to though,{w=0.75}{nw}"
+                    extend 1fsrpol " obviously."
 
             else:
                 n 1tnmpueqm "Eh?{w=1}{nw}"
@@ -2370,7 +2468,7 @@ label new_wearables_outfits_unlocked:
                     extend 1fsqpofesssbl " you jerk."
                     n 1fslpofesssbr "I guess I'll {i}have{/i} to keep this [unlock.display_name] now.{w=0.75}{nw}"
                     extend 1fnmpofesssbl " I-{w=0.2}I hope you're happy."
-                    
+
                 else:
                     n 1fspgsledz "W-{w=0.2}woah!"
                     n 1uskemfesh "...!"
@@ -2394,13 +2492,13 @@ label new_wearables_outfits_unlocked:
                 n 1ksrunl "Uuuuuuu...{w=1}{nw}"
                 extend 1ksremlesd " there's {i}still{/i} more?!"
                 n 1kcsemlesisbl "Jeez..."
-                
+
             else:
                 n 1fnmpol "H-{w=0.2}how much {i}is{/i} there here,{w=0.1} [player]{w=1}{nw}?"
                 extend 1fslpofesssbr " Jeez..."
 
     if Natsuki.isEnamored(higher=True):
-        n 1fcsssl "Finally ran out of things to throw at me,{w=0.5}{nw}" 
+        n 1fcsssl "Finally ran out of things to throw at me,{w=0.5}{nw}"
         extend 1fllsslsbl " huh?"
         n 1kllbolsbl "..."
         n 1ksrpulsbl "I...{w=1}{nw}"
@@ -2448,7 +2546,7 @@ label new_wearables_outfits_unlocked:
 
         n 1ksrcafsbr "..."
         n 1fcstrlsbl "T-{w=0.2}thanks."
-        
+
     else:
         n 1kslemlesi "Man...{w=1}{nw}"
         extend 1flrtrl " is that all of it?{w=0.5}{nw}"
@@ -2460,7 +2558,7 @@ label new_wearables_outfits_unlocked:
         n 1kslpulsbl "But..."
         extend 1knmsllsbr " [player]?"
         n 1fsrunlsbr "..."
-        n 1fsrajlsbr "I..." 
+        n 1fsrajlsbr "I..."
         extend 1ksrcafsbr " really appreciate the stuff you got me."
         n 1kllcalsbr "..."
         n 1fcstrlsbl "T-{w=0.2}thanks."
@@ -2524,7 +2622,7 @@ screen create_outfit():
             label _(jn_utils.escapeRenpySubstitutionString(jn_outfits._PREVIEW_OUTFIT.eyewear.display_name) if isinstance(jn_outfits._PREVIEW_OUTFIT.eyewear, jn_outfits.JNEyewear) else "None"):
                 style "hkbd_label"
                 left_margin 10
-  
+
         hbox:
             # Accessories
             textbutton _("Accessories"):
