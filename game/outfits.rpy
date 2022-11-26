@@ -1363,12 +1363,6 @@ init -1 python in jn_outfits:
         unlocked=True,
         is_jn_wearable=True
     ))
-    __register_wearable(JNClothes(
-        reference_name="jn_clothes_teddy_cardigan",
-        display_name="Teddy cardigan",
-        unlocked=False,
-        is_jn_wearable=True
-    ))
 
     # Official JN headgear
 
@@ -1431,12 +1425,6 @@ init -1 python in jn_outfits:
         reference_name="jn_headgear_black_beanie",
         display_name="Black beanie",
         unlocked=True,
-        is_jn_wearable=True
-    ))
-    __register_wearable(JNHeadgear(
-        reference_name="jn_headgear_teddy_hairpins",
-        display_name="Teddy hairpins",
-        unlocked=False,
         is_jn_wearable=True
     ))
     __register_wearable(JNHeadgear(
@@ -1632,16 +1620,7 @@ init -1 python in jn_outfits:
         clothes=get_wearable("jn_clothes_ruffled_swimsuit"),
         hairstyle=get_wearable("jn_hair_down")
     ))
-    __register_outfit(JNOutfit(
-        reference_name="jn_teddy_cardigan_outfit",
-        display_name="Teddy cardigan outfit",
-        unlocked=False,
-        is_jn_outfit=True,
-        clothes=get_wearable("jn_clothes_teddy_cardigan"),
-        hairstyle=get_wearable("jn_hair_twintails"),
-        accessory=get_wearable("jn_accessory_hairband_red"),
-        headgear=get_wearable("jn_headgear_teddy_hairpins")
-    ))
+
 
     # Internal outfits; used for events, etc. These shouldn't be unlocked!
 
