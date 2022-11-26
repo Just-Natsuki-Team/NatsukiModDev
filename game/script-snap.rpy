@@ -5,9 +5,6 @@ default persistent.jn_snap_explanation_given = False
 # Natsuki will refuse to play with a cheater
 default persistent.jn_snap_player_is_cheater = False
 
-# Transition for the "Snap"! popup
-define popup_hide_transition = Dissolve(0.75)
-
 init 0 python in jn_snap:
     import random
     import store
@@ -475,7 +472,8 @@ label snap_quip(is_player_snap, is_correct_snap):
             play audio smack
             hide snap_popup
             show snap_popup zorder jn_snap._SNAP_POPUP_Z_INDEX
-            hide snap_popup with popup_hide_transition
+            $ jnPause(0.75)
+            hide snap_popup
 
         # Player snapped, and was incorrect
         else:
@@ -715,6 +713,10 @@ label snap_forfeit:
             $ jn_snap._natsuki_skill_level += 1
             jump snap_main_loop
 
+# Animation for the Snap! popup fading out; we use this because Ren'Py sucks at image prediction
+transform snap_popup_fadeout:
+    easeout 0.75 alpha 0
+
 # This is the card currently on the top of the pile being shown
 image current_table_card:
     anchor(0, 0)
@@ -750,6 +752,8 @@ image snap_popup:
         choice:
             "mod_assets/games/snap/ui/snap_d.png"
 
+    snap_popup_fadeout
+            
 # Game UI
 screen snap_ui:
     zorder jn_snap._SNAP_UI_Z_INDEX
