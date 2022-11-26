@@ -10,6 +10,8 @@ label ch30_autoload:
         config.allow_skipping = False
         n.display_args["callback"] = jnNoDismissDialogue
         n.what_args["slow_abortable"] = False
+        n.display_args["callback"] = jnNoDismissDialogue
+        n.what_args["slow_abortable"] = False
 
     #Do all the things here for initial setup/flow hijacking
 
@@ -115,14 +117,14 @@ label ch30_init:
 
     # Prepare visuals
     show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
-    hide black with Dissolve(2) 
+    hide black with Dissolve(2)
     show screen hkb_overlay
     play music audio.just_natsuki_bgm
 
     # Random sticker chance
     if Natsuki.isAffectionate(higher=True):
         if (
-            (not persistent._jn_natsuki_chibi_seen and persistent.jn_total_visit_count > 50) 
+            (not persistent._jn_natsuki_chibi_seen and persistent.jn_total_visit_count > 50)
             or (random.randint(1, 1000) == 1)
         ):
             $ import random
@@ -174,7 +176,7 @@ label ch30_wait:
             jn_stickers.stickerWindowPeekUp(at_right=random.choice([True, False]))
 
         jnPause(delay=5.0, hard=True)
-    
+
     jump ch30_loop
 
 #Other labels
@@ -191,7 +193,7 @@ label call_next_topic(show_natsuki=True):
                 and jn_utils.get_current_session_length().total_seconds() > 60
                 and not jn_activity.getJNWindowActive()
                 and not _topic in ["random_music_change", "weather_change"]):
-                    
+
                     play audio notification
                     python:
                         jn_activity.taskbarFlash()
@@ -310,7 +312,7 @@ init python:
         if (
             Natsuki.isHappy(higher=True)
             and persistent.jn_custom_outfits_unlocked
-            and len(jn_outfits._SESSION_NEW_UNLOCKS) 
+            and len(jn_outfits._SESSION_NEW_UNLOCKS)
         ):
             queue("new_wearables_outfits_unlocked")
 
@@ -376,7 +378,7 @@ init python:
         if len(jn_plugins.quarter_hour_check_calls) > 0:
             for action in jn_plugins.quarter_hour_check_calls:
                 eval(action.statement)
-        
+
         queue("weather_change")
         queue("random_music_change")
 
@@ -475,7 +477,7 @@ label talk_menu:
         "I want to say sorry...":
             jump player_apologies_start
 
-        "About your outfit..." if Natsuki.isHappy(higher=True) and persistent.jn_custom_outfits_unlocked: 
+        "About your outfit..." if Natsuki.isHappy(higher=True) and persistent.jn_custom_outfits_unlocked:
             jump outfits_menu
 
         "Goodbye..." if Natsuki.isAffectionate(higher=True):

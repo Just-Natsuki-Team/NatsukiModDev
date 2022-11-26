@@ -52,7 +52,7 @@ init -3 python:
         night = 6
 
         def __str__(self):
-            return self.name 
+            return self.name
 
     #Constants for types. Add more here if we need more organizational areas
     TOPIC_TYPE_FAREWELL = "FAREWELL"
@@ -837,7 +837,7 @@ init -3 python:
     def jn_open_google_maps(latitude, longitude):
         """
         Opens Google Maps in a new tab/window in the default browser centred on the given latitude and longitude.
-        
+
         IN:
             - latitude - The latitude to centre the map on.
             - longitude - The longitude to centre the map on.
@@ -1410,7 +1410,7 @@ init -999 python in jn_utils:
         IN:
             path - The path to check
 
-        OUT: 
+        OUT:
             - True if the file exists, otherwise False
         """
         return os.path.isfile(path)
@@ -1457,7 +1457,7 @@ init -999 python in jn_utils:
         """
         Escapes a string to account for Ren'Py substitution.
         Use this when displaying names of items that may contain the Ren'Py substitution characters, such as file names from users.
-        
+
         IN:
             - string - The string to escape and return
         OUT:
@@ -1606,7 +1606,6 @@ init -100 python in jn_utils:
     def getPlayerFinal(repeat_times=0):
         """
         Returns the last letter of the player's name.
-
         OUT:
             Last letter of the player's name
         """
@@ -1781,6 +1780,9 @@ define audio.button_mashing_b = "mod_assets/sfx/button_mashing_b.ogg"
 define audio.button_mashing_c = "mod_assets/sfx/button_mashing_c.ogg"
 define audio.twitch_die = "mod_assets/sfx/twitch_die.ogg"
 define audio.twitch_you_lose = "mod_assets/sfx/twitch_you_lose.ogg"
+define audio.switch_flip = "mod_assets/sfx/switch_flip.ogg"
+define audio.kettle_boil = "mod_assets/sfx/kettle_boil.ogg"
+define audio.drink_pour = "mod_assets/sfx/drink_pour.ogg"
 
 define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
 define audio.glitch_b = "mod_assets/sfx/glitch_b.ogg"
@@ -1817,7 +1819,7 @@ init python:
     s_name = "Sayori"
     m_name = "Monika"
     y_name = "Yuri"
-    
+
     n_name = "Natsuki"
     player = persistent.playername
 
