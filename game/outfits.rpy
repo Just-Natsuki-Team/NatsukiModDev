@@ -1433,7 +1433,7 @@ init -1 python in jn_outfits:
     __register_wearable(JNClothes(
         reference_name="jn_clothes_bunny_pajamas",
         display_name="Bunny pajamas",
-        unlocked=False,
+        unlocked=True,
         is_jn_wearable=True
     ))
 
@@ -1766,7 +1766,7 @@ init -1 python in jn_outfits:
     ))
 
     # Random choice between pajamas
-    __PAJAMA_CHOICE = get_outfit("jn_bunny_pajamas") if range(1,3) == 1 else get_outfit("jn_star_pajamas")
+    __PAJAMA_CHOICE = get_outfit("jn_bunny_pajamas") if range(1,1) == 1 else get_outfit("jn_star_pajamas")
 
     # Outfit schedules
     _OUTFIT_SCHEDULE_WEEKDAY_HIGH_AFFINITY = {
