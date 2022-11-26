@@ -1430,6 +1430,13 @@ init -1 python in jn_outfits:
         unlocked=False,
         is_jn_wearable=True
     ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_bunny_pajamas",
+        display_name="Bunny pajamas",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+
 
     # Official JN headgear
 
@@ -1504,6 +1511,12 @@ init -1 python in jn_outfits:
         reference_name="jn_headgear_teddy_hairpins",
         display_name="Teddy hairpins",
         unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_sleep_mask",
+        display_name="Sleep mask",
+        unlocked=True,
         is_jn_wearable=True
     ))
 
@@ -1630,6 +1643,15 @@ init -1 python in jn_outfits:
         accessory=get_wearable("jn_accessory_hairband_hot_pink")
     ))
     __register_outfit(JNOutfit(
+        reference_name="jn_bunny_pajamas",
+        display_name="Bunny pajamas",
+        unlocked=True,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_bunny_pajamas"),
+        hairstyle=get_wearable("jn_hair_down"),
+        headgear=get_wearable("jn_headgear_sleep_mask")
+    ))
+    __register_outfit(JNOutfit(
         reference_name="jn_hoodie_turtleneck",
         display_name="Hoodie and turtleneck",
         unlocked=True,
@@ -1745,21 +1767,21 @@ init -1 python in jn_outfits:
 
     # Outfit schedules
     _OUTFIT_SCHEDULE_WEEKDAY_HIGH_AFFINITY = {
-        store.JNTimeBlocks.early_morning: get_outfit("jn_star_pajamas"),
+        store.JNTimeBlocks.early_morning: random.choice((get_outfit("jn_bunny_pajamas"), get_outfit("jn_star_pajamas"))),
         store.JNTimeBlocks.mid_morning: get_outfit("jn_school_uniform"),
         store.JNTimeBlocks.late_morning: get_outfit("jn_school_uniform"),
         store.JNTimeBlocks.afternoon: get_outfit("jn_school_uniform"),
         store.JNTimeBlocks.evening: random.choice((get_outfit("jn_casual_clothes"), get_outfit("jn_hoodie_turtleneck"))),
-        store.JNTimeBlocks.night: get_outfit("jn_star_pajamas")
+        store.JNTimeBlocks.night: random.choice((get_outfit("jn_bunny_pajamas"), get_outfit("jn_star_pajamas")))
     }
 
     _OUTFIT_SCHEDULE_WEEKEND_HIGH_AFFINITY = {
-        store.JNTimeBlocks.early_morning: get_outfit("jn_star_pajamas"),
-        store.JNTimeBlocks.mid_morning: get_outfit("jn_star_pajamas"),
-        store.JNTimeBlocks.late_morning: get_outfit("jn_star_pajamas"),
+        store.JNTimeBlocks.early_morning: random.choice((get_outfit("jn_bunny_pajamas"), get_outfit("jn_star_pajamas"))),
+        store.JNTimeBlocks.mid_morning: random.choice((get_outfit("jn_bunny_pajamas"), get_outfit("jn_star_pajamas"))),
+        store.JNTimeBlocks.late_morning: random.choice((get_outfit("jn_bunny_pajamas"), get_outfit("jn_star_pajamas"))),
         store.JNTimeBlocks.afternoon: get_outfit("jn_casual_clothes"),
         store.JNTimeBlocks.evening: random.choice((get_outfit("jn_casual_clothes"), get_outfit("jn_hoodie_turtleneck"))),
-        store.JNTimeBlocks.night: get_outfit("jn_star_pajamas")
+        store.JNTimeBlocks.night: random.choice((get_outfit("jn_bunny_pajamas"), get_outfit("jn_star_pajamas")))
     }
 
     _OUTFIT_SCHEDULE_WEEKDAY_MEDIUM_AFFINITY = {
