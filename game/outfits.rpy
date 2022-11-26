@@ -1766,7 +1766,7 @@ init -1 python in jn_outfits:
     ))
 
     # Random choice between pajamas
-    __PAJAMA_CHOICE = get_outfit("jn_bunny_pajamas") if range(1,2) == 1 else get_outfit("jn_star_pajamas")
+    __PAJAMA_CHOICE = get_outfit("jn_bunny_pajamas") if random.randint(0, 10) == 1 else get_outfit("jn_star_pajamas")
 
     # Outfit schedules
     _OUTFIT_SCHEDULE_WEEKDAY_HIGH_AFFINITY = {
