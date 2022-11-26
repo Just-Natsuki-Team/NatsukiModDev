@@ -1295,8 +1295,8 @@ label event_warm_package:
         teddy_cardigan_outfit.unlock()
         Natsuki.setOutfit(teddy_cardigan_outfit)
 
-    image prob hot_chocholate hot = "mod_assets/props/hot_chocolate.png"
-    image prob hot_chocolate cold = "mod_assets/probs/hot_chocolate_cold.png"
+    image prop hot_chocholate hot = "mod_assets/props/hot_chocolate.png"
+    image prop hot_chocolate cold = "mod_assets/props/hot_chocolate_cold.png"
 
     if jn_atmosphere.isCurrentWeatherRain() or jn_atmosphere.isCurrentWeatherThunder():
         n "..."
@@ -1545,7 +1545,7 @@ label event_warm_package:
         n 1kslsl "..."
         n 1fcsbgsbr "B-{w=0.2}but yeah!"
 
-    show prob hot_chocolate cold
+    show prop hot_chocolate cold
 
     n 1nchsm "And that about {i}wraps{/i} things up!{w=0.75}"
     extend 1nllss " I-"
