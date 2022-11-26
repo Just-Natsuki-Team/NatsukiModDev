@@ -119,8 +119,8 @@ image prop a_la_mode_manga_held = "mod_assets/props/a_la_mode_manga_held.png"
 image prop strawberry_milkshake = "mod_assets/props/strawberry_milkshake.png"
 image prop step_by_step_manga_held = "mod_assets/props/step_by_step_manga_held.png"
 image prop glasses_case = "mod_assets/props/glasses_case.png"
-image prop hot_chocolate = "mod_assets/props/hot_chocolate.png"
-image prop hot_chocolate_cold = "mod_assets/props/hot_chocolate_cold.png"
+image prop hot_chocolate hot = "mod_assets/props/hot_chocolate.png"
+image prop hot_chocolate cold = "mod_assets/props/hot_chocolate_cold.png"
 
 # Overlays are displayed over the top of Natsuki, but behind any props
 image overlay slipping_glasses = "mod_assets/overlays/slipping_glasses.png"
@@ -1096,7 +1096,7 @@ label event_wintendo_twitch_battery_dead:
 
     show prop wintendo_twitch_playing free zorder jn_events.JN_EVENT_PROP_ZORDER
     show natsuki gaming at jn_center zorder JN_NATSUKI_ZORDER
-    $ jn_events.display_visuals()
+    $ jn_events.display_visuals("1fdwfol")
     $ jn_globals.force_quit_enabled = True
     $ jnPause(3)
 
@@ -1228,7 +1228,7 @@ label event_wintendo_twitch_game_over:
 
     show prop wintendo_twitch_playing charging zorder jn_events.JN_EVENT_PROP_ZORDER
     show natsuki gaming at jn_center zorder JN_NATSUKI_ZORDER
-    $ jn_events.display_visuals()
+    $ jn_events.display_visuals("1unmpu")
     $ jn_globals.force_quit_enabled = True
     $ jnPause(1.5)
 
@@ -1294,9 +1294,6 @@ label event_warm_package:
         teddy_cardigan_outfit = jn_outfits.get_outfit("jn_cosy_cardigan_outfit")
         teddy_cardigan_outfit.unlock()
         Natsuki.setOutfit(teddy_cardigan_outfit)
-
-    image prop hot_chocholate hot = "mod_assets/props/hot_chocolate.png"
-    image prop hot_chocolate cold = "mod_assets/props/hot_chocolate_cold.png"
 
     if jn_atmosphere.isCurrentWeatherRain() or jn_atmosphere.isCurrentWeatherThunder():
         n "..."
@@ -1485,7 +1482,7 @@ label event_warm_package:
     extend 1fcstr " it isn't exactly hard to stay nice and toasty if you know what you're doing..."
     n 1fchsm "...And it all begins with what you wear!"
     n 1fllpu "Think of it as a fight:{w=0.75}{nw}"
-    extend 1flrem " The cold is your opponent,{w=1}{nw}"
+    extend 1flrem " the cold is your opponent,{w=1}{nw}"
     extend 1fcspoesi " and your clothing is your armor!"
 
     n 1ullaj "Now{w=0.2} -{w=0.2} obviously,{w=0.2} you're gonna want to start with layers.{w=0.75}{nw}"
@@ -1551,7 +1548,7 @@ label event_warm_package:
     extend 1nllss " I-"
     n 1unmsf "..."
     n 1udwemeshsbl "...!"
-    n 1uskemsbl "M-{w=0.2}my drink!{w=1}"
+    n 1uskemsbl "M-{w=0.2}my drink!{w=1}{nw}"
     extend 1kbkwresssbr " I-{w=0.2}it's getting all cold!{w=0.75}{nw}"
 
     show black zorder 6 with Dissolve(0.5)
