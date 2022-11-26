@@ -942,6 +942,23 @@ init -1 python in jn_outfits:
         """
         return __ALL_WEARABLES.values()
 
+    def save_temporary_outfit(outfit):
+        """
+        Saves the given outfit as the designated temporary outfit.
+        The temporary outfit is not persisted between game exit/reload.
+        IN:
+            - outfit - the JNOutfit to use as the base for the temporary outfit
+        """
+        temporary_outfit = get_outfit("jn_temporary_outfit")
+        temporary_outfit.clothes = outfit.clothes
+        temporary_outfit.hairstyle = outfit.hairstyle
+        temporary_outfit.accessory = outfit.accessory
+        temporary_outfit.eyewear = outfit.eyewear
+        temporary_outfit.headgear = outfit.headgear
+        temporary_outfit.necklace = outfit.necklace
+        store.Natsuki.setOutfit(temporary_outfit)
+        return True
+
     def save_custom_outfit(outfit):
         """
         Saves the given outfit as a JSON custom outfit file.
@@ -949,13 +966,23 @@ init -1 python in jn_outfits:
         IN:
             - outfit - the JNOutfit to save
         """
-        # Generate the name, we make sure it is unique thanks to the timestamp
-        outfit.is_jn_outfit = False
-        outfit.reference_name = "{0}_{1}_{2}".format(
-            store.persistent.playername,
-            outfit.display_name.replace(" ", "_"),
-            int(time.time())
-        ).lower()
+        # Create a new custom outfit, templating the old one
+        new_custom_outfit = JNOutfit(
+            reference_name="{0}_{1}_{2}".format(
+                store.persistent.playername,
+                outfit.display_name.replace(" ", "_"),
+                int(time.time())
+            ).lower(),
+            display_name=outfit.display_name,
+            unlocked=True,
+            is_jn_outfit=False,
+            clothes=outfit.clothes,
+            hairstyle=outfit.hairstyle,
+            accessory=outfit.accessory,
+            eyewear=outfit.eyewear,
+            headgear=outfit.headgear,
+            necklace=outfit.necklace
+        )
 
         # Create directory if it doesn't exist
         if jn_utils.createDirectoryIfNotExists(__CUSTOM_OUTFITS_DIRECTORY):
@@ -963,18 +990,18 @@ init -1 python in jn_outfits:
 
         try:
             # Create the JSON file
-            with open(os.path.join(__CUSTOM_OUTFITS_DIRECTORY, "{0}.json".format(outfit.reference_name)), "w") as file:
-                file.write(outfit.to_json_string())
-
+            with open(os.path.join(__CUSTOM_OUTFITS_DIRECTORY, "{0}.json".format(new_custom_outfit.reference_name)), "w") as file:
+                file.write(new_custom_outfit.to_json_string())
+            
             # Finally register the new outfit
-            __register_outfit(outfit=outfit, player_created=True)
-            store.Natsuki.setOutfit(outfit)
+            __register_outfit(outfit=new_custom_outfit, player_created=True)
+            store.Natsuki.setOutfit(new_custom_outfit)
             renpy.notify("Outfit saved!")
             return True
 
         except Exception as exception:
             renpy.notify("Save failed; please check log for more information.")
-            jn_utils.log("Failed to save outfit {0}, as a write operation was not possible.".format(outfit.display_name))
+            jn_utils.log("Failed to save outfit {0}, as a write operation was not possible.".format(new_custom_outfit.display_name))
             return False
 
     def delete_custom_outfit(outfit):
@@ -1695,6 +1722,17 @@ init -1 python in jn_outfits:
 
     # Internal outfits; used for events, etc. These shouldn't be unlocked!
 
+    # Temporary outfit; used when we don't want to visibly save an outfit
+    __register_outfit(JNOutfit(
+        reference_name="jn_temporary_outfit",
+        display_name="Temporary outfit",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_school_uniform"),
+        hairstyle=get_wearable("jn_hair_twintails"),
+        accessory=get_wearable("jn_accessory_hairband_red")
+    ))
+
     # Outfit used for ahoge unlock event
     __register_outfit(JNOutfit(
         reference_name="jn_ahoge_unlock",
@@ -2184,6 +2222,17 @@ label outfits_create_save:
 
                 jump outfits_create_menu
 
+        "Yes, but don't worry about saving this outfit.":
+            n 1tnmpueqm "Eh?{w=0.75}{nw}"
+            extend 1tnmaj " You {i}don't{/i} want me to remember this one?"
+            n 1ullaj "Well...{w=0.75}{nw}"
+            extend 1tnmss " if you insist."
+            n 1nchgneme "Less note taking for me!"
+
+            $ jn_outfits._changes_made = False
+            $ jn_outfits.save_temporary_outfit(jn_outfits._PREVIEW_OUTFIT)
+            jump ch30_loop
+            
         "No, I'm not quite finished.":
             n 1nslpo "I {i}knew{/i} I should have brought a book...{w=2}{nw}"
             extend 1fsqsm " Ehehe."
@@ -2609,7 +2658,7 @@ screen create_outfit():
         xpos 600
         ypos 450
 
-        textbutton _("Save"):
+        textbutton _("Finished"):
             style "hkbd_option"
             action Jump("outfits_create_save")
 
