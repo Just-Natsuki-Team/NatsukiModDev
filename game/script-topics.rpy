@@ -3125,7 +3125,7 @@ label talk_i_love_you:
 
     # De facto confession
     if (
-        persistent.affinity == (jn_affinity.AFF_THRESHOLD_LOVE -1)
+        persistent.affinity >= (jn_affinity.AFF_THRESHOLD_LOVE -1)
         and not persistent._jn_player_confession_accepted
     ):
         n 1uscemf "O-{w=0.1}o-{w=0.1}oh my gosh..."
@@ -3172,7 +3172,7 @@ label talk_i_love_you:
         return
 
     # Player has not confessed, and this is the first time they're telling Natsuki this
-    elif persistent.jn_player_love_you_count == 0:
+    elif persistent.jn_player_love_you_count == 0 and not persistent._jn_player_confession_accepted:
         if Natsuki.isEnamored():
             n 1uscgsf "[player_initial]-{w=0.2}[player]!"
             n 1fskgsf "Y-{w=0.1}you...!"
@@ -3468,7 +3468,7 @@ label talk_i_love_you:
 
             return
 
-        elif Natsuki.isEnamored():
+        elif Natsuki.isEnamored(higher=True):
             n 1fbkwrf "G-{w=0.1}gah!{w=0.2} [player]!"
             n 1fllwrf "What did I say about making things awkward?{w=0.2} Now it's twice as awkward!"
             n 1fcsemf "Jeez..."
@@ -3485,7 +3485,7 @@ label talk_i_love_you:
             n 1fcspof "But you're gonna have to try a lot harder than that!"
             return
 
-        elif Natsuki.isNormal():
+        elif Natsuki.isNormal(higher=True):
             n 1fskemf "G-{w=0.1}gah!"
             n 1fbkwrf "[player_initial]-{w=0.1}[player]!"
             n 1fnmanl "Stop being gross!"
@@ -3494,7 +3494,7 @@ label talk_i_love_you:
             n 1fsqaj "But it really isn't funny to me,{w=0.1} [player]."
             return
 
-        elif Natsuki.isUpset():
+        elif Natsuki.isUpset(higher=True):
             n 1fcssr "..."
             n 1fsqsr "Talk is cheap,{w=0.1} [player]."
             n 1fsqaj "If you {i}really{/i} care about me..."
