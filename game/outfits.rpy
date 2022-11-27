@@ -2606,6 +2606,8 @@ label new_wearables_outfits_unlocked:
     n 1ullajl "So..."
     n 1tnmsslsbl "Where we we?{w=1}{nw}"
     extend 1fslsslsbr " Ehehe..."
+    
+    $ Natsuki.calculatedAffinityGain(bypass=True)
     $ jn_globals.force_quit_enabled = True
 
     jump ch30_loop

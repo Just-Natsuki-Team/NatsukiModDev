@@ -208,10 +208,11 @@ init 0 python:
                 jn_utils.log("Affinity blocked - CN!")
                 return
 
-            if bypass:
+            if bypass and persistent._affinity_daily_bypasses > 0:
                 # Ignore the daily gain and just award the full affinity
                 persistent.affinity += to_add
-                jn_utils.log("Affinity+")
+                persistent._affinity_daily_bypasses -= 1
+                jn_utils.log("Affinity+ (B)")
 
             elif persistent.affinity_daily_gain > 0:
                 # Award the full affinity if any cap remains
@@ -290,6 +291,7 @@ init 0 python:
             elif current_date.day is not persistent.affinity_gain_reset_date.day:
                 persistent.affinity_daily_gain = 5 * jn_affinity.get_relationship_length_multiplier()
                 persistent.affinity_gain_reset_date = current_date
+                persistent._affinity_daily_bypasses = 5
                 jn_utils.log("Daily affinity cap reset; new cap is: {0}".format(persistent.affinity_daily_gain))
 
         @staticmethod

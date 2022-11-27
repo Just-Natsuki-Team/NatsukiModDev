@@ -211,6 +211,7 @@ style hkbd_option_text is default:
 
 style hkbd_option is default:
     properties gui.button_properties("hkb_option")
+    insensitive_background "mod_assets/buttons/option_disabled.png"
     idle_background "mod_assets/buttons/option_hover_blank.png"
     hover_background "mod_assets/buttons/option_hover_fold.png"
     hover_sound gui.hover_sound
