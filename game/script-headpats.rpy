@@ -53,7 +53,7 @@ init python in jn_headpats:
         jump_label="headpats_start"
     )
 
-# Initial dialogue based on scritch count
+# Initial dialogue based on headpat count
 label headpats_start:
     $ jn_headpats._more_pats_requested = False
 
@@ -83,62 +83,61 @@ label headpats_start:
     show screen headpats_ui
     jump headpats_loop
 
-# Main scritch loop/logic
+# Main headpat loop/logic
 label headpats_loop:
     $ current_mouse_position = jn_utils.getMousePosition()
 
-    if not jn_headpats._has_been_given_pats:
-        if persistent._jn_headpats_total_given < 5:
-            show natsuki headpats nervous
+    # Switch Natsuki's expression to nervous/waiting, if she's not been patted yet
+    if not jn_headpats._has_been_given_pats and persistent._jn_headpats_total_given < 5:
+        show natsuki headpats nervous
 
-        else:
-            show natsuki headpats waiting
-            
-        $ jnPause(1)
+    elif not jn_headpats._has_been_given_pats:
+        show natsuki headpats waiting
+    
+    $ config.mouse = (
+        {"default": [("mod_assets/extra/headpats/headpats_active_cursor.png", 24, 24)]} if jn_headpats._ACTIVE_PAT_AREA.collidepoint(current_mouse_position[0], current_mouse_position[1])
+        else None
+    )  
 
-    if jn_headpats._ACTIVE_PAT_AREA.collidepoint(current_mouse_position[0], current_mouse_position[1]):
+    if (
+        jn_headpats._ACTIVE_PAT_AREA.collidepoint(current_mouse_position[0], current_mouse_position[1]) 
+        and jn_headpats._getMousePositionChanged()
+    ):
+        python:
+            global _last_mouse_position
+            jn_headpats._has_been_given_pats = True
+            persistent._jn_headpats_total_given += 1
+            jn_headpats._no_pat_count = 0
+            jn_headpats._last_mouse_position = current_mouse_position
 
-        $ config.mouse = {"default": [("mod_assets/extra/headpats/headpats_active_cursor.png", 0, 0)]}
+        play audio headpat
+        show headpats_effect_popup zorder jn_headpats._PATS_POPUP_Z_INDEX
+        show natsuki headpats active
+        $ jnPause(0.75)
+        hide headpats_effect_popup
 
-        if jn_headpats._getMousePositionChanged():
-            python:
-                global _last_mouse_position
-                jn_headpats._has_been_given_pats = True
-                persistent._jn_headpats_total_given += 1
-                jn_headpats._no_pat_count = 0
-                jn_headpats._last_mouse_position = current_mouse_position
+        python:
+            milestone_label = "headpats_milestone_{0}".format(str(persistent._jn_headpats_total_given))
+            if (renpy.has_label(milestone_label)):
+                renpy.jump(milestone_label)
 
-            play audio scritch
-            show headpats_effect_popup zorder jn_headpats._PATS_POPUP_Z_INDEX
-            show natsuki headpats active
-            $ jnPause(0.75)
-            hide headpats_effect_popup
+            elif (
+                persistent._jn_headpats_total_given > 1000
+                and persistent._jn_headpats_total_given % 1000 == 0
+            ):
+                renpy.jump(headpats_milestone_1000_plus)
 
-            python:
-                milestone_label = "headpats_milestone_{0}".format(str(persistent._jn_headpats_total_given))
-                if (renpy.has_label(milestone_label)):
-                    renpy.jump(milestone_label)
-
-                elif (
-                    persistent._jn_headpats_total_given > 1000
-                    and persistent._jn_headpats_total_given % 1000 == 0
-                ):
-                    renpy.jump(headpats_milestone_1000_plus)
-        
-        elif jn_headpats._has_been_given_pats:
-            show natsuki headpats waiting
-
-        else:
-            $ jn_headpats._no_pat_count += 1
-
-            # Natsuki picks up on no scritches for extended time
-            if (jn_headpats._no_pat_count == 5):
-                jump scritch_inactive
-            
     else:
-        $ config.mouse = None
+        $ jn_headpats._no_pat_count += 1
 
-    $ jnPause(2)
+        if jn_headpats._has_been_given_pats:
+            show natsuki headpats waiting
+
+        # Natsuki picks up on no headpats for extended time
+        if (jn_headpats._no_pat_count == 6):
+            jump headpats_inactive
+
+    $ jnPause(1)
     jump headpats_loop
 
 label headpats_inactive:
@@ -160,25 +159,28 @@ label headpats_inactive:
         n 1kllbolsbr "...Were you done already,{w=0.2} or...?"
 
     jump headpats_loop
-        
-# Dialogue for each scritch milestone
+
+# Dialogue for each headpat milestone
 
 label headpats_milestone_5:
     n 1fcsunlsbl "Nnnnnn..."
     n 1ksrunlsbr "..."
 
+    $ Natsuki.calculatedAffinityGain(bypass=True)
     jump headpats_loop
 
 label headpats_milestone_10:
     n 1kwmpulsbr "Y-{w=0.2}you're still going?{w=0.5}{nw}"
     extend 1ksrunfsbl " Jeez..."
 
+    $ Natsuki.calculatedAffinityGain(bypass=True)
     jump headpats_loop
 
 label headpats_milestone_25:
     n 1kslunl "Uuuuuuu..."
     n 1kcsemlesi "My hair is gonna be {i}so{/i} tangled later..."
 
+    $ Natsuki.calculatedAffinityGain(bypass=True)
     jump headpats_loop
 
 label headpats_milestone_50:
@@ -186,18 +188,21 @@ label headpats_milestone_50:
     n 1fsqcal "...E-{w=0.2}enjoying yourself,{w=0.2} [player]?"
     n 1ksrcaf "..."
 
+    $ Natsuki.calculatedAffinityGain(bypass=True)
     jump headpats_loop
 
 label headpats_milestone_100:
     n 1ksqtrfsbr "...You really are enjoying this,{w=0.2} huh?"
     n 1kslcaf "..."
 
+    $ Natsuki.calculatedAffinityGain(bypass=True)
     jump headpats_loop
     
 label headpats_milestone_250:
     n 1ksqcal "...Still going strong,{w=0.2} huh [player]?{w=0.75}{nw}"
     extend 1ksrssl " Heh."
 
+    $ Natsuki.calculatedAffinityGain(bypass=True)
     jump headpats_loop
     
 label headpats_milestone_500:
@@ -205,50 +210,58 @@ label headpats_milestone_500:
     extend 1nslsml " isn't actually so bad."
     n 1fcscafsbr "O-{w=0.2}once you get used to it."
 
+    $ Natsuki.calculatedAffinityGain(bypass=True)
     jump headpats_loop
 
 label headpats_milestone_750:
     n 1kcsssfesi "...Haah."
 
+    $ Natsuki.calculatedAffinityGain(bypass=True)
     jump headpats_loop
 
 label headpats_milestone_1000:
     n 1kcssmf "..."
 
+    $ Natsuki.calculatedAffinityGain(bypass=True)
     jump headpats_loop
 
 label headpats_milestone_1000_plus:
     n 1kcsssfeaf "...[player]..."
-
+    
+    $ Natsuki.calculatedAffinityGain(bypass=True)
     jump headpats_loop
 
 label headpats_finished:
     $ jn_headpats._pats_finished = True
 
-    # About a 1/3 chance to ask for more scritches, if not already asked
+    # About a 1/3 chance to ask for more headpats, if not already asked
     if (
         persistent._jn_headpats_total_given >= 100
-        and random.randint(1,3) == 1
+        and random.randint(0,3) == 1
         and not jn_headpats._more_pats_requested
     ):
-        n 1kllunf "..."
-        n 1knmpuf "Uhmm...{w=0.3} [player]?"
-        n 1klrssf "Could you...{w=0.3} you know..."
-        n 1klrpof "Keep doing that just a little longer?"
+        n 1kslbol "..."
+        n 1kslsll "Uhmm...{w=0.75}{nw}" 
+        extend 1knmsll " [player]?"
+        n 1klrpulsbl "Could you...{w=0.75}{nw}" 
+        extend 1ksrbolsbl " you know..."
+        n 1knmbolsbr "Keep doing that just a little longer?"
 
+        show natsuki 1fcscalesssbr at jn_center
         menu:
             n "J-{w=0.2}just a little."
 
             "Of course.":
-                n 1kwmnvf "...{w=0.3}Thanks,{w=0.2} [player]."
+                n 1ksrssf "...{w=0.3}Thanks,{w=0.2} [player]."
                 $ jn_headpats._more_pats_requested = True
                 $ jn_headpats._pats_finished = False
                 jump headpats_loop
 
             "That's it for now.":
-                n 1kllajl "...Oh."
-                n 1fllpol "W-{w=0.2}well, that's fine!{w=0.2} Not like I was super into it or anything dumb like that anyway."
-                n 1kllpol "..."
+                n 1nslbol "...Oh."
+                n 1fcsemlsbl "W-{w=0.2}well,{w=0.2} that's fine!{w=0.75}{nw}" 
+                extend 1fcspolsbl " I wasn't really {i}that{/i} into it anyway."
+                n 1kslpol "..."
     else:
         $ finished_start_quip = renpy.substitute(random.choice(jn_headpats._FINISHED_START_QUIPS))
         n 1kwmpul "[finished_start_quip]"
@@ -259,14 +272,11 @@ label headpats_finished:
     hide screen headpats_ui
     jump ch30_loop
 
-# Definitions
-define audio.scritch = "mod_assets/sfx/scritch.ogg"
-
 # Animation for the headpat effect fading out
 transform snap_popup_fadeout:
     easeout 0.75 alpha 0
 
-# Appears, floats up and fades away above Natsuki's head for each scritch given
+# Appears, floats up and fades away above Natsuki's head for each headpat given
 image headpats_effect_popup:
     block:
         choice:
@@ -287,7 +297,7 @@ image headpats_effect_popup:
 
     snap_popup_fadeout
 
-# Pre-scritch Natsuki sprites
+# Pre-headpat Natsuki sprites
 image natsuki headpats nervous:
     block:
         choice:
@@ -304,7 +314,7 @@ image natsuki headpats nervous:
         pause 3
         repeat
 
-# Natsuki waiting for scritch sprites
+# Natsuki waiting for headpats sprites
 image natsuki headpats waiting:
     block:
         choice:
@@ -327,7 +337,7 @@ image natsuki headpats waiting:
         pause 5
         repeat
 
-# Natsuki during scritch sprites
+# Natsuki during headpats sprites
 image natsuki headpats active:
     block:
         choice:
@@ -352,13 +362,13 @@ screen headpats_ui:
     zorder jn_headpats._PATS_UI_Z_INDEX
 
     # Pat counter
-    text "{0} headpats given".format(persistent._jn_headpats_total_given) size 30 xalign 0.5 ypos 40 style "categorized_menu_button"
+    text "{0} headpats given".format(persistent._jn_headpats_total_given) size 30 xalign 0.5 ypos 40 text_align 0.5 xysize (None, None) outlines [(3, "#000000aa", 0, 0)] style "categorized_menu_button_text"
     
     # Options
     style_prefix "hkb"
     vbox:
         xpos 1000
-        ypos 440
+        ypos 450
 
         textbutton _("Finished"):
             style "hkbd_option"

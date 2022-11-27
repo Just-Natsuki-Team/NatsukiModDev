@@ -1783,6 +1783,7 @@ define audio.twitch_you_lose = "mod_assets/sfx/twitch_you_lose.ogg"
 define audio.switch_flip = "mod_assets/sfx/switch_flip.ogg"
 define audio.kettle_boil = "mod_assets/sfx/kettle_boil.ogg"
 define audio.drink_pour = "mod_assets/sfx/drink_pour.ogg"
+define audio.headpat = "mod_assets/sfx/headpat.ogg"
 
 define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
 define audio.glitch_b = "mod_assets/sfx/glitch_b.ogg"
