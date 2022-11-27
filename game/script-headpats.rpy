@@ -36,7 +36,7 @@ init python in jn_headpats:
     # Collision detection
     _last_mouse_position = None
 
-    _ACTIVE_PAT_AREA = pygame.Rect(457, 105, 353, 163)
+    _ACTIVE_PAT_AREA = pygame.Rect(519, 100, 239, 152)
 
     def _getMousePositionChanged():
         """
@@ -58,29 +58,27 @@ label headpats_start:
     $ jn_headpats._more_pats_requested = False
 
     if persistent._jn_headpats_total_given == 0:
-        n 1kwdajl "H-{w=0.2}huh?!"
-        extend " D-{w=0.1}did you just say...?!"
-        n 1kbkeml "[player]!{w=0.5} W-{w=0.2}wait...!"
+        n 1uskemlesh "H-{w=0.2}huh?!{w=0.75}{nw}"
+        extend 1uwdemlsbl " D-{w=0.1}did you just say...?!"
+        n 1kbkwrlsbl "[player]!{w=0.5} W-{w=0.2}wait...!"
 
     elif persistent._jn_headpats_total_given < 10:
-        n "T-{w=0.2}this again?!"
-        n "[player]..."
-        extend " c-{w=0.2}come on..."
+        n 1knmemlsbl "T-{w=0.2}this again?!"
+        n 1kslunlsbr "[player]..."
 
     elif persistent._jn_headpats_total_given < 25:
-        n "...Again,{w=0.2} [player]?"
-        n 1kllajl "Uuuuuuu..."
-        n 1kllunl "...Fine." 
+        n 1ksqsllsbr "...Again,{w=0.2} [player]?"
+        n 1ksrcalsbl "..."
 
     elif persistent._jn_headpats_total_given < 50:
-        n 1kwmpul "..." #sigh
-        n 1kllssl "Fine..."
+        n 1kcspulesisbl "..."
+        n 1kslcaf "Fine..."
 
     elif persistent._jn_headpats_total_given < 250:
-        n 1kllssl "...Fine."
+        n 1kcscaf "...Fine."
 
     else:
-        n 1kcsssl "...Okay."
+        n 1nsrssf "...Okay."
     
     show screen headpats_ui
     jump headpats_loop
@@ -98,126 +96,129 @@ label headpats_loop:
             
         $ jnPause(1)
 
-    if (jn_headpats._ACTIVE_PAT_AREA.collidepoint(current_mouse_position[0], current_mouse_position[1])
-        and jn_headpats._getMousePositionChanged()):
+    if jn_headpats._ACTIVE_PAT_AREA.collidepoint(current_mouse_position[0], current_mouse_position[1]):
 
-        python:
-            global _last_mouse_position
-            jn_headpats._has_been_given_pats = True
-            persistent._jn_headpats_total_given += 1
-            jn_headpats._no_pat_count = 0
-            jn_headpats._last_mouse_position = current_mouse_position
+        $ config.mouse = {"default": [("mod_assets/extra/headpats/headpats_active_cursor.png", 0, 0)]}
 
-        play audio scritch
-        show headpats_effect_popup zorder jn_headpats._PATS_POPUP_Z_INDEX
-        show natsuki headpats active
-        $ jnPause(0.75)
-        hide headpats_effect_popup
+        if jn_headpats._getMousePositionChanged():
+            python:
+                global _last_mouse_position
+                jn_headpats._has_been_given_pats = True
+                persistent._jn_headpats_total_given += 1
+                jn_headpats._no_pat_count = 0
+                jn_headpats._last_mouse_position = current_mouse_position
 
-        python:
-            milestone_label = "headpats_milestone_{0}".format(str(persistent._jn_headpats_total_given))
-            if (renpy.has_label(milestone_label)):
-                renpy.jump(milestone_label)
+            play audio scritch
+            show headpats_effect_popup zorder jn_headpats._PATS_POPUP_Z_INDEX
+            show natsuki headpats active
+            $ jnPause(0.75)
+            hide headpats_effect_popup
 
-            elif (
-                persistent._jn_headpats_total_given > 1000
-                and persistent._jn_headpats_total_given % 1000 == 0
-            ):
-                renpy.jump(headpats_milestone_1000_plus)
+            python:
+                milestone_label = "headpats_milestone_{0}".format(str(persistent._jn_headpats_total_given))
+                if (renpy.has_label(milestone_label)):
+                    renpy.jump(milestone_label)
 
-    elif jn_headpats._has_been_given_pats:
-        show natsuki headpats waiting
-        $ jnPause(2)
+                elif (
+                    persistent._jn_headpats_total_given > 1000
+                    and persistent._jn_headpats_total_given % 1000 == 0
+                ):
+                    renpy.jump(headpats_milestone_1000_plus)
+        
+        elif jn_headpats._has_been_given_pats:
+            show natsuki headpats waiting
 
+        else:
+            $ jn_headpats._no_pat_count += 1
+
+            # Natsuki picks up on no scritches for extended time
+            if (jn_headpats._no_pat_count == 5):
+                jump scritch_inactive
+            
     else:
-        $ jn_headpats._no_pat_count += 1
-        $ jnPause(2)
+        $ config.mouse = None
 
-    # Natsuki picks up on no scritches for extended time
-    if (jn_headpats._no_pat_count == 5):
-        jump scritch_inactive
-
+    $ jnPause(2)
     jump headpats_loop
 
 label headpats_inactive:
-    if persistent._jn_headpats_total_given >= 750:
-        n 1kwmunf "..."
+    if persistent._jn_headpats_total_given == 0:
+        n 1fwmeml "A-{w=0.2}are you teasing me or something?"
 
-    elif persistent._jn_headpats_total_given >= 50:
-        n 1kplunf "...{w=0.3}Why aren't you...{w=0.3} you know?"
+    elif persistent._jn_headpats_total_given <= 10:
+        n 1fcspolsbr "...Are you gonna do something or what?{w=0.75}{nw}"
+        extend 1kslunl " Jeez..."
 
-    elif persistent._jn_headpats_total_given >= 25:
-        n 1kwmpofsbr "...{w=0.3}I said you can keep going,{w=0.2} [player]."
+    elif persistent._jn_headpats_total_given <= 25:
+        n 1kslpul "...Did..."
+        n 1knmpulsbr "...D-{w=0.2}did you change your mind or something already?"
 
-    elif persistent._jn_headpats_total_given >= 10:
-        n 1fllpofesssbr "...{w=0.3}I didn't say stop,{w=0.2} you know."
+    elif persistent._jn_headpats_total_given <= 50:
+        n 1kwmpulsbr "...D-{w=0.2}did you not feel like it anymore or something?"
 
     else:
-        n 1kllemfesssbr "...{w=0.3}A-{w=0.2}are you going to do something or what?"
+        n 1kllbolsbr "...Were you done already,{w=0.2} or...?"
 
     jump headpats_loop
         
 # Dialogue for each scritch milestone
 
 label headpats_milestone_5:
-    n 1kwmpolsbl "Nnnnnn..."
-    n 1kllpofsbr "..."
+    n 1fcsunlsbl "Nnnnnn..."
+    n 1ksrunlsbr "..."
 
     jump headpats_loop
 
 label headpats_milestone_10:
-    n 1knmpul "Y-{w=0.2}you're still going?!{w=0.5}{nw}"
-    extend 1kllpulsbr " Jeez..."
+    n 1kwmpulsbr "Y-{w=0.2}you're still going?{w=0.5}{nw}"
+    extend 1ksrunfsbl " Jeez..."
 
     jump headpats_loop
 
 label headpats_milestone_25:
-    n "Uuuuuuu..."
-    n "My hair is gonna be {i}so{/i} tangled later..."
+    n 1kslunl "Uuuuuuu..."
+    n 1kcsemlesi "My hair is gonna be {i}so{/i} tangled later..."
 
     jump headpats_loop
 
 label headpats_milestone_50:
-    n "..."
-    n 1klrpol "...E-{w=0.2}enjoying yourself,{w=0.2} [player]?"
-    n "..."
+    n 1ncsemlesi "..."
+    n 1fsqcal "...E-{w=0.2}enjoying yourself,{w=0.2} [player]?"
+    n 1ksrcaf "..."
 
     jump headpats_loop
 
 label headpats_milestone_100:
-    n 1tdtbol "...You really are enjoying this,{w=0.2} huh?"
-    n 1tdtajf "I'm...{w=0.5}{nw}" 
-    extend 1fllunfsbl " warming up to it."
-    n 1kllssfsbl "I think."
+    n 1ksqtrfsbr "...You really are enjoying this,{w=0.2} huh?"
+    n 1kslcaf "..."
 
     jump headpats_loop
     
 label headpats_milestone_250:
-    n 1kllsml "..."
-    n 1knmnvl "...Well?{w=0.2} Keep going,{w=0.2} [player]..."
+    n 1ksqcal "...Still going strong,{w=0.2} huh [player]?{w=0.75}{nw}"
+    extend 1ksrssl " Heh."
 
     jump headpats_loop
     
 label headpats_milestone_500:
-    n 1knmnvl "..."
-    n 1kcssml "..."
+    n 1ucspul "This...{w=0.75}{nw}"
+    extend 1nslsml " isn't actually so bad."
+    n 1fcscafsbr "O-{w=0.2}once you get used to it."
 
     jump headpats_loop
 
 label headpats_milestone_750:
-    n 1kcsssl "...You know..."
-    n 1kllssfsbl "This is...{w=0.75} pretty great after all."
+    n 1kcsssfesi "...Haah."
 
     jump headpats_loop
 
 label headpats_milestone_1000:
-    n 1kllsml "..."
-    n 1kwmssleaf "...More?"
+    n 1kcssmf "..."
 
     jump headpats_loop
 
 label headpats_milestone_1000_plus:
-    n 1kcssmleaf "...[player]..."
+    n 1kcsssfeaf "...[player]..."
 
     jump headpats_loop
 
@@ -269,19 +270,19 @@ transform snap_popup_fadeout:
 image headpats_effect_popup:
     block:
         choice:
-            "mod_assets/extra/headpats/scritch_a.png"
+            "mod_assets/extra/headpats/headpat_poof_a.png"
             ease 0.33 alpha 1.0 yoffset -30
         choice:
-            "mod_assets/extra/headpats/scritch_b.png"
+            "mod_assets/extra/headpats/headpat_poof_b.png"
             ease 0.33 alpha 1.0 yoffset -30
         choice:
-            "mod_assets/extra/headpats/scritch_c.png"
+            "mod_assets/extra/headpats/headpat_poof_c.png"
             ease 0.33 alpha 1.0 yoffset -30
         choice:
-            "mod_assets/extra/headpats/scritch_d.png"
+            "mod_assets/extra/headpats/headpat_poof_d.png"
             ease 0.33 alpha 1.0 yoffset -30
         choice:
-            "mod_assets/extra/headpats/scritch_e.png"
+            "mod_assets/extra/headpats/headpat_poof_e.png"
             ease 0.33 alpha 1.0 yoffset -30
 
     snap_popup_fadeout
@@ -350,8 +351,8 @@ image natsuki headpats active:
 screen headpats_ui:
     zorder jn_headpats._PATS_UI_Z_INDEX
 
-    # Scritch counter
-    text "{0} headpats given".format(persistent._jn_headpats_total_given) size 30 xpos 555 ypos 40 style "categorized_menu_button"
+    # Pat counter
+    text "{0} headpats given".format(persistent._jn_headpats_total_given) size 30 xalign 0.5 ypos 40 style "categorized_menu_button"
     
     # Options
     style_prefix "hkb"
@@ -360,7 +361,7 @@ screen headpats_ui:
         ypos 440
 
         textbutton _("Finished"):
-            style "hkbd_button"
+            style "hkbd_option"
             action [
                 Function(renpy.jump, "headpats_finished"),
                 SensitiveIf(not jn_headpats._pats_finished)
