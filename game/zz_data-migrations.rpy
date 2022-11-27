@@ -149,6 +149,7 @@ init 10 python:
 #All migration scripts go here
 init python in jn_data_migrations:
     import store
+    import store.jn_outfits as jn_outfits
     import store.jn_utils as jn_utils
 
     @migration(["0.0.0", "0.0.1", "0.0.2"], "1.0.0", runtime=MigrationRuntimes.INIT)
@@ -220,5 +221,14 @@ init python in jn_data_migrations:
 
     @migration(["1.0.0"], "1.0.1", runtime=MigrationRuntimes.INIT)
     def to_1_0_1():
-        jn_utils.log("No data migration needed for 1.0.1")
+        jn_utils.log("Migration to 1.0.1 START")
+
+        # Unlock some outfit items registered originally as locked, now unlocked by default
+        jn_outfits.get_outfit("jn_nyatsuki_outfit").unlock()
+        jn_outfits.get_wearable("jn_clothes_qeeb_sweater").unlock()
+        jn_outfits.get_wearable("jn_clothes_qt_sweater").unlock()
+
+        store.persistent._jn_version = "1.0.1"
+        jn_utils.save_game()
+        jn_utils.log("Migration to 1.0.1 DONE")
         return

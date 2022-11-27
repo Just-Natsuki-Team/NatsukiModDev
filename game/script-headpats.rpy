@@ -55,6 +55,7 @@ init python in jn_headpats:
 
 # Initial dialogue based on headpat count
 label headpats_start:
+    $ jn_headpats._pats_finished = False
     $ jn_headpats._more_pats_requested = False
 
     if persistent._jn_headpats_total_given == 0:
@@ -232,6 +233,7 @@ label headpats_milestone_1000_plus:
     jump headpats_loop
 
 label headpats_finished:
+    $ config.mouse = None
     $ jn_headpats._pats_finished = True
 
     # About a 1/3 chance to ask for more headpats, if not already asked
