@@ -992,7 +992,7 @@ init -1 python in jn_outfits:
             # Create the JSON file
             with open(os.path.join(__CUSTOM_OUTFITS_DIRECTORY, "{0}.json".format(new_custom_outfit.reference_name)), "w") as file:
                 file.write(new_custom_outfit.to_json_string())
-            
+
             # Finally register the new outfit
             __register_outfit(outfit=new_custom_outfit, player_created=True)
             store.Natsuki.setOutfit(new_custom_outfit)
@@ -1275,7 +1275,7 @@ init -1 python in jn_outfits:
     __register_wearable(JNAccessory(
         reference_name="jn_accessory_hairband_cat",
         display_name="Cat hairband",
-        unlocked=False,
+        unlocked=True,
         is_jn_wearable=True
     ))
     __register_wearable(JNAccessory(
@@ -1949,7 +1949,7 @@ label outfits_remove_outfit:
         jump new_wearables_outfits_unlocked
 
     elif (
-        not jn_outfits.get_all_outfits() 
+        not jn_outfits.get_all_outfits()
         or len(jn_outfits.JNOutfit.filter_outfits(
             outfit_list=jn_outfits.get_all_outfits(),
             unlocked=True,
@@ -2257,7 +2257,7 @@ label outfits_create_save:
             $ jn_outfits._changes_made = False
             $ jn_outfits.save_temporary_outfit(jn_outfits._PREVIEW_OUTFIT)
             jump ch30_loop
-            
+
         "No, I'm not quite finished.":
             n 1nslpo "I {i}knew{/i} I should have brought a book...{w=2}{nw}"
             extend 1fsqsm " Ehehe."
@@ -2606,7 +2606,7 @@ label new_wearables_outfits_unlocked:
     n 1ullajl "So..."
     n 1tnmsslsbl "Where we we?{w=1}{nw}"
     extend 1fslsslsbr " Ehehe..."
-    
+
     $ Natsuki.calculatedAffinityGain(bypass=True)
     $ jn_globals.force_quit_enabled = True
 
