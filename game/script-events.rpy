@@ -1151,7 +1151,7 @@ label event_wintendo_twitch_battery_dead:
     n 1fcsful "..."
     n 1fcsunl "..."
 
-    show black zorder 4 with Dissolve(0.5)
+    show black zorder 6 with Dissolve(0.5)
     $ jnPause(0.5)
     hide prop
     play audio chair_out_in
@@ -1257,7 +1257,7 @@ label event_wintendo_twitch_game_over:
     n 1flrtr "I guess I'll just do that later."
     n 1fsqcal "{b}Again{/b}."
 
-    show black zorder 4 with Dissolve(0.5)
+    show black zorder 6 with Dissolve(0.5)
     $ jnPause(0.5)
     hide prop
     play audio chair_out_in
@@ -1471,7 +1471,7 @@ label event_warm_package:
     extend 1fcstsl " If I do say so myself~."
 
     n 1ullss "Well,{w=0.5}{nw}"
-    extend 1fsqss " as much as I'm sure you'd {i}love{/i} to share me with this,{w=0.2} [player]..."
+    extend 1fsqss " as much as I'm sure you'd {i}love{/i} to share this with me,{w=0.2} [player]..."
     n 1fcscaesi "There's some things I just can't allow.{w=0.75}{nw}"
     extend 1fsqsm " Ehehe."
     n 1fsqbg "So!{w=0.5} Prepare yourself."

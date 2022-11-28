@@ -3912,7 +3912,7 @@ label talk_school_uniform:
     show natsuki 1tnmpu at jn_center
 
     menu:
-        n "Did you have to wear uniform at school?"
+        n "Did you have to wear any uniform at school?"
 
         "Yes, I had to wear uniform.":
             n 1fcsbg "Aha!{w=0.2} So you know the struggle too,{w=0.1} huh?"

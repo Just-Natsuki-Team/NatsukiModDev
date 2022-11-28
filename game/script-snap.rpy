@@ -470,7 +470,6 @@ label snap_quip(is_player_snap, is_correct_snap):
 
             # Some UE things to make it fun
             play audio smack
-            hide snap_popup
             show snap_popup zorder jn_snap._SNAP_POPUP_Z_INDEX
             $ jnPause(0.75)
             hide snap_popup
@@ -530,9 +529,11 @@ label snap_quip(is_player_snap, is_correct_snap):
             show natsuki 1uchbg zorder JN_NATSUKI_ZORDER
 
             # Some UE things to make it fun
+
             play audio smack
             show snap_popup zorder jn_snap._SNAP_POPUP_Z_INDEX
-            hide snap_popup with popup_hide_transition
+            $ jnPause(0.75)
+            hide snap_popup
 
         # Natsuki snapped, and was incorrect
         else:

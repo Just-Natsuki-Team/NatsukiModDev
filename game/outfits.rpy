@@ -2219,6 +2219,8 @@ label outfits_create_save:
                     n 1fsqem "...Really,{w=0.5} [player]."
                     n 1fsqsr "Come on.{w=1}{nw}"
                     extend 1fllsr " Quit being a jerk."
+
+                    $ Natsuki.addApology(jn_apologies.ApologyTypes.rude)
                     $ Natsuki.percentageAffinityLoss(2)
 
                 else:
