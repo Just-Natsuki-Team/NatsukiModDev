@@ -64,7 +64,7 @@ label ch30_init:
         Natsuki.setInConversation(True)
 
         # Determine if the player should get a prolonged leave greeting
-        if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
+        if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 2:
             Natsuki.setQuitApology(jn_apologies.ApologyTypes.prolonged_leave)
 
         # Repeat visits have a small affinity gain

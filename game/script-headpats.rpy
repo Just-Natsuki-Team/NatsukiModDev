@@ -28,10 +28,10 @@ init python in jn_headpats:
     ]
 
     # Tracking
-    _has_been_given_pats = False
     _more_pats_requested = False
     _no_pat_count = 0
     _pats_finished = False
+    _is_idle = True
 
     # Collision detection
     _last_mouse_position = None
@@ -86,15 +86,7 @@ label headpats_start:
 
 # Main headpat loop/logic
 label headpats_loop:
-    $ current_mouse_position = jn_utils.getMousePosition()
-
-    # Switch Natsuki's expression to nervous/waiting, if she's not been patted yet
-    if not jn_headpats._has_been_given_pats and persistent._jn_headpats_total_given < 5:
-        show natsuki headpats nervous
-
-    elif not jn_headpats._has_been_given_pats:
-        show natsuki headpats waiting
-    
+    $ current_mouse_position = jn_utils.getMousePosition()    
     $ config.mouse = (
         {"default": [("mod_assets/extra/headpats/headpats_active_cursor.png", 24, 24)]} if jn_headpats._ACTIVE_PAT_AREA.collidepoint(current_mouse_position[0], current_mouse_position[1])
         else None
@@ -106,10 +98,10 @@ label headpats_loop:
     ):
         python:
             global _last_mouse_position
-            jn_headpats._has_been_given_pats = True
             persistent._jn_headpats_total_given += 1
             jn_headpats._no_pat_count = 0
             jn_headpats._last_mouse_position = current_mouse_position
+            jn_headpats._is_idle = False
 
         play audio headpat
         show headpats_effect_popup zorder jn_headpats._PATS_POPUP_Z_INDEX
@@ -126,16 +118,30 @@ label headpats_loop:
                 persistent._jn_headpats_total_given > 1000
                 and persistent._jn_headpats_total_given % 1000 == 0
             ):
-                renpy.jump(headpats_milestone_1000_plus)
+                renpy.jump("headpats_milestone_1000_plus")
 
     else:
         $ jn_headpats._no_pat_count += 1
 
-        if jn_headpats._has_been_given_pats:
-            show natsuki headpats waiting
+        # Switch to waiting idle
+        if not jn_headpats._is_idle and persistent._jn_headpats_total_given < 10:
+            $ jn_headpats._is_idle = True
+            show natsuki headpats waiting min
+
+        elif not jn_headpats._is_idle and persistent._jn_headpats_total_given < 25:
+            $ jn_headpats._is_idle = True
+            show natsuki headpats waiting low
+
+        elif not jn_headpats._is_idle and persistent._jn_headpats_total_given < 100:
+            $ jn_headpats._is_idle = True
+            show natsuki headpats waiting medium
+
+        elif not jn_headpats._is_idle:
+            $ jn_headpats._is_idle = True
+            show natsuki headpats waiting high
 
         # Natsuki picks up on no headpats for extended time
-        if (jn_headpats._no_pat_count == 6):
+        if (jn_headpats._no_pat_count == 12):
             jump headpats_inactive
 
     $ jnPause(1)
@@ -144,20 +150,25 @@ label headpats_loop:
 label headpats_inactive:
     if persistent._jn_headpats_total_given == 0:
         n 1fwmeml "A-{w=0.2}are you teasing me or something?"
+        show natsuki 1fcspol
 
     elif persistent._jn_headpats_total_given <= 10:
         n 1fcspolsbr "...Are you gonna do something or what?{w=0.75}{nw}"
         extend 1kslunl " Jeez..."
+        show natsuki 1kslsll
 
     elif persistent._jn_headpats_total_given <= 25:
         n 1kslpul "...Did..."
         n 1knmpulsbr "...D-{w=0.2}did you change your mind or something already?"
+        show natsuki 1knmbolsbr
 
     elif persistent._jn_headpats_total_given <= 50:
         n 1kwmpulsbr "...D-{w=0.2}did you not feel like it anymore or something?"
+        show natsuki 1kwmbolsbr
 
     else:
         n 1kllbolsbr "...Were you done already,{w=0.2} or...?"
+        show natsuki 1kwmbolsbr
 
     jump headpats_loop
 
@@ -201,7 +212,7 @@ label headpats_milestone_100:
     
 label headpats_milestone_250:
     n 1ksqcal "...Still going strong,{w=0.2} huh [player]?{w=0.75}{nw}"
-    extend 1ksrssl " Heh."
+    extend 1ksrfsl " Heh."
 
     $ Natsuki.calculatedAffinityGain(bypass=True)
     jump headpats_loop
@@ -257,6 +268,7 @@ label headpats_finished:
                 n 1ksrssf "...{w=0.3}Thanks,{w=0.2} [player]."
                 $ jn_headpats._more_pats_requested = True
                 $ jn_headpats._pats_finished = False
+                $ jn_headpats._is_idle = False
                 jump headpats_loop
 
             "That's it for now.":
@@ -299,8 +311,8 @@ image headpats_effect_popup:
 
     snap_popup_fadeout
 
-# Pre-headpat Natsuki sprites
-image natsuki headpats nervous:
+# Idle for 0+
+image natsuki headpats waiting min:
     block:
         choice:
             "natsuki 1kllemf"
@@ -313,11 +325,11 @@ image natsuki headpats nervous:
         choice:
             "natsuki 1fcsunf"
 
-        pause 3
+        pause 5
         repeat
 
-# Natsuki waiting for headpats sprites
-image natsuki headpats waiting:
+# Idle for 10+
+image natsuki headpats waiting low:
     block:
         choice:
             "natsuki 1knmpul"
@@ -335,6 +347,50 @@ image natsuki headpats waiting:
             "natsuki 1klrunl"
         choice:
             "natsuki 1kllunl"
+
+        pause 5
+        repeat
+
+# Idle for 25+
+image natsuki headpats waiting medium:
+    block:
+        choice:
+            "natsuki 1nnmbol"
+        choice:
+            "natsuki 1nslbol"
+        choice:
+            "natsuki 1nsrbol"
+        choice:
+            "natsuki 1tnmsll"
+        choice:
+            "natsuki 1tslsll"
+        choice:
+            "natsuki 1tslsll"
+        choice:
+            "natsuki 1tsrsll"
+        choice:
+            "natsuki 1nslpol"
+        choice:
+            "natsuki 1nsrpol"
+        choice:
+            "natsuki 1nsqpol"
+
+        pause 5
+        repeat
+
+# Idle for 100+
+image natsuki headpats waiting high:
+    block:
+        choice:
+            "natsuki 1ksqcal"
+        choice:
+            "natsuki 1knmcal"
+        choice:
+            "natsuki 1kwmbol"
+        choice:
+            "natsuki 1kslfsl"
+        choice:
+            "natsuki 1ksrfsl"
 
         pause 5
         repeat
