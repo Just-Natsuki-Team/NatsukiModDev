@@ -514,6 +514,13 @@ init 5 python:
     )
 
 label greeting_normal_happy_wake_up_nat:
+    n 1nslpu "..."
+    n 1kslpu "..."
+    n 1kcsbo "..."
+    n 1ncsaj "..."
+    n 1ncspu "..."
+    n 1ncsem "..."
+    n 1ncspu "..."
     n 1ncsemesl "..."
     n 1kcsemesl "Mmm...{w=1}{nw}"
     extend 1kwlemesl " nnnn?"
