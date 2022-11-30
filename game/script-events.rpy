@@ -791,7 +791,7 @@ init 5 python:
             persistent._event_database,
             label="event_eyewear_problems",
             unlocked=True,
-            conditional="jn_utils.get_total_gameplay_days() >= 21 and persistent.jn_custom_outfits_unlocked",
+            conditional="persistent.jn_custom_outfits_unlocked",
             affinity_range=(jn_affinity.HAPPY, None)
         ),
         topic_group=TOPIC_TYPE_EVENT
@@ -1046,7 +1046,7 @@ init 5 python:
             persistent._event_database,
             label="event_wintendo_twitch_battery_dead",
             unlocked=True,
-            conditional="jn_utils.get_total_gameplay_days() >= 14",
+            conditional="jn_utils.get_total_gameplay_days() >= 7",
             affinity_range=(jn_affinity.AFFECTIONATE, None)
         ),
         topic_group=TOPIC_TYPE_EVENT
@@ -1176,7 +1176,7 @@ init 5 python:
             persistent._event_database,
             label="event_wintendo_twitch_game_over",
             unlocked=True,
-            conditional="jn_utils.get_total_gameplay_days() >= 21",
+            conditional="jn_utils.get_total_gameplay_days() >= 14",
             affinity_range=(jn_affinity.AFFECTIONATE, None)
         ),
         topic_group=TOPIC_TYPE_EVENT
@@ -1282,8 +1282,8 @@ init 5 python:
             persistent._event_database,
             label="event_warm_package",
             unlocked=True,
-            conditional="jn_utils.get_total_gameplay_days() >= 21 and persistent.jn_custom_outfits_unlocked",
-            affinity_range=(jn_affinity.HAPPY, None)
+            conditional="jn_utils.get_total_gameplay_days() >= 7 and persistent.jn_custom_outfits_unlocked",
+            affinity_range=(jn_affinity.AFFECTIONATE, None)
         ),
         topic_group=TOPIC_TYPE_EVENT
     )
