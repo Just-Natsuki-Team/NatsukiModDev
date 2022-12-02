@@ -544,7 +544,7 @@ label farewell_love_you_mean_the_world_to_me:
     extend 1kplsfl " you're leaving now,{w=0.2} [player]?" 
     n 1klrcal "Well...{w=1}{nw}" 
     extend 1ksrcal " okay."
-    n 1fnmtrf "Y-{w=0.2}you better take care,{w=0.2} [player]!{w=0.5}" 
+    n 1fnmtrf "Y-{w=0.2}you better take care,{w=0.2} [player]!{w=0.5}{nw}" 
     extend 1kchssfeaf " You mean the world to me!"
 
     return { "quit": None }
@@ -1221,7 +1221,7 @@ label farewell_short_session_ask:
                 n 1kllssl "T-{w=0.1}thanks,{w=0.1} [player]. It means a lot to me."
                 $ chosen_endearment = jn_utils.getRandomEndearment()
                 n 1kplssl "Really.{w=0.2} Thank you,{w=0.1} [chosen_endearment]."
-                n 1klrbgl "...A-{w=0.1}anyway."
+                n 1ksrunl "..."
 
             else:
                 n 1fnmbgl "Y-{w=0.2}yeah!{w=0.5}{nw}" 
@@ -1498,15 +1498,15 @@ label farewell_pleading_ask:
                 show natsuki 1kslsgf at jn_center zorder JN_NATSUKI_ZORDER
                 show black zorder 3 with Dissolve(0.5)
                 play audio clothing_ruffle
-                pause 3.5
+                $ jnPause(3.5)
                 play audio kiss
-                pause 2.5
+                $ jnPause(2.5)
                 n "L-{w=0.2}love you!"
 
             else:
                 n 1kcsunfess "...I'll miss you.{w=0.75}{nw}"
                 show natsuki 1kllunfess
-                pause 1.5
+                $ jnPause(1.5)
 
             return { "quit": None }
     return
@@ -1543,7 +1543,7 @@ label farewell_gentle_ask:
             show natsuki 1fbkcaf at jn_center zorder JN_NATSUKI_ZORDER
             show black zorder 3 with Dissolve(0.5)
             play audio clothing_ruffle
-            pause 3.5
+            $ jnPause(3.5)
             show natsuki 1ncspuf at jn_center zorder JN_NATSUKI_ZORDER
             hide black with Dissolve(1.25)
 
@@ -1567,9 +1567,9 @@ label farewell_gentle_ask:
                 show natsuki 1ksrsgfsbl at jn_center zorder JN_NATSUKI_ZORDER
                 show black zorder 3 with Dissolve(0.5)
                 play audio clothing_ruffle
-                pause 3.5
+                $ jnPause(3.5)
                 play audio kiss
-                pause 2.5
+                $ jnPause(2.5)
 
             return { "quit": None }
     return

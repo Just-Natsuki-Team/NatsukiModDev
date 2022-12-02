@@ -6,8 +6,12 @@ label ch30_autoload:
         quick_menu = True
         style.say_dialogue = style.normal
         in_sayori_kill = None
-        allow_skipping = True
+        config.skipping = False
         config.allow_skipping = False
+        n.display_args["callback"] = jnNoDismissDialogue
+        n.what_args["slow_abortable"] = False
+        n.display_args["callback"] = jnNoDismissDialogue
+        n.what_args["slow_abortable"] = False
 
     #Do all the things here for initial setup/flow hijacking
 
@@ -41,11 +45,11 @@ label ch30_init:
         import random
 
         #Run runtime data migrations here
-        jn_utils.log("Current persisted version is: {0}".format(store.persistent._jn_version))
         jn_data_migrations.runRuntimeMigrations()
 
         #Now adjust the stored version number
         persistent._jn_version = config.version
+        jn_utils.log("Current persisted version post-mig check: {0}".format(store.persistent._jn_version))
 
         # Assign Natsuki and player nicknames
         if Natsuki.isEnamored(higher=True) and persistent._jn_nicknames_natsuki_allowed and persistent._jn_nicknames_natsuki_current_nickname:
@@ -60,7 +64,7 @@ label ch30_init:
         Natsuki.setInConversation(True)
 
         # Determine if the player should get a prolonged leave greeting
-        if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 1:
+        if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 2:
             Natsuki.setQuitApology(jn_apologies.ApologyTypes.prolonged_leave)
 
         # Repeat visits have a small affinity gain
@@ -81,18 +85,17 @@ label ch30_init:
         jn_utils.log("Outfit data loaded.")
 
         # Set Natsuki's outfit
-        if persistent.jn_natsuki_auto_outfit_change_enabled:
-            # Real-time outfit selection
+        if persistent.jn_natsuki_auto_outfit_change_enabled or persistent.jn_natsuki_outfit_on_quit == "jn_temporary_outfit":
+            # Real-time outfit selection, or last outfit was temporary
             Natsuki.setOutfit(jn_outfits.get_realtime_outfit())
 
-        else:
-            if jn_outfits.outfit_exists(persistent.jn_natsuki_outfit_on_quit):
-                # Custom outfit/default outfit selection
-                Natsuki.setOutfit(jn_outfits.get_outfit(persistent.jn_natsuki_outfit_on_quit))
+        elif jn_outfits.outfit_exists(persistent.jn_natsuki_outfit_on_quit):
+            # Custom outfit/default outfit selection
+            Natsuki.setOutfit(jn_outfits.get_outfit(persistent.jn_natsuki_outfit_on_quit))
 
-            else:
-                # Fallback to Natsuki's school uniform
-                Natsuki.setOutfit(jn_outfits.get_outfit("jn_school_uniform"))
+        else:
+            # Fallback to Natsuki's school uniform
+            Natsuki.setOutfit(jn_outfits.get_outfit("jn_school_uniform"))
 
         jn_utils.log("Outfit set.")
 
@@ -113,14 +116,14 @@ label ch30_init:
 
     # Prepare visuals
     show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
-    hide black with Dissolve(2) 
+    hide black with Dissolve(2)
     show screen hkb_overlay
     play music audio.just_natsuki_bgm
 
     # Random sticker chance
     if Natsuki.isAffectionate(higher=True):
         if (
-            (not persistent._jn_natsuki_chibi_seen and persistent.jn_total_visit_count > 50) 
+            (not persistent._jn_natsuki_chibi_seen and persistent.jn_total_visit_count > 50)
             or (random.randint(1, 1000) == 1)
         ):
             $ import random
@@ -171,8 +174,8 @@ label ch30_wait:
         if (random.randint(1, 10000) == 1):
             jn_stickers.stickerWindowPeekUp(at_right=random.choice([True, False]))
 
-        renpy.pause(delay=5.0, hard=True)
-    
+        jnPause(delay=5.0, hard=True)
+
     jump ch30_loop
 
 #Other labels
@@ -189,7 +192,7 @@ label call_next_topic(show_natsuki=True):
                 and jn_utils.get_current_session_length().total_seconds() > 60
                 and not jn_activity.getJNWindowActive()
                 and not _topic in ["random_music_change", "weather_change"]):
-                    
+
                     play audio notification
                     python:
                         jn_activity.taskbarFlash()
@@ -308,7 +311,7 @@ init python:
         if (
             Natsuki.isHappy(higher=True)
             and persistent.jn_custom_outfits_unlocked
-            and len(jn_outfits._SESSION_NEW_UNLOCKS) 
+            and len(jn_outfits._SESSION_NEW_UNLOCKS)
         ):
             queue("new_wearables_outfits_unlocked")
 
@@ -374,7 +377,7 @@ init python:
         if len(jn_plugins.quarter_hour_check_calls) > 0:
             for action in jn_plugins.quarter_hour_check_calls:
                 eval(action.statement)
-        
+
         queue("weather_change")
         queue("random_music_change")
 
@@ -473,7 +476,7 @@ label talk_menu:
         "I want to say sorry...":
             jump player_apologies_start
 
-        "About your outfit..." if Natsuki.isHappy(higher=True) and persistent.jn_custom_outfits_unlocked: 
+        "About your outfit..." if Natsuki.isHappy(higher=True) and persistent.jn_custom_outfits_unlocked:
             jump outfits_menu
 
         "Goodbye..." if Natsuki.isAffectionate(higher=True):
@@ -672,11 +675,11 @@ label try_force_quit:
                     if (random.randint(0, 10) == 1):
                         play sound glitch_d loop
                         show glitch_garbled_red zorder 99 with vpunch
-                        $ renpy.pause(random.randint(4,13))
+                        $ jnPause(random.randint(4,13), hard=True)
                         stop sound
                         play audio glitch_e
                         show glitch_garbled_n zorder 99 with hpunch
-                        $ renpy.pause(0.025)
+                        $ jnPause(0.025, hard=True)
                         hide glitch_garbled_n
                         hide glitch_garbled_red
 

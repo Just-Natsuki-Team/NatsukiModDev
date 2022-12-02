@@ -67,7 +67,7 @@ label compliment_amazing:
         if Natsuki.isEnamored(higher=True):
             n 1uskemf "[player]...{w=0.3} honestly!{w=0.2} Jeez..."
             n 1kllssl "But...{w=0.3} thanks.{w=0.2} It really means a lot to me."
-            n 1fchbgl "You're amaazing too,{w=0.1} though.{w=0.2} Remember that!"
+            n 1fchbgl "You're amazing too,{w=0.1} though.{w=0.2} Remember that!"
 
         else:
             n 1kchbgl "Jeez,{w=0.1} [player]...{w=0.3} you're really doling out the compliments today,{w=0.2} aren't you?"

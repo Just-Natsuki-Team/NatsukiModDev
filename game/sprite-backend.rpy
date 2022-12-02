@@ -60,6 +60,8 @@ init -50 python:
         worried = 35
         blep = 36
         drink = 37
+        focus = 38
+        flat_smile = 39
 
         def __str__(self):
             return self.name
@@ -292,7 +294,7 @@ init 1 python:
         "wl": JNEyes.wink_left,
         "wr": JNEyes.wink_right
     }
-
+    
     MOUTH_MAP = {
         "aj": JNMouth.ajar,
         "an": JNMouth.angry,
@@ -306,7 +308,9 @@ init 1 python:
         "dr": JNMouth.drink,
         "dv": JNMouth.devious,
         "em": JNMouth.embarrassed,
+        "fo": JNMouth.focus,
         "fr": JNMouth.frown,
+        "fs": JNMouth.flat_smile,
         "fu": JNMouth.furious,
         "gs": JNMouth.gasp,
         "gn": JNMouth.grin,
@@ -328,7 +332,7 @@ init 1 python:
         "up": JNMouth.upset,
         "wr": JNMouth.worried
     }
-
+    
     BLUSH_MAP = {
         "f": JNBlush.full,
         "l": JNBlush.light
@@ -602,18 +606,50 @@ init 1 python:
 #
 # For spritecode construction, use the previewer @ https://just-natsuki-team.github.io/Expression-Previewer/
 
+# Idle images for Natsuki playing her Twitch
+image natsuki gaming:
+    block:
+        choice:
+            "natsuki 1fdwfosbl"
+            pause 3
+            "natsuki 1fcsfosbl"
+            pause 0.1
+
+        choice:
+            "natsuki 1fdwpusbr"
+            pause 3
+
+        choice:
+            "natsuki 1fdwslsbl"
+            pause 3
+            "natsuki 1fcsslsbl"
+            pause 0.1
+
+        choice:
+            "natsuki 1fdwcaesssbr"
+            pause 3
+            
+        choice:
+            "natsuki 1fdwsssbl"
+            pause 3
+            "natsuki 1fcssssbl"
+            pause 0.1
+
+    repeat
+
 # This selects which idle image to show based on current affinity state
 image natsuki idle = ConditionSwitch(
-    "Natsuki.isEnamored(higher=True)", "natsuki idle max_affinity",
-    "Natsuki.isAffectionate(higher=True)", "natsuki idle high_affinity",
-    "Natsuki.isNormal(higher=True)", "natsuki idle medium_affinity",
-    "Natsuki.isDistressed(higher=True)", "natsuki idle low_affinity",
-    "True", "natsuki idle min_affinity",
+    "Natsuki.isEnamored(higher=True)", "natsuki idle enamored",
+    "Natsuki.isAffectionate(higher=True)", "natsuki idle affectionate",
+    "Natsuki.isHappy(higher=True)", "natsuki idle happy",
+    "Natsuki.isNormal(higher=True)", "natsuki idle normal",
+    "Natsuki.isDistressed(higher=True)", "natsuki idle distressed",
+    "True", "natsuki idle ruined",
     predict_all = True
 )
 
 # Idle images for ENAMORED+
-image natsuki idle max_affinity:
+image natsuki idle enamored:
     block:
         choice:
             "natsuki 1nchsmf"
@@ -724,7 +760,7 @@ image natsuki idle max_affinity:
         repeat
 
 # Idle images for AFFECTIONATE+
-image natsuki idle high_affinity:
+image natsuki idle affectionate:
     block:
         choice:
             "natsuki 1ullsml"
@@ -810,8 +846,125 @@ image natsuki idle high_affinity:
 
         repeat
 
+# Idle images for HAPPY+
+image natsuki idle happy:
+    block:
+        choice:
+            "natsuki 1ullbo"
+            pause 4
+            "natsuki 1ucsbo"
+            pause 0.1
+            "natsuki 1ullbo"
+            pause 4
+            "natsuki 1ucsbo"
+            pause 0.1
+
+        choice:
+            "natsuki 1ulrbo"
+            pause 4
+            "natsuki 1ucsbo"
+            pause 0.1
+            "natsuki 1ulrbo"
+            pause 4
+            "natsuki 1ucsbo"
+            pause 0.1
+
+        choice:
+            "natsuki 1ullfs"
+            pause 4
+            "natsuki 1ucsfs"
+            pause 0.1
+            "natsuki 1ullfs"
+            pause 4
+            "natsuki 1ucsfs"
+            pause 0.1
+
+        choice:
+            "natsuki 1ulrfs"
+            pause 4
+            "natsuki 1ucsfs"
+            pause 0.1
+            "natsuki 1ulrfs"
+            pause 4
+            "natsuki 1ucsfs"
+            pause 0.1
+
+        choice:
+            "natsuki 1ullca"
+            pause 4
+            "natsuki 1ucsca"
+            pause 0.1
+            "natsuki 1tllca"
+            pause 4
+            "natsuki 1tcsca"
+            pause 0.1
+            "natsuki 1tllca"
+            pause 2
+            "natsuki 1tnmpu"
+            pause 2
+            "natsuki 1tcspu"
+            pause 0.1
+            "natsuki 1unmpul"
+            pause 2
+            "natsuki 1ucspul"
+            pause 0.1
+            "natsuki 1fcspolsbl"
+            pause 4
+
+        choice:
+            "natsuki 1tslca"
+            pause 4
+            "natsuki 1tcsca"
+            pause 0.1
+            "natsuki 1tslca"
+            pause 1
+            "natsuki 1tcsca"
+            pause 0.1
+            "natsuki 1tsqca"
+            pause 2
+            "natsuki 1unmpul"
+            pause 2
+            "natsuki 1ucspul"
+            pause 0.1
+            "natsuki 1fslsmlsbl"
+            pause 3
+            "natsuki 1fcssmlsbl"
+            pause 0.1
+
+        choice:
+            "natsuki 1ulrcal"
+            pause 4
+            "natsuki 1ucscal"
+            pause 0.1
+            "natsuki 1ulrcal"
+            pause 4
+            "natsuki 1ucscal"
+            pause 0.1
+
+        choice:
+            "natsuki 1nnmca"
+            pause 4
+            "natsuki 1ncsca"
+            pause 0.1
+            "natsuki 1nnmca"
+            pause 4
+            "natsuki 1ncsca"
+            pause 0.1
+
+        choice:
+            "natsuki 1ullfs"
+            pause 4
+            "natsuki 1ucsfs"
+            pause 0.1
+            "natsuki 1ulrfs"
+            pause 4
+            "natsuki 1ucsfs"
+            pause 0.1
+
+        repeat
+
 # Idle images for NORMAL+
-image natsuki idle medium_affinity:
+image natsuki idle normal:
     block:
         choice:
             "natsuki 1nllbo"
@@ -896,7 +1049,7 @@ image natsuki idle medium_affinity:
         repeat
 
 # Idle images for DISTRESSED+
-image natsuki idle low_affinity:
+image natsuki idle distressed:
     block:
         choice:
             "natsuki 1fllsl"
@@ -943,7 +1096,7 @@ image natsuki idle low_affinity:
         repeat
 
 # Idle images for RUINED+
-image natsuki idle min_affinity:
+image natsuki idle ruined:
     block:
         choice:
             "natsuki 1fcsuntsa"
@@ -993,22 +1146,25 @@ init python:
         Hack to work around renpy issue where the sprite is not refreshed when showing again
         """
         if Natsuki.isEnamored(higher=True):
-            renpy.show("natsuki talk_menu_max_affinity", at_list=[jn_left])
+            renpy.show("natsuki talk_menu_enamored", at_list=[jn_left])
 
         elif Natsuki.isAffectionate(higher=True):
-            renpy.show("natsuki talk_menu_high_affinity", at_list=[jn_left])
+            renpy.show("natsuki talk_menu_affectionate", at_list=[jn_left])
+
+        elif Natsuki.isHappy(higher=True):
+            renpy.show("natsuki talk_menu_happy", at_list=[jn_left])
 
         elif Natsuki.isNormal(higher=True):
-            renpy.show("natsuki talk_menu_medium_affinity", at_list=[jn_left])
+            renpy.show("natsuki talk_menu_normal", at_list=[jn_left])
 
         elif Natsuki.isDistressed(higher=True):
-            renpy.show("natsuki talk_menu_low_affinity", at_list=[jn_left])
+            renpy.show("natsuki talk_menu_distressed", at_list=[jn_left])
 
         else:
-            renpy.show("natsuki talk_menu_min_affinity", at_list=[jn_left])
+            renpy.show("natsuki talk_menu_ruined", at_list=[jn_left])
 
 # Menu images for ENAMORED+
-image natsuki talk_menu_max_affinity:
+image natsuki talk_menu_enamored:
     block:
         choice:
             "natsuki 1nchbgl"
@@ -1022,7 +1178,7 @@ image natsuki talk_menu_max_affinity:
             "natsuki 1uwltsl"
 
 # Menu images for AFFECTIONATE+
-image natsuki talk_menu_high_affinity:
+image natsuki talk_menu_affectionate:
     block:
         choice:
             "natsuki 1unmsm"
@@ -1033,8 +1189,22 @@ image natsuki talk_menu_high_affinity:
         choice:
             "natsuki 1nchbg"
 
+# Menu images for HAPPY+
+image natsuki talk_menu_happy:
+    block:
+        choice:
+            "natsuki 1unmss"
+        choice:
+            "natsuki 1unmfs"
+        choice:
+            "natsuki 1tnmfs"
+        choice:
+            "natsuki 1ullaj"
+        choice:
+            "natsuki 1unmbo"
+
 # Menu images for NORMAL+
-image natsuki talk_menu_medium_affinity:
+image natsuki talk_menu_normal:
     block:
         choice:
             "natsuki 1unmss"
@@ -1048,7 +1218,7 @@ image natsuki talk_menu_medium_affinity:
             "natsuki 1unmca"
 
 # Menu images for DISTRESSED+
-image natsuki talk_menu_low_affinity:
+image natsuki talk_menu_distressed:
     block:
         choice:
             "natsuki 1fcsun"
@@ -1062,7 +1232,7 @@ image natsuki talk_menu_low_affinity:
             "natsuki 1fcsaj"
 
 # Menu images for RUINED+
-image natsuki talk_menu_min_affinity:
+image natsuki talk_menu_ruined:
     block:
         choice:
             "natsuki 1fcsantsb"

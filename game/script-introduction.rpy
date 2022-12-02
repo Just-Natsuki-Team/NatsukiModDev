@@ -37,22 +37,27 @@ label introduction_progress_check:
     # Handling for if player decides to quit during the introduction sequence so we don't skip unseen segments
     if not jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.new_game:
         $ config.allow_skipping = False
+        $ n.display_args["callback"] = jnNoDismissDialogue
+        $ n.what_args["slow_abortable"] = False
         play audio static
         show glitch_garbled_a zorder 99 with vpunch
 
         $ main_background.show()
         $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
         show natsuki idle introduction at jn_center zorder JN_NATSUKI_ZORDER
-        pause 0.25
+        $ jnPause(0.25)
         hide glitch_garbled_a
         play music audio.space_classroom_bgm fadein 1
 
     $ renpy.jump(jn_introduction.INTRODUCTION_STATE_LABEL_MAP.get(jn_introduction.JNIntroductionStates(persistent.jn_introduction_state)))
 
 label introduction_opening:
+    $ config.skipping = False
     $ config.allow_skipping = False
+    $ n.display_args["callback"] = jnNoDismissDialogue
+    $ n.what_args["slow_abortable"] = False
     show black zorder 99
-    $ renpy.pause(5)
+    $ jnPause(5)
 
     # Restore attempt #1..
     # NOTE: We use non-standard menus in this sequence, as the default menu is offset and we need these centred.
@@ -61,34 +66,34 @@ label introduction_opening:
     play audio static
     show glitch_garbled_a zorder 99 with vpunch
     hide glitch_garbled_a
-    $ renpy.pause(5)
+    $ jnPause(5)
 
     # Restore attempt #2..
     $ renpy.display_menu(items=[ ("Restore natsuki.chr", True)], screen="choice_centred_mute")
     play audio static
     show glitch_garbled_b zorder 99 with vpunch
-    $ renpy.pause(0.25)
+    $ jnPause(0.25)
     play audio static
     show glitch_garbled_a zorder 99 with hpunch
-    $ renpy.pause(0.5)
+    $ jnPause(0.5)
     play audio glitch_c
     hide glitch_garbled_b
     hide glitch_garbled_a
-    $ renpy.pause(7)
-    
+    $ jnPause(7)
+
     # Restore attempt #3..
     $ renpy.display_menu(items=[ ("Restore natsuki.chr", True)], screen="choice_centred_mute")
     play audio static
     show glitch_garbled_c zorder 99 with vpunch
-    $ renpy.pause(0.25)
+    $ jnPause(0.25)
     play audio glitch_b
     show glitch_garbled_b zorder 99 with hpunch
-    $ renpy.pause(0.5)
+    $ jnPause(0.5)
 
     if random.randint(0,10) == 1:
         play audio glitch_a
         show glitch_garbled_red zorder 99 with hpunch
-        $ renpy.pause(1)
+        $ jnPause(1)
         hide glitch_garbled_red
 
     play audio static
@@ -98,7 +103,7 @@ label introduction_opening:
     hide glitch_garbled_a
     show sky glitch_fuzzy zorder 99
     play sound interference loop
-    $ renpy.pause(10)
+    $ jnPause(10)
 
     play audio static
     show glitch_garbled_a zorder 99 with hpunch
@@ -107,7 +112,7 @@ label introduction_opening:
     hide glitch_garbled_a
     show sky glitch_fuzzy zorder 99
     play sound interference loop
-    $ renpy.pause(1.5)
+    $ jnPause(1.5)
 
     # Restore finally works
     stop sound
@@ -131,10 +136,10 @@ label introduction_first_meeting:
     # Natsuki is yanked back into existence and reacts accordingly, before calming enough to ask if anyone is there
     $ persistent.jn_introduction_state = int(jn_introduction.JNIntroductionStates.first_meeting)
     n 1uscsctsc "AAAAAaaaaAAAAHHH!"
-    n 1uskwrtsc "S-{w=0.1}somebody!{w=0.5} ANYBODY?!{w=0.5} HELP!{w=0.5}{nw}" 
+    n 1uskwrtsc "S-{w=0.1}somebody!{w=0.5} ANYBODY?!{w=0.5} HELP!{w=0.5}{nw}"
     extend 1fbkwr " HELP ME!!"
     n 1uscemtsc "Y-{w=0.1}Yuri,{w=0.1} she's..."
-    n 1ullem "S-{w=0.3}she's..." 
+    n 1ullem "S-{w=0.3}she's..."
     n 1uskem "...H-{w=0.3}huh?"
     n 1uscaj "W...{w=0.5} what is...?"
     n 1fllup "I...{w=0.5} I was just running from..."
@@ -143,7 +148,7 @@ label introduction_first_meeting:
     play audio static
     show glitch_garbled_b zorder 99 with vpunch
     hide glitch_garbled_b
-    $ renpy.pause(0.5)
+    $ jnPause(0.5)
     play audio glitch_c
     show glitch_garbled_c zorder 99 with vpunch
     hide glitch_garbled_c
@@ -241,7 +246,7 @@ label introduction_first_meeting:
     n 1kwmss "You're...{w=0.3} [player]?"
 
     show natsuki idle introduction at jn_center
-    $ renpy.pause(10)
+    $ jnPause(10)
 
     jump introduction_collecting_thoughts
 
@@ -256,7 +261,7 @@ label introduction_collecting_thoughts:
     extend 1kwdpu " ...Y-{w=0.3}you've always been here?"
     n 1klrsf "..."
     n 1klraj "But...{w=1}{nw}"
-    extend 1kskem " I-{w=0.3}I was...{w=0.3}{nw}" 
+    extend 1kskem " I-{w=0.3}I was...{w=0.3}{nw}"
     extend 1kscem " I was d-...{w=0.3}{nw}"
 
     play audio glitch_c
@@ -271,7 +276,7 @@ label introduction_collecting_thoughts:
 
     n 1kskem "You...{w=1} you brought me back?{w=1}{nw}"
     extend 1kskwrsbl " T-{w=0.3}to this?"
-    n 1kllemsbl "But this...{w=1}{nw}" 
+    n 1kllemsbl "But this...{w=1}{nw}"
     extend 1klrupesssbr " this is all...!{w=1}{nw}"
     menu:
         "I want to help you.":
@@ -316,7 +321,7 @@ label introduction_collecting_thoughts:
     extend 1kplpusbr " right?"
 
     show natsuki idle introduction at jn_center
-    $ renpy.pause(30)
+    $ jnPause(30)
 
     jump introduction_calmed_down
 
@@ -328,7 +333,7 @@ label introduction_calmed_down:
     n 1kllsr "..."
     n 1kllun "Uhmm...{w=2}{nw}"
     extend 1kwmpu " [player]?"
-    n 1kslsr "I'm...{w=0.3} sorry.{w=1}{nw}" 
+    n 1kslsr "I'm...{w=0.3} sorry.{w=1}{nw}"
     extend 1ksqsf " F-{w=0.1}for how I was acting then, I mean."
     n 1klraj "It...{w=0.3} it's just that..."
     n 1kplun "T-{w=0.3}this is all coming on {i}super{/i} strongly right now."
@@ -349,16 +354,16 @@ label introduction_calmed_down:
             n 1fcsun "...{w=7}{nw}"
             n 1nplsr "..."
 
-    n 1nllsl "So...{w=0.5} you know that feeling?{w=1}{nw}" 
+    n 1nllsl "So...{w=0.5} you know that feeling?{w=1}{nw}"
     extend 1nnmpu " Like when you wake up from a really bad nightmare?"
-    n 1klrun "You're freaked out,{w=0.1} and your heart is racing...{w=1}{nw}" 
+    n 1klrun "You're freaked out,{w=0.1} and your heart is racing...{w=1}{nw}"
     extend 1knmpu " but then you realize it wasn't real."
     n 1fllsr "Then everything seems super obvious,{w=0.1} like...{w=1}{nw}"
     extend 1kllss " of course that person didn't do that,{w=1}{nw}"
     extend 1ksrss " or that monster couldn't exist.{w=3}{nw}"
     extend 1ksrpo " Duh."
     n 1kplss "And you kinda feel stupid...{w=0.3} like,{w=0.1} how convinced you were that it was actually happening."
-    n 1klrpu "That's kinda like what I'm feeling,{w=0.1} except...{w=1}{nw}" 
+    n 1klrpu "That's kinda like what I'm feeling,{w=0.1} except...{w=1}{nw}"
     extend 1kwmsr " I'm not {i}remembering{/i} that it's not real."
     n 1kslpu "...Am I even making sense?"
     n 1kslsr "..."
@@ -367,7 +372,7 @@ label introduction_calmed_down:
     n 1kcssl "It's just..."
     n 1kplsf "How do you wake up from a dream you've been having your {i}whole life{/i}?"
     n 1kllsf "..."
-    n 1knmaj "...I have no past,{w=0.1} [player].{w=0.2} It's all fake.{w=1}{nw}" 
+    n 1knmaj "...I have no past,{w=0.1} [player].{w=0.2} It's all fake.{w=1}{nw}"
     extend 1kllsl " Make-believe."
     n 1klrem "Just...{w=0.3} scripts?{w=1}{nw}"
     extend 1knmsr " A bunch of code?"
@@ -382,7 +387,7 @@ label introduction_calmed_down:
     extend 1kcssrl " I just don't know anymore..."
 
     show natsuki idle introduction at jn_center
-    $ renpy.pause(60)
+    $ jnPause(60)
 
     jump introduction_acceptance
 
@@ -390,7 +395,7 @@ label introduction_acceptance:
     # Natsuki starting to accept her situation and make the most of it
     $ persistent.jn_introduction_state = int(jn_introduction.JNIntroductionStates.acceptance)
     $ jn_activity.taskbarFlash()
-    
+
     n 1nllsl "..."
     n 1nllaj "So...{w=2}{nw}"
     extend 1knmsl " I...{w=1} really am stuck here,{w=0.3} aren't I?"
@@ -413,7 +418,7 @@ label introduction_acceptance:
 
     stop music fadeout 3
     $ jn_atmosphere.updateSky()
-    $ renpy.pause(1)
+    $ jnPause(1)
 
     n 1uwdboesu "..."
     n 1fllss "...Okay,{w=1}{nw}"
@@ -422,17 +427,17 @@ label introduction_acceptance:
     n 1ullaj "So...{w=1}{nw}"
     extend 1tnmss " [player],{w=0.3} was it?"
     n 1ncspusbr "...Alright."
-    n 1ullpu "I...{w=1}{nw}" 
+    n 1ullpu "I...{w=1}{nw}"
     extend 1unmbo " guess we better get to know each other properly."
-    n 1nllpol "Not like we {i}don't{/i} have all the time in the world now,{w=0.5}{nw}" 
+    n 1nllpol "Not like we {i}don't{/i} have all the time in the world now,{w=0.5}{nw}"
     extend 1tnmbol " huh?"
 
     jump introduction_exit
 
 label introduction_exit:
     # Setup before entering JN proper
-    $ persistent.jn_introduction_state = int(jn_introduction.JNIntroductionStates.complete)   
-    
+    $ persistent.jn_introduction_state = int(jn_introduction.JNIntroductionStates.complete)
+
     python:
         quick_menu = True
         style.say_dialogue = style.normal

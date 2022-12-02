@@ -1335,6 +1335,8 @@ init 5 python:
     )
 label talk_favourite_season:
     n 1unmbo "Huh?{w=0.2} My favourite season?"
+
+    # Player hasn't given their favourite season before
     if not persistent.jn_player_favourite_season:
         n 1tllss "That's a little random,{w=0.1} isn't it?"
         n 1tnmss "Well...{w=0.3} anyway.{w=0.3}{nw}"
@@ -1363,6 +1365,7 @@ label talk_favourite_season:
                 n 1fsqan "But the rain!{w=0.2} Jeez!{w=0.5}{nw}"
                 extend 1fcspu " It just never stops!"
                 n 1fllpo "Roll on summer,{w=0.1} I say."
+
                 $ persistent.jn_player_favourite_season = "Spring"
 
             "Summer":
@@ -1370,6 +1373,7 @@ label talk_favourite_season:
                 n 1fsqbg "Nobody can resist some fun in the sun,{w=0.1} am I right?"
                 n 1fnmbg "I'm glad we both agree,{w=0.1} [player].{w=0.5}{nw}"
                 extend 1fchsm " Ehehe."
+
                 $ persistent.jn_player_favourite_season = "Summer"
 
             "Autumn":
@@ -1382,6 +1386,7 @@ label talk_favourite_season:
                 extend 1fsrsr " it's all ruined when the rain comes,{w=0.1} you know?"
                 n 1fsqsr "Trudging through all those sloppy leaves is just gross.{w=0.5}{nw}"
                 extend 1fcssf " No thanks!"
+
                 $ persistent.jn_player_favourite_season = "Autumn"
 
             "Winter":
@@ -1390,8 +1395,10 @@ label talk_favourite_season:
                 n 1tlrbo "Though...{w=0.3} I get it, kinda."
                 n 1fcsbg "It's the perfect time of year to get super snug and spend some quality reading time!"
                 n 1fslss "Especially since there's not much you can do outside,{w=0.1} anyway."
+
                 $ persistent.jn_player_favourite_season = "Winter"
 
+    # Player has already shared their favourite season
     else:
         n 1tllbo "Hang on...{w=0.5}{nw}"
         extend 1tnmss " didn't we talk about this before,{w=0.1} [player]?"
@@ -1403,12 +1410,13 @@ label talk_favourite_season:
             n "Still rooting for [persistent.jn_player_favourite_season]?"
             "Yes.":
                 n 1fcsbg "Ehehe.{w=0.2} I thought as much,{w=0.1} [player]."
+                
                 if persistent.jn_player_favourite_season == "Summer":
                     n 1uchbg "You already picked the best season,{w=0.1} after all!"
-                    return
-
-                n 1fllss "Well...{w=0.3} I'm afraid you're not gonna sway me!{w=0.5}{nw}"
-                extend 1uchbg " Ahaha!"
+                    
+                else:
+                    n 1fllss "Well...{w=0.3} I'm afraid you're not gonna sway me!{w=0.5}{nw}"
+                    extend 1uchbg " Ahaha!"
 
             "No.":
                 n 1tsgbg "Oh?{w=0.2} Changed our mind,{w=0.1} have we?"
@@ -1429,6 +1437,7 @@ label talk_favourite_season:
                     "Winter":
                         $ new_favourite_season = "Winter"
 
+                $ season_preference_changed = False
                 if persistent.jn_player_favourite_season == new_favourite_season:
                     n 1fnmgs "Hey!{w=0.2} [player]!"
                     n 1fsqpo "I thought you said you'd changed your mind?"
@@ -1436,6 +1445,7 @@ label talk_favourite_season:
                     $ chosen_tease = jn_utils.getRandomTease()
                     n 1fcsem "Jeez...{w=0.5}{nw}"
                     extend 1fnmpo " you're such a wind-up sometimes,{w=0.1} [chosen_tease]!"
+
                     if Natsuki.isAffectionate(higher=True):
                         n 1flrpol "N-{w=0.1}not that I {i}dislike{/i} that side of you,{w=0.1} o-{w=0.1}or anything."
 
@@ -1443,12 +1453,11 @@ label talk_favourite_season:
                         n 1fsqsm "But...{w=0.3} I think I can {i}weather{/i} it."
                         n 1fsrss "For now."
 
-                    return
-
                 else:
                     $ persistent.jn_player_favourite_season = new_favourite_season
+                    $ season_preference_changed = True
 
-                if persistent.jn_player_favourite_season == "Spring":
+                if season_preference_changed and persistent.jn_player_favourite_season == "Spring":
                     n 1usqss "Ooh?{w=0.2} Favouring Spring now,{w=0.1} [player]?"
                     n 1nlrbo "I could do without all the rain,{w=0.1} but I get it."
                     n 1flrpu "Hmm...{w=0.3} Spring..."
@@ -1456,25 +1465,92 @@ label talk_favourite_season:
                     extend 1tnmss " do you grow anything,{w=0.1} [player]?"
                     n 1fchsm "Ahaha."
 
-                elif persistent.jn_player_favourite_season == "Summer":
+                elif season_preference_changed and persistent.jn_player_favourite_season == "Summer":
                     n 1fchbs "Aha!{w=0.2} See?"
                     n 1fsqbs "You knew I was right all along,{w=0.1} didn't you?"
                     n 1usqsg "Don't even try to deny it,{w=0.1} [player].{w=0.5}{nw}"
                     extend 1fchbg " Summer is the best!"
                     n 1uchsm "I'm just glad you came around.{w=0.2} That's the important thing!"
 
-                elif persistent.jn_player_favourite_season == "Autumn":
+                elif season_preference_changed and persistent.jn_player_favourite_season == "Autumn":
                     n 1usqsm "Oh?{w=0.2} You've taken the {i}fall{/i} for Autumn,{w=0.1} have you?"
                     n 1fchsm "Ehehe."
                     n 1ullss "I'll admit,{w=0.1} it's a pretty season,{w=0.1} with all the golden leaves and stuff..."
                     n 1nslss "So long as the weather stays warm,{w=0.1} anyway."
 
-                elif persistent.jn_player_favourite_season == "Winter":
+                elif season_preference_changed and persistent.jn_player_favourite_season == "Winter":
                     n 1tllss "Winter,{w=0.1} huh?{w=0.2} I wasn't expecting that."
                     n 1tnmbo "Do you prefer being indoors now or something,{w=0.1} [player]?"
                     n 1flrss "Well,{w=0.1} if you prefer being all cosy inside..."
                     n 1fsqsm "Then you better not be slacking on your reading,{w=0.1} [player]!{w=0.5}{nw}"
                     extend 1fchsm " Ehehe."
+
+    # Unlock the seasonal off-shoulder sweaters, if all not already unlocked and custom outfits unlocked.
+    # Some special dialogue based off the chosen season.
+
+    python:
+        spring_sweater = jn_outfits.get_wearable("jn_clothes_bee_off_shoulder_sweater")
+        summer_sweater = jn_outfits.get_wearable("jn_clothes_creamsicle_off_shoulder_sweater")
+        autumn_sweater = jn_outfits.get_wearable("jn_clothes_autumn_off_shoulder_sweater")
+        winter_sweater = jn_outfits.get_wearable("jn_clothes_nightbloom_off_shoulder_sweater")
+
+    if (
+        (
+            not spring_sweater.unlocked
+            or not summer_sweater.unlocked
+            or not autumn_sweater.unlocked
+            or not winter_sweater.unlocked
+        )
+        and Natsuki.isHappy(higher=True) 
+        and persistent.jn_custom_outfits_unlocked
+    ):
+        n 1flrpu "..."
+        n 1ulraj "Actually,{w=0.3}{nw}" 
+        extend 1fnmss " you know what?"
+        n 1fcsss "Give me a sec here.{w=0.75}{nw}"
+        extend 1uchgnl " I've got {i}just{/i} the thing!{w=1}{nw}"
+
+        show black zorder 4 with Dissolve(0.5)
+        $ jnPause(1)
+        play audio zipper
+        $ jnPause(2)
+
+        python:
+            import copy
+
+            spring_sweater.unlock()
+            summer_sweater.unlock()
+            autumn_sweater.unlock()
+            winter_sweater.unlock()
+            temporary_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
+
+            if persistent.jn_player_favourite_season == "Spring":
+                temporary_outfit.clothes = spring_sweater
+            
+            elif persistent.jn_player_favourite_season == "Summer":
+                temporary_outfit.clothes = summer_sweater
+            
+            elif persistent.jn_player_favourite_season == "Autumn":
+                temporary_outfit.clothes = autumn_sweater
+            
+            else:
+                temporary_outfit.clothes = winter_sweater
+
+            jn_outfits.save_temporary_outfit(temporary_outfit)
+
+        play audio clothing_ruffle
+        $ jnPause(2)
+        play audio zipper
+        $ jnPause(1)
+        show natsuki 1fsqsm at jn_center
+        hide black with Dissolve(1.25)
+
+        n 1fsqsm "..."
+        n 1tsqssl "...Well,{w=0.2} [player]?{w=1}{nw}"
+        extend 1tcsssl " You gotta admit..."
+        n 1fsqss "Whatever your preference?"
+        n 1fcsbgedz "My fashion is {i}always{/i} in-season."
+        n 1fchsml "Ehehe."
 
     return
 
@@ -3049,7 +3125,7 @@ label talk_i_love_you:
 
     # De facto confession
     if (
-        persistent.affinity == (jn_affinity.AFF_THRESHOLD_LOVE -1)
+        persistent.affinity >= (jn_affinity.AFF_THRESHOLD_LOVE -1)
         and not persistent._jn_player_confession_accepted
     ):
         n 1uscemf "O-{w=0.1}o-{w=0.1}oh my gosh..."
@@ -3070,10 +3146,10 @@ label talk_i_love_you:
         show natsuki 1kcspuf at jn_center zorder JN_NATSUKI_ZORDER
         show black zorder 3 with Dissolve(0.5)
         play audio clothing_ruffle
-        pause 3.5
+        $ jnPause(3.5)
         play audio kiss
         show natsuki 1ksrsmfsbr at jn_center zorder JN_NATSUKI_ZORDER
-        pause 1.5
+        $ jnPause(1.5)
         hide black with Dissolve(1.25)
 
         n 1kchsmf "..."
@@ -3096,7 +3172,7 @@ label talk_i_love_you:
         return
 
     # Player has not confessed, and this is the first time they're telling Natsuki this
-    elif persistent.jn_player_love_you_count == 0:
+    elif persistent.jn_player_love_you_count == 0 and not persistent._jn_player_confession_accepted:
         if Natsuki.isEnamored():
             n 1uscgsf "[player_initial]-{w=0.2}[player]!"
             n 1fskgsf "Y-{w=0.1}you...!"
@@ -3114,7 +3190,7 @@ label talk_i_love_you:
             n 1kllbof "..."
             $ Natsuki.calculatedAffinityGain(base=2, bypass=True)
 
-        elif Natsuki.isAffectionate():
+        elif Natsuki.isAffectionate(higher=True):
             n 1uskwrf "W-{w=0.1}w-{w=0.1}what?"
             n 1fwdwrf "D-{w=0.1}did you just...?"
             n 1fcsanf "Nnnnnnnnn-!"
@@ -3130,7 +3206,7 @@ label talk_i_love_you:
             n 1kslslf "..."
             $ Natsuki.calculatedAffinityGain(bypass=True)
 
-        elif Natsuki.isHappy():
+        elif Natsuki.isHappy(higher=True):
             n 1fsqdvl "Pffffft!"
             n 1uchbslelg "Ahaha!"
             n 1tllbgl "You can't be serious,{w=0.1} [player]!{w=0.2} You're just messing with me!{w=0.2} Right?"
@@ -3144,7 +3220,7 @@ label talk_i_love_you:
             n 1fcsajl "Just...{w=0.3} think a little before you just blurt stuff out!{w=0.2} Sheesh."
             n 1fllslf "[chosen_tease.capitalize()]..."
 
-        elif Natsuki.isNormal():
+        elif Natsuki.isNormal(higher=True):
             n 1fscgsf "Urk-!"
             n 1fskanf "W-{w=0.1}what did you..."
             n 1fwdanf "Did you just...?"
@@ -3155,7 +3231,7 @@ label talk_i_love_you:
             n 1fllssf "I-{w=0.1}I mean,{w=0.1} I'm just glad you have some good taste."
             n 1fllunf "Yeah..."
 
-        elif Natsuki.isUpset():
+        elif Natsuki.isUpset(higher=True):
             n 1fcsan "..."
             n 1fnmfu "Seriously,{w=0.1} [player]?{w=0.2} You're really going to say that to me {i}now{/i}?"
             n 1fsqfutsb "The first time you choose to say it...{w=0.3} and you say it {i}now{/i}?"
@@ -3190,6 +3266,7 @@ label talk_i_love_you:
             n 1fsqfutse "Go!"
             n 1fscsctdc "{i}JUST LEAVE ME ALONE!{/i}{nw}"
             $ Natsuki.percentageAffinityLoss(25)
+            $ persistent.jn_player_love_you_count += 1
             return { "quit": None }
 
         $ persistent.jn_player_love_you_count += 1
@@ -3392,7 +3469,7 @@ label talk_i_love_you:
 
             return
 
-        elif Natsuki.isEnamored():
+        elif Natsuki.isEnamored(higher=True):
             n 1fbkwrf "G-{w=0.1}gah!{w=0.2} [player]!"
             n 1fllwrf "What did I say about making things awkward?{w=0.2} Now it's twice as awkward!"
             n 1fcsemf "Jeez..."
@@ -3409,7 +3486,7 @@ label talk_i_love_you:
             n 1fcspof "But you're gonna have to try a lot harder than that!"
             return
 
-        elif Natsuki.isNormal():
+        elif Natsuki.isNormal(higher=True):
             n 1fskemf "G-{w=0.1}gah!"
             n 1fbkwrf "[player_initial]-{w=0.1}[player]!"
             n 1fnmanl "Stop being gross!"
@@ -3418,7 +3495,7 @@ label talk_i_love_you:
             n 1fsqaj "But it really isn't funny to me,{w=0.1} [player]."
             return
 
-        elif Natsuki.isUpset():
+        elif Natsuki.isUpset(higher=True):
             n 1fcssr "..."
             n 1fsqsr "Talk is cheap,{w=0.1} [player]."
             n 1fsqaj "If you {i}really{/i} care about me..."
@@ -3835,7 +3912,7 @@ label talk_school_uniform:
     show natsuki 1tnmpu at jn_center
 
     menu:
-        n "Did you have to wear uniform at school?"
+        n "Did you have to wear any uniform at school?"
 
         "Yes, I had to wear uniform.":
             n 1fcsbg "Aha!{w=0.2} So you know the struggle too,{w=0.1} huh?"
@@ -3847,6 +3924,10 @@ label talk_school_uniform:
         "I have to wear uniform now.":
             n 1fchgn "Then you have my condolences,{w=0.1} [player]!{w=0.2} Ahaha."
             n 1fcsbg "Good to know we're on the same page,{w=0.1} though."
+
+        "I don't have to wear uniform now.":
+            n 1fslsr "..."
+            n 1fsqsr "...Lucky."
 
     n 1ullss "Well,{w=0.1} anyway..."
 
@@ -4220,104 +4301,190 @@ init 5 python:
     )
 
 label talk_are_you_into_cosplay:
-
-    # Check to see if Natsuki has already revealed she can sew/seamstress in this/previous topic(s)
-    $ already_mentioned_sewing = get_topic("talk_sustainable_fashion").shown_count > 0 or get_topic("talk_are_you_into_cosplay").shown_count > 0
-
+    $ already_unlocked_cosplay_outfits = jn_outfits.get_outfit("jn_trainer_cosplay").unlocked and jn_outfits.get_outfit("jn_sango_cosplay").unlocked
+    
     if Natsuki.isEnamored(higher=True):
-        n 1unmbg "Ooh!{w=0.2} Cosplay,{w=0.1} you say?"
-        n 1fllbg "Honestly,{w=0.1} I've never really done any cosplaying or anything..."
-        n 1nnmss "But I've actually thought about it a lot since I got into manga and all that stuff more!"
-        n 1flrbg "Plus I mean,{w=0.1} why shouldn't I?{w=0.2} There isn't a whole lot stopping me."
+        if already_unlocked_cosplay_outfits:
+            n 1tnmpu "Eh?{w=0.5}{nw}"
+            extend 1tsqsf " Cosplay {i}again{/i}, [player]?"
+            n 1fllpo "Yeesh..."
 
-        if already_mentioned_sewing:
-            n 1fcssm "Like I think I mentioned before -{w=0.1} I'm already pretty handy with a needle and thread,{w=0.1} if I say so myself!"
+            if Natsuki.isWearingClothes("jn_clothes_trainer_cosplay") or Natsuki.isWearingClothes("jn_clothes_sango_cosplay"):
+                n 1fsqpol "As if having me {i}wearing{/i} cosplay wasn't already enough for you..."
+                n 1fnmeml "It's all you wanna {i}talk{/i} about too!"
+                n 1fcseml "I'm not your own personal dress-up doll,{w=0.75}{nw}"
+                extend 1fsrpol " you know..."
 
-        else:
-            n 1fwlsm "I'm actually pretty handy with the old needle and thread,{w=0.1} you know!"
+            else:
+                n 1nslaj "You know,{w=0.75}{nw}"
+                extend 1fsqajl " if you wanted me wearing it {i}that{/i} badly..."
+                n 1fsqsslsbl "You do realize you could have just {i}asked{/i},{w=0.2} right?"
 
-        n 1ulrss "And materials aren't really that expensive either -{w=0.1} besides props and wigs,{w=0.1} anyway."
-        n 1nnmsm "So it seems like a pretty awesome way to show my appreciation for characters I like..."
-        n 1fsqbg "...And show my {i}limitless{/i} talent while I'm at it."
-        n 1nchgn "Ehehe."
-        n 1uchgn "And anyway,{w=0.1} who knows?"
-        n 1uchsm "Maybe you'll get to see some of my handiwork some day,{w=0.1} [player]."
-        n 1fsqbg "I bet you'd like that,{w=0.1} huh?{w=0.2} Ehehe."
-        n 1fsgsg "No need to be shy,{w=0.1} [player] -{w=0.1} I can read you like a book."
-        n 1fsqsgl "A gross book,{w=0.1} but a book nonetheless~."
-        n 1fchgnelg "Ahaha!"
-        return
+            n 1fchsml "Ahaha."
+            n 1ullss "Well,{w=0.2} anyway.{w=0.5}{nw}"
+            extend 1unmbo " In all seriousness?"
+            n 1ulrsl "I can't say too much has changed,{w=0.2} honestly."
+            n 1unmpu "Don't get me wrong!"
+            n 1fchbg "I totally wanna get into cosplaying more!{w=0.75}{nw}"
+            extend 1fcssmeme " Any excuse to show off my talent {i}and{/i} needlework."
+            n 1ullaj "Plus I mean,{w=0.75}{nw}"
+            extend 1unmgs " have you {i}seen{/i} what kinds of outfits people can pull off,{w=0.5}{nw}"
+            extend 1fnmgs " all in the name of the stuff they love?"
+            n 1fcsem "All that talent,{w=0.3} all that passion...{w=1}{nw}"
+            n 1fcspu "It's{w=0.75}{nw}"
+            extend 1fspgsedz " {i}awesome{/i}!{w=1}{nw}"
+            extend 1fchgnedz " There's no way I {i}don't{/i} wanna be a part of that!"
+            n 1kllpu "But..."
+            n 1nslsl "Well."
+            n 1ksrca "Ignoring how conventions are pretty much completely out of reach for me..."
+            n 1ksqtr "I don't suppose {i}you've{/i} seen any crafts shops around here,{w=0.2} have you?{w=0.75}{nw}"
+            extend 1ksqca " Or any of my sewing stuff?"
+            n 1ksqsl "..."
+            n 1ncsss "Heh.{w=1}{nw}"
+            extend 1nsrsl " Yeah,{w=0.2} I thought not."
+            n 1nsrajsbl "I really gotta figure something out for that,{w=0.75}{nw}"
+            extend 1tsqsssbl " huh?"
+            n 1tslslsbl "..."
+            n 1fcsbgsbl "W-{w=0.2}well,{w=0.2} if there's one thing I'm not short of here,{w=0.75}{nw}"
+            extend 1fchbgedz " it's ideas!{w=0.5}{nw}"
+            extend 1fsqsm " So don't you worry about a thing,{w=0.2} [player]..."
+            n 1fwrbg "'Cause there's no shortage of that {i}material{/i}!{w=0.75}{nw}"
+            extend 1nchgnl " Ehehe."
 
-        if Natsuki.isLove(higher=True):
-            n 1uchtsl "Love you,{w=0.1} [player]~!"
             return
 
-    elif Natsuki.isHappy(higher=True):
-        n 1tsrpu "...Why did I get the feeling you'd bring this up sooner or later,{w=0.1} [player]?"
-        n 1fnmpo "What?{w=0.2} Did you think I'd {i}automatically{/i} be into it because I read manga from time to time?"
-        n 1fsqpo "Huh?{w=0.2} Is that it?"
-        n 1fnmaj "Well?"
-        n 1fsqsg "Speak up,{w=0.1} [player]!{w=0.2} I can't hear you~!"
-        n 1fslpo "..."
-        n 1fchgnelg "Ahaha!{w=0.75}{nw}" 
-        extend 1ullss " Nah,{w=0.1} it's fine."
-        n 1ulraj "I've thought about it a bunch,{w=0.1} honestly -{w=0.1} like since I got into manga and all that a while ago."
-        n 1nnmaj "I haven't {i}actually{/i} gone and dressed up yet,{w=0.1} though."
-        n 1fnmaj "But there really isn't much stopping me,{w=0.1} [player]."
-
-        if already_mentioned_sewing:
-            n 1ullbo "Like I said -{w=0.1} I already fix up and make my own normal clothes,{w=0.1} so a costume isn't much of a leap."
-
         else:
-            n 1flrbg "You could say I'm something of a pro with a needle and thread,{w=0.1} so it's right up my alley!"
+            n 1usqct "Oho?{w=0.5}{nw}" 
+            extend 1fcsbg " Cosplay,{w=0.2} you say?"
+            n 1fllbo "..."
+            n 1ullpu "Honestly?{w=0.75}{nw}"
+            extend 1nslsssbl " I've never really done any {i}serious{/i} cosplaying or anything..."
+            n 1unmaj "But I've actually thought about it a lot more since I got into manga and all that stuff a bunch!"
+            n 1fcsbg "Plus I mean,{w=0.1} why shouldn't I?{w=0.75}{nw}"
+            extend 1fspgsedz " I {w=0.2}{i}love{/i}{w=0.2} thinking up new ideas for outfits!"
+            n 1fcsbg "Besides,{w=0.2} I know my way around a needle and thread!{w=0.75}{nw}"
+            extend 1nsrsssbr " I've had to use them often enough before."
+            n 1fcsajlsbr "B-{w=0.2}but I think it seems like a pretty awesome way to show my appreciation for characters I like..."
+            n 1fsqbg "...And show my {i}limitless{/i} talent while I'm at it."
+            n 1usqsm "Anyway,{w=0.2} who knows?"
+            n 1fsqsm "Maybe you'll get to see some of my handiwork some day,{w=0.2} [player]."
+            n 1fsqbg "I bet you'd like that,{w=0.2} huh?{w=0.5}{nw}"
+            extend 1fchsml " Ehehe."
 
-        n 1unmaj "Besides,{w=0.1} I've done the math on materials -{w=0.1} it's actually pretty affordable,{w=0.1} so that's all good."
-        n 1nllaj "Well,{w=0.1} besides wigs and props and stuff.{w=0.2} Those can be kinda pricey,{w=0.1} but not exactly unaffordable -{w=0.1} just gotta shop around!"
-        n 1fllsl "That being said...{w=0.3} hmm..."
-        n 1fllsm "You know what,{w=0.1} [player]?"
-        n 1fnmbg "Perhaps I might just give it a shot...{w=0.3} yeah!"
-        n 1fchgn "Man,{w=0.1} I've got so many awesome ideas buzzing around in my head now!"
-        n 1fchsm "Oh -{w=0.1} don't worry -{w=0.1} you'll get your chance to see them too.{w=0.2} I'll need a second opinion after all."
-        n 1uchbg "That's what friends are for,{w=0.1} right?{w=0.2} Ehehe."
+            # Continue to unlock dialogue
 
-        if Natsuki.isAffectionate(higher=True):
-            n 1fsqbg "Besides,{w=0.1} [player].{w=0.2} You seem to have pretty good taste."
-            n 1fsqsml "I think I can trust your judgement..."
+    elif Natsuki.isAffectionate(higher=True):
+        if already_unlocked_cosplay_outfits:
+            n 1tsqpu "Huh?{w=0.5}{nw}"
+            extend 1tsqsf " Cosplay {i}again{/i}, [player]?"
 
-        return
+            if Natsuki.isWearingClothes("jn_clothes_trainer_cosplay") or Natsuki.isWearingClothes("jn_clothes_sango_cosplay"):
+                n 1fsqsflsbl "...Was {i}wearing{/i} it seriously not enough already?"
+                n 1fsqsslsbl "Or did I somehow awaken some kind of hidden nerdiness in you?"
+                n 1fslsslsbr "Ehehe..."
+                n 1fcsemlsbr "A-{w=0.3}anyway!{w=0.5}{nw}"
+
+            else:
+                n 1tlraj "I gotta say,{w=0.2} I'm actually kinda impressed."
+                n 1fslsslsbr "Sucking up to my interest in manga,{w=0.75}{nw}"
+                extend 1fsqsslsbr " bugging me about cosplay..."
+                n 1tsqsm "You're absorbing my sense of taste pretty fast,{w=0.2} huh?{w=0.75}{nw}"
+                extend 1uchgn " Like a little dorky sponge!"
+                n 1fchsm "Ehehe."
+                n 1fchss "Anyway!{w=0.75}{nw}"
+
+            extend 1nllss " Putting all that aside..."
+            n 1unmaj "I actually wouldn't be {i}against{/i} doing a little more cosplay at all."
+            n 1ulrpu "I mean,{w=0.75}{nw}"
+            extend 1flrss " I've already got most of what I need."
+            n 1fsqss "{i}Amazing{/i} ideas?{w=0.75}{nw}"
+            extend 1fcsbg " Check!{w=0.75}{nw}"
+            extend 1tsqsm " Tons of experience?{w=0.75}{nw}"
+            extend 1fchbg " Check!"
+            n 1usqgn "{i}Unmatched{/i} handiwork with a needle and thread?{w=1}{nw}"
+            extend 1fcsbg " Oh,{w=0.2} you bet."
+            n 1fllpu "It's just..."
+            n 1kslsl "..."
+            n 1tsrsf "I don't exactly have much {i}material{/i} to work with here,{w=0.75}{nw}"
+            extend 1tnmsf " you know?"
+            n 1kslbo "...Or even my sewing stuff,{w=0.2} for that matter."
+            n 1kslsl "..."
+            n 1fcswrlsbl "W-{w=0.2}well,{w=0.2} I'll figure something out!{w=0.75}{nw}"
+            extend 1fcspolsbl " I always do,{w=0.2} a-{w=0.2}anyway."
+            n 1fsqcal "So you better look forward to it,{w=0.2} [player]..."
+            n 1fcsbglsbr "'Cause you ain't seen nothing yet!{w=0.75}{nw}"
+            extend 1fcssmlsbr " Ehehe."
+
+            return
+            
+        else:
+            n 1tsrpu "Why...{w=1}{nw}" 
+            extend 1nsqbo " did I get the feeling you'd bring this up sooner or later,{w=0.2} [player]?"
+            n 1fsqsl "..."
+            n 1fnmpo "What?{w=0.75}{nw}" 
+            extend 1fsqgs " Did you think I'd {i}automatically{/i} be into it because I read manga from time to time?"
+            n 1fsqpo "Huh?{w=0.75}{nw}" 
+            extend 1fnmgs " Is that it?"
+            n 1fsqaj "Well?"
+            n 1fsqdv "..."
+            n 1fchdvesi "Pfffft!"
+            n 1fchsm "Ehehe.{w=0.5}{nw}"
+            extend 1ullss " Nah,{w=0.2} it's fine."
+            n 1ulraj "I've thought about it a bunch,{w=0.2} honestly -{w=0.3}{nw}" 
+            extend 1unmbo " like since I got into manga and all that a while ago."
+            n 1nslsssbr "I haven't {i}actually{/i} gone dressed up to a convention or anything yet..."
+            n 1fcswrlsbl "B-{w=0.2}but that doesn't mean I haven't tried cosplaying at all!"
+            n 1fcsbgsbl "I {i}am{/i} something of a pro with a needle and thread,{w=0.75}{nw}" 
+            extend 1fcssmeme " so it's right up my alley!"
+            n 1tslsl "..."
+            n 1tslss "Actually...{w=1}{nw}"
+            extend 1fsqbg " you know what,{w=0.2} [player]?"
+            n 1fsrsm "Perhaps I {i}might{/i} just give it another shot...{w=0.5}{nw}" 
+            extend 1fchbg " yeah!"
+            n 1fcsss "Man,{w=0.5}{nw}" 
+            extend 1fchgnedz " I've got so many awesome ideas buzzing around in my head now!"
+            n 1fsqss "You better be prepared,{w=0.2} [player]..."
+            n 1fchbg "'Cause I'm gonna need some second opinions when I do!"
+            n 1fwlbll "That's what friends are for,{w=0.2} right?"
+
+            # Continue to unlock dialogue
 
     elif Natsuki.isNormal(higher=True):
-        n 1unmaj "Cosplay,{w=0.1} huh?"
-        n 1ulraj "Well...{w=0.3} I mean,{w=0.1} I've considered it,{w=0.1} if that's what you're asking."
-        n 1nnmbo "I never really thought about it that much until I got more into manga and things like that."
-        n 1flrbg "It kinda feels like once you start getting into that stuff,{w=0.1} you discover tons more at once!"
-        n 1nnmaj "But anyway,{w=0.1} I've never actually gone out and cosplayed myself."
-        n 1flleml "T-{w=0.1}that isn't to say there's anything stopping me,{w=0.1} of course!"
-
-        if already_mentioned_sewing:
-            n 1fllss "I told you already that I'm pretty good with a needle and thread,{w=0.1} so that's a-{w=0.1}okay!"
-
-        else:
-            n 1fcsbg "I'm basically a pro with a needle and thread,{w=0.1} so that's the hard part already mastered!"
-
-        n 1nlrpu "The rest of it is just shopping around for materials,{w=0.1} which are usually pretty cheap anyway."
-        n 1unmpu "Props and wigs and all that are a little more annoying,{w=0.1} but not exactly undoable."
-        n 1tupbo "Hmm..."
+        n 1unmbo "Cosplay,{w=0.2} huh?"
+        n 1ulraj "Well...{w=0.5}{nw}" 
+        extend 1tnmbo " I mean,{w=0.2} I've played around with it,{w=0.2} if that's what you're asking."
+        n 1tllpu "I never really thought about it that much until I got more into manga and things like that."
+        n 1flrbg "It kinda feels like once you start getting into that stuff,{w=0.2} you discover tons more at once!"
+        n 1nslsssbr "I've never really gone out and cosplayed myself though..."
+        n 1fcsgslsbr "B-{w=0.2}but that doesn't mean I couldn't try it out more!"
+        n 1fcspolesi "I'm basically a pro with a needle and thread,{w=0.5}{nw}" 
+        extend 1fchsml " so I've already got the hardest part done!"
+        n 1fcsaj "The rest of it is just finding materials,{w=0.2} which are usually pretty easy to come by anyway."
+        n 1fslcasbl "Props and wigs and all that are a little more annoying,{w=0.2} but not exactly {i}undoable{/i}.{w=1}{nw}"
+        extend 1fcssmeme " Especially with a little ingenuity."
+        n 1tcssl "..."
+        n 1tupbo "Mmmm..."
         n 1tllpu "You know,{w=0.75}{nw}"
         extend 1fllss " the more I think about it...{w=1}{nw}"
-        extend 1nchgnedz " the more I like the idea!"
-        n 1fnmbg "What about you,{w=0.1} [player]?{w=0.2} I bet you'd love to see my skills at work,{w=0.1} right?"
-        n 1nnmsm "Ahaha."
-        n 1flrsml "Well...{w=0.3} we'll see,{w=0.1} but no promises!"
+        extend 1nchgnedz " the more I like the idea of giving it another run!"
+        n 1fnmbg "What about you,{w=0.2} [player]?{w=0.75}{nw}" 
+        extend 1usqbg " I bet you'd love to see my skills at work,{w=0.2} right?"
+        n 1fsrbgl "Well...{w=1}{nw}" 
+        extend 1fsqsm " we'll see." 
+        n 1fcsgssbl "B-{w=0.2}but no promises!"
+
         return
 
     elif Natsuki.isDistressed(higher=True):
         n 1nnmpu "Huh?{w=0.2} Cosplay?"
-        n 1fsqsr "...Why,{w=0.1} [player]?"
+        n 1fsqsr "...Why,{w=0.2} [player]?"
         n 1fsqpu "So you can make fun of my clothes too?"
         n 1fslsr "..."
-        n 1fsqpu "No,{w=0.1} [player].{w=0.2} I've never cosplayed.{w=0.2} I could,{w=0.1} but I haven't."
-        n 1fsqan "Does that answer your question?"
+        n 1fsqpu "No,{w=0.2} [player].{w=0.75}{nw}"
+        extend 1fcssr " That's for me to know,{w=0.75}{nw}"
+        extend 1fsqan " and for you {i}not{/i} to find out."
+        n 1fsqgs "Does {i}that{/i} answer your question?"
+
         return
 
     else:
@@ -4325,7 +4492,101 @@ label talk_are_you_into_cosplay:
         n 1fcsantsa "So you have something else to make me feel awful about?"
         n 1fcssrltsa "...Yeah.{w=0.75} No thanks."
         n 1fcsanltsd "I'm done talking to you about this."
+
         return
+
+    # Show Natsuki in cosplay and unlock cosplay outfits, if custom outfits unlocked
+    if (
+        Natsuki.isAffectionate(higher=True)
+        and persistent.jn_custom_outfits_unlocked
+        and not already_unlocked_cosplay_outfits
+    ):
+        n 1tllbo "..."
+        n 1tslpu "...Actually,{w=0.5}{nw}"
+        extend 1tslaj " now that I think about it..."
+        n 1tlrsl "I wonder..."
+        n 1fcssl "..."
+        n 1nnmaj "You know what?{w=0.75}{nw}"
+        extend 1nllaj " Just...{w=0.75}{nw}" 
+        extend 1nslunl " give me a sec here...{w=1}{nw}"
+
+        show black zorder 4 with Dissolve(0.5)
+        $ jnPause(1)
+        play audio chair_out
+
+        $ jnPause(3)
+        play audio drawer
+        $ jnPause(2)
+        play audio gift_open
+        $ jnPause(3)
+        n "...!"
+        play audio clothing_ruffle
+        $ jnPause(1)
+        play audio zipper
+        $ jnPause(5)
+
+        $ outfit_to_restore = Natsuki._outfit
+        $ jn_outfits.get_outfit("jn_trainer_cosplay").unlock()
+        $ jn_outfits.get_outfit("jn_sango_cosplay").unlock()
+        $ Natsuki.setOutfit(jn_outfits.get_outfit(random.choice(["jn_trainer_cosplay", "jn_sango_cosplay"])))
+
+        play audio chair_in
+        $ jnPause(3)
+        show natsuki 1fsldvlesssbr at jn_center
+        hide black with Dissolve(1.25)
+
+        n 1fchsslesssbr "T-{w=0.5}ta-da!{w=0.5}{nw}"
+        extend 1fchsml " Ehehe..."
+        n 1fsqsll "..."
+        n 1fslunl "..."
+        n 1fcsemlsbl "W-{w=0.2}well?"
+        n 1fcsbglsbl "What do you think,{w=0.2} [player]?{w=0.75}{nw}"
+        extend 1fchsmlsbr " I made it all myself,{w=0.2} too!"
+        n 1fsqsrlsbr "..."
+        n 1fnmemlsbr "What?"
+        n 1fcsgslsbl "I {i}did{/i} say I was good with a needle and thread!"
+        n 1fllsslsbl "S-{w=0.3}so of course I {i}had{/i} to prove it!"
+        extend 1fcsajlsbl " And..."
+        n 1nslsslsbl "...And..."
+        n 1nslsllsbl "..."
+        n 1kslsll "..."
+        n 1kcspul "This...{w=1}{nw}" 
+        extend 1ksrsfl " wasn't actually {i}meant{/i} for me,{w=0.2} you know."
+        n 1kcspulesi "..."
+        n 1ksqbol "...I made it for Sayori."
+        n 1fcseml "I-{w=0.2}it was meant to be for some kind of party after the festival she insisted on,{w=0.2} but...{w=1}{nw}"
+        extend 1kcssll " yeah."
+        n 1kslslltsb "..."
+        n 1fcsunltsb "I'm...{w=1.25}{nw}"
+        extend 1ksrsrl " just gonna go put this away now."
+
+        show black zorder 4 with Dissolve(0.5)
+        $ jnPause(2)
+        play audio chair_out
+
+        $ jnPause(3)
+        play audio drawer
+        $ jnPause(3)
+        play audio clothing_ruffle
+        $ jnPause(4)
+        play audio gift_close
+        $ jnPause(3)
+
+        play audio chair_in
+        $ jnPause(3)
+        $ Natsuki.setOutfit(outfit_to_restore)
+        show natsuki 1ncspul at jn_center
+        hide black with Dissolve(1.25)
+
+        n 1kslsll "..."
+        n 1kslpul "...I know I can't just throw that outfit away.{w=1.25}{nw}"
+        extend 1kcsajl " It just...{w=0.5} wouldn't be right."
+        n 1kslbol "..."
+        n 1kcspul "I'll...{w=0.5} keep it around."
+        n 1knmsll "The best thing I could do is to make some {i}happy{/i} memories with it myself instead."
+        n 1ksrajl "...It's what she would have done, a-{w=0.2}after all."
+        n 1ksrsll "..."
+        n 1ksqbol "...Right?"
 
     return
 
@@ -5117,25 +5378,25 @@ init 5 python:
 
 label talk_skateboarding:
     if Natsuki.isEnamored(higher=True):
-        n 1fchbs "You bet I am,{w=0.1} [player]!{w=0.5}{nw}"
+        n 1fchbs "You bet I am,{w=0.2} [player]!{w=0.5}{nw}"
         extend 1fchsm " Ehehe."
         n 1tllbg "But how'd you guess?{w=0.5}{nw}"
         extend 1tnmbg " Do I look the type or something?"
-        n 1tlrsm "Well,{w=0.1} whatever."
+        n 1tlrsm "Well,{w=0.2} whatever."
 
     elif Natsuki.isHappy(higher=True):
         n 1uchsm "Ehehe.{w=0.5}{nw}"
         extend 1fchbg " You bet!"
-        n 1uwlbg "Good guess,{w=0.1} [player]!"
+        n 1uwlbg "Good guess,{w=0.2} [player]!"
 
     elif Natsuki.isNormal(higher=True):
-        n 1ullaj "I...{w=0.3} am,{w=0.1} actually.{w=0.5}{nw}"
+        n 1ullaj "I...{w=0.3} am,{w=0.2} actually.{w=0.5}{nw}"
         extend 1tllss " How'd you guess?"
-        n 1unmss "Well,{w=0.1} anyway."
+        n 1unmss "Well,{w=0.2} anyway."
 
     elif Natsuki.isDistressed(higher=True):
         n 1fupemesi "Ugh..."
-        n 1fnmbo "Yes,{w=0.1} [player].{w=0.2} I'm a skateboarder.{w=0.2} I skateboard.{w=0.5}{nw}"
+        n 1fnmbo "Yes,{w=0.2} [player].{w=0.2} I'm a skateboarder.{w=0.2} I skateboard.{w=0.5}{nw}"
         extend 1fsqsf " Is that a problem or something?"
         n 1fllpu "It's just a convenient way to get around.{w=0.5}{nw}"
         extend 1fsqpu " An {i}affordable{/i} way."
@@ -5143,13 +5404,13 @@ label talk_skateboarding:
         n 1flraj "...Yeah.{w=0.2} I don't have much else to say about it.{w=0.5}{nw}"
         extend 1fnmbo " But hey."
         n 1fsgaj "Not like you'd really care to listen anyway...{w=0.5}{nw}"
-        extend 1fsqsftsa " isn't that right,{w=0.1} {i}[player]{/i}?"
+        extend 1fsqsftsa " isn't that right,{w=0.2} {i}[player]{/i}?"
         return
 
     else:
         n 1fsqanean "...And since when did {i}you{/i} give a crap about my hobbies and interests?"
         n 1fcsan "..."
-        n 1fnmsf "Yes,{w=0.1} [player].{w=0.5}{nw}"
+        n 1fnmsf "Yes,{w=0.2} [player].{w=0.5}{nw}"
         extend 1fsqsftsb " I {i}do{/i} enjoy skateboarding."
         n 1fsqupltsb "And I'd rather be doing that than be stuck here talking to {i}you{/i}.{w=0.5}{nw}"
         extend 1fcsanltsa " Jerk."
@@ -5158,17 +5419,17 @@ label talk_skateboarding:
     n 1tchbg "I'm a skater girl alright!{w=0.5}{nw}"
     extend 1tslbo " Or...{w=0.3} was?"
     n 1tllss "Though...{w=0.3} not really by choice.{w=0.5}{nw}"
-    extend 1knmaj " Bikes are {i}expensive{/i}, [player]!"
+    extend 1knmaj " Bikes are {i}expensive{/i},{w=0.2} [player]!"
     n 1kllun "And I could never rely on lifts from my...{w=0.3} folk,{w=0.3}{nw}"
     extend 1kllss " so I saved up all I could,{w=0.3}{nw}" 
     extend 1fcsbg " and got a board the first chance I had!"
     n 1nsqaj "Seriously.{w=0.75}{nw}"
     extend 1fllpusbr " You have no {i}idea{/i} how many lunches I skipped to earn that thing."
     n 1unmbg "But it was actually super convenient!{w=0.5}{nw}"
-    extend 1flrbg " I didn't have to worry about locking it up somewhere,{w=0.1} or some jerk damaging it..."
-    n 1fchsm "I could just pick it up and take it around with me,{w=0.1} or toss it in my locker."
-    n 1nslsssbl "I mean...{w=0.3} I don't need it so much {i}now{/i},{w=0.1} but..."
-    n 1fsqss "You gotta admit,{w=0.1} [player] {w=0.1}-{w=0.1} I'm nothing if not resourceful!{w=0.5}{nw}"
+    extend 1flrbg " I didn't have to worry about locking it up somewhere,{w=0.2} or some jerk damaging it..."
+    n 1fchsm "I could just pick it up and take it around with me,{w=0.2} or toss it in my locker."
+    n 1nslsssbl "I mean...{w=0.3} I don't need it so much {i}now{/i},{w=0.2} but..."
+    n 1fsqss "You gotta admit,{w=0.2} [player] {w=0.2}-{w=0.2} I'm nothing if not resourceful!{w=0.5}{nw}"
     extend 1fchsm " Ahaha."
 
     n 1fllss "I...{w=0.75}{nw}" 
@@ -5181,12 +5442,43 @@ label talk_skateboarding:
     n 1kslunsbr "Not after all that effort."
 
     n 1kcsaj "...Yeah,{w=0.2} yeah.{w=0.5}{nw}"
-    extend 1fcspo " Not very {i}radical{/i} of me,{w=0.1} huh?"
-    n 1ullpo "But...{w=0.5} enough of that for now.{w=0.5}{nw}"
-    extend 1fnmsm " Besides,{w=0.1} [player]..."
-    n 1fsqss "I can tell when you're getting...{w=0.3} {i}board{/i}."
-    n 1fchsm "Ehehe.{w=0.5}{nw}"
-    extend 1uchgn " No regrets,{w=0.1} [player]!"
+    extend 1fcspo " Not very {i}radical{/i} of me,{w=0.2} huh?"
+
+    if (
+        not jn_outfits.get_outfit("jn_skater_outfit").unlocked
+        and Natsuki.isAffectionate(higher=True) 
+        and persistent.jn_custom_outfits_unlocked
+    ):
+        # Unlock skater outfit, if custom outfits unlocked
+        n 1tslsl "..."
+        n 1uwdajesu "Oh!{w=0.5}{nw}"
+        extend 1fsqbs " But you know what {i}totally{/i} was,{w=0.2} [player]?{w=1}{nw}"
+        extend 1fllbgsbl " Radical,{w=0.2} I mean."
+        n 1uchgn "...My favourite skateboarding outfit,{w=0.2} of course!"
+        n 1tllss "In fact,{w=0.75}{nw}"
+        extend 1fchbg " I probably still have it around here somewhere too!{w=0.75}{nw}"
+        extend 1ullaj " I usually brought it around with me anyways."
+        n 1fcsajsbl "O-{w=0.2}only for going back and forth from school though!{w=0.75}{nw}"
+        extend 1nslsssbl " It isn't exactly following the dress code..."
+        n 1nslbosbl "But...{w=0.75}{nw}" 
+        extend 1tsqem " I wasn't exactly gonna make my uniform all sweaty for rest of the day either."
+        n 1fsrpu "...Ew."
+        n 1ulrpu "Well,{w=0.2} anyway.{w=1}{nw}"
+        extend 1unmaj " I'm not gonna go look for it now though,{w=0.75}{nw}"
+        extend 1nnmpu " but I think we can both agree."
+        n 1fcsss "If you're gonna skateboard..."
+        n 1uchgn "You gotta follow {w=0.2}{i}all{/i}{w=0.2} the rules of cool!{w=0.75}{nw}"
+        extend 1fchsmeme " Ehehe."
+
+        $ jn_outfits.get_outfit("jn_skater_outfit").unlock()
+
+    else:
+        n 1ullpo "But...{w=0.5} enough of that for now.{w=0.5}{nw}"
+        extend 1fnmsm " Besides,{w=0.2} [player]..."
+        n 1fsqss "I can tell when you're getting...{w=0.3} {i}board{/i}."
+        n 1fchsm "Ehehe.{w=0.5}{nw}"
+        extend 1uchgn " No regrets,{w=0.2} [player]!"
+        
     return
 
 # Natsuki describes her experiences with sports at school
@@ -5901,7 +6193,7 @@ label talk_fighting_drowsiness:
     n 1ncsajesl "...{w=2}{nw}"
     n 1ncsemesl "...{w=2}{nw}"
     n 1ncsajesl "...{w=2}{nw}"
-    $ renpy.pause(4)
+    $ jnPause(4)
     n 1fcsbo "..."
     n 1nsqpu "Mmmmm...{w=0.5}{nw}"
     extend 1tsqsr " mmmnn?"
@@ -6943,7 +7235,7 @@ label talk_impressions_of_the_other_girls:
     $ already_discussed_impressions_of_others = get_topic("talk_impressions_of_the_other_girls").shown_count > 0
 
     if Natsuki.isAffectionate(higher=True):
-        if already_discussed_realizations_of_others:
+        if already_discussed_impressions_of_others:
             n 1fcsem "Oh,{w=0.75}{nw}"
             extend 1kslemesisbl " come {i}on{/i}..."
             n 1knmemsbl "This again?{w=0.75}{nw}"
@@ -6977,7 +7269,7 @@ label talk_impressions_of_the_other_girls:
         n 1fcsunl "...And it always {i}will{/i} be."
 
     elif Natsuki.isNormal(higher=True):
-        if already_discussed_realizations_of_others:
+        if already_discussed_impressions_of_others:
             n 1knmaw "[player]...{w=0.5}{nw}"
             extend 1knmwr " really?"
             n 1kslemlsbr "This {w=0.2}{i}again{/i}?"
@@ -7000,14 +7292,14 @@ label talk_impressions_of_the_other_girls:
         extend 1fcssr " get...{w=1}{nw}" 
         extend 1fcsem " that you were just trying to have fun."
 
-        if already_discussed_realizations_of_others:
+        if already_discussed_impressions_of_others:
             n 1fsrun "...I {i}hope{/i},{w=0.2} at least."
 
         n 1fsqsr "But I am {i}not{/i} making jokes about my friends."
         n 1fcssr "Sorry,{w=0.1} [player]."
         n 1fslunl "But some things are just off-limits."
 
-        if already_discussed_realizations_of_others:
+        if already_discussed_impressions_of_others:
             n 1fsqunl "And you {i}better{/i} respect that sooner rather than later."
 
     elif Natsuki.isDistressed(higher=True):
@@ -7021,7 +7313,7 @@ label talk_impressions_of_the_other_girls:
         n 1fcsunl "..."
         n 1fsqem "Your sense of humour {i}{w=0.2}blows{w=0.2}{/i},{w=0.2} [player]."
 
-        if already_discussed_realizations_of_others:
+        if already_discussed_impressions_of_others:
             n 1fsqanl "Now knock.{w=0.3}{nw}"
             extend 1fcsanl " It.{w=0.3}{nw}"
             extend 1fsqful " {i}Off{/i}."
