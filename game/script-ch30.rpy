@@ -127,6 +127,14 @@ label ch30_init:
     show screen hkb_overlay
     play music audio.just_natsuki_bgm
 
+    # If we have decorations from the last holiday, and the day hasn't changed, then we should put them back up
+    if len(persistent._jn_holiday_deco_list_on_quit) > 0 and datetime.date.today().day == persistent.jn_last_visited_date.day:
+        for deco in persistent._jn_holiday_deco_list_on_quit:
+            renpy.show(name="deco {0}".format(deco), zorder=jn_events.JN_EVENT_DECO_ZORDER)
+
+    else:
+        persistent._jn_holiday_prop_list_on_quit = []
+
     # Random sticker chance
     if Natsuki.isAffectionate(higher=True):
         if (
@@ -446,6 +454,7 @@ init python:
         persistent.jn_last_visited_date = datetime.datetime.now()
 
         # Check for holidays, then queue them up and run them in sequence if we have any
+        persistent._jn_holiday_prop_list_on_quit = []
         available_holidays = jn_events.selectHolidays()
         if len(available_holidays > 0):
             jn_events.queueHolidays(is_day_check=True)

@@ -1,6 +1,7 @@
 default persistent._event_database = dict()
 default persistent._jn_holiday_list = dict()
 default persistent._jn_holiday_completed_list = []
+default persistent._jn_holiday_deco_list_on_quit = []
 
 # Transforms for overlays
 transform jn_glasses_pre_slide:
@@ -357,11 +358,15 @@ init python in jn_events:
             Marks this holiday as complete, preventing it from being seen again until marked as unseen again.
             This should be run after a holiday has concluded, so a crash/quit after starting the holiday doesn't lock progression.
             We also mark the holiday type as completed for this year, so we can't cycle through all seasonal events in one year
+            Lastly, set the persisted deco list so reloading the game without a day change shows the deco for this event.
             """
             self.is_seen = True
             self.__save()
             if not int(self.holiday_type) in store.persistent._jn_holiday_completed_list:
                 store.persistent._jn_holiday_completed_list.append(int(self.holiday_type))
+
+            if self.deco_list:
+                store.persistent._jn_holiday_deco_list_on_quit = self.deco_list
 
     def __registerHoliday(holiday):
         """
