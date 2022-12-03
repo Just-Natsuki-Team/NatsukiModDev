@@ -42,7 +42,7 @@ init -3 python:
         night = 6
 
         def __str__(self):
-            return self.name 
+            return self.name
 
     #Constants for types. Add more here if we need more organizational areas
     TOPIC_TYPE_FAREWELL = "FAREWELL"
@@ -210,7 +210,7 @@ init -3 python:
             """
             return {
                 key:value
-                for key, value in self.__dict__.iteritems()
+                for key, value in self.__dict__.items()
                 if key != "_m1_definitions__persistent_db"
             }
 
@@ -259,7 +259,7 @@ init -3 python:
 
             NOTE: Will raise a KeyError of the lock map doesn't have the persist key in it
             """
-            for persist_key, value in self.as_dict().iteritems():
+            for persist_key, value in self.as_dict().items():
                 if TOPIC_LOCKED_PROP_BASE_MAP[persist_key]:
                     self.__persistent_db[self.label][persist_key] = value
 
@@ -268,7 +268,7 @@ init -3 python:
             """
             Saves all topics
             """
-            for topic in store.topic_handler.ALL_TOPIC_MAP.itervalues():
+            for topic in store.topic_handler.ALL_TOPIC_MAP.values():
                 topic.__save()
 
         def has_additional_property_with_value(self, property_key, property_value):
@@ -296,6 +296,20 @@ init -3 python:
             """
             self.nat_says = False
             self.player_says = True
+
+        def lock(self):
+            """
+            Locks this topic, so it cannot be selected or brought up in random dialogue.
+            """
+            self.unlocked = False
+            self.__save()
+
+        def unlock(self):
+            """
+            Unlocks this topic.
+            """
+            self.unlocked = True
+            self.__save()
 
         def _filter_topic(
             self,
@@ -581,6 +595,130 @@ init -3 python:
 
         return ordered_menu_items
 
+    def jnNoDismissDialogue(event, interact=True, **kwargs):
+        """
+        Callback for whenever Natsuki talks.
+        """
+        if event == "show" or event == "begin":
+            # Prevent skip before dialogue
+            global allow_dismiss
+            allow_dismiss = False
+
+        elif event == "slow_done":
+            # Allow skip after dialogue
+            global allow_dismiss
+            allow_dismiss = True
+
+    def jn_is_new_years_day(input_date=None):
+        """
+        Returns True if the current date is New Year's Day; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_NEW_YEARS_DAY
+
+    def jn_is_easter(input_date=None):
+        """
+        Returns True if the current date is Easter; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_EASTER
+
+    def jn_is_halloween(input_date=None):
+        """
+        Returns True if the current date is Halloween; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_HALLOWEEN
+
+    def jn_is_christmas_eve(input_date=None):
+        """
+        Returns True if the current date is Christmas Eve; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_CHRISTMAS_EVE
+
+    def jn_is_christmas_day(input_date=None):
+        """
+        Returns True if the current date is Christmas Day; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_CHRISTMAS_DAY
+
+    def jn_is_new_years_eve(input_date=None):
+        """
+        Returns True if the current date is New Year's Eve; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_NEW_YEARS_EVE
+
+    def jn_get_holiday_for_date(input_date=None):
+        """
+        Gets the holiday - if any - corresponding to the supplied date, or the current date by default.
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+
+        OUT:
+            - JNHoliday representing the holiday for the supplied date.
+        """
+
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        elif not isinstance(input_date, datetime.date):
+            raise TypeError("input_date for holiday check must be of type date; type given was {0}".format(type(input_date)))
+
+        if jn_is_new_years_day(input_date):
+            return JNHolidays.new_years_day
+
+        elif jn_is_easter(input_date):
+            return JNHolidays.easter
+
+        elif jn_is_halloween(input_date):
+            return JNHolidays.halloween
+
+        elif jn_is_christmas_eve(input_date):
+            return JNHolidays.christmas_eve
+
+        elif jn_is_christmas_day(input_date):
+            return JNHolidays.christmas_day
+
+        elif jn_is_christmas_eve(input_date):
+            return JNHolidays.new_years_eve
+
+        else:
+            return JNHolidays.none
+
     def jn_get_current_hour():
         """
         Gets the current hour (out of 24) of the day.
@@ -689,13 +827,23 @@ init -3 python:
     def jn_open_google_maps(latitude, longitude):
         """
         Opens Google Maps in a new tab/window in the default browser centred on the given latitude and longitude.
-        
+
         IN:
             - latitude - The latitude to centre the map on.
             - longitude - The longitude to centre the map on.
         """
         url = "https://www.google.com/maps/place/{0},{1}".format(latitude, longitude)
         webbrowser.open(url)
+
+    def jnPause(delay, hard=True):
+        """
+        Equivalent to jnPause, but we assume a hard pause so players cannot skip.
+
+        IN:
+            - delay - int/decimal amount of time in seconds to wait for
+            - hard - bool flag for whether the player can skip the pause or not. Defaults to true, as in not skippable.
+        """
+        renpy.pause(delay=delay, hard=hard)
 
 # Variables with cross-script utility specific to Just Natsuki
 init -990 python in jn_globals:
@@ -709,12 +857,6 @@ init -990 python in jn_globals:
 
     # Tracks whether the player opted to stay for longer when Natsuki asked them to when quitting; True if so, otherwise False
     player_already_stayed_on_farewell = False
-
-    # Tracks whether the player is or is not currently playing a game
-    player_is_ingame = False
-
-    # Tracks whether the player is or is not currently in some topic flow
-    player_is_in_conversation = False
 
     # Tracks if the player is permitted to force quit; use this to block force quits during sequences
     force_quit_enabled = True
@@ -759,6 +901,9 @@ init -990 python in jn_globals:
     ]
 
     # Links
+
+    # GitHub
+    LINK_JN_GITHUB = "https://github.com/Just-Natsuki-Team/NatsukiModDev"
 
     # OpenWeatherMap; used for setting up weather in-game
     LINK_OPEN_WEATHER_MAP_HOME = "https://openweathermap.org"
@@ -878,7 +1023,8 @@ init -990 python in jn_globals:
         ":-(",
         "</3",
         "<|3",
-        ":<"
+        ":<",
+        ">:",
     ]
 
     DEFAULT_TEASE_EMOTICONS = [
@@ -1031,7 +1177,7 @@ init -990 python in jn_globals:
         "pigfucker",
         "pimpis",
         "piss",
-        "poop",
+        "poo|poop",
         "prick",
         "pube",
         "rectum",
@@ -1049,7 +1195,7 @@ init -990 python in jn_globals:
         "smegma",
         "smut",
         "snatch",
-        "son-of-a-bitch",
+        "son-of-a-bitch|sonofabitch",
         "spac",
         "spunk",
         "tosser",
@@ -1065,6 +1211,95 @@ init -990 python in jn_globals:
         "whore",
         "xrated",
         "xxx"
+    }
+
+    _INSULT_LIST = {
+        "arrogant",
+        "^(beast|beastly)$",
+        "bonebag",
+        "bonehead",
+        "brat|bratty",
+        "breadboard",
+        "bully",
+        "cheater",
+        "child",
+        "clown",
+        "cuttingboard",
+        "demon",
+        "dimwit",
+        "dirt",
+        "disgusting",
+        "^dog$",
+        "dumb|dumbo",
+        "dunce",
+        "dwarf",
+        "dweeb",
+        "egoist|egotistical",
+        "evil",
+        "^(fail|failure)$",
+        "fake",
+        "(^fat$|fatso|fatty|fattie)",
+        "(flat|flatso|flatty|flattie)",
+        "gilf",
+        "^(ghast|ghastly)$"
+        "gremlin",
+        "gross",
+        "halfling|halfpint|half-pint",
+        "halfwit",
+        "heartless",
+        "hellspawn",
+        "hideous",
+        "horrid|horrible",
+        "hungry",
+        "idiot",
+        "ignoramus",
+        "ignorant",
+        "imbecile",
+        "^imp$",
+        "ironingboard",
+        "(^kid$|kiddo|kiddy|kiddie)",
+        "l[e3]sbian",
+        "l[e3]sb[o0]",
+        "midget",
+        "moron",
+        "narcissist",
+        "nasty",
+        "neckcrack|neck-crack",
+        "necksnap|neck-snap",
+        "^nimrod$",
+        "nuisance",
+        "^pest$",
+        "pathetic",
+        "plaything",
+        "punchbag|punch-bag|punchingbag|punching-bag",
+        "puppet",
+        "putrid",
+        "^short$|shortstuff|shorty",
+        "^sick$",
+        "^simp$",
+        "simpleton",
+        "skinny",
+        "slave",
+        "smelly",
+        "^soil$",
+        "starved|starving",
+        "stinky",
+        "^(stuckup|stuck-up)$"
+        "stupid",
+        "^teabag$",
+        "^th[o0]t$",
+        "^tiny$",
+        "^toy$",
+        "^twerp$",
+        "^twit$",
+        "^useless$",
+        "^vendingmachine$",
+        "^(virgin|turbovirgin)$",
+        "^vomit$",
+        "^washboard$",
+        "^witch$",
+        "^wretch$",
+        "^zombie$",
     }
 
     # Alphabetical (excluding numbers) values allowed for text input
@@ -1165,7 +1400,7 @@ init -999 python in jn_utils:
         IN:
             path - The path to check
 
-        OUT: 
+        OUT:
             - True if the file exists, otherwise False
         """
         return os.path.isfile(path)
@@ -1212,7 +1447,7 @@ init -999 python in jn_utils:
         """
         Escapes a string to account for Ren'Py substitution.
         Use this when displaying names of items that may contain the Ren'Py substitution characters, such as file names from users.
-        
+
         IN:
             - string - The string to escape and return
         OUT:
@@ -1240,12 +1475,14 @@ init -999 python in jn_utils:
 
         return return_file_items
 
-init python in jn_utils:
+init -100 python in jn_utils:
+    import random
     import re
     import store
     import store.jn_globals as jn_globals
 
-    __PROFANITY_REGEX = re.compile('|'.join(jn_globals._PROFANITY_LIST), re.IGNORECASE)
+    PROFANITY_REGEX = re.compile('|'.join(jn_globals._PROFANITY_LIST), re.IGNORECASE)
+    INSULT_REGEX = re.compile('|'.join(jn_globals._INSULT_LIST), re.IGNORECASE)
 
     def get_current_session_length():
         """
@@ -1347,7 +1584,7 @@ init python in jn_utils:
         else:
             return "a while"
 
-    def get_number_ordinal(value):
+    def getNumberOrdinal(value):
         """
         Returns the ordinal (trailing characters) for a given numerical value.
         """
@@ -1363,7 +1600,7 @@ init python in jn_utils:
         else:
             return "th"
 
-    def get_player_initial():
+    def getPlayerInitial():
         """
         Returns the first letter of the player's name.
 
@@ -1371,6 +1608,18 @@ init python in jn_utils:
             First letter of the player's name.
         """
         return list(store.player)[0]
+
+    def getPlayerFinal(repeat_times=0):
+        """
+        Returns the last letter of the player's name.
+        OUT:
+            Last letter of the player's name
+        """
+        player_final = list(store.player)[len(store.player) - 1]
+        for i in range(repeat_times):
+            player_final += list(store.player)[len(store.player) - 1]
+
+        return player_final
 
     def get_string_contains_profanity(string):
         """
@@ -1382,7 +1631,73 @@ init python in jn_utils:
         OUT:
             - True if string contains profanity; otherwise False
         """
-        return re.search(__PROFANITY_REGEX, string.lower())
+        return re.search(PROFANITY_REGEX, string.lower())
+
+    def get_string_contains_insult(string):
+        """
+        Returns True if the given string contains an insult, based on regex.
+
+        IN:
+            - string - The string to test
+
+        OUT:
+            - True if string contains an insult; otherwise False
+        """
+        return re.search(INSULT_REGEX, string.lower())
+
+    def getRandomTease():
+        """
+        Returns a random tease from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+
+    def getRandomEndearment():
+        """
+        Returns a random endearment from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+
+    def getRandomDescriptor():
+        """
+        Returns a random positive descriptor from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_PLAYER_DESCRIPTORS)
+
+    def getRandomInsult():
+        """
+        Returns a random insult from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_PLAYER_INSULT_NAMES)
+
+    def getRandomHappyEmoticon():
+        """
+        Returns a random happy emoticon from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_HAPPY_EMOTICONS)
+
+    def getRandomAngryEmoticon():
+        """
+        Returns a random angry emoticon from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_ANGRY_EMOTICONS)
+
+    def getRandomSadEmoticon():
+        """
+        Returns a random sad emoticon from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_SAD_EMOTICONS)
+
+    def getRandomTeaseEmoticon():
+        """
+        Returns a random teasing emoticon from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_TEASE_EMOTICONS)
+
+    def getRandomConfusedEmoticon():
+        """
+        Returns a random confused emoticon from Natsuki for the player from the list.
+        """
+        return random.choice(jn_globals.DEFAULT_CONFUSED_EMOTICONS)
 
     # Key setup
     key_path = os.path.join(renpy.config.basedir, "game/dev/key.txt").replace("\\", "/")
@@ -1434,35 +1749,54 @@ define audio.t4g = "<loop 1.000>bgm/4g.ogg"
 
 # JN resources
 
-# UI sound effects
-define audio.select_hover = "mod_assets/sfx/select_hover.mp3"
-define audio.select_confirm = "mod_assets/sfx/select_confirm.mp3"
-define audio.notification = "mod_assets/sfx/notification.ogg"
-
-# Generic sound effects
-define audio.camera_shutter = "mod_assets/sfx/camera_shutter.mp3"
-define audio.coin_flip = "mod_assets/sfx/coin_flip.mp3"
-define audio.card_shuffle = "mod_assets/sfx/card_shuffle.mp3"
-define audio.card_place = "mod_assets/sfx/card_place.mp3"
-define audio.drawer = "mod_assets/sfx/drawer.mp3"
-define audio.smack = "mod_assets/sfx/smack.mp3"
-define audio.clothing_ruffle = "mod_assets/sfx/clothing_ruffle.mp3"
-define audio.page_turn = "mod_assets/sfx/page_turn.ogg"
-define audio.paper_crumple = "mod_assets/sfx/paper_crumple.ogg"
-define audio.paper_throw = "mod_assets/sfx/paper_throw.ogg"
+# Singleton sound effects
+define audio.blow = "mod_assets/sfx/blow.ogg"
+define audio.button_mashing_a = "mod_assets/sfx/button_mashing_a.ogg"
+define audio.button_mashing_b = "mod_assets/sfx/button_mashing_b.ogg"
+define audio.button_mashing_c = "mod_assets/sfx/button_mashing_c.ogg"
+define audio.button_tap_a = "mod_assets/sfx/button_tap_a.ogg"
+define audio.button_tap_b = "mod_assets/sfx/button_tap_b.ogg"
+define audio.button_tap_c = "mod_assets/sfx/button_tap_c.ogg"
+define audio.camera_shutter = "mod_assets/sfx/camera_shutter.ogg"
+define audio.card_place = "mod_assets/sfx/card_place.ogg"
+define audio.card_shuffle = "mod_assets/sfx/card_shuffle.ogg"
+define audio.cassette_close = "mod_assets/sfx/cassette_close.ogg"
+define audio.cassette_open = "mod_assets/sfx/cassette_open.ogg"
 define audio.chair_in = "mod_assets/sfx/chair_in.ogg"
 define audio.chair_out = "mod_assets/sfx/chair_out.ogg"
 define audio.chair_out_in = "mod_assets/sfx/chair_out_in.ogg"
+define audio.clothing_ruffle = "mod_assets/sfx/clothing_ruffle.ogg"
+define audio.coin_flip = "mod_assets/sfx/coin_flip.ogg"
+define audio.drawer = "mod_assets/sfx/drawer.ogg"
+define audio.drink_pour = "mod_assets/sfx/drink_pour.ogg"
+define audio.gift_close = "mod_assets/sfx/gift_close.ogg"
+define audio.gift_open = "mod_assets/sfx/gift_open.ogg"
+define audio.gift_rustle = "mod_assets/sfx/gift_rustle.ogg"
+define audio.gift_slide = "mod_assets/sfx/gift_slide.ogg"
+define audio.glass_move = "mod_assets/sfx/glass_move.ogg"
+define audio.glasses_case_close = "mod_assets/sfx/glasses_case_close.ogg"
+define audio.glasses_case_open = "mod_assets/sfx/glasses_case_open.ogg"
 define audio.hair_brush = "mod_assets/sfx/hair_brush.ogg"
 define audio.hair_clip = "mod_assets/sfx/hair_clip.ogg"
-define audio.necklace_clip = "mod_assets/sfx/necklace_clip.ogg"
-define audio.cassette_open = "mod_assets/sfx/cassette_open.ogg"
-define audio.cassette_close = "mod_assets/sfx/cassette_close.ogg"
-define audio.glass_move = "mod_assets/sfx/glass_move.ogg"
-define audio.straw_sip = "mod_assets/sfx/straw_sip.ogg"
-define audio.light_switch = "mod_assets/sfx/light_switch.ogg"
-define audio.blow = "mod_assets/sfx/blow.ogg"
+define audio.headpat = "mod_assets/sfx/headpat.ogg"
+define audio.kettle_boil = "mod_assets/sfx/kettle_boil.ogg"
 define audio.kiss = "mod_assets/sfx/kiss.ogg"
+define audio.necklace_clip = "mod_assets/sfx/necklace_clip.ogg"
+define audio.notification = "mod_assets/sfx/notification.ogg"
+define audio.page_turn = "mod_assets/sfx/page_turn.ogg"
+define audio.paper_crumple = "mod_assets/sfx/paper_crumple.ogg"
+define audio.paper_throw = "mod_assets/sfx/paper_throw.ogg"
+define audio.select_confirm = "mod_assets/sfx/select_confirm.ogg"
+define audio.select_hover = "mod_assets/sfx/select_hover.ogg"
+define audio.smack = "mod_assets/sfx/smack.ogg"
+define audio.stationary_rustle_a = "mod_assets/sfx/stationary_rustle_a.ogg"
+define audio.stationary_rustle_b = "mod_assets/sfx/stationary_rustle_a.ogg"
+define audio.stationary_rustle_c = "mod_assets/sfx/stationary_rustle_a.ogg"
+define audio.straw_sip = "mod_assets/sfx/straw_sip.ogg"
+define audio.switch_flip = "mod_assets/sfx/switch_flip.ogg"
+define audio.twitch_die = "mod_assets/sfx/twitch_die.ogg"
+define audio.twitch_you_lose = "mod_assets/sfx/twitch_you_lose.ogg"
+define audio.zipper = "mod_assets/sfx/zipper.ogg"
 
 # Glitch sound effects
 define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
@@ -1474,7 +1808,7 @@ define audio.interference = "mod_assets/sfx/interference.ogg"
 define audio.static = "mod_assets/sfx/glitch_static.ogg"
 
 # Looped sound effects
-define audio.rain_muffled = "mod_assets/sfx/rain_muffled.mp3"
+define audio.rain_muffled = "mod_assets/sfx/rain_muffled.ogg"
 
 # Music, vanilla DDLC
 define audio.space_classroom_bgm = "mod_assets/bgm/space_classroom.ogg"
@@ -1502,12 +1836,8 @@ init python:
     m_name = "Monika"
     y_name = "Yuri"
 
-    # Assign Natsuki the chosen nickname (defaulted to Natsuki)
-    if persistent.jn_player_nicknames_current_nickname:
-        n_name = persistent.jn_player_nicknames_current_nickname
-
-    else:
-        n_name = "Natsuki"
+    n_name = "Natsuki"
+    player = persistent.playername
 
 init -999 python:
     def label_callback(name, abnormal):
@@ -1524,7 +1854,8 @@ init -999 python:
             "input",
             "choice",
             "poem_view",
-            "preferences"
+            "preferences",
+            "history"
         )
         for blocked_screen in blocked_screens:
             if renpy.get_screen(blocked_screen):

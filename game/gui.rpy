@@ -17,8 +17,8 @@ init python:
 # GUI Configuration Variables
 ################################################################################
 
-define gui.hover_sound = "mod_assets/sfx/select_hover.mp3"
-define gui.activate_sound = "mod_assets/sfx/select_confirm.mp3"
+define gui.hover_sound = "mod_assets/sfx/select_hover.ogg"
+define gui.activate_sound = "mod_assets/sfx/select_confirm.ogg"
 define gui.activate_sound_glitch = "gui/sfx/select_glitch.ogg"
 
 ## Colors ######################################################################
@@ -71,6 +71,9 @@ define gui.interface_font = "mod_assets/fonts/natsuki.ttf"
 
 ## The size of normal dialogue text.
 define gui.text_size = 22
+
+## The size of say/textbox text.
+define gui.say_text_size = 23
 
 ## The size of button text.
 define gui.button_text_size = 24
@@ -144,7 +147,8 @@ define gui.namebox_tile = False
 ## number of pixels relative to the left or top side of the textbox, or 0.5 to
 ## center.
 define gui.text_xpos = 268
-define gui.text_ypos = 62
+# define gui.text_ypos = 62
+define gui.text_ypos = 54
 
 ## The maximum width of dialogue text, in pixels.
 define gui.text_width = 744
@@ -185,7 +189,6 @@ define gui.button_text_insensitive_color = gui.insensitive_color
 # The horizontal alignment of the button text. (0.0 is left, 0.5 is center,
 # 1.0 is right).
 define gui.button_text_xalign = 0.0
-
 
 ## These variables override settings for different kinds of buttons. Please see
 ## the gui documentation for the kinds of buttons available, and what each is

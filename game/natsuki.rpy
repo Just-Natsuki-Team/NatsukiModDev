@@ -1,3 +1,6 @@
+default persistent.affinity = 25.0
+default persistent._jn_player_confession_accepted = False
+
 init 0 python:
     import store.jn_outfits as jn_outfits
 
@@ -57,8 +60,15 @@ init 0 python:
         ::::cccccccclxkxddddxxdddxxdxkkOOOxoollccc::::;;,;;;,,,,,,,,,,;d0xccldkodKWWWWWWNNNNNNNWN0oclddddddo
         """
 
+        # Tracks whether Natsuki is currently in some topic flow
+        __is_in_conversation = False
+
+        # Tracks whether Natsuki is currently playing a game
+        __is_in_game = False
+
         # START: Outfit functionality
 
+        # Tracks Natsuki's currently worn outfit
         _outfit = None
 
         @staticmethod
@@ -181,15 +191,31 @@ init 0 python:
             """
             Adds a calculated amount to affinity, based on the player's relationship with Natsuki and daily cap state.
 
+            NOTE:
+                If the player has not confessed to Natsuki via the talk_i_love_you topic, further affinity gain is not possible
+                until the confession has been made! This is to prevent players having Natsuki tell them she loves them unwarranted
+                by accidentally crossing the boundary into LOVE.
+
             IN:
                 - base - The base amount to use for the calculation
                 - bypass - If the daily cap should be bypassed for things like one-time gifts, events, etc.
             """
             to_add = base * jn_affinity.get_relationship_length_multiplier()
-            if bypass:
+
+            if (
+                not persistent._jn_player_confession_accepted 
+                and (persistent.affinity + to_add) > (jn_affinity.AFF_THRESHOLD_LOVE -1)
+            ):
+                # Player cannot reach LOVE without having confessed to Natsuki successfully
+                persistent.affinity = jn_affinity.AFF_THRESHOLD_LOVE -1
+                jn_utils.log("Affinity blocked - CN!")
+                return
+
+            if bypass and persistent._affinity_daily_bypasses > 0:
                 # Ignore the daily gain and just award the full affinity
                 persistent.affinity += to_add
-                jn_utils.log("Affinity+")
+                persistent._affinity_daily_bypasses -= 1
+                jn_utils.log("Affinity+ (B)")
 
             elif persistent.affinity_daily_gain > 0:
                 # Award the full affinity if any cap remains
@@ -219,12 +245,25 @@ init 0 python:
         def percentageAffinityGain(percentage_gain):
             """
             Adds a percentage amount to affinity, with the percentage based on the existing affinity value.
+            This bypasses the usual check, so this should only be used for one-off big gains.
+
+            NOTE:
+                If the player has not confessed to Natsuki via the talk_i_love_you topic, further affinity gain is not possible
+                until the confession has been made! This is to prevent players having Natsuki tell them she loves them unwarranted
+                by accidentally crossing the boundary into LOVE.
 
             IN:
                 - percentage_gain - The integer percentage the affinity should increase by
             """
-            persistent.affinity += persistent.affinity * (float(percentage_gain) / 100)
-            jn_utils.log("Affinity+")
+            to_add = persistent.affinity * (float(percentage_gain) / 100)
+            if (not persistent._jn_player_confession_accepted and (persistent.affinity + to_add) > (jn_affinity.AFF_THRESHOLD_LOVE -1)):
+                # Player cannot reach LOVE without having confessed to Natsuki successfully
+                persistent.affinity = jn_affinity.AFF_THRESHOLD_LOVE -1
+                jn_utils.log("Affinity blocked - CN!")
+
+            else:
+                persistent.affinity += to_add
+                jn_utils.log("Affinity+")
 
         @staticmethod
         def percentageAffinityLoss(percentage_loss):
@@ -234,7 +273,12 @@ init 0 python:
             IN:
                 - percentage_loss - The integer percentage the affinity should decrease by
             """
-            persistent.affinity -= persistent.affinity * (float(percentage_loss) / 100)
+            if persistent.affinity == 0:
+                persistent.affinity -= (float(percentage_loss) / 10)
+
+            else:
+                persistent.affinity -= abs(persistent.affinity * (float(percentage_loss) / 100))
+            
             jn_utils.log("Affinity-")
 
         @staticmethod
@@ -250,6 +294,7 @@ init 0 python:
             elif current_date.day is not persistent.affinity_gain_reset_date.day:
                 persistent.affinity_daily_gain = 5 * jn_affinity.get_relationship_length_multiplier()
                 persistent.affinity_gain_reset_date = current_date
+                persistent._affinity_daily_bypasses = 5
                 jn_utils.log("Daily affinity cap reset; new cap is: {0}".format(persistent.affinity_daily_gain))
 
         @staticmethod
@@ -497,3 +542,146 @@ init 0 python:
                     logseverity=store.jn_utils.SEVERITY_WARN
                 )
                 return "UNKNOWN"
+
+        @staticmethod
+        def addApology(apology_type):
+            """
+            Adds a new apology possiblity to the list of pending apologies.
+            If the apology type is already present in the list, ignore it.
+
+            IN:
+                apology_type - The jn_apologies.ApologyTypes type to add.
+            """
+            if not isinstance(apology_type, int) and not isinstance(apology_type, jn_apologies.ApologyTypes):
+                raise TypeError("apology_type must be of types int or jn_apologies.ApologyTypes")
+
+            if not int(apology_type) in store.persistent._jn_player_pending_apologies:
+                store.persistent._jn_player_pending_apologies.append(int(apology_type))
+
+        @staticmethod
+        def setQuitApology(apology_type):
+            """
+            Sets the jn_apologies.ApologyTypes type to be checked on loading the game after quitting.
+
+            IN:
+                apology_type - The jn_apologies.ApologyTypes type to add.
+            """
+            if not isinstance(apology_type, int) and not isinstance(apology_type, jn_apologies.ApologyTypes):
+                raise TypeError("apology_type must be of types int or jn_apologies.ApologyTypes")
+
+            store.persistent._jn_player_apology_type_on_quit = int(apology_type)
+
+        @staticmethod
+        def removeApology(apology_type):
+            """
+            Removes an apology from the list of pending apologies, if it exists.
+
+            IN:
+                apology_type - The jn_apologies.ApologyTypes type to add.
+            """
+            if not isinstance(apology_type, int) and not isinstance(apology_type, jn_apologies.ApologyTypes):
+                raise TypeError("apology_type must be of types int or jn_apologies.ApologyTypes")
+
+            if int(apology_type) in store.persistent._jn_player_pending_apologies:
+                store.persistent._jn_player_pending_apologies.remove(int(apology_type))
+
+        @staticmethod
+        def setInConversation(is_in_conversation):
+            """
+            Marks Natsuki as being in a conversation with the player, or another dialogue flow.
+            While in conversation, the hotkey buttons are disabled.
+
+            IN:
+                - is_in_conversation - The bool in conversation flag to set
+            """
+            if not isinstance(is_in_conversation, bool):
+                raise TypeError("is_in_conversation must be of type bool")
+
+            Natsuki.__is_in_conversation = is_in_conversation
+
+        @staticmethod
+        def setInGame(is_in_game):
+            """
+            Marks Natsuki as being in a game with the player.
+            While in a game, the player is marked as a cheater if they force quit, and can later apologize for it.
+
+            IN:
+                - is_in_game - The bool in game flag to set
+            """
+            if not isinstance(is_in_game, bool):
+                raise TypeError("is_in_game must be of type bool")
+
+            Natsuki.__is_in_game = is_in_game
+
+        @staticmethod
+        def isInConversation():
+            """
+            Gets whether Natsuki is or is not currently in a conversation.
+            While in conversation, the hotkey buttons are disabled.
+            
+            OUT:
+                - True if in conversation, otherwise False
+            """
+            return Natsuki.__is_in_conversation
+
+        @staticmethod
+        def isInGame():
+            """
+            Gets whether Natsuki is or is not currently playing a game.
+            While in a game, the player is marked as a cheater if they force quit, and can later apologize for it.
+            
+            OUT:
+                - True if in game, otherwise False
+            """
+            return Natsuki.__is_in_game
+
+# KWWWMMMMMMMWNNNNNNXXXKKKKK00KKXXKKK0KK0000KKKKKK000Okkxdoodk0KKKKKXKKKK0000KOxoccdkko;,cOX00XXXXXXXX
+# KNWWWWWMMWWNNNNNXXXXXXXXKKKKKXXXXXXKKKKXXXXXXXKKKXXKKKKKKXKKKXXK00KKKKKKK000OxOOdclxOx:;kXOxKXXXXXKK
+# KNWWWWWWNXKXNNNNNNNNNNXXXXXXXXXXXXXXXXXXXXXXXXXKKKXKKKKKKXXKXXXXXKKKKKKKKKK00Ok0KOo:oxddOXkdOXXXXXKK
+# KNWWWNNNXKXNWWWWWNNXXNNXXXXXXXXXXXXXXXXXXXXXXXXKKKKKXKKKKKXXXNNNXXXXKKKKKKKKK0000KKx:cdkK0olx0XXXXKK
+# 0NWWNNNNWWWWWNXKXNXXNNNXXXXXXXXXXXXXXXXXXXXXXXXXXXKKKXXKKKKKXNNXXXXXXXXKKKKKKK00OO00x:l0KkooxOXXXKK0
+# 0NNNNXXNWWN0kdxOKKKXNXKKXXXXXXXXXXXXXXXXXXXXXXXXXXXKKKKXKKK00XXNXXXXXXXXXXKK000000OOOkOxdxkkk0XXKKK0
+# 0XKXNNNNKkolcd0KKKXXXKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXKKKKXXXKOOXNXXXKKXXXXXXXKK00000OkOx:lkkkOKXXKK0O
+# kdkXNNN0occokKK0KKK0KXXXXKKKXXXXXXXXXXXXXXXXXXXXXXXXKKKKKXXKKOk0KXKKKKKXXXXXXKKK0OOO0OkxkOkkKXXKKKOx
+# loOXNNXOlco0XK000K00KNNK0KKKXXXXXXXXXXXKKKXXXXXXXXKXXKKXXXK0KX0kkKXKK00KXXXXXXXXKK00000OOkk0XKKK0Odl
+# lx0KXXXkcd0XK000000KXXX00KXKXXXKXXXXXXXKKKKXXXXXXXXXKKKXXXN0OKK0xk0KKK0OKXXXKXXXXKKK0000kk0KK000kooo
+# ok00XXKxd0X000000O0KXK00KXXKXXKKKXXXXXXKKKKKKKXXXXXXKKXNXNXkx0XKOxk0KKKOO0KXXXXXXKKXK0000KKK0Okdlooo
+# O000KK0OKX0O000OOOKXK0OKNNXKKXK0KKXXXXKKKXXKXXXXXXXXKKNNNKkxkOKKOkkOKKK0kk0KKXXXXXXKK0000Oxxdolloodx
+# 00OO0KKXNKO00OOOOOKK0O0XNNNXXX00KXXKKXXKXXKXXXXXXNNX0KNX0kxkOO0KOOK00KKKOkkO0KKXXKK0OOOOkdoloddxxkkk
+# 0Okk0KKNXOO00OOkkOK0OO0KXNNNNN00XXXXXXXXXXNNXNNNNNNK0KX0kxk0K000OKNX00000kxkO0KXKXKKKKKK00OxxkOkkkkk
+# 0kkO0KKNKOO0OOkkkOOOkO0KKKXXNX0KNNNNNNNWWWNXNNNNNKOk0K0kxxx0KOkxkKXX00OOOkOOkkOKXXXKKKKKKK0OxkkOOOOO
+# 0Okk0KXX0kO0OkxxxkkkkO00KKXXXKOKNNNNXXNNNNXXXXXKKkxkOkxxdx0XN0xxKNNNXK0kxkKNKOkOKXXKK0KXKK00kxkOkOOO
+# 00OkOKXXOk00OkxxxkxxkO0OOKKKK0O0XKKKKKKKKKKKXKKKOxoxxxkxkKNWW0d0WWWMWNXOdkNWWN0kOKXKK0KXKXK0Oxk00Okk
+# XKOkOKXXOk00OxxxxkxxkOOOOO0KKOO0K0xkKXKK0KKXXK0Oxxxxxxxx0XWWNOONWMMMMNNXk0WWMWWX0KXKK00KXKKOkxxOK0Ok
+# NXOkk0XXOk00OxxxxkxxkkOOkkO00kk00x;:d000KXKKK0OkxxxdddxOXWWWNNNWMMMWWWWWKXWMWWWWX0KKKOOKXKKkddxkKK0O
+# WX0kxONN0k00OkxxxkxxkkkkkkOOkxkOOd;,::lkKKK0OkkxddxddxOKNWWWWMMWWWMMWMWWWWWMWWWWNK0KKOkKXKKkodxx0KKO
+# WN0kOKWN0k00OkxxxkxxxkkkkkkOxdkO0Oc:dd:;cldkxkkdddooxOKNWMMWMMMMMMWWWWMMMWWWWWWWWXKKKkdOXK0xldkkOKK0
+# NXkOKXWNKOO00kxxxxxxxxxkkkkkxdk00Oc,oxo:,..,lxdodxxkO0XWWMMMMMWWWWWWWWWWMWWWWWWWWWKK0xokK0OxloOOk0KK
+# X0dkKXWWXOO00Oxdxxxdxxxxxkkxlcllc:,.';;::::ldodkOOO00XWWMWWWWWWWWWWWWNXK000O000KNWX0Odlk0OkxdxKOkOKK
+# KOxokKWNX0O00Oxddxxddxddxxxo;',:ldl';xOkkxkxdxO00000KNWMMWWWWWWWNKxl:,'..''';:d0NWX0kolxOxkOkOK0kkKK
+# K0Oxd0NNNKkO00kooxddoddodddxo:,;lxx:'okxxkkkO00000KKNWWMMWWWWNN0d:;:ldkOO0000XNWWWXkdllxkk000KKOxk0K
+# K0OOOKNXXXOkO00xodddoolldxxddxdc,,:;.;dxOO000000KKXNWWMWMWWWWWKxkKNWWWWWWWWWWWWWWW0ddllxk0XKKKKkokKX
+# kOOO0XX0KX0xkO0Ododdlloxxxdxkkkkdl;''cxOO00000KKKXNWWWWWWWWWWWNNWWWWMWWWWWWWWWWWWXkxdcdOKKKKKK0doOKK
+# okOO0N0kKXKkxO00OdoooxxxxxkkkkkkxdlldkO0000KKKKKNWWWWWWWWWWWWWWWWWWWWWWWWWWNNNNNN0OOdd0KKKKKKKOoo0XK
+# okOk0XOx0XX0xxk0OkddxddxxxxxkkxdoodkkkkO00KKKKXNWWWWWMMWWWWWWWWWWWWWWWWWNNNNXXXNXXKkx0K00KKKKKkokKXK
+# oxOOKKOk0XXKOxxkkkdoodxxxxxxxdlldxkOOO000KKKKXNWWMMMWWMWWWWWWWWWWWWWWWNNNXXXXXXNNN0k00OOKKKKK0xxKKKK
+# lxkO0OkkOXXK0xdxdodxxxxxxxdolldxkOOOOkkkkO0KXXNWWWWWWWMMWWWWWWWWWWWWWWNNNNXXXXNNNX000kk0KKK000OKK0Ok
+# lxkkkkkkkKK0kdlldxkxxxxdollloxkkkxo:,',clxOKXNWWWWWWWWWWWWWWWWWWWWWWWWNNNNNNNNNNX00K0kOKKK0000K0kxdo
+# cdxxkkkxxO0OOxdxkkxxdolc:codkkkxc...;oxOKKXXNWWWWWWWWWWWWWWWWWWWWWWWWNWNNNNNNWWNXKNXOkOK0OOkkkxddooo
+# :lxxxxxxxOK0OOOkxdolccllododkkd;.'cx0KKKKXXNWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWN0xx0K0kkxdxxxxood
+# :oxxxxxxxkOkkxdlc:;;clloxkkxxxddxk0KKKKKKXNWWWWWWNXXNWWWWWWWWWWWWWWWWWWWWWWWWWWWWN0ddOKK0Okxkkxdooxx
+# :oxdddddxxkkxxl::::;;cclodxkxdodxkO0KKKXXNNWWWWWWXXXNWWWWWWWWWWWWNN0OXWWWWWWWWWWNOddk00Okxxkxdooxkkx
+# 'cddddddddOK00xlcc:;;::ccodxxxdolok0KKXXNNWWWWWWWWWWWMWWWWWWWNXKOkOkxKWWWWWWWWWKkodkO0kxddxxxllxxxkk
+# .:oooddoddx0XKkoccc:;::::clodxxkkxkkO0KXNNWWWWWWWMMMWWMMWWXOddxkkOOOOKWWWWWWWXOdoxkOOkxdxdckNkcokxxk
+# .:oooooooooOXX0dlllc:cccccccllllloodooxKXNNWWWWMWWWMMWWNOl,.:xOOOOOO0NWWWWWN0dooxkkOOkkkOkkKNOdxOxxk
+# .:oollllloldKXKkolllccccclcclllllllc:clxKNNWWWWMMWMMMWWNOl;,lOOOOO00XWWWWN0xoodxxkkOOOOO0KNNN0dkOxox
+# .;::::ccclcckNX0doooollllllllllooddolccclxKNWMMMMMMMMMMMWWNK0KKKKXNWWWWNKdllodxkkkOOO0KXNNNNNOdxkxod
+# ',,,,,;;:l:,l0NXOxdddooooooolllloddxxddxxdk0KXWMMMMMMMMMWWWWWWWWWWWWWNX0l;codxkO0KKXNWMMWWWNXkdxkxol
+# ',,,,,,;;cc;,oKXK0kxxdddddddddxdoooxxxxxOOxdlcodxkOO0KXNNNWNNNXXXXXXXKOOdldO0KXNWWMMMMMMMMMWOodxxdoo
+# '''',,,,;;::::xKXOOOkxxddxxdddxkOOOOOOOxolc::;;,,''',;:cccclccclkKKKOxdoxXWWMMMMMMMMMMMMMMNkloxxdoox
+# ''''''''''',;;;lOOolxxxxxxxxdddxkkO0Oxdollc::;;;,,,,,,,,'',,,,,oKX0xodxdOWMMMMMMMMMMMMMWXkolddddoodd
+# ''...........''',clccodxxxddddddxkkxdooollcc::;;,,,,,,,'',,''';dxc;cxOddXMMMMMMMMMMMMWKkdlodddddoodd
+# '''''''''''''',,,,,;:lxkkkkxxxdxkxxxdoolllcc::;;,;;,,,,....'..''..,:lo:xWMMMMMMMMMWX0xdodddddddooddd
+# '''''''''''',',,,,,,;lxkkOOOOkkkkxxxdoollcc::;;;,,,,,,'..''',,'..,oo:cxXMMMMMMWWX0kdododdddoddoldddd
+# '',,'''''''''',,,;;,:ldkkkkkkkkxxddddoollcc::,,;,,,,,,....':llc,'o0KxcOMMMWNX0Oxdooooooddddddoloddoo
+# '',,,,,,''',,:codkkOO00OkOOkxxxxddddooollccc:;,;,,,,,,....':dkd;:0XXOckWNKOxdooooooooooodddooooddooo

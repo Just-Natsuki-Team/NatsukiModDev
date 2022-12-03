@@ -30,31 +30,25 @@ init python in jn_random_music:
     # The file extensions we (Ren'Py) support
     _VALID_FILE_EXTENSIONS = ["mp3", "ogg", "wav"]
 
-    def random_music_change_check():
-        """
-        Determines if Natsuki should pick a new song to play in the background.
-        """
-
-        if (
-            store.persistent.jn_custom_music_unlocked
-            and store.persistent.jn_random_music_enabled
-            and store.Natsuki.isAffectionate(higher=True)
-            and store.preferences.get_volume("music") > 0
-            and len(jn_utils.getAllDirectoryFiles(
-                path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
-                extension_list=_VALID_FILE_EXTENSIONS
-                )
-            ) >= 2
-        ):
-            store.push("random_music_change")
-            renpy.jump("call_next_topic")
-
 label random_music_change:
+    if not (
+        store.persistent.jn_custom_music_unlocked
+        and store.persistent.jn_random_music_enabled
+        and store.Natsuki.isAffectionate(higher=True)
+        and store.preferences.get_volume("music") > 0
+        and len(jn_utils.getAllDirectoryFiles(
+            path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
+            extension_list=jn_random_music._VALID_FILE_EXTENSIONS
+            )
+        ) >= 2
+    ):
+        return
+
     $ track_quip = random.choice(jn_random_music._NEW_TRACK_QUIPS)
     n 1nchbg "[track_quip]{w=2}{nw}"
 
     stop music fadeout 2
-    $ renpy.pause(2)
+    $ jnPause(2, hard=True)
     play audio cassette_open
 
     $ track_followup = random.choice(jn_random_music._NEW_TRACK_FOLLOWUPS)
@@ -74,12 +68,12 @@ label random_music_change:
 
     play audio cassette_close
     python:
-        renpy.pause(2)
+        jnPause(2, hard=True)
         renpy.play(filename=music_title_and_file[1], channel="music", fadein=2)
         jn_custom_music._now_playing = music_title
         renpy.notify("Now playing: {0}".format(jn_custom_music._now_playing))
 
-    jump ch30_loop
+    return
 
 # Enable random music
 init 5 python:
@@ -131,7 +125,7 @@ label random_music_enable:
         extend 1tnmca " You haven't exactly given me a lot to work with here."
         n 1unmaj "Can you give me at least a couple of tracks?{w=0.5}{nw}"
         extend 1tnmpo " You {i}do{/i} remember how do to that,{w=0.1} right?"
-        $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        $ chosen_tease = jn_utils.getRandomTease()
         n 1uchbg "Just add them to the custom music folder,{w=0.1} [chosen_tease]!"
 
     jump ch30_loop
@@ -161,11 +155,11 @@ label random_music_disable:
     extend 1nchsm " I'll just put it back to the regular music."
 
     stop music fadeout 2
-    $ renpy.pause(2)
+    $ jnPause(2, hard=True)
     play audio cassette_open
-    $ renpy.pause(1.5)
+    $ jnPause(1.5, hard=True)
     play audio cassette_close
-    $ renpy.pause(2)
+    $ jnPause(2, hard=True)
     play music audio.just_natsuki_bgm fadein 2
 
     n 1nwlbg "...And there we go!"

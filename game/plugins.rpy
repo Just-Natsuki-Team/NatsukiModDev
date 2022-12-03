@@ -31,7 +31,7 @@ init -1 python in jn_plugins:
             self.visible_if = visible_if
             self.jump_label = jump_label
 
-    def register_time_check_action(action_type, statement, priority=0):
+    def registerTimeCheckAction(action_type, statement, priority=0):
         """
         Registers an action to take place each minute/hour/day, when not in conversation or gameplay with Natsuki.
 
@@ -70,7 +70,7 @@ init -1 python in jn_plugins:
             day_check_calls.append(JNRegisteredAction(statement, priority))
             day_check_calls.sort(key = lambda action: action.priority)
 
-    def register_extras_option(option_name, visible_if, jump_label):
+    def registerExtrasOption(option_name, visible_if, jump_label):
         """
         Registers an option that can be selected under the Extras menu.
 

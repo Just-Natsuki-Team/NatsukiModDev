@@ -65,7 +65,7 @@ init python in jn_custom_music:
     _now_playing = None
 
 label music_menu:
-    $ jn_globals.player_is_in_conversation = True
+    $ Natsuki.setInConversation(True)
     $ music_title = "Error, this should have changed"
 
     # Attempt to get the music in the custom_music directory to present as menu options

@@ -1,314 +1,239 @@
-# Nickname data
-default persistent.jn_player_nicknames_allowed = True
-default persistent.jn_player_nicknames_current_nickname = "Natsuki"
-default persistent.jn_player_nicknames_bad_given_total = 0
+# Natsuki nickname data
+default persistent._jn_nicknames_natsuki_allowed = True
+default persistent._jn_nicknames_natsuki_current_nickname = "Natsuki"
+default persistent._jn_nicknames_natsuki_bad_given_total = 0
+
+# Player nickname data
+default persistent._jn_nicknames_player_allowed = True
+default persistent._jn_nicknames_player_current_nickname = persistent.playername
+default persistent._jn_nicknames_player_bad_given_total = 0
 
 init 0 python in jn_nicknames:
+    from Enum import Enum
+    import re
+    import store
     import store.jn_globals as jn_globals
     import store.jn_utils as jn_utils
     
-    # Nickname types
-    TYPE_INVALID = 0
-    TYPE_LOVED = 1
-    TYPE_NEUTRAL = 2
-    TYPE_DISLIKED = 3
-    TYPE_HATED = 4
-    TYPE_PROFANITY = 5
-    TYPE_FUNNY = 6
-    TYPE_NOU = 7
-    
+    class NicknameTypes(Enum):
+        """
+        Identifiers for different nickname types.
+        """
+        invalid = 1
+        loved = 2
+        neutral = 3
+        disliked = 4
+        hated = 5
+        profanity = 6
+        funny = 7
+        nou = 8
+
     # Natsuki loves these nicknames; awarding them awards affinity/trust
-    NICKNAME_LOVED_LIST = {
-        "babe",
-        "amazing",
-        "angel",
-        "babygirl",
-        "baby",
-        "babycakes",
-        "beautiful",
-        "bestgirl",
-        "betterhalf",
-        "boo",
-        "bunbun",
-        "bun-bun",
-        "bunny",
-        "buttercup",
-        "butterscotch",
-        "candy",
-        "cookie",
-        "cupcake",
-        "cuteypie",
-        "cutey",
-        "cutiepie",
-        "cutie",
-        "darlin",
-        "darling",
-        "doll",
-        "dollface",
-        "dove",
-        "gem",
-        "gorgeous",
-        "heartstring",
-        "heart-string",
-        "heartthrob",
-        "heart-throb",
-        "heaven",
-        "honey",
-        "honeybun",
-        "hun",
-        "ki",
-        "kitten",
-        "kitty",
-        "love",
-        "mine",
-        "myflower",
-        "mylove",
-        "mylovely",
-        "myprincess",
-        "myqueen",
-        "myrose",
-        "natnat",
-        "nat",
-        "nat-nat",
-        "natsu",
-        "natsukitten",
-        "natsukitty",
-        "natty",
-        "nattykins",
-        "numberone",
-        "precious",
-        "princess",
-        "qtpie",
-        "qt",
-        "queen",
-        "snooki",
-        "snookums",
-        "special",
-        "squeeze",
-        "starlight",
-        "starshine",
-        "su",
-        "sugar",
-        "sugarlump",
-        "sugarplum",
-        "'suki",
-        "suki",
-        "summer",
-        "sunny",
-        "sunshine",
-        "sweetcakes",
-        "sweetpea",
-        "sweetheart",
-        "sweetie",
-        "sweetness",
-        "sweety"
-        "thebest"
+    __NATSUKI_NICKNAME_LOVED_LIST = {
+        "^amazing$",
+        "^angel$",
+        "^(babe|baby|babygirl)$",
+        "^babycakes$",
+        "^beautiful$",
+        "^bestgirl$",
+        "^betterhalf$",
+        "^boo$",
+        "^(bunbun|bun-bun|bunny)$",
+        "^(butter(cup|scotch))$",
+        "^candy$",
+        "^cookie$",
+        "^cupcake$",
+        "^(cutey|cutie|cuteypie|cutiepie)$",
+        "^(darlin|darling)$",
+        "^(doll|dollface)$",
+        "^dove$",
+        "^gem$",
+        "^gorgeous$",
+        "^(heartstring|heart-string|heartthrob|heart-throb)$",
+        "^heaven$",
+        "^(honey|honeybun)$",
+        "^hun$",
+        "^ki$",
+        "^(kitty|kitten)$",
+        "^love$",
+        "^mine$",
+        "^myflower$",
+        "^(mylove|mylovely)$",
+        "^myprincess$",
+        "^myqueen$",
+        "^myrose$",
+        "^(nat|natnat|nat-nat)$",
+        "^(natsu|natsukitten|natsukitty)$",
+        "^(natty|nattykins)$",
+        "^number(one|1)$",
+        "^precious$",
+        "^princess$",
+        "^(qt|qtpie)$",
+        "^(queen|myqueen)$",
+        "^(snooki|snookums)$",
+        "^special$",
+        "^squeeze$",
+        "^(starlight|starshine)$",
+        "^su$",
+        "^(sugar|sugarlump|sugarplum)$",
+        "^'suki$",
+        "^suki$",
+        "^summer$",
+        "^(sunny|sunshine)$",
+        "^(sweetcakes|sweetpea|sweetheart|sweetness|sweety)$",
+        "^thebest$",
     }
 
     # Natsuki dislikes these nicknames; no penalty given but name will not be permitted
-    NICKNAME_DISLIKED_LIST = {
-        "dad",
-        "daddy",
-        "father",
-        "lily",
-        "moni",
-        "monika",
-        "monikins",
-        "monmon",
-        "mon-mon",
-        "papa",
-        "sayo",
-        "sayori",
-        "yori",
-        "yuri",
-        "weeb"
-    }
-
-    # Natsuki hates these (non-profanity) nicknames; awarding them detracts affinity/trust
-    NICKNAME_HATED_LIST={
-        "arrogant",
-        "beast",
-        "badonkers",
-        "bonebag",
-        "bonehead",
-        "brat",
-        "bratty",
-        "breadboard",
-        "bully",
-        "cheater",
-        "child",
-        "clown",
-        "cuttingboard",
-        "demon",
-        "dimwit",
-        "dirt",
-        "disgusting",
-        "dog",
-        "dumb",
-        "dumbo",
-        "dumbo",
-        "dunce",
-        "dwarf",
-        "dweeb",
-        "egoist",
-        "egotistical",
-        "evil",
-        "failure",
-        "fake",
-        "fat",
-        "fatso",
-        "fatty",
-        "flat",
-        "flatso",
-        "flatty",
-        "gilf",
-        "gremlin",
-        "gross",
-        "halfling",
-        "halfpint",
-        "half-pint",
-        "halfwit",
-        "heartless",
-        "hellspawn",
-        "hideous",
-        "horrible",
-        "horrid",
-        "hungry",
-        "idiot",
-        "ignoramus",
-        "ignorant",
-        "imbecile",
-        "imp",
-        "ironingboard",
-        "kid",
-        "lesbian",
-        "lesbo",
-        "midget",
-        "moron",
-        "narcissist",
-        "nasty",
-        "neckcrack",
-        "neck-crack",
-        "necksnap",
-        "neck-snap",
-        "nerd",
-        "nimrod",
-        "nuisance",
-        "pest",
-        "plaything"
-        "punchbag",
-        "punch-bag",
-        "punchingbag",
-        "punching-bag",
-        "puppet",
-        "putrid",
-        "short",
-        "shortstuff",
-        "shorty",
-        "sick",
-        "simp",
-        "simpleton",
-        "skinny",
-        "slave",
-        "smelly",
-        "soil",
-        "starved",
-        "starving",
-        "stinky",
-        "stuckup"
-        "stuck-up",
-        "stupid",
-        "teabag",
-        "thot",
-        "tiny",
-        "toy",
-        "twerp",
-        "twit",
-        "useless",
-        "vendingmachine",
-        "vomit",
-        "washboard",
-        "witch",
-        "wretch",
-        "zombie"
+    __NATSUKI_NICKNAME_DISLIKED_LIST = {
+        "^(dad|daddy)$",
+        "^father$",
+        "^lily$",
+        "^(moni$|moni([ck])a|monikins|monmon|mon-mon)$",
+        "^papa$",
+        "^(sayo|sayori)$",
+        "^(salvato|dansalvato)$",
+        "^metaverse$",
+        "^yori$",
+        "^yuri$",
+        "^weeb$",
+        "(playboy|playgirl)",
     }
 
     # Natsuki finds these nicknames funny
-    NICKNAME_FUNNY_LIST = {
-        "catsuki",
-        "gorgeous",
-        "hot",
-        "hotstuff",
-        "hottie",
-        "nyatsuki",
-        "mama",
-        "mom",
-        "mommy",
-        "mother",
-        "mum",
-        "mummy",
-        "sexy",
-        "smol",
-        "snack"
+    __NATSUKI_NICKNAME_FUNNY_LIST = {
+        "^catsuki$",
+        "^gorgeous$",
+        "^(hot|hotstuff|hottie)$",
+        "^nyatsuki$",
+        "^mama$",
+        "^(mom|mommy|mother)$",
+        "^(mum|mummy|maam|ma'am)$",
+        "^sexy$",
+        "^smol$",
+        "^snack$",
     }
 
-    NICKNAME_NOU_LIST = {
-        "adorkable",
-        "baka",
-        "booplicate",
-        "booplic8",
-        "booplik8",
-        "boopliqeeb",
-        "boopliqeb",
-        "dummy",
-        "qab",
-        "qeb",
-        "qeeb",
-        "qebqeb",
-        "qebweb",
-        "qib",
-        "qob",
-        "qoob",
-        "qub",
-        "web",
-        "webqeb",
-        "woob",
-        "wob"
+    # Nou
+    __NATSUKI_NICKNAME_NOU_LIST = {
+        "^adorkable$",
+        "^baka$",
+        "^(booplicate|boopli[ck]8|boopliq(ee|e|3|33)b)$",
+        "^dummy$",
+        "^(q[eaoui]b|q[eaoui][eaoui]b|q[eaoui]b[wq][eaoui]b)$",
+        "^(w[eaoui]b|w[eaoui][eaoui]b|w[eaoui]b[wq][eaoui]b)$",
     }
 
-    def get_nickname_type(nickname):
+    # Natsuki dislikes these nicknames; no penalty given but name will not be permitted
+    __PLAYER_NICKNAME_DISLIKED_LIST = {
+        "^(dad|daddy)$",
+        "^father$",
+        "^papa$",
+        "^(salvato|dansalvato)$",
+        "^metaverse$",
+        "(playboy|playgirl)",
+        "^nerd$",
+        "^trash$",
+        "^junk$",
+    }
+
+    # Natsuki finds these nicknames funny
+    __PLAYER_NICKNAME_FUNNY_LIST = {
+        "^gorgeous$",
+        "^(hot|hotstuff|hottie)$",
+        "^(mom|mommy|mother)$",
+        "^(mum|mummy|maam|ma'am)$",
+        "^mama$",
+        "^sexy$",
+        "^weeb$",
+        "^dork$",
+        "^nerd$",
+        "^geek$",
+        "^girl$",
+        "^boy$",
+        "thiccsuki"
+    }
+
+    NATSUKI_LOVED_NICKNAME_REGEX = re.compile('|'.join(__NATSUKI_NICKNAME_LOVED_LIST), re.IGNORECASE)
+    NATSUKI_DISLIKED_NICKNAME_REGEX = re.compile('|'.join(__NATSUKI_NICKNAME_DISLIKED_LIST), re.IGNORECASE)
+    NATSUKI_FUNNY_NICKNAME_REGEX = re.compile('|'.join(__NATSUKI_NICKNAME_FUNNY_LIST), re.IGNORECASE)
+    NATSUKI_NOU_NICKNAME_REGEX = re.compile('|'.join(__NATSUKI_NICKNAME_NOU_LIST), re.IGNORECASE)
+
+    PLAYER_DISLIKED_NICKNAME_REGEX = re.compile('|'.join(__PLAYER_NICKNAME_DISLIKED_LIST), re.IGNORECASE)
+    PLAYER_FUNNY_NICKNAME_REGEX = re.compile('|'.join(__PLAYER_NICKNAME_FUNNY_LIST), re.IGNORECASE)
+
+    def get_natsuki_nickname_type(nickname):
         """
-        Returns the nickname type for a given string nickname, defaulting to TYPE_NEUTRAL
+        Returns the NicknameTypes type for a given string nickname for Natsuki, defaulting to NatsukiNicknameTypes.neutral
 
         IN:
             nickname - The nickname to test
+
         OUT:
-            Nickname type, integer as defined in constant list
+            NicknameTypes type of the given nickname
         """
 
         if not isinstance(nickname, basestring):
-            return TYPE_INVALID
+            return NicknameTypes.invalid
         
         else:
             nickname = nickname.lower().replace(" ", "")
 
-            if nickname in NICKNAME_LOVED_LIST:
-                return TYPE_LOVED
+            if nickname == "":
+                return NicknameTypes.invalid
+            
+            elif re.search(NATSUKI_LOVED_NICKNAME_REGEX, nickname):
+                return NicknameTypes.loved
 
-            elif nickname in NICKNAME_DISLIKED_LIST:
-                return TYPE_DISLIKED
+            elif re.search(NATSUKI_FUNNY_NICKNAME_REGEX, nickname):
+                return NicknameTypes.funny
 
-            elif nickname in NICKNAME_HATED_LIST:
-                return TYPE_HATED
+            elif re.search(NATSUKI_DISLIKED_NICKNAME_REGEX, nickname):
+                return NicknameTypes.disliked
+
+            elif jn_utils.get_string_contains_insult(nickname):
+                return NicknameTypes.hated
 
             elif jn_utils.get_string_contains_profanity(nickname):
-                return TYPE_PROFANITY
+                return NicknameTypes.profanity
 
-            elif nickname in NICKNAME_FUNNY_LIST:
-                return TYPE_FUNNY
-
-            elif nickname in NICKNAME_NOU_LIST:
-                return TYPE_NOU
+            elif re.search(NATSUKI_NOU_NICKNAME_REGEX, nickname):
+                return NicknameTypes.nou
 
             else:
-                return TYPE_NEUTRAL
+                return NicknameTypes.neutral
+
+    def get_player_nickname_type(nickname):
+        """
+        Returns the NicknameTypes type for a given string nickname for the player, defaulting to NicknameTypes.neutral
+
+        IN:
+            nickname - The nickname to test
+
+        OUT:
+            NicknameTypes type of the given nickname
+        """
+
+        if not isinstance(nickname, basestring):
+            return NicknameTypes.invalid
+        
+        else:
+            nickname = nickname.lower().replace(" ", "")
+
+            if nickname == "":
+                return NicknameTypes.invalid
+
+            if re.search(PLAYER_FUNNY_NICKNAME_REGEX, nickname):
+                return NicknameTypes.funny
+
+            elif re.search(PLAYER_DISLIKED_NICKNAME_REGEX, nickname):
+                return NicknameTypes.disliked
+
+            elif jn_utils.get_string_contains_insult(nickname):
+                return NicknameTypes.hated
+
+            elif jn_utils.get_string_contains_profanity(nickname):
+                return NicknameTypes.profanity
+
+            else:
+                return NicknameTypes.neutral

@@ -12,19 +12,14 @@
 ##
 ## The _() surrounding the string marks it as eligible for translation.
 
+define config.version = "1.0.1"
 define config.name = "Just Natsuki"
-define config.window_title = _("Just Natsuki - BETA")
+define config.window_title = _("Just Natsuki - {0}".format(config.version))
 
 ## Determines if the title given above is shown on the main menu screen. Set
 ## this to False to hide the title.
 
 define gui.show_name = False
-
-
-## The version of the game.
-
-define config.version = "0.0.2"
-
 
 ## Text that is placed on the game's about screen. To insert a blank line
 ## between paragraphs, write \n\n.
@@ -37,6 +32,9 @@ define gui.about = _("")
 ## or semicolons.
 
 define build.name = "JustNatsuki"
+
+## Name of the executables, we must keep it DDLC to obey the guidelines
+define build.executable_name = "DDLC"
 
 ## Sounds and music ############################################################
 
@@ -149,7 +147,10 @@ define config.window_icon = "mod_assets/jnlogo.png"
 
 ## Custom configs ##############################################################
 
-define config.allow_skipping = True
+define config.developer = False
+define config.console = False
+define config.allow_skipping = False
+define config.skipping = False
 define config.has_autosave = False
 define config.autosave_on_quit = False
 define config.autosave_slots = 0
@@ -159,7 +160,6 @@ define config.predict_statements = 50
 define config.rollback_enabled = config.developer
 define config.menu_clear_layers = ["front"]
 define config.gl_test_image = "white"
-#define config.gl_resize = False
 
 init python:
     if len(renpy.loadsave.location.locations) > 1: del(renpy.loadsave.location.locations[1])
@@ -181,21 +181,12 @@ init python:
         else:
             return (float(height) * (float(config.screen_width) / float(config.screen_height)), height)
 
-    #config.adjust_view_size = force_integer_multiplier
-
 ## Build configuration #########################################################
 ##
 ## This section controls how Ren'Py turns your project into distribution files.
 ## These settings create a set of files suitable for distributing as a mod.
 
 init python:
-
-    ## By default, renpy looks for archive files in the game and common directories
-    ## Mac needs to check in the install directory instead.
-    #if renpy.mac:
-
-
-
     ## The following functions take file patterns. File patterns are case-
     ## insensitive, and matched against the path relative to the base directory,
     ## with and without a leading /. If multiple patterns match, the first is
@@ -215,67 +206,54 @@ init python:
 
     ## Classify files as None to exclude them from the built distributions.
 
-    ## This is the archive of data for your mod
-    #build.archive(build.name, "all")
+    ##This tells Renpy to build an updater file
+    build.include_update = True
 
+    ## INCLUDE
 
-    ## These files get put into your data file
-    build.package(build.directory_name + "Mod",'zip',build.name,description='DDLC Compatible Mod')
+    # Add mod assets
+    build.classify("game/mod_assets/**", "all")
 
-    # Declare archives
-    build.archive("scripts",build.name)
-    build.archive("mod_assets",build.name)
-    build.archive("submods",build.name)
-#    build.archive("images",build.name)
+    # Add scripts in the game folder
+    build.classify("game/*.rpyc", "all")
 
-    #Choose files for archives
-    build.classify("game/mod_assets/**","mod_assets")
-    build.classify("game/submods/**","submods")
-    build.classify('game/**.rpyc',"scripts")
-#    build.classify("game/images/**","images")
-    build.classify('game/advanced_scripts/**.rpyc',"scripts")
-    build.classify('game/advanced_scripts/poemwords.txt',"scripts")
-    build.classify('game/original_story_scripts/**',"scripts")
-    build.classify('game/**.chr',"scripts")
-    build.classify('game/**.mpg',"scripts")
-    build.classify('game/**.obj',"scripts")
+    # Add python packages
+    build.classify("game/python-packages/**", "all")
 
-    build.classify('**~', None)
-    build.classify('**.bak', None)
-    build.classify('**/.**', None)
-    build.classify('**/#**', None)
-    build.classify('**/thumbs.db', None)
-    build.classify('**.rpy', None)
-    build.classify('**.psd', None)
-    build.classify('**.sublime-project', None)
-    build.classify('**.sublime-workspace', None)
-    build.classify('/music/*.*', None)
-    build.classify('script-regex.txt', None)
-    build.classify('/game/10', None)
-    build.classify('/game/cache/*.*', None)
-    build.classify('**.rpa',None)
+    # Add README
+    build.classify("README.html", "all")
+    build.classify("README.md", "all")
 
     ## Files matching documentation patterns are duplicated in a mac app build,
     ## so they appear in both the app and the zip file.
+    build.documentation('**.html')
+    build.documentation('COPYRIGHT.txt')
+    build.documentation('README.txt')
+    build.documentation('**.md')
 
-    build.classify('README.md',build.name)
+    ## EXCLUDE
 
-    build.documentation('README.md')
+    # Remove everything else from the game folder
+    build.classify("game/*.rpy", None)
+    build.classify("game/dev/**", None)
+    build.classify("game/saves/**", None)
+    build.classify("game/cache/**", None)
+
+    # Remove logs
+    build.classify("log/**", None)
+    build.classify("*.log", None)
+    build.classify("errors.txt", None)
+    build.classify("log.txt", None)
+
+    # Remove anything else
+    build.classify("screenshots/**", None)
+    build.classify("renpy/**", None)
+    build.classify("characters/**", None)
+    build.classify("custom_outfits/**", None)
+    build.classify("custom_wearables/**", None)
+    build.classify("custom_music/**", None)
+    build.classify("**.exe", None)
+    build.classify("DDLC.py", None)
+    build.classify("DDLC.sh", None)
 
     build.include_old_themes = False
-
-    build.include_update = True
-
-
-
-## A Google Play license key is required to download expansion files and perform
-## in-app purchases. It can be found on the "Services & APIs" page of the Google
-## Play developer console.
-
-# define build.google_play_key = "..."
-
-
-## The username and project name associated with an itch.io project, separated
-## by a slash.
-
-# define build.itch_project = "..."

@@ -5,9 +5,6 @@ default persistent.jn_snap_explanation_given = False
 # Natsuki will refuse to play with a cheater
 default persistent.jn_snap_player_is_cheater = False
 
-# Transition for the "Snap"! popup
-define popup_hide_transition = Dissolve(0.75)
-
 init 0 python in jn_snap:
     import random
     import store
@@ -192,14 +189,14 @@ init 0 python in jn_snap:
             if (len(_player_hand) > 0):
                 new_card = _player_hand.pop(0)
                 _cards_on_table.append(new_card)
-                renpy.play("mod_assets/sfx/card_place.mp3")
+                renpy.play("mod_assets/sfx/card_place.ogg")
                 _is_player_turn = False
 
         else:
             if (len(_natsuki_hand) > 0):
                 new_card = _natsuki_hand.pop(0)
                 _cards_on_table.append(new_card)
-                renpy.play("mod_assets/sfx/card_place.mp3")
+                renpy.play("mod_assets/sfx/card_place.ogg")
                 _is_player_turn = True
 
         update_turn_indicator()
@@ -258,7 +255,7 @@ init 0 python in jn_snap:
 
             # Clear the cards on the table
             del _cards_on_table[:]
-            renpy.play("mod_assets/sfx/card_shuffle.mp3")
+            renpy.play("mod_assets/sfx/card_shuffle.ogg")
             draw_card_onscreen()
 
             # Use of renpy.call here is a stopgap and will be reworked, as renpy.call risks breaking label flow if not carefully applied.
@@ -400,7 +397,7 @@ label snap_start:
     else:
         n 1flrpol "Hmph...{w=0.3} you got lucky this time.{w=0.2} Looks like I'm first,{w=0.1} [player]."
 
-    $ jn_globals.player_is_ingame = True
+    $ Natsuki.setInGame(True)
     $ jn_snap._controls_enabled = True
     jump snap_main_loop
 
@@ -428,7 +425,7 @@ label snap_main_loop:
         $ jn_snap.last_game_result = jn_snap.RESULT_PLAYER_WIN
         jump snap_end
 
-    $ renpy.pause(delay=max(0.33, (3.0 - (jn_snap._natsuki_skill_level * 0.5))))
+    $ jnPause(delay=max(0.33, (3.0 - (jn_snap._natsuki_skill_level * 0.5))), hard=True)
 
     # Natsuki's snap logic
 
@@ -448,7 +445,7 @@ label snap_main_loop:
 
         # If Natsuki only has one card left, she'll try to see if she can snap before admitting defeat
         if len(jn_snap._natsuki_hand) == 0:
-            $ renpy.pause(delay=max(0.33, (1.25 - (jn_snap._natsuki_skill_level * 0.5))))
+            $ jnPause(delay=max(0.33, (1.25 - (jn_snap._natsuki_skill_level * 0.5))), hard=True)
 
             if jn_snap._get_snap_result():
                 $ jn_snap._call_snap()
@@ -473,9 +470,9 @@ label snap_quip(is_player_snap, is_correct_snap):
 
             # Some UE things to make it fun
             play audio smack
-            hide snap_popup
             show snap_popup zorder jn_snap._SNAP_POPUP_Z_INDEX
-            hide snap_popup with popup_hide_transition
+            $ jnPause(0.75)
+            hide snap_popup
 
         # Player snapped, and was incorrect
         else:
@@ -502,7 +499,7 @@ label snap_quip(is_player_snap, is_correct_snap):
                 $ _player_win_streak = 0
                 $ persistent.jn_snap_player_is_cheater = True
                 $ Natsuki.percentageAffinityLoss(1)
-                $ jn_apologies.add_new_pending_apology(jn_apologies.TYPE_CHEATED_GAME)
+                $ Natsuki.addApology(jn_apologies.ApologyTypes.cheated_game)
 
                 # Hide all the UI
                 hide player_natsuki_hands
@@ -516,7 +513,7 @@ label snap_quip(is_player_snap, is_correct_snap):
                 with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
                 # Reset the ingame flag, then hop back to ch30 as getting here has lost context
-                $ jn_globals.player_is_ingame = False
+                $ Natsuki.setInGame(False)
                 jump ch30_loop
 
             # Generic incorrect quip/tease
@@ -532,9 +529,11 @@ label snap_quip(is_player_snap, is_correct_snap):
             show natsuki 1uchbg zorder JN_NATSUKI_ZORDER
 
             # Some UE things to make it fun
+
             play audio smack
             show snap_popup zorder jn_snap._SNAP_POPUP_Z_INDEX
-            hide snap_popup with popup_hide_transition
+            $ jnPause(0.75)
+            hide snap_popup
 
         # Natsuki snapped, and was incorrect
         else:
@@ -675,7 +674,7 @@ label snap_end:
             with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
             # Reset the ingame flag, then hop back to ch30 as getting here has lost context
-            $ jn_globals.player_is_ingame = False
+            $ Natsuki.setInGame(False)
             jump ch30_loop
 
 label snap_forfeit:
@@ -705,7 +704,7 @@ label snap_forfeit:
             with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
             # Reset the ingame flag, then hop back to ch30 as getting here has lost context
-            $ jn_globals.player_is_ingame = False
+            $ Natsuki.setInGame(False)
             jump ch30_loop
 
         "In your dreams!":
@@ -714,6 +713,10 @@ label snap_forfeit:
             $ jn_snap._controls_enabled = True
             $ jn_snap._natsuki_skill_level += 1
             jump snap_main_loop
+
+# Animation for the Snap! popup fading out; we use this because Ren'Py sucks at image prediction
+transform snap_popup_fadeout:
+    easeout 0.75 alpha 0
 
 # This is the card currently on the top of the pile being shown
 image current_table_card:
@@ -750,6 +753,8 @@ image snap_popup:
         choice:
             "mod_assets/games/snap/ui/snap_d.png"
 
+    snap_popup_fadeout
+            
 # Game UI
 screen snap_ui:
     zorder jn_snap._SNAP_UI_Z_INDEX
