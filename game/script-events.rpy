@@ -1,6 +1,6 @@
 default persistent._event_database = dict()
 default persistent._jn_holiday_list = dict()
-default persistent._jn_holiday_completion_states = dict()
+default persistent._jn_holiday_completed_list = []
 
 # Transforms for overlays
 transform jn_glasses_pre_slide:
@@ -145,7 +145,7 @@ init python in jn_events:
     JN_EVENT_DECO_ZORDER = 2
     JN_EVENT_PROP_ZORDER = 4
     JN_EVENT_OVERLAY_ZORDER = 5
-    JN_EVENT_FADE_ZORDER = 10
+    JN_EVENT_BLACK_ZORDER = 10
 
     EVENT_MAP = dict()
     EVENT_RETURN_OUTFIT = None
@@ -166,6 +166,9 @@ init python in jn_events:
 
         def __str__(self):
             return self.name
+
+        def __int__(self):
+            return self.value
 
     class JNHoliday():
         """
@@ -321,7 +324,7 @@ init python in jn_events:
 
             elif (
                 holiday_completion_state
-                and store.persistent._jn_holiday_completion_states[str(self.holiday_type)]
+                and int(self.holiday_type) in store.persistent._jn_holiday_completed_list
             ):
                 return False
 
@@ -357,7 +360,8 @@ init python in jn_events:
             """
             self.is_seen = True
             self.__save()
-            store.persistent._jn_holiday_completion_states[str(self.holiday_type)]
+            if not int(self.holiday_type) in store.persistent._jn_holiday_completed_list:
+                store.persistent._jn_holiday_completed_list.append(int(self.holiday_type))
 
     def __registerHoliday(holiday):
         """
@@ -407,34 +411,34 @@ init python in jn_events:
 
         holidays = []
 
-        if jnIsNewYearsDay(input_date):
+        if store.jnIsNewYearsDay(input_date):
             holidays.append(JNHolidayTypes.new_years_day)
 
-        if jnIsValentinesDay(input_date):
+        if store.jnIsValentinesDay(input_date):
             holidays.append(JNHolidayTypes.valentines_day)
 
-        if jnIsEaster(input_date):
+        if store.jnIsEaster(input_date):
             holidays.append(JNHolidayTypes.easter)
 
-        if jnIsHalloween(input_date):
+        if store.jnIsHalloween(input_date):
             holidays.append(JNHolidayTypes.halloween)
 
-        if jnIsChristmasEve(input_date):
+        if store.jnIsChristmasEve(input_date):
             holidays.append(JNHolidayTypes.christmas_eve)
 
-        if jnIsChristmasDay(input_date):
+        if store.jnIsChristmasDay(input_date):
             holidays.append(JNHolidayTypes.christmas_day)
 
-        if jnIsChristmasEve(input_date):
+        if store.jnIsChristmasEve(input_date):
             holidays.append(JNHolidayTypes.new_years_eve)
 
-        if jnIsNatsukiBirthday(input_date):
+        if store.jnIsNatsukiBirthday(input_date):
             holidays.append(JNHolidayTypes.natsuki_birthday)
 
-        if jnIsPlayerBirthday(input_date):
+        if store.jnIsPlayerBirthday(input_date):
             holidays.append(JNHolidayTypes.player_birthday)
 
-        if jnIsAnniversary(input_date):
+        if store.jnIsAnniversary(input_date):
             holidays.append(JNHolidayTypes.anniversary)
 
         return holidays
@@ -488,9 +492,8 @@ init python in jn_events:
         for holiday in getAllHolidays():
             holiday.is_seen = False
 
-        for holiday_type in JNHolidayTypes:
-            if str(holiday_type) in store.persistent._jn_holiday_completion_states:
-                store.persistent._jn_holiday_completion_states[str(holiday_type)] = False
+        store.persistent._jn_holiday_completed_list = []
+        JNHoliday.save_all()
 
     def displayVisuals(
         natsuki_sprite_code,
@@ -508,16 +511,9 @@ init python in jn_events:
         store.jnPause(0.1)
         renpy.hide("black")
         renpy.show_screen("hkb_overlay")
-        renpy.play(filename=audio.light_switch, channel="audio")
+        renpy.play(filename=audio.switch_flip, channel="audio")
         renpy.play(filename=bgm, channel="music")
-
-        # Reveal
         renpy.hide("black")
-
-    # Handle the holiday completion states on the persistent
-    for holiday_type in JNHolidayTypes:
-        if not str(holiday_type) in store.persistent._jn_holiday_completion_states:
-            store.persistent._jn_holiday_completion_states[str(holiday_type)] = False
 
     # Holiday registration
 
@@ -566,12 +562,12 @@ label event_interlude:
     extend 1flrpol " Don't go anywhere!{w=1}{nw}"
 
     hide screen hkb_overlay
-    show black zorder 99
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER
     stop music
     hide prop
     hide deco
     $ Natsuki.setOutfit(jn_outfits.get_outfit(jn_events.EVENT_RETURN_OUTFIT))
-    play audio light_switch
+    play audio switch_flip
     pause 3
 
     return
@@ -1018,7 +1014,7 @@ label event_reading_a_la_mode:
             pass
 
     show prop a_la_mode_manga_held zorder jn_events.JN_EVENT_PROP_ZORDER
-    $ jn_events.display_visuals("1fdwca")
+    $ jn_events.displayVisuals("1fdwca")
     $ jn_globals.force_quit_enabled = True
 
     n 1unmgslesu "Oh!{w=1}{nw}"
@@ -1148,7 +1144,7 @@ label event_step_by_step_manga:
             pass
 
     show prop step_by_step_manga_held zorder jn_events.JN_EVENT_PROP_ZORDER
-    $ jn_events.display_visuals("1uskemfesh")
+    $ jn_events.displayVisuals("1uskemfesh")
     $ jn_globals.force_quit_enabled = True
 
     n 1uskemesh "...!"
@@ -1305,7 +1301,7 @@ label event_eyewear_problems:
 
     show prop glasses_case zorder jn_events.JN_EVENT_PROP_ZORDER
     show overlay slipping_glasses zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_glasses_pre_slide
-    $ jn_events.display_visuals("1fcssmesi")
+    $ jn_events.displayVisuals("1fcssmesi")
     $ jn_globals.force_quit_enabled = True
 
     n 1uskgsesu "...!"
@@ -1417,7 +1413,7 @@ label event_eyewear_problems:
     n 1fcseml "...Wearing them all high up like that was dorky,{w=0.5}{nw}"
     extend 1fcspol " a-{w=0.2}anyway."
 
-    show black zorder 6 with Dissolve(0.5)
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     # Hide glasses overlay and restore old outfit
     hide prop
@@ -1502,7 +1498,7 @@ label event_wintendo_twitch_battery_dead:
 
     show prop wintendo_twitch_playing free zorder jn_events.JN_EVENT_PROP_ZORDER
     show natsuki gaming at jn_center zorder JN_NATSUKI_ZORDER
-    $ jn_events.display_visuals("1fdwfol")
+    $ jn_events.displayVisuals("1fdwfol")
     $ jn_globals.force_quit_enabled = True
     $ jnPause(3)
 
@@ -1557,7 +1553,7 @@ label event_wintendo_twitch_battery_dead:
     n 1fcsful "..."
     n 1fcsunl "..."
 
-    show black zorder 6 with Dissolve(0.5)
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     hide prop
     play audio chair_out_in
@@ -1634,7 +1630,7 @@ label event_wintendo_twitch_game_over:
 
     show prop wintendo_twitch_playing charging zorder jn_events.JN_EVENT_PROP_ZORDER
     show natsuki gaming at jn_center zorder JN_NATSUKI_ZORDER
-    $ jn_events.display_visuals("1unmpu")
+    $ jn_events.displayVisuals("1unmpu")
     $ jn_globals.force_quit_enabled = True
     $ jnPause(1.5)
 
@@ -1663,7 +1659,7 @@ label event_wintendo_twitch_game_over:
     n 1flrtr "I guess I'll just do that later."
     n 1fsqcal "{b}Again{/b}."
 
-    show black zorder 6 with Dissolve(0.5)
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     hide prop
     play audio chair_out_in
@@ -1843,7 +1839,7 @@ label event_warm_package:
             pass
 
     show prop hot_chocolate hot zorder jn_events.JN_EVENT_PROP_ZORDER
-    $ jn_events.display_visuals("1fsqbl")
+    $ jn_events.displayVisuals("1fsqbl")
     $ jn_globals.force_quit_enabled = True
 
     n 1kcsbsesi "Haah...{w=1.5}{nw}"
@@ -1957,7 +1953,7 @@ label event_warm_package:
     n 1uskemsbl "M-{w=0.2}my drink!{w=1}{nw}"
     extend 1kbkwresssbr " I-{w=0.2}it's getting all cold!{w=0.75}{nw}"
 
-    show black zorder 6 with Dissolve(0.5)
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(1)
     hide prop hot_chocolate
     play audio straw_sip
@@ -2114,7 +2110,7 @@ label event_new_years_day:
         extend 1knmpufsbr " one last thing?"
         n 1fcsunfsbr "..."
 
-        show black zorder 4 with Dissolve(0.5)
+        show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
         play audio clothing_ruffle
         pause 3.5
 
@@ -2150,7 +2146,7 @@ label event_new_years_day:
         n 1ncsajl "..."
         n 1fcsunl "..."
 
-        show black zorder 4 with Dissolve(0.5)
+        show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
         show natsuki 1fsldvlsbl at jn_center zorder JN_NATSUKI_ZORDER
         play audio clothing_ruffle
         pause 3.5
@@ -2387,7 +2383,7 @@ label event_player_birthday():
         n 1klrssl "And...{w=1.5}{nw}"
         extend 1knmsml " [player]?"
 
-        show black zorder jn_events.JN_EVENT_FADE_ZORDER with Dissolve(0.5)
+        show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
         $ renpy.pause(0.5)
         play audio kiss
         $ renpy.pause(0.25)
