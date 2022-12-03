@@ -130,10 +130,10 @@ label ch30_init:
     # If we have decorations from the last holiday, and the day hasn't changed, then we should put them back up
     if len(persistent._jn_holiday_deco_list_on_quit) > 0 and datetime.date.today().day == persistent.jn_last_visited_date.day:
         for deco in persistent._jn_holiday_deco_list_on_quit:
-            renpy.show(name="deco {0}".format(deco), zorder=jn_events.JN_EVENT_DECO_ZORDER)
+            $ renpy.show(name="deco {0}".format(deco), zorder=jn_events.JN_EVENT_DECO_ZORDER)
 
     else:
-        persistent._jn_holiday_prop_list_on_quit = []
+        $ persistent._jn_holiday_prop_list_on_quit = []
 
     # Random sticker chance
     if Natsuki.isAffectionate(higher=True):
