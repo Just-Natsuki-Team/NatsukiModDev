@@ -1,5 +1,6 @@
 default persistent.affinity = 25.0
 default persistent._jn_player_confession_accepted = False
+default persistent._jn_player_confession_day_month = None # Format (day, month)
 
 init 0 python:
     import store.jn_outfits as jn_outfits

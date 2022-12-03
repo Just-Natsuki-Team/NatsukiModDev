@@ -470,7 +470,8 @@ init python in jn_events:
 
     def selectHolidays():
         """
-        Returns a list of all holidays with a corresponding incomplete persistent entry that apply for the current date, or None if no holidays apply
+        Returns a list of all uncompleted holidays that apply for the current date, or None if no holidays apply.
+        Only one holiday of each type may be returned.
         """
         holiday_list = JNHoliday.filterHolidays(
             holiday_list=getAllHolidays(),
@@ -480,7 +481,14 @@ init python in jn_events:
         )
 
         if len(holiday_list) > 0:
-            return holiday_list
+            holiday_types_added = {}
+            return_list = []
+            for (holiday in holiday_list):
+                if holiday.holiday_type not in holiday_types_added:
+                    holiday_types_added.add(holiday.holiday_type)
+                    return_list.append(holiday)
+                
+            return return_list
 
         else:
             return None
@@ -495,6 +503,28 @@ init python in jn_events:
         store.persistent._jn_holiday_completed_list = []
         JNHoliday.save_all()
 
+    def queueHolidays(holiday_list, is_day_check=False):
+        """
+        Given a list of holidays, will sort them according to priority and add them to the list of topics to run through.
+        Interludes are used to perform pacing, so a holiday will not immediately transition into another.
+        """
+        store.persistent._event_list = list()
+        holiday_list.sort(key = lambda holiday: holiday.priority)
+
+        if is_day_check:
+            queue("holiday_prelude")
+
+        while len(holiday_list) > 0:
+            queue(holiday_list.pop().label)
+
+            if len(holiday_list) > 0:
+                queue("holiday_interlude")
+
+            else:
+                queue("ch30_loop")
+
+        renpy.jump("call_next_topic")
+        
     def displayVisuals(
         natsuki_sprite_code,
         bgm="mod_assets/bgm/just_natsuki.ogg"
@@ -519,9 +549,9 @@ init python in jn_events:
 
     # New year's eve
     __registerHoliday(JNHoliday(
-        label="event_new_years_eve",
-        holiday_type=JNHolidayTypes.new_years_day,
-        conditional="store.jn_events.jnIsNewYearsEve()",
+        label="holiday_new_years_eve",
+        holiday_type=JNHolidayTypes.new_years_eve,
+        conditional="store.jnIsNewYearsEve()",
         affinity_range=(jn_affinity.HAPPY, None),
         natsuki_sprite_code="1uchgneme",
         priority=10
@@ -529,9 +559,9 @@ init python in jn_events:
 
     # New year's day
     __registerHoliday(JNHoliday(
-        label="event_new_years_day",
+        label="holiday_new_years_day",
         holiday_type=JNHolidayTypes.new_years_day,
-        conditional="store.jn_events.jnIsNewYearsDay()",
+        conditional="store.jnIsNewYearsDay()",
         affinity_range=(jn_affinity.HAPPY, None),
         natsuki_sprite_code="1uchgneme",
         deco_list=["balloons"],
@@ -540,9 +570,9 @@ init python in jn_events:
 
     # Player's birthday
     __registerHoliday(JNHoliday(
-        label="event_player_birthday",
+        label="holiday_player_birthday",
         holiday_type=JNHolidayTypes.player_birthday,
-        conditional="store.jn_events.jnIsPlayerBirthday()",
+        conditional="store.jnIsPlayerBirthday()",
         affinity_range=(jn_affinity.AFFECTIONATE, None),
         natsuki_sprite_code="1uchgnl",
         bgm=audio.happy_birthday_bgm,
@@ -550,27 +580,6 @@ init python in jn_events:
         prop_list=["cake unlit"],
         priority=99
     ))
-
-# Used to handle multiple events in a single day by cleaning/setting up inbetween events
-label event_interlude:
-    n 1fllbo "..."
-    n 1tllpu "You know..."
-    n 1tnmpueqm "I feel like I'm forgetting something else."
-    n 1fsrpu "...{w=1}{nw}"
-    n 1uskemlesh "...!{w=0.5}{nw}"
-    n 1fbkwrl "J-{w=0.3}just a second!{w=1}{nw}"
-    extend 1flrpol " Don't go anywhere!{w=1}{nw}"
-
-    hide screen hkb_overlay
-    show black zorder jn_events.JN_EVENT_BLACK_ZORDER
-    stop music
-    hide prop
-    hide deco
-    $ Natsuki.setOutfit(jn_outfits.get_outfit(jn_events.EVENT_RETURN_OUTFIT))
-    play audio switch_flip
-    pause 3
-
-    return
 
 # RANDOM INTRO EVENTS
 
@@ -1973,9 +1982,49 @@ label event_warm_package:
 
     return
 
-# HOLIDAY EVENTS
+# HOLIDAYS
 
-label event_new_years_day:
+# Used to lead up to a holiday
+label holiday_prelude:
+    n 1tllbo "..."
+    n 1ullpu "...You know,{w=0.75}{nw}"
+    extend 1fsrcaesp " it almost feels like I'm missing something."
+    n 1fsrpu "...{w=1}{nw}"
+    n 1uskemlesh "...!{w=0.5}{nw}"
+    n 1fbkwrl "J-{w=0.3}just a second!{w=1}{nw}"
+    extend 1flrpol " I-{w=0.2}I'll be right back!{w=1}{nw}"
+
+    hide screen hkb_overlay
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER
+    stop music
+    hide prop
+    hide deco
+    play audio switch_flip
+    $ jnPause(5)
+
+    return
+
+# Used to handle multiple events in a single day by cleaning/setting up inbetween events
+label holiday_interlude:
+    n 1fllbo "..."
+    n 1tllpu "You know..."
+    n 1tnmpueqm "I feel like I'm forgetting something else."
+    n 1fsrpu "...{w=1}{nw}"
+    n 1uskemlesh "...!{w=0.5}{nw}"
+    n 1fbkwrl "J-{w=0.3}just a second!{w=1}{nw}"
+    extend 1flrpol " Don't go anywhere!{w=1}{nw}"
+
+    hide screen hkb_overlay
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER
+    stop music
+    hide prop
+    hide deco
+    play audio switch_flip
+    $ jnPause(5)
+
+    return
+
+label holiday_new_years_day:
     python:
         import copy
         # Give Natsuki a party hat, using whatever she's currently wearing as a base
@@ -1983,7 +2032,7 @@ label event_new_years_day:
         new_years_hat_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
         new_years_hat_outfit.headgear = jn_outfits.get_wearable("jn_headgear_classic_party_hat")
         Natsuki.setOutfit(new_years_hat_outfit, False)
-        jn_events.getHoliday("event_new_years_day").run()
+        jn_events.getHoliday("holiday_new_years_day").run()
     
     n 1uchbs "FIVE!"
     n 1uchbg "FOUR!"
@@ -2156,51 +2205,52 @@ label event_new_years_day:
         n 1nslsslesssbl "A-{w=0.2}and if anyone asks,{w=0.3} that never happened.{w=1}{nw}"
         extend 1fsldvlesssbl " Ehehe..."
 
-    $ jn_events.getHoliday("event_new_years_day").complete()
+    $ jn_events.getHoliday("holiday_new_years_day").complete()
 
     return
 
-label event_valentines_day:
+label holiday_valentines_day:
     #TODO: writing
-    $ jn_events.getHoliday("event_valentines_day").run()
+    $ jn_events.getHoliday("holiday_valentines_day").run()
 
-    $ jn_events.getHoliday("event_valentines_day").complete()
+    $ jn_events.getHoliday("holiday_valentines_day").complete()
 
     return
 
-label event_easter:
+label holiday_easter:
     #TODO: writing
-    $ jn_events.getHoliday("event_easter").run()
-    $ jn_events.getHoliday("event_easter").complete()
+    $ jn_events.getHoliday("holiday_easter").run()
+    $ jn_events.getHoliday("holiday_easter").complete()
 
     return
 
-label event_halloween:
+label holiday_halloween:
     #TODO: writing
-    $ jn_events.getHoliday("event_halloween").run()
+    $ jn_events.getHoliday("holiday_halloween").run()
 
-    $ jn_events.getHoliday("event_halloween").complete()
+    $ jn_events.getHoliday("holiday_halloween").complete()
 
     return
 
-label event_christmas_eve:
+label holiday_christmas_eve:
     #TODO: writing
-    $ jn_events.getHoliday("event_christmas_eve").run()
+    $ jn_events.getHoliday("holiday_christmas_eve").run()
 
-    $ jn_events.getHoliday("event_christmas_eve").complete()
+    $ jn_events.getHoliday("holiday_christmas_eve").complete()
 
     return
 
-label event_christmas_day:
+label holiday_christmas_day:
     #TODO: writing
-    $ jn_events.getHoliday("event_christmas_day").run()
+    $ jn_events.getHoliday("holiday_christmas_day").run()
 
-    $ jn_events.getHoliday("event_christmas_day").complete()
+    $ jn_events.getHoliday("holiday_christmas_day").complete()
 
     return
 
-label event_new_years_eve:
-    $ jn_events.getHoliday("event_new_years_eve").run()
+label holiday_new_years_eve:
+    $ jn_events.getHoliday("holiday_new_years_eve").run()
+
     n 1nchbselg "[player]!{w=1}{nw}"
     n 1uchlgelg "[player]!{w=0.5} [player]!"
     n 1fspaj "Look at the date!{w=0.5}{nw}"
@@ -2262,14 +2312,15 @@ label event_new_years_eve:
         n 1fsqpolsbr "It's the least you can do...{w=1}{nw}"
         extend 1kwmpolsbr " right?"
 
-    $ jn_events.getHoliday("event_new_years_eve").complete()
+    $ jn_events.getHoliday("holiday_new_years_eve").complete()
 
     return
 
 # Natsuki wishes the player a happy birthday!
-label event_player_birthday():
-    $ jn_events.getHoliday("event_player_birthday").run()
+label holiday_player_birthday():
+    $ jn_events.getHoliday("holiday_player_birthday").run()
     $ player_name_capitalized = persistent.playername.upper()
+
     n 1uchlgl "HAPPY BIRTHDAY,{w=0.1} [player_name_capitalized]!"
     n 1fcsbg "Betcha' didn't think I had something planned all along,{w=0.1} did you?{w=0.5}{nw}"
     extend 1nchsml " Ehehe."
@@ -2401,15 +2452,15 @@ label event_player_birthday():
     if birthday_poem:
         $ birthday_poem.unlock()
 
-    $ jn_events.getHoliday("event_player_birthday").complete()
+    $ jn_events.getHoliday("holiday_player_birthday").complete()
 
     return
 
-label event_anniversary:
+label holiday_anniversary:
     #TODO: writing
-    $ jn_events.getHoliday("event_anniversary").run()
+    $ jn_events.getHoliday("holiday_anniversary").run()
     n "This isn't done yet, but happy anniversary!"
     
-    $ jn_events.getHoliday("event_anniversary").complete()
+    $ jn_events.getHoliday("holiday_anniversary").complete()
     
     return

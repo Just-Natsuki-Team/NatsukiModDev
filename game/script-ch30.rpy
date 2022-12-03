@@ -101,37 +101,10 @@ label ch30_init:
             jn_events.resetHolidays()
             jn_utils.log("Holiday completion states reset.")
 
-        # Check for holidays, push each one that occurs today
-        available_holiday_list = jn_events.selectHolidays()
-
-        # TODO: TEST CODE - REMOVE
-        jn_events.EVENT_RETURN_OUTFIT = jn_outfits.get_outfit(store.persistent.jn_natsuki_outfit_on_quit)
-        # queue("event_new_years_day")
-        # queue("event_interlude")
-        # queue("event_player_birthday")
-        # queue("ch30_loop")
-        # renpy.jump("call_next_topic")
-
-        if available_holiday_list:
-            jn_events.EVENT_RETURN_OUTFIT = jn_outfits.get_outfit(store.persistent.jn_natsuki_outfit_on_quit)
-            available_holiday_list.sort(key = lambda holiday: holiday.priority)
-            queued_holiday_types = list()
-
-            while len(available_holiday_list) > 0:
-                holiday = available_holiday_list.pop()
-
-                # Since we can have multiple events for a holiday, ensure no dupes are pushed
-                if not holiday.holiday_type in queued_holiday_types:
-                    queued_holiday_types.append(holiday.holiday_type)
-                    queue(holiday.label)
-
-                    if len(available_holiday_list) > 0:
-                        queue("event_interlude")
-
-                    else:
-                        queue("ch30_loop")
-
-            renpy.jump("call_next_topic")
+        # Check for holidays, then queue them up and run them in sequence if we have any
+        available_holidays = jn_events.selectHolidays()
+        if len(available_holidays > 0):
+            jn_events.queueHolidays()
 
         # No holiday, so pick a greeting or random event
         elif not jn_topic_in_event_list_pattern("^greeting_"):
@@ -472,21 +445,10 @@ init python:
         # Update the last visited date, so extended periods spent with Natsuki open aren't penalised
         persistent.jn_last_visited_date = datetime.datetime.now()
 
-        # Check for holidays, push each one that occurs today
-        holiday_list = jn_events.selectHolidays()
-        if holiday_list:
-            holiday_list.sort(key = lambda holiday: holiday.priority)
-            while len(holiday_list) > 0:
-                holiday = holiday_list.pop()
-                queue(holiday.label)
-
-                if len(holiday_list) > 0:
-                    queue("event_interlude")
-
-                else:
-                    queue("ch30_loop")
-
-            renpy.jump("call_next_topic")
+        # Check for holidays, then queue them up and run them in sequence if we have any
+        available_holidays = jn_events.selectHolidays()
+        if len(available_holidays > 0):
+            jn_events.queueHolidays(is_day_check=True)
 
         return
 
