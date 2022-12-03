@@ -8164,14 +8164,14 @@ label talk_players_birthday_intro:
 
     else:
         n 1nslbo "...Huh."
-        n 1tnmbo "You know,{w=0.1} [player].{w=1}{nw}"
+        n 1tnmbo "You know,{w=0.2} [player].{w=1}{nw}"
         extend 1unmaj " I actually think I'm kinda getting to know you a little more now."
-        n 1flrbg "We've already been talking a bunch,{w=0.1} after all."
+        n 1flrbg "We've already been talking a bunch,{w=0.2} after all."
 
         if persistent.jn_player_appearance_eye_colour:
-            n 1ulraj "I mean,{w=0.5}{nw}"
+            n 1ulraj "I mean,{w=0.75}{nw}"
             extend 1nchbg " I even know what you {i}look{/i} like now!"
-            n 1fchsmeme "If {i}that{/i} isn't a sign of trust,{w=0.1} I'm not sure what is."
+            n 1fchsmeme "If {i}that{/i} isn't a sign of trust,{w=0.2} I'm not sure what is."
 
         n 1nllpu "But...{w=1}{nw}"
         extend 1nnmsr " something just hit me.{w=1}{nw}"
@@ -8181,7 +8181,7 @@ label talk_players_birthday_intro:
         n 1kcsemesi "Man...{w=1}{nw}"
         extend 1fslpol " I can't {i}believe{/i} I never brought that up earlier..."
         n 1fsqpo "And come on.{w=0.5}{nw}" 
-        extend 1nsqpo " Let's be real,{w=0.1} here."
+        extend 1nsqpo " Let's be real,{w=0.2} here."
         n 1fcswr "What kind of a friend misses birthdays?!"
         n 1kllbo "...Especially when there's only {i}one{/i} birthday to remember nowadays."
         n 1ksrsl "..."
@@ -8194,7 +8194,7 @@ label talk_players_birthday_intro:
             n 1fcsbg "I'm not counting candles for anybody's cake!{w=0.5}{nw}"
             extend 1fcssm " Ahaha."
 
-        n 1unmaj "So...{w=0.3} how about it,{w=0.1} [player]?"
+        n 1unmaj "So...{w=0.3} how about it,{w=0.2} [player]?"
 
         menu:
             n "Did you wanna share your birthday with me?"
@@ -8205,18 +8205,18 @@ label talk_players_birthday_intro:
                 n 1ullaj "I know I asked what kind of friend would miss a birthday..."
                 n 1flrpo "But you can't miss something you didn't know about!"
                 n 1uskajesh "Oh!{w=0.5}{nw}"
-                extend 1nllss " Right,{w=0.1} before I forget."
-                n 1fnmpu "Not that I'd {i}expect{/i} you to get it wrong,{w=0.1} but I wanna make a {b}permanent{/b} record of this."
+                extend 1nllss " Right,{w=0.2} before I forget."
+                n 1fnmpu "Not that I'd {i}expect{/i} you to get it wrong,{w=0.2} but I wanna make a {b}permanent{/b} record of this."
                 n 1ullbo "So...{w=1}{nw}"
-                extend 1nsqpo " no messing around,{w=0.1} alright?{w=1}{nw}"
+                extend 1nsqpo " no messing around,{w=0.2} alright?{w=1}{nw}"
                 extend 1nchgn " 'Preciated!"
                 # Continue to input
 
             "I'm not comfortable sharing that.":
                 n 1nnmbo "...Oh."
-                n 1fcseml "W-{w=0.3}well,{w=0.1} that's fine,{w=0.5}{nw}"
+                n 1fcseml "W-{w=0.3}well,{w=0.2} that's fine,{w=0.5}{nw}"
                 extend 1flrpo " I guess."
-                n 1nsqpo "Just let me know if you change your mind then,{w=0.1} 'kay?"
+                n 1nsqpo "Just let me know if you change your mind then,{w=0.2} 'kay?"
 
                 return
 
@@ -8225,7 +8225,7 @@ label talk_players_birthday_intro:
 
 label talk_players_birthday_input:
     n 1fsqsm "So...{w=1}{nw}"
-    extend 1tsqsm " what {b}month{/b} were you born in,{w=0.1} [player]?"
+    extend 1tsqsm " what {b}month{/b} were you born in,{w=0.2} [player]?"
     show natsuki 1tsqsm at jn_left
 
     # Get the month the player was born
@@ -8252,7 +8252,7 @@ label talk_players_birthday_input:
         $ player_birthday_month = _return
 
     $ response_month = datetime.date(datetime.date.today().year, player_birthday_month, 1).strftime("%B")
-    n 1unmbo "[response_month],{w=0.1} huh?{w=1}{nw}" 
+    n 1unmbo "[response_month],{w=0.2} huh?{w=1}{nw}" 
     extend 1nchbg " Gotcha!"
     n 1unmss "And what about the {b}day{/b}?"
     
@@ -8268,7 +8268,7 @@ label talk_players_birthday_input:
 
         if not player_input or player_input == 0:
             n 1tsqpueqm "Huh?{w=1}{nw}"
-            extend 1fnmpo " Come on,{w=0.1} [player]!{w=0.2} You gotta tell me what day!"
+            extend 1fnmpo " Come on,{w=0.2} [player]!{w=0.2} You gotta tell me what day!"
         
         # We use 2020 here, as it is a leapyear
         elif not calendar.monthrange(2020, player_birthday_month)[0] <= player_input <= calendar.monthrange(2020, player_birthday_month)[1]:
@@ -8289,7 +8289,7 @@ label talk_players_birthday_input:
         jn_utils.getNumberOrdinal(persistent._jn_player_birthday_day_month[0])
     )
     menu:
-        n "Your birthday was [birthday_formatted],{w=0.1} right?"
+        n "Your birthday was [birthday_formatted],{w=0.2} right?"
 
         "Yes, that's right.":
             jump talk_players_birthday_outro
@@ -8320,8 +8320,8 @@ label talk_players_birthday_outro:
         stop music
         play audio light_switch
         show black zorder 99
-        push("holiday_player_birthday")
-        renpy.jump("call_next_topic")
+        $ push("holiday_player_birthday")
+        $ renpy.jump("call_next_topic")
 
     else:
         # Player's birthday was missed
@@ -8330,10 +8330,10 @@ label talk_players_birthday_outro:
         extend 1nsrpo " Aww..."
         n 1nllpo "Well...{w=1}{nw}"
         extend 1nllss " thanks anyway.{w=1}{nw}"
-        extend 1nlrss " For sharing,{w=0.1} I mean."
+        extend 1nlrss " For sharing,{w=0.2} I mean."
         n 1nsrpo "..."
         n 1nsraj "I...{w=0.5}{nw}" 
-        extend 1tnmss " guess I better return the favour,{w=0.1} huh?"
+        extend 1tnmss " guess I better return the favour,{w=0.2} huh?"
         n 1nslcal "Just promise you won't make it all awkward."
         n 1ncsemlesi "..."
         n 1nsrssl "It's May 1st.{w=1}{nw}"
@@ -8345,7 +8345,7 @@ label talk_players_birthday_outro:
         extend 1nchgn " Ehehe."
 
         if Natsuki.isLove():
-            n 1fchblleaf "Love you,{w=0.1} [player]~!"
+            n 1fchblleaf "Love you,{w=0.2} [player]~!"
 
     return
 
@@ -8381,15 +8381,15 @@ label talk_can_i_see_a_poem:
 
     elif Natsuki.isAffectionate(higher=True):
         n 1unmajl "Huh?{w=1}{nw}"
-        extend 1fllssl " Oh,{w=0.1} those."
+        extend 1fllssl " Oh,{w=0.2} those."
         n 1fchbgl "Sure thing!{w=0.5}{nw}"
-        extend 1tsqbgl " Just can't get enough of my amazing writing skills,{w=0.1} huh?"
+        extend 1tsqbgl " Just can't get enough of my amazing writing skills,{w=0.2} huh?"
         show natsuki 1flrsml at jn_left
 
     else:
         n 1unmajl "Huh?{w=1}{nw}"
-        extend 1nllbo " Oh,{w=0.1} my poems."
-        n 1unmbo "Sure,{w=0.1} I guess.{w=1}{nw}"
+        extend 1nllbo " Oh,{w=0.2} my poems."
+        n 1unmbo "Sure,{w=0.2} I guess.{w=1}{nw}"
         extend 1tnmaj " Which one did you wanna see again?"
         show natsuki 1ulrbo at jn_left
 
@@ -8409,7 +8409,7 @@ label talk_can_i_see_a_poem:
         if Natsuki.isEnamored(higher=True):
             n 1unmaj "[_return.display_name]?{w=0.5}{nw}" 
             extend 1nchsmeme " Okaaay!"
-            n 1uchsml "Just a second,{w=0.1} [player]..."
+            n 1uchsml "Just a second,{w=0.2} [player]..."
 
             play audio drawer
             with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
@@ -8462,10 +8462,10 @@ label talk_can_i_see_a_poem:
         n 1nnmbo "Oh.{w=1}{nw}"
 
         if Natsuki.isAffectionate(higher=True) and random.randint(0, 10) == 1:
-            extend 1nlrpol " Well,{w=0.1} okay then.{w=1}{nw}"
+            extend 1nlrpol " Well,{w=0.2} okay then.{w=1}{nw}"
             extend 1fsqbll " Spoilsport.{w=0.75}{nw}"
 
         else:
-            extend 1nlrpol " Well,{w=0.1} okay then."
+            extend 1nlrpol " Well,{w=0.2} okay then."
 
     return
