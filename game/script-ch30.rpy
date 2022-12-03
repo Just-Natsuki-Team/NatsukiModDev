@@ -103,7 +103,7 @@ label ch30_init:
 
         # Check for holidays, then queue them up and run them in sequence if we have any
         available_holidays = jn_events.selectHolidays()
-        if len(available_holidays > 0):
+        if available_holidays:
             jn_events.queueHolidays()
 
         # No holiday, so pick a greeting or random event
@@ -126,23 +126,22 @@ label ch30_init:
     hide black with Dissolve(2)
     show screen hkb_overlay
     play music audio.just_natsuki_bgm
+    python:
+        # If we have decorations from the last holiday, and the day hasn't changed, then we should put them back up
+        if len(persistent._jn_holiday_deco_list_on_quit) > 0 and datetime.date.today().day == persistent.jn_last_visited_date.day:
+            for deco in persistent._jn_holiday_deco_list_on_quit:
+                renpy.show(name="deco {0}".format(deco), zorder=jn_events.JN_EVENT_DECO_ZORDER)
 
-    # If we have decorations from the last holiday, and the day hasn't changed, then we should put them back up
-    if len(persistent._jn_holiday_deco_list_on_quit) > 0 and datetime.date.today().day == persistent.jn_last_visited_date.day:
-        for deco in persistent._jn_holiday_deco_list_on_quit:
-            $ renpy.show(name="deco {0}".format(deco), zorder=jn_events.JN_EVENT_DECO_ZORDER)
+        else:
+            persistent._jn_holiday_prop_list_on_quit = []
 
-    else:
-        $ persistent._jn_holiday_prop_list_on_quit = []
-
-    # Random sticker chance
-    if Natsuki.isAffectionate(higher=True):
-        if (
-            (not persistent._jn_natsuki_chibi_seen and persistent.jn_total_visit_count > 50)
-            or (random.randint(1, 1000) == 1)
-        ):
-            $ import random
-            $ jn_stickers.stickerWindowPeekUp(at_right=random.choice([True, False]))
+        # Random sticker chance
+        if Natsuki.isAffectionate(higher=True):
+            if (
+                (not persistent._jn_natsuki_chibi_seen and persistent.jn_total_visit_count > 50)
+                or (random.randint(1, 1000) == 1)
+            ):
+                jn_stickers.stickerWindowPeekUp(at_right=random.choice([True, False]))
 
     #FALL THROUGH
 
@@ -456,7 +455,7 @@ init python:
         # Check for holidays, then queue them up and run them in sequence if we have any
         persistent._jn_holiday_prop_list_on_quit = []
         available_holidays = jn_events.selectHolidays()
-        if len(available_holidays > 0):
+        if available_holidays:
             jn_events.queueHolidays(is_day_check=True)
 
         return
