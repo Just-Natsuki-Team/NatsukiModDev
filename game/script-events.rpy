@@ -483,7 +483,7 @@ init python in jn_events:
         if len(holiday_list) > 0:
             holiday_types_added = {}
             return_list = []
-            for (holiday in holiday_list):
+            for holiday in holiday_list:
                 if holiday.holiday_type not in holiday_types_added:
                     holiday_types_added.add(holiday.holiday_type)
                     return_list.append(holiday)
