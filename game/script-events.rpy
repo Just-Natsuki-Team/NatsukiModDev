@@ -353,6 +353,7 @@ init python in jn_events:
             """
             Marks this holiday as complete, preventing it from being seen again until marked as unseen again.
             This should be run after a holiday has concluded, so a crash/quit after starting the holiday doesn't lock progression.
+            We also mark the holiday type as completed for this year, so we can't cycle through all seasonal events in one year
             """
             self.is_seen = True
             self.__save()
@@ -387,144 +388,6 @@ init python in jn_events:
 
         return None
 
-    def isNewYearsDay(input_date=None):
-        """
-        Returns True if the input_date is New Year's Day; otherwise False
-
-        IN:
-            - input_date - datetime object to test against. Defaults to the current date.
-        """
-        if input_date is None:
-            input_date = datetime.datetime.today()
-
-        return input_date == store.JN_NEW_YEARS_DAY
-
-    def isValentinesDay(input_date=None):
-        """
-        Returns True if the input_date is Valentine's Day; otherwise False
-
-        IN:
-            - input_date - datetime object to test against. Defaults to the current date.
-        """
-        if input_date is None:
-            input_date = datetime.datetime.today()
-
-        return input_date == store.JN_VALENTINES_DAY
-
-    def isEaster(input_date=None):
-        """
-        Returns True if the input_date is Easter; otherwise False
-
-        IN:
-            - input_date - datetime object to test against. Defaults to the current date.
-        """
-        if input_date is None:
-            input_date = datetime.datetime.today()
-
-        return input_date == store.JN_EASTER
-
-    def isHalloween(input_date=None):
-        """
-        Returns True if the input_date is Halloween; otherwise False
-
-        IN:
-            - input_date - datetime object to test against. Defaults to the current date.
-        """
-        if input_date is None:
-            input_date = datetime.datetime.today()
-
-        return input_date == store.JN_HALLOWEEN
-
-    def isChristmasEve(input_date=None):
-        """
-        Returns True if the input_date is Christmas Eve; otherwise False
-
-        IN:
-            - input_date - datetime object to test against. Defaults to the current date.
-        """
-        if input_date is None:
-            input_date = datetime.datetime.today()
-
-        return input_date == store.JN_CHRISTMAS_EVE
-
-    def isChristmasDay(input_date=None):
-        """
-        Returns True if the input_date is Christmas Day; otherwise False
-
-        IN:
-            - input_date - datetime object to test against. Defaults to the current date.
-        """
-        if input_date is None:
-            input_date = datetime.datetime.today()
-
-        return input_date == store.JN_CHRISTMAS_DAY
-
-    def isNewYearsEve(input_date=None):
-        """
-        Returns True if the input_date is New Year's Eve; otherwise False
-
-        IN:
-            - input_date - datetime object to test against. Defaults to the current date.
-        """
-        if input_date is None:
-            input_date = datetime.datetime.today()
-
-        return input_date == store.JN_NEW_YEARS_EVE
-
-    def isNatsukiBirthday(input_date=None):
-        """
-        Returns True if the input_date is Natsuki's birthday; otherwise False
-
-        IN:
-            - input_date - datetime object to test against. Defaults to the current date.
-        """
-        if input_date is None:
-            input_date = datetime.datetime.today()
-
-        return input_date == store.JN_NATSUKI_BIRTHDAY
-
-    def isPlayerBirthday(input_date=None):
-        """
-        Returns True if the input_date is the player's birthday; otherwise False
-
-        IN:
-            - input_date - datetime object to test against. Defaults to the current date.
-        """
-        if not store.persistent._jn_player_birthday_day_month:
-            return False
-
-        if input_date is None:
-            input_date = datetime.datetime.today()
-
-        player_birthday = datetime.date(
-            2020, # We use 2020 as it is a leap year
-            store.persistent._jn_player_birthday_day_month[1],
-            store.persistent._jn_player_birthday_day_month[0]
-        )
-
-        return (input_date.month == player_birthday.month and input_date.day == player_birthday.day)
-
-    def isAnniversary(input_date=None):
-        """
-        Returns True if the input_date is the player and Natsuki's anniversary; otherwise False
-
-        IN:
-            - input_date - datetime object to test against. Defaults to the current date.
-        """
-        if not store.persistent._jn_player_anniversary_day_month:
-            return False
-
-        if input_date is None:
-            input_date = datetime.datetime.today()
-
-        anniversary_date = datetime.date(
-            2020, # We use 2020 as it is a leap year
-            store.persistent._jn_player_anniversary_day_month[1],
-            store.persistent._jn_player_anniversary_day_month[0]
-        )
-
-        return (input_date.month == anniversary_date.month and input_date.day == anniversary_date.day)
-
     def getHolidaysForDate(input_date=None):
         """
         Gets the holidays - if any - corresponding to the supplied date, or the current date by default.
@@ -544,34 +407,34 @@ init python in jn_events:
 
         holidays = []
 
-        if isNewYearsDay(input_date):
+        if jnIsNewYearsDay(input_date):
             holidays.append(JNHolidayTypes.new_years_day)
 
-        if isValentinesDay(input_date):
+        if jnIsValentinesDay(input_date):
             holidays.append(JNHolidayTypes.valentines_day)
 
-        if isEaster(input_date):
+        if jnIsEaster(input_date):
             holidays.append(JNHolidayTypes.easter)
 
-        if isHalloween(input_date):
+        if jnIsHalloween(input_date):
             holidays.append(JNHolidayTypes.halloween)
 
-        if isChristmasEve(input_date):
+        if jnIsChristmasEve(input_date):
             holidays.append(JNHolidayTypes.christmas_eve)
 
-        if isChristmasDay(input_date):
+        if jnIsChristmasDay(input_date):
             holidays.append(JNHolidayTypes.christmas_day)
 
-        if isChristmasEve(input_date):
+        if jnIsChristmasEve(input_date):
             holidays.append(JNHolidayTypes.new_years_eve)
 
-        if isNatsukiBirthday(input_date):
+        if jnIsNatsukiBirthday(input_date):
             holidays.append(JNHolidayTypes.natsuki_birthday)
 
-        if isPlayerBirthday(input_date):
+        if jnIsPlayerBirthday(input_date):
             holidays.append(JNHolidayTypes.player_birthday)
 
-        if isAnniversary(input_date):
+        if jnIsAnniversary(input_date):
             holidays.append(JNHolidayTypes.anniversary)
 
         return holidays
@@ -662,7 +525,7 @@ init python in jn_events:
     __registerHoliday(JNHoliday(
         label="event_new_years_eve",
         holiday_type=JNHolidayTypes.new_years_day,
-        conditional="store.jn_events.isNewYearsEve()",
+        conditional="store.jn_events.jnIsNewYearsEve()",
         affinity_range=(jn_affinity.HAPPY, None),
         natsuki_sprite_code="1uchgneme",
         priority=10
@@ -672,7 +535,7 @@ init python in jn_events:
     __registerHoliday(JNHoliday(
         label="event_new_years_day",
         holiday_type=JNHolidayTypes.new_years_day,
-        conditional="store.jn_events.isNewYearsDay()",
+        conditional="store.jn_events.jnIsNewYearsDay()",
         affinity_range=(jn_affinity.HAPPY, None),
         natsuki_sprite_code="1uchgneme",
         deco_list=["balloons"],
@@ -683,7 +546,7 @@ init python in jn_events:
     __registerHoliday(JNHoliday(
         label="event_player_birthday",
         holiday_type=JNHolidayTypes.player_birthday,
-        conditional="store.jn_events.isPlayerBirthday()",
+        conditional="store.jn_events.jnIsPlayerBirthday()",
         affinity_range=(jn_affinity.AFFECTIONATE, None),
         natsuki_sprite_code="1uchgnl",
         bgm=audio.happy_birthday_bgm,

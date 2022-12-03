@@ -609,9 +609,9 @@ init -3 python:
             global allow_dismiss
             allow_dismiss = True
 
-    def jn_is_new_years_day(input_date=None):
+    def jnIsNewYearsDay(input_date=None):
         """
-        Returns True if the current date is New Year's Day; otherwise False
+        Returns True if the input_date is New Year's Day; otherwise False
 
         IN:
             - input_date - datetime object to test against. Defaults to the current date.
@@ -621,9 +621,21 @@ init -3 python:
 
         return input_date == store.JN_NEW_YEARS_DAY
 
-    def jn_is_easter(input_date=None):
+    def jnIsValentinesDay(input_date=None):
         """
-        Returns True if the current date is Easter; otherwise False
+        Returns True if the input_date is Valentine's Day; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_VALENTINES_DAY
+
+    def jnIsEaster(input_date=None):
+        """
+        Returns True if the input_date is Easter; otherwise False
 
         IN:
             - input_date - datetime object to test against. Defaults to the current date.
@@ -633,9 +645,9 @@ init -3 python:
 
         return input_date == store.JN_EASTER
 
-    def jn_is_halloween(input_date=None):
+    def jnIsHalloween(input_date=None):
         """
-        Returns True if the current date is Halloween; otherwise False
+        Returns True if the input_date is Halloween; otherwise False
 
         IN:
             - input_date - datetime object to test against. Defaults to the current date.
@@ -645,9 +657,9 @@ init -3 python:
 
         return input_date == store.JN_HALLOWEEN
 
-    def jn_is_christmas_eve(input_date=None):
+    def jnIsChristmasEve(input_date=None):
         """
-        Returns True if the current date is Christmas Eve; otherwise False
+        Returns True if the input_date is Christmas Eve; otherwise False
 
         IN:
             - input_date - datetime object to test against. Defaults to the current date.
@@ -657,9 +669,9 @@ init -3 python:
 
         return input_date == store.JN_CHRISTMAS_EVE
 
-    def jn_is_christmas_day(input_date=None):
+    def jnIsChristmasDay(input_date=None):
         """
-        Returns True if the current date is Christmas Day; otherwise False
+        Returns True if the input_date is Christmas Day; otherwise False
 
         IN:
             - input_date - datetime object to test against. Defaults to the current date.
@@ -669,9 +681,9 @@ init -3 python:
 
         return input_date == store.JN_CHRISTMAS_DAY
 
-    def jn_is_new_years_eve(input_date=None):
+    def jnIsNewYearsEve(input_date=None):
         """
-        Returns True if the current date is New Year's Eve; otherwise False
+        Returns True if the input_date is New Year's Eve; otherwise False
 
         IN:
             - input_date - datetime object to test against. Defaults to the current date.
@@ -681,43 +693,59 @@ init -3 python:
 
         return input_date == store.JN_NEW_YEARS_EVE
 
-    def jn_get_holiday_for_date(input_date=None):
+    def jnIsNatsukiBirthday(input_date=None):
         """
-        Gets the holiday - if any - corresponding to the supplied date, or the current date by default.
+        Returns True if the input_date is Natsuki's birthday; otherwise False
 
         IN:
             - input_date - datetime object to test against. Defaults to the current date.
-
-        OUT:
-            - JNHoliday representing the holiday for the supplied date.
         """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date == store.JN_NATSUKI_BIRTHDAY
+
+    def jnIsPlayerBirthday(input_date=None):
+        """
+        Returns True if the input_date is the player's birthday; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if not store.persistent._jn_player_birthday_day_month:
+            return False
 
         if input_date is None:
             input_date = datetime.datetime.today()
 
-        elif not isinstance(input_date, datetime.date):
-            raise TypeError("input_date for holiday check must be of type date; type given was {0}".format(type(input_date)))
+        player_birthday = datetime.date(
+            2020, # We use 2020 as it is a leap year
+            store.persistent._jn_player_birthday_day_month[1],
+            store.persistent._jn_player_birthday_day_month[0]
+        )
 
-        if jn_is_new_years_day(input_date):
-            return JNHolidays.new_years_day
+        return (input_date.month == player_birthday.month and input_date.day == player_birthday.day)
 
-        elif jn_is_easter(input_date):
-            return JNHolidays.easter
+    def jnIsAnniversary(input_date=None):
+        """
+        Returns True if the input_date is the player and Natsuki's anniversary; otherwise False
 
-        elif jn_is_halloween(input_date):
-            return JNHolidays.halloween
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if not store.persistent._jn_player_anniversary_day_month:
+            return False
 
-        elif jn_is_christmas_eve(input_date):
-            return JNHolidays.christmas_eve
+        if input_date is None:
+            input_date = datetime.datetime.today()
 
-        elif jn_is_christmas_day(input_date):
-            return JNHolidays.christmas_day
+        anniversary_date = datetime.date(
+            2020, # We use 2020 as it is a leap year
+            store.persistent._jn_player_anniversary_day_month[1],
+            store.persistent._jn_player_anniversary_day_month[0]
+        )
 
-        elif jn_is_christmas_eve(input_date):
-            return JNHolidays.new_years_eve
-
-        else:
-            return JNHolidays.none
+        return (input_date.month == anniversary_date.month and input_date.day == anniversary_date.day)
 
     def jn_get_current_hour():
         """

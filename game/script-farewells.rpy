@@ -269,7 +269,7 @@ label farewell_option_eat:
     return { "quit": None }
 
 label farewell_option_going_out:
-    if jn_is_new_years_eve():
+    if jnIsNewYearsEve():
         n 1tsqbg "Oho?{w=0.2} Going out for the new year,{w=0.1} are we?{w=0.5}{nw}"
         extend 1fchbg " Can't say I blame you!"
         n 1ullaj "Just...{w=0.5}{nw}"
@@ -280,7 +280,7 @@ label farewell_option_going_out:
         n 1usqbg "And if I don't see you sooner?"
         n 1fbkbs "Happy new year!"
 
-    elif jn_is_easter():
+    elif jnIsEaster():
         n 1unmaj "Oh?{w=0.2} You're heading off now?"
         n 1unmbg "Did you have a meal planned for today or something?"
         n 1tlrsm "It {i}is{/i} Easter,{w=0.1} after all!{w=0.5}{nw}"
@@ -288,14 +288,14 @@ label farewell_option_going_out:
         n 1ullss "Well,{w=0.1} anyway.{w=0.5}{nw}"
         extend 1uchgn " See you later,{w=0.1} [player]!"
 
-    elif jn_is_halloween():
+    elif jnIsHalloween():
         n 1usqss "Ooh?{w=0.2} Heading out for Halloween,{w=0.1} [player]?"
         n 1fsqsm "Just don't forget..."
         n 1fsqbg "I want my share of treats too!"
         n 1fchgn "Ehehe.{w=0.5}{nw}"
         extend 1uchbg " Have fun~!"
 
-    elif jn_is_christmas_eve():
+    elif jnIsChristmasEve():
         n 1unmbo "Oh?{w=0.2} You're heading out for Christmas Eve?"
         n 1kllsl "Well...{w=0.3} okay."
         n 1kllajl "...You will be back in time for Christmas though...{w=0.5}{nw}"
@@ -303,7 +303,7 @@ label farewell_option_going_out:
         n 1klrbgl "...Ahaha.{w=0.3}"
         extend 1kchbg " See you later,{w=0.1} [player]!"
 
-    elif jn_is_christmas_day():
+    elif jnIsChristmasDay():
         n 1unmbo "Huh?{w=0.2} You're heading off now?"
         n 1kllsl "Well...{w=0.3} alright."
         n 1kllss "Thanks for dropping by today though,{w=0.1} [player]."
@@ -343,21 +343,21 @@ label farewell_option_work:
     else:
         n 1unmajesu "Oh?{w=0.2} You're working today?"
 
-        if jn_is_easter():
+        if jnIsEaster():
             n 1uskgs "...And on Easter,{w=0.1} of all days?{w=0.5}{nw}"
             extend 1fslpo " Man..."
 
-        elif jn_is_christmas_eve():
+        elif jnIsChristmasEve():
             n 1fskgsl "...On Christmas Eve?{w=0.5}{nw}"
             extend 1kcsemledr " You've gotta be kidding me..."
 
-        elif jn_is_christmas_day():
+        elif jnIsChristmasDay():
             n 1fskwrl "...On {i}Christmas{/i}?!{w=0.5}{nw}"
             extend 1kcsemledr " Ugh..."
             n 1fslpol "..."
             n 1fslajl "Well..."
 
-        elif jn_is_new_years_eve():
+        elif jnIsNewYearsEve():
             n 1fskgsl "...And on New Year's Eve,{w=0.1} too?!{w=0.5}{nw}"
             extend 1kcsemledr " Jeez..."
 
@@ -385,16 +385,16 @@ label farewell_option_school:
         n 1tnmem "...School?{w=1}{nw}" 
         extend 1fskgsesh " A-{w=0.1}At this hour?"
 
-        if jn_is_easter():
+        if jnIsEaster():
             n 1kwdgs "...And on {i}Easter{/i},{w=0.1} of all days?}"
 
-        elif jn_is_christmas_eve():
+        elif jnIsChristmasEve():
             n 1fskgsl "...And on {i}Christmas Eve{/i}?"
 
-        elif jn_is_christmas_day():
+        elif jnIsChristmasDay():
             n 1fskwrl "...And on {i}Christmas{/i}?!"
 
-        elif jn_is_new_years_eve():
+        elif jnIsNewYearsEve():
             n 1fskgsl "...And on New Year's Eve,{w=0.1} too?!"
 
         if not jn_is_weekday():
@@ -410,21 +410,21 @@ label farewell_option_school:
         n 1kllss "Study hard,{w=0.1} [player]!"
 
     else:
-        if jn_is_easter():
+        if jnIsEaster():
             n 1uskgs "...And on Easter,{w=0.1} of all days?{w=0.5}{nw}"
             extend 1fslpo " Man..."
 
-        elif jn_is_christmas_eve():
+        elif jnIsChristmasEve():
             n 1fskgsl "...On Christmas Eve?{w=0.5}{nw}"
             extend 1fcseml " You've gotta be kidding me..."
 
-        elif jn_is_christmas_day():
+        elif jnIsChristmasDay():
             n 1fskwrl "...On {i}Christmas{/i}?!{w=0.5}{nw}"
             extend 1fcseml " Ugh..."
             n 1fslpol "..."
             n 1fslajl "Well..."
 
-        elif jn_is_new_years_eve():
+        elif jnIsNewYearsEve():
             n 1fskgsl "...And on New Year's Eve,{w=0.1} too?!{w=0.5}{nw}"
             extend 1fcseml " Jeez..."
 
