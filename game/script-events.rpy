@@ -153,6 +153,25 @@ init python in jn_events:
 
     __ALL_HOLIDAYS = {}
 
+    def selectEvent():
+        """
+        Picks and returns a single random event, or None if no events are left.
+        """
+        kwargs = dict()
+        event_list = store.Topic.filter_topics(
+            EVENT_MAP.values(),
+            unlocked=True,
+            affinity=store.Natsuki._getAffinityState(),
+            is_seen=False,
+            **kwargs
+        )
+        # Events are one-time only, so we sanity check here
+        if len(event_list) > 0:
+            return random.choice(event_list).label
+
+        else:
+            return None
+
     class JNHolidayTypes(Enum):
         new_years_day = 1
         easter = 2
@@ -164,6 +183,9 @@ init python in jn_events:
         player_birthday = 8
         anniversary = 9
         valentines_day = 10
+        test_one = 11
+        test_two = 12
+        test_three = 13
 
         def __str__(self):
             return self.name
@@ -179,9 +201,9 @@ init python in jn_events:
             self,
             label,
             holiday_type,
-            conditional,
             affinity_range,
             natsuki_sprite_code,
+            conditional=None,
             bgm=None,
             deco_list=[],
             prop_list=[],
@@ -193,9 +215,9 @@ init python in jn_events:
             IN:
                 - label - The name used to uniquely identify this wearable and refer to it internally
                 - holiday_type - The JNHolidayTypes type of this holiday
-                - conditional - Python statement that must evaluate to True for this holiday to be picked when filtering
                 - affinity_range - The affinity range that must be satisfied for this holiday to be picked when filtering
                 - natsuki_sprite_code - The sprite code to show for Natsuki when the holiday is revealed
+                - conditional - Python statement that must evaluate to True for this holiday to be picked when filtering
                 - bgm - The optional music to play when the holiday is revealed 
                 - deco_list - Optional list of deco images to show when setting up
                 - prop_list - Optional list of prop images to show when setting up
@@ -329,7 +351,7 @@ init python in jn_events:
             ):
                 return False
 
-            elif not eval(self.conditional):
+            elif self.conditional is not None and not eval(self.conditional, globals=store.__dict__):
                 return False
 
             return True
@@ -355,7 +377,7 @@ init python in jn_events:
 
         def complete(self):
             """
-            Marks this holiday as complete, preventing it from being seen again until marked as unseen again.
+            Marks this holiday as complete, preventing it from being seen again until reset.
             This should be run after a holiday has concluded, so a crash/quit after starting the holiday doesn't lock progression.
             We also mark the holiday type as completed for this year, so we can't cycle through all seasonal events in one year
             Lastly, set the persisted deco list so reloading the game without a day change shows the deco for this event.
@@ -446,6 +468,11 @@ init python in jn_events:
         if store.jnIsAnniversary(input_date):
             holidays.append(JNHolidayTypes.anniversary)
 
+        if store.jnIsDate(input_date):
+            holidays.append(JNHolidayTypes.test_one)
+            holidays.append(JNHolidayTypes.test_two)
+            holidays.append(JNHolidayTypes.test_three)
+
         return holidays
 
     def getAllHolidays():
@@ -453,25 +480,6 @@ init python in jn_events:
         Returns a list of all holidays.
         """
         return __ALL_HOLIDAYS.itervalues()
-
-    def selectEvent():
-        """
-        Picks and returns a single random event, or None if no events are left.
-        """
-        kwargs = dict()
-        event_list = store.Topic.filter_topics(
-            EVENT_MAP.values(),
-            unlocked=True,
-            affinity=store.Natsuki._getAffinityState(),
-            is_seen=False,
-            **kwargs
-        )
-        # Events are one-time only, so we sanity check here
-        if len(event_list) > 0:
-            return random.choice(event_list).label
-
-        else:
-            return None
 
     def selectHolidays():
         """
@@ -486,11 +494,11 @@ init python in jn_events:
         )
 
         if len(holiday_list) > 0:
-            holiday_types_added = {}
+            holiday_types_added = []
             return_list = []
             for holiday in holiday_list:
                 if holiday.holiday_type not in holiday_types_added:
-                    holiday_types_added.add(holiday.holiday_type)
+                    holiday_types_added.append(holiday.holiday_type)
                     return_list.append(holiday)
                 
             return return_list
@@ -505,9 +513,9 @@ init python in jn_events:
         for holiday in getAllHolidays():
             holiday.is_seen = False
 
+        JNHoliday.saveAll()
         store.persistent._jn_holiday_completed_list = []
-        JNHoliday.save_all()
-
+        
     def queueHolidays(holiday_list, is_day_check=False):
         """
         Given a list of holidays, will sort them according to priority and add them to the list of topics to run through.
@@ -517,19 +525,19 @@ init python in jn_events:
         holiday_list.sort(key = lambda holiday: holiday.priority)
 
         if is_day_check:
-            queue("holiday_prelude")
+            store.queue("holiday_prelude")
 
         while len(holiday_list) > 0:
-            queue(holiday_list.pop().label)
+            store.queue(holiday_list.pop(0).label)
 
             if len(holiday_list) > 0:
-                queue("holiday_interlude")
+                store.queue("holiday_interlude")
 
             else:
-                queue("ch30_loop")
+                store.queue("ch30_loop")
 
         renpy.jump("call_next_topic")
-        
+
     def displayVisuals(
         natsuki_sprite_code,
         bgm="mod_assets/bgm/just_natsuki.ogg"
@@ -556,7 +564,6 @@ init python in jn_events:
     __registerHoliday(JNHoliday(
         label="holiday_new_years_eve",
         holiday_type=JNHolidayTypes.new_years_eve,
-        conditional="store.jnIsNewYearsEve()",
         affinity_range=(jn_affinity.HAPPY, None),
         natsuki_sprite_code="1uchgneme",
         priority=10
@@ -566,7 +573,6 @@ init python in jn_events:
     __registerHoliday(JNHoliday(
         label="holiday_new_years_day",
         holiday_type=JNHolidayTypes.new_years_day,
-        conditional="store.jnIsNewYearsDay()",
         affinity_range=(jn_affinity.HAPPY, None),
         natsuki_sprite_code="1uchgneme",
         deco_list=["balloons"],
@@ -577,7 +583,6 @@ init python in jn_events:
     __registerHoliday(JNHoliday(
         label="holiday_player_birthday",
         holiday_type=JNHolidayTypes.player_birthday,
-        conditional="store.jnIsPlayerBirthday()",
         affinity_range=(jn_affinity.AFFECTIONATE, None),
         natsuki_sprite_code="1uchgnl",
         bgm=audio.happy_birthday_bgm,
@@ -585,6 +590,39 @@ init python in jn_events:
         prop_list=["cake unlit"],
         priority=99
     ))
+
+    # holiday_test_one
+    __registerHoliday(JNHoliday(
+        label="holiday_test_one",
+        holiday_type=JNHolidayTypes.test_one,
+        affinity_range=(jn_affinity.AFFECTIONATE, None),
+        natsuki_sprite_code="1fchsmedz",
+        priority=5
+    ))
+
+    # holiday_test_two
+    __registerHoliday(JNHoliday(
+        label="holiday_test_two",
+        holiday_type=JNHolidayTypes.test_two,
+        affinity_range=(jn_affinity.AFFECTIONATE, None),
+        natsuki_sprite_code="1fchsmedz",
+        bgm=audio.happy_birthday_bgm,
+        deco_list=["balloons"],
+        prop_list=["cake unlit"],
+        priority=10
+    ))
+
+label holiday_test_one:
+    $ jn_events.getHoliday("holiday_test_one").run()
+    n 1fchbg "This is holiday test one!"
+    $ jn_events.getHoliday("holiday_test_one").complete()
+    return
+
+label holiday_test_two:
+    $ jn_events.getHoliday("holiday_test_two").run()
+    n 1fwrts "This is holiday test two! Now with props!"
+    $ jn_events.getHoliday("holiday_test_two").complete()
+    return
 
 # RANDOM INTRO EVENTS
 

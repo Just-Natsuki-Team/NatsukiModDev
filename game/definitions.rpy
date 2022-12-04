@@ -747,6 +747,16 @@ init -3 python:
 
         return (input_date.month == anniversary_date.month and input_date.day == anniversary_date.day)
 
+    def jnIsDate(input_date):
+        """
+        Returns True if the current date's day and month match the given day and month.
+
+        IN:
+            - day - int day of the month to check against
+            - month - int month of the year to check against
+        """
+        return (datetime.date.today().day == input_date.day and datetime.date.today().month == input_date.month)
+
     def jn_get_current_hour():
         """
         Gets the current hour (out of 24) of the day.
