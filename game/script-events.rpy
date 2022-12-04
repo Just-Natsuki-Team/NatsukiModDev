@@ -560,6 +560,24 @@ init python in jn_events:
 
     # Holiday registration
 
+    # Christmas eve
+    __registerHoliday(JNHoliday(
+        label="holiday_christmas_eve",
+        holiday_type=JNHolidayTypes.christmas_eve,
+        affinity_range=(jn_affinity.HAPPY, None),
+        natsuki_sprite_code="1uchgneme",
+        priority=10
+    ))
+
+    # Christmas day
+    __registerHoliday(JNHoliday(
+        label="holiday_christmas_day",
+        holiday_type=JNHolidayTypes.christmas_day,
+        affinity_range=(jn_affinity.HAPPY, None),
+        natsuki_sprite_code="1uchgneme",
+        priority=10
+    ))
+
     # New year's eve
     __registerHoliday(JNHoliday(
         label="holiday_new_years_eve",
@@ -597,6 +615,7 @@ init python in jn_events:
         holiday_type=JNHolidayTypes.test_one,
         affinity_range=(jn_affinity.AFFECTIONATE, None),
         natsuki_sprite_code="1fchsmedz",
+        bgm=audio.holiday_bgm,
         priority=5
     ))
 
@@ -2276,18 +2295,69 @@ label holiday_halloween:
     return
 
 label holiday_christmas_eve:
-    #TODO: writing
     $ jn_events.getHoliday("holiday_christmas_eve").run()
+
+    n "Heeeey!"
+    extend "[player]! [player]!"
+    n "Guess what day it is?"
+    extend " Ehehe."
+    n "...As if I needed to remind you!"
+    n "Man..."
+    n "Hard to believe it's Christmas Eve {i}already{/i}, huh?"
+    n "It's actually almost spooky how quickly it rolls around."
+    extend " Seriously!"
+    n "I mean..."
+    extend " the later part of the year mainly feels like just one big snooze-fest."
+    n "School starts again,"
+    extend " it gets all cold and nasty outside,"
+    extend " everyone gets stuck indoors..."
+    n "But then before you know it?"
+    extend " December rolls around,"
+    extend " and it's like all hell breaks loose!"
+    n "It's like clockwork!"
+    n "Plus you'd think with a whole {i}year{/i} to prepare,"
+    extend " people wouldn't always leave things to the very last month."
+    n "Oh,"
+    extend " and don't even {i}start{/i} on the music every single store feels the need to play..."
+    n "D-don't get me wrong!"
+    extend " I'm no scrooge!"
+    n "...And I'm definitely not stuck in the {i}Christmas past{/i}, that's for sure!"
+    extend " Ehehe."
+    n "Well,"
+    extend " anyway."
+    extend " At least {i}here{/i} we can change the record, right?"
+
+    n "And speaking of which..."
+    n "What do you think of my decoration skills?"
+    extend " Not bad for {i}just{/i} school supplies, if I say so myself!"
+    n "...Just don't ask me where I got the tree, 'kay?"
+    extend " Ehehe."
+
+    #TODO
+    if Natsuki.isEnamored(higher=True):
+        n ""
+
+    elif Natsuki.isAffectionate(higher=True):
+        n ""
+
+    else:
+        n ""
+
+    n "Man..."
+    extend " now I'm really getting in the festive mood!"
 
     $ jn_events.getHoliday("holiday_christmas_eve").complete()
 
     return
 
 label holiday_christmas_day:
-    #TODO: writing
     $ jn_events.getHoliday("holiday_christmas_day").run()
 
+
+
     $ jn_events.getHoliday("holiday_christmas_day").complete()
+
+
 
     return
 

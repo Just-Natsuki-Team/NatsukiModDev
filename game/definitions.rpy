@@ -1850,6 +1850,7 @@ define audio.rain_muffled = "mod_assets/sfx/rain_muffled.ogg"
 
 # Music, vanilla DDLC
 define audio.space_classroom_bgm = "mod_assets/bgm/space_classroom.ogg"
+define audio.holiday_bgm = "mod_assets/bgm/vacation.ogg"
 
 # Music, JN exclusive
 define audio.just_natsuki_bgm = "mod_assets/bgm/just_natsuki.ogg"
