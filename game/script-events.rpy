@@ -127,6 +127,7 @@ image prop wintendo_twitch_dead:
 
 # Background decorations are displayed in the room behind Natsuki
 image deco balloons = "mod_assets/deco/balloons.png"
+image deco garlands = "mod_assets/deco/garlands.png"
 
 # Overlays are displayed over the top of Natsuki, in front of any decorations but behind any props
 image overlay slipping_glasses = "mod_assets/overlays/slipping_glasses.png"
@@ -566,6 +567,7 @@ init python in jn_events:
         holiday_type=JNHolidayTypes.christmas_eve,
         affinity_range=(jn_affinity.HAPPY, None),
         natsuki_sprite_code="1uchgneme",
+        deco_list=["garlands"],
         priority=10
     ))
 
@@ -575,6 +577,7 @@ init python in jn_events:
         holiday_type=JNHolidayTypes.christmas_day,
         affinity_range=(jn_affinity.HAPPY, None),
         natsuki_sprite_code="1uchgneme",
+        deco_list=["garlands"],
         priority=10
     ))
 
@@ -2295,57 +2298,160 @@ label holiday_halloween:
     return
 
 label holiday_christmas_eve:
+    $ persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
+    $ jn_atmosphere.setSky(jn_atmosphere.WEATHER_SNOW)
     $ jn_events.getHoliday("holiday_christmas_eve").run()
 
-    n "Heeeey!"
-    extend "[player]! [player]!"
-    n "Guess what day it is?"
-    extend " Ehehe."
-    n "...As if I needed to remind you!"
-    n "Man..."
-    n "Hard to believe it's Christmas Eve {i}already{/i}, huh?"
-    n "It's actually almost spooky how quickly it rolls around."
-    extend " Seriously!"
-    n "I mean..."
-    extend " the later part of the year mainly feels like just one big snooze-fest."
-    n "School starts again,"
-    extend " it gets all cold and nasty outside,"
-    extend " everyone gets stuck indoors..."
-    n "But then before you know it?"
-    extend " December rolls around,"
-    extend " and it's like all hell breaks loose!"
-    n "It's like clockwork!"
-    n "Plus you'd think with a whole {i}year{/i} to prepare,"
-    extend " people wouldn't always leave things to the very last month."
-    n "Oh,"
-    extend " and don't even {i}start{/i} on the music every single store feels the need to play..."
-    n "D-don't get me wrong!"
-    extend " I'm no scrooge!"
-    n "...And I'm definitely not stuck in the {i}Christmas past{/i}, that's for sure!"
-    extend " Ehehe."
-    n "Well,"
-    extend " anyway."
-    extend " At least {i}here{/i} we can change the record, right?"
+    n 1uchbg "Heeeey!{w=0.75}{nw}"
+    extend 1uchbs " [player]!{w=0.5} [player]!"
+    n 1uchgnedz "Guess what day it is?"
+    n 1tsqsm "..."
+    n 1fsqsm "Ehehe.{w=0.5}{nw}"
+    extend 1fchbl " As {i}if{/i} I needed to remind you!"
+    n 1ulraj "Man..."
+    n 1tnmsssbr "Hard to believe it's Christmas Eve {i}already{/i},{w=0.2} huh?"
+    n 1nsrsssbr "It's actually almost spooky how quickly it rolls around.{w=1}{nw}"
+    extend 1uwdajsbr " Seriously!"
+    n  "I mean...{w=1}{nw}"
+    extend  " the later part of the year mainly feels like just one big snooze-{w=0.2}fest."
+    n  "School starts again,{w=0.75}{nw}"
+    extend  " it gets all cold and nasty outside,{w=0.75}{nw}"
+    extend  " everyone gets stuck indoors..."
+    n  "But then before you know it?{w=1}{nw}"
+    extend  " December rolls around,{w=0.75}{nw}"
+    extend  " and it's like all hell breaks loose!"
+    n  "It's like clockwork!"
+    n  "Plus you'd think with a whole {i}year{/i} to prepare,{w=1}{nw}"
+    extend  " people wouldn't always leave things to the very last month."
+    n  "Oh,{w=0.75}{nw}"
+    extend  " and don't even {i}start{/i} on the music {i}every{w=0.3} single{w=0.3} store{/i}{w=0.3} feels the need to play..."
+    n  "Ugh..."
+    n  "I swear, it's like scheduled earache..."
+    n  "..."
+    n  "D-{w=0.3}don't get me wrong!{w=0.75}{nw}"
+    extend  " I'm no scrooge!"
+    n  "...I'm just not stuck in the {i}Christmas past{/i},{w=0.2} that's all!{w=0.75}{nw}"
+    extend  " Ehehe."
+    n  "Well,{w=0.75}{nw}"
+    extend  " whatever.{w=1}{nw}"
+    extend  " At least {i}here{/i} we can change the record,{w=0.2} right?"
+    n  "And speaking of which..."
+    n  "What do you think of my decoration skills,{w=0.2} [player]?{w=0.75}{nw}"
+    extend  " Not bad for {i}just{/i} school supplies,{w=0.2} if I say so myself."
+    n  "Just don't ask me where I got the tree!"
+    n  "Ah!{w=0.75}{nw}"
+    extend  " But what about you,{w=0.2} [player]?{w=0.75}{nw}"
+    extend  " Huh?"
+    n  "You didn't {i}seriously{/i} think you were off the hook for decorating,{w=0.2} did you?{w=0.75}{nw}"
+    extend  " Ehehe."
+    n  "So...{w=0.75}{nw}"
 
-    n "And speaking of which..."
-    n "What do you think of my decoration skills?"
-    extend " Not bad for {i}just{/i} school supplies, if I say so myself!"
-    n "...Just don't ask me where I got the tree, 'kay?"
-    extend " Ehehe."
+    show natsuki test at jn_center
+    
+    menu:
+        extend  " Are {i}you{/i} all good to go yet,{w=0.2} [player]?"
 
-    #TODO
+        "You bet I am!":
+            n  "Oho?{w=0.75}{nw}"
+            extend  " No kidding!"
+            n  "Now that's {i}exactly{/i} what I like to hear."
+            n  "This year is gonna be {b}awesome{/b}!{w=0.75}{nw}"
+            extend  " I just know it!"
+
+        "I haven't decorated yet.":
+            n  "H-{w=0.2}huh?!"
+            n  "Then what are you doing here,{w=0.2} you dope?!{w=0.75}{nw}"
+            extend  " Jeez..."
+            n  "I'm not doing {i}your{/i} place too,{w=0.2} you know."
+
+        "I don't really celebrate Christmas.":
+            n  "...Oh."
+            n  "I mean,{w=0.75}{nw}"
+            extend  " that's totally fine."
+            n  "...Just means I gotta celebrate for both of us!{w=0.75}{nw}"
+            extend  " Ahaha."
+
+    n  "..."
+    n  "But...{w=1}{nw}"
+    extend  " in all seriousness,{w=0.2} [player]?"
+
     if Natsuki.isEnamored(higher=True):
-        n ""
+        n  "...Thanks."
+        n  "For coming to see me today,{w=0.2} I mean."
+        n  "It..."
+        n  "..."
+        n  "It seriously means a lot.{w=1}{nw}"
+        extend  " You being here right now."
+        n  "Heh."
+        n  "...More than you probably know."
+        n  "..."
+        n  "...I really should have been spending today with my friends,{w=0.2} [player].{w=1}{nw}" 
+        extend  " But..."
+        n  "I-{w=0.3}I think I can settle for just you."
+        n  "And...{w=0.75}{nw}"
+        extend  " [player]?"
+        n  "..."
 
     elif Natsuki.isAffectionate(higher=True):
-        n ""
+        n  "...T-{w=0.2}thanks."
+        n  "F-{w=0.3}for being here today,{w=0.75}{nw}" 
+        extend  " I mean."
+        n  "I-{w=0.3}I know you didn't have to come visit at all.{w=0.75}{nw}"
+        extend  " And I'd be a real jerk to demand it..."
+        n  "So just..."
+        n  "..."
+        n  "Just...{w=0.75} know it's appreciated...{w=0.75}{nw}"
+        extend  " 'kay?"
+        n  "Really.{w=1}{nw}"
+        extend  " Thank you."
+        n  "..."
+        n  "And...{w=1}{nw}" 
+        extend  " [player]?"
+        n  "..."
+    
+    else:
+        n  "...Thanks.{w=0.75}{nw}"
+        extend  " F-{w=0.3}for turning up today,{w=0.2} I mean."
+        n  "I-{w=0.2}I knew you would,{w=0.2} of course!{w=1}{nw}"
+        extend  " Only a real jerk would leave someone all alone here,{w=1}{nw}"
+        extend  " of all nights."
+        n  "So I..."
+        n  "I..."
+        n  "..."
+        n  "I...{w=1.25}{nw}"
+        extend  " really appreciate it.{w=0.75}{nw}"
+        extend  " I do."
+        n  "...A-{w=0.2}and [player]?"
+        n  "..."
+
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(2)
+
+    if Natsuki.isLove(higher=True):
+        play audio clothing_ruffle
+        $ jnPause(2.5)
+        play audio kiss
+        show natsuki love jn_center
 
     else:
-        n ""
+        play audio clothing_ruffle
+        show natsuki like jn_center
 
-    n "Man..."
-    extend " now I'm really getting in the festive mood!"
+    $ jnPause(1)
+    hide black with Dissolve(1.25) 
 
+    if Natsukui.isEnamored(higher=True):
+        n  "S-{w=0.2}so..."
+        n  "What did you wanna talk about,{w=0.2} [player]?{w=0.75}{nw}"
+        extend  " Ehehe."
+
+    else:
+        n  "..."
+        n  "N-{w=0.3}now,{w=1}{nw}"
+        extend  " where were we?"
+        n  "Ehehe..."
+
+    $ Natsuki.calculatedAffinityGain(5, bypass=True)
     $ jn_events.getHoliday("holiday_christmas_eve").complete()
 
     return
@@ -2448,7 +2554,7 @@ label holiday_player_birthday():
     play audio necklace_clip
 
     n 1uchgn "Ta-{w=0.3}da!"
-    $ renpy.pause(3)
+    $ jnPause(3)
     n 1fnmpu "..."
     n 1fbkwr "What?!{w=1}{nw}"
     extend 1fllpol " You don't {i}seriously{/i} expect me to sing all by myself?{w=1}{nw}"
@@ -2548,9 +2654,9 @@ label holiday_player_birthday():
         extend 1knmsml " [player]?"
 
         show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
-        $ renpy.pause(0.5)
+        $ jnPause(0.5)
         play audio kiss
-        $ renpy.pause(0.25)
+        $ jnPause(0.25)
         hide black with Dissolve(1.25) 
 
         n 1kwmssf "H-{w=0.2}happy birthday.{w=1}{nw}"
