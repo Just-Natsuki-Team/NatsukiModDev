@@ -564,11 +564,12 @@ init python in jn_events:
     # Christmas eve
     __registerHoliday(JNHoliday(
         label="holiday_christmas_eve",
-        holiday_type=JNHolidayTypes.christmas_eve,
+        holiday_type=JNHolidayTypes.test_three,
         affinity_range=(jn_affinity.HAPPY, None),
-        natsuki_sprite_code="1uchgneme",
+        natsuki_sprite_code="1uchsmeme",
+        bgm=audio.holiday_bgm,
         deco_list=["garlands"],
-        priority=10
+        priority=99
     ))
 
     # Christmas day
@@ -578,7 +579,7 @@ init python in jn_events:
         affinity_range=(jn_affinity.HAPPY, None),
         natsuki_sprite_code="1uchgneme",
         deco_list=["garlands"],
-        priority=10
+        priority=99
     ))
 
     # New year's eve
@@ -609,17 +610,16 @@ init python in jn_events:
         bgm=audio.happy_birthday_bgm,
         deco_list=["balloons"],
         prop_list=["cake unlit"],
-        priority=99
+        priority=50
     ))
 
     # holiday_test_one
     __registerHoliday(JNHoliday(
         label="holiday_test_one",
         holiday_type=JNHolidayTypes.test_one,
-        affinity_range=(jn_affinity.AFFECTIONATE, None),
-        natsuki_sprite_code="1fchsmedz",
-        bgm=audio.holiday_bgm,
-        priority=5
+        affinity_range=(jn_affinity.HAPPY, None),
+        natsuki_sprite_code="1uchgneme",
+        priority=15
     ))
 
     # holiday_test_two
@@ -642,7 +642,7 @@ label holiday_test_one:
 
 label holiday_test_two:
     $ jn_events.getHoliday("holiday_test_two").run()
-    n 1fwrts "This is holiday test two! Now with props!"
+    n 1fwrts "This is holiday test two!"
     $ jn_events.getHoliday("holiday_test_two").complete()
     return
 
@@ -2299,7 +2299,7 @@ label holiday_halloween:
 
 label holiday_christmas_eve:
     $ persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
-    $ jn_atmosphere.setSky(jn_atmosphere.WEATHER_SNOW)
+    $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_SNOW)
     $ jn_events.getHoliday("holiday_christmas_eve").run()
 
     n 1uchbg "Heeeey!{w=0.75}{nw}"
@@ -2321,13 +2321,15 @@ label holiday_christmas_eve:
     extend 1fcsgs " December rolls around,{w=0.75}{nw}"
     extend 1fbkwr " and it's like all hell breaks loose!"
     n 1fslan "It's like clockwork!"
-    n 1fcsemsbr "P-{w=0.2}plus,{w=0.5}{nw}"
+    n 1fcsemsbr "Yeesh,{w=0.5}{nw}"
     extend 1tsqemsbr " you'd think with a whole {i}year{/i} to prepare,{w=1}{nw}"
     extend 1fslcasbr " people wouldn't {i}always{/i} leave things to the very last month."
-    n 1fcsajsbr "Oh,{w=0.75}{nw}"
+    n 1flrem "Like...{w=0.75}"
+    extend 1fcswr " who {i}does{/i} that to themselves?"
+    n 1fcsajeansbr "Oh,{w=0.75}{nw}"
     extend 1fcsgs " and don't even get me {i}started{/i} on the music {i}every{w=0.3} single{w=0.3} store{/i}{w=0.3} feels the need to play..."
     n 1fslsl "Ugh..."
-    n 1fcspoesi "I swear,{w=0.2} it's like some kind of scheduled earache..."
+    n 1fcspoesi "I swear,{w=0.2} it's like some kind of coordinated earache."
     n 1fllca "..."
     n 1unmgslsbl "D-{w=0.3}don't get me wrong!{w=0.75}{nw}"
     extend 1fcsgslsbl " I'm no scrooge{nw}"
@@ -2341,12 +2343,11 @@ label holiday_christmas_eve:
     n 1uchsmedz "What do you think of my decoration skills,{w=0.2} [player]?{w=0.75}{nw}"
     extend 1fwlbgeme " Not bad for {i}just{/i} school supplies,{w=0.2} if I say so myself."
     n 1fchbl "Just don't ask me where I got the tree!"
-    n 1usqsm "...{w=0.5}{nw}"
-    n 1uwdajeex "Ah!{w=0.75}{nw}"
-    extend 1fnmbg " But what about you,{w=0.2} [player]?{w=0.75}{nw}"
+    n 1usqsm "...{w=1}{nw}"
+    n 1uwdajeex "Ah!{w=1}{nw}"
+    n 1fnmbg "But what about you,{w=0.2} [player]?{w=1}{nw}"
     extend 1fsqsg " Huh?"
-    n 1fcsbg "You didn't {i}seriously{/i} think {i}you{/i} were off the hook for decorating,{w=0.2} did you?{w=0.75}{nw}"
-    extend 1fsqsmeme " Ehehe."
+    n 1fcsbg "You didn't {i}seriously{/i} think {i}you{/i} were off the hook for decorating,{w=0.2} did you?"
     n 1fcsbg "So...{w=0.75}{nw}"
 
     show natsuki 1tsqsm at jn_center
@@ -2357,7 +2358,7 @@ label holiday_christmas_eve:
         "You bet I am!":
             n 1usqct "Oho?"
             n 1fchbg "Well,{w=0.2} no kidding!{w=1}{nw}"
-            extend 1fcsbs "That's {i}exactly{/i} what I like to hear."
+            extend 1fcsbs " Now that's {i}exactly{/i} what I like to hear."
             n 1fchbs "This year is gonna be {b}awesome{/b}!{w=0.75}{nw}"
             extend 1uchgnedz " I just know it!"
 
@@ -2389,8 +2390,7 @@ label holiday_christmas_eve:
         n 1kslpul "..."
         n 1kcsbolesi "It seriously means a lot.{w=1}{nw}"
         extend 1kwmbol " You being here right now."
-        n 1ncsssl "Heh."
-        n 1ksrbol "...More than you probably know."
+        n 1ksrbol "...Probably more than you'd know."
         n 1klrbol "..."
         n 1kwmpuf "...I really should have been spending today with my friends,{w=0.2} [player].{w=1}{nw}" 
         extend 1kllbol " But..."
@@ -2401,6 +2401,7 @@ label holiday_christmas_eve:
         else:
             n 1nslfsfsbr "I-{w=0.3}I can probably settle for you this year."
 
+        n 1kslbol "..."
         n 1kslpul "And...{w=0.75}{nw}"
         extend 1ksqbol " [player]?"
         n 1ksrfsfsbr "..."
@@ -2453,17 +2454,18 @@ label holiday_christmas_eve:
             $ jnPause(2.5)
             play audio kiss
 
-        show natsuki 1kcsfsf zorder jn_center
+        show natsuki 1kcsfsf at jn_center
 
     else:
         play audio clothing_ruffle
-        show natsuki 1kcsbol zorder jn_center
+        show natsuki 1kcsbol at jn_center
 
     $ jnPause(3)
     play audio chair_in
+    $ jnPause(2)
     hide black with Dissolve(1.25) 
 
-    if Natsukui.isEnamored(higher=True):
+    if Natsuki.isEnamored(higher=True):
         n 1kslsmlsbl "S-{w=0.2}so..."
         n 1kwmsml "What did you wanna talk about,{w=0.2} [player]?{w=0.75}{nw}"
         extend 1fchsmlsbr " Ehehe."
