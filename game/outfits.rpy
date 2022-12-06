@@ -2332,6 +2332,10 @@ label new_wearables_outfits_unlocked:
         n 1knmpulsbl "[player]...{w=1.25}{nw}"
         extend 1kllpulsbl " y-{w=0.2}you {i}do{/i} know you don't have to get me stuff just so I like you..."
         n 1knmsllsbr "Right?"
+
+        if jnIsChristmasEve():
+            n 1ksrbofsbl "...Especially tonight,{w=0.3} of all nights..."
+
         n 1uskemlesusbr "I-{w=0.2}it's not that I don't appreciate it!{w=0.5}{nw}"
         extend 1fcsemless " Don't get me wrong!{w=1}{nw}"
         extend 1knmpoless " I-{w=0.2}I totally do!"
@@ -2353,7 +2357,14 @@ label new_wearables_outfits_unlocked:
         n 1fslunl "..."
         n 1fcsanl "Uuuuuuuuu-!"
         n 1fpawrledr "Why would you do thaaat?!{w=1}{nw}"
-        extend 1fbkgsless " I-{w=0.2}I didn't even {i}ask{/i} for anything!"
+
+        if jnIsChristmasEve():
+            n 1knmgsf "Y-{w=0.2}you couldn't have at {i}least{/i} waited for tomorrow?!{w=1}{nw}"
+            extend 1kbkwrlesd " I didn't even make a list or anythiiing!"
+
+        else:
+            extend 1kbkwrless " I-{w=0.2}I didn't even {i}ask{/i} for anything!"
+
         n 1fslunl "..."
         n 1fcseml "Jeez...{w=0.5}{nw}"
         extend 1flrsrf " and now I look like a total {i}jerk{/i} for not even having anything to give back...{w=1}{nw}"
@@ -2369,6 +2380,11 @@ label new_wearables_outfits_unlocked:
         $ player_initial = jn_utils.getPlayerInitial()
         n 1fbkwrf "[player_initial]-{w=0.2}[player]!"
         n 1kbkwrf "What even {i}is{/i} all this?!"
+
+        if jnIsChristmasEve():
+            n 1knmgsf "A-{w=0.2}and come {i}on{/i}, [player]!{w=1}{nw}" 
+            extend 1kbkwrfesd "It isn't even Christmas yeeeet!"
+
         n 1fllemlesssbl "Y-{w=0.2}you better not be trying to win me over with gifts or something!{w=1}{nw}"
         extend 1fcsemlsbr " Yeesh!"
         n 1flremlsbl "I-{w=0.2}I'll have you know I'm a {i}lot{/i} deeper than that!"
