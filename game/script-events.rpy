@@ -2312,144 +2312,167 @@ label holiday_christmas_eve:
     n 1tnmsssbr "Hard to believe it's Christmas Eve {i}already{/i},{w=0.2} huh?"
     n 1nsrsssbr "It's actually almost spooky how quickly it rolls around.{w=1}{nw}"
     extend 1uwdajsbr " Seriously!"
-    n  "I mean...{w=1}{nw}"
-    extend  " the later part of the year mainly feels like just one big snooze-{w=0.2}fest."
-    n  "School starts again,{w=0.75}{nw}"
-    extend  " it gets all cold and nasty outside,{w=0.75}{nw}"
-    extend  " everyone gets stuck indoors..."
-    n  "But then before you know it?{w=1}{nw}"
-    extend  " December rolls around,{w=0.75}{nw}"
-    extend  " and it's like all hell breaks loose!"
-    n  "It's like clockwork!"
-    n  "Plus you'd think with a whole {i}year{/i} to prepare,{w=1}{nw}"
-    extend  " people wouldn't always leave things to the very last month."
-    n  "Oh,{w=0.75}{nw}"
-    extend  " and don't even {i}start{/i} on the music {i}every{w=0.3} single{w=0.3} store{/i}{w=0.3} feels the need to play..."
-    n  "Ugh..."
-    n  "I swear, it's like scheduled earache..."
-    n  "..."
-    n  "D-{w=0.3}don't get me wrong!{w=0.75}{nw}"
-    extend  " I'm no scrooge!"
-    n  "...I'm just not stuck in the {i}Christmas past{/i},{w=0.2} that's all!{w=0.75}{nw}"
-    extend  " Ehehe."
-    n  "Well,{w=0.75}{nw}"
-    extend  " whatever.{w=1}{nw}"
-    extend  " At least {i}here{/i} we can change the record,{w=0.2} right?"
-    n  "And speaking of which..."
-    n  "What do you think of my decoration skills,{w=0.2} [player]?{w=0.75}{nw}"
-    extend  " Not bad for {i}just{/i} school supplies,{w=0.2} if I say so myself."
-    n  "Just don't ask me where I got the tree!"
-    n  "Ah!{w=0.75}{nw}"
-    extend  " But what about you,{w=0.2} [player]?{w=0.75}{nw}"
-    extend  " Huh?"
-    n  "You didn't {i}seriously{/i} think you were off the hook for decorating,{w=0.2} did you?{w=0.75}{nw}"
-    extend  " Ehehe."
-    n  "So...{w=0.75}{nw}"
+    n 1fllem "I mean...{w=1}{nw}"
+    extend 1nsqbo " the later part of the year mainly feels like just one big snooze-{w=0.2}fest."
+    n 1nsrem "School starts again,{w=0.75}{nw}"
+    extend 1fslem " it gets all cold and nasty outside,{w=0.75}{nw}"
+    extend 1nsqpo " everyone gets stuck indoors..."
+    n 1fnmem "But then before you know it?{w=1}{nw}"
+    extend 1fcsgs " December rolls around,{w=0.75}{nw}"
+    extend 1fbkwr " and it's like all hell breaks loose!"
+    n 1fslan "It's like clockwork!"
+    n 1fcsemsbr "P-{w=0.2}plus,{w=0.5}{nw}"
+    extend 1tsqemsbr " you'd think with a whole {i}year{/i} to prepare,{w=1}{nw}"
+    extend 1fslcasbr " people wouldn't {i}always{/i} leave things to the very last month."
+    n 1fcsajsbr "Oh,{w=0.75}{nw}"
+    extend 1fcsgs " and don't even get me {i}started{/i} on the music {i}every{w=0.3} single{w=0.3} store{/i}{w=0.3} feels the need to play..."
+    n 1fslsl "Ugh..."
+    n 1fcspoesi "I swear,{w=0.2} it's like some kind of scheduled earache..."
+    n 1fllca "..."
+    n 1unmgslsbl "D-{w=0.3}don't get me wrong!{w=0.75}{nw}"
+    extend 1fcsgslsbl " I'm no scrooge{nw}"
+    extend 1fcspolsbr " !"
+    n 1fcsbglsbr "...I{w=0.2}-I'm just not stuck in the {i}Christmas past{/i},{w=0.2} that's all!{w=0.75}{nw}"
+    extend 1fchsml " Ehehe."
+    n 1ullss "Well,{w=0.75}{nw}"
+    extend 1nllbg " whatever.{w=1}{nw}"
+    extend 1fchgn " At least {i}here{/i} we can change the record,{w=0.2} right?"
+    n 1fsqbg "And speaking of which..."
+    n 1uchsmedz "What do you think of my decoration skills,{w=0.2} [player]?{w=0.75}{nw}"
+    extend 1fwlbgeme " Not bad for {i}just{/i} school supplies,{w=0.2} if I say so myself."
+    n 1fchbl "Just don't ask me where I got the tree!"
+    n 1usqsm "...{w=0.5}{nw}"
+    n 1uwdajeex "Ah!{w=0.75}{nw}"
+    extend 1fnmbg " But what about you,{w=0.2} [player]?{w=0.75}{nw}"
+    extend 1fsqsg " Huh?"
+    n 1fcsbg "You didn't {i}seriously{/i} think {i}you{/i} were off the hook for decorating,{w=0.2} did you?{w=0.75}{nw}"
+    extend 1fsqsmeme " Ehehe."
+    n 1fcsbg "So...{w=0.75}{nw}"
 
-    show natsuki test at jn_center
+    show natsuki 1tsqsm at jn_center
     
     menu:
-        extend  " Are {i}you{/i} all good to go yet,{w=0.2} [player]?"
+        extend " Are {i}you{/i} all good to go yet,{w=0.2} [player]?"
 
         "You bet I am!":
-            n  "Oho?{w=0.75}{nw}"
-            extend  " No kidding!"
-            n  "Now that's {i}exactly{/i} what I like to hear."
-            n  "This year is gonna be {b}awesome{/b}!{w=0.75}{nw}"
-            extend  " I just know it!"
+            n 1usqct "Oho?"
+            n 1fchbg "Well,{w=0.2} no kidding!{w=1}{nw}"
+            extend 1fcsbs "That's {i}exactly{/i} what I like to hear."
+            n 1fchbs "This year is gonna be {b}awesome{/b}!{w=0.75}{nw}"
+            extend 1uchgnedz " I just know it!"
 
         "I haven't decorated yet.":
-            n  "H-{w=0.2}huh?!"
-            n  "Then what are you doing here,{w=0.2} you dope?!{w=0.75}{nw}"
-            extend  " Jeez..."
-            n  "I'm not doing {i}your{/i} place too,{w=0.2} you know."
+            n 1uskemlesh "H-{w=0.2}huh?!"
+            n 1fbkwrl "T-{w=0.2}then what are you doing sat around here,{w=0.2} you goof?!{w=0.75}{nw}"
+            extend 1fcsajlsbl " Jeez..."
+            n 1fcspolsbl "I'm not doing {i}your{/i} place too,{w=0.2} you know."
+            n 1fchbl "...Not for {i}free{/i},{w=0.2} anyway."
 
         "I don't really celebrate Christmas.":
-            n  "...Oh."
-            n  "I mean,{w=0.75}{nw}"
-            extend  " that's totally fine."
-            n  "...Just means I gotta celebrate for both of us!{w=0.75}{nw}"
-            extend  " Ahaha."
+            n 1kslpu "...Aww.{w=0.75}{nw}"
+            extend 1knmbo " Really?"
+            n 1kllsl "..."
+            n 1fcstrlsbr "I-{w=0.2}I mean,{w=0.75}{nw}"
+            extend 1fchsmlsbl " that's totally fine."
+            n 1fsqsslsbl "...Just means I gotta celebrate for both of us!{w=0.75}{nw}"
+            extend 1fchsmleme " Ahaha."
 
-    n  "..."
-    n  "But...{w=1}{nw}"
-    extend  " in all seriousness,{w=0.2} [player]?"
+    n 1kslsm "..."
+    n 1kslpu "But...{w=1}{nw}"
+    extend 1knmpu " in all seriousness,{w=0.2} [player]?"
+    n 1ksrbosbl "..."
 
     if Natsuki.isEnamored(higher=True):
-        n  "...Thanks."
-        n  "For coming to see me today,{w=0.2} I mean."
-        n  "It..."
-        n  "..."
-        n  "It seriously means a lot.{w=1}{nw}"
-        extend  " You being here right now."
-        n  "Heh."
-        n  "...More than you probably know."
-        n  "..."
-        n  "...I really should have been spending today with my friends,{w=0.2} [player].{w=1}{nw}" 
-        extend  " But..."
-        n  "I-{w=0.3}I think I can settle for just you."
-        n  "And...{w=0.75}{nw}"
-        extend  " [player]?"
-        n  "..."
+        n 1kcscalsbl "...Thanks."
+        n 1ksrajlsbl "For coming to see me today,{w=0.2} I mean."
+        n 1knmajl "It..."
+        n 1kslpul "..."
+        n 1kcsbolesi "It seriously means a lot.{w=1}{nw}"
+        extend 1kwmbol " You being here right now."
+        n 1ncsssl "Heh."
+        n 1ksrbol "...More than you probably know."
+        n 1klrbol "..."
+        n 1kwmpuf "...I really should have been spending today with my friends,{w=0.2} [player].{w=1}{nw}" 
+        extend 1kllbol " But..."
+
+        if Natsuki.isLove(higher=True):
+            n 1kwmfsfsbr "I-{w=0.3}I think I can settle for just you."
+
+        else:
+            n 1nslfsfsbr "I-{w=0.3}I can probably settle for you this year."
+
+        n 1kslpul "And...{w=0.75}{nw}"
+        extend 1ksqbol " [player]?"
+        n 1ksrfsfsbr "..."
+        show natsuki 1kcsbofesisbr
 
     elif Natsuki.isAffectionate(higher=True):
-        n  "...T-{w=0.2}thanks."
-        n  "F-{w=0.3}for being here today,{w=0.75}{nw}" 
-        extend  " I mean."
-        n  "I-{w=0.3}I know you didn't have to come visit at all.{w=0.75}{nw}"
-        extend  " And I'd be a real jerk to demand it..."
-        n  "So just..."
-        n  "..."
-        n  "Just...{w=0.75} know it's appreciated...{w=0.75}{nw}"
-        extend  " 'kay?"
-        n  "Really.{w=1}{nw}"
-        extend  " Thank you."
-        n  "..."
-        n  "And...{w=1}{nw}" 
-        extend  " [player]?"
-        n  "..."
+        n 1kcscalsbl "...T-{w=0.2}thanks."
+        n 1fcsemlsbl "F-{w=0.3}for being here today,{w=0.75}{nw}" 
+        extend 1kslbolsbl " I mean."
+        n 1fcsbolsbr "I-{w=0.3}I know you didn't have to come visit at all.{w=0.75}{nw}"
+        extend 1ksrpulsbl " And I'd be a real jerk to demand it..."
+        n 1knmpulsbl "So just..."
+        n 1kslunlsbl "..."
+        n 1fcsunf "Just...{w=0.75} know it's appreciated...{w=0.75}{nw}"
+        extend 1kwmunl " 'kay?"
+        n 1kslbol "Really.{w=1}{nw}"
+        extend 1ksqbol " Thank you."
+        n 1ksrcal "..."
+        n 1ksrajlsbr "And...{w=1}{nw}" 
+        extend 1knmajlsbr " [player]?"
+        n 1kcsunfsbr "..."
+        show natsuki 1fcssrfsbr
     
     else:
-        n  "...Thanks.{w=0.75}{nw}"
-        extend  " F-{w=0.3}for turning up today,{w=0.2} I mean."
-        n  "I-{w=0.2}I knew you would,{w=0.2} of course!{w=1}{nw}"
-        extend  " Only a real jerk would leave someone all alone here,{w=1}{nw}"
-        extend  " of all nights."
-        n  "So I..."
-        n  "I..."
-        n  "..."
-        n  "I...{w=1.25}{nw}"
-        extend  " really appreciate it.{w=0.75}{nw}"
-        extend  " I do."
-        n  "...A-{w=0.2}and [player]?"
-        n  "..."
+        n 1kcscalsbl "...Thanks.{w=0.75}{nw}"
+        extend 1fcsemlsbl " F-{w=0.3}for turning up today,{w=0.2} I mean."
+        n 1fcsgslesssbr "I-{w=0.2}I knew you would,{w=0.2} of course!{w=1}{nw}"
+        n 1fcscal "A-{w=0.2}and besides."
+        extend 1fsrcal " Only a real jerk would leave someone all alone here,{w=1}{nw}"
+        extend 1klrcafsbr " of all nights."
+        n 1fcsajlsbr "So I..."
+        n 1fllajlsbr "I..."
+        n 1kslsllsbr "..."
+        n 1fcsunlsbr "I...{w=1.25}{nw}"
+        extend 1kcspufesisbr " really appreciate it.{w=0.75}{nw}"
+        extend 1kwmbolsbr " I do."
+        n 1kslbolsbr "..."
+        n 1kwmpulsbr "...A-{w=0.2}and [player]?"
+        n 1fslunfsbl "..."
+        show natsuki 1fcsunfesssbl
 
+    play audio chair_out
     show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(2)
 
-    if Natsuki.isLove(higher=True):
+    if Natsuki.isEnamored(higher=True):
         play audio clothing_ruffle
-        $ jnPause(2.5)
-        play audio kiss
-        show natsuki love jn_center
+
+        if Natsuki.isLove(higher=True):
+            $ jnPause(2.5)
+            play audio kiss
+
+        show natsuki 1kcsfsf zorder jn_center
 
     else:
         play audio clothing_ruffle
-        show natsuki like jn_center
+        show natsuki 1kcsbol zorder jn_center
 
-    $ jnPause(1)
+    $ jnPause(3)
+    play audio chair_in
     hide black with Dissolve(1.25) 
 
     if Natsukui.isEnamored(higher=True):
-        n  "S-{w=0.2}so..."
-        n  "What did you wanna talk about,{w=0.2} [player]?{w=0.75}{nw}"
-        extend  " Ehehe."
+        n 1kslsmlsbl "S-{w=0.2}so..."
+        n 1kwmsml "What did you wanna talk about,{w=0.2} [player]?{w=0.75}{nw}"
+        extend 1fchsmlsbr " Ehehe."
 
     else:
-        n  "..."
-        n  "N-{w=0.3}now,{w=1}{nw}"
-        extend  " where were we?"
-        n  "Ehehe..."
+        n 1kslfsl "..."
+        n 1ncsajlsbl "N-{w=0.3}now,{w=1}{nw}"
+        extend 1tsqsslsbl " where were we?"
+        n 1fsrdvlsbr "Ehehe..."
 
     $ Natsuki.calculatedAffinityGain(5, bypass=True)
     $ jn_events.getHoliday("holiday_christmas_eve").complete()
