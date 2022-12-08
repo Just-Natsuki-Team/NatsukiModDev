@@ -476,9 +476,7 @@ init python in jn_events:
             holidays.append(JNHolidayTypes.anniversary)
 
         if store.jnIsDate(input_date):
-            # holidays.append(JNHolidayTypes.test_one)
-            # holidays.append(JNHolidayTypes.test_two)
-            # holidays.append(JNHolidayTypes.test_three)
+            pass
 
         return holidays
 
