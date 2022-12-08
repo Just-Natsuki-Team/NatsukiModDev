@@ -252,6 +252,8 @@ init -50 python:
             *lc_args
         )
 
+    # TODO: empty desk + chair sprite based on aff.
+
 init 1 python:
     import store
 

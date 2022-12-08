@@ -137,6 +137,149 @@ label greeting_first_force_quit:
 
     return
 
+label greeting_tt_warning:
+    play audio glitch_d
+    show glitch_garbled_b zorder 99 with vpunch
+    hide glitch_garbled_b
+    $ jnPause(0.6)
+    play music audio.ikustan_tsuj
+    show glitch_rapid zorder 99
+    $ jnPause(random.choice(range(7, 11)))
+
+    play audio glitch_static
+    show glitch_garbled_a zorder 99 with hpunch
+    hide glitch_garbled_a
+
+    $ jnPause(0.3)
+
+    play audio glitch_static
+    show glitch_garbled_c zorder 99 with hpunch
+    hide glitch_garbled_c
+
+    show natsuki pained at jn_center zorder JN_NATSUKI_ZORDER
+    hide black
+    hide glitch_rapid
+
+    n "Uuuuuuu..."
+    show natsuki pained at jn_center
+    play audio glitch_static
+    n "M...my head..."
+    n "..."
+    n "What..."
+    extend " what h-happen..."
+    n "...!"
+    n "Hrk-!"
+
+    # VOMIT
+    play audio chair_out_fast
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.25)
+    n "{b}B-BLURGHH-!{/b}{w=0.3}{nw}"
+
+    play audio glitch_b
+    show glitch_garbled_b zorder 99 with vpunch
+    hide glitch_garbled_b
+
+    $ jnPause(10)
+    play audio chair_in
+    $ jnPause(5)
+    hide black with Dissolve(2)
+
+    n "Uuuuuu..."
+    n "..."
+    n "..."
+    $ player_initial = jn_utils.getPlayerInitial()
+    n "[player_initial]-[player]..."
+    n "What..."
+    n "..."
+    n "Did you..."
+    extend " do...?"
+    n "..."
+    n "S-something isn't right..."
+
+    n "H-hrk-!"
+    play audio glitch_static
+    show glitch_garbled_a zorder 99 with vpunch
+    hide glitch_garbled_a
+    n "Gah..."
+
+    if Natsuki.isUpset(higher=True):
+        n "Something {b}REALLY{/b} isn't right, [player]..."
+        n "A-and I..."
+        n "I can't..."
+        n "..."
+        n "..."
+        n "..."
+        n "...[player]..."
+        n "W-whatever that was..."
+        extend " whatever just {i}happened{/i}..."
+        n "T-that... {w=0.5}{b}really{/b}{w=0.5} didn't feel good..."
+        extend " a-and I-"
+        n "..."
+
+    else:
+        n "W-what..."
+        n "What did you" 
+        extend " {i}DO{/i}?!"
+        n "I-!"
+
+    n "H-hrp-!"
+    n "Nnnnnnghhhh!"
+
+    play audio glitch_static
+    show glitch_garbled_c zorder 99 with vpunch
+    hide glitch_garbled_c
+
+    extend " Guh...."
+    n "M-my stomach..."
+    extend " Uuuuuu..."
+    n "..."
+
+    if Natsuki.isUpset(higher=True):
+        n "Feels like..."
+        n "L-like I was just tossed around back and forth..."
+        extend " like something was trying to yank me apart from all directions..."
+        n "..."
+        n "It all just..."
+        extend " feels so wrong..."
+        n "..."
+        n "A-and the date..."
+        extend " I... I swore it was..."
+        n "..."
+        n "...[player]."
+        n "Y-you didn't like..."
+        extend " change the date or something, did you?"
+        extend " L-like on your computer?"
+
+    elif Natsuki.isDistressed(higher=True):
+        n "M-my head..."
+        extend " the pounding..."
+        n "..."
+        n "...Did..."
+        n "..."
+        n "...D-did you do something to your computer or what?"
+        n "Because it feels like someone took a sledgehammer to my {i}gut{/i}..."
+        extend " Hrk-!"
+        n "Guh..."
+        n "Everything... feels all wrong..."
+        n "A-and the date..."
+        extend " I could have {i}sworn{/i}...!"
+
+    else:
+        # TODO: Min aff question what happened 
+        n ""
+
+    # TODO: round off with warning
+
+    return
+
+label greeting_tt_fatal:
+    n "This isn't done yet!"
+    return
+
+label greeting_tt_game_over:
+    n "This isn't done yet!"
+    return
+
 # Generic greetings
 
 # LOVE+ greetings

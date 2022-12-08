@@ -33,12 +33,16 @@ label ch30_init:
     python:
         import random
 
+        # MIGRATIONS
+
         #Run runtime data migrations here
         jn_data_migrations.runRuntimeMigrations()
 
         #Now adjust the stored version number
         persistent._jn_version = config.version
         jn_utils.log("Current persisted version post-mig check: {0}".format(store.persistent._jn_version))
+
+        # NATSUKI SETUP
 
         # Assign Natsuki and player nicknames
         if Natsuki.isEnamored(higher=True) and persistent._jn_nicknames_natsuki_allowed and persistent._jn_nicknames_natsuki_current_nickname:
@@ -49,8 +53,15 @@ label ch30_init:
 
         # Check the daily affinity cap and reset if need be
         Natsuki.checkResetDailyAffinityGain()
-
         Natsuki.setInConversation(True)
+        persistent.jn_total_visit_count += 1
+
+        # TIME CHECKS
+
+        tt_in_session = False
+        if ((last_visited_date - datetime.datetime.now()).total_seconds() / 3600) >= 30:
+            persistent._jn_player_tt_state += 1
+            tt_in_session = True
 
         # Determine if the player should get a prolonged leave greeting
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 2:
@@ -60,9 +71,9 @@ label ch30_init:
         elif not persistent._jn_player_apology_type_on_quit:
             Natsuki.calculatedAffinityGain()
 
-        # Add to the total visits counter and set the last visit date
-        persistent.jn_total_visit_count += 1
         persistent.jn_last_visited_date = datetime.datetime.now()
+
+        # LOAD OUTFITS, WEARABLES
 
         # Load outfits from disk and corresponding persistent data
         if Natsuki.isHappy(higher=True) and persistent.jn_custom_outfits_unlocked:
@@ -88,6 +99,8 @@ label ch30_init:
 
         jn_utils.log("Outfit set.")
 
+        # LOAD HOLIDAYS, POEMS
+
         # Load poems from disk and corresponding persistent data
         jn_poems.JNPoem.loadAll()
         jn_utils.log("Poem data loaded.")
@@ -96,10 +109,29 @@ label ch30_init:
         jn_events.JNHoliday.loadAll()
         jn_utils.log("Holiday data loaded.")
 
+        # FLOW HANDLING INTO CH30 - DECIDE WHERE TO ACTUALLY START
+
         # Determine if the year has changed, in which case we reset all holidays so they can be celebrated again
         if (datetime.datetime.now().year > persistent.jn_last_visited_date.year):
             jn_events.resetHolidays()
             jn_utils.log("Holiday completion states reset.")
+
+        # Handle TT strikes/checks
+        if tt_in_session:
+            if persistent._jn_player_tt_state == 1:
+                push("greeting_tt_warning")
+
+            elif persistent._jn_player_tt_state == 2:
+                push("greeting_tt_fatal")
+
+            else:
+                push("greeting_tt_game_over")
+
+            renpy.call("call_next_topic", False)
+
+        elif persistent._jn_player_tt_state >= 2:
+            push("greeting_tt_game_over")
+            renpy.call("call_next_topic", False)
 
         # If we have decorations from the last holiday, and the day hasn't changed, then we should put them back up
         if len(persistent._jn_holiday_deco_list_on_quit) > 0 and datetime.date.today().day == persistent.jn_last_visited_date.day:

@@ -458,9 +458,7 @@ init python in jn_events:
             holidays.append(JNHolidayTypes.halloween)
 
         if store.jnIsChristmasEve(input_date):
-            # TODO: revert this
-            #holidays.append(JNHolidayTypes.christmas_eve)
-            holidays.append(JNHolidayTypes.test_three)
+            holidays.append(JNHolidayTypes.christmas_eve)
 
         if store.jnIsChristmasDay(input_date):
             holidays.append(JNHolidayTypes.christmas_day)
@@ -478,9 +476,9 @@ init python in jn_events:
             holidays.append(JNHolidayTypes.anniversary)
 
         if store.jnIsDate(input_date):
-            holidays.append(JNHolidayTypes.test_one)
-            holidays.append(JNHolidayTypes.test_two)
-            holidays.append(JNHolidayTypes.test_three)
+            # holidays.append(JNHolidayTypes.test_one)
+            # holidays.append(JNHolidayTypes.test_two)
+            # holidays.append(JNHolidayTypes.test_three)
 
         return holidays
 
@@ -620,39 +618,6 @@ init python in jn_events:
         prop_list=["cake unlit"],
         priority=50
     ))
-
-    # holiday_test_one
-    __registerHoliday(JNHoliday(
-        label="holiday_test_one",
-        holiday_type=JNHolidayTypes.test_one,
-        affinity_range=(jn_affinity.HAPPY, None),
-        natsuki_sprite_code="1uchgneme",
-        priority=15
-    ))
-
-    # holiday_test_two
-    __registerHoliday(JNHoliday(
-        label="holiday_test_two",
-        holiday_type=JNHolidayTypes.test_two,
-        affinity_range=(jn_affinity.AFFECTIONATE, None),
-        natsuki_sprite_code="1fchsmedz",
-        bgm=audio.happy_birthday_bgm,
-        deco_list=["balloons"],
-        prop_list=["cake unlit"],
-        priority=10
-    ))
-
-label holiday_test_one:
-    $ jn_events.getHoliday("holiday_test_one").run()
-    n 1fchbg "This is holiday test one!"
-    $ jn_events.getHoliday("holiday_test_one").complete()
-    return
-
-label holiday_test_two:
-    $ jn_events.getHoliday("holiday_test_two").run()
-    n 1fwrts "This is holiday test two!"
-    $ jn_events.getHoliday("holiday_test_two").complete()
-    return
 
 # RANDOM INTRO EVENTS
 

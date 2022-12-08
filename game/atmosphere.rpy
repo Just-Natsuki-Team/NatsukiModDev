@@ -41,6 +41,16 @@ image sky glitch_fuzzy:
     pause 0.25
     repeat
 
+image glitch_rapid:
+    choice:
+        "mod_assets/backgrounds/etc/glitch_fuzzy_a.png"
+    choice:
+        "mod_assets/backgrounds/etc/glitch_fuzzy_b.png"
+    choice:
+        "mod_assets/backgrounds/etc/glitch_fuzzy_c.png"
+    pause 0.1
+    repeat
+
 # Clouds
 image clouds day light:
     "mod_assets/backgrounds/atmosphere/clouds/clouds_day_light.png"

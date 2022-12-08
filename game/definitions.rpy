@@ -1802,6 +1802,7 @@ define audio.cassette_close = "mod_assets/sfx/cassette_close.ogg"
 define audio.cassette_open = "mod_assets/sfx/cassette_open.ogg"
 define audio.chair_in = "mod_assets/sfx/chair_in.ogg"
 define audio.chair_out = "mod_assets/sfx/chair_out.ogg"
+define audio.chair_out_fast = "mod_assets/sfx/chair_out_fast.ogg"
 define audio.chair_out_in = "mod_assets/sfx/chair_out_in.ogg"
 define audio.clothing_ruffle = "mod_assets/sfx/clothing_ruffle.ogg"
 define audio.coin_flip = "mod_assets/sfx/coin_flip.ogg"
@@ -1855,6 +1856,7 @@ define audio.holiday_bgm = "mod_assets/bgm/vacation.ogg"
 # Music, JN exclusive
 define audio.just_natsuki_bgm = "mod_assets/bgm/just_natsuki.ogg"
 define audio.happy_birthday_bgm = "mod_assets/bgm/happy_birthday.ogg"
+define audio.ikustan_tsuj = "mod_assets/bgm/ikustan_tsuj.ogg"
 
 # Voicing - we disable TTS
 define config.tts_voice = None
