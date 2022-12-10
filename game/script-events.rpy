@@ -545,7 +545,7 @@ init python in jn_events:
 
     def displayVisuals(
         natsuki_sprite_code,
-        bgm="mod_assets/bgm/just_natsuki.ogg"
+        bgm="mod_assets/bgm/vacation.ogg"
     ):
         """
         Sets up the visuals/audio for an instant "pop-in" effect after a black scene opening.
@@ -568,7 +568,7 @@ init python in jn_events:
     # Christmas eve
     __registerHoliday(JNHoliday(
         label="holiday_christmas_eve",
-        holiday_type=JNHolidayTypes.test_three,
+        holiday_type=JNHolidayTypes.christmas_eve,
         affinity_range=(jn_affinity.HAPPY, None),
         natsuki_sprite_code="1uchsmeme",
         bgm=audio.holiday_bgm,
@@ -791,7 +791,7 @@ label event_relationship_doubts:
         "Enter.":
             pass
 
-    $ jn_events.displayVisuals("1fcsupl")
+    $ jn_events.displayVisuals(natsuki_sprite_code="1fcsupl", bgm="mod_assets/bgm/just_natsuki.ogg")
     $ jn_globals.force_quit_enabled = True
 
     n 1fsqunltsb "..."
@@ -2302,7 +2302,7 @@ label holiday_christmas_eve:
     n 1fllca "..."
     n 1unmgslsbl "D-{w=0.3}don't get me wrong!{w=0.75}{nw}"
     extend 1fcsgslsbl " I'm no scrooge{nw}"
-    extend 1fcspolsbr " !"
+    extend 1fcspolsbr "!"
     n 1fcsbglsbr "...I{w=0.2}-I'm just not stuck in the {i}Christmas past{/i},{w=0.2} that's all!{w=0.75}{nw}"
     extend 1fchsml " Ehehe."
     n 1ullss "Well,{w=0.75}{nw}"
