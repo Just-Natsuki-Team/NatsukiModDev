@@ -157,12 +157,13 @@ label greeting_tt_warning:
     show glitch_garbled_c zorder 99 with vpunch
     hide glitch_garbled_c
     show natsuki 1kcsfultsaeaf at jn_center zorder JN_NATSUKI_ZORDER
+    $ jnPause(0.1)
     hide black
     hide glitch_rapid
-    play music audio.just_natsuki
+    play music audio.just
 
     n 1kcsunltsa "Uuuuuuu..."
-    show natsuki pained at jn_center
+    show natsuki 1kcsfuftsa at jn_center
     play audio glitch_static
     n 1kcsanltsa "M...my head..."
     n 1kslunltsb "..."
@@ -171,6 +172,7 @@ label greeting_tt_warning:
     n 1kskpultscesh "...!"
     n 1kscpoitsc "Hrk-!"
 
+    stop music
     play audio chair_out_fast
     show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.1)
     n "{b}B-BLURGHH-!{/b}{w=0.3}{nw}"
@@ -178,43 +180,45 @@ label greeting_tt_warning:
     play audio glitch_b
     show glitch_garbled_b zorder 99 with vpunch
     hide glitch_garbled_b
-
+    show natsuki 1kcsemtsd
     $ jnPause(10)
     play audio chair_in
-    $ jnPause(5)
+    play music audio.just fadein 5
+    $ jnPause(3)
     hide black with Dissolve(2)
 
-    n 1kcsems "Uuuuuu..."
+    n 1kcsemi "Uuuuuu..."
     n 1kcsup "..."
     n 1kcsuntsa "..."
     n 1ksquptsa "[player_initial]-[player]..."
     n 1ksqantsa "What..."
-    n 1kcsemstsa "..."
-    n  "Did you..."
-    extend  " do...?"
-    n  "..."
-    n  "S-something isn't right..."
+    n 1kcsantsa "..."
+    n 1ksqfutsa "Did you..."
+    extend 1ksqemtsasbl " do...?"
+    n 1kllemtscsbr "..."
+    n 1klrwrtscsbr "S-something isn't right..."
 
-    n  "H-hrk-!"
-    show natsuki pained
+    n 1kscpoitscsbr "H-hrk-!"
+    show natsuki 1fcsanitscsbr
     play audio glitch_static
     show glitch_garbled_a zorder 99 with vpunch
     hide glitch_garbled_a
-    n  "Gah..."
+    n 1kcsemltscesi "Gah..."
 
     if Natsuki.isUpset(higher=True):
-        n  "Something {b}REALLY{/b} isn't right, [player]..."
-        n  "A-and I..."
-        n  "I can't..."
-        n  "..."
-        n  "..."
-        n  "..."
-        n  "...[player]..."
-        n  "W-whatever that was..."
-        extend  " whatever just {i}happened{/i}..."
-        n  "T-that... {w=0.5}{b}really{/b}{w=0.5} didn't feel good..."
-        extend  " a-and I-"
-        n  "..."
+        n 1ksqunltse "..."
+        n 1kplemltsb "Something {b}REALLY{/b} isn't right, [player]..."
+        n 1kllemltsb "A-and I..."
+        n 1klremltsb "I can't..."
+        n 1kcsfultsb "..."
+        n 1kcsanltsd "..."
+        n 1fcsunltsa "..."
+        n 1ksqunltsb "...[player]..."
+        n 1kllunltsc "W-whatever that was..."
+        extend 1klremltdr " whatever just {i}happened{/i}..."
+        n 1fcsunl "T-that...{w=0.5}{nw}" 
+        extend 1kplemltdr " {b}really{/b}{w=0.5} didn't feel good..."
+        extend 1klremltdr " a-and I-"
 
     else:
         n  "W-what..."

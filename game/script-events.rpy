@@ -478,9 +478,6 @@ init python in jn_events:
         if store.jnIsAnniversary(input_date):
             holidays.append(JNHolidayTypes.anniversary)
 
-        if store.jnIsDate(input_date):
-            pass
-
         return holidays
 
     def getAllHolidays():
@@ -2425,6 +2422,7 @@ label holiday_christmas_eve:
         show natsuki 1fcsunfesssbl
 
     play audio chair_out
+    # TODO: show mistletoe?
     show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(2)
 
@@ -2447,6 +2445,7 @@ label holiday_christmas_eve:
     hide black with Dissolve(1.25) 
 
     if Natsuki.isLove(higher=True):
+        # TODO: hide mistletoe
         n 1fchsmf "M-{w=0.2}mind the mistletoe!"
         n 1fchtsfeaf "Ehehe."
 
