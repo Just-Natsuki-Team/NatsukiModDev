@@ -1857,6 +1857,7 @@ define audio.holiday_bgm = "mod_assets/bgm/vacation.ogg"
 define audio.just_natsuki_bgm = "mod_assets/bgm/just_natsuki.ogg"
 define audio.happy_birthday_bgm = "mod_assets/bgm/happy_birthday.ogg"
 define audio.ikustan_tsuj = "mod_assets/bgm/ikustan_tsuj.ogg"
+define audio.juuuuu_nnnnn = "mod_assets/bgm/juuuuu_nnnnn.ogg"
 
 # Voicing - we disable TTS
 define config.tts_voice = None

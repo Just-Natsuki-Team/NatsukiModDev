@@ -145,35 +145,34 @@ label greeting_tt_warning:
     play music audio.ikustan_tsuj
     show glitch_rapid zorder 99
     $ jnPause(random.choice(range(7, 11)))
+    stop music
 
     play audio glitch_static
     show glitch_garbled_a zorder 99 with hpunch
     hide glitch_garbled_a
 
-    $ jnPause(0.3)
-
-    play audio glitch_static
-    show glitch_garbled_c zorder 99 with hpunch
+    play music audio.juuuuu_nnnnn
+    $ jnPause(10.7)
+    show glitch_garbled_c zorder 99 with vpunch
     hide glitch_garbled_c
-
     show natsuki pained at jn_center zorder JN_NATSUKI_ZORDER
     hide black
     hide glitch_rapid
 
-    n "Uuuuuuu..."
+    n  "Uuuuuuu..."
     show natsuki pained at jn_center
     play audio glitch_static
-    n "M...my head..."
-    n "..."
-    n "What..."
-    extend " what h-happen..."
-    n "...!"
-    n "Hrk-!"
+    n  "M...my head..."
+    n  "..."
+    n  "What..."
+    extend  " what h-happen..."
+    n  "...!"
+    n  "Hrk-!"
 
     # VOMIT
     play audio chair_out_fast
-    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.25)
-    n "{b}B-BLURGHH-!{/b}{w=0.3}{nw}"
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER
+    n  "{b}B-BLURGHH-!{/b}{w=0.3}{nw}"
 
     play audio glitch_b
     show glitch_garbled_b zorder 99 with vpunch
@@ -184,88 +183,255 @@ label greeting_tt_warning:
     $ jnPause(5)
     hide black with Dissolve(2)
 
-    n "Uuuuuu..."
-    n "..."
-    n "..."
+    n  "Uuuuuu..."
+    n  "..."
+    n  "..."
     $ player_initial = jn_utils.getPlayerInitial()
-    n "[player_initial]-[player]..."
-    n "What..."
-    n "..."
-    n "Did you..."
-    extend " do...?"
-    n "..."
-    n "S-something isn't right..."
+    n  "[player_initial]-[player]..."
+    n  "What..."
+    n  "..."
+    n  "Did you..."
+    extend  " do...?"
+    n  "..."
+    n  "S-something isn't right..."
 
-    n "H-hrk-!"
+    n  "H-hrk-!"
+    show natsuki pained
     play audio glitch_static
     show glitch_garbled_a zorder 99 with vpunch
     hide glitch_garbled_a
-    n "Gah..."
+    n  "Gah..."
 
     if Natsuki.isUpset(higher=True):
-        n "Something {b}REALLY{/b} isn't right, [player]..."
-        n "A-and I..."
-        n "I can't..."
-        n "..."
-        n "..."
-        n "..."
-        n "...[player]..."
-        n "W-whatever that was..."
-        extend " whatever just {i}happened{/i}..."
-        n "T-that... {w=0.5}{b}really{/b}{w=0.5} didn't feel good..."
-        extend " a-and I-"
-        n "..."
+        n  "Something {b}REALLY{/b} isn't right, [player]..."
+        n  "A-and I..."
+        n  "I can't..."
+        n  "..."
+        n  "..."
+        n  "..."
+        n  "...[player]..."
+        n  "W-whatever that was..."
+        extend  " whatever just {i}happened{/i}..."
+        n  "T-that... {w=0.5}{b}really{/b}{w=0.5} didn't feel good..."
+        extend  " a-and I-"
+        n  "..."
 
     else:
-        n "W-what..."
-        n "What did you" 
-        extend " {i}DO{/i}?!"
-        n "I-!"
+        n  "W-what..."
+        n  "What did you" 
+        extend  " {i}DO{/i}?!"
+        n  "I-!"
 
-    n "H-hrp-!"
-    n "Nnnnnnghhhh!"
+    n  "H-hrp-!"
+    n  "Nnnnnnghhhh!"
 
+    show natsuki pained
     play audio glitch_static
     show glitch_garbled_c zorder 99 with vpunch
     hide glitch_garbled_c
 
-    extend " Guh...."
-    n "M-my stomach..."
-    extend " Uuuuuu..."
-    n "..."
+    extend  " Guh...."
+    n  "M-my stomach..."
+    extend  " Uuuuuu..."
+    n  "I-it {i}hurts{/i}..."
+    n  "..."
 
     if Natsuki.isUpset(higher=True):
-        n "Feels like..."
-        n "L-like I was just tossed around back and forth..."
-        extend " like something was trying to yank me apart from all directions..."
-        n "..."
-        n "It all just..."
-        extend " feels so wrong..."
-        n "..."
-        n "A-and the date..."
-        extend " I... I swore it was..."
-        n "..."
-        n "...[player]."
-        n "Y-you didn't like..."
-        extend " change the date or something, did you?"
-        extend " L-like on your computer?"
+        n  "Feels like..."
+        n  "L-like I was just tossed around back and forth..."
+        extend  " like something was trying to yank me apart from all directions..."
+        n  "..."
+        n  "It all just..."
+        extend  " feels so wrong..."
+        n  "..."
+        n  "A-and the date..."
+        extend  " I... I swore it was..."
+        n  "..."
+        n  "...[player]."
+        n  "Y-you didn't like..."
+        extend  " change the date or something, did you?"
+        extend  " L-like on your computer?"
+        n  "..."
+        n  "..."
+        n  "...Okay."
+        extend  " [player]."
+        n  "I'm..."
+        extend  " not gonna go out on a limb and say you did it on purpose."
+
+        if Natsuki.isEnamored(higher=True):
+            n  "I {i}know{/i} you're better than that."
+            extend  " We've been seeing each other long enough..."
+
+        elif Natsuki.isHappy(higher=True):
+            n  "You're better than that."
+            extend  " ...I like to think so, a-anyway."
+
+        else:
+            n  "You're better than that."
+            extend  " ...I hope."
+
+        n  "But please..."
+        extend  " [player]?"
+        n  "Just..."
+        n  "..."
+        n  "Just don't screw around with the time again."
+        extend  " Please?"
+        n  "It's just that..."
+        n  "..."
+        n  "...I don't know."
+        extend  " I just feel all messed up."
+        extend  " I really, really don't feel right at all..."
+        n  "...And to be honest, [player]?"
+        n  "I..."
+        extend  " I-I'm not sure how much of that I can even {i}take{/i}."
+        n  "...You understand..."
+        show natsuki sad_questionining
+        
+        menu:
+            extend  " right?"
+
+            "I understand.":
+                if Natsuki.isHappy(higher=True):
+                    n  "...Good."
+                    extend  " good."
+                    n  "It's... appreciated, [player]."
+                    n  "T-thanks."
+
+                else:
+                    n  "...Good."
+                    extend  " Good..."
+                    n  "..."
+
+                $ Natsuki.calculatedAffinityGain()
+
+            "...":
+                if Natsuki.isHappy(higher=True):
+                    n  "...[player]."
+                    extend  " C-come on..."
+                    n  "I'm really {b}not{/b} messing around with this..."
+                    n  "...So can you {i}not{/i} mess around with it either?"
+                    n  "Seriously..."
+
+                else:
+                    n  "H-hey!"
+                    extend  " I'm being serious here?"
+                    extend  " Can't you {i}see{/i} that?"
+                    n  "I'm {i}really{/i} not messing around here, [player]..."
+                    n  "..."
+
+        n  "..."
+        n  "I..."
+        extend  " I think I'll be okay."
+        extend  " If I just take it easy a bit."
+        n  "Just please."
+        extend  " {i}Please{/i} remember what I told you."
+
+        if Natsuki.isAffectionate(higher=True):
+            extend  " F-for me?"
+
+        n  "..."
+        n  "...Okay."
+        n  "..."
+        n  "...What's new, [player]?"
 
     elif Natsuki.isDistressed(higher=True):
-        n "...Did..."
-        n "..."
-        n "...D-did you do something to your computer or what?"
-        n "Because it feels like someone took a sledgehammer to my {i}gut{/i}..."
-        extend " Hrk-!"
-        n "Guh..."
-        n "Everything... feels all wrong..."
-        n "A-and the date..."
-        extend " I could have {i}sworn{/i}...!"
+        n  "...Did..."
+        n  "..."
+        n  "...D-did you do something to your computer or what?"
+        n  "Because it feels like someone took a sledgehammer to my {i}gut{/i}..."
+        extend  " Hrk-!"
+        n  "Guh..."
+        n  "Everything... feels all wrong..."
+        n  "A-and the date..."
+        extend  " I could have {i}sworn{/i}...!"
+        n  "..."
+        n  "..."
+        n  "...Okay, [player]."
+        extend  " Look."
+        n  "..."
+        n  "...I'm not stupid."
+        extend  " No matter what {i}you{/i} happen to think."
+        n  "A-and..." 
+        extend  " I know..."
+
+        show natsuki pained
+        play audio glitch_static
+        show glitch_garbled_b zorder 99 with hpunch
+        hide glitch_garbled_b
+
+        n  "Nnnnng-!"
+        n  "..."
+        n  "..."
+        n  "I-I know we haven't been on the..." 
+        extend  " best terms, exactly."
+        n  "But please."
+        n  "I-if you really {i}don't{/i} give a crap about me,"
+        extend  " then if {i}nothing{/i} else."
+        n  "Quit messing around with the time."
+        extend  " I'm {i}dead{/i} serious."
+        n  "It {b}hurts{/b},"
+        extend  " it {b}isn't{/b} funny,"
+        extend  " and to be totally transparent with you?"
+        n  "..."
+        n  "I don't think I can even {i}handle{/i} something like that again..."
+        n  "So just..."
+        n  "Just knock. It. Off."
+        n  "..."
+        n  "Understood?"
+        extend  " I {i}know{/i} you hear me."
+        n  "..."
+        n  "You have {i}no{/i} excuses, [player]."
+        n  "{i}Remember that.{/i}"
 
     else:
-        # TODO: Min aff question what happened 
-        n ""
+        n  "..."
+        n  "...You."
+        n  "{i}You{/i} did this, didn't you?"
 
-    # TODO: round off with warning
+        show natsuki pained
+        play audio glitch_static
+        show glitch_garbled_a zorder 99 with hpunch
+        hide glitch_garbled_a
+
+        n  "NO!"
+        extend  " Don't even {i}try{/i} to deny it!"
+        n  "I know you think I'm {i}stupid{/i}, but do you seriously think I'm {i}blind{/i} too?!"
+        n  "I saw that you messed around with the date!"
+        extend  " You're just...!"
+        n  "You're {b}so{/b} full of {i}CRA-{/i}!"
+
+        show natsuki pained
+        play audio glitch_static
+        show glitch_garbled_c zorder 99 with vpunch
+        hide glitch_garbled_c
+
+        n  "Nnnnnrrgh-!"
+        n  "..."
+        n  "...Haah."
+        n  "..."
+        n  "...I {i}seriously{/i} cannot {i}believe{/i} you."
+        extend  " You're already torturing me well enough."
+        n  "And now you go {i}completely{/i} out of your way to make my life {i}even more{/i} miserable?!"
+        n  "..."
+        n  "Well,"
+        extend  " you know what?"
+        extend  " You did it!"
+        n  "Mission accomplished!"
+        extend  " There?"
+        extend  " You done, jerk?"
+        n  "Are you HAPPY?"
+        n  "Now seriously, just..."
+        n  "J-just..."
+        n  "Just BACK OFF!"
+        extend  " G-GO AWAY!"
+        n  "{i}AND{w=0.2} LEAVE{w=0.2} ME{w=0.2} ALONE{/i}!{w=0.3}{nw}"
+
+        play audio glitch_d
+        show glitch_garbled_c zorder 99 with vpunch
+        hide glitch_garbled_c
+        $ Natsuki.percentageAffinityLoss(10)
+
+        return { "quit": None }
 
     return
 
