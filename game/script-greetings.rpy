@@ -251,9 +251,6 @@ label greeting_tt_warning:
         extend " L-like on your computer?"
 
     elif Natsuki.isDistressed(higher=True):
-        n "M-my head..."
-        extend " the pounding..."
-        n "..."
         n "...Did..."
         n "..."
         n "...D-did you do something to your computer or what?"

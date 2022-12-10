@@ -59,7 +59,7 @@ label ch30_init:
         # TIME CHECKS
 
         tt_in_session = False
-        if ((last_visited_date - datetime.datetime.now()).total_seconds() / 3600) >= 30:
+        if ((persistent.jn_last_visited_date - datetime.datetime.now()).total_seconds() / 3600) >= 30:
             persistent._jn_player_tt_state += 1
             tt_in_session = True
 
