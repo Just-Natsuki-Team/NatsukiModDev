@@ -146,7 +146,7 @@ label ch30_init:
                 renpy.show(name="deco {0}".format(deco), zorder=jn_events.JN_EVENT_DECO_ZORDER)
 
         else:
-            persistent._jn_holiday_prop_list_on_quit = []
+            persistent._jn_holiday_deco_list_on_quit = []
 
         # Check for holidays, then queue them up and run them in sequence if we have any
         available_holidays = jn_events.selectHolidays()

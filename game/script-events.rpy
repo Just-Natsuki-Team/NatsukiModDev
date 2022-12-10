@@ -258,6 +258,7 @@ init python in jn_events:
         @staticmethod
         def filterHolidays(
             holiday_list,
+            is_seen=None,
             holiday_types=None,
             affinity=None,
             holiday_completion_state=None
@@ -278,6 +279,7 @@ init python in jn_events:
                 _holiday
                 for _holiday in holiday_list
                 if _holiday.__filterHoliday(
+                    is_seen,
                     holiday_types,
                     affinity,
                     holiday_completion_state
@@ -325,6 +327,7 @@ init python in jn_events:
 
         def __filterHoliday(
             self,
+            is_seen=None,
             holiday_types=None,
             affinity=None,
             holiday_completion_state=None
@@ -339,17 +342,17 @@ init python in jn_events:
             OUT:
                 - True, if the holiday meets the filter criteria. Otherwise False
             """
-            if self.is_seen:
+            if is_seen is not None and not self.is_seen == is_seen:
                 return False
 
             elif holiday_types and not self.holiday_type in holiday_types:
                 return False
 
-            elif affinity and not self.currAffinityInAffinityRange(affinity):
+            elif affinity is not None and not self.currAffinityInAffinityRange(affinity):
                 return False
 
             elif (
-                holiday_completion_state
+                holiday_completion_state is not None
                 and int(self.holiday_type) in store.persistent._jn_holiday_completed_list
             ):
                 return False
@@ -492,6 +495,7 @@ init python in jn_events:
         Only one holiday of each type may be returned.
         """
         holiday_list = JNHoliday.filterHolidays(
+            is_seen=False,
             holiday_list=getAllHolidays(),
             holiday_types=getHolidaysForDate(),
             affinity=store.Natsuki._getAffinityState(),
