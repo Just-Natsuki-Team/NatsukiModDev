@@ -5,6 +5,7 @@ default persistent._jn_player_tt_state = 0
 default persistent._jn_player_tt_instances = 0
 
 init 0 python:
+    import datetime
     import store.jn_outfits as jn_outfits
 
     class Natsuki(object):
@@ -232,7 +233,7 @@ init 0 python:
                 jn_utils.log("Affinity+")
 
             else:
-                writeCap()
+                Natsuki.writeCap()
 
         @staticmethod
         def calculatedAffinityLoss(base=1):
@@ -290,7 +291,7 @@ init 0 python:
             """
             Resets the daily affinity cap, if 24 hours has elapsed.
             """
-            current_date = datetime.datetime.now()
+            current_date = datetime.datetime.now() 
             if current_date in Natsuki.__capped_aff_dates:
                 return
 
@@ -306,8 +307,8 @@ init 0 python:
         @staticmethod
         def writeCap():
             jn_utils.log("Daily affinity cap reached!")
-            if not datetime.today().isoformat() in Natsuki.__capped_aff_dates:
-                Natsuki.__capped_aff_dates.append(datetime.today().isoformat())
+            if not datetime.datetime.today().isoformat() in Natsuki.__capped_aff_dates:
+                Natsuki.__capped_aff_dates.append(datetime.datetime.today().isoformat())
 
         @staticmethod
         def __isStateGreaterThan(aff_state):
