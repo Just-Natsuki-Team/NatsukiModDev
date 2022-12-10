@@ -1,4 +1,5 @@
 default persistent._jn_version = "0.0.1"
+default persistent._jn_gs_aff = persistent.affinity
 
 python early in jn_data_migrations:
     from enum import Enum

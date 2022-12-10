@@ -138,6 +138,7 @@ label greeting_first_force_quit:
     return
 
 label greeting_tt_warning:
+    $ player_initial = jn_utils.getPlayerInitial()
     play audio glitch_d
     show glitch_garbled_b zorder 99 with vpunch
     hide glitch_garbled_b
@@ -155,24 +156,24 @@ label greeting_tt_warning:
     $ jnPause(10.7)
     show glitch_garbled_c zorder 99 with vpunch
     hide glitch_garbled_c
-    show natsuki pained at jn_center zorder JN_NATSUKI_ZORDER
+    show natsuki 1kcsfultsaeaf at jn_center zorder JN_NATSUKI_ZORDER
     hide black
     hide glitch_rapid
+    play music audio.just_natsuki
 
-    n  "Uuuuuuu..."
+    n 1kcsunltsa "Uuuuuuu..."
     show natsuki pained at jn_center
     play audio glitch_static
-    n  "M...my head..."
-    n  "..."
-    n  "What..."
-    extend  " what h-happen..."
-    n  "...!"
-    n  "Hrk-!"
+    n 1kcsanltsa "M...my head..."
+    n 1kslunltsb "..."
+    n 1kslemltsb "What..."
+    extend 1klremltsc " what h-happen-"
+    n 1kskpultscesh "...!"
+    n 1kscpoitsc "Hrk-!"
 
-    # VOMIT
     play audio chair_out_fast
-    show black zorder jn_events.JN_EVENT_BLACK_ZORDER
-    n  "{b}B-BLURGHH-!{/b}{w=0.3}{nw}"
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.1)
+    n "{b}B-BLURGHH-!{/b}{w=0.3}{nw}"
 
     play audio glitch_b
     show glitch_garbled_b zorder 99 with vpunch
@@ -183,13 +184,12 @@ label greeting_tt_warning:
     $ jnPause(5)
     hide black with Dissolve(2)
 
-    n  "Uuuuuu..."
-    n  "..."
-    n  "..."
-    $ player_initial = jn_utils.getPlayerInitial()
-    n  "[player_initial]-[player]..."
-    n  "What..."
-    n  "..."
+    n 1kcsems "Uuuuuu..."
+    n 1kcsup "..."
+    n 1kcsuntsa "..."
+    n 1ksquptsa "[player_initial]-[player]..."
+    n 1ksqantsa "What..."
+    n 1kcsemstsa "..."
     n  "Did you..."
     extend  " do...?"
     n  "..."

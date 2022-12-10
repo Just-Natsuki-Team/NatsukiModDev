@@ -63,6 +63,13 @@ label ch30_init:
             persistent._jn_player_tt_state += 1
             tt_in_session = True
 
+        elif ((persistent.jn_last_visited_date - datetime.datetime.now()).total_seconds() / 3600) >= 4:
+            persistent._jn_player_tt_instances += 1
+            tt_in_session = True
+
+            if persistent._jn_player_tt_instances == 3 or persistent._jn_player_tt_instances == 6:
+                persistent._jn_player_tt_state += 1
+
         # Determine if the player should get a prolonged leave greeting
         if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 2:
             Natsuki.setQuitApology(jn_apologies.ApologyTypes.prolonged_leave)

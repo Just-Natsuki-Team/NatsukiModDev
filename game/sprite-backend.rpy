@@ -18,6 +18,7 @@ init -50 python:
     class JNBlush(Enum):
         full = 1
         light = 2
+        ill = 3
 
         def __str__(self):
             return self.name
@@ -337,7 +338,8 @@ init 1 python:
     
     BLUSH_MAP = {
         "f": JNBlush.full,
-        "l": JNBlush.light
+        "l": JNBlush.light,
+        "i": JNBlush.ill
     }
 
     TEARS_MAP = {

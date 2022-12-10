@@ -1,4 +1,3 @@
-# General tracking; the player unlocks Snap by admitting boredom to Natsuki at least once
 default persistent.jn_custom_music_unlocked = False
 default persistent.jn_custom_music_explanation_given = False
 

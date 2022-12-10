@@ -1514,9 +1514,11 @@ init -999 python in jn_utils:
         return return_file_items
 
 init -100 python in jn_utils:
+    import codecs
     import random
     import re
     import store
+    import store.jn_utils as jn_utils
     import store.jn_globals as jn_globals
 
     PROFANITY_REGEX = re.compile('|'.join(jn_globals._PROFANITY_LIST), re.IGNORECASE)
@@ -1771,6 +1773,16 @@ init -100 python in jn_utils:
         #Save background data
         store.main_background.save()
 
+        if store.persistent._affinity_daily_bypasses > 5:
+            store.persistent._affinity_daily_bypasses = 5
+
+        if store.persistent.affinity >= (store.persistent._jn_gs_aff + 250):
+            store.persistent.affinity = store.persistent._jn_gs_aff
+            jn_utils.log("53746f70206368656174696e67203a2d29".decode("hex"))
+
+        else:
+            store.persistent._jn_gs_aff = store.persistent.affinity
+
 # Vanilla resources from base DDLC
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
 define audio.t2 = "<loop 4.499>bgm/2.ogg"   #Sayori theme
@@ -1858,6 +1870,7 @@ define audio.just_natsuki_bgm = "mod_assets/bgm/just_natsuki.ogg"
 define audio.happy_birthday_bgm = "mod_assets/bgm/happy_birthday.ogg"
 define audio.ikustan_tsuj = "mod_assets/bgm/ikustan_tsuj.ogg"
 define audio.juuuuu_nnnnn = "mod_assets/bgm/juuuuu_nnnnn.ogg"
+define audio.just = "mod_assets/bgm/just.ogg" 
 
 # Voicing - we disable TTS
 define config.tts_voice = None

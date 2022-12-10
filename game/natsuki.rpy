@@ -2,6 +2,7 @@ default persistent.affinity = 25.0
 default persistent._jn_player_confession_accepted = False
 default persistent._jn_player_confession_day_month = None # Format (day, month)
 default persistent._jn_player_tt_state = 0
+default persistent._jn_player_tt_instances = 0
 
 init 0 python:
     import store.jn_outfits as jn_outfits
@@ -67,6 +68,8 @@ init 0 python:
 
         # Tracks whether Natsuki is currently playing a game
         __is_in_game = False
+
+        __capped_aff_dates = list()
 
         # START: Outfit functionality
 
@@ -203,7 +206,6 @@ init 0 python:
                 - bypass - If the daily cap should be bypassed for things like one-time gifts, events, etc.
             """
             to_add = base * jn_affinity.get_relationship_length_multiplier()
-
             if (
                 not persistent._jn_player_confession_accepted 
                 and (persistent.affinity + to_add) > (jn_affinity.AFF_THRESHOLD_LOVE -1)
@@ -230,7 +232,7 @@ init 0 python:
                 jn_utils.log("Affinity+")
 
             else:
-                jn_utils.log("Daily affinity cap reached!")
+                writeCap()
 
         @staticmethod
         def calculatedAffinityLoss(base=1):
@@ -289,6 +291,8 @@ init 0 python:
             Resets the daily affinity cap, if 24 hours has elapsed.
             """
             current_date = datetime.datetime.now()
+            if current_date in Natsuki.__capped_aff_dates:
+                return
 
             if not persistent.affinity_gain_reset_date:
                 persistent.affinity_gain_reset_date = current_date
@@ -298,6 +302,12 @@ init 0 python:
                 persistent.affinity_gain_reset_date = current_date
                 persistent._affinity_daily_bypasses = 5
                 jn_utils.log("Daily affinity cap reset; new cap is: {0}".format(persistent.affinity_daily_gain))
+
+        @staticmethod
+        def writeCap():
+            jn_utils.log("Daily affinity cap reached!")
+            if not datetime.today().isoformat() in Natsuki.__capped_aff_dates:
+                Natsuki.__capped_aff_dates.append(datetime.today().isoformat())
 
         @staticmethod
         def __isStateGreaterThan(aff_state):
