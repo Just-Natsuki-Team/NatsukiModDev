@@ -1569,6 +1569,12 @@ init -1 python in jn_outfits:
         unlocked=False,
         is_jn_wearable=True
     ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_pompoms",
+        display_name="Pompoms",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
 
     # Official JN necklaces
     __register_wearable(JNNecklace(
@@ -1695,8 +1701,7 @@ init -1 python in jn_outfits:
         is_jn_outfit=True,
         clothes=get_wearable("jn_clothes_lolita_christmas_dress"),
         hairstyle=get_wearable("jn_hair_down"),
-        accessory=get_wearable("jn_accessory_hairband_white"),
-        headgear=get_wearable("jn_headgear_santa_hat")
+        headgear=get_wearable("jn_headgear_pompoms")
     ))
     __register_outfit(JNOutfit(
         reference_name="jn_trainer_cosplay",
@@ -2382,7 +2387,7 @@ label new_wearables_outfits_unlocked:
         n 1kbkwrf "What even {i}is{/i} all this?!"
 
         if jnIsChristmasEve():
-            n 1knmgsf "A-{w=0.2}and come {i}on{/i}, [player]!{w=1}{nw}" 
+            n 1knmgsf "A-{w=0.2}and come {i}on{/i}, [player]!{w=1}{nw}"
             extend 1kbkwrfesd "It isn't even Christmas yeeeet!"
 
         n 1fllemlesssbl "Y-{w=0.2}you better not be trying to win me over with gifts or something!{w=1}{nw}"
