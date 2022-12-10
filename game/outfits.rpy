@@ -827,6 +827,9 @@ init -1 python in jn_outfits:
             except TypeError:
                 jn_utils.log("Unable to read file {0}; corrupt file or invalid JSON.".format(file_name))
 
+            except ValueError:
+                jn_utils.log("Unable to read file {0}; corrupt file or invalid JSON.".format(file_name))
+
             except:
                 raise
 
@@ -854,6 +857,9 @@ init -1 python in jn_outfits:
                 jn_utils.log("Unable to read file {0}; file could not be found.".format(file_name))
 
             except TypeError:
+                jn_utils.log("Unable to read file {0}; corrupt file or invalid JSON.".format(file_name))
+
+            except ValueError:
                 jn_utils.log("Unable to read file {0}; corrupt file or invalid JSON.".format(file_name))
 
             except:
