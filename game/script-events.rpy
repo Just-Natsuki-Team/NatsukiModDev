@@ -2484,7 +2484,57 @@ label holiday_christmas_eve:
     return
 
 label holiday_christmas_day:
-    $ jn_events.getHoliday("holiday_christmas_day").run()
+    python:
+        # Let it snow
+        persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
+        jn_atmosphere.showSky(jn_atmosphere.WEATHER_SNOW)
+
+        # Dress up Natsu
+        christmas_outfit = jn_outfits.get_outfit("jn_christmas_outfit")
+        christmas_outfit.unlock()
+        jn_outfits.save_temporary_outfit(christmas_outfit)
+        
+        # Let it go
+        jn_events.getHoliday("holiday_christmas_day").run()
+
+    n "Omigosh!"
+    extend " Omigosh omigosh omigosh omigosh omigoooosh!"
+    n "[player]!"
+    extend "[player]! [player]!"
+    n "It's here!"
+    extend " It's actually,"
+    extend " finally," 
+    extend " freaking {i}HERE{/i}!"
+
+    if jn_get_current_time_block in [JNTimeBlocks.early_morning, JNTimeBlocks.mid_morning, JNTimeBlocks.late_morning]:
+        n "Come on!"
+        extend " Get the sleep out of your eyes already, [player]!"
+        n "Up and at 'em!"
+        extend " C'mon, [player]!"
+
+    else:
+        n "What even took you so long?"
+        extend " Did you forget what day it was or something?"
+        extend " It's time to celebrate!"
+        n "'Cause..."
+
+    n "IT'S CHRISTMAAAAS!"
+    extend " Ehehe!"
+    n "Man,"
+    extend " it feels so good to {i}finally{/i} say that..."
+    n "I mean..."
+    extend " it isn't as if I had tons planned or anything."
+    extend " ...Not like there's much {i}to{/i} plan here."
+    # TODO: does this fit here?
+    n "But there's just something about Christmas that brings that sense of relief, you know?"
+    n "Studies can take a hike,"
+    extend " you've finally given away the gifts..."
+    # ^
+    n "Haah..."
+    extend " I'm telling you,"
+    extend " it's like I can feel the stress of the year just washing away from me..."
+    n "Much better!"
+
     $ jn_events.getHoliday("holiday_christmas_day").complete()
 
     return
