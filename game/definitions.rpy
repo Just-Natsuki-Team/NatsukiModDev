@@ -1864,13 +1864,15 @@ define audio.rain_muffled = "mod_assets/sfx/rain_muffled.ogg"
 # Music, vanilla DDLC
 define audio.space_classroom_bgm = "mod_assets/bgm/space_classroom.ogg"
 define audio.holiday_bgm = "mod_assets/bgm/vacation.ogg"
+define audio.dread = "mod_assets/bgm/dread.ogg"
 
 # Music, JN exclusive
 define audio.just_natsuki_bgm = "mod_assets/bgm/just_natsuki.ogg"
 define audio.happy_birthday_bgm = "mod_assets/bgm/happy_birthday.ogg"
 define audio.ikustan_tsuj = "mod_assets/bgm/ikustan_tsuj.ogg"
 define audio.juuuuu_nnnnn = "mod_assets/bgm/juuuuu_nnnnn.ogg"
-define audio.just = "mod_assets/bgm/just.ogg" 
+define audio.just = "mod_assets/bgm/just.ogg"
+define audio.night_natsuki = "mod_assets/bgm/night_natsuki.ogg"
 
 # Voicing - we disable TTS
 define config.tts_voice = None

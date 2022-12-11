@@ -139,18 +139,16 @@ label ch30_init:
         if tt_in_session:
             if persistent._jn_player_tt_state == 1:
                 push("greeting_tt_warning")
+                renpy.jump("call_next_topic")
 
             elif persistent._jn_player_tt_state == 2:
-                push("greeting_tt_fatal")
+                renpy.jump("greeting_tt_fatal")
 
             else:
-                push("greeting_tt_game_over")
-
-            renpy.jump("call_next_topic", False)
+                renpy.jump("greeting_tt_game_over")
 
         elif persistent._jn_player_tt_state >= 2:
-            push("greeting_tt_game_over")
-            renpy.jump("call_next_topic", False)
+            renpy.jump("greeting_tt_game_over")
 
         # Check for holidays, then queue them up and run them in sequence if we have any
         available_holidays = jn_events.selectHolidays()
@@ -662,8 +660,12 @@ label extras_menu:
     jump ch30_loop
 
 label try_force_quit:
+    # Goodnight
+    if persistent._jn_player_tt_state >= 2:
+        $ renpy.jump("quit")
+
     # Decision making that overrides the default Ren'Py quit behaviour
-    if (
+    elif (
         jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete
         and jn_farewells.JNForceQuitStates(persistent.jn_player_force_quit_state) == jn_farewells.JNForceQuitStates.not_force_quit
     ):

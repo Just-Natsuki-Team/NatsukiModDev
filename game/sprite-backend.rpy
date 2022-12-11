@@ -1246,3 +1246,6 @@ image natsuki talk_menu_ruined:
             "natsuki 1fcssrtse"
         choice:
             "natsuki 1fnmantdr"
+
+image desk = "mod_assets/natsuki/desk/table_normal.png"
+image chair = "mod_assets/natsuki/desk/chair_normal.png"

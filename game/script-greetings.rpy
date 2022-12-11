@@ -456,12 +456,47 @@ label greeting_tt_warning:
     return
 
 label greeting_tt_fatal:
-    n "This isn't done yet!"
+    $ config.window_title = _("Just You - {0}".format(config.version))
+    $ jn_globals.force_quit_enabled = False
+    $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_GLITCH)
+    show chair zorder JN_NATSUKI_ZORDER
+    show desk zorder JN_NATSUKI_ZORDER
+    play audio dread
+    $ jnPause(5.3)
+    hide black
+    show glitch_steady zorder 98
+    play audio static
+    show glitch_spook zorder 99 with vpunch
+    hide glitch_spook
+
+    play audio static
+    show glitch_garbled_b zorder 99 with vpunch
+    hide glitch_garbled_b
+
+    play audio static
+    show glitch_spook zorder 99 with vpunch
+    hide glitch_spook
+
+    play audio interference fadeout 0.5
+    hide glitch_steady with Dissolve(2)
+    play music audio.night_natsuki fadein 2
+
+    $ jn_globals.force_quit_enabled = True
+    $ jnPause(100000)
+    $ renpy.quit()
+
     return
 
 label greeting_tt_game_over:
-    n "This isn't done yet!"
-    return
+    $ config.window_title = _("Just You - {0}".format(config.version))
+    $ jn_globals.force_quit_enabled = False
+    $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_GLITCH)
+    show chair zorder JN_NATSUKI_ZORDER
+    show desk zorder JN_NATSUKI_ZORDER
+    hide black with Dissolve(2)
+    $ jn_globals.force_quit_enabled = True
+    $ jnPause(100000)
+    $ renpy.quit()
 
 # Generic greetings
 
