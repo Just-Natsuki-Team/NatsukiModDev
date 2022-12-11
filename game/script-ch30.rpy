@@ -71,7 +71,7 @@ label ch30_init:
                 persistent._jn_player_tt_state += 1
 
         # Determine if the player should get a prolonged leave greeting
-        if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 2:
+        elif (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 2:
             Natsuki.setQuitApology(jn_apologies.ApologyTypes.prolonged_leave)
 
         # Repeat visits have a small affinity gain
@@ -123,6 +123,10 @@ label ch30_init:
             jn_events.resetHolidays()
             jn_utils.log("Holiday completion states reset.")
 
+        # TEST CODE
+        push("greeting_tt_warning")
+        renpy.jump("call_next_topic")
+
         # Handle TT strikes/checks
         if tt_in_session:
             if persistent._jn_player_tt_state == 1:
@@ -134,11 +138,11 @@ label ch30_init:
             else:
                 push("greeting_tt_game_over")
 
-            renpy.call("call_next_topic", False)
+            renpy.jump("call_next_topic", False)
 
         elif persistent._jn_player_tt_state >= 2:
             push("greeting_tt_game_over")
-            renpy.call("call_next_topic", False)
+            renpy.jump("call_next_topic", False)
 
         # If we have decorations from the last holiday, and the day hasn't changed, then we should put them back up
         if len(persistent._jn_holiday_deco_list_on_quit) > 0 and datetime.date.today().day == persistent.jn_last_visited_date.day:

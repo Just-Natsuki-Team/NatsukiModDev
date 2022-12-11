@@ -342,10 +342,10 @@ init python in jn_events:
             OUT:
                 - True, if the holiday meets the filter criteria. Otherwise False
             """
-            if is_seen is not None and not self.is_seen == is_seen:
+            if is_seen is not None and self.is_seen != is_seen:
                 return False
 
-            elif holiday_types and not self.holiday_type in holiday_types:
+            elif holiday_types is not None and not self.holiday_type in holiday_types:
                 return False
 
             elif affinity is not None and not self.currAffinityInAffinityRange(affinity):
@@ -466,7 +466,7 @@ init python in jn_events:
         if store.jnIsChristmasDay(input_date):
             holidays.append(JNHolidayTypes.christmas_day)
 
-        if store.jnIsChristmasEve(input_date):
+        if store.jnIsNewYearsEve(input_date):
             holidays.append(JNHolidayTypes.new_years_eve)
 
         if store.jnIsNatsukiBirthday(input_date):

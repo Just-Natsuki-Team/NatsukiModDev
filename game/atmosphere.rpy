@@ -42,14 +42,15 @@ image sky glitch_fuzzy:
     repeat
 
 image glitch_rapid:
-    choice:
-        "mod_assets/backgrounds/etc/glitch_fuzzy_a.png"
-    choice:
-        "mod_assets/backgrounds/etc/glitch_fuzzy_b.png"
-    choice:
-        "mod_assets/backgrounds/etc/glitch_fuzzy_c.png"
+    "mod_assets/backgrounds/etc/class_garbled_a.png"
+    pause 0.1
+    "mod_assets/backgrounds/etc/class_garbled_b.png"
+    pause 0.1
+    "mod_assets/backgrounds/etc/class_garbled_c.png"
     pause 0.1
     repeat
+
+image glitch_spook = "mod_assets/backgrounds/etc/class_garbled_d.png"
 
 # Clouds
 image clouds day light:

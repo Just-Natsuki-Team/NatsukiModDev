@@ -619,7 +619,7 @@ init -3 python:
         if input_date is None:
             input_date = datetime.datetime.today()
 
-        return input_date == store.JN_NEW_YEARS_DAY
+        return input_date.day == store.JN_NEW_YEARS_DAY.day and input_date.month == store.JN_NEW_YEARS_DAY.month
 
     def jnIsValentinesDay(input_date=None):
         """
@@ -631,7 +631,7 @@ init -3 python:
         if input_date is None:
             input_date = datetime.datetime.today()
 
-        return input_date == store.JN_VALENTINES_DAY
+        return input_date.day == store.JN_VALENTINES_DAY.day and input_date.month == store.JN_VALENTINES_DAY.month
 
     def jnIsEaster(input_date=None):
         """
@@ -643,7 +643,7 @@ init -3 python:
         if input_date is None:
             input_date = datetime.datetime.today()
 
-        return input_date == store.JN_EASTER
+        return input_date.day == store.JN_EASTER.day and input_date.month == store.JN_EASTER.month
 
     def jnIsHalloween(input_date=None):
         """
@@ -655,7 +655,7 @@ init -3 python:
         if input_date is None:
             input_date = datetime.datetime.today()
 
-        return input_date == store.JN_HALLOWEEN
+        return input_date.day == store.JN_HALLOWEEN.day and input_date.month == store.JN_HALLOWEEN.month
 
     def jnIsChristmasEve(input_date=None):
         """
@@ -667,7 +667,7 @@ init -3 python:
         if input_date is None:
             input_date = datetime.datetime.today()
 
-        return input_date == store.JN_CHRISTMAS_EVE
+        return input_date.day == store.JN_CHRISTMAS_EVE.day and input_date.month == store.JN_CHRISTMAS_EVE.month
 
     def jnIsChristmasDay(input_date=None):
         """
@@ -679,7 +679,7 @@ init -3 python:
         if input_date is None:
             input_date = datetime.datetime.today()
 
-        return input_date == store.JN_CHRISTMAS_DAY
+        return input_date.day == store.JN_CHRISTMAS_DAY.day and input_date.month == store.JN_CHRISTMAS_DAY.month
 
     def jnIsNewYearsEve(input_date=None):
         """
@@ -691,7 +691,7 @@ init -3 python:
         if input_date is None:
             input_date = datetime.datetime.today()
 
-        return input_date == store.JN_NEW_YEARS_EVE
+        return input_date.day == store.JN_NEW_YEARS_EVE.day and input_date.month == store.JN_NEW_YEARS_EVE.month
 
     def jnIsNatsukiBirthday(input_date=None):
         """
@@ -703,7 +703,7 @@ init -3 python:
         if input_date is None:
             input_date = datetime.datetime.today()
 
-        return input_date == store.JN_NATSUKI_BIRTHDAY
+        return input_date.day == store.JN_NATSUKI_BIRTHDAY.day and input_date.month == store.JN_NATSUKI_BIRTHDAY.month
 
     def jnIsPlayerBirthday(input_date=None):
         """
@@ -724,7 +724,7 @@ init -3 python:
             store.persistent._jn_player_birthday_day_month[0]
         )
 
-        return (input_date.month == player_birthday.month and input_date.day == player_birthday.day)
+        return input_date.day == player_birthday.day and input_date.month == player_birthday.month
 
     def jnIsAnniversary(input_date=None):
         """
@@ -745,7 +745,7 @@ init -3 python:
             store.persistent._jn_player_anniversary_day_month[0]
         )
 
-        return (input_date.month == anniversary_date.month and input_date.day == anniversary_date.day)
+        return input_date.day == anniversary_date.day and input_date.month == anniversary_date.month
 
     def jnIsDate(input_date):
         """

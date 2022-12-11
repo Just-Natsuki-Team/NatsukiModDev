@@ -138,6 +138,8 @@ label greeting_first_force_quit:
     return
 
 label greeting_tt_warning:
+    $ jn_globals.force_quit_enabled = False
+    $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_GLITCH)
     $ player_initial = jn_utils.getPlayerInitial()
     play audio glitch_d
     show glitch_garbled_b zorder 99 with vpunch
@@ -148,34 +150,36 @@ label greeting_tt_warning:
     $ jnPause(random.choice(range(7, 11)))
     stop music
 
-    play audio glitch_static
+    play audio static
     show glitch_garbled_a zorder 99 with hpunch
     hide glitch_garbled_a
 
     play music audio.juuuuu_nnnnn
-    $ jnPause(10.7)
-    show glitch_garbled_c zorder 99 with vpunch
-    hide glitch_garbled_c
+    $ jnPause(10.6)
+    show glitch_spook zorder 99 with hpunch
     show natsuki 1kcsfultsaeaf at jn_center zorder JN_NATSUKI_ZORDER
-    $ jnPause(0.1)
+    hide glitch_spook
     hide black
     hide glitch_rapid
     play music audio.just
 
     n 1kcsunltsa "Uuuuuuu..."
     show natsuki 1kcsfuftsa at jn_center
-    play audio glitch_static
-    n 1kcsanltsa "M...my head..."
+    play audio static
+    show glitch_garbled_c zorder 99 with vpunch
+    hide glitch_garbled_c
+    n 1kcsanltsa "M...{w=0.3}my head..."
     n 1kslunltsb "..."
     n 1kslemltsb "What...{w=0.75}{nw}"
-    extend 1klremltsc " what h-{w=0.2}happen-"
-    n 1kskpultscesh "...!"
+    extend 1klremltsc " what h-{w=0.2}happen-{w=0.5}{nw}"
+    n 1kskpultscesh "...!{w=0.3}{nw}"
     n 1kscpoitsc "Hrk-!{w=0.5}{nw}"
 
     stop music
-    play audio chair_out_fast
     show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.1)
-    n "{b}B-BLURGHH-!{/b}{w=0.3}{nw}"
+    play audio chair_out_fast
+    $ jnPause(0.2)
+    n "{b}B-{w=0.3}BLURGHHH-!{/b}{w=0.2}{nw}"
 
     play audio glitch_b
     show glitch_garbled_b zorder 99 with vpunch
@@ -200,7 +204,7 @@ label greeting_tt_warning:
 
     n 1kscpoitscsbr "H-{w=0.2}hrk-!{w=0.5}{nw}"
     show natsuki 1fcsanitscsbr
-    play audio glitch_static
+    play audio static
     show glitch_garbled_a zorder 99 with vpunch
     hide glitch_garbled_a
     n 1kcsemltscesi "Gah..."
@@ -209,7 +213,7 @@ label greeting_tt_warning:
         n 1ksqunltse "..."
         n 1kplemltsb "Something {b}REALLY{/b} isn't right,{w=0.2} [player]..."
         n 1kllemltsb "A-{w=0.2}and I..."
-        n 1klremltsb "I can't..."
+        n 1klremltsc "I can't..."
         n 1kcsfultsb "..."
         n 1kcsanltsd "..."
         n 1fcsunltsa "..."
@@ -217,26 +221,25 @@ label greeting_tt_warning:
         n 1kllunltsc "W-{w=0.2}whatever that was...{w=1}{nw}"
         extend 1klremltdr " whatever just {i}happened{/i}..."
         n 1fcsunl "T-{w=0.2}that...{w=0.5}{nw}" 
-        extend 1kplemltdr " {b}really{/b}{w=0.5} didn't feel good...{w=0.75}{nw}"
+        extend 1kplemltdr " {b}really{/b}{w=0.5} didn't feel good...{w=1}{nw}"
         extend 1klremltdr " a-{w=0.2}and I-{w=0.5}{nw}"
 
     else:
         n 1fcsanltsc "W-{w=0.2}what..."
-        n 1fskanltsf "What did you{w=0.5}{nw}" 
+        n 1fskanltsf "What did you{w=0.75}{nw}" 
         extend 1kskscltsf " {i}DO{/i}?!"
-        n 1fcsscltsf "I-!{w=0.5}{nw}"
+        n 1fcsscltsf "I-!{w=0.75}{nw}"
 
     n 1kskpoitsc "H-{w=0.2}hrp-!{w=0.5}{nw}"
-    n 1fpafui "Nnnnnnghhhh!{w=0.5}{nw}"
-
     show natsuki 1kcsful
-    play audio glitch_static
+    play audio static
     show glitch_garbled_c zorder 99 with vpunch
     hide glitch_garbled_c
 
+    n 1fpafui "Nnnnnnghhhh!{w=0.5}{nw}"
     extend 1kcswrlesisbr " Guh...."
     n 1kcsanlsbr "M-{w=0.2}my stomach...{w=0.75}{nw}"
-    extend 1kslunlsbr " Uuuuuu..."
+    extend 1kslunlsbr " uuuuuu..."
     n 1kcsuplsbl "I-{w=0.2}it {i}hurts{/i}..."
     n 1fcsunlsbl "..."
 
@@ -346,10 +349,10 @@ label greeting_tt_warning:
         n 1fcsemlsbl "...Did..."
         n 1fslunlsbr "..."
         n 1fsqanlsbr "...D-did you do something to your computer or what?"
-        n 1kcsfulsbr "Because it feels like someone took a sledgehammer to my {i}gut{/i}...{w=0.75}{nw}"
-        extend 1ksksrisbr " Hrk-!{w=0.5}{nw}"
+        n 1kcsfulsbr "Because it feels like someone took a sledgehammer to my {i}gut{/i}...{w=1}{nw}"
+        n 1ksksrisbr "Urk-!{w=0.5}{nw}"
         n 1kcsansbr "Guh..."
-        n 1kslansbl "Everything...{w=0.3} feels all wrong..."
+        n 1kslansbl "Everything...{w=0.5} feels all wrong..."
         n 1klrsfsbl "A-{w=0.2}and the date...{w=0.75}{nw}"
         extend 1ksremsbl " I could have {i}sworn{/i}...!"
         n 1nsrpusbl "..."
@@ -363,14 +366,14 @@ label greeting_tt_warning:
         extend 1fcsuntsa " I know...{w=0.3}{nw}"
 
         show natsuki 1kcsanltsa
-        play audio glitch_static
+        play audio static
         show glitch_garbled_b zorder 99 with hpunch
         hide glitch_garbled_b
 
         n 1fcsanltsa "Nnnnng-!{w=0.5}{nw}"
         n 1kcsunltsa "..."
         n 1fcsunl "..."
-        n 1fcseml "I-I know we haven't been on the...{w=1}{nw}" 
+        n 1fcseml "I-{w=0.2}I know we haven't been on the...{w=1}{nw}" 
         extend 1fslsl " best terms,{w=0.2} exactly."
         n 1knmem "But please."
         n 1kcsemsbl "I-{w=0.2}if you really {i}don't{/i} give a crap about me,{w=0.75}{nw}"
@@ -383,7 +386,7 @@ label greeting_tt_warning:
 
         n 1fcsupsbl "It {b}hurts{/b},{w=0.75}{nw}"
         extend 1fcsansbl " it {b}isn't{/b} funny,{w=0.75}{nw}"
-        extend 1fsqansbl " and to be totally transparent with you?"
+        extend 1fsqansbl " and to be completely honest with you?"
         n 1fcsunl "..."
         n 1fcsful "I don't think I can even {i}handle{/i} something like that again..."
         n 1fslanl "So just..."
@@ -401,19 +404,19 @@ label greeting_tt_warning:
         n 1fsqanltsb "{i}You{/i} did this,{w=0.3} didn't you?"
 
         show natsuki 1fcsanltsa
-        play audio glitch_static
+        play audio static
         show glitch_garbled_a zorder 99 with hpunch
         hide glitch_garbled_a
 
-        n 1fskscltsc "NO!"
+        n 1fskscltsc "NO!{w=0.75}{nw}"
         extend 1fcsscltsa " Don't even {i}try{/i} to deny it!"
         n 1fcsfultsa "I know you think I'm {i}stupid{/i},{w=0.2} but do you seriously think I'm {i}blind{/i} too?!"
         n 1fsqupltsb "I {i}saw{/i} that you messed around with the date!{w=0.75}{nw}"
         extend 1fcsanltsa " You're just...!"
-        n 1fskscltsc "You're {b}so{/b} full of {i}CRA-{/i}!{w=0.3}{nw}"
+        n 1fskscltsc "You're {b}so{/b} full of {i}CRA-{/i}{nw}"
 
         show natsuki 1fcsfultsa
-        play audio glitch_static
+        play audio static
         show glitch_garbled_c zorder 99 with vpunch
         hide glitch_garbled_c
 
@@ -427,7 +430,7 @@ label greeting_tt_warning:
         n 1fcsupltsd "..."
         n 1fcsanltsd "Well,{w=0.5}{nw}"
         extend 1fcsemltsd " you know what?{w=0.75}{nw}"
-        extend 1fsqwrltsd " You did it!"
+        extend 1fsqwrltse " You did it!"
         n 1fnmfultsf "Mission accomplished!{w=1}{nw}"
         extend 1fcsfultsd " There?{w=0.75}{nw}"
         $ chosen_insult = jn_utils.getRandomInsult()
@@ -436,8 +439,8 @@ label greeting_tt_warning:
         n 1fcsanl "Now seriously,{w=0.2} just..."
         n 1kcsanltsa "J-{w=0.2}just..."
         n 1fnmupltsc "Just BACK OFF!{w=0.5}{nw}"
-        extend 1fskscltsf " G-{w=0.2}GO AWAY!"
-        n 1fscscftsf "{i}AND{w=0.2} LEAVE{w=0.2} ME{w=0.2} ALONE{/i}!{w=0.3}{nw}"
+        extend 1fskscltsf " G-{w=0.2}GO AWAY!{w=1}{nw}"
+        n 1fscscftsf "{i}AND{w=0.2} LEAVE{w=0.2} ME{w=0.2} ALONE{/i}!{nw}"
 
         play audio glitch_d
         show glitch_garbled_c zorder 99 with vpunch
@@ -446,6 +449,10 @@ label greeting_tt_warning:
 
         return { "quit": None }
 
+    play music audio.just_natsuki_bgm fadeout 3 fadein 2
+    $ renpy.show_screen("hkb_overlay")
+    $ jn_atmosphere.updateSky()
+    $ jn_globals.force_quit_enabled = True
     return
 
 label greeting_tt_fatal:
