@@ -391,47 +391,47 @@ label greeting_tt_warning:
         n 1fcsfu "{i}Remember that.{/i}"
 
     else:
-        n  "..."
-        n  "...You."
-        n  "{i}You{/i} did this, didn't you?"
+        n 1fcsupltsa "..."
+        n 1fsqupltsb "...You."
+        n 1fsqanltsb "{i}You{/i} did this, didn't you?"
 
-        show natsuki pained
+        show natsuki 1fcsanltsa
         play audio glitch_static
         show glitch_garbled_a zorder 99 with hpunch
         hide glitch_garbled_a
 
-        n  "NO!"
-        extend  " Don't even {i}try{/i} to deny it!"
-        n  "I know you think I'm {i}stupid{/i}, but do you seriously think I'm {i}blind{/i} too?!"
-        n  "I saw that you messed around with the date!"
-        extend  " You're just...!"
-        n  "You're {b}so{/b} full of {i}CRA-{/i}!"
+        n 1fskscltsc "NO!"
+        extend 1fcsscltsa " Don't even {i}try{/i} to deny it!"
+        n 1fcsfultsa "I know you think I'm {i}stupid{/i}, but do you seriously think I'm {i}blind{/i} too?!"
+        n 1fsqupltsb "I saw that you messed around with the date!"
+        extend 1fcsanltsa " You're just...!"
+        n 1fskscltsc "You're {b}so{/b} full of {i}CRA-{/i}!"
 
-        show natsuki pained
+        show natsuki 1fcsfultsa
         play audio glitch_static
         show glitch_garbled_c zorder 99 with vpunch
         hide glitch_garbled_c
 
-        n  "Nnnnnrrgh-!"
-        n  "..."
-        n  "...Haah."
-        n  "..."
-        n  "...I {i}seriously{/i} cannot {i}believe{/i} you."
-        extend  " You're already torturing me well enough."
-        n  "And now you go {i}completely{/i} out of your way to make my life {i}even more{/i} miserable?!"
-        n  "..."
-        n  "Well,"
-        extend  " you know what?"
-        extend  " You did it!"
-        n  "Mission accomplished!"
-        extend  " There?"
-        extend  " You done, jerk?"
-        n  "Are you HAPPY?"
-        n  "Now seriously, just..."
-        n  "J-just..."
-        n  "Just BACK OFF!"
-        extend  " G-GO AWAY!"
-        n  "{i}AND{w=0.2} LEAVE{w=0.2} ME{w=0.2} ALONE{/i}!{w=0.3}{nw}"
+        n 1fcsupltsa "Nnnnnrrgh-!"
+        n 1fcsunltsa "..."
+        n 1fcsemltsa "...Haah."
+        n 1fcsunltsa "..."
+        n 1fcsanltsa "...I {i}seriously{/i} cannot {i}believe{/i} you."
+        extend 1fsqanltsa " You're already torturing me well enough."
+        n 1fnmupltsc "And now you go {i}completely{/i} out of your way to make my life {i}even more{/i} miserable?!"
+        n 1fcsupltsd "..."
+        n 1fcsanltsd "Well,"
+        extend 1fcsemltsd " you know what?"
+        extend 1fsqwrltsd " You did it!"
+        n 1fnmfultsf "Mission accomplished!"
+        extend 1fcsfultsd " There?"
+        extend 1fcsgsltsa " You done, jerk?"
+        n 1fnmanltdr "Are you HAPPY?"
+        n 1fcsanl "Now seriously, just..."
+        n 1kcsanltsa "J-just..."
+        n 1fnmupltsc "Just BACK OFF!"
+        extend 1fskscltsf " G-GO AWAY!"
+        n 1fscscftsf "{i}AND{w=0.2} LEAVE{w=0.2} ME{w=0.2} ALONE{/i}!{w=0.3}{nw}"
 
         play audio glitch_d
         show glitch_garbled_c zorder 99 with vpunch
