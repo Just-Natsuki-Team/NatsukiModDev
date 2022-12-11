@@ -1700,7 +1700,8 @@ init -1 python in jn_outfits:
         unlocked=False,
         is_jn_outfit=True,
         clothes=get_wearable("jn_clothes_lolita_christmas_dress"),
-        hairstyle=get_wearable("jn_hair_down"),
+        hairstyle=get_wearable("jn_hair_twintails"),
+        accessory=get_wearable("jn_accessory_hairband_red"),
         headgear=get_wearable("jn_headgear_pompoms")
     ))
     __register_outfit(JNOutfit(
