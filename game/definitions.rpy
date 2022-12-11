@@ -5,6 +5,8 @@ default player = persistent.playername
 default persistent.jn_total_visit_count = 0
 default persistent.jn_first_visited_date = datetime.datetime.now()
 default persistent.jn_last_visited_date = datetime.datetime.now()
+default persistent._jn_player_tt_state = 0
+default persistent._jn_player_tt_instances = 0
 
 #Our main topic pool
 default persistent._event_list = list()
