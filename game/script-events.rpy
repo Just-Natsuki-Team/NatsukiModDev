@@ -227,7 +227,7 @@ init python in jn_events:
                 - affinity_range - The affinity range that must be satisfied for this holiday to be picked when filtering
                 - natsuki_sprite_code - The sprite code to show for Natsuki when the holiday is revealed
                 - conditional - Python statement that must evaluate to True for this holiday to be picked when filtering
-                - bgm - The optional music to play when the holiday is revealed 
+                - bgm - The optional music to play when the holiday is revealed
                 - deco_list - Optional list of deco images to show when setting up
                 - prop_list - Optional list of prop images to show when setting up
                 - priority - Optional priority value; holidays with lower values are shown first
@@ -428,7 +428,7 @@ init python in jn_events:
         IN:
             - holiday_name - str outfit name to fetch
 
-        OUT: Corresponding JNHoliday if the holiday exists, otherwise None 
+        OUT: Corresponding JNHoliday if the holiday exists, otherwise None
         """
         if holiday_name in __ALL_HOLIDAYS:
             return __ALL_HOLIDAYS[holiday_name]
@@ -512,7 +512,7 @@ init python in jn_events:
                 if holiday.holiday_type not in holiday_types_added:
                     holiday_types_added.append(holiday.holiday_type)
                     return_list.append(holiday)
-                
+
             return return_list
 
         else:
@@ -527,7 +527,7 @@ init python in jn_events:
 
         JNHoliday.saveAll()
         store.persistent._jn_holiday_completed_list = []
-        
+
     def queueHolidays(holiday_list, is_day_check=False):
         """
         Given a list of holidays, will sort them according to priority and add them to the list of topics to run through.
@@ -2070,16 +2070,16 @@ label holiday_interlude:
 label holiday_new_years_day:
     python:
         import copy
-        
-        # Give Natsuki a party hat, using whatever she's currently wearing as a base
-        jn_outfits.get_wearable("jn_headgear_classic_party_hat").unlock()
+
+        # Give Natsuki a new year headband, using whatever she's currently wearing as a base
+        jn_outfits.get_wearable("jn_headgear_new_year_headband").unlock()
         new_years_hat_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
-        new_years_hat_outfit.headgear = jn_outfits.get_wearable("jn_headgear_classic_party_hat")
+        new_years_hat_outfit.headgear = jn_outfits.get_wearable("jn_headgear_new_year_headband")
         new_years_hat_outfit.hairstyle = jn_outfits.get_wearable("jn_hair_down")
         jn_outfits.save_temporary_outfit(new_years_hat_outfit)
 
         jn_events.getHoliday("holiday_new_years_day").run()
-    
+
     n 1uchbs "FIVE!"
     n 1uchbg "FOUR!"
     n 1uchbs "THREE!"
@@ -2134,7 +2134,7 @@ label holiday_new_years_day:
     if jn_is_day():
         n 1fchgn "{i}Something{/i} tells me you wouldn't appreciate the extra headache!"
 
-    n 1tllaj "But...{w=1}{nw}" 
+    n 1tllaj "But...{w=1}{nw}"
     extend 1tnmsl " there actually is one thing I wanna say."
     n 1ncssl "..."
     n 1ucspu "Just..."
@@ -2142,7 +2142,7 @@ label holiday_new_years_day:
     if Natsuki.isAffectionate(higher=True):
         extend 1fnmpul " promise me something,{w=0.1} [player].{w=0.5}{nw}"
         extend 1knmbol " Please?"
-    
+
     else:
         extend 1fnmpu " do one thing for me.{w=0.5}{nw}"
         extend 1knmbol " Please?"
@@ -2156,8 +2156,8 @@ label holiday_new_years_day:
 
     else:
         extend 1fcsajfesssbl " A-{w=0.2}and I don't mean me.{w=0.5}{nw}"
-    
-    n 1fcsun "Please...{w=1}{nw}" 
+
+    n 1fcsun "Please...{w=1}{nw}"
     extend 1fcspul " hear me out,{w=0.1} alright?"
     n 1kllun "Not everyone has the luxury of friends or family.{w=1}{nw}"
     extend 1ksqpu " And trust me when I say not everyone looks forward to a new year..."
@@ -2190,7 +2190,7 @@ label holiday_new_years_day:
         n 1knmsll "...Thank you."
         n 1kllssl "For this year,{w=0.1} I mean."
         n 1fcsemlesssbl "I-{w=0.2}I know I don't show it a lot!{w=0.5}{nw}"
-        extend 1klrpul " But...{w=0.5}{nw}" 
+        extend 1klrpul " But...{w=0.5}{nw}"
         extend 1knmpul " just taking time out of your day to visit me,{w=0.75}{nw}"
         extend 1kllssl " listening to all my nonsense,{w=0.75}{nw}"
         extend 1fsldvl " dealing with my crap sometimes..."
@@ -2225,7 +2225,7 @@ label holiday_new_years_day:
         extend 1fcsemlsbl " F-{w=0.2}for this year,{w=0.1} I mean."
         n 1fslbolesssbl "I...{w=0.5}{nw}"
         extend 1knmboless " really appreciate that you've spent so much time with me already."
-        n 1kllssless "Even if I {i}am{/i} just a grouchy girl stuck in some{w=0.5}{nw}" 
+        n 1kllssless "Even if I {i}am{/i} just a grouchy girl stuck in some{w=0.5}{nw}"
         extend 1fsrssl " magical space classroom."
         n 1nlrunl "..."
         n 1kbkwrl "Seriously!{w=0.2} I do!"
@@ -2341,7 +2341,7 @@ label holiday_christmas_eve:
     n 1fcsbg "So...{w=1}{nw}"
 
     show natsuki 1tsqsm at jn_center
-    
+
     menu:
         extend " are {i}you{/i} all good to go yet,{w=0.2} [player]?"
 
@@ -2388,7 +2388,7 @@ label holiday_christmas_eve:
         extend 1kwmbol " You being here right now."
         n 1ksrbol "...Probably more than you'd know."
         n 1klrbol "..."
-        n 1kwmpuf "...I really should have been spending today with my friends,{w=0.2} [player].{w=1}{nw}" 
+        n 1kwmpuf "...I really should have been spending today with my friends,{w=0.2} [player].{w=1}{nw}"
         extend 1kllbol " But..."
 
         if Natsuki.isLove(higher=True):
@@ -2405,7 +2405,7 @@ label holiday_christmas_eve:
 
     elif Natsuki.isAffectionate(higher=True):
         n 1kcscalsbl "...T-{w=0.2}thanks."
-        n 1fcsemlsbl "F-{w=0.3}for being here today,{w=0.75}{nw}" 
+        n 1fcsemlsbl "F-{w=0.3}for being here today,{w=0.75}{nw}"
         extend 1kslbolsbl " I mean."
         n 1fcsbolsbr "I-{w=0.3}I know you didn't have to come visit at all.{w=0.75}{nw}"
         extend 1ksrpulsbl " And I'd be a real jerk to demand it..."
@@ -2416,11 +2416,11 @@ label holiday_christmas_eve:
         n 1kslbol "Really.{w=1.25}{nw}"
         extend 1ksqbol " Thank you."
         n 1ksrcal "..."
-        n 1ksrajlsbr "And...{w=1}{nw}" 
+        n 1ksrajlsbr "And...{w=1}{nw}"
         extend 1knmajlsbr " [player]?"
         n 1kcsunfsbr "..."
         show natsuki 1fcssrfsbr
-    
+
     else:
         n 1kcscalsbl "...Thanks.{w=0.75}{nw}"
         extend 1fcsemlsbl " F-{w=0.3}for turning up today,{w=0.2} I mean."
@@ -2460,7 +2460,7 @@ label holiday_christmas_eve:
     play audio chair_in
     $ jnPause(2)
     show overlay mistletoe zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_mistletoe_lift
-    hide black with Dissolve(1.25) 
+    hide black with Dissolve(1.25)
 
     if Natsuki.isLove(higher=True):
         n 1fchsmf "M-{w=0.2}mind the mistletoe!"
@@ -2502,7 +2502,7 @@ label holiday_new_years_eve:
     n 1ullaj "I don't know about you,{w=0.1} [player]...{w=1}{nw}"
     $ current_year = datetime.date.today().year
     extend 1fchbleme " but I can't {i}WAIT{/i} to tell [current_year] where to stick it!"
-    n 1fsqsm "And what better way to do that...{w=0.75}{nw}" 
+    n 1fsqsm "And what better way to do that...{w=0.75}{nw}"
     extend 1fchgnedz " than a crap ton of explosions and snacks?"
     n 1fchsml "Ehehe.{w=0.5}{nw}"
     extend 1fchbglelg " It's gonna be great!"
@@ -2535,7 +2535,7 @@ label holiday_new_years_eve:
         extend 1fllsllsbl " a life.{w=0.75}{nw}"
         extend 1kslsllsbl " Out there."
         n 1fcspol "I'm not gonna be a complete jerk about it.{w=0.75}{nw}"
-        extend 1fcsajlsbl " I'm {i}way{/i} better than that,{w=0.5}{nw}" 
+        extend 1fcsajlsbl " I'm {i}way{/i} better than that,{w=0.5}{nw}"
         extend 1fslpolsbr " a-{w=0.3}after all."
         n 1kslpulsbr "But...{w=1.25}{nw}"
         extend 1knmpulsbl " [player]?"
@@ -2559,6 +2559,13 @@ label holiday_new_years_eve:
 
 # Natsuki wishes the player a happy birthday!
 label holiday_player_birthday():
+    # Give Natsuki a party hat, using whatever she's currently wearing as a base
+        jn_outfits.get_wearable("jn_headgear_classic_party_hat").unlock()
+        new_years_hat_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
+        new_years_hat_outfit.headgear = jn_outfits.get_wearable("jn_headgear_classic_party_hat")
+        new_years_hat_outfit.hairstyle = jn_outfits.get_wearable("jn_hair_down")
+        jn_outfits.save_temporary_outfit(new_years_hat_outfit)
+
     $ jn_events.getHoliday("holiday_player_birthday").run()
     $ player_name_capitalized = persistent.playername.upper()
 
@@ -2625,13 +2632,13 @@ label holiday_player_birthday():
         holiday_types=[jn_events.JNHolidayTypes.player_birthday],
         affinity=Natsuki._getAffinityState()
     )
-    $ birthday_poem = random.choice(unlocked_poem_pool) if len(unlocked_poem_pool) > 0 else None   
+    $ birthday_poem = random.choice(unlocked_poem_pool) if len(unlocked_poem_pool) > 0 else None
 
     if birthday_poem:
         if Natsuki.isEnamored(higher=True):
             n 1kllcal "..."
             n 1knmpul "...I wrote you something too,{w=0.1} you know."
-            n 1fcseml "I-{w=0.2}I know it's not some {i}fancy{/i} gift,{w=1}{nw}" 
+            n 1fcseml "I-{w=0.2}I know it's not some {i}fancy{/i} gift,{w=1}{nw}"
             extend 1klrsrl " but..."
             n 1fsrsrl "..."
             n 1fcsunl "Uuuuu..."
@@ -2654,7 +2661,7 @@ label holiday_player_birthday():
             n 1knmbol "Hey...{w=1}{nw}"
             extend 1knmpul " you {i}did{/i} read it,{w=0.1} right?"
             n 1fslbol "I worked a lot on that,{w=0.1} you know."
-            n 1fcseml "A-{w=0.2}and I meant every word,{w=1}{nw}" 
+            n 1fcseml "A-{w=0.2}and I meant every word,{w=1}{nw}"
             extend 1kllbof " so..."
             n 1klrssf "...Yeah."
             n 1flldvl "I'll..."
@@ -2679,7 +2686,7 @@ label holiday_player_birthday():
         $ jnPause(0.5)
         play audio kiss
         $ jnPause(0.25)
-        hide black with Dissolve(1.25) 
+        hide black with Dissolve(1.25)
 
         n 1kwmssf "H-{w=0.2}happy birthday.{w=1}{nw}"
         extend 1kchsmf " Ehehe."
@@ -2702,5 +2709,5 @@ label holiday_anniversary:
     $ jn_events.getHoliday("holiday_anniversary").run()
     n "This isn't done yet, but happy anniversary!"
     $ jn_events.getHoliday("holiday_anniversary").complete()
-    
+
     return
