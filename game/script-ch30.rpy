@@ -65,9 +65,9 @@ label ch30_init:
 
         elif ((persistent.jn_last_visited_date - datetime.datetime.now()).total_seconds() / 3600) >= 4:
             persistent._jn_player_tt_instances += 1
-            tt_in_session = True
 
             if persistent._jn_player_tt_instances == 3 or persistent._jn_player_tt_instances == 6:
+                tt_in_session = True
                 persistent._jn_player_tt_state += 1
 
         # Determine if the player should get a prolonged leave greeting
@@ -77,6 +77,23 @@ label ch30_init:
         # Repeat visits have a small affinity gain
         elif not persistent._jn_player_apology_type_on_quit:
             Natsuki.calculatedAffinityGain()
+
+        # If we have decorations from the last holiday, and the day hasn't changed, then we should put them back up
+        if (
+            len(persistent._jn_holiday_deco_list_on_quit) > 0 
+            and datetime.date.today().day == persistent.jn_last_visited_date.day
+            and not tt_in_session
+        ):
+            for deco in persistent._jn_holiday_deco_list_on_quit:
+                renpy.show(name="deco {0}".format(deco), zorder=jn_events.JN_EVENT_DECO_ZORDER)
+
+        else:
+            persistent._jn_holiday_deco_list_on_quit = []
+
+        # Determine if the year has changed, in which case we reset all holidays so they can be celebrated again
+        if (datetime.datetime.now().year > persistent.jn_last_visited_date.year):
+            jn_events.resetHolidays()
+            jn_utils.log("Holiday completion states reset.")
 
         persistent.jn_last_visited_date = datetime.datetime.now()
 
@@ -118,15 +135,6 @@ label ch30_init:
 
         # FLOW HANDLING INTO CH30 - DECIDE WHERE TO ACTUALLY START
 
-        # Determine if the year has changed, in which case we reset all holidays so they can be celebrated again
-        if (datetime.datetime.now().year > persistent.jn_last_visited_date.year):
-            jn_events.resetHolidays()
-            jn_utils.log("Holiday completion states reset.")
-
-        # TEST CODE
-        push("greeting_tt_warning")
-        renpy.jump("call_next_topic")
-
         # Handle TT strikes/checks
         if tt_in_session:
             if persistent._jn_player_tt_state == 1:
@@ -144,17 +152,10 @@ label ch30_init:
             push("greeting_tt_game_over")
             renpy.jump("call_next_topic", False)
 
-        # If we have decorations from the last holiday, and the day hasn't changed, then we should put them back up
-        if len(persistent._jn_holiday_deco_list_on_quit) > 0 and datetime.date.today().day == persistent.jn_last_visited_date.day:
-            for deco in persistent._jn_holiday_deco_list_on_quit:
-                renpy.show(name="deco {0}".format(deco), zorder=jn_events.JN_EVENT_DECO_ZORDER)
-
-        else:
-            persistent._jn_holiday_deco_list_on_quit = []
-
         # Check for holidays, then queue them up and run them in sequence if we have any
         available_holidays = jn_events.selectHolidays()
         if available_holidays:
+            renpy.hide("deco")
             jn_events.queueHolidays(available_holidays)
 
         # No holiday, so pick a greeting or random event

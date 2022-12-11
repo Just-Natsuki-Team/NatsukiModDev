@@ -25,6 +25,11 @@ transform jn_glasses_readjust:
     ypos 20
     easein 0.75 ypos 0
 
+transform jn_mistletoe_lift:
+    subpixel True
+    ypos 0
+    easeout 2 ypos -54
+
 # Foreground props are displayed on the desk, in front of Natsuki
 image prop poetry_attempt = "mod_assets/props/poetry_attempt.png"
 image prop parfait_manga_held = "mod_assets/props/parfait_manga_held.png"
@@ -133,6 +138,7 @@ image deco garlands = "mod_assets/deco/garlands.png"
 
 # Overlays are displayed over the top of Natsuki, in front of any decorations but behind any props
 image overlay slipping_glasses = "mod_assets/overlays/slipping_glasses.png"
+image overlay mistletoe = "mod_assets/overlays/mistletoe.png"
 
 init python in jn_events:
     import datetime
@@ -2064,11 +2070,14 @@ label holiday_interlude:
 label holiday_new_years_day:
     python:
         import copy
+        
         # Give Natsuki a party hat, using whatever she's currently wearing as a base
-        previous_outfit = Natsuki.getOutfitName()
+        jn_outfits.get_wearable("jn_headgear_classic_party_hat").unlock()
         new_years_hat_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
         new_years_hat_outfit.headgear = jn_outfits.get_wearable("jn_headgear_classic_party_hat")
-        Natsuki.setOutfit(new_years_hat_outfit, False)
+        new_years_hat_outfit.hairstyle = jn_outfits.get_wearable("jn_hair_down")
+        jn_outfits.save_temporary_outfit(new_years_hat_outfit)
+
         jn_events.getHoliday("holiday_new_years_day").run()
     
     n 1uchbs "FIVE!"
@@ -2097,10 +2106,6 @@ label holiday_new_years_day:
         extend 1tsqsl " I suppose I can't give you too much of a hard time for it,{w=0.1} [player]."
         n 1fcsbg " Your hangover can do that for me.{w=0.5}{nw}"
         extend 1fcsajsbr " Anyway!"
-
-        play audio page_turn
-        $ Natsuki.setOutfit(previous_outfit)
-        with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
 
     else:
         n 1kcsemedr "Man..."
@@ -2268,9 +2273,22 @@ label holiday_halloween:
     return
 
 label holiday_christmas_eve:
-    $ persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
-    $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_SNOW)
-    $ jn_events.getHoliday("holiday_christmas_eve").run()
+    python:
+        import copy
+
+        # Let it snow
+        persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
+        jn_atmosphere.showSky(jn_atmosphere.WEATHER_SNOW)
+
+        # The Nat in the Hat
+        jn_outfits.get_wearable("jn_headgear_santa_hat").unlock()
+        santa_hat_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
+        santa_hat_outfit.headgear = jn_outfits.get_wearable("jn_headgear_santa_hat")
+        santa_hat_outfit.hairstyle = jn_outfits.get_wearable("jn_hair_down")
+        jn_outfits.save_temporary_outfit(santa_hat_outfit)
+
+        # Let it go
+        jn_events.getHoliday("holiday_christmas_eve").run()
 
     n 1uchbg "Heeeey!{w=0.75}{nw}"
     extend 1uchbs " [player]!{w=0.5} [player]!"
@@ -2422,7 +2440,6 @@ label holiday_christmas_eve:
         show natsuki 1fcsunfesssbl
 
     play audio chair_out
-    # TODO: show mistletoe?
     show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(2)
 
@@ -2442,12 +2459,13 @@ label holiday_christmas_eve:
     $ jnPause(3)
     play audio chair_in
     $ jnPause(2)
+    show overlay mistletoe zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_mistletoe_lift
     hide black with Dissolve(1.25) 
 
     if Natsuki.isLove(higher=True):
-        # TODO: hide mistletoe
         n 1fchsmf "M-{w=0.2}mind the mistletoe!"
         n 1fchtsfeaf "Ehehe."
+        hide overlay
 
     elif Natsuki.isEnamored(higher=True):
         n 1kslsmlsbl "S-{w=0.2}so..."
@@ -2683,7 +2701,6 @@ label holiday_anniversary:
     #TODO: writing
     $ jn_events.getHoliday("holiday_anniversary").run()
     n "This isn't done yet, but happy anniversary!"
-    
     $ jn_events.getHoliday("holiday_anniversary").complete()
     
     return
