@@ -255,8 +255,17 @@ init python in jn_poems:
             "Test test test test test test test\n"
             "Test test test test test test test\n"
             "\n"
+            "Test test test test test test test test test test test test test\n"
+            "Test test test test test test test test test test test test test\n"
+            "\n"
             "Test test test test test test test\n"
             "Test test test test test test test\n"
+            "\n"
+            "Test test test test test test test\n"
+            "Test test test test test test test\n"
+            "\n"
+            "Test test test test test test test test test test test test test\n"
+            "Test test test test test test test test test test test test test\n"
             "\n"
             "Test test test test test test test\n"
             "Test test test test test test test\n"
@@ -276,20 +285,11 @@ init python in jn_poems:
             "Test test test test test test test\n"
             "Test test test test test test test\n"
             "\n"
-            "Test test test test test test test\n"
-            "Test test test test test test test\n"
+            "Test test test test test test test test test test test test test\n"
+            "Test test test test test test test test test test test test test\n"
             "\n"
             "Test test test test test test test\n"
-            "Test test test test test test test\n"
-            "\n"
-            "Test test test test test test test\n"
-            "Test test test test test test test\n"
-            "\n"
-            "Test test test test test test test\n"
-            "Test test test test test test test\n"
-            "\n"
-            "Test test test test test test test\n"
-            "Test test test test test test test\n"
+            "Test test test test test test test test test test test test test test test test test test test\n"
             "\n"
             "Test test test test test test test\n"
             "Test test test test test test test\n"
@@ -299,7 +299,7 @@ init python in jn_poems:
             "\n"
             "Test!"
         ),
-        paper="pink_floral"
+        paper="festive"
     ))
 
 label show_poem(poem):
@@ -318,16 +318,22 @@ screen poem_view(poem):
     # Scrolling poem view
     viewport id "poem_viewport":
         child_size (710, None)
+        xysize(600,600)
         mousewheel True
         draggable True
         xanchor 0
-        xsize 600
+        ypos 100
         xpos 360
         has vbox
-        null height 100
-        text "[poem.display_name]" style "poem_text"
-        null height 30
-        text "[poem.poem]" style "poem_text"
+        hbox:
+            xsize 600
+            box_wrap True
+            xalign 0.0
+            null height 50
+            text "[poem.display_name]" style "poem_text"
+            null height 30
+            text "[poem.poem]" style "poem_text"
+            null height 30
 
     vbar value YScrollValue(viewport="poem_viewport") style "poem_vbar"
 
@@ -356,3 +362,4 @@ style poem_text:
     color "#000"
     outlines []
     line_leading 5
+    xalign 0.0
