@@ -2525,15 +2525,148 @@ label holiday_christmas_day:
     n "I mean..."
     extend " it isn't as if I had tons planned or anything."
     extend " ...Not like there's much {i}to{/i} plan here."
-    # TODO: does this fit here?
     n "But there's just something about Christmas that brings that sense of relief, you know?"
     n "Studies can take a hike,"
-    extend " you've finally given away the gifts..."
-    # ^
-    n "Haah..."
-    extend " I'm telling you,"
-    extend " it's like I can feel the stress of the year just washing away from me..."
-    n "Much better!"
+    extend " everything's all arranged and ready to go for everyone..."
+    n "And even if it's just for a couple days..."
+    n "Just having all that weight and stress removed {i}rocks{/i}!"
+    extend " It's great!"
+    n "Like I can just feel the stress of the year just washing away from me..."
+    n "And I don't even have to cook anything here!"
+    extend " Ehehe..."
+    n "..."
+    n "..."
+    n "It's..."
+    extend " rough sometimes,"
+    extend " you know."
+    n "Christmas, I mean."
+    n "..."
+    n "..."
+    n "...How do I {i}even{/i} put this..."
+    n "..."
+    n "W-we were always 'traditional', my family."
+    extend " I-if we were asked."
+    n "...Heh."
+    extend " Why, you wonder?"
+    n "...Think about it, [player]."
+    n "..."
+    n "...You don't need to buy gifts, if you're {i}traditional{/i}."
+    extend " You don't need to invite guests, if you're {i}traditional{/i}."
+    n "..."
+    n "You see where I'm going with this..." 
+    extend " right?"
+    n "N-not celebrating it wasn't a {i}choice{/i} at my place, [player]."
+    n "..."
+    n "So..."
+    n "...I made my own." 
+    extend " I'd sneak out."
+    n "Heh."
+    extend " I'd already gotten {i}real{/i} good at figuring out where the squeaky floorboards were,"
+    extend " I'll tell you that much."
+    n "Not like they particularly cared where I was..."
+    n "..."
+    n "But my friends always did."
+    extend " We'd pre-arrange it all."
+    extend " Just before the winter break."
+    n "Sayori's place,"
+    extend " Monika's..."
+    extend " It honestly didn't even matter."
+    n "...Wherever I went?"
+    extend " So long as we were all together?"
+    n "..."
+    n "T-that's where {i}my{/i} home was."
+    n "I didn't even care what I got."
+    n "It didn't matter."
+    extend " N-not really."
+    n "Just..."
+    extend " warmth. P-people who really {i}cared{/i}."
+    n "N-not about money."
+    extend " About me."
+    extend " Even if I could never get them anything..."
+    n "...That was a gift enough to me."
+    n "So that's why..."
+    n "S-so that's..."
+    n "...t-that's..."
+    extend " w-why..."
+    n "..."
+
+    $ prompt = "Natsuki..." if Natsuki.isEnamored(higher=True) else "Natsuki?"
+    menu:
+        "[prompt]":
+            pass
+
+    n "I-I'm fine."
+    extend " I'm fine!"
+    n "I-it's just that..."
+    n "..."
+    n "..."
+    n "...They aren't here anymore, [player]."
+    extend " They haven't been here a long time now."
+    n "...T-they're gone."
+    extend " But they never stopped being my friends."
+    n "A-and I guess that's why I'm still celebrating."
+    n "...For them."
+
+    if Natsuki.isEnamored(higher=True):
+        n "..."
+        n "...A-and for you."
+
+    n "So..."
+    n "..."
+    n "...Thanks, [player]."
+    extend " Really."
+    n "I don't have {i}all{/i} my friends right now," 
+    extend " but..."
+
+    if Natsuki.isLove(higher=True):
+        n "...Just having you here, [player]?"
+        extend " Heh."
+        n "...Yeah."
+        extend " I {i}know{/i} I can manage."
+
+    elif Natsuki.isEnamored():
+        n "...I think I can manage with just you."
+
+    elif Natsuki.isAffectionate():
+        n "...A-at least I got my best one."
+
+    else:
+        n "I think..."
+        n "..."
+        n "I-I think even just the one here is enough right now."
+
+    $ unlocked_poem_pool = jn_poems.JNPoem.filterPoems(
+        poem_list=jn_poems.getAllPoems(),
+        unlocked=False,
+        holiday_types=[jn_events.JNHolidayTypes.christmas_day],
+        affinity=Natsuki._getAffinityState()
+    )
+    $ christmas_poem = random.choice(unlocked_poem_pool) if len(unlocked_poem_pool) > 0 else None
+
+    if christmas_poem:
+        # We have a poem to give the player
+        n "..."
+        n "...I did get you something, you know."
+        n "..."
+        n "H-hey!"
+        extend " Don't give me that look."
+        n "You didn't {i}seriously{/i} think all I had to give you was a {i}story{/i}, did you?"
+        n "I had to at least {i}try{/i},"
+        extend " s-so..."
+
+        if Natsuki.isEnamored(higher=True):
+            $ chosen_tease = jn_utils.getRandomTease()
+            n "..."
+            n "...J-just look at it already, [chosen_tease]."
+
+        else:
+            n "..."
+            n "Nnnnnnn-!"
+            n "...J-just read it already, [player]."
+            extend " {i}B-before{/i} I change my mind."
+
+        call show_poem(christmas_poem)
+    
 
     $ jn_events.getHoliday("holiday_christmas_day").complete()
 
@@ -2607,10 +2740,11 @@ label holiday_new_years_eve:
 
     return
 
-# Natsuki wishes the player a happy birthday!
 label holiday_player_birthday():
-    # Give Natsuki a party hat, using whatever she's currently wearing as a base
     python:
+        import copy
+
+        # Give Natsuki a party hat, using whatever she's currently wearing as a base
         jn_outfits.get_wearable("jn_headgear_classic_party_hat").unlock()
         birthday_hat_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
         birthday_hat_outfit.headgear = jn_outfits.get_wearable("jn_headgear_classic_party_hat")

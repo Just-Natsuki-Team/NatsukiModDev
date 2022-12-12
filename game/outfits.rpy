@@ -1525,6 +1525,12 @@ init -1 python in jn_outfits:
         unlocked=False,
         is_jn_wearable=True
     ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_new_year_headband",
+        display_name="New year headband",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
 
     # Ahoges
     __register_wearable(JNHeadgear(

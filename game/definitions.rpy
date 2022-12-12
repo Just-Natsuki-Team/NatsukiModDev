@@ -1780,7 +1780,7 @@ init -100 python in jn_utils:
 
         if store.persistent.affinity >= (store.persistent._jn_gs_aff + 250):
             store.persistent.affinity = store.persistent._jn_gs_aff
-            jn_utils.log("53746f70206368656174696e67203a2d29".decode("hex"))
+            jn_utils.log("434845415421".decode("hex"))
 
         else:
             store.persistent._jn_gs_aff = store.persistent.affinity

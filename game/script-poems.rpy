@@ -245,6 +245,26 @@ init python in jn_poems:
         paper="pink_floral"
     ))
 
+    __registerPoem(JNPoem(
+        reference_name="jn_christmas_placeholder",
+        display_name="Christmas Placeholder",
+        holiday_type=jn_events.JNHolidayTypes.christmas_day,
+        affinity_range=(jn_affinity.HAPPY, None),
+        poem=(
+            "Test test test test test test test\n"
+            "Test test test test test test test\n"
+            "\n"
+            "Test test test test test test test\n"
+            "Test test test test test test test\n"
+            "\n"
+            "Test test test test test test test\n"
+            "Test test test test test test test\n"
+            "\n"
+            "Test!"
+        ),
+        paper="pink_floral"
+    ))
+
 label show_poem(poem):
     play audio page_turn
     show screen poem_view(poem)
