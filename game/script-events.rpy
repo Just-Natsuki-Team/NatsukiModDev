@@ -2027,7 +2027,7 @@ label event_warm_package:
 
 # HOLIDAYS
 
-# Used to lead up to a holiday
+# Used to lead up to a holiday, but only if already in-game and the day changes
 label holiday_prelude:
     n 1tllbo "..."
     n 1ullpu "...You know,{w=0.75}{nw}"
@@ -2459,7 +2459,10 @@ label holiday_christmas_eve:
     $ jnPause(3)
     play audio chair_in
     $ jnPause(2)
-    show overlay mistletoe zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_mistletoe_lift
+
+    if Natsuki.isLove(higher=True):
+        show overlay mistletoe zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_mistletoe_lift
+
     hide black with Dissolve(1.25)
 
     if Natsuki.isLove(higher=True):
@@ -2635,6 +2638,9 @@ label holiday_christmas_day:
         n "..."
         n "I-I think even just the one here is enough right now."
 
+    if persistent._jn_player_celebrates_christmas == False:
+        n "Even if you {i}don't{/i} really celebrate Christmas."
+
     $ unlocked_poem_pool = jn_poems.JNPoem.filterPoems(
         poem_list=jn_poems.getAllPoems(),
         unlocked=False,
@@ -2666,7 +2672,72 @@ label holiday_christmas_day:
             extend " {i}B-before{/i} I change my mind."
 
         call show_poem(christmas_poem)
-    
+
+        if Natsuki.isEnamored(higher=True):
+            n "...Finished, [player]?"
+            n "..."
+            n "...Look."
+            extend "I'm..."
+            n "..."
+            n "I'm not gonna kid myself and say this was some {i}amazing{/i} gift."
+            n "...Not like I'm the {i}first{/i} one to hand you a poem."
+            n "I just..."
+            n "..."
+            n "I-I just wanted to show some appreciation."
+            extend " F-for everything."
+            n "It..."
+            extend " seriously..."
+            extend " m-means a lot to me, [player]."
+            n "It really does..."
+            n "...Thank you."
+
+        else:
+            n "..."
+            n "All done, [player]?"
+            extend "Man..."
+            n "A-about time, huh?"
+            n "..."
+            n "..."
+            n "...I know it wasn't much."
+            extend " I'm not going to kid myself."
+            n "I-I know I can't get you some fancy gift."
+            extend " It's just..."
+            n "..."
+            n "...Just know I appreciate what you've done."
+            extend " Even if it is just listening to me ramble on sometimes."
+            n "It really..."
+            n "..."
+            n "I-It means a lot to me, [player]."
+            n "...T-thanks."
+
+    else:
+        n "..."
+        n "...And [player]?"
+
+    play audio chair_out
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(2)
+
+    if Natsuki.isEnamored(higher=True):
+        play audio clothing_ruffle
+        $ jnPause(2.5)
+        play audio kiss
+        show natsuki 1kcsfsf at jn_center
+
+    else:
+        play audio clothing_ruffle
+        show natsuki 1kcsbol at jn_center
+
+    $ jnPause(3)
+    play audio chair_in
+    $ jnPause(2)
+
+    if Natsuki.isLove(higher=True):
+        $ chosen_endearment = jn_utils.getRandomEndearment()
+        n "...Merry Christmas, [chosen_endearment]."
+
+    else:
+        n "M-merry Christmas, [player]."
 
     $ jn_events.getHoliday("holiday_christmas_day").complete()
 
