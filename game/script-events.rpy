@@ -2493,7 +2493,7 @@ label holiday_christmas_day:
         christmas_outfit = jn_outfits.get_outfit("jn_christmas_outfit")
         christmas_outfit.unlock()
         jn_outfits.save_temporary_outfit(christmas_outfit)
-        
+
         # Let it go
         jn_events.getHoliday("holiday_christmas_day").run()
 
@@ -2503,7 +2503,7 @@ label holiday_christmas_day:
     extend "[player]! [player]!"
     n "It's here!"
     extend " It's actually,"
-    extend " finally," 
+    extend " finally,"
     extend " freaking {i}HERE{/i}!"
 
     if jn_get_current_time_block in [JNTimeBlocks.early_morning, JNTimeBlocks.mid_morning, JNTimeBlocks.late_morning]:
@@ -2559,7 +2559,7 @@ label holiday_new_years_eve:
 
     if Natsuki.isEnamored(higher=True):
         n 1kllsml "..."
-        n 1kllpul "But...{w=0.75}{nw}"
+        n 1kllpul "BuSw=0.75}{nw}"
         extend 1knmbol " in all seriousness,{w=0.1} [player]?"
         n 1klrbol "..."
         n 1fcspul "I'd...{w=1}{nw}"
@@ -2610,6 +2610,7 @@ label holiday_new_years_eve:
 # Natsuki wishes the player a happy birthday!
 label holiday_player_birthday():
     # Give Natsuki a party hat, using whatever she's currently wearing as a base
+    python:
         jn_outfits.get_wearable("jn_headgear_classic_party_hat").unlock()
         new_years_hat_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
         new_years_hat_outfit.headgear = jn_outfits.get_wearable("jn_headgear_classic_party_hat")
