@@ -2559,7 +2559,7 @@ label holiday_new_years_eve:
 
     if Natsuki.isEnamored(higher=True):
         n 1kllsml "..."
-        n 1kllpul "BuSw=0.75}{nw}"
+        n 1kllpul "But...{w=0.75}{nw}"
         extend 1knmbol " in all seriousness,{w=0.1} [player]?"
         n 1klrbol "..."
         n 1fcspul "I'd...{w=1}{nw}"
@@ -2612,13 +2612,13 @@ label holiday_player_birthday():
     # Give Natsuki a party hat, using whatever she's currently wearing as a base
     python:
         jn_outfits.get_wearable("jn_headgear_classic_party_hat").unlock()
-        new_years_hat_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
-        new_years_hat_outfit.headgear = jn_outfits.get_wearable("jn_headgear_classic_party_hat")
-        new_years_hat_outfit.hairstyle = jn_outfits.get_wearable("jn_hair_down")
-        jn_outfits.save_temporary_outfit(new_years_hat_outfit)
+        birthday_hat_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
+        birthday_hat_outfit.headgear = jn_outfits.get_wearable("jn_headgear_classic_party_hat")
+        birthday_hat_outfit.hairstyle = jn_outfits.get_wearable("jn_hair_down")
+        jn_outfits.save_temporary_outfit(birthday_hat_outfit)
 
-    $ jn_events.getHoliday("holiday_player_birthday").run()
-    $ player_name_capitalized = persistent.playername.upper()
+        jn_events.getHoliday("holiday_player_birthday").run()
+        player_name_capitalized = persistent.playername.upper()
 
     n 1uchlgl "HAPPY BIRTHDAY,{w=0.1} [player_name_capitalized]!"
     n 1fcsbg "Betcha' didn't think I had something planned all along,{w=0.1} did you?{w=0.5}{nw}"
