@@ -2687,48 +2687,58 @@ label holiday_christmas_day:
         call show_poem(christmas_poem)
 
         if Natsuki.isEnamored(higher=True):
-            n  "...Finished,{w=0.2} [player]?"
-            n  "..."
-            n  "...Look.{w=1}{nw}"
-            extend  "I'm..."
-            n  "..."
-            n  "I'm not gonna kid myself and say this was some {i}amazing{/i} gift."
-            n  "...Not like I'm the {i}first{/i} one to hand you a poem."
-            n  "I just..."
-            n  "..."
-            n  "I-{w=0.2}I just wanted to show some appreciation.{w=1}{nw}"
-            extend  " F-{w=0.2}for everything."
-            n  "It...{w=0.75}{nw}"
-            extend  " seriously...{w=0.75}{nw}"
-            extend  " m-{w=0.2}means a lot to me,{w=0.2} [player]."
-            n  "It really does..."
-            n  "...Thank you."
+            n 1ksqcalsbr "...Finished,{w=0.2} [player]?"
+            n 1kslcalsbr "..."
+            n 1kcsbolsbl "...Look.{w=1}{nw}"
+            extend 1fcseml "I'm..."
+            n 1kslbol "..."
+            n 1ksqbol "I'm not gonna kid myself and say this was some {i}amazing{/i} gift."
+            n 1nsrsssbl "...Not like I'm the {i}first{/i} one to hand you a poem."
+            n 1ncsajsbl "I just..."
+            n 1kslsllsbl "..."
+            n 1kcssllsbl "I-{w=0.2}I just wanted to show some appreciation.{w=1}{nw}"
+            extend 1ksqcal " F-{w=0.2}for everything."
+            n 1kcsajl "It...{w=0.75}{nw}"
+            extend 1kcssll " seriously...{w=0.75}{nw}"
+            extend 1kwmsll " m-{w=0.2}means a lot to me,{w=0.2} [player]."
+            n 1kslbol "I-{w=0.2}it really does."
+            n 1kwmfsl "...Thank you."
 
         else:
-            n  "..."
-            n  "All done,{w=0.2} [player]?{w=1}{nw}"
-            extend  "Man..."
-            n  "A-{w=0.2}about time,{w=0.2} huh?{w=1}{nw}"
-            extend " I swear,{w=0.2} sometimes it's like you want things read to you or something.{w=0.75}{nw}"
-            extend " Heh."
-            n  "..."
-            n  "..."
-            n  "...I know it wasn't much.{w=0.75}{nw}"
-            extend  " I'm not going to kid myself."
-            n  "I-{w=0.2}I know I can't get you some fancy gift.{w=0.75}{nw}"
-            extend  " It's just..."
-            n  "..."
-            n  "...Just know I appreciate what you've done.{w=1}{nw}"
-            extend  " Even if it is just listening to me ramble on sometimes."
-            n  "It really..."
-            n  "..."
-            n  "..."
-            n  "I-{w=0.2}It means a lot to me,{w=0.2} [player]."
-            n  "...T-thanks."
+            n 1nsqsllsbl "..."
+            n 1tsqcalsbl "All done,{w=0.2} [player]?{w=1}{nw}"
+            extend 1nslssl "Man..."
+            n 1fcsajlsbl "A-{w=0.2}about time,{w=0.2} huh?{w=1}{nw}"
+            extend 1flrajlsbl " I swear,{w=0.5}{nw}" 
+            extend 1fcspolsbl " sometimes it's like you {i}need{/i} things read out to you or something.{w=0.75}{nw}"
+            extend 1fsrfslsbl " Heh."
+            n 1ksrbol "..."
+            n 1kcsbolesi "..."
+            n 1fslbol "...I know it wasn't much.{w=0.75}{nw}"
+            extend 1kslsll " I'm not going to kid myself."
+            n 1fsrunlsbr "I-{w=0.2}I know I can't get you some {i}fancy gift{/i}.{w=0.75}{nw}"
+            extend 1fsrajlsbr " It's just..."
+            n 1ksrbolsbr "..."
+            n 1fcsbofsbr "...Just know I appreciate what you've done.{w=1}{nw}"
+            extend 1fsldvlsbl " Even if it is just listening to me ramble on sometimes."
+            n 1nllpulsbl "It really..."
+            n 1fcsunlsbl "..."
+            n 1kcscalsbl "..."
+            n 1ksqcalsbl "I-{w=0.2}It means a lot to me,{w=0.2} [player]."
+            n 1ksrcafsbl "...T-thanks."
 
     else:
-        n  "..."
-        n  "...And [player]?"
+        n 1kllbol "..."
+        
+        if Natsuki.isEnamored(higher=True):
+            n 1kwmfsl "...And [player]?"
+            show natsuki 1fcscalsbl at jn_center
+
+        else:
+            n 1kllpul "...And...{w=1}"
+            extend 1knmsll " [player]?"
+            n 1ksrsllsbl "..."
+            show natsuki 1fcsunlsbl at jn_center
 
     play audio chair_out
     show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
@@ -2753,7 +2763,7 @@ label holiday_christmas_day:
         n  "...Merry Christmas,{w=0.2} [chosen_endearment]."
 
     else:
-        n  "M-merry Christmas,{w=0.2} [player]."
+        n  "M-{w=0.3}merry Christmas."
 
     $ jn_events.getHoliday("holiday_christmas_day").complete()
 
