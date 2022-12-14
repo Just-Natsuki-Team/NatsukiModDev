@@ -23,7 +23,8 @@ init python in jn_poems:
             holiday_type,
             affinity_range,
             poem,
-            paper="default"
+            paper="default",
+            font_size=28
         ):
             """
             Constructor.
@@ -35,6 +36,7 @@ init python in jn_poems:
                 affinity_range - The affinity range that must be satisfied for this holiday to be picked when filtering
                 poem - The actual poem content
                 paper - The paper image that is associated with this poem. Defaults to a standard notepad page
+                font_size - The int font size for the main body of the poem. Must be within a range of 16-28.
             """
             self.reference_name = reference_name
             self.display_name = display_name
@@ -43,6 +45,7 @@ init python in jn_poems:
             self.affinity_range = affinity_range
             self.poem = poem
             self.paper = paper
+            self.font_size = font_size if 16 <= font_size <= 28 else 28 
 
         @staticmethod
         def loadAll():
@@ -329,11 +332,11 @@ screen poem_view(poem):
             xsize 600
             box_wrap True
             xalign 0.0
+            null height 100
+            text "[poem.display_name]" style "poem_title"
+            null height 60
+            text "[poem.poem]" style "poem_text" size poem.font_size
             null height 50
-            text "[poem.display_name]" style "poem_text"
-            null height 30
-            text "[poem.poem]" style "poem_text"
-            null height 30
 
     vbar value YScrollValue(viewport="poem_viewport") style "poem_vbar"
 
@@ -356,9 +359,17 @@ style poem_vbar is vscrollbar:
     yalign 0.5
     ysize 700
 
+style poem_title:
+    font "mod_assets/fonts/natsuki.ttf"
+    size 30
+    color "#000"
+    outlines []
+    line_leading 5
+    xalign 0.5
+    italic True
+
 style poem_text:
     font "mod_assets/fonts/natsuki.ttf"
-    size 28
     color "#000"
     outlines []
     line_leading 5
