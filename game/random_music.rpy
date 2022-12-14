@@ -60,8 +60,8 @@ label random_music_change:
     show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     play audio gift_close
-    $ jnPause(0.25)
     show music_player playing zorder jn_events.JN_EVENT_PROP_ZORDER
+    $ jnPause(0.5)
     hide black with Dissolve(0.5)
     $ jnPause(0.5)
     play audio button_tap_c
@@ -186,11 +186,13 @@ label random_music_disable:
     n 1uchbg "I'm just messing with you.{w=0.2} Sure thing!{w=0.5}{nw}"
     extend 1nchsm " I'll just put it back to the regular music."
 
-    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.25)
-    $ jnPause(0.25)
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    play audio gift_close
     show music_player playing zorder jn_events.JN_EVENT_PROP_ZORDER
-    hide black with Dissolve(0.25)
-    $ jnPause(0.25)
+    $ jnPause(0.5)
+    hide black with Dissolve(0.5)
+    $ jnPause(0.5)
 
     play audio button_tap_c
     show music_player stopped
