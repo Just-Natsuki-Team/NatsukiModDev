@@ -1,6 +1,11 @@
 default persistent.jn_custom_music_unlocked = False
 default persistent.jn_custom_music_explanation_given = False
 
+image music_player off = "mod_assets/props/music_player/music_player_off.png"
+image music_player playing = "mod_assets/props/music_player/music_player_play.png"
+image music_player stopped = "mod_assets/props/music_player/music_player_stop.png"
+image music_player paused = "mod_assets/props/music_player/music_player_pause.png"
+
 init python in jn_custom_music:
     import os
     import store

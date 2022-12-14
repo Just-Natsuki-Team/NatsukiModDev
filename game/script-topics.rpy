@@ -5214,31 +5214,87 @@ init 5 python:
     )
 
 label talk_custom_music_introduction:
-    n 1fllpu "Hmm..."
+    n 1tllboeqm "..."
+    n 1fllpu "...Huh."
     n 1flrbo "I wonder if it's still here..."
+    n 1fsrpoesp "..."
+    n 1flraj "You know what?{w=0.75}{nw}"
+    extend 1fnmsseid " Just give me a second here,{w=0.2} [player]."
+    n 1fcsbg "You're gonna {i}love{/i} this!"
+    show natsuki 1fcssm
+
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    play audio chair_out
+    $ jnPause(3)
+    play audio drawer
+    $ jnPause(2)
+
+    n "Come on!{w=0.75} It's gotta still be here somewhere!{w=0.75} I know it!"
 
     play audio drawer
-    with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+    $ jnPause(2.5)
+    play audio gift_slide
+    $ jnPause(0.5)
 
-    n 1fllpo "Come on!{w=0.2} It's gotta still be here!{w=0.2} I know it!"
+    n "...!"
+    n "Aha!{w=0.5} Yes!{w=0.75} Found you~!"
+    play audio gift_close
+    $ jnPause(3)
+    n "...Ah.{w=0.75} Just gotta...{w=0.75}{nw}"
+    play audio blow
+    $ jnPause(0.3)
+    n "A-{w=0.2}ack!{w=0.75} I didn't think it was {i}that{/i} dusty..."
+    n "...Ew."
 
-    play audio drawer
-    with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+    play audio headpat
+    $ jnPause(3)
+    play audio gift_close
+    show music_player off zorder jn_events.JN_EVENT_PROP_ZORDER
+    show natsuki 1fchsm
+    $ jnPause(1.5)
+    play audio chair_in
+    $ jnPause(2)
+    hide black with Dissolve(2)
 
-    n 1uspbg "..."
-    n 1fchbs "Aha!{w=0.2} Yes!"
     n 1nchsm "..."
-    n 1uwdbg "Oh!{w=0.2} [player]!{w=0.2} [player]!"
-    n 1uchgn "Guess what I fooound!{w=0.5} Ehehe."
-    n 1nchbs "It's...{w=0.3} a music player!{w=0.2} Neat,{w=0.1} right?"
-    n 1tlrbg "Well...{w=0.3} kinda.{w=0.2} It's not exactly...{w=0.3} {i}modern{/i},{w=0.1} but it'll do the job!"
-    n 1tllpo "Come to think of it...{w=0.3} I don't really even know who it belongs to."
-    n 1unmpu "We just found it left in the clubroom one day.{w=0.2} Nobody knew if it belonged to anyone -{w=0.1} and trust me,{w=0.1} we tried to find out!"
-    n 1tnmsl "We asked around in lessons,{w=0.1} we sent out notes...{w=0.3} nothing!"
-    n 1tlrbg "So...{w=0.3} we kinda just kept it here,{w=0.1} in my desk,{w=0.1} in case whoever it was came back to pick it up."
-    n 1tsqpo "I guess they never will now,{w=0.1} huh?"
-    n 1uchbg "Well,{w=0.1} whatever.{w=0.2} The point is we can play whatever music we want now!"
-    n 1fchbg "I think I figured out a way to let you send me whatever you want me to put on,{w=0.1} so listen up,{w=0.1} 'kay?"
+    n 1unmajesu "Oh!{w=0.5}{nw}" 
+    extend 1fchbgsbl " [player]!"
+    n 1fcsbg "Guess what I fooound!{w=0.75}{nw}" 
+    extend 1fsqsm " Ehehe."
+    n 1fcsbg "It's...{w=1.25}{nw}"
+    play audio button_tap_c
+    show music_player stopped
+    $ jnPause(1)
+    n 1uchgn "...Our old music player!{w=1}{nw}" 
+    extend 1fwlbg " Neat,{w=0.2} right?"
+    n 1fchbgsbl "Ehehe..."
+    n 1tlrss "Well...{w=1}{nw}" 
+    extend 1nsrsssbl " kinda."
+    n 1nllsssbl "It's not exactly...{w=0.5}{nw}" 
+    extend 1nslsssbl " well...{w=1}{nw}" 
+    extend 1fslposbl " {i}modern{/i},{w=0.75}{nw}" 
+    extend 1fcsbgsbr " but it'll do the job!"
+    n 1tslbo "..."
+    n 1tslaj "Actually...{w=0.75}{nw}"
+    extend 1tllsl " come to think of it..."
+    n 1tnmpo "I don't really even know who it belongs to."
+    n 1tllca "We just found it left in the clubroom one day.{w=0.75}{nw}" 
+    extend 1tnmpu " Nobody knew if it belonged to anyone -{w=0.5}{nw}" 
+    extend 1unmaj " and trust me,{w=0.2} we {i}tried{/i} to find out!"
+    n 1tlrsl "We asked around in lessons,{w=0.5}{nw}" 
+    extend 1tllaj " Monika sent out notes...{w=1}{nw}" 
+    extend 1unmaw " nothing!"
+    n 1ulraj "So...{w=0.75}{nw}" 
+    extend 1tnmsl " we kinda just kept it here,{w=0.2} by the teacher's desk,{w=0.2} in case whoever it was came back to pick it up."
+    n 1nslss "And,{w=0.2} well..."
+    n 1tsqposbr "I guess they never will now,{w=0.2} huh?"
+    n 1kslbo "..."
+    n 1fcssslsbl "W-{w=0.2}well,{w=0.2} whatever.{w=0.75}{nw}"
+    extend 1fchbgsbl " The point is we can play whatever music we want now!"
+    n 1fchsmeme "I think I figured out a way to let you send me whatever you want me to put on,{w=0.75}{nw}" 
+    extend 1fwlbg " so listen up,{w=0.2} 'kay?"
+
     $ get_topic("talk_custom_music_introduction").lock()
     jump talk_custom_music_explanation
 
@@ -5303,6 +5359,14 @@ label talk_custom_music_explanation:
     n 1nsqbg "A word of warning though,{w=0.1} [player]..."
     n 1usqsg "You better have good taste."
     n 1uchgnelg "Ahaha!"
+
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    play audio gift_close
+    $ jnPause(0.25)
+    hide music_player
+    hide black with Dissolve(0.5)
+
     return
 
 # Natsuki's thoughts on VTubers

@@ -2348,6 +2348,11 @@ label new_wearables_outfits_unlocked:
         if jnIsChristmasEve():
             n 1ksrbofsbl "...Especially tonight,{w=0.3} of all nights..."
 
+        elif jnIsChristmasDay():
+            n 1kllajlsbr "A-{w=0.2}and anyway,{w=0.75}{nw}"
+            extend 1kwmpulsbl " I'm still not used to getting stuff on Christmas Day..."
+            n 1kslsllsbl "..."
+
         n 1uskemlesusbr "I-{w=0.2}it's not that I don't appreciate it!{w=0.5}{nw}"
         extend 1fcsemless " Don't get me wrong!{w=1}{nw}"
         extend 1knmpoless " I-{w=0.2}I totally do!"
@@ -2371,8 +2376,13 @@ label new_wearables_outfits_unlocked:
         n 1fpawrledr "Why would you do thaaat?!{w=1}{nw}"
 
         if jnIsChristmasEve():
+            extend 1fllemf " I-{w=0.2}I mean..."
             n 1knmgsf "Y-{w=0.2}you couldn't have at {i}least{/i} waited for tomorrow?!{w=1}{nw}"
-            extend 1kbkwrlesd " I didn't even make a list or anythiiing!"
+            extend 1kbkwrlesd " I didn't even make a list or anythiiiing!"
+
+        elif jnIsChristmasDay():
+            extend 1kllemf " I mean..."
+            n 1kwmunlsbl "You should know I'm not used to getting stuff on Christmas Day..."
 
         else:
             extend 1kbkwrless " I-{w=0.2}I didn't even {i}ask{/i} for anything!"
@@ -2394,8 +2404,14 @@ label new_wearables_outfits_unlocked:
         n 1kbkwrf "What even {i}is{/i} all this?!"
 
         if jnIsChristmasEve():
-            n 1knmgsf "A-{w=0.2}and come {i}on{/i}, [player]!{w=1}{nw}"
-            extend 1kbkwrfesd "It isn't even Christmas yeeeet!"
+            n 1knmgsf "A-{w=0.2}and come {i}on{/i},{w=0.2} [player]!{w=1}{nw}"
+            extend 1kbkwrfesd " It isn't even Christmas yeeeet!"
+
+        elif jnIsChristmasDay():
+            n 1fcsemfsbl "I-{w=0.2}I mean,{w=0.75}{nw}"
+            extend 1kwmemfsbl " I {i}get{/i} what day it is,{w=0.75}{nw}" 
+            extend 1kslemfsbl " but..."
+            n 1kcspufesisbl "..."
 
         n 1fllemlesssbl "Y-{w=0.2}you better not be trying to win me over with gifts or something!{w=1}{nw}"
         extend 1fcsemlsbr " Yeesh!"
