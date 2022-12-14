@@ -2760,10 +2760,10 @@ label holiday_christmas_day:
 
     if Natsuki.isLove(higher=True):
         $ chosen_endearment = jn_utils.getRandomEndearment()
-        n  "...Merry Christmas,{w=0.2} [chosen_endearment]."
+        n 1kchfsfeaf "...Merry Christmas,{w=0.2} [chosen_endearment]."
 
     else:
-        n  "M-{w=0.3}merry Christmas."
+        n 1fchsmfsbl "M-{w=0.3}merry Christmas."
 
     $ jn_events.getHoliday("holiday_christmas_day").complete()
 
