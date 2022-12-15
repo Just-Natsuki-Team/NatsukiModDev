@@ -24,7 +24,8 @@ init python in jn_poems:
             affinity_range,
             poem,
             paper="default",
-            font_size=28
+            font_size=28,
+            text_align=0.0
         ):
             """
             Constructor.
@@ -37,6 +38,10 @@ init python in jn_poems:
                 poem - The actual poem content
                 paper - The paper image that is associated with this poem. Defaults to a standard notepad page
                 font_size - The int font size for the main body of the poem. Must be within a range of 16-28.
+                text_align - The decimal alignment for the main body of the poem, where:
+                    0.0: LEFT
+                    0.5: CENTRE
+                    1.0: RIGHT
             """
             self.reference_name = reference_name
             self.display_name = display_name
@@ -46,6 +51,7 @@ init python in jn_poems:
             self.poem = poem
             self.paper = paper
             self.font_size = font_size if 16 <= font_size <= 28 else 28 
+            self.text_align = text_align if text_align in (0.0, 0.5, 1.0) else 0.0
 
         @staticmethod
         def loadAll():
@@ -255,28 +261,29 @@ init python in jn_poems:
         holiday_type=jn_events.JNHolidayTypes.christmas_day,
         affinity_range=(jn_affinity.ENAMORED, None),
         poem=(
-            "                  It's\n" 
-            "               Chilly and\n" 
-            "              Cold outside\n" 
-            "             But warm inside\n" 
-            "            With you by my side.\n" 
-            "           Listening to the cozy fire\n" 
-            "          Sitting side by side together.\n" 
-            "         Talking to one another, making\n" 
-            "        New memories that shine brightly.\n" 
-            "       Illuminating even the darkest of nights\n" 
-            "      To allow weary travelers a guiding light\n" 
-            "     A star guided path ahead in a stressful life.\n" 
-            "    Previous troubles melt away in the hot cocoa\n" 
-            "   That I hold tight as I tease you to find your own.\n" 
-            "  Was always my favorite, but now, so more than ever\n" 
-            " As it tastes more sweet with new and fresh ingredients.\n" 
+            "It's\n" 
+            "Chilly and\n" 
+            "Cold outside\n" 
+            "But warm inside\n" 
+            "With you by my side.\n" 
+            "Listening to the cozy fire\n" 
+            "Sitting side by side together.\n" 
+            "Talking to one another, making\n" 
+            "New memories that shine brightly.\n" 
+            "Illuminating even the darkest of nights\n" 
+            "To allow weary travelers a guiding light\n" 
+            "A star guided path ahead in a stressful life.\n" 
+            "Previous troubles melt away in the hot cocoa\n" 
+            "That I hold tight as I tease you to find your own.\n" 
+            "Was always my favorite, but now, so more than ever\n" 
+            "As it tastes more sweet with new and fresh ingredients.\n" 
             "The warmth I feel inside will outlast any amount of winter\n" 
-            "             Because with you by my side\n" 
-            "             I'm always ready for another.\n" 
+            "Because with you by my side\n" 
+            "I'm always ready for another.\n" 
         ),
         paper="festive",
-        font_size=24
+        font_size=18,
+        text_align=0.5
     ))
 
     __registerPoem(JNPoem(
@@ -308,7 +315,8 @@ init python in jn_poems:
             "Being welcomed without all the bells and whistles\n"
             "As acceptance provides warmth in the coldest of winters\n"
         ),
-        paper="festive"
+        paper="festive",
+        font_size=20
     ))
 
 label show_poem(poem):
@@ -337,11 +345,10 @@ screen poem_view(poem):
         hbox:
             xsize 600
             box_wrap True
-            xalign 0.0
             null height 100
             text "[poem.display_name]" style "poem_title"
             null height 60
-            text "[poem.poem]" style "poem_text" size poem.font_size
+            text "[poem.poem]" style "poem_text" size poem.font_size text_align poem.text_align
             null height 50
 
     vbar value YScrollValue(viewport="poem_viewport") style "poem_vbar"
@@ -371,12 +378,12 @@ style poem_title:
     color "#000"
     outlines []
     line_leading 5
-    xalign 0.5
     italic True
+    xalign 0.5
 
 style poem_text:
     font "mod_assets/fonts/natsuki.ttf"
     color "#000"
     outlines []
+    xalign 0.5
     line_leading 5
-    xalign 0.0
