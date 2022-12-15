@@ -250,60 +250,65 @@ init python in jn_poems:
     ))
 
     __registerPoem(JNPoem(
-        reference_name="jn_christmas_placeholder",
-        display_name="Christmas Placeholder",
+        reference_name="jn_evergreen",
+        display_name="Evergreen",
         holiday_type=jn_events.JNHolidayTypes.christmas_day,
-        affinity_range=(jn_affinity.HAPPY, None),
+        affinity_range=(jn_affinity.ENAMORED, None),
         poem=(
-            "Test test test test test test test\n"
-            "Test test test test test test test\n"
-            "\n"
-            "Test test test test test test test test test test test test test\n"
-            "Test test test test test test test test test test test test test\n"
-            "\n"
-            "Test test test test test test test\n"
-            "Test test test test test test test\n"
-            "\n"
-            "Test test test test test test test\n"
-            "Test test test test test test test\n"
-            "\n"
-            "Test test test test test test test test test test test test test\n"
-            "Test test test test test test test test test test test test test\n"
-            "\n"
-            "Test test test test test test test\n"
-            "Test test test test test test test\n"
-            "\n"
-            "Test test test test test test test\n"
-            "Test test test test test test test\n"
-            "\n"
-            "Test test test test test test test\n"
-            "Test test test test test test test\n"
-            "\n"
-            "Test test test test test test test\n"
-            "Test test test test test test test\n"
-            "\n"
-            "Test test test test test test test\n"
-            "Test test test test test test test\n"
-            "\n"
-            "Test test test test test test test\n"
-            "Test test test test test test test\n"
-            "\n"
-            "Test test test test test test test test test test test test test\n"
-            "Test test test test test test test test test test test test test\n"
-            "\n"
-            "Test test test test test test test\n"
-            "Test test test test test test test test test test test test test test test test test test test\n"
-            "\n"
-            "Test test test test test test test\n"
-            "Test test test test test test test\n"
-            "\n"
-            "Test test test test test test test\n"
-            "Test test test test test test test\n"
-            "\n"
-            "Test!"
+            "                  It’s\n" 
+            "               Chilly and\n" 
+            "              Cold outside\n" 
+            "             But warm inside\n" 
+            "            With you by my side.\n" 
+            "           Listening to the cozy fire\n" 
+            "          Sitting side by side together.\n" 
+            "         Talking to one another, making\n" 
+            "        New memories that shine brightly.\n" 
+            "       Illuminating even the darkest of nights\n" 
+            "      To allow weary travelers a guiding light\n" 
+            "     A star guided path ahead in a stressful life.\n" 
+            "    Previous troubles melt away in the hot cocoa\n" 
+            "   That I hold tight as I tease you to find your own.\n" 
+            "  Was always my favorite, but now, so more than ever\n" 
+            " As it tastes more sweet with new and fresh ingredients.\n" 
+            "The warmth I feel inside will outlast any amount of winter\n" 
+            "             Because with you by my side\n" 
+            "             I’m always ready for another.\n" 
         ),
         paper="festive"
     ))
+
+    __registerPoem(JNPoem(
+        reference_name="jn_gingerbread_house",
+        display_name="Gingerbread House",
+        holiday_type=jn_events.JNHolidayTypes.christmas_day,
+        affinity_range=(jn_affinity.HAPPY, None),
+        poem=(
+            "From a brittle gingerbread household Amy came\n"
+            "Disguised by colorful icing and confectionaries\n" 
+            "One that hid the shouts and all the arguments\n"
+            "One that hid in plain sight, opposed to spotlight\n"
+            "\n"
+            "But where we come from doesn’t define\n"
+            "Who we truly are deep on the inside\n"
+            "And sometimes all it takes is someone.\n"
+            "Someone new to remind you of more.\n"
+            "\n"
+            "A new friend to help decorate a tree.\n"
+            "An evergreen free for decoration\n"
+            "Eagerly awaiting two people\n"
+            "To coat it with ornaments and lights.\n"
+            "\n"
+            "That tree a template of what’s to come\n"
+            "A place where new memories can form\n"
+            "Where gingerbread can appear brittle\n"
+            "Without needing to lie, with honesty.\n"
+            "\n"
+            "Being welcomed without all the bells and whistles\n"
+            "As acceptance provides warmth in the coldest of winters\n"
+
+        ),
+        paper="festive"
 
 label show_poem(poem):
     play audio page_turn

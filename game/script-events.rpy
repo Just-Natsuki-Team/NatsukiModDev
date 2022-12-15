@@ -2657,8 +2657,9 @@ label holiday_christmas_day:
         holiday_types=[jn_events.JNHolidayTypes.christmas_day],
         affinity=Natsuki._getAffinityState()
     )
-    $ christmas_poem = random.choice(unlocked_poem_pool) if len(unlocked_poem_pool) > 0 else None
-
+    $ unlocked_poem_pool.sort(key = lambda poem: poem.affinity)
+    $ christmas_poem = unlocked_poem_pool.pop() if len(unlocked_poem_pool) > 0 else None
+    
     if christmas_poem:
         # We have a poem to give the player
         n 1nllsllsbl "..."
