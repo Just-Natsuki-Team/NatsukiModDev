@@ -255,7 +255,7 @@ init python in jn_poems:
         holiday_type=jn_events.JNHolidayTypes.christmas_day,
         affinity_range=(jn_affinity.ENAMORED, None),
         poem=(
-            "                  It’s\n" 
+            "                  It's\n" 
             "               Chilly and\n" 
             "              Cold outside\n" 
             "             But warm inside\n" 
@@ -273,9 +273,10 @@ init python in jn_poems:
             " As it tastes more sweet with new and fresh ingredients.\n" 
             "The warmth I feel inside will outlast any amount of winter\n" 
             "             Because with you by my side\n" 
-            "             I’m always ready for another.\n" 
+            "             I'm always ready for another.\n" 
         ),
-        paper="festive"
+        paper="festive",
+        font_size=24
     ))
 
     __registerPoem(JNPoem(
@@ -289,7 +290,7 @@ init python in jn_poems:
             "One that hid the shouts and all the arguments\n"
             "One that hid in plain sight, opposed to spotlight\n"
             "\n"
-            "But where we come from doesn’t define\n"
+            "But where we come from doesn't define\n"
             "Who we truly are deep on the inside\n"
             "And sometimes all it takes is someone.\n"
             "Someone new to remind you of more.\n"
@@ -299,16 +300,16 @@ init python in jn_poems:
             "Eagerly awaiting two people\n"
             "To coat it with ornaments and lights.\n"
             "\n"
-            "That tree a template of what’s to come\n"
+            "That tree a template of what's to come\n"
             "A place where new memories can form\n"
             "Where gingerbread can appear brittle\n"
             "Without needing to lie, with honesty.\n"
             "\n"
             "Being welcomed without all the bells and whistles\n"
             "As acceptance provides warmth in the coldest of winters\n"
-
         ),
         paper="festive"
+    ))
 
 label show_poem(poem):
     play audio page_turn
