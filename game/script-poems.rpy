@@ -133,7 +133,6 @@ init python in jn_poems:
             """
             Locks this poem, making it unavailable to the player.
             """
-            # Unlock the poem
             self.unlocked = False
             self.__save()
 
@@ -141,7 +140,6 @@ init python in jn_poems:
             """
             Unlocks this poem, making it available to the player.
             """
-            # Unlock the poem
             self.unlocked = True
             self.__save()
 

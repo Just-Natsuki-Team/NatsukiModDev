@@ -2504,13 +2504,13 @@ label holiday_christmas_day:
     extend 1uchbsl " Omigosh omigosh omigosh omigosh omigoooosh!"
     n 1unmbgleex "!{w=0.5}{nw}"
     n 1uwdbgl "[player]!{w=0.75}{nw}"
-    extend 1uwdbsl "[player]!{w=0.2} [player]!"
+    extend 1uwdbsl " [player]!{w=0.2} [player]!"
     n 1uchbsl "It's here!{w=0.75}{nw}"
     extend 1uchbgl " It's actually,{w=0.5}{nw}"
     extend 1fchbsl " finally,{w=0.5}{nw}"
-    extend 1uchgnleme " freaking {i}HERE{/i}!"
+    extend 1uchgnleme " freaking{w=0.5} {i}HERE{/i}!"
 
-    if jn_get_current_time_block in [JNTimeBlocks.early_morning,{w=0.2} JNTimeBlocks.mid_morning,{w=0.2} JNTimeBlocks.late_morning]:
+    if jn_get_current_time_block in [JNTimeBlocks.early_morning, JNTimeBlocks.mid_morning, JNTimeBlocks.late_morning]:
         n 1fspgs "Come on!{w=0.75}{nw}"
         extend 1knmgs " Get the sleep out of your eyes already,{w=0.2} [player]!"
         n 1fcsss "Up and at 'em!{w=0.5}{nw}"
@@ -2584,7 +2584,7 @@ label holiday_christmas_day:
     extend 1tnmpu " So long as we were all together?"
     n 1kllbol "..."
     n 1fcsunl "T-{w=0.3}that's where {i}my{/i} home was."
-    n 1fcsunltsa "...."
+    n 1fcsunltsa "..."
     n 1fllunltsc "I didn't even care what I got."
     n 1fcsunl "It didn't matter.{w=1}{nw}"
     extend 1ksrsll " N-{w=0.2}not really."
@@ -2757,6 +2757,8 @@ label holiday_christmas_day:
 
     $ jnPause(3)
     play audio chair_in
+    $ jnPause(1)
+    hide black with Dissolve(2)
     $ jnPause(2)
 
     if Natsuki.isLove(higher=True):
@@ -2779,8 +2781,8 @@ label holiday_new_years_eve:
     extend 1unmbg " Do you even know what day it is?!{w=1}{nw}"
     extend 1fspgsedz " It's almost the new year!"
     n 1kcsss "Man...{w=1}{nw}"
-    extend 1fchgn " and about time too,{w=0.1} huh?"
-    n 1ullaj "I don't know about you,{w=0.1} [player]...{w=1}{nw}"
+    extend 1fchgn " and about time too,{w=0.2} huh?"
+    n 1ullaj "I don't know about you,{w=0.2} [player]...{w=1}{nw}"
     $ current_year = datetime.date.today().year
     extend 1fchbleme " but I can't {i}WAIT{/i} to tell [current_year] where to stick it!"
     n 1fsqsm "And what better way to do that...{w=0.75}{nw}"
@@ -2791,13 +2793,13 @@ label holiday_new_years_eve:
     if Natsuki.isEnamored(higher=True):
         n 1kllsml "..."
         n 1kllpul "But...{w=0.75}{nw}"
-        extend 1knmbol " in all seriousness,{w=0.1} [player]?"
+        extend 1knmbol " in all seriousness,{w=0.2} [player]?"
         n 1klrbol "..."
         n 1fcspul "I'd...{w=1}{nw}"
         extend 1knmpol " really like to spend it with you."
         n 1kllpof "..."
         n 1kslunf "...I'd like that a lot."
-        n 1fcsemf "I-{w=0.3}if you didn't have anything planned,{w=0.1} anyway.{w=1}{nw}"
+        n 1fcsemf "I-{w=0.3}if you didn't have anything planned,{w=0.2} anyway.{w=1}{nw}"
         extend 1nwmpol " I'm not gonna be a jerk about it if you already had stuff to do."
         n 1nlrpul "Though...{w=1}{nw}"
         extend 1tnmpul " if you didn't?{w=0.75}{nw}"
@@ -2806,7 +2808,7 @@ label holiday_new_years_eve:
         extend 1flldvfsbl " Ehehe."
 
         if Natsuki.isLove(higher=True):
-            n 1uchsmfeaf "Love you,{w=0.1} [player]~!"
+            n 1uchsmfeaf "Love you,{w=0.2} [player]~!"
 
     elif Natsuki.isAffectionate(higher=True):
         n 1kllsll "..."
@@ -2821,12 +2823,12 @@ label holiday_new_years_eve:
         n 1kslpulsbr "But...{w=1.25}{nw}"
         extend 1knmpulsbl " [player]?"
         n 1ksrunlsbl "..."
-        n 1fcspolsbl "...It isn't like I'd say {i}no{/i} to your company,{w=0.1} you know.{w=1}{nw}"
-        extend 1fllpofesssbl " S-{w=0.3}so long as you don't make it all gross,{w=0.1} anyway."
+        n 1fcspolsbl "...It isn't like I'd say {i}no{/i} to your company,{w=0.2} you know.{w=1}{nw}"
+        extend 1fllpofesssbl " S-{w=0.3}so long as you don't make it all gross,{w=0.2} anyway."
         n 1fsldvfesdsbr "Ehehe."
 
     else:
-        n 1fnmssl "Just a word of warning though,{w=0.1} [player]..."
+        n 1fnmssl "Just a word of warning though,{w=0.2} [player]..."
         n 1fsqbgl "I {i}fully{/i} expect to see you here for it.{w=1}{nw}"
         extend 1fcslgl " No excuses!"
         n 1fcsajl "A-{w=0.3}and besides,{w=0.5}{nw}"
@@ -2852,15 +2854,15 @@ label holiday_player_birthday():
         jn_events.getHoliday("holiday_player_birthday").run()
         player_name_capitalized = persistent.playername.upper()
 
-    n 1uchlgl "HAPPY BIRTHDAY,{w=0.1} [player_name_capitalized]!"
-    n 1fcsbg "Betcha' didn't think I had something planned all along,{w=0.1} did you?{w=0.5}{nw}"
+    n 1uchlgl "HAPPY BIRTHDAY,{w=0.2} [player_name_capitalized]!"
+    n 1fcsbg "Betcha' didn't think I had something planned all along,{w=0.2} did you?{w=0.5}{nw}"
     extend 1nchsml " Ehehe."
     n 1fnmaj "Don't lie!{w=1}{nw}"
     extend 1fchbl " I know I got you {i}real{/i} good this time."
-    n 1ullss "Well,{w=0.1} whatever.{w=1}{nw}"
-    extend 1tsqsm " We both know what {i}you're{/i} waiting for,{w=0.1} huh?"
-    n 1fcsss "Yeah,{w=0.1} yeah.{w=0.5}{nw}"
-    extend 1fchsm " I got you covered,{w=0.1} [player]."
+    n 1ullss "Well,{w=0.2} whatever.{w=1}{nw}"
+    extend 1tsqsm " We both know what {i}you're{/i} waiting for,{w=0.2} huh?"
+    n 1fcsss "Yeah,{w=0.2} yeah.{w=0.5}{nw}"
+    extend 1fchsm " I got you covered,{w=0.2} [player]."
 
     show prop cake lit zorder jn_events.JN_EVENT_PROP_ZORDER
     play audio necklace_clip
@@ -2875,9 +2877,9 @@ label holiday_player_birthday():
     n 1nlrpu "But..."
     n 1nchbs "Yeah!{w=0.2} Here you go!{w=0.5}{nw}"
     extend 1nchsml " Ehehe."
-    n 1tsqsm "So,{w=0.1} [player]?{w=1}{nw}"
+    n 1tsqsm "So,{w=0.2} [player]?{w=1}{nw}"
     extend 1tsqss " Aren't you gonna make a wish?"
-    n 1tlrpu "...Better come up with one soon,{w=0.1} actually.{w=1}{nw}"
+    n 1tlrpu "...Better come up with one soon,{w=0.2} actually.{w=1}{nw}"
     extend 1uskemlesh " I gotta put this out before the wax ruins all the icing!"
     n 1nllpo "..."
     n 1tsqpu "All set?{w=0.5}{nw}"
@@ -2890,7 +2892,7 @@ label holiday_player_birthday():
 
     n 1nchsm "..."
     n 1tsgss "Well?{w=0.75}{nw}"
-    extend 1tnmaj " What're you waiting for,{w=0.1} [player]?{w=1}{nw}"
+    extend 1tnmaj " What're you waiting for,{w=0.2} [player]?{w=1}{nw}"
     extend 1flrcal " Dig in already!"
     n 1nsqsll "Don't tell me I went all out on this for nothing."
     n 1fsqsr "..."
@@ -2903,7 +2905,7 @@ label holiday_player_birthday():
     extend 1ullaj " So..."
     n 1nsrss "I'm just gonna just save this for later."
     n 1fnmajl "Hey!{w=0.5}{nw}"
-    extend 1fllbgl " It's the thought that counts,{w=0.1} right?"
+    extend 1fllbgl " It's the thought that counts,{w=0.2} right?"
 
     play audio glass_move
     hide prop cake unlit
@@ -2920,14 +2922,14 @@ label holiday_player_birthday():
     if birthday_poem:
         if Natsuki.isEnamored(higher=True):
             n 1kllcal "..."
-            n 1knmpul "...I wrote you something too,{w=0.1} you know."
+            n 1knmpul "...I wrote you something too,{w=0.2} you know."
             n 1fcseml "I-{w=0.2}I know it's not some {i}fancy{/i} gift,{w=1}{nw}"
             extend 1klrsrl " but..."
             n 1fsrsrl "..."
             n 1fcsunl "Uuuuu..."
             n 1fcspul "Just...{w=1}{nw}"
             $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
-            extend 1klrpol " read it already,{w=0.1} [chosen_tease]."
+            extend 1klrpol " read it already,{w=0.2} [chosen_tease]."
 
         else:
             n 1fllunl "..."
@@ -2942,8 +2944,8 @@ label holiday_player_birthday():
 
         if Natsuki.isEnamored(higher=True):
             n 1knmbol "Hey...{w=1}{nw}"
-            extend 1knmpul " you {i}did{/i} read it,{w=0.1} right?"
-            n 1fslbol "I worked a lot on that,{w=0.1} you know."
+            extend 1knmpul " you {i}did{/i} read it,{w=0.2} right?"
+            n 1fslbol "I worked a lot on that,{w=0.2} you know."
             n 1fcseml "A-{w=0.2}and I meant every word,{w=1}{nw}"
             extend 1kllbof " so..."
             n 1klrssf "...Yeah."
@@ -2956,7 +2958,7 @@ label holiday_player_birthday():
             extend 1fslcal " Jeez..."
             n 1fslunl "..."
             n 1fcsajl "I guess I'll just keep it in my desk for now.{w=1}{nw}"
-            extend 1fsrssl " I-{w=0.2}in case you wanted to reference my writing skills later,{w=0.1} {i}obviously{/i}."
+            extend 1fsrssl " I-{w=0.2}in case you wanted to reference my writing skills later,{w=0.2} {i}obviously{/i}."
 
         play audio drawer
         with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
