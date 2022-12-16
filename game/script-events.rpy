@@ -484,8 +484,6 @@ init python in jn_events:
         if store.jnIsAnniversary(input_date):
             holidays.append(JNHolidayTypes.anniversary)
 
-        holidays.append(JNHolidayTypes.christmas_day)
-
         return holidays
 
     def getAllHolidays():
