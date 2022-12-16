@@ -484,6 +484,8 @@ init python in jn_events:
         if store.jnIsAnniversary(input_date):
             holidays.append(JNHolidayTypes.anniversary)
 
+        holidays.append(JNHolidayTypes.christmas_day)
+
         return holidays
 
     def getAllHolidays():
@@ -2539,7 +2541,7 @@ label holiday_christmas_day:
     n 1tnmss "And even if it's just for a couple days..."
     n 1fchbg "Just having all that weight and stress removed {i}rocks{/i}!{w=1}{nw}"
     extend 1uchgn " It's great!"
-    n 1kcsssesi "Like I can just feel the stress of the year just washing away from me..."
+    n 1kcsssesi "Like I can just feel the stress of the year washing away from me..."
     n 1fwlbl "And I don't even have to cook anything here!{w=0.75}{nw}"
     extend 1fchsm " Ehehe..."
     n 1kslsm "..."
@@ -2563,12 +2565,12 @@ label holiday_christmas_day:
     n 1fcssr "...You don't need to buy gifts,{w=0.2} if you're {i}traditional{/i}.{w=1.25}{nw}"
     extend 1fsrsl " You don't need to invite guests,{w=0.2} if you're {i}traditional{/i}."
     n 1ksqsl "..."
-    n 1kllpu "You see where I'm going with this...{w=1}{nw}" 
+    n 1kllpu "You see where I'm going with this...{w=1}{nw}"
     extend 1ksqbo " right?"
     n 1fcsunl "N-{w=0.2}not celebrating it wasn't a {i}choice{/i} at my place,{w=0.2} [player]."
     n 1fcsbol "..."
     n 1ncspul "So..."
-    n 1nnmbo "...I made my own.{w=0.75}{nw}" 
+    n 1nnmbo "...I made my own.{w=0.75}{nw}"
     extend 1kllbo " I'd sneak out."
     n 1ncsss "Heh.{w=0.75}{nw}"
     extend 1nslss " I'd already gotten {i}real{/i} good at figuring out where the squeaky floorboards were,{w=0.5}{nw}"
@@ -2576,7 +2578,7 @@ label holiday_christmas_day:
     n 1fslsll "Besides.{w=0.3} Not like {i}they{/i} particularly cared where I was..."
     n 1kslsll "..."
     n 1ksqbol "But my friends always did."
-    n 1ncsbol "We'd pre-arrange it all.{w=0.75}{nw}" 
+    n 1ncsbol "We'd pre-arrange it all.{w=0.75}{nw}"
     extend 1unmajl " Every year,{w=1}{nw}"
     extend 1kslfslsbl " just before the winter break."
     n 1ucsaj "Sayori's place,{w=0.75}{nw}"
@@ -2630,7 +2632,7 @@ label holiday_christmas_day:
     n 1knmpul "..."
     n 1kcspul "...Thanks,{w=0.2} [player].{w=1}{nw}"
     extend 1ksrpolsbl " Really."
-    n 1kcssllsbl "I don't have {i}all{/i} my friends right now,{w=0.75}{nw}" 
+    n 1kcssllsbl "I don't have {i}all{/i} my friends right now,{w=0.75}{nw}"
     extend 1ksrbol " but..."
 
     if Natsuki.isLove(higher=True):
@@ -2661,7 +2663,7 @@ label holiday_christmas_day:
     )
     $ unlocked_poem_pool.sort(key = lambda poem: poem.affinity)
     $ christmas_poem = unlocked_poem_pool.pop() if len(unlocked_poem_pool) > 0 else None
-    
+
     if christmas_poem:
         # We have a poem to give the player
         n 1nllsllsbl "..."
@@ -2682,7 +2684,7 @@ label holiday_christmas_day:
         else:
             n 1nslunlsbr "..."
             n 1fcsunlsbl "Nnnnnnn-!"
-            n 1fcsemlsbl "...J-{w=0.2}just...{w=1}{nw}" 
+            n 1fcsemlsbl "...J-{w=0.2}just...{w=1}{nw}"
             extend 1ksrsllsbl " read it already,{w=0.2} [player].{w=1.25}{nw}"
             extend 1fcssllsbl " {i}B-before{/i} I change my mind."
             show natsuki 1ksrsllsbl at jn_center
@@ -2693,7 +2695,7 @@ label holiday_christmas_day:
             n 1ksqcalsbr "...Finished,{w=0.2} [player]?"
             n 1kslcalsbr "..."
             n 1kcsbolsbl "...Look.{w=1}{nw}"
-            extend 1fcseml "I'm..."
+            extend 1fcseml " I'm..."
             n 1kslbol "..."
             n 1ksqbol "I'm not gonna kid myself and say this was some {i}amazing{/i} gift."
             n 1nsrsssbl "...Not like I'm the {i}first{/i} one to hand you a poem."
@@ -2710,9 +2712,9 @@ label holiday_christmas_day:
         else:
             n 1nsqsllsbl "..."
             n 1tsqcalsbl "All done,{w=0.2} [player]?{w=1}{nw}"
-            extend 1nslssl "Man..."
+            extend 1nslssl " Man..."
             n 1fcsajlsbl "A-{w=0.2}about time,{w=0.2} huh?{w=1}{nw}"
-            extend 1flrajlsbl " I swear,{w=0.5}{nw}" 
+            extend 1flrajlsbl " I swear,{w=0.5}{nw}"
             extend 1fcspolsbl " sometimes it's like you {i}need{/i} things read out to you or something.{w=0.75}{nw}"
             extend 1fsrfslsbl " Heh."
             n 1ksrbol "..."
@@ -2732,7 +2734,7 @@ label holiday_christmas_day:
 
     else:
         n 1kllbol "..."
-        
+
         if Natsuki.isEnamored(higher=True):
             n 1kwmfsl "...And [player]?"
             show natsuki 1fcscalsbl at jn_center
