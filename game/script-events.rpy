@@ -521,12 +521,14 @@ init python in jn_events:
     def resetHolidays():
         """
         Resets the is_seen state and corresponding completion state for all holidays.
+        Also clears the deco.
         """
         for holiday in getAllHolidays():
             holiday.is_seen = False
 
         JNHoliday.saveAll()
         store.persistent._jn_holiday_completed_list = []
+        store.persistent._jn_holiday_deco_list_on_quit = []
 
     def queueHolidays(holiday_list, is_day_check=False):
         """
