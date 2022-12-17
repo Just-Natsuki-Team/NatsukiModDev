@@ -580,7 +580,6 @@ init python in jn_events:
         holiday_type=JNHolidayTypes.christmas_eve,
         affinity_range=(jn_affinity.HAPPY, None),
         natsuki_sprite_code="1uchsm",
-        bgm=audio.holiday_bgm,
         deco_list=["garlands"],
         priority=99
     ))
@@ -2592,8 +2591,8 @@ label holiday_christmas_day:
     extend 1ksrsll " N-{w=0.2}not really."
     n 1kcsajl "Just...{w=1}{nw}"
     extend 1fcsunl " warmth.{w=0.5} P-{w=0.2}people who really {i}cared{/i}."
-    n 1fcseml "N-{w=0.2}not about money.{w=1}{nw}"
-    extend 1ksrboltsa " About me.{w=1}{nw}"
+    n 1fcsemltsa "N-{w=0.2}not about money.{w=1}{nw}"
+    extend 1ksrboltsb " About me.{w=1}{nw}"
     extend 1ksrpultsb " Even if I could never get them {i}anything{/i}..."
     n 1fcsunlsbl "...That was a gift enough to me."
     n 1fcsajlsbl "So that's why..."
@@ -2659,10 +2658,12 @@ label holiday_christmas_day:
         holiday_types=[jn_events.JNHolidayTypes.christmas_day],
         affinity=Natsuki._getAffinityState()
     )
-    $ unlocked_poem_pool.sort(key = lambda poem: poem.affinity)
+    $ unlocked_poem_pool.sort(key = lambda poem: poem.affinity_range[0])
     $ christmas_poem = unlocked_poem_pool.pop() if len(unlocked_poem_pool) > 0 else None
 
     if christmas_poem:
+        $ christmas_poem.unlock()
+
         # We have a poem to give the player
         n 1nllsllsbl "..."
         n 1knmcalsbl "...I did get you something,{w=0.2} you know."
@@ -2908,6 +2909,7 @@ label holiday_player_birthday():
     n 1nsrss "I'm just gonna just save this for later."
     n 1fnmajl "Hey!{w=0.5}{nw}"
     extend 1fllbgl " It's the thought that counts,{w=0.2} right?"
+    show natsuki 1fsldvl
 
     play audio glass_move
     hide prop cake unlit

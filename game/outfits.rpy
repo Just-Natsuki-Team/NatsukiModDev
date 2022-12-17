@@ -2345,7 +2345,13 @@ label new_wearables_outfits_unlocked:
         extend 1kllpulsbl " y-{w=0.2}you {i}do{/i} know you don't have to get me stuff just so I like you..."
         n 1knmsllsbr "Right?"
 
-        if jnIsChristmasEve():
+        if jnIsPlayerBirthday():
+            n 1uskgslesh "...Wait!{w=0.75}{nw}"
+            extend 1knmemlsbl "Y-{w=0.2}you shouldn't even be the one {i}giving{/i} things today anyway!"
+            n 1kslemlsbl "...It's {i}weird{/i},{w=0.2} [player]..."
+            n 1kslbolsbl "..."
+
+        elif jnIsChristmasEve():
             n 1ksrbofsbl "...Especially tonight,{w=0.3} of all nights..."
 
         elif jnIsChristmasDay():
@@ -2375,7 +2381,11 @@ label new_wearables_outfits_unlocked:
         n 1fcsanl "Uuuuuuuuu-!"
         n 1fpawrledr "Why would you do thaaat?!{w=1}{nw}"
 
-        if jnIsChristmasEve():
+        if jnIsPlayerBirthday():
+            n 1uskwrlesh "E-{w=0.2}especially today!{w=1}{nw}"
+            extend 1kbkwrl " Did you {i}forget{/i} it's your {i}birthday{/i}?!"
+
+        elif jnIsChristmasEve():
             extend 1fllemf " I-{w=0.2}I mean..."
             n 1knmgsf "Y-{w=0.2}you couldn't have at {i}least{/i} waited for tomorrow?!{w=1}{nw}"
             extend 1kbkwrlesd " I didn't even make a list or anythiiiing!"

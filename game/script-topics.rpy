@@ -8485,6 +8485,7 @@ label talk_can_i_see_a_poem:
 
             n 1tnmsml "All done?{w=0.5}{nw}"
             extend 1nlrssl " I'll just put that back."
+            show natsuki 1nsrsml
 
         elif Natsuki.isAffectionate(higher=True):
             n 1unmaj "[_return.display_name]?{w=0.2} That one?{w=0.5}{nw}"
@@ -8500,6 +8501,7 @@ label talk_can_i_see_a_poem:
 
             n 1tnmssl "All done?{w=0.75}{nw}"
             extend 1flrdvl " Ehehe."
+            show natsuki 1fsrdvl
 
         else:
             n 1unmaj "That one?{w=0.5}{nw}"
@@ -8516,6 +8518,7 @@ label talk_can_i_see_a_poem:
 
             n 1tnmbol "All done?{w=0.5}{nw}"
             extend 1nslssl "I'll just put that back."
+            show natsuki 1nslbol
 
         play audio drawer
         with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")

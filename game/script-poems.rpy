@@ -50,7 +50,7 @@ init python in jn_poems:
             self.affinity_range = affinity_range
             self.poem = poem
             self.paper = paper
-            self.font_size = font_size if 16 <= font_size <= 28 else 28 
+            self.font_size = font_size if 16 <= font_size <= 24 else 24 
             self.text_align = text_align if text_align in (0.0, 0.5, 1.0) else 0.0
 
         @staticmethod
@@ -254,7 +254,7 @@ init python in jn_poems:
     ))
 
     __registerPoem(JNPoem(
-        reference_name="jn_evergreen",
+        reference_name="jn_christmas_evergreen",
         display_name="Evergreen",
         holiday_type=jn_events.JNHolidayTypes.christmas_day,
         affinity_range=(jn_affinity.ENAMORED, None),
@@ -285,7 +285,7 @@ init python in jn_poems:
     ))
 
     __registerPoem(JNPoem(
-        reference_name="jn_gingerbread_house",
+        reference_name="jn_christmas_gingerbread_house",
         display_name="Gingerbread House",
         holiday_type=jn_events.JNHolidayTypes.christmas_day,
         affinity_range=(jn_affinity.HAPPY, None),
@@ -340,11 +340,11 @@ screen poem_view(poem):
         ypos 100
         xpos 360
         has vbox
+        text "[poem.display_name]" style "poem_title" text_align 0.5
+        null height 50
         hbox:
             xsize 600
             box_wrap True
-            null height 100
-            text "[poem.display_name]" style "poem_title"
             null height 60
             text "[poem.poem]" style "poem_text" size poem.font_size text_align poem.text_align
             null height 50
@@ -376,7 +376,6 @@ style poem_title:
     color "#000"
     outlines []
     line_leading 5
-    italic True
     xalign 0.5
 
 style poem_text:
