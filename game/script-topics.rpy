@@ -8536,3 +8536,191 @@ label talk_can_i_see_a_poem:
             extend 1nlrpol " Well,{w=0.2} okay then."
 
     return
+
+# Natsuki is more specific with her sweet tooth!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_chocolate_preference",
+            unlocked=True,
+            prompt="What chocolate do you prefer?",
+            category=["Food"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_chocolate_preference:
+    if Natsuki.isAffectionate(higher=True):
+        if get_topic("event_warm_package").shown_count > 0:
+            n  "This again,{w=0.2} [player]?"
+
+        else:
+            n  "Ooh!"
+            extend  " My favorite type of chocolate,{w=0.2} you say?"
+
+        n  "...Why,{w=1}{nw}"
+        extend  " [player]?"
+        n  "Y-{w=0.2}you aren't trying to {i}sweeten{/i} me up or something,{w=0.2} are you?{w=0.75}{nw}"
+        extend  " Ehehe..."
+        n  "..."
+        n  "W-{w=0.2}well,{w=0.2} anyway!"
+
+    elif Natsuki.isNormal(higher=True):
+        if get_topic("event_warm_package").shown_count > 0:
+            n  "Huh?{w=1}{nw}"
+            extend  " Didn't you ask me this already,{w=0.2} [player]?"
+            n  "Well,{w=0.75}{nw}"
+            extend  " I wouldn't say I've changed my mind..."
+
+        else:
+            n  "Eh?{w=0.75}{nw}"
+            extend  " My favorite kind of chocolate,{w=0.5}{nw}"
+            extend  " huh?"
+            n  "That's...{w=1}{nw}"
+            extend  " actually a pretty tough one,{w=0.75}{nw}" 
+            extend  " to be honest."
+            n  "I mean..."
+
+    if Natsuki.isDistressed(higher=True):
+        n  "Oh,{w=1}{nw}"
+        extend  " {i}please{/i}."
+        
+        if get_topic("event_warm_package").shown_count > 0:
+            n  "Really,{w=0.2} [player]?{w=1}{nw}"
+            extend  " {i}This{/i} again?"
+
+        else:
+            n  "Really,{w=0.2} [player]?"
+
+        n  "..."
+        n  "...Fine.{w=0.75}{nw}"
+        extend  " For what it even {i}matters{/i} to you."
+        n  "White chocolate,{w=0.2} probably."
+        n  "...Why?{w=1}{nw}"
+        extend  " It's cheap,{w=0.5} full of sugars and fats,{w=0.75}{nw}"
+        extend  " and I could always add it to whatever I wanted."
+        n  "Heh."
+        extend  " What else did you expect?{w=0.75}{nw}"
+        n  "Not like {i}I{/i} was the one going to {i}fancy{/i} candy stores to pick out whatever I fancied."
+        n  "Heh.{w=0.75}{nw}"
+        extend  " Yeah.{w=1}{nw}"
+        extend  " Not like I'd expect you to get it."
+        n  "Whatever."
+        n  "The others are fine too,{w=0.75}{nw}"
+        extend  " I guess."
+        n  "Milk chocolate is just kinda boring.{w=1}{nw}"
+        extend  " And there's no {i}way{/i} I was buying dark chocolate with {i}my{/i} kind of budget."
+        n  "So...{w=1}{nw}"
+        extend  " yeah.{w=0.75}{nw}"
+        extend  " That about sums it up."
+        n  " Happy now?"
+        n  "Because unless you magically have something to sweeten {i}this{/i} experience up?"
+        n  "Heh."
+        n  "I think we're about done here,{w=0.2} {i}[player]{/i}."
+
+        return
+        
+    else:
+        n  "Heh.{w=0.75}{nw}"
+        extend  " My favourite type of chocolate?"
+
+        if get_topic("event_warm_package").shown_count > 0:
+            n  "Does your memory {i}seriously{/i} suck as much as your personality does?"
+            n  "Heh.{w=0.75}{nw}"
+            extend  " Allow me to {i}remind{/i} you,{w=0.2} {i}[player]{/i}."
+
+        else:
+            n  "You {i}really{/i} wanna know,{w=0.2} [player]?"
+            n  "..."
+
+        n  "Not whatever cheap,{w=0.75} half-{w=0.2}expired{w=0.75}{nw}" 
+        extend  " trash{w=0.75}{nw}" 
+        extend  " {i}you{/i} would hand me,{w=0.75}{nw}"
+        extend  " that's for sure."
+        n  "Jerk."
+
+        return
+
+    n  "It's {i}gotta{/i} be white chocolate.{w=0.75}{nw}"
+    extend  " Any day of the week!"
+    n  "It {i}is{/i} practically overflowing with sugar...{w=0.75}{nw}"
+    extend  " and debatably even {i}chocolate{/i}..."
+    
+
+    if get_topic("event_warm_package").shown_count > 0:
+        n  "But that {i}taste{/i}!"
+        extend  "Especially in hot chocolate!"
+
+    else:
+        n  "But that {i}taste{/i}!"
+
+    n  "Oh!{w=0.75}{nw}"
+    extend  " And it's even super convenient for baking!"
+    n  "It's pretty inexpensive -{w=0.5}{nw}"
+    extend  " since it really doesn't have much {i}actual{/i} cocoa at all -{w=0.5}{nw}"
+    extend  " I never have to worry about how strong it is,{w=0.75}{nw}"
+    extend  " plus it goes super well with regular old chocolate too!"
+    n  "Bought some as a treat and can't finish the job?{w=0.75}{nw}"
+    extend  " No problemo!"
+    n  "Just wrap it back up,{w=0.2} save it,{w=0.75}{nw}"
+    extend  " and that's your next cake topping sorted!"
+    n  "So take it from me,{w=0.2} [player]:{w=1}{nw}"
+    extend  " it's a confectioner's best friend!"
+    n  "..."
+    n  "...Ah!"
+    n  "B-{w=0.2}but that's not to say the others are terrible,{w=0.2} or anything like that.{w=0.75}{nw}"
+    extend  " Chocolate is super subjective!{w=1}{nw}"
+    extend  " But..."
+    n  "I guess I just don't really see the appeal {i}as{/i} much."
+    n  "Milk chocolate is {i}okay{/i},{w=0.2} but you kinda see it everywhere already."
+    n  "As for dark chocolate..."
+    n  "..."
+    n  "W-{w=0.2}well,{w=1}{nw}"
+    extend  " it totally has its place too!"
+    n  "Sometimes,{w=0.2} that dash of bitterness is just what you need!{w=0.75}{nw}"
+    extend  " Plus with all the antioxidants and generally the least sugar..."
+    n  "At least for chocolate?{w=1}{nw}"
+    extend  " It doesn't get much healthier than that!"
+    n  "So yeah!{w=0.75}{nw}"
+    extend  " It {i}totally{/i} has its place,{w=0.2} like I said..."
+    n  "...Just not in {i}my{/i} mouth.{w=0.75}{nw}"
+    extend  " Ehehe."
+    n  "A-{w=0.2}anyway!{w=0.75}{nw}"
+    extend  " Enough of me yammering on again.{w=0.75}{nw}"
+    extend  " Jeez."
+    n  "What about you,{w=0.2} [player]?"
+    n  "...Wait!{w=1}{nw}"
+    extend  " Don't tell me!"
+    n  "..."
+
+    if Natsuki.isLove(higher=True):
+        n  "It {i}has{/i} to be white chocolate.{w=0.75}{nw}"
+        extend  " Complete no-{w=0.2}brainer.{w=1}{nw}"
+        extend  " Besides..."
+        n  "I-{w=0.2}I like to think I {i}know{/i} a sweetheart when I see one."
+        n  "Ehehe..."
+        n  "L-{w=0.2}love you,{w=0.2} [player]~!"
+
+    elif Natsuki.isEnamored(higher=True):
+        n  "...It's {i}gotta{/i} be white chocolate.{w=1}{nw}"
+        extend  " Besides..."
+        n  "H-{w=0.2}how else would our time together be this sweet?"
+        n  "Ehehe..."
+
+    elif Natsuki.isAffectionate(higher=True):
+        n  "...Probably milk chocolate,{w=0.75}{nw}"
+        extend  " I'd guess."
+        n  "You've gone about as soft,{w=0.2} after all!"
+
+    else:
+        n  "It's...{w=1}{nw}"
+        extend  " actually kinda hard to guess,{w=0.75}{nw}"
+        extend  " to be honest."
+        n  "I {i}would{/i} say dark chocolate,{w=0.2} but..."
+        n  "I like to think you aren't {i}that{/i} bitter!{w=0.75}{nw}"
+        extend  " Ahaha."
+
+    return
