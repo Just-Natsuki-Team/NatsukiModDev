@@ -8182,10 +8182,10 @@ init 5 python:
 
 label talk_players_birthday_intro:
     # Player has already discussed their birthday with Natsuki
-    if get_topic("talk_players_birthday_intro").shown_count > 0:
+    if get_topic("talk_players_birthday_intro").shown_count != 0:
         n 1tnmbo "Huh?{w=0.2} Your birthday?"
 
-        if persistent._jn_player_birthday_day_month:
+        if persistent._jn_player_birthday_day_month is not None:
             n 1fslaj "Wait...{w=1}{nw}"
             extend 1fsrpu " didn't you already share that with me?"
             n 1fskajesh "...{w=0.5}{nw}"

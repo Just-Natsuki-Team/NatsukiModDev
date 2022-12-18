@@ -32,6 +32,7 @@ label ch30_visual_setup:
 label ch30_init:
     python:
         import random
+        import codecs
 
         # MIGRATIONS
 
@@ -60,6 +61,7 @@ label ch30_init:
 
         tt_in_session = False
         if ((persistent.jn_last_visited_date - datetime.datetime.now()).total_seconds() / 3600) >= 30:
+            jn_utils.log("545421".decode("hex"))
             persistent._jn_player_tt_state += 1
             tt_in_session = True
 
@@ -67,6 +69,7 @@ label ch30_init:
             persistent._jn_player_tt_instances += 1
 
             if persistent._jn_player_tt_instances == 3 or persistent._jn_player_tt_instances == 6:
+                jn_utils.log("545421".decode("hex"))
                 tt_in_session = True
                 persistent._jn_player_tt_state += 1
 
