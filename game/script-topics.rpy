@@ -8556,7 +8556,7 @@ label talk_chocolate_preference:
     if Natsuki.isAffectionate(higher=True):
         if get_topic("talk_chocolate_preference").shown_count > 0:
             n 1tnmaj "Oh?"
-            extend 1tsqbo "This again,{w=0.2} huh?"
+            extend 1tsqbo " This again,{w=0.2} huh?"
             n 1tsrsm "..."
 
         else:
@@ -8582,14 +8582,14 @@ label talk_chocolate_preference:
             extend 1tllbo " My favorite kind of chocolate,{w=0.5}{nw}"
             extend 1tnmss " huh?"
             n 1uupaj "That's...{w=1}{nw}"
-            extend 1flrbo " actually a pretty tough one,{w=0.75}{nw}" 
+            extend 1flrbo " actually a pretty tough one,{w=0.75}{nw}"
             extend 1tnmbo " to be honest."
             n 1ullaj "I mean..."
 
     elif Natsuki.isDistressed(higher=True):
         n 1fcsansbl "Oh,{w=1}{nw}"
         extend 1fsremsbl " {i}please{/i}."
-        
+
         if get_topic("talk_chocolate_preference").shown_count > 0:
             n 1fcsemsbl "Really,{w=0.2} [player]?{w=1}{nw}"
             extend 1fsqemsbl " {i}This{/i} again?"
@@ -8626,7 +8626,7 @@ label talk_chocolate_preference:
         n 1fsqan "I think we're about done here,{w=0.2} {i}[player]{/i}."
 
         return
-        
+
     else:
         n 1fcsan "Heh.{w=0.75}{nw}"
         extend 1fsqanltsb " My favourite type of chocolate?"
@@ -8640,8 +8640,8 @@ label talk_chocolate_preference:
             n 1fsqupltsb "You {i}really{/i} wanna know,{w=0.2} [player]?"
             n 1fcsunltsa "..."
 
-        n 1fnmanltsc "Not whatever cheap,{w=0.75} half-{w=0.2}expired{w=0.75}{nw}" 
-        extend 1fnmwrltsc " trash{w=0.75}{nw}" 
+        n 1fnmanltsc "Not whatever cheap,{w=0.75} half-{w=0.2}expired{w=0.75}{nw}"
+        extend 1fnmwrltsc " trash{w=0.75}{nw}"
         extend 1fnmfultsc " {i}you{/i} would hand me,{w=1}{nw}"
         extend 1fcsfultsa " that's for sure."
         n 1fsqanltsb "Jerk."
@@ -8652,11 +8652,11 @@ label talk_chocolate_preference:
     extend 1fchbg " Any day of the week!"
     n 1nslsmsbr "It {i}is{/i} practically overflowing with sugar...{w=0.75}{nw}"
     extend 1nsrdvsbr " and debatably even {i}chocolate{/i}..."
-    
+
 
     if get_topic("event_warm_package").shown_count > 0:
         n 1uspajl "But that {i}taste{/i}!{w=0.75}{nw}"
-        extend 1uchtsleme "Especially in hot chocolate!"
+        extend 1uchtsleme " Especially in hot chocolate!"
 
     else:
         n 1uspajl "But that {i}taste{/i}!"
@@ -8727,7 +8727,7 @@ label talk_chocolate_preference:
         n 1fcspu "It's...{w=1}{nw}"
         extend 1tnmpu " actually kinda hard to guess,{w=0.75}{nw}"
         extend 1tllsl " to be honest."
-        n 1tnmss "I {i}would{/i} say dark chocolate,{w=0.5}" 
+        n 1tnmss "I {i}would{/i} say dark chocolate,{w=0.5}"
         extend 1tsqss " but..."
         n 1fchgnl "I like to think you aren't {i}that{/i} bitter!{w=0.75}{nw}"
         extend 1nchgn " Ahaha."
