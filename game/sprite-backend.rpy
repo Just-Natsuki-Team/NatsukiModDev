@@ -18,6 +18,7 @@ init -50 python:
     class JNBlush(Enum):
         full = 1
         light = 2
+        ill = 3
 
         def __str__(self):
             return self.name
@@ -252,6 +253,8 @@ init -50 python:
             *lc_args
         )
 
+    # TODO: empty desk + chair sprite based on aff.
+
 init 1 python:
     import store
 
@@ -335,7 +338,8 @@ init 1 python:
     
     BLUSH_MAP = {
         "f": JNBlush.full,
-        "l": JNBlush.light
+        "l": JNBlush.light,
+        "i": JNBlush.ill
     }
 
     TEARS_MAP = {
@@ -1242,3 +1246,6 @@ image natsuki talk_menu_ruined:
             "natsuki 1fcssrtse"
         choice:
             "natsuki 1fnmantdr"
+
+image desk = "mod_assets/natsuki/desk/table_normal.png"
+image chair = "mod_assets/natsuki/desk/chair_normal.png"

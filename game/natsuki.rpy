@@ -1,7 +1,9 @@
 default persistent.affinity = 25.0
 default persistent._jn_player_confession_accepted = False
+default persistent._jn_player_confession_day_month = None # Format (day, month)
 
 init 0 python:
+    import datetime
     import store.jn_outfits as jn_outfits
 
     class Natsuki(object):
@@ -66,6 +68,8 @@ init 0 python:
         # Tracks whether Natsuki is currently playing a game
         __is_in_game = False
 
+        __capped_aff_dates = list()
+
         # START: Outfit functionality
 
         # Tracks Natsuki's currently worn outfit
@@ -79,15 +83,18 @@ init 0 python:
             return Natsuki._outfit.reference_name
 
         @staticmethod
-        def setOutfit(outfit):
+        def setOutfit(outfit, persist=True):
             """
             Assigns the specified jn_outfits.JNOutfit outfit to Natsuki.
 
             IN:
                 - outfit - The jn_outfits.JNOutfit outfit for Natsuki to wear.
+                - persist - True if the outfit should be remembered so Natsuki will be wearing it on next boot
             """
             Natsuki._outfit = outfit
-            store.persistent.jn_natsuki_outfit_on_quit = Natsuki._outfit.reference_name
+
+            if persist:
+                store.persistent.jn_natsuki_outfit_on_quit = Natsuki._outfit.reference_name
 
         @staticmethod
         def isWearingOutfit(reference_name):
@@ -198,7 +205,6 @@ init 0 python:
                 - bypass - If the daily cap should be bypassed for things like one-time gifts, events, etc.
             """
             to_add = base * jn_affinity.get_relationship_length_multiplier()
-
             if (
                 not persistent._jn_player_confession_accepted 
                 and (persistent.affinity + to_add) > (jn_affinity.AFF_THRESHOLD_LOVE -1)
@@ -225,7 +231,7 @@ init 0 python:
                 jn_utils.log("Affinity+")
 
             else:
-                jn_utils.log("Daily affinity cap reached!")
+                Natsuki.writeCap()
 
         @staticmethod
         def calculatedAffinityLoss(base=1):
@@ -283,7 +289,9 @@ init 0 python:
             """
             Resets the daily affinity cap, if 24 hours has elapsed.
             """
-            current_date = datetime.datetime.now()
+            current_date = datetime.datetime.now() 
+            if current_date in Natsuki.__capped_aff_dates:
+                return
 
             if not persistent.affinity_gain_reset_date:
                 persistent.affinity_gain_reset_date = current_date
@@ -293,6 +301,12 @@ init 0 python:
                 persistent.affinity_gain_reset_date = current_date
                 persistent._affinity_daily_bypasses = 5
                 jn_utils.log("Daily affinity cap reset; new cap is: {0}".format(persistent.affinity_daily_gain))
+
+        @staticmethod
+        def writeCap():
+            jn_utils.log("Daily affinity cap reached!")
+            if not datetime.datetime.today().isoformat() in Natsuki.__capped_aff_dates:
+                Natsuki.__capped_aff_dates.append(datetime.datetime.today().isoformat())
 
         @staticmethod
         def __isStateGreaterThan(aff_state):

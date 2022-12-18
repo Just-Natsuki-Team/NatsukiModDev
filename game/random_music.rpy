@@ -27,6 +27,15 @@ init python in jn_random_music:
         "Let me see..."
     ]
 
+    _NEW_TRACK_COMPLETE_LINES = [
+        "Done~!",
+        "All done!",
+        "All good!",
+        "There we go!",
+        "And...{w=0.3} we're good!",
+        "Okie-dokie!{w=0.3} Ehehe."
+    ]
+
     # The file extensions we (Ren'Py) support
     _VALID_FILE_EXTENSIONS = ["mp3", "ogg", "wav"]
 
@@ -46,13 +55,23 @@ label random_music_change:
 
     $ track_quip = random.choice(jn_random_music._NEW_TRACK_QUIPS)
     n 1nchbg "[track_quip]{w=2}{nw}"
+    show natsuki 1nchsmeme
 
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    play audio gift_close
+    show music_player playing zorder jn_events.JN_EVENT_PROP_ZORDER
+    $ jnPause(0.5)
+    hide black with Dissolve(0.5)
+    $ jnPause(0.5)
+    play audio button_tap_c
+    show music_player stopped
     stop music fadeout 2
-    $ jnPause(2, hard=True)
-    play audio cassette_open
+    $ jnPause(2)
 
     $ track_followup = random.choice(jn_random_music._NEW_TRACK_FOLLOWUPS)
     n 1unmbgl "[track_followup]{w=2}{nw}"
+    show natsuki 1fcssm
 
     python:
         music_title_and_file = random.choice(
@@ -66,12 +85,25 @@ label random_music_change:
         )
         music_title = music_title_and_file[0]
 
-    play audio cassette_close
+    play audio button_tap_c
+    show music_player playing
+
     python:
-        jnPause(2, hard=True)
+        jnPause(2)
         renpy.play(filename=music_title_and_file[1], channel="music", fadein=2)
         jn_custom_music._now_playing = music_title
         renpy.notify("Now playing: {0}".format(jn_custom_music._now_playing))
+
+    $ track_complete = random.choice(jn_random_music._NEW_TRACK_COMPLETE_LINES)
+    n 1uchbgeme "[track_complete]{w=2}{nw}"
+    show natsuki 1fcssm
+
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    play audio gift_close
+    $ jnPause(0.25)
+    hide music_player
+    hide black with Dissolve(0.5)
 
     return
 
@@ -154,15 +186,32 @@ label random_music_disable:
     n 1uchbg "I'm just messing with you.{w=0.2} Sure thing!{w=0.5}{nw}"
     extend 1nchsm " I'll just put it back to the regular music."
 
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    play audio gift_close
+    show music_player playing zorder jn_events.JN_EVENT_PROP_ZORDER
+    $ jnPause(0.5)
+    hide black with Dissolve(0.5)
+    $ jnPause(0.5)
+
+    play audio button_tap_c
+    show music_player stopped
     stop music fadeout 2
-    $ jnPause(2, hard=True)
-    play audio cassette_open
-    $ jnPause(1.5, hard=True)
-    play audio cassette_close
-    $ jnPause(2, hard=True)
+    $ jnPause(2)
+
+    play audio button_tap_c
+    show music_player playing
     play music audio.just_natsuki_bgm fadein 2
+    $ jnPause(2)
 
     n 1nwlbg "...And there we go!"
+
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    play audio gift_close
+    $ jnPause(0.25)
+    hide music_player
+    hide black with Dissolve(0.5)
 
     $ persistent.jn_random_music_enabled = False
     jump ch30_loop

@@ -1,5 +1,11 @@
 default persistent._event_database = dict()
+default persistent._jn_holiday_list = dict()
+default persistent._jn_holiday_completed_list = []
+default persistent._jn_holiday_deco_list_on_quit = []
 
+default persistent._jn_player_celebrates_christmas = None
+
+# Transforms for overlays
 transform jn_glasses_pre_slide:
     subpixel True
     ypos 0
@@ -18,6 +24,24 @@ transform jn_glasses_readjust:
     subpixel True
     ypos 20
     easein 0.75 ypos 0
+
+transform jn_mistletoe_lift:
+    subpixel True
+    ypos 0
+    easeout 2 ypos -54
+
+# Foreground props are displayed on the desk, in front of Natsuki
+image prop poetry_attempt = "mod_assets/props/poetry_attempt.png"
+image prop parfait_manga_held = "mod_assets/props/parfait_manga_held.png"
+image prop renpy_for_dummies_book_held = "mod_assets/props/renpy_for_dummies_book_held.png"
+image prop a_la_mode_manga_held = "mod_assets/props/a_la_mode_manga_held.png"
+image prop strawberry_milkshake = "mod_assets/props/strawberry_milkshake.png"
+image prop step_by_step_manga_held = "mod_assets/props/step_by_step_manga_held.png"
+image prop glasses_case = "mod_assets/props/glasses_case.png"
+image prop hot_chocolate hot = "mod_assets/props/hot_chocolate.png"
+image prop hot_chocolate cold = "mod_assets/props/hot_chocolate_cold.png"
+image prop cake lit = "mod_assets/props/cake_lit.png"
+image prop cake unlit = "mod_assets/props/cake_unlit.png"
 
 image prop wintendo_twitch_held free = "mod_assets/props/twitch/held/wintendo_twitch_held_free.png"
 image prop wintendo_twitch_held charging = "mod_assets/props/twitch/held/wintendo_twitch_held_charging.png"
@@ -58,7 +82,6 @@ image prop wintendo_twitch_playing free:
         pause 0.15
 
     repeat
-
 image prop wintendo_twitch_playing charging:
     "mod_assets/props/twitch/gaming/charging/wintendo_twitch_playing_a.png"
     pause 1
@@ -96,14 +119,12 @@ image prop wintendo_twitch_playing charging:
         pause 0.15
 
     repeat
-
 image prop wintendo_twitch_battery_low:
     "mod_assets/props/twitch/low_battery/wintendo_twitch_battery_low_a.png"
     pause 1
     "mod_assets/props/twitch/low_battery/wintendo_twitch_battery_low_b.png"
     pause 1
     repeat
-
 image prop wintendo_twitch_dead:
     "mod_assets/props/twitch/dead/wintendo_twitch_dead_a.png"
     pause 1
@@ -111,34 +132,39 @@ image prop wintendo_twitch_dead:
     pause 1
     repeat
 
-# Props are displayed on the desk, in front of Natsuki
-image prop poetry_attempt = "mod_assets/props/poetry_attempt.png"
-image prop parfait_manga_held = "mod_assets/props/parfait_manga_held.png"
-image prop renpy_for_dummies_book_held = "mod_assets/props/renpy_for_dummies_book_held.png"
-image prop a_la_mode_manga_held = "mod_assets/props/a_la_mode_manga_held.png"
-image prop strawberry_milkshake = "mod_assets/props/strawberry_milkshake.png"
-image prop step_by_step_manga_held = "mod_assets/props/step_by_step_manga_held.png"
-image prop glasses_case = "mod_assets/props/glasses_case.png"
-image prop hot_chocolate hot = "mod_assets/props/hot_chocolate.png"
-image prop hot_chocolate cold = "mod_assets/props/hot_chocolate_cold.png"
+# Background decorations are displayed in the room behind Natsuki
+image deco balloons = "mod_assets/deco/balloons.png"
+image deco garlands = "mod_assets/deco/garlands.png"
 
-# Overlays are displayed over the top of Natsuki, but behind any props
+# Overlays are displayed over the top of Natsuki, in front of any decorations but behind any props
 image overlay slipping_glasses = "mod_assets/overlays/slipping_glasses.png"
+image overlay mistletoe = "mod_assets/overlays/mistletoe.png"
 
 init python in jn_events:
+    import datetime
+    from Enum import Enum
     import random
     import store
+    import store.audio as audio
     import store.jn_atmosphere as jn_atmosphere
     import store.jn_affinity as jn_affinity
+    import store.jn_globals as jn_globals
+    import store.jn_outfits as jn_outfits
+    import store.jn_utils as jn_utils
 
-    JN_EVENT_PROP_ZORDER = 5
-    JN_EVENT_OVERLAY_ZORDER = 4
+    JN_EVENT_DECO_ZORDER = 2
+    JN_EVENT_PROP_ZORDER = 4
+    JN_EVENT_OVERLAY_ZORDER = 5
+    JN_EVENT_BLACK_ZORDER = 10
 
     EVENT_MAP = dict()
+    EVENT_RETURN_OUTFIT = None
 
-    def select_event():
+    __ALL_HOLIDAYS = {}
+
+    def selectEvent():
         """
-        Picks and returns a random event, or None if no events are left.
+        Picks and returns a single random event, or None if no events are left.
         """
         kwargs = dict()
         event_list = store.Topic.filter_topics(
@@ -155,22 +181,451 @@ init python in jn_events:
         else:
             return None
 
-    def display_visuals(natsuki_sprite_code):
+    class JNHolidayTypes(Enum):
+        new_years_day = 1
+        easter = 2
+        halloween = 3
+        christmas_eve = 4
+        christmas_day = 5
+        new_years_eve = 6
+        natsuki_birthday = 7
+        player_birthday = 8
+        anniversary = 9
+        valentines_day = 10
+        test_one = 11
+        test_two = 12
+        test_three = 13
+
+        def __str__(self):
+            return self.name
+
+        def __int__(self):
+            return self.value
+
+    class JNHoliday():
+        """
+        Describes a holiday event that a user can experience, once per year.
+        """
+        def __init__(
+            self,
+            label,
+            holiday_type,
+            affinity_range,
+            natsuki_sprite_code,
+            conditional=None,
+            bgm=None,
+            deco_list=[],
+            prop_list=[],
+            priority=0
+        ):
+            """
+            Constructor.
+
+            IN:
+                - label - The name used to uniquely identify this wearable and refer to it internally
+                - holiday_type - The JNHolidayTypes type of this holiday
+                - affinity_range - The affinity range that must be satisfied for this holiday to be picked when filtering
+                - natsuki_sprite_code - The sprite code to show for Natsuki when the holiday is revealed
+                - conditional - Python statement that must evaluate to True for this holiday to be picked when filtering
+                - bgm - The optional music to play when the holiday is revealed
+                - deco_list - Optional list of deco images to show when setting up
+                - prop_list - Optional list of prop images to show when setting up
+                - priority - Optional priority value; holidays with lower values are shown first
+            """
+            self.label = label
+            self.is_seen = False
+            self.holiday_type = holiday_type
+            self.conditional = conditional
+            self.affinity_range = affinity_range
+            self.natsuki_sprite_code = natsuki_sprite_code
+            self.bgm = bgm
+            self.deco_list = deco_list
+            self.prop_list = prop_list
+            self.priority = priority
+
+        @staticmethod
+        def loadAll():
+            """
+            Loads all persisted data for each holiday from the persistent.
+            """
+            global __ALL_HOLIDAYS
+            for holiday in __ALL_HOLIDAYS.itervalues():
+                holiday.__load()
+
+        @staticmethod
+        def saveAll():
+            """
+            Saves all persistable data for each holiday to the persistent.
+            """
+            global __ALL_HOLIDAYS
+            for holiday in __ALL_HOLIDAYS.itervalues():
+                holiday.__save()
+
+        @staticmethod
+        def filterHolidays(
+            holiday_list,
+            is_seen=None,
+            holiday_types=None,
+            affinity=None,
+            holiday_completion_state=None
+        ):
+            """
+            Returns a filtered list of holidays, given an holiday list and filter criteria.
+
+            IN:
+                - holiday_list - the list of JNHoliday objects to query
+                - holiday_types - list of JNHolidayTypes the holiday must be in
+                - affinity - minimum affinity state the holiday must have
+                - holiday_completion_state - boolean state the completion state corresponding to each holiday must be
+
+            OUT:
+                - list of JNWearable child wearables matching the search criteria
+            """
+            return [
+                _holiday
+                for _holiday in holiday_list
+                if _holiday.__filterHoliday(
+                    is_seen,
+                    holiday_types,
+                    affinity,
+                    holiday_completion_state
+                )
+            ]
+
+        def asDict(self):
+            """
+            Exports a dict representation of this holiday; this is for data we want to persist.
+
+            OUT:
+                dictionary representation of the holiday object
+            """
+            return {
+                "is_seen": self.is_seen
+            }
+
+        def currAffinityInAffinityRange(self, affinity_state=None):
+            """
+            Checks if the current affinity is within this holidays's affinity_range
+
+            IN:
+                affinity_state - Affinity state to test if the holidays can be shown in. If None, the current affinity state is used.
+                    (Default: None)
+            OUT:
+                True if the current affinity is within range. False otherwise
+            """
+            if not affinity_state:
+                affinity_state = jn_affinity._getAffinityState()
+
+            return jn_affinity._isAffStateWithinRange(affinity_state, self.affinity_range)
+
+        def __load(self):
+            """
+            Loads the persisted data for this holiday from the persistent.
+            """
+            if store.persistent._jn_holiday_list[self.label]:
+                self.is_seen = store.persistent._jn_holiday_list[self.label]["is_seen"]
+
+        def __save(self):
+            """
+            Saves the persistable data for this holiday to the persistent.
+            """
+            store.persistent._jn_holiday_list[self.label] = self.asDict()
+
+        def __filterHoliday(
+            self,
+            is_seen=None,
+            holiday_types=None,
+            affinity=None,
+            holiday_completion_state=None
+        ):
+            """
+            Returns True, if the holiday meets the filter criteria. Otherwise False.
+
+            IN:
+                - holiday_types - list of JNHolidayTypes the holiday must be in
+                - affinity - minimum affinity state the holiday must have
+
+            OUT:
+                - True, if the holiday meets the filter criteria. Otherwise False
+            """
+            if is_seen is not None and self.is_seen != is_seen:
+                return False
+
+            elif holiday_types is not None and not self.holiday_type in holiday_types:
+                return False
+
+            elif affinity is not None and not self.currAffinityInAffinityRange(affinity):
+                return False
+
+            elif (
+                holiday_completion_state is not None
+                and int(self.holiday_type) in store.persistent._jn_holiday_completed_list
+            ):
+                return False
+
+            elif self.conditional is not None and not eval(self.conditional, globals=store.__dict__):
+                return False
+
+            return True
+
+        def run(self):
+            """
+            Sets up all visuals for this holiday, before revealing everything to the player.
+            Any props or decorations left over from the previous holiday are tidied up before presentation.
+            """
+            renpy.hide("prop")
+            renpy.hide("deco")
+
+            for prop in self.prop_list:
+                renpy.show(name="prop {0}".format(prop), zorder=JN_EVENT_PROP_ZORDER)
+
+            for deco in self.deco_list:
+                renpy.show(name="deco {0}".format(deco), zorder=JN_EVENT_DECO_ZORDER)
+
+            kwargs = {
+                "natsuki_sprite_code": self.natsuki_sprite_code
+            }
+            if self.bgm:
+                kwargs.update({"bgm": self.bgm})
+
+            jn_globals.force_quit_enabled = True
+            displayVisuals(**kwargs)
+
+        def complete(self):
+            """
+            Marks this holiday as complete, preventing it from being seen again until reset.
+            This should be run after a holiday has concluded, so a crash/quit after starting the holiday doesn't lock progression.
+            We also mark the holiday type as completed for this year, so we can't cycle through all seasonal events in one year
+            Lastly, set the persisted deco list so reloading the game without a day change shows the deco for this event.
+            """
+            self.is_seen = True
+            self.__save()
+            if not int(self.holiday_type) in store.persistent._jn_holiday_completed_list:
+                store.persistent._jn_holiday_completed_list.append(int(self.holiday_type))
+
+            if self.deco_list:
+                store.persistent._jn_holiday_deco_list_on_quit = self.deco_list
+
+    def __registerHoliday(holiday):
+        """
+        Registers a new holiday in the list of all holidays, allowing in-game access and persistency.
+        """
+        if holiday.label in __ALL_HOLIDAYS:
+            jn_utils.log("Cannot register holiday name: {0}, as a holiday with that name already exists.".format(holiday.reference_name))
+
+        else:
+            __ALL_HOLIDAYS[holiday.label] = holiday
+            if holiday.label not in store.persistent._jn_holiday_list:
+                holiday.__save()
+
+            else:
+                holiday.__load()
+
+    def getHoliday(holiday_name):
+        """
+        Returns the holiday for the given name, if it exists.
+
+        IN:
+            - holiday_name - str outfit name to fetch
+
+        OUT: Corresponding JNHoliday if the holiday exists, otherwise None
+        """
+        if holiday_name in __ALL_HOLIDAYS:
+            return __ALL_HOLIDAYS[holiday_name]
+
+        return None
+
+    def getHolidaysForDate(input_date=None):
+        """
+        Gets the holidays - if any - corresponding to the supplied date, or the current date by default.
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+
+        OUT:
+            - JNHoliday representing the holiday for the supplied date.
+        """
+
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        elif not isinstance(input_date, datetime.date):
+            raise TypeError("input_date for holiday check must be of type date; type given was {0}".format(type(input_date)))
+
+        holidays = []
+
+        if store.jnIsNewYearsDay(input_date):
+            holidays.append(JNHolidayTypes.new_years_day)
+
+        if store.jnIsValentinesDay(input_date):
+            holidays.append(JNHolidayTypes.valentines_day)
+
+        if store.jnIsEaster(input_date):
+            holidays.append(JNHolidayTypes.easter)
+
+        if store.jnIsHalloween(input_date):
+            holidays.append(JNHolidayTypes.halloween)
+
+        if store.jnIsChristmasEve(input_date):
+            holidays.append(JNHolidayTypes.christmas_eve)
+
+        if store.jnIsChristmasDay(input_date):
+            holidays.append(JNHolidayTypes.christmas_day)
+
+        if store.jnIsNewYearsEve(input_date):
+            holidays.append(JNHolidayTypes.new_years_eve)
+
+        if store.jnIsNatsukiBirthday(input_date):
+            holidays.append(JNHolidayTypes.natsuki_birthday)
+
+        if store.jnIsPlayerBirthday(input_date):
+            holidays.append(JNHolidayTypes.player_birthday)
+
+        if store.jnIsAnniversary(input_date):
+            holidays.append(JNHolidayTypes.anniversary)
+
+        return holidays
+
+    def getAllHolidays():
+        """
+        Returns a list of all holidays.
+        """
+        return __ALL_HOLIDAYS.itervalues()
+
+    def selectHolidays():
+        """
+        Returns a list of all uncompleted holidays that apply for the current date, or None if no holidays apply.
+        Only one holiday of each type may be returned.
+        """
+        holiday_list = JNHoliday.filterHolidays(
+            is_seen=False,
+            holiday_list=getAllHolidays(),
+            holiday_types=getHolidaysForDate(),
+            affinity=store.Natsuki._getAffinityState(),
+            holiday_completion_state=False
+        )
+
+        if len(holiday_list) > 0:
+            holiday_types_added = []
+            return_list = []
+            for holiday in holiday_list:
+                if holiday.holiday_type not in holiday_types_added:
+                    holiday_types_added.append(holiday.holiday_type)
+                    return_list.append(holiday)
+
+            return return_list
+
+        else:
+            return None
+
+    def resetHolidays():
+        """
+        Resets the is_seen state and corresponding completion state for all holidays.
+        Also clears the deco.
+        """
+        for holiday in getAllHolidays():
+            holiday.is_seen = False
+
+        JNHoliday.saveAll()
+        store.persistent._jn_holiday_completed_list = []
+        store.persistent._jn_holiday_deco_list_on_quit = []
+
+    def queueHolidays(holiday_list, is_day_check=False):
+        """
+        Given a list of holidays, will sort them according to priority and add them to the list of topics to run through.
+        Interludes are used to perform pacing, so a holiday will not immediately transition into another.
+        """
+        store.persistent._event_list = list()
+        holiday_list.sort(key = lambda holiday: holiday.priority)
+
+        if is_day_check:
+            store.queue("holiday_prelude")
+
+        while len(holiday_list) > 0:
+            store.queue(holiday_list.pop(0).label)
+
+            if len(holiday_list) > 0:
+                store.queue("holiday_interlude")
+
+            else:
+                store.queue("ch30_loop")
+
+        renpy.jump("call_next_topic")
+
+    def displayVisuals(
+        natsuki_sprite_code,
+        bgm="mod_assets/bgm/vacation.ogg"
+    ):
         """
         Sets up the visuals/audio for an instant "pop-in" effect after a black scene opening.
         Note that we start off from ch30_autoload with a black scene by default.
 
         IN:
             - natsuki_sprite_code - The sprite code to show Natsuki displaying before dialogue
+            - music_file_path - The str file path of the music to play upon revealing Natsuki; defaults to standard bgm
         """
         renpy.show("natsuki {0}".format(natsuki_sprite_code), at_list=[store.jn_center], zorder=store.JN_NATSUKI_ZORDER)
         store.jnPause(0.1)
         renpy.hide("black")
         renpy.show_screen("hkb_overlay")
-        renpy.play(filename="mod_assets/bgm/just_natsuki.ogg", channel="music")
-
-        # Reveal
+        renpy.play(filename=audio.switch_flip, channel="audio")
+        renpy.play(filename=bgm, channel="music")
         renpy.hide("black")
+
+    # Holiday registration
+
+    # Christmas eve
+    __registerHoliday(JNHoliday(
+        label="holiday_christmas_eve",
+        holiday_type=JNHolidayTypes.christmas_eve,
+        affinity_range=(jn_affinity.HAPPY, None),
+        natsuki_sprite_code="1uchsm",
+        deco_list=["garlands"],
+        priority=99
+    ))
+
+    # Christmas day
+    __registerHoliday(JNHoliday(
+        label="holiday_christmas_day",
+        holiday_type=JNHolidayTypes.christmas_day,
+        affinity_range=(jn_affinity.HAPPY, None),
+        natsuki_sprite_code="1fspss",
+        deco_list=["garlands"],
+        priority=99
+    ))
+
+    # New year's eve
+    __registerHoliday(JNHoliday(
+        label="holiday_new_years_eve",
+        holiday_type=JNHolidayTypes.new_years_eve,
+        affinity_range=(jn_affinity.HAPPY, None),
+        natsuki_sprite_code="1uchgneme",
+        priority=10
+    ))
+
+    # New year's day
+    __registerHoliday(JNHoliday(
+        label="holiday_new_years_day",
+        holiday_type=JNHolidayTypes.new_years_day,
+        affinity_range=(jn_affinity.HAPPY, None),
+        natsuki_sprite_code="1uchgneme",
+        deco_list=["balloons"],
+        priority=10
+    ))
+
+    # Player's birthday
+    __registerHoliday(JNHoliday(
+        label="holiday_player_birthday",
+        holiday_type=JNHolidayTypes.player_birthday,
+        affinity_range=(jn_affinity.AFFECTIONATE, None),
+        natsuki_sprite_code="1uchgnl",
+        bgm=audio.happy_birthday_bgm,
+        deco_list=["balloons"],
+        prop_list=["cake unlit"],
+        priority=50
+    ))
+
+# RANDOM INTRO EVENTS
 
 # Natsuki is walked in on reading a new volume of Parfait Girls. She isn't impressed.
 init 5 python:
@@ -210,7 +665,7 @@ label event_caught_reading_manga:
             pass
 
     show prop parfait_manga_held zorder jn_events.JN_EVENT_PROP_ZORDER
-    $ jn_events.display_visuals("1fsrpo")
+    $ jn_events.displayVisuals("1fsrpo")
     $ jn_globals.force_quit_enabled = True
 
     n 1uskemesh "...!"
@@ -281,7 +736,7 @@ label event_caught_writing_poetry:
             pass
 
     show prop poetry_attempt zorder jn_events.JN_EVENT_PROP_ZORDER
-    $ jn_events.display_visuals("1fsrpo")
+    $ jn_events.displayVisuals("1fsrpo")
     $ jn_globals.force_quit_enabled = True
 
     n 1uskuplesh "...!"
@@ -344,7 +799,7 @@ label event_relationship_doubts:
         "Enter.":
             pass
 
-    $ jn_events.display_visuals("1fcsupl")
+    $ jn_events.displayVisuals(natsuki_sprite_code="1fcsupl", bgm="mod_assets/bgm/just_natsuki.ogg")
     $ jn_globals.force_quit_enabled = True
 
     n 1fsqunltsb "..."
@@ -406,7 +861,7 @@ label event_code_fiddling:
         "Enter...":
             pass
 
-    $ jn_events.display_visuals("1fslpo")
+    $ jn_events.displayVisuals("1fslpo")
     $ jn_globals.force_quit_enabled = True
 
     $ player_initial = jn_utils.getPlayerInitial()
@@ -426,8 +881,8 @@ init 5 python:
             label="event_not_ready_yet",
             unlocked=True,
             conditional=(
-                "((jn_is_time_block_early_morning() or jn_is_time_block_mid_morning()) and jn_is_weekday())"
-                " or (jn_is_time_block_late_morning and not jn_is_weekday())"
+                "((is_time_block_early_morning() or is_time_block_mid_morning()) and is_weekday())"
+                " or (is_time_block_late_morning and not is_weekday())"
             ),
             affinity_range=(jn_affinity.HAPPY, None)
         ),
@@ -455,7 +910,7 @@ label event_not_ready_yet:
         outfit_to_restore = Natsuki.getOutfitName()
         ahoge_outfit = jn_outfits.get_outfit("jn_ahoge_unlock")
         ahoge_outfit.headgear = random.choice(unlocked_ahoges)
-        Natsuki.setOutfit(ahoge_outfit)
+        Natsuki.setOutfit(ahoge_outfit, False)
 
     $ jnPause(5)
     n "Uuuuuu...{w=2}{nw}"
@@ -472,7 +927,7 @@ label event_not_ready_yet:
         "Enter...":
             pass
 
-    $ jn_events.display_visuals("1uskeml")
+    $ jn_events.displayVisuals("1uskeml")
     $ jn_globals.force_quit_enabled = True
 
     n 1uskemlesh "H-{w=0.3}huh?{w=1.5}{nw}"
@@ -548,7 +1003,7 @@ label event_renpy_for_dummies:
             pass
 
     show prop renpy_for_dummies_book_held zorder jn_events.JN_EVENT_PROP_ZORDER
-    $ jn_events.display_visuals("1fcspo")
+    $ jn_events.displayVisuals("1fcspo")
     $ jn_globals.force_quit_enabled = True
 
     n 1uskemesh "O-{w=0.3}oh!"
@@ -612,7 +1067,7 @@ label event_reading_a_la_mode:
             pass
 
     show prop a_la_mode_manga_held zorder jn_events.JN_EVENT_PROP_ZORDER
-    $ jn_events.display_visuals("1fdwca")
+    $ jn_events.displayVisuals("1fdwca")
     $ jn_globals.force_quit_enabled = True
 
     n 1unmgslesu "Oh!{w=1}{nw}"
@@ -670,7 +1125,7 @@ label event_drinking_strawberry_milkshake:
             pass
 
     show prop strawberry_milkshake zorder jn_events.JN_EVENT_PROP_ZORDER
-    $ jn_events.display_visuals("1nchdr")
+    $ jn_events.displayVisuals("1nchdr")
     $ jn_globals.force_quit_enabled = True
 
     n 1nchdr "..."
@@ -742,7 +1197,7 @@ label event_step_by_step_manga:
             pass
 
     show prop step_by_step_manga_held zorder jn_events.JN_EVENT_PROP_ZORDER
-    $ jn_events.display_visuals("1uskemfesh")
+    $ jn_events.displayVisuals("1uskemfesh")
     $ jn_globals.force_quit_enabled = True
 
     n 1uskemesh "...!"
@@ -899,7 +1354,7 @@ label event_eyewear_problems:
 
     show prop glasses_case zorder jn_events.JN_EVENT_PROP_ZORDER
     show overlay slipping_glasses zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_glasses_pre_slide
-    $ jn_events.display_visuals("1fcssmesi")
+    $ jn_events.displayVisuals("1fcssmesi")
     $ jn_globals.force_quit_enabled = True
 
     n 1uskgsesu "...!"
@@ -1011,7 +1466,7 @@ label event_eyewear_problems:
     n 1fcseml "...Wearing them all high up like that was dorky,{w=0.5}{nw}"
     extend 1fcspol " a-{w=0.2}anyway."
 
-    show black zorder 6 with Dissolve(0.5)
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     # Hide glasses overlay and restore old outfit
     hide prop
@@ -1096,7 +1551,7 @@ label event_wintendo_twitch_battery_dead:
 
     show prop wintendo_twitch_playing free zorder jn_events.JN_EVENT_PROP_ZORDER
     show natsuki gaming at jn_center zorder JN_NATSUKI_ZORDER
-    $ jn_events.display_visuals("1fdwfol")
+    $ jn_events.displayVisuals("1fdwfol")
     $ jn_globals.force_quit_enabled = True
     $ jnPause(3)
 
@@ -1151,7 +1606,7 @@ label event_wintendo_twitch_battery_dead:
     n 1fcsful "..."
     n 1fcsunl "..."
 
-    show black zorder 6 with Dissolve(0.5)
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     hide prop
     play audio chair_out_in
@@ -1228,7 +1683,7 @@ label event_wintendo_twitch_game_over:
 
     show prop wintendo_twitch_playing charging zorder jn_events.JN_EVENT_PROP_ZORDER
     show natsuki gaming at jn_center zorder JN_NATSUKI_ZORDER
-    $ jn_events.display_visuals("1unmpu")
+    $ jn_events.displayVisuals("1unmpu")
     $ jn_globals.force_quit_enabled = True
     $ jnPause(1.5)
 
@@ -1257,7 +1712,7 @@ label event_wintendo_twitch_game_over:
     n 1flrtr "I guess I'll just do that later."
     n 1fsqcal "{b}Again{/b}."
 
-    show black zorder 6 with Dissolve(0.5)
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     hide prop
     play audio chair_out_in
@@ -1437,7 +1892,7 @@ label event_warm_package:
             pass
 
     show prop hot_chocolate hot zorder jn_events.JN_EVENT_PROP_ZORDER
-    $ jn_events.display_visuals("1fsqbl")
+    $ jn_events.displayVisuals("1fsqbl")
     $ jn_globals.force_quit_enabled = True
 
     n 1kcsbsesi "Haah...{w=1.5}{nw}"
@@ -1551,7 +2006,7 @@ label event_warm_package:
     n 1uskemsbl "M-{w=0.2}my drink!{w=1}{nw}"
     extend 1kbkwresssbr " I-{w=0.2}it's getting all cold!{w=0.75}{nw}"
 
-    show black zorder 6 with Dissolve(0.5)
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(1)
     hide prop hot_chocolate
     play audio straw_sip
@@ -1568,5 +2023,980 @@ label event_warm_package:
     extend 1fsqsmeme " Ehehe."
     n 1tsqss "Well?{w=0.75}{nw}"
     extend 1fchbl " I'm waiting!"
+
+    return
+
+# HOLIDAYS
+
+# Used to lead up to a holiday, but only if already in-game and the day changes
+label holiday_prelude:
+    n 1tllbo "..."
+    n 1ullpu "...You know,{w=0.75}{nw}"
+    extend 1fsrcaesp " it almost feels like I'm missing something."
+    n 1fsrpu "...{w=1}{nw}"
+    n 1uskemlesh "...!{w=0.5}{nw}"
+    n 1fbkwrl "J-{w=0.3}just a second!{w=1}{nw}"
+    extend 1flrpol " I-{w=0.2}I'll be right back!{w=1}{nw}"
+
+    hide screen hkb_overlay
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER
+    stop music
+    hide prop
+    hide deco
+    play audio switch_flip
+    $ jnPause(5)
+
+    return
+
+# Used to handle multiple events in a single day by cleaning/setting up inbetween events
+label holiday_interlude:
+    n 1fllbo "..."
+    n 1tllpu "You know..."
+    n 1tnmpueqm "I feel like I'm forgetting something else."
+    n 1fsrpu "...{w=1}{nw}"
+    n 1uskemlesh "...!{w=0.5}{nw}"
+    n 1fbkwrl "J-{w=0.3}just a second!{w=1}{nw}"
+    extend 1flrpol " Don't go anywhere!{w=1}{nw}"
+
+    hide screen hkb_overlay
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER
+    stop music
+    hide prop
+    hide deco
+    play audio switch_flip
+    $ jnPause(5)
+
+    return
+
+label holiday_new_years_day:
+    python:
+        import copy
+
+        # Give Natsuki a new year headband, using whatever she's currently wearing as a base
+        jn_outfits.get_wearable("jn_headgear_new_year_headband").unlock()
+        new_years_hat_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
+        new_years_hat_outfit.headgear = jn_outfits.get_wearable("jn_headgear_new_year_headband")
+        new_years_hat_outfit.hairstyle = jn_outfits.get_wearable("jn_hair_down")
+        jn_outfits.save_temporary_outfit(new_years_hat_outfit)
+
+        jn_events.getHoliday("holiday_new_years_day").run()
+
+    n 1uchbs "FIVE!"
+    n 1uchbg "FOUR!"
+    n 1uchbs "THREE!"
+    n 1uchbg "TWO!"
+    n 1unmajesu "ON-"
+    n 1fskemesh "...!"
+    n 1fcsanless "Uuuuuuuu-!"
+    n 1fcsemless "Are you{w=0.5}{nw}"
+    extend 1fcswrl " {cps=\10}freaking{/cps}{w=0.5}{nw}"
+    extend 1fbkwrlean " {i}kidding{/i} me?!"
+    n 1kskem "I missed it?!{w=0.5}{nw}"
+    extend 1kskwr " {b}AGAIN?!{/b}"
+    n 1fcsfu "Ugh!{w=0.5}{nw}"
+    n 1fbkwrlean "How do I {i}always{/i} miss something that only happens once a year?!{w=1.25}{nw}"
+    extend 1kslfreso " I can't {i}believe{/i} I was so off with the timing!"
+
+    if jn_is_day():
+        n 1tnmpu "...Really off,{w=0.1} actually.{w=0.5} Now that I look at the time.{w=1}{nw}"
+        extend 1nsrpo " Almost impressively."
+        n 1kcsemedr "Jeez..."
+        n 1fslajl "You could have at least woken me up sooner,{w=0.5}{nw}"
+        extend 1fsqpol " you jerk."
+        n 1nslpu "But...{w=1}{nw}"
+        extend 1tsqsl " I suppose I can't give you too much of a hard time for it,{w=0.1} [player]."
+        n 1fcsbg " Your hangover can do that for me.{w=0.5}{nw}"
+        extend 1fcsajsbr " Anyway!"
+
+    else:
+        n 1kcsemedr "Man..."
+        n 1fsrpu "Now that's gonna bug me from the rest of the day..."
+        n 1fslsrl "Way to start the new year,{w=0.1} huh?"
+        n 1fcspoesi "..."
+        n 1fcsajsbr "Well,{w=0.1} whatever!"
+
+    n 1fcsemlsbr "Missing the new year?{w=0.5}{nw}"
+    extend 1flrbgsbl " M-{w=0.3}merely a minor setback!"
+    n 1fcsajsbr "Besides,{w=0.5}{nw}"
+    extend 1fllbgsbr " it's not like we're gonna run out of years to count!{w=1}{nw}"
+    extend 1nsrsssbr " Probably."
+    n 1nllpusbr "It's...{w=1}{nw}"
+    extend 1nsqsssbl " kinda getting harder to tell these days, huh?"
+    n 1kllbosbl "..."
+
+    n 1unmsl "In all seriousness though,{w=0.1} [player]?"
+    n 1nslss "I know I've already kinda trashed my clean start..."
+    n 1fnmbol "But that doesn't mean you're off the hook."
+    n 1fcsss "Yeah,{w=0.1} yeah.{w=0.5} I know."
+    n 1fslss "I'm not gonna give you a whole lecture on fresh starts,{w=1}{nw}"
+    extend 1tlrbo " hitting the gym{w=0.5}{nw}"
+    extend 1tnmss " or anything like that."
+
+    if jn_is_day():
+        n 1fchgn "{i}Something{/i} tells me you wouldn't appreciate the extra headache!"
+
+    n 1tllaj "But...{w=1}{nw}"
+    extend 1tnmsl " there actually is one thing I wanna say."
+    n 1ncssl "..."
+    n 1ucspu "Just..."
+
+    if Natsuki.isAffectionate(higher=True):
+        extend 1fnmpul " promise me something,{w=0.1} [player].{w=0.5}{nw}"
+        extend 1knmbol " Please?"
+
+    else:
+        extend 1fnmpu " do one thing for me.{w=0.5}{nw}"
+        extend 1knmbol " Please?"
+
+    n 1kslbol "..."
+    n 1kplpulsbl "Reach out to someone today.{w=0.5}{nw}"
+
+    if Natsuki.isEnamored(higher=True):
+        extend 1fcsajfesssbl " A-{w=0.2}and I don't mean me.{w=0.5}{nw}"
+        extend 1fslssfesssbl " This time."
+
+    else:
+        extend 1fcsajfesssbl " A-{w=0.2}and I don't mean me.{w=0.5}{nw}"
+
+    n 1fcsun "Please...{w=1}{nw}"
+    extend 1fcspul " hear me out,{w=0.1} alright?"
+    n 1kllun "Not everyone has the luxury of friends or family.{w=1}{nw}"
+    extend 1ksqpu " And trust me when I say not everyone looks forward to a new year..."
+    n 1knmsl "But the right message really {i}can{/i} make all the difference."
+    n 1klrsl "...And you never know if you'll always have the chance to send it."
+    n 1ncspu "Some family you don't get along with,{w=1}{nw}"
+    extend 1nllsr " a friend you've drifted away from..."
+    n 1knmpu "They won't...{w=0.5}{nw}"
+    extend 1kllpu " be there{w=0.5}{nw}"
+    extend 1fslunl " forever."
+    n 1kslunltsb "...Just like my friends,{w=0.3} [player]."
+    n 1fcsajftsa "A-{w=0.1}and remembering the people around you is just as important as any stupid resolution."
+    n 1fnmsrl "So I don't care {i}how{/i} you do it.{w=1}{nw}"
+    extend 1fllpul " Text message,{w=0.35} phone call,{w=0.35} whatever."
+    n 1fcspul "But please...{w=0.5}{nw}"
+    extend 1kllsrl " do something,{w=0.1} alright?{w=1}{nw}"
+    extend 1fnmbol " For yourself just as much as them."
+
+    n 1nlrunl "..."
+    n 1ncsajl "Oh,{w=0.5}{nw}"
+    extend 1nsleml " jeez."
+    $ current_year = datetime.date.today().year
+    n 1fllunlsbr "We're barely into [current_year] and I'm already making things all serious..."
+    n 1fslsslsbr "Heh.{w=0.5}{nw}"
+    extend 1tsqpu " So much for a lighthearted celebration,{w=0.1} right?"
+    n 1tnmpu "But [player]?"
+    n 1kllsl "..."
+
+    if Natsuki.isEnamored(higher=True):
+        n 1knmsll "...Thank you."
+        n 1kllssl "For this year,{w=0.1} I mean."
+        n 1fcsemlesssbl "I-{w=0.2}I know I don't show it a lot!{w=0.5}{nw}"
+        extend 1klrpul " But...{w=0.5}{nw}"
+        extend 1knmpul " just taking time out of your day to visit me,{w=0.75}{nw}"
+        extend 1kllssl " listening to all my nonsense,{w=0.75}{nw}"
+        extend 1fsldvl " dealing with my crap sometimes..."
+        n 1knmbol "...It matters."
+        n 1kllssl "It really does,{w=0.1} heh.{w=1.25}{nw}"
+        extend 1kllbofsbr " A lot."
+        n 1kllajf "And...{w=1}{nw}"
+        extend 1knmpufsbr " one last thing?"
+        n 1fcsunfsbr "..."
+
+        show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+        play audio clothing_ruffle
+        pause 3.5
+
+        if Natsuki.isLove(higher=True):
+            show natsuki 1fsldvlsbl at jn_center zorder JN_NATSUKI_ZORDER
+            play audio kiss
+            pause 1.5
+            hide black with Dissolve(1.25)
+            $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+            n 1kwmsmf "...Happy new year,{w=0.1} [chosen_endearment].{w=1.25}{nw}"
+            extend 1kllssfess " Ehehe."
+
+        else:
+            show natsuki 1nsldvlsbl at jn_center zorder JN_NATSUKI_ZORDER
+            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            n 1klrssf "Heh."
+            n 1fchsmfess "...Happy new year,{w=0.1} [chosen_tease]."
+
+    else:
+        n 1knmsll "...Thanks.{w=0.75}{nw}"
+        extend 1fcsemlsbl " F-{w=0.2}for this year,{w=0.1} I mean."
+        n 1fslbolesssbl "I...{w=0.5}{nw}"
+        extend 1knmboless " really appreciate that you've spent so much time with me already."
+        n 1kllssless "Even if I {i}am{/i} just a grouchy girl stuck in some{w=0.5}{nw}"
+        extend 1fsrssl " magical space classroom."
+        n 1nlrunl "..."
+        n 1kbkwrl "Seriously!{w=0.2} I do!"
+        n 1fllanlsbl "It's..."
+        n 1kcsemlesisbl "..."
+        n 1ksrpol "I-{w=0.3}it just means a lot to me,{w=0.1} okay?"
+        n 1ksrpul "And...{w=0.75}{nw}"
+        extend 1knmssl " one last thing?"
+        n 1ncsajl "..."
+        n 1fcsunl "..."
+
+        show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+        show natsuki 1fsldvlsbl at jn_center zorder JN_NATSUKI_ZORDER
+        play audio clothing_ruffle
+        pause 3.5
+        hide black with Dissolve(1.25)
+
+        n 1fsqdvlesssbr "...H-{w=0.2}happy new year,{w=0.1} dummy."
+        n 1nslsslesssbl "A-{w=0.2}and if anyone asks,{w=0.3} that never happened.{w=1}{nw}"
+        extend 1fsldvlesssbl " Ehehe..."
+
+    $ jn_events.getHoliday("holiday_new_years_day").complete()
+
+    return
+
+label holiday_valentines_day:
+    #TODO: writing
+    $ jn_events.getHoliday("holiday_valentines_day").run()
+    $ jn_events.getHoliday("holiday_valentines_day").complete()
+
+    return
+
+label holiday_easter:
+    #TODO: writing
+    $ jn_events.getHoliday("holiday_easter").run()
+    $ jn_events.getHoliday("holiday_easter").complete()
+
+    return
+
+label holiday_halloween:
+    #TODO: writing
+    $ jn_events.getHoliday("holiday_halloween").run()
+    $ jn_events.getHoliday("holiday_halloween").complete()
+
+    return
+
+label holiday_christmas_eve:
+    python:
+        import copy
+
+        # Let it snow
+        persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
+        jn_atmosphere.showSky(jn_atmosphere.WEATHER_SNOW)
+
+        # The Nat in the Hat
+        jn_outfits.get_wearable("jn_headgear_santa_hat").unlock()
+        santa_hat_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
+        santa_hat_outfit.headgear = jn_outfits.get_wearable("jn_headgear_santa_hat")
+        santa_hat_outfit.hairstyle = jn_outfits.get_wearable("jn_hair_down")
+        jn_outfits.save_temporary_outfit(santa_hat_outfit)
+
+        # Let it go
+        jn_events.getHoliday("holiday_christmas_eve").run()
+
+    n 1uchbg "Heeeey!{w=0.75}{nw}"
+    extend 1uchbs " [player]!{w=0.5} [player]!"
+    n 1uchgnedz "Guess what day it is?"
+    n 1tsqsm "..."
+    n 1fsqsm "Ehehe.{w=0.5}{nw}"
+    extend 1fchbl " As {i}if{/i} I needed to remind you!"
+    n 1ulraj "Man..."
+    n 1tnmsssbr "Hard to believe it's Christmas Eve {i}already{/i},{w=0.2} huh?"
+    n 1nsrsssbr "It's actually almost spooky how quickly it rolls around.{w=1}{nw}"
+    extend 1uwdajsbr " Seriously!"
+    n 1fllem "I mean...{w=1}{nw}"
+    extend 1nsqbo " the later part of the year mainly feels like just one big snooze-{w=0.2}fest."
+    n 1nsrem "School starts again,{w=0.75}{nw}"
+    extend 1fslem " it gets all cold and nasty outside,{w=0.75}{nw}"
+    extend 1nsqpo " everyone gets stuck indoors..."
+    n 1fnmem "But then before you know it?{w=1}{nw}"
+    extend 1fcsgs " December rolls around,{w=0.75}{nw}"
+    extend 1fbkwr " and it's like all hell breaks loose!"
+    n 1fslan "Every time!{w=0.5} Like clockwork!"
+    n 1fcsemsbr "Yeesh,{w=0.5}{nw}"
+    extend 1tsqemsbr " you'd think with a whole {i}year{/i} to prepare,{w=1}{nw}"
+    extend 1fslcasbr " people wouldn't {i}always{/i} leave things to the very last month."
+    n 1flrem "Like...{w=0.75}{nw}"
+    extend 1fcswr " who {i}does{/i} that to themselves?"
+    n 1fcsajeansbr "Oh,{w=0.75}{nw}"
+    extend 1fcsgs " and don't even get me {i}started{/i} on the music {i}every{w=0.3} single{w=0.3} store{/i}{w=0.3} feels the need to play..."
+    n 1fslsl "Ugh..."
+    n 1fcspoesi "I swear,{w=0.2} it's like some kind of coordinated earache."
+    n 1fllca "..."
+    n 1unmgslsbl "D-{w=0.3}don't get me wrong!{w=0.75}{nw}"
+    extend 1fcsgslsbl " I'm no scrooge{nw}"
+    extend 1fcspolsbr "!"
+    n 1fcsbglsbr "...I{w=0.2}-I'm just not stuck in the {i}Christmas past{/i},{w=0.2} that's all!{w=0.75}{nw}"
+    extend 1fchsml " Ehehe."
+    n 1ullss "Well,{w=0.75}{nw}"
+    extend 1nllbg " whatever.{w=1}{nw}"
+    extend 1fchgn " At least {i}here{/i} we can change the record,{w=0.2} right?"
+    n 1fsqbg "And speaking of which..."
+    n 1uchsmedz "What do you think of my decoration skills,{w=0.2} [player]?{w=0.75}{nw}"
+    extend 1fwlbgeme " Not bad for {i}just{/i} school supplies,{w=0.2} if I say so myself."
+    n 1fchbl "Just don't ask me where I got the tree!"
+    n 1usqsm "...{w=1}{nw}"
+    n 1uwdajeex "Ah!{w=1}{nw}"
+    n 1fnmbg "But what about you,{w=0.2} [player]?{w=1}{nw}"
+    extend 1fsqsg " Huh?"
+    n 1fcsbg "You didn't {i}seriously{/i} think {i}you{/i} were off the hook for decorating,{w=0.2} did you?"
+    n 1fchbg "Sorry!{w=0.75}{nw}"
+    extend 1uchgnelg " Not a chance!"
+    n 1fcsbg "So...{w=1}{nw}"
+
+    show natsuki 1tsqsm at jn_center
+
+    menu:
+        extend " are {i}you{/i} all good to go yet,{w=0.2} [player]?"
+
+        "You bet I am!":
+            n 1usqct "Oho?"
+            n 1fchbg "Well,{w=0.2} no kidding!{w=1}{nw}"
+            extend 1fcsbs " Now that's {i}exactly{/i} what I like to hear."
+            n 1fchbs "This year is gonna be {b}awesome{/b}!{w=0.75}{nw}"
+            extend 1uchgnedz " I just know it!"
+
+            $ persistent._jn_player_celebrates_christmas = True
+
+        "I haven't decorated yet.":
+            n 1uskemlesh "H-{w=0.2}huh?!"
+            n 1fbkwrl "T-{w=0.2}then what are you doing sat around here,{w=0.2} you goof?!{w=0.75}{nw}"
+            extend 1fcsajlsbl " Jeez..."
+            n 1fcspolsbl "I'm not doing {i}your{/i} place too,{w=0.2} you know."
+            n 1fchbl "...Not for {i}free{/i},{w=0.2} anyway."
+
+            $ persistent._jn_player_celebrates_christmas = True
+
+        "I don't really celebrate Christmas.":
+            n 1kslpu "...Aww.{w=0.75}{nw}"
+            extend 1knmbo " Really?"
+            n 1kllsl "..."
+            n 1fcstrlsbr "I-{w=0.2}I mean,{w=0.75}{nw}"
+            extend 1fchsmlsbl " that's totally fine."
+            n 1fsqsslsbl "...Just means I gotta celebrate for both of us!{w=0.75}{nw}"
+            extend 1fchsmleme " Ahaha."
+
+            $ persistent._jn_player_celebrates_christmas = False
+
+    n 1kslsm "..."
+    n 1kslpu "But...{w=1}{nw}"
+    extend 1knmpu " in all seriousness,{w=0.2} [player]?"
+    n 1ksrbosbl "..."
+
+    if Natsuki.isEnamored(higher=True):
+        n 1kcscalsbl "...Thanks."
+        n 1ksrajlsbl "For coming to see me today,{w=0.2} I mean."
+        n 1knmajl "It..."
+        n 1kslpul "..."
+        n 1kcsbolesi "It seriously means a lot.{w=1}{nw}"
+        extend 1kwmbol " You being here right now."
+        n 1ksrbol "...Probably more than you'd know."
+        n 1klrbol "..."
+        n 1kwmpuf "...I really should have been spending today with my friends,{w=0.2} [player].{w=1}{nw}"
+        extend 1kllbol " But..."
+
+        if Natsuki.isLove(higher=True):
+            n 1kwmfsfsbr "I-{w=0.3}I think I can settle for just you."
+
+        else:
+            n 1nslfsfsbr "I-{w=0.3}I can probably settle for you this year."
+
+        n 1kslbol "..."
+        n 1kslpul "And...{w=0.75}{nw}"
+        extend 1ksqbol " [player]?"
+        n 1ksrfsfsbr "..."
+        show natsuki 1fcscafsbr
+
+    elif Natsuki.isAffectionate(higher=True):
+        n 1kcscalsbl "...T-{w=0.2}thanks."
+        n 1fcsemlsbl "F-{w=0.3}for being here today,{w=0.75}{nw}"
+        extend 1kslbolsbl " I mean."
+        n 1fcsbolsbr "I-{w=0.3}I know you didn't have to come visit at all.{w=0.75}{nw}"
+        extend 1ksrpulsbl " And I'd be a real jerk to demand it..."
+        n 1knmpulsbl "So just..."
+        n 1kslunlsbl "..."
+        n 1fcsunf "Just...{w=0.75} know it's appreciated.{w=1.25}{nw}"
+        extend 1kwmunl " 'Kay?"
+        n 1kslbol "Really.{w=1.25}{nw}"
+        extend 1ksqbol " Thank you."
+        n 1ksrcal "..."
+        n 1ksrajlsbr "And...{w=1}{nw}"
+        extend 1knmajlsbr " [player]?"
+        n 1kcsunfsbr "..."
+        show natsuki 1fcssrfsbr
+
+    else:
+        n 1kcscalsbl "...Thanks.{w=0.75}{nw}"
+        extend 1fcsemlsbl " F-{w=0.3}for turning up today,{w=0.2} I mean."
+        n 1fcsgslesssbr "I-{w=0.2}I knew you would,{w=0.2} of course!"
+        n 1fcscal "A-{w=0.2}and besides."
+        extend 1fsrcal " Only a real jerk would leave someone all alone here,{w=1}{nw}"
+        extend 1klrcafsbr " of all nights."
+        n 1fcsajlsbr "So I..."
+        n 1fllajlsbr "I..."
+        n 1kslsllsbr "..."
+        n 1fcsunlsbr "I...{w=1.25}{nw}"
+        extend 1kcspufesisbr " really appreciate it.{w=0.75}{nw}"
+        extend 1kwmbolsbr " I do."
+        n 1kslbolsbr "..."
+        n 1kwmpulsbr "...A-{w=0.2}and [player]?"
+        n 1fslunfsbl "..."
+        show natsuki 1fcsunfesssbl
+
+    play audio chair_out
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(2)
+
+    if Natsuki.isEnamored(higher=True):
+        play audio clothing_ruffle
+
+        if Natsuki.isLove(higher=True):
+            $ jnPause(2.5)
+            play audio kiss
+
+        show natsuki 1kcsfsf at jn_center
+
+    else:
+        play audio clothing_ruffle
+        show natsuki 1kcsbol at jn_center
+
+    $ jnPause(3)
+    play audio chair_in
+    $ jnPause(2)
+
+    if Natsuki.isLove(higher=True):
+        show overlay mistletoe zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_mistletoe_lift
+
+    hide black with Dissolve(1.25)
+
+    if Natsuki.isLove(higher=True):
+        n 1fchsmf "M-{w=0.2}mind the mistletoe!"
+        n 1fchtsfeaf "Ehehe."
+        hide overlay
+
+    elif Natsuki.isEnamored(higher=True):
+        n 1kslsmlsbl "S-{w=0.2}so..."
+        n 1kwmsml "What did you wanna talk about,{w=0.2} [player]?{w=0.75}{nw}"
+        extend 1fchsmlsbr " Ehehe."
+
+    else:
+        n 1kslfsl "..."
+        n 1ncsajlsbl "N-{w=0.3}now,{w=1}{nw}"
+        extend 1tsqsslsbl " where were we?"
+        n 1fsrdvlsbr "Ehehe..."
+
+    $ Natsuki.calculatedAffinityGain(5, bypass=True)
+    $ jn_events.getHoliday("holiday_christmas_eve").complete()
+
+    return
+
+label holiday_christmas_day:
+    python:
+        # Let it snow
+        persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
+        jn_atmosphere.showSky(jn_atmosphere.WEATHER_SNOW)
+
+        # Dress up Natsu
+        christmas_outfit = jn_outfits.get_outfit("jn_christmas_outfit")
+        christmas_outfit.unlock()
+        jn_outfits.save_temporary_outfit(christmas_outfit)
+
+        # Let it go
+        jn_events.getHoliday("holiday_christmas_day").run()
+
+    n 1uwdgsesu "Omigosh!{w=0.5}{nw}"
+    extend 1uchbsl " Omigosh omigosh omigosh omigosh omigoooosh!"
+    n 1unmbgleex "!{w=0.5}{nw}"
+    n 1uwdbgl "[player]!{w=0.75}{nw}"
+    extend 1uwdbsl " [player]!{w=0.2} [player]!"
+    n 1uchbsl "It's here!{w=0.75}{nw}"
+    extend 1uchbgl " It's actually,{w=0.5}{nw}"
+    extend 1fchbsl " finally,{w=0.5}{nw}"
+    extend 1uchgnleme " freaking{w=0.5} {i}HERE{/i}!"
+
+    if jn_get_current_time_block in [JNTimeBlocks.early_morning, JNTimeBlocks.mid_morning, JNTimeBlocks.late_morning]:
+        n 1fspgs "Come on!{w=0.75}{nw}"
+        extend 1knmgs " Get the sleep out of your eyes already,{w=0.2} [player]!"
+        n 1fcsss "Up and at 'em!{w=0.5}{nw}"
+        extend 1fchbg " C'mon,{w=0.2} [player]!"
+
+    else:
+        n 1fspgs "What even {i}took{/i} you so long?{w=0.75}{nw}"
+        extend 1fsqpoesi " Did you forget what day it was or something?{w=0.5}{nw}"
+        extend 1fcsgs " It's time to celebrate!"
+        n 1fcsbg "'Cause..."
+
+    n 1uchbsleme "IT'S CHRISTMAAAAS!{w=1}{nw}"
+    extend 1uchsmleme " Ehehe!"
+    n 1kcssslesi "..."
+    n 1kcsss "Man,{w=0.75}{nw}"
+    extend 1fchsm " it feels so good to {i}finally{/i} say that..."
+    n 1ullss "I mean...{w=0.75}{nw}"
+    extend 1tllss " it isn't as if I had tons planned or anything.{w=1}{nw}"
+    extend 1nsrss " ...Not like there's much {i}to{/i} plan here."
+    n 1ncsss "But there's just something about Christmas that brings that sense of relief,{w=0.5}{nw}"
+    extend 1ksqsm " you know?"
+    n 1fcssm "Studies can take a hike,{w=0.75}{nw}"
+    extend 1ullaj " everything's all arranged and ready to go for everyone..."
+    n 1tnmss "And even if it's just for a couple days..."
+    n 1fchbg "Just having all that weight and stress removed {i}rocks{/i}!{w=1}{nw}"
+    extend 1uchgn " It's great!"
+    n 1kcsssesi "Like I can just feel the stress of the year washing away from me..."
+    n 1fwlbl "And I don't even have to cook anything here!{w=0.75}{nw}"
+    extend 1fchsm " Ehehe..."
+    n 1kslsm "..."
+    n 1kslsr "..."
+    n 1kcssr "..."
+    n 1ncspu "It's...{w=0.75}{nw}"
+    extend 1kslpu " rough sometimes,{w=1}{nw}"
+    extend 1kslsl " you know."
+    n 1ksqsl "Christmas,{w=0.2} I mean."
+    n 1klrbo "..."
+    n 1kcspuesi "..."
+    n 1ksrslsbl "...How do I {i}even{/i} put this..."
+    n 1fcsunsbl "..."
+    n 1fcsaj "We..."
+    n 1ksrsl "W-{w=0.2}we were always 'traditional',{w=0.2} my family.{w=1}{nw}"
+    extend 1ksqsl " I-{w=0.2}if we were asked."
+    n 1ncsss "...Heh.{w=1}{nw}"
+    extend 1tsqbo " Why,{w=0.2} you wonder?"
+    n 1kslbo "...Think about it,{w=0.2} [player]."
+    n 1ksqsr "..."
+    n 1fcssr "...You don't need to buy gifts,{w=0.2} if you're {i}traditional{/i}.{w=1.25}{nw}"
+    extend 1fsrsl " You don't need to invite guests,{w=0.2} if you're {i}traditional{/i}."
+    n 1ksqsl "..."
+    n 1kllpu "You see where I'm going with this...{w=1}{nw}"
+    extend 1ksqbo " right?"
+    n 1fcsunl "N-{w=0.2}not celebrating it wasn't a {i}choice{/i} at my place,{w=0.2} [player]."
+    n 1fcsbol "..."
+    n 1ncspul "So..."
+    n 1nnmbo "...I made my own.{w=0.75}{nw}"
+    extend 1kllbo " I'd sneak out."
+    n 1ncsss "Heh.{w=0.75}{nw}"
+    extend 1nslss " I'd already gotten {i}real{/i} good at figuring out where the squeaky floorboards were,{w=0.5}{nw}"
+    extend 1nslfs " I'll tell you that much."
+    n 1fslsll "Besides.{w=0.3} Not like {i}they{/i} particularly cared where I was..."
+    n 1kslsll "..."
+    n 1ksqbol "But my friends always did."
+    n 1ncsbol "We'd pre-arrange it all.{w=0.75}{nw}"
+    extend 1unmajl " Every year,{w=1}{nw}"
+    extend 1kslfslsbl " just before the winter break."
+    n 1ucsaj "Sayori's place,{w=0.75}{nw}"
+    extend 1nlraj " Monika's...{w=1}{nw}"
+    extend 1ksrfs " It honestly didn't even matter."
+    n 1knmbo "...Wherever I went?{w=1}{nw}"
+    extend 1tnmpu " So long as we were all together?"
+    n 1kllbol "..."
+    n 1fcsunl "T-{w=0.3}that's where {i}my{/i} home was."
+    n 1fcsunltsa "..."
+    n 1fllunltsc "I didn't even care what I got."
+    n 1fcsunl "It didn't matter.{w=1}{nw}"
+    extend 1ksrsll " N-{w=0.2}not really."
+    n 1kcsajl "Just...{w=1}{nw}"
+    extend 1fcsunl " warmth.{w=0.5} P-{w=0.2}people who really {i}cared{/i}."
+    n 1fcsemltsa "N-{w=0.2}not about money.{w=1}{nw}"
+    extend 1ksrboltsb " About me.{w=1}{nw}"
+    extend 1ksrpultsb " Even if I could never get them {i}anything{/i}..."
+    n 1fcsunlsbl "...That was a gift enough to me."
+    n 1fcsajlsbl "So that's why..."
+    n 1flrajltscsbl "S-{w=0.3}so that's..."
+    n 1klremltscsbl "...t-{w=0.3}that's...{w=1}{nw}"
+    extend 1fcsemltsd " w-{w=0.3}why..."
+    n 1kcsupltsd "..."
+    n 1kcsanltsd "..."
+
+    $ prompt = "Natsuki..." if Natsuki.isEnamored(higher=True) else "Natsuki?"
+    menu:
+        "[prompt]":
+            pass
+
+    n 1fcsunltsd "I-{w=0.3}I'm fine.{w=1}{nw}"
+    extend 1fcsemltsa " I'm fine!"
+    n 1kcsboltsa "..."
+    n 1kcspultsa "I-{w=0.2}it's just that..."
+    n 1kslpultsb "..."
+    n 1kcspultsb "..."
+    n 1kcsboltsb "..."
+    n 1ksqboltsb "...They aren't here anymore,{w=0.2} [player].{w=1.25}{nw}"
+    extend 1kslpultsb " They haven't been here a long time now."
+    n 1kllboltdr "...T-they're gone."
+    n 1kwmboltdr "But they never stopped being my friends.{w=1.25}{nw}"
+    extend 1kcsbol " A-{w=0.2}and I guess that's why I'm still celebrating."
+    n 1kslfsl "...For them."
+
+    if Natsuki.isEnamored(higher=True):
+        n 1ksqbol "..."
+        n 1ksrfslsbl "...A-{w=0.3}and for you."
+
+    n 1kslpul "So..."
+    n 1knmpul "..."
+    n 1kcspul "...Thanks,{w=0.2} [player].{w=1}{nw}"
+    extend 1ksrpolsbl " Really."
+    n 1kcssllsbl "I don't have {i}all{/i} my friends right now,{w=0.75}{nw}"
+    extend 1ksrbol " but..."
+
+    if Natsuki.isLove(higher=True):
+        n 1ksqbol "...Just having you here,{w=0.2} [player]?"
+        n 1kslfsl "Heh."
+        n 1kllssl "...Yeah.{w=1}{nw}"
+        extend 1kcssmfsbl " I {i}know{/i} I can manage."
+
+    elif Natsuki.isEnamored():
+        n 1kslsmlsbl "...I think I can manage with just you."
+
+    elif Natsuki.isAffectionate():
+        n 1nslsslsbl "...A-{w=0.2}at least I got my best one."
+
+    else:
+        n 1ncsbol "I think..."
+        n 1ncspulesi "..."
+        n 1ncscal "I-{w=0.2}I think even just the one here is enough right now."
+
+    if persistent._jn_player_celebrates_christmas == False:
+        n 1nslsslsbr "Even if you {i}don't{/i} really celebrate Christmas."
+
+    $ unlocked_poem_pool = jn_poems.JNPoem.filterPoems(
+        poem_list=jn_poems.getAllPoems(),
+        unlocked=False,
+        holiday_types=[jn_events.JNHolidayTypes.christmas_day],
+        affinity=Natsuki._getAffinityState()
+    )
+    $ unlocked_poem_pool.sort(key = lambda poem: poem.affinity_range[0])
+    $ christmas_poem = unlocked_poem_pool.pop() if len(unlocked_poem_pool) > 0 else None
+
+    if christmas_poem:
+        $ christmas_poem.unlock()
+
+        # We have a poem to give the player
+        n 1nllsllsbl "..."
+        n 1knmcalsbl "...I did get you something,{w=0.2} you know."
+        n 1fsrunlsbl "..."
+        n 1fnmajlsbl "H-{w=0.3}hey!{w=0.75}{nw}"
+        extend 1fcspolsbr " Don't give me that look."
+        n 1fcstrlsbr "You didn't {i}seriously{/i} think all I had to give you was a {i}story{/i},{w=0.2} did you?"
+        n 1fcsemlsbr "I had to at least {i}try{/i},{w=0.75}{nw}"
+        extend 1kllbolsbr " s-{w=0.2}so..."
+
+        if Natsuki.isEnamored(higher=True):
+            $ chosen_tease = jn_utils.getRandomTease()
+            n 1knmbofsbr "..."
+            n 1fcscalsbr "...J-{w=0.2}just look at it already,{w=0.2} [chosen_tease]."
+            show natsuki 1kcscalsbr at jn_center
+
+        else:
+            n 1nslunlsbr "..."
+            n 1fcsunlsbl "Nnnnnnn-!"
+            n 1fcsemlsbl "...J-{w=0.2}just...{w=1}{nw}"
+            extend 1ksrsllsbl " read it already,{w=0.2} [player].{w=1.25}{nw}"
+            extend 1fcssllsbl " {i}B-before{/i} I change my mind."
+            show natsuki 1ksrsllsbl at jn_center
+
+        call show_poem(christmas_poem)
+
+        if Natsuki.isEnamored(higher=True):
+            n 1ksqcalsbr "...Finished,{w=0.2} [player]?"
+            n 1kslcalsbr "..."
+            n 1kcsbolsbl "...Look.{w=1}{nw}"
+            extend 1fcseml " I'm..."
+            n 1kslbol "..."
+            n 1ksqbol "I'm not gonna kid myself and say this was some {i}amazing{/i} gift."
+            n 1nsrsssbl "...Not like I'm the {i}first{/i} one to hand you a poem."
+            n 1ncsajsbl "I just..."
+            n 1kslsllsbl "..."
+            n 1kcssllsbl "I-{w=0.2}I just wanted to show some appreciation.{w=1}{nw}"
+            extend 1ksqcal " F-{w=0.2}for everything."
+            n 1kcsajl "It...{w=0.75}{nw}"
+            extend 1kcssll " seriously...{w=0.75}{nw}"
+            extend 1kwmsll " m-{w=0.2}means a lot to me,{w=0.2} [player]."
+            n 1kslbol "I-{w=0.2}it really does."
+            n 1kwmfsl "...Thank you."
+
+        else:
+            n 1nsqsllsbl "..."
+            n 1tsqcalsbl "All done,{w=0.2} [player]?{w=1}{nw}"
+            extend 1nslssl " Man..."
+            n 1fcsajlsbl "A-{w=0.2}about time,{w=0.2} huh?{w=1}{nw}"
+            extend 1flrajlsbl " I swear,{w=0.5}{nw}"
+            extend 1fcspolsbl " sometimes it's like you {i}need{/i} things read out to you or something.{w=0.75}{nw}"
+            extend 1fsrfslsbl " Heh."
+            n 1ksrbol "..."
+            n 1kcsbolesi "..."
+            n 1fslbol "...I know it wasn't much.{w=0.75}{nw}"
+            extend 1kslsll " I'm not going to kid myself."
+            n 1fsrunlsbr "I-{w=0.2}I know I can't get you some {i}fancy gift{/i}.{w=0.75}{nw}"
+            extend 1fsrajlsbr " It's just..."
+            n 1ksrbolsbr "..."
+            n 1fcsbofsbr "...Just know I appreciate what you've done.{w=1}{nw}"
+            extend 1fsldvlsbl " Even if it is just listening to me ramble on sometimes."
+            n 1nllpulsbl "It really..."
+            n 1fcsunlsbl "..."
+            n 1kcscalsbl "..."
+            n 1ksqcalsbl "I-{w=0.2}It means a lot to me,{w=0.2} [player]."
+            n 1ksrcafsbl "...T-thanks."
+
+    else:
+        n 1kllbol "..."
+
+        if Natsuki.isEnamored(higher=True):
+            n 1kwmfsl "...And [player]?"
+            show natsuki 1fcscalsbl at jn_center
+
+        else:
+            n 1kllpul "...And...{w=1}"
+            extend 1knmsll " [player]?"
+            n 1ksrsllsbl "..."
+            show natsuki 1fcsunlsbl at jn_center
+
+    play audio chair_out
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(2)
+
+    if Natsuki.isEnamored(higher=True):
+        play audio clothing_ruffle
+        $ jnPause(2.5)
+        play audio kiss
+        show natsuki 1kcsfsf at jn_center
+
+    else:
+        play audio clothing_ruffle
+        show natsuki 1kcsbol at jn_center
+
+    $ jnPause(3)
+    play audio chair_in
+    $ jnPause(1)
+    hide black with Dissolve(2)
+    $ jnPause(2)
+
+    if Natsuki.isLove(higher=True):
+        $ chosen_endearment = jn_utils.getRandomEndearment()
+        n 1kchfsfeaf "...Merry Christmas,{w=0.2} [chosen_endearment]."
+
+    else:
+        n 1fchsmfsbl "M-{w=0.3}merry Christmas."
+
+    $ jn_events.getHoliday("holiday_christmas_day").complete()
+
+    return
+
+label holiday_new_years_eve:
+    $ jn_events.getHoliday("holiday_new_years_eve").run()
+
+    n 1nchbselg "[player]!{w=1}{nw}"
+    n 1uchlgelg "[player]!{w=0.5} [player]!"
+    n 1fspaj "Look at the date!{w=0.5}{nw}"
+    extend 1unmbg " Do you even know what day it is?!{w=1}{nw}"
+    extend 1fspgsedz " It's almost the new year!"
+    n 1kcsss "Man...{w=1}{nw}"
+    extend 1fchgn " and about time too,{w=0.2} huh?"
+    n 1ullaj "I don't know about you,{w=0.2} [player]...{w=1}{nw}"
+    $ current_year = datetime.date.today().year
+    extend 1fchbleme " but I can't {i}WAIT{/i} to tell [current_year] where to stick it!"
+    n 1fsqsm "And what better way to do that...{w=0.75}{nw}"
+    extend 1fchgnedz " than a crap ton of explosions and snacks?"
+    n 1fchsml "Ehehe.{w=0.5}{nw}"
+    extend 1fchbglelg " It's gonna be great!"
+
+    if Natsuki.isEnamored(higher=True):
+        n 1kllsml "..."
+        n 1kllpul "But...{w=0.75}{nw}"
+        extend 1knmbol " in all seriousness,{w=0.2} [player]?"
+        n 1klrbol "..."
+        n 1fcspul "I'd...{w=1}{nw}"
+        extend 1knmpol " really like to spend it with you."
+        n 1kllpof "..."
+        n 1kslunf "...I'd like that a lot."
+        n 1fcsemf "I-{w=0.3}if you didn't have anything planned,{w=0.2} anyway.{w=1}{nw}"
+        extend 1nwmpol " I'm not gonna be a jerk about it if you already had stuff to do."
+        n 1nlrpul "Though...{w=1}{nw}"
+        extend 1tnmpul " if you didn't?{w=0.75}{nw}"
+        extend 1nslssl " Well..."
+        n 1nsqsmfsbl "You know where to find me.{w=0.5}{nw}"
+        extend 1flldvfsbl " Ehehe."
+
+        if Natsuki.isLove(higher=True):
+            n 1uchsmfeaf "Love you,{w=0.2} [player]~!"
+
+    elif Natsuki.isAffectionate(higher=True):
+        n 1kllsll "..."
+        n 1knmsll "...I'm not gonna expect you to drop all your plans to come see me,{w=0.5}{nw}"
+        extend 1klrbol " you know."
+        n 1fcsemlesssbl "I-{w=0.3}I know you already have...{w=1}{nw}"
+        extend 1fllsllsbl " a life.{w=0.75}{nw}"
+        extend 1kslsllsbl " Out there."
+        n 1fcspol "I'm not gonna be a complete jerk about it.{w=0.75}{nw}"
+        extend 1fcsajlsbl " I'm {i}way{/i} better than that,{w=0.5}{nw}"
+        extend 1fslpolsbr " a-{w=0.3}after all."
+        n 1kslpulsbr "But...{w=1.25}{nw}"
+        extend 1knmpulsbl " [player]?"
+        n 1ksrunlsbl "..."
+        n 1fcspolsbl "...It isn't like I'd say {i}no{/i} to your company,{w=0.2} you know.{w=1}{nw}"
+        extend 1fllpofesssbl " S-{w=0.3}so long as you don't make it all gross,{w=0.2} anyway."
+        n 1fsldvfesdsbr "Ehehe."
+
+    else:
+        n 1fnmssl "Just a word of warning though,{w=0.2} [player]..."
+        n 1fsqbgl "I {i}fully{/i} expect to see you here for it.{w=1}{nw}"
+        extend 1fcslgl " No excuses!"
+        n 1fcsajl "A-{w=0.3}and besides,{w=0.5}{nw}"
+        extend 1fsrpofsbl " you {i}did{/i} bring me back to experience things like this."
+        n 1fsqpolsbr "It's the least you can do...{w=1}{nw}"
+        extend 1kwmpolsbr " right?"
+
+    $ jn_events.getHoliday("holiday_new_years_eve").complete()
+
+    return
+
+label holiday_player_birthday():
+    python:
+        import copy
+
+        # Give Natsuki a party hat, using whatever she's currently wearing as a base
+        jn_outfits.get_wearable("jn_headgear_classic_party_hat").unlock()
+        birthday_hat_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
+        birthday_hat_outfit.headgear = jn_outfits.get_wearable("jn_headgear_classic_party_hat")
+        birthday_hat_outfit.hairstyle = jn_outfits.get_wearable("jn_hair_down")
+        jn_outfits.save_temporary_outfit(birthday_hat_outfit)
+
+        jn_events.getHoliday("holiday_player_birthday").run()
+        player_name_capitalized = persistent.playername.upper()
+
+    n 1uchlgl "HAPPY BIRTHDAY,{w=0.2} [player_name_capitalized]!"
+    n 1fcsbg "Betcha' didn't think I had something planned all along,{w=0.2} did you?{w=0.5}{nw}"
+    extend 1nchsml " Ehehe."
+    n 1fnmaj "Don't lie!{w=1}{nw}"
+    extend 1fchbl " I know I got you {i}real{/i} good this time."
+    n 1ullss "Well,{w=0.2} whatever.{w=1}{nw}"
+    extend 1tsqsm " We both know what {i}you're{/i} waiting for,{w=0.2} huh?"
+    n 1fcsss "Yeah,{w=0.2} yeah.{w=0.5}{nw}"
+    extend 1fchsm " I got you covered,{w=0.2} [player]."
+
+    show prop cake lit zorder jn_events.JN_EVENT_PROP_ZORDER
+    play audio necklace_clip
+
+    n 1uchgn "Ta-{w=0.3}da!"
+    $ jnPause(3)
+    n 1fnmpu "..."
+    n 1fbkwr "What?!{w=1}{nw}"
+    extend 1fllpol " You don't {i}seriously{/i} expect me to sing all by myself?{w=1}{nw}"
+    extend 1fcseml " No way!"
+    n 1nlrpol "..."
+    n 1nlrpu "But..."
+    n 1nchbs "Yeah!{w=0.2} Here you go!{w=0.5}{nw}"
+    extend 1nchsml " Ehehe."
+    n 1tsqsm "So,{w=0.2} [player]?{w=1}{nw}"
+    extend 1tsqss " Aren't you gonna make a wish?"
+    n 1tlrpu "...Better come up with one soon,{w=0.2} actually.{w=1}{nw}"
+    extend 1uskemlesh " I gotta put this out before the wax ruins all the icing!"
+    n 1nllpo "..."
+    n 1tsqpu "All set?{w=0.5}{nw}"
+    extend 1fsrpo " About time.{w=1}{nw}"
+    extend 1fchbg " Let's put these out already!"
+
+    n 1ncsaj "...{w=0.5}{nw}"
+    show prop cake unlit zorder jn_events.JN_EVENT_PROP_ZORDER
+    play audio blow
+
+    n 1nchsm "..."
+    n 1tsgss "Well?{w=0.75}{nw}"
+    extend 1tnmaj " What're you waiting for,{w=0.2} [player]?{w=1}{nw}"
+    extend 1flrcal " Dig in already!"
+    n 1nsqsll "Don't tell me I went all out on this for nothing."
+    n 1fsqsr "..."
+    n 1uskajesu "...Oh.{w=0.5}{nw}"
+    extend 1fllssl " Ehehe.{w=1}{nw}"
+    extend 1fslssl " Right."
+    n 1flrssl "I...{w=1.5}{nw}"
+    extend 1fsrdvl " kinda forgot about {i}that{/i} aspect."
+    n 1fslpol "And I don't really feel like smearing cake all over your screen.{w=1}{nw}"
+    extend 1ullaj " So..."
+    n 1nsrss "I'm just gonna just save this for later."
+    n 1fnmajl "Hey!{w=0.5}{nw}"
+    extend 1fllbgl " It's the thought that counts,{w=0.2} right?"
+    show natsuki 1fsldvl
+
+    play audio glass_move
+    hide prop cake unlit
+    with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
+
+    $ unlocked_poem_pool = jn_poems.JNPoem.filterPoems(
+        poem_list=jn_poems.getAllPoems(),
+        unlocked=False,
+        holiday_types=[jn_events.JNHolidayTypes.player_birthday],
+        affinity=Natsuki._getAffinityState()
+    )
+    $ birthday_poem = random.choice(unlocked_poem_pool) if len(unlocked_poem_pool) > 0 else None
+
+    if birthday_poem:
+        if Natsuki.isEnamored(higher=True):
+            n 1kllcal "..."
+            n 1knmpul "...I wrote you something too,{w=0.2} you know."
+            n 1fcseml "I-{w=0.2}I know it's not some {i}fancy{/i} gift,{w=1}{nw}"
+            extend 1klrsrl " but..."
+            n 1fsrsrl "..."
+            n 1fcsunl "Uuuuu..."
+            n 1fcspul "Just...{w=1}{nw}"
+            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            extend 1klrpol " read it already,{w=0.2} [chosen_tease]."
+
+        else:
+            n 1fllunl "..."
+            n 1fnmcal "I-{w=0.2}I hope you didn't think I'd just leave you with nothing."
+            n 1nsrpol "I'm not {i}that{/i} much of a jerk."
+            n 1nsrajl "So...{w=1}{nw}"
+            extend 1fnmcal " here you go."
+            n 1fcsemf "J-{w=0.2}just hurry up and read it.{w=1}{nw}"
+            extend 1fslbof " I'm not gonna read it to you."
+
+        call show_poem(birthday_poem)
+
+        if Natsuki.isEnamored(higher=True):
+            n 1knmbol "Hey...{w=1}{nw}"
+            extend 1knmpul " you {i}did{/i} read it,{w=0.2} right?"
+            n 1fslbol "I worked a lot on that,{w=0.2} you know."
+            n 1fcseml "A-{w=0.2}and I meant every word,{w=1}{nw}"
+            extend 1kllbof " so..."
+            n 1klrssf "...Yeah."
+            n 1flldvl "I'll..."
+            extend 1fslssl " just put that poem back in my desk for now."
+
+        else:
+            n 1nsqpul "All done?{w=1}{nw}"
+            extend 1fcseml " {i}Finally{/i}.{w=1}{nw}"
+            extend 1fslcal " Jeez..."
+            n 1fslunl "..."
+            n 1fcsajl "I guess I'll just keep it in my desk for now.{w=1}{nw}"
+            extend 1fsrssl " I-{w=0.2}in case you wanted to reference my writing skills later,{w=0.2} {i}obviously{/i}."
+
+        play audio drawer
+        with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+
+    if Natsuki.isLove(higher=True):
+        n 1klrssl "And...{w=1.5}{nw}"
+        extend 1knmsml " [player]?"
+
+        show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+        $ jnPause(0.5)
+        play audio kiss
+        $ jnPause(0.25)
+        hide black with Dissolve(1.25)
+
+        n 1kwmssf "H-{w=0.2}happy birthday.{w=1}{nw}"
+        extend 1kchsmf " Ehehe."
+
+    elif Natsuki.isEnamored(higher=True):
+        n 1kwmssf "H-{w=0.2}happy birthday."
+
+    else:
+        n 1fcsbgf "You're welcome!"
+
+    if birthday_poem:
+        $ birthday_poem.unlock()
+
+    $ jn_events.getHoliday("holiday_player_birthday").complete()
+
+    return
+
+label holiday_anniversary:
+    #TODO: writing
+    $ jn_events.getHoliday("holiday_anniversary").run()
+    n "This isn't done yet, but happy anniversary!"
+    $ jn_events.getHoliday("holiday_anniversary").complete()
 
     return

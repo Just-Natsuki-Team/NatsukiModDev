@@ -5,6 +5,8 @@ default player = persistent.playername
 default persistent.jn_total_visit_count = 0
 default persistent.jn_first_visited_date = datetime.datetime.now()
 default persistent.jn_last_visited_date = datetime.datetime.now()
+default persistent._jn_player_tt_state = 0
+default persistent._jn_player_tt_instances = 0
 
 #Our main topic pool
 default persistent._event_list = list()
@@ -16,7 +18,9 @@ init -990 python:
     _easter = easter.easter(datetime.datetime.today().year)
 
 define JN_NEW_YEARS_DAY = datetime.date(datetime.date.today().year, 1, 1)
+define JN_VALENTINES_DAY = datetime.date(datetime.date.today().year, 2, 14)
 define JN_EASTER = datetime.date(_easter.year, _easter.month, _easter.day)
+define JN_NATSUKI_BIRTHDAY = datetime.date(datetime.date.today().year, 5, 1)
 define JN_HALLOWEEN = datetime.date(datetime.date.today().year, 10, 31)
 define JN_CHRISTMAS_EVE = datetime.date(datetime.date.today().year, 12, 24)
 define JN_CHRISTMAS_DAY = datetime.date(datetime.date.today().year, 12, 25)
@@ -30,18 +34,6 @@ init -3 python:
     import store.jn_affinity as jn_affinity
     import store.jn_utils as jn_utils
     import webbrowser
-
-    class JNHolidays(Enum):
-        none = 1
-        new_years_day = 2
-        easter = 3
-        halloween = 4
-        christmas_eve = 5
-        christmas_day = 6
-        new_years_eve = 7
-
-        def __str__(self):
-            return self.name
 
     class JNTimeBlocks(Enum):
         early_morning = 1
@@ -475,7 +467,7 @@ init -3 python:
 
     def push(topic_label):
         """
-        Pushes a topic to the topic stack
+        Pushes a topic to the topic stack, adding it to the front of the list
 
         IN:
             topic_label - Topic.label of the topic you wish to push
@@ -484,10 +476,10 @@ init -3 python:
 
     def queue(topic_label):
         """
-        Queues a topic to the topic stack
+        Queues a topic to the topic stack, adding it to the back of the list
 
         IN:
-            topic_label - Topic.label of the topic you wish you queue
+            topic_label - Topic.label of the topic you wish to queue
         """
         persistent._event_list.append(topic_label)
 
@@ -619,9 +611,9 @@ init -3 python:
             global allow_dismiss
             allow_dismiss = True
 
-    def jn_is_new_years_day(input_date=None):
+    def jnIsNewYearsDay(input_date=None):
         """
-        Returns True if the current date is New Year's Day; otherwise False
+        Returns True if the input_date is New Year's Day; otherwise False
 
         IN:
             - input_date - datetime object to test against. Defaults to the current date.
@@ -629,11 +621,11 @@ init -3 python:
         if input_date is None:
             input_date = datetime.datetime.today()
 
-        return input_date == store.JN_NEW_YEARS_DAY
+        return input_date.day == store.JN_NEW_YEARS_DAY.day and input_date.month == store.JN_NEW_YEARS_DAY.month
 
-    def jn_is_easter(input_date=None):
+    def jnIsValentinesDay(input_date=None):
         """
-        Returns True if the current date is Easter; otherwise False
+        Returns True if the input_date is Valentine's Day; otherwise False
 
         IN:
             - input_date - datetime object to test against. Defaults to the current date.
@@ -641,11 +633,11 @@ init -3 python:
         if input_date is None:
             input_date = datetime.datetime.today()
 
-        return input_date == store.JN_EASTER
+        return input_date.day == store.JN_VALENTINES_DAY.day and input_date.month == store.JN_VALENTINES_DAY.month
 
-    def jn_is_halloween(input_date=None):
+    def jnIsEaster(input_date=None):
         """
-        Returns True if the current date is Halloween; otherwise False
+        Returns True if the input_date is Easter; otherwise False
 
         IN:
             - input_date - datetime object to test against. Defaults to the current date.
@@ -653,11 +645,11 @@ init -3 python:
         if input_date is None:
             input_date = datetime.datetime.today()
 
-        return input_date == store.JN_HALLOWEEN
+        return input_date.day == store.JN_EASTER.day and input_date.month == store.JN_EASTER.month
 
-    def jn_is_christmas_eve(input_date=None):
+    def jnIsHalloween(input_date=None):
         """
-        Returns True if the current date is Christmas Eve; otherwise False
+        Returns True if the input_date is Halloween; otherwise False
 
         IN:
             - input_date - datetime object to test against. Defaults to the current date.
@@ -665,11 +657,11 @@ init -3 python:
         if input_date is None:
             input_date = datetime.datetime.today()
 
-        return input_date == store.JN_CHRISTMAS_EVE
+        return input_date.day == store.JN_HALLOWEEN.day and input_date.month == store.JN_HALLOWEEN.month
 
-    def jn_is_christmas_day(input_date=None):
+    def jnIsChristmasEve(input_date=None):
         """
-        Returns True if the current date is Christmas Day; otherwise False
+        Returns True if the input_date is Christmas Eve; otherwise False
 
         IN:
             - input_date - datetime object to test against. Defaults to the current date.
@@ -677,11 +669,11 @@ init -3 python:
         if input_date is None:
             input_date = datetime.datetime.today()
 
-        return input_date == store.JN_CHRISTMAS_DAY
+        return input_date.day == store.JN_CHRISTMAS_EVE.day and input_date.month == store.JN_CHRISTMAS_EVE.month
 
-    def jn_is_new_years_eve(input_date=None):
+    def jnIsChristmasDay(input_date=None):
         """
-        Returns True if the current date is New Year's Eve; otherwise False
+        Returns True if the input_date is Christmas Day; otherwise False
 
         IN:
             - input_date - datetime object to test against. Defaults to the current date.
@@ -689,45 +681,83 @@ init -3 python:
         if input_date is None:
             input_date = datetime.datetime.today()
 
-        return input_date == store.JN_NEW_YEARS_EVE
+        return input_date.day == store.JN_CHRISTMAS_DAY.day and input_date.month == store.JN_CHRISTMAS_DAY.month
 
-    def jn_get_holiday_for_date(input_date=None):
+    def jnIsNewYearsEve(input_date=None):
         """
-        Gets the holiday - if any - corresponding to the supplied date, or the current date by default.
+        Returns True if the input_date is New Year's Eve; otherwise False
 
         IN:
             - input_date - datetime object to test against. Defaults to the current date.
-
-        OUT:
-            - JNHoliday representing the holiday for the supplied date.
         """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date.day == store.JN_NEW_YEARS_EVE.day and input_date.month == store.JN_NEW_YEARS_EVE.month
+
+    def jnIsNatsukiBirthday(input_date=None):
+        """
+        Returns True if the input_date is Natsuki's birthday; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if input_date is None:
+            input_date = datetime.datetime.today()
+
+        return input_date.day == store.JN_NATSUKI_BIRTHDAY.day and input_date.month == store.JN_NATSUKI_BIRTHDAY.month
+
+    def jnIsPlayerBirthday(input_date=None):
+        """
+        Returns True if the input_date is the player's birthday; otherwise False
+
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if not store.persistent._jn_player_birthday_day_month:
+            return False
 
         if input_date is None:
             input_date = datetime.datetime.today()
 
-        elif not isinstance(input_date, datetime.date):
-            raise TypeError("input_date for holiday check must be of type date; type given was {0}".format(type(input_date)))
+        player_birthday = datetime.date(
+            2020, # We use 2020 as it is a leap year
+            store.persistent._jn_player_birthday_day_month[1],
+            store.persistent._jn_player_birthday_day_month[0]
+        )
 
-        if jn_is_new_years_day(input_date):
-            return JNHolidays.new_years_day
+        return input_date.day == player_birthday.day and input_date.month == player_birthday.month
 
-        elif jn_is_easter(input_date):
-            return JNHolidays.easter
+    def jnIsAnniversary(input_date=None):
+        """
+        Returns True if the input_date is the player and Natsuki's anniversary; otherwise False
 
-        elif jn_is_halloween(input_date):
-            return JNHolidays.halloween
+        IN:
+            - input_date - datetime object to test against. Defaults to the current date.
+        """
+        if not store.persistent._jn_player_anniversary_day_month:
+            return False
 
-        elif jn_is_christmas_eve(input_date):
-            return JNHolidays.christmas_eve
+        if input_date is None:
+            input_date = datetime.datetime.today()
 
-        elif jn_is_christmas_day(input_date):
-            return JNHolidays.christmas_day
+        anniversary_date = datetime.date(
+            2020, # We use 2020 as it is a leap year
+            store.persistent._jn_player_anniversary_day_month[1],
+            store.persistent._jn_player_anniversary_day_month[0]
+        )
 
-        elif jn_is_christmas_eve(input_date):
-            return JNHolidays.new_years_eve
+        return input_date.day == anniversary_date.day and input_date.month == anniversary_date.month
 
-        else:
-            return JNHolidays.none
+    def jnIsDate(input_date):
+        """
+        Returns True if the current date's day and month match the given day and month.
+
+        IN:
+            - day - int day of the month to check against
+            - month - int month of the year to check against
+        """
+        return (datetime.date.today().day == input_date.day and datetime.date.today().month == input_date.month)
 
     def jn_get_current_hour():
         """
@@ -1486,9 +1516,11 @@ init -999 python in jn_utils:
         return return_file_items
 
 init -100 python in jn_utils:
+    import codecs
     import random
     import re
     import store
+    import store.jn_utils as jn_utils
     import store.jn_globals as jn_globals
 
     PROFANITY_REGEX = re.compile('|'.join(jn_globals._PROFANITY_LIST), re.IGNORECASE)
@@ -1593,6 +1625,22 @@ init -100 python in jn_utils:
 
         else:
             return "a while"
+
+    def getNumberOrdinal(value):
+        """
+        Returns the ordinal (trailing characters) for a given numerical value.
+        """
+        if value % 10 == 1:
+            return "st"
+
+        elif value % 10 == 2:
+            return "nd"
+
+        elif value % 10 == 3:
+            return "rd"
+
+        else:
+            return "th"
 
     def getPlayerInitial():
         """
@@ -1715,11 +1763,27 @@ init -100 python in jn_utils:
         # Save outfit data
         store.jn_outfits.JNOutfit.save_all()
 
+        # Save holiday data
+        store.jn_events.JNHoliday.saveAll()
+
+        # Save poem data
+        store.jn_poems.JNPoem.saveAll()
+
         #Save topic data
         store.Topic._save_topic_data()
 
         #Save background data
         store.main_background.save()
+
+        if store.persistent._affinity_daily_bypasses > 5:
+            store.persistent._affinity_daily_bypasses = 5
+
+        if store.persistent.affinity >= (store.persistent._jn_gs_aff + 250):
+            store.persistent.affinity = store.persistent._jn_gs_aff
+            jn_utils.log("434845415421".decode("hex"))
+
+        else:
+            store.persistent._jn_gs_aff = store.persistent.affinity
 
 # Vanilla resources from base DDLC
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
@@ -1738,53 +1802,56 @@ define audio.t4g = "<loop 1.000>bgm/4g.ogg"
 # JN resources
 
 # Singleton sound effects
+define audio.blow = "mod_assets/sfx/blow.ogg"
+define audio.button_mashing_a = "mod_assets/sfx/button_mashing_a.ogg"
+define audio.button_mashing_b = "mod_assets/sfx/button_mashing_b.ogg"
+define audio.button_mashing_c = "mod_assets/sfx/button_mashing_c.ogg"
+define audio.button_tap_a = "mod_assets/sfx/button_tap_a.ogg"
+define audio.button_tap_b = "mod_assets/sfx/button_tap_b.ogg"
+define audio.button_tap_c = "mod_assets/sfx/button_tap_c.ogg"
 define audio.camera_shutter = "mod_assets/sfx/camera_shutter.ogg"
-define audio.select_hover = "mod_assets/sfx/select_hover.ogg"
-define audio.select_confirm = "mod_assets/sfx/select_confirm.ogg"
-define audio.coin_flip = "mod_assets/sfx/coin_flip.ogg"
-define audio.card_shuffle = "mod_assets/sfx/card_shuffle.ogg"
 define audio.card_place = "mod_assets/sfx/card_place.ogg"
-define audio.drawer = "mod_assets/sfx/drawer.ogg"
-define audio.smack = "mod_assets/sfx/smack.ogg"
+define audio.card_shuffle = "mod_assets/sfx/card_shuffle.ogg"
+define audio.cassette_close = "mod_assets/sfx/cassette_close.ogg"
+define audio.cassette_open = "mod_assets/sfx/cassette_open.ogg"
+define audio.chair_in = "mod_assets/sfx/chair_in.ogg"
+define audio.chair_out = "mod_assets/sfx/chair_out.ogg"
+define audio.chair_out_fast = "mod_assets/sfx/chair_out_fast.ogg"
+define audio.chair_out_in = "mod_assets/sfx/chair_out_in.ogg"
 define audio.clothing_ruffle = "mod_assets/sfx/clothing_ruffle.ogg"
+define audio.coin_flip = "mod_assets/sfx/coin_flip.ogg"
+define audio.drawer = "mod_assets/sfx/drawer.ogg"
+define audio.drink_pour = "mod_assets/sfx/drink_pour.ogg"
+define audio.gift_close = "mod_assets/sfx/gift_close.ogg"
+define audio.gift_open = "mod_assets/sfx/gift_open.ogg"
+define audio.gift_rustle = "mod_assets/sfx/gift_rustle.ogg"
+define audio.gift_slide = "mod_assets/sfx/gift_slide.ogg"
+define audio.glass_move = "mod_assets/sfx/glass_move.ogg"
+define audio.glasses_case_close = "mod_assets/sfx/glasses_case_close.ogg"
+define audio.glasses_case_open = "mod_assets/sfx/glasses_case_open.ogg"
+define audio.hair_brush = "mod_assets/sfx/hair_brush.ogg"
+define audio.hair_clip = "mod_assets/sfx/hair_clip.ogg"
+define audio.headpat = "mod_assets/sfx/headpat.ogg"
+define audio.kettle_boil = "mod_assets/sfx/kettle_boil.ogg"
+define audio.kiss = "mod_assets/sfx/kiss.ogg"
+define audio.necklace_clip = "mod_assets/sfx/necklace_clip.ogg"
 define audio.notification = "mod_assets/sfx/notification.ogg"
 define audio.page_turn = "mod_assets/sfx/page_turn.ogg"
 define audio.paper_crumple = "mod_assets/sfx/paper_crumple.ogg"
 define audio.paper_throw = "mod_assets/sfx/paper_throw.ogg"
-define audio.chair_in = "mod_assets/sfx/chair_in.ogg"
-define audio.chair_out = "mod_assets/sfx/chair_out.ogg"
-define audio.chair_out_in = "mod_assets/sfx/chair_out_in.ogg"
-define audio.hair_brush = "mod_assets/sfx/hair_brush.ogg"
-define audio.hair_clip = "mod_assets/sfx/hair_clip.ogg"
-define audio.necklace_clip = "mod_assets/sfx/necklace_clip.ogg"
-define audio.cassette_open = "mod_assets/sfx/cassette_open.ogg"
-define audio.cassette_close = "mod_assets/sfx/cassette_close.ogg"
-define audio.glass_move = "mod_assets/sfx/glass_move.ogg"
-define audio.straw_sip = "mod_assets/sfx/straw_sip.ogg"
-define audio.kiss = "mod_assets/sfx/kiss.ogg"
-define audio.gift_slide = "mod_assets/sfx/gift_slide.ogg"
-define audio.gift_open = "mod_assets/sfx/gift_open.ogg"
-define audio.gift_close = "mod_assets/sfx/gift_close.ogg"
-define audio.gift_rustle = "mod_assets/sfx/gift_rustle.ogg"
-define audio.zipper = "mod_assets/sfx/zipper.ogg"
+define audio.select_confirm = "mod_assets/sfx/select_confirm.ogg"
+define audio.select_hover = "mod_assets/sfx/select_hover.ogg"
+define audio.smack = "mod_assets/sfx/smack.ogg"
 define audio.stationary_rustle_a = "mod_assets/sfx/stationary_rustle_a.ogg"
 define audio.stationary_rustle_b = "mod_assets/sfx/stationary_rustle_a.ogg"
 define audio.stationary_rustle_c = "mod_assets/sfx/stationary_rustle_a.ogg"
-define audio.glasses_case_open = "mod_assets/sfx/glasses_case_open.ogg"
-define audio.glasses_case_close = "mod_assets/sfx/glasses_case_close.ogg"
-define audio.button_tap_a = "mod_assets/sfx/button_tap_a.ogg"
-define audio.button_tap_b = "mod_assets/sfx/button_tap_b.ogg"
-define audio.button_tap_c = "mod_assets/sfx/button_tap_c.ogg"
-define audio.button_mashing_a = "mod_assets/sfx/button_mashing_a.ogg"
-define audio.button_mashing_b = "mod_assets/sfx/button_mashing_b.ogg"
-define audio.button_mashing_c = "mod_assets/sfx/button_mashing_c.ogg"
+define audio.straw_sip = "mod_assets/sfx/straw_sip.ogg"
+define audio.switch_flip = "mod_assets/sfx/switch_flip.ogg"
 define audio.twitch_die = "mod_assets/sfx/twitch_die.ogg"
 define audio.twitch_you_lose = "mod_assets/sfx/twitch_you_lose.ogg"
-define audio.switch_flip = "mod_assets/sfx/switch_flip.ogg"
-define audio.kettle_boil = "mod_assets/sfx/kettle_boil.ogg"
-define audio.drink_pour = "mod_assets/sfx/drink_pour.ogg"
-define audio.headpat = "mod_assets/sfx/headpat.ogg"
+define audio.zipper = "mod_assets/sfx/zipper.ogg"
 
+# Glitch sound effects
 define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
 define audio.glitch_b = "mod_assets/sfx/glitch_b.ogg"
 define audio.glitch_c = "mod_assets/sfx/glitch_c.ogg"
@@ -1798,9 +1865,16 @@ define audio.rain_muffled = "mod_assets/sfx/rain_muffled.ogg"
 
 # Music, vanilla DDLC
 define audio.space_classroom_bgm = "mod_assets/bgm/space_classroom.ogg"
+define audio.holiday_bgm = "mod_assets/bgm/vacation.ogg"
+define audio.dread = "mod_assets/bgm/dread.ogg"
 
 # Music, JN exclusive
 define audio.just_natsuki_bgm = "mod_assets/bgm/just_natsuki.ogg"
+define audio.happy_birthday_bgm = "mod_assets/bgm/happy_birthday.ogg"
+define audio.ikustan_tsuj = "mod_assets/bgm/ikustan_tsuj.ogg"
+define audio.juuuuu_nnnnn = "mod_assets/bgm/juuuuu_nnnnn.ogg"
+define audio.just = "mod_assets/bgm/just.ogg"
+define audio.night_natsuki = "mod_assets/bgm/night_natsuki.ogg"
 
 # Voicing - we disable TTS
 define config.tts_voice = None
@@ -1835,13 +1909,18 @@ init -999 python:
         """
         This checks to ensure an input or menu screen is not up before allowing a force quit, as these crash the game. Thanks, Tom.
         """
-        if (
-            not renpy.get_screen("input")
-            and not renpy.get_screen("choice")
-            and not renpy.get_screen("preferences")
-            and not renpy.get_screen("history")
-            and jn_globals.force_quit_enabled
-        ):
+        blocked_screens = (
+            "input",
+            "choice",
+            "poem_view",
+            "preferences",
+            "history"
+        )
+        for blocked_screen in blocked_screens:
+            if renpy.get_screen(blocked_screen):
+                return
+
+        if jn_globals.force_quit_enabled:
             renpy.call("try_force_quit")
 
     class JNEvent(object):
