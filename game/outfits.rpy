@@ -2347,7 +2347,7 @@ label new_wearables_outfits_unlocked:
 
         if jnIsPlayerBirthday():
             n 1uskgslesh "...Wait!{w=0.75}{nw}"
-            extend 1knmemlsbl "Y-{w=0.2}you shouldn't even be the one {i}giving{/i} things today anyway!"
+            extend 1knmemlsbl " Y-{w=0.2}you shouldn't even be the one {i}giving{/i} things today anyway!"
             n 1kslemlsbl "...It's {i}weird{/i},{w=0.2} [player]..."
             n 1kslbolsbl "..."
 
