@@ -2280,7 +2280,6 @@ label holiday_christmas_eve:
         import copy
 
         # Let it snow
-        persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
         jn_atmosphere.showSky(jn_atmosphere.WEATHER_SNOW)
 
         # The Nat in the Hat
@@ -2492,7 +2491,6 @@ label holiday_christmas_eve:
 label holiday_christmas_day:
     python:
         # Let it snow
-        persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
         jn_atmosphere.showSky(jn_atmosphere.WEATHER_SNOW)
 
         # Dress up Natsu
@@ -2845,7 +2843,7 @@ label holiday_new_years_eve:
 
     return
 
-label holiday_player_birthday():
+label holiday_player_birthday:
     python:
         import copy
 
@@ -2998,7 +2996,6 @@ label holiday_player_birthday():
 label holiday_anniversary:
     #TODO: writing
     $ jn_events.getHoliday("holiday_anniversary").run()
-    n "This isn't done yet, but happy anniversary!"
     $ jn_events.getHoliday("holiday_anniversary").complete()
 
     return
