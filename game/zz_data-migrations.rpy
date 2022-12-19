@@ -233,3 +233,10 @@ init python in jn_data_migrations:
         jn_utils.save_game()
         jn_utils.log("Migration to 1.0.1 DONE")
         return
+
+    @migration(["1.0.1"], "1.0.2", runtime=MigrationRuntimes.INIT)
+    def to_1_0_1():
+        jn_utils.log("Migration to 1.0.2 START")
+        store.persistent._jn_version = "1.0.2"
+        jn_utils.log("Migration to 1.0.2 DONE")
+        return

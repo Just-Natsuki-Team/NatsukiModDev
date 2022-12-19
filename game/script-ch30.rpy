@@ -65,7 +65,7 @@ label ch30_init:
             persistent._jn_player_tt_state += 1
             tt_in_session = True
 
-        elif ((persistent.jn_last_visited_date - datetime.datetime.now()).total_seconds() / 3600) >= 4:
+        elif ((persistent.jn_last_visited_date - datetime.datetime.now()).total_seconds() / 3600) >= 10:
             persistent._jn_player_tt_instances += 1
 
             if persistent._jn_player_tt_instances == 3 or persistent._jn_player_tt_instances == 6:
@@ -156,6 +156,7 @@ label ch30_init:
         # Check for holidays, then queue them up and run them in sequence if we have any
         available_holidays = jn_events.selectHolidays()
         if available_holidays:
+            persistent._jn_holiday_completed_count += 1
             renpy.hide("deco")
             jn_events.queueHolidays(available_holidays)
 
@@ -166,6 +167,7 @@ label ch30_init:
                 and (not persistent.jn_player_admission_type_on_quit and not persistent._jn_player_apology_type_on_quit)
                 and jn_events.selectEvent()
             ):
+                persistent._jn_holiday_completed_count += 1
                 push(jn_events.selectEvent())
                 renpy.call("call_next_topic", False)
 

@@ -408,8 +408,6 @@ init python in jn_events:
             if self.deco_list:
                 store.persistent._jn_holiday_deco_list_on_quit = self.deco_list
 
-            store.persistent._jn_holiday_completed_count += 1
-
     def __registerHoliday(holiday):
         """
         Registers a new holiday in the list of all holidays, allowing in-game access and persistency.
