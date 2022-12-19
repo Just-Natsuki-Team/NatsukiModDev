@@ -2,6 +2,7 @@ default persistent._event_database = dict()
 default persistent._jn_holiday_list = dict()
 default persistent._jn_holiday_completed_list = []
 default persistent._jn_holiday_deco_list_on_quit = []
+default persistent._jn_holiday_completed_count = 0
 
 default persistent._jn_player_celebrates_christmas = None
 
@@ -400,11 +401,14 @@ init python in jn_events:
             """
             self.is_seen = True
             self.__save()
+
             if not int(self.holiday_type) in store.persistent._jn_holiday_completed_list:
                 store.persistent._jn_holiday_completed_list.append(int(self.holiday_type))
 
             if self.deco_list:
                 store.persistent._jn_holiday_deco_list_on_quit = self.deco_list
+
+            store.persistent._jn_holiday_completed_count += 1
 
     def __registerHoliday(holiday):
         """

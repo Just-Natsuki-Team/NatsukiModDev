@@ -56,6 +56,15 @@ init python in jn_custom_music:
         "Let's see..."
     ]
 
+    _NATSUKI_PICK_MUSIC_DONE_QUIPS = [
+        "Done~!",
+        "All done!",
+        "All good!",
+        "There we go!",
+        "And...{w=0.3} we're good!",
+        "Okie-dokie!{w=0.3} Ehehe."
+    ]
+
     _NATSUKI_NO_MUSIC_QUIPS = [
         "Just quiet for now?{w=0.2} Sure!",
         "Not in the mood for music,{w=0.1} [player]?{w=0.2} No worries!",
@@ -85,12 +94,16 @@ label music_menu:
             )
             custom_music_options.sort()
 
-            # Add the default music as the first option
-            custom_music_options.insert(0, ("Default", "mod_assets/bgm/just_natsuki.ogg"))
-
             # Add random option if we have more than one potential track for Nat to pick
             if len(custom_music_options) > 1:
-                custom_music_options.insert(1, ("You pick!", "random"))
+                custom_music_options.insert(0, ("You pick!", "random"))
+
+            # Add the default music as the first option
+            custom_music_options.insert(1, ("Default", "mod_assets/bgm/just_natsuki.ogg"))
+
+            # Add holiday music if unlocked
+            if persistent._jn_holiday_completed_count > 0 and Natsuki.isNormal(higher=True):
+                custom_music_options.insert(2, ("Vacation!", "mod_assets/bgm/vacation.ogg"))
 
             custom_music_options.append(("No music", "no_music"))
             success = True
@@ -147,15 +160,35 @@ label music_menu:
     if _return == "no_music":
         $ chosen_no_music_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_NO_MUSIC_QUIPS))
         n 1knmsm "[chosen_no_music_quip]"
+        show natsuki 1fchsm
         $ music_title = "No music"
 
-        stop music fadeout 3
-        n 1uchsm "There you go, [player]!"
+        show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+        $ jnPause(0.5)
+        play audio gift_close
+        show music_player playing zorder jn_events.JN_EVENT_PROP_ZORDER
+        $ jnPause(0.5)
+        hide black with Dissolve(0.5)
+        $ jnPause(0.5)
+        play audio button_tap_c
+        show music_player stopped
+        stop music fadeout 2
+        $ jnPause(2)
+
+        n 1uchsm "There you go, [player]!{w=2}{nw}"
         
         if persistent.jn_random_music_enabled:
             # Stop playing random music, if enabled
             $ persistent.jn_random_music_enabled = False
-            n 1unmaj "Oh{w=0.1} -{w=0.1} and I'll stop switching around the music too."
+            n 1unmaj "Oh{w=0.2} -{w=0.50}{nw}" 
+            extend 1kchbgsbl " and I'll stop switching around the music too.{w=2}{nw}"
+
+        show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+        $ jnPause(0.5)
+        play audio gift_close
+        $ jnPause(0.25)
+        hide music_player
+        hide black with Dissolve(0.5)
 
     elif _return == "random":
 
@@ -168,25 +201,78 @@ label music_menu:
         $ chosen_question_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_QUESTION_QUIPS))
         n 1unmajl "[chosen_question_quip]"
 
-        show natsuki 1uchbg
-
         $ chosen_answer_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_ANSWER_QUIPS))
-        n 1uchbsl "[chosen_answer_quip]"
+        n 1uchbgl "[chosen_answer_quip]"
+        show natsuki 1fchsmleme
+
+        show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+        $ jnPause(0.5)
+        play audio gift_close
+        show music_player playing zorder jn_events.JN_EVENT_PROP_ZORDER
+        $ jnPause(0.5)
+        hide black with Dissolve(0.5)
+        $ jnPause(0.5)
+        play audio button_tap_c
+        show music_player stopped
+        stop music fadeout 2
+        $ jnPause(2)
 
         $ chosen_search_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_SEARCH_QUIPS))
-        n 1ullbgl "[chosen_search_quip]"
+        n 1ullbgl "[chosen_search_quip]{w=2}{nw}"
+        show natsuki 1fcspul
 
         # If we have more than one track, we can make sure the new chosen track isn't the same as the current one
-        python:
-            if len(available_custom_music) > 1:
-                music_title_and_file = random.choice(filter(lambda track: (jn_custom_music._now_playing not in track), available_custom_music))
-                music_title = music_title_and_file[0]
-                renpy.play(filename=music_title_and_file[1], channel="music")
+        if len(available_custom_music) > 1:
+            $ music_title_and_file = random.choice(filter(lambda track: (jn_custom_music._now_playing not in track), available_custom_music))
+            $ music_title = music_title_and_file[0]
+            play audio button_tap_c
+            show music_player playing
+            $ renpy.play(filename=music_title_and_file[1], channel="music", fadein=2)
+            $ jnPause(2)
+
+        $ chosen_done_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_DONE_QUIPS))
+        n 1uchbgeme "[chosen_done_quip]{w=2}{nw}"
+        show natsuki 1fcssm
+
+        show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+        $ jnPause(0.5)
+        play audio gift_close
+        $ jnPause(0.25)
+        hide music_player
+        hide black with Dissolve(0.5)
 
     elif _return is not None:
-        # Play the selected specific track
         $ music_title = store.jn_utils.escapeRenpySubstitutionString(_return.split('/')[-1])
-        $ renpy.play(filename=_return, channel="music")
+
+        n 1fwlbg "You got it!{w=2}{nw}"
+        show natsuki 1fchsmleme
+
+        show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+        $ jnPause(0.5)
+        play audio gift_close
+        show music_player playing zorder jn_events.JN_EVENT_PROP_ZORDER
+        $ jnPause(0.5)
+        hide black with Dissolve(0.5)
+        $ jnPause(0.5)
+        play audio button_tap_c
+        show music_player stopped
+        stop music fadeout 2
+
+        $ jnPause(2)
+        play audio button_tap_c
+        show music_player playing
+        $ renpy.play(filename=_return, channel="music", fadein=2)
+
+        $ chosen_done_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_DONE_QUIPS))
+        n 1uchbgeme "[chosen_done_quip]{w=2}{nw}"
+        show natsuki 1fcssm
+
+        show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+        $ jnPause(0.5)
+        play audio gift_close
+        $ jnPause(0.25)
+        hide music_player
+        hide black with Dissolve(0.5)
 
     # Pop a cheeky notify with the Nat for visual confirmation :)
     $ jn_custom_music._now_playing = music_title
