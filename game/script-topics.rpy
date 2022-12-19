@@ -8544,7 +8544,7 @@ init 5 python:
             persistent._topic_database,
             label="talk_chocolate_preference",
             unlocked=True,
-            prompt="What chocolate do you prefer?",
+            prompt="What sort of chocolate do you prefer?",
             category=["Food"],
             player_says=True,
             location="classroom"
@@ -8555,7 +8555,7 @@ init 5 python:
 label talk_chocolate_preference:
     if Natsuki.isAffectionate(higher=True):
         if get_topic("talk_chocolate_preference").shown_count > 0:
-            n 1tnmaj "Oh?"
+            n 1tnmaj "Oh?{w=0.5}{nw}"
             extend 1tsqbo " This again,{w=0.2} huh?"
             n 1tsrsm "..."
 
@@ -8604,12 +8604,12 @@ label talk_chocolate_preference:
         n 1tsqem "...Why?{w=1}{nw}"
         extend 1fcsem " It's cheap,{w=0.5} full of sugars and fats,{w=0.75}{nw}"
         extend 1fcssr " and I could always add it to whatever I wanted."
-        n 1fsqfr "What?"
-        extend 1fsqaj " What else did you expect?{w=0.75}{nw}"
+        n 1fsqfr "What?{w=1}{nw}"
+        extend 1fsqaj " Don't act like you {i}seriously{/i} expected anything different.{w=0.75}{nw}"
         n 1fsran "As if {i}I{/i} was the one going to {i}fancy{/i} candy stores to pick out whatever I fancied."
         n 1fsqun "..."
         n 1fslun "Yeah.{w=1}{nw}"
-        extend 1fcsfr " Not like I'd expect {i}you{/i} to get it."
+        extend 1fcsfr " Not like I thought {i}you{/i} would get it."
         n 1fcsbo "Whatever."
         n 1flrpu "The others are fine too,{w=0.75}{nw}"
         extend 1fsrfr " I guess."
@@ -8640,19 +8640,19 @@ label talk_chocolate_preference:
             n 1fsqupltsb "You {i}really{/i} wanna know,{w=0.2} [player]?"
             n 1fcsunltsa "..."
 
-        n 1fnmanltsc "Not whatever cheap,{w=0.75} half-{w=0.2}expired{w=0.75}{nw}"
-        extend 1fnmwrltsc " trash{w=0.75}{nw}"
+        n 1fcsupltsa "Not whatever cheap,{w=0.75}{nw}"
+        extend 1fnmanltsc " half-{w=0.2}expired{w=0.75}{nw}"
+        extend 1fsqwrltsb " trash{w=0.75}{nw}"
         extend 1fnmfultsc " {i}you{/i} would hand me,{w=1}{nw}"
         extend 1fcsfultsa " that's for sure."
         n 1fsqanltsb "Jerk."
 
         return
 
-    n 1fcsbg "It's {i}gotta{/i} be white chocolate.{w=0.75}{nw}"
+    n 1fcstr "It's {i}gotta{/i} be white chocolate.{w=0.75}{nw}"
     extend 1fchbg " Any day of the week!"
     n 1nslsmsbr "It {i}is{/i} practically overflowing with sugar...{w=0.75}{nw}"
     extend 1nsrdvsbr " and debatably even {i}chocolate{/i}..."
-
 
     if get_topic("event_warm_package").shown_count > 0:
         n 1uspajl "But that {i}taste{/i}!{w=0.75}{nw}"
@@ -8670,7 +8670,7 @@ label talk_chocolate_preference:
     extend 1nsrsssbl " since it really doesn't have much {i}actual{/i} cocoa at all -{w=0.5}{nw}"
     extend 1ulrss " I never have to worry about how strong it is,{w=0.75}{nw}"
     extend 1fchsm " plus it goes super well with regular old chocolate too!"
-    n 1fchbl "It's multipurpose!"
+    n 1fchbl "Talk about multipurpose!"
     n 1tsqss "Bought some as a treat and can't finish the job?{w=0.75}{nw}"
     extend 1fchsmeme " No problemo!"
     n 1ullss "Just wrap it back up,{w=0.2} save it,{w=0.75}{nw}"
@@ -8678,14 +8678,14 @@ label talk_chocolate_preference:
     n 1fcsss "So take it from me,{w=0.2} [player]:{w=1}{nw}"
     extend 1uchgn " it's a confectioner's best friend!"
     n 1fcssm "..."
-    n 1unmajesu "...Ah!"
-    n 1fllbglsbr "B-{w=0.2}but that's not to say the others are terrible,{w=0.2} or anything like that.{w=0.75}{nw}"
+    n 1unmajesu "...Ah!{w=1}{nw}"
+    n 1fllbglsbr "T-{w=0.2}that's not to say the others are terrible,{w=0.2} or anything like that.{w=0.75}{nw}"
     extend 1unmajsbr " Chocolate is super subjective!{w=1}{nw}"
     extend 1nsrsssbr " But..."
     n 1tnmbo "I guess I just don't really see the appeal {i}as{/i} much."
     n 1nslss "Milk chocolate is {i}okay{/i},{w=0.2} but you kinda see it everywhere already."
     n 1fllpu "As for dark chocolate..."
-    n 1nsrdv "..."
+    n 1nsrunsbl "..."
     n 1fcsbglsbr "W-{w=0.2}well,{w=1}{nw}"
     extend 1flrsslsbr " it totally has its place too!"
     n 1unmaj "Sometimes,{w=0.2} that dash of bitterness is just what you need!{w=0.75}{nw}"
@@ -8695,22 +8695,22 @@ label talk_chocolate_preference:
     n 1fcsbg "So yeah!{w=0.75}{nw}"
     extend 1fllbgsbr " It {i}totally{/i} has its place,{w=0.2} like I said..."
     n 1fslposbr "...Just not in {i}my{/i} mouth.{w=0.75}{nw}"
-    extend 1fchsmsbr " Ehehe."
+    extend 1fchsmsbr " That's all I'm saying!"
     n 1fllajlsbr "A-{w=0.2}anyway!{w=0.75}{nw}"
     extend 1fcsajl " Enough of me yammering on again.{w=0.75}{nw}"
-    extend 1flrss " Jeez."
-    n 1unmaj "What about you,{w=0.2} [player]?"
+    extend 1tlrsssbl " Jeez."
+    n 1unmaj "What about you,{w=0.2} [player]?{w=0.75}{nw}"
     n 1fbkwreex "...Wait!{w=1}{nw}"
     extend 1fcsbg " Don't tell me!"
     n 1fcssresp "..."
 
     if Natsuki.isLove(higher=True):
         n 1fcsgs "It {i}has{/i} to be white chocolate.{w=0.75}{nw}"
-        extend 1fchbl " Complete no-{w=0.2}brainer.{w=1}{nw}"
+        extend 1fchbl " Complete no-brainer.{w=1}{nw}"
         extend 1fcsss " Besides..."
         n 1fsldvlsbl "I-{w=0.2}I like to think I {i}know{/i} a sweetheart when I see one."
         n 1fchsmlsbl "Ehehe..."
-        n 1fchssfsbl "L-{w=0.2}love you,{w=0.2} [player]~!"
+        n 1fchblfsbl "L-{w=0.2}love you,{w=0.2} [player]~!"
 
     elif Natsuki.isEnamored(higher=True):
         n 1fcsbg "...It's {i}gotta{/i} be white chocolate.{w=1}{nw}"
@@ -8727,7 +8727,7 @@ label talk_chocolate_preference:
         n 1fcspu "It's...{w=1}{nw}"
         extend 1tnmpu " actually kinda hard to guess,{w=0.75}{nw}"
         extend 1tllsl " to be honest."
-        n 1tnmss "I {i}would{/i} say dark chocolate,{w=0.5}"
+        n 1tnmss "I {i}would{/i} say dark chocolate,{w=0.5}{nw}"
         extend 1tsqss " but..."
         n 1fchgnl "I like to think you aren't {i}that{/i} bitter!{w=0.75}{nw}"
         extend 1nchgn " Ahaha."
