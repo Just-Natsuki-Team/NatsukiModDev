@@ -962,7 +962,7 @@ init -1 python in jn_outfits:
         temporary_outfit.eyewear = outfit.eyewear
         temporary_outfit.headgear = outfit.headgear
         temporary_outfit.necklace = outfit.necklace
-        store.Natsuki.setOutfit(temporary_outfit)
+        store.Natsuki.setOutfit(temporary_outfit, persist=False)
         return True
 
     def save_custom_outfit(outfit):

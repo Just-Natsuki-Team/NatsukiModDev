@@ -325,7 +325,7 @@ label call_next_topic(show_natsuki=True):
 
         #Handle all things which act on topic objects here, since we can't access attributes of Nonetypes
         if topic_obj is not None:
-            #Increment shown count, update last seen
+            #Increment shown count, update last seen - remember this won't work if we're jumping around a bunch (like with setups with many labels)
             topic_obj.shown_count += 1
             topic_obj.last_seen = datetime.datetime.now()
 

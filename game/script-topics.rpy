@@ -8172,7 +8172,7 @@ init 5 python:
             label="talk_players_birthday_intro",
             unlocked=True,
             prompt="My birthday",
-            category=["Setup", "You"],
+            category=["You"],
             player_says=True,
             affinity_range=(jn_affinity.AFFECTIONATE, None),
             location="classroom"
@@ -8182,7 +8182,7 @@ init 5 python:
 
 label talk_players_birthday_intro:
     # Player has already discussed their birthday with Natsuki
-    if get_topic("talk_players_birthday_intro").shown_count != 0:
+    if get_topic("talk_players_birthday_intro").shown_count > 0:
         n 1tnmbo "Huh?{w=0.2} Your birthday?"
 
         if persistent._jn_player_birthday_day_month is not None:
@@ -8380,11 +8380,20 @@ label talk_players_birthday_outro:
         n 1fcsem "Right!{w=1}{nw}"
         extend 1fcswr " Then there's only one thing for it!{w=1.5}{nw}"
 
+        # Have to hard set this because we jump away from the label, and lose context of it for topic metric set on call_next_topic return
+        $ birthday_topic = get_topic("talk_players_birthday_intro")
+        $ birthday_topic.shown_count = 1
+        $ birthday_topic.last_seen = datetime.datetime.now()
+
+        # Prep for birthday
         $ jn_globals.force_quit_enabled = False
         stop music
         play audio switch_flip
         show black zorder 99
+        $ jnPause(5)
         $ push("holiday_player_birthday")
+
+        # Go!
         $ renpy.jump("call_next_topic")
 
     else:
