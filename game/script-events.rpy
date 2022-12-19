@@ -2,7 +2,7 @@ default persistent._event_database = dict()
 default persistent._jn_holiday_list = dict()
 default persistent._jn_holiday_completed_list = []
 default persistent._jn_holiday_deco_list_on_quit = []
-default persistent._jn_holiday_completed_count = 0
+default persistent._jn_event_completed_count = 0
 
 default persistent._jn_player_celebrates_christmas = None
 
@@ -566,6 +566,7 @@ init python in jn_events:
             - natsuki_sprite_code - The sprite code to show Natsuki displaying before dialogue
             - music_file_path - The str file path of the music to play upon revealing Natsuki; defaults to standard bgm
         """
+        store.persistent._jn_event_completed_count += 1
         renpy.show("natsuki {0}".format(natsuki_sprite_code), at_list=[store.jn_center], zorder=store.JN_NATSUKI_ZORDER)
         store.jnPause(0.1)
         renpy.hide("black")

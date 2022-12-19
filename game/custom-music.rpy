@@ -102,7 +102,7 @@ label music_menu:
             custom_music_options.insert(1, ("Default", "mod_assets/bgm/just_natsuki.ogg"))
 
             # Add holiday music if unlocked
-            if persistent._jn_holiday_completed_count > 0 and Natsuki.isNormal(higher=True):
+            if persistent._jn_event_completed_count > 0 and Natsuki.isNormal(higher=True):
                 custom_music_options.insert(2, ("Vacation!", "mod_assets/bgm/vacation.ogg"))
 
             custom_music_options.append(("No music", "no_music"))
