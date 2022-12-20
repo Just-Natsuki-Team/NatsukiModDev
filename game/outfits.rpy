@@ -1443,7 +1443,6 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
 
-
     # Official JN headgear
 
     # Hats/hairbands/ears

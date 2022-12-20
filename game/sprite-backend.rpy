@@ -535,8 +535,10 @@ init 1 python:
             ):
                 #Reset name
                 name = self.name
+
                 #Generate
                 _generate_image(name[1])
+                
                 #Try to get the img again
                 target = renpy.display.image.images[name]
 

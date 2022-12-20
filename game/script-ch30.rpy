@@ -213,8 +213,9 @@ label ch30_loop:
             LAST_HOUR_CHECK = _now.hour
 
         if LAST_DAY_CHECK is not _now.day:
-            day_check()
+            # Set here as holidays jump
             LAST_DAY_CHECK = _now.day
+            day_check()
 
         Natsuki.setInConversation(False)
 
@@ -482,7 +483,6 @@ init python:
         """
         Runs every day during breaks between topics
         """
-
         # Run through all externally-registered day check actions
         if len(jn_plugins.day_check_calls) > 0:
             for action in jn_plugins.day_check_calls:
@@ -490,11 +490,11 @@ init python:
 
         queue("weather_change")
 
-        # Check for a year change, reset holidays if so
-        if persistent.jn_last_visited_date.year != datetime.datetime.now().year:
+        # Determine if the year has changed, in which case we reset all holidays so they can be celebrated again
+        if (datetime.datetime.now().year > persistent.jn_last_visited_date.year):
             jn_events.resetHolidays()
+            jn_utils.log("Holiday completion states reset.")
 
-        # Update the last visited date, so extended periods spent with Natsuki open aren't penalised
         persistent.jn_last_visited_date = datetime.datetime.now()
 
         # Check for holidays, then queue them up and run them in sequence if we have any
