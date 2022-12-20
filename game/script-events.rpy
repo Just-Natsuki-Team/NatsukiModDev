@@ -136,6 +136,14 @@ image prop wintendo_twitch_dead:
 # Background decorations are displayed in the room behind Natsuki
 image deco balloons = "mod_assets/deco/balloons.png"
 image deco garlands = "mod_assets/deco/garlands.png"
+image deco tree day = "mod_assets/deco/tree_day.png"
+image deco tree night = "mod_assets/deco/tree_night.png"
+image deco hanging_lights lit = "mod_assets/deco/hanging_lights_lit.png"
+image deco hanging_lights unlit = "mod_assets/deco/hanging_lights_unlit.png"
+image deco wall_stocking day = "mod_assets/deco/wall_stocking_day.png"
+image deco wall_stocking night = "mod_assets/deco/wall_stocking_night.png"
+image deco d24 = "mod_assets/deco/d24.png"
+image deco d25 = "mod_assets/deco/d25.png"
 
 # Overlays are displayed over the top of Natsuki, in front of any decorations but behind any props
 image overlay slipping_glasses = "mod_assets/overlays/slipping_glasses.png"
@@ -583,7 +591,7 @@ init python in jn_events:
         holiday_type=JNHolidayTypes.christmas_eve,
         affinity_range=(jn_affinity.HAPPY, None),
         natsuki_sprite_code="1uchsm",
-        deco_list=["garlands"],
+        deco_list=["d24"],
         priority=99
     ))
 
@@ -593,7 +601,7 @@ init python in jn_events:
         holiday_type=JNHolidayTypes.christmas_day,
         affinity_range=(jn_affinity.HAPPY, None),
         natsuki_sprite_code="1fspss",
-        deco_list=["garlands"],
+        deco_list=["d25"],
         priority=99
     ))
 
