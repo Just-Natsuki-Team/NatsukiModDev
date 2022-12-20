@@ -370,6 +370,7 @@ init python:
             Natsuki.isHappy(higher=True)
             and persistent.jn_custom_outfits_unlocked
             and len(jn_outfits._SESSION_NEW_UNLOCKS)
+            and not jn_events.selectHolidays()
         ):
             queue("new_wearables_outfits_unlocked")
 

@@ -2207,12 +2207,12 @@ label holiday_new_years_day:
 
         show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
         play audio clothing_ruffle
-        pause 3.5
+        $ jnPause(3.5)
 
         if Natsuki.isLove(higher=True):
             show natsuki 1fsldvlsbl at jn_center zorder JN_NATSUKI_ZORDER
             play audio kiss
-            pause 1.5
+            $ jnPause(1.5)
             hide black with Dissolve(1.25)
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
             n 1kwmsmf "...Happy new year,{w=0.1} [chosen_endearment].{w=1.25}{nw}"
@@ -2220,6 +2220,8 @@ label holiday_new_years_day:
 
         else:
             show natsuki 1nsldvlsbl at jn_center zorder JN_NATSUKI_ZORDER
+            $ jnPause(1.5)
+            hide black with Dissolve(1.25)
             $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
             n 1klrssf "Heh."
             n 1fchsmfess "...Happy new year,{w=0.1} [chosen_tease]."
@@ -2244,7 +2246,7 @@ label holiday_new_years_day:
         show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
         show natsuki 1fsldvlsbl at jn_center zorder JN_NATSUKI_ZORDER
         play audio clothing_ruffle
-        pause 3.5
+        $ jnPause(3.5)
         hide black with Dissolve(1.25)
 
         n 1fsqdvlesssbr "...H-{w=0.2}happy new year,{w=0.1} dummy."
@@ -2359,7 +2361,7 @@ label holiday_christmas_eve:
 
         "I haven't decorated yet.":
             n 1uskemlesh "H-{w=0.2}huh?!"
-            n 1fbkwrl "T-{w=0.2}then what are you doing sat around here,{w=0.2} you goof?!{w=0.75}{nw}"
+            n 1fbkwrl "T-{w=0.2}then what are you doing sitting around here,{w=0.2} you goof?!{w=0.75}{nw}"
             extend 1fcsajlsbl " Jeez..."
             n 1fcspolsbl "I'm not doing {i}your{/i} place too,{w=0.2} you know."
             n 1fchbl "...Not for {i}free{/i},{w=0.2} anyway."
@@ -2847,6 +2849,9 @@ label holiday_new_years_eve:
 label holiday_player_birthday:
     python:
         import copy
+        import datetime
+
+        today_day_month = (datetime.date.today().day, datetime.date.today().month)
 
         # Give Natsuki a party hat, using whatever she's currently wearing as a base
         jn_outfits.get_wearable("jn_headgear_classic_party_hat").unlock()
@@ -2859,6 +2864,14 @@ label holiday_player_birthday:
         player_name_capitalized = persistent.playername.upper()
 
     n 1uchlgl "HAPPY BIRTHDAY,{w=0.2} [player_name_capitalized]!"
+
+    if (
+        persistent._jn_player_birthday_is_leap_day
+        and today_day_month == (28, 2)
+    ):
+        # Actual birthday check already handled, so just need to check leap flag and day
+        n 1nsldvlsbr "...Or close enough anyway this year,{w=0.2} right?"
+
     n 1fcsbg "Betcha' didn't think I had something planned all along,{w=0.2} did you?{w=0.5}{nw}"
     extend 1nchsml " Ehehe."
     n 1fnmaj "Don't lie!{w=1}{nw}"

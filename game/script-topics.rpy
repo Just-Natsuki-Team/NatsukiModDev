@@ -16,6 +16,7 @@ default persistent.jn_player_appearance_hair_length = None
 default persistent.jn_player_appearance_hair_colour = None
 default persistent.jn_player_appearance_height_cm = None
 default persistent._jn_player_birthday_day_month = None # Format (day, month)
+default persistent._jn_player_birthday_is_leap_day = False # True if player gave birthday as 29th
 
 # Hobby data
 default persistent.jn_player_gaming_frequency = None
@@ -8347,6 +8348,7 @@ label talk_players_birthday_input:
 
     n 1nchsm "Oki-doki!{w=0.5}{nw}"
     extend 1ullaj " So just to double check..."
+    show natsuki 1tnmbo
     $ birthday_formatted = "{0}{1}{2}".format(
         persistent._jn_player_birthday_day_month[1],
         persistent._jn_player_birthday_day_month[0],
@@ -8356,6 +8358,23 @@ label talk_players_birthday_input:
         n "Your birthday was [birthday_formatted],{w=0.2} right?"
 
         "Yes, that's right.":
+            if persistent._jn_player_birthday_day_month == (29, 2):
+                # Leap year, so celebrate on 28th instead and mark as leap year for future use
+                $ persistent._jn_player_birthday_is_leap_day = True
+                n 1fcspu "...Wait.{w=1}{nw}"
+                extend 1tnmpueqm " Isn't that a leap day too?"
+                n 1nllansbl "Yeesh..."
+                n 1fslposbl "..."
+                n 1fcsajsbl "Actually,{w=0.75}{nw}"
+                extend 1unmaj " you know what?"
+                n1ullss  "I'm...{w=1}{nw}"
+                extend 1fcsbgl " juuuust{w=0.3} gonna chalk down the 28th as well."
+                n 1fchgnl "Sorry [player]!{w=0.75}{nw}"
+                extend 1fchbllelg " No escaping the birthday cheers for you!"
+
+            else:
+                n 1fchsm "Gotcha!"
+
             jump talk_players_birthday_outro
 
         "No, that's not right.":
@@ -8365,7 +8384,16 @@ label talk_players_birthday_input:
             jump talk_players_birthday_input
 
 label talk_players_birthday_outro:
-    if persistent._jn_player_birthday_day_month == (datetime.date.today().day, datetime.date.today().month):
+    python:
+        import datetime
+
+        today_day_month = (datetime.date.today().day, datetime.date.today().month)
+        this_year_birthday_date = datetime.date(
+            datetime.date.today().year,
+            persistent._jn_player_birthday_day_month[1],
+            persistent._jn_player_birthday_day_month[0])
+
+    if jnIsPlayerBirthday():
         # It's the player's birthday today
         n 1nchbg "Okaaay!{w=0.2} So I think that's-{w=0.5}{nw}"
         n 1uskemesh "...!{w=1}{nw}"
@@ -8396,29 +8424,36 @@ label talk_players_birthday_outro:
         # Go!
         $ renpy.jump("call_next_topic")
 
+    elif this_year_birthday_date < datetime.date.today():
+        # Player's birthday coming up
+        n 1tsqbg "And hey!{w=0.75}{nw}"
+        extend 1fwlsm " Looks like I still got some time after all!"
+        n 1fchsmleme "Ehehe."
+
     else:
         # Player's birthday was missed
         n 1unmem "Wait,{w=0.5} seriously?{w=1}{nw}"
         extend 1knmem " I missed it already?{w=1.5}{nw}"
         extend 1nsrpo " Aww..."
-        n 1nllpo "Well...{w=1}{nw}"
-        extend 1nllss " thanks anyway.{w=1}{nw}"
-        extend 1nlrss " For sharing,{w=0.2} I mean."
-        n 1nsrpo "..."
-        n 1nsraj "I...{w=0.5}{nw}"
-        extend 1tnmss " guess I better return the favour,{w=0.2} huh?"
-        n 1nslcal "Just promise you won't make it all awkward."
-        n 1ncsemlesi "..."
-        n 1nsrssl "It's May 1st.{w=1}{nw}"
-        extend 1nsqpol " Don't make me say it twice."
-        n 1nllpu "And...{w=1}{nw}"
-        extend 1tnmbo " [player]?"
-        n 1fsqss "I hope you know that you better prepare yourself."
-        n 1fcsbg "'Cause I'm going all out next time!{w=1}{nw}"
-        extend 1nchgn " Ehehe."
 
-        if Natsuki.isLove():
-            n 1fchblleaf "Love you,{w=0.2} [player]~!"
+    n 1nllpo "Well...{w=1}{nw}"
+    extend 1nllss " thanks anyway.{w=1}{nw}"
+    extend 1nlrss " For sharing,{w=0.2} I mean."
+    n 1nsrpo "..."
+    n 1nsraj "I...{w=0.5}{nw}"
+    extend 1tnmss " guess I better return the favour,{w=0.2} huh?"
+    n 1nslcal "Just promise you won't make it all awkward."
+    n 1ncsemlesi "..."
+    n 1nsrssl "It's May 1st.{w=1}{nw}"
+    extend 1nsqpol " Don't make me say it twice."
+    n 1nllpu "And...{w=1}{nw}"
+    extend 1tnmbo " [player]?"
+    n 1fsqss "I hope you know that you better prepare yourself."
+    n 1fcsbg "'Cause I'm going all out next time!{w=1}{nw}"
+    extend 1nchgn " Ehehe."
+
+    if Natsuki.isLove():
+        n 1fchblleaf "Love you,{w=0.2} [player]~!"
 
     return
 

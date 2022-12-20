@@ -720,13 +720,16 @@ init -3 python:
         if input_date is None:
             input_date = datetime.datetime.today()
 
-        player_birthday = datetime.date(
-            2020, # We use 2020 as it is a leap year
-            store.persistent._jn_player_birthday_day_month[1],
-            store.persistent._jn_player_birthday_day_month[0]
-        )
+        if (
+            ((input_date.year % 4 == 0 and input_date.year % 100 != 0) or (input_date.year % 400 == 0))
+            or store.persistent._jn_player_birthday_day_month != (29, 2)
+        ):
+            # Leap year or birthday isn't on a leap day, so do direct comparison
+            return (input_date.day, input_date.month) == store.persistent._jn_player_birthday_day_month
 
-        return input_date.day == player_birthday.day and input_date.month == player_birthday.month
+        else:
+            # Not a leap year, account for birthdays on 29th February
+            return (input_date.day, input_date.month) == (28, 2)
 
     def jnIsAnniversary(input_date=None):
         """
@@ -741,13 +744,16 @@ init -3 python:
         if input_date is None:
             input_date = datetime.datetime.today()
 
-        anniversary_date = datetime.date(
-            2020, # We use 2020 as it is a leap year
-            store.persistent._jn_player_anniversary_day_month[1],
-            store.persistent._jn_player_anniversary_day_month[0]
-        )
+        if (
+            ((input_date.year % 4 == 0 and input_date.year % 100 != 0) or (input_date.year % 400 == 0))
+            or store.persistent._jn_player_anniversary_day_month != (29, 2)
+        ):
+            # Leap year or anniversary isn't on a leap day, so do direct comparison
+            return (input_date.day, input_date.month) == store.persistent._jn_player_anniversary_day_month
 
-        return input_date.day == anniversary_date.day and input_date.month == anniversary_date.month
+        else:
+            # Not a leap year, account for anniversaries on 29th February
+            return (input_date.day, input_date.month) == (28, 2)
 
     def jnIsDate(input_date):
         """
