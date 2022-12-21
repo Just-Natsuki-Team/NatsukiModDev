@@ -780,6 +780,29 @@ init -3 python:
         except:
             return False
 
+    def jnGetMonthNameFromInt(month):
+        """
+        Gets the month name from an integer.
+
+        IN:
+            - month - int month
+        """
+        month_map = {
+            1: "January",
+            2: "Feburary",
+            3: "March",
+            4: "April",
+            5: "May",
+            6: "June",
+            7: "July",
+            8: "August",
+            9: "September",
+            10: "October",
+            11: "November",
+            12: "December"
+        }
+        return month_map.get(month)
+
     def jn_get_current_hour():
         """
         Gets the current hour (out of 24) of the day.

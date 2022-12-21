@@ -8342,16 +8342,17 @@ label talk_players_birthday_input:
             # Get ready to lead in to the next stage of setup
             $ player_input_valid = True
             $ persistent._jn_player_birthday_day_month = (player_input, player_birthday_month)
-            jump talk_players_birthday_outro
 
     n 1nchsm "Oki-doki!{w=0.5}{nw}"
     extend 1ullaj " So just to double check..."
     show natsuki 1tnmbo
-    $ birthday_formatted = "{0}{1}{2}".format(
-        persistent._jn_player_birthday_day_month[1],
+
+    $ birthday_formatted = "{0} {1}{2}".format(
+        jnGetMonthNameFromInt(persistent._jn_player_birthday_day_month[1]),
         persistent._jn_player_birthday_day_month[0],
         jn_utils.getNumberOrdinal(persistent._jn_player_birthday_day_month[0])
     )
+
     menu:
         n "Your birthday was [birthday_formatted],{w=0.2} right?"
 
@@ -8365,7 +8366,7 @@ label talk_players_birthday_input:
                 n 1fslposbl "..."
                 n 1fcsajsbl "Actually,{w=0.75}{nw}"
                 extend 1unmaj " you know what?"
-                n1ullss  "I'm...{w=1}{nw}"
+                n 1ullss "I'm...{w=1}{nw}"
                 extend 1fcsbgl " juuuust{w=0.3} gonna chalk down the 28th as well."
                 n 1fchgnl "Sorry [player]!{w=0.75}{nw}"
                 extend 1fchbllelg " No escaping the birthday cheers for you!"
