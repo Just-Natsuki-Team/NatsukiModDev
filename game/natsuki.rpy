@@ -1,4 +1,3 @@
-default persistent.affinity = 25.0
 default persistent._jn_player_confession_accepted = False
 default persistent._jn_player_confession_day_month = None # Format (day, month)
 
@@ -205,6 +204,7 @@ init 0 python:
                 - base - The base amount to use for the calculation
                 - bypass - If the daily cap should be bypassed for things like one-time gifts, events, etc.
             """
+            base = 10 if base > 10 else base
             to_add = base * jn_affinity.get_relationship_length_multiplier()
             if (
                 not persistent._jn_player_confession_accepted 
@@ -259,6 +259,7 @@ init 0 python:
             IN:
                 - percentage_gain - The integer percentage the affinity should increase by
             """
+            percentage_gain = 10 if percentage_gain > 10 else percentage_gain
             to_add = persistent.affinity * (float(percentage_gain) / 100)
             if (not persistent._jn_player_confession_accepted and (persistent.affinity + to_add) > (jn_affinity.AFF_THRESHOLD_LOVE -1)):
                 # Player cannot reach LOVE without having confessed to Natsuki successfully

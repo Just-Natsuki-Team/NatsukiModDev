@@ -8334,7 +8334,7 @@ label talk_players_birthday_input:
             extend 1fnmpo " Come on,{w=0.2} [player]!{w=0.2} You gotta tell me what day!"
 
         # We use 2020 here, as it is a leapyear
-        elif not calendar.monthrange(2020, player_birthday_month)[0] <= player_input <= calendar.monthrange(2020, player_birthday_month)[1]:
+        elif not jnGetIsDateValid(2020, player_birthday_month, player_input):
             n 1fsqsr "[player].{w=0.2} Please.{w=1}{nw}"
             extend 1nsqpo " Take this seriously."
 
@@ -8386,10 +8386,13 @@ label talk_players_birthday_outro:
         import datetime
 
         today_day_month = (datetime.date.today().day, datetime.date.today().month)
-        this_year_birthday_date = datetime.date(
-            datetime.date.today().year,
-            persistent._jn_player_birthday_day_month[1],
-            persistent._jn_player_birthday_day_month[0])
+        before_birthday = (
+            today_day_month[1] < persistent._jn_player_birthday_day_month[1]
+            or (
+                today_day_month[1] == persistent._jn_player_birthday_day_month[1]
+                and today_day_month[0] < persistent._jn_player_birthday_day_month[0]
+            )
+        )
 
     if jnIsPlayerBirthday():
         # It's the player's birthday today
@@ -8422,7 +8425,7 @@ label talk_players_birthday_outro:
         # Go!
         $ renpy.jump("call_next_topic")
 
-    elif this_year_birthday_date < datetime.date.today():
+    elif before_birthday:
         # Player's birthday coming up
         n 1tsqbg "And hey!{w=0.75}{nw}"
         extend 1fwlsm " Looks like I still got some time after all!"
@@ -8450,7 +8453,7 @@ label talk_players_birthday_outro:
     n 1fcsbg "'Cause I'm going all out next time!{w=1}{nw}"
     extend 1nchgn " Ehehe."
 
-    if Natsuki.isLove():
+    if Natsuki.isLove(higher=True):
         n 1fchblleaf "Love you,{w=0.2} [player]~!"
 
     return

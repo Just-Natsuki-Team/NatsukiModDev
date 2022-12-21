@@ -757,13 +757,28 @@ init -3 python:
 
     def jnIsDate(input_date):
         """
-        Returns True if the current date's day and month match the given day and month.
+        Returns True if the current date's day and month match the given day and month; otherwise False
 
         IN:
-            - day - int day of the month to check against
-            - month - int month of the year to check against
+            - input_date - The datetime date to check against
         """
         return (datetime.date.today().day == input_date.day and datetime.date.today().month == input_date.month)
+
+    def jnGetIsDateValid(input_year=2020, input_month=1, input_day=1):
+        """
+        Returns True if the given year, month and day correspond to a valid date; otherwise False
+
+        IN:
+            - input_year - int year of the date to check. Defaults to 2020 for leapyear checks.
+            - input_month - int month of the date to check.
+            - input_day - int day of the date to check.
+        """
+        try:
+            new_date = datetime.datetime(input_year, input_month, input_day)
+            return True
+
+        except:
+            return False
 
     def jn_get_current_hour():
         """
