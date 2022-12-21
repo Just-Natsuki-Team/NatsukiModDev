@@ -57,13 +57,7 @@ label random_music_change:
     n 1nchbg "[track_quip]{w=2}{nw}"
     show natsuki 1nchsmeme
 
-    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
-    $ jnPause(0.5)
-    play audio gift_close
-    show music_player playing zorder jn_events.JN_EVENT_PROP_ZORDER
-    $ jnPause(0.5)
-    hide black with Dissolve(0.5)
-    $ jnPause(0.5)
+    $ jn_custom_music.presentMusicPlayer("playing")
     play audio button_tap_c
     show music_player stopped
     stop music fadeout 2
@@ -98,12 +92,7 @@ label random_music_change:
     n 1uchbgeme "[track_complete]{w=2}{nw}"
     show natsuki 1fcssm
 
-    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
-    $ jnPause(0.5)
-    play audio gift_close
-    $ jnPause(0.25)
-    hide music_player
-    hide black with Dissolve(0.5)
+    $ jn_custom_music.hideMusicPlayer()
 
     return
 
@@ -186,14 +175,7 @@ label random_music_disable:
     n 1uchbg "I'm just messing with you.{w=0.2} Sure thing!{w=0.5}{nw}"
     extend 1nchsm " I'll just put it back to the regular music."
 
-    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
-    $ jnPause(0.5)
-    play audio gift_close
-    show music_player playing zorder jn_events.JN_EVENT_PROP_ZORDER
-    $ jnPause(0.5)
-    hide black with Dissolve(0.5)
-    $ jnPause(0.5)
-
+    $ jn_custom_music.presentMusicPlayer("playing")
     play audio button_tap_c
     show music_player stopped
     stop music fadeout 2
@@ -206,12 +188,7 @@ label random_music_disable:
 
     n 1nwlbg "...And there we go!"
 
-    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
-    $ jnPause(0.5)
-    play audio gift_close
-    $ jnPause(0.25)
-    hide music_player
-    hide black with Dissolve(0.5)
+    $ jn_custom_music.hideMusicPlayer()
 
     $ persistent.jn_random_music_enabled = False
     jump ch30_loop

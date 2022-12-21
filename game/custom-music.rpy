@@ -6,9 +6,20 @@ image music_player playing = "mod_assets/props/music_player/music_player_play.pn
 image music_player stopped = "mod_assets/props/music_player/music_player_stop.png"
 image music_player paused = "mod_assets/props/music_player/music_player_pause.png"
 
+transform music_player_fadein:
+    subpixel True
+    alpha 0
+    ease 0.5 alpha 1
+
+transform music_player_fadeout:
+    subpixel True
+    alpha 1
+    ease 0.5 alpha 0
+
 init python in jn_custom_music:
     import os
     import store
+    import store.jn_events as jn_events
     import store.jn_utils as jn_utils
 
     # Tracks must be placed here for Natsuki to find them
@@ -76,6 +87,36 @@ init python in jn_custom_music:
 
     # Tracks what is currently playing to avoid repetition with random music picks
     _now_playing = None
+
+    def presentMusicPlayer(state="stopped"):
+        """
+        Shows the music player, in the given state, with some sounds and pauses as appropriate.
+
+        IN:
+            - state - str state. Must be an image tag that exists for the player.
+        """
+        renpy.show(
+            name="music_player {0}".format(state),
+            at_list=[store.music_player_fadein],
+            zorder=jn_events.JN_EVENT_PROP_ZORDER
+        )
+        store.jnPause(0.5)
+        renpy.play(filename=store.audio.gift_close, channel="audio")
+        store.jnPause(0.5)
+
+    def hideMusicPlayer():
+        """
+        Hides the music player, with some sounds and pauses as appropriate.
+        """
+        renpy.show(
+            name="music_player",
+            at_list=[store.music_player_fadeout],
+            zorder=jn_events.JN_EVENT_PROP_ZORDER
+        )
+        store.jnPause(0.5)
+        renpy.hide("music_player")
+        renpy.play(filename=store.audio.gift_close, channel="audio")
+        store.jnPause(0.5)
 
 label music_menu:
     $ Natsuki.setInConversation(True)
@@ -163,13 +204,7 @@ label music_menu:
         show natsuki 1fchsm
         $ music_title = "No music"
 
-        show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
-        $ jnPause(0.5)
-        play audio gift_close
-        show music_player playing zorder jn_events.JN_EVENT_PROP_ZORDER
-        $ jnPause(0.5)
-        hide black with Dissolve(0.5)
-        $ jnPause(0.5)
+        $ jn_custom_music.presentMusicPlayer("playing")
         play audio button_tap_c
         show music_player stopped
         stop music fadeout 2
@@ -183,12 +218,7 @@ label music_menu:
             n 1unmaj "Oh{w=0.2} -{w=0.50}{nw}" 
             extend 1kchbgsbl " and I'll stop switching around the music too.{w=2}{nw}"
 
-        show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
-        $ jnPause(0.5)
-        play audio gift_close
-        $ jnPause(0.25)
-        hide music_player
-        hide black with Dissolve(0.5)
+        $ jn_custom_music.hideMusicPlayer()
 
     elif _return == "random":
 
@@ -205,13 +235,7 @@ label music_menu:
         n 1uchbgl "[chosen_answer_quip]"
         show natsuki 1fchsmleme
 
-        show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
-        $ jnPause(0.5)
-        play audio gift_close
-        show music_player playing zorder jn_events.JN_EVENT_PROP_ZORDER
-        $ jnPause(0.5)
-        hide black with Dissolve(0.5)
-        $ jnPause(0.5)
+        $ jn_custom_music.presentMusicPlayer("playing")
         play audio button_tap_c
         show music_player stopped
         stop music fadeout 2
@@ -234,12 +258,7 @@ label music_menu:
         n 1uchbgeme "[chosen_done_quip]{w=2}{nw}"
         show natsuki 1fcssm
 
-        show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
-        $ jnPause(0.5)
-        play audio gift_close
-        $ jnPause(0.25)
-        hide music_player
-        hide black with Dissolve(0.5)
+        $ jn_custom_music.hideMusicPlayer()
 
     elif _return is not None:
         $ music_title = store.jn_utils.escapeRenpySubstitutionString(_return.split('/')[-1])
@@ -247,18 +266,12 @@ label music_menu:
         n 1fwlbg "You got it!{w=2}{nw}"
         show natsuki 1fchsmleme
 
-        show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
-        $ jnPause(0.5)
-        play audio gift_close
-        show music_player playing zorder jn_events.JN_EVENT_PROP_ZORDER
-        $ jnPause(0.5)
-        hide black with Dissolve(0.5)
-        $ jnPause(0.5)
+        $ jn_custom_music.presentMusicPlayer("playing")
         play audio button_tap_c
         show music_player stopped
         stop music fadeout 2
-
         $ jnPause(2)
+
         play audio button_tap_c
         show music_player playing
         $ renpy.play(filename=_return, channel="music", fadein=2)
@@ -267,12 +280,7 @@ label music_menu:
         n 1uchbgeme "[chosen_done_quip]{w=2}{nw}"
         show natsuki 1fcssm
 
-        show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
-        $ jnPause(0.5)
-        play audio gift_close
-        $ jnPause(0.25)
-        hide music_player
-        hide black with Dissolve(0.5)
+        $ jn_custom_music.hideMusicPlayer()
 
     # Pop a cheeky notify with the Nat for visual confirmation :)
     $ jn_custom_music._now_playing = music_title

@@ -3,6 +3,7 @@ default persistent._jn_player_confession_accepted = False
 default persistent._jn_player_confession_day_month = None # Format (day, month)
 
 init 0 python:
+    import codecs
     import datetime
     import store.jn_outfits as jn_outfits
 
@@ -211,14 +212,14 @@ init 0 python:
             ):
                 # Player cannot reach LOVE without having confessed to Natsuki successfully
                 persistent.affinity = jn_affinity.AFF_THRESHOLD_LOVE -1
-                jn_utils.log("Affinity blocked - CN!")
+                jn_utils.log("416666696e69747920626c6f636b6564202d20434e21".decode("hex"))
                 return
 
             if bypass and persistent._affinity_daily_bypasses > 0:
                 # Ignore the daily gain and just award the full affinity
                 persistent.affinity += to_add
                 persistent._affinity_daily_bypasses -= 1
-                jn_utils.log("Affinity+ (B)")
+                jn_utils.log("416666696e6974792b20284229".decode("hex"))
 
             elif persistent.affinity_daily_gain > 0:
                 # Award the full affinity if any cap remains
@@ -227,8 +228,8 @@ init 0 python:
 
                 if persistent.affinity_daily_gain < 0:
                     persistent.affinity_daily_gain = 0
-                
-                jn_utils.log("Affinity+")
+
+                jn_utils.log("416666696e6974792b".decode("hex"))
 
             else:
                 Natsuki.writeCap()
@@ -242,7 +243,7 @@ init 0 python:
                 - base - The base amount to use for the calculation
             """
             persistent.affinity -= base * jn_affinity.get_relationship_length_multiplier()
-            jn_utils.log("Affinity-")
+            jn_utils.log("416666696e6974792d".decode("hex"))
 
         @staticmethod
         def percentageAffinityGain(percentage_gain):
@@ -262,11 +263,11 @@ init 0 python:
             if (not persistent._jn_player_confession_accepted and (persistent.affinity + to_add) > (jn_affinity.AFF_THRESHOLD_LOVE -1)):
                 # Player cannot reach LOVE without having confessed to Natsuki successfully
                 persistent.affinity = jn_affinity.AFF_THRESHOLD_LOVE -1
-                jn_utils.log("Affinity blocked - CN!")
+                jn_utils.log("416666696e69747920626c6f636b6564202d20434e21".decode("hex"))
 
             else:
                 persistent.affinity += to_add
-                jn_utils.log("Affinity+")
+                jn_utils.log("416666696e6974792b".decode("hex"))
 
         @staticmethod
         def percentageAffinityLoss(percentage_loss):
@@ -282,7 +283,7 @@ init 0 python:
             else:
                 persistent.affinity -= abs(persistent.affinity * (float(percentage_loss) / 100))
             
-            jn_utils.log("Affinity-")
+            jn_utils.log("416666696e6974792d".decode("hex"))
 
         @staticmethod
         def checkResetDailyAffinityGain():
@@ -300,11 +301,11 @@ init 0 python:
                 persistent.affinity_daily_gain = 5 * jn_affinity.get_relationship_length_multiplier()
                 persistent.affinity_gain_reset_date = current_date
                 persistent._affinity_daily_bypasses = 5
-                jn_utils.log("Daily affinity cap reset; new cap is: {0}".format(persistent.affinity_daily_gain))
+                jn_utils.log("4461696c7920616666696e697479206361702072657365743b206e6577206361702069733a".decode("hex") + str(persistent.affinity_daily_gain))
 
         @staticmethod
         def writeCap():
-            jn_utils.log("Daily affinity cap reached!")
+            jn_utils.log("4461696c7920616666696e69747920636170207265616368656421".decode("hex"))
             if not datetime.datetime.today().isoformat() in Natsuki.__capped_aff_dates:
                 Natsuki.__capped_aff_dates.append(datetime.datetime.today().isoformat())
 

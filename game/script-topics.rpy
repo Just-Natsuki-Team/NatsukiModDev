@@ -5320,6 +5320,7 @@ init 5 python:
 label talk_custom_music_explanation:
     # Unlock early in case of crash/quit
     $ persistent.jn_custom_music_unlocked = True
+    $ hide_music_player = False
 
     if persistent.jn_custom_music_explanation_given:
         $ persistent.jn_custom_music_explanation_given = True
@@ -5328,6 +5329,7 @@ label talk_custom_music_explanation:
         n 1nnmsm "First things first,{w=0.1} let me just check for the {i}custom_music{/i} folder..."
 
     else:
+        $ hide_music_player = True
         $ persistent.jn_custom_music_explanation_given = True
         n 1unmbg "Alright!{w=0.2} So...{w=0.3} it's actually pretty simple,{w=0.1} [player]."
         n 1nnmsm "There should be a folder called {i}custom_music{/i} somewhere around here..."
@@ -5361,12 +5363,8 @@ label talk_custom_music_explanation:
     n 1usqsg "You better have good taste."
     n 1uchgnelg "Ahaha!"
 
-    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
-    $ jnPause(0.5)
-    play audio gift_close
-    $ jnPause(0.25)
-    hide music_player
-    hide black with Dissolve(0.5)
+    if hide_music_player:
+        $ jn_custom_music.hideMusicPlayer()
 
     return
 
