@@ -8180,9 +8180,22 @@ init 5 python:
     )
 
 label talk_players_birthday_intro:
+    # Already the player's birthday
+    if jnIsPlayerBirthday():
+        n 1tnmpueqm "Huh?{w=0.75}{nw}"
+        extend 1tnmaj " What about your birthday,{w=0.2} [player]?"
+        n 1fsqsm "We're {i}already{/i} celebrating it,{w=0.75}{nw}"
+        extend 1tsqss " aren't we?"
+        n 1fsqsm "Ehehe."
+        n 1fcsbg "Sorry,{w=0.2} [player]..."
+        n 1fchgnlelg "But no double-dipping for you!"
+
+        return
+
     # Player has already discussed their birthday with Natsuki
-    if get_topic("talk_players_birthday_intro").shown_count > 0:
-        n 1tnmbo "Huh?{w=0.2} Your birthday?"
+    elif get_topic("talk_players_birthday_intro").shown_count > 0:
+        n 1tnmpueqm "Huh?{w=0.75}{nw}" 
+        extend 1tnmbo " Your birthday?"
 
         if persistent._jn_player_birthday_day_month is not None:
             n 1fslaj "Wait...{w=1}{nw}"
@@ -8225,6 +8238,7 @@ label talk_players_birthday_intro:
 
                 return
 
+    # Player has never discussed their birthday with Natsuki before
     else:
         n 1nslbo "...Huh."
         n 1tnmbo "You know,{w=0.2} [player].{w=1}{nw}"

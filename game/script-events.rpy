@@ -201,9 +201,6 @@ init python in jn_events:
         player_birthday = 8
         anniversary = 9
         valentines_day = 10
-        test_one = 11
-        test_two = 12
-        test_three = 13
 
         def __str__(self):
             return self.name
@@ -2583,12 +2580,28 @@ label holiday_christmas_day:
     n 1ncsss "Heh.{w=0.75}{nw}"
     extend 1nslss " I'd already gotten {i}real{/i} good at figuring out where the squeaky floorboards were,{w=0.5}{nw}"
     extend 1nslfs " I'll tell you that much."
+    n 1kslsll "I'd just leave for a couple hours."
+    n 1nsrssl "Sure,{w=0.3} it was cold,{w=0.75}{nw}"
+    extend 1ksrsrl " but..."
+    n 1fsrunl "At least seeing all the decorations up on people's houses gave me {i}some{/i} sense of cheer."
     n 1fslsll "Besides.{w=0.3} Not like {i}they{/i} particularly cared where I was..."
     n 1kslsll "..."
     n 1ksqbol "But my friends always did."
-    n 1ncsbol "We'd pre-arrange it all.{w=0.75}{nw}"
-    extend 1unmajl " Every year,{w=1}{nw}"
-    extend 1kslfslsbl " just before the winter break."
+    n 1knmpul "...We'd already arranged something,{w=1}{nw}" 
+    extend 1knmbolsbr " you know."
+    n 1kllbolsbr "For Christmas.{w=1}{nw}"
+    extend 1tnmbolsbr " Didn't I tell you,{w=0.2} [player]?"
+    n 1nllss "I was {i}meant{/i} to meet up with everyone,{w=0.75}{nw}"
+    extend 1nslfs " and we were supposed to head off to Yuri's together."
+    n 1kslss "...Heh.{w=0.75}{nw}"
+    extend 1knmbo " There was so much talk over where we'd all go."
+    n 1klrsssbl "Sayori got so excited over hosting...{w=0.75}{nw}"
+    extend 1nsrsssbl " but it would have been {i}way{/i} too cramped for all of us."
+    n 1nlraj "Though...{w=1}{nw}" 
+    extend 1tnmbo " seriously?"
+    n 1kslbo "..."
+    n 1kcsaj "I...{w=0.75}{nw}"
+    extend 1kslfs " never really paid it much mind."
     n 1ucsaj "Sayori's place,{w=0.75}{nw}"
     extend 1nlraj " Monika's...{w=1}{nw}"
     extend 1ksrfs " It honestly didn't even matter."
