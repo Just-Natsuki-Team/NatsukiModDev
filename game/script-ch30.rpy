@@ -17,17 +17,6 @@ label ch30_autoload:
 
     #FALL THROUGH
 
-label ch30_holiday_check:
-    python:
-        import datetime
-        import store.jn_utils as jn_utils
-
-        jn_utils.log("Holiday check: {0}".format(jn_get_holiday_for_date(datetime.datetime.now().date())))
-
-    #Run holiday checks and push/setup holiday related things here
-
-    #FALL THROUGH
-
 label ch30_visual_setup:
     # Hide everything so we can set up behind the scenes
     show black zorder 99
@@ -43,6 +32,9 @@ label ch30_visual_setup:
 label ch30_init:
     python:
         import random
+        import codecs
+
+        # MIGRATIONS
 
         #Run runtime data migrations here
         jn_data_migrations.runRuntimeMigrations()
@@ -50,6 +42,8 @@ label ch30_init:
         #Now adjust the stored version number
         persistent._jn_version = config.version
         jn_utils.log("Current persisted version post-mig check: {0}".format(store.persistent._jn_version))
+
+        # NATSUKI SETUP
 
         # Assign Natsuki and player nicknames
         if Natsuki.isEnamored(higher=True) and persistent._jn_nicknames_natsuki_allowed and persistent._jn_nicknames_natsuki_current_nickname:
@@ -60,20 +54,53 @@ label ch30_init:
 
         # Check the daily affinity cap and reset if need be
         Natsuki.checkResetDailyAffinityGain()
-
         Natsuki.setInConversation(True)
+        persistent.jn_total_visit_count += 1
+
+        # TIME CHECKS
+
+        tt_in_session = False
+        if ((persistent.jn_last_visited_date - datetime.datetime.now()).total_seconds() / 3600) >= 30:
+            jn_utils.log("545421".decode("hex"))
+            persistent._jn_player_tt_state += 1
+            tt_in_session = True
+
+        elif ((persistent.jn_last_visited_date - datetime.datetime.now()).total_seconds() / 3600) >= 10:
+            persistent._jn_player_tt_instances += 1
+
+            if persistent._jn_player_tt_instances == 3 or persistent._jn_player_tt_instances == 6:
+                jn_utils.log("545421".decode("hex"))
+                tt_in_session = True
+                persistent._jn_player_tt_state += 1
 
         # Determine if the player should get a prolonged leave greeting
-        if (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 2:
+        elif (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 2:
             Natsuki.setQuitApology(jn_apologies.ApologyTypes.prolonged_leave)
 
         # Repeat visits have a small affinity gain
         elif not persistent._jn_player_apology_type_on_quit:
             Natsuki.calculatedAffinityGain()
 
-        # Add to the total visits counter and set the last visit date
-        persistent.jn_total_visit_count += 1
+        # If we have decorations from the last holiday, and the day hasn't changed, then we should put them back up
+        if (
+            len(persistent._jn_holiday_deco_list_on_quit) > 0 
+            and datetime.date.today().day == persistent.jn_last_visited_date.day
+            and not tt_in_session
+        ):
+            for deco in persistent._jn_holiday_deco_list_on_quit:
+                renpy.show(name="deco {0}".format(deco), zorder=jn_events.JN_EVENT_DECO_ZORDER)
+
+        else:
+            persistent._jn_holiday_deco_list_on_quit = []
+
+        # Determine if the year has changed, in which case we reset all holidays so they can be celebrated again
+        if (datetime.datetime.now().year > persistent.jn_last_visited_date.year):
+            jn_events.resetHolidays()
+            jn_utils.log("Holiday completion states reset.")
+
         persistent.jn_last_visited_date = datetime.datetime.now()
+
+        # LOAD OUTFITS, WEARABLES
 
         # Load outfits from disk and corresponding persistent data
         if Natsuki.isHappy(higher=True) and persistent.jn_custom_outfits_unlocked:
@@ -99,14 +126,47 @@ label ch30_init:
 
         jn_utils.log("Outfit set.")
 
-        # Pick a greeting or random event
-        if not jn_topic_in_event_list_pattern("^greeting_"):
+        # LOAD HOLIDAYS, POEMS
+
+        # Load poems from disk and corresponding persistent data
+        jn_poems.JNPoem.loadAll()
+        jn_utils.log("Poem data loaded.")
+
+        # Load holidays from disk and corresponding persistent data
+        jn_events.JNHoliday.loadAll()
+        jn_utils.log("Holiday data loaded.")
+
+        # FLOW HANDLING INTO CH30 - DECIDE WHERE TO ACTUALLY START
+
+        # Handle TT strikes/checks
+        if tt_in_session:
+            if persistent._jn_player_tt_state == 1:
+                push("greeting_tt_warning")
+                renpy.jump("call_next_topic")
+
+            elif persistent._jn_player_tt_state == 2:
+                renpy.jump("greeting_tt_fatal")
+
+            else:
+                renpy.jump("greeting_tt_game_over")
+
+        elif persistent._jn_player_tt_state >= 2:
+            renpy.jump("greeting_tt_game_over")
+
+        # Check for holidays, then queue them up and run them in sequence if we have any
+        available_holidays = jn_events.selectHolidays()
+        if available_holidays:
+            renpy.hide("deco")
+            jn_events.queueHolidays(available_holidays)
+
+        # No holiday, so pick a greeting or random event
+        elif not jn_topic_in_event_list_pattern("^greeting_"):
             if (
                 random.randint(1, 10) == 1
                 and (not persistent.jn_player_admission_type_on_quit and not persistent._jn_player_apology_type_on_quit)
-                and jn_events.select_event()
+                and jn_events.selectEvent()
             ):
-                push(jn_events.select_event())
+                push(jn_events.selectEvent())
                 renpy.call("call_next_topic", False)
 
             else:
@@ -121,13 +181,11 @@ label ch30_init:
     play music audio.just_natsuki_bgm
 
     # Random sticker chance
-    if Natsuki.isAffectionate(higher=True):
-        if (
-            (not persistent._jn_natsuki_chibi_seen and persistent.jn_total_visit_count > 50)
-            or (random.randint(1, 1000) == 1)
-        ):
-            $ import random
-            $ jn_stickers.stickerWindowPeekUp(at_right=random.choice([True, False]))
+    if (
+        Natsuki.isAffectionate(higher=True)
+        and (not persistent._jn_natsuki_chibi_seen and persistent.jn_total_visit_count > 50) or (random.randint(1, 1000) == 1)
+    ):
+        $ jn_stickers.stickerWindowPeekUp(at_right=random.choice([True, False]))
 
     #FALL THROUGH
 
@@ -155,8 +213,9 @@ label ch30_loop:
             LAST_HOUR_CHECK = _now.hour
 
         if LAST_DAY_CHECK is not _now.day:
-            day_check()
+            # Set here as holidays jump
             LAST_DAY_CHECK = _now.day
+            day_check()
 
         Natsuki.setInConversation(False)
 
@@ -265,7 +324,7 @@ label call_next_topic(show_natsuki=True):
 
         #Handle all things which act on topic objects here, since we can't access attributes of Nonetypes
         if topic_obj is not None:
-            #Increment shown count, update last seen
+            #Increment shown count, update last seen - remember this won't work if we're jumping around a bunch (like with setups with many labels)
             topic_obj.shown_count += 1
             topic_obj.last_seen = datetime.datetime.now()
 
@@ -312,6 +371,7 @@ init python:
             Natsuki.isHappy(higher=True)
             and persistent.jn_custom_outfits_unlocked
             and len(jn_outfits._SESSION_NEW_UNLOCKS)
+            and not jn_events.selectHolidays()
         ):
             queue("new_wearables_outfits_unlocked")
 
@@ -423,13 +483,25 @@ init python:
         """
         Runs every day during breaks between topics
         """
-
         # Run through all externally-registered day check actions
         if len(jn_plugins.day_check_calls) > 0:
             for action in jn_plugins.day_check_calls:
                 eval(action.statement)
 
         queue("weather_change")
+
+        # Determine if the year has changed, in which case we reset all holidays so they can be celebrated again
+        if (datetime.datetime.now().year > persistent.jn_last_visited_date.year):
+            jn_events.resetHolidays()
+            jn_utils.log("Holiday completion states reset.")
+
+        persistent.jn_last_visited_date = datetime.datetime.now()
+
+        # Check for holidays, then queue them up and run them in sequence if we have any
+        persistent._jn_holiday_prop_list_on_quit = []
+        available_holidays = jn_events.selectHolidays()
+        if available_holidays:
+            jn_events.queueHolidays(available_holidays, is_day_check=True)
 
         return
 
@@ -470,7 +542,7 @@ label talk_menu:
         "I feel..." if Natsuki.isHappy(higher=True):
             jump player_admissions_start
 
-        "I want to tell you something..." if Natsuki.isHappy(higher=True):
+        "I want to tell you..." if Natsuki.isHappy(higher=True):
             jump player_compliments_start
 
         "I want to say sorry...":
@@ -592,8 +664,12 @@ label extras_menu:
     jump ch30_loop
 
 label try_force_quit:
+    # Goodnight
+    if persistent._jn_player_tt_state >= 2:
+        $ renpy.jump("quit")
+
     # Decision making that overrides the default Ren'Py quit behaviour
-    if (
+    elif (
         jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete
         and jn_farewells.JNForceQuitStates(persistent.jn_player_force_quit_state) == jn_farewells.JNForceQuitStates.not_force_quit
     ):

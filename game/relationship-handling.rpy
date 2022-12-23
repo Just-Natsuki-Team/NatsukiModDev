@@ -1,3 +1,4 @@
+default persistent.affinity = 25.0
 default persistent.affinity_daily_gain = 5
 default persistent.affinity_gain_reset_date = None
 default persistent._affinity_daily_bypasses = 5

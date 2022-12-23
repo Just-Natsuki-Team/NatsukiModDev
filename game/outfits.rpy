@@ -827,6 +827,9 @@ init -1 python in jn_outfits:
             except TypeError:
                 jn_utils.log("Unable to read file {0}; corrupt file or invalid JSON.".format(file_name))
 
+            except ValueError:
+                jn_utils.log("Unable to read file {0}; corrupt file or invalid JSON.".format(file_name))
+
             except:
                 raise
 
@@ -854,6 +857,9 @@ init -1 python in jn_outfits:
                 jn_utils.log("Unable to read file {0}; file could not be found.".format(file_name))
 
             except TypeError:
+                jn_utils.log("Unable to read file {0}; corrupt file or invalid JSON.".format(file_name))
+
+            except ValueError:
                 jn_utils.log("Unable to read file {0}; corrupt file or invalid JSON.".format(file_name))
 
             except:
@@ -956,7 +962,7 @@ init -1 python in jn_outfits:
         temporary_outfit.eyewear = outfit.eyewear
         temporary_outfit.headgear = outfit.headgear
         temporary_outfit.necklace = outfit.necklace
-        store.Natsuki.setOutfit(temporary_outfit)
+        store.Natsuki.setOutfit(temporary_outfit, persist=False)
         return True
 
     def save_custom_outfit(outfit):
@@ -1437,7 +1443,6 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
 
-
     # Official JN headgear
 
     # Hats/hairbands/ears
@@ -1519,6 +1524,18 @@ init -1 python in jn_outfits:
         unlocked=True,
         is_jn_wearable=True
     ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_classic_party_hat",
+        display_name="Classic party hat",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_new_year_headband",
+        display_name="New year headband",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
 
     # Ahoges
     __register_wearable(JNHeadgear(
@@ -1560,6 +1577,12 @@ init -1 python in jn_outfits:
     __register_wearable(JNHeadgear(
         reference_name="jn_headgear_ahoge_swirl",
         display_name="Ahoge (swirl)",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_pompoms",
+        display_name="Pompoms",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1688,9 +1711,9 @@ init -1 python in jn_outfits:
         unlocked=False,
         is_jn_outfit=True,
         clothes=get_wearable("jn_clothes_lolita_christmas_dress"),
-        hairstyle=get_wearable("jn_hair_down"),
-        accessory=get_wearable("jn_accessory_hairband_white"),
-        headgear=get_wearable("jn_headgear_santa_hat")
+        hairstyle=get_wearable("jn_hair_twintails"),
+        accessory=get_wearable("jn_accessory_hairband_red"),
+        headgear=get_wearable("jn_headgear_pompoms")
     ))
     __register_outfit(JNOutfit(
         reference_name="jn_trainer_cosplay",
@@ -2326,6 +2349,21 @@ label new_wearables_outfits_unlocked:
         n 1knmpulsbl "[player]...{w=1.25}{nw}"
         extend 1kllpulsbl " y-{w=0.2}you {i}do{/i} know you don't have to get me stuff just so I like you..."
         n 1knmsllsbr "Right?"
+
+        if jnIsPlayerBirthday():
+            n 1uskgslesh "...Wait!{w=0.75}{nw}"
+            extend 1knmemlsbl " Y-{w=0.2}you shouldn't even be the one {i}giving{/i} things today anyway!"
+            n 1kslemlsbl "...It's {i}weird{/i},{w=0.2} [player]..."
+            n 1kslbolsbl "..."
+
+        elif jnIsChristmasEve():
+            n 1ksrbofsbl "...Especially tonight,{w=0.3} of all nights..."
+
+        elif jnIsChristmasDay():
+            n 1kllajlsbr "A-{w=0.2}and anyway,{w=0.75}{nw}"
+            extend 1kwmpulsbl " I'm still not used to getting stuff on Christmas Day..."
+            n 1kslsllsbl "..."
+
         n 1uskemlesusbr "I-{w=0.2}it's not that I don't appreciate it!{w=0.5}{nw}"
         extend 1fcsemless " Don't get me wrong!{w=1}{nw}"
         extend 1knmpoless " I-{w=0.2}I totally do!"
@@ -2347,7 +2385,23 @@ label new_wearables_outfits_unlocked:
         n 1fslunl "..."
         n 1fcsanl "Uuuuuuuuu-!"
         n 1fpawrledr "Why would you do thaaat?!{w=1}{nw}"
-        extend 1fbkgsless " I-{w=0.2}I didn't even {i}ask{/i} for anything!"
+
+        if jnIsPlayerBirthday():
+            n 1uskwrlesh "E-{w=0.2}especially today!{w=1}{nw}"
+            extend 1kbkwrl " Did you {i}forget{/i} it's your {i}birthday{/i}?!"
+
+        elif jnIsChristmasEve():
+            extend 1fllemf " I-{w=0.2}I mean..."
+            n 1knmgsf "Y-{w=0.2}you couldn't have at {i}least{/i} waited for tomorrow?!{w=1}{nw}"
+            extend 1kbkwrlesd " I didn't even make a list or anythiiiing!"
+
+        elif jnIsChristmasDay():
+            extend 1kllemf " I mean..."
+            n 1kwmunlsbl "You should know I'm not used to getting stuff on Christmas Day..."
+
+        else:
+            extend 1kbkwrless " I-{w=0.2}I didn't even {i}ask{/i} for anything!"
+
         n 1fslunl "..."
         n 1fcseml "Jeez...{w=0.5}{nw}"
         extend 1flrsrf " and now I look like a total {i}jerk{/i} for not even having anything to give back...{w=1}{nw}"
@@ -2363,6 +2417,17 @@ label new_wearables_outfits_unlocked:
         $ player_initial = jn_utils.getPlayerInitial()
         n 1fbkwrf "[player_initial]-{w=0.2}[player]!"
         n 1kbkwrf "What even {i}is{/i} all this?!"
+
+        if jnIsChristmasEve():
+            n 1knmgsf "A-{w=0.2}and come {i}on{/i},{w=0.2} [player]!{w=1}{nw}"
+            extend 1kbkwrfesd " It isn't even Christmas yeeeet!"
+
+        elif jnIsChristmasDay():
+            n 1fcsemfsbl "I-{w=0.2}I mean,{w=0.75}{nw}"
+            extend 1kwmemfsbl " I {i}get{/i} what day it is,{w=0.75}{nw}" 
+            extend 1kslemfsbl " but..."
+            n 1kcspufesisbl "..."
+
         n 1fllemlesssbl "Y-{w=0.2}you better not be trying to win me over with gifts or something!{w=1}{nw}"
         extend 1fcsemlsbr " Yeesh!"
         n 1flremlsbl "I-{w=0.2}I'll have you know I'm a {i}lot{/i} deeper than that!"

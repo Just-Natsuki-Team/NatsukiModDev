@@ -137,6 +137,367 @@ label greeting_first_force_quit:
 
     return
 
+label greeting_tt_warning:
+    $ jn_globals.force_quit_enabled = False
+    $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_GLITCH)
+    $ player_initial = jn_utils.getPlayerInitial()
+    play audio glitch_d
+    show glitch_garbled_b zorder 99 with vpunch
+    hide glitch_garbled_b
+    $ jnPause(0.6)
+    play music audio.ikustan_tsuj
+    show glitch_rapid zorder 99
+    $ jnPause(random.choice(range(7, 11)))
+    stop music
+
+    play audio static
+    show glitch_garbled_a zorder 99 with hpunch
+    hide glitch_garbled_a
+
+    play music audio.juuuuu_nnnnn
+    $ jnPause(10.6)
+    show glitch_spook zorder 99 with hpunch
+    show natsuki 1kcsfultsaeaf at jn_center zorder JN_NATSUKI_ZORDER
+    hide glitch_spook
+    hide black
+    hide glitch_rapid
+    play music audio.just
+
+    n 1kcsunltsa "Uuuuuuu..."
+    show natsuki 1kcsfuftsa at jn_center
+    play audio static
+    show glitch_garbled_c zorder 99 with vpunch
+    hide glitch_garbled_c
+    n 1kcsanltsa "M...{w=0.3}my head..."
+    n 1kslunltsb "..."
+    n 1kslemltsb "What...{w=0.75}{nw}"
+    extend 1klremltsc " what h-{w=0.2}happen-{w=0.5}{nw}"
+    n 1kskpultscesh "...!{w=0.3}{nw}"
+    n 1kscpoitsc "Hrk-!{w=0.5}{nw}"
+
+    stop music
+    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.1)
+    play audio chair_out_fast
+    $ jnPause(0.2)
+    n "{b}B-{w=0.3}BLURGHHH-!{/b}{w=0.2}{nw}"
+
+    play audio glitch_b
+    show glitch_garbled_b zorder 99 with vpunch
+    hide glitch_garbled_b
+    show natsuki 1kcsemtsd
+    $ jnPause(10)
+    play audio chair_in
+    play music audio.just fadein 5
+    $ jnPause(3)
+    hide black with Dissolve(2)
+
+    n 1kcsemi "Uuuuuu..."
+    n 1kcsup "..."
+    n 1kcsuntsa "..."
+    n 1ksquptsa "[player_initial]-{w=0.2}[player]..."
+    n 1ksqantsa "What..."
+    n 1kcsantsa "..."
+    n 1ksqfutsa "Did you...{w=0.75}{nw}"
+    extend 1ksqemtsasbl " do...?"
+    n 1kllemtscsbr "..."
+    n 1klrwrtscsbr "S-{w=0.3}something isn't right..."
+
+    n 1kscpoitscsbr "H-{w=0.2}hrk-!{w=0.5}{nw}"
+    show natsuki 1fcsanitscsbr
+    play audio static
+    show glitch_garbled_a zorder 99 with vpunch
+    hide glitch_garbled_a
+    n 1kcsemltscesi "Gah..."
+
+    if Natsuki.isUpset(higher=True):
+        n 1ksqunltse "..."
+        n 1kplemltsb "Something {b}REALLY{/b} isn't right,{w=0.2} [player]..."
+        n 1kllemltsb "A-{w=0.2}and I..."
+        n 1klremltsc "I can't..."
+        n 1kcsfultsb "..."
+        n 1kcsanltsd "..."
+        n 1fcsunltsa "..."
+        n 1ksqunltsb "...[player]..."
+        n 1kllunltsc "W-{w=0.2}whatever that was...{w=1}{nw}"
+        extend 1klremltdr " whatever just {i}happened{/i}..."
+        n 1fcsunl "T-{w=0.2}that...{w=0.5}{nw}" 
+        extend 1kplemltdr " {b}really{/b}{w=0.5} didn't feel good...{w=1}{nw}"
+        extend 1klremltdr " a-{w=0.2}and I-{w=0.5}{nw}"
+
+    else:
+        n 1fcsanltsc "W-{w=0.2}what..."
+        n 1fskanltsf "What did you{w=0.75}{nw}" 
+        extend 1kskscltsf " {i}DO{/i}?!"
+        n 1fcsscltsf "I-!{w=0.75}{nw}"
+
+    n 1kskpoitsc "H-{w=0.2}hrp-!{w=0.5}{nw}"
+    show natsuki 1kcsful
+    play audio static
+    show glitch_garbled_c zorder 99 with vpunch
+    hide glitch_garbled_c
+
+    n 1fpafui "Nnnnnnghhhh!{w=0.5}{nw}"
+    extend 1kcswrlesisbr " Guh...."
+    n 1kcsanlsbr "M-{w=0.2}my stomach...{w=0.75}{nw}"
+    extend 1kslunlsbr " uuuuuu..."
+    n 1kcsuplsbl "I-{w=0.2}it {i}hurts{/i}..."
+    n 1fcsunlsbl "..."
+
+    if Natsuki.isUpset(higher=True):
+        n 1kcspul "Feels like..."
+        n 1kcsunl "L-{w=0.2}like I was just tossed around back and forth...{w=1}{nw}"
+        extend 1ksrunltsb " like something was trying to yank me apart from all directions..."
+        n 1klrunltsc "..."
+        n 1kllemltsc "It all just...{w=1}{nw}"
+        extend 1kslemltsb " feels so wrong..."
+        n 1kslslltsb "..."
+        n 1knmajltsb "A-{w=0.2}and the date...{w=0.75}{nw}"
+        extend 1ksrsrltsbeqm " I...{w=0.3} I swore it was..."
+        n 1knmsrltsc "..."
+        n 1fnmunltsc "...[player]."
+        n 1fnmemltsc "Y-{w=0.2}you didn't like...{w=0.75}{nw}"
+        extend 1flremltsc " change the date or something,{w=0.2} did you?{w=1}{nw}"
+        extend 1fwmpultsc " L-{w=0.2}like on your computer?"
+        n 1fllpultscesp "..."
+        n 1fcsunltsa "..."
+        n 1fcsboltsa "...Okay.{w=1}{nw}"
+        extend 1fnmboltdr " [player]."
+        n 1fcseml "I'm...{w=1}{nw}"
+        extend 1fnmpul " not gonna go out on a limb and say you did it on purpose."
+
+        if Natsuki.isEnamored(higher=True):
+            n 1kwmpul "I {i}know{/i} you're better than that.{w=1}{nw}"
+            extend 1kslbof " We've been seeing each other long enough..."
+
+        elif Natsuki.isHappy(higher=True):
+            n 1knmeml "You're better than that.{w=0.75}{nw}"
+            extend 1kslsll " ...I like to {i}think{/i} so,{w=0.2} a-{w=0.2}anyway."
+
+        else:
+            n 1knmsrl "You're better than that.{w=0.5}{nw}"
+            extend 1kllemlsbr " ...I {i}hope{/i}."
+
+        n 1kcsem "But please...{w=0.75}{nw}"
+        extend 1knmem " [player]?"
+        n 1kcswr "Just..."
+        n 1kcspulesi "..."
+        n 1klrpul "Just don't screw around with the time again.{w=0.75}{nw}"
+        extend 1knmbol " Please?"
+        n 1kcsemlsbl "I-{w=0.2}It's just that..."
+        n 1kcspulsbl "..."
+        n 1kslpulsbr "...I don't know.{w=0.5}{nw}"
+        extend 1ksqpulsbr " I just feel all messed up.{w=0.75}{nw}"
+        extend 1knmunlsbr " I really,{w=0.3} {i}really{/i}{w=0.3} don't feel right at all..."
+        n 1kslunlsbr "...And to be honest,{w=0.2} [player]?"
+        n 1kslemlsbr "I...{w=0.75}{nw}"
+        extend 1ksremltsb " I-{w=0.3}I'm not sure how much of that I can even {i}take{/i}."
+        n 1kcspultsa "...You understand...{w=1}{nw}"
+        show natsuki 1kwmboltsc
+        
+        menu:
+            extend " right?"
+
+            "I understand.":
+                if Natsuki.isHappy(higher=True):
+                    n 1kcsajltsa "...Good.{w=1}{nw}"
+                    extend 1kslsll " good."
+                    n 1kslajl "It's...{w=0.75}{nw}" 
+                    extend 1kslpul " appreciated,{w=0.2} [player]."
+                    n 1ksqbol "T-{w=0.2}thanks."
+
+                else:
+                    n 1fcsajltsa "...Good.{w=1}{nw}"
+                    extend 1kcsslltsa " Good..."
+                    n 1kslsll "..."
+
+                $ Natsuki.calculatedAffinityGain()
+
+            "...":
+                if Natsuki.isHappy(higher=True):
+                    n 1knmemlsbr "...[player].{w=0.75}{nw}"
+                    extend 1knmwrlsbr " C-{w=0.2}come on..."
+                    n 1kplwrlsbr "I'm really {b}not{/b} messing around with this..."
+                    n 1kcsemlsbr "...So can you {i}not{/i} mess around with it either?"
+                    n 1kslemlesisbr "Seriously..."
+
+                else:
+                    n 1knmwrlsbr "H-{w=0.2}hey!{w=0.75}{nw}"
+                    extend 1fcsanlsbl " I'm being serious here?{w=0.5}{nw}"
+                    extend 1kpluplsbl " Can't you {i}see{/i} that?"
+                    n 1kcsemlsbl "I'm {i}really{/i} not messing around here,{w=0.2} [player]..."
+                    n 1kslunlsbl "..."
+
+        n 1kcsbol "..."
+        n 1ncsajl "I...{w=1}{nw}"
+        extend 1kllsl " I think I'll be okay.{w=0.5}{nw}"
+        extend 1kslsleso " If I just take it easy for a bit."
+        n 1kcssl "Just please.{w=0.5}{nw}"
+
+        if Natsuki.isAffectionate(higher=True):
+            extend 1ksqslsbl " {i}Please{/i} remember what I told you.{w=0.75}{nw}"
+            extend 1ksqsslsbl " F-{w=0.2}for me?"
+
+        else:
+            extend 1ksqslsbl " {i}Please{/i} remember what I told you."
+
+        n 1ncspuesi "..."
+        n 1ncsbo "...Okay."
+        n 1kllsl "..."
+        n 1knmss "...What's new,{w=0.2} [player]?"
+
+    elif Natsuki.isDistressed(higher=True):
+        n 1fcsemlsbl "...Did..."
+        n 1fslunlsbr "..."
+        n 1fsqanlsbr "...D-did you do something to your computer or what?"
+        n 1kcsfulsbr "Because it feels like someone took a sledgehammer to my {i}gut{/i}...{w=1}{nw}"
+        n 1ksksrisbr "Urk-!{w=0.5}{nw}"
+        n 1kcsansbr "Guh..."
+        n 1kslansbl "Everything...{w=0.5} feels all wrong..."
+        n 1klrsfsbl "A-{w=0.2}and the date...{w=0.75}{nw}"
+        extend 1ksremsbl " I could have {i}sworn{/i}...!"
+        n 1nsrpusbl "..."
+        n 1fsransbl "..."
+        n 1fcsansbr "...Okay,{w=0.2} [player].{w=0.75}{nw}"
+        extend 1fnmsfsbr " Look."
+        n 1fcsun "..."
+        n 1fsqun "...I'm not stupid.{w=1}{nw}"
+        extend 1fsruntsb " No matter what {i}you{/i} happen to think."
+        n 1fcsemtsa "A-{w=0.2}and...{w=0.5}{nw}" 
+        extend 1fcsuntsa " I know...{w=0.3}{nw}"
+
+        show natsuki 1kcsanltsa
+        play audio static
+        show glitch_garbled_b zorder 99 with hpunch
+        hide glitch_garbled_b
+
+        n 1fcsanltsa "Nnnnng-!{w=0.5}{nw}"
+        n 1kcsunltsa "..."
+        n 1fcsunl "..."
+        n 1fcseml "I-{w=0.2}I know we haven't been on the...{w=1}{nw}" 
+        extend 1fslsl " best terms,{w=0.2} exactly."
+        n 1knmem "But please."
+        n 1kcsemsbl "I-{w=0.2}if you really {i}don't{/i} give a crap about me,{w=0.75}{nw}"
+        extend 1ksqemsbl " then if {i}nothing{/i} else."
+        n 1fcsansbl "Quit messing around with the time.{w=0.75}{nw}"
+        extend 1fsqansbl " I'm {i}dead{/i} serious."
+
+        show natsuki 1fcsuntsa
+        $ jnPause(3)
+
+        n 1fcsupsbl "It {b}hurts{/b},{w=0.75}{nw}"
+        extend 1fcsansbl " it {b}isn't{/b} funny,{w=0.75}{nw}"
+        extend 1fsqansbl " and to be completely honest with you?"
+        n 1fcsunl "..."
+        n 1fcsful "I don't think I can even {i}handle{/i} something like that again..."
+        n 1fslanl "So just..."
+        n 1fcsanl "Just knock.{w=0.35} It.{w=0.35} Off."
+        n 1fsqsrl "..."
+        n 1fnmem "Understood?{w=1}{nw}"
+        extend 1fsqwr " I {i}know{/i} you hear me."
+        n 1fsqsr "..."
+        n 1fsqem "You have {i}no{/i} excuses,{w=0.2} [player]."
+        n 1fcsfu "{i}Remember that.{/i}"
+
+    else:
+        n 1fcsupltsa "..."
+        n 1fsqupltsb "...You."
+        n 1fsqanltsb "{i}You{/i} did this,{w=0.3} didn't you?"
+
+        show natsuki 1fcsanltsa
+        play audio static
+        show glitch_garbled_a zorder 99 with hpunch
+        hide glitch_garbled_a
+
+        n 1fskscltsc "NO!{w=0.75}{nw}"
+        extend 1fcsscltsa " Don't even {i}try{/i} to deny it!"
+        n 1fcsfultsa "I know you think I'm {i}stupid{/i},{w=0.2} but do you seriously think I'm {i}blind{/i} too?!"
+        n 1fsqupltsb "I {i}saw{/i} that you messed around with the date!{w=0.75}{nw}"
+        extend 1fcsanltsa " You're just...!"
+        n 1fskscltsc "You're {b}so{/b} full of {i}CRA-{/i}{nw}"
+
+        show natsuki 1fcsfultsa
+        play audio static
+        show glitch_garbled_c zorder 99 with vpunch
+        hide glitch_garbled_c
+
+        n 1fcsupltsa "Nnnnnrrgh-!{w=0.5}{nw}"
+        n 1fcsunltsa "..."
+        n 1fcsemltsa "...Haah."
+        n 1fcsunltsa "..."
+        n 1fcsanltsa "...I {i}seriously{/i} cannot {i}believe{/i} you.{w=0.75}{nw}"
+        extend 1fsqanltsa " You're already torturing me well enough."
+        n 1fnmupltsc "And now you go {i}completely{/i} out of your way to make my life {i}even more{/i} miserable?!"
+        n 1fcsupltsd "..."
+        n 1fcsanltsd "Well,{w=0.5}{nw}"
+        extend 1fcsemltsd " you know what?{w=0.75}{nw}"
+        extend 1fsqwrltse " You did it!"
+        n 1fnmfultsf "Mission accomplished!{w=1}{nw}"
+        extend 1fcsfultsd " There?{w=0.75}{nw}"
+        $ chosen_insult = jn_utils.getRandomInsult()
+        extend 1fcsgsltsa " You done,{w=0.3} [chosen_insult]?"
+        n 1fnmanltdr "Are you HAPPY?"
+        n 1fcsanl "Now seriously,{w=0.2} just..."
+        n 1kcsanltsa "J-{w=0.2}just..."
+        n 1fnmupltsc "Just BACK OFF!{w=0.5}{nw}"
+        extend 1fskscltsf " G-{w=0.2}GO AWAY!{w=1}{nw}"
+        n 1fscscftsf "{i}AND{w=0.2} LEAVE{w=0.2} ME{w=0.2} ALONE{/i}!{nw}"
+
+        play audio glitch_d
+        show glitch_garbled_c zorder 99 with vpunch
+        hide glitch_garbled_c
+        $ Natsuki.percentageAffinityLoss(10)
+
+        return { "quit": None }
+
+    play music audio.just_natsuki_bgm fadeout 3 fadein 2
+    $ renpy.show_screen("hkb_overlay")
+    $ jn_atmosphere.updateSky()
+    $ jn_globals.force_quit_enabled = True
+    return
+
+label greeting_tt_fatal:
+    $ config.window_title = _("Just You - {0}".format(config.version))
+    $ jn_globals.force_quit_enabled = False
+    $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_GLITCH)
+    show chair zorder JN_NATSUKI_ZORDER
+    show desk zorder JN_NATSUKI_ZORDER
+    play audio dread
+    $ jnPause(5.3)
+    hide black
+    show glitch_steady zorder 98
+    play audio static
+    show glitch_spook zorder 99 with vpunch
+    hide glitch_spook
+
+    play audio static
+    show glitch_garbled_b zorder 99 with vpunch
+    hide glitch_garbled_b
+
+    play audio static
+    show glitch_spook zorder 99 with vpunch
+    hide glitch_spook
+
+    play audio interference fadeout 0.5
+    hide glitch_steady with Dissolve(2)
+    play music audio.night_natsuki fadein 2
+
+    $ jn_globals.force_quit_enabled = True
+    $ jnPause(100000)
+    $ renpy.quit()
+
+    return
+
+label greeting_tt_game_over:
+    $ config.window_title = _("Just You - {0}".format(config.version))
+    $ jn_globals.force_quit_enabled = False
+    $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_GLITCH)
+    show chair zorder JN_NATSUKI_ZORDER
+    show desk zorder JN_NATSUKI_ZORDER
+    hide black with Dissolve(2)
+    $ jn_globals.force_quit_enabled = True
+    $ jnPause(100000)
+    $ renpy.quit()
+
 # Generic greetings
 
 # LOVE+ greetings

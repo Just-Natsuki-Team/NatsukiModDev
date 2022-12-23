@@ -41,6 +41,26 @@ image sky glitch_fuzzy:
     pause 0.25
     repeat
 
+image glitch_steady:
+    "mod_assets/backgrounds/etc/glitch_fuzzy_a.png"
+    pause 0.15
+    "mod_assets/backgrounds/etc/glitch_fuzzy_b.png"
+    pause 0.15
+    "mod_assets/backgrounds/etc/glitch_fuzzy_c.png"
+    pause 0.15
+    repeat
+
+image glitch_rapid:
+    "mod_assets/backgrounds/etc/class_garbled_a.png"
+    pause 0.1
+    "mod_assets/backgrounds/etc/class_garbled_b.png"
+    pause 0.1
+    "mod_assets/backgrounds/etc/class_garbled_c.png"
+    pause 0.1
+    repeat
+
+image glitch_spook = "mod_assets/backgrounds/etc/class_garbled_d.png"
+
 # Clouds
 image clouds day light:
     "mod_assets/backgrounds/atmosphere/clouds/clouds_day_light.png"
