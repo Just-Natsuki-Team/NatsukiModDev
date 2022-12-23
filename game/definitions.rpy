@@ -1678,7 +1678,7 @@ init -100 python in jn_utils:
             return "th"
 
         else:
-            return ['th', 'st', 'nd', 'rd', 'th'][min(value % 10, 4)]
+            return ["th", "st", "nd", "rd", "th"][min(value % 10, 4)]
 
     def getPlayerInitial():
         """
