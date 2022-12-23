@@ -1674,17 +1674,11 @@ init -100 python in jn_utils:
         """
         Returns the ordinal (trailing characters) for a given numerical value.
         """
-        if value % 10 == 1:
-            return "st"
-
-        elif value % 10 == 2:
-            return "nd"
-
-        elif value % 10 == 3:
-            return "rd"
+        if 11 <= (value % 100) <= 13:
+            return "th"
 
         else:
-            return "th"
+            return ['th', 'st', 'nd', 'rd', 'th'][min(value % 10, 4)]
 
     def getPlayerInitial():
         """
