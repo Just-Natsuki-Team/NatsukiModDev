@@ -22,6 +22,10 @@ init python in greetings:
         elif store.persistent.jn_player_is_first_greet:
             return "greeting_first_time"
 
+        # The player has given notice that they'll be away
+        elif persistent._jn_player_extended_leave_response:
+            return "greeting_leave_return"
+
         kwargs = dict()
 
         # The player either left suddenly, or has been gone a long time
@@ -134,6 +138,42 @@ label greeting_first_force_quit:
         extend 1fsqfutsb " Now."
 
     $ persistent.jn_player_force_quit_state = int(jn_farewells.JNForceQuitStates.previously_force_quit)
+
+    return
+
+label greeting_leave_return:
+    return
+    if jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_days:
+        # Player said they would be gone a few days; excuse up to a week
+        if :
+            n ""
+
+        else:
+            n ""
+
+    elif jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_weeks:
+        # Player said they would be gone a few weeks; excuse up to a month
+        if :
+            n ""
+
+        else:
+            n ""
+
+    elif jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_months:
+        # Player said they would be gone a few months; excuse up to 3 months
+        if :
+            n ""
+
+        else:
+            n ""
+
+    else:
+        # Player gave no return time; excuse up to 6 months
+        if :
+            n ""
+
+        else:
+            n ""
 
     return
 

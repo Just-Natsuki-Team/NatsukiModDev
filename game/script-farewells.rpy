@@ -1,6 +1,7 @@
 default persistent._farewell_database = dict()
 default persistent.jn_player_first_farewell_response = None
 default persistent.jn_player_force_quit_state = 1
+default persistent._jn_player_extended_leave_response = None
 
 init python in jn_farewells:
     from Enum import Enum
@@ -36,6 +37,18 @@ init python in jn_farewells:
         def __int__(self):
             return self.value
 
+    class JNExtendedLeaveResponseTypes(Enum):
+        """
+        Ways in which the player may respond when telling Natsuki they will be gone a while.
+        """
+        a_few_days = 1
+        a_few_weeks = 2
+        a_few_months = 3
+        unknown = 4
+
+        def __int__(self):
+            return self.value
+
     def get_farewell_options():
         """
         Returns the list of all farewell options when saying Goodbye to Natsuki.
@@ -49,7 +62,8 @@ init python in jn_farewells:
             ("I'm going to play something else.", "farewell_option_play"),
             ("I'm going to do some studying.", "farewell_option_studying"),
             ("I'm going to do something else.", "farewell_option_misc_activity"),
-            ("I'm going to do some chores.", "farewell_option_chores")
+            ("I'm going to do some chores.", "farewell_option_chores"),
+            ("I'll be gone a while.", "farewell_extended_leave")
         ]
 
     def select_farewell():
@@ -522,6 +536,128 @@ label farewell_option_chores:
 
         else:
             n 1fchbg "Ehehe.{w=0.2} Later,{w=0.1} [player]!"
+
+    return { "quit": None }
+
+label farewell_option_extended_leave:
+    n  "Eh?{w=0.75}{nw}"
+    extend  " A while?"
+    n  "..."
+    n  "...What do you mean 'a while',{w=0.2} [player]?{w=0.75}{nw}"
+    extend  " Huh?"
+    n  "Are you trying to avoid me?{w=1}{nw}"
+    extend  " Am I {i}not{/i} the best to be around?"
+    n  "I-{w=0.2}is {i}that{/i} it?!"
+    n  "..."
+    n  "..."
+    n  "Oh,{w=0.75}{nw}"
+    extend  " lighten up,{w=0.2} [player]!{w=1}{nw}"
+    extend  " Sheesh!"
+    n  "You should know when I'm pulling your leg by now,{w=0.75}{nw}"
+    extend  " you dork."
+    n  "Well,{w=0.2} anyway.{w=0.75}{nw}"
+    extend  " It's totally fine!"
+    n  "I can {i}easily{/i} handle a few days alone.{w=0.75}{nw}"
+    extend  " No sweat!"
+    n  "..."
+    n  "But...{w=0.75}{nw}"
+    extend  " just so I know...."
+    show natsuki 
+    
+    menu:
+        n  "Did you plan on being away long, or...?"
+
+        "A few days.":
+            $ persistent._jn_player_extended_leave_response = int(jn_farewells.JNExtendedLeaveResponseTypes.a_few_days)
+            n  "Pffff-!{w=0.75}{nw}"
+            extend  " And to think you were probably getting all worked up over it too!{w=0.75}{nw}"
+            extend  " Ehehe."
+            n  "Yeah,{w=0.2} that's no problem at all.{w=1}{nw}"
+            extend  " Now get going already!"
+
+            if Natsuki.isLove(higher=True):
+                n  "See ya later,{w=0.2} [player]!{w=0.75}{nw}"
+                extend  " L-{w=0.2}love you!"
+
+            elif Natsuki.isEnamored(higher=True):
+                n  "See ya later,{w=0.2} [player]!"
+                n  "..."
+
+        "A few weeks:":
+            $ persistent._jn_player_extended_leave_response = int(jn_farewells.JNExtendedLeaveResponseTypes.a_few_weeks)
+            n  "A few weeks,{w=0.75}{nw}"
+            extend  " huh?"
+            n  "..."
+            n  "That's...{w=0.75}{nw}"
+            extend  " a little longer than I hoped."
+            n  "B-{w=0.2}but I'll be fine!{w=0.75}{nw}"
+            extend  " I totally got this.{w=1}{nw}"
+            extend  " Don't you worry!"
+            n  "Ehehe..."
+            n  "L-{w=0.2}later, [player]!"
+            
+            if Natsuki.isLove(higher=True):
+                n  "Love you!"
+
+            elif Natsuki.isEnamored(higher=True):
+                n  "..."
+
+        "A few months":
+            $ persistent._jn_player_extended_leave_response = int(jn_farewells.JNExtendedLeaveResponseTypes.a_few_months)
+            n  "...A few {i}months{/i}?"
+            n  "..."
+            n  "That's...{w=1}{nw}"
+            extend  " a lot longer than I expected."
+            n  "..."
+            n  "I-{w=0.2}I mean,{w=0.75}{nw}"
+            extend  " I'll still be fine!"
+            n  "But..."
+            n  "..."
+            n  "N-{w=0.2}nevermind.{w=0.75}{nw}"
+            extend  " I got this!{w=1}{nw}"
+            extend  " ...I think."
+            n  "T-{w=0.2}take care,{w=0.2} [player]."
+            extend  "'Kay?"
+
+            if Natsuki.isLove(higher=True):
+                n  "...You know how much you mean to me,{w=1}{nw}"
+                extend  " a-{w=0.2}after all..."
+
+            elif Natsuki.isEnamored(higher=True):
+                n  "I'll get mad if you don't."
+                n  "..."
+
+            else:
+                n  "..."
+
+        "I'm not sure.":
+            $ persistent._jn_player_extended_leave_response = int(jn_farewells.JNExtendedLeaveResponseTypes.unknown)
+            n  "...Huh?{w=0.75}{nw}"
+            extend  " You don't even {i}know{/i} when you'll be back?"
+            n  "..."
+            n  "But...{w=0.75}{nw}"
+            extend  " you {i}will{/i} be back...{w=1}{nw}"
+            extend  " right?"
+            n  "..."
+            n  "..."
+            n  "...I'll be fine.{w=1}{nw}"
+            extend  " I guess.{w=1}{nw}"
+            extend  " Just..."
+            n  "..."
+            n  "Don't keep me waiting too long.{w=0.75}{nw}"
+            extend  " 'Kay?"
+
+            if Natsuki.isLove(higher=True):
+                n  "...You know how much you mean to me,{w=0.75}{nw}"
+                extend  " a-{w=0.2}after all..."
+
+            elif Natsuki.isEnamored(higher=True):
+                n  "...Later,{w=0.2} [player]."
+                n  "..."
+
+            else:
+                n  "Later,{w=0.2} [player]."
+                n  "..."
 
     return { "quit": None }
 
