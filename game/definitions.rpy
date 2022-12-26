@@ -921,7 +921,7 @@ init -3 python:
 
     def jnPause(delay, hard=True):
         """
-        Equivalent to jnPause, but we assume a hard pause so players cannot skip.
+        Equivalent to Ren'Py's pause, but we assume a hard pause so players cannot skip.
 
         IN:
             - delay - int/decimal amount of time in seconds to wait for

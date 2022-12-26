@@ -244,3 +244,14 @@ init python in jn_data_migrations:
         jn_utils.save_game()
         jn_utils.log("Migration to 1.0.2 DONE")
         return
+
+    @migration(["1.0.2"], "1.0.3", runtime=MigrationRuntimes.INIT)
+    def to_1_0_3():
+        jn_utils.log("Migration to 1.0.3 START")
+        store.persistent._jn_version = "1.0.3"
+        if store.persistent.affinity >= 10000:
+            store.persistent.affinity = 0
+            jn_utils.log("434845415421".decode("hex"))
+        jn_utils.save_game()
+        jn_utils.log("Migration to 1.0.3 DONE")
+        return
