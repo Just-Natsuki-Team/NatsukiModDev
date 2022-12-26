@@ -495,8 +495,8 @@ label talk_using_computers_healthily:
     n 1ullsf "And you've been here a while already..."
 
     if (jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.work_applications)
-        or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(JNActivities.artwork)
-        or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(JNActivities.coding)):
+        or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.artwork)
+        or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.coding)):
             n 1knmaj "In fact, I've even {i}seen{/i} you working on a lot of stuff myself!"
             n 1kllsl "..."
 
