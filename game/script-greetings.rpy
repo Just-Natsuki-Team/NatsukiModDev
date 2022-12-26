@@ -141,39 +141,97 @@ label greeting_first_force_quit:
 
     return
 
+# Only chosen when the player explicitly says they will be gone a while
 label greeting_leave_return:
-    return
-    if jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_days:
-        # Player said they would be gone a few days; excuse up to a week
-        if :
+    $ time_since_departure = (datetime.datetime.now() - persistent._jn_player_extended_leave_departure_date).total_seconds() 
+
+    if time_since_departure / 2628000 > 3: # Gone more than three months
+        if (
+            jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_days
+            or jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_weeks
+            or jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_months
+        ):
             n ""
 
         else:
             n ""
 
-    elif jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_weeks:
-        # Player said they would be gone a few weeks; excuse up to a month
-        if :
-            n ""
+    elif time_since_departure / 86400 > 30: # Gone more than a month
+        if (
+            jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_days
+            or jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_weeks
+        ):
+            n "...!"
+            $ player_initial = jn_utils.getPlayerInitial()
+            n "[player_initial]-[player]!"
+            extend " What the heck even {i}happened{/i}?!"
+            n "You didn't say you were gonna disappear on me for {i}that{/i} long!"
+            n "I was starting to get worried,"
+            extend " you jerk..."
+            n "..."
+            n "..."
+            n "...Look."
+            n "I'm..."
+            extend " glad..."
+            extend " you're back, [player]."
+            n "Just..."
+            n "...Be honest."
+            extend " Okay?"
+            n "I don't care if you gotta go for longer than usual."
+            n "...I just wanna know what to {i}expect{/i}."
+            extend " You know?"
+            n "..."
+            n "...And welcome back too,"
+            extend " I guess."
 
         else:
-            n ""
+            n "Well, well, well."
+            extend " Look who the {i}Nat{/i} dragged in!"
+            n "Ehehe."
+            n "It's..."
+            extend " been a while,"
+            extend " huh?"
+            n "..."
+            n "But..."
+            n "I'm..."
+            extend " glad you're back, [player]."
+            n "Welcome!"
 
-    elif jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_months:
-        # Player said they would be gone a few months; excuse up to 3 months
-        if :
-            n ""
+    if time_since_departure / 86400 > 7: # Gone more than a week
+        if jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_days:
+            n "..."
+            n "[player]."
+            extend " What do you call this?"
+            n "You said you'd only be gone a few daaaays!"
+            n "..."
+            n "..."
+            n "I..."
+            extend " guess I'll let you off."
+            extend " This time."
+            n "Just..."
+            extend " try to plan a little better,"
+            extend " if you can."
+            n "It's really not {i}that{/i} much to ask..."
+            extend " right?"
 
         else:
-            n ""
+            n "Oho?"
+            extend " Well look who just decided to show up!"
+            n "Ehehe."
+            n "Welcome back, [player]!"
 
-    else:
-        # Player gave no return time; excuse up to 6 months
-        if :
-            n ""
+    else: # Gone less than a week
+        n "Well,"
+        extend " look who we have here."
+        n "...And you said you'd be gone for a while."
+        n "..."
+        n "Ehehe."
+        extend " Relax!"
+        n "I'm just messing with you."
+        n "Welcome back, [player]!"
 
-        else:
-            n ""
+    $ persistent._jn_player_extended_leave_response = None
+    $ persistent._jn_player_extended_leave_departure_date = None
 
     return
 

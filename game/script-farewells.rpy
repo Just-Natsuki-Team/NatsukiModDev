@@ -1,7 +1,10 @@
 default persistent._farewell_database = dict()
+
 default persistent.jn_player_first_farewell_response = None
 default persistent.jn_player_force_quit_state = 1
+
 default persistent._jn_player_extended_leave_response = None
+default persistent._jn_player_extended_leave_departure_date = None
 
 init python in jn_farewells:
     from Enum import Enum
@@ -659,6 +662,8 @@ label farewell_option_extended_leave:
                 n  "Later,{w=0.2} [player]."
                 n  "..."
 
+    $ import datetime
+    $ persistent._jn_player_extended_leave_departure_date = datetime.datetime.now()
     return { "quit": None }
 
 # Generic farewells
