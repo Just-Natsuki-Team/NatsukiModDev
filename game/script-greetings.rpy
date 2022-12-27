@@ -151,84 +151,176 @@ label greeting_leave_return:
             or jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_weeks
             or jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_months
         ):
-            n ""
+            n  "..."
+            n  "...!"
+            $ player_initial = jn_utils.getPlayerInitial()
+            n  "[player_initial]-[player]!{w=0.75}{nw}"
+            extend  " You're..."
+            n  "Y-{w=0.2}you're..."
+            n  "Nnnnnnn-!"
+            n  "Where {i}were{/i} you?!{w=1}{nw}"
+            extend  " Were you trying to {i}disappear{/i} or something?"
+            n  "Y-{w=0.2}you had me worried {i}sick{/i}!{w=0.75}{nw}"
+            extend  " A-{w=0.2}and I thought...!"
+            n  "I-{w=0.2}I thought that..."
+            n  "..."
+            n  "..."
+            n  "That you'd just...{w=0.75}{nw}"
+            extend  " forgotten{w=0.75}{nw}"
+            extend  " about me..."
+            n  "..."
+            n  "..."
+            n  "...Look.{w=1}{nw}"
+            extend  " I'm..."
+            n  "..."
+            n  "...Really glad you're back."
+            n  "..."
+            n  "Really!{w=0.75}{nw}"
+            extend  " I am..."
+            n  "But you can't just completely flake out on me like that, [player]..."
+            n  "I-{w=0.2}I know you gave me {i}some{/i} notice,{w=0.75}{nw}"
+            extend  " but do you have any idea how {i}scary{/i} it gets?"
+            n  "When someone says they'll come back,{w=0.75}{nw}"
+            extend  " and they just...{w=1.25}{nw}"
+            extend  " don't?"
+            n  "Days,{w=0.75}{nw}"
+            extend  " weeks,{w=0.75}{nw}"
+            extend  " {i}months{/i}..."
+            n  "...And just nothing?"
+            n  "..."
+            n  "...Whatever.{w=1}{nw}"
+            extend  " It's fine.{w=0.75}{nw}"
+            extend  " I..." 
+            n "..." 
+            n  "I just wanna forget about it now.{w=1}{nw}"
+            extend  " But please, [player]."
+            n  "If you don't know {i}when{/i} you'll be back..."
+            n  "..."
+            n  "...Just tell me.{w=0.75}{nw}" 
+            extend " Upfront."
+            n  "You know I won't get mad..."
+            n  "...Right?"
 
         else:
-            n ""
+            n  "...!"
+            n  "[player]!{w=0.75}{nw}"
+            extend  " [player]{w=0.2} [player]{w=0.2} [player]{w=0.2} [player]{w=0.2} [player]!"
+            n  "I-{w=0.2}I mean,{w=0.75}{nw}"
+            extend  " it's about {i}time{/i} you got your butt back here!{w=1}{nw}"
+            extend  " Jeez..."
+            n  "It's rude to keep a girl waiting,{w=0.75}{nw}"
+            extend  " you know..."
+            n  "..."
+            n  "But...{w=0.75}{nw}"
+            extend  " seriously,{w=0.2} [player]?"
+
+            show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+            play audio clothing_ruffle
+            $ jnPause(3.5)
+
+            if Natsuki.isLove(higher=True):
+                show natsuki 1fsldvlsbl at jn_center zorder JN_NATSUKI_ZORDER
+                play audio kiss
+                $ jnPause(1.5)
+                hide black with Dissolve(1.25)
+
+                n  "...I really did miss you."
+                n  "Heh."
+                n  "Welcome back."
+
+            else:
+                show natsuki 1nsldvlsbl at jn_center zorder JN_NATSUKI_ZORDER
+                $ jnPause(1.5)
+                hide black with Dissolve(1.25)
+
+                n  "...W-{w=0.2}welcome back.{w=1}{nw}"
+                extend  " Ehehe."
 
     elif time_since_departure / 86400 > 30: # Gone more than a month
         if (
             jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_days
             or jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_weeks
         ):
-            n "...!"
+            n  "...!"
             $ player_initial = jn_utils.getPlayerInitial()
-            n "[player_initial]-[player]!"
-            extend " What the heck even {i}happened{/i}?!"
-            n "You didn't say you were gonna disappear on me for {i}that{/i} long!"
-            n "I was starting to get worried,"
-            extend " you jerk..."
-            n "..."
-            n "..."
-            n "...Look."
-            n "I'm..."
-            extend " glad..."
-            extend " you're back, [player]."
-            n "Just..."
-            n "...Be honest."
-            extend " Okay?"
-            n "I don't care if you gotta go for longer than usual."
-            n "...I just wanna know what to {i}expect{/i}."
-            extend " You know?"
-            n "..."
-            n "...And welcome back too,"
-            extend " I guess."
+            n  "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
+            extend  " What the heck even {i}happened{/i}?!"
+            n  "You didn't say you were gonna disappear on me for {i}that{/i} long!"
+            n  "I was starting to get worried,{w=0.75}{nw}"
+            extend  " you jerk..."
+            n  "..."
+            n  "..."
+            n  "...Look."
+            n  "I'm...{w=1}{nw}"
+            extend  " glad...{w=1}{nw}"
+            extend  " you're back,{w=0.2} [player]."
+            n  "Just..."
+            n  "...Be honest.{w=0.75}{nw}"
+            extend  " Okay?"
+            n  "I don't care if you gotta go for longer than usual."
+            n  "...I just wanna know what to {i}expect{/i}.{w=0.75}{nw}"
+            extend  " You know?"
+            n  "..."
+            n  "...And welcome back too,{w=0.75}{nw}"
+            extend  " I guess."
 
         else:
-            n "Well, well, well."
-            extend " Look who the {i}Nat{/i} dragged in!"
-            n "Ehehe."
-            n "It's..."
-            extend " been a while,"
-            extend " huh?"
-            n "..."
-            n "But..."
-            n "I'm..."
-            extend " glad you're back, [player]."
-            n "Welcome!"
+            n  "Well,{w=0.2} well,{w=0.2} well.{w=1}{nw}"
+            extend  " Look who the {i}Nat{/i} dragged in!"
+            n  "Ehehe."
+            n  "It's...{w=1}{nw}"
+            extend  " been a while,{w=0.75}{nw}"
+            extend  " huh?"
+            n  "..."
+            n  "But..."
+            n  "I'm...{w=0.75}{nw}"
+            extend  " glad you're back, [player]."
+            n  "Welcome!"
 
     if time_since_departure / 86400 > 7: # Gone more than a week
         if jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_days:
-            n "..."
-            n "[player]."
-            extend " What do you call this?"
-            n "You said you'd only be gone a few daaaays!"
-            n "..."
-            n "..."
-            n "I..."
-            extend " guess I'll let you off."
-            extend " This time."
-            n "Just..."
-            extend " try to plan a little better,"
-            extend " if you can."
-            n "It's really not {i}that{/i} much to ask..."
-            extend " right?"
+            n  "..."
+            n  "[player].{w=0.75}{nw}"
+            extend  " What do you call this?"
+            n  "You said you'd only be gone a few daaaays!"
+            n  "..."
+            n  "..."
+            n  "I...{w=1}{nw}"
+            extend  " guess I'll let you off.{w=0.75}{nw}"
+            extend  " This time."
+            n  "Just...{w=0.75}{nw}"
+            extend  " try to plan a little better,{w=0.75}{nw}"
+            extend  " if you can."
+            n  "It's really not {i}that{/i} much to ask...{w=1}{nw}"
+            extend  " right?"
 
         else:
-            n "Oho?"
-            extend " Well look who just decided to show up!"
-            n "Ehehe."
-            n "Welcome back, [player]!"
+            n  "Oho?{w=0.75}{nw}"
+            extend  " Well look who just decided to show up!"
+            n  "Ehehe."
+
+            if Natsuki.isLove(higher=True):
+                $ chosen_endearment = jn_utils.getRandomEndearment()
+                n  "Welcome back,{w=0.2} [chosen_endearment]!"
+
+            else:
+                n  "Welcome back,{w=0.2} [player]!"
 
     else: # Gone less than a week
-        n "Well,"
-        extend " look who we have here."
-        n "...And you said you'd be gone for a while."
-        n "..."
-        n "Ehehe."
-        extend " Relax!"
-        n "I'm just messing with you."
-        n "Welcome back, [player]!"
+        n  "Well,{w=0.75}{nw}"
+        extend  " look who we have here."
+        n  "...And you said you'd be gone for a while."
+        n  "..."
+        n  "Ehehe.{w=0.75}{nw}"
+        extend  " Relax!"
+        n  "I'm just messing with you."
+
+        if Natsuki.isLove(higher=True):
+            $ chosen_endearment = jn_utils.getRandomEndearment()
+            n  "Welcome back,{w=0.2} [chosen_endearment]!"
+
+        else:
+            n  "Welcome back,{w=0.2} [player]!"
 
     $ persistent._jn_player_extended_leave_response = None
     $ persistent._jn_player_extended_leave_departure_date = None

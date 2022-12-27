@@ -66,7 +66,7 @@ init python in jn_farewells:
             ("I'm going to do some studying.", "farewell_option_studying"),
             ("I'm going to do something else.", "farewell_option_misc_activity"),
             ("I'm going to do some chores.", "farewell_option_chores"),
-            ("I'll be gone a while.", "farewell_extended_leave")
+            ("I'm going away for a while.", "farewell_extended_leave")
         ]
 
     def select_farewell():
