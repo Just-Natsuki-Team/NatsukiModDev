@@ -1750,3 +1750,8 @@ style notify_frame:
 
 style notify_text:
     size gui.notify_text_size
+
+screen problem(message):
+    zorder 100
+    text "[message]" size 30 xalign 0.5 ypos 40 text_align 0.5 xysize (None, None) color "#FF0000"
+    

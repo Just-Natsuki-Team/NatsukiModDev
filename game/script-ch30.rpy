@@ -43,6 +43,9 @@ label ch30_init:
         persistent._jn_version = config.version
         jn_utils.log("Current persisted version post-mig check: {0}".format(store.persistent._jn_version))
 
+        if store.persistent._jn_pic:
+            renpy.jump("greeting_pic")
+
         # NATSUKI SETUP
 
         # Assign Natsuki and player nicknames
@@ -668,7 +671,7 @@ label extras_menu:
 
 label try_force_quit:
     # Goodnight
-    if persistent._jn_player_tt_state >= 2:
+    if persistent._jn_player_tt_state >= 2 or persistent._jn_pic:
         $ renpy.jump("quit")
 
     # Decision making that overrides the default Ren'Py quit behaviour

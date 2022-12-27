@@ -23,7 +23,7 @@ init python in greetings:
             return "greeting_first_time"
 
         # The player has given notice that they'll be away
-        elif persistent._jn_player_extended_leave_response:
+        elif store.persistent._jn_player_extended_leave_response:
             return "greeting_leave_return"
 
         kwargs = dict()
@@ -684,6 +684,13 @@ label greeting_tt_game_over:
     show chair zorder JN_NATSUKI_ZORDER
     show desk zorder JN_NATSUKI_ZORDER
     hide black with Dissolve(2)
+    $ jn_globals.force_quit_enabled = True
+    $ jnPause(100000)
+    $ renpy.quit()
+
+label greeting_pic:
+    $ import codecs
+    show screen problem("412070726f626c656d20686173206f636375727265642e20506c6561736520636f6e74616374204a4e2073746166662e".decode("hex"))
     $ jn_globals.force_quit_enabled = True
     $ jnPause(100000)
     $ renpy.quit()
