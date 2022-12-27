@@ -1,3 +1,4 @@
+# All topics list
 default persistent._topic_database = dict()
 
 # Generic
