@@ -78,7 +78,7 @@ label ch30_init:
             Natsuki.setQuitApology(jn_apologies.ApologyTypes.prolonged_leave)
 
         # Repeat visits have a small affinity gain
-        elif not persistent._jn_player_apology_type_on_quit:
+        elif not persistent._jn_player_apology_type_on_quit and datetime.date.today().day != persistent.jn_last_visited_date.day:
             Natsuki.calculatedAffinityGain()
 
         # If we have decorations from the last holiday, and the day hasn't changed, then we should put them back up
