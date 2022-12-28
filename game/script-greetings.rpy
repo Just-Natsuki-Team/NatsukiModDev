@@ -295,32 +295,32 @@ label greeting_leave_return:
             extend  " right?"
 
         else:
-            n  "Oho?{w=0.75}{nw}"
-            extend  " Well look who just decided to show up!"
-            n  "Ehehe."
+            n 1fsqct "Oho?{w=0.75}{nw}"
+            extend 1fsqbg " Well look who just decided to show up!"
+            n 1fsqsm "Ehehe."
 
             if Natsuki.isLove(higher=True):
                 $ chosen_endearment = jn_utils.getRandomEndearment()
-                n  "Welcome back,{w=0.2} [chosen_endearment]!"
+                n 1uchsml "Welcome back,{w=0.2} [chosen_endearment]!"
 
             else:
-                n  "Welcome back,{w=0.2} [player]!"
+                n 1uchbg "Welcome back,{w=0.2} [player]!"
 
     else: # Gone less than a week
-        n  "Well,{w=0.75}{nw}"
-        extend  " look who we have here."
-        n  "...And you said you'd be gone for a while."
-        n  "..."
-        n  "Ehehe.{w=0.75}{nw}"
-        extend  " Relax!"
-        n  "I'm just messing with you."
+        n 1fsqss "Well,{w=0.75}{nw}"
+        extend 1fsqsm " look who we have here."
+        n 1tsqct "...And you said you'd be gone for a while."
+        n 1usqsm "..."
+        n 1fchsm "Ehehe.{w=0.75}{nw}"
+        extend 1fchbg " Relax!"
+        n 1fwlbl "I'm just messing with you."
 
         if Natsuki.isLove(higher=True):
             $ chosen_endearment = jn_utils.getRandomEndearment()
-            n  "Welcome back,{w=0.2} [chosen_endearment]!"
+            n 1uchsml "Welcome back,{w=0.2} [chosen_endearment]!"
 
         else:
-            n  "Welcome back,{w=0.2} [player]!"
+            n 1uchbg "Welcome back,{w=0.2} [player]!"
 
     $ persistent._jn_player_extended_leave_response = None
     $ persistent._jn_player_extended_leave_departure_date = None
