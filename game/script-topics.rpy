@@ -8829,22 +8829,21 @@ label talk_learning_languages:
         n 1fcsaj "Ahem!"
         n 1fcssm "..."
 
-        # TODO: German translation here
+        # Natsuki struggles with German
         n 1uchgn "Moin moin,{w=0.2} [player]!{w=0.75}{nw}"
-        extend 1usqsm " What's new?{w=0.5}{nw}"
+        extend 1usqsm " Was liegt an?{w=0.5}{nw}"
         extend 1fchss " Ehehe."
-        n 1fcsbs "Betcha didn't know I don't just speak English,{w=0.2} huh?"
-        n 1tsqbg "There's nothing more pro than being a..."
-        n 1fsrbglsbl "A-a..."
+        n 1fcsbs "Ich wette du wusstest nicht, dass ich nicht {i}nur{/i} Englisch tue,{w=0.2} huh?"
+        n 1tsqbg "Du solltest auch versuchen mehr Sprachen...{w=0.5} f-fluessig..."
+        n 1fsrbglsbl "f-fliessend...?"
         n 1fsrunlesdsbr "..."
-        n 1tsremlesssbr "Many-talker...?{w=0.5}{nw}"
-        extend 1fcsbglesssbr " L-lots of tongues!"
-        n 1flrbglsbr "A-and as they say -{w=0.3}{nw}"
-        extend 1fcsbglsbl " those who..."
-        n 1fllunlesssbl "W-who...!{w=0.5}{nw}"
-        extend 1klremfesssbl " L-languages...!{w=0.75}{nw}" 
-        extend 1kllemfesssbl " Know them!"
-        # Translation end
+        n 1tsremlesssbr "zu reden...?{w=0.5}{nw}"
+        extend 1fcsbglesssbr " Sprachfluss!"
+        n 1flrbglsbr "O-oder wie man auch sagt -{w=0.3}{nw}"
+        extend 1fcsbglsbl " wer rasst..."
+        n 1fllunlesssbl "r-rastet...!{w=0.5}{nw}"
+        extend 1klremfesssbl " Hat Rosen...?{w=0.75}{nw}" 
+        extend 1kllemfesssbl " Mit Rost!"
 
         n 1fcsunfesssbr "..."
         n 1fcsanfesssbr "Nnnnnn-!"
@@ -8870,7 +8869,7 @@ label talk_learning_languages:
     extend 1fnmpu " but there was never enough time to actually {i}practice{/i}!"
     n 1fllem "We'd get paired up with partners and practice pronunciations and such."
     n 1unmem "But when neither of you actually {i}know{/i} the language,{w=0.5}{nw}"
-    extend 1fcswr "how're you meant to know when someone's doing something wrong?"
+    extend 1fcswr " how're you meant to know when someone's doing something wrong?"
     n 1fllaj "Then with all the other studies flying around,{w=0.5}{nw}"
     extend 1fsrsr " it's not like we had the spare time to try it outside of school either."
     n 1tsqpu "Plus,{w=0.2} with how complex all the rules are and how much repetition you need,{w=0.5}{nw}"
@@ -8960,7 +8959,7 @@ label talk_learning_languages:
             if persistent._jn_player_is_multilingual:
                 n 1tsqaj "...Huh?"
                 n 1uskemlesh "W-{w=0.2}wait a second!{w=0.5}{nw}"
-                extend 1fsqem "You already {i}said{/i} you knew another language!"
+                extend 1fsqem " You already {i}said{/i} you knew another language!"
                 n 1fslpol "I wasn't born {i}yesterday{/i},{w=0.2} you jerk..."
 
             else:
@@ -8977,9 +8976,7 @@ label talk_learning_languages:
     extend 1tnmss " I think I've gone on long enough at this point,{w=0.2} huh?"
     n 1tlrss "And,{w=0.2} well...{w=0.75}{nw}"
     extend 1fsqbg " as they say in {i}Deutschland{/i}..."
-    # Translate
-    n 1ncsss "Everything has an end.{w=0.5}{nw}" 
-    extend 1uchgnlelg " Only the sausage has two!"
-    # Translate 
+    n 1ncsss "Alles hat ein Ende,{w=0.5}{nw}" 
+    extend 1uchgnlelg " nur die Wurst hat zwei!"
     
     return
