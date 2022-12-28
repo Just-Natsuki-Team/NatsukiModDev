@@ -66,7 +66,7 @@ init python in jn_farewells:
             ("I'm going to do some studying.", "farewell_option_studying"),
             ("I'm going to do something else.", "farewell_option_misc_activity"),
             ("I'm going to do some chores.", "farewell_option_chores"),
-            ("I'm going away for a while.", "farewell_extended_leave")
+            ("I'm going away for a while.", "farewell_option_extended_leave")
         ]
 
     def select_farewell():
@@ -553,7 +553,7 @@ label farewell_option_extended_leave:
     n 1fbkwrl "I-{w=0.2}is {i}that{/i} it?!"
     n 1fsqpol "..."
     n 1fsqsml "..."
-    n 1fcsaj "Oh,{w=0.75}{nw}"
+    n 1fcsaj "Oh,{w=0.5}{nw}"
     extend 1fchgn " lighten up,{w=0.2} [player]!{w=1}{nw}"
     extend 1ullss " Sheesh!"
     n 1fchbg "You should know when I'm pulling your leg by now,{w=0.75}{nw}"
@@ -580,14 +580,13 @@ label farewell_option_extended_leave:
 
             if Natsuki.isLove(higher=True):
                 n 1kchbgl "See ya later,{w=0.2} [player]!{w=0.75}{nw}"
-                extend 1kslsslsbl " L-{w=0.2}love you!"
-                n 1kslbolsbl "..."
+                extend 1fchsmleafsbl " L-{w=0.2}love you!"
 
             elif Natsuki.isEnamored(higher=True):
                 n 1fchbg "See ya later,{w=0.2} [player]!"
                 n 1kslsssbl "..."
 
-        "A few weeks:":
+        "A few weeks.":
             $ persistent._jn_player_extended_leave_response = int(jn_farewells.JNExtendedLeaveResponseTypes.a_few_weeks)
             n 1tnmpu "A few weeks,{w=0.75}{nw}"
             extend 1tnmbo " huh?"
@@ -607,7 +606,7 @@ label farewell_option_extended_leave:
             elif Natsuki.isEnamored(higher=True):
                 n 1kcspuesi "..."
 
-        "A few months":
+        "A few months.":
             $ persistent._jn_player_extended_leave_response = int(jn_farewells.JNExtendedLeaveResponseTypes.a_few_months)
             n 1knmpu "...A few {i}months{/i}?"
             n 1kslpu "..."
