@@ -239,7 +239,7 @@ init python in jn_data_migrations:
     def to_1_0_2():
         jn_utils.log("Migration to 1.0.2 START")
         store.persistent._jn_version = "1.0.2"
-        if store.persistent.affinity >= 10000:
+        if store.persistent.affinity >= 5000:
             store.persistent.affinity = 0
             store.persistent._jn_pic = True
             jn_utils.log("434346".decode("hex"))
@@ -251,9 +251,9 @@ init python in jn_data_migrations:
     def to_1_0_3():
         jn_utils.log("Migration to 1.0.3 START")
         store.persistent._jn_version = "1.0.3"
-        if store.persistent.affinity >= 10000:
+        if store.persistent.affinity >= 5000:
             store.persistent.affinity = 0
-            jn_utils.log("434845415421".decode("hex"))
+            jn_utils.log("434346".decode("hex"))
         jn_utils.save_game()
         jn_utils.log("Migration to 1.0.3 DONE")
         return
