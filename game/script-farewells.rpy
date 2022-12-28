@@ -568,102 +568,105 @@ label farewell_option_extended_leave:
     show natsuki 1knmbo
     
     menu:
-        n  "Did you plan on being away long, or...?"
+        n "Did you plan on being away long, or...?"
 
         "A few days.":
             $ persistent._jn_player_extended_leave_response = int(jn_farewells.JNExtendedLeaveResponseTypes.a_few_days)
-            n  "Pffff-!{w=0.75}{nw}"
-            extend  " And to think you were probably getting all worked up over it too!{w=0.75}{nw}"
-            extend  " Ehehe."
-            n  "Yeah,{w=0.2} that's no problem at all.{w=1}{nw}"
-            extend  " Now get going already!"
+            n 1kchdvesi "Pffff-!{w=0.75}{nw}"
+            extend 1tsqbg " And to think you were probably getting all worked up over it too!{w=0.75}{nw}"
+            extend 1fcssm " Ehehe."
+            n 1fcsbg "Yeah,{w=0.2} that's no problem at all.{w=1}{nw}"
+            extend 1fchgn " Now get going already!"
 
             if Natsuki.isLove(higher=True):
-                n  "See ya later,{w=0.2} [player]!{w=0.75}{nw}"
-                extend  " L-{w=0.2}love you!"
+                n 1kchbgl "See ya later,{w=0.2} [player]!{w=0.75}{nw}"
+                extend 1kslsslsbl " L-{w=0.2}love you!"
+                n 1kslbolsbl "..."
 
             elif Natsuki.isEnamored(higher=True):
-                n  "See ya later,{w=0.2} [player]!"
-                n  "..."
+                n 1fchbg "See ya later,{w=0.2} [player]!"
+                n 1kslsssbl "..."
 
         "A few weeks:":
             $ persistent._jn_player_extended_leave_response = int(jn_farewells.JNExtendedLeaveResponseTypes.a_few_weeks)
-            n  "A few weeks,{w=0.75}{nw}"
-            extend  " huh?"
-            n  "..."
-            n  "That's...{w=0.75}{nw}"
-            extend  " a little longer than I hoped."
-            n  "B-{w=0.2}but I'll be fine!{w=0.75}{nw}"
-            extend  " I totally got this.{w=1}{nw}"
-            extend  " Don't you worry!"
-            n  "Ehehe..."
-            n  "L-{w=0.2}later, [player]!"
+            n 1tnmpu "A few weeks,{w=0.75}{nw}"
+            extend 1tnmbo " huh?"
+            n 1kllbo "..."
+            n 1kllss "That's...{w=0.75}{nw}"
+            extend 1nslsl " a little longer than I hoped."
+            n 1fcsgslsbl "B-{w=0.2}but I'll be fine!{w=0.75}{nw}"
+            extend 1fcspolsbl " I've {i}totally{/i} got this.{w=1}{nw}"
+            extend 1fcsbglsbl " Don't you worry!"
+            n 1nslsslsbl "Ehehe..."
+            n 1fchbgsbl "L-{w=0.2}later, [player]!"
             
             if Natsuki.isLove(higher=True):
-                n  "Love you!"
+                n 1kchsmlsbl "Love you!"
+                n 1ksrsll "..."
 
             elif Natsuki.isEnamored(higher=True):
-                n  "..."
+                n 1kcspuesi "..."
 
         "A few months":
             $ persistent._jn_player_extended_leave_response = int(jn_farewells.JNExtendedLeaveResponseTypes.a_few_months)
-            n  "...A few {i}months{/i}?"
-            n  "..."
-            n  "That's...{w=1}{nw}"
-            extend  " a lot longer than I expected."
-            n  "..."
-            n  "I-{w=0.2}I mean,{w=0.75}{nw}"
-            extend  " I'll still be fine!"
-            n  "But..."
-            n  "..."
-            n  "N-{w=0.2}nevermind.{w=0.75}{nw}"
-            extend  " I got this!{w=1}{nw}"
-            extend  " ...I think."
-            n  "T-{w=0.2}take care,{w=0.2} [player]."
-            extend  "'Kay?"
+            n 1knmpu "...A few {i}months{/i}?"
+            n 1kslpu "..."
+            n 1kslaj "That's...{w=1}{nw}"
+            extend 1klrsl " a lot longer than I expected."
+            n 1fcsca "..."
+            n 1fcsajlsbl "I-{w=0.2}I mean,{w=0.75}{nw}"
+            extend 1fcsgslsbl " I'll be totally fine!"
+            n 1kslbolsbl "But..."
+            n 1ncsbolesi "..."
+            n 1nsrbol "N-{w=0.2}nevermind.{w=0.75}{nw}"
+            extend 1fcstrl " I got this!{w=1}{nw}"
+            extend 1nslsslsbl " ...I think."
+            n 1klrbolsbl "T-{w=0.2}take care,{w=0.2} [player]."
+            extend 1knmbolsbl "'Kay?"
 
             if Natsuki.isLove(higher=True):
-                n  "...You know how much you mean to me,{w=1}{nw}"
-                extend  " a-{w=0.2}after all..."
+                n 1fcsajlsbr "...You know how much you mean to me,{w=1}{nw}"
+                extend 1kllbolsbr " a-{w=0.2}after all..."
 
             elif Natsuki.isEnamored(higher=True):
-                n  "I'll get mad if you don't."
-                n  "..."
+                n 1fnmcalsbr "I'll get mad if you don't."
+                n 1kslbolsbr "..."
 
             else:
-                n  "..."
+                n 1kslbolsbr "..."
 
         "I'm not sure.":
             $ persistent._jn_player_extended_leave_response = int(jn_farewells.JNExtendedLeaveResponseTypes.unknown)
-            n  "...Huh?{w=0.75}{nw}"
-            extend  " You don't even {i}know{/i} when you'll be back?"
-            n  "..."
-            n  "But...{w=0.75}{nw}"
-            extend  " you {i}will{/i} be back...{w=1}{nw}"
-            extend  " right?"
-            n  "..."
-            n  "..."
-            n  "...I'll be fine.{w=1}{nw}"
-            extend  " I guess.{w=1}{nw}"
-            extend  " Just..."
-            n  "..."
-            n  "Don't keep me waiting too long.{w=0.75}{nw}"
-            extend  " 'Kay?"
+            n 1uskemlesh "...H-{w=0.2}huh?{w=0.75}{nw}"
+            extend 1knmemlsbr " You don't even {i}know{/i} when you'll be back?"
+            n 1kllunlsbr "..."
+            n 1kllpulsbr "But...{w=0.75}{nw}"
+            extend 1klrbolsbl " you {i}will{/i} be back...{w=1}{nw}"
+            extend 1knmbolsbl " right?"
+            n 1ksqbol "..."
+            n 1kcsemlesi "..."
+            n 1kslpol "...I'll be fine.{w=1}{nw}"
+            extend 1nslpol " I guess.{w=1}{nw}"
+            extend 1kslpul " Just..."
+            n 1fcsunl "..."
+            n 1kcseml "Don't keep me waiting too long.{w=0.75}{nw}"
+            extend 1knmbol " Please?"
 
             if Natsuki.isLove(higher=True):
-                n  "...You know how much you mean to me,{w=0.75}{nw}"
-                extend  " a-{w=0.2}after all..."
+                n 1ksrbofsbr "...You know how much you mean to me,{w=0.75}{nw}"
+                extend 1ksqbofsbr " a-{w=0.2}after all..."
 
             elif Natsuki.isEnamored(higher=True):
-                n  "...Later,{w=0.2} [player]."
-                n  "..."
+                n 1kslajlsbl "...Later,{w=0.2} [player]."
+                n 1kslsllsbl "..."
 
             else:
-                n  "Later,{w=0.2} [player]."
-                n  "..."
+                n 1kslajl "Later,{w=0.2} [player]."
+                n 1kslsll "..."
 
     $ import datetime
     $ persistent._jn_player_extended_leave_departure_date = datetime.datetime.now()
+
     return { "quit": None }
 
 # Generic farewells
