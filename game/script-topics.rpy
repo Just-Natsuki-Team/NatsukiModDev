@@ -18,6 +18,7 @@ default persistent.jn_player_appearance_hair_colour = None
 default persistent.jn_player_appearance_height_cm = None
 default persistent._jn_player_birthday_day_month = None # Format (day, month)
 default persistent._jn_player_birthday_is_leap_day = False # True if player gave birthday as 29th
+default persistent._jn_player_is_multilingual = None
 
 # Hobby data
 default persistent.jn_player_gaming_frequency = None
@@ -8793,4 +8794,190 @@ label talk_chocolate_preference:
         n 1fchgnl "I like to think you aren't {i}that{/i} bitter!{w=0.75}{nw}"
         extend 1nchgn " Ahaha."
 
+    return
+
+# Natsuki discusses her experiences and frustrations learning other languages.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_learning_languages",
+            unlocked=True,
+            prompt="Learning languages",
+            category=["Society"],
+            nat_says=True,
+            affinity_range=(jn_affinity.HAPPY, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_learning_languages:
+    $ already_discussed_learning_languages = get_topic("talk_learning_languages").shown_count > 0
+    if already_discussed_learning_languages:
+        n 1ncsemesi "..."
+        n 1nsrem "Man...{w=1}{nw}"
+        extend 1fcspo " I still can't believe I messed up my German {i}that{/i} badly last time.{w=0.75}{nw}"
+        extend 1kslan " Yeesh."
+        n 1tnmaj "But anyway,{w=0.2} it's like I said before.{w=0.5}{nw}"
+        extend 1kbkwr " Learning a new language is {i}super{/i} tricky!"
+
+    else:
+        n 1nllpu "..."
+        n 1fllsm "..."
+        n 1fsqsm "..."
+        n 1fcsss "Heh."
+        n 1fcsaj "Ahem!"
+        n 1fcssm "..."
+
+        # Natsuki struggles with German
+        n 1uchgn "Moin moin,{w=0.2} [player]!{w=0.75}{nw}"
+        extend 1usqsm " Was liegt an?{w=0.5}{nw}"
+        extend 1fchss " Ehehe."
+        n 1fcsbs "Ich wette du wusstest nicht, dass ich nicht {i}nur{/i} Englisch tue,{w=0.2} huh?"
+        n 1tsqbg "Du solltest auch versuchen mehr Sprachen...{w=0.5} f-fluessig..."
+        n 1fsrbglsbl "f-fliessend...?"
+        n 1fsrunlesdsbr "..."
+        n 1tsremlesssbr "zu reden...?{w=0.5}{nw}"
+        extend 1fcsbglesssbr " Sprachfluss!"
+        n 1flrbglsbr "O-oder wie man auch sagt -{w=0.3}{nw}"
+        extend 1fcsbglsbl " wer rasst..."
+        n 1fllunlesssbl "r-rastet...!{w=0.5}{nw}"
+        extend 1klremfesssbl " Hat Rosen...?{w=0.75}{nw}" 
+        extend 1kllemfesssbl " Mit Rost!"
+
+        n 1fcsunfesssbr "..."
+        n 1fcsanfesssbr "Nnnnnn-!"
+        n 1fcsemlesssbr "Oh,{w=0.75}{nw}" 
+        extend 1fbkwrlesssbr " {i}forget it{/i}!{w=0.75}{nw}"
+        extend 1kslpul " This is so embarrassing..."
+        n 1fslunl "..."
+
+        n 1uskemlesh "...!{w=0.5}{nw}"
+        n 1fcswrl "N-{w=0.3}not like I couldn't do it!{w=0.75}{nw}"
+        extend 1flleml " I can {i}totally{/i} ace it alone."
+        n 1fcseml "I'm...{w=0.5}{nw}" 
+        extend 1fsrpol " just being put off.{w=0.5}{nw}" 
+        extend 1fsqpol " Having an {i}audience{/i},{w=0.2} and all."
+        n 1fnmpu "But seriously,{w=0.2} [player].{w=0.75}{nw}"
+        extend 1tnmaj " Have you ever {i}tried{/i} learning another language?"
+        n 1fbkwr "It's super hard!{w=1}{nw}"
+        extend 1fslpo " I don't know how people do it!"
+
+    n 1tslpu "Like..."
+    n 1unmaj "We had language classes in school -{w=0.5}{nw}"
+    extend 1nslss " obviously -{w=0.75}{nw}"
+    extend 1fnmpu " but there was never enough time to actually {i}practice{/i}!"
+    n 1fllem "We'd get paired up with partners and practice pronunciations and such."
+    n 1unmem "But when neither of you actually {i}know{/i} the language,{w=0.5}{nw}"
+    extend 1fcswr " how're you meant to know when someone's doing something wrong?"
+    n 1fllaj "Then with all the other studies flying around,{w=0.5}{nw}"
+    extend 1fsrsr " it's not like we had the spare time to try it outside of school either."
+    n 1tsqpu "Plus,{w=0.2} with how complex all the rules are and how much repetition you need,{w=0.5}{nw}"
+    extend 1fcsem " one or two classes a week just doesn't cut it!"
+    n 1fllpu "Like,{w=0.75}{nw}"
+    extend 1fnmem " how is someone supposed to remember if some random household thing has a masculine or feminine name?"
+    n 1flrwr "Or how to pronounce some random word-spaghetti that looks like someone just made it all up?!"
+    n 1kcsemesi "Ugh..."
+    n 1ucspu "I mean...{w=0.75}{nw}"
+    extend 1unmpu " don't get me wrong!{w=0.5}{nw}"
+    extend 1fcssl " It's not like I {i}didn't{/i} like learning a new language!"
+    n 1nsrss "And at {i}least{/i} we got to pick which language we wanted to learn."
+    n 1nsqpo "I just wish we got to actually,{w=0.2} well..."
+    n 1kslpo "{i}Learn them{/i},{w=0.2} you know?"
+    n 1fcsss "Heh.{w=0.5}{nw}"
+    extend 1fslsr " Not like any of that ever stopped {i}Monika{/i},{w=0.2} of course."
+    n 1nslpu "Though...{w=0.75}{nw}"
+    n 1fnmsll "I still kinda feel like I was robbed of experiences in that way."
+    n 1fllss "It's easy to forget there's a whole world out there when you only interact with a certain language-speaking part of it!"
+
+    if get_topic("talk_flying").shown_count > 0:
+        n 1tllaj "I think I mentioned before that I've never flown anywhere.{w=0.5}{nw}"
+        extend 1tnmpu " But if I did?"
+        n 1fcsss "I'd want to at least try to learn a little of the language for where I'm going."
+        n 1fnmpu "Think about it!{w=0.75}{nw}"
+        extend 1fcsbg " If you're already putting in all that money and effort to arrange it all..."
+        n 1tsqsm "What's a little extra to show some respect,{w=0.2} right?"
+
+    else:
+        n 1tsqss "And with how much more you unlock when you know how to talk the languages there?"
+        n 1fsqsr "You'd have to be a real dummy not to at {i}least{/i} think about it.{w=0.5}{nw}"
+        extend 1fsqsm " Ehehe."
+
+    n 1ullaj "But...{w=0.75}{nw}"
+    extend 1nnmbo " that's just me,{w=0.2} I guess."
+    n 1tnmss "What about you though,{w=0.2} [player]?"
+    $ menu_opening = "Anything new in the language department?" if already_discussed_learning_languages else "You know any other languages?"
+
+    menu:
+        n "[menu_opening]"
+
+        "I know another language.":
+            if persistent._jn_player_is_multilingual:
+                n 1uskemlesh "H-{w=0.3}huh?{w=0.75}{nw}"
+                extend 1fnmeml " But you already said you knew another language!"
+                n 1fsqsfl "...And you're telling me you went and learned another one?!"
+                n 1fsrbol "Wow,{w=0.2} [player]..."
+                n 1tsqss "...You really are a show-off,{w=0.2} huh?{w=0.5}{nw}"
+                extend 1fsqsm " Ehehe."
+
+            else:
+                n 1tsqbg "Oho?{w=0.75}{nw}"
+                extend 1fsqbg " Well,{w=0.2} look at you!{w=0.5}{nw}"
+                extend 1fsqss " Better not get too cocky now,{w=0.2} [player]..."
+                n 1usqsm "You aren't the {i}only{/i} multilingual here,{w=0.2} after all.{w=0.5}{nw}"
+                extend 1fsqsm " Ehehe."
+                $ persistent._jn_player_is_multilingual = True
+
+        "I know multiple other languages.":
+            if persistent._jn_player_is_multilingual:
+                n 1fllem "Oh,{w=0.5}{nw}" 
+                extend 1fcswr " come {b}on{/b}!{w=0.75}{nw}"
+                extend 1fsqem " Really?"
+                n 1fslem "You're {i}such{/i} a show-off,{w=0.2} [player]."
+                n 1fsqsm "...Ehehe."
+
+            else:
+                n 1fsqsr "..."
+                n 1fsrpo "...Show-{w=0.2}off.{w=0.5}{nw}"
+                extend 1fsqsm " Ehehe."
+                $ persistent._jn_player_is_multilingual = True
+
+        "I'm trying to learn another language.":
+            if persistent._jn_player_is_multilingual:
+                n 1unmaj "Oh?{w=0.75}{nw}"
+                extend 1flrbg " Well,{w=0.2} hey!"
+                n 1fsqss "That makes both of us now,{w=0.2} huh?{w=0.5}{nw}"
+                extend 1fsqsm " Ehehe."
+
+            else:
+                n 1fnmbgesu "Aha!{w=0.5}{nw}"
+                extend 1tsqbg " So you're familiar with the struggle too,{w=0.2} huh?"
+                n 1fsqsm "Ehehe."
+                $ persistent._jn_player_is_multilingual = False
+
+        "I don't know any other languages.":
+            if persistent._jn_player_is_multilingual:
+                n 1tsqaj "...Huh?"
+                n 1uskemlesh "W-{w=0.2}wait a second!{w=0.5}{nw}"
+                extend 1fsqem " You already {i}said{/i} you knew another language!"
+                n 1fslpol "I wasn't born {i}yesterday{/i},{w=0.2} you jerk..."
+
+            else:
+                n 1unmem "...Huh?{w=0.5} Really?{w=0.5}{nw}"
+                extend 1knmpo " Not even a little?"
+                n 1ncspuesi "Man..."
+                n 1nllpu "I gotta admit,{w=0.5}{nw}"
+                extend 1nsqbo " that's kinda disappointing."
+                n 1fsqbg "...Nothing stopping you from getting started though,{w=0.2} right?{w=0.5}{nw}"
+                extend 1fsqsm " Ehehe."
+                $ persistent._jn_player_is_multilingual = False
+
+    n 1ullaj "Well,{w=0.2} anyway.{w=1}{nw}"
+    extend 1tnmss " I think I've gone on long enough at this point,{w=0.2} huh?"
+    n 1tlrss "And,{w=0.2} well...{w=0.75}{nw}"
+    extend 1fsqbg " as they say in {i}Deutschland{/i}..."
+    n 1ncsss "Alles hat ein Ende,{w=0.5}{nw}" 
+    extend 1uchgnlelg " nur die Wurst hat zwei!"
+    
     return
