@@ -22,6 +22,13 @@ init python in greetings:
         elif store.persistent.jn_player_is_first_greet:
             return "greeting_first_time"
 
+        # The player has given notice that they'll be away
+        elif (
+            store.persistent._jn_player_extended_leave_response is not None
+            and store.persistent._jn_player_extended_leave_departure_date is not None
+        ):
+            return "greeting_leave_return"
+
         kwargs = dict()
 
         # The player either left suddenly, or has been gone a long time
@@ -134,6 +141,189 @@ label greeting_first_force_quit:
         extend 1fsqfutsb " Now."
 
     $ persistent.jn_player_force_quit_state = int(jn_farewells.JNForceQuitStates.previously_force_quit)
+
+    return
+
+# Only chosen when the player explicitly says they will be gone a while
+label greeting_leave_return:
+    $ time_since_departure = (datetime.datetime.now() - persistent._jn_player_extended_leave_departure_date).total_seconds() 
+
+    if time_since_departure / 2628000 > 3: # Gone more than three months
+        if jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) != jn_farewells.JNExtendedLeaveResponseTypes.unknown:
+            n 1ksrpu "..."
+            n 1uskemlesh "...!{w=0.75}{nw}"
+            $ player_initial = jn_utils.getPlayerInitial()
+            n 1unmwrl "[player_initial]-[player]!{w=0.75}{nw}"
+            extend 1ulleml " You're..."
+            n 1fcsupl "Y-{w=0.2}you're..."
+            n 1fcsanlsbr "Nnnnnnn-!"
+            n 1knmwrlsbr "Where {i}were{/i} you?!{w=1}{nw}"
+            extend 1fsqwrlsbr " Were you trying to {i}disappear{/i} or something?"
+            n 1kcswrlsbr "Y-{w=0.2}you had me worried {i}sick{/i}!{w=0.75}{nw}"
+            extend 1klleml " A-{w=0.2}and I thought...!"
+            n 1klremlsbl "I-{w=0.2}I thought that..."
+            n 1ksrunlsbl "..."
+            n 1fcsunl "..."
+            n 1fcseml "That you'd just...{w=0.75}{nw}"
+            extend 1kwmeml " forgotten{w=0.75}{nw}"
+            extend 1ksleml " about me..."
+            n 1kslbol "..."
+            n 1ncsemesi "..."
+            n 1nnmsl "...Look.{w=1}{nw}"
+            extend 1ncsaj " I'm..."
+            n 1kslsl "..."
+            n 1kcspusbr "...Really glad you're back."
+            n 1ksqsl "..."
+            n 1knmajsbl "Really!{w=0.75}{nw}"
+            extend 1knmbosbl " I am..."
+            n 1ksqem "But you can't just completely flake out on me like that, [player]..."
+            n 1kslem "I-{w=0.2}I know you gave me {i}some{/i} notice,{w=0.75}{nw}"
+            extend 1knmem " but do you have any {i}idea{/i} how {i}scary{/i} it gets?"
+            n 1kllpu "When someone says they'll come back,{w=0.75}{nw}"
+            extend 1kllsl " and they just...{w=1.25}{nw}"
+            extend 1kwmsll " don't?"
+            n 1kcspul "Days,{w=0.75}{nw}"
+            extend 1kllajl " weeks,{w=0.75}{nw}"
+            extend 1knmajl " {i}months{/i}..."
+            n 1ksqbol "...And just nothing?"
+            n 1ncsbo "..."
+            n 1ncssl "...Whatever.{w=1}{nw}"
+            extend 1nllpu " It's fine.{w=0.75}{nw}"
+            extend 1kllpu " I..." 
+            n 1ksrsl "..." 
+            n 1ksrbo "I just wanna forget about it now.{w=1}{nw}"
+            extend 1knmbo " But please,{w=0.2} [player]."
+            n 1knmaj "If you don't know {i}when{/i} you'll be back..."
+            n 1fslun "..."
+            n 1kcssl "...Just tell me.{w=0.75}{nw}" 
+            extend 1ksqsl " Upfront."
+            n 1ksrpulsbr "You know I won't get mad..."
+            n 1knmpulsbr "...Right?"
+
+        else:
+            n 1uskemlesh "...!"
+            n 1unmbgl "[player]!{w=0.75}{nw}"
+            extend 1uchbgledz " [player]{w=0.2} [player]{w=0.2} [player]{w=0.2} [player]{w=0.2} [player]!"
+            n 1fcsajlsbl "I-{w=0.2}I mean,{w=0.75}{nw}"
+            extend 1fcsgslsbl " it's about {i}time{/i} you got your butt back here!{w=1}{nw}"
+            extend 1flrpolsbl " Jeez..."
+            n 1fsrpol "It's rude to keep a girl waiting,{w=0.75}{nw}"
+            extend 1fsqcal " you know..."
+            n 1kslcal "..."
+            n 1kslssl "But...{w=0.75}{nw}"
+            extend 1knmssl " seriously,{w=0.2} [player]?"
+            show natsuki 1ksrbol
+
+            show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+            play audio clothing_ruffle
+            $ jnPause(3.5)
+
+            if Natsuki.isLove(higher=True):
+                show natsuki 1kcspul at jn_center zorder JN_NATSUKI_ZORDER
+                play audio kiss
+                $ jnPause(1.5)
+                hide black with Dissolve(1.25)
+
+                n 1ksqbolsbr "...I really did miss you."
+                n 1nslfsl "Heh."
+                n 1nchsmleaf "Welcome back."
+
+            else:
+                show natsuki 1nsldvlsbl at jn_center zorder JN_NATSUKI_ZORDER
+                $ jnPause(1.5)
+                hide black with Dissolve(1.25)
+
+                n 1nslsslsbl "...W-{w=0.2}welcome back.{w=1}{nw}"
+                extend 1fchdvlsbl " Ehehe."
+
+    elif time_since_departure / 86400 > 30: # Gone more than a month
+        if (
+            jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_days
+            or jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_weeks
+        ):
+            n 1uskemlesh "...!{w=0.75}{nw}"
+            $ player_initial = jn_utils.getPlayerInitial()
+            n 1fnmgsl "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
+            extend 1knmeml " What the heck even {i}happened{/i}?!"
+            n 1klleml "You didn't say you were gonna disappear on me for {i}that{/i} long!"
+            n 1ksremlsbl "I was starting to get worried,{w=0.75}{nw}"
+            extend 1ksrbolsbl " you jerk..."
+            n 1fcsunlsbr "..."
+            n 1ncspulesi "..."
+            n 1nsqsll "...Look."
+            n 1fcseml "I'm...{w=1}{nw}"
+            extend 1kcssll " glad...{w=1}{nw}"
+            extend 1ksrsll " you're back,{w=0.2} [player]."
+            n 1fcssll "Just..."
+            n 1fnmsll "...Be honest.{w=0.75}{nw}"
+            extend 1knmbol " Okay?"
+            n 1kllbol "I don't care if you gotta go for longer than usual."
+            n 1kslsrl "...I just wanna know what to {i}expect{/i}.{w=0.75}{nw}"
+            extend 1ksqpulsbr " You know?"
+            n 1kslsllsbr "..."
+            n 1kslajlsbr "...And welcome back too,{w=0.75}{nw}"
+            extend 1ksrbol " I guess."
+
+        else:
+            n 1fcsbg "Well,{w=0.2} well,{w=0.2} well.{w=1}{nw}"
+            extend 1fsqsm " Look who the {i}Nat{/i} dragged in!"
+            n 1fchsm "Ehehe."
+            n 1fslsslsbl "It's...{w=1}{nw}"
+            extend 1ksqsslsbl " been a while,{w=0.75}{nw}"
+            extend 1tsqbolsbl " huh?"
+            n 1ksrcalsbl "..."
+            n 1ncsajl "But..."
+            n 1nlrajl "I'm...{w=0.75}{nw}"
+            extend 1nsrssl " glad you're finally back,{w=0.2} [player]."
+            n 1fchbglsbr "W-{w=0.2}welcome!"
+
+    elif time_since_departure / 86400 > 7: # Gone more than a week
+        if jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_days:
+            n 1nsqsll "..."
+            n 1fsqsll "[player].{w=1}{nw}"
+            extend 1fsqajl " What do you call this?"
+            n 1kbkwrl "You said you'd only be gone a few daaaays!"
+            n 1fsqpol "..."
+            n 1fcspol "..."
+            n 1fsrajl "I...{w=1}{nw}"
+            extend 1fsrsll " guess I'll let you off.{w=0.75}{nw}"
+            extend 1fsqcal " This time."
+            n 1fcspul "Just...{w=1}{nw}"
+            extend 1knmpul " try to plan a little better,{w=0.75}{nw}"
+            extend 1kllsrl " if you can."
+            n 1kslbol "It's really not {i}that{/i} much to ask...{w=1}{nw}"
+            extend 1knmbolsbr " right?"
+
+        else:
+            n 1fsqct "Oho?{w=0.75}{nw}"
+            extend 1fsqbg " Well look who just decided to show up!"
+            n 1fsqsm "Ehehe."
+
+            if Natsuki.isLove(higher=True):
+                $ chosen_endearment = jn_utils.getRandomEndearment()
+                n 1uchsml "Welcome back,{w=0.2} [chosen_endearment]!"
+
+            else:
+                n 1uchbg "Welcome back,{w=0.2} [player]!"
+
+    else: # Gone less than a week
+        n 1fsqss "Well,{w=0.75}{nw}"
+        extend 1fsqsm " look who we have here."
+        n 1tsqct "...And you said you'd be gone for a while."
+        n 1usqsm "..."
+        n 1fchsm "Ehehe.{w=0.75}{nw}"
+        extend 1fchbg " Relax!"
+        n 1fwlbl "I'm just messing with you."
+
+        if Natsuki.isLove(higher=True):
+            $ chosen_endearment = jn_utils.getRandomEndearment()
+            n 1uchsml "Welcome back,{w=0.2} [chosen_endearment]!"
+
+        else:
+            n 1uchbg "Welcome back,{w=0.2} [player]!"
+
+    $ persistent._jn_player_extended_leave_response = None
+    $ persistent._jn_player_extended_leave_departure_date = None
 
     return
 
@@ -494,6 +684,13 @@ label greeting_tt_game_over:
     show chair zorder JN_NATSUKI_ZORDER
     show desk zorder JN_NATSUKI_ZORDER
     hide black with Dissolve(2)
+    $ jn_globals.force_quit_enabled = True
+    $ jnPause(100000)
+    $ renpy.quit()
+
+label greeting_pic:
+    $ import codecs
+    show screen problem("412070726f626c656d20686173206f636375727265642e20506c6561736520636f6e74616374204a4e2073746166662e".decode("hex"))
     $ jn_globals.force_quit_enabled = True
     $ jnPause(100000)
     $ renpy.quit()

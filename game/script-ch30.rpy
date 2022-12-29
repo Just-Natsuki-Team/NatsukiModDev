@@ -43,6 +43,9 @@ label ch30_init:
         persistent._jn_version = config.version
         jn_utils.log("Current persisted version post-mig check: {0}".format(store.persistent._jn_version))
 
+        if store.persistent._jn_pic:
+            renpy.jump("greeting_pic")
+
         # NATSUKI SETUP
 
         # Assign Natsuki and player nicknames
@@ -74,7 +77,10 @@ label ch30_init:
                 persistent._jn_player_tt_state += 1
 
         # Determine if the player should get a prolonged leave greeting
-        elif (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 2:
+        elif (
+            not persistent._jn_player_extended_leave_response
+            and (datetime.datetime.now() - persistent.jn_last_visited_date).total_seconds() / 604800 >= 2
+        ):
             Natsuki.setQuitApology(jn_apologies.ApologyTypes.prolonged_leave)
 
         # Repeat visits have a small affinity gain
@@ -665,7 +671,7 @@ label extras_menu:
 
 label try_force_quit:
     # Goodnight
-    if persistent._jn_player_tt_state >= 2:
+    if persistent._jn_player_tt_state >= 2 or persistent._jn_pic:
         $ renpy.jump("quit")
 
     # Decision making that overrides the default Ren'Py quit behaviour
