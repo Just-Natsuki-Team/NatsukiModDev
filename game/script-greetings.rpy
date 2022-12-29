@@ -23,7 +23,10 @@ init python in greetings:
             return "greeting_first_time"
 
         # The player has given notice that they'll be away
-        elif store.persistent._jn_player_extended_leave_response:
+        elif (
+            store.persistent._jn_player_extended_leave_response is not None
+            and store.persistent._jn_player_extended_leave_departure_date is not None
+        ):
             return "greeting_leave_return"
 
         kwargs = dict()
