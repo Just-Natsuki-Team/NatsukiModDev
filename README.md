@@ -7,7 +7,7 @@
 
 An After-Story style mod for Natsuki from DDLC, focusing on building a post-game relationship between Natsuki and her player (you!).
 
-**Please read this document thoroughly before downloading and installing the mod!**
+**Please read this document and the license thoroughly before downloading and installing the mod!**
 
 ### Made possible thanks to our contributors:
 <!-- readme: contributors -start -->
@@ -102,6 +102,7 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
 
 ### And extra special thanks to:
 - Snow, rain graphics thanks to Monika After Story team @ https://github.com/Monika-After-Story/MonikaModDev
+- License template thanks to Monika After Story team @ https://github.com/Monika-After-Story/MonikaModDev
 - Our community, for being so patient despite our delays
 
 **You're all awesome!**
