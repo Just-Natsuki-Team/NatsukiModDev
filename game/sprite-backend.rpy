@@ -11,6 +11,7 @@ init -50 python:
 
     class JNPose(Enum):
         sitting = 1
+        arms_crossed = 2
 
         def __str__(self):
             return self.name
@@ -172,66 +173,66 @@ init -50 python:
         lc_args = [
             (1280, 740), # Anchor
             (0, 0), _JN_NATSUKI_BASE_SPRITE_PATH + "desk/chair_normal.png", # Chair
-            (0, 0), "{0}{1}/hair/[Natsuki._outfit.hairstyle.reference_name]/back.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose), # Hair back
-            (0, 0), "{0}{1}/base/body.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose), # Body
-            (0, 0), "{0}{1}/clothes/[Natsuki._outfit.clothes.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose), # Outfit, body
+            (0, 0), "{0}/hair/[Natsuki._outfit.hairstyle.reference_name]/sitting/back.png".format(_JN_NATSUKI_BASE_SPRITE_PATH), # Hair back
+            (0, 0), "{0}/base/{1}/body.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose), # Body
+            (0, 0), "{0}/clothes/[Natsuki._outfit.clothes.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose), # Outfit, body
         ]
 
         # Necklace
-        necklace = Null() if not Natsuki._outfit.necklace else "{0}{1}/necklace/[Natsuki._outfit.necklace.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose)
+        necklace = Null() if not Natsuki._outfit.necklace else "{0}/necklace/[Natsuki._outfit.necklace.reference_name]/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH)
         lc_args.extend([
             (0, 0), necklace
         ])
 
         # Head
         lc_args.extend([
-            (0, 0), "{0}{1}/base/head.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose),
+            (0, 0), "{0}/base/{1}/head.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose),
         ])
 
         # Blush
         if blush:
             lc_args.extend([
-                (0, 0), "{0}{1}/face/blush/{2}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose, blush)
+                (0, 0), "{0}/face/blush/sitting/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, blush)
             ])
 
         # Mouth, nose, hair (front)
         lc_args.extend([
-            (0, 0), "{0}{1}/face/mouth/{2}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose, mouth),
-            (0, 0), "{0}{1}/face/nose/nose.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose),
-            (0, 0), "{0}{1}/hair/[Natsuki._outfit.hairstyle.reference_name]/bangs.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose),
+            (0, 0), "{0}/face/mouth/sitting/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, mouth),
+            (0, 0), "{0}/face/nose/sitting/nose.png".format(_JN_NATSUKI_BASE_SPRITE_PATH),
+            (0, 0), "{0}/hair/[Natsuki._outfit.hairstyle.reference_name]/sitting/bangs.png".format(_JN_NATSUKI_BASE_SPRITE_PATH),
         ])
 
         # Accessory
-        accessory = Null() if not Natsuki._outfit.accessory else "{0}{1}/accessory/[Natsuki._outfit.accessory.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose)
+        accessory = Null() if not Natsuki._outfit.accessory else "{0}/accessory/[Natsuki._outfit.accessory.reference_name]/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH)
         lc_args.extend([
             (0, 0), accessory
         ])
 
         # Eyes
         lc_args.extend([
-            (0, 0), "{0}{1}/face/eyes/{2}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose, eyes), 
+            (0, 0), "{0}/face/eyes/sitting/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, eyes), 
         ])
 
         # Tears
         if tears:
             lc_args.extend([
-                (0, 0), "{0}{1}/face/tears/{2}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose, tears)
+                (0, 0), "{0}/face/tears/sitting/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, tears)
             ])
 
         # Sweat
         if sweat:
             lc_args.extend([
-                (0, 0), "{0}{1}/face/sweat/{2}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose, sweat)
+                (0, 0), "{0}/face/sweat/sitting/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, sweat)
             ])
 
         # Headgear
-        headgear = Null() if not Natsuki._outfit.headgear else "{0}{1}/headgear/[Natsuki._outfit.headgear.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose)
+        headgear = Null() if not Natsuki._outfit.headgear else "{0}/headgear/[Natsuki._outfit.headgear.reference_name]/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH)
         lc_args.extend([
             (0, 0), headgear
         ])
 
         # Eyewear
-        eyewear = Null() if not Natsuki._outfit.eyewear else "{0}{1}/eyewear/[Natsuki._outfit.eyewear.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose)
+        eyewear = Null() if not Natsuki._outfit.eyewear else "{0}/eyewear/[Natsuki._outfit.eyewear.reference_name]/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH)
         lc_args.extend([
             (0, 0), eyewear
         ])
@@ -239,13 +240,18 @@ init -50 python:
         # Emotes
         if emote:
             lc_args.extend([
-                (0, 0), "{0}{1}/emote/{2}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose, emote)
+                (0, 0), "{0}/emote/sitting/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, emote)
             ])
 
         # Brows
         lc_args.extend([
-            (0, 0), "{0}{1}/face/eyebrows/{2}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose, eyebrows), # Brows
+            (0, 0), "{0}/face/eyebrows/sitting/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, eyebrows), # Brows
             (0, 0), _JN_NATSUKI_BASE_SPRITE_PATH + "/desk/{0}.png".format(_JN_TABLE_SPRITE) # Table
+        ])
+
+        # Arms
+        lc_args.extend([
+            (0, 0), "{0}/arms/[Natsuki._outfit.clothes.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose)
         ])
 
         # Generate and return the sprite
@@ -253,13 +259,12 @@ init -50 python:
             *lc_args
         )
 
-    # TODO: empty desk + chair sprite based on aff.
-
 init 1 python:
     import store
 
     POSE_MAP = {
-        "1": JNPose.sitting
+        "1": JNPose.sitting,
+        "2": JNPose.arms_crossed
     }
 
     EYEBROW_MAP = {
