@@ -146,13 +146,9 @@ label greeting_leave_return:
     $ time_since_departure = (datetime.datetime.now() - persistent._jn_player_extended_leave_departure_date).total_seconds() 
 
     if time_since_departure / 2628000 > 3: # Gone more than three months
-        if (
-            jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_days
-            or jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_weeks
-            or jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_months
-        ):
+        if jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) != jn_farewells.JNExtendedLeaveResponseTypes.unknown:
             n 1ksrpu "..."
-            n 1uskemlesh "...!"
+            n 1uskemlesh "...!{w=0.75}{nw}"
             $ player_initial = jn_utils.getPlayerInitial()
             n 1unmwrl "[player_initial]-[player]!{w=0.75}{nw}"
             extend 1ulleml " You're..."
@@ -242,7 +238,7 @@ label greeting_leave_return:
             jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_days
             or jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_weeks
         ):
-            n 1uskemlesh "...!"
+            n 1uskemlesh "...!{w=0.75}{nw}"
             $ player_initial = jn_utils.getPlayerInitial()
             n 1fnmgsl "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
             extend 1knmeml " What the heck even {i}happened{/i}?!"
@@ -270,18 +266,18 @@ label greeting_leave_return:
             extend 1fsqsm " Look who the {i}Nat{/i} dragged in!"
             n 1fchsm "Ehehe."
             n 1fslsslsbl "It's...{w=1}{nw}"
-            extend 1ksqajlsbl " been a while,{w=0.75}{nw}"
-            extend 1ksqbolsbl " huh?"
+            extend 1ksqsslsbl " been a while,{w=0.75}{nw}"
+            extend 1tsqbolsbl " huh?"
             n 1ksrcalsbl "..."
             n 1ncsajl "But..."
             n 1nlrajl "I'm...{w=0.75}{nw}"
-            extend 1nsrssl " glad you're finally back, [player]."
+            extend 1nsrssl " glad you're finally back,{w=0.2} [player]."
             n 1fchbglsbr "W-{w=0.2}welcome!"
 
-    if time_since_departure / 86400 > 7: # Gone more than a week
+    elif time_since_departure / 86400 > 7: # Gone more than a week
         if jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_days:
             n 1nsqsll "..."
-            n 1fsqsll "[player].{w=0.75}{nw}"
+            n 1fsqsll "[player].{w=1}{nw}"
             extend 1fsqajl " What do you call this?"
             n 1kbkwrl "You said you'd only be gone a few daaaays!"
             n 1fsqpol "..."
@@ -289,7 +285,7 @@ label greeting_leave_return:
             n 1fsrajl "I...{w=1}{nw}"
             extend 1fsrsll " guess I'll let you off.{w=0.75}{nw}"
             extend 1fsqcal " This time."
-            n 1fcspul "Just...{w=0.75}{nw}"
+            n 1fcspul "Just...{w=1}{nw}"
             extend 1knmpul " try to plan a little better,{w=0.75}{nw}"
             extend 1kllsrl " if you can."
             n 1kslbol "It's really not {i}that{/i} much to ask...{w=1}{nw}"

@@ -621,7 +621,7 @@ label farewell_option_extended_leave:
             extend 1fcstrl " I got this!{w=1}{nw}"
             extend 1nslsslsbl " ...I think."
             n 1klrbolsbl "T-{w=0.2}take care,{w=0.2} [player]."
-            extend 1knmbolsbl "'Kay?"
+            extend 1knmbolsbl " 'Kay?"
 
             if Natsuki.isLove(higher=True):
                 n 1fcsajlsbr "...You know how much you mean to me,{w=1}{nw}"
