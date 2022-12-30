@@ -207,37 +207,43 @@ init -1 python in jn_outfits:
         """
         Describes a hairstyle for Natsuki; a wearable with additional functionality specific to hairstyles.
         """
-        pass
+        def getFolderName():
+            return "hair"
 
     class JNEyewear(JNWearable):
         """
         Describes eyewear for Natsuki; a wearable with additional functionality specific to eyewear.
         """
-        pass
+        def getFolderName():
+            return "eyewear"
 
     class JNAccessory(JNWearable):
         """
         Describes an accessory for Natsuki; a wearable with additional functionality specific to accessories.
         """
-        pass
+        def getFolderName():
+            return "accessory"
 
     class JNClothes(JNWearable):
         """
         Describes a set of clothes for Natsuki; a wearable with additional functionality specific to clothes.
         """
-        pass
+        def getFolderName():
+            return "clothes"
 
     class JNHeadgear(JNWearable):
         """
         Describes some headgear for Natsuki; a wearable with additional functionality specific to clothes.
         """
-        pass
+        def getFolderName():
+            return "headgear"
 
     class JNNecklace(JNWearable):
         """
         Describes some headgear for Natsuki; a wearable with additional functionality specific to clothes.
         """
-        pass
+        def getFolderName():
+            return "necklace"
 
     class JNOutfit():
         """
@@ -557,41 +563,44 @@ init -1 python in jn_outfits:
     def _check_wearable_sprites(wearable):
         """
         Checks sprite paths based on wearable type to ensure all required assets exist.
-        IN:
-            - wearable - the wearable to test
-        """
 
-        WEARABLE_TYPE_PATH_MAP = {
-            JNHairstyle: "hair",
-            JNEyewear: "eyewear",
-            JNAccessory: "accessory",
-            JNClothes: "clothes",
-            JNHeadgear: "headgear",
-            JNNecklace: "necklace"
-        }
+        IN:
+            - wearable - the JNWearable wearable to test
+
+        OUT:
+            - True if all required assets for the wearable exist, otherwise False
+        """
+        WEARABLE_COMMON_PATH = os.path.join(__WEARABLE_BASE_PATH, wearable.getFolderName())
 
         for pose in store.JNPose:
-            # Set up the base path, given by the pose
-            resource_path = os.path.join(
-                __WEARABLE_BASE_PATH,
-                pose.name,
-                WEARABLE_TYPE_PATH_MAP[type(wearable)],
-                wearable.reference_name
-            )
 
-            # Hairstyles have two sprites for a given pose (front and back), so we must check both exist
-            if isinstance(wearable, JNHairstyle):
-                if (
-                    not jn_utils.getFileExists(os.path.join(resource_path, "back.png"))
-                    or not jn_utils.getFileExists(os.path.join(resource_path, "bangs.png"))
-                ):
-                    jn_utils.log("Missing back/bangs sprite(s) for {0}: check {1}".format(wearable.reference_name, resource_path))
+            # Note that for now, only the clothes are pose-sensitive; all other wearables only need a sitting sprite
+
+            if isinstance(wearable, JNClothes):
+                # Clothes have both an arms and body portion, so we must check both exist
+                arms_path = os.path.join(__WEARABLE_BASE_PATH, "arms", wearable.reference_name, pose.name)
+                clothes_path = os.path.join(__WEARABLE_BASE_PATH, "clothes", wearable.reference_name, pose.name)
+
+                if not jn_utils.getFileExists(arms_path) or not jn_utils.getFileExists(clothes_path):
+                    jn_utils.log("Missing clothes/arms sprite(s) for {0}".format(wearable.reference_name))
                     return False
 
-            # Any other wearable only has one sprite for a given pose
-            elif not jn_utils.getFileExists(os.path.join(resource_path, "{0}.png".format(pose.name))):
-                jn_utils.log("Missing sprite(s) for {0}: check {1}".format(wearable.reference_name, resource_path))
-                return False
+            elif isinstance(wearable, JNHairstyle):
+                # Hairstyles have two sprites for a given pose (front/bangs and back), so we must check both exist
+                back_path = os.path.join(WEARABLE_COMMON_PATH, wearable.reference_name, "sitting", "back.png")
+                bangs_path = os.path.join(WEARABLE_COMMON_PATH, wearable.reference_name, "sitting", "bangs.png")
+
+                if not jn_utils.getFileExists(back_path) or not jn_utils.getFileExists(bangs_path):
+                    jn_utils.log("Missing back/bangs sprite(s) for {0}".format(wearable.reference_name))
+                    return False
+
+            else:
+                # Any other wearable only has one sprite for a given pose
+                resource_path = os.path.join(WEARABLE_COMMON_PATH, wearable.reference_name, "sitting.png")
+
+                if not jn_utils.getFileExists(resource_path):
+                    jn_utils.log("Missing sprite(s) for {0}: check {1}".format(wearable.reference_name, resource_path))
+                    return False
 
         return True
 

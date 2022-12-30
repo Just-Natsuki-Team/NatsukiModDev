@@ -1270,6 +1270,6 @@ label pose_test:
     n 3kwmpu "And this is my fingers_on_desk pose!"
 
     n 1fchbg "...And that's about it!{w=0.75}{nw}"
-    extend 1fwlsm  "Glad to be of service,{w=0.2} [player]!"
+    extend 1fwlsm  " Glad to be of service,{w=0.2} [player]!"
 
     jump ch30_loop
