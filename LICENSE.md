@@ -1,12 +1,12 @@
 _Just Natsuki_ is a fan work, and is unaffiliated with *Team Salvato* or any members of the *Doki Doki Literature Club* development team. *Doki Doki Literature Club* and all related characters and trademarks are property of *Team Salvato* and are used in accordance with their IP Guidlines, reproduced here:
 
-*Team Salvato's IP Guidelines for Doki Doki Literature Club, as accessed on 03/11/18, are reproduced here for convenience. For questions or an up-to-date copy of the latest terms, please visit [Team Salvato's website](http://teamsalvato.com/ip-guidelines/).*
+*Team Salvato's IP Guidelines for Doki Doki Literature Club, as accessed on 30/12/2022, are reproduced here for convenience. For questions or an up-to-date copy of the latest terms, please visit [Team Salvato's website](http://teamsalvato.com/ip-guidelines/).*
 
 ## Disclaimer
 
 These guidelines do not grant a copyright license to any DDLC-related fan content. Despite these guidelines, Team Salvato reserves the right to issue a formal takedown request for any content that infringes copyright. This includes content that uses official DDLC assets, as well as content that includes any Intellectual Properties (IPs) that belong to Team Salvato. Moreover, this page is subject to revision at any time without notice.
 
-This page was last updated: December 29th, 2022
+This page was last updated: July 12th, 2021
 
 ## Fan Work
 
@@ -101,7 +101,7 @@ Further restrictions are listed below:
 
 **Art**
 
-* **All Just Natsuki art used outside of Just Natsuki must be credited back to us or the creator of said music.**
+* **All Just Natsuki art used outside of Just Natsuki must be credited back to us or the creator of said art.**
 * **All Just Natsuki art cannot be distributed or used outside of Just Natsuki without express consent from the Just Natsuki team or the creator of said art. In the event of a disagreement of consent between the Just Natsuki team and the creator of said art, the creator's consent or restriction on the usage of said art takes precedence.**
 * DDLC art used in Just Natsuki is exempt from these restrictions but is covered under Team Salvato's [IP Guidelines](http://teamsalvato.com/ip-guidelines/).
 
@@ -114,7 +114,7 @@ Further restrictions are listed below:
 
 **Code**
 
-* **All Just Natsuki code used outside of Just Natsuki must be credited back to us.**
+* **All Just Natsuki code used outside of Just Natsuki must be credited back to us or the creator of said code.**
 * **All Just Natsuki code cannot be distributed or used outside of Just Natsuki without express consent from the Just Natsuki team.**
 * External libraries and packages (i.e: some of the libraries in the `lib` or `python-packages` folders) that are **not created by the Just Natsuki team** should not be considered "Just Natsuki code" and therefore are **exempt** from these restrictions.
 
