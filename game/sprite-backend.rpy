@@ -265,7 +265,7 @@ init 1 python:
 
     POSE_MAP = {
         "1": JNPose.sitting,
-        "2": JNPose.arms_crossed
+        "2": JNPose.arms_crossed,
         "3": JNPose.fingers_on_desk
     }
 
