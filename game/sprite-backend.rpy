@@ -1258,3 +1258,18 @@ image natsuki talk_menu_ruined:
 
 image desk = "mod_assets/natsuki/desk/table_normal.png"
 image chair = "mod_assets/natsuki/desk/chair_normal.png"
+
+label pose_test:
+    n 1tsqss "Oh?{w=0.5}{nw}"
+    extend 1tsqbg " You wanna see some poses?{w=0.75}{nw}"
+    extend 1fsqsm " Ehehe."
+    n 1fchbl "You got it!"
+
+    n 1fcssm "This is just my sitting pose!"
+    n 2fllpo "This is my arms_crossed pose!"
+    n 3kwmpu "And this is my fingers_on_desk pose!"
+
+    n 1fchbg "...And that's about it!{w=0.75}{nw}"
+    extend 1fwlsm  "Glad to be of service,{w=0.2} [player]!"
+
+    jump ch30_loop
