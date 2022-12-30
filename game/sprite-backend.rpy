@@ -12,6 +12,7 @@ init -50 python:
     class JNPose(Enum):
         sitting = 1
         arms_crossed = 2
+        fingers_on_desk = 3
 
         def __str__(self):
             return self.name
@@ -265,6 +266,7 @@ init 1 python:
     POSE_MAP = {
         "1": JNPose.sitting,
         "2": JNPose.arms_crossed
+        "3": JNPose.fingers_on_desk
     }
 
     EYEBROW_MAP = {
