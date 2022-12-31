@@ -568,7 +568,7 @@ label farewell_option_extended_leave:
     show natsuki 1knmbo
     
     menu:
-        n "Did you plan on being away long, or...?"
+        n "Did you plan on being away long,{w=0.2} or...?"
 
         "A few days.":
             $ persistent._jn_player_extended_leave_response = int(jn_farewells.JNExtendedLeaveResponseTypes.a_few_days)
