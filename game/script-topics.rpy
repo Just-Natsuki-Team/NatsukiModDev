@@ -8981,3 +8981,88 @@ label talk_learning_languages:
     extend 1uchgnlelg " nur die Wurst hat zwei!"
     
     return
+
+# Natsuki pitches the idea of rage rooms and how they can be fun to the player.
+# Natsuki smash!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_rage_rooms",
+            unlocked=True,
+            prompt="Rage rooms",
+            category=["Entertainment", "Hobbies"],
+            nat_says=True,
+            affinity_range=(jn_affinity.HAPPY, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_rage_rooms:
+    $ already_discussed_rage_rooms = get_topic("talk_rage_rooms").shown_count > 0
+
+    if already_discussed_rage_rooms:
+        n 1fslss "Man..."
+        n 1ullaj "You know,{w=0.5}{nw}"
+        extend 1tnmbo " [player]..."
+        n 1fcssm "I still can't get my mind off rage rooms."
+        n 1ulraj "I know we spoke about them before,{w=0.2} but..."
+        n 1nsrss "Well,{w=0.75}{nw}"
+        extend 1tnmpu " can you blame me?"
+
+    else:
+        n 1ullaj "Hey,{w=0.2} [player]..."
+        n 1ulrbo "This is kinda random,{w=0.5}{nw}"
+        extend 1ulraj " but..." 
+        n 1tnmpu "Have you ever been to a rage room before?"
+        n 1nslsssbr "I've never actually {i}been{/i} to one myself,{w=0.75}{nw}"
+        extend 1ncsaj " but oh.{w=0.5}{nw}"
+        extend 1fcsaj " My.{w=0.5}{nw}"
+        extend 1fcsaw " God.{w=0.5}{nw}"
+        extend 1nsqsr " [player]."
+
+    n 1fcspu "They...{w=0.75}{nw}" 
+    extend 1fcsaj " look...{w=0.75}{nw}"
+    extend 1fspgsedz " {i}awesome{/i}!"
+    n 1uwdaj "No,{w=0.2} really!{w=0.75}{nw}"
+    extend 1fcspo " I'm serious!"
+    n 1ullss "You basically get an entire room full of useless old junk:{w=0.5}{nw}"
+    extend 1ulrbo " unwanted furniture,{w=0.2} decorations,{w=0.2} old computer hardware...{w=0.75}{nw}"
+    extend 1nnmbo " as well as a bunch of tools and safety equipment."
+    n 1nllpu "You know.{w=0.75}{nw}"
+    extend 1ullaj " Goggles,{w=0.2} hammers,{w=0.5}{nw}"
+    extend 1nllsm " that sort of thing."
+    n 1tsqsm "And then...?"
+    n 1fcssm "Ehehe."
+    n 1fchbg "Come on,{w=0.2} [player]!{w=0.75}{nw}"
+    extend 1fsqbg " What {i}else{/i} do you think it's all for?"
+    n 1uchgnelg "...You get to beat the absolute {i}SNOT{/i} out of everything!"
+    n 1unmbs "Seriously!{w=0.75}{nw}"
+    extend 1fchbs " You just get to go wild!"
+    n 1tsqbg "...And the best part?{w=1}{nw}"
+    extend 1fchbg " You don't have to clean up afterwards either!{w=0.75}{nw}"
+    extend 1fspgs " You can even take people {i}with{/i} you!"
+    n 1fcsss "Man...{w=0.75}{nw}"
+    extend 1fchgn " imagine {i}Yuri{/i} trying out something like that!"
+    n 1nsrdvsbl "And Sayori..."
+    n 1uwdbosbl "...There'd be no room {i}left{/i}!"
+    n 1ullss "Of course,{w=0.5}{nw}" 
+    extend 1ullbo " they already supply a bunch of their own things you can smash up...{w=0.75}"
+    n 1fchsm "But you can totally bring your own stuff too!{w=0.75}{nw}"
+    extend 1nsrsmsbr " Well..."
+    n 1nlrbo "So long as it's all safe to break up -{w=0.5}{nw}"
+    extend 1nsrsssbl " no big batteries,{w=0.2} pressurized things,{w=0.2} or anything dumb like that."
+    n 1fsqsm "Finally had enough of that garbage printer chewing up all your assignments?"
+    n 1fcsbg "Nothing like some trial by combat to show who's on top!"
+    n 1unmajesu "Oh!{w=0.5}{nw}"
+    extend 1nnmbo " Don't get me wrong though."
+    n 1nsrbgsbl "You still gotta pay regardless of if you brought your own junk,{w=0.75}{nw}"
+    extend 1nsrposbl " of course...{w=1}{nw}"
+    extend 1kslslsbl " and it really {i}isn't{/i} a way to deal with anger issues or anything like that."
+    n 1fcssm "But I gotta say,{w=0.2} [player]."
+    n 1fsqbg "If that doesn't sound like a {w=0.2}{i}smashing{/i}{w=0.2} way to relieve stress..."
+    n 1uchgn "Then I don't know what is!{w=0.5}{nw}"
+    extend 1fchsmeme " Ehehe."
+
+    return
