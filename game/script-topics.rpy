@@ -8981,3 +8981,86 @@ label talk_learning_languages:
     extend 1uchgnlelg " nur die Wurst hat zwei!"
     
     return
+
+# Natsuki pitches the idea of rage rooms and how they can be fun to the player.
+# Natsuki smash!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_rage_rooms",
+            unlocked=True,
+            prompt="Rage rooms",
+            category=["Entertainment", "Hobbies"],
+            nat_says=True,
+            affinity_range=(jn_affinity.HAPPY, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_rage_rooms:
+    $ already_discussed_rage_rooms = get_topic("talk_rage_rooms").shown_count > 0
+
+    if already_discussed_rage_rooms:
+        n "Man..."
+        n "You know,"
+        extend " [player]..."
+        n "I still can't get my mind off rage rooms."
+        extend " I know we spoke about them before, but..."
+        n "Well,"
+        extend " can you blame me?"
+
+    else:
+        n "Hey, [player]..."
+        n "This is kinda random,"
+        extend " but..." 
+        n "Have you ever been to a rage room before?"
+        n "I've never actually {i}been{/i} to one myself,"
+        extend " but oh."
+        extend " My."
+        extend " God."
+        extend " [player]."
+
+    n "They..." 
+    extend " look..."
+    extend " {i}awesome{/i}!"
+    n "No, really!"
+    extend " I'm serious!"
+    n "You basically get an entire room full of useless old junk:"
+    extend " unwanted furniture, decorations, old computer hardware..."
+    extend " as well as a bunch of tools and safety equipment."
+    n "You know."
+    extend " Goggles, hammers,"
+    extend " that sort of thing."
+    n "And then...?"
+    n "Ehehe."
+    n "Come on, [player]!"
+    extend " What {i}else{/i} do you think it's all for?"
+    n "You get to beat the absolute {i}snot{/i} out of all of everything!"
+    extend " Seriously!"
+    extend " You just get to go wild!"
+    n "...And the best part?"
+    extend " You don't have to clean up afterwards either!"
+    extend " You can even take people {i}with{/i} you!"
+    n "Man..."
+    extend " imagine Yuri trying out something like that!"
+    n "And Sayori..."
+    n "...There'd be no room {i}left{/i}!"
+    n "Of course," 
+    extend " they already supply a bunch of their own things you can smash up..."
+    n "But you can totally bring your own stuff too!"
+    extend " Well..."
+    extend " so long as it's all safe to break up -"
+    extend " no big batteries or anything dumb like that."
+    n "Finally had enough of that garbage printer chewing up all your assignments?"
+    extend " Trial by combat it is!"
+    n "You still gotta pay regardless of if you brought your own junk,"
+    extend " of course..."
+    extend " and it really isn't a way to deal with anger issues or anything like that."
+    n "But I gotta say, [player]..."
+    extend " if that isn't a {i}smashing{/i} way to relieve stress..."
+    n "I don't know what is!"
+    extend " Ehehe."
+
+    return
