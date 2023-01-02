@@ -252,7 +252,12 @@ init -50 python:
 
         # Arms
         lc_args.extend([
-            (0, 0), "{0}/arms/[Natsuki._outfit.clothes.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose)
+            (0, 0), "{0}/arms/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose)
+        ])
+
+        # Sleeves
+        lc_args.extend([
+            (0, 0), "{0}/sleeves/[Natsuki._outfit.clothes.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose)
         ])
 
         # Generate and return the sprite
