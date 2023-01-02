@@ -345,17 +345,45 @@ label farewell_option_work:
         n 1kllajsbr "But...{w=0.5}{nw}" 
         extend 1knmgssbr " it's super [time_concern] though,{w=0.1} [player]..."
         n 1kllsll "..."
-        n 1fcspusbr "Just...{w=1}{nw}" 
-        extend 1kllsl " be careful,{w=0.2} alright?"
-        n 1fsqpol "And you {i}better{/i} come visit when you get back."
+        n 1kllajl "Are you..."
+        show natsuki 1tnmbol
 
-        if Natsuki.isLove(higher=True):
-            n 1fnmcal "Take care,{w=0.1} [player]!{w=1}{nw}"
-            extend 1kchsmleaf " I love you!"
-            n 1kllcalsbr "..."
+        menu:
+            n "Are you at {i}least{/i} working from home today,{w=0.2} or...?"
 
-        else:
-            n 1fnmcal "Take care,{w=0.1} [player]!"
+            "Yes, I'm working from home.":
+                n 1ncsssl "Heh.{w=0.75}{nw}"
+                extend 1nllpul " I {i}guess{/i} that's something,{w=0.75}{nw}"
+                extend 1nslsll " at least."
+                n 1fslpol "Still doesn't mean I gotta like it,{w=0.2} though."
+                n 1fcspol "Just..."
+                n 1kllbol "...Keep an eye on the clock.{w=0.75}{nw}"
+                extend 1knmbol " Alright?"
+                n 1fsqcal "I don't wanna hear about you staying back late or anything."
+                
+                if Natsuki.isLove(higher=True):
+                    n 1fchsml "Take it easy,{w=0.2} [player]!{w=0.75}{nw}"
+                    extend 1fchssleafsbl " L-{w=0.2}love you!"
+
+                else:
+                    n 1fchssl "Take it easy,{w=0.2} [player]!"
+                    n 1kslsll "..."
+
+            "No, I have to head out.":
+                n 1kcsemlesi "Man...{w=1}{nw}"
+                extend 1ksqbol " {i}really{/i}?"
+                n 1ksrsllsbr "..."
+                n 1fcspusbr "Just...{w=1}{nw}" 
+                extend 1kllsl " be careful,{w=0.2} alright?"
+                n 1fsqpol "And you {i}better{/i} come visit when you get back."
+
+                if Natsuki.isLove(higher=True):
+                    n 1fnmcal "Take care,{w=0.1} [player]!{w=1}{nw}"
+                    extend 1kchsmleaf " I love you!"
+                    n 1kllcalsbr "..."
+
+                else:
+                    n 1fnmcal "Take care,{w=0.1} [player]!"
 
     else:
         n 1unmajesu "Oh?{w=0.2} You're working today?"
@@ -377,6 +405,11 @@ label farewell_option_work:
         elif jnIsNewYearsEve():
             n 1fskgsl "...And on New Year's Eve,{w=0.1} too?!{w=0.5}{nw}"
             extend 1kcsemledr " Jeez..."
+
+        elif jnIsPlayerBirthday():
+            n 1kwdgsl "...And on your {i}birthday{/i} too?!{w=1}{nw}"
+            extend 1kslanl " Yikes,{w=0.75}{nw}" 
+            extend 1kslsll " [player]..."
 
         elif not jn_is_weekday():
             n 1uwdaj "A-{w=0.1}and on a weekend,{w=0.1} too?{w=0.5}{nw}"
