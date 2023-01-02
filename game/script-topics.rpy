@@ -9066,3 +9066,155 @@ label talk_rage_rooms:
     extend 1fchsmeme " Ehehe."
 
     return
+
+# Natsuki adds her thoughts on vegetarianism/veganism.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_thoughts_on_vegetarianism",
+            unlocked=True,
+            prompt="What do you think about vegetarianism?",
+            category=["Food", "Society"],
+            nat_says=True,
+            affinity_range=(jn_affinity.HAPPY, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_thoughts_on_vegetarianism:
+    $ already_discussed_vegetarianism = get_topic("talk_thoughts_on_vegetarianism").shown_count > 0
+
+    if Natsuki.isNormal(higher=True):
+        if already_discussed_vegetarianism:
+            n  "Huh?"
+            extend  " Vegetarianism?"
+            n  "...Wait."
+            n  "Didn't we talk about this before?"
+
+        else:
+            n  "Eh?"
+            extend  " Vegetarianism?"
+            n  "That's..."
+            extend  " definitely not a question I was expecting,"
+            extend  " I gotta say."
+            n  "But..." 
+            extend  " Why do you ask,{w=0.2} [player]?"
+            n  "Looking to turn over a new leaf,{w=0.2} are we?"
+            extend  " Ehehe."
+
+        n  "Well,{w=0.2} anyway."
+        extend  " In all seriousness?"
+        n  "I've never really thought about it that much,"
+        extend  " to be honest."
+        n  "We had vegetarian and vegan options at school,"
+        extend  " but I never really felt a particular drive to try them out or anything."
+        n  "T-that's not to say they looked {i}bad{/i} or anything!"
+        n  "At least not to me."
+        n  "Heck,"
+        extend  " Monika shovelled that stuff down like there was no tomorrow!"
+        n  "Although..."
+        extend  " I do think it's super admirable how people can put meat aside for so many reasons!"
+        extend  " Seriously!"
+        n  "I mean,"
+        extend  " it's one thing to skip out on eating a particular type of meat."
+        extend  " Anyone can do that."
+        n  "But dropping {i}everything{/i}," 
+        extend  " or even refusing {i}any{/i} animal products whatsoever?"
+        n  "Now {i}that{/i} takes some guts!"
+        extend  "...Heh."
+        extend  " Pun not intended."
+
+        n  "Of course,{w=0.2} maybe some people just don't like the taste."
+        extend  " I totally get that."
+        extend  " But there's a whole bunch of reasons people do it -"
+        extend  " and they're all just as valid!"
+        n  "Environmental concerns,"
+        extend  " animal welfare..."
+        extend  " even just to save money!"
+        n  "Crazy to think how a single lifestyle choice can link so many people,{w=0.2} huh?"
+
+        n  "Oh -" 
+        extend  " don't worry,{w=0.2} [player]."
+        extend  " I'm not gonna get all preachy about it or anything like that."
+        n  "It {i}is{/i} just a choice like anything else,"
+        extend  " after all."
+        extend  " And a personal one at that."
+
+        n  "...Not like that's gonna stop me suggesting it though!"
+        n  "Sorry,{w=0.2} [player]."
+        n  "You aren't wriggling out of this one!"
+        extend  " Ehehe."
+        n  "I don't know if you're practicing an animal-free diet already,"
+        extend  " but if you aren't..."
+        n  "Why not give it a shot,{w=0.2} [player]?"
+        n  "You don't need to go all out or anything -{w=0.2} "
+        extend  " you could swap out one meal a day and just see how you feel!"
+        n  "Plus with all the recipes out there,"
+        extend  " the hard work has practically already been done for you!"
+        n  "And anyway,"
+        extend  " even if it's only for a day or two,{w=0.2} and it doesn't work out:"
+        extend  " at least you can say you {i}tried{/i} it,{w=0.2} right?"
+
+        n  "Well,{w=0.2} at any rate -{w=0.2} "
+        extend  " I've gone on long enough,"
+        extend  " so I think that's about all I have to say on that topic."
+        n  "Besides,{w=0.2} [player]..."
+        n  "Wouldn't want to turn you into a {i}vegetable{/i} now,"
+        extend  " would we?"
+        n  "Ehehe."
+
+        if Natsuki.isLove(higher=True):
+            n  "Love you,{w=0.2} [player]~!"
+
+    elif Natsuki.isDistressed(higher=True):
+        if already_discussed_vegetarianism:
+            n  "Seriously," 
+            extend  " [player]?"
+            n  "This {i}again{/i}?"
+            n  "..."
+            
+        else:
+            n  "...Really,{w=0.2} [player]?"
+            extend  " {i}Vegetarianism{/i}?"
+            n  "..."
+
+        n  "Whatever."
+        extend  " it's not like I have much to say about it."
+        n  "I never really practiced it or anything like that,"
+        extend  " but I can at least respect the effort people make."
+        n  "It takes some real guts to cut out so many options from your diet."
+        extend  " Or even cut from your lifestyle completely."
+        n  "People do it for a whole bunch of reasons,"
+        extend  " obviously."
+        n  "But..." 
+        extend  " I do think it's cool how a single lifestyle choice can link tons of people together."
+        n  "The environment,"
+        extend  " animal welfare..."
+        extend  " even just fruits and veggies being cheaper to buy in bulk."
+        n  "It's all just as valid."
+        extend  "Just like the choice to start going animal-free or not."
+        n  "...Heh."
+        extend  " And speaking of choices people make..."
+        n  "No prizes for guessing who should be making better ones right now," 
+        extend  " {i}[player]{/i}."
+
+    else:
+        if already_discussed_vegetarianism:
+            n  "Oh,"
+            extend  " take a hike already,{w=0.2} [player]."
+            n  "I'm still not giving you an answer."
+            extend  " Why should I?"
+            n  "Anything I ever say to you is wrong,"
+            extend  " apparently."
+
+        else:
+            n  "...Wow."
+            extend  " And why should I even bother answering,{w=0.2} [player]?"
+            n  "Knowing you?"
+            n  "Whatever answer I give is gonna be the {i}wrong{/i} one anyway,"
+            extend  " isn't it?"
+            n  "Jerk."
+
+    return

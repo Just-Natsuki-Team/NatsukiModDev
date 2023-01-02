@@ -23,7 +23,7 @@ init python in jn_preferences.random_topic_frequency:
     OFTEN = 4
 
     _RANDOM_TOPIC_FREQUENCY_COOLDOWN_MAP = {
-        0: 999,
+        0: 10000,
         1: 30,
         2: 15,
         3: 5,
