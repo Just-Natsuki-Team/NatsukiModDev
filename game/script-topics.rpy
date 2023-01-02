@@ -9066,3 +9066,57 @@ label talk_rage_rooms:
     extend 1fchsmeme " Ehehe."
 
     return
+
+# Allows the player to ask Natsuki to take down any decorations in the room.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_take_down_deco",
+            unlocked=True,
+            prompt="Can you tidy away the decorations for me?",
+            conditional="len(store.persistent._jn_holiday_deco_list_on_quit) > 0",
+            category=["Holidays"],
+            player_says=True,
+            affinity_range=(jn_affinity.HAPPY, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_take_down_deco:
+    n 1tllpu "Just not feeling the celebrations today,{w=0.75}{nw}"
+    extend 1tnmsl " [player]?"
+
+    if len(jn_events.getHolidaysForDate()) == 0:
+        n 1nslsssbl "I suppose they {i}have{/i} kinda overstayed their welcome..."
+        n 1nslposbl "..."
+    
+    else:
+        n 1ncsemesi "...{w=1}{nw}"
+
+    n 1ulraj "Yeah,{w=0.5}{nw}" 
+    extend 1nlrbo " I can do that.{w=0.75}{nw}"
+    extend 1nsrpo " I guess.{w=1}{nw}"
+    extend 1fsqca " But you're putting it all up next time."
+    n 1nllsl "Just give me a second here...{w=1}{nw}"
+    show natsuki 1ncssl
+
+    show black zorder 4 with Dissolve(0.5)
+    $ jnPause(1)
+    play audio chair_out
+    $ jnPause(3)
+    hide deco
+    $ persistent._jn_holiday_deco_list_on_quit = []
+    play audio clothing_ruffle
+    $ jnPause(2)
+    play audio drawer
+    $ jnPause(3)
+    play audio chair_in
+    $ jnPause(1)
+    show natsuki 1nlrbo at jn_center
+    hide black with Dissolve(1.25)
+
+    n 1ulraj "And I think that's everything!"
+
+    return
