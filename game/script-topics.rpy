@@ -9205,7 +9205,7 @@ label talk_thoughts_on_vegetarianism:
         if already_discussed_vegetarianism:
             n  "Oh,{w=0.75}{nw}"
             extend  " take a hike already,{w=0.2} [player]."
-            n  "I'm still not giving you an answer.{w=0.75}{nw}"
+            n  "I'm {i}still{/i} not giving you an answer.{w=0.75}{nw}"
             extend  " And why should I?"
             n  "Anything I ever say to you is wrong,{w=0.75}{nw}"
             extend  " apparently."
