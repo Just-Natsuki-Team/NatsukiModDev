@@ -349,7 +349,7 @@ label farewell_option_work:
         show natsuki 1tnmbol
 
         menu:
-            n "Are you at {i}least{/i} working from home today,{w=0.2} or...?"
+            n "Are you gonna work from home today,{w=0.2} or...?"
 
             "Yes, I'm working from home.":
                 n 1ncsssl "Heh.{w=0.75}{nw}"
