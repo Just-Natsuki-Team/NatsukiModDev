@@ -11,8 +11,9 @@ init -50 python:
 
     class JNPose(Enum):
         sitting = 1
-        arms_crossed = 2
-        fingers_on_desk = 3
+        arms_crossed_body = 2
+        arms_crossed_desk = 3
+        fingers_on_desk = 4
 
         def __str__(self):
             return self.name
@@ -270,8 +271,9 @@ init 1 python:
 
     POSE_MAP = {
         "1": JNPose.sitting,
-        "2": JNPose.arms_crossed,
-        "3": JNPose.fingers_on_desk
+        "2": JNPose.arms_crossed_body,
+        "3": JNPose.arms_crossed_desk,
+        "4": JNPose.fingers_on_desk
     }
 
     EYEBROW_MAP = {
@@ -1271,8 +1273,9 @@ label pose_test:
     n 1fchbl "You got it!"
 
     n 1fcssm "This is just my sitting pose!"
-    n 2fllpo "This is my arms_crossed pose!"
-    n 3kwmpu "And this is my fingers_on_desk pose!"
+    n 2fllpo "This is my arms_crossed_body pose!"
+    n 3kwmsml "This is my arms_crossed_desk pose!"
+    n 4kwmpu "And this is my fingers_on_desk pose!"
 
     n 1fchbg "...And that's about it!{w=0.75}{nw}"
     extend 1fwlsm  " Glad to be of service,{w=0.2} [player]!"
