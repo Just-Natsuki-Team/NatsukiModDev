@@ -9077,7 +9077,7 @@ init 5 python:
             prompt="What do you think about vegetarianism?",
             conditional="jn_utils.get_total_gameplay_hours() >= 4",
             category=["Food", "Society"],
-            nat_says=True,
+            player_says=True,
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
@@ -9092,6 +9092,7 @@ label talk_thoughts_on_vegetarianism:
             extend 1tnmsl " Vegetarianism?"
             n 1fcspu "...Wait."
             n 1tllboeqm "Didn't we talk about this before?"
+            n 1tslbo "..."
 
         else:
             n 1tnmpu "Eh?{w=0.5}{nw}"
@@ -9100,18 +9101,18 @@ label talk_thoughts_on_vegetarianism:
             extend 1ullss " definitely not a question I was expecting,{w=0.75}{nw}"
             extend 1tnmbo " I gotta say."
             n 1ulrpu "But...{w=0.75}{nw}" 
-            extend 1tsqss " Why do you ask,{w=0.2} [player]?"
-            n 1tsqsm "Looking to turn over a new leaf,{w=0.2} are we?{w=0.75}{nw}"
+            extend 1tsqss " why do you ask,{w=0.2} [player]?"
+            n 1fsqsm "Looking to turn over a new leaf,{w=0.2} are we?{w=0.75}{nw}"
             extend 1fchsm " Ehehe."
 
         n 1ullss "Well,{w=0.2} anyway.{w=0.75}{nw}"
         extend 1tnmbo " In all seriousness?"
-        n 1ulraj "I've never really thought about it that much,{w=0.75}{nw}"
+        n 1ulraj "I've never really thought about it that much,{w=0.5}{nw}"
         extend 1ulrbo " to be honest."
         n 1nsrss "We had vegetarian and vegan options at school,{w=0.75}{nw}"
         extend 1tnmbo " but I never really felt a particular drive to try them out or anything."
-        extend 1nslsssbr " Not like I can really try them {i}now{/i},{w=0.2} either."
-        n 1unmeml "T-{w=0.2}that's not to say they looked {i}bad{/i} or anything!"
+        n 1nslsssbr "And it's not like I can really try them {i}now{/i},{w=0.2} either."
+        n 1unmeml "B-{w=0.2}but that's not to say they looked {i}bad{/i} or anything!"
         n 1fsldv "At least not to me."
         n 1fllss "Heck,{w=0.75}{nw}"
         extend 1fchgn " Monika shoveled that stuff down like there was no tomorrow!"
@@ -9121,12 +9122,10 @@ label talk_thoughts_on_vegetarianism:
         n 1ullaj "I mean,{w=0.75}{nw}"
         extend 1nllsl " it's one thing to skip out on eating a particular type of meat.{w=0.75}{nw}"
         extend 1fcsss " Anyone can do that."
-        n 1unmem "But dropping {i}everything{/i},{w=0.75}{nw}" 
-        extend 1tnmpu" or even refusing {i}any{/i} animal products whatsoever?"
-        n 1fcsbg "Now {i}that{/i} takes some guts!{w=0.75}{nw}"
-        extend 1nslss "...Heh.{w=0.75}{nw}"
-        extend 1nsldvsbl " Pun not intended."
-
+        n 1tnmpu "But dropping {i}everything{/i},{w=0.75}{nw}" 
+        extend 1unmem " or even refusing {i}any{/i} animal products whatsoever?"
+        n 1fcsbg "Now {i}that{/i} takes some guts!{w=1.25}{nw}"
+        extend 1fsldvsbl " ...Pun not intended."
         n 1ullaj "Of course,{w=0.5}{nw}" 
         extend 1tllsl " maybe some people just don't like the taste.{w=0.75}{nw}"
         extend 1tnmbo " I totally get that.{w=1}{nw}"
@@ -9135,16 +9134,14 @@ label talk_thoughts_on_vegetarianism:
         n 1ulraj "Environmental concerns,{w=0.5}{nw}"
         extend 1nslun " animal welfare...{w=0.75}{nw}"
         extend 1kchbgsbr " even just to save money!"
-        n 1tsqsssbr "Crazy to think how a single lifestyle choice can link so many people,{w=0.2} huh?"
-
+        n 1tsqsssbr "Crazy to think how a single lifestyle choice can come from so many places,{w=0.2} huh?"
         n 1unmajesu "Oh -{w=0.5}{nw}" 
         extend 1fllbgsbl " don't worry,{w=0.2} [player].{w=0.75}{nw}"
         extend 1nslpo " I'm not gonna get all preachy about it or anything like that."
         n 1unmca "It {i}is{/i} just a choice like anything else,{w=0.75}{nw}"
         extend 1nlrss " after all.{w=0.75}{nw}"
         extend 1nsrsssbl " And a personal one at that."
-
-        n 1fwlbg "...Not like that's gonna stop me suggesting it though!"
+        n 1fwlbg "...As if that's gonna stop me suggesting it though!"
         n 1fsldv "Even if {i}I{/i} can't try it out myself right now..."
         n 1fsqsm "There's no excuse for you!{w=1}{nw}"
         extend 1fcsbg " Sorry,{w=0.2} [player]."
@@ -9154,14 +9151,13 @@ label talk_thoughts_on_vegetarianism:
         extend 1fsqss " but if you aren't..."
         n 1fchbg "Why not give it a shot,{w=0.2} [player]?"
         n 1ullss "You don't need to go all out or anything -{w=0.5}{nw}"
-        extend 1fchsm " you could swap out one meal a day and just see how you feel!"
+        extend 1fchsm " you could swap out just a single meal a day and see how you're feeling!"
         n 1tlrss "Plus with all the recipes out there,{w=0.75}{nw}"
         extend 1tsqbg " the hard work is practically already done for you!{w=0.75}{nw}"
         extend 1fchsmeme " Easy peasy!"
         n 1tnmsm "And anyway,{w=0.75}{nw}"
         extend 1tllaj " even if it's only for a day or two,{w=0.2} and it doesn't work out:{w=0.5}{nw}"
         extend 1tsqsm " at least you can say you {i}tried{/i} it,{w=0.2} right?"
-
         n 1tslsm "Well,{w=0.2} at any rate -{w=0.5}{nw}"
         extend 1nslss " I've gone on long enough,{w=0.75}{nw}"
         extend 1fcsss " so I think that's about all I have to say on that topic."
@@ -9187,7 +9183,7 @@ label talk_thoughts_on_vegetarianism:
 
         n 1fcssl "..."
         n 1nsrsl "Whatever.{w=1}{nw}"
-        extend 1fsrsr " it's not like I have much to say about it."
+        extend 1fsrsr " It's not like I have much to say about it."
         n 1nnmbo "I never really practiced it or anything like that,{w=0.75}{nw}"
         extend 1nllsl " but I can at least respect the effort people make."
         n 1fcsaj "It takes some real guts to cut out so many options from your diet.{w=0.75}{nw}"
@@ -9200,7 +9196,7 @@ label talk_thoughts_on_vegetarianism:
         extend 1nslsf " animal welfare...{w=0.75}{nw}"
         extend 1ksrbo " even just fruits and veggies being cheaper to buy in bulk."
         n 1fcsca "It's all just as valid.{w=0.75}{nw}"
-        extend 1ncssl "Just like the choice to start going animal-free or not."
+        extend 1ncssl " Just like the choice to start going animal-free or not."
         n 1ncsss "...Heh.{w=0.75}{nw}"
         extend 1fsqsl " And speaking of choices people make..."
         n 1fnmem "No prizes for guessing who should be making better ones right now,{w=0.75}{nw}" 
