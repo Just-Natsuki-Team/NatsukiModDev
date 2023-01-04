@@ -9075,7 +9075,7 @@ init 5 python:
             label="talk_thoughts_on_vegetarianism",
             unlocked=True,
             prompt="What do you think about vegetarianism?",
-            conditional="jn_utils.get_total_gameplay_hours() >= 4"
+            conditional="jn_utils.get_total_gameplay_hours() >= 4",
             category=["Food", "Society"],
             nat_says=True,
             location="classroom"
@@ -9175,52 +9175,53 @@ label talk_thoughts_on_vegetarianism:
 
     elif Natsuki.isDistressed(higher=True):
         if already_discussed_vegetarianism:
-            n  "Seriously,{w=0.75}{nw}" 
-            extend  " [player]?"
-            n  "This {i}again{/i}?"
-            n  "..."
+            n 1fcsemesi "..."
+            n 1fslsl "Seriously,{w=0.75}{nw}" 
+            extend 1fsqsl " [player]?"
+            n 1nsqsr "This {i}again{/i}?"
             
         else:
-            n  "...Really,{w=0.2} [player]?{w=0.75}{nw}"
-            extend  " {i}Vegetarianism{/i}?"
-            n  "..."
+            n 1fcsem "...Really,{w=0.2} [player]?{w=0.75}{nw}"
+            extend 1fsqsr " {i}Vegetarianism{/i}?"
+            n 1fcssl "..."
 
-        n  "Whatever.{w=1}{nw}"
-        extend  " it's not like I have much to say about it."
-        n  "I never really practiced it or anything like that,{w=0.75}{nw}"
-        extend  " but I can at least respect the effort people make."
-        n  "It takes some real guts to cut out so many options from your diet.{w=0.75}{nw}"
-        extend  " Or even cut from your lifestyle completely."
-        n  "People do it for a whole bunch of reasons,{w=0.75}{nw}"
-        extend  " obviously."
-        n  "But...{w=1}{nw}" 
-        extend  " I guess it's cool how a single lifestyle choice can link tons of people together."
-        n  "The environment,{w=0.5}{nw}"
-        extend  " animal welfare...{w=0.75}{nw}"
-        extend  " even just fruits and veggies being cheaper to buy in bulk."
-        n  "It's all just as valid.{w=0.75}{nw}"
-        extend  "Just like the choice to start going animal-free or not."
-        n  "...Heh.{w=0.75}{nw}"
-        extend  " And speaking of choices people make..."
-        n  "No prizes for guessing who should be making better ones right now,{w=0.75}{nw}" 
-        extend  " {i}[player]{/i}."
+        n 1fcssl "..."
+        n 1nsrsl "Whatever.{w=1}{nw}"
+        extend 1fsrsr " it's not like I have much to say about it."
+        n 1nnmbo "I never really practiced it or anything like that,{w=0.75}{nw}"
+        extend 1nllsl " but I can at least respect the effort people make."
+        n 1fcsaj "It takes some real guts to cut out so many options from your diet.{w=0.75}{nw}"
+        extend 1flrca " Or even from your lifestyle completely."
+        n 1nlrtr "People do it for a whole bunch of reasons,{w=0.75}{nw}"
+        extend 1nsrsl " obviously."
+        n 1nlrpu "But...{w=1}{nw}" 
+        extend 1nnmsl " I guess it's cool how a single lifestyle choice can link tons of people together."
+        n 1ullsl "The environment,{w=0.5}{nw}"
+        extend 1nslsf " animal welfare...{w=0.75}{nw}"
+        extend 1ksrbo " even just fruits and veggies being cheaper to buy in bulk."
+        n 1fcsca "It's all just as valid.{w=0.75}{nw}"
+        extend 1ncssl "Just like the choice to start going animal-free or not."
+        n 1ncsss "...Heh.{w=0.75}{nw}"
+        extend 1fsqsl " And speaking of choices people make..."
+        n 1fnmem "No prizes for guessing who should be making better ones right now,{w=0.75}{nw}" 
+        extend 1fsqan " {i}[player]{/i}."
 
     else:
         if already_discussed_vegetarianism:
-            n  "Oh,{w=0.75}{nw}"
-            extend  " take a hike already,{w=0.2} [player]."
-            n  "I'm {i}still{/i} not giving you an answer.{w=0.75}{nw}"
-            extend  " And why should I?"
-            n  "{i}Anything{/i} I ever say to you is wrong,{w=0.75}{nw}"
-            extend  " apparently."
-            n "Isn't that right?"
+            n 1fcsan "Oh,{w=0.75}{nw}"
+            extend 1fsqupl " take a hike already,{w=0.2} [player]."
+            n 1fsleml "I'm {i}still{/i} not giving you an answer.{w=0.75}{nw}"
+            extend 1fsqful " A-{w=0.2}and why should I?"
+            n 1fcsanltsa "{i}Anything{/i} I ever say to you is wrong,{w=0.75}{nw}"
+            extend 1fcssrltsa " apparently."
+            n 1fnmfultsc "Isn't that right?"
 
         else:
-            n  "...Wow.{w=0.75}{nw}"
-            extend  " And why should I even {i}bother{/i} answering,{w=0.2} [player]?"
-            n  "Knowing you?"
-            n  "Whatever answer I give is gonna be the {i}wrong{/i} one anyway,{w=0.75}{nw}"
-            extend  " isn't it?"
-            n  "Jerk."
+            n 1fsqeml "...Wow.{w=0.75}{nw}"
+            extend 1fnmanltsc " And why should I even {i}bother{/i} answering,{w=0.2} [player]?"
+            n 1fllunltsc "Knowing you?"
+            n 1fcsfultsa "Whatever answer I give is gonna be the {i}wrong{/i} one anyway,{w=0.75}{nw}"
+            extend 1fsqfultsb " isn't it?"
+            n 1fcsupltsa "Jerk."
 
     return
