@@ -150,6 +150,7 @@ init 10 python:
 #All migration scripts go here
 init python in jn_data_migrations:
     import store
+    import store.jn_affinity as jn_affinity
     import store.jn_outfits as jn_outfits
     import store.jn_utils as jn_utils
 
