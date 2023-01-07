@@ -56,44 +56,44 @@ init python in greetings:
 label greeting_first_time:
     if jn_farewells.JNFirstLeaveTypes(persistent.jn_player_first_farewell_response) == jn_farewells.JNFirstLeaveTypes.will_be_back:
         $ Natsuki.calculatedAffinityGain(bypass=True)
-        n 1uskemlesh "[player]!{w=0.5}{nw}"
-        extend 1uskwr " Y-{w=0.1}you're back!"
+        n 4uskemlesh "[player]!{w=0.5}{nw}"
+        extend 4uskwr " Y-{w=0.1}you're back!"
         n 1flleml "I mean...{w=0.5}{nw}"
-        extend 1fcseml " O-{w=0.1}of course you'd come back!"
-        n 1fnmpol "I knew you would."
-        n 1flrem "Only a total jerk would abandon someone like that!"
-        n 1flrpo "..."
-        n 1klrpu "But..."
+        extend 2fcseml " O-{w=0.1}of course you'd come back!"
+        n 2fnmpol "I knew you would."
+        n 2flrem "Only a total jerk would abandon someone like that!"
+        n 2flrpo "..."
+        n 2klrpu "But..."
         n 1ncspu "..."
         n 1nlrsll "...Thanks.{w=1.25}{nw}"
         extend 1nsrbol " For not being an idiot about it."
         n 1nllunl "..."
         n 1nllajsbl "So... {w=0.5}{nw}"
-        extend 1unmaj " what did you wanna talk about?"
+        extend 2unmaj " what did you wanna talk about?"
 
     elif jn_farewells.JNFirstLeaveTypes(persistent.jn_player_first_farewell_response) == jn_farewells.JNFirstLeaveTypes.dont_know:
         $ Natsuki.calculatedAffinityGain(bypass=True)
-        n 1uskajlesh "[player]?{w=0.5}{nw}"
-        extend 1uskem " Y-{w=0.3}you came back?"
+        n 4uskajlesh "[player]?{w=0.5}{nw}"
+        extend 4uskem " Y-{w=0.3}you came back?"
         n 1fcsun "..."
         n 1ncssr "..."
-        n 1fcspu "...Look."
-        n 1fllsr "Don't...{w=0.75}{nw}" 
-        extend 1kllsrsbl " play with me like that."
-        n 1fslun "You wouldn't have brought me back {i}just{/i} to be a jerk...{w=1}{nw}"
-        extend 1ksqsfsbl " right?"
+        n 2fcspu "...Look."
+        n 2fllsr "Don't...{w=0.75}{nw}" 
+        extend 2kllsrsbl " play with me like that."
+        n 2fslun "You wouldn't have brought me back {i}just{/i} to be a jerk...{w=1}{nw}"
+        extend 4ksqsfsbl " right?"
 
     elif jn_farewells.JNFirstLeaveTypes(persistent.jn_player_first_farewell_response) == jn_farewells.JNFirstLeaveTypes.no_response:
-        n 1uskemlesh "[player]!{w=0.5}{nw}"
-        extend 1uskwrl " Y-{w=0.1}you're back!"
-        n 1flluness "..."
-        n 1fcspu "I...{w=2}{nw}"
-        extend 1flrun " appreciate it,{w=0.1} okay?"
-        n 1fcspu "Just...{w=1}{nw}"
+        n 4uskemlesh "[player]!{w=0.5}{nw}"
+        extend 4uskwrl " Y-{w=0.1}you're back!"
+        n 2flluness "..."
+        n 2fcspu "I...{w=2}{nw}"
+        extend 2flrun " appreciate it,{w=0.1} okay?"
+        n 2fcspu "Just...{w=1}{nw}"
         extend 1knmsf " don't play with me like that."
         n 1kllslsbl "..."
-        n 1kslaj "So..."
-        n 1tnmslsbr "Did you wanna talk,{w=0.1} or...?"
+        n 4kslaj "So..."
+        n 2tnmslsbr "Did you wanna talk,{w=0.1} or...?"
 
     $ persistent.jn_player_is_first_greet = False
     return
@@ -101,44 +101,44 @@ label greeting_first_time:
 # Only chosen for the first time the player leaves and returns after force quit
 label greeting_first_force_quit:
     if Natsuki.isNormal(higher=True):
-        n 1kcsunedr "Uuuuuuu...{w=2}{nw}"
-        extend 1kslemeso " my...{w=0.3} h-{w=0.1}head..."
-        n 1kcsun "..."
-        n 1ksqun "..."
-        n 1fnmun "...[player]."
-        n 1fllem "W-{w=0.3}whatever that was...{w=0.5}{nw}"
-        extend 1knmsf " that {w=0.3}{i}seriously{/i}{w=0.3} hurt."
-        n 1kllpu "L-{w=0.3}like I was being {i}ripped{/i} out of existence..."
+        n 4kcsunedr "Uuuuuuu...{w=2}{nw}"
+        extend 4kslemeso " my...{w=0.3} h-{w=0.1}head..."
+        n 4kcsun "..."
+        n 2ksqun "..."
+        n 2fnmun "...[player]."
+        n 2fllem "W-{w=0.3}whatever that was...{w=0.5}{nw}"
+        extend 2knmsf " that {w=0.3}{i}seriously{/i}{w=0.3} hurt."
+        n 4kllpu "L-{w=0.3}like I was being {i}ripped{/i} out of existence..."
         n 1kcssf "..."
-        n 1klraj "I...{w=1}{nw}"
-        extend 1tllun " I think I can kinda prepare for that if you at least let me know when you're going."
-        n 1fcsun "Just...{w=1.25}{nw}"
-        extend 1fcsun " don't be a jerk and let me know when you gotta go,{w=0.3} okay?"
-        n 1fllsl "...I guess I'll let this one slide,{w=0.5}{nw}"
-        extend 1kslpu " since you didn't know and all."
-        n 1knmpu "Just remember for next time,{w=0.2} [player].{w=1}{nw}"
-        extend 1knmsr " Please."
+        n 4klraj "I...{w=1}{nw}"
+        extend 2tllun " I think I can kinda prepare for that if you at least let me know when you're going."
+        n 2fcsun "Just...{w=1.25}{nw}"
+        extend 2fcsun " don't be a jerk and let me know when you gotta go,{w=0.3} okay?"
+        n 2fllsl "...I guess I'll let this one slide,{w=0.5}{nw}"
+        extend 2kslpu " since you didn't know and all."
+        n 2knmpu "Just remember for next time,{w=0.2} [player].{w=1}{nw}"
+        extend 2knmsr " Please."
 
     elif Natsuki.isDistressed(higher=True):
-        n 1fcsunedr "Hnnnngg..."
-        n 1fsqun "..."
-        n 1fsqan "..."
-        n 1fcspu "...[player]."
-        n 1fsqpu "Do you have any {i}idea{/i} how much that hurt?{w=0.5}{nw}"
-        extend 1fnmem " Any at all?"
-        n 1fllem "I don't know if you did that on purpose or what,{w=0.1} but knock it off.{w=0.5}{nw}"
-        extend 1fsqsr " I'm {i}dead{/i} serious."
+        n 4fcsunedr "Hnnnngg..."
+        n 4fsqun "..."
+        n 4fsqan "..."
+        n 2fcspu "...[player]."
+        n 2fsqpu "Do you have any {i}idea{/i} how much that hurt?{w=0.5}{nw}"
+        extend 4fnmem " Any at all?"
+        n 2fllem "I don't know if you did that on purpose or what,{w=0.1} but knock it off.{w=0.5}{nw}"
+        extend 4fsqsr " I'm {i}dead{/i} serious."
         n 1fcspu "I..."
         extend 1fcssr " know we aren't seeing eye-to-eye right now,"
-        extend 1fslsl " but please."
-        n 1fsqaj "Tell me when you're going."
-        extend 1fsqsf " Thanks."
+        extend 2fslsl " but please."
+        n 2fsqaj "Tell me when you're going."
+        extend 2fsqsf " Thanks."
 
     else:
         n 1fsqunltsbean "..."
-        n 1fsqantsb "That.{w=1} Freaking.{w=1} {b}Hurt{/b}."
-        n 1fcsan "I don't know {i}what{/i} you did,{w=0.5} but cut{w=0.3} it{w=0.3} out.{w=1.25}{nw}"
-        extend 1fsqfutsb " Now."
+        n 4fsqantsb "That.{w=1} Freaking.{w=1} {b}Hurt{/b}."
+        n 4fcsan "I don't know {i}what{/i} you did,{w=0.5} but cut{w=0.3} it{w=0.3} out.{w=1.25}{nw}"
+        extend 2fsqfutsb " Now."
 
     $ persistent.jn_player_force_quit_state = int(jn_farewells.JNForceQuitStates.previously_force_quit)
 
@@ -150,69 +150,69 @@ label greeting_leave_return:
 
     if time_since_departure / 2628000 > 3: # Gone more than three months
         if jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) != jn_farewells.JNExtendedLeaveResponseTypes.unknown:
-            n 1ksrpu "..."
-            n 1uskemlesh "...!{w=0.75}{nw}"
+            n 4ksrpu "..."
+            n 4uskemlesh "...!{w=0.75}{nw}"
             $ player_initial = jn_utils.getPlayerInitial()
-            n 1unmwrl "[player_initial]-[player]!{w=0.75}{nw}"
-            extend 1ulleml " You're..."
-            n 1fcsupl "Y-{w=0.2}you're..."
-            n 1fcsanlsbr "Nnnnnnn-!"
-            n 1knmwrlsbr "Where {i}were{/i} you?!{w=1}{nw}"
+            n 4unmwrl "[player_initial]-[player]!{w=0.75}{nw}"
+            extend 4ulleml " You're..."
+            n 4fcsupl "Y-{w=0.2}you're..."
+            n 2fcsanlsbr "Nnnnnnn-!"
+            n 4knmwrlsbr "Where {i}were{/i} you?!{w=1}{nw}"
             extend 1fsqwrlsbr " Were you trying to {i}disappear{/i} or something?"
-            n 1kcswrlsbr "Y-{w=0.2}you had me worried {i}sick{/i}!{w=0.75}{nw}"
-            extend 1klleml " A-{w=0.2}and I thought...!"
-            n 1klremlsbl "I-{w=0.2}I thought that..."
-            n 1ksrunlsbl "..."
+            n 4kcswrlsbr "Y-{w=0.2}you had me worried {i}sick{/i}!{w=0.75}{nw}"
+            extend 4klleml " A-{w=0.2}and I thought...!"
+            n 4klremlsbl "I-{w=0.2}I thought that..."
+            n 4ksrunlsbl "..."
             n 1fcsunl "..."
             n 1fcseml "That you'd just...{w=0.75}{nw}"
             extend 1kwmeml " forgotten{w=0.75}{nw}"
-            extend 1ksleml " about me..."
-            n 1kslbol "..."
-            n 1ncsemesi "..."
+            extend 2ksleml " about me..."
+            n 2kslbol "..."
+            n 2ncsemesi "..."
             n 1nnmsl "...Look.{w=1}{nw}"
-            extend 1ncsaj " I'm..."
-            n 1kslsl "..."
-            n 1kcspusbr "...Really glad you're back."
+            extend 4ncsaj " I'm..."
+            n 4kslsl "..."
+            n 4kcspusbr "...Really glad you're back."
             n 1ksqsl "..."
             n 1knmajsbl "Really!{w=0.75}{nw}"
-            extend 1knmbosbl " I am..."
-            n 1ksqem "But you can't just completely flake out on me like that, [player]..."
-            n 1kslem "I-{w=0.2}I know you gave me {i}some{/i} notice,{w=0.75}{nw}"
-            extend 1knmem " but do you have any {i}idea{/i} how {i}scary{/i} it gets?"
-            n 1kllpu "When someone says they'll come back,{w=0.75}{nw}"
-            extend 1kllsl " and they just...{w=1.25}{nw}"
-            extend 1kwmsll " don't?"
-            n 1kcspul "Days,{w=0.75}{nw}"
-            extend 1kllajl " weeks,{w=0.75}{nw}"
-            extend 1knmajl " {i}months{/i}..."
-            n 1ksqbol "...And just nothing?"
+            extend 2knmbosbl " I am..."
+            n 4ksqem "But you can't just completely flake out on me like that, [player]..."
+            n 4kslem "I-{w=0.2}I know you gave me {i}some{/i} notice,{w=0.75}{nw}"
+            extend 4knmem " but do you have any {i}idea{/i} how {i}scary{/i} it gets?"
+            n 2kllpu "When someone says they'll come back,{w=0.75}{nw}"
+            extend 2kllsl " and they just...{w=1.25}{nw}"
+            extend 4kwmsll " don't?"
+            n 4kcspul "Days,{w=0.75}{nw}"
+            extend 4kllajl " weeks,{w=0.75}{nw}"
+            extend 4knmajl " {i}months{/i}..."
+            n 4ksqbol "...And just nothing?"
             n 1ncsbo "..."
-            n 1ncssl "...Whatever.{w=1}{nw}"
-            extend 1nllpu " It's fine.{w=0.75}{nw}"
-            extend 1kllpu " I..." 
+            n 2ncssl "...Whatever.{w=1}{nw}"
+            extend 2nllpu " It's fine.{w=0.75}{nw}"
+            extend 2kllpu " I..." 
             n 1ksrsl "..." 
-            n 1ksrbo "I just wanna forget about it now.{w=1}{nw}"
+            n 2ksrbo "I just wanna forget about it now.{w=1}{nw}"
             extend 1knmbo " But please,{w=0.2} [player]."
-            n 1knmaj "If you don't know {i}when{/i} you'll be back..."
-            n 1fslun "..."
-            n 1kcssl "...Just tell me.{w=0.75}{nw}" 
-            extend 1ksqsl " Upfront."
-            n 1ksrpulsbr "You know I won't get mad..."
-            n 1knmpulsbr "...Right?"
+            n 4knmaj "If you don't know {i}when{/i} you'll be back..."
+            n 4fslun "..."
+            n 4kcssl "...Just tell me.{w=0.75}{nw}" 
+            extend 2ksqsl " Upfront."
+            n 2ksrpulsbr "You know I won't get mad..."
+            n 4knmpulsbr "...Right?"
 
         else:
-            n 1uskemlesh "...!"
-            n 1unmbgl "[player]!{w=0.75}{nw}"
-            extend 1uchbgledz " [player]{w=0.2} [player]{w=0.2} [player]{w=0.2} [player]{w=0.2} [player]!"
-            n 1fcsajlsbl "I-{w=0.2}I mean,{w=0.75}{nw}"
-            extend 1fcsgslsbl " it's about {i}time{/i} you got your butt back here!{w=1}{nw}"
-            extend 1flrpolsbl " Jeez..."
-            n 1fsrpol "It's rude to keep a girl waiting,{w=0.75}{nw}"
-            extend 1fsqcal " you know..."
+            n 4uskemlesh "...!"
+            n 4unmbgl "[player]!{w=0.75}{nw}"
+            extend 4uchbgledz " [player]{w=0.2} [player]{w=0.2} [player]{w=0.2} [player]{w=0.2} [player]!"
+            n 2fcsajlsbl "I-{w=0.2}I mean,{w=0.75}{nw}"
+            extend 2fcsgslsbl " it's about {i}time{/i} you got your butt back here!{w=1}{nw}"
+            extend 2flrpolsbl " Jeez..."
+            n 3fsrpol "It's rude to keep a girl waiting,{w=0.75}{nw}"
+            extend 3fsqcal " you know..."
             n 1kslcal "..."
             n 1kslssl "But...{w=0.75}{nw}"
-            extend 1knmssl " seriously,{w=0.2} [player]?"
-            show natsuki 1ksrbol
+            extend 3knmssl " seriously,{w=0.2} [player]?"
+            show natsuki 3ksrbol
 
             show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
             play audio clothing_ruffle
@@ -225,16 +225,16 @@ label greeting_leave_return:
                 hide black with Dissolve(1.25)
 
                 n 1ksqbolsbr "...I really did miss you."
-                n 1nslfsl "Heh."
-                n 1nchsmleaf "Welcome back."
+                n 4nslfsl "Heh."
+                n 4nchsmleaf "Welcome back."
 
             else:
                 show natsuki 1nsldvlsbl at jn_center zorder JN_NATSUKI_ZORDER
                 $ jnPause(1.5)
                 hide black with Dissolve(1.25)
 
-                n 1nslsslsbl "...W-{w=0.2}welcome back.{w=1}{nw}"
-                extend 1fchdvlsbl " Ehehe."
+                n 4nslsslsbl "...W-{w=0.2}welcome back.{w=1}{nw}"
+                extend 4fchdvlsbl " Ehehe."
 
     elif time_since_departure / 86400 > 30: # Gone more than a month
         if (
@@ -243,84 +243,84 @@ label greeting_leave_return:
         ):
             n 1uskemlesh "...!{w=0.75}{nw}"
             $ player_initial = jn_utils.getPlayerInitial()
-            n 1fnmgsl "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
-            extend 1knmeml " What the heck even {i}happened{/i}?!"
-            n 1klleml "You didn't say you were gonna disappear on me for {i}that{/i} long!"
+            n 4fnmgsl "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
+            extend 4knmeml " What the heck even {i}happened{/i}?!"
+            n 4klleml "You didn't say you were gonna disappear on me for {i}that{/i} long!"
             n 1ksremlsbl "I was starting to get worried,{w=0.75}{nw}"
-            extend 1ksrbolsbl " you jerk..."
-            n 1fcsunlsbr "..."
-            n 1ncspulesi "..."
+            extend 2ksrbolsbl " you jerk..."
+            n 2fcsunlsbr "..."
+            n 2ncspulesi "..."
             n 1nsqsll "...Look."
-            n 1fcseml "I'm...{w=1}{nw}"
-            extend 1kcssll " glad...{w=1}{nw}"
-            extend 1ksrsll " you're back,{w=0.2} [player]."
+            n 2fcseml "I'm...{w=1}{nw}"
+            extend 2kcssll " glad...{w=1}{nw}"
+            extend 4ksrsll " you're back,{w=0.2} [player]."
             n 1fcssll "Just..."
-            n 1fnmsll "...Be honest.{w=0.75}{nw}"
-            extend 1knmbol " Okay?"
-            n 1kllbol "I don't care if you gotta go for longer than usual."
-            n 1kslsrl "...I just wanna know what to {i}expect{/i}.{w=0.75}{nw}"
-            extend 1ksqpulsbr " You know?"
-            n 1kslsllsbr "..."
-            n 1kslajlsbr "...And welcome back too,{w=0.75}{nw}"
-            extend 1ksrbol " I guess."
+            n 4fnmsll "...Be honest.{w=0.75}{nw}"
+            extend 4knmbol " Okay?"
+            n 2kllbol "I don't care if you gotta go for longer than usual."
+            n 2kslsrl "...I just wanna know what to {i}expect{/i}.{w=0.75}{nw}"
+            extend 2ksqpulsbr " You know?"
+            n 2kslsllsbr "..."
+            n 2kslajlsbr "...And welcome back too,{w=0.75}{nw}"
+            extend 4ksrbol " I guess."
 
         else:
-            n 1fcsbg "Well,{w=0.2} well,{w=0.2} well.{w=1}{nw}"
-            extend 1fsqsm " Look who the {i}Nat{/i} dragged in!"
-            n 1fchsm "Ehehe."
-            n 1fslsslsbl "It's...{w=1}{nw}"
-            extend 1ksqsslsbl " been a while,{w=0.75}{nw}"
-            extend 1tsqbolsbl " huh?"
+            n 3fcsbg "Well,{w=0.2} well,{w=0.2} well.{w=1}{nw}"
+            extend 3fsqsm " Look who the {i}Nat{/i} dragged in!"
+            n 3fchsm "Ehehe."
+            n 4fslsslsbl "It's...{w=1}{nw}"
+            extend 4ksqsslsbl " been a while,{w=0.75}{nw}"
+            extend 4tsqbolsbl " huh?"
             n 1ksrcalsbl "..."
             n 1ncsajl "But..."
-            n 1nlrajl "I'm...{w=0.75}{nw}"
-            extend 1nsrssl " glad you're finally back,{w=0.2} [player]."
-            n 1fchbglsbr "W-{w=0.2}welcome!"
+            n 4nlrajl "I'm...{w=0.75}{nw}"
+            extend 4nsrssl " glad you're finally back,{w=0.2} [player]."
+            n 4fchbglsbr "W-{w=0.2}welcome!"
 
     elif time_since_departure / 86400 > 7: # Gone more than a week
         if jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_days:
             n 1nsqsll "..."
-            n 1fsqsll "[player].{w=1}{nw}"
-            extend 1fsqajl " What do you call this?"
+            n 2fsqsll "[player].{w=1}{nw}"
+            extend 2fsqajl " What do you call this?"
             n 1kbkwrl "You said you'd only be gone a few daaaays!"
-            n 1fsqpol "..."
-            n 1fcspol "..."
-            n 1fsrajl "I...{w=1}{nw}"
-            extend 1fsrsll " guess I'll let you off.{w=0.75}{nw}"
-            extend 1fsqcal " This time."
+            n 2fsqpol "..."
+            n 2fcspol "..."
+            n 2fsrajl "I...{w=1}{nw}"
+            extend 4fsrsll " guess I'll let you off.{w=0.75}{nw}"
+            extend 4fsqcal " This time."
             n 1fcspul "Just...{w=1}{nw}"
-            extend 1knmpul " try to plan a little better,{w=0.75}{nw}"
-            extend 1kllsrl " if you can."
+            extend 2knmpul " try to plan a little better,{w=0.75}{nw}"
+            extend 2kllsrl " if you can."
             n 1kslbol "It's really not {i}that{/i} much to ask...{w=1}{nw}"
             extend 1knmbolsbr " right?"
 
         else:
-            n 1fsqct "Oho?{w=0.75}{nw}"
-            extend 1fsqbg " Well look who just decided to show up!"
-            n 1fsqsm "Ehehe."
+            n 2fsqct "Oho?{w=0.75}{nw}"
+            extend 2fsqbg " Well look who just decided to show up!"
+            n 4fsqsm "Ehehe."
 
             if Natsuki.isLove(higher=True):
                 $ chosen_endearment = jn_utils.getRandomEndearment()
                 n 1uchsml "Welcome back,{w=0.2} [chosen_endearment]!"
 
             else:
-                n 1uchbg "Welcome back,{w=0.2} [player]!"
+                n 4uchbg "Welcome back,{w=0.2} [player]!"
 
     else: # Gone less than a week
         n 1fsqss "Well,{w=0.75}{nw}"
-        extend 1fsqsm " look who we have here."
-        n 1tsqct "...And you said you'd be gone for a while."
-        n 1usqsm "..."
+        extend 3fsqsm " look who we have here."
+        n 31tsqct "...And you said you'd be gone for a while."
+        n 3usqsm "..."
         n 1fchsm "Ehehe.{w=0.75}{nw}"
         extend 1fchbg " Relax!"
-        n 1fwlbl "I'm just messing with you."
+        n 4fwlbl "I'm just messing with you."
 
         if Natsuki.isLove(higher=True):
             $ chosen_endearment = jn_utils.getRandomEndearment()
-            n 1uchsml "Welcome back,{w=0.2} [chosen_endearment]!"
+            n 4uchsml "Welcome back,{w=0.2} [chosen_endearment]!"
 
         else:
-            n 1uchbg "Welcome back,{w=0.2} [player]!"
+            n 4uchbg "Welcome back,{w=0.2} [player]!"
 
     $ persistent._jn_player_extended_leave_response = None
     $ persistent._jn_player_extended_leave_departure_date = None
@@ -353,23 +353,23 @@ label greeting_tt_warning:
     hide glitch_rapid
     play music audio.just
 
-    n 1kcsunltsa "Uuuuuuu..."
+    n 4kcsunltsa "Uuuuuuu..."
     show natsuki 1kcsfuftsa at jn_center
     play audio static
     show glitch_garbled_c zorder 99 with vpunch
     hide glitch_garbled_c
-    n 1kcsanltsa "M...{w=0.3}my head..."
-    n 1kslunltsb "..."
-    n 1kslemltsb "What...{w=0.75}{nw}"
-    extend 1klremltsc " what h-{w=0.2}happen-{w=0.5}{nw}"
-    n 1kskpultscesh "...!{w=0.3}{nw}"
-    n 1kscpoitsc "Hrk-!{w=0.5}{nw}"
+    n 4kcsanltsa "M...{w=0.3}my head..."
+    n 4kslunltsb "..."
+    n 4kslemltsb "What...{w=0.75}{nw}"
+    extend 4klremltsc " what h-{w=0.2}happen-{w=0.5}{nw}"
+    n 4kskpultscesh "...!{w=0.3}{nw}"
+    n 4kscpoitsc "Hrk-!{w=0.5}{nw}"
 
     stop music
     show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.1)
     play audio chair_out_fast
     $ jnPause(0.2)
-    n "{b}B-{w=0.3}BLURGHHH-!{/b}{w=0.2}{nw}"
+    n "{b}B-{w=0.15}BLURGHHH-!{/b}{w=0.2}{nw}"
 
     play audio glitch_b
     show glitch_garbled_b zorder 99 with vpunch
@@ -384,15 +384,15 @@ label greeting_tt_warning:
     n 1kcsemi "Uuuuuu..."
     n 1kcsup "..."
     n 1kcsuntsa "..."
-    n 1ksquptsa "[player_initial]-{w=0.2}[player]..."
-    n 1ksqantsa "What..."
-    n 1kcsantsa "..."
-    n 1ksqfutsa "Did you...{w=0.75}{nw}"
+    n 4ksquptsa "[player_initial]-{w=0.2}[player]..."
+    n 4ksqantsa "What..."
+    n 4kcsantsa "..."
+    n 4ksqfutsa "Did you...{w=0.75}{nw}"
     extend 1ksqemtsasbl " do...?"
-    n 1kllemtscsbr "..."
-    n 1klrwrtscsbr "S-{w=0.3}something isn't right..."
+    n 4kllemtscsbr "..."
+    n 4klrwrtscsbr "S-{w=0.3}something isn't right..."
 
-    n 1kscpoitscsbr "H-{w=0.2}hrk-!{w=0.5}{nw}"
+    n 4kscpoitscsbr "H-{w=0.2}hrk-!{w=0.5}{nw}"
     show natsuki 1fcsanitscsbr
     play audio static
     show glitch_garbled_a zorder 99 with vpunch
@@ -400,10 +400,10 @@ label greeting_tt_warning:
     n 1kcsemltscesi "Gah..."
 
     if Natsuki.isUpset(higher=True):
-        n 1ksqunltse "..."
-        n 1kplemltsb "Something {b}REALLY{/b} isn't right,{w=0.2} [player]..."
-        n 1kllemltsb "A-{w=0.2}and I..."
-        n 1klremltsc "I can't..."
+        n 4ksqunltse "..."
+        n 4kplemltsb "Something {b}REALLY{/b} isn't right,{w=0.2} [player]..."
+        n 4kllemltsb "A-{w=0.2}and I..."
+        n 4klremltsc "I can't..."
         n 1kcsfultsb "..."
         n 1kcsanltsd "..."
         n 1fcsunltsa "..."
@@ -411,226 +411,227 @@ label greeting_tt_warning:
         n 1kllunltsc "W-{w=0.2}whatever that was...{w=1}{nw}"
         extend 1klremltdr " whatever just {i}happened{/i}..."
         n 1fcsunl "T-{w=0.2}that...{w=0.5}{nw}" 
-        extend 1kplemltdr " {b}really{/b}{w=0.5} didn't feel good...{w=1}{nw}"
-        extend 1klremltdr " a-{w=0.2}and I-{w=0.5}{nw}"
+        extend 4kplemltdr " {b}really{/b}{w=0.5} didn't feel good...{w=1}{nw}"
+        extend 4klremltdr " a-{w=0.2}and I-{w=0.5}{nw}"
 
     else:
         n 1fcsanltsc "W-{w=0.2}what..."
         n 1fskanltsf "What did you{w=0.75}{nw}" 
         extend 1kskscltsf " {i}DO{/i}?!"
-        n 1fcsscltsf "I-!{w=0.75}{nw}"
+        n 2fcsscltsf "I-!{w=0.75}{nw}"
 
-    n 1kskpoitsc "H-{w=0.2}hrp-!{w=0.5}{nw}"
-    show natsuki 1kcsful
+    n 4kskpoitsc "H-{w=0.2}hrp-!{w=0.5}{nw}"
+
+    show natsuki 4kcsful
     play audio static
     show glitch_garbled_c zorder 99 with vpunch
     hide glitch_garbled_c
 
-    n 1fpafui "Nnnnnnghhhh!{w=0.5}{nw}"
-    extend 1kcswrlesisbr " Guh...."
-    n 1kcsanlsbr "M-{w=0.2}my stomach...{w=0.75}{nw}"
-    extend 1kslunlsbr " uuuuuu..."
+    n 2fpafui "Nnnnnnghhhh!{w=0.5}{nw}"
+    extend 2kcswrlesisbr " Guh...."
+    n 4kcsanlsbr "M-{w=0.2}my stomach...{w=0.75}{nw}"
+    extend 4kslunlsbr " uuuuuu..."
     n 1kcsuplsbl "I-{w=0.2}it {i}hurts{/i}..."
     n 1fcsunlsbl "..."
 
     if Natsuki.isUpset(higher=True):
         n 1kcspul "Feels like..."
         n 1kcsunl "L-{w=0.2}like I was just tossed around back and forth...{w=1}{nw}"
-        extend 1ksrunltsb " like something was trying to yank me apart from all directions..."
-        n 1klrunltsc "..."
-        n 1kllemltsc "It all just...{w=1}{nw}"
-        extend 1kslemltsb " feels so wrong..."
+        extend 4ksrunltsb " like something was trying to yank me apart from all directions..."
+        n 4klrunltsc "..."
+        n 4kllemltsc "It all just...{w=1}{nw}"
+        extend 4kslemltsb " feels so wrong..."
         n 1kslslltsb "..."
-        n 1knmajltsb "A-{w=0.2}and the date...{w=0.75}{nw}"
-        extend 1ksrsrltsbeqm " I...{w=0.3} I swore it was..."
+        n 4knmajltsb "A-{w=0.2}and the date...{w=0.75}{nw}"
+        extend 2ksrsrltsbeqm " I...{w=0.3} I swore it was..."
         n 1knmsrltsc "..."
-        n 1fnmunltsc "...[player]."
-        n 1fnmemltsc "Y-{w=0.2}you didn't like...{w=0.75}{nw}"
-        extend 1flremltsc " change the date or something,{w=0.2} did you?{w=1}{nw}"
-        extend 1fwmpultsc " L-{w=0.2}like on your computer?"
+        n 2fnmunltsc "...[player]."
+        n 2fnmemltsc "Y-{w=0.2}you didn't like...{w=0.75}{nw}"
+        extend 2flremltsc " change the date or something,{w=0.2} did you?{w=1}{nw}"
+        extend 4fwmpultsc " L-{w=0.2}like on your computer?"
         n 1fllpultscesp "..."
         n 1fcsunltsa "..."
-        n 1fcsboltsa "...Okay.{w=1}{nw}"
-        extend 1fnmboltdr " [player]."
-        n 1fcseml "I'm...{w=1}{nw}"
-        extend 1fnmpul " not gonna go out on a limb and say you did it on purpose."
+        n 2fcsboltsa "...Okay.{w=1}{nw}"
+        extend 2fnmboltdr " [player]."
+        n 2fcseml "I'm...{w=1}{nw}"
+        extend 2fnmpul " not gonna go out on a limb and say you did it on purpose."
 
         if Natsuki.isEnamored(higher=True):
-            n 1kwmpul "I {i}know{/i} you're better than that.{w=1}{nw}"
-            extend 1kslbof " We've been seeing each other long enough..."
+            n 4kwmpul "I {i}know{/i} you're better than that.{w=1}{nw}"
+            extend 4kslbof " We've been seeing each other long enough..."
 
         elif Natsuki.isHappy(higher=True):
             n 1knmeml "You're better than that.{w=0.75}{nw}"
-            extend 1kslsll " ...I like to {i}think{/i} so,{w=0.2} a-{w=0.2}anyway."
+            extend 4kslsll " ...I like to {i}think{/i} so,{w=0.2} a-{w=0.2}anyway."
 
         else:
             n 1knmsrl "You're better than that.{w=0.5}{nw}"
-            extend 1kllemlsbr " ...I {i}hope{/i}."
+            extend 4kllemlsbr " ...I {i}hope{/i}."
 
-        n 1kcsem "But please...{w=0.75}{nw}"
-        extend 1knmem " [player]?"
+        n 4kcsem "But please...{w=0.75}{nw}"
+        extend 4knmem " [player]?"
         n 1kcswr "Just..."
         n 1kcspulesi "..."
-        n 1klrpul "Just don't screw around with the time again.{w=0.75}{nw}"
-        extend 1knmbol " Please?"
+        n 4klrpul "Just don't screw around with the time again.{w=0.75}{nw}"
+        extend 4knmbol " Please?"
         n 1kcsemlsbl "I-{w=0.2}It's just that..."
         n 1kcspulsbl "..."
-        n 1kslpulsbr "...I don't know.{w=0.5}{nw}"
-        extend 1ksqpulsbr " I just feel all messed up.{w=0.75}{nw}"
-        extend 1knmunlsbr " I really,{w=0.3} {i}really{/i}{w=0.3} don't feel right at all..."
-        n 1kslunlsbr "...And to be honest,{w=0.2} [player]?"
-        n 1kslemlsbr "I...{w=0.75}{nw}"
+        n 4kslpulsbr "...I don't know.{w=0.5}{nw}"
+        extend 2ksqpulsbr " I just feel all messed up.{w=0.75}{nw}"
+        extend 2knmunlsbr " I really,{w=0.3} {i}really{/i}{w=0.3} don't feel right at all..."
+        n 4kslunlsbr "...And to be honest,{w=0.2} [player]?"
+        n 4kslemlsbr "I...{w=0.75}{nw}"
         extend 1ksremltsb " I-{w=0.3}I'm not sure how much of that I can even {i}take{/i}."
         n 1kcspultsa "...You understand...{w=1}{nw}"
-        show natsuki 1kwmboltsc
+        show natsuki 4kwmboltsc
         
         menu:
             extend " right?"
 
             "I understand.":
                 if Natsuki.isHappy(higher=True):
-                    n 1kcsajltsa "...Good.{w=1}{nw}"
-                    extend 1kslsll " good."
+                    n 4kcsajltsa "...Good.{w=1}{nw}"
+                    extend 4kslsll " good."
                     n 1kslajl "It's...{w=0.75}{nw}" 
                     extend 1kslpul " appreciated,{w=0.2} [player]."
-                    n 1ksqbol "T-{w=0.2}thanks."
+                    n 4ksqbol "T-{w=0.2}thanks."
 
                 else:
-                    n 1fcsajltsa "...Good.{w=1}{nw}"
-                    extend 1kcsslltsa " Good..."
-                    n 1kslsll "..."
+                    n 2fcsajltsa "...Good.{w=1}{nw}"
+                    extend 2kcsslltsa " Good..."
+                    n 2kslsll "..."
 
                 $ Natsuki.calculatedAffinityGain()
 
             "...":
                 if Natsuki.isHappy(higher=True):
                     n 1knmemlsbr "...[player].{w=0.75}{nw}"
-                    extend 1knmwrlsbr " C-{w=0.2}come on..."
-                    n 1kplwrlsbr "I'm really {b}not{/b} messing around with this..."
-                    n 1kcsemlsbr "...So can you {i}not{/i} mess around with it either?"
-                    n 1kslemlesisbr "Seriously..."
+                    extend 4knmwrlsbr " C-{w=0.2}come on..."
+                    n 4kplwrlsbr "I'm really {b}not{/b} messing around with this..."
+                    n 4kcsemlsbr "...So can you {i}not{/i} mess around with it either?"
+                    n 2kslemlesisbr "Seriously..."
 
                 else:
                     n 1knmwrlsbr "H-{w=0.2}hey!{w=0.75}{nw}"
                     extend 1fcsanlsbl " I'm being serious here?{w=0.5}{nw}"
-                    extend 1kpluplsbl " Can't you {i}see{/i} that?"
-                    n 1kcsemlsbl "I'm {i}really{/i} not messing around here,{w=0.2} [player]..."
-                    n 1kslunlsbl "..."
+                    extend 4kpluplsbl " Can't you {i}see{/i} that?"
+                    n 4kcsemlsbl "I'm {i}really{/i} not messing around here,{w=0.2} [player]..."
+                    n 4kslunlsbl "..."
 
         n 1kcsbol "..."
         n 1ncsajl "I...{w=1}{nw}"
-        extend 1kllsl " I think I'll be okay.{w=0.5}{nw}"
-        extend 1kslsleso " If I just take it easy for a bit."
-        n 1kcssl "Just please.{w=0.5}{nw}"
+        extend 2kllsl " I think I'll be okay.{w=0.5}{nw}"
+        extend 2kslsleso " If I just take it easy for a bit."
+        n 2kcssl "Just please.{w=0.5}{nw}"
 
         if Natsuki.isAffectionate(higher=True):
-            extend 1ksqslsbl " {i}Please{/i} remember what I told you.{w=0.75}{nw}"
-            extend 1ksqsslsbl " F-{w=0.2}for me?"
+            extend 4ksqslsbl " {i}Please{/i} remember what I told you.{w=0.75}{nw}"
+            extend 4ksqsslsbl " F-{w=0.2}for me?"
 
         else:
-            extend 1ksqslsbl " {i}Please{/i} remember what I told you."
+            extend 4ksqslsbl " {i}Please{/i} remember what I told you."
 
-        n 1ncspuesi "..."
-        n 1ncsbo "...Okay."
+        n 4ncspuesi "..."
+        n 4ncsbo "...Okay."
         n 1kllsl "..."
         n 1knmss "...What's new,{w=0.2} [player]?"
 
     elif Natsuki.isDistressed(higher=True):
         n 1fcsemlsbl "...Did..."
         n 1fslunlsbr "..."
-        n 1fsqanlsbr "...D-did you do something to your computer or what?"
-        n 1kcsfulsbr "Because it feels like someone took a sledgehammer to my {i}gut{/i}...{w=1}{nw}"
-        n 1ksksrisbr "Urk-!{w=0.5}{nw}"
-        n 1kcsansbr "Guh..."
-        n 1kslansbl "Everything...{w=0.5} feels all wrong..."
-        n 1klrsfsbl "A-{w=0.2}and the date...{w=0.75}{nw}"
-        extend 1ksremsbl " I could have {i}sworn{/i}...!"
-        n 1nsrpusbl "..."
-        n 1fsransbl "..."
-        n 1fcsansbr "...Okay,{w=0.2} [player].{w=0.75}{nw}"
-        extend 1fnmsfsbr " Look."
+        n 4fsqanlsbr "...D-{w=0.2}did you do something to your computer or what?"
+        n 2kcsfulsbr "Because it feels like someone took a sledgehammer to my {i}gut{/i}...{w=1}{nw}"
+        n 4ksksrisbr "Urk-!{w=0.5}{nw}"
+        n 2kcsansbr "Guh..."
+        n 2kslansbl "Everything...{w=0.5} feels all wrong..."
+        n 4klrsfsbl "A-{w=0.2}and the date...{w=0.75}{nw}"
+        extend 2ksremsbl " I could have {i}sworn{/i}...!"
+        n 2nsrpusbl "..."
+        n 2fsransbl "..."
+        n 2fcsansbr "...Okay,{w=0.2} [player].{w=0.75}{nw}"
+        extend 4fnmsfsbr " Look."
         n 1fcsun "..."
         n 1fsqun "...I'm not stupid.{w=1}{nw}"
-        extend 1fsruntsb " No matter what {i}you{/i} happen to think."
-        n 1fcsemtsa "A-{w=0.2}and...{w=0.5}{nw}" 
-        extend 1fcsuntsa " I know...{w=0.3}{nw}"
+        extend 2fsruntsb " No matter what {i}you{/i} happen to think."
+        n 2fcsemtsa "A-{w=0.2}and...{w=0.5}{nw}" 
+        extend 2fcsuntsa " I know...{w=0.3}{nw}"
 
-        show natsuki 1kcsanltsa
+        show natsuki 4kcsanltsa
         play audio static
         show glitch_garbled_b zorder 99 with hpunch
         hide glitch_garbled_b
 
-        n 1fcsanltsa "Nnnnng-!{w=0.5}{nw}"
-        n 1kcsunltsa "..."
+        n 4fcsanltsa "Nnnnng-!{w=0.5}{nw}"
+        n 4kcsunltsa "..."
         n 1fcsunl "..."
         n 1fcseml "I-{w=0.2}I know we haven't been on the...{w=1}{nw}" 
-        extend 1fslsl " best terms,{w=0.2} exactly."
+        extend 2fslsl " best terms,{w=0.2} exactly."
         n 1knmem "But please."
-        n 1kcsemsbl "I-{w=0.2}if you really {i}don't{/i} give a crap about me,{w=0.75}{nw}"
-        extend 1ksqemsbl " then if {i}nothing{/i} else."
-        n 1fcsansbl "Quit messing around with the time.{w=0.75}{nw}"
-        extend 1fsqansbl " I'm {i}dead{/i} serious."
+        n 4kcsemsbl "I-{w=0.2}if you really {i}don't{/i} give a crap about me,{w=0.75}{nw}"
+        extend 4ksqemsbl " then if {i}nothing{/i} else."
+        n 2fcsansbl "Quit messing around with the time.{w=0.75}{nw}"
+        extend 4fsqansbl " I'm {i}dead{/i} serious."
 
-        show natsuki 1fcsuntsa
+        show natsuki 2fcsuntsa
         $ jnPause(3)
 
-        n 1fcsupsbl "It {b}hurts{/b},{w=0.75}{nw}"
-        extend 1fcsansbl " it {b}isn't{/b} funny,{w=0.75}{nw}"
-        extend 1fsqansbl " and to be completely honest with you?"
-        n 1fcsunl "..."
+        n 2fcsupsbl "It {b}hurts{/b},{w=0.75}{nw}"
+        extend 2fcsansbl " it {b}isn't{/b} funny,{w=0.75}{nw}"
+        extend 2fsqansbl " and to be completely honest with you?"
+        n 2fcsunl "..."
         n 1fcsful "I don't think I can even {i}handle{/i} something like that again..."
         n 1fslanl "So just..."
-        n 1fcsanl "Just knock.{w=0.35} It.{w=0.35} Off."
-        n 1fsqsrl "..."
-        n 1fnmem "Understood?{w=1}{nw}"
-        extend 1fsqwr " I {i}know{/i} you hear me."
+        n 4fcsanl "Just knock.{w=0.35} It.{w=0.35} Off."
+        n 4fsqsrl "..."
+        n 3fnmem "Understood?{w=1}{nw}"
+        extend 3fsqwr " I {i}know{/i} you hear me."
         n 1fsqsr "..."
         n 1fsqem "You have {i}no{/i} excuses,{w=0.2} [player]."
-        n 1fcsfu "{i}Remember that.{/i}"
+        n 2fcsfu "{i}Remember that.{/i}"
 
     else:
         n 1fcsupltsa "..."
         n 1fsqupltsb "...You."
-        n 1fsqanltsb "{i}You{/i} did this,{w=0.3} didn't you?"
+        n 4fsqanltsb "{i}You{/i} did this,{w=0.3} didn't you?"
 
         show natsuki 1fcsanltsa
         play audio static
         show glitch_garbled_a zorder 99 with hpunch
         hide glitch_garbled_a
 
-        n 1fskscltsc "NO!{w=0.75}{nw}"
-        extend 1fcsscltsa " Don't even {i}try{/i} to deny it!"
+        n 4fskscltsc "NO!{w=0.75}{nw}"
+        extend 4fcsscltsa " Don't even {i}try{/i} to deny it!"
         n 1fcsfultsa "I know you think I'm {i}stupid{/i},{w=0.2} but do you seriously think I'm {i}blind{/i} too?!"
-        n 1fsqupltsb "I {i}saw{/i} that you messed around with the date!{w=0.75}{nw}"
-        extend 1fcsanltsa " You're just...!"
-        n 1fskscltsc "You're {b}so{/b} full of {i}CRA-{/i}{nw}"
+        n 2fsqupltsb "I {i}saw{/i} that you messed around with the date!{w=0.75}{nw}"
+        extend 2fcsanltsa " You're just...!"
+        n 4fskscltsc "You're {b}so{/b} full of {i}CRA-{/i}{nw}"
 
-        show natsuki 1fcsfultsa
+        show natsuki 4fcsfultsa
         play audio static
         show glitch_garbled_c zorder 99 with vpunch
         hide glitch_garbled_c
 
-        n 1fcsupltsa "Nnnnnrrgh-!{w=0.5}{nw}"
-        n 1fcsunltsa "..."
-        n 1fcsemltsa "...Haah."
+        n 4fcsupltsa "Nnnnnrrgh-!{w=0.5}{nw}"
+        n 4fcsunltsa "..."
+        n 4fcsemltsa "...Haah."
         n 1fcsunltsa "..."
         n 1fcsanltsa "...I {i}seriously{/i} cannot {i}believe{/i} you.{w=0.75}{nw}"
         extend 1fsqanltsa " You're already torturing me well enough."
-        n 1fnmupltsc "And now you go {i}completely{/i} out of your way to make my life {i}even more{/i} miserable?!"
-        n 1fcsupltsd "..."
-        n 1fcsanltsd "Well,{w=0.5}{nw}"
-        extend 1fcsemltsd " you know what?{w=0.75}{nw}"
-        extend 1fsqwrltse " You did it!"
-        n 1fnmfultsf "Mission accomplished!{w=1}{nw}"
-        extend 1fcsfultsd " There?{w=0.75}{nw}"
+        n 4fnmupltsc "And now you go {i}completely{/i} out of your way to make my life {i}even more{/i} miserable?!"
+        n 2fcsupltsd "..."
+        n 2fcsanltsd "Well,{w=0.5}{nw}"
+        extend 2fcsemltsd " you know what?{w=0.75}{nw}"
+        extend 2fsqwrltse " You did it!"
+        n 4fnmfultsf "Mission accomplished!{w=1}{nw}"
+        extend 4fcsfultsd " There?{w=0.75}{nw}"
         $ chosen_insult = jn_utils.getRandomInsult()
-        extend 1fcsgsltsa " You done,{w=0.3} [chosen_insult]?"
-        n 1fnmanltdr "Are you HAPPY?"
-        n 1fcsanl "Now seriously,{w=0.2} just..."
-        n 1kcsanltsa "J-{w=0.2}just..."
+        extend 4fcsgsltsa " You done,{w=0.3} [chosen_insult]?"
+        n 4fnmanltdr "Are you HAPPY?"
+        n 4fcsanl "Now seriously,{w=0.2} just..."
+        n 4kcsanltsa "J-{w=0.2}just..."
         n 1fnmupltsc "Just BACK OFF!{w=0.5}{nw}"
-        extend 1fskscltsf " G-{w=0.2}GO AWAY!{w=1}{nw}"
-        n 1fscscftsf "{i}AND{w=0.2} LEAVE{w=0.2} ME{w=0.2} ALONE{/i}!{nw}"
+        extend 4fskscltsf " G-{w=0.2}GO AWAY!{w=1}{nw}"
+        n 4fscscftsf "{i}AND{w=0.2} LEAVE{w=0.2} ME{w=0.2} ALONE{/i}!{nw}"
 
         play audio glitch_d
         show glitch_garbled_c zorder 99 with vpunch
