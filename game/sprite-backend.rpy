@@ -18,6 +18,9 @@ init -50 python:
         def __str__(self):
             return self.name
 
+        def __int__(self):
+            return self.value
+
     class JNBlush(Enum):
         full = 1
         light = 2
@@ -181,7 +184,7 @@ init -50 python:
         ]
 
         # Necklace
-        necklace = Null() if not Natsuki._outfit.necklace else "{0}/necklace/[Natsuki._outfit.necklace.reference_name]/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH)
+        necklace = "{0}/necklace/jn_none/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH) if not Natsuki._outfit.necklace else "{0}/necklace/[Natsuki._outfit.necklace.reference_name]/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH)
         lc_args.extend([
             (0, 0), necklace
         ])
@@ -205,7 +208,7 @@ init -50 python:
         ])
 
         # Accessory
-        accessory = Null() if not Natsuki._outfit.accessory else "{0}/accessory/[Natsuki._outfit.accessory.reference_name]/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH)
+        accessory = "{0}/accessory/jn_none/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH) if not Natsuki._outfit.accessory else "{0}/accessory/[Natsuki._outfit.accessory.reference_name]/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH)
         lc_args.extend([
             (0, 0), accessory
         ])
@@ -228,13 +231,13 @@ init -50 python:
             ])
 
         # Headgear
-        headgear = Null() if not Natsuki._outfit.headgear else "{0}/headgear/[Natsuki._outfit.headgear.reference_name]/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH)
+        headgear = "{0}/headgear/jn_none/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH) if not Natsuki._outfit.headgear else "{0}/headgear/[Natsuki._outfit.headgear.reference_name]/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH)
         lc_args.extend([
             (0, 0), headgear
         ])
 
         # Eyewear
-        eyewear = Null() if not Natsuki._outfit.eyewear else "{0}/eyewear/[Natsuki._outfit.eyewear.reference_name]/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH)
+        eyewear = "{0}/eyewear/jn_none/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH) if not Natsuki._outfit.eyewear else "{0}/eyewear/[Natsuki._outfit.eyewear.reference_name]/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH)
         lc_args.extend([
             (0, 0), eyewear
         ])

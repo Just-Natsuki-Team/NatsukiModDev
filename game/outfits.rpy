@@ -961,17 +961,20 @@ init -1 python in jn_outfits:
         """
         Saves the given outfit as the designated temporary outfit.
         The temporary outfit is not persisted between game exit/reload.
+
         IN:
             - outfit - the JNOutfit to use as the base for the temporary outfit
         """
         temporary_outfit = get_outfit("jn_temporary_outfit")
         temporary_outfit.clothes = outfit.clothes
         temporary_outfit.hairstyle = outfit.hairstyle
-        temporary_outfit.accessory = outfit.accessory
-        temporary_outfit.eyewear = outfit.eyewear
-        temporary_outfit.headgear = outfit.headgear
-        temporary_outfit.necklace = outfit.necklace
+        temporary_outfit.accessory = get_wearable("jn_none") if not outfit.accessory else outfit.accessory
+        temporary_outfit.eyewear = get_wearable("jn_none") if not outfit.eyewear else outfit.eyewear
+        temporary_outfit.headgear = get_wearable("jn_none") if not outfit.headgear else outfit.headgear
+        temporary_outfit.necklace = get_wearable("jn_none") if not outfit.necklace else outfit.necklace
+
         store.Natsuki.setOutfit(temporary_outfit, persist=False)
+
         return True
 
     def save_custom_outfit(outfit):
