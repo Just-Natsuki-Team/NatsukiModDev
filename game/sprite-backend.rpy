@@ -697,33 +697,33 @@ image natsuki idle enamored:
             pause 10
 
         choice:
-            "natsuki 1kwmsmf"
+            "natsuki 4kwmsmf"
             pause 5
-            "natsuki 1kcssmf"
+            "natsuki 4kcssmf"
             pause 0.1
-            "natsuki 1kwmsmf"
+            "natsuki 4kwmsmf"
             pause 5
-            "natsuki 1kcssmf"
-            pause 0.1
-
-        choice:
-            "natsuki 1kllsmf"
-            pause 5
-            "natsuki 1kcssmf"
-            pause 0.1
-            "natsuki 1kllsmf"
-            pause 5
-            "natsuki 1kcssmf"
+            "natsuki 4kcssmf"
             pause 0.1
 
         choice:
-            "natsuki 1klrsmf"
+            "natsuki 3kllsmf"
             pause 5
-            "natsuki 1kcssmf"
+            "natsuki 3kcssmf"
             pause 0.1
-            "natsuki 1klrsmf"
+            "natsuki 3kllsmf"
             pause 5
-            "natsuki 1kcssmf"
+            "natsuki 3kcssmf"
+            pause 0.1
+
+        choice:
+            "natsuki 4klrsmf"
+            pause 5
+            "natsuki 4kcssmf"
+            pause 0.1
+            "natsuki 4klrsmf"
+            pause 5
+            "natsuki 4kcssmf"
             pause 0.1
 
         choice:
@@ -741,7 +741,7 @@ image natsuki idle enamored:
             pause 10
 
         choice:
-            "natsuki 1kcssgf"
+            "natsuki 2kcssgf"
             pause 10
 
         choice:
@@ -751,23 +751,23 @@ image natsuki idle enamored:
             pause 0.1
             "natsuki 1knmsmf"
             pause 3
-            "natsuki 1fsqsmf"
+            "natsuki 4fsqsmf"
             pause 3
-            "natsuki 1fchblf"
+            "natsuki 4fchblf"
             pause 1
-            "natsuki 1fchgnf"
+            "natsuki 2fchgnf"
             pause 2
-            "natsuki 1klrsmf"
+            "natsuki 2klrsmf"
             pause 2
-            "natsuki 1kcssmf"
+            "natsuki 2kcssmf"
             pause 0.1
 
         choice:
-            "natsuki 1kcssmf"
+            "natsuki 2kcssmf"
             pause 3
-            "natsuki 1kcsssf"
+            "natsuki 2kcsssf"
             pause 3
-            "natsuki 1kcssmf"
+            "natsuki 2kcssmf"
             pause 5
 
         choice:
@@ -775,27 +775,27 @@ image natsuki idle enamored:
             pause 3
             "natsuki 1ncspul"
             pause 0.1
-            "natsuki 1flrpul"
+            "natsuki 3flrpul"
             pause 3
-            "natsuki 1ncspul"
+            "natsuki 3ncspul"
             pause 0.1
-            "natsuki 1tnmpul"
+            "natsuki 3tnmpul"
             pause 1
-            "natsuki 1unmpulesu"
+            "natsuki 3unmpulesu"
             pause 1.5
-            "natsuki 1fcspul"
+            "natsuki 3fcspul"
             pause 0.1
-            "natsuki 1flldvfsbl"
+            "natsuki 4flldvfsbl"
             pause 4
-            "natsuki 1fcsdvf"
+            "natsuki 4fcsdvf"
             pause 0.1
 
         choice:
-            "natsuki 1uchsmfedz"
+            "natsuki 3uchsmfedz"
             pause 7
 
         choice:
-            "natsuki 1nchsmfeme"
+            "natsuki 3nchsmfeme"
             pause 7
 
         repeat
@@ -804,27 +804,27 @@ image natsuki idle enamored:
 image natsuki idle affectionate:
     block:
         choice:
-            "natsuki 1ullsml"
+            "natsuki 3ullsml"
             pause 5
-            "natsuki 1ucssml"
+            "natsuki 3ucssml"
             pause 0.1
-            "natsuki 1ullsml"
+            "natsuki 3ullsml"
             pause 5
-            "natsuki 1ucssml"
+            "natsuki 3ucssml"
             pause 0.1
 
         choice:
-            "natsuki 1ulrsml"
+            "natsuki 4ulrsml"
             pause 5
-            "natsuki 1ucssml"
+            "natsuki 4ucssml"
             pause 0.1
-            "natsuki 1ulrsml"
+            "natsuki 4ulrsml"
             pause 0.25
-            "natsuki 1ucssml"
+            "natsuki 4ucssml"
             pause 0.1
-            "natsuki 1ulrsml"
+            "natsuki 4ulrsml"
             pause 5
-            "natsuki 1ucssml"
+            "natsuki 4ucssml"
             pause 0.1
 
         choice:
@@ -838,33 +838,33 @@ image natsuki idle affectionate:
             pause 0.1
 
         choice:
-            "natsuki 1nnmsgl"
+            "natsuki 2nnmsgl"
             pause 5
-            "natsuki 1ncssgl"
+            "natsuki 2ncssgl"
             pause 0.1
-            "natsuki 1nnmsgl"
+            "natsuki 2nnmsgl"
             pause 5
-            "natsuki 1ncssgl"
+            "natsuki 2ncssgl"
             pause 0.1
 
         choice:
             "natsuki 1nllbol"
             pause 4
-            "natsuki 1fllbol"
+            "natsuki 2fllbol"
             pause 4
-            "natsuki 1fcsbol"
+            "natsuki 2fcsbol"
             pause 0.1
-            "natsuki 1tnmbol"
+            "natsuki 2tnmbol"
             pause 4
-            "natsuki 1tcsbol"
+            "natsuki 2tcsbol"
             pause 0.1
-            "natsuki 1fsqsml"
+            "natsuki 4fsqsml"
             pause 4
-            "natsuki 1fwlsml"
+            "natsuki 4fwlsml"
             pause 0.5
-            "natsuki 1flldvl"
+            "natsuki 4flldvl"
             pause 2
-            "natsuki 1fcsdvl"
+            "natsuki 4fcsdvl"
             pause 0.1
 
         choice:
@@ -880,9 +880,9 @@ image natsuki idle affectionate:
             pause 4
             "natsuki 1tcspul"
             pause 0.1
-            "natsuki 1flrdvless"
+            "natsuki 4flrdvless"
             pause 4
-            "natsuki 1fcsdvl"
+            "natsuki 4fcsdvl"
             pause 0.1
 
         repeat
@@ -891,13 +891,13 @@ image natsuki idle affectionate:
 image natsuki idle happy:
     block:
         choice:
-            "natsuki 1ullbo"
+            "natsuki 3ullbo"
             pause 4
-            "natsuki 1ucsbo"
+            "natsuki 3ucsbo"
             pause 0.1
-            "natsuki 1ullbo"
+            "natsuki 3ullbo"
             pause 4
-            "natsuki 1ucsbo"
+            "natsuki 3ucsbo"
             pause 0.1
 
         choice:
@@ -911,23 +911,23 @@ image natsuki idle happy:
             pause 0.1
 
         choice:
-            "natsuki 1ullfs"
+            "natsuki 2ullfs"
             pause 4
-            "natsuki 1ucsfs"
+            "natsuki 2ucsfs"
             pause 0.1
-            "natsuki 1ullfs"
+            "natsuki 2ullfs"
             pause 4
-            "natsuki 1ucsfs"
+            "natsuki 2ucsfs"
             pause 0.1
 
         choice:
-            "natsuki 1ulrfs"
+            "natsuki 4ulrfs"
             pause 4
-            "natsuki 1ucsfs"
+            "natsuki 4ucsfs"
             pause 0.1
-            "natsuki 1ulrfs"
+            "natsuki 4ulrfs"
             pause 4
-            "natsuki 1ucsfs"
+            "natsuki 4ucsfs"
             pause 0.1
 
         choice:
@@ -967,19 +967,19 @@ image natsuki idle happy:
             pause 2
             "natsuki 1ucspul"
             pause 0.1
-            "natsuki 1fslsmlsbl"
+            "natsuki 2fslsmlsbl"
             pause 3
-            "natsuki 1fcssmlsbl"
+            "natsuki 2fcssmlsbl"
             pause 0.1
 
         choice:
-            "natsuki 1ulrcal"
+            "natsuki 2ulrcal"
             pause 4
-            "natsuki 1ucscal"
+            "natsuki 2ucscal"
             pause 0.1
-            "natsuki 1ulrcal"
+            "natsuki 2ulrcal"
             pause 4
-            "natsuki 1ucscal"
+            "natsuki 2ucscal"
             pause 0.1
 
         choice:
@@ -993,13 +993,13 @@ image natsuki idle happy:
             pause 0.1
 
         choice:
-            "natsuki 1ullfs"
+            "natsuki 2ullfs"
             pause 4
-            "natsuki 1ucsfs"
+            "natsuki 2ucsfs"
             pause 0.1
-            "natsuki 1ulrfs"
+            "natsuki 2ulrfs"
             pause 4
-            "natsuki 1ucsfs"
+            "natsuki 2ucsfs"
             pause 0.1
 
         repeat
@@ -1008,23 +1008,23 @@ image natsuki idle happy:
 image natsuki idle normal:
     block:
         choice:
-            "natsuki 1nllbo"
+            "natsuki 2nllbo"
             pause 4
-            "natsuki 1ncsbo"
+            "natsuki 2ncsbo"
             pause 0.1
-            "natsuki 1nllbo"
+            "natsuki 2nllbo"
             pause 4
-            "natsuki 1ncsbo"
+            "natsuki 2ncsbo"
             pause 0.1
 
         choice:
-            "natsuki 1nlrbo"
+            "natsuki 2nlrbo"
             pause 4
-            "natsuki 1ncsbo"
+            "natsuki 2ncsbo"
             pause 0.1
-            "natsuki 1nlrbo"
+            "natsuki 2nlrbo"
             pause 4
-            "natsuki 1ncsbo"
+            "natsuki 2ncsbo"
             pause 0.1
 
         choice:
@@ -1038,43 +1038,43 @@ image natsuki idle normal:
             pause 0.1
 
         choice:
-            "natsuki 1nlrpu"
+            "natsuki 2nlrpu"
             pause 4
-            "natsuki 1ncspu"
+            "natsuki 2ncspu"
             pause 0.1
-            "natsuki 1nlrpu"
+            "natsuki 2nlrpu"
             pause 4
-            "natsuki 1ncspu"
-            pause 0.1
-
-        choice:
-            "natsuki 1nllca"
-            pause 4
-            "natsuki 1ncsca"
-            pause 0.1
-            "natsuki 1nllca"
-            pause 4
-            "natsuki 1ncsca"
+            "natsuki 2ncspu"
             pause 0.1
 
         choice:
-            "natsuki 1nlrca"
+            "natsuki 2nllca"
             pause 4
-            "natsuki 1ncsca"
+            "natsuki 2ncsca"
             pause 0.1
-            "natsuki 1nlrca"
+            "natsuki 2nllca"
             pause 4
-            "natsuki 1ncsca"
+            "natsuki 2ncsca"
             pause 0.1
 
         choice:
-            "natsuki 1nnmca"
+            "natsuki 4nlrca"
             pause 4
-            "natsuki 1ncsca"
+            "natsuki 4ncsca"
             pause 0.1
-            "natsuki 1nnmca"
+            "natsuki 4nlrca"
             pause 4
-            "natsuki 1ncsca"
+            "natsuki 4ncsca"
+            pause 0.1
+
+        choice:
+            "natsuki 2nnmca"
+            pause 4
+            "natsuki 2ncsca"
+            pause 0.1
+            "natsuki 2nnmca"
+            pause 4
+            "natsuki 2ncsca"
             pause 0.1
 
         choice:
@@ -1093,15 +1093,15 @@ image natsuki idle normal:
 image natsuki idle distressed:
     block:
         choice:
-            "natsuki 1fllsl"
+            "natsuki 2fllsl"
             pause 3
-            "natsuki 1fcssl"
+            "natsuki 2fcssl"
             pause 0.1
 
         choice:
-            "natsuki 1flrsl"
+            "natsuki 2flrsl"
             pause 3
-            "natsuki 1fcssl"
+            "natsuki 2fcssl"
             pause 0.1
 
         choice:
@@ -1113,25 +1113,25 @@ image natsuki idle distressed:
             pause 8
 
         choice:
-            "natsuki 1fcssf"
+            "natsuki 2fcssf"
             pause 8
 
         choice:
-            "natsuki 1fllsf"
+            "natsuki 2fllsf"
             pause 3
-            "natsuki 1fcssf"
+            "natsuki 2fcssf"
             pause 0.1
 
         choice:
-            "natsuki 1flrsf"
+            "natsuki 2flrsf"
             pause 3
-            "natsuki 1fcssf"
+            "natsuki 2fcssf"
             pause 0.1
 
         choice:
-            "natsuki 1fsqca"
+            "natsuki 2fsqca"
             pause 3
-            "natsuki 1fcsca"
+            "natsuki 2fcsca"
             pause 0.1
 
         repeat
@@ -1142,17 +1142,17 @@ image natsuki idle ruined:
         choice:
             "natsuki 1fcsuntsa"
         choice:
-            "natsuki 1fcsantsa"
+            "natsuki 4fcsantsa"
         choice:
-            "natsuki 1fslantsb"
+            "natsuki 4fslantsb"
         choice:
-            "natsuki 1fcssrtsa"
+            "natsuki 2fcssrtsa"
         choice:
-            "natsuki 1kcssrtsa"
+            "natsuki 4kcssrtsa"
         choice:
             "natsuki 1ksrsrtsb"
         choice:
-            "natsuki 1fsrantse"
+            "natsuki 4fsrantse"
 
         pause 4
         repeat
@@ -1161,13 +1161,13 @@ image natsuki idle ruined:
 image natsuki idle introduction:
     block:
         choice:
-            "natsuki 1kllsr"
+            "natsuki 4kllsr"
         choice:
-            "natsuki 1klrsr"
+            "natsuki 4klrsr"
         choice:
-            "natsuki 1klrpu"
+            "natsuki 2klrpu"
         choice:
-            "natsuki 1kllpu"
+            "natsuki 2kllpu"
         choice:
             "natsuki 1kcspu"
         choice:
@@ -1175,9 +1175,9 @@ image natsuki idle introduction:
         choice:
             "natsuki 1kcsun"
         choice:
-            "natsuki 1kllun"
+            "natsuki 4kllun"
         choice:
-            "natsuki 1klrun"
+            "natsuki 4klrun"
         pause 10
         repeat
 
@@ -1208,27 +1208,27 @@ init python:
 image natsuki talk_menu_enamored:
     block:
         choice:
-            "natsuki 1nchbgl"
+            "natsuki 3nchbgl"
         choice:
-            "natsuki 1nnmbgl"
+            "natsuki 4nnmbgl"
         choice:
-            "natsuki 1uchssl"
+            "natsuki 3uchssl"
         choice:
-            "natsuki 1unmssl"
+            "natsuki 3unmssl"
         choice:
-            "natsuki 1uwltsl"
+            "natsuki 4uwltsl"
 
 # Menu images for AFFECTIONATE+
 image natsuki talk_menu_affectionate:
     block:
         choice:
-            "natsuki 1unmsm"
+            "natsuki 3unmsm"
         choice:
             "natsuki 1unmbg"
         choice:
-            "natsuki 1uchbg"
+            "natsuki 4uchbg"
         choice:
-            "natsuki 1nchbg"
+            "natsuki 2nchbg"
 
 # Menu images for HAPPY+
 image natsuki talk_menu_happy:
@@ -1236,13 +1236,13 @@ image natsuki talk_menu_happy:
         choice:
             "natsuki 1unmss"
         choice:
-            "natsuki 1unmfs"
+            "natsuki 2unmfs"
         choice:
-            "natsuki 1tnmfs"
+            "natsuki 2tnmfs"
         choice:
-            "natsuki 1ullaj"
+            "natsuki 4ullaj"
         choice:
-            "natsuki 1unmbo"
+            "natsuki 4unmbo"
 
 # Menu images for NORMAL+
 image natsuki talk_menu_normal:
@@ -1250,39 +1250,39 @@ image natsuki talk_menu_normal:
         choice:
             "natsuki 1unmss"
         choice:
-            "natsuki 1unmaj"
+            "natsuki 2unmaj"
         choice:
-            "natsuki 1ulraj"
+            "natsuki 2ulraj"
         choice:
             "natsuki 1ullaj"
         choice:
-            "natsuki 1unmca"
+            "natsuki 2unmca"
 
 # Menu images for DISTRESSED+
 image natsuki talk_menu_distressed:
     block:
         choice:
-            "natsuki 1fcsun"
+            "natsuki 2fcsun"
         choice:
-            "natsuki 1fslun"
+            "natsuki 2fslun"
         choice:
-            "natsuki 1fsrbo"
+            "natsuki 2fsrbo"
         choice:
-            "natsuki 1fcsbo"
+            "natsuki 2fcsbo"
         choice:
-            "natsuki 1fcsaj"
+            "natsuki 2fcsaj"
 
 # Menu images for RUINED+
 image natsuki talk_menu_ruined:
     block:
         choice:
-            "natsuki 1fcsantsb"
+            "natsuki 2fcsantsb"
         choice:
-            "natsuki 1fsluntse"
+            "natsuki 2fsluntse"
         choice:
-            "natsuki 1fcssrtse"
+            "natsuki 2fcssrtse"
         choice:
-            "natsuki 1fnmantdr"
+            "natsuki 2fnmantdr"
 
 image desk = "mod_assets/natsuki/desk/table_normal.png"
 image chair = "mod_assets/natsuki/desk/chair_normal.png"

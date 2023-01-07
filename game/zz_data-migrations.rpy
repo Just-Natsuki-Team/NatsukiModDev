@@ -254,6 +254,10 @@ init python in jn_data_migrations:
         if store.persistent.affinity >= 5000:
             store.persistent.affinity = 0
             jn_utils.log("434346".decode("hex"))
+        
+        if jn_outfits.get_outfit("jn_skater_outfit").unlocked:
+            jn_outfits.get_wearable("jn_facewear_plasters").unlock()
+
         jn_utils.save_game()
         jn_utils.log("Migration to 1.0.3 DONE")
         return

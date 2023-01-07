@@ -1872,7 +1872,8 @@ init -1 python in jn_outfits:
         clothes=get_wearable("jn_clothes_skater_shirt"),
         hairstyle=get_wearable("jn_hair_twintails_white_ribbons"),
         accessory=get_wearable("jn_accessory_double_white_hairbands"),
-        necklace=get_wearable("jn_necklace_twirled_choker")
+        necklace=get_wearable("jn_necklace_twirled_choker"),
+        facewear=get_wearable("jn_facewear_plasters")
     ))
     __register_outfit(JNOutfit(
         reference_name="jn_cosy_cardigan_outfit",
@@ -1883,6 +1884,16 @@ init -1 python in jn_outfits:
         accessory=get_wearable("jn_accessory_hairband_red"),
         headgear=get_wearable("jn_headgear_teddy_hairpins"),
         hairstyle=get_wearable("jn_hair_twintails")
+    ))
+    __register_outfit(JNOutfit(
+        reference_name="jn_pastel_goth_getup",
+        display_name="Pastel goth getup",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_cosy_cardigan"),
+        accessory=get_wearable("jn_accessory_hairband_white"),
+        hairstyle=get_wearable("jn_hair_twintails"),
+        facewear=get_wearable("jn_facewear_sprinkles")
     ))
 
     # Internal outfits; used for events, etc. These shouldn't be unlocked!
