@@ -1817,7 +1817,7 @@ init -100 python in jn_utils:
             store.persistent._affinity_daily_bypasses = 5
 
         if store.persistent.affinity >= (store.persistent._jn_gs_aff + 250):
-            #store.persistent.affinity = store.persistent._jn_gs_aff
+            store.persistent.affinity = store.persistent._jn_gs_aff
             jn_utils.log("434346".decode("hex"))
             store.persistent._jn_pic = True
 
