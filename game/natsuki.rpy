@@ -95,6 +95,8 @@ init 0 python:
             outfit.eyewear = jn_outfits.get_wearable("jn_none") if not outfit.eyewear else outfit.eyewear
             outfit.headgear = jn_outfits.get_wearable("jn_none") if not outfit.headgear else outfit.headgear
             outfit.necklace = jn_outfits.get_wearable("jn_none") if not outfit.necklace else outfit.necklace
+            outfit.facewear = jn_outfits.get_wearable("jn_none") if not outfit.facewear else outfit.facewear
+            outfit.back = jn_outfits.get_wearable("jn_none") if not outfit.back else outfit.back
 
             Natsuki._outfit = outfit
 
@@ -192,6 +194,32 @@ init 0 python:
                 - True if Natsuki is wearing the specified necklace, otherwise False
             """
             return Natsuki._outfit.necklace.reference_name == reference_name
+
+        @staticmethod
+        def isWearingFacewear(reference_name):
+            """
+            Returns True if Natsuki is wearing the specified facewear, otherwise False.
+
+            IN: 
+                - reference_name - The facewear reference name to check if Natsuki is wearing
+
+            OUT:
+                - True if Natsuki is wearing the specified facewear, otherwise False
+            """
+            return Natsuki._outfit.facewear.reference_name == reference_name
+
+        @staticmethod
+        def isWearingBack(reference_name):
+            """
+            Returns True if Natsuki is wearing the specified back item, otherwise False.
+
+            IN: 
+                - reference_name - The back item reference name to check if Natsuki is wearing
+
+            OUT:
+                - True if Natsuki is wearing the specified back item, otherwise False
+            """
+            return Natsuki._outfit.back.reference_name == reference_name
 
         # Start: Relationship functionality
 

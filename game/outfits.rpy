@@ -233,17 +233,31 @@ init -1 python in jn_outfits:
 
     class JNHeadgear(JNWearable):
         """
-        Describes some headgear for Natsuki; a wearable with additional functionality specific to clothes.
+        Describes some headgear for Natsuki; a wearable with additional functionality specific to headgear.
         """
         def getFolderName():
             return "headgear"
 
     class JNNecklace(JNWearable):
         """
-        Describes some headgear for Natsuki; a wearable with additional functionality specific to clothes.
+        Describes some headgear for Natsuki; a wearable with additional functionality specific to necklaces.
         """
         def getFolderName():
             return "necklace"
+
+    class JNFacewear(JNWearable):
+        """
+        Describes some facewear for Natsuki; a wearable with additional functionality specific to facewear.
+        """
+        def getFolderName():
+            return "facewear"
+
+    class JNBack(JNWearable):
+        """
+        Describes some back item for Natsuki; a wearable with additional functionality specific to back items.
+        """
+        def getFolderName():
+            return "back"
 
     class JNOutfit():
         """
@@ -261,7 +275,9 @@ init -1 python in jn_outfits:
             accessory=None,
             eyewear=None,
             headgear=None,
-            necklace=None
+            necklace=None,
+            facewear=None,
+            back=None
         ):
             """
             Constructor.
@@ -277,6 +293,8 @@ init -1 python in jn_outfits:
                 - eyewear - JNEyewear associated with this outfit. Optional.
                 - headgear - JNHeadgear associated with this outfit. Optional.
                 - necklace - JNNecklace associated with this outfit. Optional.
+                - facewear - JNFacialwear associated with this outfit. Optional.
+                - back - JNBack associated with this outfit. Optional.
             """
             # Clothes are required
             if clothes is None:
@@ -298,6 +316,8 @@ init -1 python in jn_outfits:
             self.eyewear = eyewear
             self.headgear = headgear
             self.necklace = necklace
+            self.facewear = facewear
+            self.back = back
 
         @staticmethod
         def load_all():
@@ -326,7 +346,9 @@ init -1 python in jn_outfits:
             has_accessory=None,
             has_eyewear=None,
             has_headgear=None,
-            has_necklace=None
+            has_necklace=None,
+            has_facewear=None,
+            has_back=None
         ):
             """
             Returns a filtered list of outfits, given an outfit list and filter criteria.
@@ -340,6 +362,8 @@ init -1 python in jn_outfits:
                 - has_eyewear - the boolean has_eyewear state to filter for
                 - has_headgear - the boolean has_headgear state to filter for
                 - has_necklace - the boolean has_necklace state to filter for
+                - has_facewear - the boolean has_facewear state to filter for
+                - has_back - the boolean has_back state to filter for
 
             OUT:
                 - list of JNOutfit outfits matching the search criteria
@@ -354,7 +378,9 @@ init -1 python in jn_outfits:
                     has_accessory,
                     has_eyewear,
                     has_headgear,
-                    has_necklace
+                    has_necklace,
+                    has_facewear,
+                    has_back
                 )
             ]
 
@@ -395,6 +421,12 @@ init -1 python in jn_outfits:
 
             if self.necklace and not self.necklace.unlocked:
                 self.necklace.unlock()
+            
+            if self.facewear and not self.facewear.unlocked:
+                self.facewear.unlock()
+
+            if self.back and not self.back.unlocked:
+                self.back.unlock()
 
         def lock(self):
             """
@@ -430,6 +462,12 @@ init -1 python in jn_outfits:
             if self.necklace and isinstance(self.necklace, JNNecklace):
                 outfit_dict["necklace"] = self.necklace.reference_name
 
+            if self.facewear and isinstance(self.necklace, JNFacewear):
+                outfit_dict["facewear"] = self.facewear.reference_name
+
+            if self.back and isinstance(self.back, JNBack):
+                outfit_dict["back"] = self.back.reference_name
+
             return json.dumps(outfit_dict)
 
         def __load(self):
@@ -460,7 +498,9 @@ init -1 python in jn_outfits:
             has_accessory=None,
             has_eyewear=None,
             has_headgear=None,
-            has_necklace=None
+            has_necklace=None,
+            has_facewear=None,
+            has_back=None
         ):
             """
             Returns True, if the outfit meets the filter criteria. Otherwise False.
@@ -473,6 +513,8 @@ init -1 python in jn_outfits:
                 - has_eyewear - the boolean has_eyewear state to filter for
                 - has_headgear - the boolean has_headgear state to filter for
                 - has_necklace - the boolean has_necklace state to filter for
+                - has_facewear - the boolean has_facewear state to filter for
+                - has_back - the boolean has_back state to filter for
 
             OUT:
                 - True, if the outfit meets the filter criteria. Otherwise False
@@ -496,6 +538,12 @@ init -1 python in jn_outfits:
                 return False
 
             elif has_necklace is not None and bool(self.has_necklace) != has_necklace:
+                return False
+
+            elif has_facewear is not None and bool(self.has_facewear) != has_facewear:
+                return False
+
+            elif has_back is not None and bool(self.has_back) != has_back:
                 return False
 
             return True
@@ -524,6 +572,12 @@ init -1 python in jn_outfits:
 
             if not outfit.necklace:
                 outfit.necklace = get_wearable("jn_none")
+
+            if not outfit.facewear:
+                outfit.facewear = get_wearable("jn_none")
+
+            if not outfit.back:
+                outfit.back = get_wearable("jn_none")
 
             __ALL_OUTFITS[outfit.reference_name] = outfit
             if outfit.reference_name not in store.persistent.jn_outfit_list:
@@ -669,6 +723,12 @@ init -1 python in jn_outfits:
             elif json["category"] == "necklace":
                 wearable = JNNecklace(**kwargs)
 
+            elif json["category"] == "facewear":
+                wearable = JNFacewear(**kwargs)
+
+            elif json["category"] == "back":
+                wearable = JNBack(**kwargs)
+
             # Finally, make sure the resources necessary for this wearable exist
             if not _check_wearable_sprites(wearable):
                 jn_utils.log("Cannot load wearable {0} as one or more sprites are missing.".format(wearable.reference_name))
@@ -707,6 +767,8 @@ init -1 python in jn_outfits:
             or "eyewear" in json and not isinstance(json["eyewear"], basestring)
             or "headgear" in json and not isinstance(json["headgear"], basestring)
             or "necklace" in json and not isinstance(json["necklace"], basestring)
+            or "facewear" in json and not isinstance(json["facewear"], basestring)
+            or "back" in json and not isinstance(json["back"], basestring)
         ):
             jn_utils.log("Cannot load outfit as one or more attributes are the wrong data type.")
             return False
@@ -746,6 +808,14 @@ init -1 python in jn_outfits:
             jn_utils.log("Cannot load outfit {0} as specified necklace does not exist.".format(json["reference_name"]))
             return False
 
+        elif "facewear" in json and not json["facewear"] in __ALL_WEARABLES:
+            jn_utils.log("Cannot load outfit {0} as specified facewear does not exist.".format(json["reference_name"]))
+            return False
+
+        elif "back" in json and not json["back"] in __ALL_WEARABLES:
+            jn_utils.log("Cannot load outfit {0} as specified back does not exist.".format(json["reference_name"]))
+            return False
+
         else:
             outfit = JNOutfit(
                 reference_name=json["reference_name"],
@@ -757,7 +827,9 @@ init -1 python in jn_outfits:
                 accessory=__ALL_WEARABLES[json["accessory"]] if "accessory" in json else None,
                 eyewear=__ALL_WEARABLES[json["eyewear"]] if "eyewear" in json else None,
                 headgear=__ALL_WEARABLES[json["headgear"]] if "headgear" in json else None,
-                necklace=__ALL_WEARABLES[json["necklace"]]  if "necklace" in json else None
+                necklace=__ALL_WEARABLES[json["necklace"]]  if "necklace" in json else None,
+                facewear=__ALL_WEARABLES[json["facewear"]]  if "facewear" in json else None,
+                back=__ALL_WEARABLES[json["back"]]  if "back" in json else None
             )
 
             # Sanity check components to make sure the components are applicable to the slots they have been assigned to
@@ -785,6 +857,14 @@ init -1 python in jn_outfits:
                 jn_utils.log("Cannot load outfit {0} as specified necklace is not a valid necklace.".format(outfit.reference_name))
                 return False
 
+            elif outfit.facewear and not isinstance(outfit.facewear, JNFacewear):
+                jn_utils.log("Cannot load outfit {0} as specified facewear is not a valid facewear.".format(outfit.reference_name))
+                return False
+
+            elif outfit.back and not isinstance(outfit.back, JNBack):
+                jn_utils.log("Cannot load outfit {0} as specified back is not a valid back.".format(outfit.reference_name))
+                return False
+
             # Make sure locks aren't being bypassed with this outfit by locking the outfit if any components are locked
             if outfit.unlocked:
                 if (
@@ -794,6 +874,8 @@ init -1 python in jn_outfits:
                     or outfit.eyewear and not outfit.eyewear.unlocked
                     or outfit.headgear and not outfit.headgear.unlocked
                     or outfit.necklace and not outfit.necklace.unlocked
+                    or outfit.facewear and not outfit.facewear.unlocked
+                    or outfit.back and not outfit.back.unlocked
                 ):
                     jn_utils.log("Outfit {0} contains one or more locked components; locking outfit.".format(outfit.reference_name))
                     outfit.unlocked = False
@@ -972,6 +1054,8 @@ init -1 python in jn_outfits:
         temporary_outfit.eyewear = get_wearable("jn_none") if not outfit.eyewear else outfit.eyewear
         temporary_outfit.headgear = get_wearable("jn_none") if not outfit.headgear else outfit.headgear
         temporary_outfit.necklace = get_wearable("jn_none") if not outfit.necklace else outfit.necklace
+        temporary_outfit.facewear = get_wearable("jn_none") if not outfit.facewear else outfit.facewear
+        temporary_outfit.back = get_wearable("jn_none") if not outfit.back else outfit.back
 
         store.Natsuki.setOutfit(temporary_outfit, persist=False)
 
@@ -999,7 +1083,9 @@ init -1 python in jn_outfits:
             accessory=outfit.accessory,
             eyewear=outfit.eyewear,
             headgear=outfit.headgear,
-            necklace=outfit.necklace
+            necklace=outfit.necklace,
+            facewear=outfit.facewear,
+            back=outfit.back
         )
 
         # Create directory if it doesn't exist
@@ -1649,6 +1735,28 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
 
+    # Official JN facewear
+    __register_wearable(JNFacewear(
+        reference_name="jn_facewear_sprinkles",
+        display_name="Sprinkles",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNFacewear(
+        reference_name="jn_facewear_plasters",
+        display_name="Plasters",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+
+    # Official JN back items
+    __register_wearable(JNBack(
+        reference_name="jn_back_cat_tail",
+        display_name="Cat tail",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+
     # Starter official JN outfits
     __register_outfit(JNOutfit(
         reference_name="jn_school_uniform",
@@ -2177,6 +2285,50 @@ label outfits_create_select_clothes:
         python:
             jn_outfits._changes_made = True
             jn_outfits._PREVIEW_OUTFIT.clothes = _return
+            Natsuki.setOutfit(jn_outfits._PREVIEW_OUTFIT)
+
+    jump outfits_create_menu
+
+# Facewear selection for outfit creator flow
+label outfits_create_select_facewear:
+    python:
+        unlocked_wearables = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNFacewear)
+        wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
+        wearable_options.sort(key = lambda option: option[1].display_name)
+        wearable_options.insert(0, ("No facewear", "none"))
+
+    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+
+    if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNFacewear):
+        play audio hair_clip
+        python:
+            jn_outfits._changes_made = True
+            wearable_to_apply = jn_outfits.get_wearable("jn_none") if _return == "none" else _return
+            jn_outfits._PREVIEW_OUTFIT.facewear = wearable_to_apply
+            Natsuki.setOutfit(jn_outfits._PREVIEW_OUTFIT)
+
+    jump outfits_create_menu
+
+# Back slot selection for outfit creator flow
+label outfits_create_select_back:
+    python:
+        unlocked_wearables = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNBack)
+        wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
+        wearable_options.sort(key = lambda option: option[1].display_name)
+        wearable_options.insert(0, ("No back", "none"))
+
+    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+
+    if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNBack):
+        if (random.choice([True, False])):
+            play audio clothing_ruffle
+        else:
+            play audio zipper
+
+        python:
+            jn_outfits._changes_made = True
+            wearable_to_apply = jn_outfits.get_wearable("jn_none") if _return == "none" else _return
+            jn_outfits._PREVIEW_OUTFIT.back = wearable_to_apply
             Natsuki.setOutfit(jn_outfits._PREVIEW_OUTFIT)
 
     jump outfits_create_menu
@@ -2730,6 +2882,16 @@ screen create_outfit():
                 left_margin 10
 
         hbox:
+            # Facewear
+            textbutton _("Facewear"):
+                style "hkbd_option"
+                action Jump("outfits_create_select_facewear")
+
+            label _(jn_utils.escapeRenpySubstitutionString(jn_outfits._PREVIEW_OUTFIT.facewear.display_name) if isinstance(jn_outfits._PREVIEW_OUTFIT.facewear, jn_outfits.JNFacewear) else "None"):
+                style "hkbd_label"
+                left_margin 10
+
+        hbox:
             # Accessories
             textbutton _("Accessories"):
                 style "hkbd_option"
@@ -2759,10 +2921,21 @@ screen create_outfit():
                 style "hkbd_label"
                 left_margin 10
 
+        hbox:
+            # Back slot
+            textbutton _("Back"):
+                style "hkbd_option"
+                action Jump("outfits_create_select_back")
+
+            label _(jn_utils.escapeRenpySubstitutionString(jn_outfits._PREVIEW_OUTFIT.back.display_name) if isinstance(jn_outfits._PREVIEW_OUTFIT.back, jn_outfits.JNBack) else "None"):
+                style "hkbd_label"
+                left_margin 10
+
     # Save/quit
     vbox:
         xpos 600
         ypos 450
+        null height 20
 
         textbutton _("Finished"):
             style "hkbd_option"

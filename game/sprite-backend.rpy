@@ -175,13 +175,25 @@ init -50 python:
         """
         Generates sprites for Natsuki based on outfit, expression, pose, etc.
         """
+
+        # Base
         lc_args = [
             (1280, 740), # Anchor
             (0, 0), _JN_NATSUKI_BASE_SPRITE_PATH + "desk/chair_normal.png", # Chair
+        ]
+
+        # Back item
+        back = "{0}/back/jn_none/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH) if not Natsuki._outfit.back else "{0}/back/[Natsuki._outfit.back.reference_name]/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH)
+        lc_args.extend([
+            (0, 0), back
+        ])
+
+        # Back hair, base, clothes
+        lc_args.extend([
             (0, 0), "{0}/hair/[Natsuki._outfit.hairstyle.reference_name]/sitting/back.png".format(_JN_NATSUKI_BASE_SPRITE_PATH), # Hair back
             (0, 0), "{0}/base/{1}/body.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose), # Body
             (0, 0), "{0}/clothes/[Natsuki._outfit.clothes.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose), # Outfit, body
-        ]
+        ])
 
         # Necklace
         necklace = "{0}/necklace/jn_none/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH) if not Natsuki._outfit.necklace else "{0}/necklace/[Natsuki._outfit.necklace.reference_name]/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH)
@@ -234,6 +246,12 @@ init -50 python:
         headgear = "{0}/headgear/jn_none/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH) if not Natsuki._outfit.headgear else "{0}/headgear/[Natsuki._outfit.headgear.reference_name]/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH)
         lc_args.extend([
             (0, 0), headgear
+        ])
+
+        # Facewear
+        facewear = "{0}/facewear/jn_none/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH) if not Natsuki._outfit.facewear else "{0}/facewear/[Natsuki._outfit.facewear.reference_name]/sitting.png".format(_JN_NATSUKI_BASE_SPRITE_PATH)
+        lc_args.extend([
+            (0, 0), facewear
         ])
 
         # Eyewear
