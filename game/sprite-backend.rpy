@@ -162,6 +162,18 @@ init -50 python:
         def __str__(self):
             return self.name
 
+    # These are poses with arms rendered under the desk
+    _JN_BEFORE_DESK_POSES = [
+        JNPose.sitting,
+        JNPose.arms_crossed_body
+    ]
+
+    # These are poses with arms rendere on top of the desk
+    _JN_AFTER_DESK_POSES = [
+        JNPose.arms_crossed_desk,
+        JNPose.fingers_on_desk
+    ]
+
     def jn_generate_natsuki_sprite(
         pose,
         eyebrows,
@@ -268,19 +280,29 @@ init -50 python:
 
         # Brows
         lc_args.extend([
-            (0, 0), "{0}/face/eyebrows/sitting/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, eyebrows), # Brows
-            (0, 0), _JN_NATSUKI_BASE_SPRITE_PATH + "/desk/{0}.png".format(_JN_TABLE_SPRITE) # Table
+            (0, 0), "{0}/face/eyebrows/sitting/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, eyebrows)
         ])
 
-        # Arms
+        if pose in _JN_BEFORE_DESK_POSES:
+            y_offset = -2 if pose is JNPose.fingers_on_desk else 0
+
+            # Arms, sleeves
+            lc_args.extend([
+                (0, y_offset), "{0}/arms/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose),
+                (0, y_offset), "{0}/sleeves/[Natsuki._outfit.clothes.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose)
+            ])
+
+        # Desk
         lc_args.extend([
-            (0, 0), "{0}/arms/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose)
+            (0, 0), _JN_NATSUKI_BASE_SPRITE_PATH + "/desk/{0}.png".format(_JN_TABLE_SPRITE)           
         ])
 
-        # Sleeves
-        lc_args.extend([
-            (0, 0), "{0}/sleeves/[Natsuki._outfit.clothes.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose)
-        ])
+        if pose in _JN_AFTER_DESK_POSES:
+            # Arms
+            lc_args.extend([
+                (0, 0), "{0}/arms/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose),
+                (0, 0), "{0}/sleeves/[Natsuki._outfit.clothes.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose)
+            ])
 
         # Generate and return the sprite
         return renpy.display.layout.LiveComposite(
