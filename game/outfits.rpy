@@ -1481,12 +1481,6 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
-        reference_name="jn_clothes_sparkly_ballgown",
-        display_name="Sparkly ballgown",
-        unlocked=False,
-        is_jn_wearable=True
-    ))
-    __register_wearable(JNClothes(
         reference_name="jn_clothes_bee_off_shoulder_sweater",
         display_name="Bee off-shoulder sweater",
         unlocked=False,
