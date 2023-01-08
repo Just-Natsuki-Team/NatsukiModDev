@@ -1750,6 +1750,12 @@ init -1 python in jn_outfits:
         unlocked=False,
         is_jn_wearable=True
     ))
+    __register_wearable(JNBack(
+        reference_name="jn_back_fox_tail",
+        display_name="Fox tail",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
 
     # Starter official JN outfits
     __register_outfit(JNOutfit(
