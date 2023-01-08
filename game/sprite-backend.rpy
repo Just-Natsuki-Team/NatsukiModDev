@@ -192,6 +192,7 @@ init -50 python:
         lc_args = [
             (1280, 740), # Anchor
             (0, 0), _JN_NATSUKI_BASE_SPRITE_PATH + "desk/chair_normal.png", # Chair
+            (0, 0), "{0}/hair/[Natsuki._outfit.hairstyle.reference_name]/sitting/back.png".format(_JN_NATSUKI_BASE_SPRITE_PATH), # Hair back
         ]
 
         # Back item
@@ -202,7 +203,6 @@ init -50 python:
 
         # Back hair, base, clothes
         lc_args.extend([
-            (0, 0), "{0}/hair/[Natsuki._outfit.hairstyle.reference_name]/sitting/back.png".format(_JN_NATSUKI_BASE_SPRITE_PATH), # Hair back
             (0, 0), "{0}/base/{1}/body.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose), # Body
             (0, 0), "{0}/clothes/[Natsuki._outfit.clothes.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose), # Outfit, body
         ])
@@ -284,12 +284,10 @@ init -50 python:
         ])
 
         if pose in _JN_BEFORE_DESK_POSES:
-            y_offset = -2 if pose is JNPose.fingers_on_desk else 0
-
             # Arms, sleeves
             lc_args.extend([
-                (0, y_offset), "{0}/arms/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose),
-                (0, y_offset), "{0}/sleeves/[Natsuki._outfit.clothes.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose)
+                (0, 0), "{0}/arms/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose),
+                (0, 0), "{0}/sleeves/[Natsuki._outfit.clothes.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose)
             ])
 
         # Desk
@@ -298,7 +296,7 @@ init -50 python:
         ])
 
         if pose in _JN_AFTER_DESK_POSES:
-            # Arms
+            # Arms, sleeves
             lc_args.extend([
                 (0, 0), "{0}/arms/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose),
                 (0, 0), "{0}/sleeves/[Natsuki._outfit.clothes.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose)
