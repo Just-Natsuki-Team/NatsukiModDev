@@ -191,7 +191,7 @@ init -50 python:
         # Base
         lc_args = [
             (1280, 740), # Anchor
-            (0, 0), _JN_NATSUKI_BASE_SPRITE_PATH + "desk/chair_normal.png", # Chair
+            (0, 0), _JN_NATSUKI_BASE_SPRITE_PATH + "desk/chair/chair_normal.png", # Chair
             (0, 0), "{0}/hair/[Natsuki._outfit.hairstyle.reference_name]/sitting/back.png".format(_JN_NATSUKI_BASE_SPRITE_PATH), # Hair back
         ]
 
@@ -292,12 +292,13 @@ init -50 python:
 
         # Desk
         lc_args.extend([
-            (0, 0), _JN_NATSUKI_BASE_SPRITE_PATH + "/desk/{0}.png".format(_JN_TABLE_SPRITE)           
+            (0, 0), _JN_NATSUKI_BASE_SPRITE_PATH + "/desk/table/{0}.png".format(_JN_TABLE_SPRITE)           
         ])
 
         if pose in _JN_AFTER_DESK_POSES:
             # Arms, sleeves
             lc_args.extend([
+                (0, 0), "{0}/desk/table_shadow/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose),
                 (0, 0), "{0}/arms/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose),
                 (0, 0), "{0}/sleeves/[Natsuki._outfit.clothes.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose)
             ])
@@ -1304,8 +1305,8 @@ image natsuki talk_menu_ruined:
         choice:
             "natsuki 2fnmantdr"
 
-image desk = "mod_assets/natsuki/desk/table_normal.png"
-image chair = "mod_assets/natsuki/desk/chair_normal.png"
+image desk = "mod_assets/natsuki/desk/table/table_normal.png"
+image chair = "mod_assets/natsuki/desk/chair/chair_normal.png"
 
 label pose_test:
     n 1tsqss "Oh?{w=0.5}{nw}"
