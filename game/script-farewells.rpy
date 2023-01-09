@@ -826,7 +826,7 @@ label farewell_love_wish_you_could_stay_forever:
     n 3kwmpol "Time to go,{w=0.1} [player]?"
     n 3kllssl "Sometimes I kinda wish you could just stay forever..."
     n 4fcsajf "But I understand you've got stuff to do."
-    n 2fslssfsbl "...Even if it {i}isn't{/i} always as important as me."
+    n 2fslssfsbl "...Even if it {i}isn't{/i} always as important as me.{w=0.75{nw}"
     extend 2nchgnl " Ehehe."
     $ chosen_endearment = jn_utils.getRandomEndearment()
     n 1fchbgf "Later,{w=0.2} [chosen_endearment]!"
