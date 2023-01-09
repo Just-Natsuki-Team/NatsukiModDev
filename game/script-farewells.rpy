@@ -1010,8 +1010,8 @@ init 5 python:
     )
 
 label farewell_happy_affectionate_going_now:
-    n 1unmaj "Going now,{w=0.2} [player]?{w=0.75}{nw}"
-    extend 1nchsm " See you later!"
+    n 2unmaj "Going now,{w=0.2} [player]?{w=0.75}{nw}"
+    extend 2nchsm " See you later!"
 
     return { "quit": None }
 
@@ -1028,8 +1028,8 @@ init 5 python:
 
 label farewell_happy_affectionate_heading_off:
     n 1unmaj "Heading off now,{w=0.2} [player]?"
-    n 1nnmsm "Alright!{w=0.5}{nw}" 
-    extend 1fchsm " Take care!"
+    n 3nnmsm "Alright!{w=0.5}{nw}" 
+    extend 3fchsm " Take care!"
 
     return { "quit": None }
 
@@ -1046,8 +1046,8 @@ init 5 python:
 
 label farewell_happy_affectionate_stay_safe:
     n 1nchss "Okaaay!{w=0.75}" 
-    extend 1tnmss " I guess I'll catch you later then."
-    n 1fchsm "Stay safe,{w=0.2} [player]!"
+    extend 2tnmss " I guess I'll catch you later then."
+    n 2fchsm "Stay safe,{w=0.2} [player]!"
 
     return { "quit": None }
 
@@ -1063,8 +1063,8 @@ init 5 python:
     )
 
 label farewell_happy_affectionate_take_care:
-    n 1nnmbg "See you later,{w=0.2} [player]!"
-    n 1fchsm "Take care!"
+    n 4nnmbg "See you later,{w=0.2} [player]!"
+    n 4fchsm "Take care!"
 
     return { "quit": None }
 
@@ -1081,7 +1081,7 @@ init 5 python:
 
 label farewell_happy_affectionate_see_me_soon:
     n 1nchbg "Bye,{w=0.1} [player]!"
-    n 1fchsmlsbr "Come see me soon,{w=0.1} alright?"
+    n 4fchsmlsbr "Come see me soon,{w=0.1} alright?"
 
     return { "quit": None }
 
@@ -1114,7 +1114,7 @@ init 5 python:
     )
 
 label farewell_normal_happy_later:
-    n 1nnmss "Later,{w=0.2} [player]!"
+    n 2nnmss "Later,{w=0.2} [player]!"
 
     return { "quit": None }
 
@@ -1130,7 +1130,7 @@ init 5 python:
     )
 
 label farewell_normal_happy_goodbye:
-    n 1nchsm "Goodbye,{w=0.2} [player]!"
+    n 4nchsm "Goodbye,{w=0.2} [player]!"
 
     return { "quit": None }
 
@@ -1147,7 +1147,7 @@ init 5 python:
 
 label farewell_normal_happy_kay:
     n 1fcsbg "'kay!{w=0.5}{nw}" 
-    extend 1fchbg " Bye for now!"
+    extend 2fchbg " Bye for now!"
 
     return { "quit": None }
 
@@ -1163,7 +1163,7 @@ init 5 python:
     )
 
 label farewell_normal_happy_see_ya:
-    n 1nchbg "See ya,{w=0.2} [player]!"
+    n 3nchbg "See ya,{w=0.2} [player]!"
 
     return { "quit": None }
 
@@ -1181,6 +1181,7 @@ init 5 python:
 
 label farewell_upset_distressed_bye:
     n 1nnmsl "Bye,{w=0.2} [player]."
+
     return { "quit": None }
 
 init 5 python:
@@ -1195,7 +1196,8 @@ init 5 python:
     )
 
 label farewell_upset_distressed_later:
-    n 1nnmsf "Later,{w=0.2} [player]."
+    n 2nnmsf "Later,{w=0.2} [player]."
+
     return { "quit": None }
 
 init 5 python:
@@ -1210,7 +1212,8 @@ init 5 python:
     )
 
 label farewell_upset_distressed_kay:
-    n 1fllsf "'kay.{w=0.2} Later."
+    n 3fllsf "'kay.{w=0.2} Later."
+
     return { "quit": None }
 
 init 5 python:
@@ -1226,7 +1229,8 @@ init 5 python:
 
 label farewell_upset_distressed_goodbye:
     n 1nnmbo "Oh.{w=0.5}{nw}"
-    extend 1fslsf " Goodbye."
+    extend 2fslsf " Goodbye."
+
     return { "quit": None }
 
 init 5 python:
@@ -1241,7 +1245,8 @@ init 5 python:
     )
 
 label farewell_upset_distressed_see_you_around:
-    n 1fsqsf "See you around."
+    n 2fsqsf "See you around."
+
     return { "quit": None }
 
 # DISTRESSED/BROKEN/RUINED farewells
@@ -1258,7 +1263,8 @@ init 5 python:
     )
 
 label farewell_broken_ruined_yeah:
-    n 1fcssfltsa "Yeah."
+    n 2fcssfltsa "Yeah."
+
     return { "quit": None }
 
 init 5 python:
@@ -1273,7 +1279,8 @@ init 5 python:
     )
 
 label farewell_broken_ruined_yep:
-    n 1fcsupltsa "Yep."
+    n 2fcsupltsa "Yep."
+
     return { "quit": None }
 
 init 5 python:
@@ -1289,6 +1296,7 @@ init 5 python:
 
 label farewell_broken_ruined_uh_huh:
     n 1fsqsrltsb "Uh huh."
+
     return { "quit": None }
 
 init 5 python:
@@ -1303,8 +1311,9 @@ init 5 python:
     )
 
 label farewell_broken_ruined_nothing_to_say:
-    n 1fcssftsa "..."
-    n 1kcsupltsa "..."
+    n 2fcssftsa "..."
+    n 4kcsupltsa "..."
+
     return { "quit": None }
 
 init 5 python:
@@ -1319,7 +1328,8 @@ init 5 python:
     )
 
 label farewell_broken_ruined_kay:
-    n 1fslsrltsb "'kay."
+    n 3fslsrltsb "'kay."
+
     return { "quit": None }
 
 init 5 python:
@@ -1334,7 +1344,8 @@ init 5 python:
     )
 
 label farewell_broken_ruined_good:
-    n 1fsqanltse "{i}Good{/i}."
+    n 4fsqanltse "{i}Good{/i}."
+
     return { "quit": None }
 
 # Farewells that allow the player to choose to stay
@@ -1354,31 +1365,33 @@ init 5 python:
 
 label farewell_short_session_ask:
     n 1uskwrlesh "What?{w=0.75}{nw}" 
-    extend 1knmemlsbl " You're leaving?{w=1}{nw}" 
-    extend 1fnmgslsbl " B-{w=0.1}but you've {i}barely{/i} even been here at all today,{w=0.2} [player]!"
+    extend 4knmemlsbl " You're leaving?{w=1}{nw}" 
+    extend 4fnmgslsbl " B-{w=0.1}but you've {i}barely{/i} even been here at all today,{w=0.2} [player]!"
     $ time_in_session_descriptor = jn_utils.get_time_in_session_descriptor()
-    n 1fcsgslsbr "I mean,{w=0.75}{nw}"
-    extend 1fnmpol " you've literally only been here for [time_in_session_descriptor]!"
-    show natsuki 1knmpol at jn_center zorder JN_NATSUKI_ZORDER
+    n 3fcsgslsbr "I mean,{w=0.75}{nw}"
+    extend 3fnmpol " you've literally only been here for [time_in_session_descriptor]!"
+
+    show natsuki 3knmpol at jn_center zorder JN_NATSUKI_ZORDER
     menu:
         n "You seriously can't stay just a little longer?"
 
         "Sure, I can stay a little longer.":
-            n 1uchbsl "Yay{nw}{w=0.33}!"
-            n 1uskgsl "I-{w=0.2}I mean...!"
+            n 4uchbsl "Yay{nw}{w=0.33}!"
+            n 4uskgsl "I-{w=0.2}I mean...!"
+
             if Natsuki.isLove(higher=True):
                 n 1kllssl "T-{w=0.1}thanks,{w=0.1} [player]. It means a lot to me."
                 $ chosen_endearment = jn_utils.getRandomEndearment()
-                n 1kplssl "Really.{w=0.2} Thank you,{w=0.1} [chosen_endearment]."
-                n 1ksrunl "..."
+                n 2kplssl "Really.{w=0.2} Thank you,{w=0.1} [chosen_endearment]."
+                n 4ksrunl "..."
 
             else:
                 n 1fnmbgl "Y-{w=0.2}yeah!{w=0.5}{nw}" 
-                extend 1fcsbgl " That's what I thought!"
-                n 1fcssslsbl "Yeah..."
-                n 1fnmunl "..."
-                n 1fbkwrf "Stop looking at me like that,{w=0.1} jeez!"
-                n 1fllpof "Ugh..."
+                extend 2fcsbgl " That's what I thought!"
+                n 2fcssslsbl "Yeah..."
+                n 2fnmunl "..."
+                n 4fbkwrf "Stop looking at me like that,{w=0.1} jeez!"
+                n 3fllpof "Ugh..."
 
             n 1fllbgl "N-{w=0.1}now,{w=0.1} where were we?"
             $ jn_globals.player_already_stayed_on_farewell = True
