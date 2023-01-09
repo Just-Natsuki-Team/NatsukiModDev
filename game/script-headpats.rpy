@@ -61,25 +61,25 @@ label headpats_start:
     if persistent._jn_headpats_total_given == 0:
         n 1uskemlesh "H-{w=0.2}huh?!{w=0.75}{nw}"
         extend 1uwdemlsbl " D-{w=0.1}did you just say...?!"
-        n 1kbkwrlsbl "[player]!{w=0.5} W-{w=0.2}wait...!"
+        n 2kbkwrlsbl "[player]!{w=0.5} W-{w=0.2}wait...!"
 
     elif persistent._jn_headpats_total_given < 10:
         n 1knmemlsbl "T-{w=0.2}this again?!"
-        n 1kslunlsbr "[player]..."
+        n 2kslunlsbr "[player]..."
 
     elif persistent._jn_headpats_total_given < 25:
         n 1ksqsllsbr "...Again,{w=0.2} [player]?"
-        n 1ksrcalsbl "..."
+        n 2ksrcalsbl "..."
 
     elif persistent._jn_headpats_total_given < 50:
         n 1kcspulesisbl "..."
-        n 1kslcaf "Fine..."
+        n 2kslcaf "Fine..."
 
     elif persistent._jn_headpats_total_given < 250:
-        n 1kcscaf "...Fine."
+        n 2kcscaf "...Fine."
 
     else:
-        n 1nsrssf "...Okay."
+        n 4nsrssf "...Okay."
     
     show screen headpats_ui
     jump headpats_loop
@@ -149,62 +149,62 @@ label headpats_loop:
 
 label headpats_inactive:
     if persistent._jn_headpats_total_given == 0:
-        n 1fwmeml "A-{w=0.2}are you teasing me or something?"
-        show natsuki 1fcspol
+        n 2fwmeml "A-{w=0.2}are you teasing me or something?"
+        show natsuki 2fcspol
 
     elif persistent._jn_headpats_total_given <= 10:
-        n 1fcspolsbr "...Are you gonna do something or what?{w=0.75}{nw}"
+        n 2fcspolsbr "...Are you gonna do something or what?{w=0.75}{nw}"
         extend 1kslunl " Jeez..."
         show natsuki 1kslsll
 
     elif persistent._jn_headpats_total_given <= 25:
         n 1kslpul "...Did..."
-        n 1knmpulsbr "...D-{w=0.2}did you change your mind or something already?"
+        n 4knmpulsbr "...D-{w=0.2}did you change your mind or something already?"
         show natsuki 1knmbolsbr
 
     elif persistent._jn_headpats_total_given <= 50:
-        n 1kwmpulsbr "...D-{w=0.2}did you not feel like it anymore or something?"
-        show natsuki 1kwmbolsbr
+        n 4kwmpulsbr "...D-{w=0.2}did you not feel like it anymore or something?"
+        show natsuki 4kwmbolsbr
 
     else:
-        n 1kllbolsbr "...Were you done already,{w=0.2} or...?"
-        show natsuki 1kwmbolsbr
+        n 3kllbolsbr "...Were you done already,{w=0.2} or...?"
+        show natsuki 4kwmbolsbr
 
     jump headpats_loop
 
 # Dialogue for each headpat milestone
 
 label headpats_milestone_5:
-    n 1fcsunlsbl "Nnnnnn..."
+    n 2fcsunlsbl "Nnnnnn..."
     n 1ksrunlsbr "..."
 
     $ Natsuki.calculatedAffinityGain(bypass=True)
     jump headpats_loop
 
 label headpats_milestone_10:
-    n 1kwmpulsbr "Y-{w=0.2}you're still going?{w=0.5}{nw}"
-    extend 1ksrunfsbl " Jeez..."
+    n 4kwmpulsbr "Y-{w=0.2}you're still going?{w=0.5}{nw}"
+    extend 2ksrunfsbl " Jeez..."
 
     $ Natsuki.calculatedAffinityGain(bypass=True)
     jump headpats_loop
 
 label headpats_milestone_25:
     n 1kslunl "Uuuuuuu..."
-    n 1kcsemlesi "My hair is gonna be {i}so{/i} tangled later..."
+    n 3kcsemlesi "My hair is gonna be {i}so{/i} tangled later..."
 
     $ Natsuki.calculatedAffinityGain(bypass=True)
     jump headpats_loop
 
 label headpats_milestone_50:
     n 1ncsemlesi "..."
-    n 1fsqcal "...E-{w=0.2}enjoying yourself,{w=0.2} [player]?"
-    n 1ksrcaf "..."
+    n 4fsqcal "...E-{w=0.2}enjoying yourself,{w=0.2} [player]?"
+    n 4ksrcaf "..."
 
     $ Natsuki.calculatedAffinityGain(bypass=True)
     jump headpats_loop
 
 label headpats_milestone_100:
-    n 1ksqtrfsbr "...You really are enjoying this,{w=0.2} huh?"
+    n 4ksqtrfsbr "...You really are enjoying this,{w=0.2} huh?"
     n 1kslcaf "..."
 
     $ Natsuki.calculatedAffinityGain(bypass=True)
@@ -212,7 +212,7 @@ label headpats_milestone_100:
     
 label headpats_milestone_250:
     n 1ksqcal "...Still going strong,{w=0.2} huh [player]?{w=0.75}{nw}"
-    extend 1ksrfsl " Heh."
+    extend 4ksrfsl " Heh."
 
     $ Natsuki.calculatedAffinityGain(bypass=True)
     jump headpats_loop
@@ -220,13 +220,13 @@ label headpats_milestone_250:
 label headpats_milestone_500:
     n 1ucspul "This...{w=0.75}{nw}"
     extend 1nslsml " isn't actually so bad."
-    n 1fcscafsbr "O-{w=0.2}once you get used to it."
+    n 3fcscafsbr "O-{w=0.2}once you get used to it."
 
     $ Natsuki.calculatedAffinityGain(bypass=True)
     jump headpats_loop
 
 label headpats_milestone_750:
-    n 1kcsssfesi "...Haah."
+    n 4kcsssfesi "...Haah."
 
     $ Natsuki.calculatedAffinityGain(bypass=True)
     jump headpats_loop
@@ -253,12 +253,12 @@ label headpats_finished:
         and random.randint(0,3) == 1
         and not jn_headpats._more_pats_requested
     ):
-        n 1kslbol "..."
-        n 1kslsll "Uhmm...{w=0.75}{nw}" 
-        extend 1knmsll " [player]?"
+        n 2kslbol "..."
+        n 2kslsll "Uhmm...{w=0.75}{nw}" 
+        extend 4knmsll " [player]?"
         n 1klrpulsbl "Could you...{w=0.75}{nw}" 
-        extend 1ksrbolsbl " you know..."
-        n 1knmbolsbr "Keep doing that just a little longer?"
+        extend 2ksrbolsbl " you know..."
+        n 4knmbolsbr "Keep doing that just a little longer?"
 
         show natsuki 1fcscalesssbr at jn_center
         menu:
@@ -272,9 +272,9 @@ label headpats_finished:
                 jump headpats_loop
 
             "That's it for now.":
-                n 1nslbol "...Oh."
-                n 1fcsemlsbl "W-{w=0.2}well,{w=0.2} that's fine!{w=0.75}{nw}" 
-                extend 1fcspolsbl " I wasn't really {i}that{/i} into it anyway."
+                n 2nslbol "...Oh."
+                n 2fcsemlsbl "W-{w=0.2}well,{w=0.2} that's fine!{w=0.75}{nw}" 
+                extend 2fcspolsbl " I wasn't really {i}that{/i} into it anyway."
                 n 1kslpol "..."
     else:
         $ finished_start_quip = renpy.substitute(random.choice(jn_headpats._FINISHED_START_QUIPS))
