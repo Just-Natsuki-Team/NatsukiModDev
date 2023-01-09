@@ -399,19 +399,19 @@ image natsuki headpats waiting high:
 image natsuki headpats active:
     block:
         choice:
-            "natsuki 1kcssmf"
+            "natsuki 4kcssmf"
         choice:
             "natsuki 1kchcaf"
         choice:
             "natsuki 1fchcaf"
         choice:
-            "natsuki 1kslcaf"
+            "natsuki 2kslcaf"
         choice:
-            "natsuki 1ksrcaf"
+            "natsuki 2ksrcaf"
         choice:
             "natsuki 1kcscaf"
         choice:
-            "natsuki 1kchpuf"
+            "natsuki 4kchpuf"
 
         pause 2
         repeat
