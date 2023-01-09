@@ -96,46 +96,47 @@ label farewell_start:
 # Only chosen for the first time the player chooses to say Goodbye
 label farewell_first_time:
     n 1uskem "W-{w=0.1}wait,{w=0.1} you're leaving?"
-    n 1fskwrlsbr "[player]!{w=0.2} H-{w=0.1}hang on!{w=0.5}{nw}"
-    extend 1fbkwrleexsbr " Wait just a second!"
-    n 1fskemlsbl "..."
-    n 1kllemlsbl "..."
-    n 1kplpu "...Y-{w=0.1}you are coming back,{w=0.1} right?"
-    n 1kllunsbl "..."
-    n 1kwmemesssbr "...Right?"
+    n 4fskwrlsbr "[player]!{w=0.2} H-{w=0.1}hang on!{w=0.5}{nw}"
+    extend 4fbkwrleexsbr " Wait just a second!"
+    n 4fskemlsbl "..."
+    n 2kllemlsbl "..."
+    n 2kplpu "...Y-{w=0.1}you are coming back,{w=0.1} right?"
+    n 2kllunsbl "..."
+    n 4kwmemesssbr "...Right?"
+
     menu:
         "I'll be back.":
             $ persistent.jn_player_first_farewell_response = int(jn_farewells.JNFirstLeaveTypes.will_be_back)
             $ Natsuki.calculatedAffinityGain(bypass=True)
-            n 1unmemlesu "...!{w=0.5}{nw}"
+            n 4unmemlesu "...!{w=0.5}{nw}"
             n 1fllemless "Y-{w=0.1}yeah!{w=0.5}{nw}"
             extend 1fsqpolsbr " You better."
-            n 1flremlsbl "Y-{w=0.1}you are responsible for this,{w=0.1} like I said.{w=0.5}{nw}"
-            extend 1flrpol " So..."
-            n 1kllpol "..."
+            n 2flremlsbl "Y-{w=0.1}you are responsible for this,{w=0.1} like I said.{w=0.5}{nw}"
+            extend 2flrpol " So..."
+            n 2kllpol "..."
 
         "I don't know.":
             $ persistent.jn_player_first_farewell_response = int(jn_farewells.JNFirstLeaveTypes.dont_know)
             n 1kskem "..."
-            n 1kskwr "N-{w=0.5}no!"
-            n 1kcsan "You can't do this to me!{w=0.5}{nw}"
-            extend 1fcsuptsa " N-{w=0.1}not now..."
+            n 4kskwr "N-{w=0.5}no!"
+            n 4kcsan "You can't do this to me!{w=0.5}{nw}"
+            extend 4fcsuptsa " N-{w=0.1}not now..."
             n 1kcsunltsa "..."
             n 1ksqunl "..."
-            n 1kplpul "Please,{w=0.1} [player]...{w=0.5}{nw}"
-            extend 1kllpu " it isn't much to ask for..."
-            n 1kwmemsbr "Right?"
+            n 2kplpul "Please,{w=0.1} [player]...{w=0.5}{nw}"
+            extend 2kllpu " it isn't much to ask for..."
+            n 4kwmemsbr "Right?"
 
         "...":
             $ persistent.jn_player_first_farewell_response = int(jn_farewells.JNFirstLeaveTypes.no_response)
             n 1knmemsbr "[player],{w=0.1} c-{w=0.5}come on..."
             n 1kllpu "If this is a joke,{w=0.5}{nw}"
-            extend 1fnmgs " it really isn't funny!{w=2}{nw}"
-            extend 1knmgssbl " I-{w=0.1}I'm serious!"
+            extend 4fnmgs " it really isn't funny!{w=2}{nw}"
+            extend 4knmgssbl " I-{w=0.1}I'm serious!"
             n 1kllunsbl "..."
             n 1knmaj "Please,{w=0.1} [player]...{w=0.5}{nw}"
             extend 1kllpu " it isn't much to ask for..."
-            n 1kwmem "Right?"
+            n 4kwmem "Right?"
 
     return { "quit": None }
 
@@ -152,8 +153,8 @@ label farewell_force_quit:
     play audio glitch_c
 
     n 1uskem "H-{w=0.3}huh?{w=1}{nw}"
-    extend 1uscwr " N-{w=0.3}no!{w=0.2} Wait!!{w=0.2} PLEASE-{w=0.3}{nw}"
-    show natsuki 1kchupltsa at jn_center zorder JN_NATSUKI_ZORDER
+    extend 4uscwr " N-{w=0.3}no!{w=0.2} Wait!!{w=0.2} PLEASE-{w=0.3}{nw}"
+    show natsuki 4kchupltsa at jn_center zorder JN_NATSUKI_ZORDER
 
     play audio static
     show glitch_garbled_b zorder 99 with hpunch
@@ -166,79 +167,79 @@ label farewell_force_quit:
 label farewell_option_sleep:
     if jn_admissions.last_admission_type in (jn_admissions.TYPE_SICK , jn_admissions.TYPE_TIRED):
         # Sick/tired
-        n 1kllsl "...[player]."
-        n 1knmpu "I...{w=0.75}{nw}" 
-        extend 1klrpu " think that'd be a good idea.{w=0.5} You know."
+        n 2kllsl "...[player]."
+        n 2knmpu "I...{w=0.75}{nw}" 
+        extend 2klrpu " think that'd be a good idea.{w=0.5} You know."
         $ feeling_like = "feeling sick" if jn_admissions.last_admission_type == jn_admissions.TYPE_SICK else "feeling tired"
-        n 1klrpu "With what you said earlier about [feeling_like] and all."
-        n 1ulraj "So...{w=0.75}{nw}"
-        extend 1knmpo " go get some rest,{w=0.1} alright?{w=1}{nw}" 
-        extend 1fcspol " We can just talk later anyway."
-        n 1fnmgsl "Now get going,{w=0.1} [player]!"
-        extend 1fchsml " Ehehe."
+        n 2klrpu "With what you said earlier about [feeling_like] and all."
+        n 4ulraj "So...{w=0.75}{nw}"
+        extend 4knmpo " go get some rest,{w=0.1} alright?{w=1}{nw}" 
+        extend 2fcspol " We can just talk later anyway."
+        n 2fnmgsl "Now get going,{w=0.1} [player]!"
+        extend 4fchsml " Ehehe."
 
         if Natsuki.isEnamored(higher=True):
-            n 1fchbgl "Don't let the bedbugs bite!"
+            n 3fchbgl "Don't let the bedbugs bite!"
 
         elif Natsuki.isLove(higher=True):
-            n 1fchblledz "Love you too~!"
+            n 3fchblledz "Love you too~!"
 
     elif jn_get_current_hour() > 22 or jn_get_current_hour() < 6:
         # Late night
-        n 1fwdajesh "A-{w=0.2}and I should think so,{w=0.1} too!{w=0.5}{nw}"
-        extend 1tnmem " It seriously took you {i}that{/i} long to notice the time?!"
-        n 1fllposbl "Jeez...{w=0.5}{nw}"
-        extend 1nllpo " but better late than never,{w=0.1} I guess."
-        n 1fllsm "Ehehe.{w=0.5}{nw}"
+        n 4fwdajesh "A-{w=0.2}and I should think so,{w=0.1} too!{w=0.5}{nw}"
+        extend 2tnmem " It seriously took you {i}that{/i} long to notice the time?!"
+        n 2fllposbl "Jeez...{w=0.5}{nw}"
+        extend 2nllpo " but better late than never,{w=0.1} I guess."
+        n 4fllsm "Ehehe.{w=0.5}{nw}"
         extend 1fchsm " Sleep well,{w=0.1} [player]!"
 
         if Natsuki.isEnamored(higher=True):
-            n 1fchbll "See you soon~!"
+            n 3fchbll "See you soon~!"
 
         elif Natsuki.isLove(higher=True):
-            n 1nchsml "Love you~!"
+            n 3nchsml "Love you~!"
 
     elif jn_get_current_hour() >= 21:
         # Standard night
         n 1unmaj "About ready to turn in,{w=0.1} huh?"
-        n 1ullaj "That's fine...{w=0.5}{nw}"
-        extend 1fslca " I guess."
-        n 1fcsct "I know you need your beauty sleep and all."
-        n 1fsqsm "...Ehehe."
+        n 4ullaj "That's fine...{w=0.5}{nw}"
+        extend 2fslca " I guess."
+        n 4fcsct "I know you need your beauty sleep and all."
+        n 3fsqsm "...Ehehe."
 
         if Natsuki.isLove(higher=True):
             $ chosen_tease = jn_utils.getRandomTease()
-            n 1fchbll "Sleep tight,{w=0.2} [chosen_tease]!{w=0.5}{nw}"
-            extend 1uchsmledz " See you tomorrow~!"
+            n 3fchbll "Sleep tight,{w=0.2} [chosen_tease]!{w=0.5}{nw}"
+            extend 3uchsmledz " See you tomorrow~!"
 
         else:
-            n 1fchbgl "No worries!{w=0.2} Sleep well,{w=0.1} [player]!"
+            n 3fchbgl "No worries!{w=0.2} Sleep well,{w=0.1} [player]!"
         
     elif jn_get_current_hour() >= 19:
         # Early night
         n 1unmaj "Huh?{w=0.75}{nw}" 
-        extend 1tnmaj " You're taking an early night?"
-        n 1nnmbo "Oh.{w=0.5}{nw}" 
+        extend 4tnmaj " You're taking an early night?"
+        n 4nnmbo "Oh.{w=0.5}{nw}" 
         extend 1nllpu " Well..."
-        n 1ullaj "That's fine.{w=0.75}{nw}" 
-        extend 1nslpo " I suppose."
-        n 1fsqcal "You better stay up with me later though.{w=0.75}{nw}"
-        extend 1fsrtrl " You know."
-        n 1fsqbglsbl "To make up for lost time and all."
-        n 1fchbll "Night,{w=0.1} [player]!"
+        n 4ullaj "That's fine.{w=0.75}{nw}" 
+        extend 2nslpo " I suppose."
+        n 2fsqcal "You better stay up with me later though.{w=0.75}{nw}"
+        extend 4fsrtrl " You know."
+        n 3fsqbglsbl "To make up for lost time and all."
+        n 3fchbll "Night,{w=0.1} [player]!"
 
     else:
         # Nap
         n 1tnmbo "Huh?{w=1}{nw}" 
-        extend 1tnmpu " You're taking {i}naps{/i} now?"
-        n 1tsqcaesd " ...Really?"
-        n 1ncsemesi "Jeez...{w=1}{nw}" 
-        extend 1fllca " I swear I'm gonna be feeding you next at this rate..."
-        n 1fsqdv "..."
-        n 1fchbg "Oh,{w=0.3} relax!"
-        n 1nchgnelg "I'm kidding,{w=0.1} I'm kidding!{w=0.5}{nw}"
-        extend 1tllss " Sheesh."
-        n 1fchbg "See you later,{w=0.1} [player]~!"
+        extend 4tnmpu " You're taking {i}naps{/i} now?"
+        n 2tsqcaesd " ...Really?"
+        n 2ncsemesi "Jeez...{w=1}{nw}" 
+        extend 2fllca " I swear I'm gonna be feeding you next at this rate..."
+        n 4fsqdv "..."
+        n 3fchbg "Oh,{w=0.3} relax!"
+        n 3nchgnelg "I'm kidding,{w=0.1} I'm kidding!{w=0.5}{nw}"
+        extend 3tllss " Sheesh."
+        n 4fchbg "See you later,{w=0.1} [player]~!"
 
         if Natsuki.isLove(higher=True):
             n 1uchbgf "Love you~!"
@@ -248,93 +249,94 @@ label farewell_option_sleep:
 label farewell_option_eat:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_HUNGRY:
         n 1fcsgs "W-{w=0.1}well,{w=0.1} duh!{w=0.5} You {i}said{/i} you were starving!"
-        n 1fllpoesi "Jeez..."
-        n 1fdtposbr "Just make it something healthy,{w=0.1} got it?"
-        n 1fsqsm "...Ehehe."
-        n 1fchbg "Enjoy,{w=0.1} [player]!"
+        n 2fllpoesi "Jeez..."
+        n 2fdtposbr "Just make it something healthy,{w=0.1} got it?"
+        n 4fsqsm "...Ehehe."
+        n 2fchbg "Enjoy,{w=0.1} [player]!"
 
     elif jn_get_current_hour() in (7, 8):
         n 1fnmgs "Yeah!{w=0.3} You better!{w=0.5}{nw}"
-        extend 1fsqtr " You {i}do{/i} know what they say about breakfast,{w=0.1} right?"
-        n 1fsqsml "...Ehehe."
-        n 1fchbg "Bon appetit,{w=0.1} [player]!"
+        extend 2fsqtr " You {i}do{/i} know what they say about breakfast,{w=0.1} right?"
+        n 4fsqsml "...Ehehe."
+        n 2fchbg "Bon appetit,{w=0.1} [player]!"
 
     elif jn_get_current_hour() in (12, 13):
-        n 1unmaj "Heading out for lunch,{w=0.1} [player]?"
+        n 2unmaj "Heading out for lunch,{w=0.1} [player]?"
         n 1ulrbo "That's cool,{w=0.3} that's cool."
-        n 1nsqsm "Just remember though...{w=0.3}{nw}"
-        extend 1fsqss " you are what you eat~."
-        n 1fchsm "...Ehehe.{w=0.5}{nw}"
-        extend 1uchsm " Enjoy!"
+        n 4nsqsm "Just remember though...{w=0.3}{nw}"
+        extend 2fsqss " you are what you eat~."
+        n 4fchsm "...Ehehe.{w=0.5}{nw}"
+        extend 3uchsm " Enjoy!"
 
     elif jn_get_current_hour() in (18, 19):
-        n 1unmaj "Dinner time,{w=0.1} huh?{w=0.5}{nw}"
-        extend 1unmbg " No probs!"
+        n 3unmaj "Dinner time,{w=0.1} huh?{w=0.5}{nw}"
+        extend 2unmbg " No probs!"
         n 1nlrpu "Just...{w=0.5}{nw}"
-        extend 1fdtposbr " make sure it isn't a ready meal.{w=0.5}{nw}"
-        extend 1fsqpo " Got it?"
-        n 1fsqsm "...Ehehe."
+        extend 2fdtposbr " make sure it isn't a ready meal.{w=0.5}{nw}"
+        extend 2fsqpo " Got it?"
+        n 2fsqsm "...Ehehe."
         n 1fchbg "Enjoy,{w=0.1} [player]~!"
 
     else:
         n 1unmaj "Oh?{w=0.2} You're gonna grab a bite to eat?"
-        n 1nllaj "That's fine."
-        n 1nsqpo "You better not be filling up on junk though,{w=0.1} [player]."
-        n 1fsqsm "...Ehehe.{w=0.5}{nw}"
-        extend 1uchbg " Enjoy~!"
+        n 2nllaj "That's fine."
+        n 2nsqpo "You better not be filling up on junk though,{w=0.1} [player]."
+        n 2fsqsm "...Ehehe.{w=0.5}{nw}"
+        extend 4uchbg " Enjoy~!"
 
     return { "quit": None }
 
 label farewell_option_going_out:
     if jnIsNewYearsEve():
-        n 1tsqbg "Oho?{w=0.2} Going out for the new year,{w=0.1} are we?{w=0.5}{nw}"
-        extend 1fchbg " Can't say I blame you!"
+        n 3tsqbg "Oho?{w=0.2} Going out for the new year,{w=0.1} are we?{w=0.5}{nw}"
+        extend 3fchbg " Can't say I blame you!"
         n 1ullaj "Just...{w=0.5}{nw}"
-        extend 1nsqsl " don't be an idiot out there,{w=0.1} okay?"
-        n 1fslsl "I don't want you messing around with drinks and fireworks like a complete moron and getting hurt."
+        extend 4nsqsl " don't be an idiot out there,{w=0.1} okay?"
+        n 2fslsl "I don't want you messing around with drinks and fireworks like a complete moron and getting hurt."
         n 1ullpu "But...{w=0.5}{nw}"
         extend 1uchbg " yeah!{w=0.2} Have fun out there,{w=0.1} [player]!"
-        n 1usqbg "And if I don't see you sooner?"
-        n 1fbkbs "Happy new year!"
+        n 2usqbg "And if I don't see you sooner?"
+        n 1fchbs "Happy new year!"
 
     elif jnIsEaster():
         n 1unmaj "Oh?{w=0.2} You're heading off now?"
-        n 1unmbg "Did you have a meal planned for today or something?"
-        n 1tlrsm "It {i}is{/i} Easter,{w=0.1} after all!{w=0.5}{nw}"
-        extend 1uchsm " Ehehe."
-        n 1ullss "Well,{w=0.1} anyway.{w=0.5}{nw}"
-        extend 1uchgn " See you later,{w=0.1} [player]!"
+        n 4unmbg "Did you have a meal planned for today or something?"
+        n 4tlrsm "It {i}is{/i} Easter,{w=0.1} after all!{w=0.5}{nw}"
+        extend 3uchsm " Ehehe."
+        n 4ullss "Well,{w=0.1} anyway.{w=0.5}{nw}"
+        extend 2uchgn " See you later,{w=0.1} [player]!"
 
     elif jnIsHalloween():
-        n 1usqss "Ooh?{w=0.2} Heading out for Halloween,{w=0.1} [player]?"
-        n 1fsqsm "Just don't forget..."
-        n 1fsqbg "I want my share of treats too!"
-        n 1fchgn "Ehehe.{w=0.5}{nw}"
-        extend 1uchbg " Have fun~!"
+        n 3usqss "Ooh?{w=0.2} Heading out for Halloween,{w=0.1} [player]?"
+        n 3fsqsm "Just don't forget..."
+        n 2fsqbg "I want my share of treats too!"
+        n 2fchgn "Ehehe.{w=0.5}{nw}"
+        extend 1fchbg " Have fun~!"
 
     elif jnIsChristmasEve():
         n 1unmbo "Oh?{w=0.2} You're heading out for Christmas Eve?"
         n 1kllsl "Well...{w=0.3} okay."
-        n 1kllajl "...You will be back in time for Christmas though...{w=0.5}{nw}"
-        extend 1knmsll " right?"
-        n 1klrbgl "...Ahaha.{w=0.3}"
-        extend 1kchbg " See you later,{w=0.1} [player]!"
+        n 4kllajl "...You will be back in time for Christmas though...{w=0.5}{nw}"
+        extend 4knmsll " right?"
+        n 2nsrssl "...Ahaha.{w=0.3}"
+        extend 1nchbgsbl " See you later,{w=0.1} [player]!"
+        n 1kslslsbl "..."
 
     elif jnIsChristmasDay():
         n 1unmbo "Huh?{w=0.2} You're heading off now?"
-        n 1kllsl "Well...{w=0.3} alright."
-        n 1kllss "Thanks for dropping by today though,{w=0.1} [player]."
-        n 1kcsssl "It...{w=0.3} really meant a lot to me."
-        n 1kchss "See you later,{w=0.1} [player]!{w=0.5}{nw}"
+        n 2kllsl "Well...{w=0.3} alright."
+        n 2kllss "Thanks for dropping by today though,{w=0.1} [player]."
+        n 4kcsssl "It...{w=0.3} really meant a lot to me."
+        n 4kchss "See you later,{w=0.1} [player]!{w=0.5}{nw}"
         extend 1kchbg " And Merry Christmas!"
 
     else:
-        n 1unmaj "Oh?{w=0.2} You're heading out,{w=0.1} [player]?"
-        n 1fchbg "No worries!{w=0.2} I'll catch you later!"
-        n 1nchbg "Toodles~!"
+        n 2unmaj "Oh?{w=0.2} You're heading out,{w=0.1} [player]?"
+        n 2fchbg "No worries!{w=0.2} I'll catch you later!"
+        n 2nchbg "Toodles~!"
 
     if Natsuki.isLove(higher=True):
-        n 1uchbgf "Love you~!"
+        n 4uchbgf "Love you~!"
 
     return { "quit": None }
 
