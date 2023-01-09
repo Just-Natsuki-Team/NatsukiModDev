@@ -753,14 +753,15 @@ init 5 python:
     )
 
 label farewell_love_do_your_best:
-    n 1unmajl "Oh?{w=0.2} You're heading out now?"
-    n 1flrpol "That's...{w=0.5} fine.{w=0.75}{nw}" 
-    extend 1fsrsll " I guess."
-    n 1kplcal "...You know I'll really miss you,{w=0.1} [player]."
+    n 1unmajl "Oh?{w=0.5}{nw}" 
+    extend 3tnmbol " You're heading out now?"
+    n 4flrpol "That's...{w=0.5} fine.{w=0.75}{nw}" 
+    extend 2fsrsll " I guess."
+    n 2kplcal "...You know I'll really miss you,{w=0.1} [player]."
     $ chosen_endearment = jn_utils.getRandomEndearment()
-    n 1flrssfsbr "S-{w=0.2}so you better do your best for me,{w=0.1} [chosen_endearment]!"
-    n 1fchsmf "Ehehe.{w=0.75}{nw}"
-    extend 1uchsmfeaf " See you soon!"
+    n 2flrssfsbr "S-{w=0.2}so you better do your best for me,{w=0.1} [chosen_endearment]!"
+    n 4fchsmf "Ehehe.{w=0.75}{nw}"
+    extend 2uchsmfeaf " See you soon!"
 
     return { "quit": None }
 
@@ -776,13 +777,15 @@ init 5 python:
     )
 
 label farewell_love_rooting_for_you:
-    n 1unmajl "Huh?{w=0.2} You're leaving now?"
+    n 3unmajl "Huh?{w=0.5}{nw}" 
+    extend 3tnmsll " You're leaving now?"
     n 1fcssll "I always hate it when you have to go somewhere..."
     $ chosen_endearment = jn_utils.getRandomEndearment()
     n 1kcssml "...But I know you'll always be back for me,{w=0.1} [chosen_endearment]."
-    n 1fllssfsbl "N-{w=0.2}not like you {i}have{/i} a choice,{w=0.2} obviously!"
-    n 1fsqsmf "Ehehe."
-    n 1fchblfeaf "Make me proud,{w=0.2} [player]!{w=0.3} I'm rooting for you!"
+    n 2fllssfsbl "N-{w=0.2}not like you {i}have{/i} a choice,{w=0.2} obviously!{w=0.75}{nw}"
+    extend 2fsqsmf " Ehehe."
+    n 4fchblfeaf "Make me proud,{w=0.2} [player]!{w=0.5}{nw}" 
+    extend 4fchsmfeaf " I'm rooting for you!"
 
     return { "quit": None }
 
@@ -799,12 +802,12 @@ init 5 python:
 
 label farewell_love_me_to_deal_with:
     n 1unmajl "You're leaving now,{w=0.1} [player]?"
-    n 1kllpul "Awww...{w=0.75}{nw}" 
-    extend 1kllpol " well okay."
+    n 4kllpul "Awww...{w=0.75}{nw}" 
+    extend 2kllpol " well okay."
     n 1fnmcal "You take care of yourself,{w=0.2} got it?" 
-    extend 1fcsssl " Or you'll have me to deal with!"
-    n 1fsqsml "Ehehe."
-    n 1fchbgfeaf "Bye now!{w=0.5} I love you~!"
+    extend 3fcsssl " Or you'll have me to deal with!"
+    n 3fsqsml "Ehehe."
+    n 3fchbgfeaf "Bye now!{w=0.5} I love you~!"
 
     return { "quit": None }
 
@@ -820,11 +823,11 @@ init 5 python:
     )
 
 label farewell_love_wish_you_could_stay_forever:
-    n 1kwmpol "Time to go,{w=0.1} [player]?"
-    n 1kllssl "Sometimes I kinda wish you could just stay forever..."
-    n 1fcsajf "But I understand you've got stuff to do."
-    n 1fslssfsbl "...Even if it {i}isn't{/i} always as important as me."
-    extend 1nchgnl " Ehehe."
+    n 3kwmpol "Time to go,{w=0.1} [player]?"
+    n 3kllssl "Sometimes I kinda wish you could just stay forever..."
+    n 4fcsajf "But I understand you've got stuff to do."
+    n 2fslssfsbl "...Even if it {i}isn't{/i} always as important as me."
+    extend 2nchgnl " Ehehe."
     $ chosen_endearment = jn_utils.getRandomEndearment()
     n 1fchbgf "Later,{w=0.2} [chosen_endearment]!"
 
@@ -844,15 +847,15 @@ init 5 python:
     )
 
 label farewell_affectionate_enamored_was_having_fun:
-    n 1unmajl "Eh?{w=0.5}{nw}" 
-    extend 1tnmpul " You're leaving now?"
-    n 1kcsemesi "Man..."
+    n 3unmajl "Eh?{w=0.5}{nw}" 
+    extend 3tnmpul " You're leaving now?"
+    n 4kcsemesi "Man..."
     n 1fllpol "And I was actually having fun,{w=0.2} too...{w=1}{nw}"
-    extend 1fsqpol " talk about being a buzzkill,{w=0.2} [player]."
-    n 1fcspol "..."
+    extend 2fsqpol " talk about being a buzzkill,{w=0.2} [player]."
+    n 2fcspol "..."
     n 1fchbll "Well,{w=0.1} if you gotta go,{w=0.1} you gotta go!"
-    n 1nchgnl "Now get out there,{w=0.1} dummy!{w=1}{nw}"
-    extend 1fwlbgl " See you later!"
+    n 2nchgnl "Now get out there,{w=0.1} dummy!{w=1}{nw}"
+    extend 2fwlbgl " See you later!"
 
     return { "quit": None }
 
@@ -868,13 +871,13 @@ init 5 python:
     )
 
 label farewell_affectionate_enamored_waiting_for_you:
-    n 1unmajl "You're going,{w=0.1} [player]?"
-    n 1fcsanl "Uuuuu...{w=1.5}{nw}"
+    n 2unmajl "You're going,{w=0.1} [player]?"
+    n 2fcsanl "Uuuuu...{w=1.5}{nw}"
     extend 1kllpol " okay."
-    n 1fsqgsl "But you better be back here soon."
-    extend 1fcsajf " It's rude to keep someone waiting around for you,{w=0.2} a-{w=0.1}after all."
-    n 1fslssfsbl "Ahaha."
-    n 1fchbglsbr "L-{w=0.1}later,{w=0.1} [player]!"
+    n 4fsqgsl "But you better be back here soon."
+    extend 3fcsajf " It's rude to keep someone waiting around for you,{w=0.2} a-{w=0.1}after all."
+    n 4fslssfsbl "Ahaha."
+    n 3fchbglsbr "L-{w=0.1}later,{w=0.1} [player]!"
 
     return { "quit": None }
 
@@ -891,13 +894,13 @@ init 5 python:
 
 label farewell_affectionate_enamored_ill_be_okay:
     n 1unmajlesu "Huh?{w=0.5}{nw}" 
-    extend 1knmajlsbl " You're leaving?"
-    n 1fslunl "..."
+    extend 4knmajlsbl " You're leaving?"
+    n 4fslunl "..."
     n 1fcsgsfsbl "T-{w=0.1}that's fine!{w=1}{nw}"
     extend 1fcsssledz " I'll be okay!"
-    n 1fsqpol "Which is more than I can say for you if you keep me waiting again,{w=0.2} [player]..."
-    n 1fsqsml "Ehehe."
-    n 1nchgnl "See you later~!"
+    n 2fsqpol "Which is more than I can say for you if you keep me waiting again,{w=0.2} [player]..."
+    n 2fsqsml "Ehehe."
+    n 3nchgnl "See you later~!"
 
     return { "quit": None }
 
@@ -913,16 +916,16 @@ init 5 python:
     )
 
 label farewell_affectionate_enamored_dont_make_me_find_you:
-    n 1unmbol "Oh?{w=0.5}{nw}" 
-    extend 1unmajl " Heading off now,{w=0.1} [player]?"
+    n 2unmbol "Oh?{w=0.5}{nw}" 
+    extend 2unmajl " Heading off now,{w=0.1} [player]?"
     n 1kllpol "I...{w=0.75}{nw}" 
-    extend 1kslpol " wish you didn't have to..."
-    n 1fcsajl "But I get that you have things to do."
-    n 1fsqcal "You better come see me later though.{w=0.5}{nw}" 
-    extend 1fsqtrl " Promise?"
-    n 1fcsbgl "Don't make me come find you!"
-    n 1fchgnl "...Now get going already,{w=0.2} you dope!{w=0.75}{nw}"
-    extend 1fchbll " See you soon!"
+    extend 4kslpol " wish you didn't have to..."
+    n 4fcsajl "But I get that you have things to do."
+    n 2fsqcal "You better come see me later though.{w=0.5}{nw}" 
+    extend 2fsqtrl " Promise?"
+    n 2fcsbgl "Don't make me come find you!"
+    n 4fchgnl "...Now get going already,{w=0.2} you dope!{w=0.75}{nw}"
+    extend 3fchbll " See you soon!"
 
     return { "quit": None }
 
@@ -939,16 +942,16 @@ init 5 python:
 
 label farewell_affectionate_enamored_take_care_for_both:
     n 1unmpul "Mmm?{w=0.5}{nw}" 
-    extend 1tnmajl " You're going now,{w=0.1} [player]?"
-    n 1kcsemlesi "...Fine,{w=0.3} fine.{w=1.25}{nw}"
-    extend 1fsqtrl " But on one condition!"
-    n 1kslcalsbr "..."
-    n 1knmtrlsbr "..Just take care of yourself,{w=0.5}{nw}"
-    extend 1knmsllsbr " okay?"
-    n 1fcspofsbl "A-{w=0.1}and not just for your own sake."
-    extend 1kslssfsbl " Heh."
+    extend 3tnmajl " You're going now,{w=0.1} [player]?"
+    n 3kcsemlesi "...Fine,{w=0.3} fine.{w=1.25}{nw}"
+    extend 4fsqtrl " But on one condition!"
+    n 4kslcalsbr "..."
+    n 2knmtrlsbr "..Just take care of yourself,{w=0.5}{nw}"
+    extend 2knmsllsbr " okay?"
+    n 2fcspofsbl "A-{w=0.1}and not just for your own sake."
+    extend 2kslssfsbl " Heh."
     n 1kchssfesssbl "See you later!"
-    n 1kslslfsbr "..."
+    n 4kslslfsbr "..."
 
     return { "quit": None }
 
@@ -964,13 +967,13 @@ init 5 python:
     )
 
 label farewell_affectionate_enamored_enjoy_our_time_together:
-    n 1tnmajl "You're leaving now,{w=0.2} [player]?"
-    n 1fllcal "Nnnnnn...{w=0.5}{nw}" 
-    extend 1ksltrl " alright."
-    n 1fcsgsl "But you better be back later,{w=0.2} you hear?"
-    n 1fllajl "I...{w=0.75}{nw}"
-    extend 1kslcafsbr " enjoy our time together."
-    n 1kchssfsbl "See you soon,{w=0.2} [player]!"
+    n 2tnmajl "You're leaving now,{w=0.2} [player]?"
+    n 2fllcal "Nnnnnn...{w=0.5}{nw}" 
+    extend 4ksltrl " alright."
+    n 2fcsgsl "But you better be back later,{w=0.2} you hear?"
+    n 2fllajl "I...{w=0.75}{nw}"
+    extend 4kslcafsbr " enjoy our time together."
+    n 2kchssfsbl "See you soon,{w=0.2} [player]!"
 
     return { "quit": None }
 
@@ -988,8 +991,8 @@ init 5 python:
 label farewell_affectionate_enamored_see_me_soon:
     n 1ullajl "Well,{w=0.3}{nw}" 
     extend 1fllcal " I guess you had to leave eventually."
-    n 1fsqpol "Doesn't mean I have to like it,{w=0.2} though..."
-    n 1knmpol "Come see me soon,{w=0.2} 'kay?"
+    n 2fsqpol "Doesn't mean I have to like it,{w=0.2} though..."
+    n 4knmpol "Come see me soon,{w=0.2} 'kay?"
 
     return { "quit": None }
 
