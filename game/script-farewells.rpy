@@ -707,11 +707,11 @@ init 5 python:
     )
 
 label farewell_love_dont_like_saying_goodbye:
-    n 1fsqtrl "You know I don't like saying goodbye,{w=0.1} [player]..."
-    n 1kcssllesi "..."
-    n 1fcsgsfess "I-{w=0.2}I'll be okay!{w=1}{nw}"
-    extend 1fcsajf " Just..."
-    n 1knmpof "...Get back here soon,{w=0.2} alright?"
+    n 4fsqtrl "You know I don't like saying goodbye,{w=0.1} [player]..."
+    n 4kcssllesi "..."
+    n 2fcsgsfess "I-{w=0.2}I'll be okay!{w=1}{nw}"
+    extend 2fcsajf " Just..."
+    n 4knmpof "...Get back here soon,{w=0.2} alright?"
     n 1kchssfeaf "I-{w=0.2}I love you,{w=0.2} [player]!"
 
     return { "quit": None }
@@ -729,15 +729,15 @@ init 5 python:
 
 label farewell_love_counting_on_you:
     n 1fcsunl "Uuuu...{w=0.75}{nw}" 
-    extend 1fslpol " I never like saying goodbye to you..."
-    n 1kslbol "But...{w=0.5}{nw}" 
-    extend 1kslssl " I guess it can't be helped sometimes."
+    extend 2fslpol " I never like saying goodbye to you..."
+    n 2kslbol "But...{w=0.5}{nw}" 
+    extend 2kslssl " I guess it can't be helped sometimes."
     $ chosen_endearment = jn_utils.getRandomEndearment()
-    n 1fcsajl "S-{w=0.2}so!"
-    n 1fsqtrf "You better take care of yourself out there,{w=0.1} [chosen_endearment]." 
-    n 1fchgnl "...'Cuz I'm counting on you!"
+    n 2fcsajl "S-{w=0.2}so!"
+    n 4fsqtrf "You better take care of yourself out there,{w=0.1} [chosen_endearment]." 
+    n 3fchgnl "...'Cuz I'm counting on you!"
     $ chosen_tease = jn_utils.getRandomTease()
-    n 1fchblleaf "Later,{w=0.2} [chosen_tease]!"
+    n 3fchblleaf "Later,{w=0.2} [chosen_tease]!"
 
     return { "quit": None }
 
