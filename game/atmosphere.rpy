@@ -592,57 +592,57 @@ label weather_change:
             if jn_atmosphere.isCurrentWeatherSunny():
                 if previous_weather.weather_type == jn_atmosphere.JNWeatherTypes.rain:
                     n 1fcsaj "Well,{w=1}{nw}"
-                    extend 1fllgs " about time all that rain buzzed off!{w=1}{nw}"
-                    n 1nchgn "Much better.{w=3}{nw}"
+                    extend 2fllgs " about time all that rain buzzed off!{w=1}{nw}"
+                    n 2nchgn "Much better.{w=3}{nw}"
 
                 elif previous_weather.weather_type == jn_atmosphere.JNWeatherTypes.thunder:
-                    n 1tllpu "Huh?{w=1.25}{nw}"
-                    extend 1ullajeex "Oh,{w=0.2} the storm passed.{w=1}{nw}"
-                    n 1fcsajsbl "Good riddance.{w=3}{nw}"
+                    n 3tllpu "Huh?{w=1.25}{nw}"
+                    extend 4ullajeex "Oh,{w=0.2} the storm passed.{w=1}{nw}"
+                    n 2fcsajsbl "Good riddance.{w=3}{nw}"
 
                 elif previous_weather.weather_type == jn_atmosphere.JNWeatherTypes.snow:
-                    n 1kllpu "Aww...{w=1.5}{nw}"
+                    n 4kllpu "Aww...{w=1.5}{nw}"
                     extend 1kllpol " it stopped snowing...{w=3}{nw}"
 
                 else:
                     n 1ulraj "Oh,{w=0.2} hey.{w=1}{nw}"
-                    extend 1ulrbo " It just cleared up outside.{w=3}{nw}"
+                    extend 2ulrbo " It just cleared up outside.{w=3}{nw}"
 
             if jn_atmosphere.isCurrentWeatherRain():
                 # Rain
                 if alt_dialogue:
                     n 1kcsemesi "Man...{w=1.25}{nw}"
-                    extend 1kllsl " rain {i}again{/i}?{w=1}{nw}"
-                    extend 1fsrbo " Lame...{w=3}{nw}"
+                    extend 4kllsl " rain {i}again{/i}?{w=1}{nw}"
+                    extend 3fsrbo " Lame...{w=3}{nw}"
 
                 else:
-                    n 1fcsem "Ugh...{w=1.5}{nw}"
-                    extend 1fslpol " I'll never {i}not{/i} find rain gross.{w=3}{nw}"
+                    n 3fcsem "Ugh...{w=1.5}{nw}"
+                    extend 3fslpol " I'll never {i}not{/i} find rain gross.{w=3}{nw}"
                 
             elif jn_atmosphere.isCurrentWeatherThunder():
                 # Thunder
                 if alt_dialogue:
-                    n 1unmboesu "...{w=1}{nw}"
-                    n 1nllem "I gotta say,{w=0.75}{nw}"
-                    extend 1ksqsr " I am {i}not{/i} liking the look of those clouds.{w=1}{nw}"
-                    extend 1nsrupesd " Yeesh...{w=3}{nw}"
+                    n 4unmboesu "...{w=1}{nw}"
+                    n 2nllem "I gotta say,{w=0.75}{nw}"
+                    extend 2ksqsr " I am {i}not{/i} liking the look of those clouds.{w=1}{nw}"
+                    extend 3nsrupesd " Yeesh...{w=3}{nw}"
 
                 else:
                     n 1ulremesu "Woah...{w=1}{nw}"
-                    extend 1ullpu " now those are some clouds,{w=0.5}{nw}"
-                    extend 1tnmbo " huh?{w=3}{nw}"
+                    extend 2ullpu " now those are some clouds,{w=0.5}{nw}"
+                    extend 2tnmbo " huh?{w=3}{nw}"
 
             elif jn_atmosphere.isCurrentWeatherSnow():
                 # Snow
                 if alt_dialogue:
-                    n 1uwdajeex "Woah!{w=1}{nw}"
+                    n 4uwdajeex "Woah!{w=1}{nw}"
                     n 1ullgs "[player],{w=0.2} look!{w=0.5}{nw}"
-                    extend 1uchbgledz " It's snowing!{w=3}{nw}"
+                    extend 4uchbgledz " It's snowing!{w=3}{nw}"
 
                 else:
                     n 1uwdajeex "...!{w=1}{nw}"
-                    n 1ullbg "Heeey!{w=0.75}{nw}"
-                    extend 1uchgnledz " It's snowing!{w=3}{nw}"
+                    n 4ullbg "Heeey!{w=0.75}{nw}"
+                    extend 4uchgnledz " It's snowing!{w=3}{nw}"
 
             pause 1
             show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
