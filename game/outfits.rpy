@@ -1981,11 +1981,11 @@ init -1 python in jn_outfits:
 label outfits_wear_outfit:
     if not jn_outfits.get_all_outfits():
         # No outfits, no point proceeding
-        n 1tnmbo "Huh?{w=0.5}{nw}"
+        n 4tnmbo "Huh?{w=0.5}{nw}"
         extend 1fchbg " I don't {i}have{/i} any other outfits, dummy!"
         jump ch30_loop
 
-    n 1unmaj "Huh?{w=0.2} You want me to put on another outfit?"
+    n 4unmaj "Huh?{w=0.2} You want me to put on another outfit?"
     n 1fchbg "Sure thing!{w=0.5}{nw}"
     extend 1unmbg " What do you want me to wear?{w=1.5}{nw}"
     show natsuki idle at jn_left
@@ -2009,7 +2009,7 @@ label outfits_wear_outfit:
     if isinstance(_return, jn_outfits.JNOutfit):
         # Wear the chosen outfit
         $ outfit_name = _return.display_name.lower()
-        n 1unmaj "Oh?{w=0.2} You want me to wear my [outfit_name]?{w=0.5}{nw}"
+        n 4unmaj "Oh?{w=0.2} You want me to wear my [outfit_name]?{w=0.5}{nw}"
         extend 1uchbg " Gotcha!"
         n 1nchsm "Just give me a second...{w=2}{nw}"
 
@@ -2018,17 +2018,17 @@ label outfits_wear_outfit:
         with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
 
         n 1nchbg "Okaaay!"
-        n 1tnmsm "How do I look,{w=0.1} [player]?{w=0.5}{nw}"
-        extend 1flldvl " Ehehe."
+        n 4tnmsm "How do I look,{w=0.1} [player]?{w=0.5}{nw}"
+        extend 4flldvl " Ehehe."
         $ persistent.jn_natsuki_auto_outfit_change_enabled = False
 
     elif _return == "random":
         # Wear a random unlocked outfit
         n 1fchbg "You got it!{w=1.5}{nw}"
-        extend 1fslss " Now what have we got here...{w=1.5}{nw}"
+        extend 3fslss " Now what have we got here...{w=1.5}{nw}"
         n 1ncssr "...{w=1.5}{nw}"
-        n 1fnmbg "Aha!{w=1.5}{nw}"
-        extend 1fchbg " This'll do.{w=1.5}{nw}"
+        n 4fnmbg "Aha!{w=1.5}{nw}"
+        extend 4fchbg " This'll do.{w=1.5}{nw}"
         extend 1uchsm " One second!"
 
         play audio clothing_ruffle
@@ -2049,7 +2049,7 @@ label outfits_wear_outfit:
         # Nevermind
         n 1nnmbo "Oh.{w=1.5}{nw}"
         extend 1nllaj " Well, that's fine."
-        n 1nsrpol "I didn't wanna change anyway."
+        n 3nsrpol "I didn't wanna change anyway."
 
     return
 
@@ -2077,7 +2077,7 @@ label outfits_reload:
 
 # Asking Natsuki to suggest a new outfit; leads to the outfit creator flow
 label outfits_suggest_outfit:
-    n 1unmaj "Ooh!{w=1.5}{nw}"
+    n 4unmaj "Ooh!{w=1.5}{nw}"
     extend 1fchbg " I'm always open to a suggestion!{w=0.5}{nw}"
     extend 1unmss " What did you have in mind?"
     python:
@@ -2096,7 +2096,7 @@ label outfits_remove_outfit:
     if len(jn_outfits._SESSION_NEW_UNLOCKS):
         # Prevent the player telling Natsuki to delete something she could be about to gift by popping it early, and removing from event list
         n 1nsqpu "...Wait.{w=1}{nw}"
-        extend 1fnmpo " Are you trying to hide something?"
+        extend 3fnmpo " Are you trying to hide something?"
         n 1fcspolesi "At least show me what it is first!"
 
         $ jn_rm_topic_from_event_list("new_wearables_outfits_unlocked")
@@ -2145,7 +2145,7 @@ label outfits_remove_outfit:
             "Yes, remove [outfit_name].":
                 if Natsuki.isWearingOutfit(_return.reference_name):
                     # Change Natsuki out of the uniform to be removed, if she's wearing it
-                    n 1uwdaj "Oh! I totally forgot I'm wearing it already!"
+                    n 4uwdaj "Oh! I totally forgot I'm wearing it already!"
                     extend 1fslssl " Ehehe."
 
                     play audio clothing_ruffle
@@ -2161,9 +2161,9 @@ label outfits_remove_outfit:
                 else:
                     n 1kllaj "...Oh."
                     n 1klrun "Uhmm...{w=1.5}{nw}"
-                    extend 1knmpu " [player]?"
-                    n 1kllpo "I wasn't able to remove that for some reason."
-                    n 1kllss "Sorry..."
+                    extend 4knmpu " [player]?"
+                    n 2kllpo "I wasn't able to remove that for some reason."
+                    n 2kllss "Sorry..."
 
             "Nevermind.":
                 n 1nnmbo "Oh."
@@ -2706,7 +2706,7 @@ label new_wearables_outfits_unlocked:
                 if alt_dialogue:
                     n 1uwdajlesu "...!"
                     n 2fcsemlesssbl "A-{w=0.1}ahem!{w=1}{nw}"
-                    extend 1fslpol " Another good choice,{w=0.5}{nw}"
+                    extend 2fslpol " Another good choice,{w=0.5}{nw}"
                     extend 4fsqpolsbr " I hate to admit."
                     n 1klrbolsbr "..."
                     n 1fcsunlsbr "...Thanks,{w=0.1} [player]."
@@ -2752,7 +2752,7 @@ label new_wearables_outfits_unlocked:
             if Natsuki.isEnamored(higher=True):
                 n 1klrpul "...I can't believe there's even more.{w=1}{nw}"
                 extend 4fcspul " Jeez,{w=0.1} [player]..."
-                n 1kcspul "...Okay.{w=1}{nw}"
+                n 4kcspul "...Okay.{w=1}{nw}"
                 extend 4fslssl " Let's see what's next..."
 
             elif Natsuki.isAffectionate(higher=True):
@@ -2847,7 +2847,7 @@ label new_wearables_outfits_unlocked:
 
     n 1ullajl "So..."
     n 4tnmsslsbl "Where we we?{w=1}{nw}"
-    extend 1fslsslsbr " Ehehe..."
+    extend 4fslsslsbr " Ehehe..."
 
     $ Natsuki.calculatedAffinityGain(bypass=True)
     $ jn_globals.force_quit_enabled = True
