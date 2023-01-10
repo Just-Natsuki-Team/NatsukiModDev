@@ -1238,6 +1238,10 @@ image natsuki talk_menu_enamored:
             "natsuki 3unmssl"
         choice:
             "natsuki 4uwltsl"
+        choice:
+            "natsuki 4fchbgl"
+        choice:
+            "natsuki 3fchsml"
 
 # Menu images for AFFECTIONATE+
 image natsuki talk_menu_affectionate:
@@ -1250,6 +1254,10 @@ image natsuki talk_menu_affectionate:
             "natsuki 4uchbg"
         choice:
             "natsuki 2nchbg"
+        choice:
+            "natsuki 2tchbg"
+        choice:
+            "natsuki 3tsqsm"
 
 # Menu images for HAPPY+
 image natsuki talk_menu_happy:

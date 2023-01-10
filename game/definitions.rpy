@@ -1018,7 +1018,15 @@ init -990 python in jn_globals:
         "[player]!{w=0.2} What's on your mind?",
         "Ooh!{w=0.2} What did you wanna talk about?",
         "I'm all ears,{w=0.1} [player]!",
-        "I've always got time for you,{w=0.1} [player]!"
+        "I've always got time for you,{w=0.1} [player]!",
+        "Hey!{w=0.2} What's up,{w=0.2} [player]?",
+        "What have you got for me?{w=0.2} Ehehe.",
+        "[player]!{w=0.2} What's new?",
+        "[player]!{w=0.2} You wanna talk?",
+        "Shoot,{w=0.2} [player]!{w=0.3} Ehehe.",
+        "Shoot,{w=0.2} [player]!",
+        "Oh!{w=0.2} Oh!{w=0.2} You got something for me?",
+        "Talk to me,{w=0.2} [player]!{w=0.3} Ehehe."
     ]
 
     # Flavor text for the talk menu at medium affinity
@@ -1031,7 +1039,9 @@ init -990 python in jn_globals:
         "Huh?{w=0.2} What's up?",
         "You wanna share something?",
         "What's new,{w=0.1} [player]?",
-        "'Sup,{w=0.1} [player]?"
+        "'Sup,{w=0.1} [player]?",
+        "You wanna talk?",
+        "Hey,{w=0.2} [player]!"
     ]
 
     # Flavor text for the talk menu at low affinity
