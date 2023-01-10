@@ -1981,11 +1981,11 @@ init -1 python in jn_outfits:
 label outfits_wear_outfit:
     if not jn_outfits.get_all_outfits():
         # No outfits, no point proceeding
-        n 1tnmbo "Huh?{w=0.5}{nw}"
+        n 4tnmbo "Huh?{w=0.5}{nw}"
         extend 1fchbg " I don't {i}have{/i} any other outfits, dummy!"
         jump ch30_loop
 
-    n 1unmaj "Huh?{w=0.2} You want me to put on another outfit?"
+    n 4unmaj "Huh?{w=0.2} You want me to put on another outfit?"
     n 1fchbg "Sure thing!{w=0.5}{nw}"
     extend 1unmbg " What do you want me to wear?{w=1.5}{nw}"
     show natsuki idle at jn_left
@@ -2009,7 +2009,7 @@ label outfits_wear_outfit:
     if isinstance(_return, jn_outfits.JNOutfit):
         # Wear the chosen outfit
         $ outfit_name = _return.display_name.lower()
-        n 1unmaj "Oh?{w=0.2} You want me to wear my [outfit_name]?{w=0.5}{nw}"
+        n 4unmaj "Oh?{w=0.2} You want me to wear my [outfit_name]?{w=0.5}{nw}"
         extend 1uchbg " Gotcha!"
         n 1nchsm "Just give me a second...{w=2}{nw}"
 
@@ -2018,17 +2018,17 @@ label outfits_wear_outfit:
         with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
 
         n 1nchbg "Okaaay!"
-        n 1tnmsm "How do I look,{w=0.1} [player]?{w=0.5}{nw}"
-        extend 1flldvl " Ehehe."
+        n 4tnmsm "How do I look,{w=0.1} [player]?{w=0.5}{nw}"
+        extend 4flldvl " Ehehe."
         $ persistent.jn_natsuki_auto_outfit_change_enabled = False
 
     elif _return == "random":
         # Wear a random unlocked outfit
         n 1fchbg "You got it!{w=1.5}{nw}"
-        extend 1fslss " Now what have we got here...{w=1.5}{nw}"
+        extend 3fslss " Now what have we got here...{w=1.5}{nw}"
         n 1ncssr "...{w=1.5}{nw}"
-        n 1fnmbg "Aha!{w=1.5}{nw}"
-        extend 1fchbg " This'll do.{w=1.5}{nw}"
+        n 4fnmbg "Aha!{w=1.5}{nw}"
+        extend 4fchbg " This'll do.{w=1.5}{nw}"
         extend 1uchsm " One second!"
 
         play audio clothing_ruffle
@@ -2049,7 +2049,7 @@ label outfits_wear_outfit:
         # Nevermind
         n 1nnmbo "Oh.{w=1.5}{nw}"
         extend 1nllaj " Well, that's fine."
-        n 1nsrpol "I didn't wanna change anyway."
+        n 3nsrpol "I didn't wanna change anyway."
 
     return
 
@@ -2077,7 +2077,7 @@ label outfits_reload:
 
 # Asking Natsuki to suggest a new outfit; leads to the outfit creator flow
 label outfits_suggest_outfit:
-    n 1unmaj "Ooh!{w=1.5}{nw}"
+    n 4unmaj "Ooh!{w=1.5}{nw}"
     extend 1fchbg " I'm always open to a suggestion!{w=0.5}{nw}"
     extend 1unmss " What did you have in mind?"
     python:
@@ -2096,7 +2096,7 @@ label outfits_remove_outfit:
     if len(jn_outfits._SESSION_NEW_UNLOCKS):
         # Prevent the player telling Natsuki to delete something she could be about to gift by popping it early, and removing from event list
         n 1nsqpu "...Wait.{w=1}{nw}"
-        extend 1fnmpo " Are you trying to hide something?"
+        extend 3fnmpo " Are you trying to hide something?"
         n 1fcspolesi "At least show me what it is first!"
 
         $ jn_rm_topic_from_event_list("new_wearables_outfits_unlocked")
@@ -2145,7 +2145,7 @@ label outfits_remove_outfit:
             "Yes, remove [outfit_name].":
                 if Natsuki.isWearingOutfit(_return.reference_name):
                     # Change Natsuki out of the uniform to be removed, if she's wearing it
-                    n 1uwdaj "Oh! I totally forgot I'm wearing it already!"
+                    n 4uwdaj "Oh! I totally forgot I'm wearing it already!"
                     extend 1fslssl " Ehehe."
 
                     play audio clothing_ruffle
@@ -2161,9 +2161,9 @@ label outfits_remove_outfit:
                 else:
                     n 1kllaj "...Oh."
                     n 1klrun "Uhmm...{w=1.5}{nw}"
-                    extend 1knmpu " [player]?"
-                    n 1kllpo "I wasn't able to remove that for some reason."
-                    n 1kllss "Sorry..."
+                    extend 4knmpu " [player]?"
+                    n 2kllpo "I wasn't able to remove that for some reason."
+                    n 2kllss "Sorry..."
 
             "Nevermind.":
                 n 1nnmbo "Oh."
@@ -2347,14 +2347,14 @@ label outfits_create_select_back:
 # Exit sequence from the outfit creator flow
 label outfits_create_quit:
     if jn_outfits._changes_made:
-        n 1unmaj "Huh?{w=0.5}{nw}"
+        n 4unmaj "Huh?{w=0.5}{nw}"
         extend 1tnmbo " You're done already,{w=0.1} [player]?"
         menu:
             n "You're sure you don't want me to try more stuff on?"
 
             # Go back to editor
             "Yes, I'm not done yet.":
-                n 1fcsbg "Gotcha!"
+                n 2fcsbg "Gotcha!"
                 extend 1tsqsm " What else have you got?"
 
                 jump outfits_create_menu
@@ -2363,7 +2363,7 @@ label outfits_create_quit:
             "No, we're done here.":
                 n 1nnmbo "Oh.{w=1.5}{nw}"
                 extend 1nllaj " Well...{w=0.3} okay."
-                n 1nsrpol "I was bored of changing anyway."
+                n 2nsrpol "I was bored of changing anyway."
 
                 play audio clothing_ruffle
                 $ Natsuki.setOutfit(jn_outfits._LAST_OUTFIT)
@@ -2371,18 +2371,18 @@ label outfits_create_quit:
                 jump ch30_loop
 
     else:
-        n 1tllaj "So...{w=1.5}{nw}"
-        extend 1tnmpo " you don't want me to change after all?"
+        n 4tllaj "So...{w=1.5}{nw}"
+        extend 3tnmpo " you don't want me to change after all?"
         n 1nlrbo "Huh."
         n 1tnmss "Well,{w=0.1} if it ain't broke,{w=0.1} right?{w=0.5}{nw}"
-        extend 1fcssm " Ehehe."
+        extend 2fcssm " Ehehe."
         jump ch30_loop
 
 # Save sequence from the outfit creator flow
 label outfits_create_save:
-    n 1fllaj "Well,{w=0.5} finally!"
-    n 1flrpo "If I'd known you were {i}this{/i} into dress-up,{w=0.3} I'd have set a timer!{w=1.5}{nw}"
-    extend 1fsqsm " Ehehe."
+    n 4fllaj "Well,{w=0.5} finally!"
+    n 3flrpo "If I'd known you were {i}this{/i} into dress-up,{w=0.3} I'd have set a timer!{w=1.5}{nw}"
+    extend 3fsqsm " Ehehe."
     n 1ullaj "So..."
     menu:
         n "All finished, [player]?"
@@ -2401,20 +2401,20 @@ label outfits_create_save:
 
                 # Outfit name cannot be empty or None
                 if len(outfit_name) == 0 or outfit_name is None:
-                    n 1knmpo "Come on,{w=0.3} [player]!{w=1.5}{nw}"
+                    n 2knmpo "Come on,{w=0.3} [player]!{w=1.5}{nw}"
                     extend 1fchbg " Any outfit worth wearing has a {i}name{/i},{w=0.1} dummy!"
 
                 # Outfit name cannot contain the jn_ namespace, though this should never happen
                 elif re.search("^jn_.", outfit_name.lower()):
                     n 1tsqsssbl "...Is that some kind of robot name or something?"
-                    n 1fchbl "Try harder,{w=0.2} [player]!"
+                    n 4fchbl "Try harder,{w=0.2} [player]!"
 
                 # Outfit cannot be an insult or profanity
                 elif(
                     jn_utils.get_string_contains_profanity(outfit_name.lower())
                     or jn_utils.get_string_contains_insult(outfit_name.lower())
                 ):
-                    n 1fsqem "...Really,{w=0.5} [player]."
+                    n 2fsqem "...Really,{w=0.5} [player]."
                     n 1fsqsr "Come on.{w=1}{nw}"
                     extend 1fllsr " Quit being a jerk."
 
@@ -2433,7 +2433,7 @@ label outfits_create_save:
             if jn_outfits.save_custom_outfit(jn_outfits._PREVIEW_OUTFIT):
                 n 1uchsm "...And done!"
                 n 1fchbg "Thanks,{w=0.1} [player]!{w=0.5}{nw}"
-                extend 1uchsm " Ehehe."
+                extend 4uchsm " Ehehe."
 
                 $ jn_outfits._changes_made = False
                 jump ch30_loop
@@ -2441,17 +2441,17 @@ label outfits_create_save:
             else:
                 n 1kllaj "...Oh."
                 n 1klrun "Uhmm...{w=1.5}{nw}"
-                extend 1knmpu " [player]?"
-                n 1kllpo "I wasn't able to save that for some reason."
+                extend 4knmpu " [player]?"
+                n 2kllpo "I wasn't able to save that for some reason."
                 n 1kllss "Sorry..."
 
                 jump outfits_create_menu
 
         "Yes, but don't worry about saving this outfit.":
-            n 1tnmpueqm "Eh?{w=0.75}{nw}"
+            n 4tnmpueqm "Eh?{w=0.75}{nw}"
             extend 1tnmaj " You {i}don't{/i} want me to remember this one?"
             n 1ullaj "Well...{w=0.75}{nw}"
-            extend 1tnmss " if you insist."
+            extend 2tnmss " if you insist."
             n 1nchgneme "Less note taking for me!"
 
             $ jn_outfits._changes_made = False
@@ -2459,10 +2459,10 @@ label outfits_create_save:
             jump ch30_loop
 
         "No, I'm not quite finished.":
-            n 1nslpo "I {i}knew{/i} I should have brought a book...{w=2}{nw}"
+            n 3nslpo "I {i}knew{/i} I should have brought a book...{w=2}{nw}"
             extend 1fsqsm " Ehehe."
             n 1ulrss "Well,{w=0.1} whatever.{w=0.5}{nw}"
-            extend 1unmbo " What else did you have in mind,{w=0.1} [player]?"
+            extend 4unmbo " What else did you have in mind,{w=0.1} [player]?"
 
             jump outfits_create_menu
 
@@ -2472,24 +2472,24 @@ label outfits_auto_change:
         n 1uchbg "Oh!{w=0.2} I gotta change,{w=0.1} just give me a sec...{w=0.75}{nw}"
 
     elif Natsuki.isHappy(higher=True):
-        n 1unmpu "Oh!{w=0.2} I should probably change,{w=0.1} one second...{w=0.75}{nw}"
-        n 1flrpol "A-{w=0.1}and no peeking,{w=0.1} got it?!{w=0.75}{nw}"
+        n 4unmpu "Oh!{w=0.2} I should probably change,{w=0.1} one second...{w=0.75}{nw}"
+        n 2flrpol "A-{w=0.1}and no peeking,{w=0.1} got it?!{w=0.75}{nw}"
 
     elif Natsuki.isNormal(higher=True):
-        n 1unmpu "Oh -{w=0.1} I gotta get changed.{w=0.2} I'll be back in a sec.{w=0.75}{nw}"
+        n 4unmpu "Oh -{w=0.1} I gotta get changed.{w=0.2} I'll be back in a sec.{w=0.75}{nw}"
 
     elif Natsuki.isDistressed(higher=True):
         n 1nnmsl "Back in a second.{w=0.75}{nw}"
 
     else:
-        n 1fsqsl "I'm changing.{w=0.75}{nw}"
+        n 2fsqsl "I'm changing.{w=0.75}{nw}"
 
     play audio clothing_ruffle
     $ Natsuki.setOutfit(jn_outfits.get_realtime_outfit())
     with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
 
     if Natsuki.isAffectionate(higher=True):
-        n 1uchgn "Ta-da!{w=0.2} There we go!{w=0.2} Ehehe.{w=0.75}{nw}"
+        n 4uchgn "Ta-da!{w=0.2} There we go!{w=0.2} Ehehe.{w=0.75}{nw}"
 
     elif Natsuki.isHappy(higher=True):
         n 1nchbg "Okaaay!{w=0.2} I'm back!{w=0.75}{nw}"
@@ -2498,10 +2498,10 @@ label outfits_auto_change:
         n 1nnmsm "And...{w=0.3} all done.{w=0.75}{nw}"
 
     elif Natsuki.isDistressed(higher=True):
-        n 1nllsl "I'm back.{w=0.75}{nw}"
+        n 3nllsl "I'm back.{w=0.75}{nw}"
 
     else:
-        n 1fsqsl "...{w=0.75}{nw}"
+        n 2fsqsl "...{w=0.75}{nw}"
 
     show natsuki idle at jn_center
     return
@@ -2520,101 +2520,101 @@ label new_wearables_outfits_unlocked:
 
     if Natsuki.isEnamored(higher=True):
         n 1uskemleex "...!"
-        n 1ksrunlsbl "..."
-        n 1knmpulsbl "[player]...{w=1.25}{nw}"
-        extend 1kllpulsbl " y-{w=0.2}you {i}do{/i} know you don't have to get me stuff just so I like you..."
+        n 4ksrunlsbl "..."
+        n 4knmpulsbl "[player]...{w=1.25}{nw}"
+        extend 2kllpulsbl " y-{w=0.2}you {i}do{/i} know you don't have to get me stuff just so I like you..."
         n 1knmsllsbr "Right?"
 
         if jnIsPlayerBirthday():
             n 1uskgslesh "...Wait!{w=0.75}{nw}"
             extend 1knmemlsbl " Y-{w=0.2}you shouldn't even be the one {i}giving{/i} things today anyway!"
-            n 1kslemlsbl "...It's {i}weird{/i},{w=0.2} [player]..."
+            n 2kslemlsbl "...It's {i}weird{/i},{w=0.2} [player]..."
             n 1kslbolsbl "..."
 
         elif jnIsChristmasEve():
-            n 1ksrbofsbl "...Especially tonight,{w=0.3} of all nights..."
+            n 2ksrbofsbl "...Especially tonight,{w=0.3} of all nights..."
 
         elif jnIsChristmasDay():
-            n 1kllajlsbr "A-{w=0.2}and anyway,{w=0.75}{nw}"
+            n 4kllajlsbr "A-{w=0.2}and anyway,{w=0.75}{nw}"
             extend 1kwmpulsbl " I'm still not used to getting stuff on Christmas Day..."
-            n 1kslsllsbl "..."
+            n 2kslsllsbl "..."
 
         n 1uskemlesusbr "I-{w=0.2}it's not that I don't appreciate it!{w=0.5}{nw}"
         extend 1fcsemless " Don't get me wrong!{w=1}{nw}"
-        extend 1knmpoless " I-{w=0.2}I totally do!"
+        extend 2knmpoless " I-{w=0.2}I totally do!"
         n 1kllemless "I just..."
-        n 1ksrunlsbl "..."
+        n 2ksrunlsbl "..."
         n 1fcsunl "I...{w=0.3} know...{w=1}{nw}"
-        extend 1ksrpolsbr " I can't exactly return the favour."
+        extend 2ksrpolsbr " I can't exactly return the favour."
         n 1fcsajlsbl "A-{w=0.2}and you've already done a lot for me,{w=0.5}{nw}"
-        extend 1kslbolsbl " so..."
+        extend 4kslbolsbl " so..."
         n 1kcsbolsbl "..."
         n 1kcsemlesi "...Fine.{w=0.75}{nw}"
         extend 1ksrsl " I'll take a look.{w=1.25}{nw}"
-        extend 1kslpo " But I still kinda feel like a jerk about it..."
+        extend 2kslpo " But I still kinda feel like a jerk about it..."
 
     elif Natsuki.isAffectionate(higher=True):
         n 1uskeml "H-{w=0.2}huh?"
         n 1uskwrl "[player]?{w=1}{nw}"
-        extend 1knmwrl " D-{w=0.2}did you {i}seriously{/i} just get me all this stuff?!"
+        extend 4knmwrl " D-{w=0.2}did you {i}seriously{/i} just get me all this stuff?!"
         n 1fslunl "..."
-        n 1fcsanl "Uuuuuuuuu-!"
-        n 1fpawrledr "Why would you do thaaat?!{w=1}{nw}"
+        n 2fcsanl "Uuuuuuuuu-!"
+        n 4fpawrledr "Why would you do thaaat?!{w=1}{nw}"
 
         if jnIsPlayerBirthday():
             n 1uskwrlesh "E-{w=0.2}especially today!{w=1}{nw}"
-            extend 1kbkwrl " Did you {i}forget{/i} it's your {i}birthday{/i}?!"
+            extend 4kbkwrl " Did you {i}forget{/i} it's your {i}birthday{/i}?!"
 
         elif jnIsChristmasEve():
             extend 1fllemf " I-{w=0.2}I mean..."
-            n 1knmgsf "Y-{w=0.2}you couldn't have at {i}least{/i} waited for tomorrow?!{w=1}{nw}"
-            extend 1kbkwrlesd " I didn't even make a list or anythiiiing!"
+            n 4knmgsf "Y-{w=0.2}you couldn't have at {i}least{/i} waited for tomorrow?!{w=1}{nw}"
+            extend 4kbkwrlesd " I didn't even make a list or anythiiiing!"
 
         elif jnIsChristmasDay():
             extend 1kllemf " I mean..."
-            n 1kwmunlsbl "You should know I'm not used to getting stuff on Christmas Day..."
+            n 4kwmunlsbl "You should know I'm not used to getting stuff on Christmas Day..."
 
         else:
             extend 1kbkwrless " I-{w=0.2}I didn't even {i}ask{/i} for anything!"
 
-        n 1fslunl "..."
-        n 1fcseml "Jeez...{w=0.5}{nw}"
+        n 2fslunl "..."
+        n 2fcseml "Jeez...{w=0.5}{nw}"
         extend 1flrsrf " and now I look like a total {i}jerk{/i} for not even having anything to give back...{w=1}{nw}"
-        extend 1fsqsrfsbr " I hope you're happy,{w=0.1} [player]."
+        extend 4fsqsrfsbr " I hope you're happy,{w=0.1} [player]."
         n 1fcsemlesisbr "..."
         n 1kcsbolsbr "...Alright.{w=0.75}{nw}"
-        extend 1fslpolsbr " J-{w=0.2}just a quick look..."
+        extend 2fslpolsbr " J-{w=0.2}just a quick look..."
 
     else:
         n 1uwdeml "...Eh?"
         n 1ulreml "What even..."
-        n 1uskemfeex "...!"
+        n 4uskemfeex "...!"
         $ player_initial = jn_utils.getPlayerInitial()
         n 1fbkwrf "[player_initial]-{w=0.2}[player]!"
         n 1kbkwrf "What even {i}is{/i} all this?!"
 
         if jnIsChristmasEve():
             n 1knmgsf "A-{w=0.2}and come {i}on{/i},{w=0.2} [player]!{w=1}{nw}"
-            extend 1kbkwrfesd " It isn't even Christmas yeeeet!"
+            extend 4kbkwrfesd " It isn't even Christmas yeeeet!"
 
         elif jnIsChristmasDay():
             n 1fcsemfsbl "I-{w=0.2}I mean,{w=0.75}{nw}"
-            extend 1kwmemfsbl " I {i}get{/i} what day it is,{w=0.75}{nw}" 
-            extend 1kslemfsbl " but..."
+            extend 2kwmemfsbl " I {i}get{/i} what day it is,{w=0.75}{nw}" 
+            extend 2kslemfsbl " but..."
             n 1kcspufesisbl "..."
 
         n 1fllemlesssbl "Y-{w=0.2}you better not be trying to win me over with gifts or something!{w=1}{nw}"
-        extend 1fcsemlsbr " Yeesh!"
+        extend 2fcsemlsbr " Yeesh!"
         n 1flremlsbl "I-{w=0.2}I'll have you know I'm a {i}lot{/i} deeper than that!"
         n 1fsqpulsbl "I swear it's like you're trying to embarrass me sometimes...{w=1}{nw}"
-        extend 1fslpolsbl " you jerk."
+        extend 2fslpolsbl " you jerk."
         n 1ksrcalsbl "You {i}know{/i} I can't exactly give anything {i}back{/i},{w=0.1} either..."
         n 1fcscalesssbl "..."
         n 1kcsemlesi "..."
-        n 1fslsll "...Fine.{w=1}{nw}"
+        n 2fslsll "...Fine.{w=1}{nw}"
         extend 1fcseml " Fine!{w=0.75}{nw}"
         extend 1flremlsbr " I'll look at it!{w=1}{nw}"
-        extend 1fsrpolsbr " ...But only because you put the effort in."
+        extend 2fsrpolsbr " ...But only because you put the effort in."
 
     python:
         import random
@@ -2634,146 +2634,146 @@ label new_wearables_outfits_unlocked:
         if type(unlock) is jn_outfits.JNHairstyle:
             if alt_dialogue:
                 n 1unmpuesu "Mmm?{w=1}{nw}"
-                extend 1tnmajeqm " A...{w=0.3} note...?"
+                extend 4tnmajeqm " A...{w=0.3} note...?"
                 n 1tslpu "..."
                 n 1unmgsesu "...Oh!{w=1}{nw}"
                 extend 1unmbol " You wanted me to try my hair like that?{w=0.5} [unlock.display_name]?"
-                n 1nllunl "..."
+                n 3nllunl "..."
                 n 1nllajl "Well...{w=1}{nw}"
-                extend 1nnmajl " okay."
+                extend 4nnmajl " okay."
 
                 if Natsuki.isEnamored(higher=True):
                     n 1nlrssl "I {i}suppose{/i} I can give that a shot later."
-                    n 1fsqsslsbl "I bet {i}someone{/i} would like that,{w=0.1} huh?{w=0.5}{nw}"
-                    extend 1fsldvlsbl " Ehehe..."
+                    n 4fsqsslsbl "I bet {i}someone{/i} would like that,{w=0.1} huh?{w=0.5}{nw}"
+                    extend 4fsldvlsbl " Ehehe..."
 
                 elif Natsuki.isAffectionate(higher=True):
                     n 1nlrpol "I {i}suppose{/i} I can give that a shot later."
                     extend 1nlrsslsbr " Ehehe..."
 
                 else:
-                    n 1fcspol "I {i}suppose{/i} I can give that a shot later."
-                    n 1flrajl "B-but only because I want to though,{w=0.75}{nw}"
+                    n 2fcspol "I {i}suppose{/i} I can give that a shot later."
+                    n 2flrajl "B-but only because I want to though,{w=0.75}{nw}"
                     extend 1fsrpol " obviously."
 
             else:
-                n 1tnmpueqm "Eh?{w=1}{nw}"
+                n 4tnmpueqm "Eh?{w=1}{nw}"
                 extend 1tlrpueqm " What's this note doing here...?"
-                n 1tllbo "..."
+                n 2tllbo "..."
                 n 1unmgsesu "W-{w=0.2}woah!"
                 n 1flldvl "Heh.{w=0.5}{nw}"
                 extend 1fllsslsbr " I gotta admit.{w=1}{nw}"
-                extend 1fsrnvlsbr " I never even thought of trying {i}that{/i} with my hair..."
+                extend 3fsrnvlsbr " I never even thought of trying {i}that{/i} with my hair..."
                 n 1unmbo "[unlock.display_name],{w=0.1} huh?"
                 n 1nllajl "I {i}guess{/i} it might be worth a try..."
 
                 if Natsuki.isEnamored(higher=True):
-                    n 1fsqsslsbr "I wonder who'd like {i}that{/i},{w=0.1} though?{w=0.5}{nw}"
-                    extend 1fsqsmlsbr " Ehehe..."
+                    n 4fsqsslsbr "I wonder who'd like {i}that{/i},{w=0.1} though?{w=0.5}{nw}"
+                    extend 4fsqsmlsbr " Ehehe..."
 
                 elif Natsuki.isAffectionate(higher=True):
                     n 1nlrsslsbr "We'll see."
 
                 else:
                     n 1fcsgsl "B-{w=0.2}but only out of curiosity!{w=1}{nw}"
-                    extend 1fsqpol " Got it?"
+                    extend 2fsqpol " Got it?"
 
         else:
             if Natsuki.isEnamored(higher=True):
                 if alt_dialogue:
                     n 1kcsemlesi "Jeez...{w=1}{nw}"
-                    extend 1knmpol " why are you trying to spoil me so much?"
-                    n 1fllpol "You know I hate being showered in flashy stuff..."
+                    extend 3knmpol " why are you trying to spoil me so much?"
+                    n 3fllpol "You know I hate being showered in flashy stuff..."
                     n 1kslsrl "..."
                     n 1ksqsrlsbl "...Especially things like this [unlock.display_name]."
                     extend 1kslsslsbl " Even if it is pretty awesome."
                     n 1kslsrl "..."
                     n 1nllajl "I'm...{w=1}{nw}"
-                    extend 1ksrpol " just going to keep that too."
-                    n 1nsrdvf "...Thanks."
+                    extend 2ksrpol " just going to keep that too."
+                    n 2nsrdvf "...Thanks."
 
                 else:
                     n 1uskgsfesu "...!"
                     n 1fsldvl "...Heh.{w=1}{nw}"
-                    extend 1tsqpufsbl " You really {i}are{/i} trying to win me over with all this stuff,{w=0.1} huh?"
+                    extend 4tsqpufsbl " You really {i}are{/i} trying to win me over with all this stuff,{w=0.1} huh?"
                     n 1kslsllsbl "..."
                     n 1fcspulsbl "The [unlock.display_name]...{w=1}{nw}"
                     n 1knmpulsbr "It's...{w=0.5} really nice.{w=0.75}{nw}"
-                    extend 1kllsrlsbr " Okay?"
+                    extend 4kllsrlsbr " Okay?"
                     n 1kslunlesssbr "Thanks..."
 
             elif Natsuki.isAffectionate(higher=True):
                 if alt_dialogue:
                     n 1uwdajlesu "...!"
-                    n 1fcsemlesssbl "A-{w=0.1}ahem!{w=1}{nw}"
-                    extend 1fslpol " Another good choice,{w=0.5}{nw}"
-                    extend 1fsqpolsbr " I hate to admit."
+                    n 2fcsemlesssbl "A-{w=0.1}ahem!{w=1}{nw}"
+                    extend 2fslpol " Another good choice,{w=0.5}{nw}"
+                    extend 4fsqpolsbr " I hate to admit."
                     n 1klrbolsbr "..."
                     n 1fcsunlsbr "...Thanks,{w=0.1} [player]."
                     n 1fllunlsbr "For the [unlock.display_name],{w=0.5}{nw}"
-                    extend 1fnmpulsbl " I-{w=0.2}I mean."
+                    extend 4fnmpulsbl " I-{w=0.2}I mean."
                     n 1kslpulsbl "It's...{w=1}{nw}"
                     extend 1kslsslsbl " really cool."
-                    n 1fslpofsbl "...Thanks."
+                    n 2fslpofsbl "...Thanks."
 
                 else:
                     n 1uwdajledz "...!"
                     n 1fcsunlesdsbl "..."
                     n 1fcssslsbl "Heh,{w=1}{nw}"
-                    extend 1fllbglesssbr " a-{w=0.2}and here I was thinking I'd have to teach you {i}everything{/i} about style!"
-                    n 1kllsllsbr "..."
+                    extend 3fllbglesssbr " a-{w=0.2}and here I was thinking I'd have to teach you {i}everything{/i} about style!"
+                    n 3kllsllsbr "..."
                     n 1knmbolsbr "...But thanks,{w=0.3} [player].{w=1}"
                     extend 1flrunlsbr " For the [unlock.display_name]."
                     n 1fcsunlsbr "I...{w=0.75}{nw}"
-                    extend 1ksrunfsbl " really appreciate it."
+                    extend 4ksrunfsbl " really appreciate it."
 
             else:
                 if alt_dialogue:
                     n 1uskgslesh "...!"
-                    n 1fdwanfess "Nnnnnnn-!"
+                    n 4fdwanfess "Nnnnnnn-!"
                     n 1fcsemfesssbl "Y-{w=0.2}you're just lucky you're good at picking out gifts,{w=0.5}{nw}"
-                    extend 1fsqpofesssbl " you jerk."
-                    n 1fslpofesssbr "I guess I'll {i}have{/i} to keep this [unlock.display_name] now.{w=0.75}{nw}"
-                    extend 1fnmpofesssbl " I-{w=0.2}I hope you're happy."
+                    extend 3fsqpofesssbl " you jerk."
+                    n 3fslpofesssbr "I guess I'll {i}have{/i} to keep this [unlock.display_name] now.{w=0.75}{nw}"
+                    extend 3fnmpofesssbl " I-{w=0.2}I hope you're happy."
 
                 else:
                     n 1fspgsledz "W-{w=0.2}woah!"
                     n 1uskemfesh "...!"
-                    n 1fbkwrf "What?!{w=1}{nw}"
-                    extend 1fllwrfeszsbl " Don't look at me like that!"
+                    n 4fbkwrf "What?!{w=1}{nw}"
+                    extend 4fllwrfeszsbl " Don't look at me like that!"
                     n 1fcseml "I-{w=0.2}I'm glad to see you have {i}some{/i} taste after all to have found this."
-                    n 1fllcal "[unlock.display_name],{w=0.1} huh?{w=1}{nw}"
-                    extend 1fcscal " I-{w=0.2}I guess I'll keep it around."
-                    n 1fcspofess "Juuuust in case."
+                    n 2fllcal "[unlock.display_name],{w=0.1} huh?{w=1}{nw}"
+                    extend 2fcscal " I-{w=0.2}I guess I'll keep it around."
+                    n 2fcspofess "Juuuust in case."
 
         $ alt_dialogue = not alt_dialogue
 
         if len(jn_outfits._SESSION_NEW_UNLOCKS) > 0:
             if Natsuki.isEnamored(higher=True):
                 n 1klrpul "...I can't believe there's even more.{w=1}{nw}"
-                extend 1fcspul " Jeez,{w=0.1} [player]..."
-                n 1kcspul "...Okay.{w=1}{nw}"
-                extend 1fslssl " Let's see what's next..."
+                extend 4fcspul " Jeez,{w=0.1} [player]..."
+                n 4kcspul "...Okay.{w=1}{nw}"
+                extend 4fslssl " Let's see what's next..."
 
             elif Natsuki.isAffectionate(higher=True):
-                n 1ksrunl "Uuuuuuu...{w=1}{nw}"
+                n 2ksrunl "Uuuuuuu...{w=1}{nw}"
                 extend 1ksremlesd " there's {i}still{/i} more?!"
                 n 1kcsemlesisbl "Jeez..."
 
             else:
-                n 1fnmpol "H-{w=0.2}how much {i}is{/i} there here,{w=0.1} [player]{w=1}{nw}?"
-                extend 1fslpofesssbr " Jeez..."
+                n 3fnmpol "H-{w=0.2}how much {i}is{/i} there here,{w=0.1} [player]{w=1}{nw}?"
+                extend 3fslpofesssbr " Jeez..."
 
     if Natsuki.isEnamored(higher=True):
         n 1fcsssl "Finally ran out of things to throw at me,{w=0.5}{nw}"
         extend 1fllsslsbl " huh?"
-        n 1kllbolsbl "..."
-        n 1ksrpulsbl "I...{w=1}{nw}"
+        n 4kllbolsbl "..."
+        n 4ksrpulsbl "I...{w=1}{nw}"
         extend 1ksqsrlsbl " really wish you didn't do that,{w=0.1} you know."
         n 1kllbolsbl "..."
         n 1kllpulsbr "But...{w=0.75}{nw}"
-        extend 1knmsslsbr " [player]?"
-        n 1fsrunfsbr "..."
+        extend 4knmsslsbr " [player]?"
+        n 4fsrunfsbr "..."
 
         show black zorder 4 with Dissolve(0.5)
         play audio clothing_ruffle
@@ -2786,24 +2786,24 @@ label new_wearables_outfits_unlocked:
             hide black with Dissolve(1.25)
             $ chosen_tease = jn_utils.getRandomTease()
             n 1knmssf "...Thanks,{w=0.1} [chosen_tease]."
-            n 1klrsmfeme "Ehehe."
+            n 2klrsmfeme "Ehehe."
 
         else:
             hide black with Dissolve(1.25)
-            n 1fslunf "...Thanks.{w=0.75}{nw}"
-            extend 1fslsmfsbr " Ehehe."
+            n 2fslunf "...Thanks.{w=0.75}{nw}"
+            extend 2fslsmfsbr " Ehehe."
 
     elif Natsuki.isAffectionate(higher=True):
         n 1fllun "...Is that it?{w=0.75}{nw}"
-        extend 1flrunl " Is that everything?"
+        extend 3flrunl " Is that everything?"
         n 1fcsemlesi "Jeez..."
-        n 1fnmtrl "You really need to stop giving away so much stuff,{w=0.1} [player].{w=1}{nw}"
-        extend 1fsqcal " I don't want you getting into a dumb habit!"
+        n 4fnmtrl "You really need to stop giving away so much stuff,{w=0.1} [player].{w=1}{nw}"
+        extend 4fsqcal " I don't want you getting into a dumb habit!"
         n 1fslunlsbl "Especially when I can't do anything nice back..."
         n 1kslunlsbl "..."
         n 1kslpulsbl "But...{w=0.75}{nw}"
-        extend 1knmsllsbr " [player]?"
-        n 1fsrunfsbr "..."
+        extend 4knmsllsbr " [player]?"
+        n 2fsrunfsbr "..."
 
         show black zorder 4 with Dissolve(0.5)
         show natsuki 1flrcafsbr at jn_center zorder JN_NATSUKI_ZORDER
@@ -2816,16 +2816,16 @@ label new_wearables_outfits_unlocked:
 
     else:
         n 1kslemlesi "Man...{w=1}{nw}"
-        extend 1flrtrl " is that all of it?{w=0.5}{nw}"
+        extend 2flrtrl " is that all of it?{w=0.5}{nw}"
         extend 1fcspulsbl " Jeez..."
         n 1fslunlsbr "..."
         n 1nslajlsbr "I...{w=0.75}{nw}"
-        extend 1nsqajlsbl " suppose I better go put all this away now."
+        extend 4nsqajlsbl " suppose I better go put all this away now."
         n 1kslunlsbr "..."
         n 1kslpulsbl "But..."
-        extend 1knmsllsbr " [player]?"
-        n 1fsrunlsbr "..."
-        n 1fsrajlsbr "I..."
+        extend 4knmsllsbr " [player]?"
+        n 2fsrunlsbr "..."
+        n 2fsrajlsbr "I..."
         extend 1ksrcafsbr " really appreciate the stuff you got me."
         n 1kllcalsbr "..."
         n 1fcstrlsbl "T-{w=0.2}thanks."
@@ -2846,8 +2846,8 @@ label new_wearables_outfits_unlocked:
     hide black with Dissolve(1.25)
 
     n 1ullajl "So..."
-    n 1tnmsslsbl "Where we we?{w=1}{nw}"
-    extend 1fslsslsbr " Ehehe..."
+    n 4tnmsslsbl "Where we we?{w=1}{nw}"
+    extend 4fslsslsbr " Ehehe..."
 
     $ Natsuki.calculatedAffinityGain(bypass=True)
     $ jn_globals.force_quit_enabled = True
