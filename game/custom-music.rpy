@@ -153,42 +153,46 @@ label music_menu:
     if not success:
         show natsuki at jn_center
         n 1kllunl "Uhmm..."
-        n 1knmunl "Hey...{w=0.3} [player]?"
-        n 1klrbgl "Something went wrong when I was trying look for your music..."
+        n 4knmunl "Hey...{w=0.3} [player]?"
+        n 4klrbgl "Something went wrong when I was trying look for your music..."
         n 1kchbgl "Can you do me a favour and just check everything out real quick?"
         $ folder = jn_custom_music.CUSTOM_MUSIC_DIRECTORY
-        n 1knmbgl "If you forgot -{w=0.1} anything you want me to play needs to be in the {a=[folder]}custom_music{/a} folder."
-        n 1uwdaj "Oh!{w=0.2} Right!{w=0.2} And it also needs to be in {i}.mp3,{w=0.1} .ogg or .wav{/i} format -{w=0.1} just look for the letters after the period in the file name!"
+        n 2knmbgl "If you forgot -{w=0.1} anything you want me to play needs to be in the {a=[folder]}custom_music{/a} folder."
+        n 2uwdaj "Oh!{w=0.2} Right!{w=0.2} And it also needs to be in {i}.mp3,{w=0.1} .ogg or .wav{/i} format -{w=0.1} just look for the letters after the period in the file name!"
         jump ch30_loop
 
     elif preferences.get_volume("music") == 0:
         show natsuki at jn_center
         n 1tsqaj "Uh...{w=0.5}{nw}"
         extend 1tslaj " huh."
-        n 1tsgsg "And {i}how{/i} exactly do you plan to hear any music with the volume at zero?"
-        n 1fchbg "Jeez, [player].{w=0.5}{nw}" 
+        n 2tsgsg "And {i}how{/i} exactly do you plan to hear any music with the volume at zero?"
+        n 2fchbg "Jeez, [player].{w=0.5}{nw}" 
         extend 1uchgn " How do you even get dressed in the morning with memory like that?!"
-        n 1ullss "Well, whatever.{w=0.5}{nw}"
-        extend 1unmaj " So..."
+        n 3ullss "Well, whatever.{w=0.5}{nw}"
+        extend 3unmaj " So..."
+
+        show natsuki 3unmboeqm
         menu:
             n "Did you want me to turn the music back up so you can pick something?"
 
             "Yes.":
                 n 1nchsm "Okey-{w=0.1}dokey!{w=0.2} Just a second..."
                 $ preferences.set_volume("music", 0.75)
-                n 1fcsbg "And there we are!"
-                n 1ullss "So...{w=0.5}{nw}"
-                extend 1unmaj " What did you wanna listen to?"
+                n 2fcsbg "And there we are!"
+                n 2ullss "So...{w=0.5}{nw}"
+                extend 2unmaj " what did you wanna listen to?"
+
                 show natsuki idle at jn_left
 
             "No.":
-                n 1fcsbg "The sound of silence it is,{w=0.1} then!{w=0.5}{nw}"
-                extend 1fchsm " Ehehe."
+                n 3fcsbg "The sound of silence it is,{w=0.1} then!{w=0.5}{nw}"
+                extend 3fchsm " Ehehe."
+
                 jump ch30_loop
 
     else:
         $ chosen_quip = renpy.substitute(random.choice(jn_custom_music._CHOOSE_PLAY_MUSIC_QUIPS))
-        n 1unmbgl "[chosen_quip]"
+        n 3unmbgl "[chosen_quip]"
         show natsuki idle at jn_left
 
     # We have custom music options, present the choices
@@ -200,8 +204,9 @@ label music_menu:
 
     if _return == "no_music":
         $ chosen_no_music_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_NO_MUSIC_QUIPS))
-        n 1knmsm "[chosen_no_music_quip]"
-        show natsuki 1fchsm
+        n 2knmsm "[chosen_no_music_quip]"
+
+        show natsuki 2fchsm
         $ music_title = "No music"
 
         $ jn_custom_music.presentMusicPlayer("playing")
@@ -210,13 +215,13 @@ label music_menu:
         stop music fadeout 2
         $ jnPause(2)
 
-        n 1uchsm "There you go, [player]!{w=2}{nw}"
+        n 2uchsm "There you go, [player]!{w=2}{nw}"
         
         if persistent.jn_random_music_enabled:
             # Stop playing random music, if enabled
             $ persistent.jn_random_music_enabled = False
             n 1unmaj "Oh{w=0.2} -{w=0.50}{nw}" 
-            extend 1kchbgsbl " and I'll stop switching around the music too.{w=2}{nw}"
+            extend 3kchbgsbl " and I'll stop switching around the music too.{w=2}{nw}"
 
         $ jn_custom_music.hideMusicPlayer()
 
@@ -232,7 +237,7 @@ label music_menu:
         n 1unmajl "[chosen_question_quip]"
 
         $ chosen_answer_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_ANSWER_QUIPS))
-        n 1uchbgl "[chosen_answer_quip]"
+        n 4uchbgl "[chosen_answer_quip]"
         show natsuki 1fchsmleme
 
         $ jn_custom_music.presentMusicPlayer("playing")
@@ -242,8 +247,8 @@ label music_menu:
         $ jnPause(2)
 
         $ chosen_search_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_SEARCH_QUIPS))
-        n 1ullbgl "[chosen_search_quip]{w=2}{nw}"
-        show natsuki 1fcspul
+        n 2ullbgl "[chosen_search_quip]{w=2}{nw}"
+        show natsuki 4fcspul
 
         # If we have more than one track, we can make sure the new chosen track isn't the same as the current one
         if len(available_custom_music) > 1:
@@ -263,8 +268,8 @@ label music_menu:
     elif _return is not None:
         $ music_title = store.jn_utils.escapeRenpySubstitutionString(_return.split('/')[-1])
 
-        n 1fwlbg "You got it!{w=2}{nw}"
-        show natsuki 1fchsmleme
+        n 2fwlbg "You got it!{w=2}{nw}"
+        show natsuki 4fchsmleme
 
         $ jn_custom_music.presentMusicPlayer("playing")
         play audio button_tap_c
@@ -277,8 +282,8 @@ label music_menu:
         $ renpy.play(filename=_return, channel="music", fadein=2)
 
         $ chosen_done_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_DONE_QUIPS))
-        n 1uchbgeme "[chosen_done_quip]{w=2}{nw}"
-        show natsuki 1fcssm
+        n 2uchbgeme "[chosen_done_quip]{w=2}{nw}"
+        show natsuki 2fcssm
 
         $ jn_custom_music.hideMusicPlayer()
 
