@@ -719,9 +719,9 @@ init 5 python:
 
 label greeting_love_plus_today_is_gonna_be_great:
     n 1unmbsledz "[player]!{w=1}{nw}" 
-    extend 1fchgnl " You're back,{w=0.3} finally!"
-    n 1fchsml "Ehehe.{w=0.5}{nw}" 
-    extend 1uchgnleme " Now I {i}know{/i} today's gonna be great!"
+    extend 3fchgnl " You're back,{w=0.3} finally!"
+    n 3fchsml "Ehehe.{w=0.5}{nw}" 
+    extend 3uchgnleme " Now I {i}know{/i} today's gonna be great!"
 
     return
 
