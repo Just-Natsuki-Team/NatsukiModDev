@@ -649,8 +649,8 @@ label event_caught_reading_manga:
     n "..."
     play audio page_turn
     $ jnPause(2)
-    n "W-{w=0.1}wait...{w=0.3} what?!"
-    n "M-{w=0.1}Minori!{w=0.5}{nw}"
+    n "W-{w=0.2}wait...{w=0.3} what?!"
+    n "M-{w=0.2}Minori!{w=0.5}{nw}"
     extend " You {i}idiot{/i}!"
     n "I seriously can't believe...!"
     n "Ugh...{w=0.5}{nw}"
@@ -673,26 +673,31 @@ label event_caught_reading_manga:
 
     n 1uskemesh "...!"
     n 1uskeml "[player]!{w=0.5}{nw}"
-    extend 1fcsan " C-{w=0.1}can you {i}believe{/i} this?"
+    extend 1fcsan " C-{w=0.2}can you {i}believe{/i} this?"
     n 1fllfu "Parfait Girls got a new editor,{w=0.3}{nw}"
     extend 1fbkwr " and they have no {i}idea{/i} what they're doing!"
-    n 1flrwr "I mean,{w=0.1} have you {i}seen{/i} this crap?!{w=0.5}{nw}"
-    extend 1fcsfu " Have they even read the series before?!"
+    n 1flrwr "I mean,{w=0.2} have you {i}seen{/i} this crap?!{w=0.5}{nw}"
+    extend 1fcsfu " Have they even {i}read{/i} the series before?!"
     n 1fcsan "As {i}if{/i} Minori would ever stoop so low as to-!"
     n 1unmem "...!"
     n 1fllpol "..."
-    n 1fcspo "Actually,{w=0.1} you know what?{w=0.2} It's fine."
+    n 1fcspo "Actually,{w=0.2} you know what?{w=0.5} It's fine."
     n 1fsrss "I didn't wanna spoil it for you anyway."
     n 1flldv "Ehehe..."
     n 1nllpol "I'll just...{w=0.5}{nw}"
     extend 1nlrss " put this away."
 
+    show natsuki 1nsrca
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(2)
     play audio drawer
     hide prop parfait_manga_held
-    with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+    show natsuki 4nlrbo
+    $ jnPause(4)
+    hide black with Dissolve(1)
 
     n 3ulraj "So..."
-    n 3fchbg "What's new,{w=0.1} [player]?"
+    n 3fchbgsbr "What's new,{w=0.2} [player]?"
 
     return
 
@@ -727,7 +732,7 @@ label event_caught_writing_poetry:
     $ jnPause(7)
 
     n "Rrrrr...!"
-    n "Oh,{w=0.1} {i}forget it!{/i}"
+    n "Oh,{w=0.2} {i}forget it!{/i}"
 
     play audio paper_crumple
     $ jnPause(3)
@@ -744,20 +749,25 @@ label event_caught_writing_poetry:
 
     n 1uskuplesh "...!"
     $ player_initial = jn_utils.getPlayerInitial()
-    n 1uskgsf "[player_initial]-[player]?!{w=0.5}{nw}"
-    extend 1fbkwrl " How long have you been there?!"
-    n 1fllpol "..."
-    n 1uskeml "H-{w=0.1}huh? This?{w=0.5}{nw}"
-    extend 1fcswrl " I-{w=0.1}it's nothing!{w=0.5}{nw}"
-    extend 1flrpol " Nothing at all!"
+    n 4uskgsf "[player_initial]-[player]?!{w=0.5}{nw}"
+    extend 2fbkwrl " How long have you been there?!"
+    n 2fllpol "..."
+    n 4uskeml "H-{w=0.2}huh? This?{w=0.5}{nw}"
+    extend 4fcswrl " I-{w=0.2}it's nothing!{w=0.5}{nw}"
+    extend 2flrpol " Nothing at all!"
 
+    show natsuki 4fcspol
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(2)
     play audio drawer
     hide prop poetry_attempt
-    with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+    show natsuki 2nslbol
+    $ jnPause(4)
+    hide black with Dissolve(1)
 
-    n 1nslpol "..."
-    n 1kslss "S-{w=0.1}so...{w=0.5}{nw}"
-    extend 1flldv " what's up,{w=0.1} [player]?"
+    n 2nslpol "..."
+    n 2fslsslsbr "S-{w=0.2}so...{w=0.5}{nw}"
+    extend 4fcsbglsbr " what's up,{w=0.2} [player]?"
 
     return
 
@@ -807,9 +817,9 @@ label event_relationship_doubts:
 
     n 1fsqunltsb "..."
     n 1fsqemtsb "...Oh.{w=1}{nw}"
-    extend 1fsrsr " {i}You're{/i} here."
-    n 1ncsem "{i}Great{/i}..."
-    n 1fcsantsa "Yeah, that's {i}just{/i} what I need right now."
+    extend 2fsrsr " {i}You're{/i} here."
+    n 2ncsem "{i}Great{/i}..."
+    n 4fcsantsa "Yeah, that's {i}just{/i} what I need right now."
 
     return
 
@@ -831,7 +841,7 @@ label event_code_fiddling:
     n "..."
     n "Mmm..."
     n "Aha!{w=0.5}{nw}"
-    extend " I see,{w=0.1} I see."
+    extend " I see,{w=0.2} I see."
     n "So,{w=0.3} I think...{w=1}{nw}"
     extend " if I just...{w=1.5}{nw}"
     extend " very...{w=2}{nw}"
@@ -869,10 +879,10 @@ label event_code_fiddling:
 
     $ player_initial = jn_utils.getPlayerInitial()
     n 1uskemlesh "Ack-!"
-    n 1fbkwrl "[player_initial]-{w=0.1}[player]!"
-    extend 1fcseml " Are you {i}trying{/i} to give me a heart attack or something?"
-    n 1fllpol "Jeez..."
-    n 1fsrpo "Hello to you too,{w=0.1} dummy..."
+    n 4fbkwrl "[player_initial]-{w=0.2}[player]!"
+    extend 2fcseml " Are you {i}trying{/i} to give me a heart attack or something?"
+    n 2fllpol "Jeez..."
+    n 1fsrpo "Hello to you too,{w=0.2} dummy..."
 
     return
 
@@ -913,7 +923,7 @@ label event_not_ready_yet:
         outfit_to_restore = Natsuki.getOutfitName()
         ahoge_outfit = jn_outfits.get_outfit("jn_ahoge_unlock")
         ahoge_outfit.headgear = random.choice(unlocked_ahoges)
-        Natsuki.setOutfit(ahoge_outfit, False)
+        jn_outfits.save_temporary_outfit(ahoge_outfit)
 
     $ jnPause(5)
     n "Uuuuuu...{w=2}{nw}"
@@ -933,21 +943,26 @@ label event_not_ready_yet:
     $ jn_events.displayVisuals("1uskeml")
     $ jn_globals.force_quit_enabled = True
 
-    n 1uskemlesh "H-{w=0.3}huh?{w=1.5}{nw}"
-    extend 1uskwrl " [player]?!{w=1}{nw}"
-    extend 1klleml " You're here already?!"
-    n 1flrunl "..."
-    n 1uskemf "I-{w=0.3}I gotta get ready!"
+    n 1uskemlesh "H-{w=0.3}huh?{w=1}{nw}"
+    extend 1uskwrl " [player]?!{w=0.75}{nw}"
+    extend 4klleml " You're here already?!"
+    n 4flrunl "..."
+    n 4uskemfeexsbr "I-{w=0.3}I gotta get ready!"
 
+    show natsuki 1fslunlsbr
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(2)
     play audio clothing_ruffle
     $ Natsuki.setOutfit(jn_outfits.get_outfit(outfit_to_restore))
-    with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
+    show natsuki 2fsrpol
+    $ jnPause(4)
+    hide black with Dissolve(1)
 
-    n 1fcsem "Jeez...{w=1.5}{nw}"
-    extend 1nslpo  " I really gotta get an alarm clock or something.{w=1}{nw}"
-    extend 1nsrss " Heh."
-    n 1flldv "So...{w=1}{nw}"
-    extend 1fcsbgl " what's up,{w=0.1} [player]?"
+    n 2fcsem "Jeez...{w=1.5}{nw}"
+    extend 2nslpo  " I really gotta get an alarm clock or something.{w=1}{nw}"
+    extend 2nsrss " Heh."
+    n 4flldv "So...{w=1}{nw}"
+    extend 3fcsbgl " what's up,{w=0.2} [player]?"
 
     return
 
@@ -998,7 +1013,7 @@ label event_renpy_for_dummies:
     n "Yep!{w=1.5}{nw}"
     extend " I have no idea what I'm doing!"
     n "Can't believe I thought {i}this{/i} would help me...{w=1.5}{nw}"
-    extend " '{i}award winning{/i}',{w=0.1} my butt."
+    extend " '{i}award winning{/i}',{w=0.2} my butt."
     $ jnPause(7)
 
     menu:
@@ -1010,19 +1025,24 @@ label event_renpy_for_dummies:
     $ jn_globals.force_quit_enabled = True
 
     n 1uskemesh "O-{w=0.3}oh!"
-    extend 1fllbgl " H-{w=0.3}hey,{w=0.1} [player]!"
+    extend 1fllbgl " H-{w=0.3}hey,{w=0.2} [player]!"
     n 1ullss "I was just...{w=1.5}{nw}"
     extend 1nslss " doing...{w=1.5}{nw}"
     n 1fsrun "..."
-    n 1fcswr "N-{w=0.1}nevermind that!"
+    n 1fcswr "N-{w=0.2}nevermind that!"
     extend 1fllpo " This book is trash anyway."
 
+    show natsuki 1fcspo
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(2)
     play audio drawer
     hide prop renpy_for_dummies_book_held
-    with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+    show natsuki 4nslsr
+    $ jnPause(4)
+    hide black with Dissolve(1)
 
-    n 1nllaj "So...{w=1}{nw}"
-    extend 1kchbg " what's new,{w=0.1} [player]?"
+    n 4nllaj "So...{w=1}{nw}"
+    extend 2fchbgsbl " what's new,{w=0.2} [player]?"
 
     return
 
@@ -1074,18 +1094,24 @@ label event_reading_a_la_mode:
     $ jn_globals.force_quit_enabled = True
 
     n 1unmgslesu "Oh!{w=1}{nw}"
-    extend 1fllbgl " H-{w=0.1}hey,{w=0.1} [player]!"
+    extend 1fllbgl " H-{w=0.2}hey,{w=0.2} [player]!"
     n 1nsrss "I was just catching up on some reading time..."
     n 1fspaj "Who'd have guessed slice of life and fashion go so well together?"
     n 1fchbg "I gotta continue this one later!{w=1}{nw}"
-    extend 1fchsm " I'm just gonna mark my place real quick,{w=0.1} one sec..."
+    extend 1fchsm " I'm just gonna mark my place real quick,{w=0.2} one sec..."
 
+    show natsuki 1fcssm
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(2)
+    play audio page_turn
+    $ jnPause(1.5)
     play audio drawer
     hide prop a_la_mode_manga_held
-    with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+    $ jnPause(4)
+    hide black with Dissolve(1)
 
-    n 1nchbg "Aaaand we're good to go!{w=1}{nw}"
-    extend 1fwlsm " What's new,{w=0.1} [player]?"
+    n 3nchbg "Aaaand we're good to go!{w=1}{nw}"
+    extend 3fwlsm " What's new,{w=0.2} [player]?"
 
     return
 
@@ -1152,7 +1178,7 @@ label event_drinking_strawberry_milkshake:
     hide black with Dissolve(1)
 
     n 4ncsss "Ah..."
-    n 1uchgn "Man,{w=0.1} that hit the spot!"
+    n 1uchgn "Man,{w=0.2} that hit the spot!"
     n 4fsqbg "And now I'm all refreshed...{w=1}{nw}"
     extend 3tsqsm " what's happening, [player]?{w=1}{nw}"
     extend 3fchsm " Ehehe."
@@ -1188,8 +1214,8 @@ label event_step_by_step_manga:
     play audio page_turn
     $ jnPause(1)
     n "Man..."
-    n "A-{w=0.3}alright,{w=0.1} enough drooling over the art!{w=1.5}{nw}"
-    extend " You got this thing for a reason,{w=0.1} Natsuki..."
+    n "A-{w=0.3}alright,{w=0.2} enough drooling over the art!{w=1.5}{nw}"
+    extend " You got this thing for a reason,{w=0.2} Natsuki..."
     n "Step by step..."
     n "Improve my daily confidence,{w=0.3} huh?{w=1.5}{nw}"
     extend " Okaaay..."
@@ -1228,7 +1254,7 @@ label event_step_by_step_manga:
     n 1fcswrl "I'm {i}super{/i} confident already!"
     n 1fllunlsbl "..."
     n 1fcsemlsbr "A-{w=0.2}and besides,{w=1}{nw}"
-    extend 1fllpol " even if I {i}was{/i} reading it for the self-{w=0.1}help stuff..."
+    extend 1fllpol " even if I {i}was{/i} reading it for the self-{w=0.2}help stuff..."
     n 1kllsll "..."
     n 1kwmpul "...What'd be wrong with that?"
     n 1fcsbol "It takes real guts to admit to yourself that you can do better.{w=1}{nw}"
@@ -1240,10 +1266,10 @@ label event_step_by_step_manga:
     hide prop step_by_step_manga_held
     with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
-    n 1nllpol "..."
-    n 1ulrbol "So..."
-    n 1tnmsslsbr "What's new,{w=0.1} [player]?{w=1}{nw}"
-    extend 1fllsslsbl " Ahaha..."
+    n 4nllpol "..."
+    n 4ulrbol "So..."
+    n 3tnmsslsbr "What's new,{w=0.2} [player]?{w=1}{nw}"
+    extend 3fllsslsbl " Ahaha..."
 
     return
 
@@ -1315,7 +1341,7 @@ label event_eyewear_problems:
 
     n "And are these...{w=1} {i}candy wrappers{/i}?!"
     n "That's funny..."
-    n "I don't remember ever saying my desk was a{w=0.1}{nw}"
+    n "I don't remember ever saying my desk was a{w=0.2}{nw}"
     extend " {b}trash{/b}{w=0.33}{nw}"
     extend " {b}basket!{/b}"
 
@@ -1535,7 +1561,7 @@ label event_wintendo_twitch_battery_dead:
     play audio button_mashing_b
 
     n "Nnnng-!"
-    n "G-{w=0.1}get OFF me!{w=0.5}{nw}"
+    n "G-{w=0.2}get OFF me!{w=0.5}{nw}"
     extend " Jeez!"
     play audio button_mashing_a
     n "I HATE these enemies!"
@@ -2106,22 +2132,22 @@ label holiday_new_years_day:
     extend 4kslfreso " I can't {i}believe{/i} I was so off with the timing!"
 
     if jn_is_day():
-        n 4tnmpu "...Really off,{w=0.1} actually.{w=0.5} Now that I look at the time.{w=1}{nw}"
+        n 4tnmpu "...Really off,{w=0.2} actually.{w=0.5} Now that I look at the time.{w=1}{nw}"
         extend 4nsrpo " Almost impressively."
         n 1kcsemedr "Jeez..."
         n 3fslajl "You could have at least woken me up sooner,{w=0.5}{nw}"
         extend 3fsqpol " you jerk."
         n 1nslpu "But...{w=1}{nw}"
-        extend 1tsqsl " I suppose I can't give you too much of a hard time for it,{w=0.1} [player]."
+        extend 1tsqsl " I suppose I can't give you too much of a hard time for it,{w=0.2} [player]."
         n 1fcsbg " Your hangover can do that for me.{w=0.5}{nw}"
         extend 1fcsajsbr " Anyway!"
 
     else:
         n 1kcsemedr "Man..."
         n 2fsrpu "Now that's gonna bug me from the rest of the day..."
-        n 2fslsrl "Way to start the new year,{w=0.1} huh?"
+        n 2fslsrl "Way to start the new year,{w=0.2} huh?"
         n 1fcspoesi "..."
-        n 1fcsajsbr "Well,{w=0.1} whatever!"
+        n 1fcsajsbr "Well,{w=0.2} whatever!"
 
     n 1fcsemlsbr "Missing the new year?{w=0.5}{nw}"
     extend 2flrbgsbl " M-{w=0.3}merely a minor setback!"
@@ -2132,10 +2158,10 @@ label holiday_new_years_day:
     extend 1nsqsssbl " kinda getting harder to tell these days, huh?"
     n 1kllbosbl "..."
 
-    n 1unmsl "In all seriousness though,{w=0.1} [player]?"
+    n 1unmsl "In all seriousness though,{w=0.2} [player]?"
     n 3nslss "I know I've already kinda trashed my clean start..."
     n 4fnmbol "But that doesn't mean you're off the hook."
-    n 1fcsss "Yeah,{w=0.1} yeah.{w=0.5} I know."
+    n 1fcsss "Yeah,{w=0.2} yeah.{w=0.5} I know."
     n 1fslss "I'm not gonna give you a whole lecture on fresh starts,{w=1}{nw}"
     extend 1tlrbo " hitting the gym{w=0.5}{nw}"
     extend 4tnmss " or anything like that."
@@ -2149,7 +2175,7 @@ label holiday_new_years_day:
     n 1ucspu "Just..."
 
     if Natsuki.isAffectionate(higher=True):
-        extend 4fnmpul " promise me something,{w=0.1} [player].{w=0.5}{nw}"
+        extend 4fnmpul " promise me something,{w=0.2} [player].{w=0.5}{nw}"
         extend 4knmbol " Please?"
 
     else:
@@ -2167,7 +2193,7 @@ label holiday_new_years_day:
         extend 1fcsajfesssbl " A-{w=0.2}and I don't mean me.{w=0.5}{nw}"
 
     n 1fcsun "Please...{w=1}{nw}"
-    extend 1fcspul " hear me out,{w=0.1} alright?"
+    extend 1fcspul " hear me out,{w=0.2} alright?"
     n 2kllun "Not everyone has the luxury of friends or family.{w=1}{nw}"
     extend 4ksqpu " And trust me when I say not everyone looks forward to a new year..."
     n 1knmsl "But the right message really {i}can{/i} make all the difference."
@@ -2178,11 +2204,11 @@ label holiday_new_years_day:
     extend 4kllpu " be there{w=0.5}{nw}"
     extend 4fslunl " forever."
     n 2kslunltsb "...Just like my friends,{w=0.3} [player]."
-    n 1fcsajftsa "A-{w=0.1}and remembering the people around you is just as important as any stupid resolution."
+    n 1fcsajftsa "A-{w=0.2}and remembering the people around you is just as important as any stupid resolution."
     n 1fnmsrl "So I don't care {i}how{/i} you do it.{w=1}{nw}"
     extend 1fllpul " Text message,{w=0.35} phone call,{w=0.35} whatever."
     n 1fcspul "But please...{w=0.5}{nw}"
-    extend 1kllsrl " do something,{w=0.1} alright?{w=1}{nw}"
+    extend 1kllsrl " do something,{w=0.2} alright?{w=1}{nw}"
     extend 4fnmbol " For yourself just as much as them."
 
     n 4nlrunl "..."
@@ -2191,20 +2217,20 @@ label holiday_new_years_day:
     $ current_year = datetime.date.today().year
     n 3fllunlsbr "We're barely into [current_year] and I'm already making things all serious..."
     n 1fslsslsbr "Heh.{w=0.5}{nw}"
-    extend 1tsqpu " So much for a lighthearted celebration,{w=0.1} right?"
+    extend 1tsqpu " So much for a lighthearted celebration,{w=0.2} right?"
     n 4tnmpu "But [player]?"
     n 2kllsl "..."
 
     if Natsuki.isEnamored(higher=True):
         n 4knmsll "...Thank you."
-        n 1kllssl "For this year,{w=0.1} I mean."
+        n 1kllssl "For this year,{w=0.2} I mean."
         n 2fcsemlesssbl "I-{w=0.2}I know I don't show it a lot!{w=0.5}{nw}"
         extend 2klrpul " But...{w=0.5}{nw}"
         extend 2knmpul " just taking time out of your day to visit me,{w=0.75}{nw}"
         extend 2kllssl " listening to all my nonsense,{w=0.75}{nw}"
         extend 2fsldvl " dealing with my crap sometimes..."
         n 1knmbol "...It matters."
-        n 1kllssl "It really does,{w=0.1} heh.{w=1.25}{nw}"
+        n 1kllssl "It really does,{w=0.2} heh.{w=1.25}{nw}"
         extend 4kllbofsbr " A lot."
         n 1kllajf "And...{w=1}{nw}"
         extend 4knmpufsbr " one last thing?"
@@ -2220,7 +2246,7 @@ label holiday_new_years_day:
             $ jnPause(1.5)
             hide black with Dissolve(1.25)
             $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
-            n 4kwmsmf "...Happy new year,{w=0.1} [chosen_endearment].{w=1.25}{nw}"
+            n 4kwmsmf "...Happy new year,{w=0.2} [chosen_endearment].{w=1.25}{nw}"
             extend 4kllssfess " Ehehe."
 
         else:
@@ -2229,11 +2255,11 @@ label holiday_new_years_day:
             hide black with Dissolve(1.25)
             $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
             n 4klrssf "Heh."
-            n 1fchsmfess "...Happy new year,{w=0.1} [chosen_tease]."
+            n 1fchsmfess "...Happy new year,{w=0.2} [chosen_tease]."
 
     else:
         n 1knmsll "...Thanks.{w=0.75}{nw}"
-        extend 3fcsemlsbl " F-{w=0.2}for this year,{w=0.1} I mean."
+        extend 3fcsemlsbl " F-{w=0.2}for this year,{w=0.2} I mean."
         n 1fslbolesssbl "I...{w=0.5}{nw}"
         extend 4knmboless " really appreciate that you've spent so much time with me already."
         n 1kllssless "Even if I {i}am{/i} just a grouchy girl stuck in some{w=0.5}{nw}"
@@ -2242,7 +2268,7 @@ label holiday_new_years_day:
         n 1kbkwrl "Seriously!{w=0.2} I do!"
         n 3fllanlsbl "It's..."
         n 1kcsemlesisbl "..."
-        n 2ksrpol "I-{w=0.3}it just means a lot to me,{w=0.1} okay?"
+        n 2ksrpol "I-{w=0.3}it just means a lot to me,{w=0.2} okay?"
         n 1ksrpul "And...{w=0.75}{nw}"
         extend 1knmssl " one last thing?"
         n 1ncsajl "..."
@@ -2254,7 +2280,7 @@ label holiday_new_years_day:
         $ jnPause(3.5)
         hide black with Dissolve(1.25)
 
-        n 4fsqdvlesssbr "...H-{w=0.2}happy new year,{w=0.1} dummy."
+        n 4fsqdvlesssbr "...H-{w=0.2}happy new year,{w=0.2} dummy."
         n 4nslsslesssbl "A-{w=0.2}and if anyone asks,{w=0.3} that never happened.{w=1}{nw}"
         extend 4fsldvlesssbl " Ehehe..."
 
