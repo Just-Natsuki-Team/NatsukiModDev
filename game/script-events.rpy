@@ -1131,26 +1131,31 @@ label event_drinking_strawberry_milkshake:
     $ jn_events.displayVisuals("1nchdr")
     $ jn_globals.force_quit_enabled = True
 
-    n 1nchdr "..."
+    n 4nchdr "..."
     play audio straw_sip
-    n 1nsqdr "..."
-    n 1uskdrlesh "...!"
+    n 4nsqdr "..."
+    n 4uskdrlesh "...!"
     $ player_initial = jn_utils.getPlayerInitial()
-    n 1fbkwrl "[player_initial]-{w=0.3}[player]!{w=1}{nw}"
-    extend 1flleml " I wish you'd stop just {i}appearing{/i} like that..."
+    n 2fbkwrl "[player_initial]-{w=0.3}[player]!{w=1}{nw}"
+    extend 2flleml " I wish you'd stop just {i}appearing{/i} like that..."
     n 1fcseml "Jeez...{w=1}{nw}"
-    extend 1fsqpo " you almost made me spill it!"
-    n 1flrpo "At least let me finish up here real quick..."
+    extend 4fsqpo " you almost made me spill it!"
+    n 4flrpo "At least let me finish up here real quick..."
 
+    show natsuki 2fcsdrl
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
     play audio glass_move
     hide prop strawberry_milkshake
-    with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+    show natsuki 4ncssm
+    $ jnPause(2)
+    hide black with Dissolve(1)
 
-    n 1ncsss "Ah..."
+    n 4ncsss "Ah..."
     n 1uchgn "Man,{w=0.1} that hit the spot!"
-    n 1fsqbg "And now I'm all refreshed...{w=1}{nw}"
-    extend 1tsqsm " what's happening, [player]?{w=1}{nw}"
-    extend 1fchsm " Ehehe."
+    n 4fsqbg "And now I'm all refreshed...{w=1}{nw}"
+    extend 3tsqsm " what's happening, [player]?{w=1}{nw}"
+    extend 3fchsm " Ehehe."
 
     return
 
