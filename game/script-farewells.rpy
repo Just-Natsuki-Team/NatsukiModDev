@@ -147,7 +147,7 @@ label farewell_force_quit:
         $ persistent.jn_player_first_farewell_response = int(jn_farewells.JNFirstLeaveTypes.force_quit)
 
     hide screen hkb_overlay
-    show glitch_garbled_a zorder 99 with hpunch
+    show glitch_garbled_a zorder JN_GLITCH_ZORDER with hpunch
     hide glitch_garbled_a
     stop music
     play audio glitch_c
@@ -157,7 +157,7 @@ label farewell_force_quit:
     show natsuki 4kchupltsa at jn_center zorder JN_NATSUKI_ZORDER
 
     play audio static
-    show glitch_garbled_b zorder 99 with hpunch
+    show glitch_garbled_b zorder JN_GLITCH_ZORDER with hpunch
     hide glitch_garbled_b
 
     return { "quit": None }

@@ -2775,7 +2775,7 @@ label new_wearables_outfits_unlocked:
         extend 4knmsslsbr " [player]?"
         n 4fsrunfsbr "..."
 
-        show black zorder 4 with Dissolve(0.5)
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         play audio clothing_ruffle
         $ jnPause(3.5, hard=True)
 
@@ -2805,7 +2805,7 @@ label new_wearables_outfits_unlocked:
         extend 4knmsllsbr " [player]?"
         n 2fsrunfsbr "..."
 
-        show black zorder 4 with Dissolve(0.5)
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         show natsuki 1flrcafsbr at jn_center zorder JN_NATSUKI_ZORDER
         play audio clothing_ruffle
         $ jnPause(2, hard=True)
@@ -2830,7 +2830,7 @@ label new_wearables_outfits_unlocked:
         n 1kllcalsbr "..."
         n 1fcstrlsbl "T-{w=0.2}thanks."
 
-    show black zorder 4 with Dissolve(0.5)
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ giftbox.close()
     $ giftbox.hide()
     $ jnPause(2, hard=True)

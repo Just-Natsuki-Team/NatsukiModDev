@@ -4,8 +4,6 @@ init -50 python:
     import store.jn_utils as jn_utils
     from Enum import Enum
 
-    JN_NATSUKI_ZORDER = 3
-
     _JN_NATSUKI_BASE_SPRITE_PATH = "mod_assets/natsuki/"
     _JN_TABLE_SPRITE = None
 

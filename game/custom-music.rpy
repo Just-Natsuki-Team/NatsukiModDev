@@ -98,7 +98,7 @@ init python in jn_custom_music:
         renpy.show(
             name="music_player {0}".format(state),
             at_list=[store.music_player_fadein],
-            zorder=jn_events.JN_EVENT_PROP_ZORDER
+            zorder=store.JN_PROP_ZORDER
         )
         store.jnPause(0.5)
         renpy.play(filename=store.audio.gift_close, channel="audio")
@@ -111,7 +111,7 @@ init python in jn_custom_music:
         renpy.show(
             name="music_player",
             at_list=[store.music_player_fadeout],
-            zorder=jn_events.JN_EVENT_PROP_ZORDER
+            zorder=store.JN_PROP_ZORDER
         )
         store.jnPause(0.5)
         renpy.hide("music_player")

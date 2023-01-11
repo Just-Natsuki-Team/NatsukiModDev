@@ -17,6 +17,16 @@ init -990 python:
     import easter
     _easter = easter.easter(datetime.datetime.today().year)
 
+    # zorder constants; use these in place of hard-coded values!
+    # Remember that higher zorder values are displayed closer to the player!
+    JN_GLITCH_ZORDER = 99
+    JN_BLACK_ZORDER = 10
+    JN_OVERLAY_ZORDER = 5
+    JN_PROP_ZORDER = 4
+    JN_NATSUKI_ZORDER = 3
+    JN_DECO_ZORDER = 2
+    JN_LOCATION_ZORDER = 1
+
 define JN_NEW_YEARS_DAY = datetime.date(datetime.date.today().year, 1, 1)
 define JN_VALENTINES_DAY = datetime.date(datetime.date.today().year, 2, 14)
 define JN_EASTER = datetime.date(_easter.year, _easter.month, _easter.day)

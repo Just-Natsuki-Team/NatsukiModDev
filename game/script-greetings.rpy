@@ -221,7 +221,7 @@ label greeting_leave_return:
             extend 3knmssl " seriously,{w=0.2} [player]?"
             show natsuki 3ksrbol
 
-            show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+            show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
             play audio clothing_ruffle
             $ jnPause(3.5)
 
@@ -339,21 +339,21 @@ label greeting_tt_warning:
     $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_GLITCH)
     $ player_initial = jn_utils.getPlayerInitial()
     play audio glitch_d
-    show glitch_garbled_b zorder 99 with vpunch
+    show glitch_garbled_b zorder JN_GLITCH_ZORDER with vpunch
     hide glitch_garbled_b
     $ jnPause(0.6)
     play music audio.ikustan_tsuj
-    show glitch_rapid zorder 99
+    show glitch_rapid zorder JN_GLITCH_ZORDER
     $ jnPause(random.choice(range(7, 11)))
     stop music
 
     play audio static
-    show glitch_garbled_a zorder 99 with hpunch
+    show glitch_garbled_a zorder JN_GLITCH_ZORDER with hpunch
     hide glitch_garbled_a
 
     play music audio.juuuuu_nnnnn
     $ jnPause(10.6)
-    show glitch_spook zorder 99 with hpunch
+    show glitch_spook zorder JN_GLITCH_ZORDER with hpunch
     show natsuki 1kcsfultsaeaf at jn_center zorder JN_NATSUKI_ZORDER
     hide glitch_spook
     hide black
@@ -363,7 +363,7 @@ label greeting_tt_warning:
     n 4kcsunltsa "Uuuuuuu..."
     show natsuki 1kcsfuftsa at jn_center
     play audio static
-    show glitch_garbled_c zorder 99 with vpunch
+    show glitch_garbled_c zorder JN_GLITCH_ZORDER with vpunch
     hide glitch_garbled_c
     n 4kcsanltsa "M...{w=0.3}my head..."
     n 4kslunltsb "..."
@@ -373,13 +373,13 @@ label greeting_tt_warning:
     n 4kscpoitsc "Hrk-!{w=0.5}{nw}"
 
     stop music
-    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.1)
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.1)
     play audio chair_out_fast
     $ jnPause(0.2)
     n "{b}B-{w=0.15}BLURGHHH-!{/b}{w=0.2}{nw}"
 
     play audio glitch_b
-    show glitch_garbled_b zorder 99 with vpunch
+    show glitch_garbled_b zorder JN_GLITCH_ZORDER with vpunch
     hide glitch_garbled_b
     show natsuki 1kcsemtsd
     $ jnPause(10)
@@ -402,7 +402,7 @@ label greeting_tt_warning:
     n 4kscpoitscsbr "H-{w=0.2}hrk-!{w=0.5}{nw}"
     show natsuki 1fcsanitscsbr
     play audio static
-    show glitch_garbled_a zorder 99 with vpunch
+    show glitch_garbled_a zorder JN_GLITCH_ZORDER with vpunch
     hide glitch_garbled_a
     n 1kcsemltscesi "Gah..."
 
@@ -431,7 +431,7 @@ label greeting_tt_warning:
 
     show natsuki 4kcsful
     play audio static
-    show glitch_garbled_c zorder 99 with vpunch
+    show glitch_garbled_c zorder JN_GLITCH_ZORDER with vpunch
     hide glitch_garbled_c
 
     n 2fpafui "Nnnnnnghhhh!{w=0.5}{nw}"
@@ -565,7 +565,7 @@ label greeting_tt_warning:
 
         show natsuki 4kcsanltsa
         play audio static
-        show glitch_garbled_b zorder 99 with hpunch
+        show glitch_garbled_b zorder JN_GLITCH_ZORDER with hpunch
         hide glitch_garbled_b
 
         n 4fcsanltsa "Nnnnng-!{w=0.5}{nw}"
@@ -603,7 +603,7 @@ label greeting_tt_warning:
 
         show natsuki 1fcsanltsa
         play audio static
-        show glitch_garbled_a zorder 99 with hpunch
+        show glitch_garbled_a zorder JN_GLITCH_ZORDER with hpunch
         hide glitch_garbled_a
 
         n 4fskscltsc "NO!{w=0.75}{nw}"
@@ -615,7 +615,7 @@ label greeting_tt_warning:
 
         show natsuki 4fcsfultsa
         play audio static
-        show glitch_garbled_c zorder 99 with vpunch
+        show glitch_garbled_c zorder JN_GLITCH_ZORDER with vpunch
         hide glitch_garbled_c
 
         n 4fcsupltsa "Nnnnnrrgh-!{w=0.5}{nw}"
@@ -641,7 +641,7 @@ label greeting_tt_warning:
         n 4fscscftsf "{i}AND{w=0.2} LEAVE{w=0.2} ME{w=0.2} ALONE{/i}!{nw}"
 
         play audio glitch_d
-        show glitch_garbled_c zorder 99 with vpunch
+        show glitch_garbled_c zorder JN_GLITCH_ZORDER with vpunch
         hide glitch_garbled_c
         $ Natsuki.percentageAffinityLoss(10)
 
@@ -664,15 +664,15 @@ label greeting_tt_fatal:
     hide black
     show glitch_steady zorder 98
     play audio static
-    show glitch_spook zorder 99 with vpunch
+    show glitch_spook zorder JN_GLITCH_ZORDER with vpunch
     hide glitch_spook
 
     play audio static
-    show glitch_garbled_b zorder 99 with vpunch
+    show glitch_garbled_b zorder JN_GLITCH_ZORDER with vpunch
     hide glitch_garbled_b
 
     play audio static
-    show glitch_spook zorder 99 with vpunch
+    show glitch_spook zorder JN_GLITCH_ZORDER with vpunch
     hide glitch_spook
 
     play audio interference fadeout 0.5

@@ -19,7 +19,7 @@ label ch30_autoload:
 
 label ch30_visual_setup:
     # Hide everything so we can set up behind the scenes
-    show black zorder 99
+    show black zorder JN_BLACK_ZORDER
 
     # Draw background
     $ main_background.show()
@@ -94,7 +94,7 @@ label ch30_init:
             and not tt_in_session
         ):
             for deco in persistent._jn_holiday_deco_list_on_quit:
-                renpy.show(name="deco {0}".format(deco), zorder=jn_events.JN_EVENT_DECO_ZORDER)
+                renpy.show(name="deco {0}".format(deco), zorder=store.JN_DECO_ZORDER)
 
         else:
             persistent._jn_holiday_deco_list_on_quit = []
@@ -756,11 +756,11 @@ label try_force_quit:
 
                     if (random.randint(0, 10) == 1):
                         play sound glitch_d loop
-                        show glitch_garbled_red zorder 99 with vpunch
+                        show glitch_garbled_red zorder JN_GLITCH_ZORDER with vpunch
                         $ jnPause(random.randint(4,13), hard=True)
                         stop sound
                         play audio glitch_e
-                        show glitch_garbled_n zorder 99 with hpunch
+                        show glitch_garbled_n zorder JN_GLITCH_ZORDER with hpunch
                         $ jnPause(0.025, hard=True)
                         hide glitch_garbled_n
                         hide glitch_garbled_red
@@ -772,6 +772,6 @@ label try_force_quit:
                     Natsuki.setQuitApology(jn_apologies.ApologyTypes.sudden_leave)
 
                 play audio static
-                show glitch_garbled_b zorder 99 with hpunch
+                show glitch_garbled_b zorder JN_GLITCH_ZORDER with hpunch
                 hide glitch_garbled_b
                 $ renpy.jump("quit")

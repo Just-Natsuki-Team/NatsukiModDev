@@ -161,11 +161,6 @@ init python in jn_events:
     import store.jn_outfits as jn_outfits
     import store.jn_utils as jn_utils
 
-    JN_EVENT_DECO_ZORDER = 2
-    JN_EVENT_PROP_ZORDER = 4
-    JN_EVENT_OVERLAY_ZORDER = 5
-    JN_EVENT_BLACK_ZORDER = 10
-
     EVENT_MAP = dict()
     EVENT_RETURN_OUTFIT = None
 
@@ -383,10 +378,10 @@ init python in jn_events:
             renpy.hide("deco")
 
             for prop in self.prop_list:
-                renpy.show(name="prop {0}".format(prop), zorder=JN_EVENT_PROP_ZORDER)
+                renpy.show(name="prop {0}".format(prop), zorder=store.JN_PROP_ZORDER)
 
             for deco in self.deco_list:
-                renpy.show(name="deco {0}".format(deco), zorder=JN_EVENT_DECO_ZORDER)
+                renpy.show(name="deco {0}".format(deco), zorder=store.JN_DECO_ZORDER)
 
             kwargs = {
                 "natsuki_sprite_code": self.natsuki_sprite_code
@@ -672,7 +667,7 @@ label event_caught_reading_manga:
         "Enter...":
             pass
 
-    show prop parfait_manga_held zorder jn_events.JN_EVENT_PROP_ZORDER
+    show prop parfait_manga_held zorder JN_PROP_ZORDER
     $ jn_events.displayVisuals("1fsrpo")
     $ jn_globals.force_quit_enabled = True
 
@@ -696,8 +691,8 @@ label event_caught_reading_manga:
     hide prop parfait_manga_held
     with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
-    n 1ulraj "So..."
-    n 1fchbg "What's new,{w=0.1} [player]?"
+    n 3ulraj "So..."
+    n 3fchbg "What's new,{w=0.1} [player]?"
 
     return
 
@@ -743,7 +738,7 @@ label event_caught_writing_poetry:
         "Enter...":
             pass
 
-    show prop poetry_attempt zorder jn_events.JN_EVENT_PROP_ZORDER
+    show prop poetry_attempt zorder JN_PROP_ZORDER
     $ jn_events.displayVisuals("1fsrpo")
     $ jn_globals.force_quit_enabled = True
 
@@ -798,7 +793,7 @@ label event_relationship_doubts:
 
     if Natsuki.isRuined() and random.randint(0, 10) == 1:
         play audio glitch_a
-        show glitch_garbled_red zorder 99 with vpunch
+        show glitch_garbled_red zorder JN_GLITCH_ZORDER with vpunch
         n "I {i}HATE{/i} IT!!{w=0.5}{nw}"
         hide glitch_garbled_red
         $ jnPause(5)
@@ -843,7 +838,7 @@ label event_code_fiddling:
     extend " carefully...{w=0.5}{nw}"
 
     play audio static
-    show glitch_garbled_a zorder 99 with vpunch
+    show glitch_garbled_a zorder JN_GLITCH_ZORDER with vpunch
     hide glitch_garbled_a
 
     n "Ack-!{w=2}{nw}"
@@ -856,7 +851,7 @@ label event_code_fiddling:
     n "But...{w=1} what if I-{w=0.5}{nw}"
 
     play audio static
-    show glitch_garbled_c zorder 99 with hpunch
+    show glitch_garbled_c zorder JN_GLITCH_ZORDER with hpunch
     hide glitch_garbled_c
 
     n "Eek!"
@@ -1010,7 +1005,7 @@ label event_renpy_for_dummies:
         "Enter...":
             pass
 
-    show prop renpy_for_dummies_book_held zorder jn_events.JN_EVENT_PROP_ZORDER
+    show prop renpy_for_dummies_book_held zorder JN_PROP_ZORDER
     $ jn_events.displayVisuals("1fcspo")
     $ jn_globals.force_quit_enabled = True
 
@@ -1074,7 +1069,7 @@ label event_reading_a_la_mode:
         "Enter...":
             pass
 
-    show prop a_la_mode_manga_held zorder jn_events.JN_EVENT_PROP_ZORDER
+    show prop a_la_mode_manga_held zorder JN_PROP_ZORDER
     $ jn_events.displayVisuals("1fdwca")
     $ jn_globals.force_quit_enabled = True
 
@@ -1132,7 +1127,7 @@ label event_drinking_strawberry_milkshake:
         "Enter...":
             pass
 
-    show prop strawberry_milkshake zorder jn_events.JN_EVENT_PROP_ZORDER
+    show prop strawberry_milkshake zorder JN_PROP_ZORDER
     $ jn_events.displayVisuals("1nchdr")
     $ jn_globals.force_quit_enabled = True
 
@@ -1204,7 +1199,7 @@ label event_step_by_step_manga:
         "Enter...":
             pass
 
-    show prop step_by_step_manga_held zorder jn_events.JN_EVENT_PROP_ZORDER
+    show prop step_by_step_manga_held zorder JN_PROP_ZORDER
     $ jn_events.displayVisuals("1uskemfesh")
     $ jn_globals.force_quit_enabled = True
 
@@ -1360,8 +1355,8 @@ label event_eyewear_problems:
         "Enter...":
             pass
 
-    show prop glasses_case zorder jn_events.JN_EVENT_PROP_ZORDER
-    show overlay slipping_glasses zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_glasses_pre_slide
+    show prop glasses_case zorder JN_PROP_ZORDER
+    show overlay slipping_glasses zorder jn_events.JN_OVERLAY_ZORDER at jn_glasses_pre_slide
     $ jn_events.displayVisuals("1fcssmesi")
     $ jn_globals.force_quit_enabled = True
 
@@ -1377,7 +1372,7 @@ label event_eyewear_problems:
     n 1tsqsmledz "...Mmm?"
     n 1usqctleme "Oho?{w=1}{nw}"
     extend 1fcsctl " What's that?"
-    show overlay slipping_glasses zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_glasses_slide_down
+    show overlay slipping_glasses zorder jn_events.JN_OVERLAY_ZORDER at jn_glasses_slide_down
     n 1tllbgl "Did I do something with my hair?{w=1}{nw}"
     extend 1fcssml " Ehehe."
     n 1nchgnleme "Nope!{w=0.5}{nw}"
@@ -1385,25 +1380,25 @@ label event_eyewear_problems:
     n 1nsqbol "..."
 
     show natsuki 1fsqbof at jn_center zorder JN_NATSUKI_ZORDER
-    show overlay slipping_glasses zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_glasses_readjust
+    show overlay slipping_glasses zorder jn_events.JN_OVERLAY_ZORDER at jn_glasses_readjust
     $ jnPause(1)
 
     n 1fcspol "..."
     n 1fcsemfsbl "Ahem!"
     n 1fcsbglsbl "N-{w=0.2}nope!{w=0.75}{nw}"
-    show overlay slipping_glasses zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_glasses_slide_down
+    show overlay slipping_glasses zorder jn_events.JN_OVERLAY_ZORDER at jn_glasses_slide_down
     extend 1fchbglsbr " I-{w=0.2}it's not my hair,{w=0.2} [player]!"
     n 1tsqsmlsbr "What else did you-{w=1}{nw}"
     n 1fsranlsbl "..."
     n 1fcsanf "Nnnnn...!"
 
     show natsuki 1fcsunf at jn_center zorder JN_NATSUKI_ZORDER
-    show overlay slipping_glasses zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_glasses_readjust
+    show overlay slipping_glasses zorder jn_events.JN_OVERLAY_ZORDER at jn_glasses_readjust
     $ jnPause(1.15)
 
     n 1fcsemlesi "..."
     n 1fcstrlsbr "So!"
-    show overlay slipping_glasses zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_glasses_slide_down_faster
+    show overlay slipping_glasses zorder jn_events.JN_OVERLAY_ZORDER at jn_glasses_slide_down_faster
     extend 1fsqbglesssbr " What else did you noti-{w=1}{nw}"
     n 1fslanlsbl "Uuuuuuuuu-!"
 
@@ -1474,7 +1469,7 @@ label event_eyewear_problems:
     n 1fcseml "...Wearing them all high up like that was dorky,{w=0.5}{nw}"
     extend 1fcspol " a-{w=0.2}anyway."
 
-    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     # Hide glasses overlay and restore old outfit
     hide prop
@@ -1557,7 +1552,7 @@ label event_wintendo_twitch_battery_dead:
         "Enter...":
             pass
 
-    show prop wintendo_twitch_playing free zorder jn_events.JN_EVENT_PROP_ZORDER
+    show prop wintendo_twitch_playing free zorder JN_PROP_ZORDER
     show natsuki gaming at jn_center zorder JN_NATSUKI_ZORDER
     $ jn_events.displayVisuals("1fdwfol")
     $ jn_globals.force_quit_enabled = True
@@ -1570,14 +1565,14 @@ label event_wintendo_twitch_battery_dead:
     play audio button_mashing_c
     n 1fdwfoesssbl "Mmmmmm...!"
 
-    show prop wintendo_twitch_held free zorder jn_events.JN_EVENT_PROP_ZORDER
+    show prop wintendo_twitch_held free zorder JN_PROP_ZORDER
 
     n 1uchbsedz "YES!{w=1.25}{nw}"
     extend 1uchgnedz " FINALLY!"
     n 1kcsbgesisbl "Haah..."
     n 1fcsbgemesbr "Stick {i}that{/i} in your pipe and smoke it!"
 
-    show prop wintendo_twitch_battery_low zorder jn_events.JN_EVENT_PROP_ZORDER
+    show prop wintendo_twitch_battery_low zorder JN_PROP_ZORDER
 
     n 1kcsssemesbr "..."
     n 1ksqsmsbl "...{w=0.75}{nw}"
@@ -1602,7 +1597,7 @@ label event_wintendo_twitch_battery_dead:
     extend 1flrdvlsbr " I'm almost done anyway."
     n 1ucssslsbr "All I gotta do is save,{w=0.5}{nw}"
 
-    show prop wintendo_twitch_dead zorder jn_events.JN_EVENT_PROP_ZORDER
+    show prop wintendo_twitch_dead zorder JN_PROP_ZORDER
 
     extend " and I'll be right-{w=1.25}{nw}"
     n 1udwssl "..."
@@ -1614,7 +1609,7 @@ label event_wintendo_twitch_battery_dead:
     n 1fcsful "..."
     n 1fcsunl "..."
 
-    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     hide prop
     play audio chair_out_in
@@ -1689,7 +1684,7 @@ label event_wintendo_twitch_game_over:
         "Enter...":
             pass
 
-    show prop wintendo_twitch_playing charging zorder jn_events.JN_EVENT_PROP_ZORDER
+    show prop wintendo_twitch_playing charging zorder JN_PROP_ZORDER
     show natsuki gaming at jn_center zorder JN_NATSUKI_ZORDER
     $ jn_events.displayVisuals("1unmpu")
     $ jn_globals.force_quit_enabled = True
@@ -1720,7 +1715,7 @@ label event_wintendo_twitch_game_over:
     n 1flrtr "I guess I'll just do that later."
     n 1fsqcal "{b}Again{/b}."
 
-    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     hide prop
     play audio chair_out_in
@@ -1899,7 +1894,7 @@ label event_warm_package:
         "Enter...":
             pass
 
-    show prop hot_chocolate hot zorder jn_events.JN_EVENT_PROP_ZORDER
+    show prop hot_chocolate hot zorder JN_PROP_ZORDER
     $ jn_events.displayVisuals("1fsqbl")
     $ jn_globals.force_quit_enabled = True
 
@@ -2014,7 +2009,7 @@ label event_warm_package:
     n 1uskemsbl "M-{w=0.2}my drink!{w=1}{nw}"
     extend 1kbkwresssbr " I-{w=0.2}it's getting all cold!{w=0.75}{nw}"
 
-    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(1)
     hide prop hot_chocolate
     play audio straw_sip
@@ -2047,7 +2042,7 @@ label holiday_prelude:
     extend 2flrpol " I-{w=0.2}I'll be right back!{w=1}{nw}"
 
     hide screen hkb_overlay
-    show black zorder jn_events.JN_EVENT_BLACK_ZORDER
+    show black zorder JN_BLACK_ZORDER
     stop music
     hide prop
     hide deco
@@ -2067,7 +2062,7 @@ label holiday_interlude:
     extend 2flrpol " Don't go anywhere!{w=1}{nw}"
 
     hide screen hkb_overlay
-    show black zorder jn_events.JN_EVENT_BLACK_ZORDER
+    show black zorder JN_BLACK_ZORDER
     stop music
     hide prop
     hide deco
@@ -2210,7 +2205,7 @@ label holiday_new_years_day:
         extend 4knmpufsbr " one last thing?"
         n 1fcsunfsbr "..."
 
-        show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         play audio clothing_ruffle
         $ jnPause(3.5)
 
@@ -2248,7 +2243,7 @@ label holiday_new_years_day:
         n 1ncsajl "..."
         n 1fcsunl "..."
 
-        show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         show natsuki 1fsldvlsbl at jn_center zorder JN_NATSUKI_ZORDER
         play audio clothing_ruffle
         $ jnPause(3.5)
@@ -2450,7 +2445,7 @@ label holiday_christmas_eve:
         show natsuki 1fcsunfesssbl
 
     play audio chair_out
-    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(2)
 
     if Natsuki.isEnamored(higher=True):
@@ -2471,7 +2466,7 @@ label holiday_christmas_eve:
     $ jnPause(2)
 
     if Natsuki.isLove(higher=True):
-        show overlay mistletoe zorder jn_events.JN_EVENT_OVERLAY_ZORDER at jn_mistletoe_lift
+        show overlay mistletoe zorder jn_events.JN_OVERLAY_ZORDER at jn_mistletoe_lift
 
     hide black with Dissolve(1.25)
 
@@ -2769,7 +2764,7 @@ label holiday_christmas_day:
             show natsuki 1fcsunlsbl at jn_center
 
     play audio chair_out
-    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(2)
 
     if Natsuki.isEnamored(higher=True):
@@ -2902,7 +2897,7 @@ label holiday_player_birthday:
     n 1fcsss "Yeah,{w=0.2} yeah.{w=0.5}{nw}"
     extend 1fchsm " I got you covered,{w=0.2} [player]."
 
-    show prop cake lit zorder jn_events.JN_EVENT_PROP_ZORDER
+    show prop cake lit zorder JN_PROP_ZORDER
     play audio necklace_clip
 
     n 1uchgn "Ta-{w=0.3}da!"
@@ -2925,7 +2920,7 @@ label holiday_player_birthday:
     extend 1fchbg " Let's put these out already!"
 
     n 1ncsaj "...{w=0.5}{nw}"
-    show prop cake unlit zorder jn_events.JN_EVENT_PROP_ZORDER
+    show prop cake unlit zorder JN_PROP_ZORDER
     play audio blow
 
     n 1nchsm "..."
@@ -3006,7 +3001,7 @@ label holiday_player_birthday:
         n 1klrssl "And...{w=1.5}{nw}"
         extend 1knmsml " [player]?"
 
-        show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         $ jnPause(0.5)
         play audio kiss
         $ jnPause(0.25)

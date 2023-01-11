@@ -1514,7 +1514,7 @@ label talk_favourite_season:
         n 1fcsss "Give me a sec here.{w=0.75}{nw}"
         extend 1uchgnl " I've got {i}just{/i} the thing!{w=1}{nw}"
 
-        show black zorder 4 with Dissolve(0.5)
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         $ jnPause(1)
         play audio zipper
         $ jnPause(2)
@@ -3148,7 +3148,7 @@ label talk_i_love_you:
         n 1fcsunfsbl "..."
 
         show natsuki 1kcspuf at jn_center zorder JN_NATSUKI_ZORDER
-        show black zorder 3 with Dissolve(0.5)
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         play audio clothing_ruffle
         $ jnPause(3.5)
         play audio kiss
@@ -4521,7 +4521,7 @@ label talk_are_you_into_cosplay:
         extend 1nllaj " Just...{w=0.75}{nw}"
         extend 1nslunl " give me a sec here...{w=1}{nw}"
 
-        show black zorder 4 with Dissolve(0.5)
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         $ jnPause(1)
         play audio chair_out
 
@@ -4571,7 +4571,7 @@ label talk_are_you_into_cosplay:
         n 1fcsunltsb "I'm...{w=1.25}{nw}"
         extend 1ksrsrl " just gonna go put this away now."
 
-        show black zorder 4 with Dissolve(0.5)
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         $ jnPause(2)
         play audio chair_out
 
@@ -5226,7 +5226,7 @@ label talk_custom_music_introduction:
     n 1fcsbg "You're gonna {i}love{/i} this!"
     show natsuki 1fcssm
 
-    show black zorder jn_events.JN_EVENT_BLACK_ZORDER with Dissolve(0.5)
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     play audio chair_out
     $ jnPause(3)
@@ -5253,7 +5253,7 @@ label talk_custom_music_introduction:
     play audio headpat
     $ jnPause(3)
     play audio gift_close
-    show music_player off zorder jn_events.JN_EVENT_PROP_ZORDER
+    show music_player off zorder JN_PROP_ZORDER
     show natsuki 1fchsm
     $ jnPause(1.5)
     play audio chair_in
@@ -8435,7 +8435,7 @@ label talk_players_birthday_outro:
         $ jn_globals.force_quit_enabled = False
         stop music
         play audio switch_flip
-        show black zorder 99
+        show black zorder JN_BLACK_ZORDER
         $ jnPause(5)
         $ push("holiday_player_birthday")
 

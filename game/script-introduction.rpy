@@ -40,7 +40,7 @@ label introduction_progress_check:
         $ n.display_args["callback"] = jnNoDismissDialogue
         $ n.what_args["slow_abortable"] = False
         play audio static
-        show glitch_garbled_a zorder 99 with vpunch
+        show glitch_garbled_a zorder JN_GLITCH_ZORDER with vpunch
 
         $ main_background.show()
         $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
@@ -56,7 +56,7 @@ label introduction_opening:
     $ config.allow_skipping = False
     $ n.display_args["callback"] = jnNoDismissDialogue
     $ n.what_args["slow_abortable"] = False
-    show black zorder 99
+    show black zorder JN_BLACK_ZORDER
     $ jnPause(5)
 
     # Restore attempt #1..
@@ -64,17 +64,17 @@ label introduction_opening:
     # Only use this menu code if a non-standard menu is required!
     $ renpy.display_menu(items=[ ("Restore natsuki.chr", True)], screen="choice_centred_mute")
     play audio static
-    show glitch_garbled_a zorder 99 with vpunch
+    show glitch_garbled_a zorder JN_GLITCH_ZORDER with vpunch
     hide glitch_garbled_a
     $ jnPause(5)
 
     # Restore attempt #2..
     $ renpy.display_menu(items=[ ("Restore natsuki.chr", True)], screen="choice_centred_mute")
     play audio static
-    show glitch_garbled_b zorder 99 with vpunch
+    show glitch_garbled_b zorder JN_GLITCH_ZORDER with vpunch
     $ jnPause(0.25)
     play audio static
-    show glitch_garbled_a zorder 99 with hpunch
+    show glitch_garbled_a zorder JN_GLITCH_ZORDER with hpunch
     $ jnPause(0.5)
     play audio glitch_c
     hide glitch_garbled_b
@@ -84,33 +84,33 @@ label introduction_opening:
     # Restore attempt #3..
     $ renpy.display_menu(items=[ ("Restore natsuki.chr", True)], screen="choice_centred_mute")
     play audio static
-    show glitch_garbled_c zorder 99 with vpunch
+    show glitch_garbled_c zorder JN_GLITCH_ZORDER with vpunch
     $ jnPause(0.25)
     play audio glitch_b
-    show glitch_garbled_b zorder 99 with hpunch
+    show glitch_garbled_b zorder JN_GLITCH_ZORDER with hpunch
     $ jnPause(0.5)
 
     if random.randint(0,10) == 1:
         play audio glitch_a
-        show glitch_garbled_red zorder 99 with hpunch
+        show glitch_garbled_red zorder JN_GLITCH_ZORDER with hpunch
         $ jnPause(1)
         hide glitch_garbled_red
 
     play audio static
-    show glitch_garbled_a zorder 99 with vpunch
+    show glitch_garbled_a zorder JN_GLITCH_ZORDER with vpunch
     hide glitch_garbled_c
     hide glitch_garbled_b
     hide glitch_garbled_a
-    show sky glitch_fuzzy zorder 99
+    show sky glitch_fuzzy zorder JN_GLITCH_ZORDER
     play sound interference loop
     $ jnPause(10)
 
     play audio static
-    show glitch_garbled_a zorder 99 with hpunch
+    show glitch_garbled_a zorder JN_GLITCH_ZORDER with hpunch
     hide glitch_garbled_c
     hide glitch_garbled_b
     hide glitch_garbled_a
-    show sky glitch_fuzzy zorder 99
+    show sky glitch_fuzzy zorder JN_GLITCH_ZORDER
     play sound interference loop
     $ jnPause(1.5)
 
@@ -118,7 +118,7 @@ label introduction_opening:
     stop sound
     hide sky glitch_fuzzy
     play audio static
-    show glitch_garbled_a zorder 99 with vpunch
+    show glitch_garbled_a zorder JN_GLITCH_ZORDER with vpunch
 
     # Get the visuals ready
     $ Natsuki.setOutfit(jn_outfits.get_outfit("jn_school_uniform"))
@@ -147,11 +147,11 @@ label introduction_first_meeting:
 
     show natsuki 4kskantsc
     play audio static
-    show glitch_garbled_b zorder 99 with vpunch
+    show glitch_garbled_b zorder JN_GLITCH_ZORDER with vpunch
     hide glitch_garbled_b
     $ jnPause(0.5)
     play audio glitch_c
-    show glitch_garbled_c zorder 99 with vpunch
+    show glitch_garbled_c zorder JN_GLITCH_ZORDER with vpunch
     hide glitch_garbled_c
 
     n 4fcsantsa "Ugh!"
@@ -160,7 +160,7 @@ label introduction_first_meeting:
 
     show natsuki 4fcsantsasbl
     play audio static
-    show glitch_garbled_a zorder 99 with vpunch
+    show glitch_garbled_a zorder JN_GLITCH_ZORDER with vpunch
     hide glitch_garbled_a
 
     n 1kskan "A-{w=0.1}and I'm..."
@@ -169,7 +169,7 @@ label introduction_first_meeting:
 
     show natsuki 4kcsantsc
     play audio static
-    show glitch_garbled_c zorder 99 with vpunch
+    show glitch_garbled_c zorder JN_GLITCH_ZORDER with vpunch
     hide glitch_garbled_c
 
     n 4fcsuptsa "Hhnnngghh!{w=1}{nw}"
@@ -183,7 +183,7 @@ label introduction_first_meeting:
     n 4kwdun "...H-{w=0.1}hello?{w=1}{nw}"
 
     play audio static
-    show glitch_garbled_b zorder 99 with vpunch
+    show glitch_garbled_b zorder JN_GLITCH_ZORDER with vpunch
     hide glitch_garbled_b
     show natsuki 1kcsantsa
 
@@ -204,7 +204,7 @@ label introduction_first_meeting:
     n 1kcsan "Nnn-!{nw}"
 
     play audio glitch_c
-    show glitch_garbled_a zorder 99 with vpunch
+    show glitch_garbled_a zorder JN_GLITCH_ZORDER with vpunch
     hide glitch_garbled_a
 
     n 4fcsfu "Nnngh!"
@@ -232,7 +232,7 @@ label introduction_first_meeting:
         elif jn_nicknames.get_player_nickname_type(player_name) != jn_nicknames.NicknameTypes.neutral:            # We only apply penalty once here so we don't have to rewrite the whole sequence for diff aff/trust levels
             if persistent._jn_player_profanity_during_introduction:
                 play audio static
-                show glitch_garbled_a zorder 99 with hpunch
+                show glitch_garbled_a zorder JN_GLITCH_ZORDER with hpunch
                 hide glitch_garbled_a
                 n 4fscan "ENOUGH!{w=2}{nw}"
                 n 2fcsun "...{w=2}{nw}"
@@ -275,7 +275,7 @@ label introduction_collecting_thoughts:
 
     show natsuki 1fcsup
     play audio glitch_c
-    show glitch_garbled_c zorder 99 with hpunch
+    show glitch_garbled_c zorder JN_GLITCH_ZORDER with hpunch
     hide glitch_garbled_c
 
     n 4kcsup "..."
