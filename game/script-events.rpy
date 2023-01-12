@@ -1309,7 +1309,7 @@ label event_eyewear_problems:
         outfit_to_restore = Natsuki.getOutfitName()
         eyewear_outfit = copy.copy(jn_outfits.get_outfit(outfit_to_restore))
         eyewear_outfit.eyewear = jn_outfits.get_wearable("jn_none")
-        Natsuki.setOutfit(eyewear_outfit)
+        jn_outfits.save_temporary_outfit(eyewear_outfit)
 
     n "..."
     play audio drawer
@@ -1387,50 +1387,50 @@ label event_eyewear_problems:
             pass
 
     show prop glasses_case zorder JN_PROP_ZORDER
-    show overlay slipping_glasses zorder jn_events.JN_OVERLAY_ZORDER at jn_glasses_pre_slide
+    show overlay slipping_glasses zorder JN_OVERLAY_ZORDER at jn_glasses_pre_slide
     $ jn_events.displayVisuals("1fcssmesi")
     $ jn_globals.force_quit_enabled = True
 
     n 1uskgsesu "...!"
     n 1ullajl "O-{w=0.2}oh!{w=1}{nw}"
-    extend 1fllbglsbl " [player]!"
-    n 1fcssslsbl "Heh."
+    extend 4fllbglsbl " [player]!"
+    n 4fcssslsbl "Heh."
     n 1fcsbglsbr "Well,{w=0.5}{nw}"
-    extend 1fsqsglsbr " didn't {i}you{/i} pick a fine time to show up."
-    n 1fcssglsbr "..."
-    n 1tsqsslsbr "...So,{w=0.3} [player]?{w=1}{nw}"
-    extend 1fchgnledzsbr " Notice anything different?"
+    extend 2fsqsglsbr " didn't {i}you{/i} pick a fine time to show up."
+    n 2fcssglsbr "..."
+    n 2tsqsslsbr "...So,{w=0.3} [player]?{w=1}{nw}"
+    extend 4fchgnledzsbr " Notice anything different?"
     n 1tsqsmledz "...Mmm?"
-    n 1usqctleme "Oho?{w=1}{nw}"
-    extend 1fcsctl " What's that?"
-    show overlay slipping_glasses zorder jn_events.JN_OVERLAY_ZORDER at jn_glasses_slide_down
-    n 1tllbgl "Did I do something with my hair?{w=1}{nw}"
-    extend 1fcssml " Ehehe."
-    n 1nchgnleme "Nope!{w=0.5}{nw}"
-    extend 1fcsbgl " I-{w=0.75}{nw}"
-    n 1nsqbol "..."
+    n 2usqctleme "Oho?{w=1}{nw}"
+    extend 2fcsctl " What's that?"
+    show overlay slipping_glasses zorder JN_OVERLAY_ZORDER at jn_glasses_slide_down
+    n 4tllbgl "Did I do something with my hair?{w=1}{nw}"
+    extend 4fcssml " Ehehe."
+    n 2nchgnleme "Nope!{w=0.5}{nw}"
+    extend 2fcsbgl " I-{w=0.75}{nw}"
+    n 2nsqbol "..."
 
     show natsuki 1fsqbof at jn_center zorder JN_NATSUKI_ZORDER
-    show overlay slipping_glasses zorder jn_events.JN_OVERLAY_ZORDER at jn_glasses_readjust
+    show overlay slipping_glasses zorder JN_OVERLAY_ZORDER at jn_glasses_readjust
     $ jnPause(1)
 
-    n 1fcspol "..."
-    n 1fcsemfsbl "Ahem!"
-    n 1fcsbglsbl "N-{w=0.2}nope!{w=0.75}{nw}"
-    show overlay slipping_glasses zorder jn_events.JN_OVERLAY_ZORDER at jn_glasses_slide_down
+    n 4fcspol "..."
+    n 4fcsemfsbl "Ahem!"
+    n 2fcsbglsbl "N-{w=0.2}nope!{w=0.75}{nw}"
+    show overlay slipping_glasses zorder JN_OVERLAY_ZORDER at jn_glasses_slide_down
     extend 1fchbglsbr " I-{w=0.2}it's not my hair,{w=0.2} [player]!"
-    n 1tsqsmlsbr "What else did you-{w=1}{nw}"
+    n 2tsqsmlsbr "What else did you-{w=1}{nw}"
     n 1fsranlsbl "..."
-    n 1fcsanf "Nnnnn...!"
+    n 4fcsanf "Nnnnn...!"
 
     show natsuki 1fcsunf at jn_center zorder JN_NATSUKI_ZORDER
-    show overlay slipping_glasses zorder jn_events.JN_OVERLAY_ZORDER at jn_glasses_readjust
+    show overlay slipping_glasses zorder JN_OVERLAY_ZORDER at jn_glasses_readjust
     $ jnPause(1.15)
 
-    n 1fcsemlesi "..."
-    n 1fcstrlsbr "So!"
-    show overlay slipping_glasses zorder jn_events.JN_OVERLAY_ZORDER at jn_glasses_slide_down_faster
-    extend 1fsqbglesssbr " What else did you noti-{w=1}{nw}"
+    n 4fcsemlesi "..."
+    n 2fcstrlsbr "So!"
+    show overlay slipping_glasses zorder JN_OVERLAY_ZORDER at jn_glasses_slide_down_faster
+    extend 2fsqbglesssbr " What else did you noti-{w=1}{nw}"
     n 1fslanlsbl "Uuuuuuuuu-!"
 
     menu:
@@ -1438,67 +1438,67 @@ label event_eyewear_problems:
             pass
 
     n 1fbkwrlesssbl "Alright!{w=0.75}{nw}"
-    extend 1flrwrlesssbl" Alright!"
-    n 1fcsgslsbr "I know,{w=0.33} okay?!"
-    extend 1fsremlsbr " The glasses don't fit properly!"
-    n 1fslsrl "They {i}never{/i} have."
+    extend 4flrwrlesssbl" Alright!"
+    n 2fcsgslsbr "I know,{w=0.33} okay?!"
+    extend 2fsremlsbr " The glasses don't fit properly!"
+    n 2fslsrl "They {i}never{/i} have."
     n 1ksrbol "And to think I wasted all that time trying to find them,{w=0.2} too..."
-    n 1kcsemlesi "..."
+    n 4kcsemlesi "..."
 
     menu:
         "I think glasses suit you, Natsuki!":
             $ Natsuki.calculatedAffinityGain()
             if Natsuki.isEnamored(higher=True):
                 n 1knmsll "..."
-                n 1kllpul "...You really think so,{w=0.75}{nw}"
-                extend 1knmpul " [player]?"
+                n 4kllpul "...You really think so,{w=0.75}{nw}"
+                extend 4knmpul " [player]?"
                 n 1ksrunlsbl "..."
                 n 1fcssslsbl "Heh."
                 n 1fsldvlsbr "...Then I guess that at least wasn't a {i}total{/i} waste of time."
-                n 1fcsajlsbr "Not that I {i}don't{/i} think I look good in them too,{w=0.5}{nw}"
-                extend 1fcssmfsbl " obviously."
+                n 2fcsajlsbr "Not that I {i}don't{/i} think I look good in them too,{w=0.5}{nw}"
+                extend 2fcssmfsbl " o-{w=0.2}obviously."
 
             elif Natsuki.isAffectionate(higher=True):
-                n 1uskemfeshsbl "...!{w=0.5}{nw}"
-                n 1fcsgsfsbl "W-{w=0.3}well,{w=0.2} of course they do,{w=0.2} [player]!{w=1}{nw}"
-                extend 1flrpolsbl " I {i}did{/i} pick them,{w=0.2} after all."
-                n 1ksrsllsbl "..."
+                n 4uskemfeshsbl "...!{w=0.5}{nw}"
+                n 2fcsgsfsbl "W-{w=0.3}well,{w=0.2} of course they do,{w=0.2} [player]!{w=1}{nw}"
+                extend 2flrpolsbl " I {i}did{/i} pick them,{w=0.2} a-{w=0.2}after all."
+                n 4ksrsllsbl "..."
 
             else:
                 n 1fcsgslsbl "W-{w=0.2}well,{w=0.5}{nw}"
-                extend 1fllgslsbl " duh!"
-                n 1fcsbglsbr "Of course they suit me,{w=0.2} [player]!"
-                n 1fcsemlsbr "I mean,{w=0.75}{nw}"
-                extend 1fllemlsbr " You didn't seriously think I'd pick something that {i}wouldn't{/i} show off my sense of style,{w=0.75}{nw}"
-                extend 1fnmpolsbr " did you?"
+                extend 4fllgslsbl " duh!"
+                n 2fcsbglsbr "Of course they suit me,{w=0.2} [player]!"
+                n 4fcsemlsbr "I mean,{w=0.75}{nw}"
+                extend 2fllemlsbr " You didn't seriously think I'd pick something that {i}wouldn't{/i} show off my sense of style,{w=0.75}{nw}"
+                extend 2fnmpolsbr " did you?"
                 n 1fcsemlsbl "Yeesh..."
 
         "Yeah, that was a waste of time.":
             $ Natsuki.percentageAffinityLoss(2)
             if Natsuki.isAffectionate(higher=True):
-                n 1fskemlesh "H-{w=0.3}hey!{w=1}{nw}"
+                n 4fskemlesh "H-{w=0.3}hey!{w=1}{nw}"
                 extend 1fsqwrl " And listening to you being so rude {i}isn't{/i}?"
-                n 1flreml "Yeesh..."
-                n 1fsreml "{i}Someone{/i} woke up on the wrong side of the bed..."
-                n 1fsrsll "..."
+                n 2flreml "Yeesh..."
+                n 2fsreml "{i}Someone{/i} woke up on the wrong side of the bed..."
+                n 2fsrsll "..."
 
             else:
-                n 1fskwrlesh "H-{w=0.2}hey!{w=0.5}{nw}"
+                n 4fskwrlesh "H-{w=0.2}hey!{w=0.5}{nw}"
                 extend 1fnmgsl " What was that for?!"
-                n 1fnmwrl "And as if you acting like a jerk {i}isn't{/i}?"
-                n 1fsrsllean "..."
+                n 2fnmwrl "And as if you acting like a jerk {i}isn't{/i}?"
+                n 2fsrsllean "..."
 
         "...":
             n 1fllsll "..."
-            n 1knmeml "...What?"
-            extend 1fsqemlsbr " The silent act {i}definitely{/i} isn't helping,"
-            extend 1fsrpolsbl " you jerk..."
+            n 4knmeml "...What?"
+            extend 2fsqemlsbr " The silent act {i}definitely{/i} isn't helping,"
+            extend 2fsrpolsbl " you jerk..."
 
     n 1fcsajl "Well,{w=0.3} whatever.{w=1}{nw}"
-    extend 1fllsll " At least I know where they are now,"
-    extend 1fslbol " I suppose."
-    n 1fcseml "...Wearing them all high up like that was dorky,{w=0.5}{nw}"
-    extend 1fcspol " a-{w=0.2}anyway."
+    extend 2fllsll " At least I know where they are now,"
+    extend 2fslbol " I suppose."
+    n 1fcseml "...And wearing them all high up like that was dorky,{w=0.5}{nw}"
+    extend 2fcspol " a-{w=0.2}anyway."
 
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
@@ -1513,18 +1513,18 @@ label event_eyewear_problems:
     $ jnPause(3)
     hide black with Dissolve(2)
 
-    n 1nsrcal "..."
-    n 1nsrajl "I...{w=0.75}{nw}"
+    n 4nsrcal "..."
+    n 4nsrajl "I...{w=0.75}{nw}"
     extend 1nsrsslsbl " guess I should apologize for all of...{w=1.25}{nw}"
-    extend 1nslsllsbl " that."
-    n 1nsrpolsbl "Not exactly rolling out the red carpet here,{w=0.2} am I?{w=0.75}{nw}"
+    extend 2nslsllsbl " that."
+    n 2nsrpolsbl "Not exactly rolling out the red carpet here,{w=0.2} am I?{w=0.75}{nw}"
     extend 1nslsslsbl " Heh."
-    n 1fcsajlsbr "A-{w=0.2}and besides."
-    n 1fslsslsbr "I think that's about enough of that{w=0.75}{nw}"
-    extend 1fsqbglsbr " {i}spectacle{/i},{w=1}{nw}"
-    extend 1nsqbglsbr " huh?"
+    n 4fcsajlsbr "A-{w=0.2}and besides."
+    n 3fslsslsbr "I think that's about enough of that{w=0.75}{nw}"
+    extend 3fsqbglsbr " {i}spectacle{/i},{w=1}{nw}"
+    extend 3nsqbglsbr " huh?"
     n 1nsrsslsbr "So..."
-    n 1kchsslesd "W-{w=0.2}what's new,{w=0.2} [player]?"
+    n 2kchsslesd "W-{w=0.2}what's new,{w=0.2} [player]?"
 
     return
 
@@ -1647,14 +1647,14 @@ label event_wintendo_twitch_battery_dead:
     $ jnPause(5)
     hide black with Dissolve(2)
 
-    n 1ndtbo "..."
-    n 1nslbo "..."
-    n 1ndtca "..."
-    n 1fdteml "This stays between us."
-    n 1fsqfrlsbl "Got it?"
+    n 4ndtbo "..."
+    n 4nslbo "..."
+    n 4ndtca "..."
+    n 2fdteml "This stays between us."
+    n 2fsqfrlsbl "Got it?"
     n 1nsrpolsbl "..."
-    n 1nsrajlsbl "...So.{w=1}{nw}"
-    extend 1tsqsllsbl " What's new,{w=0.2} [player]?"
+    n 4nsrajlsbl "...So.{w=1}{nw}"
+    extend 2tsqsllsbl " What's new,{w=0.2} [player]?"
 
     return
 
@@ -1754,13 +1754,13 @@ label event_wintendo_twitch_game_over:
     hide black with Dissolve(2)
 
     n 1nsrcal "..."
-    n 1nnmtrl "Well,{w=0.2} [player]."
-    n 1nsqtrl "I hope you're buckled up."
-    n 1nsrpol "...'Cause now you owe me {i}twice{/i} as much fun today to make up for that."
-    n 1nsqbol "..."
-    n 1fsqajl "Well?{w=0.5}{nw}"
-    extend 1fcspolesi " Get to it then,{w=0.2} [player]!"
-    n 1fsqsml " Ehehe."
+    n 2nnmtrl "Well,{w=0.2} [player]."
+    n 2nsqtrl "I hope you're buckled up."
+    n 2nsrpol "...'Cause now you owe me {i}twice{/i} as much fun today to make up for that."
+    n 4nsqbol "..."
+    n 4fsqajl "Well?{w=0.5}{nw}"
+    extend 3fcspolesi " Get to it then,{w=0.2} [player]!"
+    n 3fsqsml " Ehehe."
 
     return
 
@@ -1899,8 +1899,9 @@ label event_warm_package:
         n "Yuri's...{w=0.75} Yuri's...{w=0.75} Yuri's..."
         play audio clothing_ruffle
         n "Monika's..."
-        play audio clothing_ruffle
         $ jnPause(2)
+        play audio clothing_ruffle
+        $ jnPause(3)
         n "..."
         n "...{b}Definitely{/b}{w=0.25} Yuri's."
         n "..."
@@ -1931,114 +1932,114 @@ label event_warm_package:
 
     n 1kcsbsesi "Haah...{w=1.5}{nw}"
     extend 1fchsmedz " perfecto!"
-    n 1fcsbg "Who {i}needs{/i} working heating when you have hot chocolate?"
-    n 1fcssmlesisbl "{i}And{/i} I didn't even burn my tongue this time!"
+    n 2fcsbg "Who {i}needs{/i} working heating when you have hot chocolate?"
+    n 2fcssmlesisbl "{i}And{/i} I didn't even burn my tongue this time!"
 
-    n 1ndwsm "..."
-    n 1uwdgseex "...!"
-    n 1fllbglsbl "W-{w=0.2}well,{w=0.75}{nw}"
-    extend 1fcsbglsbl " hello [player]!"
-    n 1fllsmlsbl "..."
-    n 1tsqsml "...?"
-    n 1tsqctl "Oho?"
-    n 1nchts "Is that a hint of {i}jealousy{/i} I spy there,{w=0.2} [player]?{w=1}{nw}"
+    n 2ndwsm "..."
+    n 2uwdgseex "...!"
+    n 4fllbglsbl "W-{w=0.2}well,{w=0.75}{nw}"
+    extend 2fcsbglsbl " hello [player]!"
+    n 2fllsmlsbl "..."
+    n 2tsqsml "...?"
+    n 2tsqctl "Oho?"
+    n 4nchts "Is that a hint of {i}jealousy{/i} I spy there,{w=0.2} [player]?{w=1}{nw}"
     extend 1fsqsmleme " Ehehe."
-    n 1uchgn "Well,{w=0.2} can't say I blame you!"
-    n 1fllbg "I mean...{w=0.5}{nw}"
-    extend 1fspgsedz " have you {i}seen{/i} this right here?"
+    n 2uchgn "Well,{w=0.2} can't say I blame you!"
+    n 2fllbg "I mean...{w=0.5}{nw}"
+    extend 4fspgsedz " have you {i}seen{/i} this right here?"
     n 1ncsajsbl "...And no,{w=0.5}{nw}"
-    extend 1fslpo " I don't care how unhealthy it is."
+    extend 2fslpo " I don't care how unhealthy it is."
     n 1fsqcaesi "I {i}always{/i} make an exception for hot chocolate."
-    n 1fcstr "Besides,{w=0.2} you know what they say."
-    n 1fchgn "...Go big or go home,{w=0.3} right?{w=0.75}{nw}"
-    extend 1fchsml " Ehehe."
+    n 4fcstr "Besides,{w=0.2} you know what they say."
+    n 2fchgn "...Go big or go home,{w=0.3} right?{w=0.75}{nw}"
+    extend 2fchsml " Ehehe."
     n 1fllgs "Seriously,{w=0.2} hot chocolate just wouldn't {i}be{/i} hot chocolate without {i}all{/i} the extras!"
-    n 1fcsgs "Cream?{w=0.3} Check!{w=0.3} Marshmallows?{w=0.3} Check!"
-    n 1fsqcal "...My special panda mug?{w=1.25}{nw}"
-    extend 1fcssml " Check again!"
+    n 2fcsgs "Cream?{w=0.3} Check!{w=0.3} Marshmallows?{w=0.3} Check!"
+    n 2fsqcal "...My special panda mug?{w=1.25}{nw}"
+    extend 4fcssml " Check again!"
     n 1fchbgl "Perfection!{w=0.75}{nw}"
-    extend 1fcstsl " If I do say so myself~."
+    extend 2fcstsl " If I do say so myself~."
 
-    n 1ullss "Well,{w=0.5}{nw}"
-    extend 1fsqss " as much as I'm sure you'd {i}love{/i} to share this with me,{w=0.2} [player]..."
+    n 2ullss "Well,{w=0.5}{nw}"
+    extend 4fsqss " as much as I'm sure you'd {i}love{/i} to share this with me,{w=0.2} [player]..."
     n 1fcscaesi "There's some things I just can't allow.{w=0.75}{nw}"
     extend 1fsqsm " Ehehe."
-    n 1fsqbg "So!{w=0.5} Prepare yourself."
-    n 1fchbg "...'Cause I'm gonna share some pretty {i}hot{/i} tips of my own instead!"
-    n 1fsqbg "That's right,{w=0.2} [player].{w=1}{nw}"
-    extend 1fchbledz " You've got front row seats to another lesson from yours truly~!"
+    n 2fsqbg "So!{w=0.5} Prepare yourself."
+    n 2fchbg "...'Cause I'm gonna share some pretty {i}hot{/i} tips of my own instead!"
+    n 4fsqbg "That's right,{w=0.2} [player].{w=1}{nw}"
+    extend 2fchbledz " You've got front row seats to another lesson from yours truly~!"
     n 1fcsaj "As you can see,{w=0.75}{nw}"
-    extend 1fcstr " it isn't exactly hard to stay nice and toasty if you know what you're doing..."
-    n 1fchsm "...And it all begins with what you wear!"
-    n 1fllpu "Think of it as a fight:{w=0.75}{nw}"
+    extend 2fcstr " it isn't exactly hard to stay nice and toasty if you know what you're doing..."
+    n 2fchsm "...And it all begins with what you wear!"
+    n 4fllpu "Think of it as a fight:{w=0.75}{nw}"
     extend 1flrem " the cold is your opponent,{w=1}{nw}"
-    extend 1fcspoesi " and your clothing is your armor!"
+    extend 2fcspoesi " and your clothing is your armor!"
 
-    n 1ullaj "Now{w=0.2} -{w=0.2} obviously,{w=0.2} you're gonna want to start with layers.{w=0.75}{nw}"
-    extend 1nsrss " You probably knew that much already."
+    n 2ullaj "Now{w=0.2} -{w=0.2} obviously,{w=0.2} you're gonna want to start with layers.{w=0.75}{nw}"
+    extend 2nsrss " You probably knew that much already."
     n 1fnmgs "But that doesn't mean you should just throw on {i}anything{/i} you can find!"
-    n 1fcspo "You really gotta {i}think{/i} about what exactly you're putting on -{w=1}{nw}"
-    extend 1unmaj " like the material!"
-    n 1fslaj "If your clothes aren't breathable,{w=0.75}{nw}"
-    extend 1fsqpu " then you'll just end up getting all sticky and sweaty under all that fabric..."
+    n 4fcspo "You really gotta {i}think{/i} about what exactly you're putting on -{w=1}{nw}"
+    extend 4unmaj " like the material!"
+    n 2fslaj "If your clothes aren't breathable,{w=0.75}{nw}"
+    extend 2fsqpu " then you'll just end up getting all sticky and sweaty under all that fabric..."
     n 1fcsan "...And wet clothes are useless at keeping the heat in!"
-    n 1ksqup "The last thing you want is being freezing cold {i}and{/i} stinky..."
-    n 1fcsaj "So pick your layers{w=0.75}{nw}"
-    extend 1fslpu " -{w=0.5} and how many of them -{w=0.5}{nw}"
-    extend 1fchsm " wisely!"
+    n 4ksqup "The last thing you want is being freezing cold {i}and{/i} stinky..."
+    n 2fcsaj "So pick your layers{w=0.75}{nw}"
+    extend 2fslpu " -{w=0.5} and how many of them -{w=0.5}{nw}"
+    extend 2fchsm " wisely!"
 
-    n 1fcsgs "Next up: ditch the tight clothes!"
+    n 2fcsgs "Next up: ditch the tight clothes!"
     n 1nsqem "You {i}really{/i} want stuff that gives you at least some kind of gap between your skin and the fabric."
     n 1ullaj "That way,{w=0.2} all the heat from your body stays trapped around you -{w=0.75}{nw}"
-    extend 1fchgn " like a little toasty shield!"
-    n 1flrsl "If you just wear something like leggings,{w=0.5}{nw}"
+    extend 4fchgn " like a little toasty shield!"
+    n 4flrsl "If you just wear something like leggings,{w=0.5}{nw}"
     extend 1fsqsl " then all that warmth goes straight from your body,{w=0.2} into the cloth..."
-    n 1fllem  "...And then the air just snatches it away,{w=0.2} like a professional freeloader!{w=0.75}{nw}"
-    extend 1fcswr " What a waste!"
-    n 1fslss "Besides,{w=0.2} unless you're a professional cyclist or something,{w=1}{nw}"
-    extend 1fsqss " I {i}highly{/i} doubt you need the aerodynamics..."
-    n 1fchbg "So keep 'em nice and baggy,{w=0.2} [player]!{w=0.75}{nw}"
-    extend 1nchgn " Easy peasy!"
+    n 2fllem  "...And then the air just snatches it away,{w=0.2} like a professional freeloader!{w=0.75}{nw}"
+    extend 2fcswr " What a waste!"
+    n 4fslss "Besides,{w=0.2} unless you're a professional cyclist or something,{w=1}{nw}"
+    extend 2fsqss " I {i}highly{/i} doubt you need the aerodynamics..."
+    n 2fchbg "So keep 'em nice and baggy,{w=0.2} [player]!{w=0.75}{nw}"
+    extend 4nchgn " Easy peasy!"
 
-    n 1uwdaj "Oh -{w=0.5}{nw}"
+    n 4uwdaj "Oh -{w=0.5}{nw}"
     extend 1nllaj " right,{w=0.2} and most of all?"
     n 1ncssr "..."
-    n 1nsqaj "...Just don't be a dork about going outside,{w=0.2} alright?"
-    n 1nslss "I mean,{w=0.2} I get it -{w=0.5}{nw}"
+    n 2nsqaj "...Just don't be a dork about going outside,{w=0.2} alright?"
+    n 4nslss "I mean,{w=0.2} I get it -{w=0.5}{nw}"
     extend 1ksqss " sometimes you just have things that {i}need{/i} to be done out there.{w=0.75}{nw}"
     extend 1ksrsm " It happens.{w=1}{nw}"
-    extend 1ksrsl " But..."
-    n 1ksqbo "...Just know your limits.{w=0.5}{nw}"
+    extend 4ksrsl " But..."
+    n 4ksqbo "...Just know your limits.{w=0.5}{nw}"
     extend 1ksqpo " Warm up {i}properly{/i} if you've spent ages in crappy weather,{w=0.5}{nw}"
     extend 1fslpo " or nasty old buildings..."
-    n 1fcsaj "Decent shelter,{w=0.2} hot drinks,{w=0.5}{nw}"
+    n 2fcsaj "Decent shelter,{w=0.2} hot drinks,{w=0.5}{nw}"
 
 
     if Natsuki.isLove(higher=True):
-        extend 1tslss " warm food..."
+        extend 2tslss " warm food..."
         n 1nsldvleafsbl "Some quality time with your favourite girl..."
-        n 1fchsmlsbl "I-{w=0.2}it all counts!"
+        n 4fchsmlsbl "I-{w=0.2}it all counts!"
 
     elif Natsuki.isAffectionate(higher=True):
-        extend 1tslss " warm food..."
+        extend 2tslss " warm food..."
         n 1fsrdvl "S-{w=0.2}some quality time with a certain someone..."
-        n 1fcssslsbr "I-{w=0.2}it all counts!"
+        n 4fcssslsbr "I-{w=0.2}it all counts!"
 
     else:
-        extend 1tslss " warm food...{w=0.5}{nw}"
-        extend 1unmaj " you'd be surprised how much a little baking can turn up the heat!"
+        extend 2tslss " warm food...{w=0.5}{nw}"
+        extend 4unmaj " you'd be surprised how much a little baking can turn up the heat!"
         n 1fslslsbr "...Speaking from experience."
         n 1kslsl "..."
-        n 1fcsbgsbr "B-{w=0.2}but yeah!"
+        n 2fcsbgsbr "B-{w=0.2}but yeah!"
 
     show prop hot_chocolate cold
 
-    n 1nchsm "And that about {i}wraps{/i} things up!{w=0.75}"
-    extend 1nllss " I-"
+    n 2nchsm "And that about {i}wraps{/i} things up!{w=0.75}"
+    extend 2nllss " I-"
     n 1unmsf "..."
-    n 1udwemeshsbl "...!"
-    n 1uskemsbl "M-{w=0.2}my drink!{w=1}{nw}"
-    extend 1kbkwresssbr " I-{w=0.2}it's getting all cold!{w=0.75}{nw}"
+    n 4udwemeshsbl "...!"
+    n 4uskemsbl "M-{w=0.2}my drink!{w=1}{nw}"
+    extend 4kbkwresssbr " I-{w=0.2}it's getting all cold!{w=0.75}{nw}"
 
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(1)
@@ -2051,12 +2052,12 @@ label event_warm_package:
     hide black with Dissolve(2)
 
     n 1kcsbgesi "Haaah...{w=1.25}{nw}"
-    extend 1nchtseme " much better!"
-    n 1fsqsm "Now that's out of the way,{w=0.2} [player]..."
-    n 1usqbg "...How about {i}you{/i} warm up that conversational muscle of yours?{w=1}{nw}"
+    extend 4nchtseme " much better!"
+    n 3fsqsm "Now that's out of the way,{w=0.2} [player]..."
+    n 3usqbg "...How about {i}you{/i} warm up that conversational muscle of yours?{w=1}{nw}"
     extend 1fsqsmeme " Ehehe."
-    n 1tsqss "Well?{w=0.75}{nw}"
-    extend 1fchbl " I'm waiting!"
+    n 2tsqss "Well?{w=0.75}{nw}"
+    extend 2fchbl " I'm waiting!"
 
     return
 
@@ -2497,7 +2498,7 @@ label holiday_christmas_eve:
     $ jnPause(2)
 
     if Natsuki.isLove(higher=True):
-        show overlay mistletoe zorder jn_events.JN_OVERLAY_ZORDER at jn_mistletoe_lift
+        show overlay mistletoe zorder JN_OVERLAY_ZORDER at jn_mistletoe_lift
 
     hide black with Dissolve(1.25)
 

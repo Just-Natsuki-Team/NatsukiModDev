@@ -1681,7 +1681,7 @@ label farewell_pleading_ask:
             
             if Natsuki.isLove(higher=True):
                 show natsuki 4kslsgf at jn_center zorder JN_NATSUKI_ZORDER
-                show black zorder 3 with Dissolve(0.5)
+                show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
                 play audio clothing_ruffle
                 $ jnPause(3.5)
                 play audio kiss
@@ -1726,7 +1726,7 @@ label farewell_gentle_ask:
             n 1ksrcaf "..."
 
             show natsuki 1fbkcaf at jn_center zorder JN_NATSUKI_ZORDER
-            show black zorder 3 with Dissolve(0.5)
+            show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
             play audio clothing_ruffle
             $ jnPause(3.5)
             show natsuki 1ncspuf at jn_center zorder JN_NATSUKI_ZORDER
@@ -1750,7 +1750,7 @@ label farewell_gentle_ask:
 
             if (random.choice([True, False])):
                 show natsuki 1ksrsgfsbl at jn_center zorder JN_NATSUKI_ZORDER
-                show black zorder 3 with Dissolve(0.5)
+                show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
                 play audio clothing_ruffle
                 $ jnPause(3.5)
                 play audio kiss
