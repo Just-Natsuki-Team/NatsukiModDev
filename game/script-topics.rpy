@@ -421,52 +421,52 @@ init 5 python:
 
 label talk_service_animals:
     n 1ullbo "Hmm..."
-    n 1unmaj "Hey [player],{w=0.1} have you ever heard of service animals?"
-    n 1unmbg "They're like animals people train up specially to do jobs that humans can't do easily."
+    n 4unmaj "Hey [player],{w=0.1} have you ever heard of service animals?"
+    n 1usqbg "They're like animals people train up specially to do jobs that humans can't do easily."
 
     if Natsuki.isNormal(higher=True):
         n 1unmbs "Some work in airports to keep people safe,{w=0.1} others help in rescues...{w=0.3} it's super cool!"
-        n 1uwmsm "But there's one type that's especially awesome..."
-        n 1uchgn "Emotional support animals!"
+        n 4uwmsm "But there's one type that's especially awesome..."
+        n 3uchgn "Emotional support animals!"
         n 1ullaj "They're like really tame pets that are used to comfort people going through a bad time."
-        n 1ulraj "They come in all different shapes and sizes too!{w=0.5}{nw}"
-        n 1nnmpu " Dogs and cats -{w=0.5}{nw}"
-        extend 1fslss " {i}obviously{/i}{w=0.5}{nw}"
-        extend 1uwdgs " -{w=0.2} but even horses sometimes!"
+        n 4usrss "They come in all different shapes and sizes too!{w=0.5}{nw}"
+        n 3nnmpu " Dogs and cats -{w=0.5}{nw}"
+        extend 3fslss " {i}obviously{/i}{w=0.5}{nw}"
+        extend 4uwdgs " -{w=0.2} but even horses sometimes!"
         n 1fchbg "Awesome,{w=0.1} right?"
         n 1kllss "..."
         n 1ulrbo "..."
-        n 1uplaj "You know,{w=0.1} [player]..."
+        n 4uplaj "You know,{w=0.1} [player]..."
         n 1kcsaj "Sometimes I wonder if one could have helped Sayori..."
-        n 1klrfr "...but I try not to think about that too much."
+        n 2klrfr "...but I try not to think about that too much."
         n 1knmem "They {i}are{/i} great,{w=0.1} but they don't do miracles."
-        n 1kwmem "[player]...{w=0.3} I really hope you never have to seek their help."
-        n 1kwmnv "And on that note,{w=0.1} if you do need support?"
+        n 4kwmem "[player]...{w=0.3} I really hope you never have to seek their help."
+        n 2kwmnv "And on that note,{w=0.1} if you do need support?"
 
         if Natsuki.isAffectionate(higher=True):
             n 1fcssrl "I-{w=0.2}I want you to know that you can depend on me,{w=0.1} 'kay?"
 
             if Natsuki.isLove(higher=True):
-                n 1kwmnv "I love you,{w=0.1} [player]."
+                n 4kwmnv "I love you,{w=0.1} [player]."
                 return
 
         else:
             n 1fcssrl "Just...{w=0.5}{nw}"
             extend 1fnmsl " don't be dumb about it,{w=0.1} [player].{w=0.5}{nw}"
             extend 1kllss " I can listen if you need me to."
-            n 1fcsajl "I-{w=0.1}I'm not a jerk!{w=0.5}{nw}"
-            extend 1flrpol " It's just the least anyone can do,{w=0.1} that's all."
+            n 3fcsajl "I-{w=0.1}I'm not a jerk!{w=0.5}{nw}"
+            extend 3flrpol " It's just the least anyone can do,{w=0.1} that's all."
 
     else:
         n 1unmbo "They work in a bunch of places.{w=0.2} Airports and rescues and stuff,{w=0.1} usually."
         n 1unmss "But I really like emotional support animals."
         n 1nnmsl "They're like specially tame pets that are used to comfort those having a bad time."
-        n 1nsgbo "..."
-        n 1nsgaj "And...{w=0.3} to be perfectly honest?"
+        n 2nsgbo "..."
+        n 4nsgaj "And...{w=0.3} to be perfectly honest?"
         n 1fcsun "Sometimes I feel like I could use one."
         return
 
-    n 1ksrfr "..."
+    n 2ksrfr "..."
     n 1kwmfr "That got kinda heavy,{w=0.1} didn't it?"
     n 1kwmbg "Well,{w=0.1} enough of that.{w=0.2}"
     extend 1uwmss " What else do you wanna talk about?"
@@ -492,9 +492,9 @@ init 5 python:
 
 label talk_using_computers_healthily:
     n 1unmaj "Huh."
-    n 1tnmaj "Hey,{w=0.1} [player].{w=0.2} I just thought of something."
+    n 3tnmaj "Hey,{w=0.1} [player].{w=0.2} I just thought of something."
     n 1unmsf "You gotta be at your computer to talk to me,{w=0.1} right?"
-    n 1ullsf "And you've been here a while already..."
+    n 4ullsf "And you've been here a while already..."
 
     if (jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.work_applications)
         or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.artwork)
@@ -504,48 +504,48 @@ label talk_using_computers_healthily:
 
     n 1nchgn "Alright,{w=0.1} that's it!{w=0.2} I've decided."
     n 1uchgn "I'm gonna give you a little lesson on using your computer the right way!"
-    n 1nnmss "Number one:{w=0.2} posture!"
+    n 3nnmss "Number one:{w=0.2} posture!"
     n 1fwmlg "Sit up straight,{w=0.1} and back against the chair,{w=0.1} [player].{w=0.2}"
     extend 1uchlg " I mean it!"
-    n 1tnmlg "You don't want back problems,{w=0.1} do you?"
+    n 4tnmlg "You don't want back problems,{w=0.1} do you?"
     n 1nnmsm "Make sure your feet can still touch the floor,{w=0.1} though.{w=0.2}"
-    extend 1uchgn " Even I can do that!"
+    extend 3uchgn " Even I can do that!"
     n 1nnmaj "Number two:{w=0.2} distance!"
-    n 1nsggn "I know you can't get enough of me,{w=0.1}"
-    extend 1fnmpo " but I don't wanna see you pressing your face against the screen.{w=0.2} It's weird."
+    n 3nsggn "I know you can't get enough of me,{w=0.1}"
+    extend 3fnmpo " but I don't wanna see you pressing your face against the screen.{w=0.2} It's weird."
     n 1uchgn "So make sure you sit about an arm's length away from the display,{w=0.1} alright?"
-    n 1uwdaj "Oh!{w=0.2} Don't forget to keep your stuff in easy reach though{w=0.1} -{w=0.1}"
+    n 4uwdaj "Oh!{w=0.2} Don't forget to keep your stuff in easy reach though{w=0.1} -{w=0.1}"
     extend 1unmsm " like your mouse."
     n 1unmbg "Number three:{w=0.2} breaks!"
     n 1uwmbg "I don't know about you,{w=0.1} but I get all fidgety if I stay still too long..."
-    n 1fchgn "So make sure you get off your butt and do some stretches a few times per hour!"
-    n 1fsqsg "You could even get some water or something if you {i}really{/i} need an excuse to move."
+    n 3fchgn "So make sure you get off your butt and do some stretches a few times per hour!"
+    n 4fsqsg "You could even get some water or something if you {i}really{/i} need an excuse to move."
     n 1nnmsm "It'd also give your eyes a rest from the screen!"
     n 1uchbs "Alright {w=0.1}-{w=0.1} and the last one!{w=0.2} This one's important,{w=0.1}"
-    extend 1uchgn " so listen up good!"
+    extend 4uchgn " so listen up good!"
     n 1unmbo "If you ever feel unwell {w=0.1}-{w=0.1} like your back aches,{w=0.1} or your eyes hurt or something..."
-    n 1nwmbo "Please just stop whatever you're doing.{w=0.2} Your health comes first.{w=0.2} I don't care what needs to be done."
+    n 2fwmpu "Please just stop whatever you're doing.{w=0.2} Your health comes first.{w=0.2} I don't care what needs to be done."
     n 1unmsm "Take some time to feel better,{w=0.1} then make sure all your stuff is set up right like I said."
-    n "Don't carry on until you feel well enough {w=0.1}-{w=0.1} talk to someone if you have to!"
+    n 3fcsss "Don't carry on until you feel well enough {w=0.1}-{w=0.1} talk to someone if you have to!"
     n 1uchgn "Okaaay!{w=0.2} Lecture over!"
-    n 1ullaj "Wow...{w=0.3} I rambled on a while,{w=0.1} didn't I?{w=0.2}"
+    n 4ullaj "Wow...{w=0.3} I rambled on a while,{w=0.1} didn't I?{w=0.2}"
     extend 1klrbgl " Sorry,{w=0.1} sorry!{w=0.2} Ehehe."
 
     if Natsuki.isEnamored(higher=True):
-        n 1kwmsml "But you know I only do these things because I really care about you,{w=0.1} [player]...{w=0.3} right?"
-        n 1kwmnvl "So please...{w=0.3} take care of yourself, okay?{w=0.2} I don't want you hurting because of me."
+        n 3kwmsml "But you know I only do these things because I really care about you,{w=0.1} [player]...{w=0.3} right?"
+        n 4kwmnvl "So please...{w=0.3} take care of yourself, okay?{w=0.2} I don't want you hurting because of me."
 
         if Natsuki.isLove(higher=True):
             $ chosen_endearment = jn_utils.getRandomEndearment()
-            n 1kwmsml "I love you,{w=0.1} [chosen_endearment]."
+            n 4kwmsml "I love you,{w=0.1} [chosen_endearment]."
             n 1kwmnvl "..."
             return
 
     else:
         n 1usglg "But you know I only say these things because I care."
-        n 1nsqpo "...And I don't want you whining to me that your back hurts.{w=0.2}"
+        n 3nsqpo "...And I don't want you whining to me that your back hurts.{w=0.2}"
 
-    n 1nchgn "Ahaha...{w=0.3} now, where were we?"
+    n 4nchgn "Ahaha...{w=0.3} now, where were we?"
     return
 
 # Natsuki highlights the importance of staying active and getting exercise
@@ -567,29 +567,29 @@ init 5 python:
 
 label talk_staying_active:
     n 1nnmbo "Hey,{w=0.1} [player]..."
-    n 1nllsr "You should get out more."
+    n 3nllsr "You should get out more."
     n 1fsqsm "..."
-    n 1fchbg "Ahaha!{w=0.2} No,{w=0.1} really!{w=0.2} I'm serious!"
+    n 4fchbg "Ahaha!{w=0.2} No,{w=0.1} really!{w=0.2} I'm serious!"
     n 1ulraj "At school,{w=0.1} it was super easy to get exercise since we had to walk everywhere,{w=0.1} and we had sports and such..."
     n 1nsqsf "It's not so straightforward when you have a job and other stuff to worry about,{w=0.1} though."
-    n 1fllss "I'm not gonna lie and say I worked out or anything like that..."
+    n 2fllss "I'm not gonna lie and say I worked out or anything like that..."
     n 1ullaj "But I tried to get some walks in when I could.{w=0.5}{nw}"
-    extend 1uchgn " Any excuse to hit the bookshop is reason enough for me!"
-    n 1kslsl "...Or {i}was{/i} reason enough, anyway."
+    extend 4uchgn " Any excuse to hit the bookshop is reason enough for me!"
+    n 2kslsl "...Or {i}was{/i} reason enough, anyway."
     n 1fllaj "But still {w=0.1}-{w=0.5}{nw}"
     extend 1unmbg " you should give it a shot too,{w=0.1} [player]!"
     n 1nlrss "It doesn't have to be a hike or anything crazy{w=0.1} -{w=0.3}{nw}"
     extend 1nnmsm " it's more about keeping at it,{w=0.1} really."
     n 1fchsm "Even a daily ten minute walk will help you feel refreshed and awake!"
-    n 1ullaj "So...{w=0.5}{nw}"
-    extend 1fnmss " make sure you get out soon,{w=0.1} [player]."
+    n 4ullaj "So...{w=0.5}{nw}"
+    extend 4fnmss " make sure you get out soon,{w=0.1} [player]."
 
     if Natsuki.isEnamored(higher=True):
-        n 1fchbg "I wanna see you fighting fit!{w=0.5}{nw}"
-        extend 1uchsm " Ehehe."
+        n 3fchbg "I wanna see you fighting fit!{w=0.5}{nw}"
+        extend 3uchsm " Ehehe."
         return
 
-    n 1fchbg "It's the least you can do!"
+    n 1fchbl "It's the least you can do!"
     return
 
 # Natsuki discusses stress and offers ways she finds useful to deal with it
@@ -610,26 +610,26 @@ init 5 python:
 
 label talk_relieving_stress:
     n 1ullaj "You know,{w=0.1} I'll admit it,{w=0.1} [player]."
-    n 1flrbg "I...{w=0.3} kinda have a short fuse.{w=0.5}{nw}"
-    extend 1klrss " Ehehe."
+    n 2flrbgsbl "I...{w=0.3} kinda have a short fuse.{w=0.5}{nw}"
+    extend 1klrsssbl " Ehehe."
     n 1fnmss "I've been trying to work on that though,{w=0.3}{nw}"
     extend 1fchbg " and I'd love to share some of the ways I deal with stress!"
     n 1unmss "Personally,{w=0.1} I think the best way to deal with it if you can is to try and create some distance."
-    n 1nslss "Back before all of...{w=0.3} this,{w=0.5}{nw}"
-    extend 1nllss " if things got a little too much,{w=0.1} I just stepped outside if I could."
+    n 2nslss "Back before all of...{w=0.3} this,{w=0.5}{nw}"
+    extend 2nllss " if things got a little too much,{w=0.1} I just stepped outside if I could."
     n 1unmbo "Some fresh air and a change of scenery can really put things into context.{w=0.5}{nw}"
-    extend 1fwdaj " It's crazy effective!"
-    n 1ulraj "But don't just create physical distance,{w=0.1} though.{w=0.5}{nw}"
+    extend 4fwdaj " It's crazy effective!"
+    n 4ulraj "But don't just create physical distance,{w=0.1} though.{w=0.5}{nw}"
     extend 1fnmpu " Distance yourself mentally too!"
-    n 1ncssr "If something is stressing you out,{w=0.1} you need to starve it of attention."
-    n 1fslpo "I can't really go outside now,{w=0.5}{nw}"
+    n 3ncssr "If something is stressing you out,{w=0.1} you need to starve it of attention."
+    n 3fslpo "I can't really go outside now,{w=0.5}{nw}"
     extend 1nllsf " so I just read something,{w=0.1} or watch some dumb videos."
     n 1fchbg "But do whatever works for you; {w=0.1}we all have our own comfort zones!"
-    n 1fslpo "A-{w=0.1}and of course,{w=0.1} you could always come see me,{w=0.1} you know..."
+    n 2fslpo "A-{w=0.1}and of course,{w=0.1} you could always come see me,{w=0.1} you know..."
     n 1fchbgl "A-{w=0.1}anyway!"
     n 1unmpu "The point is to always try and come back with a clean headspace,{w=0.3}{nw}"
     extend 1nnmss " and don't sweat the small things."
-    n 1tnmss "You can manage that,{w=0.1} right [player]?"
+    n 4tnmss "You can manage that,{w=0.1} right [player]?"
     n 1uchsm "I'll keep working on it if you do!"
     return
 
@@ -653,33 +653,33 @@ label talk_careful_spending:
     n 1tllsr "..."
     n 1fllsr "..."
     n 1tnmpu "Hmm...?"
-    n 1uwdgsesu "O-{w=0.1}oh!{w=0.5}{nw} "
+    n 4uwdgsesu "O-{w=0.1}oh!{w=0.5}{nw} "
     extend 1flrbg " A-{w=0.1}aha!{w=0.5}{nw}"
-    extend 1flrdvl " I spaced out!"
+    extend 4fsrdvl " I spaced out!"
     n 1unmaj "I was just thinking..."
     n 1flrbo "It's so easy to spend more than you mean nowadays,{w=0.1} you know?"
-    n 1flrpu "Like...{w=0.3} it seems everywhere you look,{w=0.1} there's a sale,{w=0.1} or deals,{w=0.1} or some kind of special offer..."
+    n 2flrpu "Like...{w=0.3} it seems everywhere you look,{w=0.1} there's a sale,{w=0.1} or deals,{w=0.1} or some kind of special offer..."
     n 1unmpu "And every place accepts all kinds of ways of paying,{w=0.1} too.{w=0.5}{nw}"
-    extend 1fsrpo " They make it super convenient!"
-    n 1fsrpo "I guess what I'm getting at is...{w=0.3} try to be careful of your spending habits,{w=0.1} okay?"
-    n 1unmss "Try not to buy junk you don't need{w=0.1} -{w=0.3}{nw}"
+    extend 3fsrpo " They make it super convenient!"
+    n 3fnmun "I guess what I'm getting at is...{w=0.3} try to be careful of your spending habits,{w=0.1} okay?"
+    n 1uslss "Try not to buy junk you don't need{w=0.1} -{w=0.3}{nw}"
     extend 1flrbg " think of how much you threw away the last time you cleaned out!"
-    n 1uwdajl "T-{w=0.1}that's not to say you shouldn't treat yourself,{w=0.1} of course!{w=0.5}{nw}"
-    extend 1flrssl " You deserve cool stuff too!"
-    n 1flrss "Money can't buy happiness...{w=0.5}{nw}"
+    n 4uwdajl "T-{w=0.1}that's not to say you shouldn't treat yourself,{w=0.1} of course!{w=0.5}{nw}"
+    extend 4flrssl " You deserve cool stuff too!"
+    n 1fcsss "Money can't buy happiness...{w=0.5}{nw}"
     extend 1fchgn " but it sure as hell makes finding it easier.{w=0.5}{nw}"
     extend 1uchbselg " Ahaha!"
-    n 1nllss "Well,{w=0.1} anyway.{w=0.5}{nw}"
+    n 4nllss "Well,{w=0.1} anyway.{w=0.5}{nw}"
     extend 1tnmsg " Just try to think a little before you spend,{w=0.1} [player]{w=0.1} -{w=0.3}{nw}"
     extend 1uchbs " that's all I'm saying!"
 
     if Natsuki.isAffectionate(higher=True):
-        n 1nslbg "Besides..."
+        n 3nslbg "Besides..."
         n 1fsqsm "Gotta save up all we can for when we can hang out,{w=0.1} right?{w=0.5}{nw}"
         extend 1uchsm " Ehehe."
 
         if Natsuki.isLove(higher=True):
-            n 1uchbgl "Love you,{w=0.1} [player]~!"
+            n 4uchbgl "Love you,{w=0.1} [player]~!"
 
     return
 
@@ -700,44 +700,44 @@ init 5 python:
     )
 
 label talk_eating_well:
-    n 1unmaj "Hey,{w=0.1} [player]..."
+    n 4unmaj "Hey,{w=0.1} [player]..."
     menu:
         n "Have you eaten today?"
 
         "Yes":
             n 1fnmbg "Aha!{w=0.5}{nw}"
-            extend 1fsqbg " But did you eat {i}well{/i},{w=0.1} [player]?"
+            extend 3fsqbg " But did you eat {i}well{/i},{w=0.1} [player]?"
 
         "No":
             n 1knmpu "Huh?{w=0.2} What?{w=0.5}{nw}"
-            extend 1knmem " Why not?!"
-            n 1fnmem "You aren't skipping meals,{w=0.1} are you?"
-            n 1flrpo "You better not be,{w=0.1} [player]."
+            extend 2knmem " Why not?!"
+            n 1fnmpu "You aren't skipping meals,{w=0.1} are you?"
+            n 3flrpo "You better not be,{w=0.1} [player]."
 
     n 1unmpu "It's super important to make sure you aren't only eating regularly,{w=0.3}{nw}"
     extend 1fnmpu " but eating decently too!"
     n 1fnmsr "The right diet makes all the difference,{w=0.1} [player]."
-    n 1ullaj "So...{w=0.5}{nw}"
-    extend 1nnmaj " try and make an effort with your meals,{w=0.1} got it?"
+    n 4ullaj "So...{w=0.5}{nw}"
+    extend 1nsgaj " try and make an effort with your meals,{w=0.1} got it?"
     n 1fnmaj "And I mean a real effort!{w=0.5}{nw}"
     extend 1ulrss " Try to prepare them from scratch if you can;{w=0.3}{nw}"
-    extend 1flrss " it's often cheaper than ready meals anyway."
+    extend 2fsrss " it's often cheaper than ready meals anyway."
     n 1unmss "Cut back on things like salt and sugar and stuff too...{w=0.5}{nw}"
-    extend 1nslpo " as well as anything really processed."
+    extend 3nslpo " as well as anything really processed."
     n 1unmaj "Oh {w=0.1}-{w=0.3}{nw}"
-    extend 1fnmaj " and like I said,{w=0.1} have meals regularly too!"
+    extend 4fnmaj " and like I said,{w=0.1} have meals regularly too!"
     n 1fchbg "You shouldn't find yourself snacking on junk if you have proper meals throughout the day."
     n 1usqsm "Your bank balance and your body will thank you.{w=0.5}{nw}"
-    extend 1nchsm " Ehehe."
+    extend 4nchsm " Ehehe."
 
     if Natsuki.isAffectionate(higher=True):
         n 1fsqsm "And besides..."
-        n 1usqss "I gotta get you into good habits by yourself before I'm there to make you."
+        n 3usqss "I gotta get you into good habits by yourself before I'm there to make you."
         n 1fchgnelg "Ahaha!{w=0.2} I'm kidding,{w=0.1} [player]!{w=0.2} I'm kidding!"
-        n 1fsqsm "...Mostly."
+        n 4fsqsm "...Mostly."
 
         if Natsuki.isEnamored(higher=True):
-            n 1uchsm "Love you, [player]~!{w=0.2} Ehehe."
+            n 4uchsm "Love you, [player]~!{w=0.2} Ehehe."
             return
 
     n 1fllss "Now...{w=0.3} where were we?"
@@ -765,7 +765,7 @@ label talk_weather_setup_main:
 
     if persistent._jn_weather_setup_started:
         # Player has already done at least some of the setup process, so offer range of options
-        n 1unmajesu "Oh!{w=1}{nw}"
+        n 4unmajesu "Oh!{w=1}{nw}"
         extend 1fcsbg " Yeah,{w=0.1} I remember!"
         n 1ulraj "So..."
         show natsuki 1unmbg at jn_center
@@ -775,9 +775,9 @@ label talk_weather_setup_main:
 
             "I want to give you an API key.":
                 # API key
-                n 1unmaj "You wanna give me an API key?{w=1}{nw}"
+                n 4unmaj "You wanna give me an API key?{w=1}{nw}"
                 extend 1fchbg " Sure!"
-                n 1nchbg "I'll just walk you through it just in case,{w=0.1} 'kay?"
+                n 3nchbg "I'll just walk you through it just in case,{w=0.1} 'kay?"
 
                 # Reset configuration state
                 $ persistent._jn_weather_api_configured = False
@@ -787,9 +787,9 @@ label talk_weather_setup_main:
 
             "I want to give you my location." if persistent._jn_weather_api_key:
                 # Location
-                n 1unmaj "You wanna go through your location?{w=1}{nw}"
+                n 4unmaj "You wanna go through your location?{w=1}{nw}"
                 extend 1fchbg " Sure!"
-                n 1nchbg "I'll just walk you through it just in case,{w=0.1} 'kay?"
+                n 3nchbg "I'll just walk you through it just in case,{w=0.1} 'kay?"
 
                 # Reset configuration state
                 $ persistent._jn_weather_api_configured = False
@@ -799,7 +799,7 @@ label talk_weather_setup_main:
 
             "Can you try testing everything I've told you again?" if persistent._jn_weather_api_key and persistent._jn_player_latitude_longitude:
                 # Retry verification
-                n 1unmaj "You just want me to try testing it all again?{w=0.75}{nw}"
+                n 4unmaj "You just want me to try testing it all again?{w=0.75}{nw}"
                 extend 1fchbgeme " Right-o!"
 
                 # Reset configuration state
@@ -811,74 +811,74 @@ label talk_weather_setup_main:
             "Nevermind.":
                 # Cancel
                 n 1tsqpu "Uh...{w=0.5}{nw}"
-                extend 1tsrpu " huh."
+                extend 2tsrpu " huh."
                 n 1fchbg "Well,{w=0.1} your loss,{w=0.3} [player]!"
-                extend 1fchsm " Ehehe."
+                extend 4fchsm " Ehehe."
 
                 return
 
     else:
         # Introduction
-        n 1fslbo "..."
-        n 1fcsem "Urgh...{w=1.5}{nw}"
-        extend 1fsrem " so annoying!"
+        n 3fslbo "..."
+        n 3fcsem "Urgh...{w=1.5}{nw}"
+        extend 4fsrem " so annoying!"
         n 1fbkwr "Why is this so hard to get right...?!"
-        n 1fllpo "Stupid...{w=0.5}{nw}"
-        extend 1fcsan " Nnnnnn-!"
+        n 2fllpo "Stupid...{w=0.5}{nw}"
+        extend 2fcsan " Nnnnnn-!"
 
         menu:
             "What's the matter, Natsuki?":
-                n 1uwdpueqm "Huh?{w=0.5}{nw}"
-                extend 1uwdajesu " Oh!{w=0.5} [player]!{w=1}{nw}"
+                n 4uwdpueqm "Huh?{w=0.5}{nw}"
+                extend 4uwdajesu " Oh!{w=0.5} [player]!{w=1}{nw}"
                 extend 1fllbgsbr " I'm glad you asked!"
 
             "What're you complaining about?":
                 n 1fwdemesh "...!{w=0.5}{nw}"
-                n 1fcsgs "Well,{w=0.1} your attitude,{w=0.1} for one thing!{w=1}{nw}"
-                extend 1fslca " Anyway..."
+                n 2fcsgs "Well,{w=0.1} your attitude,{w=0.1} for one thing!{w=1}{nw}"
+                extend 2fslca " Anyway..."
 
         n 1ullaj "So...{w=0.5}{nw}"
         extend 1flrss " I'm not really one to just sit around and admire the view."
-        n 1nsqbo "But seriously,{w=0.1} [player]...{w=1}{nw}"
-        extend 1fllpo " it's super boring out there!"
-        n 1nsqpo "Outside the room,{w=0.1} I mean.{w=1}{nw}"
+        n 4nsqbo "But seriously,{w=0.1} [player]...{w=1}{nw}"
+        extend 2fllpo " it's super boring out there!"
+        n 2nsqpo "Outside the room,{w=0.1} I mean.{w=1}{nw}"
         extend 1fbkwr " Nothing ever changes!"
         n 1ulraj "But...{w=1}{nw}"
         extend 1fchbg " I've been doing a little tinkering,{w=0.1} and I think I found a way to make things a little more dynamic!"
-        n 1fslsr "I just can't get it all to work properly..."
+        n 3fslsr "I just can't get it all to work properly..."
         n 1fcsem "It's just...{w=1}{nw}"
         extend 1fcssr " it's really bugging me.{w=1}{nw}"
-        extend 1fslan " I hate it when I can't get stuff to go right!"
+        extend 2fslan " I hate it when I can't get stuff to go right!"
 
         menu:
             "Perhaps I could help?":
-                n 1unmpu "Huh?{w=0.5}{nw}"
+                n 1uwdpu "Huh?{w=0.5}{nw}"
                 extend 1unmbg " Really?!{w=0.5}{nw}"
-                extend 1uchbs " Thanks,{w=0.1} [player]!"
-                n 1fllssl "N-{w=0.3}not that I was {i}waiting{/i} for help,{w=0.1} {i}obviously{/i}!"
+                extend 4nchbs " Thanks,{w=0.1} [player]!"
+                n 4fllssl "N-{w=0.3}not that I was {i}waiting{/i} for help,{w=0.1} {i}obviously{/i}!"
 
             "What do I have to do?":
-                n 1fcsem "Jeez,{w=0.1} [player]...{w=0.3}"
-                extend 1fsqpo " what's with the attitude today?"
-                n 1kslpo "I'm {i}trying{/i} to do something nice here..."
+                n 2fcsem "Jeez,{w=0.1} [player]...{w=0.3}"
+                extend 2fsqpo " what's with the attitude today?"
+                n 4kslpo "I'm {i}trying{/i} to do something nice here..."
 
         n 1ullaj "Well,{w=0.1} anyway..."
-        n 1fllss "What I'm {i}trying{/i} to do is add some atmosphere to this place,{w=1}{nw}"
+        n 4fslss "What I'm {i}trying{/i} to do is add some atmosphere to this place,{w=1}{nw}"
         extend 1fsqsm " and what better way to do that than..."
         n 1fchbg "Some actual weather!"
         n 1nsqsl "And not {i}just{/i} some randomly changing thing..."
-        n 1ulraj "I wanna set things up so the weather here matches what it's like where you are,{w=0.1} [player]."
+        n 2ulraj "I wanna set things up so the weather here matches what it's like where you are,{w=0.1} [player]."
         n 1fcsbg "I know{w=0.1} -{w=0.5}{nw}"
-        extend 1fchbg " awesome,{w=0.1} right?"
+        extend 4fwlbg " awesome,{w=0.1} right?"
         n 1ullaj "But...{w=1}{nw}"
-        extend 1nnmbo " I need you to go to this website I found."
+        extend 4nnmbo " I need you to go to this website I found."
         n 1kchbg "Don't worry,{w=0.1} I won't make you go search for it.{w=1}{nw}"
-        extend 1uchgn " I'm not {i}that{/i} mean!"
+        extend 1kchbgess " I'm not {i}that{/i} mean!"
         n 1unmss "It's called OpenWeatherMap,{w=0.5}{nw}"
         extend 1uchbg " and it's {i}super{/i} cool!{w=1}{nw}"
-        extend 1fcssm " It's just what I need to make this work."
+        extend 3fcssm " It's just what I need to make this work."
         n 1fllss "I'll need a little time to get this all set up,{w=0.1} though.{w=1}{nw}"
-        extend 1ulraj " So..."
+        extend 4ulraj " So..."
 
         menu:
             n "Are you okay if we get started now,{w=0.1} [player]?"
@@ -890,52 +890,52 @@ label talk_weather_setup_main:
 
             "I can't right now.":
                 n 1nnmbo "Oh.{w=1.5}{nw}"
-                extend 1nllss " Well..."
-                n 1nllaj "Just let me know when you have the time,{w=0.1} 'kay?"
-                n 1fcsbg "It'll be {i}super{/i} worth it!"
+                extend 4nllsssbl " Well..."
+                n 1nsldv "Just let me know when you have the time,{w=0.1} 'kay?"
+                n 3fcsbg "It'll be {i}super{/i} worth it!"
                 return
 
 label talk_weather_setup_api_key:
     # Direct the player to the website
-    n 1nchbg "Okaaay!{w=1}{nw}"
-    extend 1fchbg " Let's get started!"
+    n 1nnmss "Okaaay!{w=1}{nw}"
+    extend 3fchbg " Let's get started!"
     n 1ullaj "So like I said{w=0.1} -{w=0.3}{nw}"
     extend 1unmaj " the website is called OpenWeatherMap.{w=1}{nw}"
-    extend 1nnmsm " You can get there from {a=[store.jn_globals.LINK_OPEN_WEATHER_MAP_HOME]}here{/a}!"
+    extend 4nnmsm " You can get there from {a=[store.jn_globals.LINK_OPEN_WEATHER_MAP_HOME]}here{/a}!"
     n 1ulraj "So..."
 
     menu:
         n "Do you have the website open,{w=0.1} [player]?"
 
         "Yes, I have the website open.":
-            n 1nchbg "Awesome!{w=0.5}{nw}"
-            extend 1nchgn " Step one complete!"
+            n 1nchbs "Awesome!{w=0.5}{nw}"
+            extend 4nwlbg " Step one complete!"
 
         "No, I couldn't get to the website.":
-            n 1tnmaj "Huh?{w=1} Why not?{w=1}{nw}"
+            n 4tnmaj "Huh?{w=1} Why not?{w=1}{nw}"
             extend 1tnmsr " Is it down or something?"
-            n 1tslaj "Well...{w=1}{nw}"
-            extend 1tnmss " Maybe we can try this again later?"
-            n 1fllss "Just let me know when you're ready!"
+            n 2tslaj "Well...{w=1}{nw}"
+            extend 2tnmss " Maybe we can try this again later?"
+            n 1fllsssbr "Just let me know when you're ready!"
 
             jump ch30_loop
 
     # Prompt the player to create an account
     n 1nchbg "'Kay!{w=0.5}{nw}"
-    extend 1fcssm " Now for step two!"
+    extend 3fcssm " Now for step two!"
     n 1nllaj "Basically I need something called an API key,{w=1}{nw}"
     extend 1nnmbo " which will let me use that website to find out what the weather is like over there."
-    n 1fslbo "But I can't do that myself...{w=1.5}{nw}"
+    n 3fslbo "But I can't do that myself...{w=1.5}{nw}"
     extend 1fchsm " which is where you come in,{w=0.1} [player]!"
     n 1nlrss "You'll need to make an account before you can get an API key."
-    extend 1kchbg " It's totally free though!"
+    extend 1kchbgess " It's totally free though!"
     n 1ullaj "You can create an account {a=[store.jn_globals.LINK_OPEN_WEATHER_MAP_SIGN_UP]}here{/a},{w=1}{nw}"
     extend 1nnmsm " or you can sign in using the menu at the top."
-    n 1fcsaj "Just make sure to go through all the options carefully{w=0.1} -{w=0.5}{nw}"
-    extend 1nsqpo " don't just dash through it!"
+    n 3fcsaj "Just make sure to go through all the options carefully{w=0.1} -{w=0.5}{nw}"
+    extend 3nsqpo " don't just dash through it!"
     n 1unmaj "Oh{w=0.1} -{w=0.5}{nw}"
     extend 1flrss " and make sure you confirm your email address once you've created it,{w=0.1} 'kay?"
-    n 1nchbg "{a=[store.jn_globals.LINK_OPEN_WEATHER_MAP_SIGN_UP]}Here's{/a} that link once more,{w=0.1} just in case!"
+    n 4nchbg "{a=[store.jn_globals.LINK_OPEN_WEATHER_MAP_SIGN_UP]}Here's{/a} that link once more,{w=0.1} just in case!"
     n 1fnmsm "Now..."
 
     menu:
@@ -943,25 +943,25 @@ label talk_weather_setup_api_key:
 
         "Yes, I have an account set up.":
             n 1fchsm "Awesome!"
-            n 1tllss "You'll probably want to make sure you save your login details somewhere secure,{w=0.5}{nw}"
-            extend 1fchsm " juuuust in case."
+            n 3tllss "You'll probably want to make sure you save your login details somewhere secure,{w=0.5}{nw}"
+            extend 4fchsm " juuuust in case."
             n 1fchts "Don't forget to confirm your email address too!"
             n 1fsqsm "Now,{w=0.1} here comes the challenging part..."
 
         "I already had an account set up.":
             n 1fchsm "Awesome!{w=0.5}{nw}"
-            extend 1fchsm " The rest of this should be a piece of cake!"
+            extend 3fwlbg " The rest of this should be a piece of cake!"
 
     # API Key
 
     # Prompt the player for an API key
     n 1usqsm "Are you ready,{w=0.1} [player]?"
     n 1fchsm "You need to get your API key and send it to me!"
-    n 1ullss "You can find your keys {a=[store.jn_globals.LINK_OPEN_WEATHER_MAP_API_KEYS]}here{/a},{w=1}{nw}"
+    n 4ullss "You can find your keys {a=[store.jn_globals.LINK_OPEN_WEATHER_MAP_API_KEYS]}here{/a},{w=1}{nw}"
     extend 1unmaj " or you can get there using the menu like before."
-    n 1tsqsm "You got all that?"
-    n 1fsqsm "Ehehe.{w=0.5}{nw}"
-    extend 1fchbg " Then take it away,{w=0.1} [player]!"
+    n 3tsqsm "You got all that?"
+    n 3fsqsm "Ehehe.{w=0.5}{nw}"
+    extend 4fchbg " Then take it away,{w=0.1} [player]!"
 
     $ player_input_valid = False
 
@@ -971,12 +971,12 @@ label talk_weather_setup_api_key:
         $ player_input = renpy.input("Enter your API key (or type Nevermind to go back):")
 
         if not player_input or player_input == "":
-            n 1tsqsm "I {i}thought{/i} I asked for an {i}API key{/i},{w=0.1} [player]?"
-            extend 1fchbl " Try again!"
+            n 3tsqsm "I {i}thought{/i} I asked for an {i}API key{/i},{w=0.1} [player]?"
+            extend 4fchbl " Try again!"
 
         elif player_input.replace(" ", "").lower() == "nevermind":
             # Allow the player to back out
-            n 1tnmaj "Huh?{w=0.2} You don't wanna continue?"
+            n 4tnmaj "Huh?{w=0.2} You don't wanna continue?"
             n 1tllbo "That's fine,{w=0.1} I guess."
             n 1fcsbg "Just let me know when you're ready,{w=0.1} 'kay?"
 
@@ -992,10 +992,10 @@ label talk_weather_setup_api_key:
 
 label talk_weather_setup_location:
     n 1fsqbg "Now for the final piece of the puzzle..."
-    n 1uchbg "...Your location,{w=0.1} obviously!"
+    n 4uchss "...Your location,{w=0.1} obviously!"
     n 1ullaj "There's a couple ways to do this,{w=1}{nw}"
     extend 1nnmsm " but I thought it'd be best to just ask."
-    n 1ulraj "So..."
+    n 4ulraj "So..."
 
     menu:
         n "How do you wanna tell me, [player]?"
@@ -1007,20 +1007,20 @@ label talk_weather_setup_location:
             $ ip_latitude_longitude = jn_atmosphere.getLatitudeLongitudeByIpAddress()
             if not ip_latitude_longitude:
                 # We couldn't get the coordinates via IP, so we have to prompt them via the player
-                n 1fslpu "...Huh."
-                n 1knmpo "I {i}tried{/i} to look you up, but I couldn't find anything!"
-                n 1flrpo "..."
+                n 2fslpu "...Huh."
+                n 2knmpo "I {i}tried{/i} to look you up, but I couldn't find anything!"
+                n 2flrpo "..."
                 n 1tlraj "Well..."
-                extend 1tllbg " looks like we're gonna have to do things the old-fashioned way,{w=0.1} [player]."
+                extend 1tllbgsbl " looks like we're gonna have to do things the old-fashioned way,{w=0.1} [player]."
 
                 jump talk_weather_setup_manual_coords
 
             else:
                 # Success, confirm with player
-                n 1nwdbg "Aha!{w=0.5}{nw}"
+                n 4fsgss "Aha!{w=0.5}{nw}"
                 extend 1uchbg " I think I got it!"
-                n 1nwlbg "Now...{w=0.3} wanna see something awesome, [player]?{w=1}{nw}"
-                extend 1fsqsm " I know you do."
+                n 3nwlbg "Now...{w=0.3} wanna see something awesome, [player]?{w=1}{nw}"
+                extend 3fsqsm " I know you do."
                 n 1ncsbo "...{w=1}{nw}"
 
                 python:
@@ -1036,11 +1036,11 @@ label talk_weather_setup_location:
                 if show_map_success:
                     n 1fchbg "Ta-da!{w=0.5} Found you!"
                     n 1fsqsm  "..."
-                    n 1tsqsm "Well?{w=1}{nw}"
-                    extend 1tsqss " Am I right or what, [player]?"
+                    n 3tsqsm "Well?{w=1}{nw}"
+                    extend 3tsqss " Am I right or what, [player]?"
                     menu:
                         "Yes, you found me.":
-                            n 1fcsbg "Like a pro!"
+                            n 4fcsbg "Like a pro!"
                             extend 1fcssm " Ehehe."
                             n 1fllss "I'll just note those down real quick..."
 
@@ -1048,37 +1048,37 @@ label talk_weather_setup_location:
                             jump talk_weather_setup_verify
 
                         "No, that's not right.":
-                            n 1fnmgs "What?{w=0.2} Are you kidding me!?"
-                            n 1flrsl "Ugh..."
-                            n 1nlrpu "And I was so proud of myself for figuring that out,{w=0.1} too..."
+                            n 2fnmgs "What?{w=0.2} Are you kidding me!?"
+                            n 2flrsl "Ugh..."
+                            n 4nlrpu "And I was so proud of myself for figuring that out,{w=0.1} too..."
                             n 1nnmss "Well,{w=0.1} it looks like we're gonna have to do things the old-fashioned way."
 
                             jump talk_weather_setup_manual_coords
 
                 else:
-                    n 1fnmaj "Eh?{w=0.2} What the...?"
+                    n 4fnmaj "Eh?{w=0.2} What the...?"
                     n 1nnmpu "Huh.{w=0.2} Weird."
                     n 1nlrss "Well,{w=0.1} I {i}was{/i} gonna show you something neat,{w=0.5}{nw}"
-                    extend 1nslpo " but it looks like something messed up."
-                    n 1nlrss "Hey,{w=0.1} [player]...{w=0.3}"
+                    extend 3nslpo " but it looks like something messed up."
+                    n 4nlrss "Hey,{w=0.1} [player]...{w=0.3}"
                     extend 1flrbg " could you look these coordinates up and tell me if I got it right?"
-                    n 1tslbo "I'm {i}pretty{/i} sure your latitude is [ip_latitude_longitude[0]],{w=0.1} and your longitude is [ip_latitude_longitude[1]]."
+                    n 4tslbo "I'm {i}pretty{/i} sure your latitude is [ip_latitude_longitude[0]],{w=0.1} and your longitude is [ip_latitude_longitude[1]]."
                     n 1nllbo "..."
-                    n 1tnmss "Well,{w=0.3} [player]?"
+                    n 4tnmss "Well,{w=0.3} [player]?"
                     menu:
                         n "How're we looking?"
 
                         "Yes, that looks good to me.":
                             n 1kchbg "Phew!"
-                            extend 1nsldv " I was kinda worried I'd have to get a little more creative..."
+                            extend 2nsldv " I was kinda worried I'd have to get a little more creative..."
 
                             $ persistent._jn_player_latitude_longitude = ip_latitude_longitude
                             jump talk_weather_setup_verify
 
                         "No, that's not right.":
-                            n 1fcsan "Uuuuuuu..."
-                            n 1nslpo "Fine.{w=1}{nw}"
-                            extend 1usqpo " It looks like we're gonna have to do things the old-fashioned way."
+                            n 4fcsan "Uuuuuuu..."
+                            n 2nslpo "Fine.{w=1}{nw}"
+                            extend 2usqpo " It looks like we're gonna have to do things the old-fashioned way."
 
                             jump talk_weather_setup_manual_coords
 
@@ -1088,8 +1088,8 @@ label talk_weather_setup_location:
             jump talk_weather_setup_manual_coords
 
         "Nevermind.":
-            n 1fllpo "Well...{w=1}{nw}"
-            extend 1nslpo " fine."
+            n 2fllpo "Well...{w=1}{nw}"
+            extend 4nslpo " fine."
             n 1fchbg "Just let me know when you wanna go through all this again,{w=0.1} 'kay?"
 
             jump ch30_loop
@@ -1098,9 +1098,9 @@ label talk_weather_setup_manual_coords:
     n 1ulraj "So,{w=0.3}{nw}"
     extend 1nnmbo " I'm going to need to know a few things to find out where you are."
     n 1flrss "Let's start off with the basics{w=0.1} -{w=0.5}{nw}"
-    extend 1fchsm " Hemispheres!"
+    extend 4fchsm " Hemispheres!"
     n 1unmaj "Do you live in the {b}Northern{/b} or {b}Southern{/b} Hemisphere?"
-    n 1nllss "Just in case you didn't know,{w=0.1} it basically just means if you live {b}North{/b} or {b}South{/b} of the {b}equator{/b}."
+    n 3nllss "Just in case you didn't know,{w=0.1} it basically just means if you live {b}North{/b} or {b}South{/b} of the {b}equator{/b}."
     n 1nllaj "So..."
     show natsuki 1tsqsm at jn_center
     menu:
@@ -1112,19 +1112,19 @@ label talk_weather_setup_manual_coords:
 
             n 1unmaj "The Northern Hemisphere?{w=1}{nw}"
             extend 1flrbg " Well hey!{w=1}{nw}"
-            extend 1fchbg " Just like me!"
+            extend 4fchbg " Just like me!"
 
         "The Southern Hemisphere.":
             $ player_in_southern_hemisphere = True
             $ persistent.hemisphere_north_south = "South"
 
             n 1unmaj "The Southern Hemisphere?{w=1}{nw}"
-            extend 1fchbg " Gotcha!"
+            extend 4fchbg " Gotcha!"
 
     n 1uchbg "Okay,{w=0.1} now time for the other two!"
     n 1tnmss "Do you live in the {b}Eastern{/b} or {b}Western{/b} Hemisphere?"
     n 1ulraj "This one's a little more tricky,{w=0.1} but I find it helps to think of it this way:"
-    n 1nnmbo "If we took a world map and cut it in half {b}vertically{/b} down the middle..."
+    n 4nnmbo "If we took a world map and cut it in half {b}vertically{/b} down the middle..."
     show natsuki 1unmaj at jn_center
     menu:
         n "Would you live in the {b}Eastern half{/b},{w=0.1} or the {b}Western half{/b}?"
@@ -1136,7 +1136,7 @@ label talk_weather_setup_manual_coords:
             if not player_in_southern_hemisphere:
                 n 1unmbg "Wow!{w=1}{nw}"
                 extend 1fchbg " Just like me again,{w=0.1} [player]!"
-                n 1tslss "It really is a small world,{w=0.1} huh?"
+                n 2tslss "It really is a small world,{w=0.1} huh?"
 
             else:
                 n 1fchbg "Well hey!{w=0.5} Just like me!"
@@ -1148,13 +1148,13 @@ label talk_weather_setup_manual_coords:
             n 1fchbg "The Western half.{w=0.5} Gotcha!"
 
     # Get the latitude
-    n 1fllss "Now with that out of the way,{w=0.1} I just need your coordinates!"
-    n 1fsqss "And by those,{w=0.5}{nw}"
+    n 4fllss "Now with that out of the way,{w=0.1} I just need your coordinates!"
+    n 3fsqsm "And by those,{w=0.5}{nw}"
     extend 1fchsm " I mean your {b}latitude{/b} and {b}longitude{/b}!"
     n 1ullaj "I always used {a=[store.jn_globals.LINK_LAT_LONG_HOME]}this{/a} website to look mine up for homework,{w=0.1} but you can use your phone or whatever too."
-    n 1unmaj "Oh,{w=0.3}{nw}"
+    n 4unmaj "Oh,{w=0.3}{nw}"
     extend 1fnmbo " and don't worry about making it positive or negative.{w=1}{nw}"
-    extend 1fcssm " I'll take care of that!"
+    extend 3fcssm " I'll take care of that!"
     n 1ullss "We'll start off with your {b}latitude{/b} first."
     n 1fchsm "So...{w=0.3} take it away!"
     $ player_latitude = renpy.input(prompt="Enter your {b}latitude{/b}:", allow="0123456789.")
@@ -1162,7 +1162,7 @@ label talk_weather_setup_manual_coords:
     # Get the longitude
     n 1fchbg "Alright!{w=0.5}{nw}"
     extend 1nchsm " Now finally,{w=0.1} I just need your {b}longitude{/b}!"
-    n 1fcssm "Just like last time,{w=0.1} I can figure it out without any positive or negative symbols."
+    n 3fcssm "Just like last time,{w=0.1} I can figure it out without any positive or negative symbols."
     n 1fchsm "Take it away,{w=0.1} [player]!"
     $ player_longitude = renpy.input("Enter your {b}longitude{/b}:", allow="0123456789.")
 
@@ -1177,7 +1177,7 @@ label talk_weather_setup_manual_coords:
         player_latitude = float(player_latitude)
         player_longitude = float(player_longitude)
 
-    n 1fcssm "'Kay!"
+    n 3fcssm "'Kay!"
     extend 1fchsm " I think we're nearly there now,{w=0.1} [player]!"
     extend 1fcsbg " Let me just open up a map real quick...{w=1}{nw}"
 
@@ -1193,23 +1193,23 @@ label talk_weather_setup_manual_coords:
 
     if show_map_success:
         n 1uchgn "Ta-da!"
-        n 1fnmbg "How about it,{w=0.1} [player]?{w=1}{nw}"
+        n 4fnmbg "How about it,{w=0.1} [player]?{w=1}{nw}"
 
         menu:
             n "Close enough,{w=0.1} right?"
 
             "Yes, that's close enough.":
                 n 1fchbg "Finally!{w=1}{nw}"
-                extend 1nchsm " I'll just note all that down real quick..."
+                extend 4nchsm " I'll just note all that down real quick..."
 
                 $ persistent._jn_player_latitude_longitude = (player_latitude, player_longitude)
                 jump talk_weather_setup_verify
 
             "No, that's not right at all.":
                 n 1tnmem "What?{w=0.2} Really?!"
-                n 1fcsem "Ugh..."
-                n 1fcsaj "Let's...{0.5} try again,{w=0.1} alright?{w=1}{nw}"
-                extend 1fnmpo " I really wanna get this working!"
+                n 3fcsem "Ugh..."
+                n 4fcsaj "Let's...{0.5} try again,{w=0.1} alright?{w=1}{nw}"
+                extend 2fnmpo " I really wanna get this working!"
 
                 jump talk_weather_setup_manual_coords
 
@@ -1217,46 +1217,46 @@ label talk_weather_setup_manual_coords:
         n 1fllaj "Urgh...{w=0.3} really?{w=0.2} This is {i}such{/i} a pain!"
         n 1nlrsl "I can't seem to show you where I think you are on a map,{w=0.1} so I'll just ask to make sure."
         n 1nnmss "I've done some checks to work out the coordinates,{w=0.1} and from what you said..."
-        n 1nnmaj "Your overall latitude would be [player_latitude],{w=0.1} and your overall longitude would be [player_longitude]."
+        n 4nnmaj "Your overall latitude would be [player_latitude],{w=0.1} and your overall longitude would be [player_longitude]."
         menu:
             n "Is [player_latitude], [player_longitude] correct?"
 
             "Yes, that's right.":
-                n 1fcsem "Finally!{w=1}{nw}"
-                extend 1kslpo " Jeez..."
+                n 3fcsem "Finally!{w=1}{nw}"
+                extend 3kslpo " Jeez..."
 
                 $ persistent._jn_player_latitude_longitude = (player_latitude, player_longitude)
                 jump talk_weather_setup_verify
 
             "No, that's still not right.":
-                n 1tnmem "What?{w=0.2} Really?!"
-                n 1fcsem "Ugh..."
+                n 3tnmem "What?{w=0.2} Really?!"
+                n 3fcsem "Ugh..."
                 n 1fcsaj "Let's...{0.5} try again,{w=0.1} alright?{w=1}{nw}"
-                extend 1fnmpo " I really wanna get this working!"
+                extend 4fnmpo " I really wanna get this working!"
 
                 jump talk_weather_setup_manual_coords
 
             "Nevermind.":
-                n 1fllpo "Jeez...{w=1}{nw}"
+                n 3fllpo "Jeez...{w=1}{nw}"
                 extend 1tlrss " what a mess,{w=0.1} huh?"
                 n 1fcspo "..."
                 n 1nllaj "Well,{w=0.1} thanks anyway.{w=1}{nw}"
                 extend 1nnmaj " We can always try again later,{w=0.5}{nw}"
-                extend 1tnmss " right?"
+                extend 4tnmss " right?"
 
                 jump ch30_loop
 
 label talk_weather_setup_verify:
     n 1nchbg "Okaaay!{w=1}{nw}"
-    extend 1fnmsm " I think we're almost done now,{w=0.1} [player]!"
+    extend 4fnmsm " I think we're almost done now,{w=0.1} [player]!"
     n 1ncsbo "Let me just check everything is in order here...{w=1.5}{nw}"
 
     if jn_atmosphere.getWeatherFromApi():
         n 1fchbg "Yes!"
         extend 1uchbs " It's working,{w=0.5} it's working!{w=1}{nw}"
-        extend 1nchsml " Ehehe."
+        extend 4nchsml " Ehehe."
         n 1nchbgl "Thanks a bunch,{w=0.1} [player]!{w=1}{nw}"
-        extend 1uchgnledz " This is gonna be {i}super{/i} awesome!"
+        extend 3uchgnledz " This is gonna be {i}super{/i} awesome!"
         $ Natsuki.calculatedAffinityGain()
 
         python:
@@ -1266,21 +1266,21 @@ label talk_weather_setup_verify:
 
     else:
         n 1fcsaj "Oh,{w=0.5}{nw}"
-        extend 1fllan " come {i}on!{/i}"
+        extend 2fllan " come {i}on!{/i}"
         n 1fcsem "Ugh..."
-        n 1fslem "And I was so stoked about it,{w=0.1} too..."
+        n 3fslem "And I was so stoked about it,{w=0.1} too..."
         n 1fcsem "I'm sorry,{w=0.1} [player].{w=1}{nw}"
-        extend 1knmemsbl " I can't get it all to work!"
-        n 1fsrem "Talk about a disappointment..."
-        n 1nsrposbl "..."
+        extend 4knmemsbl " I can't get it all to work!"
+        n 2fsrem "Talk about a disappointment..."
+        n 2nsrposbl "..."
         n 1unmgsesu "Ah!{w=0.5}{nw}"
         extend 1fnmgs " I just thought of something!"
-        n 1tnmpueqm "Did you have to make a new account for OpenWeatherMap,{w=0.2} [player]?{w=0.75}{nw}"
-        extend 1tslbo " Or like,{w=0.2} did you make a new API key?"
+        n 4tnmpueqm "Did you have to make a new account for OpenWeatherMap,{w=0.2} [player]?{w=0.75}{nw}"
+        extend 4tslbo " Or like,{w=0.2} did you make a new API key?"
         n 1tnmss "I...{w=1}{nw}"
-        extend 1fsrdvsbr " kinda spaced out a little when you told me before.{w=0.75}{nw}"
+        extend 4fsrdvsbr " kinda spaced out a little when you told me before.{w=0.75}{nw}"
         extend 1nlrajsbr " So..."
-        show natsuki 1tnmslsbr at jn_center
+        show natsuki 2tnmslsbr at jn_center
 
         menu:
             n "Do you remember?{w=0.3} Like,{w=0.2} at all?"
@@ -1293,32 +1293,32 @@ label talk_weather_setup_verify:
 
             "I already had an account, and used an existing API key.":
                 $ new_account_or_key = False
-                n 1tslpusbr "...Huh."
+                n 2tslpusbr "...Huh."
                 n 1tslsr "I'm...{w=0.75}{nw}"
                 extend 1kcsemesisbl " kinda stumped then,{w=0.2} actually."
-                n 1tsrsl "I mean..."
-                n 1tnmpueqm "Maybe you just gave me the wrong key...?"
+                n 3tsrsl "I mean..."
+                n 4tnmpueqm "Maybe you just gave me the wrong key...?"
                 extend 1fchbgsbl " Or your internet just isn't feeling it today?"
                 n 1nslsssbl "I don't know."
                 n 1fllsssbl "Just...{w=0.5}{nw}"
-                extend 1knmsssbr " let me know when if you wanna try again,{w=0.2} 'kay?"
+                extend 4knmsssbr " let me know when if you wanna try again,{w=0.2} 'kay?"
                 n 1knmcaesssbr "It'll be awesome!{w=0.5}{nw}"
-                extend 1knmpolesssbr " I-{w=0.3}I promise!"
+                extend 2knmpolesssbr " I-{w=0.3}I promise!"
 
         if new_account_or_key:
             n 1tslbo "So you did,{w=0.2} huh..."
-            n 1fslpuesp "..."
+            n 4fslpuesp "..."
             n 1unmgsesu "Oh!{w=0.5}{nw}"
             extend 1fsrdvsbl " Right!"
-            n 1fsrsssbl "I forgot to say..."
-            n 1fsldvsbr "It might take a day or so for your API key to actually {i}activate{/i} so I can use it..."
+            n 2fsrsssbl "I forgot to say..."
+            n 2fsldvsbr "It might take a day or so for your API key to actually {i}activate{/i} so I can use it..."
             n 1kchsssbr "Ehehe.{w=0.5}{nw}"
             extend 1fchblsbl " Oops!"
             n 1fllsssbl "Just...{w=0.5}{nw}"
-            extend 1knmsssbr " let me know when you wanna try again,{w=0.2} 'kay?"
-            n 1fnmcasbr "I really wanna get this all working!"
+            extend 4knmsssbr " let me know when you wanna try again,{w=0.2} 'kay?"
+            n 4fnmcasbr "I really wanna get this all working!"
             n 1fcstr "Because when I do,{w=0.2} you bet it's gonna be{w=0.3}{nw}"
-            extend 1fspgsledz " {i}awesome{/i}!"
+            extend 4fspgsledz " {i}awesome{/i}!"
 
     jump ch30_loop
 
