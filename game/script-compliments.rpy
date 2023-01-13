@@ -152,56 +152,106 @@ label compliment_beautiful:
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_BEAUTIFUL:
         if Natsuki.isEnamored(higher=True):
-            n 1uskwrf "J-{w=0.2}jeez,{w=0.2} [player]...!"
-            n 1fcsanf "Uuuuuu-!"
-            n 1fbkwrf "Are you trying to put me on the spot or what?!{w=0.2} You already told me thaaat!"
-            n 1flrpof "..."
-            n 1klrpol "..."
-            n 1klrpul "...I-I'll take it,{w=0.2} though."
-            n 1fllsll "The compliment,{w=0.2} I mean."
+            $ player_initial = jn_utils.getPlayerInitial()
+            n 1fcsanlesssbl "Uuuuuu-!"
+            n 4kwdgslesssbl "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
+            extend 1kbkwrless " You already told me thaaaaat!"
+            n 4ksqemlsbr "You really gotta do it {i}again{/i}?!"
+            n 2ksrbolsbr "..."
+            n 2ncsemlesisbr "..."
+            n 1ncsbolsbr "...Fine.{w=0.75}{nw}"
+            extend 4kslbolsbl " I'll take it."
+            n 2fcscalsbl "The compliment,{w=0.2} I mean.{w=0.75}{nw}"
+            extend 2fcstrlsbl " Just..."
             $ chosen_tease = jn_utils.getRandomTease()
-            n 1kllssl "T-{w=0.2}thanks again,{w=0.2} [chosen_tease]."
+            n 1ksrcal "..."
+            n 4ncsssl "...Heh.{w=1}{nw}"
+            extend 4nslfsl " Nevermind."
+            
+            if Natsuki.isLove(higher=True):
+                n 2kslbol "T-{w=0.2}thanks again,{w=0.2} [chosen_tease]."
+                n 1kslfsfeaf "...Y-{w=0.2}you always make me feel prettier."
+
+            else:
+                n 2kslbol "T-{w=0.2}thanks again,{w=0.2} [chosen_tease]."
+                n 1kslcaf "..."
 
         else:
-            n 1fskwrf "E-{w=0.2}excuse me?!"
-            n 1fbkwrf "[player]!{w=0.2} What did I tell you?!"
+            n 4fskgslesh "E-{w=0.2}excuse me?!"
+            n 1fwmgslsbl "[player]!{w=0.5}{nw}" 
+            extend 4fbkwrlsbl " What did {i}literally{/i} just I tell you?!"
             $ chosen_tease = jn_utils.getRandomTease()
-            n 1fcsanf "Seriously...{w=0.3} are you trying to give me a heart attack or something,{w=0.2} [chosen_tease]?!"
-            n 1fllpof "..."
+            n 1fcsgsl "Are you {i}trying{/i} to give me a heart attack or something?!{w=0.75}{nw}"
+            extend 2fsleml " Sheesh..."
+            n 2fslpol "..."
+            n 4fcsajl "I-{w=0.2}I mean,{w=0.75}{nw}"
+            extend 3fcspol " I know I already look great!{w=1}{nw}"
+            extend 3fsrdvlsbl " I {i}always{/i} look top-{w=0.2}notch, o-{w=0.2}of course."
+            n 2fcsemlsbl "But you {i}really{/i} don't have to..."
+            n 2fslunlsbl "T-{w=0.2}to keep...!"
+            n 1fcsunlsbl "..."
+            n 4fcsemlsbr "Oh,{w=0.5}{nw}"
+            extend 2flrbolsbr " forget it!"
 
             if Natsuki.isAffectionate(higher=True):
-                n 1fcspuf "Just...{w=0.3} save it until I can be sure you really mean it,{w=0.2} alright?"
-                n 1kllpol "Jeez..."
+                n 2fcscalsbr "You know what I mean,{w=0.2} a-{w=0.2}anyway..."
+
+            n 2ksrbolsbr "..."
 
     else:
         if Natsuki.isEnamored(higher=True):
-            n 1uskpuf "H-{w=0.2}huh?!"
-            n 1uskajf "Wait..."
-            n 1uskpuf "Y-{w=0.2}you really think I'm..."
-            n 1uscunf "I-{w=0.3}I'm..."
-            n 1fcsunf "..."
-            n 1fnmunf "[player]..."
-            n 1knmpuf "You know you're not meant to just say things like that..."
-            n 1kllpuf "Unless you really mean it?"
-            n 1kcsunf "..."
-            n 1klrssf "...I...{w=0.3} believe you,{w=0.2} though.{w=0.2} Just don't make me regret saying that,{w=0.2} okay?"
-            n 1klrbgl "T-{w=0.2}thanks,{w=0.2} [player]."
+            n 4uskemlesh "H-{w=0.2}huh?!"
+            n 1fcseml "Wait..."
+            n 1kllemlsbl "Y-{w=0.2}you really think I'm..."
+            n 1fslunfsbl "I-{w=0.3}I'm..."
+            n 4fcsunfesssbr "..."
+            n 2kcsbolsbr "..."
+            n 2ksqbolsbr "[player]..."
+            n 1kllbolsbr "You {w=0.2}{i}do{/i}{w=0.2} know you're not meant to just say things like that..."
+            n 4kwmslfsbl "Unless you really mean them?"
 
             if Natsuki.isLove(higher=True):
-                n 1kwmsmf "...I love you,{w=0.2} [player]...{w=0.3} Ahaha..."
+                n 1knmajlsbl "I-{w=0.2}it's not that I don't believe you!{w=1}{nw}"
+                extend 2klrsslsbl " O-{w=0.2}of course not!"
+                n 4ksrbolsbl "...You should know that by now."
+                n 2ksrpulsbl "But..."
+                n 4ksrsll "..."
+                n 1ksrfsl "...Thanks,{w=0.2} [player].{w=1}{nw}"
+                extend 1ksrssl " Really{w=0.2}, heh."
+                n 4ksqfsl "Thank you."
+                n 3fcssmless "...Just don't forget {i}who{/i} helps me feel that way.{w=0.75}{nw}"
+                extend 3fsqbll " You goof."
+                n 4fchsmleaf "Ehehe."
+
+            else:
+                n 1kslcafsbl "..."
+                n 2fcstrlesssbr  "I-{w=0.2}I mean...!"
+                n 2nsrsllsbr "...{w=0.75}{nw}"
+                extend 2ksrbolsbr "Really."
+                n 2ksrfslsbr "T-{w=0.2}thanks, [player]."
 
         else:
-            n 1uscemf "W{w=0.2}-w{w=0.2}-what?"
-            n 1fskwrf "W-{w=0.2}what did you say?!"
-            n 1fcsanf "Nnnnnnnnnn-!"
-            n 1fbkwrf "Y-{w=0.2}you can't just say things like that so suddenly,{w=0.2} you dummy!"
-            n 1fllemf "Sheesh..."
-
-            if Natsuki.isAffectionate(higher=True):
-                n 1kllunl "..."
-                n 1flrajl "I mean,{w=0.2} I'm flattered,{w=0.2} but..."
-                n 1fcsanl "Uuuuuu...{w=0.3} just stop it for now,{w=0.2} okay?"
-                n 1fllpof "You're making this all super awkward..."
+            n 1uskemlesh "W{w=0.2}-w{w=0.2}-what?"
+            n 1fskeml "W-{w=0.2}what did you say?!"
+            n 4fcsanfsbr "Nnnnnnnnnn-!"
+            n 4fbkwrfsbr "Y-{w=0.2}you can't just {i}say{/i} things like that so suddenly!"
+            n 2fllemlsbl "Sheesh...{w=0.75}{nw}"
+            extend 2fslpolsbl " come on,{w=0.2} [player]..."
+            n 1fcsbolsbr "..."
+            n 1fcsemlsbr "I-{w=0.2}I mean,{w=0.75}{nw}" 
+            extend 3fsrbglsbr " I'm glad we both agree,{w=0.75}{nw}" 
+            extend 4fsrunlsbr " but..."
+            n 1fcsunlesssbl "Uuuuuu...!"
+            n 1fcsemlsbl "Just..." 
+            n 1kslcal "..."
+            n 2ksqsllsbr "...Think a little before you just blurt stuff out like that.{w=0.75}{nw}"
+            extend 2fsrsllsbr " I-{w=0.2}it just makes everything all awkward."
+            n 1fsrsslsbr "...Heh.{w=0.75}{nw}"
+            extend 4fcsajlsbr " A-{w=0.2}and besides,{w=0.75}{nw}"
+            n 3fcsbglsbl " I {i}always{/i} look stunning anyway!{w=0.75}{nw}"
+            extend 3nslsslsbl " So...{w=0.5}{nw}" 
+            extend 3nslbol " yeah."
+            n 3kslsllsbr "..."
 
     $ jn_compliments.last_compliment_type = jn_compliments.TYPE_BEAUTIFUL
     return
