@@ -1342,53 +1342,53 @@ label talk_favourite_season:
 
     # Player hasn't given their favourite season before
     if not persistent.jn_player_favourite_season:
-        n 1tllss "That's a little random,{w=0.1} isn't it?"
+        n 4tllss "That's a little random,{w=0.1} isn't it?"
         n 1tnmss "Well...{w=0.3} anyway.{w=0.3}{nw}"
-        extend 1fnmaw " Tough question, [player]!"
-        n 1fsrsl "I think if I had to pick..."
+        extend 4fnmaw " Tough question, [player]!"
+        n 3fsrsl "I think if I had to pick..."
         n 1fchts "It'd be summer!{w=0.2} Duh!"
-        n 1fsqss "Why?{w=0.5}{nw}"
+        n 3fsqss "Why?{w=0.5}{nw}"
         extend 1fchgn " Just think about it,{w=0.1} [player]!"
-        n 1ullbg "Long trips to the beach...{w=0.5}{nw}"
-        extend 1ncssm " ice cream in the shade...{w=0.5}{nw}"
-        extend 1ksrss " lazy evening walks to the shops..."
+        n 4ullbg "Long trips to the beach...{w=0.5}{nw}"
+        extend 4ncssm " ice cream in the shade...{w=0.5}{nw}"
+        extend 4ksrss " lazy evening walks to the shops..."
         n 1flleml "I-{w=0.1}I mean,{w=0.3}{nw}"
         extend 1fllbgl " what's not to love?"
         n 1fchbg "I can just enjoy life out there without having to worry about the weather!"
         n 1usqsg "I don't think I need to make my case any more clear,{w=0.1} do I?{w=0.5}{nw}"
-        extend 1uchsm " Ahaha."
+        extend 4uchsm " Ahaha."
         n 1unmaj "Although...{w=0.3} what about you,{w=0.1} [player]?"
         menu:
             n "What's your favourite season?"
 
             "Spring":
                 n 1fnmss "Oh?{w=0.2} Spring,{w=0.1} huh?"
-                n 1tllsr "Hmmm..."
+                n 3tllsr "Hmmm..."
                 n 1unmss "I mean,{w=0.1} I kinda get it.{w=0.2} It's the sign winter finally got lost,{w=0.1} right?"
                 n 1ulrss "And I suppose the flowers blooming again is kinda cool to see."
-                n 1fsqan "But the rain!{w=0.2} Jeez!{w=0.5}{nw}"
+                n 3fsqan "But the rain!{w=0.2} Jeez!{w=0.5}{nw}"
                 extend 1fcspu " It just never stops!"
-                n 1fllpo "Roll on summer,{w=0.1} I say."
+                n 3fllpo "Roll on summer,{w=0.1} I say."
 
                 $ persistent.jn_player_favourite_season = "Spring"
 
             "Summer":
                 n 1fsgbg "Aha!{w=0.2} I knew it!"
-                n 1fsqbg "Nobody can resist some fun in the sun,{w=0.1} am I right?"
+                n 4fsqbg "Nobody can resist some fun in the sun,{w=0.1} am I right?"
                 n 1fnmbg "I'm glad we both agree,{w=0.1} [player].{w=0.5}{nw}"
-                extend 1fchsm " Ehehe."
+                extend 3fchsm " Ehehe."
 
                 $ persistent.jn_player_favourite_season = "Summer"
 
             "Autumn":
                 n 1unmaj "Autumn?{w=0.5}{nw}"
-                extend 1nllaj " Not a bad choice,{w=0.1} actually!"
+                extend 4nllaj " Not a bad choice,{w=0.1} actually!"
                 n 1ullsm "I like when it's still warm enough in the day to go out and do things..."
-                n 1ucsss "But you also get that crisp,{w=0.1} fresh morning air to wake you up."
+                n 4ucsss "But you also get that crisp,{w=0.1} fresh morning air to wake you up."
                 n 1ullaj "The falling leaves are super pretty too."
-                n 1fcsan "It's just...{w=0.5}{nw}"
-                extend 1fsrsr " it's all ruined when the rain comes,{w=0.1} you know?"
-                n 1fsqsr "Trudging through all those sloppy leaves is just gross.{w=0.5}{nw}"
+                n 2fcsan "It's just...{w=0.5}{nw}"
+                extend 4fsrsr " it's all ruined when the rain comes,{w=0.1} you know?"
+                n 2fsqsr "Trudging through all those sloppy leaves is just gross.{w=0.5}{nw}"
                 extend 1fcssf " No thanks!"
 
                 $ persistent.jn_player_favourite_season = "Autumn"
@@ -1396,20 +1396,20 @@ label talk_favourite_season:
             "Winter":
                 n 1tnmsf "Huh?{w=0.2} Really?"
                 n 1tnmaj "Winter is the last thing I expected you to say,{w=0.1} [player]!"
-                n 1tlrbo "Though...{w=0.3} I get it, kinda."
+                n 4tlrbo "Though...{w=0.3} I get it, kinda."
                 n 1fcsbg "It's the perfect time of year to get super snug and spend some quality reading time!"
-                n 1fslss "Especially since there's not much you can do outside,{w=0.1} anyway."
+                n 2fslss "Especially since there's not much you can do outside,{w=0.1} anyway."
 
                 $ persistent.jn_player_favourite_season = "Winter"
 
     # Player has already shared their favourite season
     else:
         n 1tllbo "Hang on...{w=0.5}{nw}"
-        extend 1tnmss " didn't we talk about this before,{w=0.1} [player]?"
+        extend 4tnmss " didn't we talk about this before,{w=0.1} [player]?"
         n 1nlrpu "Well,{w=0.1} anyway..."
         n 1ucsbg "I still love summer,{w=0.1} as you know{w=0.1} -{w=0.3}{nw}"
-        extend 1fcsbg " and nothing's gonna change that any time soon!"
-        n 1tsqsg "What about you,{w=0.1} [player]?"
+        extend 3fcsbg " and nothing's gonna change that any time soon!"
+        n 4tsqsg "What about you,{w=0.1} [player]?"
         menu:
             n "Still rooting for [persistent.jn_player_favourite_season]?"
             "Yes.":
@@ -1419,12 +1419,12 @@ label talk_favourite_season:
                     n 1uchbg "You already picked the best season,{w=0.1} after all!"
 
                 else:
-                    n 1fllss "Well...{w=0.3} I'm afraid you're not gonna sway me!{w=0.5}{nw}"
+                    n 4fllss "Well...{w=0.3} I'm afraid you're not gonna sway me!{w=0.5}{nw}"
                     extend 1uchbg " Ahaha!"
 
             "No.":
-                n 1tsgbg "Oh?{w=0.2} Changed our mind,{w=0.1} have we?"
-                n 1tsqss "Well?{w=0.5}{nw}"
+                n 3tsgbg "Oh?{w=0.2} Changed our mind,{w=0.1} have we?"
+                n 3tsqss "Well?{w=0.5}{nw}"
                 extend 1fchbg " Tell me then,{w=0.1} [player]!"
                 menu:
                     n "What's your favourite season?"
@@ -1444,18 +1444,18 @@ label talk_favourite_season:
                 $ season_preference_changed = False
                 if persistent.jn_player_favourite_season == new_favourite_season:
                     n 1fnmgs "Hey!{w=0.2} [player]!"
-                    n 1fsqpo "I thought you said you'd changed your mind?"
-                    n 1fllem "You haven't changed your mind at all!{w=0.2} You said [persistent.jn_player_favourite_season] last time,{w=0.1} too!"
+                    n 3fsqpo "I thought you said you'd changed your mind?"
+                    n 3fllem "You haven't changed your mind at all!{w=0.2} You said [persistent.jn_player_favourite_season] last time,{w=0.1} too!"
                     $ chosen_tease = jn_utils.getRandomTease()
                     n 1fcsem "Jeez...{w=0.5}{nw}"
-                    extend 1fnmpo " you're such a wind-up sometimes,{w=0.1} [chosen_tease]!"
+                    extend 2fnmpo " you're such a wind-up sometimes,{w=0.1} [chosen_tease]!"
 
                     if Natsuki.isAffectionate(higher=True):
-                        n 1flrpol "N-{w=0.1}not that I {i}dislike{/i} that side of you,{w=0.1} o-{w=0.1}or anything."
+                        n 2flrpol "N-{w=0.1}not that I {i}dislike{/i} that side of you,{w=0.1} o-{w=0.1}or anything."
 
                     else:
                         n 1fsqsm "But...{w=0.3} I think I can {i}weather{/i} it."
-                        n 1fsrss "For now."
+                        n 4fsrss "For now."
 
                 else:
                     $ persistent.jn_player_favourite_season = new_favourite_season
@@ -1464,28 +1464,28 @@ label talk_favourite_season:
                 if season_preference_changed and persistent.jn_player_favourite_season == "Spring":
                     n 1usqss "Ooh?{w=0.2} Favouring Spring now,{w=0.1} [player]?"
                     n 1nlrbo "I could do without all the rain,{w=0.1} but I get it."
-                    n 1flrpu "Hmm...{w=0.3} Spring..."
+                    n 3flrpu "Hmm...{w=0.3} Spring..."
                     n 1tlrbo "I wonder...{w=0.5}{nw}"
-                    extend 1tnmss " do you grow anything,{w=0.1} [player]?"
+                    extend 4tnmss " do you grow anything,{w=0.1} [player]?"
                     n 1fchsm "Ahaha."
 
                 elif season_preference_changed and persistent.jn_player_favourite_season == "Summer":
                     n 1fchbs "Aha!{w=0.2} See?"
-                    n 1fsqbs "You knew I was right all along,{w=0.1} didn't you?"
-                    n 1usqsg "Don't even try to deny it,{w=0.1} [player].{w=0.5}{nw}"
+                    n 4fsqbs "You knew I was right all along,{w=0.1} didn't you?"
+                    n 3usqsg "Don't even try to deny it,{w=0.1} [player].{w=0.5}{nw}"
                     extend 1fchbg " Summer is the best!"
                     n 1uchsm "I'm just glad you came around.{w=0.2} That's the important thing!"
 
                 elif season_preference_changed and persistent.jn_player_favourite_season == "Autumn":
-                    n 1usqsm "Oh?{w=0.2} You've taken the {i}fall{/i} for Autumn,{w=0.1} have you?"
+                    n 4usqsm "Oh?{w=0.2} You've taken the {i}fall{/i} for Autumn,{w=0.1} have you?"
                     n 1fchsm "Ehehe."
                     n 1ullss "I'll admit,{w=0.1} it's a pretty season,{w=0.1} with all the golden leaves and stuff..."
-                    n 1nslss "So long as the weather stays warm,{w=0.1} anyway."
+                    n 2nslss "So long as the weather stays warm,{w=0.1} anyway."
 
                 elif season_preference_changed and persistent.jn_player_favourite_season == "Winter":
                     n 1tllss "Winter,{w=0.1} huh?{w=0.2} I wasn't expecting that."
-                    n 1tnmbo "Do you prefer being indoors now or something,{w=0.1} [player]?"
-                    n 1flrss "Well,{w=0.1} if you prefer being all cosy inside..."
+                    n 3tnmbo "Do you prefer being indoors now or something,{w=0.1} [player]?"
+                    n 4flrss "Well,{w=0.1} if you prefer being all cosy inside..."
                     n 1fsqsm "Then you better not be slacking on your reading,{w=0.1} [player]!{w=0.5}{nw}"
                     extend 1fchsm " Ehehe."
 
@@ -1510,9 +1510,9 @@ label talk_favourite_season:
     ):
         n 1flrpu "..."
         n 1ulraj "Actually,{w=0.3}{nw}"
-        extend 1fnmss " you know what?"
+        extend 3fnmss " you know what?"
         n 1fcsss "Give me a sec here.{w=0.75}{nw}"
-        extend 1uchgnl " I've got {i}just{/i} the thing!{w=1}{nw}"
+        extend 3uchgnl " I've got {i}just{/i} the thing!{w=1}{nw}"
 
         show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         $ jnPause(1)
@@ -1552,8 +1552,8 @@ label talk_favourite_season:
         n 1fsqsm "..."
         n 1tsqssl "...Well,{w=0.2} [player]?{w=1}{nw}"
         extend 1tcsssl " You gotta admit..."
-        n 1fsqss "Whatever your preference?"
-        n 1fcsbgedz "My fashion is {i}always{/i} in-season."
+        n 3fsqss "Whatever your preference?"
+        n 4fcsbgedz "My fashion is {i}always{/i} in-season."
         n 1fchsml "Ehehe."
 
     return
@@ -1577,30 +1577,30 @@ init 5 python:
 label talk_time_management:
     n 1ullaj "Hey,{w=0.1} [player]..."
     n 1unmaj "Do you have off days sometimes?{w=0.2} Where you struggle to get anything done?"
-    n 1flrpo "Or you just get distracted super easily?"
-    n 1unmbo "To be honest?{nw}"
-    extend 1fllss "{w=0.2} I struggled with that for a while.{nw}"
-    extend 1fbkwr "{w=0.2} Especially when things like assignments are so boring!"
+    n 3flrpo "Or you just get distracted super easily?"
+    n 4unmbo "To be honest?{nw}"
+    extend 3fllss "{w=0.2} I struggled with that for a while.{nw}"
+    extend 3fbkwr "{w=0.2} Especially when things like assignments are so boring!"
     n 1nllaj "But...{w=0.5}{nw}"
     extend 1fllbg " I figured out a way of managing that{w=0.1} -{w=0.1} and you should know it too,{w=0.1} [player]!"
     n 1fchbg "Time boxing!"
-    n 1nsqpo "And no,{w=0.1} it's not as literal as it sounds."
+    n 3nsqpo "And no,{w=0.1} it's not as literal as it sounds."
     n 1nnmaj "The idea is that you set aside a period during the day you want to work{w=0.1} -{w=0.1} like the school day,{w=0.1} or a few hours in the evening."
-    n 1fnmbg "Then for each hour in that period,{w=0.1} you split it!"
+    n 4fnmbg "Then for each hour in that period,{w=0.1} you split it!"
     n 1ulraj "So for any given hour,{w=0.1} you spend most of that working,{w=0.1} and the remainder on some kind of break."
     n 1unmss "The idea is that it becomes way easier to stay focused and motivated since you always have a breather coming up."
     n 1uchsm "Personally,{w=0.1} I find a 50/10 split works best for me."
-    n 1nllbo "So I spend 50 minutes of each hour studying,{w=0.3}{nw}"
+    n 2nllbo "So I spend 50 minutes of each hour studying,{w=0.3}{nw}"
     extend 1uchsm " and 10 minutes doing whatever I want."
-    n 1usqbg "You'd be surprised how much manga time I can sneak in!"
+    n 4usqbg "You'd be surprised how much manga time I can sneak in!"
     n 1unmaj "Don't just take my schedule as a rule though.{w=0.5}{nw}"
     extend 1fchbg " Find a balance that works for you, [player]!"
-    n 1fslbg "Though I should remind you...{w=0.3} the key word here is {i}balance{/i}."
+    n 3fslbg "Though I should remind you...{w=0.3} the key word here is {i}balance{/i}."
     n 1fsqsr "I'm not gonna be impressed if you work too much...{w=0.5}{nw}"
-    extend 1fnmpo " Or just slack off!"
+    extend 4fnmpo " Or just slack off!"
     if Natsuki.isAffectionate(higher=True):
         n 1ullbo "Although...{w=0.3} now that I think about it..."
-        n 1tsqsm "Perhaps I should timebox our time together,{w=0.1} [player]."
+        n 3tsqsm "Perhaps I should timebox our time together,{w=0.1} [player]."
         extend 1uchbselg " Ahaha!"
 
     return
