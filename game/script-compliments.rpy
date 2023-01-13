@@ -272,33 +272,48 @@ label compliment_confident:
     $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_confident").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_CONFIDENT:
-        if Natsuki.isEnamored(higher=True):
-            n 1fchbg "Ehehe.{w=0.2} I'm glad you still think so,{w=0.2} [player]!"
-            n 1uchsm "That's what it means to be a pro,{w=0.2} right?"
-            n 1kllss "Ahaha..."
+        n 1fcssmleme "Ehehe.{w=0.5}{nw}"
+        extend 2fcsbg " Well,{w=0.2} I'm glad you still agree,{w=0.2} [player]!"
+        n 2fllsm "Besides,{w=0.5}{nw}"
+        extend 2fcssm " it's only natural."
+        
+        if Natsuki.isEnamoured(higher=True):
+            n 4nslssl "E-{w=0.2}especially with you around,"
+            extend 3fchbll " you goof."
 
         else:
-            n 1fchbg "Ahaha.{w=0.2} I'm glad you still think so, [player]!"
-            n 1uchsm "I try my best,{w=0.2} after all."
-
+            n 2fcsbg "Full of confidence,{w=0.5}{nw}"
+            extend 2flrbs " always unfazed..."
+            n 3uchgnl "...That's just what it means to be a pro,{w=0.2} right?"
+    
     else:
+        n "Oho?{w=1}{nw}"
+        extend " I do,{w=0.2} do I?"
+        n "Now that's {i}just{/i} what I like to hear!"
+        n "After all,{w=0.5}{nw}"
+        extend " don't I just radiate confidence?"
+        n " Come on,{w=0.2} [player]!{w=0.75}{nw}"
+        extend " No need to be shy!{w=0.5}{nw}"
+        extend " Is it the eyes?"
+        n "The smile?"
+        n "The {i}killer{/i} personality?"
+        n "Ehehe."
+        n "Whatever it is..."
+        
+        if Natsuki.isLove(higher=True):
+            n "..."
+            n "I-{w=0.2}I hope I inspire you just as much as you inspire me."
+            extend " Ehehe."
+            n "L-{w=0.2}love you,{w=0.2} [player]!"
+
         if Natsuki.isEnamored(higher=True):
-            n 1fchbg "Ehehe.{w=0.2} I just radiate confidence,{w=0.2} don't I?"
-            n 1kllss "..."
-            n 1kllsl "Well...{w=0.3} to tell you the truth,{w=0.2} [player]."
-            n 1fcssr "I...{w=0.3} really...{w=0.3} wish I could say it was {i}all{/i} genuine."
-            n 1kllsr "But having you here with me...{w=0.3} it helps,{w=0.2} you know.{w=0.2} A lot."
-            n 1klrss "So...{w=0.3} thanks,{w=0.2} [player].{w=0.2} Really."
+            n "I hope I inspire some confidence in you too!"
+            n "N-{w=0.2}not that you need it {i}too{/i} much,{w=0.2} a-{w=0.2}anyway."
+            n "Y-{w=0.2}you're welcome,{w=0.2} [player]!"
 
         else:
-            n 1uskajl "H-{w=0.2}huh?"
-            n 1fchbgl "O-{w=0.2}oh!{w=0.2} Well of course you do!"
-            n 1fcsbgl "I have a lot to be confident about,{w=0.2} after all!"
-            n 1flrssl "Wouldn't you agree?"
-
-            if Natsuki.isEnamored(higher=True):
-                n 1uchgnl "Oh,{w=0.2} who am I kidding.{w=0.2} Of course you do."
-                n 1uchbslelg "Ahaha!"
+            n "I hope I inspire some confidence in you too."
+            n "You're welcome,{w=0.2} [player]!"
 
     $ jn_compliments.last_compliment_type = jn_compliments.TYPE_CONFIDENT
     return
