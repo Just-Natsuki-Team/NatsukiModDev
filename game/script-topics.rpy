@@ -2057,60 +2057,60 @@ init 5 python:
 label talk_drinking_alcohol:
     n 1tnmss "Do I drink alcohol?"
     extend 1tllss " Well...{w=0.3} I can't say I've ever tried it."
-    n 1nllsr "I just don't think it's something for me."
+    n 2nllsr "I just don't think it's something for me."
     n 1ullpu "That being said,{w=0.1} I knew people who {i}did{/i} drink it..."
     n 1kcspu "But...{w=0.3} I'd...{w=0.3} really rather not get into that,{w=0.1} [player]."
     n 1ncssr "Sorry."
-    n 1tlrpu "..."
-    n 1uwdajesu "Oh!{w=0.5}{nw}"
-    extend 1fllss " That reminds me,{w=0.1} actually!"
+    n 2tlrpu "..."
+    n 4uwdajesu "Oh!{w=0.5}{nw}"
+    extend 4fllss " That reminds me,{w=0.1} actually!"
     n 1fnmbg "I bet you didn't know,{w=0.1} but guess who just randomly brought some into the club one day?"
     n 1fchgn "...Yuri!"
-    n 1tnmbg "Surprised?{w=0.5}{nw}"
+    n 4tnmbg "Surprised?{w=0.5}{nw}"
     extend 1fcsss " I know,{w=0.1} right?"
-    n 1tllss "I mean...{w=0.3} it was just completely out of the blue!"
+    n 3tllss "I mean...{w=0.3} it was just completely out of the blue!"
     n 1uchbs "She just slipped it out from her bag like it was a book or something."
-    n 1unmbo "It wasn't even just some random supermarket stuff either...{w=0.5}{nw}"
+    n 4unmbo "It wasn't even just some random supermarket stuff either...{w=0.5}{nw}"
     extend 1uwdaj " it looked super expensive too!"
-    n 1kllss "Honestly,{w=0.1} I couldn't help myself.{w=0.2} I just burst into laughter."
+    n 3kllss "Honestly,{w=0.1} I couldn't help myself.{w=0.2} I just burst into laughter."
     n 1ullun "I think it was just how non-chalant she was being about it all,{w=0.1} really."
-    n 1nnmsl "Monika didn't look impressed,{w=0.1} though..."
+    n 4nnmsl "Monika didn't look impressed,{w=0.1} though..."
     n 1klrsl "And Sayori...{w=0.3} she just got really upset.{w=0.5}{nw}"
-    extend 1klrpu " She was shouting and everything!"
+    extend 2klrpu " She was shouting and everything!"
     n 1kcspu "It looked like Yuri put a lot of thought into picking something out,{w=0.1} but she was just given a hard time over for it..."
     n 1kcssr "I mean...{w=0.5}{nw}"
     extend 1kllsr " I know we shouldn't have had it in there at all,{w=0.1} and Yuri should have known better."
-    n 1fslsr "But she didn't deserve all of...{w=0.5}{nw}"
-    extend 1kslsr " that."
+    n 2fslsr "But she didn't deserve all of...{w=0.5}{nw}"
+    extend 2kslsr " that."
     n 1kslaj "I think she was just trying to be nice,{w=0.1} you know?"
-    n 1unmsr "It's all in the past now,{w=0.1} obviously.{w=0.5}{nw}"
-    extend 1kslsr " But...{w=0.3} that doesn't mean I don't still feel bad about it sometimes."
+    n 4unmsr "It's all in the past now,{w=0.1} obviously.{w=0.5}{nw}"
+    extend 2kslsr " But...{w=0.3} that doesn't mean I don't still feel bad about it sometimes."
     n 1kcssr "..."
     if Natsuki.isAffectionate(higher=True):
         n 1kllsr "Hey...{w=0.5}{nw}"
-        extend 1knmpu " [player]?"
+        extend 4knmpu " [player]?"
         n 1klrsr "Can you promise me something?"
-        n 1fcssr "It's dumb,{w=0.1} but I don't care."
+        n 2fcssr "It's dumb,{w=0.1} but I don't care."
         n 1nnmsl "It doesn't really matter to me if you drink or not."
-        n 1klrpu "But...{w=0.3} if you do?"
-        n 1ksqsr "Please just take it all in moderation,{w=0.1} okay?"
-        n 1kllsr "I've...{w=0.5}{nw}"
-        extend 1fcsan " seen...{w=0.5}{nw}"
+        n 2klrpu "But...{w=0.3} if you do?"
+        n 4ksqsr "Please just take it all in moderation,{w=0.1} okay?"
+        n 2kllsr "I've...{w=0.5}{nw}"
+        extend 2fcsan " seen...{w=0.5}{nw}"
         extend 1fcssr " what it can do to people."
         n 1kslsr "...Firsthand."
-        n 1ksqsl "You deserve better than that,{w=0.1} [player].{w=0.5}{nw}"
-        extend 1kslun " You {i}are{/i} better than that."
+        n 4ksqsl "You deserve better than that,{w=0.1} [player].{w=0.5}{nw}"
+        extend 4kslun " You {i}are{/i} better than that."
         if Natsuki.isLove(higher=True):
             n 1kcsun "..."
             n 1ksqsml "I love you,{w=0.1} [player]."
-            n 1fcssrl "I'm {w=0.3}{i}never{/i}{w=0.3} going to let a bottle get between us."
+            n 3fcssrl "I'm {w=0.3}{i}never{/i}{w=0.3} going to let a bottle get between us."
 
     else:
-        n 1unmsr "Hey,{w=0.1} [player]?"
+        n 4unmsr "Hey,{w=0.1} [player]?"
         n 1nllaj "I don't really care that much if you drink or not."
-        n 1ncssr "Just...{w=0.3} go easy on the stuff."
-        n 1flleml "B-{w=0.1}but only because I'm not gonna clean up after you!"
-        n 1fllss "Ahaha..."
+        n 2ncssr "Just...{w=0.3} go easy on the stuff."
+        n 2flleml "B-{w=0.1}but only because I'm not gonna clean up after you!"
+        n 2fllss "Ahaha..."
         n 1kllsr "..."
 
     return
@@ -2137,25 +2137,25 @@ label talk_driving:
     $ chosen_tease = jn_utils.getRandomTease()
 
     if already_discussed_driving:
-        n 1tnmboeqm "...Huh?{w=0.75}{nw}"
+        n 4tnmboeqm "...Huh?{w=0.75}{nw}"
         extend 1tllsssbr " I already told you I can't drive,{w=0.2} [chosen_tease]!"
         n 1fchgnelg "I still don't have a license,{w=0.2} remember?"
-        n 1tllaj "And even if I wanted to,{w=0.5}{nw}"
-        extend 1nslposbl " I don't think I could afford it..."
+        n 3tllaj "And even if I wanted to,{w=0.5}{nw}"
+        extend 3nslposbl " I don't think I could afford it..."
 
     else:
         n 1fchdvesi "Pffft!{w=0.5}{nw}"
         extend 1uchbselg " Ahaha!"
-        n 1fchgn "What kind of a question is that,{w=0.1} [player]?"
+        n 3fchgn "What kind of a question is that,{w=0.1} [player]?"
         n 1tllss "Of course I can't drive,{w=0.1} [chosen_tease]!{w=0.5}{nw}"
-        extend 1fchgn " I don't even have a license!"
-        n 1kllpo "I mean...{w=0.3} even if I wanted to learn,{w=0.1} I don't think I could afford it."
+        extend 4fchgn " I don't even have a license!"
+        n 2kllpo "I mean...{w=0.3} even if I wanted to learn,{w=0.1} I don't think I could afford it."
 
     n 1uskgs "Lessons are super expensive nowadays!"
-    n 1fslem "And then there's tests,{w=0.1} insurance,{w=0.1} fuel,{w=0.1} parking...{w=0.5}{nw}"
+    n 3fslem "And then there's tests,{w=0.1} insurance,{w=0.1} fuel,{w=0.1} parking...{w=0.5}{nw}"
     extend 1fsqaj " it's actually pretty gross how fast it all adds up."
     n 1nlraj "I think I'd rather stick to public transport and my own two feet."
-    n 1unmaj "But what about you,{w=0.1} [player]?"
+    n 4unmaj "But what about you,{w=0.1} [player]?"
     show natsuki 1tnmss at jn_center
 
     # Player has never confirmed if they can/cannot drive
@@ -2165,53 +2165,53 @@ label talk_driving:
 
             "Yes, and I do currently.":
                 n 1uwdaj "Wow..."
-                extend 1fsraj " ...{w=0.3}show-off."
+                extend 3fsraj " ...{w=0.3}show-off."
                 n 1fsqpo "..."
                 n 1fchbg "Relax,{w=0.1} [player]!{w=0.2} Jeez!{w=0.5}{nw}"
                 extend 1nchsm " I'm just messing with you."
-                n 1unmbg "That's awesome though{w=0.1} -{w=0.1} you just can't beat the convenience of a car,{w=0.1} right?"
+                n 4unmbg "That's awesome though{w=0.1} -{w=0.1} you just can't beat the convenience of a car,{w=0.1} right?"
 
                 if Natsuki.isAffectionate(higher=True):
                     n 1fllbg "But I should probably warn you..."
-                    n 1fsgsm "I'm picking the songs for our driving playlist."
-                    extend 1uchbgelg " Ahaha!"
+                    n 3fsgsm "I'm picking the songs for our driving playlist."
+                    extend 3uchbgelg " Ahaha!"
 
                 else:
-                    n 1fllbg "Just remember,{w=0.1} [player]..."
-                    n 1fsgsm "I call shotgun.{w=0.5}{nw}"
+                    n 2fllbg "Just remember,{w=0.1} [player]..."
+                    n 4fsgsm "I call shotgun.{w=0.5}{nw}"
 
                 $ persistent.jn_player_can_drive = True
                 return
 
             "Yes, but I don't right now.":
-                n 1unmaj "Oh?{w=0.2} Is something wrong with your car,{w=0.1} [player]?"
-                n 1tllbo "Or perhaps...{w=0.3} you just don't own one at the moment?"
+                n 4unmaj "Oh?{w=0.2} Is something wrong with your car,{w=0.1} [player]?"
+                n 2tllbo "Or perhaps...{w=0.3} you just don't own one at the moment?"
                 n 1nnmsm "Well,{w=0.1} I'm not one to judge.{w=0.2} I'm sure you manage just fine."
-                n 1flrss "Besides,{w=0.1} you're helping the environment too,{w=0.1} right?"
+                n 2flrss "Besides,{w=0.1} you're helping the environment too,{w=0.1} right?"
 
                 if Natsuki.isAffectionate(higher=True):
                     n 1fsgsm "Thoughtful as always,{w=0.1} [player]."
-                    extend 1nchsm " Ehehe."
+                    extend 4nchsm " Ehehe."
 
                 $ persistent.jn_player_can_drive = True
                 return
 
             "No, I can't.":
-                n 1klrsl "Oh..."
+                n 2klrsl "Oh..."
                 n 1flrss "Well,{w=0.3}{nw}"
                 extend 1fchbg " chin up,{w=0.1} [player]!{w=0.2} It isn't the end of the world."
                 n 1usgsg "Don't worry -{w=0.3}{nw}"
                 extend 1fsgsm " I'll teach you how to use the bus!"
-                n 1uchsm "Ehehe."
+                n 4uchsm "Ehehe."
 
                 if Natsuki.isEnamored(higher=True):
                     n 1fllsm "And besides..."
-                    n 1fllssl "That just means we can huddle up on the seat together,{w=0.1} [player]."
+                    n 3fllssl "That just means we can huddle up on the seat together,{w=0.1} [player]."
                     n 1fcsbgl "A dream come true for you,{w=0.1} right?"
-                    n 1flldvl "Ehehe."
+                    n 4flldvl "Ehehe."
 
                 else:
-                    n 1fchbg "That's what friends are for, [player]!"
+                    n 4fchbg "That's what friends are for, [player]!"
 
                 $ persistent.jn_player_can_drive = False
                 return
@@ -2223,21 +2223,21 @@ label talk_driving:
 
             "Yes, I'm driving frequently.":
                 n 1fnmbg "Ah,{w=0.1}  so you're at home on the roads,{w=0.1} are you?"
-                n 1ullss "Fair enough I suppose -{w=0.1} just remember to drive safe,{w=0.1} [player]!"
+                n 4ullss "Fair enough I suppose -{w=0.1} just remember to drive safe,{w=0.1} [player]!"
 
             "I only drive sometimes.":
-                n 1ullss "Well hey,{w=0.1} at least you're saving on fuel,{w=0.1} right?{w=0.5}{nw}"
+                n 4ullss "Well hey,{w=0.1} at least you're saving on fuel,{w=0.1} right?{w=0.5}{nw}"
                 extend 1ullsm " That doesn't sound like a bad thing to me."
                 n 1fchsm "Besides,{w=0.1} it just means you can save the miles for ones you enjoy!"
 
             "No, I'm not driving much.":
-                n 1unmaj "Oh?{w=0.5}{nw}"
+                n 4unmaj "Oh?{w=0.5}{nw}"
                 extend 1tllbg " That sounds like a bonus to me,{w=0.1} honestly!"
                 n 1tnmbg "Just make sure you still get out there if you aren't driving around much though,{w=0.1} 'kay?"
 
             "No, I can't drive anymore.":
-                n 1tnmsl "Oh...{w=0.3} did something happen?"
-                n 1kllsl "I'm...{w=0.3} sorry to hear it,{w=0.1} [player]."
+                n 4tnmsl "Oh...{w=0.3} did something happen?"
+                n 3kllsl "I'm...{w=0.3} sorry to hear it,{w=0.1} [player]."
                 n 1fsgsm "But at least that means more time to hang out with me,{w=0.1} right?{w=0.5}{nw}"
                 extend 1fchbg " Ahaha."
                 $ persistent.jn_player_can_drive = False
@@ -2250,33 +2250,33 @@ label talk_driving:
             n "Anything new happening with you on the driving front?"
 
             "I'm learning to drive!":
-                n 1fnmss "Ooh!{w=0.5}{nw}"
+                n 4fnmss "Ooh!{w=0.5}{nw}"
                 extend 1fchbg " Nice,{w=0.1} [player]!"
                 n 1fchsm "Don't sweat the test,{w=0.1} alright?{w=0.2} I'm sure you'll do fine!"
 
                 if Natsuki.isAffectionate(higher=True):
-                    n 1uchsm "I believe in you,{w=0.1} [player]!"
+                    n 4uchsm "I believe in you,{w=0.1} [player]!"
 
             "I passed my test!":
-                n 1uskgs "No kidding?{w=0.5}{nw}"
-                extend 1uchbs " Yaaay!{w=0.2} Congrats,{w=0.1} [player]!"
+                n 4uskgs "No kidding?{w=0.5}{nw}"
+                extend 3uchbs " Yaaay!{w=0.2} Congrats,{w=0.1} [player]!"
 
                 if Natsuki.isLove(higher=True):
-                    n 1kwmsm "I knew you could do it,{w=0.1} you big dummy!"
-                    extend 1kchsm " Ehehe."
+                    n 4kwmsm "I knew you could do it,{w=0.1} you big dummy!"
+                    extend 4kchsm " Ehehe."
 
-                n 1kwmsm "Just make sure you keep up the good habits when you continue learning on your own,{w=0.1} alright?{w=0.2} Ahaha."
+                n 3kwmsm "Just make sure you keep up the good habits when you continue learning on your own,{w=0.1} alright?{w=0.2} Ahaha."
                 $ persistent.jn_player_can_drive = True
 
             "I can drive again!":
-                n 1uchbgedz "Hey!{w=0.2} Nice going,{w=0.1} [player]!"
+                n 3uchbgedz "Hey!{w=0.2} Nice going,{w=0.1} [player]!"
                 n 1fchbl "Drive safe!"
                 $ persistent.jn_player_can_drive = True
 
             "Nope, nothing new.":
-                n 1unmaj "Oh?{w=0.5}{nw}"
+                n 4unmaj "Oh?{w=0.5}{nw}"
                 extend 1nlrss " Well,{w=0.1} fair enough!"
-                n 1tnmsm "You and me both then,{w=0.1} in that case?{w=0.5}{nw}"
+                n 2tnmsm "You and me both then,{w=0.1} in that case?{w=0.5}{nw}"
                 extend 1nchsm " Ahaha."
 
         return
@@ -2300,8 +2300,8 @@ init 5 python:
 
 label talk_sustainable_fashion:
     n 1nnmaj "Hey,{w=0.1} [player]..."
-    n 1nllaj "This is kinda random,{w=0.1} but..."
-    extend 1unmpu " are you into fashion?"
+    n 3nllaj "This is kinda random,{w=0.1} but..."
+    extend 4unmpu " are you into fashion?"
     if Natsuki.isHappy(higher=True):
         n 1fcsbg "I know I am!{w=0.2} Can you tell?"
         extend 1nchsm " Ehehe."
@@ -2309,41 +2309,41 @@ label talk_sustainable_fashion:
     else:
         n 1nnmpu "I know I am."
 
-    n 1fllpu "But what caught me by surprise is just how much waste there is."
+    n 3fllpu "But what caught me by surprise is just how much waste there is."
 
     if Natsuki.isNormal(higher=True):
         n 1uwdgs "Seriously,{w=0.1} [player] {w=0.1}-{w=0.1} it's insane!"
         n 1ullaj "People throw away a {i}lot{/i} of clothing...{w=0.5}{nw}"
-        extend 1flrem " it's estimated that we toss out around 90{w=0.3} {i}million{/i}{w=0.3} tonnes every year."
+        extend 3flrem " it's estimated that we toss out around 90{w=0.3} {i}million{/i}{w=0.3} tonnes every year."
         n 1fnman "That's a truck-full every second!{w=0.2} What a waste!"
 
     else:
         n 1nllbo "It's pretty insane, honestly."
-        n 1fnmsl "I remember reading somewhere that we toss out something like 90{w=0.3} {i}million{/i}{w=0.3} tonnes each year."
+        n 2fnmsl "I remember reading somewhere that we toss out something like 90{w=0.3} {i}million{/i}{w=0.3} tonnes each year."
         n 1fcsan "That's literally a truck-full {i}every{w=0.3} second{/i}."
 
-    n 1fsrem "And we haven't even began to talk about the amount of water used for washing and plastic used for packaging too."
+    n 2fsrem "And we haven't even began to talk about the amount of water used for washing and plastic used for packaging too."
     n 1ksrsr "...Or the conditions some of the workers making our clothes have to put up with."
 
     if Natsuki.isNormal(higher=True):
         n 1fcssm "It's actually one of the reasons I began learning how to sew!"
-        n 1klrsr "I've...{w=0.3} never had tons of money to buy more clothes anyway,{w=0.1} so I try to reuse and fix up what I can."
+        n 2klrsr "I've...{w=0.3} never had tons of money to buy more clothes anyway,{w=0.1} so I try to reuse and fix up what I can."
         n 1fchbg "But you'd be surprised at what you can pull off with a little creativity!"
         extend 1fcssm " And just a pinch of know-how too,{w=0.1} obviously."
-        n 1fchgn "Betcha didn't know my favourite pink skirt was hand-made,{w=0.1} did you?"
+        n 4fchgn "Betcha didn't know my favourite pink skirt was hand-made,{w=0.1} did you?"
 
     n 1unmaj "I think I've lectured you enough now,{w=0.1} [player],{w=0.1} so I won't keep harping on about it."
-    n 1nllpu "But...{w=0.3} the next time you're out shopping for clothes,{w=0.1} or looking through some catalogues online?"
-    n 1unmpu "Just spare a thought for the environment,{w=0.1} would you?"
+    n 3nllpu "But...{w=0.3} the next time you're out shopping for clothes,{w=0.1} or looking through some catalogues online?"
+    n 3unmpu "Just spare a thought for the environment,{w=0.1} would you?"
 
     if Natsuki.isAffectionate(higher=True):
         n 1kllssl "For me?"
         n 1nchbg "Ahaha.{w=0.5}{nw}"
-        extend 1uchsm " Thanks,{w=0.1} [player]!"
+        extend 4uchsm " Thanks,{w=0.1} [player]!"
 
     elif Natsuki.isNormal(higher=True):
         n 1nchbg "Ahaha.{w=0.5}{nw}"
-        extend 1uchsm " Thanks,{w=0.1} [player]!"
+        extend 4uchsm " Thanks,{w=0.1} [player]!"
 
     else:
         n 1nllsl "Thanks."
