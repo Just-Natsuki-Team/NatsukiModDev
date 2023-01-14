@@ -4198,94 +4198,94 @@ label talk_how_do_you_feel_about_me:
     if Natsuki.isLove(higher=True):
 
         if persistent.jn_player_love_you_count > 0:
-            n 1kwmpof "[player]...{w=0.3} isn't it obvious? You know I love you already,{w=0.1} right?"
-            n 1fllpol "Jeez...{w=0.3} you really are a dork sometimes,{w=0.1} you know."
+            n 3kwmpof "[player]...{w=0.3} isn't it obvious? You know I love you already,{w=0.1} right?"
+            n 3fllpol "Jeez...{w=0.3} you really are a dork sometimes,{w=0.1} you know."
             n 1kllssl "But...{w=0.3} I kinda like that silly part of you,{w=0.1} [player]."
             n 1nwmbgl "Never change,{w=0.1} 'kay? Ehehe."
-            n 1nchbgl "Love you,{w=0.1} [player]~!"
+            n 4nchbgl "Love you,{w=0.1} [player]~!"
 
         else:
             n 1fcsanf "Nnnnnnn-!"
-            n 1fnmanf "C-{w=0.1}come on! Isn't it obvious by now? Jeez...{w=0.5}{nw}"
-            n 1fllpof "Do I really have to spell it out for you,{w=0.1} [player]?"
+            n 4fnmanf "C-{w=0.1}come on! Isn't it obvious by now? Jeez...{w=0.5}{nw}"
+            n 2fllpof "Do I really have to spell it out for you,{w=0.1} [player]?"
             n 1fcspolesi "Ugh...{w=0.5}{nw}"
             n 1fsqssl "Heh.{w=0.2} Actually,{w=0.1} you know what?"
-            n 1fsqbgl "I'll let you figure it out."
+            n 4fsqbgl "I'll let you figure it out."
             n 1fslajl "And no,{w=0.1} before you ask -{w=0.1} you've had enough hints already."
-            n 1fllpol "Dummy..."
+            n 2fllpol "Dummy..."
 
         return
 
     elif Natsuki.isEnamored(higher=True):
         n 1fcsanf "Uuuuuu-!"
-        n 1fskwrf "A-{w=0.1}are you trying to put me on the spot or something,{w=0.1} [player]?"
-        n 1fllemf "Jeez...{w=0.5}{nw}"
+        n 4fskwrf "A-{w=0.1}are you trying to put me on the spot or something,{w=0.1} [player]?"
+        n 2fllemf "Jeez...{w=0.5}{nw}"
         n 1fcseml "You should {i}know{/i} what I think of you by now...{w=0.5}{nw}"
-        n 1fllpol "...{w=0.5}{nw}"
-        n 1kcspol "...{w=0.3}Fine."
-        n 1fcspol "I...{w=0.3} like...{w=0.3} you,{w=0.1} [player].{w=0.2} A bunch."
+        n 2fllpol "...{w=0.5}{nw}"
+        n 2kcspol "...{w=0.3}Fine."
+        n 4fcspol "I...{w=0.3} like...{w=0.3} you,{w=0.1} [player].{w=0.2} A bunch."
         n 1fbkwrf "T-{w=0.1}there!{w=0.2} Happy now?!"
-        n 1kllsrl "Sheesh..."
+        n 4kllsrl "Sheesh..."
         return
 
     elif Natsuki.isAffectionate(higher=True):
         n 1fskemf "H-{w=0.1}huh? How do I feel about you?"
-        n 1fbkwrf "W-{w=0.1}what're you asking me about that for?!"
-        n 1fllpol "Sheesh,{w=0.1} [player]...{w=0.3} you'll make things all awkward at this rate..."
+        n 4fbkwrf "W-{w=0.1}what're you asking me about that for?!"
+        n 2fllpol "Sheesh,{w=0.1} [player]...{w=0.3} you'll make things all awkward at this rate..."
         n 1fcseml "You're fine,{w=0.1} so you don't need to keep bugging me about it!"
-        n 1flrunl "Jeez..."
+        n 4flrunl "Jeez..."
         return
 
     elif Natsuki.isHappy(higher=True):
         n 1uskemf "H-huh?!"
-        n 1fllbgl "O-oh! Ahaha..."
+        n 2fllbgl "O-oh! Ahaha..."
         n 1nllaj "Well,{w=0.1} I mean...{w=0.5}{nw}"
         n 1ullaj "You're pretty fun to be with,{w=0.1} all things considered."
-        n 1fllnvl "So...{w=0.3} yeah...."
+        n 4fllnvl "So...{w=0.3} yeah...."
         return
 
     elif Natsuki.isNormal(higher=True):
         n 1uskeml "H-{w=0.1}huh?!"
         n 1fllbg "O-oh!"
-        n 1unmaj "I mean...{w=0.3} you're alright...{w=0.3} I guess?"
+        n 4unmaj "I mean...{w=0.3} you're alright...{w=0.3} I guess?"
 
         if not persistent.jn_player_first_farewell_response:
             n 1flleml "W-{w=0.1}what did you expect?{w=0.5}{nw}"
-            extend 1fnmpol " We've {i}literally{/i} just met!"
+            extend 2fnmpol " We've {i}literally{/i} just met!"
 
         n 1nnmpu "That's about all I can say so far,{w=0.1} so...{w=0.3} yeah."
         n 1nllca "...{w=0.5}{nw}"
-        n 1nlraj "So...{w=0.3} where were we?"
+        n 4nlraj "So...{w=0.3} where were we?"
         return
 
     elif Natsuki.isUpset(higher=True):
-        n 1fsqaj "...{w=0.3}Oh? That matters to you now,{w=0.1} does it?"
+        n 2fsqaj "...{w=0.3}Oh? That matters to you now,{w=0.1} does it?"
         n 1fsqbo "Then tell me,{w=0.1} [player]."
         n 1fnmun "Why did you keep hurting my feelings like that?"
         n 1fcsun "...{w=0.5}{nw}"
-        n 1fllan "I don't have much patience for jerks,{w=0.1} [player]."
+        n 2fllan "I don't have much patience for jerks,{w=0.1} [player]."
         n 1fnmaj "I don't know if you're trying to be funny or what,{w=0.1} but knock it off.{w=0.2} Got it?"
         n 1fsqsr "Thanks."
         return
 
     elif Natsuki.isDistressed(higher=True):
         n 1fsqsr "...{w=0.3}Let's just cut the crap."
-        n 1fcsan "You've hurt me,{w=0.1} [player].{w=0.2} You've hurt me again,{w=0.1} and again."
-        n 1fnmfu "You've done it so many times now."
-        n 1fnman "So you tell me."
+        n 4fcsan "You've hurt me,{w=0.1} [player].{w=0.2} You've hurt me again,{w=0.1} and again."
+        n 2fnmfu "You've done it so many times now."
+        n 2fnman "So you tell me."
         n 1fsqpu "What the hell would {i}you{/i} think of someone who did that to you?"
         n 1fcspu "...{w=0.5}{nw}"
-        n 1fsqan "You're on thin ice,{w=0.1} [player].{w=0.2} Got it?"
+        n 2fsqan "You're on thin ice,{w=0.1} [player].{w=0.2} Got it?"
         return
 
     elif Natsuki.isBroken():
         $ already_discussed_relationship = get_topic("talk_how_do_you_feel_about_me").shown_count > 0
         if already_discussed_relationship:
-            n 1fsqpultse "...Wow.{w=0.2} Really?"
+            n 2fsqpultse "...Wow.{w=0.2} Really?"
 
         else:
             n 1fsqputsb "...{w=0.3}I have no words for how I feel about {i}you{/i}."
-            n 1fsqfultseean "Don't freaking test me, {i}[player]{/i}."
+            n 2fsqfultseean "Don't freaking test me, {i}[player]{/i}."
 
         return
 
@@ -4317,68 +4317,68 @@ label talk_are_you_into_cosplay:
     if Natsuki.isEnamored(higher=True):
         if already_unlocked_cosplay_outfits:
             n 1tnmpu "Eh?{w=0.5}{nw}"
-            extend 1tsqsf " Cosplay {i}again{/i}, [player]?"
-            n 1fllpo "Yeesh..."
+            extend 2tsqsf " Cosplay {i}again{/i}, [player]?"
+            n 2fllpo "Yeesh..."
 
             if Natsuki.isWearingClothes("jn_clothes_trainer_cosplay") or Natsuki.isWearingClothes("jn_clothes_sango_cosplay"):
-                n 1fsqpol "As if having me {i}wearing{/i} cosplay wasn't already enough for you..."
+                n 4fsqpol "As if having me {i}wearing{/i} cosplay wasn't already enough for you..."
                 n 1fnmeml "It's all you wanna {i}talk{/i} about too!"
                 n 1fcseml "I'm not your own personal dress-up doll,{w=0.75}{nw}"
-                extend 1fsrpol " you know..."
+                extend 2fsrpol " you know..."
 
             else:
                 n 1nslaj "You know,{w=0.75}{nw}"
                 extend 1fsqajl " if you wanted me wearing it {i}that{/i} badly..."
-                n 1fsqsslsbl "You do realize you could have just {i}asked{/i},{w=0.2} right?"
+                n 4fsqsslsbl "You do realize you could have just {i}asked{/i},{w=0.2} right?"
 
             n 1fchsml "Ahaha."
             n 1ullss "Well,{w=0.2} anyway.{w=0.5}{nw}"
-            extend 1unmbo " In all seriousness?"
+            extend 4unmbo " In all seriousness?"
             n 1ulrsl "I can't say too much has changed,{w=0.2} honestly."
             n 1unmpu "Don't get me wrong!"
             n 1fchbg "I totally wanna get into cosplaying more!{w=0.75}{nw}"
-            extend 1fcssmeme " Any excuse to show off my talent {i}and{/i} needlework."
+            extend 3fcssmeme " Any excuse to show off my talent {i}and{/i} needlework."
             n 1ullaj "Plus I mean,{w=0.75}{nw}"
-            extend 1unmgs " have you {i}seen{/i} what kinds of outfits people can pull off,{w=0.5}{nw}"
-            extend 1fnmgs " all in the name of the stuff they love?"
-            n 1fcsem "All that talent,{w=0.3} all that passion...{w=1}{nw}"
+            extend 4unmgs " have you {i}seen{/i} what kinds of outfits people can pull off,{w=0.5}{nw}"
+            extend 4fnmgs " all in the name of the stuff they love?"
+            n 3fcsem "All that talent,{w=0.3} all that passion...{w=1}{nw}"
             n 1fcspu "It's{w=0.75}{nw}"
-            extend 1fspgsedz " {i}awesome{/i}!{w=1}{nw}"
+            extend 4fspgsedz " {i}awesome{/i}!{w=1}{nw}"
             extend 1fchgnedz " There's no way I {i}don't{/i} wanna be a part of that!"
             n 1kllpu "But..."
-            n 1nslsl "Well."
-            n 1ksrca "Ignoring how conventions are pretty much completely out of reach for me..."
+            n 2nslsl "Well."
+            n 2ksrca "Ignoring how conventions are pretty much completely out of reach for me..."
             n 1ksqtr "I don't suppose {i}you've{/i} seen any crafts shops around here,{w=0.2} have you?{w=0.75}{nw}"
             extend 1ksqca " Or any of my sewing stuff?"
             n 1ksqsl "..."
-            n 1ncsss "Heh.{w=1}{nw}"
-            extend 1nsrsl " Yeah,{w=0.2} I thought not."
+            n 4ncsss "Heh.{w=1}{nw}"
+            extend 4nsrsl " Yeah,{w=0.2} I thought not."
             n 1nsrajsbl "I really gotta figure something out for that,{w=0.75}{nw}"
             extend 1tsqsssbl " huh?"
             n 1tslslsbl "..."
-            n 1fcsbgsbl "W-{w=0.2}well,{w=0.2} if there's one thing I'm not short of here,{w=0.75}{nw}"
+            n 3fcsbgsbl "W-{w=0.2}well,{w=0.2} if there's one thing I'm not short of here,{w=0.75}{nw}"
             extend 1fchbgedz " it's ideas!{w=0.5}{nw}"
             extend 1fsqsm " So don't you worry about a thing,{w=0.2} [player]..."
             n 1fwrbg "'Cause there's no shortage of that {i}material{/i}!{w=0.75}{nw}"
-            extend 1nchgnl " Ehehe."
+            extend 4nchgnl " Ehehe."
 
             return
 
         else:
-            n 1usqct "Oho?{w=0.5}{nw}"
-            extend 1fcsbg " Cosplay,{w=0.2} you say?"
+            n 4usqct "Oho?{w=0.5}{nw}"
+            extend 3fcsbg " Cosplay,{w=0.2} you say?"
             n 1fllbo "..."
             n 1ullpu "Honestly?{w=0.75}{nw}"
-            extend 1nslsssbl " I've never really done any {i}serious{/i} cosplaying or anything..."
+            extend 2nslsssbl " I've never really done any {i}serious{/i} cosplaying or anything..."
             n 1unmaj "But I've actually thought about it a lot more since I got into manga and all that stuff a bunch!"
             n 1fcsbg "Plus I mean,{w=0.1} why shouldn't I?{w=0.75}{nw}"
-            extend 1fspgsedz " I {w=0.2}{i}love{/i}{w=0.2} thinking up new ideas for outfits!"
+            extend 4fspgsedz " I {w=0.2}{i}love{/i}{w=0.2} thinking up new ideas for outfits!"
             n 1fcsbg "Besides,{w=0.2} I know my way around a needle and thread!{w=0.75}{nw}"
-            extend 1nsrsssbr " I've had to use them often enough before."
+            extend 3nsrsssbr " I've had to use them often enough before."
             n 1fcsajlsbr "B-{w=0.2}but I think it seems like a pretty awesome way to show my appreciation for characters I like..."
             n 1fsqbg "...And show my {i}limitless{/i} talent while I'm at it."
             n 1usqsm "Anyway,{w=0.2} who knows?"
-            n 1fsqsm "Maybe you'll get to see some of my handiwork some day,{w=0.2} [player]."
+            n 4fsqsm "Maybe you'll get to see some of my handiwork some day,{w=0.2} [player]."
             n 1fsqbg "I bet you'd like that,{w=0.2} huh?{w=0.5}{nw}"
             extend 1fchsml " Ehehe."
 
@@ -4390,41 +4390,41 @@ label talk_are_you_into_cosplay:
             extend 1tsqsf " Cosplay {i}again{/i}, [player]?"
 
             if Natsuki.isWearingClothes("jn_clothes_trainer_cosplay") or Natsuki.isWearingClothes("jn_clothes_sango_cosplay"):
-                n 1fsqsflsbl "...Was {i}wearing{/i} it seriously not enough already?"
-                n 1fsqsslsbl "Or did I somehow awaken some kind of hidden nerdiness in you?"
-                n 1fslsslsbr "Ehehe..."
+                n 2fsqsflsbl "...Was {i}wearing{/i} it seriously not enough already?"
+                n 4fsqsslsbl "Or did I somehow awaken some kind of hidden nerdiness in you?"
+                n 4fslsslsbr "Ehehe..."
                 n 1fcsemlsbr "A-{w=0.3}anyway!{w=0.5}{nw}"
 
             else:
                 n 1tlraj "I gotta say,{w=0.2} I'm actually kinda impressed."
                 n 1fslsslsbr "Sucking up to my interest in manga,{w=0.75}{nw}"
-                extend 1fsqsslsbr " bugging me about cosplay..."
+                extend 4fsqsslsbr " bugging me about cosplay..."
                 n 1tsqsm "You're absorbing my sense of taste pretty fast,{w=0.2} huh?{w=0.75}{nw}"
-                extend 1uchgn " Like a little dorky sponge!"
+                extend 3uchgn " Like a little dorky sponge!"
                 n 1fchsm "Ehehe."
                 n 1fchss "Anyway!{w=0.75}{nw}"
 
-            extend 1nllss " Putting all that aside..."
+            extend 4nllss " Putting all that aside..."
             n 1unmaj "I actually wouldn't be {i}against{/i} doing a little more cosplay at all."
             n 1ulrpu "I mean,{w=0.75}{nw}"
-            extend 1flrss " I've already got most of what I need."
+            extend 3flrss " I've already got most of what I need."
             n 1fsqss "{i}Amazing{/i} ideas?{w=0.75}{nw}"
-            extend 1fcsbg " Check!{w=0.75}{nw}"
-            extend 1tsqsm " Tons of experience?{w=0.75}{nw}"
-            extend 1fchbg " Check!"
-            n 1usqgn "{i}Unmatched{/i} handiwork with a needle and thread?{w=1}{nw}"
-            extend 1fcsbg " Oh,{w=0.2} you bet."
+            extend 3fcsbg " Check!{w=0.75}{nw}"
+            extend 4tsqsm " Tons of experience?{w=0.75}{nw}"
+            extend 3fchbg " Check!"
+            n 4usqgn "{i}Unmatched{/i} handiwork with a needle and thread?{w=1}{nw}"
+            extend 3fcsbg " Oh,{w=0.2} you bet."
             n 1fllpu "It's just..."
-            n 1kslsl "..."
+            n 2kslsl "..."
             n 1tsrsf "I don't exactly have much {i}material{/i} to work with here,{w=0.75}{nw}"
-            extend 1tnmsf " you know?"
-            n 1kslbo "...Or even my sewing stuff,{w=0.2} for that matter."
+            extend 4tnmsf " you know?"
+            n 2kslbo "...Or even my sewing stuff,{w=0.2} for that matter."
             n 1kslsl "..."
             n 1fcswrlsbl "W-{w=0.2}well,{w=0.2} I'll figure something out!{w=0.75}{nw}"
-            extend 1fcspolsbl " I always do,{w=0.2} a-{w=0.2}anyway."
+            extend 2fcspolsbl " I always do,{w=0.2} a-{w=0.2}anyway."
             n 1fsqcal "So you better look forward to it,{w=0.2} [player]..."
             n 1fcsbglsbr "'Cause you ain't seen nothing yet!{w=0.75}{nw}"
-            extend 1fcssmlsbr " Ehehe."
+            extend 3fcssmlsbr " Ehehe."
 
             return
 
@@ -4432,77 +4432,77 @@ label talk_are_you_into_cosplay:
             n 1tsrpu "Why...{w=1}{nw}"
             extend 1nsqbo " did I get the feeling you'd bring this up sooner or later,{w=0.2} [player]?"
             n 1fsqsl "..."
-            n 1fnmpo "What?{w=0.75}{nw}"
-            extend 1fsqgs " Did you think I'd {i}automatically{/i} be into it because I read manga from time to time?"
-            n 1fsqpo "Huh?{w=0.75}{nw}"
-            extend 1fnmgs " Is that it?"
+            n 3fnmpo "What?{w=0.75}{nw}"
+            extend 3fsqgs " Did you think I'd {i}automatically{/i} be into it because I read manga from time to time?"
+            n 4fsqpo "Huh?{w=0.75}{nw}"
+            extend 4fnmgs " Is that it?"
             n 1fsqaj "Well?"
             n 1fsqdv "..."
-            n 1fchdvesi "Pfffft!"
-            n 1fchsm "Ehehe.{w=0.5}{nw}"
+            n 4fchdvesi "Pfffft!"
+            n 3fchsm "Ehehe.{w=0.5}{nw}"
             extend 1ullss " Nah,{w=0.2} it's fine."
             n 1ulraj "I've thought about it a bunch,{w=0.2} honestly -{w=0.3}{nw}"
-            extend 1unmbo " like since I got into manga and all that a while ago."
-            n 1nslsssbr "I haven't {i}actually{/i} gone dressed up to a convention or anything yet..."
-            n 1fcswrlsbl "B-{w=0.2}but that doesn't mean I haven't tried cosplaying at all!"
-            n 1fcsbgsbl "I {i}am{/i} something of a pro with a needle and thread,{w=0.75}{nw}"
+            extend 4unmbo " like since I got into manga and all that a while ago."
+            n 2nslsssbr "I haven't {i}actually{/i} gone dressed up to a convention or anything yet..."
+            n 2fcswrlsbl "B-{w=0.2}but that doesn't mean I haven't tried cosplaying at all!"
+            n 4fcsbgsbl "I {i}am{/i} something of a pro with a needle and thread,{w=0.75}{nw}"
             extend 1fcssmeme " so it's right up my alley!"
             n 1tslsl "..."
-            n 1tslss "Actually...{w=1}{nw}"
+            n 2tslss "Actually...{w=1}{nw}"
             extend 1fsqbg " you know what,{w=0.2} [player]?"
             n 1fsrsm "Perhaps I {i}might{/i} just give it another shot...{w=0.5}{nw}"
-            extend 1fchbg " yeah!"
+            extend 3fchbg " yeah!"
             n 1fcsss "Man,{w=0.5}{nw}"
-            extend 1fchgnedz " I've got so many awesome ideas buzzing around in my head now!"
+            extend 4fchgnedz " I've got so many awesome ideas buzzing around in my head now!"
             n 1fsqss "You better be prepared,{w=0.2} [player]..."
             n 1fchbg "'Cause I'm gonna need some second opinions when I do!"
-            n 1fwlbll "That's what friends are for,{w=0.2} right?"
+            n 3fwlbll "That's what friends are for,{w=0.2} right?"
 
             # Continue to unlock dialogue
 
     elif Natsuki.isNormal(higher=True):
         n 1unmbo "Cosplay,{w=0.2} huh?"
         n 1ulraj "Well...{w=0.5}{nw}"
-        extend 1tnmbo " I mean,{w=0.2} I've played around with it,{w=0.2} if that's what you're asking."
+        extend 3tnmbo " I mean,{w=0.2} I've played around with it,{w=0.2} if that's what you're asking."
         n 1tllpu "I never really thought about it that much until I got more into manga and things like that."
-        n 1flrbg "It kinda feels like once you start getting into that stuff,{w=0.2} you discover tons more at once!"
-        n 1nslsssbr "I've never really gone out and cosplayed myself though..."
-        n 1fcsgslsbr "B-{w=0.2}but that doesn't mean I couldn't try it out more!"
-        n 1fcspolesi "I'm basically a pro with a needle and thread,{w=0.5}{nw}"
+        n 3flrbg "It kinda feels like once you start getting into that stuff,{w=0.2} you discover tons more at once!"
+        n 4nslsssbr "I've never really gone out and cosplayed myself though..."
+        n 3fcsgslsbr "B-{w=0.2}but that doesn't mean I couldn't try it out more!"
+        n 3fcspolesi "I'm basically a pro with a needle and thread,{w=0.5}{nw}"
         extend 1fchsml " so I've already got the hardest part done!"
         n 1fcsaj "The rest of it is just finding materials,{w=0.2} which are usually pretty easy to come by anyway."
-        n 1fslcasbl "Props and wigs and all that are a little more annoying,{w=0.2} but not exactly {i}undoable{/i}.{w=1}{nw}"
+        n 2fslcasbl "Props and wigs and all that are a little more annoying,{w=0.2} but not exactly {i}undoable{/i}.{w=1}{nw}"
         extend 1fcssmeme " Especially with a little ingenuity."
         n 1tcssl "..."
-        n 1tupbo "Mmmm..."
+        n 3tupbo "Mmmm..."
         n 1tllpu "You know,{w=0.75}{nw}"
         extend 1fllss " the more I think about it...{w=1}{nw}"
-        extend 1nchgnedz " the more I like the idea of giving it another run!"
+        extend 3nchgnedz " the more I like the idea of giving it another run!"
         n 1fnmbg "What about you,{w=0.2} [player]?{w=0.75}{nw}"
         extend 1usqbg " I bet you'd love to see my skills at work,{w=0.2} right?"
-        n 1fsrbgl "Well...{w=1}{nw}"
+        n 3fsrbgl "Well...{w=1}{nw}"
         extend 1fsqsm " we'll see."
-        n 1fcsgssbl "B-{w=0.2}but no promises!"
+        n 2fcsgssbl "B-{w=0.2}but no promises!"
 
         return
 
     elif Natsuki.isDistressed(higher=True):
         n 1nnmpu "Huh?{w=0.2} Cosplay?"
         n 1fsqsr "...Why,{w=0.2} [player]?"
-        n 1fsqpu "So you can make fun of my clothes too?"
+        n 2fsqpu "So you can make fun of my clothes too?"
         n 1fslsr "..."
-        n 1fsqpu "No,{w=0.2} [player].{w=0.75}{nw}"
+        n 2fsqpu "No,{w=0.2} [player].{w=0.75}{nw}"
         extend 1fcssr " That's for me to know,{w=0.75}{nw}"
-        extend 1fsqan " and for you {i}not{/i} to find out."
-        n 1fsqgs "Does {i}that{/i} answer your question?"
+        extend 4fsqan " and for you {i}not{/i} to find out."
+        n 2fsqgs "Does {i}that{/i} answer your question?"
 
         return
 
     else:
         n 1fsqsr "Heh.{w=0.5} Why?"
-        n 1fcsantsa "So you have something else to make me feel awful about?"
+        n 2fcsantsa "So you have something else to make me feel awful about?"
         n 1fcssrltsa "...Yeah.{w=0.75} No thanks."
-        n 1fcsanltsd "I'm done talking to you about this."
+        n 2fcsanltsd "I'm done talking to you about this."
 
         return
 
@@ -4514,12 +4514,12 @@ label talk_are_you_into_cosplay:
     ):
         n 1tllbo "..."
         n 1tslpu "...Actually,{w=0.5}{nw}"
-        extend 1tslaj " now that I think about it..."
+        extend 2tslaj " now that I think about it..."
         n 1tlrsl "I wonder..."
         n 1fcssl "..."
-        n 1nnmaj "You know what?{w=0.75}{nw}"
+        n 3nnmaj "You know what?{w=0.75}{nw}"
         extend 1nllaj " Just...{w=0.75}{nw}"
-        extend 1nslunl " give me a sec here...{w=1}{nw}"
+        extend 4nslunl " give me a sec here...{w=1}{nw}"
 
         show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         $ jnPause(1)
@@ -4546,30 +4546,30 @@ label talk_are_you_into_cosplay:
         show natsuki 1fsldvlesssbr at jn_center
         hide black with Dissolve(1.25)
 
-        n 1fchsslesssbr "T-{w=0.5}ta-da!{w=0.5}{nw}"
+        n 2fchsslesssbr "T-{w=0.5}ta-da!{w=0.5}{nw}"
         extend 1fchsml " Ehehe..."
         n 1fsqsll "..."
-        n 1fslunl "..."
-        n 1fcsemlsbl "W-{w=0.2}well?"
-        n 1fcsbglsbl "What do you think,{w=0.2} [player]?{w=0.75}{nw}"
+        n 2fslunl "..."
+        n 4fcsemlsbl "W-{w=0.2}well?"
+        n 2fcsbglsbl "What do you think,{w=0.2} [player]?{w=0.75}{nw}"
         extend 1fchsmlsbr " I made it all myself,{w=0.2} too!"
-        n 1fsqsrlsbr "..."
-        n 1fnmemlsbr "What?"
-        n 1fcsgslsbl "I {i}did{/i} say I was good with a needle and thread!"
-        n 1fllsslsbl "S-{w=0.3}so of course I {i}had{/i} to prove it!"
+        n 2fsqsrlsbr "..."
+        n 4fnmemlsbr "What?"
+        n 3fcsgslsbl "I {i}did{/i} say I was good with a needle and thread!"
+        n 3fllsslsbl "S-{w=0.3}so of course I {i}had{/i} to prove it!"
         extend 1fcsajlsbl " And..."
         n 1nslsslsbl "...And..."
-        n 1nslsllsbl "..."
+        n 4nslsllsbl "..."
         n 1kslsll "..."
         n 1kcspul "This...{w=1}{nw}"
-        extend 1ksrsfl " wasn't actually {i}meant{/i} for me,{w=0.2} you know."
+        extend 2ksrsfl " wasn't actually {i}meant{/i} for me,{w=0.2} you know."
         n 1kcspulesi "..."
-        n 1ksqbol "...I made it for Sayori."
+        n 4ksqbol "...I made it for Sayori."
         n 1fcseml "I-{w=0.2}it was meant to be for some kind of party after the festival she insisted on,{w=0.2} but...{w=1}{nw}"
-        extend 1kcssll " yeah."
+        extend 2kcssll " yeah."
         n 1kslslltsb "..."
-        n 1fcsunltsb "I'm...{w=1.25}{nw}"
-        extend 1ksrsrl " just gonna go put this away now."
+        n 2fcsunltsb "I'm...{w=1.25}{nw}"
+        extend 4ksrsrl " just gonna go put this away now."
 
         show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         $ jnPause(2)
@@ -4590,14 +4590,14 @@ label talk_are_you_into_cosplay:
         hide black with Dissolve(1.25)
 
         n 1kslsll "..."
-        n 1kslpul "...I know I can't just throw that outfit away.{w=1.25}{nw}"
+        n 2kslpul "...I know I can't just throw that outfit away.{w=1.25}{nw}"
         extend 1kcsajl " It just...{w=0.5} wouldn't be right."
         n 1kslbol "..."
-        n 1kcspul "I'll...{w=0.5} keep it around."
-        n 1knmsll "The best thing I could do is to make some {i}happy{/i} memories with it myself instead."
-        n 1ksrajl "...It's what she would have done, a-{w=0.2}after all."
+        n 4kcspul "I'll...{w=0.5} keep it around."
+        n 2knmsll "The best thing I could do is to make some {i}happy{/i} memories with it myself instead."
+        n 2ksrajl "...It's what she would have done, a-{w=0.2}after all."
         n 1ksrsll "..."
-        n 1ksqbol "...Right?"
+        n 4ksqbol "...Right?"
 
     return
 
@@ -4620,136 +4620,136 @@ init 5 python:
 label talk_why_do_you_like_me:
     if Natsuki.isLove(higher=True):
         if jn_admissions.last_admission_type == jn_admissions.TYPE_INSECURE:
-            n 1kwmsl "[player]..."
+            n 4kwmsl "[player]..."
             n 1kwmsf "You aren't asking me this because of what you told me earlier...{w=0.3} right?"
             n 1kllbo "..."
             n 1ncspu "Look,{w=0.1} [player].{w=0.2} I'm going to be completely honest with you,{w=0.1} okay?"
             n 1ncssl "What you can -{w=0.1} or {i}can't{/i} do -{w=0.1} isn't important to me."
             n 1nnmpu "What people {i}say{/i} you are -{w=0.1} or {i}aren't{/i} capable of -{w=0.1} isn't important to me either."
-            n 1fnmpu "Neither is what people say about you."
-            n 1knmsr "[player]."
+            n 4fnmpu "Neither is what people say about you."
+            n 2knmsr "[player]."
             $ chosen_endearment = jn_utils.getRandomEndearment()
             n 1klrpu "I...{w=0.3} feel about you the way I do because of how you've treated me,{w=0.1} [chosen_endearment].{w=0.2} Can you not see that?"
-            n 1klrss "You've spent so much time with me,{w=0.1} day after day..."
-            n 1kwmss "You've listened to my problems,{w=0.1} and you've told me yours..."
-            n 1kllpo "You've been so patient with my mood swings,{w=0.1} and my grumpy moments..."
+            n 2klrss "You've spent so much time with me,{w=0.1} day after day..."
+            n 4kwmss "You've listened to my problems,{w=0.1} and you've told me yours..."
+            n 2kllpo "You've been so patient with my mood swings,{w=0.1} and my grumpy moments..."
 
             if persistent.jn_player_love_you_count >= 10:
                 n 1kcsunl "And...{w=0.3} you've made me feel..."
-                n 1kcsunf "So loved..."
+                n 4kcsunf "So loved..."
                 n 1kllunl "..."
 
             elif persistent.jn_player_love_you_count >= 1:
                 n 1kllssl "You're...{w=0.3} you're my first love,{w=0.1} [player]..."
-                n 1kcussl "Do you even realise how {i}much{/i} that means to me?"
+                n 4kcussl "Do you even realise how {i}much{/i} that means to me?"
 
             elif persistent.jn_player_love_you_count == 0:
-                n 1kwmssl "You honestly,{w=0.1} truly mean the world to me,{w=0.1} [player]..."
+                n 2kwmssl "You honestly,{w=0.1} truly mean the world to me,{w=0.1} [player]..."
 
             n 1kllssl "So...{w=0.3} yeah."
-            n 1klrnvl "Does that answer your question?"
+            n 4klrnvl "Does that answer your question?"
             n 1knmsr "I know I can't solve your problems with a snap of my fingers,{w=0.1} [player].{w=0.2} I'm not a miracle worker."
-            n 1kslsl "Believe me -{w=0.1} I {i}already{/i} would have if I could."
+            n 2kslsl "Believe me -{w=0.1} I {i}already{/i} would have if I could."
             n 1knmsl "But..."
             n 1kllss "I hope you can believe me when I say things will work out,{w=0.1} okay?"
-            n 1fwmsm "Just...{w=0.3} keep fighting..."
+            n 4fwmsm "Just...{w=0.3} keep fighting..."
             n 1fcssml "...Because I'm fighting for you too."
-            n 1kplnvf "I love you,{w=0.1} [player].{w=0.2} You better not forget that."
+            n 3kplnvf "I love you,{w=0.1} [player].{w=0.2} You better not forget that."
             return
 
         else:
-            n 1fcspo "[player]..."
-            n 1flrpo "Do I really have to explain this all to you?"
+            n 3fcspo "[player]..."
+            n 3flrpo "Do I really have to explain this all to you?"
             n 1flrsll "It's just...{w=0.3} embarrassing...{w=0.3} to me..."
             n 1kcssll "..."
-            n 1ncspu "...Okay,{w=0.1} look."
+            n 4ncspu "...Okay,{w=0.1} look."
             n 1fllssl "You've...{w=0.3} honestly done more than you could ever know,{w=0.1} [player]."
-            n 1fllsll "For me,{w=0.1} I mean."
+            n 2fllsll "For me,{w=0.1} I mean."
             n 1knmsll "I've almost lost count of how many hours you've spent talking to me..."
-            n 1klrssl "You've listened to so many of my dumb problems,{w=0.1} over and over..."
-            n 1fllunl "...And you've been so patient through all of my stupid moods."
+            n 3klrssl "You've listened to so many of my dumb problems,{w=0.1} over and over..."
+            n 4fllunl "...And you've been so patient through all of my stupid moods."
 
             if persistent.jn_player_love_you_count >= 10:
                 n 1fcsunl "Y-you've made me feel..."
-                n 1kcsunl "Really appreciated.{w=0.2} So many times,{w=0.1} I've lost count..."
+                n 4kcsunl "Really appreciated.{w=0.2} So many times,{w=0.1} I've lost count..."
 
             elif persistent.jn_player_love_you_count >= 1:
                 n 1kskajf "You're...{w=0.3} you're my first love,{w=0.1} even!"
-                n 1kwmpuf "Do you even know what that {i}means{/i} to me?"
+                n 3kwmpuf "Do you even know what that {i}means{/i} to me?"
 
             elif persistent.jn_player_love_you_count == 0:
-                n 1kwmpuf "You seriously mean the world to me,{w=0.1} [player]..."
+                n 3kwmpuf "You seriously mean the world to me,{w=0.1} [player]..."
 
             n 1kllssl "So...{w=0.3} yeah."
-            n 1klrnvl "Does that answer all of your questions?{w=0.2} Am I free to go now?"
+            n 4klrnvl "Does that answer all of your questions?{w=0.2} Am I free to go now?"
             n 1klrss "Ahaha..."
-            n 1kwmpu "But seriously,{w=0.1} [player]."
+            n 2kwmpu "But seriously,{w=0.1} [player]."
             n 1kplbo "Don't ever doubt how important you are to me,{w=0.1} alright?"
-            n 1fnmpol "I'll get mad if you do."
-            n 1flrpol "And trust me..."
-            n 1klrssl "I doubt you want that."
+            n 2fnmpol "I'll get mad if you do."
+            n 2flrpol "And trust me..."
+            n 4klrssl "I doubt you want that."
             return
 
     elif Natsuki.isEnamored(higher=True):
         if jn_admissions.last_admission_type == jn_admissions.TYPE_INSECURE:
             n 1knmaj "...Hey,{w=0.1} [player]..."
-            n 1klrpu "This isn't by chance because of what you said earlier...{w=0.3} right?"
+            n 2klrpu "This isn't by chance because of what you said earlier...{w=0.3} right?"
 
         else:
             n 1uskpul "Wh-{w=0.1}why do I-{w=0.1}...?"
-            n 1fcsanl "Uuuuuuu..."
+            n 2fcsanl "Uuuuuuu..."
 
         n 1fcsajl "...Okay,{w=0.1} look.{w=0.2} I'll try to help you understand as best I can."
-        n 1fllaj "I'm not sure if someone's giving you a tough time or what, but I'm saying it anyway."
+        n 3fllaj "I'm not sure if someone's giving you a tough time or what, but I'm saying it anyway."
         n 1fllsr "I don't really care about what others expect from you."
-        n 1fnmsr "I don't really care about what others say or think about you."
-        n 1knmpu "I don't really care if you can -{w=0.1} or can't -{w=0.1} do something."
+        n 4fnmsr "I don't really care about what others say or think about you."
+        n 4knmpu "I don't really care if you can -{w=0.1} or can't -{w=0.1} do something."
         n 1fcseml "I...{w=0.3} {i}like{/i} you,{w=0.1} because of how you've treated me,{w=0.1} you dummy!"
-        n 1flleml "Like,{w=0.1} come on!"
-        n 1flrssl "You've listened to me yammer on,{w=0.1} again and again..."
+        n 3flleml "Like,{w=0.1} come on!"
+        n 4flrssl "You've listened to me yammer on,{w=0.1} again and again..."
         n 1knmssl "You've heard me out on so many dumb problems I've had..."
-        n 1fcsbgl "You've even dealt with my crappy temper like a champ!"
+        n 3fcsbgl "You've even dealt with my crappy temper like a champ!"
         n 1klrsl "..."
         n 1kcssl "...I've never been treated by anyone as well as I've been treated by you,{w=0.1} [player]."
-        n 1fllslf "So is it any wonder why I...{w=0.3} enjoy hanging out with you this much?"
+        n 3fllslf "So is it any wonder why I...{w=0.3} enjoy hanging out with you this much?"
         n 1fcsslf "..."
         n 1flrajl "Alright,{w=0.1} okay.{w=0.2} I really don't wanna have to explain all that again,{w=0.1} so I hope you took all that in."
-        n 1fnmssl "Just...{w=0.3} continue being you,{w=0.1} got it?"
-        n 1kllpul "I...{w=0.3} kinda like how you do that already."
+        n 4fnmssl "Just...{w=0.3} continue being you,{w=0.1} got it?"
+        n 3kllpul "I...{w=0.3} kinda like how you do that already."
         return
 
     else:
         if jn_admissions.last_admission_type == jn_admissions.TYPE_INSECURE:
             n 1unmpul "...Huh?"
-            n 1uskemf "W-{w=0.1}why do I...?"
-            n 1fcsanf "..."
+            n 4uskemf "W-{w=0.1}why do I...?"
+            n 2fcsanf "..."
             n 1tlremf "..."
             n 1flrsll "..."
-            n 1fnmpul "Uhmm...{w=0.3} [player]?"
-            n 1fllpo "This isn't all related to what you told me earlier,{w=0.1} right?"
-            n 1knmpo "About feeling insecure and all that?"
+            n 4fnmpul "Uhmm...{w=0.3} [player]?"
+            n 2fllpo "This isn't all related to what you told me earlier,{w=0.1} right?"
+            n 4knmpo "About feeling insecure and all that?"
             n 1klrsl "..."
-            n 1nnmsl "[player]."
-            n 1fnmpuf "Listen up,{w=0.1} 'kay?{w=0.2} I...{w=0.3} really don't wanna have to repeat this."
+            n 4nnmsl "[player]."
+            n 3fnmpuf "Listen up,{w=0.1} 'kay?{w=0.2} I...{w=0.3} really don't wanna have to repeat this."
 
         else:
-            n 1uscemf "Urk-!"
+            n 4uscemf "Urk-!"
             n 1uskemf "W-{w=0.1}wait,{w=0.1} w-{w=0.1}what?"
-            n 1fwdemf "W-{w=0.1}why do I...{w=0.3} l-{w=0.1}like you?!"
+            n 3fwdemf "W-{w=0.1}why do I...{w=0.3} l-{w=0.1}like you?!"
             n 1fcsanf "Nnnnnnnnn-!"
             n 1fllwrf "I mean...!{w=0.2} It's not that I {i}like{/i} like you,{w=0.1} or anything ridiculous like that!"
-            n 1fcsemf "Ugh...{w=0.3} I swear,{w=0.1} [player] -{w=0.1} you honestly try to put me in the most awkward freaking spots sometimes..."
+            n 3fcsemf "Ugh...{w=0.3} I swear,{w=0.1} [player] -{w=0.1} you honestly try to put me in the most awkward freaking spots sometimes..."
             n 1fllslf "..."
-            n 1fllsll "I...{w=0.3} guess I {i}do{/i} owe you an answer though,{w=0.1} at least."
+            n 4fllsll "I...{w=0.3} guess I {i}do{/i} owe you an answer though,{w=0.1} at least."
 
         n 1fcssll "Look."
         n 1nlrpu "You've been pretty awesome to me so far,{w=0.1} [player]."
-        n 1klrpu "...Do you even know how few other people make me feel that way?"
+        n 4klrpu "...Do you even know how few other people make me feel that way?"
         n 1klrsl "It's...{w=0.3} really not a lot,{w=0.1} if you hadn't gathered."
-        n 1fllpol "You always listen to me,{w=0.1} you don't tell me I'm annoying,{w=0.1} or to pipe down..."
+        n 2fllpol "You always listen to me,{w=0.1} you don't tell me I'm annoying,{w=0.1} or to pipe down..."
         n 1kwmsrl "And you've been super understanding too."
         n 1kllpul "I...{w=0.3} honestly couldn't ask for a better friend,{w=0.1} [player]."
-        n 1fnmbol "Always remember that,{w=0.1} alright?{w=0.2} I'll get mad if you don't."
+        n 3fnmbol "Always remember that,{w=0.1} alright?{w=0.2} I'll get mad if you don't."
         n 1kllbol "..."
 
     return
@@ -4772,49 +4772,49 @@ init 5 python:
 
 label talk_fried_squid:
     n 1fllss "Hey,{w=0.1} [player]..."
-    n 1usqsm "You know what I could go for right now?"
+    n 4usqsm "You know what I could go for right now?"
     n 1uchbs "A big,{w=0.1} steaming fresh bowl of Mon-{w=0.1}ika!"
     n 1uchbg "..."
-    n 1flrpu "...Huh."
+    n 2flrpu "...Huh."
     n 1tnmpu "You know,{w=0.1} in hindsight?{w=0.2} That joke really wasn't funny the first time round."
-    n 1tllpo "I've...{w=0.3} no idea why it'd be funny this time,{w=0.1} to be honest."
-    n 1uspgsesu "Oh!"
+    n 3tllpo "I've...{w=0.3} no idea why it'd be funny this time,{w=0.1} to be honest."
+    n 4uspgsesu "Oh!"
     n 1fchbg "But fried squid is no joke at all,{w=0.1} [player]!{w=0.2} Have you ever tried it?"
     n 1uchbs "It's {i}delicious{/i}!{w=0.2} I love it!"
-    n 1fsqsm "Not just boring old fried seafood though -{w=0.1} it's gotta have the crap battered out of it first!"
-    n 1uspbg "That crispy golden coating is seriously the best.{w=0.2} Deep fried food is awesome!"
+    n 3fsqsm "Not just boring old fried seafood though -{w=0.1} it's gotta have the crap battered out of it first!"
+    n 4uspbg "That crispy golden coating is seriously the best.{w=0.2} Deep fried food is awesome!"
     n 1fllbg "It's not {i}good{/i} for you exactly,{w=0.1} but as a treat?{w=0.2} You could do way worse..."
-    n 1fcssm "Especially with sauce to spice things up a bit!"
+    n 4fcsts "Especially with sauce to spice things up a bit!"
     n 1fnmss "By the way -{w=0.1} wanna know how you can tell you're dining on some top-notch squiddy goodness?"
-    n 1uchbs "The texture,{w=0.1} of course!"
-    n 1fllaj "Overcooked squid becomes all rubbery and nasty,{w=0.1} and even worse -{w=0.1} it loses all of its flavor too!"
+    n 3uchbs "The texture,{w=0.1} of course!"
+    n 3fllaj "Overcooked squid becomes all rubbery and nasty,{w=0.1} and even worse -{w=0.1} it loses all of its flavor too!"
     n 1fsqsr "Imagine biting through the batter,{w=0.1} only to find you're basically chewing on a bunch of rubber bands."
-    n 1fsqem "Ugh!{w=0.2} Gross!{w=0.2} Talk about a disappointment."
+    n 2fsqem "Ugh!{w=0.2} Gross!{w=0.2} Talk about a disappointment."
     n 1unmaj "Don't let that put you off though,{w=0.1} [player] -{w=0.1} next time you see some,{w=0.1} why not give it a shot?"
 
     if jn_admissions.last_admission_type == jn_admissions.TYPE_HUNGRY:
         n 1kllss "...Probably the sooner the better,{w=0.1} if you're hungry like you said."
-        n 1ullaj "But anyway..."
+        n 4ullaj "But anyway..."
 
     n 1unmbg "You could even be all fancy if you wanted to and order it by the culinary name!"
-    n 1fnmbg "Ten points if you can guess what that is.{w=0.2} Ehehe."
+    n 3fnmbg "Ten points if you can guess what that is.{w=0.2} Ehehe."
 
     if Natsuki.isLove(higher=True):
-        n 1flrsg "Hmm..."
+        n 3flrsg "Hmm..."
         n 1fnmbg "Actually...{w=0.3} you know what?"
         n 1fchbg "We should just get a bowl of calamari to share.{w=0.2} That's fair,{w=0.1} right?"
-        n 1fsqsm "I should warn you though,{w=0.1} [player]..."
-        n 1fchgn "I'm not handing over the last piece without a fight!"
+        n 4fsqsm "I should warn you though,{w=0.1} [player]..."
+        n 3fchgn "I'm not handing over the last piece without a fight!"
         n 1nchsml "Ehehe."
 
     elif Natsuki.isEnamored(higher=True):
         n 1uchbg "But yeah -{w=0.1} you should really give it a try if you haven't already,{w=0.1} [player]!"
-        n 1fchbg "I wouldn't want someone to miss out on that!"
-        n 1klrssl "E-{w=0.1}especially not you.{w=0.2} Ehehe..."
+        n 4fchbg "I wouldn't want someone to miss out on that!"
+        n 2klrssl "E-{w=0.1}especially not you.{w=0.2} Ehehe..."
 
     else:
         n 1uchbg "But yeah {w=0.1}-{w=0.1} you should really try it out if you haven't already,{w=0.1} [player]!"
-        n 1fchbg "I wouldn't want someone to miss out on that!{w=0.2} Ahaha."
+        n 4fchbg "I wouldn't want someone to miss out on that!{w=0.2} Ahaha."
 
     return
 
@@ -4835,79 +4835,79 @@ init 5 python:
 
 label talk_collectibles:
     if Natsuki.isAffectionate(higher=True):
-        n 1unmpueqm "Collectibles?{w=0.2} You mean like figurines and plushies and such?"
-        n 1flrpu "Mmm...{w=0.3} not really.{w=0.2} Collecting is an expensive hobby,{w=0.1} [player]!"
-        n 1klrpo "I mean,{w=0.1} it all depends on exactly what you collect,{w=0.1} but it feels like places that sell them prey on that."
+        n 4unmpueqm "Collectibles?{w=0.2} You mean like figurines and plushies and such?"
+        n 4flrpu "Mmm...{w=0.3} not really.{w=0.2} Collecting is an expensive hobby,{w=0.1} [player]!"
+        n 3klrpo "I mean,{w=0.1} it all depends on exactly what you collect,{w=0.1} but it feels like places that sell them prey on that."
         n 1flraj "Like...{w=0.3} the urge to complete a collection -{w=0.1} so they jack up the prices!"
         n 1fcsboesi "Ugh..."
-        n 1kllbosbl "And for people in my...{w=0.3} uhmm...{w=0.3} {i}position{/i},{w=0.1} it's a big barrier to entry."
+        n 3kllbosbl "And for people in my...{w=0.3} uhmm...{w=0.3} {i}position{/i},{w=0.1} it's a big barrier to entry."
         n 1unmaj "But anyway..."
 
     elif Natsuki.isNormal(higher=True):
-        n 1tnmpueqm "Huh?{w=0.2} You mean like figurines and all that stuff?"
+        n 4tnmpueqm "Huh?{w=0.2} You mean like figurines and all that stuff?"
         n 1tlrpu "Well...{w=0.3} no,{w=0.1} [player].{w=0.2} Not really."
-        n 1knmsf "I couldn't justify spending so much just on hobbies like that!"
-        n 1flrbo "...Especially not when I had {i}other{/i} things to worry about spending my money on first."
+        n 2knmsf "I couldn't justify spending so much just on hobbies like that!"
+        n 2flrbo "...Especially not when I had {i}other{/i} things to worry about spending my money on first."
         n 1unmaj "B-{w=0.2}but anyway,{w=0.1} putting all that aside..."
 
     elif Natsuki.isDistressed(higher=True):
         n 1fsqsfsbl "No,{w=0.1} [player]."
-        n 1fsqaj "Collectibles were way too expensive for me.{w=0.2} I couldn't justify wasting the money I {i}do{/i} have."
+        n 2fsqaj "Collectibles were way too expensive for me.{w=0.2} I couldn't justify wasting the money I {i}do{/i} have."
         n 1fnmsl "{i}Especially{/i} on stuff that'll just sit on a shelf that I'll forget about."
-        n 1fsqsr "Yeah,{w=0.1} [player] -{w=0.1} believe it or not,{w=0.1} some of us {i}do{/i} have to think about how we spend our money."
-        n 1fsqun "Shocker,{w=0.1} right?"
+        n 4fsqsr "Yeah,{w=0.1} [player] -{w=0.1} believe it or not,{w=0.1} some of us {i}do{/i} have to think about how we spend our money."
+        n 2fsqun "Shocker,{w=0.1} right?"
         n 1fcsun "..."
         n 1fnmaj "Well?{w=0.2} Satisfied with your answer?"
-        n 1fsqsl "We're done here."
+        n 2fsqsl "We're done here."
         return
 
     else:
         n 1fsqsr "...Why?{w=0.2} ...And I don't just mean why you care."
-        n 1fsqan "But why should I tell {i}you{/i} if I do or not?"
+        n 2fsqan "But why should I tell {i}you{/i} if I do or not?"
         n 1fcsan "You'd probably just trash them."
-        n 1fcsun "Heh.{w=0.2} After all."
-        n 1fsqupltsa "You've proven great at trashing things so far,{w=0.1} {i}haven't you{/i}?{w=0.2} Jerk."
+        n 2fcsun "Heh.{w=0.2} After all."
+        n 4fsqupltsa "You've proven great at trashing things so far,{w=0.1} {i}haven't you{/i}?{w=0.2} Jerk."
         return
 
     n 1ullbo "..."
-    n 1tllbo "...Huh.{w=0.2} There's a point,{w=0.1} actually.{w=0.2} Does manga count as a collectible?"
+    n 2tllbo "...Huh.{w=0.2} There's a point,{w=0.1} actually.{w=0.2} Does manga count as a collectible?"
     n 1tllaj "I'm...{w=0.3} not really sure..."
     n 1tnmpu "What do you think,{w=0.1} [player]?"
     menu:
         n "Would you call it a collectible?"
 
         "I'd say so!":
-            n 1fsqbg "Oho!"
-            n 1fchbg "So I suppose I am something of a collector,{w=0.1} after all!"
+            n 4fsqbg "Oho!"
+            n 3fchbg "So I suppose I am something of a collector,{w=0.1} after all!"
 
             if Natsuki.isLove(higher=True):
                 n 1uchsm "I guess that all makes sense.{w=0.2} After all..."
-                n 1fllsmf "I'd like to think you're in my collection too,{w=0.1} [player]~."
+                n 3fllsmf "I'd like to think you're in my collection too,{w=0.1} [player]~."
                 n 1uchsmf "Ehehe."
 
             else:
                 n 1flrsm "Well,{w=0.1} in that case..."
-                n 1nchbg "Just let me know if you ever feel like a tour!"
-                n 1nchgn "You won't find a better collection!{w=0.2} Ehehe."
+                n 4nchbg "Just let me know if you ever feel like a tour!"
+                n 3nchgn "You won't find a better collection!{w=0.2} Ehehe."
 
                 if jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.manga):
                     n 1fllss "Or,{w=0.1} at least...{w=0.5}{nw}"
-                    extend 1fsqss " a better...{w=0.3} {i}physical{/i} one."
+                    extend 3fsqss " a better...{w=0.3} {i}physical{/i} one."
                     n 1fsqsm "Right,{w=0.5}{nw}"
-                    extend 1fsqbg " [player]?"
+                    extend 4fsqbg " [player]?"
 
         "No,{w=0.1} I wouldn't.":
-            n 1flrpo "Huh...{w=0.3} you do have a point."
-            n 1tnmpo "I suppose you'd call it a library,{w=0.1} or something like that?"
+            n 3flrpo "Huh...{w=0.3} you do have a point."
+            n 3tnmpo "I suppose you'd call it a library,{w=0.1} or something like that?"
             n 1nnmsm "Well,{w=0.1} whatever."
-            n 1nsqsm "I suppose I'd better {i}read{/i} up on my definitions,{w=0.1} right?"
+            n 4nsqsm "I suppose I'd better {i}read{/i} up on my definitions,{w=0.1} right?"
             n 1nchsm "Ehehe."
 
         "Well,{w=0.1} it definitely isn't literature.":
             n 1nsqsr "Ha.{w=0.2} Ha.{w=0.2} Ha.{w=0.2} Ha.{w=0.2} ...Ha."
-            n 1flrpo "{i}Hilarious{/i},{w=0.1} [player]."
+            n 2flrpo "{i}Hilarious{/i},{w=0.1} [player]."
             n 1flraj "Keep it up,{w=0.1} and I'm gonna book you one."
-            n 1fsqsg "...And no,{w=0.1} I don't mean read you a story."
+            n 4fsqsg "...And no,{w=0.1} I don't mean read you a story."
 
     return
 
@@ -4935,15 +4935,15 @@ label talk_play_snap:
             $ persistent.jn_snap_player_is_cheater = False
 
         else:
-            n 1fnmem "[player]...{w=0.3} if you aren't even sorry you cheated,{w=0.1} why should I play with you again?"
-            n 1kllpo "Come on...{w=0.3} it's not hard to apologize,{w=0.1} is it?"
+            n 2fnmem "[player]...{w=0.3} if you aren't even sorry you cheated,{w=0.1} why should I play with you again?"
+            n 4kllpo "Come on...{w=0.3} it's not hard to apologize,{w=0.1} is it?"
             return
 
     if Natsuki.isLove(higher=True):
-        n 1uchbg "Of course I do,{w=0.1} dummy!{w=0.2} Ehehe."
+        n 3uchbg "Of course I do,{w=0.1} dummy!{w=0.2} Ehehe."
 
     elif Natsuki.isEnamored(higher=True):
-        n 1fchbg "Of course I'll play some with you,{w=0.1} dummy!"
+        n 4fchbg "Of course I'll play some with you,{w=0.1} dummy!"
 
     elif Natsuki.isAffectionate(higher=True):
         n 1fchsm "Well,{w=0.1} duh!{w=0.2} Of course I'm up for a game!"
@@ -4975,18 +4975,18 @@ init 5 python:
 
 label talk_remind_snap_rules:
     if persistent.jn_snap_player_is_cheater:
-        n 1fcsan "Come on,{w=0.1} [player]."
-        n 1flrpo "If you cared about the rules,{w=0.1} then why did you cheat when we played earlier?"
-        n 1fnmpo "You haven't even apologized for it yet..."
+        n 2fcsan "Come on,{w=0.1} [player]."
+        n 2flrpo "If you cared about the rules,{w=0.1} then why did you cheat when we played earlier?"
+        n 4fnmpo "You haven't even apologized for it yet..."
         return
 
     else:
         if Natsuki.isLove(higher=True):
             n 1nchbg "Ahaha.{w=0.2} You're so forgetful sometimes,{w=0.1} [player]."
-            n 1nsqbg "Sure,{w=0.1} I'll go over it again!{w=0.2} Juuust for you~."
+            n 3nsqbg "Sure,{w=0.1} I'll go over it again!{w=0.2} Juuust for you~."
 
         elif Natsuki.isEnamored(higher=True):
-            n 1nchbg "Of course I can!"
+            n 4nchbg "Of course I can!"
 
         elif Natsuki.isAffectionate(higher=True):
             n 1fchsm "You bet I can!"
@@ -5013,29 +5013,29 @@ init 5 python:
     )
 
 label talk_windup_chewing_gum:
-    n 1fcsan "Ugh...{w=0.3} you know what really gets on my nerves?"
+    n 2fcsan "Ugh...{w=0.3} you know what really gets on my nerves?"
     n 1fsqsl "When people are gross and don't get rid of chewing gum properly."
     n 1fbkwr "Seriously -{w=0.1} it annoys the crap out of me!"
-    n 1fllem "Like,{w=0.1} have you ever walked into a city center and looked at the ground?{w=0.2} At all the paving?"
+    n 3fllem "Like,{w=0.1} have you ever walked into a city center and looked at the ground?{w=0.2} At all the paving?"
     n 1fcsan "All those dried up spots of gum -{w=0.1} it's freaking disgusting,{w=0.1} and it looks nasty too!"
-    n 1fsqan "And that's in a place where there's usually bins everywhere too,{w=0.1} so it isn't just gross..."
-    n 1fnmwr "It's super lazy too!{w=0.2} I can't decide what winds me up more."
-    n 1fcswr "Even worse than that -{w=0.1} there's even people who go and stick it under tables,{w=0.1} or on walls -{w=0.1} who {i}does{/i} that?!"
+    n 4fsqan "And that's in a place where there's usually bins everywhere too,{w=0.1} so it isn't just gross..."
+    n 3fnmwr "It's super lazy too!{w=0.2} I can't decide what winds me up more."
+    n 3fcsup "Even worse than that -{w=0.1} there's even people who go and stick it under tables,{w=0.1} or on walls -{w=0.1} who {i}does{/i} that?!"
     n 1flrpu "Jeez...{w=0.3} makes me want to track them down and stick that crap back in their stupid mouths."
     n 1nnmsl "I don't really care if you chew gum yourself,{w=0.1} [player]."
 
     if Natsuki.isLove(higher=True):
-        n 1kllca "Just make sure you dispose of it properly,{w=0.1} 'kay?"
+        n 2kllca "Just make sure you dispose of it properly,{w=0.1} 'kay?"
         n 1kllss "I'm sure you do anyway,{w=0.1} but...{w=0.3} just in case."
-        n 1kchsml "Love you,{w=0.1} [player]~!"
+        n 4kchsml "Love you,{w=0.1} [player]~!"
 
     elif Natsuki.isAffectionate(higher=True):
         n 1nllca "But please,{w=0.1} just get rid of it properly when you're done."
-        n 1nchsm "Thanks,{w=0.1} [player]~!"
+        n 4nchsm "Thanks,{w=0.1} [player]~!"
 
     else:
-        n 1fnmaj "But seriously -{w=0.1} stick it in the bin when you're done,{w=0.1} alright?{w=0.2} Or just wrap it in a tissue and get rid of it later."
-        n 1fsqaj "...Or it won't just be the gum that'll be getting chewed out!"
+        n 3fnmaj "But seriously -{w=0.1} stick it in the bin when you're done,{w=0.1} alright?{w=0.2} Or just wrap it in a tissue and get rid of it later."
+        n 3fsqaj "...Or it won't just be the gum that'll be getting chewed out!"
 
     return
 
