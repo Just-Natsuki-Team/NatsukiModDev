@@ -523,29 +523,38 @@ label compliment_inspirational:
     $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_inspirational").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.TYPE_INSPIRATIONAL:
-        if Natsuki.isEnamored(higher=True):
-            n 1fchbg "Ahaha.{w=0.2} Thanks again for that,{w=0.2} [player]."
-            n 1nllss "You're not half-bad an inspiration either,{w=0.2} you know!"
+        n 1nchgn "Ahaha.{w=0.75}{nw}" 
+        extend 2fcsbg " Well,{w=0.2} what can I say?{w=0.75}{nw}" 
+        extend 2fchsmedz " I guess it must be natural~."
+        n 1nchsm "But thanks,{w=0.2} [player]!"
+        n 4fsqsm "Don't worry."
+        extend 3fwlbg " You can always count on yours truly for {i}all{/i} your inspiration needs!"
 
-        else:
-            n 1nchgn "Ehehe.{w=0.2} What can I say?{w=0.2} I'm a pro,{w=0.2} after all!"
-            n 1nnmbg "But thanks,{w=0.2} [player]!"
-            n 1fchsm "I'm glad you still find inspiration in yours truly!"
+        if Natsuki.isEnamored(higher=True):
+            n 3fsrssl "J-{w=0.2}just like I know I can count on you.{w=0.75}{nw}"
+            extend 1fchsml " Ehehe."
 
     else:
+        n 4unmemleex "H-{w=0.2}huh?{w=0.75}{nw}"
+        extend 2flrbglsbr " W-{w=0.2}well,{w=0.2} yeah!{w=0.75}{nw}"
+        extend 2fcsbglsbr " Duh!"
+        n 2fchgnsbr "Of course I am,{w=0.2} you dope!{w=1}{nw}"
+        extend 4fllct " In fact..."
+        n 1fcsct "I daresay you'd be hard pressed to find a {i}better{/i} role model than me."
+        n 3fsqsmeme "Ehehe."
+
         if Natsuki.isEnamored(higher=True):
-            n 1fskeml "H-{w=0.2}huh?{w=0.2} I'm inspirational to you?"
-            n 1fllbgl "Ahaha...{w=0.3} well...{w=0.3} of course I am!"
-            n 1kllsr "..."
-            n 1kllssl "Though I'm glad to hear it,{w=0.2} all the same."
+            n 3ullaj "Well,{w=0.2} anyway.{w=0.75}{nw}"
+            extend 4fwlbg " You're welcome,{w=0.2} [player]!"
+            n 2fchbgl "I'll {i}always{/i} be around to inspire you."
+
+            if Natsuki.isLove(higher=True):
+                n 2nsrsmlsbl "...You do the same for me,{w=0.2} a-{w=0.2}after all."
 
         else:
-            n 1fskeml "H-{w=0.2}huh?{w=0.2} I'm an inspiration to you?"
-            n 1fcsbgl "Well...{w=0.3} o-{w=0.2}of course you'd think that!"
-            n 1fllbgl "I mean,{w=0.2} role models don't come much better than me,{w=0.2} after all."
-            n 1uchgn "Why,{w=0.2} I'm practically an idol,{w=0.2} right?{w=0.2} Ahaha!"
-            n 1nllss "..."
-            n 1knmss "...Right?"
+            n 3fcsbgedz "Well,{w=0.2} feel free to be inspired by me anytime,{w=0.2} [player].{w=1}{nw}"
+            extend 4fsqss " After all..."
+            n 2fwlbg "That's just what the pros are for,{w=0.2} right?"
 
     $ jn_compliments.last_compliment_type = jn_compliments.TYPE_INSPIRATIONAL
     return
