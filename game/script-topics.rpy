@@ -653,7 +653,7 @@ label talk_careful_spending:
     n 1tllsr "..."
     n 1fllsr "..."
     n 1tnmpu "Hmm...?"
-    n 4uwdgsesu "O-{w=0.1}oh!{w=0.5}{nw} "
+    n 4uwdgsesu "O-{w=0.1}oh!{w=0.5}{nw}"
     extend 1flrbg " A-{w=0.1}aha!{w=0.5}{nw}"
     extend 4fsrdvl " I spaced out!"
     n 1unmaj "I was just thinking..."
@@ -2457,7 +2457,7 @@ label talk_give_nickname:
         n 1nbkdv "Pffft!"
         n 1uchbselg "Ahaha!"
         n 1fbkbs "[nickname]?!{w=0.2} What was that meant to be,{w=0.1} [player]?"
-        n 1fbkbs "Well...{w=0.3} you're just lucky I have a healthy sense of humour."
+        n 1fbkbs "Well...{w=0.3} you're just lucky I have a healthy sense of humor."
         n 1fsgbg "[nickname] it is,{w=0.1} I guess!{w=0.5}{nw}"
         extend 1fchgn " Ehehe."
 
@@ -3226,7 +3226,7 @@ label talk_i_love_you:
             n 1fllunf "..."
             n 1fcsgsf "J-{w=0.1}jeez!{w=0.2} Enough of this!"
             n 1fsqajf "You really shouldn't mess around with girls like that,{w=0.1} [player]!"
-            n 1fslpul "Y-{w=0.1}you're just lucky I've got a great sense of humour."
+            n 1fslpul "Y-{w=0.1}you're just lucky I've got a great sense of humor."
             n 1fnmpol "S-{w=0.1}so it's fine...{w=0.3} this time..."
             n 1fcsajl "Just...{w=0.3} think a little before you just blurt stuff out!{w=0.2} Sheesh."
             n 1fllslf "[chosen_tease.capitalize()]..."
@@ -3237,7 +3237,7 @@ label talk_i_love_you:
             n 1fwdanf "Did you just...?"
             n 1fllajl "..."
             n 1fcsbgf "A-{w=0.1}aha!{w=0.2} I mean...{w=0.3} y-{w=0.1}yeah!{w=0.2} Who wouldn't love me,{w=0.1} right?"
-            n 1fllbgf "My wit,{w=0.1} my style,{w=0.1} my killer sense of humour...{w=0.3} I've got it all.{w=0.1} Yeah..."
+            n 1fllbgf "My wit,{w=0.1} my style,{w=0.1} my killer sense of humor...{w=0.3} I've got it all.{w=0.1} Yeah..."
             n 1fbkwrf "D-{w=0.1}don't get the wrong idea or a-{w=0.1}anything, though!"
             n 1fllssf "I-{w=0.1}I mean,{w=0.1} I'm just glad you have some good taste."
             n 1fllunf "Yeah..."
@@ -7384,7 +7384,7 @@ label talk_impressions_of_the_other_girls:
             extend 1fcsfultsa " Knowing how much I {i}miss{/i} them?!"
 
         n 1fcsunl "..."
-        n 1fsqem "Your sense of humour {i}{w=0.2}blows{w=0.2}{/i},{w=0.2} [player]."
+        n 1fsqem "Your sense of humor {i}{w=0.2}blows{w=0.2}{/i},{w=0.2} [player]."
 
         if already_discussed_impressions_of_others:
             n 1fsqanl "Now knock.{w=0.3}{nw}"
@@ -8093,7 +8093,7 @@ label talk_player_change_name:
         extend 1flrbo " Maybe you thought you were being funny or something."
         n 1fnmfr "Just knock it off,{w=0.1} alright?{w=1}{nw}"
         extend 1tsqpu " Because honestly?"
-        n 1fslsl "I really {i}don't{/i} see the humour."
+        n 1fslsl "I really {i}don't{/i} see the humor."
 
         # Apply penalty and pending apology
         $ Natsuki.addApology(jn_apologies.ApologyTypes.bad_player_name)
