@@ -1694,42 +1694,42 @@ init 5 python:
 label talk_player_appearance:
     # Player was asked before, and declined to share their appearance
     if persistent.jn_player_appearance_declined_share:
-        n 1unmaj "Huh?{w=0.2} Your appearance?"
+        n 4unmaj "Huh?{w=0.2} Your appearance?"
         n 1ullaj "If I remember,{w=0.1} [player]{w=0.1} -{w=0.3}{nw}"
-        extend 1tnmbo " you said didn't want to share it with me before."
+        extend 2tnmbo " you said didn't want to share it with me before."
         n 1tlrbo "Huh. Well..."
         menu:
             n "Did you change your mind,{w=0.1} [player]?"
 
             "Yes, I want to share my appearance.":
-                n 1fcsbg "A-{w=0.1}aha!{w=0.2} I knew you'd come around eventually,{w=0.1} [player].{nw}"
-                extend 1fchgn "{w=0.2} Let's not waste any time!"
+                n 3fcsbg "A-{w=0.1}aha!{w=0.2} I knew you'd come around eventually,{w=0.1} [player].{nw}"
+                extend 3fchgn "{w=0.2} Let's not waste any time!"
 
             "No, I still don't want to share my appearance.":
                 n 1nllsl "Oh..."
-                n 1unmaj "Well,{w=0.1} it's your call,{w=0.1} [player]."
+                n 4unmaj "Well,{w=0.1} it's your call,{w=0.1} [player]."
                 n 1unmss "Just let me know if you change your mind again,{w=0.1} alright?"
                 return
 
     # Player has already described themselves to Natsuki
     elif persistent.jn_player_appearance_eye_colour is not None:
         n 1unmaj "Huh?{w=0.2} Your appearance?"
-        n 1tllbo "But...{w=0.3} I was sure you already shared that with me,{w=0.1} [player]."
-        n 1uspgs "Ooh!{w=0.5}{nw}"
+        n 2tllbo "But...{w=0.3} I was sure you already shared that with me,{w=0.1} [player]."
+        n 4uspgs "Ooh!{w=0.5}{nw}"
         extend 1unmbg " Did you dye your hair or something?"
-        n 1fllbg "Or...{w=0.3} maybe you just made a mistake last time?"
-        n 1tslbg "Well...{w=0.5}{nw}"
+        n 2fllbg "Or...{w=0.3} maybe you just made a mistake last time?"
+        n 2tslbg "Well...{w=0.5}{nw}"
         extend 1unmbg " either way."
         menu:
             n "Did you want to share your appearance again,{w=0.1} [player]?"
 
             "Yes, my appearance has changed.":
                 n 1fcssm "Aha!{w=0.2} I thought so!"
-                n 1fchgn "I can't wait to find out how!"
+                n 2fchgn "I can't wait to find out how!"
 
             "No, my appearance hasn't changed.":
                 n 1tnmsr "H-{w=0.1}huh?{w=0.2} Just pulling my leg,{w=0.1} are you?"
-                n 1tsrsf "Okaaay..."
+                n 2tsrsf "Okaaay..."
                 n 1tnmss "Just let me know if you actually {i}do{/i} change something then,{w=0.2} 'kay?"
                 return
 
@@ -1737,35 +1737,35 @@ label talk_player_appearance:
     else:
         n 1tlrbo "Huh..."
         n 1tnmbo "You know,{w=0.1} [player].{w=0.2} I just realized something."
-        n 1unmaj "You've seen a lot of me,{w=0.1} right?{w=0.5}{nw}"
-        extend 1fslssl " B-{w=0.1}by spending time with me here,{w=0.1} I mean."
+        n 4unmaj "You've seen a lot of me,{w=0.1} right?{w=0.5}{nw}"
+        extend 2fslssl " B-{w=0.1}by spending time with me here,{w=0.1} I mean."
         n 1ullaj "So...{w=0.3} you kinda know exactly who you're dealing with."
-        n 1uwdgs "But I don't have a clue about who {i}I'm{/i} dealing with!"
-        n 1fsqsm "And honestly?{w=0.2} You should know me by now.{w=0.5}{nw}"
-        extend 1fsqbg " I'm actually pretty curious!"
+        n 4uwdgs "But I don't have a clue about who {i}I'm{/i} dealing with!"
+        n 3fsqsm "And honestly?{w=0.2} You should know me by now.{w=0.5}{nw}"
+        extend 3fsqbg " I'm actually pretty curious!"
         n 1nchbg "Don't worry though{w=0.1} -{w=0.1} anything you tell me is staying strictly between us,{w=0.1} obviously!"
         n 1fllsfl "N-{w=0.1}not like anyone else would care {i}that{/i} much,{w=0.1} anyway."
-        n 1unmsm "So...{w=0.3} how about it, [player]?"
+        n 4unmsm "So...{w=0.3} how about it, [player]?"
         menu:
             n "Do you wanna share your appearance with me, [player]?"
 
             "Sure!":
                 n 1uchbsl "Yes!{w=0.5}{nw}"
-                extend 1fcsbgl " I-{w=0.1}I mean good!{w=0.5}{nw}"
+                extend 2fcsbgl " I-{w=0.1}I mean good!{w=0.5}{nw}"
                 n 1fchbg "Let's get started then,{w=0.1} shall we?"
 
             "I'm not comfortable sharing that.":
                 n 1unmsl "Oh..."
                 n 1ullaj "That's kind of disappointing to hear,{w=0.1} if I'm being honest."
-                n 1nchss "But I totally get it,{w=0.1} [player].{w=0.2} So don't worry,{w=0.1} 'kay?"
-                n 1fsqss "You better let me know if you feel like telling me later though!"
+                n 2nchss "But I totally get it,{w=0.1} [player].{w=0.2} So don't worry,{w=0.1} 'kay?"
+                n 2fsqss "You better let me know if you feel like telling me later though!"
                 $ persistent.jn_player_appearance_declined_share = True
                 return
 
     n 1uchgn "Okaaay!{w=0.2} Let's start with...{w=0.5}{nw}"
     extend 1fchbg " your eyes!"
-    n 1unmbg "They say the eyes are the window to the soul,{w=0.1} so it only makes sense to begin there,{w=0.1} right?"
-    n 1flldvl "..."
+    n 4unmbg "They say the eyes are the window to the soul,{w=0.1} so it only makes sense to begin there,{w=0.1} right?"
+    n 4flldvl "..."
     n 1fcseml "A-{w=0.1}anyway...!"
 
     # Eye colour
@@ -1773,166 +1773,166 @@ label talk_player_appearance:
         n "How would you describe your eye colour,{w=0.1} [player]?"
 
         "Amber":
-            n 1unmaj "Ooh!{w=0.2} I don't think I've seen someone with amber eyes before."
+            n 4unmaj "Ooh!{w=0.2} I don't think I've seen someone with amber eyes before."
             n 1fchbg "That's awesome,{w=0.1} [player]!{w=0.2} I bet those help you stand out,{w=0.1} right?"
             $ persistent.jn_player_appearance_eye_colour = "Amber"
 
         "Blue":
-            n 1unmbg "Blue eyes,{w=0.1} huh?{w=0.2} Cool!"
+            n 4unmbg "Blue eyes,{w=0.1} huh?{w=0.2} Cool!"
             n 1fsgsm "I really like how striking they are!"
             $ persistent.jn_player_appearance_eye_colour = "Blue"
 
         "Brown":
-            n 1unmaj "Brown eyes,{w=0.1} huh?{w=0.5}{nw}"
+            n 4unmaj "Brown eyes,{w=0.1} huh?{w=0.5}{nw}"
             extend 1fchsm " I'm not complaining!"
-            n 1tsqss "Nice and natural,{w=0.1} am I right?{w=0.5}{nw}"
+            n 3tsqss "Nice and natural,{w=0.1} am I right?{w=0.5}{nw}"
             extend 1uchsm " Ahaha."
             $ persistent.jn_player_appearance_eye_colour = "Brown"
 
         "Grey":
-            n 1unmaj "Oh?{w=0.2} Grey eyes?{w=0.2} Super neat, [player]!"
+            n 4unmaj "Oh?{w=0.2} Grey eyes?{w=0.2} Super neat, [player]!"
             n 1tllss "I don't think I've seen anyone with grey eyes before!"
             $ persistent.jn_player_appearance_eye_colour = "Grey"
 
         "Green":
-            n 1fsgbg "Aha!{w=0.2} I had you figured for green eyes,{w=0.1} [player]."
+            n 4fsgbg "Aha!{w=0.2} I had you figured for green eyes,{w=0.1} [player]."
             n 1fsqbg "I bet you're proud of them,{w=0.1} no?{w=0.5}{nw}"
             extend 1uchsm " Ehehe."
             $ persistent.jn_player_appearance_eye_colour = "Green"
 
         "Hazel":
-            n 1unmaj "Ooh!{w=0.2} Hazel,{w=0.1} huh?{w=0.5}{nw}"
+            n 4unmaj "Ooh!{w=0.2} Hazel,{w=0.1} huh?{w=0.5}{nw}"
             extend 1fsqbg " Classy!"
             n 1tslsm "Hmm...{w=0.3} I wonder if yours are closer to green or brown,{w=0.1} [player]?"
             $ persistent.jn_player_appearance_eye_colour = "Hazel"
 
         "Mixed":
-            n 1unmaj "Wow!{w=0.2} Do you have two different colours or something,{w=0.1} [player]?"
+            n 4unmaj "Wow!{w=0.2} Do you have two different colours or something,{w=0.1} [player]?"
             n 1fchbg "Now if that isn't unique,{w=0.1} I don't know what is!"
             $ persistent.jn_player_appearance_eye_colour = "Mixed"
 
         "Other":
-            n 1unmaj "Oh?{w=0.2} Something a bit off the beaten trail,{w=0.1} huh?"
+            n 4unmaj "Oh?{w=0.2} Something a bit off the beaten trail,{w=0.1} huh?"
             n 1tlrss "...Or maybe you just wear contacts a lot?{w=0.5}{nw}"
             extend 1unmsg " Well,{w=0.1} whatever."
             n 1ncsss "I'm sure they look fine either way."
             $ persistent.jn_player_appearance_eye_colour = "Other"
 
     n 1uchbg "Alright!{w=0.2} That's one down!"
-    n 1ullaj "So next,{w=0.1} we have...{w=0.5}{nw}"
+    n 3ullaj "So next,{w=0.1} we have...{w=0.5}{nw}"
     extend 1fchsm " your hair,{w=0.1} of course!"
     n 1nnmsm "We'll just start off with the length for now."
-    n 1ullss "Now..."
+    n 4ullss "Now..."
 
     # Hair length
     menu:
         n "How would you describe your hair length,{w=0.1} [player]?"
 
         "Short.":
-            n 1ncsss "Ah,{w=0.1} the low maintenance approach{w=0.1} -{w=0.1} I see,{w=0.1} I see.{w=0.5}{nw}"
+            n 4ncsss "Ah,{w=0.1} the low maintenance approach{w=0.1} -{w=0.1} I see,{w=0.1} I see.{w=0.5}{nw}"
             extend 1fchbg " Trendy!"
             n 1unmaj "To be honest though,{w=0.1} I totally get it."
-            n 1fslpo "I have no idea how you even keep long hair looking good..."
-            n 1nslpo "It just seems like way too much effort to me."
+            n 3fslpo "I have no idea how you even keep long hair looking good..."
+            n 3nslpo "It just seems like way too much effort to me."
             $ persistent.jn_player_appearance_hair_length = "Short"
 
         "Mid-length.":
-            n 1fcsbg "Aha!{w=0.2} The perfect balance,{w=0.1} am I right?"
+            n 4fcsbg "Aha!{w=0.2} The perfect balance,{w=0.1} am I right?"
             n 1fllss "Just long enough for pretty much any style..."
             n 1fchgn "And yet still short enough to suit a lazy day!{w=0.5}{nw}"
             extend 1nchsm " Ehehe."
-            n 1flrbgl "I'm glad we think the same way,{w=0.1} [player]!"
+            n 3flrbgl "I'm glad we think the same way,{w=0.1} [player]!"
             $ persistent.jn_player_appearance_hair_length = "Mid-length"
 
         "Long.":
-            n 1unmbg "Ooh!{w=0.2} Letting it run free,{w=0.1} are we?"
+            n 4unmbg "Ooh!{w=0.2} Letting it run free,{w=0.1} are we?"
             n 1fcssm "I bet you take super good care of yours."
-            n 1fsqsm "I might even have to borrow your products,{w=0.1} [player].{w=0.5}{nw}"
+            n 3fsqsm "I might even have to borrow your products,{w=0.1} [player].{w=0.5}{nw}"
             extend 1nchsm " Ehehe!"
             $ persistent.jn_player_appearance_hair_length = "Long"
 
         "I don't have any hair.":
-            n 1fnmaj "Hey{w=0.1} -{w=0.1} nothing wrong with that!{nw}"
+            n 4fnmaj "Hey{w=0.1} -{w=0.1} nothing wrong with that!{nw}"
             extend 1fsqbg "{w=0.2} You wanna know why?"
-            n 1fchgn "Because it just means you're aerodynamic,{w=0.1} [player].{w=0.5}{nw}"
-            extend 1uchsmelg " Ahaha!"
+            n 3fchgn "Because it just means you're aerodynamic,{w=0.1} [player].{w=0.5}{nw}"
+            extend 3uchsmelg " Ahaha!"
             $ persistent.jn_player_appearance_hair_length = "None"
 
     n 1uchbs "Okay!{w=0.5}{nw}"
     extend 1unmbg " I'm really starting to get a picture now."
-    n 1fwdgs "We gotta keep the ball rolling,{w=0.1} [player]!"
+    n 4fwdgs "We gotta keep the ball rolling,{w=0.1} [player]!"
 
     # Hair colour
     if persistent.jn_player_appearance_hair_length == "None":
         n 1fllss "You said you didn't have any hair,{w=0.1} right?{w=0.5}{nw}"
-        extend 1fllbg " So I think it's kinda pointless talking about hair colour."
-        n 1fslbo "Now,{w=0.1} let's see...{w=0.3} what else..."
+        extend 4fllbg " So I think it's kinda pointless talking about hair colour."
+        n 3fslbo "Now,{w=0.1} let's see...{w=0.3} what else..."
 
     else:
         n 1fchsm "Now for your hair colour!"
-        n 1unmbg "So,{w=0.1} [player]..."
+        n 4unmbg "So,{w=0.1} [player]..."
         menu:
             n "How would you describe your hair colour?"
 
             "Auburn":
-                n 1unmaw "Ooh!{w=0.2} Auburn,{w=0.1} huh?{w=0.5}{nw}"
+                n 4unmaw "Ooh!{w=0.2} Auburn,{w=0.1} huh?{w=0.5}{nw}"
                 extend 1fwdaw " That's awesome,{w=0.1} [player]!"
                 n 1fchbg "It's such a warm colour!"
                 $ persistent.jn_player_appearance_hair_colour = "Auburn"
 
             "Black":
-                n 1tsgsm "Black,{w=0.1} huh?{w=0.5}{nw}"
+                n 4tsgsm "Black,{w=0.1} huh?{w=0.5}{nw}"
                 extend 1nchgn " Nice!"
                 n 1usqsg "I bet you feel super slick,{w=0.1} huh [player]?"
                 $ persistent.jn_player_appearance_hair_colour = "Black"
 
             "Blond":
-                n 1fnmbg "Aha!{w=0.2} A blond,{w=0.1} are we?{w=0.5}{nw}"
-                extend 1fsqts " {w=0.3}...That explains a lot."
+                n 4fnmbg "Aha!{w=0.2} A blond,{w=0.1} are we?{w=0.5}{nw}"
+                extend 3fsqts " {w=0.3}...That explains a lot."
                 n 1fchgnelg "Ahaha!"
                 n 1uchbs "I'm kidding,{w=0.1} [player]!{w=0.2} I'm just kidding!"
-                n 1fllbg "I'm actually a little jealous.{w=0.5}{nw}"
-                extend 1fsqsm " Just a little."
+                n 3fllbg "I'm actually a little jealous.{w=0.5}{nw}"
+                extend 4fsqsm " Just a little."
                 $ persistent.jn_player_appearance_hair_colour = "Blond"
 
             "Brown":
-                n 1unmaj "Brown hair,{w=0.1} [player]?{w=0.5}{nw}"
+                n 4unmaj "Brown hair,{w=0.1} [player]?{w=0.5}{nw}"
                 extend 1nchsm " I'm for it!"
-                n 1nchsm "Not too subtle and not too striking,{w=0.1} you know?{w=0.2} It's just right!"
+                n 4nsgss "Not too subtle and not too striking,{w=0.1} you know?{w=0.2} It's just right!"
                 $ persistent.jn_player_appearance_hair_colour = "Brown"
 
             "Grey":
-                n 1unmaj "Ooh...{w=0.5}{nw}"
+                n 4unmaj "Ooh...{w=0.5}{nw}"
                 extend 1ullaj " I gotta say...{w=0.5}{nw}"
                 extend 1kllbg " I wasn't expecting that!"
-                n 1fsqsr "I just hope that isn't from stress,{w=0.1} [player]..."
-                n 1fllbg "...Or at least stress from me,{w=0.1} anyway.{w=0.5}{nw}"
+                n 2fsqsr "I just hope that isn't from stress,{w=0.1} [player]..."
+                n 2fllbg "...Or at least stress from me,{w=0.1} anyway.{w=0.5}{nw}"
                 extend 1fchsm " Ehehe."
                 $ persistent.jn_player_appearance_hair_colour = "Grey"
 
             "Red":
-                n 1fchsm "Ehehe.{w=0.5}{nw}"
+                n 4fchsm "Ehehe.{w=0.5}{nw}"
                 extend 1usqsm " So you're a red head,{w=0.1} [player]?"
-                n 1flrajl "Not that there's anything wrong with that,{w=0.1} o-{w=0.1}obviously!"
+                n 3flrajl "Not that there's anything wrong with that,{w=0.1} o-{w=0.1}obviously!"
                 n 1fchbg "I bet that gets you some attention,{w=0.1} huh?"
-                n 1fsrpo "Better be the good kind,{w=0.1} though."
+                n 3fsrpo "Better be the good kind,{w=0.1} though."
                 $ persistent.jn_player_appearance_hair_colour = "Red"
 
             "White":
-                n 1unmbg "White hair,{w=0.1} huh?{w=0.5}{nw}"
+                n 4unmbg "White hair,{w=0.1} huh?{w=0.5}{nw}"
                 extend 1uchsm " Neat!"
                 $ persistent.jn_player_appearance_hair_colour = "White"
 
             "Other":
-                n 1unmaj "Oh?{w=0.5}{nw}"
+                n 4unmaj "Oh?{w=0.5}{nw}"
                 extend 1fsqsm " It looks like we're more similar in taste than I thought!"
-                n 1fsrss "Though I should probably clarify...{w=0.5}{nw}"
+                n 4fsrss "Though I should probably clarify...{w=0.5}{nw}"
                 extend 1uchgn " mine is all natural,{w=0.1} [player]!{w=0.2} Ahaha."
                 $ persistent.jn_player_appearance_hair_colour = "Other"
 
     # Height
     n 1unmbg "Alright!{w=0.2} I think I'm almost done interrogating you now,{w=0.1} [player]."
-    n 1fsqsm "Ehehe."
+    n 4fsqsm "Ehehe."
     n 1flrsl "So...{w=0.3} don't tease me when I ask this,{w=0.1} but I gotta know."
     n 1ulrbo "Exactly..."
 
@@ -1946,50 +1946,50 @@ label talk_player_appearance:
             $ persistent.jn_player_appearance_height_cm = player_input
 
             if player_input < 149:
-                n 1unmgs "H-{w=0.1}huh?{w=0.2} Really?"
+                n 4unmgs "H-{w=0.1}huh?{w=0.2} Really?"
                 n 1unmaj "You're even shorter than me?"
-                n 1flldv "Well,{w=0.1} I wasn't expecting that!"
+                n 3flldv "Well,{w=0.1} I wasn't expecting that!"
                 n 1fnmbg "Don't worry,{w=0.1} [player].{w=0.2} We're both on the same side,{w=0.1} right?{w=0.5}{nw}"
                 extend 1fchbg " Ehehe."
 
             elif player_input == 149:
-                n 1unmgs "Seriously?{w=0.2} We're the same height?"
+                n 4unmgs "Seriously?{w=0.2} We're the same height?"
                 n 1uchbg "That's amazing,{w=0.1} [player]!"
 
                 if persistent.jn_player_appearance_hair_length = "Medium" and persistent.jn_player_appearance_hair_colour = "Other":
-                    n 1fllbg "With the hair and everything too..."
+                    n 2fllbg "With the hair and everything too..."
                     n 1uchgn "It's like we're practically twins!"
 
             elif player_input > 149 and player_input < 166:
-                n 1unmaj "Oh?{w=0.2} A little on the shorter side,{w=0.1} [player]?"
+                n 4unmaj "Oh?{w=0.2} A little on the shorter side,{w=0.1} [player]?"
                 n 1fcsss "Don't worry, don't worry!{w=0.5}{nw}"
-                extend 1fllpo " I-{w=0.1}I'm not one to judge,{w=0.1} after all."
+                extend 2fllpo " I-{w=0.1}I'm not one to judge,{w=0.1} after all."
 
             elif player_input >= 166 and player_input < 200:
-                n 1unmaj "About average height,{w=0.1} [player]?"
+                n 4unmaj "About average height,{w=0.1} [player]?"
                 n 1nchsm "No complaints from me!"
 
             elif player_input >= 200 and player_input < 250:
-                n 1unmaj "Oh?{w=0.2} On the taller side [player],{w=0.1} are we?"
+                n 4unmaj "Oh?{w=0.2} On the taller side [player],{w=0.1} are we?"
                 n 1fllbg "I guess I know who to take shopping,{w=0.1} right?{w=0.5}{nw}"
                 extend 1nchsm " Ehehe."
 
             else:
-                n 1unmgs "W-{w=0.1}woah!{w=0.2} What the heck,{w=0.1} [player]?{w=0.2} Really?"
+                n 4unmgs "W-{w=0.1}woah!{w=0.2} What the heck,{w=0.1} [player]?{w=0.2} Really?"
                 n 1fbkwr "That's crazy tall!"
-                n 1tlrem "Though...{w=0.3} actually...{w=0.5}{nw}"
-                extend 1knmpo " I hope that isn't actually just inconvenient for you,{w=0.1} though."
+                n 3tlrem "Though...{w=0.3} actually...{w=0.5}{nw}"
+                extend 3knmpo " I hope that isn't actually just inconvenient for you,{w=0.1} though."
 
         else:
-            n 1fllpo "[player]...{w=0.3} please.{w=0.2} Take this seriously,{w=0.1} alright?"
+            n 3fllpo "[player]...{w=0.3} please.{w=0.2} Take this seriously,{w=0.1} alright?"
 
     n 1uchsm "Okaaay!{w=0.2} I think that's everything."
     n 1unmbg "Thanks a bunch,{w=0.1} [player]!"
-    n 1fllbg "I know it wasn't a lot,{w=0.3}{nw}"
+    n 4fllbg "I know it wasn't a lot,{w=0.3}{nw}"
     extend 1uchgn " but I feel like I know you so much better now!"
 
     if Natsuki.isLove(higher=True):
-        n 1flldvl "You know,{w=0.1} [player]?{w=0.2} I can just picture it now."
+        n 4flldvl "You know,{w=0.1} [player]?{w=0.2} I can just picture it now."
         n 1fnmssl "Meeting you in person somewhere out there,{w=0.1} for the first time..."
         python:
             # Get the descriptor for the eye colour
@@ -2009,31 +2009,31 @@ label talk_player_appearance:
         # Comment on hair length and colour, if the player has hair
         if persistent.jn_player_appearance_hair_length != "None":
             $ hair_length_descriptor = persistent.jn_player_appearance_hair_length.lower()
-            n 1fsqsml "Spotting your [hair_length_descriptor] [hair_colour_descriptor] hair in the distance and hunting you down..."
+            n 4fsqsml "Spotting your [hair_length_descriptor] [hair_colour_descriptor] hair in the distance and hunting you down..."
 
         else:
-            n 1fsqsml "Spotting you in the distance and hunting you down..."
+            n 4fsqsml "Spotting you in the distance and hunting you down..."
 
         # Comment on height and eye colour
         if persistent.jn_player_appearance_height_cm < 149:
-            n 1fllssl "Gazing down into your [eye_colour_descriptor] eyes..."
+            n 2fllssl "Gazing down into your [eye_colour_descriptor] eyes..."
 
         elif persistent.jn_player_appearance_height_cm == 149:
-            n 1fllssl "Gazing directly into your [eye_colour_descriptor] eyes..."
+            n 2fllssl "Gazing directly into your [eye_colour_descriptor] eyes..."
 
         elif persistent.jn_player_appearance_height_cm > 149:
-            n 1fllssl "Gazing upwards into your [eye_colour_descriptor] eyes..."
+            n 2fllssl "Gazing upwards into your [eye_colour_descriptor] eyes..."
 
         n 1fchunl "Uuuuuu..."
         n 1fsqunl "...{w=0.5}{nw}"
-        extend 1fllajl " A-ahem!{w=0.2} Anyway..."
+        extend 2fllajl " A-ahem!{w=0.2} Anyway..."
         $ chosen_endearment = jn_utils.getRandomEndearment()
         n 1kllsml "Really.{w=0.2} Thank you,{w=0.1} [chosen_endearment]."
         n 1kcsbgl "This seriously meant a lot to me."
 
     elif Natsuki.isEnamored():
-        n 1fsldvl "...And now I know exactly who I should be watching out for."
-        n 1fsqssl "So you better watch out,{w=0.1} [player]."
+        n 4fsldvl "...And now I know exactly who I should be watching out for."
+        n 4fsqssl "So you better watch out,{w=0.1} [player]."
         n 1fcsbgl "Ehehe."
 
     return
