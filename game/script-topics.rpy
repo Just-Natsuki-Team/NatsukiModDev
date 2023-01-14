@@ -3570,7 +3570,7 @@ label talk_natsukis_hairstyle:
     n 4ullpu "I never really thought about it that much,{w=0.1} honestly."
 
     if Natsuki.isNormal(higher=True):
-        if Natsuki.isWearingHairstyle("jn_hair_twintails"):
+        if Natsuki.isWearingHairstyle("jn_hair_twintails") or Natsuki.isWearingHairstyle("jn_hair_twintails_long") or Natsuki.isWearingHairstyle("jn_hair_twintails_white_ribbons"):
             n 2ulrpo "I just thought twintails would look kinda cute on me."
 
         else:
@@ -3582,12 +3582,12 @@ label talk_natsukis_hairstyle:
             n 1ksqsm "Was I wrong...?"
             n 1fchbg "Ehehe.{w=0.2} I thought not."
 
-        if Natsuki.isWearingHairstyle("jn_hair_twintails"):
+        if Natsuki.isWearingHairstyle("jn_hair_twintails") or Natsuki.isWearingHairstyle("jn_hair_twintails_long") or Natsuki.isWearingHairstyle("jn_hair_twintails_white_ribbons"):
             n 1ullaj "Besides,{w=0.1} I had a whole bunch of ribbon lying around from my craft stuff {w=0.1}-{w=0.5}{nw}"
             extend 3fcsbg " so it isn't like I had to go {i}buy{/i} anything new to try twintails out."
 
     else:
-        if Natsuki.isWearingHairstyle("jn_hair_twintails"):
+        if Natsuki.isWearingHairstyle("jn_hair_twintails") or Natsuki.isWearingHairstyle("jn_hair_twintails_long") or Natsuki.isWearingHairstyle("jn_hair_twintails_white_ribbons"):
             n 1nnmsl "I guess I just liked the idea of twintails."
             n 1nlrpu "Besides,{w=0.1} I had some spare ribbons lying around anyways.{w=0.5}{nw}"
             extend 4nsrsr " Not like I had to {i}buy{/i} anything to try doing twintails."
@@ -3622,7 +3622,7 @@ label talk_natsukis_hairstyle:
 
     n 4tllaj "Have I thought about other hairstyles?{w=0.2} Well..."
 
-    if not Natsuki.isWearingHairstyle("jn_hair_twintails"):
+    if not Natsuki.isWearingHairstyle("jn_hair_twintails") or Natsuki.isWearingHairstyle("jn_hair_twintails_white_ribbons"):
         if Natsuki.isEnamored(higher=True):
             n 1tsqsml "Is that not what I'm doing right now?"
             extend 1fchsml " Ehehe."
