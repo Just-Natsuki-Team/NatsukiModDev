@@ -277,43 +277,45 @@ label compliment_confident:
         n 2fllsm "Besides,{w=0.5}{nw}"
         extend 2fcssm " it's only natural."
         
-        if Natsuki.isEnamoured(higher=True):
+        if Natsuki.isEnamored(higher=True):
             n 4nslssl "E-{w=0.2}especially with you around,"
-            extend 3fchbll " you goof."
+            $ chosen_tease = jn_utils.getRandomTease()
+            extend 3fchbll " [chosen_tease]."
 
         else:
-            n 2fcsbg "Full of confidence,{w=0.5}{nw}"
+            n 2fcsbgedz "Brimming with confidence,{w=0.5}{nw}"
             extend 2flrbs " always unfazed..."
             n 3uchgnl "...That's just what it means to be a pro,{w=0.2} right?"
     
     else:
-        n "Oho?{w=1}{nw}"
-        extend " I do,{w=0.2} do I?"
-        n "Now that's {i}just{/i} what I like to hear!"
-        n "After all,{w=0.5}{nw}"
-        extend " don't I just radiate confidence?"
-        n " Come on,{w=0.2} [player]!{w=0.75}{nw}"
-        extend " No need to be shy!{w=0.5}{nw}"
-        extend " Is it the eyes?"
-        n "The smile?"
-        n "The {i}killer{/i} personality?"
-        n "Ehehe."
-        n "Whatever it is..."
+        n 4fsqct "Oho?{w=1}{nw}"
+        extend 3fsqbg " You do,{w=0.2} do you?"
+        n 3fchgn "Now that's {i}just{/i} what I like to hear!"
+        n 4fcsbg "After all,{w=0.5}{nw}"
+        extend 2fcssmeme " don't I just {i}radiate{/i} confidence?"
+        n 4tsqbg "Come on,{w=0.2} [player]!{w=0.75}{nw}"
+        extend 4fchgn " No need to be shy!{w=0.5}{nw}"
+        extend 4fsqbg " You {i}gotta{/i} tell me!"
+        n 3fllct "Is it the eyes?"
+        n 3fcsbg "The smile?"
+        n 3usqsm "The {i}killer{/i} personality?"
+        n 4fchsmedz "Ehehe."
+        n 2fcsss "Well,{w=0.2} whatever it is..."
         
         if Natsuki.isLove(higher=True):
-            n "..."
-            n "I-{w=0.2}I hope I inspire you just as much as you inspire me."
-            extend " Ehehe."
-            n "L-{w=0.2}love you,{w=0.2} [player]!"
+            n 4nsrsmsbl "..."
+            n 4fcssmlsbl "I-{w=0.2}I hope I inspire you just as much as you inspire me.{w=0.75}{nw}"
+            extend 4fchdvlsbl " Ehehe."
+            n 1fchbgleafsbr "L-{w=0.2}love you,{w=0.2} [player]!"
 
-        if Natsuki.isEnamored(higher=True):
-            n "I hope I inspire some confidence in you too!"
-            n "N-{w=0.2}not that you need it {i}too{/i} much,{w=0.2} a-{w=0.2}anyway."
-            n "Y-{w=0.2}you're welcome,{w=0.2} [player]!"
+        elif Natsuki.isEnamored(higher=True):
+            n 2fcsbg "I hope I inspire some confidence in you too!"
+            n 2fslbglsbr "N-{w=0.2}not that you need it {i}too{/i} much,{w=0.2} a-{w=0.2}anyway."
+            n 2fchbglsbr "Y-{w=0.2}you're welcome,{w=0.2} [player]!"
 
         else:
-            n "I hope I inspire some confidence in you too."
-            n "You're welcome,{w=0.2} [player]!"
+            n 2fchgnl "I better inspire some confidence in you too!"
+            n 2fwlsm "You're welcome,{w=0.2} [player]!"
 
     $ jn_compliments.last_compliment_type = jn_compliments.TYPE_CONFIDENT
     return
