@@ -1622,35 +1622,35 @@ init 5 python:
     )
 
 label talk_sweet_tooth:
-    n 1unmbo "Huh?{w=0.2} Do I have a sweet tooth?"
+    n 4unmbo "Huh?{w=0.2} Do I have a sweet tooth?"
 
     # Opening response
     if Natsuki.isAffectionate(higher=True):
-        n 1fspbg "You bet I do!"
-        n 1nsqts "What else were you expecting,{w=0.1} [player]?"
+        n 3fspbg "You bet I do!"
+        n 4nsqts "What else were you expecting,{w=0.1} [player]?"
         extend 1fchsm "{w=0.2} Ehehe."
 
     elif Natsuki.isNormal(higher=True):
-        n 1fllss "Well,{w=0.1} yeah.{w=0.2} Of course I do!"
+        n 3fllss "Well,{w=0.1} yeah.{w=0.2} Of course I do!"
 
     else:
         n 1nnmsl "Well...{w=0.3} yeah.{w=0.2} Why wouldn't I?"
 
     n 1nllaj "Baked stuff is okay,{w=0.1} but I find it gets kinda sickly before long."
     n 1ullaj "But to be completely honest,{w=0.1} if I had a choice?{w=0.5}{nw}"
-    extend 1unmbo " Just give me a bunch of candy every time."
+    extend 2unmbo " Just give me a bunch of candy every time."
 
     if Natsuki.isNormal(higher=True):
         n 1uwdaj "There's so much more variety!{w=0.2} Like...{w=0.3} there's always something for whatever I feel like!"
-        n 1tllss "I think if I had to pick a favourite though,{w=0.3}{nw}"
+        n 2tllss "I think if I had to pick a favourite though,{w=0.3}{nw}"
         extend 1fllss " it'd be those fizzy ones."
         n 1fchbg "Just that perfect mix of sweet and sour,{w=0.1} you know?"
-        n 1flraj "Jeez...{w=0.5}{nw}"
+        n 3flraj "Jeez...{w=0.5}{nw}"
         extend 1fchts " I can feel my tongue tingling already just thinking about them!"
         n 1fsrts "..."
-        n 1flleml "A-{w=0.1}anyway!"
+        n 3flleml "A-{w=0.1}anyway!"
         n 1fcseml "It isn't like I'm snacking on treats all the time though."
-        n 1fllpo "I've got way better things to spend my money on."
+        n 2fllpo "I've got way better things to spend my money on."
         n 1fnmss "And...{w=0.3} it's not exactly healthy either.{w=0.5}{nw}"
         extend 1fchsm " Ahaha."
 
@@ -1658,20 +1658,20 @@ label talk_sweet_tooth:
     if Natsuki.isAffectionate(higher=True):
         n 1fsqsm "Though I have to say,{w=0.1} [player]."
         n 1fsqssl "I'm pretty sure you have a sweet tooth too."
-        n 1fsrbgl "It'd explain why you're spending so much time with me,{w=0.1} a-{w=0.1}after all."
+        n 2fsrbgl "It'd explain why you're spending so much time with me,{w=0.1} a-{w=0.1}after all."
         n 1fchbgl "Ahaha!"
 
     elif Natsuki.isNormal(higher=True):
         n 1fllbg "I could go for some candy right now,{w=0.1} actually.{w=0.5}{nw}"
         extend 1fslss " But...{w=0.3} I think I'll hold back."
-        n 1usqbg "Someone's gotta be a role model to you,{w=0.1} [player].{w=0.2} Am I right?"
+        n 4usqbg "Someone's gotta be a role model to you,{w=0.1} [player].{w=0.2} Am I right?"
         n 1fchsm "Ehehe."
 
     else:
         n 1nnmbo "..."
         n 1nlrbo "That being said..."
-        n 1flrsr "I...{w=0.3} could really use some chocolate right now."
-        n 1fsqsr "I'll let {i}you{/i} figure out why,{w=0.1} [player]."
+        n 2flrsr "I...{w=0.3} could really use some chocolate right now."
+        n 2fsqsr "I'll let {i}you{/i} figure out why,{w=0.1} [player]."
 
     return
 
