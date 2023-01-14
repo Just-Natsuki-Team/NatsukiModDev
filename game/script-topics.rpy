@@ -3543,40 +3543,40 @@ init 5 python:
 
 label talk_natsukis_hairstyle:
     if Natsuki.isEnamored(higher=True):
-        n 1tnmaj "Hmm?{w=0.2} My hairstyle?"
-        n 1fsqss "Why do you ask,{w=0.1} [player]?{w=0.5}{nw}"
-        extend 1fsgsg " Looking for a stylist?"
+        n 4tnmaj "Hmm?{w=0.2} My hairstyle?"
+        n 3fsqss "Why do you ask,{w=0.1} [player]?{w=0.5}{nw}"
+        extend 3fsgsg " Looking for a stylist?"
         n 1fchsm "Ehehe."
 
     elif Natsuki.isNormal(higher=True):
-        n 1tnmpu "Huh?{w=0.2} My hairstyle?"
+        n 4tnmpu "Huh?{w=0.2} My hairstyle?"
         n 1fsqaj "Wait...{w=0.75}{nw}"
-        extend 1fnmeml " a-{w=0.1}are you messing with me?{w=0.2} What do you mean?"
+        3fslpo 4fnmeml " a-{w=0.1}are you messing with me?{w=0.2} What do you mean?"
         n 1fslpo "You better not be teasing me,{w=0.1} [player]..."
 
     elif Natsuki.isDistressed(higher=True):
         n 1nnmsl "...Huh?{w=0.2} Oh.{w=0.2} My hair."
-        n 1flrsl "I'm...{w=0.3} surprised you care enough to ask about that."
+        n 2flrsl "I'm...{w=0.3} surprised you care enough to ask about that."
 
     else:
         n 1fsqfu "Because I {i}like{/i} it that way.{w=0.75}{nw}"
-        extend 1fnman " That good enough for you,{w=0.3} {i}[player]{/i}?"
+        extend 2fnman " That good enough for you,{w=0.3} {i}[player]{/i}?"
         n 1fsqantsb "And why would you even {i}care{/i} anyway?{w=1}{nw}"
-        extend 1fsqupltsb " You haven't cared about me so far."
-        n 1fcsanltsa "Jerk."
+        extend 4fsqupltsb " You haven't cared about me so far."
+        n 2fcsanltsa "Jerk."
         return
 
     n 1nnmpu "Well,{w=0.1} anyway."
-    n 1ullpu "I never really thought about it that much,{w=0.1} honestly."
+    n 4ullpu "I never really thought about it that much,{w=0.1} honestly."
 
     if Natsuki.isNormal(higher=True):
         if Natsuki.isWearingHairstyle("jn_hair_twintails"):
-            n 1ulrpo "I just thought twintails would look kinda cute on me."
+            n 2ulrpo "I just thought twintails would look kinda cute on me."
 
         else:
-            n 1ulrpo "I think this hairstyle looks kinda cute on me."
+            n 2ulrpo "I think this hairstyle looks kinda cute on me."
 
-        n 1fsqpo "...Yeah,{w=0.1} yeah.{w=0.2} I know what you're thinking,{w=0.1} [player]."
+        n 4fsqpo "...Yeah,{w=0.1} yeah.{w=0.2} I know what you're thinking,{w=0.1} [player]."
 
         if Natsuki.isEnamored(higher=True):
             n 1ksqsm "Was I wrong...?"
@@ -3584,13 +3584,13 @@ label talk_natsukis_hairstyle:
 
         if Natsuki.isWearingHairstyle("jn_hair_twintails"):
             n 1ullaj "Besides,{w=0.1} I had a whole bunch of ribbon lying around from my craft stuff {w=0.1}-{w=0.5}{nw}"
-            extend 1fcsbg " so it isn't like I had to go {i}buy{/i} anything new to try twintails out."
+            extend 3fcsbg " so it isn't like I had to go {i}buy{/i} anything new to try twintails out."
 
     else:
         if Natsuki.isWearingHairstyle("jn_hair_twintails"):
             n 1nnmsl "I guess I just liked the idea of twintails."
             n 1nlrpu "Besides,{w=0.1} I had some spare ribbons lying around anyways.{w=0.5}{nw}"
-            extend 1nsrsr " Not like I had to {i}buy{/i} anything to try doing twintails."
+            extend 4nsrsr " Not like I had to {i}buy{/i} anything to try doing twintails."
 
         else:
             n 1nnmsl "I guess I just like this hairstyle."
@@ -3598,29 +3598,29 @@ label talk_natsukis_hairstyle:
     n 1ulraj "As for the bangs,{w=0.1} I...{w=0.3} always found it difficult to get my hair cut."
 
     if Natsuki.isNormal(higher=True):
-        n 1flraj "It just costs so much,{w=0.1} you know?{w=0.2} It's super dumb!"
+        n 4flraj "It just costs so much,{w=0.1} you know?{w=0.2} It's super dumb!"
         n 1fnman "Like...{w=0.3} I don't get it at all!"
-        n 1fllan "And the annoying thing is that if I were a guy,{w=0.1} it'd be {i}way{/i} cheaper!{w=0.5}{nw}"
+        n 3fllan "And the annoying thing is that if I were a guy,{w=0.1} it'd be {i}way{/i} cheaper!{w=0.5}{nw}"
         extend 1fbkwrean " What's up with that?!"
         n 1fcspuesi "Ugh...{w=1}{nw}"
-        extend 1nsrpo " but yeah."
+        extend 2nsrpo " but yeah."
 
     else:
         n 1nlrsl "I was always kinda short when it came to getting it cut."
         n 1fsqsl "...And no,{w=0.1} {i}not{/i} in the physical sense."
 
     if Natsuki.isWearingAccessory(jn_outfits.get_wearable("jn_accessory_hairband_red")):
-        n 1ullaj "As for my hairband?{w=0.2} It's just to keep my hair out of my eyes."
+        n 4ullaj "As for my hairband?{w=0.2} It's just to keep my hair out of my eyes."
 
     else:
-        n 1ullaj "I'm not wearing it now,{w=0.1} but my old hairband was just to keep my hair out of my eyes."
+        n 4ullaj "I'm not wearing it now,{w=0.1} but my old hairband was just to keep my hair out of my eyes."
 
     if Natsuki.isNormal(higher=True):
-        n 1fllss "Looking good is a bonus,{w=0.1} but I mostly just got tired of brushing my hair out of my face."
+        n 3fllss "Looking good is a bonus,{w=0.1} but I mostly just got tired of brushing my hair out of my face."
         n 1nsrca "Especially with those bangs!"
         n 1unmaj "Anyway..."
 
-    n 1tllaj "Have I thought about other hairstyles?{w=0.2} Well..."
+    n 4tllaj "Have I thought about other hairstyles?{w=0.2} Well..."
 
     if not Natsuki.isWearingHairstyle("jn_hair_twintails"):
         if Natsuki.isEnamored(higher=True):
@@ -3631,21 +3631,21 @@ label talk_natsukis_hairstyle:
             n 1ullbo "I think that kinda speaks for itself,{w=0.1} really.{w=0.2} I {i}am{/i} trying out a different one..."
 
         else:
-            n 1nsqsl "...Go figure,{w=0.1} [player]."
+            n 2nsqsl "...Go figure,{w=0.1} [player]."
 
     else:
         if Natsuki.isEnamored(higher=True):
             $ chosen_tease = jn_utils.getRandomTease()
             n 1fcssml "I'm pretty sure I already let my hair down around you,{w=0.1} [chosen_tease].{w=0.2} That qualifies, right?"
-            n 1uchgnlelg "Ahaha!"
+            n 3uchgnlelg "Ahaha!"
 
         elif Natsuki.isNormal(higher=True):
             n 1unmaj "You know what they say,{w=0.1} [player]."
-            n 1fnmbg "If it ain't broke,{w=0.1} don't fix it!"
+            n 3fnmbg "If it ain't broke,{w=0.1} don't fix it!"
             n 1uchgn "Ehehe."
 
         else:
-            n 1fslaj "...At this point,{w=0.1} [player]?{w=0.2} I'd rather you stayed {i}out{/i} of my hair."
+            n 2fslaj "...At this point,{w=0.1} [player]?{w=0.2} I'd rather you stayed {i}out{/i} of my hair."
             n 1fsqbo "Thanks."
 
     return
@@ -3667,45 +3667,45 @@ init 5 python:
     )
 
 label talk_integrity:
-    n 1ullaj "You know,{w=0.1} [player]..."
+    n 4ullaj "You know,{w=0.1} [player]..."
     n 1nnmaj "I feel like nowadays,{w=0.1} everyone is trying to make a point,{w=0.1} or preach something."
-    n 1flrem "Especially with social media and all that everywhere -{w=0.1} it's crazy!"
-    n 1fllem "Like...{w=0.3} there's posts telling you this is bad,{w=0.1} others asking why you don't support something else..."
+    n 2flrem "Especially with social media and all that everywhere -{w=0.1} it's crazy!"
+    n 2fllem "Like...{w=0.3} there's posts telling you this is bad,{w=0.1} others asking why you don't support something else..."
     n 1fcsan "And of course,{w=0.1} {i}everyone{/i} is tuned in to that -{w=0.1} so it leaks into real life as well!"
     n 1flrsl "Ugh...{w=0.3} it can't only be me that finds it all exhausting,{w=0.1} right?"
     n 1unmaj "I think it makes it kinda easy to lose track of what you really like,{w=0.1} or what you stand for."
-    n 1ullaj "Which...{w=0.3} is actually something I really wanted to talk to you about,{w=0.1} [player]."
+    n 4ullaj "Which...{w=0.3} is actually something I really wanted to talk to you about,{w=0.1} [player]."
     n 1fllpu "I'm not saying you should just ignore everyone else,{w=0.1} or never consider other points of view."
-    n 1fnmpo "That's just being ignorant."
+    n 3fnmpo "That's just being ignorant."
     n 1knmaj "But...{w=0.3} don't just let other people's opinions or conceptions completely overwrite your own,{w=0.1} 'kay?"
-    n 1fnmbo "At least not without a fight,{w=0.1} at least."
+    n 4fnmbo "At least not without a fight,{w=0.1} at least."
     n 1fnmpu "{i}You{/i} are your own master,{w=0.1} [player] -{w=0.1} you have your own opinions,{w=0.1} your own values:{w=0.1} and that's super important!"
     n 1fcsbg "I mean,{w=0.1} look at me!"
     n 1fllaj "So what if someone says what I'm into sucks?{w=0.2} Or if I should be following something more popular?"
     n 1fnmsf "It isn't hurting anyone,{w=0.1} so who are they to judge and tell me what I should be enjoying?"
-    n 1fcsbg "It's my life,{w=0.1} so they can jog on!"
+    n 3fcsbg "It's my life,{w=0.1} so they can jog on!"
     n 1nnmsr "Anyway...{w=0.3} I guess what I'm saying is don't be afraid to stand up for what matters to you,{w=0.1} [player]."
     n 1fcsaj "There's gonna be times you'll be wrong,{w=0.1} but don't let it get to you!"
     n 1flrsl "I just don't like the idea of people being pushed into what isn't right for them."
-    n 1nnmpu "That being said,{w=0.1} [player]..."
+    n 4nnmpu "That being said,{w=0.1} [player]..."
 
     if Natsuki.isEnamored(higher=True):
         n 1ksqsm "I'm pretty sure we both know what's right for each other by now,{w=0.1} huh?"
-        n 1fcsbglesssbl "Ahaha."
+        n 3fcsbglesssbl "Ahaha."
 
         if Natsuki.isLove(higher=True):
-            n 1uchsml "Love you,{w=0.1} [player]~!"
+            n 4uchsml "Love you,{w=0.1} [player]~!"
 
     elif Natsuki.isAffectionate(higher=True):
         n 1ksqsm "I'm pretty sure I know what's right for you..."
-        n 1fcsbgledz "Spending more time with me!"
-        extend 1nchgnedz " Ehehe."
+        n 3fcsbgledz "Spending more time with me!"
+        extend 4nchgnedz " Ehehe."
 
     else:
         n 1unmss "I'm sure I can help you find what's right for you."
         n 1fllss "That's what friends are for,{w=0.1} right?"
-        n 1fcsbg "{i}Especially{/i} ones like me!{w=0.5}{nw}"
-        extend 1nchgnedz " Ehehe."
+        n 3fcsbg "{i}Especially{/i} ones like me!{w=0.5}{nw}"
+        extend 4nchgnedz " Ehehe."
 
     return
 
@@ -3727,46 +3727,46 @@ init 5 python:
 label talk_favourite_animal:
     if Natsuki.isNormal(higher=True):
         n 1fsqsr "Hammies."
-        n 1fcssm "That's barely even a question for me,{w=0.1} [player]."
+        n 3fcssm "That's barely even a question for me,{w=0.1} [player]."
         n 1uwdaj "Like...{w=0.3} if you've seen them,{w=0.1} can you blame me?"
         n 1fcspu "They're...{w=0.5}{nw}"
-        n 1fspgsedz "{i}Adorable{/i}!!"
+        n 4fspgsedz "{i}Adorable{/i}!!"
         n 1fbkbsl "I just love everything about them...{w=0.3} the little paws,{w=0.1} the bright eyes, those puffy cheeks..."
-        n 1fspbgl "And that tiny little tail...{w=0.3} oh my gosh!{w=0.2} It's just precious!"
-        n 1fllan "It really winds me up when people call them boring,{w=0.1} or unaffectionate though.{w=0.2} Like...{w=0.3} have you ever watched one?"
+        n 4fspbgl "And that tiny little tail...{w=0.3} oh my gosh!{w=0.2} It's just precious!"
+        n 2fllan "It really winds me up when people call them boring,{w=0.1} or unaffectionate though.{w=0.2} Like...{w=0.3} have you ever watched one?"
         n 1fnmaj "They all have their own little personalities,{w=0.1} just like any other animal -{w=0.1} only smaller!"
         n 1uwdaj "And if you bond with them,{w=0.1} they aren't afraid to show it -{w=0.1} I've seen videos of them following their owners around,{w=0.1} and even leaping into their hands!"
-        n 1fchbg "Plus they're easy to take care of,{w=0.1} too!"
+        n 4fchbg "Plus they're easy to take care of,{w=0.1} too!"
         n 1fchsm "Just top up their food and change their water daily,{w=0.1} and clean their cage out once a week -{w=0.1} no sweat."
-        n 1nllpu "Hmm..."
+        n 4nllpu "Hmm..."
         n 1unmpu "You know,{w=0.1} [player]...{w=0.3} it does get a little quiet when you aren't around,{w=0.1} if you know what I'm getting at..."
-        n 1fnmsm "Perhaps one day we could have our own furry friend here too?{w=0.1} Ehehe."
+        n 3fnmsm "Perhaps one day we could have our own furry friend here too?{w=0.1} Ehehe."
         n 1fllss "Don't worry though,{w=0.1} [player]..."
         n 1ucssm "I don't mind taking care of it."
-        n 1fchgn "...But you're in charge of the supplies!"
+        n 3fchgn "...But you're in charge of the supplies!"
 
         if Natsuki.isEnamored(higher=True):
             n 1fchbg "Oh,{w=0.1} and relax -{w=0.1} I'll make sure it'll be well tamed!"
             n 1uslbg "Or..."
-            n 1usqts "At least about as tame as you,{w=0.1} huh [player]?{w=0.2} Ahaha!"
+            n 3usqts "At least about as tame as you,{w=0.1} huh [player]?{w=0.2} Ahaha!"
 
             if Natsuki.isLove(higher=True):
-                n 1uchbg "Love you~!"
+                n 4uchbg "Love you~!"
 
     elif Natsuki.isDistressed(higher=True):
         n 1fsqpu "Hamsters,{w=0.1} if it matters."
-        n 1fllpu "Why?{w=0.2} I don't know.{w=0.2} I just think they're cute."
+        n 2fllpu "Why?{w=0.2} I don't know.{w=0.2} I just think they're cute."
         n 1nllbo "I think people actually underestimate how expressive they can be,{w=0.1} too."
         n 1nnmbo "They're like most animals really -{w=0.1} they all have their own personalities."
         n 1nnmaj "I guess they're pretty easy to take care of as well,{w=0.1} so there's that."
         n 1nlrsl "..."
-        n 1flrsl "...I'd be lying if I said I hadn't been thinking about getting one myself..."
+        n 2flrsl "...I'd be lying if I said I hadn't been thinking about getting one myself..."
         n 1fsqpu "But honestly,{w=0.1} [player]?{w=0.2} If you've shown you can't take care of {i}me{/i}?"
-        n 1fcsan "...Then I don't think it'd be fair to bring one here,{w=0.1} either.{w=0.2} Heh."
+        n 2fcsan "...Then I don't think it'd be fair to bring one here,{w=0.1} either.{w=0.2} Heh."
 
     else:
         n 1fsqpu "Heh.{w=0.2} Really?{w=0.2} My favourite animal...?"
-        n 1fcsantsa "Not you,{w=0.1} [player].{w=0.2} That's for sure."
+        n 2fcsantsa "Not you,{w=0.1} [player].{w=0.2} That's for sure."
 
     return
 
@@ -3796,55 +3796,55 @@ label talk_favourite_drink:
         n 1nllbo "Huh?{w=0.2} Oh.{w=0.1} My favourite drink."
 
     else:
-        n 1fslsf "...I can't understand why you'd care,{w=0.1} [player]."
+        n 2fslsf "...I can't understand why you'd care,{w=0.1} [player]."
         n 1fsqsf "So...{w=0.3} why should I?"
-        n 1fsqan "Water.{w=0.2} There's an answer for you.{w=0.2} Happy?"
-        n 1fcsanltsa "Now just go away..."
+        n 2fsqan "Water.{w=0.2} There's an answer for you.{w=0.2} Happy?"
+        n 2fcsanltsa "Now just go away..."
         return
 
     if Natsuki.isNormal(higher=True):
         n 1ullaj "I gotta say...{w=0.3} it depends on the weather more than anything."
-        n 1tnmaj "I mean...{w=0.3} what kind of dope would order an iced drink in the middle of winter?!"
+        n 3tnmaj "I mean...{w=0.3} what kind of dope would order an iced drink in the middle of winter?!"
         n 1fllss "But anyway..."
         n 1fcsbg "If it's cold out,{w=0.1} then hot chocolate.{w=0.2} No questions,{w=0.1} no doubts."
-        n 1uchgn "In the depths of winter,{w=0.1} you definitely won't get a better option than that!"
+        n 4uchgn "In the depths of winter,{w=0.1} you definitely won't get a better option than that!"
 
         if Natsuki.isAffectionate(higher=True):
             n 1fcsbg "And yeah,{w=0.1} [player] -{w=0.1} whipped cream,{w=0.1} marshmallows -{w=0.1} all of it.{w=0.2} The complete works."
             n 1uchgn "...And I wouldn't accept anything less!"
-            n 1fllbg "I mean,{w=0.1} think about it -{w=0.1} if you're getting hot chocolate,{w=0.1} you've already kinda lost on the health front."
-            n 1uchgn "So you might as well go all in,{w=0.1} right?{w=0.2} Ahaha."
+            n 3fllbg "I mean,{w=0.1} think about it -{w=0.1} if you're getting hot chocolate,{w=0.1} you've already kinda lost on the health front."
+            n 3uchgn "So you might as well go all in,{w=0.1} right?{w=0.2} Ahaha."
 
             if Natsuki.isLove(higher=True):
-                n 1fcsdvl "Besides,{w=0.2} I'm not too worried -{w=0.1} we'll just share the calories,{w=0.1} [player]~."
+                n 4fcsdvl "Besides,{w=0.2} I'm not too worried -{w=0.1} we'll just share the calories,{w=0.1} [player]~."
 
         n 1unmaj "As for warmer weather...{w=0.3} that's a little trickier,{w=0.1} actually."
-        n 1fslsr "Let me think..."
-        n 1fsrsr "..."
+        n 3fslsr "Let me think..."
+        n 3fsrsr "..."
         n 1fchbs "Aha!{w=0.2} I got it!"
         n 1unmbg "It's gotta be those milkshakes,{w=0.1} but from one of those places where you get to choose what goes in it!"
         n 1fsqsm "I don't just mean picking a flavor,{w=0.1} [player]..."
-        n 1fchgn "I mean where you can pick any combination of ingredients you want!"
+        n 4fchgn "I mean where you can pick any combination of ingredients you want!"
         n 1fllss "Well...{w=0.3} as long as it blends,{w=0.1} anyway."
         n 1ncssm "All kinds of sweets,{w=0.1} any type of milk..."
 
         if Natsuki.isAffectionate(higher=True):
             n 1ucssm "Though if I had to pick a favourite?"
-            n 1fcsbg "It's gotta be strawberries and cream,{w=0.1} obviously."
-            n 1fllbgl "And...{w=0.3} maybe with just a dash of chocolate too?{w=0.2} Ehehe."
+            n 3fcsbg "It's gotta be strawberries and cream,{w=0.1} obviously."
+            n 3fllbgl "And...{w=0.3} maybe with just a dash of chocolate too?{w=0.2} Ehehe."
 
         else:
             n 1fchbg "Yeah.{w=0.2} That's the real deal!"
 
-        n 1fllpo "Jeez...{w=0.3} all this talk about drinks is making me kinda thirsty,{w=0.1} actually.{w=0.2} So on that note..."
+        n 3fllpo "Jeez...{w=0.3} all this talk about drinks is making me kinda thirsty,{w=0.1} actually.{w=0.2} So on that note..."
         n 1fnmbg "You need to stay hydrated too,{w=0.1} [player] -{w=0.1} whatever the weather!"
 
     else:
         n 1flrsl "I suppose it depends what the weather is like."
-        n 1fnmbo "Hot chocolate if it's cold out,{w=0.1} though I'm not very picky I guess."
+        n 2fnmbo "Hot chocolate if it's cold out,{w=0.1} though I'm not very picky I guess."
         n 1fllaj "As for warmer weather..."
         n 1fllsl "I don't really know.{w=0.2} Whatever is fine."
-        n 1fsqsl "Heh.{w=0.2} Though at this rate,{w=0.1} I shouldn't expect much more than tap water from you anyway.{w=0.2} Right,{w=0.1} [player]?"
+        n 2fsqsl "Heh.{w=0.2} Though at this rate,{w=0.1} I shouldn't expect much more than tap water from you anyway.{w=0.2} Right,{w=0.1} [player]?"
 
     return
 
@@ -3865,90 +3865,90 @@ init 5 python:
 
 label talk_school_uniform:
     if Natsuki.isLove(higher=True):
-        n 1fsqctl "Oho?{w=0.2} Does [player] like a girl in uniform?"
+        n 4fsqctl "Oho?{w=0.2} Does [player] like a girl in uniform?"
         n 1ksqaj "Wow...{w=0.3} you're even {i}more{/i} gross than I thought."
         n 1fsqsm "..."
         $ chosen_tease = jn_utils.getRandomTease()
-        n 1uchgn "Oh come on,{w=0.1} [chosen_tease]!{w=0.2} You always get all sulky when I call you that!{w=0.2} I just can't resist."
+        n 3uchgn "Oh come on,{w=0.1} [chosen_tease]!{w=0.2} You always get all sulky when I call you that!{w=0.2} I just can't resist."
         n 1fchsm "Ehehe.{w=0.2} So anyway..."
 
     elif Natsuki.isAffectionate(higher=True):
-        n 1unmaj "Huh?{w=0.2} My school uniform?"
+        n 4unmaj "Huh?{w=0.2} My school uniform?"
         n 1fsqsm "...Ehehe."
-        n 1fcsbgl "Why do you ask,{w=0.1} [player]?{w=0.2} Did {i}you{/i} wanna wear it or something?"
+        n 3fcsbgl "Why do you ask,{w=0.1} [player]?{w=0.2} Did {i}you{/i} wanna wear it or something?"
         n 1fchgn "Oh!{w=0.2} We can play dress-up!{w=0.2} Wouldn't you like that,{w=0.1} [player]?{w=0.2} It'll be so much fun!"
-        n 1uchbselg "I bet I could make you look so cute~.{w=0.1} Ahaha!"
+        n 4uchbselg "I bet I could make you look so cute~.{w=0.1} Ahaha!"
         n 1nllss "Well anyway,{w=0.1} putting jokes aside..."
 
     elif Natsuki.isNormal(higher=True):
-        n 1tnmaj "My school uniform?{w=0.2} That's...{w=0.3} kind of a weird thing to ask me about,{w=0.1} huh?"
+        n 4tnmaj "My school uniform?{w=0.2} That's...{w=0.3} kind of a weird thing to ask me about,{w=0.1} huh?"
         n 1nslaj "Well,{w=0.1} whatever.{w=0.2} I'll let it slide...{w=0.3} this time."
 
     elif Natsuki.isDistressed(higher=True):
-        n 1nsraj "...Huh?{w=0.2} Oh,{w=0.1} the school uniform."
+        n 2nsraj "...Huh?{w=0.2} Oh,{w=0.1} the school uniform."
         n 1nsqsl "I...{w=0.3} don't know what you're expecting to hear from me,{w=0.1} [player]."
         n 1fsqsl "I had to wear it for school.{w=0.2} That's the point of a uniform,{w=0.1} if you hadn't realized."
-        n 1fsrsf "It doesn't matter if I like it or not."
-        n 1fsqbo "...And it matters even less if you do."
+        n 2fsrsf "It doesn't matter if I like it or not."
+        n 4fsqbo "...And it matters even less if you do."
         return
 
     else:
-        n 1fsran "Heh.{w=0.2} I like it more than {i}you{/i}.{w=0.2} Jerk."
+        n 2fsran "Heh.{w=0.2} I like it more than {i}you{/i}.{w=0.2} Jerk."
         return
 
     n 1unmaj "It's alright,{w=0.1} I guess.{w=0.2} I actually really like the warm colours!"
     n 1nnmss "They're way easier on the eyes than a lot of the other uniforms I've seen around."
-    n 1nsqsr "But Oh.{w=0.2} My.{w=0.2} Gosh.{w=0.2} [player]."
+    n 2nsqsr "But Oh.{w=0.2} My.{w=0.2} Gosh.{w=0.2} [player]."
     n 1fcsan "The layers.{w=0.2} So many layers."
-    n 1fllem "Who even thought someone needs that much clothing?!{w=0.2} For school,{w=0.1} of all places?!"
+    n 4fllem "Who even thought someone needs that much clothing?!{w=0.2} For school,{w=0.1} of all places?!"
     n 1fbkwr "I mean...{w=0.3} do you even {i}know{/i} what wearing all that clothing in summer is like?!{w=0.2} It's {i}horrible{/i}!"
-    n 1flrpo "And the blazer...{w=0.3} ugh!{w=0.2} It's actually the worst thing ever."
-    n 1fsqpo "Like yeah,{w=0.1} I could take some off between class,{w=0.1} but I had to put it all back on when I went in."
-    n 1fllpo "...Or get told off.{w=0.2} {i}Again{/i}.{w=0.2} I honestly have no idea how Sayori got away with hers being so scruffy."
+    n 2flrpo "And the blazer...{w=0.3} ugh!{w=0.2} It's actually the worst thing ever."
+    n 2fsqpo "Like yeah,{w=0.1} I could take some off between class,{w=0.1} but I had to put it all back on when I went in."
+    n 2fllpo "...Or get told off.{w=0.2} {i}Again{/i}.{w=0.2} I honestly have no idea how Sayori got away with hers being so scruffy."
     n 1fcsan "And all of the uniform stuff is super expensive too!{w=0.2} Talk about a kick in the teeth!"
-    n 1fslan "Jerks."
+    n 4fslan "Jerks."
     n 1fslsr "Ugh...{w=0.3} I seriously wish uniforms were banned or something."
-    n 1flrpo "I guess it could be worse.{w=0.5}{nw}"
+    n 3flrpo "I guess it could be worse.{w=0.5}{nw}"
     extend 1ksrsl  " At least it kept me warm when it mattered."
 
     if not Natsuki.isWearingClothes("jn_clothes_school_uniform"):
         n 1nchgn "...And I'm not wearing it now,{w=0.1} at least!{w=1}{nw}"
-        extend 1fcsbg " Always a plus."
+        extend 3fcsbg " Always a plus."
         n 1ullaj "That being said...{w=0.75}{nw}"
 
     else:
         n 1ulraj "But...{w=0.75}{nw}"
 
-    extend 1unmbo " what about you,{w=0.1} [player]?"
+    extend 4unmbo " what about you,{w=0.1} [player]?"
     show natsuki 1tnmpu at jn_center
 
     menu:
         n "Did you have to wear any uniform at school?"
 
         "Yes, I had to wear uniform.":
-            n 1fcsbg "Aha!{w=0.2} So you know the struggle too,{w=0.1} huh?"
+            n 3fcsbg "Aha!{w=0.2} So you know the struggle too,{w=0.1} huh?"
 
         "No, I didn't have to wear uniform.":
             n 1fslsr "..."
-            n 1fsqsr "...Lucky."
+            n 3fsqsr "...Lucky."
 
         "I have to wear uniform now.":
             n 1fchgn "Then you have my condolences,{w=0.1} [player]!{w=0.2} Ahaha."
-            n 1fcsbg "Good to know we're on the same page,{w=0.1} though."
+            n 4fcsbg "Good to know we're on the same page,{w=0.1} though."
 
         "I don't have to wear uniform now.":
             n 1fslsr "..."
-            n 1fsqsr "...Lucky."
+            n 3fsqsr "...Lucky."
 
     n 1ullss "Well,{w=0.1} anyway..."
 
     if Natsuki.isLove(higher=True):
         n 1fllss "I still don't particularly {i}like{/i} wearing it..."
-        n 1uslbgl "But...{w=0.3} I think I can put up with it.{w=0.2} Just for you,{w=0.1} [player]~."
+        n 3uslbgl "But...{w=0.3} I think I can put up with it.{w=0.2} Just for you,{w=0.1} [player]~."
         n 1usrdvl "Ehehe."
 
     elif Natsuki.isAffectionate(higher=True):
-        n 1usrdvl "I-{w=0.1}if you don't mind it,{w=0.1} [player]?"
+        n 4usrdvl "I-{w=0.1}if you don't mind it,{w=0.1} [player]?"
         n 1fllbgl "I suppose it has that going for it too,{w=0.1} a-{w=0.1}at least..."
 
     elif Natsuki.isNormal(higher=True):
@@ -3974,58 +3974,58 @@ init 5 python:
 
 label talk_flying:
     if Natsuki.isEnamored(higher=True):
-        n 1uwdbg "Ooh!{w=0.2} Flying?{w=0.2} Like on a plane?"
-        n 1fllun "Nnn...{w=0.3} I wish I could say I have,{w=0.1} [player]..."
+        n 4uwdaj "Ooh!{w=0.2} Flying?{w=0.2} Like on a plane?"
+        n 3fllun "Nnn...{w=0.3} I wish I could say I have,{w=0.1} [player]..."
         n 1fchbg "Don't get me wrong though!{w=0.2} I'd {i}totally{/i} fly somewhere new if I could!"
-        n 1fslsl "It's just...{w=0.3} the price of it all,{w=0.1} you know?"
-        n 1kllsl "I've never had a passport,{w=0.1} but it's mainly the tickets and everything beyond that..."
+        n 4fslsl "It's just...{w=0.3} the price of it all,{w=0.1} you know?"
+        n 4kllsl "I've never had a passport,{w=0.1} but it's mainly the tickets and everything beyond that..."
 
     elif Natsuki.isHappy(higher=True):
-        n 1unmaj "Huh?{w=0.2} Flying?{w=0.2} Like on a plane or something?"
+        n 4unmaj "Huh?{w=0.2} Flying?{w=0.2} Like on a plane or something?"
         n 1kllaj "I...{w=0.3} wish I could say I have,{w=0.1} [player]."
         n 1fnmbg "Don't get me wrong though!{w=0.2} I'd love to jet off somewhere.{w=0.2} Like for a vacation or something!"
-        n 1flrpo "It's just the cost that stops me, you know?"
-        n 1fcspo "Even if I had a passport, there's just so many things to pay out for..."
+        n 2flrpo "It's just the cost that stops me, you know?"
+        n 2fcspo "Even if I had a passport, there's just so many things to pay out for..."
 
     elif Natsuki.isNormal(higher=True):
         n 1unmaj "Oh?{w=0.2} Like flying on a plane or whatever?"
         n 1kllbo "Uhmm..."
-        n 1klraj "I...{w=0.3} never really had the opportunity to fly anywhere,{w=0.1} [player]."
+        n 2klraj "I...{w=0.3} never really had the opportunity to fly anywhere,{w=0.1} [player]."
         n 1unmaj "I don't even have a passport or anything like that,{w=0.1} and even if I did?"
-        n 1nsraj "It isn't like tickets are...{w=0.3} affordable,{w=0.1} if you know what I mean?"
-        n 1nslpo "Especially to someone in my...{w=0.3} position."
+        n 2nsraj "It isn't like tickets are...{w=0.3} affordable,{w=0.1} if you know what I mean?"
+        n 2nslpo "Especially to someone in my...{w=0.3} position."
 
     elif Natsuki.isDistressed(higher=True):
         n 1nnmbo "Flying?{w=0.2} Like...{w=0.3} on a plane?"
-        n 1fnmsf "No,{w=0.1} [player].{w=0.2} I haven't."
+        n 2fnmsf "No,{w=0.1} [player].{w=0.2} I haven't."
         n 1fllsf "I've never owned a passport,{w=0.1} and it's way too expensive anyway."
         n 1fnmaj "I don't really like the idea of the environmental impact either."
-        n 1fsqaj "...But something tells me you don't really care about that last point,{w=0.2} do you?"
+        n 2fsqaj "...But something tells me you don't really care about that last point,{w=0.2} do you?"
         n 1flrca "You know...{w=0.3} just going by my experience so far."
-        n 1fsqca "...Am I {i}wrong{/i}?"
+        n 2fsqca "...Am I {i}wrong{/i}?"
         return
 
     else:
-        n 1fsqanean "No,{w=0.1} [player].{w=0.2} I haven't.{w=0.2} And I probably never will."
+        n 2fsqanean "No,{w=0.1} [player].{w=0.2} I haven't.{w=0.2} And I probably never will."
         n 1fcsanltsa "Gloat all you want.{w=0.2} I don't give a crap if you have."
         return
 
     n 1ullaj "Besides,{w=0.1} I try not to feel too bad about it.{w=0.2} It's way better for the environment if I don't,{w=0.1} anyway!"
     n 1nnmbo "Flying places is pretty polluting.{w=0.2} I think I'd just feel selfish if I was constantly zooming around,{w=0.1} knowing how bad that is for everyone."
     n 1nllss "But...{w=0.3} that's just me,{w=0.1} I guess."
-    n 1unmaj "What about you,{w=0.1} [player]?"
+    n 4unmaj "What about you,{w=0.1} [player]?"
     menu:
         n "Are you a frequent flier?"
 
         "Yes, I fly regularly.":
             n 1fcsbg "Oh?{w=0.2} Well check you out,{w=0.1} [player]!"
-            n 1fslpo "I guess it's {i}plane{/i} to see how well you're doing for yourself?"
+            n 3fslpo "I guess it's {i}plane{/i} to see how well you're doing for yourself?"
             n 1fchbg "Ehehe."
             n 1fnmaj "Just try to avoid racking up too many miles,{w=0.1} [player]."
-            n 1fllss "You gotta think about the planet too,{w=0.1} you know..."
+            n 4fllss "You gotta think about the planet too,{w=0.1} you know..."
 
             if Natsuki.isEnamored(higher=True):
-                n 1fslnvf "E-{w=0.1}especially if people we really care about are in it.{w=0.2} Ahaha..."
+                n 4fslnvf "E-{w=0.1}especially if people we really care about are in it.{w=0.2} Ahaha..."
 
             elif Natsuki.isHappy(higher=True):
                 n 1fchgn "No excuses,{w=0.1} [player]! Ehehe."
@@ -4034,33 +4034,33 @@ label talk_flying:
 
         "I fly sometimes.":
             n 1unmss "Ooh,{w=0.1} okay!{w=0.2} So the odd vacation or family flight then?"
-            n 1fslsm "I see,{w=0.1} I see..."
+            n 2fslsm "I see,{w=0.1} I see..."
             n 1fcsbg "Well,{w=0.1} good for you,{w=0.1} [player]!{w=0.2} Everyone should get the chance to explore the world."
-            n 1kslss "Hopefully I'll get the chance someday too."
+            n 4kslss "Hopefully I'll get the chance someday too."
 
             if Natsuki.isEnamored(higher=True):
                 n 1fsqsg "I hope you'll be available when that happens,{w=0.1} [player]."
-                n 1fchgnl "You're gonna be my tour guide,{w=0.1} whether you like it or not!"
+                n 3fchgnl "You're gonna be my tour guide,{w=0.1} whether you like it or not!"
 
             elif Natsuki.isHappy(higher=True):
                 n 1fsqsm "You better be handy when that happens,{w=0.1} [player]..."
-                n 1fchgn "We'll see how good a guide you are!"
+                n 4fchgn "We'll see how good a guide you are!"
 
             $ persistent._jn_player_has_flown = True
 
         "I've flown before.":
-            n 1fsqct "Oh?{w=0.2} So you've already earned your wings,{w=0.1} huh?"
+            n 4fsqct "Oh?{w=0.2} So you've already earned your wings,{w=0.1} huh?"
             n 1tllaj "Hmm...{w=0.3} I wonder where you went?"
             n 1fnmaj "You gotta promise to tell me if you fly again,{w=0.1} 'kay?"
-            n 1fchgn "I wanna hear all about it!"
+            n 3fchgn "I wanna hear all about it!"
 
             $ persistent._jn_player_has_flown = True
 
         "I've never flown.":
             n 1fcsbg "Then that's just another thing we have in common,{w=0.1} [player]!"
             n 1fsqss "I guess you could say..."
-            n 1fsqdv "We're both just {i}well grounded{/i} people,{w=0.1} huh?"
-            n 1fchgnelg "Ahaha!"
+            n 4fsqdv "We're both just {i}well grounded{/i} people,{w=0.1} huh?"
+            n 3fchgnelg "Ahaha!"
 
             $ persistent._jn_player_has_flown = False
 
@@ -4094,36 +4094,36 @@ label talk_are_you_into_cars:
     if already_discussed_driving:
         # Natsuki has already established she can't drive at some point
         if Natsuki.isNormal(higher=True):
-            n 1unmaj "Eh?{w=0.2} Cars?"
+            n 4unmaj "Eh?{w=0.2} Cars?"
             n 1fchgn "Jeez,{w=0.1} you know I can't drive,{w=0.1} dummy!{w=0.2} I don't have a reason to be into cars!"
-            n 1nlrbg "Well,{w=0.1} anyway..."
+            n 3nlrbg "Well,{w=0.1} anyway..."
 
         elif Natsuki.isDistressed(higher=True):
-            n 1fcssl 1nnmsl "[player].{w=0.2} You know I can't drive.{w=0.2} Why would you think I'd be into cars,{w=0.1} of all things?"
-            n 1fllsl 1nllsl "...Fine.{w=0.2} Whatever."
+            n 1fcssl "[player].{w=0.2} You know I can't drive.{w=0.2} Why would you think I'd be into cars,{w=0.1} of all things?"
+            n 2fllsl "...Fine.{w=0.2} Whatever."
 
         else:
             n 1fsqpu "...Really?"
-            n 1fsqan "You know I can't drive.{w=0.2} So I'm not even going to {i}pretend{/i} I care if you're into that,{w=0.1} [player]."
+            n 2fsqan "You know I can't drive.{w=0.2} So I'm not even going to {i}pretend{/i} I care if you're into that,{w=0.1} [player]."
             n 1fnmfultsc "Besides...{w=0.3} I bet you'd {i}never{/i} treat your {i}precious{/i} car like you treat me,{w=0.1} huh?"
             return
 
     else:
         # Natsuki hasn't stated she can't drive before
         if Natsuki.isNormal(higher=True):
-            n 1unmaj "Huh?{w=0.1} Am I into cars?"
-            n 1fllnv "Well...{w=0.3} to tell you the truth,{w=0.1} [player]?"
+            n 4unmaj "Huh?{w=0.1} Am I into cars?"
+            n 2fllnv "Well...{w=0.3} to tell you the truth,{w=0.1} [player]?"
             n 1unmaj "...I've never actually owned a license."
-            n 1flrpo "I don't even think I could afford to learn!"
+            n 3flrpo "I don't even think I could afford to learn!"
             n 1nnmaj "So I've never really been drawn to them honestly."
 
         elif Natsuki.isDistressed(higher=True):
             n 1fnmsr "I can't drive,{w=0.1} [player].{w=0.2} I don't have a license either;{w=0.1} learning was always too expensive."
-            n 1fnmpu "So...{w=0.3} why would I be into that?{w=0.1} I literally can't {i}afford{/i} to be."
+            n 2fnmpu "So...{w=0.3} why would I be into that?{w=0.1} I literally can't {i}afford{/i} to be."
 
         else:
             n 1fcsan "Newsflash,{w=0.1} jerk.{w=0.2} I {i}can't{/i} drive,{w=0.1} and I can't even afford to {i}learn{/i}."
-            n 1fsqan "So you tell {i}me{/i} -{w=0.1} why would I be into cars?{w=0.2} And if I was,{w=0.1} why the hell would I want to talk to {i}you{/i} about them?"
+            n 2fsqan "So you tell {i}me{/i} -{w=0.1} why would I be into cars?{w=0.2} And if I was,{w=0.1} why the hell would I want to talk to {i}you{/i} about them?"
             n 1fcspu "...Heh.{w=0.2} Yeah,{w=0.1} I thought so.{w=0.2} We're done here,{w=0.1} [player]."
             return
 
@@ -4131,7 +4131,7 @@ label talk_are_you_into_cars:
         n 1unmsm "I can appreciate the talent that goes into them -{w=0.1} I think it's actually pretty cool how expressive they can be!"
         n 1nllss "Like...{w=0.3} the design languages of all the different brands,{w=0.1} the engineering that goes into them and all that."
         n 1fchbg "It's pretty insane how much work goes into it;{w=0.1} and that's definitely something I have respect for!"
-        n 1fsqsm "What about you though, [player]?{w=0.2} You {i}did{/i} bring it up,{w=0.1} but I thought I'd ask anyway..."
+        n 2fsqsm "What about you though, [player]?{w=0.2} You {i}did{/i} bring it up,{w=0.1} but I thought I'd ask anyway..."
         menu:
             n "Are you into cars?"
 
@@ -4140,42 +4140,42 @@ label talk_are_you_into_cars:
                 # The player has never stated if they can drive
                 if persistent.jn_player_can_drive is None:
                     n 1tllbo "Huh.{w=0.2} I wasn't actually sure if you could even drive,{w=0.1} but I suppose that doesn't matter really."
-                    n 1fsqsm "I guess being a petrolhead isn't an exclusive club,{w=0.1} huh?"
+                    n 3fsqsm "I guess being a petrolhead isn't an exclusive club,{w=0.1} huh?"
                     n 1uchbg "Ahaha."
 
                 # The player has confirmed they can drive
                 elif persistent.jn_player_can_drive:
-                    n 1fsgbg "Well,{w=0.1} color {i}me{/i} surprised."
+                    n 4fsgbg "Well,{w=0.1} color {i}me{/i} surprised."
                     n 1fchgn "Ehehe."
                     n 1fcsbg "Don't worry,{w=0.1} I had you figured for the sort,{w=0.2} [player]."
-                    n 1fchbg "But hey -{w=0.1} whatever floats your boat!"
+                    n 3fchbg "But hey -{w=0.1} whatever floats your boat!"
 
                 # The player has admitted they cannot drive
                 else:
                     n 1unmaj "That's...{w=0.3} actually pretty surprising to hear from you,{w=0.1} [player]."
                     n 1nllaj "You know,{w=0.1} since you said you can't drive and all that..."
-                    n 1fchbg "But I guess it's like anything -{w=0.1} you don't have to be doing it to be a fan,{w=0.1} and that's fine with me!"
+                    n 3fchbg "But I guess it's like anything -{w=0.1} you don't have to be doing it to be a fan,{w=0.1} and that's fine with me!"
 
             "I don't care much for them.":
                 n 1ullss "I guess that's fair enough -{w=0.1} and don't worry,{w=0.1} I completely get it."
-                n 1nnmsm "But if someone's into that kind of thing,{w=0.1} who are we to judge,{w=0.1} after all?"
+                n 4nnmsm "But if someone's into that kind of thing,{w=0.1} who are we to judge,{w=0.1} after all?"
 
             "No, I'm not into them.":
                 n 1ulraj "...Huh.{w=0.2} That's kinda weird -{w=0.1} then why did you bring it up,{w=0.1} [player]?"
 
                 if persistent.jn_player_can_drive:
-                    n 1tlraj "Especially if you can drive!"
+                    n 4tlraj "Especially if you can drive!"
                     n 1tllpu "Huh..."
 
-                n 1fchbg "Well,{w=0.1} anyway.{w=0.2} Fair enough I guess!"
+                n 3fchbg "Well,{w=0.1} anyway.{w=0.2} Fair enough I guess!"
 
     else:
-        n 1flrsr "I guess I can respect the work and talent that goes into designing and making one..."
+        n 2flrsr "I guess I can respect the work and talent that goes into designing and making one..."
         n 1fnmbo "But it's just the same as anything else."
         n 1fsqbo "...I suppose you're into your cars then,{w=0.1} are you?"
         n 1fcspu "Heh."
-        n 1fsqpu "It'd be nice if you extended that respect to {i}people{/i} too,{w=0.1} [player]."
-        n 1fsqsr "{i}Just saying.{/i}"
+        n 2fsqpu "It'd be nice if you extended that respect to {i}people{/i} too,{w=0.1} [player]."
+        n 4fsqsr "{i}Just saying.{/i}"
 
     return
 
