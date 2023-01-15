@@ -22,39 +22,61 @@ screen hotkeys():
     tag menu
     use game_menu(("Hotkeys")):
         viewport id "hotkeys":
-            vbox:
-                label _("All hotkeys") style "check_label"
-                xoffset 100
-                yoffset 40
-                null height 20
-                style_prefix "hotkeys"
-                grid 2 8:
-                    xoffset 20                
-                    spacing 10
+            yoffset 0
+            xoffset 50
+            hbox:
+                vbox:
+                    box_wrap True
+                    label _("All hotkeys") style "check_label"
+                    null height 20
+                    style_prefix "hotkeys"
+                    grid 2 8:
+                        xoffset 20                
+                        spacing 10
 
-                    text _("Talk")
-                    text _("T")
+                        text _("Talk")
+                        text _("T")
 
-                    text _("Music")
-                    text _("M")
+                        text _("Music")
+                        text _("M")
 
-                    text _("Extras")
-                    text _("E")
+                        text _("Extras")
+                        text _("E")
 
-                    text _("Fullscreen")
-                    text _("F")
+                        text _("Fullscreen")
+                        text _("F")
 
-                    text _("Hide UI")
-                    text _("H")
+                        text _("Hide UI")
+                        text _("H")
 
-                    text _("Screenshot")
-                    text _("S")
+                        text _("Screenshot")
+                        text _("S")
 
-                    text _("Settings")
-                    text _("Esc")
+                        text _("Settings")
+                        text _("Esc")
 
-                    null width 175 height 30
-                    null width 175 height 0
+                        null width 175 height 30
+                        null width 175 height 0
+            
+            hbox:
+                xoffset 300
+                vbox:
+                    box_wrap True
+                    label _("Snap hotkeys") style "check_label"
+                    null height 20
+                    style_prefix "hotkeys"
+                    grid 2 3:
+                        xoffset 20                
+                        spacing 10
+
+                        text _("Place")
+                        text _("1")
+
+                        text _("Snap!")
+                        text _("2")
+
+                        null width 175 height 30
+                        null width 175 height 0
 
 # Categorized menu
 ## Similar to MAS' twopane_scrollable menu.
