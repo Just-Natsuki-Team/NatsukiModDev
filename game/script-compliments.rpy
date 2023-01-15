@@ -1,20 +1,24 @@
 default persistent._compliment_database = dict()
 
 init 0 python in jn_compliments:
+    from Enum import Enum
     import random
     import store
 
     COMPLIMENT_MAP = dict()
 
-    # Compliment types
-    TYPE_AMAZING = 0
-    TYPE_BEAUTIFUL = 1
-    TYPE_CONFIDENT = 2
-    TYPE_CUTE = 3
-    TYPE_HILARIOUS = 4
-    TYPE_INSPIRATIONAL = 5
-    TYPE_STYLE = 6
-    TYPE_THOUGHTFUL = 7
+    class JNComplimentTypes(Enum):
+        """
+        Identifiers for different compliment types.
+        """
+        amazing = 1
+        beautiful = 2
+        confident = 3
+        cute = 4
+        hilarious = 5
+        inspirational = 6
+        style = 7
+        thoughtful = 8
 
     # The last compliment the player gave to Natsuki
     last_compliment_type = None
@@ -63,7 +67,7 @@ init 5 python:
 label compliment_amazing:
     $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_amazing").shown_count == 0)
 
-    if jn_compliments.last_compliment_type == jn_compliments.TYPE_AMAZING:
+    if jn_compliments.last_compliment_type == jn_compliments.JNComplimentTypes.amazing:
         if Natsuki.isEnamored(higher=True):
             $ player_initial = jn_utils.getPlayerInitial()
             n 4uskemfesh "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}" 
@@ -132,7 +136,7 @@ label compliment_amazing:
                 $ chosen_tease = jn_utils.getRandomTease()
                 n 3fchgnlsbr "Thanks,{w=0.2} [chosen_tease]!"
 
-    $ jn_compliments.last_compliment_type = jn_compliments.TYPE_AMAZING
+    $ jn_compliments.last_compliment_type = jn_compliments.JNComplimentTypes.amazing
     return
 
 init 5 python:
@@ -150,7 +154,7 @@ init 5 python:
 label compliment_beautiful:
     $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_beautiful").shown_count == 0)
 
-    if jn_compliments.last_compliment_type == jn_compliments.TYPE_BEAUTIFUL:
+    if jn_compliments.last_compliment_type == jn_compliments.JNComplimentTypes.beautiful:
         if Natsuki.isEnamored(higher=True):
             $ player_initial = jn_utils.getPlayerInitial()
             n 1fcsanlesssbl "Uuuuuu-!"
@@ -253,7 +257,7 @@ label compliment_beautiful:
             extend 3nslbol " yeah."
             n 3kslsllsbr "..."
 
-    $ jn_compliments.last_compliment_type = jn_compliments.TYPE_BEAUTIFUL
+    $ jn_compliments.last_compliment_type = jn_compliments.JNComplimentTypes.beautiful
     return
 
 init 5 python:
@@ -271,7 +275,7 @@ init 5 python:
 label compliment_confident:
     $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_confident").shown_count == 0)
 
-    if jn_compliments.last_compliment_type == jn_compliments.TYPE_CONFIDENT:
+    if jn_compliments.last_compliment_type == jn_compliments.JNComplimentTypes.confident:
         n 1fcssmleme "Ehehe.{w=0.5}{nw}"
         extend 2fcsbg " Well,{w=0.2} I'm glad you still agree,{w=0.2} [player]!"
         n 2fllsm "Besides,{w=0.5}{nw}"
@@ -317,7 +321,7 @@ label compliment_confident:
             n 2fchgnl "I better inspire some confidence in you too!"
             n 2fwlsm "You're welcome,{w=0.2} [player]!"
 
-    $ jn_compliments.last_compliment_type = jn_compliments.TYPE_CONFIDENT
+    $ jn_compliments.last_compliment_type = jn_compliments.JNComplimentTypes.confident
     return
 
 init 5 python:
@@ -335,7 +339,7 @@ init 5 python:
 label compliment_cute:
     $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_cute").shown_count == 0)
 
-    if jn_compliments.last_compliment_type == jn_compliments.TYPE_CUTE:
+    if jn_compliments.last_compliment_type == jn_compliments.JNComplimentTypes.cute:
         if Natsuki.isEnamored(higher=True):
             n 1fskwrleshsbr "..."
             n 4fcsanlsbr "..."
@@ -429,7 +433,7 @@ label compliment_cute:
             extend 3fcssslsbl " I {i}totally{/i} misheard you!{w=0.5} O-{w=0.2}one hundred percent."
             n 3fslunlsbl "..."
 
-    $ jn_compliments.last_compliment_type = jn_compliments.TYPE_CUTE
+    $ jn_compliments.last_compliment_type = jn_compliments.JNComplimentTypes.cute
     return
 
 init 5 python:
@@ -447,7 +451,7 @@ init 5 python:
 label compliment_hilarious:
     $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_hilarious").shown_count == 0)
 
-    if jn_compliments.last_compliment_type == jn_compliments.TYPE_HILARIOUS:
+    if jn_compliments.last_compliment_type == jn_compliments.JNComplimentTypes.hilarious:
         n 4usqss "Oh...?"
         n 3tsqsm "What is this?{w=0.75}{nw}"
         extend 3fcsbg " An encore or something?"
@@ -504,7 +508,7 @@ label compliment_hilarious:
             else:
                 n 3fchbgl "Much obliged,{w=0.2} [player]!"
 
-    $ jn_compliments.last_compliment_type = jn_compliments.TYPE_HILARIOUS
+    $ jn_compliments.last_compliment_type = jn_compliments.JNComplimentTypes.hilarious
     return
 
 init 5 python:
@@ -522,7 +526,7 @@ init 5 python:
 label compliment_inspirational:
     $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_inspirational").shown_count == 0)
 
-    if jn_compliments.last_compliment_type == jn_compliments.TYPE_INSPIRATIONAL:
+    if jn_compliments.last_compliment_type == jn_compliments.JNComplimentTypes.inspirational:
         n 1nchgn "Ahaha.{w=0.75}{nw}" 
         extend 2fcsbg " Well,{w=0.2} what can I say?{w=0.75}{nw}" 
         extend 2fchsmedz " I guess it must be natural~."
@@ -556,7 +560,7 @@ label compliment_inspirational:
             extend 4fsqss " After all..."
             n 2fwlbg "That's just what the pros are for,{w=0.2} right?"
 
-    $ jn_compliments.last_compliment_type = jn_compliments.TYPE_INSPIRATIONAL
+    $ jn_compliments.last_compliment_type = jn_compliments.JNComplimentTypes.inspirational
     return
 
 init 5 python:
@@ -574,7 +578,7 @@ init 5 python:
 label compliment_style:
     $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_style").shown_count == 0)
 
-    if jn_compliments.last_compliment_type == jn_compliments.TYPE_STYLE:
+    if jn_compliments.last_compliment_type == jn_compliments.JNComplimentTypes.style:
         if not Natsuki.isWearingOutfit("jn_school_uniform"):
 
             # Non-uniform dialogue
@@ -680,7 +684,7 @@ label compliment_style:
                 extend 4fcssmeme " And isn't that always what matters?"
                 n 3fchgn "Thanks anyway,{w=0.2} you goof!"
 
-    $ jn_compliments.last_compliment_type = jn_compliments.TYPE_STYLE
+    $ jn_compliments.last_compliment_type = jn_compliments.JNComplimentTypes.style
     return
 
 init 5 python:
@@ -698,7 +702,7 @@ init 5 python:
 label compliment_thoughtful:
     $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_thoughtful").shown_count == 0)
 
-    if jn_compliments.last_compliment_type == jn_compliments.TYPE_THOUGHTFUL:
+    if jn_compliments.last_compliment_type == jn_compliments.JNComplimentTypes.thoughtful:
         if Natsuki.isEnamored(higher=True):
             n 1fcsanl "Nnnnn-!{w=0.2} what did I tell you,{w=0.2} [player]?"
             n 1kllpol "I'm just...{w=0.3} giving as good as I get,{w=0.2} alright?"
@@ -730,5 +734,5 @@ label compliment_thoughtful:
             n 1knmpol "I-{w=0.2}I'm just trying to be friendly,{w=0.2} you know?"
             n 1fcsbgl "Yeah!{w=0.2} Totally no special treatment going on here.{w=0.2} Nope!"
 
-    $ jn_compliments.last_compliment_type = jn_compliments.TYPE_THOUGHTFUL
+    $ jn_compliments.last_compliment_type = jn_compliments.JNComplimentTypes.thoughtful
     return
