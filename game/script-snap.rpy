@@ -5,6 +5,10 @@ default persistent.jn_snap_explanation_given = False
 # Natsuki will refuse to play with a cheater
 default persistent.jn_snap_player_is_cheater = False
 
+# Win records
+default persistent._jn_snap_player_wins = 0
+default persistent._jn_snap_natsuki_wins = 0
+
 init 0 python in jn_snap:
     import random
     import store
@@ -280,8 +284,6 @@ init 0 python in jn_snap:
         else:
             _current_table_card_image = "mod_assets/games/snap/cards/blank.png"
 
-        renpy.show(name="current_table_card", zorder=_SNAP_UI_Z_INDEX)
-
     def update_turn_indicator():
         """
         Updates the turn indicator graphic to display who's turn it is to move
@@ -296,8 +298,6 @@ init 0 python in jn_snap:
 
         else:
             _turn_indicator_image = "mod_assets/games/snap/ui/turn_indicator_natsuki.png"
-
-        renpy.show(name="turn_indicator_icon", zorder=_SNAP_UI_Z_INDEX)
 
     def get_turn_label_to_display():
         """
@@ -387,9 +387,6 @@ label snap_start:
     $ jn_snap.update_turn_indicator()
 
     show natsuki 1uchsm at jn_left
-    show player_hand_icon zorder jn_snap._SNAP_UI_Z_INDEX
-    show natsuki_hand_icon zorder jn_snap._SNAP_UI_Z_INDEX
-    show turn_indicator_icon zorder jn_snap._SNAP_UI_Z_INDEX
     show screen snap_ui
 
     n 1nchbg "Okaaay!{w=0.2} That's the deck shuffled!"
@@ -424,12 +421,14 @@ label snap_main_loop:
         # Player has lost; end the game
         $ jn_snap._player_win_streak = 0
         $ jn_snap._natsuki_win_streak += 1
+        $ persistent._jn_snap_natsuki_wins += 1 
         $ jn_snap.last_game_result = jn_snap.RESULT_NATSUKI_WIN
         jump snap_end
 
     elif len(jn_snap._natsuki_hand) == 0:
         # Natsuki has lost; end the game
         $ jn_snap._player_win_streak += 1
+        $ persistent._jn_snap_player_wins += 1
         $ jn_snap._natsuki_win_streak = 0
         $ jn_snap.last_game_result = jn_snap.RESULT_PLAYER_WIN
         jump snap_end
@@ -511,11 +510,6 @@ label snap_quip(is_player_snap, is_correct_snap):
                 $ Natsuki.addApology(jn_apologies.ApologyTypes.cheated_game)
 
                 # Hide all the UI
-                hide player_natsuki_hands
-                hide current_table_card
-                hide player_hand_icon
-                hide natsuki_hand_icon
-                hide turn_indicator_icon
                 hide screen snap_ui
 
                 play audio drawer
@@ -571,7 +565,7 @@ label snap_quip(is_player_snap, is_correct_snap):
     return
 
 label snap_end:
-
+    hide screen snap_ui
     $ jn_snap._controls_enabled = False
 
     # Player won, Natsuki amger
@@ -673,14 +667,6 @@ label snap_end:
             elif jn_snap._natsuki_win_streak >= 3:
                 n 4fchbgl "I wanna see more fight in you next time, though. Ahaha!"
 
-            # Hide all the UI
-            hide player_natsuki_hands
-            hide current_table_card
-            hide player_hand_icon
-            hide natsuki_hand_icon
-            hide turn_indicator_icon
-            hide screen snap_ui
-
             play audio drawer
             with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
@@ -689,6 +675,8 @@ label snap_end:
             jump ch30_loop
 
 label snap_forfeit:
+    hide screen snap_ui
+            
     $ jn_snap._controls_enabled = False
     n 3knmpo "Awww...{w=0.3} you're not giving up already are you,{w=0.1} [player]?"
     menu:
@@ -702,15 +690,7 @@ label snap_forfeit:
             # Hit the streaks
             $ jn_snap._player_win_streak = 0
             $ jn_snap._natsuki_win_streak += 1
-
-            # Hide all the UI
-            hide player_natsuki_hands
-            hide current_table_card
-            hide player_hand_icon
-            hide natsuki_hand_icon
-            hide turn_indicator_icon
-            hide screen snap_ui
-
+            $ persistent._jn_snap_natsuki_wins += 1
             play audio drawer
             with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
@@ -723,34 +703,13 @@ label snap_forfeit:
             n 1fchbs "Game on then,{w=0.1} [player]!"
             $ jn_snap._controls_enabled = True
             $ jn_snap._natsuki_skill_level += 1
+    
+            show screen snap_ui
             jump snap_main_loop
 
 # Animation for the Snap! popup fading out; we use this because Ren'Py sucks at image prediction
 transform snap_popup_fadeout:
     easeout 0.75 alpha 0
-
-# This is the card currently on the top of the pile being shown
-image current_table_card:
-    anchor(0, 0)
-    pos(1000, 100)
-    jn_snap._current_table_card_image
-
-# Icons representing each player's hand
-image player_hand_icon:
-    anchor(0,0)
-    pos (675, 110)
-    jn_snap._CARD_FAN_IMAGE_PLAYER
-
-image natsuki_hand_icon:
-    anchor(0,0)
-    pos (675, 180)
-    jn_snap._CARD_FAN_IMAGE_NATSUKI
-
-# Icon representing who's turn it is
-image turn_indicator_icon:
-    anchor(0,0)
-    pos(675, 250)
-    jn_snap._turn_indicator_image
 
 # Self-explanatory, you dummy
 image snap_popup:
@@ -770,35 +729,57 @@ image snap_popup:
 screen snap_ui:
     zorder jn_snap._SNAP_UI_Z_INDEX
 
+    # This is the card currently on the top of the pile being shown
+    add jn_snap._current_table_card_image anchor(0, 0) pos(1000, 100)
+    
+    # Icons representing each player's hand
+    add jn_snap._CARD_FAN_IMAGE_PLAYER anchor(0,0) pos (675, 110)
+    add jn_snap._CARD_FAN_IMAGE_NATSUKI anchor(0,0) pos (675, 180)
+
+    # Icon representing who's turn it is
+    add jn_snap._turn_indicator_image anchor(0,0) pos(675, 250)
+
     # Game information
-    text "Cards down: {0}".format(len(jn_snap._cards_on_table)) size 22 xpos 1000 ypos 50 style "categorized_menu_button"
-    text "[player]'s hand: {0}".format(len(jn_snap._player_hand)) size 22 xpos 750 ypos 125 style "categorized_menu_button"
+    text "Cards down: {0}".format(len(jn_snap._cards_on_table)) size 32 xpos 1000 ypos 50 style "categorized_menu_button"
+    text "Your hand: {0}".format(len(jn_snap._player_hand)) size 22 xpos 750 ypos 125 style "categorized_menu_button"
     text "[n_name]'s hand: {0}".format(len(jn_snap._natsuki_hand)) size 22 xpos 750 ypos 195 style "categorized_menu_button"
     text "Turn: {0}".format(jn_snap.get_turn_label_to_display()) size 22 xpos 750 ypos 265 style "categorized_menu_button"
 
     # Options
     style_prefix "hkb"
     vbox:
-        xpos 1000
-        ypos 440
+        xpos 1012
+        ypos 420
+
+        # Hotkeys
+        key "1" action [
+            # Place
+            If(jn_snap._is_player_turn and (len(jn_snap._natsuki_hand) > 0 or len(jn_snap._player_hand) > 0) and jn_snap._controls_enabled, Function(jn_snap._place_card_on_table, True)) 
+        ]
+        key "2" action [
+            # Snap
+            If(len(jn_snap._cards_on_table) >= 2 and not jn_snap._player_is_snapping and (len(jn_snap._natsuki_hand) > 0 or len(jn_snap._player_hand) > 0) and jn_snap._controls_enabled, Function(jn_snap._call_snap, True))
+        ]
 
         # Place card, but only selectable if player's turn, and both players are still capable of playing
         textbutton _("Place"):
-            style "hkbd_button"
+            style "hkbd_option"
             action [
                 Function(jn_snap._place_card_on_table, True),
                 SensitiveIf(jn_snap._is_player_turn and (len(jn_snap._natsuki_hand) > 0 or len(jn_snap._player_hand) > 0) and jn_snap._controls_enabled)]
 
-        # Forfeit, but only selectable if player's turn, and both players are still capable of playing
-        textbutton _("Forfeit"):
-            style "hkbd_button"
-            action [
-                Function(renpy.jump, "snap_forfeit"),
-                SensitiveIf(jn_snap._is_player_turn and (len(jn_snap._natsuki_hand) > 0 or len(jn_snap._player_hand) > 0) and jn_snap._controls_enabled)]
-
         # Snap, but only selectable if there's enough cards down on the table, and both players are still capable of playing
         textbutton _("Snap!"):
-            style "hkbd_button"
+            style "hkbd_option"
             action [
                 Function(jn_snap._call_snap, True),
                 SensitiveIf(len(jn_snap._cards_on_table) >= 2 and not jn_snap._player_is_snapping and (len(jn_snap._natsuki_hand) > 0 or len(jn_snap._player_hand) > 0) and jn_snap._controls_enabled)]
+
+        null height 20
+
+        # Forfeit, but only selectable if player's turn, and both players are still capable of playing
+        textbutton _("Forfeit"):
+            style "hkbd_option"
+            action [
+                Function(renpy.jump, "snap_forfeit"),
+                SensitiveIf(jn_snap._is_player_turn and (len(jn_snap._natsuki_hand) > 0 or len(jn_snap._player_hand) > 0) and jn_snap._controls_enabled)]
