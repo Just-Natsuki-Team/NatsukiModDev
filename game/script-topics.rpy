@@ -5057,35 +5057,35 @@ init 5 python:
 
 label talk_windup_smoking_vaping_indoors:
     n 1fllaj "You know what stinks,{w=0.1} [player]?"
-    n 1fsqaj "I mean {i}really{/i} stinks -{w=0.1} not just figuratively,{w=0.1} but literally too?"
+    n 3fsqaj "I mean {i}really{/i} stinks -{w=0.1} not just figuratively,{w=0.1} but literally too?"
     n 1fcssf "When people smoke or vape indoors,{w=0.1} or near entrances -{w=0.1} {i}especially{/i} when other people are around.{w=0.2} I can't stand it!"
-    n 1fcsan "Like...{w=0.3} how inconsiderate can you be?{w=0.2} Seriously?"
-    n 1fsqwr "For starters,{w=0.1} and like I was just saying -{w=0.1} it absolutely {i}reeks{/i}!"
-    n 1fllem "Tobacco is awful smelling stuff,{w=0.1} and all those sickly vaping fluid types aren't much better either."
-    n 1ksqup "It clings to the walls too -{w=0.1} so the smell hangs around for ages!"
+    n 4fcsan "Like...{w=0.3} how inconsiderate can you be?{w=0.2} Seriously?"
+    n 3fsqwr "For starters,{w=0.1} and like I was just saying -{w=0.1} it absolutely {i}reeks{/i}!"
+    n 3fllem "Tobacco is awful smelling stuff,{w=0.1} and all those sickly vaping fluid types aren't much better either."
+    n 4ksqup "It clings to the walls too -{w=0.1} so the smell hangs around for ages!"
     n 1kllan "Speaking of clinging to the walls,{w=0.1} the smoke literally does that too -{w=0.1} have you {i}seen{/i} a smoker's house,{w=0.1} or car?"
-    n 1ksqup "All those yellow stains...{w=0.3} you'd think it was painted on or something.{w=0.2} Ew!"
+    n 3ksqup "All those yellow stains...{w=0.3} you'd think it was painted on or something.{w=0.2} Ew!"
     n 1fsqan "And you know what,{w=0.1} [player]?{w=0.2} I haven't even gotten to the worst of it yet..."
-    n 1fcsan "I've said nothing about how expensive it all is,{w=0.1} or the health problems not just to the smoker..."
-    n 1fsqaj "...But to everyone else!"
+    n 3fcsan "I've said nothing about how expensive it all is,{w=0.1} or the health problems not just to the smoker..."
+    n 4fsqaj "...But to everyone else!"
     n 1fcsbo "Ugh..."
-    n 1flrbo "Don't get me wrong -{w=0.1} if someone wants to smoke or vape,{w=0.1} that's their choice and their money.{w=0.2} I don't care."
+    n 3flrbo "Don't get me wrong -{w=0.1} if someone wants to smoke or vape,{w=0.1} that's their choice and their money.{w=0.2} I don't care."
     n 1fnmbo "But the least they can do is respect the decision of everyone who {i}doesn't{/i},{w=0.1} you know?"
     n 1fcssl "..."
 
     if Natsuki.isLove(higher=True):
         n 1nnmsl "I know you,{w=0.1} [player].{w=0.2} I highly doubt you'd be the kind of person to be a jerk like that."
-        n 1klrss "Just...{w=0.3} don't prove me wrong,{w=0.1} alright?"
-        n 1uchgn "'preciate it!{w=0.2} Ahaha."
+        n 4klrss "Just...{w=0.3} don't prove me wrong,{w=0.1} alright?"
+        n 2uchgn "'preciate it!{w=0.2} Ahaha."
 
     elif Natsuki.isAffectionate(higher=True):
-        n 1kllpo "I doubt you'd be a jerk like that even if you do smoke,{w=0.1} [player]."
-        n 1fsqpo "But...{w=0.3} try not to prove me wrong,{w=0.1} 'kay?{w=0.2} I like you more as not a jerk."
+        n 3kllpo "I doubt you'd be a jerk like that even if you do smoke,{w=0.1} [player]."
+        n 3fsqpo "But...{w=0.3} try not to prove me wrong,{w=0.1} 'kay?{w=0.2} I like you more as not a jerk."
         n 1uchsm "Thanks!"
 
     else:
         n 1ullaj "I don't think you'd be a jerk like that,{w=0.1} [player]."
-        n 1nnmaj "But...{w=0.3} just in case -{w=0.1} keep it in mind,{w=0.1} will you?"
+        n 4nnmaj "But...{w=0.3} just in case -{w=0.1} keep it in mind,{w=0.1} will you?"
         n 1nchsm "Thanks!"
 
     return
@@ -5107,29 +5107,29 @@ init 5 python:
     )
 
 label talk_windup_unwashed_hands:
-    n 1unmaj "Hey,{w=0.1} [player]."
-    n 1nnmaj "Have you ever worked in a restaurant,{w=0.1} or a hospital or anything like that?"
+    n 4unmaj "Hey,{w=0.1} [player]."
+    n 3nsqsl "Have you ever worked in a restaurant,{w=0.1} or a hospital or anything like that?"
     n 1fnmaj "Because I bet if there's one thing drilled into you...{w=0.3} it's how important washing your hands is!"
-    n 1flraj "It really gets on my nerves when people don't wash their hands after doing something nasty."
-    n 1fsqsl "Like...{w=0.3} we {i}know{/i} how important it is to stop germs getting around -{w=0.1} and {i}what{/i} exactly is hard about sticking your hands under the tap for a minute?!"
-    n 1fsqem "It annoys me even more when people are really dumb about it too!{w=0.2} Like,{w=0.1} they think they don't need to do that if they didn't go."
-    n 1fcsem "Newsflash -{w=0.1} if you went in,{w=0.1} you must have touched stuff -{w=0.1} so now there's all that crap on your hands that you've taken out with you!"
-    n 1fsqsf "Not only is it {i}super{/i} icky and bad for {i}your{/i} health..."
-    n 1ksqan "It's awful for others too!{w=0.2} What if you're about to handle someone's food,{w=0.1} or visit someone in hospital?"
-    n 1fllan "You could make someone seriously ill..."
-    n 1fnmfu "...And then they get all upset when you call them out on their grossness!{w=0.2} I mean,{w=0.1} come {i}on{/i}!"
+    n 3flrun "It really gets on my nerves when people don't wash their hands after doing something nasty."
+    n 3fsqsl "Like...{w=0.3} we {i}know{/i} how important it is to stop germs getting around -{w=0.1} and {i}what{/i} exactly is hard about sticking your hands under the tap for a minute?!"
+    n 1fslem "It annoys me even more when people are really dumb about it too!{w=0.2} Like,{w=0.1} they think they don't need to do that if they didn't go."
+    n 1fcsan "Newsflash -{w=0.1} if you went in,{w=0.1} you must have touched stuff -{w=0.1} so now there's all that crap on your hands that you've taken out with you!"
+    n 4fsqsf "Not only is it {i}super{/i} icky and bad for {i}your{/i} health..."
+    n 2ksqan "It's awful for others too!{w=0.2} What if you're about to handle someone's food,{w=0.1} or visit someone in hospital?"
+    n 1fllem "You could make someone seriously ill..."
+    n 3fnmfu "...And then they get all upset when you call them out on their grossness!{w=0.2} I mean,{w=0.1} come {i}on{/i}!"
     n 1fcssl "Just...{w=0.3} ugh."
     n 1ncssl "...[player]."
-    n 1nnmpu "I really hope you keep your hands spick and span.{w=0.2} And not just when you visit the restroom."
-    n 1fnmpu "Before you prepare food,{w=0.1} after you've handled trash...{w=0.3} just think about where you've been,{w=0.1} alright?"
+    n 4nnmpu "I really hope you keep your hands spick and span.{w=0.2} And not just when you visit the restroom."
+    n 3fsgaj "Before you prepare food,{w=0.1} after you've handled trash...{w=0.3} just think about where you've been,{w=0.1} alright?"
 
     if Natsuki.isLove(higher=True):
         n 1kchbg "Don't get me wrong though!{w=0.2} I'm pretty sure you at least try to do the right thing!"
-        n 1nnmbg "Just...{w=0.3} keep up the good work,{w=0.1} alright?{w=0.2} For everyone."
-        n 1nchsm "Thanks,{w=0.1} [player]!"
+        n 3nnmss "Just...{w=0.3} keep up the good work,{w=0.1} alright?{w=0.2} For everyone."
+        n 4nchsm "Thanks,{w=0.1} [player]!"
 
     else:
-        n 1tsqpo "It really isn't that much to ask...{w=0.3} is it?"
+        n 3tsqpo "It really isn't that much to ask...{w=0.3} is it?"
 
     return
 
@@ -5153,46 +5153,46 @@ label talk_windup_litter:
     n 1ullpu "You know,{w=0.1} [player]..."
     n 1unmaj "At school?{w=0.2} At my school,{w=0.1} anyway?"
     n 1unmss "We -{w=0.1} the students -{w=0.1}  were actually responsible for keeping it all clean."
-    n 1fcsbg "Ehehe.{w=0.2} Are you surprised?"
-    n 1fchgn "Yep!{w=0.2} From the bins,{w=0.1} to the desks,{w=0.1} to the floors.{w=0.2} It was all our effort that kept it squeaky clean!"
-    n 1flrpol "N-{w=0.1}not that I {i}enjoyed{/i} it,{w=0.1} of course!{w=0.2} Cleaning {i}is{/i} pretty lame,{w=0.1} but it's just something you gotta do."
-    n 1fnmpo "But I'll tell you one thing,{w=0.1} [player]."
-    n 1fsqtr "{i}Nothing{/i} pissed me off more than the jerks who just went and dropped or left their trash everywhere."
+    n 3fcsbg "Ehehe.{w=0.2} Are you surprised?"
+    n 3fchgn "Yep!{w=0.2} From the bins,{w=0.1} to the desks,{w=0.1} to the floors.{w=0.2} It was all our effort that kept it squeaky clean!"
+    n 3flrpol "N-{w=0.1}not that I {i}enjoyed{/i} it,{w=0.1} of course!{w=0.2} Cleaning {i}is{/i} pretty lame,{w=0.1} but it's just something you gotta do."
+    n 4fnmpo "But I'll tell you one thing,{w=0.1} [player]."
+    n 2fsqtr "{i}Nothing{/i} pissed me off more than the jerks who just went and dropped or left their trash everywhere."
     n 1fnman "...And not even just in school!"
     n 1fcsan "I mean...{w=0.3} where do I start?!"
-    n 1fnmaj "First off -{w=0.1} how much of a freaking slob do you have to be?{w=0.2} Do these people just drop crap all over their homes too?!"
+    n 3fnmaj "First off -{w=0.1} how much of a freaking slob do you have to be?{w=0.2} Do these people just drop crap all over their homes too?!"
     n 1flran "It annoys me even more when there's bins and stuff literally right there!"
-    n 1fcsfu "Like,{w=0.1} wow...{w=0.3} lazy as well as inconsiderate?{w=0.2} What a {i}charming{/i} combo!"
+    n 4fcsfu "Like,{w=0.1} wow...{w=0.3} lazy as well as inconsiderate?{w=0.2} What a {i}charming{/i} combo!"
     n 1fllpu "Even if there isn't a trash can or whatever around..."
-    n 1fllan "It's not like they don't have pockets,{w=0.1} or can't just carry it around for a few minutes!"
-    n 1fcsan "Ugh..."
-    n 1flrup "And I haven't even mentioned people tossing their rubbish out of cars,{w=0.1} or into lakes and ponds!"
+    n 3fllan "It's not like they don't have pockets,{w=0.1} or can't just carry it around for a few minutes!"
+    n 1fcswr "Ugh..."
+    n 3flrup "And I haven't even mentioned people tossing their rubbish out of cars,{w=0.1} or into lakes and ponds!"
     n 1fcssl "It pisses me off just thinking about it..."
     n 1fllbo "..."
-    n 1fnmbo "[player]."
+    n 4fnmbo "[player]."
 
     if Natsuki.isEnamored(higher=True):
-        n 1ksqbo "I know you.{w=0.2} In fact,{w=0.1} I daresay I know you {i}very{/i} well by now."
+        n 2ksqbo "I know you.{w=0.2} In fact,{w=0.1} I daresay I know you {i}very{/i} well by now."
         n 1knmbo "I don't think you're the sort to do that at all..."
-        n 1klraj "I'm not wrong...{w=0.3} am I?"
+        n 2ksraj "I'm not wrong...{w=0.3} am I?"
         n 1klrss "I don't wanna have to be.{w=0.2} Ahaha..."
 
     elif Natsuki.isAffectionate(higher=True):
         n 1unmaj "I don't think you're like that,{w=0.1} [player]."
-        n 1ullsl "Or...{w=0.3} at least you don't {i}try{/i} to be anyway."
+        n 2ullsl "Or...{w=0.3} at least you don't {i}try{/i} to be anyway."
 
     else:
-        n 1fnmsl "I really,{w=0.1} really hope you aren't one of those people."
+        n 2fnmsl "I really,{w=0.1} really hope you aren't one of those people."
 
     n 1nllpu "So..."
     n 1nnmsl "...If you're a litterbug already,{w=0.1} I'll forgive you this one time."
-    n 1klrpo "Just...{w=0.3} make sure you clean up your act,{w=0.1} okay?"
+    n 3klrpo "Just...{w=0.3} make sure you clean up your act,{w=0.1} okay?"
 
     if Natsuki.isLove(higher=True):
-        n 1uchsml "Ehehe.{w=0.2} Love you,{w=0.1} [player]~."
+        n 4uchsml "Ehehe.{w=0.2} Love you,{w=0.1} [player]~."
 
     elif Natsuki.isAffectionate(higher=True):
-        n 1nlrpol "It'd...{w=0.3} mean a lot."
+        n 3nlrpol "It'd...{w=0.3} mean a lot."
 
     else:
         n 1fchbg "Thanks,{w=0.1} [player]."
@@ -5220,9 +5220,9 @@ label talk_custom_music_introduction:
     n 1tllboeqm "..."
     n 1fllpu "...Huh."
     n 1flrbo "I wonder if it's still here..."
-    n 1fsrpoesp "..."
+    n 2fsrpoesp "..."
     n 1flraj "You know what?{w=0.75}{nw}"
-    extend 1fnmsseid " Just give me a second here,{w=0.2} [player]."
+    extend 4fnmsseid " Just give me a second here,{w=0.2} [player]."
     n 1fcsbg "You're gonna {i}love{/i} this!"
     show natsuki 1fcssm
 
@@ -5262,41 +5262,41 @@ label talk_custom_music_introduction:
 
     n 1nchsm "..."
     n 1unmajesu "Oh!{w=0.5}{nw}"
-    extend 1fchbgsbl " [player]!"
+    extend 2fchbgsbl " [player]!"
     n 1fcsbg "Guess what I fooound!{w=0.75}{nw}"
     extend 1fsqsm " Ehehe."
     n 1fcsbg "It's...{w=1.25}{nw}"
     play audio button_tap_c
     show music_player stopped
     $ jnPause(1)
-    n 1uchgn "...Our old music player!{w=1}{nw}"
+    n 2uchgn "...Our old music player!{w=1}{nw}"
     extend 1fwlbg " Neat,{w=0.2} right?"
-    n 1fchbgsbl "Ehehe..."
+    n 4fchbgsbl "Ehehe..."
     n 1tlrss "Well...{w=1}{nw}"
     extend 1nsrsssbl " kinda."
-    n 1nllsssbl "It's not exactly...{w=0.5}{nw}"
-    extend 1nslsssbl " well...{w=1}{nw}"
-    extend 1fslposbl " {i}modern{/i},{w=0.75}{nw}"
+    n 2nllsssbl "It's not exactly...{w=0.5}{nw}"
+    extend 2nslsssbl " well...{w=1}{nw}"
+    extend 2fslposbl " {i}modern{/i},{w=0.75}{nw}"
     extend 1fcsbgsbr " but it'll do the job!"
     n 1tslbo "..."
     n 1tslaj "Actually...{w=0.75}{nw}"
     extend 1tllsl " come to think of it..."
-    n 1tnmpo "I don't really even know who it belongs to."
+    n 4tnmpo "I don't really even know who it belongs to."
     n 1tllca "We just found it left in the clubroom one day.{w=0.75}{nw}"
     extend 1tnmpu " Nobody knew if it belonged to anyone -{w=0.5}{nw}"
     extend 1unmaj " and trust me,{w=0.2} we {i}tried{/i} to find out!"
-    n 1tlrsl "We asked around in lessons,{w=0.5}{nw}"
-    extend 1tllaj " Monika sent out notes...{w=1}{nw}"
+    n 2tlrsl "We asked around in lessons,{w=0.5}{nw}"
+    extend 2tllaj " Monika sent out notes...{w=1}{nw}"
     extend 1unmaw " nothing!"
-    n 1ulraj "So...{w=0.75}{nw}"
+    n 4ulraj "So...{w=0.75}{nw}"
     extend 1tnmsl " we kinda just kept it here,{w=0.2} by the teacher's desk,{w=0.2} in case whoever it was came back to pick it up."
-    n 1nslss "And,{w=0.2} well..."
-    n 1tsqposbr "I guess they never will now,{w=0.2} huh?"
+    n 2nslss "And,{w=0.2} well..."
+    n 2tsqposbr "I guess they never will now,{w=0.2} huh?"
     n 1kslbo "..."
     n 1fcssslsbl "W-{w=0.2}well,{w=0.2} whatever.{w=0.75}{nw}"
-    extend 1fchbgsbl " The point is we can play whatever music we want now!"
+    extend 4fchbgsbl " The point is we can play whatever music we want now!"
     n 1fchsmeme "I think I figured out a way to let you send me whatever you want me to put on,{w=0.75}{nw}"
-    extend 1fwlbg " so listen up,{w=0.2} 'kay?"
+    extend 2fwlbg " so listen up,{w=0.2} 'kay?"
 
     $ get_topic("talk_custom_music_introduction").lock()
     jump talk_custom_music_explanation
@@ -5328,19 +5328,19 @@ label talk_custom_music_explanation:
         $ persistent.jn_custom_music_explanation_given = True
         n 1unmaj "Huh?{w=0.2} You want me to explain how custom music works again?"
         n 1uchbg "Sure,{w=0.1} I can do that!"
-        n 1nnmsm "First things first,{w=0.1} let me just check for the {i}custom_music{/i} folder..."
+        n 2nnmsm "First things first,{w=0.1} let me just check for the {i}custom_music{/i} folder..."
 
     else:
         $ hide_music_player = True
         $ persistent.jn_custom_music_explanation_given = True
         n 1unmbg "Alright!{w=0.2} So...{w=0.3} it's actually pretty simple,{w=0.1} [player]."
-        n 1nnmsm "There should be a folder called {i}custom_music{/i} somewhere around here..."
+        n 1nsgsm "There should be a folder called {i}custom_music{/i} somewhere around here..."
         n 1nchbg "Let me just take a look,{w=0.1} one sec..."
-        n 1ncssr "..."
+        n 2ncssr "..."
 
     if not jn_utils.createDirectoryIfNotExists(jn_custom_music.CUSTOM_MUSIC_DIRECTORY):
-        n 1tnmbg "Well,{w=0.1} hey!{w=0.2} It's already there!{w=0.2} I must have set it up earlier and forgot."
-        n 1uchgn "No complaints from me!"
+        n 2tnmbg "Well,{w=0.1} hey!{w=0.2} It's already there!{w=0.2} I must have set it up earlier and forgot."
+        n 2uchgn "No complaints from me!"
 
     else:
         n 1uchbg "Okaaay!{w=0.2} It wasn't there,{w=0.1} so I've just created it for you."
@@ -5348,22 +5348,22 @@ label talk_custom_music_explanation:
     $ folder = jn_custom_music.CUSTOM_MUSIC_DIRECTORY
     n 1nnmss "So,{w=0.1} [player] -{w=0.1} if you click {a=[folder]}here{/a},{w=0.1} that'll take you to the folder I set up."
     n 1ullbg "Then all you gotta do is just {i}copy{/i} your music into that folder,{w=0.1} and you're good to go!"
-    n 1uchgn "Easy as pie,{w=0.1} huh?{w=0.2} Ehehe."
-    n 1uwdaj "Oh -{w=0.1} a couple of things first though,{w=0.1} [player]."
+    n 2uchgn "Easy as pie,{w=0.1} huh?{w=0.2} Ehehe."
+    n 4uwdaj "Oh -{w=0.1} a couple of things first though,{w=0.1} [player]."
     n 1unmpu "Any music you give me needs to be in {i}.mp3,{w=0.1} .ogg or .wav{/i} format."
     n 1ullss "If you don't know how to check,{w=0.1} then just look at the letters after the period in the file name."
     n 1unmss "You should also be able to see those in the file {i}properties{/i} if they don't appear on the screen at first."
-    n 1flrbg "Like I said -{w=0.1} this thing isn't {i}exactly{/i} super modern,{w=0.1} so it won't work with any fancy newer formats,{w=0.1} or weird old ones."
-    n 1uwdaj "Oh,{w=0.75}{nw}"
+    n 2flrbg "Like I said -{w=0.1} this thing isn't {i}exactly{/i} super modern,{w=0.1} so it won't work with any fancy newer formats,{w=0.1} or weird old ones."
+    n 4uwdaj "Oh,{w=0.75}{nw}"
     extend 1nlrpu " and if you gotta convert it first,{w=1}{nw}"
-    extend 1nsqpo " don't just rename it."
+    extend 2nsqpo " don't just rename it."
     n 1fcsbg "Use a proper converter!{w=1}{nw}"
-    extend 1fsrbg " Unless you {i}enjoy{/i} hearing your music being all warped and nasty,{w=0.3} anyway."
+    extend 2fsrbg " Unless you {i}enjoy{/i} hearing your music being all warped and nasty,{w=0.3} anyway."
     n 1nnmaj "Once you've done that,{w=0.1} just click the {i}Music{/i} button,{w=0.1} and I'll check that it's all done right."
-    n 1nchbg "...And that's about it!"
-    n 1nsqbg "A word of warning though,{w=0.1} [player]..."
+    n 4nchbg "...And that's about it!"
+    n 4nsqbg "A word of warning though,{w=0.1} [player]..."
     n 1usqsg "You better have good taste."
-    n 1uchgnelg "Ahaha!"
+    n 2uchgnelg "Ahaha!"
 
     if hide_music_player:
         $ jn_custom_music.hideMusicPlayer()
@@ -5388,50 +5388,50 @@ init 5 python:
 label talk_vtubers:
     if Natsuki.isEnamored(higher=True):
         n 1tllss "VTubers,{w=0.1} huh?{w=0.2} You're asking {i}me{/i}?"
-        n 1fnmsm "...Wow,{w=0.1} [player].{w=0.2} I'm impressed."
-        n 1fsqsm "Yet again,{w=0.1} you've proved you're even more of a nerd than I am!"
+        n 4fnmsm "...Wow,{w=0.1} [player].{w=0.2} I'm impressed."
+        n 4fsqsm "Yet again,{w=0.1} you've proved you're even more of a nerd than I am!"
         n 1uchsm "Ehehe."
-        n 1klrbg "Relax!{w=0.2} Relax,{w=0.1} jeez!{w=0.2} You know I'd never seriously judge your hobbies,{w=0.1} you dummy."
+        n 3klrbg "Relax!{w=0.2} Relax,{w=0.1} jeez!{w=0.2} You know I'd never seriously judge your hobbies,{w=0.1} you dummy."
         n 1unmaj "But yeah,{w=0.1} anyway..."
 
     elif Natsuki.isHappy(higher=True):
         n 1unmbg "Yeah!{w=0.2} I think I know those!"
-        n 1tnmpu "They're those people with the anime avatars that stream stuff online for people,{w=0.1} right?"
-        n 1tllpu "Well..."
+        n 4tnmpu "They're those people with the anime avatars that stream stuff online for people,{w=0.1} right?"
+        n 2tllpu "Well..."
 
     elif Natsuki.isNormal(higher=True):
         n 1unmpu "Huh?{w=0.2} VTubers?{w=0.2} Like those people with the anime-style avatars that play games and stuff online for people to watch?"
-        n 1tnmpu "That {i}is{/i} what you mean,{w=0.1} right?"
-        n 1tllpu "Well..."
+        n 4tnmpu "That {i}is{/i} what you mean,{w=0.1} right?"
+        n 2tllpu "Well..."
 
     elif Natsuki.isDistressed(higher=True):
-        n 1fsqpu "No,{w=0.1} I do not.{w=0.2} I'd rather be playing the game myself than watching someone play it for me."
+        n 2fsqpu "No,{w=0.1} I do not.{w=0.2} I'd rather be playing the game myself than watching someone play it for me."
         n 1fsqbo "If you follow any,{w=0.1} good for you."
-        n 1flrbo "{i}Some{/i} of us don't have the time to sit around on our butt for hours..."
+        n 4flrbo "{i}Some{/i} of us don't have the time to sit around on our butt for hours..."
         n 1fsqaj "...Or the money to just give it away to strangers."
-        n 1fsqpu "[player]."
+        n 2fsqpu "[player]."
         n 1fsqsrtsb "How much are we betting you aren't {i}nearly{/i} as toxic to {i}them{/i} as you are to me, huh?"
         return
 
     else:
-        n 1fsqantsb "No.{w=0.2} And I couldn't give less of a crap if you did,{w=0.1} either."
-        n 1fnmpultsf "...And hey,{w=0.1} newsflash,{w=0.1} idiot."
+        n 2fsqantsb "No.{w=0.2} And I couldn't give less of a crap if you did,{w=0.1} either."
+        n 2fnmpultsf "...And hey,{w=0.1} newsflash,{w=0.1} idiot."
         n 1fsqupltse "Throwing money at a stranger hiding behind a cutesy picture doesn't make you any less of a {b}jerk{/b}."
         return
 
     n 1nchsm "It's definitely a cool idea!{w=0.2} It lets people share their passions and experiences with others behind a new persona..."
-    n 1fllpo "Without having to worry about baggage following them into their personal lives,{w=0.1} or people being creeps,{w=0.1} or stuff like that."
+    n 3fllpo "Without having to worry about baggage following them into their personal lives,{w=0.1} or people being creeps,{w=0.1} or stuff like that."
     n 1uwdem "A lot of them even make full-blown careers out of it: merchandise,{w=0.1} song releases and everything -{w=0.1} just like idols!{w=0.2} It's crazy!"
-    n 1tllem "That being said..."
+    n 4tllem "That being said..."
     n 1tnmbo "I never really got into that sort of thing myself."
-    n 1klrss "Like...{w=0.3} don't get me wrong!{w=0.2} I'm sure they're pretty fun to watch.{w=0.2} If you're into that kind of thing,{w=0.1} I mean."
+    n 2klrss "Like...{w=0.3} don't get me wrong!{w=0.2} I'm sure they're pretty fun to watch.{w=0.2} If you're into that kind of thing,{w=0.1} I mean."
     n 1nllsl "But I'd rather be playing or doing something {i}myself{/i} than watching someone else do it,{w=0.1} usually."
     n 1nllss "That might just be me,{w=0.1} though."
-    n 1nllbg "Ehehe."
-    n 1unmaj "What about you,{w=0.1} [player]?{w=0.2} Are you into that sort of stuff?"
+    n 4nllbg "Ehehe."
+    n 4unmaj "What about you,{w=0.1} [player]?{w=0.2} Are you into that sort of stuff?"
     n 1fcssm "Wait,{w=0.1} wait!{w=0.2} Don't bother answering that."
-    n 1tsqsm "You {i}did{/i} ask me about them,{w=0.1} after all -{w=0.1} I think that speaks for itself,{w=0.1} wouldn't you agree?"
-    n 1uchbselg "Ahaha!"
+    n 3tsqsm "You {i}did{/i} ask me about them,{w=0.1} after all -{w=0.1} I think that speaks for itself,{w=0.1} wouldn't you agree?"
+    n 3uchbselg "Ahaha!"
     return
 
 # Natsuki discusses her skateboarding past, and why she used to use one
