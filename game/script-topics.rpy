@@ -5733,6 +5733,7 @@ init 5 python:
     )
 
 label talk_windup_subscriptions:
+    # Raion stop
     n 1fllan "Grrr..."
     n 1fcsan "Man,{w=0.1} that's {i}such{/i} a pain!{w=0.5}{nw}"
     extend 1fbkwr " I thought I cancelled thaaat!"
@@ -5809,6 +5810,7 @@ init 5 python:
     )
 
 label talk_mod_contributions:
+    # Raion pls
     n 1unmaj "You know,{w=0.1} [player].{w=0.5}{nw}"
     extend 1tllss " I gotta say..."
     n 1klrbg "I don't think I'd {i}ever{/i} be able to handle doing everything that lets you visit me.{w=0.5}{nw}"
@@ -5875,6 +5877,7 @@ init 5 python:
     )
 
 label talk_realizations_player_ddlc_actions:
+    # Raion why
     n 1nllbo "So,{w=0.5}{nw}"
     extend 1nnmbo " [player]."
     n 1ulraj "I've...{w=0.3} been having some thoughts.{w=0.5}{nw}"
