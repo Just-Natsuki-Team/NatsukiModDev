@@ -704,35 +704,65 @@ label compliment_thoughtful:
 
     if jn_compliments.last_compliment_type == jn_compliments.JNComplimentTypes.thoughtful:
         if Natsuki.isEnamored(higher=True):
-            n 1fcsanl "Nnnnn-!{w=0.2} what did I tell you,{w=0.2} [player]?"
-            n 1kllpol "I'm just...{w=0.3} giving as good as I get,{w=0.2} alright?"
-            n 1knmpol "Jeez...{w=0.3} are you trying to put me on the spot or what?"
-            $ chosen_tease = jn_utils.getRandomTease().capitalize()
-            n 1klrpo "[chosen_tease]..."
-            n 1klrpu "But...{w=0.3} I'm just really glad you appreciate it,{w=0.2} [player]."
-
-            if Natsuki.isLove(higher=True):
-                n 1knmsml "You're totally worth the effort."
+            n 1unmaj "...Wow.{w=0.75}{nw}"
+            extend 1ulrbo " You...{w=0.75}{nw}"
+            extend 4tnmssl " really are still hung up over that, huh?"
+            n 1ncsajl "But seriously,{w=0.2} [player] -{w=0.5}{nw}"
+            extend 3fchbglsbl " don't worry about it!{w=0.75}{nw}"
+            extend 3fcssmlesisbl " It's totally fine."
+            n 1fllbol "Besides,{w=0.75}{nw}"
+            $ friend_type = "girlfriend" if Natsuki.isLove(higher=True) else "friend"
+            extend 2fcseml " what kind of [friend_type] would I be if I {i}wasn't{/i} at least trying to be thoughtful?"
+            n 2fsrbglsbr "P-{w=0.2}plus it looks like you're trying just as much anyway!"
+            n 4tsrbolsbr "..."
+            n 1tsrpu "Well,{w=0.5}{nw}" 
+            extend 1fsrsssbl " if it puts your mind at ease...{w=1}{nw}"
+            $ chosen_descriptor = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else jn_utils.getRandomTease()
+            extend 3fcssml " no worries,{w=0.2} [chosen_descriptor]!"
+            n 3fchgnledz "You don't have to ask me to keep it up!"
 
         else:
-            n 1fcsanl "Uuuuu...{w=0.3} jeez,{w=0.2} [player]..."
-            n 1fbkeml "I already said it was nothing!{w=0.2} Are you trying to put me on the spot?"
-            n 1fllpol "It's fine,{w=0.2} so...{w=0.3} don't worry about it,{w=0.2} alright?"
-            $ chosen_tease = jn_utils.getRandomTease().capitalize()
-            n 1flrpol "[chosen_tease]..."
+            n 1unmpul "H-{w=0.2}huh?{w=0.75}{nw}"
+            extend 1fllbgl " Oh,{w=0.2} right.{w=0.5}{nw}"
+            extend 4fsldvl " Ahaha."
+            n 2unmaj "Well,{w=0.5}{nw}"
+            extend 2ulraj " just like I was saying before -{w=0.5}{nw}"
+            extend 2fcsaj " it's really {i}not{/i} much to ask at all."
+            n 3fchgn "...So don't worry about it,{w=0.2} you goof!"
+            n 3fwlsm "It's no sweat off my back!"
 
     else:
         if Natsuki.isEnamored(higher=True):
-            n 1klrpol "Honestly,{w=0.2} [player]?{w=0.2} Don't worry about it,{w=0.2} 'kay?"
-            n 1knmpol "You've done...{w=0.3} a lot for me already..."
-            n 1klrnvl "So...{w=0.3} I'm just returning the favour,{w=0.2} that's all."
-            n 1klrssl "Ahaha..."
+            n 2nslss "Man...{w=0.75}{nw}"
+            extend 2fchgnl " you make it sound like I had to put effort in or something!"
+            n 1fcssmlsbl "Ahaha."
+            n 4ullss "Nah,{w=0.75}{nw}" 
+            extend 3fcsss " it's nothing."
+            n 1unmbo "Being a little thoughtful is what {i}most{/i} people deserve,{w=0.2} at least.{w=1}{nw}"
+            extend 2flrca " I kinda just consider that being a decent person."
+            n 2ulraj "That being said though,{w=0.2} [player]." 
+            n 1fcscal "I don't mind putting in a bit more for you..."
+            n 4fsqssl "...But only a {i}bit{/i}.{w=0.75}{nw}"
+            extend 4fchsml " Ehehe."
+
+            if Natsuki.isLove(higher=True):
+                n 1fchgnl "Love you too,{w=0.2} [player]~!"
+
+            else:
+                n 1fchbgl "Any time,{w=0.2} [player]!"
 
         else:
-            n 1fcsssl "Ah,{w=0.2} jeez,{w=0.2} [player]..."
-            n 1fllssl "It's nothing,{w=0.2} honestly!"
-            n 1knmpol "I-{w=0.2}I'm just trying to be friendly,{w=0.2} you know?"
-            n 1fcsbgl "Yeah!{w=0.2} Totally no special treatment going on here.{w=0.2} Nope!"
+            n 2tnmpuleqm "Eh?{w=0.75}{nw}"
+            extend 2tnmajl " Thoughtful?"
+            n 1fllbglesssbl "W-{w=0.2}well...{w=0.75}{nw}"
+            extend 4fchbglsbl " yeah!{w=0.75}{nw}"
+            extend 4fsrdvlsbl " At least I {i}like{/i} to think so, anyway."
+            n 3unmbo "It's not like it's much to ask though.{w=1}{nw}"
+            extend 3nllsssbr " Being thoughtful,{w=0.2} I mean."
+            n 1ulrbosbr "Honestly,{w=0.5}{nw}"
+            extend 2tlrcasbr " it's really the {i}least{/i} anyone can expect."
+            n 2uchgn "But hey,{w=0.2} I'll take it!"
+            n 2fchsm "You're welcome,{w=0.2} [player]!"
 
     $ jn_compliments.last_compliment_type = jn_compliments.JNComplimentTypes.thoughtful
     return
