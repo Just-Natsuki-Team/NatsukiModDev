@@ -67,6 +67,7 @@ init -50 python:
         drink = 37
         focus = 38
         flat_smile = 39
+        cat_smug = 40
 
         def __str__(self):
             return self.name
@@ -149,6 +150,7 @@ init -50 python:
         sweat_drop = 17
         sweat_spritz = 18
         sweat_small = 19
+        smug = 20
 
         def __str__(self):
             return self.name
@@ -361,6 +363,7 @@ init 1 python:
         "bl": JNMouth.blep,
         "bo": JNMouth.bored,
         "ca": JNMouth.caret,
+        "cs": JNMouth.cat_smug,
         "ct": JNMouth.catty,
         "dr": JNMouth.drink,
         "dv": JNMouth.devious,
@@ -426,6 +429,7 @@ init 1 python:
         "esi": JNEmote.sigh,
         "esh": JNEmote.shock,
         "esl": JNEmote.sleepy,
+        "esm": JNEmote.smug,
         "eso": JNEmote.somber,
         "esp": JNEmote.speech,
         "esu": JNEmote.surprise,
