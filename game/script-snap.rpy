@@ -699,7 +699,7 @@ label snap_forfeit:
             jump ch30_loop
 
         "In your dreams!":
-            n 3tsqdv "Pffffft!{w=0.2} Oh really?"
+            n 3tsqcs "Pffffft!{w=0.2} Oh really?"
             n 1fchbs "Game on then,{w=0.1} [player]!"
             $ jn_snap._controls_enabled = True
             $ jn_snap._natsuki_skill_level += 1

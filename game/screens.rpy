@@ -728,6 +728,7 @@ style choice_button_text is default:
 style quickmenu_text:
     color "#e2d1d1"
     hover_color "#FF8ED0"
+    selected_color "#b59"
     size 14
 
 screen quick_menu():

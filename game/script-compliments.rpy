@@ -293,7 +293,7 @@ label compliment_confident:
     
     else:
         n 4fsqct "Oho?{w=1}{nw}"
-        extend 3fsqbg " You do,{w=0.2} do you?"
+        extend 3fsqcs " You do,{w=0.2} do you?"
         n 3fchgn "Now that's {i}just{/i} what I like to hear!"
         n 4fcsbg "After all,{w=0.5}{nw}"
         extend 2fcssmeme " don't I just {i}radiate{/i} confidence?"
@@ -374,7 +374,7 @@ label compliment_cute:
                 n 1fsqssl "...Heh."
                 n 2fcssslsbl "S-{w=0.2}sounds like some pretty bad projection,{w=0.5}{nw}" 
                 extend 4fcsbglsbl " i-{w=0.2}if you ask me."
-                n 3fsqsml "..."
+                n 3fsqcsl "..."
                 n 3fsqbgl "...Am I right,{w=0.5} {i}[player]{/i}?"
                 n 3fsqsmlsbr "Ehehe."
                 $ chosen_tease = jn_utils.getRandomTease()
@@ -453,7 +453,7 @@ label compliment_hilarious:
 
     if jn_compliments.last_compliment_type == jn_compliments.JNComplimentTypes.hilarious:
         n 4usqss "Oh...?"
-        n 3tsqsm "What is this?{w=0.75}{nw}"
+        n 3tsqcs "What is this?{w=0.75}{nw}"
         extend 3fcsbg " An encore or something?"
         n 4uchgnl "Well,{w=0.3} I'm taking it!"
         n 2fsqfs "Don't you worry,{w=0.2} [player]..."
@@ -472,7 +472,7 @@ label compliment_hilarious:
 
     else:
         if Natsuki.isEnamored(higher=True):
-            n 4fcsct "Oho?{w=0.75}{nw}"
+            n 4fcscs "Oho?{w=0.75}{nw}"
             extend 3fcsbg " What's that,{w=0.2} [player]?"
             n 3fchgnlelg "So you {w=0.2}{i}do{/i}{w=0.2} recognize talent when you see it!{w=0.75}{nw}"
             extend 4fcssml " Ehehe..." 
