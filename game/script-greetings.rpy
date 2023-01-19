@@ -838,7 +838,7 @@ label greeting_love_plus_looking_for_me:
     n 2nnmpul "...Hello?{w=2.5}{nw}"
     extend 2tsqdvf " Was it {i}me{/i} you're looking for?"
     n 2fchdvfess "..."
-    n 2fchnvfesi "Pfffft-!"
+    n 2fchcsfesm "Pfffft-!"
     n 1kllbgl "Man,{w=0.5}{nw}" 
     extend 4fchgnlelg " I {i}cannot{/i} take that seriously!"
     n 4fnmssl "But let's be real here,{w=0.2} [player]..."

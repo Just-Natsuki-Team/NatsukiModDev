@@ -808,9 +808,9 @@ image natsuki idle enamored:
             pause 1.5
             "natsuki 3fcspul"
             pause 0.1
-            "natsuki 4flldvfsbl"
+            "natsuki 4fllcsfsbl"
             pause 4
-            "natsuki 4fcsdvf"
+            "natsuki 4fcscsf"
             pause 0.1
 
         choice:
@@ -826,6 +826,16 @@ image natsuki idle enamored:
 # Idle images for AFFECTIONATE+
 image natsuki idle affectionate:
     block:
+        choice:
+            "natsuki 3ullcsl"
+            pause 5
+            "natsuki 3ucscsl"
+            pause 0.1
+            "natsuki 3ullcsl"
+            pause 5
+            "natsuki 3ucscsl"
+            pause 0.1
+
         choice:
             "natsuki 3ullsml"
             pause 5

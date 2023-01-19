@@ -3218,7 +3218,7 @@ label talk_i_love_you:
             $ Natsuki.calculatedAffinityGain(bypass=True)
 
         elif Natsuki.isHappy(higher=True):
-            n 4fsqdvl "Pffffft!"
+            n 4fchcslesm "Pffffft!"
             n 1uchbslelg "Ahaha!"
             n 1tllbgl "You can't be serious,{w=0.1} [player]!{w=0.2} You're just messing with me!{w=0.2} Right?"
             n 3knmbgl "Right,{w=0.1} [player]?"
@@ -4438,7 +4438,7 @@ label talk_are_you_into_cosplay:
             extend 4fnmgs " Is that it?"
             n 1fsqaj "Well?"
             n 1fsqdv "..."
-            n 4fchdvesi "Pfffft!"
+            n 4fchcsesm "Pfffft!"
             n 3fchsm "Ehehe.{w=0.5}{nw}"
             extend 1ullss " Nah,{w=0.2} it's fine."
             n 1ulraj "I've thought about it a bunch,{w=0.2} honestly -{w=0.3}{nw}"
