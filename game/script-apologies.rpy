@@ -88,10 +88,10 @@ label apology_bad_nickname:
             extend 4nllsl " willing...{w=1}{nw}"
             extend 4nnmca " to let you call me something else."
             n 1flrbo "Something {i}other{/i} than the name I've been called all my life."
-            n 3tnmpu "You {i}do{/i} know what that is,{w=0.2} right?{w=0.75}{nw}"
+            n 3tnmpu "You {i}do{/i} know what that's all about,{w=0.2} right?{w=0.75}{nw}"
             extend 3tsqsl " What it means?"
             n 1ncsaj "It's a show of trust."
-            n 2fsqem "...So what do you seriously think it shows when you use that trust to {i}insult{/i} me?"
+            n 2fsqem "...So what do you {i}seriously{/i} think it shows when you use that trust to {i}insult{/i} me?"
             n 2fcspu "..."
             n 2nllsl "I'm...{w=0.75}{nw}" 
             extend 1kslbo " glad you've chosen to apologize."
@@ -135,10 +135,10 @@ label apology_bad_nickname:
         else:
             n 2fcsan "...I honestly don't know what I find more {i}gross{/i} about you,{w=0.2} [player]."
             n 2fcsaj "The fact you even did it in the first place..."
-            n 4fsqfu "...Or that you think a simple apology makes all that a-{w=0.2}okay."
-            n 1fcssr "..."
-            n 1fcsantsa "Don't think this changes anything,{w=0.2} {i}[player]{/i}."
-            n 4fsqsrtsb "Because it {i}doesn't.{/i}"
+            n 4fsqful "...Or that you think a simple apology makes all that a-{w=0.2}okay."
+            n 1fcssrl "..."
+            n 1fcsanltsa "Don't think this changes anything,{w=0.2} {i}[player]{/i}."
+            n 4fsqsrltsb "Because it {i}doesn't.{/i}"
 
     else:
         # The player has been barred from nicknaming Natsuki, and even an apology won't change that
@@ -175,10 +175,10 @@ label apology_bad_nickname:
             n 4fslem "Really,{w=0.75}{nw}"
             extend 4fsqfr " [player]?"
             n 2fcsfr "..."
-            n 1fcsaj "I {i}said{/i} actions have consequences."
+            n 1fcsaj "I {i}said{/i} actions have consequences.{w=1}{nw}"
             extend 2fsqan " So I guess now you're just going to have to learn the hard way."
-            n 2fcssl "Yeah,{w=0.2} I'll take your apology.{w=0.75}{nw}" 
-            extend 2fsqsr " But that's {i}all{/i} you're getting."
+            n 2fcssl "Yeah,{w=0.2} I'll take your apology." 
+            n 2fsqsr "But that's {i}all{/i} you're getting."
 
             $ Natsuki.calculatedAffinityGain()
 
@@ -189,7 +189,7 @@ label apology_bad_nickname:
             n 2fcsunltsa "..."
             n 2fcsemltsa "Whatever.{w=1}{nw}" 
             extend 2fcsfultsa " I literally don't care."
-            n 4fsqupltsb "You can stick your half-{w=0.2}assed apology,{w=0.2} [player]."
+            n 4fsqupltsb "You can stick your {w=0.2}half-{w=0.2}assed{w=0.2} apology,{w=0.2} [player]."
             n 1fcsfultsa "This changes {i}nothing{/i}."
 
     $ Natsuki.removeApology(jn_apologies.ApologyTypes.bad_nickname)
