@@ -274,67 +274,94 @@ label apology_generic:
     if len(persistent._jn_player_pending_apologies) == 0:
         # The player has nothing to be sorry to Natsuki for; prompt them to do better
         if Natsuki.isEnamored(higher=True):
-            n 1tnmaj "Huh?{w=0.2} You're sorry?"
-            n 1tllaj "I...{w=0.3} don't get it,{w=0.2} [player].{w=0.2} You haven't done anything to upset me..."
-            n 1tnmsl "Did you upset someone else or something?"
+            n 2tnmpu "Huh?{w=0.75}{nw}" 
+            extend 2tnmbo " You're sorry?"
+            n 1nlrss "I...{w=1}{nw}" 
+            extend 4tnmsl " don't get it,{w=0.2} [player].{w=0.75}{nw}" 
+            extend 2tslca " You haven't done anything to upset {i}me{/i},{w=0.2} at least..."
+            n 2tnmsl "Did you upset someone else or something?"
             n 1ncssl "..."
-            n 1kchbg "Well,{w=0.2} there's no point sitting around here feeling sorry for yourself."
-            n 1unmsm "You're gonna make things right,{w=0.2} [player]. 'Kay?"
-            n 1kchbg "And no -{w=0.1} this isn't up for discussion."
-            n 1fchsm "Whatever you did,{w=0.2} you'll fix things up and that's all there is to it."
-            $ chosen_tease = jn_utils.getRandomTease()
-            n 1fchbg "You have my vote of confidence,{w=0.2} [chosen_tease] -{w=0.1} now do your best!"
-            n 1uchsm "Ehehe."
+            n 4fchbg "Well,{w=0.5}{nw}" 
+            extend 3fcsbg " there's no point sitting around here feeling sorry for yourself!"
+            n 3fcssm "You're gonna make things right,{w=0.2} [player].{w=0.75}{nw}" 
+            extend 3fcsbg " 'Kay?"
+            n 4nllfl "And no -{w=0.75}{nw}" 
+            extend 2fcscaesm " this isn't up for discussion."
+            n 1fcsss "Whatever you did,{w=0.2} you'll fix things up and that's just all there is to it."
+            $ chosen_descriptor = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else jn_utils.getRandomTease()
+            n 3fchbg "You have my vote of confidence,{w=0.2} [chosen_descriptor] -{w=0.3}{nw}"
+            extend 3fwlbg " now do your best!{w=0.75}{nw}"
+            extend 3fchgn " Ehehe."
 
         elif Natsuki.isNormal(higher=True):
-            n 1tnmaj "Eh?{w=0.2} You're sorry?"
-            n 1nllaj "What for,{w=0.2} [player]?{w=0.2} I don't remember you getting on my nerves lately..."
-            n 1fnmcal "Did you do something dumb that I don't know about?"
+            n 2tnmpu "Eh?{w=0.5}{nw}" 
+            extend 2tnmbo " You're sorry?"
+            n 1tllaj "What for,{w=0.2} [player]?{w=0.75}{nw}" 
+            extend 4tslaj " I don't remember you getting on my nerves lately..."
+            n 2fsqcal "...Did you go and do something dumb that I don't know about?"
             n 1ncsca "..."
-            n 1knmpu "Well,{w=0.2} whatever it was -{w=0.1} it's not like it's unfixable,{w=0.2} you know?"
-            n 1fcsbg "Now get out there and put things right,{w=0.2} [player]!{w=0.2} I believe in you!"
+            n 4unmaj "Well,{w=0.75}{nw}" 
+            extend 2ulraj " whatever it was -{w=0.5}{nw}" 
+            extend 2tlrss " it's not like it's unfixable,{w=0.75}{nw}" 
+            extend 4fnmsm " you know?"
+            n 3fcsbg "Now get out there and put things right,{w=0.2} [player]!"
+            n 3fchsmeme "You got this!"
 
         elif Natsuki.isDistressed(higher=True):
-            n 1fsqbo "...You're sorry,{w=0.2} are you?"
-            n 1fsqan "Did you hurt someone besides me,{w=0.2} this time?"
-            n 1fcssl "..."
-            n 1fsqsl "Well,{w=0.2} whatever.{w=0.2} I don't really care right now."
-            n 1fsqaj "But you better go make things right,{w=0.2} [player]."
-            n 1fllsl "You can do that,{w=0.2} at least."
+            n 1fcsfl "Heh.{w=0.75}{nw}"
+            extend 1fsqbo " You're sorry,{w=0.2} are you?"
+            n 4fsran "Did you hurt someone {i}besides{/i} me,{w=0.5}{nw}" 
+            extend 4fsqan " this time?"
+            n 2fcssl "..."
+            n 2fsqsl "...Whatever.{w=0.5}{nw}" 
+            extend 2fslfr " I really don't care right now."
+            n 2fsqem "But you {i}better{/i} go make things right,{w=0.2} [player]."
+            n 2fllsl "You can do that,{w=0.5}{nw}" 
+            extend 2fslsl " at least."
 
         else:
-            n 1fcsan "...Huh.{w=0.2} Wow."
-            n 1fsqan "So you {i}do{/i} actually feel remorse,{w=0.2} then."
-            n 1fcssl "..."
-            n 1fsqfutsb "Whatever.{w=0.2} It isn't {i}me{/i} you should be apologizing to,{w=0.2} anyway."
+            n 1fcsfl "...Huh.{w=0.75}{nw}" 
+            extend 1fcsan " Wow."
+            n 4fsqgtl "So you {i}do{/i} actually feel remorse,{w=0.2} then."
+            n 2fcsunl "..."
+            n 2fsqfultsb "Whatever.{w=0.75}{nw}" 
+            extend 2fsrgtltsb " It isn't {i}me{/i} you should be apologizing to,{w=0.2} anyway."
 
     else:
         # The player is avoiding a direct apology to Natsuki; call them out on it
         if Natsuki.isEnamored(higher=True):
-            n 1kplsr "...[player].{w=0.2} Come on."
-            n 1knmsr "You know what you did wrong."
-            n 1knmaj "Just apologize properly,{w=0.2} alright?"
-            n 1kllbo "I won't get mad."
-            n 1kcsbo "I just wanna move on."
+            n 1kllsl "...[player].{w=0.75}{nw}" 
+            extend 4knmsl " Come on."
+            n 2ksqsr "You {i}know{/i} what you did wrong.{w=0.75}{nw}"
+            extend 2ksqbo " So just apologize properly already."
+            n 4kllbo "I won't get mad."
+            n 1kslbol "I just wanna move on."
+
             $ Natsuki.percentageAffinityLoss(2.5)
 
         elif Natsuki.isNormal(higher=True):
-            n 1fnmsf "Come on,{w=0.2} [player]."
-            n 1fnmaj "You know what you did."
-            n 1nllsl "Just apologize properly so we can both move on."
+            n 1fnmsf "Come on,{w=0.2} [player].{w=1}{nw}"
+            extend 2fnmaj " You know what you did."
+            n 2nslsl "Just apologize properly so we can both move on."
+
             $ Natsuki.percentageAffinityLoss(2)
 
         elif Natsuki.isDistressed(higher=True):
-            n 1fupem "Ugh..."
-            n 1fnman "Really,{w=0.2} [player].{w=0.2} Haven't you screwed with me enough?"
-            n 1fsqfu "If you're gonna apologize,{w=0.2} have the guts to do it properly."
-            n 1fsqsf "You owe me that much,{w=0.2} at least."
+            n 2fupem "Ugh..."
+            n 2fnman "Really,{w=0.2} [player].{w=0.75}{nw}" 
+            extend 4fsqan " Haven't you screwed with me enough?"
+            n 1fcsgs "If you're gonna apologize,{w=0.75}{nw}" 
+            extend 2fcsan " have the guts to do it {i}properly{/i}."
+            n 2fsqsf "You owe me that much,{w=0.2} at least."
+
             $ Natsuki.percentageAffinityLoss(1.5)
 
         else:
-            n 1fsqfu "...Do you even know how you sound?"
-            n 1fnmfutsf "Do you even {i}listen{/i} to yourself?"
-            n 1fcsfutsa "Apologize properly or don't bother."
+            n 4fsqfu "...Do you even know how you sound?"
+            n 4fnmgtltsc "Do you even {i}listen{/i} to yourself?"
+            n 2fcsfultsa "Apologize properly or{nw}" 
+            extend 2fsqfultsb " {i}get out of my face{/i}."
+
             $ Natsuki.percentageAffinityLoss(1)
 
     return
