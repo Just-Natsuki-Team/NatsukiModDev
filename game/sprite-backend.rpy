@@ -68,6 +68,8 @@ init -50 python:
         focus = 38
         flat_smile = 39
         cat_smug = 40
+        flustered = 41
+        grit_teeth = 42
 
         def __str__(self):
             return self.name
@@ -368,12 +370,14 @@ init 1 python:
         "dr": JNMouth.drink,
         "dv": JNMouth.devious,
         "em": JNMouth.embarrassed,
+        "fl": JNMouth.flustered,
         "fo": JNMouth.focus,
         "fr": JNMouth.frown,
         "fs": JNMouth.flat_smile,
         "fu": JNMouth.furious,
-        "gs": JNMouth.gasp,
         "gn": JNMouth.grin,
+        "gs": JNMouth.gasp,
+        "gt": JNMouth.grit_teeth,
         "lg": JNMouth.laugh,
         "nv": JNMouth.nervous,
         "po": JNMouth.pout,

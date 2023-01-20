@@ -209,29 +209,50 @@ init 5 python:
 
 label apology_cheated_game:
     if Natsuki.isEnamored(higher=True):
-        n 1kchbg "Ehehe.{w=0.2} It's fine,{w=0.2} [player]."
-        n 1nllsm "We all get a little too competitive sometimes,{w=0.2} right?"
-        n 1nsqsm "Just remember though."
-        n 1fsqbg "Two can play at that game!"
+        n 1tnmpueqm "Eh?{w=0.75}{nw}"
+        extend 4nlrss " Oh,{w=0.2} yeah."
+        n 1nlrbo "It's fine."
+        n 2nsrpu "...It just gets annoying sometimes.{w=0.75}{nw}"
+        extend 4tnmbo " You know?"
+        n 4fllsl "When you're {i}trying{/i} to have fun and someone else keeps going way overboard just to win.{w=0.75}{nw}"
+        extend 2nllca " It just spoils it for me.{w=0.75}{nw}"
+        extend 2kslcal " I can't play like that."
+        n 4nllbo "But...{w=0.75}{nw}"
+        extend 1knmss " I appreciate the apology.{w=0.75}{nw}"
+        extend 4fsqsm " Just remember though,{w=0.2} [player]..."
+        n 3fcsbgl "Two can play at that game!"
+
         $ Natsuki.calculatedAffinityGain()
         $ persistent.jn_snap_player_is_cheater = False
 
     elif Natsuki.isNormal(higher=True):
-        n 1fsqbg "Huh?{w=0.2} Oh,{w=0.2} that."
-        n 1nnmaj "Yeah,{w=0.2} yeah.{w=0.2} It's fine."
-        n 1nllsl "Just play fair next time,{w=0.2} 'kay?"
+        n 2tsqpueqm "Huh?{w=0.75}{nw}" 
+        extend 2nlrbo " Oh,{w=0.2} that."
+        n 1ncsaj "Yeah,{w=0.2} yeah.{w=0.75}{nw}" 
+        extend 1nslca " It's fine."
+        n 2tnmca "Just play fair next time,{w=0.2} alright?"
+        n 2nslsssbl "It's really not hard...{w=1}{nw}"
+        extend 2tnmbosbl " is it?"
+
         $ Natsuki.calculatedAffinityGain()
         $ persistent.jn_snap_player_is_cheater = False
 
     elif Natsuki.isDistressed(higher=True):
-        n 1fcssl "Whatever,{w=0.2} [player]."
-        n 1fsqsl "But thanks for the apology,{w=0.2} I guess."
+        n 2fcssresi "..."
+        n 2fslsr "Fine.{w=0.75}{nw}"
+        extend 2fcsem " Yeah.{w=0.75}{nw}"
+        extend 1fsqfr " Whatever,{w=0.2} [player]."
+        n 2nsrsl "But thanks for the apology,{w=0.2} I guess."
+
         $ Natsuki.calculatedAffinityGain()
         $ persistent.jn_snap_player_is_cheater = False
 
     else:
-        n 1fcsan "Whatever.{w=0.2} I don't care."
-        n 1fsqantsa "As if I could expect much better from {i}you{/i},{w=0.2} anyway."
+        n 4fcsanl "Oh,{w=0.5}{nw}" 
+        extend 2fcsupl " whatever.{w=0.5}{nw}" 
+        extend 1fsrfultsb " I really couldn't give a {i}crap{/i} anymore."
+        n 4fsqgtltsb "As if I could expect much better from {i}you{/i},{w=0.2} anyway."
+
         $ persistent.jn_snap_player_is_cheater = False
 
     $ Natsuki.removeApology(jn_apologies.ApologyTypes.cheated_game)
