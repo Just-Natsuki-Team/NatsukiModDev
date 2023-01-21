@@ -1419,16 +1419,23 @@ label greeting_sudden_leave:
     if Natsuki.isEnamored(higher=True):
         n 1kwmsrl "..."
         n 4kwmsrl "[player]."
-        n 4knmsll "Come on.{w=0.2} You're better than that."
-        n 4knmajl "I don't know if something happened or what,{w=0.2} but please..."
-        n 1knmsll "Try to remember to say goodbye properly next time,{w=0.2} 'kay?"
-        n 1knmssl "It'd mean a lot to me."
+        n 4knmsll "Come on.{w=0.75}{nw}" 
+        extend 4ksqbol " You know you're better than that."
+        n 4ncseml "I-{w=0.2}I don't know if something happened or what,{w=0.75}{nw}" 
+        extend 4knmajl " but please..."
+        n 1knmsll "...Try to remember to say goodbye properly next time.{w=0.5}{nw}"
+        extend 2knmbol " Okay?"
+        n 2ksrbol "It'd mean a lot to me."
 
     elif Natsuki.isNormal(higher=True):
-        n 1kwmsr "..."
-        n 2fplsf "[player]!{w=0.2} Do you know how scary it is when you just vanish like that?"
-        n 2knmsf "Please...{w=0.3} just remember to say goodbye properly when you gotta leave."
-        n 4knmss "It's not much to ask...{w=0.3} is it?"
+        n 1fsqsr "..."
+        $ player_initial = jn_utils.getPlayerInitial()
+        n 4fnmem "[player_initial]-[player]!{w=0.75}{nw}" 
+        extend 4knmem " Do you even know how scary it is when you just vanish like that?"
+        n 2kllsf "Seriously...{w=0.75}{nw}" 
+        extend 2knmaj " just remember to say goodbye properly when you gotta leave."
+        n 4fnmslsbr "I'm really {i}not{/i} asking for much,{w=0.5}{nw}"
+        extend 4kslslsbr " you know..."
 
     elif Natsuki.isDistressed(higher=True):
         n 2fsqsf "..."
@@ -1440,7 +1447,8 @@ label greeting_sudden_leave:
         n 2fcsuntsa "..."
         n 2fsquntsb "Heh.{w=0.2} Yeah."
         $ chosen_insult = jn_utils.getRandomInsult().capitalize()
-        n 2fcsuptsa "Welcome back to you,{w=0.2} too.{w=0.2} [chosen_insult]."
+        n 2fsruptsb "Welcome back to you,{w=0.2} too.{w=0.75}{nw}" 
+        extend 2fsrgttsb " [chosen_insult]."
 
     $ Natsuki.addApology(jn_apologies.ApologyTypes.sudden_leave)
     return

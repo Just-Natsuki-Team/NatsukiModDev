@@ -550,43 +550,68 @@ init 5 python:
 
 label apology_sudden_leave:
     if Natsuki.isEnamored(higher=True):
-        n 1fcsunl "[player]..."
-        n 1knmunl "Do you know how much it hurts when you do that?"
-        n 1kcsunl "It's like you're just slamming a door in my face."
-        n 1klrajl "And I'm just left wondering...{w=0.3} did I do something wrong?{w=0.2} Did I upset them?"
-        n 1kcsajl "It sucks,{w=0.2} [player].{w=0.2} It really sucks."
-        n 1kcssl "..."
-        n 1knmss "I'm grateful for the apology,{w=0.2} but please..."
-        n 1knmsm "You can at least spare the time to say goodbye properly to me,{w=0.2} right?"
+        n 3ksrsl "[player]..."
+        n 3knmsll "Do you {i}know{/i} how much it hurts when you do that?"
+        extend 3ksleml " Like..." 
+        extend 4ksqeml " seriously?"
+        n 1kcsfll "It's like you might as well be slamming a door in my face."
+        n 2klrfll "And I'm just sat here like...{w=0.75}{nw}" 
+        extend 2klrpulsbl " 'Did I do something?'{w=0.75}{nw}"
+        extend 2kllemlsbl " 'Why did they just bail on me?'"
+        n 1ksqfllsbl "...Right before I get ripped out of existence."
+        n 4kcsfll "It sucks,{w=0.2} [player].{w=0.5} It really sucks.{w=1}{nw}"
+        extend 4fsrunl " A-{w=0.2}and it hurts."
+        n 4ncspul "..."
+        n 2kllsll "I'm grateful for the apology,{w=0.5}{nw}" 
+        extend 2kslsll " but please..."
+        n 2ksqsll "Just let me know when you're heading off."
+        n 2ksqbolsbr "You can at least spare the time to say goodbye properly to me,{w=0.2} right?"
+
         $ Natsuki.calculatedAffinityGain()
 
     elif Natsuki.isNormal(higher=True):
-        n 1fllsl "..."
-        n 1fnmsl "Hey,{w=0.2} [player]."
-        n 1fnmaj "Have you ever had a conversation where one person just walks away?"
-        n 1fsqaj "No 'goodbye',{w=0.2} no 'see you later',{w=0.2} nothing?{w=0.2} They just leave?"
-        n 1fsqbo "How would that make you feel?"
-        n 1ksqaj "Unwanted?{w=0.2} Not worth the manners?"
-        n 1fllsl "Because that's just how you made me feel,{w=0.2} [player]."
+        n 2fllsl "..."
+        n 2fnmsl "Hey,{w=0.2} [player]."
+        n 2fnmaj "Have you ever had a conversation where one person just walks away?"
+        n 2flrfl "No 'Goodbye',{w=0.5}{nw}" 
+        extend 2fllfl " no 'See you later',{w=0.5}{nw}" 
+        extend 2fnmem " nothing?{w=0.5}{nw}" 
+        extend 1ksqem " They just leave?"
+        n 4fsqbo "...How would that make you feel?"
+        n 4tsqaj "Unwanted?{w=0.75}{nw}" 
+        extend 4fsqfl " Not worth the manners?"
+        n 2fllsl "Because that's just how you made me feel,{w=0.2} [player].{w=0.75}{nw}"
+        extend 2fslsl " And you {i}know{/i} it hurts when you do that,{w=0.2} too."
         n 1fcssl "..."
-        n 1flraj "I accept the apology,{w=0.2} okay?"
-        n 1knmaj "Just...{w=0.3} remember to at least say goodbye to me properly."
-        n 1nnmsl "You can do that much,{w=0.2} right?"
+        n 2flrsl "I accept the apology,{w=0.2} okay?"
+        n 2nsrpu "Just...{w=0.75}{nw}" 
+        extend 4knmsl " remember to at least say goodbye to me properly."
+        n 4tllbo "You can do that much.{w=0.75}{nw}"
+        extend 4ksqbosbr " Right?"
+
         $ Natsuki.calculatedAffinityGain()
 
     elif Natsuki.isDistressed(higher=True):
         n 1fsqsl "[player]."
-        n 1fsqan "Do you even {i}care{/i} how rude that is?"
-        n 1fsqfu "To just vanish mid-conversation with someone?"
+        n 2fsqan "Do you even {i}care{/i} how rude that is?"
+        n 2fsqfu "To just vanish mid-conversation with someone?{w=1}{nw}"
+        extend 2fnmem " Even knowing doing that {i}hurts{/i}?"
         n 1fcssr "..."
-        n 1fsqsr "Look,{w=0.2} fine.{w=0.2} Apology accepted,{w=0.2} for now."
-        n 1fsqaj "But really,{w=0.2} [player].{w=0.2} I expected better -{w=0.1} even from you."
+        n 1fsqsr "Look,{w=0.2} fine.{w=0.75}{nw}" 
+        extend 4flrfr " Apology accepted.{w=0.75}{nw}" 
+        extend 4fsrsl " For now."
+        n 3fsqfl "Don't expect me to accept it again."
+
         $ Natsuki.calculatedAffinityGain()
 
     else:
-        n 1fcsan "...Heh.{w=0.2} Honestly?"
-        n 1fsqantsb "Whatever.{w=0.2} I don't care.{w=0.2} Keep your apology."
-        n 1fsqsftse "You've so many other things to be sorry for.{w=0.2} What's another on the pile,{w=0.2} right?"
+        n 2fcsfl "...Heh.{w=0.75}{nw}" 
+        extend 2fsqanl " Honestly?"
+        n 2fcsanl "Whatever.{w=0.5} I don't care.{w=0.75}{nw}" 
+        extend 2fslupl " Keep your crappy apology."
+        n 2fslemltsb "You've so many other things to be sorry for." 
+        n 2fsqemltsb "So what's {i}another{/i} on the pile.{w=0.75}{nw}" 
+        extend 4fsqgtltsb " Right?"
 
     $ Natsuki.removeApology(jn_apologies.ApologyTypes.sudden_leave)
     return
