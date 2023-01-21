@@ -203,7 +203,7 @@ init -50 python:
             (0, 0), back
         ])
 
-        # Back hair, base, clothes
+        # Base, clothes
         lc_args.extend([
             (0, 0), "{0}/base/{1}/body.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose), # Body
             (0, 0), "{0}/clothes/[Natsuki._outfit.clothes.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose), # Outfit, body
