@@ -628,41 +628,122 @@ init 5 python:
         topic_group=TOPIC_TYPE_APOLOGY
     )
 
+label test:
+    n 3fcsssl "[player],{w=0.5} [player],{w=0.5} [player]..."
+    n 3tsqssl "What {i}am{/i} I gonna do with you?{w=0.75}{nw}"
+    extend 4nslsslsbr " Honestly..."
+    n 4kslbolsbr "..."
+    n 4kslpulsbr "But..."
+    n 1knmsll "I do really care about you,{w=0.2} you know."
+    n 2klrsll "It...{w=1}{nw}" 
+    extend 2ksrsll " hurts{w=0.5} when you don't take care of yourself."
+    n 2kcssllesi "..."
+    n 1ksrbol "Thanks,{w=0.2} [player].{w=0.75}{nw}" 
+    extend 2ksqssl " I accept your apology."
+    n 2knmbol "Just look after yourself better from now on,{w=0.2} alright?"
+    n 2kllbol "I'll get mad if you don't.{w=0.75}{nw}" 
+    extend 2fslpol " For real,{w=0.2} this time."
+    
+    $ chosen_tease = jn_utils.getRandomTease()
+    n 3fchbll " L-{w=0.2}love you too,{w=0.2} [chosen_tease]!"
+
+    n 1fupbol "Ugh...{w=0.3} [player]."
+    n 2fnmbo "Look.{w=0.5}{nw}" 
+    extend 2ksrsl " I accept your apology."
+    n 4knmaj "But you gotta take better care of yourself!"
+    n 3fcspoesm "I'm not always gonna be here to babysit you,{w=0.2} you know..."
+    n 2flremlsbl "A-{w=0.1}and no,{w=0.5}{nw}"
+    extend 2fsqpolsbl " you aren't an exception."
+    n 4fcsfll "I-{w=0.2}I just care about all my friends like this,{w=0.75}{nw}" 
+    extend 4fllfll " so...{w=1}{nw}" 
+    extend 1nllsll " yeah."
+    n 2knmsll "Just make more of an effort to look after yourself."
+    n 2fcsfllsbl "Or you'll have me to deal with.{w=0.75}{nw}"
+    extend 2fcsbosbl " And trust me." 
+    n 2fcscaesi "You really don't want that."
+
+    n 1fcssl "...Look.{w=0.75}{nw}" 
+    extend 2fsqsl " [player]."
+    n 2flrsl "Thanks for the apology.{w=0.75}{nw}" 
+    extend 2fsrem " I guess.{w=0.75}{nw}" 
+    extend 2fsrfl " If you even {i}meant{/i} it,{w=0.2} anyway."
+    n 1fcsem "But I'm really struggling to see why I should care."
+    n 4fsrem "If you can't even take care of {i}yourself{/i}..."
+    n 2fsqan "...Then what does that say about me?"
+    n 2fsqsl "..."
+    n 2fcsfl "Yeah.{w=1}{nw}"
+    extend 2fllsl " Just some food for thought,{w=0.75}{nw}"
+    extend 2fsqfr " [player]."
+
+    n 1fcsun "...Heh."
+    n 2fcsanltsa "At least you care that {i}you{/i} aren't being treated right."
+
+    jump ch30_loop
+
 label apology_unhealthy:
     if Natsuki.isEnamored(higher=True):
-        n 1kcssml "[player],{w=0.2} [player],{w=0.2} [player]..."
-        n 1knmajl "What am I gonna do with you?"
-        n 1kllsll "Honestly..."
-        n 1kwmsl "You know I just want what's best for you,{w=0.2} right?"
-        n 1klrsl "It...{w=0.3} hurts when you don't take care of yourself."
-        n 1kcssl "..."
-        n 1knmss "Thanks,{w=0.2} [player].{w=0.2} I accept your apology."
-        n 1knmbo "Just please...{w=0.3} take better care of yourself,{w=0.2} alright?"
-        n 1kllbol "I'll get mad if you don't.{w=0.2} For real,{w=0.2} this time."
+        n 3fcsssl "[player],{w=0.5} [player],{w=0.5} [player]..."
+        n 3tsqssl "What {i}am{/i} I gonna do with you?{w=0.75}{nw}"
+        extend 4nslsslsbr " Honestly..."
+        n 4kslbolsbr "..."
+        n 4kslpulsbr "But..."
+        n 1knmsll "I do really care about you,{w=0.2} you know."
+        n 2klrsll "It...{w=1}{nw}" 
+        extend 2ksrsll " hurts{w=0.5} when you don't take care of yourself."
+        n 2kcssllesi "..."
+        n 1ksrbol "Thanks,{w=0.2} [player].{w=0.75}{nw}" 
+        extend 2ksqssl " I accept your apology."
+        n 2knmbol "Just look after yourself better from now on,{w=0.2} alright?"
+        n 2kllbol "I'll get mad if you don't.{w=0.75}{nw}" 
+        extend 2fslpol " For real,{w=0.2} this time."
+        
+        if Natsuki.isLove(higher=True):
+            $ chosen_tease = jn_utils.getRandomTease()
+            n 3fchbll "L-{w=0.2}love you too,{w=0.2} [chosen_tease]!"
+
+        else:
+            n 2fsqsml "Ehehe."
+
         $ Natsuki.calculatedAffinityGain()
 
     elif Natsuki.isNormal(higher=True):
-        n 1fupbol "Ugh...{w=0.3} [player]."
-        n 1fnmbo "Look.{w=0.2} I accept your apology."
-        n 1knmaj "But you gotta take better care of yourself!"
-        n 1fllpo "I'm not always gonna be here to babysit you,{w=0.2} you know..."
-        n 1fnmem "A-{w=0.1}and it's not like I'm making an exception for you,{w=0.2} by the way!"
-        n 1nlrbo "I just care about all my friends like this,{w=0.2} so...{w=0.3} yeah."
-        n 1knmsl "Try and make more of an effort to look after yourself,{w=0.2} 'kay?"
+        n 1fcseml "Ugh...{w=0.75}" 
+        extend 1fcspol " [player]."
+        n 2fnmbo "Look.{w=0.5}{nw}" 
+        extend 2ksrsl " I accept your apology."
+        n 4knmaj "But you gotta take better care of yourself!"
+        n 3fcspoesm "I'm not always gonna be here to babysit you,{w=0.2} you know..."
+        n 2flremlsbl "A-{w=0.1}and no,{w=0.5}{nw}"
+        extend 2fsqpolsbl " you aren't an exception."
+        n 4fcsfll "I-{w=0.2}I just care about all my friends like this,{w=0.75}{nw}" 
+        extend 4fllfll " so...{w=1}{nw}" 
+        extend 1nllsll " yeah."
+        n 2knmsll "Just make more of an effort to look after yourself."
+        n 2fcsfllsbl "Or you'll have me to deal with.{w=0.75}{nw}"
+        extend 2fcsbosbl " And trust me." 
+        n 2fcscaesi "You really don't want that."
+
         $ Natsuki.calculatedAffinityGain()
 
     elif Natsuki.isDistressed(higher=True):
-        n 1fcssl "...Look.{w=0.2} [player]."
-        n 1flrsl "Firstly,{w=0.2} thanks for the apology.{w=0.2} If you even meant it,{w=0.2} anyway."
-        n 1fcsaj "But I'm really struggling to see why I should care."
-        n 1fcssl "..."
-        n 1fnmsl "Just...{w=0.3} take more care of yourself."
-        n 1fsqsl "...And while you're at it, perhaps try taking better care of me.{w=0.2} Thanks."
+        n 1fcssl "...Look.{w=0.75}{nw}" 
+        extend 2fsqsl " [player]."
+        n 2flrsl "Thanks for the apology.{w=0.75}{nw}" 
+        extend 2fsrem " I guess.{w=0.75}{nw}" 
+        extend 2fsrfl " If you even {i}meant{/i} it,{w=0.2} anyway."
+        n 1fcsem "But I'm really struggling to see why I should care."
+        n 4fsrem "If you can't even take care of {i}yourself{/i}..."
+        n 2fsqan "...Then what does that say about me?"
+        n 2fsqsl "..."
+        n 2fcsfl "Yeah.{w=1}{nw}"
+        extend 2fllsl " Just some food for thought,{w=0.75}{nw}"
+        extend 2fsqfr " [player]."
+
         $ Natsuki.calculatedAffinityGain()
 
     else:
-        n 1kcsun "...Heh."
-        n 1fcsantsa "At least you care that {i}you{/i} aren't being treated right."
+        n 1fcsun "...Heh."
+        n 2fcsanltsa "At least you care that {i}you{/i} aren't being treated right."
 
     $ Natsuki.removeApology(jn_apologies.ApologyTypes.unhealthy)
     return
