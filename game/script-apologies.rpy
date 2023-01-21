@@ -380,46 +380,82 @@ init 5 python:
 
 label apology_prolonged_leave:
     if Natsuki.isEnamored(higher=True):
-        n 1kcssl "...[player]."
-        n 1knmsl "We've been together a while now,{w=0.2} haven't we?"
-        n 1kllsll "I...{w=0.3} really...{w=0.3} like spending time with you.{w=0.2} Why do you think I'm always here when you drop in?"
-        n 1kllaj "So..."
-        n 1knmsl "Can you imagine how it makes me feel when you just...{w=0.3} don't turn up?"
-        n 1kcssl "..."
-        n 1kplsl "I waited for you,{w=0.2} [player]."
-        n 1kcsun "I waited a long time."
-        n 1kcsup "I was starting to wonder if you were ever going to come back,{w=0.2} or if something happened..."
-        n 1kcssf "..."
-        n 1kplsm "Thanks,{w=0.2} [player].{w=0.2} I accept your apology."
-        n 1kplbo "Just...{w=0.3} some notice would be nice next time,{w=0.2} is all."
-        n 1kllbo "That isn't too much to ask...{w=0.3} right?"
+        if Natsuki.isLove(higher=True):
+            n 1ncssl "...[player]."
+            n 1kllfl "We've...{w=0.75}{nw}" 
+            extend 1knmbo " been together a while now,{w=0.2} haven't we?"
+            n 1ksrbol "A-{w=0.2}and you know I like spending time with you.{w=1}{nw}" 
+            extend 1knmbol " Why do you {i}think{/i} I'm always here whenever you show up?"
+
+        else:
+            n 1ncssl "...[player]."
+            n 1kllfl "We've...{w=0.75}{nw}" 
+            extend 1knmbo " been here together a while now,{w=0.2} haven't we?"
+            n 1fcsun "I...{w=0.75}{nw}" 
+            extend 1fcsfll " really...{w=0.75}{nw}" 
+            extend 1ksrbol " like spending time with you.{w=1}{nw}" 
+            extend 1knmbol " Why do you {i}think{/i} I'm always here whenever you show up?"
+            
+        n 1klrfll "So can you imagine how it feels when you just...{w=1}{nw}" 
+        extend 1klrsll " don't turn up?"
+        n 1fcsunl "..."
+        n 1fcssll "I waited for you,{w=0.2} [player]."
+        n 1kslbol "I waited a really long time."
+        n 1kllemlsbl "I was starting to wonder if you were ever going to come back...{w=0.75}{nw}" 
+        extend 1kllunlsbl " o-{w=0.2}or if something happened."
+        n 1kcspulesi "..."
+        n 1nsqbol "...Thanks,{w=0.2} [player].{w=0.75}{nw}" 
+        extend 1ksrbol " For the apology, I mean.{w=1}{nw}"
+        extend 1ksrfsl " It's appreciated."
+        n 1kcsajl "Just..." 
+        n 1kslsrl "..."
+        n 1knmsll "Just some notice would be nice,{w=0.2} is all."
+        n 1klrsll "That isn't too much to ask..." 
+        n 1knmbol "Right?"
+
         $ Natsuki.calculatedAffinityGain()
 
     elif Natsuki.isNormal(higher=True):
         n 1fcsunl "[player]..."
-        n 1fbkwrl "What were you thinking?!{w=0.2} Just vanishing like that!"
-        n 1fwmunl "I waited so long for you...{w=0.3} I was starting to wonder if something bad happened!"
-        n 1fsqpol "N-{w=0.1}not that I care {i}that{/i} much,{w=0.2} but still...!"
-        n 1fllunl "..."
-        n 1fllpo "I'm...{w=0.3} grateful for your apology,{w=0.2} [player]."
-        n 1fnmpo "Just...{w=0.3} no more disappearing acts,{w=0.2} alright?"
+        n 1fnmgsl "What were you even {i}thinking?!{/i}{w=0.75}{nw}" 
+        extend 1fcsgsl " Just vanishing like that!"
+        n 1fbkwrlsbl "I don't have a crystal ball!{w=0.75}{nw}"
+        extend 1flremlsbl " How am {i}I{/i} meant to know if you'd be back?{w=0.75}{nw}"
+        extend 1fcswrlsbl " Or if something happened?!"
+        n 1fcssll "..."
+        n 1nslbo "..."
+        n 1ncspu "...Look."
+        extend 1fnmbol " I appreciate the apology.{w=0.75}{nw}"
+        extend 1flrfll " And I get that you've got stuff to do.{w=0.75}{nw}"
+        extend 1fsrbolsbl " It's not like we're not super close or anything like that,{w=0.2} e-{w=0.2}either."
+        n 1fnmbol "But can you at least {i}tell{/i} me when you're gonna go,{w=0.2} like I said?"
+        n 1fcspol "I-{w=0.2}if I wanted a disappearing act,{w=0.2} I would have asked,{w=0.2} after all."
+        n 1ksrpol "..."
+
         $ Natsuki.calculatedAffinityGain()
 
     elif Natsuki.isDistressed(higher=True):
-        n 1fcsbo "[player]."
-        n 1fnmbo "I know we haven't exactly been seeing eye-to-eye lately."
-        n 1knmaj "But do you know how {i}scary{/i} it is to me when you just disappear like that?"
-        n 1fllsl "In case you haven't already noticed,{w=0.2} I don't exactly have many other people to talk to..."
-        n 1fcssl "..."
-        n 1fsqsl "Thanks for the apology,{w=0.2} I guess."
-        n 1fsqbo "Just don't do that again."
+        n 1fsqfr "...[player]."
+        n 1fcsfr "I know we haven't exactly been seeing eye-to-eye lately."
+        n 1fnman "But do you even {i}care{/i} how scary it is to me when you just disappear?"
+        n 1flrem "In case you haven't already {i}noticed{/i},{w=0.75}{nw}" 
+        extend 1fcsem " I don't exactly have many {i}other{/i} people to talk to..."
+        n 1fcssr "..."
+        n 1fslpu "I guess I should say thanks.{w=1}{nw}"
+        extend 1fslbo " For the apology."
+        n 1fcsbo "Just...{w=0.75}{nw}" 
+        extend 1fcsemsbr " don't do that again."
+
         $ Natsuki.calculatedAffinityGain()
 
     else:
-        n 1kcspu "...Ha...{w=0.3} ah...{w=0.3} haha..."
-        n 1fsqan "Y-{w=0.1}you're apologizing to me?{w=0.2} For not being here?"
-        n 1kcssl "...Heh..."
-        n 1fsqfutsb "You should be apologizing that you {i}came back{/i}."
+        n 1fcsem "...Ha...{w=0.5}{nw}" 
+        extend 1fcsssltsa " ah...{w=0.5}{nw}" 
+        extend 1fsrflltse " haha..."
+        n 1fsqflltse "Y-{w=0.2}you're apologizing to me?{w=0.75}{nw}" 
+        extend 1fnmflltsf " For not being here?"
+        n 1fcsunltsd "...Heh..."
+        n 1fsqgtltse "You should be apologizing that you {i}came back{/i}."
 
     $ Natsuki.removeApology(jn_apologies.ApologyTypes.prolonged_leave)
     return
