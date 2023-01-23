@@ -250,33 +250,76 @@ init 5 python:
 
 label admission_ashamed:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_ASHAMED:
-        n 1knmsl "[player]...{w=0.3} you're still feeling ashamed of yourself?"
-        n 1fnmsl "Well,{w=0.2} I'm not going to give up on you {i}that{/i} easily,{w=0.2} you know!"
-        n 1fnmss "Just keep trying your best to put things right,{w=0.2} okay?"
-        n 1unmbg "You can do it!{w=0.2} I know you can!"
+        n 1knmbo "[player]...{w=0.75}{nw}" 
+        extend 4ksrslsbl " you aren't {i}seriously{/i} still feeling ashamed of yourself,{w=0.5}{nw}"
+        extend 4ksqsrsbl " are you?"
+        n 2fcsbo "..."
+        n 2fcsfl "Well,{w=0.5}{nw}" 
+        extend 1fcsgs " sorry [player] -{w=0.5}{nw}"
+        extend 4fchgn " but I'm not giving up on you {i}that{/i} easily!"
+        n 3flrss "And hey,{w=0.5}{nw}"
+        extend 3fnmbg " newsflash:{w=0.75}{nw}"
+        extend 3fsqbg " you're not giving up that easily either!"
+
+        if Natsuki.isEnamored(higher=True):
+            $ chosen_descriptor = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else jn_utils.getRandomTease()
+
+        else:
+            $ chosen_descriptor = player
+
+        n 4fcsbs "Now go put things right,{w=0.2} [chosen_descriptor]!"
+
+        if Natsuki.isEnamored(higher=True):
+            n 4fchsml "I believe in you!"
+            
+        else:
+            n 4fwlsm "You better not let me down!"
 
     else:
-        n 1unmbo "Huh?{w=0.2} What?"
-        n 1tnmbo "You're feeling...{w=0.3} ashamed?{w=0.2} Of yourself?"
-        n 1kllbo "...Why,{w=0.2} [player]?{w=0.2} Did you do something wrong?"
-        n 1ncsaj "Well...{w=0.3} whatever you did,{w=0.2} I'm sure you didn't mean it!"
-        n 1fcsbg "More importantly,{w=0.2} you're going to work hard to put things right.{w=0.2} I just know it!"
-        n 1fnmaj "So...{w=0.3} don't let me down,{w=0.2} okay?"
-        n 1fnmbo "And you aren't going to let yourself down either,{w=0.2} right?"
+        n 1unmem "Huh?{w=1}{nw}" 
+        extend 4kcsfl " Wait,{w=0.75}{nw}" 
+        extend 4knmfl " what?"
+        n 4kllbo "You're feeling...{w=0.75}{nw}" 
+        extend 2knmbo " ashamed?{w=0.75}{nw}" 
+        extend 2knmflsbr " Of yourself?"
+        n 2ksrpu "...Why,{w=0.5} [player]?{w=0.75}{nw}" 
+        extend 2fnmpol " You didn't go out and do something {w=0.2}{i}really{/i}{w=0.2} dumb,{w=0.2} did you?"
+        n 2fcscal "..."
+        n 4fcstrl "Well...{w=0.3} whatever you did,{w=0.5}{nw}" 
+        extend 2fcsgsl " I-{w=0.2}I'm sure you didn't mean it!"
+        n 3fnmfl "And more importantly,{w=0.5}{nw}" 
+        extend 3fcsss " you're going to work your butt off to put things right.{w=0.75}{nw}" 
+        extend 3fcssmedz " I just know it!"
+        n 4fcsbg "You're gonna step up to the plate,{w=0.2} and that's all there is to it."
+        n 2nllaj "So...{w=0.75}{nw}" 
+        extend 2fnmca " don't let me down,{w=0.2} got it?"
+        n 2fnmaj "And you aren't going to let yourself down either."
+
+        show natsuki 2fnmca
         menu:
+            "Right?"
+
             "Right!":
-                n 1fchbg "Exactly!"
-                n 1fnmsm "You know you got this!"
+                n 1fchbs "Exactly!{w=0.5}{nw}"
+                extend 4fsqcs " See?{w=0.75}{nw}"
+                extend 4fcssmeme " Just like I told you!"
 
             "...":
-                n 1fsqpo "..."
-                n 1fsqaj "I don't think you get it,{w=0.2} [player]."
-                n 1fcsss "Now,{w=0.2} repeat after me:{w=0.2} 'I'm not gonna let myself down!'"
+                n 1nsqbo "..."
+                n 2fcssr "I don't think you get it,{w=0.2} [player]."
+                n 2uchgn "...So I guess we gotta do things the hard way!"
+                n 4fcsbg "Now,{w=0.5}{nw}" 
+                extend 1fnmss " repeat after me:{w=0.5}{nw}" 
+                extend 2fcsss " 'I'm not gonna let myself down!'"
+
+                show natsuki 2fcscs
                 menu:
                     "I'm not gonna let myself down!":
-                        n 1uchgn "See?{w=0.2} I knew you had it in you!{w=0.2} Ahaha."
+                        n 2usqcsesm "See?{w=1}{nw}"
+                        extend 2fchbg " I {i}knew{/i} you had it in you!{w=0.5}{nw}"
+                        extend 2fsqcs " Ehehe."
 
-        n 1fchbs "Go get 'em,{w=0.2} [player]!"
+        n 4fchbg "Now go get 'em,{w=0.2} [player]!"
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_ASHAMED
     return
