@@ -150,36 +150,88 @@ init 5 python:
 
 label admission_anxious:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_ANXIOUS:
-        n 1knmsl "Still feeling anxious,{w=0.2} [player]?"
-        n 1kllsl "..."
-        n 1kllaj "I wish I could do more to help you..."
-        n 1knmaj "Perhaps you could try some distractions to keep your mind off things?"
-        n 1unmss "You could pick up a series you haven't finished,{w=0.2} or continue a hobby or something."
-        n 1klran "Nnnn..{w=0.3} what else..."
-        n 1unmgs "Oh!{w=0.2} Try to avoid soda,{w=0.2} coffee and things like that too,{w=0.2} [player]."
-        n 1knmsl "I think caffeine is the last thing you need right now."
-        n 1klrss "Music might also help!{w=0.2} Something calming, though {w=0.2}-{w=0.2} I guess kind of like meditation?"
-        n 1knmss "Can you do something like that,{w=0.2} [player]?"
-        n 1kwmsm "I promise you'll start to feel normal soon!"
+        n 4knmpu "You're still feeling anxious,{w=0.2} [player]?"
+        n 1nsrun "Uuuuuuuu..."
+        n 2ksrflsbr "I'm really {w=0.3}{i}not{/i}{w=0.3} the best person for this sort of thing..."
+        n 2knmbosbr "But perhaps you could try some distractions to keep your mind off whatever it is?"
+        n 4kllsssbr "You could pick up a series you haven't finished,{w=0.75}{nw}" 
+        extend 4tllbosbr " or continue a hobby or something."
+        n 1fslunsbl "Nnnnnn...{w=0.75}{nw}" 
+        extend 4kslemsbl " what else..."
+        n 1unmajesu "Oh!{w=0.5}{nw}" 
+        extend 3fcspo " Try to avoid soda,{w=0.2} coffee and things like that too."
+        n 3flrca "I mean,{w=0.75}{nw}"
+        extend 1fsrss " they aren't great for you anyway.{w=1}{nw}"
+        extend 4nsrslsbl " But I think loading up on caffeine and sugar is the {i}last{/i} thing you need right now."
+        n 4tnmbo "Besides that,{w=0.5}{nw}" 
+        extend 1kllss " I usually find listening to music works for me.{w=0.75}{nw}"
+        extend 4unmaj " But don't feel like you have to do whatever I find helps -{w=0.5}{nw}"
+        extend 3fchbgsbr " you should totally do whatever {i}you{/i} usually find comforting!"
+        n 3unmbo "You don't have to push the boat out or anything:{w=0.5}{nw}"
+        extend 4ullfl " a favourite game,{w=0.5}{nw}"
+        extend 2nsrsm " some dumb old manga series...{w=1}{nw}"
+        extend 2fchbg " whatever keeps that noggin of yours busy!"
+        n 4fsqcs "...And if nothing else comes to mind?"
+        n 4fchgn "You could always get stuck into some good old busywork!"
+        n 2uslss "There's {i}always{/i} some kind of chore that needs doing anyway,{w=0.75}{nw}"
+        extend 2usqcs " right?"
+        n 1fsqsm "Ehehe."
+        n 3fcsbs "Don't worry -{w=0.5}{nw}"
+        $ chosen_descriptor = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else jn_utils.getRandomTease()
+        extend 3uchgnl " you got this,{w=0.2} [chosen_descriptor]!"
 
     else:
-        n 1tplsf "Feeling anxious,{w=0.2} [player]?"
-        n 1tlrsl "..."
-        n 1klraj "I wish there was more I could say to ease your mind."
-        n 1nnmbo "But I can tell you one thing,{w=0.2} [player]."
-        n 1knmaj "Everything is going to be okay.{w=0.2} Everything will work out,{w=0.2} eventually."
-        n 1knmbo "I promise."
-        n 1klrbo "Getting really worked up about something won't make it any easier,{w=0.2} [player]."
-        n 1nllssl "And if nothing else,{w=0.2} I'll be here to listen."
-        n 1knmbo "So...{w=0.3} try and put your mind at rest,{w=0.2} okay?"
-        n 1knmaj "I know it's tough...{w=0.3} but just try,{w=0.2} alright?"
+        n 4tnmpu "Huh?{w=0.75}{nw}"
+        extend 4knmfl " You're feeling anxious,{w=0.5}{nw}" 
+        extend 4knmbo " [player]?"
+        n 1kllsssbl "...What brought this on,{w=0.5}{nw}"
+        extend 1knmsssbl " all of a sudden?{w=0.75}{nw}"
+        extend 2knmcasbl " You don't have some kind of big thing coming up soon,{w=0.2} do you?"
+        n 2ksrslsbl "..."
+        n 2ksrsssbr "W-{w=0.2}well,{w=0.75}{nw}"
+        extend 4ksrpusbr " I gotta admit.{w=1}{nw}"
+        extend 1knmslsbr " I don't really know what kind of advice I can give you this time,{w=0.2} [player]..."
+        n 3fcssllsbr "But what I do know is this."
+        n 3fcsbol "Everything is gonna be fine." 
+        n 4fcsssl "Everything {i}will{/i} work out,{w=0.2} eventually.{w=0.75}{nw}"
+        extend 4fchbgl " It always does!"
+        n 1fllss "I mean,{w=0.5}{nw}"
+        extend 2fslss " it might not always be in the way you {i}expect{/i},{w=0.75}{nw}"
+        extend 2tslbo " or even necessarily the way you {i}want{/i}..."
+        n 4fnmbo "But getting all stressed out about something won't make it any easier,{w=0.2} [player]."
 
-        if Natsuki.isAffectionate(higher=True):
-            n 1kwmsm "I'll always have your back."
+        if Natsuki.isEnamored(higher=True):
+            n 1fchsml "And you know I'll always be here to listen."
 
-        if Natsuki.isLove(higher=True):
-            $ chosen_endearment = jn_utils.getRandomEndearment()
-            n 1kchsml "I love you, [chosen_endearment]."
+        else:
+            n 1fcscal "Plus if nothing else,{w=0.2} I'll always be here to listen."
+
+        n 2nlrbo "So...{w=0.75}{nw}" 
+        extend 2knmbosbr " try and put your mind at rest,{w=0.2} okay?"
+        n 1fcsbol "I-{w=0.2}I know it's tough...{w=0.75}{nw}"
+        extend 1kllsll " but just try,{w=0.75}{nw}" 
+        extend 4knmsll " alright?"
+
+        if Natsuki.isEnamored(higher=True):
+            n 4klrssl "A-{w=0.2}and besides."
+            $ chosen_descriptor = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else jn_utils.getRandomTease()
+            n 1fchsml "You should know I've {i}always{/i} got your back by now,{w=0.75}{nw}"
+            extend 1fchbll " [chosen_descriptor]."
+            
+            if Natsuki.isLove(higher=True):
+                n 4fchsmleaf "Love you,{w=0.2} [player]~!"
+
+            else:
+                n 4fchsml "Ehehe."
+                $ chosen_tease = jn_utils.getRandomTease()
+                n 4fchbgl "Do your best,{w=0.2} [chosen_tease]"
+        
+        else:
+            n 4fcssslsbl "B-{w=0.2}besides..."
+            n 2fsqbglsbl "With someone like {i}me{/i} backing you up?{w=0.75}{nw}"
+            extend 2fsrdvlsbl " Well..."
+            n 3fchbgl "I daresay you've got nothing to worry about,{w=0.2} [player]!{w=0.75}{nw}"
+            extend 3fchsmleme " Ehehe."
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_ANXIOUS
     return
