@@ -338,86 +338,134 @@ init 5 python:
 
 label admission_bored:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_BORED:
-        n 1tnmsm "Still trying to beat the boredom,{w=0.2} [player]?"
-        n 1nllpo "Did you actually try doing what I said?"
-        n 1flrpu "Hmm..."
-        n 1fnmbg "Well,{w=0.2} you could try phoning around!{w=0.2} You gotta have friends or family you can visit,{w=0.2} right?"
-        n 1nllbg "Or...{w=0.3} perhaps you could try reading,{w=0.2} or picking up something new?"
-        n 1fsqsm "I guess what I'm trying to say is..."
-        n 1fsqbg "There's no shortage of stuff to do,{w=0.2} [player]."
-        n 1fchgn "You just gotta find it!"
+        n 4nslsssbl "Wow...{w=1}{nw}"
+        extend 4nslflsbl " I guess you really weren't exaggerating then,{w=0.5}{nw}"
+        extend 4tnmbosbl " huh?"
+        n 2fsqfl "Did you actually {i}try{/i} doing what I suggested?{w=0.75}{nw}"
+        extend 2fcsca " Sheesh..."
+        n 1nlrsl "..."
+        n 4ulraj "Well,{w=0.75}{nw}"
+        extend 3tlraj " if there's really {i}nothing{/i} to for you to do {i}here{/i}..."
+        n 3fcsbg "Then why not check out what everyone else is doing for a change?"
+        n 4ullbo "Friends,{w=0.5}{nw}"
+        extend 4ulraj " family...{w=0.75}{nw}"
+        extend 3fsqcs " that colleague you always plan to hang out with...{w=1}{nw}"
+        extend 3fcsgs " {i}someone{/i}'s gotta have {i}something{/i} going on,{w=0.2} [player]!"
+        n 4fchgn "...So get up off your butt already and find out!{w=0.75}{nw}"
+        extend 4ullss " Phone around or something!"
+        n 2tnmsl "Or,{w=0.2} you know..."
+        n 2tsqsmesm "Pick up that game or book you were {i}totally{/i} gonna check out at some point...?"
+        n 2usqcs "..."
+        n 2fnmss "What?{w=0.75}{nw}"
+        extend 4fcsbg " Called you out yet again,{w=0.2} [player]?{w=0.75}{nw}"
+        extend 1fsqcs " Ehehe."
+        n 2fnmfl "Now come on!{w=0.75}{nw}"
+        extend 2fcsbg " There's never a shortage of stuff to do to pass the time.{w=1}{nw}"
+        extend 2uchgn " Time for you to get up and go find it!"
 
-        if Natsuki.isEnamored(higher=True):
-            n 1uchbg "Now,{w=0.2} go!{w=0.2} And make sure you tell me all about it later,{w=0.2} 'kay?"
+        if Natsuki.isAffectionate(higher=True):
+            $ chosen_descriptor = jn_utils.getRandomTease() if Natsuki.isEnamored(higher=True) else player
+            n 4fwlsm "Off you go,{w=0.2} [chosen_descriptor]!"
 
-        else:
-            n 1usqbg "Well?{w=0.3} What're you waiting for?"
-            n 1nchgn "Go for it,{w=0.2} [player]!"
+            if Natsuki.isLove(higher=True):
+                n 1fchsml "Love you~!"
 
     # Unlock Snap if not already unlocked
     elif not persistent.jn_snap_unlocked:
-        n 1unmaj "You're bored,{w=0.2} huh?"
-        n 1nlrpo "Well,{w=0.2} now that you mention it...{w=0.3} there isn't {i}exactly{/i} a whole lot going on here."
-
-        if Natsuki.isEnamored(higher=True):
-            n 1fllssl "Besides me,{w=0.2} anyway.{w=0.2} Ehehe."
-
-        n 1flrpo "Hmm...{w=0.3} there's gotta be something else..."
-        n 1fcspo "Think,{w=0.2} Natsuki!{w=0.2} Think..."
-        n 1fllpu "..."
-        n 1fsgbg "Aha!{w=0.2} I think I got it!{w=0.2} Let me just check something real quick..."
-
-        play audio drawer
-        with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
-
-        n 1fchgn "Yes!{w=0.2} It's still here!"
-        n 1fsgsg "Betcha' didn't know I had playing cards,{w=0.2} right?"
-        n 1nchgn "Turns out these desk drawers {i}are{/i} handy,{w=0.2} after all!"
-        n 1nnmsm "I always had a pack here ready for a rainy day."
-        n 1kllsll "...Uhmm."
-        n 1nnmsl "Hey...{w=0.3} [player]?{w=0.2} Don't judge me for it,{w=0.2} but..."
-        n 1nlrun "I...{w=0.3} never really learned all the really fancy card game rules or anything like that."
-        n 1ullaj "So...{w=0.3} we're playing Snap."
-        n 1fllssl "...At least until I do some reading up,{w=0.2} anyway."
         $ persistent.jn_snap_unlocked = True
-        n 1nnmss "So..."
-        n 1uchgn "What about it then,{w=0.2} [player]?{w=0.2} Fancy a game or two?"
+        n 4fcsfl "Wait...{w=0.75}{nw}"
+        extend 4tnmpu " you're bored?{w=0.75}{nw}"
+        n 1fcsflsbr "H-{w=0.2}hang on for just a second."
+        n 2fnmeml "A-{w=0.2}and what are you trying to say,{w=0.2} exactly?!{w=1}{nw}"
+        extend 2fnmgsl " Huh?"
+        n 2fcsgslsbr "How could you possibly be bored with someone as awesome as me around?"
+        n 2fslposbr "Jeez,{w=0.2} [player]..."
+        n 4fcsposbl "You make it sound like I'm {i}not{/i} trying to liven things up around here or something."
+        n 1nsrposbl "..."
+        n 4tsrfl "Though..."
+        n 3nlrss "Well,{w=0.2} even I gotta admit.{w=1}{nw}"
+        extend 3tnmfl " there isn't {i}exactly{/i} a whole lot going on here.{w=0.75}{nw}"
+        extend 3fcscal " Besides me,{w=0.2} I mean."
+        n 1fslsl "There's gotta be something else around here."
+        n 1nslss "It is...{w=0.75}{nw}"
+        extend 2tslpu " was...?{w=0.75}{nw}"
+        extend 2tnmbo " A classroom,{w=0.2} right?"
+        n 4tlrca "There has to be {i}something{/i} someone left in a desk,{w=0.2} or..."
+        n 4unmfleex "...!{w=0.75}{nw}"
+        n 4fnmbg "Aha!{w=0.5}{nw}"
+        extend 1fchbg " I just remembered!{w=0.75}{nw}"
+        extend 1fcssm " Just give me a second here..."
+
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+        $ jnPause(2)
+        play audio drawer
+        show natsuki 4fchgn
+        $ jnPause(4)
+        hide black with Dissolve(1)
+
+        n 4uchgn "Yes!{w=0.75}{nw}" 
+        extend 4fchsmeme " I knew it was still here!"
+        n 2fsqcs "Betcha' didn't know I had playing cards stashed away,{w=0.2} huh?"
+        n 2fchbl "Turns out these desk drawers {i}are{/i} handy,{w=0.2} after all!{w=1}{nw}"
+        extend 2fcssm " And you {i}always{/i} gotta have something prepared for a rainy day at school."
+        n 4nllss "I...{w=0.75}{nw}"
+        extend 1nsrca " don't exactly know a whole lot of card games...{w=0.75}{nw}"
+        extend 1fsrpo " yet."
+        n 3fsqss "But I'll tell you one thing,{w=0.2} [player]."
+        n 3fchbs "I've got a mean hand at Snap!{w=0.75}{nw}"
+        extend 4fsqbs " And I am just {i}itching{/i} to prove it right now."
+        n 2fsqss "So..."
+        n 2tnmsm "What about it then,{w=0.2} [player]?{w=0.75}{nw}"
+        extend 2tsqsm " Care to test your mettle?"
+
+        show natsuki 2fsqcs
         menu:
-            n "Not like you have much of an excuse not to,{w=0.2} right?"
+            n  "Not like you have any excuse not to,{w=0.2} right?"
 
             "Sure,{w=0.2} why not?":
                 jump snap_intro
 
             "Not right now.":
-                n 1fllpo "Aww...{w=0.3} but I already got the cards out and everything!"
-                n 1unmpo "Well...{w=0.3} whatever."
-                n 1nnmsm "Just let me know whenever you feel like a game then."
+                n 4usqct "Oh?{w=0.75}{nw}"
+                extend 4tsqsm " Not right now,{w=0.2} you say?"
+                n 3ullss "Fine,{w=0.2} fine.{w=0.75}{nw}"
+                extend 3fcsbg " That's cool with me."
+                n 3uchgn "Just means I get to look forward to kicking your butt later instead!{w=0.75}{nw}"
+                extend 4nchgn " Ehehe."
 
+                show natsuki 1fchsmeme
+                show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+                $ jnPause(2)
                 play audio drawer
-                with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+                $ jnPause(4)
+                hide black with Dissolve(1)
 
     else:
-        n 1tnmaj "Huh?{w=0.2} You're bored?"
-        n 1fnmaj "And just what is that supposed to mean,{w=0.2} [player]?"
-        n 1fsqpo "Am I not fun enough to be with?"
-        n 1fbkwr "Are you not entertained?!"
-        n 1flrpo "..."
-        n 1fsqsm "..."
-        n 1uchgn "Relax!{w=0.2} Relax,{w=0.2} [player], jeez!"
-        n 1ullaj "Well,{w=0.2} if you're bored..."
-        $ chosen_tease = jn_utils.getRandomTease()
-        n 1uchbs "Then get up off your butt and do something about it,{w=0.2} [chosen_tease]!"
-        n 1tlrbg "Jeez,{w=0.2} [player]...{w=0.3} there's a big, wide world out there just waiting for you!"
-        n 1tsqbg "And if that isn't enough,{w=0.2} there's an even bigger one right at your fingertips!"
-        n 1fsqss "Or you could,{w=0.2} you know."
-
-        if Natsuki.isEnamored(higher=True):
-            n 1kwmsgl "Spend more time with yours truly?"
-            n 1knmpol "I'm not that dull...{w=0.3} right?"
-
-        else:
-            n 1fchbg "Appreciate that you get to spend more time with me!"
-            n 1flrpol "N-{w=0.2}not that I'd totally appreciate it,{w=0.2} or anything,{w=0.2} of course.{w=0.2} Ahaha..."
+        n 1tnmfl "Huh?{w=0.75}{nw}" 
+        extend 4tnmpu " You're bored?"
+        n 2fnmgsl "A-{w=0.2}and just what is {i}that{/i} supposed to mean,{w=0.2} [player]?!"
+        n 2flreml "Am I boring?{w=0.75}{nw}"
+        extend 4fcsgsl " Huh?{w=1}{nw}"
+        extend 4fnmfll " Am I not fun enough to be with?"
+        n 4fbkwrl "Are you not entertained?!"
+        n 2fsqpol "..."
+        n 2fsqdvl "..."
+        n 1fcsajl "Oh,{w=0.5}{nw}"
+        extend 4uchgnl " lighten up a little,{w=0.2} [player]!{w=0.75}{nw}"
+        extend 4flrss " Man..."
+        n 3fcsbg "But really,{w=0.2} come on!{w=0.75}{nw}"
+        extend 3tnmfl " If you're seriously bored enough to tell me about it..."
+        n 4fchbg "Then get up off your butt and do something,{w=0.2} you dork!{w=0.75}{nw}"
+        extend 2tsqss " You {i}do{/i} have a world beyond this screen,{w=0.2} you know!{w=0.75}{nw}"
+        extend 2fcspolsbl " T-{w=0.2}that's a lot more than {i}I've{/i} got!"
+        n 2tllss "And if {i}that{/i} isn't enough,{w=0.75}{nw}" 
+        extend 4fchbgedz " there's an even {i}bigger{/i} one right at your fingertips!"
+        n 3fcsbg "Now if {i}those{/i} aren't some prime opportunities to beat the boredom right there..."
+        n 3fchbg "Then I don't know what is!{w=0.75}{nw}"
+        extend 1fchsm " Ehehe."
+        $ chosen_descriptor = jn_utils.getRandomTease() if Natsuki.isEnamored(higher=True) else player
+        n 1fnmbg "Now stop complaining and get a move on,{w=0.2} [chosen_descriptor]!"
+        n 2fsqbl "Time's wasting!"
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_BORED
     return
