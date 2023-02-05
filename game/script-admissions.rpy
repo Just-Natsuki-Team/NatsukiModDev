@@ -778,40 +778,81 @@ init 5 python:
 
 label admission_insecure:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_INSECURE:
-        n 1knmsl "You're still feeling insecure about yourself,{w=0.2} [player]?"
-        n 1kllsl "You...{w=0.3} do remember what I said though,{w=0.2} right?"
-        n 1ncssl "Everybody has their own pace.{w=0.2} I don't care what yours is.{w=0.2} We'll take it together."
-        n 1fchgn "...Wow{w=0.2}, that seriously sounded super corny."
-        n 1kllnv "But really,{w=0.2} [player]...{w=0.3} try not to sweat it,{w=0.2} okay?"
-        n 1fchbgl "The great Natsuki has your back,{w=0.2} after all!"
+        n 2knmbosbr "You're {i}still{/i} feeling all beat up about that,{w=0.2} [player]?"
+        n 2klrbosbr "..."
+        n 2nlrfl "You...{w=0.75}{nw}" 
+        extend 2fnmbol " do remember what I said though,{w=0.2} right?"
+        n 1fcsfl "Everybody has their own pace.{w=0.75}{nw}"
+        extend 4fcsca " You are no exception.{w=0.75}{nw}"
+        extend 2tnmaj " And honestly?"
+        n 2fcsbo "I don't really care what it is.{w=1}{nw}"
+
+        if Natsuki.isEnamored(higher=True):
+            extend 2tnmbol " So long as we're together?"
+
+        else:
+            extend 2tnmfl " So long as we're friends?"
+
+        n 2fcstrl "We'll just have to find it together."
+        n 1nllcal "..."
+        n 4nsleml "...Man,{w=0.75}{nw}"
+        extend 4fslsslsbr " that was corny.{w=0.75}{nw}"
+        extend 1fnmpu " But seriously,{w=0.2} [player]."
+        n 3fchbgsbr "Don't sweat it!"
+        n 3fcsbgsbr "Besides..."
+        n 3fsrcs "When someone like {i}me{/i} has your back?"
+        n 4fcsbgledz "I daresay you've got nothing to worry about!{w=0.75}"
+        extend 1nchgnl "Ehehe."
+
+        if Natsuki.isLove(higher=True):
+            n 1fchsmleaf "Love you,{w=0.2} [player]~!"
 
     else:
-        n 1knmsl "Huh?{w=0.2} You're feeling insecure?{w=0.2} Where did that come from,{w=0.2} [player]?"
-        n 1kllsl "..."
-        n 1knmpu "I...{w=0.3} can't really comment on what made you feel that way..."
-        n 1fnmpu "But you better listen,{w=0.2} and listen good,{w=0.2} [player]."
-        n 1fcspu "I don't care if people don't like you.{w=0.2} I like you."
-        n 1fcsbo "I don't care if people think you have no talents.{w=0.2} I know you do."
-        n 1fnmbo "I don't care if people think you're falling behind.{w=0.2} I know you'll catch up."
-        n 1kllsl "Just...{w=0.3} give yourself time and space,{w=0.2} [player]."
-        n 1kwmsl "These thoughts you're having...{w=0.3} they can lead you to some really bad places.{w=0.2} Trust me."
-        n 1fwmsl "I'm not gonna let that happen without a fight{w=0.2} -{w=0.2} but you gotta fight too,{w=0.2} [player].{w=0.2} Got it?"
+        n 1fcsfl "...Wait,{w=0.5}{nw}" 
+        extend 2knmpu " what?"
+        n 2tnmbo "You're feeling insecure?"
+        n 1knmslsbr "...What brought this on all of a sudden,{w=0.2} [player]?"
+        n 4ncspu "..."
+        n 4ncsaj "I...{w=0.75}{nw}" 
+        extend 4klrsl " can't really comment on what made you feel that way.{w=1}{nw}"
+        extend 1ksrbo " And I'm not gonna pretend I can."
+        n 2fnmbol "But you better listen here,{w=0.2} [player] -{w=0.75}{nw}" 
+        extend 2fsqbol " and listen good."
+        n 2fcseml "I don't care if you think people don't like you.{w=0.75}{nw}" 
+        extend 2fnmbolsbr " {i}I{/i} like you."
+        n 4flrfll "I don't care if think you have no talents.{w=0.75}{nw}" 
+        extend 1fcscalesi " {i}I{/i} know you do."
+        n 1fcstrl "I don't care if people think you're falling behind.{w=0.75}{nw}" 
+        extend 2fnmsll " {i}I{/i} know you'll catch up."
+        n 2fcsajl "Just..." 
+        n 2kslbol "..."
+        n 4kcsfll "Give yourself time and space,{w=0.2} [player].{w=0.75}{nw}"
+        extend 4knmbol " Alright?"
+
+        if Natsuki.isEnamored(higher=True):
+            n 1knmbol "I get how you're feeling.{w=0.75}{nw}"
+            extend 2knmpul " I really do.{w=1}{nw}"
+            extend 2ksqsfl " I've {i}been{/i} there."
+
+        else:
+            n 2fcsbol "I get how crappy you're probably feeling right now."
+
+        n 2fcstrl "And I'm not gonna let a friend keep feeling that way without a fight.{w=0.75}{nw}"
+        extend 2fnmtrl " But you need to put in some effort too."
+        n 4fllfll "You can do that...{w=0.75}{nw}"
+
+        show natsuki 4knmbol
         menu:
-            "Okay.":
-                n 1fnmsl "...Good.{w=0.2} Or you'll have me to deal with too."
-                n 1kllsm "..."
-                if Natsuki.isAffectionate(lower=True):
-                    n 1flrajl "Message received?{w=0.2} T{w=0.2}-then let's get back to it already!"
-                    n 1flrpol "Jeez..."
+            extend " right?"
 
-                else:
-                    n 1kwmpul "...You know I meant every single word I said,{w=0.2} right?"
-                    n 1kcssll "So please...{w=0.3} don't give up.{w=0.2} We both need you to win,{w=0.2} [player]."
-
-                    if Natsuki.isLove(higher=True):
-                        $ chosen_endearment = jn_utils.getRandomEndearment()
-                        n 1kwmsmf "I really do love you, [chosen_endearment]."
-                        n 1kchbgf "You know I'll always have your back,{w=0.2} dummy..."
+            "Right.":
+                n 1fcsbo "...Good.{w=0.75}{nw}" 
+                extend 4flrfl " Or you'll have me to deal with too.{w=0.75}{nw}"
+                extend 4fnmfl " And trust me."
+                n 2fsqpo "...You {i}really{/i} don't want that.{w=1}{nw}"
+                extend 2flrss " Ahaha."
+                n 4klrbo "So..."
+                n 2knmsssbr "Did you wanna talk about something else?"
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_INSECURE
     return
