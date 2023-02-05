@@ -484,35 +484,65 @@ init 5 python:
 
 label admission_confident:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_CONFIDENT:
-        n 1fsgsm "Still full of confidence,{w=0.2} I see?"
-        n 1nchbg "Well,{w=0.2} I'm glad to hear it!"
+        n 2nchsm "Ahaha.{w=0.75}{nw}"
+        extend 4tsqcs " Still full of confidence,{w=0.2} I see!"
 
         if Natsuki.isEnamored(higher=True):
-            n 1kwlsml "You've got a lot to be confident of,{w=0.2} [player]."
-            n 1fchsml "You better remember that!"
+            n 4ullaj "Not like it's any big surprise or anything like that,{w=0.2} though.{w=0.75}{nw}"
+            extend 1ullbo " I mean..."
+            n 2fchbgl "I like to think you've got a bunch to be confident about!"
+
+        else:
+            n 4fsqcs "...And I wonder who you have to thank for that?"
+
+        n 2fcssm "Ehehe."
+        $ chosen_descriptor = jn_utils.getRandomTease() if Natsuki.isEnamored(higher=True) else player
+        n 2fchbl "You're welcome,{w=0.2} [chosen_descriptor]!"
 
     elif jn_admissions.last_admission_type == jn_admissions.TYPE_INSECURE:
-        n 1fchbg "Really?{w=0.2} That's awesome,{w=0.2} [player]!"
-        n 1kllss "I was hoping you'd snap out of those feelings sooner rather than later."
-        n 1klrpo "I don't like when you talk like that,{w=0.2} you know..."
+        n 2fcssmeme "Ehehe.{w=0.75}{nw}"
+        extend 2tnmbg " See,{w=0.2} [player]?{w=0.75}{nw}"
+        extend 3fchbgsbr " I {i}knew{/i} you'd snap out of it eventually!"
 
-        if Natsuki.isAffectionate():
-            n 1fcspol "N-{w=0.2}not that I care {i}that{/i} much, o-{w=0.2}of course!"
-            n 1fllsll "But...{w=0.3} I'm glad to know you're okay now,{w=0.2} [player]. That's what matters."
+        if Natsuki.isEnamored(higher=True):
+            n 3nllpu "But...{w=0.75}{nw}"
+            extend 3tnmsl " in all seriousness?"
+            n 4nlrpul "I'm just...{w=0.75}{nw}" 
+            extend 1ksrsll " really glad to know you're better now,{w=0.2} [player]."
+            n 2fcssml "That's all that matters."
 
-        elif Natsuki.isEnamored(higher=True):
-            n 1kllsll "I'm just really glad to know you're better now,{w=0.2} [player]."
+            if Natsuki.isLove(higher=True):
+                $ chosen_endearment = jn_utils.getRandomEndearment()
+                n 4kchsmleafsbl "L-{w=0.2}love you,{w=0.2} [chosen_endearment]."
 
-        if Natsuki.isLove(higher=True):
-            $ chosen_endearment = jn_utils.getRandomEndearment()
-            n 1knmssf "I love you, [chosen_endearment].{w=0.2} Please don't forget that,{w=0.2} alright?"
-            n 1klrpof "I'll get mad if you do.{w=0.2} Ahaha..."
+        elif Natsuki.isAffectionate(higher=True):
+            n 2fcsfllsbr "N-{w=0.2}not that I care {i}that{/i} much, o-{w=0.2}of course!"
+            n 2nlrbolsbr "But...{w=0.75}{nw}" 
+            extend 4ncsajl " I'm glad to know you're okay now,{w=0.2} [player]." 
+            n 2fcscaesi "That's what matters."
+            n 2kslca "..."
+
+        else:
+            n 2tsqcs "No guessing who you have to thank,{w=0.2} huh?{w=0.75}{nw}"
+            extend 1fsqsm " Ehehe."
+            n 4fcsbgedz "You're welcome!"
 
     else:
-        n 1nchgn "Ahaha!{w=0.2} I'm glad to hear that,{w=0.2} [player]!"
-        n 1unmaj "Being confident in yourself and your abilities can be really difficult sometimes."
-        n 1ullbo "Especially if you messed up,{w=0.2} or if you aren't feeling well."
-        n 1fchbg "But if you're feeling that way about yourself,{w=0.2} I'm not gonna rob you of it!"
+        n 2tsqct "Oh?{w=0.75}{nw}"
+        extend 2tsqbg " Feeling confident today,{w=0.75}{nw}"
+        extend 2tsqcs " huh?"
+        n 4fchbg "Well,{w=0.2} more power to you!"
+        n 1fcssmesm "It's never a bad thing to have more confidence in yourself.{w=0.75}{nw}"
+        extend 1ullss " I mean...{w=1}{nw}"
+        extend 3fchgn " look at me!"
+        n 3unmaj "Don't get me wrong though -{w=0.5}{nw}"
+        extend 4nlrss " I'm not saying it's always {i}easy{/i},{w=0.75}{nw}"
+        extend 4nlrsl " obviously."
+        n 1tnmsl "Especially if you messed up or something,{w=0.75}{nw}"
+        extend 1tslss " or if you aren't feeling great."
+        n 4tnmss "But hey!{w=0.75}{nw}"
+        extend 2tsqsm " If that's how you're feeling?{w=0.75}{nw}"
+        extend 2fchbg " Well,{w=0.2} I'm not gonna rob it from you!"
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_CONFIDENT
     return
@@ -531,13 +561,29 @@ init 5 python:
 
 label admission_excited:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_EXCITED:
-        n 1fnmsm "Still pumped up,{w=0.2} are we [player]?"
-        n 1fsqsm "I bet you just can't wait,{w=0.2} huh?{w=0.2} Ehehe."
+        n 2fllss "Man...{w=0.75}{nw}"
+        extend 2tsqss " you must {i}really{/i} be pumped if you're still going on about it,{w=0.5}{nw}"
+        extend 2tsqcs " huh?"
+        n 4fchsm "Ehehe."
+        n 3fchbg "Good on you,{w=0.2} [player]!"
 
     else:
-        n 1fsptr "Oh?{w=0.2} Did something happen?{w=0.2} Is something {i}gonna{/i} happen?"
-        n 1fchbg "Whatever it is,{w=0.2} good to know you're looking forward to it!"
-        n 1unmsm "It's always awesome to have something you can get excited over,{w=0.2} right?"
+        n 4fspgs "Oh!{w=0.5} Oh!{w=0.75}{nw}"
+        extend 4unmbg " Did something happen?{w=0.75}{nw}"
+        extend 4fnmtr " Is something gonna happen?"
+        n 4fnmca "..."
+        n 2tnmaj "Well?"
+        n 3fnmgs "Come on,{w=0.2} [player]!{w=0.75}{nw}"
+        extend 3fnmfl " Spill the beans!{w=0.75}{nw}"
+        extend 4fbkwr " You gotta tell me!"
+        n 2fsqpo "Don't tell me you're just gonna hog all the news to yourself..."
+        n 2fsqcs "..."
+        n 2fchsm "Ehehe.{w=0.5}{nw}"
+        extend 4fllss " Nah,{w=0.2} it's fine.{w=0.75}{nw}"
+        extend 2fcsbg " Glad to hear you've got stuff to look forward to!{w=0.75}{nw}"
+        extend 2flrss " Well..."
+        n 2fcsssedz "Besides seeing yours truly,{w=0.2} {i}obviously{/i}.{w=0.75}{nw}"
+        extend 1fchsmeme " Ehehe."
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_EXCITED
     return
