@@ -602,38 +602,69 @@ init 5 python:
 
 label admission_happy:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_HAPPY:
-        n 1ksqsg "Wow...{w=0.3} it's all sunshine and rainbows with you today,{w=0.2} isn't it?"
-        n 1fchbg "Ahaha!"
-        n 1fchbg "Good for you,{w=0.2} [player]!"
+        n 3nlraj "Wow...{w=0.75}{nw}" 
+        extend 3unmaj " it's all just sunshine and rainbows with you today,{w=0.2} isn't it?"
+        n 4fsqsm "Ehehe."
 
-    elif jn_admissions.last_admission_type == jn_admissions.TYPE_ANGRY or jn_admissions.last_admission_type == jn_admissions.TYPE_SAD:
-        n 1kwmss "Feeling better now,{w=0.2} [player]?"
-        n 1kllbg "That's...{w=0.3} a relief,{w=0.2} ahaha..."
-
-        if Natsuki.isAffectionate(higher=True):
-            n 1kllunl "..."
-            n 1klrbgl "S-{w=0.2}so...{w=0.3} where were we?"
+        if Natsuki.isEnamored(higher=True):
+            n 2uchgn "Keep up the smiles,{w=0.2} [player]!"
 
         else:
-            n 1fllunl "..."
-            n 1fcswrl "Jeez...{w=0.3} if you're okay,{w=0.2} then let's get back to it already!"
-            n 1klrpol "Dummy..."
+            n 2fchbg "Good on you,{w=0.2} [player]!"
+
+    elif jn_admissions.last_admission_type == jn_admissions.TYPE_ANGRY or jn_admissions.last_admission_type == jn_admissions.TYPE_SAD:
+        n 2tnmsl "...Feeling better now,{w=0.2} [player]?"
+        n 2kllbo "..."
+        n 4kllpu "I'll admit.{w=1}{nw}"
+        extend 4nslsll " I was getting kinda worried.{w=1}{nw}"
+        extend 2kslcal " I hate seeing my friends getting all upset."
+        n 2ncscal "Life is just way too short for all that."
+
+        if Natsuki.isEnamored(higher=True):
+            n 2knmbolsbl "And you deserve to be happy too,{w=0.2} you know."
+            n 2ncssll "Remember that."
+            n 2ksrbol "..."
+            n 2nsrajl "S-{w=0.2}so...{w=0.75}{nw}" 
+            extend 4tnmsllsbl " where were we?"
+
+        else:
+            n 2nslsll "Everyone deserves to at least be happy,{w=0.2} after all."
+            n 2flrbolsbl "N-{w=0.2}now let's just get back to it already."
+            n 2ksrbolsbl "..."
 
     elif jn_admissions.last_admission_type == jn_admissions.TYPE_HUNGRY:
-        n 1fsqbg "Feeling better,{w=0.2} [player]?{w=0.2} I'm not surprised!"
-        n 1fchbg "You just aren't yourself when you're hungry.{w=0.2} Ehehe."
-        n 1kllsl "Trust me...{w=0.3} I would know."
+        n 4tnmsl "Feeling better,{w=0.2} [player]?{w=0.75}{nw}" 
+        extend 4fnmfl " I'm not surprised!"
+        n 2fcstr "You just aren't yourself when you're hungry."
+        n 2nslss "Trust me...{w=0.75}{nw}" 
+        extend 1nslslsbr " I would know."
+        n 2fcsaj "Just don't let it get {i}that{/i} bad next time!"
+        n 2fsqfl "...Or I really will give you a mouthful.{w=1}{nw}"
+        extend 1fsqsm " Ehehe."
+
+        if Natsuki.isLove(higher=True):
+            $ chosen_tease = jn_utils.getRandomTease()
+            n 3nchgnl "Love you,{w=0.2} [chosen_tease]~!"
 
     elif jn_admissions.last_admission_type == jn_admissions.TYPE_SICK:
-        n 1nnmsm "Feeling better,{w=0.2} [player]?{w=0.2} I'm glad to hear it!"
-        n 1nchbg "Nothing makes you appreciate feeling normal more than being sick,{w=0.2} right?"
+        n 1fcssm "Ehehe.{w=0.75}{nw}"
+        extend 2fwlbg " Glad to see you're back in action, [player]!"
+        n 2ullaj "It's kinda funny,{w=0.2} actually."
+        n 2tnmfl "Nothing makes you appreciate feeling normal more than being sick,{w=0.2} huh?"
+        n 4fchgn "I guess you'd know that a whole lot better now!"
+
+        if Natsuki.isLove(higher=True):
+            n 4fchblleaf "Love you too,{w=0.2} [player]!"
 
     else:
-        n 1usqbg "Oh?{w=0.2} Someone's in a good mood today!"
-        n 1fchbg "Good for you,{w=0.2} [player]!"
+        n 4tnmss "Oh?{w=0.75}{nw}" 
+        extend 4usqsm " Someone's in a good mood today!"
+        n 3fcsbgedz "Is a certain {i}someone{/i} being around helping,{w=0.2} I wonder?"
+        n 3fsqsmeme "Ehehe."
+        n 4fchbg "Good for you,{w=0.2} [player]!"
 
-        if Natsuki.isAffectionate(higher=True):
-            n 1uchsm "If you're happy,{w=0.2} I'm happy!"
+        if Natsuki.isEnamored(higher=True):
+            n 2fcssmesm "If you're happy,{w=0.2} I'm happy!"
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_HAPPY
     return
