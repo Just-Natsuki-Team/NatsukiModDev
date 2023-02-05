@@ -683,36 +683,83 @@ init 5 python:
 
 label admission_hungry:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_HUNGRY:
-        n 1tnmpu "What?{w=0.2} You're still hungry?"
-        n 1fnmpo "Or did you not get something when I told you to earlier?"
-        n 1fchgn "Well...{w=0.3} either way,{w=0.2} get off your butt and go get something then!"
-        n 1fllpol "Jeez,{w=0.2} [player]...{w=0.3} I'm not your babysitter!"
-
+        n 4fcsfl "...Wait.{w=1}{nw}"
+        extend 4tsqpu " What?{w=0.75}{nw}"
+        extend 2tnmfl " You're {i}still{/i} hungry?"
+        n 2fsqfl "...Or did you seriously not get something when I told you to earlier?"
+        n 1fcsfl "Either way,{w=0.75}{nw}"
+        
         if Natsuki.isEnamored(higher=True):
-            n 1fsqsml "A-{w=0.2}as much as you probably wish I was,{w=0.2} right?{w=0.2} Ahaha!"
-            n 1uchbs "Now get going already!{w=0.2} Bon appetit,{w=0.2} [player]!"
+            extend 2fchgn " I'm not your babysitter!{w=0.75}{nw}"
+            extend 2fsrdvlsbl " E-{w=0.2}even if you {i}wish{/i} I was!"
 
-    elif jn_admissions.last_admission_type == jn_admissions.TYPE_SAD:
-        n 1knmsl "[player]...{w=0.3} you told me you were sad earier."
-        n 1klrsl "I don't mind if you're hungry,{w=0.2} but try not to comfort-eat,{w=0.2} okay?"
-        n 1knmpu "You might feel a little better...{w=0.3} but it won't fix what made you sad."
-        n 1knmsm "Try to enjoy your meal,{w=0.2} alright?"
+        else:
+            extend 2fchgn " I'm not your babysitter!"
+
+        n 2fcsaj "Now get off that butt of yours and sort something out already!{w=1}{nw}"
+        extend 2flrss " Yeesh..."
+        $ chosen_descriptor = jn_utils.getRandomTease() if Natsuki.isEnamored(higher=True) else player
+        n 4fcsbg "Just keep it healthy,{w=0.2} [chosen_descriptor]!"
 
         if Natsuki.isAffectionate(higher=True):
-            n 1kwmsml "I'm here for you if you need me,{w=0.2} [player]."
+            n 4fsqbg "Someone's gotta make sure you're staying in tip-top shape,{w=0.2} after all.{w=0.5}"
+            extend 2fchsmleme " Ehehe."
+
+    elif jn_admissions.last_admission_type == jn_admissions.TYPE_SAD:
+        n 2knmbo "...[player]."
+        n 2ncssl "I...{w=1}{nw}" 
+        extend 4knmca " get if you're hungry,{w=0.2} okay?{w=0.75}{nw}"
+        extend 4knmaj " Really.{w=1}{nw}"
+        extend 1fcssl " Everybody's gotta eat."
+        n 1kllfl "Just..."
+        n 1kslbo "..."
+        n 4ncsbo "Don't use food or snacks as a way to feel better if you're feeling down.{w=1}{nw}"
+        extend 4ksqbol " Alright?"
+        n 2unmeml "I-{w=0.2}I'm not trying to parent you or anything!{w=0.5}{nw}"
+        extend 2fcspol " Of course not.{w=0.75}{nw}"
+        extend 2ksrsll " But I'd be a pretty crappy friend if I didn't at least say {i}something{/i} about it."
+        n 1ncspu "So please.{w=0.75}{nw}"
+        extend 4ksqca " Just don't overdo it."
+        n 3nlrsl "A treat is fine,{w=0.2} and it might help you feel better."
+        extend 3nsrpu " I can get that."
+        n 3ksqbo "But it's not gonna fix what made you feel that way in the first place."
+        
+        if Natsuki.isEnamored(higher=True):
+            n 4klrbol "And you know you can come talk to me if you really need to...{w=1}{nw}"
+            extend 4knmbol " right?"
+
+        elif Natsuki.isAffectionate(higher=True):
+            n 4fcsbol "A-{w=0.2}and you can always come talk to me,{w=0.2} you know."
+            n 4ksrcal "..."
+
+        else:
+            n 4ksrbo "...Enjoy your meal,{w=0.2} [player]."
 
     else:
-        n 1unmpu "Huh?{w=0.2} You're hungry?"
+        n 4tnmpu "Huh?{w=0.75}{nw}" 
+        extend 4tsqem " You're {i}hungry{/i}?"
         $ chosen_tease = jn_utils.getRandomTease()
-        n 1fupem "Then what're you telling {i}me{/i} for?{w=0.5}{nw}" 
-        extend 1fchgnelg " Go get something to eat,{w=0.2} [chosen_tease]!"
-        n 1fllaj "Honestly...{w=0.75}{nw}" 
-        extend 1fcspo " what am I going to do with you,{w=0.2} [player]?"
-        n 1fchbg "Now go make something already!{w=0.2} Just don't fill yourself up on junk!"
-
+        n 2tnmfl "...Then what're you telling {i}me{/i} for?{w=0.75}{nw}" 
+        extend 2fchgn " Go get something to eat,{w=0.2} you big dope!"
+        
         if Natsuki.isEnamored(higher=True):
-            n 1fsqbg "I want you fighting fit for when we hang out,{w=0.2} 'kay?"
-            n 1uchgn "We're gonna have so much to do together,{w=0.2} after all!"
+            n 1fcsaj "Honestly...{w=0.75}{nw}"
+            extend 2tsqss " what am I gonna do with you,{w=0.2} huh?"
+
+        else:
+            n 1fcsaj "Honestly...{w=0.75}{nw}"
+            extend 2fllfl " what am I,{w=0.5}{nw}"
+            extend 2fsqpo " your mom or something?"
+            n 2nsrfl "Jeez..."
+
+        n 1fcsaj "Now go make something already!"
+        n 4nsrslsbr "...And no,{w=0.2} [player],{w=0.75}"
+        extend 4nsqsl " before you ask."
+        n 3fcsbg "Junk food doesn't count!"
+
+        if Natsuki.isAffectionate(higher=True):
+            n 3fsqsm "You weren't a trash can last time I checked.{w=0.75}{nw}"
+            extend 3fchgnelg " So no garbage for you~!"
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_HUNGRY
     return
