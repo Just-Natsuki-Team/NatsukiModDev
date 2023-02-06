@@ -871,17 +871,37 @@ init 5 python:
 
 label admission_proud:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_PROUD:
-        n 1fsqbg "Really,{w=0.2} [player]?{w=0.2} Still gloating,{w=0.2} are we?"
-        n 1tsqbg "You {i}do{/i} know what they say about pride,{w=0.2} right?"
-        n 1fsqsm "..."
-        n 1kchlg "I'm just kidding,{w=0.2} [player]!{w=0.2} Jeez!"
-        n 1kchgn "You should see your face sometimes!"
-        n 1nnmsm "Well,{w=0.2} it's cool to see you're still feeling good about yourself!"
+        n 2nslaj "Wow...{w=1}{nw}"
+        extend 2tnmpo " {i}still{/i} in the mood for gloating,{w=0.2} are you?"
+        n 4ucsfl "That's fine.{w=0.75}{nw}"
+        extend 4ncsfl " That's fine.{w=1}{nw}"
+        extend 4nlrfl " So long as you aren't getting too carried away."
+        n 1nnmca "Just remember,{w=0.2} [player] -{w=0.5}{nw}"
+        extend 3fnmss " if there's one thing I'm good at..."
+        n 3fcsbg "...It's knocking people down a peg or two!"
+        n 4ullfl "Well...{w=0.5}{nw}"
+        extend 2fchgn " when they need it,{w=0.2} anyway.{w=1}{nw}"
+        extend 1nchgneme " Ehehe."
+
+        if Natsuki.isLove(higher=True):
+            $ chosen_tease = jn_utils.getRandomTease()
+            n 1fchblleme "Love you too,{w=0.2} [chosen_tease]~!"
 
     else:
-        n 1tsgbg "Oh?{w=0.2} You're feeling proud,{w=0.2} huh?"
-        n 1fsqsm "You must be pretty pleased with yourself to brag to me about it."
-        n 1fchbg "Well...{w=0.3} whatever it was -{w=0.2} good work,{w=0.2} [player]!"
+        n 2tnmct "Oh?{w=0.75}{nw}"
+        extend 2fsqbg " And what are {i}you{/i} so proud about?{w=1}{nw}" 
+        extend 2fnmbg " Huh?"
+        n 4fsqsm "Well?"
+        n 4fsqbg "Spit it out,{w=0.2} [player]!{w=1}{nw}"
+        extend 3fcsbg " It must be pretty amazing,{w=0.2} after all.{w=1}{nw}"
+        extend 4fsqss " Right?"
+        n 2tsqcs "..."
+        n 2fchcs "Ehehe."
+        n 4ullaj "Well,{w=0.75}{nw}"
+        extend 4tnmbo " whatever it is.{w=0.75}{nw}"
+        extend 3fcsbg " You'd have to be pretty smug about it to share it with me!"
+        $ chosen_descriptor = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else player
+        n 3fchbg "Good job,{w=0.2} [chosen_descriptor]!"
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_PROUD
     return
