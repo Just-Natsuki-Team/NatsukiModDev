@@ -920,46 +920,161 @@ init 5 python:
 
 label admission_sad:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_SAD:
-        n 1knmsl "Oh...{w=0.3} I'm really sorry to hear you're still feeling upset,{w=0.2} [player]."
-        n 1kllsl "I'm...{w=0.3} not sure if it's my place to say this,{w=0.2} but..."
-        n 1knmpu "Do you have others you can share this with?{w=0.2} Friends,{w=0.2} or family?"
+        if Natsuki.isEnamored(higher=True):
+            n 2kllbo "...Still feeling the blues,{w=0.5}{nw}"
+            extend 2knmbo " [player]?"
+
+        else:
+            n 1ksrpusbl "Man...{w=0.75}{nw}"
+            extend 4knmflsbl " you're still feeling down,{w=0.2} [player]?"
+
+        n 2kslbosbr "..."
+        n 2kslajsbr "I...{w=1}{nw}"
+        extend 4kslsssbr " can't believe I never mentioned it before,{w=0.2} but...{w=0.75}{nw}"
+        extend 4knmbosbr " have you spoken to anyone about this?"
+        n 1fcsajlsbr "B-{w=0.2}besides me,{w=0.75}{nw}"
+        extend 1nllsllsbr " I mean.{w=1.25}{nw}"
+        extend 4knmsllsbr " I'm being serious."
+        n 4knmbolsbr "...Do you have anyone else you can share this with?"
+
+        show natsuki 4klrbolsbr
         menu:
+            n "Like any friends or family,{w=0.2} or...?"
+
             "I do.":
-                n 1kllss "Then maybe you should share how you feel."
-                n 1kchbg "A problem shared is a problem halved,{w=0.2} as they say!"
-                n 1knmsl "But seriously,{w=0.2} [player].{w=0.2} Don't be afraid to ask for help,{w=0.2} alright?"
-                n 1klrsl "Everyone needs help sometimes."
+                n 1knmbo "...Then maybe you should share how you feel,{w=0.2} [player].{w=1}{nw}"
+                extend 2nsrss " Even if it's embarrassing."
+                n 2tlrsssbl "You do know what they say,{w=0.75}{nw}"
+                extend 2tnmsssbl " right?{w=1}{nw}"
+                extend 2fcsbgsbl " A problem shared is a problem halved!"
+                n 4ksqcasbr "But really,{w=0.2} [player].{w=0.75}{nw}" 
+                extend 1ksrcasbr " Don't be afraid to ask for help,{w=0.2} alright?"
+                n 1fcscalsbr "It's never something to be ashamed of.{w=0.5}{nw}"
+                extend 4fcsbolsbl " Trust me."
+                n 2kslbol "...And it took me a long time to learn that,{w=0.2} too."
 
             "I don't.":
-                n 1ncssf "That's...{w=0.3} not what I was hoping to hear,{w=0.2} honestly."
-                n 1kllsr "I'm sorry to hear that,{w=0.2} [player].{w=0.2} Truly."
-                n 1nnmpu "But know this."
-                n 1knmsr "You've got my support,{w=0.2} okay?"
-                n 1klrpol "I-if that helps,{w=0.2} I mean."
+                n 4nlrsslsbr "That's...{w=0.75}{nw}" 
+                extend 4ksrsllsbr " really {i}not{/i} what I was hoping to hear,{w=0.75}{nw}" 
+                extend 1ksqbolsbr " honestly."
+                n 1ncsflsbr "I'm...{w=1}{nw}" 
+                extend 1knmbosbr " sorry to hear that,{w=0.2} [player].{w=0.75}{nw}" 
+                extend 2kllbosbr " Truly."
+
+                if Natsuki.isEnamored(higher=True):
+                    n 2kslcalsbl "...And I'm sorry I asked."
+
+                n 4knmbosbr "Just let me know if I can help in some way.{w=1.25}{nw}"
+                extend 4klrbosbr " Alright?"
 
             "They already know.":
-                n 1kcspu "Good! Good..."
-                n 1knmpo "I just hope they were supportive of you,{w=0.2} [player].{w=0.2} You at least deserve that much."
-
-        if Natsuki.isLove(higher=True):
-            $ chosen_endearment = jn_utils.getRandomEndearment()
-            n 1kchnvf "I love you,{w=0.2} [chosen_endearment]."
-
-        n 1kllpu "I hope you start to feel better soon!"
-
-    else:
-        n 1knmpo "Oh...{w=0.3} I'm really sorry to hear you're upset,{w=0.2} [player]."
-        n 1knmpu "Did something happen?{w=0.2} You can tell me about it,{w=0.2} [player].{w=0.2} I won't judge."
-        n 1ncssr "..."
-        n 1nwmpu "It's...{w=0.3} okay,{w=0.2} [player].{w=0.2} Everything is gonna be okay."
+                n 2fcsfllsbr "Good!{w=0.75}{nw}" 
+                extend 2fcscalsbr " Good..."
+                n 3fllbol "I just hope they were supportive of you,{w=0.2} [player]."
+                n 3kllbolsbl "You at least deserve that much."
 
         if Natsuki.isEnamored(higher=True):
-            n 1knmpu "Now,{w=0.2} take some deep breaths for me,{w=0.2} alright?"
-            n 1uchsm "That's it,{w=0.2} [player].{w=0.2} Keep breathing."
+            n 4knmbol "...And [player]?"
+            n 1kslbol "..."
 
-        n 1kllpu "Whatever happened,{w=0.2} I'm sure it'll all work out."
-        n 1ucssl "What matters is that you're okay,{w=0.2} [player].{w=0.2} So let's concentrate on fixing that, alright?"
-        n 1kwmsm "We can work on that here,{w=0.2} okay?"
+            show natsuki 4kcscal at jn_center
+            play audio chair_out
+            show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+            $ jnPause(4)
+            play audio clothing_ruffle
+            show natsuki 1knmcal at jn_center
+            $ jnPause(6)
+            play audio chair_in
+            $ jnPause(4)
+            hide black with Dissolve(1.25)
+
+            if Natsuki.isLove(higher=True):
+                $ chosen_endearment = jn_utils.getRandomEndearment()
+                n 1klrcal "Y-{w=0.2}you know I love you.{w=1}{nw}"
+                extend 4knmsll " Right?{w=0.75}{nw}"
+                extend 4knmssl " Regardless of how you feel right now."
+
+            n 4klrsslsbl "I hope you start to feel better soon,{w=0.2} [player]."
+
+        else:
+            n 4klrsslsbl "I hope you start to feel better soon."
+            n 4ksrbolsbl "..."
+
+    else:
+        if Natsuki.isEnamored(higher=True):
+            n 2kllbo "Oh...{w=0.75}{nw}"
+            extend 2knmsl " really?{w=1.25}{nw}"
+            extend 2klrflsbl " Jeez..."
+            n 4ksrpusbl "Did...{w=1}{nw}"
+            extend 4knmpusbl " something happen,{w=0.2} or...?{w=0.75}{nw}"
+            extend 2fcsfllsbr " Y-{w=0.2}you don't have to tell me if you don't want to,{w=0.2} of course."
+            n 2flrsllsbr "I won't judge.{w=0.75}{nw}"
+            extend 2klrsllsbr " So..."
+
+        else:
+            n 1uskfl "H-{w=0.2}huh?{w=0.75}{nw}"
+            extend 4knmboeqm " You're feeling sad now?"
+            n 2klrflsbr "...Where did that come from all of a sudden?"
+            n 2ksrflsbr "Man...{w=0.75}{nw}"
+            extend 2fcsfllsbl " you really just {i}had{/i} to pick the worst person for handling this kind of stuff,{w=0.75}{nw}"
+            extend 2ksrsllsbl " didn't you?"
+
+        n 1kcsbolesi "..."
+        n 4ncsfl "Alright.{w=1}{nw}"
+        extend 4nnmfl " Okay,{w=0.2} [player].{w=1.25}{nw}"
+        extend 4nnmca " Listen to me."
+        n 4ncstrl "A-{w=0.2}and focus on your breathing.{w=0.75}{nw}"
+        extend 1ncsfl " In,{w=1.5}{nw}" 
+        extend 1ncspu " and out."
+        n 1nnmbo "Just like that."
+        n 1ncspu "And again."
+        n 4ncssl "..."
+        n 2ncsfl "...Alright.{w=1.25}{nw}"
+        extend 2nnmsl " [player]."
+        n 2nllaj "Whatever happened,{w=0.2} you gotta understand one thing."
+        n 4kllbo "How you're feeling...{w=0.75}{nw}"
+        extend 4knmca " it's only gonna be temporary.{w=1}{nw}"
+        extend 1fcscal " It's {i}always{/i} temporary.{w=1}{nw}"
+        extend 1flrpul " No matter what you're thinking now...{w=1.5}{nw}" 
+        extend 4knmcal " that's how it is."
+        n 2fcsfllsbr "I-{w=0.2}I know it sucks!{w=0.75}{nw}"
+        extend 2nslsll " Believe me.{w=0.75}{nw}"
+        extend 4kslbol " And it must have been bad if you had to open up to me about it."
+        
+        if Natsuki.isAffectionate(higher=True):
+            n 4fcsajlsbr "N-{w=0.2}not that it's a problem or anything."
+
+        n 3klrss "But even if you can't fix whatever made you upset right now..."
+        n 3knmbo "You can at least begin trying to fix how you feel about it."
+        
+        show natsuki 4knmsssbr
+        menu:
+            n "...Right?"
+
+            "Right.":
+                pass
+
+        n 4fcssssbr "Ehehe.{w=0.75}{nw}"
+        extend 4fchbgsbl " S-{w=0.2}see?{w=1}{nw}"
+        extend 2fcssmsbl " That's the spirit!"
+        n 1ullaj "So just...{w=0.75}{nw}"
+        extend 1tnmbo " take your time with it.{w=1}{nw}"
+        extend 2tlrss " You don't have to feel better {i}instantly{/i}."
+        n 2nsrpo "...I'd actually be jealous if you could."
+        n 4fcsss "Throw on some comfy clothes,{w=0.75}{nw}"
+        extend 4fllss " fire up some dumb old anime..."
+        n 4fcssm "Whatever you think helps best!"
+
+        if Natsuki.isEnamored(higher=True):
+            n 1fsrdvl "...Like spending more time with yours truly,{w=0.2} f-{w=0.2}for example."
+
+        n 2ullfl "It won't be an instant fix,{w=0.75}{nw}"
+        extend 4fnmsl " but that's not the point.{w=1}{nw}"
+        extend 3fchbg " We're just kickstarting your recovery,{w=0.2} that's all!"
+        $ chosen_descriptor = jn_utils.getRandomTease() if Natsuki.isEnamored(higher=True) else player
+        n 3fcsaj "Now hop to it,{w=0.2} [chosen_descriptor] -{w=0.5}{nw}"
+        extend 3fsqbgsbr " I wanna see you smiling again A.S.A.P!{w=0.75}{nw}"
+        extend 4fchsmlsbr " Ehehe."
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_SAD
     return
