@@ -1093,99 +1093,175 @@ init 5 python:
 
 label admission_sick:
     if jn_admissions.last_admission_type == jn_admissions.TYPE_SICK:
-        n 1knmsl "[player]...{w=0.3} you're still feeling sick?"
-        n 1knmbo "How long have you felt like this now?"
+        n 1kcsem "Man...{w=1}{nw}"
+        extend 4knmflsbr " you're really {i}still{/i} feeling sick?{w=0.75}{nw}"
+        extend 4ksrbosbr " Jeez,{w=0.2} [player]..."
+        
+        show natsuki 2knmbosbr
         menu:
-            "A few hours.":
-                n 1kllsr "That's...{w=0.3} not great to hear,{w=0.2} [player]."
-                n 1tnmsr "Perhaps you should get some rest soon{w=0.2} -{w=0.2} hopefully you'll feel better."
+            n "How long have you actually felt like this now?"
 
-                if Natsuki.isEnamored(higher=True):
-                    n 1knmsl "Let me know if it keeps up,{w=0.2} okay?"
+            "A few hours.":
+                n 2tslfl "...Huh."
+                n 2fcsajsbl "W-{w=0.2}well,{w=0.75}{nw}"
+                extend 2flrsssbl " at least that's not so long."
+                n 4fsqpol "But that doesn't mean you should be neglecting yourself either."
+                n 1ullbo "So...{w=1}{nw}"
+                extend 4tnmbo " just make sure you take it easy,{w=0.2} alright?"
+                n 4fcsbgsbr "Sorry,{w=0.2} [player].{w=0.75}{nw}"
+                extend 2fchgn " Looks like it's no adventuring for you today!{w=0.75}{nw}"
+                extend 2fchsm " Ehehe."
 
             "A few days.":
-                n 1fcssl "[player]."
-                n 1fnmca "You need to make sure you see someone soon."
-                n 1knmaj "Especially if you start to hurt anywhere,{w=0.2}  or if you've been sick,{w=0.2} or anything like that..."
-                n 1knmsl "Try and get extra rest too,{w=0.2} okay?"
+                n 4tnmfl "...You're kidding,{w=0.2} right?{w=0.75}{nw}"
+                extend 4knmflsbl " It's already been days?"
+                n 1ncsbo "..."
+                n 2nlrfl "Okay,{w=0.2} look.{w=0.75}{nw}"
+                extend 2fnmca " I get that you know your limits.{w=0.75}{nw}"
+                extend 2fcspu " Just..."
+                n 1fsrpol "...Don't be a dummy about it.{w=1}{nw}"
+                extend 4fnmajlsbl " Seriously.{w=0.75}{nw}"
+                extend 2fnmbolsbl " I don't wanna hear about you getting even worse because you tried toughing it out like some kind of macho."
+                n 2tnmbolsbl "Capiche?"
+
+                if Natsuki.isEnamored(higher=True):
+                    n 4kllsllsbr "...And try to get some more rest too.{w=0.75}{nw}"
+                    extend 4kllsslsbr " F-{w=0.2}for me?"
+                    n 1ksqbol "You sound like you need it."
+
+                else:
+                    n 4kllbolsbr "...And at least try to get some more rest too."
+
+                n 2knmbo "Get well soon,{w=0.2} alright?"
 
             "A week or so.":
-                n 1fnmsl "[player]..."
-                n 1knmsl "Have you seen anybody about this yet?"
+                n 2flrbo "[player]..."
+                n 2fnmbol "You should know by now that I hate nagging.{w=1}{nw}"
+                extend 2ksqsllsbl " Nobody likes a nagger.{w=1}{nw}"
+                extend 2fcssllsbl " But I'd be a lousy friend if I didn't at least {i}ask{/i}."
+                n 4klrbol "So...{w=1}{nw}"
+                extend 4klraj " this...{w=0.75}{nw}"
+                extend 4knmbo " illness of yours."
+                n 4tsrpu "...You {i}have{/i} seen someone about this..."
 
+                show natsuki 4ksqpul
                 menu:
-                    "Yes, I have.":
-                        n 1kllbo "Well...{w=0.3} fine."
-                        n 1knmbo "I...{w=0.3} really hope they were able to help you,{w=0.2} [player]."
-                        n 1knmpu "Make sure you get some extra rest,{w=0.2} okay?"
+                    n "Right?"
 
-                    "No, I haven't.":
-                        n 1fnmpu "[player]...{w=0.3} that's no good."
-                        n 1knmpo "I trust you know your own limits...{w=0.3} but please,{w=0.2} take care of yourself."
-                        n 1klrpol "Your health...{w=0.3} matters to me, you know."
+                    "Yes,{w=0.2} I have.":
+                        n 2fsrpol "Well...{w=1.25}{nw}" 
+                        extend 2nsrpol " fine."
+                        n 2nsraj "I...{w=1}{nw}" 
+                        extend 1ksqbo " just hope they were able to help you,{w=0.2} [player]."
+                        n 4ksqsl "Make sure you get some extra rest,{w=0.2} alright?"
+
+                    "No,{w=0.2} I haven't.":
+                        n 3tnmem "...Seriously?{w=0.75}{nw}"
+                        extend 3ksqgs " Come on,{w=0.2} [player]!{w=1}{nw}"
+                        extend 3fcswrlsbr " How're you meant to get better if you don't even know what's wrong with you?"
+                        n 2ncsbolsbl "..."
+                        n 2nslemlsbl "Yeah...{w=0.3} I know.{w=0.75}{nw}"
+                        extend 4nslpol " I'm not naive.{w=1}{nw}"
+                        extend 4kslsll " I get if you have to pay to see a doctor,{w=0.2} or whatever."
+                        n 1knmsl "...Or if there just isn't any help nearby."
+                        n 1fcssl "Just..."
+                        n 4ksrsl "..."
+                        n 2ksqpusbr "Take things easy.{w=0.75}{nw}"
+                        extend 2knmpusbr " Please?"
+                        n 2ncsfl "If you really can't -{w=0.75}{nw}"
+                        extend 2nslfl " or don't want to -{w=0.75}{nw}"
+                        extend 2nslsl " see anyone..."
+                        n 4fnmsll "Then the least you can do is try to recover the best you can."
+
+                        if Natsuki.isEnamored(higher=True):
+                            n 2knmbol "You can at least manage that.{w=0.75}{nw}"
+                            extend 2kllbol " I know you can.{w=0.75}{nw}"
+                            extend 2kllajl " And besides."
+                            n 4kslsllsbl "...You know your health really matters to me.{w=1.25}{nw}"
+                            extend 4ksqcalsbl " Right?"
+
+                        else:
+                            n 2flrcal "You can at least do that much...{w=1.25}{nw}"
+                            extend 2knmbol " right?"
 
                         # Add pending apology
                         $ Natsuki.addApology(jn_apologies.ApologyTypes.unhealthy)
 
+                $ chosen_descriptor = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else player
+                n 4knmslsbl "I-{w=0.2}I hope you feel better soon,{w=0.2} [chosen_descriptor]."
+                n 1ksrbolsbl "..."
+
             "Longer.":
-                n 1knmpo "..."
-                n 1kllpo "I...{w=0.3} don't really know what to say to you,{w=0.2} [player]."
-                n 1knmpu "I just hope you feel better soon."
-                n 1knmsl "Take it easy,{w=0.2} alright?"
+                n 2knmbosbl "..."
+                n 2klrajsbl "I...{w=1.25}{nw}" 
+                extend 2ksrbosbr " honestly don't really know what to say to you,{w=0.2} [player]."
+                n 4ksqbolsbr "I just hope you feel better soon."
+                n 4knmbosbr "Take it easy,{w=0.2} alright?"
 
-                if Natsuki.isAffectionate():
-                    n 1kllcal "I hate seeing you unwell like this..."
-
-                elif Natsuki.isEnamored(higher=True):
-                    n 1kllsfl "It really hurts me seeing you unwell like this..."
-
-                if Natsuki.isLove(higher=True):
-                    n 1kcssff "I love you,{w=0.2} [player].{w=0.2} Please get well soon."
+                if Natsuki.isEnamored(higher=True):
+                    n 1knmsslsbr "For me?"
+                    n 1ksrbolsbl "..."
 
                 # Add pending apology
                 $ Natsuki.addApology(jn_apologies.ApologyTypes.unhealthy)
 
-
     elif jn_admissions.last_admission_type == jn_admissions.TYPE_HUNGRY:
-        n 1ulrsf "You know,{w=0.2} you can start to feel unwell if you haven't eaten for a while,{w=0.2} [player]."
-        n 1nnmsf "Have you eaten something today?{w=0.2} Like a proper meal?"
+        n 4fcsfl "...Wait.{w=1}{nw}"
+        extend 2tnmfl " Didn't you say you were hungry earlier,{w=0.2} [player]?"
+        n 2fsqsl "You {i}do{/i} know not eating can make you feel just as crappy as being sick,{w=0.75}{nw}"
+        extend 2tsqsl " don't you?"
+        
+        show natsuki 1fcsflsbl
         menu:
-            "Yes, I have.":
-                n 1tllsl "Huh...{w=0.3} then maybe it was something you ate that's making you feel sick?"
-                n 1tnmsl "Go lie down if you need to,{w=0.2} [player].{w=0.2} Alright?"
+            n "Don't tell me you skipped out on your meals today or something."
 
-            "No, I haven't.":
-                n 1fskem "T-then obviously you should have something now,{w=0.2} [player]!"
-                n 1fllpo "It doesn't have to be some big fancy dish or anything,{w=0.2} you know."
-                n 1knmsl "Even something small like some candy or whatever.{w=0.2} Just to get your energy level up."
-                n 1kllpo "That's not much to ask,{w=0.2} is it?"
+            "I've eaten.":
+                n 4tsqpu "...Huh.{w=1}{nw}"
+                extend 2tllpueqm " Then maybe it was something you ate?{w=0.75}{nw}"
+                extend 2tnmbo " Like some undercooked food or something?"
+                n 1tsrbo "..."
+                n 4nlraj "Well,{w=0.75}{nw}"
+                extend 4nlrbo " I guess it doesn't {i}really{/i} matter.{w=0.75}{nw}"
+                extend 2tllsll " Just make sure you rest up if you need to."
+                n 2knmbol "Got it?"
 
-                if Natsuki.isEnamored(higher=True):
-                    n 1kllss "Now go get something already, silly! Ahaha..."
+            "No,{w=0.2} I haven't eaten.":
+                n 4fcsbglsbl "H-{w=0.2}ha!{w=1}{nw}"
+                extend 4fnmgs " I knew it!{w=0.75}{nw}"
+                extend 2fbkwrsbr " What did you seriously {i}expect{/i},{w=0.2} [player]?"
+                n 2fllflsbr "Of {i}course{/i} you're gonna feel miserable if you're running on fumes!{w=0.75}{nw}"
+                extend 2fcsposbr " Anyone would!"
+                n 1nsqposbr "...And trust me.{w=1}{nw}"
+                extend 4kslbolsbr " I would know."
+                n 3fcsfllsbr "Now go sort something out already,{w=0.2} you goof!"
+                extend 3fchsm " Ehehe."
 
     else:
-        n 1knmsl "Feeling under the weather,{w=0.2} [player]?"
+        n 2tnmbosbr "Feeling under the weather,{w=0.2} [player]?"
+        n 2fsqbolsbr "You better not be straining yourself by being here.{w=1}{nw}"
+        extend 2fnmfllsbr " I mean it."
+        n 4fcsfllsbr "I-{w=0.2}it's not that I don't appreciate the company!{w=0.75}{nw}"
+        extend 4knmbolsbl " I do!{w=1}{nw}"
+        extend 4ksrslsbl " It's just..."
+        n 1fcssll "I really don't wanna get in the way of you feeling better.{w=0.75}{nw}"
+        extend 2kllbol " I'm not selfish like that."
+        n 1ncsajl "Just...{w=0.75}{nw}"
+        extend 4nlrsll " let me know if you gotta go rest.{w=0.75}{nw}"
+        extend 4knmbol " Alright?"
 
         if Natsuki.isEnamored(higher=True):
-            n 1kllsl "I wish there was something I could do to help..."
-
-        n 1fwmsl "You aren't straining yourself by being here,{w=0.2} are you?"
-        n 1klrsl "I don't wanna get in the way of you feeling better."
-
-        if Natsuki.isEnamored(higher=True):
-            n 1kwmsll "Your health has to come first over our time together."
+            n 4fcspulsbr "Your health has to come first,{w=0.2} a-{w=0.2}after all."
+            n 1ksrbolsbr "..."
+            
+            if Natsuki.isLove(higher=True):
+                $ chosen_endearment = jn_utils.getRandomEndearment()
+                n 1ksrsslsbr "...Even if I do really want you here,{w=0.2} [chosen_endearment]."
+                n 4knmboleaf "I really hope you get well soon."
 
         else:
-            n 1flrpul "I'm not selfish like that."
-
-        n 1knmpo "So...{w=0.3} promise you'll leave and rest if you have to,{w=0.2} got it?"
-
-        if Natsuki.isLove(higher=True):
-            $ chosen_endearment = jn_utils.getRandomEndearment()
-            n 1knmssl "I love you,{w=0.2} [chosen_endearment].{w=0.2} I...{w=0.3} really hope you get better soon..."
-
-        elif Natsuki.isAffectionate(higher=True):
-            n 1knmbol "I hope you feel better soon,{w=0.2} [player]..."
+            n 4fllajlsbr "I won't be upset or anything,{w=0.75}{nw}"
+            extend 4fllbolsbr " so..."
+            n 1kllbolsbr "..."
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_SICK
     return
