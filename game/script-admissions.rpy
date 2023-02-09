@@ -753,7 +753,7 @@ label admission_hungry:
             n 2nsrfl "Jeez..."
 
         n 1fcsaj "Now go make something already!"
-        n 4nsrslsbr "...And no,{w=0.2} [player],{w=0.75}"
+        n 4nsrslsbr "...And no,{w=0.2} [player],{w=0.75}{nw}"
         extend 4nsqsl " before you ask."
         n 3fcsbg "Junk food doesn't count!"
 
@@ -1283,122 +1283,117 @@ label admission_tired:
     $ total_hours_in_session = jn_utils.get_current_session_length().total_seconds() / 3600
 
     if jn_admissions.last_admission_type == jn_admissions.TYPE_TIRED:
-        n 1unmpu "Huh?{w=0.2} You're still tired?"
-        n 1fnmpo "Did you not get any rest,{w=0.2} [player]?"
-        n 1fllpo "I don't want you getting all cranky..."
-        n 1klrsm "So...{w=0.3} go to bed, alright?"
-        n 1nchbg "I'll see you later,{w=0.2} [player]!"
+        n 1tnmpu "Huh?{w=0.75}{nw}" 
+        extend 2tsqem " You're {i}still{/i} tired?"
+        n 2fnmfl "...Then what're you doing hanging around here?{w=0.5}{nw}"
+        extend 2fllem " Sheesh."
+        n 2fcspo "Sounds like somebody needs another round of shut-eye,{w=0.2} if you ask me.{w=0.75}{nw}"
+        extend 4fsqsm " Ehehe."
+        n 4tsqfl "Well?{w=0.75}{nw}"
+        $ chosen_descriptor = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else player
+        extend 4fcsbg " Off you go,{w=0.2} [chosen_descriptor]!{w=0.75}{nw}"
+        extend 1fchbg " Sleep well!"
 
         if Natsuki.isLove(higher=True):
-            $ chosen_endearment = jn_utils.getRandomEndearment()
-            n 1nchsml "Love you,{w=0.2} [chosen_endearment]!"
+            n 1fchsmleaf "Love you!"
 
         elif Natsuki.isAffectionate(higher=True):
-            n 1fsqsml "Don't let the bed bugs bite!{w=0.2} Ehehe."
+            n 1fchbleme "Don't let the bed bugs bite~!"
 
         $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_TIRED
         return { "quit": None }
 
-    elif jn_admissions.last_admission_type == jn_admissions.TYPE_ANGRY or jn_admissions.last_admission_type == jn_admissions.TYPE_SAD:
-        n 1tllpu "Well,{w=0.2} you did say you weren't happy earlier,{w=0.2} [player]."
-        n 1unmca "If you're already tired,{w=0.2} I think you should sleep on it."
-        n 1unmsr "Are you gonna turn in,{w=0.2} [player]?"
-        menu:
-            "Yes, I will.":
-                n 1fcssm "Good...{w=0.3} you'll feel better soon,{w=0.2} okay?"
-
-                if Natsuki.isAffectionate(higher=True):
-                    n 1nwmsm "I promise."
-
-                n 1nchbg "Sleep well,{w=0.2} [player]!"
-
-                $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_TIRED
-                return { "quit": None }
-
-            "No, not yet.":
-                n 1ulrpo "Well...{w=0.3} if you're sure,{w=0.2} [player]."
-                n 1fsgsm "Now,{w=0.2} let's see if I can't improve your mood,{w=0.2} huh?"
-
     elif jn_admissions.last_admission_type == jn_admissions.TYPE_SICK:
-        n 1ulrpo "I'm really not surprised if you're already sick,{w=0.2} [player]."
-        n 1fnmpo "You should get some rest."
-        n 1kllss "We can talk later,{w=0.2} alright?"
-        n 1knmsm "Take it easy,{w=0.2} [player]!"
+        n 4nllsl "...Yeah.{w=0.75}{nw}"
+        extend 4tnmfl " You know what?{w=1}{nw}"
+        extend 2tnmbo " That'd probably be for the best."
+        n 2klraj "If you're feeling sick and all,{w=0.75}{nw}"
+        extend 2klrbo " like you said."
+        n 1fcsajlsbr "Don't worry,{w=0.2} I'll be fine.{w=1}{nw}"
+        extend 4fcsbglsbr " I always am.{w=1}{nw}"
+        extend 2fcssm " Ehehe."
+        n 2fchbglsbr "Take it easy,{w=0.2} [player]!"
+
+        if Natsuki.isLove(higher=True):
+            n 4fchsmleafsbr "L-{w=0.2}love you!"
+            n 4klrbolsbr "..."
+
+        elif Natsuki.isEnamored(higher=True):
+            n 4ksrbolsbr "..."
+
+        else:
+            n 4ksrbosbl "..."
 
         # Add pending apology
         $ Natsuki.addApology(jn_apologies.ApologyTypes.unhealthy)
-
         $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_SICK
+
         return { "quit": None }
 
     elif jn_admissions.last_admission_type == jn_admissions.TYPE_HUNGRY:
-        n 1fskem "I'm not surprised you're feeling tired if you're hungry!"
-        n 1kchgn "Stop sitting around and go eat something,{w=0.2} [player]!"
-        n 1tnmsl "Just take it easy getting up,{w=0.2} alright?{w=0.2} I don't want you fainting on me."
-        n 1klrsf "And trust me,{w=0.2} I don't think you want that either..."
+        n 4fcsfl "Well,{w=0.75}{nw}"
+        extend 4fcsgs " duh!{w=1}{nw}"
+        extend 2fchgn " Of course you're gonna feel tired if you're hungry!"
+        n 2tsqflsbr "Did you really {i}not{/i} know that?{w=1}{nw}"
+        extend 2fcsslsbr " Jeez."
+        n 4fcsaj "Now quit being lazy,{w=0.2} get off your butt and go get something already!"
+        n 4fcsfl "Sorry [player],{w=0.75}{nw}"
+        extend 3fchgn " but I'm not making it for you!"
 
-    elif total_hours_in_session >= 24:
-        n 1fbkwrl "[player]!"
-        n 1kskem "You've been here for like a day now{w=0.2} -{w=0.2} It's no wonder you're tired!"
-        n 1fnmpo "You better get some sleep right now!{w=0.2} And I don't wanna see you come back until you've slept!"
-        n 1fcspo "Sheesh..."
-        n 1knmpo "Now get going,{w=0.2} [player]!{w=0.2} I'll see you later,{w=0.2} 'kay?"
-        $ chosen_tease = jn_utils.getRandomTease()
-        n 1unmbg "Sleep well,{w=0.2} [chosen_tease]!"
+    elif total_hours_in_session >= 18:
+        n 2fnmgsl "A-{w=0.2}and just who do you have to thank for that?!"
+        n 4fbkwrl "You've been here {i}ages{/i} now,{w=0.2} [player]!{w=1}{nw}"
+        extend 4fnmpol " Did you {i}seriously{/i} not notice the time?"
+        n 1fcsfl "Man...{w=0.75}{nw}"
+        extend 2fsrpo " you {i}really{/i} need to get going."
+        n 2unmfll "Don't get me wrong!{w=0.75}{nw}"
+        extend 4fcsfllsbl " I-{w=0.2}it's not that I don't want you here or anything!{w=1}{nw}"
+
+        if Natsuki.isEnamored(higher=True):
+            extend 4ksrpolsbl " O-{w=0.2}of course I do!{w=1}{nw}"
+
+        else:
+            extend 4fcscalsbl " Obviously."
+
+        n 4fcsajl "But clearly {i}someone{/i} has to set some boundaries around here."
+        n 3fcspol "...So I guess that 'someone' is gonna have to be me.{w=0.75}{nw}"
+        extend 3fsqsm " Ehehe."
+        $ chosen_descriptor = jn_utils.getRandomTease() if Natsuki.isAffectionate(higher=True) else player
+        n 3fcsbg "Now get going already,{w=0.2} [chosen_descriptor]!{w=0.75}{nw}"
+        extend 4fchbg " See you later!"
 
         if Natsuki.isLove(higher=True):
-            n 1uchsml "Love you~!"
+            n 4fchsml "Love you~!"
 
-        elif Natsuki.isAffectionate(higher=True):
-            n 1nllsml "Sweet dreams! Ehehe."
+        elif Natsuki.isEnamored(higher=True):
+            n 4fchsmlsbl "S-{w=0.2}sweet dreams!"
 
         # Add pending apology
         $ Natsuki.addApology(jn_apologies.ApologyTypes.unhealthy)
-
         $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_TIRED
+
         return { "quit": None }
 
-    elif total_hours_in_session >= 12:
-        n 1fbkwr "[player]!"
-        $ chosen_tease = jn_utils.getRandomTease()
-        n 1fnmpo "I'm not surprised you're feeling tired{w=0.2} -{w=0.2} you've been here ages,{w=0.2} [chosen_tease]!"
-        n 1fllpo "You need to get some sleep...{w=0.3} you're gonna be all cranky later at this rate!"
-        n 1kllpo "I appreciate the company but make sure you turn in soon,{w=0.2} alright?"
-
-        if 1knmpul Natsuki.isLove(higher=True):
-            n 1klrpul "You know I don't like it when you don't take care of yourself like this..."
-
-        elif Natsuki.isAffectionate(higher=True):
-            n 1fcspol "You should know better than to treat yourself like this by now,{w=0.2} [player]..."
-
-        n 1fllsfl "Don't let me down,{w=0.2} got it?"
-
-        # Add pending apology
-        $ Natsuki.addApology(jn_apologies.ApologyTypes.unhealthy)
-
-    elif jn_get_current_hour() > 21 or jn_get_current_hour() < 3:
-        n 1fskem "[player]!"
-        n 1fnmem "I'm not surprised you're tired!{w=0.2} Have you even seen the time?!"
-        $ chosen_tease = jn_utils.getRandomTease()
-        n 1knmpu "It's the middle of the night,{w=0.2} [chosen_tease]!"
-        n 1fcsanl "Nnnn...{w=0.3} you should really turn in soon,{w=0.2} you know..."
-        n 1fnmpol "I don't want you to be all cranky later because you didn't get enough sleep."
-        n 1flrpol "And neither do you,{w=0.2} I'm sure."
-        n 1kcspo "Just...{w=0.3} try to get to bed soon,{w=0.2} okay?{w=0.2} {i}Before{/i} your keyboard becomes your pillow."
+    else:
+        n 2tlraj "Feeling tired,{w=0.75}{nw}"
+        extend 2tnmss " huh?"
+        n 1tllss "Well...{w=1}{nw}"
+        extend 4fcsbg " why not grab something to pep yourself up?{w=0.75}{nw}"
+        extend 4fchbg " Duh!"
+        n 3ulraj "I mean...{w=0.75}{nw}"
+        extend 3nsrsssbr " I'm not super into stuff like coffee myself.{w=1}{nw}"
+        extend 4fchgn " But I'd be lying if I said Monika didn't look refreshed after a swig of that stuff!"
+        n 4ullbo "Or...{w=0.75}{nw}"
+        extend 4fllsm " you know.{w=0.75}{nw}"
+        extend 4fsqbg " Just go splash some cold water in your face or something."
+        n 2fsqsm "Ehehe.{w=0.75}{nw}"
+        extend 1nlrss " Nah,{w=0.2} in all seriousness?{w=0.75}{nw}"
+        extend 2tnmbo " Don't feel like you have to stick around or anything."
+        n 2fchgnelg "...Just let me know if you're going {i}before{/i} you faceplant the desk!{w=0.75}{nw}"
+        extend 2fchsm " Ehehe."
 
         if Natsuki.isLove(higher=True):
-            n 1ksqpol "Besides...{w=0.3} you do know I'm not actually strong enough to carry you to bed myself...{w=0.3} right?"
-
-        n 1kllssl "Ahaha..."
-
-        # Add pending apology
-        $ Natsuki.addApology(jn_apologies.ApologyTypes.unhealthy)
-
-    else:
-        n 1knmsl "Feeling tired,{w=0.2} [player]?"
-        n 1kllbo "You should think about turning in soon{w=0.2} -{w=0.2} even just for a nap."
-        n 1fcseml "Don't worry about me if you need to rest!{w=0.2} I'll be fine!"
-        n 1knmpo "Just make sure you let me know when you decide to go,{w=0.2} [player]."
+            n 1fwrsml "Love you too,{w=0.2} [player]~!"
 
     $ jn_admissions.last_admission_type = jn_admissions.TYPE_TIRED
     return
