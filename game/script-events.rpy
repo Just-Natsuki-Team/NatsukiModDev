@@ -44,6 +44,9 @@ image prop hot_chocolate cold = "mod_assets/props/hot_chocolate_cold.png"
 image prop cake lit = "mod_assets/props/cake_lit.png"
 image prop cake unlit = "mod_assets/props/cake_unlit.png"
 
+image prop f14_heart give = "mod_assets/props/f14/give_heart.png"
+image prop f14_heart hold = "mod_assets/props/f14/hold_heart.png"
+
 image prop wintendo_twitch_held free = "mod_assets/props/twitch/held/wintendo_twitch_held_free.png"
 image prop wintendo_twitch_held charging = "mod_assets/props/twitch/held/wintendo_twitch_held_charging.png"
 image prop wintendo_twitch_playing free:
@@ -613,6 +616,15 @@ init python in jn_events:
         affinity_range=(jn_affinity.HAPPY, None),
         natsuki_sprite_code="1uchgneme",
         deco_list=["balloons"],
+        priority=10
+    ))
+
+    # Valentine's day
+    __registerHoliday(JNHoliday(
+        label="holiday_valentines_day",
+        holiday_type=JNHolidayTypes.valentines_day,
+        affinity_range=(jn_affinity.AFFECTIONATE, None),
+        natsuki_sprite_code="1uchgneme",
         priority=10
     ))
 
