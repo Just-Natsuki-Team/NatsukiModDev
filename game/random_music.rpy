@@ -54,8 +54,8 @@ label random_music_change:
         return
 
     $ track_quip = random.choice(jn_random_music._NEW_TRACK_QUIPS)
-    n 1nchbg "[track_quip]{w=2}{nw}"
-    show natsuki 1nchsmeme
+    n 3nchbg "[track_quip]{w=2}{nw}"
+    show natsuki 4nchsmeme
 
     $ jn_custom_music.presentMusicPlayer("playing")
     play audio button_tap_c
@@ -64,8 +64,8 @@ label random_music_change:
     $ jnPause(2)
 
     $ track_followup = random.choice(jn_random_music._NEW_TRACK_FOLLOWUPS)
-    n 1unmbgl "[track_followup]{w=2}{nw}"
-    show natsuki 1fcssm
+    n 2fcssm "[track_followup]{w=2}{nw}"
+    show natsuki 4fcssm
 
     python:
         music_title_and_file = random.choice(
@@ -89,8 +89,8 @@ label random_music_change:
         renpy.notify("Now playing: {0}".format(jn_custom_music._now_playing))
 
     $ track_complete = random.choice(jn_random_music._NEW_TRACK_COMPLETE_LINES)
-    n 1uchbgeme "[track_complete]{w=2}{nw}"
-    show natsuki 1fcssm
+    n 2uchbgeme "[track_complete]{w=2}{nw}"
+    show natsuki 2fcssm
 
     $ jn_custom_music.hideMusicPlayer()
 
@@ -115,11 +115,11 @@ init 5 python:
 
 label random_music_enable:
     n 1unmbg "Ooh!{w=0.5}{nw}"
-    extend 1fchbg " Yeah,{w=0.1} I can do that!"
-    n 1unmss "I'll change it about every fifteen minutes or so then,{w=0.1} 'kay?"
-    n 1uwdaj "Oh!{w=0.5}{nw}"
+    extend 3fchbg " Yeah,{w=0.1} I can do that!"
+    n 3unmss "I'll change it about every fifteen minutes or so then,{w=0.1} 'kay?"
+    n 4uwdaj "Oh!{w=0.5}{nw}"
     extend 1fllbg " I almost forgot {w=0.1}-{w=0.1} let me just check there's actually any music for me to play first."
-    n 1ncsbo "..."
+    n 4ncsbo "..."
 
     if len(jn_utils.getAllDirectoryFiles(
             path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
@@ -127,27 +127,28 @@ label random_music_enable:
         )) >= 2:
         # Proceed if we have at least two tracks
         n 1uchgn "Okaaay!{w=0.2} I think I've got enough to work with here!{w=0.5}{nw}"
-        extend 1nchsm " Ehehe."
-        n 1nsqsm "Don't worry,{w=0.1} [player].{w=0.5}{nw}"
-        extend 1fcsbg " I'll pick good ones!"
+        extend 4nchsm " Ehehe."
+        n 2nsqsm "Don't worry,{w=0.1} [player].{w=0.5}{nw}"
+        extend 2fcsbg " I'll pick good ones!"
+
         $ persistent.jn_random_music_enabled = True
 
     elif preferences.get_volume("music") == 0:
         # Cancel if the player has music volume set to zero
         n 1nsqem "Uh...{w=0.5} huh."
-        n 1tsqca "And how {i}exactly{/i} do you plan to hear it with music turned off?"
-        n 1uchbg "Geez...{w=0.3} you're such a dork sometimes,{w=0.1} [player].{w=0.5}{nw}"
-        extend 1nchsm " Ehehe."
-        n 1fwlsm "Turn it back up,{w=0.1} and then we'll talk.{w=0.2} 'Kay?"
+        n 2tsqca "And how {i}exactly{/i} do you plan to hear it with music turned off?"
+        n 2uchbg "Geez...{w=0.3} you're such a dork sometimes,{w=0.1} [player].{w=0.5}{nw}"
+        extend 4nchsm " Ehehe."
+        n 3fwlsm "Turn it back up,{w=0.1} and then we'll talk.{w=0.2} 'Kay?"
 
     else:
         # Cancel if the player doesn't have a selection of custom music
         n 1tllaj "Uhmm...{w=0.3} [player]?{w=0.5}{nw}"
-        extend 1tnmca " You haven't exactly given me a lot to work with here."
-        n 1unmaj "Can you give me at least a couple of tracks?{w=0.5}{nw}"
-        extend 1tnmpo " You {i}do{/i} remember how do to that,{w=0.1} right?"
+        extend 4tnmca " You haven't exactly given me a lot to work with here."
+        n 2unmaj "Can you give me at least a couple of tracks?{w=0.5}{nw}"
+        extend 2tnmpo " You {i}do{/i} remember how do to that,{w=0.1} right?"
         $ chosen_tease = jn_utils.getRandomTease()
-        n 1uchbg "Just add them to the custom music folder,{w=0.1} [chosen_tease]!"
+        n 3uchbg "Just add them to the custom music folder,{w=0.1} [chosen_tease]!"
 
     jump ch30_loop
 
@@ -170,10 +171,10 @@ init 5 python:
 
 label random_music_disable:
     n 1unmaj "Huh?{w=0.2} Wow.{w=0.5}{nw}"
-    extend 1nsqsf " Are my music choices {i}really{/i} that bad,{w=0.1} [player]?"
-    n 1fsrsm "...Ehehe."
+    extend 2nsqsf " Are my music choices {i}really{/i} that bad,{w=0.1} [player]?"
+    n 4fsrsm "...Ehehe."
     n 1uchbg "I'm just messing with you.{w=0.2} Sure thing!{w=0.5}{nw}"
-    extend 1nchsm " I'll just put it back to the regular music."
+    extend 2nchsm " I'll just put it back to the regular music."
 
     $ jn_custom_music.presentMusicPlayer("playing")
     play audio button_tap_c
@@ -186,7 +187,7 @@ label random_music_disable:
     play music audio.just_natsuki_bgm fadein 2
     $ jnPause(2)
 
-    n 1nwlbg "...And there we go!"
+    n 2nwlbg "...And there we go!"
 
     $ jn_custom_music.hideMusicPlayer()
 

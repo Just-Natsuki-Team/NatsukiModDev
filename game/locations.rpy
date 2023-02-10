@@ -15,8 +15,6 @@ init python in locations:
 init -20 python:
     import os
 
-    JN_LOCATION_ZORDER = 1
-
     class Location(object):
         """
         PROPERTIES:
@@ -190,7 +188,7 @@ init -20 python:
 
             #Draw the room if we're not showing it already
             if room is not None:
-                renpy.show(room, tag="main_bg", zorder=JN_LOCATION_ZORDER)
+                renpy.show(room, tag="main_bg", zorder=store.JN_LOCATION_ZORDER)
 
             else:
                 jn_utils.log("Unable to draw room: no room image was found.")
@@ -207,7 +205,7 @@ init -20 python:
             """
             room = self.location.get_current_room_image()
             if room is not None:
-                renpy.show(room, tag="main_bg", zorder=JN_LOCATION_ZORDER)
+                renpy.show(room, tag="main_bg", zorder=store.JN_LOCATION_ZORDER)
 
             else:
                 jn_utils.log("Unable to show room: no room image was found.")

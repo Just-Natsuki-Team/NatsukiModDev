@@ -36,7 +36,7 @@ screen hotkeys():
 
                         text _("Talk")
                         text _("T")
-
+                        
                         text _("Music")
                         text _("M")
 
@@ -57,26 +57,27 @@ screen hotkeys():
 
                         null width 175 height 30
                         null width 175 height 0
-            
-            hbox:
-                xoffset 300
-                vbox:
-                    box_wrap True
-                    label _("Snap hotkeys") style "check_label"
-                    null height 20
-                    style_prefix "hotkeys"
-                    grid 2 3:
-                        xoffset 20                
-                        spacing 10
 
-                        text _("Place")
-                        text _("1")
+            if persistent.jn_snap_unlocked:
+                hbox:
+                    xoffset 300
+                    vbox:
+                        box_wrap True
+                        label _("Snap hotkeys") style "check_label"
+                        null height 20
+                        style_prefix "hotkeys"
+                        grid 2 3:
+                            xoffset 20                
+                            spacing 10
 
-                        text _("Snap!")
-                        text _("2")
+                            text _("Place")
+                            text _("1")
 
-                        null width 175 height 30
-                        null width 175 height 0
+                            text _("Snap!")
+                            text _("2")
+
+                            null width 175 height 30
+                            null width 175 height 0
 
 # Categorized menu
 ## Similar to MAS' twopane_scrollable menu.
@@ -728,6 +729,7 @@ style choice_button_text is default:
 style quickmenu_text:
     color "#e2d1d1"
     hover_color "#FF8ED0"
+    selected_color "#b59"
     size 14
 
 screen quick_menu():

@@ -19,7 +19,7 @@ label ch30_autoload:
 
 label ch30_visual_setup:
     # Hide everything so we can set up behind the scenes
-    show black zorder 99
+    show black zorder JN_BLACK_ZORDER
 
     # Draw background
     $ main_background.show()
@@ -94,7 +94,7 @@ label ch30_init:
             and not tt_in_session
         ):
             for deco in persistent._jn_holiday_deco_list_on_quit:
-                renpy.show(name="deco {0}".format(deco), zorder=jn_events.JN_EVENT_DECO_ZORDER)
+                renpy.show(name="deco {0}".format(deco), zorder=store.JN_DECO_ZORDER)
 
         else:
             persistent._jn_holiday_deco_list_on_quit = []
@@ -690,28 +690,28 @@ label try_force_quit:
     else:
         # Standard quit behaviour
         if Natsuki.isAffectionate(higher=True):
-            n 1kplpo "W-{w=0.1}wait,{w=0.1} what?{w=0.2} Aren't you going to say goodbye first,{w=0.1} [player]?"
+            n 2kplpo "W-{w=0.1}wait,{w=0.1} what?{w=0.2} Aren't you going to say goodbye first,{w=0.1} [player]?"
 
         elif Natsuki.isNormal(higher=True):
-            n 1kskem "H-{w=0.1}hey!{w=0.2} You aren't just going to leave like that,{w=0.1} are you?"
+            n 4kskem "H-{w=0.1}hey!{w=0.2} You aren't just going to leave like that,{w=0.1} are you?"
 
         elif Natsuki.isDistressed(higher=True):
-            n 1fsqpu "...Really?{w=0.2} I don't even get a 'goodbye' now?"
+            n 2fsqpu "...Really?{w=0.2} I don't even get a 'goodbye' now?"
 
         else:
-            n 1fsqsf "...Oh.{w=0.2} You're leaving."
+            n 2fsqsf "...Oh.{w=0.2} You're leaving."
 
         menu:
             # Back out of quitting
             "Nevermind.":
                 if Natsuki.isAffectionate(higher=True):
-                    n 1kllssl "T-{w=0.1}thanks,{w=0.1} [player].{w=1}{nw}"
+                    n 4kllssl "T-{w=0.1}thanks,{w=0.1} [player].{w=1}{nw}"
                     n 1tllss "Now,{w=0.1} where was I...?{w=1}{nw}"
                     extend 1unmbo " Oh,{w=0.1} right.{w=1}{nw}"
 
                 elif Natsuki.isNormal(higher=True):
-                    n 1flleml "G-{w=0.1}good!{w=1}{nw}"
-                    extend 1kllpol " Good...{w=1}{nw}"
+                    n 2flleml "G-{w=0.1}good!{w=1}{nw}"
+                    extend 2kllpol " Good...{w=1}{nw}"
                     n 1tslpu "Now...{w=0.3} what was I saying again?{w=0.5}{nw}"
                     extend 1nnmbo " Oh,{w=0.1} right.{w=1}{nw}"
 
@@ -721,7 +721,7 @@ label try_force_quit:
 
                 else:
                     n 1fcsfr "Whatever.{w=1}{nw}"
-                    n 1fsqsl "{cps=\7.5}As I was saying.{/cps}{w=1}{nw}"
+                    n 2fsqsl "{cps=\7.5}As I was saying.{/cps}{w=1}{nw}"
 
                 return
 
@@ -729,23 +729,23 @@ label try_force_quit:
             "...":
                 hide screen hkb_overlay
                 if Natsuki.isAffectionate(higher=True):
-                    n 1kwmem "Come on,{w=0.2} [player]...{w=1}{nw}"
+                    n 4kwmem "Come on,{w=0.2} [player]...{w=1}{nw}"
                     play audio glitch_c
                     stop music
-                    n 1kcsup "...!{nw}"
+                    n 2kcsup "...!{nw}"
 
                 elif Natsuki.isNormal(higher=True):
-                    n 1fwmun "...Really,{w=0.2} [player]?{w=1}{nw}"
+                    n 4fwmun "...Really,{w=0.2} [player]?{w=1}{nw}"
                     play audio glitch_c
                     stop music
-                    n 1kcsfu "Hnnng-!{nw}"
+                    n 2kcsfu "Hnnng-!{nw}"
 
                 elif Natsuki.isDistressed(higher=True):
-                    n 1fslun "Don't let the door hit you on the way out.{w=1}{nw}"
-                    extend 1fsqem " Jerk.{w=1}{nw}"
+                    n 2fslun "Don't let the door hit you on the way out.{w=1}{nw}"
+                    extend 2fsqem " Jerk.{w=1}{nw}"
                     play audio glitch_c
                     stop music
-                    n 1fcsan "Nnngg-!{nw}"
+                    n 2fcsan "Nnngg-!{nw}"
 
                 else:
                     n 1fslun "Heh.{w=1}{nw}"
@@ -756,11 +756,11 @@ label try_force_quit:
 
                     if (random.randint(0, 10) == 1):
                         play sound glitch_d loop
-                        show glitch_garbled_red zorder 99 with vpunch
+                        show glitch_garbled_red zorder JN_GLITCH_ZORDER with vpunch
                         $ jnPause(random.randint(4,13), hard=True)
                         stop sound
                         play audio glitch_e
-                        show glitch_garbled_n zorder 99 with hpunch
+                        show glitch_garbled_n zorder JN_GLITCH_ZORDER with hpunch
                         $ jnPause(0.025, hard=True)
                         hide glitch_garbled_n
                         hide glitch_garbled_red
@@ -772,6 +772,6 @@ label try_force_quit:
                     Natsuki.setQuitApology(jn_apologies.ApologyTypes.sudden_leave)
 
                 play audio static
-                show glitch_garbled_b zorder 99 with hpunch
+                show glitch_garbled_b zorder JN_GLITCH_ZORDER with hpunch
                 hide glitch_garbled_b
                 $ renpy.jump("quit")
