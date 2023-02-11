@@ -1910,6 +1910,15 @@ init -1 python in jn_outfits:
         accessory=get_wearable("jn_accessory_hairband_red"),
         hairstyle=get_wearable("jn_hair_twin_buns")
     ))
+    __register_outfit(JNOutfit(
+        reference_name="jn_heart_sweater_outfit",
+        display_name="Heart sweater outfit",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_heart_sweater"),
+        accessory=get_wearable("jn_accessory_hairband_red"),
+        hairstyle=get_wearable("jn_hair_twin_buns")
+    ))
 
     # Internal outfits; used for events, etc. These shouldn't be unlocked!
 

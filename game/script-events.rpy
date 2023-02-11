@@ -2302,8 +2302,160 @@ label holiday_new_years_day:
     return
 
 label holiday_valentines_day:
-    #TODO: writing
+    $ valentine_outfit = jn_outfits.get_outfit("jn_ruffle_neck_sweater_outfit")
+    $ valentine_outfit.unlock()
+    $ jn_outfits.save_temporary_outfit(valentine_outfit)
+    $ player_has_gifted_clothes = len(jn_outfits.filter_wearables(jn_outfits.get_all_wearables(), True, False)) > 0
+    show prop f14_heart hold zorder JN_PROP_ZORDER
     $ jn_events.getHoliday("holiday_valentines_day").run()
+
+    n "...!"
+    n "A-ah!"
+    extend " [player]!"
+    n "Well,"
+    extend " didn't you take your sweet time showing up?"
+    extend " Yeesh!"
+    n "I mean,"
+    extend " come on!"
+    extend " Did you totally forget what day it was or something?"
+    extend " Do I {i}seriously{/i} have to remind you?"
+    n "..."
+    n "...Huh?"
+    extend " What?"
+    n "What's that look for, all of a sudden?"
+
+    if Natsuki.isLove(higher=True):
+        n "O-oh!"
+        extend " Right."
+        extend " T-the chocolates."
+        n "..."
+        n "...Come on, [player]."
+        extend " Isn't it obvious?"
+        extend " Why else do you think I'd magically have a box of them ready?"
+        n "I-I know I can't exactly give you them..."
+        n "Well."
+        extend " Unless you count smearing them all over the screen or something."
+        extend " But..."
+        n "..."
+        n "I had to do something!"
+        extend " A-and not just because we're..."
+        extend " y-you know."
+        n "It's just..."
+        n "..."
+        n "You've..."
+        extend " done so much for me already."
+        extend " You know?"
+        n "...And for such a long time now, too."
+        n "Yeah, you brought me back."
+        extend " Obviously."
+        n "...But it's all the small things I really care about, [player]."
+        extend " It's how many times you've come to visit me."
+        extend " It's how you always let me talk your ears off about random stuff."
+
+        if persistent.jn_custom_outfits_unlocked and player_has_gifted_clothes:
+            n "It's all the new stuff you've just..."
+            extend " given me."
+            extend " Even if I never asked for it."
+
+        n "..."
+        n "...Look."
+        extend " I've never been good at this kind of stuff."
+        extend " I-I always struggle with it."
+        n "Especially when it's all just..." 
+        extend " so new to me."
+        extend " Having someone who..."
+        n "..."
+        n "...Who really cares about me."
+        n "S-someone who loves me."
+
+        n "But what I'm trying to say is..."
+        n "..."
+        n "...It's appreciated, [player]."
+        extend " R-really."
+        n "And you need to know that."
+        extend " Even if it means I gotta feel all awkward in the process."
+        extend " That's what really matters."
+        n "So..."
+        extend " yeah."
+        n "...And [player]?"
+
+        hide prop f14_heart
+        show natsuki x
+        play audio chair_out
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+        $ jnPause(2)
+
+        play audio clothing_ruffle
+        $ jnPause(2.5)
+        play audio kiss
+        $ valentine_special_outfit = jn_outfits.get_outfit("jn_heart_sweater_outfit")
+        $ valentine_special_outfit.unlock()
+        $ jn_outfits.save_temporary_outfit(valentine_special_outfit)
+        show natsuki y at jn_center
+        show prop f14_heart hold
+
+        $ jnPause(3)
+        play audio chair_in
+        $ jnPause(1)
+        hide black with Dissolve(2)
+        $ jnPause(2)
+
+        n "S-surprise."
+        show prop f14_heart give
+        n "H-happy Valentine's day."
+        extend " Ehehe."
+
+    elif Natsuki.isEnamored(higher=True):
+        #TODO: write up
+
+    else:
+        n "...!"
+        n "T-this?!"
+        extend " It's..."
+        n "I-it's...!"
+        n "Nnnnnnnn..."
+        n "W-what do you {i}think{/i} it's for?!"
+        extend " I don't really have to spell it all out, do I?"
+        extend " Jeez!"
+        n "I-It's just...!"
+        n "..."
+        n "Okay,"
+        extend " look."
+        extend " I'm not dumb."
+        n "I know we're not like..."
+        extend " that."
+        extend " But..."
+        n "..."
+        n "It just didn't feel right not doing {i}something{/i}."
+        extend " Think about it, [player]."
+        n "Y-you don't have to be all lovey-dovey with someone to show them they matter!"
+        extend " Despite what all the corny adverts insist."
+        n "...And yes [player], before you say anything."
+        extend " Y-you do matter."
+        n "B-bringing me back,"
+        extend " listening to all my dumb thoughts..."
+
+        if persistent.jn_custom_outfits_unlocked and player_has_gifted_clothes:
+            n "All the new stuff you've given me."
+
+        n "Just..."
+        extend " showing up."
+        n "It's all..."
+        n "..."
+        n "..." #sigh/exhale
+        n "...It's appreciated, [player]."
+        extend " And I had to make sure you knew that."
+        extend " So..."
+        n "..."
+        show prop f14_heart give
+        n "...Here."
+        n "Just pretend you're taking it or something,"
+        extend " I guess."
+        n "H..."
+        extend "happy Valentine's day, [player]."
+
+    # TODO: put away heart chocs
+
     $ jn_events.getHoliday("holiday_valentines_day").complete()
 
     return
