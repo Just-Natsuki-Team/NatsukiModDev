@@ -624,7 +624,8 @@ init python in jn_events:
         label="holiday_valentines_day",
         holiday_type=JNHolidayTypes.valentines_day,
         affinity_range=(jn_affinity.AFFECTIONATE, None),
-        natsuki_sprite_code="1uchgneme",
+        natsuki_sprite_code="1fsrunlsbr",
+        prop_list=["f14_heart hold"],
         priority=10
     ))
 
@@ -2305,94 +2306,173 @@ label holiday_valentines_day:
     $ valentine_outfit = jn_outfits.get_outfit("jn_ruffle_neck_sweater_outfit")
     $ valentine_outfit.unlock()
     $ jn_outfits.save_temporary_outfit(valentine_outfit)
-    $ player_has_gifted_clothes = len(jn_outfits.filter_wearables(jn_outfits.get_all_wearables(), True, False)) > 0
-    show prop f14_heart hold zorder JN_PROP_ZORDER
+    $ player_has_gifted_clothes = len(jn_outfits.JNWearable.filter_wearables(jn_outfits.get_all_wearables(), True, False)) > 0
     $ jn_events.getHoliday("holiday_valentines_day").run()
 
-    n "...!"
-    n "A-ah!"
-    extend " [player]!"
-    n "Well,"
-    extend " didn't you take your sweet time showing up?"
-    extend " Yeesh!"
-    n "I mean,"
-    extend " come on!"
-    extend " Did you totally forget what day it was or something?"
-    extend " Do I {i}seriously{/i} have to remind you?"
-    n "..."
-    n "...Huh?"
-    extend " What?"
-    n "What's that look for, all of a sudden?"
+    n 1uskfllsbr "...!{w=0.75}{nw}"
+    n 1uskwrlsbr "A-{w=0.2}ah!{w=0.75}{nw}"
+    extend 1flrbglsbr " [player]!"
+    n 1fcsajlsbl "Well,{w=1}{nw}"
+    extend 1fcsgslsbl " didn't you take your sweet time showing up?{w=0.75}{nw}"
+    extend 1fllemlsbl " Yeesh!"
+    n 1fcsemlsbl "I mean,{w=0.75}{nw}"
+    extend 1fcsgsl " come on!{w=1}{nw}"
+    extend 1fnmpol " Did you totally forget what day it was or something?{w=1}{nw}"
+    extend 1fsqpol " Do I {i}seriously{/i} have to remind you?"
+    n 1fcswrl "I'm not your personal assistant,{w=0.2} you know!"
+    n 1fsqpol "..."
+    n 1fsqpul "...Huh?{w=0.75}{nw}"
+    extend 1tsqfll " What?"
+    n 1nlrfllsbl "What's that look for,{w=0.5}{nw}" 
+    extend 1knmfllsbl " all of a sudden?"
 
     if Natsuki.isLove(higher=True):
-        n "O-oh!"
-        extend " Right."
-        extend " T-the chocolates."
-        n "..."
-        n "...Come on, [player]."
-        extend " Isn't it obvious?"
-        extend " Why else do you think I'd magically have a box of them ready?"
-        n "I-I know I can't exactly give you them..."
-        n "Well."
-        extend " Unless you count smearing them all over the screen or something."
-        extend " But..."
-        n "..."
-        n "I had to do something!"
-        extend " A-and not just because we're..."
-        extend " y-you know."
-        n "It's just..."
-        n "..."
-        n "You've..."
-        extend " done so much for me already."
-        extend " You know?"
-        n "...And for such a long time now, too."
-        n "Yeah, you brought me back."
-        extend " Obviously."
-        n "...But it's all the small things I really care about, [player]."
-        extend " It's how many times you've come to visit me."
-        extend " It's how you always let me talk your ears off about random stuff."
+        n 1knmbolsbl "..."
+        n 1udweml "O-{w=0.2}oh!{w=0.75}{nw}"
+        extend 1fcseml " Right.{w=1}{nw}"
+        extend 1nsrbolsbl " T-{w=0.2}the chocolates."
+        n 1ksrbolsbl "..."
+        n 1ksqfllsbl "...Come on,{w=0.2} [player].{w=1}{nw}"
+        extend 1knmfllsbl " Isn't it obvious?{w=1}{nw}"
+        extend 1klrfllsbl " Why else do you think I'd {i}magically{/i} have a box of them ready?"
+        n 1ksrslfsbl "...T-{w=0.2}they're yours."
+        n 1fcsajlsbl "I-{w=0.2}I know I can't exactly give you them..."
+        n 1nslpulsbl "Well.{w=1}{nw}"
+        extend 1nslsslsbr " Unless you count smearing them all over the screen or something.{w=1}{nw}"
+        extend 1kslbolsbr " But..."
+        n 1kslunlsbr "..."
+        n 1fcsunlsbr "I had to do something!{w=0.75}{nw}"
+        extend 1flrfllsbr " A-{w=0.2}and not just because we're...{w=1.25}{nw}"
+        extend 1ksrbof " y-{w=0.2}you know."
+        n 1kcsfll "It's just..."
+        n 1kslsll "..."
+        n 1kslpul "You've...{w=0.75}{nw}"
+        extend 1kllbol " really done so much for me already.{w=1}{nw}"
+        extend 1knmbol " You know?"
+        n 1knmfll "...And for a super long time now too."
+        n 1ncsajl "Yeah,{w=0.2} you brought me back.{w=1.25}{nw}"
+        extend 1nsrfsl " Obviously.{w=1}{nw}"
+        extend 1knmbol " But it's all the small things I {i}really{/i} care about,{w=0.2} [player]."
+        n 1kllbol "It's how many times you've come to visit me."
+        n 1kllsslsbr "It's how you always let me talk your ears off about random stuff."
 
         if persistent.jn_custom_outfits_unlocked and player_has_gifted_clothes:
-            n "It's all the new stuff you've just..."
-            extend " given me."
-            extend " Even if I never asked for it."
+            n 1klrajlsbr "It's all the new stuff you've just...{w=1}{nw}"
+            extend 1klrsllsbr " given me.{w=1.25}{nw}"
+            extend 1ksrpol " Even if I never asked for it."
 
-        n "..."
-        n "...Look."
-        extend " I've never been good at this kind of stuff."
-        extend " I-I always struggle with it."
-        n "Especially when it's all just..." 
-        extend " so new to me."
-        extend " Having someone who..."
-        n "..."
-        n "...Who really cares about me."
-        n "S-someone who loves me."
+        n 1kcspulesi "..."
+        n 1ksqsll "...Look.{w=1}{nw}"
+        extend 1klrsll " I've never been good at this kind of stuff.{w=1.25}{nw}"
+        extend 1fcsunlsbl " I-{w=0.2}I always struggle with it."
+        n 1fcspulsbl "Especially when it's all just...{w=0.75}{nw}" 
+        extend 1ksrsllsbl " so new to me.{w=0.75}{nw}"
+        extend 1kllsllsbl " Having someone who..."
+        n 1kllsrlsbl "..."
+        n 1kllfllsbl "...Who really cares about me."
+        n 1knmpulsbl "S-{w=0.2}someone who{w=0.75}{nw}" 
+        extend 1ksrpufsbr " loves{w=0.75}{nw}" 
+        extend 1ksrbofsbr " me."
+        n 1kcsajlsbr "But what I'm trying to say is..."
+        n 1ksrbolsbr "..."
+        n 1knmbolsbr "...It's appreciated,{w=0.2} [player].{w=0.75}{nw}"
+        extend 1knmfllsbr " Really.{w=1}{nw}"
+        extend 1kllbolsbl " A whole lot more than you think."
+        n 1knmbofsbl "And...{w=0.5} I really wanted you to know that."
+        n 1fcsemfsbl "Even if it means I gotta feel all awkward in the process."
+        extend 1ksrbof " That's what {i}really{/i} matters."
+        n 1ksrajf "So...{w=1.25}{nw}"
+        extend 1ksrssf " yeah."
+        n 1ksrfsf "..."
+        n 1knmfsf "...And [player]?"
+        n 1kslcafsbr "..."
 
-        n "But what I'm trying to say is..."
-        n "..."
-        n "...It's appreciated, [player]."
-        extend " R-really."
-        n "And you need to know that."
-        extend " Even if it means I gotta feel all awkward in the process."
-        extend " That's what really matters."
-        n "So..."
-        extend " yeah."
-        n "...And [player]?"
-
-        hide prop f14_heart
-        show natsuki x
+        show natsuki 1fcscafsbr
         play audio chair_out
         show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         $ jnPause(2)
 
         play audio clothing_ruffle
         $ jnPause(2.5)
+        play audio drawer
+        $ jnPause(2.5)
+        play audio clothing_ruffle
+        $ jnPause(5)
         play audio kiss
         $ valentine_special_outfit = jn_outfits.get_outfit("jn_heart_sweater_outfit")
         $ valentine_special_outfit.unlock()
         $ jn_outfits.save_temporary_outfit(valentine_special_outfit)
-        show natsuki y at jn_center
+        show natsuki 1nsrdvfess at jn_center
+
+        $ jnPause(3)
+        play audio chair_in
+        $ jnPause(1)
+        hide black with Dissolve(2)
+        $ jnPause(1)
+
+        n 1fsrssf "S-{w=0.2}surprise."
+        show prop f14_heart give
+        $ chosen_endearment = jn_utils.getRandomEndearment()
+        n 1fchbgfesssbl "H-{w=0.2}happy Valentine's day,{w=0.2} [chosen_endearment].{w=1.25}{nw}"
+        extend 1fchsmfesssbl " Ehehe."
+
+    elif Natsuki.isEnamored(higher=True):
+        n 1uskwrlesh "A-{w=0.2}ah!{w=0.5}{nw}"
+        extend 1udwfll " T-{w=0.2}this thing?"
+        n 1fcsgslsbr "I mean,{w=0.2} it's obviously..."
+        n 1fslunlsbr "..."
+        n 1fcsemlsbr "I-{w=0.2}it's...!"
+        n 1fcsanlsbr "Uuuuuuuu...!"
+        n 1fbkwrlsbr "C-{w=0.2}come on,{w=0.2} [player]!{w=0.75}{nw}"
+        extend 1fnmemlsbl " Can't you read the room by now?{w=1}{nw}"
+        extend 1klrfllsbl " Who {i}else{/i} do you see around here?"
+        n 1flrfllsbl "Jeez...{w=0.75}{nw}"
+        extend 1ksremlsbl " as if this wasn't awkward enough..."
+        n 1fcsunlsbl "..."
+        n 1ncspulesi "..."
+        n 1flrbol "...I made them for you,{w=0.75}{nw}"
+        extend 1fnmbol " okay?{w=1}{nw}"
+        extend 1fslcalsbl " You wouldn't {i}believe{/i} how hard it was to find all this stuff."
+        n 1fcsemfsbl "I-{w=0.2}I know we're not like {i}that{/i}!{w=0.75}{nw}"
+        extend 1flrslf " And I know I can't exactly just hand them over.{w=1}{nw}"
+        extend 1klrbof " But that's not the point at all."
+        n 1klrfll "It's just that..."
+        n 1ksrsll "..."
+        n 1ksrfll "Not doing {i}something{/i}...{w=0.75}{nw}"
+        extend 1fllbol " it just wouldn't have felt right.{w=1}{nw}"
+        extend 1kllbol " N-{w=0.2}not after everything you've done for me."
+        n 1fcscal "...A-{w=0.2}and I don't just mean bringing me back,{w=0.2} [player]."
+        n 1nlrsll "Hearing out all my random thoughts.{w=1}{nw}"
+        extend 1ksrbol " Bothering to come visit me all the time."
+
+        if persistent.jn_custom_outfits_unlocked and player_has_gifted_clothes:
+            n 1fsrsslsbl "E-{w=0.2}even the dumb surprise gifts you {i}insist{/i} on giving me."
+
+        n 1kllajl "It's all..."
+        n 1kslunl "..."
+        n 1ksqbolsbr "...It's appreciated.{w=1}{nw}"
+        extend 1knmbolsbr " Okay?{w=1.25}{nw}"
+        extend 1klrbolsbr " Really."
+        n 1ksrflf "...And I wanted to make sure you know that too."
+        n 1ksrslf "..."
+        n 1ksrajl "So...{w=1}{nw}"
+        extend 1nsrssl " yeah.{w=1.25}{nw}"
+        extend 1nsrcal " Here."
+        show prop f14_heart give
+        $ jnPause(3)
+        n 1ksrcal "..."
+        n 1nnmajl "...And [player]?"
+        n 1fslunlsbl "..."
+
         show prop f14_heart hold
+        show natsuki 1fcsunfsbl
+        play audio chair_out
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+        $ jnPause(2)
+
+        play audio clothing_ruffle
+        $ jnPause(3)
+        show natsuki 1nsrbofsbr at jn_center
 
         $ jnPause(3)
         play audio chair_in
@@ -2400,61 +2480,69 @@ label holiday_valentines_day:
         hide black with Dissolve(2)
         $ jnPause(2)
 
-        n "S-surprise."
         show prop f14_heart give
-        n "H-happy Valentine's day."
-        extend " Ehehe."
-
-    elif Natsuki.isEnamored(higher=True):
-        #TODO: write up
+        n 1fsrfsfsbr "H-{w=0.2}happy Valentine's day."
 
     else:
-        n "...!"
-        n "T-this?!"
-        extend " It's..."
-        n "I-it's...!"
-        n "Nnnnnnnn..."
-        n "W-what do you {i}think{/i} it's for?!"
-        extend " I don't really have to spell it all out, do I?"
-        extend " Jeez!"
-        n "I-It's just...!"
-        n "..."
-        n "Okay,"
-        extend " look."
-        extend " I'm not dumb."
-        n "I know we're not like..."
-        extend " that."
-        extend " But..."
-        n "..."
-        n "It just didn't feel right not doing {i}something{/i}."
-        extend " Think about it, [player]."
-        n "Y-you don't have to be all lovey-dovey with someone to show them they matter!"
-        extend " Despite what all the corny adverts insist."
-        n "...And yes [player], before you say anything."
-        extend " Y-you do matter."
-        n "B-bringing me back,"
-        extend " listening to all my dumb thoughts..."
+        n 1uskflleshsbr "...!{w=0.5}{nw}"
+        n 1fcsgslsbr "T-{w=0.2}this?!{w=0.75}{nw}"
+        extend 1flrgslsbr " It's..."
+        n 1fcsgslsbr "I-{w=0.2}it's...!"
+        n 1fcsanlsbr "Nnnnnnnn...!"
+        n 1fbkwrlsbr "W-{w=0.2}what do you {i}think{/i} it's for?!{w=0.75}{nw}"
+        extend 1flrwrlsbr " I don't {i}really{/i} have to spell it all out,{w=0.2} do I?{w=0.75}{nw}"
+        extend 1fcsemlsbr " Jeez!"
+        n 1fllemlsbr "I-{w=0.2}It's just...!"
+        n 1fslemlsbr "..."
+        n 1kslsllsbr "..."
+        n 1fcsemlsbr "...Okay,{w=0.75}{nw}"
+        extend 1flrbolsbl " look.{w=1}{nw}"
+        extend 1fsrsrlsbl " I'm not dumb."
+        n 1fcsgslsbl "I know we're not like...{w=0.75}{nw}"
+        extend 1fslunfsbl " that.{w=1.5}{nw}"
+        extend 1kslbolsbl " But..."
+        n 1kllbolsbl "..."
+        n 1fcsbolsbr "It just didn't feel right not doing {i}something{/i}.{w=1}{nw}"
+        extend 1fnmbolsbl " Think about it,{w=0.2} [player]."
+        n 1fcsemfsbl "Y-{w=0.2}you don't have to be all lovey-dovey with someone to show them they matter!{w=0.75}{nw}"
+        extend 1fsrcalsbl " Despite what all the corny adverts insist."
+        n 1fsqcalsbl "...And yes [player],{w=0.2} before you say anything.{w=0.75}{nw}"
+        extend 1fcscalsbl " Y-{w=0.2}you do matter."
+        n 1flrcalsbl "B-{w=0.2}bringing me back,{w=0.75}{nw}"
+        extend 1nllbol " listening to all my dumb thoughts..."
 
         if persistent.jn_custom_outfits_unlocked and player_has_gifted_clothes:
-            n "All the new stuff you've given me."
+            n 1kslbolsbr "All the new stuff you've given me."
 
-        n "Just..."
-        extend " showing up."
-        n "It's all..."
-        n "..."
-        n "..." #sigh/exhale
-        n "...It's appreciated, [player]."
-        extend " And I had to make sure you knew that."
-        extend " So..."
-        n "..."
+        n 1ncsemlsbr "E-{w=0.2}even just...{w=1}{nw}"
+        extend 1kslsllsbr " showing up."
+        n 1ncsajlsbr "It's all..."
+        n 1klrbolsbr "..."
+        n 1kcsemlesisbr "..." #sigh/exhale
+        n 1ksqcal "...It's appreciated,{w=0.2} [player].{w=0.75}{nw}"
+        extend 1fcseml " A-{w=0.2}and I had to make sure you knew that."
+        n 1fcscal "W-{w=0.2}whether you wanted to or not."
+        n 1nslajl "So..."
+        n 1fslslf "..."
         show prop f14_heart give
-        n "...Here."
-        n "Just pretend you're taking it or something,"
-        extend " I guess."
-        n "H..."
-        extend "happy Valentine's day, [player]."
+        n 1fcsslfsbr "...Here."
+        n 1fcsajfsbr "Just pretend you're taking it or something,{w=0.75}{nw}"
+        extend 1flrcafsbr " I guess.{w=1.25}{nw}"
+        extend 1fsrpolsbr " Before I change my mind."
+        n 1nsrpolsbr "..."
+        n 1nsrpulsbr "And..."
+        n 1fcssslsbl "H...{w=0.75}{nw}"
+        extend 1fcspolsbl "happy Valentine's day,{w=0.2} [player]."
 
-    # TODO: put away heart chocs
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(2)
+    play audio gift_close
+    $ jnPause(3)
+    play audio drawer
+    hide prop f14_heart
+    $ jnPause(3)
+    hide black with Dissolve(2)
+    $ jnPause(2)
 
     $ jn_events.getHoliday("holiday_valentines_day").complete()
 
