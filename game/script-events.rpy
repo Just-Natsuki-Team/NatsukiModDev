@@ -2390,23 +2390,20 @@ label holiday_valentines_day:
         show natsuki 1fcscafsbr
         play audio chair_out
         show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
-        $ jnPause(2)
+        $ jnPause(3)
 
-        play audio clothing_ruffle
-        $ jnPause(2.5)
         play audio drawer
-        $ jnPause(2.5)
+        $ jnPause(3)
         play audio clothing_ruffle
-        $ jnPause(5)
-        play audio kiss
+
         $ valentine_special_outfit = jn_outfits.get_outfit("jn_heart_sweater_outfit")
         $ valentine_special_outfit.unlock()
         $ jn_outfits.save_temporary_outfit(valentine_special_outfit)
         show natsuki 1nsrdvfess at jn_center
 
-        $ jnPause(3)
+        $ jnPause(5)
         play audio chair_in
-        $ jnPause(1)
+        $ jnPause(2)
         hide black with Dissolve(2)
         $ jnPause(1)
 
@@ -2518,7 +2515,7 @@ label holiday_valentines_day:
         extend 1kslsllsbr " showing up."
         n 1ncsajlsbr "It's all..."
         n 1klrbolsbr "..."
-        n 1kcsemlesisbr "..." #sigh/exhale
+        n 1kcsemlesisbr "..."
         n 1ksqcal "...It's appreciated,{w=0.2} [player].{w=0.75}{nw}"
         extend 1fcseml " A-{w=0.2}and I had to make sure you knew that."
         n 1fcscal "W-{w=0.2}whether you wanted to or not."
@@ -2541,6 +2538,11 @@ label holiday_valentines_day:
     play audio drawer
     hide prop f14_heart
     $ jnPause(3)
+
+    if Natsuki.isLove(higher=True):
+        play audio kiss
+        $ jnPause(2.5)
+
     hide black with Dissolve(2)
     $ jnPause(2)
 
