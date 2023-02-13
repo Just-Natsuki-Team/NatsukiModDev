@@ -633,12 +633,12 @@ init -1 python in jn_outfits:
             # Note that for now, only the clothes are pose-sensitive; all other wearables only need a sitting sprite
 
             if isinstance(wearable, JNClothes):
-                # Clothes have both an arms and body portion, so we must check both exist
-                arms_path = os.path.join(__WEARABLE_BASE_PATH, "arms", wearable.reference_name, pose.name)
-                clothes_path = os.path.join(__WEARABLE_BASE_PATH, "clothes", wearable.reference_name, pose.name)
+                # Clothes have both a sleeves and body portion, so we must check both exist
+                sleeves_path = os.path.join(__WEARABLE_BASE_PATH, "sleeves", wearable.reference_name, "{0}.png".format(pose.name))
+                clothes_path = os.path.join(__WEARABLE_BASE_PATH, "clothes", wearable.reference_name, "{0}.png".format(pose.name))
 
-                if not jn_utils.getFileExists(arms_path) or not jn_utils.getFileExists(clothes_path):
-                    jn_utils.log("Missing clothes/arms sprite(s) for {0}".format(wearable.reference_name))
+                if not jn_utils.getFileExists(sleeves_path) or not jn_utils.getFileExists(clothes_path):
+                    jn_utils.log("Missing clothes/sleeves_path sprite(s) for {0}".format(wearable.reference_name))
                     return False
 
             elif isinstance(wearable, JNHairstyle):
