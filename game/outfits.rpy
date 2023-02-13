@@ -43,7 +43,9 @@ init -1 python in jn_outfits:
         "accessory",
         "clothes",
         "headgear",
-        "necklace"
+        "necklace",
+        "facewear",
+        "back"
     ]
 
     class JNWearable():
@@ -207,56 +209,56 @@ init -1 python in jn_outfits:
         """
         Describes a hairstyle for Natsuki; a wearable with additional functionality specific to hairstyles.
         """
-        def getFolderName():
+        def getFolderName(self):
             return "hair"
 
     class JNEyewear(JNWearable):
         """
         Describes eyewear for Natsuki; a wearable with additional functionality specific to eyewear.
         """
-        def getFolderName():
+        def getFolderName(self):
             return "eyewear"
 
     class JNAccessory(JNWearable):
         """
         Describes an accessory for Natsuki; a wearable with additional functionality specific to accessories.
         """
-        def getFolderName():
+        def getFolderName(self):
             return "accessory"
 
     class JNClothes(JNWearable):
         """
         Describes a set of clothes for Natsuki; a wearable with additional functionality specific to clothes.
         """
-        def getFolderName():
+        def getFolderName(self):
             return "clothes"
 
     class JNHeadgear(JNWearable):
         """
         Describes some headgear for Natsuki; a wearable with additional functionality specific to headgear.
         """
-        def getFolderName():
+        def getFolderName(self):
             return "headgear"
 
     class JNNecklace(JNWearable):
         """
         Describes some headgear for Natsuki; a wearable with additional functionality specific to necklaces.
         """
-        def getFolderName():
+        def getFolderName(self):
             return "necklace"
 
     class JNFacewear(JNWearable):
         """
         Describes some facewear for Natsuki; a wearable with additional functionality specific to facewear.
         """
-        def getFolderName():
+        def getFolderName(self):
             return "facewear"
 
     class JNBack(JNWearable):
         """
         Describes some back item for Natsuki; a wearable with additional functionality specific to back items.
         """
-        def getFolderName():
+        def getFolderName(self):
             return "back"
 
     class JNOutfit():
@@ -943,7 +945,7 @@ init -1 python in jn_outfits:
                 with open(file_path) as wearable_data:
                     if _load_wearable_from_json(json.loads(wearable_data.read())):
                         success_count += 1
-
+            
             except OSError:
                 jn_utils.log("Unable to read file {0}; file could not be found.".format(file_name))
 
