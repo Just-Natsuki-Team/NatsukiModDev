@@ -156,7 +156,7 @@ label greeting_leave_return:
     $ time_since_departure = (datetime.datetime.now() - persistent._jn_player_extended_leave_departure_date).total_seconds() 
 
     if time_since_departure / 2628000 > 3: # Gone more than three months
-        if jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) != jn_farewells.JNExtendedLeaveResponseTypes.unknown:
+        if jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_extended_leave_response) != jn_farewells.JNExtendedLeaveResponseTypes.unknown:
             n 4ksrpu "..."
             n 4uskemlesh "...!{w=0.75}{nw}"
             $ player_initial = jn_utils.getPlayerInitial()
@@ -245,8 +245,8 @@ label greeting_leave_return:
 
     elif time_since_departure / 86400 > 30: # Gone more than a month
         if (
-            jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_days
-            or jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_weeks
+            jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_extended_leave_response) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_days
+            or jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_extended_leave_response) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_weeks
         ):
             n 1uskemlesh "...!{w=0.75}{nw}"
             $ player_initial = jn_utils.getPlayerInitial()
@@ -285,7 +285,7 @@ label greeting_leave_return:
             n 4fchbglsbr "W-{w=0.2}welcome!"
 
     elif time_since_departure / 86400 > 7: # Gone more than a week
-        if jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_apology_type_on_quit) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_days:
+        if jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_extended_leave_response) == jn_farewells.JNExtendedLeaveResponseTypes.a_few_days:
             n 1nsqsll "..."
             n 2fsqsll "[player].{w=1}{nw}"
             extend 2fsqajl " What do you call this?"
@@ -316,7 +316,7 @@ label greeting_leave_return:
     else: # Gone less than a week
         n 1fsqss "Well,{w=0.75}{nw}"
         extend 3fsqsm " look who we have here."
-        n 31tsqct "...And you said you'd be gone for a while."
+        n 3tsqct "...And you said you'd be gone for a while."
         n 3usqsm "..."
         n 1fchsm "Ehehe.{w=0.75}{nw}"
         extend 1fchbg " Relax!"
