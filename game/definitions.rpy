@@ -17,6 +17,16 @@ init -990 python:
     import easter
     _easter = easter.easter(datetime.datetime.today().year)
 
+    # zorder constants; use these in place of hard-coded values!
+    # Remember that higher zorder values are displayed closer to the player!
+    JN_GLITCH_ZORDER = 99
+    JN_BLACK_ZORDER = 10
+    JN_OVERLAY_ZORDER = 5
+    JN_PROP_ZORDER = 4
+    JN_NATSUKI_ZORDER = 3
+    JN_DECO_ZORDER = 2
+    JN_LOCATION_ZORDER = 1
+
 define JN_NEW_YEARS_DAY = datetime.date(datetime.date.today().year, 1, 1)
 define JN_VALENTINES_DAY = datetime.date(datetime.date.today().year, 2, 14)
 define JN_EASTER = datetime.date(_easter.year, _easter.month, _easter.day)
@@ -921,7 +931,7 @@ init -3 python:
 
     def jnPause(delay, hard=True):
         """
-        Equivalent to jnPause, but we assume a hard pause so players cannot skip.
+        Equivalent to Ren'Py's pause, but we assume a hard pause so players cannot skip.
 
         IN:
             - delay - int/decimal amount of time in seconds to wait for
@@ -1018,7 +1028,15 @@ init -990 python in jn_globals:
         "[player]!{w=0.2} What's on your mind?",
         "Ooh!{w=0.2} What did you wanna talk about?",
         "I'm all ears,{w=0.1} [player]!",
-        "I've always got time for you,{w=0.1} [player]!"
+        "I've always got time for you,{w=0.1} [player]!",
+        "Hey!{w=0.2} What's up,{w=0.2} [player]?",
+        "What have you got for me?{w=0.2} Ehehe.",
+        "[player]!{w=0.2} What's new?",
+        "[player]!{w=0.2} You wanna talk?",
+        "Shoot,{w=0.2} [player]!{w=0.3} Ehehe.",
+        "Shoot,{w=0.2} [player]!",
+        "Oh!{w=0.2} Oh!{w=0.2} You got something for me?",
+        "Talk to me,{w=0.2} [player]!{w=0.3} Ehehe."
     ]
 
     # Flavor text for the talk menu at medium affinity
@@ -1031,7 +1049,9 @@ init -990 python in jn_globals:
         "Huh?{w=0.2} What's up?",
         "You wanna share something?",
         "What's new,{w=0.1} [player]?",
-        "'Sup,{w=0.1} [player]?"
+        "'Sup,{w=0.1} [player]?",
+        "You wanna talk?",
+        "Hey,{w=0.2} [player]!"
     ]
 
     # Flavor text for the talk menu at low affinity
@@ -1818,7 +1838,8 @@ init -100 python in jn_utils:
 
         if store.persistent.affinity >= (store.persistent._jn_gs_aff + 250):
             store.persistent.affinity = store.persistent._jn_gs_aff
-            jn_utils.log("434845415421".decode("hex"))
+            jn_utils.log("434346".decode("hex"))
+            store.persistent._jn_pic = True
 
         else:
             store.persistent._jn_gs_aff = store.persistent.affinity

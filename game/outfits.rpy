@@ -43,7 +43,9 @@ init -1 python in jn_outfits:
         "accessory",
         "clothes",
         "headgear",
-        "necklace"
+        "necklace",
+        "facewear",
+        "back"
     ]
 
     class JNWearable():
@@ -207,37 +209,57 @@ init -1 python in jn_outfits:
         """
         Describes a hairstyle for Natsuki; a wearable with additional functionality specific to hairstyles.
         """
-        pass
+        def getFolderName(self):
+            return "hair"
 
     class JNEyewear(JNWearable):
         """
         Describes eyewear for Natsuki; a wearable with additional functionality specific to eyewear.
         """
-        pass
+        def getFolderName(self):
+            return "eyewear"
 
     class JNAccessory(JNWearable):
         """
         Describes an accessory for Natsuki; a wearable with additional functionality specific to accessories.
         """
-        pass
+        def getFolderName(self):
+            return "accessory"
 
     class JNClothes(JNWearable):
         """
         Describes a set of clothes for Natsuki; a wearable with additional functionality specific to clothes.
         """
-        pass
+        def getFolderName(self):
+            return "clothes"
 
     class JNHeadgear(JNWearable):
         """
-        Describes some headgear for Natsuki; a wearable with additional functionality specific to clothes.
+        Describes some headgear for Natsuki; a wearable with additional functionality specific to headgear.
         """
-        pass
+        def getFolderName(self):
+            return "headgear"
 
     class JNNecklace(JNWearable):
         """
-        Describes some headgear for Natsuki; a wearable with additional functionality specific to clothes.
+        Describes some headgear for Natsuki; a wearable with additional functionality specific to necklaces.
         """
-        pass
+        def getFolderName(self):
+            return "necklace"
+
+    class JNFacewear(JNWearable):
+        """
+        Describes some facewear for Natsuki; a wearable with additional functionality specific to facewear.
+        """
+        def getFolderName(self):
+            return "facewear"
+
+    class JNBack(JNWearable):
+        """
+        Describes some back item for Natsuki; a wearable with additional functionality specific to back items.
+        """
+        def getFolderName(self):
+            return "back"
 
     class JNOutfit():
         """
@@ -255,7 +277,9 @@ init -1 python in jn_outfits:
             accessory=None,
             eyewear=None,
             headgear=None,
-            necklace=None
+            necklace=None,
+            facewear=None,
+            back=None
         ):
             """
             Constructor.
@@ -271,6 +295,8 @@ init -1 python in jn_outfits:
                 - eyewear - JNEyewear associated with this outfit. Optional.
                 - headgear - JNHeadgear associated with this outfit. Optional.
                 - necklace - JNNecklace associated with this outfit. Optional.
+                - facewear - JNFacialwear associated with this outfit. Optional.
+                - back - JNBack associated with this outfit. Optional.
             """
             # Clothes are required
             if clothes is None:
@@ -292,6 +318,8 @@ init -1 python in jn_outfits:
             self.eyewear = eyewear
             self.headgear = headgear
             self.necklace = necklace
+            self.facewear = facewear
+            self.back = back
 
         @staticmethod
         def load_all():
@@ -320,7 +348,9 @@ init -1 python in jn_outfits:
             has_accessory=None,
             has_eyewear=None,
             has_headgear=None,
-            has_necklace=None
+            has_necklace=None,
+            has_facewear=None,
+            has_back=None
         ):
             """
             Returns a filtered list of outfits, given an outfit list and filter criteria.
@@ -334,6 +364,8 @@ init -1 python in jn_outfits:
                 - has_eyewear - the boolean has_eyewear state to filter for
                 - has_headgear - the boolean has_headgear state to filter for
                 - has_necklace - the boolean has_necklace state to filter for
+                - has_facewear - the boolean has_facewear state to filter for
+                - has_back - the boolean has_back state to filter for
 
             OUT:
                 - list of JNOutfit outfits matching the search criteria
@@ -348,7 +380,9 @@ init -1 python in jn_outfits:
                     has_accessory,
                     has_eyewear,
                     has_headgear,
-                    has_necklace
+                    has_necklace,
+                    has_facewear,
+                    has_back
                 )
             ]
 
@@ -389,6 +423,12 @@ init -1 python in jn_outfits:
 
             if self.necklace and not self.necklace.unlocked:
                 self.necklace.unlock()
+            
+            if self.facewear and not self.facewear.unlocked:
+                self.facewear.unlock()
+
+            if self.back and not self.back.unlocked:
+                self.back.unlock()
 
         def lock(self):
             """
@@ -424,6 +464,12 @@ init -1 python in jn_outfits:
             if self.necklace and isinstance(self.necklace, JNNecklace):
                 outfit_dict["necklace"] = self.necklace.reference_name
 
+            if self.facewear and isinstance(self.necklace, JNFacewear):
+                outfit_dict["facewear"] = self.facewear.reference_name
+
+            if self.back and isinstance(self.back, JNBack):
+                outfit_dict["back"] = self.back.reference_name
+
             return json.dumps(outfit_dict)
 
         def __load(self):
@@ -454,7 +500,9 @@ init -1 python in jn_outfits:
             has_accessory=None,
             has_eyewear=None,
             has_headgear=None,
-            has_necklace=None
+            has_necklace=None,
+            has_facewear=None,
+            has_back=None
         ):
             """
             Returns True, if the outfit meets the filter criteria. Otherwise False.
@@ -467,6 +515,8 @@ init -1 python in jn_outfits:
                 - has_eyewear - the boolean has_eyewear state to filter for
                 - has_headgear - the boolean has_headgear state to filter for
                 - has_necklace - the boolean has_necklace state to filter for
+                - has_facewear - the boolean has_facewear state to filter for
+                - has_back - the boolean has_back state to filter for
 
             OUT:
                 - True, if the outfit meets the filter criteria. Otherwise False
@@ -490,6 +540,12 @@ init -1 python in jn_outfits:
                 return False
 
             elif has_necklace is not None and bool(self.has_necklace) != has_necklace:
+                return False
+
+            elif has_facewear is not None and bool(self.has_facewear) != has_facewear:
+                return False
+
+            elif has_back is not None and bool(self.has_back) != has_back:
                 return False
 
             return True
@@ -518,6 +574,12 @@ init -1 python in jn_outfits:
 
             if not outfit.necklace:
                 outfit.necklace = get_wearable("jn_none")
+
+            if not outfit.facewear:
+                outfit.facewear = get_wearable("jn_none")
+
+            if not outfit.back:
+                outfit.back = get_wearable("jn_none")
 
             __ALL_OUTFITS[outfit.reference_name] = outfit
             if outfit.reference_name not in store.persistent.jn_outfit_list:
@@ -557,41 +619,44 @@ init -1 python in jn_outfits:
     def _check_wearable_sprites(wearable):
         """
         Checks sprite paths based on wearable type to ensure all required assets exist.
-        IN:
-            - wearable - the wearable to test
-        """
 
-        WEARABLE_TYPE_PATH_MAP = {
-            JNHairstyle: "hair",
-            JNEyewear: "eyewear",
-            JNAccessory: "accessory",
-            JNClothes: "clothes",
-            JNHeadgear: "headgear",
-            JNNecklace: "necklace"
-        }
+        IN:
+            - wearable - the JNWearable wearable to test
+
+        OUT:
+            - True if all required assets for the wearable exist, otherwise False
+        """
+        WEARABLE_COMMON_PATH = os.path.join(__WEARABLE_BASE_PATH, wearable.getFolderName())
 
         for pose in store.JNPose:
-            # Set up the base path, given by the pose
-            resource_path = os.path.join(
-                __WEARABLE_BASE_PATH,
-                pose.name,
-                WEARABLE_TYPE_PATH_MAP[type(wearable)],
-                wearable.reference_name
-            )
 
-            # Hairstyles have two sprites for a given pose (front and back), so we must check both exist
-            if isinstance(wearable, JNHairstyle):
-                if (
-                    not jn_utils.getFileExists(os.path.join(resource_path, "back.png"))
-                    or not jn_utils.getFileExists(os.path.join(resource_path, "bangs.png"))
-                ):
-                    jn_utils.log("Missing back/bangs sprite(s) for {0}: check {1}".format(wearable.reference_name, resource_path))
+            # Note that for now, only the clothes are pose-sensitive; all other wearables only need a sitting sprite
+
+            if isinstance(wearable, JNClothes):
+                # Clothes have both an arms and body portion, so we must check both exist
+                arms_path = os.path.join(__WEARABLE_BASE_PATH, "arms", wearable.reference_name, pose.name)
+                clothes_path = os.path.join(__WEARABLE_BASE_PATH, "clothes", wearable.reference_name, pose.name)
+
+                if not jn_utils.getFileExists(arms_path) or not jn_utils.getFileExists(clothes_path):
+                    jn_utils.log("Missing clothes/arms sprite(s) for {0}".format(wearable.reference_name))
                     return False
 
-            # Any other wearable only has one sprite for a given pose
-            elif not jn_utils.getFileExists(os.path.join(resource_path, "{0}.png".format(pose.name))):
-                jn_utils.log("Missing sprite(s) for {0}: check {1}".format(wearable.reference_name, resource_path))
-                return False
+            elif isinstance(wearable, JNHairstyle):
+                # Hairstyles have two sprites for a given pose (front/bangs and back), so we must check both exist
+                back_path = os.path.join(WEARABLE_COMMON_PATH, wearable.reference_name, "sitting", "back.png")
+                bangs_path = os.path.join(WEARABLE_COMMON_PATH, wearable.reference_name, "sitting", "bangs.png")
+
+                if not jn_utils.getFileExists(back_path) or not jn_utils.getFileExists(bangs_path):
+                    jn_utils.log("Missing back/bangs sprite(s) for {0}".format(wearable.reference_name))
+                    return False
+
+            else:
+                # Any other wearable only has one sprite for a given pose
+                resource_path = os.path.join(WEARABLE_COMMON_PATH, wearable.reference_name, "sitting.png")
+
+                if not jn_utils.getFileExists(resource_path):
+                    jn_utils.log("Missing sprite(s) for {0}: check {1}".format(wearable.reference_name, resource_path))
+                    return False
 
         return True
 
@@ -660,6 +725,12 @@ init -1 python in jn_outfits:
             elif json["category"] == "necklace":
                 wearable = JNNecklace(**kwargs)
 
+            elif json["category"] == "facewear":
+                wearable = JNFacewear(**kwargs)
+
+            elif json["category"] == "back":
+                wearable = JNBack(**kwargs)
+
             # Finally, make sure the resources necessary for this wearable exist
             if not _check_wearable_sprites(wearable):
                 jn_utils.log("Cannot load wearable {0} as one or more sprites are missing.".format(wearable.reference_name))
@@ -698,6 +769,8 @@ init -1 python in jn_outfits:
             or "eyewear" in json and not isinstance(json["eyewear"], basestring)
             or "headgear" in json and not isinstance(json["headgear"], basestring)
             or "necklace" in json and not isinstance(json["necklace"], basestring)
+            or "facewear" in json and not isinstance(json["facewear"], basestring)
+            or "back" in json and not isinstance(json["back"], basestring)
         ):
             jn_utils.log("Cannot load outfit as one or more attributes are the wrong data type.")
             return False
@@ -737,6 +810,14 @@ init -1 python in jn_outfits:
             jn_utils.log("Cannot load outfit {0} as specified necklace does not exist.".format(json["reference_name"]))
             return False
 
+        elif "facewear" in json and not json["facewear"] in __ALL_WEARABLES:
+            jn_utils.log("Cannot load outfit {0} as specified facewear does not exist.".format(json["reference_name"]))
+            return False
+
+        elif "back" in json and not json["back"] in __ALL_WEARABLES:
+            jn_utils.log("Cannot load outfit {0} as specified back does not exist.".format(json["reference_name"]))
+            return False
+
         else:
             outfit = JNOutfit(
                 reference_name=json["reference_name"],
@@ -748,7 +829,9 @@ init -1 python in jn_outfits:
                 accessory=__ALL_WEARABLES[json["accessory"]] if "accessory" in json else None,
                 eyewear=__ALL_WEARABLES[json["eyewear"]] if "eyewear" in json else None,
                 headgear=__ALL_WEARABLES[json["headgear"]] if "headgear" in json else None,
-                necklace=__ALL_WEARABLES[json["necklace"]]  if "necklace" in json else None
+                necklace=__ALL_WEARABLES[json["necklace"]]  if "necklace" in json else None,
+                facewear=__ALL_WEARABLES[json["facewear"]]  if "facewear" in json else None,
+                back=__ALL_WEARABLES[json["back"]]  if "back" in json else None
             )
 
             # Sanity check components to make sure the components are applicable to the slots they have been assigned to
@@ -776,6 +859,14 @@ init -1 python in jn_outfits:
                 jn_utils.log("Cannot load outfit {0} as specified necklace is not a valid necklace.".format(outfit.reference_name))
                 return False
 
+            elif outfit.facewear and not isinstance(outfit.facewear, JNFacewear):
+                jn_utils.log("Cannot load outfit {0} as specified facewear is not a valid facewear.".format(outfit.reference_name))
+                return False
+
+            elif outfit.back and not isinstance(outfit.back, JNBack):
+                jn_utils.log("Cannot load outfit {0} as specified back is not a valid back.".format(outfit.reference_name))
+                return False
+
             # Make sure locks aren't being bypassed with this outfit by locking the outfit if any components are locked
             if outfit.unlocked:
                 if (
@@ -785,6 +876,8 @@ init -1 python in jn_outfits:
                     or outfit.eyewear and not outfit.eyewear.unlocked
                     or outfit.headgear and not outfit.headgear.unlocked
                     or outfit.necklace and not outfit.necklace.unlocked
+                    or outfit.facewear and not outfit.facewear.unlocked
+                    or outfit.back and not outfit.back.unlocked
                 ):
                     jn_utils.log("Outfit {0} contains one or more locked components; locking outfit.".format(outfit.reference_name))
                     outfit.unlocked = False
@@ -852,7 +945,7 @@ init -1 python in jn_outfits:
                 with open(file_path) as wearable_data:
                     if _load_wearable_from_json(json.loads(wearable_data.read())):
                         success_count += 1
-
+            
             except OSError:
                 jn_utils.log("Unable to read file {0}; file could not be found.".format(file_name))
 
@@ -952,17 +1045,22 @@ init -1 python in jn_outfits:
         """
         Saves the given outfit as the designated temporary outfit.
         The temporary outfit is not persisted between game exit/reload.
+
         IN:
             - outfit - the JNOutfit to use as the base for the temporary outfit
         """
         temporary_outfit = get_outfit("jn_temporary_outfit")
         temporary_outfit.clothes = outfit.clothes
         temporary_outfit.hairstyle = outfit.hairstyle
-        temporary_outfit.accessory = outfit.accessory
-        temporary_outfit.eyewear = outfit.eyewear
-        temporary_outfit.headgear = outfit.headgear
-        temporary_outfit.necklace = outfit.necklace
+        temporary_outfit.accessory = get_wearable("jn_none") if not outfit.accessory else outfit.accessory
+        temporary_outfit.eyewear = get_wearable("jn_none") if not outfit.eyewear else outfit.eyewear
+        temporary_outfit.headgear = get_wearable("jn_none") if not outfit.headgear else outfit.headgear
+        temporary_outfit.necklace = get_wearable("jn_none") if not outfit.necklace else outfit.necklace
+        temporary_outfit.facewear = get_wearable("jn_none") if not outfit.facewear else outfit.facewear
+        temporary_outfit.back = get_wearable("jn_none") if not outfit.back else outfit.back
+
         store.Natsuki.setOutfit(temporary_outfit, persist=False)
+
         return True
 
     def save_custom_outfit(outfit):
@@ -987,7 +1085,9 @@ init -1 python in jn_outfits:
             accessory=outfit.accessory,
             eyewear=outfit.eyewear,
             headgear=outfit.headgear,
-            necklace=outfit.necklace
+            necklace=outfit.necklace,
+            facewear=outfit.facewear,
+            back=outfit.back
         )
 
         # Create directory if it doesn't exist
@@ -1383,12 +1483,6 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
-        reference_name="jn_clothes_sparkly_ballgown",
-        display_name="Sparkly ballgown",
-        unlocked=False,
-        is_jn_wearable=True
-    ))
-    __register_wearable(JNClothes(
         reference_name="jn_clothes_bee_off_shoulder_sweater",
         display_name="Bee off-shoulder sweater",
         unlocked=False,
@@ -1440,6 +1534,12 @@ init -1 python in jn_outfits:
         reference_name="jn_clothes_bunny_pajamas",
         display_name="Bunny pajamas",
         unlocked=True,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_ruffle_neck_sweater",
+        display_name="Ruffle neck sweater",
+        unlocked=False,
         is_jn_wearable=True
     ))
 
@@ -1637,6 +1737,34 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
 
+    # Official JN facewear
+    __register_wearable(JNFacewear(
+        reference_name="jn_facewear_sprinkles",
+        display_name="Sprinkles",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNFacewear(
+        reference_name="jn_facewear_plasters",
+        display_name="Plasters",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+
+    # Official JN back items
+    __register_wearable(JNBack(
+        reference_name="jn_back_cat_tail",
+        display_name="Cat tail",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNBack(
+        reference_name="jn_back_fox_tail",
+        display_name="Fox tail",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+
     # Starter official JN outfits
     __register_outfit(JNOutfit(
         reference_name="jn_school_uniform",
@@ -1752,7 +1880,8 @@ init -1 python in jn_outfits:
         clothes=get_wearable("jn_clothes_skater_shirt"),
         hairstyle=get_wearable("jn_hair_twintails_white_ribbons"),
         accessory=get_wearable("jn_accessory_double_white_hairbands"),
-        necklace=get_wearable("jn_necklace_twirled_choker")
+        necklace=get_wearable("jn_necklace_twirled_choker"),
+        facewear=get_wearable("jn_facewear_plasters")
     ))
     __register_outfit(JNOutfit(
         reference_name="jn_cosy_cardigan_outfit",
@@ -1763,6 +1892,34 @@ init -1 python in jn_outfits:
         accessory=get_wearable("jn_accessory_hairband_red"),
         headgear=get_wearable("jn_headgear_teddy_hairpins"),
         hairstyle=get_wearable("jn_hair_twintails")
+    ))
+    __register_outfit(JNOutfit(
+        reference_name="jn_pastel_goth_getup",
+        display_name="Pastel goth getup",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_cosy_cardigan"),
+        accessory=get_wearable("jn_accessory_hairband_white"),
+        hairstyle=get_wearable("jn_hair_twintails"),
+        facewear=get_wearable("jn_facewear_sprinkles")
+    ))
+    __register_outfit(JNOutfit(
+        reference_name="jn_ruffle_neck_sweater_outfit",
+        display_name="Ruffle neck sweater outfit",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_ruffle_neck_sweater"),
+        accessory=get_wearable("jn_accessory_hairband_red"),
+        hairstyle=get_wearable("jn_hair_twin_buns")
+    ))
+    __register_outfit(JNOutfit(
+        reference_name="jn_heart_sweater_outfit",
+        display_name="Heart sweater outfit",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_heart_sweater"),
+        accessory=get_wearable("jn_accessory_hairband_red"),
+        hairstyle=get_wearable("jn_hair_twin_buns")
     ))
 
     # Internal outfits; used for events, etc. These shouldn't be unlocked!
@@ -1850,11 +2007,11 @@ init -1 python in jn_outfits:
 label outfits_wear_outfit:
     if not jn_outfits.get_all_outfits():
         # No outfits, no point proceeding
-        n 1tnmbo "Huh?{w=0.5}{nw}"
+        n 4tnmbo "Huh?{w=0.5}{nw}"
         extend 1fchbg " I don't {i}have{/i} any other outfits, dummy!"
         jump ch30_loop
 
-    n 1unmaj "Huh?{w=0.2} You want me to put on another outfit?"
+    n 4unmaj "Huh?{w=0.2} You want me to put on another outfit?"
     n 1fchbg "Sure thing!{w=0.5}{nw}"
     extend 1unmbg " What do you want me to wear?{w=1.5}{nw}"
     show natsuki idle at jn_left
@@ -1878,7 +2035,7 @@ label outfits_wear_outfit:
     if isinstance(_return, jn_outfits.JNOutfit):
         # Wear the chosen outfit
         $ outfit_name = _return.display_name.lower()
-        n 1unmaj "Oh?{w=0.2} You want me to wear my [outfit_name]?{w=0.5}{nw}"
+        n 4unmaj "Oh?{w=0.2} You want me to wear my [outfit_name]?{w=0.5}{nw}"
         extend 1uchbg " Gotcha!"
         n 1nchsm "Just give me a second...{w=2}{nw}"
 
@@ -1887,17 +2044,17 @@ label outfits_wear_outfit:
         with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
 
         n 1nchbg "Okaaay!"
-        n 1tnmsm "How do I look,{w=0.1} [player]?{w=0.5}{nw}"
-        extend 1flldvl " Ehehe."
+        n 4tnmsm "How do I look,{w=0.1} [player]?{w=0.5}{nw}"
+        extend 4flldvl " Ehehe."
         $ persistent.jn_natsuki_auto_outfit_change_enabled = False
 
     elif _return == "random":
         # Wear a random unlocked outfit
         n 1fchbg "You got it!{w=1.5}{nw}"
-        extend 1fslss " Now what have we got here...{w=1.5}{nw}"
+        extend 3fslss " Now what have we got here...{w=1.5}{nw}"
         n 1ncssr "...{w=1.5}{nw}"
-        n 1fnmbg "Aha!{w=1.5}{nw}"
-        extend 1fchbg " This'll do.{w=1.5}{nw}"
+        n 4fnmbg "Aha!{w=1.5}{nw}"
+        extend 4fchbg " This'll do.{w=1.5}{nw}"
         extend 1uchsm " One second!"
 
         play audio clothing_ruffle
@@ -1918,7 +2075,7 @@ label outfits_wear_outfit:
         # Nevermind
         n 1nnmbo "Oh.{w=1.5}{nw}"
         extend 1nllaj " Well, that's fine."
-        n 1nsrpol "I didn't wanna change anyway."
+        n 3nsrpol "I didn't wanna change anyway."
 
     return
 
@@ -1946,7 +2103,7 @@ label outfits_reload:
 
 # Asking Natsuki to suggest a new outfit; leads to the outfit creator flow
 label outfits_suggest_outfit:
-    n 1unmaj "Ooh!{w=1.5}{nw}"
+    n 4unmaj "Ooh!{w=1.5}{nw}"
     extend 1fchbg " I'm always open to a suggestion!{w=0.5}{nw}"
     extend 1unmss " What did you have in mind?"
     python:
@@ -1965,7 +2122,7 @@ label outfits_remove_outfit:
     if len(jn_outfits._SESSION_NEW_UNLOCKS):
         # Prevent the player telling Natsuki to delete something she could be about to gift by popping it early, and removing from event list
         n 1nsqpu "...Wait.{w=1}{nw}"
-        extend 1fnmpo " Are you trying to hide something?"
+        extend 3fnmpo " Are you trying to hide something?"
         n 1fcspolesi "At least show me what it is first!"
 
         $ jn_rm_topic_from_event_list("new_wearables_outfits_unlocked")
@@ -2014,7 +2171,7 @@ label outfits_remove_outfit:
             "Yes, remove [outfit_name].":
                 if Natsuki.isWearingOutfit(_return.reference_name):
                     # Change Natsuki out of the uniform to be removed, if she's wearing it
-                    n 1uwdaj "Oh! I totally forgot I'm wearing it already!"
+                    n 4uwdaj "Oh! I totally forgot I'm wearing it already!"
                     extend 1fslssl " Ehehe."
 
                     play audio clothing_ruffle
@@ -2030,9 +2187,9 @@ label outfits_remove_outfit:
                 else:
                     n 1kllaj "...Oh."
                     n 1klrun "Uhmm...{w=1.5}{nw}"
-                    extend 1knmpu " [player]?"
-                    n 1kllpo "I wasn't able to remove that for some reason."
-                    n 1kllss "Sorry..."
+                    extend 4knmpu " [player]?"
+                    n 2kllpo "I wasn't able to remove that for some reason."
+                    n 2kllss "Sorry..."
 
             "Nevermind.":
                 n 1nnmbo "Oh."
@@ -2169,17 +2326,61 @@ label outfits_create_select_clothes:
 
     jump outfits_create_menu
 
+# Facewear selection for outfit creator flow
+label outfits_create_select_facewear:
+    python:
+        unlocked_wearables = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNFacewear)
+        wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
+        wearable_options.sort(key = lambda option: option[1].display_name)
+        wearable_options.insert(0, ("No facewear", "none"))
+
+    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+
+    if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNFacewear):
+        play audio hair_clip
+        python:
+            jn_outfits._changes_made = True
+            wearable_to_apply = jn_outfits.get_wearable("jn_none") if _return == "none" else _return
+            jn_outfits._PREVIEW_OUTFIT.facewear = wearable_to_apply
+            Natsuki.setOutfit(jn_outfits._PREVIEW_OUTFIT)
+
+    jump outfits_create_menu
+
+# Back slot selection for outfit creator flow
+label outfits_create_select_back:
+    python:
+        unlocked_wearables = jn_outfits.JNWearable.filter_wearables(wearable_list=jn_outfits.get_all_wearables(), unlocked=True, wearable_type=jn_outfits.JNBack)
+        wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
+        wearable_options.sort(key = lambda option: option[1].display_name)
+        wearable_options.insert(0, ("No back", "none"))
+
+    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+
+    if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNBack):
+        if (random.choice([True, False])):
+            play audio clothing_ruffle
+        else:
+            play audio zipper
+
+        python:
+            jn_outfits._changes_made = True
+            wearable_to_apply = jn_outfits.get_wearable("jn_none") if _return == "none" else _return
+            jn_outfits._PREVIEW_OUTFIT.back = wearable_to_apply
+            Natsuki.setOutfit(jn_outfits._PREVIEW_OUTFIT)
+
+    jump outfits_create_menu
+
 # Exit sequence from the outfit creator flow
 label outfits_create_quit:
     if jn_outfits._changes_made:
-        n 1unmaj "Huh?{w=0.5}{nw}"
+        n 4unmaj "Huh?{w=0.5}{nw}"
         extend 1tnmbo " You're done already,{w=0.1} [player]?"
         menu:
             n "You're sure you don't want me to try more stuff on?"
 
             # Go back to editor
             "Yes, I'm not done yet.":
-                n 1fcsbg "Gotcha!"
+                n 2fcsbg "Gotcha!"
                 extend 1tsqsm " What else have you got?"
 
                 jump outfits_create_menu
@@ -2188,7 +2389,7 @@ label outfits_create_quit:
             "No, we're done here.":
                 n 1nnmbo "Oh.{w=1.5}{nw}"
                 extend 1nllaj " Well...{w=0.3} okay."
-                n 1nsrpol "I was bored of changing anyway."
+                n 2nsrpol "I was bored of changing anyway."
 
                 play audio clothing_ruffle
                 $ Natsuki.setOutfit(jn_outfits._LAST_OUTFIT)
@@ -2196,18 +2397,18 @@ label outfits_create_quit:
                 jump ch30_loop
 
     else:
-        n 1tllaj "So...{w=1.5}{nw}"
-        extend 1tnmpo " you don't want me to change after all?"
+        n 4tllaj "So...{w=1.5}{nw}"
+        extend 3tnmpo " you don't want me to change after all?"
         n 1nlrbo "Huh."
         n 1tnmss "Well,{w=0.1} if it ain't broke,{w=0.1} right?{w=0.5}{nw}"
-        extend 1fcssm " Ehehe."
+        extend 2fcssm " Ehehe."
         jump ch30_loop
 
 # Save sequence from the outfit creator flow
 label outfits_create_save:
-    n 1fllaj "Well,{w=0.5} finally!"
-    n 1flrpo "If I'd known you were {i}this{/i} into dress-up,{w=0.3} I'd have set a timer!{w=1.5}{nw}"
-    extend 1fsqsm " Ehehe."
+    n 4fllaj "Well,{w=0.5} finally!"
+    n 3flrpo "If I'd known you were {i}this{/i} into dress-up,{w=0.3} I'd have set a timer!{w=1.5}{nw}"
+    extend 3fsqsm " Ehehe."
     n 1ullaj "So..."
     menu:
         n "All finished, [player]?"
@@ -2226,20 +2427,20 @@ label outfits_create_save:
 
                 # Outfit name cannot be empty or None
                 if len(outfit_name) == 0 or outfit_name is None:
-                    n 1knmpo "Come on,{w=0.3} [player]!{w=1.5}{nw}"
+                    n 2knmpo "Come on,{w=0.3} [player]!{w=1.5}{nw}"
                     extend 1fchbg " Any outfit worth wearing has a {i}name{/i},{w=0.1} dummy!"
 
                 # Outfit name cannot contain the jn_ namespace, though this should never happen
                 elif re.search("^jn_.", outfit_name.lower()):
                     n 1tsqsssbl "...Is that some kind of robot name or something?"
-                    n 1fchbl "Try harder,{w=0.2} [player]!"
+                    n 4fchbl "Try harder,{w=0.2} [player]!"
 
                 # Outfit cannot be an insult or profanity
                 elif(
                     jn_utils.get_string_contains_profanity(outfit_name.lower())
                     or jn_utils.get_string_contains_insult(outfit_name.lower())
                 ):
-                    n 1fsqem "...Really,{w=0.5} [player]."
+                    n 2fsqem "...Really,{w=0.5} [player]."
                     n 1fsqsr "Come on.{w=1}{nw}"
                     extend 1fllsr " Quit being a jerk."
 
@@ -2258,7 +2459,7 @@ label outfits_create_save:
             if jn_outfits.save_custom_outfit(jn_outfits._PREVIEW_OUTFIT):
                 n 1uchsm "...And done!"
                 n 1fchbg "Thanks,{w=0.1} [player]!{w=0.5}{nw}"
-                extend 1uchsm " Ehehe."
+                extend 4uchsm " Ehehe."
 
                 $ jn_outfits._changes_made = False
                 jump ch30_loop
@@ -2266,17 +2467,17 @@ label outfits_create_save:
             else:
                 n 1kllaj "...Oh."
                 n 1klrun "Uhmm...{w=1.5}{nw}"
-                extend 1knmpu " [player]?"
-                n 1kllpo "I wasn't able to save that for some reason."
+                extend 4knmpu " [player]?"
+                n 2kllpo "I wasn't able to save that for some reason."
                 n 1kllss "Sorry..."
 
                 jump outfits_create_menu
 
         "Yes, but don't worry about saving this outfit.":
-            n 1tnmpueqm "Eh?{w=0.75}{nw}"
+            n 4tnmpueqm "Eh?{w=0.75}{nw}"
             extend 1tnmaj " You {i}don't{/i} want me to remember this one?"
             n 1ullaj "Well...{w=0.75}{nw}"
-            extend 1tnmss " if you insist."
+            extend 2tnmss " if you insist."
             n 1nchgneme "Less note taking for me!"
 
             $ jn_outfits._changes_made = False
@@ -2284,10 +2485,10 @@ label outfits_create_save:
             jump ch30_loop
 
         "No, I'm not quite finished.":
-            n 1nslpo "I {i}knew{/i} I should have brought a book...{w=2}{nw}"
+            n 3nslpo "I {i}knew{/i} I should have brought a book...{w=2}{nw}"
             extend 1fsqsm " Ehehe."
             n 1ulrss "Well,{w=0.1} whatever.{w=0.5}{nw}"
-            extend 1unmbo " What else did you have in mind,{w=0.1} [player]?"
+            extend 4unmbo " What else did you have in mind,{w=0.1} [player]?"
 
             jump outfits_create_menu
 
@@ -2297,24 +2498,24 @@ label outfits_auto_change:
         n 1uchbg "Oh!{w=0.2} I gotta change,{w=0.1} just give me a sec...{w=0.75}{nw}"
 
     elif Natsuki.isHappy(higher=True):
-        n 1unmpu "Oh!{w=0.2} I should probably change,{w=0.1} one second...{w=0.75}{nw}"
-        n 1flrpol "A-{w=0.1}and no peeking,{w=0.1} got it?!{w=0.75}{nw}"
+        n 4unmpu "Oh!{w=0.2} I should probably change,{w=0.1} one second...{w=0.75}{nw}"
+        n 2flrpol "A-{w=0.1}and no peeking,{w=0.1} got it?!{w=0.75}{nw}"
 
     elif Natsuki.isNormal(higher=True):
-        n 1unmpu "Oh -{w=0.1} I gotta get changed.{w=0.2} I'll be back in a sec.{w=0.75}{nw}"
+        n 4unmpu "Oh -{w=0.1} I gotta get changed.{w=0.2} I'll be back in a sec.{w=0.75}{nw}"
 
     elif Natsuki.isDistressed(higher=True):
         n 1nnmsl "Back in a second.{w=0.75}{nw}"
 
     else:
-        n 1fsqsl "I'm changing.{w=0.75}{nw}"
+        n 2fsqsl "I'm changing.{w=0.75}{nw}"
 
     play audio clothing_ruffle
     $ Natsuki.setOutfit(jn_outfits.get_realtime_outfit())
     with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
 
     if Natsuki.isAffectionate(higher=True):
-        n 1uchgn "Ta-da!{w=0.2} There we go!{w=0.2} Ehehe.{w=0.75}{nw}"
+        n 4uchgn "Ta-da!{w=0.2} There we go!{w=0.2} Ehehe.{w=0.75}{nw}"
 
     elif Natsuki.isHappy(higher=True):
         n 1nchbg "Okaaay!{w=0.2} I'm back!{w=0.75}{nw}"
@@ -2323,10 +2524,10 @@ label outfits_auto_change:
         n 1nnmsm "And...{w=0.3} all done.{w=0.75}{nw}"
 
     elif Natsuki.isDistressed(higher=True):
-        n 1nllsl "I'm back.{w=0.75}{nw}"
+        n 3nllsl "I'm back.{w=0.75}{nw}"
 
     else:
-        n 1fsqsl "...{w=0.75}{nw}"
+        n 2fsqsl "...{w=0.75}{nw}"
 
     show natsuki idle at jn_center
     return
@@ -2345,101 +2546,101 @@ label new_wearables_outfits_unlocked:
 
     if Natsuki.isEnamored(higher=True):
         n 1uskemleex "...!"
-        n 1ksrunlsbl "..."
-        n 1knmpulsbl "[player]...{w=1.25}{nw}"
-        extend 1kllpulsbl " y-{w=0.2}you {i}do{/i} know you don't have to get me stuff just so I like you..."
+        n 4ksrunlsbl "..."
+        n 4knmpulsbl "[player]...{w=1.25}{nw}"
+        extend 2kllpulsbl " y-{w=0.2}you {i}do{/i} know you don't have to get me stuff just so I like you..."
         n 1knmsllsbr "Right?"
 
         if jnIsPlayerBirthday():
             n 1uskgslesh "...Wait!{w=0.75}{nw}"
             extend 1knmemlsbl " Y-{w=0.2}you shouldn't even be the one {i}giving{/i} things today anyway!"
-            n 1kslemlsbl "...It's {i}weird{/i},{w=0.2} [player]..."
+            n 2kslemlsbl "...It's {i}weird{/i},{w=0.2} [player]..."
             n 1kslbolsbl "..."
 
         elif jnIsChristmasEve():
-            n 1ksrbofsbl "...Especially tonight,{w=0.3} of all nights..."
+            n 2ksrbofsbl "...Especially tonight,{w=0.3} of all nights..."
 
         elif jnIsChristmasDay():
-            n 1kllajlsbr "A-{w=0.2}and anyway,{w=0.75}{nw}"
+            n 4kllajlsbr "A-{w=0.2}and anyway,{w=0.75}{nw}"
             extend 1kwmpulsbl " I'm still not used to getting stuff on Christmas Day..."
-            n 1kslsllsbl "..."
+            n 2kslsllsbl "..."
 
         n 1uskemlesusbr "I-{w=0.2}it's not that I don't appreciate it!{w=0.5}{nw}"
         extend 1fcsemless " Don't get me wrong!{w=1}{nw}"
-        extend 1knmpoless " I-{w=0.2}I totally do!"
+        extend 2knmpoless " I-{w=0.2}I totally do!"
         n 1kllemless "I just..."
-        n 1ksrunlsbl "..."
+        n 2ksrunlsbl "..."
         n 1fcsunl "I...{w=0.3} know...{w=1}{nw}"
-        extend 1ksrpolsbr " I can't exactly return the favour."
+        extend 2ksrpolsbr " I can't exactly return the favour."
         n 1fcsajlsbl "A-{w=0.2}and you've already done a lot for me,{w=0.5}{nw}"
-        extend 1kslbolsbl " so..."
+        extend 4kslbolsbl " so..."
         n 1kcsbolsbl "..."
         n 1kcsemlesi "...Fine.{w=0.75}{nw}"
         extend 1ksrsl " I'll take a look.{w=1.25}{nw}"
-        extend 1kslpo " But I still kinda feel like a jerk about it..."
+        extend 2kslpo " But I still kinda feel like a jerk about it..."
 
     elif Natsuki.isAffectionate(higher=True):
         n 1uskeml "H-{w=0.2}huh?"
         n 1uskwrl "[player]?{w=1}{nw}"
-        extend 1knmwrl " D-{w=0.2}did you {i}seriously{/i} just get me all this stuff?!"
+        extend 4knmwrl " D-{w=0.2}did you {i}seriously{/i} just get me all this stuff?!"
         n 1fslunl "..."
-        n 1fcsanl "Uuuuuuuuu-!"
-        n 1fpawrledr "Why would you do thaaat?!{w=1}{nw}"
+        n 2fcsanl "Uuuuuuuuu-!"
+        n 4fpawrledr "Why would you do thaaat?!{w=1}{nw}"
 
         if jnIsPlayerBirthday():
             n 1uskwrlesh "E-{w=0.2}especially today!{w=1}{nw}"
-            extend 1kbkwrl " Did you {i}forget{/i} it's your {i}birthday{/i}?!"
+            extend 4kbkwrl " Did you {i}forget{/i} it's your {i}birthday{/i}?!"
 
         elif jnIsChristmasEve():
             extend 1fllemf " I-{w=0.2}I mean..."
-            n 1knmgsf "Y-{w=0.2}you couldn't have at {i}least{/i} waited for tomorrow?!{w=1}{nw}"
-            extend 1kbkwrlesd " I didn't even make a list or anythiiiing!"
+            n 4knmgsf "Y-{w=0.2}you couldn't have at {i}least{/i} waited for tomorrow?!{w=1}{nw}"
+            extend 4kbkwrlesd " I didn't even make a list or anythiiiing!"
 
         elif jnIsChristmasDay():
             extend 1kllemf " I mean..."
-            n 1kwmunlsbl "You should know I'm not used to getting stuff on Christmas Day..."
+            n 4kwmunlsbl "You should know I'm not used to getting stuff on Christmas Day..."
 
         else:
             extend 1kbkwrless " I-{w=0.2}I didn't even {i}ask{/i} for anything!"
 
-        n 1fslunl "..."
-        n 1fcseml "Jeez...{w=0.5}{nw}"
+        n 2fslunl "..."
+        n 2fcseml "Jeez...{w=0.5}{nw}"
         extend 1flrsrf " and now I look like a total {i}jerk{/i} for not even having anything to give back...{w=1}{nw}"
-        extend 1fsqsrfsbr " I hope you're happy,{w=0.1} [player]."
+        extend 4fsqsrfsbr " I hope you're happy,{w=0.1} [player]."
         n 1fcsemlesisbr "..."
         n 1kcsbolsbr "...Alright.{w=0.75}{nw}"
-        extend 1fslpolsbr " J-{w=0.2}just a quick look..."
+        extend 2fslpolsbr " J-{w=0.2}just a quick look..."
 
     else:
         n 1uwdeml "...Eh?"
         n 1ulreml "What even..."
-        n 1uskemfeex "...!"
+        n 4uskemfeex "...!"
         $ player_initial = jn_utils.getPlayerInitial()
         n 1fbkwrf "[player_initial]-{w=0.2}[player]!"
         n 1kbkwrf "What even {i}is{/i} all this?!"
 
         if jnIsChristmasEve():
             n 1knmgsf "A-{w=0.2}and come {i}on{/i},{w=0.2} [player]!{w=1}{nw}"
-            extend 1kbkwrfesd " It isn't even Christmas yeeeet!"
+            extend 4kbkwrfesd " It isn't even Christmas yeeeet!"
 
         elif jnIsChristmasDay():
             n 1fcsemfsbl "I-{w=0.2}I mean,{w=0.75}{nw}"
-            extend 1kwmemfsbl " I {i}get{/i} what day it is,{w=0.75}{nw}" 
-            extend 1kslemfsbl " but..."
+            extend 2kwmemfsbl " I {i}get{/i} what day it is,{w=0.75}{nw}" 
+            extend 2kslemfsbl " but..."
             n 1kcspufesisbl "..."
 
         n 1fllemlesssbl "Y-{w=0.2}you better not be trying to win me over with gifts or something!{w=1}{nw}"
-        extend 1fcsemlsbr " Yeesh!"
+        extend 2fcsemlsbr " Yeesh!"
         n 1flremlsbl "I-{w=0.2}I'll have you know I'm a {i}lot{/i} deeper than that!"
         n 1fsqpulsbl "I swear it's like you're trying to embarrass me sometimes...{w=1}{nw}"
-        extend 1fslpolsbl " you jerk."
+        extend 2fslpolsbl " you jerk."
         n 1ksrcalsbl "You {i}know{/i} I can't exactly give anything {i}back{/i},{w=0.1} either..."
         n 1fcscalesssbl "..."
         n 1kcsemlesi "..."
-        n 1fslsll "...Fine.{w=1}{nw}"
+        n 2fslsll "...Fine.{w=1}{nw}"
         extend 1fcseml " Fine!{w=0.75}{nw}"
         extend 1flremlsbr " I'll look at it!{w=1}{nw}"
-        extend 1fsrpolsbr " ...But only because you put the effort in."
+        extend 2fsrpolsbr " ...But only because you put the effort in."
 
     python:
         import random
@@ -2459,148 +2660,148 @@ label new_wearables_outfits_unlocked:
         if type(unlock) is jn_outfits.JNHairstyle:
             if alt_dialogue:
                 n 1unmpuesu "Mmm?{w=1}{nw}"
-                extend 1tnmajeqm " A...{w=0.3} note...?"
+                extend 4tnmajeqm " A...{w=0.3} note...?"
                 n 1tslpu "..."
                 n 1unmgsesu "...Oh!{w=1}{nw}"
                 extend 1unmbol " You wanted me to try my hair like that?{w=0.5} [unlock.display_name]?"
-                n 1nllunl "..."
+                n 3nllunl "..."
                 n 1nllajl "Well...{w=1}{nw}"
-                extend 1nnmajl " okay."
+                extend 4nnmajl " okay."
 
                 if Natsuki.isEnamored(higher=True):
                     n 1nlrssl "I {i}suppose{/i} I can give that a shot later."
-                    n 1fsqsslsbl "I bet {i}someone{/i} would like that,{w=0.1} huh?{w=0.5}{nw}"
-                    extend 1fsldvlsbl " Ehehe..."
+                    n 4fsqsslsbl "I bet {i}someone{/i} would like that,{w=0.1} huh?{w=0.5}{nw}"
+                    extend 4fsldvlsbl " Ehehe..."
 
                 elif Natsuki.isAffectionate(higher=True):
                     n 1nlrpol "I {i}suppose{/i} I can give that a shot later."
                     extend 1nlrsslsbr " Ehehe..."
 
                 else:
-                    n 1fcspol "I {i}suppose{/i} I can give that a shot later."
-                    n 1flrajl "B-but only because I want to though,{w=0.75}{nw}"
+                    n 2fcspol "I {i}suppose{/i} I can give that a shot later."
+                    n 2flrajl "B-but only because I want to though,{w=0.75}{nw}"
                     extend 1fsrpol " obviously."
 
             else:
-                n 1tnmpueqm "Eh?{w=1}{nw}"
+                n 4tnmpueqm "Eh?{w=1}{nw}"
                 extend 1tlrpueqm " What's this note doing here...?"
-                n 1tllbo "..."
+                n 2tllbo "..."
                 n 1unmgsesu "W-{w=0.2}woah!"
                 n 1flldvl "Heh.{w=0.5}{nw}"
                 extend 1fllsslsbr " I gotta admit.{w=1}{nw}"
-                extend 1fsrnvlsbr " I never even thought of trying {i}that{/i} with my hair..."
+                extend 3fsrnvlsbr " I never even thought of trying {i}that{/i} with my hair..."
                 n 1unmbo "[unlock.display_name],{w=0.1} huh?"
                 n 1nllajl "I {i}guess{/i} it might be worth a try..."
 
                 if Natsuki.isEnamored(higher=True):
-                    n 1fsqsslsbr "I wonder who'd like {i}that{/i},{w=0.1} though?{w=0.5}{nw}"
-                    extend 1fsqsmlsbr " Ehehe..."
+                    n 4fsqsslsbr "I wonder who'd like {i}that{/i},{w=0.1} though?{w=0.5}{nw}"
+                    extend 4fsqsmlsbr " Ehehe..."
 
                 elif Natsuki.isAffectionate(higher=True):
                     n 1nlrsslsbr "We'll see."
 
                 else:
                     n 1fcsgsl "B-{w=0.2}but only out of curiosity!{w=1}{nw}"
-                    extend 1fsqpol " Got it?"
+                    extend 2fsqpol " Got it?"
 
         else:
             if Natsuki.isEnamored(higher=True):
                 if alt_dialogue:
                     n 1kcsemlesi "Jeez...{w=1}{nw}"
-                    extend 1knmpol " why are you trying to spoil me so much?"
-                    n 1fllpol "You know I hate being showered in flashy stuff..."
+                    extend 3knmpol " why are you trying to spoil me so much?"
+                    n 3fllpol "You know I hate being showered in flashy stuff..."
                     n 1kslsrl "..."
                     n 1ksqsrlsbl "...Especially things like this [unlock.display_name]."
                     extend 1kslsslsbl " Even if it is pretty awesome."
                     n 1kslsrl "..."
                     n 1nllajl "I'm...{w=1}{nw}"
-                    extend 1ksrpol " just going to keep that too."
-                    n 1nsrdvf "...Thanks."
+                    extend 2ksrpol " just going to keep that too."
+                    n 2nsrdvf "...Thanks."
 
                 else:
                     n 1uskgsfesu "...!"
                     n 1fsldvl "...Heh.{w=1}{nw}"
-                    extend 1tsqpufsbl " You really {i}are{/i} trying to win me over with all this stuff,{w=0.1} huh?"
+                    extend 4tsqpufsbl " You really {i}are{/i} trying to win me over with all this stuff,{w=0.1} huh?"
                     n 1kslsllsbl "..."
                     n 1fcspulsbl "The [unlock.display_name]...{w=1}{nw}"
                     n 1knmpulsbr "It's...{w=0.5} really nice.{w=0.75}{nw}"
-                    extend 1kllsrlsbr " Okay?"
+                    extend 4kllsrlsbr " Okay?"
                     n 1kslunlesssbr "Thanks..."
 
             elif Natsuki.isAffectionate(higher=True):
                 if alt_dialogue:
                     n 1uwdajlesu "...!"
-                    n 1fcsemlesssbl "A-{w=0.1}ahem!{w=1}{nw}"
-                    extend 1fslpol " Another good choice,{w=0.5}{nw}"
-                    extend 1fsqpolsbr " I hate to admit."
+                    n 2fcsemlesssbl "A-{w=0.1}ahem!{w=1}{nw}"
+                    extend 2fslpol " Another good choice,{w=0.5}{nw}"
+                    extend 4fsqpolsbr " I hate to admit."
                     n 1klrbolsbr "..."
                     n 1fcsunlsbr "...Thanks,{w=0.1} [player]."
                     n 1fllunlsbr "For the [unlock.display_name],{w=0.5}{nw}"
-                    extend 1fnmpulsbl " I-{w=0.2}I mean."
+                    extend 4fnmpulsbl " I-{w=0.2}I mean."
                     n 1kslpulsbl "It's...{w=1}{nw}"
                     extend 1kslsslsbl " really cool."
-                    n 1fslpofsbl "...Thanks."
+                    n 2fslpofsbl "...Thanks."
 
                 else:
                     n 1uwdajledz "...!"
                     n 1fcsunlesdsbl "..."
                     n 1fcssslsbl "Heh,{w=1}{nw}"
-                    extend 1fllbglesssbr " a-{w=0.2}and here I was thinking I'd have to teach you {i}everything{/i} about style!"
-                    n 1kllsllsbr "..."
+                    extend 3fllbglesssbr " a-{w=0.2}and here I was thinking I'd have to teach you {i}everything{/i} about style!"
+                    n 3kllsllsbr "..."
                     n 1knmbolsbr "...But thanks,{w=0.3} [player].{w=1}"
                     extend 1flrunlsbr " For the [unlock.display_name]."
                     n 1fcsunlsbr "I...{w=0.75}{nw}"
-                    extend 1ksrunfsbl " really appreciate it."
+                    extend 4ksrunfsbl " really appreciate it."
 
             else:
                 if alt_dialogue:
                     n 1uskgslesh "...!"
-                    n 1fdwanfess "Nnnnnnn-!"
+                    n 4fdwanfess "Nnnnnnn-!"
                     n 1fcsemfesssbl "Y-{w=0.2}you're just lucky you're good at picking out gifts,{w=0.5}{nw}"
-                    extend 1fsqpofesssbl " you jerk."
-                    n 1fslpofesssbr "I guess I'll {i}have{/i} to keep this [unlock.display_name] now.{w=0.75}{nw}"
-                    extend 1fnmpofesssbl " I-{w=0.2}I hope you're happy."
+                    extend 3fsqpofesssbl " you jerk."
+                    n 3fslpofesssbr "I guess I'll {i}have{/i} to keep this [unlock.display_name] now.{w=0.75}{nw}"
+                    extend 3fnmpofesssbl " I-{w=0.2}I hope you're happy."
 
                 else:
                     n 1fspgsledz "W-{w=0.2}woah!"
                     n 1uskemfesh "...!"
-                    n 1fbkwrf "What?!{w=1}{nw}"
-                    extend 1fllwrfeszsbl " Don't look at me like that!"
+                    n 4fbkwrf "What?!{w=1}{nw}"
+                    extend 4fllwrfeszsbl " Don't look at me like that!"
                     n 1fcseml "I-{w=0.2}I'm glad to see you have {i}some{/i} taste after all to have found this."
-                    n 1fllcal "[unlock.display_name],{w=0.1} huh?{w=1}{nw}"
-                    extend 1fcscal " I-{w=0.2}I guess I'll keep it around."
-                    n 1fcspofess "Juuuust in case."
+                    n 2fllcal "[unlock.display_name],{w=0.1} huh?{w=1}{nw}"
+                    extend 2fcscal " I-{w=0.2}I guess I'll keep it around."
+                    n 2fcspofess "Juuuust in case."
 
         $ alt_dialogue = not alt_dialogue
 
         if len(jn_outfits._SESSION_NEW_UNLOCKS) > 0:
             if Natsuki.isEnamored(higher=True):
                 n 1klrpul "...I can't believe there's even more.{w=1}{nw}"
-                extend 1fcspul " Jeez,{w=0.1} [player]..."
-                n 1kcspul "...Okay.{w=1}{nw}"
-                extend 1fslssl " Let's see what's next..."
+                extend 4fcspul " Jeez,{w=0.1} [player]..."
+                n 4kcspul "...Okay.{w=1}{nw}"
+                extend 4fslssl " Let's see what's next..."
 
             elif Natsuki.isAffectionate(higher=True):
-                n 1ksrunl "Uuuuuuu...{w=1}{nw}"
+                n 2ksrunl "Uuuuuuu...{w=1}{nw}"
                 extend 1ksremlesd " there's {i}still{/i} more?!"
                 n 1kcsemlesisbl "Jeez..."
 
             else:
-                n 1fnmpol "H-{w=0.2}how much {i}is{/i} there here,{w=0.1} [player]{w=1}{nw}?"
-                extend 1fslpofesssbr " Jeez..."
+                n 3fnmpol "H-{w=0.2}how much {i}is{/i} there here,{w=0.1} [player]{w=1}{nw}?"
+                extend 3fslpofesssbr " Jeez..."
 
     if Natsuki.isEnamored(higher=True):
         n 1fcsssl "Finally ran out of things to throw at me,{w=0.5}{nw}"
         extend 1fllsslsbl " huh?"
-        n 1kllbolsbl "..."
-        n 1ksrpulsbl "I...{w=1}{nw}"
+        n 4kllbolsbl "..."
+        n 4ksrpulsbl "I...{w=1}{nw}"
         extend 1ksqsrlsbl " really wish you didn't do that,{w=0.1} you know."
         n 1kllbolsbl "..."
         n 1kllpulsbr "But...{w=0.75}{nw}"
-        extend 1knmsslsbr " [player]?"
-        n 1fsrunfsbr "..."
+        extend 4knmsslsbr " [player]?"
+        n 4fsrunfsbr "..."
 
-        show black zorder 4 with Dissolve(0.5)
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         play audio clothing_ruffle
         $ jnPause(3.5, hard=True)
 
@@ -2611,26 +2812,26 @@ label new_wearables_outfits_unlocked:
             hide black with Dissolve(1.25)
             $ chosen_tease = jn_utils.getRandomTease()
             n 1knmssf "...Thanks,{w=0.1} [chosen_tease]."
-            n 1klrsmfeme "Ehehe."
+            n 2klrsmfeme "Ehehe."
 
         else:
             hide black with Dissolve(1.25)
-            n 1fslunf "...Thanks.{w=0.75}{nw}"
-            extend 1fslsmfsbr " Ehehe."
+            n 2fslunf "...Thanks.{w=0.75}{nw}"
+            extend 2fslsmfsbr " Ehehe."
 
     elif Natsuki.isAffectionate(higher=True):
         n 1fllun "...Is that it?{w=0.75}{nw}"
-        extend 1flrunl " Is that everything?"
+        extend 3flrunl " Is that everything?"
         n 1fcsemlesi "Jeez..."
-        n 1fnmtrl "You really need to stop giving away so much stuff,{w=0.1} [player].{w=1}{nw}"
-        extend 1fsqcal " I don't want you getting into a dumb habit!"
+        n 4fnmtrl "You really need to stop giving away so much stuff,{w=0.1} [player].{w=1}{nw}"
+        extend 4fsqcal " I don't want you getting into a dumb habit!"
         n 1fslunlsbl "Especially when I can't do anything nice back..."
         n 1kslunlsbl "..."
         n 1kslpulsbl "But...{w=0.75}{nw}"
-        extend 1knmsllsbr " [player]?"
-        n 1fsrunfsbr "..."
+        extend 4knmsllsbr " [player]?"
+        n 2fsrunfsbr "..."
 
-        show black zorder 4 with Dissolve(0.5)
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         show natsuki 1flrcafsbr at jn_center zorder JN_NATSUKI_ZORDER
         play audio clothing_ruffle
         $ jnPause(2, hard=True)
@@ -2641,21 +2842,21 @@ label new_wearables_outfits_unlocked:
 
     else:
         n 1kslemlesi "Man...{w=1}{nw}"
-        extend 1flrtrl " is that all of it?{w=0.5}{nw}"
+        extend 2flrtrl " is that all of it?{w=0.5}{nw}"
         extend 1fcspulsbl " Jeez..."
         n 1fslunlsbr "..."
         n 1nslajlsbr "I...{w=0.75}{nw}"
-        extend 1nsqajlsbl " suppose I better go put all this away now."
+        extend 4nsqajlsbl " suppose I better go put all this away now."
         n 1kslunlsbr "..."
         n 1kslpulsbl "But..."
-        extend 1knmsllsbr " [player]?"
-        n 1fsrunlsbr "..."
-        n 1fsrajlsbr "I..."
+        extend 4knmsllsbr " [player]?"
+        n 2fsrunlsbr "..."
+        n 2fsrajlsbr "I..."
         extend 1ksrcafsbr " really appreciate the stuff you got me."
         n 1kllcalsbr "..."
         n 1fcstrlsbl "T-{w=0.2}thanks."
 
-    show black zorder 4 with Dissolve(0.5)
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ giftbox.close()
     $ giftbox.hide()
     $ jnPause(2, hard=True)
@@ -2671,8 +2872,8 @@ label new_wearables_outfits_unlocked:
     hide black with Dissolve(1.25)
 
     n 1ullajl "So..."
-    n 1tnmsslsbl "Where we we?{w=1}{nw}"
-    extend 1fslsslsbr " Ehehe..."
+    n 4tnmsslsbl "Where we we?{w=1}{nw}"
+    extend 4fslsslsbr " Ehehe..."
 
     $ Natsuki.calculatedAffinityGain(bypass=True)
     $ jn_globals.force_quit_enabled = True
@@ -2718,6 +2919,16 @@ screen create_outfit():
                 left_margin 10
 
         hbox:
+            # Facewear
+            textbutton _("Facewear"):
+                style "hkbd_option"
+                action Jump("outfits_create_select_facewear")
+
+            label _(jn_utils.escapeRenpySubstitutionString(jn_outfits._PREVIEW_OUTFIT.facewear.display_name) if isinstance(jn_outfits._PREVIEW_OUTFIT.facewear, jn_outfits.JNFacewear) else "None"):
+                style "hkbd_label"
+                left_margin 10
+
+        hbox:
             # Accessories
             textbutton _("Accessories"):
                 style "hkbd_option"
@@ -2747,10 +2958,21 @@ screen create_outfit():
                 style "hkbd_label"
                 left_margin 10
 
+        hbox:
+            # Back slot
+            textbutton _("Back"):
+                style "hkbd_option"
+                action Jump("outfits_create_select_back")
+
+            label _(jn_utils.escapeRenpySubstitutionString(jn_outfits._PREVIEW_OUTFIT.back.display_name) if isinstance(jn_outfits._PREVIEW_OUTFIT.back, jn_outfits.JNBack) else "None"):
+                style "hkbd_label"
+                left_margin 10
+
     # Save/quit
     vbox:
         xpos 600
         ypos 450
+        null height 20
 
         textbutton _("Finished"):
             style "hkbd_option"
