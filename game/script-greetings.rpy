@@ -654,7 +654,8 @@ label greeting_tt_warning:
     return
 
 label greeting_tt_fatal:
-    $ config.window_title = _("Just You - {0}".format(config.version))
+    $ import uuid
+    $ config.window_title = _("{0} - {1}".format(uuid.uuid4(), config.version))
     $ jn_globals.force_quit_enabled = False
     $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_GLITCH)
     show chair zorder JN_NATSUKI_ZORDER
@@ -686,7 +687,8 @@ label greeting_tt_fatal:
     return
 
 label greeting_tt_game_over:
-    $ config.window_title = _("Just You - {0}".format(config.version))
+    $ import uuid
+    $ config.window_title = _("{0} - {1}".format(uuid.uuid4(), config.version))
     $ jn_globals.force_quit_enabled = False
     $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_GLITCH)
     show chair zorder JN_NATSUKI_ZORDER
