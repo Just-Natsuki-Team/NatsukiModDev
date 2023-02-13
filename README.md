@@ -21,6 +21,13 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/RaionArt">
+            <img src="https://avatars.githubusercontent.com/u/112613077?v=4" width="100;" alt="RaionArt"/>
+            <br />
+            <sub><b>RaionArt</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/multimokia">
             <img src="https://avatars.githubusercontent.com/u/22531674?v=4" width="100;" alt="multimokia"/>
             <br />
@@ -32,13 +39,6 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
             <img src="https://avatars.githubusercontent.com/u/64098288?v=4" width="100;" alt="spaghetsie"/>
             <br />
             <sub><b>Spaghetsie</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/RaionArt">
-            <img src="https://avatars.githubusercontent.com/u/112613077?v=4" width="100;" alt="RaionArt"/>
-            <br />
-            <sub><b>RaionArt</b></sub>
         </a>
     </td>
     <td align="center">
