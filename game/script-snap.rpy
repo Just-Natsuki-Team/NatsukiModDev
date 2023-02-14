@@ -315,12 +315,12 @@ init 0 python in jn_snap:
 label snap_intro:
     n 1nchbs "Alriiiight!{w=0.2} Let's play some Snap!"
     if not persistent.jn_snap_explanation_given:
-        n 1nnmaj "Oh -{w=0.1} before we start,{w=0.1} did you want an explanation?{w=0.2}" 
-        extends n 4tllca "You know,{w=0.1} on how it works?"
+        n 1nnmaj "Oh -{w=0.1} before we start,{w=0.1} did you want an explanation?{w=0.5}{nw}" 
+        extend 4tllca "You know,{w=0.1} on how it works?"
         n 1nchsm "It's a super simple game,{w=0.1} but I thought I'd better ask."
         n 3fcsbg "I don't wanna win just because you didn't know what you were doing!"
-        n 1usqfs "So..."
-        extend n 3fchss " How about it?"
+        n 1usqfs "So...{w=1}{nw}"
+        extend 3fchss " How about it?"
         menu:
             n "Want me to run through the rules real quick?"
 
@@ -329,33 +329,33 @@ label snap_intro:
 
             "No,{w=0.1} I'm ready.":
                 n 1fsqbg "Oh?{w=0.2} You're ready,{w=0.1} huh?"
-                n 3tsqdv "Ready to get your butt kicked!{w=0.2}" 
-                extend n 3fchbs " Let's go,{w=0.1} [player]!"
+                n 3tsqdv "Ready to get your butt kicked!{w=0.75}{nw}" 
+                extend 3fchbs " Let's go,{w=0.1} [player]!"
                 $ persistent.jn_snap_explanation_given = True
 
     jump snap_start
 
 label snap_explanation:
-    n 1nnmss "Alright!{w=0.2} So the rules are dead simple,{w=0.1}" 
-    extend n 3nslsm " like I was saying before."
+    n 1nnmss "Alright!{w=0.2} So the rules are dead simple,{w=0.5}{nw}" 
+    extend 3nslsm " like I was saying before."
     n 1unmaj "Basically,{w=0.1} we each get half a deck of cards."
-    n 3nchss "Then,{w=0.1} we take it in turns placing a card face up on the table -{w=0.25}{nw}"
-    extend n 3fsrdv " we don't get to {i}pick or see{/i} the card before,{w=0.1} though!"
+    n 3nchss "Then,{w=0.1} we take it in turns placing a card face up on the table -{w=0.5}{nw}"
+    extend 3fsrdv " we don't get to {i}pick or see{/i} the card before,{w=0.1} though!"
     n 4fsgbg "Following me so far,{w=0.1} [player]?{w=0.2} Ehehe."
     n 1nnmbg "If the card just placed down on the table matches either the {i}value or suit{/i} of the card that was there before..."
-    n 4usqsm "Then we gotta call{w=0.25}{nw}"
-    extend n 4fchbs " Snap!"
+    n 4usqsm "Then we gotta call{w=0.5}{nw}"
+    extend 4fchbs " Snap!"
     n 1nnmsm "Whoever calls it first gets the cards on the table."
-    n 1unmaj "Oh -{w=0.1}{nw}"
-    extend n 3tsqss " but you gotta be careful,{w=0.2} [player]."
+    n 1unmaj "Oh -{w=0.5}{nw}"
+    extend 3tsqss " but you gotta be careful,{w=0.2} [player]."
     n 1fllsg "When you call snap,{w=0.2} it becomes the other player's turn..."
-    n 1fsqsm "So don't shout unless you know you got it,{w=0.1}"
-    extend n 1nchgn " 'kay?"
+    n 1fsqsm "So don't shout unless you know you got it,{w=0.5}{nw}"
+    extend 1nchgn " 'kay?"
     n 1uchbg "The winner is whoever ends up with all the cards first!"
-    n 4tsqsm "Which is usually me,{w=0.1}"
-    extend n 2fsldv " obviously."
-    n 4uwdaj "Oh,{w=0.1} right -{w=0.1}{nw}"
-    extend n 1nnmsm " you also lose if you run out of cards to play,{w=0.1} so you should keep that in mind too."
+    n 4tsqsm "Which is usually me,{w=0.75}{nw}"
+    extend 2fsldv " obviously."
+    n 4uwdaj "Oh,{w=0.1} right -{w=0.5}{nw}"
+    extend 1nnmsm " you also lose if you run out of cards to play,{w=0.1} so you should keep that in mind too."
     n 4tsqss "So...{w=0.3} how about it,{w=0.1} [player]?{w=0.2} You got all that?"
     menu:
         n "Do the rules all make sense to you?"
@@ -573,8 +573,8 @@ label snap_end:
 
         if jn_snap._player_win_streak > 10:
             n 3fllpol "Yeah,{w=0.1} yeah.{w=0.2} You won again."
-            n 3fsqsml "...Nerd.{w=0.2}{nw}"
-            extend n 3fchgnl " Ehehe."
+            n 3fsqsml "...Nerd.{w=0.5}{nw}"
+            extend 3fchgnl " Ehehe."
 
         elif jn_snap._player_win_streak == 10:
             n 2fcsanf "Nnnnnnnnnn-!!"
@@ -605,16 +605,16 @@ label snap_end:
             n 3fsqsm "...Almost.{w=0.2} Ehehe."
 
         if jn_snap._natsuki_win_streak == 10:
-            n 1fchbsl "Jeez,{w=0.1} [player]...{w=0.3} are you having a bad day or what?{w=0.2}"
-            extend n 1fchbselg " Ahaha!"
+            n 1fchbsl "Jeez,{w=0.1} [player]...{w=0.3} are you having a bad day or what?{w=0.5}{nw}"
+            extend 1fchbselg " Ahaha!"
             n 4nsqss "So long as you're having fun though,{w=0.1} right?"
 
         elif jn_snap._natsuki_win_streak == 5:
             n 1fcsss "Oh?{w=0.2} This?{w=0.2} This skill?"
             n 3fcssg "Don't worry about it."
             n 3fchgn "It's all natural,{w=0.1} [player]~."
-            n 1uchbs "What did you expect,{w=0.1} challenging a pro like that?{w=0.1}"
-            extend n 4nsqsm " Ehehe."
+            n 1uchbs "What did you expect,{w=0.1} challenging a pro like that?{w=0.75}{nw}"
+            extend 4nsqsm " Ehehe."
 
         elif jn_snap._natsuki_win_streak == 3:
             n 1fchbg "Yes!{w=0.2} I win again!"
@@ -633,8 +633,8 @@ label snap_end:
     else:
         # Assume forfeit
         n 4unmaj "Oh?{w=0.2} You're giving up?"
-        n 1nsrss "Well,{w=0.1} I guess that's fine.{w=0.2}{nw}"
-        extend n 1nchgn " Let me just chalk up another win for me,{w=0.1} then.{w=0.2} Ehehe."
+        n 1nsrss "Well,{w=0.1} I guess that's fine.{w=0.75}{nw}"
+        extend 1nchgn " Let me just chalk up another win for me,{w=0.1} then.{w=0.2} Ehehe."
 
     # Award affinity for playing to completion with best girl
     $ Natsuki.calculatedAffinityGain()
