@@ -3551,8 +3551,8 @@ label talk_natsukis_hairstyle:
     elif Natsuki.isNormal(higher=True):
         n 4tnmpu "Huh?{w=0.2} My hairstyle?"
         n 1fsqaj "Wait...{w=0.75}{nw}"
-        3fslpo 4fnmeml " a-{w=0.1}are you messing with me?{w=0.2} What do you mean?"
-        n 1fslpo "You better not be teasing me,{w=0.1} [player]..."
+        extend 4fnmeml " a-{w=0.1}are you messing with me?{w=0.2} What do you mean?"
+        n 3fslpo "You better not be teasing me,{w=0.1} [player]..."
 
     elif Natsuki.isDistressed(higher=True):
         n 1nnmsl "...Huh?{w=0.2} Oh.{w=0.2} My hair."
@@ -7739,7 +7739,7 @@ label talk_how_to_interview_properly:
     extend 1nlrss " or what awards they won recently {w=0.1}-{w=0.5}{nw}"
     extend 3fcsss " it all shows the effort you're putting in."
     n 3tsqss "And when it comes down to the wire?"
-    n 1fwlcsm "Even something tiny like that can just about tip the scales."
+    n 3fsqbg "Even something tiny like that can just about tip the scales."
 
     n 1fcsss "Next up...{w=0.5}{nw}"
     extend 2fnmca " revision!"
