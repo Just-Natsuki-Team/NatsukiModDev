@@ -1,4 +1,5 @@
 init python in jn_idles:
+    from Enum import Enum
     import random
     import store
     import store.jn_affinity as jn_affinity
