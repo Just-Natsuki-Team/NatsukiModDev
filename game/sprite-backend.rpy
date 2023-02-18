@@ -705,6 +705,30 @@ image natsuki gaming:
 
     repeat
 
+# Idle images for Natsuki falling - then remaining - asleep
+image natsuki sleeping:
+    # Falling asleep
+    "natsuki "
+    pause 1
+    "natsuki "
+    pause 1
+    "natsuki "
+    pause 1
+    "natsuki "
+    pause 1
+    "natsuki "
+    pause 1
+    "natsuki "
+    pause 1
+
+    # Sleeping loop
+    block:
+        "natsuki "
+        pause 2
+        "natsuki "
+        pause 4
+        repeat
+
 # This selects which idle image to show based on current affinity state
 image natsuki idle = ConditionSwitch(
     "Natsuki.isEnamored(higher=True)", "natsuki idle enamored",

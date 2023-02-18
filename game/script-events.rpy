@@ -226,7 +226,7 @@ init python in jn_events:
             Constructor.
 
             IN:
-                - label - The name used to uniquely identify this wearable and refer to it internally
+                - label - The name used to uniquely identify this holiday and refer to it internally
                 - holiday_type - The JNHolidayTypes type of this holiday
                 - affinity_range - The affinity range that must be satisfied for this holiday to be picked when filtering
                 - natsuki_sprite_code - The sprite code to show for Natsuki when the holiday is revealed
@@ -283,7 +283,7 @@ init python in jn_events:
                 - holiday_completion_state - boolean state the completion state corresponding to each holiday must be
 
             OUT:
-                - list of JNWearable child wearables matching the search criteria
+                - list of holidays matching the search criteria
             """
             return [
                 _holiday
