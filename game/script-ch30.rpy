@@ -245,6 +245,9 @@ label ch30_wait:
 
 #Other labels
 label call_next_topic(show_natsuki=True):
+    $ jn_utils.log("Calling next topic with event list item: " + str(persistent._event_list))
+    $ _topic = None
+
     if show_natsuki:
         show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
 
@@ -256,7 +259,8 @@ label call_next_topic(show_natsuki=True):
             if (persistent._jn_notify_conversations
                 and jn_utils.get_current_session_length().total_seconds() > 60
                 and not jn_activity.getJNWindowActive()
-                and not _topic in ["random_music_change", "weather_change"]):
+                and not _topic in ["random_music_change", "weather_change"]
+                and not "idle_" in _topic):
 
                     play audio notification
                     python:
@@ -344,13 +348,23 @@ label call_next_topic(show_natsuki=True):
 
     # Reenable the UI and hop back to the loop
     python:
+        global LAST_IDLE_CALL
         global LAST_TOPIC_CALL
-        LAST_TOPIC_CALL = datetime.datetime.now()
+
+        if "idle_" in _topic:
+            jn_utils.log("LAST_IDLE_CALL")
+            LAST_IDLE_CALL = datetime.datetime.now()
+
+        else:
+            jn_utils.log("LAST_TOPIC_CALL")
+            LAST_TOPIC_CALL = datetime.datetime.now()
+
         Natsuki.setInConversation(False)
 
     jump ch30_loop
 
 init python:
+    LAST_IDLE_CALL = datetime.datetime.now()
     LAST_TOPIC_CALL = datetime.datetime.now()
     LAST_MINUTE_CHECK = datetime.datetime.now()
     LAST_HOUR_CHECK = LAST_MINUTE_CHECK.hour
@@ -420,6 +434,13 @@ init python:
             elif not store.persistent.jn_natsuki_repeat_topics and not store.persistent._jn_out_of_topics_warning_given:
                 # Out of random topics
                 queue("talk_out_of_topics")
+        elif (
+            jn_idles.selectIdle()
+            and datetime.datetime.now() >= LAST_IDLE_CALL + datetime.timedelta(minutes=5)
+            and not persistent._event_list
+        ):
+            # Select a random idle
+            queue(random.choice(jn_idles.selectIdle()))
 
         elif (
             persistent._jn_notify_activity

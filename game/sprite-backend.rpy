@@ -707,27 +707,73 @@ image natsuki gaming:
 
 # Idle images for Natsuki falling - then remaining - asleep
 image natsuki sleeping:
-    # Falling asleep
-    "natsuki "
+    # Falling asleep (4.1s)
+    "natsuki 3nnmpu"
     pause 1
-    "natsuki "
-    pause 1
-    "natsuki "
-    pause 1
-    "natsuki "
-    pause 1
-    "natsuki "
-    pause 1
-    "natsuki "
-    pause 1
+    "natsuki 3nsqpu"
+    pause 2
+    "natsuki 3ncspu"
+    pause 0.1
+    "natsuki 3nsqsl"
+    pause 2
+    "natsuki 3ncssl"
+    pause 2
 
     # Sleeping loop
     block:
-        "natsuki "
+        "natsuki 1ncsflesl"
         pause 2
-        "natsuki "
+        "natsuki 1ncsemesl"
         pause 4
+        "natsuki 1ncspuesl"
+        pause 1
+
         repeat
+
+# Idle images for Natsuki reading something
+image natsuki reading:
+    block:
+        choice:
+            "natsuki 1ndwbo"
+            pause 3
+            "natsuki 1ndwbo"
+            pause 0.1
+            "natsuki 1ndwbo"
+            pause 4
+
+        choice:
+            "natsuki 1ndwpu"
+            pause 3
+            "natsuki 1ncspu"
+            pause 0.1
+            "natsuki 1ndwpu"
+            pause 4
+
+        choice:
+            "natsuki 1udwsm"
+            pause 3
+            "natsuki 1ucssm"
+            pause 0.1
+            "natsuki 1udwsm"
+            pause 2
+
+        choice:
+            "natsuki 1fdwpu"
+            pause 3
+            "natsuki 1fcspu"
+            pause 0.1
+            "natsuki 1fdwpu"
+            pause 4
+
+        choice:
+            "natsuki 1ndwfs"
+            pause 3
+            "natsuki 1ncsfs"
+            pause 0.1
+            "natsuki 1ndwfs"
+            pause 4
+
+    repeat
 
 # This selects which idle image to show based on current affinity state
 image natsuki idle = ConditionSwitch(
