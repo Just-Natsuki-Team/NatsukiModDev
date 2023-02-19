@@ -222,6 +222,18 @@ label idle_reading_renpy_for_dummies:
     hide black with Dissolve(0.5)
     $ jnClickToContinue()
 
+    # TODO: writing
+
+    show natsuki reading
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    show natsuki 1fchsmeme
+    hide prop
+    play audio drawer
+    $ jnPause(1.3)
+    hide black with Dissolve(0.5)
+    $ jnPause(1)
+
     jump talk_menu
 
 label idle_reading_a_la_mode:
@@ -231,6 +243,18 @@ label idle_reading_a_la_mode:
     hide black with Dissolve(0.5)
     $ jnClickToContinue()
 
+    # TODO: writing
+
+    show natsuki reading
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    show natsuki 1fchsmeme
+    hide prop
+    play audio drawer
+    $ jnPause(1.3)
+    hide black with Dissolve(0.5)
+    $ jnPause(1)
+
     jump talk_menu
 
 label idle_reading_step_by_step:
@@ -239,6 +263,18 @@ label idle_reading_step_by_step:
     show natsuki reading
     hide black with Dissolve(0.5)
     $ jnClickToContinue()
+
+    # TODO: writing
+
+    show natsuki reading
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    show natsuki 1fchsmeme
+    hide prop
+    play audio drawer
+    $ jnPause(1.3)
+    hide black with Dissolve(0.5)
+    $ jnPause(1)
 
     jump talk_menu
 

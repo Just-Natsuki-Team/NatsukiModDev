@@ -395,14 +395,12 @@ init python:
         ):
             queue("new_wearables_outfits_unlocked")
 
-        # Push a new topic every couple of minutes
-        # TODO: Move to a wait/has-waited system to allow some more flexibility
-        elif (
+        # Push a topic, if we have waited long enough since the last one, and settings for random chat allow it
+        if (
             persistent.jn_natsuki_random_topic_frequency is not jn_preferences.random_topic_frequency.NEVER
             and datetime.datetime.now() > LAST_TOPIC_CALL + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown())
             and not persistent._event_list
         ):
-
             if not persistent.jn_natsuki_repeat_topics:
                 topic_pool = Topic.filter_topics(
                     topics.TOPIC_MAP.values(),
@@ -412,7 +410,6 @@ init python:
                     affinity=Natsuki._getAffinityState(),
                     is_seen=False
                 )
-
             else:
                 topic_pool = Topic.filter_topics(
                     topics.TOPIC_MAP.values(),
@@ -434,21 +431,23 @@ init python:
             elif not store.persistent.jn_natsuki_repeat_topics and not store.persistent._jn_out_of_topics_warning_given:
                 # Out of random topics
                 queue("talk_out_of_topics")
-        elif (
-            jn_idles.selectIdle()
-            and datetime.datetime.now() >= LAST_IDLE_CALL + datetime.timedelta(minutes=5)
+
+        # Select a random idle, if we haven't had one for a while and there's nothing already queued
+        if (
+            datetime.datetime.now() >= LAST_IDLE_CALL + datetime.timedelta(minutes=5)
             and not persistent._event_list
         ):
-            # Select a random idle
-            queue(random.choice(jn_idles.selectIdle()))
+            idle_topic = jn_idles.selectIdle()
+            if idle_topic:
+                queue(idle_topic)
 
-        elif (
+        # Notify for player activity, if settings allow it
+        if (
             persistent._jn_notify_activity
             and Natsuki.isAffectionate(higher=True)
             and current_activity.activity_type != jn_activity.ACTIVITY_MANAGER.last_activity.activity_type
             and random.randint(1, 20) == 1
         ):
-            # Activity check for notif
             jn_activity.ACTIVITY_MANAGER.last_activity = current_activity
             if jn_activity.ACTIVITY_MANAGER.last_activity.getRandomNotifyText():
                 jn_activity.notifyPopup(jn_activity.ACTIVITY_MANAGER.last_activity.getRandomNotifyText())
