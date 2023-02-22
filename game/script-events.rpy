@@ -352,6 +352,9 @@ init python in jn_events:
             OUT:
                 - True, if the holiday meets the filter criteria. Otherwise False
             """
+            if self.conditional is not None and not eval(self.conditional, globals=store.__dict__):
+                return False
+                
             if is_seen is not None and self.is_seen != is_seen:
                 return False
 

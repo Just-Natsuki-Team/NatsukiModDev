@@ -348,17 +348,8 @@ label call_next_topic(show_natsuki=True):
 
     # Reenable the UI and hop back to the loop
     python:
-        global LAST_IDLE_CALL
         global LAST_TOPIC_CALL
-
-        if "idle_" in _topic:
-            jn_utils.log("LAST_IDLE_CALL")
-            LAST_IDLE_CALL = datetime.datetime.now()
-
-        else:
-            jn_utils.log("LAST_TOPIC_CALL")
-            LAST_TOPIC_CALL = datetime.datetime.now()
-
+        LAST_TOPIC_CALL = datetime.datetime.now()
         Natsuki.setInConversation(False)
 
     jump ch30_loop
@@ -374,6 +365,8 @@ init python:
         """
         Runs every minute during breaks between topics
         """
+        global LAST_IDLE_CALL
+
         jn_utils.save_game()
 
         # Check the daily affinity cap and reset if need be
@@ -440,6 +433,7 @@ init python:
             idle_topic = jn_idles.selectIdle()
             if idle_topic:
                 queue(idle_topic)
+                LAST_IDLE_CALL = datetime.datetime.now()
 
         # Notify for player activity, if settings allow it
         if (

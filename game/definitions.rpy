@@ -621,9 +621,12 @@ init -3 python:
             global allow_dismiss
             allow_dismiss = True
 
-    def jnClickToContinue():
+    def jnClickToContinue(silent=True):
         """
         Requires the player to click to advance the game for a given step.
+
+        IN:
+            - silent - If False, plays a notification sound on click. Defaults to True.
         """
         global allow_dismiss
         global _dismiss_pause
@@ -631,6 +634,13 @@ init -3 python:
         _dismiss_pause = True
         renpy.pause()
         _dismiss_pause = False
+
+        if not silent:
+            if jn_is_day():
+                renpy.play("mod_assets/buttons/sounds/button_click_day.ogg")
+            
+            else:
+                renpy.play("mod_assets/buttons/sounds/button_click_night.ogg")
 
     def jnIsNewYearsDay(input_date=None):
         """

@@ -1,4 +1,5 @@
 init python in jn_idles:
+    import datetime
     from Enum import Enum
     import random
     import store
@@ -8,15 +9,25 @@ init python in jn_idles:
     
     __ALL_IDLES = {}
 
+    _last_idle_label = None
+
     def selectIdle():
         """
         Picks and returns a single random idle, or None if no idles are available.
+        The same idle cannot be returned two times in a row.
         """
+        global _last_idle_label
+        not_label = [_last_idle_label] if _last_idle_label is not None else []
+
         idle_list = JNIdle.filterIdles(
             idle_list=getAllIdles(),
-            affinity=store.Natsuki._getAffinityState()
+            affinity=store.Natsuki._getAffinityState(),
+            not_label=not_label
         )
-        return random.choice(idle_list).label if len(idle_list) > 0 else None
+        return_idle = random.choice(idle_list).label if len(idle_list) > 0 else None
+        _last_idle_label = return_idle
+
+        return return_idle
 
     def getAllIdles():
         """
@@ -72,13 +83,14 @@ init python in jn_idles:
         def __filterIdle(
             self,
             affinity=None,
-            conditional=None
+            not_label=None
         ):
             """
             Returns True if the idle meets the filter criteria, otherwise False.
 
             IN:
                 - affinity - The affinity the idle must match in its affinity_range.
+                - not_label - List of labels the idle must not match
 
             OUT:
                 - True if all filter criteria has been passed; otherwise False.
@@ -86,7 +98,10 @@ init python in jn_idles:
             if affinity is not None and not self.__currAffinityInAffinityRange(affinity):
                 return False
 
-            elif conditional is not None and not eval(self.conditional, globals=store.__dict__):
+            elif self.conditional is not None and not eval(self.conditional, store.__dict__):
+                return False
+
+            elif not_label is not None and self.label in not_label:
                 return False
 
             return True
@@ -94,13 +109,15 @@ init python in jn_idles:
         @staticmethod
         def filterIdles(
             idle_list,
-            affinity
+            affinity=None,
+            not_label=None
         ):
             """
             Returns a filtered list of idles, given an idle list and filter criteria.
 
             IN:
-                - affinity - minimum affinity state the idle must have
+                - affinity - The affinity the idle must match in its affinity_range.
+                - not_label - List of labels the idle must not match
 
             OUT:
                 - list of idles matching the search criteria
@@ -109,24 +126,39 @@ init python in jn_idles:
                 _idle
                 for _idle in idle_list
                 if _idle.__filterIdle(
-                    affinity
+                    affinity,
+                    not_label
                 )
             ]
 
     def __registerIdle(idle):
+        """
+        Registers a new idle in the list of idles, allowing it to be selected randomly between topics.
+        
+        IN:
+            - idle - JNIdle to register.
+        """
         if idle.label in __ALL_IDLES:
             jn_utils.log("Cannot register idle name: {0}, as an idle with that name already exists.".format(idle.label))
 
         else:
             __ALL_IDLES[idle.label] = idle
-    
+
+    def _concludeIdle():
+        """
+        Wraps up an idle by setting the last idle call time and jumping to the talk menu.
+        This is necessary as we can't call the menu and then return like a topic.
+        """
+        store.LAST_IDLE_CALL = datetime.datetime.now()
+        renpy.jump("talk_menu")
+
     __registerIdle(JNIdle(
         label="idle_twitch_playing",
         idle_type=JNIdleTypes.gaming,
         affinity_range=(jn_affinity.HAPPY, None),
         conditional=(
-            """get_topic("talk_thoughts_on_vegetarianism").shown_count > 0"""
-            """ or get_topic("talk_thoughts_on_vegetarianism").shown_count > 0"""
+            "get_topic('event_wintendo_twitch_battery_dead').shown_count > 0"
+            " or get_topic('event_wintendo_twitch_game_over').shown_count > 0"
         )
     ))
 
@@ -134,28 +166,28 @@ init python in jn_idles:
         label="idle_reading_parfait_girls",
         idle_type=JNIdleTypes.reading,
         affinity_range=(jn_affinity.NORMAL, None),
-        conditional="""get_topic("event_caught_reading_manga").shown_count > 0"""
+        conditional="get_topic('event_caught_reading_manga').shown_count > 0"
     ))
 
     __registerIdle(JNIdle(
         label="idle_reading_renpy_for_dummies",
         idle_type=JNIdleTypes.reading,
         affinity_range=(jn_affinity.NORMAL, None),
-        conditional="""get_topic("event_renpy_for_dummies").shown_count > 0"""
+        conditional="get_topic('event_renpy_for_dummies').shown_count > 0"
     ))
 
     __registerIdle(JNIdle(
         label="idle_reading_a_la_mode",
         idle_type=JNIdleTypes.reading,
         affinity_range=(jn_affinity.HAPPY, None),
-        conditional="""get_topic("event_reading_a_la_mode").shown_count > 0"""
+        conditional="get_topic('event_reading_a_la_mode').shown_count > 0"
     ))
 
     __registerIdle(JNIdle(
         label="idle_reading_step_by_step",
         idle_type=JNIdleTypes.reading,
         affinity_range=(jn_affinity.AFFECTIONATE, None),
-        conditional="""get_topic("event_step_by_step_manga").shown_count > 0"""
+        conditional="get_topic('event_step_by_step_manga').shown_count > 0"
     ))
 
     __registerIdle(JNIdle(
@@ -170,13 +202,19 @@ label idle_twitch_playing:
     show natsuki gaming
     hide black with Dissolve(0.5)
     $ jnPause(0.5)
-    $ jnClickToContinue()
+    $ jnClickToContinue(silent=False)
 
     n 1tnmpueqm "...?{w=1}{nw}"
     show prop wintendo_twitch_held free
     n 1unmflesu "Oh!{w=1}{nw}"
     extend 1fchbgsbr " What's up,{w=0.2} [player]?"
-    n 1fsrsssbr "Just give me a second here..."
+
+    $ alt_dialogue = random.choice([True, False])
+    if alt_dialogue:
+        n 1fllsssbr "Just gotta save real quick..."
+    
+    else:
+        n 1fsrsssbr "Just give me a second here..."
 
     show natsuki gaming
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
@@ -188,20 +226,26 @@ label idle_twitch_playing:
     hide black with Dissolve(0.5)
     $ jnPause(1)
 
-    jump talk_menu
+    $ jn_idles._concludeIdle()
 
 label idle_reading_parfait_girls:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     show prop parfait_manga_held zorder JN_PROP_ZORDER
     show natsuki reading
     hide black with Dissolve(0.5)
-    $ jnClickToContinue()
+    $ jnClickToContinue(silent=False)
 
     n 1tlrbo "...{w=1}{nw}"
     n 1tnmboeqm "...?{w=1}{nw}"
     n 1unmflesu "Oh!{w=0.75}{nw}"
     extend 1fchbgsbl " Hey!"
-    n 1fslsssbl "Let me just bookmark this real quick..."
+
+    $ alt_dialogue = random.choice([True, False])
+    if alt_dialogue:
+        n 1fslsssbl "Let me just bookmark this real quick..."
+    
+    else:
+        n 1fcssssbl "Just gotta find a good stopping point here..."
 
     show natsuki reading
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
@@ -213,39 +257,68 @@ label idle_reading_parfait_girls:
     hide black with Dissolve(0.5)
     $ jnPause(1)
 
-    jump talk_menu
+    $ jn_idles._concludeIdle()
 
 label idle_reading_renpy_for_dummies:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     show prop renpy_for_dummies_book_held zorder JN_PROP_ZORDER
     show natsuki reading
     hide black with Dissolve(0.5)
-    $ jnClickToContinue()
+    $ jnClickToContinue(silent=False)
 
-    # TODO: writing
+    n 1fdwbo "...{w=1}{nw}"
+    n 1tnmboeqm "...?{w=1}{nw}"
+    n 1unmflesu "Oh!{w=0.75}{nw}"
+    extend 1nlrsssbr " Hey.{w=1}{nw}"
+    extend 1nsrsssbr " Just let me finish up here real quick."
 
-    show natsuki reading
+    $ alt_dialogue = random.choice([True, False])
+    if alt_dialogue:
+        n 1nsrbosbr "..."
+        n 1nnmaj "...And no.{w=1}{nw}" 
+        extend 1fslpo " The book still sucks."
+
+    else:
+        n 1fcsflsbr "None of this crap was making any sense,{w=0.2} a-{w=0.2}anyway."
+
+    show natsuki 1fcspo
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
-    show natsuki 1fchsmeme
+    show natsuki 1fcssmeme
     hide prop
     play audio drawer
     $ jnPause(1.3)
     hide black with Dissolve(0.5)
     $ jnPause(1)
 
-    jump talk_menu
+    $ jn_idles._concludeIdle()
 
 label idle_reading_a_la_mode:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     show prop a_la_mode_manga_held zorder JN_PROP_ZORDER
     show natsuki reading
     hide black with Dissolve(0.5)
-    $ jnClickToContinue()
+    $ jnClickToContinue(silent=False)
 
-    # TODO: writing
+    $ alt_dialogue = random.choice([True, False])
+    if alt_dialogue:
+        n 1unmaj "Ah!{w=1}{nw}"
+        extend 1unmbg " [player]!{w=1}{nw}"
+        extend 1fcsbg " Perfect timing."
+        n 1fsqsm "I {i}juuuust{/i} finished that chapter~.{w=1.25}{nw}"
+        extend 1fchsm " Ehehe."
 
-    show natsuki reading
+    else:
+        n 1tnmpu "Huh?{w=1}{nw}"
+        extend 1unmajl " Oh!{w=0.75}{nw}"
+        extend 1nlrsslsbl " Heh."
+        n 1nsrsssbl "I...{w=1}{nw}"
+        extend 1nslsssbl " kinda got distracted.{w=0.75}{nw}"
+        extend 1fspgs " But man,{w=0.2} this is a good read!"
+        n 1fcsbg "You have no {w=0.3}{i}idea{/i}{w=0.3} what you're missing out on,{w=0.2} [player].{w=0.75}{nw}"
+        extend 1fsqsm " Ehehe."
+
+    show natsuki 1fcssm
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     show natsuki 1fchsmeme
@@ -255,18 +328,31 @@ label idle_reading_a_la_mode:
     hide black with Dissolve(0.5)
     $ jnPause(1)
 
-    jump talk_menu
+    $ jn_idles._concludeIdle()
 
 label idle_reading_step_by_step:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     show prop step_by_step_manga_held zorder JN_PROP_ZORDER
     show natsuki reading
     hide black with Dissolve(0.5)
-    $ jnClickToContinue()
+    $ jnClickToContinue(silent=False)
 
-    # TODO: writing
+    n 1tnmpu "Eh?{w=1.25}{nw}"
+    extend 1unmfllesu " Oh!{w=0.75}{nw}"
+    extend 1ullfllsbl " [player]!"
 
-    show natsuki reading
+    $ alt_dialogue = random.choice([True, False])
+    if alt_dialogue:
+        n 1nslbolsbl "..."
+        n 1nslajl "Just...{w=1}{nw}"
+        extend 1nslssl " give me a sec.{w=1}{nw}"
+        extend 1nsrcal " I was only just getting into that..."
+
+    else:
+        n 1fcsbglsbr "W-{w=0.2}what's up?{w=1}{nw}"
+        extend 1nsrsslsbr " I'll just...{w=1}{nw}" 
+        extend 1nsrcal " bookmark this real quick."
+
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     show natsuki 1fchsmeme
@@ -276,13 +362,13 @@ label idle_reading_step_by_step:
     hide black with Dissolve(0.5)
     $ jnPause(1)
 
-    jump talk_menu
+    $ jn_idles._concludeIdle()
 
 label idle_naptime:
     $ jn_globals.force_quit_enabled = False
     show natsuki sleeping
     $ jnPause(7.1)
-    $ jnClickToContinue()
+    $ jnClickToContinue(silent=False)
     
     n 3kcsslesl "...Mmmnnn...{w=2}{nw}"
     n 3kwlpuesl "...Nnnn?{w=1}{nw}"
@@ -294,4 +380,4 @@ label idle_naptime:
     extend 4nsrunlsbr " Jeez..."
     n 2nsrpol "What's up?"
 
-    jump talk_menu
+    $ jn_idles._concludeIdle()

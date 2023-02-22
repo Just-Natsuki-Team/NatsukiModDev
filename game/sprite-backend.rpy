@@ -713,7 +713,7 @@ image natsuki sleeping:
     "natsuki 3nsqpu"
     pause 2
     "natsuki 3ncspu"
-    pause 0.1
+    pause 0.2
     "natsuki 3nsqsl"
     pause 2
     "natsuki 3ncssl"
@@ -721,11 +721,11 @@ image natsuki sleeping:
 
     # Sleeping loop
     block:
-        "natsuki 1ncsflesl"
+        "natsuki 3ncsflesl"
         pause 2
-        "natsuki 1ncsemesl"
+        "natsuki 3ncsemesl"
         pause 4
-        "natsuki 1ncspuesl"
+        "natsuki 3ncspuesl"
         pause 1
 
         repeat
