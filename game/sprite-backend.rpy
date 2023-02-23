@@ -775,6 +775,61 @@ image natsuki reading:
 
     repeat
 
+# Idle images for Natsuki daydreaming/in thought
+image natsuki daydreaming:
+    block:
+        choice:
+            "natsuki 2tupbo"
+            pause 4
+            "natsuki 2tcsbo"
+            pause 0.1
+            "natsuki 2tupbo"
+            pause 1
+            "natsuki 2tcsbo"
+            pause 0.1
+            "natsuki 2tupbo"
+            pause 4
+            "natsuki 2tcsbo"
+            pause 0.1
+
+        choice:
+            "natsuki 2tllbo"
+            pause 4
+            "natsuki 2tcsbo"
+            pause 0.1
+            "natsuki 2tllbo"
+            pause 4
+            "natsuki 2tcsbo"
+            pause 0.1
+
+        choice:
+            "natsuki 3tlrbo"
+            pause 4
+            "natsuki 3tcsbo"
+            pause 0.1
+            "natsuki 3tlrbo"
+            pause 4
+            "natsuki 3tcsbo"
+            pause 0.1
+    
+        choice:
+            "natsuki 4tsrpu"
+            pause 4
+            "natsuki 4tcspu"
+            pause 0.1
+            "natsuki 4tsrpu"
+            pause 3
+            "natsuki 4fsrpu"
+            pause 3
+            "natsuki 4fcspu"
+            pause 0.1
+            "natsuki 4tsrsl"
+            pause 5
+            "natsuki 4tcssl"
+            pause 0.1
+
+    repeat
+
 # This selects which idle image to show based on current affinity state
 image natsuki idle = ConditionSwitch(
     "Natsuki.isEnamored(higher=True)", "natsuki idle enamored",

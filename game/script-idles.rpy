@@ -196,6 +196,12 @@ init python in jn_idles:
         affinity_range=(jn_affinity.AFFECTIONATE, None)
     ))
 
+    __registerIdle(JNIdle(
+        label="idle_daydreaming",
+        idle_type=JNIdleTypes.resting,
+        affinity_range=(jn_affinity.NORMAL, None)
+    ))
+
 label idle_twitch_playing:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     show prop wintendo_twitch_playing free zorder JN_PROP_ZORDER
@@ -379,5 +385,31 @@ label idle_naptime:
     n 4unmfllsbr "[player_initial]-[player]!{w=1}{nw}"
     extend 4nsrunlsbr " Jeez..."
     n 2nsrpol "What's up?"
+
+    $ jn_idles._concludeIdle()
+
+label idle_daydreaming:
+    $ jn_globals.force_quit_enabled = False
+    show natsuki daydreaming
+    $ jnClickToContinue(silent=False)
+
+    $ alt_dialogue = random.choice([True, False])
+    if alt_dialogue:
+        n 3flrpu "...{w=1.5}{nw}"
+        n 3tnmpueqm "...?{w=1}{nw}"
+        n 4unmfleex "Oh!{w=0.75}{nw}"
+        extend 4fllsslsbr " H-{w=0.2}hey."
+        n 2fcsajlsbr "I-{w=0.2}I {i}totally{/i} wasn't spacing out or anything like that.{w=1}{nw}"
+        extend 2fsrposbr " In case you were wondering."
+        n 1fcsajsbr "A-{w=0.2}anyway."
+
+    else:
+        n 3tlrca "...{w=1.5}{nw}"
+        n 3tnmpueqm "Huh?{w=1}{nw}"
+        extend 4unmemeex " Oh!{w=1}{nw}"
+        extend 4nllfllsbr " [player]."
+        n 2fcspolsbr "Y-{w=0.2}you should {i}really{/i} know better than to interrupt someone thinking,{w=0.75}{nw}"
+        extend 2flrposbr " you know."
+        n 2fcsajsbr "Anyhow..."
 
     $ jn_idles._concludeIdle()
