@@ -202,6 +202,13 @@ init python in jn_idles:
         affinity_range=(jn_affinity.NORMAL, None)
     ))
 
+    __registerIdle(JNIdle(
+        label="idle_poetry_attempts",
+        idle_type=JNIdleTypes.reading,
+        affinity_range=(jn_affinity.NORMAL, None),
+        conditional="get_topic('event_caught_writing_poetry').shown_count > 0"
+    ))
+
 label idle_twitch_playing:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     show prop wintendo_twitch_playing free zorder JN_PROP_ZORDER
@@ -389,8 +396,7 @@ label idle_naptime:
     $ jn_idles._concludeIdle()
 
 label idle_daydreaming:
-    $ jn_globals.force_quit_enabled = False
-    show natsuki daydreaming
+    show natsuki thinking
     $ jnClickToContinue(silent=False)
 
     $ alt_dialogue = random.choice([True, False])
@@ -411,5 +417,46 @@ label idle_daydreaming:
         n 2fcspolsbr "Y-{w=0.2}you should {i}really{/i} know better than to interrupt someone thinking,{w=0.75}{nw}"
         extend 2flrposbr " you know."
         n 2fcsajsbr "Anyhow..."
+
+    $ jn_idles._concludeIdle()
+
+label idle_poetry_attempts:
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    show prop poetry_attempt zorder JN_PROP_ZORDER
+    show natsuki thinking
+    hide black with Dissolve(0.5)
+    $ jnClickToContinue(silent=False)
+
+    $ alt_dialogue = random.choice([True, False])
+    if alt_dialogue:
+        n 1tnmboeqm "...?{w=1.25}{nw}"
+        n 1unmajesu "Oh!{w=0.75}{nw}"
+        extend 1fchbgsbl " Hey,{w=0.2} [player]."
+        n 1tnmsm "..."
+        n 1tnmpu "...What?{w=0.75}{nw}"
+        extend 1klrflsbl " What's that look for,{w=0.5}{nw}" 
+        extend 1knmbosbl " all of a sudden?"
+        n 1udwfll "..."
+        n 1udwemleex "A-{w=0.2}ah!{w=0.75}{nw}"
+        extend 1flremlsbl " T-{w=0.2}this?{w=0.75}{nw}"
+        extend 1fcsemlsbl " It's nothing!{w=1}{nw}"
+        extend 1fcscalsbl " N-{w=0.2}nothing at all."
+
+    else:
+        n 1tlrca "...{w=1.25}{nw}"
+        n 1tnmcaeqm "...?{w=0.75}{nw}"
+        n 1unmeml "A-{w=0.2}ah!{w=0.75}{nw}"
+        extend 1ulreml " [player]!"
+        n 1fcsajlsbr "J-{w=0.2}just a second!{w=1}{nw}"
+        extend 1fsrcalsbr " Jeez..."
+
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    show natsuki 1nsrcasbl
+    hide prop
+    play audio drawer
+    $ jnPause(1.3)
+    hide black with Dissolve(0.5)
+    $ jnPause(1)
 
     $ jn_idles._concludeIdle()

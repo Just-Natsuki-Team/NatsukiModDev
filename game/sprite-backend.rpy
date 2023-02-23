@@ -776,7 +776,7 @@ image natsuki reading:
     repeat
 
 # Idle images for Natsuki daydreaming/in thought
-image natsuki daydreaming:
+image natsuki thinking:
     block:
         choice:
             "natsuki 2tupbo"

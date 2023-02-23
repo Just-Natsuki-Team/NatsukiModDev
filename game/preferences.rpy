@@ -56,6 +56,9 @@ default persistent.jn_natsuki_random_topic_frequency = jn_preferences.random_top
 # This determines if Natsuki should talk about topics randomly that she has already spoken about
 default persistent.jn_natsuki_repeat_topics = True
 
+# This determines if Natsuki will do her own thing in the downtime between topics
+default persistent._jn_natsuki_idles_enabled = True
+
 # This determines if the game should use realtime weather
 default persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
 

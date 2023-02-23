@@ -7127,7 +7127,7 @@ label talk_thoughts_on_tea:
                 else:
                     n 4tnmaj "Oh?{w=0.5}{nw}"
                     extend 3tnmss " You like {i}both{/i} now?"
-                    n 4tsqbg "...Are you {i}sure{/i} you aren't just a caffeine junkie,{w=0.2} [player]?{w=0.5}{nw}"
+                    n 4tsqbg "...Are you {i}sure{/i} you aren't just a caffeine junkie,{w=0.2} [player]?"
                     extend 1nchgn " Ehehe."
 
             else:
@@ -7135,7 +7135,7 @@ label talk_thoughts_on_tea:
                 extend 1tnmss " Really?"
                 n 3nsrss "That's...{w=0.3} kinda weird,{w=0.2} actually."
                 n 1fchbg "Most people like at least {i}one{/i} of the two more!"
-                n 4fsqsg "Are you {i}sure{/i} you aren't just a caffeine junkie,{w=0.2} [player]?{w=0.5}{nw}"
+                n 4fsqsg "Are you {i}sure{/i} you aren't just a caffeine junkie,{w=0.2} [player]?"
 
             $ persistent.jn_player_tea_coffee_preference = "both"
 
