@@ -803,13 +803,13 @@ image natsuki thinking:
             pause 0.1
 
         choice:
-            "natsuki 3tlrbo"
+            "natsuki 4tlrbo"
             pause 4
-            "natsuki 3tcsbo"
+            "natsuki 4tcsbo"
             pause 0.1
-            "natsuki 3tlrbo"
+            "natsuki 4tlrbo"
             pause 4
-            "natsuki 3tcsbo"
+            "natsuki 4tcsbo"
             pause 0.1
     
         choice:
