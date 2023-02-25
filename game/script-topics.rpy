@@ -9275,3 +9275,114 @@ label talk_thoughts_on_vegetarianism:
             n 2fcsupltsa "Jerk."
 
     return
+
+# Natsuki shares her thoughts on motivation and how she manages hers.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_staying_motivated",
+            unlocked=True,
+            prompt="Staying motivated",
+            conditional="jn_utils.get_total_gameplay_hours() >= 4",
+            category=["Life"],
+            affinity_range=(jn_affinity.NORMAL, None),
+            nat_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_staying_motivated:
+    n "...{w=1.25}{nw}"
+    n "Man..."
+    n "..."
+    n "You know,{w=0.2} [player].{w=0.75}{nw}" 
+    extend "If there's one thing I {i}really{/i} can't stand?"
+    n " It's when for whatever reason,{w=0.2} I just can't get motivated about anything.{w=1}{nw}"
+    extend " It's the worst!"
+    n "Like...{w=0.75}{nw}"
+    extend " when nothing seems worth the effort,{w=0.75}{nw}"
+    extend " or you feel like you're just putting something off.{w=1}{nw}"
+    extend " Even if you actually wanna do it!"
+    n "And then?{w=1}{nw}"
+    extend " If you {i}don't{/i} snap out of it somehow?"
+    n "You end up feeling all crappy about not getting something done!{w=0.75}{nw}"
+    extend " It {i}stinks{/i}!"
+    n "Ugh.{w=1.25}{nw}"
+    extend " Feels like you just can't win sometimes."
+    n "...T-{w=0.2}that's not to say I feel like that often or anything!{w=1}{nw}"
+    extend " N-{w=0.2}no way!{w=1}{nw}"
+    extend " I've {i}always{/i} got things under control."
+    n "Heh."
+    n "...And you know why,{w=0.2} [player]?"
+    n "Yeah.{w=0.75}{nw}"
+    extend " I bet you do."
+    n "'Cause I know just how to tell that kind of mood to stick it!"
+
+    if get_topic("talk_time_management").shown_count > 0:
+        n "I mean,{w=1}{nw}"
+        extend " I think I mentioned timeboxing before.{w=0.75}{nw}"
+        extend " Having at least {i}some{/i} kind of structure can help."
+        n "But personally?{w=1}{nw}"
+    
+    else:
+        n "Personally?{w=1}{nw}"
+
+    extend " I find most of the problem is just getting in the right mood -{w=0.5}{nw}"
+    extend " and there's no shortage of ways to get there."
+    n "Like music!"
+    n "Nothing beats my tried-and-true music playlists to kick me out of a rutt!{w=0.75}{nw}"
+    extend " A good tune always gets me pumped."
+    n "But you need to do what works for {i}you{/i}!"
+
+    if persistent.jn_player_tea_coffee_preference in ["tea",{w=0.2} "coffee"]:
+        n "Downing some [persistent.jn_player_tea_coffee_preference],{w=1}{nw}"
+
+    else:
+        n "Getting some caffeine in your system,{w=1}{nw}"
+
+    extend " cracking open the windows for some fresh air,{w=1}{nw}"
+    extend " getting off your backside -{w=0.75}{nw}"
+    extend " whatever it is!"
+    n "It's all about getting that momentum going...{w=1}{nw}"
+    extend " and then keeping it!"
+    n "Seriously.{w=1}{nw}"
+    extend " The worst thing you can do is get all fired up and just drop it straightaway.{w=0.75}{nw}"
+    extend " You gotta commit!"
+    n "And don't let yourself get distracted.{w=0.75}{nw}"
+    extend " One thing at a time!"
+
+    n "But most importantly,{w=0.2} [player]?"
+    n "Just...{w=0.75}{nw}"
+    extend " don't be totally dumb about it.{w=1}{nw}"
+    extend  " Forcing yourself into stuff,{w=0.2} I mean."
+    n "Coming back with a fresh mindset is just as valid as trying to push past the block."
+    n "Like yeah,{w=0.75}{nw}"
+    extend " no kidding.{w=1}{nw}"
+    extend " It sucks feeling like you're throwing time away."
+    n "But it's not like you'll never get to try again,{w=0.75}{nw}"
+    extend " or get another time to do it!"
+    n "It's only a waste of time if you {i}convince{/i} yourself it is -{w=1}{nw}"
+    extend " or that you'll never start."
+
+    n "And hey.{w=1}{nw}"
+    extend " You know what's {i}never{/i} a waste of time,{w=0.2} [player]?"
+    
+    if Natsuki.isLove(higher=True):
+        n "Spending more time with yours truly!"
+        n "N-{w=0.2}now that's something I {i}know{/i} you of all people find motivating.{w=0.75}{nw}"
+        extend " Ehehe."
+        n "Love you too,{w=0.2} [player]~!"
+
+    if Natsuki.isEnamored(higher=True):
+        n "Spending more time with yours truly!"
+        n "N-{w=0.2}now {i}that's{/i} something anyone should find motivating!{w=0.75}{nw}"
+        extend " Ehehe."
+
+    else:
+        n "Getting more pro tips from yours truly!"
+        n "You're welcome,{w=0.2} [player]~!{w=0.75}{nw}"
+        extend " Ehehe."
+    
+    return
