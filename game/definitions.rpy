@@ -11,13 +11,6 @@ default persistent._jn_player_tt_instances = 0
 #Our main topic pool
 default persistent._event_list = list()
 
-# Prevent multiple JN instances
-init -1500 python:
-    import os
-    import singleton
-
-    #me = singleton.SingleInstance()
-
 #Early imports
 init -990 python:
     import datetime
