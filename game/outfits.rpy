@@ -1278,6 +1278,12 @@ init -1 python in jn_outfits:
         unlocked=True,
         is_jn_wearable=True
     ))
+    __register_wearable(JNHairstyle(
+        reference_name="jn_hair_twintails_down",
+        display_name="Twintails down",
+        unlocked=True,
+        is_jn_wearable=True
+    ))
 
     # Official JN eyewear
     __register_wearable(JNEyewear(
