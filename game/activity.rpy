@@ -441,13 +441,13 @@ init python in jn_activity:
                     if not isinstance(focus, int):
                         wm_name = focus.get_wm_name()
 
-                        if isinstance(wm_name, str) and wm_name != "":
+                        if isinstance(wm_name, basestring) and wm_name != "":
                             return wm_name
 
                         elif focus.get_wm_class() is None and (wm_name is None or wm_name == ""):
-                            focus = focus.query_tree.parent
-                            wm_name = window.get_wm_name()
-                            return wm_name if isinstance(wm_name, str) else ""
+                            focus = focus.query_tree().parent
+                            wm_name = focus.get_wm_name()
+                            return wm_name if isinstance(wm_name, basestring) else ""
 
                         # Fall through
 
