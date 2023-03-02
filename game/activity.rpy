@@ -144,7 +144,7 @@ init python in jn_activity:
                 - JNPlayerActivity type for the active window, or None
             """
             if delay is not 0:
-                jnPause(delay, hard=True)
+                store.jnPause(delay, hard=True)
 
             window_name = getCurrentWindowName()
             if window_name is not None:
@@ -421,15 +421,21 @@ init python in jn_activity:
         """
         return getCurrentWindowName() == store.config.window_title
 
-    def getCurrentWindowName():
+    def getCurrentWindowName(delay=0):
         """
         Gets the title of the currently active window.
+
+        IN: 
+            - delay - int amount of seconds to wait before checking window
 
         OUT:
             - str representing the title of the currently active window
         """
         global ACTIVITY_SYSTEM_ENABLED 
         if ACTIVITY_SYSTEM_ENABLED:
+            if delay is not 0:
+                store.jnPause(delay, hard=True)
+
             try:
                 if renpy.windows and pygetwindow.getActiveWindow():
                     return pygetwindow.getActiveWindow().title
