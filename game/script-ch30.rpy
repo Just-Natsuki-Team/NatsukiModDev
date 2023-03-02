@@ -245,7 +245,6 @@ label ch30_wait:
 
 #Other labels
 label call_next_topic(show_natsuki=True):
-    $ jn_utils.log("Calling next topic with event list item: " + str(persistent._event_list))
     $ _topic = None
 
     if show_natsuki:

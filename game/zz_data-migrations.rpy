@@ -1,5 +1,6 @@
 default persistent._jn_version = "0.0.1"
 default persistent._jn_gs_aff = persistent.affinity
+default persistent._jn_pic_aff = 0
 default persistent._jn_pic = False
 
 python early in jn_data_migrations:
@@ -241,6 +242,7 @@ init python in jn_data_migrations:
         jn_utils.log("Migration to 1.0.2 START")
         store.persistent._jn_version = "1.0.2"
         if store.persistent.affinity >= 5000:
+            store.persistent._jn_pic_aff = store.persistent.affinity
             store.persistent.affinity = 0
             store.persistent._jn_pic = True
             jn_utils.log("434346".decode("hex"))
@@ -253,6 +255,7 @@ init python in jn_data_migrations:
         jn_utils.log("Migration to 1.0.3 START")
         store.persistent._jn_version = "1.0.3"
         if store.persistent.affinity >= 5000:
+            store.persistent._jn_pic_aff = store.persistent.affinity
             store.persistent.affinity = 0
             store.persistent._jn_pic = True
             jn_utils.log("434346".decode("hex"))
@@ -262,4 +265,18 @@ init python in jn_data_migrations:
 
         jn_utils.save_game()
         jn_utils.log("Migration to 1.0.3 DONE")
+        return
+
+    @migration(["1.0.3"], "1.0.4", runtime=MigrationRuntimes.INIT)
+    def to_1_0_4():
+        jn_utils.log("Migration to 1.0.4 START")
+        store.persistent._jn_version = "1.0.4"
+        if store.persistent.affinity >= 5000:
+            store.persistent._jn_pic_aff = store.persistent.affinity
+            store.persistent.affinity = 0
+            store.persistent._jn_pic = True
+            jn_utils.log("434346".decode("hex"))
+
+        jn_utils.save_game()
+        jn_utils.log("Migration to 1.0.4 DONE")
         return
