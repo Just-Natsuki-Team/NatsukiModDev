@@ -428,12 +428,38 @@ init python in jn_activity:
         OUT:
             - str representing the title of the currently active window
         """
+        global ACTIVITY_SYSTEM_ENABLED 
         if ACTIVITY_SYSTEM_ENABLED:
-            if renpy.windows and pygetwindow.getActiveWindow():
-                return pygetwindow.getActiveWindow().title
+            try:
+                if renpy.windows and pygetwindow.getActiveWindow():
+                    return pygetwindow.getActiveWindow().title
 
-            elif renpy.linux:
-                return Xlib.display.Display().get_input_focus().focus.get_wm_name()
+                elif renpy.linux:
+                    # This is incredibly messy
+                    focus = Xlib.display.Display().get_input_focus().focus
+
+                    if not isinstance(focus, int):
+                        wm_name = focus.get_wm_name()
+
+                        if isinstance(wm_name, str) and wm_name != "":
+                            return wm_name
+
+                        elif focus.get_wm_class() is None and (wm_name is None or wm_name == ""):
+                            focus = focus.query_tree.parent
+                            wm_name = window.get_wm_name()
+                            return wm_name if isinstance(wm_name, str) else ""
+
+                        # Fall through
+
+            except AttributeError as exception:
+                ACTIVITY_SYSTEM_ENABLED = False
+                jn_utils.log("Failed to identifty activity: {0}; only x11 sessions are supported. Disabling activity system for session.".format(repr(exception)))
+                return ""
+
+            except Exception as exception:
+                ACTIVITY_SYSTEM_ENABLED = False
+                jn_utils.log("Failed to identifty activity: {0}. Disabling activity system for session.".format(repr(exception)))
+                return ""
 
         return ""
 
