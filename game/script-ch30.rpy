@@ -31,8 +31,8 @@ label ch30_visual_setup:
 
 label ch30_init:
     python:
-        import random
         import codecs
+        import random  
 
         # MIGRATIONS
 
@@ -45,6 +45,12 @@ label ch30_init:
 
         if store.persistent._jn_pic:
             renpy.jump("greeting_pic")
+
+        if (
+            jn_utils.getAllDirectoryFiles(path=renpy.config.gamedir, extension_list=["rpy"]) 
+            and persistent._jn_scw
+        ):
+            renpy.show_screen("warn", "596f75206172652072756e6e696e6720736f7572636520282e727079292066696c65732120556e6c65737320796f75206b6e6f77207768617420796f752061726520646f696e672c20706c656173652073776974636820746f2072656c656173652066696c65732e".decode("hex"))
 
         # NATSUKI SETUP
 
@@ -199,7 +205,6 @@ label ch30_init:
 label ch30_loop:
     show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
 
-    # TODO: topic selection here once wait system is implemented
     #Run our checks
     python:
         _now = datetime.datetime.now()
@@ -381,14 +386,12 @@ init python:
         ):
             queue("new_wearables_outfits_unlocked")
 
-        # Push a new topic every couple of minutes
-        # TODO: Move to a wait/has-waited system to allow some more flexibility
-        elif (
+        # Push a topic, if we have waited long enough since the last one, and settings for random chat allow it
+        if (
             persistent.jn_natsuki_random_topic_frequency is not jn_preferences.random_topic_frequency.NEVER
             and datetime.datetime.now() > LAST_TOPIC_CALL + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown())
             and not persistent._event_list
         ):
-
             if not persistent.jn_natsuki_repeat_topics:
                 topic_pool = Topic.filter_topics(
                     topics.TOPIC_MAP.values(),
@@ -421,7 +424,8 @@ init python:
                 # Out of random topics
                 queue("talk_out_of_topics")
 
-        elif (
+        # Notify for player activity, if settings allow it
+        if (
             persistent._jn_notify_activity
             and Natsuki.isAffectionate(higher=True)
             and current_activity.activity_type != jn_activity.ACTIVITY_MANAGER.last_activity.activity_type

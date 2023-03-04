@@ -1778,4 +1778,8 @@ style notify_text:
 screen problem(message):
     zorder 100
     text "[message]" size 30 xalign 0.5 ypos 40 text_align 0.5 xysize (None, None) color "#FF0000"
-    
+
+init:
+    screen warn(message):
+        zorder 100
+        text "[message]" size 15 xpos 10 ypos 10 text_align 0 xysize (None, None) color "#FF0000"
