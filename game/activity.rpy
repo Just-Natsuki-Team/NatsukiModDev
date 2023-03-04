@@ -457,13 +457,10 @@ init python in jn_activity:
                             # Try and get the parent of the window
                             focus = focus.query_tree().parent
 
-                            if isinstance(focus, int):
-                                # No parent, return
-                                return ""
-
-                            # Try and get the wm_name of the parent and return that instead
-                            wm_name = focus.get_wm_name()
-                            return wm_name if isinstance(wm_name, basestring) else ""
+                            if not isinstance(focus, int):
+                                # Try and get the wm_name of the parent and return that instead
+                                wm_name = focus.get_wm_name()
+                                return wm_name if isinstance(wm_name, basestring) else ""
 
                         elif isinstance(wm_class, tuple):
                             # Just return the parent name
