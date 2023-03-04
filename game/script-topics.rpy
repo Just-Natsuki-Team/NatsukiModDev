@@ -7127,7 +7127,7 @@ label talk_thoughts_on_tea:
                 else:
                     n 4tnmaj "Oh?{w=0.5}{nw}"
                     extend 3tnmss " You like {i}both{/i} now?"
-                    n 4tsqbg "...Are you {i}sure{/i} you aren't just a caffeine junkie,{w=0.2} [player]?{w=0.5}{nw}"
+                    n 4tsqbg "...Are you {i}sure{/i} you aren't just a caffeine junkie,{w=0.2} [player]?"
                     extend 1nchgn " Ehehe."
 
             else:
@@ -7135,7 +7135,7 @@ label talk_thoughts_on_tea:
                 extend 1tnmss " Really?"
                 n 3nsrss "That's...{w=0.3} kinda weird,{w=0.2} actually."
                 n 1fchbg "Most people like at least {i}one{/i} of the two more!"
-                n 4fsqsg "Are you {i}sure{/i} you aren't just a caffeine junkie,{w=0.2} [player]?{w=0.5}{nw}"
+                n 4fsqsg "Are you {i}sure{/i} you aren't just a caffeine junkie,{w=0.2} [player]?"
 
             $ persistent.jn_player_tea_coffee_preference = "both"
 
@@ -9274,4 +9274,116 @@ label talk_thoughts_on_vegetarianism:
             extend 2fsqfultsb " isn't it?"
             n 2fcsupltsa "Jerk."
 
+    return
+
+# Natsuki shares her thoughts on motivation and how she manages hers.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_staying_motivated",
+            unlocked=True,
+            prompt="Staying motivated",
+            conditional="jn_utils.get_total_gameplay_hours() >= 4",
+            category=["Life"],
+            affinity_range=(jn_affinity.NORMAL, None),
+            nat_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_staying_motivated:
+    n 1kcsemesi "...{w=1.25}{nw}"
+    n 2ksrem "Man..."
+    n 2fsrsl "..."
+    n 4flrfl "You know,{w=0.2} [player].{w=0.75}{nw}" 
+    extend 4fsqfl " If there's one thing I {i}really{/i} can't stand?"
+    n 1fllem "It's when for whatever reason,{w=0.2} I just can't get motivated about anything.{w=1}{nw}"
+    extend 1fcsgs " It's the worst!"
+    n 4flrfl "Like...{w=0.75}{nw}"
+    extend 2fsrsl " when nothing seems worth the effort,{w=0.75}{nw}"
+    extend 2ksqsl " or you feel like you're just putting something off.{w=0.75}{nw}"
+    extend 4knmajsbr " Even if you actually wanna do it!"
+    n 3fnman "And then?{w=0.5}{nw}"
+    extend 3fllfl " If you {i}don't{/i} snap out of it somehow?"
+    n 1fcsan "You end up feeling all crappy about not getting something done!{w=0.75}{nw}"
+    extend 1fbkwr " It {i}stinks{/i}!"
+    n 2fcsem "Ugh.{w=1.25}{nw}"
+    extend 2fslem " Feels like you just can't win sometimes."
+    n 4unmfllsbl "...T-{w=0.2}that's not to say I feel like that often or anything!{w=0.75}{nw}"
+    extend 3fcsemlsbl " N-{w=0.2}no way!{w=0.75}{nw}"
+    extend 3fcsbgsbr " I've {i}always{/i} got things under control."
+    n 1fcsss "Heh."
+    n 4fsqss "...And you know why,{w=0.2} [player]?"
+    n 4fsqcs "Yeah.{w=0.75}{nw}"
+    extend 2fcsbg " I bet you do."
+    n 2fchgn "'Cause I know just how to tell that kind of mood to stick it!"
+
+    if get_topic("talk_time_management").shown_count > 0:
+        n 1ullaj "I mean,{w=0.75}{nw}"
+        extend 2tllbo " I think I mentioned timeboxing before.{w=0.75}{nw}"
+        extend 2nslss " Having at least {i}some{/i} kind of structure to follow can help."
+        n 1tnmaj "But personally?{w=0.75}{nw}"
+    
+    else:
+        n 1tlraj "Personally?{w=0.75}{nw}"
+
+    extend 1unmaj " I find most of the problem is just getting in the right mood -{w=0.5}{nw}"
+    extend 4ulraj " and there's no shortage of ways to get there."
+    n 3fchgn "Like music!"
+    n 3fcsbg "Nothing beats my tried-and-true music playlists to kick me out of a rutt!{w=0.75}{nw}"
+    extend 3fcssmeme " A good tune or two {i}always{/i} gets me pumped."
+    n 4fnmaj "But you need to do what works for {i}you{/i},{w=0.2} [player]!"
+
+    if persistent.jn_player_tea_coffee_preference in ["tea", "coffee"]:
+        n 1fsqss "Downing some [persistent.jn_player_tea_coffee_preference],{w=1}{nw}"
+
+    else:
+        n 1ullbo "Getting some caffeine in your system,{w=0.75}{nw}"
+
+    extend 2ulraj " cracking open the windows for some fresh air,{w=0.75}{nw}"
+    extend 2fcsbg " getting off your backside -{w=1}{nw}"
+    extend 2fnmfl " whatever it is!"
+    n 4fcsaj "It's all about getting that momentum going...{w=0.75}{nw}"
+    extend 4fcsca " and then keeping it!"
+    n 2nsqsr "Seriously.{w=0.5}{nw}"
+    extend 2fsrem " The worst thing you can do is get all fired up and just drop whatever you're doing straightaway.{w=0.75}{nw}"
+    extend 2fnmgs " You gotta commit!"
+    n 1fsrca "And don't let yourself get distracted -{w=0.5}{nw}"
+    extend 4fcscaesm " one thing at a time.{w=0.75}{nw}"
+    extend 4fcssm " And finish what you start!"
+
+    n 1fsqfl "But most importantly,{w=0.2} [player]?"
+    n 1fcsfl "Just...{w=0.75}{nw}"
+    extend 2nsrpo " don't be totally dumb about it.{w=1}{nw}"
+    extend 2fnmbo " Forcing yourself into stuff,{w=0.2} I mean."
+    n 4fcstr "Coming back with a fresh mindset is just as valid as trying to push past the block."
+    n 4flrem "Like yeah,{w=0.75}{nw}"
+    extend 3fsrsl " no kidding.{w=1}{nw}"
+    extend 3nsqca " It sucks feeling like you're throwing time away."
+    n 4tllfl "But it's not like you'll never get to try again,{w=0.75}{nw}"
+    extend 4tnmbo " or get another time to do stuff!"
+    n 2fcsaj "Coming back later is only a waste of time if you {i}convince{/i} yourself it is -{w=1}{nw}"
+    extend 2fsqca " or you convince yourself that you'll never even start something."
+
+    n 1nllaj "And hey.{w=1}{nw}"
+    extend 4fsqss " You know what's {i}never{/i} a waste of time,{w=0.2} [player]?"
+    
+    if Natsuki.isLove(higher=True):
+        n 3fchgnl "Spending more time with yours truly!"
+        n 3fcsbgl "N-{w=0.2}now that's something I {i}know{/i} you of all people find motivating.{w=0.75}{nw}"
+        extend 1fsqsml " Ehehe."
+        n 4fchbgl "Love you too,{w=0.2} [player]~!"
+
+    elif Natsuki.isAffectionate(higher=True):
+        n 3fcssmledzsbl "Spending more time with yours truly!"
+        n 3fcsbglsbl "N-{w=0.2}now {i}that's{/i} something anyone should find motivating!{w=1}{nw}"
+        extend 4fsrsmlsbl " Ehehe."
+
+    else:
+        n 3fchbgedz "Getting more pro tips from yours truly!"
+        n 3fcsbg "You're welcome,{w=0.2} [player]~!{w=1}{nw}"
+        extend 3fchsm " Ahaha."
+    
     return
