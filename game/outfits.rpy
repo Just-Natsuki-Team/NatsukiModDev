@@ -423,7 +423,7 @@ init -1 python in jn_outfits:
 
             if self.necklace and not self.necklace.unlocked:
                 self.necklace.unlock()
-            
+
             if self.facewear and not self.facewear.unlocked:
                 self.facewear.unlock()
 
@@ -945,7 +945,7 @@ init -1 python in jn_outfits:
                 with open(file_path) as wearable_data:
                     if _load_wearable_from_json(json.loads(wearable_data.read())):
                         success_count += 1
-            
+
             except OSError:
                 jn_utils.log("Unable to read file {0}; file could not be found.".format(file_name))
 
@@ -1273,6 +1273,12 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
     __register_wearable(JNHairstyle(
+        reference_name="jn_hair_wavy",
+        display_name="Wavy",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHairstyle(
         reference_name="jn_hair_twintails_braided",
         display_name="Braided twintails",
         unlocked=True,
@@ -1560,6 +1566,12 @@ init -1 python in jn_outfits:
         unlocked=False,
         is_jn_wearable=True
     ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_office_blazer",
+        display_name="Office blazer",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
 
     # Official JN headgear
 
@@ -1766,6 +1778,12 @@ init -1 python in jn_outfits:
         unlocked=False,
         is_jn_wearable=True
     ))
+    __register_wearable(JNNecklace(
+        reference_name="jn_necklace_formal_necktie",
+        display_name="Formal necktie",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
 
     # Official JN facewear
     __register_wearable(JNFacewear(
@@ -1960,6 +1978,15 @@ init -1 python in jn_outfits:
         headgear=get_wearable("jn_headgear_chocolate_plaid_bow"),
         necklace=get_wearable("jn_necklace_golden_necklace"),
         hairstyle=get_wearable("jn_hair_ponytail")
+    ))
+    __register_outfit(JNOutfit(
+        reference_name="jn_office_outfit",
+        display_name="Office outfit",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_office_blazer"),
+        hairstyle=get_wearable("jn_hair_wavy"),
+        necklace=get_wearable("jn_necklace_formal_necktie")
     ))
 
     # Internal outfits; used for events, etc. These shouldn't be unlocked!
@@ -2665,7 +2692,7 @@ label new_wearables_outfits_unlocked:
 
         elif jnIsChristmasDay():
             n 1fcsemfsbl "I-{w=0.2}I mean,{w=0.75}{nw}"
-            extend 2kwmemfsbl " I {i}get{/i} what day it is,{w=0.75}{nw}" 
+            extend 2kwmemfsbl " I {i}get{/i} what day it is,{w=0.75}{nw}"
             extend 2kslemfsbl " but..."
             n 1kcspufesisbl "..."
 
