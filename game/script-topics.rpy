@@ -8196,7 +8196,7 @@ label talk_players_birthday_intro:
 
     # Player has already discussed their birthday with Natsuki
     elif get_topic("talk_players_birthday_intro").shown_count > 0:
-        n 4tnmpueqm "Huh?{w=0.75}{nw}" 
+        n 4tnmpueqm "Huh?{w=0.75}{nw}"
         extend 1tnmbo " Your birthday?"
 
         if persistent._jn_player_birthday_day_month is not None:
@@ -8765,13 +8765,13 @@ label talk_chocolate_preference:
         and persistent.jn_custom_outfits_unlocked
     ):
         # Unlock chocolate plaid outfit, if custom outfits unlocked
-        n  "Man...{w=1}{nw}"
-        extend  " all this talk of treats is bringing back all kinds of memories."
-        n  "In fact..."
-        n  "I'm {i}sure{/i} I had some kind of cute chocolate themed dress at some point.{w=0.75}{nw}"
-        extend  " Or at least it felt that way with all the colours."
-        n  "...And Sayori practically drooling over it."
-        n  "Maybe I should go dig that out later..."
+        n 2nslss "Man...{w=1}{nw}"
+        extend 1ncsfs " all this talk of treats is bringing back all kinds of memories."
+        n 2tllaj "In fact..."
+        n 4tnmss "I'm {i}sure{/i} I had some kind of cute chocolate themed dress at some point.{w=0.75}{nw}"
+        extend 2nchgn " Or at least it felt that way with all the colours."
+        n 2ksrfssbl "...And Sayori practically drooling over it."
+        n 2kchsm "Maybe I should go dig that out later..."
         $ jn_outfits.get_outfit("jn_chocolate_plaid_collection").unlock()
 
     n 1fllajlsbr "A-{w=0.2}anyway!{w=0.75}{nw}"
@@ -8860,12 +8860,12 @@ label talk_learning_languages:
         n 4flrbglsbr "O-oder wie man auch sagt -{w=0.3}{nw}"
         extend 1fcsbglsbl " wer rasst..."
         n 2fllunlesssbl "r-rastet...!{w=0.5}{nw}"
-        extend 2klremfesssbl " Hat Rosen...?{w=0.75}{nw}" 
+        extend 2klremfesssbl " Hat Rosen...?{w=0.75}{nw}"
         extend 2kllemfesssbl " Mit Rost!"
 
         n 1fcsunfesssbr "..."
         n 2fcsanfesssbr "Nnnnnn-!"
-        n 1fcsemlesssbr "Oh,{w=0.75}{nw}" 
+        n 1fcsemlesssbr "Oh,{w=0.75}{nw}"
         extend 4fbkwrlesssbr " {i}forget it{/i}!{w=0.75}{nw}"
         extend 2kslpul " This is so embarrassing..."
         n 1fslunl "..."
@@ -8873,8 +8873,8 @@ label talk_learning_languages:
         n 4uskemlesh "...!{w=0.5}{nw}"
         n 2fcswrl "N-{w=0.3}not like I couldn't do it!{w=0.75}{nw}"
         extend 2flleml " I can {i}totally{/i} ace it alone."
-        n 1fcseml "I'm...{w=0.5}{nw}" 
-        extend 4fsrpol " just being put off.{w=0.5}{nw}" 
+        n 1fcseml "I'm...{w=0.5}{nw}"
+        extend 4fsrpol " just being put off.{w=0.5}{nw}"
         extend 4fsqpol " Having an {i}audience{/i},{w=0.2} and all."
         n 1fnmpu "But seriously,{w=0.2} [player].{w=0.75}{nw}"
         extend 3tnmaj " Have you ever {i}tried{/i} learning another language?"
@@ -8948,7 +8948,7 @@ label talk_learning_languages:
 
         "I know multiple other languages.":
             if persistent._jn_player_is_multilingual:
-                n 1fllem "Oh,{w=0.5}{nw}" 
+                n 1fllem "Oh,{w=0.5}{nw}"
                 extend 2fcswr " come {b}on{/b}!{w=0.75}{nw}"
                 extend 2fsqem " Really?"
                 n 1fslem "You're {i}such{/i} a show-off,{w=0.2} [player]."
@@ -8994,9 +8994,9 @@ label talk_learning_languages:
     extend 2tnmss " I think I've gone on long enough at this point,{w=0.2} huh?"
     n 2tlrss "And,{w=0.2} well...{w=0.75}{nw}"
     extend 4fsqbg " as they say in {i}Deutschland{/i}..."
-    n 1ncsss "Alles hat ein Ende,{w=0.5}{nw}" 
+    n 1ncsss "Alles hat ein Ende,{w=0.5}{nw}"
     extend 3uchgnlelg " nur die Wurst hat zwei!"
-    
+
     return
 
 # Natsuki pitches the idea of rage rooms and how they can be fun to the player.
@@ -9031,7 +9031,7 @@ label talk_rage_rooms:
     else:
         n 1ullaj "Hey,{w=0.2} [player]..."
         n 1ulrbo "This is kinda random,{w=0.5}{nw}"
-        extend 4ulraj " but..." 
+        extend 4ulraj " but..."
         n 2tnmpu "Have you ever been to a rage room before?"
         n 2nslsssbr "I've never actually {i}been{/i} to one myself,{w=0.75}{nw}"
         extend 1ncsaj " but oh.{w=0.5}{nw}"
@@ -9039,7 +9039,7 @@ label talk_rage_rooms:
         extend 1fcsaw " God.{w=0.5}{nw}"
         extend 2nsqsr " [player]."
 
-    n 1fcspu "They...{w=0.75}{nw}" 
+    n 1fcspu "They...{w=0.75}{nw}"
     extend 1fcsaj " look...{w=0.75}{nw}"
     extend 4fspgsedz " {i}awesome{/i}!"
     n 4uwdaj "No,{w=0.2} really!{w=0.75}{nw}"
@@ -9064,7 +9064,7 @@ label talk_rage_rooms:
     extend 3fchgn " imagine {i}Yuri{/i} trying out something like that!"
     n 3nsrdvsbl "And Sayori..."
     n 4uwdbosbl "...There'd be no room {i}left{/i}!"
-    n 1ullss "Of course,{w=0.5}{nw}" 
+    n 1ullss "Of course,{w=0.5}{nw}"
     extend 1ullbo " they already supply a bunch of their own things you can smash up...{w=0.75}"
     n 1fchsm "But you can totally bring your own stuff too!{w=0.75}{nw}"
     extend 3nsrsmsbr " Well..."
@@ -9108,11 +9108,11 @@ label talk_take_down_deco:
     if len(jn_events.getHolidaysForDate()) == 0:
         n 2nslsssbl "I suppose they {i}have{/i} kinda overstayed their welcome..."
         n 2nslposbl "..."
-    
+
     else:
         n 1ncsemesi "...{w=1}{nw}"
 
-    n 1ulraj "Yeah,{w=0.5}{nw}" 
+    n 1ulraj "Yeah,{w=0.5}{nw}"
     extend 1nlrbo " I can do that.{w=0.75}{nw}"
     extend 3nsrpo " I guess.{w=1}{nw}"
     extend 3fsqca " But you're putting it all up next time."
@@ -9171,7 +9171,7 @@ label talk_thoughts_on_vegetarianism:
             n 1tllaj "That's...{w=0.75}{nw}"
             extend 1ullss " definitely not a question I was expecting,{w=0.75}{nw}"
             extend 4tnmbo " I gotta say."
-            n 1ulrpu "But...{w=0.75}{nw}" 
+            n 1ulrpu "But...{w=0.75}{nw}"
             extend 2tsqss " why do you ask,{w=0.2} [player]?"
             n 2fsqsm "Looking to turn over a new leaf,{w=0.2} are we?{w=0.75}{nw}"
             extend 1fchsm " Ehehe."
@@ -9193,11 +9193,11 @@ label talk_thoughts_on_vegetarianism:
         n 1ullaj "I mean,{w=0.75}{nw}"
         extend 1nllsl " it's one thing to skip out on eating a particular type of meat.{w=0.75}{nw}"
         extend 2fcsss " Anyone can do that."
-        n 1tnmpu "But dropping {i}everything{/i},{w=0.75}{nw}" 
+        n 1tnmpu "But dropping {i}everything{/i},{w=0.75}{nw}"
         extend 4unmem " or even refusing {i}any{/i} animal products whatsoever?"
         n 3fcsbg "Now {i}that{/i} takes some guts!{w=1.25}{nw}"
         extend 3fsldvsbl " ...Pun not intended."
-        n 1ullaj "Of course,{w=0.5}{nw}" 
+        n 1ullaj "Of course,{w=0.5}{nw}"
         extend 2tllsl " maybe some people just don't like the taste.{w=0.75}{nw}"
         extend 2tnmbo " I totally get that.{w=1}{nw}"
         extend 1fnmaj " But there's a whole bunch of reasons people do it -{w=0.5}{nw}"
@@ -9206,7 +9206,7 @@ label talk_thoughts_on_vegetarianism:
         extend 3nslun " animal welfare...{w=0.75}{nw}"
         extend 3kchbgsbr " even just to save money!"
         n 4tsqsssbr "Crazy to think how a single lifestyle choice can come from so many places,{w=0.2} huh?"
-        n 1unmajesu "Oh -{w=0.5}{nw}" 
+        n 1unmajesu "Oh -{w=0.5}{nw}"
         extend 2fllbgsbl " don't worry,{w=0.2} [player].{w=0.75}{nw}"
         extend 2nslpo " I'm not gonna get all preachy about it or anything like that."
         n 1unmca "It {i}is{/i} just a choice like anything else,{w=0.75}{nw}"
@@ -9243,10 +9243,10 @@ label talk_thoughts_on_vegetarianism:
     elif Natsuki.isDistressed(higher=True):
         if already_discussed_vegetarianism:
             n 1fcsemesi "..."
-            n 2fslsl "Seriously,{w=0.75}{nw}" 
+            n 2fslsl "Seriously,{w=0.75}{nw}"
             extend 2fsqsl " [player]?"
             n 2nsqsr "This {i}again{/i}?"
-            
+
         else:
             n 1fcsem "...Really,{w=0.2} [player]?{w=0.75}{nw}"
             extend 2fsqsr " {i}Vegetarianism{/i}?"
@@ -9261,7 +9261,7 @@ label talk_thoughts_on_vegetarianism:
         extend 2flrca " Or even from your lifestyle completely."
         n 4nlrtr "People do it for a whole bunch of reasons,{w=0.75}{nw}"
         extend 4nsrsl " obviously."
-        n 1nlrpu "But...{w=1}{nw}" 
+        n 1nlrpu "But...{w=1}{nw}"
         extend 1nnmsl " I guess it's cool how a single lifestyle choice can link tons of people together."
         n 1ullsl "The environment,{w=0.5}{nw}"
         extend 2nslsf " animal welfare...{w=0.75}{nw}"
@@ -9270,7 +9270,7 @@ label talk_thoughts_on_vegetarianism:
         extend 1ncssl " Just like the choice to start going animal-free or not."
         n 2ncsss "...Heh.{w=0.75}{nw}"
         extend 2fsqsl " And speaking of choices people make..."
-        n 4fnmem "No prizes for guessing who should be making better ones right now,{w=0.75}{nw}" 
+        n 4fnmem "No prizes for guessing who should be making better ones right now,{w=0.75}{nw}"
         extend 1fsqan " {i}[player]{/i}."
 
     else:
@@ -9314,7 +9314,7 @@ label talk_staying_motivated:
     n 1kcsemesi "...{w=1.25}{nw}"
     n 2ksrem "Man..."
     n 2fsrsl "..."
-    n 4flrfl "You know,{w=0.2} [player].{w=0.75}{nw}" 
+    n 4flrfl "You know,{w=0.2} [player].{w=0.75}{nw}"
     extend 4fsqfl " If there's one thing I {i}really{/i} can't stand?"
     n 1fllem "It's when for whatever reason,{w=0.2} I just can't get motivated about anything.{w=1}{nw}"
     extend 1fcsgs " It's the worst!"
@@ -9342,7 +9342,7 @@ label talk_staying_motivated:
         extend 2tllbo " I think I mentioned timeboxing before.{w=0.75}{nw}"
         extend 2nslss " Having at least {i}some{/i} kind of structure to follow can help."
         n 1tnmaj "But personally?{w=0.75}{nw}"
-    
+
     else:
         n 1tlraj "Personally?{w=0.75}{nw}"
 
@@ -9386,7 +9386,7 @@ label talk_staying_motivated:
 
     n 1nllaj "And hey.{w=1}{nw}"
     extend 4fsqss " You know what's {i}never{/i} a waste of time,{w=0.2} [player]?"
-    
+
     if Natsuki.isLove(higher=True):
         n 3fchgnl "Spending more time with yours truly!"
         n 3fcsbgl "N-{w=0.2}now that's something I {i}know{/i} you of all people find motivating.{w=0.75}{nw}"
@@ -9402,5 +9402,5 @@ label talk_staying_motivated:
         n 3fchbgedz "Getting more pro tips from yours truly!"
         n 3fcsbg "You're welcome,{w=0.2} [player]~!{w=1}{nw}"
         extend 3fchsm " Ahaha."
-    
+
     return
