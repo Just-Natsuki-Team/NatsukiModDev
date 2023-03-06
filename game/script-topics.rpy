@@ -8765,29 +8765,22 @@ label talk_chocolate_preference:
         and persistent.jn_custom_outfits_unlocked
     ):
         # Unlock chocolate plaid outfit, if custom outfits unlocked
-        n 1tslsl "..."
-        n 4uwdajesu "Oh!{w=0.5}{nw}"
-        extend 2fcscs " Kinda reminds me of one of my favourite dresses,{w=0.3} acutally!"
-        n 4fllss "It's like all types of chocolates combined.{w=0.75}{nw}"
-        extend 3fchcs " Ehehe."
-        n 3tslss "Maybe I should go dig that out later..."
-        n 1fllajlsbr "But that was enough about me.{w=0.75}{nw}"
-        extend 2fcssssbl " For now at least..."
-        n 1unmaj "What about you,{w=0.2} [player]?{w=0.75}{nw}"
-        n 1fbkwreex "...Wait!{w=1}{nw}"
-        extend 1fcsbg " Don't tell me!"
-        n 4fcssresp "..."
-
+        n  "Man...{w=1}{nw}"
+        extend  " all this talk of treats is bringing back all kinds of memories."
+        n  "In fact..."
+        n  "I'm {i}sure{/i} I had some kind of cute chocolate themed dress at some point.{w=0.75}{nw}"
+        extend  " Or at least it felt that way with all the colours."
+        n  "...And Sayori practically drooling over it."
+        n  "Maybe I should go dig that out later..."
         $ jn_outfits.get_outfit("jn_chocolate_plaid_collection").unlock()
 
-    else:
-        n 1fllajlsbr "A-{w=0.2}anyway!{w=0.75}{nw}"
-        extend 1fcsajl " Enough of me yammering on again.{w=0.75}{nw}"
-        extend 2tlrsssbl " Jeez."
-        n 1unmaj "What about you,{w=0.2} [player]?{w=0.75}{nw}"
-        n 1fbkwreex "...Wait!{w=1}{nw}"
-        extend 1fcsbg " Don't tell me!"
-        n 4fcssresp "..."
+    n 1fllajlsbr "A-{w=0.2}anyway!{w=0.75}{nw}"
+    extend 1fcsajl " Enough of me yammering on again.{w=0.75}{nw}"
+    extend 2tlrsssbl " Jeez."
+    n 1unmaj "What about you,{w=0.2} [player]?{w=0.75}{nw}"
+    n 1fbkwreex "...Wait!{w=1}{nw}"
+    extend 1fcsbg " Don't tell me!"
+    n 4fcssresp "..."
 
     # Dialogue variations
     if Natsuki.isLove(higher=True):
