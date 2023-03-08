@@ -349,8 +349,10 @@ label call_next_topic(show_natsuki=True):
 
     # Reenable the UI and hop back to the loop
     python:
-        global LAST_TOPIC_CALL
-        LAST_TOPIC_CALL = datetime.datetime.now()
+        if _topic not in ["weather_change", "random_music_change", "outfits_auto_change"]:
+            global LAST_TOPIC_CALL
+            LAST_TOPIC_CALL = datetime.datetime.now()
+
         Natsuki.setInConversation(False)
 
     jump ch30_loop
@@ -388,7 +390,7 @@ init python:
 
         # Push a topic, if we have waited long enough since the last one, and settings for random chat allow it
         if (
-            persistent.jn_natsuki_random_topic_frequency is not jn_preferences.random_topic_frequency.NEVER
+            persistent.jn_natsuki_random_topic_frequency != jn_preferences.random_topic_frequency.NEVER
             and datetime.datetime.now() > LAST_TOPIC_CALL + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown())
             and not persistent._event_list
         ):
