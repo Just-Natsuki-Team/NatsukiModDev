@@ -67,3 +67,6 @@ default persistent._jn_notify_conversations = True
 
 # This determines if Natsuki should attempt to notify the user when she spots them doing something she's interested in
 default persistent._jn_notify_activity = True
+
+# RPY warning
+default persistent._jn_scw = True

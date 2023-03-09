@@ -144,7 +144,7 @@ init python in jn_activity:
                 - JNPlayerActivity type for the active window, or None
             """
             if delay is not 0:
-                jnPause(delay, hard=True)
+                store.jnPause(delay, hard=True)
 
             window_name = getCurrentWindowName()
             if window_name is not None:
@@ -421,19 +421,62 @@ init python in jn_activity:
         """
         return getCurrentWindowName() == store.config.window_title
 
-    def getCurrentWindowName():
+    def getCurrentWindowName(delay=0):
         """
         Gets the title of the currently active window.
+
+        IN: 
+            - delay - int amount of seconds to wait before checking window
 
         OUT:
             - str representing the title of the currently active window
         """
+        global ACTIVITY_SYSTEM_ENABLED 
         if ACTIVITY_SYSTEM_ENABLED:
-            if renpy.windows and pygetwindow.getActiveWindow():
-                return pygetwindow.getActiveWindow().title
+            if delay is not 0:
+                store.jnPause(delay, hard=True)
 
-            elif renpy.linux:
-                return Xlib.display.Display().get_input_focus().focus.get_wm_name()
+            try:
+                if renpy.windows and pygetwindow.getActiveWindow():
+                    return pygetwindow.getActiveWindow().title
+
+                elif renpy.linux:
+                    # This is incredibly messy
+                    focus = Xlib.display.Display().get_input_focus().focus
+
+                    if not isinstance(focus, int):
+                        # We have a window
+                        wm_name = focus.get_wm_name()
+                        wm_class = focus.get_wm_class()
+
+                        if isinstance(wm_name, basestring) and wm_name != "":
+                            # Window has a name, return it
+                            return wm_name
+
+                        elif wm_class is None and (wm_name is None or wm_name == ""):
+                            # Try and get the parent of the window
+                            focus = focus.query_tree().parent
+
+                            if not isinstance(focus, int):
+                                # Try and get the wm_name of the parent and return that instead
+                                wm_name = focus.get_wm_name()
+                                return wm_name if isinstance(wm_name, basestring) else ""
+
+                        elif isinstance(wm_class, tuple):
+                            # Just return the parent name
+                            return str(wm_class[0])
+
+                        # Fall through
+
+            except AttributeError as exception:
+                ACTIVITY_SYSTEM_ENABLED = False
+                jn_utils.log("Failed to identifty activity: {0}; only x11 sessions are supported. Disabling activity system for session.".format(repr(exception)))
+                return ""
+
+            except Exception as exception:
+                ACTIVITY_SYSTEM_ENABLED = False
+                jn_utils.log("Failed to identifty activity: {0}. Disabling activity system for session.".format(repr(exception)))
+                return ""
 
         return ""
 
