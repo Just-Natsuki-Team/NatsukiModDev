@@ -354,7 +354,7 @@ label call_next_topic(show_natsuki=True):
     python:
         import re
 
-        # if no match regex
+        # Prevent pushed mechanic topics such as weather changes from resetting topic wait timer
         if re.search("(^talk_)") or not re.search("(_change$)|(^idle_)"):
             global LAST_TOPIC_CALL
             LAST_TOPIC_CALL = datetime.datetime.now()
