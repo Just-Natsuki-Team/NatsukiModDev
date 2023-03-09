@@ -533,7 +533,7 @@ init 0 python in jn_atmosphere:
             return (response.json()["loc"].split(','))
 
         except Exception as exception:
-            jn_utils.log("Failed to retrieve user latitude, longitude via IP address: {}".format(exception))
+            jn_utils.log("Failed to retrieve user latitude, longitude via IP address: {0}".format(exception))
             return None
 
     def isCurrentWeatherOvercast():

@@ -705,6 +705,131 @@ image natsuki gaming:
 
     repeat
 
+# Idle images for Natsuki falling - then remaining - asleep
+image natsuki sleeping:
+    # Falling asleep (4.1s)
+    "natsuki 3nnmpu"
+    pause 1
+    "natsuki 3nsqpu"
+    pause 2
+    "natsuki 3ncspu"
+    pause 0.2
+    "natsuki 3nsqsl"
+    pause 2
+    "natsuki 3ncssl"
+    pause 2
+
+    # Sleeping loop
+    block:
+        "natsuki 3ncsflesl"
+        pause 2
+        "natsuki 3ncsemesl"
+        pause 4
+        "natsuki 3ncspuesl"
+        pause 1
+
+        repeat
+
+# Idle images for Natsuki reading something
+image natsuki reading:
+    block:
+        choice:
+            "natsuki 1ndwbo"
+            pause 3
+            "natsuki 1ndwbo"
+            pause 0.1
+            "natsuki 1ndwbo"
+            pause 4
+
+        choice:
+            "natsuki 1ndwpu"
+            pause 3
+            "natsuki 1ncspu"
+            pause 0.1
+            "natsuki 1ndwpu"
+            pause 4
+
+        choice:
+            "natsuki 1udwsm"
+            pause 3
+            "natsuki 1ucssm"
+            pause 0.1
+            "natsuki 1udwsm"
+            pause 2
+
+        choice:
+            "natsuki 1fdwpu"
+            pause 3
+            "natsuki 1fcspu"
+            pause 0.1
+            "natsuki 1fdwpu"
+            pause 4
+
+        choice:
+            "natsuki 1ndwfs"
+            pause 3
+            "natsuki 1ncsfs"
+            pause 0.1
+            "natsuki 1ndwfs"
+            pause 4
+
+    repeat
+
+# Idle images for Natsuki daydreaming/in thought
+image natsuki thinking:
+    block:
+        choice:
+            "natsuki 2tupbo"
+            pause 4
+            "natsuki 2tcsbo"
+            pause 0.1
+            "natsuki 2tupbo"
+            pause 1
+            "natsuki 2tcsbo"
+            pause 0.1
+            "natsuki 2tupbo"
+            pause 4
+            "natsuki 2tcsbo"
+            pause 0.1
+
+        choice:
+            "natsuki 2tllbo"
+            pause 4
+            "natsuki 2tcsbo"
+            pause 0.1
+            "natsuki 2tllbo"
+            pause 4
+            "natsuki 2tcsbo"
+            pause 0.1
+
+        choice:
+            "natsuki 4tlrbo"
+            pause 4
+            "natsuki 4tcsbo"
+            pause 0.1
+            "natsuki 4tlrbo"
+            pause 4
+            "natsuki 4tcsbo"
+            pause 0.1
+    
+        choice:
+            "natsuki 4tsrpu"
+            pause 4
+            "natsuki 4tcspu"
+            pause 0.1
+            "natsuki 4tsrpu"
+            pause 3
+            "natsuki 4fsrpu"
+            pause 3
+            "natsuki 4fcspu"
+            pause 0.1
+            "natsuki 4tsrsl"
+            pause 5
+            "natsuki 4tcssl"
+            pause 0.1
+
+    repeat
+
 # This selects which idle image to show based on current affinity state
 image natsuki idle = ConditionSwitch(
     "Natsuki.isEnamored(higher=True)", "natsuki idle enamored",

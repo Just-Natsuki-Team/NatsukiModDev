@@ -250,6 +250,8 @@ label ch30_wait:
 
 #Other labels
 label call_next_topic(show_natsuki=True):
+    $ _topic = None
+
     if show_natsuki:
         show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
 
@@ -261,7 +263,8 @@ label call_next_topic(show_natsuki=True):
             if (persistent._jn_notify_conversations
                 and jn_utils.get_current_session_length().total_seconds() > 60
                 and not jn_activity.getJNWindowActive()
-                and not _topic in ["random_music_change", "weather_change"]):
+                and not _topic in ["random_music_change", "weather_change"]
+                and not "idle_" in _topic):
 
                     play audio notification
                     python:
@@ -349,7 +352,10 @@ label call_next_topic(show_natsuki=True):
 
     # Reenable the UI and hop back to the loop
     python:
-        if _topic not in ["weather_change", "random_music_change", "outfits_auto_change"]:
+        import re
+
+        # if no match regex
+        if re.search("(^talk_)") or not re.search("(_change$)|(^idle_)"):
             global LAST_TOPIC_CALL
             LAST_TOPIC_CALL = datetime.datetime.now()
 
@@ -358,6 +364,7 @@ label call_next_topic(show_natsuki=True):
     jump ch30_loop
 
 init python:
+    LAST_IDLE_CALL = datetime.datetime.now()
     LAST_TOPIC_CALL = datetime.datetime.now()
     LAST_MINUTE_CHECK = datetime.datetime.now()
     LAST_HOUR_CHECK = LAST_MINUTE_CHECK.hour
@@ -367,6 +374,8 @@ init python:
         """
         Runs every minute during breaks between topics
         """
+        global LAST_IDLE_CALL
+
         jn_utils.save_game()
 
         # Check the daily affinity cap and reset if need be
@@ -403,7 +412,6 @@ init python:
                     affinity=Natsuki._getAffinityState(),
                     is_seen=False
                 )
-
             else:
                 topic_pool = Topic.filter_topics(
                     topics.TOPIC_MAP.values(),
@@ -426,6 +434,17 @@ init python:
                 # Out of random topics
                 queue("talk_out_of_topics")
 
+        # Select a random idle if enabled, we haven't had one for a while and there's nothing already queued
+        if (
+            persistent._jn_natsuki_idles_enabled
+            and datetime.datetime.now() >= LAST_IDLE_CALL + datetime.timedelta(minutes=10)
+            and not persistent._event_list
+        ):
+            idle_topic = jn_idles.selectIdle()
+            if idle_topic:
+                queue(idle_topic)
+                LAST_IDLE_CALL = datetime.datetime.now()
+
         # Notify for player activity, if settings allow it
         if (
             persistent._jn_notify_activity
@@ -433,7 +452,6 @@ init python:
             and current_activity.activity_type != jn_activity.ACTIVITY_MANAGER.last_activity.activity_type
             and random.randint(1, 20) == 1
         ):
-            # Activity check for notif
             jn_activity.ACTIVITY_MANAGER.last_activity = current_activity
             if jn_activity.ACTIVITY_MANAGER.last_activity.getRandomNotifyText():
                 jn_activity.notifyPopup(jn_activity.ACTIVITY_MANAGER.last_activity.getRandomNotifyText())
