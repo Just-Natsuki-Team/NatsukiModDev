@@ -1561,6 +1561,12 @@ init -1 python in jn_outfits:
         is_jn_wearable=True
     ))
     __register_wearable(JNClothes(
+        reference_name="jn_clothes_chocolate_plaid_dress",
+        display_name="Chocolate plaid dress",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNClothes(
         reference_name="jn_clothes_office_blazer",
         display_name="Office blazer",
         unlocked=False,
@@ -1657,6 +1663,12 @@ init -1 python in jn_outfits:
     __register_wearable(JNHeadgear(
         reference_name="jn_headgear_new_year_headband",
         display_name="New year headband",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_chocolate_plaid_bow",
+        display_name="Chocolate plaid bow",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1757,6 +1769,12 @@ init -1 python in jn_outfits:
     __register_wearable(JNNecklace(
         reference_name="jn_necklace_twirled_choker",
         display_name="Twirled choker",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNNecklace(
+        reference_name="jn_necklace_golden_necklace",
+        display_name="Golden necklace",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1950,6 +1968,16 @@ init -1 python in jn_outfits:
         clothes=get_wearable("jn_clothes_heart_sweater"),
         accessory=get_wearable("jn_accessory_hairband_red"),
         hairstyle=get_wearable("jn_hair_twin_buns")
+    ))
+    __register_outfit(JNOutfit(
+        reference_name="jn_chocolate_plaid_collection",
+        display_name="Chocolate plaid collection",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_chocolate_plaid_dress"),
+        headgear=get_wearable("jn_headgear_chocolate_plaid_bow"),
+        necklace=get_wearable("jn_necklace_golden_necklace"),
+        hairstyle=get_wearable("jn_hair_ponytail")
     ))
     __register_outfit(JNOutfit(
         reference_name="jn_office_outfit",
