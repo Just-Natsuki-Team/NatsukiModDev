@@ -1,5 +1,5 @@
 default persistent._jn_joke_list = ()
-default persistent._jn_daily_jokes_unlocked
+default persistent._jn_daily_jokes_unlocked = False
 default persistent._jn_daily_joke_given = False
 
 image joke_book = "mod_assets/props/joke_book_held.png"

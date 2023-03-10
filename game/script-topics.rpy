@@ -9421,8 +9421,13 @@ init 5 python:
     )
 
 label talk_daily_jokes_unlock:
-    # TODO:  - intro book
-    
+    # TODO: writing
+
+    # P1: Nat thinks, excuses herself, searches desk
+
+    # P2: Nat finds book, is happy, then composes herself
+
+    # P3: Nat explains
 
     $ persistent._jn_daily_jokes_unlocked = True
 
@@ -9445,7 +9450,7 @@ init 5 python:
     )
 
 label talk_daily_joke:
-    $ random_intro = random.randint(1, 3)
+    $ random_intro = random.randint(1, 6)
     if random_intro == 1:
         n "Okaaay!"
         extend " I think we both know what it's time for now, huh?"
@@ -9468,9 +9473,11 @@ label talk_daily_joke:
         n "Ehehe."
 
     elif random_intro == 5:
+        #TODO: write variant as per above
         n ""
 
     elif random_intro == 6:
+        #TODO: write variant as per above
         n ""
 
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
@@ -9517,6 +9524,18 @@ label talk_daily_joke:
         n "Aha!"
         extend " Here we go!"
 
+    elif random_joke_found == 4:
+        #TODO: write variant as per above
+        n ""
+
+    elif random_joke_found == 5:
+        #TODO: write variant as per above
+        n ""
+
+    elif random_joke_found == 6:
+        #TODO: write variant as per above
+        n ""
+
     n "A-hem!"
     n "..."
 
@@ -9524,5 +9543,14 @@ label talk_daily_joke:
     call daily_joke.label
     $ daily_joke.setSeen(True)
     $ persistent._jn_daily_joke_given = True
+
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    play audio drawer
+    hide joke_book
+    show natsuki 1fchsmeme
+    $ jnPause(1.3)
+    hide black with Dissolve(0.5)
+    $ jnPause(1)
 
     return
