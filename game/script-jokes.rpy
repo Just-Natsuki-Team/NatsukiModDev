@@ -1,4 +1,4 @@
-default persistent._jn_joke_list = ()
+default persistent._jn_joke_list = dict()
 default persistent._jn_daily_jokes_unlocked = False
 default persistent._jn_daily_joke_given = False
 
