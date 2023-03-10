@@ -137,11 +137,11 @@ init python in jn_jokes:
 
         return None
 
-    __registerJoke(JNDailyJoke(
+    __registerJoke(JNJoke(
         label="joke_test_joke"
     ))
 
-    __registerJoke(JNDailyJoke(
+    __registerJoke(JNJoke(
         label="joke_test_with_condition",
         conditional="persistent.jn_total_visit_count > 30"
     ))
