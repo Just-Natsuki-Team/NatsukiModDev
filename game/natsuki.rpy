@@ -142,7 +142,6 @@ init 0 python:
             """
             return Natsuki._outfit.hairstyle.reference_name == reference_name
 
-        #TODO: Adjust these functions in a proper acs system
         @staticmethod
         def isWearingAccessory(reference_name):
             """
@@ -320,7 +319,7 @@ init 0 python:
             jn_utils.log("416666696e6974792d".decode("hex"))
 
         @staticmethod
-        def checkResetDailyAffinityGain():
+        def checkResetDailies ():
             """
             Resets the daily affinity cap, if 24 hours has elapsed.
             """
@@ -335,6 +334,7 @@ init 0 python:
                 persistent.affinity_daily_gain = 5 * jn_affinity.get_relationship_length_multiplier()
                 persistent.affinity_gain_reset_date = current_date
                 persistent._affinity_daily_bypasses = 5
+                persistent._jn_daily_joke_given = False
                 jn_utils.log("4461696c7920616666696e697479206361702072657365743b206e6577206361702069733a".decode("hex") + str(persistent.affinity_daily_gain))
 
         @staticmethod

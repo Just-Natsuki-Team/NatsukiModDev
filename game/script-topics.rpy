@@ -9404,3 +9404,125 @@ label talk_staying_motivated:
         extend 3fchsm " Ahaha."
 
     return
+
+# Natsuki finds and introduces the joke book, unlocking daily jokes.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_daily_jokes_unlock",
+            unlocked=True,
+            conditional="not persistent._jn_daily_jokes_unlocked",
+            affinity_range=(jn_affinity.HAPPY, None),
+            nat_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_daily_jokes_unlock:
+    # TODO:  - intro book
+    
+
+    $ persistent._jn_daily_jokes_unlocked = True
+
+    return
+
+# Natsuki reads out a daily joke.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_daily_joke",
+            unlocked=True,
+            prompt="Daily joke",
+            conditional="persistent._jn_daily_jokes_unlocked and not persistent._jn_daily_joke_given",
+            affinity_range=(jn_affinity.HAPPY, None),
+            nat_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_daily_joke:
+    $ random_intro = random.randint(1, 3)
+    if random_intro == 1:
+        n "Okaaay!"
+        extend " I think we both know what it's time for now, huh?"
+        extend " Ehehe."
+
+    elif random_intro == 2:
+        n "Alright!"
+        extend " I think it's about time, [player]."
+        extend " Don't you?"
+
+    elif random_intro == 3:
+        n "Right!"
+        extend " I think now's as good a time as any."
+        n "Now where did I leave that book..."
+
+    elif random_intro == 4:
+        n "Hmmm..."
+        n "You know what, [player]?"
+        extend " I think it's about that time again."
+        n "Ehehe."
+
+    elif random_intro == 5:
+        n ""
+
+    elif random_intro == 6:
+        n ""
+
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    show joke_book zorder JN_PROP_ZORDER
+    show natsuki reading
+    hide black with Dissolve(0.5)
+    $ jnPause(0.5)
+
+    $ daily_jokes = jn_jokes.selectJokes()
+    if not daily_jokes:
+        $ jn_jokes.resetJokes()
+        n "..."
+        n "Man..."
+        extend " we really are going through these things, huh?"
+        extend " I'm gonna run out of jokes completely at this rate!"
+        n "..."
+        n "You..."
+        extend " don't mind if I just pick them at random, right?"
+        n "D-don't worry!"
+        extend " I'm still gonna at least try and keep things fresh!"
+        n "Just don't give me any funny looks if I pick one you've already heard."
+        extend " Capiche?"
+        $ daily_jokes = jn_jokes.selectJokes()
+
+    n "Now, let's see..."
+    n "..."
+
+    show natsuki reading
+    $ jnPause(3)
+    play audio page_turn
+    $ jnPause(2)
+    $ random_joke_found = random.randint(1, 3)
+
+    if random_joke_found == 1:
+        n "Pfffff-!"
+        n "Oh,"
+        extend " this'll do perfectly!"
+
+    elif random_joke_found == 2:
+        n "Oh! Oh!"
+        extend " How about this?"
+
+    elif random_joke_found == 3:
+        n "Aha!"
+        extend " Here we go!"
+
+    n "A-hem!"
+    n "..."
+
+    $ daily_joke = random.choice(daily_jokes)
+    call daily_joke.label
+    $ daily_joke.setSeen(True)
+    $ persistent._jn_daily_joke_given = True
+
+    return
