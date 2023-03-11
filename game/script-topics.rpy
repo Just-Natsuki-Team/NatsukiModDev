@@ -9525,12 +9525,12 @@ label talk_daily_joke:
         extend " Here we go!"
 
     elif random_joke_found == 4:
-        #TODO: write variant as per above
-        n ""
+        n "Oh! Oh!"
+        extend " This is a good one!"
 
     elif random_joke_found == 5:
-        #TODO: write variant as per above
-        n ""
+        n "Alright!"
+        extend " Let's try {i}this one{/i} on for size!"
 
     elif random_joke_found == 6:
         #TODO: write variant as per above
