@@ -9404,3 +9404,71 @@ label talk_staying_motivated:
         extend 3fchsm " Ahaha."
 
     return
+
+# Natsuki noticed a new type of cake and nerds out about it
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_castella_cake",
+            unlocked=True,
+            prompt="Castella cake",
+            category=["Food"],
+            nat_says=True,
+            affinity_range=(jn_affinity.HAPPY, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_castella_cake:
+    n  "Hmm..."
+    n  "Hey [player],{w=0.1} have you ever heard of castella cake before?"
+    n  "It is similar to sponge cake,{w=0.1} but with a more moist texture."
+    n  "I recently discovered it and it looks like a big soft pillow with a smooth surface.{w=0.2}{nw}"
+    extend " Totally yummy!"
+    n  "Apparently they are easy to make too.{w=0.2} As they only require your regular baking ingredients,{w=0.3}{nw}"
+    extend " things like eggs,{w=0.1} milk,{w=0.1} flour...{w=0.3}{nw}"
+    extend " just the usual!"
+    n  "But now you are probably wondering,{w=0.1} what makes this cake so fancy?{w=0.3}"
+    n  "Luckily for you {i}I'm{/i} around to enlighten you."
+    n  "The trick is the {i}way{/i} the cake is baked!{w=0.3}{nw}"
+    extend " You see...{w=0.2}"
+    n  "After transfering the batter into a cake mold and placing it into the oven."
+    n  "The baking tray needs to be filled with piping hot water!{w=0.3}"
+    extend " You could say we are cooking the cake more than actually baking it.{w=0.2}{nw}"
+    extend " Ehehe."
+
+    n  "Of course we can put more effort into the cake too."
+
+    if Natsuki.isLove(higher=True):
+        n  "How about going all out?{w=0.3}"
+        n  "Topping it with some cream and strawberries would work really well!{w=0.3}"
+
+        if get_topic("talk_chocolate_preference").shown_count > 0:
+            extend " maybe also a few white chocolate bits...{w=0.3}"
+
+        n  "B-but only if you want to try it of course!{w=0.3}{nw}"
+        extend " Ehehe."
+        n  "L-love you!"
+
+    elif Natsuki.isEnamored(higher=True):
+        n  "Perhaps we can play with colors?{w=0.3}"
+        n  "Drop in some chocolate chips and give the cake it's own personality...{w=0.3}{nw}"
+        extend " I'll bet you can do it!"
+
+    elif Natsuki.isAffectionate(higher=True):
+        n  "I'm sure you would enjoy some chocolate cake?{w=0.3}"
+        n  "Just mix in some cocoa powder into the batter and you are good to go!"
+
+    else:
+        n "You could never go wrong with a pinch of vanilla."
+
+    n  "So...{w=0.3}{nw}"
+    extend " What do you think,{w=0.1} [player]?{w=0.2}{nw}"
+    extend " Have I sparked your curiosity?{w=0.2}"
+    n  "It's worth a try!{w=0.3}{nw}"
+    extend " I'll give it one for sure.{w=0.2}{nw}"
+    extend " Ehehe."
+
+    return
