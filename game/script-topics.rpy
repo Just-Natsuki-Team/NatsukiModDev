@@ -9452,35 +9452,35 @@ init 5 python:
 label talk_daily_joke:
     $ random_intro = random.randint(1, 6)
     if random_intro == 1:
-        n "Okaaay!"
-        extend " I think we both know what it's time for now, huh?"
-        extend " Ehehe."
+        n  "Okaaay!{w=1}{nw}"
+        extend  " I think we both know what it's time for now,{w=0.2} huh?{w=1}{nw}"
+        extend  " Ehehe."
 
     elif random_intro == 2:
-        n "Alright!"
-        extend " I think it's about time, [player]."
-        extend " Don't you?"
+        n  "Alright!{w=1}{nw}"
+        extend  " I think it's about time,{w=0.2} [player].{w=1}{nw}"
+        extend  " Don't you?"
 
     elif random_intro == 3:
-        n "Right!"
-        extend " I think now's as good a time as any."
-        n "Now where did I leave that book..."
+        n  "Right!{w=1}{nw}"
+        extend  " I think now's as good a time as any."
+        n  "Now where did I leave that book..."
 
     elif random_intro == 4:
-        n "Hmmm..."
-        n "You know what, [player]?"
-        extend " I think it's about that time again."
-        n "Ehehe."
+        n  "Hmmm..."
+        n  "You know what,{w=0.2} [player]?{w=1}{nw}"
+        extend  " I think it's about that time again."
+        n  "Ehehe."
 
     elif random_intro == 5:
-        n "You know, [player]..."
-        extend " I think it's about that time."
-        extend " Don't you?"
+        n  "You know,{w=0.2} [player]...{w=1}{nw}"
+        extend  " I think it's about that time.{w=1}{nw}"
+        extend  " Don't you?"
 
     elif random_intro == 6:
-        n "Alright!"
-        extend " I think it's about time for the old joke book!"
-        extend " Ehehe."
+        n  "Alright!{w=1}{nw}"
+        extend  " I think it's about time for the old joke book!{w=0.75}{nw}"
+        extend  " Ehehe."
 
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     show joke_book zorder JN_PROP_ZORDER
@@ -9491,22 +9491,23 @@ label talk_daily_joke:
     $ daily_jokes = jn_jokes.selectJokes()
     if not daily_jokes:
         $ jn_jokes.resetJokes()
-        n "..."
-        n "Man..."
-        extend " we really are going through these things, huh?"
-        extend " I'm gonna run out of jokes completely at this rate!"
-        n "..."
-        n "You..."
-        extend " don't mind if I just pick them at random, right?"
-        n "D-don't worry!"
-        extend " I'm still gonna at least {i}try{/i} and keep things fresh!"
-        extend " O-obviously."
-        n "Just don't give me any funny looks if I pick one you've already heard."
-        extend " Capiche?"
+        n  "..."
+        n  "Man...{w=1}{nw}"
+        extend  " we really are going through these things,{w=0.2} huh?{w=1}{nw}"
+        extend  " I'm gonna run out of jokes completely at this rate!"
+        n  "..."
+        n  "You...{w=1.25}{nw}"
+        extend  " don't mind if I just starting picking them out at random,{w=0.2} right?"
+        n  "D-{w=0.2}don't worry!"
+        extend  " I'm still gonna at least {i}try{/i} and keep things fresh!{w=1}{nw}"
+        extend  " O-{w=0.2}obviously."
+        n  "Just don't give me any funny looks if I pick one you've already heard.{w=1.25}{nw}"
+        extend  " Capiche?"
         $ daily_jokes = jn_jokes.selectJokes()
 
-    n "Now, let's see..."
-    n "..."
+    n  "Now,{w=0.5}{nw}" 
+    extend  " let's see..."
+    n  "..."
 
     show natsuki reading
     $ jnPause(3)
@@ -9515,32 +9516,32 @@ label talk_daily_joke:
     $ random_joke_found = random.randint(1, 3)
 
     if random_joke_found == 1:
-        n "Pfffff-!"
-        n "Oh,"
-        extend " this'll do perfectly!"
+        n  "Pfffff-!{w=0.75}{nw}"
+        n  "Oh,{w=0.75}{nw}"
+        extend  " this'll do perfectly!"
 
     elif random_joke_found == 2:
-        n "Oh! Oh!"
-        extend " How about this?"
+        n  "Oh!{w=0.5} Oh!{w=0.75}{nw}"
+        extend  " How about this?"
 
     elif random_joke_found == 3:
-        n "Aha!"
-        extend " Here we go!"
+        n  "Aha!{w=0.75}{nw}"
+        extend  " Here we go!"
 
     elif random_joke_found == 4:
-        n "Oh! Oh!"
-        extend " This is a good one!"
+        n  "Oh!{w=0.5} Oh!{w=0.75}{nw}"
+        extend  " This is a good one!"
 
     elif random_joke_found == 5:
-        n "Alright!"
-        extend " Let's try {i}this one{/i} on for size!"
+        n  "Alright!{w=0.75}{nw}"
+        extend  " Let's try {i}this one{/i} on for size!"
 
     elif random_joke_found == 6:
-        n "Oh!"
-        extend " I got one! I got one!"
+        n  "Oh!{w=0.75}{nw}"
+        extend  " I got one!{w=0.5} I got one!"
 
-    n "A-hem!"
-    n "..."
+    n  "A-{w=0.2}hem!"
+    n  "..."
 
     $ daily_joke = random.choice(daily_jokes)
     call daily_joke.label
@@ -9574,15 +9575,19 @@ init 5 python:
     )
 
 label talk_daily_jokes_start:
-    n "Oho?"
-    extend " What's this now,"
-    extend " all of a sudden?"
-    n "Seems you really {w=0.2}{i}can't{/i}{w=0.2} get enough of my killer sense of humour after all!"
-    n "Ehehe."
-    n "Well,"
-    extend " you better prepare yourself then, [player]."
-    n "'Cause I'm gonna make them {i}extra{/i} corny now." 
-    extend " Juuuust for you~!"
+    n  "Oho?{w=1}{nw}"
+    extend  " What's this now,{w=0.75}{nw}"
+    extend  " all of a sudden?"
+    n  "Seems you really {w=0.2}{i}can't{/i}{w=0.2} get enough of my killer sense of humour after all!"
+    n  "Ehehe."
+    n  "Well in that case,{w=1}{nw}"
+    extend  " you better prepare yourself,{w=0.2} [player]."
+    n  "'Cause I'm gonna make them {i}extra{/i} corny now.{w=1}{nw}" 
+    extend  " Juuuust for you~!"
+
+    if Natsuki.isLove(higher=True):
+        n  "Ehehe."
+        n  "Love you too,{w=0.2} [player]!"
 
     return
 
@@ -9602,28 +9607,29 @@ init 5 python:
     )
 
 label talk_daily_jokes_stop:
-    n "H-huh?"
-    extend " What, what?"
-    n "And just what is {i}that{/i} meant to mean, [player]?!"
-    extend " Huh?"
-    n "You think my sense of humour just stinks?"
-    extend " Is that it?!"
-    n "..."
-    n "..."
-    n "Pfffft-!"
-    extend " Relax, [player]!"
-    extend " Relax!"
-    extend " Man..."
-    n "You {i}really{/i} gotta see the look on your face sometimes."
-    extend " Priceless!"
-    n "Nah, it's totally fine."
-    extend " I guess."
-    n "It's not like they're the {i}best{/i} jokes."
-    extend " You know."
-    extend " Not being {i}mine{/i} and all, o-obviously."
-    n "So..."
-    extend " just let me know whenever you get bored or something."
-    n "...Not like I'm ever gonna pass up a chance to make you squirm!"
-    extend " Ahaha."
+    n  "H-{w=0.3}huh?{w=1}{nw}"
+    extend  " Wait,{w=0.3} what?"
+    n  "A-{w=0.2}and just what is {i}that{/i} meant to mean,{w=0.2} [player]?!"
+    extend  " Huh?"
+    n  "You got some kind of problem with the book?"
+    n  "You think my sense of humour just stinks?{w=1}{nw}"
+    extend  " Is that it?!"
+    n  "..."
+    n  "..."
+    n  "Pfffft-!{w=1}{nw}"
+    extend  " Relax,{w=0.2} [player]!{w=0.75}{nw}"
+    extend  " Relax!{w=0.75}{nw}"
+    extend  " Man..."
+    n  "You {i}really{/i} gotta see the look on your face sometimes.{w=1}{nw}"
+    extend  " Priceless!"
+    n  "Nah,{w=0.2} it's fine.{w=1}{nw}"
+    extend  " I guess."
+    n  "It's not like they're the {i}best{/i} jokes anyway.{w=1}{nw}"
+    extend  " You know.{w=1}{nw}"
+    extend  " Not being {i}mine{/i} and all,{w=0.2} o-{w=0.2}of course."
+    n  "So...{w=1}{nw}"
+    extend  " just let me know whenever you get bored or something,{w=0.2} I suppose."
+    n  "...Not like I'm ever gonna pass up a chance to make you squirm!{w=1}{nw}"
+    extend  " Ahaha."
 
     return
