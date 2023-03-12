@@ -355,7 +355,7 @@ label call_next_topic(show_natsuki=True):
         import re
 
         # Prevent pushed mechanic topics such as weather changes from resetting topic wait timer
-        if re.search("(^talk_)") or not re.search("(_change$)|(^idle_)"):
+        if re.search("(^talk_)", _topic) or not re.search("(_change$)|(^idle_)", _topic):
             global LAST_TOPIC_CALL
             LAST_TOPIC_CALL = datetime.datetime.now()
 
