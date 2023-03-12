@@ -9441,7 +9441,7 @@ init 5 python:
             label="talk_daily_joke",
             unlocked=True,
             prompt="Daily joke",
-            conditional="persistent._jn_daily_jokes_unlocked and not persistent._jn_daily_joke_given",
+            conditional="persistent._jn_daily_jokes_unlocked and persistent._jn_daily_jokes_enabled and not persistent._jn_daily_joke_given",
             affinity_range=(jn_affinity.HAPPY, None),
             nat_says=True,
             location="classroom"
@@ -9473,12 +9473,14 @@ label talk_daily_joke:
         n "Ehehe."
 
     elif random_intro == 5:
-        #TODO: write variant as per above
-        n ""
+        n "You know, [player]..."
+        extend " I think it's about that time."
+        extend " Don't you?"
 
     elif random_intro == 6:
-        #TODO: write variant as per above
-        n ""
+        n "Alright!"
+        extend " I think it's about time for the old joke book!"
+        extend " Ehehe."
 
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     show joke_book zorder JN_PROP_ZORDER
@@ -9497,7 +9499,8 @@ label talk_daily_joke:
         n "You..."
         extend " don't mind if I just pick them at random, right?"
         n "D-don't worry!"
-        extend " I'm still gonna at least try and keep things fresh!"
+        extend " I'm still gonna at least {i}try{/i} and keep things fresh!"
+        extend " O-obviously."
         n "Just don't give me any funny looks if I pick one you've already heard."
         extend " Capiche?"
         $ daily_jokes = jn_jokes.selectJokes()
@@ -9533,8 +9536,8 @@ label talk_daily_joke:
         extend " Let's try {i}this one{/i} on for size!"
 
     elif random_joke_found == 6:
-        #TODO: write variant as per above
-        n ""
+        n "Oh!"
+        extend " I got one! I got one!"
 
     n "A-hem!"
     n "..."
@@ -9552,5 +9555,75 @@ label talk_daily_joke:
     $ jnPause(1.3)
     hide black with Dissolve(0.5)
     $ jnPause(1)
+
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_daily_jokes_start",
+            unlocked=True,
+            prompt="Can you start telling me daily jokes?",
+            conditional="not persistent._jn_daily_jokes_unlocked and not persistent._jn_daily_jokes_enabled",
+            affinity_range=(jn_affinity.HAPPY, None),
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_daily_jokes_start:
+    n "Oho?"
+    extend " What's this now,"
+    extend " all of a sudden?"
+    n "Seems you really {w=0.2}{i}can't{/i}{w=0.2} get enough of my killer sense of humour after all!"
+    n "Ehehe."
+    n "Well,"
+    extend " you better prepare yourself then, [player]."
+    n "'Cause I'm gonna make them {i}extra{/i} corny now." 
+    extend " Juuuust for you~!"
+
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_daily_jokes_stop",
+            unlocked=True,
+            prompt="Can stop telling me daily jokes?",
+            conditional="not persistent._jn_daily_jokes_unlocked and persistent._jn_daily_jokes_enabled",
+            affinity_range=(jn_affinity.HAPPY, None),
+            nat_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_daily_jokes_stop:
+    n "H-huh?"
+    extend " What, what?"
+    n "And just what is {i}that{/i} meant to mean, [player]?!"
+    extend " Huh?"
+    n "You think my sense of humour just stinks?"
+    extend " Is that it?!"
+    n "..."
+    n "..."
+    n "Pfffft-!"
+    extend " Relax, [player]!"
+    extend " Relax!"
+    extend " Man..."
+    n "You {i}really{/i} gotta see the look on your face sometimes."
+    extend " Priceless!"
+    n "Nah, it's totally fine."
+    extend " I guess."
+    n "It's not like they're the {i}best{/i} jokes."
+    extend " You know."
+    extend " Not being {i}mine{/i} and all, o-obviously."
+    n "So..."
+    extend " just let me know whenever you get bored or something."
+    n "...Not like I'm ever gonna pass up a chance to make you squirm!"
+    extend " Ahaha."
 
     return
