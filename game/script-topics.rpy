@@ -736,7 +736,7 @@ label talk_eating_well:
         n 1fchgnelg "Ahaha!{w=0.2} I'm kidding,{w=0.1} [player]!{w=0.2} I'm kidding!"
         n 4fsqsm "...Mostly."
 
-        if Natsuki.isEnamored(higher=True):
+        if Natsuki.isLove(higher=True):
             n 4uchsm "Love you, [player]~!{w=0.2} Ehehe."
             return
 
@@ -2086,6 +2086,7 @@ label talk_drinking_alcohol:
     n 4unmsr "It's all in the past now,{w=0.1} obviously.{w=0.5}{nw}"
     extend 2kslsr " But...{w=0.3} that doesn't mean I don't still feel bad about it sometimes."
     n 1kcssr "..."
+
     if Natsuki.isAffectionate(higher=True):
         n 1kllsr "Hey...{w=0.5}{nw}"
         extend 4knmpu " [player]?"
@@ -2100,6 +2101,7 @@ label talk_drinking_alcohol:
         n 1kslsr "...Firsthand."
         n 4ksqsl "You deserve better than that,{w=0.1} [player].{w=0.5}{nw}"
         extend 4kslun " You {i}are{/i} better than that."
+
         if Natsuki.isLove(higher=True):
             n 1kcsun "..."
             n 1ksqsml "I love you,{w=0.1} [player]."
@@ -9421,13 +9423,121 @@ init 5 python:
     )
 
 label talk_daily_jokes_unlock:
-    # TODO: writing
+    n "..."
+    n "..."
+    n "You know, [player]."
+    extend " I just thought of something."
+    extend " Something that's really starting to bug the crap out of me."
+    n "You stop by here often enough, right?"
+    extend " To visit, I mean."
 
-    # P1: Nat thinks, excuses herself, searches desk
+    n "N-not that I don't appreciate it, or anything like that!"
 
-    # P2: Nat finds book, is happy, then composes herself
+    if Natsuki.isEnamoured(higher=True):
+        extend " You should know I do by now."
 
-    # P3: Nat explains
+    elif Natsuki.isAffectionate(higher=True):
+        extend " I-I totally do!"
+        
+    else:
+        extend " O-of course I do!"
+        n "Even if you {i}do{/i} kinda owe it to me."
+
+    extend "But..."
+    n "It's just..."
+    n "..."
+    n "Nnnnn...!"
+    n "It just gets so {i}boring{/i}!"
+    extend " It's like nothing {i}ever{/i} changes around here!"
+    extend " It's always the same,"
+    extend " and I'm sick of it!"
+    n "Ugh..."
+    n "What we need is variety!"
+    n "Something different!"
+    extend " And nothing different ever happened by sitting around waiting for it."
+    n "There HAS to be something like that around here somewhere..."
+    n "..."
+    n "...Actually."
+    extend " You know what?"
+    extend " Just give me a couple minutes."
+    n "There's gotta be something in the closet I missed before."
+
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    play audio chair_out
+
+    n "Alright..."
+    extend " what have we got..."
+    n "..."
+    n "Oh, for-!"
+    n "Since when did this become the official school {i}dumping ground{/i}?!"
+    extend " Half this stuff wasn't even {i}ours{/i}!"
+
+    play audio stationary_rustle_a
+    $ jnPause(2.5)
+    play audio gift_slide
+    $ jnPause(3)
+
+    n "Jeez..."
+    extend " What is this?"
+    extend " A library?"
+    n "How much more of this stuff is there...?"
+
+    play audio gift_slide
+    $ jnPause(3)
+
+    n "...Huh?"
+    extend " What's..."
+    n "..."
+    n "Wait..."
+    extend " i-is that my homework?! Who-"
+    play audio gift_close
+    n "Ack-!"
+    n "..."
+    n "Nnnnng..."
+    extend " my head..."
+    n "W-who the hell just balances books like that?!"
+    extend " I am {i}seriously{/i} gonna...!"
+    n "..."
+    n "..."
+    n "...Wait a second."
+    extend " Oh. My. Gosh."
+    n "This is perfect!"
+    n "..."
+    n "...!"
+
+    $ jnPause(2)
+    
+    show natsuki merry_smug
+    play audio chair_in
+    $ jnPause(1.5)
+
+    n "[player]! [player]!"
+    n "Guess what I fooound~?"
+    extend " Ehehe."
+    show joke_book zorder JN_PROP_ZORDER
+    play audio page_turn
+    $ jnPause(3)
+
+    n "..."
+    n "..."
+    n "What?"
+    extend " Don't you start giving me that look, [player]."
+    extend " Besides."
+    n "Did {i}you{/i} have anything better?"
+    n "..."
+    n "..."
+    n "Yep!"
+    extend " That's about what I expected."
+    extend " Ehehe."
+    n "Man..."
+    extend " I can't wait to start cracking out some of these!"
+    extend " This is gonna be great!"
+    n "Oh -"
+    extend " I should probably say that I'll probably just pick out something daily."
+    extend " I'm not gonna just bombard you with terrible puns or anything like that."
+
+    #TODO: round this off, tag, adjust, etc.
 
     $ persistent._jn_daily_jokes_unlocked = True
 
