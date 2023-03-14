@@ -9562,35 +9562,35 @@ init 5 python:
 label talk_daily_joke:
     $ random_intro = random.randint(1, 6)
     if random_intro == 1:
-        n  "Okaaay!{w=1}{nw}"
-        extend  " I think we both know what it's time for now,{w=0.2} huh?{w=1}{nw}"
-        extend  " Ehehe."
+        n 1nchgn "Okaaay!{w=1}{nw}"
+        extend 3fsqbg " I think we both know what it's time for now,{w=0.2} huh?{w=1}{nw}"
+        extend 3fsqsm " Ehehe."
 
     elif random_intro == 2:
-        n  "Alright!{w=1}{nw}"
-        extend  " I think it's about time,{w=0.2} [player].{w=1}{nw}"
-        extend  " Don't you?"
+        n 4fcsbg "Alright!{w=1}{nw}"
+        extend 2tlrss " I think it's about time,{w=0.2} [player].{w=1}{nw}"
+        extend 2tsqsm " Don't you?"
 
     elif random_intro == 3:
-        n  "Right!{w=1}{nw}"
-        extend  " I think now's as good a time as any."
-        n  "Now where did I leave that book..."
+        n 2fcsaj "Right!{w=1}{nw}"
+        extend 2fcsbg " I think now's as good a time as any."
+        n 4tlrbo "Now where did I leave that book..."
 
     elif random_intro == 4:
-        n  "Hmmm..."
-        n  "You know what,{w=0.2} [player]?{w=1}{nw}"
-        extend  " I think it's about that time again."
-        n  "Ehehe."
+        n 4tllbo "Hmmm..."
+        n 4tnmaj "You know what,{w=0.2} [player]?{w=1}{nw}"
+        extend 3fsqbg " I think it's about that time again."
+        n 3fcssm "Ehehe."
 
     elif random_intro == 5:
-        n  "You know,{w=0.2} [player]...{w=1}{nw}"
-        extend  " I think it's about that time.{w=1}{nw}"
-        extend  " Don't you?"
+        n 2ulraj "You know,{w=0.2} [player]...{w=1}{nw}"
+        extend 2flrcs " I think it's about that time.{w=1}{nw}"
+        extend 4fsqcs " Don't you?"
 
     elif random_intro == 6:
-        n  "Alright!{w=1}{nw}"
-        extend  " I think it's about time for the old joke book!{w=0.75}{nw}"
-        extend  " Ehehe."
+        n 1fcsbg "Alright!{w=1}{nw}"
+        extend 4fwrbg " I think it's about time for the old joke book!{w=0.75}{nw}"
+        extend 4fcssm " Ehehe."
 
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     show joke_book zorder JN_PROP_ZORDER
@@ -9601,23 +9601,23 @@ label talk_daily_joke:
     $ daily_jokes = jn_jokes.selectJokes()
     if not daily_jokes:
         $ jn_jokes.resetJokes()
-        n  "..."
-        n  "Man...{w=1}{nw}"
-        extend  " we really are going through these things,{w=0.2} huh?{w=1}{nw}"
-        extend  " I'm gonna run out of jokes completely at this rate!"
-        n  "..."
-        n  "You...{w=1.25}{nw}"
-        extend  " don't mind if I just starting picking them out at random,{w=0.2} right?"
-        n  "D-{w=0.2}don't worry!"
-        extend  " I'm still gonna at least {i}try{/i} and keep things fresh!{w=1}{nw}"
-        extend  " O-{w=0.2}obviously."
-        n  "Just don't give me any funny looks if I pick one you've already heard.{w=1.25}{nw}"
-        extend  " Capiche?"
+        n 1fcsemesi "..."
+        n 1fsrpo "Man...{w=1}{nw}"
+        extend 1tnmbo " we really are going through these things,{w=0.2} huh?{w=1}{nw}"
+        extend 1fcsflsbl " I'm gonna run out of jokes completely at this rate!"
+        n 1nsrslsbr "..."
+        n 1nsrajsbr "You...{w=1.25}{nw}"
+        extend 1flrsssbr " don't mind if I just starting picking them out at random,{w=0.2} right?"
+        n 1fcsgslsbr "D-{w=0.2}don't get me wrong!"
+        extend 1fllflsbr " I'm still gonna at least {i}try{/i} and keep things fresh!{w=1}{nw}"
+        extend 1fcsposbr " O-{w=0.2}obviously."
+        n 1nsqpo "Just don't give me any funny looks if I pick one you've already heard.{w=1.25}{nw}"
+        extend 1fsqpo " Capiche?"
+
         $ daily_jokes = jn_jokes.selectJokes()
 
-    n  "Now,{w=0.5}{nw}" 
-    extend  " let's see..."
-    n  "..."
+    n 1fcsss "Now,{w=0.5}{nw}" 
+    extend 1fsqsm " let's see..."
 
     show natsuki reading
     $ jnPause(3)
@@ -9626,32 +9626,32 @@ label talk_daily_joke:
     $ random_joke_found = random.randint(1, 3)
 
     if random_joke_found == 1:
-        n  "Pfffff-!{w=0.75}{nw}"
-        n  "Oh,{w=0.75}{nw}"
-        extend  " this'll do perfectly!"
+        n 1fchdvesm "Pfffff-!{w=0.75}{nw}"
+        n 1fcsss "Oh,{w=0.75}{nw}"
+        extend 1fchgn " this'll do perfectly!"
 
     elif random_joke_found == 2:
-        n  "Oh!{w=0.5} Oh!{w=0.75}{nw}"
-        extend  " How about this?"
+        n 1unmbs "Oh!{w=0.5} Oh!{w=0.75}{nw}"
+        extend 1fcsbs " How about this?"
 
     elif random_joke_found == 3:
-        n  "Aha!{w=0.75}{nw}"
-        extend  " Here we go!"
+        n 1fcsbg "Aha!{w=0.75}{nw}"
+        extend 1fsqsm " Here we go!"
 
     elif random_joke_found == 4:
-        n  "Oh!{w=0.5} Oh!{w=0.75}{nw}"
-        extend  " This is a good one!"
+        n 1fspgs "Oh!{w=0.5} Oh!{w=0.75}{nw}"
+        extend 1fnmbg " This is a good one!"
 
     elif random_joke_found == 5:
-        n  "Alright!{w=0.75}{nw}"
-        extend  " Let's try {i}this one{/i} on for size!"
+        n 1nchgn "Alright!{w=0.75}{nw}"
+        extend 1fcsbg " Let's try {i}this one{/i} on for size!"
 
     elif random_joke_found == 6:
-        n  "Oh!{w=0.75}{nw}"
-        extend  " I got one!{w=0.5} I got one!"
+        n 1unmbg "Oh!{w=0.75}{nw}"
+        extend 1fchgn " I got one!{w=0.5} I got one!"
 
-    n  "A-{w=0.2}hem!"
-    n  "..."
+    n 1fcsaj "A-{w=0.2}hem!"
+    n 1fcssm "..."
 
     $ daily_joke = random.choice(daily_jokes)
     call daily_joke.label
@@ -9685,19 +9685,18 @@ init 5 python:
     )
 
 label talk_daily_jokes_start:
-    n  "Oho?{w=1}{nw}"
-    extend  " What's this now,{w=0.75}{nw}"
-    extend  " all of a sudden?"
-    n  "Seems you really {w=0.2}{i}can't{/i}{w=0.2} get enough of my killer sense of humour after all!"
-    n  "Ehehe."
-    n  "Well in that case,{w=1}{nw}"
-    extend  " you better prepare yourself,{w=0.2} [player]."
-    n  "'Cause I'm gonna make them {i}extra{/i} corny now.{w=1}{nw}" 
-    extend  " Juuuust for you~!"
+    n 2usqss "Oho?{w=1}{nw}"
+    extend 4nlrbg " What's this now,{w=0.75}{nw}"
+    extend 4tsqbg " all of a sudden?"
+    n 2fcsbg "Seems you really {w=0.2}{i}can't{/i}{w=0.2} get enough of my killer sense of humour after all!"
+    n 2fsqsmeme "Ehehe."
+    n 1fcsss "Well in that case,{w=1}{nw}"
+    extend 4fnmss " you better prepare yourself,{w=0.2} [player]."
+    n 3fchgn "'Cause I'm gonna make them {i}extra{/i} corny now.{w=1}{nw}" 
+    extend 3nchgn " Juuuust for you~!"
 
     if Natsuki.isLove(higher=True):
-        n  "Ehehe."
-        n  "Love you too,{w=0.2} [player]!"
+        n 3fchbll "Love you,{w=0.2} [player]!"
 
     return
 
@@ -9717,8 +9716,9 @@ init 5 python:
     )
 
 label talk_daily_jokes_stop:
-    n  "H-{w=0.3}huh?{w=1}{nw}"
-    extend  " Wait,{w=0.3} what?"
+    n 1unmem "H-{w=0.3}huh?{w=1}{nw}"
+    extend 1fcseml " Wait,{w=0.5}{nw}" 
+    extend  " what?"
     n  "A-{w=0.2}and just what is {i}that{/i} meant to mean,{w=0.2} [player]?!"
     extend  " Huh?"
     n  "You got some kind of problem with the book?"
