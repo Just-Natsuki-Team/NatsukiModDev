@@ -122,6 +122,8 @@ init python in jn_jokes:
 
         else:
             __ALL_JOKES[joke.label] = joke
+            if joke.label not in store.persistent._jn_joke_list:
+                joke.__save()
 
     def getJoke(joke_name):
         """
