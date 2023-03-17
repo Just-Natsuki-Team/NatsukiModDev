@@ -9519,6 +9519,12 @@ label talk_daily_jokes_unlock:
     play audio page_turn
     $ jnPause(3)
 
+    n "It's..."
+    extend " our old homeroom joke book!"
+    extend " Duh!"
+    n "And just when I was starting to wonder if this place had {i}any{/i} literature!"
+    n "...Well..."
+    extend " any that {i}isn't{/i} just my own stuff, anyway."
     n "..."
     n "..."
     n "What?"
@@ -9532,10 +9538,16 @@ label talk_daily_jokes_unlock:
     extend " Ehehe."
     n "Man..."
     extend " I can't wait to start cracking out some of these!"
-    extend " This is gonna be great!"
+    extend " This is gonna be great, I just know it!"
+    n "..."
     n "Oh -"
-    extend " I should probably say that I'll probably just pick out something daily."
-    extend " I'm not gonna just bombard you with terrible puns or anything like that."
+    extend " I should probably mention, [player]."
+    n "I don't want to end up blowing through this thing too quickly."
+    extend " Or we'd just end up back where we were."
+    extend " So..."
+    n "I'm just gonna pick out something daily."
+    extend " No reason to overdo it."
+
 
     #TODO: round this off, tag, adjust, etc.
 
