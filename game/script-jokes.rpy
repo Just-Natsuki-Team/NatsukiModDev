@@ -13,14 +13,23 @@ init python in jn_jokes:
 
     __ALL_JOKES = {}
 
+    class JNJokeCategories(Enum):
+        neutral = 1
+        funny = 2
+        corny = 3
+        bad = 4
+
     class JNJoke:
         def __init__(
             self,
             label,
+            joke_category,
             conditional=None,
         ):
             self.label = label
             self.is_seen = False
+            self.shown_count = 0
+            self.joke_category = joke_category
             self.conditional = conditional
 
         @staticmethod
@@ -72,7 +81,8 @@ init python in jn_jokes:
                 dictionary representation of the joke object
             """
             return {
-                "is_seen": self.is_seen
+                "is_seen": self.is_seen,
+                "shown_count": self.shown_count
             }
 
         def setSeen(self, is_seen):
@@ -80,6 +90,7 @@ init python in jn_jokes:
             Marks this joke as seen.
             """
             self.is_seen = is_seen
+            self.shown_count += 1
             self.__save()
 
         def __load(self):
@@ -88,6 +99,7 @@ init python in jn_jokes:
             """
             if store.persistent._jn_joke_list[self.label]:
                 self.is_seen = store.persistent._jn_joke_list[self.label]["is_seen"]
+                self.shown_count = store.persistent._jn_joke_list[self.label]["shown_count"]
 
         def __save(self):
             """
@@ -140,24 +152,141 @@ init python in jn_jokes:
         return None
 
     __registerJoke(JNJoke(
-        label="joke_test_joke"
+        label="joke_clock_eating",
+        joke_category=jn_jokes.JNJokeCategories.neutral
     ))
 
     __registerJoke(JNJoke(
-        label="joke_test_with_condition",
-        conditional="persistent.jn_total_visit_count > 30"
+        label="joke_anime_bounce",
+        joke_category=jn_jokes.JNJokeCategories.funny
     ))
 
-label joke_test_joke:
-    n "This is a joke"
-    n "No, really"
-    n "This isn't finished"
-    n "What a joke"
-    n "Roflmao"
+    __registerJoke(JNJoke(
+        label="joke_pirate_shower",
+        joke_category=jn_jokes.JNJokeCategories.corny
+    ))
+
+    __registerJoke(JNJoke(
+        label="joke_cinderella_soccer",
+        joke_category=jn_jokes.JNJokeCategories.funny
+    ))
+
+    __registerJoke(JNJoke(
+        label="joke_blind_fish",
+        joke_category=jn_jokes.JNJokeCategories.funny
+    ))
+
+    __registerJoke(JNJoke(
+        label="joke_skeleton_music",
+        joke_category=jn_jokes.JNJokeCategories.neutral,
+        conditional="persistent.jn_custom_music_unlocked"
+    ))
+
+    __registerJoke(JNJoke(
+        label="joke_skeleton_communication",
+        joke_category=jn_jokes.JNJokeCategories.neutral,
+        conditional="jn_jokes.getJoke('joke_skeleton_music').shown_count > 0"
+    ))
+
+    __registerJoke(JNJoke(
+        label="joke_ocean_greeting",
+        joke_category=jn_jokes.JNJokeCategories.neutral
+    ))
+
+    __registerJoke(JNJoke(
+        label="joke_tractor_trailer",
+        joke_category=jn_jokes.JNJokeCategories.bad
+    ))
+
+    __registerJoke(JNJoke(
+        label="joke_tentacle_tickles",
+        joke_category=jn_jokes.JNJokeCategories.funny
+    ))
+
+label joke_clock_eating:
+    n "Hey,{w=0.2} [player]..."
+    n "Have {i}you{/i} ever tried eating a clock?"
+    extend " No?"
+    n "Well, I can't say I blame you."
+    n "It's very...{w=0.5} {i}time{w=0.3} consuming{/i}.{w=0.75}{nw}"
+    extend " Ehehe."
 
     return
 
-label joke_test_with_condition:
-    n "Some test joke w/ condition"
+label joke_anime_bounce:
+    n "Listen here [player]."
+    n "You know how anime gets you really bouncy and jolly,{w=0.3}{nw}"
+    extend " right?"
+    n "Well, it's the same for me."
+    n "That's why I'm always so...{w=0.5} {i}anime-ated{/i}.{w=0.75}{nw}"
+    n " Got it?{w=0.5}{nw}"
+    extend " Ehehe."
+
+    return
+
+label joke_pirate_shower:
+    n "Okay,{w=0.2} [player]..."
+    n "What do {i}you{/i} think why pirates never take a shower before they walk the plank?"
+    n "Well obviously...{w=0.5}{nw}"
+    extend " because they just {i}wash up on shore{/i}."
+
+    return
+
+label joke_cinderella_soccer:
+    n "Let's talk about princesses,{w=0.2} [player]!"
+    n "Any idea why Cinderella was so bad at soccer?{w=0.3}"
+    n "Well duh!{w=0.5}{nw}"
+    extend " She kept running away from the {i}ball{/i}!{w=0.5}"
+
+    return
+
+label joke_blind_fish:
+    n "Okay,{w=0.2} [player]..."
+    n "What do you call a fish without eyes?{w=0.5}"
+    n "I'll give you a hint,{w=0.5} it's not blind!{w=0.75}"
+    n " It's...{w=0.5} {i}fsh{/i}.{w=0.5}{nw}"
+    extend " Pffff-!{w=0.5}"
+
+    return      
+
+label joke_skeleton_music:
+    n "As I know you like to share music with me, [player]...{w=0.3}{nw}"
+    extend " I'm sure you will enjoy this one too!"
+    n "So...{w=0.3}{nw}"
+    extend " What do you think is a skeleton's favourite instrument?"
+    n "A...{w=0.5} xylo{i}bone{/i}.{w=0.75}"
+
+    return 
+
+label joke_skeleton_communication:
+    n "Okay,{w=0.2} [player].{w=0.3}{nw}"
+    extend " I found another spooky joke for you!"
+    n "How do skeletons keep in touch with each other?"
+    n "Only one possible solution...{w=0.5}{nw}"
+    extend " With the help of the tele{i}bone{/i}{w=0.75}!"
+
+    return    
+
+label joke_ocean_greeting:
+    n "Ready,{w=0.2} [player]?{w=0.3}"
+    n "What did the ocean say to the sand?{w=0.3}{nw}"
+    extend " Any guesses?{w=0.3} It's simple."
+    n "Nothing{w=0.5} - it just {iwaved.{w=0.75}"
+
+    return  
+
+label joke_tractor_trailer:
+    n "Time to pay attention,{w=0.1} [player]!"
+    n "A colleague asked me if I watched the movie 'Tractor'...{w=0.5}"
+    n "I did not.{w=0.3}{nw}"
+    extend " But I watched the {i}trailer{/i}...{w=0.75}"
+
+    return     
+
+label joke_tentacle_tickles:
+    n "Hey,{w=0.2} [player]..."
+    n "Can you guess how many tickles it take to make an octopus laugh?"
+    n "Four?{w=0.3} Eight?{w=0.3} No!{w=0.1}{nw}"
+    extend " {i}Ten{/i}-tickles!"
 
     return

@@ -9423,88 +9423,90 @@ init 5 python:
     )
 
 label talk_daily_jokes_unlock:
-    n "..."
-    n "..."
-    n "You know, [player]."
-    extend " I just thought of something."
-    extend " Something that's really starting to bug the crap out of me."
-    n "You stop by here often enough, right?"
-    extend " To visit, I mean."
+    n 1nllsl "..."
+    n 1fllsl "..."
+    n 1fcsflesi "..."
+    n 1nlrfl "You know,{w=0.2} [player].{w=0.75}{nw}"
+    extend 1nnmsl " I just thought of something.{w=0.75}{nw}"
+    extend 1fslfl " Something that's really starting to bug the crap out of me."
+    n 1unmbo "You stop by here often enough,{w=0.2} right?{w=0.75}{nw}"
+    extend 1nlraj " To visit,{w=0.2} I mean."
 
-    n "N-not that I don't appreciate it, or anything like that!"
+    n 1unmemeshsbl "N-{w=0.2}not that I don't appreciate it,{w=0.2} or anything like that!{w=0.75}{nw}"
 
     if Natsuki.isEnamoured(higher=True):
-        extend " You should know I do by now."
+        extend 1nslsllsbl " You should know I do by now.{w=1}{nw}"
 
     elif Natsuki.isAffectionate(higher=True):
-        extend " I-I totally do!"
+        extend 1fcsajlsbl " I-{w=0.2}I totally do!{w=1}{nw}"
         
     else:
-        extend " O-of course I do!"
-        n "Even if you {i}do{/i} kinda owe it to me."
+        extend 1fcsemsbl " O-{w=0.2}of course I do!"
+        n 1fcspo "Even if you {i}do{/i} kinda owe it to me.{w=1}{nw}"
 
-    extend "But..."
-    n "It's just..."
-    n "..."
-    n "Nnnnn...!"
-    n "It just gets so {i}boring{/i}!"
-    extend " It's like nothing {i}ever{/i} changes around here!"
-    extend " It's always the same,"
-    extend " and I'm sick of it!"
-    n "Ugh..."
-    n "What we need is variety!"
-    n "Something different!"
-    extend " And nothing different ever happened by sitting around waiting for it."
-    n "There HAS to be something like that around here somewhere..."
-    n "..."
-    n "...Actually."
-    extend " You know what?"
-    extend " Just give me a couple minutes."
-    n "There's gotta be something in the closet I missed before."
+    extend 1nlrsl " But..."
+    n 1fcsaj "It's just..."
+    n 1fslun "..."
+    n 1fcsansbl "Nnnnn...!"
+    n 1fbkwrsbr "It just gets so {w=0.3}{i}boring{/i}!{w=1}{nw}"
+    extend 1fcswr " Like nothing {i}ever{/i} changes around here!{w=0.75}{nw}"
+    extend 1flrgs " It's always the same,{w=0.75}{nw}"
+    extend 1fcsgs " and I'm sick of it!"
+    n 1fslsl "Ugh..."
+    n 1fcsemesi "..."
+    n 1fcswr "What we need is variety!"
+    n 1fcsgs "Something different!{w=0.75}{nw}"
+    extend 1fcspo " And nothing different ever happened by just sitting around {i}waiting{/i} for it."
+    n  "There HAS to be something like that around here somewhere..."
+    n  "..."
+    n  "...Actually.{w=0.75}{nw}"
+    extend  " You know what?{w=1}{nw}"
+    extend  " Just give me a couple minutes."
+    n  "There's gotta be something in the closet I missed before."
 
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     play audio chair_out
 
-    n "Alright..."
-    extend " what have we got..."
-    n "..."
-    n "Oh, for-!"
-    n "Since when did this become the official school {i}dumping ground{/i}?!"
-    extend " Half this stuff wasn't even {i}ours{/i}!"
+    n  "Alright...{w=1}{nw}"
+    extend  " what have we got..."
+    n  "..."
+    n  "Oh,{w=0.2} for-!"
+    n  "Since when did this become the official school {i}dumping ground{/i}?!{w=1}{nw}"
+    extend  " Half this stuff wasn't even {i}ours{/i}!"
 
     play audio stationary_rustle_a
     $ jnPause(2.5)
     play audio gift_slide
     $ jnPause(3)
 
-    n "Jeez..."
-    extend " What is this?"
-    extend " A library?"
-    n "How much more of this stuff is there...?"
+    n  "Jeez...{w=1}{nw}"
+    extend  " What is this?{w=0.75}{nw}"
+    extend  " A library?"
+    n  "How much more of this stuff is there...?"
 
     play audio gift_slide
     $ jnPause(3)
 
-    n "...Huh?"
-    extend " What's..."
-    n "..."
-    n "Wait..."
-    extend " i-is that my homework?! Who-"
+    n  "...Huh?{w=1.25}{nw}"
+    extend  " What's..."
+    n  "..."
+    n  "Wait...{w=1}{nw}"
+    extend  " i-{w=0.2}is that my homework?!{w=0.2} Who-{w=0.5}{nw}"
     play audio gift_close
-    n "Ack-!"
-    n "..."
-    n "Nnnnng..."
-    extend " my head..."
-    n "W-who the hell just balances books like that?!"
-    extend " I am {i}seriously{/i} gonna...!"
-    n "..."
-    n "..."
-    n "...Wait a second."
-    extend " Oh. My. Gosh."
-    n "This is perfect!"
-    n "..."
-    n "...!"
+    n  "Ack-!"
+    n  "..."
+    n  "Nnnnng...{w=1.25}{nw}"
+    extend  " my head..."
+    n  "W-{w=0.2}who the hell just balances books like that?!{w=0.75}{nw}"
+    extend  " I am {i}seriously{/i} gonna...!"
+    n  "..."
+    n  "..."
+    n  "...Wait a second.{w=1.5}{nw}"
+    extend  " Oh.{w=0.2} My.{w=0.2} Gosh."
+    n  "This is perfect!"
+    n  "..."
+    n  "...!"
 
     $ jnPause(2)
     
@@ -9512,44 +9514,47 @@ label talk_daily_jokes_unlock:
     play audio chair_in
     $ jnPause(1.5)
 
-    n "[player]! [player]!"
-    n "Guess what I fooound~?"
-    extend " Ehehe."
+    n  "[player]!{w=0.2} [player]!"
+    n  "Guess what I fooound~?{w=0.75}{nw}"
+    extend  " Ehehe."
+
     show joke_book zorder JN_PROP_ZORDER
     play audio page_turn
     $ jnPause(3)
 
-    n "It's..."
-    extend " our old homeroom joke book!"
-    extend " Duh!"
-    n "And just when I was starting to wonder if this place had {i}any{/i} literature!"
-    n "...Well..."
-    extend " any that {i}isn't{/i} just my own stuff, anyway."
-    n "..."
-    n "..."
-    n "What?"
-    extend " Don't you start giving me that look, [player]."
-    extend " Besides."
-    n "Did {i}you{/i} have anything better?"
-    n "..."
-    n "..."
-    n "Yep!"
-    extend " That's about what I expected."
-    extend " Ehehe."
-    n "Man..."
-    extend " I can't wait to start cracking out some of these!"
-    extend " This is gonna be great, I just know it!"
-    n "..."
-    n "Oh -"
-    extend " I should probably mention, [player]."
-    n "I don't want to end up blowing through this thing too quickly."
-    extend " Or we'd just end up back where we were."
-    extend " So..."
-    n "I'm just gonna pick out something daily."
-    extend " No reason to overdo it."
-
-
-    #TODO: round this off, tag, adjust, etc.
+    n  "It's...{w=1}{nw}"
+    extend  " our old homeroom joke book!{w=0.75}{nw}"
+    extend  " Duh!"
+    n  "And just when I was starting to wonder if this place had {i}any{/i} literature!"
+    n  "...Well...{w=0.75}{nw}"
+    extend  " any that {i}isn't{/i} just my own stuff,{w=0.2} anyway."
+    n  "..."
+    n  "..."
+    n  "What?{w=0.75}{nw}"
+    extend  " Don't you start giving me that,{w=0.2} [player].{w=1}{nw}"
+    extend  " Besides."
+    n  "Did {i}you{/i} have anything better?"
+    n  "..."
+    n  "..."
+    n  "Yep!{w=0.75}{nw}"
+    extend  " That's about what I expected.{w=1}{nw}"
+    extend  " Ehehe."
+    n  "Man...{w=1}{nw}"
+    extend  " I can't wait to start cracking out some of these!{w=0.75}{nw}"
+    extend  " This is gonna be great,{w=0.2} I just know it!"
+    n  "..."
+    n  "Oh -{w=0.5}{nw}"
+    extend  " I should probably mention,{w=0.2} [player]."
+    n  "I don't want to end up blowing through this thing too quickly.{w=0.75}{nw}"
+    extend  " Or we'd just end up right back where we were.{w=1}{nw}"
+    extend  " So..."
+    n  "I'm just gonna pick out something daily to torture you with.{w=0.75}{nw}"
+    extend  " No reason to overdo it."
+    n  "Sound like a plan,{w=0.2} [player]?{w=0.75}{nw}"
+    extend  " Of course it does!"
+    n  "So you better look forward to it..."
+    n  "'Cause I {i}definitely{/i} am!{w=1}{nw}"
+    extend  " Ehehe."
 
     $ persistent._jn_daily_jokes_unlocked = True
 
@@ -9572,34 +9577,34 @@ init 5 python:
     )
 
 label talk_daily_joke:
-    $ random_intro = random.randint(1, 6)
-    if random_intro == 1:
+    $ dialogue_choice = random.randint(1, 6)
+    if dialogue_choice == 1:
         n 1nchgn "Okaaay!{w=1}{nw}"
         extend 3fsqbg " I think we both know what it's time for now,{w=0.2} huh?{w=1}{nw}"
         extend 3fsqsm " Ehehe."
 
-    elif random_intro == 2:
+    elif dialogue_choice == 2:
         n 4fcsbg "Alright!{w=1}{nw}"
         extend 2tlrss " I think it's about time,{w=0.2} [player].{w=1}{nw}"
         extend 2tsqsm " Don't you?"
 
-    elif random_intro == 3:
+    elif dialogue_choice == 3:
         n 2fcsaj "Right!{w=1}{nw}"
         extend 2fcsbg " I think now's as good a time as any."
         n 4tlrbo "Now where did I leave that book..."
 
-    elif random_intro == 4:
+    elif dialogue_choice == 4:
         n 4tllbo "Hmmm..."
         n 4tnmaj "You know what,{w=0.2} [player]?{w=1}{nw}"
         extend 3fsqbg " I think it's about that time again."
         n 3fcssm "Ehehe."
 
-    elif random_intro == 5:
+    elif dialogue_choice == 5:
         n 2ulraj "You know,{w=0.2} [player]...{w=1}{nw}"
         extend 2flrcs " I think it's about that time.{w=1}{nw}"
         extend 4fsqcs " Don't you?"
 
-    elif random_intro == 6:
+    elif dialogue_choice == 6:
         n 1fcsbg "Alright!{w=1}{nw}"
         extend 4fwrbg " I think it's about time for the old joke book!{w=0.75}{nw}"
         extend 4fcssm " Ehehe."
@@ -9635,30 +9640,29 @@ label talk_daily_joke:
     $ jnPause(3)
     play audio page_turn
     $ jnPause(2)
-    $ random_joke_found = random.randint(1, 3)
+    $ dialogue_choice = random.randint(1, 6)
 
-    if random_joke_found == 1:
-        n 1fchdvesm "Pfffff-!{w=0.75}{nw}"
-        n 1fcsss "Oh,{w=0.75}{nw}"
-        extend 1fchgn " this'll do perfectly!"
+    if dialogue_choice == 1:
+        n 1fcsss "Ah!{w=0.75}{nw}"
+        extend 1fchgn " This'll do!"
 
-    elif random_joke_found == 2:
+    elif dialogue_choice == 2:
         n 1unmbs "Oh!{w=0.5} Oh!{w=0.75}{nw}"
         extend 1fcsbs " How about this?"
 
-    elif random_joke_found == 3:
+    elif dialogue_choice == 3:
         n 1fcsbg "Aha!{w=0.75}{nw}"
         extend 1fsqsm " Here we go!"
 
-    elif random_joke_found == 4:
-        n 1fspgs "Oh!{w=0.5} Oh!{w=0.75}{nw}"
-        extend 1fnmbg " This is a good one!"
+    elif dialogue_choice == 4:
+        n 1fspgs "Hmm...{w=0.75}{nw}"
+        extend 1fnmbg " how about this one,{w=0.2} [player]?"
 
-    elif random_joke_found == 5:
+    elif dialogue_choice == 5:
         n 1nchgn "Alright!{w=0.75}{nw}"
         extend 1fcsbg " Let's try {i}this one{/i} on for size!"
 
-    elif random_joke_found == 6:
+    elif dialogue_choice == 6:
         n 1unmbg "Oh!{w=0.75}{nw}"
         extend 1fchgn " I got one!{w=0.5} I got one!"
 
@@ -9669,6 +9673,48 @@ label talk_daily_joke:
     call daily_joke.label
     $ daily_joke.setSeen(True)
     $ persistent._jn_daily_joke_given = True
+    $ dialogue_choice = random.randint(1, 6)
+    # TODO - joke reactions based on category
+    
+    if daily_joke.category == jn_jokes.JNJokeCategories.funny:
+        if dialogue_choice == 1:
+            n ""
+
+        elif dialogue_chouce == 2:
+            n ""
+
+        else:
+            n ""
+
+    elif daily_joke.category == jn_jokes.JNJokeCategories.corny:
+        if dialogue_choice == 1:
+            n ""
+
+        elif dialogue_chouce == 2:
+            n ""
+
+        else:
+            n ""
+
+    elif daily_joke.category == jn_jokes.JNJokeCategories.bad:
+        if dialogue_choice == 1:
+            n ""
+
+        elif dialogue_chouce == 2:
+            n ""
+
+        else:
+            n ""
+
+    else:
+        if dialogue_choice == 1:
+            n ""
+
+        elif dialogue_chouce == 2:
+            n ""
+
+        else:
+            n ""
 
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
