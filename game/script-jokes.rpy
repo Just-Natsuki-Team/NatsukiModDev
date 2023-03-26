@@ -271,7 +271,7 @@ label joke_ocean_greeting:
     n "Ready,{w=0.2} [player]?{w=0.3}"
     n "What did the ocean say to the sand?{w=0.3}{nw}"
     extend " Any guesses?{w=0.3} It's simple."
-    n "Nothing{w=0.5} - it just {iwaved.{w=0.75}"
+    n "Nothing{w=0.5} - it just {i}waved{/i}.{w=0.75}"
 
     return  
 
