@@ -6,16 +6,6 @@ image music_player playing = "mod_assets/props/music_player/music_player_play.pn
 image music_player stopped = "mod_assets/props/music_player/music_player_stop.png"
 image music_player paused = "mod_assets/props/music_player/music_player_pause.png"
 
-transform music_player_fadein:
-    subpixel True
-    alpha 0
-    ease 0.5 alpha 1
-
-transform music_player_fadeout:
-    subpixel True
-    alpha 1
-    ease 0.5 alpha 0
-
 init python in jn_custom_music:
     import os
     import store
@@ -23,7 +13,8 @@ init python in jn_custom_music:
     import store.jn_utils as jn_utils
 
     # Tracks must be placed here for Natsuki to find them
-    CUSTOM_MUSIC_DIRECTORY = os.path.join(renpy.config.basedir, "custom_music/").replace("\\", "/")
+    CUSTOM_MUSIC_FOLDER = "custom_music/"
+    CUSTOM_MUSIC_DIRECTORY = os.path.join(renpy.config.basedir, CUSTOM_MUSIC_FOLDER).replace("\\", "/")
 
     # The file extensions we (Ren'Py) support
     _VALID_FILE_EXTENSIONS = ["mp3", "ogg", "wav"]
@@ -97,7 +88,7 @@ init python in jn_custom_music:
         """
         renpy.show(
             name="music_player {0}".format(state),
-            at_list=[store.music_player_fadein],
+            at_list=[store.JN_TRANSFORM_FADE_IN],
             zorder=store.JN_PROP_ZORDER
         )
         store.jnPause(0.5)
@@ -110,13 +101,25 @@ init python in jn_custom_music:
         """
         renpy.show(
             name="music_player",
-            at_list=[store.music_player_fadeout],
+            at_list=[store.JN_TRANSFORM_FADE_OUT],
             zorder=store.JN_PROP_ZORDER
         )
         store.jnPause(0.5)
         renpy.hide("music_player")
         renpy.play(filename=store.audio.gift_close, channel="audio")
         store.jnPause(0.5)
+
+    def getMusicFileRelativePath(file_name):
+        """
+        Returns the relative file path for a music file.
+
+        IN:
+            - file_name - The name of the music file
+
+        OUT:
+            - str relative path of file
+        """
+        return "../{0}{1}".format(CUSTOM_MUSIC_FOLDER, file_name)
 
 label music_menu:
     $ Natsuki.setInConversation(True)
@@ -256,7 +259,7 @@ label music_menu:
             $ music_title = music_title_and_file[0]
             play audio button_tap_c
             show music_player playing
-            $ renpy.play(filename=music_title_and_file[1], channel="music", fadein=2)
+            $ renpy.play(filename=jn_custom_music.getMusicFileRelativePath(music_title), channel="music", fadein=2)
             $ jnPause(2)
 
         $ chosen_done_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_DONE_QUIPS))
@@ -279,7 +282,7 @@ label music_menu:
 
         play audio button_tap_c
         show music_player playing
-        $ renpy.play(filename=_return, channel="music", fadein=2)
+        $ renpy.play(filename=jn_custom_music.getMusicFileRelativePath(music_title), channel="music", fadein=2)
 
         $ chosen_done_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_DONE_QUIPS))
         n 2uchbgeme "[chosen_done_quip]{w=2}{nw}"

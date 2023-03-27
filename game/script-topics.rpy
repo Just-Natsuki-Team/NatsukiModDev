@@ -5345,8 +5345,9 @@ label talk_custom_music_explanation:
     else:
         n 1uchbg "Okaaay!{w=0.2} It wasn't there,{w=0.1} so I've just created it for you."
 
-    $ folder = jn_custom_music.CUSTOM_MUSIC_DIRECTORY
-    n 1nnmss "So,{w=0.1} [player] -{w=0.1} if you click {a=[folder]}here{/a},{w=0.1} that'll take you to the folder I set up."
+    #$ custom_music_link_path = "../{0}".format(jn_custom_music.CUSTOM_MUSIC_FOLDER)
+    $ custom_music_link_path = jn_custom_music.CUSTOM_MUSIC_DIRECTORY
+    n 1nnmss "So,{w=0.1} [player] -{w=0.1} if you click {a=[custom_music_link_path]}here{/a},{w=0.1} that'll take you to the folder I set up."
     n 1ullbg "Then all you gotta do is just {i}copy{/i} your music into that folder,{w=0.1} and you're good to go!"
     n 2uchgn "Easy as pie,{w=0.1} huh?{w=0.2} Ehehe."
     n 4uwdaj "Oh -{w=0.1} a couple of things first though,{w=0.1} [player]."
