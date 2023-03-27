@@ -6,16 +6,6 @@ image music_player playing = "mod_assets/props/music_player/music_player_play.pn
 image music_player stopped = "mod_assets/props/music_player/music_player_stop.png"
 image music_player paused = "mod_assets/props/music_player/music_player_pause.png"
 
-transform music_player_fadein:
-    subpixel True
-    alpha 0
-    ease 0.5 alpha 1
-
-transform music_player_fadeout:
-    subpixel True
-    alpha 1
-    ease 0.5 alpha 0
-
 init python in jn_custom_music:
     import os
     import store
@@ -97,7 +87,7 @@ init python in jn_custom_music:
         """
         renpy.show(
             name="music_player {0}".format(state),
-            at_list=[store.music_player_fadein],
+            at_list=[store.generic_fadein],
             zorder=store.JN_PROP_ZORDER
         )
         store.jnPause(0.5)
@@ -110,7 +100,7 @@ init python in jn_custom_music:
         """
         renpy.show(
             name="music_player",
-            at_list=[store.music_player_fadeout],
+            at_list=[store.generic_fadeout],
             zorder=store.JN_PROP_ZORDER
         )
         store.jnPause(0.5)

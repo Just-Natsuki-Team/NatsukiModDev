@@ -1868,6 +1868,17 @@ init -100 python in jn_utils:
         else:
             store.persistent._jn_gs_aff = store.persistent.affinity
 
+# Generic animations/transforms
+transform generic_fadein:
+    subpixel True
+    alpha 0
+    ease 0.5 alpha 1
+
+transform generic_fadeout:
+    subpixel True
+    alpha 1
+    ease 0.5 alpha 0
+
 # Vanilla resources from base DDLC
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
 define audio.t2 = "<loop 4.499>bgm/2.ogg"   #Sayori theme

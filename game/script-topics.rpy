@@ -9457,104 +9457,114 @@ label talk_daily_jokes_unlock:
     n 1fcswr "What we need is variety!"
     n 1fcsgs "Something different!{w=0.75}{nw}"
     extend 1fcspo " And nothing different ever happened by just sitting around {i}waiting{/i} for it."
-    n  "There HAS to be something like that around here somewhere..."
-    n  "..."
-    n  "...Actually.{w=0.75}{nw}"
-    extend  " You know what?{w=1}{nw}"
-    extend  " Just give me a couple minutes."
-    n  "There's gotta be something in the closet I missed before."
+    n 1fllfl "There HAS to be something like that around here somewhere..."
+    n 1fslbo "..."
+    n 1nllaj "...Actually.{w=0.75}{nw}"
+    extend 1unmfl " You know what?{w=1}{nw}"
+    extend 1fcsca " Just give me a couple minutes."
+    n 1flrpu "There's gotta be something in the closet I missed before."
 
+    show natsuki 1fcsbo
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     play audio chair_out
 
-    n  "Alright...{w=1}{nw}"
-    extend  " what have we got..."
-    n  "..."
-    n  "Oh,{w=0.2} for-!"
-    n  "Since when did this become the official school {i}dumping ground{/i}?!{w=1}{nw}"
-    extend  " Half this stuff wasn't even {i}ours{/i}!"
+    n "Alright...{w=1}{nw}"
+    extend " what have we got..."
+    n "..."
+    n "Oh,{w=0.2} for-!"
+    n "Since when did this become the official school {i}dumping ground{/i}?!{w=1}{nw}"
+    extend " Half this stuff wasn't even {i}ours{/i}!"
 
     play audio stationary_rustle_a
     $ jnPause(2.5)
     play audio gift_slide
     $ jnPause(3)
 
-    n  "Jeez...{w=1}{nw}"
-    extend  " What is this?{w=0.75}{nw}"
-    extend  " A library?"
-    n  "How much more of this stuff is there...?"
+    n "Jeez...{w=1}{nw}"
+    extend " What is this?{w=0.75}{nw}"
+    extend " A library?"
+    n "How much more of this stuff is there...?"
 
     play audio gift_slide
     $ jnPause(3)
 
-    n  "...Huh?{w=1.25}{nw}"
-    extend  " What's..."
-    n  "..."
-    n  "Wait...{w=1}{nw}"
-    extend  " i-{w=0.2}is that my homework?!{w=0.2} Who-{w=0.5}{nw}"
+    n "...Huh?{w=1.25}{nw}"
+    extend " What's..."
+    n "..."
+    n "Wait...{w=1}{nw}"
+    extend " i-{w=0.2}is that my homework?!{w=0.2} Who-{w=0.5}{nw}"
     play audio gift_close
-    n  "Ack-!"
-    n  "..."
-    n  "Nnnnng...{w=1.25}{nw}"
-    extend  " my head..."
-    n  "W-{w=0.2}who the hell just balances books like that?!{w=0.75}{nw}"
-    extend  " I am {i}seriously{/i} gonna...!"
-    n  "..."
-    n  "..."
-    n  "...Wait a second.{w=1.5}{nw}"
-    extend  " Oh.{w=0.2} My.{w=0.2} Gosh."
-    n  "This is perfect!"
-    n  "..."
-    n  "...!"
+    n "Ack-!"
+    n "..."
+    n "Nnnnng...{w=1.25}{nw}"
+    extend " my head..."
+    n "W-{w=0.2}who the hell just balances books like that?!{w=0.75}{nw}"
+    extend " I am {i}seriously{/i} gonna...!"
+    n "..."
+    n "..."
+    n "...Wait a second.{w=1.5}{nw}"
+    extend " Oh.{w=0.2} My.{w=0.2} Gosh."
+    n "This is perfect!"
+    n "..."
+    n "...!"
 
     $ jnPause(2)
     
-    show natsuki merry_smug
+    show natsuki 1fcssmeme
     play audio chair_in
     $ jnPause(1.5)
 
-    n  "[player]!{w=0.2} [player]!"
-    n  "Guess what I fooound~?{w=0.75}{nw}"
-    extend  " Ehehe."
+    n 1fchbg "[player]!{w=0.2} [player]!"
+    n 1uchgneme "Guess what I fooound~?{w=0.75}{nw}"
+    extend 1fsqsmeme " Ehehe."
+    n 1fcsbs "It's...{w=1.5}{nw}"
 
     show joke_book zorder JN_PROP_ZORDER
     play audio page_turn
     $ jnPause(3)
 
-    n  "It's...{w=1}{nw}"
-    extend  " our old homeroom joke book!{w=0.75}{nw}"
-    extend  " Duh!"
-    n  "And just when I was starting to wonder if this place had {i}any{/i} literature!"
-    n  "...Well...{w=0.75}{nw}"
-    extend  " any that {i}isn't{/i} just my own stuff,{w=0.2} anyway."
-    n  "..."
-    n  "..."
-    n  "What?{w=0.75}{nw}"
-    extend  " Don't you start giving me that,{w=0.2} [player].{w=1}{nw}"
-    extend  " Besides."
-    n  "Did {i}you{/i} have anything better?"
-    n  "..."
-    n  "..."
-    n  "Yep!{w=0.75}{nw}"
-    extend  " That's about what I expected.{w=1}{nw}"
-    extend  " Ehehe."
-    n  "Man...{w=1}{nw}"
-    extend  " I can't wait to start cracking out some of these!{w=0.75}{nw}"
-    extend  " This is gonna be great,{w=0.2} I just know it!"
-    n  "..."
-    n  "Oh -{w=0.5}{nw}"
-    extend  " I should probably mention,{w=0.2} [player]."
-    n  "I don't want to end up blowing through this thing too quickly.{w=0.75}{nw}"
-    extend  " Or we'd just end up right back where we were.{w=1}{nw}"
-    extend  " So..."
-    n  "I'm just gonna pick out something daily to torture you with.{w=0.75}{nw}"
-    extend  " No reason to overdo it."
-    n  "Sound like a plan,{w=0.2} [player]?{w=0.75}{nw}"
-    extend  " Of course it does!"
-    n  "So you better look forward to it..."
-    n  "'Cause I {i}definitely{/i} am!{w=1}{nw}"
-    extend  " Ehehe."
+    extend 1uchgnedz " our old homeroom joke book!{w=0.75}{nw}"
+    extend 1fchbgedz " Duh!"
+    n 1fcsbg "And just when I was starting to wonder if this place had {i}any{/i} literature!"
+    n 1fsrbgsbl "...Well...{w=0.75}{nw}"
+    extend 1fsrposbl " any that {i}isn't{/i} just my own stuff,{w=0.2} anyway."
+    n 1fsqsm "..."
+    n 1tsqbosbl "..."
+    n 1fnmflsbl "What?{w=0.75}{nw}"
+    extend 1fcsposbl " Don't you start giving me that,{w=0.2} [player].{w=1}{nw}"
+    extend 1fcsaj " Besides."
+    n 1tsqbg "Did {i}you{/i} have anything better?"
+    n 1tsqcs "..."
+    n 1fcscsesm "..."
+    n 1fcsbg "Yep!{w=0.75}{nw}"
+    extend 1fcssm " That's about what I expected.{w=1}{nw}"
+    extend 1fsqsm " Ehehe."
+    n 1fcsss "Man...{w=1}{nw}"
+    extend 1fchbg " I can't wait to start cracking out some of these!{w=0.75}{nw}"
+    extend 1uchgn " This is gonna be great,{w=0.2} I just know it!"
+    n 1nchsmeme "..."
+    n 1unmaj "Oh -{w=0.5}{nw}"
+    extend 1nllaj " I should probably mention,{w=0.2} [player]."
+    n 1nslca "I don't want to end up blowing through this thing too quickly.{w=0.75}{nw}"
+    extend 1nsqslsbr " Or we'd just end up right back where we were.{w=1.25}{nw}"
+    extend 1ulraj " So..."
+    n 1fcsbg "I'm just gonna pick out something daily to torture you with.{w=0.75}{nw}"
+    extend 1fchbg " No reason to overdo it."
+    n 1fsqss "Sound like a plan,{w=0.2} [player]?{w=0.75}{nw}"
+    extend 1fcsss " Of course it does."
+    n 1fcsgs "So!{w=0.5}{nw}" 
+    extend 1fcsbg " You better start looking forward to it..."
+    n 1fchgn "'Cause I {i}definitely{/i} am!{w=1}{nw}"
+    extend 1nchgn " Ehehe."
+
+    show natsuki 1fchsmeme
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    hide prop
+    play audio drawer
+    $ jnPause(3)
+    hide black with Dissolve(0.5)
 
     $ persistent._jn_daily_jokes_unlocked = True
 

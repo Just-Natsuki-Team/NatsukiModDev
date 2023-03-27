@@ -5,6 +5,7 @@ default persistent._jn_daily_joke_given = False
 image joke_book = "mod_assets/props/joke_book_held.png"
 
 init python in jn_jokes:
+    from Enum import Enum
     import random
     import store
     import store.jn_affinity as jn_affinity
@@ -153,54 +154,54 @@ init python in jn_jokes:
 
     __registerJoke(JNJoke(
         label="joke_clock_eating",
-        joke_category=jn_jokes.JNJokeCategories.neutral
+        joke_category=JNJokeCategories.neutral
     ))
 
     __registerJoke(JNJoke(
         label="joke_anime_bounce",
-        joke_category=jn_jokes.JNJokeCategories.funny
+        joke_category=JNJokeCategories.funny
     ))
 
     __registerJoke(JNJoke(
         label="joke_pirate_shower",
-        joke_category=jn_jokes.JNJokeCategories.corny
+        joke_category=JNJokeCategories.corny
     ))
 
     __registerJoke(JNJoke(
         label="joke_cinderella_soccer",
-        joke_category=jn_jokes.JNJokeCategories.funny
+        joke_category=JNJokeCategories.funny
     ))
 
     __registerJoke(JNJoke(
         label="joke_blind_fish",
-        joke_category=jn_jokes.JNJokeCategories.funny
+        joke_category=JNJokeCategories.funny
     ))
 
     __registerJoke(JNJoke(
         label="joke_skeleton_music",
-        joke_category=jn_jokes.JNJokeCategories.neutral,
+        joke_category=JNJokeCategories.neutral,
         conditional="persistent.jn_custom_music_unlocked"
     ))
 
     __registerJoke(JNJoke(
         label="joke_skeleton_communication",
-        joke_category=jn_jokes.JNJokeCategories.neutral,
-        conditional="jn_jokes.getJoke('joke_skeleton_music').shown_count > 0"
+        joke_category=JNJokeCategories.neutral,
+        conditional="getJoke('joke_skeleton_music').shown_count > 0"
     ))
 
     __registerJoke(JNJoke(
         label="joke_ocean_greeting",
-        joke_category=jn_jokes.JNJokeCategories.neutral
+        joke_category=JNJokeCategories.neutral
     ))
 
     __registerJoke(JNJoke(
         label="joke_tractor_trailer",
-        joke_category=jn_jokes.JNJokeCategories.bad
+        joke_category=JNJokeCategories.bad
     ))
 
     __registerJoke(JNJoke(
         label="joke_tentacle_tickles",
-        joke_category=jn_jokes.JNJokeCategories.funny
+        joke_category=JNJokeCategories.funny
     ))
 
 label joke_clock_eating:
