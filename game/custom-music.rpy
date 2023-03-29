@@ -160,7 +160,7 @@ label music_menu:
         n 4klrbgl "Something went wrong when I was trying look for your music..."
         n 1kchbgl "Can you do me a favour and just check everything out real quick?"
         $ folder = jn_custom_music.CUSTOM_MUSIC_DIRECTORY
-        n 2knmbgl "If you forgot -{w=0.1} anything you want me to play needs to be in the {a=[folder]}custom_music{/a} folder."
+        n 2knmbgl "If you forgot -{w=0.1} anything you want me to play needs to be in the custom_music folder."
         n 2uwdaj "Oh!{w=0.2} Right!{w=0.2} And it also needs to be in {i}.mp3,{w=0.1} .ogg or .wav{/i} format -{w=0.1} just look for the letters after the period in the file name!"
         jump ch30_loop
 
