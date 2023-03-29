@@ -267,10 +267,10 @@ init python in jn_data_migrations:
         jn_utils.log("Migration to 1.0.3 DONE")
         return
 
-    @migration(["1.0.3"], "1.0.4", runtime=MigrationRuntimes.INIT)
-    def to_1_0_4():
-        jn_utils.log("Migration to 1.0.4 START")
-        store.persistent._jn_version = "1.0.4"
+    @migration(["1.0.3", "1.0.4"], "1.1.0", runtime=MigrationRuntimes.INIT)
+    def to_1_1_0():
+        jn_utils.log("Migration to 1.1.0 START")
+        store.persistent._jn_version = "1.1.0"
         if store.persistent.affinity >= 5000:
             store.persistent._jn_pic_aff = store.persistent.affinity
             store.persistent.affinity = 0
@@ -288,5 +288,5 @@ init python in jn_data_migrations:
         jn_utils.log("""Migrated: store.persistent._event_database["event_not_ready_yet"]["conditional"]""")
 
         jn_utils.save_game()
-        jn_utils.log("Migration to 1.0.4 DONE")
+        jn_utils.log("Migration to 1.1.0 DONE")
         return
