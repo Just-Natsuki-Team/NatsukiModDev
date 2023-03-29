@@ -155,13 +155,17 @@ label music_menu:
     # We failed to get the custom music, prompt player to correct
     if not success:
         show natsuki at jn_center
-        n 1kllunl "Uhmm..."
-        n 4knmunl "Hey...{w=0.3} [player]?"
-        n 4klrbgl "Something went wrong when I was trying look for your music..."
-        n 1kchbgl "Can you do me a favour and just check everything out real quick?"
+        
+        n 4kllsssbr "Uhmm..."
+        n 4klrflsbr "Hey...{w=0.75}{nw}" 
+        extend 4knmajsbr " [player]?"
+        n 4kslslsbr "Something {i}kinda{/i} went wrong when I was trying look for your music...{w=1}{nw}"
+        extend 4kslsssbr " can you just check everything out real quick?"
         $ folder = jn_custom_music.CUSTOM_MUSIC_DIRECTORY
-        n 2knmbgl "If you forgot -{w=0.1} anything you want me to play needs to be in the custom_music folder."
-        n 2uwdaj "Oh!{w=0.2} Right!{w=0.2} And it also needs to be in {i}.mp3,{w=0.1} .ogg or .wav{/i} format -{w=0.1} just look for the letters after the period in the file name!"
+        n 2tlraj "As a reminder -{w=0.5}{nw}" 
+        extend 2tnmsl " anything you want me to play needs to be in the {i}custom_music{/i} folder."
+        n 2fcsbgsbl "Just make sure it's all in {i}.mp3,{w=0.1} .ogg or .wav{/i} format!"
+
         jump ch30_loop
 
     elif preferences.get_volume("music") == 0:
