@@ -4643,7 +4643,7 @@ label talk_why_do_you_like_me:
 
             elif persistent.jn_player_love_you_count >= 1:
                 n 1kllssl "You're...{w=0.3} you're my first love,{w=0.1} [player]..."
-                n 4kcussl "Do you even realise how {i}much{/i} that means to me?"
+                n 4kcussl "Do you even realize how {i}much{/i} that means to me?"
 
             elif persistent.jn_player_love_you_count == 0:
                 n 2kwmssl "You honestly,{w=0.1} truly mean the world to me,{w=0.1} [player]..."
@@ -9640,7 +9640,7 @@ label talk_daily_joke:
         $ jn_jokes.resetJokes()
         n 1fcsemesi "..."
         n 1fsrpo "Man...{w=1}{nw}"
-        extend 1tnmbo " we really are going through these things,{w=0.2} huh?{w=1}{nw}"
+        extend 1tnmbo " we really {i}are{/i} going through these things,{w=0.2} huh?{w=1}{nw}"
         extend 1fcsflsbl " I'm gonna run out of jokes completely at this rate!"
         n 1nsrslsbr "..."
         n 1nsrajsbr "You...{w=1.25}{nw}"
@@ -9693,14 +9693,13 @@ label talk_daily_joke:
     call daily_joke.label
     $ daily_joke.setSeen(True)
     $ persistent._jn_daily_joke_given = True
-    $ dialogue_choice = random.randint(1, 6)
-    # TODO - joke reactions based on category
+    $ dialogue_choice = random.randint(1, 3)
     
     if daily_joke.category == jn_jokes.JNJokeCategories.funny:
         if dialogue_choice == 1:
             n ""
 
-        elif dialogue_chouce == 2:
+        elif dialogue_choice == 2:
             n ""
 
         else:
@@ -9710,7 +9709,7 @@ label talk_daily_joke:
         if dialogue_choice == 1:
             n ""
 
-        elif dialogue_chouce == 2:
+        elif dialogue_choice == 2:
             n ""
 
         else:
@@ -9718,23 +9717,39 @@ label talk_daily_joke:
 
     elif daily_joke.category == jn_jokes.JNJokeCategories.bad:
         if dialogue_choice == 1:
-            n ""
+            n "...Yeesh."
+            n "..."
+            n "W-{w=0.2}well,{w=0.5}{nw}"
+            extend " I never said they'd be {i}good{/i} jokes!"
+            n "Sorry, [player]~!"
 
-        elif dialogue_chouce == 2:
-            n ""
+        elif dialogue_choice == 2:
+            n "..."
+            n "I'm...{w=1.25}{nw}"
+            extend " starting to realize why we never saw this book very often."
+            n "Well -{w=0.3}{nw}"
+            extend " Better luck next time,{w=0.2} [player]!"
+            n "Ahaha."
 
         else:
             n ""
 
     else:
         if dialogue_choice == 1:
-            n ""
+            n "Thanks for listening~!"
+            extend " Ehehe."
 
-        elif dialogue_chouce == 2:
-            n ""
+        elif dialogue_choice == 2:
+            if Natsuki.isLove(higher=True):
+                n "You're welcome,{w=0.2} [player]!"
+
+            else:
+                n "Love you too, [player]!"
+                extend " Ehehe."
 
         else:
-            n ""
+            n "Same time tomorrow, [player]?"
+            extend " Ehehe."
 
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
