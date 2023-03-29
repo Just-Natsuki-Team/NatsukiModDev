@@ -910,8 +910,8 @@ init 5 python:
             label="event_not_ready_yet",
             unlocked=True,
             conditional=(
-                "((is_time_block_early_morning() or is_time_block_mid_morning()) and is_weekday())"
-                " or (is_time_block_late_morning and not is_weekday())"
+                "((jn_is_time_block_early_morning() or jn_is_time_block_mid_morning()) and jn_is_weekday())"
+                " or (jn_is_time_block_late_morning and not jn_is_weekday())"
             ),
             affinity_range=(jn_affinity.HAPPY, None)
         ),
