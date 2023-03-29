@@ -1868,13 +1868,13 @@ init -100 python in jn_utils:
         else:
             store.persistent._jn_gs_aff = store.persistent.affinity
 
-# Generic animations/transforms
-transform generic_fadein:
+# Generic transforms/animations
+transform JN_TRANSFORM_FADE_IN:
     subpixel True
     alpha 0
     ease 0.5 alpha 1
 
-transform generic_fadeout:
+transform JN_TRANSFORM_FADE_OUT:
     subpixel True
     alpha 1
     ease 0.5 alpha 0

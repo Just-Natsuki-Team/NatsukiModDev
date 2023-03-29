@@ -267,16 +267,26 @@ init python in jn_data_migrations:
         jn_utils.log("Migration to 1.0.3 DONE")
         return
 
-    @migration(["1.0.3"], "1.0.4", runtime=MigrationRuntimes.INIT)
-    def to_1_0_4():
-        jn_utils.log("Migration to 1.0.4 START")
-        store.persistent._jn_version = "1.0.4"
+    @migration(["1.0.3", "1.0.4"], "1.1.0", runtime=MigrationRuntimes.INIT)
+    def to_1_1_0():
+        jn_utils.log("Migration to 1.1.0 START")
+        store.persistent._jn_version = "1.1.0"
         if store.persistent.affinity >= 5000:
             store.persistent._jn_pic_aff = store.persistent.affinity
             store.persistent.affinity = 0
             store.persistent._jn_pic = True
             jn_utils.log("434346".decode("hex"))
 
+        store.persistent._event_database["event_not_ready_yet"]["conditional"] = (
+            "((jn_is_time_block_early_morning() or jn_is_time_block_mid_morning()) and jn_is_weekday())"
+            " or (jn_is_time_block_late_morning and not jn_is_weekday())"
+        )
+        store.get_topic("event_not_ready_yet").conditional = (
+            "((jn_is_time_block_early_morning() or jn_is_time_block_mid_morning()) and jn_is_weekday())"
+            " or (jn_is_time_block_late_morning and not jn_is_weekday())"
+        )
+        jn_utils.log("""Migrated: store.persistent._event_database["event_not_ready_yet"]["conditional"]""")
+
         jn_utils.save_game()
-        jn_utils.log("Migration to 1.0.4 DONE")
+        jn_utils.log("Migration to 1.1.0 DONE")
         return

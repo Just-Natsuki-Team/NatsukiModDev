@@ -13,7 +13,8 @@ init python in jn_custom_music:
     import store.jn_utils as jn_utils
 
     # Tracks must be placed here for Natsuki to find them
-    CUSTOM_MUSIC_DIRECTORY = os.path.join(renpy.config.basedir, "custom_music/").replace("\\", "/")
+    CUSTOM_MUSIC_FOLDER = "custom_music/"
+    CUSTOM_MUSIC_DIRECTORY = os.path.join(renpy.config.basedir, CUSTOM_MUSIC_FOLDER).replace("\\", "/")
 
     # The file extensions we (Ren'Py) support
     _VALID_FILE_EXTENSIONS = ["mp3", "ogg", "wav"]
@@ -87,7 +88,7 @@ init python in jn_custom_music:
         """
         renpy.show(
             name="music_player {0}".format(state),
-            at_list=[store.generic_fadein],
+            at_list=[store.JN_TRANSFORM_FADE_IN],
             zorder=store.JN_PROP_ZORDER
         )
         store.jnPause(0.5)
@@ -100,13 +101,25 @@ init python in jn_custom_music:
         """
         renpy.show(
             name="music_player",
-            at_list=[store.generic_fadeout],
+            at_list=[store.JN_TRANSFORM_FADE_OUT],
             zorder=store.JN_PROP_ZORDER
         )
         store.jnPause(0.5)
         renpy.hide("music_player")
         renpy.play(filename=store.audio.gift_close, channel="audio")
         store.jnPause(0.5)
+
+    def getMusicFileRelativePath(file_name):
+        """
+        Returns the relative file path for a music file.
+
+        IN:
+            - file_name - The name of the music file
+
+        OUT:
+            - str relative path of file
+        """
+        return "../{0}{1}".format(CUSTOM_MUSIC_FOLDER, file_name)
 
 label music_menu:
     $ Natsuki.setInConversation(True)
@@ -142,13 +155,17 @@ label music_menu:
     # We failed to get the custom music, prompt player to correct
     if not success:
         show natsuki at jn_center
-        n 1kllunl "Uhmm..."
-        n 4knmunl "Hey...{w=0.3} [player]?"
-        n 4klrbgl "Something went wrong when I was trying look for your music..."
-        n 1kchbgl "Can you do me a favour and just check everything out real quick?"
+        
+        n 4kllsssbr "Uhmm..."
+        n 4klrflsbr "Hey...{w=0.75}{nw}" 
+        extend 4knmajsbr " [player]?"
+        n 4kslslsbr "Something {i}kinda{/i} went wrong when I was trying look for your music...{w=1}{nw}"
+        extend 4kslsssbr " can you just check everything out real quick?"
         $ folder = jn_custom_music.CUSTOM_MUSIC_DIRECTORY
-        n 2knmbgl "If you forgot -{w=0.1} anything you want me to play needs to be in the {a=[folder]}custom_music{/a} folder."
-        n 2uwdaj "Oh!{w=0.2} Right!{w=0.2} And it also needs to be in {i}.mp3,{w=0.1} .ogg or .wav{/i} format -{w=0.1} just look for the letters after the period in the file name!"
+        n 2tlraj "As a reminder -{w=0.5}{nw}" 
+        extend 2tnmsl " anything you want me to play needs to be in the {i}custom_music{/i} folder."
+        n 2fcsbgsbl "Just make sure it's all in {i}.mp3,{w=0.1} .ogg or .wav{/i} format!"
+
         jump ch30_loop
 
     elif preferences.get_volume("music") == 0:
@@ -246,7 +263,7 @@ label music_menu:
             $ music_title = music_title_and_file[0]
             play audio button_tap_c
             show music_player playing
-            $ renpy.play(filename=music_title_and_file[1], channel="music", fadein=2)
+            $ renpy.play(filename=jn_custom_music.getMusicFileRelativePath(music_title), channel="music", fadein=2)
             $ jnPause(2)
 
         $ chosen_done_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_DONE_QUIPS))
@@ -269,7 +286,7 @@ label music_menu:
 
         play audio button_tap_c
         show music_player playing
-        $ renpy.play(filename=_return, channel="music", fadein=2)
+        $ renpy.play(filename=jn_custom_music.getMusicFileRelativePath(music_title), channel="music", fadein=2)
 
         $ chosen_done_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_DONE_QUIPS))
         n 2uchbgeme "[chosen_done_quip]{w=2}{nw}"
