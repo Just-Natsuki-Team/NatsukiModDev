@@ -5345,10 +5345,20 @@ label talk_custom_music_explanation:
     else:
         n 1uchbg "Okaaay!{w=0.2} It wasn't there,{w=0.1} so I've just created it for you."
 
-    $ folder = jn_custom_music.CUSTOM_MUSIC_DIRECTORY
-    n 1nnmss "So,{w=0.1} [player] -{w=0.1} if you click {a=[folder]}here{/a},{w=0.1} that'll take you to the folder I set up."
-    n 1ullbg "Then all you gotta do is just {i}copy{/i} your music into that folder,{w=0.1} and you're good to go!"
-    n 2uchgn "Easy as pie,{w=0.1} huh?{w=0.2} Ehehe."
+    $ custom_music_link_path = jn_custom_music.CUSTOM_MUSIC_DIRECTORY
+    if renpy.windows:
+        n 1unmaj "So,{w=0.1} [player] -{w=0.3}{nw}" 
+        extend 1ullaj " if you click {a=[custom_music_link_path]}here{/a},{w=0.2}{nw}" 
+        extend 1fcsss " that'll take you to the folder I set up."
+        n 1fchbg "Then all you gotta do is just {i}copy{/i} your music into that folder,{w=0.2} and you're good to go!"
+
+    else:
+        n 1unmaj "So,{w=0.1} [player] -{w=0.3}{nw}" 
+        extend 1ullaj " you should be able to find the folder I set up at {i}[custom_music_link_path]{/i}." 
+        n 1fchbg "All you gotta do is just {i}copy{/i} your music into that folder,{w=0.2} and you're good to go!"
+
+    n 2uchgn "Easy as pie,{w=0.1} huh?{w=0.5}{nw}" 
+    extend 2fchsm " Ehehe."
     n 4uwdaj "Oh -{w=0.1} a couple of things first though,{w=0.1} [player]."
     n 1unmpu "Any music you give me needs to be in {i}.mp3,{w=0.1} .ogg or .wav{/i} format."
     n 1ullss "If you don't know how to check,{w=0.1} then just look at the letters after the period in the file name."
