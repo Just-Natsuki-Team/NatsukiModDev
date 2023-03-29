@@ -277,6 +277,16 @@ init python in jn_data_migrations:
             store.persistent._jn_pic = True
             jn_utils.log("434346".decode("hex"))
 
+        store.persistent._event_database["event_not_ready_yet"]["conditional"] = (
+            "((jn_is_time_block_early_morning() or jn_is_time_block_mid_morning()) and jn_is_weekday())"
+            " or (jn_is_time_block_late_morning and not jn_is_weekday())"
+        )
+        store.get_topic("event_not_ready_yet").conditional = (
+            "((jn_is_time_block_early_morning() or jn_is_time_block_mid_morning()) and jn_is_weekday())"
+            " or (jn_is_time_block_late_morning and not jn_is_weekday())"
+        )
+        jn_utils.log("""Migrated: store.persistent._event_database["event_not_ready_yet"]["conditional"]""")
+
         jn_utils.save_game()
         jn_utils.log("Migration to 1.0.4 DONE")
         return
