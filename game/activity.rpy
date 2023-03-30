@@ -470,12 +470,12 @@ init python in jn_activity:
 
             except AttributeError as exception:
                 ACTIVITY_SYSTEM_ENABLED = False
-                jn_utils.log("Failed to identifty activity: {0}; only x11 sessions are supported. Disabling activity system for session.".format(repr(exception)))
+                jn_utils.log("Failed to identify activity: {0}; only x11 sessions are supported. Disabling activity system for session.".format(repr(exception)))
                 return ""
 
             except Exception as exception:
                 ACTIVITY_SYSTEM_ENABLED = False
-                jn_utils.log("Failed to identifty activity: {0}. Disabling activity system for session.".format(repr(exception)))
+                jn_utils.log("Failed to identify activity: {0}. Disabling activity system for session.".format(repr(exception)))
                 return ""
 
         return ""

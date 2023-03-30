@@ -2075,8 +2075,18 @@ label outfits_wear_outfit:
     if not jn_outfits.get_all_outfits():
         # No outfits, no point proceeding
         n 4tnmbo "Huh?{w=0.5}{nw}"
-        extend 1fchbg " I don't {i}have{/i} any other outfits, dummy!"
+        extend 1fchbg " I don't {i}have{/i} any other outfits,{w=0.2} dummy!"
         jump ch30_loop
+
+    elif len(jn_outfits._SESSION_NEW_UNLOCKS):
+        # Automatically go to gifting dialogue if player is trying to immediately see new gifted items
+        n 1nsqpu "...Wait.{w=1.25}{nw}"
+        extend 3tnmfl " What's {i}that{/i} you're holding?"
+        n 1fcstrlesi "At {i}least{/i} show me what it is first!"
+        show natsuki 1fcspol
+
+        $ jn_rm_topic_from_event_list("new_wearables_outfits_unlocked")
+        jump new_wearables_outfits_unlocked
 
     n 4unmaj "Huh?{w=0.2} You want me to put on another outfit?"
     n 1fchbg "Sure thing!{w=0.5}{nw}"
@@ -2170,6 +2180,17 @@ label outfits_reload:
 
 # Asking Natsuki to suggest a new outfit; leads to the outfit creator flow
 label outfits_suggest_outfit:
+
+    if len(jn_outfits._SESSION_NEW_UNLOCKS):
+        # Automatically go to gifting dialogue if player is trying to immediately see new gifted items
+        n 1nsqpu "...Wait.{w=1.25}{nw}"
+        extend 3tnmfl " What's {i}that{/i} you're holding?"
+        n 1fcstrlesi "At {i}least{/i} show me what it is first!"
+        show natsuki 1fcspol
+
+        $ jn_rm_topic_from_event_list("new_wearables_outfits_unlocked")
+        jump new_wearables_outfits_unlocked
+
     n 4unmaj "Ooh!{w=1.5}{nw}"
     extend 1fchbg " I'm always open to a suggestion!{w=0.5}{nw}"
     extend 1unmss " What did you have in mind?"
@@ -2188,9 +2209,10 @@ label outfits_remove_outfit:
 
     if len(jn_outfits._SESSION_NEW_UNLOCKS):
         # Prevent the player telling Natsuki to delete something she could be about to gift by popping it early, and removing from event list
-        n 1nsqpu "...Wait.{w=1}{nw}"
+        n 1nsqpu "...Wait.{w=1.25}{nw}"
         extend 3fnmpo " Are you trying to hide something?"
-        n 1fcspolesi "At least show me what it is first!"
+        n 1fcstrlesi "At least show me what it is first!"
+        show natsuki 1fcspol
 
         $ jn_rm_topic_from_event_list("new_wearables_outfits_unlocked")
         jump new_wearables_outfits_unlocked
