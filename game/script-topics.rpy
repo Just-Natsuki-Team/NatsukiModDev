@@ -9697,13 +9697,22 @@ label talk_daily_joke:
     
     if daily_joke.category == jn_jokes.JNJokeCategories.funny:
         if dialogue_choice == 1:
-            n ""
+            n "See?"
+            extend " I {i}told{/i} you this book had some good stuff!"
+            n "You're welcome,{w=0.2} [player]!"
 
         elif dialogue_choice == 2:
-            n ""
+            n "Man..."
+            n "I am {w=0.2}{i}so{/i}{w=0.2} bookmarking that one.{w=1}{nw}"
+            extend " Ehehe."
+            n "'preciate you tuning in,{w=0.2} [player]!"
 
         else:
-            n ""
+            n "Pfffft-!"
+            n "Okay, okay."
+            extend " You gotta admit."
+            extend " That one {i}was{/i} pretty good."
+            n "You bet you're getting another tomorrow, [player]!"
 
     elif daily_joke.category == jn_jokes.JNJokeCategories.corny:
         if dialogue_choice == 1:
@@ -9732,11 +9741,17 @@ label talk_daily_joke:
             n "Ahaha."
 
         else:
-            n ""
+            n "...Wow.{w=1.25}{nw}"
+            extend " I'm actually starting to think that the book itself is the joke at this point."
+            n "..."
+            n "Well,{w=0.5}{nw}"
+            extend " I'm still not going back on what I said.{w=1}{nw}"
+            extend " Sorry [player]."
+            n "But that's all you're getting for today!"
 
     else:
         if dialogue_choice == 1:
-            n "Thanks for listening~!"
+            n "Thanks for listening~!{w=0.75}{nw}"
             extend " Ehehe."
 
         elif dialogue_choice == 2:
@@ -9744,11 +9759,11 @@ label talk_daily_joke:
                 n "You're welcome,{w=0.2} [player]!"
 
             else:
-                n "Love you too, [player]!"
+                n "Love you too,{w=0.2} [player]!{w=0.75}{nw}"
                 extend " Ehehe."
 
         else:
-            n "Same time tomorrow, [player]?"
+            n "Same time tomorrow,{w=0.2} [player]?{w=0.75}{nw}"
             extend " Ehehe."
 
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
