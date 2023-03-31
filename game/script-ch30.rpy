@@ -406,7 +406,6 @@ init python:
             and datetime.datetime.now() > LAST_TOPIC_CALL + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown())
             and not persistent._event_list
         ):
-            # TODO: figure out some way of always including a daily joke when no repeat topic
             if not persistent.jn_natsuki_repeat_topics:
                 topic_pool = Topic.filter_topics(
                     topics.TOPIC_MAP.values(),
@@ -416,6 +415,8 @@ init python:
                     affinity=Natsuki._getAffinityState(),
                     is_seen=False
                 )
+                if persistent._jn_daily_jokes_unlocked and persistent._jn_daily_jokes_enabled and not persistent._jn_daily_joke_given:
+                    topic_pool.append(get_topic("talk_daily_joke")) # Not ideal
             else:
                 topic_pool = Topic.filter_topics(
                     topics.TOPIC_MAP.values(),

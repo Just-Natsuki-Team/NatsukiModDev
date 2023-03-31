@@ -8864,14 +8864,14 @@ label talk_learning_languages:
         extend 1usqsm " Was liegt an?{w=0.5}{nw}"
         extend 1fchss " Ehehe."
         n 3fcsbs "Ich wette du wusstest nicht, dass ich nicht {i}nur{/i} Englisch tue,{w=0.2} huh?"
-        n 1tsqbg "Du solltest auch versuchen mehr Sprachen...{w=0.5} f-fluessig..."
-        n 2fsrbglsbl "f-fliessend...?"
+        n 1tsqbg "Du solltest auch versuchen mehr Sprachen...{w=0.5} f-{w=0.2}fluessig..."
+        n 2fsrbglsbl "f-{w=0.2}fliessend...?"
         n 1fsrunlesdsbr "..."
         n 2tsremlesssbr "zu reden...?{w=0.5}{nw}"
         extend 2fcsbglesssbr " Sprachfluss!"
         n 4flrbglsbr "O-oder wie man auch sagt -{w=0.3}{nw}"
         extend 1fcsbglsbl " wer rasst..."
-        n 2fllunlesssbl "r-rastet...!{w=0.5}{nw}"
+        n 2fllunlesssbl "r-{w=0.2}rastet...!{w=0.5}{nw}"
         extend 2klremfesssbl " Hat Rosen...?{w=0.75}{nw}"
         extend 2kllemfesssbl " Mit Rost!"
 
@@ -9600,12 +9600,12 @@ label talk_daily_joke:
     $ dialogue_choice = random.randint(1, 6)
     if dialogue_choice == 1:
         n 1nchgn "Okaaay!{w=1}{nw}"
-        extend 3fsqbg " I think we both know what it's time for now,{w=0.2} huh?{w=1}{nw}"
+        extend 3fsqbg " I think we both know what it's time for now,{w=0.2} huh?{w=1.25}{nw}"
         extend 3fsqsm " Ehehe."
 
     elif dialogue_choice == 2:
         n 4fcsbg "Alright!{w=1}{nw}"
-        extend 2tlrss " I think it's about time,{w=0.2} [player].{w=1}{nw}"
+        extend 2tlrss " I think it's about time,{w=0.2} [player].{w=1.25}{nw}"
         extend 2tsqsm " Don't you?"
 
     elif dialogue_choice == 3:
@@ -9621,7 +9621,7 @@ label talk_daily_joke:
 
     elif dialogue_choice == 5:
         n 2ulraj "You know,{w=0.2} [player]...{w=1}{nw}"
-        extend 2flrcs " I think it's about that time.{w=1}{nw}"
+        extend 2flrcs " I think it's about that time.{w=1.25}{nw}"
         extend 4fsqcs " Don't you?"
 
     elif dialogue_choice == 6:
@@ -9640,7 +9640,7 @@ label talk_daily_joke:
         $ jn_jokes.resetJokes()
         n 1fcsemesi "..."
         n 1fsrpo "Man...{w=1}{nw}"
-        extend 1tnmbo " we really {i}are{/i} going through these things,{w=0.2} huh?{w=1}{nw}"
+        extend 1tnmbo " we really {i}are{/i} going through these things,{w=0.2} huh?{w=1.25}{nw}"
         extend 1fcsflsbl " I'm gonna run out of jokes completely at this rate!"
         n 1nsrslsbr "..."
         n 1nsrajsbr "You...{w=1.25}{nw}"
@@ -9651,9 +9651,18 @@ label talk_daily_joke:
         n 1nsqpo "Just don't give me any funny looks if I pick one you've already heard.{w=1.25}{nw}"
         extend 1fsqpo " Capiche?"
 
+        if Natsuki.isLove(higher=True):
+            n 1fsqsm "Ehehe.{w=1}{nw}"
+            $ chosen_tease = jn_utils.getRandomTease()
+            extend 1fchbll " Love you too,{w=0.2} [chosen_tease]!"
+
+        elif Natsuki.isAffectionate(higher=True):
+            n 1fsqsm "Ehehe.{w=1}{nw}"
+            extend 1uchgnl " 'ppreciated,{w=0.2} [player]!"
+
         $ daily_jokes = jn_jokes.selectJokes()
 
-    n 1fcsss "Now,{w=0.5}{nw}" 
+    n 1fcsss "Now,{w=0.75}{nw}" 
     extend 1fsqsm " let's see..."
 
     show natsuki reading
@@ -9691,83 +9700,113 @@ label talk_daily_joke:
 
     $ daily_joke = random.choice(daily_jokes)
     call daily_joke.label
+
     $ daily_joke.setSeen(True)
     $ persistent._jn_daily_joke_given = True
+    $ Natsuki.calculatedAffinityGain(bypass=True)
     $ dialogue_choice = random.randint(1, 3)
     
     if daily_joke.category == jn_jokes.JNJokeCategories.funny:
         if dialogue_choice == 1:
-            n "See?"
-            extend " I {i}told{/i} you this book had some good stuff!"
-            n "You're welcome,{w=0.2} [player]!"
+            n 1uchgn "See?{w=1}{nw}"
+            extend 1fchbg " I {i}told{/i} you this book had some good stuff!"
+            n 1fwlbg "You're welcome,{w=0.2} [player]!"
+            extend 1fchsmeme " Ehehe."
 
         elif dialogue_choice == 2:
-            n "Man..."
-            n "I am {w=0.2}{i}so{/i}{w=0.2} bookmarking that one.{w=1}{nw}"
-            extend " Ehehe."
-            n "'preciate you tuning in,{w=0.2} [player]!"
+            n 1fllbg "Man..."
+            n 1fchgn "I am {w=0.2}{i}so{/i}{w=0.2} bookmarking that one.{w=1}{nw}"
+            extend 1fchsmeme " Ehehe."
+            n 1uchgn "'preciate you tuning in,{w=0.2} [player]!"
 
         else:
-            n "Pfffft-!"
-            n "Okay, okay."
-            extend " You gotta admit."
-            extend " That one {i}was{/i} pretty good."
-            n "You bet you're getting another tomorrow, [player]!"
+            n 1fchdvesm "Pfffft-!"
+            n 1fchbg "Okay,{w=0.2} okay.{w=0.75}{nw}"
+            extend 1flrbg " You gotta admit.{w=1}{nw}"
+            extend 1fcsbg " That one {w=0.2}{i}was{/i}{w=0.2} pretty good."
+            n 1fchbg "You bet you're getting another tomorrow,{w=0.2} [player]!"
+
+        show natsuki 1fchsm
 
     elif daily_joke.category == jn_jokes.JNJokeCategories.corny:
         if dialogue_choice == 1:
-            n ""
+            n 1fsrem "...Yeesh."
+            n 1fsrca "..."
+            n 1fcsbgsbl "W-{w=0.2}well,{w=0.5}{nw}"
+            extend 1fcstrsbl " I never said they'd be {w=0.2}{i}good{/i}{w=0.2} jokes!"
+            n 1fchgn "Sorry,{w=0.2} [player]~!"
 
         elif dialogue_choice == 2:
-            n ""
+            n 1nsqsr "..."
+            n 1nslaj "I'm...{w=1.25}{nw}"
+            extend 1nllss " starting to realize {i}why{/i} we never saw this book very often."
+            n 1ullss "Well -{w=0.3}{nw}"
+            extend 1fwlbg " Better luck next time,{w=0.2} [player]!"
+            n 1fchsm "Ahaha."
 
         else:
-            n ""
+            n 1nlrfl "...Wow.{w=1.25}{nw}"
+            extend 1fsqpo " I'm actually starting to think that the book itself is the joke at this point."
+            n 1nslpo "..."
+            n 1nllaj "Well,{w=0.5}{nw}"
+            extend 1fcsfl " I'm still not going back on what I said.{w=1}{nw}"
+            extend 1fchgn " Sorry [player]."
+            n 1fsqbg "But that's all you're getting for today!"
+
+        show natsuki 1fchsm
 
     elif daily_joke.category == jn_jokes.JNJokeCategories.bad:
         if dialogue_choice == 1:
-            n "...Yeesh."
-            n "..."
-            n "W-{w=0.2}well,{w=0.5}{nw}"
-            extend " I never said they'd be {i}good{/i} jokes!"
-            n "Sorry, [player]~!"
+            n 1fcsfl "...Okay,{w=1.25}{nw}"
+            extend 1fbkwr " who the hell approved {i}that{/i} one?{w=0.75}{nw}"
+            extend 1fcsgs " Jeez!"
+            n 1fslpo "I can't believe someone {i}actually{/i} paid money for this.{w=1.25}{nw}"
+            extend 1fcsaj " Whatever."
+            n 1fsrfl "The next one better be good.{w=1}{nw}"
+            extend 1fcspoesi " That's all {i}I've{/i} got to say."
 
         elif dialogue_choice == 2:
-            n "..."
-            n "I'm...{w=1.25}{nw}"
-            extend " starting to realize why we never saw this book very often."
-            n "Well -{w=0.3}{nw}"
-            extend " Better luck next time,{w=0.2} [player]!"
-            n "Ahaha."
+            n 1fcsemesi "..."
+            n 1fsqwr "Really?{w=1.25}{nw}"
+            extend 1fllfl " Is {i}one{/i} good joke so much to ask for?{w=1}{nw}"
+            extend 1fcsfl " Come {w=0.2}{i}on{/i}."
+            n 1flrfl "I'm done with this thing."
+            n 1fsrem "{i}'Award winning'{/i},{w=1}{nw}"
+            extend 1fcsfl " my {i}butt{/i}."
 
         else:
-            n "...Wow.{w=1.25}{nw}"
-            extend " I'm actually starting to think that the book itself is the joke at this point."
-            n "..."
-            n "Well,{w=0.5}{nw}"
-            extend " I'm still not going back on what I said.{w=1}{nw}"
-            extend " Sorry [player]."
-            n "But that's all you're getting for today!"
+            n 1fcssl "..."
+            n 1fcsan "Uuuuuu-!"
+            n 1fbkwr "Why do so many of these just {w=0.2}{i}stink{/i}{w=0.2}?!{w=1.25}{nw}"
+            extend 1fcswrl " Seriously!"
+            n 1fcsgssbr "The only joke here is how much these writers were paid!"
+            n 1fsrslesi "..."
+            n 1fsqtr "You know what?{w=1}{nw}"
+            extend 1fcsca " I think that's more than enough for today."
+
+        show natsuki 1fcspo
 
     else:
         if dialogue_choice == 1:
-            n "Thanks for listening~!{w=0.75}{nw}"
-            extend " Ehehe."
+            n 1fcsbg "Thanks for listening~!{w=0.75}{nw}"
+            extend 1fchsm " Ehehe."
 
         elif dialogue_choice == 2:
             if Natsuki.isLove(higher=True):
-                n "You're welcome,{w=0.2} [player]!"
+                n 1fwlsml "Love you too,{w=0.2} [player]!{w=0.75}{nw}"
+                extend 1fchsml " Ehehe."
 
             else:
-                n "Love you too,{w=0.2} [player]!{w=0.75}{nw}"
-                extend " Ehehe."
+                n 1fchgn "You're welcome,{w=0.2} [player]!"
 
         else:
-            n "Same time tomorrow,{w=0.2} [player]?{w=0.75}{nw}"
-            extend " Ehehe."
+            n 1fsqbg "Same time tomorrow,{w=0.2} [player]?{w=0.75}{nw}"
+            extend 1nchgn " Ehehe."
+
+        show natsuki 1fchsm
 
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
-    $ jnPause(0.5)
+    $ jnPause(1.5)
     play audio drawer
     hide joke_book
     show natsuki 1fchsmeme
