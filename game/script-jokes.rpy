@@ -215,7 +215,6 @@ init python in jn_jokes:
         joke_category=JNJokeCategories.neutral
     ))
 
-
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
     n 1fsqbg "Have {i}you{/i} ever tried eating a clock?"
@@ -334,7 +333,9 @@ label joke_upset_cat:
 label joke_cute_chicks:
     n 1fslem "Why was the lonely farmer excited to go to the show-barn?"
     n 1fslsl "..."
-    n 1fsrem "...Because he heard it'd be full of 'cute chicks'."
+    n 1fsrem "...Because he heard it'd be full of{w=0.75}{nw}" 
+    extend 1fcsem " 'cute {w=0.75}{nw}" 
+    extend 1fslsl " chicks'."
 
     return
 
