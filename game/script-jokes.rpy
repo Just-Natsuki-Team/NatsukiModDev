@@ -158,8 +158,8 @@ init python in jn_jokes:
     ))
 
     __registerJoke(JNJoke(
-        label="joke_anime_bounce",
-        joke_category=JNJokeCategories.funny
+        label="joke_anime_animated",
+        joke_category=JNJokeCategories.neutral
     ))
 
     __registerJoke(JNJoke(
@@ -169,23 +169,23 @@ init python in jn_jokes:
 
     __registerJoke(JNJoke(
         label="joke_cinderella_soccer",
-        joke_category=JNJokeCategories.funny
+        joke_category=JNJokeCategories.neutral
     ))
 
     __registerJoke(JNJoke(
         label="joke_blind_fish",
-        joke_category=JNJokeCategories.funny
+        joke_category=JNJokeCategories.corny
     ))
 
     __registerJoke(JNJoke(
         label="joke_skeleton_music",
-        joke_category=JNJokeCategories.neutral,
+        joke_category=JNJokeCategories.corny,
         conditional="persistent.jn_custom_music_unlocked"
     ))
 
     __registerJoke(JNJoke(
         label="joke_skeleton_communication",
-        joke_category=JNJokeCategories.neutral,
+        joke_category=JNJokeCategories.corny,
         conditional="getJoke('joke_skeleton_music').shown_count > 0"
     ))
 
@@ -196,98 +196,104 @@ init python in jn_jokes:
 
     __registerJoke(JNJoke(
         label="joke_tractor_trailer",
-        joke_category=JNJokeCategories.bad
+        joke_category=JNJokeCategories.funny
     ))
 
     __registerJoke(JNJoke(
         label="joke_tentacle_tickles",
-        joke_category=JNJokeCategories.funny
+        joke_category=JNJokeCategories.neutral
     ))
 
 label joke_clock_eating:
-    n "Hey,{w=0.2} [player]..."
-    n "Have {i}you{/i} ever tried eating a clock?"
-    extend " No?"
-    n "Well, I can't say I blame you."
-    n "It's very...{w=0.5} {i}time{w=0.3} consuming{/i}.{w=0.75}{nw}"
-    extend " Ehehe."
+    n 1fcsbg "Hey,{w=0.2} [player]..."
+    n 1fsqbg "Have {i}you{/i} ever tried eating a clock?"
+    n 1fsqcs "..."
+    n 1tsqss "...No?"
+    n 1ullaj "Well,{w=0.2} I can't say I blame you."
+    n 1fllss "It's very...{w=1.25}{nw}" 
+    extend 1fsqbg " {i}time{w=0.3} consuming{/i}."
 
     return
 
-label joke_anime_bounce:
-    n "Listen here [player]."
-    n "You know how anime gets you really bouncy and jolly,{w=0.3}{nw}"
-    extend " right?"
-    n "Well, it's the same for me."
-    n "That's why I'm always so...{w=0.5} {i}anime-ated{/i}.{w=0.75}{nw}"
-    n " Got it?{w=0.5}{nw}"
-    extend " Ehehe."
+label joke_anime_animated:
+    n 1ulraj "Say,{w=0.2} [player]..."
+    n 1unmbo "You know how some people get really into their anime?{w=1}{nw}"
+    extend 1nslsssbr " Like they {i}constantly{/i} mention it every chance they get."
+    n 1tllsl "If they get super excited over an episode..."
+    n 1tsqss "Would that make them...{w=1.25}{nw}"
+    extend 1fsqbg " {i}anime{/i}{w=0.75}-ted?"
 
     return
 
 label joke_pirate_shower:
-    n "Okay,{w=0.2} [player]..."
-    n "What do {i}you{/i} think why pirates never take a shower before they walk the plank?"
-    n "Well obviously...{w=0.5}{nw}"
-    extend " because they just {i}wash up on shore{/i}."
+    n 1unmfl "Did you know pirates wouldn't let their victims shower,{w=0.75}{nw}"
+    extend 1ulraj " once they captured them?"
+    n 1tlrsl "...Why?"
+    n 1fcssm "Heh.{w=0.75}{nw}" 
+    extend 1fsqsm " Isn't it obvious?"
+    n 1fsrsssbl "...'Cause they'd just {i}wash up on shore{/i}."
 
     return
 
 label joke_cinderella_soccer:
-    n "Let's talk about princesses,{w=0.2} [player]!"
-    n "Any idea why Cinderella was so bad at soccer?{w=0.3}"
-    n "Well duh!{w=0.5}{nw}"
-    extend " She kept running away from the {i}ball{/i}!{w=0.5}"
+    n 1fchbg "Let's talk princesses,{w=0.2} [player]!"
+    n 1tnmss "Any idea why Cinderella was so bad at soccer?"
+    n 1tsqsm "..."
+    n 1tsqss "...No?"
+    n 1fchgn "...'Cause she kept running away from the {i}ball{/i}!"
 
     return
 
 label joke_blind_fish:
-    n "Okay,{w=0.2} [player]..."
-    n "What do you call a fish without eyes?{w=0.5}"
-    n "I'll give you a hint,{w=0.5} it's not blind!{w=0.75}"
-    n " It's...{w=0.5} {i}fsh{/i}.{w=0.5}{nw}"
-    extend " Pffff-!{w=0.5}"
+    n 1fcsaj "Alright,{w=0.2} [player]..."
+    n 1tsqsl "What do you call a fish without eyes?"
+    n 1tsqfs "..."
+    n 1fcsss "Nope,{w=0.5}{nw}" 
+    extend 1fsrss " it's not {i}blind{/i}."
+    n 1nsqcasbl "...It's {i}fsh{/i}."
 
     return      
 
 label joke_skeleton_music:
-    n "As I know you like to share music with me, [player]...{w=0.3}{nw}"
-    extend " I'm sure you will enjoy this one too!"
-    n "So...{w=0.3}{nw}"
-    extend " What do you think is a skeleton's favourite instrument?"
-    n "A...{w=0.5} xylo{i}bone{/i}.{w=0.75}"
+    n 1fcsaj "Alright!{w=0.75}{nw}"
+    extend 1nslsssbr " Seeing as you love music so much,{w=0.2} [player]..."
+    n 1tsqsssbr "What's a skeleton's favourite instrument?"
+    n 1nsrsssbr "..."
+    n 1nsrposbl "...A xylo-{w=1}{i}bone{/i}."
 
     return 
 
 label joke_skeleton_communication:
-    n "Okay,{w=0.2} [player].{w=0.3}{nw}"
-    extend " I found another spooky joke for you!"
-    n "How do skeletons keep in touch with each other?"
-    n "Only one possible solution...{w=0.5}{nw}"
-    extend " With the help of the tele{i}bone{/i}{w=0.75}!"
+    n 1nsrsssbl "Here's another {i}spooky{/i} one for you.{w=1}{nw}"
+    extend 1tnmsssbl " How do skeletons keep in touch with each other?"
+    n 1fcssssbl "It's obvious.{w=1}{nw}"
+    extend 1nslsssbr " They use a tele-{w=0.75}{i}bone{/i}."
 
     return    
 
 label joke_ocean_greeting:
-    n "Ready,{w=0.2} [player]?{w=0.3}"
-    n "What did the ocean say to the sand?{w=0.3}{nw}"
-    extend " Any guesses?{w=0.3} It's simple."
-    n "Nothing{w=0.5} - it just {i}waved{/i}.{w=0.75}"
+    n 1fcsbg "Alright!"
+    n 1fcsss "What did the ocean say to the sand?{w=0.3}{nw}"
+    n 1fsqsm "..."
+    n 1fcsbg "Nothing -{w=0.5}{nw}" 
+    extend 1fchgn " it just {i}waved{/i}!"
 
     return  
 
 label joke_tractor_trailer:
-    n "Time to pay attention,{w=0.1} [player]!"
-    n "A colleague asked me if I watched the movie 'Tractor'...{w=0.5}"
-    n "I did not.{w=0.3}{nw}"
-    extend " But I watched the {i}trailer{/i}...{w=0.75}"
+    n 1fllaj "I was meant to see a film all about tractors,{w=0.75}{nw}"
+    extend 1fcspo " but I ended up missing it!"
+    n 1ulraj "It's fine though,{w=0.2} really."
+    n 1fsqss "I didn't catch see the tractor..."
+    n 1fchbg "...But I at least saw the {i}trailer{/i}!"
 
     return     
 
 label joke_tentacle_tickles:
-    n "Hey,{w=0.2} [player]..."
-    n "Can you guess how many tickles it take to make an octopus laugh?"
-    n "Four?{w=0.3} Eight?{w=0.3} No!{w=0.1}{nw}"
-    extend " {i}Ten{/i}-tickles!"
+    n 1fcsbg "So!{w=0.75}{nw}"
+    extend 1fsqbg " How many tickles does it take to make an octopus laugh?"
+    n 1fsqcs "..."
+    n 1fllss "You'd need...{w=0.75}{nw}"
+    extend 1fwlbg " {i}ten{/i}{w=1}-tickles!"
 
     return
