@@ -9669,34 +9669,59 @@ label talk_daily_joke:
     $ jnPause(3)
     play audio page_turn
     $ jnPause(2)
-    $ dialogue_choice = random.randint(1, 6)
+    
 
-    if dialogue_choice == 1:
-        n 1fcsss "Ah!{w=0.75}{nw}"
-        extend 1fchgn " This'll do!"
+    if daily_joke.category == jn_jokes.JNJokeCategories.corny:
+        $ dialogue_choice = random.randint(1, 3)
+        if dialogue_choice == 1:
+            n 1nsrflsbl "Oh,{w=0.2} jeez."
 
-    elif dialogue_choice == 2:
-        n 1unmbs "Oh!{w=0.5} Oh!{w=0.75}{nw}"
-        extend 1fcsbs " How about this?"
+        elif dialogue_choice == 2:
+            n 1ncsemesi "..."
 
-    elif dialogue_choice == 3:
-        n 1fcsbg "Aha!{w=0.75}{nw}"
-        extend 1fsqsm " Here we go!"
+        elif dialogue_choice == 3:
+            n 1nslposbl "..."
 
-    elif dialogue_choice == 4:
-        n 1fspgs "Hmm...{w=0.75}{nw}"
-        extend 1fnmbg " how about this one,{w=0.2} [player]?"
+    elif daily_joke.category == jn_jokes.JNJokeCategories.bad:
+        $ dialogue_choice = random.randint(1, 3)
+        if dialogue_choice == 1:
+            n 1fcsemesi "..."
 
-    elif dialogue_choice == 5:
-        n 1nchgn "Alright!{w=0.75}{nw}"
-        extend 1fcsbg " Let's try {i}this one{/i} on for size!"
+        elif dialogue_choice == 2:
+            n 1fupem "Oh,{w=0.5} for-{w=1.25}{nw}"
+            n 1fcssl "..."
 
-    elif dialogue_choice == 6:
-        n 1unmbg "Oh!{w=0.75}{nw}"
-        extend 1fchgn " I got one!{w=0.5} I got one!"
+        elif dialogue_choice == 3:
+            n 1fsrem "Ugh..."
 
-    n 1fcsaj "A-{w=0.2}hem!"
-    n 1fcssm "..."
+    else:
+        $ dialogue_choice = random.randint(1, 6)
+        if dialogue_choice == 1:
+            n 1fcsss "Ah!{w=0.75}{nw}"
+            extend 1fchgn " This'll do!"
+
+        elif dialogue_choice == 2:
+            n 1unmbs "Oh!{w=0.5} Oh!{w=0.75}{nw}"
+            extend 1fcsbs " How about this?"
+
+        elif dialogue_choice == 3:
+            n 1fcsbg "Aha!{w=0.75}{nw}"
+            extend 1fsqsm " Here we go!"
+
+        elif dialogue_choice == 4:
+            n 1fspgs "Hmm...{w=0.75}{nw}"
+            extend 1fnmbg " how about this one,{w=0.2} [player]?"
+
+        elif dialogue_choice == 5:
+            n 1nchgn "Alright!{w=0.75}{nw}"
+            extend 1fcsbg " Let's try {i}this one{/i} on for size!"
+
+        elif dialogue_choice == 6:
+            n 1unmbg "Oh!{w=0.75}{nw}"
+            extend 1fchgn " I got one!{w=0.5} I got one!"
+
+        n 1fcsaj "A-{w=0.2}hem!"
+        n 1fcssm "..."
 
     $ daily_joke = random.choice(daily_jokes)
     call daily_joke.label

@@ -156,53 +156,65 @@ init python in jn_jokes:
         label="joke_clock_eating",
         joke_category=JNJokeCategories.neutral
     ))
-
     __registerJoke(JNJoke(
         label="joke_anime_animated",
         joke_category=JNJokeCategories.neutral
     ))
-
     __registerJoke(JNJoke(
         label="joke_pirate_shower",
         joke_category=JNJokeCategories.corny
     ))
-
     __registerJoke(JNJoke(
         label="joke_cinderella_soccer",
         joke_category=JNJokeCategories.neutral
     ))
-
     __registerJoke(JNJoke(
         label="joke_blind_fish",
         joke_category=JNJokeCategories.corny
     ))
-
     __registerJoke(JNJoke(
         label="joke_skeleton_music",
         joke_category=JNJokeCategories.corny,
         conditional="persistent.jn_custom_music_unlocked"
     ))
-
     __registerJoke(JNJoke(
         label="joke_skeleton_communication",
         joke_category=JNJokeCategories.corny,
         conditional="getJoke('joke_skeleton_music').shown_count > 0"
     ))
-
     __registerJoke(JNJoke(
         label="joke_ocean_greeting",
         joke_category=JNJokeCategories.neutral
     ))
-
     __registerJoke(JNJoke(
         label="joke_tractor_trailer",
         joke_category=JNJokeCategories.funny
     ))
-
     __registerJoke(JNJoke(
         label="joke_tentacle_tickles",
         joke_category=JNJokeCategories.neutral
     ))
+    __registerJoke(JNJoke(
+        label="joke_tentacle_tickles",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_basic_chemistry",
+        joke_category=JNJokeCategories.funny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_upset_cat",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_cute_chicks",
+        joke_category=JNJokeCategories.bad
+    ))
+    __registerJoke(JNJoke(
+        label="joke_lumberjack_axeception",
+        joke_category=JNJokeCategories.neutral
+    ))
+
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -295,5 +307,42 @@ label joke_tentacle_tickles:
     n 1fsqcs "..."
     n 1fllss "You'd need...{w=0.75}{nw}"
     extend 1fwlbg " {i}ten{/i}{w=1}-tickles!"
+
+    return
+
+label joke_basic_chemistry:
+    n 1fcsbs "Time for a chemistry test,{w=0.2} [player]!"
+    n 1fcsbg "What do you get when you mix sulfur,{w=0.5}{nw}"
+    extend 1fllss " tungsten,{w=0.5}{nw}"
+    extend 1fnmbg " and silver?"
+    n 1usqcs "..."
+    n 1fcsbg "{i}SWAG{/i},{w=0.5}{nw}"
+    extend 1fchgn " of course!"
+
+    return
+
+label joke_upset_cat:
+    n 1ulraj "How do you know if you've upset a cat?"
+    n 1tnmsm "..."
+    n 1fcssm "Ehehe."
+    n 1fcsss "You get a...{w=1}{nw}"
+    extend 1fsqss " {i}feline{/i}{w=0.75}{nw}"
+    extend 1fwlbg " for the exit!"
+    
+    return
+
+label joke_cute_chicks:
+    n 1fslem "Why was the lonely farmer excited to go to the show-barn?"
+    n 1fslsl "..."
+    n 1fsrem "...Because he heard it'd be full of 'cute chicks'."
+
+    return
+
+label joke_lumberjack_axeception:
+    n 1unmaj "What would a lumberjack do if they couldn't cut down a tree?"
+    n 1flrsm "..."
+    n 1flrss "They'd make an...{w=1}"
+    extend 1fsqbg " {i}axe{/i}{w=1.25}"
+    extend 1nchgn "-ception!"
 
     return
