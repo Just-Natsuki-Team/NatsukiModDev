@@ -240,7 +240,7 @@ init python in jn_jokes:
     ))
     __registerJoke(JNJoke(
         label="joke_snek_maths",
-        joke_category=JNJokeCategories.corny
+        joke_category=JNJokeCategories.bad
     ))
     __registerJoke(JNJoke(
         label="joke_balloonist_hot_air",
@@ -257,6 +257,18 @@ init python in jn_jokes:
     __registerJoke(JNJoke(
         label="joke_carpentry_nailed_it",
         joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_neutrons_no_charge",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_train_sound_track",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_bored_typist",
+        joke_category=JNJokeCategories.bad
     ))
 
 label joke_clock_eating:
@@ -500,5 +512,33 @@ label joke_carpentry_nailed_it:
     n 1tlraj "But...{w=1}{nw}"
     extend 1fsqss " if I did?"
     n 1uchgn "...I bet I'd totally {w=0.3}{i}nail{/i}{w=0.3} it!"
+
+    return
+
+label joke_neutrons_no_charge:
+    n 1fsqsm "I hope you're ready for some physics,{w=0.2} [player]."
+    n 1fcsbg "So!{w=1}{nw}"
+    extend 1fsqbg " Why don't neutrons have to pay entry fees when they go anywhere?"
+    n 1fsqcs "..."
+    n 1fcsbg "'Cause for neutrons...{w=1}{nw}" 
+    extend 1uchgn " there's never any {i}charge{/i}!"
+
+    return
+
+label joke_train_sound_track:
+    n 1fcsbg "What's a train driver's favourite thing to listen to while they're working?"
+    n 1fnmsm "..."
+    n 1tsqss "No?{w=0.75}{nw}"
+    extend 1fcssm " Ehehe."
+    n 1fcsbg "Sound {w=0.2}{i}tracks{/i},{w=1}{nw}"
+    extend 1fchbg " of course!"
+
+    return
+
+label joke_bored_typist:
+    n 1fcsfl "...Why did the typist end up quitting their job?"
+    n 1fsrbo "..."
+    n 1fcsemesi "..."
+    n 1fcsfl "...Because they were key-{w=0.3}{i}bored{/i}."
 
     return
