@@ -242,6 +242,22 @@ init python in jn_jokes:
         label="joke_snek_maths",
         joke_category=JNJokeCategories.corny
     ))
+    __registerJoke(JNJoke(
+        label="joke_balloonist_hot_air",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_author_cover_story",
+        joke_category=JNJokeCategories.funny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_wrapped_up_quickly",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_carpentry_nailed_it",
+        joke_category=JNJokeCategories.neutral
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -446,4 +462,43 @@ label joke_snek_maths:
     n 1nslpo "..."
     n 1nsqem "...{i}An adder{/i}."
     
+    return
+
+label joke_balloonist_hot_air:
+    n 1nsqsl "...What do an arrogant balloonist and their balloon have in common?"
+    n 1ncsemesi "..."
+    n 1nsrem "They're both full of...{w=0.75}{nw}"
+    extend 1nslajsbr " {i}hot{w=0.3} air{/i}."
+    
+    return
+
+label joke_author_cover_story:
+    n 1fsqsg "You better not {i}book it{/i} after this one, [player]..."
+    n 1fcsbg "What does an author do when they need an excuse for a day off?"
+    n 1fsqsm "..."
+    n 1fcssm "Ehehe.{w=0.75}{nw}"
+    extend 1fchbg " What else?"
+    n 1uchgn "...They'd write a {i}cover story{/i}!"
+
+    return
+
+label joke_wrapped_up_quickly:
+    n 1unmaj "Did you hear about the packaging company that went bust?"
+    n 1tnmbo "..."
+    n 1tllss "No?{w=0.75}{nw}"
+    extend 1ncsss " I guess I shouldn't be too surprised."
+    n 1fcsbg "After all."
+    n 1fsqbg "They sure...{w=1}{nw}"
+    extend 1fsqsm " {i}wrapped things up{/i}{w=0.75}{nw}"
+    extend 1fchgn " quickly!"
+
+    return
+
+label joke_carpentry_nailed_it:
+    n 1ullbo "You know..."
+    n 1tnmbo "I never really got into carpentry much."
+    n 1tlraj "But...{w=1}{nw}"
+    extend 1fsqss " if I did?"
+    n 1uchgn "...I bet I'd totally {w=0.3}{i}nail{/i}{w=0.3} it!"
+
     return
