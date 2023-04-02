@@ -214,6 +214,26 @@ init python in jn_jokes:
         label="joke_lumberjack_axeception",
         joke_category=JNJokeCategories.neutral
     ))
+    __registerJoke(JNJoke(
+        label="joke_tallest_building",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_baking_baseball",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_soya_tofu",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_distrust_atoms",
+        joke_category=JNJokeCategories.funny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_running_latte",
+        joke_category=JNJokeCategories.corny
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -325,7 +345,7 @@ label joke_upset_cat:
     n 1tnmsm "..."
     n 1fcssm "Ehehe."
     n 1fcsss "You get a...{w=1}{nw}"
-    extend 1fsqss " {i}feline{/i}{w=0.75}{nw}"
+    extend 1fsqss " {i}{w=0.2}fe{w=0.2}-line{/i}{w=0.75}{nw}"
     extend 1fwlbg " for the exit!"
     
     return
@@ -345,5 +365,56 @@ label joke_lumberjack_axeception:
     n 1flrss "They'd make an...{w=1}"
     extend 1fsqbg " {i}axe{/i}{w=1.25}"
     extend 1nchgn "-ception!"
+
+    return
+
+label joke_tallest_building:
+    n 1fcsbg "Seeing as you love literature so much,{w=0.75}{nw}"
+    extend 1fsqsm " this should be easy."
+    n 1fcsaj "So!{w=1}{nw}"
+    extend 1tnmss " Why are libraries the tallest buildings?"
+    n 1fsqsm "..."
+    n 1fchbg "...Because they have the most {i}stories{/i}!"
+
+    return
+
+label joke_baking_baseball:
+    n 1unmbo "You enjoy baking,{w=0.2} right?"
+    n 1fsqss "...So what do baking and baseball both have in common?"
+    n 1tsqfs "..."
+    n 1fcsbg "Easy!{w=0.75}{nw}"
+    extend 1fwlbg " You gotta keep an eye on the {i}batter{/i}!"
+
+    return
+
+label joke_soya_tofu:
+    n 1fsqbg "Fancy yourself a culinary expert,{w=0.2} [player]?{w=0.75}{nw}"
+    extend 1fcsbg " Then riddle me this!"
+    n 1fnmss "How does soya milk defend itself?"
+    n 1fnmsm "..."
+    n 1tsqss "Well?{w=1}{nw}" 
+    extend 1fsqbg " Isn't it obvious?"
+    n 1nchgn "It does {w=0.3}{i}to-{w=0.3}fu{/i}!"
+
+    return
+
+label joke_distrust_atoms:
+    n 1nlrbo "You know,{w=0.2} [player]..."
+    n 1fnmbo "I never liked studying physics.{w=0.75}{nw}"
+    extend 1fslfl " {i}Especially{/i} atomic theory."
+    n 1fslsl "..."
+    n 1tnmem "What?{w=1}{nw}"
+    extend 1flrfl " Can you blame me?{w=0.75}{nw}"
+    extend 1fcsgs " It's ridiculous!"
+    n 1fcspo "How am I meant to take it {i}seriously{/i}..."
+    n 1fsqsm "...when the atoms {i}make up{/i} everything?"
+
+    return
+
+label joke_running_latte:
+    n 1fcsfl "What do you call a barista that didn't make it to work on time?"
+    n 1nsrsl "..."
+    n 1ncsfl "Running...{w=1.25}{nw}" 
+    extend 1fslcasbl " {i}latte{/i}."
 
     return

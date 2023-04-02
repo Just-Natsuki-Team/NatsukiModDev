@@ -2073,7 +2073,7 @@ label talk_drinking_alcohol:
     n 4unmbo "It wasn't even just some random supermarket stuff either...{w=0.5}{nw}"
     extend 1uwdaj " it looked super expensive too!"
     n 3kllss "Honestly,{w=0.1} I couldn't help myself.{w=0.2} I just burst into laughter."
-    n 1ullun "I think it was just how non-chalant she was being about it all,{w=0.1} really."
+    n 1ullun "I think it was just how all casual she was being about it all,{w=0.1} really."
     n 4nnmsl "Monika didn't look impressed,{w=0.1} though..."
     n 1klrsl "And Sayori...{w=0.3} she just got really upset.{w=0.5}{nw}"
     extend 2klrpu " She was shouting and everything!"
@@ -6493,7 +6493,7 @@ label talk_thoughts_on_dan_salvato:
     extend 2fslan " {i}him{/i}."
     n 1fcsbo "..."
     n 1fplaj "I...{w=1}{nw}"
-    extend 2fcsan " I just don't understand him, [player]."
+    extend 2fcsan " I just don't understand him,{w=0.2} [player]."
     n 1nsqbo "Like yeah,{w=1}{nw}"
     extend 1nslbo " sure,{w=0.5}{nw}"
     extend 1nsqaj " I get it."
@@ -9669,10 +9669,9 @@ label talk_daily_joke:
     $ jnPause(3)
     play audio page_turn
     $ jnPause(2)
-    
 
     if daily_joke.category == jn_jokes.JNJokeCategories.corny:
-        $ dialogue_choice = random.randint(1, 3)
+        $ dialogue_choice = random.randint(1, 4)
         if dialogue_choice == 1:
             n 1nsrflsbl "Oh,{w=0.2} jeez."
 
@@ -9681,6 +9680,10 @@ label talk_daily_joke:
 
         elif dialogue_choice == 3:
             n 1nslposbl "..."
+
+        elif dialogue_choice == 4:
+            n 1nsrem "...{i}Seriously{/i}?"
+            n 1ncsemesi "..."
 
     elif daily_joke.category == jn_jokes.JNJokeCategories.bad:
         $ dialogue_choice = random.randint(1, 3)
@@ -9894,7 +9897,7 @@ label talk_daily_jokes_stop:
     n 1fcswr "A-{w=0.2}and just what is {i}that{/i} meant to mean,{w=0.2} [player]?!"
     extend 3fnmfl " Huh?"
     n 3fnmgs "You got some kind of problem with the book?"
-    n 4fsqwr "You think my sense of humour just stinks?{w=1}{nw}"
+    n 4fsqwr "You think my delivery just stinks?{w=1}{nw}"
     extend 4fbkwr " Is that it?!"
     n 2fcspo "..."
     n 2fsqcs "..."
