@@ -234,6 +234,14 @@ init python in jn_jokes:
         label="joke_running_latte",
         joke_category=JNJokeCategories.corny
     ))
+    __registerJoke(JNJoke(
+        label="joke_guitar_stringing_along",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_snek_maths",
+        joke_category=JNJokeCategories.corny
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -417,4 +425,25 @@ label joke_running_latte:
     n 1ncsfl "Running...{w=1.25}{nw}" 
     extend 1fslcasbl " {i}latte{/i}."
 
+    return
+
+label joke_guitar_stringing_along:
+    n 1unmpu "Did you hear about the band who just dropped their guitarist?"
+    n 1fllfl "{i}Apparently{/i} they promised to practice with everyone,{w=0.75}{nw}"
+    extend 1fnmgs " but they just never turned up!{w=0.75}{nw}"
+    extend 1fcswr " What a jerk!"
+    n 1fcspo "..."
+    n 1fcsaj "Well,{w=0.75}{nw}"
+    extend 1fllfl "I guess you could say they were just...{w=0.75}{nw}"
+    extend 1fsqss " {i}stringing{/i}{w=1.25}{nw}"
+    extend 1fcsbg " everyone along!"
+
+    return
+
+label joke_snek_maths:
+    n 1ncsfl "...What kind of reptile would you trust to do long sums?"
+    n 1nsqsl "..."
+    n 1nslpo "..."
+    n 1nsqem "...{i}An adder{/i}."
+    
     return
