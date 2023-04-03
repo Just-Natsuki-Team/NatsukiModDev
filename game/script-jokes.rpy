@@ -152,6 +152,35 @@ init python in jn_jokes:
 
         return None
 
+    def getAllJokes():
+        """
+        Returns all jokes.
+        """
+        return __ALL_JOKES.values()
+
+    def selectJokes():
+        """
+        Returns a list of all unseen jokes, or None if zero that are unlocked and unseen exist.
+        
+        OUT:
+            - List of JNJoke jokes, or None
+        """
+        joke_list = JNJoke.filterJokes(
+            joke_list=getAllJokes(),
+            is_seen=False
+        )
+
+        return joke_list if len(joke_list) > 0 else None
+
+    def resetJokes():
+        """
+        Resets the is_seen state for all jokes.
+        """
+        for joke in getAllJokes():
+            joke.is_seen = False
+
+        JNJoke.saveAll()
+
     __registerJoke(JNJoke(
         label="joke_clock_eating",
         joke_category=JNJokeCategories.neutral
@@ -180,7 +209,7 @@ init python in jn_jokes:
     __registerJoke(JNJoke(
         label="joke_skeleton_communication",
         joke_category=JNJokeCategories.corny,
-        conditional="getJoke('joke_skeleton_music').shown_count > 0"
+        conditional="jn_jokes.getJoke('joke_skeleton_music').shown_count > 0"
     ))
     __registerJoke(JNJoke(
         label="joke_ocean_greeting",
@@ -348,7 +377,7 @@ label joke_skeleton_communication:
 
 label joke_ocean_greeting:
     n 1fcsbg "Alright!"
-    n 1fcsss "What did the ocean say to the sand?{w=0.3}{nw}"
+    n 1fcsss "What did the ocean say to the sand?"
     n 1fsqsm "..."
     n 1fcsbg "Nothing -{w=0.5}{nw}" 
     extend 1fchgn " it just {i}waved{/i}!"

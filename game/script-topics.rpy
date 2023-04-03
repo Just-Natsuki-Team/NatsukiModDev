@@ -9643,6 +9643,7 @@ label talk_daily_joke(from_unlock):
         $ jnPause(0.5)
 
     $ daily_jokes = jn_jokes.selectJokes()
+
     if not daily_jokes:
         $ jn_jokes.resetJokes()
         n 1fcsemesi "..."
