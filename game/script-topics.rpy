@@ -9574,16 +9574,16 @@ label talk_daily_jokes_unlock:
     n 1fchgn "'Cause I {i}definitely{/i} am!{w=1}{nw}"
     extend 1nchgn " Ehehe."
 
-    show natsuki 1fchsmeme
-    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
-    $ jnPause(0.5)
-    hide joke_book
-    play audio drawer
-    $ jnPause(3)
-    hide black with Dissolve(0.5)
+    n 1fllsm "..."
+    n 1fllbg "In fact...{w=1}{nw}"
+    extend 1fsqbg " you know what,{w=0.2} [player]?{w=0.75}{nw}"
+    extend 1fcsbg " Why wait?"
+    n 1fsqsm "You know what they say,{w=0.2} after all.{w=1}{nw}"
+    extend 1fchgn " No time like the present!"
 
     $ persistent._jn_daily_jokes_unlocked = True
-
+    call talk_daily_joke(from_unlock=True)
+    
     return
 
 # Natsuki reads out a daily joke.
@@ -9602,44 +9602,45 @@ init 5 python:
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label talk_daily_joke:
-    $ dialogue_choice = random.randint(1, 6)
-    if dialogue_choice == 1:
-        n 1nchgn "Okaaay!{w=1}{nw}"
-        extend 3fsqbg " I think we both know what it's time for now,{w=0.2} huh?{w=1.25}{nw}"
-        extend 3fsqsm " Ehehe."
+label talk_daily_joke(from_unlock):
+    if not from_unlock:
+        $ dialogue_choice = random.randint(1, 6)
+        if dialogue_choice == 1:
+            n 1nchgn "Okaaay!{w=1}{nw}"
+            extend 3fsqbg " I think we both know what it's time for now,{w=0.2} huh?{w=1.25}{nw}"
+            extend 3fsqsm " Ehehe."
 
-    elif dialogue_choice == 2:
-        n 4fcsbg "Alright!{w=1}{nw}"
-        extend 2tlrss " I think it's about time,{w=0.2} [player].{w=1.25}{nw}"
-        extend 2tsqsm " Don't you?"
+        elif dialogue_choice == 2:
+            n 4fcsbg "Alright!{w=1}{nw}"
+            extend 2tlrss " I think it's about time,{w=0.2} [player].{w=1.25}{nw}"
+            extend 2tsqsm " Don't you?"
 
-    elif dialogue_choice == 3:
-        n 2fcsaj "Right!{w=1}{nw}"
-        extend 2fcsbg " I think now's as good a time as any."
-        n 4tlrbo "Now where did I leave that book..."
+        elif dialogue_choice == 3:
+            n 2fcsaj "Right!{w=1}{nw}"
+            extend 2fcsbg " I think now's as good a time as any."
+            n 4tlrbo "Now where did I leave that book..."
 
-    elif dialogue_choice == 4:
-        n 4tllbo "Hmmm..."
-        n 4tnmaj "You know what,{w=0.2} [player]?{w=1}{nw}"
-        extend 3fsqbg " I think it's about that time again."
-        n 3fcssm "Ehehe."
+        elif dialogue_choice == 4:
+            n 4tllbo "Hmmm..."
+            n 4tnmaj "You know what,{w=0.2} [player]?{w=1}{nw}"
+            extend 3fsqbg " I think it's about that time again."
+            n 3fcssm "Ehehe."
 
-    elif dialogue_choice == 5:
-        n 2ulraj "You know,{w=0.2} [player]...{w=1}{nw}"
-        extend 2flrcs " I think it's about that time.{w=1.25}{nw}"
-        extend 4fsqcs " Don't you?"
+        elif dialogue_choice == 5:
+            n 2ulraj "You know,{w=0.2} [player]...{w=1}{nw}"
+            extend 2flrcs " I think it's about that time.{w=1.25}{nw}"
+            extend 4fsqcs " Don't you?"
 
-    elif dialogue_choice == 6:
-        n 1fcsbg "Alright!{w=1}{nw}"
-        extend 4fwrbg " I think it's about time for the old joke book!{w=0.75}{nw}"
-        extend 4fcssm " Ehehe."
+        elif dialogue_choice == 6:
+            n 1fcsbg "Alright!{w=1}{nw}"
+            extend 4fwrbg " I think it's about time for the old joke book!{w=0.75}{nw}"
+            extend 4fcssm " Ehehe."
 
-    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
-    show joke_book zorder JN_PROP_ZORDER
-    show natsuki reading
-    hide black with Dissolve(0.5)
-    $ jnPause(0.5)
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+        show joke_book zorder JN_PROP_ZORDER
+        show natsuki reading
+        hide black with Dissolve(0.5)
+        $ jnPause(0.5)
 
     $ daily_jokes = jn_jokes.selectJokes()
     if not daily_jokes:
