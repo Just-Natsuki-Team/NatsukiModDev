@@ -518,7 +518,7 @@ label joke_balloonist_hot_air:
     return
 
 label joke_author_cover_story:
-    n 1fsqsg "You better not {i}book it{/i} after this one, [player]..."
+    n 1fsqsg "You better not {i}book it{/i} after this one,{w=0.2} [player]..."
     n 1fcsbg "What does an author do when they need an excuse for a day off?"
     n 1fsqsm "..."
     n 1fcssm "Ehehe.{w=0.75}{nw}"
