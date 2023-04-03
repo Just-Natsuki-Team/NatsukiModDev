@@ -423,7 +423,7 @@ label joke_cute_chicks:
     n 1fslem "Why was the lonely farmer excited to go to the show-barn?"
     n 1fslsl "..."
     n 1fsrem "...Because he heard it'd be full of{w=0.75}{nw}" 
-    extend 1fcsem " 'cute {w=0.75}{nw}" 
+    extend 1fcsem " 'cute{w=0.75}{nw}" 
     extend 1fslsl " chicks'."
 
     return
