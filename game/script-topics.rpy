@@ -9677,7 +9677,8 @@ label talk_daily_joke(from_unlock):
     $ jnPause(3)
     play audio page_turn
     $ jnPause(2)
-
+    
+    $ daily_joke = random.choice(daily_jokes)
     if daily_joke.category == jn_jokes.JNJokeCategories.corny:
         $ dialogue_choice = random.randint(1, 4)
         if dialogue_choice == 1:
@@ -9734,7 +9735,6 @@ label talk_daily_joke(from_unlock):
         n 1fcsaj "A-{w=0.2}hem!"
         n 1fcssm "..."
 
-    $ daily_joke = random.choice(daily_jokes)
     call daily_joke.label
 
     $ daily_joke.setSeen(True)
