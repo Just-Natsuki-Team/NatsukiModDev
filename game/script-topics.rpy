@@ -9602,7 +9602,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label talk_daily_joke(from_unlock):
+label talk_daily_joke(from_unlock=False):
     if not from_unlock:
         $ dialogue_choice = random.randint(1, 6)
         if dialogue_choice == 1:
