@@ -442,6 +442,7 @@ init python:
         # Select a random idle if enabled, we haven't had one for a while and there's nothing already queued
         if (
             persistent._jn_natsuki_idles_enabled
+            and datetime.datetime.now() >= LAST_TOPIC_CALL + datetime.timedelta(minutes=2)
             and datetime.datetime.now() >= LAST_IDLE_CALL + datetime.timedelta(minutes=10)
             and not persistent._event_list
         ):

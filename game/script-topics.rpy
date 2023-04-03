@@ -9433,51 +9433,52 @@ init 5 python:
     )
 
 label talk_daily_jokes_unlock:
-    n 1nllsl "..."
-    n 1fllsl "..."
-    n 1fcsflesi "..."
-    n 1nlrfl "You know,{w=0.2} [player].{w=0.75}{nw}"
+    n 2nllsl "..."
+    n 2fllsl "..."
+    n 2fcsflesi "..."
+    n 2nlrfl "You know,{w=0.2} [player].{w=0.75}{nw}"
     extend 1nnmsl " I just thought of something.{w=0.75}{nw}"
-    extend 1fslfl " Something that's really starting to bug the crap out of me."
-    n 1unmbo "You stop by here often enough,{w=0.2} right?{w=0.75}{nw}"
-    extend 1nlraj " To visit,{w=0.2} I mean."
+    extend 4fslfl " Something that's really starting to bug the crap out of me."
+    n 2unmbo "You stop by here often enough,{w=0.2} right?{w=0.75}{nw}"
+    extend 2nlraj " To visit,{w=0.2} I mean."
 
-    n 1unmemeshsbl "N-{w=0.2}not that I don't appreciate it,{w=0.2} or anything like that!{w=0.75}{nw}"
+    n 4unmemeshsbl "N-{w=0.2}not that I don't appreciate it,{w=0.2} or anything like that!{w=0.75}{nw}"
 
-    if Natsuki.isEnamoured(higher=True):
-        extend 1nslsllsbl " You should know I do by now.{w=1}{nw}"
+    if Natsuki.isEnamored(higher=True):
+        extend 4nslsllsbl " You should know I do by now.{w=1}{nw}"
 
     elif Natsuki.isAffectionate(higher=True):
-        extend 1fcsajlsbl " I-{w=0.2}I totally do!{w=1}{nw}"
+        extend 2fcsajlsbl " I-{w=0.2}I totally do!{w=1}{nw}"
         
     else:
-        extend 1fcsemsbl " O-{w=0.2}of course I do!"
-        n 1fcspo "Even if you {i}do{/i} kinda owe it to me.{w=1}{nw}"
+        extend 4fcsemsbl " O-{w=0.2}of course I do!"
+        n 2fcspo "Even if you {i}do{/i} kinda owe it to me.{w=1}{nw}"
 
     extend 1nlrsl " But..."
     n 1fcsaj "It's just..."
-    n 1fslun "..."
-    n 1fcsansbl "Nnnnn...!"
+    n 4fslun "..."
+    n 4fcsansbl "Nnnnn...!"
     n 1fbkwrsbr "It just gets so {w=0.3}{i}boring{/i}!{w=1}{nw}"
-    extend 1fcswr " Like nothing {i}ever{/i} changes around here!{w=0.75}{nw}"
-    extend 1flrgs " It's always the same,{w=0.75}{nw}"
-    extend 1fcsgs " and I'm sick of it!"
+    extend 1fcswr " Like nothing {i}ever{/i} changes around here!{w=1}{nw}"
+    extend 2flrgs " It's always the same,{w=0.75}{nw}"
+    extend 2fcsgs " and I'm sick of it!"
     n 1fslsl "Ugh..."
-    n 1fcsemesi "..."
-    n 1fcswr "What we need is variety!"
-    n 1fcsgs "Something different!{w=0.75}{nw}"
-    extend 1fcspo " And nothing different ever happened by just sitting around {i}waiting{/i} for it."
-    n 1fllfl "There HAS to be something like that around here somewhere..."
-    n 1fslbo "..."
-    n 1nllaj "...Actually.{w=0.75}{nw}"
-    extend 1unmfl " You know what?{w=1}{nw}"
-    extend 1fcsca " Just give me a couple minutes."
-    n 1flrpu "There's gotta be something in the closet I missed before."
+    n 4fcsemesi "..."
+    n 2fcswr "What we need is variety!"
+    n 2fcsgs "Something different!{w=0.75}{nw}"
+    extend 4fcspo " And nothing different ever happened by just sitting around {i}waiting{/i} for it."
+    n 3fllfl "There HAS to be something like that around here somewhere..."
+    n 3fslbo "..."
+    n 4nllaj "...Actually.{w=0.75}{nw}"
+    extend 2unmfl " You know what?{w=1}{nw}"
+    extend 2fcsca " Just give me a couple minutes."
+    n 4flrpu "There's gotta be something in the closet I missed before."
 
     show natsuki 1fcsbo
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     play audio chair_out
+    $ jnPause(4)
 
     n "Alright...{w=1}{nw}"
     extend " what have we got..."
@@ -9492,7 +9493,7 @@ label talk_daily_jokes_unlock:
     $ jnPause(3)
 
     n "Jeez...{w=1}{nw}"
-    extend " What is this?{w=0.75}{nw}"
+    extend " what is this?{w=0.75}{nw}"
     extend " A library?"
     n "How much more of this stuff is there...?"
 
@@ -9503,19 +9504,21 @@ label talk_daily_jokes_unlock:
     extend " What's..."
     n "..."
     n "Wait...{w=1}{nw}"
-    extend " i-{w=0.2}is that my homework?!{w=0.2} Who-{w=0.5}{nw}"
+    extend " i-{w=0.2}is that my homework?!{w=0.75} WHO-{w=0.5}{nw}"
     play audio gift_close
     n "Ack-!"
     n "..."
-    n "Nnnnng...{w=1.25}{nw}"
-    extend " my head..."
-    n "W-{w=0.2}who the hell just balances books like that?!{w=0.75}{nw}"
+    n "Nnnnng...{w=1.5}{nw}"
+    extend " m-{w=0.5}my head..."
+    n "W-{w=0.2}who the hell just {b}balances{/b} books like that?!{w=0.75}{nw}"
     extend " I am {i}seriously{/i} gonna...!"
     n "..."
     n "..."
     n "...Wait a second.{w=1.5}{nw}"
     extend " Oh.{w=0.2} My.{w=0.2} Gosh."
-    n "This is perfect!"
+    n "This...{w=1.25}{nw}"
+    extend " is...{w=1.25}{nw}"
+    extend " {b}PERFECT{/b}!"
     n "..."
     n "...!"
 
@@ -9524,12 +9527,15 @@ label talk_daily_jokes_unlock:
     show natsuki 1fcssmeme
     play audio chair_in
     $ jnPause(1.5)
+    hide black with Dissolve(0.5)
+    $ jnPause(0.5)
 
-    n 1fchbg "[player]!{w=0.2} [player]!"
-    n 1uchgneme "Guess what I fooound~?{w=0.75}{nw}"
-    extend 1fsqsmeme " Ehehe."
-    n 1fcsbs "It's...{w=1.5}{nw}"
+    n 4fchbg "[player]!{w=0.5} [player]!"
+    n 4uchgneme "Guess what I fooound~?{w=0.75}{nw}"
+    extend 4fsqsmeme " Ehehe."
+    n 4fcsbs "It's...{w=1.5}{nw}"
 
+    show natsuki 1uchgn
     show joke_book zorder JN_PROP_ZORDER
     play audio page_turn
     $ jnPause(3)
