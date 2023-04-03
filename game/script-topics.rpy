@@ -9735,7 +9735,7 @@ label talk_daily_joke(from_unlock):
         n 1fcsaj "A-{w=0.2}hem!"
         n 1fcssm "..."
 
-    call daily_joke.label
+    call expression daily_joke.label
 
     $ daily_joke.setSeen(True)
     $ persistent._jn_daily_joke_given = True

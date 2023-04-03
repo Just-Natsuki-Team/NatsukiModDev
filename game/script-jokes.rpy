@@ -224,10 +224,6 @@ init python in jn_jokes:
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
-        label="joke_tentacle_tickles",
-        joke_category=JNJokeCategories.neutral
-    ))
-    __registerJoke(JNJoke(
         label="joke_basic_chemistry",
         joke_category=JNJokeCategories.funny
     ))
