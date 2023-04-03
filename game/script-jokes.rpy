@@ -364,10 +364,10 @@ label joke_skeleton_music:
     return 
 
 label joke_skeleton_communication:
-    n 1nsrsssbl "Here's another {i}spooky{/i} one for you.{w=1}{nw}"
+    n 1nsrsssbl "Here's another {i}spooky{/i} one for you.{w=0.75}{nw}"
     extend 1tnmsssbl " How do skeletons keep in touch with each other?"
-    n 1fcssssbl "It's obvious.{w=1}{nw}"
-    extend 1nslsssbr " They use a tele-{w=0.75}{i}bone{/i}."
+    n 1fcssssbl "It's obvious.{w=0.75}{nw}"
+    extend 1nslsssbr " They use a tele-{w=0.5}{i}bone{/i}."
 
     return    
 
@@ -431,8 +431,8 @@ label joke_cute_chicks:
 label joke_lumberjack_axeception:
     n 1unmaj "What would a lumberjack do if they couldn't cut down a tree?"
     n 1flrsm "..."
-    n 1flrss "They'd make an...{w=1}"
-    extend 1fsqbg " {i}axe{/i}{w=1.25}"
+    n 1flrss "They'd make an...{w=1}{nw}"
+    extend 1fsqbg " {i}axe{/i}{w=1.25}{nw}"
     extend 1nchgn "-ception!"
 
     return
@@ -495,7 +495,7 @@ label joke_guitar_stringing_along:
     extend 1fcswr " What a jerk!"
     n 1fcspo "..."
     n 1fcsaj "Well,{w=0.75}{nw}"
-    extend 1fllfl "I guess you could say they were just...{w=0.75}{nw}"
+    extend 1fllfl " I guess you could say they were just...{w=0.75}{nw}"
     extend 1fsqss " {i}stringing{/i}{w=1.25}{nw}"
     extend 1fcsbg " everyone along!"
 
@@ -563,7 +563,7 @@ label joke_train_sound_track:
     n 1fnmsm "..."
     n 1tsqss "No?{w=0.75}{nw}"
     extend 1fcssm " Ehehe."
-    n 1fcsbg "Sound {w=0.2}{i}tracks{/i},{w=1}{nw}"
+    n 1fcsbg "Sound{w=0.2}{i}tracks{/i},{w=1}{nw}"
     extend 1fchbg " of course!"
 
     return
