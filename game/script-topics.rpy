@@ -9882,6 +9882,8 @@ label talk_daily_jokes_start:
     if Natsuki.isLove(higher=True):
         n 3fchbll "Love you,{w=0.2} [player]!"
 
+    $ persistent._jn_daily_jokes_enabled = True
+
     return
 
 init 5 python:
@@ -9930,5 +9932,7 @@ label talk_daily_jokes_stop:
 
     if Natsuki.isLove(higher=True):
         n 3fchtsl "Love you too,{w=0.2} [player]~!"
+
+    $ persistent._jn_daily_jokes_enabled = False
 
     return
