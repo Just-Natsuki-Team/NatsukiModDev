@@ -270,6 +270,14 @@ init python in jn_jokes:
         label="joke_bored_typist",
         joke_category=JNJokeCategories.bad
     ))
+    __registerJoke(JNJoke(
+        label="joke_regular_moovements",
+        joke_category=JNJokeCategories.bad
+    ))
+    __registerJoke(JNJoke(
+        label="joke_rabbit_lottery",
+        joke_category=JNJokeCategories.funny
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -540,5 +548,26 @@ label joke_bored_typist:
     n 1fsrbo "..."
     n 1fcsemesi "..."
     n 1fcsfl "...Because they were key-{w=0.3}{i}bored{/i}."
+
+    return
+
+label joke_regular_moovements:
+    n 1nsqem "Why shouldn't cows be made to walk up and down stairs too often?"
+    n 1fsrsl "..."
+    n 1fsrpu "Because it isn't part of their regular..."
+    n 1fcsflesi "..."
+    n 1fslflsbr "...{i}moo{/i}{w=1}-vements."
+
+    return
+
+label joke_rabbit_lottery:
+    n 1nlraj "Hey,{w=0.2} [player]...{w=1}{nw}"
+    extend 1unmaj "did {i}you{/i} know that there's actually a rabbit {i}lottery{/i}?"
+    n 1fcsbg "Not what you expected to hear,{w=0.2} I bet."
+    n 1fchbg "But it makes perfect sense when you think about it!{w=1}{nw}"
+    extend 1fsqsm " After all..."
+    n 1fsqss "...How else do they join the{w=0.5}{nw}" 
+    extend 1fnmbg " {i}bun{/i}{w=0.75}{nw}" 
+    extend 1uchgn "-percent?"
 
     return

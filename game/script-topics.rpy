@@ -9567,7 +9567,7 @@ label talk_daily_jokes_unlock:
     extend 1ulraj " So..."
     n 1fcsbg "I'm just gonna pick out something daily to torture you with.{w=0.75}{nw}"
     extend 1fchbg " No reason to overdo it."
-    n 1fsqss "Sound like a plan,{w=0.2} [player]?{w=0.75}{nw}"
+    n 1fsqss "Sounds like a plan,{w=0.2} [player]?{w=0.75}{nw}"
     extend 1fcsss " Of course it does."
     n 1fcsgs "So!{w=0.5}{nw}" 
     extend 1fcsbg " You better start looking forward to it..."
@@ -9577,7 +9577,7 @@ label talk_daily_jokes_unlock:
     show natsuki 1fchsmeme
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
-    hide prop
+    hide joke_book
     play audio drawer
     $ jnPause(3)
     hide black with Dissolve(0.5)
