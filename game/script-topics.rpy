@@ -9859,7 +9859,8 @@ init 5 python:
             label="talk_daily_jokes_start",
             unlocked=True,
             prompt="Can you start telling me daily jokes?",
-            conditional="not persistent._jn_daily_jokes_unlocked and not persistent._jn_daily_jokes_enabled",
+            category=["Jokes"],
+            conditional="persistent._jn_daily_jokes_unlocked and not persistent._jn_daily_jokes_enabled",
             affinity_range=(jn_affinity.HAPPY, None),
             player_says=True,
             location="classroom"
@@ -9871,7 +9872,7 @@ label talk_daily_jokes_start:
     n 2usqss "Oho?{w=1}{nw}"
     extend 4nlrbg " What's this now,{w=0.75}{nw}"
     extend 4tsqbg " all of a sudden?"
-    n 2fcsbg "Seems you really {w=0.2}{i}can't{/i}{w=0.2} get enough of my killer sense of humour after all!"
+    n 2fcsbg "Seems you really {w=0.2}{i}can't{/i}{w=0.2} get enough of my killer sense of joke delivery after all!"
     n 2fsqsmeme "Ehehe."
     n 1fcsss "Well in that case,{w=1}{nw}"
     extend 4fnmss " you better prepare yourself,{w=0.2} [player]."
@@ -9890,7 +9891,8 @@ init 5 python:
             label="talk_daily_jokes_stop",
             unlocked=True,
             prompt="Can stop telling me daily jokes?",
-            conditional="not persistent._jn_daily_jokes_unlocked and persistent._jn_daily_jokes_enabled",
+            category=["Jokes"],
+            conditional="persistent._jn_daily_jokes_unlocked and persistent._jn_daily_jokes_enabled",
             affinity_range=(jn_affinity.HAPPY, None),
             nat_says=True,
             location="classroom"
