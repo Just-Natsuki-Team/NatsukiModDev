@@ -1,6 +1,7 @@
 default persistent._jn_joke_list = dict()
 default persistent._jn_daily_jokes_unlocked = False
 default persistent._jn_daily_joke_given = False
+default persistent._jn_daily_jokes_enabled = True
 
 image joke_book = "mod_assets/props/joke_book_held.png"
 

@@ -9872,11 +9872,11 @@ label talk_daily_jokes_start:
     n 2usqss "Oho?{w=1}{nw}"
     extend 4nlrbg " What's this now,{w=0.75}{nw}"
     extend 4tsqbg " all of a sudden?"
-    n 2fcsbg "Seems you really {w=0.2}{i}can't{/i}{w=0.2} get enough of my killer sense of joke delivery after all!"
+    n 2fcsbg "Seems you really {w=0.2}{i}can't{/i}{w=0.2} get enough of my amazing joke delivery after all!"
     n 2fsqsmeme "Ehehe."
     n 1fcsss "Well in that case,{w=1}{nw}"
     extend 4fnmss " you better prepare yourself,{w=0.2} [player]."
-    n 3fchgn "'Cause I'm gonna make them {i}extra{/i} corny now.{w=1}{nw}" 
+    n 3fchgn "'Cause I'm gonna pick out all the {i}extra{/i} corny ones now.{w=1}{nw}" 
     extend 3nchgn " Juuuust for you~!"
 
     if Natsuki.isLove(higher=True):
@@ -9896,7 +9896,7 @@ init 5 python:
             category=["Jokes"],
             conditional="persistent._jn_daily_jokes_unlocked and persistent._jn_daily_jokes_enabled",
             affinity_range=(jn_affinity.HAPPY, None),
-            nat_says=True,
+            player_says=True,
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
