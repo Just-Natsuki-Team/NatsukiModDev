@@ -9677,9 +9677,9 @@ label talk_daily_joke(from_unlock):
     $ jnPause(3)
     play audio page_turn
     $ jnPause(2)
-    
+
     $ daily_joke = random.choice(daily_jokes)
-    if daily_joke.category == jn_jokes.JNJokeCategories.corny:
+    if daily_joke.joke_category == jn_jokes.JNJokeCategories.corny:
         $ dialogue_choice = random.randint(1, 4)
         if dialogue_choice == 1:
             n 1nsrflsbl "Oh,{w=0.2} jeez."
@@ -9694,7 +9694,7 @@ label talk_daily_joke(from_unlock):
             n 1nsrem "...{i}Seriously{/i}?"
             n 1ncsemesi "..."
 
-    elif daily_joke.category == jn_jokes.JNJokeCategories.bad:
+    elif daily_joke.joke_category == jn_jokes.JNJokeCategories.bad:
         $ dialogue_choice = random.randint(1, 3)
         if dialogue_choice == 1:
             n 1fcsemesi "..."
@@ -9742,7 +9742,7 @@ label talk_daily_joke(from_unlock):
     $ Natsuki.calculatedAffinityGain(bypass=True)
     $ dialogue_choice = random.randint(1, 3)
     
-    if daily_joke.category == jn_jokes.JNJokeCategories.funny:
+    if daily_joke.joke_category == jn_jokes.JNJokeCategories.funny:
         if dialogue_choice == 1:
             n 1uchgn "See?{w=1}{nw}"
             extend 1fchbg " I {i}told{/i} you this book had some good stuff!"
@@ -9764,7 +9764,7 @@ label talk_daily_joke(from_unlock):
 
         show natsuki 1fchsm
 
-    elif daily_joke.category == jn_jokes.JNJokeCategories.corny:
+    elif daily_joke.joke_category == jn_jokes.JNJokeCategories.corny:
         if dialogue_choice == 1:
             n 1fsrem "...Yeesh."
             n 1fsrca "..."
@@ -9791,7 +9791,7 @@ label talk_daily_joke(from_unlock):
 
         show natsuki 1fchsm
 
-    elif daily_joke.category == jn_jokes.JNJokeCategories.bad:
+    elif daily_joke.joke_category == jn_jokes.JNJokeCategories.bad:
         if dialogue_choice == 1:
             n 1fcsfl "...Okay,{w=1.25}{nw}"
             extend 1fbkwr " who the hell approved {i}that{/i} one?{w=0.75}{nw}"
