@@ -1848,6 +1848,9 @@ init -100 python in jn_utils:
         # Save poem data
         store.jn_poems.JNPoem.saveAll()
 
+        # Save joke data
+        store.jn_jokes.JNJoke.saveAll()
+
         #Save topic data
         store.Topic._save_topic_data()
 

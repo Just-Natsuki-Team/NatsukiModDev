@@ -62,7 +62,7 @@ label ch30_init:
             player = persistent._jn_nicknames_player_current_nickname
 
         # Check the daily affinity cap and reset if need be
-        Natsuki.checkResetDailyAffinityGain()
+        Natsuki.checkResetDailies ()
         Natsuki.setInConversation(True)
         persistent.jn_total_visit_count += 1
 
@@ -138,7 +138,7 @@ label ch30_init:
 
         jn_utils.log("Outfit set.")
 
-        # LOAD HOLIDAYS, POEMS
+        # LOAD HOLIDAYS, POEMS, JOKES
 
         # Load poems from disk and corresponding persistent data
         jn_poems.JNPoem.loadAll()
@@ -147,6 +147,9 @@ label ch30_init:
         # Load holidays from disk and corresponding persistent data
         jn_events.JNHoliday.loadAll()
         jn_utils.log("Holiday data loaded.")
+
+        jn_jokes.JNJoke.loadAll()
+        jn_utils.log("Joke data loaded.")
 
         # FLOW HANDLING INTO CH30 - DECIDE WHERE TO ACTUALLY START
 
@@ -379,7 +382,7 @@ init python:
         jn_utils.save_game()
 
         # Check the daily affinity cap and reset if need be
-        Natsuki.checkResetDailyAffinityGain()
+        Natsuki.checkResetDailies ()
 
         # Run through all externally-registered minute check actions
         if len(jn_plugins.minute_check_calls) > 0:
@@ -412,6 +415,8 @@ init python:
                     affinity=Natsuki._getAffinityState(),
                     is_seen=False
                 )
+                if persistent._jn_daily_jokes_unlocked and persistent._jn_daily_jokes_enabled and not persistent._jn_daily_joke_given:
+                    topic_pool.append(get_topic("talk_daily_joke")) # Not ideal
             else:
                 topic_pool = Topic.filter_topics(
                     topics.TOPIC_MAP.values(),
@@ -437,6 +442,7 @@ init python:
         # Select a random idle if enabled, we haven't had one for a while and there's nothing already queued
         if (
             persistent._jn_natsuki_idles_enabled
+            and datetime.datetime.now() >= LAST_TOPIC_CALL + datetime.timedelta(minutes=2)
             and datetime.datetime.now() >= LAST_IDLE_CALL + datetime.timedelta(minutes=10)
             and not persistent._event_list
         ):

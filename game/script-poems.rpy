@@ -167,7 +167,6 @@ init python in jn_poems:
             Returns True, if the poem meets the filter criteria. Otherwise False.
 
             IN:
-                - poem_list - the list of JNpoem child poems to query
                 - unlocked - the boolean unlocked state to filter for
                 - reference_name - list of reference_names the poem must have 
                 - holiday_types - list of the JNHolidayTypes the poem must be in
