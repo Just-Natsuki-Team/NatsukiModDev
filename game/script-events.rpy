@@ -632,6 +632,15 @@ init python in jn_events:
         priority=10
     ))
 
+    # Easter
+    __registerHoliday(JNHoliday(
+        label="holiday_easter",
+        holiday_type=JNHolidayTypes.easter,
+        affinity_range=(jn_affinity.HAPPY, None),
+        natsuki_sprite_code="1fsrunlsbr",
+        priority=10
+    ))
+
     # Player's birthday
     __registerHoliday(JNHoliday(
         label="holiday_player_birthday",
@@ -2554,8 +2563,69 @@ label holiday_valentines_day:
     return
 
 label holiday_easter:
-    #TODO: writing
     $ jn_events.getHoliday("holiday_easter").run()
+
+    n "...!"
+    n "[player]!"
+    extend "[player]! [player]!"
+    n "I-it's about time you got your butt in here!"
+    extend " Do you even {i}know{/i} what day it is today?"
+    
+    if not jn_is_day:
+        extend " Sheesh!"
+        n "It took you long enough!"
+
+    else:
+        extend " I guess not,"
+        extend " considering the time you got here."
+
+    n "It's..."
+    n "Easter,"
+    extend " obviously!"
+    extend " What else was it gonna be, [player]?"
+    n "After all."
+    extend " You do know what Easter means, right?"
+    n "..."
+    n "Yeah."
+    extend " You do."
+    extend " I basically have a sixth sense for this kind of thing, after all."
+    n "...It means cherry blossom season,"
+    extend " obviously!"
+    n "..."
+    n "What?"
+    extend " I'm being serious, [player]!"
+    extend " Why wouldn't I be?"
+    n "It's..."
+    extend " awesome!"
+    n "Seeing all the cherry blossom trees just explode into life like that?"
+    extend " It's super pretty!"
+    extend " Plus with how the blossoms travel all the way up through Japan, from south to north..."
+    n "It's pretty much a rolling announcement for the summer! I love it!"
+    n "...And actually, now that I think about it -"
+    extend " it's like a reward for surviving through all the gross winter months too."
+    n "All the crappy weather, getting up when it's dark -"
+    extend " getting back when it's dark."
+    extend " Not to mention being basically stuck indoors!"
+    n "So after all that,"
+    extend " seeing everything become like something out of a fairy tale,"
+    extend " even if it's just for a couple of weeks?"
+    n "It almost makes dealing with winter worth it!"
+    n "...Almost."
+    extend " Ehehe."
+
+    # Pivot?
+    n "..."
+    n "Oh, right."
+    extend " And the chocolate stuff is cool too,"
+    extend " I guess."
+    n "Don't tell me that's what you were {i}really{/i} interested in, [player]."
+    n "..."
+    n "Nah,"
+    extend " it's fine."
+    extend " I can get that too."
+    n "...Or did you seriously think the outfit was just for fun?"
+
+
     $ jn_events.getHoliday("holiday_easter").complete()
 
     return
