@@ -2563,67 +2563,94 @@ label holiday_valentines_day:
     return
 
 label holiday_easter:
-    $ jn_events.getHoliday("holiday_easter").run()
+    python:
+        jn_atmosphere.showSky(jn_atmosphere.WEATHER_CHERRY_BLOSSOM)
+        jn_outfits.get_outfit("jn_chick_outfit").unlock()
+        jn_outfits.save_temporary_outfit(santa_hat_outfit)
+        jn_events.getHoliday("holiday_easter").run()
 
     n "...!"
     n "[player]!"
-    extend "[player]! [player]!"
-    n "I-it's about time you got your butt in here!"
+    extend "[player]!{w=0.2} [player]!"
+    n "I-I mean,"
+    extend " it's about time you got your butt in here!"
     extend " Do you even {i}know{/i} what day it is today?"
     
     if not jn_is_day:
         extend " Sheesh!"
-        n "It took you long enough!"
 
     else:
-        extend " I guess not,"
+        n "I guess not,"
         extend " considering the time you got here."
 
     n "It's..."
     n "Easter,"
     extend " obviously!"
-    extend " What else was it gonna be, [player]?"
+    extend " What else was it gonna be,{w=0.2} [player]?"
     n "After all."
-    extend " You do know what Easter means, right?"
+    extend " You {i}do{/i} know what Easter means,{w=0.2} right?"
     n "..."
     n "Yeah."
-    extend " You do."
-    extend " I basically have a sixth sense for this kind of thing, after all."
+    extend " I bet you do."
+    extend " I basically have a sixth sense for this kind of thing,{w=0.2} after all."
     n "...It means cherry blossom season,"
     extend " obviously!"
     n "..."
     n "What?"
-    extend " I'm being serious, [player]!"
+    extend " I'm being serious,{w=0.2} [player]!"
     extend " Why wouldn't I be?"
     n "It's..."
-    extend " awesome!"
-    n "Seeing all the cherry blossom trees just explode into life like that?"
-    extend " It's super pretty!"
-    extend " Plus with how the blossoms travel all the way up through Japan, from south to north..."
-    n "It's pretty much a rolling announcement for the summer! I love it!"
-    n "...And actually, now that I think about it -"
-    extend " it's like a reward for surviving through all the gross winter months too."
-    n "All the crappy weather, getting up when it's dark -"
+    extend " {b}AWESOME{/b}!"
+    n "Seeing all the cherry blossom trees just {i}explode{/i} into life like that?"
+    extend " It's {i}super{/i} pretty!"
+    extend " What else can you think of that floods the place with colour like that?"
+    n "Plus with how the blossoms travel all the way up from south to north..."
+    n "It's pretty much a rolling announcement for the summer!{w=0.2} I love it!"
+
+    n "But personally?"
+    extend " I like to think it's my reward for making it through all the gross winter months too."
+    n "Putting up with all the crappy weather,{w=0.2} getting up when it's dark -"
     extend " getting back when it's dark."
-    extend " Not to mention being basically stuck indoors!"
+    n "Not to mention being basically stuck indoors!"
     n "So after all that,"
-    extend " seeing everything become like something out of a fairy tale,"
+    extend " seeing everywhere start looking like something out of a fairy tale,"
     extend " even if it's just for a couple of weeks?"
-    n "It almost makes dealing with winter worth it!"
-    n "...Almost."
+    extend " Well..."
+    n "It {i}almost{/i} makes dealing with winter worth it!"
+    n "...{i}Almost{/i}."
     extend " Ehehe."
 
-    # Pivot?
     n "..."
     n "Oh, right."
     extend " And the chocolate stuff is cool too,"
     extend " I guess."
-    n "Don't tell me that's what you were {i}really{/i} interested in, [player]."
-    n "..."
-    n "Nah,"
-    extend " it's fine."
-    extend " I can get that too."
-    n "...Or did you seriously think the outfit was just for fun?"
+    n "What?"
+    n "Don't tell me {i}that's{/i} the part of Easter you were {i}really{/i} interested in, [player]."
+    n "Though..."
+    extend " in all seriousness, [player]?"
+    extend " We never really covered it a whole lot in school, to be honest."
+    n "I mean,"
+    extend " I get what it's supposed to represent."
+    extend " Rebirth, starting over - "
+    extend " that kind of thing."
+    n "Where else did you think I got the idea for the dress?"
+    n "But..."
+    extend " at least to me?"
+
+    if Natsuki.isEnamored(higher=True):
+        n "...Heh."
+        n "I think I already got the "
+
+    elif Natsuki.isAffectionate(higher=True):
+        n ""
+
+    else:
+        n ""
+
+
+    n "Easter {i}is{/i} cool and all."
+    # Nothing says a fresh start like cherry blossom, link to flowers, round off
+    n "But "
 
 
     $ jn_events.getHoliday("holiday_easter").complete()

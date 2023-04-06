@@ -1408,6 +1408,12 @@ init -1 python in jn_outfits:
         unlocked=False,
         is_jn_wearable=True
     ))
+    __register_wearable(JNAccessory(
+        reference_name="jn_accessory_fried_egg_hairpin",
+        display_name="Fried egg hairpin",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
 
     # Official JN clothes
     __register_wearable(JNClothes(
@@ -1675,12 +1681,6 @@ init -1 python in jn_outfits:
     __register_wearable(JNHeadgear(
         reference_name="jn_headgear_chocolate_plaid_bow",
         display_name="Chocolate plaid bow",
-        unlocked=False,
-        is_jn_wearable=True
-    ))
-    __register_wearable(JNHeadgear(
-        reference_name="jn_headgear_fried_egg_hairpin",
-        display_name="Fried egg hairpin",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -2012,7 +2012,7 @@ init -1 python in jn_outfits:
         unlocked=False,
         is_jn_outfit=True,
         clothes=get_wearable("jn_clothes_chick_dress"),
-        headgear=get_wearable("jn_headgear_fried_egg_hairpin"),
+        accessory=get_wearable("jn_accessory_fried_egg_hairpin"),
         hairstyle=get_wearable("jn_hair_twintails_braided"),
         necklace=get_wearable("jn_necklace_bunny_necklace")
     ))

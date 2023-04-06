@@ -14,6 +14,7 @@ image sky day rain = "mod_assets/backgrounds/atmosphere/sky/sky_day_rain.png"
 image sky day sunny = "mod_assets/backgrounds/atmosphere/sky/sky_day_sunny.png"
 image sky day thunder = "mod_assets/backgrounds/atmosphere/sky/sky_day_thunder.png"
 image sky day snow = "mod_assets/backgrounds/atmosphere/sky/sky_day_snow.png"
+image sky day blossom = "mod_assets/backgrounds/atmosphere/sky/sky_day_blossom.png"
 
 image sky night overcast = "mod_assets/backgrounds/atmosphere/sky/sky_night_overcast.png"
 image sky night rain = "mod_assets/backgrounds/atmosphere/sky/sky_night_rain.png"
@@ -93,6 +94,10 @@ image particles snow:
     "mod_assets/backgrounds/atmosphere/particles/snow.png"
     snow_scroll
 
+image particles cherry_blossom:
+    "mod_assets/backgrounds/atmosphere/particles/cherry_blossom.png"
+    cherry_blossom_scroll
+
 # Transforms
 transform cloud_scroll:
     # Clouds shift from left to right
@@ -117,6 +122,14 @@ transform rain_scroll:
     parallel:
         xoffset 0 yoffset 0
         linear 2 xoffset 220  yoffset 1280
+        repeat
+
+transform cherry_blossom_scroll:
+    subpixel True
+    right
+    parallel:
+        xoffset 0 yoffset 0
+        linear 30 xoffset 220  yoffset 1280
         repeat
 
 # Transitions
@@ -159,6 +172,7 @@ init 0 python in jn_atmosphere:
         thunder = 4
         glitch = 5
         snow = 6
+        cherry_blossom = 7
 
     class JNWeather():
         def __init__(
@@ -288,6 +302,14 @@ init 0 python in jn_atmosphere:
         weather_type=JNWeatherTypes.glitch,
         day_sky_image="sky glitch_fuzzy",
         night_sky_image="sky glitch_fuzzy")
+
+    WEATHER_CHERRY_BLOSSOM = JNWeather(
+        weather_type=JNWeatherTypes.cherry_blossom,
+        day_sky_image="sky day blossom",
+        night_sky_image="sky night sunny",
+        night_clouds_image="clouds night light",
+        day_particles_image="particles cherry_blossom"
+    )
 
     # Weather code -> JNWeather map
     # key: Regex matching the weather code as a string, allowing ranged captures (returned from OpenWeatherMap)
