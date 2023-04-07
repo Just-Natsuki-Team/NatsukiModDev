@@ -2567,6 +2567,8 @@ label holiday_easter:
         jn_atmosphere.showSky(jn_atmosphere.WEATHER_CHERRY_BLOSSOM)
         chick_outfit = jn_outfits.get_outfit("jn_chick_outfit")
         chick_outfit.unlock()
+        cherry_blossom_outfit = jn_outfits.get_outfit("jn_cherry_blossom_outfit")
+        cherry_blossom_outfit.unlock()
         jn_outfits.save_temporary_outfit(chick_outfit)
         jn_events.getHoliday("holiday_easter").run()
 
