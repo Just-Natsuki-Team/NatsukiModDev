@@ -2029,7 +2029,7 @@ init -1 python in jn_outfits:
         necklace=get_wearable("jn_necklace_bunny_necklace")
     ))
     __register_outfit(JNOutfit(
-        reference_name="jn_cerry_blossom_outfit",
+        reference_name="jn_cherry_blossom_outfit",
         display_name="Cherry blossom outfit",
         unlocked=False,
         is_jn_outfit=True,

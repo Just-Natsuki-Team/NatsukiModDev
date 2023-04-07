@@ -2565,137 +2565,144 @@ label holiday_valentines_day:
 label holiday_easter:
     python:
         jn_atmosphere.showSky(jn_atmosphere.WEATHER_CHERRY_BLOSSOM)
+
         chick_outfit = jn_outfits.get_outfit("jn_chick_outfit")
         chick_outfit.unlock()
-        cherry_blossom_outfit = jn_outfits.get_outfit("jn_cherry_blossom_outfit")
-        cherry_blossom_outfit.unlock()
+        jn_outfits.get_outfit("jn_cherry_blossom_outfit").unlock()
         jn_outfits.save_temporary_outfit(chick_outfit)
+
         jn_events.getHoliday("holiday_easter").run()
 
-    n 1unmflleex "...!"
-    n 1unmbgl "[player]!{w=0.75}{nw}"
-    extend 1uchbgl "[player]!{w=0.5} [player]!"
-    n 1fcsfll "I-{w=0.2}I mean,{w=1}{nw}"
-    extend 1fcsgslsbr " it's about time you got your butt in here!{w=1}{nw}"
-    
-    
-    if not jn_is_day:
-        extend 1fcsgssbl " Do you even {i}know{/i} what day it is today?{w=0.75}{nw}"
-        extend 1fcsposbl " Sheesh!"
+    n 1unmflleex "...!{w=1.25}{nw}"
+    n 4unmbgl "[player]!{w=0.5}{nw}"
+    extend 4uchbgl " [player]!{w=0.3} [player]!"
+    n 2fcsfll "I-{w=0.2}I mean,{w=0.5}{nw}"
+    extend 2fcsgslsbr " it's about time you got your butt in here!{w=1}{nw}"
+
+    if jn_is_day():
+        extend 3fcsgssbl " Do you even {i}know{/i} what day it is today?{w=0.75}{nw}"
+        extend 3fcsposbl " Sheesh!"
         
     else:
-        extend 1fsqgssbl " Do you even {i}know{/i} what day it is today?"
-        n 1fsrslsbl "I guess not,{w=0.75}{nw}"
-        extend 1fcspoesisbl " considering the time you got here."
+        extend 3fsqgssbl " Do you even {i}know{/i} what day it is today?"
+        n 4fsrslsbl "I guess not,{w=0.75}{nw}"
+        extend 2fcspoesisbl " considering the time you got here."
 
-    n 1fsqca "I don't {i}seriously{/i} have to remind you,{w=0.2} do I?"
+    n 2fsqca "I don't {i}seriously{/i} have to remind you,{w=0.2} do I?"
     n 1fcstresi "..."
-    n 1fcsaj "It's..."
-    n 1fchbg "Easter,{w=0.75}{nw}"
-    extend 1uchgn " obviously!{w=1}{nw}"
-    extend 1fsqbg " What else was it gonna be,{w=0.2} [player]?"
+    n 4fcsaj "It's..."
+    n 3fchbg "Easter,{w=0.75}{nw}"
+    extend 3uchgn " obviously!{w=1}{nw}"
+    extend 4fsqbg " What else was it gonna be,{w=0.2} [player]?"
     n 1fcsbg "After all.{w=0.75}{nw}"
-    extend 1fsqsm " You {i}do{/i} know what Easter means,{w=0.2} right?"
-    n 1tsqsm "..."
+    extend 3fsqsm " You {i}do{/i} know what Easter means,{w=0.2} right?"
+    n 3tsqsm "..."
     n 1fcssm "Heh."
-    n 1fcsbg "Yeah.{w=0.75}{nw}"
-    extend 1fsqss " I bet you do.{w=1}{nw}"
+    n 4fcsbg "Yeah,{w=0.2} you do.{w=0.75}{nw}"
     extend 1fcssmesm " I basically have a sixth sense for this kind of thing,{w=0.2} after all."
     n 1fcsss "It means..." 
-    n 1fchbs "Cherry blossom season,{w=0.75}{nw}"
-    extend 1uchgn " obviously!"
-    n 1tnmbo "..."
-    n 1tnmfl "What?{w=0.75}{nw}"
-    extend 1fsrpo " I'm being serious,{w=0.2} [player]!{w=1}{nw}"
-    extend 1fcsaj " Why wouldn't I be?"
+    n 3fchbs "Cherry blossom season,{w=0.75}{nw}"
+    extend 3uchgn " obviously!"
+    n 4tnmbo "..."
+    n 4tnmfl "What?{w=0.75}{nw}"
+    extend 2fsrpo " I'm being serious,{w=0.2} [player]!{w=1}{nw}"
+    extend 2fcsaj " Why wouldn't I be?"
     n 1fcsfl "It's...{w=1.25}{nw}"
-    extend 1uchgnledz " {b}AWESOME{/b}!"
-    n 1ullbg "Seeing all the cherry blossom trees just {i}explode{/i} into life like that?{w=0.75}{nw}"
-    extend 1fspgs " It's {i}super{/i} pretty!{w=1.25}{nw}"
-    extend 1fcsbs " What else can you think of that floods the place with colour like that?"
+    extend 3uchgnledz " {b}AWESOME{/b}!"
+    n 4ullbg "Seeing all the cherry blossom trees just {i}explode{/i} into life like that?{w=0.75}{nw}"
+    extend 4fspgs " It's {i}super{/i} pretty!"
+    n 2fcsbs "What else can you think of that floods the place with colour that well,{w=0.2} huh?"
     n 1ulrss "Plus with how the blossoms travel all the way up from south to north..."
-    n 1uchgn "It's pretty much a rolling announcement for the summer!{w=0.2} I love it!"
+    n 3uchgn "It's pretty much a rolling announcement for the summer!{w=0.2} I love it!"
 
-    n 1unmaj "But personally?{w=0.75}{nw}"
-    extend 1fcsca " I like to think it's my reward for making it through all the gross winter months too."
+    n 3unmaj "But personally?{w=0.75}{nw}"
+    extend 2fcsca " I like to think it's my reward for making it through all the gross winter months too."
     n 1fslem "Putting up with all the crappy weather,{w=0.2} getting up when it's dark -{w=0.5}{nw}"
     extend 1fsqsl " getting back when it's dark."
-    n 1fcswr "Not to mention being basically stuck indoors all the time!"
-    n 1ulrfl "So after all that,{w=0.75}{nw}"
-    extend 1nsrss " seeing everywhere start looking like something out of a fairy tale,{w=0.5}{nw}"
-    extend 1tnmbo " even if it's just for a couple of weeks?{w=0.75}{nw}"
-    extend 1tllss " Well..."
+    n 2fcswr "Not to mention being basically stuck indoors all the time!"
+    n 4ulrfl "So after all that,{w=0.75}{nw}"
+    extend 4nsrss " seeing everywhere start looking like something out of a fairy tale,{w=0.5}{nw}"
+    extend 2tnmbo " even if it's just for a couple of weeks?{w=0.75}{nw}"
+    extend 2tllss " Well..."
     n 1fchsm "It {i}almost{/i} makes dealing with winter worth it!"
-    n 1fsqss "...{i}Almost{/i}.{w=1}{nw}"
-    extend 1fcssm " Ehehe."
+    n 4fsqss "...{i}Almost{/i}.{w=1}{nw}"
+    extend 4fcssm " Ehehe."
 
-    n "..."
-    n "Oh, right."
-    extend " And the chocolate stuff is cool too,"
-    extend " I guess."
-    n "What?"
-    n "Don't tell me {i}that's{/i} the part of Easter you were {i}really{/i} interested in, [player]."
-    n "Though..."
-    extend " in all seriousness, [player]?"
-    extend " We never really covered it a whole lot in school, to be honest."
-    n "I mean,"
-    extend " I get what it's supposed to represent."
-    extend " Rebirth, starting over - "
-    extend " that kind of thing."
-    n "Where else did you think I got the idea for the dress?"
-    n "But..."
-    extend " at least to me?"
-    n "The inspiration I can get ouf of it is the best part."
-    n "Building nests,{w=0.2} painting eggs...{w=0.2}"
-    extend " There are many ways to decorate!"
-    extend " Including complementing the blossoms of course too."
-
-    n "...Heh."
-    n "By now you probably already guessed it..."
-    extend " but I do have a bit of a weak point for adorable fluffiness."
-    extend " Only a {i}tad{/i} of course."
-    n "So my favourite part about this holiday?"
-    n "..."
-    n "It's definitely the plush!"
-    n "I mean,"
-    extend "{w=0.3} have you seen chicks?!{w=0.5}{nw}"
-    extend " They are so {i}poofy{/i}!"
-    n "Heck,{w=0.3} what I would give to pet one."
-    n "Or even better..."
-    n "Being showered in chicks!"
-    n "Oh gosh!{w=0.3}{nw}"
-    extend " Let's add bunnies to the mix too!{w=0.3} Living the perfect dream."
-    extend " Ehehe."
-    
+    n 4tslbo "..."
+    n 4unmaj "Oh,{w=0.2} right.{w=1}{nw}"
+    extend 2ulraj " And the chocolate stuff is cool too,{w=0.75}{nw}"
+    extend 2tlrbo " I guess."
+    n 1fsqsm "Ehehe."
+    n 3fcsbs "Don't tell me {i}that's{/i} the part of Easter you were {i}really{/i} interested in,{w=0.2} [player]."
+    n 3fcsbg "I can read you like a book!"
+    n 3nlraj "Though...{w=1.25}{nw}"
+    extend 1tnmbo " in all seriousness,{w=0.2} [player]?{w=0.75}{nw}"
+    n 2ullfl "We never really covered that a whole lot in school,{w=0.2} to be honest.{w=0.5}{nw}"
+    extend 2tnmsl " Easter."
+    n 4fsran "Not like that stopped all the stupid adverts {i}trying{/i} to cover it for us."
+    n 1unmca "But at least I get what it's supposed to represent.{w=1}{nw}"
+    extend 2ullaj " Rebirth,{w=0.2} starting over -{w=0.75}{nw}"
+    extend 2fcssm " that kind of thing."
+    n 4fcsbg "Surpised,{w=0.2} [player]?{w=0.75}{nw}"
+    extend 3fsqss " Where {i}else{/i} did you think I got the idea for the dress?"
+    n 3fsrss "I don't know a whole lot about Easter..."
+    n 3fchgnl "But it doesn't take a genius to know chicks are cuuuute!{w=0.75}{nw}"
+    extend 4uchgnl " I love the little yellow puffballs!"
+    n 1ncsssl "Man..."
+    n 4fcstrl "I have {w=0.2}{i}got{/i}{w=0.2} to get some plushies or something..."
+    n 4nslcalsbr "..."
+    n 2fcstrlsbr "Well,{w=0.2} a-{w=0.2}anyway."
 
     if Natsuki.isEnamored(higher=True):
-        n "..."
-        n "Oh,{w=0.3}{nw}"
-        extend " I ended up talking quite a lot,{w=0.2} right?"
-        n "..."
-        n "Look,{w=0.5}{nw}"
-        extend " I don't know if you are celebrating Easter or not,{w=0.2} [player].{w=0.5}{nw}"
-        extend " But...{w=0.75}"
-        extend " thank you for visiting me today {i}again{/i}."
-        n "It's really appreciated."
+        n 2ulraj "Easter might be all about fresh starts,{w=0.75}{nw}"
+        extend 2nlrpu " but...{w=1}{nw}" 
+        extend 4tnmbo " honestly?"
+        n 4nllssl "...Thanks to you?"
+        n 1kllbol "..."
+        n 1ncsssl "Heh."
+
+        if Natsuki.isLove(higher=True):
+            n 1ksrssl "I think I've already {i}had{/i} the best I could have gotten."
+            n 4ksrbolsbl "..."
+
+            show natsuki 4fcsbolsbl
+            play audio chair_out
+            show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+            $ jnPause(3)
+            play audio kiss
+            show natsuki 4nslfsl at jn_center
+            $ jnPause(3)
+            play audio chair_in
+            $ jnPause(2)
+            hide black with Dissolve(2)
+
+            n 4nsldvl "...And I guess we ended up {i}blossoming{/i} too,{w=0.2} huh?{w=1.25}{nw}"
+            extend 4fchsslsbl " E-{w=0.2}ehehe..."
+            $ chosen_endearment = jn_utils.getRandomEndearment()
+            n 3fchbll "H-{w=0.2}happy Easter,{w=0.2} [chosen_endearment]!"
+
+        else:
+            n 3ksrssl "I think I've already had the best I could have gotten.{w=0.75}{nw}"
+            extend 3nsrsmlsbl " Ehehe."
+            $ chosen_tease = jn_utils.getRandomTease()
+            n 3fchbgl "H-{w=0.2}happy Easter,{w=0.2} [chosen_tease]!"
 
     elif Natsuki.isAffectionate(higher=True):
-        n "..."
-        extend " A-{w=0.2}ah!"
-        extend " But you wanted to hear more than just me rambling about cute animals,{w=0.3} right?"
-        n ""
+        n 2ullaj "Easter might be all about fresh starts,{w=0.75}{nw}"
+        extend 2tnmbo " but honestly?"
+        n 4kslslsbr "..."
+        n 4fllsslsbr "I...{w=1}{nw}"
+        extend 1nsrsslsbr " think I can settle for the one you gave me too.{w=1}{nw}"
+        extend 1fcssslsbr " Ehehe."
+        n 2fcsbglsbl "H-{w=0.2}happy Easter,{w=0.2} [player]!"
 
     else:
-        n "...!"
-        extend " A-{w=0.2}and don't you think this is me talking like a child!{w=0.3}{nw}"
-        extend " It's totally reasonable to enjoy adorable animals.{w=0.75}{nw}"
-        extend " ...It totally is."
-
-    n "A-{w=0.2}anyway!"
-    n "I think we can agree Easter {i}is{/i} cool and all."
-    # Nothing says a fresh start like cherry blossom, link to flowers, round off
-    n "But nothing could beat a tornado of cherry blossoms cutting through the air like a samurai."
-
+        n 2ulrbo "They say Easter is all about fresh starts,{w=0.75}{nw}"
+        extend 2tlrpu " but...{w=1}{nw}"
+        extend 2fnmsm " honestly?"
+        n 3fcsbg "...I like to think this one is juuust getting started.{w=1}{nw}"
+        extend 3fsqsm " Ehehe."
+        n 4nchgn "Happy Easter,{w=0.2} [player]!"
 
     $ jn_events.getHoliday("holiday_easter").complete()
 
