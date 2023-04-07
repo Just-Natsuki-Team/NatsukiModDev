@@ -94,8 +94,12 @@ image particles snow:
     "mod_assets/backgrounds/atmosphere/particles/snow.png"
     snow_scroll
 
-image particles cherry_blossom:
-    "mod_assets/backgrounds/atmosphere/particles/cherry_blossom.png"
+image particles cherry_blossom day:
+    "mod_assets/backgrounds/atmosphere/particles/cherry_blossom_day.png"
+    cherry_blossom_scroll
+    
+image particles cherry_blossom night:
+    "mod_assets/backgrounds/atmosphere/particles/cherry_blossom_night.png"
     cherry_blossom_scroll
 
 # Transforms
@@ -307,8 +311,8 @@ init 0 python in jn_atmosphere:
         weather_type=JNWeatherTypes.cherry_blossom,
         day_sky_image="sky day blossom",
         night_sky_image="sky night sunny",
-        night_clouds_image="clouds night light",
-        day_particles_image="particles cherry_blossom"
+        day_particles_image="particles cherry_blossom day",
+        night_particles_image="particles cherry_blossom night"
     )
 
     # Weather code -> JNWeather map
