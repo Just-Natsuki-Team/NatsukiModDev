@@ -24,6 +24,8 @@ python early in jn_data_migrations:
     # ver and suffix
     VER_STR_PARSER = re.compile(r"^(?P<ver>\d+\.\d+\.\d+)(?P<suffix>.*)$")
 
+    migrated_in_session = False
+
     class MigrationRuntimes(Enum):
         """
         Enum for the times to run migration scripts.
@@ -153,7 +155,9 @@ init 10 python:
 init python in jn_data_migrations:
     import store
     import store.jn_affinity as jn_affinity
+    import store.jn_events as jn_events
     import store.jn_outfits as jn_outfits
+    import store.jn_poems as jn_poems
     import store.jn_utils as jn_utils
 
     @migration(["0.0.0", "0.0.1", "0.0.2"], "1.0.0", runtime=MigrationRuntimes.INIT)
@@ -286,6 +290,19 @@ init python in jn_data_migrations:
             " or (jn_is_time_block_late_morning and not jn_is_weekday())"
         )
         jn_utils.log("""Migrated: store.persistent._event_database["event_not_ready_yet"]["conditional"]""")
+
+        if "holiday_player_birthday" in store.persistent._seen_ever:
+            jn_poems.getPoem("jn_birthday_cakes_candles").unlock()
+            jn_utils.log("Migrated: jn_birthday_cakes_candles unlock state")
+        
+        if "holiday_christmas_day" in store.persistent._seen_ever:
+            if store.Natsuki.isEnamored(higher=True):
+                jn_poems.getPoem("jn_christmas_evergreen").unlock()
+                jn_utils.log("Migrated: jn_christmas_evergreen unlock state")
+
+            elif store.Natsuki.isHappy(higher=True):
+                jn_poems.getPoem("jn_christmas_gingerbread_house").unlock()
+                jn_utils.log("Migrated: jn_christmas_gingerbread_house unlock state")
 
         jn_utils.save_game()
         jn_utils.log("Migration to 1.1.0 DONE")

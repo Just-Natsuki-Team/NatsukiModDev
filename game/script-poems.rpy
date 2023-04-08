@@ -204,6 +204,9 @@ init python in jn_poems:
             __ALL_POEMS[poem.reference_name] = poem
             if poem.reference_name not in store.persistent.jn_poem_list:
                 poem.__save()
+            
+            else:
+                poem.__load()
 
     def getPoem(poem_name):
         """
