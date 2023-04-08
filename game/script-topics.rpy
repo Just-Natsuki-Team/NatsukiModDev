@@ -1770,7 +1770,7 @@ label talk_player_appearance:
 
     # Eye colour
     menu:
-        n "How would you describe your eye colour,{w=0.1} [player]?"
+        n "How would you describe your eye color,{w=0.1} [player]?"
 
         "Amber":
             n 4unmaj "Ooh!{w=0.2} I don't think I've seen someone with amber eyes before."
@@ -1807,7 +1807,7 @@ label talk_player_appearance:
             $ persistent.jn_player_appearance_eye_colour = "Hazel"
 
         "Mixed":
-            n 4unmaj "Wow!{w=0.2} Do you have two different colours or something,{w=0.1} [player]?"
+            n 4unmaj "Wow!{w=0.2} Do you have two different colors or something,{w=0.1} [player]?"
             n 1fchbg "Now if that isn't unique,{w=0.1} I don't know what is!"
             $ persistent.jn_player_appearance_eye_colour = "Mixed"
 
@@ -1865,19 +1865,19 @@ label talk_player_appearance:
     # Hair colour
     if persistent.jn_player_appearance_hair_length == "None":
         n 1fllss "You said you didn't have any hair,{w=0.1} right?{w=0.5}{nw}"
-        extend 4fllbg " So I think it's kinda pointless talking about hair colour."
+        extend 4fllbg " So I think it's kinda pointless talking about hair color."
         n 3fslbo "Now,{w=0.1} let's see...{w=0.3} what else..."
 
     else:
-        n 1fchsm "Now for your hair colour!"
+        n 1fchsm "Now for your hair color!"
         n 4unmbg "So,{w=0.1} [player]..."
         menu:
-            n "How would you describe your hair colour?"
+            n "How would you describe your hair color?"
 
             "Auburn":
                 n 4unmaw "Ooh!{w=0.2} Auburn,{w=0.1} huh?{w=0.5}{nw}"
                 extend 1fwdaw " That's awesome,{w=0.1} [player]!"
-                n 1fchbg "It's such a warm colour!"
+                n 1fchbg "It's such a warm color!"
                 $ persistent.jn_player_appearance_hair_colour = "Auburn"
 
             "Black":
@@ -3898,7 +3898,7 @@ label talk_school_uniform:
         n 2fsran "Heh.{w=0.2} I like it more than {i}you{/i}.{w=0.2} Jerk."
         return
 
-    n 1unmaj "It's alright,{w=0.1} I guess.{w=0.2} I actually really like the warm colours!"
+    n 1unmaj "It's alright,{w=0.1} I guess.{w=0.2} I actually really like the warm colors!"
     n 1nnmss "They're way easier on the eyes than a lot of the other uniforms I've seen around."
     n 2nsqsr "But Oh.{w=0.2} My.{w=0.2} Gosh.{w=0.2} [player]."
     n 1fcsan "The layers.{w=0.2} So many layers."
@@ -8781,7 +8781,7 @@ label talk_chocolate_preference:
         extend 1ncsfs " all this talk of treats is bringing back all kinds of memories."
         n 2tllaj "In fact..."
         n 4tnmss "I'm {i}sure{/i} I had some kind of cute chocolate themed dress at some point.{w=0.75}{nw}"
-        extend 2nchgn " Or at least it felt that way with all the colours."
+        extend 2nchgn " Or at least it felt that way with all the colors."
         n 2ksrfssbl "...And Sayori practically drooling over it."
         n 2kchsm "Maybe I should go dig that out later..."
         $ jn_outfits.get_outfit("jn_chocolate_plaid_collection").unlock()

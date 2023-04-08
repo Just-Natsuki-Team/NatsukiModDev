@@ -139,6 +139,9 @@ init python in jn_jokes:
             if joke.label not in store.persistent._jn_joke_list:
                 joke.__save()
 
+            else:
+                joke.__load()
+
     def getJoke(joke_name):
         """
         Returns the joke for the given name, if it exists.

@@ -1408,6 +1408,18 @@ init -1 python in jn_outfits:
         unlocked=False,
         is_jn_wearable=True
     ))
+    __register_wearable(JNAccessory(
+        reference_name="jn_accessory_fried_egg_hairpin",
+        display_name="Fried egg hairpin",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNAccessory(
+        reference_name="jn_accessory_cherry_blossom_hairpin",
+        display_name="Cherry blossom hairpin",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
 
     # Official JN clothes
     __register_wearable(JNClothes(
@@ -1569,6 +1581,18 @@ init -1 python in jn_outfits:
     __register_wearable(JNClothes(
         reference_name="jn_clothes_office_blazer",
         display_name="Office blazer",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_chick_dress",
+        display_name="Chick dress",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_cherry_blossom_dress",
+        display_name="Cherry Blossom dress",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1784,6 +1808,12 @@ init -1 python in jn_outfits:
         unlocked=False,
         is_jn_wearable=True
     ))
+    __register_wearable(JNNecklace(
+        reference_name="jn_necklace_bunny_necklace",
+        display_name="Bunny necklace",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
 
     # Official JN facewear
     __register_wearable(JNFacewear(
@@ -1987,6 +2017,26 @@ init -1 python in jn_outfits:
         clothes=get_wearable("jn_clothes_office_blazer"),
         hairstyle=get_wearable("jn_hair_wavy"),
         necklace=get_wearable("jn_necklace_formal_necktie")
+    ))
+    __register_outfit(JNOutfit(
+        reference_name="jn_chick_outfit",
+        display_name="Chick outfit",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_chick_dress"),
+        accessory=get_wearable("jn_accessory_fried_egg_hairpin"),
+        hairstyle=get_wearable("jn_hair_twintails_braided"),
+        necklace=get_wearable("jn_necklace_bunny_necklace")
+    ))
+    __register_outfit(JNOutfit(
+        reference_name="jn_cherry_blossom_outfit",
+        display_name="Cherry blossom outfit",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_cherry_blossom_dress"),
+        accessory=get_wearable("jn_accessory_cherry_blossom_hairpin"),
+        hairstyle=get_wearable("jn_hair_twintails_braided"),
+        necklace=get_wearable("jn_necklace_bunny_necklace")
     ))
 
     # Internal outfits; used for events, etc. These shouldn't be unlocked!

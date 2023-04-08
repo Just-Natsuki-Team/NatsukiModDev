@@ -632,6 +632,15 @@ init python in jn_events:
         priority=10
     ))
 
+    # Easter
+    __registerHoliday(JNHoliday(
+        label="holiday_easter",
+        holiday_type=JNHolidayTypes.easter,
+        affinity_range=(jn_affinity.HAPPY, None),
+        natsuki_sprite_code="1fsrunlsbr",
+        priority=10
+    ))
+
     # Player's birthday
     __registerHoliday(JNHoliday(
         label="holiday_player_birthday",
@@ -2554,8 +2563,195 @@ label holiday_valentines_day:
     return
 
 label holiday_easter:
-    #TODO: writing
-    $ jn_events.getHoliday("holiday_easter").run()
+    python:
+        persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
+        jn_atmosphere.showSky(jn_atmosphere.WEATHER_CHERRY_BLOSSOM)
+
+        chick_outfit = jn_outfits.get_outfit("jn_chick_outfit")
+        chick_outfit.unlock()
+        jn_outfits.save_temporary_outfit(chick_outfit)
+
+        jn_events.getHoliday("holiday_easter").run()
+
+    n 1unmflleex "...!{w=1.25}{nw}"
+    n 4unmbgl "[player]!{w=0.5}{nw}"
+    extend 4uchbgl " [player]!{w=0.3} [player]!"
+    n 2fcsfll "I-{w=0.2}I mean,{w=0.5}{nw}"
+    extend 2fcsgslsbr " it's about time you got your butt in here!{w=1}{nw}"
+
+    if jn_is_day():
+        extend 4fcsgssbl " Do you even {i}know{/i} what day it is today?{w=0.75}{nw}"
+        extend 2fcsposbl " Sheesh!"
+        
+    else:
+        extend 4fsqgssbl " Do you even {i}know{/i} what day it is today?"
+        n 2fsrslsbl "I guess not,{w=0.75}{nw}"
+        extend 2fcspoesisbl " considering the time you got here."
+
+    n 2fsqca "I don't {i}seriously{/i} have to remind you,{w=0.2} do I?"
+    n 1fcstresi "..."
+    n 4fcsaj "It's..."
+    n 3fchbg "Easter,{w=0.75}{nw}"
+    extend 3uchgn " duh!{w=1}{nw}"
+    extend 4fsqbg " What else was it gonna be,{w=0.2} [player]?"
+    n 1fcsbg "After all.{w=0.75}{nw}"
+    extend 3fsqsm " You {i}do{/i} know what Easter means,{w=0.2} right?"
+    n 3tsqsm "..."
+    n 1fcssm "Heh."
+    n 4fcsbg "Yeah,{w=0.2} you do.{w=0.75}{nw}"
+    extend 1fcssmesm " I basically have a sixth sense for this kind of thing,{w=0.2} after all."
+    n 1fcsss "It means..." 
+    n 3fchbs "Cherry blossom season,{w=0.75}{nw}"
+    extend 3uchgn " obviously!"
+    n 4tnmbo "..."
+    n 4tnmfl "What?{w=0.75}{nw}"
+    extend 2fsrpo " I'm being serious,{w=0.2} [player]!{w=1}{nw}"
+    extend 2fcsaj " Why wouldn't I be?"
+    n 1fcsfl "It's...{w=1.25}{nw}"
+    extend 3uchgnledz " {b}AWESOME{/b}!"
+    n 4ullbg "Seeing all the cherry blossom trees just {i}explode{/i} into life like that?{w=0.75}{nw}"
+    extend 4fspgs " It's {i}super{/i} pretty!"
+    n 2fcsbs "What else can you think of that floods the place with color that well,{w=0.2} huh?"
+    n 1ulrss "Plus with how the blossoms travel all the way up from south to north..."
+    n 3uchgn "It's pretty much a rolling announcement for the summer!{w=0.2} I love it!"
+    
+    $ cherry_blossom_outfit = jn_outfits.get_outfit("jn_cherry_blossom_outfit")
+    if not cherry_blossom_outfit.unlocked:
+        $ cherry_blossom_outfit.unlock()
+        n 4fslpu "I'm sure I had a super stylish dress themed around it somewhere..."
+
+    n 3unmaj "But personally?{w=0.75}{nw}"
+    extend 3fcsca " I like to think it's my reward for making it through all the gross winter months too."
+    n 1fslem "Putting up with all the crappy weather,{w=0.2} getting up when it's dark -{w=0.5}{nw}"
+    extend 1fsqsl " getting back when it's dark."
+    n 2fcswr "Not to mention being basically stuck indoors all the time!"
+    n 4ulrfl "So after all that,{w=0.75}{nw}"
+    extend 4nsrss " seeing everywhere start looking like something out of a fairy tale,{w=0.5}{nw}"
+    extend 2tnmbo " even if it's just for a couple of weeks?{w=0.75}{nw}"
+    extend 2tllss " Well..."
+    n 1fchsm "It {i}almost{/i} makes dealing with winter worth it!"
+    n 4fsqss "...{i}Almost{/i}.{w=1}{nw}"
+    extend 4fcssm " Ehehe."
+
+    $ easter_poem = jn_poems.getPoem("jn_easter_sakura_in_bloom")
+    if not easter_poem.unlocked:
+        $ easter_poem.unlock()
+        n 1fcsbg "In fact..."
+
+        show natsuki 1fcssmeme
+        play audio page_turn
+        show prop poetry_attempt zorder JN_PROP_ZORDER at JN_TRANSFORM_FADE_IN
+        $ jnPause(2)
+
+        n 1fchbgeme "Ta-{w=0.2}da!{w=0.75}{nw}"
+        extend 4uchgn " I even wrote a poem about it!{w=0.75}{nw}"
+        extend 4fcsbg " How could I {i}not{/i}?"
+        n 2flrfl "What kind of poet would just throw away such easy inspiration?"
+        n 2fcsaj "I mean...{w=1}{nw}"
+        extend 2fcssm " it practically wrote itself!"
+        n 1fsqsm "..."
+        n 4fsqss "Oh?{w=0.75}{nw}"
+        extend 4fnmss " What's that,{w=0.2} [player]?"
+        n 2fcsbgsbl "You're just {i}dying{/i} to see it?{w=0.75}{nw}"
+        extend 2fnmbgsbl " Is that it?"
+        n 2fsqcssbl "..."
+        n 2fcsbglsbl "W-{w=0.2}well,{w=0.75}{nw}"
+        extend 2fcssmlsbl " I don't see why not.{w=1.25}{nw}"
+        extend 4fcsajlsbr " After all..."
+        n 4fcssmlsbr "{i}Someone's{/i} gotta remind you what {i}real{/i} literature looks like from time to time!"
+        show natsuki 1fsrsmlsbr
+
+        call show_poem(easter_poem)
+        show natsuki 1fsrbolsbr
+
+        n 2fllsssbr "Well?{w=0.75}{nw}"
+        extend 2fcssmsbr " I told you it basically wrote itself!"
+        n 4fsqsm "I don't mean to brag,{w=0.2} [player].{w=1}{nw}"
+        extend 4tnmaj " But unlike the trees?"
+        n 2fcssmesm "My writing is {i}always{/i} in full bloom.{w=0.75}{nw}"
+        extend 2fchsm " Ahaha."
+
+        show natsuki 4fcssm
+        play audio page_turn
+        hide prop at JN_TRANSFORM_FADE_OUT
+        $ jnPause(2)
+
+    n 4tslbo "..."
+    n 4unmaj "Oh,{w=0.2} right.{w=1}{nw}"
+    extend 2ulraj " And all the chocolate stuff is cool too,{w=0.75}{nw}"
+    extend 2tlrbo " I guess."
+    n 1fsqsm "Ehehe."
+    n 3fcsbs "Don't tell me {i}that's{/i} the part of Easter you were {i}really{/i} interested in,{w=0.2} [player]."
+    n 3fcsbg "I can read you like a book!"
+    n 3nlraj "Though...{w=1.25}{nw}"
+    extend 1tnmbo " in all seriousness,{w=0.2} [player]?{w=0.75}{nw}"
+    n 2ullfl "We never really covered that a whole lot in school,{w=0.2} to be honest.{w=0.5}{nw}"
+    extend 2tnmsl " Easter."
+    n 4fsran "Not like that stopped all the stupid adverts {i}trying{/i} to cover it for us."
+    n 1unmca "But at least I get what it's supposed to represent.{w=1}{nw}"
+    extend 2ullaj " Rebirth,{w=0.2} starting over -{w=0.75}{nw}"
+    extend 2fcssm " that kind of thing."
+    n 4fcsbg "Surpised,{w=0.2} [player]?{w=0.75}{nw}"
+    extend 3fsqss " Where {i}else{/i} did you think I got the idea for the dress?"
+    n 3fsrss "I don't know a whole lot about Easter..."
+    n 3fchgnl "But it doesn't take a genius to know chicks are cuuuute!{w=0.75}{nw}"
+    extend 4uchgnl " I love the little yellow puffballs!"
+    n 1ncsssl "Man..."
+    n 4fcstrl "I have {w=0.2}{i}got{/i}{w=0.2} to get some plushies or something..."
+    n 4nslcalsbr "..."
+    n 2fcstrlsbr "Well,{w=0.2} a-{w=0.2}anyway."
+
+    if Natsuki.isEnamored(higher=True):
+        n 2ulraj "Easter might be all about fresh starts,{w=0.75}{nw}"
+        extend 2nlrpu " but...{w=1}{nw}" 
+        extend 4tnmbo " honestly?"
+        n 4nllssl "...Thanks to you?"
+        n 1kllbol "..."
+        n 1ncsssl "Heh."
+
+        if Natsuki.isLove(higher=True):
+            n 1ksrssl "I think I've already {i}had{/i} the best I could have gotten."
+            n 4ksrbolsbl "..."
+
+            show natsuki 4fcsbolsbl
+            play audio chair_out
+            show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+            $ jnPause(3)
+            play audio kiss
+            show natsuki 4nslfsl at jn_center
+            $ jnPause(3)
+            play audio chair_in
+            $ jnPause(2)
+            hide black with Dissolve(2)
+
+            n 4nsldvl "...And I guess we ended up {i}blossoming{/i} too,{w=0.2} huh?{w=1.25}{nw}"
+            extend 4fchsslsbl " E-{w=0.2}ehehe..."
+            $ chosen_tease = jn_utils.getRandomTease()
+            n 3fchbll "H-{w=0.2}happy Easter,{w=0.2} [chosen_tease]!"
+
+        else:
+            n 3ksrssl "I think I've already had the best I could have gotten.{w=0.75}{nw}"
+            extend 3nsrsmlsbl " Ehehe."
+            $ chosen_tease = jn_utils.getRandomTease()
+            n 3fchbgl "H-{w=0.2}happy Easter,{w=0.2} [chosen_tease]!"
+
+    elif Natsuki.isAffectionate(higher=True):
+        n 2ullaj "Easter might be all about fresh starts,{w=0.75}{nw}"
+        extend 2tnmbo " but honestly?"
+        n 4kslslsbr "..."
+        n 4fllsslsbr "I...{w=1}{nw}"
+        extend 1nsrsslsbr " think I can settle for the one you gave me too.{w=1}{nw}"
+        extend 1fcssslsbr " Ehehe."
+        n 2fcsbglsbl "H-{w=0.2}happy Easter,{w=0.2} [player]!"
+
+    else:
+        n 2ulrbo "They say Easter is all about fresh starts,{w=0.75}{nw}"
+        extend 2tlrpu " but...{w=1}{nw}"
+        extend 2fnmsm " honestly?"
+        n 3fcsbg "...I like to think this one is juuust getting started.{w=1}{nw}"
+        extend 3fsqsm " Ehehe."
+        n 4nchgn "Happy Easter,{w=0.2} [player]!"
+
     $ jn_events.getHoliday("holiday_easter").complete()
 
     return
