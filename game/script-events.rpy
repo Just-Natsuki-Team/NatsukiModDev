@@ -2611,14 +2611,14 @@ label holiday_easter:
     extend 3uchgnledz " {b}AWESOME{/b}!"
     n 4ullbg "Seeing all the cherry blossom trees just {i}explode{/i} into life like that?{w=0.75}{nw}"
     extend 4fspgs " It's {i}super{/i} pretty!"
-    n 2fcsbs "What else can you think of that floods the place with colour that well,{w=0.2} huh?"
+    n 2fcsbs "What else can you think of that floods the place with color that well,{w=0.2} huh?"
     n 1ulrss "Plus with how the blossoms travel all the way up from south to north..."
     n 3uchgn "It's pretty much a rolling announcement for the summer!{w=0.2} I love it!"
     
     $ cherry_blossom_outfit = jn_outfits.get_outfit("jn_cherry_blossom_outfit")
     if not cherry_blossom_outfit.unlocked:
         $ cherry_blossom_outfit.unlock()
-        n 4fslpu "I'm sure I had a super stylish dress themed around it somewhere too..."
+        n 4fslpu "I'm sure I had a super stylish dress themed around it somewhere..."
 
     n 3unmaj "But personally?{w=0.75}{nw}"
     extend 3fcsca " I like to think it's my reward for making it through all the gross winter months too."
@@ -2633,9 +2633,52 @@ label holiday_easter:
     n 4fsqss "...{i}Almost{/i}.{w=1}{nw}"
     extend 4fcssm " Ehehe."
 
+    $ easter_poem = jn_poems.getPoem("jn_easter_sakura_in_bloom")
+    if not easter_poem.unlocked:
+        $ easter_poem.unlock()
+        n 1fcsbg "In fact..."
+
+        show natsuki 1fcssmeme
+        play audio page_turn
+        show prop poetry_attempt zorder JN_PROP_ZORDER at JN_TRANSFORM_FADE_IN
+        $ jnPause(2)
+
+        n 1fchbgeme "Ta-{w=0.2}da!{w=0.75}{nw}"
+        extend 4uchgn " I even wrote a poem about it!{w=0.75}{nw}"
+        extend 4fcsbg " How could I {i}not{/i}?"
+        n 2flrfl "What kind of poet would just throw away such easy inspiration?"
+        n 2fcsaj "I mean...{w=1}{nw}"
+        extend 2fcssm " it practically wrote itself!"
+        n 1fsqsm "..."
+        n 4fsqss "Oh?{w=0.75}{nw}"
+        extend 4fnmss " What's that,{w=0.2} [player]?"
+        n 2fcsbgsbl "You're just {i}dying{/i} to see it?{w=0.75}{nw}"
+        extend 2fnmbgsbl " Is that it?"
+        n 2fsqcssbl "..."
+        n 2fcsbglsbl "W-{w=0.2}well,{w=0.75}{nw}"
+        extend 2fcssmlsbl " I don't see why not.{w=1.25}{nw}"
+        extend 4fcsajlsbr " After all..."
+        n 4fcssmlsbr "{i}Someone's{/i} gotta remind you what {i}real{/i} literature looks like from time to time!"
+        show natsuki 1fsrsmlsbr
+
+        call show_poem(easter_poem)
+        show natsuki 1fsrbolsbr
+
+        n 2fllsssbr "Well?{w=0.75}{nw}"
+        extend 2fcssmsbr " I told you it basically wrote itself!"
+        n 4fsqsm "I don't mean to brag,{w=0.2} [player].{w=1}{nw}"
+        extend 4tnmaj " But unlike the trees?"
+        n 2fcssmesm "My writing is {i}always{/i} in full bloom.{w=0.75}{nw}"
+        extend 2fchsm " Ahaha."
+
+        show natsuki 4fcssm
+        play audio page_turn
+        hide prop at JN_TRANSFORM_FADE_OUT
+        $ jnPause(2)
+
     n 4tslbo "..."
     n 4unmaj "Oh,{w=0.2} right.{w=1}{nw}"
-    extend 2ulraj " And the chocolate stuff is cool too,{w=0.75}{nw}"
+    extend 2ulraj " And all the chocolate stuff is cool too,{w=0.75}{nw}"
     extend 2tlrbo " I guess."
     n 1fsqsm "Ehehe."
     n 3fcsbs "Don't tell me {i}that's{/i} the part of Easter you were {i}really{/i} interested in,{w=0.2} [player]."

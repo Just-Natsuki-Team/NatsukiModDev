@@ -316,6 +316,37 @@ init python in jn_poems:
         font_size=20
     ))
 
+    __registerPoem(JNPoem(
+        reference_name="jn_easter_sakura_in_bloom",
+        display_name="Sakura in Bloom",
+        holiday_type=jn_events.JNHolidayTypes.easter,
+        affinity_range=(jn_affinity.HAPPY, None),
+        poem=(
+            "Vibrant trees spring back anew\n"
+            "As fluorescent hues illuminate\n"
+            "The path for crowds to gather\n"
+            "Came to recognize life's splendor\n"
+            "\n"
+            "Before long the petals branch out\n"
+            "As they gently fly in the breeze\n"
+            "Until they reach the hand of another\n"
+            "And gently touch the lives of others\n"
+            "\n"
+            "Some may think that their job is done\n"
+            "And while that may indeed be true\n"
+            "Their beauty continues to live on\n"
+            "Through the people who were touched\n"
+            "\n"
+            "They take up the mantle to create anew\n"
+            "They sow the seeds and supply the water\n"
+            "To help usher in other forms of beauty\n"
+            "As a rainbow of flora emerge to shine\n"
+        ),
+        paper="pink_floral",
+        font_size=18,
+        text_align=0.5
+    ))
+
 label show_poem(poem):
     play audio page_turn
     show screen poem_view(poem)
