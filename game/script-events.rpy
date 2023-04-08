@@ -2564,11 +2564,11 @@ label holiday_valentines_day:
 
 label holiday_easter:
     python:
+        persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
         jn_atmosphere.showSky(jn_atmosphere.WEATHER_CHERRY_BLOSSOM)
 
         chick_outfit = jn_outfits.get_outfit("jn_chick_outfit")
         chick_outfit.unlock()
-        jn_outfits.get_outfit("jn_cherry_blossom_outfit").unlock()
         jn_outfits.save_temporary_outfit(chick_outfit)
 
         jn_events.getHoliday("holiday_easter").run()
@@ -2580,19 +2580,19 @@ label holiday_easter:
     extend 2fcsgslsbr " it's about time you got your butt in here!{w=1}{nw}"
 
     if jn_is_day():
-        extend 3fcsgssbl " Do you even {i}know{/i} what day it is today?{w=0.75}{nw}"
-        extend 3fcsposbl " Sheesh!"
+        extend 4fcsgssbl " Do you even {i}know{/i} what day it is today?{w=0.75}{nw}"
+        extend 2fcsposbl " Sheesh!"
         
     else:
-        extend 3fsqgssbl " Do you even {i}know{/i} what day it is today?"
-        n 4fsrslsbl "I guess not,{w=0.75}{nw}"
+        extend 4fsqgssbl " Do you even {i}know{/i} what day it is today?"
+        n 2fsrslsbl "I guess not,{w=0.75}{nw}"
         extend 2fcspoesisbl " considering the time you got here."
 
     n 2fsqca "I don't {i}seriously{/i} have to remind you,{w=0.2} do I?"
     n 1fcstresi "..."
     n 4fcsaj "It's..."
     n 3fchbg "Easter,{w=0.75}{nw}"
-    extend 3uchgn " obviously!{w=1}{nw}"
+    extend 3uchgn " duh!{w=1}{nw}"
     extend 4fsqbg " What else was it gonna be,{w=0.2} [player]?"
     n 1fcsbg "After all.{w=0.75}{nw}"
     extend 3fsqsm " You {i}do{/i} know what Easter means,{w=0.2} right?"
@@ -2614,6 +2614,11 @@ label holiday_easter:
     n 2fcsbs "What else can you think of that floods the place with colour that well,{w=0.2} huh?"
     n 1ulrss "Plus with how the blossoms travel all the way up from south to north..."
     n 3uchgn "It's pretty much a rolling announcement for the summer!{w=0.2} I love it!"
+    
+    $ cherry_blossom_outfit = jn_outfits.get_outfit("jn_cherry_blossom_outfit")
+    if not cherry_blossom_outfit.unlocked:
+        $ cherry_blossom_outfit.unlock()
+        n 4fslpu "I'm sure I had a super stylish dress themed around it somewhere too..."
 
     n 3unmaj "But personally?{w=0.75}{nw}"
     extend 3fcsca " I like to think it's my reward for making it through all the gross winter months too."
@@ -2678,8 +2683,8 @@ label holiday_easter:
 
             n 4nsldvl "...And I guess we ended up {i}blossoming{/i} too,{w=0.2} huh?{w=1.25}{nw}"
             extend 4fchsslsbl " E-{w=0.2}ehehe..."
-            $ chosen_endearment = jn_utils.getRandomEndearment()
-            n 3fchbll "H-{w=0.2}happy Easter,{w=0.2} [chosen_endearment]!"
+            $ chosen_tease = jn_utils.getRandomTease()
+            n 3fchbll "H-{w=0.2}happy Easter,{w=0.2} [chosen_tease]!"
 
         else:
             n 3ksrssl "I think I've already had the best I could have gotten.{w=0.75}{nw}"
