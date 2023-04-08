@@ -2616,7 +2616,7 @@ label holiday_easter:
     n 3uchgn "It's pretty much a rolling announcement for the summer!{w=0.2} I love it!"
 
     n 3unmaj "But personally?{w=0.75}{nw}"
-    extend 2fcsca " I like to think it's my reward for making it through all the gross winter months too."
+    extend 3fcsca " I like to think it's my reward for making it through all the gross winter months too."
     n 1fslem "Putting up with all the crappy weather,{w=0.2} getting up when it's dark -{w=0.5}{nw}"
     extend 1fsqsl " getting back when it's dark."
     n 2fcswr "Not to mention being basically stuck indoors all the time!"
