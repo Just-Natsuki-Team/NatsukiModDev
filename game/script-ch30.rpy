@@ -356,11 +356,12 @@ label call_next_topic(show_natsuki=True):
     # Reenable the UI and hop back to the loop
     python:
         import re
-
-        # Prevent pushed mechanic topics such as weather changes from resetting topic wait timer
-        if re.search("(^talk_)", _topic) or not re.search("(_change$)|(^idle_)", _topic):
-            global LAST_TOPIC_CALL
-            LAST_TOPIC_CALL = datetime.datetime.now()
+        
+        if isinstance(_topic, basestring): 
+            # Prevent pushed mechanic topics such as weather changes from resetting topic wait timer
+            if re.search("(^talk_)", _topic) or not re.search("(_change$)|(^idle_)", _topic):
+                global LAST_TOPIC_CALL
+                LAST_TOPIC_CALL = datetime.datetime.now()
 
         Natsuki.setInConversation(False)
 
