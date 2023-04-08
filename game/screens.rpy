@@ -1261,6 +1261,17 @@ screen preferences():
                                 false_value=False)
                         ]
 
+                    vbox:
+                        style_prefix "check"
+                        label _("Idles")
+                        textbutton _("Enabled") action [
+                            ToggleField(
+                                object=persistent,
+                                field="_jn_natsuki_idles_enabled",
+                                true_value=True,
+                                false_value=False)
+                        ]
+
                     ## Additional vboxes of type "radio_pref" or "check_pref" can be
                     ## added here, to add additional creator-defined preferences.
 
@@ -1777,5 +1788,9 @@ style notify_text:
 
 screen problem(message):
     zorder 100
-    text "[message]" size 30 xalign 0.5 ypos 40 text_align 0.5 xysize (None, None) color "#FF0000"
-    
+    text "[message]" size 30 xalign 0.5 ypos 40 text_align 0.5 xysize (None, None) color "#FF0000" outlines [(2, "#000000d2", 0, 0)]
+
+init:
+    screen warn(message):
+        zorder 100
+        text "[message]" size 20 xpos 10 ypos 10 text_align 0 xysize (None, None) color "#FF3333" outlines [(2, "#000000d2", 0, 0)]

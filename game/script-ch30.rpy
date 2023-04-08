@@ -31,8 +31,8 @@ label ch30_visual_setup:
 
 label ch30_init:
     python:
-        import random
         import codecs
+        import random  
 
         # MIGRATIONS
 
@@ -46,6 +46,12 @@ label ch30_init:
         if store.persistent._jn_pic:
             renpy.jump("greeting_pic")
 
+        if (
+            jn_utils.getAllDirectoryFiles(path=renpy.config.gamedir, extension_list=["rpy"]) 
+            and persistent._jn_scw
+        ):
+            renpy.show_screen("warn", "596f75206172652072756e6e696e6720736f7572636520282e727079292066696c65732120556e6c65737320796f75206b6e6f77207768617420796f752061726520646f696e672c20706c656173652073776974636820746f2072656c656173652066696c65732e".decode("hex"))
+
         # NATSUKI SETUP
 
         # Assign Natsuki and player nicknames
@@ -56,7 +62,7 @@ label ch30_init:
             player = persistent._jn_nicknames_player_current_nickname
 
         # Check the daily affinity cap and reset if need be
-        Natsuki.checkResetDailyAffinityGain()
+        Natsuki.checkResetDailies ()
         Natsuki.setInConversation(True)
         persistent.jn_total_visit_count += 1
 
@@ -132,7 +138,7 @@ label ch30_init:
 
         jn_utils.log("Outfit set.")
 
-        # LOAD HOLIDAYS, POEMS
+        # LOAD HOLIDAYS, POEMS, JOKES
 
         # Load poems from disk and corresponding persistent data
         jn_poems.JNPoem.loadAll()
@@ -141,6 +147,9 @@ label ch30_init:
         # Load holidays from disk and corresponding persistent data
         jn_events.JNHoliday.loadAll()
         jn_utils.log("Holiday data loaded.")
+
+        jn_jokes.JNJoke.loadAll()
+        jn_utils.log("Joke data loaded.")
 
         # FLOW HANDLING INTO CH30 - DECIDE WHERE TO ACTUALLY START
 
@@ -199,7 +208,6 @@ label ch30_init:
 label ch30_loop:
     show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
 
-    # TODO: topic selection here once wait system is implemented
     #Run our checks
     python:
         _now = datetime.datetime.now()
@@ -245,6 +253,8 @@ label ch30_wait:
 
 #Other labels
 label call_next_topic(show_natsuki=True):
+    $ _topic = None
+
     if show_natsuki:
         show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
 
@@ -256,7 +266,8 @@ label call_next_topic(show_natsuki=True):
             if (persistent._jn_notify_conversations
                 and jn_utils.get_current_session_length().total_seconds() > 60
                 and not jn_activity.getJNWindowActive()
-                and not _topic in ["random_music_change", "weather_change"]):
+                and not _topic in ["random_music_change", "weather_change"]
+                and not "idle_" in _topic):
 
                     play audio notification
                     python:
@@ -344,13 +355,19 @@ label call_next_topic(show_natsuki=True):
 
     # Reenable the UI and hop back to the loop
     python:
-        global LAST_TOPIC_CALL
-        LAST_TOPIC_CALL = datetime.datetime.now()
+        import re
+
+        # Prevent pushed mechanic topics such as weather changes from resetting topic wait timer
+        if re.search("(^talk_)", _topic) or not re.search("(_change$)|(^idle_)", _topic):
+            global LAST_TOPIC_CALL
+            LAST_TOPIC_CALL = datetime.datetime.now()
+
         Natsuki.setInConversation(False)
 
     jump ch30_loop
 
 init python:
+    LAST_IDLE_CALL = datetime.datetime.now()
     LAST_TOPIC_CALL = datetime.datetime.now()
     LAST_MINUTE_CHECK = datetime.datetime.now()
     LAST_HOUR_CHECK = LAST_MINUTE_CHECK.hour
@@ -360,10 +377,12 @@ init python:
         """
         Runs every minute during breaks between topics
         """
+        global LAST_IDLE_CALL
+
         jn_utils.save_game()
 
         # Check the daily affinity cap and reset if need be
-        Natsuki.checkResetDailyAffinityGain()
+        Natsuki.checkResetDailies ()
 
         # Run through all externally-registered minute check actions
         if len(jn_plugins.minute_check_calls) > 0:
@@ -381,14 +400,12 @@ init python:
         ):
             queue("new_wearables_outfits_unlocked")
 
-        # Push a new topic every couple of minutes
-        # TODO: Move to a wait/has-waited system to allow some more flexibility
-        elif (
-            persistent.jn_natsuki_random_topic_frequency is not jn_preferences.random_topic_frequency.NEVER
+        # Push a topic, if we have waited long enough since the last one, and settings for random chat allow it
+        if (
+            persistent.jn_natsuki_random_topic_frequency != jn_preferences.random_topic_frequency.NEVER
             and datetime.datetime.now() > LAST_TOPIC_CALL + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown())
             and not persistent._event_list
         ):
-
             if not persistent.jn_natsuki_repeat_topics:
                 topic_pool = Topic.filter_topics(
                     topics.TOPIC_MAP.values(),
@@ -398,7 +415,8 @@ init python:
                     affinity=Natsuki._getAffinityState(),
                     is_seen=False
                 )
-
+                if persistent._jn_daily_jokes_unlocked and persistent._jn_daily_jokes_enabled and not persistent._jn_daily_joke_given:
+                    topic_pool.append(get_topic("talk_daily_joke")) # Not ideal
             else:
                 topic_pool = Topic.filter_topics(
                     topics.TOPIC_MAP.values(),
@@ -421,13 +439,25 @@ init python:
                 # Out of random topics
                 queue("talk_out_of_topics")
 
-        elif (
+        # Select a random idle if enabled, we haven't had one for a while and there's nothing already queued
+        if (
+            persistent._jn_natsuki_idles_enabled
+            and datetime.datetime.now() >= LAST_TOPIC_CALL + datetime.timedelta(minutes=2)
+            and datetime.datetime.now() >= LAST_IDLE_CALL + datetime.timedelta(minutes=10)
+            and not persistent._event_list
+        ):
+            idle_topic = jn_idles.selectIdle()
+            if idle_topic:
+                queue(idle_topic)
+                LAST_IDLE_CALL = datetime.datetime.now()
+
+        # Notify for player activity, if settings allow it
+        if (
             persistent._jn_notify_activity
             and Natsuki.isAffectionate(higher=True)
             and current_activity.activity_type != jn_activity.ACTIVITY_MANAGER.last_activity.activity_type
             and random.randint(1, 20) == 1
         ):
-            # Activity check for notif
             jn_activity.ACTIVITY_MANAGER.last_activity = current_activity
             if jn_activity.ACTIVITY_MANAGER.last_activity.getRandomNotifyText():
                 jn_activity.notifyPopup(jn_activity.ACTIVITY_MANAGER.last_activity.getRandomNotifyText())

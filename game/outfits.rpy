@@ -423,7 +423,7 @@ init -1 python in jn_outfits:
 
             if self.necklace and not self.necklace.unlocked:
                 self.necklace.unlock()
-            
+
             if self.facewear and not self.facewear.unlocked:
                 self.facewear.unlock()
 
@@ -945,7 +945,7 @@ init -1 python in jn_outfits:
                 with open(file_path) as wearable_data:
                     if _load_wearable_from_json(json.loads(wearable_data.read())):
                         success_count += 1
-            
+
             except OSError:
                 jn_utils.log("Unable to read file {0}; file could not be found.".format(file_name))
 
@@ -1272,6 +1272,24 @@ init -1 python in jn_outfits:
         unlocked=False,
         is_jn_wearable=True
     ))
+    __register_wearable(JNHairstyle(
+        reference_name="jn_hair_wavy",
+        display_name="Wavy",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHairstyle(
+        reference_name="jn_hair_twintails_braided",
+        display_name="Braided twintails",
+        unlocked=True,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHairstyle(
+        reference_name="jn_hair_twintails_down",
+        display_name="Twintails down",
+        unlocked=True,
+        is_jn_wearable=True
+    ))
 
     # Official JN eyewear
     __register_wearable(JNEyewear(
@@ -1387,6 +1405,18 @@ init -1 python in jn_outfits:
     __register_wearable(JNAccessory(
         reference_name="jn_accessory_double_white_hairbands",
         display_name="Double white hairbands",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNAccessory(
+        reference_name="jn_accessory_fried_egg_hairpin",
+        display_name="Fried egg hairpin",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNAccessory(
+        reference_name="jn_accessory_cherry_blossom_hairpin",
+        display_name="Cherry blossom hairpin",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1542,6 +1572,30 @@ init -1 python in jn_outfits:
         unlocked=False,
         is_jn_wearable=True
     ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_chocolate_plaid_dress",
+        display_name="Chocolate plaid dress",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_office_blazer",
+        display_name="Office blazer",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_chick_dress",
+        display_name="Chick dress",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNClothes(
+        reference_name="jn_clothes_cherry_blossom_dress",
+        display_name="Cherry Blossom dress",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
 
     # Official JN headgear
 
@@ -1633,6 +1687,12 @@ init -1 python in jn_outfits:
     __register_wearable(JNHeadgear(
         reference_name="jn_headgear_new_year_headband",
         display_name="New year headband",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_chocolate_plaid_bow",
+        display_name="Chocolate plaid bow",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1733,6 +1793,24 @@ init -1 python in jn_outfits:
     __register_wearable(JNNecklace(
         reference_name="jn_necklace_twirled_choker",
         display_name="Twirled choker",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNNecklace(
+        reference_name="jn_necklace_golden_necklace",
+        display_name="Golden necklace",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNNecklace(
+        reference_name="jn_necklace_formal_necktie",
+        display_name="Formal necktie",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __register_wearable(JNNecklace(
+        reference_name="jn_necklace_bunny_necklace",
+        display_name="Bunny necklace",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1921,6 +1999,45 @@ init -1 python in jn_outfits:
         accessory=get_wearable("jn_accessory_hairband_red"),
         hairstyle=get_wearable("jn_hair_twin_buns")
     ))
+    __register_outfit(JNOutfit(
+        reference_name="jn_chocolate_plaid_collection",
+        display_name="Chocolate plaid collection",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_chocolate_plaid_dress"),
+        headgear=get_wearable("jn_headgear_chocolate_plaid_bow"),
+        necklace=get_wearable("jn_necklace_golden_necklace"),
+        hairstyle=get_wearable("jn_hair_ponytail")
+    ))
+    __register_outfit(JNOutfit(
+        reference_name="jn_office_outfit",
+        display_name="Office outfit",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_office_blazer"),
+        hairstyle=get_wearable("jn_hair_wavy"),
+        necklace=get_wearable("jn_necklace_formal_necktie")
+    ))
+    __register_outfit(JNOutfit(
+        reference_name="jn_chick_outfit",
+        display_name="Chick outfit",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_chick_dress"),
+        accessory=get_wearable("jn_accessory_fried_egg_hairpin"),
+        hairstyle=get_wearable("jn_hair_twintails_braided"),
+        necklace=get_wearable("jn_necklace_bunny_necklace")
+    ))
+    __register_outfit(JNOutfit(
+        reference_name="jn_cherry_blossom_outfit",
+        display_name="Cherry blossom outfit",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=get_wearable("jn_clothes_cherry_blossom_dress"),
+        accessory=get_wearable("jn_accessory_cherry_blossom_hairpin"),
+        hairstyle=get_wearable("jn_hair_twintails_braided"),
+        necklace=get_wearable("jn_necklace_bunny_necklace")
+    ))
 
     # Internal outfits; used for events, etc. These shouldn't be unlocked!
 
@@ -2008,8 +2125,18 @@ label outfits_wear_outfit:
     if not jn_outfits.get_all_outfits():
         # No outfits, no point proceeding
         n 4tnmbo "Huh?{w=0.5}{nw}"
-        extend 1fchbg " I don't {i}have{/i} any other outfits, dummy!"
+        extend 1fchbg " I don't {i}have{/i} any other outfits,{w=0.2} dummy!"
         jump ch30_loop
+
+    elif len(jn_outfits._SESSION_NEW_UNLOCKS):
+        # Automatically go to gifting dialogue if player is trying to immediately see new gifted items
+        n 1nsqpu "...Wait.{w=1.25}{nw}"
+        extend 3tnmfl " What's {i}that{/i} you're holding?"
+        n 1fcstrlesi "At {i}least{/i} show me what it is first!"
+        show natsuki 1fcspol
+
+        $ jn_rm_topic_from_event_list("new_wearables_outfits_unlocked")
+        jump new_wearables_outfits_unlocked
 
     n 4unmaj "Huh?{w=0.2} You want me to put on another outfit?"
     n 1fchbg "Sure thing!{w=0.5}{nw}"
@@ -2103,6 +2230,17 @@ label outfits_reload:
 
 # Asking Natsuki to suggest a new outfit; leads to the outfit creator flow
 label outfits_suggest_outfit:
+
+    if len(jn_outfits._SESSION_NEW_UNLOCKS):
+        # Automatically go to gifting dialogue if player is trying to immediately see new gifted items
+        n 1nsqpu "...Wait.{w=1.25}{nw}"
+        extend 3tnmfl " What's {i}that{/i} you're holding?"
+        n 1fcstrlesi "At {i}least{/i} show me what it is first!"
+        show natsuki 1fcspol
+
+        $ jn_rm_topic_from_event_list("new_wearables_outfits_unlocked")
+        jump new_wearables_outfits_unlocked
+
     n 4unmaj "Ooh!{w=1.5}{nw}"
     extend 1fchbg " I'm always open to a suggestion!{w=0.5}{nw}"
     extend 1unmss " What did you have in mind?"
@@ -2121,9 +2259,10 @@ label outfits_remove_outfit:
 
     if len(jn_outfits._SESSION_NEW_UNLOCKS):
         # Prevent the player telling Natsuki to delete something she could be about to gift by popping it early, and removing from event list
-        n 1nsqpu "...Wait.{w=1}{nw}"
+        n 1nsqpu "...Wait.{w=1.25}{nw}"
         extend 3fnmpo " Are you trying to hide something?"
-        n 1fcspolesi "At least show me what it is first!"
+        n 1fcstrlesi "At least show me what it is first!"
+        show natsuki 1fcspol
 
         $ jn_rm_topic_from_event_list("new_wearables_outfits_unlocked")
         jump new_wearables_outfits_unlocked
@@ -2625,7 +2764,7 @@ label new_wearables_outfits_unlocked:
 
         elif jnIsChristmasDay():
             n 1fcsemfsbl "I-{w=0.2}I mean,{w=0.75}{nw}"
-            extend 2kwmemfsbl " I {i}get{/i} what day it is,{w=0.75}{nw}" 
+            extend 2kwmemfsbl " I {i}get{/i} what day it is,{w=0.75}{nw}"
             extend 2kslemfsbl " but..."
             n 1kcspufesisbl "..."
 

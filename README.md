@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://justnatsuki.club/img/logos/jn_1-0-0_logo.png" height="300"/>
+    <img src="https://justnatsuki.club/img/logos/jn_1-1-0_logo.png" height="300"/>
 </p>
 <br>
 
@@ -201,6 +201,12 @@ To report bugs or request support with the mod, please raise a new issue [here](
 ### Frequently Asked Questions
 
 Please refer to the full article on the wiki [here](https://github.com/Just-Natsuki-Team/NatsukiModDev/wiki/04:-FAQ).
+
+---
+
+### Additional content
+
+Visit the official JN extras repository [here](https://github.com/Just-Natsuki-Team/NatsukiModOutfits)!
 
 ---
 

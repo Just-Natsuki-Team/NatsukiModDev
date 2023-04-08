@@ -1,5 +1,6 @@
 default persistent._jn_version = "0.0.1"
 default persistent._jn_gs_aff = persistent.affinity
+default persistent._jn_pic_aff = 0
 default persistent._jn_pic = False
 
 python early in jn_data_migrations:
@@ -22,6 +23,8 @@ python early in jn_data_migrations:
     #Parses x.x.x.x (suffix) to a regex match with two groups:
     # ver and suffix
     VER_STR_PARSER = re.compile(r"^(?P<ver>\d+\.\d+\.\d+)(?P<suffix>.*)$")
+
+    migrated_in_session = False
 
     class MigrationRuntimes(Enum):
         """
@@ -152,7 +155,9 @@ init 10 python:
 init python in jn_data_migrations:
     import store
     import store.jn_affinity as jn_affinity
+    import store.jn_events as jn_events
     import store.jn_outfits as jn_outfits
+    import store.jn_poems as jn_poems
     import store.jn_utils as jn_utils
 
     @migration(["0.0.0", "0.0.1", "0.0.2"], "1.0.0", runtime=MigrationRuntimes.INIT)
@@ -241,6 +246,7 @@ init python in jn_data_migrations:
         jn_utils.log("Migration to 1.0.2 START")
         store.persistent._jn_version = "1.0.2"
         if store.persistent.affinity >= 5000:
+            store.persistent._jn_pic_aff = store.persistent.affinity
             store.persistent.affinity = 0
             store.persistent._jn_pic = True
             jn_utils.log("434346".decode("hex"))
@@ -253,6 +259,7 @@ init python in jn_data_migrations:
         jn_utils.log("Migration to 1.0.3 START")
         store.persistent._jn_version = "1.0.3"
         if store.persistent.affinity >= 5000:
+            store.persistent._jn_pic_aff = store.persistent.affinity
             store.persistent.affinity = 0
             store.persistent._jn_pic = True
             jn_utils.log("434346".decode("hex"))
@@ -262,4 +269,41 @@ init python in jn_data_migrations:
 
         jn_utils.save_game()
         jn_utils.log("Migration to 1.0.3 DONE")
+        return
+
+    @migration(["1.0.3", "1.0.4"], "1.1.0", runtime=MigrationRuntimes.INIT)
+    def to_1_1_0():
+        jn_utils.log("Migration to 1.1.0 START")
+        store.persistent._jn_version = "1.1.0"
+        if store.persistent.affinity >= 5000:
+            store.persistent._jn_pic_aff = store.persistent.affinity
+            store.persistent.affinity = 0
+            store.persistent._jn_pic = True
+            jn_utils.log("434346".decode("hex"))
+
+        store.persistent._event_database["event_not_ready_yet"]["conditional"] = (
+            "((jn_is_time_block_early_morning() or jn_is_time_block_mid_morning()) and jn_is_weekday())"
+            " or (jn_is_time_block_late_morning and not jn_is_weekday())"
+        )
+        store.get_topic("event_not_ready_yet").conditional = (
+            "((jn_is_time_block_early_morning() or jn_is_time_block_mid_morning()) and jn_is_weekday())"
+            " or (jn_is_time_block_late_morning and not jn_is_weekday())"
+        )
+        jn_utils.log("""Migrated: store.persistent._event_database["event_not_ready_yet"]["conditional"]""")
+
+        if "holiday_player_birthday" in store.persistent._seen_ever:
+            jn_poems.getPoem("jn_birthday_cakes_candles").unlock()
+            jn_utils.log("Migrated: jn_birthday_cakes_candles unlock state")
+        
+        if "holiday_christmas_day" in store.persistent._seen_ever:
+            if store.Natsuki.isEnamored(higher=True):
+                jn_poems.getPoem("jn_christmas_evergreen").unlock()
+                jn_utils.log("Migrated: jn_christmas_evergreen unlock state")
+
+            elif store.Natsuki.isHappy(higher=True):
+                jn_poems.getPoem("jn_christmas_gingerbread_house").unlock()
+                jn_utils.log("Migrated: jn_christmas_gingerbread_house unlock state")
+
+        jn_utils.save_game()
+        jn_utils.log("Migration to 1.1.0 DONE")
         return

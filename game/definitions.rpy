@@ -621,6 +621,27 @@ init -3 python:
             global allow_dismiss
             allow_dismiss = True
 
+    def jnClickToContinue(silent=True):
+        """
+        Requires the player to click to advance the game for a given step.
+
+        IN:
+            - silent - If False, plays a notification sound on click. Defaults to True.
+        """
+        global allow_dismiss
+        global _dismiss_pause
+        allow_dismiss = True
+        _dismiss_pause = True
+        renpy.pause()
+        _dismiss_pause = False
+
+        if not silent:
+            if jn_is_day():
+                renpy.play("mod_assets/buttons/sounds/button_click_day.ogg")
+            
+            else:
+                renpy.play("mod_assets/buttons/sounds/button_click_night.ogg")
+
     def jnIsNewYearsDay(input_date=None):
         """
         Returns True if the input_date is New Year's Day; otherwise False
@@ -1827,6 +1848,9 @@ init -100 python in jn_utils:
         # Save poem data
         store.jn_poems.JNPoem.saveAll()
 
+        # Save joke data
+        store.jn_jokes.JNJoke.saveAll()
+
         #Save topic data
         store.Topic._save_topic_data()
 
@@ -1843,6 +1867,17 @@ init -100 python in jn_utils:
 
         else:
             store.persistent._jn_gs_aff = store.persistent.affinity
+
+# Generic transforms/animations
+transform JN_TRANSFORM_FADE_IN:
+    subpixel True
+    alpha 0
+    ease 0.5 alpha 1
+
+transform JN_TRANSFORM_FADE_OUT:
+    subpixel True
+    alpha 1
+    ease 0.5 alpha 0
 
 # Vanilla resources from base DDLC
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
