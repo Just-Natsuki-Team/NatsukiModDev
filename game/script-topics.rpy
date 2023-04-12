@@ -9892,7 +9892,7 @@ init 5 python:
             persistent._topic_database,
             label="talk_daily_jokes_stop",
             unlocked=True,
-            prompt="Can stop telling me daily jokes?",
+            prompt="Can you stop telling me daily jokes?",
             category=["Jokes"],
             conditional="persistent._jn_daily_jokes_unlocked and persistent._jn_daily_jokes_enabled",
             affinity_range=(jn_affinity.HAPPY, None),
