@@ -1443,7 +1443,7 @@ screen history():
         for h in _history_list:
 
             window:
-
+                
                 ## This lays things out properly if history_height is None.
                 has fixed:
                     yfit True
@@ -1462,7 +1462,6 @@ screen history():
 
         if not _history_list:
             label _("The dialogue history is empty.")
-
 
 style history_window is empty
 
@@ -1485,9 +1484,17 @@ style history_name:
     ypos gui.history_name_ypos
     xsize gui.history_name_width
 
+    line_overlap_split 8
+    line_spacing 8
+    line_leading 8
+
 style history_name_text:
     min_width gui.history_name_width
     text_align gui.history_name_xalign
+
+    line_overlap_split 8
+    line_spacing 8
+    line_leading 8
 
 style history_text:
     xpos gui.history_text_xpos
@@ -1495,14 +1502,27 @@ style history_text:
     xanchor gui.history_text_xalign
     xsize gui.history_text_width
     min_width gui.history_text_width
+
     text_align gui.history_text_xalign
     layout ("subtitle" if gui.history_text_xalign else "tex")
+
+    line_overlap_split 8
+    line_spacing 8
+    line_leading 8
 
 style history_label:
     xfill True
 
+    line_overlap_split 8
+    line_spacing 8
+    line_leading 8
+
 style history_label_text:
     xalign 0.5
+
+    line_overlap_split 8
+    line_spacing 8
+    line_leading 8
 
 ## Confirm screen ##############################################################
 ##
