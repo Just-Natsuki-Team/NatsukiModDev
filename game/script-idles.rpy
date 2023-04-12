@@ -39,6 +39,7 @@ init python in jn_idles:
         reading = 1
         gaming = 2
         resting = 3
+        vibing = 4
 
     class JNIdle:
         """
@@ -207,6 +208,13 @@ init python in jn_idles:
         idle_type=JNIdleTypes.reading,
         affinity_range=(jn_affinity.NORMAL, None),
         conditional="get_topic('event_caught_writing_poetry').shown_count > 0"
+    ))
+
+    __registerIdle(JNIdle(
+        label="idle_vibing_headphones",
+        idle_type=JNIdleTypes.vibing,
+        affinity_range=(jn_affinity.HAPPY, None),
+        conditional="persistent.jn_custom_music_unlocked"
     ))
 
 label idle_twitch_playing:
@@ -454,6 +462,56 @@ label idle_poetry_attempts:
     $ jnPause(0.5)
     show natsuki 1nsrcasbl
     hide prop
+    play audio drawer
+    $ jnPause(1.3)
+    hide black with Dissolve(0.5)
+    $ jnPause(1)
+
+    $ jn_idles._concludeIdle()
+
+label idle_vibing_headphones:
+    python:
+        import copy
+
+        outfit_to_restore = jn_outfits.get_outfit(Natsuki.getOutfitName())
+        headphones = jn_outfits.get_wearable("jn_headgear_cat_headphones")
+        if not headphones.unlocked:
+            headphones.unlock()
+
+        headphones_outfit = copy.copy(outfit_to_restore)
+        headphones_outfit.headgear = headphones
+
+    show natsuki 1ncsca
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    show prop music_notes zorder JN_PROP_ZORDER
+    $ jn_outfits.save_temporary_outfit(headphones_outfit)
+    show natsuki vibing
+    hide black with Dissolve(0.5)
+    $ jnClickToContinue(silent=False)
+
+    if random.choice([True, False]):
+        n 4tslboeqm "...{w=1}{nw}"
+        n 4tnmboeqm "...?{w=0.75}{nw}"
+        hide prop
+        n 1unmfllesh "O-{w=0.2}oh!{w=0.75}{nw}"
+        extend 1flrsslsbl " [player]!{w=0.75}{nw}"
+        extend 2fsrdvlsbl " Heh."
+        n 2fcsfllsbl "J-{w=0.2}just give me a second here."
+
+    else:
+        n 1tsqcaeqm "...?{w=1}{nw}"
+        n 1uskemlesh "...!{w=0.75}{nw}"
+        hide prop
+        $ player_initial = jn_utils.getPlayerInitial()
+        n 4fbkwrl "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
+        extend 4fnmemlsbr " How long have you just been {i}sat there{/i}?!{w=1.25}{nw}"
+        extend 2fslfllsbr " Jeez..."
+        n 2fcsposbr "At {i}least{/i} let me put these on charge first..."
+
+    show natsuki 2nsrcasbl
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    $ Natsuki.setOutfit(outfit_to_restore)
     play audio drawer
     $ jnPause(1.3)
     hide black with Dissolve(0.5)

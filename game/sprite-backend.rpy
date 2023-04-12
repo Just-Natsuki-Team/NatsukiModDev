@@ -830,6 +830,48 @@ image natsuki thinking:
 
     repeat
 
+# Idle images for Natsuki vibing/listening to music
+image natsuki vibing:
+    block:
+        choice:
+            "natsuki 1ncssm"
+        choice:
+            "natsuki 2fcssm"
+        choice:
+            "natsuki 4fcssm"
+        choice:
+            "natsuki 2fchsm"
+        choice:
+            "natsuki 4fchsm"
+        choice:
+            "natsuki 2fcsss"
+            pause 0.75
+            "natsuki 2fcsaj"
+            pause 0.75
+            "natsuki 2fcsbs"
+            pause 0.75
+            "natsuki 2fcsss"
+            pause 0.75
+            "natsuki 2fchsm"
+        choice:
+            "natsuki 1fcspu"
+        choice:
+            "natsuki 1fcssl"
+        choice:
+            "natsuki 1fcsca"
+        choice:
+            "natsuki 1fcssl"
+            pause 0.75
+            "natsuki 1fcsaj"
+            pause 0.75
+            "natsuki 1fcssl"
+            pause 0.75
+            "natsuki 1fcsaj"
+            pause 0.75
+            "natsuki 1fcsca"
+    pause 8
+    repeat
+
 # This selects which idle image to show based on current affinity state
 image natsuki idle = ConditionSwitch(
     "Natsuki.isEnamored(higher=True)", "natsuki idle enamored",
