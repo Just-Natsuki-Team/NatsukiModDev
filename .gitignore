@@ -1,2 +1,3 @@
-game/dev/tools/dialogue.txt
-game/dev/key.txt
+game/dev/*
+game/saves/*
+game/*.rpyc
