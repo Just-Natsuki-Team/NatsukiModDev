@@ -230,8 +230,7 @@ label idle_twitch_playing:
     n 1unmflesu "Oh!{w=1}{nw}"
     extend 1fchbgsbr " What's up,{w=0.2} [player]?"
 
-    $ alt_dialogue = random.choice([True, False])
-    if alt_dialogue:
+    if random.choice([True, False]):
         n 1fllsssbr "Just gotta save real quick..."
     
     else:
@@ -261,8 +260,7 @@ label idle_reading_parfait_girls:
     n 1unmflesu "Oh!{w=0.75}{nw}"
     extend 1fchbgsbl " Hey!"
 
-    $ alt_dialogue = random.choice([True, False])
-    if alt_dialogue:
+    if random.choice([True, False]):
         n 1fslsssbl "Let me just bookmark this real quick..."
     
     else:
@@ -293,8 +291,7 @@ label idle_reading_renpy_for_dummies:
     extend 1nlrsssbr " Hey.{w=1}{nw}"
     extend 1nsrsssbr " Just let me finish up here real quick."
 
-    $ alt_dialogue = random.choice([True, False])
-    if alt_dialogue:
+    if random.choice([True, False]):
         n 1nsrbosbr "..."
         n 1nnmaj "...And no.{w=1}{nw}" 
         extend 1fslpo " The book still sucks."
@@ -321,8 +318,7 @@ label idle_reading_a_la_mode:
     hide black with Dissolve(0.5)
     $ jnClickToContinue(silent=False)
 
-    $ alt_dialogue = random.choice([True, False])
-    if alt_dialogue:
+    if random.choice([True, False]):
         n 1unmaj "Ah!{w=1}{nw}"
         extend 1unmbg " [player]!{w=1}{nw}"
         extend 1fcsbg " Perfect timing."
@@ -362,8 +358,7 @@ label idle_reading_step_by_step:
     extend 1unmfllesu " Oh!{w=0.75}{nw}"
     extend 1ullfllsbl " [player]!"
 
-    $ alt_dialogue = random.choice([True, False])
-    if alt_dialogue:
+    if random.choice([True, False]):
         n 1nslbolsbl "..."
         n 1nslajl "Just...{w=1}{nw}"
         extend 1nslssl " give me a sec.{w=1}{nw}"
@@ -407,8 +402,7 @@ label idle_daydreaming:
     show natsuki thinking
     $ jnClickToContinue(silent=False)
 
-    $ alt_dialogue = random.choice([True, False])
-    if alt_dialogue:
+    if random.choice([True, False]):
         n 3flrpu "...{w=1.5}{nw}"
         n 3tnmpueqm "...?{w=1}{nw}"
         n 4unmfleex "Oh!{w=0.75}{nw}"
@@ -435,8 +429,7 @@ label idle_poetry_attempts:
     hide black with Dissolve(0.5)
     $ jnClickToContinue(silent=False)
 
-    $ alt_dialogue = random.choice([True, False])
-    if alt_dialogue:
+    if random.choice([True, False]):
         n 1tnmboeqm "...?{w=1.25}{nw}"
         n 1unmajesu "Oh!{w=0.75}{nw}"
         extend 1fchbgsbl " Hey,{w=0.2} [player]."
