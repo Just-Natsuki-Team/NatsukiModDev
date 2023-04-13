@@ -307,6 +307,14 @@ init python in jn_jokes:
         label="joke_rabbit_lottery",
         joke_category=JNJokeCategories.funny
     ))
+    __registerJoke(JNJoke(
+        label="joke_trees_logged_out",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_con_crete",
+        joke_category=JNJokeCategories.neutral
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -598,5 +606,28 @@ label joke_rabbit_lottery:
     n 1fsqss "...How else do they join the{w=0.5}{nw}" 
     extend 1fnmbg " {i}bun{/i}{w=0.75}{nw}" 
     extend 1uchgn "-percent?"
+
+    return
+
+label joke_trees_logged_out:
+    n 1fcsaj "So!{w=1}{nw}"
+    extend 1fcsbg " Why is it so hard to find trees online,{w=0.2} [player]?"
+    n 1fsqsg "..."
+    n 1fnmss "Because they're always...{w=1}{nw}"
+    extend 1fsqbg " {i}logged{/i}{w=1}{nw}"
+    extend 1fchgn " out!"
+
+    return
+
+label joke_con_crete:
+    n 1ullaj "Hey,{w=0.2} [player]...{w=1}{nw}"
+    extend 1tnmfl " did you hear about the construction project that got shut down?"
+    n 1flrgs "Apparently all the materials were suddenly swapped out for cheap crap!{w=0.75}{nw}"
+    extend 1fcsan " It wasn't even up to code!{w=1}{nw}"
+    extend 1fsran " A complete scam!"
+    n 1fcsaj "Turns out..."
+    n 1fllfl "They got stuck with{w=0.5}{nw}"
+    extend 1fsqbg " {i}con{/i}{w=1}{nw}"
+    extend 1nchgn "-crete!"
 
     return

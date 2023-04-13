@@ -39,6 +39,7 @@ init python in jn_idles:
         reading = 1
         gaming = 2
         resting = 3
+        vibing = 4
 
     class JNIdle:
         """
@@ -209,6 +210,13 @@ init python in jn_idles:
         conditional="get_topic('event_caught_writing_poetry').shown_count > 0"
     ))
 
+    __registerIdle(JNIdle(
+        label="idle_vibing_headphones",
+        idle_type=JNIdleTypes.vibing,
+        affinity_range=(jn_affinity.HAPPY, None),
+        conditional="persistent.jn_custom_music_unlocked"
+    ))
+
 label idle_twitch_playing:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     show prop wintendo_twitch_playing free zorder JN_PROP_ZORDER
@@ -222,8 +230,7 @@ label idle_twitch_playing:
     n 1unmflesu "Oh!{w=1}{nw}"
     extend 1fchbgsbr " What's up,{w=0.2} [player]?"
 
-    $ alt_dialogue = random.choice([True, False])
-    if alt_dialogue:
+    if random.choice([True, False]):
         n 1fllsssbr "Just gotta save real quick..."
     
     else:
@@ -253,8 +260,7 @@ label idle_reading_parfait_girls:
     n 1unmflesu "Oh!{w=0.75}{nw}"
     extend 1fchbgsbl " Hey!"
 
-    $ alt_dialogue = random.choice([True, False])
-    if alt_dialogue:
+    if random.choice([True, False]):
         n 1fslsssbl "Let me just bookmark this real quick..."
     
     else:
@@ -285,8 +291,7 @@ label idle_reading_renpy_for_dummies:
     extend 1nlrsssbr " Hey.{w=1}{nw}"
     extend 1nsrsssbr " Just let me finish up here real quick."
 
-    $ alt_dialogue = random.choice([True, False])
-    if alt_dialogue:
+    if random.choice([True, False]):
         n 1nsrbosbr "..."
         n 1nnmaj "...And no.{w=1}{nw}" 
         extend 1fslpo " The book still sucks."
@@ -313,8 +318,7 @@ label idle_reading_a_la_mode:
     hide black with Dissolve(0.5)
     $ jnClickToContinue(silent=False)
 
-    $ alt_dialogue = random.choice([True, False])
-    if alt_dialogue:
+    if random.choice([True, False]):
         n 1unmaj "Ah!{w=1}{nw}"
         extend 1unmbg " [player]!{w=1}{nw}"
         extend 1fcsbg " Perfect timing."
@@ -354,8 +358,7 @@ label idle_reading_step_by_step:
     extend 1unmfllesu " Oh!{w=0.75}{nw}"
     extend 1ullfllsbl " [player]!"
 
-    $ alt_dialogue = random.choice([True, False])
-    if alt_dialogue:
+    if random.choice([True, False]):
         n 1nslbolsbl "..."
         n 1nslajl "Just...{w=1}{nw}"
         extend 1nslssl " give me a sec.{w=1}{nw}"
@@ -399,8 +402,7 @@ label idle_daydreaming:
     show natsuki thinking
     $ jnClickToContinue(silent=False)
 
-    $ alt_dialogue = random.choice([True, False])
-    if alt_dialogue:
+    if random.choice([True, False]):
         n 3flrpu "...{w=1.5}{nw}"
         n 3tnmpueqm "...?{w=1}{nw}"
         n 4unmfleex "Oh!{w=0.75}{nw}"
@@ -427,8 +429,7 @@ label idle_poetry_attempts:
     hide black with Dissolve(0.5)
     $ jnClickToContinue(silent=False)
 
-    $ alt_dialogue = random.choice([True, False])
-    if alt_dialogue:
+    if random.choice([True, False]):
         n 1tnmboeqm "...?{w=1.25}{nw}"
         n 1unmajesu "Oh!{w=0.75}{nw}"
         extend 1fchbgsbl " Hey,{w=0.2} [player]."
@@ -456,6 +457,56 @@ label idle_poetry_attempts:
     hide prop
     play audio drawer
     $ jnPause(1.3)
+    hide black with Dissolve(0.5)
+    $ jnPause(1)
+
+    $ jn_idles._concludeIdle()
+
+label idle_vibing_headphones:
+    python:
+        import copy
+
+        outfit_to_restore = jn_outfits.get_outfit(Natsuki.getOutfitName())
+        headphones = jn_outfits.get_wearable("jn_headgear_cat_headphones")
+        if not headphones.unlocked:
+            headphones.unlock()
+
+        headphones_outfit = copy.copy(outfit_to_restore)
+        headphones_outfit.headgear = headphones
+
+    show natsuki 1ncsca
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    show prop music_notes zorder JN_PROP_ZORDER
+    $ jn_outfits.save_temporary_outfit(headphones_outfit)
+    show natsuki vibing
+    hide black with Dissolve(0.5)
+    $ jnClickToContinue(silent=False)
+
+    if random.choice([True, False]):
+        n 4tslboeqm "...{w=1}{nw}"
+        n 4tnmboeqm "...?{w=0.75}{nw}"
+        hide prop
+        n 1unmfllesh "O-{w=0.2}oh!{w=0.75}{nw}"
+        extend 1flrsslsbl " [player]!{w=0.75}{nw}"
+        extend 2fsrdvlsbl " Heh."
+        n 2fcsfllsbl "J-{w=0.2}just give me a second here."
+
+    else:
+        n 1tsqcaeqm "...?{w=1}{nw}"
+        n 1uskemlesh "...!{w=0.75}{nw}"
+        hide prop
+        $ player_initial = jn_utils.getPlayerInitial()
+        n 4fbkwrl "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
+        extend 4fnmemlsbr " How long have you just been {i}sat there{/i}?!{w=1.25}{nw}"
+        extend 2fslfllsbr " Jeez..."
+        n 2fcsposbr "At {i}least{/i} let me put these on charge first..."
+
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    play audio drawer
+    $ jnPause(1.3)
+    $ Natsuki.setOutfit(outfit_to_restore)
+    show natsuki 2nsrcasbl
     hide black with Dissolve(0.5)
     $ jnPause(1)
 

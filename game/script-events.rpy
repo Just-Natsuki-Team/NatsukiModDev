@@ -136,6 +136,18 @@ image prop wintendo_twitch_dead:
     pause 1
     repeat
 
+image prop music_notes:
+    choice:
+        "mod_assets/props/music/music_notes_a.png"
+    choice:
+        "mod_assets/props/music/music_notes_b.png"
+    choice:
+        "mod_assets/props/music/music_notes_c.png"
+    choice:
+        "mod_assets/props/music/music_notes_d.png"
+    pause 1
+    repeat
+
 # Background decorations are displayed in the room behind Natsuki
 image deco balloons = "mod_assets/deco/balloons.png"
 image deco garlands = "mod_assets/deco/garlands.png"

@@ -1746,6 +1746,12 @@ init -1 python in jn_outfits:
         unlocked=False,
         is_jn_wearable=True
     ))
+    __register_wearable(JNHeadgear(
+        reference_name="jn_headgear_cat_headphones",
+        display_name="Cat headphones",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
 
     # Official JN necklaces
     __register_wearable(JNNecklace(

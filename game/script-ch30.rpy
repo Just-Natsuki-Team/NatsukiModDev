@@ -559,9 +559,8 @@ label talk_menu:
 
         # Ensure any variable references are substituted
         _talk_flavor_text = renpy.substitute(_talk_flavor_text)
-
-    $ show_natsuki_talk_menu()
-    $ Natsuki.setInConversation(True)
+        show_natsuki_talk_menu()
+        Natsuki.setInConversation(True)
 
     menu:
         n "[_talk_flavor_text]"
@@ -595,6 +594,8 @@ label talk_menu:
             jump farewell_start
 
         "Nevermind.":
+            $ global LAST_IDLE_CALL
+            $ LAST_IDLE_CALL = datetime.datetime.now()
             jump ch30_loop
 
     return
