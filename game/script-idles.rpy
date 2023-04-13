@@ -501,12 +501,12 @@ label idle_vibing_headphones:
         extend 2fslfllsbr " Jeez..."
         n 2fcsposbr "At {i}least{/i} let me put these on charge first..."
 
-    show natsuki 2nsrcasbl
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
-    $ Natsuki.setOutfit(outfit_to_restore)
     play audio drawer
     $ jnPause(1.3)
+    $ Natsuki.setOutfit(outfit_to_restore)
+    show natsuki 2nsrcasbl
     hide black with Dissolve(0.5)
     $ jnPause(1)
 
