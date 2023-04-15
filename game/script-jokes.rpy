@@ -327,6 +327,10 @@ init python in jn_jokes:
         label="joke_meeting_walls",
         joke_category=JNJokeCategories.bad
     ))
+    __registerJoke(JNJoke(
+        label="joke_hour_feeling",
+        joke_category=JNJokeCategories.funny
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -669,5 +673,13 @@ label joke_meeting_walls:
     n 1fcspo "..."
     n 1fslbo "We'll meet at the{w=1}{nw}"
     extend 1fsqbo " {i}corner{/i}."
+
+    return
+
+label joke_hour_feeling:
+    n 1fcsaj "So!{w=1}{nw}"
+    extend 1fsqsm " What did the clock ask the watch,{w=0.2} [player]?"
+    n 1fsldv "..."
+    n 1fchgn "{i}Hour{/i}{w=1} you doing?"
 
     return
