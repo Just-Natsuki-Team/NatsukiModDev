@@ -100,6 +100,8 @@ init -50 python:
         down = 23
         pained = 24
         up = 25
+        think_left = 26
+        think_right = 27
 
         def __str__(self):
             return self.name
@@ -110,6 +112,7 @@ init -50 python:
         knit = 3
         furrowed = 4
         think = 5
+        concerned = 6
 
         def __str__(self):
             return self.name
@@ -325,7 +328,8 @@ init 1 python:
         "u": JNEyebrows.up,
         "k": JNEyebrows.knit,
         "f": JNEyebrows.furrowed,
-        "t": JNEyebrows.think
+        "t": JNEyebrows.think,
+        "c": JNEyebrows.concerned
     }
 
     EYE_MAP = {
@@ -348,6 +352,8 @@ init 1 python:
         "sq": JNEyes.squint,
         "sl": JNEyes.squint_left,
         "sr": JNEyes.squint_right,
+        "tl": JNEyes.think_left,
+        "tr": JNEyes.think_right,
         "un": JNEyes.unamused,
         "up": JNEyes.up,
         "wm": JNEyes.warm,
