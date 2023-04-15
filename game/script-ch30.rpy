@@ -370,6 +370,8 @@ label call_next_topic(show_natsuki=True):
 init python:
     LAST_IDLE_CALL = datetime.datetime.now()
     LAST_TOPIC_CALL = datetime.datetime.now()
+    LAST_MENU_CALL = datetime.datetime.now()
+
     LAST_MINUTE_CHECK = datetime.datetime.now()
     LAST_HOUR_CHECK = LAST_MINUTE_CHECK.hour
     LAST_DAY_CHECK = LAST_MINUTE_CHECK.day
@@ -405,6 +407,7 @@ init python:
         if (
             persistent.jn_natsuki_random_topic_frequency != jn_preferences.random_topic_frequency.NEVER
             and datetime.datetime.now() > LAST_TOPIC_CALL + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown())
+            and datetime.datetime.now() >= LAST_MENU_CALL + datetime.timedelta(seconds=5)
             and not persistent._event_list
         ):
             if not persistent.jn_natsuki_repeat_topics:
@@ -445,6 +448,7 @@ init python:
             persistent._jn_natsuki_idles_enabled
             and datetime.datetime.now() >= LAST_TOPIC_CALL + datetime.timedelta(minutes=2)
             and datetime.datetime.now() >= LAST_IDLE_CALL + datetime.timedelta(minutes=10)
+            and datetime.datetime.now() >= LAST_MENU_CALL + datetime.timedelta(seconds=5)
             and not persistent._event_list
         ):
             idle_topic = jn_idles.selectIdle()
@@ -562,6 +566,9 @@ label talk_menu:
         show_natsuki_talk_menu()
         Natsuki.setInConversation(True)
 
+        global LAST_IDLE_CALL
+        global LAST_MENU_CALL
+
     menu:
         n "[_talk_flavor_text]"
 
@@ -594,9 +601,12 @@ label talk_menu:
             jump farewell_start
 
         "Nevermind.":
-            $ global LAST_IDLE_CALL
             $ LAST_IDLE_CALL = datetime.datetime.now()
+            $ LAST_MENU_CALL = datetime.datetime.now()
             jump ch30_loop
+
+    $ LAST_IDLE_CALL = datetime.datetime.now()
+    $ LAST_MENU_CALL = datetime.datetime.now()
 
     return
 
