@@ -10012,14 +10012,14 @@ label talk_fitting_clothing:
     n 3fcsaj "But I can assure you:{w=0.5}{nw}" 
     extend 3fcsbg " my imagination {i}never{/i} comes up short!"
 
-    $ pastel_goth_outfit = jn_outfits.get_outfit("jn_pastel_goth_getup")
-    if not pastel_goth_outfit.unlocked:
+    $ pastel_goth_getup = jn_outfits.get_outfit("jn_pastel_goth_getup")
+    if not pastel_goth_getup.unlocked:
         python:
             import copy
 
-            pastel_goth_outfit.unlock()
-            pastel_overalls_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
-            pastel_overalls_outfit.clothes = jn_outfits.get_wearable("jn_clothes_pastel_goth_overalls")
+            pastel_goth_getup.unlock()
+            topic_outfit = copy.copy(pastel_goth_getup)
+            topic_outfit.hairstyle = jn_outfits.get_outfit(Natsuki.getOutfitName()).hairstyle
 
         n 3fllpu "..."
         n 3fllss "...In fact.{w=1}{nw}"
@@ -10057,7 +10057,8 @@ label talk_fitting_clothing:
 
         $ jnPause(1)
         play audio zipper
-        $ Natsuki.setOutfit(pastel_overalls_outfit)
+        $ Natsuki.setOutfit(outfit=topic_outfit, persist=False)
+
         show natsuki 2fsrdvlsbl
         $ jnPause(2)
         n "And..."
