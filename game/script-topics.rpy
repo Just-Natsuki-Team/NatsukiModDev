@@ -9954,39 +9954,142 @@ init 5 python:
     )
 
 label talk_fitting_clothing:
-    n "..."
-    n "You know, [player]..."
-    n "I don't remember ever complaining about my height that much."
-    extend " Not really."
-    n "I mean..."
-    extend " it always seemed pointless getting all worked up about it."
-    extend " It's not like I was ever going to be tall {i}eventually{/i}."
-    n "...Especially not now."
-    n "But..." 
-    extend " I guess I just came to realize it's like my teeth,"
-    extend " or my hair or whatever."
-    n "You just gotta make the most of it."
-    extend " A-and why shouldn't I?"
-    n "I'm rocking it!"
+    n  "..."
+    n  "You know,{w=0.2} [player]..."
+    n  "I don't remember ever complaining about my height that much."
+    extend  " Not {i}really{/i}."
+    n  "I mean..."
+    extend  " it always seemed pointless getting all worked up about it."
+    extend  " It's not like I was ever going to be tall {i}eventually{/i}."
+    n  "...Especially not now."
+    n  "But..." 
+    extend  " I guess I just came to realize it's like my teeth,"
+    extend  " or my hair or whatever."
+    n  "You just gotta make the most of it."
+    extend  " A-and why shouldn't I?"
+    extend  " I'm rocking it!"
 
-    n "But Oh."
-    extend " My."
-    extend " God,"
-    extend " [player]."
-    n "Clothes shopping."
-    extend " I swear."
-    extend " It's like my own special hell!"
-    n "Have you even considered what getting new clothes is like when you're this small?!"
-    extend " It's the worst -"
-    extend " it doesn't even matter where you go!"
-    n "Medium?"
-    extend " Small?"
-    extend " {i}Extra{/i} Small?"
-    extend " It doesn't even matter!"
-    n "Those aren't sizes -"
-    extend " I'm just picking how much of a {i}joke{/i} the fit is!"
+    n  "But Oh."
+    extend  " My."
+    extend  " God,"
+    extend  " [player]."
+    n  "Clothes shopping."
+    extend  " I swear."
+    extend  " It's like my own special hell!"
+    n  "Have you even {i}considered{/i} what getting new clothes is like when you're this small?!"
+    n  "Seriously -"
+    extend  " it's the worst!"
+    extend  " And it doesn't even matter where you go!"
+    n  "Medium?"
+    extend  " Small?"
+    extend  " {i}Extra{/i} Small?"
+    extend  " As if it matters!"
+    n  "Those aren't sizes -"
+    extend  " I'm just picking how much of a {i}joke{/i} the fit is!"
     
-    n "Half the time I walk over to the adult section,"
-    extend " I have to walk right back out again!"
-    extend " And there's only so many times you can visit the kid section before people start giving you funny looks."
+    n  "Half the time I walked over to the adult section,"
+    extend  " I'd have to walk right back out again!"
+    n  "...And there's only so many times you can try the kid section before people start giving you stupid looks."
+    n  "Ugh..."
+    n  "It's just embarrassing."
+    extend  " And usually a {i}complete{/i} waste of time too."
+    n  "I know some places do a..."
+    extend  " petite"
+    extend  " line,"
+    extend  " But it's all still just as expensive as the normal stuff!"
+    n  "Yeesh..."
+    n  "They don't use {i}that{/i} much material."
+    extend  " They could at least cut us a discount or something."
+    n  " ...{i}Jerks{/i}."
+
+    n  "Well,{w=0.2} whatever."
+    extend  " Stores might be short of options."
+    extend  " And {i}courtesy{/i}."
+    n  "But I can assure you: my imagination {i}never{/i} comes up short!"
+
+    $ pastel_goth_outfit = jn_outfits.getOutfit("jn_pastel_goth_getup")
+    if not pastel_goth_outfit.unlocked:
+        python:
+            import copy
+
+            pastel_goth_outfit.unlock()
+            pastel_overalls_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
+            pastel_overalls_outfit.clothes = jn_outfits.get_wearable("jn_clothes_pastel_goth_overalls")
+
+        n  "...In fact."
+        extend  " You know what?"
+        n  "Forget just rambling on about it."
+        extend  " You should know I'm way better than that by now."
+        n  "...So I'm gonna {i}prove{/i} it!"
+        n  "Y-you better sit tight,{w=0.2} [player]..."
+        n  "'Cause I'm gonna show you what {i}real{/i} craftsmanship looks like!"
+        extend  " Ehehe."
+        show natsuki 
+
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+        $ jnPause(0.5)
+        play audio chair_out
+        $ jnPause(3)
+
+        n  "Alright..."
+        extend  " now where did I...?"
+        n  "Aha!"
+
+        play audio drawer
+        $ jnPause(3)
+        play audio clothing_ruffle
+        $ jnPause(1)
+
+        if Natsuki.isLove(higher=True):
+            n "N-no peeking!{w=0.2} Ehehe..."
+
+        elif Natsuki.isEnamored(higher=True):
+            n "N-no peeking!"
+
+        else:
+            n "H-hey!{w=0.2} You better not be peeking!"
+
+        $ jnPause(3)
+        play audio zipper
+        $ Natsuki.setOutfit(pastel_overalls_outfit)
+        show natsuki 2nsrcasbl
+        $ jnPause(2)
+        n "And..."
+        play audio chair_in
+        hide black with Dissolve(1.5)
+        $ jnPause(1.5)
+
+        n  "Ta-da!"
+        n  "Can you guess where {i}this{/i} came from,{w=0.2} [player]?"
+        extend  " Ehehe."
+        extend  " As much as I complain about resorting to the kids section..."
+
+    else:
+        n  "I'm pretty sure I showed my handiwork off already,"
+        extend  " so I'll spare you the fashion show,{w=0.2} [player]."
+        n  "...This time."
+        n  "Like I said before though -"
+        extend  " as much as I complain about resorting to the kids section..."
+
+    n  "There's nothing some good old fashioned know-how,{w=0.2} a needle,"
+    extend  " and a bunch of my patches can't fix!"
+    extend  " Ahaha."
     
+    n  "Well,{w=0.2} anyway."
+    extend  " I think I've just about gone on long enough."
+    extend  " As good as it was getting all that off my chest."
+    n  "Heh."
+    extend  " Besides."
+    n  "Seems moving on is only..."
+    extend  " fitting"
+    extend  ",{w=0.2} right?"
+
+    if Natsuki.isLove(higher=True):
+        n  "Ehehe."
+        extend  " love you,{w=0.2} [player]!"
+
+    else:
+        n  "Ehehe."
+        extend  " No regrets,{w=0.2} [player]!"
+
+    return
