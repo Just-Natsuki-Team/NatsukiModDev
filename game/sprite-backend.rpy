@@ -232,8 +232,18 @@ init -50 python:
         # Mouth, nose, hair (front)
         lc_args.extend([
             (0, 0), "{0}/face/mouth/sitting/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, mouth),
-            (0, 0), "{0}/face/nose/sitting/nose.png".format(_JN_NATSUKI_BASE_SPRITE_PATH),
-            (0, 0), "{0}/hair/[Natsuki._outfit.hairstyle.reference_name]/sitting/bangs.png".format(_JN_NATSUKI_BASE_SPRITE_PATH),
+            (0, 0), "{0}/face/nose/sitting/nose.png".format(_JN_NATSUKI_BASE_SPRITE_PATH)
+        ])
+
+        # Sweat
+        if sweat:
+            lc_args.extend([
+                (0, 0), "{0}/face/sweat/sitting/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, sweat)
+            ])
+
+        # Hair (front)
+        lc_args.extend([
+            (0, 0), "{0}/hair/[Natsuki._outfit.hairstyle.reference_name]/sitting/bangs.png".format(_JN_NATSUKI_BASE_SPRITE_PATH)
         ])
 
         # Accessory
@@ -251,12 +261,6 @@ init -50 python:
         if tears:
             lc_args.extend([
                 (0, 0), "{0}/face/tears/sitting/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, tears)
-            ])
-
-        # Sweat
-        if sweat:
-            lc_args.extend([
-                (0, 0), "{0}/face/sweat/sitting/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, sweat)
             ])
 
         # Headgear
