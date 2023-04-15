@@ -9954,60 +9954,65 @@ init 5 python:
     )
 
 label talk_fitting_clothing:
-    n  "..."
-    n  "You know,{w=0.2} [player]..."
-    n  "I don't remember ever complaining about my height that much."
-    extend  " Not {i}really{/i}."
-    n  "I mean..."
-    extend  " it always seemed pointless getting all worked up about it."
-    extend  " It's not like I was ever going to be tall {i}eventually{/i}."
-    n  "...Especially not now."
-    n  "But..." 
-    extend  " I guess I just came to realize it's like my teeth,"
-    extend  " or my hair or whatever."
-    n  "You just gotta make the most of it."
-    extend  " A-and why shouldn't I?"
-    extend  " I'm rocking it!"
+    n 2cllbo "..."
+    n 2cllfl "You know,{w=0.2} [player]..."
+    n 2tnmbo "I don't remember ever complaining about my height that much.{w=0.75}{nw}"
+    extend 4nsrss "\nNot {i}really{/i}."
+    n 4ulraj "I mean...{w=1}{nw}"
+    extend 3clrsl " it always seemed pointless getting all worked up about it.{w=0.75}{nw}"
+    extend 3nsrposbr " It's not like I was ever going to be tall {i}eventually{/i}."
+    n 4csrca "...Especially not now."
+    n 1ulraj "But...{w=1}{nw}" 
+    extend 1unmaj " I guess I just came to realize it's like my teeth,{w=0.75}{nw}"
+    extend 2nnmbo " or my hair or whatever."
+    n 2fcstr "You just gotta make the most of it.{w=1}{nw}"
+    extend 4fcsgsl " A-{w=0.2}and why shouldn't I?{w=0.75}{nw}"
+    extend 3fcsbgl " I'm totally rocking what I've got!"
 
-    n  "But Oh."
-    extend  " My."
-    extend  " God,"
-    extend  " [player]."
-    n  "Clothes shopping."
-    extend  " I swear."
-    extend  " It's like my own special hell!"
-    n  "Have you even {i}considered{/i} what getting new clothes is like when you're this small?!"
-    n  "Seriously -"
-    extend  " it's the worst!"
-    extend  " And it doesn't even matter where you go!"
-    n  "Medium?"
-    extend  " Small?"
-    extend  " {i}Extra{/i} Small?"
-    extend  " As if it matters!"
-    n  "Those aren't sizes -"
-    extend  " I'm just picking how much of a {i}joke{/i} the fit is!"
+    n 1csqsl "But {w=0.3}Oh.{w=0.75} My.{w=0.75} God,{w=0.75}{nw}"
+    extend 2csrem " [player]."
+    n 2fsqem "Clothes shopping.{w=1}{nw}"
+    extend 1fcsan " I swear.{w=1}{nw}"
+    extend 4fbkwr " It's like my own special hell!"
+    n 4fcswrl "Have you even {i}considered{/i} what getting new clothes is like when you're this small?!"
+    n 2fllfll "Seriously -{w=0.5}{nw}"
+    extend 2fbkwrl " it's the worst!{w=1}{nw}"
+    extend 2fcsgs " And it doesn't even matter where you go!"
+    n 4ftlfl "Medium?{w=0.5}{nw}"
+    extend 4ftrfl " Small?{w=0.5}{nw}"
+    extend 2fsqem " {i}Extra{/i} Small?{w=0.75}{nw}"
+    extend 2fcsgs " As if it matters!"
+    n 1fslem "Those aren't sizes -{w=0.5}{nw}"
+    extend 4fcsan " I'm just picking how much of a {b}joke{/b} the fit is!"
+    n 1flrfl "Yeah,{w=0.2} sure.{w=0.75}{nw}"
+    extend 4flrca " I {i}know{/i} oversize is a thing.{w=1}{nw}"
+    extend 2fsrtr " Obviously."
+    n 2flrgs "But come {w=0.3}{nw}" 
+    extend 2fcsgs "{b}on{/b}!"
+    n 4ksqfl "Is it {i}really{/i} too much to want sleeves that {i}don't{/i} dangle off my arms too?"
+    n 1fllfl "I mean,{w=0.2} half the time I walked over to check out the adult's clothes,{w=0.75}{nw}"
+    extend 1fnmem " I'd have to walk right back out again!"
+    n 2fsrsl "...And there's only so many times you can try the kids section before people start giving you stupid looks."
     
-    n  "Half the time I walked over to the adult section,"
-    extend  " I'd have to walk right back out again!"
-    n  "...And there's only so many times you can try the kid section before people start giving you stupid looks."
-    n  "Ugh..."
-    n  "It's just embarrassing."
-    extend  " And usually a {i}complete{/i} waste of time too."
-    n  "I know some places do a..."
-    extend  " petite"
-    extend  " line,"
-    extend  " But it's all still just as expensive as the normal stuff!"
-    n  "Yeesh..."
-    n  "They don't use {i}that{/i} much material."
-    extend  " They could at least cut us a discount or something."
-    n  " ...{i}Jerks{/i}."
+    n 2fcsemesi "Ugh..."
+    n 1cslbo "It's just embarrassing.{w=1}{nw}"
+    extend 4fslsl " And usually a {i}complete{/i} waste of time too."
+    n 4cllfl "I get that some places do a...{w=0.75}{nw}"
+    extend 1cslflsbr " {i}petite{/i}{w=0.75}{nw}"
+    extend 1cslcasbr " line,{w=0.75}{nw}"
+    extend 2fcswrsbr " but it's all still {i}just{/i} as expensive as the normal stuff!"
+    n 2fcsem "Yeesh..."
+    n 4fllem "They don't even use as much material.{w=1}{nw}"
+    extend 4ftlem " They could at least throw in a discount or something."
+    n 2fsrfl " ...{i}Jerks{/i}."
+    n 2nsrpo "..."
+    n 2ncstr "Well,{w=0.2} whatever.{w=0.75}{nw}"
+    extend 1fnmca " Stores might be short of options.{w=0.75}{nw}"
+    extend 1fsrca " And {i}courtesy{/i}."
+    n 3fcsaj "But I can assure you:{w=0.5}{nw}" 
+    extend 3fcsbg " my imagination {i}never{/i} comes up short!"
 
-    n  "Well,{w=0.2} whatever."
-    extend  " Stores might be short of options."
-    extend  " And {i}courtesy{/i}."
-    n  "But I can assure you: my imagination {i}never{/i} comes up short!"
-
-    $ pastel_goth_outfit = jn_outfits.getOutfit("jn_pastel_goth_getup")
+    $ pastel_goth_outfit = jn_outfits.get_outfit("jn_pastel_goth_getup")
     if not pastel_goth_outfit.unlocked:
         python:
             import copy
@@ -10016,22 +10021,23 @@ label talk_fitting_clothing:
             pastel_overalls_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
             pastel_overalls_outfit.clothes = jn_outfits.get_wearable("jn_clothes_pastel_goth_overalls")
 
-        n  "...In fact."
-        extend  " You know what?"
-        n  "Forget just rambling on about it."
-        extend  " You should know I'm way better than that by now."
-        n  "...So I'm gonna {i}prove{/i} it!"
-        n  "Y-you better sit tight,{w=0.2} [player]..."
-        n  "'Cause I'm gonna show you what {i}real{/i} craftsmanship looks like!"
-        extend  " Ehehe."
-        show natsuki 
+        n 3fllpu "..."
+        n 3fllss "...In fact.{w=1}{nw}"
+        extend 4fsqss " You know what?"
+        n 2fcsbg "Forget just rambling on about it.{w=0.75}{nw}"
+        extend 2fcssm " You should know I'm way better than that by now."
+        n 4fchgn "...So I'm gonna {i}prove{/i} it!"
+        n 3fcsbgsbl "Y-{w=0.2}you better sit tight,{w=0.2} [player]..."
+        n 3fchgn "'Cause I'm gonna show you what {i}real{/i} craftsmanship looks like!{w=0.75}{nw}"
+        extend 3nchgn " Ehehe."
+        show natsuki 1fcssmeme
 
         show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         $ jnPause(0.5)
         play audio chair_out
         $ jnPause(3)
 
-        n  "Alright..."
+        n  "Alright...{w=1}{nw}"
         extend  " now where did I...?"
         n  "Aha!"
 
@@ -10041,55 +10047,56 @@ label talk_fitting_clothing:
         $ jnPause(1)
 
         if Natsuki.isLove(higher=True):
-            n "N-no peeking!{w=0.2} Ehehe..."
+            n "N-{w=0.2}no peeking!{w=0.75} Ehehe..."
 
         elif Natsuki.isEnamored(higher=True):
-            n "N-no peeking!"
+            n "N-{w=0.2}no peeking!"
 
         else:
-            n "H-hey!{w=0.2} You better not be peeking!"
+            n "H-{w=0.2}hey!{w=0.75} You better not be peeking!"
 
-        $ jnPause(3)
+        $ jnPause(1)
         play audio zipper
         $ Natsuki.setOutfit(pastel_overalls_outfit)
-        show natsuki 2nsrcasbl
+        show natsuki 2fsrdvlsbl
         $ jnPause(2)
         n "And..."
         play audio chair_in
+        $ jnPause(0.25)
         hide black with Dissolve(1.5)
         $ jnPause(1.5)
 
-        n  "Ta-da!"
-        n  "Can you guess where {i}this{/i} came from,{w=0.2} [player]?"
-        extend  " Ehehe."
-        extend  " As much as I complain about resorting to the kids section..."
+        n 2fchbglsbl "Ta-da!"
+        n 2csqsm "Can you guess where {i}this{/i} came from,{w=0.2} [player]?{w=0.75}{nw}"
+        extend 1fcssm " Ehehe."
+        n 4fslss "As much as I complained about resorting to the kids section..."
 
     else:
-        n  "I'm pretty sure I showed my handiwork off already,"
-        extend  " so I'll spare you the fashion show,{w=0.2} [player]."
-        n  "...This time."
-        n  "Like I said before though -"
-        extend  " as much as I complain about resorting to the kids section..."
+        n 4ullaj "I'm pretty sure I showed my handiwork off already,{w=0.75}{nw}"
+        extend 1fcsbg " so I'll spare you the fashion show,{w=0.2} [player]."
+        n 3fsqsm "...This time."
+        n 3tnmss "Like I said before though -{w=0.5}{nw}"
+        extend 4fslss " as much as I complained about resorting to the kids section..."
 
-    n  "There's nothing some good old fashioned know-how,{w=0.2} a needle,"
-    extend  " and a bunch of my patches can't fix!"
-    extend  " Ahaha."
+    n 3fcsbg "There's nothing some good old fashioned know-how,{w=0.2} a needle,{w=0.75}{nw}"
+    extend 3fchgn " and a bunch of my patches can't fix!{w=1}{nw}"
+    extend 3nchgn " Ahaha."
     
-    n  "Well,{w=0.2} anyway."
-    extend  " I think I've just about gone on long enough."
-    extend  " As good as it was getting all that off my chest."
-    n  "Heh."
-    extend  " Besides."
-    n  "Seems moving on is only..."
-    extend  " fitting"
-    extend  ",{w=0.2} right?"
+    n 4clrss "Well,{w=0.2} anyway.{w=0.75}{nw}"
+    extend 2csrsmsbl " I think I've just about gone on long enough.{w=1}{nw}"
+    extend 2fcsajsbl " As good as it was getting all that off my chest."
+    n 1fcsss "Heh.{w=0.75}{nw}"
+    extend 4cslbg " Besides,{w=0.2} all this talk about stuff never being the right size?"
+    n 4fnmss "I guess you could say moving on is only...{w=1}{nw}"
+    extend 3fsqbg " {i}fitting{/i}{w=1}{nw}"
+    extend 3fchgn ",{w=0.2} right?"
 
     if Natsuki.isLove(higher=True):
-        n  "Ehehe."
-        extend  " love you,{w=0.2} [player]!"
+        n 3fchsm "Ehehe.{w=0.5}{nw}"
+        extend 3fchbll " Love you too,{w=0.2} [player]!"
 
     else:
-        n  "Ehehe."
-        extend  " No regrets,{w=0.2} [player]!"
+        n 3fchsm "Ehehe.{w=0.5}{nw}"
+        extend 3uchgn " No regrets,{w=0.2} [player]!"
 
     return
