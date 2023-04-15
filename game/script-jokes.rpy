@@ -339,6 +339,10 @@ init python in jn_jokes:
         label="joke_missing_bell",
         joke_category=JNJokeCategories.funny
     ))
+    __registerJoke(JNJoke(
+        label="joke_cheesy_pizza",
+        joke_category=JNJokeCategories.bad
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -717,4 +721,12 @@ label joke_missing_bell:
     n 1nnmbo "{i}No bell{/i},{w=1}{nw}"
     extend 1fchgn " so I just knocked!"
 
+    return
+
+label joke_cheesy_pizza:
+    n 1fsqfl "...I've found a joke about pizza."
+    n 1ftrsl "Ugh..."
+    n 1fsqaj "But it is too{w=1}{nw}"
+    extend 1fcspo " {i}cheesy{/i}."
+    
     return
