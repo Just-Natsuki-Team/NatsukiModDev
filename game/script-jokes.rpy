@@ -335,6 +335,10 @@ init python in jn_jokes:
         label="joke_spotless_tigers",
         joke_category=JNJokeCategories.funny
     ))
+    __registerJoke(JNJoke(
+        label="joke_missing_bell",
+        joke_category=JNJokeCategories.funny
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -694,5 +698,23 @@ label joke_spotless_tigers:
     n 1fcsss "It is not a fashion choice,{w=0.2} that's for sure!"
     n 1fsqsm "It is because they don't want to be{w=1}{nw}"
     extend 1fchgn " {i}spotted{/i}!"
+
+    return
+
+label joke_missing_bell:
+    n 1fsqsm "Knock,{w=0.2} knock,{w=0.2} [player]!"
+
+    menu:
+        "Who's there?":
+            pass
+
+    n 1fcsaj "Nobel."
+
+    menu:
+        "Nobel who?":
+            pass
+
+    n 1nnmbo "{i}No bell{/i},{w=1}{nw}"
+    extend 1fchgn " so I just knocked!"
 
     return
