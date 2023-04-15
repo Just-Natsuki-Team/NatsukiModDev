@@ -321,7 +321,7 @@ init python in jn_jokes:
     ))
     __registerJoke(JNJoke(
         label="joke_bigger_ball",
-        joke_category=JNJokeCategories.funny
+        joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_meeting_walls",
@@ -329,6 +329,10 @@ init python in jn_jokes:
     ))
     __registerJoke(JNJoke(
         label="joke_hour_feeling",
+        joke_category=JNJokeCategories.funny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_spotless_tigers",
         joke_category=JNJokeCategories.funny
     ))
 
@@ -681,5 +685,14 @@ label joke_hour_feeling:
     extend 1fsqsm " What did the clock ask the watch,{w=0.2} [player]?"
     n 1fsldv "..."
     n 1fchgn "{i}Hour{/i}{w=1} you doing?"
+
+    return
+
+label joke_spotless_tigers:
+    n 1ulraj "So,{w=0.2} [player]...{w=1}{nw}"
+    extend 1tnmfl " did you ever ask yourself why tigers have stripes?"
+    n 1fcsss "It is not a fashion choice,{w=0.2} that's for sure!"
+    n 1fsqsm "It is because they don't want to be{w=1}{nw}"
+    extend 1fchgn " {i}spotted{/i}!"
 
     return
