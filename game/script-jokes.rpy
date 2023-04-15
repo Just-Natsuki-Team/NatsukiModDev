@@ -323,6 +323,10 @@ init python in jn_jokes:
         label="joke_bigger_ball",
         joke_category=JNJokeCategories.funny
     ))
+    __registerJoke(JNJoke(
+        label="joke_meeting_walls",
+        joke_category=JNJokeCategories.bad
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -657,5 +661,13 @@ label joke_bigger_ball:
     n 1uwdaj "I wondered why the ball keeps getting bigger!{w=0.5}"
     n 1flrfl "Then it{w=1}{nw}" 
     extend 1fsqcs " {i}hit{/i} me!"
+
+    return
+
+label joke_meeting_walls:
+    n 1fsqfl "...What did the wall say to the other wall?"
+    n 1fcspo "..."
+    n 1fslbo "We'll meet at the{w=1}{nw}"
+    extend 1fsqbo " {i}corner{/i}."
 
     return
