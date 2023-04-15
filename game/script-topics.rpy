@@ -9936,3 +9936,57 @@ label talk_daily_jokes_stop:
     $ persistent._jn_daily_jokes_enabled = False
 
     return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_fitting_clothing",
+            unlocked=True,
+            prompt="Clothing problems",
+            category=["Fashion"],
+            conditional="persistent.jn_custom_outfits_unlocked",
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
+            nat_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_fitting_clothing:
+    n "..."
+    n "You know, [player]..."
+    n "I don't remember ever complaining about my height that much."
+    extend " Not really."
+    n "I mean..."
+    extend " it always seemed pointless getting all worked up about it."
+    extend " It's not like I was ever going to be tall {i}eventually{/i}."
+    n "...Especially not now."
+    n "But..." 
+    extend " I guess I just came to realize it's like my teeth,"
+    extend " or my hair or whatever."
+    n "You just gotta make the most of it."
+    extend " A-and why shouldn't I?"
+    n "I'm rocking it!"
+
+    n "But Oh."
+    extend " My."
+    extend " God,"
+    extend " [player]."
+    n "Clothes shopping."
+    extend " I swear."
+    extend " It's like my own special hell!"
+    n "Have you even considered what getting new clothes is like when you're this small?!"
+    extend " It's the worst -"
+    extend " it doesn't even matter where you go!"
+    n "Medium?"
+    extend " Small?"
+    extend " {i}Extra{/i} Small?"
+    extend " It doesn't even matter!"
+    n "Those aren't sizes -"
+    extend " I'm just picking how much of a {i}joke{/i} the fit is!"
+    
+    n "Half the time I walk over to the adult section,"
+    extend " I have to walk right back out again!"
+    extend " And there's only so many times you can visit the kid section before people start giving you funny looks."
+    
