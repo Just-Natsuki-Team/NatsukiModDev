@@ -1769,7 +1769,7 @@ init 5 python:
 label greeting_night_night_owl:
     n 1unmajesu "Oh!{w=0.3} [player]!{w=1}{nw}"
     extend 3fllsslsbl " You're a night owl too,{w=0.2} huh?"
-    n 2fcsbg "N-{w=0.2}not that I have a problem with that,{w=0.2} obviously." 
+    n 3fcsbg "N-{w=0.2}not that I have a problem with that,{w=0.2} obviously." 
     extend 4nchgnl " Welcome back!"
 
     return

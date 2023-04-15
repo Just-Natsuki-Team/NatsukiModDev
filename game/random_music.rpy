@@ -39,19 +39,29 @@ init python in jn_random_music:
     # The file extensions we (Ren'Py) support
     _VALID_FILE_EXTENSIONS = ["mp3", "ogg", "wav"]
 
+    def getRandomMusicPlayable():
+        """
+        Returns whether random music is considered playable, ignoring if any custom music is defined.
+        Note that at least two tracks must exist for random music to work properly.
+
+        OUT:
+            - True if random music should be playable, otherwise False.
+        """
+        return (
+            store.persistent.jn_custom_music_unlocked
+            and store.persistent.jn_random_music_enabled
+            and store.Natsuki.isAffectionate(higher=True)
+            and store.preferences.get_volume("music") > 0
+            and not jn_utils.createDirectoryIfNotExists(jn_custom_music.CUSTOM_MUSIC_DIRECTORY)
+        )
+
 label random_music_change:
     $ available_custom_music = jn_utils.getAllDirectoryFiles(
         path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
         extension_list=jn_custom_music._VALID_FILE_EXTENSIONS
     )
 
-    if not (
-        store.persistent.jn_custom_music_unlocked
-        and store.persistent.jn_random_music_enabled
-        and store.Natsuki.isAffectionate(higher=True)
-        and store.preferences.get_volume("music") > 0
-        and len(available_custom_music) >= 2
-    ):
+    if not jn_random_music.getRandomMusicPlayable() or len(available_custom_music) < 2:
         return
 
     $ track_quip = random.choice(jn_random_music._NEW_TRACK_QUIPS)
