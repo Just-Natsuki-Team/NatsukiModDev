@@ -19,6 +19,8 @@ style hotkeys_text:
     yalign 0.5
 
 screen hotkeys():
+    $ config.mouse = None
+
     tag menu
     use game_menu(("Hotkeys")):
         viewport id "hotkeys":
@@ -796,6 +798,8 @@ screen indicator(message):
         xpos 10 ypos 70
 
 screen navigation():
+    $ config.mouse = None
+    
     vbox:
         style_prefix "navigation"
 
@@ -1158,6 +1162,7 @@ style slot_button_text:
 define persistent.room_animation = True
 
 screen preferences():
+    $ config.mouse = None
 
     tag menu
 
@@ -1430,6 +1435,7 @@ style slider_vbox:
 ## https://www.renpy.org/doc/html/history.html
 
 screen history():
+    $ config.mouse = None
 
     tag menu
 
