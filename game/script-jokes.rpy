@@ -319,6 +319,10 @@ init python in jn_jokes:
         label="joke_footless_snakes",
         joke_category=JNJokeCategories.neutral
     ))
+    __registerJoke(JNJoke(
+        label="joke_bigger_ball",
+        joke_category=JNJokeCategories.funny
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -644,5 +648,14 @@ label joke_footless_snakes:
     n 1fcsss "Well,{w=0.2} my guess would be in inches or centimetre...{w=0.5}"
     n 1nsrss " Because they...{w=1}{nw}"
     extend 1nchgn " have no {i}feet{/i}!"
+
+    return
+
+label joke_bigger_ball:
+    n 1ullbo "You know..."
+    n 1nslss "When I was playing sports lately..."
+    n 1uwdaj "I wondered why the ball keeps getting bigger!{w=0.5}"
+    n 1flrfl "Then it{w=1}{nw}" 
+    extend 1fsqcs " {i}hit{/i} me!"
 
     return
