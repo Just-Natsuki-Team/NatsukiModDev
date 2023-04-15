@@ -132,6 +132,9 @@ init python in jn_custom_music:
         """
         return "../{0}{1}".format(CUSTOM_MUSIC_FOLDER, file_name) if is_custom else "../{0}{1}".format(BGM_FOLDER, file_name)
 
+    if store.persistent.jn_custom_music_unlocked:
+        jn_utils.createDirectoryIfNotExists(CUSTOM_MUSIC_DIRECTORY)
+
 label music_menu:
     $ Natsuki.setInConversation(True)
     $ music_title = "Error, this should have changed"
@@ -172,7 +175,6 @@ label music_menu:
         extend 4knmajsbr " [player]?"
         n 4kslslsbr "Something {i}kinda{/i} went wrong when I was trying look for your music...{w=1}{nw}"
         extend 4kslsssbr " can you just check everything out real quick?"
-        $ folder = jn_custom_music.CUSTOM_MUSIC_DIRECTORY
         n 2tlraj "As a reminder -{w=0.5}{nw}" 
         extend 2tnmsl " anything you want me to play needs to be in the {i}custom_music{/i} folder."
         n 2fcsbgsbl "Just make sure it's all in {i}.mp3,{w=0.1} .ogg or .wav{/i} format!"

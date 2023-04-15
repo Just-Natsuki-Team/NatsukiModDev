@@ -193,7 +193,23 @@ label ch30_init:
     show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
     hide black with Dissolve(2)
     show screen hkb_overlay
-    play music audio.just_natsuki_bgm
+
+    # Play appropriate music
+    if jn_random_music.getRandomMusicPlayable():
+        $ available_custom_music = jn_utils.getAllDirectoryFiles(
+            path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
+            extension_list=jn_custom_music._VALID_FILE_EXTENSIONS
+        )
+        if (len(available_custom_music) >= 2):
+            $ renpy.play(
+                filename=jn_custom_music.getMusicFileRelativePath(file_name=random.choice(available_custom_music)[0], is_custom=True),
+                channel="music"
+            )
+        else:
+            play music audio.just_natsuki_bgm
+
+    else:
+        play music audio.just_natsuki_bgm
 
     # Random sticker chance
     if (
