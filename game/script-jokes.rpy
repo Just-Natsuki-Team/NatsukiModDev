@@ -315,6 +315,10 @@ init python in jn_jokes:
         label="joke_con_crete",
         joke_category=JNJokeCategories.neutral
     ))
+    __registerJoke(JNJoke(
+        label="joke_footless_snakes",
+        joke_category=JNJokeCategories.neutral
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -629,5 +633,16 @@ label joke_con_crete:
     n 1fllfl "They got stuck with{w=0.5}{nw}"
     extend 1fsqbg " {i}con{/i}{w=1}{nw}"
     extend 1nchgn "-crete!"
+
+    return
+
+label joke_footless_snakes:
+    n 1ulraj "Hey,{w=0.2} [player]...{w=1}{nw}"
+    extend 1tnmfl " have you ever wondered how to measure snakes?"
+    n 1uwdaj "Like they are so long!"
+    n 1fsqcs "What measurement could be possibly the best?"
+    n 1fcsss "Well,{w=0.2} my guess would be in inches or centimetre...{w=0.5}"
+    n 1nsrss " Because they...{w=1}{nw}"
+    extend 1nchgn " have no {i}feet{/i}!"
 
     return
