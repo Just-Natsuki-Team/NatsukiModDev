@@ -665,8 +665,8 @@ label joke_footless_snakes:
     extend 1tnmfl " have {i}you{/i} ever wondered how snakes are measured?"
     n 1uwdaj "Especially with all those different sizes!"
     extend 1fsqcs " What kind of measurement would even work {i}best{/i}?"
-    n 1fcsss "Well,{w=0.2} I guess you'd just be stuck with metric...{w=0.5}"
-    n 1fsqbg "...'Cause you definitely aren't using {w=0.5}{nw}"
+    n 1fcsss "Well,{w=0.2} I guess you'd just be stuck with metric..."
+    n 1fsqbg "...'Cause you definitely aren't using {w=0.25}{nw}"
     extend 1nchgn " {i}feet{/i}!"
 
     return
