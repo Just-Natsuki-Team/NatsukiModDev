@@ -663,11 +663,11 @@ label joke_con_crete:
 label joke_footless_snakes:
     n 1ulraj "Hey,{w=0.2} [player]...{w=1}{nw}"
     extend 1tnmfl " have {i}you{/i} ever wondered how snakes are measured?"
-    n 1uwdaj "Like they are so long!"
-    n 1fsqcs "What measurement could be possibly the best?"
-    n 1fcsss "Well,{w=0.2} my guess would be in inches or centimetre...{w=0.5}"
-    n 1nsrss "Because they...{w=1}{nw}"
-    extend 1nchgn " have no {i}feet{/i}!"
+    n 1uwdaj "Especially with all those different sizes!"
+    extend 1fsqcs " What kind of measurement would even work {i}best{/i}?"
+    n 1fcsss "Well,{w=0.2} I guess you'd just be stuck with metric...{w=0.5}"
+    n 1fsqbg "...'Cause you definitely aren't using {w=0.5}{nw}"
+    extend 1nchgn " {i}feet{/i}!"
 
     return
 
@@ -690,7 +690,7 @@ label joke_meeting_walls:
 
 label joke_hour_feeling:
     n 1fcsaj "So!{w=0.5}{nw}"
-    extend 1fsqsm " What did the clock ask the watch,{w=0.2} [player]?"
+    extend 1fsqsm " How did the clock greet the watch,{w=0.2} [player]?"
     n 1fsldv "..."
     n 1fchgn "{i}Hour{/i}{w=1} you doing?"
 
@@ -729,8 +729,9 @@ label joke_missing_bell:
 
 label joke_cheesy_pizza:
     n 1fsqfl "...I've found a joke about pizza."
-    n 1ftrsl "Ugh..."
-    n 1fsqaj "But it is too{w=1}{nw}"
-    extend 1fcspo " {i}cheesy{/i}."
+    n 1fsrfl "But...{w=0.75}{nw}"
+    extend 1fcsem " ugh."
+    n 1fslsl "Yeah.{w=0.3} There's no way I'm sharing something...{w=1}{nw}"
+    extend 1nsqpo " {i}that cheesy{/i}."
     
     return
