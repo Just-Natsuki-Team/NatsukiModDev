@@ -665,9 +665,9 @@ label joke_footless_snakes:
     extend 1tnmfl " have you ever wondered how to measure snakes?"
     n 1uwdaj "Like they are so long!"
     n 1fsqcs "What measurement could be possibly the best?"
-    n 1fcsss "Well,{w=0.2} my guess would be in inches or centimetre...{w=0.5}"
-    n 1nsrss "Because they...{w=1}{nw}"
-    extend 1nchgn " have no {i}feet{/i}!"
+    n 1fcsss "Well,{w=0.2} I guess you'd just be stuck with metric...{w=0.5}"
+    n 1fsqbg "...'Cause you definitely aren't using {w=0.5}{nw}"
+    extend 1nchgn " {i}feet{/i}!"
 
     return
 
