@@ -675,8 +675,8 @@ label joke_bigger_ball:
     n 1ullbo "You know..."
     n 1nslss "When I was playing sports lately..."
     n 1uwdaj "I wondered why the ball keeps getting bigger!{w=0.5}"
-    n 1flrfl "Then it{w=1}{nw}" 
-    extend 1fsqcs " {i}hit{/i} me!"
+    n 1unmfl "...But then it{w=0.5}{nw}" 
+    extend 1fchbgsbr " {i}hit{/i} me!"
 
     return
 
