@@ -725,8 +725,9 @@ label joke_missing_bell:
 
 label joke_cheesy_pizza:
     n 1fsqfl "...I've found a joke about pizza."
-    n 1ftrsl "Ugh..."
-    n 1fsqaj "But it is too{w=1}{nw}"
-    extend 1fcspo " {i}cheesy{/i}."
+    n 1fsrfl "But...{w=0.75}{nw}"
+    extend 1fcsem " ugh."
+    n 1fslsl "Yeah.{w=0.3} There's no way I'm sharing something...{w=1}{nw}"
+    extend 1nsqpo " {i}that cheesy{/i}."
     
     return
