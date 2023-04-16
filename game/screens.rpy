@@ -486,8 +486,10 @@ style say_dialogue:
 
     text_align gui.text_xalign
     layout ("subtitle" if gui.text_xalign else "tex")
-    line_overlap_split -8
+
+    line_overlap_split 8
     line_spacing 8
+    line_leading 8
 
 image ctc:
     xalign 0.81 yalign 0.98 xoffset -5 alpha 0.0 subpixel True

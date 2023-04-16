@@ -9936,3 +9936,168 @@ label talk_daily_jokes_stop:
     $ persistent._jn_daily_jokes_enabled = False
 
     return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_fitting_clothing",
+            unlocked=True,
+            prompt="Clothing problems",
+            category=["Fashion"],
+            conditional="persistent.jn_custom_outfits_unlocked",
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
+            nat_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_fitting_clothing:
+    n 2cllbo "..."
+    n 2cllfl "You know,{w=0.2} [player]..."
+    n 2tnmbo "I don't remember ever complaining about my height that much.{w=0.75}{nw}"
+    extend 4nsrss "\nNot {i}really{/i}."
+    n 4ulraj "I mean...{w=1}{nw}"
+    extend 3clrsl " it always seemed pointless getting all worked up about it.{w=0.75}{nw}"
+    extend 3nsrposbr " It's not like I was ever going to be tall {i}eventually{/i}."
+    n 4csrca "...Especially not now."
+    n 1ulraj "But...{w=1}{nw}" 
+    extend 1unmaj " I guess I just came to realize it's like my teeth,{w=0.75}{nw}"
+    extend 2nnmbo " or my hair or whatever."
+    n 2fcstr "You just gotta make the most of it.{w=1}{nw}"
+    extend 4fcsgsl " A-{w=0.2}and why shouldn't I?{w=0.75}{nw}"
+    extend 3fcsbgl " I'm totally rocking what I've got!"
+
+    n 1csqsl "But {w=0.3}Oh.{w=0.75} My.{w=0.75} God,{w=0.75}{nw}"
+    extend 2csrem " [player]."
+    n 2fsqem "Clothes shopping.{w=1}{nw}"
+    extend 1fcsan " I swear.{w=1}{nw}"
+    extend 4fbkwr " It's like my own special hell!"
+    n 4fcswrl "Have you even {i}considered{/i} what getting new clothes is like when you're this small?!"
+    n 2fllfll "Seriously -{w=0.5}{nw}"
+    extend 2fbkwrl " it's the worst!{w=1}{nw}"
+    extend 2fcsgs " And it doesn't even matter where you go!"
+    n 4ftlfl "Medium?{w=0.5}{nw}"
+    extend 4ftrfl " Small?{w=0.5}{nw}"
+    extend 2fsqem " {i}Extra{/i} Small?{w=0.75}{nw}"
+    extend 2fcsgs " As if it matters!"
+    n 1fslem "Those aren't sizes -{w=0.5}{nw}"
+    extend 4fcsan " I'm just picking how much of a {b}joke{/b} the fit is!"
+    n 1flrfl "Yeah,{w=0.2} sure.{w=0.75}{nw}"
+    extend 4flrca " I {i}know{/i} oversize is a thing.{w=1}{nw}"
+    extend 2fsrtr " Obviously."
+    n 2flrgs "But come {w=0.3}{nw}" 
+    extend 2fcsgs "{b}on{/b}!"
+    n 4ksqfl "Is it {i}really{/i} too much to want sleeves that {i}don't{/i} dangle off my arms too?"
+    n 1fllfl "I mean,{w=0.2} half the time I walked over to check out the adult's clothes,{w=0.75}{nw}"
+    extend 1fnmem " I'd have to walk right back out again!"
+    n 2fsrsl "...And there's only so many times you can try the kids section before people start giving you stupid looks."
+    
+    n 2fcsemesi "Ugh..."
+    n 1cslbo "It's just embarrassing.{w=1}{nw}"
+    extend 4fslsl " And usually a {i}complete{/i} waste of time too."
+    n 4cllfl "I get that some places do a...{w=0.75}{nw}"
+    extend 1cslflsbr " {i}petite{/i}{w=0.75}{nw}"
+    extend 1cslcasbr " line,{w=0.75}{nw}"
+    extend 2fcswrsbr " but it's all still {i}just{/i} as expensive as the normal stuff!"
+    n 2fcsem "Yeesh..."
+    n 4fllem "They don't even use as much material.{w=1}{nw}"
+    extend 4ftlem " They could at least throw in a discount or something."
+    n 2fsrfl " ...{i}Jerks{/i}."
+    n 2nsrpo "..."
+    n 2ncstr "Well,{w=0.2} whatever.{w=0.75}{nw}"
+    extend 1fnmca " Stores might be short of options.{w=0.75}{nw}"
+    extend 1fsrca " And {i}courtesy{/i}."
+    n 3fcsaj "But I can assure you:{w=0.5}{nw}" 
+    extend 3fcsbg " my imagination {i}never{/i} comes up short!"
+
+    $ pastel_goth_getup = jn_outfits.get_outfit("jn_pastel_goth_getup")
+    if not pastel_goth_getup.unlocked:
+        python:
+            import copy
+
+            pastel_goth_getup.unlock()
+            topic_outfit = copy.copy(pastel_goth_getup)
+            topic_outfit.hairstyle = jn_outfits.get_outfit(Natsuki.getOutfitName()).hairstyle
+
+        n 3fllpu "..."
+        n 3fllss "...In fact.{w=1}{nw}"
+        extend 4fsqss " You know what?"
+        n 2fcsbg "Forget just rambling on about it.{w=0.75}{nw}"
+        extend 2fcssm " You should know I'm way better than that by now."
+        n 4fchgn "...So I'm gonna {i}prove{/i} it!"
+        n 3fcsbgsbl "Y-{w=0.2}you better sit tight,{w=0.2} [player]..."
+        n 3fchgn "'Cause I'm gonna show you what {i}real{/i} craftsmanship looks like!{w=0.75}{nw}"
+        extend 3nchgn " Ehehe."
+        show natsuki 1fcssmeme
+
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+        $ jnPause(0.5)
+        play audio chair_out
+        $ jnPause(3)
+
+        n  "Alright...{w=1}{nw}"
+        extend  " now where did I...?"
+        n  "Aha!"
+
+        play audio drawer
+        $ jnPause(3)
+        play audio clothing_ruffle
+        $ jnPause(1)
+
+        if Natsuki.isLove(higher=True):
+            n "N-{w=0.2}no peeking!{w=0.75} Ehehe..."
+
+        elif Natsuki.isEnamored(higher=True):
+            n "N-{w=0.2}no peeking!"
+
+        else:
+            n "H-{w=0.2}hey!{w=0.75} You better not be peeking!"
+
+        $ jnPause(1)
+        play audio zipper
+        $ Natsuki.setOutfit(outfit=topic_outfit, persist=False)
+
+        show natsuki 2fsrdvlsbl
+        $ jnPause(2)
+        n "And..."
+        play audio chair_in
+        $ jnPause(0.25)
+        hide black with Dissolve(1.5)
+        $ jnPause(1.5)
+
+        n 2fchbglsbl "Ta-da!"
+        n 2csqsm "Can you guess where {i}this{/i} came from,{w=0.2} [player]?{w=0.75}{nw}"
+        extend 1fcssm " Ehehe."
+        n 4fslss "As much as I complained about resorting to the kids section..."
+
+    else:
+        n 4ullaj "I'm pretty sure I showed my handiwork off already,{w=0.75}{nw}"
+        extend 1fcsbg " so I'll spare you the fashion show,{w=0.2} [player]."
+        n 3fsqsm "...This time."
+        n 3tnmss "Like I said before though -{w=0.5}{nw}"
+        extend 4fslss " as much as I complained about resorting to the kids section..."
+
+    n 3fcsbg "There's nothing some good old fashioned know-how,{w=0.2} a needle,{w=0.75}{nw}"
+    extend 3fchgn " and a bunch of my patches can't fix!{w=1}{nw}"
+    extend 3nchgn " Ahaha."
+    
+    n 4clrss "Well,{w=0.2} anyway.{w=0.75}{nw}"
+    extend 2csrsmsbl " I think I've just about gone on long enough.{w=1}{nw}"
+    extend 2fcsajsbl " As good as it was getting all that off my chest."
+    n 1fcsss "Heh.{w=0.75}{nw}"
+    extend 4cslbg " Besides,{w=0.2} all this talk about stuff never being the right size?"
+    n 4fnmss "I guess you could say moving on is only...{w=1}{nw}"
+    extend 3fsqbg " {i}fitting{/i}{w=1}{nw}"
+    extend 3fchgn ",{w=0.2} right?"
+
+    if Natsuki.isLove(higher=True):
+        n 3fchsm "Ehehe.{w=0.5}{nw}"
+        extend 3fchbll " Love you too,{w=0.2} [player]!"
+
+    else:
+        n 3fchsm "Ehehe.{w=0.5}{nw}"
+        extend 3uchgn " No regrets,{w=0.2} [player]!"
+
+    return

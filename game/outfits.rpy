@@ -1982,9 +1982,10 @@ init -1 python in jn_outfits:
         display_name="Pastel goth getup",
         unlocked=False,
         is_jn_outfit=True,
-        clothes=get_wearable("jn_clothes_cosy_cardigan"),
-        accessory=get_wearable("jn_accessory_hairband_white"),
-        hairstyle=get_wearable("jn_hair_twintails"),
+        clothes=get_wearable("jn_clothes_pastel_goth_overalls"),
+        hairstyle=get_wearable("jn_hair_down"),
+        necklace=get_wearable("jn_necklace_spiked_choker"),
+        headgear=get_wearable("jn_headgear_spiked_headband"),
         facewear=get_wearable("jn_facewear_sprinkles")
     ))
     __register_outfit(JNOutfit(
