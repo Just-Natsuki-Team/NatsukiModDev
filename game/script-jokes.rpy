@@ -662,7 +662,7 @@ label joke_con_crete:
 
 label joke_footless_snakes:
     n 1ulraj "Hey,{w=0.2} [player]...{w=1}{nw}"
-    extend 1tnmfl " have you ever wondered how to measure snakes?"
+    extend 1tnmfl " have {i}you{/i} ever wondered how snakes are measured?"
     n 1uwdaj "Like they are so long!"
     n 1fsqcs "What measurement could be possibly the best?"
     n 1fcsss "Well,{w=0.2} my guess would be in inches or centimetre...{w=0.5}"
@@ -674,7 +674,7 @@ label joke_footless_snakes:
 label joke_bigger_ball:
     n 1ullbo "You know..."
     n 1nslsssbl "I ended up visiting the school nurse the last time I played sports."
-    n 1uwdaj "I wondered why the ball keeps getting bigger!{w=0.5}"
+    n 1uwdaj "I wondered why the ball kept getting bigger...{w=0.5}"
     n 1unmfl "...But then it{w=0.5}{nw}" 
     extend 1fchbgsbr " {i}hit{/i} me!"
 
@@ -682,14 +682,14 @@ label joke_bigger_ball:
 
 label joke_meeting_walls:
     n 1fsqfl "...What did the wall say to the other wall?"
-    n 1fcspo "..."
+    n 1ftlemesi "..."
     n 1fslbo "We'll meet at the{w=1}{nw}"
     extend 1fsqbo " {i}corner{/i}."
 
     return
 
 label joke_hour_feeling:
-    n 1fcsaj "So!{w=1}{nw}"
+    n 1fcsaj "So!{w=0.5}{nw}"
     extend 1fsqsm " What did the clock ask the watch,{w=0.2} [player]?"
     n 1fsldv "..."
     n 1fchgn "{i}Hour{/i}{w=1} you doing?"
@@ -698,9 +698,9 @@ label joke_hour_feeling:
 
 label joke_spotless_tigers:
     n 1ulraj "So,{w=0.2} [player]...{w=1}{nw}"
-    extend 1tnmfl " did you ever ask yourself why tigers have stripes?"
-    n 1fcsss "It is not a fashion choice,{w=0.2} that's for sure!"
-    n 1fsqsm "It is because they don't want to be{w=1}{nw}"
+    extend 1tnmfl " ever asked yourself why tigers have stripes?"
+    n 1fcsss "It's not a fashion choice,{w=0.2} that's for sure..."
+    n 1fsqsm "...It's because they don't want to be{w=0.5}{nw}"
     extend 1fchgn " {i}spotted{/i}!"
 
     return
@@ -708,17 +708,21 @@ label joke_spotless_tigers:
 label joke_missing_bell:
     n 1fsqsm "Knock,{w=0.2} knock,{w=0.2} [player]!"
 
+    show natsuki 1fchsm
+
     menu:
         "Who's there?":
             pass
 
-    n 1fcsaj "Nobel."
+    n 1ucsaj "Nobel."
+
+    show natsuki 1fsqcs
 
     menu:
         "Nobel who?":
             pass
 
-    n 1nnmbo "{i}No bell{/i},{w=1}{nw}"
+    n 1nnmbo "{i}No-bel{/i},{w=1}{nw}"
     extend 1fchgn " so I just knocked!"
 
     return
