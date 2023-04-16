@@ -315,6 +315,34 @@ init python in jn_jokes:
         label="joke_con_crete",
         joke_category=JNJokeCategories.neutral
     ))
+    __registerJoke(JNJoke(
+        label="joke_footless_snakes",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_bigger_ball",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_meeting_walls",
+        joke_category=JNJokeCategories.bad
+    ))
+    __registerJoke(JNJoke(
+        label="joke_hour_feeling",
+        joke_category=JNJokeCategories.funny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_spotless_tigers",
+        joke_category=JNJokeCategories.funny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_missing_bell",
+        joke_category=JNJokeCategories.funny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_cheesy_pizza",
+        joke_category=JNJokeCategories.bad
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -630,4 +658,80 @@ label joke_con_crete:
     extend 1fsqbg " {i}con{/i}{w=1}{nw}"
     extend 1nchgn "-crete!"
 
+    return
+
+label joke_footless_snakes:
+    n 1ulraj "Hey,{w=0.2} [player]...{w=1}{nw}"
+    extend 1tnmfl " have {i}you{/i} ever wondered how snakes are measured?"
+    n 1uwdaj "Especially with all those different sizes!"
+    extend 1fsqcs " What kind of measurement would even work {i}best{/i}?"
+    n 1fcsss "Well,{w=0.2} I guess you'd just be stuck with metric..."
+    n 1fsqbg "...'Cause you definitely aren't using {w=0.25}{nw}"
+    extend 1nchgn " {i}feet{/i}!"
+
+    return
+
+label joke_bigger_ball:
+    n 1ullbo "You know..."
+    n 1nslsssbl "I ended up visiting the school nurse the last time I played sports."
+    n 1uwdaj "I wondered why the ball kept getting bigger..."
+    n 1unmfl "...But then it{w=0.25}{nw}" 
+    extend 1fchbgsbr " {i}hit{/i} me!"
+
+    return
+
+label joke_meeting_walls:
+    n 1fsqfl "...What did the wall say to the other wall?"
+    n 1ftlemesi "..."
+    n 1fslbo "We'll meet at the{w=1}{nw}"
+    extend 1fsqbo " {i}corner{/i}."
+
+    return
+
+label joke_hour_feeling:
+    n 1fcsaj "So!{w=0.5}{nw}"
+    extend 1fsqsm " How did the clock greet the watch,{w=0.2} [player]?"
+    n 1fsldv "..."
+    n 1fchgn "{i}Hour{/i}{w=1} you doing?"
+
+    return
+
+label joke_spotless_tigers:
+    n 1ulraj "So,{w=0.2} [player]...{w=1}{nw}"
+    extend 1tnmfl " ever asked yourself why tigers have stripes?"
+    n 1fcsss "It's not a fashion choice,{w=0.2} that's for sure..."
+    n 1fsqsm "...It's because they don't want to be{w=0.5}{nw}"
+    extend 1fchgn " {i}spotted{/i}!"
+
+    return
+
+label joke_missing_bell:
+    n 1fsqsm "Knock,{w=0.2} knock,{w=0.2} [player]!"
+
+    show natsuki 1fchsm
+
+    menu:
+        "Who's there?":
+            pass
+
+    n 1ucsaj "Nobel."
+
+    show natsuki 1fsqcs
+
+    menu:
+        "Nobel who?":
+            pass
+
+    n 1nnmbo "{i}No-bel{/i},{w=1}{nw}"
+    extend 1fchgn " so I just knocked!"
+
+    return
+
+label joke_cheesy_pizza:
+    n 1fsqfl "...I've found a joke about pizza."
+    n 1fsrfl "But...{w=0.75}{nw}"
+    extend 1fcsem " ugh."
+    n 1fslsl "Yeah.{w=0.3} There's no way I'm sharing something...{w=1}{nw}"
+    extend 1nsqpo " {i}that cheesy{/i}."
+    
     return
