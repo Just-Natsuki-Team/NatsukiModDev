@@ -690,7 +690,7 @@ label joke_meeting_walls:
 
 label joke_hour_feeling:
     n 1fcsaj "So!{w=1}{nw}"
-    extend 1fsqsm " What did the clock ask the watch,{w=0.2} [player]?"
+    extend 1fsqsm " How did the clock greet the watch,{w=0.2} [player]?"
     n 1fsldv "..."
     n 1fchgn "{i}Hour{/i}{w=1} you doing?"
 
