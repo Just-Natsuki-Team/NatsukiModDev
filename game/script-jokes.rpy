@@ -674,8 +674,8 @@ label joke_footless_snakes:
 label joke_bigger_ball:
     n 1ullbo "You know..."
     n 1nslsssbl "I ended up visiting the school nurse the last time I played sports."
-    n 1uwdaj "I wondered why the ball kept getting bigger...{w=0.5}"
-    n 1unmfl "...But then it{w=0.5}{nw}" 
+    n 1uwdaj "I wondered why the ball kept getting bigger..."
+    n 1unmfl "...But then it{w=0.25}{nw}" 
     extend 1fchbgsbr " {i}hit{/i} me!"
 
     return
