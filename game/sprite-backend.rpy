@@ -12,6 +12,7 @@ init -50 python:
         arms_crossed_body = 2
         arms_crossed_desk = 3
         fingers_on_desk = 4
+        finger_touching = 5
 
         def __str__(self):
             return self.name
@@ -171,9 +172,10 @@ init -50 python:
     _JN_BEFORE_DESK_POSES = [
         JNPose.sitting,
         JNPose.arms_crossed_body
+        JNPose.finger_touching
     ]
 
-    # These are poses with arms rendere on top of the desk
+    # These are poses with arms rendered on top of the desk
     _JN_AFTER_DESK_POSES = [
         JNPose.arms_crossed_desk,
         JNPose.fingers_on_desk
@@ -324,7 +326,8 @@ init 1 python:
         "1": JNPose.sitting,
         "2": JNPose.arms_crossed_body,
         "3": JNPose.arms_crossed_desk,
-        "4": JNPose.fingers_on_desk
+        "4": JNPose.fingers_on_desk,
+        "5": JNPose.finger_touching
     }
 
     EYEBROW_MAP = {
@@ -1518,7 +1521,8 @@ label pose_test:
     n 1fcssm "This is just my sitting pose!"
     n 2fllpo "This is my arms_crossed_body pose!"
     n 3kwmsml "This is my arms_crossed_desk pose!"
-    n 4kwmpu "And this is my fingers_on_desk pose!"
+    n 4kwmpu "This is my fingers_on_desk pose!"
+    n 5kslajl "And this is my finger_touching pose!"
 
     n 1fchbg "...And that's about it!{w=0.75}{nw}"
     extend 1fwlsm  " Glad to be of service,{w=0.2} [player]!"
