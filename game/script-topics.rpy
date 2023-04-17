@@ -1329,7 +1329,7 @@ init 5 python:
             persistent._topic_database,
             label="talk_favourite_season",
             unlocked=True,
-            prompt="What's your favourite season?",
+            prompt="What's your favorite season?",
             category=["Weather", "Nature"],
             player_says=True,
             affinity_range=(jn_affinity.NORMAL, None),
@@ -1359,7 +1359,7 @@ label talk_favourite_season:
         extend 4uchsm " Ahaha."
         n 1unmaj "Although...{w=0.3} what about you,{w=0.1} [player]?"
         menu:
-            n "What's your favourite season?"
+            n "What's your favorite season?"
 
             "Spring":
                 n 1fnmss "Oh?{w=0.2} Spring,{w=0.1} huh?"
@@ -1427,7 +1427,7 @@ label talk_favourite_season:
                 n 3tsqss "Well?{w=0.5}{nw}"
                 extend 1fchbg " Tell me then,{w=0.1} [player]!"
                 menu:
-                    n "What's your favourite season?"
+                    n "What's your favorite season?"
 
                     "Spring":
                         $ new_favourite_season = "Spring"
@@ -1642,7 +1642,7 @@ label talk_sweet_tooth:
 
     if Natsuki.isNormal(higher=True):
         n 1uwdaj "There's so much more variety!{w=0.2} Like...{w=0.3} there's always something for whatever I feel like!"
-        n 2tllss "I think if I had to pick a favourite though,{w=0.3}{nw}"
+        n 2tllss "I think if I had to pick a favorite though,{w=0.3}{nw}"
         extend 1fllss " it'd be those fizzy ones."
         n 1fchbg "Just that perfect mix of sweet and sour,{w=0.1} you know?"
         n 3flraj "Jeez...{w=0.5}{nw}"
@@ -2332,7 +2332,7 @@ label talk_sustainable_fashion:
         n 2klrsr "I've...{w=0.3} never had tons of money to buy more clothes anyway,{w=0.1} so I try to reuse and fix up what I can."
         n 1fchbg "But you'd be surprised at what you can pull off with a little creativity!"
         extend 1fcssm " And just a pinch of know-how too,{w=0.1} obviously."
-        n 4fchgn "Betcha didn't know my favourite pink skirt was hand-made,{w=0.1} did you?"
+        n 4fchgn "Betcha didn't know my favorite pink skirt was hand-made,{w=0.1} did you?"
 
     n 1unmaj "I think I've lectured you enough now,{w=0.1} [player],{w=0.1} so I won't keep harping on about it."
     n 3nllpu "But...{w=0.3} the next time you're out shopping for clothes,{w=0.1} or looking through some catalogues online?"
@@ -3718,7 +3718,7 @@ init 5 python:
             persistent._topic_database,
             label="talk_favourite_animal",
             unlocked=True,
-            prompt="What's your favourite animal?",
+            prompt="What's your favorite animal?",
             category=["Animals", "Nature"],
             player_says=True,
             location="classroom"
@@ -3767,7 +3767,7 @@ label talk_favourite_animal:
         n 2fcsan "...Then I don't think it'd be fair to bring one here,{w=0.1} either.{w=0.2} Heh."
 
     else:
-        n 1fsqpu "Heh.{w=0.2} Really?{w=0.2} My favourite animal...?"
+        n 1fsqpu "Heh.{w=0.2} Really?{w=0.2} My favorite animal...?"
         n 2fcsantsa "Not you,{w=0.1} [player].{w=0.2} That's for sure."
 
     return
@@ -3779,7 +3779,7 @@ init 5 python:
             persistent._topic_database,
             label="talk_favourite_drink",
             unlocked=True,
-            prompt="What's your favourite drink?",
+            prompt="What's your favorite drink?",
             category=["Food"],
             player_says=True,
             location="classroom"
@@ -3789,13 +3789,13 @@ init 5 python:
 
 label talk_favourite_drink:
     if Natsuki.isAffectionate(higher=True):
-        n 1unmbg "Ooooh!{w=0.2} My favourite drink?"
+        n 1unmbg "Ooooh!{w=0.2} My favorite drink?"
 
     elif Natsuki.isNormal(higher=True):
-        n 1unmaj "Mmm?{w=0.2} My favourite drink?"
+        n 1unmaj "Mmm?{w=0.2} My favorite drink?"
 
     elif Natsuki.isDistressed(higher=True):
-        n 1nllbo "Huh?{w=0.2} Oh.{w=0.1} My favourite drink."
+        n 1nllbo "Huh?{w=0.2} Oh.{w=0.1} My favorite drink."
 
     else:
         n 2fslsf "...I can't understand why you'd care,{w=0.1} [player]."
@@ -3831,7 +3831,7 @@ label talk_favourite_drink:
         n 1ncssm "All kinds of sweets,{w=0.1} any type of milk..."
 
         if Natsuki.isAffectionate(higher=True):
-            n 1ucssm "Though if I had to pick a favourite?"
+            n 1ucssm "Though if I had to pick a favorite?"
             n 3fcsbg "It's gotta be strawberries and cream,{w=0.1} obviously."
             n 3fllbgl "And...{w=0.3} maybe with just a dash of chocolate too?{w=0.2} Ehehe."
 
@@ -5539,7 +5539,7 @@ label talk_skateboarding:
         n 4uwdajesu "Oh!{w=0.5}{nw}"
         extend 1fsqbs " But you know what {i}totally{/i} was,{w=0.2} [player]?{w=1}{nw}"
         extend 3fllbgsbl " Radical,{w=0.2} I mean."
-        n 1uchgn "...My favourite skateboarding outfit,{w=0.2} of course!"
+        n 1uchgn "...My favorite skateboarding outfit,{w=0.2} of course!"
         n 3tllss "In fact,{w=0.75}{nw}"
         extend 1fchbg " I probably still have it around here somewhere too!{w=0.75}{nw}"
         extend 1ullaj " I usually brought it around with me anyways."
@@ -5679,7 +5679,7 @@ label talk_online_shopping:
         extend 1nlrpu " It {i}is{/i} pretty convenient."
         n 2ulrpu "But...{w=0.5}{nw}"
         extend 1nnmsf " I still think it's a shame how people miss out on an actual experience."
-        n 2fllsl "I'd never pass up on an afternoon just flicking through books at my favourite bookstore."
+        n 2fllsl "I'd never pass up on an afternoon just flicking through books at my favorite bookstore."
         n 1fcssf "...Which is somewhere I'd {i}much{/i} rather be.{w=0.5}{nw}"
         extend 4fsqan " {i}Shockingly{/i}."
         return
@@ -7662,7 +7662,7 @@ label talk_what_do_you_think_about_fanart:
     extend 1unmaj " I just think it's a super neat way to show how much you appreciate something."
     n 3fnmss "Plus with how active creators are on social media now,{w=0.5}{nw}"
     extend 3fchbg " it's super easy to reach out and share your work!"
-    n 1fsldv "Not just with your favourite director,{w=0.1} or manga writer or whatever either,{w=0.5}{nw}"
+    n 1fsldv "Not just with your favorite director,{w=0.1} or manga writer or whatever either,{w=0.5}{nw}"
     extend 4fspajedz " but with other fans too!"
     n 1fcsbg "Everybody wins,{w=0.1} right?{w=0.5}{nw}"
     extend 1nllbg " Ahaha..."
@@ -8703,7 +8703,7 @@ label talk_chocolate_preference:
 
     else:
         n 1fcsan "Heh.{w=0.75}{nw}"
-        extend 1fsqanltsb " My favourite type of chocolate?"
+        extend 1fsqanltsb " My favorite type of chocolate?"
 
         if get_topic("event_warm_package").shown_count > 0:
             n 2fsqupltsb "Does your memory {i}seriously{/i} suck as much as your personality does?"
@@ -10100,4 +10100,136 @@ label talk_fitting_clothing:
         n 3fchsm "Ehehe.{w=0.5}{nw}"
         extend 3uchgn " No regrets,{w=0.2} [player]!"
 
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_favorite_subject",
+            unlocked=True,
+            prompt="What's your favorite subject?",
+            category=["Education"],
+            conditional="jn_utils.get_total_gameplay_hours() >= 2",
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_favorite_subject:
+    if Natsuki.isNormal(higher=True):
+        n "Not {i}math{/i},"
+        extend " I'll tell you that much."
+        n "..."
+        n "..."
+        n "...What?"
+        extend " I'm being serious!"
+        extend " I just can't stand it!"
+        n "I mean, I totally get all the normal stuff."
+        extend " Addition, subtraction, fractions."
+        extend " That's child's play."
+        extend " I don't really care about {i}that{/i}."
+        n "It's just..."
+        n "..."
+        n "It's when you get all those {i}stupid{/i} rules you have to remember!"
+        extend " There's just way too many of them!"
+        n "Like..."
+        extend " how am {i}I{/i} meant to remember three different flavours of mumbo-jumbo for calculating some random part of a triangle?"
+        extend " What am I even gonna {i}do{/i} with that?"
+        n "Measure my cake slices?!"
+        n "And don't even get me {i}started{/i} on calculus..."
+        extend " or {i}algebra{/i}."
+        n "And I {i}really{/i} hated having to spend my nights cramming the crap out of it before every single exam."
+        n "It's..."
+        n "..."
+        n "...Just not how my brain works."
+        extend " At all."
+        n "B-but that's not to say nobody would help or anything like that!"
+        extend " Monika always kept trying to offer when she had the time."
+        extend " But..."
+        n "..."
+
+        if Natsuki.isAffectionate(higher=True):
+            n "...It's just embarassing."
+            extend " You know?"
+            extend " And as much as I can't stand the subject..."
+            n "...It's not like I {i}don't{/i} wanna be good at it too."
+            n "E-even if it's just so I can {i}say{/i} I can do it."
+            n "..."
+            n "A-anyway!"
+            extend " We're getting off track here."
+            n "Favorite subject," 
+            extend " huh?"
+            n "Ehehe."
+            extend " You really need to ask?"
+            extend " You hadn't {i}already{/i} guessed, [player]?"
+
+        else:
+            n "...Forget it."
+            extend " It doesn't matter."
+            n "A-and besides."
+            extend " This is just getting off track."
+            n "Favorite subject,"
+            extend " huh?"
+            n "Heh."
+            extend " As if the answer hadn't already practically slapped you in the face."
+        
+        n "...Literature,"
+        extend " duh!"
+        n "You didn't seriously think I just pulled my poetry out of thin air or something,"
+        extend " did you?"
+        extend " Nope!"
+        n "I mean,"
+        extend " I {i}am{/i} a natural..."
+        n "...But you're only kidding yourself if you think you can get away without putting in actual effort too."
+        n "Putting poetry aside though..."
+        extend " how could anyone dislike something with that much variety?"
+
+        # Unsure
+        n "Epic stories..."
+        extend " life-changing experiences..."
+        n "...And all I gotta do is just turn the pages?"
+        extend " Sign me up!"
+
+        n "Well, anyway."
+        extend " I think I've gone on about that long enough."
+        extend " Who wants to spend all day talking about courses and topics anyway?"
+
+        if Natsuki.isEnamored(higher=True):
+            n "Besides..."
+            #TODO: Some pun about the player/romance using studies 
+            n ""
+
+            if Natsuki.isLove(higher=True):
+                n "Love you too, [player]!"
+
+        else:
+            n "In fact..."
+            n "I guess you could say it's about time we..."
+            extend " {i}changed the subject{/i}"
+            extend ", right?"
+            n "Ehehe."
+
+    elif Natsuki.isDistressed(higher=True):
+        n "..."
+        n "...I guess I can at least tell you what I {i}don't{/i} like."
+        extend " Math."
+        n "...And no, not because I'm just hopeless at it or anything stupid like that."
+        n "It's just..."
+        extend " it's way too complicated."
+        n "I mean..."
+        extend " how is {i}anyone{/i} meant to remember so much random garbage?"
+        extend " Especially around exams."
+        #TODO: cont
+
+    else:
+        n "Heh."
+        extend " Really?"
+        extend " My favorite subject?"
+        n "...And why exactly should I tell you?"
+        n "So you can start lecturing me about it?"
+        extend " No thanks."
+        n "Now get out of my face."
+    
     return
