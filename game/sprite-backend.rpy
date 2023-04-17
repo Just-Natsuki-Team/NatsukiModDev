@@ -171,7 +171,7 @@ init -50 python:
     # These are poses with arms rendered under the desk
     _JN_BEFORE_DESK_POSES = [
         JNPose.sitting,
-        JNPose.arms_crossed_body
+        JNPose.arms_crossed_body,
         JNPose.finger_touching
     ]
 
