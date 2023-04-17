@@ -10183,15 +10183,16 @@ label talk_favorite_subject:
         n "I mean,"
         extend " I {i}am{/i} a natural..."
         n "...But you're only kidding yourself if you think you can get away without putting in actual effort too."
-        n "Putting poetry aside though..."
+        n "Really though -"
         extend " how could anyone dislike something with that much variety?"
-
-        # Unsure
+        extend " Literature is {b}awesome{/b}!"
         n "Epic stories..."
         extend " life-changing experiences..."
-        n "...And all I gotta do is just turn the pages?"
+        extend " anything and everything you could {i}possibly{/i} imagine..."
+        n "...And all I gotta do is turn the pages?"
         extend " Sign me up!"
-
+        n "I've probably called you it a bunch before already, [player]."
+        n "...But only a {i}real{/i} dummy would check out on an offer that good."
         n "Well, anyway."
         extend " I think I've gone on about that long enough."
         extend " Who wants to spend all day talking about courses and topics anyway?"
@@ -10219,17 +10220,26 @@ label talk_favorite_subject:
         n "It's just..."
         extend " it's way too complicated."
         n "I mean..."
-        extend " how is {i}anyone{/i} meant to remember so much random garbage?"
+        extend " how is {i}anyone{/i} meant to remember so much random nonsense?"
         extend " Especially around exams."
+        n "Because nothing makes me {i}love{/i} a subject more than having to no-life it every single time an exam pops up."
+
+
+        n "...And as for my favorite subject?"
+        extend " Heh."
+        n "How about you study up on being less of a jerk first?"
+
         #TODO: cont
 
     else:
         n "Heh."
         extend " Really?"
         extend " My favorite subject?"
-        n "...And why exactly should I tell you?"
+        n "...And why exactly should I tell {i}you{/i}?"
         n "So you can start lecturing me about it?"
-        extend " No thanks."
+        n "Heh."
+        extend " Yeah."
+        extend " {i}No thanks{/i}."
         n "Now get out of my face."
     
     return
