@@ -2,7 +2,7 @@ default persistent._farewell_database = dict()
 
 default persistent.jn_player_first_farewell_response = None
 default persistent.jn_player_force_quit_state = 1
-default persistent.jn_player_restarted = False
+default persistent._jn_player_be_right_back = False
 
 default persistent._jn_player_extended_leave_response = None
 default persistent._jn_player_extended_leave_departure_date = None
