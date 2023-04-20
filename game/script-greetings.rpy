@@ -29,15 +29,15 @@ init python in greetings:
         ):
             return "greeting_leave_return"
 
+        # The player has previously said they are restarting the game.
+        elif store.persistent._jn_player_be_right_back:
+            return "greeting_brb"
+
         kwargs = dict()
 
         # The player either left suddenly, or has been gone a long time
         if store.persistent._jn_player_apology_type_on_quit is not None:
             kwargs.update({"additional_properties": [("apology_type", jn_apologies.ApologyTypes(store.persistent._jn_player_apology_type_on_quit))]})
-
-        # The player has previously said they are restarting the game.
-        elif store.persistent.jn_player_restarted:
-            return "greeting_restart"
 
         # The player left or was forced to leave by way of an admission (E.G tired, sick)
         elif store.persistent.jn_player_admission_type_on_quit is not None:
@@ -338,22 +338,16 @@ label greeting_leave_return:
 
     return
 
-label greeting_restart:
-    $ jn_player_restarted = False
+label greeting_brb:
+    $ _jn_player_be_right_back = False
     n 1nnmsm "Hey,{w=0.1} there you are!"
-    show natsuki 4nnmpu
-    menu:
-        n "Did the restart go okay?"
-
-        "Yes, it went well.":
-
-            n 2nchgn "Good!"
-
-        "No, it didn't work.":
-
-            n 1nnmpu "Oh,{w=0.1} that's a shame."
-            n "Well,{w=0.2}{nw}"
-            extend 4nlraj " if you need to restart again,{w=0.1} just let me know okay?"
+    n 2nchsmesm "Told you that you couldn't stay away!"
+    if Natsuki.isLove(higher=True):
+        n 4knmsml "I guess you just love me that much!{nw}"
+        extend 4kchsmlelg " Ehehe!"
+    else:
+        n 1nnmss "I guess you just like me that much!{nw}"
+        extend 1nchgnelg " Ehehe!"
     return
 
 label greeting_tt_warning:

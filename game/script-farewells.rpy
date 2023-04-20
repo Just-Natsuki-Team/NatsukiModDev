@@ -67,7 +67,7 @@ init python in jn_farewells:
             ("I'm going to do some studying.", "farewell_option_studying"),
             ("I'm going to do something else.", "farewell_option_misc_activity"),
             ("I'm going to do some chores.", "farewell_option_chores"),
-            ("I need to restart the game.", "farewell_option_restart"),
+            ("I'll be right back.", "farewell_option_restart"),
             ("I'm going away for a while.", "farewell_option_extended_leave")
         ]
 
@@ -550,12 +550,15 @@ label farewell_option_studying:
     return { "quit": None }
 
 label farewell_option_restart:
-    $ persistent.jn_player_restarted = True
-    n 1tnmsl "Going to restart the game,{w=0.2} [player]?"
+    $ persistent._jn_player_be_right_back = True
+    n 4tnmpu "Going somewhere,{w=0.2} [player]?"
     n 4nlrss "Okay."
     n 2nsgsg "Don't take too long!"
-    if Natsuki.isLove(higher=True):
-        n 2nwmsml "Love you!"
+    n "Who am I kidding,{nw}"
+    extend 2nwmssl " You could never keep away from me!"
+    n 2nchgnlelg "See you,{w=0.1} [player]!"
+    if Natuski.isLove(higher=True):
+        n 1nnmbgleaf "Love you!" 
 
     return { "quit": None }
 
