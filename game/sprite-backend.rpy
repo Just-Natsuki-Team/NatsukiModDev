@@ -13,6 +13,8 @@ init -50 python:
         arms_crossed_desk = 3
         fingers_on_desk = 4
         finger_touching = 5
+        pointy_finger = 6
+        hand_on_chin = 7
 
         def __str__(self):
             return self.name
@@ -178,7 +180,9 @@ init -50 python:
     # These are poses with arms rendered on top of the desk
     _JN_AFTER_DESK_POSES = [
         JNPose.arms_crossed_desk,
-        JNPose.fingers_on_desk
+        JNPose.fingers_on_desk,
+        JNPose.pointy_finger,
+        JNPose.hand_on_chin
     ]
 
     def jn_generate_natsuki_sprite(
@@ -327,7 +331,9 @@ init 1 python:
         "2": JNPose.arms_crossed_body,
         "3": JNPose.arms_crossed_desk,
         "4": JNPose.fingers_on_desk,
-        "5": JNPose.finger_touching
+        "5": JNPose.finger_touching,
+        "6": JNPose.pointy_finger,
+        "7": JNPose.hand_on_chin
     }
 
     EYEBROW_MAP = {
@@ -1522,7 +1528,9 @@ label pose_test:
     n 2fllpo "This is my arms_crossed_body pose!"
     n 3kwmsml "This is my arms_crossed_desk pose!"
     n 4kwmpu "This is my fingers_on_desk pose!"
-    n 5kslajl "And this is my finger_touching pose!"
+    n 5kslajl "This is my finger_touching pose!"
+    n 6fcsss "This is my pointy_finger pose!"
+    n 7ttlbo "And this is my hand_on_chin pose!"
 
     n 1fchbg "...And that's about it!{w=0.75}{nw}"
     extend 1fwlsm  " Glad to be of service,{w=0.2} [player]!"
