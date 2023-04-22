@@ -1288,7 +1288,7 @@ init -990 python in jn_globals:
         "labia",
         "lmfao",
         "^lust$",
-        "muff",
+        "^muff$",
         "mutha",
         "nazi",
         "numbnuts",
