@@ -10330,7 +10330,7 @@ init 5 python:
     )
 
 label talk_can_you_draw:
-    already_discussed_topic = get_topic("talk_can_you_draw").shown_count > 0
+    $ already_discussed_topic = get_topic("talk_can_you_draw").shown_count > 0
 
     if Natsuki.isNormal(higher=True):
         if already_discussed_topic:
