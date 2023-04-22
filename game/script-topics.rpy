@@ -9852,6 +9852,7 @@ label talk_daily_joke(from_unlock=False):
 
     return
 
+# Natsuki is asked to start telling daily jokes again.
 init 5 python:
     registerTopic(
         Topic(
@@ -9886,6 +9887,7 @@ label talk_daily_jokes_start:
 
     return
 
+# Natsuki is asked to stop telling daily jokes.
 init 5 python:
     registerTopic(
         Topic(
@@ -9937,6 +9939,7 @@ label talk_daily_jokes_stop:
 
     return
 
+# Natsuki expresses her annoyance at clothing not always being made with all sizes in mind.
 init 5 python:
     registerTopic(
         Topic(
@@ -10102,6 +10105,7 @@ label talk_fitting_clothing:
 
     return
 
+# Natsuki discusses her favourite - and least favourite - subjects.
 init 5 python:
     registerTopic(
         Topic(
@@ -10147,14 +10151,14 @@ label talk_favorite_subject:
         n 4fcswr "It's when you get all those {i}stupid{/i} rules you have to remember!{w=0.75}{nw}"
         extend 2fbkwr " There's just way too many of them!"
         n 2fllwr "Like...{w=1}{nw}"
-        extend 2fcsgs " how am {i}I{/i} meant to remember three different flavors of mumbo-jumbo for calculating some random part of a triangle?"
+        extend 2fcsgs " how am {i}I{/i} meant to remember three different flavours of mumbo-jumbo for calculating some random part of a triangle?"
         n 2flran "What am I even gonna {i}do{/i} with that?{w=0.75}{nw}"
         extend 1fsrwr " Measure out the perfect pizza slice?!{w=0.75}{nw}"
         extend 2fcsem " Come on."
         n 4fcsan "And don't even get me {i}started{/i} on calculus...{w=1}{nw}"
         extend 2fslsl " or {i}algebra{/i}."
         n 2fsqem "And I {i}really{/i} hated having to spend my nights cramming the crap out of it before{w=0.25}{nw}"
-        extend 2fcsan " every{w=0.5} single{w=0.5}{nw}" 
+        extend 2fcsan " every{w=0.3} single{w=0.3}{nw}" 
         extend 2fsran " exam."
         n 4fcsan "It's..."
         n 1csrsl "..."
@@ -10307,4 +10311,138 @@ label talk_favorite_subject:
         extend 2fsqantsb " {i}No thanks{/i}."
         n 4fsqupltsb "Now {i}get out of my face{/i}."
     
+    return
+
+# Natsuki discusses her favourite - and least favourite - subjects.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_can_you_draw",
+            unlocked=True,
+            prompt="Can you draw?",
+            category=["Artwork"],
+            conditional="jn_utils.get_total_gameplay_hours() >= 6",
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_can_you_draw:
+    already_discussed_topic = get_topic("talk_can_you_draw").shown_count > 0
+
+    if Natsuki.isNormal(higher=True):
+        if already_discussed_topic:
+            n "Wait..."
+            extend " drawing?"
+            extend " I could have sworn we talked about this before, [player]..."
+            extend " huh."
+            n "Well, anyway."
+            n "I'm still kinda peeved about how my school handled art classes."
+            extend " Like yeah, we had them..."
+            extend " But they weren't exactly super in-depth or anything."
+
+        else:
+            n "Huh?"
+            extend " Can I draw?"
+            extend " Like... portraits, landscapes," 
+            extend " that kind of thing?"
+            n "Heh."
+            extend " I wish!"
+            extend " And believe me -"
+            extend " you'd know about it if I had that kind of talent."
+            n "I mean, have you even {i}seen{/i} the sort of stuff people post online now?"
+            n "It's insane!"
+            extend " I have no idea how they do it!"
+            n "...Or even where they start, for that matter."
+            n "We had art class during school,"
+            extend " obviously."
+            extend " But it wasn't really super in-depth or anything."
+
+        extend " Like... at all."
+        n "In fact."
+        extend " the more I think about it..."
+        n "It hardly even {i}qualified{/i} as art class at all!"
+        extend " It felt like we barely even broke out the canvas!"
+        n "I get that art has a lot of history behind it."
+        extend " And of course there's tons of styles out there to learn."
+        extend " I get it."
+        n "But come" 
+        extend " on!"
+        extend " What's even the point in studying so much about all these different artists and styles..."
+        n "...If we barely even had the time to cover any of the basics?"
+        extend " Let alone try any of the stuff we studied out!"
+        n "A-and besides!"
+        extend " All those artists already had their turn."
+        extend " I wanna create cool things too!"
+        n "Ugh..."
+        n "You'd think the one time they want to encourage creativity would be when they'd give the textbooks a rest."
+        n "..."
+        n "I guess it wouldn't have been so bad if I could have just practiced outside school."
+        extend " Like at home or whatever."
+        extend " Or maybe even the art club!"
+        n "Heh."
+        n "No prizes for guessing why neither of those was gonna work out."
+        n "..."
+        n "Putting all that aside though."
+        extend " Honestly?"
+        n "It's not that I wouldn't want to be able to draw cool stuff."
+        extend " Are you kidding?"
+        extend " That'd be awesome!"
+
+        if Natsuki.isAffectionate(higher=True):
+            n "It's just that..."
+            n "..."
+            n "It's..." 
+            extend " intimidating."
+            extend " Trying to teach yourself something like that."
+            n "People always say it's just down to practice,"
+            extend " or to look up some random course online or whatever."
+            extend " A-and I'm not saying they're wrong!"
+            n "Everyone has their own approach, obviously."
+            n "...I guess I just never found mine."
+            extend " Not {i}yet{/i}."
+
+        else: 
+            n "But..."
+            extend " that's..."
+            n "..."
+            n "N-nevermind."
+            extend " I guess it doesn't even matter now anyway."
+            n "B-besides. I think I'm about done listening to myself talk for now."
+            n "So..."
+            extend " what about you, [player]?"
+
+        if jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.artwork):
+            n "...Wait!"
+            extend " Don't tell me!"
+            extend " I've seen the kinds of programs you've been running, [player]."
+            n "Ehehe."
+            n ""
+
+        else:
+            show natsuki question
+            menu:
+                n "Do you get up to much drawing, or...?"
+
+                "Yes, I draw often!":
+                    pass
+
+                "No, I don't usually draw.":
+                    pass
+
+                "I don't draw anymore.":
+                    pass
+
+        #TODO: wrap-up
+
+    elif Natsuki.isDistressed(higher=True):
+        #TODO: writing
+        n ""
+
+    else:
+        #TODO: writing
+        n ""
+
     return
