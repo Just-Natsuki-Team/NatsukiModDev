@@ -10385,7 +10385,7 @@ label talk_can_you_draw:
         extend  " Like at home or whatever.{w=0.75}{nw}"
         extend  " Or maybe even the art club!"
         n  "Heh."
-        n  "No prizes for guessing why neither of those was gonna work out."
+        n  "No prizes for guessing why neither of those were gonna work out."
         n  "..."
         n  "Putting all that aside though.{w=0.75}{nw}"
         extend  " Honestly?"
