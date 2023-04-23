@@ -10321,7 +10321,7 @@ init 5 python:
             label="talk_can_you_draw",
             unlocked=True,
             prompt="Can you draw?",
-            category=["Artwork"],
+            category=["Art"],
             conditional="jn_utils.get_total_gameplay_hours() >= 6",
             player_says=True,
             location="classroom"
@@ -10442,7 +10442,7 @@ label talk_can_you_draw:
             extend 4fchgn " am I right?"
 
         else:
-            show natsuki question
+            show n 4fsqcs
             menu:
                 n "Do you get up to much drawing,{w=0.2} or...?"
 
