@@ -116,6 +116,8 @@ style categorized_menu_button is choice_button:
 style categorized_menu_button_text is choice_button_text:
     align (0.0, 0.0)
     text_align 0.0
+    line_leading 0
+    line_spacing 2
 
 style categorized_menu_button_italic is categorized_menu_button
 
@@ -645,7 +647,8 @@ style choice_button is default:
 style choice_button_text is default:
     properties gui.button_text_properties("choice_button")
     outlines []
-
+    line_leading 6
+    line_spacing -6
 
 init python:
     def RigMouse():
