@@ -1324,7 +1324,7 @@ init -990 python in jn_globals:
         "spac",
         "spunk",
         "tosser",
-        "turd",
+        "^turd$",
         "v14gra|v1gra",
         "vagina",
         "viagra",
