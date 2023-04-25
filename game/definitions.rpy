@@ -624,16 +624,23 @@ init -3 python:
     def jnClickToContinue(silent=True):
         """
         Requires the player to click to advance the game for a given step.
+        If Auto is enabled, it is disabled until the player clicks to advance, then reenabled.
 
         IN:
             - silent - If False, plays a notification sound on click. Defaults to True.
         """
         global allow_dismiss
         global _dismiss_pause
+
         allow_dismiss = True
         _dismiss_pause = True
+
+        pre_click_afm = preferences.afm_enable
+        preferences.afm_enable = False
+
         renpy.pause()
         _dismiss_pause = False
+        preferences.afm_enable = pre_click_afm
 
         if not silent:
             if jn_is_day():
