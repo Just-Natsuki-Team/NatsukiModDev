@@ -1,5 +1,6 @@
 default persistent._jn_player_confession_accepted = False
 default persistent._jn_player_confession_day_month = None # Format (day, month)
+default persistent._jn_natsuki_birthday_known = False
 
 init 0 python:
     import codecs

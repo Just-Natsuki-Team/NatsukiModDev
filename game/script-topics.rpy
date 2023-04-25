@@ -8476,6 +8476,9 @@ label talk_players_birthday_outro:
     n 1ncsemlesi "..."
     n 2nsrssl "It's May 1st.{w=1}{nw}"
     extend 2nsqpol " Don't make me say it twice."
+
+    $ persistent._jn_natsuki_birthday_known = True
+    
     n 1nllpu "And...{w=1}{nw}"
     extend 4tnmbo " [player]?"
     n 1fsqss "I hope you know that you better prepare yourself."

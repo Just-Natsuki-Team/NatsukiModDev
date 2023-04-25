@@ -665,6 +665,17 @@ init python in jn_events:
         priority=50
     ))
 
+    # __registerHoliday(JNHoliday(
+    #     label="holiday_natsuki_birthday",
+    #     holiday_type=JNHolidayTypes.natsuki_birthday,
+    #     affinity_range=(jn_affinity.AFFECTIONATE, None),
+    #     natsuki_sprite_code="1uchgnl",
+    #     bgm=audio.happy_birthday_bgm,
+    #     deco_list=["balloons"],
+    #     prop_list=["cake unlit"],
+    #     priority=50
+    # ))
+
 # RANDOM INTRO EVENTS
 
 # Natsuki is walked in on reading a new volume of Parfait Girls. She isn't impressed.
@@ -3358,6 +3369,164 @@ label holiday_new_years_eve:
     $ jn_events.getHoliday("holiday_new_years_eve").complete()
 
     return
+
+label holiday_natsuki_birthday:
+    python:
+        import copy
+
+        # Give Natsuki a party hat, using whatever she's currently wearing as a base
+        jn_outfits.get_wearable("jn_headgear_classic_party_hat").unlock()
+        birthday_hat_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
+        birthday_hat_outfit.headgear = jn_outfits.get_wearable("jn_headgear_classic_party_hat")
+        birthday_hat_outfit.hairstyle = jn_outfits.get_wearable("jn_hair_down")
+        jn_outfits.save_temporary_outfit(birthday_hat_outfit)
+
+        jn_events.getHoliday("holiday_natsuki_birthday").run()
+
+    if persistent._jn_natsuki_birthday_known:
+        n "...!"
+        n "H-huh?"
+        extend " What the..."
+        n "W-what even...?"
+        n "This..."
+        extend " this is all..."
+        n "..."
+        n "Uuuuuuuu...!"
+        n "[player_initial]-[player]!"
+        extend " What the {b}hell{/b} is all this?!"
+        extend " Are you {i}kidding me{/i}?!"
+        n "I didn't even {i}tell you{/i} my birthday!"
+        extend " How did you even...!"
+
+        show natsuki embarrass
+        menu:
+            "Happy Birthday, [n_name]!":
+                pass
+        
+        n "W-well yeah!"
+        extend " No kidding!"
+        extend " Sheesh..."
+        n "You should know I hate being put on the spot like this by now..."
+        n "..."
+        n "I swear, [player]."
+        extend " You are {i}such{/i} a jerk sometimes."
+        extend " You know that?"
+
+    else:
+        n "...!"
+        n "W-wait,"
+        extend " what?"
+        extend " This is..."
+        n "This is all...!"
+
+        show natsuki embarrass
+        menu:
+            "Happy Birthday, [n_name]!":
+                pass
+
+        n "[player_initial]-[player]!"
+        extend " What {i}is{/i} all thiiiis?!"
+        extend " Jeez!"
+        n "Y-you were supposed to {i}forget{/i} I told you anything about my birthday!"
+        n "Not make {i}me{/i} the front and center of everything!"
+        extend " Come on..."
+
+    if jn_events.getHoliday("holiday_player_birthday").is_seen:
+        show natsuki pouty
+        menu:
+            "Just returning the favor.":
+                pass
+
+        n "...!"
+        n "..."
+        n "...Heh."
+        extend " Wise-ass."
+
+    n "..."
+    n "But..."
+    extend " [player]?"
+    n "..."
+
+    if Natsuki.isEnamored(higher=True):
+        n "...Thank you."
+        extend " For all of..."
+        extend " this."
+        n "It..."
+        n "..."
+        n "...Really means a lot."
+        n "A-and not just because of the flashy decorations, or the dumb cake."
+        extend " I can live without those."
+        extend " I {i}have{/i} lived without those."
+        n "It's just..."
+        n "..."
+        n "Nobody's..."
+        extend " ever..."
+        extend " really..." 
+        extend " tried this hard before."
+        n "...For me."
+        extend " And I'd just be lying if I said I wasn't still trying to get used to it."
+
+        n "D-don't get me wrong!"
+        extend " I'm sure the others would have done {i}something{/i}."
+        extend " Sayori, Monika..."
+        n "Heh."
+        extend " Even Yuri."
+        extend " But..."
+        n "..."
+        n "...They're not here."
+        extend " They're not here, [player]."
+        n "...And they never will be."
+        n "So that's why..."
+        n "..."
+        n "So..."
+    
+    else:
+        n "...Thanks."
+        extend " F-for all of this, I mean."
+        n "..."
+        n ""
+
+    $ jnPause(3)
+    show prop cake lit zorder JN_PROP_ZORDER
+    play audio necklace_clip
+
+    n "..."
+    n "Man..."
+    extend " I {i}really{/i} gotta do this whole thing too?"
+    extend " Seriously?"
+
+    menu:
+        "Make a wish, [n_name]!":
+            pass
+
+    n "..."
+    n "..."
+    n "...Fine."
+
+    if Natsuki.isLove(higher=True):
+        extend " B-but only because it's you."
+        extend " Got it?"
+
+    if Natsuki.isEnamored(higher=True):
+        extend " B-but only because you did all of..."
+        extend " this."
+    
+    else:
+        extend " B-but only because I'd look like a total jerk otherwise."
+
+    show natsuki closed_eyes
+    $ jnPause(5)
+    show natsuki blowing
+    show prop cake unlit zorder JN_PROP_ZORDER
+    play audio blow
+    $ jnPause(0.5)
+    show natsuki closed_eyes
+
+    n "..."
+
+    # TODO: gift seq?
+
+    $ jn_events.getHoliday("holiday_natsuki_birthday").complete()
 
 label holiday_player_birthday:
     python:
