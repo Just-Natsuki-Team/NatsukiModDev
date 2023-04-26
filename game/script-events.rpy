@@ -3374,7 +3374,7 @@ label holiday_player_birthday:
         jn_outfits.save_temporary_outfit(birthday_hat_outfit)
 
         jn_events.getHoliday("holiday_player_birthday").run()
-        player_name_capitalized = persistent.playername.upper()
+        player_name_capitalized = player.upper()
 
     n 1uchlgl "HAPPY BIRTHDAY,{w=0.2} [player_name_capitalized]!"
 
