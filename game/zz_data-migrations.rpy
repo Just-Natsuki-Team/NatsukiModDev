@@ -301,16 +301,16 @@ init python in jn_data_migrations:
         jn_utils.log("Migration to 1.1.1 DONE")
         return
 
-    @migration(["1.1.1"], "1.1.2", runtime=MigrationRuntimes.INIT)
-    def to_1_1_2():
-        jn_utils.log("Migration to 1.1.2 START")
-        store.persistent._jn_version = "1.1.2"
-        if store.persistent.affinity >= 5000:
+    @migration(["1.1.1", "1.1.2"], "1.2.0", runtime=MigrationRuntimes.INIT)
+    def to_1_2_0():
+        jn_utils.log("Migration to 1.2.0 START")
+        store.persistent._jn_version = "1.2.0"
+        if store.persistent.affinity >= 7500:
             store.persistent._jn_pic_aff = store.persistent.affinity
             store.persistent.affinity = 0
             store.persistent._jn_pic = True
             jn_utils.log("434346".decode("hex"))
 
         jn_utils.save_game()
-        jn_utils.log("Migration to 1.1.2 DONE")
+        jn_utils.log("Migration to 1.2.0 DONE")
         return
