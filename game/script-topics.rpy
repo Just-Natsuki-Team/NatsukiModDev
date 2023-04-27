@@ -10345,10 +10345,10 @@ label talk_can_you_draw:
 
         else:
             n 4tnmaj "Huh?{w=0.75}{nw}"
-            extend 2cllbo " Can I draw?{w=0.75}{nw}"
-            extend 2tslpu " Like...{w=0.3} portraits,{w=0.2} landscapes,{w=0.5}{nw}" 
+            extend 4cllbo " Can I draw?{w=0.75}{nw}"
+            extend 1tslpu " Like...{w=0.3} portraits,{w=0.2} landscapes,{w=0.5}{nw}" 
             extend 2tnmaj " that kind of thing?"
-            n 7fcsss "Heh.{w=0.75}{nw}"
+            n 2ccsss "Heh.{w=0.75}{nw}"
             extend 2cslaj " I wish!{w=0.75}{nw}"
             extend 2fsqbo " And believe me -{w=0.5}{nw}"
             extend 4fcsss " you'd know about it if I had {i}that{/i} kind of talent."
