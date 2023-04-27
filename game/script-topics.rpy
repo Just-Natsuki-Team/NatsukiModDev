@@ -10151,7 +10151,7 @@ label talk_favorite_subject:
         n 4fcswr "It's when you get all those {i}stupid{/i} rules you have to remember!{w=0.75}{nw}"
         extend 2fbkwr " There's just way too many of them!"
         n 2fllwr "Like...{w=1}{nw}"
-        extend 2fcsgs " how am {i}I{/i} meant to remember three different flavours of mumbo-jumbo for calculating some random part of a triangle?"
+        extend 2fcsgs " how am {i}I{/i} meant to remember three different flavors of mumbo-jumbo for calculating some random part of a triangle?"
         n 2flran "What am I even gonna {i}do{/i} with that?{w=0.75}{nw}"
         extend 1fsrwr " Measure out the perfect pizza slice?!{w=0.75}{nw}"
         extend 2fcsem " Come on."
