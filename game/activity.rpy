@@ -182,7 +182,7 @@ init python in jn_activity:
             "You forgot a semicolon! [tease_emote]",
             "How do you even read all that stuff?!",
             "Well? Does it work? [tease_emote]",
-            "What even IS that mumbo jumbo...",
+            "What even IS that mumbo-jumbo...",
             "I don't even know where I'd start with coding stuff...",
             "More programming stuff?",
             "I see, I see. You're on nerd duty today! [tease_emote]",
