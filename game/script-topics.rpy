@@ -9130,7 +9130,7 @@ label talk_take_down_deco:
     n 1ulraj "Yeah,{w=0.5}{nw}"
     extend 1nlrbo " I can do that.{w=0.75}{nw}"
     extend 3nsrpo " I guess.{w=1}{nw}"
-    extend 3fsqca " But you're putting it all up next time."
+    extend 3fsqca " But you're cleaning it all up next time."
     n 1nllsl "Just give me a second here...{w=1}{nw}"
     show natsuki 1ncssl
 

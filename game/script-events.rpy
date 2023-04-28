@@ -364,9 +364,6 @@ init python in jn_events:
             OUT:
                 - True, if the holiday meets the filter criteria. Otherwise False
             """
-            if self.conditional is not None and not eval(self.conditional, globals=store.__dict__):
-                return False
-                
             if is_seen is not None and self.is_seen != is_seen:
                 return False
 
@@ -665,16 +662,18 @@ init python in jn_events:
         priority=50
     ))
 
-    # __registerHoliday(JNHoliday(
-    #     label="holiday_natsuki_birthday",
-    #     holiday_type=JNHolidayTypes.natsuki_birthday,
-    #     affinity_range=(jn_affinity.AFFECTIONATE, None),
-    #     natsuki_sprite_code="1uchgnl",
-    #     bgm=audio.happy_birthday_bgm,
-    #     deco_list=["balloons"],
-    #     prop_list=["cake unlit"],
-    #     priority=50
-    # ))
+    # Natsuki's birthday
+    __registerHoliday(JNHoliday(
+        label="holiday_natsuki_birthday",
+        holiday_type=JNHolidayTypes.natsuki_birthday,
+        conditional="jn_gifts.getGiftFileExists('party_supplies')",
+        affinity_range=(jn_affinity.HAPPY, None),
+        natsuki_sprite_code="1uskflleshsbr",
+        bgm=audio.happy_birthday_bgm,
+        deco_list=["balloons"],
+        prop_list=["cake unlit"],
+        priority=50
+    ))
 
 # RANDOM INTRO EVENTS
 
@@ -3381,138 +3380,143 @@ label holiday_natsuki_birthday:
         birthday_hat_outfit.hairstyle = jn_outfits.get_wearable("jn_hair_down")
         jn_outfits.save_temporary_outfit(birthday_hat_outfit)
 
+        # Delete the party supplies needed to proc this holiday
+        jn_utils.deleteFileFromDirectory(os.path.join(renpy.config.basedir, "characters/party_supplies.nats").replace("\\", "/"))
+
+        player_initial = jn_utils.getPlayerInitial()
+        player_final = jn_utils.getPlayerFinal(3)
+        already_celebrated_player_birthday = jn_events.getHoliday("holiday_player_birthday").is_seen
+        
         jn_events.getHoliday("holiday_natsuki_birthday").run()
 
     if persistent._jn_natsuki_birthday_known:
-        n "...!"
-        n "H-huh?"
-        extend " What the..."
-        n "W-what even...?"
-        n "This..."
-        extend " this is all..."
-        n "..."
-        n "Uuuuuuuu...!"
-        n "[player_initial]-[player]!"
-        extend " What the {b}hell{/b} is all this?!"
-        extend " Are you {i}kidding me{/i}?!"
-        n "I didn't even {i}tell you{/i} my birthday!"
-        extend " How did you even...!"
+        n  "...!{w=0.75}{nw}"
+        n  "H-{w=0.2}huh?{w=0.75}{nw}"
+        extend  " What the..."
+        n  "W-{w=0.2}what even...?"
+        n  "This...{w=1}{nw}"
+        extend  " this is all..."
+        n  "..."
+        n  "Uuuuuuuu...!"
+        n  "[player_initial]-{w=0.2}[player][player_final]!{w=1}{nw}"
+        extend  " What the {b}hell{/b} is all this?!{w=0.75}{nw}"
+        extend  " Are you {i}kidding me{/i}?!"
+        n  "I didn't even {i}tell you{/i} my birthday!{w=0.75}{nw}"
+        extend  " How did you even...!"
 
         show natsuki embarrass
         menu:
             "Happy Birthday, [n_name]!":
                 pass
-        
-        n "W-well yeah!"
-        extend " No kidding!"
-        extend " Sheesh..."
-        n "You should know I hate being put on the spot like this by now..."
-        n "..."
-        n "I swear, [player]."
-        extend " You are {i}such{/i} a jerk sometimes."
-        extend " You know that?"
+
+        if Natsuki.isEnamored(higher=True):
+            n  "W-{w=0.2}well yeah!{w=0.75}{nw}"
+            extend  " No kidding!{w=0.75}{nw}"
+            extend  " Sheesh..."
+            n  "You should know I hate being put on the spot like this by now..."
+            n  "..."
+            n  "I swear,{w=0.2} [player].{w=0.75}{nw}"
+            extend  " You are {i}such{/i} a jerk sometimes."
+            extend  " You know that?"
+
+        else:
+            n  "...!"
+            n  "Uuuuuuu-!"
+            n  "[player],{w=0.2} I swear..."
+            n  "You are {i}such{/i} a jerk sometimes.{w=0.75}{nw}"
+            extend  " Really.{w=1}{nw}"
+            extend  " I hate being put on the spot like this..."
 
     else:
-        n "...!"
-        n "W-wait,"
-        extend " what?"
-        extend " This is..."
-        n "This is all...!"
+        n  "...!"
+        n  "W-{w=0.2}wait,{w=0.5}{nw}"
+        extend  " what?{w=0.75}{nw}"
+        extend  " This is..."
+        n  "This is all...!{w=0.75}{nw}"
+        extend  " H-{w=0.2}how...?!"
 
         show natsuki embarrass
         menu:
             "Happy Birthday, [n_name]!":
                 pass
 
-        n "[player_initial]-[player]!"
-        extend " What {i}is{/i} all thiiiis?!"
-        extend " Jeez!"
-        n "Y-you were supposed to {i}forget{/i} I told you anything about my birthday!"
-        n "Not make {i}me{/i} the front and center of everything!"
-        extend " Come on..."
+        n  "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
+        extend  " What {i}is{/i} all thiiiis?!"
+        n  "Y-{w=0.2}you were supposed to {i}forget{/i} I told you anything about my birthday!{w=0.75}{nw}"
+        extend  " And what do you go ahead and do?!"
+        n  "You go and make {i}me{/i} the front and center of everything!"
+        n  "Then just to top it off,{w=0.5}{nw}"
+        extend  " it's {i}easily{/i} the most embarrassing type of attention too!"
+        extend  " Man..."
 
-    if jn_events.getHoliday("holiday_player_birthday").is_seen:
+    if already_celebrated_player_birthday:
         show natsuki pouty
         menu:
             "Just returning the favor.":
                 pass
 
-        n "...!"
-        n "..."
-        n "...Heh."
-        extend " Wise-ass."
-
-    n "..."
-    n "But..."
-    extend " [player]?"
-    n "..."
-
-    if Natsuki.isEnamored(higher=True):
-        n "...Thank you."
-        extend " For all of..."
-        extend " this."
-        n "It..."
-        n "..."
-        n "...Really means a lot."
-        n "A-and not just because of the flashy decorations, or the dumb cake."
-        extend " I can live without those."
-        extend " I {i}have{/i} lived without those."
-        n "It's just..."
-        n "..."
-        n "Nobody's..."
-        extend " ever..."
-        extend " really..." 
-        extend " tried this hard before."
-        n "...For me."
-        extend " And I'd just be lying if I said I wasn't still trying to get used to it."
-
-        n "D-don't get me wrong!"
-        extend " I'm sure the others would have done {i}something{/i}."
-        extend " Sayori, Monika..."
-        n "Heh."
-        extend " Even Yuri."
-        extend " But..."
-        n "..."
-        n "...They're not here."
-        extend " They're not here, [player]."
-        n "...And they never will be."
-        n "So that's why..."
-        n "..."
-        n "So..."
+        n  "...!{w=0.5}{nw}" # quick reaction, then hides it
+        n  "..."
+        n  "...Yeah,{w=0.2} yeah.{w=0.75}{nw}"
+        extend  " Wise-ass."
+        n  "But come "
+        extend  " on!{w=0.75}{nw}"
     
     else:
-        n "...Thanks."
-        extend " F-for all of this, I mean."
-        n "..."
-        n ""
+        n  "...And come on now.{w=0.75}{nw}"
 
-    $ jnPause(3)
+    extend  " Seriously?{w=0.75}{nw}"
+    extend  " You just {i}had{/i} to get the cake and everything too?"
+    n  "..."
+    n  "...And now that I think about it..."
+    n  "Where did you even {i}find{/i} this?"
+
+    if already_celebrated_player_birthday:
+        n  "...And why does it look {i}exactly{/i} like the one I made you?"
+        n  "..."
+        n  "I'm...{w=0.75}{nw}"
+        extend  " just gonna pretend I've never seen it before."
+    
+    else:
+        n  "I-{w=0.2}it's not that I don't like it or anything!{w=0.75}{nw}"
+        extend  " It's fine!{w=1}{nw}"
+        extend  " But..."
+        n "..."
+
+    n  "..."
+    n  "...You're gonna make me do the whole wish thing.{w=0.75}{nw}"
+    extend  " Aren't you?"
+    
+    $ jnPause(1)
     show prop cake lit zorder JN_PROP_ZORDER
     play audio necklace_clip
-
-    n "..."
-    n "Man..."
-    extend " I {i}really{/i} gotta do this whole thing too?"
-    extend " Seriously?"
+    $ jnPause(3)
 
     menu:
         "Make a wish, [n_name]!":
             pass
-
-    n "..."
-    n "..."
-    n "...Fine."
+    
+    $ jnPause(3)
+    
+    n  "..."
+    n  "..."
+    n  "...Fine.{w=1}{nw}"
 
     if Natsuki.isLove(higher=True):
-        extend " B-but only because it's you."
-        extend " Got it?"
+        extend  " B-{w=0.2}but only because it's you.{w=0.75}{nw}"
+        extend  " Got it?"
 
-    if Natsuki.isEnamored(higher=True):
-        extend " B-but only because you did all of..."
-        extend " this."
+    elif Natsuki.isEnamored(higher=True):
+        extend  " B-{w=0.2}but only because you did all of...{w=1}{nw}"
+        extend  " this."
+
+    elif Natsuki.isAffectionate(higher=True):
+        extend  " B-{w=0.2}but only because you put in the effort.{w=0.75}{nw}"
+        extend  " Got it?"
     
     else:
-        extend " B-but only because I'd look like a total jerk otherwise."
+        extend  " But {i}only{/i} because I'd look like a total jerk otherwise.{w=0.75}{nw}"
+        extend  " Capiche?"
 
     show natsuki closed_eyes
     $ jnPause(5)
@@ -3520,12 +3524,201 @@ label holiday_natsuki_birthday:
     show prop cake unlit zorder JN_PROP_ZORDER
     play audio blow
     $ jnPause(0.5)
-    show natsuki closed_eyes
+    show natsuki 
+    $ jnPause(4)
 
-    n "..."
+    if Natsuki.isEnamored(higher=True):
+        n  "...Heh.{w=0.75}{nw}"
+        extend  " I can't even {i}remember{/i} the last time I got to do that."
+        n  "..."
+        n  "But...{w=1}{nw}"
+        extend  " [player]?"
+        n  "..."
 
-    # TODO: gift seq?
+        n  "...Thank you.{w=1}{nw}"
+        extend  " F-{w=0.2}for all of..."
+        extend  " this."
+        n  "It..."
+        n  "..."
+        n  "...Really means a lot."
+        n  "A-{w=0.2}and not just because of the flashy decorations,{w=0.2} or the dumb cake.{w=0.75}{nw}"
+        extend  " I can live without those.{w=1.25}{nw}"
+        extend  " I {i}have{/i} lived without those."
+        n  "...Probably more times than you'd think."
+        n  "It's just that..."
+        n  "..."
 
+        n  "Nobody's...{w=1}{nw}"
+        extend  " ever...{w=1}{nw}"
+        extend  " actually...{w=1}{nw}" 
+        extend  " tried this hard before."
+        n  "...For me.{w=0.75}{nw}"
+        extend  " And I'd just be lying if I said I wasn't still trying to get used to it."
+        n  "I-{w=0.2}it's not like {i}nobody{/i} would have cared enough!{w=0.75}{nw}"
+        extend  " I know the others would have done {i}something{/i}.{w=0.75}{nw}"
+        extend  " Sayori,{w=0.2} Monika..."
+        n  "Heh.{w=0.75}{nw}"
+        extend  " Even Yuri.{w=1}{nw}"
+        extend  " But..."
+
+        n  "..."
+        n  "...They're not here.{w=0.75}{nw}"
+        extend  " N-{w=0.2}not anymore."
+        n  "...And they never will be again."
+        n  "So that's why..."
+        n  "..."
+        n  "So...{w=0.75}{nw}"
+        extend  " t-{w=0.2}that's..."
+        n  "..."
+        n  "..."
+        n  "S-{w=0.4}so that's why I..."
+        n  "..."
+        n  "..."
+        $ chosen_endearment = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else player
+        n  "...Thanks,{w=0.2} [chosen_endearment].{w=0.75}{nw}"
+        extend  " Really.{w=0.75}{nw}"
+        extend  " Even if it's just through a screen?"
+        n  "..."
+        n  "...Heh."
+        n  "It's still...{w=0.3} way more than I could have hoped for."
+
+        $ unlocked_poem_pool = jn_poems.JNPoem.filterPoems(
+            poem_list=jn_poems.getAllPoems(),
+            unlocked=False,
+            holiday_types=[jn_events.JNHolidayTypes.natsuki_birthday],
+            affinity=Natsuki._getAffinityState()
+        )
+        $ unlocked_poem_pool.sort(key = lambda poem: poem.affinity_range[0])
+        $ birthday_poem = unlocked_poem_pool.pop() if len(unlocked_poem_pool) > 0 else None
+
+        if birthday_poem:
+            $ birthday_poem.unlock()
+        
+            n  "..."
+            n  "...I ended up writing something,{w=0.2} you know."
+            n  "..."
+            n  "What?{w=0.75}{nw}"
+            extend  " Don't give me that look.{w=1}{nw}"
+            extend  " I-{w=0.2}I {i}know{/i} you're not meant to give other people stuff on your birthday.{w=1}{nw}"
+            extend  " {i}Obviously{/i}."
+            n  "But..."
+            n  "..."
+            n  "It doesn't matter."
+            n  "J-{w=0.2}just take it.{w=0.5}{nw}"
+            extend  " Before I change my mind."
+
+            show natsuki thought
+            call show_poem(birthday_poem)
+            $ jnPause(3)
+
+            n  "..."
+            n  "Hey..."
+            n  "...You did read that,{w=0.75}{nw}"
+            extend  " right?"
+            n  "Because...{w=1}{nw}"
+            extend  " I really {b}did{/b} mean it,{w=0.2} [player].{w=0.75}{nw}"
+            extend  " You should really know I do by now."
+            n  "I-{w=0.2}I might not be any taller."
+            n  "But...{w=0.3} being here with you?"
+            n  "Heh."
+            n  "...I like to think I grew anyway.{w=0.75}{nw}"
+            extend  " J-{w=0.2}just a little."
+
+        n  "..."
+        n  "...And [player]?"
+        n  "..."
+
+    else:
+        if Natsuki.isAffectionate(higher=True):
+            n  "...Heh.{w=0.75}{nw}"
+            extend  " Happy now,{w=0.2} [player]?{w=0.75}{nw}"
+            extend  " Sheesh..."
+            n  "..."
+            n  "But..."
+            n  "..."
+            
+        else:
+            n  "...Happy now?{w=0.75}{nw}"
+            extend  " Jeez..."
+            n  "If I wanted to be embarrassed I would have just asked,{w=0.2} you know."
+            n  "..."
+            n  "But..."
+            n  "..."
+
+        n  "...Thanks.{w=1}{nw}"
+        extend  " F-{w=0.2}for all of this,{w=0.2} I mean."
+        n  "It's just that..."
+        n  "..."
+        n  "It's...{w=0.75}{nw}"
+        extend  " a lot{w=0.75}{nw}"
+        extend  " to get used to.{w=1}{nw}"
+        extend  " Actually celebrating it with anyone."
+        n  "...Anyone who actually cares."
+        n  "I-{w=0.2}it's not like the others {i}wouldn't{/i} have done anything!"
+        extend  " Of course they would!{w=0.75}{nw}"
+        extend  " Sayori,{w=0.2} Monika..."
+        n  "Heh."
+        extend  " Even Yuri.{w=1}{nw}"
+        extend  " But..."
+        n  "..."
+        n  "It's...{w=0.75}{nw}"
+        extend  " not like they're gonna show up.{w=0.75}{nw}"
+        extend  " E-{w=0.2}especially not now."
+        n  "..."
+        n  "S-{w=0.2}so!{w=0.75}{nw}"
+        extend  " That's why..."
+        n  "T-{w=0.2}that's..."
+        n  "..."
+        n  "It's..."
+        n  "I-{w=0.2}it's just a good thing you showed up today!{w=1}{nw}"
+        extend  " That's all I'm saying.{w=1}{nw}"
+        extend  " So..."
+        n  "...Yeah."
+        n  "..."
+        n  "...And [player]?"
+        n  "..."
+
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(2)
+    play audio glass_move
+    $ jnPause(2)
+    play audio chair_out
+    $ jnPause(3)
+    play audio clothing_ruffle
+
+    if Natsuki.isLove(higher=True):
+        $ jnPause(1)
+        n  "...L-{w=0.2}love you."
+        $ jnPause(3)
+        play audio kiss
+        $ jnPause(3)
+
+    else:
+        $ hug_length = 5 if Natsuki.isEnamored(higher=True) else 3
+        $ jnPause(hug_length)
+
+    $ jnPause(1.25)
+    hide black with Dissolve(1.25)
+
+    if Natsuki.isEnamored(higher=True):
+        n  "..."
+        n  "So..."
+        $ chosen_endearment = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else player
+        n  "What did you wanna talk about,{w=0.2} [player]?{w=0.75}{nw}"
+        extend  " Ehehe..."
+
+    elif Natsuki.isAffectionate(higher=True):
+        n  "..."
+        n  "So..."
+        n  "W-{w=0.2}what's happening,{w=0.2} [player]?{w=0.75}{nw}"
+        extend  " Ehehe..."
+
+    else:
+        n  "..."
+        n  "S-{w=0.2}so..."
+        n  "What else is new,{w=0.2} [player]?"
+
+    $ persistent._jn_natsuki_birthday_known = True
     $ jn_events.getHoliday("holiday_natsuki_birthday").complete()
 
 label holiday_player_birthday:

@@ -238,7 +238,7 @@ init 0 python:
                 - bypass - If the daily cap should be bypassed for things like one-time gifts, events, etc.
             """
             base = 10 if base > 10 else base
-            to_add = base * jn_affinity.get_relationship_length_multiplier()
+            to_add = base * jn_affinity.getRelationshipLengthMultiplier()
             if (
                 not persistent._jn_player_confession_accepted 
                 and (persistent.affinity + to_add) > (jn_affinity.AFF_THRESHOLD_LOVE -1)
@@ -275,7 +275,7 @@ init 0 python:
             IN:
                 - base - The base amount to use for the calculation
             """
-            persistent.affinity -= base * jn_affinity.get_relationship_length_multiplier()
+            persistent.affinity -= base * jn_affinity.getRelationshipLengthMultiplier()
             jn_utils.log("416666696e6974792d".decode("hex"))
 
         @staticmethod
@@ -332,7 +332,7 @@ init 0 python:
                 persistent.affinity_gain_reset_date = current_date
 
             elif current_date.day is not persistent.affinity_gain_reset_date.day:
-                persistent.affinity_daily_gain = 5 * jn_affinity.get_relationship_length_multiplier()
+                persistent.affinity_daily_gain = 5 * jn_affinity.getRelationshipLengthMultiplier()
                 persistent.affinity_gain_reset_date = current_date
                 persistent._affinity_daily_bypasses = 5
                 persistent._jn_daily_joke_given = False
