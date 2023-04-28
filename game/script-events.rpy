@@ -3390,102 +3390,103 @@ label holiday_natsuki_birthday:
         jn_events.getHoliday("holiday_natsuki_birthday").run()
 
     if persistent._jn_natsuki_birthday_known:
-        n  "...!{w=0.75}{nw}"
-        n  "H-{w=0.2}huh?{w=0.75}{nw}"
-        extend  " What the..."
-        n  "W-{w=0.2}what even...?"
-        n  "This...{w=1}{nw}"
-        extend  " this is all..."
-        n  "..."
-        n  "Uuuuuuuu...!"
-        n  "[player_initial]-{w=0.2}[player][player_final]!{w=1}{nw}"
-        extend  " What the {b}hell{/b} is all this?!{w=0.75}{nw}"
-        extend  " Are you {i}kidding me{/i}?!"
-        n  "I didn't even {i}tell you{/i} my birthday!{w=0.75}{nw}"
-        extend  " How did you even...!"
+        n 1uskgsleshsbr "...!{w=0.75}{nw}"
+        n 1kllfllsbr "H-{w=0.2}huh?{w=0.75}{nw}"
+        extend 1klrpulsbl " What the..."
+        n 1clrfllsbl "W-{w=0.2}what even...?"
+        n 1cllunlsbr "This...{w=1}{nw}"
+        extend 1fsluplsbl " this is all..."
+        n 1fcsuplsbl "..."
+        n 1fcsanlsbl "Uuuuuuuu...!"
+        n 1fbkwrf "[player_initial]-{w=0.2}[player][player_final]!{w=1}{nw}"
+        extend 1knmwrl " What the {b}hell{/b} is all this?!{w=0.75}{nw}"
+        extend 1fllwrl " Are you {i}kidding me{/i}?!"
+        n 1fbkwrl "I didn't even {i}tell you{/i} my birthday!{w=0.75}{nw}"
+        extend 1clreml " How did you even...!"
 
-        show natsuki embarrass
+        show natsuki idle fluster
         menu:
             "Happy Birthday, [n_name]!":
                 pass
 
         if Natsuki.isEnamored(higher=True):
-            n  "W-{w=0.2}well yeah!{w=0.75}{nw}"
-            extend  " No kidding!{w=0.75}{nw}"
-            extend  " Sheesh..."
-            n  "You should know I hate being put on the spot like this by now..."
-            n  "..."
-            n  "I swear,{w=0.2} [player].{w=0.75}{nw}"
-            extend  " You are {i}such{/i} a jerk sometimes."
-            extend  " You know that?"
+            n 1ccsgslsbl "W-{w=0.2}well yeah!{w=0.75}{nw}"
+            extend 1flremlsbl " No kidding!{w=0.75}{nw}"
+            extend 1csrfllsbl " Sheesh..."
+            n 1ksrbolsbl "You should know I hate being put on the spot like this by now..."
+            n 1ccsbolesisbl "..."
+            n 1ccsfll "I swear,{w=0.2} [player].{w=0.75}{nw}"
+            extend 1csrfll " You are {i}such{/i} a jerk sometimes."
+            extend 1csqpol " You know that?"
 
         else:
-            n  "...!"
-            n  "Uuuuuuu-!"
-            n  "[player],{w=0.2} I swear..."
-            n  "You are {i}such{/i} a jerk sometimes.{w=0.75}{nw}"
-            extend  " Really.{w=1}{nw}"
-            extend  " I hate being put on the spot like this..."
+            n 1uskeml "...!{w=0.5}{nw}"
+            n 1fcsanl "Uuuuuuu-!"
+            n 1fcseml "[player],{w=0.2} I swear..."
+            n 1cslsll "You are {i}such{/i} a jerk sometimes.{w=0.75}{nw}"
+            extend 1csqsll " Really.{w=1}{nw}"
+            extend 1csrcal " I hate being put on the spot like this..."
 
     else:
-        n  "...!"
-        n  "W-{w=0.2}wait,{w=0.5}{nw}"
-        extend  " what?{w=0.75}{nw}"
-        extend  " This is..."
-        n  "This is all...!{w=0.75}{nw}"
-        extend  " H-{w=0.2}how...?!"
+        n 1uskgsleshsbr "...!"
+        n 1ccsemlsbr "W-{w=0.2}wait,{w=0.5}{nw}"
+        extend 1cnmemlsbr " what?{w=0.75}{nw}"
+        extend 1cllemlsbl " This is..."
+        n 1clrwrlsbl "This is all...!{w=0.75}{nw}"
+        extend 1unmemlsbl " H-{w=0.2}how...?!"
 
-        show natsuki embarrass
+        show natsuki idle fluster
         menu:
             "Happy Birthday, [n_name]!":
                 pass
 
-        n  "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
-        extend  " What {i}is{/i} all thiiiis?!"
-        n  "Y-{w=0.2}you were supposed to {i}forget{/i} I told you anything about my birthday!{w=0.75}{nw}"
-        extend  " And what do you go ahead and do?!"
-        n  "You go and make {i}me{/i} the front and center of everything!"
-        n  "Then just to top it off,{w=0.5}{nw}"
-        extend  " it's {i}easily{/i} the most embarrassing type of attention too!"
-        extend  " Man..."
+        n 1fcsanlsbl "Nnnnnnn-!"
+        n 1fbkwrf "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
+        extend 1kbkwrl " What {i}is{/i} all thiiiis?!"
+        n 1fcsgslsbl "Y-{w=0.2}you were supposed to {i}forget{/i} I told you anything about my birthday!{w=0.75}{nw}"
+        extend 1fllgslsbl " And what do you go ahead and do?!"
+        n 1fbkwrleansbl "You go and make {i}me{/i} the front and center of everything!"
+        n 1fcsgsl "Then just to top it off,{w=0.5}{nw}"
+        extend 1flrgslsbr " it's {i}easily{/i} the most embarrassing type of attention too!"
+        extend 1ksrfllsbr " Man..."
 
     if already_celebrated_player_birthday:
-        show natsuki pouty
+        show natsuki 1csrbol
         menu:
             "Just returning the favor.":
                 pass
 
-        n  "...!{w=0.5}{nw}" # quick reaction, then hides it
-        n  "..."
-        n  "...Yeah,{w=0.2} yeah.{w=0.75}{nw}"
-        extend  " Wise-ass."
-        n  "But come "
-        extend  " on!{w=0.75}{nw}"
+        n 1unmemlesh "...!{w=0.5}{nw}" # quick reaction, then hides it
+        n 1csrbol "..."
+        n 1ccseml "...Yeah,{w=0.2} yeah.{w=0.75}{nw}"
+        extend 1nslpol " Wise-ass."
+        n 1ccsfll "But come "
+        extend 1ccsgsl " on!{w=0.75}{nw}"
     
     else:
-        n  "...And come on now.{w=0.75}{nw}"
+        n 1ccsfllsbl "...And come on now.{w=0.75}{nw}"
 
-    extend  " Seriously?{w=0.75}{nw}"
-    extend  " You just {i}had{/i} to get the cake and everything too?"
-    n  "..."
-    n  "...And now that I think about it..."
-    n  "Where did you even {i}find{/i} this?"
+    extend 1cdwfllsbr " Seriously?{w=0.75}{nw}"
+    extend 1cupajlsbr " You just {i}had{/i} to get the cake and everything too?"
+    n 1csrsllsbr "..."
+    n 1csrpulsbr "...And now that I think about it..."
+    n 1csqtrl "Where did you even {i}find{/i} this?"
 
     if already_celebrated_player_birthday:
-        n  "...And why does it look {i}exactly{/i} like the one I made you?"
-        n  "..."
-        n  "I'm...{w=0.75}{nw}"
-        extend  " just gonna pretend I've never seen it before."
+        n 1fsqcal "...And why does it look {i}exactly{/i} like the one I made you?"
+        n 1csrcal "..."
+        n 1csrajl "I'm...{w=0.75}{nw}"
+        extend 1csrbolsbl " just gonna pretend I've never seen it before."
     
     else:
-        n  "I-{w=0.2}it's not that I don't like it or anything!{w=0.75}{nw}"
-        extend  " It's fine!{w=1}{nw}"
-        extend  " But..."
-        n "..."
+        n 1unmemlsbr "I-{w=0.2}it's not that I don't like it or anything!{w=0.75}{nw}"
+        extend 1fcsemlsbr " It's fine!{w=1}{nw}"
+        extend 1clrsll " But..."
+        n 1csrbol "..."
 
-    n  "..."
-    n  "...You're gonna make me do the whole wish thing.{w=0.75}{nw}"
-    extend  " Aren't you?"
+    n 1cdwbol "..."
+    n 1cslfll "...You're gonna make me do the whole wish thing.{w=0.75}{nw}"
+    extend 1ksqsll " Aren't you?"
     
     $ jnPause(1)
     show prop cake lit zorder JN_PROP_ZORDER
@@ -3498,25 +3499,25 @@ label holiday_natsuki_birthday:
     
     $ jnPause(3)
     
-    n  "..."
-    n  "..."
-    n  "...Fine.{w=1}{nw}"
+    n 1clrsll "..."
+    n 1ccspulesi "..."
+    n 1cslpol "...Fine.{w=1}{nw}"
 
     if Natsuki.isLove(higher=True):
-        extend  " B-{w=0.2}but only because it's you.{w=0.75}{nw}"
-        extend  " Got it?"
+        extend 1ccscaf " B-{w=0.2}but only because it's you.{w=0.75}{nw}"
+        extend 1csqcaf " Got it?"
 
     elif Natsuki.isEnamored(higher=True):
-        extend  " B-{w=0.2}but only because you did all of...{w=1}{nw}"
-        extend  " this."
+        extend 1ccsajl " B-{w=0.2}but only because you did all of...{w=1}{nw}"
+        extend 1ksrcal " this."
 
     elif Natsuki.isAffectionate(higher=True):
-        extend  " B-{w=0.2}but only because you put in the effort.{w=0.75}{nw}"
-        extend  " Got it?"
+        extend 1ccsajl " B-{w=0.2}but only because you put in the effort.{w=0.75}{nw}"
+        extend 1csqcal " Got it?"
     
     else:
-        extend  " But {i}only{/i} because I'd look like a total jerk otherwise.{w=0.75}{nw}"
-        extend  " Capiche?"
+        extend 1ccsajl " But {i}only{/i} because I'd look like a total jerk otherwise.{w=0.75}{nw}"
+        extend 1fsqcal " Capiche?"
 
     show natsuki closed_eyes
     $ jnPause(5)
@@ -3681,6 +3682,7 @@ label holiday_natsuki_birthday:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(2)
     play audio glass_move
+    hide prop cake
     $ jnPause(2)
     play audio chair_out
     $ jnPause(3)

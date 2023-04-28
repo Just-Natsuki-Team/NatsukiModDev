@@ -1395,6 +1395,43 @@ image natsuki idle introduction:
         pause 10
         repeat
 
+image natsuki idle fluster:
+    block:
+        choice:
+            "natsuki 1cllunlsbr"
+            pause 2
+            "natsuki 1ccsunlsbr"
+            pause 0.1
+            "natsuki 1clrunlsbr"
+            pause 2
+            "natsuki 1ccsunlsbr"
+            pause 0.1
+
+        choice:
+            "natsuki 1clremlsbl"
+            pause 2
+            "natsuki 1ccsemlsbl"
+            pause 0.1
+            "natsuki 1cllemlsbl"
+            pause 2
+            "natsuki 1ccsemlsbl"
+            pause 0.1
+
+        choice:
+            "natsuki 1cllfllsbr"
+            pause 2
+            "natsuki 1ccsfllsbr"
+            pause 0.1
+            "natsuki 1clrfllsbr"
+            pause 2
+            "natsuki 1ccsfllsbl"
+            pause 0.1
+            "natsuki 1clrfllsbl"
+            pause 1.25
+            "natsuki 1ccsfllsbl"
+            pause 0.1
+        repeat
+
 init python:
     def show_natsuki_talk_menu():
         """
