@@ -882,6 +882,74 @@ image natsuki vibing:
     pause 8
     repeat
 
+image natsuki whistling:
+    block:
+        choice:
+            "natsuki 3nllpueme"
+            pause 0.75
+            "natsuki 3nllajeme"
+            pause 0.75
+            "natsuki 3nllpueme"
+            pause 0.75
+            "natsuki 3nllajeme"
+            pause 0.75
+            "natsuki 3nllboeme"
+            pause 0.75
+            "natsuki 3ncsboeme"
+            pause 0.1
+            "natsuki 3nllajeme"
+            pause 0.75
+            "natsuki 3nllpueme"
+            pause 0.75
+            "natsuki 3ullbo"
+            pause 4
+            "natsuki 3ucsboeme"
+            pause 0.1
+        choice:
+            "natsuki 3nlrpueme"
+            pause 0.75
+            "natsuki 3nlrajeme"
+            pause 0.75
+            "natsuki 3nlrpueme"
+            pause 0.75
+            "natsuki 3nlrajeme"
+            pause 0.75
+            "natsuki 3nlrboeme"
+            pause 0.75
+            "natsuki 3ncsboeme"
+            pause 0.1
+            "natsuki 3nlrajeme"
+            pause 0.75
+            "natsuki 3nlrpueme"
+            pause 0.75
+            "natsuki 3ulrbo"
+            pause 4
+            "natsuki 3ucsboeme"
+            pause 0.1
+        choice:
+            "natsuki 3utlajeme"
+            pause 0.75
+            "natsuki 3utlpueme"
+            pause 0.75
+            "natsuki 3ucspueme"
+            pause 0.1
+            "natsuki 3utlajeme"
+            pause 0.75
+            "natsuki 3utlsl"
+            pause 4
+        choice:
+            "natsuki 3utrpueme"
+            pause 0.75
+            "natsuki 3utrajeme"
+            pause 0.75
+            "natsuki 3ucsajeme"
+            pause 0.1
+            "natsuki 3utrpueme"
+            pause 0.75
+            "natsuki 3utrsl"
+            pause 4
+    repeat
+
 # This selects which idle image to show based on current affinity state
 image natsuki idle = ConditionSwitch(
     "Natsuki.isEnamored(higher=True)", "natsuki idle enamored",
