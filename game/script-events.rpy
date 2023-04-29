@@ -31,6 +31,11 @@ transform jn_mistletoe_lift:
     ypos 0
     easeout 2 ypos -54
 
+transform jn_confetti_fall:
+    subpixel True
+    ypos 0
+    easeout 2.25 alpha 0 ypos 90
+
 # Foreground props are displayed on the desk, in front of Natsuki
 image prop poetry_attempt = "mod_assets/props/poetry_attempt.png"
 image prop parfait_manga_held = "mod_assets/props/parfait_manga_held.png"
@@ -147,6 +152,17 @@ image prop music_notes:
         "mod_assets/props/music/music_notes_d.png"
     pause 1
     repeat
+
+image prop confetti falling:
+    "mod_assets/props/confetti/confetti_a.png"
+    pause 0.75
+    "mod_assets/props/confetti/confetti_b.png"
+    pause 0.75
+    "mod_assets/props/confetti/confetti_c.png"
+    pause 0.75
+
+image prop confetti desk:
+    "mod_assets/props/confetti/confetti_desk.png"
 
 # Background decorations are displayed in the room behind Natsuki
 image deco balloons = "mod_assets/deco/balloons.png"
@@ -668,7 +684,7 @@ init python in jn_events:
         holiday_type=JNHolidayTypes.natsuki_birthday,
         conditional="jn_gifts.getGiftFileExists('party_supplies')",
         affinity_range=(jn_affinity.HAPPY, None),
-        natsuki_sprite_code="1uskflleshsbr",
+        natsuki_sprite_code="1unmemlsbr",
         bgm=audio.happy_birthday_bgm,
         deco_list=["balloons"],
         prop_list=["cake unlit"],
@@ -3374,11 +3390,15 @@ label holiday_natsuki_birthday:
         import copy
 
         # Give Natsuki a party hat, using whatever she's currently wearing as a base
-        jn_outfits.get_wearable("jn_headgear_classic_party_hat").unlock()
-        birthday_hat_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
-        birthday_hat_outfit.headgear = jn_outfits.get_wearable("jn_headgear_classic_party_hat")
-        birthday_hat_outfit.hairstyle = jn_outfits.get_wearable("jn_hair_down")
-        jn_outfits.save_temporary_outfit(birthday_hat_outfit)
+        party_hat = jn_outfits.get_wearable("jn_headgear_classic_party_hat")
+
+        if not party_hat.unlocked:
+            party_hat.unlock()
+
+        birthday_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
+        birthday_outfit.headgear = party_hat
+        birthday_outfit.hairstyle = jn_outfits.get_wearable("jn_hair_ponytail")
+        jn_outfits.save_temporary_outfit(birthday_outfit)
 
         # Delete the party supplies needed to proc this holiday
         jn_utils.deleteFileFromDirectory(os.path.join(renpy.config.basedir, "characters/party_supplies.nats").replace("\\", "/"))
@@ -3388,8 +3408,39 @@ label holiday_natsuki_birthday:
         already_celebrated_player_birthday = jn_events.getHoliday("holiday_player_birthday").is_seen
         
         jn_events.getHoliday("holiday_natsuki_birthday").run()
+    
+    $ jnPause(0.25)
+    play audio smack
+    show natsuki 1cchanlsbr
+    show prop confetti falling at jn_confetti_fall zorder JN_PROP_ZORDER
+    $ jnPause(2.25)
+    hide prop
+    show prop confetti desk zorder JN_PROP_ZORDER
 
     if persistent._jn_natsuki_birthday_known:
+        n 1uskgsleshsbr "...!{w=0.75}{nw}"
+        n 1ccsemlsbr "W-{w=0.2}wait,{w=0.5}{nw}"
+        extend 1cnmemlsbr " what?{w=0.75}{nw}"
+        extend 1cllemlsbl " This is..."
+        n 1clrwrlsbl "This is all...!{w=0.75}{nw}"
+        extend 1unmemlsbl " H-{w=0.2}how...?!"
+
+        show natsuki idle fluster
+        menu:
+            "Happy Birthday, [n_name]!":
+                pass
+
+        n 1fcsanlsbl "Nnnnnnn-!"
+        n 1fbkwrf "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
+        extend 1kbkwrl " What {i}is{/i} all thiiiis?!"
+        n 1fcsgslsbl "Y-{w=0.2}you were supposed to {i}forget{/i} I told you anything about my birthday!{w=0.75}{nw}"
+        extend 1fllgslsbl " And what do you go ahead and do?!"
+        n 1fbkwrleansbl "You go and make {i}me{/i} the front and center of everything!"
+        n 1fcsgsl "Then just to top it off,{w=0.5}{nw}"
+        extend 1flrgslsbr " it's {i}easily{/i} the most embarrassing type of attention too!"
+        extend 1ksrfllsbr " Man..."
+
+    else:
         n 1uskgsleshsbr "...!{w=0.75}{nw}"
         n 1kllfllsbr "H-{w=0.2}huh?{w=0.75}{nw}"
         extend 1klrpulsbl " What the..."
@@ -3427,36 +3478,13 @@ label holiday_natsuki_birthday:
             extend 1csqsll " Really.{w=1}{nw}"
             extend 1csrcal " I hate being put on the spot like this..."
 
-    else:
-        n 1uskgsleshsbr "...!"
-        n 1ccsemlsbr "W-{w=0.2}wait,{w=0.5}{nw}"
-        extend 1cnmemlsbr " what?{w=0.75}{nw}"
-        extend 1cllemlsbl " This is..."
-        n 1clrwrlsbl "This is all...!{w=0.75}{nw}"
-        extend 1unmemlsbl " H-{w=0.2}how...?!"
-
-        show natsuki idle fluster
-        menu:
-            "Happy Birthday, [n_name]!":
-                pass
-
-        n 1fcsanlsbl "Nnnnnnn-!"
-        n 1fbkwrf "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
-        extend 1kbkwrl " What {i}is{/i} all thiiiis?!"
-        n 1fcsgslsbl "Y-{w=0.2}you were supposed to {i}forget{/i} I told you anything about my birthday!{w=0.75}{nw}"
-        extend 1fllgslsbl " And what do you go ahead and do?!"
-        n 1fbkwrleansbl "You go and make {i}me{/i} the front and center of everything!"
-        n 1fcsgsl "Then just to top it off,{w=0.5}{nw}"
-        extend 1flrgslsbr " it's {i}easily{/i} the most embarrassing type of attention too!"
-        extend 1ksrfllsbr " Man..."
-
     if already_celebrated_player_birthday:
         show natsuki 1csrbol
         menu:
             "Just returning the favor.":
                 pass
 
-        n 1unmemlesh "...!{w=0.5}{nw}" # quick reaction, then hides it
+        n 1unmemlesh "...!{w=0.5}{nw}"
         n 1csrbol "..."
         n 1ccseml "...Yeah,{w=0.2} yeah.{w=0.75}{nw}"
         extend 1nslpol " Wise-ass."
@@ -3519,62 +3547,60 @@ label holiday_natsuki_birthday:
         extend 1ccsajl " But {i}only{/i} because I'd look like a total jerk otherwise.{w=0.75}{nw}"
         extend 1fsqcal " Capiche?"
 
-    show natsuki closed_eyes
+    show natsuki 1ncsca
     $ jnPause(5)
-    show natsuki blowing
+    show natsuki 1ccsaj
     show prop cake unlit zorder JN_PROP_ZORDER
     play audio blow
     $ jnPause(0.5)
-    show natsuki 
+    show natsuki 1ccsbo
     $ jnPause(4)
 
     if Natsuki.isEnamored(higher=True):
-        n  "...Heh.{w=0.75}{nw}"
-        extend  " I can't even {i}remember{/i} the last time I got to do that."
-        n  "..."
-        n  "But...{w=1}{nw}"
-        extend  " [player]?"
-        n  "..."
+        n 1ncsss "...Heh.{w=0.75}{nw}"
+        extend 1clrsm " I can't even {i}remember{/i} the last time I got to do that."
+        n 1clrsl "..."
+        n 1clrpu "But...{w=1}{nw}"
+        extend 1cnmpu " [player]?"
+        n 1kslsll "..."
+        n 1klrsll "...Thank you.{w=1}{nw}"
+        extend 1kcsfll " F-{w=0.2}for all of..."
+        extend 1cslfll " this."
+        n 1ccsfll "It..."
+        n 1ksrcalsbl "..."
+        n 1ksrajlsbl "...Really means a lot."
+        n 1ccsajlsbl "A-{w=0.2}and not just because of the flashy decorations,{w=0.2} or the dumb cake.{w=0.75}{nw}"
+        extend 1cllsllsbl " I can live without those.{w=1.25}{nw}"
+        extend 1cslbol " I {i}have{/i} lived without those."
+        n 1ksrcal "...Probably more times than you'd think."
+        n 1ccspu "It's just that..."
+        n 1clrun "..."
+        n 1clrpul "Nobody's...{w=1}{nw}"
+        extend 1csrpul " ever...{w=1}{nw}"
+        extend 1ccsunl " actually...{w=1}{nw}" 
+        extend 1cslunl " tried this hard before."
+        n 1kslsllsbr "...For me.{w=0.75}{nw}"
+        extend 1kslbolsbr " And I'd just be lying if I said I wasn't still trying to get used to it."
+        n 1cnmemlsbr "I-{w=0.2}it's not like {i}nobody{/i} would have cared enough!{w=0.75}{nw}"
+        extend 1clrfll " I know the others would have done {i}something{/i}.{w=0.75}{nw}"
+        extend 1clrajl " Sayori,{w=0.2} Monika..."
+        n 1csrfsl "Heh.{w=0.75}{nw}"
+        extend 1ksrsll " Even Yuri.{w=1}{nw}"
+        extend 1ksrpul " But..."
 
-        n  "...Thank you.{w=1}{nw}"
-        extend  " F-{w=0.2}for all of..."
-        extend  " this."
-        n  "It..."
-        n  "..."
-        n  "...Really means a lot."
-        n  "A-{w=0.2}and not just because of the flashy decorations,{w=0.2} or the dumb cake.{w=0.75}{nw}"
-        extend  " I can live without those.{w=1.25}{nw}"
-        extend  " I {i}have{/i} lived without those."
-        n  "...Probably more times than you'd think."
-        n  "It's just that..."
-        n  "..."
-
-        n  "Nobody's...{w=1}{nw}"
-        extend  " ever...{w=1}{nw}"
-        extend  " actually...{w=1}{nw}" 
-        extend  " tried this hard before."
-        n  "...For me.{w=0.75}{nw}"
-        extend  " And I'd just be lying if I said I wasn't still trying to get used to it."
-        n  "I-{w=0.2}it's not like {i}nobody{/i} would have cared enough!{w=0.75}{nw}"
-        extend  " I know the others would have done {i}something{/i}.{w=0.75}{nw}"
-        extend  " Sayori,{w=0.2} Monika..."
-        n  "Heh.{w=0.75}{nw}"
-        extend  " Even Yuri.{w=1}{nw}"
-        extend  " But..."
-
-        n  "..."
-        n  "...They're not here.{w=0.75}{nw}"
-        extend  " N-{w=0.2}not anymore."
-        n  "...And they never will be again."
-        n  "So that's why..."
-        n  "..."
-        n  "So...{w=0.75}{nw}"
-        extend  " t-{w=0.2}that's..."
-        n  "..."
-        n  "..."
-        n  "S-{w=0.4}so that's why I..."
-        n  "..."
-        n  "..."
+        n 1kcssllesi "..."
+        n 1cllsl "...They're not here.{w=0.75}{nw}"
+        extend 1kslsl " N-{w=0.2}not anymore."
+        n 1knmsl "...And they never will be again."
+        n 1klrpu "So that's why..."
+        n 1klrbol "..."
+        n 1ccsunl "So...{w=0.75}{nw}"
+        extend 1cslemltsb " t-{w=0.2}that's..."
+        n 1cslunltsb "..."
+        n 1fcsunltsa "..."
+        n 1fcsupltsa "S-{w=0.4}so that's why I..."
+        n 1ccsunltsa "..."
+        n 1ksrslltsb "..."
         $ chosen_endearment = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else player
         n  "...Thanks,{w=0.2} [chosen_endearment].{w=0.75}{nw}"
         extend  " Really.{w=0.75}{nw}"
