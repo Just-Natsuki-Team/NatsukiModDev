@@ -3744,12 +3744,100 @@ label holiday_natsuki_birthday:
     $ jnPause(1.25)
     hide black with Dissolve(1.25)
     $ jnPause(3)
+    
+    $ gold_star_hairpin = jn_outfits.get_wearable("jn_accessory_gold_star_hairpin")
+    $ pink_star_hairpin = jn_outfits.get_wearable("jn_accessory_pink_star_hairpin")
+    
+    if (
+        persistent.jn_custom_outfits_unlocked 
+        and (not gold_star_hairpin.unlocked or not pink_star_hairpin.unlocked)
+    ):
+        $ hairpin_to_gift = gold_star_hairpin if not gold_star_hairpin.unlocked else pink_star_hairpin
+        n 2ksrbol "..."
+        n 2nsrajl "So...{w=1}"
+        extend 4tnmbol " what's...{w=0.5}{nw}"
+
+        $ jn_gifts.GIFT_PINK.present()
+        show natsuki 4udwfll
+        $ jnPause(2.5)
+
+        if Natsuki.isEnamored(higher=True):
+            n 4knmpul "...[player]...{w=1.25}{nw}"
+            extend 2ksrpul " come on..."
+            n 2knmsll "You haven't embarrassed me enough already?"
+            n 2cllsll "..."
+            n 2kcspulesi "..."
+            n 4kslbol "...Fine.{w=1}{nw}"
+            extend 4nslsslsbr " I guess it's the least I could do,{w=0.2} huh?"
+        
+        else:
+            n 4unmfll "...!"
+            n 2fslunlsbr "..."
+            n 2fsqunlsbr "T-{w=0.2}this better not be some kind of prank,{w=0.2} [player]."
+            n 2nsrsllsbl "..."
+            n 2ccsemlsbl "F-fine."
+            extend 4ksrbolsbr " I suppose it's the least I should do."
+        
+        show natsuki 4cdwbolsbr
+        $ jn_gifts.GIFT_PINK.open()
+        $ jnPause(3)
+        show natsuki 1udwfllsbr
+        play audio gift_rustle
+        $ giftbox.empty()
+        $ jnPause(3)
+
+        if Natsuki.isEnamored(higher=True):
+            show natsuki 4ksrfsltsb
+
+        else:
+            show natsuki 4csrboltsb
+
+        $ jnPause(3)
+        play audio necklace_clip
+        $ birthday_outfit.accessory = hairpin_to_gift
+
+        if Natsuki.isEnamored(higher=True):
+            show natsuki 2ksrsml
+
+        else:
+            show natsuki 2nsrbol
+
+        $ jnPause(3)
+        
+        if Natsuki.isEnamored(higher=True):
+            n 2nsrssl "...Heh."
+            n 4nsrfsl "It...{w=1}{nw}" 
+            extend 1ksrfsl " really {i}does{/i} feel like my birthday now."
+            $ chosen_endearment = jn_utils.getRandomEndearment() if Natsuki.isLove() else jn_utils.getRandomTease()
+            n 1ksqbol "...Thanks,{w=0.2} [player].{w=0.75}{nw}"
+            extend 1kllssl " It's..."
+            n 2kslfslsbr "..."
+            n 2kslssfsbr "...I-{w=0.2}I love it.{w=1}{nw}"
+            extend 4kslfslsbr " T-{w=0.2}thank you.{w=1}{nw}" 
+            extend 4cslsslsbr " You big dope."
+
+        else:
+            n 2nsrbol "..."
+            n 2nsrajlsbl "...I-{w=0.2}I guess that's one way to make it feel like a birthday.{w=0.75}{nw}"
+            extend 2nsrsslsbl " Heh."
+            n 4ksrbolsbl "..."
+            n 4knmbolsbr "...Thanks,{w=0.2} [player].{w=1}{nw}"
+            extend 4klrbolsbr "It's..."
+            n 1ksrsllsbr "..."
+            n 2ncssslsbr "...It's awesome.{w=1}{nw}"
+            extend 2cslsslsbl " E-{w=0.2}even if it {i}did{/i} come from a dummy."
+
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+        $ giftbox.close()
+        $ giftbox.hide()
+        hide black with Dissolve(1.5)
+        $ jnPause(3)
 
     if Natsuki.isEnamored(higher=True):
         n 1nsrbol "..."
         n 1nsrssl "So..."
         $ chosen_endearment = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else player
-        n 3tnmssl "What did you wanna talk about,{w=0.2} [player]?{w=0.75}{nw}"
+        n 3tnmssl "What did you wanna do today,{w=0.2} [player]?{w=0.75}{nw}"
         extend 3csldvlsbr " Ehehe..."
 
     elif Natsuki.isAffectionate(higher=True):
@@ -3765,6 +3853,7 @@ label holiday_natsuki_birthday:
 
     $ persistent._jn_natsuki_birthday_known = True
     $ jn_events.getHoliday("holiday_natsuki_birthday").complete()
+
     return
 
 label holiday_player_birthday:
