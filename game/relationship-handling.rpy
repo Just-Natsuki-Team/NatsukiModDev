@@ -51,18 +51,15 @@ init -2 python in jn_affinity:
         LOVE
     ]
 
-    def get_relationship_length_multiplier():
+    def getRelationshipLengthMultiplier():
         """
         Gets the multiplier for affinity changes, based on the length of the relationship in months.
 
         OUT:
-            - relationship multiplier value, capped at 1.5
+            - relationship multiplier value, capped at 1.75
         """
         relationship_length_multiplier = 1 + (jn_utils.get_total_gameplay_months() / 10)
-        if relationship_length_multiplier > 1.5:
-            relationship_length_multiplier = 1.5
-
-        return relationship_length_multiplier
+        return relationship_length_multiplier if relationship_length_multiplier <= 1.75 else 1.75
 
     def _isAffStateValid(state):
         """

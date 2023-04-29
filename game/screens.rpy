@@ -12,11 +12,13 @@ style hotkeys_text:
     font gui.interface_font
     size gui.interface_text_size
     color "#e2d1d1"
-    line_overlap_split 1.25
-    line_spacing 1.25
     outlines [(3, "#000000aa", 0, 0)]
     xalign 0.0
     yalign 0.5
+    
+    line_overlap_split 8
+    line_spacing 8
+    line_leading 8
 
 screen hotkeys():
     $ config.mouse = None
@@ -489,7 +491,7 @@ style say_dialogue:
     text_align gui.text_xalign
     layout ("subtitle" if gui.text_xalign else "tex")
 
-    line_overlap_split 8
+    line_overlap_split -8
     line_spacing 8
     line_leading 8
 

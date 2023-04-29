@@ -8476,6 +8476,9 @@ label talk_players_birthday_outro:
     n 1ncsemlesi "..."
     n 2nsrssl "It's May 1st.{w=1}{nw}"
     extend 2nsqpol " Don't make me say it twice."
+
+    $ persistent._jn_natsuki_birthday_known = True
+    
     n 1nllpu "And...{w=1}{nw}"
     extend 4tnmbo " [player]?"
     n 1fsqss "I hope you know that you better prepare yourself."
@@ -9127,7 +9130,7 @@ label talk_take_down_deco:
     n 1ulraj "Yeah,{w=0.5}{nw}"
     extend 1nlrbo " I can do that.{w=0.75}{nw}"
     extend 3nsrpo " I guess.{w=1}{nw}"
-    extend 3fsqca " But you're putting it all up next time."
+    extend 3fsqca " But you're cleaning it all up next time."
     n 1nllsl "Just give me a second here...{w=1}{nw}"
     show natsuki 1ncssl
 
