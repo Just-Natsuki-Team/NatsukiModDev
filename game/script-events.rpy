@@ -3434,9 +3434,9 @@ label holiday_natsuki_birthday:
         n 4fcsanlsbl "Nnnnnnn-!"
         n 4fbkwrf "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
         extend 2kbkwrl " What {i}is{/i} all thiiiis?!"
-        n 2fcsgslsbl "Y-{w=0.2}you were supposed to {i}forget{/i} I told you anything about my birthday!{w=0.75}{nw}"
+        n 2fcsgslsbl "Y-{w=0.2}you were supposed to {i}forget{/i} all about my birthday!{w=0.75}{nw}"
         extend 2fllgslsbl " And what do you go ahead and do?!"
-        n 4fbkwrleansbl "You go and make {i}me{/i} the front and center of everything!"
+        n 4fbkwrleansbl "You go and make me the front and center of {i}everything{/i}!"
         n 1fcsgsl "Then just to top it off,{w=0.5}{nw}"
         extend 4flrgslsbr " it's {i}easily{/i} the most embarrassing type of attention too!"
         extend 4ksrfllsbr " Man..."
@@ -3489,20 +3489,20 @@ label holiday_natsuki_birthday:
         n 4csrbol "..."
         n 2ccseml "...Yeah,{w=0.2} yeah.{w=0.75}{nw}"
         extend 2nslpol " Wise-ass."
-        n 2ccsfll "But come "
+        n 2ccsfll "But come{w=0.5}{nw}"
         extend 2ccsgsl " on!{w=0.75}{nw}"
     
     else:
         n 2ccsfllsbl "...And come on now.{w=0.75}{nw}"
 
     extend 2cdwfllsbr " Seriously?{w=0.75}{nw}"
-    extend 2cupajlsbr " You just {i}had{/i} to get the cake and everything too?"
+    extend 2cupajlsbr " You just {i}had{/i} to get the cake and everything else too?"
     n 2csrsllsbr "..."
     n 2csrpulsbr "...And now that I think about it..."
-    n 4csqtrl "Where did you even {i}find{/i} this?"
+    n 4csqtrl "Where did you even {i}find{/i} all this?"
 
     if already_celebrated_player_birthday:
-        n 2fsqcal "...And why does it look {i}exactly{/i} like the one I made you?"
+        n 2fsqcal "...And why does the cake look {i}exactly{/i} like the one I made you?"
         n 2csrcal "..."
         n 4csrajl "I'm...{w=0.75}{nw}"
         extend 4csrbolsbl " just gonna pretend I've never seen it before."
@@ -3560,7 +3560,7 @@ label holiday_natsuki_birthday:
     $ jnPause(4)
 
     if Natsuki.isEnamored(higher=True):
-        n 1ncsss "...Heh.{w=0.75}{nw}"
+        n 1ncsss "...Heh.{w=1.25}{nw}"
         extend 2clrsm " I can't even {i}remember{/i} the last time I got to do that."
         n 2clrsl "..."
         n 2clrpu "But...{w=1}{nw}"
@@ -3671,7 +3671,7 @@ label holiday_natsuki_birthday:
         else:
             n 2csqfll "...Happy now?{w=0.75}{nw}"
             extend 2cllfllsbr " Jeez..."
-            n 2ccsposbr "If I wanted to be embarrassed I would have just asked,{w=0.2} you know."
+            n 2ccsposbr "If I {i}wanted{/i} to be embarrassed I would have just asked,{w=0.2} you know."
             n 2csrpo "..."
             n 2nsrbo "But..."
             n 4ksrslsbl "..."
@@ -3684,7 +3684,7 @@ label holiday_natsuki_birthday:
         extend 4fcsunl " a lot{w=0.75}{nw}"
         extend 4ksrsll " to get used to.{w=1}{nw}"
         extend 4knmbol " Actually celebrating it with anyone."
-        n 2kslcal "...Anyone who actually cares."
+        n 2kslcal "...Let alone anyone who actually {i}cares{/i}."
         n 2fcsgslsbl "N-{w=0.2}not like the others {i}wouldn't{/i} have done anything!"
         extend 2ccsflsbl " Of course they would!{w=0.75}{nw}"
         extend 4clrss " Sayori,{w=0.2} Monika..."
@@ -3753,29 +3753,34 @@ label holiday_natsuki_birthday:
         and (not gold_star_hairpin.unlocked or not pink_star_hairpin.unlocked)
     ):
         $ hairpin_to_gift = gold_star_hairpin if not gold_star_hairpin.unlocked else pink_star_hairpin
+        $ hairpin_to_gift.unlock()
         n 2ksrbol "..."
-        n 2nsrajl "So...{w=1}"
+        n 2nsrajl "So...{w=1}{nw}"
         extend 4tnmbol " what's...{w=0.5}{nw}"
 
+        show natsuki 1tnmboltsbeqm
         $ jn_gifts.GIFT_PINK.present()
+        $ jnPause(0.5)
         show natsuki 4udwfll
-        $ jnPause(2.5)
 
         if Natsuki.isEnamored(higher=True):
+            $ jnPause(3)
             n 4knmpul "...[player]...{w=1.25}{nw}"
             extend 2ksrpul " come on..."
-            n 2knmsll "You haven't embarrassed me enough already?"
+            n 2knmsll "You haven't embarrassed me enough already?{w=0.75}{nw}"
+            extend 2ksrpol " Man..."
             n 2cllsll "..."
             n 2kcspulesi "..."
             n 4kslbol "...Fine.{w=1}{nw}"
             extend 4nslsslsbr " I guess it's the least I could do,{w=0.2} huh?"
         
         else:
-            n 4unmfll "...!"
+            $ jnPause(1.5)
+            n 4unmfll "...!{w=0.5}{nw}"
             n 2fslunlsbr "..."
             n 2fsqunlsbr "T-{w=0.2}this better not be some kind of prank,{w=0.2} [player]."
             n 2nsrsllsbl "..."
-            n 2ccsemlsbl "F-fine."
+            n 2ccsemlsbl "F-{w=0.2}fine."
             extend 4ksrbolsbr " I suppose it's the least I should do."
         
         show natsuki 4cdwbolsbr
@@ -3783,7 +3788,7 @@ label holiday_natsuki_birthday:
         $ jnPause(3)
         show natsuki 1udwfllsbr
         play audio gift_rustle
-        $ giftbox.empty()
+        $ jn_gifts.GIFT_PINK.empty()
         $ jnPause(3)
 
         if Natsuki.isEnamored(higher=True):
@@ -3795,6 +3800,7 @@ label holiday_natsuki_birthday:
         $ jnPause(3)
         play audio necklace_clip
         $ birthday_outfit.accessory = hairpin_to_gift
+        $ jn_outfits.save_temporary_outfit(birthday_outfit)
 
         if Natsuki.isEnamored(higher=True):
             show natsuki 2ksrsml
@@ -3815,6 +3821,7 @@ label holiday_natsuki_birthday:
             n 2kslssfsbr "...I-{w=0.2}I love it.{w=1}{nw}"
             extend 4kslfslsbr " T-{w=0.2}thank you.{w=1}{nw}" 
             extend 4cslsslsbr " You big dope."
+            show natsuki 4cslsml
 
         else:
             n 2nsrbol "..."
@@ -3822,14 +3829,16 @@ label holiday_natsuki_birthday:
             extend 2nsrsslsbl " Heh."
             n 4ksrbolsbl "..."
             n 4knmbolsbr "...Thanks,{w=0.2} [player].{w=1}{nw}"
-            extend 4klrbolsbr "It's..."
+            extend 4klrbolsbr " It's..."
             n 1ksrsllsbr "..."
             n 2ncssslsbr "...It's awesome.{w=1}{nw}"
             extend 2cslsslsbl " E-{w=0.2}even if it {i}did{/i} come from a dummy."
+            show natsuki 2nslfsl
 
+        $ jn_gifts.GIFT_PINK.close()
         show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
-        $ giftbox.close()
-        $ giftbox.hide()
+        $ jnPause(0.5)
+        $ jn_gifts.GIFT_PINK.hide()
         hide black with Dissolve(1.5)
         $ jnPause(3)
 
@@ -3852,6 +3861,7 @@ label holiday_natsuki_birthday:
         n 2ccssssbl "What else is new,{w=0.2} [player]?"
 
     $ persistent._jn_natsuki_birthday_known = True
+    $ Natsuki.calculatedAffinityGain(base=2.5, bypass=True)
     $ jn_events.getHoliday("holiday_natsuki_birthday").complete()
 
     return
