@@ -10434,7 +10434,7 @@ label talk_can_you_draw:
         if jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.artwork):
             n 4fwdaw "...Wait!{w=0.75}{nw}"
             extend 3fcsbg " Don't tell me!{w=0.75}{nw}"
-            extend 3fcsbs " I've got a pretty good hunch for this kind of thing,{w=0.5}{nw}"
+            extend 3fcsbs " I've got a pretty good hunch for this kind of thing{w=0.5}{nw}"
             extend 3fsqss " if I say so myself."
             n 3fcssm "Ehehe."
             n 4fcsbg "Yep!"
