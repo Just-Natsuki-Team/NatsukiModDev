@@ -491,7 +491,7 @@ style say_dialogue:
     text_align gui.text_xalign
     layout ("subtitle" if gui.text_xalign else "tex")
 
-    line_overlap_split 8
+    line_overlap_split -8
     line_spacing 8
     line_leading 8
 
