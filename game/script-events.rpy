@@ -395,7 +395,7 @@ init python in jn_events:
             ):
                 return False
 
-            elif self.conditional is not None and not eval(self.conditional, globals=store.__dict__):
+            elif self.conditional is not None and not eval(self.conditional, store.__dict__):
                 return False
 
             return True
