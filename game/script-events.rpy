@@ -391,7 +391,7 @@ init python in jn_events:
 
             elif (
                 holiday_completion_state is not None
-                and int(self.holiday_type) in store.persistent._jn_holiday_completed_list
+                and self.isCompleted()
             ):
                 return False
 
@@ -433,11 +433,20 @@ init python in jn_events:
             self.is_seen = True
             self.__save()
 
-            if not int(self.holiday_type) in store.persistent._jn_holiday_completed_list:
+            if not self.isCompleted():
                 store.persistent._jn_holiday_completed_list.append(int(self.holiday_type))
 
             if self.deco_list:
                 store.persistent._jn_holiday_deco_list_on_quit = self.deco_list
+
+        def isCompleted(self):
+            """
+            Returns whether this holiday has been completed.
+
+            OUT:
+                - True if the holiday has been marked as completed, otherwise False
+            """
+            return int(self.holiday_type) in store.persistent._jn_holiday_completed_list
 
     def __registerHoliday(holiday):
         """
@@ -3759,7 +3768,7 @@ label holiday_natsuki_birthday:
         extend 4tnmbol " what's...{w=0.5}{nw}"
 
         show natsuki 1tnmboltsbeqm
-        $ jn_gifts.GIFT_PINK.present()
+        $ jn_gifts.GIFT_BLUE.present()
         $ jnPause(0.5)
         show natsuki 4udwfll
 
@@ -3784,11 +3793,11 @@ label holiday_natsuki_birthday:
             extend 4ksrbolsbr " I suppose it's the least I should do."
         
         show natsuki 4cdwbolsbr
-        $ jn_gifts.GIFT_PINK.open()
+        $ jn_gifts.GIFT_BLUE.open()
         $ jnPause(3)
         show natsuki 1udwfllsbr
         play audio gift_rustle
-        $ jn_gifts.GIFT_PINK.empty()
+        $ jn_gifts.GIFT_BLUE.empty()
         $ jnPause(3)
 
         if Natsuki.isEnamored(higher=True):
@@ -3835,10 +3844,10 @@ label holiday_natsuki_birthday:
             extend 2cslsslsbl " E-{w=0.2}even if it {i}did{/i} come from a dummy."
             show natsuki 2nslfsl
 
-        $ jn_gifts.GIFT_PINK.close()
+        $ jn_gifts.GIFT_BLUE.close()
         show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         $ jnPause(0.5)
-        $ jn_gifts.GIFT_PINK.hide()
+        $ jn_gifts.GIFT_BLUE.hide()
         hide black with Dissolve(1.5)
         $ jnPause(3)
 

@@ -757,7 +757,15 @@ label admission_hungry:
         extend 4nsqsl " before you ask."
         n 3fcsbg "Junk food doesn't count!"
 
-        if Natsuki.isAffectionate(higher=True):
+        if (
+            (jnIsNatsukiBirthday() and jn_events.getHoliday("holiday_natsuki_birthday").isCompleted())
+            or (jnIsPlayerBirthday() and jn_events.getHoliday("holiday_player_birthday").isCompleted())
+        ):
+            n 3ullaj "Oh,{w=0.5}{nw}"
+            extend 3csqss " and you're not getting any of that cake from earlier either.{w=1.25}{nw}"
+            extend 3fchgnelg " Sorry~!"
+
+        elif Natsuki.isAffectionate(higher=True):
             n 3fsqsm "You weren't a trash can last time I checked.{w=0.75}{nw}"
             extend 3fchgnelg " So no garbage for you~!"
 

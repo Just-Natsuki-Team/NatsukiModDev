@@ -311,6 +311,9 @@ init python in jn_data_migrations:
             store.persistent._jn_pic = True
             jn_utils.log("434346".decode("hex"))
 
+        if store.persistent._jn_player_birthday_day_month is not None:
+            store.persistent._jn_natsuki_birthday_known = True
+
         jn_utils.save_game()
         jn_utils.log("Migration to 1.2.0 DONE")
         return
