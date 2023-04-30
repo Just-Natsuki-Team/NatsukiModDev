@@ -2727,7 +2727,7 @@ label new_wearables_outfits_unlocked:
         n 1kllemless "I just..."
         n 2ksrunlsbl "..."
         n 1fcsunl "I...{w=0.3} know...{w=1}{nw}"
-        extend 2ksrpolsbr " I can't exactly return the favour."
+        extend 2ksrpolsbr " I can't exactly return the favor."
         n 1fcsajlsbl "A-{w=0.2}and you've already done a lot for me,{w=0.5}{nw}"
         extend 4kslbolsbl " so..."
         n 1kcsbolsbl "..."

@@ -1462,7 +1462,7 @@ label talk_favourite_season:
                     $ season_preference_changed = True
 
                 if season_preference_changed and persistent.jn_player_favourite_season == "Spring":
-                    n 1usqss "Ooh?{w=0.2} Favouring Spring now,{w=0.1} [player]?"
+                    n 1usqss "Ooh?{w=0.2} Favoring Spring now,{w=0.1} [player]?"
                     n 1nlrbo "I could do without all the rain,{w=0.1} but I get it."
                     n 3flrpu "Hmm...{w=0.3} Spring..."
                     n 1tlrbo "I wonder...{w=0.5}{nw}"
@@ -3416,7 +3416,7 @@ label talk_i_love_you:
                                 n 1tnmajl "Wow!{w=0.2} This is like...{w=0.3} the 50th time you've been wrong!{w=0.2} In a row!"
                                 n 3tsqsgl "Sounds to me like you're in some serious denial there,{w=0.1} [player]~."
                                 n 1nllssl "I don't think I can be bothered counting much more from here..."
-                                n 3fsqtsl "So why don't you do me a favour and just accept that I love {i}you{/i} more already?"
+                                n 3fsqtsl "So why don't you do me a favor and just accept that I love {i}you{/i} more already?"
                                 n 1uchsml "Ehehe."
                                 n 4fchbgl "Thanks,{w=0.1} [chosen_endearment]~!"
 
@@ -8471,7 +8471,7 @@ label talk_players_birthday_outro:
     extend 3nlrdv " For sharing,{w=0.2} I mean."
     n 2nsrpo "..."
     n 1nsraj "I...{w=0.5}{nw}"
-    extend 3tnmss " guess I better return the favour,{w=0.2} huh?"
+    extend 3tnmss " guess I better return the favor,{w=0.2} huh?"
     n 4nslcal "Just promise you won't make it all awkward."
     n 1ncsemlesi "..."
     n 2nsrssl "It's May 1st.{w=1}{nw}"
