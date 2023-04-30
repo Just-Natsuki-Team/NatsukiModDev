@@ -2080,7 +2080,7 @@ label event_warm_package:
 
     if Natsuki.isLove(higher=True):
         extend 2tslss " warm food..."
-        n 1nsldvleafsbl "Some quality time with your favourite girl..."
+        n 1nsldvleafsbl "Some quality time with your favorite girl..."
         n 4fchsmlsbl "I-{w=0.2}it all counts!"
 
     elif Natsuki.isAffectionate(higher=True):

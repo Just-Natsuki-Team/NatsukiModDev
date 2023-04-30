@@ -397,7 +397,7 @@ label joke_blind_fish:
 label joke_skeleton_music:
     n 1fcsaj "Alright!{w=0.75}{nw}"
     extend 1nslsssbr " Seeing as you love music so much,{w=0.2} [player]..."
-    n 1tsqsssbr "What's a skeleton's favourite instrument?"
+    n 1tsqsssbr "What's a skeleton's favorite instrument?"
     n 1nsrsssbr "..."
     n 1nsrposbl "...A xylo-{w=1}{i}bone{/i}."
 
@@ -599,7 +599,7 @@ label joke_neutrons_no_charge:
     return
 
 label joke_train_sound_track:
-    n 1fcsbg "What's a train driver's favourite thing to listen to while they're working?"
+    n 1fcsbg "What's a train driver's favorite thing to listen to while they're working?"
     n 1fnmsm "..."
     n 1tsqss "No?{w=0.75}{nw}"
     extend 1fcssm " Ehehe."
