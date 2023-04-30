@@ -272,7 +272,7 @@ define gui.skip_ypos = 10
 define gui.notify_ypos = 45
 
 ## The spacing between menu choices.
-define gui.choice_spacing = 22
+define gui.choice_spacing = 16
 
 ## Buttons in the navigation section of the main and game menus.
 define gui.navigation_spacing = 6
@@ -367,7 +367,7 @@ define gui.history_name_xalign = 1.0
 
 ## The position, width, and alignment of the dialogue text.
 define gui.history_text_xpos = 170
-define gui.history_text_ypos = 5
+define gui.history_text_ypos = 1
 define gui.history_text_width = 740
 define gui.history_text_xalign = 0.0
 
@@ -449,7 +449,7 @@ init python:
         gui.navigation_spacing = 20
         gui.pref_button_spacing = 10
 
-        gui.history_height = 190
+        gui.history_height = 200
         gui.history_text_width = 690
 
         ## File button layout.

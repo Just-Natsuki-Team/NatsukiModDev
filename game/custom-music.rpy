@@ -7,12 +7,23 @@ image music_player stopped = "mod_assets/props/music_player/music_player_stop.pn
 image music_player paused = "mod_assets/props/music_player/music_player_pause.png"
 
 init python in jn_custom_music:
+    from Enum import Enum
     import os
     import store
     import store.jn_events as jn_events
     import store.jn_utils as jn_utils
 
+    class JNMusicOptionTypes(Enum):
+        """
+        Identifiers for different music option responses.
+        """
+        bgm = 1
+        custom = 2
+        random = 3
+        no_music = 4
+
     # Tracks must be placed here for Natsuki to find them
+    BGM_FOLDER = "game/mod_assets/bgm/"
     CUSTOM_MUSIC_FOLDER = "custom_music/"
     CUSTOM_MUSIC_DIRECTORY = os.path.join(renpy.config.basedir, CUSTOM_MUSIC_FOLDER).replace("\\", "/")
 
@@ -109,7 +120,7 @@ init python in jn_custom_music:
         renpy.play(filename=store.audio.gift_close, channel="audio")
         store.jnPause(0.5)
 
-    def getMusicFileRelativePath(file_name):
+    def getMusicFileRelativePath(file_name, is_custom):
         """
         Returns the relative file path for a music file.
 
@@ -119,7 +130,10 @@ init python in jn_custom_music:
         OUT:
             - str relative path of file
         """
-        return "../{0}{1}".format(CUSTOM_MUSIC_FOLDER, file_name)
+        return "../{0}{1}".format(CUSTOM_MUSIC_FOLDER, file_name) if is_custom else "../{0}{1}".format(BGM_FOLDER, file_name)
+
+    if store.persistent.jn_custom_music_unlocked:
+        jn_utils.createDirectoryIfNotExists(CUSTOM_MUSIC_DIRECTORY)
 
 label music_menu:
     $ Natsuki.setInConversation(True)
@@ -132,24 +146,24 @@ label music_menu:
         if not jn_utils.createDirectoryIfNotExists(jn_custom_music.CUSTOM_MUSIC_DIRECTORY):
 
             # Get the user's music, then sort the options for presentation
-            custom_music_options = jn_utils.getAllDirectoryFiles(
+            custom_music_options = [(music_file[0], (jn_custom_music.JNMusicOptionTypes.custom, music_file[0])) for music_file in jn_utils.getAllDirectoryFiles(
                 path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
                 extension_list=jn_custom_music._VALID_FILE_EXTENSIONS
-            )
+            )]
             custom_music_options.sort()
 
             # Add random option if we have more than one potential track for Nat to pick
             if len(custom_music_options) > 1:
-                custom_music_options.insert(0, ("You pick!", "random"))
+                custom_music_options.insert(0, ("You pick!", (jn_custom_music.JNMusicOptionTypes.random, None)))
 
             # Add the default music as the first option
-            custom_music_options.insert(1, ("Default", "mod_assets/bgm/just_natsuki.ogg"))
+            custom_music_options.insert(1, ("Default", (jn_custom_music.JNMusicOptionTypes.bgm, "just_natsuki.ogg")))
 
             # Add holiday music if unlocked
             if persistent._jn_event_completed_count > 0 and Natsuki.isNormal(higher=True):
-                custom_music_options.insert(2, ("Vacation!", "mod_assets/bgm/vacation.ogg"))
+                custom_music_options.insert(2, ("Vacation!", (jn_custom_music.JNMusicOptionTypes.bgm, "vacation.ogg")))
 
-            custom_music_options.append(("No music", "no_music"))
+            custom_music_options.append(("No music", (jn_custom_music.JNMusicOptionTypes.no_music, None)))
             success = True
 
     # We failed to get the custom music, prompt player to correct
@@ -161,7 +175,6 @@ label music_menu:
         extend 4knmajsbr " [player]?"
         n 4kslslsbr "Something {i}kinda{/i} went wrong when I was trying look for your music...{w=1}{nw}"
         extend 4kslsssbr " can you just check everything out real quick?"
-        $ folder = jn_custom_music.CUSTOM_MUSIC_DIRECTORY
         n 2tlraj "As a reminder -{w=0.5}{nw}" 
         extend 2tnmsl " anything you want me to play needs to be in the {i}custom_music{/i} folder."
         n 2fcsbgsbl "Just make sure it's all in {i}.mp3,{w=0.1} .ogg or .wav{/i} format!"
@@ -209,7 +222,7 @@ label music_menu:
     if not _return:
         jump ch30_loop
 
-    if _return == "no_music":
+    if _return[0] == jn_custom_music.JNMusicOptionTypes.no_music:
         $ chosen_no_music_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_NO_MUSIC_QUIPS))
         n 2knmsm "[chosen_no_music_quip]"
 
@@ -232,7 +245,7 @@ label music_menu:
 
         $ jn_custom_music.hideMusicPlayer()
 
-    elif _return == "random":
+    elif _return[0] == jn_custom_music.JNMusicOptionTypes.random:
 
         $ available_custom_music = jn_utils.getAllDirectoryFiles(
             path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
@@ -259,11 +272,10 @@ label music_menu:
 
         # If we have more than one track, we can make sure the new chosen track isn't the same as the current one
         if len(available_custom_music) > 1:
-            $ music_title_and_file = random.choice(filter(lambda track: (jn_custom_music._now_playing not in track), available_custom_music))
-            $ music_title = music_title_and_file[0]
+            $ music_title = random.choice(filter(lambda track: (jn_custom_music._now_playing not in track), available_custom_music))[0]
             play audio button_tap_c
             show music_player playing
-            $ renpy.play(filename=jn_custom_music.getMusicFileRelativePath(music_title), channel="music", fadein=2)
+            $ renpy.play(filename=jn_custom_music.getMusicFileRelativePath(file_name=music_title, is_custom=True), channel="music", fadein=2)
             $ jnPause(2)
 
         $ chosen_done_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_DONE_QUIPS))
@@ -273,7 +285,8 @@ label music_menu:
         $ jn_custom_music.hideMusicPlayer()
 
     elif _return is not None:
-        $ music_title = store.jn_utils.escapeRenpySubstitutionString(_return.split('/')[-1])
+        $ jn_utils.log(_return)
+        $ music_title = store.jn_utils.escapeRenpySubstitutionString(_return[1].split('/')[-1])
 
         n 2fwlbg "You got it!{w=2}{nw}"
         show natsuki 4fchsmleme
@@ -286,7 +299,12 @@ label music_menu:
 
         play audio button_tap_c
         show music_player playing
-        $ renpy.play(filename=jn_custom_music.getMusicFileRelativePath(music_title), channel="music", fadein=2)
+        $ renpy.play(
+            filename=jn_custom_music.getMusicFileRelativePath(
+                file_name=music_title,
+                is_custom=_return[0] == jn_custom_music.JNMusicOptionTypes.custom),
+            channel="music",
+            fadein=2)
 
         $ chosen_done_quip = renpy.substitute(random.choice(jn_custom_music._NATSUKI_PICK_MUSIC_DONE_QUIPS))
         n 2uchbgeme "[chosen_done_quip]{w=2}{nw}"

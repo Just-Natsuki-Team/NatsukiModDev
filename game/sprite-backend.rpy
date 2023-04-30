@@ -100,6 +100,8 @@ init -50 python:
         down = 23
         pained = 24
         up = 25
+        think_left = 26
+        think_right = 27
 
         def __str__(self):
             return self.name
@@ -110,6 +112,7 @@ init -50 python:
         knit = 3
         furrowed = 4
         think = 5
+        concerned = 6
 
         def __str__(self):
             return self.name
@@ -229,8 +232,18 @@ init -50 python:
         # Mouth, nose, hair (front)
         lc_args.extend([
             (0, 0), "{0}/face/mouth/sitting/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, mouth),
-            (0, 0), "{0}/face/nose/sitting/nose.png".format(_JN_NATSUKI_BASE_SPRITE_PATH),
-            (0, 0), "{0}/hair/[Natsuki._outfit.hairstyle.reference_name]/sitting/bangs.png".format(_JN_NATSUKI_BASE_SPRITE_PATH),
+            (0, 0), "{0}/face/nose/sitting/nose.png".format(_JN_NATSUKI_BASE_SPRITE_PATH)
+        ])
+
+        # Sweat
+        if sweat:
+            lc_args.extend([
+                (0, 0), "{0}/face/sweat/sitting/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, sweat)
+            ])
+
+        # Hair (front)
+        lc_args.extend([
+            (0, 0), "{0}/hair/[Natsuki._outfit.hairstyle.reference_name]/sitting/bangs.png".format(_JN_NATSUKI_BASE_SPRITE_PATH)
         ])
 
         # Accessory
@@ -248,12 +261,6 @@ init -50 python:
         if tears:
             lc_args.extend([
                 (0, 0), "{0}/face/tears/sitting/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, tears)
-            ])
-
-        # Sweat
-        if sweat:
-            lc_args.extend([
-                (0, 0), "{0}/face/sweat/sitting/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, sweat)
             ])
 
         # Headgear
@@ -325,7 +332,8 @@ init 1 python:
         "u": JNEyebrows.up,
         "k": JNEyebrows.knit,
         "f": JNEyebrows.furrowed,
-        "t": JNEyebrows.think
+        "t": JNEyebrows.think,
+        "c": JNEyebrows.concerned
     }
 
     EYE_MAP = {
@@ -348,6 +356,8 @@ init 1 python:
         "sq": JNEyes.squint,
         "sl": JNEyes.squint_left,
         "sr": JNEyes.squint_right,
+        "tl": JNEyes.think_left,
+        "tr": JNEyes.think_right,
         "un": JNEyes.unamused,
         "up": JNEyes.up,
         "wm": JNEyes.warm,
@@ -828,6 +838,116 @@ image natsuki thinking:
             "natsuki 4tcssl"
             pause 0.1
 
+    repeat
+
+# Idle images for Natsuki vibing/listening to music
+image natsuki vibing:
+    block:
+        choice:
+            "natsuki 1ncssm"
+        choice:
+            "natsuki 2fcssm"
+        choice:
+            "natsuki 4fcssm"
+        choice:
+            "natsuki 2fchsm"
+        choice:
+            "natsuki 4fchsm"
+        choice:
+            "natsuki 2fcsss"
+            pause 0.75
+            "natsuki 2fcsaj"
+            pause 0.75
+            "natsuki 2fcsbs"
+            pause 0.75
+            "natsuki 2fcsss"
+            pause 0.75
+            "natsuki 2fchsm"
+        choice:
+            "natsuki 1fcspu"
+        choice:
+            "natsuki 1fcssl"
+        choice:
+            "natsuki 1fcsca"
+        choice:
+            "natsuki 1fcssl"
+            pause 0.75
+            "natsuki 1fcsaj"
+            pause 0.75
+            "natsuki 1fcssl"
+            pause 0.75
+            "natsuki 1fcsaj"
+            pause 0.75
+            "natsuki 1fcsca"
+    pause 8
+    repeat
+
+image natsuki whistling:
+    block:
+        choice:
+            "natsuki 3nllpueme"
+            pause 0.75
+            "natsuki 3nllajeme"
+            pause 0.75
+            "natsuki 3nllpueme"
+            pause 0.75
+            "natsuki 3nllajeme"
+            pause 0.75
+            "natsuki 3nllboeme"
+            pause 0.75
+            "natsuki 3ncsboeme"
+            pause 0.1
+            "natsuki 3nllajeme"
+            pause 0.75
+            "natsuki 3nllpueme"
+            pause 0.75
+            "natsuki 3ullbo"
+            pause 4
+            "natsuki 3ucsboeme"
+            pause 0.1
+        choice:
+            "natsuki 3nlrpueme"
+            pause 0.75
+            "natsuki 3nlrajeme"
+            pause 0.75
+            "natsuki 3nlrpueme"
+            pause 0.75
+            "natsuki 3nlrajeme"
+            pause 0.75
+            "natsuki 3nlrboeme"
+            pause 0.75
+            "natsuki 3ncsboeme"
+            pause 0.1
+            "natsuki 3nlrajeme"
+            pause 0.75
+            "natsuki 3nlrpueme"
+            pause 0.75
+            "natsuki 3ulrbo"
+            pause 4
+            "natsuki 3ucsboeme"
+            pause 0.1
+        choice:
+            "natsuki 3utlajeme"
+            pause 0.75
+            "natsuki 3utlpueme"
+            pause 0.75
+            "natsuki 3ucspueme"
+            pause 0.1
+            "natsuki 3utlajeme"
+            pause 0.75
+            "natsuki 3utlsl"
+            pause 4
+        choice:
+            "natsuki 3utrpueme"
+            pause 0.75
+            "natsuki 3utrajeme"
+            pause 0.75
+            "natsuki 3ucsajeme"
+            pause 0.1
+            "natsuki 3utrpueme"
+            pause 0.75
+            "natsuki 3utrsl"
+            pause 4
     repeat
 
 # This selects which idle image to show based on current affinity state
@@ -1341,6 +1461,43 @@ image natsuki idle introduction:
         choice:
             "natsuki 4klrun"
         pause 10
+        repeat
+
+image natsuki idle fluster:
+    block:
+        choice:
+            "natsuki 1cllunlsbr"
+            pause 2
+            "natsuki 1ccsunlsbr"
+            pause 0.1
+            "natsuki 1clrunlsbr"
+            pause 2
+            "natsuki 1ccsunlsbr"
+            pause 0.1
+
+        choice:
+            "natsuki 1clremlsbl"
+            pause 2
+            "natsuki 1ccsemlsbl"
+            pause 0.1
+            "natsuki 1cllemlsbl"
+            pause 2
+            "natsuki 1ccsemlsbl"
+            pause 0.1
+
+        choice:
+            "natsuki 1cllfllsbr"
+            pause 2
+            "natsuki 1ccsfllsbr"
+            pause 0.1
+            "natsuki 1clrfllsbr"
+            pause 2
+            "natsuki 1ccsfllsbl"
+            pause 0.1
+            "natsuki 1clrfllsbl"
+            pause 1.25
+            "natsuki 1ccsfllsbl"
+            pause 0.1
         repeat
 
 init python:

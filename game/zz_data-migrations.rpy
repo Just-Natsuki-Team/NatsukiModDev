@@ -245,11 +245,6 @@ init python in jn_data_migrations:
     def to_1_0_2():
         jn_utils.log("Migration to 1.0.2 START")
         store.persistent._jn_version = "1.0.2"
-        if store.persistent.affinity >= 5000:
-            store.persistent._jn_pic_aff = store.persistent.affinity
-            store.persistent.affinity = 0
-            store.persistent._jn_pic = True
-            jn_utils.log("434346".decode("hex"))
         jn_utils.save_game()
         jn_utils.log("Migration to 1.0.2 DONE")
         return
@@ -258,11 +253,6 @@ init python in jn_data_migrations:
     def to_1_0_3():
         jn_utils.log("Migration to 1.0.3 START")
         store.persistent._jn_version = "1.0.3"
-        if store.persistent.affinity >= 5000:
-            store.persistent._jn_pic_aff = store.persistent.affinity
-            store.persistent.affinity = 0
-            store.persistent._jn_pic = True
-            jn_utils.log("434346".decode("hex"))
 
         if jn_outfits.get_outfit("jn_skater_outfit").unlocked:
             jn_outfits.get_wearable("jn_facewear_plasters").unlock()
@@ -275,11 +265,6 @@ init python in jn_data_migrations:
     def to_1_1_0():
         jn_utils.log("Migration to 1.1.0 START")
         store.persistent._jn_version = "1.1.0"
-        if store.persistent.affinity >= 5000:
-            store.persistent._jn_pic_aff = store.persistent.affinity
-            store.persistent.affinity = 0
-            store.persistent._jn_pic = True
-            jn_utils.log("434346".decode("hex"))
 
         store.persistent._event_database["event_not_ready_yet"]["conditional"] = (
             "((jn_is_time_block_early_morning() or jn_is_time_block_mid_morning()) and jn_is_weekday())"
@@ -312,12 +297,23 @@ init python in jn_data_migrations:
     def to_1_1_1():
         jn_utils.log("Migration to 1.1.1 START")
         store.persistent._jn_version = "1.1.1"
-        if store.persistent.affinity >= 5000:
+        jn_utils.save_game()
+        jn_utils.log("Migration to 1.1.1 DONE")
+        return
+
+    @migration(["1.1.1", "1.1.2"], "1.2.0", runtime=MigrationRuntimes.INIT)
+    def to_1_2_0():
+        jn_utils.log("Migration to 1.2.0 START")
+        store.persistent._jn_version = "1.2.0"
+        if store.persistent.affinity >= 7500:
             store.persistent._jn_pic_aff = store.persistent.affinity
             store.persistent.affinity = 0
             store.persistent._jn_pic = True
             jn_utils.log("434346".decode("hex"))
 
+        if store.persistent._jn_player_birthday_day_month is not None:
+            store.persistent._jn_natsuki_birthday_known = True
+
         jn_utils.save_game()
-        jn_utils.log("Migration to 1.1.1 DONE")
+        jn_utils.log("Migration to 1.2.0 DONE")
         return

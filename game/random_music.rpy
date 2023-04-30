@@ -39,18 +39,29 @@ init python in jn_random_music:
     # The file extensions we (Ren'Py) support
     _VALID_FILE_EXTENSIONS = ["mp3", "ogg", "wav"]
 
+    def getRandomMusicPlayable():
+        """
+        Returns whether random music is considered playable, ignoring if any custom music is defined.
+        Note that at least two tracks must exist for random music to work properly.
+
+        OUT:
+            - True if random music should be playable, otherwise False.
+        """
+        return (
+            store.persistent.jn_custom_music_unlocked
+            and store.persistent.jn_random_music_enabled
+            and store.Natsuki.isAffectionate(higher=True)
+            and store.preferences.get_volume("music") > 0
+            and not jn_utils.createDirectoryIfNotExists(jn_custom_music.CUSTOM_MUSIC_DIRECTORY)
+        )
+
 label random_music_change:
-    if not (
-        store.persistent.jn_custom_music_unlocked
-        and store.persistent.jn_random_music_enabled
-        and store.Natsuki.isAffectionate(higher=True)
-        and store.preferences.get_volume("music") > 0
-        and len(jn_utils.getAllDirectoryFiles(
-            path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
-            extension_list=jn_random_music._VALID_FILE_EXTENSIONS
-            )
-        ) >= 2
-    ):
+    $ available_custom_music = jn_utils.getAllDirectoryFiles(
+        path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
+        extension_list=jn_custom_music._VALID_FILE_EXTENSIONS
+    )
+
+    if not jn_random_music.getRandomMusicPlayable() or len(available_custom_music) < 2:
         return
 
     $ track_quip = random.choice(jn_random_music._NEW_TRACK_QUIPS)
@@ -67,28 +78,17 @@ label random_music_change:
     n 2fcssm "[track_followup]{w=2}{nw}"
     show natsuki 4fcssm
 
-    python:
-        music_title_and_file = random.choice(
-            filter(
-                lambda track: (jn_custom_music._now_playing not in track),
-                jn_utils.getAllDirectoryFiles(
-                    path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
-                    extension_list=["mp3","wav","ogg"]
-                )
-            )
-        )
-        music_title = music_title_and_file[0]
+    $ music_title = random.choice(filter(lambda track: (jn_custom_music._now_playing not in track), available_custom_music))[0]
 
     play audio button_tap_c
     show music_player playing
 
-    python:
-        jnPause(2)
-        renpy.play(filename=music_title_and_file[1], channel="music", fadein=2)
-        jn_custom_music._now_playing = music_title
-        renpy.notify("Now playing: {0}".format(jn_custom_music._now_playing))
-
+    $ jnPause(2)
+    $ renpy.play(filename=jn_custom_music.getMusicFileRelativePath(file_name=music_title, is_custom=True), channel="music", fadein=2)
+    $ jn_custom_music._now_playing = music_title
+    $ renpy.notify("Now playing: {0}".format(jn_custom_music._now_playing))
     $ track_complete = random.choice(jn_random_music._NEW_TRACK_COMPLETE_LINES)
+
     n 2uchbgeme "[track_complete]{w=2}{nw}"
     show natsuki 2fcssm
 

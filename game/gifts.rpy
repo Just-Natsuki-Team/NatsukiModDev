@@ -4,14 +4,29 @@ transform jn_gift_slide_up:
     easein 2 ypos 0
 
 init -5 python in jn_gifts:
+    import os
     import store
+    import store.jn_utils as jn_utils
+
+    GIFT_DIRECTORY = os.path.join(renpy.config.basedir, "characters").replace("\\", "/")
 
     _GIFT_ZORDER = 4
+    
+    def getGiftFileExists(gift_name):
+        """
+        Returns whether the given gift exists in the configured gift directory, with a .nats prefix.
 
-    class JNGift():
+        IN:
+            - gift_name - str name of the gift to check for
+        OUT:
+            - True if the gift exists, otherwise False
+        """
+        return jn_utils.getFileExists(os.path.join(GIFT_DIRECTORY, "{0}.nats".format(gift_name)).replace("\\", "/"))
+
+    class JNGiftBox():
         def __init__(self, color, zorder):
             """
-            Initialises a new instance of JNGift.
+            Initialises a new instance of JNGiftBox.
 
             IN:
                 - color - The str color of the gift; matching open/closed/empty assets must exist in mod_assets/props/gifts
@@ -78,19 +93,19 @@ init -5 python in jn_gifts:
             """
             renpy.hide("gift_{0}".format(self.color))
 
-    GIFT_BLUE = JNGift(
+    GIFT_BLUE = JNGiftBox(
         color="blue",
         zorder=_GIFT_ZORDER
     )
-    GIFT_GREEN = JNGift(
+    GIFT_GREEN = JNGiftBox(
         color="green",
         zorder=_GIFT_ZORDER
     )
-    GIFT_PINK = JNGift(
+    GIFT_PINK = JNGiftBox(
         color="pink",
         zorder=_GIFT_ZORDER
     )
-    GIFT_PURPLE = JNGift(
+    GIFT_PURPLE = JNGiftBox(
         color="purple",
         zorder=_GIFT_ZORDER
     )

@@ -12,13 +12,17 @@ style hotkeys_text:
     font gui.interface_font
     size gui.interface_text_size
     color "#e2d1d1"
-    line_overlap_split 1.25
-    line_spacing 1.25
     outlines [(3, "#000000aa", 0, 0)]
     xalign 0.0
     yalign 0.5
+    
+    line_overlap_split 8
+    line_spacing 8
+    line_leading 8
 
 screen hotkeys():
+    $ config.mouse = None
+
     tag menu
     use game_menu(("Hotkeys")):
         viewport id "hotkeys":
@@ -114,6 +118,8 @@ style categorized_menu_button is choice_button:
 style categorized_menu_button_text is choice_button_text:
     align (0.0, 0.0)
     text_align 0.0
+    line_leading 0
+    line_spacing 2
 
 style categorized_menu_button_italic is categorized_menu_button
 
@@ -484,8 +490,10 @@ style say_dialogue:
 
     text_align gui.text_xalign
     layout ("subtitle" if gui.text_xalign else "tex")
+
     line_overlap_split -8
     line_spacing 8
+    line_leading 8
 
 image ctc:
     xalign 0.81 yalign 0.98 xoffset -5 alpha 0.0 subpixel True
@@ -641,7 +649,8 @@ style choice_button is default:
 style choice_button_text is default:
     properties gui.button_text_properties("choice_button")
     outlines []
-
+    line_leading 6
+    line_spacing -6
 
 init python:
     def RigMouse():
@@ -796,6 +805,8 @@ screen indicator(message):
         xpos 10 ypos 70
 
 screen navigation():
+    $ config.mouse = None
+    
     vbox:
         style_prefix "navigation"
 
@@ -1158,6 +1169,7 @@ style slot_button_text:
 define persistent.room_animation = True
 
 screen preferences():
+    $ config.mouse = None
 
     tag menu
 
@@ -1430,6 +1442,7 @@ style slider_vbox:
 ## https://www.renpy.org/doc/html/history.html
 
 screen history():
+    $ config.mouse = None
 
     tag menu
 
@@ -1443,7 +1456,7 @@ screen history():
         for h in _history_list:
 
             window:
-
+                
                 ## This lays things out properly if history_height is None.
                 has fixed:
                     yfit True
@@ -1462,7 +1475,6 @@ screen history():
 
         if not _history_list:
             label _("The dialogue history is empty.")
-
 
 style history_window is empty
 
@@ -1485,9 +1497,17 @@ style history_name:
     ypos gui.history_name_ypos
     xsize gui.history_name_width
 
+    line_overlap_split 8
+    line_spacing 8
+    line_leading 8
+
 style history_name_text:
     min_width gui.history_name_width
     text_align gui.history_name_xalign
+
+    line_overlap_split 8
+    line_spacing 8
+    line_leading 8
 
 style history_text:
     xpos gui.history_text_xpos
@@ -1495,14 +1515,27 @@ style history_text:
     xanchor gui.history_text_xalign
     xsize gui.history_text_width
     min_width gui.history_text_width
+
     text_align gui.history_text_xalign
     layout ("subtitle" if gui.history_text_xalign else "tex")
+
+    line_overlap_split 8
+    line_spacing 8
+    line_leading 8
 
 style history_label:
     xfill True
 
+    line_overlap_split 8
+    line_spacing 8
+    line_leading 8
+
 style history_label_text:
     xalign 0.5
+
+    line_overlap_split 8
+    line_spacing 8
+    line_leading 8
 
 ## Confirm screen ##############################################################
 ##
