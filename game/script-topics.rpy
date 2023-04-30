@@ -1208,7 +1208,7 @@ label talk_weather_setup_manual_coords:
             "No, that's not right at all.":
                 n 1tnmem "What?{w=0.2} Really?!"
                 n 3fcsem "Ugh..."
-                n 4fcsaj "Let's...{0.5} try again,{w=0.1} alright?{w=1}{nw}"
+                n 4fcsaj "Let's...{w=0.5} try again,{w=0.1} alright?{w=1}{nw}"
                 extend 2fnmpo " I really wanna get this working!"
 
                 jump talk_weather_setup_manual_coords
