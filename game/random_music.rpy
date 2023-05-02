@@ -56,12 +56,15 @@ init python in jn_random_music:
         )
 
 label random_music_change:
+    if not jn_random_music.getRandomMusicPlayable():
+        return
+
     $ available_custom_music = jn_utils.getAllDirectoryFiles(
         path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
         extension_list=jn_custom_music._VALID_FILE_EXTENSIONS
     )
 
-    if not jn_random_music.getRandomMusicPlayable() or len(available_custom_music) < 2:
+    if len(available_custom_music) < 2:
         return
 
     $ track_quip = random.choice(jn_random_music._NEW_TRACK_QUIPS)
