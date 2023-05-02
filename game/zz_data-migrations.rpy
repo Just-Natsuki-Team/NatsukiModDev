@@ -305,15 +305,25 @@ init python in jn_data_migrations:
     def to_1_2_0():
         jn_utils.log("Migration to 1.2.0 START")
         store.persistent._jn_version = "1.2.0"
-        if store.persistent.affinity >= 7500:
-            store.persistent._jn_pic_aff = store.persistent.affinity
-            store.persistent.affinity = 0
-            store.persistent._jn_pic = True
-            jn_utils.log("434346".decode("hex"))
 
         if store.persistent._jn_player_birthday_day_month is not None:
             store.persistent._jn_natsuki_birthday_known = True
 
         jn_utils.save_game()
         jn_utils.log("Migration to 1.2.0 DONE")
+        return
+
+    @migration(["1.2.0"], "1.2.1", runtime=MigrationRuntimes.INIT)
+    def to_1_2_1():
+        jn_utils.log("Migration to 1.2.1 START")
+        store.persistent._jn_version = "1.2.0"
+
+        if store.persistent.affinity >= 7500:
+            store.persistent._jn_pic_aff = store.persistent.affinity
+            store.persistent.affinity = 0
+            store.persistent._jn_pic = True
+            jn_utils.log("434346".decode("hex"))
+
+        jn_utils.save_game()
+        jn_utils.log("Migration to 1.2.1 DONE")
         return
