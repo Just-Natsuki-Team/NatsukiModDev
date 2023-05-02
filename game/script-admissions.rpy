@@ -802,7 +802,7 @@ label admission_insecure:
         n 3fcsbgsbr "Besides..."
         n 3fsrcs "When someone like {i}me{/i} has your back?"
         n 4fcsbgledz "I daresay you've got nothing to worry about!{w=0.75}"
-        extend 1nchgnl "Ehehe."
+        extend 1nchgnl " Ehehe."
 
         if Natsuki.isLove(higher=True):
             n 1fchsmleaf "Love you,{w=0.2} [player]~!"
