@@ -168,7 +168,7 @@ label admission_anxious:
         extend 4unmaj " But don't feel like you have to do whatever I find helps -{w=0.5}{nw}"
         extend 3fchbgsbr " you should totally do whatever {i}you{/i} usually find comforting!"
         n 3unmbo "You don't have to push the boat out or anything:{w=0.5}{nw}"
-        extend 4ullfl " a favourite game,{w=0.5}{nw}"
+        extend 4ullfl " a favorite game,{w=0.5}{nw}"
         extend 2nsrsm " some dumb old manga series...{w=1}{nw}"
         extend 2fchbg " whatever keeps that noggin of yours busy!"
         n 4fsqcs "...And if nothing else comes to mind?"

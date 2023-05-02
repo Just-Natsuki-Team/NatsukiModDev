@@ -1338,7 +1338,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_NORMAL
     )
 label talk_favourite_season:
-    n 1unmbo "Huh?{w=0.2} My favourite season?"
+    n 1unmbo "Huh?{w=0.2} My favorite season?"
 
     # Player hasn't given their favourite season before
     if not persistent.jn_player_favourite_season:
