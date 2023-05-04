@@ -503,7 +503,7 @@ label idle_vibing_headphones:
         hide prop
         $ player_initial = jn_utils.getPlayerInitial()
         n 4fbkwrl "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
-        extend 4fnmemlsbr " How long have you just been {i}sat there{/i}?!{w=1.25}{nw}"
+        extend 4fnmemlsbr " How long have you just been {i}sitting there{/i}?!{w=1.25}{nw}"
         extend 2fslfllsbr " Jeez..."
         n 2fcsposbr "At {i}least{/i} let me put these on charge first..."
 
