@@ -295,7 +295,7 @@ init -1 python in jn_outfits:
                 - eyewear - JNEyewear associated with this outfit. Optional.
                 - headgear - JNHeadgear associated with this outfit. Optional.
                 - necklace - JNNecklace associated with this outfit. Optional.
-                - facewear - JNFacialwear associated with this outfit. Optional.
+                - facewear - JNFacewear associated with this outfit. Optional.
                 - back - JNBack associated with this outfit. Optional.
             """
             # Clothes are required
