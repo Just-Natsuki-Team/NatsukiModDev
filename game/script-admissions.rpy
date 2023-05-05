@@ -828,7 +828,7 @@ label admission_insecure:
         extend 2fsqbol " and listen good."
         n 2fcseml "I don't care if you think people don't like you.{w=0.75}{nw}" 
         extend 2fnmbolsbr " {i}I{/i} like you."
-        n 4flrfll "I don't care if think you have no talents.{w=0.75}{nw}" 
+        n 4flrfll "I don't care if people think you have no talents.{w=0.75}{nw}" 
         extend 1fcscalesi " {i}I{/i} know you do."
         n 1fcstrl "I don't care if people think you're falling behind.{w=0.75}{nw}" 
         extend 2fnmsll " {i}I{/i} know you'll catch up."
