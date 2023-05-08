@@ -1678,7 +1678,7 @@ label farewell_pleading_ask:
     n 2fcsunl "..."
     n 2fcspulesi "..."
     n 1fnmcal "[player]..."
-    n 1fcsemfsbr "I...{w=0.75}{nw} " 
+    n 1fcsemfsbr "I...{w=0.75}{nw}" 
     extend 2fcsunfesssbr " really...{w=1}{nw}" 
     extend 2kslunfesssbr " want you here right now."
 
