@@ -323,9 +323,9 @@ label snap_intro:
     extend 1fcsbg " Let's play some Snap!"
 
     if not persistent.jn_snap_explanation_given:
-        n 1nnmaj "Oh -{w=0.1} before we start,{w=0.1} did you want an explanation?{w=0.5}{nw}" 
-        extend 4tllca "You know,{w=0.1} on how it works?"
-        n 1nchsm "It's a super simple game,{w=0.1} but I thought I'd better ask."
+        n 1nnmaj "Oh -{w=0.3} before we start,{w=0.2} did you want an explanation?{w=0.5}{nw}" 
+        extend 4tllca " You know,{w=0.2} on how it works?"
+        n 1nchsm "It's a super simple game,{w=0.2} but I thought I'd better ask."
         n 3fcsbg "I don't wanna win just because you didn't know what you were doing!"
         n 1usqfs "So...{w=1}{nw}"
         extend 3fchss " How about it?"
@@ -337,7 +337,7 @@ label snap_intro:
             "Yes please!":
                 jump snap_explanation
 
-            "No,{w=0.1} I'm ready.":
+            "No, I'm ready.":
                 n 1fsqbg "Oh?{w=0.2} You're ready,{w=0.1} huh?"
                 n 3tsqdv "Ready to get your butt kicked!{w=0.75}{nw}" 
                 extend 3fchbs " Let's go,{w=0.1} [player]!"
@@ -367,16 +367,18 @@ label snap_explanation:
     n 4uwdaj "Oh,{w=0.1} right -{w=0.5}{nw}"
     extend 1nnmsm " you also lose if you run out of cards to play,{w=0.1} so you should keep that in mind too."
     n 4tsqss "So...{w=0.3} how about it,{w=0.1} [player]?{w=0.2} You got all that?"
+
     menu:
         n "Do the rules all make sense to you?"
-        "Could you go over them again,{w=0.1} please?":
-            n 1unmaj "Huh?{w=0.2} Well,{w=0.1} okay..."
+
+        "Could you go over them again, please?":
+            n 1unmaj "Huh?{w=0.2} Well,{w=0.2} okay..."
             jump snap_explanation
 
-        "Got it.{w=0.2} Let's play!":
+        "Got it. Let's play!":
             n 1uchbg "That's what I'm talking about!{w=0.2} Some fighting spirit!"
-            n 2flldv "I should warn you though,{w=0.1} [player]..."
-            n 2fchbs "I'm not gonna hold back!{w=0.2} Let's do this!"
+            n 2flldv "I should warn you though,{w=0.2} [player]..."
+            n 2fchbs "I'm not gonna hold back!{w=0.5} Let's do this!"
             $ persistent.jn_snap_explanation_given = True
             jump snap_start
 
@@ -689,6 +691,7 @@ label snap_end:
         n 2fcsan "Uuuuuu-!"
         n 4fcsgsl "I-{w=0.2}I demand a rematch!{w=0.75}{nw}" 
         extend 3fcspol " I'm not going down like this!"
+
         show natsuki 3fcsgsl
         $ play_again_prompt = "We're playing again!"
 
@@ -696,11 +699,13 @@ label snap_end:
         n 4fnmaj "Come on,{w=0.2} [player]!{w=0.75}{nw}"
         extend 3fcsbs " That {i}can't{/i} be all you've got!"
         n 3fchbs "Rematch!{w=0.3} Rematch!"
+
         show natsuki 3fchbg
         $ play_again_prompt = "Again!"
 
     else:
         n 3nsqsm "So..."
+
         show natsuki 3fchbg
 
     menu:
@@ -708,6 +713,7 @@ label snap_end:
 
         "You're on!":
             n 3fcsbg "You bet you are,{w=0.2} [player]!"
+
             $ jn_snap._natsuki_skill_level += 1
             jump snap_start
 
@@ -721,16 +727,18 @@ label snap_end:
             if jn_snap._player_win_streak >= 3:
                 extend 4fchsm " And thanks for playing."
                 n 2csrpo "...Even if you did kick my butt."
+                show natsuki 2nsrpo
 
             elif jn_snap._natsuki_win_streak >= 3:
                 extend 4fchsm " And thanks for playing."
                 n 3fsqcs "...Just bring more fight with you next time."
                 extend 3fcssm " Ahaha."
+                show natsuki 1fcssm
 
             else:
                 extend 3fchsm " Thanks for playing~!"
+                show natsuki 1fcssm
 
-            show natsuki 1fcssm
             play audio drawer
             with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
 
@@ -754,7 +762,7 @@ label snap_forfeit:
         "Yes, I give up.":
             n 2ccscaesm "..."
             n 2nllsl "Well,{w=0.2} I guess that's fine.{w=0.75}{nw}"
-            extend 2fcsbg " I'm taking that as a win for me!"
+            extend 2fcsbg " But I'm taking that as a win for me!"
 
             # Hit the streaks
             $ jn_snap._player_win_streak = 0
