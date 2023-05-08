@@ -70,3 +70,6 @@ default persistent._jn_notify_activity = True
 
 # RPY warning
 default persistent._jn_scw = True
+
+# This determines if Natsuki should warn the player whenever she runs out of unlocked things to say
+default persistent._jn_natsuki_out_of_topics_remind = True

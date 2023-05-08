@@ -455,7 +455,11 @@ init python:
                 Natsuki.calculatedAffinityGain()
                 queue(random.choice(topic_pool).label)
 
-            elif not store.persistent.jn_natsuki_repeat_topics and not store.persistent._jn_out_of_topics_warning_given:
+            elif (
+                not store.persistent.jn_natsuki_repeat_topics 
+                and not store.persistent._jn_out_of_topics_warning_given
+                and persistent._jn_natsuki_out_of_topics_remind
+            ):
                 # Out of random topics
                 queue("talk_out_of_topics")
 
