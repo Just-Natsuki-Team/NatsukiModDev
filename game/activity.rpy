@@ -71,6 +71,7 @@ init python in jn_activity:
         just_yuri = 20
         forever_and_ever = 21
         video_applications = 22
+        e_commerce = 23
 
         def __int__(self):
             return self.value
@@ -176,7 +177,7 @@ init python in jn_activity:
     ))
     ACTIVITY_MANAGER.registerActivity(JNPlayerActivity(
         activity_type=JNActivities.coding,
-        window_name_regex="(- visual studio|- notepad/+/+|- atom|- brackets|vim|eclipse|^github desktop$|^sourcetree$)",
+        window_name_regex="(- visual studio|- notepad/+/+|- atom|- brackets|vim|eclipse|^github desktop$|^sourcetree$|- scratch)",
         notify_text=[
             "You're seriously such a nerd, [player].",
             "You forgot a semicolon! [tease_emote]",
@@ -215,7 +216,7 @@ init python in jn_activity:
     ))
     ACTIVITY_MANAGER.registerActivity(JNPlayerActivity(
         activity_type=JNActivities.gaming,
-        window_name_regex="(^steam$|^origin$|^battle.net$)",
+        window_name_regex="(^steam$|^origin$|^battle.net$|- itch.io$)",
         notify_text=[
             "You better not be spending all day on that! [angry_emote]",
             "Just... remember to take breaks, alright? [sad_emote]",
@@ -250,7 +251,7 @@ init python in jn_activity:
     ))
     ACTIVITY_MANAGER.registerActivity(JNPlayerActivity(
         activity_type=JNActivities.artwork,
-        window_name_regex="(clip studio paint|photoshop|krita|gimp|paint.net|paint tool sai|medibang)",
+        window_name_regex="(clip studio paint|photoshop|krita|gimp|paint.net|paint tool sai|medibang|- paint)",
         notify_text=[
             "Draw for me, [player]! Ehehe.",
             "I was never any good at artwork... [sad_emote]",
@@ -391,6 +392,17 @@ init python in jn_activity:
             "What're you watching, [player]? [confused_emote]",
             "You watching something, [player]? [confused_emote]",
             "Oh hey! Any funny video clips? [tease_emote]",
+        ]
+    ))
+    ACTIVITY_MANAGER.registerActivity(JNPlayerActivity(
+        activity_type=JNActivities.e_commerce,
+        window_name_regex="(^amazon.[A-Za-z]{2,6}|\| ebay)",
+        notify_text=[
+            "Just... don't go overboard. [angry_emote]",
+            "Shopping, huh? [tease_emote]",
+            "Run out of something again? Ehehe.",
+            "Oh? You gotta grab something? [confused_emote]",
+            "Money to burn, huh?"
         ]
     ))
 
