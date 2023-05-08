@@ -385,14 +385,18 @@ init python in jn_poems:
     ))
 
 label show_poem(poem):
+    $ pre_click_afm = preferences.afm_enable
+    $ preferences.afm_enable = False
+
     play audio page_turn
-    show screen poem_view(poem)
+    show screen poem_view(poem, pre_click_afm)
     with Dissolve(1)
     $ renpy.pause(hard=True)
     $ renpy.pause(2)
+
     return
 
-screen poem_view(poem):
+screen poem_view(poem, pre_click_afm):
     vbox:
         xalign 0.5
         add "paper [poem.paper]"
@@ -428,6 +432,11 @@ screen poem_view(poem):
                 Hide(
                     screen="poem_view",
                     transition=Dissolve(1)
+                ),
+                SetField(
+                    object=preferences,
+                    field="afm_enable",
+                    value=pre_click_afm
                 ),
                 Return()
             ]
