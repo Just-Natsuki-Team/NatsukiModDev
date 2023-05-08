@@ -464,7 +464,7 @@ init -1 python in jn_outfits:
             if self.necklace and isinstance(self.necklace, JNNecklace):
                 outfit_dict["necklace"] = self.necklace.reference_name
 
-            if self.facewear and isinstance(self.necklace, JNFacewear):
+            if self.facewear and isinstance(self.facewear, JNFacewear):
                 outfit_dict["facewear"] = self.facewear.reference_name
 
             if self.back and isinstance(self.back, JNBack):
