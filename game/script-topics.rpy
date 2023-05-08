@@ -4937,25 +4937,41 @@ label talk_play_snap:
             $ persistent.jn_snap_player_is_cheater = False
 
         else:
-            n 2fnmem "[player]...{w=0.3} if you aren't even sorry you cheated,{w=0.1} why should I play with you again?"
-            n 4kllpo "Come on...{w=0.3} it's not hard to apologize,{w=0.1} is it?"
+            n 1ccsem "[player]..." 
+            n 2cllfl "If you aren't even sorry you cheated,{w=0.5}{nw}" 
+            extend 2csqfl " why {i}should{/i} I play with you again?"
+            n 4fcssl "Come on...{w=1}{nw}" 
+            extend 2csrca " it's not hard to apologize,{w=0.75}{nw}" 
+            extend 2csqca " is it?"
+
             return
 
     if Natsuki.isLove(higher=True):
-        n 3uchbg "Of course I do,{w=0.1} dummy!{w=0.2} Ehehe."
+        $ chosen_tease = jn_utils.getRandomTease()
+        n 3fchbg "Of course I do,{w=0.2} [chosen_tease]!{w=0.5}{nw}"
+        extend 3fchsmeme " Ehehe."
 
     elif Natsuki.isEnamored(higher=True):
-        n 4fchbg "Of course I'll play some with you,{w=0.1} dummy!"
+        n 4unmss "Snap?{w=0.75}{nw}"
+        extend 4fchbg " Sure thing,{w=0.2} [player]!"
 
     elif Natsuki.isAffectionate(higher=True):
-        n 1fchsm "Well,{w=0.1} duh!{w=0.2} Of course I'm up for a game!"
+        n 1fcsbg "Well,{w=0.2} duh!{w=0.75}" 
+        extend 2fchbg " Say no more,{w=0.2} [player]!"
 
     else:
-        n 1nnmss "You wanna play Snap?{w=0.2} Sure!"
+        n 1unmaj "You wanna play Snap?{w=0.75}{nw}" 
+        extend 4fchsm " Sure!"
 
-    n 1unmsm "Let me just get the cards out real quick,{w=0.1} alright?"
+    n 4fcsss "Let me just get the cards out real quick..."
+
+    show natsuki 4fcssm
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(1.5)
     play audio drawer
-    with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+    show natsuki 4fchsm
+    hide black with Dissolve(1)
+
     jump snap_intro
 
 # Natsuki goes over the rules of snap again, for if the player has already heard the explanation pre-game

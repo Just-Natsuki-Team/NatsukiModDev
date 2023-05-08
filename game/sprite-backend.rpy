@@ -950,6 +950,56 @@ image natsuki whistling:
             pause 4
     repeat
 
+image natsuki snap:
+    block:
+        choice:
+            "natsuki 4csqsm"
+            pause 4
+            "natsuki 4ccssm"
+            pause 0.1
+            "natsuki 4csqsm"
+            pause 4
+            "natsuki 4ccssm"
+            pause 0.1
+        choice:
+            "natsuki 4fsqsm"
+            pause 4
+            "natsuki 4fcssm"
+            pause 0.1
+            "natsuki 4fsqsm"
+            pause 4
+            "natsuki 4fcssm"
+            pause 0.1
+        choice:
+            "natsuki 1flrss"
+            pause 4
+            "natsuki 1fcsss"
+            pause 0.1
+            "natsuki 1flrss"
+            pause 4
+            "natsuki 1fcsss"
+            pause 0.1
+        choice:
+            "natsuki 1flrpu"
+            pause 4
+            "natsuki 1fcspu"
+            pause 0.1
+            "natsuki 1flrpu"
+            pause 4
+            "natsuki 1fcspu"
+            pause 0.1
+        choice:
+            "natsuki 4flrpu"
+            pause 4
+            "natsuki 4fcspu"
+            pause 0.1
+            "natsuki 4flrpu"
+            pause 4
+            "natsuki 4fcspu"
+            pause 0.1
+
+    repeat
+
 # This selects which idle image to show based on current affinity state
 image natsuki idle = ConditionSwitch(
     "Natsuki.isEnamored(higher=True)", "natsuki idle enamored",
