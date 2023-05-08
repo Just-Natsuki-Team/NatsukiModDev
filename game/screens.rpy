@@ -224,7 +224,7 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                         null height 20
 
                         for _topic in menu_items.get(selected_category):
-                            $ display_text = _topic.prompt if (_topic.shown_count > 0 or _topic.nat_says) else "{i}[_topic.prompt]{/i}"
+                            $ display_text = _topic.prompt if (_topic.shown_count > 0 or _topic.nat_says) else "{i}[_topic.prompt]{/i} *"
                             #NOTE: This should be preprocessed such that Topics without prompts aren't passed into this menu
                             textbutton display_text:
                                 style "categorized_menu_button"
