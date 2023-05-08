@@ -216,7 +216,7 @@ init python in jn_activity:
     ))
     ACTIVITY_MANAGER.registerActivity(JNPlayerActivity(
         activity_type=JNActivities.gaming,
-        window_name_regex="(^steam$|^origin$|^battle.net$|- itch.io$)",
+        window_name_regex="(^steam$|^origin$|^battle.net$|- itch.io)",
         notify_text=[
             "You better not be spending all day on that! [angry_emote]",
             "Just... remember to take breaks, alright? [sad_emote]",
