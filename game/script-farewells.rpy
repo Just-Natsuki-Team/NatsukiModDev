@@ -419,7 +419,7 @@ label farewell_option_work:
 
         n 2nlrpo "It sucks that you've gotta work,{w=0.1} but I get it.{w=0.5}{nw}" 
         extend 2nsrpo " I guess."
-        n 4fnmpo "...You better come finish when you visit though."
+        n 4fnmpo "...You better come vist when you finish though."
         n 4fsqsm "Ehehe."
         n 3fchbg "Take it easy,{w=0.1} [player]!{w=0.2} Don't let anyone push you around!"
 
