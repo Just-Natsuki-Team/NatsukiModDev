@@ -97,13 +97,24 @@ label talk_out_of_topics:
         extend 1unmbo " I guess I {i}could{/i} just tell you about whatever comes to mind."
         n 1nchbg "So...{w=0.3} how about it?"
 
+        show natsuki 2nsrsssbl
         menu:
-            n "Do you mind if I repeat some stuff?"
+            n "Do you mind if I repeat some stuff,{w=0.2} or...?"
 
             "Sure, I don't mind listening.":
                 $ persistent.jn_natsuki_repeat_topics = True
+
                 n 4uchgn "Okaaay!{w=0.5}{nw}"
-                extend 1tcsaj " Now,{w=0.1} let me think..."
+                extend 1tcsaj " Now,{w=0.2} let me think..."
+
+            "I don't mind listening, but don't remind me next time.":
+                $ persistent.jn_natsuki_repeat_topics = True
+                $ persistent._jn_natsuki_out_of_topics_remind = False
+
+                n 2tnmboeqm "Huh?{w=0.75}{nw}"
+                extend 2unmfl " Oh.{w=0.75}{nw}"
+                extend 2nslsssbl " Right.{w=0.5} Sure."
+                n 2cslsl "Now,{w=0.2} let me think..."
 
             "I'd rather wait.":
                 n 2tllaj "Well...{w=0.5}{nw}"
@@ -114,7 +125,20 @@ label talk_out_of_topics:
                     extend 4klrssl " 'kay?"
 
                 else:
-                    n 1flrpol "J-{w=0.1}just don't make the silence all awkward,{w=0.1} got it?!"
+                    n 1flrpol "J-{w=0.2}just don't make the silence all awkward,{w=0.2} got it?!"
+
+            "I'd rather wait, but don't remind me next time.":
+                $ persistent._jn_natsuki_out_of_topics_remind = False
+                
+                n 2tsqpueqm "Huh?{w=0.75}{nw}"
+                extend 2unmfl " Oh.{w=0.75}{nw}"
+                extend 2csrsssbl " Heh."
+                n 2clrsl "Well...{w=1}{nw}"
+                extend 2tnmca " if you're sure,{w=0.2} [player]."
+
+                if Natsuki.isAffectionate(higher=True):
+                    n 4cllss "I'll...{w=1}{nw}"
+                    extend 1cslbosbr " try to think of something soon."
 
     elif Natsuki.isDistressed(higher=True):
         n 1nllsf "..."
