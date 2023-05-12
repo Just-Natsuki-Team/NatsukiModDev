@@ -355,6 +355,14 @@ init python in jn_jokes:
         label="joke_sundae_school",
         joke_category=JNJokeCategories.funny
     ))
+    __registerJoke(JNJoke(
+        label="joke_burned_tongue",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_pointless_pencil",
+        joke_category=JNJokeCategories.funny
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -776,4 +784,28 @@ label joke_sundae_school:
     n 1nslss "It was the...{w=1}{nw}"
     extend 1fsqcs " {i}sundae{/i}{w=0.75} school."
     
+    return
+
+label joke_burned_tongue:
+    n 1fnmfl "Do you know these people always trying to gatekeep simply {i}everything{/i}?{w=0.3}{nw}"
+    extend 1fsran " It really grinds my gears!"
+    n 1fcsbo "But...{w=0.5}{nw}"
+    extend 1ncsaj " I guess it's fine."
+    #TO DO add manually font for 'é'
+    n 1nllpu "I saw one of these hipsters in a café lately.{w=0.3}{nw}"
+    extend 1unmaj " They burned their tongue.{w=0.3}{nw}"
+    extend 1tnmss " Wondering why?{w=0.3}"
+    n 1flrss "Because they drank their coffee{w=1}"
+    extend 1fchgn " {i}before it was cool{/i}."
+
+    return
+
+label joke_pointless_pencil:
+    n 1fllfl "Man...{w=0.5}"
+    n 1fcsem "When I was working on my last poem,{w=0.2} my pencil just decided to break!{w=0.5}{nw}"
+    extend 1fslpo " Great."
+    n 1cllaj "I was planning to tell a joke about it...{w=0.5}"
+    n 1tnmbo "But now?{w=0.3}{nw}"
+    extend 1fsqsm " It's {i}pointless{/i}."
+
     return
