@@ -792,7 +792,7 @@ label joke_burned_tongue:
     n 1fcsbo "But...{w=0.5}{nw}"
     extend 1ncsaj " I guess it's fine."
     #TO DO add manually font for 'é'
-    n 1nllpu "I saw one of these hipsters in a café lately.{w=0.3}{nw}"
+    n 1nllpu "I saw one of these hipsters in a cafe lately.{w=0.3}{nw}"
     extend 1unmaj " They burned their tongue.{w=0.3}{nw}"
     extend 1tnmss " Wondering why?{w=0.3}"
     n 1flrss "Because they drank their coffee{w=1}"
