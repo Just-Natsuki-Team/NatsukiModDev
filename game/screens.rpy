@@ -224,7 +224,8 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                         null height 20
 
                         for _topic in menu_items.get(selected_category):
-                            $ display_text = _topic.prompt if (_topic.shown_count > 0 or _topic.nat_says) else "{i}[_topic.prompt]{/i} *"
+                            $ display_text = _topic.prompt if (_topic.shown_count > 0 or _topic.nat_says) else "{i}[_topic.prompt]{/i}"
+
                             #NOTE: This should be preprocessed such that Topics without prompts aren't passed into this menu
                             textbutton display_text:
                                 style "categorized_menu_button"
@@ -232,6 +233,9 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                                 action [ Return(_topic.label), Function(prev_adjustment.change, 0), SetVariable("selected_category", None) ]
                                 hover_sound gui.hover_sound
                                 activate_sound gui.activate_sound
+                                
+                                if _topic.shown_count == 0 and not _topic.nat_says:
+                                    idle_background Frame("mod_assets/buttons/choice_hover_blank_star.png", gui.frame_hover_borders, tile=gui.frame_tile)
 
                             null height 5
 
