@@ -343,6 +343,10 @@ init python in jn_jokes:
         label="joke_cheesy_pizza",
         joke_category=JNJokeCategories.bad
     ))
+    __registerJoke(JNJoke(
+        label="joke_veggie_mood",
+        joke_category=JNJokeCategories.neutral
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -733,5 +737,16 @@ label joke_cheesy_pizza:
     extend 1fcsem " ugh."
     n 1fslsl "Yeah.{w=0.3} There's no way I'm sharing something...{w=1}{nw}"
     extend 1nsqpo " {i}that cheesy{/i}."
+    
+    return
+
+label joke_veggie_mood:
+    n 1nslsssbl "...I've found a joke reminding me of Monika."
+    n 1ccsajsbl "E-{w=0.2}ehm..."
+    n 1tnmaj "You've got {i}any{/i} idea when vegetarians experience mood swings?{w=0.75}"
+    n 1nllss "Well...{0.5}{nw}"
+    extend 1nslss " I do."
+    n 1nlraj "Obviosuly,{w=0.2} when they are out of their...{w}{nw}"
+    extend 1nwlbg " {i}gourd{/i}."
     
     return
