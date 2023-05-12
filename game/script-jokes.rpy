@@ -347,6 +347,14 @@ init python in jn_jokes:
         label="joke_veggie_mood",
         joke_category=JNJokeCategories.neutral
     ))
+    __registerJoke(JNJoke(
+        label="joke_scarecrow_award",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_sundae_school",
+        joke_category=JNJokeCategories.funny
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -748,5 +756,24 @@ label joke_veggie_mood:
     extend 1nslss " I do."
     n 1nlraj "Obviosuly,{w=0.2} when they are out of their...{w}{nw}"
     extend 1nwlbg " {i}gourd{/i}."
+    
+    return
+
+label joke_scarecrow_award:
+    n 1fsqfl "...Why did the scarecrow get an award?"
+    n 1ftlemesi "..."
+    n 1fcsbo "Because...{w=1}"
+    n 1fsqbo "Because it was outstanding in its field."
+    
+    return
+
+label joke_sundae_school:
+    n 1nslss "Heh...{w=0.5}"
+    n 1tnmbo "You know, I did some thinking about schools and stuff."
+    n 1nlraj "There were many schools I could've attended.{w=0.5}{nw}"
+    extend 1uwdaj " One even teached how to make ice cream!"
+    n 1tnmss "Oh?{w=0.3} You wonder which one would do that?{w=0.3}"
+    n 1nslss "It was the...{w=1}{nw}"
+    extend 1fsqcs " {i}sundae{/i}{w=0.75} school."
     
     return
