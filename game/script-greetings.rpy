@@ -874,6 +874,26 @@ label greeting_love_plus_dull_moment:
 
     return
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_love_plus_cant_get_enough",
+            unlocked=True,
+            affinity_range=(jn_affinity.LOVE, None)
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_love_plus_cant_get_enough:
+    n 4ccsbg "Well,{w=0.2} well,{w=0.2} well.{w=0.75}{nw}"
+    extend 3fsqbg " And just look who decided to show up today.{w=0.75}{nw}"
+    extend 3fsqsm " Ehehe."
+    n 1fcsbgl "Well,{w=0.2} what can I say?{w=0.75}{nw}"
+    extend 2fchgnl " Guess you really {i}can't{/i} get enough of me,{w=0.2} huh?"
+    
+    return
+
 # AFFECTIONATE/ENAMORED greetings
 
 init 5 python:
@@ -971,6 +991,27 @@ label greeting_affectionate_enamored_everything_is_fine:
     n 2fsqpol "You kept me waiting {i}again{/i},{w=0.2} you know..."
     n 2fcsbgl "But...{w=0.5} at least my patience paid off.{w=0.75}{nw}"
     extend 2fcssmleme " Ehehe."
+
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_affectionate_enamored_not_surprised",
+            unlocked=True,
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED)
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_affectionate_enamored_not_surprised:
+    n 2tsqaj "Oh?{w=0.75}{nw}"
+    extend 2csqbg " You're back again,{w=0.2} [player]?{w=0.75}{nw}"
+    extend 2fsqsm " Ehehe."
+    n 4ullfl "Well...{w=0.75}{nw}"
+    extend 4cllss " not like I can say I'm surprised or anything."
+    n 3fchgnl "As if you could {i}possibly{/i} resist,{w=0.2} am I right?"
 
     return
 
@@ -1117,6 +1158,26 @@ label greeting_normal_happy_wake_up_nat:
 
     return
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_normal_oh_whats_up",
+            unlocked=True,
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_normal_oh_whats_up:
+    n 2tlrsl "..."
+    n 2tnmpueqm "...Huh?{w=0.5}{nw}"
+    extend 4unmfllesu " Oh!{w=0.75}{nw}"
+    extend 4cllsslsbr " [player]!"
+    n 2cchsssbr "W-{w=0.2}what's up?"
+
+    return
+
 # DISTRESSED/UPSET greetings
 
 init 5 python:
@@ -1206,6 +1267,27 @@ label greeting_distressed_upset_oh_you_came_back:
 
     return
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_distressed_upset_oh_great",
+            unlocked=True,
+            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET)
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_distressed_upset_oh_great:
+    n 1cslsl "..."
+    n 1csqboeqm "...?"
+    n 2clrfl "Oh.{w=0.75}{nw}"
+    extend 2clrem " Great."
+    n 4csqem "It's{w=0.25}{nw}" 
+    extend 4fsqsl " {i}you{/i}."
+
+    return
+
 # BROKEN- greetings
 
 init 5 python:
@@ -1290,6 +1372,24 @@ init 5 python:
 label greeting_broken_minus_leave_me_be:
     n 1fcsfultsa "I'm so {i}sick{/i} of this."
     n 2kcsupltsd "Why can't you just leave me be..."
+
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_broken_minus_just_leave_me_alone",
+            unlocked=True,
+            affinity_range=(None, jn_affinity.BROKEN)
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_broken_minus_just_leave_me_alone:
+    n 1fsqunltsbeqm "...?{w=0.75}{nw}"
+    n 4fcsupltsa "Oh,{w=0.2} for-!"
+    n 4cslupltsb "Why can't you just leave me alone..."
 
     return
 
