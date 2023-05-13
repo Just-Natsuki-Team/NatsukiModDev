@@ -894,6 +894,29 @@ label greeting_love_plus_cant_get_enough:
     
     return
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_love_plus_show_yourself",
+            unlocked=True,
+            affinity_range=(jn_affinity.LOVE, None)
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_love_plus_show_yourself:
+    n 4fsqss "Oh?{w=0.5}{nw}"
+    extend 4fsqbg " And just what do we have here?"
+    n 2ccsbgl "Finally decided to show yourself after all,{w=0.2} huh?"
+    n 2csqcsl "..."
+    n 1ccsssl "Well,{w=0.5}{nw}" 
+    extend 4fchgnl " not like I've got a problem with that!{w=0.75}{nw}"
+    $ chosen_endearment = jn_utils.getRandomEndearment()
+    extend 3fchsmleaf " Make yourself comfy already,{w=0.2} [chosen_endearment]!"
+
+    return
+
 # AFFECTIONATE/ENAMORED greetings
 
 init 5 python:
@@ -1010,8 +1033,28 @@ label greeting_affectionate_enamored_not_surprised:
     extend 2csqbg " You're back again,{w=0.2} [player]?{w=0.75}{nw}"
     extend 2fsqsm " Ehehe."
     n 4ullfl "Well...{w=0.75}{nw}"
-    extend 4cllss " not like I can say I'm surprised or anything."
+    extend 4cllssl " not like I can say I'm surprised or anything."
     n 3fchgnl "As if you could {i}possibly{/i} resist,{w=0.2} am I right?"
+
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_affectionate_enamored_in_for_some_fun",
+            unlocked=True,
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED)
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_affectionate_enamored_in_for_some_fun:
+    n 1unmbg "[player]!{w=0.75}{nw}"
+    extend 2ccssslsbr " Man...{w=1}{nw}"
+    extend 2fcsbglsbr " it's about time you showed up!"
+    n 4fsqsml "Ehehe.{w=0.75}{nw}"
+    extend 3fchbgleme " Now I {i}know{/i} we're in for some fun!"
 
     return
 
