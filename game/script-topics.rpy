@@ -10588,3 +10588,145 @@ label talk_can_you_draw:
             n 4fnmfultsf "...And I've got plenty drawn about the likes of {b}you{/b}."
 
     return
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_gacha_games",
+            unlocked=True,
+            prompt="Are you into gacha games?",
+            category=["Media", "Games"],
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_gacha_games:
+    n  "Gacha games?{w=0.3}{nw}"
+    extend  " Like the games that are frequently on phones?"
+    n  "Alright,{w=0.2} [player]."
+    n  "I suppose based on your question that you're are a fan,{w=0.3}{nw}"
+    extend  " but I can't quite say the same personally!"
+    n  "I never engaged in any myself...{w=0.2}{nw}"
+    extend  " but I had an online friend who was totally addicted to one based off her favorite anime."
+    n  "She wouldn't shut up about it and she kept talking about it over and over trying to get me into it."
+    n  "Sure,{w=0.3} I liked the manga the show was based off of but..."
+    n  "..."
+
+    if Natsuki.isAffectionate(higher=True):
+        n  "I didn't really have the spare time or access funds to really want to risk getting involved."
+
+    n  "They're known to be rather addictive,{w=0.2} better to not take the chance at all,{w=0.5}{nw}"
+    extend  " you know?"
+
+    n  "Anyway...{w=0.5}{nw}"
+    extend  " I was a little worried about her."
+    extend  " So I decided to do some digging." 
+    n  "Luckily the game my friend played wasn't as predatory as some other ones that I heard about."
+    n  "Her's was...{w=1}{nw}"
+    extend  " more free to play friendly...{w=0.5}{nw}"
+    extend  " or so I read." 
+    n  "There were the usual microtransactions as you'd expect,{w=0.3}{nw}"
+    extend  " cosmetics for characters,{w=0.3}{nw}"
+    extend  " more rolls,{w=0.3}{nw}"
+    extend  " you know the drill."
+    n  "But the game seemed to be held in high regard in various circles for {i}not{/i} being pay to win."
+    n  "So at least my friend could play and experience the game without needing to bust out her wallet"
+    extend  " if she was smart with her resources of course."
+    n  "But...{w=1}"
+    n  "Here's a kicker..."
+    n  "When you don't pay with your money?{w=0.3}"
+    extend  " Yeah,{w=0.2} you will pay with your time."
+
+    n  "My friend would brag sometimes about being able to grind in the game and get away with not spending money on characters."
+    n  "That might sounds good in theory,{w=0.2}{nw}"
+    extend  " until you think about how much time she spent playing!"
+    n  "It was ridiculous!"
+    n  "The time she spent gathering resources to try and summon more characters?"
+    n  "It wasn't proportional {b}at all{/b}!"
+    n  "You could've work in the same amount of time and get more out of it!"
+    n  "I think these type of players are typically called whales?{w=0.5}{nw}"
+    extend  " Whatever!"
+    extend  " Ugh..."
+    n  "I couldn't be bothered grinding {i}forever{/i}"
+    extend  " for some digital dress or whatever..."
+    n  "All that wasted time could've been spend better..."
+
+    if Natsuki.isLove(higher=True):
+        extend  " Like with yours truly for example."
+
+    n  "But I want to point out the main reason as to why I dislike them."
+    n  "They can be very emotionally manipulative,{w=0.5}{nw}"
+    extend  " you know?"
+    n  "Given how they're pretty much gambling."
+    n  "I-{w=0.2}it's just a scam at this point!"
+    n  "I know most games have some kind of guarantee system"
+    extend " to insure you can get the character you want or so..."
+    n  "But not everyone would always have such amount of currency stockpiled for such a rainy day."
+    n  "The game my friend was playing didn't have one of those ensured systems."
+    n  "I remember one time where my friend missing out on a character that came out."
+    n  "She was devastated!"
+    n  "..."
+    n  "She already used all of her in-game currency.{w=0.3}{nw}"
+    extend  "All the grind was useless."
+    n  "so the only other option?{w=0.5}{nw}"
+    extend  " Yep,{w=0.2} spending {i}real{/i} money.{w=0.3}{nw}"
+    extend  " What a {i}great{/i} system!"
+
+    n  "She wasn't well off but she wasn't really poor either."
+    n  "It annoyed the crap out of me!{w=0.3}{nw}"
+    extend  " Seeing someone wasting so much money."
+    n  "I know it was her choice..."
+    n  "But..."
+    n  "She could throw all the money in the world at the game and still not end up with who she wanted."
+    n  "The feeling of having the {i}chance{/i} to get that one character?{w=0.3}{nw}"
+    extend  " That's already enough."
+    n  "You don't need to be a mathematical genius to tell you are not getting closer to your character of choice!"
+    n  "No matter how many times you pulled for it..."
+    n  "In the end my friend got the character she aimed for."
+    extend  " but -{w=0.5} of course -{w=0.5} she spent more money than she would've liked."
+    n "It..."
+    extend  " wasn't too much..."
+    extend  " at least for her."
+    
+    if Natsuki.isEnamored(higher=True):
+        n " But it would've been too much for me."
+
+    n  "She didn't spend any money on the game after that to my knowledge anyway,{w=0.2}{nw}"
+    extend  " unless she did and never told me."
+    n  "..."
+    n  "But I chose to believe her."
+
+    n  "So either playstyle,{w=0.2}{nw} games like this can be consuming one way or another."
+    n  "Pick your poison,{w=0.3}{nw}"
+    extend  " time sink whale or money whale!"
+    n  "..."
+    n  "D-{w=0.2}Don't get me entirely wrong though!"
+    n  "I can see {i}some{/i} of their appeal."
+    n  "The collection aspect is interesting!{w=0.3}{nw}"
+    extend  " Each player would have a unique personal experience based on the characters they get!"
+    n  "Unless they all chase after whoever's really overpowered,{w=0.2} I guess."
+    n  "Of course you can go all out and challenge yourself!"
+    extend  " Trying to make a weak character work."
+    extend  " Which is especially fun,{w=0.2} when you like the character!"
+    n  "And as a new player,{w=0.2} sometimes gameplay can be akin to solving a puzzle and utilizing who's available to progress."
+    
+    n  "I also have heard that while some stories they hold can be lackluster,{w=0.2}{nw}"
+    extend  " some stories seem to be actually very good!"
+    n  "So..."
+    extend  " I suppose if you're looking for one with a good story, you'll need to keep an eye out."
+    n  "Oh...{w=0.5}{nw}"
+    extend  " and it's another way to experience characters besides from their initial source material."
+    n  "More background characters may get a larger role than previous"
+    extend  " or something for example."
+
+    n  "While they aren't for me,{w=0.2} I understand why they're so popular...{w=0.5}{nw}"
+    extend  " their addictive qualities aside."
+    n  "Like with many things,{w=0.3} it's important to practice the art of moderation!"
+
+    if Natsuki.isLove(higher=True): 
+        n  "Although I think you may've lucked out with a super rare Natsuki of your own!"
+        extend  " Love you,{w=0.2} [player]!"
+
+    return
