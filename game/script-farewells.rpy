@@ -1960,20 +1960,27 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._farewell_database,
-            label="natsu_nice_rest_of_the_day_farewell",
+            label="farewell_rest_of_your_day",
             unlocked=True,
-                conditional="store.jn_get_current_hour() >= 18 or store.jn_get_current_hour() <= 0",
+                conditional="store.jn_get_current_hour() >= 16 or store.jn_get_current_hour() <= 19",
+                affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
                 ),
             topic_group=TOPIC_TYPE_FAREWELL
             )
 
-label natsu_nice_rest_of_the_day_farewell:
-    n 2kllajl "Oh, you're heading out, [player]?"
-    n 1ksgssl "That's alright... {w=0.6}{nw}"
-    extend 1nwmssl " Have a nice rest of your day, [player]."
-    if Natsuki.isLove(higher=True):
-        n 3uchbgl "I love you, [chosen_endearment]!"
-        n 2uchbgleaf "I'll catch you later!"
-    else:
-        n 3uchsml "Stay safe!"
+label farewell_rest_of_your_day:
+    n 2kllajl "Oh, you're heading out,{w=0.4} [player]?"
+    n 2nnmssl "That's alright, {w=0.4}{nw}"
+    extend 2fsqfsl " I guess..."
+    if Natsuki.isEnamored(higher=False):
+        n 1unmbgl "Have a nice rest of your day, [player]!"
+        return { "quit": None }
+    if Natsuki.isEnamored(higher=True):
+        $ chosen_tease = jn_utils.getRandomTease()
+        n 3uchbsl "Haha! I'm just messing with you,{w=0.6} [chosen_tease]."
+        n 3nchsml "I'll catch you later,{w=0.3} [player]."
+        if Natsuki.isLove(higher=True):
+            $ chosen_endearment = jn_utils.getRandomEndearment()
+            n 3uchbgleaf "I love you, [chosen_endearment]!"
+    
     return { "quit": None }

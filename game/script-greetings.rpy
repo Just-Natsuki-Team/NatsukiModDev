@@ -1780,20 +1780,26 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="natsu_startle_greeting",
+            label="greeting_startled",
             unlocked=True,
-                affinity_range=(jn_affinity.LOVE, None),
+                affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
                 ),
             topic_group=TOPIC_TYPE_GREETING
             )
 
-label natsu_startle_greeting:
+label greeting_startled:
     n 1kcsunl "..."
     n 1kwmunleqm "...?"
-    n 1kskemleex "A-ah!"
-    n 1kwmssleaf "[player_initial]-{w=0.1}[player]!,{w=1}{nw}"
-    extend 1uchssl " I'm so glad to see you again..."
-    n 2kslajl "Y-you scared me..{w=0.5}{nw}"
-    extend 1kwmajl " It doesn't matter. What would you like to talk about, [chosen_endearment]?"
+    n 1kskemleex "A-{w=0.2}ah!"
+    n 1fsqeml "[player_initial]-{w=0.1}[player]!-{w=0.5}{nw}"
+    extend 2fcsunl " are you {w=0.2}{i}trying{/i} to give me a heart attack?!"
+    n 2ccsemlesi "But... {w=0.3}{nw}"
+    extend 1nnmssl "I'm glad to see you again..."
+
+    if Natsuki.isEnamored(higher=True):
+        n 1kwmssl "I missed you, [player]."
+        if Natsuki.isLove(higher=True):
+            $ chosen_endearment = jn_utils.getRandomEndearment()
+            n 2uchssleaf "And I know that everything will be better now that you're by my side, [chosen_endearment]."
 
     return
