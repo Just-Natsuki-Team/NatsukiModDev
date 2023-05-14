@@ -866,6 +866,32 @@ label farewell_love_wish_you_could_stay_forever:
 
     return { "quit": None }
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_love_that_time_again",
+            unlocked=True,
+            affinity_range=(jn_affinity.LOVE, None)
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
+
+label farewell_love_that_time_again:
+    n 4nslss "Heh.{w=0.75}{nw}"
+    extend 2nllfl " That time again,{w=0.75}{nw}"
+    extend 2tnmbo " huh?"
+    n 1csrsll "..."
+    n 1ccsajlsbr "You should know by now I never look forward to it,{w=0.2} [player].{w=0.75}{nw}"
+    extend 4csrcalsbr " But I guess it's gotta be done at some point."
+    n 3fsqssl "...Doesn't mean you're off the hook for coming back though.{w=0.5}{nw}"
+    extend 3fsqsml " Ehehe."
+    $ chosen_tease = jn_utils.getRandomTease()
+    n 3fcsbgl "Better not keep me waiting,{w=0.2} [chosen_tease]!"
+    n 4fchbgleafsbl "L-{w=0.2}love you!"
+
+    return { "quit": None }
+
 # AFFECTIONATE/ENAMORED farewells
 
 init 5 python:
@@ -1029,6 +1055,31 @@ label farewell_affectionate_enamored_see_me_soon:
 
     return { "quit": None }
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_affectionate_enamored_making_it_up",
+            unlocked=True,
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED)
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
+
+label farewell_affectionate_enamored_making_it_up:
+    n 4kslfl "Man...{w=1}{nw}"
+    extend 4cnmfll " really?{w=0.75}{nw}"
+    extend 4csreml " Come {i}on{/i}..."
+    n 2ccsslesi "..."
+    n 2fcstr "Fine,{w=0.2} fine."
+    n 2fcspo "...But you're {i}totally{/i} making it up to me when you're back.{w=0.75}{nw}"
+    extend 4fchbleme " Sorry~!"
+    $ chosen_tease = jn_utils.getRandomTease()
+    n 3fcsbglsbr "N-{w=0.2}now get out of here already,{w=0.2} [chosen_tease]!"
+    n 3fchbgl "Catch you later!"
+
+    return { "quit": None }
+
 # HAPPY/AFFECTIONATE farewells
 
 init 5 python:
@@ -1113,8 +1164,28 @@ init 5 python:
     )
 
 label farewell_happy_affectionate_see_me_soon:
-    n 1nchbg "Bye,{w=0.1} [player]!"
-    n 4fchsmlsbr "Come see me soon,{w=0.1} alright?"
+    n 1nchbg "Bye,{w=0.2} [player]!"
+    n 4fchsmlsbr "Come see me soon,{w=0.2} alright?"
+
+    return { "quit": None }
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_happy_affectionate_catch_you_later",
+            unlocked=True,
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.AFFECTIONATE)
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
+
+label farewell_happy_affectionate_catch_you_later:
+    n 1tnmboeqm "Huh?{w=0.75}{nw}"
+    extend 2unmaj " You're heading off now?"
+    n 2fcsbg "Gotcha!{w=0.75}{nw}"
+    extend 2fchbgl " Catch you later,{w=0.2} [player]!"
+    n 2csrsllsbl "..."
 
     return { "quit": None }
 
@@ -1200,6 +1271,24 @@ label farewell_normal_happy_see_ya:
 
     return { "quit": None }
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_normal_happy_oh_right",
+            unlocked=True,
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
+
+label farewell_normal_happy_oh_right:
+    n 1tnmfleqm "Huh?{w=0.75}{nw}"
+    extend 1ullbo " Oh,{w=0.2} right."
+    n 1cchsm "Later,{w=0.2} [player]!"
+
+    return { "quit": None }
+
 # UPSET/DISTRESSED farewells
 init 5 python:
     registerTopic(
@@ -1279,6 +1368,23 @@ init 5 python:
 
 label farewell_upset_distressed_see_you_around:
     n 2fsqsf "See you around."
+
+    return { "quit": None }
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_upset_distressed_yeah_bye",
+            unlocked=True,
+            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET)
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
+
+label farewell_upset_distressed_yeah_bye:
+    n 1fslfl "...Yeah.{w=1}{nw}"
+    extend 1fsqsl " {b}Bye{/b}."
 
     return { "quit": None }
 
@@ -1378,6 +1484,23 @@ init 5 python:
 
 label farewell_broken_ruined_good:
     n 4fsqanltse "{i}Good{/i}."
+
+    return { "quit": None }
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_broken_ruined_door_hit_you",
+            unlocked=True,
+            affinity_range=(None, jn_affinity.BROKEN)
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
+
+label farewell_broken_ruined_door_hit_you:
+    n 2fsqemltsb "Hope the door hits you on the way out.{w=0.75}{nw}"
+    extend 2fsranltsb " Jerk."
 
     return { "quit": None }
 
