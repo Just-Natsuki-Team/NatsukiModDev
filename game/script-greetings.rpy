@@ -878,19 +878,23 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_love_plus_cant_get_enough",
+            label="greeting_love_plus_nat_dragged_in",
             unlocked=True,
             affinity_range=(jn_affinity.LOVE, None)
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_love_plus_cant_get_enough:
-    n 4ccsbg "Well,{w=0.2} well,{w=0.2} well.{w=0.75}{nw}"
-    extend 3fsqbg " And just look who decided to show up today.{w=0.75}{nw}"
+label greeting_love_plus_nat_dragged_in:
+    n 4ccsbg "Well,{w=0.2} well,{w=0.2} well..."
+    n 3fnmbg "And just look who the{w=0.5}{nw}"
+    extend 3fsgbg " {i}Nat{/i}{w=0.75}{nw}" 
+    extend 3fsqbg " dragged in.{w=0.75}{nw}"
     extend 3fsqsm " Ehehe."
     n 1fcsbgl "Well,{w=0.2} what can I say?{w=0.75}{nw}"
-    extend 2fchgnl " Guess you really {i}can't{/i} get enough of me,{w=0.2} huh?"
+    extend 2fchgnl " I-{w=0.2}I {i}am{/i} pretty irresistible to you,{w=0.2} after all!"
+    $ chosen_tease = jn_utils.getRandomTease()
+    n 2fchbll "Welcome back,{w=0.2} [chosen_tease]!"
     
     return
 
