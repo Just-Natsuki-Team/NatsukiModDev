@@ -757,41 +757,46 @@ label joke_cheesy_pizza:
     return
 
 label joke_veggie_mood:
-    n 1nslsssbl "...I've found a joke reminding me of Monika."
-    n 1ccsajsbl "E-{w=0.2}ehm..."
-    n 1tnmaj "You've got {i}any{/i} idea when vegetarians experience mood swings?{w=0.75}"
+    n 1nslsssbl "Heh.{w=0.75}"
+    extend 1fcssssbl " Let's see who {i}this{/i} reminds you of, [player]."
+    n 1ccsajsbl "A-{w=0.2}hem!"
+    n 1tnmbo "Do you have {i}any{/i} idea when vegetarians get mood swings?{w=0.75}"
     n 1nllss "Well...{w=0.5}{nw}"
-    extend 1nslss " I do."
-    n 1nlraj "Obviosuly,{w=0.2} when they are out of their...{w}{nw}"
-    extend 1nwlbg " {i}gourd{/i}."
+    extend 1fcssmesm " I do."
+    n 1fcsbg "...When they're out of their {i}gourd{/i},{w=0.5}{nw}"
+    extend 1fchbg " obviously!"
     
     return
 
 label joke_scarecrow_award:
     n 1fsqfl "...Why did the scarecrow get an award?"
-    n 1ftlemesi "..."
+    n 1ncsemesi "..."
     n 1fcsbo "Because...{w=1}"
-    n 1fsqbo "Because it was outstanding in its field."
+    n 1fsqfl " it was {i}outstanding{/i}{w=0.75}{nw}" 
+    extend 1nsrca " in its field."
     
     return
 
 label joke_sundae_school:
-    n 1nslss "Heh...{w=0.5}"
-    n 1tnmbo "You know, I did some thinking about schools and stuff."
-    n 1nlraj "There were many schools I could've attended.{w=0.5}{nw}"
-    extend 1uwdaj " One even teached how to make ice cream!"
-    n 1tnmss "Oh?{w=0.3} You wonder which one would do that?{w=0.3}"
-    n 1nslss "It was the...{w=1}{nw}"
-    extend 1fsqcs " {i}sundae{/i}{w=0.75} school."
+    n 1ullaj "You know...{w=0.75}{nw}"
+    n 1tnmbo "I've been thinking about school a bunch lately."
+    n 1ulraj "I mean,{w=0.5}{nw}"
+    n 1unmfl " there were {i}so{/i} many schools I could've gone to -{w=0.5}{nw}"
+    extend 1fspbg " one even did culinary classes!"
+    n 1fcsan "But the schedule meant going in on a {i}weekend{/i}!{w=0.5}{nw}"
+    extend 1fllwr " Who {i}does{/i} that?!"
+    n 1fcsem "Ugh..."
+    n 1flrfl "Talk about a...{w=1}{nw}"
+    extend 1fsqss " {i}sundae{/i}{w=0.75}{nw}" 
+    extend 1uchgn " school."
     
     return
 
 label joke_burned_tongue:
-    n 1fnmfl "Do you know these people always trying to gatekeep simply {i}everything{/i}?{w=0.3}{nw}"
-    extend 1fsran " It really grinds my gears!"
-    n 1fcsbo "But...{w=0.5}{nw}"
-    extend 1ncsaj " I guess it's fine."
-    n 1nllpu "I saw one of these hipsters in a café lately.{w=0.3}{nw}"
+    n 1ullaj "You know,{w=0.75}{nw}"
+    extend 1tnmbo " I never understood why hipsters hung around coffee shops so much."
+    n 1nsrbo "Like...{w=0.3} what's so fun about sitting around sipping from a cup all day?"
+    n 1nllfl "Only yesterday I saw one of them in a café lately.{w=0.3}{nw}"
     extend 1unmaj " They burned their tongue.{w=0.3}{nw}"
     extend 1tnmss " Wondering why?{w=0.3}"
     n 1flrss "Because they drank their coffee{w=1}"
@@ -800,10 +805,10 @@ label joke_burned_tongue:
     return
 
 label joke_pointless_pencil:
-    n 1fllfl "Man...{w=0.5}"
-    n 1fcsem "When I was working on my last poem,{w=0.2} my pencil just decided to break!{w=0.5}{nw}"
+    n 1fllfl "Man..."
+    n 1fcsem "I was {i}trying{/i} to work on my poetry,{w=0.2} and my pencil just decided to break!{w=0.75}{nw}"
     extend 1fslpo " Great."
-    n 1cllaj "I was planning to tell a joke about it...{w=0.5}"
+    n 1cllaj "I was {i}going{/i} to tell a joke about it...{w=0.5}"
     n 1tnmbo "But now?{w=0.3}{nw}"
     extend 1fsqsm " It's {i}pointless{/i}."
 
