@@ -791,7 +791,6 @@ label joke_burned_tongue:
     extend 1fsran " It really grinds my gears!"
     n 1fcsbo "But...{w=0.5}{nw}"
     extend 1ncsaj " I guess it's fine."
-    #TO DO add manually font for 'é'
     n 1nllpu "I saw one of these hipsters in a café lately.{w=0.3}{nw}"
     extend 1unmaj " They burned their tongue.{w=0.3}{nw}"
     extend 1tnmss " Wondering why?{w=0.3}"
