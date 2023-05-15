@@ -758,9 +758,9 @@ label joke_cheesy_pizza:
 
 label joke_veggie_mood:
     n 1nslsssbl "Heh.{w=0.75}"
-    extend 1fcssssbl " Let's see who {i}this{/i} reminds you of, [player]."
+    extend 1fcssssbl " Let's see who {i}this{/i} reminds you of,{w=0.2} [player]."
     n 1ccsajsbl "A-{w=0.2}hem!"
-    n 1tnmbo "Do you have {i}any{/i} idea when vegetarians get mood swings?{w=0.75}"
+    n 1tnmbo "Do you have {i}any{/i} idea when vegetarians get mood swings?"
     n 1nllss "Well...{w=0.5}{nw}"
     extend 1fcssmesm " I do."
     n 1fcsbg "...When they're out of their {i}gourd{/i},{w=0.5}{nw}"
@@ -771,8 +771,8 @@ label joke_veggie_mood:
 label joke_scarecrow_award:
     n 1fsqfl "...Why did the scarecrow get an award?"
     n 1ncsemesi "..."
-    n 1fcsbo "Because...{w=1}"
-    n 1fsqfl " it was {i}outstanding{/i}{w=0.75}{nw}" 
+    n 1fcsbo "Because..."
+    n 1fsqfl "It was {i}outstanding{/i}{w=0.75}{nw}" 
     extend 1nsrca " in its field."
     
     return
@@ -781,7 +781,7 @@ label joke_sundae_school:
     n 1ullaj "You know...{w=0.75}{nw}"
     n 1tnmbo "I've been thinking about school a bunch lately."
     n 1ulraj "I mean,{w=0.5}{nw}"
-    n 1unmfl " there were {i}so{/i} many schools I could've gone to -{w=0.5}{nw}"
+    extend 1unmfl " there were {i}so{/i} many schools I could've gone to -{w=0.5}{nw}"
     extend 1fspbg " one even did culinary classes!"
     n 1fcsan "But the schedule meant going in on a {i}weekend{/i}!{w=0.5}{nw}"
     extend 1fllwr " Who {i}does{/i} that?!"
@@ -796,10 +796,10 @@ label joke_burned_tongue:
     n 1ullaj "You know,{w=0.75}{nw}"
     extend 1tnmbo " I never understood why hipsters hung around coffee shops so much."
     n 1nsrbo "Like...{w=0.3} what's so fun about sitting around sipping from a cup all day?"
-    n 1nllfl "Only yesterday I saw one of them in a café lately.{w=0.3}{nw}"
-    extend 1unmaj " They burned their tongue.{w=0.3}{nw}"
-    extend 1tnmss " Wondering why?{w=0.3}"
-    n 1flrss "Because they drank their coffee{w=1}"
+    n 1nllfl "In fact,{w=0.2} only yesterday I saw one of them in a café..."
+    n 1unmaj "And they kept burning their tongue!{w=0.5} Like it was on purpose or something!{w=0.75}{nw}"
+    extend 1tnmss " Wondering why,{w=0.2} [player]?"
+    n 1flrss "Because they drank their coffee...{w=1}"
     extend 1fchgn " {i}before it was cool{/i}."
 
     return
