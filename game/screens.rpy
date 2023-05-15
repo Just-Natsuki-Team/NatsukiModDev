@@ -392,13 +392,13 @@ style vscrollbar:
 
 style slider:
     ysize 18
-    base_bar Frame("gui/scrollbar/horizontal_poem_bar.png", tile=False)
-    thumb "gui/slider/horizontal_hover_thumb.png"
+    base_bar Frame("mod_assets/panels/slider_back_h.png", tile=False)
+    thumb "mod_assets/panels/slider_thumb_small.png"
 
 style vslider:
     xsize gui.slider_size
-    base_bar Frame("gui/slider/vertical_[prefix_]bar.png", gui.vslider_borders, tile=gui.slider_tile)
-    thumb "gui/slider/vertical_[prefix_]thumb.png"
+    base_bar Frame("mod_assets/panels/slider_back_v.png", gui.vslider_borders, tile=gui.slider_tile)
+    thumb "mod_assets/panels/slider_thumb_small.png"
 
 style frame:
     padding gui.frame_borders.padding
