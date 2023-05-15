@@ -757,13 +757,13 @@ label joke_cheesy_pizza:
     return
 
 label joke_veggie_mood:
-    n 1nslsssbl "Heh.{w=0.75}"
+    n 1nslsssbl "Heh.{w=0.75}{nw}"
     extend 1fcssssbl " Let's see who {i}this{/i} reminds you of,{w=0.2} [player]."
     n 1ccsajsbl "A-{w=0.2}hem!"
     n 1tnmbo "Do you have {i}any{/i} idea when vegetarians get mood swings?"
-    n 1nllss "Well...{w=0.5}{nw}"
+    n 1nllss "Well...{w=0.75}{nw}"
     extend 1fcssmesm " I do."
-    n 1fcsbg "...When they're out of their {i}gourd{/i},{w=0.5}{nw}"
+    n 1fcsbg "...When they're out of their {i}gourd{/i},{w=0.75}{nw}"
     extend 1fchbg " obviously!"
     
     return
@@ -799,7 +799,7 @@ label joke_burned_tongue:
     n 1nllfl "In fact,{w=0.2} only yesterday I saw one of them in a café..."
     n 1unmaj "And they kept burning their tongue!{w=0.5} Like it was on purpose or something!{w=0.75}{nw}"
     extend 1tnmss " Wondering why,{w=0.2} [player]?"
-    n 1flrss "Because they drank their coffee...{w=1}"
+    n 1flrss "Because they drank their coffee...{w=1}{nw}"
     extend 1fchgn " {i}before it was cool{/i}."
 
     return
@@ -808,8 +808,8 @@ label joke_pointless_pencil:
     n 1fllfl "Man..."
     n 1fcsem "I was {i}trying{/i} to work on my poetry,{w=0.2} and my pencil just decided to break!{w=0.75}{nw}"
     extend 1fslpo " Great."
-    n 1cllaj "I was {i}going{/i} to tell a joke about it...{w=0.5}"
-    n 1tnmbo "But now?{w=0.3}{nw}"
+    n 1cllaj "I was {i}going{/i} to tell a joke about it..."
+    n 1tnmbo "But now?{w=0.5}{nw}"
     extend 1fsqsm " It's {i}pointless{/i}."
 
     return
