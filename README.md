@@ -101,6 +101,7 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
 </table>  
 
 ### And extra special thanks to:
+
 - Snow, rain graphics thanks to Monika After Story team @ https://github.com/Monika-After-Story/MonikaModDev
 - License template thanks to Monika After Story team @ https://github.com/Monika-After-Story/MonikaModDev
 - Our community, for being so patient despite our delays
@@ -147,6 +148,7 @@ It's rude to keep someone waiting, you know...
 3. Download the [Official JN Installer](https://github.com/Just-Natsuki-Team/NatsukiModInstaller/releases/tag/release) for your operating system (one starting with `jn-installer`).
 4. Extract the JN Installer file you have downloaded.
 5. Run the JN Installer, and follow the steps in the application: **make sure you select your DDLC folder when prompted**.
+    1. If on Windows, you may receive a security warning from SmartScreen: to continue, click _More Info_, then _Run anyway_.
 6. **This only applies if you have played the Just Natsuki BETA, wish to completely reset your progress, or if you are running the discontinued build from Wix/Google Drive**: You may already have a persistent from the old version of JN - this **must** be deleted.
     1. Guidance on how to find your persistent can be found [here](https://github.com/Just-Natsuki-Team/NatsukiModDev/wiki/04:-FAQ#can-i-back-up-my-save-data--how-do-i-find-my-persistent).
 7. Finally, launch `DDLC.exe`.
@@ -186,6 +188,7 @@ It's rude to keep someone waiting, you know...
 2. Download the [Official JN Installer](https://github.com/Just-Natsuki-Team/NatsukiModInstaller/releases/tag/release) for your operating system (one starting with `jn-installer`).
 3. Extract the JN Installer file you have downloaded.
 4. Run the JN Installer, and follow the steps in the application: **make sure you select your DDLC folder when prompted**.
+    1. If on Windows, you may receive a security warning from SmartScreen: to continue, click _More Info_, then _Run anyway_.
 5. Finally, launch `DDLC.exe`.
 6. Enjoy!
 
