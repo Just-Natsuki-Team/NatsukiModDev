@@ -151,7 +151,7 @@ It's rude to keep someone waiting, you know...
     1. If on Windows, you may receive a security warning from SmartScreen: to continue, click _More Info_, then _Run anyway_.
 6. **This only applies if you have played the Just Natsuki BETA, wish to completely reset your progress, or if you are running the discontinued build from Wix/Google Drive**: You may already have a persistent from the old version of JN - this **must** be deleted.
     1. Guidance on how to find your persistent can be found [here](https://github.com/Just-Natsuki-Team/NatsukiModDev/wiki/04:-FAQ#can-i-back-up-my-save-data--how-do-i-find-my-persistent).
-7. Finally, launch `DDLC.exe`.
+7. Finally, launch _DDLC_.
     1. If you are on OSX, you may have to review your security settings for the game to launch properly; please see the guidance listed [here](https://github.com/Just-Natsuki-Team/NatsukiModDev/issues/221).
 8. Enjoy!
 
@@ -169,8 +169,9 @@ It's rude to keep someone waiting, you know...
 7. From the JN mod files, copy the `update` folder into the DDLC folder.
 8. **This only applies if you have played the Just Natsuki BETA, wish to completely reset your progress, or if you are running the discontinued build from Wix/Google Drive**: You may already have a persistent from the old version of JN - this **must** be deleted.
     1. Guidance on how to find your persistent can be found [here](https://github.com/Just-Natsuki-Team/NatsukiModDev/wiki/04:-FAQ#can-i-back-up-my-save-data--how-do-i-find-my-persistent).
-9. Finally, launch `DDLC.exe`.
+9. Finally, launch _DDLC_.
     1. If you are on OSX, you may have to review your security settings for the game to launch properly; please see the guidance listed [here](https://github.com/Just-Natsuki-Team/NatsukiModDev/issues/221).
+10. Enjoy!
 
 </details>
 
@@ -189,7 +190,7 @@ It's rude to keep someone waiting, you know...
 3. Extract the JN Installer file you have downloaded.
 4. Run the JN Installer, and follow the steps in the application: **make sure you select your DDLC folder when prompted**.
     1. If on Windows, you may receive a security warning from SmartScreen: to continue, click _More Info_, then _Run anyway_.
-5. Finally, launch `DDLC.exe`.
+5. Finally, launch _DDLC_.
 6. Enjoy!
 
 #### Manual update
@@ -203,7 +204,7 @@ It's rude to keep someone waiting, you know...
 4. From the release files, copy the `game` folder contents (all of it) into the `game` folder of your JN installation. If asked to replace files, select _Yes_.
 5. From the release files, copy the `lib` folder contents (all of it) into the `lib` folder of your JN installation. If asked to replace files, select _Yes_.
 6. From the release files, copy the `update` folder contents (all of it) into the `update` folder of your JN installation. If asked to replace files, select _Yes_.
-7. Finally, launch `DDLC.exe`.
+7. Finally, launch _DDLC_.
     1. If the game does not appear to update or displays a warning about `.rpy` files, you are running the source code (files ending in `.rpy`) instead of the release files: delete **everything** in the `game` folder, download the release files (starting with `jn`) and update using those.
 8. Enjoy!
 
