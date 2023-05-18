@@ -778,7 +778,7 @@ label joke_scarecrow_award:
     return
 
 label joke_sundae_school:
-    n 1ullaj "You know...{w=0.75}{nw}"
+    n 1ullaj "You know...{w=0.75}"
     n 1tnmbo "I've been thinking about school a bunch lately."
     n 1ulraj "I mean,{w=0.5}{nw}"
     extend 1unmfl " there were {i}so{/i} many schools I could've gone to -{w=0.5}{nw}"
@@ -788,7 +788,7 @@ label joke_sundae_school:
     n 1fcsem "Ugh..."
     n 1flrfl "Talk about a...{w=1}{nw}"
     extend 1fsqss " {i}sundae{/i}{w=0.75}{nw}" 
-    extend 1uchgn " school."
+    extend 1uchgn " school!"
     
     return
 
@@ -800,7 +800,7 @@ label joke_burned_tongue:
     n 1unmaj "And they kept burning their tongue!{w=0.5} Like it was on purpose or something!{w=0.75}{nw}"
     extend 1tnmss " Wondering why,{w=0.2} [player]?"
     n 1flrss "Because they drank their coffee...{w=1}{nw}"
-    extend 1fchgn " {i}before it was cool{/i}."
+    extend 1fchgn " {i}before it was cool{/i}!"
 
     return
 
