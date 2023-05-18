@@ -97,13 +97,24 @@ label talk_out_of_topics:
         extend 1unmbo " I guess I {i}could{/i} just tell you about whatever comes to mind."
         n 1nchbg "So...{w=0.3} how about it?"
 
+        show natsuki 2nsrsssbl
         menu:
-            n "Do you mind if I repeat some stuff?"
+            n "Do you mind if I repeat some stuff,{w=0.2} or...?"
 
             "Sure, I don't mind listening.":
                 $ persistent.jn_natsuki_repeat_topics = True
+
                 n 4uchgn "Okaaay!{w=0.5}{nw}"
-                extend 1tcsaj " Now,{w=0.1} let me think..."
+                extend 1tcsaj " Now,{w=0.2} let me think..."
+
+            "I don't mind listening, but don't remind me next time.":
+                $ persistent.jn_natsuki_repeat_topics = True
+                $ persistent._jn_natsuki_out_of_topics_remind = False
+
+                n 2tnmboeqm "Huh?{w=0.75}{nw}"
+                extend 2unmfl " Oh.{w=0.75}{nw}"
+                extend 2nslsssbl " Right.{w=0.5} Sure."
+                n 2cslsl "Now,{w=0.2} let me think..."
 
             "I'd rather wait.":
                 n 2tllaj "Well...{w=0.5}{nw}"
@@ -114,7 +125,20 @@ label talk_out_of_topics:
                     extend 4klrssl " 'kay?"
 
                 else:
-                    n 1flrpol "J-{w=0.1}just don't make the silence all awkward,{w=0.1} got it?!"
+                    n 1flrpol "J-{w=0.2}just don't make the silence all awkward,{w=0.2} got it?!"
+
+            "I'd rather wait, but don't remind me next time.":
+                $ persistent._jn_natsuki_out_of_topics_remind = False
+                
+                n 2tsqpueqm "Huh?{w=0.75}{nw}"
+                extend 2unmfl " Oh.{w=0.75}{nw}"
+                extend 2csrsssbl " Heh."
+                n 2clrsl "Well...{w=1}{nw}"
+                extend 2tnmca " if you're sure,{w=0.2} [player]."
+
+                if Natsuki.isAffectionate(higher=True):
+                    n 4cllss "I'll...{w=1}{nw}"
+                    extend 1cslbosbr " try to think of something soon."
 
     elif Natsuki.isDistressed(higher=True):
         n 1nllsf "..."
@@ -4937,25 +4961,41 @@ label talk_play_snap:
             $ persistent.jn_snap_player_is_cheater = False
 
         else:
-            n 2fnmem "[player]...{w=0.3} if you aren't even sorry you cheated,{w=0.1} why should I play with you again?"
-            n 4kllpo "Come on...{w=0.3} it's not hard to apologize,{w=0.1} is it?"
+            n 1ccsem "[player]..." 
+            n 2cllfl "If you aren't even sorry you cheated,{w=0.5}{nw}" 
+            extend 2csqfl " why {i}should{/i} I play with you again?"
+            n 4fcssl "Come on...{w=1}{nw}" 
+            extend 2csrca " it's not hard to apologize,{w=0.75}{nw}" 
+            extend 2csqca " is it?"
+
             return
 
     if Natsuki.isLove(higher=True):
-        n 3uchbg "Of course I do,{w=0.1} dummy!{w=0.2} Ehehe."
+        $ chosen_tease = jn_utils.getRandomTease()
+        n 3fchbg "Of course I do,{w=0.2} [chosen_tease]!{w=0.5}{nw}"
+        extend 3fchsmeme " Ehehe."
 
     elif Natsuki.isEnamored(higher=True):
-        n 4fchbg "Of course I'll play some with you,{w=0.1} dummy!"
+        n 4unmss "Snap?{w=0.75}{nw}"
+        extend 4fchbg " Sure thing,{w=0.2} [player]!"
 
     elif Natsuki.isAffectionate(higher=True):
-        n 1fchsm "Well,{w=0.1} duh!{w=0.2} Of course I'm up for a game!"
+        n 1fcsbg "Well,{w=0.2} duh!{w=0.75}" 
+        extend 2fchbg " Say no more,{w=0.2} [player]!"
 
     else:
-        n 1nnmss "You wanna play Snap?{w=0.2} Sure!"
+        n 1unmaj "You wanna play Snap?{w=0.75}{nw}" 
+        extend 4fchsm " Sure!"
 
-    n 1unmsm "Let me just get the cards out real quick,{w=0.1} alright?"
+    n 4fcsss "Let me just get the cards out real quick..."
+
+    show natsuki 4fcssm
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(1.5)
     play audio drawer
-    with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+    show natsuki 4fchsm
+    hide black with Dissolve(1)
+
     jump snap_intro
 
 # Natsuki goes over the rules of snap again, for if the player has already heard the explanation pre-game

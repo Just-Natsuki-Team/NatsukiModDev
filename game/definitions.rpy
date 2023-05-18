@@ -1395,7 +1395,7 @@ init -990 python in jn_globals:
         "midget",
         "moron",
         "narcissist",
-        "nasty",
+        "(^nasty$|nasty-ass)",
         "neckcrack|neck-crack",
         "necksnap|neck-snap",
         "^nimrod$",
