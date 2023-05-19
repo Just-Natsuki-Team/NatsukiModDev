@@ -12,11 +12,13 @@ style hotkeys_text:
     font gui.interface_font
     size gui.interface_text_size
     color "#e2d1d1"
-    line_overlap_split 1.25
-    line_spacing 1.25
     outlines [(3, "#000000aa", 0, 0)]
     xalign 0.0
     yalign 0.5
+    
+    line_overlap_split 8
+    line_spacing 8
+    line_leading 8
 
 screen hotkeys():
     $ config.mouse = None
@@ -116,6 +118,8 @@ style categorized_menu_button is choice_button:
 style categorized_menu_button_text is choice_button_text:
     align (0.0, 0.0)
     text_align 0.0
+    line_leading 0
+    line_spacing 2
 
 style categorized_menu_button_italic is categorized_menu_button
 
@@ -221,6 +225,7 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
 
                         for _topic in menu_items.get(selected_category):
                             $ display_text = _topic.prompt if (_topic.shown_count > 0 or _topic.nat_says) else "{i}[_topic.prompt]{/i}"
+
                             #NOTE: This should be preprocessed such that Topics without prompts aren't passed into this menu
                             textbutton display_text:
                                 style "categorized_menu_button"
@@ -228,6 +233,9 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                                 action [ Return(_topic.label), Function(prev_adjustment.change, 0), SetVariable("selected_category", None) ]
                                 hover_sound gui.hover_sound
                                 activate_sound gui.activate_sound
+                                
+                                if _topic.shown_count == 0 and not _topic.nat_says:
+                                    idle_background Frame("mod_assets/buttons/choice_hover_blank_star.png", gui.frame_hover_borders, tile=gui.frame_tile)
 
                             null height 5
 
@@ -384,13 +392,13 @@ style vscrollbar:
 
 style slider:
     ysize 18
-    base_bar Frame("gui/scrollbar/horizontal_poem_bar.png", tile=False)
-    thumb "gui/slider/horizontal_hover_thumb.png"
+    base_bar Frame("mod_assets/panels/slider_back_h.png", tile=False)
+    thumb "mod_assets/panels/slider_thumb_small.png"
 
 style vslider:
     xsize gui.slider_size
-    base_bar Frame("gui/slider/vertical_[prefix_]bar.png", gui.vslider_borders, tile=gui.slider_tile)
-    thumb "gui/slider/vertical_[prefix_]thumb.png"
+    base_bar Frame("mod_assets/panels/slider_back_v.png", gui.vslider_borders, tile=gui.slider_tile)
+    thumb "mod_assets/panels/slider_thumb_small.png"
 
 style frame:
     padding gui.frame_borders.padding
@@ -487,7 +495,7 @@ style say_dialogue:
     text_align gui.text_xalign
     layout ("subtitle" if gui.text_xalign else "tex")
 
-    line_overlap_split 8
+    line_overlap_split -8
     line_spacing 8
     line_leading 8
 
@@ -645,7 +653,8 @@ style choice_button is default:
 style choice_button_text is default:
     properties gui.button_text_properties("choice_button")
     outlines []
-
+    line_leading 6
+    line_spacing -6
 
 init python:
     def RigMouse():

@@ -217,6 +217,12 @@ init python in jn_idles:
         conditional="persistent.jn_custom_music_unlocked"
     ))
 
+    __registerIdle(JNIdle(
+        label="idle_whistling",
+        idle_type=JNIdleTypes.vibing,
+        affinity_range=(jn_affinity.NORMAL, None)
+    ))
+
 label idle_twitch_playing:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     show prop wintendo_twitch_playing free zorder JN_PROP_ZORDER
@@ -497,7 +503,7 @@ label idle_vibing_headphones:
         hide prop
         $ player_initial = jn_utils.getPlayerInitial()
         n 4fbkwrl "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
-        extend 4fnmemlsbr " How long have you just been {i}sat there{/i}?!{w=1.25}{nw}"
+        extend 4fnmemlsbr " How long have you just been {i}sitting there{/i}?!{w=1.25}{nw}"
         extend 2fslfllsbr " Jeez..."
         n 2fcsposbr "At {i}least{/i} let me put these on charge first..."
 
@@ -509,5 +515,25 @@ label idle_vibing_headphones:
     show natsuki 2nsrcasbl
     hide black with Dissolve(0.5)
     $ jnPause(1)
+
+    $ jn_idles._concludeIdle()
+
+label idle_whistling:
+    show natsuki whistling
+    $ jnClickToContinue(silent=False)
+
+    if random.choice([True, False]):
+        n 1tnmboeqm "...?{w=0.75}{nw}"
+        n 4unmfllesh "O-{w=0.2}oh!{w=0.75}{nw}"
+        extend 4cllssl " H-{w=0.2}hey [player]."
+        n 4tnmbo "What's up?"
+
+    else:
+        n 4tllbo "...{w=0.75}{nw}"
+        n 4tnmboeqm "...?{w=0.75}{nw}"
+        n 4unmfllesh "A-{w=0.2}ah!{w=0.75}{nw}"
+        extend 2nlrsslsbl " Heh.{w=0.75}{nw}"
+        extend 2nllbolsbl " Hey."
+        n 2tnmbo "What's happening,{w=0.2} [player]?"
 
     $ jn_idles._concludeIdle()

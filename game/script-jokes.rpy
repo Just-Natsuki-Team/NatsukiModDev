@@ -343,6 +343,26 @@ init python in jn_jokes:
         label="joke_cheesy_pizza",
         joke_category=JNJokeCategories.bad
     ))
+    __registerJoke(JNJoke(
+        label="joke_veggie_mood",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_scarecrow_award",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_sundae_school",
+        joke_category=JNJokeCategories.funny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_burned_tongue",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_pointless_pencil",
+        joke_category=JNJokeCategories.funny
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -397,7 +417,7 @@ label joke_blind_fish:
 label joke_skeleton_music:
     n 1fcsaj "Alright!{w=0.75}{nw}"
     extend 1nslsssbr " Seeing as you love music so much,{w=0.2} [player]..."
-    n 1tsqsssbr "What's a skeleton's favourite instrument?"
+    n 1tsqsssbr "What's a skeleton's favorite instrument?"
     n 1nsrsssbr "..."
     n 1nsrposbl "...A xylo-{w=1}{i}bone{/i}."
 
@@ -599,7 +619,7 @@ label joke_neutrons_no_charge:
     return
 
 label joke_train_sound_track:
-    n 1fcsbg "What's a train driver's favourite thing to listen to while they're working?"
+    n 1fcsbg "What's a train driver's favorite thing to listen to while they're working?"
     n 1fnmsm "..."
     n 1tsqss "No?{w=0.75}{nw}"
     extend 1fcssm " Ehehe."
@@ -666,7 +686,7 @@ label joke_footless_snakes:
     n 1uwdaj "Especially with all those different sizes!"
     extend 1fsqcs " What kind of measurement would even work {i}best{/i}?"
     n 1fcsss "Well,{w=0.2} I guess you'd just be stuck with metric..."
-    n 1fsqbg "...'Cause you definitely aren't using {w=0.25}{nw}"
+    n 1fsqbg "...'Cause you definitely aren't using{w=0.5}{nw}"
     extend 1nchgn " {i}feet{/i}!"
 
     return
@@ -734,4 +754,62 @@ label joke_cheesy_pizza:
     n 1fslsl "Yeah.{w=0.3} There's no way I'm sharing something...{w=1}{nw}"
     extend 1nsqpo " {i}that cheesy{/i}."
     
+    return
+
+label joke_veggie_mood:
+    n 1nslsssbl "Heh.{w=0.75}{nw}"
+    extend 1fcssssbl " Let's see who {i}this{/i} reminds you of,{w=0.2} [player]."
+    n 1ccsajsbl "A-{w=0.2}hem!"
+    n 1tnmbo "Do you have {i}any{/i} idea when vegetarians get mood swings?"
+    n 1nllss "Well...{w=0.75}{nw}"
+    extend 1fcssmesm " I do."
+    n 1fcsbg "...When they're out of their {i}gourd{/i},{w=0.75}{nw}"
+    extend 1fchbg " obviously!"
+    
+    return
+
+label joke_scarecrow_award:
+    n 1fsqfl "...Why did the scarecrow get an award?"
+    n 1ncsemesi "..."
+    n 1fcsbo "Because..."
+    n 1fsqfl "It was {i}outstanding{/i}{w=0.75}{nw}" 
+    extend 1nsrca " in its field."
+    
+    return
+
+label joke_sundae_school:
+    n 1ullaj "You know...{w=0.75}"
+    n 1tnmbo "I've been thinking about school a bunch lately."
+    n 1ulraj "I mean,{w=0.5}{nw}"
+    extend 1unmfl " there were {i}so{/i} many schools I could've gone to -{w=0.5}{nw}"
+    extend 1fspbg " one even did culinary classes!"
+    n 1fcsan "But the schedule meant going in on a {i}weekend{/i}!{w=0.5}{nw}"
+    extend 1fllwr " Who {i}does{/i} that?!"
+    n 1fcsem "Ugh..."
+    n 1flrfl "Talk about a...{w=1}{nw}"
+    extend 1fsqss " {i}sundae{/i}{w=0.75}{nw}" 
+    extend 1uchgn " school!"
+    
+    return
+
+label joke_burned_tongue:
+    n 1ullaj "You know,{w=0.75}{nw}"
+    extend 1tnmbo " I never understood why hipsters hung around coffee shops so much."
+    n 1nsrbo "Like...{w=0.3} what's so fun about sitting around sipping from a cup all day?"
+    n 1nllfl "In fact,{w=0.2} only yesterday I saw one of them in a café..."
+    n 1unmaj "And they kept burning their tongue!{w=0.5} Like it was on purpose or something!{w=0.75}{nw}"
+    extend 1tnmss " Wondering why,{w=0.2} [player]?"
+    n 1flrss "Because they drank their coffee...{w=1}{nw}"
+    extend 1fchgn " {i}before it was cool{/i}!"
+
+    return
+
+label joke_pointless_pencil:
+    n 1fllfl "Man..."
+    n 1fcsem "I was {i}trying{/i} to work on my poetry,{w=0.2} and my pencil just decided to break!{w=0.75}{nw}"
+    extend 1fslpo " Great."
+    n 1cllaj "I was {i}going{/i} to tell a joke about it..."
+    n 1tnmbo "But now?{w=0.5}{nw}"
+    extend 1fsqsm " It's {i}pointless{/i}."
+
     return

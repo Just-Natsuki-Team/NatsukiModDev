@@ -168,7 +168,7 @@ label admission_anxious:
         extend 4unmaj " But don't feel like you have to do whatever I find helps -{w=0.5}{nw}"
         extend 3fchbgsbr " you should totally do whatever {i}you{/i} usually find comforting!"
         n 3unmbo "You don't have to push the boat out or anything:{w=0.5}{nw}"
-        extend 4ullfl " a favourite game,{w=0.5}{nw}"
+        extend 4ullfl " a favorite game,{w=0.5}{nw}"
         extend 2nsrsm " some dumb old manga series...{w=1}{nw}"
         extend 2fchbg " whatever keeps that noggin of yours busy!"
         n 4fsqcs "...And if nothing else comes to mind?"
@@ -757,7 +757,15 @@ label admission_hungry:
         extend 4nsqsl " before you ask."
         n 3fcsbg "Junk food doesn't count!"
 
-        if Natsuki.isAffectionate(higher=True):
+        if (
+            (jnIsNatsukiBirthday() and jn_events.getHoliday("holiday_natsuki_birthday").isCompleted())
+            or (jnIsPlayerBirthday() and jn_events.getHoliday("holiday_player_birthday").isCompleted())
+        ):
+            n 3ullaj "Oh,{w=0.5}{nw}"
+            extend 3csqss " and you're not getting any of that cake from earlier either.{w=1.25}{nw}"
+            extend 3fchgnelg " Sorry~!"
+
+        elif Natsuki.isAffectionate(higher=True):
             n 3fsqsm "You weren't a trash can last time I checked.{w=0.75}{nw}"
             extend 3fchgnelg " So no garbage for you~!"
 
@@ -802,7 +810,7 @@ label admission_insecure:
         n 3fcsbgsbr "Besides..."
         n 3fsrcs "When someone like {i}me{/i} has your back?"
         n 4fcsbgledz "I daresay you've got nothing to worry about!{w=0.75}"
-        extend 1nchgnl "Ehehe."
+        extend 1nchgnl " Ehehe."
 
         if Natsuki.isLove(higher=True):
             n 1fchsmleaf "Love you,{w=0.2} [player]~!"
@@ -820,7 +828,7 @@ label admission_insecure:
         extend 2fsqbol " and listen good."
         n 2fcseml "I don't care if you think people don't like you.{w=0.75}{nw}" 
         extend 2fnmbolsbr " {i}I{/i} like you."
-        n 4flrfll "I don't care if think you have no talents.{w=0.75}{nw}" 
+        n 4flrfll "I don't care if people think you have no talents.{w=0.75}{nw}" 
         extend 1fcscalesi " {i}I{/i} know you do."
         n 1fcstrl "I don't care if people think you're falling behind.{w=0.75}{nw}" 
         extend 2fnmsll " {i}I{/i} know you'll catch up."

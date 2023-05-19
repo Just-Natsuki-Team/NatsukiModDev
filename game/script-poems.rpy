@@ -3,6 +3,7 @@ default persistent.jn_poem_list = dict()
 image paper default = "mod_assets/poems/default.png"
 image paper pink_floral = "mod_assets/poems/pink_floral.png"
 image paper festive = "mod_assets/poems/festive.png"
+image paper notepad = "mod_assets/poems/notepad.png"
 
 init python in jn_poems:
     import store
@@ -350,15 +351,52 @@ init python in jn_poems:
         text_align=0.5
     ))
 
+    __registerPoem(JNPoem(
+        reference_name="jn_natsuki_birthday_flight",
+        display_name="Flight",
+        holiday_type=jn_events.JNHolidayTypes.natsuki_birthday,
+        affinity_range=(jn_affinity.ENAMORED, None),
+        poem=(
+            "Climbing on top of a mountain doesn't make a hiker tall\n"
+            "But accomplishment of reaching that height says it all\n"
+            "Climbing up a ladder though is another thing altogether\n"
+            "But try as one reaches, clouds stay high dispersing weather\n"
+            "\n"
+            "People who once dreamed of flight were looked upon with gall\n"
+            "Told that they should know their place and keep to being small\n"
+            "The two brothers looked upon birds flapping feather after feather\n"
+            "Until one day what was thought impossible was born together\n"
+            "\n"
+            "Those are both extraordinary feats, but both are measured differently\n"
+            "Be it stick, ruler, measuring tape, but how do we measure ability?\n"
+            "Growth comes in many forms and that's rather tough to truly gauge\n"
+            "So as calendars wizz on by, what is changed besides someone's age?\n"
+            "\n"
+            "Kids are always told to expect a growth spurt, and they accept willingly\n"
+            "But nobody ever talks about how growth can hurt often without sympathy\n"
+            "People are simply much more than just in what they choose to engage\n"
+            "But others like to make assumptions and usher in unnecessary rage\n"
+            "\n"
+            "People are so much more than what their appearance may present\n"
+            "Stature can only say so much as opposed to what lies beneath pleasant\n"
+        ),
+        paper="notepad",
+        font_size=16
+    ))
+
 label show_poem(poem):
+    $ pre_click_afm = preferences.afm_enable
+    $ preferences.afm_enable = False
+
     play audio page_turn
-    show screen poem_view(poem)
+    show screen poem_view(poem, pre_click_afm)
     with Dissolve(1)
     $ renpy.pause(hard=True)
     $ renpy.pause(2)
+
     return
 
-screen poem_view(poem):
+screen poem_view(poem, pre_click_afm):
     vbox:
         xalign 0.5
         add "paper [poem.paper]"
@@ -394,6 +432,11 @@ screen poem_view(poem):
                 Hide(
                     screen="poem_view",
                     transition=Dissolve(1)
+                ),
+                SetField(
+                    object=preferences,
+                    field="afm_enable",
+                    value=pre_click_afm
                 ),
                 Return()
             ]

@@ -891,6 +891,124 @@ image natsuki vibing:
     pause 8
     repeat
 
+image natsuki whistling:
+    block:
+        choice:
+            "natsuki 3nllpueme"
+            pause 0.75
+            "natsuki 3nllajeme"
+            pause 0.75
+            "natsuki 3nllpueme"
+            pause 0.75
+            "natsuki 3nllajeme"
+            pause 0.75
+            "natsuki 3nllboeme"
+            pause 0.75
+            "natsuki 3ncsboeme"
+            pause 0.1
+            "natsuki 3nllajeme"
+            pause 0.75
+            "natsuki 3nllpueme"
+            pause 0.75
+            "natsuki 3ullbo"
+            pause 4
+            "natsuki 3ucsboeme"
+            pause 0.1
+        choice:
+            "natsuki 3nlrpueme"
+            pause 0.75
+            "natsuki 3nlrajeme"
+            pause 0.75
+            "natsuki 3nlrpueme"
+            pause 0.75
+            "natsuki 3nlrajeme"
+            pause 0.75
+            "natsuki 3nlrboeme"
+            pause 0.75
+            "natsuki 3ncsboeme"
+            pause 0.1
+            "natsuki 3nlrajeme"
+            pause 0.75
+            "natsuki 3nlrpueme"
+            pause 0.75
+            "natsuki 3ulrbo"
+            pause 4
+            "natsuki 3ucsboeme"
+            pause 0.1
+        choice:
+            "natsuki 3utlajeme"
+            pause 0.75
+            "natsuki 3utlpueme"
+            pause 0.75
+            "natsuki 3ucspueme"
+            pause 0.1
+            "natsuki 3utlajeme"
+            pause 0.75
+            "natsuki 3utlsl"
+            pause 4
+        choice:
+            "natsuki 3utrpueme"
+            pause 0.75
+            "natsuki 3utrajeme"
+            pause 0.75
+            "natsuki 3ucsajeme"
+            pause 0.1
+            "natsuki 3utrpueme"
+            pause 0.75
+            "natsuki 3utrsl"
+            pause 4
+    repeat
+
+image natsuki snap:
+    block:
+        choice:
+            "natsuki 4csqsm"
+            pause 4
+            "natsuki 4ccssm"
+            pause 0.1
+            "natsuki 4csqsm"
+            pause 4
+            "natsuki 4ccssm"
+            pause 0.1
+        choice:
+            "natsuki 4fsqsm"
+            pause 4
+            "natsuki 4fcssm"
+            pause 0.1
+            "natsuki 4fsqsm"
+            pause 4
+            "natsuki 4fcssm"
+            pause 0.1
+        choice:
+            "natsuki 1flrss"
+            pause 4
+            "natsuki 1fcsss"
+            pause 0.1
+            "natsuki 1flrss"
+            pause 4
+            "natsuki 1fcsss"
+            pause 0.1
+        choice:
+            "natsuki 1flrpu"
+            pause 4
+            "natsuki 1fcspu"
+            pause 0.1
+            "natsuki 1flrpu"
+            pause 4
+            "natsuki 1fcspu"
+            pause 0.1
+        choice:
+            "natsuki 4flrpu"
+            pause 4
+            "natsuki 4fcspu"
+            pause 0.1
+            "natsuki 4flrpu"
+            pause 4
+            "natsuki 4fcspu"
+            pause 0.1
+
+    repeat
+
 # This selects which idle image to show based on current affinity state
 image natsuki idle = ConditionSwitch(
     "Natsuki.isEnamored(higher=True)", "natsuki idle enamored",
@@ -1402,6 +1520,43 @@ image natsuki idle introduction:
         choice:
             "natsuki 4klrun"
         pause 10
+        repeat
+
+image natsuki idle fluster:
+    block:
+        choice:
+            "natsuki 1cllunlsbr"
+            pause 2
+            "natsuki 1ccsunlsbr"
+            pause 0.1
+            "natsuki 1clrunlsbr"
+            pause 2
+            "natsuki 1ccsunlsbr"
+            pause 0.1
+
+        choice:
+            "natsuki 1clremlsbl"
+            pause 2
+            "natsuki 1ccsemlsbl"
+            pause 0.1
+            "natsuki 1cllemlsbl"
+            pause 2
+            "natsuki 1ccsemlsbl"
+            pause 0.1
+
+        choice:
+            "natsuki 1cllfllsbr"
+            pause 2
+            "natsuki 1ccsfllsbr"
+            pause 0.1
+            "natsuki 1clrfllsbr"
+            pause 2
+            "natsuki 1ccsfllsbl"
+            pause 0.1
+            "natsuki 1clrfllsbl"
+            pause 1.25
+            "natsuki 1ccsfllsbl"
+            pause 0.1
         repeat
 
 init python:

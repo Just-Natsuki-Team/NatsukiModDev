@@ -295,7 +295,7 @@ init -1 python in jn_outfits:
                 - eyewear - JNEyewear associated with this outfit. Optional.
                 - headgear - JNHeadgear associated with this outfit. Optional.
                 - necklace - JNNecklace associated with this outfit. Optional.
-                - facewear - JNFacialwear associated with this outfit. Optional.
+                - facewear - JNFacewear associated with this outfit. Optional.
                 - back - JNBack associated with this outfit. Optional.
             """
             # Clothes are required
@@ -464,7 +464,7 @@ init -1 python in jn_outfits:
             if self.necklace and isinstance(self.necklace, JNNecklace):
                 outfit_dict["necklace"] = self.necklace.reference_name
 
-            if self.facewear and isinstance(self.necklace, JNFacewear):
+            if self.facewear and isinstance(self.facewear, JNFacewear):
                 outfit_dict["facewear"] = self.facewear.reference_name
 
             if self.back and isinstance(self.back, JNBack):
@@ -2703,6 +2703,16 @@ label new_wearables_outfits_unlocked:
             n 2kslemlsbl "...It's {i}weird{/i},{w=0.2} [player]..."
             n 1kslbolsbl "..."
 
+        elif jnIsNatsukiBirthday():
+            if persistent._jn_natsuki_birthday_known:
+                n 1ccsfllsbr "...E-{w=0.2}even if it {i}is{/i} my birthday.{w=0.75}{nw}"
+                extend 2clrbolsbr " Jeez."
+                n 2ksrcalsbr "You should {i}know{/i} by now I'm not used to being given all the fancy stuff..."
+
+            else:
+                n 2ccsemlsbr "N-{w=0.2}no matter what day it happens to be!{w=0.75}{nw}"
+                extend 2cllslfsbr " Jeez..."
+
         elif jnIsChristmasEve():
             n 2ksrbofsbl "...Especially tonight,{w=0.3} of all nights..."
 
@@ -2717,7 +2727,7 @@ label new_wearables_outfits_unlocked:
         n 1kllemless "I just..."
         n 2ksrunlsbl "..."
         n 1fcsunl "I...{w=0.3} know...{w=1}{nw}"
-        extend 2ksrpolsbr " I can't exactly return the favour."
+        extend 2ksrpolsbr " I can't exactly return the favor."
         n 1fcsajlsbl "A-{w=0.2}and you've already done a lot for me,{w=0.5}{nw}"
         extend 4kslbolsbl " so..."
         n 1kcsbolsbl "..."
@@ -2736,6 +2746,17 @@ label new_wearables_outfits_unlocked:
         if jnIsPlayerBirthday():
             n 1uskwrlesh "E-{w=0.2}especially today!{w=1}{nw}"
             extend 4kbkwrl " Did you {i}forget{/i} it's your {i}birthday{/i}?!"
+
+        elif jnIsNatsukiBirthday():
+            if persistent._jn_natsuki_birthday_known:
+                n 1fcswrlsbr "I-{w=0.2}I already {i}know{/i} it's my birthday,{w=0.2} okay?!{w=0.75}{nw}"
+                extend 2fllfllsbr " I get it!"
+                n 2csrcalsbl "You don't have to shower me with stuff just to make a point..."
+
+            else:
+                n 2flrfllsbr "I-{w=0.2}it's not even like today's actually {i}important{/i},{w=0.5}{nw}"
+                extend 2fcsemlsbr " or anything like that."
+                n 2csrslfsbr "..."
 
         elif jnIsChristmasEve():
             extend 1fllemf " I-{w=0.2}I mean..."
@@ -2765,7 +2786,16 @@ label new_wearables_outfits_unlocked:
         n 1fbkwrf "[player_initial]-{w=0.2}[player]!"
         n 1kbkwrf "What even {i}is{/i} all this?!"
 
-        if jnIsChristmasEve():
+        if jnIsNatsukiBirthday():
+            if persistent._jn_natsuki_birthday_known:
+                n 2ccseml "I-{w=0.2}I already know what day it is today!{w=0.75}{nw}"
+                extend 2clreml " Jeez..."
+                n 4csrsrl "You don't have to keep showering me in fancy stuff too..."
+
+            else:
+                n 2ccseml "I-{w=0.2}it isn't like today is even really {i}special{/i}!"
+
+        elif jnIsChristmasEve():
             n 1knmgsf "A-{w=0.2}and come {i}on{/i},{w=0.2} [player]!{w=1}{nw}"
             extend 4kbkwrfesd " It isn't even Christmas yeeeet!"
 
