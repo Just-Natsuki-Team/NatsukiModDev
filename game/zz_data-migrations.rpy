@@ -221,7 +221,7 @@ init python in jn_data_migrations:
             store.persistent._jn_notify_conversations = store.persistent.jn_notify_conversations
             del store.persistent.jn_notify_conversations
             jn_utils.log("Migrated: persistent.jn_player_nicknames_bad_given_total")
-        
+
         store.persistent._jn_version = "1.0.0"
         jn_utils.save_game()
         jn_utils.log("Migration to 1.0.0 DONE")
@@ -279,7 +279,7 @@ init python in jn_data_migrations:
         if "holiday_player_birthday" in store.persistent._seen_ever:
             jn_poems.getPoem("jn_birthday_cakes_candles").unlock()
             jn_utils.log("Migrated: jn_birthday_cakes_candles unlock state")
-        
+
         if "holiday_christmas_day" in store.persistent._seen_ever:
             if store.Natsuki.isEnamored(higher=True):
                 jn_poems.getPoem("jn_christmas_evergreen").unlock()
@@ -325,6 +325,14 @@ init python in jn_data_migrations:
     def to_1_2_2():
         jn_utils.log("Migration to 1.2.2 START")
         store.persistent._jn_version = "1.2.2"
+        jn_utils.save_game()
+        jn_utils.log("Migration to 1.2.2 DONE")
+        return
+
+    @migration(["1.2.2"], "1.3.0", runtime=MigrationRuntimes.INIT)
+    def to_1_3_0():
+        jn_utils.log("Migration to 1.3.0 START")
+        store.persistent._jn_version = "1.3.0"
 
         if store.persistent.affinity >= 7500:
             store.persistent._jn_pic_aff = store.persistent.affinity
@@ -333,5 +341,5 @@ init python in jn_data_migrations:
             jn_utils.log("434346".decode("hex"))
 
         jn_utils.save_game()
-        jn_utils.log("Migration to 1.2.2 DONE")
+        jn_utils.log("Migration to 1.3.0 DONE")
         return

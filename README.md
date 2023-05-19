@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://justnatsuki.club/img/logos/jn_1-2-2_logo.png" height="300"/>
+    <img src="https://justnatsuki.club/img/logos/jn_1-3-0_logo.png" height="300"/>
 </p>
 <br>
 
@@ -98,7 +98,7 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
             </a>
         </td>
     </tr>
-</table>  
+</table>
 
 ### And extra special thanks to:
 
@@ -158,7 +158,7 @@ It's rude to keep someone waiting, you know...
 #### Manual installation
 
 <details>
-<summary>Details</summary> 
+<summary>Details</summary>
 
 1. Download a fresh copy of DDLC from the [official site](https://ddlc.moe). **Do not use a Steam installation**.
 2. Extract/unzip DDLC.
@@ -196,7 +196,7 @@ It's rude to keep someone waiting, you know...
 #### Manual update
 
 <details>
-<summary>Details</summary> 
+<summary>Details</summary>
 
 1. Stop JN, if you are currently playing the mod.
 2. Download the latest release [here](https://github.com/Just-Natsuki-Team/NatsukiModDev/releases): select the ZIP file starting with `jn` (I.E `jn-1.0.0.zip`). **Do not download the source code, as this will result in future updates failing.**
