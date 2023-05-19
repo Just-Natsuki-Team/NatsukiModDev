@@ -7781,7 +7781,7 @@ label talk_how_to_interview_properly:
     extend 3tsqss " duh!"
     n 1usqaj "If there's one thing you gotta know before going to interview for something,{w=0.5}{nw}"
     extend 3fchgnelg " it's what you're actually interviewing {i}for{/i}!"
-    n 1fllaj "You wouldn't skimp out on revising before a big test,{w=1}{nw}"
+    n 1fllaj "You wouldn't skip out on revising before a big test,{w=1}{nw}"
     extend 4tnmsl " and interviews really aren't much different when you think about it."
     n 4fnmss "Interviewing for some big-shot company?{w=1}{nw}"
     extend 1fcsbg " Check them out online and take notes!"
