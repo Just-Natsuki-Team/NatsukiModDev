@@ -239,9 +239,10 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
 
                             null height 5
 
-screen scrollable_choice_menu(items, last_item=None):
+screen scrollable_choice_menu(items, last_item=None, option_width=560):
     fixed:
-        area (680, 40, 560, 440)
+        #TODO: fix this floating right too much
+        area (680, 40, option_width, 440)
         vbox:
             ypos 0
             yanchor 0
@@ -249,7 +250,7 @@ screen scrollable_choice_menu(items, last_item=None):
             if last_item:
                 textbutton last_item[0]:
                     style "categorized_menu_button"
-                    xsize 560
+                    xsize option_width
                     action Return(last_item[1])
                     hover_sound gui.hover_sound
                     activate_sound gui.activate_sound
@@ -265,7 +266,7 @@ screen scrollable_choice_menu(items, last_item=None):
                     for prompt, _value in items:
                         textbutton prompt:
                             style "categorized_menu_button"
-                            xsize 560
+                            xsize option_width
                             action Return(_value)
                             hover_sound gui.hover_sound
                             activate_sound gui.activate_sound
