@@ -9987,7 +9987,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_daily_jokes_seen_before",
+            label="talk_daily_jokes_seen_before_start",
             unlocked=True,
             prompt="What jokes have you told me before?",
             category=["Jokes"],
@@ -9999,14 +9999,15 @@ init 5 python:
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label talk_daily_jokes_seen_before:
+label talk_daily_jokes_seen_before_start:
+    #TODO: possible first time dialogue?
     if persistent._jn_daily_jokes_enabled:
         n "Oh?"
         extend " What's this?"
         extend " Someone just can't get enough of the joke book, huh?"
         n "Ehehe."
         n "Well..."
-        extend " I didn't exactly take notes or anything on which ones I've told you..."
+        extend " I didn't exactly take notes or anything on which ones I've told you...\n"
         extend " but I'm sure I can figure it out!"
         n "Just give me a sec here..."
 
@@ -10032,51 +10033,15 @@ label talk_daily_jokes_seen_before:
     hide black with Dissolve(0.5)
     $ jnPause(0.5)
 
-    n "Alright!"
-    extend " Here you go, [player]!"
-
-    python:
-        joke_options = []
-        for joke in jn_jokes.getShownBeforeJokes(jn_jokes.getAllJokes()):
-            joke_options.append((joke.display_name, joke))
-
-        joke_options.sort(key = lambda option: option[0])
-
-    show natsuki reading
-    call screen scrollable_choice_menu(joke_options, ("Nevermind.", None))
-
-    if isinstance(_return, jn_jokes.JNJoke):
-        if _return.joke_category == jn_jokes.JNJokeCategories.funny:
-            n ""
-
-        elif _return.joke_category == jn_jokes.JNJokeCategories.corny:
-            n ""
-
-        elif _return.joke_category == jn_jokes.JNJokeCategories.bad:
-            n ""
-
-        else:
-            n ""
-
-        n 1fcsaj "A-{w=0.2}hem!"
-        n 1fcssm "..."
-
-        call expression _return.label
-
-        if _return.joke_category == jn_jokes.JNJokeCategories.funny:
-            n ""
-
-        elif _return.joke_category == jn_jokes.JNJokeCategories.corny:
-            n ""
-
-        elif _return.joke_category == jn_jokes.JNJokeCategories.bad:
-            n ""
-
-        else:
-            n ""
+    if random.choice([True, False]):
+        n "Alright!{w=0.75}{nw}"
 
     else:
-        n ""
+        n "Okaaay!{w=0.75}{nw}"
+    
+    extend " Here you go,{w=0.2} [player]!"
+
+    call talk_daily_jokes_seen_before_loop
 
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
@@ -10085,6 +10050,170 @@ label talk_daily_jokes_seen_before:
     $ jnPause(2.25)
     hide black with Dissolve(0.5)
     $ jnPause(0.5)
+
+    return
+
+label talk_daily_jokes_seen_before_loop:
+    python:
+        joke_options = []
+        for joke in jn_jokes.getShownBeforeJokes():
+            joke_options.append((joke.display_name, joke))
+
+        joke_options.sort(key = lambda option: option[0])
+
+    show natsuki reading
+    call screen scrollable_choice_menu(joke_options, ("Nevermind.", None))
+
+    if isinstance(_return, jn_jokes.JNJoke):
+        $ dialogue_choice = random.randint(1, 3)
+        if _return.joke_category == jn_jokes.JNJokeCategories.funny:
+            if dialogue_choice == 1:
+                n "Ooh!{w=0.75}{nw}"
+                extend " Yeah!{w=0.5}{nw}"
+                extend " I love this one!"
+
+            elif dialogue_choice == 2:
+                n "[_return.display_name],{w=0.2} huh?"
+                n "Ehehe.{w=0.75}{nw}"
+                extend " You got it,{w=0.2} [player]!"
+            
+            else:
+                n "Oh!{w=0.2} Oh!{w=0.5}{nw}"
+                extend " I love that one!"
+
+        elif _return.joke_category == jn_jokes.JNJokeCategories.corny:
+            if dialogue_choice == 1:
+                n "...Seriously?{w=0.75}{nw}"
+                extend " But it wasn't even {i}that{/i} good,{w=0.2} [player]!"
+                n "..."
+
+            elif dialogue_choice == 2:
+                n "Man...{w=1}{nw}"
+                extend " you're {i}sure{/i} you wanna hear this one again?{w=0.75}{nw}"
+                extend " Fine."
+            
+            else:
+                n "...This one {i}again{/i}?{w=0.75}{nw}"
+                extend " Jeez..."
+
+        elif _return.joke_category == jn_jokes.JNJokeCategories.bad:
+            if dialogue_choice == 1:
+                n "Oh,{w=0.2} for-{w=0.5}{nw}"
+                n "..."
+                n "You just {i}had{/i} to pick out that one,{w=0.5}{nw}"
+                extend " huh?"
+                n "...Fine.{w=0.75}{nw}"
+                extend " Whatever."
+
+            elif dialogue_choice == 2:
+                n ""
+                n "..."
+                n "Really,{w=0.2} [player]?{w=0.75}{nw}"
+                extend " {i}That{/i} one?"
+                n "...Fine."
+            
+            else:
+                n "Ugh...{w=1}{nw}"
+                extend " for real?"
+                n "You {i}can't{/i} be serious,{w=0.2} [player].{w=0.75}{nw}"
+                extend " [_return.display_name]?"
+                extend " come on."
+                n "..."
+
+        else:
+            if dialogue_choice == 1:
+                n "[_return.display_name]?{w=0.75}{nw}"
+                extend " Sure!"
+
+            elif dialogue_choice == 2:
+                n "[_return.display_name]?{w=0.75}{nw}"
+                extend " You got it!"
+            
+            else:
+                n "[_return.display_name]?{w=0.75}{nw}"
+                extend " That one?"
+                n "'Kay!{w=0.75}{nw}"
+                extend " Here we go!"
+
+        n 1fcsaj "A-{w=0.2}hem!"
+        n 1fcssm "..."
+
+        call expression _return.label
+
+        # TODO: why is return None??
+        if _return.joke_category == jn_jokes.JNJokeCategories.funny:
+            if random.choice((True, False)):
+                n "Man..."
+                extend " I swear that one never gets old!"
+                extend " Ahaha."
+            
+            else:
+                n "Ehehe."
+                extend " Gotta love it, [player]!"
+
+            n "Anyway..."
+            show natsuki questioning
+
+        elif _return.joke_category == jn_jokes.JNJokeCategories.corny:
+            if random.choice((True, False)):
+                n "...Yeah."
+                n "I gotta say.{w=0.75}{nw}"
+                extend " I wouldn't complain if {i}that{/i} one never showed up again.{w=0.75}{nw}"
+                extend " Just saying."
+            
+            else:
+                n "I...{w=1}"
+                extend " think that one should have {i}stayed{/i} in the book,{w=0.5}{nw}"
+                extend " [player]."
+                n "..."
+
+            n "So..."
+            show natsuki questioning
+
+        elif _return.joke_category == jn_jokes.JNJokeCategories.bad:
+            if random.choice((True, False)):
+                n "..."
+                n "Alright.{w=0.75}{nw}"
+                extend " That's that one dealt with.{w=0.75}{nw}"
+                extend " {i}Again{/i}."
+            
+            else:
+                n "Heh.{w=0.75}{nw}"
+                extend " Well, at least some things don't change.{w=0.75}{nw}"
+                extend " {i}Like that joke still sucking{/i}."
+
+            n "Well,{w=0.2}whatever."
+            extend " So..."
+            show natsuki questioning
+
+        else:
+            if random.choice((True, False)):
+                n "Ehehe.{w=0.75}{nw}"
+                extend " There you go,{w=0.2} [player]!"
+            
+            else:
+                n "...And that's all she wrote!{w=0.75}{nw}"
+                extend " Ehehe."
+
+            n "So..."
+            show natsuki questioning
+
+        menu:
+            n "Did you wanna pick out another one [player],{w=0.2} or...?"
+
+            "Sure!":
+                # TODO: writing
+                n "Looping"
+
+                jump talk_daily_jokes_seen_before_loop
+
+            "That's enough for now.":
+                # TODO: writing
+                n "Ending"
+
+    else:
+        #TODO: writing
+        n "Nevermind"
 
     return
 
