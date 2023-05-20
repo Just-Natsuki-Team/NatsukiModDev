@@ -9685,7 +9685,7 @@ label talk_daily_joke(from_unlock=False):
         hide black with Dissolve(0.5)
         $ jnPause(0.5)
 
-    $ daily_jokes = jn_jokes.selectJokes()
+    $ daily_jokes = jn_jokes.getUnseenJokes()
 
     if not daily_jokes:
         $ jn_jokes.resetJokes()
@@ -9711,7 +9711,7 @@ label talk_daily_joke(from_unlock=False):
             n 1fsqsm "Ehehe.{w=1}{nw}"
             extend 1uchgnl " 'ppreciated,{w=0.2} [player]!"
 
-        $ daily_jokes = jn_jokes.selectJokes()
+        $ daily_jokes = jn_jokes.getUnseenJokes()
 
     n 1fcsss "Now,{w=0.75}{nw}" 
     extend 1fsqsm " let's see..."
@@ -9979,6 +9979,112 @@ label talk_daily_jokes_stop:
         n 3fchtsl "Love you too,{w=0.2} [player]~!"
 
     $ persistent._jn_daily_jokes_enabled = False
+
+    return
+
+# Ask Natsuki to let the player see a previously seen joke.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_daily_jokes_seen_before",
+            unlocked=True,
+            prompt="What jokes have you told me before?",
+            category=["Jokes"],
+            conditional="persistent._jn_daily_jokes_unlocked and jn_jokes.getShownBeforeJokes() is not None",
+            affinity_range=(jn_affinity.HAPPY, None),
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_daily_jokes_seen_before:
+    if persistent._jn_daily_jokes_enabled:
+        n "Oh?"
+        extend " What's this?"
+        extend " Someone just can't get enough of the joke book, huh?"
+        n "Ehehe."
+        n "Well..."
+        extend " I didn't exactly take notes or anything on which ones I've told you..."
+        extend " but I'm sure I can figure it out!"
+        n "Just give me a sec here..."
+
+    else:
+        n "Oh?"
+        extend " Am I hearing this right?"
+        n "{i}Now{/i} you suddenly wanna hear all about the jokes?"
+        extend " The ones you practically {i}begged{/i} me to stop telling you?"
+        n "Is that right..."
+        extend " [player]?"
+        n "..."
+        n "Ehehe."
+        n "Say no more, say no more."
+        extend " [n_name] has you covered!"
+        n "Just give me a sec here..."
+
+    show natsuki smug_whistle
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    play audio drawer
+    show joke_book zorder JN_PROP_ZORDER
+    $ jnPause(2.25)
+    hide black with Dissolve(0.5)
+    $ jnPause(0.5)
+
+    n "Alright!"
+    extend " Here you go, [player]!"
+
+    python:
+        joke_options = []
+        for joke in jn_jokes.getShownBeforeJokes(jn_jokes.getAllJokes()):
+            joke_options.append((joke.display_name, joke))
+
+        joke_options.sort(key = lambda option: option[0])
+
+    show natsuki reading
+    call screen scrollable_choice_menu(joke_options, ("Nevermind.", None))
+
+    if isinstance(_return, jn_jokes.JNJoke):
+        if _return.joke_category == jn_jokes.JNJokeCategories.funny:
+            n ""
+
+        elif _return.joke_category == jn_jokes.JNJokeCategories.corny:
+            n ""
+
+        elif _return.joke_category == jn_jokes.JNJokeCategories.bad:
+            n ""
+
+        else:
+            n ""
+
+        n 1fcsaj "A-{w=0.2}hem!"
+        n 1fcssm "..."
+
+        call expression _return.label
+
+        if _return.joke_category == jn_jokes.JNJokeCategories.funny:
+            n ""
+
+        elif _return.joke_category == jn_jokes.JNJokeCategories.corny:
+            n ""
+
+        elif _return.joke_category == jn_jokes.JNJokeCategories.bad:
+            n ""
+
+        else:
+            n ""
+
+    else:
+        n ""
+
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    play audio drawer
+    hide joke_book
+    $ jnPause(2.25)
+    hide black with Dissolve(0.5)
+    $ jnPause(0.5)
 
     return
 
