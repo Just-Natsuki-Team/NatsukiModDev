@@ -10588,3 +10588,54 @@ label talk_can_you_draw:
             n 4fnmfultsf "...And I've got plenty drawn about the likes of {b}you{/b}."
 
     return
+
+# Ask Natsuki to remind the player next time she runs out of topics.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_enable_no_topics_reminder",
+            unlocked=True,
+            prompt="Can you remind me next time you run out of topics?",
+            category=["Natsuki", "Reminders"],
+            conditional="not persistent._jn_natsuki_out_of_topics_remind",
+            player_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_enable_no_topics_reminder:
+    n 1tnmpueqm "Huh?{w=0.75}{nw}"
+    extend 4tnmbo " Topics?{w=0.75}{nw}"
+    extend 2tsrfl " What do you...?"
+    n 2ttrsl "..."
+
+    if Natsuki.isEnamored(higher=True):
+        n 2unmajesu "Oh!{w=0.75}{nw}"
+        extend 4nllsssbr " Yeah,{w=0.2} I remember."
+        $ chosen_tease = jn_utils.getRandomTease()
+        n 3fchsm "Sure thing,{w=0.2} [chosen_tease]!{w=0.75}{nw}"
+        extend 3fsqss " Better not catch you making any complaints though,{w=0.2} [player]."
+        n 4fcsbg "After all..."
+        n 3uchgnl "{i}You{/i} asked for it!{w=0.75}{nw}"
+        extend 3fchsmleme " Ehehe."
+
+    elif Natsuki.isAffectionate(higher=True):
+        n 4unmajesu "Oh!{w=0.75}{nw}"
+        extend 4nslsssbr " Right,{w=0.5} that."
+        n 2fchbg "Sure thing!{w=0.75}{nw}"
+        extend 2fsqbg " Just remember,{w=0.2} [player]..."
+        n 2nchgn "You asked for it!"
+
+    else:
+        n 2unmfleex "Oh!{w=0.75}{nw}"
+        extend 2cllsssbr " Heh.{w=0.75}{nw}"
+        extend 4cslsssbr " Right."
+        n 2ullaj "I mean...{w=1}{nw}"
+        extend 2tnmbo " sure thing,{w=0.2} I guess."
+        n 2ccspo "J-{w=0.2}just don't get all antsy when I gotta tell you what's up again,{w=0.2} got it?"
+
+    $ persistent._jn_natsuki_out_of_topics_remind = True
+    return
