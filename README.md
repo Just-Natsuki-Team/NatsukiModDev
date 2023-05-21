@@ -76,6 +76,13 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
             <sub><b>Obsidian Knife</b></sub>
         </a>
     </td>
+    <td align="center">
+        <a href="https://github.com/Booplicate">
+            <img src="https://avatars.githubusercontent.com/u/53382877?v=4" width="100;" alt="Booplicate"/>
+            <br />
+            <sub><b>Booplicate</b></sub>
+        </a>
+    </td>
     </tr>
 </table>
 
