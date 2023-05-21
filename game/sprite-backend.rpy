@@ -534,15 +534,8 @@ init 1 python:
         #Parse the expression code and generate the displayable
         disp = jn_generate_natsuki_sprite(**_parse_exp_code(exp_code))
 
-        #Get existing attrs to append this one to the known attrs
-        _existing_attr_list = renpy.display.image.image_attributes["natsuki"]
-
-        #Now add the displayable
-        renpy.display.image.images[("natsuki", exp_code)] = disp
-
-        #And finally update the attributes
-        if exp_code not in _existing_attr_list:
-            _existing_attr_list.append(exp_code)
+        #Add the displayable and update the attributes
+        renpy.display.image.register_image(("natsuki", exp_code), disp)
 
     def _find_target_override(self):
         """
