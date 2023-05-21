@@ -241,7 +241,7 @@ Visit the official JN extras repository [here](https://github.com/Just-Natsuki-T
     - If you are working on a bug: `bugfix/your-bugfix`
     - If you are working on a documentation change: `docs/your-docs`
     - Remember, a branch name should be descriptive!
-- When making an MR (Merge Request) from your fork, always target the most recent version-formatted branch: **please do not targer master**, as this should always be stable, thoroughly tested code that matches with what we are distributing in our releases. We _never_ go straight from a feature branch into `master`.
+- When making an MR (Merge Request) from your fork, always target the most recent version-formatted branch: **please do not targer master**, as this should always be stable, team-reviewed and thoroughly tested code that matches with what we are distributing in our releases. We _never_ go straight from a feature branch into `master`.
     - If a version-formatted branch does not exist, please let us know.
 - See our [wiki](https://github.com/Just-Natsuki-Team/NatsukiModDev/wiki) for more information!
 
