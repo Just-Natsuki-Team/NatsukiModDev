@@ -10023,7 +10023,7 @@ label talk_daily_jokes_seen_before_start:
         extend  " [n_name] has you covered!"
         n  "Just give me a sec here..."
 
-    show natsuki smug_whistle
+    show natsuki 1fcssmeme
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     play audio drawer

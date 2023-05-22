@@ -241,8 +241,7 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
 
 screen scrollable_choice_menu(items, last_item=None, option_width=560):
     fixed:
-        #TODO: fix this floating right too much
-        area (680, 40, option_width, 440)
+        area (1280 - (40 + option_width), 40, option_width, 440)
         vbox:
             ypos 0
             yanchor 0

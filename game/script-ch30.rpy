@@ -659,8 +659,8 @@ label player_select_topic(is_repeat_topics=False):
 
     call screen categorized_menu(
         menu_items=menu_items,
-        category_pane_space=(1020, 70, 250, 572),
-        option_list_space=(740, 70, 250, 572),
+        category_pane_space=(990, 40, 250, 572),
+        option_list_space=(710, 40, 250, 572), # x should be 280 less than above
         category_length=len(_topics))
 
     $ _choice = _return
