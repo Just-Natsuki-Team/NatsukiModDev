@@ -10062,7 +10062,7 @@ label talk_daily_jokes_seen_before_loop:
         joke_options.sort(key = lambda option: option[0])
 
     show natsuki reading
-    call screen scrollable_choice_menu(joke_options, ("Nevermind.", None), 250)
+    call screen scrollable_choice_menu(joke_options, ("Nevermind.", None), 425)
     $ joke_choice = _return
 
     if isinstance(joke_choice, jn_jokes.JNJoke):

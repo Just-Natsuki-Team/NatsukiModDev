@@ -239,7 +239,9 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
 
                             null height 5
 
-screen scrollable_choice_menu(items, last_item=None, option_width=560):
+screen scrollable_choice_menu(items, last_item=None, option_width=560, icon_path=None):
+    if icon_path:
+        add icon_path anchor(0, 0) pos(1280 - (275 + option_width), 20)
     fixed:
         area (1280 - (40 + option_width), 40, option_width, 440)
         vbox:
