@@ -10616,7 +10616,7 @@ label talk_enable_no_topics_reminder:
 
     if already_discussed_topic:
         n 4fnmwrleexsbr "...H-{w=0.2}hey!{w=0.75}{nw}"
-        extend 4fsqwr " Now hold on just a second here,{w=0.2} [player]!{w=0.75}{nw}"
+        extend 4fsqwrl " Now hold on just a second here,{w=0.2} [player]!{w=0.75}{nw}"
         extend 4fcsgs " I know {i}exactly{/i} what this is all about!"
         n 2fllfl "It wasn't even that long ago you told me to {i}stop{/i} reminding you..."
         n 2fnmgs "And now you're getting on my case about reminding you{w=0.3}{nw}" 
