@@ -127,7 +127,8 @@ style categorized_menu_button_text_italic is categorized_menu_button_text:
     italic True
 
 screen categorized_menu(menu_items, category_pane_space, option_list_space, category_length):
-    at categorized_menu_slide_in_right
+    # TODO: u'at' is not a keyword argument or valid child of the screen statement.
+    # at categorized_menu_slide_in_right
     style_prefix "categorized_menu"
 
     #Just entered this menu so just need to list categories
