@@ -32,7 +32,7 @@ label ch30_visual_setup:
 label ch30_init:
     python:
         import codecs
-        import random  
+        import random
 
         # MIGRATIONS
 
@@ -47,7 +47,7 @@ label ch30_init:
             renpy.jump("greeting_pic")
 
         if (
-            jn_utils.getAllDirectoryFiles(path=renpy.config.gamedir, extension_list=["rpy"]) 
+            jn_utils.getAllDirectoryFiles(path=renpy.config.gamedir, extension_list=["rpy"])
             and persistent._jn_scw
         ):
             renpy.show_screen("warn", "596f75206172652072756e6e696e6720736f7572636520282e727079292066696c65732120556e6c65737320796f75206b6e6f77207768617420796f752061726520646f696e672c20706c656173652073776974636820746f2072656c656173652066696c65732e".decode("hex"))
@@ -95,7 +95,7 @@ label ch30_init:
 
         # If we have decorations from the last holiday, and the day hasn't changed, then we should put them back up
         if (
-            len(persistent._jn_holiday_deco_list_on_quit) > 0 
+            len(persistent._jn_holiday_deco_list_on_quit) > 0
             and datetime.date.today().day == persistent.jn_last_visited_date.day
             and not tt_in_session
         ):
@@ -372,8 +372,8 @@ label call_next_topic(show_natsuki=True):
     # Reenable the UI and hop back to the loop
     python:
         import re
-        
-        if isinstance(_topic, basestring): 
+
+        if isinstance(_topic, basestring):
             # Prevent pushed mechanic topics such as weather changes from resetting topic wait timer
             if re.search("(^talk_)", _topic) or not re.search("(_change$)|(^idle_)", _topic):
                 global LAST_TOPIC_CALL
@@ -456,7 +456,7 @@ init python:
                 queue(random.choice(topic_pool).label)
 
             elif (
-                not store.persistent.jn_natsuki_repeat_topics 
+                not store.persistent.jn_natsuki_repeat_topics
                 and not store.persistent._jn_out_of_topics_warning_given
                 and persistent._jn_natsuki_out_of_topics_remind
             ):

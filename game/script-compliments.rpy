@@ -70,17 +70,17 @@ label compliment_amazing:
     if jn_compliments.last_compliment_type == jn_compliments.JNComplimentTypes.amazing:
         if Natsuki.isEnamored(higher=True):
             $ player_initial = jn_utils.getPlayerInitial()
-            n 4uskemfesh "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}" 
-            extend 1fcsemfsbr " Honestly!{w=0.75}{nw}" 
-            extend 4kwmemfsbr " Again?!{w=1}{nw}" 
+            n 4uskemfesh "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
+            extend 1fcsemfsbr " Honestly!{w=0.75}{nw}"
+            extend 4kwmemfsbr " Again?!{w=1}{nw}"
             extend 4kslpofsbr " Jeez..."
             n 2nslsllsbr "..."
-            n 2nslpulsbr "But...{w=0.75}{nw}" 
-            extend 1ksqcalsbr " thanks.{w=0.5} It really...{w=0.75}{nw}" 
+            n 2nslpulsbr "But...{w=0.75}{nw}"
+            extend 1ksqcalsbr " thanks.{w=0.5} It really...{w=0.75}{nw}"
             extend 4ksrcalsbr " means a lot to me."
             n 4ksqajlsbr "...And [player]?"
             n 1kslbolsbr "..."
-            n 2fcstrl "...You're pretty amazing too." 
+            n 2fcstrl "...You're pretty amazing too."
             n 2fcspol "A-{w=0.2}and you better remember that."
 
             if Natsuki.isLove(higher=True):
@@ -88,9 +88,9 @@ label compliment_amazing:
 
         else:
             n 1nslsslsbr "Jeez,{w=0.2} [player]...{w=0.5}{nw}"
-            extend 1klrbolsbr " you...{w=0.5} really are doling out the compliments today,{w=0.5}{nw}" 
+            extend 1klrbolsbr " you...{w=0.5} really are doling out the compliments today,{w=0.5}{nw}"
             extend 4ksrsslsbr " huh?"
-            n 2fcsajl "D-{w=0.2}don't get me wrong though!{w=0.5}{nw}" 
+            n 2fcsajl "D-{w=0.2}don't get me wrong though!{w=0.5}{nw}"
             extend 2fcsbglsbl " I'm not complaining!"
             extend 2fcssmlsbl " I-{w=0.2}it's good to know we {i}both{/i} agree!"
             extend 4nslsslsbr " Just..."
@@ -101,7 +101,7 @@ label compliment_amazing:
 
     else:
         if Natsuki.isEnamored(higher=True):
-            n 1kwmpul "...Y{w=0.2}-you really think so,{w=0.5}{nw}" 
+            n 1kwmpul "...Y{w=0.2}-you really think so,{w=0.5}{nw}"
             extend 1kllpul " [player]?"
             n 4kllsrl "..."
             n 1ncsssl "Heh."
@@ -109,11 +109,11 @@ label compliment_amazing:
             n 2kslbol "..."
             n 2ncspul "But...{w=0.75}{nw}"
             extend 2kwmbol " thanks."
-            n 4fcsajlsbr "It means...{w=0.75}{nw}" 
+            n 4fcsajlsbr "It means...{w=0.75}{nw}"
             extend 1ksrsllsbr " a lot to me,{w=0.5} [player]."
-            n 1ksqsllsbr "Really.{w=0.75}{nw}" 
-            extend 4ksqbol " Thank you.{w=0.75}{nw}" 
-            extend 4kcspul " You're honestly...{w=1}{nw}" 
+            n 1ksqsllsbr "Really.{w=0.75}{nw}"
+            extend 4ksqbol " Thank you.{w=0.75}{nw}"
+            extend 4kcspul " You're honestly...{w=1}{nw}"
             $ chosen_descriptor = jn_utils.getRandomDescriptor()
             extend 1ksrcal " [chosen_descriptor],{w=0.3} [player]."
             n 1ksrfsl "..."
@@ -122,8 +122,8 @@ label compliment_amazing:
                 n 4kchssf "L-{w=0.2}love you."
 
         else:
-            n 1uskgslesh "O-{w=0.2}oh!{w=0.5}{nw}" 
-            extend 4fllbglesssbr " A-{w=0.2}aha!{w=0.5}{nw}" 
+            n 1uskgslesh "O-{w=0.2}oh!{w=0.5}{nw}"
+            extend 4fllbglesssbr " A-{w=0.2}aha!{w=0.5}{nw}"
             extend 2fcsbglsbr " Well,{w=0.2} I knew you'd {i}have{/i} to admit it {i}eventually{/i}!"
             n 2fcssmlsbl "I'm just glad to hear {i}both{/i} of us agree on that.{w=0.75}{nw}"
             extend 1fsldvlsbl " Ehehe."
@@ -171,7 +171,7 @@ label compliment_beautiful:
             n 1ksrcal "..."
             n 4ncsssl "...Heh.{w=1}{nw}"
             extend 4nslfsl " Nevermind."
-            
+
             if Natsuki.isLove(higher=True):
                 n 2kslbol "T-{w=0.2}thanks again,{w=0.2} [chosen_tease]."
                 n 1kslfsfeaf "...Y-{w=0.2}you always make me feel prettier."
@@ -182,7 +182,7 @@ label compliment_beautiful:
 
         else:
             n 4fskgslesh "E-{w=0.2}excuse me?!"
-            n 1fwmgslsbl "[player]!{w=0.5}{nw}" 
+            n 1fwmgslsbl "[player]!{w=0.5}{nw}"
             extend 4fbkwrlsbl " What did {i}literally{/i} just I tell you?!"
             $ chosen_tease = jn_utils.getRandomTease()
             n 1fcsgsl "Are you {i}trying{/i} to give me a heart attack or something?!{w=0.75}{nw}"
@@ -242,18 +242,18 @@ label compliment_beautiful:
             n 2fllemlsbl "Sheesh...{w=0.75}{nw}"
             extend 2fslpolsbl " come on,{w=0.2} [player]..."
             n 1fcsbolsbr "..."
-            n 1fcsemlsbr "I-{w=0.2}I mean,{w=0.75}{nw}" 
-            extend 3fsrbglsbr " I'm glad we both agree,{w=0.75}{nw}" 
+            n 1fcsemlsbr "I-{w=0.2}I mean,{w=0.75}{nw}"
+            extend 3fsrbglsbr " I'm glad we both agree,{w=0.75}{nw}"
             extend 4fsrunlsbr " but..."
             n 1fcsunlesssbl "Uuuuuu...!"
-            n 1fcsemlsbl "Just..." 
+            n 1fcsemlsbl "Just..."
             n 1kslcal "..."
             n 2ksqsllsbr "...Think a little before you just blurt stuff out like that.{w=0.75}{nw}"
             extend 2fsrsllsbr " I-{w=0.2}it just makes everything all awkward."
             n 1fsrsslsbr "...Heh.{w=0.75}{nw}"
             extend 4fcsajlsbr " A-{w=0.2}and besides,{w=0.75}{nw}"
             n 3fcsbglsbl " I {i}always{/i} look stunning anyway!{w=0.75}{nw}"
-            extend 3nslsslsbl " So...{w=0.5}{nw}" 
+            extend 3nslsslsbl " So...{w=0.5}{nw}"
             extend 3nslbol " yeah."
             n 3kslsllsbr "..."
 
@@ -280,7 +280,7 @@ label compliment_confident:
         extend 2fcsbg " Well,{w=0.2} I'm glad you still agree,{w=0.2} [player]!"
         n 2fllsm "Besides,{w=0.5}{nw}"
         extend 2fcssm " it's only natural."
-        
+
         if Natsuki.isEnamored(higher=True):
             n 4nslssl "E-{w=0.2}especially with you around,"
             $ chosen_tease = jn_utils.getRandomTease()
@@ -290,7 +290,7 @@ label compliment_confident:
             n 2fcsbgedz "Brimming with confidence,{w=0.5}{nw}"
             extend 2flrbs " always unfazed..."
             n 3uchgnl "...That's just what it means to be a pro,{w=0.2} right?"
-    
+
     else:
         n 4fsqct "Oho?{w=1}{nw}"
         extend 3fsqcs " You do,{w=0.2} do you?"
@@ -305,7 +305,7 @@ label compliment_confident:
         n 3usqsm "The {i}killer{/i} personality?"
         n 4fchsmedz "Ehehe."
         n 2fcsss "Well,{w=0.2} whatever it is..."
-        
+
         if Natsuki.isLove(higher=True):
             n 4nsrsmsbl "..."
             n 4fcssmlsbl "I-{w=0.2}I hope I inspire you just as much as you inspire me.{w=0.75}{nw}"
@@ -345,24 +345,24 @@ label compliment_cute:
             n 4fcsanlsbr "..."
             n 4fcsfulsbl "..."
             n 1fcsfufsbl "Urgh!"
-            n 4fcsgsf "Alright,{w=0.5}{nw}" 
-            extend 1fcsemfsbl " fine!{w=0.5}{nw}" 
-            extend 2fcswrfsbl " Fine!{w=0.5}{nw}" 
+            n 4fcsgsf "Alright,{w=0.5}{nw}"
+            extend 1fcsemfsbl " fine!{w=0.5}{nw}"
+            extend 2fcswrfsbl " Fine!{w=0.5}{nw}"
             extend 2fbkwrfsbl " You win,{w=0.2} okay?!"
             n 2fcsunfesi "..."
-            n 2fcsemf  "I'm kinda...{w=0.5} maybe...{w=0.75}{nw}" 
-            extend 1fslemf " sorta..." 
+            n 2fcsemf  "I'm kinda...{w=0.5} maybe...{w=0.75}{nw}"
+            extend 1fslemf " sorta..."
             n 1fcsgsf "Somehow..."
             n 4fsqemf "In some {i}abstract{/i} way..."
             n 1fsrsrf "..."
             n 1fsqpuf "...{w=0.3}'cute.'"
             n 2fsqslf "..."
-            n 2fcsemf "There.{w=0.75}{nw}" 
-            extend 2fcsgsf " I said it,{w=0.2} [player].{w=0.75}{nw}" 
-            extend 2fcspof " I said it.{w=0.75}{nw}" 
+            n 2fcsemf "There.{w=0.75}{nw}"
+            extend 2fcsgsf " I said it,{w=0.2} [player].{w=0.75}{nw}"
+            extend 2fcspof " I said it.{w=0.75}{nw}"
             extend 2fllpof " {i}Hooray{/i} for you."
-            n 1fsqpof "Are we done?{w=0.75}{nw}" 
-            extend 4fnmpof " Are you happy?{w=0.75}{nw}" 
+            n 1fsqpof "Are we done?{w=0.75}{nw}"
+            extend 4fnmpof " Are you happy?{w=0.75}{nw}"
             extend 2fcsgsf " Are you {i}pleased{/i} with yourself now?"
             n 1flrpof "Jeez..."
             n 2fsqpof "I swear,{w=0.2} you're such a goofball sometimes..."
@@ -372,7 +372,7 @@ label compliment_cute:
                 n 3fcsajl "All this talk about {i}cuteness{/i}?{w=0.75}{nw}"
                 extend 3flrcal " Being {i}adorable{/i}?"
                 n 1fsqssl "...Heh."
-                n 2fcssslsbl "S-{w=0.2}sounds like some pretty bad projection,{w=0.5}{nw}" 
+                n 2fcssslsbl "S-{w=0.2}sounds like some pretty bad projection,{w=0.5}{nw}"
                 extend 4fcsbglsbl " i-{w=0.2}if you ask me."
                 n 3fsqcsl "..."
                 n 3fsqbgl "...Am I right,{w=0.5} {i}[player]{/i}?"
@@ -402,7 +402,7 @@ label compliment_cute:
                 n 3nslcal "..."
                 n 1nllajl "Well..."
                 n 2fcspol "Just count yourself lucky you're in my good books."
-                n 2fsqsslsbl "O-{w=0.2}or I wouldn't be {i}nearly{/i} this patient.{w=0.75}{nw}" 
+                n 2fsqsslsbl "O-{w=0.2}or I wouldn't be {i}nearly{/i} this patient.{w=0.75}{nw}"
                 extend 2fsqsmlsbl " Ehehe."
 
             else:
@@ -414,7 +414,7 @@ label compliment_cute:
 
     else:
         if Natsuki.isEnamored(higher=True):
-            n 1fcsbslsbr "A-{w=0.2}Aha!{w=0.5}{nw}" 
+            n 1fcsbslsbr "A-{w=0.2}Aha!{w=0.5}{nw}"
             extend 2fchbglsbr " Nope!"
             n 2fsqfslsbr "..."
             n 4fsqsmlsbr "Nice try,{w=0.2} [player]..."
@@ -422,14 +422,14 @@ label compliment_cute:
             extend 3fcssmlsbl " Ehehe."
 
         else:
-            n 4uskemfesh "W-{w=0.2}what?" 
+            n 4uskemfesh "W-{w=0.2}what?"
             n 4fnmemfsbl "{i}What{/i} did you just say?!"
             n 1fllunfsbl "..."
             n 1nsrsrfsbr "..."
-            n 2fsrssfsbr "I...{w=0.75}{nw}" 
+            n 2fsrssfsbr "I...{w=0.75}{nw}"
             extend 2fsqunfsbr " must have misheard you."
-            n 4fcsbgl "Y-{w=0.2}yeah.{w=0.5}{nw}" 
-            extend 3fchbgl " Yeah!{w=0.75}{nw}" 
+            n 4fcsbgl "Y-{w=0.2}yeah.{w=0.5}{nw}"
+            extend 3fchbgl " Yeah!{w=0.75}{nw}"
             extend 3fcssslsbl " I {i}totally{/i} misheard you!{w=0.5} O-{w=0.2}one hundred percent."
             n 3fslunlsbl "..."
 
@@ -465,7 +465,7 @@ label compliment_hilarious:
             if Natsuki.isLove(higher=True):
                 $ chosen_tease = jn_utils.getRandomTease()
                 n 3fchbll "Love you too,{w=0.2} [chosen_tease]~!"
-            
+
         else:
             n 2fchsmeme "You aren't escaping {i}my{/i} routine any time soon!{w=0.5}{nw}"
             extend 2nchgnl " Ahaha."
@@ -475,20 +475,20 @@ label compliment_hilarious:
             n 4fcscs "Oho?{w=0.75}{nw}"
             extend 3fcsbg " What's that,{w=0.2} [player]?"
             n 3fchgnlelg "So you {w=0.2}{i}do{/i}{w=0.2} recognize talent when you see it!{w=0.75}{nw}"
-            extend 4fcssml " Ehehe..." 
+            extend 4fcssml " Ehehe..."
             n 2nslfsl "..."
-            n 2nslbol "But...{w=0.75}{nw}" 
+            n 2nslbol "But...{w=0.75}{nw}"
             extend 2tsqcal " seriously,{w=0.2} [player]?"
             n 1ksrcal "..."
-            n 1klrss "I'm honestly...{w=0.75}{nw}" 
+            n 1klrss "I'm honestly...{w=0.75}{nw}"
             extend 4nsrss " kinda glad to hear that."
-            n 1fcsajlsbr "I-{w=0.2}I know it's dumb.{w=0.75}{nw}" 
+            n 1fcsajlsbr "I-{w=0.2}I know it's dumb.{w=0.75}{nw}"
             extend 4nslbolsbr " But I always kinda worry about how much fun you're having here."
             n 4nlrcalsbr "With me,{w=0.2} I mean."
             n 4ksqbolsbl "I...{w=0.3} don't want you to get all bored..."
             n 2fcsajlsbl "T-{w=0.2}that'd just be super lame."
-            n 1kllbol "So...{w=0.5}{nw}" 
-            extend 1knmbol " thanks,{w=0.2} [player].{w=0.5}{nw}" 
+            n 1kllbol "So...{w=0.5}{nw}"
+            extend 1knmbol " thanks,{w=0.2} [player].{w=0.5}{nw}"
             extend 2klrfsl " Really."
             n 2nsrsslsbl "It means a lot."
 
@@ -527,8 +527,8 @@ label compliment_inspirational:
     $ Natsuki.calculatedAffinityGain(bypass=get_topic("compliment_inspirational").shown_count == 0)
 
     if jn_compliments.last_compliment_type == jn_compliments.JNComplimentTypes.inspirational:
-        n 1nchgn "Ahaha.{w=0.75}{nw}" 
-        extend 2fcsbg " Well,{w=0.2} what can I say?{w=0.75}{nw}" 
+        n 1nchgn "Ahaha.{w=0.75}{nw}"
+        extend 2fcsbg " Well,{w=0.2} what can I say?{w=0.75}{nw}"
         extend 2fchsmedz " I guess it must be natural~."
         n 1nchsm "But thanks,{w=0.2} [player]!"
         n 4fsqsm "Don't worry."
@@ -583,9 +583,9 @@ label compliment_style:
 
             # Non-uniform dialogue
             if Natsuki.isEnamored(higher=True):
-                n 1fcssm "Ehehe.{w=0.5}{nw}" 
+                n 1fcssm "Ehehe.{w=0.5}{nw}"
                 extend 3fcsbgeme " Still awestruck by my sense of fashion,{w=0.2} [player]?"
-                n 3ullss "Well,{w=0.5}{nw}" 
+                n 3ullss "Well,{w=0.5}{nw}"
                 extend 4tllsm " if nothing else -{w=0.5}{nw}"
                 extend 2fcssm " you can't deny I'm a snappy dresser."
 
@@ -598,10 +598,10 @@ label compliment_style:
                     extend 2fchgnledz " 'Preciated!"
 
             else:
-                n 4tnmaj "Oh?{w=0.5}{nw}" 
+                n 4tnmaj "Oh?{w=0.5}{nw}"
                 extend 2tsqss " Sounds like {i}someone{/i} is just itching to take a few points,{w=0.2} huh?"
                 n 2fsqsm "Ehehe."
-                n 1fchbg "Relax,{w=0.2} relax!{w=0.5}{nw}" 
+                n 1fchbg "Relax,{w=0.2} relax!{w=0.5}{nw}"
                 extend 1uchsm " I'm kidding,{w=0.2} [player].{w=0.3} Don't worry."
                 n 4fsqsm "...Mostly."
                 n 3fwlbl "But thanks again!"
@@ -636,21 +636,21 @@ label compliment_style:
 
             # Non-uniform dialogue
             if Natsuki.isEnamored(higher=True):
-                n 1fchsmleme "Ehehe.{w=0.75}{nw}" 
+                n 1fchsmleme "Ehehe.{w=0.75}{nw}"
                 extend 1nchsml " I'm just happy you like this outfit,{w=0.2} [player]!"
-                n 1ulrbol "But then...{w=0.75}{nw}" 
+                n 1ulrbol "But then...{w=0.75}{nw}"
                 extend 4tlrbol " now that I think about it..."
                 n 2tsqssl "Should I {i}really{/i} be surprised?"
-                n 3fcsbgl "I-{w=0.2}I {i}am{/i} the one wearing it,{w=0.5}{nw}" 
+                n 3fcsbgl "I-{w=0.2}I {i}am{/i} the one wearing it,{w=0.5}{nw}"
                 extend 3uchgnl " after all!"
 
                 if Natsuki.isLove(higher=True):
                     n 3fchblleaf "Love you too,{w=0.2} [player]~!"
 
             else:
-                n 1fcsbglsbl "H-{w=0.2}ha!{w=0.5}{nw}" 
+                n 1fcsbglsbl "H-{w=0.2}ha!{w=0.5}{nw}"
                 extend 2flrbglsbl " I'm glad you agree!"
-                n 4fcssml "It's only natural though,{w=0.2} right?{w=0.5}{nw}" 
+                n 4fcssml "It's only natural though,{w=0.2} right?{w=0.5}{nw}"
                 extend 2fcsbgledz " I like to pride myself on my {i}superb{/i} sense of style!"
                 n 2fwlbll "Good job noticing,{w=0.2} [player]!"
                 extend 2fchgnl " Ehehe."
@@ -676,7 +676,7 @@ label compliment_style:
                 extend 2tnmdv " You mean my school uniform?"
                 n 4fchdvesi "Pfffft-!"
                 n 1fchbselg "What kind of compliment is {i}that{/i}?!"
-                n 2tlrsslsbl "You really {w=0.2}{i}aren't{/i}{w=0.2} good at this sort of thing are you,{w=0.5}{nw}" 
+                n 2tlrsslsbl "You really {w=0.2}{i}aren't{/i}{w=0.2} good at this sort of thing are you,{w=0.5}{nw}"
                 extend 2tnmsmlsbl " [player]?{w=0.5}{nw}"
                 extend 2fsqsmlsbl " Ehehe."
                 n 1fcsbgl "Well,{w=0.75}{nw}"
@@ -715,7 +715,7 @@ label compliment_thoughtful:
             extend 2fcseml " what kind of [friend_type] would I be if I {i}wasn't{/i} at least trying to be thoughtful?"
             n 2fsrbglsbr "P-{w=0.2}plus it looks like you're trying just as much anyway!"
             n 4tsrbolsbr "..."
-            n 1tsrpu "Well,{w=0.5}{nw}" 
+            n 1tsrpu "Well,{w=0.5}{nw}"
             extend 1fsrsssbl " if it puts your mind at ease...{w=1}{nw}"
             $ chosen_descriptor = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else jn_utils.getRandomTease()
             extend 3fcssml " no worries,{w=0.2} [chosen_descriptor]!"
@@ -736,11 +736,11 @@ label compliment_thoughtful:
             n 2nslss "Man...{w=0.75}{nw}"
             extend 2fchgnl " you make it sound like I had to put effort in or something!"
             n 1fcssmlsbl "Ahaha."
-            n 4ullss "Nah,{w=0.75}{nw}" 
+            n 4ullss "Nah,{w=0.75}{nw}"
             extend 3fcsss " it's nothing."
             n 1unmbo "Being a little thoughtful is what {i}most{/i} people deserve,{w=0.2} at least.{w=1}{nw}"
             extend 2flrca " I kinda just consider that being a decent person."
-            n 2ulraj "That being said though,{w=0.2} [player]." 
+            n 2ulraj "That being said though,{w=0.2} [player]."
             n 1fcscal "I don't mind putting in a bit more for you..."
             n 4fsqssl "...But only a {i}bit{/i}.{w=0.75}{nw}"
             extend 4fchsml " Ehehe."

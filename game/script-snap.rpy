@@ -319,11 +319,11 @@ init 0 python in jn_snap:
             return renpy.substitute("[n_name]")
 
 label snap_intro:
-    n 1nchbs "Alriiiight!{w=0.75}{nw}" 
+    n 1nchbs "Alriiiight!{w=0.75}{nw}"
     extend 1fcsbg " Let's play some Snap!"
 
     if not persistent.jn_snap_explanation_given:
-        n 1nnmaj "Oh -{w=0.3} before we start,{w=0.2} did you want an explanation?{w=0.5}{nw}" 
+        n 1nnmaj "Oh -{w=0.3} before we start,{w=0.2} did you want an explanation?{w=0.5}{nw}"
         extend 4tllca " You know,{w=0.2} on how it works?"
         n 1nchsm "It's a super simple game,{w=0.2} but I thought I'd better ask."
         n 3fcsbg "I don't wanna win just because you didn't know what you were doing!"
@@ -339,14 +339,14 @@ label snap_intro:
 
             "No, I'm ready.":
                 n 1fsqbg "Oh?{w=0.2} You're ready,{w=0.1} huh?"
-                n 3tsqdv "Ready to get your butt kicked!{w=0.75}{nw}" 
+                n 3tsqdv "Ready to get your butt kicked!{w=0.75}{nw}"
                 extend 3fchbs " Let's go,{w=0.1} [player]!"
                 $ persistent.jn_snap_explanation_given = True
 
     jump snap_start
 
 label snap_explanation:
-    n 1nnmss "Alright!{w=0.2} So the rules are dead simple,{w=0.5}{nw}" 
+    n 1nnmss "Alright!{w=0.2} So the rules are dead simple,{w=0.5}{nw}"
     extend 3nslsm " like I was saying before."
     n 1unmaj "Basically,{w=0.1} we each get half a deck of cards."
     n 3nchss "Then,{w=0.1} we take it in turns placing a card face up on the table -{w=0.5}{nw}"
@@ -401,7 +401,7 @@ label snap_start:
     show screen snap_ui
     $ jnPause(1)
 
-    n 1nchbg "'Kay!{w=0.75}{nw}" 
+    n 1nchbg "'Kay!{w=0.75}{nw}"
     extend 1fchsm " That's the deck shuffled!"
     n 4fsqsm "Let's see who's up first..."
 
@@ -412,14 +412,14 @@ label snap_start:
     $ jn_snap.update_turn_indicator()
 
     if jn_snap._is_player_turn:
-        n 1fcssm "Ehehe.{w=0.5}{nw}" 
-        extend 1fcsbg " Bad luck,{w=0.2} [player].{w=0.75}{nw}" 
+        n 1fcssm "Ehehe.{w=0.5}{nw}"
+        extend 1fcsbg " Bad luck,{w=0.2} [player].{w=0.75}{nw}"
         extend 1fchgn " Looks like you're up first!"
 
     else:
         n 3nsqsl "..."
-        n 3fslpo "Hmph.{w=0.5}{nw}" 
-        extend 3fcsaj " You just got lucky this time.{w=0.75}{nw}" 
+        n 3fslpo "Hmph.{w=0.5}{nw}"
+        extend 3fcsaj " You just got lucky this time.{w=0.75}{nw}"
         extend 3fcsca " I guess I'll go first then,{w=0.2} [player]."
 
     show natsuki snap
@@ -441,7 +441,7 @@ label snap_main_loop:
         # Player has lost; end the game
         $ jn_snap._player_win_streak = 0
         $ jn_snap._natsuki_win_streak += 1
-        $ persistent._jn_snap_natsuki_wins += 1 
+        $ persistent._jn_snap_natsuki_wins += 1
         $ jn_snap.last_game_result = jn_snap.RESULT_NATSUKI_WIN
         jump snap_end
 
@@ -518,11 +518,11 @@ label snap_quip(is_player_snap, is_correct_snap):
             # Natsuki calls off the game
             elif jn_snap._player_failed_snap_streak == 6 and not persistent.jn_snap_player_is_cheater:
                 $ jn_snap_controls_enabled = False
-                n 2fupfl "Ugh...{w=1.25}{nw}" 
+                n 2fupfl "Ugh...{w=1.25}{nw}"
                 extend 2fcsfl " look,{w=0.2} [player]."
-                n 2fcsaj "If you aren't gonna play fairly,{w=0.5}{nw}" 
+                n 2fcsaj "If you aren't gonna play fairly,{w=0.5}{nw}"
                 extend 2flrem " then why should I bother playing at all?"
-                n 4fllfl "I even {i}warned{/i} you before,{w=0.5}{nw}" 
+                n 4fllfl "I even {i}warned{/i} you before,{w=0.5}{nw}"
                 extend 4fnmfl " too!"
                 n 4fcsemesi "..."
                 n 4fcssl "You know what?{w=0.75}{nw}"
@@ -597,7 +597,7 @@ label snap_end:
     if jn_snap.last_game_result == jn_snap.RESULT_PLAYER_WIN:
 
         if jn_snap._player_win_streak > 10:
-            n 3csltr "Yeah,{w=0.3} yeah.{w=1}{nw}" 
+            n 3csltr "Yeah,{w=0.3} yeah.{w=1}{nw}"
             extend 3cslpo " You won again."
             n 3csrsssbr "...You nerd."
 
@@ -616,7 +616,7 @@ label snap_end:
             n 4fcsem "J-{w=0.2}jeez!{w=0.5}{nw}"
             extend 4flrgs " Five {i}already{/i}?!{w=0.75}{nw}"
             extend 2cslca " Come on."
-            n 2fcsajsbl "I never {i}said{/i} I was a professional,{w=0.5}{nw}" 
+            n 2fcsajsbl "I never {i}said{/i} I was a professional,{w=0.5}{nw}"
             extend 2fcsposbl " you know."
 
         elif jn_snap._player_win_streak == 3:
@@ -625,7 +625,7 @@ label snap_end:
             n 1fcsbgsbr "'Cause that lucky streak won't last forever!"
 
         else:
-            n 3nllpo "Well,{w=0.2} heck.{w=0.5}{nw}" 
+            n 3nllpo "Well,{w=0.2} heck.{w=0.5}{nw}"
             extend 3nslsssbr " I guess that's it,{w=0.2} huh?"
             n 3fcssssbr "W-{w=0.2}well played,{w=0.2} [player].{w=0.75}{nw}"
             extend 3csrposbr " I guess."
@@ -634,11 +634,11 @@ label snap_end:
     elif jn_snap.last_game_result == jn_snap.RESULT_NATSUKI_WIN:
 
         if jn_snap._natsuki_win_streak > 10:
-            n 1fcsss "Man,{w=0.5}{nw}" 
-            extend 4fcsbg " this is just too{w=0.25}{nw}" 
-            extend 4fchgn " {i}easy{/i}!{w=0.75}{nw}" 
+            n 1fcsss "Man,{w=0.5}{nw}"
+            extend 4fcsbg " this is just too{w=0.25}{nw}"
+            extend 4fchgn " {i}easy{/i}!{w=0.75}{nw}"
             extend 4fcsbg " I {i}almost{/i} feel bad."
-            n 3fsqsm "...Almost.{w=0.75}{nw}" 
+            n 3fsqsm "...Almost.{w=0.75}{nw}"
             extend 3fchsmeme " Ehehe."
 
         if jn_snap._natsuki_win_streak == 10:
@@ -668,17 +668,17 @@ label snap_end:
 
     # What
     elif jn_snap.last_game_result == jn_snap.RESULT_DRAW:
-        n 1csrfl "...Huh.{w=0.75}{nw}" 
+        n 1csrfl "...Huh.{w=0.75}{nw}"
         extend 1tnmfl " We {i}actually{/i} tied?"
         n 2tslpu "..."
         n 2tslaj "That's...{w=1}{nw}"
-        extend 4tllsl " almost impressive,{w=0.2} actually.{w=1}{nw}" 
+        extend 4tllsl " almost impressive,{w=0.2} actually.{w=1}{nw}"
         extend 3cllsssbr " Weird."
         n 3ccssssbr "Well,{w=0.2} whatever."
 
     else:
         # Assume forfeit
-        n 4tnmpu "Huh?{w=0.5}{nw}" 
+        n 4tnmpu "Huh?{w=0.5}{nw}"
         extend 4tnmbo " You're giving up?"
         n 1ullaj "Well,{w=0.2} I guess that's fine.{w=0.75}{nw}"
         extend 1fchgn " I'm taking that as a win for me!"
@@ -689,7 +689,7 @@ label snap_end:
 
     if jn_snap._player_win_streak >= 3:
         n 2fcsan "Uuuuuu-!"
-        n 4fcsgsl "I-{w=0.2}I demand a rematch!{w=0.75}{nw}" 
+        n 4fcsgsl "I-{w=0.2}I demand a rematch!{w=0.75}{nw}"
         extend 3fcspol " I'm not going down like this!"
 
         show natsuki 3fcsgsl
@@ -784,7 +784,7 @@ label snap_forfeit:
 
             $ jn_snap._controls_enabled = True
             $ jn_snap._natsuki_skill_level += 1
-    
+
             show screen snap_ui
             jump snap_main_loop
 
@@ -805,14 +805,14 @@ image snap_popup:
             "mod_assets/games/snap/ui/snap_d.png"
 
     snap_popup_fadeout
-            
+
 # Game UI
 screen snap_ui:
     zorder jn_snap._SNAP_UI_Z_INDEX
 
     # This is the card currently on the top of the pile being shown
     add jn_snap._current_table_card_image anchor(0, 0) pos(1000, 100)
-    
+
     # Icons representing each player's hand
     add jn_snap._CARD_FAN_IMAGE_PLAYER anchor(0,0) pos (675, 110)
     add jn_snap._CARD_FAN_IMAGE_NATSUKI anchor(0,0) pos (675, 180)
@@ -835,7 +835,7 @@ screen snap_ui:
         # Hotkeys
         key "1" action [
             # Place
-            If(jn_snap._is_player_turn and (len(jn_snap._natsuki_hand) > 0 or len(jn_snap._player_hand) > 0) and jn_snap._controls_enabled, Function(jn_snap._place_card_on_table, True)) 
+            If(jn_snap._is_player_turn and (len(jn_snap._natsuki_hand) > 0 or len(jn_snap._player_hand) > 0) and jn_snap._controls_enabled, Function(jn_snap._place_card_on_table, True))
         ]
         key "2" action [
             # Snap

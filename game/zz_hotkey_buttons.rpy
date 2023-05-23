@@ -247,7 +247,7 @@ screen hkb_overlay:
     style_prefix "hkb"
 
     key "t" action [
-        If(not Natsuki.isInConversation() and not Natsuki.isInGame(), Jump("talk_menu")) 
+        If(not Natsuki.isInConversation() and not Natsuki.isInGame(), Jump("talk_menu"))
     ]
     key "m" action [
         If(

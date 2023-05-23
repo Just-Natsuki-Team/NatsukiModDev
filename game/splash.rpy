@@ -222,7 +222,7 @@ label before_main_menu:
 
     # Prevent the player's menu hotkey from defaulting to Save/Load
     $ store._game_menu_screen  = "preferences"
-    
+
     return
 
 label quit:

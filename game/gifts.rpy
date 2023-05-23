@@ -11,7 +11,7 @@ init -5 python in jn_gifts:
     GIFT_DIRECTORY = os.path.join(renpy.config.basedir, "characters").replace("\\", "/")
 
     _GIFT_ZORDER = 4
-    
+
     def getGiftFileExists(gift_name):
         """
         Returns whether the given gift exists in the configured gift directory, with a .nats prefix.

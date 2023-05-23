@@ -169,13 +169,13 @@ label music_menu:
     # We failed to get the custom music, prompt player to correct
     if not success:
         show natsuki at jn_center
-        
+
         n 4kllsssbr "Uhmm..."
-        n 4klrflsbr "Hey...{w=0.75}{nw}" 
+        n 4klrflsbr "Hey...{w=0.75}{nw}"
         extend 4knmajsbr " [player]?"
         n 4kslslsbr "Something {i}kinda{/i} went wrong when I was trying look for your music...{w=1}{nw}"
         extend 4kslsssbr " can you just check everything out real quick?"
-        n 2tlraj "As a reminder -{w=0.5}{nw}" 
+        n 2tlraj "As a reminder -{w=0.5}{nw}"
         extend 2tnmsl " anything you want me to play needs to be in the {i}custom_music{/i} folder."
         n 2fcsbgsbl "Just make sure it's all in {i}.mp3,{w=0.1} .ogg or .wav{/i} format!"
 
@@ -186,7 +186,7 @@ label music_menu:
         n 1tsqaj "Uh...{w=0.5}{nw}"
         extend 1tslaj " huh."
         n 2tsgsg "And {i}how{/i} exactly do you plan to hear any music with the volume at zero?"
-        n 2fchbg "Jeez, [player].{w=0.5}{nw}" 
+        n 2fchbg "Jeez, [player].{w=0.5}{nw}"
         extend 1uchgn " How do you even get dressed in the morning with memory like that?!"
         n 3ullss "Well, whatever.{w=0.5}{nw}"
         extend 3unmaj " So..."
@@ -236,11 +236,11 @@ label music_menu:
         $ jnPause(2)
 
         n 2uchsm "There you go, [player]!{w=2}{nw}"
-        
+
         if persistent.jn_random_music_enabled:
             # Stop playing random music, if enabled
             $ persistent.jn_random_music_enabled = False
-            n 1unmaj "Oh{w=0.2} -{w=0.50}{nw}" 
+            n 1unmaj "Oh{w=0.2} -{w=0.50}{nw}"
             extend 3kchbgsbl " and I'll stop switching around the music too.{w=2}{nw}"
 
         $ jn_custom_music.hideMusicPlayer()

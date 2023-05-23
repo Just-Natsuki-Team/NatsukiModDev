@@ -80,20 +80,20 @@ label headpats_start:
 
     else:
         n 4nsrssf "...Okay."
-    
+
     show screen headpats_ui
     jump headpats_loop
 
 # Main headpat loop/logic
 label headpats_loop:
-    $ current_mouse_position = jn_utils.getMousePosition()    
+    $ current_mouse_position = jn_utils.getMousePosition()
     $ config.mouse = (
         {"default": [("mod_assets/extra/headpats/headpats_active_cursor.png", 24, 24)]} if jn_headpats._ACTIVE_PAT_AREA.collidepoint(current_mouse_position[0], current_mouse_position[1])
         else None
-    )  
+    )
 
     if (
-        jn_headpats._ACTIVE_PAT_AREA.collidepoint(current_mouse_position[0], current_mouse_position[1]) 
+        jn_headpats._ACTIVE_PAT_AREA.collidepoint(current_mouse_position[0], current_mouse_position[1])
         and jn_headpats._getMousePositionChanged()
     ):
         python:
@@ -209,14 +209,14 @@ label headpats_milestone_100:
 
     $ Natsuki.calculatedAffinityGain(bypass=True)
     jump headpats_loop
-    
+
 label headpats_milestone_250:
     n 1ksqcal "...Still going strong,{w=0.2} huh [player]?{w=0.75}{nw}"
     extend 4ksrfsl " Heh."
 
     $ Natsuki.calculatedAffinityGain(bypass=True)
     jump headpats_loop
-    
+
 label headpats_milestone_500:
     n 1ucspul "This...{w=0.75}{nw}"
     extend 1nslsml " isn't actually so bad."
@@ -239,7 +239,7 @@ label headpats_milestone_1000:
 
 label headpats_milestone_1000_plus:
     n 1kcsssfeaf "...[player]..."
-    
+
     $ Natsuki.calculatedAffinityGain(bypass=True)
     jump headpats_loop
 
@@ -254,9 +254,9 @@ label headpats_finished:
         and not jn_headpats._more_pats_requested
     ):
         n 2kslbol "..."
-        n 2kslsll "Uhmm...{w=0.75}{nw}" 
+        n 2kslsll "Uhmm...{w=0.75}{nw}"
         extend 4knmsll " [player]?"
-        n 1klrpulsbl "Could you...{w=0.75}{nw}" 
+        n 1klrpulsbl "Could you...{w=0.75}{nw}"
         extend 2ksrbolsbl " you know..."
         n 4knmbolsbr "Keep doing that just a little longer?"
 
@@ -273,7 +273,7 @@ label headpats_finished:
 
             "That's it for now.":
                 n 2nslbol "...Oh."
-                n 2fcsemlsbl "W-{w=0.2}well,{w=0.2} that's fine!{w=0.75}{nw}" 
+                n 2fcsemlsbl "W-{w=0.2}well,{w=0.2} that's fine!{w=0.75}{nw}"
                 extend 2fcspolsbl " I wasn't really {i}that{/i} into it anyway."
                 n 1kslpol "..."
     else:
@@ -421,7 +421,7 @@ screen headpats_ui:
 
     # Pat counter
     text "{0} headpats given".format(persistent._jn_headpats_total_given) size 30 xalign 0.5 ypos 40 text_align 0.5 xysize (None, None) outlines [(3, "#000000aa", 0, 0)] style "categorized_menu_button_text"
-    
+
     # Options
     style_prefix "hkb"
     vbox:

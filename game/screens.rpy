@@ -15,7 +15,7 @@ style hotkeys_text:
     outlines [(3, "#000000aa", 0, 0)]
     xalign 0.0
     yalign 0.5
-    
+
     line_overlap_split 8
     line_spacing 8
     line_leading 8
@@ -35,12 +35,12 @@ screen hotkeys():
                     null height 20
                     style_prefix "hotkeys"
                     grid 2 8:
-                        xoffset 20                
+                        xoffset 20
                         spacing 10
 
                         text _("Talk")
                         text _("T")
-                        
+
                         text _("Music")
                         text _("M")
 
@@ -71,7 +71,7 @@ screen hotkeys():
                         null height 20
                         style_prefix "hotkeys"
                         grid 2 3:
-                            xoffset 20                
+                            xoffset 20
                             spacing 10
 
                             text _("Place")
@@ -234,7 +234,7 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                                 action [ Return(_topic.label), Function(prev_adjustment.change, 0), SetVariable("selected_category", None) ]
                                 hover_sound gui.hover_sound
                                 activate_sound gui.activate_sound
-                                
+
                                 if _topic.shown_count == 0 and not _topic.nat_says:
                                     idle_background Frame("mod_assets/buttons/choice_hover_blank_star.png", gui.frame_hover_borders, tile=gui.frame_tile)
 
@@ -811,7 +811,7 @@ screen indicator(message):
 
 screen navigation():
     $ config.mouse = None
-    
+
     vbox:
         style_prefix "navigation"
 
@@ -1461,7 +1461,7 @@ screen history():
         for h in _history_list:
 
             window:
-                
+
                 ## This lays things out properly if history_height is None.
                 has fixed:
                     yfit True

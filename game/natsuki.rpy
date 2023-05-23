@@ -109,7 +109,7 @@ init 0 python:
             """
             Returns True if Natsuki is wearing the specified outfit, otherwise False.
 
-            IN: 
+            IN:
                 - reference_name - outfit reference name to check if Natsuki is wearing
 
             OUT:
@@ -122,7 +122,7 @@ init 0 python:
             """
             Returns True if Natsuki is wearing the specified clothes, otherwise False.
 
-            IN: 
+            IN:
                 - reference_name - The clothes reference name to check if Natsuki is wearing
 
             OUT:
@@ -135,7 +135,7 @@ init 0 python:
             """
             Returns True if Natsuki is wearing the specified hairstyle, otherwise False.
 
-            IN: 
+            IN:
                 - reference_name - The hairstyle reference name to check if Natsuki is wearing
 
             OUT:
@@ -148,7 +148,7 @@ init 0 python:
             """
             Returns True if Natsuki is wearing the specified accessory, otherwise False.
 
-            IN: 
+            IN:
                 - reference_name - The accessory reference name to check if Natsuki is wearing
 
             OUT:
@@ -161,7 +161,7 @@ init 0 python:
             """
             Returns True if Natsuki is wearing the specified eyewear, otherwise False.
 
-            IN: 
+            IN:
                 - reference_name - The eyewear reference name to check if Natsuki is wearing
 
             OUT:
@@ -174,7 +174,7 @@ init 0 python:
             """
             Returns True if Natsuki is wearing the specified headgear, otherwise False.
 
-            IN: 
+            IN:
                 - reference_name - The headgear reference name to check if Natsuki is wearing
 
             OUT:
@@ -187,7 +187,7 @@ init 0 python:
             """
             Returns True if Natsuki is wearing the specified necklace, otherwise False.
 
-            IN: 
+            IN:
                 - reference_name - The necklace reference name to check if Natsuki is wearing
 
             OUT:
@@ -200,7 +200,7 @@ init 0 python:
             """
             Returns True if Natsuki is wearing the specified facewear, otherwise False.
 
-            IN: 
+            IN:
                 - reference_name - The facewear reference name to check if Natsuki is wearing
 
             OUT:
@@ -213,7 +213,7 @@ init 0 python:
             """
             Returns True if Natsuki is wearing the specified back item, otherwise False.
 
-            IN: 
+            IN:
                 - reference_name - The back item reference name to check if Natsuki is wearing
 
             OUT:
@@ -240,7 +240,7 @@ init 0 python:
             base = 10 if base > 10 else base
             to_add = base * jn_affinity.getRelationshipLengthMultiplier()
             if (
-                not persistent._jn_player_confession_accepted 
+                not persistent._jn_player_confession_accepted
                 and (persistent.affinity + to_add) > (jn_affinity.AFF_THRESHOLD_LOVE -1)
             ):
                 # Player cannot reach LOVE without having confessed to Natsuki successfully
@@ -316,7 +316,7 @@ init 0 python:
 
             else:
                 persistent.affinity -= abs(persistent.affinity * (float(percentage_loss) / 100))
-            
+
             jn_utils.log("416666696e6974792d".decode("hex"))
 
         @staticmethod
@@ -324,7 +324,7 @@ init 0 python:
             """
             Resets the daily affinity cap, if 24 hours has elapsed.
             """
-            current_date = datetime.datetime.now() 
+            current_date = datetime.datetime.now()
             if current_date in Natsuki.__capped_aff_dates:
                 return
 
@@ -665,7 +665,7 @@ init 0 python:
             """
             Gets whether Natsuki is or is not currently in a conversation.
             While in conversation, the hotkey buttons are disabled.
-            
+
             OUT:
                 - True if in conversation, otherwise False
             """
@@ -676,7 +676,7 @@ init 0 python:
             """
             Gets whether Natsuki is or is not currently playing a game.
             While in a game, the player is marked as a cheater if they force quit, and can later apologize for it.
-            
+
             OUT:
                 - True if in game, otherwise False
             """

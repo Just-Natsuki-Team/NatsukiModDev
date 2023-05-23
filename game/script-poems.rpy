@@ -51,7 +51,7 @@ init python in jn_poems:
             self.affinity_range = affinity_range
             self.poem = poem
             self.paper = paper
-            self.font_size = font_size if 16 <= font_size <= 24 else 24 
+            self.font_size = font_size if 16 <= font_size <= 24 else 24
             self.text_align = text_align if text_align in (0.0, 0.5, 1.0) else 0.0
 
         @staticmethod
@@ -86,7 +86,7 @@ init python in jn_poems:
             IN:
                 - poem_list - the list of JNpoem child poems to query. Defaults to all poems
                 - unlocked - the boolean unlocked state to filter for
-                - reference_name - list of reference_names the poem must have 
+                - reference_name - list of reference_names the poem must have
                 - holiday_types - list of the JNHolidayTypes the poem must be in
                 - affinity - minimum affinity state the poem must have
 
@@ -169,7 +169,7 @@ init python in jn_poems:
 
             IN:
                 - unlocked - the boolean unlocked state to filter for
-                - reference_name - list of reference_names the poem must have 
+                - reference_name - list of reference_names the poem must have
                 - holiday_types - list of the JNHolidayTypes the poem must be in
                 - affinity - minimum affinity state the poem must have
 
@@ -205,7 +205,7 @@ init python in jn_poems:
             __ALL_POEMS[poem.reference_name] = poem
             if poem.reference_name not in store.persistent.jn_poem_list:
                 poem.__save()
-            
+
             else:
                 poem.__load()
 
@@ -216,7 +216,7 @@ init python in jn_poems:
         IN:
             - poem_name - str poem name to fetch
 
-        OUT: Corresponding JNPoem if the poem exists, otherwise None 
+        OUT: Corresponding JNPoem if the poem exists, otherwise None
         """
         if poem_name in __ALL_POEMS:
             return __ALL_POEMS[poem_name]
@@ -262,25 +262,25 @@ init python in jn_poems:
         holiday_type=jn_events.JNHolidayTypes.christmas_day,
         affinity_range=(jn_affinity.ENAMORED, None),
         poem=(
-            "It's\n" 
-            "Chilly and\n" 
-            "Cold outside\n" 
-            "But warm inside\n" 
-            "With you by my side.\n" 
-            "Listening to the cozy fire\n" 
-            "Sitting side by side together.\n" 
-            "Talking to one another, making\n" 
-            "New memories that shine brightly.\n" 
-            "Illuminating even the darkest of nights\n" 
-            "To allow weary travelers a guiding light\n" 
-            "A star guided path ahead in a stressful life.\n" 
-            "Previous troubles melt away in the hot cocoa\n" 
-            "That I hold tight as I tease you to find your own.\n" 
-            "Was always my favorite, but now, so more than ever\n" 
-            "As it tastes more sweet with new and fresh ingredients.\n" 
-            "The warmth I feel inside will outlast any amount of winter\n" 
-            "Because with you by my side\n" 
-            "I'm always ready for another.\n" 
+            "It's\n"
+            "Chilly and\n"
+            "Cold outside\n"
+            "But warm inside\n"
+            "With you by my side.\n"
+            "Listening to the cozy fire\n"
+            "Sitting side by side together.\n"
+            "Talking to one another, making\n"
+            "New memories that shine brightly.\n"
+            "Illuminating even the darkest of nights\n"
+            "To allow weary travelers a guiding light\n"
+            "A star guided path ahead in a stressful life.\n"
+            "Previous troubles melt away in the hot cocoa\n"
+            "That I hold tight as I tease you to find your own.\n"
+            "Was always my favorite, but now, so more than ever\n"
+            "As it tastes more sweet with new and fresh ingredients.\n"
+            "The warmth I feel inside will outlast any amount of winter\n"
+            "Because with you by my side\n"
+            "I'm always ready for another.\n"
         ),
         paper="festive",
         font_size=18,
@@ -294,7 +294,7 @@ init python in jn_poems:
         affinity_range=(jn_affinity.HAPPY, None),
         poem=(
             "From a brittle gingerbread household Amy came\n"
-            "Disguised by colorful icing and confectionaries\n" 
+            "Disguised by colorful icing and confectionaries\n"
             "One that hid the shouts and all the arguments\n"
             "One that hid in plain sight, opposed to spotlight\n"
             "\n"

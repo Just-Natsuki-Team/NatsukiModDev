@@ -129,7 +129,7 @@ label talk_out_of_topics:
 
             "I'd rather wait, but don't remind me next time.":
                 $ persistent._jn_natsuki_out_of_topics_remind = False
-                
+
                 n 2tsqpueqm "Huh?{w=0.75}{nw}"
                 extend 2unmfl " Oh.{w=0.75}{nw}"
                 extend 2csrsssbl " Heh."
@@ -4961,11 +4961,11 @@ label talk_play_snap:
             $ persistent.jn_snap_player_is_cheater = False
 
         else:
-            n 1ccsem "[player]..." 
-            n 2cllfl "If you aren't even sorry you cheated,{w=0.5}{nw}" 
+            n 1ccsem "[player]..."
+            n 2cllfl "If you aren't even sorry you cheated,{w=0.5}{nw}"
             extend 2csqfl " why {i}should{/i} I play with you again?"
-            n 4fcssl "Come on...{w=1}{nw}" 
-            extend 2csrca " it's not hard to apologize,{w=0.75}{nw}" 
+            n 4fcssl "Come on...{w=1}{nw}"
+            extend 2csrca " it's not hard to apologize,{w=0.75}{nw}"
             extend 2csqca " is it?"
 
             return
@@ -4980,11 +4980,11 @@ label talk_play_snap:
         extend 4fchbg " Sure thing,{w=0.2} [player]!"
 
     elif Natsuki.isAffectionate(higher=True):
-        n 1fcsbg "Well,{w=0.2} duh!{w=0.75}" 
+        n 1fcsbg "Well,{w=0.2} duh!{w=0.75}"
         extend 2fchbg " Say no more,{w=0.2} [player]!"
 
     else:
-        n 1unmaj "You wanna play Snap?{w=0.75}{nw}" 
+        n 1unmaj "You wanna play Snap?{w=0.75}{nw}"
         extend 4fchsm " Sure!"
 
     n 4fcsss "Let me just get the cards out real quick..."
@@ -5389,17 +5389,17 @@ label talk_custom_music_explanation:
 
     $ custom_music_link_path = jn_custom_music.CUSTOM_MUSIC_DIRECTORY
     if renpy.windows:
-        n 1unmaj "So,{w=0.1} [player] -{w=0.3}{nw}" 
-        extend 1ullaj " if you click {a=[custom_music_link_path]}here{/a},{w=0.2}{nw}" 
+        n 1unmaj "So,{w=0.1} [player] -{w=0.3}{nw}"
+        extend 1ullaj " if you click {a=[custom_music_link_path]}here{/a},{w=0.2}{nw}"
         extend 1fcsss " that'll take you to the folder I set up."
         n 1fchbg "Then all you gotta do is just {i}copy{/i} your music into that folder,{w=0.2} and you're good to go!"
 
     else:
-        n 1unmaj "So,{w=0.1} [player] -{w=0.3}{nw}" 
-        extend 1ullaj " you should be able to find the folder I set up at {i}[custom_music_link_path]{/i}." 
+        n 1unmaj "So,{w=0.1} [player] -{w=0.3}{nw}"
+        extend 1ullaj " you should be able to find the folder I set up at {i}[custom_music_link_path]{/i}."
         n 1fchbg "All you gotta do is just {i}copy{/i} your music into that folder,{w=0.2} and you're good to go!"
 
-    n 2uchgn "Easy as pie,{w=0.1} huh?{w=0.5}{nw}" 
+    n 2uchgn "Easy as pie,{w=0.1} huh?{w=0.5}{nw}"
     extend 2fchsm " Ehehe."
     n 4uwdaj "Oh -{w=0.1} a couple of things first though,{w=0.1} [player]."
     n 1unmpu "Any music you give me needs to be in {i}.mp3,{w=0.1} .ogg or .wav{/i} format."
@@ -8518,7 +8518,7 @@ label talk_players_birthday_outro:
     extend 2nsqpol " Don't make me say it twice."
 
     $ persistent._jn_natsuki_birthday_known = True
-    
+
     n 1nllpu "And...{w=1}{nw}"
     extend 4tnmbo " [player]?"
     n 1fsqss "I hope you know that you better prepare yourself."
@@ -9492,7 +9492,7 @@ label talk_daily_jokes_unlock:
 
     elif Natsuki.isAffectionate(higher=True):
         extend 2fcsajlsbl " I-{w=0.2}I totally do!{w=1}{nw}"
-        
+
     else:
         extend 4fcsemsbl " O-{w=0.2}of course I do!"
         n 2fcspo "Even if you {i}do{/i} kinda owe it to me.{w=1}{nw}"
@@ -9566,7 +9566,7 @@ label talk_daily_jokes_unlock:
     n "...!"
 
     $ jnPause(2)
-    
+
     show natsuki 1fcssmeme
     play audio chair_in
     $ jnPause(1.5)
@@ -9612,7 +9612,7 @@ label talk_daily_jokes_unlock:
     extend 1fchbg " No reason to overdo it."
     n 1fsqss "Sounds like a plan,{w=0.2} [player]?{w=0.75}{nw}"
     extend 1fcsss " Of course it does."
-    n 1fcsgs "So!{w=0.5}{nw}" 
+    n 1fcsgs "So!{w=0.5}{nw}"
     extend 1fcsbg " You better start looking forward to it..."
     n 1fchgn "'Cause I {i}definitely{/i} am!{w=1}{nw}"
     extend 1nchgn " Ehehe."
@@ -9626,7 +9626,7 @@ label talk_daily_jokes_unlock:
 
     $ persistent._jn_daily_jokes_unlocked = True
     call talk_daily_joke(from_unlock=True)
-    
+
     return
 
 # Natsuki reads out a daily joke.
@@ -9713,7 +9713,7 @@ label talk_daily_joke(from_unlock=False):
 
         $ daily_jokes = jn_jokes.selectJokes()
 
-    n 1fcsss "Now,{w=0.75}{nw}" 
+    n 1fcsss "Now,{w=0.75}{nw}"
     extend 1fsqsm " let's see..."
 
     show natsuki reading
@@ -9784,7 +9784,7 @@ label talk_daily_joke(from_unlock=False):
     $ persistent._jn_daily_joke_given = True
     $ Natsuki.calculatedAffinityGain(bypass=True)
     $ dialogue_choice = random.randint(1, 3)
-    
+
     if daily_joke.joke_category == jn_jokes.JNJokeCategories.funny:
         if dialogue_choice == 1:
             n 1uchgn "See?{w=1}{nw}"
@@ -9920,7 +9920,7 @@ label talk_daily_jokes_start:
     n 2fsqsmeme "Ehehe."
     n 1fcsss "Well in that case,{w=1}{nw}"
     extend 4fnmss " you better prepare yourself,{w=0.2} [player]."
-    n 3fchgn "'Cause I'm gonna pick out all the {i}extra{/i} corny ones now.{w=1}{nw}" 
+    n 3fchgn "'Cause I'm gonna pick out all the {i}extra{/i} corny ones now.{w=1}{nw}"
     extend 3nchgn " Juuuust for you~!"
 
     if Natsuki.isLove(higher=True):
@@ -9949,7 +9949,7 @@ init 5 python:
 
 label talk_daily_jokes_stop:
     n 1unmem "H-{w=0.3}huh?{w=1}{nw}"
-    extend 4fcseml " Wait,{w=0.5}{nw}" 
+    extend 4fcseml " Wait,{w=0.5}{nw}"
     extend 4fnmeml " what?"
     n 1fcswr "A-{w=0.2}and just what is {i}that{/i} meant to mean,{w=0.2} [player]?!"
     extend 3fnmfl " Huh?"
@@ -10008,7 +10008,7 @@ label talk_fitting_clothing:
     extend 3clrsl " it always seemed pointless getting all worked up about it.{w=0.75}{nw}"
     extend 3nsrposbr " It's not like I was ever going to be tall {i}eventually{/i}."
     n 4csrca "...Especially not now."
-    n 1ulraj "But...{w=1}{nw}" 
+    n 1ulraj "But...{w=1}{nw}"
     extend 1unmaj " I guess I just came to realize it's like my teeth,{w=0.75}{nw}"
     extend 2nnmbo " or my hair or whatever."
     n 2fcstr "You just gotta make the most of it.{w=1}{nw}"
@@ -10033,13 +10033,13 @@ label talk_fitting_clothing:
     n 1flrfl "Yeah,{w=0.2} sure.{w=0.75}{nw}"
     extend 4flrca " I {i}know{/i} oversize is a thing.{w=1}{nw}"
     extend 2fsrtr " Obviously."
-    n 2flrgs "But come {w=0.3}{nw}" 
+    n 2flrgs "But come {w=0.3}{nw}"
     extend 2fcsgs "{b}on{/b}!"
     n 4ksqfl "Is it {i}really{/i} too much to want sleeves that {i}don't{/i} dangle off my arms too?"
     n 1fllfl "I mean,{w=0.2} half the time I walked over to check out the adult's clothes,{w=0.75}{nw}"
     extend 1fnmem " I'd have to walk right back out again!"
     n 2fsrsl "...And there's only so many times you can try the kids section before people start giving you stupid looks."
-    
+
     n 2fcsemesi "Ugh..."
     n 1cslbo "It's just embarrassing.{w=1}{nw}"
     extend 4fslsl " And usually a {i}complete{/i} waste of time too."
@@ -10055,7 +10055,7 @@ label talk_fitting_clothing:
     n 2ncstr "Well,{w=0.2} whatever.{w=0.75}{nw}"
     extend 1fnmca " Stores might be short of options.{w=0.75}{nw}"
     extend 1fsrca " And {i}courtesy{/i}."
-    n 3fcsaj "But I can assure you:{w=0.5}{nw}" 
+    n 3fcsaj "But I can assure you:{w=0.5}{nw}"
     extend 3fcsbg " my imagination {i}never{/i} comes up short!"
 
     $ pastel_goth_getup = jn_outfits.get_outfit("jn_pastel_goth_getup")
@@ -10128,7 +10128,7 @@ label talk_fitting_clothing:
     n 3fcsbg "There's nothing some good old fashioned know-how,{w=0.2} a needle,{w=0.75}{nw}"
     extend 3fchgn " and a bunch of my patches can't fix!{w=1}{nw}"
     extend 3nchgn " Ahaha."
-    
+
     n 4clrss "Well,{w=0.2} anyway.{w=0.75}{nw}"
     extend 2csrsmsbl " I think I've just about gone on long enough.{w=1}{nw}"
     extend 2fcsajsbl " As good as it was getting all that off my chest."
@@ -10172,10 +10172,10 @@ label talk_favorite_subject:
             n 2ccsbo "...Wait.{w=0.75}{nw}"
             extend 2tnmpu " Didn't we go through this already,{w=0.2} [player]?{w=1}{nw}"
             extend 2clrbo " Huh."
-            n 1clraj "Well,{w=0.2} whatever.{w=0.75}{nw}" 
+            n 1clraj "Well,{w=0.2} whatever.{w=0.75}{nw}"
             extend 4tllaj " It's not like much has changed.{w=1}{nw}"
             extend 2cslem " I {i}still{/i} can't stick math!"
-        
+
         else:
             n 2cslem "Not {i}math{/i},{w=0.5}{nw}"
             extend 2fsrfl " I'll tell you that much."
@@ -10201,7 +10201,7 @@ label talk_favorite_subject:
         n 4fcsan "And don't even get me {i}started{/i} on calculus...{w=1}{nw}"
         extend 2fslsl " or {i}algebra{/i}."
         n 2fsqem "And I {i}really{/i} hated having to spend my nights cramming the crap out of it before{w=0.25}{nw}"
-        extend 2fcsan " every{w=0.3} single{w=0.3}{nw}" 
+        extend 2fcsan " every{w=0.3} single{w=0.3}{nw}"
         extend 2fsran " exam."
         n 4fcsan "It's..."
         n 1csrsl "..."
@@ -10221,14 +10221,14 @@ label talk_favorite_subject:
             if Natsuki.isEnamored(higher=True):
                 n 1cslcal "E-{w=0.2}even if it's just so I can {i}say{/i} I can do it."
                 n 4cslunl "..."
-            
+
             else:
                 n 1fcstrlsbr "Just like everything else."
                 n 4cllsllsbr "..."
 
             n 2ccsfllsbr "A-{w=0.2}anyway!{w=0.75}{nw}"
             extend 4fcspo " We're getting off track here."
-            n 4tllpu "Favorite subject,{w=0.5}{nw}" 
+            n 4tllpu "Favorite subject,{w=0.5}{nw}"
             extend 3tnmss " huh?"
             n 3csqsm "Ehehe.{w=0.75}{nw}"
             extend 4fsqbg " You really need to ask?{w=0.75}{nw}"
@@ -10247,13 +10247,13 @@ label talk_favorite_subject:
             n 4unmaj "Favorite subject,{w=0.5}{nw}"
             extend 4tnmbo " huh?"
             n 2ccsss "Heh.{w=1}{nw}"
-            
+
             if already_discussed_topic:
                 extend 2fcsbg " You really don't remember,{w=0.2} [player]?"
 
             else:
                 extend 2fcsbg " As if the answer hadn't already practically slapped you in the face."
-        
+
         n 4uchgn "...Literature,{w=0.75}{nw}"
         extend 3fchgn " duh!"
         n 3fsqsm "You didn't seriously think I just pulled my poetry out of thin air or something,{w=0.5}{nw}"
@@ -10318,8 +10318,8 @@ label talk_favorite_subject:
         extend 2fllan " It's ridiculous!"
         n 2fcsan "How is {i}anyone{/i} meant to remember so much random nonsense?{w=0.75}{nw}"
         extend 1flrem " Especially around exams."
-        n 2fupfl "Because nothing makes me {i}love{/i} a subject more than having to no-life it{w=0.5}{nw}" 
-        extend 4fcsan " every{w=0.3} single{w=0.3} time{w=0.3}{nw}" 
+        n 2fupfl "Because nothing makes me {i}love{/i} a subject more than having to no-life it{w=0.5}{nw}"
+        extend 4fcsan " every{w=0.3} single{w=0.3} time{w=0.3}{nw}"
         extend 4fslan " an exam shows up."
         n 1fcssl "..."
         n 4fcsfl "I...{w=0.75}{nw}"
@@ -10333,7 +10333,7 @@ label talk_favorite_subject:
         n 1fllfl "Why not?{w=0.75}{nw}"
         extend 1fslan " Besides..."
         n 4fslem "Not like there's always gonna be {i}someone{/i} you can rely on."
-        n 2fllem "...Right,{w=0.75}{nw}" 
+        n 2fllem "...Right,{w=0.75}{nw}"
         extend 2fsqem " {i}[player]{/i}?"
 
     else:
@@ -10353,7 +10353,7 @@ label talk_favorite_subject:
         extend 2fcsemtsa " Yeah.{w=1}{nw}"
         extend 2fsqantsb " {i}No thanks{/i}."
         n 4fsqupltsb "Now {i}get out of my face{/i}."
-    
+
     return
 
 # Natsuki talks about her drawing skills and art classes.
@@ -10389,7 +10389,7 @@ label talk_can_you_draw:
         else:
             n 4tnmaj "Huh?{w=0.75}{nw}"
             extend 4cllbo " Can I draw?{w=0.75}{nw}"
-            extend 1tslpu " Like...{w=0.3} portraits,{w=0.2} landscapes,{w=0.5}{nw}" 
+            extend 1tslpu " Like...{w=0.3} portraits,{w=0.2} landscapes,{w=0.5}{nw}"
             extend 2tnmaj " that kind of thing?"
             n 2ccsss "Heh.{w=0.75}{nw}"
             extend 2cslaj " I wish!{w=0.75}{nw}"
@@ -10413,7 +10413,7 @@ label talk_can_you_draw:
         n 4ctrpu "I get that art has a lot of history behind it.{w=0.75}{nw}"
         extend 4csrfl " And of course there's tons of styles out there to learn.{w=0.75}{nw}"
         extend 4fcssl " I get it."
-        n 1flrgs "But come{w=0.5}{nw}" 
+        n 1flrgs "But come{w=0.5}{nw}"
         extend 2fcsgs " {b}on{/b}!{w=1}{nw}"
         extend 2fslup " What's even the point in studying so much about all these different artists and styles..."
         n 4fsqem "...If we barely even had the time to cover any of the basics?{w=0.75}{nw}"
@@ -10438,7 +10438,7 @@ label talk_can_you_draw:
         if Natsuki.isAffectionate(higher=True):
             n 2csrpusbl "It's just that..."
             n 2ksrbol "..."
-            n 2fcspul "It's...{w=1}{nw}" 
+            n 2fcspul "It's...{w=1}{nw}"
             extend 1cslpu " intimidating.{w=1}{nw}"
             extend 2ksqsl " Trying to teach yourself something like that."
             n 2cllaj "It's fine if you've always been drawing,{w=0.2} or you have some kind of teacher."
@@ -10455,7 +10455,7 @@ label talk_can_you_draw:
                 extend 4ccsssl " Not {i}yet{/i},{w=0.2} anyway."
                 n 2ulrpu "Though...{w=1}{nw}"
                 extend 4unmbo " what about you,{w=0.2} [player]?"
-            
+
             else:
                 n 2ncspuesi "..."
                 n 2csrbo "I don't know."
@@ -10464,7 +10464,7 @@ label talk_can_you_draw:
                 extend 2ccsca " I'm kinda bored of listening to myself now.{w=0.75}{nw}"
                 extend 2tnmbo " So what about you,{w=0.2} [player]?"
 
-        else: 
+        else:
             n 2clrca "But...{w=1}{nw}"
             extend 2ksrpu " that's..."
             n 1fcsbo "..."
@@ -10482,7 +10482,7 @@ label talk_can_you_draw:
             n 3fcssm "Ehehe."
             n 4fcsbg "Yep!"
             n 4fsqsmeme "You've got 'artist' written all over you."
-            n 3fsqsssbr "All the more reason to be grateful you've always got {i}such{/i} a great subject on hand,{w=0.5}{nw}" 
+            n 3fsqsssbr "All the more reason to be grateful you've always got {i}such{/i} a great subject on hand,{w=0.5}{nw}"
             extend 3fcsbgsbr " am I right?"
 
         else:

@@ -2382,7 +2382,7 @@ label holiday_valentines_day:
     n 1fsqpol "..."
     n 1fsqpul "...Huh?{w=0.75}{nw}"
     extend 1tsqfll " What?"
-    n 1nlrfllsbl "What's that look for,{w=0.5}{nw}" 
+    n 1nlrfllsbl "What's that look for,{w=0.5}{nw}"
     extend 1knmfllsbl " all of a sudden?"
 
     if Natsuki.isLove(higher=True):
@@ -2424,13 +2424,13 @@ label holiday_valentines_day:
         n 1ksqsll "...Look.{w=1}{nw}"
         extend 1klrsll " I've never been good at this kind of stuff.{w=1.25}{nw}"
         extend 1fcsunlsbl " I-{w=0.2}I always struggle with it."
-        n 1fcspulsbl "Especially when it's all just...{w=0.75}{nw}" 
+        n 1fcspulsbl "Especially when it's all just...{w=0.75}{nw}"
         extend 1ksrsllsbl " so new to me.{w=0.75}{nw}"
         extend 1kllsllsbl " Having someone who..."
         n 1kllsrlsbl "..."
         n 1kllfllsbl "...Who really cares about me."
-        n 1knmpulsbl "S-{w=0.2}someone who{w=0.75}{nw}" 
-        extend 1ksrpufsbr " loves{w=0.75}{nw}" 
+        n 1knmpulsbl "S-{w=0.2}someone who{w=0.75}{nw}"
+        extend 1ksrpufsbr " loves{w=0.75}{nw}"
         extend 1ksrbofsbr " me."
         n 1kcsajlsbr "But what I'm trying to say is..."
         n 1ksrbolsbr "..."
@@ -2629,7 +2629,7 @@ label holiday_easter:
     if jn_is_day():
         extend 4fcsgssbl " Do you even {i}know{/i} what day it is today?{w=0.75}{nw}"
         extend 2fcsposbl " Sheesh!"
-        
+
     else:
         extend 4fsqgssbl " Do you even {i}know{/i} what day it is today?"
         n 2fsrslsbl "I guess not,{w=0.75}{nw}"
@@ -2647,7 +2647,7 @@ label holiday_easter:
     n 1fcssm "Heh."
     n 4fcsbg "Yeah,{w=0.2} you do.{w=0.75}{nw}"
     extend 1fcssmesm " I basically have a sixth sense for this kind of thing,{w=0.2} after all."
-    n 1fcsss "It means..." 
+    n 1fcsss "It means..."
     n 3fchbs "Cherry blossom season,{w=0.75}{nw}"
     extend 3uchgn " obviously!"
     n 4tnmbo "..."
@@ -2661,7 +2661,7 @@ label holiday_easter:
     n 2fcsbs "What else can you think of that floods the place with color that well,{w=0.2} huh?"
     n 1ulrss "Plus with how the blossoms travel all the way up from south to north..."
     n 3uchgn "It's pretty much a rolling announcement for the summer!{w=0.2} I love it!"
-    
+
     $ cherry_blossom_outfit = jn_outfits.get_outfit("jn_cherry_blossom_outfit")
     if not cherry_blossom_outfit.unlocked:
         $ cherry_blossom_outfit.unlock()
@@ -2750,7 +2750,7 @@ label holiday_easter:
 
     if Natsuki.isEnamored(higher=True):
         n 2ulraj "Easter might be all about fresh starts,{w=0.75}{nw}"
-        extend 2nlrpu " but...{w=1}{nw}" 
+        extend 2nlrpu " but...{w=1}{nw}"
         extend 4tnmbo " honestly?"
         n 4nllssl "...Thanks to you?"
         n 1kllbol "..."
@@ -3114,7 +3114,7 @@ label holiday_christmas_day:
     n 1fslsll "Besides.{w=0.3} Not like {i}they{/i} particularly cared where I was..."
     n 1kslsll "..."
     n 4ksqbol "But my friends always did."
-    n 4knmpul "...We'd already arranged something,{w=1}{nw}" 
+    n 4knmpul "...We'd already arranged something,{w=1}{nw}"
     extend 4knmbolsbr " you know."
     n 1kllbolsbr "For Christmas.{w=1}{nw}"
     extend 2tnmbolsbr " Didn't I tell you,{w=0.2} [player]?"
@@ -3124,7 +3124,7 @@ label holiday_christmas_day:
     extend 4knmbo " There was so much talk over where we'd all go."
     n 1klrsssbl "Sayori got so excited over hosting...{w=0.75}{nw}"
     extend 2nsrsssbl " but it would have been {i}way{/i} too cramped for all of us."
-    n 1nlraj "Though...{w=1}{nw}" 
+    n 1nlraj "Though...{w=1}{nw}"
     extend 1tnmbo " seriously?"
     n 1kslbo "..."
     n 1kcsaj "I...{w=0.75}{nw}"
@@ -3416,7 +3416,7 @@ label holiday_natsuki_birthday:
         player_final = jn_utils.getPlayerFinal(3)
         already_celebrated_player_birthday = jn_events.getHoliday("holiday_player_birthday").is_seen
         jn_atmosphere.showSky(weather=jn_atmosphere.WEATHER_CHERRY_BLOSSOM, with_transition=False)
-        
+
         jn_events.getHoliday("holiday_natsuki_birthday").run()
 
     $ jnPause(0.25)
@@ -3500,7 +3500,7 @@ label holiday_natsuki_birthday:
         extend 2nslpol " Wise-ass."
         n 2ccsfll "But come{w=0.5}{nw}"
         extend 2ccsgsl " on!{w=0.75}{nw}"
-    
+
     else:
         n 2ccsfllsbl "...And come on now.{w=0.75}{nw}"
 
@@ -3515,7 +3515,7 @@ label holiday_natsuki_birthday:
         n 2csrcal "..."
         n 4csrajl "I'm...{w=0.75}{nw}"
         extend 4csrbolsbl " just gonna pretend I've never seen it before."
-    
+
     else:
         n 4unmemlsbr "I-{w=0.2}it's not that I don't like it or anything!{w=0.75}{nw}"
         extend 2fcsemlsbr " It's perfectly fine!{w=1}{nw}"
@@ -3525,7 +3525,7 @@ label holiday_natsuki_birthday:
     n 1cdwbol "..."
     n 2cslfll "...You're gonna make me do the whole wish thing.{w=0.75}{nw}"
     extend 2ksqsll " Aren't you?"
-    
+
     $ jnPause(2)
     show prop cake lit zorder JN_PROP_ZORDER
     play audio necklace_clip
@@ -3538,7 +3538,7 @@ label holiday_natsuki_birthday:
 
     show natsuki 2csqcal
     $ jnPause(3)
-    
+
     n 2clrsll "..."
     n 2ccspulesi "..."
     n 2cslpol "...Fine.{w=1}{nw}"
@@ -3554,7 +3554,7 @@ label holiday_natsuki_birthday:
     elif Natsuki.isAffectionate(higher=True):
         extend 1ccsajl " B-{w=0.2}but only because you put in the effort.{w=0.75}{nw}"
         extend 4csqcal " Got it?"
-    
+
     else:
         extend 1ccsajl " But {i}only{/i} because I'd look like a total jerk otherwise.{w=0.75}{nw}"
         extend 4fsqcal " Capiche?"
@@ -3589,7 +3589,7 @@ label holiday_natsuki_birthday:
         n 4clrun "..."
         n 1clrpul "Nobody's...{w=1}{nw}"
         extend 1csrpul " ever...{w=1}{nw}"
-        extend 1ccsunl " actually...{w=1}{nw}" 
+        extend 1ccsunl " actually...{w=1}{nw}"
         extend 2cslunl " tried this hard before."
         n 2kslsllsbr "...For me."
         n 4kslbolsbr "And I'd just be lying if I said I wasn't still trying to get used to it."
@@ -3632,7 +3632,7 @@ label holiday_natsuki_birthday:
 
         if birthday_poem:
             $ birthday_poem.unlock()
-        
+
             n 1kslsll "..."
             n 4knmbol "...I ended up writing something,{w=0.2} you know."
             n 4klrbolsbr "..."
@@ -3676,7 +3676,7 @@ label holiday_natsuki_birthday:
             n 2clrsl "..."
             n 2nlraj "But..."
             n 4ksrslsbl "..."
-            
+
         else:
             n 2csqfll "...Happy now?{w=0.75}{nw}"
             extend 2cllfllsbr " Jeez..."
@@ -3753,12 +3753,12 @@ label holiday_natsuki_birthday:
     $ jnPause(1.25)
     hide black with Dissolve(1.25)
     $ jnPause(3)
-    
+
     $ gold_star_hairpin = jn_outfits.get_wearable("jn_accessory_gold_star_hairpin")
     $ pink_star_hairpin = jn_outfits.get_wearable("jn_accessory_pink_star_hairpin")
-    
+
     if (
-        persistent.jn_custom_outfits_unlocked 
+        persistent.jn_custom_outfits_unlocked
         and (not gold_star_hairpin.unlocked or not pink_star_hairpin.unlocked)
     ):
         $ hairpin_to_gift = gold_star_hairpin if not gold_star_hairpin.unlocked else pink_star_hairpin
@@ -3782,7 +3782,7 @@ label holiday_natsuki_birthday:
             n 2kcspulesi "..."
             n 4kslbol "...Fine.{w=1}{nw}"
             extend 4nslsslsbr " I guess it's the least I could do,{w=0.2} huh?"
-        
+
         else:
             $ jnPause(1.5)
             n 4unmfll "...!{w=0.5}{nw}"
@@ -3791,7 +3791,7 @@ label holiday_natsuki_birthday:
             n 2nsrsllsbl "..."
             n 2ccsemlsbl "F-{w=0.2}fine."
             extend 4ksrbolsbr " I suppose it's the least I should do."
-        
+
         show natsuki 4cdwbolsbr
         $ jn_gifts.GIFT_BLUE.open()
         $ jnPause(3)
@@ -3818,17 +3818,17 @@ label holiday_natsuki_birthday:
             show natsuki 2nsrbol
 
         $ jnPause(3)
-        
+
         if Natsuki.isEnamored(higher=True):
             n 2nsrssl "...Heh."
-            n 4nsrfsl "It...{w=1}{nw}" 
+            n 4nsrfsl "It...{w=1}{nw}"
             extend 1ksrfsl " really {i}does{/i} feel like my birthday now."
             $ chosen_endearment = jn_utils.getRandomEndearment() if Natsuki.isLove() else jn_utils.getRandomTease()
             n 1ksqbol "...Thanks,{w=0.2} [player].{w=0.75}{nw}"
             extend 1kllssl " It's..."
             n 2kslfslsbr "..."
             n 2kslssfsbr "...I-{w=0.2}I love it.{w=1}{nw}"
-            extend 4kslfslsbr " T-{w=0.2}thank you.{w=1}{nw}" 
+            extend 4kslfslsbr " T-{w=0.2}thank you.{w=1}{nw}"
             extend 4cslsslsbr " You big dope."
             show natsuki 4cslsml
 

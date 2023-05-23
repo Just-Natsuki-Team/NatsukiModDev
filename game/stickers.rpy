@@ -22,7 +22,7 @@ transform jn_sticker_peek_up_down_right:
     ypos 400
     easein 3 ypos 337
     pause 1.0
-    easeout 2 ypos 400   
+    easeout 2 ypos 400
 
 init 0 python in jn_stickers:
     from Enum import Enum
