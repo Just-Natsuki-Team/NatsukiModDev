@@ -367,7 +367,7 @@ label call_next_topic(show_natsuki=True):
 
     #This topic might quit
     if "quit" in return_keys:
-        jump quit
+        jump save_quit
 
     # Reenable the UI and hop back to the loop
     python:
@@ -734,7 +734,7 @@ label extras_menu:
 label try_force_quit:
     # Goodnight
     if persistent._jn_player_tt_state >= 2 or persistent._jn_pic:
-        $ renpy.jump("quit")
+        $ renpy.jump("save_quit")
 
     # Decision making that overrides the default Ren'Py quit behaviour
     elif (
@@ -747,7 +747,7 @@ label try_force_quit:
 
     elif not jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete:
         # Player hasn't passed the intro sequence, just quit
-        $ renpy.jump("quit")
+        $ renpy.jump("save_quit")
 
     else:
         # Standard quit behaviour
@@ -836,4 +836,4 @@ label try_force_quit:
                 play audio static
                 show glitch_garbled_b zorder JN_GLITCH_ZORDER with hpunch
                 hide glitch_garbled_b
-                $ renpy.jump("quit")
+                $ renpy.jump("save_quit")

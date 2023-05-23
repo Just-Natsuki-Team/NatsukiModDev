@@ -225,7 +225,7 @@ label before_main_menu:
 
     return
 
-label quit:
+label save_quit:
     python:
         # Save game data
         jn_utils.save_game()
