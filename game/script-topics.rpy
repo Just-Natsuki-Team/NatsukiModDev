@@ -10001,45 +10001,46 @@ init 5 python:
 
 label talk_daily_jokes_seen_before_start:
     if persistent._jn_daily_jokes_enabled:
-        n  "Oh?{w=0.75}{nw}"
-        extend  " What's this?{w=0.75}{nw}"
-        extend  " Someone just can't get enough of the joke book, huh?"
-        n  "Ehehe."
-        n  "Well...{w=1}{nw}"
-        extend  " I didn't exactly take notes or anything on the ones I've told you...\n{w=0.75}{nw}"
-        extend  " but I'm sure I can figure it out!"
-        n  "Just give me a sec here..."
+        n 4ccsss "Oh?{w=0.75}{nw}"
+        extend 4ccsbg " What's this now,{w=0.2} all of a sudden?{w=0.75}{nw}"
+        extend 3fsqbg " {i}Someone{/i} just can't get enough of the joke book,{w=0.2} huh?"
+        n 3fcssm "Ehehe."
+        n 4ullaj "Well...{w=1}{nw}"
+        extend 4cllss " I didn't exactly take notes or anything on the ones I've told you...\n{w=0.75}{nw}"
+        extend 2fcssssbr " but I'm pretty sure I can figure it out!"
+        n 2unmaj "Just give me a sec here..."
 
     else:
-        n  "Oh?{w=0.75}{nw}"
-        extend  " Am I hearing this right?"
-        n  "{i}Now{/i} you suddenly wanna hear all about the jokes?{w=0.75}{nw}"
-        extend  " The ones you practically {i}begged{/i} me to stop telling you?"
-        n  "Is that right...{w=1}{nw}"
-        extend  " [player]?"
-        n  "..."
-        n  "Ehehe."
-        n  "Say no more,{w=0.2} say no more.{w=0.75}{nw}"
-        extend  " [n_name] has you covered!"
-        n  "Just give me a sec here..."
+        n 1csqss "Oh?{w=0.75}{nw}"
+        extend 4fnmss " Am I hearing this right?"
+        n 4fsqbg "{i}Now{/i} you suddenly wanna hear all about the jokes?{w=0.75}{nw}"
+        extend 3fcsbg " The ones you practically {i}begged{/i} me to stop telling you?"
+        n 3tsqss "...{i}Those{/i} jokes?"
+        n 4fsqsm "..."
+        n 4fcssm "Ehehe."
+        n 2fcsbs "Say no more,{w=0.2} say no more.{w=0.75}{nw}"
+        extend 2fchgn " [n_name] has got you covered!"
+        n 4ccsss "Just give me a sec here..."
 
-    show natsuki 1fcssmeme
+    show natsuki 4fcssmeme
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     play audio drawer
     show joke_book zorder JN_PROP_ZORDER
+    show natsuki 1fchsmeme
     $ jnPause(2.25)
     hide black with Dissolve(0.5)
     $ jnPause(0.5)
 
-    #TODO: feels a bit short.
     if random.choice([True, False]):
-        n  "Alright!{w=0.75}{nw}"
+        n 1fchbgeme "Alright!{w=0.75}{nw}"
+        extend 1fcsbg " Talk to me,{w=0.2} [player]!{w=0.75}{nw}"
+        extend 1tnmss " What did you wanna hear again?"
 
     else:
-        n  "Okaaay!{w=0.75}{nw}"
-    
-    extend  " Here you go,{w=0.2} [player]!"
+        n 1fchbgeme "Okaaay!{w=0.75}{nw}"
+        extend 1fchgn " Here we go,{w=0.2} [player]!{w=0.75}{nw}"
+        extend 1tsqsm "  Which one did you wanna hear?"
 
     call talk_daily_jokes_seen_before_loop
 
@@ -10047,6 +10048,7 @@ label talk_daily_jokes_seen_before_start:
     $ jnPause(0.5)
     play audio drawer
     hide joke_book
+    show natsuki 1nchsmeme
     $ jnPause(2.25)
     hide black with Dissolve(0.5)
     $ jnPause(0.5)
@@ -10061,231 +10063,255 @@ label talk_daily_jokes_seen_before_loop:
 
         joke_options.sort(key = lambda option: option[0])
 
-    show natsuki reading
-    call screen scrollable_choice_menu(joke_options, ("Nevermind.", None), 425)
+    show natsuki option_wait
+    call screen scrollable_choice_menu(joke_options, ("Nevermind.", None), 250)
     $ joke_choice = _return
 
     if isinstance(joke_choice, jn_jokes.JNJoke):
         $ dialogue_choice = random.randint(1, 3)
         if joke_choice.joke_category == jn_jokes.JNJokeCategories.funny:
             if dialogue_choice == 1:
-                n  "Ooh!{w=0.75}{nw}"
-                extend  " Yeah!{w=0.5}{nw}"
-                extend  " I love this one!"
+                n 1unmaj "Ooh!{w=0.75}{nw}"
+                extend 1unmbg " Yeah!{w=0.5}{nw}"
+                extend 1fchbg " I love this one!"
 
             elif dialogue_choice == 2:
-                n  "[joke_choice.display_name],{w=0.2} huh?"
-                n  "Ehehe.{w=0.75}{nw}"
-                extend  " You got it,{w=0.2} [player]!"
+                n 1tsqss "[joke_choice.display_name],{w=0.2} huh?"
+                n 1fchsm "Ehehe.{w=0.75}{nw}"
+                extend 1fchbg " You got it,{w=0.2} [player]!"
             
             else:
-                n  "Oh!{w=0.2} Oh!{w=0.5}{nw}"
-                extend  " I love that one!"
+                n 1uspbg "Oh!{w=0.2} Oh!{w=0.5}{nw}"
+                extend 1uchgn " I love that one!"
+
+            show natsuki 1udwsm
 
         elif joke_choice.joke_category == jn_jokes.JNJokeCategories.corny:
             if dialogue_choice == 1:
-                n  "...Seriously?{w=0.75}{nw}"
-                extend  " But it wasn't even {i}that{/i} good,{w=0.2} [player]!"
-                n  "..."
+                n 1csqfl "...Seriously?{w=0.75}{nw}"
+                extend 1fllfl " But it wasn't even {i}that{/i} good,{w=0.2} [player]!"
+                n 1ccsemesi "..."
 
             elif dialogue_choice == 2:
-                n  "Man...{w=1}{nw}"
-                extend  " you're {i}sure{/i} you wanna hear this one again?{w=0.75}{nw}"
-                extend  " Fine."
+                n 1csrem "Man...{w=1}{nw}"
+                extend 1tnmem " you're {i}sure{/i} you wanna hear this one again?{w=0.75}{nw}"
+                extend 1nslsl " Fine."
             
             else:
-                n  "...This one {i}again{/i}?{w=0.75}{nw}"
-                extend  " Jeez..."
+                n 1nsqflsbr "...This one {i}again{/i}?{w=0.75}{nw}"
+                extend 1cslemsbr " Jeez..."
+
+            show natsuki 1ndwbo
 
         elif joke_choice.joke_category == jn_jokes.JNJokeCategories.bad:
             if dialogue_choice == 1:
-                n  "Oh,{w=0.2} for-{w=0.5}{nw}"
-                n  "..."
-                n  "You just {i}had{/i} to pick out that one,{w=0.5}{nw}"
-                extend  " huh?"
-                n  "...Fine.{w=0.75}{nw}"
-                extend  " Whatever."
+                n 1fcsan "Oh,{w=0.2} for-{w=0.5}{nw}"
+                n 1ccsemesi "..."
+                n 1csrtr "You just {i}had{/i} to pick out that one,{w=0.5}{nw}"
+                extend 1csqca " huh?"
+                n 1cslaj "...Fine.{w=0.75}{nw}"
+                extend 1ccsaj " Whatever."
 
             elif dialogue_choice == 2:
-                n  "..."
-                n  "Really,{w=0.2} [player]?{w=0.75}{nw}"
-                extend  " {i}That{/i} one?"
-                n  "...Fine."
+                n 1ccsemesi "..."
+                n 1clrfl "Really,{w=0.2} [player]?{w=0.75}{nw}"
+                extend 1csqfl " {i}That{/i} one?"
+                n 1nslposbr "...Fine."
             
             else:
-                n  "Ugh...{w=1}{nw}"
-                extend  " for real?"
-                n  "You {i}can't{/i} be serious,{w=0.2} [player].{w=0.75}{nw}"
-                extend  " [joke_choice.display_name]?{w=0.75}{nw}"
-                extend  " come on."
-                n  "..."
+                n 1fupfl "Ugh...{w=1}{nw}"
+                extend 1cnmfl " for real?"
+                n 1clraj "You {i}can't{/i} be serious,{w=0.2} [player].{w=0.75}{nw}"
+                extend 1csqemsbr " [joke_choice.display_name]?"
+                n 1ccsslesisbr "..."
+
+            show natsuki 1cdwca
 
         else:
             if dialogue_choice == 1:
-                n  "[joke_choice.display_name]?{w=0.75}{nw}"
-                extend  " Sure!"
+                n 1unmaj "[joke_choice.display_name]?{w=0.75}{nw}"
+                extend 1fchbg " Sure!"
 
             elif dialogue_choice == 2:
-                n  "[joke_choice.display_name]?{w=0.75}{nw}"
-                extend  " You got it!"
+                n 1tnmss "[joke_choice.display_name]?{w=0.75}{nw}"
+                extend 1fcssm " You got it!"
             
             else:
-                n  "[joke_choice.display_name]?{w=0.75}{nw}"
-                extend  " That one?"
-                n  "'Kay!{w=0.75}{nw}"
-                extend  " Here we go!"
+                n 1udwaj "[joke_choice.display_name]?{w=0.75}{nw}"
+                extend 1unmbo " That one?"
+                n 1nchbg "'Kay!{w=0.75}{nw}"
+                extend 1fcsbg " Here we go!"
+
+            show natsuki 1cdwsm
+
+        play audio page_turn
+
+        if random.choice([True, False]):
+            $ jnPause(0.75)
+            play audio page_turn
+
+        $ jnPause(1)
 
         n 1fcsaj "A-{w=0.2}hem!"
-        n 1fcssm "..."
+        n 1fcsbo "..."
 
         call expression joke_choice.label
 
         $ dialogue_choice = random.randint(1, 3)
         if joke_choice.joke_category == jn_jokes.JNJokeCategories.funny:
             if dialogue_choice == 1:
-                n  "Man...{w=1}{nw}"
-                extend  " I swear that one never gets old!{w=0.75}{nw}"
-                extend  " Ahaha."
+                n 1flrss "Man...{w=1}{nw}"
+                extend 1fchgn " I swear that one never gets old!{w=0.75}{nw}"
+                extend 1nchgnl " Ahaha."
             
             elif dialogue_choice == 2:
-                n  "Ehehe.{w=0.75}{nw}"
-                extend  " Yep!"
-                n  "Now that's what I call [n_name] approved!"
+                n 1fcssm "Ehehe.{w=0.75}{nw}"
+                extend 1fchbg " Yep!"
+                n 1fchbsl "Now that's what I call [n_name] approved!"
 
             else:
-                n  "Ehehe.{w=0.75}{nw}"
-                extend  " Well,{w=0.2} what can I say?"
-                n  "Gotta love it,{w=0.2} [player]!"
+                n 1fcssmeme "Ehehe.{w=0.75}{nw}"
+                extend 1ulrss " Well,{w=0.2} what can I say?"
+                n 1fwlbgl "Gotta love it,{w=0.2} [player]!"
 
-            n  "Anyway..."
-            show natsuki questioning
+            n 1ullss "Anyway..."
+            show natsuki 1tnmss
 
         elif joke_choice.joke_category == jn_jokes.JNJokeCategories.corny:
             if dialogue_choice == 1:
-                n  "...Yeah."
-                n  "I gotta say.{w=0.75}{nw}"
-                extend  " I wouldn't complain if {i}that{/i} one never showed up again.{w=0.75}{nw}"
-                extend  " Just saying."
+                n 1nsrfl "...Yeah."
+                n 1fcsaj "I gotta say.{w=0.75}{nw}"
+                extend 1cllbo " I wouldn't complain if {i}that{/i} one never showed up again.{w=0.75}{nw}"
+                extend 1ccsbosbr " Just saying."
 
             elif dialogue_choice == 2:
-                n  "..."
-                n  "I seriously can't believe someone {i}paid{/i} for this.{w=0.75}{nw}"
-                extend  " Ugh."
-                n  "Whatever."
+                n 1ccsflesi "..."
+                n 1csraj "I seriously can't believe someone {i}paid{/i} for this.{w=0.75}{nw}"
+                extend 1fcsfl " Ugh."
+                n 1cllsl "Whatever."
 
             else:
-                n  "I...{w=1}{nw}"
-                extend  " think that one should have {i}stayed{/i} in the book,{w=0.5}{nw}"
-                extend  " [player]."
-                n  "..."
+                n 1csrfl "I...{w=1}{nw}"
+                extend 1ccsfl " think that one should have {i}stayed{/i} in the book,{w=0.5}{nw}"
+                extend 1csqcasbl " [player]."
+                n 1csrcasbl "..."
 
-            n  "So..."
-            show natsuki questioning
+            n 1nlraj "So..."
+            show natsuki 1tnmbo
 
         elif joke_choice.joke_category == jn_jokes.JNJokeCategories.bad:
             if dialogue_choice == 1:
-                n  "..."
-                n  "Alright.{w=0.75}{nw}"
-                extend  " That's that one dealt with.{w=0.75}{nw}"
-                extend  " {i}Again{/i}."
+                n 1ccsemesi "..."
+                n 1clrfl "Alright.{w=0.75}{nw}"
+                extend 1clrca " That's that one dealt with.{w=0.75}{nw}"
+                extend 1csrca " {i}Again{/i}."
 
             elif dialogue_choice == 2:
-                n  "..."
-                n  "Yeah.{w=0.75}{nw}"
-                extend  " That aged about as well as I expected.{w=1}{nw}"
-                extend  " {i}Like trash{/i}."
+                n 1ccsflesi "..."
+                n 1cllfl "Yeah.{w=0.75}{nw}"
+                extend 1cllsl " That aged about as well as I expected.{w=1}{nw}"
+                extend 1cslpo " {i}Like trash{/i}."
             
             else:
-                n  "Heh.{w=0.75}{nw}"
-                extend  " Well,{w=0.2} at least some things don't change.{w=0.75}{nw}"
-                extend  " {i}Like that joke still sucking{/i}."
+                n 1ccssssbl "Heh.{w=0.75}{nw}"
+                extend 1ccstr " I suppose at least {i}some{/i} things don't change.{w=0.75}{nw}"
+                extend 1csrbo " {i}Like that joke still sucking{/i}."
 
-            n  "Well,{w=0.2}whatever.{w=0.75}{nw}"
-            extend  " So..."
-
-            show natsuki questioning
+            n 1ccsajsbl "Well,{w=0.2}whatever.{w=0.75}{nw}"
+            extend 1nllaj " So..."
+            show natsuki 1tnmsl
 
         else:
             if dialogue_choice == 1:
-                n  "Ehehe.{w=0.75}{nw}"
-                extend  " There you go,{w=0.2} [player]!"
+                n 1fcssmeme "Ehehe.{w=0.75}{nw}"
+                extend 1fchbg " There you go,{w=0.2} [player]!"
             
             elif dialogue_choice == 2:
-                n  "...And there you go,{w=0.2} [player]!{w=0.75}{nw}"
-                extend  " Better appreciate it!"
+                n 1fnmbg "...And there you go,{w=0.2} [player]!{w=0.75}{nw}"
+                extend 1fcssmesm " Better appreciate it!"
 
             else:
-                n  "...And that's all she wrote!{w=0.75}{nw}"
-                extend  " Ehehe."
+                n 1fwrsm "...And that's all she wrote!{w=0.75}{nw}"
+                extend 1fchsm " Ehehe."
 
-            n  "So..."
-            show natsuki questioning
+            n 1ulraj "So..."
+            show natsuki  1unmbo
 
         menu:
-            n  "Did you wanna pick out another one [player],{w=0.2} or...?"
+            n "Did you wanna pick out another one [player],{w=0.2} or...?"
 
             "Sure!":
                 if joke_choice.joke_category == jn_jokes.JNJokeCategories.corny or joke_choice.joke_category == jn_jokes.JNJokeCategories.bad:
-                    n  "...Alright."
-                    extend  " Just make it a good one this time."
+                    n 1nlrsl "...Alright.{w=0.75}{nw}"
+                    extend 1csrsssbl " Just try and pick out a good one this time."
 
                 else:
-                    n  "Gotcha!"
-                    extend  " What else did you wanna hear again?"
+                    n 1nchbg "Gotcha!{w=0.75}{nw}"
+                    extend 1tnmss " What else did you wanna hear again?"
 
                 jump talk_daily_jokes_seen_before_loop
 
-            "That's enough for now.":
+            "That's it for now.":
                 if joke_choice.joke_category == jn_jokes.JNJokeCategories.funny:
-                    n  "Oh?{w=0.75}{nw}"
-                    extend  " What's wrong,{w=0.2} [player]?{w=0.75}{nw}"
-                    extend  " Had enough {i}already{/i}?"
-                    n  "Ehehe."
-                    n  "Fine,{w=0.2} fine.{w=0.75}{nw}"
-                    extend  " I'll put it away..."
-                    n  "...Now that we've had enough{w=0.5}{nw}" 
-                    extend  " {i}pun{/i}{w=0.5}{nw}"
-                    extend  " and all."
-                    n  "Ahaha.{w=0.75}{nw}"
+                    n 1fcsss "Oh?{w=0.75}{nw}"
+                    extend 1fsqss " What's wrong,{w=0.2} [player]?{w=0.75}{nw}"
+                    extend 1fnmsm " Had enough {i}already{/i}?"
+                    n 1fcssm "Ehehe."
+                    n 1fcsbg "Fine,{w=0.2} fine.{w=0.75}{nw}"
+                    extend 1flrsm " I'll put it away..."
+                    n 1fsqcs "...Now that we've had enough{w=0.5}{nw}" 
+                    extend 1fnmss " {i}pun{/i}{w=0.5}{nw}"
+                    extend 1fsqbg " and all."
+                    n 1nchgn "Ahaha.{w=0.75}{nw}"
 
                     if Natsuki.isLove(higher=True):
-                        extend  "Love you too,{w=0.2} [player]~!"
+                        extend 1fchbll "Love you too,{w=0.2} [player]~!"
                     
                     else:
-                        extend  " No regrets,{w=0.2} [player]!"
+                        extend 1fcsbs " No regrets,{w=0.2} [player]!"
+
+                    show natsuki 1fchsmeme
 
                 elif joke_choice.joke_category == jn_jokes.JNJokeCategories.corny:
-                    n  "Heh.{w=0.75}{nw}"
-                    extend  " Well...{w=1}{nw}"
-                    extend  " can't say I blame you,{w=0.2} [player]."
-                    n  "I'll just...{w=0.75}{nw}"
-                    extend  " put this away."
+                    n 1ncsss "Heh.{w=0.75}{nw}"
+                    extend 1ulrfl " Well...{w=1}{nw}"
+                    extend 1nslsssbl " can't say I blame you,{w=0.2} [player]."
+                    n 1nllsssbr "I'll just...{w=0.75}{nw}"
+                    extend 1nslbosbr " put this away."
+
+                    show natsuki 1nlrbosbl
 
                 elif joke_choice.joke_category == jn_jokes.JNJokeCategories.bad:
-                    n  "...Yeah.{w=0.75}{nw}"
-                    extend  " Actually,{w=0.2} you know what?{w=0.75}{nw}"
-                    extend  " Good call."
-                    n  "I've about had enough of this anyway."
+                    n 1nslfl "...Yeah.{w=0.75}{nw}"
+                    extend 1ccsfl " Actually,{w=0.2} you know what?{w=0.75}{nw}"
+                    extend 1cnmaj " Good call."
+                    n 1ccsposbr "I've about had enough of this anyway."
+
+                    show natsuki 1nsrposbr
 
                 else:
-                    n  "About done here,{w=0.2} [player]?{w=0.75}{nw}"
-                    extend  " No worries!"
-                    n  "We'll just...{w=1}{nw}"
-                    extend  " {i}close the book{/i}{w=0.5}{nw}"
-                    extend  " on this one."
+                    n 1unmaj "About done here,{w=0.2} [player]?{w=0.75}{nw}"
+                    extend 1nchsm " No worries!"
+                    n 1clrss "We'll just...{w=1}{nw}"
+                    extend 1csqss " {i}close the book{/i}{w=0.5}{nw}"
+                    extend 1csqbg " on this one."
 
                     if Natsuki.isLove(higher=True):
-                        n  "Ehehe.{w=0.75}{nw}"
-                        extend  "Love you too,{w=0.2} [player]~!"
+                        n 1fchgn "Ehehe.{w=0.75}{nw}"
+                        extend 1fchblleme "Love you too,{w=0.2} [player]~!"
                     
                     else:
-                        n  "You're welcome,{w=0.2} [player]!"
+                        n 1fchgnelg "You're welcome,{w=0.2} [player]!"
+
+                    show natsuki 1fchsmeme
 
     else:
-        n  "Well...{w=1}{nw}"
-        extend  " if you say so,{w=0.2} [player]."
-        n  "I'll just...{w=1}{nw}"
-        extend  " put this thing back."
+        n 1tlraj "Well...{w=1}{nw}"
+        extend 1tnmbo " if you say so,{w=0.2} [player]."
+        n 1tllss "I'll just...{w=1}{nw}"
+        extend 1cslss " put this thing back."
+
+        show natsuki 1nslbo
 
     return
 

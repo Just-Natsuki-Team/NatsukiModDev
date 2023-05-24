@@ -1000,6 +1000,54 @@ image natsuki snap:
 
     repeat
 
+image natsuki option_wait:
+    block:
+        choice:
+            "natsuki 1ulrbo"
+            pause 4
+            "natsuki 1ucsbo"
+            pause 0.1
+            "natsuki 1ulrbo"
+            pause 4
+            "natsuki 1ucsbo"
+            pause 0.1
+
+        choice:
+            "natsuki 1tlrbo"
+            pause 4
+            "natsuki 1tcsbo"
+            pause 0.1
+            "natsuki 1tlrbo"
+            pause 4
+            "natsuki 1tcsbo"
+            pause 0.1
+
+        choice:
+            "natsuki 1tnmbo"
+            pause 4
+            "natsuki 1tcsbo"
+            pause 0.1
+            "natsuki 1tnmbo"
+            pause 4
+            "natsuki 1tcsbo"
+            pause 0.1
+
+        choice:
+            "natsuki 1unmbo"
+            pause 4
+            "natsuki 1ucsbo"
+            pause 0.1
+            "natsuki 1unmbo"
+            pause 4
+            "natsuki 1ucsbo"
+            pause 0.1
+            "natsuki 1unmbo"
+            pause 1
+            "natsuki 1ucsbo"
+            pause 0.1
+
+    repeat
+
 # This selects which idle image to show based on current affinity state
 image natsuki idle = ConditionSwitch(
     "Natsuki.isEnamored(higher=True)", "natsuki idle enamored",
