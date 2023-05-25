@@ -10026,7 +10026,7 @@ label talk_daily_jokes_seen_before_start:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     play audio drawer
-    show joke_book zorder JN_PROP_ZORDER
+    $ Natsuki.setDeskItem(desk_slot=JNDeskSlots.centre, item_sprite_path="mod_assets/props/joke_book_held.png")
     show natsuki 1fchsmeme
     $ jnPause(2.25)
     hide black with Dissolve(0.5)
@@ -10047,7 +10047,7 @@ label talk_daily_jokes_seen_before_start:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     play audio drawer
-    hide joke_book
+    $ Natsuki.clearDeskItem(JNDeskSlots.centre)
     show natsuki 1nchsmeme
     $ jnPause(2.25)
     hide black with Dissolve(0.5)
@@ -10063,8 +10063,9 @@ label talk_daily_jokes_seen_before_loop:
 
         joke_options.sort(key = lambda option: option[0])
 
-    show natsuki option_wait
-    call screen scrollable_choice_menu(joke_options, ("Nevermind.", None), 250)
+    show natsuki option_wait at jn_left
+    call screen scrollable_choice_menu(joke_options, ("Nevermind.", None), 425)
+    show natsuki at jn_centre
     $ joke_choice = _return
 
     if isinstance(joke_choice, jn_jokes.JNJoke):

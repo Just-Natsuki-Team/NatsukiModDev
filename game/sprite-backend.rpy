@@ -319,15 +319,15 @@ init -50 python:
 
         # Left desk item
         lc_args.extend([
-            (0, 0), _JN_NATSUKI_BASE_SPRITE_PATH + "/etc/empty.png" if not Natsuki.getDeskItem(JNDeskSlots.left) else Natsuki.getDeskItem(JNDeskSlots.left)  
+            (0, 0), "[Natsuki._desk_left]"
         ])
         # Centre desk item
         lc_args.extend([
-            (0, 0), _JN_NATSUKI_BASE_SPRITE_PATH + "/etc/empty.png" if not Natsuki.getDeskItem(JNDeskSlots.centre) else Natsuki.getDeskItem(JNDeskSlots.centre)     
+            (0, 0), "[Natsuki._desk_centre]" 
         ])
         # Right desk item
         lc_args.extend([
-            (0, 0), _JN_NATSUKI_BASE_SPRITE_PATH + "/etc/empty.png" if not Natsuki.getDeskItem(JNDeskSlots.right) else Natsuki.getDeskItem(JNDeskSlots.right)     
+            (0, 0), "[Natsuki._desk_right]"  
         ])
 
         # Generate and return the sprite
