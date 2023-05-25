@@ -967,6 +967,13 @@ init -3 python:
         """
         renpy.pause(delay=delay, hard=hard)
 
+    #TODO: allow single string input
+    def jnGetDisplayableFromTags(tags):
+        """
+        """
+
+        return renpy.display.image.images[tags] if tags in renpy.display.image.images else Null()
+
 # Variables with cross-script utility specific to Just Natsuki
 init -990 python in jn_globals:
     import re

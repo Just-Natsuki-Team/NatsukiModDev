@@ -10026,7 +10026,7 @@ label talk_daily_jokes_seen_before_start:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     play audio drawer
-    $ Natsuki.setDeskItem(desk_slot=JNDeskSlots.centre, item_sprite_path="mod_assets/props/joke_book_held.png")
+    $ Natsuki.setDeskItem(desk_slot=JNDeskSlots.centre, displayable="mod_assets/props/joke_book_held.png")
     show natsuki 1fchsmeme
     $ jnPause(2.25)
     hide black with Dissolve(0.5)

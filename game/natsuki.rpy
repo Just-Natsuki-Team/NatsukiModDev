@@ -71,34 +71,38 @@ init 0 python:
 
         __capped_aff_dates = list()
 
-        _desk_left = _JN_NATSUKI_BASE_SPRITE_PATH + "/etc/empty.png"
-        _desk_centre = _JN_NATSUKI_BASE_SPRITE_PATH + "/etc/empty.png"
-        _desk_right = _JN_NATSUKI_BASE_SPRITE_PATH + "/etc/empty.png"
+        _desk_left = Null()
+        _desk_centre = Null()
+        _desk_right = Null()
+
+        _test_image = Image("mod_assets/props/joke_book_held.png")        
 
         @staticmethod
-        def setDeskItem(desk_slot, item_sprite_path):
+        def setDeskItem(desk_slot, displayable):
             """
             Sets a desk item for Natsuki's desk, and updates her current sprite.
-            Note that this is limited to simple images only.
 
             IN:
                 - desk_slot - JNDeskSlots slot to use for the item (left, centre or right)
-                - item_sprite_path - The sprite path of the item to show in that slot
+                - displayable - The displayable to show in that slot, or a string path to create an Image from
             """
+            if isinstance(basestring, displayable):
+                displayable = Image(displayable)
+
             if desk_slot == JNDeskSlots.left:
-                Natsuki._desk_left = item_sprite_path
+                Natsuki._desk_left = displayable
 
             elif desk_slot == JNDeskSlots.centre:
-                Natsuki._desk_centre = item_sprite_path
+                Natsuki._desk_centre = displayable
 
             elif desk_slot == JNDeskSlots.right:
-                Natsuki._desk_right = item_sprite_path
+                Natsuki._desk_right = displayable
 
             else:
-                jn_utils.log("Cannot assign item_sprite_path {0} to desk slot {1} as the slot does not exist.".format(item_sprite_path, desk_slot))
+                jn_utils.log("Cannot assign displayable to desk slot {1} as the slot does not exist.".format(desk_slot))
         
         @staticmethod
-        def getDeskItem(desk_slot):
+        def getDeskItem(st, at, desk_slot):
             """
             Gets a desk item for Natsuki's desk given a specific slot.
 
@@ -106,13 +110,13 @@ init 0 python:
                 - desk_slot - JNDeskSlots slot to return an item for (left, centre or right)
             """
             if desk_slot == JNDeskSlots.left:
-                return Natsuki._desk_left
+                return Natsuki._desk_left, None
 
             elif desk_slot == JNDeskSlots.centre:
-                return Natsuki._desk_centre
+                return Natsuki._desk_centre, None
 
             elif desk_slot == JNDeskSlots.right:
-                return Natsuki._desk_right
+                return Natsuki._desk_right, None
 
             else:
                 jn_utils.log("Cannot get desk slot {0} as the slot does not exist.".format(desk_slot))
@@ -126,13 +130,13 @@ init 0 python:
                 - desk_slot - JNDeskSlots slot of the desk to clear (left, centre or right)
             """
             if desk_slot == JNDeskSlots.left:
-                Natsuki._desk_left = _JN_NATSUKI_BASE_SPRITE_PATH + "/etc/empty.png"
+                Natsuki._desk_left = Null()
 
             elif desk_slot == JNDeskSlots.centre:
-                Natsuki._desk_centre = _JN_NATSUKI_BASE_SPRITE_PATH + "/etc/empty.png"
+                Natsuki._desk_centre = Null()
 
             elif desk_slot == JNDeskSlots.right:
-                Natsuki._desk_right = _JN_NATSUKI_BASE_SPRITE_PATH + "/etc/empty.png"
+                Natsuki._desk_right = Null()
 
             else:
                 jn_utils.log("Cannot clear desk slot {0} as the slot does not exist.".format(desk_slot))
@@ -142,9 +146,9 @@ init 0 python:
             """
             Completely clears Natsuki's desk.
             """
-            Natsuki._desk_left = _JN_NATSUKI_BASE_SPRITE_PATH + "/etc/empty.png"
-            Natsuki._desk_centre = _JN_NATSUKI_BASE_SPRITE_PATH + "/etc/empty.png"
-            Natsuki._desk_right = _JN_NATSUKI_BASE_SPRITE_PATH + "/etc/empty.png"
+            Natsuki._desk_left = Null()
+            Natsuki._desk_centre = Null()
+            Natsuki._desk_right = Null()
 
         # START: Outfit functionality
 

@@ -319,15 +319,15 @@ init -50 python:
 
         # Left desk item
         lc_args.extend([
-            (0, 0), "[Natsuki._desk_left]"
+            (0, 0), DynamicDisplayable(Natsuki.getDeskItem, desk_slot=JNDeskSlots.left)
         ])
         # Centre desk item
         lc_args.extend([
-            (0, 0), "[Natsuki._desk_centre]" 
+            (0, 0), DynamicDisplayable(Natsuki.getDeskItem, desk_slot=JNDeskSlots.centre)
         ])
         # Right desk item
         lc_args.extend([
-            (0, 0), "[Natsuki._desk_right]"  
+            (0, 0), DynamicDisplayable(Natsuki.getDeskItem, desk_slot=JNDeskSlots.right)
         ])
 
         # Generate and return the sprite
