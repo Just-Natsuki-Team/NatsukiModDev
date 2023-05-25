@@ -71,6 +71,38 @@ init 0 python:
 
         __capped_aff_dates = list()
 
+        # START: Desk functionality
+        _desk_items = {
+            JNDeskSlots.left: None,
+            JNDeskSlots.centre: None,
+            JNDeskSlots.right: None
+        }
+
+        @staticmethod
+        def setDeskItem(desk_slot, item_sprite_path, redraw_spritecode):
+            """
+            """
+            if desk_slot in Natsuki._desk_items:
+                Natsuki._desk_items[desk_slot] = item_sprite_path
+                renpy.show("natsuki {redraw_spritecode}".format)
+            
+            else:
+                jn_utils.log("Cannot assign item_sprite_path {0} to desk slot {1} as the slot does not exist.".format(item_sprite_path, desk_slot))
+        
+        @staticmethod
+        def getDeskItem(desk_slot):
+            """
+            """
+            return Natsuki._desk_items[desk_slot] if desk_slot in Natsuki._desk_items else None
+
+        @staticmethod
+        def clearDeskItem(desk_slot):
+            if desk_slot in Natsuki._desk_items:
+                Natsuki._desk_items[desk_slot] = None
+
+            else:
+                jn_utils.log("Cannot clear desk slot {1} as the slot does not exist.".format(sprite, desk_slot))
+
         # START: Outfit functionality
 
         # Tracks Natsuki's currently worn outfit

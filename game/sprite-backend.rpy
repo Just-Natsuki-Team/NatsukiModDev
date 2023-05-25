@@ -167,6 +167,11 @@ init -50 python:
         def __str__(self):
             return self.name
 
+    class JNDeskSlots(Enum):
+        left = 1
+        centre = 2
+        right = 3
+
     # These are poses with arms rendered under the desk
     _JN_BEFORE_DESK_POSES = [
         JNPose.sitting,
@@ -311,6 +316,19 @@ init -50 python:
                 (0, 0), "{0}/arms/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose),
                 (0, 0), "{0}/sleeves/[Natsuki._outfit.clothes.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose)
             ])
+
+        # Left desk item
+        lc_args.extend([
+            (0, 0), _JN_NATSUKI_BASE_SPRITE_PATH + "/etc/empty.png" if not Natsuki.getDeskItem(JNDeskSlots.left) else Natsuki.getDeskItem(JNDeskSlots.left)  
+        ])
+        # Centre desk item
+        lc_args.extend([
+            (0, 0), _JN_NATSUKI_BASE_SPRITE_PATH + "/etc/empty.png" if not Natsuki.getDeskItem(JNDeskSlots.centre) else Natsuki.getDeskItem(JNDeskSlots.centre)     
+        ])
+        # Right desk item
+        lc_args.extend([
+            (0, 0), _JN_NATSUKI_BASE_SPRITE_PATH + "/etc/empty.png" if not Natsuki.getDeskItem(JNDeskSlots.right) else Natsuki.getDeskItem(JNDeskSlots.right)     
+        ])
 
         # Generate and return the sprite
         return renpy.display.layout.LiveComposite(
@@ -1711,19 +1729,3 @@ image natsuki talk_menu_ruined:
 
 image desk = "mod_assets/natsuki/desk/table/table_normal.png"
 image chair = "mod_assets/natsuki/desk/chair/chair_normal.png"
-
-label pose_test:
-    n 1tsqss "Oh?{w=0.5}{nw}"
-    extend 1tsqbg " You wanna see some poses?{w=0.75}{nw}"
-    extend 1fsqsm " Ehehe."
-    n 1fchbl "You got it!"
-
-    n 1fcssm "This is just my sitting pose!"
-    n 2fllpo "This is my arms_crossed_body pose!"
-    n 3kwmsml "This is my arms_crossed_desk pose!"
-    n 4kwmpu "And this is my fingers_on_desk pose!"
-
-    n 1fchbg "...And that's about it!{w=0.75}{nw}"
-    extend 1fwlsm  " Glad to be of service,{w=0.2} [player]!"
-
-    jump ch30_loop
