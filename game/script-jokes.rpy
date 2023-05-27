@@ -389,7 +389,7 @@ init python in jn_jokes:
     __registerJoke(JNJoke(
         label="joke_hour_feeling",
         display_name="Clock and the watch",
-        joke_category=JNJokeCategories.funny
+        joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_spotless_tigers",
@@ -715,7 +715,7 @@ label joke_regular_moovements:
 
 label joke_rabbit_lottery:
     n 1nlraj "Hey,{w=0.2} [player]...{w=1}{nw}"
-    extend 1unmaj "did {i}you{/i} know that there's actually a rabbit {i}lottery{/i}?"
+    extend 1unmaj " did {i}you{/i} know that there's actually a rabbit {i}lottery{/i}?"
     n 1fcsbg "Not what you expected to hear,{w=0.2} I bet."
     n 1fchbg "But it makes perfect sense when you think about it!{w=1}{nw}"
     extend 1fsqsm " After all..."
@@ -846,7 +846,7 @@ label joke_scarecrow_award:
     return
 
 label joke_sundae_school:
-    n 1ullaj "You know...{w=0.75}"
+    n 1ullaj "You know..."
     n 1tnmbo "I've been thinking about school a bunch lately."
     n 1ulraj "I mean,{w=0.5}{nw}"
     extend 1unmfl " there were {i}so{/i} many schools I could've gone to -{w=0.5}{nw}"

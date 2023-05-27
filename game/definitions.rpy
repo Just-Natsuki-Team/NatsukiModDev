@@ -967,10 +967,17 @@ init -3 python:
         """
         renpy.pause(delay=delay, hard=hard)
 
-    #TODO: allow single string input
     def jnGetDisplayableFromTags(tags):
         """
+        Given a tag, returns the displayable corresponding to it.
+        
+        IN:
+            - tags - Str or tuple tags identifying the image
+        OUT:
+            - If the image exists, the displayable for that image - otherwise a Null displayable
         """
+        if isinstance(tags, basestring):
+            tags = set(tags.split())
 
         return renpy.display.image.images[tags] if tags in renpy.display.image.images else Null()
 
@@ -1864,6 +1871,9 @@ init -100 python in jn_utils:
 
         # Save joke data
         store.jn_jokes.JNJoke.saveAll()
+
+        # Save desk item data
+        store.jn_desk_items.JNDeskItem.saveAll()
 
         #Save topic data
         store.Topic._save_topic_data()

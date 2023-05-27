@@ -1,5 +1,6 @@
 init -50 python:
     import store
+    import store.jn_desk_items as jn_desk_items
     import store.jn_outfits as jn_outfits
     import store.jn_utils as jn_utils
     from Enum import Enum
@@ -167,11 +168,6 @@ init -50 python:
         def __str__(self):
             return self.name
 
-    class JNDeskSlots(Enum):
-        left = 1
-        centre = 2
-        right = 3
-
     # These are poses with arms rendered under the desk
     _JN_BEFORE_DESK_POSES = [
         JNPose.sitting,
@@ -319,15 +315,15 @@ init -50 python:
 
         # Left desk item
         lc_args.extend([
-            (0, 0), DynamicDisplayable(Natsuki.getDeskItem, desk_slot=JNDeskSlots.left)
+            (0, 0), DynamicDisplayable(Natsuki.getDeskItem, desk_slot=jn_desk_items.JNDeskSlots.left)
         ])
         # Centre desk item
         lc_args.extend([
-            (0, 0), DynamicDisplayable(Natsuki.getDeskItem, desk_slot=JNDeskSlots.centre)
+            (0, 0), DynamicDisplayable(Natsuki.getDeskItem, desk_slot=jn_desk_items.JNDeskSlots.centre)
         ])
         # Right desk item
         lc_args.extend([
-            (0, 0), DynamicDisplayable(Natsuki.getDeskItem, desk_slot=JNDeskSlots.right)
+            (0, 0), DynamicDisplayable(Natsuki.getDeskItem, desk_slot=jn_desk_items.JNDeskSlots.right)
         ])
 
         # Generate and return the sprite

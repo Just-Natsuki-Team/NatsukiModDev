@@ -138,6 +138,11 @@ label ch30_init:
 
         jn_utils.log("Outfit set.")
 
+        # LOAD DESK ITEMS
+
+        jn_desk_items.JNDeskItem.loadAll()
+        jn_utils.log("Desk item data loaded.")
+
         # LOAD HOLIDAYS, POEMS, JOKES
 
         # Load poems from disk and corresponding persistent data

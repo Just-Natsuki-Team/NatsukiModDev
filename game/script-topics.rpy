@@ -10026,7 +10026,7 @@ label talk_daily_jokes_seen_before_start:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     play audio drawer
-    $ Natsuki.setDeskItem(desk_slot=JNDeskSlots.centre, displayable="mod_assets/props/joke_book_held.png")
+    $ Natsuki.setDeskItem(desk_slot=jn_desk_items.JNDeskSlots.centre, item=jn_desk_items.getDeskItem("jn_joke_book_held"))
     show natsuki 1fchsmeme
     $ jnPause(2.25)
     hide black with Dissolve(0.5)
@@ -10040,14 +10040,14 @@ label talk_daily_jokes_seen_before_start:
     else:
         n 1fchbgeme "Okaaay!{w=0.75}{nw}"
         extend 1fchgn " Here we go,{w=0.2} [player]!{w=0.75}{nw}"
-        extend 1tsqsm "  Which one did you wanna hear?"
+        extend 1tsqsm " Which one did you wanna hear?"
 
     call talk_daily_jokes_seen_before_loop
 
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     play audio drawer
-    $ Natsuki.clearDeskItem(JNDeskSlots.centre)
+    $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
     show natsuki 1nchsmeme
     $ jnPause(2.25)
     hide black with Dissolve(0.5)
@@ -10065,7 +10065,7 @@ label talk_daily_jokes_seen_before_loop:
 
     show natsuki option_wait at jn_left
     call screen scrollable_choice_menu(joke_options, ("Nevermind.", None), 425)
-    show natsuki at jn_centre
+    show natsuki at jn_center
     $ joke_choice = _return
 
     if isinstance(joke_choice, jn_jokes.JNJoke):
@@ -10074,7 +10074,7 @@ label talk_daily_jokes_seen_before_loop:
             if dialogue_choice == 1:
                 n 1unmaj "Ooh!{w=0.75}{nw}"
                 extend 1unmbg " Yeah!{w=0.5}{nw}"
-                extend 1fchbg " I love this one!"
+                extend 1fchbg " I love that one!"
 
             elif dialogue_choice == 2:
                 n 1tsqss "[joke_choice.display_name],{w=0.2} huh?"
@@ -10095,11 +10095,11 @@ label talk_daily_jokes_seen_before_loop:
 
             elif dialogue_choice == 2:
                 n 1csrem "Man...{w=1}{nw}"
-                extend 1tnmem " you're {i}sure{/i} you wanna hear this one again?{w=0.75}{nw}"
+                extend 1tnmem " you're {i}sure{/i} you wanna hear that one again?{w=0.75}{nw}"
                 extend 1nslsl " Fine."
             
             else:
-                n 1nsqflsbr "...This one {i}again{/i}?{w=0.75}{nw}"
+                n 1nsqflsbr "...That one {i}again{/i}?{w=0.75}{nw}"
                 extend 1cslemsbr " Jeez..."
 
             show natsuki 1ndwbo
@@ -10148,10 +10148,10 @@ label talk_daily_jokes_seen_before_loop:
         play audio page_turn
 
         if random.choice([True, False]):
-            $ jnPause(0.75)
+            $ jnPause(1.25)
             play audio page_turn
 
-        $ jnPause(1)
+        $ jnPause(1.25)
 
         n 1fcsaj "A-{w=0.2}hem!"
         n 1fcsbo "..."
@@ -10218,7 +10218,7 @@ label talk_daily_jokes_seen_before_loop:
                 extend 1ccstr " I suppose at least {i}some{/i} things don't change.{w=0.75}{nw}"
                 extend 1csrbo " {i}Like that joke still sucking{/i}."
 
-            n 1ccsajsbl "Well,{w=0.2}whatever.{w=0.75}{nw}"
+            n 1ccsajsbl "Well,{w=0.2} whatever.{w=0.75}{nw}"
             extend 1nllaj " So..."
             show natsuki 1tnmsl
 
@@ -10266,7 +10266,7 @@ label talk_daily_jokes_seen_before_loop:
                     n 1nchgn "Ahaha.{w=0.75}{nw}"
 
                     if Natsuki.isLove(higher=True):
-                        extend 1fchbll "Love you too,{w=0.2} [player]~!"
+                        extend 1fchbll " Love you too,{w=0.2} [player]~!"
                     
                     else:
                         extend 1fcsbs " No regrets,{w=0.2} [player]!"
@@ -10299,7 +10299,7 @@ label talk_daily_jokes_seen_before_loop:
 
                     if Natsuki.isLove(higher=True):
                         n 1fchgn "Ehehe.{w=0.75}{nw}"
-                        extend 1fchblleme "Love you too,{w=0.2} [player]~!"
+                        extend 1fchblleme " Love you too,{w=0.2} [player]~!"
                     
                     else:
                         n 1fchgnelg "You're welcome,{w=0.2} [player]!"

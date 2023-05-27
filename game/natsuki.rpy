@@ -5,6 +5,7 @@ default persistent._jn_natsuki_birthday_known = False
 init 0 python:
     import codecs
     import datetime
+    import store.jn_desk_items as jn_desk_items
     import store.jn_outfits as jn_outfits
 
     class Natsuki(object):
@@ -73,33 +74,37 @@ init 0 python:
 
         _desk_left = Null()
         _desk_centre = Null()
-        _desk_right = Null()
-
-        _test_image = Image("mod_assets/props/joke_book_held.png")        
+        _desk_right = Null()    
 
         @staticmethod
-        def setDeskItem(desk_slot, displayable):
+        def setDeskItem(desk_slot, item):
             """
             Sets a desk item for Natsuki's desk, and updates her current sprite.
 
             IN:
                 - desk_slot - JNDeskSlots slot to use for the item (left, centre or right)
-                - displayable - The displayable to show in that slot, or a string path to create an Image from
+                - item - Can be one of:
+                    - str file path to image, in which case an Image displayable is created from it
+                    - JNDeskItem instance, in which case the displayable value is used
+                    - A Ren'Py displayable (Image, etc.), which is used directly
             """
-            if isinstance(basestring, displayable):
-                displayable = Image(displayable)
+            if isinstance(item, jn_desk_items.JNDeskItem):
+                item = item.displayable
 
-            if desk_slot == JNDeskSlots.left:
-                Natsuki._desk_left = displayable
+            elif isinstance(item, basestring):
+                item = Image(item)
 
-            elif desk_slot == JNDeskSlots.centre:
-                Natsuki._desk_centre = displayable
+            if desk_slot == jn_desk_items.JNDeskSlots.left:
+                Natsuki._desk_left = item
 
-            elif desk_slot == JNDeskSlots.right:
-                Natsuki._desk_right = displayable
+            elif desk_slot == jn_desk_items.JNDeskSlots.centre:
+                Natsuki._desk_centre = item
+
+            elif desk_slot == jn_desk_items.JNDeskSlots.right:
+                Natsuki._desk_right = item
 
             else:
-                jn_utils.log("Cannot assign displayable to desk slot {1} as the slot does not exist.".format(desk_slot))
+                jn_utils.log("Cannot assign item to desk slot {0} as the slot does not exist.".format(desk_slot))
         
         @staticmethod
         def getDeskItem(st, at, desk_slot):
@@ -109,13 +114,13 @@ init 0 python:
             IN:
                 - desk_slot - JNDeskSlots slot to return an item for (left, centre or right)
             """
-            if desk_slot == JNDeskSlots.left:
+            if desk_slot == jn_desk_items.JNDeskSlots.left:
                 return Natsuki._desk_left, None
 
-            elif desk_slot == JNDeskSlots.centre:
+            elif desk_slot == jn_desk_items.JNDeskSlots.centre:
                 return Natsuki._desk_centre, None
 
-            elif desk_slot == JNDeskSlots.right:
+            elif desk_slot == jn_desk_items.JNDeskSlots.right:
                 return Natsuki._desk_right, None
 
             else:
@@ -129,13 +134,13 @@ init 0 python:
             IN:
                 - desk_slot - JNDeskSlots slot of the desk to clear (left, centre or right)
             """
-            if desk_slot == JNDeskSlots.left:
+            if desk_slot == jn_desk_items.JNDeskSlots.left:
                 Natsuki._desk_left = Null()
 
-            elif desk_slot == JNDeskSlots.centre:
+            elif desk_slot == jn_desk_items.JNDeskSlots.centre:
                 Natsuki._desk_centre = Null()
 
-            elif desk_slot == JNDeskSlots.right:
+            elif desk_slot == jn_desk_items.JNDeskSlots.right:
                 Natsuki._desk_right = Null()
 
             else:
@@ -149,6 +154,27 @@ init 0 python:
             Natsuki._desk_left = Null()
             Natsuki._desk_centre = Null()
             Natsuki._desk_right = Null()
+
+        @staticmethod
+        def getDeskSlotClear(desk_slot):
+            """
+            Returns the state of the desk for the given slot.
+
+            IN:
+                - desk_slot - JNDeskSlots slot of the desk to clear (left, centre or right)
+            OUT:
+                - True if the slot is clear/unoccupied, otherwise False
+            """
+            if desk_slot == jn_desk_items.JNDeskSlots.left:
+                return isinstance(Natsuki._desk_left, Null)
+
+            elif desk_slot == jn_desk_items.JNDeskSlots.centre:
+                return isinstance(Natsuki._desk_centre, Null)
+
+            elif desk_slot == jn_desk_items.JNDeskSlots.right:
+                return isinstance(Natsuki._desk_right, Null)
+
+            return False
 
         # START: Outfit functionality
 
