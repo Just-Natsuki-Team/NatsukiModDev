@@ -335,7 +335,7 @@ init python in jn_data_migrations:
         store.persistent._jn_version = "1.3.0"
 
         if jn_outfits.get_outfit("jn_chocolate_plaid_collection").unlocked:
-            jn_outfits.get_wearable("jn_necklace_gold_necklace").unlock()
+            jn_outfits.get_wearable("jn_necklace_tight_golden_necklace").unlock()
 
         if store.persistent.affinity >= 7500:
             store.persistent._jn_pic_aff = store.persistent.affinity

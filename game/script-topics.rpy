@@ -8829,7 +8829,7 @@ label talk_chocolate_preference:
         n 2kchsm "Maybe I should go dig that out later..."
 
         $ jn_outfits.get_outfit("jn_chocolate_plaid_collection").unlock()
-        $ jn_outfits.get_wearable("jn_necklace_gold_necklace").unlock()
+        $ jn_outfits.get_wearable("jn_necklace_tight_golden_necklace").unlock()
 
     n 1fllajlsbr "A-{w=0.2}anyway!{w=0.75}{nw}"
     extend 1fcsajl " Enough of me yammering on again.{w=0.75}{nw}"
