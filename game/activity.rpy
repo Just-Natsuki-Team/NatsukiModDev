@@ -9,7 +9,7 @@ init python in jn_activity:
     import store
     import store.jn_globals as jn_globals
     import store.jn_utils as jn_utils
-    
+
     ACTIVITY_SYSTEM_ENABLED = True
     LAST_ACTIVITY = None
 
@@ -111,7 +111,7 @@ init python in jn_activity:
                 return renpy.substitute(random.choice(self.notify_text))
 
             return None
-    
+
     class JNActivityManager:
         """
         Management class for handling activities.
@@ -437,13 +437,13 @@ init python in jn_activity:
         """
         Gets the title of the currently active window.
 
-        IN: 
+        IN:
             - delay - int amount of seconds to wait before checking window
 
         OUT:
             - str representing the title of the currently active window
         """
-        global ACTIVITY_SYSTEM_ENABLED 
+        global ACTIVITY_SYSTEM_ENABLED
         if ACTIVITY_SYSTEM_ENABLED:
             if delay is not 0:
                 store.jnPause(delay, hard=True)

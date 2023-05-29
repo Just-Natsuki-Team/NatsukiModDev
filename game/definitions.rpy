@@ -645,7 +645,7 @@ init -3 python:
         if not silent:
             if jn_is_day():
                 renpy.play("mod_assets/buttons/sounds/button_click_day.ogg")
-            
+
             else:
                 renpy.play("mod_assets/buttons/sounds/button_click_night.ogg")
 

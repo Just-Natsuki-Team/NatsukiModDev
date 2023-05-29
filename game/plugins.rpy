@@ -76,9 +76,9 @@ init -1 python in jn_plugins:
 
         IN:
             - option_name - string; the text displayed for this option that the user will see
-            - visible_if - string; python statement that must return True for this option to be visible and selectable 
+            - visible_if - string; python statement that must return True for this option to be visible and selectable
             - jump_label - string; the renpy label to jump to when this option is selected, assuming this option is visible and selectable
-        """        
+        """
         global extras_options
         extras_options.append(JNRegisteredExtraOption(
             option_name,

@@ -6,7 +6,7 @@ init python in jn_idles:
     import store.jn_affinity as jn_affinity
     import store.jn_globals as jn_globals
     import store.jn_utils as jn_utils
-    
+
     __ALL_IDLES = {}
 
     _last_idle_label = None
@@ -72,7 +72,7 @@ init python in jn_idles:
 
             IN:
                 - affinity_state - Affinity state to test if the holidays can be shown in. If None, the current affinity state is used.
-            
+
             OUT:
                 - True if the current affinity is within range; otherwise False.
             """
@@ -135,7 +135,7 @@ init python in jn_idles:
     def __registerIdle(idle):
         """
         Registers a new idle in the list of idles, allowing it to be selected randomly between topics.
-        
+
         IN:
             - idle - JNIdle to register.
         """
@@ -238,7 +238,7 @@ label idle_twitch_playing:
 
     if random.choice([True, False]):
         n 1fllsssbr "Just gotta save real quick..."
-    
+
     else:
         n 1fsrsssbr "Just give me a second here..."
 
@@ -268,7 +268,7 @@ label idle_reading_parfait_girls:
 
     if random.choice([True, False]):
         n 1fslsssbl "Let me just bookmark this real quick..."
-    
+
     else:
         n 1fcssssbl "Just gotta find a good stopping point here..."
 
@@ -299,7 +299,7 @@ label idle_reading_renpy_for_dummies:
 
     if random.choice([True, False]):
         n 1nsrbosbr "..."
-        n 1nnmaj "...And no.{w=1}{nw}" 
+        n 1nnmaj "...And no.{w=1}{nw}"
         extend 1fslpo " The book still sucks."
 
     else:
@@ -372,7 +372,7 @@ label idle_reading_step_by_step:
 
     else:
         n 1fcsbglsbr "W-{w=0.2}what's up?{w=1}{nw}"
-        extend 1nsrsslsbr " I'll just...{w=1}{nw}" 
+        extend 1nsrsslsbr " I'll just...{w=1}{nw}"
         extend 1nsrcal " bookmark this real quick."
 
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
@@ -391,7 +391,7 @@ label idle_naptime:
     show natsuki sleeping
     $ jnPause(7.1)
     $ jnClickToContinue(silent=False)
-    
+
     n 3kcsslesl "...Mmmnnn...{w=2}{nw}"
     n 3kwlpuesl "...Nnnn?{w=1}{nw}"
     extend 3ksqpul " Wha...?{w=2}{nw}"
@@ -441,7 +441,7 @@ label idle_poetry_attempts:
         extend 1fchbgsbl " Hey,{w=0.2} [player]."
         n 1tnmsm "..."
         n 1tnmpu "...What?{w=0.75}{nw}"
-        extend 1klrflsbl " What's that look for,{w=0.5}{nw}" 
+        extend 1klrflsbl " What's that look for,{w=0.5}{nw}"
         extend 1knmbosbl " all of a sudden?"
         n 1udwfll "..."
         n 1udwemleex "A-{w=0.2}ah!{w=0.75}{nw}"

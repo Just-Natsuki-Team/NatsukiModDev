@@ -8,10 +8,10 @@ init python in jn_threading:
         """
         Creates and starts a new, untracked background thread given a function and args that runs without blocking execution.
         This will not return a result, therefore only use this for things like void functions where no return is expected/needed.
-        
+
         IN:
             - function - the function to call in the new thread
-            - args - parameters to be passed to 
+            - args - parameters to be passed to
         """
 
         if not callable(function):

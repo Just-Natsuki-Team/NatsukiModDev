@@ -1,3 +1,10 @@
-game/dev/*
-game/saves/*
+characters
+game/cache
+game/dev
+game/saves
 game/*.rpyc
+game/*.rpa
+*.pyc
+errors.txt
+log.txt
+traceback.txt

@@ -97,7 +97,7 @@ image particles snow:
 image particles cherry_blossom day:
     "mod_assets/backgrounds/atmosphere/particles/cherry_blossom_day.png"
     cherry_blossom_scroll
-    
+
 image particles cherry_blossom night:
     "mod_assets/backgrounds/atmosphere/particles/cherry_blossom_night.png"
     cherry_blossom_scroll
@@ -152,7 +152,7 @@ init 0 python in jn_atmosphere:
 
     # Zorder indexes
     # Complete order is:
-    # v PROPS 
+    # v PROPS
     # v NATSUKI
     # v BACKGROUND
     # v DIM
@@ -218,7 +218,7 @@ init 0 python in jn_atmosphere:
             self.night_particles_image = night_particles_image
             self.weather_sfx = weather_sfx
 
-        
+
         def getNotifyText(self):
             """
             Gets a random notification string for this weather to be used in a popup
@@ -538,7 +538,7 @@ init 0 python in jn_atmosphere:
 
         except Exception as exception:
             jn_utils.log("Unable to fetch weather from OpenWeatherMap as an exception occurred; {0}".format(exception.message))
-        
+
         # No map entries, fallback
         return None
 
@@ -603,7 +603,7 @@ label weather_change:
     $ jn_atmosphere.updateSky()
 
     if (
-        Natsuki.isAffectionate(higher=True) 
+        Natsuki.isAffectionate(higher=True)
         and random.randint(1, 4) == 1
         and previous_weather.weather_type != jn_atmosphere.current_weather.weather_type
     ):
@@ -644,7 +644,7 @@ label weather_change:
                 else:
                     n 3fcsem "Ugh...{w=1.5}{nw}"
                     extend 3fslpol " I'll never {i}not{/i} find rain gross.{w=3}{nw}"
-                
+
             elif jn_atmosphere.isCurrentWeatherThunder():
                 # Thunder
                 if alt_dialogue:

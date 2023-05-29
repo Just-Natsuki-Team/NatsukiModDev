@@ -212,7 +212,7 @@ label introduction_first_meeting:
     n 4kplsf "It's all...{w=0.3} so foggy...{w=1}{nw}"
     extend 4kcsun " I just...{w=0.3} can't...{w=0.3} remember..."
     show natsuki 4kcsem
-    
+
     menu:
         "I'm...":
             pass

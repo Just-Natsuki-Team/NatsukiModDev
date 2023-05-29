@@ -61,7 +61,7 @@ init python in jn_jokes:
             Returns a filtered list of jokes, given a joke list and filter criteria.
 
             IN:
-                - label - list of labels the joke must have 
+                - label - list of labels the joke must have
                 - is_seen - bool is_seen state the joke must be
 
             OUT:
@@ -149,7 +149,7 @@ init python in jn_jokes:
         IN:
             - joke_name - str joke name to fetch
 
-        OUT: Corresponding JNJoke if the joke exists, otherwise None 
+        OUT: Corresponding JNJoke if the joke exists, otherwise None
         """
         if joke_name in __ALL_JOKES:
             return __ALL_JOKES[joke_name]
@@ -165,7 +165,7 @@ init python in jn_jokes:
     def selectJokes():
         """
         Returns a list of all unseen jokes, or None if zero that are unlocked and unseen exist.
-        
+
         OUT:
             - List of JNJoke jokes, or None
         """
@@ -370,7 +370,7 @@ label joke_clock_eating:
     n 1fsqcs "..."
     n 1tsqss "...No?"
     n 1ullaj "Well,{w=0.2} I can't say I blame you."
-    n 1fllss "It's very...{w=1.25}{nw}" 
+    n 1fllss "It's very...{w=1.25}{nw}"
     extend 1fsqbg " {i}time{w=0.3} consuming{/i}."
 
     return
@@ -389,7 +389,7 @@ label joke_pirate_shower:
     n 1unmfl "Did you know pirates wouldn't let their victims shower,{w=0.75}{nw}"
     extend 1ulraj " once they captured them?"
     n 1tlrsl "...Why?"
-    n 1fcssm "Heh.{w=0.75}{nw}" 
+    n 1fcssm "Heh.{w=0.75}{nw}"
     extend 1fsqsm " Isn't it obvious?"
     n 1fsrsssbl "...'Cause they'd just {i}wash up on shore{/i}."
 
@@ -408,11 +408,11 @@ label joke_blind_fish:
     n 1fcsaj "Alright,{w=0.2} [player]..."
     n 1tsqsl "What do you call a fish without eyes?"
     n 1tsqfs "..."
-    n 1fcsss "Nope,{w=0.5}{nw}" 
+    n 1fcsss "Nope,{w=0.5}{nw}"
     extend 1fsrss " it's not {i}blind{/i}."
     n 1nsqcasbl "...It's {i}fsh{/i}."
 
-    return      
+    return
 
 label joke_skeleton_music:
     n 1fcsaj "Alright!{w=0.75}{nw}"
@@ -421,7 +421,7 @@ label joke_skeleton_music:
     n 1nsrsssbr "..."
     n 1nsrposbl "...A xylo-{w=1}{i}bone{/i}."
 
-    return 
+    return
 
 label joke_skeleton_communication:
     n 1nsrsssbl "Here's another {i}spooky{/i} one for you.{w=0.75}{nw}"
@@ -429,16 +429,16 @@ label joke_skeleton_communication:
     n 1fcssssbl "It's obvious.{w=0.75}{nw}"
     extend 1nslsssbr " They use a tele-{w=0.5}{i}bone{/i}."
 
-    return    
+    return
 
 label joke_ocean_greeting:
     n 1fcsbg "Alright!"
     n 1fcsss "What did the ocean say to the sand?"
     n 1fsqsm "..."
-    n 1fcsbg "Nothing -{w=0.5}{nw}" 
+    n 1fcsbg "Nothing -{w=0.5}{nw}"
     extend 1fchgn " it just {i}waved{/i}!"
 
-    return  
+    return
 
 label joke_tractor_trailer:
     n 1fllaj "I was meant to see a film all about tractors,{w=0.75}{nw}"
@@ -447,7 +447,7 @@ label joke_tractor_trailer:
     n 1fsqss "I didn't catch see the tractor..."
     n 1fchbg "...But I at least saw the {i}trailer{/i}!"
 
-    return     
+    return
 
 label joke_tentacle_tickles:
     n 1fcsbg "So!{w=0.75}{nw}"
@@ -476,14 +476,14 @@ label joke_upset_cat:
     n 1fcsss "You get a...{w=1}{nw}"
     extend 1fsqss " {i}{w=0.2}fe{w=0.2}-line{/i}{w=0.75}{nw}"
     extend 1fwlbg " for the exit!"
-    
+
     return
 
 label joke_cute_chicks:
     n 1fslem "Why was the lonely farmer excited to go to the show-barn?"
     n 1fslsl "..."
-    n 1fsrem "...Because he heard it'd be full of{w=0.75}{nw}" 
-    extend 1fcsem " 'cute{w=0.75}{nw}" 
+    n 1fsrem "...Because he heard it'd be full of{w=0.75}{nw}"
+    extend 1fcsem " 'cute{w=0.75}{nw}"
     extend 1fslsl " chicks'."
 
     return
@@ -521,7 +521,7 @@ label joke_soya_tofu:
     extend 1fcsbg " Then riddle me this!"
     n 1fnmss "How does soya milk defend itself?"
     n 1fnmsm "..."
-    n 1tsqss "Well?{w=1}{nw}" 
+    n 1tsqss "Well?{w=1}{nw}"
     extend 1fsqbg " Isn't it obvious?"
     n 1nchgn "It does {w=0.3}{i}to-{w=0.3}fu{/i}!"
 
@@ -543,7 +543,7 @@ label joke_distrust_atoms:
 label joke_running_latte:
     n 1fcsfl "What do you call a barista that didn't make it to work on time?"
     n 1nsrsl "..."
-    n 1ncsfl "Running...{w=1.25}{nw}" 
+    n 1ncsfl "Running...{w=1.25}{nw}"
     extend 1fslcasbl " {i}latte{/i}."
 
     return
@@ -566,7 +566,7 @@ label joke_snek_maths:
     n 1nsqsl "..."
     n 1nslpo "..."
     n 1nsqem "...{i}An adder{/i}."
-    
+
     return
 
 label joke_balloonist_hot_air:
@@ -574,7 +574,7 @@ label joke_balloonist_hot_air:
     n 1ncsemesi "..."
     n 1nsrem "They're both full of...{w=0.75}{nw}"
     extend 1nslajsbr " {i}hot{w=0.3} air{/i}."
-    
+
     return
 
 label joke_author_cover_story:
@@ -613,7 +613,7 @@ label joke_neutrons_no_charge:
     n 1fcsbg "So!{w=1}{nw}"
     extend 1fsqbg " Why don't neutrons have to pay entry fees when they go anywhere?"
     n 1fsqcs "..."
-    n 1fcsbg "'Cause for neutrons...{w=1}{nw}" 
+    n 1fcsbg "'Cause for neutrons...{w=1}{nw}"
     extend 1uchgn " there's never any {i}charge{/i}!"
 
     return
@@ -651,8 +651,8 @@ label joke_rabbit_lottery:
     n 1fcsbg "Not what you expected to hear,{w=0.2} I bet."
     n 1fchbg "But it makes perfect sense when you think about it!{w=1}{nw}"
     extend 1fsqsm " After all..."
-    n 1fsqss "...How else do they join the{w=0.5}{nw}" 
-    extend 1fnmbg " {i}bun{/i}{w=0.75}{nw}" 
+    n 1fsqss "...How else do they join the{w=0.5}{nw}"
+    extend 1fnmbg " {i}bun{/i}{w=0.75}{nw}"
     extend 1uchgn "-percent?"
 
     return
@@ -695,7 +695,7 @@ label joke_bigger_ball:
     n 1ullbo "You know..."
     n 1nslsssbl "I ended up visiting the school nurse the last time I played sports."
     n 1uwdaj "I wondered why the ball kept getting bigger..."
-    n 1unmfl "...But then it{w=0.25}{nw}" 
+    n 1unmfl "...But then it{w=0.25}{nw}"
     extend 1fchbgsbr " {i}hit{/i} me!"
 
     return
@@ -753,7 +753,7 @@ label joke_cheesy_pizza:
     extend 1fcsem " ugh."
     n 1fslsl "Yeah.{w=0.3} There's no way I'm sharing something...{w=1}{nw}"
     extend 1nsqpo " {i}that cheesy{/i}."
-    
+
     return
 
 label joke_veggie_mood:
@@ -765,16 +765,16 @@ label joke_veggie_mood:
     extend 1fcssmesm " I do."
     n 1fcsbg "...When they're out of their {i}gourd{/i},{w=0.75}{nw}"
     extend 1fchbg " obviously!"
-    
+
     return
 
 label joke_scarecrow_award:
     n 1fsqfl "...Why did the scarecrow get an award?"
     n 1ncsemesi "..."
     n 1fcsbo "Because..."
-    n 1fsqfl "It was {i}outstanding{/i}{w=0.75}{nw}" 
+    n 1fsqfl "It was {i}outstanding{/i}{w=0.75}{nw}"
     extend 1nsrca " in its field."
-    
+
     return
 
 label joke_sundae_school:
@@ -787,9 +787,9 @@ label joke_sundae_school:
     extend 1fllwr " Who {i}does{/i} that?!"
     n 1fcsem "Ugh..."
     n 1flrfl "Talk about a...{w=1}{nw}"
-    extend 1fsqss " {i}sundae{/i}{w=0.75}{nw}" 
+    extend 1fsqss " {i}sundae{/i}{w=0.75}{nw}"
     extend 1uchgn " school!"
-    
+
     return
 
 label joke_burned_tongue:

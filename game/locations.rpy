@@ -206,7 +206,7 @@ init -20 python:
 
             else:
                 jn_utils.log("Unable to show room: no room image was found.")
-            
+
             return
 
         def is_showing_day_room(self):

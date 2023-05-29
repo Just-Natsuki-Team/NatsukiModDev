@@ -14,7 +14,7 @@ init 0 python in jn_nicknames:
     import store
     import store.jn_globals as jn_globals
     import store.jn_utils as jn_utils
-    
+
     class NicknameTypes(Enum):
         """
         Identifiers for different nickname types.
@@ -175,13 +175,13 @@ init 0 python in jn_nicknames:
 
         if not isinstance(nickname, basestring):
             return NicknameTypes.invalid
-        
+
         else:
             nickname = nickname.lower().replace(" ", "")
 
             if nickname == "":
                 return NicknameTypes.invalid
-            
+
             elif re.search(NATSUKI_LOVED_NICKNAME_REGEX, nickname):
                 return NicknameTypes.loved
 
@@ -216,7 +216,7 @@ init 0 python in jn_nicknames:
 
         if not isinstance(nickname, basestring):
             return NicknameTypes.invalid
-        
+
         else:
             nickname = nickname.lower().replace(" ", "")
 
