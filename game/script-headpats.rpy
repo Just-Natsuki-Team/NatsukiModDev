@@ -2,7 +2,6 @@ default persistent._jn_headpats_total_given = 0
 
 init python in jn_headpats:
     import os
-    import pygame
     import random
     import store
     import store.jn_utils as jn_utils
@@ -35,8 +34,7 @@ init python in jn_headpats:
 
     # Collision detection
     _last_mouse_position = None
-
-    _ACTIVE_PAT_AREA = pygame.Rect(519, 100, 239, 152)
+    _cursor_in_active_area = False
 
     def _getMousePositionChanged():
         """
@@ -46,6 +44,17 @@ init python in jn_headpats:
             return True
 
         return False
+
+    def _setCursorInActiveArea(is_active):
+        """
+        Sets whether the cursor is in the active pat area for Natsuki.__capped_aff_dates.
+        Needed as SetVariable on hovered/unhovered doesn't function properly on mousearea elements; thanks Ren'Py.
+
+        IN:
+            - is_active - bool state to set
+        """
+        global _cursor_in_active_area
+        _cursor_in_active_area = is_active
 
     jn_plugins.registerExtrasOption(
         option_name="Headpats",
@@ -87,15 +96,9 @@ label headpats_start:
 # Main headpat loop/logic
 label headpats_loop:
     $ current_mouse_position = jn_utils.getMousePosition()    
-    $ config.mouse = (
-        {"default": [("mod_assets/extra/headpats/headpats_active_cursor.png", 24, 24)]} if jn_headpats._ACTIVE_PAT_AREA.collidepoint(current_mouse_position[0], current_mouse_position[1])
-        else None
-    )  
+    $ config.mouse = {"default": [("mod_assets/extra/headpats/headpats_active_cursor.png", 24, 24)]} if jn_headpats._cursor_in_active_area else None
 
-    if (
-        jn_headpats._ACTIVE_PAT_AREA.collidepoint(current_mouse_position[0], current_mouse_position[1]) 
-        and jn_headpats._getMousePositionChanged()
-    ):
+    if jn_headpats._cursor_in_active_area and jn_headpats._getMousePositionChanged():
         python:
             global _last_mouse_position
             persistent._jn_headpats_total_given += 1
@@ -283,6 +286,7 @@ label headpats_finished:
         n 1kllpul "[finished_end_quip]"
         n 1kcsdvf "..."
 
+    $ jn_headpats._cursor_in_active_area = False
     hide screen headpats_ui
     jump ch30_loop
 
@@ -421,7 +425,13 @@ screen headpats_ui:
 
     # Pat counter
     text "{0} headpats given".format(persistent._jn_headpats_total_given) size 30 xalign 0.5 ypos 40 text_align 0.5 xysize (None, None) outlines [(3, "#000000aa", 0, 0)] style "categorized_menu_button_text"
-    
+
+    mousearea:
+        area (506, 109, 265, 155)
+        hovered Function(jn_headpats._setCursorInActiveArea, True)
+        unhovered Function(jn_headpats._setCursorInActiveArea, False)
+        focus_mask None
+
     # Options
     style_prefix "hkb"
     vbox:
