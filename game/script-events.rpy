@@ -1787,13 +1787,12 @@ label event_wintendo_twitch_game_over:
         "Enter...":
             pass
 
-    show prop wintendo_twitch_playing charging zorder JN_PROP_ZORDER
+    show prop wintendo_twitch_held charging zorder JN_PROP_ZORDER
     show natsuki gaming at jn_center zorder JN_NATSUKI_ZORDER
     $ jn_events.displayVisuals("1unmpu")
     $ jn_globals.force_quit_enabled = True
-    $ jnPause(1.5)
+    $ jnPause(0.5)
 
-    show prop wintendo_twitch_held charging
     n 1unmemesu "...!"
     $ player_initial = jn_utils.getPlayerInitial()
     n 1fnmgs "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
@@ -1817,22 +1816,27 @@ label event_wintendo_twitch_game_over:
     n 1fslsl "..."
     n 1flrtr "I guess I'll just do that later."
     n 1fsqcal "{b}Again{/b}."
+    n 1fcsajlsbl "You're just lucky I've done that part so many times {i}already{/i},{w=0.2} [player].{w=0.75}{nw}"
+    extend 1fcscalesm " Trust me."
+    n 1ccspol "A-{w=0.2}as if I'd seriously let some minor setback annoy me {i}that{/i} much."
 
+    show natsuki 1csrpol
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     hide prop
     play audio chair_out_in
+    show natsuki 4nsrbol
     $ jnPause(5)
     hide black with Dissolve(2)
 
-    n 1nsrcal "..."
-    n 2nnmtrl "Well,{w=0.2} [player]."
-    n 2nsqtrl "I hope you're buckled up."
+    n 4nsrcal "..."
+    n 2nnmtrl "Well,{w=0.2} [player].{w=0.75}{nw}"
+    extend 2nsqtrl " Hope you're buckled up."
     n 2nsrpol "...'Cause now you owe me {i}twice{/i} as much fun today to make up for that."
     n 4nsqbol "..."
-    n 4fsqajl "Well?{w=0.5}{nw}"
-    extend 3fcspolesi " Get to it then,{w=0.2} [player]!"
-    n 3fsqsml " Ehehe."
+    n 4fsqajl "Well?{w=0.75}{nw}"
+    extend 3fcspolesi " Get to it then,{w=0.2} [player]!{w=0.75}{nw}"
+    extend 3fsqsml " Ehehe."
 
     return
 
