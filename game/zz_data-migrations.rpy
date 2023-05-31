@@ -333,6 +333,11 @@ init python in jn_data_migrations:
     def to_1_3_0():
         jn_utils.log("Migration to 1.3.0 START")
         store.persistent._jn_version = "1.3.0"
+        
+        # Migrate topic persistent data
+        store.persistent._jn_player_pet = store.persistent.jn_player_pet
+        del store.persistent.jn_player_pet
+        jn_utils.log("Migrated: persistent._jn_player_pet")
 
         if store.persistent.affinity >= 7500:
             store.persistent._jn_pic_aff = store.persistent.affinity
