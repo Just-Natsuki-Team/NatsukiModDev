@@ -443,6 +443,9 @@ label talk_did_you_have_pets:
         extend " {i}color{/i} me surprised!"
         extend " Ehehe."
 
+        if Natsuki.isEnamored(higher=True):
+            n "No regrets, [player]!"
+
     elif _return == "dogs":
         n "Dogs, huh?"
         extend " Cool!"
@@ -467,8 +470,15 @@ label talk_did_you_have_pets:
         extend " I've always wondered about ferrets."
         extend " Is it more like having a cat or a dog?"
         n "Huh."
-        n "Well, however it behaves."
+        n "Well..." 
+        extend " however it behaves."
         extend " You better be taking care of the little guy!"
+
+        if Natsuki.isLove(higher=True):
+            n "At least as much as you take care of me, anyway."
+            n "Well..."
+            extend " {i}almost{/i}."
+            extend " Ehehe."
 
     elif _return == "fish":
         n "Fish,"
@@ -476,7 +486,8 @@ label talk_did_you_have_pets:
         n "..."
         n "Well..."
         extend " I wouldn't call them {i}super{/i} affectionate or anything..."
-        extend " but I suppose I can see the merit!"
+        extend " but I suppose I can see the merit."
+        extend " Like for stress!"
         n  "I bet you feel like you could lose yourself in that tank, huh?{w=0.5}{nw}"
         extend  " Ehehe."
         
@@ -491,13 +502,17 @@ label talk_did_you_have_pets:
         extend " You know."
         n "Just in case you gotta {i}hop to it{/i} and take care of yours!"
 
+        if Natsuki.isLove(higher=True):
+            n "Ehehe."
+            extend " Love you, [player]~!"
+
     elif _return == "geckos":
         n "Geckies!"
         extend " Yeah!"
         extend " I've heard about those!"
         n "Man..."
         extend " I just can't get over how goofy they look!"
-        n  "Just a warning though,{w=0.1} [player]..."
+        n  "Just a warning though, [player]..."
         n  "I better not hear about any tails falling off on your watch."
 
     elif _return == "gerbils":
@@ -542,35 +557,54 @@ label talk_did_you_have_pets:
         n 1unmlg "Oh -{w=0.2} and wear a helmet if you ride!"
 
     elif _return == "insects":
-        #TODO: rewrite
         n 2twmsc "Ack-{w=0.5}{nw}"
-        n 2kslupsbl "Nnnnn..."
-        n 1kwmsgsbl "...I wish I could share your enthusiasm!{w=0.5}{nw}"
-        extend 1kllsssbl " Ahaha..."
-        n 2nslunsbl "..."
-        n 1nnmemleshsbl "I-{w=0.2}I mean,{w=0.75}{nw}"
-        extend 4fcstrlsbr " it's cool that's something you're into!{w=0.75}{nw}"
-        extend 2ksrcalsbr " But..."
-        n 1ksqun "I don't think I could stomach creepy crawlies myself."
-        n 1ksrunsbr "You've certainly got an...{w=0.3} interesting taste,{w=0.1} [player]."
-        n 3fchsssbr "...Though I'm sure you take great care of yours!"
+        n "..."
+        n "B-bugs,"
+        extend " huh?"
+        extend  " Ahaha..."
+        n  "..."
+        n  "I-{w=0.2}I mean,{w=0.75}{nw}"
+        extend " don't get me wrong!"
+        extend " Someone's gotta take care of all the creepy crawlies."
+        n "...I'm just glad it's not me."
+        extend " Yeesh."
+        n "I guess I'll just try not to let it"
+        extend " {i}bug me{/i}"
+        extend " then!"
+        extend " Ehehe."
 
     elif _return == "lizards":
-        #TODO: rewrite
-        n 1uchgn "Ooh!{w=0.2} Lizards,{w=0.1} huh?"
-        n 4fsqss "...I trust you aren't just as cold-blooded yourself,{w=0.1} [player]."
-        n 1fchgnesm "...Pffffft!{w=0.5}{nw}"
+        n "Oh?"
+        extend " Really, [player]?"
+        extend " Lizards?"
+        n "Ehehe."
+        extend " I gotta say, I'm impressed -"
+        extend " you finally found a pet as cold-blooded as you!"
+        n "..."
+        n "Pfffft!"
         extend 1uchlg " I'm kidding, [player]!{w=0.2} I'm just kidding!"
-        n 1unmbg "Cool looking critters though!{w=0.2}"
-        extend 1tllbg " I think you'd actually be hard pressed to find a more varied kind of pet."
-        n 3uchgn "You better keep yours nice and toasty,{w=0.1} [player]!"
+        extend " Jeez..."
+        n "H-hey!"
+        extend " Come on, [player]."
+        extend " Don't give me that look."
+        extend " Besides..."
+        n "Shouldn't you of all people know how to {i}shed{/i} things off?"
+        extend " Ahaha."
+
+        if Natsuki.isLove(higher=True):
+            n "Love you too, [player]~!"
 
     elif _return == "mice":
-        #TODO: rewrite
-        n 3uchgn "Ehehe.{w=0.2} Mice are adorable!"
-        n 4nllaj "I'm still not sure how I feel about the tail..."
-        n 1unmbg "But they're so curious and sociable!{w=0.2} I love watching them play together."
-        n 3uchgn  "Make sure you take care of yours for me,{w=0.1} okay?"
+        n "Mice, eh?"
+        extend " Are you sure, [player]?"
+        extend " Not hamsters?"
+        extend " Gerbils?"
+        n "...Or do I smell a rat?"
+        n "..."
+        n "Ehehe."
+        extend " Nah, I guess I can see the appeal."
+        extend " They're social animals too, right?"
+        n "You better be giving yours plenty of company too!"
 
     elif _return == "rats":
         n  "Rats,{w=0.2} huh?"
@@ -587,13 +621,24 @@ label talk_did_you_have_pets:
         n "I bet you have plenty of {i}tails{/i} to tell by now,"
         extend " right?"
 
+        if Natsuki.isLove(higher=True):
+            n "Ehehe."
+            extend " Love you too, [player]~!"
+
     elif _return == "rabbits":
-        #TODO: rewrite
-        n 4kspaw "Awwwwww!{w=0.2} Bunnies!"
-        n 1kcuaw "They're so cuuute!{w=0.2} I love them!"
-        n 1uchbs "Especially the ones with the floppy ears,{w=0.1} they look so cuddly!"
-        n 1knmbo "It's a shame they need so much space,{w=0.1} though."
-        n 3uchgn "But I'm sure yours have plenty of room to roam!{w=0.2} Ehehe."
+        n "Bunnies!"
+        extend " Yes!"
+        extend " Man..."
+        n "I-I mean,"
+        extend " how could anyone {i}not{/i} love those little fuzzballs?"
+        extend " Are you kidding me?!"
+        n  "Especially those ones with the floppy ears!" 
+        extend " They look so cuddly!"
+        n "And then just to top if off," 
+        extend " they come in all those different colors too!"
+        extend " Talk about variety."
+        n "Just make sure you keep that cage spick and span though, [player] -"
+        extend " I'm not putting up with dust bunnies on my watch."
 
     elif _return == "snakes":
         #TODO: rewrite
@@ -620,14 +665,19 @@ label talk_did_you_have_pets:
         n "Well?"
         extend " Spit it out!"
         n "Ahaha."
-        # TODO: finalise
+        extend " In all seriousness though, [player]?"
+        n "Just..."
+        extend " make sure you know what you're doing."
+        extend " Capiche?"
 
-        n 4unmaj "Ooh!{w=0.2} An exotic owner, are we?"
-        n 1tsgsg "I wonder if that says something about the rest of your tastes?{w=0.2} Ehehe."
-        n 3uchgn "I trust you take good care of yours.{w=0.1} Uncommon pets can be pretty demanding!"
+        if Natsuki.isAffectionate(higher=True):
+            n "I {i}have{/i} about how demanding they can be."
+            extend " And trust me."
+            n "You really don't want {i}my{/i} demands on top of that too."
+            n "Ehehe."
 
-    if Natsuki.isLove(higher=True):
-        n "Love you too, [player]~!"
+        if Natsuki.isLove(higher=True):
+            n "Love you too, [player]~!"
 
     return
 
