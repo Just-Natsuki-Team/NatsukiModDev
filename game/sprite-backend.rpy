@@ -1000,6 +1000,88 @@ image natsuki snap:
 
     repeat
 
+image natsuki option_wait_excited:
+    block:
+        choice:
+            "natsuki 4unmbg"
+            pause 4
+            "natsuki 4ucsbg"
+            pause 0.1
+            "natsuki 4unmbg"
+            pause 4
+            "natsuki 4ucsbg"
+            pause 0.1
+
+        choice:
+            "natsuki 4unmsm"
+            pause 4
+            "natsuki 4ucssm"
+            pause 0.1
+            "natsuki 4unmsm"
+            pause 4
+            "natsuki 4ucssm"
+            pause 0.1
+
+        choice:
+            "natsuki 4unmss"
+            pause 4
+            "natsuki 4ucsss"
+            pause 0.1
+            "natsuki 4unmss"
+            pause 4
+            "natsuki 4ucsss"
+            pause 0.1
+
+    repeat
+
+image natsuki option_wait_curious:
+    block:
+        choice:
+            "natsuki 2tnmbo"
+            pause 4
+            "natsuki 2tcsbo"
+            pause 0.1
+            "natsuki 2tnmbo"
+            pause 4
+            "natsuki 2tcsbo"
+            pause 0.1
+
+        choice:
+            "natsuki 2unmbo"
+            pause 4
+            "natsuki 2ucsbo"
+            pause 0.1
+            "natsuki 2unmbo"
+            pause 4
+            "natsuki 2ucsbo"
+            pause 0.1
+
+    repeat
+
+image natsuki option_wait_smug:
+    block:
+        choice:
+            "natsuki 2tsqsm"
+            pause 4
+            "natsuki 2tcssm"
+            pause 0.1
+            "natsuki 2tsqsm"
+            pause 4
+            "natsuki 2tcssm"
+            pause 0.1
+
+        choice:
+            "natsuki 4tsqcs"
+            pause 4
+            "natsuki 4tcscs"
+            pause 0.1
+            "natsuki 2tsqcs"
+            pause 4
+            "natsuki 2tcscs"
+            pause 0.1
+
+    repeat
+
 # This selects which idle image to show based on current affinity state
 image natsuki idle = ConditionSwitch(
     "Natsuki.isEnamored(higher=True)", "natsuki idle enamored",

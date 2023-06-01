@@ -178,101 +178,126 @@ init 5 python:
 
 label talk_did_you_have_pets:
     if get_topic("talk_did_you_have_pets").shown_count > 0:
-        n  "Huh?{w=0.75}{nw}" 
-        extend  " Pets?"
-        n  "Hang on...{w=1}{nw}"
-        extend  " didn't we talk about this already,{w=0.2} [player]?{w=0.75}{nw}"
-        extend  " Huh."
-        n  "Well,{w=0.2} anyway.{w=0.75}{nw}"
-        extend  " I'm pretty sure you didn't need me to tell you {i}that{/i} hasn't changed.{w=1}{nw}"
-        extend  " As you can see."
-        n  "...And actually,{w=0.5}{nw}"
-        extend  " now that I think about it..."
-        n  "Where would I even get one now anyway?{w=0.75}{nw}"
-        extend  " L-{w=0.2}let alone all the stuff I'd need to actually keep it here!{w=0.75}{nw}"
-        extend  " You didn't seriously think I'd just have all that stuff chilling out in my desk or something,{w=0.2} did you?"
-        n  "...And somehow I doubt the closet was left stocked up with {i}pet food{/i},{w=0.75}{nw}" 
-        extend  " of all things."
-        n  "I mean,{w=0.75}{nw}"
-        extend  " don't get me wrong -{w=0.5}{nw}"
-        extend  " it's not like I {i}wouldn't{/i} like the company.{w=0.75}{nw}"
+        n 1unmaj "Huh?{w=0.75}{nw}" 
+        extend 1tnmpu " Pets?"
+        n 1ccspu "Hang on...{w=1}{nw}"
+        extend 1tnmbo " didn't we talk about this already,{w=0.2} [player]?{w=0.75}{nw}"
+        extend 1clrpu " Huh."
+        n 1ulraj "Well,{w=0.2} anyway.{w=0.75}{nw}"
+        extend 1tnmsl " I'm pretty sure you didn't need me to tell you {i}that{/i} hasn't changed.{w=1}{nw}"
+        extend 1cslca " As you can see."
+        n 1ccsfl "...And actually,{w=0.5}{nw}"
+        extend 1csrfl " now that I think about it..."
+        n 1tnmfl "Where would I even {i}get{/i} one now anyway?{w=0.75}{nw}"
+        extend 1clremsbl " L-{w=0.2}let alone all the stuff I'd need to actually keep it here!{w=0.75}{nw}"
+        extend 1nsqem " You didn't seriously think I'd just have all that stuff chilling out in my desk or something,{w=0.2} did you?"
+        n 1cslflsbr "...And somehow I doubt the closet was left stocked up with {i}pet food{/i},{w=0.75}{nw}" 
+        extend 1cllbosbr " of all things."
+        n 1unmfl "I mean,{w=0.75}{nw}"
+        extend 1ccsgs " don't get me wrong -{w=0.5}{nw}"
+        extend 1clrfll " it's not like I {i}wouldn't{/i} like the company.{w=0.75}{nw}"
 
         if Natsuki.isEnamored(higher=True):
-            extend  " A-{w=0.2}as much as having you here helps.{w=0.75}{nw}"
+            extend 1ccsbolsbr " A-{w=0.2}as much as having you here helps.{w=0.75}{nw}"
 
         elif Natsuki.isAffectionate(higher=True):
-            extend  " B-{w=0.2}between your visits,{w=0.2} I mean.{w=0.75}{nw}"
+            extend 1fcsajlsbr " B-{w=0.2}between your visits,{w=0.2} I mean.{w=0.75}{nw}"
 
         else:
-            extend  " O-{w=0.2}of course I would!{w=0.75}{nw}"
+            extend 1fcsemlsbr " O-{w=0.2}of course I would!{w=0.75}{nw}"
 
-        extend  " But..."
-        n  "Keeping something {i}else{/i} here?{w=0.75}{nw}"
-        extend  " That's..."
+        extend 1clrsll " But..."
+        n 1tnmpu "Keeping something {i}else{/i} here?{w=0.75}{nw}"
+        extend 1cllpu " That's..."
 
         if Natsuki.isAffectionate(higher=True):
-            n  "..."
-            n  "I guess it just wouldn't feel fair...{w=1}{nw}"
-            extend  " you know?{w=0.75}{nw}"
-            extend  " Like..."
-            n  "I-{w=0.2}I know I'm already stuck here.{w=0.75}{nw}"
-            extend  " Do I {i}really{/i} wanna force that on something else too?{w=0.75}{nw}"
-            extend  " Just for my own sake?"
+            n 1kslslsbl "..."
+            n 1cllslsbl "I guess it just wouldn't feel fair...{w=1}{nw}"
+            extend 1knmbosbrl " you know?{w=0.75}{nw}"
+            extend 1klrbolsbr " Like..."
+            n 1ccsfl "I-{w=0.2}I know I'm already stuck here.{w=0.75}{nw}"
+            extend 1clrfl " Do I {i}really{/i} wanna force that on something else too?{w=0.75}{nw}"
+            extend 1ksrpusbr " Just for my own sake?"
 
             if Natsuki.isEnamored(higher=True):
-                n  "..."
-                n  "I don't know,{w=0.2} [player].{w=0.75}{nw}"
-                extend  " It just doesn't sit right with me.{w=0.75}{nw}"
-                extend  " A-{w=0.2}at least right {i}now{/i},{w=0.2} anyway."
+                n 1ksrslsbr "..."
+                n 1kcsflsbr "I don't know,{w=0.2} [player].{w=0.75}{nw}"
+                n 1kllflsbr "It just..."
+                n 1kslcasbr "..."
+                n 1ccsfll " It just doesn't sit right with me.{w=0.75}{nw}"
+                extend 1csrsll " A-{w=0.2}at least right {i}now{/i},{w=0.2} anyway."
 
             else:
-                n  "..."
+                n 1ksrbo "..."
 
-            n  "A-{w=0.2}anyway.{w=0.75}{nw}"
-            extend  " I think I've gone on for long enough.{w=0.75}{nw}"
-            extend  " But why all the talk about pets all of a sudden,{w=0.2} [player]?"
+            n 1ccsemsbl "A-{w=0.2}anyway.{w=0.75}{nw}"
+            extend 1ullaj " I think I've gone on for long enough.{w=0.75}{nw}"
+            extend 1cllbo " But..."
+
+            if Natsuki.isAffectionate(higher=True):
+                n 1tnmbo "Why all the talk about pets all of a sudden,{w=0.2} [player]?{w=0.75}{nw}"
+                extend 1fsqss " Is there something you're not telling me?"
+                n 1fsqsm "..."
+                n 1fcsbg "Well?{w=0.75}{nw}"
+                $ chosen_descriptor = jn_utils.getRandomTease() if Natsuki.isEnamored(higher=True) else player
+                extend 1fchgn " Spit it out already,{w=0.2} [chosen_descriptor]!"
+
+                show natsuki option_wait_smug
+
+            else:
+                n 1tnmaj "Why all the talk about pets all of a sudden,{w=0.2} [player]?"
+                
+                show natsuki option_wait_curious
 
         else:
-            n  "..."
-            n  "N-{w=0.2}nevermind.{w=0.75}{nw}"
-            extend  " It just wouldn't be fair on whatever it was.{w=0.75}{nw}" 
-            extend  " That's all I'm saying."
-            n  "But...{w=1}{nw}"
-            extend  " why all the talk about pets all of a sudden,{w=0.2} [player]?"
+            n 1cslsllsbr "..."
+            n 1ccsfllsbr "N-{w=0.2}nevermind.{w=0.75}{nw}"
+            extend 1ccsajsbl " It just wouldn't be fair on whatever it was.{w=0.75}{nw}" 
+            extend 1ccscasbl " That's all I'm saying."
+            n 1tlraj "But...{w=1}{nw}"
+            extend 1tnmbo " why all the talk about pets all of a sudden,{w=0.2} [player]?"
+
+            show natsuki option_wait_curious
 
     else:
-        n  "Huh?{w=0.75}{nw}" 
-        extend  " Did I ever have any pets?"
-        n  "Heh.{w=0.75}{nw}"
-        extend  " I wish.{w=0.75}{nw}"
-        extend  " As if {i}that{/i} was ever gonna happen with {i}my{/i} parents!"
-        n  "Seriously -{w=0.5}{nw}"
-        extend  " I was never allowed {i}anything{/i}!{w=0.75}{nw}"
-        extend  " And just to top it off..."
-        n  "It wasn't like the excuses even made any {i}sense{/i} either!{w=0.75}{nw}"
-        extend  " Every single time I tried to bring it up!"
-        n  "It was always just about the mess it would make,{w=0.5}{nw}"
-        extend  " or how we'd pay for it,{w=0.5}{nw}"
-        extend  " or literally anything else they could come up with..."
-        n  "...When I already {i}said{/i} I'd take care of all that stuff myself!"
-        n  "Ugh...{w=1}{nw}"
-        extend  " talk about {i}pet peeves{/i}.{w=0.75}{nw}"
-        extend  " But I guess it's not like any of that matters now,{w=0.2} anyway.{w=1}{nw}"
-        extend  " Being stuck here and all."
-        n  "Though...{w=1}{nw}"
-        extend  " what about you,{w=0.2} [player]?"
+        n 1tnmboeqm "Huh?{w=0.75}{nw}" 
+        extend 1tsqfl " Did I ever have any pets?"
+        n 1fcssl "Heh.{w=0.75}{nw}"
+        extend 1fllfl " I wish.{w=0.75}{nw}"
+        extend 1fcswr " As if {i}that{/i} was ever gonna happen with {i}my{/i} parents!"
+        n 1fnmem "Seriously -{w=0.5}{nw}"
+        extend 1flrgs " I was never allowed {i}anything{/i}!{w=0.75}{nw}"
+        extend 1fcsgs " And just to top it off..."
+        n 1fllan "It wasn't like the excuses even made any {i}sense{/i} either!{w=0.75}{nw}"
+        extend 1fcsanean " Every single time I tried to bring it up!"
+        n 1flrgs "It was always just about the mess it would make,{w=0.5}{nw}"
+        extend 1fllem " or how we'd pay for it,{w=0.5}{nw}"
+        extend 1fsrem " or literally anything else they could come up with..."
+        n 1fcsan "...When I already {i}said{/i} I'd take care of all that stuff myself!"
+        n 1fcsemesi "Ugh..."
+        n 1fsrsll "Talk about {i}pet peeves{/i}.{w=0.75}{nw}"
+        extend 1csrbo " But I guess it's not like any of that matters now,{w=0.2} anyway.{w=1}{nw}"
+        extend 1cllsssbr " Being stuck here and all."
+        n 1cslbosbr "..."
+        n 1ullaj "Though...{w=1}{nw}"
+        extend 1tnmbo " what about you,{w=0.2} [player]?"
+
+        show natsuki option_wait_curious
 
     $ player_has_pet = persistent._jn_player_pet is not None
-    $ prompt = "Do you have any pets,{w=0.2} or...?" if not player_has_pet else "Did you get another pet,{w=0.2} or...?"
+    $ prompt = "Do you have any pets,{w=0.2} or...?" if not player_has_pet else "Did you just get another pet,{w=0.2} or...?"
 
     menu:
-        n  "[prompt]"
+        n "[prompt]"
 
         "Yes, I do." if not player_has_pet else "Yes, I did.":
-            n  "Oh!{w=0.2} Oh oh oh!" 
-            n  "Come on!{w=0.75}{nw}" 
-            extend  " You gotta tell me,{w=0.2} [player]!{w=0.75}{nw}"
-            extend  " What is it?{w=0.2} What is it?"
+            n 1uspgs "Oh!{w=0.5}{nw}" 
+            extend 1fchbs " Oh oh oh!" 
+            n 1unmbs "Come on!{w=0.75}{nw}" 
+            extend 1unmbg " You gotta tell me,{w=0.2} [player]!{w=0.75}{nw}"
+            extend 1uchgnedz " What is it?{w=0.2} What is it?"
+
+            show natsuki option_wait_excited
 
             $ pet_options = [
                 ("Birds", "birds"),
@@ -296,42 +321,44 @@ label talk_did_you_have_pets:
                 ("Something else", "something_else")
             ]
             $ pet_options.sort()
-
-            show natsuki 1uspbs at jn_left
             call screen scrollable_choice_menu(pet_options)
+            $ persistent._jn_player_pet = _return
+            show natsuki at jn_center
 
         "No, I don't." if not player_has_pet else "No, I didn't.":
-            n  "Man...{w=1}{nw}"
-            extend  " really?"
-            n  "..."
-            n  "Well...{w=1}{nw}" 
-            extend  " I gotta admit.{w=0.75}{nw}"
-            extend  " I'd be lying if I said I wasn't at least {i}kinda{/i} disappointed."
+            n 1cllfl "Man...{w=1}{nw}"
+            extend 1tsqfl " really?"
+            n 1nsrsl "..."
+            n 1nsraj "Well...{w=1}{nw}" 
+            extend 1nlrbo " I gotta admit.{w=0.75}{nw}"
+            extend 1nsrfl " I'd be lying if I said I wasn't at least {i}kinda{/i} disappointed."
 
             if player_has_pet:
-                n  "Even if you {i}did{/i} say you had [persistent._jn_player_pet] already."
-                n  "..."
+                n 1cslss "Even if you {i}did{/i} say you had [persistent._jn_player_pet] already."
+                n 1cslbosbr "..."
 
             if Natsuki.isAffectionate(higher=True):
-                n  "...Don't go around thinking that means you're off the hook though,{w=0.2} [player].{w=0.75}{nw}"
-                extend  " Ehehe."
-                n  "Nope!{w=0.75}{nw}"
+                n 1ullaj "Well,{w=0.2} whatever.{w=0.75}{nw}"
+                extend 1ccsss " It's not like people get pets regularly or anything, after all."
+                n 1fsqss "...Don't go around thinking that means you're off the hook though,{w=0.2} [player].{w=0.75}{nw}"
+                extend 1fsqsm " Ehehe."
+                n 1fchbg "Nope!{w=0.75}{nw}"
                 
                 if Natsuki.isEnamored(higher=True):
-                    extend  " As if I'd miss out on that kind of news."
-                    n  "And besides..."
-                    n  "Something tells me you'd just {i}have{/i} to share it anyway."
-                    n  "...Isn't that right?{w=0.75}{nw}"
-                    extend  " Ahaha."
+                    extend 1fcsbg " As if I'd miss out on that kind of news.{w=0.75}{nw}"
+                    extend 1flrss "And besides..."
+                    n 1fcsbgeme "Something tells me you'd just {i}have{/i} to share it with me,{w=0.2} anyway."
+                    n 1fsqsm "...Isn't that right?{w=0.75}{nw}"
+                    extend 1fchsm " Ahaha."
 
                 else:
-                    extend  " As if I'd miss out on that kind of news.{w=0.75}{nw}"
-                    extend  " You better tell me all about it!"
+                    extend 1fcsbg " As if I'd miss out on that kind of news.{w=0.75}{nw}"
+                    extend 1nchgn " You better tell me all about it!"
 
             else:
-                n  "Well...{w=1}{nw}"
-                extend  " just let me know when that changes,{w=0.2} I guess.{w=0.75}{nw}"
-                extend  " I still wanna hear all about it!"
+                n 1ulraj "Well...{w=1}{nw}"
+                extend 1tnmbo " just let me know when that changes,{w=0.2} I guess.{w=0.75}{nw}"
+                extend 1fcssmesm " I still wanna hear all about it!"
 
             return
 
@@ -397,10 +424,7 @@ label talk_did_you_have_pets:
 
             return
 
-    show natsuki at jn_center
-    $ persistent.jn_player_pet = _return
-
-    if _return == "birds":
+    if persistent._jn_player_pet == "birds":
         n  "Oh?{w=0.75}{nw}"
         extend  " Birds,{w=0.2} huh?{w=0.75}{nw}"
         extend  " Neat!"
@@ -415,7 +439,7 @@ label talk_did_you_have_pets:
         else:
             n  "Ehehe."
 
-    elif _return == "cats":
+    elif persistent._jn_player_pet == "cats":
         n  "Kitties?{w=0.75}{nw}"
         extend  " Now we're talking,{w=0.2} [player]!"
 
@@ -437,7 +461,7 @@ label talk_did_you_have_pets:
         extend  " You better be taking care of yours,{w=0.2} [player]!"
         n  "...Or I really will give you {i}paws{/i} for thought."
 
-    elif _return == "chameleons":
+    elif persistent._jn_player_pet == "chameleons":
         n  "Chameleons?{w=0.75}{nw}"
         extend  " Like with the swivelly eyes and all that?{w=0.75}{nw}"
         extend  " Huh."
@@ -452,7 +476,7 @@ label talk_did_you_have_pets:
         if Natsuki.isEnamored(higher=True):
             n  "No regrets,{w=0.2} [player]!"
 
-    elif _return == "dogs":
+    elif persistent._jn_player_pet == "dogs":
         n  "Dogs,{w=0.2} huh?{w=0.75}{nw}"
         extend  " Cool!"
         n  "...Not that I can see myself ever owning one,{w=0.2} though.{w=0.75}{nw}"
@@ -472,7 +496,7 @@ label talk_did_you_have_pets:
         extend  " better make sure you're taking care of yours though,{w=0.2} [player]..."
         n  "Or I really {i}will{/i} have a bone to pick with you."
 
-    elif _return == "ferrets":
+    elif persistent._jn_player_pet == "ferrets":
         n  "You know...{w=1}{nw}"
         extend  " I've always wondered about ferrets.{w=0.75}{nw}"
         extend  " Is it more like having a cat or a dog?"
@@ -487,7 +511,7 @@ label talk_did_you_have_pets:
             extend  " {i}almost{/i}.{w=0.75}{nw}"
             extend  " Ehehe."
 
-    elif _return == "fish":
+    elif persistent._jn_player_pet == "fish":
         n  "Fish,{w=0.5}{nw}"
         extend  " huh?"
         n  "..."
@@ -500,7 +524,7 @@ label talk_did_you_have_pets:
         extend  " huh?{w=0.75}{nw}"
         extend  " Ehehe."
         
-    elif _return == "frogs":
+    elif persistent._jn_player_pet == "frogs":
         n  "Ooh!{w=0.2} Froggies!{w=0.75}{nw}"
         extend  " Cute!"
         n  "I seriously can't get enough of their faces.{w=0.75}{nw}"
@@ -515,7 +539,7 @@ label talk_did_you_have_pets:
             n  "Ehehe.{w=0.75}{nw}"
             extend  " Love you,{w=0.2} [player]~!"
 
-    elif _return == "geckos":
+    elif persistent._jn_player_pet == "geckos":
         n  "Geckies!{w=0.75}{nw}"
         extend  " Yeah!{w=0.75}{nw}"
         extend  " I've heard about those!"
@@ -525,7 +549,7 @@ label talk_did_you_have_pets:
         n  "Just a warning though,{w=0.2} [player]..."
         n  "I better not hear about any tails falling off on your watch."
 
-    elif _return == "gerbils":
+    elif persistent._jn_player_pet == "gerbils":
         n  "Gerbils,{w=0.5}{nw}"
         extend  " huh?"
         n  "...And why's that,{w=0.2} [player]?{w=0.75}{nw}"
@@ -539,7 +563,7 @@ label talk_did_you_have_pets:
         n  "You better be taking care of yours though,{w=0.2} [player]..."
         n  "...Or you really {i}will{/i} need them to dig you out of it."
 
-    elif _return == "guinea_pigs":
+    elif persistent._jn_player_pet == "guinea_pigs":
         n  "Ooh!{w=0.75}{nw}"
         extend  " Yeah!{w=0.2} I've seen those!"
         n  "I don't exactly know {i}tons{/i} about them,{w=0.5}{nw}" 
@@ -547,7 +571,7 @@ label talk_did_you_have_pets:
         n  "I bet yours are a total bunch of chatterboxes too,{w=0.2} huh?{w=0.75}{nw}"
         extend  " Ehehe."
 
-    elif _return == "hamsters":
+    elif persistent._jn_player_pet == "hamsters":
         n  "W-{w=0.2}wait.{w=0.75}{nw}"
         extend  " Hammies?{w=0.75}{nw}"
         extend  " For real?"
@@ -578,7 +602,7 @@ label talk_did_you_have_pets:
         else:
             n  "...Or you really will find out how much I ham it up."
 
-    elif _return == "horses":
+    elif persistent._jn_player_pet == "horses":
         n  "H-{w=0.2}huh?{w=0.75}{nw}"
         extend  " Horses?{w=0.75}{nw}"
         extend  " No kidding!"
@@ -595,7 +619,7 @@ label talk_did_you_have_pets:
             extend  " You better hope I don't catch you riding without a helmet,{w=0.2} [player]."
             n  "'Cause I don't wanna hear about you getting saddled up with a bunch of dumb hospital bills."
 
-    elif _return == "insects":
+    elif persistent._jn_player_pet == "insects":
         n 2twmsc "Ack-{w=0.5}{nw}"
         n  "..."
         n  "B-{w=0.2}bugs,{w=0.5}{nw}"
@@ -617,7 +641,7 @@ label talk_did_you_have_pets:
         if Natsuki.isLove(higher=True):
             n  "Love you too,{w=0.2} [player]~!"
 
-    elif _return == "lizards":
+    elif persistent._jn_player_pet == "lizards":
         n  "Oh?{w=0.5}{nw}"
         extend  " Really,{w=0.2} [player]?{w=0.75}{nw}"
         extend  " Lizards?"
@@ -639,7 +663,7 @@ label talk_did_you_have_pets:
         if Natsuki.isLove(higher=True):
             n  "Love you too,{w=0.2} [player]~!"
 
-    elif _return == "mice":
+    elif persistent._jn_player_pet == "mice":
         n  "Mice,{w=0.2} eh?{w=0.75}{nw}"
         extend  " Are you sure,{w=0.2} [player]?"
         n  "Not hamsters?{w=0.75}{nw}"
@@ -651,7 +675,7 @@ label talk_did_you_have_pets:
         extend  " They're social animals,{w=0.2} right?"
         n  "You better be giving yours plenty of company too,{w=0.2} [player]!"
 
-    elif _return == "rats":
+    elif persistent._jn_player_pet == "rats":
         n  "Rats,{w=0.2} huh?{w=0.75}{nw}"
         extend  " That's pretty cool."
         n  "..."
@@ -671,7 +695,7 @@ label talk_did_you_have_pets:
             n  "Ehehe.{w=0.75}{nw}"
             extend  " Love you too,{w=0.2} [player]~!"
 
-    elif _return == "rabbits":
+    elif persistent._jn_player_pet == "rabbits":
         n  "Bunnies!{w=0.75}{nw}"
         extend  " Yes!{w=0.75}{nw}"
         extend  " Man..."
@@ -686,7 +710,7 @@ label talk_did_you_have_pets:
         n  "Just make sure you keep that cage spick and span though,{w=0.2} [player] -{w=0.5}{nw}"
         extend  " I'm not putting up with any {i}dust{/i} bunnies on my watch."
 
-    elif _return == "snakes":
+    elif persistent._jn_player_pet == "snakes":
         n  "H-{w=0.2}huh?{w=0.75}{nw}"
         extend  " N-{w=0.2}now just hold on a second,{w=0.2} [player].{w=0.75}{nw}"
         extend  " Snakes?"
@@ -711,7 +735,7 @@ label talk_did_you_have_pets:
             n  "You can't {i}shed{/i} your responsibilities that easily!{w=0.75}{nw}"
             extend  " Ehehe."
 
-    elif _return == "something_else":
+    elif persistent._jn_player_pet == "something_else":
         n  "Oho?{w=0.75}{nw}"
         extend  " An exotic owner,{w=0.2} are we?"
         n  "...And why's that,{w=0.2} [player]?{w=0.75}{nw}"
