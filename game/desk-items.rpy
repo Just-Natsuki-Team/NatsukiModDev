@@ -136,10 +136,17 @@ init -55 python in jn_desk_items:
         return None
 
     __registerDeskItem(JNDeskItem(
+        reference_name="jn_laptop",
+        desk_slot=JNDeskSlots.centre,
+        unlocked=True,
+        displayable=store.Image("mod_assets/props/laptop.png")
+    ))
+
+    __registerDeskItem(JNDeskItem(
         reference_name="jn_joke_book_held",
         desk_slot=JNDeskSlots.centre,
         unlocked=True,
-        displayable=store.Image("mod_assets/props/joke_book_held.png")  
+        displayable=store.Image("mod_assets/props/joke_book_held.png") 
     ))
 
     __registerDeskItem(JNDeskItem(
