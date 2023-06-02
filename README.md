@@ -9,8 +9,7 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
 
 **Please read this document and the license thoroughly before downloading and installing the mod!**
 
-### Made possible thanks to our contributors:
-<!-- readme: contributors -start -->
+### Made possible thanks to our team members, past and present:
 <table>
 <tr>
     <td align="center">
@@ -57,13 +56,6 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
     </td></tr>
 <tr>
     <td align="center">
-        <a href="https://github.com/TRIDENT1313">
-            <img src="https://avatars.githubusercontent.com/u/86646365?v=4" width="100;" alt="TRIDENT1313"/>
-            <br />
-            <sub><b>Nathan</b></sub>
-        </a>
-    </td>
-    <td align="center">
         <a href="https://github.com/lunulae">
             <img src="https://avatars.githubusercontent.com/u/45501964?v=4" width="100;" alt="lunulae"/>
             <br />
@@ -76,9 +68,16 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
             <br />
             <sub><b>ALTER</b></sub>
         </a>
-    </td></tr>
+    </td>
+    <td align="center">
+        <a href="https://github.com/Obsidian-Knife">
+            <img src="https://avatars.githubusercontent.com/u/121590348?v=4" width="100;" alt="Obsidian Knife"/>
+            <br />
+            <sub><b>Obsidian Knife</b></sub>
+        </a>
+    </td>
+    </tr>
 </table>
-<!-- readme: contributors -end -->
 
 ### With thanks to our amazing guest artists:
 <table>
@@ -104,6 +103,7 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
 
 - Snow, rain graphics thanks to Monika After Story team @ https://github.com/Monika-After-Story/MonikaModDev
 - License template thanks to Monika After Story team @ https://github.com/Monika-After-Story/MonikaModDev
+- Our [contributors](https://github.com/Just-Natsuki-Team/NatsukiModDev/graphs/contributors)!
 - Our community, for being so patient despite our delays
 
 **You're all awesome!**
@@ -227,6 +227,23 @@ Please refer to the full article on the wiki [here](https://github.com/Just-Nats
 ### Additional content
 
 Visit the official JN extras repository [here](https://github.com/Just-Natsuki-Team/NatsukiModOutfits)!
+
+---
+
+### Contribution guidelines
+
+- Begin by forking the NatsukiModDev repository.
+- Please base your changes off the most recent version-formatted branch (I.E `v1.3.0`), if one exists.
+- Please **raise an issue** _before_ working on something: remember, it helps both the team and community to know what work is being undertaken so effort isn't duplicated, and so your work isn't wasted if what you are working on isn't deemed a fitting addition to the mod by the JN team.
+    - Be sure that whatever you plan to work on isn't already underway, or marked as reserved by a member of the team or another contributor!
+- When making a branch under your fork, please try and keep your branch naming scheme close to JN's:
+    - If you are working on a feature: `feature/your-feature`
+    - If you are working on a bug: `bugfix/your-bugfix`
+    - If you are working on a documentation change: `docs/your-docs`
+    - Remember, a branch name should be descriptive!
+- When making an MR (Merge Request) from your fork, always target the most recent version-formatted branch: **please do not targer master**, as this should always be stable, team-reviewed and thoroughly tested code that matches with what we are distributing in our releases. We _never_ go straight from a feature branch into `master`.
+    - If a version-formatted branch does not exist, please let us know.
+- See our [wiki](https://github.com/Just-Natsuki-Team/NatsukiModDev/wiki) for more information!
 
 ---
 

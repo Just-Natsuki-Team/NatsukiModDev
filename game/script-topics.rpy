@@ -8827,7 +8827,9 @@ label talk_chocolate_preference:
         extend 2nchgn " Or at least it felt that way with all the colors."
         n 2ksrfssbl "...And Sayori practically drooling over it."
         n 2kchsm "Maybe I should go dig that out later..."
+
         $ jn_outfits.get_outfit("jn_chocolate_plaid_collection").unlock()
+        $ jn_outfits.get_wearable("jn_necklace_tight_golden_necklace").unlock()
 
     n 1fllajlsbr "A-{w=0.2}anyway!{w=0.75}{nw}"
     extend 1fcsajl " Enough of me yammering on again.{w=0.75}{nw}"
@@ -10921,4 +10923,94 @@ label talk_can_you_draw:
             extend 2fsqantsb " At drawing conclusions."
             n 4fnmfultsf "...And I've got plenty drawn about the likes of {b}you{/b}."
 
+    return
+
+# Ask Natsuki to remind the player next time she runs out of topics.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_enable_no_topics_reminder",
+            unlocked=True,
+            prompt="Can you remind me next time you run out of topics?",
+            category=["Natsuki", "Reminders"],
+            conditional="not persistent._jn_natsuki_out_of_topics_remind",
+            player_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_enable_no_topics_reminder:
+    $ already_discussed_topic = get_topic("talk_enable_no_topics_reminder").shown_count > 0
+
+    n 1tnmpueqm "Huh?{w=0.75}{nw}"
+    extend 4tnmbo " Topics?{w=0.75}{nw}"
+    extend 2tsrfl " What do you...?"
+    n 2ttrsl "..."
+
+    if already_discussed_topic:
+        n 4fnmwrleexsbr "...H-{w=0.2}hey!{w=0.75}{nw}"
+        extend 4fsqwrl " Now hold on just a second here,{w=0.2} [player]!{w=0.75}{nw}"
+        extend 4fcsgs " I know {i}exactly{/i} what this is all about!"
+        n 2fllfl "You even said before that you wanted me to {i}stop{/i} reminding you..."
+        n 2fnmgs "And now you're getting on my case about reminding you{w=0.3}{nw}" 
+        extend 4fcsgs " {i}again{/i}!{w=1}{nw}"
+        extend 2fsrfl " Jeez..."
+        n 2cslpu "Do I really have to remind you how to make a {i}decision{/i} too now [player],{w=0.5}{nw}" 
+        extend 2csqpu " or what?"
+        n 2fsqpo "..."
+        n 2fsqcs "..."
+        n 2fcssm "Ehehe.{w=0.75}{nw}"
+        extend 4nlrss " Nah,{w=0.5}{nw}"
+        extend 1csrss " it's fine.{w=0.75}{nw}"
+        extend 1csrbo " {i}I guess{/i}."
+        n 4ccsaj "Just...{w=1}{nw}"
+        extend 2csqca " don't make some kind of habit out of it.{w=0.75}{nw}"
+        extend 2cslcasbr " I hate sounding like a broken record."
+        
+        if Natsuki.isEnamored(higher=True):
+            n 2fcsbglsbr "E-{w=0.2}even if you do enjoy listening to me go on about it {i}that{/i} much.{w=0.75}{nw}"
+            extend 2fsqsmlsbr " Ehehe."
+
+            if Natsuki.isLove(higher=True):
+                n 4fchbglsbl "Love you,{w=0.2} [player]~!"
+
+        elif Natsuki.isAffectionate(higher=True):
+            n 2fcsajlsbr "E-{w=0.2}even if you {i}do{/i} enjoy hearing me go on about it that much.{w=0.75}{nw}"
+            extend 2ccsbolsbl " Got it?"
+
+        else:
+            n 2fcsaj "A-{w=0.2}and I'm sure you would too.{w=0.75}{nw}"
+            extend 2fcspo " Capiche?"
+
+    else:
+        if Natsuki.isEnamored(higher=True):
+            n 2unmajesu "Oh!{w=0.75}{nw}"
+            extend 4nllsssbr " Yeah,{w=0.2} I remember."
+            $ chosen_tease = jn_utils.getRandomTease()
+            n 3fchsm "Sure thing,{w=0.2} [chosen_tease]!{w=0.75}{nw}"
+            extend 3fsqss " Better not catch you making any complaints though,{w=0.2} [player]."
+            n 4fcsbg "After all..."
+            n 3uchgnl "{i}You{/i} asked for it!{w=0.75}{nw}"
+            extend 3fchsmleme " Ehehe."
+
+        elif Natsuki.isAffectionate(higher=True):
+            n 4unmajesu "Oh!{w=0.75}{nw}"
+            extend 4nslsssbr " Right,{w=0.5} that."
+            n 2fchbg "Sure thing!{w=0.75}{nw}"
+            extend 2fsqbg " Just remember,{w=0.2} [player]..."
+            n 2nchgn "You asked for it!"
+
+        else:
+            n 2unmfleex "Oh!{w=0.75}{nw}"
+            extend 2cllsssbr " Heh.{w=0.75}{nw}"
+            extend 4cslsssbr " Right."
+            n 2ullaj "I mean...{w=1}{nw}"
+            extend 2tnmbo " sure thing,{w=0.2} I guess."
+            n 2ccspo "J-{w=0.2}just don't get all antsy when I gotta tell you what's up again,{w=0.2} got it?"
+
+
+    $ persistent._jn_natsuki_out_of_topics_remind = True
     return

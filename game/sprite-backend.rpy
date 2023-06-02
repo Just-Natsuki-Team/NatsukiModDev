@@ -13,6 +13,9 @@ init -50 python:
         arms_crossed_body = 2
         arms_crossed_desk = 3
         fingers_on_desk = 4
+        finger_touching = 5
+        pointy_finger = 6
+        hand_on_chin = 7
 
         def __str__(self):
             return self.name
@@ -171,13 +174,16 @@ init -50 python:
     # These are poses with arms rendered under the desk
     _JN_BEFORE_DESK_POSES = [
         JNPose.sitting,
-        JNPose.arms_crossed_body
+        JNPose.arms_crossed_body,
+        JNPose.finger_touching
     ]
 
-    # These are poses with arms rendere on top of the desk
+    # These are poses with arms rendered on top of the desk
     _JN_AFTER_DESK_POSES = [
         JNPose.arms_crossed_desk,
-        JNPose.fingers_on_desk
+        JNPose.fingers_on_desk,
+        JNPose.pointy_finger,
+        JNPose.hand_on_chin
     ]
 
     def jn_generate_natsuki_sprite(
@@ -338,7 +344,10 @@ init 1 python:
         "1": JNPose.sitting,
         "2": JNPose.arms_crossed_body,
         "3": JNPose.arms_crossed_desk,
-        "4": JNPose.fingers_on_desk
+        "4": JNPose.fingers_on_desk,
+        "5": JNPose.finger_touching,
+        "6": JNPose.pointy_finger,
+        "7": JNPose.hand_on_chin
     }
 
     EYEBROW_MAP = {
