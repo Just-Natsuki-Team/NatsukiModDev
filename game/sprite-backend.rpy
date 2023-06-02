@@ -12,6 +12,9 @@ init -50 python:
         arms_crossed_body = 2
         arms_crossed_desk = 3
         fingers_on_desk = 4
+        finger_touching = 5
+        pointy_finger = 6
+        hand_on_chin = 7
 
         def __str__(self):
             return self.name
@@ -170,13 +173,16 @@ init -50 python:
     # These are poses with arms rendered under the desk
     _JN_BEFORE_DESK_POSES = [
         JNPose.sitting,
-        JNPose.arms_crossed_body
+        JNPose.arms_crossed_body,
+        JNPose.finger_touching
     ]
 
-    # These are poses with arms rendere on top of the desk
+    # These are poses with arms rendered on top of the desk
     _JN_AFTER_DESK_POSES = [
         JNPose.arms_crossed_desk,
-        JNPose.fingers_on_desk
+        JNPose.fingers_on_desk,
+        JNPose.pointy_finger,
+        JNPose.hand_on_chin
     ]
 
     def jn_generate_natsuki_sprite(
@@ -324,7 +330,10 @@ init 1 python:
         "1": JNPose.sitting,
         "2": JNPose.arms_crossed_body,
         "3": JNPose.arms_crossed_desk,
-        "4": JNPose.fingers_on_desk
+        "4": JNPose.fingers_on_desk,
+        "5": JNPose.finger_touching,
+        "6": JNPose.pointy_finger,
+        "7": JNPose.hand_on_chin
     }
 
     EYEBROW_MAP = {
@@ -1663,19 +1672,3 @@ image natsuki talk_menu_ruined:
 
 image desk = "mod_assets/natsuki/desk/table/table_normal.png"
 image chair = "mod_assets/natsuki/desk/chair/chair_normal.png"
-
-label pose_test:
-    n 1tsqss "Oh?{w=0.5}{nw}"
-    extend 1tsqbg " You wanna see some poses?{w=0.75}{nw}"
-    extend 1fsqsm " Ehehe."
-    n 1fchbl "You got it!"
-
-    n 1fcssm "This is just my sitting pose!"
-    n 2fllpo "This is my arms_crossed_body pose!"
-    n 3kwmsml "This is my arms_crossed_desk pose!"
-    n 4kwmpu "And this is my fingers_on_desk pose!"
-
-    n 1fchbg "...And that's about it!{w=0.75}{nw}"
-    extend 1fwlsm  " Glad to be of service,{w=0.2} [player]!"
-
-    jump ch30_loop
