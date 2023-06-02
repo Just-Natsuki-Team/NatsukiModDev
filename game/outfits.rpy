@@ -1820,6 +1820,12 @@ init -1 python in jn_outfits:
         unlocked=False,
         is_jn_wearable=True
     ))
+    __register_wearable(JNNecklace(
+        reference_name="jn_necklace_tight_golden_necklace",
+        display_name="Golden necklace (tightened)",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
 
     # Official JN facewear
     __register_wearable(JNFacewear(

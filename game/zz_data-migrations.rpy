@@ -339,6 +339,9 @@ init python in jn_data_migrations:
         del store.persistent.jn_player_pet
         jn_utils.log("Migrated: persistent._jn_player_pet")
 
+        if jn_outfits.get_outfit("jn_chocolate_plaid_collection").unlocked:
+            jn_outfits.get_wearable("jn_necklace_tight_golden_necklace").unlock()
+
         if store.persistent.affinity >= 7500:
             store.persistent._jn_pic_aff = store.persistent.affinity
             store.persistent.affinity = 0
