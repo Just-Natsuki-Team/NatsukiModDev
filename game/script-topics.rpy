@@ -178,126 +178,133 @@ init 5 python:
 
 label talk_did_you_have_pets:
     if get_topic("talk_did_you_have_pets").shown_count > 0:
-        n 1unmaj "Huh?{w=0.75}{nw}" 
-        extend 1tnmpu " Pets?"
+        n 4unmaj "Huh?{w=0.75}{nw}" 
+        extend 4tnmpu " Pets?"
         n 1ccspu "Hang on...{w=1}{nw}"
-        extend 1tnmbo " didn't we talk about this already,{w=0.2} [player]?{w=0.75}{nw}"
-        extend 1clrpu " Huh."
-        n 1ulraj "Well,{w=0.2} anyway.{w=0.75}{nw}"
-        extend 1tnmsl " I'm pretty sure you didn't need me to tell you {i}that{/i} hasn't changed.{w=1}{nw}"
-        extend 1cslca " As you can see."
+        extend 7tnmbo " didn't we talk about this already,{w=0.2} [player]?{w=0.75}{nw}"
+        extend 7clrpu " Huh."
+        n 2ulraj "Well,{w=0.2} anyway.{w=0.75}{nw}"
+        extend 2tnmsl " I'm pretty sure you didn't need me to tell you {i}that{/i} hasn't changed.{w=1}{nw}"
+        extend 2cslca " As you can see."
         n 1ccsfl "...And actually,{w=0.5}{nw}"
-        extend 1csrfl " now that I think about it..."
-        n 1tnmfl "Where would I even {i}get{/i} one now anyway?{w=0.75}{nw}"
-        extend 1clremsbl " L-{w=0.2}let alone all the stuff I'd need to actually keep it here!{w=0.75}{nw}"
-        extend 1nsqem " You didn't seriously think I'd just have all that stuff chilling out in my desk or something,{w=0.2} did you?"
-        n 1cslflsbr "...And somehow I doubt the closet was left stocked up with {i}pet food{/i},{w=0.75}{nw}" 
-        extend 1cllbosbr " of all things."
-        n 1unmfl "I mean,{w=0.75}{nw}"
-        extend 1ccsgs " don't get me wrong -{w=0.5}{nw}"
-        extend 1clrfll " it's not like I {i}wouldn't{/i} like the company.{w=0.75}{nw}"
+        extend 7csrfl " now that I think about it..."
+        n 7tnmfl "Where would I even {i}get{/i} one now anyway?{w=0.75}{nw}"
+        extend 4clremsbl " L-{w=0.2}let alone all the stuff I'd need to actually keep it here!{w=0.75}{nw}"
+        extend 2nsqem " You didn't seriously think I'd just have all that stuff chilling out in my desk or something,{w=0.2} did you?"
+        n 4cslflsbr "...And somehow I doubt the closet was left stocked up with {i}pet food{/i},{w=0.75}{nw}" 
+        extend 4cllbosbr " of all things."
+        n 2unmfl "I mean,{w=0.75}{nw}"
+        extend 2ccsgs " don't get me wrong -{w=0.5}{nw}"
+        extend 2clrfll " it's not like I {i}wouldn't{/i} like the company.{w=0.75}{nw}"
 
         if Natsuki.isEnamored(higher=True):
-            extend 1ccsbolsbr " A-{w=0.2}as much as having you here helps.{w=0.75}{nw}"
+            extend 2ccsbolsbr " A-{w=0.2}as much as having you here helps.{w=0.75}{nw}"
 
         elif Natsuki.isAffectionate(higher=True):
-            extend 1fcsajlsbr " B-{w=0.2}between your visits,{w=0.2} I mean.{w=0.75}{nw}"
+            extend 2fcsajlsbr " B-{w=0.2}between your visits,{w=0.2} I mean.{w=0.75}{nw}"
 
         else:
-            extend 1fcsemlsbr " O-{w=0.2}of course I would!{w=0.75}{nw}"
+            extend 2fcsemlsbr " O-{w=0.2}of course I would!{w=0.75}{nw}"
 
-        extend 1clrsll " But..."
-        n 1tnmpu "Keeping something {i}else{/i} here?{w=0.75}{nw}"
+        extend 4clrsll " But..."
+        n 4tnmpu "Keeping something {i}else{/i} here?{w=0.75}{nw}"
         extend 1cllpu " That's..."
 
         if Natsuki.isAffectionate(higher=True):
-            n 1kslslsbl "..."
-            n 1cllslsbl "I guess it just wouldn't feel fair...{w=1}{nw}"
-            extend 1knmbosbrl " you know?{w=0.75}{nw}"
-            extend 1klrbolsbr " Like..."
-            n 1ccsfl "I-{w=0.2}I know I'm already stuck here.{w=0.75}{nw}"
-            extend 1clrfl " Do I {i}really{/i} wanna force that on something else too?{w=0.75}{nw}"
-            extend 1ksrpusbr " Just for my own sake?"
+            n 5kslslsbl "..."
+            n 5cllslsbl "I guess it just wouldn't feel fair...{w=1}{nw}"
+            extend 4knmbosbrl " you know?{w=0.75}{nw}"
+            extend 4klrbolsbr " Like..."
+            n 2ccsfl "I-{w=0.2}I know I'm already stuck here.{w=0.75}{nw}"
+            extend 2clrfl " Do I {i}really{/i} wanna force that on something else too?{w=0.75}{nw}"
+            extend 2ksrpusbr " Just for my own sake?"
 
             if Natsuki.isEnamored(higher=True):
-                n 1ksrslsbr "..."
-                n 1kcsflsbr "I don't know,{w=0.2} [player].{w=0.75}{nw}"
-                n 1kllflsbr "It just..."
-                n 1kslcasbr "..."
-                n 1ccsfll " It just doesn't sit right with me.{w=0.75}{nw}"
-                extend 1csrsll " A-{w=0.2}at least right {i}now{/i},{w=0.2} anyway."
+                n 7ksrslsbr "..."
+                n 7kcsflsbr "I don't know,{w=0.2} [player].{w=0.75}{nw}"
+                n 4kllflsbr "It just..."
+                n 4kslcasbr "..."
+                n 2ccsfll " It just doesn't sit right with me.{w=0.75}{nw}"
+                extend 2csrsll " A-{w=0.2}at least right {i}now{/i},{w=0.2} anyway."
 
             else:
-                n 1ksrbo "..."
+                n 1cslsllsbr "..."
+                n 4ccsfllsbr "N-{w=0.2}nevermind.{w=0.75}{nw}"
+                extend 3ccsajsbl " It just wouldn't be fair on whatever it was.{w=0.75}{nw}" 
+                extend 3ccscasbl " That's all I'm saying."
 
-            n 1ccsemsbl "A-{w=0.2}anyway.{w=0.75}{nw}"
-            extend 1ullaj " I think I've gone on for long enough.{w=0.75}{nw}"
-            extend 1cllbo " But..."
+            n 4ccsemsbl "A-{w=0.2}anyway.{w=0.75}{nw}"
+            extend 4ullaj " I think I've gone on for long enough.{w=0.75}{nw}"
+            extend 3cllbo " But..."
 
             if Natsuki.isAffectionate(higher=True):
-                n 1tnmbo "Why all the talk about pets all of a sudden,{w=0.2} [player]?{w=0.75}{nw}"
-                extend 1fsqss " Is there something you're not telling me?"
-                n 1fsqsm "..."
-                n 1fcsbg "Well?{w=0.75}{nw}"
+                n 3tnmbo "Why all the talk about pets all of a sudden,{w=0.2} [player]?{w=0.75}{nw}"
+                extend 3fsqss " Is there something you're not telling me?"
+                n 3fsqsm "..."
+                n 3fcsbg "Well?{w=0.75}{nw}"
                 $ chosen_descriptor = jn_utils.getRandomTease() if Natsuki.isEnamored(higher=True) else player
-                extend 1fchgn " Spit it out already,{w=0.2} [chosen_descriptor]!"
+                extend 4fchgn " Spit it out already,{w=0.2} [chosen_descriptor]!"
 
                 show natsuki option_wait_smug
 
             else:
-                n 1tnmaj "Why all the talk about pets all of a sudden,{w=0.2} [player]?"
+                n 7tnmaj "Why all the talk about pets all of a sudden,{w=0.2} [player]?"
                 
                 show natsuki option_wait_curious
 
         else:
             n 1cslsllsbr "..."
-            n 1ccsfllsbr "N-{w=0.2}nevermind.{w=0.75}{nw}"
-            extend 1ccsajsbl " It just wouldn't be fair on whatever it was.{w=0.75}{nw}" 
-            extend 1ccscasbl " That's all I'm saying."
-            n 1tlraj "But...{w=1}{nw}"
-            extend 1tnmbo " why all the talk about pets all of a sudden,{w=0.2} [player]?"
+            n 4ccsfllsbr "N-{w=0.2}nevermind.{w=0.75}{nw}"
+            extend 3ccsajsbl " It just wouldn't be fair on whatever it was.{w=0.75}{nw}" 
+            extend 3ccscasbl " That's all I'm saying."
+            n 3tlraj "But...{w=1}{nw}"
+            extend 7tnmbo " why all the talk about pets all of a sudden,{w=0.2} [player]?"
 
             show natsuki option_wait_curious
 
     else:
-        n 1tnmboeqm "Huh?{w=0.75}{nw}" 
-        extend 1tsqfl " Did I ever have any pets?"
+        n 3tnmboeqm "Huh?{w=0.75}{nw}" 
+        extend 3tsqfl " Did I ever have any pets?"
         n 1fcssl "Heh.{w=0.75}{nw}"
-        extend 1fllfl " I wish.{w=0.75}{nw}"
-        extend 1fcswr " As if {i}that{/i} was ever gonna happen with {i}my{/i} parents!"
-        n 1fnmem "Seriously -{w=0.5}{nw}"
-        extend 1flrgs " I was never allowed {i}anything{/i}!{w=0.75}{nw}"
-        extend 1fcsgs " And just to top it off..."
-        n 1fllan "It wasn't like the excuses even made any {i}sense{/i} either!{w=0.75}{nw}"
-        extend 1fcsanean " Every single time I tried to bring it up!"
-        n 1flrgs "It was always just about the mess it would make,{w=0.5}{nw}"
-        extend 1fllem " or how we'd pay for it,{w=0.5}{nw}"
-        extend 1fsrem " or literally anything else they could come up with..."
-        n 1fcsan "...When I already {i}said{/i} I'd take care of all that stuff myself!"
-        n 1fcsemesi "Ugh..."
-        n 1fsrsll "Talk about {i}pet peeves{/i}.{w=0.75}{nw}"
-        extend 1csrbo " But I guess it's not like any of that matters now,{w=0.2} anyway.{w=1}{nw}"
-        extend 1cllsssbr " Being stuck here and all."
-        n 1cslbosbr "..."
-        n 1ullaj "Though...{w=1}{nw}"
-        extend 1tnmbo " what about you,{w=0.2} [player]?"
+        extend 4fllfl " I wish.{w=0.75}{nw}"
+        extend 4fcswr " As if that was ever gonna happen with {i}my{/i} parents!"
+        n 4fnmem "Seriously -{w=0.5}{nw}"
+        extend 2flrwr " I was never allowed anything!{w=0.75}{nw}"
+        extend 2fcsan " There was always some {i}convenient{/i} reason it couldn't possibly happen!"
+        n 1fcsgs "And just to top it off..."
+        n 3fllwr "It wasn't like the excuses even made any {i}sense{/i} either!{w=0.75}{nw}"
+        extend 3fcsanean " Every single time I tried to bring it up!"
+        n 6flrgs "It was always just about the mess it would make,{w=0.5}{nw}"
+        extend 6fllem " or how we'd pay for it,{w=0.5}{nw}"
+        extend 3fsrem " or literally anything else they could come up with..."
+        n 4fcsan "...Even when I already {i}said{/i} I'd take care of all that stuff myself!"
+        n 2fcsemesi "Ugh..."
+        n 2fsrsll "Talk about {i}pet peeves{/i}.{w=1}{nw}"
+        extend 2csrfl " But I guess it's not like any of that matters now,{w=0.2} anyway.{w=1}{nw}"
+        extend 2cllbosbr " Being stuck here and all."
+        n 2cslbosbr "..."
+        n 2ullaj "Though...{w=1}{nw}"
+        extend 7tnmbo " what about you,{w=0.2} [player]?"
 
         show natsuki option_wait_curious
 
     $ player_has_pet = persistent._jn_player_pet is not None
     $ prompt = "Do you have any pets,{w=0.2} or...?" if not player_has_pet else "Did you just get another pet,{w=0.2} or...?"
+    $ response_yes = "Yes, I do." if not player_has_pet else "Yes, I did."
+    $ response_no = "No, I don't." if not player_has_pet else "No, I didn't."
+    $ response_gone = "I used to." if not player_has_pet else "I lost one."
 
     menu:
         n "[prompt]"
 
-        "Yes, I do." if not player_has_pet else "Yes, I did.":
+        "[response_yes]":
             n 1uspgs "Oh!{w=0.5}{nw}" 
-            extend 1fchbs " Oh oh oh!" 
-            n 1unmbs "Come on!{w=0.75}{nw}" 
-            extend 1unmbg " You gotta tell me,{w=0.2} [player]!{w=0.75}{nw}"
-            extend 1uchgnedz " What is it?{w=0.2} What is it?"
+            extend 4fchbs " Oh{w=0.2} oh{w=0.2} oh!" 
+            n 4unmbs "Come on!{w=0.75}{nw}" 
+            extend 3unmbg " You gotta tell me,{w=0.2} [player]!{w=0.75}{nw}"
+            extend 3uchgnedz " What is it?{w=0.2} What is it?"
 
-            show natsuki option_wait_excited
+            show natsuki option_wait_excited at jn_left
 
             $ pet_options = [
                 ("Birds", "birds"),
@@ -325,102 +332,117 @@ label talk_did_you_have_pets:
             $ persistent._jn_player_pet = _return
             show natsuki at jn_center
 
-        "No, I don't." if not player_has_pet else "No, I didn't.":
-            n 1cllfl "Man...{w=1}{nw}"
-            extend 1tsqfl " really?"
-            n 1nsrsl "..."
-            n 1nsraj "Well...{w=1}{nw}" 
+        "[response_no]":
+            n 4cllfl "Man...{w=1}{nw}"
+            extend 4tsqfl " really?"
+            n 2nsrsl "..."
+            n 2nsraj "Well...{w=1}{nw}" 
             extend 1nlrbo " I gotta admit.{w=0.75}{nw}"
-            extend 1nsrfl " I'd be lying if I said I wasn't at least {i}kinda{/i} disappointed."
+            extend 3nsrfl " I'd be lying if I said I wasn't at least {i}kinda{/i} disappointed."
 
             if player_has_pet:
-                n 1cslss "Even if you {i}did{/i} say you had [persistent._jn_player_pet] already."
-                n 1cslbosbr "..."
+                n 3cslss "Even if you {i}did{/i} say you had [persistent._jn_player_pet] already."
+                n 3cslbosbr "..."
 
             if Natsuki.isAffectionate(higher=True):
-                n 1ullaj "Well,{w=0.2} whatever.{w=0.75}{nw}"
-                extend 1ccsss " It's not like people get pets regularly or anything, after all."
-                n 1fsqss "...Don't go around thinking that means you're off the hook though,{w=0.2} [player].{w=0.75}{nw}"
-                extend 1fsqsm " Ehehe."
-                n 1fchbg "Nope!{w=0.75}{nw}"
+                n 3ullaj "Well,{w=0.2} whatever.{w=0.75}{nw}"
+                extend 1ccsss " It's not like people get pets regularly or anything,{w=0.2} after all."
+                n 4fsqss "...Don't go around thinking that means you're off the hook though,{w=0.2} [player].{w=0.75}{nw}"
+                extend 4fsqsm " Ehehe."
+                n 3fchbg "Nope!{w=0.75}{nw}"
                 
                 if Natsuki.isEnamored(higher=True):
-                    extend 1fcsbg " As if I'd miss out on that kind of news.{w=0.75}{nw}"
-                    extend 1flrss "And besides..."
-                    n 1fcsbgeme "Something tells me you'd just {i}have{/i} to share it with me,{w=0.2} anyway."
-                    n 1fsqsm "...Isn't that right?{w=0.75}{nw}"
+                    extend 3fcsbg " As if I'd miss out on that kind of news.{w=0.75}{nw}"
+                    extend 3flrss "And besides..."
+                    n 6fcsbgeme "Something tells me you'd just {i}have{/i} to share it with me,{w=0.2} anyway."
+                    n 4fsqsm "...Isn't that right?{w=0.75}{nw}"
                     extend 1fchsm " Ahaha."
 
                 else:
-                    extend 1fcsbg " As if I'd miss out on that kind of news.{w=0.75}{nw}"
-                    extend 1nchgn " You better tell me all about it!"
+                    extend 3fcsbg " As if I'd miss out on that kind of news.{w=0.75}{nw}"
+                    extend 7nchgn " You better tell me all about it!"
 
             else:
-                n 1ulraj "Well...{w=1}{nw}"
-                extend 1tnmbo " just let me know when that changes,{w=0.2} I guess.{w=0.75}{nw}"
-                extend 1fcssmesm " I still wanna hear all about it!"
+                n 7ulraj "Well...{w=1}{nw}"
+                extend 7tnmbo " just let me know when that changes,{w=0.2} I guess.{w=0.75}{nw}"
+                extend 3fcssmesm " I still wanna hear all about it!"
 
             return
 
-        "I used to." if not player_has_pet else "I lost one.":
-            
+        "[response_gone]":
             if Natsuki.isAffectionate(higher=True):
-                n  "..."
-                n  "I...{w=1}{nw}"
-                extend  " don't really know what to say,{w=0.2} [player]."
-                n  "Just..."
-                n  "..."
-                n  "...Just don't keep it bottled up if you don't have to.{w=0.75}{nw}"
-                extend  " Got it?"
-                n  "Y-{w=0.2}you should know you have people around you who'd listen by now."
+                n 4klrbo "..."
+                n 4klrpusbr "I...{w=1}{nw}"
+                extend 5ksrpusbr " don't really know what to say,{w=0.2} [player]."
+                n 4ccsflsbr "Just..."
+                n 1kslslsbl "..."
+                n 4ccsslsbl "...Just don't keep it bottled up if you don't have to.{w=0.75}{nw}"
+                extend 4cnmflsbl " Got it?"
+                n 5csrsllsbl "Y-{w=0.2}you should know you have people around you who'd listen by now."
 
                 if Natsuki.isEnamored(higher=True):
-                    n  "..."
-                    n  "...And [player]?"
-                    n  "..."
-                    n  "I...{w=1.25}{nw}"
-                    extend  " know I said never I had a pet or anything like that.{w=0.75}{nw}"
-                    extend " Not even close."
-                    n  "...But I've lost friends too."
-                    n  "I-{w=0.2}I'm not saying I {i}know{/i} how you feel.{w=0.75}{nw}"
-                    extend  " Of course not!{w=0.75}{nw}"
-                    extend  " Only you know that,{w=0.2} [player].{w=1.25}{nw}"
-                    extend  " But..."
-                    n  "..."
-                    n  "...I understand,{w=0.2} okay?{w=0.75}{nw}"
-                    extend  " I get it.{w=0.75}{nw}"
-                    extend  " I just wanted you to know that too.{w=1.25}{nw}"
-                    extend  " So..."
-
+                    n 4ksrsllsbl "..."
+                    n 4knmflsbr "...And [player]?"
+                    n 5kllbosbr "..."
+                    n 5ccspulsbr "I...{w=1.25}{nw}"
+                    extend 4clrpulsbr " know I said never I had a pet or anything like that.{w=0.75}{nw}"
+                    extend 1csrpulsbr " Not even close.{w=1}{nw}"
+                    extend 1ksrsll " But..."
+                    n 2ksrbol "..."
+                    n 2ksrajl "...You know I've lost friends too."
+                    extend 2ksqcal " Right?"
+                    n 2ccsfllsbl "I-{w=0.2}I'm not saying I {i}know{/i} how you feel.{w=0.75}{nw}"
+                    extend 2cllfllsbl " Of course not!{w=0.75}{nw}"
+                    extend 2cllbolsbl " Only you know that,{w=0.2} [player].{w=1.25}{nw}"
+                    extend 4kslbolsbl " But..."
+                    n 1ccsbolesisbl "..."
+                    n 1kslsll "...I understand.{w=0.75}{nw}" 
+                    extend 4ksqsll " Okay?"
+                    n 4knmcal "Really."
+                    
                     if Natsuki.isLove(higher=True):
-                        n  "..."
-                        show natsuki 4kcscal at jn_center
+                        n 5ksrbol "...I get it.{w=0.75}{nw}"
+                        extend 1ccsfllsbl " I just wanted you to know that too.{w=1.25}{nw}"
+                        n 4ksrcal "..."
+                        n 4ksqbol "...And [player]?"
+                        n 5kslsllsbl "..."
+
+                        show natsuki 4ccssllsbr at jn_center
                         play audio chair_out
                         show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
                         $ jnPause(2)
                         play audio clothing_ruffle
-                        show natsuki 1knmcal at jn_center
+                        show natsuki 1ccscalsbr at jn_center
                         $ jnPause(3)
                         play audio chair_in
                         $ jnPause(3)
                         hide black with Dissolve(1.25)
 
-                    n  "..."
-                    n  "...Yeah."
+                    else:
+                        n 5ksrbol "...I get it.{w=0.75}{nw}"
+                        extend 1ccsfllsbl " I just wanted you to know that too.{w=1.25}{nw}"
+                        extend 1cllpulsbl " But..."
+                        n 4cslbolsbl "..."
+                        n 4kslbolsbl "...Yeah."
+
+                    n 5kslcal "..."
+                    n 4nslajl "So..."
+                    n 4tnmsll "Did you wanna talk about something else instead,{w=0.2} or...?"
 
             else:
-                n  "W-{w=0.2}wait.{w=0.75}{nw}"
-                extend  " You..."
-                n  "...Oh jeez."
-                n  "..."
-                n  "I'm...{w=1.25}{nw}"
-                extend  " really sorry to hear that,{w=0.2} [player].{w=1}{nw}"
-                extend  " Truly."
-                n  "..."
-                n  "...Maybe we should just talk about something else for now.{w=0.75}{nw}"
-                extend  " I-{w=0.2}if you wanted to,{w=0.5}{nw}" 
-                extend  " I mean."
-                n  "..."
+                n 4ccsemsbr "W-{w=0.2}wait.{w=0.75}{nw}"
+                extend 4knmemsbr " You..."
+                n 1ksrpusbr "...Oh.{w=1}{nw}" 
+                extend 4ksrflsbr " Jeez."
+                n 5kslbosbr "..."
+                n 4ccsflsbl "I'm...{w=1.25}{nw}"
+                extend 2cllslsbl " really sorry to hear that,{w=0.2} [player].{w=1}{nw}"
+                extend 2kslbolsbl " T-{w=0.2}truly."
+                n 4kslcalsbr "..."
+                n 4ccsemlsbr "...Maybe we should just talk about something else for now.{w=0.75}{nw}"
+                extend 2cnmemlsbr " I-{w=0.2}if you wanted to,{w=0.5}{nw}" 
+                extend 2nsrbolsbr " I mean."
+                n 4ksrcalsbr "..."
 
             return
 
