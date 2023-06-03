@@ -426,9 +426,9 @@ label talk_did_you_have_pets:
                         n 4cslbolsbl "..."
                         n 4kslbolsbl "...Yeah."
 
-                    n 5kslcal "..."
-                    n 4nslajl "So..."
-                    n 4tnmsll "Did you wanna talk about something else instead,{w=0.2} or...?"
+                n 5kslcal "..."
+                n 4nslajl "So..."
+                n 4tnmsllsbr "Did you wanna talk about something else instead,{w=0.2} or...?"
 
             else:
                 n 4ccsemsbr "W-{w=0.2}wait.{w=0.75}{nw}"
