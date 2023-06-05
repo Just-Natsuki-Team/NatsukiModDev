@@ -326,7 +326,7 @@ label snap_intro:
         n 1nnmaj "Oh -{w=0.3} before we start,{w=0.2} did you want an explanation?{w=0.5}{nw}" 
         extend 4tllca " You know,{w=0.2} on how it works?"
         n 1nchsm "It's a super simple game,{w=0.2} but I thought I'd better ask."
-        n 3fcsbg "I don't wanna win just because you didn't know what you were doing!"
+        n fcsbg "I don't wanna win just because you didn't know what you were doing!"
         n 1usqfs "So...{w=1}{nw}"
         extend 3fchss " How about it?"
 
@@ -384,7 +384,7 @@ label snap_explanation:
 
         "Thanks, [n_name]. I'll play later.":
             n 1unmaj "Huh?{w=0.2} Well,{w=0.1} alright..."
-            n 3fllpo "...Spoilsport."
+            n 2fllpo "...Spoilsport."
             jump ch30_loop
 
 label snap_start:
@@ -417,10 +417,10 @@ label snap_start:
         extend 1fchgn " Looks like you're up first!"
 
     else:
-        n 3nsqsl "..."
-        n 3fslpo "Hmph.{w=0.5}{nw}" 
-        extend 3fcsaj " You just got lucky this time.{w=0.75}{nw}" 
-        extend 3fcsca " I guess I'll go first then,{w=0.2} [player]."
+        n 2nsqsl "..."
+        n 2fslpo "Hmph.{w=0.5}{nw}" 
+        extend 2fcsaj " You just got lucky this time.{w=0.75}{nw}" 
+        extend 2fcsca " I guess I'll go first then,{w=0.2} [player]."
 
     show natsuki snap
     $ Natsuki.setInGame(True)
@@ -601,14 +601,14 @@ label snap_end:
     if jn_snap.last_game_result == jn_snap.RESULT_PLAYER_WIN:
 
         if jn_snap._player_win_streak > 10:
-            n 3csltr "Yeah,{w=0.3} yeah.{w=1}{nw}" 
-            extend 3cslpo " You won again."
-            n 3csrsssbr "...You nerd."
+            n 2csltr "Yeah,{w=0.3} yeah.{w=1}{nw}" 
+            extend 2cslpo " You won again."
+            n 2csrsssbr "...You nerd."
 
         elif jn_snap._player_win_streak == 10:
-            n 3fcsaj "Oh,{w=0.5}{nw}"
-            extend 3fcsan " come{w=0.75}{nw}"
-            extend 3fbkwrl " {b}on{/b}!"
+            n 2fcsaj "Oh,{w=0.5}{nw}"
+            extend 2fcsan " come{w=0.75}{nw}"
+            extend 2fbkwrl " {b}on{/b}!"
             n 4fllgs "Seriously?!{w=0.75}{nw}"
             extend 4fnmgs " Ten in a row?!{w=0.75}{nw}"
             extend 2clremsbl " Man..."
@@ -629,10 +629,10 @@ label snap_end:
             n 1fcsbgsbr "'Cause that lucky streak won't last forever!"
 
         else:
-            n 3nllpo "Well,{w=0.2} heck.{w=0.5}{nw}" 
-            extend 3nslsssbr " I guess that's it,{w=0.2} huh?"
-            n 3fcssssbr "W-{w=0.2}well played,{w=0.2} [player].{w=0.75}{nw}"
-            extend 3csrposbr " I guess."
+            n 2nllpo "Well,{w=0.2} heck.{w=0.5}{nw}" 
+            extend 2nslsssbr " I guess that's it,{w=0.2} huh?"
+            n 2fcssssbr "W-{w=0.2}well played,{w=0.2} [player].{w=0.75}{nw}"
+            extend 2csrposbr " I guess."
 
     # Natsuki won, Natsuki happ
     elif jn_snap.last_game_result == jn_snap.RESULT_NATSUKI_WIN:
@@ -642,27 +642,27 @@ label snap_end:
             extend 4fcsbg " this is just too{w=0.25}{nw}" 
             extend 4fchgn " {i}easy{/i}!{w=0.75}{nw}" 
             extend 4fcsbg " I {i}almost{/i} feel bad."
-            n 3fsqsm "...Almost.{w=0.75}{nw}" 
-            extend 3fchsmeme " Ehehe."
+            n 2fsqsm "...Almost.{w=0.75}{nw}" 
+            extend 2fchsmeme " Ehehe."
 
         if jn_snap._natsuki_win_streak == 10:
             n 2cllss "Wow...{w=1}{nw}"
             extend 2fchgn " is {i}someone{/i} having a bad day or what?"
             n 4fsqbg "...Or am I just {i}that{/i} good?{w=0.75}{nw}"
-            extend 3fsqsmeme " Ehehe."
+            extend 2fsqsmeme " Ehehe."
 
         elif jn_snap._natsuki_win_streak == 5:
             n 2fcsbg "Oh?{w=0.75}{nw}"
             extend 2fsqbg " What's that?"
             n 4fchgn "The sound of five in a row {i}already{/i}?{w=0.75}{nw}"
             extend 1nchgn " Ehehe."
-            n 3fcscs "Well don't you worry,{w=0.2} [player].{w=0.75}{nw}"
-            extend 3fcsbgeme " There's plenty more where {i}that{/i} came from!"
+            n 2fcscs "Well don't you worry,{w=0.2} [player].{w=0.75}{nw}"
+            extend 2fcsbgeme " There's plenty more where {i}that{/i} came from!"
 
         elif jn_snap._natsuki_win_streak == 3:
             n 1fcssm "Ehehe.{w=0.75}{nw}"
-            extend 3fchbg " Yep!{w=0.75}{nw}"
-            extend 3fcssmesm " Yet another one for Team [n_name]!"
+            extend 2fchbg " Yep!{w=0.75}{nw}"
+            extend 2fcssmesm " Yet another one for Team [n_name]!"
 
         else:
             n 1unmbs "Yes!{w=0.5}{nw}"
@@ -677,8 +677,8 @@ label snap_end:
         n 2tslpu "..."
         n 2tslaj "That's...{w=1}{nw}"
         extend 4tllsl " almost impressive,{w=0.2} actually.{w=1}{nw}" 
-        extend 3cllsssbr " Weird."
-        n 3ccssssbr "Well,{w=0.2} whatever."
+        extend 2cllsssbr " Weird."
+        n 2ccssssbr "Well,{w=0.2} whatever."
 
     else:
         # Assume forfeit
@@ -694,29 +694,29 @@ label snap_end:
     if jn_snap._player_win_streak >= 3:
         n 2fcsan "Uuuuuu-!"
         n 4fcsgsl "I-{w=0.2}I demand a rematch!{w=0.75}{nw}" 
-        extend 3fcspol " I'm not going down like this!"
+        extend 2fcspol " I'm not going down like this!"
 
-        show natsuki 3fcsgsl
+        show natsuki 2fcsgsl
         $ play_again_prompt = "We're playing again!"
 
     elif jn_snap._natsuki_win_streak >= 3:
         n 4fnmaj "Come on,{w=0.2} [player]!{w=0.75}{nw}"
-        extend 3fcsbs " That {i}can't{/i} be all you've got!"
-        n 3fchbs "Rematch!{w=0.3} Rematch!"
+        extend 2fcsbs " That {i}can't{/i} be all you've got!"
+        n 2fchbs "Rematch!{w=0.3} Rematch!"
 
-        show natsuki 3fchbg
+        show natsuki 2fchbg
         $ play_again_prompt = "Again!"
 
     else:
-        n 3nsqsm "So..."
+        n 2nsqsm "So..."
 
-        show natsuki 3fchbg
+        show natsuki 2fchbg
 
     menu:
         n "[play_again_prompt]"
 
         "You're on!":
-            n 3fcsbg "You bet you are,{w=0.2} [player]!"
+            n 2fcsbg "You bet you are,{w=0.2} [player]!"
 
             $ jn_snap._natsuki_skill_level += 1
             jump snap_start
@@ -735,12 +735,12 @@ label snap_end:
 
             elif jn_snap._natsuki_win_streak >= 3:
                 extend 4fchsm " And thanks for playing."
-                n 3fsqcs "...Just bring more fight with you next time."
-                extend 3fcssm " Ahaha."
+                n 2fsqcs "...Just bring more fight with you next time."
+                extend 2fcssm " Ahaha."
                 show natsuki 1fcssm
 
             else:
-                extend 3fchsm " Thanks for playing~!"
+                extend 2fchsm " Thanks for playing~!"
                 show natsuki 1fcssm
 
             show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
