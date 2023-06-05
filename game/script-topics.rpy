@@ -4993,6 +4993,7 @@ label talk_play_snap:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(1.5)
     play audio drawer
+    $ Natsuki.setDeskItem(desk_slot=jn_desk_items.JNDeskSlots.centre, item=jn_desk_items.getDeskItem("jn_card_pack"))
     show natsuki 4fchsm
     hide black with Dissolve(1)
 

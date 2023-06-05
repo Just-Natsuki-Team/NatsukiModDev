@@ -537,8 +537,12 @@ label snap_quip(is_player_snap, is_correct_snap):
                 # Hide all the UI
                 hide screen snap_ui
 
+                show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+                $ jnPause(1)
                 play audio drawer
-                with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+                $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+                $ jnPause(1)
+                hide black with Dissolve(1.25)
 
                 # Reset the ingame flag, then hop back to ch30 as getting here has lost context
                 $ Natsuki.setInGame(False)
@@ -739,8 +743,12 @@ label snap_end:
                 extend 3fchsm " Thanks for playing~!"
                 show natsuki 1fcssm
 
+            show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+            $ jnPause(1)
             play audio drawer
-            with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+            $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+            $ jnPause(1)
+            hide black with Dissolve(1.25)
 
             # Reset the ingame flag, then hop back to ch30 as getting here has lost context
             $ Natsuki.setInGame(False)
@@ -770,8 +778,12 @@ label snap_forfeit:
             $ persistent._jn_snap_natsuki_wins += 1
 
             show natsuki 1fcssm
+            show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+            $ jnPause(1)
             play audio drawer
-            with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+            $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+            $ jnPause(1)
+            hide black with Dissolve(1.25)
 
             # Reset the ingame flag, then hop back to ch30 as getting here has lost context
             $ Natsuki.setInGame(False)
