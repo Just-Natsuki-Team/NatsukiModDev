@@ -162,3 +162,10 @@ init -55 python in jn_desk_items:
         unlocked=False,
         displayable=store.Image("mod_assets/props/plush/hammie/hammie_fixed.png")  
     ))
+
+    __registerDeskItem(JNDeskItem(
+        reference_name="jn_card_pack",
+        desk_slot=JNDeskSlots.left,
+        unlocked=False,
+        displayable=store.Image("mod_assets/props/card_pack.png")  
+    ))
