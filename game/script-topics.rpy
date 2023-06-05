@@ -10066,7 +10066,7 @@ label talk_daily_jokes_seen_before_loop:
         joke_options.sort(key = lambda option: option[0])
 
     show natsuki option_wait at jn_left
-    call screen scrollable_choice_menu(joke_options, ("Nevermind.", None), 425)
+    call screen scrollable_choice_menu(joke_options, ("Nevermind.", None), 425, "mod_assets/icons/joke_book.png")
     show natsuki at jn_center
     $ joke_choice = _return
 
