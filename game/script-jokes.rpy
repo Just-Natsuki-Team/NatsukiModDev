@@ -25,10 +25,12 @@ init python in jn_jokes:
         def __init__(
             self,
             label,
+            display_name,
             joke_category,
             conditional=None,
         ):
             self.label = label
+            self.display_name = display_name
             self.is_seen = False
             self.shown_count = 0
             self.joke_category = joke_category
@@ -55,7 +57,8 @@ init python in jn_jokes:
         @staticmethod
         def filterJokes(
             joke_list,
-            is_seen=None
+            is_seen=None,
+            shown_count=None
         ):
             """
             Returns a filtered list of jokes, given a joke list and filter criteria.
@@ -63,6 +66,7 @@ init python in jn_jokes:
             IN:
                 - label - list of labels the joke must have 
                 - is_seen - bool is_seen state the joke must be
+                - shown_count - int number of times the joke must have been seen before
 
             OUT:
                 - list of jokes matching the search criteria
@@ -71,7 +75,8 @@ init python in jn_jokes:
                 _joke
                 for _joke in joke_list
                 if _joke.__filterJoke(
-                    is_seen
+                    is_seen,
+                    shown_count
                 )
             ]
 
@@ -111,18 +116,23 @@ init python in jn_jokes:
 
         def __filterJoke(
             self,
-            is_seen=None
+            is_seen=None,
+            shown_count=None
         ):
             """
             Returns True, if the joke meets the filter criteria. Otherwise False.
 
             IN:
                 - is_seen - bool is_seen state the joke must be
+                - shown_count - int number of times the joke must have been seen before
 
             OUT:
                 - True, if the joke meets the filter criteria. Otherwise False
             """
             if is_seen is not None and not self.is_seen == is_seen:
+                return False
+
+            elif shown_count is not None and self.shown_count < shown_count: 
                 return False
 
             elif self.conditional is not None and not eval(self.conditional, store.__dict__):
@@ -162,7 +172,7 @@ init python in jn_jokes:
         """
         return __ALL_JOKES.values()
 
-    def selectJokes():
+    def getUnseenJokes():
         """
         Returns a list of all unseen jokes, or None if zero that are unlocked and unseen exist.
         
@@ -172,6 +182,20 @@ init python in jn_jokes:
         joke_list = JNJoke.filterJokes(
             joke_list=getAllJokes(),
             is_seen=False
+        )
+
+        return joke_list if len(joke_list) > 0 else None
+
+    def getShownBeforeJokes():
+        """
+        Returns a list of all jokes shown at least once previously, or None if zero that are unlocked and shown before exist.
+        
+        OUT:
+            - List of JNJoke jokes, or None
+        """
+        joke_list = JNJoke.filterJokes(
+            joke_list=getAllJokes(),
+            shown_count=1
         )
 
         return joke_list if len(joke_list) > 0 else None
@@ -187,180 +211,224 @@ init python in jn_jokes:
 
     __registerJoke(JNJoke(
         label="joke_clock_eating",
+        display_name="Eating clocks",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_anime_animated",
+        display_name="Anime",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_pirate_shower",
+        display_name="Pirate hygiene",
         joke_category=JNJokeCategories.corny
     ))
     __registerJoke(JNJoke(
         label="joke_cinderella_soccer",
+        display_name="Cinderella",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_blind_fish",
+        display_name="Fish eyesight",
         joke_category=JNJokeCategories.corny
     ))
     __registerJoke(JNJoke(
         label="joke_skeleton_music",
+        display_name="Skeletal music",
         joke_category=JNJokeCategories.corny,
         conditional="persistent.jn_custom_music_unlocked"
     ))
     __registerJoke(JNJoke(
         label="joke_skeleton_communication",
+        display_name="Skeletal communication",
         joke_category=JNJokeCategories.corny,
         conditional="jn_jokes.getJoke('joke_skeleton_music').shown_count > 0"
     ))
     __registerJoke(JNJoke(
         label="joke_ocean_greeting",
+        display_name="Ocean greetings",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_tractor_trailer",
+        display_name="Tractor-trailer",
         joke_category=JNJokeCategories.funny
     ))
     __registerJoke(JNJoke(
         label="joke_tentacle_tickles",
+        display_name="Tentacles",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_basic_chemistry",
+        display_name="Basic chemistry",
         joke_category=JNJokeCategories.funny
     ))
     __registerJoke(JNJoke(
         label="joke_upset_cat",
+        display_name="Upsetting a cat",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_cute_chicks",
+        display_name="Cute chicks",
         joke_category=JNJokeCategories.bad
     ))
     __registerJoke(JNJoke(
         label="joke_lumberjack_axeception",
+        display_name="Lumberjacks",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_tallest_building",
+        display_name="Tallest building",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_baking_baseball",
+        display_name="Baking and baseball",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_soya_tofu",
+        display_name="Tofu",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_distrust_atoms",
+        display_name="Atomic theory",
         joke_category=JNJokeCategories.funny
     ))
     __registerJoke(JNJoke(
         label="joke_running_latte",
+        display_name="Barista",
         joke_category=JNJokeCategories.corny
     ))
     __registerJoke(JNJoke(
         label="joke_guitar_stringing_along",
+        display_name="Guitarist",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_snek_maths",
+        display_name="Snake mathematics",
         joke_category=JNJokeCategories.bad
     ))
     __registerJoke(JNJoke(
         label="joke_balloonist_hot_air",
+        display_name="Hot air",
         joke_category=JNJokeCategories.corny
     ))
     __registerJoke(JNJoke(
         label="joke_author_cover_story",
+        display_name="Cover story",
         joke_category=JNJokeCategories.funny
     ))
     __registerJoke(JNJoke(
         label="joke_wrapped_up_quickly",
+        display_name="Packaging",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_carpentry_nailed_it",
+        display_name="Nailed it",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_neutrons_no_charge",
+        display_name="Neutrons",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_train_sound_track",
+        display_name="Sound tracks",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_bored_typist",
+        display_name="Typists",
         joke_category=JNJokeCategories.bad
     ))
     __registerJoke(JNJoke(
         label="joke_regular_moovements",
+        display_name="Cows and stairs",
         joke_category=JNJokeCategories.bad
     ))
     __registerJoke(JNJoke(
         label="joke_rabbit_lottery",
+        display_name="Rabbit lottery",
         joke_category=JNJokeCategories.funny
     ))
     __registerJoke(JNJoke(
         label="joke_trees_logged_out",
+        display_name="Logging out",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_con_crete",
+        display_name="Con-crete",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_footless_snakes",
+        display_name="Measuring snakes",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_bigger_ball",
+        display_name="Ball sports",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_meeting_walls",
+        display_name="Meeting walls",
         joke_category=JNJokeCategories.bad
     ))
     __registerJoke(JNJoke(
         label="joke_hour_feeling",
-        joke_category=JNJokeCategories.funny
+        display_name="Clock and the watch",
+        joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_spotless_tigers",
+        display_name="Tiger's stripes",
         joke_category=JNJokeCategories.funny
     ))
     __registerJoke(JNJoke(
         label="joke_missing_bell",
+        display_name="No bell",
         joke_category=JNJokeCategories.funny
     ))
     __registerJoke(JNJoke(
         label="joke_cheesy_pizza",
+        display_name="Pizza",
         joke_category=JNJokeCategories.bad
     ))
     __registerJoke(JNJoke(
         label="joke_veggie_mood",
+        display_name="Vegetarian moods",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_scarecrow_award",
+        display_name="Scarecrows",
         joke_category=JNJokeCategories.corny
     ))
     __registerJoke(JNJoke(
         label="joke_sundae_school",
+        display_name="School",
         joke_category=JNJokeCategories.funny
     ))
     __registerJoke(JNJoke(
         label="joke_burned_tongue",
+        display_name="Burned tongues",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_pointless_pencil",
+        display_name="Pencils",
         joke_category=JNJokeCategories.funny
     ))
 
@@ -647,7 +715,7 @@ label joke_regular_moovements:
 
 label joke_rabbit_lottery:
     n 1nlraj "Hey,{w=0.2} [player]...{w=1}{nw}"
-    extend 1unmaj "did {i}you{/i} know that there's actually a rabbit {i}lottery{/i}?"
+    extend 1unmaj " did {i}you{/i} know that there's actually a rabbit {i}lottery{/i}?"
     n 1fcsbg "Not what you expected to hear,{w=0.2} I bet."
     n 1fchbg "But it makes perfect sense when you think about it!{w=1}{nw}"
     extend 1fsqsm " After all..."
@@ -778,7 +846,7 @@ label joke_scarecrow_award:
     return
 
 label joke_sundae_school:
-    n 1ullaj "You know...{w=0.75}"
+    n 1ullaj "You know..."
     n 1tnmbo "I've been thinking about school a bunch lately."
     n 1ulraj "I mean,{w=0.5}{nw}"
     extend 1unmfl " there were {i}so{/i} many schools I could've gone to -{w=0.5}{nw}"

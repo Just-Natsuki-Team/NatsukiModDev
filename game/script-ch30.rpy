@@ -138,6 +138,11 @@ label ch30_init:
 
         jn_utils.log("Outfit set.")
 
+        # LOAD DESK ITEMS
+
+        jn_desk_items.JNDeskItem.loadAll()
+        jn_utils.log("Desk item data loaded.")
+
         # LOAD HOLIDAYS, POEMS, JOKES
 
         # Load poems from disk and corresponding persistent data
@@ -348,6 +353,9 @@ label call_next_topic(show_natsuki=True):
             $ Natsuki.setInConversation(True)
             call expression _topic
 
+            # Prevent going into an idle immediately after a conversation
+            $ Natsuki.resetLastIdleCall()
+
     python:
         #Collect our return keys here
         #NOTE: This is instance checked for safety
@@ -376,18 +384,13 @@ label call_next_topic(show_natsuki=True):
         if isinstance(_topic, basestring): 
             # Prevent pushed mechanic topics such as weather changes from resetting topic wait timer
             if re.search("(^talk_)", _topic) or not re.search("(_change$)|(^idle_)", _topic):
-                global LAST_TOPIC_CALL
-                LAST_TOPIC_CALL = datetime.datetime.now()
+                Natsuki.resetLastTopicCall()
 
         Natsuki.setInConversation(False)
 
     jump ch30_loop
 
 init python:
-    LAST_IDLE_CALL = datetime.datetime.now()
-    LAST_TOPIC_CALL = datetime.datetime.now()
-    LAST_MENU_CALL = datetime.datetime.now()
-
     LAST_MINUTE_CHECK = datetime.datetime.now()
     LAST_HOUR_CHECK = LAST_MINUTE_CHECK.hour
     LAST_DAY_CHECK = LAST_MINUTE_CHECK.day
@@ -396,8 +399,6 @@ init python:
         """
         Runs every minute during breaks between topics
         """
-        global LAST_IDLE_CALL
-
         jn_utils.save_game()
 
         # Check the daily affinity cap and reset if need be
@@ -422,8 +423,8 @@ init python:
         # Push a topic, if we have waited long enough since the last one, and settings for random chat allow it
         if (
             persistent.jn_natsuki_random_topic_frequency != jn_preferences.random_topic_frequency.NEVER
-            and datetime.datetime.now() > LAST_TOPIC_CALL + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown())
-            and datetime.datetime.now() >= LAST_MENU_CALL + datetime.timedelta(seconds=5)
+            and datetime.datetime.now() > Natsuki.getLastTopicCall() + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown())
+            and datetime.datetime.now() >= Natsuki.getLastMenuCall() + datetime.timedelta(seconds=5)
             and not persistent._event_list
         ):
             if not persistent.jn_natsuki_repeat_topics:
@@ -466,15 +467,15 @@ init python:
         # Select a random idle if enabled, we haven't had one for a while and there's nothing already queued
         if (
             persistent._jn_natsuki_idles_enabled
-            and datetime.datetime.now() >= LAST_TOPIC_CALL + datetime.timedelta(minutes=2)
-            and datetime.datetime.now() >= LAST_IDLE_CALL + datetime.timedelta(minutes=10)
-            and datetime.datetime.now() >= LAST_MENU_CALL + datetime.timedelta(seconds=5)
+            and datetime.datetime.now() >= Natsuki.getLastTopicCall() + datetime.timedelta(minutes=2)
+            and datetime.datetime.now() >= Natsuki.getLastIdleCall() + datetime.timedelta(minutes=10)
+            and datetime.datetime.now() >= Natsuki.getLastMenuCall() + datetime.timedelta(seconds=5)
             and not persistent._event_list
         ):
             idle_topic = jn_idles.selectIdle()
             if idle_topic:
                 queue(idle_topic)
-                LAST_IDLE_CALL = datetime.datetime.now()
+                Natsuki.resetLastIdleCall()
 
         # Notify for player activity, if settings allow it
         if (
@@ -586,9 +587,6 @@ label talk_menu:
         show_natsuki_talk_menu()
         Natsuki.setInConversation(True)
 
-        global LAST_IDLE_CALL
-        global LAST_MENU_CALL
-
     menu:
         n "[_talk_flavor_text]"
 
@@ -621,12 +619,12 @@ label talk_menu:
             jump farewell_start
 
         "Nevermind.":
-            $ LAST_IDLE_CALL = datetime.datetime.now()
-            $ LAST_MENU_CALL = datetime.datetime.now()
+            $ Natsuki.resetLastIdleCall()
+            $ Natsuki.resetLastMenuCall()
             jump ch30_loop
 
-    $ LAST_IDLE_CALL = datetime.datetime.now()
-    $ LAST_MENU_CALL = datetime.datetime.now()
+    $ Natsuki.resetLastIdleCall()
+    $ Natsuki.resetLastMenuCall()
 
     return
 
@@ -659,8 +657,8 @@ label player_select_topic(is_repeat_topics=False):
 
     call screen categorized_menu(
         menu_items=menu_items,
-        category_pane_space=(1020, 70, 250, 572),
-        option_list_space=(740, 70, 250, 572),
+        category_pane_space=(990, 40, 250, 572),
+        option_list_space=(710, 40, 250, 572), # x should be 280 less than above
         category_length=len(_topics))
 
     $ _choice = _return

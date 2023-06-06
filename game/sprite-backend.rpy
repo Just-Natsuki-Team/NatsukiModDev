@@ -1,5 +1,6 @@
 init -50 python:
     import store
+    import store.jn_desk_items as jn_desk_items
     import store.jn_outfits as jn_outfits
     import store.jn_utils as jn_utils
     from Enum import Enum
@@ -317,6 +318,19 @@ init -50 python:
                 (0, 0), "{0}/arms/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose),
                 (0, 0), "{0}/sleeves/[Natsuki._outfit.clothes.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose)
             ])
+
+        # Left desk item
+        lc_args.extend([
+            (0, 0), DynamicDisplayable(Natsuki.getDeskItem, desk_slot=jn_desk_items.JNDeskSlots.left)
+        ])
+        # Centre desk item
+        lc_args.extend([
+            (0, 0), DynamicDisplayable(Natsuki.getDeskItem, desk_slot=jn_desk_items.JNDeskSlots.centre)
+        ])
+        # Right desk item
+        lc_args.extend([
+            (0, 0), DynamicDisplayable(Natsuki.getDeskItem, desk_slot=jn_desk_items.JNDeskSlots.right)
+        ])
 
         # Generate and return the sprite
         return renpy.display.layout.LiveComposite(
@@ -1117,6 +1131,51 @@ image natsuki option_wait_smug:
             "natsuki 7csqcs"
             pause 4
             "natsuki 7ccscs"
+
+image natsuki option_wait_holding:
+    block:
+        choice:
+            "natsuki 1ulrbo"
+            pause 4
+            "natsuki 1ucsbo"
+            pause 0.1
+            "natsuki 1ulrbo"
+            pause 4
+            "natsuki 1ucsbo"
+            pause 0.1
+
+        choice:
+            "natsuki 1tlrbo"
+            pause 4
+            "natsuki 1tcsbo"
+            pause 0.1
+            "natsuki 1tlrbo"
+            pause 4
+            "natsuki 1tcsbo"
+            pause 0.1
+
+        choice:
+            "natsuki 1tnmbo"
+            pause 4
+            "natsuki 1tcsbo"
+            pause 0.1
+            "natsuki 1tnmbo"
+            pause 4
+            "natsuki 1tcsbo"
+            pause 0.1
+
+        choice:
+            "natsuki 1unmbo"
+            pause 4
+            "natsuki 1ucsbo"
+            pause 0.1
+            "natsuki 1unmbo"
+            pause 4
+            "natsuki 1ucsbo"
+            pause 0.1
+            "natsuki 1unmbo"
+            pause 1
+            "natsuki 1ucsbo"
             pause 0.1
 
     repeat

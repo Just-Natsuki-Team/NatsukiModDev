@@ -5,6 +5,7 @@ default persistent._jn_natsuki_birthday_known = False
 init 0 python:
     import codecs
     import datetime
+    import store.jn_desk_items as jn_desk_items
     import store.jn_outfits as jn_outfits
 
     class Natsuki(object):
@@ -69,7 +70,117 @@ init 0 python:
         # Tracks whether Natsuki is currently playing a game
         __is_in_game = False
 
+        # Tracks the last time Natsuki went through a topic, idle and menu to prevent sudden dialogue jumps
+        __last_topic_call = datetime.datetime.now()
+        __last_idle_call = datetime.datetime.now()
+        __last_menu_call = datetime.datetime.now()
+
         __capped_aff_dates = list()
+        
+        # Natsuki's desk slots; items are drawn over Natsuki so be wary of overlaps!
+        _desk_left = Null()
+        _desk_centre = Null()
+        _desk_right = Null()    
+
+        @staticmethod
+        def setDeskItem(desk_slot, item):
+            """
+            Sets a desk item for Natsuki's desk, and updates her current sprite.
+
+            IN:
+                - desk_slot - JNDeskSlots slot to use for the item (left, centre or right)
+                - item - Can be one of:
+                    - str file path to image, in which case an Image displayable is created from it
+                    - JNDeskItem instance, in which case the displayable value is used
+                    - A Ren'Py displayable (Image, etc.), which is used directly
+            """
+            if isinstance(item, jn_desk_items.JNDeskItem):
+                item = item.displayable
+
+            elif isinstance(item, basestring):
+                item = Image(item)
+
+            if desk_slot == jn_desk_items.JNDeskSlots.left:
+                Natsuki._desk_left = item
+
+            elif desk_slot == jn_desk_items.JNDeskSlots.centre:
+                Natsuki._desk_centre = item
+
+            elif desk_slot == jn_desk_items.JNDeskSlots.right:
+                Natsuki._desk_right = item
+
+            else:
+                jn_utils.log("Cannot assign item to desk slot {0} as the slot does not exist.".format(desk_slot))
+        
+        @staticmethod
+        def getDeskItem(st, at, desk_slot):
+            """
+            Gets a desk item for Natsuki's desk given a specific slot.
+
+            IN:
+                - desk_slot - JNDeskSlots slot to return an item for (left, centre or right)
+            """
+            if desk_slot == jn_desk_items.JNDeskSlots.left:
+                return Natsuki._desk_left, None
+
+            elif desk_slot == jn_desk_items.JNDeskSlots.centre:
+                return Natsuki._desk_centre, None
+
+            elif desk_slot == jn_desk_items.JNDeskSlots.right:
+                return Natsuki._desk_right, None
+
+            else:
+                jn_utils.log("Cannot get desk slot {0} as the slot does not exist.".format(desk_slot))
+
+        @staticmethod
+        def clearDeskItem(desk_slot):
+            """
+            Removes a desk item from Natsuki's desk given a specific slot.
+
+            IN:
+                - desk_slot - JNDeskSlots slot of the desk to clear (left, centre or right)
+            """
+            if desk_slot == jn_desk_items.JNDeskSlots.left:
+                Natsuki._desk_left = Null()
+
+            elif desk_slot == jn_desk_items.JNDeskSlots.centre:
+                Natsuki._desk_centre = Null()
+
+            elif desk_slot == jn_desk_items.JNDeskSlots.right:
+                Natsuki._desk_right = Null()
+
+            else:
+                jn_utils.log("Cannot clear desk slot {0} as the slot does not exist.".format(desk_slot))
+
+        @staticmethod 
+        def clearDesk():
+            """
+            Completely clears Natsuki's desk.
+            """
+            Natsuki._desk_left = Null()
+            Natsuki._desk_centre = Null()
+            Natsuki._desk_right = Null()
+
+        @staticmethod
+        def getDeskSlotClear(desk_slot):
+            """
+            Returns the state of the desk for the given slot.
+
+            IN:
+                - desk_slot - JNDeskSlots slot of the desk to clear (left, centre or right)
+            OUT:
+                - True if the slot is clear/unoccupied, otherwise False
+            """
+            if desk_slot == jn_desk_items.JNDeskSlots.left:
+                return isinstance(Natsuki._desk_left, Null)
+
+            elif desk_slot == jn_desk_items.JNDeskSlots.centre:
+                return isinstance(Natsuki._desk_centre, Null)
+
+            elif desk_slot == jn_desk_items.JNDeskSlots.right:
+                return isinstance(Natsuki._desk_right, Null)
+
+            return False
 
         # START: Outfit functionality
 
@@ -82,6 +193,13 @@ init 0 python:
             Returns the reference name of the outfit Natsuki is currently wearing.
             """
             return Natsuki._outfit.reference_name
+
+        @staticmethod
+        def getOutfit():
+            """
+            Gets the JNOutfit Natsuki is currently wearing.
+            """
+            return Natsuki._outfit
 
         @staticmethod
         def setOutfit(outfit, persist=True):
@@ -221,7 +339,7 @@ init 0 python:
             """
             return Natsuki._outfit.back.reference_name == reference_name
 
-        # Start: Relationship functionality
+        # START: Relationship functionality
 
         @staticmethod
         def calculatedAffinityGain(base=1, bypass=False):
@@ -590,6 +708,8 @@ init 0 python:
                 )
                 return "UNKNOWN"
 
+        # START: Dialogue functionality
+
         @staticmethod
         def addApology(apology_type):
             """
@@ -640,6 +760,7 @@ init 0 python:
 
             IN:
                 - is_in_conversation - The bool in conversation flag to set
+                - reset_calls - bool whether to reset the idle and topic calls, preventing an immediate topic or idle call
             """
             if not isinstance(is_in_conversation, bool):
                 raise TypeError("is_in_conversation must be of type bool")
@@ -654,6 +775,7 @@ init 0 python:
 
             IN:
                 - is_in_game - The bool in game flag to set
+                - reset_calls - bool whether to reset the idle and topic calls, preventing an immediate topic or idle call
             """
             if not isinstance(is_in_game, bool):
                 raise TypeError("is_in_game must be of type bool")
@@ -681,6 +803,48 @@ init 0 python:
                 - True if in game, otherwise False
             """
             return Natsuki.__is_in_game
+
+        @staticmethod
+        def getLastTopicCall():
+            """
+            Gets the time of the last topic call.
+            """
+            return Natsuki.__last_topic_call
+
+        @staticmethod
+        def getLastIdleCall():
+            """
+            Gets the time of the last idle call.
+            """
+            return Natsuki.__last_idle_call
+
+        @staticmethod
+        def getLastMenuCall():
+            """
+            Gets the time of the last menu call.
+            """
+            return Natsuki.__last_menu_call
+
+        @staticmethod
+        def resetLastTopicCall():
+            """
+            Sets the time of the last topic call to the current time.
+            """
+            Natsuki.__last_topic_call = datetime.datetime.now()
+
+        @staticmethod
+        def resetLastIdleCall():
+            """
+            Sets the time of the last idle call to the current time.
+            """
+            Natsuki.__last_idle_call = datetime.datetime.now()
+
+        @staticmethod
+        def resetLastMenuCall():
+            """
+            Sets the time of the last menu call to the current time.
+            """
+            Natsuki.__last_menu_call = datetime.datetime.now()
 
 # KWWWMMMMMMMWNNNNNNXXXKKKKK00KKXXKKK0KK0000KKKKKK000Okkxdoodk0KKKKKXKKKK0000KOxoccdkko;,cOX00XXXXXXXX
 # KNWWWWWMMWWNNNNNXXXXXXXXKKKKKXXXXXXKKKKXXXXXXXKKKXXKKKKKKXKKKXXK00KKKKKKK000OxOOdclxOx:;kXOxKXXXXXKK

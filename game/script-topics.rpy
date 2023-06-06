@@ -4966,7 +4966,7 @@ label talk_are_you_into_cosplay:
         play audio zipper
         $ jnPause(5)
 
-        $ outfit_to_restore = Natsuki._outfit
+        $ outfit_to_restore = Natsuki.getOutfit()
         $ jn_outfits.get_outfit("jn_trainer_cosplay").unlock()
         $ jn_outfits.get_outfit("jn_sango_cosplay").unlock()
         $ Natsuki.setOutfit(jn_outfits.get_outfit(random.choice(["jn_trainer_cosplay", "jn_sango_cosplay"])))
@@ -5397,6 +5397,7 @@ label talk_play_snap:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(1.5)
     play audio drawer
+    $ Natsuki.setDeskItem(desk_slot=jn_desk_items.JNDeskSlots.centre, item=jn_desk_items.getDeskItem("jn_card_pack"))
     show natsuki 4fchsm
     hide black with Dissolve(1)
 
@@ -9890,7 +9891,6 @@ label talk_daily_jokes_unlock:
     extend 4fslfl " Something that's really starting to bug the crap out of me."
     n 2unmbo "You stop by here often enough,{w=0.2} right?{w=0.75}{nw}"
     extend 2nlraj " To visit,{w=0.2} I mean."
-
     n 4unmemeshsbl "N-{w=0.2}not that I don't appreciate it,{w=0.2} or anything like that!{w=0.75}{nw}"
 
     if Natsuki.isEnamored(higher=True):
@@ -10091,7 +10091,7 @@ label talk_daily_joke(from_unlock=False):
         hide black with Dissolve(0.5)
         $ jnPause(0.5)
 
-    $ daily_jokes = jn_jokes.selectJokes()
+    $ daily_jokes = jn_jokes.getUnseenJokes()
 
     if not daily_jokes:
         $ jn_jokes.resetJokes()
@@ -10117,7 +10117,7 @@ label talk_daily_joke(from_unlock=False):
             n 1fsqsm "Ehehe.{w=1}{nw}"
             extend 1uchgnl " 'ppreciated,{w=0.2} [player]!"
 
-        $ daily_jokes = jn_jokes.selectJokes()
+        $ daily_jokes = jn_jokes.getUnseenJokes()
 
     n 1fcsss "Now,{w=0.75}{nw}" 
     extend 1fsqsm " let's see..."
@@ -10385,6 +10385,340 @@ label talk_daily_jokes_stop:
         n 3fchtsl "Love you too,{w=0.2} [player]~!"
 
     $ persistent._jn_daily_jokes_enabled = False
+
+    return
+
+# Ask Natsuki to let the player see a previously seen joke.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_daily_jokes_seen_before_start",
+            unlocked=True,
+            prompt="What jokes have you told me before?",
+            category=["Jokes"],
+            conditional="persistent._jn_daily_jokes_unlocked and jn_jokes.getShownBeforeJokes() is not None",
+            affinity_range=(jn_affinity.HAPPY, None),
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_daily_jokes_seen_before_start:
+    if persistent._jn_daily_jokes_enabled:
+        n 4ccsss "Oh?{w=0.75}{nw}"
+        extend 4ccsbg " What's this now,{w=0.2} all of a sudden?{w=0.75}{nw}"
+        extend 3fsqbg " {i}Someone{/i} just can't get enough of the joke book,{w=0.2} huh?"
+        n 3fcssm "Ehehe."
+        n 4ullaj "Well...{w=1}{nw}"
+        extend 4cllss " I didn't exactly take notes or anything on the ones I've told you...\n{w=0.75}{nw}"
+        extend 2fcssssbr " but I'm pretty sure I can figure it out!"
+        n 2unmaj "Just give me a sec here..."
+
+    else:
+        n 1csqss "Oh?{w=0.75}{nw}"
+        extend 4fnmss " Am I hearing this right?"
+        n 4fsqbg "{i}Now{/i} you suddenly wanna hear all about the jokes?{w=0.75}{nw}"
+        extend 3fcsbg " The ones you practically {i}begged{/i} me to stop telling you?"
+        n 3tsqss "...{i}Those{/i} jokes?"
+        n 4fsqsm "..."
+        n 4fcssm "Ehehe."
+        n 2fcsbs "Say no more,{w=0.2} say no more.{w=0.75}{nw}"
+        extend 2fchgn " [n_name] has got you covered!"
+        n 4ccsss "Just give me a sec here..."
+
+    show natsuki 4fcssmeme
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    play audio drawer
+    $ Natsuki.setDeskItem(desk_slot=jn_desk_items.JNDeskSlots.centre, item=jn_desk_items.getDeskItem("jn_joke_book_held"))
+    show natsuki 1fchsmeme
+    $ jnPause(2.25)
+    hide black with Dissolve(0.5)
+    $ jnPause(0.5)
+
+    if random.choice([True, False]):
+        n 1fchbgeme "Alright!{w=0.75}{nw}"
+        extend 1fcsbg " Talk to me,{w=0.2} [player]!{w=0.75}{nw}"
+        extend 1tnmss " What did you wanna hear again?"
+
+    else:
+        n 1fchbgeme "Okaaay!{w=0.75}{nw}"
+        extend 1fchgn " Here we go,{w=0.2} [player]!{w=0.75}{nw}"
+        extend 1tsqsm " Which one did you wanna hear?"
+
+    call talk_daily_jokes_seen_before_loop
+
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    play audio drawer
+    $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+    show natsuki 1nchsmeme
+    $ jnPause(2.25)
+    hide black with Dissolve(0.5)
+    $ jnPause(0.5)
+
+    return
+
+label talk_daily_jokes_seen_before_loop:
+    python:
+        joke_options = []
+        for joke in jn_jokes.getShownBeforeJokes():
+            joke_options.append((joke.display_name, joke))
+
+        joke_options.sort(key = lambda option: option[0])
+
+    show natsuki option_wait at jn_left
+    call screen scrollable_choice_menu(joke_options, ("Nevermind.", None), 400, "mod_assets/icons/joke_book.png")
+    show natsuki at jn_center
+    $ joke_choice = _return
+
+    if isinstance(joke_choice, jn_jokes.JNJoke):
+        $ dialogue_choice = random.randint(1, 3)
+        if joke_choice.joke_category == jn_jokes.JNJokeCategories.funny:
+            if dialogue_choice == 1:
+                n 1unmaj "Ooh!{w=0.75}{nw}"
+                extend 1unmbg " Yeah!{w=0.5}{nw}"
+                extend 1fchbg " I love that one!"
+
+            elif dialogue_choice == 2:
+                n 1tsqss "[joke_choice.display_name],{w=0.2} huh?"
+                n 1fchsm "Ehehe.{w=0.75}{nw}"
+                extend 1fchbg " You got it,{w=0.2} [player]!"
+            
+            else:
+                n 1uspbg "Oh!{w=0.2} Oh!{w=0.5}{nw}"
+                extend 1uchgn " I love that one!"
+
+            show natsuki 1udwsm
+
+        elif joke_choice.joke_category == jn_jokes.JNJokeCategories.corny:
+            if dialogue_choice == 1:
+                n 1csqfl "...Seriously?{w=0.75}{nw}"
+                extend 1fllfl " But it wasn't even {i}that{/i} good,{w=0.2} [player]!"
+                n 1ccsemesi "..."
+
+            elif dialogue_choice == 2:
+                n 1csrem "Man...{w=1}{nw}"
+                extend 1tnmem " you're {i}sure{/i} you wanna hear that one again?{w=0.75}{nw}"
+                extend 1nslsl " Fine."
+            
+            else:
+                n 1nsqflsbr "...That one {i}again{/i}?{w=0.75}{nw}"
+                extend 1cslemsbr " Jeez..."
+
+            show natsuki 1ndwbo
+
+        elif joke_choice.joke_category == jn_jokes.JNJokeCategories.bad:
+            if dialogue_choice == 1:
+                n 1fcsan "Oh,{w=0.2} for-{w=0.5}{nw}"
+                n 1ccsemesi "..."
+                n 1csrtr "You just {i}had{/i} to pick out that one,{w=0.5}{nw}"
+                extend 1csqca " huh?"
+                n 1cslaj "...Fine.{w=0.75}{nw}"
+                extend 1ccsaj " Whatever."
+
+            elif dialogue_choice == 2:
+                n 1ccsemesi "..."
+                n 1clrfl "Really,{w=0.2} [player]?{w=0.75}{nw}"
+                extend 1csqfl " {i}That{/i} one?"
+                n 1nslposbr "...Fine."
+            
+            else:
+                n 1fupfl "Ugh...{w=1}{nw}"
+                extend 1cnmfl " for real?"
+                n 1clraj "You {i}can't{/i} be serious,{w=0.2} [player].{w=0.75}{nw}"
+                extend 1csqemsbr " [joke_choice.display_name]?"
+                n 1ccsslesisbr "..."
+
+            show natsuki 1cdwca
+
+        else:
+            if dialogue_choice == 1:
+                n 1unmaj "[joke_choice.display_name]?{w=0.75}{nw}"
+                extend 1fchbg " Sure!"
+
+            elif dialogue_choice == 2:
+                n 1tnmss "[joke_choice.display_name]?{w=0.75}{nw}"
+                extend 1fcssm " You got it!"
+            
+            else:
+                n 1udwaj "[joke_choice.display_name]?{w=0.75}{nw}"
+                extend 1unmbo " That one?"
+                n 1nchbg "'Kay!{w=0.75}{nw}"
+                extend 1fcsbg " Here we go!"
+
+            show natsuki 1cdwsm
+
+        play audio page_turn
+
+        if random.choice([True, False]):
+            $ jnPause(1.25)
+            play audio page_turn
+
+        $ jnPause(1.25)
+
+        n 1fcsaj "A-{w=0.2}hem!"
+        n 1fcsbo "..."
+
+        call expression joke_choice.label
+
+        $ dialogue_choice = random.randint(1, 3)
+        if joke_choice.joke_category == jn_jokes.JNJokeCategories.funny:
+            if dialogue_choice == 1:
+                n 1flrss "Man...{w=1}{nw}"
+                extend 1fchgn " I swear that one never gets old!{w=0.75}{nw}"
+                extend 1nchgnl " Ahaha."
+            
+            elif dialogue_choice == 2:
+                n 1fcssm "Ehehe.{w=0.75}{nw}"
+                extend 1fchbg " Yep!"
+                n 1fchbsl "Now that's what I call [n_name] approved!"
+
+            else:
+                n 1fcssmeme "Ehehe.{w=0.75}{nw}"
+                extend 1ulrss " Well,{w=0.2} what can I say?"
+                n 1fwlbgl "Gotta love it,{w=0.2} [player]!"
+
+            n 1ullss "Anyway..."
+            show natsuki 1tnmss
+
+        elif joke_choice.joke_category == jn_jokes.JNJokeCategories.corny:
+            if dialogue_choice == 1:
+                n 1nsrfl "...Yeah."
+                n 1fcsaj "I gotta say.{w=0.75}{nw}"
+                extend 1cllbo " I wouldn't complain if {i}that{/i} one never showed up again.{w=0.75}{nw}"
+                extend 1ccsbosbr " Just saying."
+
+            elif dialogue_choice == 2:
+                n 1ccsflesi "..."
+                n 1csraj "I seriously can't believe someone {i}paid{/i} for this.{w=0.75}{nw}"
+                extend 1fcsfl " Ugh."
+                n 1cllsl "Whatever."
+
+            else:
+                n 1csrfl "I...{w=1}{nw}"
+                extend 1ccsfl " think that one should have {i}stayed{/i} in the book,{w=0.5}{nw}"
+                extend 1csqcasbl " [player]."
+                n 1csrcasbl "..."
+
+            n 1nlraj "So..."
+            show natsuki 1tnmbo
+
+        elif joke_choice.joke_category == jn_jokes.JNJokeCategories.bad:
+            if dialogue_choice == 1:
+                n 1ccsemesi "..."
+                n 1clrfl "Alright.{w=0.75}{nw}"
+                extend 1clrca " That's that one dealt with.{w=0.75}{nw}"
+                extend 1csrca " {i}Again{/i}."
+
+            elif dialogue_choice == 2:
+                n 1ccsflesi "..."
+                n 1cllfl "Yeah.{w=0.75}{nw}"
+                extend 1cllsl " That aged about as well as I expected.{w=1}{nw}"
+                extend 1cslpo " {i}Like trash{/i}."
+            
+            else:
+                n 1ccssssbl "Heh.{w=0.75}{nw}"
+                extend 1ccstr " I suppose at least {i}some{/i} things don't change.{w=0.75}{nw}"
+                extend 1csrbo " {i}Like that joke still sucking{/i}."
+
+            n 1ccsajsbl "Well,{w=0.2} whatever.{w=0.75}{nw}"
+            extend 1nllaj " So..."
+            show natsuki 1tnmsl
+
+        else:
+            if dialogue_choice == 1:
+                n 1fcssmeme "Ehehe.{w=0.75}{nw}"
+                extend 1fchbg " There you go,{w=0.2} [player]!"
+            
+            elif dialogue_choice == 2:
+                n 1fnmbg "...And there you go,{w=0.2} [player]!{w=0.75}{nw}"
+                extend 1fcssmesm " Better appreciate it!"
+
+            else:
+                n 1fwrsm "...And that's all she wrote!{w=0.75}{nw}"
+                extend 1fchsm " Ehehe."
+
+            n 1ulraj "So..."
+            show natsuki  1unmbo
+
+        menu:
+            n "Did you wanna pick out another one [player],{w=0.2} or...?"
+
+            "Sure!":
+                if joke_choice.joke_category == jn_jokes.JNJokeCategories.corny or joke_choice.joke_category == jn_jokes.JNJokeCategories.bad:
+                    n 1nlrsl "...Alright.{w=0.75}{nw}"
+                    extend 1csrsssbl " Just try and pick out a good one this time."
+
+                else:
+                    n 1nchbg "Gotcha!{w=0.75}{nw}"
+                    extend 1tnmss " What else did you wanna hear again?"
+
+                jump talk_daily_jokes_seen_before_loop
+
+            "That's it for now.":
+                if joke_choice.joke_category == jn_jokes.JNJokeCategories.funny:
+                    n 1fcsss "Oh?{w=0.75}{nw}"
+                    extend 1fsqss " What's wrong,{w=0.2} [player]?{w=0.75}{nw}"
+                    extend 1fnmsm " Had enough {i}already{/i}?"
+                    n 1fcssm "Ehehe."
+                    n 1fcsbg "Fine,{w=0.2} fine.{w=0.75}{nw}"
+                    extend 1flrsm " I'll put it away..."
+                    n 1fsqcs "...Now that we've had enough{w=0.5}{nw}" 
+                    extend 1fnmss " {i}pun{/i}{w=0.5}{nw}"
+                    extend 1fsqbg " and all."
+                    n 1nchgn "Ahaha.{w=0.75}{nw}"
+
+                    if Natsuki.isLove(higher=True):
+                        extend 1fchbll " Love you too,{w=0.2} [player]~!"
+                    
+                    else:
+                        extend 1fcsbs " No regrets,{w=0.2} [player]!"
+
+                    show natsuki 1fchsmeme
+
+                elif joke_choice.joke_category == jn_jokes.JNJokeCategories.corny:
+                    n 1ncsss "Heh.{w=0.75}{nw}"
+                    extend 1ulrfl " Well...{w=1}{nw}"
+                    extend 1nslsssbl " can't say I blame you,{w=0.2} [player]."
+                    n 1nllsssbr "I'll just...{w=0.75}{nw}"
+                    extend 1nslbosbr " put this away."
+
+                    show natsuki 1nlrbosbl
+
+                elif joke_choice.joke_category == jn_jokes.JNJokeCategories.bad:
+                    n 1nslfl "...Yeah.{w=0.75}{nw}"
+                    extend 1ccsfl " Actually,{w=0.2} you know what?{w=0.75}{nw}"
+                    extend 1cnmaj " Good call."
+                    n 1ccsposbr "I've about had enough of this anyway."
+
+                    show natsuki 1nsrposbr
+
+                else:
+                    n 1unmaj "About done here,{w=0.2} [player]?{w=0.75}{nw}"
+                    extend 1nchsm " No worries!"
+                    n 1clrss "We'll just...{w=1}{nw}"
+                    extend 1csqss " {i}close the book{/i}{w=0.5}{nw}"
+                    extend 1csqbg " on this one."
+
+                    if Natsuki.isLove(higher=True):
+                        n 1fchgn "Ehehe.{w=0.75}{nw}"
+                        extend 1fchblleme " Love you too,{w=0.2} [player]~!"
+                    
+                    else:
+                        n 1fchgnelg "You're welcome,{w=0.2} [player]!"
+
+                    show natsuki 1fchsmeme
+
+    else:
+        n 1tlraj "Well...{w=1}{nw}"
+        extend 1tnmbo " if you say so,{w=0.2} [player]."
+        n 1tllss "I'll just...{w=1}{nw}"
+        extend 1cslss " put this thing back."
+
+        show natsuki 1nslbo
 
     return
 
