@@ -4562,7 +4562,7 @@ label talk_are_you_into_cosplay:
         play audio zipper
         $ jnPause(5)
 
-        $ outfit_to_restore = Natsuki._outfit
+        $ outfit_to_restore = Natsuki.getOutfit()
         $ jn_outfits.get_outfit("jn_trainer_cosplay").unlock()
         $ jn_outfits.get_outfit("jn_sango_cosplay").unlock()
         $ Natsuki.setOutfit(jn_outfits.get_outfit(random.choice(["jn_trainer_cosplay", "jn_sango_cosplay"])))

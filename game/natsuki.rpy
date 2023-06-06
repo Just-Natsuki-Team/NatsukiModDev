@@ -70,8 +70,14 @@ init 0 python:
         # Tracks whether Natsuki is currently playing a game
         __is_in_game = False
 
-        __capped_aff_dates = list()
+        # Tracks the last time Natsuki went through a topic, idle and menu to prevent sudden dialogue jumps
+        __last_topic_call = datetime.datetime.now()
+        __last_idle_call = datetime.datetime.now()
+        __last_menu_call = datetime.datetime.now()
 
+        __capped_aff_dates = list()
+        
+        # Natsuki's desk slots; items are drawn over Natsuki so be wary of overlaps!
         _desk_left = Null()
         _desk_centre = Null()
         _desk_right = Null()    
@@ -187,6 +193,13 @@ init 0 python:
             Returns the reference name of the outfit Natsuki is currently wearing.
             """
             return Natsuki._outfit.reference_name
+
+        @staticmethod
+        def getOutfit():
+            """
+            Gets the JNOutfit Natsuki is currently wearing.
+            """
+            return Natsuki._outfit
 
         @staticmethod
         def setOutfit(outfit, persist=True):
@@ -326,7 +339,7 @@ init 0 python:
             """
             return Natsuki._outfit.back.reference_name == reference_name
 
-        # Start: Relationship functionality
+        # START: Relationship functionality
 
         @staticmethod
         def calculatedAffinityGain(base=1, bypass=False):
@@ -695,6 +708,8 @@ init 0 python:
                 )
                 return "UNKNOWN"
 
+        # START: Dialogue functionality
+
         @staticmethod
         def addApology(apology_type):
             """
@@ -745,6 +760,7 @@ init 0 python:
 
             IN:
                 - is_in_conversation - The bool in conversation flag to set
+                - reset_calls - bool whether to reset the idle and topic calls, preventing an immediate topic or idle call
             """
             if not isinstance(is_in_conversation, bool):
                 raise TypeError("is_in_conversation must be of type bool")
@@ -759,6 +775,7 @@ init 0 python:
 
             IN:
                 - is_in_game - The bool in game flag to set
+                - reset_calls - bool whether to reset the idle and topic calls, preventing an immediate topic or idle call
             """
             if not isinstance(is_in_game, bool):
                 raise TypeError("is_in_game must be of type bool")
@@ -786,6 +803,48 @@ init 0 python:
                 - True if in game, otherwise False
             """
             return Natsuki.__is_in_game
+
+        @staticmethod
+        def getLastTopicCall():
+            """
+            Gets the time of the last topic call.
+            """
+            return Natsuki.__last_topic_call
+
+        @staticmethod
+        def getLastIdleCall():
+            """
+            Gets the time of the last idle call.
+            """
+            return Natsuki.__last_idle_call
+
+        @staticmethod
+        def getLastMenuCall():
+            """
+            Gets the time of the last menu call.
+            """
+            return Natsuki.__last_menu_call
+
+        @staticmethod
+        def resetLastTopicCall():
+            """
+            Sets the time of the last topic call to the current time.
+            """
+            Natsuki.__last_topic_call = datetime.datetime.now()
+
+        @staticmethod
+        def resetLastIdleCall():
+            """
+            Sets the time of the last idle call to the current time.
+            """
+            Natsuki.__last_idle_call = datetime.datetime.now()
+
+        @staticmethod
+        def resetLastMenuCall():
+            """
+            Sets the time of the last menu call to the current time.
+            """
+            Natsuki.__last_menu_call = datetime.datetime.now()
 
 # KWWWMMMMMMMWNNNNNNXXXKKKKK00KKXXKKK0KK0000KKKKKK000Okkxdoodk0KKKKKXKKKK0000KOxoccdkko;,cOX00XXXXXXXX
 # KNWWWWWMMWWNNNNNXXXXXXXXKKKKKXXXXXXKKKKXXXXXXXKKKXXKKKKKKXKKKXXK00KKKKKKK000OxOOdclxOx:;kXOxKXXXXXKK

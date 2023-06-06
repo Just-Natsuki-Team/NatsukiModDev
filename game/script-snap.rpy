@@ -571,6 +571,8 @@ label snap_quip(is_player_snap, is_correct_snap):
 
                 # Reset the ingame flag, then hop back to ch30 as getting here has lost context
                 $ Natsuki.setInGame(False)
+                $ Natsuki.resetLastTopicCall()
+                $ Natsuki.resetLastIdleCall()
                 jump ch30_loop
 
             # Generic incorrect quip/tease
@@ -777,6 +779,8 @@ label snap_end:
 
             # Reset the ingame flag, then hop back to ch30 as getting here has lost context
             $ Natsuki.setInGame(False)
+            $ Natsuki.resetLastTopicCall()
+            $ Natsuki.resetLastIdleCall()
             jump ch30_loop
 
 label snap_forfeit:
@@ -812,6 +816,8 @@ label snap_forfeit:
 
             # Reset the ingame flag, then hop back to ch30 as getting here has lost context
             $ Natsuki.setInGame(False)
+            $ Natsuki.resetLastTopicCall()
+            $ Natsuki.resetLastIdleCall()
             jump ch30_loop
 
         "In your dreams!":
