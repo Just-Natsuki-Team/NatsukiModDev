@@ -303,7 +303,12 @@ label talk_did_you_have_pets:
             extend 4fchbs " Oh{w=0.2} oh{w=0.2} oh!" 
             n 4unmbs "Come on!{w=0.75}{nw}" 
             extend 3unmbg " You gotta tell me,{w=0.2} [player]!{w=0.75}{nw}"
-            extend 3uchgnedz " What is it?{w=0.2} What is it?"
+
+            if player_has_pet:
+                extend 3uchgnedz " What did you get?{w=0.2} What did you get?"
+
+            else:
+                extend 3uchgnedz " What is it?{w=0.2} What is it?"
 
             show natsuki option_wait_excited at jn_left
 
@@ -329,7 +334,7 @@ label talk_did_you_have_pets:
                 ("Something else", "something_else")
             ]
             $ pet_options.sort()
-            call screen scrollable_choice_menu(items=pet_options, nat_prompt="What kind of pet did you get?")
+            call screen scrollable_choice_menu(items=pet_options)
             $ persistent._jn_player_pet = _return
             show natsuki at jn_center
 
@@ -561,9 +566,9 @@ label talk_did_you_have_pets:
         extend 3uchgn " They always look so {i}confused{/i}!{w=0.75}{nw}"
         extend 3nchgn " Ahaha."
         n 1ulrss "Well,{w=0.2} anyway...{w=1}{nw}"
-        extend 4tnmss " I guess I shouldn't keep you waiting,{w=0.2} [player].{w=0.75}{nw}"
-        extend 4fsqss " You know."
-        n 6fcsbg "Just in case you gotta {i}hop to it{/i} and take care of yours!"
+        extend 4tnmss " I guess I shouldn't keep you waiting,{w=0.2} [player]."
+        n 4fsqss "You know."
+        n 6fcsbg "...Just in case you gotta {i}hop to it{/i} and take care of yours!"
 
         if Natsuki.isLove(higher=True):
             n 3fchsmleme "Ehehe.{w=0.75}{nw}"
@@ -650,7 +655,7 @@ label talk_did_you_have_pets:
         
         if get_topic("talk_careful_spending").shown_count > 0:
             n 4tllsl "..."
-            n 7tllpu "...Huh.{w=0.75}"
+            n 7tllpu "...Huh.{w=0.75}{nw}"
             extend 7cslsssbr " Maybe that whole conversation about being careful with your money {i}was{/i} needed after all."
 
         else:
@@ -660,14 +665,15 @@ label talk_did_you_have_pets:
 
         if Natsuki.isAffectionate(higher=True):
             extend 2fcsbg " I hope you're all saddled up,{w=0.2} [player]..."
-            n 2nchgnelg "'Cause there's no way you're wiggling out of some free riding lessons!"
+            n 2nchgnelg "'Cause there's no way you're wiggling out of some free riding lessons!{w=0.75}{nw}"
+            extend 2nchgn " Ehehe."
 
         else:
             extend 4nsqpo " You better hope I don't catch you riding without a helmet,{w=0.2} [player]."
             n 2ccspoesi "'Cause you getting saddled up with a bunch of dumb hospital bills is the last thing I wanna hear about."
 
     elif persistent._jn_player_pet == "insects":
-        n 2tsqan "Ack-{w=0.5}{nw}"
+        n 2tsqan "Ack-{w=0.75}{nw}"
         n 2cllunlsbr "..."
         n 2ccssslsbr "B-{w=0.2}bugs,{w=0.5}{nw}"
         extend 4clrsslsbl " huh?"
@@ -688,16 +694,18 @@ label talk_did_you_have_pets:
             n 3fchblleaf "Love you too,{w=0.2} [player]~!"
 
     elif persistent._jn_player_pet == "lizards":
-        n 1tnmfl "Oh?{w=0.5}{nw}"
-        extend 2tllfl " Really,{w=0.2} [player]?{w=0.75}{nw}"
+        n 1tnmfl "Oh?{w=0.75}{nw}"
+        extend 2tllfl " Really,{w=0.2} [player]?{w=1.25}{nw}"
         extend 2tsqem " Lizards?"
         n 4ccsss "Heh.{w=0.75}{nw}"
-        extend 7ulraj " I gotta say,{w=0.2} I'm impressed -{w=0.5}{nw}"
-        extend 6fchbg " you {i}finally{/i} found a pet just as cold-blooded as you!"
+        extend 7ulraj " I gotta say,{w=0.2} [player] -{w=0.5}{nw}" 
+        extend 7unmbo " I'm impressed."
+        n 6fchbg "...You {i}finally{/i} managed to find a pet just as cold-blooded as you!"
         n 1fsqdv "..."
         n 4fchdvesi "Pfffft!{w=0.75}{nw}"
         extend 3fchbg " I'm kidding,{w=0.2} [player]!{w=0.5} I'm just kidding!{w=0.75}{nw}"
-        extend 3fcsss " Jeez..."
+        extend 3kllbg " Jeez..."
+        n 3cnmss "..."
         n 1fsqbo "..."
         n 4fnmem "Hey!{w=0.75}{nw}"
         extend 4flrfl " Come on,{w=0.2} [player].{w=0.75}{nw}"
@@ -719,7 +727,7 @@ label talk_did_you_have_pets:
     elif persistent._jn_player_pet == "mice":
         n 7tlrbo "Mice,{w=0.2} eh?{w=0.75}{nw}"
         extend 7tsqfl " Are you sure,{w=0.2} [player]?"
-        n 4fsqss "Not hamsters?{w=0.75}{nw}"
+        n 4fsqss "Not hamsters?{w=1}{nw}"
         extend 4fnmbg " Gerbils?"
         n 3fsqbg "...Or do I smell a rat?"
         n 3fsqsm "..."
@@ -769,11 +777,11 @@ label talk_did_you_have_pets:
         n 1unmemesh "H-{w=0.2}huh?{w=0.75}{nw}"
         extend 4ccsemlsbl " N-{w=0.2}now just hold on a second,{w=0.2} [player].{w=0.75}{nw}"
         extend 4clremlsbl " {i}Snakes{/i}?"
-        n 1csrunlsb "..."
+        n 1csrunlsbr "..."
         n 4fcsunsbr "Uuuuuu..."
         n 2kcsaj "...Fine.{w=0.75}{nw}" 
         extend 2cslbosbr " I guess I'll just be straight with you,{w=0.2} [player]."
-        n 1ccsfllsbr " I'm...{w=1}{nw}"
+        n 1ccsfllsbr "I'm...{w=1}{nw}"
         extend 4ksrsllsbr " not {i}amazing{/i} with those."
         n 2fcsfllsbr "S-{w=0.2}snakes,{w=0.2} I mean."
         n 2fllfll "They just...{w=1}{nw}" 
@@ -788,6 +796,9 @@ label talk_did_you_have_pets:
             extend 4ccsca " you know what you signed up for."
             n 3fchgn "You can't {i}shed{/i} your responsibilities that easily!{w=0.75}{nw}"
             extend 3nchgn " Ehehe."
+
+            if Natsuki.isLove(higher=True):
+                n 3fchbll "Love you too,{w=0.2} [player]~!"
 
         else:
             n 4flraj "So!{w=0.75}{nw}"
@@ -814,19 +825,22 @@ label talk_did_you_have_pets:
 
         if Natsuki.isAffectionate(higher=True):
             n 1unmemlsbl "I-{w=0.2}it's not that I think you're automatically a bad owner or anything!{w=0.75}{nw}"
-            extend 2fcsemlsbl " Of course not!{w=0.75}{nw}"
-            extend 2fcspol " Only a {i}real{/i} dummy just jumps to those kinds of assumptions."
-            n 4csrbol "But..."
+            extend 2fcsemlsbl "\nOf course not!"
+            n 2fcspol "Only a {i}real{/i} dummy just jumps to those kinds of assumptions.{w=1}{nw}"
+            extend 4csrbol " But..."
             n 3ccsajl "I {i}have{/i} heard about how demanding they can be.{w=0.75}{nw}"
             extend 3csqbo " And trust me."
-            n 4fcsss "You really don't want {i}my{/i} demands on top of that too."
-            n 4fsqsm "Ehehe."
+            n 4fcssslsbl "You really don't want {i}my{/i} demands on top of that too.{w=0.75}{nw}"
+            extend 4fsqsml " Ehehe."
 
             if Natsuki.isLove(higher=True):
                 n 3fchbll "Love you too,{w=0.2} [player]~!"
 
+            else:
+                n 6fwlbgl "Enjoy,{w=0.2} [player]!"
+
         else:
-            n 6ccsajlsbr "Y-{w=0.2}you owe the animal that much,{w=0.2} after all.{w=0.75}{nw}"
+            n 6ccsajlsbr "Y-{w=0.2}you owe the animal {i}that{/i} much,{w=0.2} after all.{w=0.75}{nw}"
             extend 3fcscalesm " Remember that."
 
     return

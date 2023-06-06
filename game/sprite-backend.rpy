@@ -1132,6 +1132,8 @@ image natsuki option_wait_smug:
             pause 4
             "natsuki 7ccscs"
 
+    repeat
+
 image natsuki option_wait_holding:
     block:
         choice:
