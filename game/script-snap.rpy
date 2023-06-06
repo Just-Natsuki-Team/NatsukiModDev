@@ -34,9 +34,9 @@ init 0 python in jn_snap:
     _PLAYER_CORRECT_SNAP_QUIPS = [
         "Nnnnn-!",
         "Ugh!{w=0.2} Come on!",
-        "Y-{w=0.1}You're fast!",
+        "Y-{w=0.2}You're fast!",
         "But I was just about to call ittt!",
-        "Just you wait,{w=0.1} [player]...",
+        "Just you wait,{w=0.2} [player]...",
         "Uuuuuu-!",
         "Not again!{w=0.2} Grrr...",
         "Damn it...",
@@ -74,19 +74,19 @@ init 0 python in jn_snap:
     ]
 
     _PLAYER_INCORRECT_SNAP_QUIPS = [
-        "Oh?{w=0.2} Someone's impatient,{w=0.1} huh?",
-        "Oopsie daisy,{w=0.1} [player]~.{w=0.2} Ehehe.",
-        "Nice one,{w=0.1} dummy.{w=0.2} Ahaha!",
-        "Real smooth,{w=0.1} [player].{w=0.2} Ehehe.",
-        "Ahaha!{w=0.2} What was that,{w=0.1} [player]?",
-        "Hey,{w=0.1} [player] -{w=0.1} you're meant to read the cards!{w=0.2} Ehehe.",
-        "Great play,{w=0.1} dummy!{w=0.2} Ahaha!"
+        "Oh?{w=0.2} Someone's impatient,{w=0.2} huh?",
+        "Oopsie daisy,{w=0.2} [player]~.{w=0.2} Ehehe.",
+        "Nice one,{w=0.2} dummy.{w=0.2} Ahaha!",
+        "Real smooth,{w=0.2} [player].{w=0.2} Ehehe.",
+        "Ahaha!{w=0.2} What was that,{w=0.2} [player]?",
+        "Hey,{w=0.2} [player] -{w=0.2} you're meant to read the cards!{w=0.2} Ehehe.",
+        "Great play,{w=0.2} dummy!{w=0.2} Ahaha!"
     ]
 
     _NATSUKI_INCORRECT_SNAP_QUIPS = [
         "Sn-...{w=0.3} oh.",
         "Snap!{w=0.2} Wait...",
-        "SNAP!{w=0.2} Huh...?{w=0.2} O-{w=0.1}oh.",
+        "SNAP!{w=0.2} Huh...?{w=0.2} O-{w=0.2}oh.",
         "Snap sna-...{w=0.3} grrr."
     ]
 
@@ -325,12 +325,12 @@ label snap_intro:
     if not persistent.jn_snap_explanation_given:
         n 1nnmaj "Oh -{w=0.3} before we start,{w=0.2} did you want an explanation?{w=0.5}{nw}" 
         extend 4tllca " You know,{w=0.2} on how it works?"
-        n 1nchsm "It's a super simple game,{w=0.2} but I thought I'd better ask."
-        n fcsbg "I don't wanna win just because you didn't know what you were doing!"
-        n 1usqfs "So...{w=1}{nw}"
-        extend 3fchss " How about it?"
+        n 4nchsm "It's a super simple game,{w=0.2} but I thought I'd better ask."
+        n 2fcsbg "I don't wanna win just because you didn't know what you were doing!"
+        n 2usqfs "So...{w=1}{nw}"
+        extend 4fchss " how about it?"
 
-        show natsuki 3fchsm
+        show natsuki 4fchsm
         menu:
             n "Need me to run through the rules real quick?"
 
@@ -338,53 +338,76 @@ label snap_intro:
                 jump snap_explanation
 
             "No, I'm ready.":
-                n 1fsqbg "Oh?{w=0.2} You're ready,{w=0.1} huh?"
-                n 3tsqdv "Ready to get your butt kicked!{w=0.75}{nw}" 
-                extend 3fchbs " Let's go,{w=0.1} [player]!"
+                n 4tsqss "Oh?{w=0.75}{nw}" 
+                extend 4flrbg " You're ready,{w=0.5}{nw}" 
+                extend 4fsqbg " huh?"
+                n 2fchgn "Ready to get your butt kicked!{w=0.75}{nw}" 
+                extend 2fchbs " Let's go,{w=0.2} [player]!"
                 $ persistent.jn_snap_explanation_given = True
 
     jump snap_start
 
 label snap_explanation:
     n 1nnmss "Alright!{w=0.2} So the rules are dead simple,{w=0.5}{nw}" 
-    extend 3nslsm " like I was saying before."
-    n 1unmaj "Basically,{w=0.1} we each get half a deck of cards."
-    n 3nchss "Then,{w=0.1} we take it in turns placing a card face up on the table -{w=0.5}{nw}"
-    extend 3fsrdv " we don't get to {i}pick or see{/i} the card before,{w=0.1} though!"
-    n 4fsgbg "Following me so far,{w=0.1} [player]?{w=0.2} Ehehe."
+    extend 4nslsm " like I was saying before."
+    n 4unmaj "Basically,{w=0.2} we each get half a deck of cards."
+    n 2nchss "Then,{w=0.2} we take it in turns placing a card face up on the table -{w=0.5}{nw}"
+    extend 2fsrdv " we don't get to {i}pick or see{/i} the card before,{w=0.2} though!"
+    n 4fsgbg "Following me so far,{w=0.2} [player]?{w=0.2} Ehehe."
     n 1nnmbg "If the card just placed down on the table matches either the {i}value or suit{/i} of the card that was there before..."
     n 4usqsm "Then we gotta call{w=0.5}{nw}"
     extend 4fchbs " Snap!"
     n 1nnmsm "Whoever calls it first gets the cards on the table."
     n 1unmaj "Oh -{w=0.5}{nw}"
-    extend 3tsqss " but you gotta be careful,{w=0.2} [player]."
-    n 1fllsg "When you call snap,{w=0.2} it becomes the other player's turn..."
-    n 1fsqsm "So don't shout unless you know you got it,{w=0.5}{nw}"
-    extend 1nchgn " 'kay?"
+    extend 2tsqss " but you gotta be careful,{w=0.2} [player]."
+    n 4fllsg "When you call snap,{w=0.2} it becomes the other player's turn..."
+    n 2fsqsm "So don't shout unless you know you got it,{w=0.5}{nw}"
+    extend 2nchgn " 'kay?"
     n 1uchbg "The winner is whoever ends up with all the cards first!"
     n 4tsqsm "Which is usually me,{w=0.75}{nw}"
     extend 2fsldv " obviously."
-    n 4uwdaj "Oh,{w=0.1} right -{w=0.5}{nw}"
-    extend 1nnmsm " you also lose if you run out of cards to play,{w=0.1} so you should keep that in mind too."
-    n 4tsqss "So...{w=0.3} how about it,{w=0.1} [player]?{w=0.2} You got all that?"
+    n 4uwdaj "Oh,{w=0.2} right -{w=0.5}{nw}"
+    extend 1nnmsm " you also lose if you run out of cards to play,{w=0.2} so you should keep that in mind too."
+    n 4tsqss "So...{w=0.3} how about it,{w=0.2} [player]?{w=0.2} You got all that?"
 
+    show natsuki 4unmbo
     menu:
-        n "Do the rules all make sense to you?"
+        n "Did that all make sense to you?"
 
-        "Could you go over them again, please?":
-            n 1unmaj "Huh?{w=0.2} Well,{w=0.2} okay..."
+        "Can you go over the rules again?":
+            n 1tsqpueqm "Huh?{w=0.75}{nw}" 
+            extend 1tllca " Well,{w=0.2} okay..."
+
             jump snap_explanation
 
         "Got it. Let's play!":
-            n 1uchbg "That's what I'm talking about!{w=0.2} Some fighting spirit!"
-            n 2flldv "I should warn you though,{w=0.2} [player]..."
-            n 2fchbs "I'm not gonna hold back!{w=0.5} Let's do this!"
+            n 1fcsbg "Now {i}that's{/i} what I'm talking about.{w=0.75}{nw}" 
+            extend 1fchgn " Some fighting spirit!"
+            n 2fsqbg "I should warn you though,{w=0.2} [player]..."
+            n 2fcsbs "I'm not gonna hold back!{w=0.75}{nw}" 
+            extend 2uchgn " Let's do this!"
+
             $ persistent.jn_snap_explanation_given = True
             jump snap_start
 
         "Thanks, [n_name]. I'll play later.":
-            n 1unmaj "Huh?{w=0.2} Well,{w=0.1} alright..."
-            n 2fllpo "...Spoilsport."
+            n 1tsqpueqm "Huh?{w=0.75}{nw}"
+            extend 2nsqflsbl " Seriously?"
+            n 2nslpo "..."
+            n 4nllfl "Well...{w=1.25}{nw}" 
+            extend 4nslca " fine."
+            n 2flrpo "...Spoilsport."
+
+            if not Natsuki.getDeskSlotClear(jn_desk_items.JNDeskSlots.centre):
+                show natsuki 2ccspo
+                show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+                $ jnPause(1)
+                play audio drawer
+                $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+                show natsuki 2nlrbo
+                $ jnPause(1)
+                hide black with Dissolve(1.25)
+
             jump ch30_loop
 
 label snap_start:
@@ -537,10 +560,12 @@ label snap_quip(is_player_snap, is_correct_snap):
                 # Hide all the UI
                 hide screen snap_ui
 
+                show natsuki 2fcsbo
                 show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
                 $ jnPause(1)
                 play audio drawer
                 $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+                show natsuki 2cslbo
                 $ jnPause(1)
                 hide black with Dissolve(1.25)
 

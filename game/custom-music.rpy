@@ -216,7 +216,7 @@ label music_menu:
         show natsuki idle at jn_left
 
     # We have custom music options, present the choices
-    call screen scrollable_choice_menu(custom_music_options, ("Nevermind.", False), 425, "mod_assets/icons/custom_music.png")
+    call screen scrollable_choice_menu(custom_music_options, ("Nevermind.", False), 400, "mod_assets/icons/custom_music.png")
     show natsuki idle at jn_center
 
     if not _return:
