@@ -399,6 +399,7 @@ label admission_bored:
         show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         $ jnPause(2)
         play audio drawer
+        $ Natsuki.setDeskItem(desk_slot=jn_desk_items.JNDeskSlots.centre, item=jn_desk_items.getDeskItem("jn_card_pack"))
         show natsuki 4fchgn
         $ jnPause(4)
         hide black with Dissolve(1)
@@ -437,8 +438,9 @@ label admission_bored:
                 show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
                 $ jnPause(2)
                 play audio drawer
-                $ jnPause(4)
-                hide black with Dissolve(1)
+                $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+                $ jnPause(1)
+                hide black with Dissolve(1.25)
 
     else:
         n 1tnmfl "Huh?{w=0.75}{nw}" 

@@ -136,7 +136,7 @@ init python in jn_custom_music:
         jn_utils.createDirectoryIfNotExists(CUSTOM_MUSIC_DIRECTORY)
 
 label music_menu:
-    $ Natsuki.setInConversation(True)
+    $ Natsuki.setInConversation(is_in_conversation=True)
     $ music_title = "Error, this should have changed"
 
     # Attempt to get the music in the custom_music directory to present as menu options
@@ -179,6 +179,8 @@ label music_menu:
         extend 2tnmsl " anything you want me to play needs to be in the {i}custom_music{/i} folder."
         n 2fcsbgsbl "Just make sure it's all in {i}.mp3,{w=0.1} .ogg or .wav{/i} format!"
 
+        $ Natsuki.resetLastTopicCall()
+        $ Natsuki.resetLastIdleCall()
         jump ch30_loop
 
     elif preferences.get_volume("music") == 0:
@@ -208,6 +210,8 @@ label music_menu:
                 n 3fcsbg "The sound of silence it is,{w=0.1} then!{w=0.5}{nw}"
                 extend 3fchsm " Ehehe."
 
+                $ Natsuki.resetLastTopicCall()
+                $ Natsuki.resetLastIdleCall()
                 jump ch30_loop
 
     else:
@@ -216,10 +220,12 @@ label music_menu:
         show natsuki idle at jn_left
 
     # We have custom music options, present the choices
-    call screen scrollable_choice_menu(custom_music_options, ("Nevermind.", False))
+    call screen scrollable_choice_menu(custom_music_options, ("Nevermind.", False), 400, "mod_assets/icons/custom_music.png")
     show natsuki idle at jn_center
 
     if not _return:
+        $ Natsuki.resetLastTopicCall()
+        $ Natsuki.resetLastIdleCall()
         jump ch30_loop
 
     if _return[0] == jn_custom_music.JNMusicOptionTypes.no_music:
@@ -315,5 +321,6 @@ label music_menu:
     # Pop a cheeky notify with the Nat for visual confirmation :)
     $ jn_custom_music._now_playing = music_title
     $ renpy.notify("Now playing: {0}".format(jn_custom_music._now_playing))
-
+    $ Natsuki.resetLastTopicCall()
+    $ Natsuki.resetLastIdleCall()
     jump ch30_loop
