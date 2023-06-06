@@ -9487,7 +9487,6 @@ label talk_daily_jokes_unlock:
     extend 4fslfl " Something that's really starting to bug the crap out of me."
     n 2unmbo "You stop by here often enough,{w=0.2} right?{w=0.75}{nw}"
     extend 2nlraj " To visit,{w=0.2} I mean."
-
     n 4unmemeshsbl "N-{w=0.2}not that I don't appreciate it,{w=0.2} or anything like that!{w=0.75}{nw}"
 
     if Natsuki.isEnamored(higher=True):
