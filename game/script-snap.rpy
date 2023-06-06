@@ -334,7 +334,7 @@ label snap_intro:
         menu:
             n "Need me to run through the rules real quick?"
 
-            "Yes please!":
+            "Yes, please!":
                 jump snap_explanation
 
             "No, I'm ready.":
