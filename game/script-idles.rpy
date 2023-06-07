@@ -226,7 +226,7 @@ init python in jn_idles:
     __registerIdle(JNIdle(
         label="idle_laptop",
         idle_type=JNIdleTypes.gaming,
-        affinity_range=(jn_affinity.NORMAL, None)
+        affinity_range=(jn_affinity.HAPPY, None)
     ))
 
 label idle_twitch_playing:
