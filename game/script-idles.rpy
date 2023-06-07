@@ -223,6 +223,12 @@ init python in jn_idles:
         affinity_range=(jn_affinity.NORMAL, None)
     ))
 
+    __registerIdle(JNIdle(
+        label="idle_laptop",
+        idle_type=JNIdleTypes.gaming,
+        affinity_range=(jn_affinity.NORMAL, None)
+    ))
+
 label idle_twitch_playing:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     show prop wintendo_twitch_playing free zorder JN_PROP_ZORDER
@@ -535,5 +541,52 @@ label idle_whistling:
         extend 2nlrsslsbl " Heh.{w=0.75}{nw}"
         extend 2nllbolsbl " Hey."
         n 2tnmbo "What's happening,{w=0.2} [player]?"
+
+    $ jn_idles._concludeIdle()
+
+label idle_laptop:
+    show natsuki 4udwbo
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+
+    if random.choice([True, False]):
+        show natsuki reading
+
+    else:
+        show natsuki gaming
+
+    $ Natsuki.setDeskItem(desk_slot=jn_desk_items.JNDeskSlots.centre, item=jn_desk_items.getDeskItem("jn_laptop"))
+    hide black with Dissolve(0.5)
+    $ jnClickToContinue(silent=False)
+
+    if random.choice([True, False]):
+        n 4tdwbo "...{w=0.75}{nw}"
+        n 4tnmfleqm "Eh?{w=0.75}{nw}"
+        n 4unmaj "Oh.{w=0.75}{nw}"
+        extend 4ulraj " Hey [player].{w=0.75}{nw}"
+        extend 4cllsssbl " Let me just finish up here real quick..."
+        show natsuki gaming
+
+    else:
+        n 4cdwpu "...{w=0.75}{nw}"
+        n 4cnmpueqm "...?{w=0.75}{nw}"
+        n 4unmfllesh "Huh?{w=0.75}{nw}"
+        extend 4unmgslesh " O-{w=0.2}oh!{w=0.75}{nw}"
+        extend 4fllbglsbr " [player]!"
+        n 4cslsssbr "Heh."
+        n 4ccsajsbr "I...{w=1}{nw}"
+        extend 4clrcasbr " kinda got distracted.{w=0.75}{nw}"
+        extend 4ccstrsbr " J-{w=0.2}just give me a sec to power down,{w=0.2} alright?"
+        show natsuki 4ccscasbr
+
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    play audio laptop_close
+    $ jnPause(0.75)
+    play audio drawer
+    $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+    $ jnPause(1.3)
+    show natsuki 3ullbo
+    hide black with Dissolve(0.5)
+    $ jnPause(1)
 
     $ jn_idles._concludeIdle()
