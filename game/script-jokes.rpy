@@ -456,6 +456,11 @@ init python in jn_jokes:
         display_name="Escape artist",
         joke_category=JNJokeCategories.corny
     ))
+    __registerJoke(JNJoke(
+        label="joke_shoemakers",
+        display_name="Shoemakers",
+        joke_category=JNJokeCategories.corny
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -970,5 +975,14 @@ label joke_escape_artists:
     n 1ccsemsbr "..."
     n 1nsrtrsbr "...Because they're always getting{w=0.5}{nw}" 
     extend 1csqcasbr " {i}tied down{/i}."
+
+    return
+
+label joke_shoemakers:
+    n 1fllfl "Why don't shoemakers go anywhere sunny on vacation?"
+    n 1fslca "..."
+    n 1ccsemesi "..."
+    n 1csrem "...Because they've already{w=0.5}{nw}" 
+    extend 1csrsl " {i}tanned{/i}."
 
     return
