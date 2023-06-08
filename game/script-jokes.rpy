@@ -431,6 +431,16 @@ init python in jn_jokes:
         display_name="Pencils",
         joke_category=JNJokeCategories.funny
     ))
+    __registerJoke(JNJoke(
+        label="joke_know_the_drill",
+        display_name="Knowing the drill",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_can_do_attitude",
+        display_name="Cannery",
+        joke_category=JNJokeCategories.neutral
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -879,5 +889,37 @@ label joke_pointless_pencil:
     n 1cllaj "I was {i}going{/i} to tell a joke about it..."
     n 1tnmbo "But now?{w=0.5}{nw}"
     extend 1fsqsm " It's {i}pointless{/i}."
+
+    return
+
+label joke_know_the_drill:
+    n 1ulraj "You know,{w=0.2} [player]..."
+    n 1nsqsl "I always used to get annoyed at people doing construction work.{w=0.75}{nw}"
+    extend 1fnmem " {i}Especially{/i} on the weekends!"
+    n 1fllfl "Like...{w=1}{nw}"
+    extend 1fcsbo " I get they have a job to do.{w=0.75}{nw}"
+    extend 1fsran " But do they seriously have to start so {i}early{/i}?!{w=0.75}{nw}"
+    extend 1fcsan " Yeesh!"
+    n 1cslsl "..."
+    n 1cslaj "But...{w=1}{nw}"
+    extend 1cllca " you do get used to all the noise after a while,{w=0.2} I suppose."
+    n 1cnmss "I guess eventually you just...{w=1}{nw}"
+    extend 1fsqbg " {i}know the drill{/i},{w=0.75}{nw}"
+    extend 1nchgn " right?"
+
+    return
+
+label joke_can_do_attitude:
+    n 1fcsbg "Let's see how well you can {i}process{/i} this one,{w=0.2} [player].{w=0.75}{nw}"
+    extend 1fsqsm " Ehehe."
+    n 1fcsbs "So!{w=0.75}{nw}"
+    extend 1tsqss " Ever wondered what it takes to land a job in a cannery?"
+    n 1tsqsm "..."
+    n 1fsqsm "No?{w=0.75}{nw}"
+    extend 1fcsbs " Come on,{w=0.2} [player]!{w=0.75}{nw}"
+    extend 1fcssmesm " Isn't it obvious?"
+    n 1fcsbg "...You just need a{w=0.5}{nw}"
+    extend 1fsqbg " {i}can{/i}-do{w=1}{nw}"
+    extend 1uchgn " attitude!"
 
     return
