@@ -433,13 +433,28 @@ init python in jn_jokes:
     ))
     __registerJoke(JNJoke(
         label="joke_know_the_drill",
-        display_name="Knowing the drill",
+        display_name="The drill",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_can_do_attitude",
         display_name="Cannery",
         joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_out_of_ctrl",
+        display_name="Out of control",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_dishwashing",
+        display_name="Dishwashing",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_escape_artists",
+        display_name="Escape artist",
+        joke_category=JNJokeCategories.corny
     ))
 
 label joke_clock_eating:
@@ -921,5 +936,39 @@ label joke_can_do_attitude:
     n 1fcsbg "...You just need a{w=0.5}{nw}"
     extend 1fsqbg " {i}can{/i}-do{w=1}{nw}"
     extend 1uchgn " attitude!"
+
+    return
+
+label joke_out_of_ctrl:
+    n 1fllbo "I gotta say,{w=0.2} [player].{w=0.75}{nw}"
+    extend 1fsqfl " I'm starting to get {i}really{/i} sick of all these stories about shortages."
+    n 1fnmem "Seriously -{w=0.5}{nw}"
+    extend 1fcsgs " it's ridiculous!{w=0.75}{nw}"
+    extend 1flrfl " Like why is it so hard to just order stuff in,{w=0.2} all of a sudden?"
+    n 1fcsgs "I mean,{w=0.5}{nw}"
+    extend 1fcspo " even just the other day I heard about places running out of parts for keyboards!"
+    n 1fcsss "...Heh."
+    n 1fcstr "I guess their management must really be{w=0.5}{nw}"
+    extend 1fsqbg " out of {i}Control{/i},{w=1}{nw}"
+    extend 1fchgn " huh?"
+
+    return
+
+label joke_dishwashing:
+    n 1csqfl "Why isn't dishwashing considered a competitive sport?"
+    n 1csrsl "..."
+    n 1fcsemesi "..."
+    n 1nsqfl "Because victory is handed to you...{w=1.25}{nw}" 
+    extend 1cslcasbr " on a {i}plate{/i}."
+
+    return
+
+label joke_escape_artists:
+    n 1ccsflesi "..."
+    n 1cllsl "Why shouldn't you rely on an escape artist to turn up to an invitation?"
+    n 1csrbosbr "..."
+    n 1ccsemsbr "..."
+    n 1nsrtrsbr "...Because they're always getting{w=0.5}{nw}" 
+    extend 1csqcasbr " {i}tied down{/i}."
 
     return
