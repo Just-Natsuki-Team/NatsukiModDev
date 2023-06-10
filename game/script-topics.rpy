@@ -451,10 +451,11 @@ label talk_service_animals:
             n "I'm pretty sure I talked about it before,"
             extend " but I still can't get my mind off that school visit we had."
             n "Not the careers advice or anything like that."
-            extend " But that visit we had from the charity for service animals!"
+            extend " But that visit we had from the charity for service and therapy animals!"
             extend " Talk about making an impression, huh?"
             n "Seriously - "
             extend " it's crazy how much work they do!"
+            extend " Like I was saying before..."
 
         else:
             n "Heh."
@@ -463,8 +464,8 @@ label talk_service_animals:
             extend " But I still keep thinking back about that school visit we had."
             n "...And no,"
             extend " not any of the career ones or anything like that."
-            n "I was thinking about that charity with the service animals."
-            extend " It's still pretty crazy how much work they actually do."
+            n "I was thinking about that charity with the service and therapy animals."
+            extend " It's still pretty crazy to me how much work they actually do."
 
     else:
         if Natsuki.isNormal(higher=True):
@@ -479,9 +480,10 @@ label talk_service_animals:
             extend " or like a visit from the local police or some other snooze-fest."
             n "But..."
             extend " there was {i}one{/i} visit I actually did like."
-            n "Betcha can't guess what it was, [player]!"
+            n "Betcha can't guess what it was, [player]."
+            n "Ehehe."
             n "It was actually a bunch of volunteers from a charity..."
-            extend " but for service animals!"
+            extend " but for service and therapy animals!"
             n "And oh.{w=0.5}{nw}"
             extend " My.{w=0.5}{nw}"
             extend " God.{w=0.5}{nw}"
@@ -505,28 +507,36 @@ label talk_service_animals:
             extend " that sort of stuff."
             n "But there was one I {i}did{/i} actually appreciate."
             n "It was some kinda charity,"
-            extend " but all their work was around training service animals and getting them to people who needed one."
+            extend " but all their work was around training up service and therapy animals -" 
+            extend " then getting them to people who needed them."
 
     if Natsuki.isNormal(higher=True):
-        n "They're like animals people train up specially for jobs you can't get people to do easily."
-        extend " Or stuff people can't do at all!"
+        n "They're like animals people train up specially to help people who struggle to do certain things for themselves -"
+        extend " or stuff they can't do at all!"
         n "Everybody knows about guide dogs."
-        extend " But there's actually a {i}ton{/i} of roles people never even think about!"
-        n "Some of them work in places like airports to keep people safe,"
-        extend " or help with rescues thanks to how strong their senses are."
-        extend " Talk about sniffing something out!"
-        n "But..." 
-        extend " the ones I really liked were the emotional support animals!"
+        extend " But there's actually a {i}ton{/i} of roles people never even think about."
+        extend " Seriously!"
+        n "There's ones that are meant to help more with mobility,"
+        extend " some that listen out for stuff if their owner has sucky hearing..."
+        n "Even helping out with managing medical conditions or avoiding allergies!"
+        extend " Talk about sniffing something out."
+        n "But..."
+        extend " personally?"
+        n "The ones I really liked were the therapy animals!"
         n "The visitors didn't go into that much detail about them,"
-        extend " but they're sorta like extra-tame pets for people having some kind of bad time."
-        extend " You know, like emotionally."
-        n "And they come in a whole load of shapes and sizes too!"
+        extend " and they aren't {i}exactly{/i} in the same group as service types -"
+        extend " but they're sorta like extra-tame pets for people going through some kind of rough time."
+        n "You know -" 
+        extend " like emotionally or mentally."
+        n "...And they come in a whole load of shapes and sizes too!"
         n "You have cats and dogs -{w=0.5}{nw}"
         extend " {i}obviously{/i}{w=0.5}{nw}"
         extend " -{w=0.2} but even animals like those miniature horses can be trained up to help!"
-        n "Awesome, right?"
-
+        n "Not even just around the home either, [player] -"
+        extend " offices, hospices and even hospitals can arrange visits too!"
+        
         if Natsuki.isAffectionate(higher=True):
+            n "Awesome, right?"
             extend "Ehehe..."
             n "..."
             n "..."
@@ -559,25 +569,42 @@ label talk_service_animals:
                 n "..."
                 n "A-anyway."
 
-        n "They didn't stick around too long..."
+        else:
+            n "Awesome, right?"
+            extend " Ehehe."
+            n "Well, anyway..."
+
+        n "It wasn't a super long visit or anything,"
+        extend " so the volunteers didn't stick around for {i}that{/i} long..."
         extend " but they did let us go up and meet the animals they brought in with them!"
-        n "No surprises who got picked first, huh?"
+        n "No surprises who got picked to go up first, huh?"
         extend " Ehehe."
         n "Yep!"
+        extend " When it comes to those kinds of animals, it's gotta be said."
+        extend " Nothing beats a real hands-on experience!"
+        n "Ahaha."
+        n "I think I've gone on for way too long already,"
+        extend " but I hope you learned something too, [player]!"
+        extend " And if not?"
+        n "Heh."
+        extend " Well..."
+        n "You're an animal too, right?"
+        extend " Not to worry, [player]."
+        extend " Pretty sure I can just train {i}you{/i} up just as well!"
 
-        # TODO: wrap-up
+        if Natsuki.isLove(higher=True):
+            $ chosen_tease = jn_utils.getRandomTease()
+            n "Love you too, [chosen_tease]~!"
 
     else:
-        n "They're pretty much animals people train up specially for stuff people don't really want to do -"
-        extend " or can't do."
-        n "I mean,"
-        extend " everyone knows about guide dogs. Obviously."
-        extend " But people forget just how much they have to thank them for."
-        n "Some work in places like airports to keep people safe,"
-        extend " or rescues thanks to their senses being way better than anything we have."
-        n "But..."
-
-        # TODO: continue
+        n "They're like animals specially trained to help people with stuff they couldn't do normally -"
+        extend " or at all."
+        n "Yeah, no kidding."
+        extend " Everyone's heard of guide dogs."
+        extend " But people forget just how adaptable they are too."
+        n "Mobility, hearing issues..."
+        extend " medical conditions and allergies too."
+        # TODO: cont
 
     return
 
