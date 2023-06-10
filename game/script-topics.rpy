@@ -444,56 +444,140 @@ init 5 python:
     )
 
 label talk_service_animals:
-    n 1ullbo "Hmm..."
-    n 4unmaj "Hey [player],{w=0.1} have you ever heard of service animals?"
-    n 1usqbg "They're like animals people train up specially to do jobs that humans can't do easily."
-
-    if Natsuki.isNormal(higher=True):
-        n 1unmbs "Some work in airports to keep people safe,{w=0.1} others help in rescues...{w=0.3} it's super cool!"
-        n 4uwmsm "But there's one type that's especially awesome..."
-        n 3uchgn "Emotional support animals!"
-        n 1ullaj "They're like really tame pets that are used to comfort people going through a bad time."
-        n 4usrss "They come in all different shapes and sizes too!{w=0.5}{nw}"
-        n 3nnmpu " Dogs and cats -{w=0.5}{nw}"
-        extend 3fslss " {i}obviously{/i}{w=0.5}{nw}"
-        extend 4uwdgs " -{w=0.2} but even horses sometimes!"
-        n 1fchbg "Awesome,{w=0.1} right?"
-        n 1kllss "..."
-        n 1ulrbo "..."
-        n 4uplaj "You know,{w=0.1} [player]..."
-        n 1kcsaj "Sometimes I wonder if one could have helped Sayori..."
-        n 2klrfr "...but I try not to think about that too much."
-        n 1knmem "They {i}are{/i} great,{w=0.1} but they don't do miracles."
-        n 4kwmem "[player]...{w=0.3} I really hope you never have to seek their help."
-        n 2kwmnv "And on that note,{w=0.1} if you do need support?"
-
-        if Natsuki.isAffectionate(higher=True):
-            n 1fcssrl "I-{w=0.2}I want you to know that you can depend on me,{w=0.1} 'kay?"
-
-            if Natsuki.isLove(higher=True):
-                n 4kwmnv "I love you,{w=0.1} [player]."
-                return
+    if get_topic("talk_service_animals").shown_count > 0:
+        if Natsuki.isNormal(higher=True):
+            n "Heh."
+            extend " Man..."
+            n "I'm pretty sure I talked about it before,"
+            extend " but I still can't get my mind off that school visit we had."
+            n "Not the careers advice or anything like that."
+            extend " But that visit we had from the charity for service animals!"
+            extend " Talk about making an impression, huh?"
+            n "Seriously - "
+            extend " it's crazy how much work they do!"
 
         else:
-            n 1fcssrl "Just...{w=0.5}{nw}"
-            extend 1fnmsl " don't be dumb about it,{w=0.1} [player].{w=0.5}{nw}"
-            extend 1kllss " I can listen if you need me to."
-            n 3fcsajl "I-{w=0.1}I'm not a jerk!{w=0.5}{nw}"
-            extend 3flrpol " It's just the least anyone can do,{w=0.1} that's all."
+            n "Heh."
+            extend " I'm pretty sure I talked about it before -"
+            extend " if you were even listening -"
+            extend " But I still keep thinking back about that school visit we had."
+            n "...And no,"
+            extend " not any of the career ones or anything like that."
+            n "I was thinking about that charity with the service animals."
+            extend " It's still pretty crazy how much work they actually do."
 
     else:
-        n 1unmbo "They work in a bunch of places.{w=0.2} Airports and rescues and stuff,{w=0.1} usually."
-        n 1unmss "But I really like emotional support animals."
-        n 1nnmsl "They're like specially tame pets that are used to comfort those having a bad time."
-        n 2nsgbo "..."
-        n 4nsgaj "And...{w=0.3} to be perfectly honest?"
-        n 1fcsun "Sometimes I feel like I could use one."
-        return
+        if Natsuki.isNormal(higher=True):
+            n "You know, [player]..."
+            n "I don't think I ever mentioned it before,"
+            extend " but we did actually used to get visitors at school sometimes."
+            n "Heh."
+            extend " Are you surprised?"
+            n "We were {i}basically{/i} a captive audience, after all."
+            extend "Not like we were given the option to leave."
+            n "Usually it was just someone trying to sell us on some kinda career after school,"
+            extend " or like a visit from the local police or some other snooze-fest."
+            n "But..."
+            extend " there was {i}one{/i} visit I actually did like."
+            n "Betcha can't guess what it was, [player]!"
+            n "It was actually a bunch of volunteers from a charity..."
+            extend " but for service animals!"
+            n "And oh.{w=0.5}{nw}"
+            extend " My.{w=0.5}{nw}"
+            extend " God.{w=0.5}{nw}"
+            extend " [player]."
+            n "They're..."
+            extend " {b}awesome{/b}!"
+            extend " I love them!"
 
-    n 2ksrfr "..."
-    n 1kwmfr "That got kinda heavy,{w=0.1} didn't it?"
-    n 1kwmbg "Well,{w=0.1} enough of that.{w=0.2}"
-    extend 1uwmss " What else do you wanna talk about?"
+        else:
+            n "You know..."
+            n "Not that I expect you to care or anything,"
+            extend " but we did actually get random visitors at school sometimes."
+            n "..."
+            n "Yeah."
+            extend " Don't look too surprised."
+            n "Hard to find a better captive audience than a bunch of students."
+            extend " Obviously."
+            n "I mean..."
+            extend " most of them were just a {i}total{/i} snooze-fest."
+            extend " Career talks,"
+            extend " that sort of stuff."
+            n "But there was one I {i}did{/i} actually appreciate."
+            n "It was some kinda charity,"
+            extend " but all their work was around training service animals and getting them to people who needed one."
+
+    if Natsuki.isNormal(higher=True):
+        n "They're like animals people train up specially for jobs you can't get people to do easily."
+        extend " Or stuff people can't do at all!"
+        n "Everybody knows about guide dogs."
+        extend " But there's actually a {i}ton{/i} of roles people never even think about!"
+        n "Some of them work in places like airports to keep people safe,"
+        extend " or help with rescues thanks to how strong their senses are."
+        extend " Talk about sniffing something out!"
+        n "But..." 
+        extend " the ones I really liked were the emotional support animals!"
+        n "The visitors didn't go into that much detail about them,"
+        extend " but they're sorta like extra-tame pets for people having some kind of bad time."
+        extend " You know, like emotionally."
+        n "And they come in a whole load of shapes and sizes too!"
+        n "You have cats and dogs -{w=0.5}{nw}"
+        extend " {i}obviously{/i}{w=0.5}{nw}"
+        extend " -{w=0.2} but even animals like those miniature horses can be trained up to help!"
+        n "Awesome, right?"
+
+        if Natsuki.isAffectionate(higher=True):
+            extend "Ehehe..."
+            n "..."
+            n "..."
+            n "...It just sucks sometimes, thinking about it now."
+            extend " You know?"
+            n "...W-with Sayori and all."
+            n "She..." 
+            extend " wasn't around that day we had the visit."
+            extend " I doubt it takes a genius to work out why."
+            n "I-it's just that..."
+
+            if Natsuki.isEnamored(higher=True):
+                n "..."
+                n "I can't help but think if just having one around could have {i}done{/i} something for her."
+                extend " One of those support animals."
+                n "I... know..." 
+                extend " they can't work miracles."
+                extend " I-I'm not naive."
+                n "But it would have been something..."
+                extend " right?"
+                n "..."
+                n "...A-anyway."
+
+            else:
+                n "..."
+                n "...N-nevermind."
+                extend " Sorry, [player]."
+                extend " It's..."
+                n "...Not really something I wanna think about right now."
+                n "..."
+                n "A-anyway."
+
+        n "They didn't stick around too long..."
+        extend " but they did let us go up and meet the animals they brought in with them!"
+        n "No surprises who got picked first, huh?"
+        extend " Ehehe."
+        n "Yep!"
+
+        # TODO: wrap-up
+
+    else:
+        n "They're pretty much animals people train up specially for stuff people don't really want to do -"
+        extend " or can't do."
+        n "I mean,"
+        extend " everyone knows about guide dogs. Obviously."
+        extend " But people forget just how much they have to thank them for."
+        n "Some work in places like airports to keep people safe,"
+        extend " or rescues thanks to their senses being way better than anything we have."
+        n "But..."
+
+        # TODO: continue
 
     return
 
