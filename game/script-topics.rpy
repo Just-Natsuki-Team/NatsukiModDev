@@ -2436,7 +2436,7 @@ label talk_give_nickname:
         return
 
     else:
-        $ nickname_type = jn_nicknames.get_natsuki_nickname_type(nickname)
+        $ nickname_type = jn_nicknames.getNatsukiNicknameType(nickname)
 
     if nickname_type == jn_nicknames.NicknameTypes.invalid:
         n 2tlraj "Uhmm...{w=0.3} [player]?"
@@ -8036,7 +8036,7 @@ label talk_player_change_name:
         return
 
     else:
-        $ nickname_type = jn_nicknames.get_player_nickname_type(nickname)
+        $ nickname_type = jn_nicknames.getPlayerNicknameType(nickname)
 
     if nickname_type == jn_nicknames.NicknameTypes.invalid:
         n 1fllpu "Are...{w=1}{nw}"

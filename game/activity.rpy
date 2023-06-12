@@ -72,6 +72,7 @@ init python in jn_activity:
         forever_and_ever = 21
         video_applications = 22
         e_commerce = 23
+        recording_software = 24
 
         def __int__(self):
             return self.value
@@ -152,7 +153,7 @@ init python in jn_activity:
                 window_name = getCurrentWindowName().lower()
                 for activity in self.registered_activities.values():
                     if activity.window_name_regex:
-                        if re.search(activity.window_name_regex, window_name):
+                        if re.search(activity.window_name_regex, window_name) is not None:
 
                             if not self.hasPlayerDoneActivity(int(activity.activity_type)):
                                 store.persistent._jn_activity_used_programs.append(int(activity.activity_type))
@@ -317,7 +318,7 @@ init python in jn_activity:
     ))
     ACTIVITY_MANAGER.registerActivity(JNPlayerActivity(
         activity_type=JNActivities.ddlc_moe,
-        window_name_regex="(Doki Doki Literature Club! -)",
+        window_name_regex="(doki doki literature club! -)",
         notify_text=[
             "...",
             "I... don't like this website.",
@@ -327,8 +328,8 @@ init python in jn_activity:
     ACTIVITY_MANAGER.registerActivity(JNPlayerActivity(
         activity_type=JNActivities.takeaway_food,
         window_name_regex=(
-            "((Uber Eats[a-zA-Z]*| Food delivery)|( - Uber Eats)|(Deliveroo - Takeaway Food Delivery)"
-            "|(\| Domino's Pizza)|(\| Pizza Hut)|(\| GrubHub)|(DoorDash Food Delivery & Takeout -))"
+            "((uber eats[a-zA-Z]*| food delivery)|( - uber eats)|(deliveroo - takeaway food delivery)"
+            "|(\| domino's pizza)|(\| pizza hut)|(\| grubhub)|(doordash food delivery & takeout -))"
         ),
         notify_text=[
             "H-hey! Less of the junk! [angry_emote]",
@@ -342,7 +343,7 @@ init python in jn_activity:
     ))
     ACTIVITY_MANAGER.registerActivity(JNPlayerActivity(
         activity_type=JNActivities.instagram,
-        window_name_regex="(• Instagram photos and videos)",
+        window_name_regex="(• instagram photos and videos)",
         notify_text=[
             "So who are YOU stalking, huh? [tease_emote]",
             "Huh? Do you post here, [player]?",
@@ -361,7 +362,7 @@ init python in jn_activity:
     ))
     ACTIVITY_MANAGER.registerActivity(JNPlayerActivity(
         activity_type=JNActivities.reddit,
-        window_name_regex="(Reddit - Dive into anything)",
+        window_name_regex="(reddit - dive into anything)",
         notify_text=[
             "I hope you don't believe everything you read...",
             "Eh? What's in the news?",
@@ -387,7 +388,7 @@ init python in jn_activity:
     ))
     ACTIVITY_MANAGER.registerActivity(JNPlayerActivity(
         activity_type=JNActivities.video_applications,
-        window_name_regex="(- VLC media player)",
+        window_name_regex="(- vlc media player)",
         notify_text=[
             "What're you watching, [player]? [confused_emote]",
             "You watching something, [player]? [confused_emote]",
@@ -403,6 +404,17 @@ init python in jn_activity:
             "Run out of something again? Ehehe.",
             "Oh? You gotta grab something? [confused_emote]",
             "Money to burn, huh?"
+        ]
+    ))
+    ACTIVITY_MANAGER.registerActivity(JNPlayerActivity(
+        activity_type=JNActivities.recording_software,
+        window_name_regex="(^obs [0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}|^bandicam [0-9]{4}|^fraps|^xsplit broadcaster$|- lightstream studio$)",
+        notify_text=[
+            "W-wait... what kind of software is that, [player]? [confused_emote]",
+            "Wait a second... is that some kind of recorder?!",
+            "Are... are you recording me, [player]? [angry_emote]",
+            "H-hey! You aren't spying on me or anything, are you?",
+            "Uuuuuu... I don't like being on video... [sad_emote]"
         ]
     ))
 

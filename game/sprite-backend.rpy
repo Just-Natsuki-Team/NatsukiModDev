@@ -106,6 +106,8 @@ init -50 python:
         up = 25
         think_left = 26
         think_right = 27
+        down_left = 28
+        down_right = 29
 
         def __str__(self):
             return self.name
@@ -367,6 +369,8 @@ init 1 python:
         "cu": JNEyes.cute,
         "dt": JNEyes.doubt,
         "dw": JNEyes.down,
+        "dl": JNEyes.down_left,
+        "dr": JNEyes.down_right,
         "ll": JNEyes.look_left,
         "lr": JNEyes.look_right,
         "nm": JNEyes.normal,
@@ -1082,9 +1086,57 @@ image natsuki idle = ConditionSwitch(
     predict_all = True
 )
 
+image natsuki test = ConditionSwitch(
+    "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsAbove()", "natsuki 5utlsml",
+    "Natsuki.getMouseIsRight() and Natsuki.getMouseIsAbove()", "natsuki 5utrsml",
+    "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsBelow()", "natsuki 5udlsml",
+    "Natsuki.getMouseIsRight() and Natsuki.getMouseIsBelow()", "natsuki 5udrsml",
+    "Natsuki.getMouseIsLeft()", "natsuki 5ullsml",
+    "Natsuki.getMouseIsRight()", "natsuki 5ulrsml",
+    "Natsuki.getMouseIsAbove()", "natsuki 5uupsml",
+    "Natsuki.getMouseIsBelow()", "natsuki 5udwsml",
+    "True", "natsuki 5unmsml",
+    predict_all = True
+)
+
+label dynatest:
+    show natsuki test
+    n ""
+    return
+
 # Idle images for ENAMORED+
 image natsuki idle enamored:
     block:
+        choice:
+            ConditionSwitch(
+                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsAbove()", "natsuki 5utlsml",
+                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsAbove()", "natsuki 5utrsml",
+                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsBelow()", "natsuki 5udlsml",
+                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsBelow()", "natsuki 5udrsml",
+                "Natsuki.getMouseIsLeft()", "natsuki 5ullsml",
+                "Natsuki.getMouseIsRight()", "natsuki 5ulrsml",
+                "Natsuki.getMouseIsAbove()", "natsuki 5uupsml",
+                "Natsuki.getMouseIsBelow()", "natsuki 5udwsml",
+                "True", "natsuki 5unmsml",
+                predict_all = True
+            )
+            pause 4
+            "natsuki 3fchbll"
+            pause 1
+            "natsuki 3fchsml"
+            pause 3
+
+        choice:
+            ConditionSwitch(
+                "Natsuki.getMouseIsLeft()", "natsuki 7tslsml",
+                "Natsuki.getMouseIsRight()", "natsuki 7tsrsml",
+                "True", "natsuki 7tsqsml",
+                predict_all = True
+            )
+            pause 4
+            "natsuki 7fchsml"
+            pause 3
+
         choice:
             "natsuki 1nchsmf"
             pause 10
@@ -1197,6 +1249,25 @@ image natsuki idle enamored:
 image natsuki idle affectionate:
     block:
         choice:
+            ConditionSwitch(
+                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsAbove()", "natsuki 3utlcsl",
+                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsAbove()", "natsuki 3utrcsl",
+                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsBelow()", "natsuki 3udlcsl",
+                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsBelow()", "natsuki 3udrcsl",
+                "Natsuki.getMouseIsLeft()", "natsuki 3ullcsl",
+                "Natsuki.getMouseIsRight()", "natsuki 3ulrcsl",
+                "Natsuki.getMouseIsAbove()", "natsuki 3uupcsl",
+                "Natsuki.getMouseIsBelow()", "natsuki 3udwcsl",
+                "True", "natsuki 3unmcsl",
+                predict_all = True
+            )
+            pause 4
+            "natsuki 4cslfslsbr"
+            pause 4
+            "natsuki 4ccsfslsbr"
+            pause 0.1
+
+        choice:
             "natsuki 3ullcsl"
             pause 5
             "natsuki 3ucscsl"
@@ -1238,16 +1309,6 @@ image natsuki idle affectionate:
             "natsuki 1unmsml"
             pause 5
             "natsuki 1ucssml"
-            pause 0.1
-
-        choice:
-            "natsuki 2nnmsgl"
-            pause 5
-            "natsuki 2ncssgl"
-            pause 0.1
-            "natsuki 2nnmsgl"
-            pause 5
-            "natsuki 2ncssgl"
             pause 0.1
 
         choice:
@@ -1293,6 +1354,29 @@ image natsuki idle affectionate:
 # Idle images for HAPPY+
 image natsuki idle happy:
     block:
+        choice:
+            ConditionSwitch(
+                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsAbove()", "natsuki 3utlbo",
+                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsAbove()", "natsuki 3utrbo",
+                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsBelow()", "natsuki 3udlbo",
+                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsBelow()", "natsuki 3udrbo",
+                "Natsuki.getMouseIsLeft()", "natsuki 3ullbo",
+                "Natsuki.getMouseIsRight()", "natsuki 3ulrbo",
+                "Natsuki.getMouseIsAbove()", "natsuki 3uupbo",
+                "Natsuki.getMouseIsBelow()", "natsuki 3udwbo",
+                "True", "natsuki 3unmbo",
+                predict_all = True
+            )
+            pause 4
+            "natsuki 3unmcalesusbr"
+            pause 2
+            "natsuki 3ucscalsbr"
+            pause 0.1
+            "natsuki 4csrcalsbr"
+            pause 4
+            "natsuki 4ccscalsbr"
+            pause 0.1
+
         choice:
             "natsuki 3ullbo"
             pause 4
@@ -1410,6 +1494,25 @@ image natsuki idle happy:
 # Idle images for NORMAL+
 image natsuki idle normal:
     block:
+        choice:
+            ConditionSwitch(
+                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsAbove()", "natsuki 2utlca",
+                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsAbove()", "natsuki 2utrca",
+                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsBelow()", "natsuki 2udlca",
+                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsBelow()", "natsuki 2udrca",
+                "Natsuki.getMouseIsLeft()", "natsuki 2ullca",
+                "Natsuki.getMouseIsRight()", "natsuki 2ulrca",
+                "Natsuki.getMouseIsUp()", "natsuki 2uupca",
+                "Natsuki.getMouseIsDown()", "natsuki 2udwca",
+                "True", "natsuki 2unmca",
+                predict_all = True
+            )
+            pause 4
+            "natsuki 2nllcasbl"
+            pause 4
+            "natsuki 2ncscasbl"
+            pause 0.1
+
         choice:
             "natsuki 2nllbo"
             pause 4
