@@ -240,8 +240,15 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                             null height 5
 
 screen scrollable_choice_menu(items, last_item=None, option_width=560, icon_path=None):
-    if icon_path:
+    if icon_path and persistent._jn_display_option_icons:
         add icon_path anchor(0, 0) pos(1280 - (275 + option_width), 20)
+    
+    elif not persistent._jn_display_option_icons:
+        $ option_width += 175
+
+    if option_width > 560:
+        $ option_width = 560
+
     fixed:
         area (1280 - (40 + option_width), 40, option_width, 440)
         vbox:
@@ -1286,6 +1293,17 @@ screen preferences():
                             ToggleField(
                                 object=persistent,
                                 field="_jn_natsuki_idles_enabled",
+                                true_value=True,
+                                false_value=False)
+                        ]
+
+                    vbox:
+                        style_prefix "check"
+                        label _("Visuals")
+                        textbutton _("Menu icons") action [
+                            ToggleField(
+                                object=persistent,
+                                field="_jn_display_option_icons",
                                 true_value=True,
                                 false_value=False)
                         ]

@@ -48,7 +48,7 @@ label player_admissions_start:
         ]
         admission_menu_items.sort()
 
-    call screen scrollable_choice_menu(admission_menu_items, ("Nevermind.", None))
+    call screen scrollable_choice_menu(admission_menu_items, ("Nevermind.", None), 400, "mod_assets/icons/admissions.png")
 
     if _return:
         $ push(_return)
