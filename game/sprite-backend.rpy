@@ -811,17 +811,17 @@ image natsuki reading:
             pause 4
 
         choice:
-            "natsuki 1cdlbo"
+            ConditionSwitch("Natsuki.getIsReadingToRight()", "natsuki 1cdrbo", "True", "natsuki 1cdlbo", predict_all=True)
             pause 3
             "natsuki 1cdwbo"
             pause 3
-            "natsuki 1cdrbo"
+            ConditionSwitch("Natsuki.getIsReadingToRight()", "natsuki 1cdlbo", "True", "natsuki 1cdrbo", predict_all=True)
             pause 3
             "natsuki 1ccsbo"
             pause 0.1
-            "natsuki 1cdrbo"
+            ConditionSwitch("Natsuki.getIsReadingToRight()", "natsuki 1cdlbo", "True", "natsuki 1cdrbo", predict_all=True)
             pause 3
-            "natsuki 1cdlbo"
+            ConditionSwitch("Natsuki.getIsReadingToRight()", "natsuki 1cdrbo", "True", "natsuki 1cdlbo", predict_all=True)
             pause 3
             "natsuki 1cdwbo"
             pause 3
@@ -829,17 +829,17 @@ image natsuki reading:
             pause 0.1
 
         choice:
-            "natsuki 1udlsm"
+            ConditionSwitch("Natsuki.getIsReadingToRight()", "natsuki 1udrsm", "True", "natsuki 1udlsm", predict_all=True)
             pause 3
             "natsuki 1udwsm"
             pause 3
-            "natsuki 1udrsm"
+            ConditionSwitch("Natsuki.getIsReadingToRight()", "natsuki 1udlsm", "True", "natsuki 1udrsm", predict_all=True)
             pause 3
             "natsuki 1ucssm"
             pause 0.1
-            "natsuki 1udrsm"
+            ConditionSwitch("Natsuki.getIsReadingToRight()", "natsuki 1udlsm", "True", "natsuki 1udrsm", predict_all=True)
             pause 3
-            "natsuki 1udlsm"
+            ConditionSwitch("Natsuki.getIsReadingToRight()", "natsuki 1udrsm", "True", "natsuki 1udlsm", predict_all=True)
             pause 3
             "natsuki 1udwsm"
             pause 3

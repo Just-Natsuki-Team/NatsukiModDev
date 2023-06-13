@@ -9683,6 +9683,7 @@ label talk_daily_joke(from_unlock=False):
 
         show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         show joke_book zorder JN_PROP_ZORDER
+        $ Natsuki.setIsReadingToRight(True)
         show natsuki reading
         hide black with Dissolve(0.5)
         $ jnPause(0.5)
@@ -9718,6 +9719,7 @@ label talk_daily_joke(from_unlock=False):
     n 1fcsss "Now,{w=0.75}{nw}" 
     extend 1fsqsm " let's see..."
 
+    $ Natsuki.setIsReadingToRight(True)
     show natsuki reading
     $ jnPause(3)
     play audio page_turn

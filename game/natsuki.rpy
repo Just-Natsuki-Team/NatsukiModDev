@@ -80,7 +80,11 @@ init 0 python:
         # Natsuki's desk slots; items are drawn over Natsuki so be wary of overlaps!
         _desk_left = Null()
         _desk_centre = Null()
-        _desk_right = Null()    
+        _desk_right = Null()
+
+        # Whether Natsuki is reading to the left or right of her book for animations: 
+        # We have to cater for both since Natsuki owns books that read both ways
+        _is_reading_to_right = False
 
         @staticmethod
         def setDeskItem(desk_slot, item):
@@ -877,6 +881,25 @@ init 0 python:
             """
             current_mouse_pos = renpy.get_mouse_pos()[1]
             return current_mouse_pos > 370
+
+        @staticmethod
+        def getIsReadingToRight():
+            """
+            Returns True if Natsuki's current reading direction for books is from left to right, otherwise False.
+            """
+            return Natsuki._is_reading_to_right
+        
+        @staticmethod
+        def setIsReadingToRight(is_reading_from_right):
+            """
+            Sets Natsuki's current reading direction for right/left.
+            For a traditional (Western) book read from left to right, this should be True.
+            For a manga volume read from right to left, this should be False.
+
+            IN:
+                - is_reading_from_right - bool reading from right value to set
+            """
+            Natsuki._is_reading_to_right = is_reading_from_right
 
 # KWWWMMMMMMMWNNNNNNXXXKKKKK00KKXXKKK0KK0000KKKKKK000Okkxdoodk0KKKKKXKKKK0000KOxoccdkko;,cOX00XXXXXXXX
 # KNWWWWWMMWWNNNNNXXXXXXXXKKKKKXXXXXXKKKKXXXXXXXKKKXXKKKKKKXKKKXXK00KKKKKKK000OxOOdclxOx:;kXOxKXXXXXKK
