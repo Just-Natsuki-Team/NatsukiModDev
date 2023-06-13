@@ -136,7 +136,7 @@ init python in jn_custom_music:
         jn_utils.createDirectoryIfNotExists(CUSTOM_MUSIC_DIRECTORY)
 
 label music_menu:
-    $ Natsuki.setInConversation(is_in_conversation=True)
+    $ Natsuki.setInConversation(True)
     $ music_title = "Error, this should have changed"
 
     # Attempt to get the music in the custom_music directory to present as menu options

@@ -1968,6 +1968,7 @@ define audio.switch_flip = "mod_assets/sfx/switch_flip.ogg"
 define audio.twitch_die = "mod_assets/sfx/twitch_die.ogg"
 define audio.twitch_you_lose = "mod_assets/sfx/twitch_you_lose.ogg"
 define audio.zipper = "mod_assets/sfx/zipper.ogg"
+define audio.laptop_close = "mod_assets/sfx/laptop_close.ogg"
 
 # Glitch sound effects
 define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
