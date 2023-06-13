@@ -2154,7 +2154,7 @@ label outfits_wear_outfit:
     n 4unmaj "Huh?{w=0.2} You want me to put on another outfit?"
     n 1fchbg "Sure thing!{w=0.5}{nw}"
     extend 1unmbg " What do you want me to wear?{w=1.5}{nw}"
-    show natsuki idle at jn_left
+    show natsuki option_wait_excited at jn_left
 
     python:
         # Get unlocked outfits, sort them and generate player options
