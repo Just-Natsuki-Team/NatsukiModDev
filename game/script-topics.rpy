@@ -590,7 +590,7 @@ label talk_service_animals:
         extend " Well..."
         n "You're an animal too,{w=0.2} right?{w=0.75}{nw}"
         extend " Not to worry then,{w=0.2} [player].{w=0.75}{nw}"
-        extend " Pretty sure I can just train {i}you{/i} up just as well!"
+        extend " Pretty sure I can train {i}you{/i} up just as well!"
 
         if Natsuki.isLove(higher=True):
             $ chosen_tease = jn_utils.getRandomTease()
