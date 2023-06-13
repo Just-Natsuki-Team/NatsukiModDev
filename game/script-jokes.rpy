@@ -954,7 +954,7 @@ label joke_out_of_ctrl:
     extend 1fcspo " even just the other day I heard about places running out of parts for keyboards!"
     n 1fcsss "...Heh."
     n 1fcstr "I guess their management must really be{w=0.5}{nw}"
-    extend 1fsqbg " out of {i}Control{/i},{w=1}{nw}"
+    extend 1fsqbg " out of {i}Control{/i},{w=0.75}{nw}"
     extend 1fchgn " huh?"
 
     return
