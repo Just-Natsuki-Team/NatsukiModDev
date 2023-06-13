@@ -2311,7 +2311,9 @@ label outfits_remove_outfit:
         for outfit in removable_outfits:
             options.append((jn_utils.escapeRenpySubstitutionString(outfit.display_name), outfit))
 
+    show natsuki option_wait_curious at jn_left
     call screen scrollable_choice_menu(options, ("Nevermind.", None))
+    show natsuki at jn_center
 
     if isinstance(_return, jn_outfits.JNOutfit):
         $ outfit_name = _return.display_name.lower()
