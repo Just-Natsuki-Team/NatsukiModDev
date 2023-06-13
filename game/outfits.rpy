@@ -3056,7 +3056,7 @@ label new_wearables_outfits_unlocked:
     hide black with Dissolve(1.25)
 
     n 1ullajl "So..."
-    n 4tnmsslsbl "Where we we?{w=1}{nw}"
+    n 4tnmsslsbl "Where were we?{w=1}{nw}"
     extend 4fslsslsbr " Ehehe..."
 
     $ Natsuki.calculatedAffinityGain(bypass=True)
