@@ -951,7 +951,7 @@ label joke_out_of_ctrl:
     extend 1fcsgs " it's ridiculous!{w=0.75}{nw}"
     extend 1flrfl " Like why is it so hard to just order stuff in,{w=0.2} all of a sudden?"
     n 1fcsgs "I mean,{w=0.5}{nw}"
-    extend 1fcspo " even just the other day I heard about places running out of parts for keyboards!"
+    extend 1fslpo " even just the other day I heard about places running out of parts for keyboards!"
     n 1fcsss "...Heh."
     n 1fcstr "I guess their management must really be{w=0.5}{nw}"
     extend 1fsqbg " out of {i}Control{/i},{w=0.75}{nw}"
