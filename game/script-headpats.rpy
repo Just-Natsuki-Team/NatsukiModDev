@@ -10,22 +10,6 @@ init python in jn_headpats:
     _PATS_UI_Z_INDEX = 4
     _PATS_POPUP_Z_INDEX = 5
 
-    _FINISHED_START_QUIPS = [
-        "...Satisfied?",
-        "Happy now,{w=0.2} [player]?",
-        "...Y-{w=0.3}you're done now?",
-        "A-{w=0.2}all done,{w=0.2} [player]?",
-        "I-{w=0.2}is that all,{w=0.2} [player]?"
-    ]
-
-    _FINISHED_END_QUIPS = [
-        "...Good.",
-        "...A-{w=0.2}about time.",
-        "Finally...{w=0.5} jeez...",
-        "T-{w=0.2}took you long enough.",
-        "Finally..."
-    ]
-
     # Tracking
     _more_pats_requested = False
     _no_pat_count = 0
@@ -40,7 +24,7 @@ init python in jn_headpats:
         """
         Returns whether the current mouse position has changed compared to the last mouse position given as stored under _last_mouse_position.
         """
-        if _last_mouse_position is None or _last_mouse_position != jn_utils.getMousePosition():
+        if _last_mouse_position is None or _last_mouse_position != renpy.get_mouse_pos():
             return True
 
         return False
@@ -95,7 +79,7 @@ label headpats_start:
 
 # Main headpat loop/logic
 label headpats_loop:
-    $ current_mouse_position = jn_utils.getMousePosition()    
+    $ current_mouse_position = renpy.get_mouse_pos()   
     $ config.mouse = {"default": [("mod_assets/extra/headpats/headpats_active_cursor.png", 24, 24)]} if jn_headpats._cursor_in_active_area else None
 
     if jn_headpats._cursor_in_active_area and jn_headpats._getMousePositionChanged():
@@ -280,10 +264,24 @@ label headpats_finished:
                 extend 2fcspolsbl " I wasn't really {i}that{/i} into it anyway."
                 n 1kslpol "..."
     else:
-        $ finished_start_quip = renpy.substitute(random.choice(jn_headpats._FINISHED_START_QUIPS))
+        $ finished_start_quip = renpy.substitute(random.choice([
+            "...Satisfied?",
+            "Happy now,{w=0.2} [player]?",
+            "...Y-{w=0.3}you're done now?",
+            "A-{w=0.2}all done,{w=0.2} [player]?",
+            "I-{w=0.2}is that all,{w=0.2} [player]?"
+        ]))
         n 1kwmpul "[finished_start_quip]"
-        $ finished_end_quip = renpy.substitute(random.choice(jn_headpats._FINISHED_END_QUIPS))
+
+        $ finished_end_quip = renpy.substitute(random.choice([
+            "...Good.",
+            "...A-{w=0.2}about time.",
+            "Finally...{w=0.5} jeez...",
+            "T-{w=0.2}took you long enough.",
+            "Finally..."
+        ]))
         n 1kllpul "[finished_end_quip]"
+        
         n 1kcsdvf "..."
 
     $ jn_headpats._cursor_in_active_area = False

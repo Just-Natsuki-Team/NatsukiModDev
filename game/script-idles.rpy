@@ -265,6 +265,7 @@ label idle_reading_parfait_girls:
     show prop parfait_manga_held zorder JN_PROP_ZORDER
     show natsuki reading
     hide black with Dissolve(0.5)
+    $ Natsuki.setIsReadingToRight(True)
     $ jnClickToContinue(silent=False)
 
     n 1tlrbo "...{w=1}{nw}"
@@ -295,6 +296,7 @@ label idle_reading_renpy_for_dummies:
     show prop renpy_for_dummies_book_held zorder JN_PROP_ZORDER
     show natsuki reading
     hide black with Dissolve(0.5)
+    $ Natsuki.setIsReadingToRight(True)
     $ jnClickToContinue(silent=False)
 
     n 1fdwbo "...{w=1}{nw}"
@@ -328,6 +330,7 @@ label idle_reading_a_la_mode:
     show prop a_la_mode_manga_held zorder JN_PROP_ZORDER
     show natsuki reading
     hide black with Dissolve(0.5)
+    $ Natsuki.setIsReadingToRight(False)
     $ jnClickToContinue(silent=False)
 
     if random.choice([True, False]):
@@ -364,6 +367,7 @@ label idle_reading_step_by_step:
     show prop step_by_step_manga_held zorder JN_PROP_ZORDER
     show natsuki reading
     hide black with Dissolve(0.5)
+    $ Natsuki.setIsReadingToRight(False)
     $ jnClickToContinue(silent=False)
 
     n 1tnmpu "Eh?{w=1.25}{nw}"

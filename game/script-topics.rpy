@@ -2854,7 +2854,7 @@ label talk_give_nickname:
         return
 
     else:
-        $ nickname_type = jn_nicknames.get_natsuki_nickname_type(nickname)
+        $ nickname_type = jn_nicknames.getNatsukiNicknameType(nickname)
 
     if nickname_type == jn_nicknames.NicknameTypes.invalid:
         n 2tlraj "Uhmm...{w=0.3} [player]?"
@@ -8454,7 +8454,7 @@ label talk_player_change_name:
         return
 
     else:
-        $ nickname_type = jn_nicknames.get_player_nickname_type(nickname)
+        $ nickname_type = jn_nicknames.getPlayerNicknameType(nickname)
 
     if nickname_type == jn_nicknames.NicknameTypes.invalid:
         n 1fllpu "Are...{w=1}{nw}"
@@ -10101,6 +10101,7 @@ label talk_daily_joke(from_unlock=False):
 
         show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         show joke_book zorder JN_PROP_ZORDER
+        $ Natsuki.setIsReadingToRight(True)
         show natsuki reading
         hide black with Dissolve(0.5)
         $ jnPause(0.5)
@@ -10136,6 +10137,7 @@ label talk_daily_joke(from_unlock=False):
     n 1fcsss "Now,{w=0.75}{nw}" 
     extend 1fsqsm " let's see..."
 
+    $ Natsuki.setIsReadingToRight(True)
     show natsuki reading
     $ jnPause(3)
     play audio page_turn

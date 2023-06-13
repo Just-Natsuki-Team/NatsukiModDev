@@ -29,7 +29,7 @@ init 0 python in jn_nicknames:
         nou = 8
 
     # Natsuki loves these nicknames; awarding them awards affinity/trust
-    __NATSUKI_NICKNAME_LOVED_LIST = {
+    NATSUKI_LOVED_NICKNAME_REGEX = re.compile('|'.join({
         "^amazing$",
         "^angel$",
         "^(babe|baby|babygirl)$",
@@ -81,11 +81,11 @@ init 0 python in jn_nicknames:
         "^summer$",
         "^(sunny|sunshine)$",
         "^(sweetcakes|sweetpea|sweetheart|sweetness|sweety)$",
-        "^thebest$",
-    }
+        "^thebest$"
+    }), re.IGNORECASE)
 
     # Natsuki dislikes these nicknames; no penalty given but name will not be permitted
-    __NATSUKI_NICKNAME_DISLIKED_LIST = {
+    NATSUKI_DISLIKED_NICKNAME_REGEX = re.compile('|'.join({
         "^(dad|daddy)$",
         "^father$",
         "^lily$",
@@ -98,10 +98,10 @@ init 0 python in jn_nicknames:
         "^yuri$",
         "^weeb$",
         "(playboy|playgirl)",
-    }
+    }), re.IGNORECASE)
 
     # Natsuki finds these nicknames funny
-    __NATSUKI_NICKNAME_FUNNY_LIST = {
+    NATSUKI_FUNNY_NICKNAME_REGEX = re.compile('|'.join({
         "^catsuki$",
         "^gorgeous$",
         "^(hot|hotstuff|hottie)$",
@@ -112,20 +112,20 @@ init 0 python in jn_nicknames:
         "^sexy$",
         "^smol$",
         "^snack$",
-    }
+    }), re.IGNORECASE)
 
     # Nou
-    __NATSUKI_NICKNAME_NOU_LIST = {
+    NATSUKI_NOU_NICKNAME_REGEX = re.compile('|'.join({
         "^adorkable$",
         "^baka$",
         "^(booplicate|boopli[ck]8|boopliq(ee|e|3|33)b)$",
         "^dummy$",
         "^(q[eaoui]b|q[eaoui][eaoui]b|q[eaoui]b[wq][eaoui]b)$",
         "^(w[eaoui]b|w[eaoui][eaoui]b|w[eaoui]b[wq][eaoui]b)$",
-    }
+    }), re.IGNORECASE)
 
-    # Natsuki dislikes these nicknames; no penalty given but name will not be permitted
-    __PLAYER_NICKNAME_DISLIKED_LIST = {
+    # Natsuki dislikes these player names; no penalty given but name will not be permitted 
+    PLAYER_DISLIKED_NICKNAME_REGEX = re.compile('|'.join({
         "^(dad|daddy)$",
         "^father$",
         "^papa$",
@@ -135,10 +135,10 @@ init 0 python in jn_nicknames:
         "^nerd$",
         "^trash$",
         "^junk$",
-    }
+    }), re.IGNORECASE)
 
     # Natsuki finds these nicknames funny
-    __PLAYER_NICKNAME_FUNNY_LIST = {
+    PLAYER_FUNNY_NICKNAME_REGEX = re.compile('|'.join({
         "^gorgeous$",
         "^(hot|hotstuff|hottie)$",
         "^(mom|mommy|mother)$",
@@ -152,17 +152,9 @@ init 0 python in jn_nicknames:
         "^girl$",
         "^boy$",
         "thiccsuki"
-    }
+    }), re.IGNORECASE)
 
-    NATSUKI_LOVED_NICKNAME_REGEX = re.compile('|'.join(__NATSUKI_NICKNAME_LOVED_LIST), re.IGNORECASE)
-    NATSUKI_DISLIKED_NICKNAME_REGEX = re.compile('|'.join(__NATSUKI_NICKNAME_DISLIKED_LIST), re.IGNORECASE)
-    NATSUKI_FUNNY_NICKNAME_REGEX = re.compile('|'.join(__NATSUKI_NICKNAME_FUNNY_LIST), re.IGNORECASE)
-    NATSUKI_NOU_NICKNAME_REGEX = re.compile('|'.join(__NATSUKI_NICKNAME_NOU_LIST), re.IGNORECASE)
-
-    PLAYER_DISLIKED_NICKNAME_REGEX = re.compile('|'.join(__PLAYER_NICKNAME_DISLIKED_LIST), re.IGNORECASE)
-    PLAYER_FUNNY_NICKNAME_REGEX = re.compile('|'.join(__PLAYER_NICKNAME_FUNNY_LIST), re.IGNORECASE)
-
-    def get_natsuki_nickname_type(nickname):
+    def getNatsukiNicknameType(nickname):
         """
         Returns the NicknameTypes type for a given string nickname for Natsuki, defaulting to NatsukiNicknameTypes.neutral
 
@@ -191,10 +183,10 @@ init 0 python in jn_nicknames:
             elif re.search(NATSUKI_DISLIKED_NICKNAME_REGEX, nickname):
                 return NicknameTypes.disliked
 
-            elif jn_utils.get_string_contains_insult(nickname):
+            elif jn_utils.getStringContainsInsult(nickname):
                 return NicknameTypes.hated
 
-            elif jn_utils.get_string_contains_profanity(nickname):
+            elif jn_utils.getStringContainsProfanity(nickname):
                 return NicknameTypes.profanity
 
             elif re.search(NATSUKI_NOU_NICKNAME_REGEX, nickname):
@@ -203,7 +195,7 @@ init 0 python in jn_nicknames:
             else:
                 return NicknameTypes.neutral
 
-    def get_player_nickname_type(nickname):
+    def getPlayerNicknameType(nickname):
         """
         Returns the NicknameTypes type for a given string nickname for the player, defaulting to NicknameTypes.neutral
 
@@ -229,10 +221,10 @@ init 0 python in jn_nicknames:
             elif re.search(PLAYER_DISLIKED_NICKNAME_REGEX, nickname):
                 return NicknameTypes.disliked
 
-            elif jn_utils.get_string_contains_insult(nickname):
+            elif jn_utils.getStringContainsInsult(nickname):
                 return NicknameTypes.hated
 
-            elif jn_utils.get_string_contains_profanity(nickname):
+            elif jn_utils.getStringContainsProfanity(nickname):
                 return NicknameTypes.profanity
 
             else:

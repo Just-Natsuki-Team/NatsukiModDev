@@ -1000,41 +1000,7 @@ init -990 python in jn_globals:
     # List of weather to push
     weather_stack = []
 
-    # Constants; use these for anything we only want defined once and used in a read-only context
-
-    # Endearments Natsuki may use at the highest levels of affinity to refer to her player
-    # She isn't that lovey-dovey, so use sparingly!
-    DEFAULT_PLAYER_ENDEARMENTS = [
-        "babe",
-        "darling",
-        "dummy",
-        "hun",
-        "my love",
-        "sweetheart",
-        "sweetie"
-    ]
-
-    # Descriptors Natsuki may use at the higher levels of affinity to define her player
-    DEFAULT_PLAYER_DESCRIPTORS = [
-        "amazing",
-        "awesome",
-        "really awesome",
-        "really great",
-        "so sweet",
-        "the best"
-    ]
-
-    # Names Natsuki may use at the higher levels of affinity to tease her player with
-    DEFAULT_PLAYER_TEASE_NAMES = [
-        "dummy",
-        "silly",
-        "stupid",
-        "you dork",
-        "you goof",
-        "you numpty",
-        "you donut",
-        "you dope"
-    ]
+    # Constants; use these for anything we only want defined once and used in a read-only context: anything defined here should be used in more than one application!
 
     # Links
 
@@ -1048,405 +1014,6 @@ init -990 python in jn_globals:
 
     # LatLong.net; used for helping the player find their coordinates when setting up location manually
     LINK_LAT_LONG_HOME = "https://www.latlong.net"
-
-    # Names Natsuki may use at the lowest levels of affinity to insult her player with
-    DEFAULT_PLAYER_INSULT_NAMES = [
-        "jerk",
-        "idiot",
-        "moron",
-        "stupid",
-        "loser"
-    ]
-
-    # Flavor text for the talk menu at high affinity
-    DEFAULT_TALK_FLAVOR_TEXT_LOVE_ENAMORED = [
-        "What's up,{w=0.1} [player]?",
-        "What's on your mind,{w=0.1} [player]?",
-        "Something up,{w=0.1} [player]?",
-        "You wanna talk?{w=0.2} Ehehe.",
-        "I'd love to talk!",
-        "I always love talking to you,{w=0.1} [player]!",
-        "[player]!{w=0.2} What's up?",
-        "[player]!{w=0.2} What's on your mind?",
-        "Ooh!{w=0.2} What did you wanna talk about?",
-        "I'm all ears,{w=0.1} [player]!",
-        "I've always got time for you,{w=0.1} [player]!",
-        "Hey!{w=0.2} What's up,{w=0.2} [player]?",
-        "What have you got for me?{w=0.2} Ehehe.",
-        "[player]!{w=0.2} What's new?",
-        "[player]!{w=0.2} You wanna talk?",
-        "Shoot,{w=0.2} [player]!{w=0.3} Ehehe.",
-        "Shoot,{w=0.2} [player]!",
-        "Oh!{w=0.2} Oh!{w=0.2} You got something for me?",
-        "Talk to me,{w=0.2} [player]!{w=0.3} Ehehe."
-    ]
-
-    # Flavor text for the talk menu at medium affinity
-    DEFAULT_TALK_FLAVOR_TEXT_AFFECTIONATE_NORMAL = [
-        "What's up?",
-        "What's on your mind?",
-        "What's happening?",
-        "Something on your mind?",
-        "Oh?{w=0.2} You wanna talk?",
-        "Huh?{w=0.2} What's up?",
-        "You wanna share something?",
-        "What's new,{w=0.1} [player]?",
-        "'Sup,{w=0.1} [player]?",
-        "You wanna talk?",
-        "Hey,{w=0.2} [player]!"
-    ]
-
-    # Flavor text for the talk menu at low affinity
-    DEFAULT_TALK_FLAVOR_TEXT_UPSET_DISTRESSED = [
-        "What do you want?",
-        "What is it?",
-        "Make it quick.",
-        "What now?",
-        "What do you want now?",
-        "What is it this time?",
-        "Yeah?{w=0.2} What?",
-        "What now?",
-        "This better be good."
-    ]
-
-    # Flavor text for the talk menu at minimum affinity
-    DEFAULT_TALK_FLAVOR_TEXT_BROKEN_RUINED = [
-        "...",
-        "...?",
-        "What?",
-        "Just talk already.",
-        "Spit it out.",
-        "Start talking.",
-        "Get it over with.",
-        "What do {i}you{/i} want?",
-        "Get on with it.",
-        "Talk."
-    ]
-
-    # Emoticon sets for where we can't express Natsuki's emotions directly (I.E modals)
-    DEFAULT_HAPPY_EMOTICONS = [
-        "^^",
-        "^.^",
-        "\.^-^./",
-        ":)",
-        ":]",
-        ":3",
-        "^-^",
-        "^_^",
-        ":]",
-        ":D",
-        "(*^▽^*)",
-        "(^∇^)",
-        "(＾▽＾)",
-        "(=^▽^=)",
-        "(^ｖ^)",
-        "(^_^)"
-    ]
-
-    DEFAULT_ANGRY_EMOTICONS = [
-        ">_>",
-        "<_<",
-        "-_-",
-        "-.-",
-        ">:T",
-        ">:/",
-        ">:(",
-        "(;>_>)",
-        "(-_-)",
-        "||-_-"
-    ]
-
-    DEFAULT_SAD_EMOTICONS = [
-        ":(",
-        ":'(",
-        ":/",
-        "._.",
-        "(v_v”)",
-        "( .. )",
-        "( ;; )",
-        "(|||;-;)",
-        "(;v-v)",
-        ":-(",
-        "</3",
-        "<|3",
-        ":<",
-        ">:",
-    ]
-
-    DEFAULT_TEASE_EMOTICONS = [
-        ">:3",
-        ">:)",
-        "^.^",
-        "(^ｖ^)",
-        ">:P",
-        ">;P",
-        ">;D",
-        ">:D",
-        ">;)"
-    ]
-
-    DEFAULT_CONFUSED_EMOTICONS = [
-        "o.o",
-        "o.o;",
-        "O.O",
-        "T.T",
-        "T_T",
-        "@_@",
-        "@.@",
-        "0.0?",
-        "C-C",
-        "C_C",
-        "C.C"
-    ]
-
-    # Source courtest of: https://github.com/RobertJGabriel/Google-profanity-words, with some additions by us
-    _PROFANITY_LIST = {
-        "(?<![blmprs])ass(?!i)",
-        "(^d[il1]ck$|d[il1]ckhead)",
-        "(^dink$|dirsa)",
-        "^fag{1,2}$",
-        "[s5]h[i1]t",
-        "(a_s_s|a55)",
-        "anu[s5]",
-        "(ar5e|arrse|^arse$)",
-        "((b|l3)[i1]a?[t+7]ch)",
-        "(bolloc?k)",
-        "([ck]ock|cok)",
-        "([ck]um|cunil|kunil)",
-        "(doosh|duche)",
-        "eja[ck]ul.*",
-        "(f4nny|fanny|fanyy)",
-        "([4f](uc?|oo|ec|cu)[kx]|f_u_c_k)",
-        "god-dam",
-        "(hoare?|hoer|hore)",
-        "(horniest|horny)",
-        "jack-?off",
-        "ji[sz]m",
-        "(m[a4][s5]t[eu]r-?b[a8][t+]?[e3]?|masochist)",
-        "m[o0]-?f[o0]",
-        "n[1i]gg",
-        "orgasi?m",
-        "phuc?[kq]",
-        "(porn|pron)",
-        "puss[eiy]",
-        "(rimjaw|rimming)",
-        "(scroat|scrote|scrotum)",
-        "(sh[i\!1][t+]e?|s_h_i_t)",
-        "(testical|testicle)",
-        "(^tit$|t[1i]tt[1i]e[5s]|teets|teez)",
-        "(tw[4a]t|twunt)",
-        "(willies|willy)",
-        "^balls$",
-        "^bum$",
-        "^coon$",
-        "^ho$",
-        "^hoe$",
-        "^nob$",
-        "^tit$",
-        "4r5e",
-        "^aids$",
-        "^anal$",
-        "b!tch",
-        "b[0o]+b(?!er|on)",
-        "ballbag",
-        "ballsack",
-        "bastard",
-        "beastial",
-        "beastiality",
-        "bellend",
-        "bestial",
-        "bestiality",
-        "bloody",
-        "blowjob",
-        "boiolas",
-        "boner",
-        "breasts",
-        "buceta",
-        "bugger",
-        "bunnyfucker",
-        "butt(?!er|on)",
-        "c0ck",
-        "c0cksucker",
-        "carpetmuncher",
-        "cawk",
-        "chink",
-        "cipa",
-        "clit|cl1t",
-        "cnut",
-        "crap",
-        "cunt",
-        "cyalis",
-        "cyberfuc*",
-        "damn",
-        "dildo",
-        "dog-fucker",
-        "doggin",
-        "donkeyribber",
-        "dyke",
-        "fatass",
-        "felching",
-        "fellat",
-        "flange",
-        "fudgepacker",
-        "gangbang",
-        "gaylord",
-        "gaysex",
-        "goatse",
-        "goddamn",
-        "h1tl3r",
-        "h1tler",
-        "hardcoresex",
-        "(^hell$|^hellspawn$)",
-        "heshe",
-        "hitler",
-        "homo",
-        "hotsex",
-        "^jap$",
-        "jerk-off",
-        "kawk",
-        "knob",
-        "kondum",
-        "labia",
-        "lmfao",
-        "^lust$",
-        "^muff$",
-        "mutha",
-        "nazi",
-        "numbnuts",
-        "nutsack",
-        "p0rn",
-        "pawn",
-        "pecker",
-        "pedo",
-        "penis",
-        "phonesex",
-        "pigfucker",
-        "pimpis",
-        "piss",
-        "poo|poop",
-        "prick",
-        "pube",
-        "rectum",
-        "retard",
-        "s.o.b.",
-        "sadist",
-        "schlong",
-        "screw",
-        "semen",
-        "sex",
-        "shag",
-        "shemale",
-        "skank",
-        "slut",
-        "smegma",
-        "smut",
-        "snatch",
-        "son-of-a-bitch|sonofabitch",
-        "spac",
-        "spunk",
-        "tosser",
-        "^turd$",
-        "v14gra|v1gra",
-        "vagina",
-        "viagra",
-        "vulva",
-        "w00se",
-        "wang",
-        "wank",
-        "whoar",
-        "whore",
-        "xrated",
-        "xxx"
-    }
-
-    _INSULT_LIST = {
-        "arrogant",
-        "^(beast|beastly)$",
-        "bonebag",
-        "bonehead",
-        "brat|bratty",
-        "breadboard",
-        "bully",
-        "cheater",
-        "child",
-        "clown",
-        "cuttingboard",
-        "demon",
-        "dimwit",
-        "dirt",
-        "disgusting",
-        "^dog$",
-        "dumb|dumbo",
-        "dunce",
-        "dwarf",
-        "dweeb",
-        "egoist|egotistical",
-        "evil",
-        "^(fail|failure)$",
-        "fake",
-        "(^fat$|fatso|fatty|fattie)",
-        "(flat|flatso|flatty|flattie)",
-        "gilf",
-        "^(ghast|ghastly)$"
-        "gremlin",
-        "gross",
-        "halfling|halfpint|half-pint",
-        "halfwit",
-        "heartless",
-        "hellspawn",
-        "hideous",
-        "horrid|horrible",
-        "hungry",
-        "idiot",
-        "ignoramus",
-        "ignorant",
-        "imbecile",
-        "^imp$",
-        "ironingboard",
-        "(^kid$|kiddo|kiddy|kiddie)",
-        "l[e3]sbian",
-        "l[e3]sb[o0]",
-        "midget",
-        "moron",
-        "narcissist",
-        "(^nasty$|nasty-ass)",
-        "neckcrack|neck-crack",
-        "necksnap|neck-snap",
-        "^nimrod$",
-        "nuisance",
-        "^pest$",
-        "pathetic",
-        "plaything",
-        "punchbag|punch-bag|punchingbag|punching-bag",
-        "puppet",
-        "putrid",
-        "^short$|shortstuff|shorty",
-        "^sick$",
-        "^simp$",
-        "simpleton",
-        "skinny",
-        "slave",
-        "smelly",
-        "^soil$",
-        "starved|starving",
-        "stinky",
-        "^(stuckup|stuck-up)$"
-        "stupid",
-        "^teabag$",
-        "^th[o0]t$",
-        "^tiny$",
-        "^toy$",
-        "^twerp$",
-        "^twit$",
-        "^useless$",
-        "^vendingmachine$",
-        "^(virgin|turbovirgin)$",
-        "^vomit$",
-        "^washboard$",
-        "^witch$",
-        "^wretch$",
-        "^zombie$",
-    }
 
     # Alphabetical (excluding numbers) values allowed for text input
     DEFAULT_ALPHABETICAL_ALLOW_VALUES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-' "
@@ -1529,15 +1096,6 @@ init -999 python in jn_utils:
             Formatted string representation of object __dict__
         """
         return pprint.pformat(object.__dict__, indent, width)
-
-    def getMousePosition():
-        """
-        Returns a tuple representing the mouse's current position in the game window.
-
-        OUT:
-            - mouse position as a tuple in format (x,y)
-        """
-        return pygame.mouse.get_pos()
 
     def getFileExists(path):
         """
@@ -1628,9 +1186,6 @@ init -100 python in jn_utils:
     import store
     import store.jn_utils as jn_utils
     import store.jn_globals as jn_globals
-
-    PROFANITY_REGEX = re.compile('|'.join(jn_globals._PROFANITY_LIST), re.IGNORECASE)
-    INSULT_REGEX = re.compile('|'.join(jn_globals._INSULT_LIST), re.IGNORECASE)
 
     def get_current_session_length():
         """
@@ -1763,9 +1318,10 @@ init -100 python in jn_utils:
 
         return player_final
 
-    def get_string_contains_profanity(string):
+    def getStringContainsProfanity(string):
         """
         Returns True if the given string contains a profanity, based on regex.
+        Source courtesy of: https://github.com/RobertJGabriel/Google-profanity-words, with some additions by us
 
         IN:
             - string - The string to test
@@ -1773,9 +1329,166 @@ init -100 python in jn_utils:
         OUT:
             - True if string contains profanity; otherwise False
         """
-        return re.search(PROFANITY_REGEX, string.lower())
+        return re.search(re.compile('|'.join({
+            "(?<![blmprs])ass(?!i)",
+            "(^d[il1]ck$|d[il1]ckhead)",
+            "(^dink$|dirsa)",
+            "^fag{1,2}$",
+            "[s5]h[i1]t",
+            "(a_s_s|a55)",
+            "anu[s5]",
+            "(ar5e|arrse|^arse$)",
+            "((b|l3)[i1]a?[t+7]ch)",
+            "(bolloc?k)",
+            "([ck]ock|cok)",
+            "([ck]um|cunil|kunil)",
+            "(doosh|duche)",
+            "eja[ck]ul.*",
+            "(f4nny|fanny|fanyy)",
+            "([4f](uc?|oo|ec|cu)[kx]|f_u_c_k)",
+            "god-dam",
+            "(hoare?|hoer|hore)",
+            "(horniest|horny)",
+            "jack-?off",
+            "ji[sz]m",
+            "(m[a4][s5]t[eu]r-?b[a8][t+]?[e3]?|masochist)",
+            "m[o0]-?f[o0]",
+            "n[1i]gg",
+            "orgasi?m",
+            "phuc?[kq]",
+            "(porn|pron)",
+            "puss[eiy]",
+            "(rimjaw|rimming)",
+            "(scroat|scrote|scrotum)",
+            "(sh[i\!1][t+]e?|s_h_i_t)",
+            "(testical|testicle)",
+            "(^tit$|t[1i]tt[1i]e[5s]|teets|teez)",
+            "(tw[4a]t|twunt)",
+            "(willies|willy)",
+            "^balls$",
+            "^bum$",
+            "^coon$",
+            "^ho$",
+            "^hoe$",
+            "^nob$",
+            "^tit$",
+            "4r5e",
+            "^aids$",
+            "^anal$",
+            "b!tch",
+            "b[0o]+b(?!er|on)",
+            "ballbag",
+            "ballsack",
+            "bastard",
+            "beastial",
+            "beastiality",
+            "bellend",
+            "bestial",
+            "bestiality",
+            "bloody",
+            "blowjob",
+            "boiolas",
+            "boner",
+            "breasts",
+            "buceta",
+            "bugger",
+            "bunnyfucker",
+            "butt(?!er|on)",
+            "c0ck",
+            "c0cksucker",
+            "carpetmuncher",
+            "cawk",
+            "chink",
+            "cipa",
+            "clit|cl1t",
+            "cnut",
+            "crap",
+            "cunt",
+            "cyalis",
+            "cyberfuc*",
+            "damn",
+            "dildo",
+            "dog-fucker",
+            "doggin",
+            "donkeyribber",
+            "dyke",
+            "fatass",
+            "felching",
+            "fellat",
+            "flange",
+            "fudgepacker",
+            "gangbang",
+            "gaylord",
+            "gaysex",
+            "goatse",
+            "goddamn",
+            "h1tl3r",
+            "h1tler",
+            "hardcoresex",
+            "(^hell$|^hellspawn$)",
+            "heshe",
+            "hitler",
+            "homo",
+            "hotsex",
+            "^jap$",
+            "jerk-off",
+            "kawk",
+            "knob",
+            "kondum",
+            "labia",
+            "lmfao",
+            "^lust$",
+            "^muff$",
+            "mutha",
+            "nazi",
+            "numbnuts",
+            "nutsack",
+            "p0rn",
+            "pawn",
+            "pecker",
+            "pedo",
+            "penis",
+            "phonesex",
+            "pigfucker",
+            "pimpis",
+            "piss",
+            "poo|poop",
+            "prick",
+            "pube",
+            "rectum",
+            "retard",
+            "s.o.b.",
+            "sadist",
+            "schlong",
+            "screw",
+            "semen",
+            "sex",
+            "shag",
+            "shemale",
+            "skank",
+            "slut",
+            "smegma",
+            "smut",
+            "snatch",
+            "son-of-a-bitch|sonofabitch",
+            "spac",
+            "spunk",
+            "tosser",
+            "^turd$",
+            "v14gra|v1gra",
+            "vagina",
+            "viagra",
+            "vulva",
+            "w00se",
+            "wang",
+            "wank",
+            "whoar",
+            "whore",
+            "xrated",
+            "xxx"
+        }), re.IGNORECASE), string.lower())
 
-    def get_string_contains_insult(string):
+    def getStringContainsInsult(string):
         """
         Returns True if the given string contains an insult, based on regex.
 
@@ -1785,61 +1498,247 @@ init -100 python in jn_utils:
         OUT:
             - True if string contains an insult; otherwise False
         """
-        return re.search(INSULT_REGEX, string.lower())
+        return re.search(re.compile('|'.join({
+            "arrogant",
+            "^(beast|beastly)$",
+            "bonebag",
+            "bonehead",
+            "brat|bratty",
+            "breadboard",
+            "bully",
+            "cheater",
+            "child",
+            "clown",
+            "cuttingboard",
+            "demon",
+            "dimwit",
+            "dirt",
+            "disgusting",
+            "^dog$",
+            "dumb|dumbo",
+            "dunce",
+            "dwarf",
+            "dweeb",
+            "egoist|egotistical",
+            "evil",
+            "^(fail|failure)$",
+            "fake",
+            "(^fat$|fatso|fatty|fattie)",
+            "(flat|flatso|flatty|flattie)",
+            "gilf",
+            "^(ghast|ghastly)$"
+            "gremlin",
+            "gross",
+            "halfling|halfpint|half-pint",
+            "halfwit",
+            "heartless",
+            "hellspawn",
+            "hideous",
+            "horrid|horrible",
+            "hungry",
+            "idiot",
+            "ignoramus",
+            "ignorant",
+            "imbecile",
+            "^imp$",
+            "ironingboard",
+            "(^kid$|kiddo|kiddy|kiddie)",
+            "l[e3]sbian",
+            "l[e3]sb[o0]",
+            "midget",
+            "moron",
+            "narcissist",
+            "(^nasty$|nasty-ass)",
+            "neckcrack|neck-crack",
+            "necksnap|neck-snap",
+            "^nimrod$",
+            "nuisance",
+            "^pest$",
+            "pathetic",
+            "plaything",
+            "punchbag|punch-bag|punchingbag|punching-bag",
+            "puppet",
+            "putrid",
+            "^short$|shortstuff|shorty",
+            "^sick$",
+            "^simp$",
+            "simpleton",
+            "skinny",
+            "slave",
+            "smelly",
+            "^soil$",
+            "starved|starving",
+            "stinky",
+            "^(stuckup|stuck-up)$"
+            "stupid",
+            "^teabag$",
+            "^th[o0]t$",
+            "^tiny$",
+            "^toy$",
+            "^twerp$",
+            "^twit$",
+            "^useless$",
+            "^vendingmachine$",
+            "^(virgin|turbovirgin)$",
+            "^vomit$",
+            "^washboard$",
+            "^witch$",
+            "^wretch$",
+            "^zombie$",
+        }), re.IGNORECASE), string.lower())
 
     def getRandomTease():
         """
         Returns a random tease from Natsuki for the player from the list.
+        Natsuki may use these at higher levels of affinity to tease her player with.
         """
-        return random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+        return random.choice([
+            "dummy",
+            "silly",
+            "stupid",
+            "you dork",
+            "you goof",
+            "you numpty",
+            "you donut",
+            "you dope"
+        ])
 
     def getRandomEndearment():
         """
         Returns a random endearment from Natsuki for the player from the list.
+        Natsuki may use these at the highest levels of affinity to refer to her player - she isn't that lovey-dovey, so use sparingly!
         """
-        return random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+        return random.choice([
+            "babe",
+            "darling",
+            "dummy",
+            "hun",
+            "my love",
+            "sweetheart",
+            "sweetie"
+        ])
 
     def getRandomDescriptor():
         """
         Returns a random positive descriptor from Natsuki for the player from the list.
+        Natsuki may use these at the highest levels of affinity to describe her player when she is being sentimental.
         """
-        return random.choice(jn_globals.DEFAULT_PLAYER_DESCRIPTORS)
+        return random.choice([
+            "amazing",
+            "awesome",
+            "really awesome",
+            "really great",
+            "so sweet",
+            "the best"
+        ])
 
     def getRandomInsult():
         """
         Returns a random insult from Natsuki for the player from the list.
+        Natsuki may use these at the lowest levels of affinity to insult her player with.
         """
-        return random.choice(jn_globals.DEFAULT_PLAYER_INSULT_NAMES)
+        return random.choice([
+            "jerk",
+            "idiot",
+            "moron",
+            "stupid",
+            "loser"
+        ])
 
     def getRandomHappyEmoticon():
         """
         Returns a random happy emoticon from Natsuki for the player from the list.
         """
-        return random.choice(jn_globals.DEFAULT_HAPPY_EMOTICONS)
+        return random.choice([
+            "^^",
+            "^.^",
+            "\.^-^./",
+            ":)",
+            ":]",
+            ":3",
+            "^-^",
+            "^_^",
+            ":]",
+            ":D",
+            "(*^▽^*)",
+            "(^∇^)",
+            "(＾▽＾)",
+            "(=^▽^=)",
+            "(^ｖ^)",
+            "(^_^)"
+        ])
 
     def getRandomAngryEmoticon():
         """
         Returns a random angry emoticon from Natsuki for the player from the list.
         """
-        return random.choice(jn_globals.DEFAULT_ANGRY_EMOTICONS)
+        return random.choice([
+            ">_>",
+            "<_<",
+            "-_-",
+            "-.-",
+            ">:T",
+            ">:/",
+            ">:(",
+            "(;>_>)",
+            "(-_-)",
+            "||-_-"
+        ])
 
     def getRandomSadEmoticon():
         """
         Returns a random sad emoticon from Natsuki for the player from the list.
         """
-        return random.choice(jn_globals.DEFAULT_SAD_EMOTICONS)
+        return random.choice([
+            ":(",
+            ":'(",
+            ":/",
+            "._.",
+            "(v_v”)",
+            "( .. )",
+            "( ;; )",
+            "(|||;-;)",
+            "(;v-v)",
+            ":-(",
+            "</3",
+            "<|3",
+            ":<",
+            ">:",
+        ])
 
     def getRandomTeaseEmoticon():
         """
         Returns a random teasing emoticon from Natsuki for the player from the list.
         """
-        return random.choice(jn_globals.DEFAULT_TEASE_EMOTICONS)
+        return random.choice([
+            ">:3",
+            ">:)",
+            "^.^",
+            "(^ｖ^)",
+            ">:P",
+            ">;P",
+            ">;D",
+            ">:D",
+            ">;)"
+        ])
 
     def getRandomConfusedEmoticon():
         """
         Returns a random confused emoticon from Natsuki for the player from the list.
         """
-        return random.choice(jn_globals.DEFAULT_CONFUSED_EMOTICONS)
+        return random.choice([
+            "o.o",
+            "o.o;",
+            "O.O",
+            "T.T",
+            "T_T",
+            "@_@",
+            "@.@",
+            "0.0?",
+            "C-C",
+            "C_C",
+            "C.C"
+        ])
 
     # Key setup
     key_path = os.path.join(renpy.config.basedir, "game/dev/key.txt").replace("\\", "/")

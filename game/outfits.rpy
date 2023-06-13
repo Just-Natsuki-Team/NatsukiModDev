@@ -2591,8 +2591,8 @@ label outfits_create_save:
 
                 # Outfit cannot be an insult or profanity
                 elif(
-                    jn_utils.get_string_contains_profanity(outfit_name.lower())
-                    or jn_utils.get_string_contains_insult(outfit_name.lower())
+                    jn_utils.getStringContainsProfanity(outfit_name.lower())
+                    or jn_utils.getStringContainsInsult(outfit_name.lower())
                 ):
                     n 2fsqem "...Really,{w=0.5} [player]."
                     n 1fsqsr "Come on.{w=1}{nw}"
