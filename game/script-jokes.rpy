@@ -431,6 +431,36 @@ init python in jn_jokes:
         display_name="Pencils",
         joke_category=JNJokeCategories.funny
     ))
+    __registerJoke(JNJoke(
+        label="joke_know_the_drill",
+        display_name="The drill",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_can_do_attitude",
+        display_name="Cannery",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_out_of_ctrl",
+        display_name="Out of control",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_dishwashing",
+        display_name="Dishwashing",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_escape_artists",
+        display_name="Escape artist",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_shoemakers",
+        display_name="Shoemakers",
+        joke_category=JNJokeCategories.corny
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -879,5 +909,80 @@ label joke_pointless_pencil:
     n 1cllaj "I was {i}going{/i} to tell a joke about it..."
     n 1tnmbo "But now?{w=0.5}{nw}"
     extend 1fsqsm " It's {i}pointless{/i}."
+
+    return
+
+label joke_know_the_drill:
+    n 1ulraj "You know,{w=0.2} [player]..."
+    n 1nsqsl "I always used to get annoyed at people doing construction work.{w=0.75}{nw}"
+    extend 1fnmem " {i}Especially{/i} on the weekends!"
+    n 1fllfl "Like...{w=1}{nw}"
+    extend 1fcsbo " I get they have a job to do.{w=0.75}{nw}"
+    extend 1fsran " But do they seriously have to start so {i}early{/i}?!{w=0.75}{nw}"
+    extend 1fcsan " Yeesh!"
+    n 1cslsl "..."
+    n 1cslaj "But...{w=1}{nw}"
+    extend 1cllca " you do get used to all the noise after a while,{w=0.2} I suppose."
+    n 1cnmss "I guess eventually you just...{w=1}{nw}"
+    extend 1fsqbg " {i}know the drill{/i},{w=0.75}{nw}"
+    extend 1nchgn " right?"
+
+    return
+
+label joke_can_do_attitude:
+    n 1fcsbg "Let's see how well you can {i}process{/i} this one,{w=0.2} [player].{w=0.75}{nw}"
+    extend 1fsqsm " Ehehe."
+    n 1fcsbs "So!{w=0.75}{nw}"
+    extend 1tsqss " Ever wondered what it takes to land a job in a cannery?"
+    n 1tsqsm "..."
+    n 1fsqsm "No?{w=0.75}{nw}"
+    extend 1fcsbs " Come on,{w=0.2} [player]!{w=0.75}{nw}"
+    extend 1fcssmesm " Isn't it obvious?"
+    n 1fcsbg "...You just need a{w=0.5}{nw}"
+    extend 1fsqbg " {i}can{/i}-do{w=1}{nw}"
+    extend 1uchgn " attitude!"
+
+    return
+
+label joke_out_of_ctrl:
+    n 1fllbo "I gotta say,{w=0.2} [player].{w=0.75}{nw}"
+    extend 1fsqfl " I'm starting to get {i}really{/i} sick of all these stories about shortages."
+    n 1fnmem "Seriously -{w=0.5}{nw}"
+    extend 1fcsgs " it's ridiculous!{w=0.75}{nw}"
+    extend 1flrfl " Like why is it so hard to just order stuff in,{w=0.2} all of a sudden?"
+    n 1fcsgs "I mean,{w=0.5}{nw}"
+    extend 1fslpo " even just the other day I heard about places running out of parts for keyboards!"
+    n 1fcsss "...Heh."
+    n 1fcstr "I guess their management must really be{w=0.5}{nw}"
+    extend 1fsqbg " out of {i}Control{/i},{w=0.75}{nw}"
+    extend 1fchgn " huh?"
+
+    return
+
+label joke_dishwashing:
+    n 1csqfl "Why isn't dishwashing considered a competitive sport?"
+    n 1csrsl "..."
+    n 1fcsemesi "..."
+    n 1nsqfl "Because victory is handed to you...{w=1.25}{nw}" 
+    extend 1cslcasbr " on a {i}plate{/i}."
+
+    return
+
+label joke_escape_artists:
+    n 1ccsflesi "..."
+    n 1cllsl "Why shouldn't you rely on an escape artist to turn up to an invitation?"
+    n 1csrbosbr "..."
+    n 1ccsemsbr "..."
+    n 1nsrtrsbr "...Because they're always getting{w=0.5}{nw}" 
+    extend 1csqcasbr " {i}tied down{/i}."
+
+    return
+
+label joke_shoemakers:
+    n 1fllfl "Why don't shoemakers go anywhere sunny on vacation?"
+    n 1fslca "..."
+    n 1ccsemesi "..."
+    n 1csrem "...Because they've already{w=0.5}{nw}" 
+    extend 1csrsl " {i}tanned{/i}."
 
     return
