@@ -410,11 +410,11 @@ init python in jn_activity:
         activity_type=JNActivities.recording_software,
         window_name_regex="(^obs [0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}|^bandicam [0-9]{4}|^fraps|^xsplit broadcaster$|- lightstream studio$)",
         notify_text=[
-            "W-wait... what kind of software is that, [player]? [confused_emote]",
-            "Wait a second... is that some kind of recorder?!",
-            "Are... are you recording me, [player]? [angry_emote]",
-            "H-hey! You aren't spying on me or anything, are you?",
-            "Uuuuuu... I don't like being on video... [sad_emote]"
+            "W-wait... what kind of app is that, [player]? [confused_emote]",
+            "Wait a second... is that some kind of recorder?",
+            "I-I hope you aren't recording me, [player]. [angry_emote]",
+            "Huh? What kind of program is that, [player]? [confused_emote]",
+            "What are you recording, [player]...? [confused_emote]"
         ]
     ))
 

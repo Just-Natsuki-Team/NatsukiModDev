@@ -810,6 +810,42 @@ image natsuki reading:
             "natsuki 1ndwfs"
             pause 4
 
+        choice:
+            "natsuki 1cdlbo"
+            pause 3
+            "natsuki 1cdwbo"
+            pause 3
+            "natsuki 1cdrbo"
+            pause 3
+            "natsuki 1ccsbo"
+            pause 0.1
+            "natsuki 1cdrbo"
+            pause 3
+            "natsuki 1cdlbo"
+            pause 3
+            "natsuki 1cdwbo"
+            pause 3
+            "natsuki 1ccsbo"
+            pause 0.1
+
+        choice:
+            "natsuki 1udlsm"
+            pause 3
+            "natsuki 1udwsm"
+            pause 3
+            "natsuki 1udrsm"
+            pause 3
+            "natsuki 1ucssm"
+            pause 0.1
+            "natsuki 1udrsm"
+            pause 3
+            "natsuki 1udlsm"
+            pause 3
+            "natsuki 1udwsm"
+            pause 3
+            "natsuki 1ucssm"
+            pause 0.1
+
     repeat
 
 # Idle images for Natsuki daydreaming/in thought
@@ -1086,24 +1122,6 @@ image natsuki idle = ConditionSwitch(
     predict_all = True
 )
 
-image natsuki test = ConditionSwitch(
-    "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsAbove()", "natsuki 5utlsml",
-    "Natsuki.getMouseIsRight() and Natsuki.getMouseIsAbove()", "natsuki 5utrsml",
-    "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsBelow()", "natsuki 5udlsml",
-    "Natsuki.getMouseIsRight() and Natsuki.getMouseIsBelow()", "natsuki 5udrsml",
-    "Natsuki.getMouseIsLeft()", "natsuki 5ullsml",
-    "Natsuki.getMouseIsRight()", "natsuki 5ulrsml",
-    "Natsuki.getMouseIsAbove()", "natsuki 5uupsml",
-    "Natsuki.getMouseIsBelow()", "natsuki 5udwsml",
-    "True", "natsuki 5unmsml",
-    predict_all = True
-)
-
-label dynatest:
-    show natsuki test
-    n ""
-    return
-
 # Idle images for ENAMORED+
 image natsuki idle enamored:
     block:
@@ -1120,7 +1138,7 @@ image natsuki idle enamored:
                 "True", "natsuki 5unmsml",
                 predict_all = True
             )
-            pause 4
+            pause 6
             "natsuki 3fchbll"
             pause 1
             "natsuki 3fchsml"
@@ -1133,7 +1151,7 @@ image natsuki idle enamored:
                 "True", "natsuki 7tsqsml",
                 predict_all = True
             )
-            pause 4
+            pause 6
             "natsuki 7fchsml"
             pause 3
 
@@ -1261,7 +1279,7 @@ image natsuki idle affectionate:
                 "True", "natsuki 3unmcsl",
                 predict_all = True
             )
-            pause 4
+            pause 5
             "natsuki 4cslfslsbr"
             pause 4
             "natsuki 4ccsfslsbr"
