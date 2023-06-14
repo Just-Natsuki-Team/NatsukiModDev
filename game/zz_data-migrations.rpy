@@ -325,6 +325,14 @@ init python in jn_data_migrations:
     def to_1_2_2():
         jn_utils.log("Migration to 1.2.2 START")
         store.persistent._jn_version = "1.2.2"
+        jn_utils.save_game()
+        jn_utils.log("Migration to 1.2.2 DONE")
+        return
+
+    @migration(["1.2.2"], "1.2.3", runtime=MigrationRuntimes.INIT)
+    def to_1_2_3():
+        jn_utils.log("Migration to 1.2.3 START")
+        store.persistent._jn_version = "1.2.3"
 
         if store.persistent.affinity >= 7500:
             store.persistent._jn_pic_aff = store.persistent.affinity
@@ -333,5 +341,5 @@ init python in jn_data_migrations:
             jn_utils.log("434346".decode("hex"))
 
         jn_utils.save_game()
-        jn_utils.log("Migration to 1.2.2 DONE")
+        jn_utils.log("Migration to 1.2.3 DONE")
         return
