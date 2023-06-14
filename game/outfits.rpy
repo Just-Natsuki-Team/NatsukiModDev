@@ -2887,7 +2887,7 @@ label new_wearables_outfits_unlocked:
                     extend 3knmpol " why are you trying to spoil me so much?"
                     n 3fllpol "You know I hate being showered in flashy stuff..."
                     n 1kslsrl "..."
-                    n 1ksqsrlsbl "...Especially things like this [unlock.display_name]."
+                    n 1ksqsrlsbl "...Especially things like this [unlock.display_name].{w=0.75}{nw}"
                     extend 1kslsslsbl " Even if it is pretty awesome."
                     n 1kslsrl "..."
                     n 1nllajl "I'm...{w=1}{nw}"
@@ -2899,7 +2899,7 @@ label new_wearables_outfits_unlocked:
                     n 1fsldvl "...Heh.{w=1}{nw}"
                     extend 4tsqpufsbl " You really {i}are{/i} trying to win me over with all this stuff,{w=0.1} huh?"
                     n 1kslsllsbl "..."
-                    n 1fcspulsbl "The [unlock.display_name]...{w=1}{nw}"
+                    n 1fcspulsbl "The [unlock.display_name]..."
                     n 1knmpulsbr "It's...{w=0.5} really nice.{w=0.75}{nw}"
                     extend 4kllsrlsbr " Okay?"
                     n 1kslunlesssbr "Thanks..."
@@ -2924,7 +2924,7 @@ label new_wearables_outfits_unlocked:
                     n 1fcssslsbl "Heh,{w=1}{nw}"
                     extend 3fllbglesssbr " a-{w=0.2}and here I was thinking I'd have to teach you {i}everything{/i} about style!"
                     n 3kllsllsbr "..."
-                    n 1knmbolsbr "...But thanks,{w=0.3} [player].{w=1}"
+                    n 1knmbolsbr "...But thanks,{w=0.3} [player].{w=0.75}{nw}"
                     extend 1flrunlsbr " For the [unlock.display_name]."
                     n 1fcsunlsbr "I...{w=0.75}{nw}"
                     extend 4ksrunfsbl " really appreciate it."
@@ -3048,7 +3048,7 @@ label new_wearables_outfits_unlocked:
     hide black with Dissolve(1.25)
 
     n 1ullajl "So..."
-    n 4tnmsslsbl "Where we we?{w=1}{nw}"
+    n 4tnmsslsbl "Where were we?{w=1}{nw}"
     extend 4fslsslsbr " Ehehe..."
 
     $ Natsuki.calculatedAffinityGain(bypass=True)
