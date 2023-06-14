@@ -80,7 +80,11 @@ init 0 python:
         # Natsuki's desk slots; items are drawn over Natsuki so be wary of overlaps!
         _desk_left = Null()
         _desk_centre = Null()
-        _desk_right = Null()    
+        _desk_right = Null()
+
+        # Whether Natsuki is reading to the left or right of her book for animations: 
+        # We have to cater for both since Natsuki owns books that read both ways
+        _is_reading_to_right = False
 
         @staticmethod
         def setDeskItem(desk_slot, item):
@@ -845,6 +849,57 @@ init 0 python:
             Sets the time of the last menu call to the current time.
             """
             Natsuki.__last_menu_call = datetime.datetime.now()
+
+        @staticmethod
+        def getMouseIsLeft():
+            """
+            Returns True if the mouse is to the left of Natsuki, otherwise False. Note this only accounts for Natsuki being centred!
+            """
+            current_mouse_pos = renpy.get_mouse_pos()[0]
+            return current_mouse_pos > 0 and current_mouse_pos < 520
+
+        @staticmethod
+        def getMouseIsRight():
+            """
+            Returns True if the mouse is to the right of Natsuki, otherwise False. Note this only accounts for Natsuki being centred!
+            """
+            current_mouse_pos = renpy.get_mouse_pos()[0]
+            return current_mouse_pos > 760
+
+        @staticmethod
+        def getMouseIsAbove():
+            """
+            Returns True if the mouse is above Natsuki, otherwise False. Note this only accounts for Natsuki being centred!
+            """
+            current_mouse_pos = renpy.get_mouse_pos()[1]
+            return current_mouse_pos < 220
+        
+        @staticmethod
+        def getMouseIsBelow():
+            """
+            Returns True if the mouse is below Natsuki, otherwise False. Note this only accounts for Natsuki being centred!
+            """
+            current_mouse_pos = renpy.get_mouse_pos()[1]
+            return current_mouse_pos > 370
+
+        @staticmethod
+        def getIsReadingToRight():
+            """
+            Returns True if Natsuki's current reading direction for books is from left to right, otherwise False.
+            """
+            return Natsuki._is_reading_to_right
+        
+        @staticmethod
+        def setIsReadingToRight(is_reading_from_right):
+            """
+            Sets Natsuki's current reading direction for right/left.
+            For a traditional (Western) book read from left to right, this should be True.
+            For a manga volume read from right to left, this should be False.
+
+            IN:
+                - is_reading_from_right - bool reading from right value to set
+            """
+            Natsuki._is_reading_to_right = is_reading_from_right
 
 # KWWWMMMMMMMWNNNNNNXXXKKKKK00KKXXKKK0KK0000KKKKKK000Okkxdoodk0KKKKKXKKKK0000KOxoccdkko;,cOX00XXXXXXXX
 # KNWWWWWMMWWNNNNNXXXXXXXXKKKKKXXXXXXKKKKXXXXXXXKKKXXKKKKKKXKKKXXK00KKKKKKK000OxOOdclxOx:;kXOxKXXXXXKK

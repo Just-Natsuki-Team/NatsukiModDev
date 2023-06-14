@@ -571,16 +571,69 @@ label talk_menu:
     python:
         # Get the flavor text for the talk menu, based on affinity state
         if Natsuki.isEnamored(higher=True):
-            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_LOVE_ENAMORED)
+            _talk_flavor_text = random.choice([
+                "What's up,{w=0.1} [player]?",
+                "What's on your mind,{w=0.1} [player]?",
+                "Something up,{w=0.1} [player]?",
+                "You wanna talk?{w=0.2} Ehehe.",
+                "I'd love to talk!",
+                "I always love talking to you,{w=0.1} [player]!",
+                "[player]!{w=0.2} What's up?",
+                "[player]!{w=0.2} What's on your mind?",
+                "Ooh!{w=0.2} What did you wanna talk about?",
+                "I'm all ears,{w=0.1} [player]!",
+                "I've always got time for you,{w=0.1} [player]!",
+                "Hey!{w=0.2} What's up,{w=0.2} [player]?",
+                "What have you got for me?{w=0.2} Ehehe.",
+                "[player]!{w=0.2} What's new?",
+                "[player]!{w=0.2} You wanna talk?",
+                "Shoot,{w=0.2} [player]!{w=0.3} Ehehe.",
+                "Shoot,{w=0.2} [player]!",
+                "Oh!{w=0.2} Oh!{w=0.2} You got something for me?",
+                "Talk to me,{w=0.2} [player]!{w=0.3} Ehehe."
+            ])
 
         elif Natsuki.isNormal(higher=True):
-            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_AFFECTIONATE_NORMAL)
+            _talk_flavor_text = random.choice([
+                "What's up?",
+                "What's on your mind?",
+                "What's happening?",
+                "Something on your mind?",
+                "Oh?{w=0.2} You wanna talk?",
+                "Huh?{w=0.2} What's up?",
+                "You wanna share something?",
+                "What's new,{w=0.1} [player]?",
+                "'Sup,{w=0.1} [player]?",
+                "You wanna talk?",
+                "Hey,{w=0.2} [player]!"
+            ])
 
         elif Natsuki.isDistressed(higher=True):
-            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_UPSET_DISTRESSED)
+            _talk_flavor_text = random.choice([
+                "What do you want?",
+                "What is it?",
+                "Make it quick.",
+                "What now?",
+                "What do you want now?",
+                "What is it this time?",
+                "Yeah?{w=0.2} What?",
+                "What now?",
+                "This better be good."
+            ])
 
         else:
-            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_BROKEN_RUINED)
+            _talk_flavor_text = random.choice([
+                "...",
+                "...?",
+                "What?",
+                "Just talk already.",
+                "Spit it out.",
+                "Start talking.",
+                "Get it over with.",
+                "What do {i}you{/i} want?",
+                "Get on with it.",
+                "Talk."
+            ])
 
         # Ensure any variable references are substituted
         _talk_flavor_text = renpy.substitute(_talk_flavor_text)

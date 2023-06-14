@@ -136,7 +136,7 @@ init python in jn_custom_music:
         jn_utils.createDirectoryIfNotExists(CUSTOM_MUSIC_DIRECTORY)
 
 label music_menu:
-    $ Natsuki.setInConversation(is_in_conversation=True)
+    $ Natsuki.setInConversation(True)
     $ music_title = "Error, this should have changed"
 
     # Attempt to get the music in the custom_music directory to present as menu options
@@ -204,7 +204,7 @@ label music_menu:
                 n 2ullss "So...{w=0.5}{nw}"
                 extend 2unmaj " what did you wanna listen to?"
 
-                show natsuki idle at jn_left
+                show natsuki option_wait_excited at jn_left
 
             "No.":
                 n 3fcsbg "The sound of silence it is,{w=0.1} then!{w=0.5}{nw}"
@@ -217,11 +217,11 @@ label music_menu:
     else:
         $ chosen_quip = renpy.substitute(random.choice(jn_custom_music._CHOOSE_PLAY_MUSIC_QUIPS))
         n 3unmbgl "[chosen_quip]"
-        show natsuki idle at jn_left
+        show natsuki option_wait_excited at jn_left
 
     # We have custom music options, present the choices
     call screen scrollable_choice_menu(custom_music_options, ("Nevermind.", False), 400, "mod_assets/icons/custom_music.png")
-    show natsuki idle at jn_center
+    show natsuki at jn_center
 
     if not _return:
         $ Natsuki.resetLastTopicCall()

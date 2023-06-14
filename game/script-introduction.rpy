@@ -229,7 +229,7 @@ label introduction_first_meeting:
         if len(player_name) == 0:
             n 4kskem "P-{w=0.3}please!{w=1} Who are you?!"
 
-        elif jn_nicknames.get_player_nickname_type(player_name) != jn_nicknames.NicknameTypes.neutral:            # We only apply penalty once here so we don't have to rewrite the whole sequence for diff aff/trust levels
+        elif jn_nicknames.getPlayerNicknameType(player_name) != jn_nicknames.NicknameTypes.neutral:            # We only apply penalty once here so we don't have to rewrite the whole sequence for diff aff/trust levels
             if persistent._jn_player_profanity_during_introduction:
                 play audio static
                 show glitch_garbled_a zorder JN_GLITCH_ZORDER with hpunch

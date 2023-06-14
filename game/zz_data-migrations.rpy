@@ -333,6 +333,12 @@ init python in jn_data_migrations:
     def to_1_3_0():
         jn_utils.log("Migration to 1.3.0 START")
         store.persistent._jn_version = "1.3.0"
+        
+        # Migrate topic persistent data
+        if store.persistent.jn_player_pet is not None:
+            store.persistent._jn_player_pet = store.persistent.jn_player_pet
+            del store.persistent.jn_player_pet
+            jn_utils.log("Migrated: persistent.jn_player_pet")
 
         if jn_outfits.get_outfit("jn_chocolate_plaid_collection").unlocked:
             jn_outfits.get_wearable("jn_necklace_tight_golden_necklace").unlock()

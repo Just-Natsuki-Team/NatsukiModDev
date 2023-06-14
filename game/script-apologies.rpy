@@ -56,7 +56,7 @@ label player_apologies_start:
         ]
         apologies_menu_items.sort()
 
-    call screen scrollable_choice_menu(apologies_menu_items, ("Nevermind.", None))
+    call screen scrollable_choice_menu(apologies_menu_items, ("Nevermind.", None), 400, "mod_assets/icons/apologies.png")
 
     if _return:
         $ push(_return)
