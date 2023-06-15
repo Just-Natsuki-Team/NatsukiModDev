@@ -461,6 +461,16 @@ init python in jn_jokes:
         display_name="Shoemakers",
         joke_category=JNJokeCategories.corny
     ))
+    __registerJoke(JNJoke(
+        label="joke_lead_times",
+        display_name="Dog walkers",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_shark_literature",
+        display_name="Shark literature",
+        joke_category=JNJokeCategories.neutral
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -985,4 +995,31 @@ label joke_shoemakers:
     n 1csrem "...Because they've already{w=0.5}{nw}" 
     extend 1csrsl " {i}tanned{/i}."
 
+    return
+
+label joke_lead_times:
+    n 1ccsfl "...Alright.{w=0.75}{nw}"
+    extend 1csqem " You asked for this,{w=0.2} [player]."
+    n 1csqsl "Why is it so hard to land a job as a dog walker nowadays?"
+    n 1cslsl "..."
+    n 1ccssl "Heh."
+    n 1cdlfl "...Because there's such a long{w=0.5}{nw}" 
+    extend 1fslfl " {i}lead time{/i}."
+
+    return
+
+label joke_shark_literature:
+    n 1fcsbs "Alright!{w=0.75}{nw}"
+    extend 1fdwbg " How about this one,{w=0.5}{nw}" 
+    extend 1fsqsm " [player]?"
+    n 1fcsbg "What kind of literature do you hand a shark?"
+    n 1fnmsm "..."
+    n 1usqss "No?{w=0.75}{nw}"
+    extend 1fsqsm " Not even a guess?"
+    n 1fcssmesm "How disappointing.{w=0.75}{nw}"
+    extend 1fcsbg " Isn't it obvious,{w=0.2} [player]?"
+    n 1fnmss "You give them stuff they can really...{w=1}{nw}" 
+    extend 1fsqbg " {i}sink their teeth into{/i},{w=0.75}{nw}" 
+    extend 1fchgn " duh!"
+    
     return
