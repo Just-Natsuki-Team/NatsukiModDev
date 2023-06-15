@@ -883,15 +883,16 @@ label talk_service_animals:
             extend 3cllca " then getting them to people who needed them."
 
     if Natsuki.isNormal(higher=True):
-        n 7ulrss "They're like animals people train up specially to help people who struggle to do certain things for themselves -{w=0.5}{nw}"
+        n 7ulrss "They're like animals trained up specially to help people who struggle to do certain things for themselves -{w=0.5}{nw}"
         extend 7unmfl " or stuff they can't do at all!"
         n 2ccsss "Everybody knows about guide dogs.{w=0.75}{nw}"
         extend 2unmbo " But there's actually a {i}ton{/i} of roles people never even think about."
         n 4unmaj "Seriously!"
         n 4ccsss "There's ones that are meant to help more with mobility,{w=0.5}{nw}"
         extend 3cllsssbr " some that listen out for stuff if their owner has sucky hearing..."
-        n 3unmaj "Even helping out with managing medical conditions or avoiding allergies!{w=0.75}{nw}"
-        extend 7ccssmesm " Talk about sniffing something out."
+        n 3unmaj "Even helping out with managing medical conditions or avoiding allergies!"
+        n 7ccsss "Heh.{w=0.75}{nw}"
+        extend 7fcssmesm " Talk about sniffing things out."
         n 7tllaj "But...{w=1}{nw}"
         extend 7tnmbo " personally?"
         n 4unmbg "The ones I really liked were the therapy animals!"
@@ -899,13 +900,13 @@ label talk_service_animals:
         extend 4csrss " and they aren't {i}exactly{/i} in the same group as service types..."
         n 4unmbo "But they're sorta like extra-tame pets for people going through some kind of rough time."
         n 2ullaj "You know,{w=0.5}{nw}" 
-        extend 2unmss " like emotionally or mentally."
+        extend 2unmbo " like emotionally or mentally."
         n 4nchgn "...And they come in a ton of shapes and sizes too!"
         n 3clrbg "You have cats and dogs -{w=0.5}{nw}"
         extend 3fcsbg " {i}obviously{/i} -{w=0.5}{nw}"
         extend 3fchsm " but even animals like those miniature horses can be trained up to help!"
         n 6fcsbg "You don't just find them hanging around the home either,{w=0.2} [player] -{w=0.5}{nw}"
-        extend 6unmbg " they said that offices,{w=0.2} hospices and even hospitals can arrange visits too!"
+        extend 6unmbg " they said that offices,{w=0.2} hospices and even hospitals can arrange visits with them too!"
         
         if Natsuki.isAffectionate(higher=True):
             n 3nchgn "Pretty awesome,{w=0.2} right?{w=0.75}{nw}"
@@ -919,7 +920,7 @@ label talk_service_animals:
             n 5cslcal "...W-{w=0.2}with Sayori and all."
             n 5cslfll "She...{w=1}{nw}" 
             extend 4cdlbol " wasn't around that day we had the visit.{w=0.75}{nw}"
-            extend 4cslbol " I doubt it takes a genius to figure out why."
+            extend 4cslbol " Doesn't exactly take a genius to figure out why."
             n 2ccsfllsbl "I-{w=0.2}it's just that..."
 
             if Natsuki.isEnamored(higher=True):
@@ -967,7 +968,7 @@ label talk_service_animals:
         n 4fcsss "Heh.{w=0.75}{nw}"
         extend 4tllss " Well..."
         n 7tsqss "You're an animal too,{w=0.2} right?{w=0.75}{nw}"
-        extend 7fcssm " Not to worry then,{w=0.2} [player]..."
+        extend 7fcssm " Don't sweat it too much,{w=0.2} [player]..."
         n 3fchgnelg "Pretty sure I can train {i}you{/i} up just as well!"
 
         if Natsuki.isLove(higher=True):
