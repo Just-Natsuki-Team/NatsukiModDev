@@ -481,6 +481,11 @@ init python in jn_jokes:
         display_name="Plans",
         joke_category=JNJokeCategories.neutral
     ))
+    __registerJoke(JNJoke(
+        label="joke_action_figures",
+        display_name="Action",
+        joke_category=JNJokeCategories.corny
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -1063,5 +1068,16 @@ label joke_shelved_plans:
     n 1tllss "I guess those plans are gonna have to be{w=0.5}{nw}"
     extend 1fsqbg " {i}shelved{/i}{w=0.75}{nw}"
     extend 1nchgn " after all,{w=0.2} huh?"
+
+    return
+
+label joke_action_figures:
+    n 1fsrem "...Seriously can't believe I'm telling {i}this{/i} one.{w=0.75}{nw}"
+    extend 1ccsem " Ugh."
+    n 1ccstresi "..."
+    n 1nsqsl "What kind of gift do movie directors love the most?"
+    n 1fllbosbr "..."
+    n 1fcsflsbr "...{i}Action{/i}{w=0.75}{nw}"
+    extend 1fsqflsbr " figures."
 
     return
