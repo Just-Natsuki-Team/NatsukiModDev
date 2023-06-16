@@ -471,6 +471,16 @@ init python in jn_jokes:
         display_name="Shark literature",
         joke_category=JNJokeCategories.neutral
     ))
+    __registerJoke(JNJoke(
+        label="joke_developers_committed",
+        display_name="Developers",
+        joke_category=JNJokeCategories.funny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_shelved_plans",
+        display_name="Plans",
+        joke_category=JNJokeCategories.neutral
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -1022,4 +1032,36 @@ label joke_shark_literature:
     extend 1fsqbg " {i}sink their teeth into{/i},{w=0.75}{nw}" 
     extend 1fchgn " duh!"
     
+    return
+
+label joke_developers_committed:
+    n 1ttrpu "You know,{w=0.2} [player]...{w=1}{nw}"
+    extend 1tlraj " I've always wondered."
+    n 1tsqfl "Is it hard for developers to start relationships?{w=0.75}{nw}"
+    extend 1tllbo " The ones that mess around with code and all that stuff?"
+    n 1tsqsl "..."
+    n 1tsqfl "No?{w=0.75}{nw}"
+    extend 1clrpu " Huh.{w=1}{nw}"
+    extend 1csqss " You sure,{w=0.2} [player]?"
+    n 1fcsss "'Cause from what I'm reading here..."
+    n 1nchgn "...They always seem to be pretty {i}committed{/i} already!"
+
+    return
+
+label joke_shelved_plans:
+    n 1ccstr "I gotta say,{w=0.2} [player].{w=0.75}{nw}"
+    extend 1cslca " I'm still pretty bummed out about being stuck here and everything,{w=0.2} you know."
+    n 1cllbo "..."
+    n 1tnmfl "What?{w=0.75}{nw}"
+    extend 1tnmbo " Didn't I tell you?"
+    n 1fcsgs "I actually landed an interview for a part-time job after school at a bookstore!{w=0.75}{nw}"
+    extend 1fcspo " I applied online and everything!"
+    n 1knmfl "...But how am I supposed to get there now?"
+    n 1ccsemesi "Ugh..."
+    n 1nsrpo "..."
+    n 1ncsaj "Well."
+    n 1tllss "I guess those plans are gonna have to be{w=0.5}{nw}"
+    extend 1fsqbg " {i}shelved{/i}{w=0.75}{nw}"
+    extend 1nchgn " after all,{w=0.2} huh?"
+
     return
