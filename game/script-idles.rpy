@@ -229,6 +229,13 @@ init python in jn_idles:
         affinity_range=(jn_affinity.HAPPY, None)
     ))
 
+    __registerIdle(JNIdle(
+        label="idle_math_attempts",
+        idle_type=JNIdleTypes.reading,
+        affinity_range=(jn_affinity.NORMAL, None),
+        conditional="get_topic('talk_favorite_subject').shown_count > 0"
+    ))
+
 label idle_twitch_playing:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     show prop wintendo_twitch_playing free zorder JN_PROP_ZORDER
@@ -590,6 +597,40 @@ label idle_laptop:
     $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
     $ jnPause(1.3)
     show natsuki 3ullbo
+    hide black with Dissolve(0.5)
+    $ jnPause(1)
+
+    $ jn_idles._concludeIdle()
+
+label idle_math_attempts:
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    show prop math_attempt zorder JN_PROP_ZORDER
+    show natsuki thinking
+    hide black with Dissolve(0.5)
+    $ jnClickToContinue(silent=False)
+
+    if random.choice([True, False]):
+        n 1tnmboeqm "...?{w=1.25}{nw}"
+        n 1uwdajesu "Oh!{w=0.75}{nw}"
+        extend 1fchbgsbl " H-{w=0.2}Hey [player]."
+        n 2fslsssbl "I was just..."
+        n 2ccsfl "Ugh,{w=0.2} it's fine."
+        extend 2fslpo " Math just won't stop being stupid."
+
+    else:
+        n 1tlrca "...{w=1.25}{nw}"
+        n 1tnmcaeqm "...?{w=0.75}{nw}"
+        n 1uwdeml "A-{w=0.2}ah!{w=0.75}{nw}"
+        extend 1cdrbol " [player]!"
+        n 2fcsajlsbr "Y-{w=0.2}You really need to learn to knock!"
+        n 2cslbo "Let me just clean up that mess."
+
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    show natsuki 1csrcasbl
+    hide prop
+    play audio drawer
+    $ jnPause(1.3)
     hide black with Dissolve(0.5)
     $ jnPause(1)
 
