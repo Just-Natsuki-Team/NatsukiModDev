@@ -745,7 +745,7 @@ label greeting_love_plus_world_revolves_around_you:
     n 2fnmsfl "You think my entire {i}world{/i} revolves around you or something?"
     n 2fnmdvl "..."
     n 2fsqsml "..."
-    n 2uchlglelg "Ahaha!{w=1}{nw}" 
+    n 4uchlglelg "Ahaha!{w=1}{nw}" 
     extend 3fsqsml " Did I getcha,{w=0.2} [player]?{w=0.5}{nw}" 
     extend 3fchgnl " Don't lie!"
     $ chosen_endearment = jn_utils.getRandomEndearment()
