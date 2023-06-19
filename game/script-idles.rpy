@@ -448,7 +448,7 @@ label idle_daydreaming:
 label idle_poetry_attempts:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     show prop poetry_attempt zorder JN_PROP_ZORDER
-    show natsuki thinking
+    show natsuki attempting
     hide black with Dissolve(0.5)
     $ jnClickToContinue(silent=False)
 
@@ -605,7 +605,7 @@ label idle_laptop:
 label idle_math_attempts:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     show prop math_attempt zorder JN_PROP_ZORDER
-    show natsuki thinking
+    show natsuki attempting
     hide black with Dissolve(0.5)
     $ jnClickToContinue(silent=False)
 

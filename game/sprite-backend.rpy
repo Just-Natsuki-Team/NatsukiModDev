@@ -1013,6 +1013,61 @@ image natsuki whistling:
             pause 4
     repeat
 
+# Idle images for Natsuki attempting
+image natsuki attempting:
+    block:
+        choice:
+            "natsuki 2tupbo"
+            pause 4
+            "natsuki 2tcsbo"
+            pause 0.1
+            "natsuki 2tupbo"
+            pause 1
+            "natsuki 2tcsbo"
+            pause 0.1
+            "natsuki 2tupbo"
+            pause 4
+            "natsuki 2tcsbo"
+            pause 0.1
+
+        choice:
+            "natsuki 2tllbo"
+            pause 4
+            "natsuki 2tcsbo"
+            pause 0.1
+            "natsuki 2tllbo"
+            pause 4
+            "natsuki 2tcsbo"
+            pause 0.1
+
+        choice:
+            "natsuki 4tlrbo"
+            pause 4
+            "natsuki 4tcsbo"
+            pause 0.1
+            "natsuki 4tlrbo"
+            pause 4
+            "natsuki 4tcsbo"
+            pause 0.1
+    
+        choice:
+            "natsuki 2tsrpu"
+            pause 4
+            "natsuki 2tcspu"
+            pause 0.1
+            "natsuki 2tsrpu"
+            pause 3
+            "natsuki 2fsrpu"
+            pause 3
+            "natsuki 2fcspu"
+            pause 0.1
+            "natsuki 2tsrsl"
+            pause 5
+            "natsuki 2tcssl"
+            pause 0.1
+
+    repeat
+
 image natsuki snap:
     block:
         choice:
