@@ -622,7 +622,7 @@ label idle_math_attempts:
         n 1tnmcaeqm "...?{w=0.75}{nw}"
         n 1uwdeml "A-{w=0.2}ah!{w=0.75}{nw}"
         extend 1cdrbol " [player]!"
-        n 2fcsajlsbr "Y-{w=0.2}You really need to learn to knock!"
+        n 2fcsajlsbr "Y-{w=0.2}You really need to learn how to knock!"
         n 2cslbo "Let me just clean up that mess."
 
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
