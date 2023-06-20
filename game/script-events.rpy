@@ -2233,16 +2233,23 @@ label event_sanjo:
 
     show natsuki 
     menu:
+        #TODO: expand?
         "What's with the plant?":
-            pass
+            n "E-excuse me?!"
+            extend " 'What's with the plant'?"
+            extend " And what exactly is that supposed to mean, [player]?"
+            n "{i}'The plant'{/i} has a name, you know."
+            n "..."
+            n "..."
+            n "...It's Sanjo."
 
-    n "E-excuse me?!"
-    extend " 'What's with the plant'?"
-    extend " Are you serious?!"
-    n "{i}'The plant'{/i} has a name, you know."
-    n "..."
-    n "..."
-    n "...It's Sanjo."
+        "...":
+            n "..."
+            n "W-what?"
+            extend " Don't look at me like that, [player]."
+            n "Besides."
+            n "...You'll annoy Sanjo here."
+    
     extend " A-and no,"
     extend " I didn't name him myself."
     n "In fact..."
@@ -2251,6 +2258,7 @@ label event_sanjo:
     n "One of the teachers just kinda brought him in one day and told the class to take care of him."
     n "...Doesn't explain why someone just decided to stuff him inside the teacher's desk though."
     extend " Jerks."
+    #TODO: cont
 
 
     return
