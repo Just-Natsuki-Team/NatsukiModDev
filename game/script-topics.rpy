@@ -898,7 +898,7 @@ label talk_service_animals:
         n 4unmbg "The ones I really liked were the therapy animals!"
         n 2clrss "The visitors didn't go into that much detail about them,{w=0.5}{nw}"
         extend 4csrss " and they aren't {i}exactly{/i} in the same group as service types..."
-        n 4unmbo "But they're sorta like extra-tame pets for people going through some kind of rough time."
+        n 4unmbo "But they're sorta like extra-tame pets for people going through rough times of some kind."
         n 2ullaj "You know,{w=0.5}{nw}" 
         extend 2unmbo " like emotionally or mentally."
         n 4nchgn "...And they come in a ton of shapes and sizes too!"
