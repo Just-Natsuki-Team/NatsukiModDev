@@ -613,7 +613,7 @@ label idle_math_attempts:
     if random.choice([True, False]):
         n 1tnmboeqm "...?{w=1.25}{nw}"
         n 1uwdajesu "Oh!{w=0.75}{nw}"
-        extend 1fchbgsbl " H-{w=0.2}Hey [player]."
+        extend 1fchbgsbl " H-{w=0.2}hey [player]."
         n 2fslsssbl "I-{w=0.2}I was just..."
         n 2fslunsbl "..."
         n 2ccsfl "Ugh.{w=0.5} Nevermind."
@@ -622,15 +622,15 @@ label idle_math_attempts:
     else:
         n 1tlrca "...{w=1.25}{nw}"
         n 1tnmcaeqm "...?{w=0.75}{nw}"
-        n n 1uwdwrlesh "A-{w=0.2}ah!{w=0.75}{nw}"
+        n 1uwdwrlesh "A-{w=0.2}ah!{w=0.75}{nw}"
         extend 1cdrbol " [player]!"
-        n 2fcsajlsbr "Y-{w=0.2}You {i}seriously{/i} need to learn how to knock!"
+        n 2fcsajlsbr "Y-{w=0.2}you {i}seriously{/i} need to learn how to knock!"
         extend 2fcsfllsbr " Yeesh..."
         n 2cslbosbr "At least let me clean up this mess..."
 
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
-    show natsuki 1csrcasbl
+    show natsuki 4nsrbosbl
     hide prop
     play audio drawer
     $ jnPause(1.3)
