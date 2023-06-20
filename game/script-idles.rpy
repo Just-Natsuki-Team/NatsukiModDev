@@ -232,7 +232,7 @@ init python in jn_idles:
 
     __registerIdle(JNIdle(
         label="idle_math_attempts",
-        idle_type=JNIdleTypes.working_on_paper,
+        idle_type=JNIdleTypes.working_on_papers,
         affinity_range=(jn_affinity.NORMAL, None),
         conditional="get_topic('talk_favorite_subject').shown_count > 0"
     ))
