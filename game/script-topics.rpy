@@ -35,52 +35,6 @@ init python in topics:
     import store
     TOPIC_MAP = dict()
 
-label menu_nevermind: #TODO: incorporate into _topic_database - not sure how to differentiate it from other talk topics
-    n "Okay!"
-    jump ch30_loop
-
-#---------------date_menu_topics--------------------
-
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="date_go2_beach",
-            unlocked=True,
-            prompt="Wanna go to the beach?",
-            player_says=True,
-            category=["date"]
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-label date_go2_beach:
-    n "I love the beach"
-    n "Let's go!"
-    $ main_background.changeLocation(beach)
-    $ main_background.draw(full_redraw=True)
-    return
-
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._topic_database,
-            label="date_go2_room",
-            unlocked=True,
-            prompt="Let's return",
-            player_says=True,
-            category=["date"]
-        ),
-        topic_group=TOPIC_TYPE_NORMAL
-    )
-
-label date_go2_room:
-    n "Heading back then?"
-    n "Alright!"
-    $ main_background.changeLocation(classroom)
-    $ main_background.draw(dissolve_all=True, full_redraw=True)
-    return
-
 # Special dialogue for when out of random topics
 label talk_out_of_topics:
     if Natsuki.isNormal(higher=True):
@@ -862,56 +816,200 @@ init 5 python:
     )
 
 label talk_service_animals:
-    n 1ullbo "Hmm..."
-    n 4unmaj "Hey [player],{w=0.1} have you ever heard of service animals?"
-    n 1usqbg "They're like animals people train up specially to do jobs that humans can't do easily."
-
-    if Natsuki.isNormal(higher=True):
-        n 1unmbs "Some work in airports to keep people safe,{w=0.1} others help in rescues...{w=0.3} it's super cool!"
-        n 4uwmsm "But there's one type that's especially awesome..."
-        n 3uchgn "Emotional support animals!"
-        n 1ullaj "They're like really tame pets that are used to comfort people going through a bad time."
-        n 4usrss "They come in all different shapes and sizes too!{w=0.5}{nw}"
-        n 3nnmpu " Dogs and cats -{w=0.5}{nw}"
-        extend 3fslss " {i}obviously{/i}{w=0.5}{nw}"
-        extend 4uwdgs " -{w=0.2} but even horses sometimes!"
-        n 1fchbg "Awesome,{w=0.1} right?"
-        n 1kllss "..."
-        n 1ulrbo "..."
-        n 4uplaj "You know,{w=0.1} [player]..."
-        n 1kcsaj "Sometimes I wonder if one could have helped Sayori..."
-        n 2klrfr "...but I try not to think about that too much."
-        n 1knmem "They {i}are{/i} great,{w=0.1} but they don't do miracles."
-        n 4kwmem "[player]...{w=0.3} I really hope you never have to seek their help."
-        n 2kwmnv "And on that note,{w=0.1} if you do need support?"
-
-        if Natsuki.isAffectionate(higher=True):
-            n 1fcssrl "I-{w=0.2}I want you to know that you can depend on me,{w=0.1} 'kay?"
-
-            if Natsuki.isLove(higher=True):
-                n 4kwmnv "I love you,{w=0.1} [player]."
-                return
+    if get_topic("talk_service_animals").shown_count > 0:
+        if Natsuki.isNormal(higher=True):
+            n 4ncsss "Heh.{w=0.75}{nw}"
+            extend 3nslss " Man..."
+            n 7ntlaj "I'm pretty sure I talked about it before,{w=0.75}{nw}"
+            extend 7unmbo " but I still can't get my mind off that school visit we had."
+            n 4fsrsssbl "N-{w=0.2}not the careers advice or anything like that.{w=0.75}{nw}"
+            extend 4unmaj " But that visit we had from the charity for service and therapy animals!"
+            n 3fchbg "Talk about making an impression,{w=0.2} huh?"
+            n 3ulraj "Seriously though -{w=0.5}{nw}"
+            extend 4unmfl " it's crazy how much work they do!{w=0.75}{nw}"
+            extend 4tllfl " Like I was saying before..."
 
         else:
-            n 1fcssrl "Just...{w=0.5}{nw}"
-            extend 1fnmsl " don't be dumb about it,{w=0.1} [player].{w=0.5}{nw}"
-            extend 1kllss " I can listen if you need me to."
-            n 3fcsajl "I-{w=0.1}I'm not a jerk!{w=0.5}{nw}"
-            extend 3flrpol " It's just the least anyone can do,{w=0.1} that's all."
+            n 1ncssl "Heh.{w=0.75}{nw}"
+            extend 2nlraj " I'm pretty sure I talked about it before -{w=0.5}{nw}"
+            extend 2csqsl " if you were even {i}listening{/i} -{w=0.5}{nw}"
+            extend 2clrpu " but I still keep thinking back about that school visit we had."
+            n 1fsqfl "...And no,{w=0.5}{nw}"
+            extend 4ccsfl " none of the career ones or anything like that."
+            n 4cdlbo "I was actually thinking about that charity with the service and therapy animals.{w=0.75}{nw}"
+            extend 2cllaj " It's still pretty crazy to me how much work they actually do."
 
     else:
-        n 1unmbo "They work in a bunch of places.{w=0.2} Airports and rescues and stuff,{w=0.1} usually."
-        n 1unmss "But I really like emotional support animals."
-        n 1nnmsl "They're like specially tame pets that are used to comfort those having a bad time."
-        n 2nsgbo "..."
-        n 4nsgaj "And...{w=0.3} to be perfectly honest?"
-        n 1fcsun "Sometimes I feel like I could use one."
-        return
+        if Natsuki.isNormal(higher=True):
+            n 7cdlbo "You know,{w=0.2} [player]..."
+            n 7tdlaj "I don't think I ever mentioned it before,{w=0.75}{nw}"
+            extend 7unmbo " but we did actually used to get visitors at school sometimes."
+            n 3ccsss "Heh.{w=0.75}{nw}"
+            extend 3csqss " Are you surprised?{w=0.75}{nw}"
+            extend 1fdrsl " We were {i}basically{/i} a captive audience,{w=0.2} after all."
+            n 1csrfl "Not like we were given the option to leave."
+            n 3cllaj "Usually it was just someone trying to sell us on some kinda career after school,{w=0.75}{nw}"
+            extend 3csrbo " or like a visit from the local police or some other snooze-fest."
+            n 7utrpu "But...{w=0.75}{nw}"
+            extend 7clrbg " there was {i}one{/i} visit I actually did like."
+            n 4fcsbg "Betcha can't guess what it was,{w=0.2} [player]."
+            n 3fsqsm "Ehehe."
+            n 3ullaj "It was actually a bunch of volunteers from a charity...{w=1}{nw}"
+            extend 4unmfl " but for service and therapy animals!"
+            n 1ccsgs "And oh.{w=0.5}{nw}"
+            extend 1ccsfl " My.{w=0.5}{nw}"
+            extend 1csqaj " God.{w=0.5}{nw}"
+            extend 4csqca " [player]."
+            n 4ccstr "They're...{w=1}{nw}"
+            extend 4fspgsedz " {b}awesome{/b}!{w=0.75}{nw}"
+            extend 3uchgn " I love them!"
 
-    n 2ksrfr "..."
-    n 1kwmfr "That got kinda heavy,{w=0.1} didn't it?"
-    n 1kwmbg "Well,{w=0.1} enough of that.{w=0.2}"
-    extend 1uwmss " What else do you wanna talk about?"
+        else:
+            n 1cllpu "You know..."
+            n 2fslpu "Not that I expect you to care or anything,{w=0.75}{nw}"
+            extend 2cnmsl " but we did actually get random visitors at school sometimes."
+            n 2clrsl "..."
+            n 2ccsfl "Yeah.{w=0.75}{nw}"
+            extend 4csqsl " Don't look too surprised."
+            n 4fllem "Hard to find a better captive audience than a bunch of students.{w=0.75}{nw}"
+            extend 2fslem " Obviously."
+            n 2cslpu "I mean...{w=1}{nw}"
+            extend 2clrsl " most of them were just a {i}total{/i} snooze-fest.{w=0.75}{nw}"
+            extend 2clraj " Career talks,{w=0.5}{nw}"
+            extend 2csrfl " that sort of stuff."
+            n 7csrsl "But there was one I {i}did{/i} actually like."
+            n 3cllpu "It was some kinda charity,{w=0.5}{nw}"
+            extend 3nllaj " but all their work was around training up service and therapy animals -{w=0.5}{nw}" 
+            extend 3cllca " then getting them to people who needed them."
+
+    if Natsuki.isNormal(higher=True):
+        n 7ulrss "They're like animals trained up specially to help people who struggle to do certain things for themselves -{w=0.5}{nw}"
+        extend 7unmfl " or stuff they can't do at all!"
+        n 2ccsss "Everybody knows about guide dogs.{w=0.75}{nw}"
+        extend 2unmbo " But there's actually a {i}ton{/i} of roles people never even think about."
+        n 4unmaj "Seriously!"
+        n 4ccsss "There's ones that are meant to help more with mobility,{w=0.5}{nw}"
+        extend 3cllsssbr " some that listen out for stuff if their owner has sucky hearing..."
+        n 3unmaj "Even helping out with managing medical conditions or avoiding allergies!"
+        n 7ccsss "Heh.{w=0.75}{nw}"
+        extend 7fcssmesm " Talk about sniffing things out."
+        n 7tllaj "But...{w=1}{nw}"
+        extend 7tnmbo " personally?"
+        n 4unmbg "The ones I really liked were the therapy animals!"
+        n 2clrss "The visitors didn't go into that much detail about them,{w=0.5}{nw}"
+        extend 4csrss " and they aren't {i}exactly{/i} in the same group as service types..."
+        n 4unmbo "But they're sorta like extra-tame pets for people going through rough times of some kind."
+        n 2ullaj "You know,{w=0.5}{nw}" 
+        extend 2unmbo " like emotionally or mentally."
+        n 4nchgn "...And they come in a ton of shapes and sizes too!"
+        n 3clrbg "You have cats and dogs -{w=0.5}{nw}"
+        extend 3fcsbg " {i}obviously{/i} -{w=0.5}{nw}"
+        extend 3fchsm " but even animals like those miniature horses can be trained up to help!"
+        n 6fcsbg "You don't just find them hanging around the home either,{w=0.2} [player] -{w=0.5}{nw}"
+        extend 6unmbg " they said that offices,{w=0.2} hospices and even hospitals can arrange visits with them too!"
+        
+        if Natsuki.isAffectionate(higher=True):
+            n 3nchgn "Pretty awesome,{w=0.2} right?{w=0.75}{nw}"
+            extend 3clrsm " Ehehe..."
+            n 4clrslsbl "..."
+            n 5ksrbosbl "..."
+            n 1kcsflesi "..."
+            n 4kllbo "It...{w=1}{nw}" 
+            extend 4kslbo " just sucks sometimes,{w=0.2} thinking about it now.{w=0.75}{nw}"
+            extend 4knmbol " You know?"
+            n 5cslcal "...W-{w=0.2}with Sayori and all."
+            n 5cslfll "She...{w=1}{nw}" 
+            extend 4cdlbol " wasn't around that day we had the visit.{w=0.75}{nw}"
+            extend 4cslbol " Doesn't exactly take a genius to figure out why."
+            n 2ccsfllsbl "I-{w=0.2}it's just that..."
+
+            if Natsuki.isEnamored(higher=True):
+                n 2ksrbolsbl "..."
+                n 2ksrfllsbr "I can't help but think if just having one around could have {i}done{/i} something for her.{w=0.75}{nw}"
+                extend 5knmbolsbr " One of those support animals."
+                n 4ccsemlsbr "I...{w=1}{nw}" 
+                extend 4ccsfllsbr " know...{w=1}{nw}" 
+                extend 4cdlbolsbr " they can't work miracles.{w=0.75}{nw}"
+                extend 2ccssrlsbr " I-{w=0.2}I'm not {i}naive{/i}."
+                n 4kslpulsbr "But..."
+                n 4kslfllsbr "It would have been something...{w=1}{nw}"
+                extend 5knmbolsbr " right?"
+                n 5ksrbolsbr "...Maybe just that one thing could have made {i}some{/i} sort of difference."
+                n 7ksrsllsbl "..."
+                n 3ccsfllsbl "...A-{w=0.2}anyway."
+
+            else:
+                n 4cslunlsbl "..."
+                n 4ccsemlsbl "...N-{w=0.2}nevermind.{w=0.75}{nw}"
+                extend 2cllfllsbl " It's..."
+                n 2cdlsllsbr "...Not really something I wanna think about right now."
+                n 2nslbolsbr "S-{w=0.2}sorry."
+                n 2nslbol "..."
+                n 4ccsajl "A-{w=0.2}anyway."
+
+        else:
+            n 3nchgn "Pretty awesome,{w=0.2} right?{w=0.75}{nw}"
+            extend 3fchsm " Ehehe."
+            n 4ulrss "Well,{w=0.2} anyhow..."
+
+        n 3ulrbo "It wasn't a super big visit or anything,{w=0.5}{nw}"
+        extend 3csrss " so the volunteers didn't stick around for {i}that{/i} long..."
+        n 4uchgn "But they did let us go up and meet the animals they brought in with them!"
+        n 3fcssmesm "No surprises who got picked to go up first.{w=0.75}{nw}"
+        extend 3fsqsm " Ehehe."
+        n 4fcsbg "Yep!"
+        n 2ullbg "When it comes to those kinds of animals,{w=0.2} it's gotta be said.{w=0.75}{nw}"
+        extend 6fchbg "\nNothing beats a real hands-on experience!"
+        n 2fchsm "Ahaha.{w=0.75}{nw}"
+        extend 2tllss " Well,{w=0.2} anyway."
+        n 4ullaj "I think I've gone on for way too long already,{w=0.5}{nw}"
+        extend 6fcssmesm " but I hope you learned something,{w=0.2} [player]!"
+        n 3fsqbg "And if not?"
+        n 4fcsss "Heh.{w=0.75}{nw}"
+        extend 4tllss " Well..."
+        n 7tsqss "You're an animal too,{w=0.2} right?{w=0.75}{nw}"
+        extend 7fcssm " Don't sweat it too much,{w=0.2} [player]..."
+        n 3fchgnelg "Pretty sure I can train {i}you{/i} up just as well!"
+
+        if Natsuki.isLove(higher=True):
+            $ chosen_tease = jn_utils.getRandomTease()
+            n 3fchbll "Love you too,{w=0.2} [chosen_tease]~!"
+
+        else:
+            n 3fwlbg "You're welcome,{w=0.2} [player]!"
+
+    else:
+        n 7tllbo "They're like animals specially trained to help people with stuff they couldn't do normally -{w=0.5}{nw}"
+        extend 7cllpu " or at all."
+        n 2csqsl "Yeah,{w=0.2} no kidding.{w=0.75}{nw}"
+        extend 2clrfl " Everyone's heard of guide dogs.{w=1}{nw}"
+        extend 2fcsca " But people forget all the other stuff trained up animals can help out with."
+        n 4clltr "Mobility,{w=0.2} hearing issues...{w=1}{nw}"
+        extend 4cllca " medical conditions and allergies too,{w=0.2} actually."
+        n 2cslaj "I suppose that kind of animal help is cool and all.{w=0.75}{nw}"
+        extend 2cnmsl " But what really stuck out to me were the therapy and emotional support animals.{w=0.75}{nw}"
+        extend 2csrfl " Even if they {i}didn't{/i} get as much focus."
+        n 7clrfl "I guess they're kinda like super-tame pets people have to help them get through a rough time."
+        n 2fcssl "Heh.{w=0.75}{nw}"
+        extend 2fsqfr " Ring any bells,{w=0.2} {i}[player]{/i}?"
+        n 2cllfl "You get dogs and cats -{w=0.5}{nw}"
+        extend 2cslfl " obviously -{w=0.5}{nw}"
+        extend 4nlraj " but you can get miniature horses and all sorts too nowadays."
+        n 1ulrfl "You can even get visits arranged to hospitals and hospices now,{w=0.2} so..."
+        n 2cdrbo "Yeah.{w=0.75}{nw}"
+        extend 2cdrsl " That's about all I had to say about it."
+
+        if Natsuki.isUpset(higher=True):
+            n 1fcssl "Heh.{w=0.75}{nw}"
+            extend 1fllpu " And besides."
+            n 4fslfl "Not like you listen to much else I say anyway.{w=0.75}{nw}"
+            extend 4fsqsl " {i}Right{/i}?"
+
+        else:
+            n 1fcsem "Heh.{w=0.75}{nw}"
+            extend 1fsrem " And besides..."
+            n 4fslsr "I can think of at least {i}one{/i} animal that could use some extra training right now...{w=0.75}{nw}"
+            extend 4fsqan " {i}[player].{/i}"
 
     return
 
