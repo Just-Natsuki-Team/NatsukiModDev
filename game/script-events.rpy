@@ -2153,7 +2153,7 @@ init 5 python:
 label event_sanjo:
     n "..."
     n "Man..."
-    extend " is there seriously {i}nothing else{/i} in this dump?"
+    extend " is there seriously {i}nothing else{/i} to do in this dump?"
     extend " I'm so {b}bored{/b}!"
     n "Would it have killed them to keep some board games here?"
     n "Ugh..."
@@ -2161,7 +2161,8 @@ label event_sanjo:
     $ jnPause(5)
 
     n "..."
-    n "Oh, screw this! I'm done sitting around. There's gotta be something I missed in the teacher's desk or... something..."
+    n "Oh, screw this! I'm done just sitting around. {i}Again{/i}." 
+    n "There's gotta be something I missed in the teacher's desk or... something..."
     play audio chair_out
     $ jnPause(3)
 
@@ -2215,12 +2216,13 @@ label event_sanjo:
     n "[player_initial]-[player]!"
     extend " Jeez!"
     n "Did you seriously just wait outside the room for all that time?!"
-    extend " Ugh..."
+    extend " How long were you even {i}there{/i}?"
+    n "Ugh..."
     n "I really wish you'd stop doing that."
     extend " You big jerk."
-
+    extend " You should know I hate being made to jump by now."
     n "A-and besides, [player]."
-    extend " Can't you see I'm {i}busy{/i} here?"
+    extend " Can't you see I'm {i}busy{/i} here already?"
     extend " Yeesh."
     n "Talk about inconsiderate."
     n "..."
@@ -2234,7 +2236,22 @@ label event_sanjo:
         "What's with the plant?":
             pass
 
-    
+    n "E-excuse me?!"
+    extend " 'What's with the plant'?"
+    extend " Are you serious?!"
+    n "{i}'The plant'{/i} has a name, you know."
+    n "..."
+    n "..."
+    n "...It's Sanjo."
+    extend " A-and no,"
+    extend " I didn't name him myself."
+    n "In fact..."
+    extend " come to think of it."
+    extend " I don't actually know who did."
+    n "One of the teachers just kinda brought him in one day and told the class to take care of him."
+    n "...Doesn't explain why someone just decided to stuff him inside the teacher's desk though."
+    extend " Jerks."
+
 
     return
 
