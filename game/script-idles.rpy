@@ -40,7 +40,7 @@ init python in jn_idles:
         gaming = 2
         resting = 3
         vibing = 4
-        working_on_papers = 5
+        working = 5
 
     class JNIdle:
         """
@@ -206,7 +206,7 @@ init python in jn_idles:
 
     __registerIdle(JNIdle(
         label="idle_poetry_attempts",
-        idle_type=JNIdleTypes.working_on_papers,
+        idle_type=JNIdleTypes.working,
         affinity_range=(jn_affinity.NORMAL, None),
         conditional="get_topic('event_caught_writing_poetry').shown_count > 0"
     ))
@@ -232,7 +232,7 @@ init python in jn_idles:
 
     __registerIdle(JNIdle(
         label="idle_math_attempts",
-        idle_type=JNIdleTypes.working_on_papers,
+        idle_type=JNIdleTypes.working,
         affinity_range=(jn_affinity.NORMAL, None),
         conditional="get_topic('talk_favorite_subject').shown_count > 0"
     ))
