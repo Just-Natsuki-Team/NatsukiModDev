@@ -169,3 +169,10 @@ init -55 python in jn_desk_items:
         unlocked=False,
         displayable=store.Image("mod_assets/props/card_pack.png")  
     ))
+
+    __registerDeskItem(JNDeskItem(
+        reference_name="jn_poem_on_desk",
+        desk_slot=JNDeskSlots.left,
+        unlocked=True,
+        displayable=store.Image("mod_assets/props/poem_on_desk.png")  
+    ))
