@@ -2137,6 +2137,107 @@ label event_warm_package:
 
     return
 
+# Natsuki finds a new friend in the clubroom!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_sanjo",
+            unlocked=True,
+            conditional="jn_utils.get_total_gameplay_days() >= 7",
+            affinity_range=(jn_affinity.AFFECTIONATE, None)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
+
+label event_sanjo:
+    n "..."
+    n "Man..."
+    extend " is there seriously {i}nothing else{/i} in this dump?"
+    extend " I'm so {b}bored{/b}!"
+    n "Would it have killed them to keep some board games here?"
+    n "Ugh..."
+
+    $ jnPause(5)
+
+    n "..."
+    n "Oh, screw this! I'm done sitting around. There's gotta be something I missed in the teacher's desk or... something..."
+    play audio chair_out
+    $ jnPause(3)
+
+    n "..."
+
+    play audio drawer
+    $ jnPause(3)
+
+    n "Alright... now what have we got here..."
+    $ jnPause(3)
+    
+    n "Trash..."
+    play audio stationary_rustle_a
+    extend " more trash..."
+    play audio stationary_rustle_b
+    n "..."
+    play audio paper_crumple
+    n "...Oh, {i}yuck{/i}! G-gross!"
+    play audio paper_throw
+    n "I-I don't even wanna {i}know{/i} what was in {i}that{/i}..."
+
+    play audio drawer
+    $ jnPause(4)
+
+    n "..."
+    n "...Huh?" 
+    n "Wait. Is that...?"
+    n "..."
+    n "I-it is! What are {i}you{/i} still doing here?"
+    n "Yeesh... you're all crusty now too..."
+    n "Come on... let's get you all fixed up..."
+
+    $ jnPause(4)
+    play audio drink_pour
+    $ jnPause(2)
+    play audio glasses_case_close
+    $ jnPause(1)
+    play audio chair_in
+
+    menu:
+        "Enter...":
+            pass
+
+    $ Natsuki.setDeskItem(desk_slot=jn_desk_items.JNDeskSlots.left, item=jn_desk_items.getDeskItem("jn_sanjo"))
+    $ jn_events.displayVisuals("1fsqbl")
+    $ jn_globals.force_quit_enabled = True
+
+    n "..."
+    n "..."
+    n "...?"
+    n "[player_initial]-[player]!"
+    extend " Jeez!"
+    n "Did you seriously just wait outside the room for all that time?!"
+    extend " Ugh..."
+    n "I really wish you'd stop doing that."
+    extend " You big jerk."
+
+    n "A-and besides, [player]."
+    extend " Can't you see I'm {i}busy{/i} here?"
+    extend " Yeesh."
+    n "Talk about inconsiderate."
+    n "..."
+    n "..."
+    n "...What?"
+    n "What's the deal with {i}that{/i} look,"
+    extend " all of a sudden?"
+
+    show natsuki 
+    menu:
+        "What's with the plant?":
+            pass
+
+    
+
+    return
+
 # HOLIDAYS
 
 # Used to lead up to a holiday, but only if already in-game and the day changes
