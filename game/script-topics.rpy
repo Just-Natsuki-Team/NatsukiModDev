@@ -10605,7 +10605,7 @@ label talk_daily_jokes_seen_before_loop:
                 n 1nsrfl "...Yeah."
                 n 1fcsaj "I gotta say.{w=0.75}{nw}"
                 extend 1cllbo " I wouldn't complain if {i}that{/i} one never showed up again.{w=0.75}{nw}"
-                extend 1ccsbosbr " Just saying."
+                extend 1ccsbosbr "\nJust saying."
 
             elif dialogue_choice == 2:
                 n 1ccsflesi "..."

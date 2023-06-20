@@ -461,6 +461,31 @@ init python in jn_jokes:
         display_name="Shoemakers",
         joke_category=JNJokeCategories.corny
     ))
+    __registerJoke(JNJoke(
+        label="joke_lead_times",
+        display_name="Dog walkers",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_shark_literature",
+        display_name="Shark literature",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_developers_committed",
+        display_name="Developers",
+        joke_category=JNJokeCategories.funny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_shelved_plans",
+        display_name="Plans",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_action_figures",
+        display_name="Action",
+        joke_category=JNJokeCategories.corny
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -984,5 +1009,75 @@ label joke_shoemakers:
     n 1ccsemesi "..."
     n 1csrem "...Because they've already{w=0.5}{nw}" 
     extend 1csrsl " {i}tanned{/i}."
+
+    return
+
+label joke_lead_times:
+    n 1ccsfl "...Alright.{w=0.75}{nw}"
+    extend 1csqem " You asked for this,{w=0.2} [player]."
+    n 1csqsl "Why is it so hard to land a job as a dog walker nowadays?"
+    n 1cslsl "..."
+    n 1ccssl "Heh."
+    n 1cdlfl "...Because there's such a long{w=0.5}{nw}" 
+    extend 1fslfl " {i}lead time{/i}."
+
+    return
+
+label joke_shark_literature:
+    n 1fcsbs "Alright!{w=0.75}{nw}"
+    extend 1fdwbg " How about this one,{w=0.5}{nw}" 
+    extend 1fsqsm " [player]?"
+    n 1fcsbg "What kind of literature do you hand a shark?"
+    n 1fnmsm "..."
+    n 1usqss "No?{w=0.75}{nw}"
+    extend 1fsqsm " Not even a guess?"
+    n 1fcssmesm "How disappointing.{w=0.75}{nw}"
+    extend 1fcsbg " Isn't it obvious,{w=0.2} [player]?"
+    n 1fnmss "You give them stuff they can really...{w=1}{nw}" 
+    extend 1fsqbg " {i}sink their teeth into{/i},{w=0.75}{nw}" 
+    extend 1fchgn " duh!"
+    
+    return
+
+label joke_developers_committed:
+    n 1ttrpu "You know,{w=0.2} [player]...{w=1}{nw}"
+    extend 1tlraj " I've always wondered."
+    n 1tsqfl "Is it hard for developers to start relationships?{w=0.75}{nw}"
+    extend 1tllbo " The ones that mess around with code and all that stuff?"
+    n 1tsqsl "..."
+    n 1tsqfl "No?{w=0.75}{nw}"
+    extend 1clrpu " Huh.{w=1}{nw}"
+    extend 1csqss " You sure,{w=0.2} [player]?"
+    n 1fcsss "'Cause from what I'm reading here..."
+    n 1nchgn "...They always seem to be pretty {i}committed{/i} already!"
+
+    return
+
+label joke_shelved_plans:
+    n 1ccstr "I gotta say,{w=0.2} [player].{w=0.75}{nw}"
+    extend 1cslca " I'm still pretty bummed out about being stuck here and everything,{w=0.2} you know."
+    n 1cllbo "..."
+    n 1tnmfl "What?{w=0.75}{nw}"
+    extend 1tnmbo " Didn't I tell you?"
+    n 1fcsgs "I actually landed an interview for a part-time job after school at a bookstore!{w=0.75}{nw}"
+    extend 1fcspo " I applied online and everything!"
+    n 1knmfl "...But how am I supposed to get there now?"
+    n 1ccsemesi "Ugh..."
+    n 1nsrpo "..."
+    n 1ncsaj "Well."
+    n 1tllss "I guess those plans are gonna have to be{w=0.5}{nw}"
+    extend 1fsqbg " {i}shelved{/i}{w=0.75}{nw}"
+    extend 1nchgn " after all,{w=0.2} huh?"
+
+    return
+
+label joke_action_figures:
+    n 1fsrem "...Seriously can't believe I'm telling {i}this{/i} one.{w=0.75}{nw}"
+    extend 1ccsem " Ugh."
+    n 1ccstresi "..."
+    n 1nsqsl "What kind of gift do movie directors love the most?"
+    n 1fllbosbr "..."
+    n 1fcsflsbr "...{i}Action{/i}{w=0.75}{nw}"
+    extend 1fsqflsbr " figures."
 
     return
