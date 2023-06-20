@@ -40,6 +40,7 @@ init python in jn_idles:
         gaming = 2
         resting = 3
         vibing = 4
+        working_on_papers = 5
 
     class JNIdle:
         """
@@ -205,7 +206,7 @@ init python in jn_idles:
 
     __registerIdle(JNIdle(
         label="idle_poetry_attempts",
-        idle_type=JNIdleTypes.reading,
+        idle_type=JNIdleTypes.working_on_papers,
         affinity_range=(jn_affinity.NORMAL, None),
         conditional="get_topic('event_caught_writing_poetry').shown_count > 0"
     ))
@@ -231,7 +232,7 @@ init python in jn_idles:
 
     __registerIdle(JNIdle(
         label="idle_math_attempts",
-        idle_type=JNIdleTypes.reading,
+        idle_type=JNIdleTypes.working_on_paper,
         affinity_range=(jn_affinity.NORMAL, None),
         conditional="get_topic('talk_favorite_subject').shown_count > 0"
     ))
@@ -448,7 +449,7 @@ label idle_daydreaming:
 label idle_poetry_attempts:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     show prop poetry_attempt zorder JN_PROP_ZORDER
-    show natsuki attempting
+    show natsuki working_on_papers
     hide black with Dissolve(0.5)
     $ jnClickToContinue(silent=False)
 
@@ -605,7 +606,7 @@ label idle_laptop:
 label idle_math_attempts:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     show prop math_attempt zorder JN_PROP_ZORDER
-    show natsuki attempting
+    show natsuki working_on_papers
     hide black with Dissolve(0.5)
     $ jnClickToContinue(silent=False)
 
@@ -613,17 +614,19 @@ label idle_math_attempts:
         n 1tnmboeqm "...?{w=1.25}{nw}"
         n 1uwdajesu "Oh!{w=0.75}{nw}"
         extend 1fchbgsbl " H-{w=0.2}Hey [player]."
-        n 2fslsssbl "I was just..."
-        n 2ccsfl "Ugh,{w=0.2} it's fine."
-        extend 2fslpo " Math just won't stop being stupid."
+        n 2fslsssbl "I-{w=0.2}I was just..."
+        n 2fslunsbl "..."
+        n 2ccsfl "Ugh.{w=0.5} Nevermind."
+        extend 2fcsposbr " Math is such a dumb subject anyway."
 
     else:
         n 1tlrca "...{w=1.25}{nw}"
         n 1tnmcaeqm "...?{w=0.75}{nw}"
-        n 1uwdeml "A-{w=0.2}ah!{w=0.75}{nw}"
+        n n 1uwdwrlesh "A-{w=0.2}ah!{w=0.75}{nw}"
         extend 1cdrbol " [player]!"
-        n 2fcsajlsbr "Y-{w=0.2}You really need to learn how to knock!"
-        n 2cslbo "Let me just clean up that mess."
+        n 2fcsajlsbr "Y-{w=0.2}You {i}seriously{/i} need to learn how to knock!"
+        extend 2fcsfllsbr " Yeesh..."
+        n 2cslbosbr "At least let me clean up this mess..."
 
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)

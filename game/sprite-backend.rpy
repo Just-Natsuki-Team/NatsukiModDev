@@ -1013,8 +1013,8 @@ image natsuki whistling:
             pause 4
     repeat
 
-# Idle images for Natsuki attempting
-image natsuki attempting:
+# Idle images for Natsuki working_on_papers
+image natsuki working_on_papers:
     block:
         choice:
             "natsuki 2tupbo"
