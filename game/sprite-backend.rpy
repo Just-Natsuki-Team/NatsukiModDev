@@ -1222,6 +1222,50 @@ image natsuki option_wait_holding:
 
     repeat
 
+image natsuki option_wait_sulky:
+    block:
+        choice:
+            "natsuki 2csqca"
+            pause 4
+            "natsuki 2ccsca"
+            pause 0.1
+            "natsuki 2csqca"
+            pause 4
+            "natsuki 2ccsca"
+            pause 0.1
+
+        choice:
+            "natsuki 5cslca"
+            pause 4
+            "natsuki 5ccsca"
+            pause 0.1
+            "natsuki 5cslca"
+            pause 4
+            "natsuki 5ccsca"
+            pause 0.1
+
+        choice:
+            "natsuki 2ccspo"
+            pause 4
+            "natsuki 2fcspo"
+            pause 4
+
+        choice:
+            "natsuki 2ccsca"
+            pause 6
+
+        choice:
+            "natsuki 2csrbo"
+            pause 4
+            "natsuki 2ccsbo"
+            pause 0.1
+            "natsuki 2csrbo"
+            pause 4
+            "natsuki 2ccsbo"
+            pause 0.1
+
+    repeat
+
 # This selects which idle image to show based on current affinity state
 image natsuki idle = ConditionSwitch(
     "Natsuki.isEnamored(higher=True)", "natsuki idle enamored",

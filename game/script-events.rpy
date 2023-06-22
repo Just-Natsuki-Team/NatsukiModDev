@@ -2152,17 +2152,16 @@ init 5 python:
 
 label event_sanjo:
     n "..."
-    n "Man..."
-    extend " is there seriously {i}nothing else{/i} to do in this dump?"
-    extend " I'm so {b}bored{/b}!"
-    n "Would it have killed them to keep some board games here?"
+    n "Man...{w=1} is there seriously {i}nothing else{/i} to do in this dump?{w=0.75} I'm so {b}bored{/b}!"
+    n "Would it actually have {i}killed them{/i} to keep some board games here or what?"
     n "Ugh..."
 
     $ jnPause(5)
 
     n "..."
-    n "Oh, screw this! I'm done just sitting around. {i}Again{/i}." 
-    n "There's gotta be something I missed in the teacher's desk or... something..."
+    n "Oh,{w=0.2} screw this!{w=0.75} I'm done just sitting around.{w=0.75} {i}Again{/i}." 
+    n "There's gotta be something I missed in the teacher's desk or...{w=1} something..."
+
     play audio chair_out
     $ jnPause(3)
 
@@ -2170,9 +2169,14 @@ label event_sanjo:
 
     play audio drawer
     $ jnPause(3)
-
-    n "Alright... now what have we got here..."
+    n "Huh.{w=0.75} Since when did the teachers keep so much stationary around?{w=0.75} Neat."
+    n "Pretty sure nobody would mind if I...{w=1} just..."
+    play audio stationary_rustle_c
+    n "Yoink."
     $ jnPause(3)
+
+    n "Alright...{w=1} now what have we got here..."
+    $ jnPause(2)
     
     n "Trash..."
     play audio stationary_rustle_a
@@ -2180,20 +2184,30 @@ label event_sanjo:
     play audio stationary_rustle_b
     n "..."
     play audio paper_crumple
-    n "...Oh, {i}yuck{/i}! G-gross!"
+    n "Huh?{w=0.75} What's...?"
+    n "..."
+    n "...Oh,{w=0.75} {i}yuck{/i}!{w=0.75} G-{w=0.2}gross!"
     play audio paper_throw
-    n "I-I don't even wanna {i}know{/i} what was in {i}that{/i}..."
+    $ jnPause(2)
+    n "I-{w=0.2}I don't even {i}want{/i} to know what was in {i}that{/i}..."
+    n "Almost makes me wanna hurl."
 
     play audio drawer
     $ jnPause(4)
 
     n "..."
     n "...Huh?" 
-    n "Wait. Is that...?"
+    n "Wait.{w=0.75} Is that...?"
     n "..."
-    n "I-it is! What are {i}you{/i} still doing here?"
-    n "Yeesh... you're all crusty now too..."
-    n "Come on... let's get you all fixed up..."
+    n "I-{w=0.2}it is!{w=0.75} What are {i}you{/i} still doing here?" 
+    n "...And what kind of inconsiderate jerk just left you {i}there{/i}?"
+
+    play audio gift_slide
+    $ jnPause(3)
+
+    n "Man...{w=1} and you're all nasty and crusty now too."
+    n "..."
+    n "Alright.{w=0.75} I guess I better get you all fixed up..."
 
     $ jnPause(4)
     play audio drink_pour
@@ -2205,61 +2219,125 @@ label event_sanjo:
     menu:
         "Enter...":
             pass
-
-    $ Natsuki.setDeskItem(desk_slot=jn_desk_items.JNDeskSlots.left, item=jn_desk_items.getDeskItem("jn_sanjo"))
+    
+    $ sanjo = jn_desk_items.getDeskItem("jn_sanjo")#
+    $ sanjo.unlock()
+    $ Natsuki.setDeskItem(desk_slot=jn_desk_items.JNDeskSlots.left,{w=0.2} item=sanjo)
     $ jn_events.displayVisuals("1fsqbl")
     $ jn_globals.force_quit_enabled = True
 
-    n "..."
-    n "..."
-    n "...?"
-    n "[player_initial]-[player]!"
-    extend " Jeez!"
-    n "Did you seriously just wait outside the room for all that time?!"
-    extend " How long were you even {i}there{/i}?"
-    n "Ugh..."
-    n "I really wish you'd stop doing that."
-    extend " You big jerk."
-    extend " You should know I hate being made to jump by now."
-    n "A-and besides, [player]."
-    extend " Can't you see I'm {i}busy{/i} here already?"
-    extend " Yeesh."
-    n "Talk about inconsiderate."
-    n "..."
-    n "..."
-    n "...What?"
-    n "What's the deal with {i}that{/i} look,"
-    extend " all of a sudden?"
+    n 2fcssmeme "..." # smug,{w=0.2} arms crossed?
+    n 2ccssm "..."
+    n 2tsqbo "...?"
+    n 2unmgslesh "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
+    extend 4fbkwrl " Jeez!{w=0.75}{nw}"
+    extend 4flrwrlsbl " Since when did {i}you{/i} get here?"
+    n 4fsqemlsbl "Did you seriously just wait outside the room for all that time?!{w=0.75}{nw}"
+    extend 4csqfllsbl " How long were you even {i}there{/i}?"
+    n 4ccsflsbl "Ugh..."
+    n 2flrflsbr "I really wish you'd stop doing that.{w=0.75}{nw}"
+    extend 2fsqposbr " You big jerk.{w=0.75}{nw}"
+    extend 2ccsposbr " You should know I hate being made to jump by now."
+    n 4ccsemsbl "A-{w=0.2}and anyway,{w=0.2} [player].{w=0.75}{nw}"
+    extend 4cllaj " Can't you see I'm {i}busy{/i} here already?{w=0.75}{nw}"
+    extend 3cslbo " Yeesh."
 
-    show natsuki 
+    if Natsuki.isEnamored(higher=True):
+        n 4ccsfl "I mean,{w=0.75}{nw}"
+        extend 5cllfll " it's not that I mind {i}that{/i} much.{w=0.75}{nw}"
+        extend 3ccspolsbr " B-{w=0.2}but still."
+        n 3ccsajlsbr "A little notice would have been nice.{w=1}{nw}"
+        extend 3nsrbolsbr " That's all I'm saying."
+    
+    else:
+        n 3ccstr "Talk about inconsiderate.{w=0.75}{nw}"
+        extend 3csrca " You could at least give me some kinda notice or something next time."
+    
+    n 4csrbo "..."
+    n 4nsrbo "..."
+    n 2tnmpu "Eh?"
+    n 2tnmfl "...What?"
+    n 2clrflsbl "What's the deal with {i}that{/i} look,{w=0.5}{nw}"
+    extend 4csqajsbl " all of a sudden?"
+
+    show natsuki option_wait_sulky
     menu:
-        #TODO: expand?
-        "What's with the plant?":
-            n "E-excuse me?!"
-            extend " 'What's with the plant'?"
-            extend " And what exactly is that supposed to mean, [player]?"
-            n "{i}'The plant'{/i} has a name, you know."
-            n "..."
-            n "..."
-            n "...It's Sanjo."
+        n "If you've got something you gotta ask then just say it already,{w=0.2} [player]."
+
+        "What's with the plant, [n_name]?":
+            n 1csqfl "...Seriously,{w=0.2} [player]?{w=0.75}{nw}"
+            extend 1fsqem " 'What's with the plant'?"
+            n 1fllem "And just what exactly is {i}that{/i} supposed to mean?{w=0.75}{nw}" 
+            extend 1fnmaj " Huh?"
+            n 1fcsgs "You trying to say it needs an {i}excuse{/i} to be here or something?{w=0.75}{nw}"
+            extend 1fcspo " Sheesh."
+            n 1csrbo "Talk about rolling out the red carpet."
+            n 1ccsaj "Besides."
+            n 1fslfl "{i}'The plant'{/i} has a name,{w=0.5}{nw}" 
+            extend 1ccsaj " you know."
+            n 1cllbo "..."
+            n 1cslbolsbl "..."
+            n 1csqcalsbl "...It's Sanjo."
+
+        "Looks like you both have something in common.":
+            n 1fcsgsean "...And what exactly {i}is{/i} that,{w=0.5}{nw}"
+            extend 1fsqem " [player]?"
+            n 1fsqca "..."
+            n 1fcsgs "No,{w=0.2} no.{w=0.75}{nw}"
+            extend 1fnmaj " Go on.{w=1}{nw}"
+            extend 1fsqca " I {i}insist{/i}."
+            n 1fsqbo "..."
+            n 1tsqfl "Well?"
+            n 1ccsss "Don't start getting cold feet now,{w=0.2} [player].{w=0.75}{nw}"
+            extend 1ccsfl " Spit it out!"
+            n 1csqfs "..."
+            n 1fcsfs "Heh.{w=0.75}{nw}"
+            extend 1fcsfl " Yeah."
+            n 1fcspoesm "That's about what Sanjo and I thought."
 
         "...":
-            n "..."
-            n "W-what?"
-            extend " Don't look at me like that, [player]."
-            n "Besides."
-            n "...You'll annoy Sanjo here."
+            n 1csrunsbr "..."
+            n 1csqemsbr "W-{w=0.2}what?{w=0.75}{nw}"
+            extend 1ccsajsbr " Don't look at me like that,{w=0.2} [player]."
+            n 1ccsflsbr "Besides."
+            n 1ccsposbr "...You'll annoy Sanjo."
     
-    extend " A-and no,"
-    extend " I didn't name him myself."
-    n "In fact..."
-    extend " come to think of it."
-    extend " I don't actually know who did."
-    n "One of the teachers just kinda brought him in one day and told the class to take care of him."
-    n "...Doesn't explain why someone just decided to stuff him inside the teacher's desk though."
-    extend " Jerks."
-    #TODO: cont
-
+    extend  " A-{w=0.2}and no,{w=0.5}{nw}"
+    extend  " I didn't name him myself."
+    n  "In fact...{w=0.75}{nw}"
+    extend  " come to think of it.{w=1}{nw}"
+    extend  " I don't actually know {i}who{/i} did."
+    n  "One of the teachers just kinda brought him in one day and told the class to take care of him.{w=0.75}{nw}"
+    extend  " Then just never bothered coming back for him."
+    n  "So...{w=1}{nw}"
+    extend  " I guess we kinda just took to having him around,{w=0.2} I guess."
+    n  "...Still doesn't explain why someone just decided to shove him underneath the teacher's desk though.{w=0.75}{nw}"
+    extend  " Jerks."
+    n  "Well,{w=0.2} anyway -{w=0.5}{nw}"
+    extend  " he's been left around long enough,{w=0.5}{nw}"
+    extend  " so clearly {i}someone{/i} is gonna have to take care of Sanjo here."
+    n  "...So who better to step up to the plate than yours truly!"
+    n  "Ehehe.{w=0.75}{nw}"
+    extend  " Yep!"
+    n  "I think it's about time [n_name] finally got her green thumb going!"
+    n  "Don't get me wrong -{w=0.5}{nw}"
+    extend  " I'm not saying I'm gonna be some professional gardener or anything like that.{w=0.75}{nw}"
+    extend  " But let's face it."
+    n  "If you're gonna take up a little horticulture..."
+    n  "Where better to start than a cactus,{w=0.2} right?"
+    n  "Think about it,{w=0.2} [player] -{w=0.5}{nw}" 
+    extend  " this little guy was practically {i}made{/i} for a beginner.{w=0.75}{nw}"
+    extend  " Look -{w=0.3} he basically already fends for himself!"
+    n  "Plus I mean...{w=0.75}{nw}"
+    extend  " it's not like I've really gotta go out of my way to take care of him either.{w=1}{nw}"
+    extend  " I think you can guess why."
+    n  "Some sunlight here,{w=0.2} a couple splashes of water there...{w=1}{nw}"
+    extend  " how hard could it {i}possibly{/i} be?"
+    n  "Ehehe."
+    n  "So!"
+    n  "You better keep your eyes and ears {i}pricked{/i},{w=0.5}{nw}" 
+    extend  " [player]..."
+    n  "'Cause I'm gonna get Sanjo here blooming before you know it!"
 
     return
 
