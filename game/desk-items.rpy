@@ -29,7 +29,7 @@ init -55 python in jn_desk_items:
             reference_name,
             desk_slot,
             unlocked,
-            displayable
+            image_path
         ):
             """
             Constructor.
@@ -38,12 +38,12 @@ init -55 python in jn_desk_items:
                 - reference_name - Str name used to uniquely identify this desk item and refer to it internally
                 - desk_slot - JNDeskSlots slot this desk item will take up when displayed
                 - unlocked - Bool unlock state of this desk item
-                - displayable - Displayable to be shown when this desk item is displayed
+                - image_path - Path of the image to be shown when this desk item is displayed
             """
             self.reference_name = reference_name
             self.desk_slot = desk_slot
             self.unlocked = unlocked
-            self.displayable = displayable
+            self.image_path = image_path
 
         @staticmethod
         def loadAll():
@@ -139,40 +139,47 @@ init -55 python in jn_desk_items:
         reference_name="jn_laptop",
         desk_slot=JNDeskSlots.centre,
         unlocked=True,
-        displayable=store.Image("mod_assets/props/laptop.png")
+        image_path="mod_assets/props/laptop.png"
     ))
 
     __registerDeskItem(JNDeskItem(
         reference_name="jn_joke_book_held",
         desk_slot=JNDeskSlots.centre,
         unlocked=True,
-        displayable=store.Image("mod_assets/props/joke_book_held.png") 
+        image_path="mod_assets/props/joke_book_held.png"
     ))
 
     __registerDeskItem(JNDeskItem(
         reference_name="jn_hammie_damaged",
         desk_slot=JNDeskSlots.left,
         unlocked=False,
-        displayable=store.Image("mod_assets/props/plush/hammie/hammie_damaged.png")  
+        image_path="mod_assets/props/plush/hammie/hammie_damaged.png"
     ))
 
     __registerDeskItem(JNDeskItem(
         reference_name="jn_hammie_fixed",
         desk_slot=JNDeskSlots.left,
         unlocked=False,
-        displayable=store.Image("mod_assets/props/plush/hammie/hammie_fixed.png")  
+        image_path="mod_assets/props/plush/hammie/hammie_fixed.png"
     ))
 
     __registerDeskItem(JNDeskItem(
         reference_name="jn_card_pack",
         desk_slot=JNDeskSlots.left,
         unlocked=False,
-        displayable=store.Image("mod_assets/props/card_pack.png")  
+        image_path="mod_assets/props/card_pack.png"
     ))
 
     __registerDeskItem(JNDeskItem(
         reference_name="jn_sanjo",
         desk_slot=JNDeskSlots.left,
         unlocked=False,
-        displayable=store.Image("mod_assets/props/plants/sanjo.png")  
+        image_path="mod_assets/props/plants/sanjo.png"
+    ))
+
+    __registerDeskItem(JNDeskItem(
+        reference_name="jn_sanjo_bloom",
+        desk_slot=JNDeskSlots.left,
+        unlocked=False,
+        image_path="mod_assets/props/plants/sanjo_bloom.png"
     ))

@@ -99,7 +99,7 @@ init 0 python:
                     - A Ren'Py displayable (Image, etc.), which is used directly
             """
             if isinstance(item, jn_desk_items.JNDeskItem):
-                item = item.displayable
+                item = Image(item.image_path)
 
             elif isinstance(item, basestring):
                 item = Image(item)
