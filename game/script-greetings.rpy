@@ -16,18 +16,18 @@ init python in jn_greetings:
         """
         # This is the first time the player has force quit; special dialogue
         if jn_farewells.JNForceQuitStates(store.persistent.jn_player_force_quit_state) == jn_farewells.JNForceQuitStates.first_force_quit:
-            return getTopic("greeting_first_force_quit")
+            return store.get_topic("greeting_first_force_quit")
 
         # This is the first time the player has returned; special dialogue
         elif store.persistent.jn_player_is_first_greet:
-            return getTopic("greeting_first_time")
+            return store.get_topic("greeting_first_time")
 
         # The player has given notice that they'll be away
         elif (
             store.persistent._jn_player_extended_leave_response is not None
             and store.persistent._jn_player_extended_leave_departure_date is not None
         ):
-            return getTopic("greeting_leave_return")
+            return store.get_topic("greeting_leave_return")
 
         kwargs = dict()
 
@@ -41,7 +41,7 @@ init python in jn_greetings:
 
         # No special conditions; so just get a standard greeting from the affinity pool
         else:
-            kwargs.update({"excludes_categories": ["Admission", "Apology"]})
+            kwargs.update({"excludes_categories": ["Admission", "Apology", "Special"]})
 
         # Finally return an appropriate greeting
         return random.choice(
@@ -53,6 +53,20 @@ init python in jn_greetings:
         )
 
 # Only chosen for the first time the player returns after bringing Natsuki back
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_first_time",
+            unlocked=True,
+            category=["Special"],
+            additional_properties={
+                "expression": "5ksrbo"
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
 label greeting_first_time:
     if (
         persistent.jn_player_first_farewell_response is None
@@ -106,6 +120,20 @@ label greeting_first_time:
     return
 
 # Only chosen for the first time the player leaves and returns after force quit
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_first_force_quit",
+            unlocked=True,
+            category=["Special"],
+            additional_properties={
+                "expression": "2kslunedr"
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
 label greeting_first_force_quit:
     if Natsuki.isNormal(higher=True):
         n 4kcsunedr "Uuuuuuu...{w=2}{nw}"
@@ -152,6 +180,20 @@ label greeting_first_force_quit:
     return
 
 # Only chosen when the player explicitly says they will be gone a while
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_leave_return",
+            unlocked=True,
+            category=["Special"],
+            additional_properties={
+                "expression": "5ksrbo"
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
 label greeting_leave_return:
     $ time_since_departure = (datetime.datetime.now() - persistent._jn_player_extended_leave_departure_date).total_seconds() 
 
@@ -1559,6 +1601,7 @@ init 5 python:
             category=["Apology"],
             additional_properties={
                 "apology_type": jn_apologies.ApologyTypes.sudden_leave,
+                "expression": "4fslbol"
             }
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -1566,7 +1609,7 @@ init 5 python:
 
 label greeting_sudden_leave:
     if Natsuki.isEnamored(higher=True):
-        n 1kwmsrl "..."
+        n 4kwmsrl "..."
         n 4kwmsrl "[player]."
         n 4knmsll "Come on.{w=0.75}{nw}" 
         extend 4ksqbol " You know you're better than that."
@@ -1975,8 +2018,8 @@ init 5 python:
     )
 
 label greeting_sanjo_generic:
-    n 2ccssmeme "..."
-    n 2tsqboeqm "...?"
+    n 2ccssmeme "...{w=0.75}{nw}"
+    n 2tsqboeqm "...?{w=0.75}{nw}"
     n 4unmfllesu "O-{w=0.2}oh!{w=0.75}{nw}"
     extend 4flrbglsbl " [player]!{w=0.75}{nw}"
     extend 1ccssslsbl " Heh."
@@ -1990,7 +2033,7 @@ label greeting_sanjo_generic:
     if Natsuki.isEnamored(higher=True):
         n 1ullaj "So...{w=1}{nw}"
         extend 3unmbo " what's new with you,{w=0.2} [player]?"
-        n 6fcsbgl "...O-{w=0.2}or are you just looking for some {i}quality care{/i} too?"
+        n 6fcsbgl "...Or are you just looking for some {i}quality care{/i} too?"
         n 7fchsml "Ehehe."
 
     else:

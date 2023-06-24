@@ -1,5 +1,7 @@
 init -60:
     default persistent._jn_desk_item_list = {} 
+    default persistent._jn_sanjo_bloom = False
+    default persistent._jn_hammie_fixed = False
 
 init -55 python in jn_desk_items:
     from Enum import Enum
@@ -150,17 +152,10 @@ init -55 python in jn_desk_items:
     ))
 
     __registerDeskItem(JNDeskItem(
-        reference_name="jn_hammie_damaged",
+        reference_name="jn_hammie",
         desk_slot=JNDeskSlots.left,
         unlocked=False,
-        image_path="mod_assets/props/plush/hammie/hammie_damaged.png"
-    ))
-
-    __registerDeskItem(JNDeskItem(
-        reference_name="jn_hammie_fixed",
-        desk_slot=JNDeskSlots.left,
-        unlocked=False,
-        image_path="mod_assets/props/plush/hammie/hammie_fixed.png"
+        image_path="mod_assets/props/plush/hammie/hammie_fixed.png" if store.persistent._jn_hammie_fixed else "mod_assets/props/plush/hammie/hammie_damaged.png"
     ))
 
     __registerDeskItem(JNDeskItem(
@@ -174,12 +169,5 @@ init -55 python in jn_desk_items:
         reference_name="jn_sanjo",
         desk_slot=JNDeskSlots.left,
         unlocked=False,
-        image_path="mod_assets/props/plants/sanjo.png"
-    ))
-
-    __registerDeskItem(JNDeskItem(
-        reference_name="jn_sanjo_bloom",
-        desk_slot=JNDeskSlots.left,
-        unlocked=False,
-        image_path="mod_assets/props/plants/sanjo_bloom.png"
+        image_path="mod_assets/props/plants/sanjo/sanjo_bloom.png" if store.persistent._jn_sanjo_bloom else "mod_assets/props/plants/sanjo/sanjo.png"
     ))

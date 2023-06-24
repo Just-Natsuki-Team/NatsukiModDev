@@ -190,7 +190,7 @@ label ch30_init:
                 renpy.call("call_next_topic", False)
 
             else:
-                greeting_topic = jn_greetings.select_greeting()
+                greeting_topic = jn_greetings.selectGreeting()
                 push(greeting_topic.label)
                 
                 # Show desk item if one is associated with this greeting
@@ -200,15 +200,16 @@ label ch30_init:
 
                 # Show Natsuki with an alternate expression if one is associated with this greeting, or default to idle
                 if "expression" in greeting_topic.additional_properties:
-                    renpy.show("natsuki {0}".format(greeting_topic.additional_properties["expression"]), at_list=[jn_center])
-                
+                    renpy.show("natsuki {0}".format(greeting_topic.additional_properties["expression"]), at_list=[jn_center], zorder=JN_NATSUKI_ZORDER)
+
                 else:
-                    renpy.show("natsuki idle", at_list=[jn_center])
+                    renpy.show("natsuki idle", at_list=[jn_center], zorder=JN_NATSUKI_ZORDER)
 
                 persistent._jn_player_admission_type_on_quit = None
                 persistent._jn_player_apology_type_on_quit = None
 
     # Prepare visuals
+    $ jnPause(0.1)
     hide black with Dissolve(2)
     show screen hkb_overlay
 

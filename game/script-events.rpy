@@ -2172,6 +2172,7 @@ label event_sanjo:
     n "Huh.{w=0.75} Since when did the teachers keep so much stationary around?{w=0.75} Neat."
     n "Pretty sure nobody would mind if I...{w=1} just..."
     play audio stationary_rustle_c
+    $ jnPause(0.5)
     n "Yoink."
     $ jnPause(3)
 
@@ -2209,26 +2210,27 @@ label event_sanjo:
     n "..."
     n "Alright.{w=0.75} I guess I better get you all fixed up..."
 
-    $ jnPause(4)
+    $ jnPause(2)
     play audio drink_pour
     $ jnPause(2)
     play audio glasses_case_close
-    $ jnPause(1)
+    $ jnPause(2)
     play audio chair_in
+    $ jnPause(2)
 
     menu:
         "Enter...":
             pass
     
     $ sanjo = jn_desk_items.getDeskItem("jn_sanjo")
-    $ sanjo.unlock()
     $ Natsuki.setDeskItem(sanjo)
     $ jn_events.displayVisuals("2fcssm")
     $ jn_globals.force_quit_enabled = True
 
-    n 2fcssmeme "..."
-    n 2ccssm "..."
-    n 2tsqbo "...?"
+    n 2fcssmeme "...{w=0.75}{nw}"
+    n 2ccssm "...{w=0.75}{nw}"
+    n 2tsqbo "...?{w=0.75}{nw}"
+    $ player_initial = jn_utils.getPlayerInitial()
     n 2unmgslesh "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
     extend 4fbkwrl " Jeez!{w=0.75}{nw}"
     extend 4flrwrlsbl " Since when did {i}you{/i} get here?"
@@ -2254,11 +2256,10 @@ label event_sanjo:
         extend 3csrca " You could at least give me some kinda notice or something next time."
     
     n 4csrbo "..."
-    n 4nsrbo "..."
-    n 2tnmpu "Eh?"
-    n 2tnmfl "...What?"
-    n 2clrflsbl "What's the deal with {i}that{/i} look,{w=0.5}{nw}"
-    extend 4csqajsbl " all of a sudden?"
+    n 4tsqbo "..."
+    n 2tnmfl "...What?{w=0.75}{nw}"
+    extend 2cnmflsbl " What's the deal with {i}that{/i} look,{w=0.5}{nw}"
+    extend 2clrflsbl " all of a sudden?"
 
     show natsuki option_wait_sulky
     menu:
@@ -2279,8 +2280,8 @@ label event_sanjo:
             n 2cslbolsbl "..."
             n 5csqcalsbl "...It's Sanjo."
 
-        "Looks like you both have something in common.":
-            n 4fcsgsean "...And what exactly {i}is{/i} that,{w=0.5}{nw}"
+        "Looks like you and that plant both have something in common.":
+            n 4fsqfl "...A-{w=0.2}and what exactly {i}is{/i} that,{w=0.5}{nw}"
             extend 4fsqem " [player]?"
             n 2fsqca "..."
             n 2fcsgs "No,{w=0.2} no.{w=0.75}{nw}"
@@ -2293,24 +2294,24 @@ label event_sanjo:
             n 4csqfs "..."
             n 4fcsfs "Heh.{w=0.75}{nw}"
             extend 2fcsfl " Yeah."
-            n 2fcspoesm "That's about what Sanjo and I thought."
+            n 2fcspoesm "That's about what Sanjo here and I thought."
 
         "...":
             n 5csrunsbr "..."
             n 5csqemsbr "W-{w=0.2}what?{w=0.75}{nw}"
             extend 4ccsajsbr " Don't look at me like that,{w=0.2} [player]."
             n 3ccsflsbr "Besides."
-            n 3ccsposbr "...You'll annoy Sanjo."
+            n 3ccsposbr "...You'll annoy Sanjo here."
     
     n 1ccsajlsbr "A-{w=0.2}and no,{w=0.5}{nw}"
     extend 5cdlbosbr " I didn't name him myself."
-    n 4tllaj "In fact...{w=0.75}{nw}"
+    n 4tllpu "In fact...{w=0.75}{nw}"
     extend 7tllbo " come to think of it.{w=1}{nw}"
     extend 7tnmfl " I don't actually know {i}who{/i} did."
     n 3unmaj "One of the teachers just kinda brought him in one day and told the class to take care of him.{w=0.75}{nw}"
-    extend 3clrpu " Then just never bothered coming back for him."
+    extend 3clrpu " Then just never bothered taking him back."
     n 3tlraj "So...{w=1}{nw}"
-    extend 7tnmbo " I guess we kinda just took to having him around,{w=0.2} I guess."
+    extend 7tnmbo " I guess we kinda just took to having him around,{w=0.2} I suppose."
     n 4cslfl "...Still doesn't explain why someone just decided to shove him underneath the teacher's desk though.{w=0.75}{nw}"
     extend 4fslem " Jerks."
     n 2ccsfl "Well,{w=0.2} whatever.{w=0.75}{nw}"
@@ -2340,6 +2341,7 @@ label event_sanjo:
     extend 4fsqbg " [player]..."
     n 3nchgnl "'Cause I'm gonna get Sanjo here blooming before you know it!"
 
+    $ sanjo.unlock()
     return
 
 # HOLIDAYS
