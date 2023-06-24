@@ -171,3 +171,10 @@ init -55 python in jn_desk_items:
         unlocked=False,
         image_path="mod_assets/props/plants/sanjo/sanjo_bloom.png" if store.persistent._jn_sanjo_bloom else "mod_assets/props/plants/sanjo/sanjo.png"
     ))
+
+    __registerDeskItem(JNDeskItem(
+        reference_name="jn_poem_on_desk",
+        desk_slot=JNDeskSlots.centre,
+        unlocked=True,
+        displayable=store.Image("mod_assets/props/poem_on_desk.png")  
+    ))

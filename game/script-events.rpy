@@ -38,6 +38,7 @@ transform jn_confetti_fall:
 
 # Foreground props are displayed on the desk, in front of Natsuki
 image prop poetry_attempt = "mod_assets/props/poetry_attempt.png"
+image prop math_attempt = "mod_assets/props/math_attempt.png"
 image prop parfait_manga_held = "mod_assets/props/parfait_manga_held.png"
 image prop renpy_for_dummies_book_held = "mod_assets/props/renpy_for_dummies_book_held.png"
 image prop a_la_mode_manga_held = "mod_assets/props/a_la_mode_manga_held.png"
