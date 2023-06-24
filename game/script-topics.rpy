@@ -5509,7 +5509,7 @@ label talk_play_snap:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(1.5)
     play audio drawer
-    $ Natsuki.setDeskItem(desk_slot=jn_desk_items.JNDeskSlots.centre, item=jn_desk_items.getDeskItem("jn_card_pack"))
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_card_pack"))
     show natsuki 4fchsm
     hide black with Dissolve(1)
 
@@ -10546,7 +10546,7 @@ label talk_daily_jokes_seen_before_start:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     play audio drawer
-    $ Natsuki.setDeskItem(desk_slot=jn_desk_items.JNDeskSlots.centre, item=jn_desk_items.getDeskItem("jn_joke_book_held"))
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_joke_book_held"))
     show natsuki 1fchsmeme
     $ jnPause(2.25)
     hide black with Dissolve(0.5)

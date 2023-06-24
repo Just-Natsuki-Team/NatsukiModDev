@@ -87,19 +87,20 @@ init 0 python:
         _is_reading_to_right = False
 
         @staticmethod
-        def setDeskItem(desk_slot, item):
+        def setDeskItem(item, desk_slot=None):
             """
             Sets a desk item for Natsuki's desk, and updates her current sprite.
 
             IN:
-                - desk_slot - JNDeskSlots slot to use for the item (left, centre or right)
                 - item - Can be one of:
                     - str file path to image, in which case an Image displayable is created from it
                     - JNDeskItem instance, in which case the displayable value is used
                     - A Ren'Py displayable (Image, etc.), which is used directly
+                - desk_slot - Optional JNDeskSlots slot to use for the item (left, centre or right), if item is not JNDeskItem
             """
             if isinstance(item, jn_desk_items.JNDeskItem):
                 item = Image(item.image_path)
+                desk_slot = item.desk_slot
 
             elif isinstance(item, basestring):
                 item = Image(item)

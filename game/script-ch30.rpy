@@ -183,19 +183,32 @@ label ch30_init:
         elif not jn_topic_in_event_list_pattern("^greeting_"):
             if (
                 random.randint(1, 10) == 1
-                and (not persistent.jn_player_admission_type_on_quit and not persistent._jn_player_apology_type_on_quit)
+                and (not persistent._jn_player_admission_type_on_quit and not persistent._jn_player_apology_type_on_quit)
                 and jn_events.selectEvent()
             ):
                 push(jn_events.selectEvent())
                 renpy.call("call_next_topic", False)
 
             else:
-                push(greetings.select_greeting())
-                persistent.jn_player_admission_type_on_quit = None
+                greeting_topic = jn_greetings.select_greeting()
+                push(greeting_topic.label)
+                
+                # Show desk item if one is associated with this greeting
+                if "desk_item" in greeting_topic.additional_properties:
+                    desk_item = jn_desk_items.getDeskItem(greeting_topic.additional_properties["desk_item"])
+                    Natsuki.setDeskItem(desk_item)
+
+                # Show Natsuki with an alternate expression if one is associated with this greeting, or default to idle
+                if "expression" in greeting_topic.additional_properties:
+                    renpy.show("natsuki {0}".format(greeting_topic.additional_properties["expression"]), at_list=[jn_center])
+                
+                else:
+                    renpy.show("natsuki idle", at_list=[jn_center])
+
+                persistent._jn_player_admission_type_on_quit = None
                 persistent._jn_player_apology_type_on_quit = None
 
     # Prepare visuals
-    show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
     hide black with Dissolve(2)
     show screen hkb_overlay
 
