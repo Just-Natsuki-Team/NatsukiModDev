@@ -822,7 +822,10 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_always_welcome_here",
             unlocked=True,
-            affinity_range=(jn_affinity.LOVE, None)
+            affinity_range=(jn_affinity.LOVE, None),
+            additional_properties={
+                "expression": "1ksrsll"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -845,7 +848,10 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_lovestruck",
             unlocked=True,
-            affinity_range=(jn_affinity.LOVE, None)
+            affinity_range=(jn_affinity.LOVE, None),
+            additional_properties={
+                "expression": "1kcssml"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
