@@ -2271,7 +2271,7 @@ label event_sanjo:
             extend 2fsqem " 'What's with the plant'?"
             n 4fllem "And just what exactly is {i}that{/i} supposed to mean?{w=0.75}{nw}" 
             extend 4fnmaj " Huh?"
-            n 3fcsgs "You trying to say it needs an {i}excuse{/i} to be here or something?{w=0.75}{nw}"
+            n 3fcsgs "You trying to say he needs an {i}excuse{/i} to be here or something?{w=0.75}{nw}"
             extend 3fcspo " Sheesh."
             n 1csrbo "Talk about rolling out the red carpet."
             n 4ccsaj "Besides."
