@@ -2138,6 +2138,216 @@ label event_warm_package:
 
     return
 
+# Natsuki finds a new friend in the clubroom!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_sanjo",
+            unlocked=True,
+            conditional="jn_utils.get_total_gameplay_days() >= 7",
+            affinity_range=(jn_affinity.AFFECTIONATE, None)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
+
+label event_sanjo:
+    n "..."
+    n "Man...{w=1} is there seriously {i}nothing else{/i} to do in this dump?{w=0.75} I'm so {b}bored{/b}!"
+    n "Would it actually have {i}killed them{/i} to keep some board games here or what?"
+    n "Ugh..."
+
+    $ jnPause(5)
+
+    n "..."
+    n "Oh,{w=0.2} screw this!{w=0.75} I'm done just sitting around.{w=0.75} {i}Again{/i}." 
+    n "There's gotta be something I missed in the teacher's desk or...{w=1} something..."
+
+    play audio chair_out
+    $ jnPause(3)
+
+    n "..."
+
+    play audio drawer
+    $ jnPause(3)
+    n "Huh.{w=0.75} Since when did the teachers keep so much stationary around?{w=0.75} Neat."
+    n "Pretty sure nobody would mind if I...{w=1} just..."
+    play audio stationary_rustle_c
+    $ jnPause(0.75)
+    n "Yoink."
+    $ jnPause(3)
+
+    n "Alright...{w=1} now what have we got here..."
+    $ jnPause(2)
+    
+    n "Trash..."
+    play audio stationary_rustle_a
+    extend " more trash..."
+    play audio stationary_rustle_b
+    n "..."
+    play audio paper_crumple
+    n "Huh?{w=0.75} What's...?"
+    n "..."
+    n "...Oh,{w=0.75} {i}yuck{/i}!{w=0.75} G-{w=0.2}gross!"
+    play audio paper_throw
+    $ jnPause(2)
+    n "I-{w=0.2}I don't even {i}want{/i} to know what was in {i}that{/i}..."
+    n "Almost makes me wanna hurl."
+
+    play audio drawer
+    $ jnPause(4)
+
+    n "..."
+    n "...Huh?" 
+    n "Wait.{w=0.75} Is that...?"
+    n "..."
+    n "I-{w=0.2}it is!{w=0.75} What are {i}you{/i} still doing here?" 
+    n "...And what kind of inconsiderate jerk just left you {i}there{/i}?"
+
+    play audio gift_slide
+    $ jnPause(1)
+    play audio necklace_clip
+    n "Ack!{w=0.5} My finger!{w=0.75} P-{w=0.2}pricked it..."
+    $ jnPause(3)
+
+    n "Man...{w=1} and you're all nasty and crusty now too."
+    n "..."
+    n "Alright.{w=0.75} I guess I better get you all fixed up..."
+
+    $ jnPause(2)
+    play audio drink_pour
+    $ jnPause(2)
+    play audio glasses_case_close
+    $ jnPause(2)
+    play audio chair_in
+    $ jnPause(2)
+
+    menu:
+        "Enter...":
+            pass
+    
+    $ sanjo = jn_desk_items.getDeskItem("jn_sanjo")
+    $ Natsuki.setDeskItem(sanjo)
+    $ jn_events.displayVisuals("2fcssm")
+    $ jn_globals.force_quit_enabled = True
+
+    n 2fcssmeme "...{w=0.75}{nw}"
+    n 2ccssm "...{w=0.75}{nw}"
+    n 2tsqbo "...?{w=0.75}{nw}"
+    $ player_initial = jn_utils.getPlayerInitial()
+    n 2unmgslesh "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
+    extend 4fbkwrl " Jeez!{w=0.75}{nw}"
+    extend 4flrwrlsbl " Since when did {i}you{/i} get here?"
+    n 4fsqemlsbl "Did you seriously just wait outside the room for all that time?!{w=0.75}{nw}"
+    extend 4csqfllsbl " How long were you even {i}there{/i}?"
+    n 4ccsemsbl "Ugh..."
+    n 2flrflsbr "I really wish you'd stop doing that.{w=0.75}{nw}"
+    extend 2fsqposbr " You big jerk.{w=0.75}{nw}"
+    extend 2ccsposbr " You should know I hate being made to jump by now."
+    n 4ccsemsbl "A-{w=0.2}and anyway,{w=0.2} [player].{w=0.75}{nw}"
+    extend 4cllaj " Can't you see I'm {i}busy{/i} here already?{w=0.75}{nw}"
+    extend 3cslbo " Yeesh."
+
+    if Natsuki.isEnamored(higher=True):
+        n 4ccsfl "I mean,{w=0.75}{nw}"
+        extend 5cllfll " it's not that I mind {i}that{/i} much.{w=0.75}{nw}"
+        extend 3ccspolsbr " B-{w=0.2}but still."
+        n 3ccsajlsbr "A little notice would have been nice.{w=1}{nw}"
+        extend 3nsrbolsbr " That's all I'm saying."
+    
+    else:
+        n 3ccstr "Talk about inconsiderate.{w=0.75}{nw}"
+        extend 3csrca " You could at least give me some kinda notice or something next time."
+    
+    n 4csrbo "..."
+    n 4tsqbo "..."
+    n 2tnmfl "...What?{w=0.75}{nw}"
+    extend 2cnmflsbl " What's the deal with {i}that{/i} look,{w=0.5}{nw}"
+    extend 2clrflsbl " all of a sudden?"
+
+    show natsuki option_wait_sulky
+    menu:
+        n "If you've got something you gotta ask then just say it already,{w=0.2} [player]."
+
+        "What's with the plant, [n_name]?":
+            n 1csqfl "...Seriously,{w=0.2} [player]?{w=0.75}{nw}"
+            extend 2fsqem " 'What's with the plant'?"
+            n 4fllem "And just what exactly is {i}that{/i} supposed to mean?{w=0.75}{nw}" 
+            extend 4fnmaj " Huh?"
+            n 3fcsgs "You trying to say he needs an {i}excuse{/i} to be here or something?{w=0.75}{nw}"
+            extend 3fcspo " Sheesh."
+            n 1csrbo "Talk about rolling out the red carpet."
+            n 4ccsaj "Besides."
+            n 2fslfl "{i}'The plant'{/i} has a name,{w=0.5}{nw}" 
+            extend 2ccsaj " you know."
+            n 2cllbo "..."
+            n 2cslbolsbl "..."
+            n 5csqcalsbl "...It's Sanjo."
+
+        "Looks like you and the plant have something in common...":
+            n 4fsqfl "...A-{w=0.2}and what exactly {i}is{/i} that,{w=0.5}{nw}"
+            extend 4fsqem " [player]?"
+            n 2fsqca "..."
+            n 2fcsgs "No,{w=0.2} no.{w=0.75}{nw}"
+            extend 4fnmaj " Go on.{w=1}{nw}"
+            extend 3fsqca " I {i}insist{/i}."
+            n 3fsqbo "..."
+            n 3tsqfl "Well?"
+            n 3ccsss "Don't start getting cold feet now,{w=0.2} [player].{w=0.75}{nw}"
+            extend 3ccsfl " Spit it out!"
+            n 4csqfs "..."
+            n 4fcsfs "Heh.{w=0.75}{nw}"
+            extend 2fcsfl " Yeah."
+            n 2fcspoesm "That's about what Sanjo here and I thought."
+
+        "...":
+            n 5csrunsbr "..."
+            n 5csqemsbr "W-{w=0.2}what?{w=0.75}{nw}"
+            extend 4ccsajsbr " Don't look at me like that,{w=0.2} [player]."
+            n 3ccsflsbr "Besides."
+            n 3ccsposbr "...You'll annoy Sanjo here."
+    
+    n 1ccsajlsbr "A-{w=0.2}and no,{w=0.5}{nw}"
+    extend 5cdlbosbr " I didn't name him myself."
+    n 4tllpu "In fact...{w=0.75}{nw}"
+    extend 7tllbo " come to think of it.{w=1}{nw}"
+    extend 7tnmfl " I don't actually know {i}who{/i} did."
+    n 3unmaj "One of the teachers just kinda brought him in one day and told the class to take care of him.{w=0.75}{nw}"
+    extend 3clrpu " Then just never bothered taking him back."
+    n 3tlraj "So...{w=1}{nw}"
+    extend 7tnmbo " I guess we kinda just took to having him around,{w=0.2} I suppose."
+    n 4cslfl "...Still doesn't explain why someone just decided to shove him underneath the teacher's desk though.{w=0.75}{nw}"
+    extend 4fslem " Jerks."
+    n 2ccsfl "Well,{w=0.2} whatever.{w=0.75}{nw}"
+    extend 2ulrfl " He's been left around long enough,{w=0.5}{nw}"
+    extend 1fcstr " so clearly {i}someone{/i} is gonna have to take care of Sanjo here."
+    n 3fchgn "...And who better to step up to the plate than yours truly!"
+    n 3fsqsm "Ehehe.{w=0.75}{nw}"
+    extend 6fcsbg " Yep!"
+    n 3fcssmesm "I think it's about time [n_name] finally got her green thumb going!"
+    n 4clrbgsbl "Don't get me wrong -{w=0.5}{nw}"
+    extend 4csrsssbl " I'm not saying I'm gonna be some professional gardener or anything like that.{w=0.75}{nw}"
+    extend 7fcsss " But let's face it."
+    n 7ullaj "If you're gonna take up a little horticulture..."
+    n 6fchbg "Where better to start than a cactus,{w=0.2} right?"
+    n 4tlrss "Think about it,{w=0.2} [player] -{w=0.5}{nw}" 
+    extend 3fdlsm " this little guy was practically {i}made{/i} for a beginner.{w=0.75}{nw}"
+    extend 6fcsbg " He basically already fends for himself!"
+    n 7ulraj "Plus I mean...{w=0.75}{nw}"
+    extend 7unmbo " it's not like I've really gotta go out of my way to take care of him either.{w=1}{nw}"
+    extend 3cdlss " I think you can guess why."
+    n 1ullss "Some sunlight here,{w=0.2} a couple splashes of water there...{w=1}{nw}"
+    extend 2fcsbg " how hard could it {i}possibly{/i} be?"
+    n 2fcssmesm "Ehehe."
+    n 4fcsaj "So!"
+    n 2flrss "You better keep your eyes and ears{w=0.5}{nw}" 
+    extend 2fsqss " {i}pricked{/i},{w=0.75}{nw}" 
+    extend 4fsqbg " [player]..."
+    n 3nchgnl "'Cause I'm gonna get Sanjo here blooming before you know it!"
+
+    $ sanjo.unlock()
+    return
+
 # HOLIDAYS
 
 # Used to lead up to a holiday, but only if already in-game and the day changes

@@ -566,7 +566,7 @@ label idle_laptop:
     else:
         show natsuki gaming
 
-    $ Natsuki.setDeskItem(desk_slot=jn_desk_items.JNDeskSlots.centre, item=jn_desk_items.getDeskItem("jn_laptop"))
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_laptop"))
     hide black with Dissolve(0.5)
     $ jnClickToContinue(silent=False)
 

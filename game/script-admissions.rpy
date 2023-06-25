@@ -1,7 +1,7 @@
 default persistent._admission_database = dict()
 
 # Retain the last admission made on quitting the game, so Natsuki can react on boot
-default persistent.jn_player_admission_type_on_quit = None
+default persistent._jn_player_admission_type_on_quit = None
 
 init 0 python in jn_admissions:
     import random
@@ -399,7 +399,7 @@ label admission_bored:
         show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         $ jnPause(2)
         play audio drawer
-        $ Natsuki.setDeskItem(desk_slot=jn_desk_items.JNDeskSlots.centre, item=jn_desk_items.getDeskItem("jn_card_pack"))
+        $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_card_pack"))
         show natsuki 4fchgn
         $ jnPause(4)
         hide black with Dissolve(1)
