@@ -2173,7 +2173,7 @@ label event_sanjo:
     n "Huh.{w=0.75} Since when did the teachers keep so much stationary around?{w=0.75} Neat."
     n "Pretty sure nobody would mind if I...{w=1} just..."
     play audio stationary_rustle_c
-    $ jnPause(0.5)
+    $ jnPause(0.75)
     n "Yoink."
     $ jnPause(3)
 
@@ -2205,6 +2205,9 @@ label event_sanjo:
     n "...And what kind of inconsiderate jerk just left you {i}there{/i}?"
 
     play audio gift_slide
+    $ jnPause(1)
+    play audio necklace_clip
+    n "Ack!{w=0.5} My finger!{w=0.75} P-{w=0.2}pricked it..."
     $ jnPause(3)
 
     n "Man...{w=1} and you're all nasty and crusty now too."
@@ -2237,7 +2240,7 @@ label event_sanjo:
     extend 4flrwrlsbl " Since when did {i}you{/i} get here?"
     n 4fsqemlsbl "Did you seriously just wait outside the room for all that time?!{w=0.75}{nw}"
     extend 4csqfllsbl " How long were you even {i}there{/i}?"
-    n 4ccsflsbl "Ugh..."
+    n 4ccsemsbl "Ugh..."
     n 2flrflsbr "I really wish you'd stop doing that.{w=0.75}{nw}"
     extend 2fsqposbr " You big jerk.{w=0.75}{nw}"
     extend 2ccsposbr " You should know I hate being made to jump by now."
@@ -2281,7 +2284,7 @@ label event_sanjo:
             n 2cslbolsbl "..."
             n 5csqcalsbl "...It's Sanjo."
 
-        "Looks like you and that plant both have something in common.":
+        "Looks like you and the plant have something in common...":
             n 4fsqfl "...A-{w=0.2}and what exactly {i}is{/i} that,{w=0.5}{nw}"
             extend 4fsqem " [player]?"
             n 2fsqca "..."

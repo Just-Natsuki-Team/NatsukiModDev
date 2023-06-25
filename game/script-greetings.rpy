@@ -1224,7 +1224,10 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_normal_happy_wake_up_nat",
             unlocked=True,
-            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY),
+            additional_properties={
+                "expression": "4nslsl"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -1253,7 +1256,10 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_normal_oh_whats_up",
             unlocked=True,
-            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY),
+            additional_properties={
+                "expression": "2tlrbo"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
