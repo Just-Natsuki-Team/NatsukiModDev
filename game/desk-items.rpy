@@ -178,10 +178,3 @@ init -55 python in jn_desk_items:
         unlocked=True,
         image_path="mod_assets/props/poem_on_desk.png"
     ))
-
-    __registerDeskItem(JNDeskItem(
-        reference_name="jn_watering_can",
-        desk_slot=JNDeskSlots.left,
-        unlocked=False,
-        displayable=store.Image("mod_assets/props/watering_can.png")  
-    ))
