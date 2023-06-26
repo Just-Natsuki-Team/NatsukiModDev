@@ -1,7 +1,7 @@
 default persistent._greeting_database = dict()
 default persistent.jn_player_is_first_greet = True
 
-init python in greetings:
+init python in jn_greetings:
     import random
     import store
     import store.jn_apologies as jn_apologies
@@ -10,24 +10,24 @@ init python in greetings:
 
     GREETING_MAP = dict()
 
-    def select_greeting():
+    def selectGreeting():
         """
         Picks a random greeting, accounting for affinity and the situation they previously left under
         """
         # This is the first time the player has force quit; special dialogue
         if jn_farewells.JNForceQuitStates(store.persistent.jn_player_force_quit_state) == jn_farewells.JNForceQuitStates.first_force_quit:
-            return "greeting_first_force_quit"
+            return store.get_topic("greeting_first_force_quit")
 
         # This is the first time the player has returned; special dialogue
         elif store.persistent.jn_player_is_first_greet:
-            return "greeting_first_time"
+            return store.get_topic("greeting_first_time")
 
         # The player has given notice that they'll be away
         elif (
             store.persistent._jn_player_extended_leave_response is not None
             and store.persistent._jn_player_extended_leave_departure_date is not None
         ):
-            return "greeting_leave_return"
+            return store.get_topic("greeting_leave_return")
 
         kwargs = dict()
 
@@ -41,7 +41,7 @@ init python in greetings:
 
         # No special conditions; so just get a standard greeting from the affinity pool
         else:
-            kwargs.update({"excludes_categories": ["Admission", "Apology"]})
+            kwargs.update({"excludes_categories": ["Admission", "Apology", "Special"]})
 
         # Finally return an appropriate greeting
         return random.choice(
@@ -50,9 +50,23 @@ init python in greetings:
                 affinity=store.Natsuki._getAffinityState(),
                 **kwargs
             )
-        ).label
+        )
 
 # Only chosen for the first time the player returns after bringing Natsuki back
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_first_time",
+            unlocked=True,
+            category=["Special"],
+            additional_properties={
+                "expression": "5ksrbo"
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
 label greeting_first_time:
     if (
         persistent.jn_player_first_farewell_response is None
@@ -106,6 +120,20 @@ label greeting_first_time:
     return
 
 # Only chosen for the first time the player leaves and returns after force quit
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_first_force_quit",
+            unlocked=True,
+            category=["Special"],
+            additional_properties={
+                "expression": "2kslunedr"
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
 label greeting_first_force_quit:
     if Natsuki.isNormal(higher=True):
         n 4kcsunedr "Uuuuuuu...{w=2}{nw}"
@@ -152,6 +180,20 @@ label greeting_first_force_quit:
     return
 
 # Only chosen when the player explicitly says they will be gone a while
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_leave_return",
+            unlocked=True,
+            category=["Special"],
+            additional_properties={
+                "expression": "5ksrbo"
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
 label greeting_leave_return:
     $ time_since_departure = (datetime.datetime.now() - persistent._jn_player_extended_leave_departure_date).total_seconds() 
 
@@ -780,7 +822,10 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_always_welcome_here",
             unlocked=True,
-            affinity_range=(jn_affinity.LOVE, None)
+            affinity_range=(jn_affinity.LOVE, None),
+            additional_properties={
+                "expression": "1ksrsll"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -803,7 +848,10 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_lovestruck",
             unlocked=True,
-            affinity_range=(jn_affinity.LOVE, None)
+            affinity_range=(jn_affinity.LOVE, None),
+            additional_properties={
+                "expression": "1kcssml"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -1182,7 +1230,10 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_normal_happy_wake_up_nat",
             unlocked=True,
-            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY),
+            additional_properties={
+                "expression": "4nslsl"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -1211,7 +1262,10 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_normal_oh_whats_up",
             unlocked=True,
-            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY),
+            additional_properties={
+                "expression": "2tlrbo"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -1559,6 +1613,7 @@ init 5 python:
             category=["Apology"],
             additional_properties={
                 "apology_type": jn_apologies.ApologyTypes.sudden_leave,
+                "expression": "4fslbol"
             }
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -1566,7 +1621,7 @@ init 5 python:
 
 label greeting_sudden_leave:
     if Natsuki.isEnamored(higher=True):
-        n 1kwmsrl "..."
+        n 4kwmsrl "..."
         n 4kwmsrl "[player]."
         n 4knmsll "Come on.{w=0.75}{nw}" 
         extend 4ksqbol " You know you're better than that."
@@ -1918,5 +1973,83 @@ label greeting_night_night_owl:
     extend 3fllsslsbl " You're a night owl too,{w=0.2} huh?"
     n 3fcsbg "N-{w=0.2}not that I have a problem with that,{w=0.2} obviously." 
     extend 4nchgnl " Welcome back!"
+
+    return
+
+# Sanjo
+
+# Sanjo getting some morning care from the club's newest (and only) gardener!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_sanjo_morning",
+            unlocked=True,
+            conditional="store.jn_get_current_hour() in range(7, 10) and jn_desk_items.getDeskItem('jn_sanjo').unlocked",
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
+            additional_properties={
+                "desk_item": "jn_sanjo",
+                "expression": "2udlsmeme"
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_sanjo_morning:
+    n 2unmaj "Ah!{w=0.75}{nw}"
+    extend 2fchbg " Morning,{w=0.2} [player]!{w=0.75}{nw}"
+    extend 2unmss " What's up?"
+    n 4fcssm "Don't mind me.{w=0.75}{nw}"
+    extend 3nchgn " Just making sure Sanjo is getting some top-quality care!"
+
+    if Natsuki.isEnamored(higher=True):
+        n 3flrbg "Yeah,{w=0.2} yeah.{w=0.75}{nw}"
+        $ chosen_tease = jn_utils.getRandomTease()
+        extend 3fnmss " Keep your shirt on,{w=0.2} [chosen_tease].{w=1}{nw}"
+        extend 4fsqsm " I know."
+        n 7fcsbgl "You must be {i}pretty{/i} desperate for my attention too if you're up already,{w=0.5}{nw}" 
+        extend 7fchgnl " huh?"
+
+    return
+
+# Sanjo getting some morning care
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_sanjo_generic",
+            unlocked=True,
+            conditional="jn_desk_items.getDeskItem('jn_sanjo').unlocked",
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
+            additional_properties={
+                "desk_item": "jn_sanjo",
+                "expression": "2fcssmeme"
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_sanjo_generic:
+    n 2ccssmeme "...{w=0.75}{nw}"
+    n 2tsqboeqm "...?{w=0.75}{nw}"
+    n 4unmfllesu "O-{w=0.2}oh!{w=0.75}{nw}"
+    extend 4flrbglsbl " [player]!{w=0.75}{nw}"
+    extend 1ccssslsbl " Heh."
+    n 3ccsbgsbl "Don't worry.{w=0.75}{nw}"
+    extend 3ccssm " Sanjo and I were juuuust about done here."
+    
+    if not jn_is_day():
+        n 5clrajsbr "N-{w=0.2}not that I completely forgot to water him before or anything like that,{w=0.5}{nw}"
+        extend 2fcscasbr " {i}obviously{/i}."
+
+    if Natsuki.isEnamored(higher=True):
+        n 1ullaj "So...{w=1}{nw}"
+        extend 3unmbo " what's new with you,{w=0.2} [player]?"
+        n 6fcsbgl "...Or are you just looking for some {i}quality care{/i} too?"
+        n 7fchsml "Ehehe."
+
+    else:
+        n 1ullaj "So..."
+        n 3tnmss "What's new,{w=0.2} [player]?"
 
     return

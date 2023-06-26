@@ -140,11 +140,16 @@ label talk_did_you_have_pets:
         n 2ulraj "Well,{w=0.2} anyway.{w=0.75}{nw}"
         extend 2tnmsl " I'm pretty sure you didn't need me to tell you {i}that{/i} hasn't changed.{w=1}{nw}"
         extend 2cslca " As you can see."
+
+        if jn_desk_items.getDeskItem("jn_sanjo").unlocked:
+            n 2csrss "It's not like Sanjo really counts as a pet either,{w=0.5}{nw}"
+            extend 2csrbo " before you say anything."
+
         n 4ccsfl "...And actually,{w=0.5}{nw}"
         extend 7csrfl " now that I think about it..."
         n 7tnmfl "Where would I even {i}get{/i} one now anyway?{w=0.75}{nw}"
         extend 4clremsbl " L-{w=0.2}let alone all the stuff I'd need to actually keep it here!"
-        n 2nsqem "You didn't seriously think I'd just have all that stuff chilling out in my desk or something,{w=0.2} did you?"
+        n 2nsqem "You didn't seriously think I'd just have all that gear chilling out in my desk or something,{w=0.2} did you?"
         n 4cslflsbr "...And somehow I doubt the closet was left stocked up with pet food and kitty litter,{w=0.75}{nw}" 
         extend 4cllbosbr " of all things."
         n 2unmfl "I mean,{w=0.5}{nw}"
@@ -223,7 +228,15 @@ label talk_did_you_have_pets:
         n 1fcssl "Heh.{w=0.75}{nw}"
         extend 4fllfl " I wish.{w=0.75}{nw}"
         extend 4fcswr " As if that was ever gonna happen with {i}my{/i} parents!"
-        n 4fnmem "Seriously -{w=0.5}{nw}"
+
+        if jn_desk_items.getDeskItem("jn_sanjo").unlocked:
+            n 4ccsem "...And no,{w=0.5}{nw}"
+            extend 4csrsl " Sanjo doesn't count."
+            n 4fnmem "But seriously -{w=0.5}{nw}"
+
+        else:
+            n 4fnmem "Seriously -{w=0.5}{nw}"
+        
         extend 2flrwr " I was never allowed anything!{w=0.75}{nw}"
         extend 2fcsan " There was always some {i}convenient{/i} reason it couldn't possibly happen!"
         n 1fcsgs "And just to top it off..."
@@ -5509,7 +5522,7 @@ label talk_play_snap:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(1.5)
     play audio drawer
-    $ Natsuki.setDeskItem(desk_slot=jn_desk_items.JNDeskSlots.centre, item=jn_desk_items.getDeskItem("jn_card_pack"))
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_card_pack"))
     show natsuki 4fchsm
     hide black with Dissolve(1)
 
@@ -10546,7 +10559,7 @@ label talk_daily_jokes_seen_before_start:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     play audio drawer
-    $ Natsuki.setDeskItem(desk_slot=jn_desk_items.JNDeskSlots.centre, item=jn_desk_items.getDeskItem("jn_joke_book_held"))
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_joke_book_held"))
     show natsuki 1fchsmeme
     $ jnPause(2.25)
     hide black with Dissolve(0.5)

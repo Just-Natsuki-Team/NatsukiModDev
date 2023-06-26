@@ -5,7 +5,7 @@ init python in topic_handler:
 
     #Add to this as needed for more databases
     TOPIC_CODE_MAP = {
-        store.TOPIC_TYPE_GREETING: store.greetings.GREETING_MAP,
+        store.TOPIC_TYPE_GREETING: store.jn_greetings.GREETING_MAP,
         store.TOPIC_TYPE_FAREWELL: store.jn_farewells.FAREWELL_MAP,
         store.TOPIC_TYPE_NORMAL: store.topics.TOPIC_MAP,
         store.TOPIC_TYPE_ADMISSION: store.jn_admissions.ADMISSION_MAP,
