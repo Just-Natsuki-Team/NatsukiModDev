@@ -237,6 +237,13 @@ init python in jn_idles:
         conditional="get_topic('talk_favorite_subject').shown_count > 0"
     ))
 
+    __registerIdle(JNIdle(
+        label="idle_plantcare",
+        idle_type=JNIdleTypes.reading,
+        affinity_range=(jn_affinity.AFFECTIONATE, None),
+        conditional="jn_desk_items.getDeskItem('jn_sanjo').unlocked"
+    ))
+
 label idle_twitch_playing:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     show prop wintendo_twitch_playing free zorder JN_PROP_ZORDER
@@ -632,6 +639,60 @@ label idle_math_attempts:
     $ jnPause(0.5)
     show natsuki 4nsrbosbl
     hide prop
+    play audio drawer
+    $ jnPause(1.3)
+    hide black with Dissolve(0.5)
+    $ jnPause(1)
+
+    $ jn_idles._concludeIdle()
+
+label idle_plantcare:
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_sanjo"))
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_plant_care_book_held"))
+    $ Natsuki.setIsReadingToRight(True)
+    show prop watering_can zorder JN_PROP_ZORDER
+    show natsuki reading
+    hide black with Dissolve(0.5)
+    $ jnClickToContinue(silent=False)
+    $ dialogue_choice = random.randint(1, 3)
+
+    if dialogue_choice == 1:
+        n 1cdwbo "...{w=0.75}{nw}"
+        n 1tnmboeqm "...?{w=0.75}{nw}"
+        n 1uwdflesu "Oh!{w=0.75}{nw}"
+        extend 1fllbgsbr " H-{w=0.2}hey,{w=0.2} [player].{w=0.75}{nw}"
+        extend 1fchbgsbr " What's happening?"
+        n 1unmaj "Let me just finish up here real quick.{w=0.75}{nw}"
+        extend 1ccsss " Besides."
+        n 1cdltr "I gotta do right by Sanjo after all,{w=0.5}{nw}" 
+        extend 1fcscaesi " you know."
+        show natsuki 1fcsca
+
+    elif dialogue_choice == 2:
+        n 1clrpu "...{w=0.75}{nw}"
+        n 1tnmpu "...Huh?{w=0.75}{nw}"
+        n 1unmpuesu "Oh!{w=0.75}{nw}"
+        extend 1cllsssbr " Heh.{w=0.75}{nw}"
+        extend 1ccssssbr " What's up,{w=0.2} [player]?"
+        n 1clraj "Just give me a minute.{w=0.75}{nw}"
+        extend 1nsrpo " I was getting tired of all the plant mumbo-jumbo anyway."
+        show natsuki 1ccspo
+
+    else:
+        n 1cdwpu "...{w=0.75}{nw}"
+        n 1cnmpueqm "Eh?{w=0.75}{nw}"
+        extend 1unmaj " Oh.{w=0.75}{nw}"
+        extend 1ullbo " Hey,{w=0.2} [player]."
+        n 1clrss "Don't mind me.{w=0.75}{nw}"
+        extend 1fcsss " Don't mind me at all."
+        n 1fcssmesm "Juuuust making sure I'm keeping Sanjo here in tip-top shape!"
+        show natsuki 1fchsmeme
+
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    hide prop
+    $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
     play audio drawer
     $ jnPause(1.3)
     hide black with Dissolve(0.5)

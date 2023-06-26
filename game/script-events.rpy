@@ -44,7 +44,6 @@ image prop renpy_for_dummies_book_held = "mod_assets/props/renpy_for_dummies_boo
 image prop a_la_mode_manga_held = "mod_assets/props/a_la_mode_manga_held.png"
 image prop strawberry_milkshake = "mod_assets/props/strawberry_milkshake.png"
 image prop step_by_step_manga_held = "mod_assets/props/step_by_step_manga_held.png"
-image prop plant_care_book_held = "mod_assets/props/plant_care_book_held.png"
 image prop glasses_case = "mod_assets/props/glasses_case.png"
 image prop hot_chocolate hot = "mod_assets/props/hot_chocolate.png"
 image prop hot_chocolate cold = "mod_assets/props/hot_chocolate_cold.png"
