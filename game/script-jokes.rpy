@@ -486,6 +486,11 @@ init python in jn_jokes:
         display_name="Action",
         joke_category=JNJokeCategories.corny
     ))
+    __registerJoke(JNJoke(
+        label="joke_befriending_sharks",
+        display_name="Befriending sharks",
+        joke_category=JNJokeCategories.neutral
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -1079,5 +1084,21 @@ label joke_action_figures:
     n 1fllbosbr "..."
     n 1fcsflsbr "...{i}Action{/i}{w=0.75}{nw}"
     extend 1fsqflsbr " figures."
+
+    return
+
+label joke_befriending_sharks:
+    n 1ccsss "Heh.{w=0.75}{nw}"
+    extend 1fsqss " You ready,{w=0.2} [player]?{w=0.75}{nw}"
+    extend 1fnmbg " You're gonna be like a fish out of water after this one."
+    n 1fcsaj "So!{w=0.75}{nw}"
+    extend 1fcsbg " How do you go about making friends with a shark?"
+    n 1fsqsm "..."
+    n 1fsqss "No?{w=0.75}{nw}"
+    extend 1flrss " Wow,{w=0.2} [player]..."
+    n 1fsgbg "Isn't it obvious?"
+    n 1fllss "You just gotta{w=0.75}{nw}"
+    extend 1fsqbg " {i}chum{/i}{w=0.75}{nw}"
+    extend 1nchgn " them up first!"
 
     return
