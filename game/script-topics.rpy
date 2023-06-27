@@ -2046,10 +2046,10 @@ label talk_favourite_season:
     # Some special dialogue based off the chosen season.
 
     python:
-        spring_sweater = jn_outfits.get_wearable("jn_clothes_bee_off_shoulder_sweater")
-        summer_sweater = jn_outfits.get_wearable("jn_clothes_creamsicle_off_shoulder_sweater")
-        autumn_sweater = jn_outfits.get_wearable("jn_clothes_autumn_off_shoulder_sweater")
-        winter_sweater = jn_outfits.get_wearable("jn_clothes_nightbloom_off_shoulder_sweater")
+        spring_sweater = jn_outfits.getWearable("jn_clothes_bee_off_shoulder_sweater")
+        summer_sweater = jn_outfits.getWearable("jn_clothes_creamsicle_off_shoulder_sweater")
+        autumn_sweater = jn_outfits.getWearable("jn_clothes_autumn_off_shoulder_sweater")
+        winter_sweater = jn_outfits.getWearable("jn_clothes_nightbloom_off_shoulder_sweater")
 
     if (
         (
@@ -2079,7 +2079,7 @@ label talk_favourite_season:
             summer_sweater.unlock()
             autumn_sweater.unlock()
             winter_sweater.unlock()
-            temporary_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
+            temporary_outfit = copy.copy(jn_outfits.getOutfit(Natsuki.getOutfitName()))
 
             if persistent.jn_player_favourite_season == "Spring":
                 temporary_outfit.clothes = spring_sweater
@@ -2093,7 +2093,7 @@ label talk_favourite_season:
             else:
                 temporary_outfit.clothes = winter_sweater
 
-            jn_outfits.save_temporary_outfit(temporary_outfit)
+            jn_outfits.saveTemporaryOutfit(temporary_outfit)
 
         play audio clothing_ruffle
         $ jnPause(2)
@@ -4164,7 +4164,7 @@ label talk_natsukis_hairstyle:
         n 1nlrsl "I was always kinda short when it came to getting it cut."
         n 1fsqsl "...And no,{w=0.1} {i}not{/i} in the physical sense."
 
-    if Natsuki.isWearingAccessory(jn_outfits.get_wearable("jn_accessory_hairband_red")):
+    if Natsuki.isWearingAccessory(jn_outfits.getWearable("jn_accessory_hairband_red")):
         n 4ullaj "As for my hairband?{w=0.2} It's just to keep my hair out of my eyes."
 
     else:
@@ -4867,7 +4867,7 @@ init 5 python:
     )
 
 label talk_are_you_into_cosplay:
-    $ already_unlocked_cosplay_outfits = jn_outfits.get_outfit("jn_trainer_cosplay").unlocked and jn_outfits.get_outfit("jn_sango_cosplay").unlocked
+    $ already_unlocked_cosplay_outfits = jn_outfits.getOutfit("jn_trainer_cosplay").unlocked and jn_outfits.getOutfit("jn_sango_cosplay").unlocked
 
     if Natsuki.isEnamored(higher=True):
         if already_unlocked_cosplay_outfits:
@@ -5092,9 +5092,9 @@ label talk_are_you_into_cosplay:
         $ jnPause(5)
 
         $ outfit_to_restore = Natsuki.getOutfit()
-        $ jn_outfits.get_outfit("jn_trainer_cosplay").unlock()
-        $ jn_outfits.get_outfit("jn_sango_cosplay").unlock()
-        $ Natsuki.setOutfit(jn_outfits.get_outfit(random.choice(["jn_trainer_cosplay", "jn_sango_cosplay"])))
+        $ jn_outfits.getOutfit("jn_trainer_cosplay").unlock()
+        $ jn_outfits.getOutfit("jn_sango_cosplay").unlock()
+        $ Natsuki.setOutfit(jn_outfits.getOutfit(random.choice(["jn_trainer_cosplay", "jn_sango_cosplay"])))
 
         play audio chair_in
         $ jnPause(3)
@@ -6100,7 +6100,7 @@ label talk_skateboarding:
     extend 2fcspo " Not very {i}radical{/i} of me,{w=0.2} huh?"
 
     if (
-        not jn_outfits.get_outfit("jn_skater_outfit").unlocked
+        not jn_outfits.getOutfit("jn_skater_outfit").unlocked
         and Natsuki.isAffectionate(higher=True)
         and persistent.jn_custom_outfits_unlocked
     ):
@@ -6125,7 +6125,7 @@ label talk_skateboarding:
         n 3uchgn "You gotta follow {w=0.2}{i}all{/i}{w=0.2} the rules of cool!{w=0.75}{nw}"
         extend 1fchsmeme " Ehehe."
 
-        $ jn_outfits.get_outfit("jn_skater_outfit").unlock()
+        $ jn_outfits.getOutfit("jn_skater_outfit").unlock()
 
     else:
         n 2ullpo "But...{w=0.5} enough of that for now.{w=0.5}{nw}"
@@ -7184,8 +7184,8 @@ label talk_custom_outfits_unlock:
         jn_outfits.load_custom_outfits()
 
         # Now we've loaded back into memory, reload the persisted data
-        jn_outfits.JNWearable.load_all()
-        jn_outfits.JNOutfit.load_all()
+        jn_outfits.JNWearable.loadAll()
+        jn_outfits.JNOutfit.loadAll()
 
     return
 
@@ -9345,7 +9345,7 @@ label talk_chocolate_preference:
     extend 2fchsmsbr " That's all I'm saying!"
 
     if (
-        not jn_outfits.get_outfit("jn_chocolate_plaid_collection").unlocked
+        not jn_outfits.getOutfit("jn_chocolate_plaid_collection").unlocked
         and Natsuki.isAffectionate(higher=True)
         and persistent.jn_custom_outfits_unlocked
     ):
@@ -9358,8 +9358,8 @@ label talk_chocolate_preference:
         n 2ksrfssbl "...And Sayori practically drooling over it."
         n 2kchsm "Maybe I should go dig that out later..."
 
-        $ jn_outfits.get_outfit("jn_chocolate_plaid_collection").unlock()
-        $ jn_outfits.get_wearable("jn_necklace_tight_golden_necklace").unlock()
+        $ jn_outfits.getOutfit("jn_chocolate_plaid_collection").unlock()
+        $ jn_outfits.getWearable("jn_necklace_tight_golden_necklace").unlock()
 
     n 1fllajlsbr "A-{w=0.2}anyway!{w=0.75}{nw}"
     extend 1fcsajl " Enough of me yammering on again.{w=0.75}{nw}"
@@ -10925,14 +10925,14 @@ label talk_fitting_clothing:
     n 3fcsaj "But I can assure you:{w=0.5}{nw}" 
     extend 3fcsbg " my imagination {i}never{/i} comes up short!"
 
-    $ pastel_goth_getup = jn_outfits.get_outfit("jn_pastel_goth_getup")
+    $ pastel_goth_getup = jn_outfits.getOutfit("jn_pastel_goth_getup")
     if not pastel_goth_getup.unlocked:
         python:
             import copy
 
             pastel_goth_getup.unlock()
             topic_outfit = copy.copy(pastel_goth_getup)
-            topic_outfit.hairstyle = jn_outfits.get_outfit(Natsuki.getOutfitName()).hairstyle
+            topic_outfit.hairstyle = jn_outfits.getOutfit(Natsuki.getOutfitName()).hairstyle
 
         n 3fllpu "..."
         n 3fllss "...In fact.{w=1}{nw}"

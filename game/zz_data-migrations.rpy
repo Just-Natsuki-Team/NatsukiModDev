@@ -232,9 +232,9 @@ init python in jn_data_migrations:
         jn_utils.log("Migration to 1.0.1 START")
 
         # Unlock some outfit items registered originally as locked, now unlocked by default
-        jn_outfits.get_outfit("jn_nyatsuki_outfit").unlock()
-        jn_outfits.get_wearable("jn_clothes_qeeb_sweater").unlock()
-        jn_outfits.get_wearable("jn_clothes_qt_sweater").unlock()
+        jn_outfits.getOutfit("jn_nyatsuki_outfit").unlock()
+        jn_outfits.getWearable("jn_clothes_qeeb_sweater").unlock()
+        jn_outfits.getWearable("jn_clothes_qt_sweater").unlock()
 
         store.persistent._jn_version = "1.0.1"
         jn_utils.save_game()
@@ -254,8 +254,8 @@ init python in jn_data_migrations:
         jn_utils.log("Migration to 1.0.3 START")
         store.persistent._jn_version = "1.0.3"
 
-        if jn_outfits.get_outfit("jn_skater_outfit").unlocked:
-            jn_outfits.get_wearable("jn_facewear_plasters").unlock()
+        if jn_outfits.getOutfit("jn_skater_outfit").unlocked:
+            jn_outfits.getWearable("jn_facewear_plasters").unlock()
 
         jn_utils.save_game()
         jn_utils.log("Migration to 1.0.3 DONE")
@@ -345,8 +345,8 @@ init python in jn_data_migrations:
             del store.persistent.jn_player_admission_type_on_quit
             jn_utils.log("Migrated: persistent.jn_player_admission_type_on_quit")
 
-        if jn_outfits.get_outfit("jn_chocolate_plaid_collection").unlocked:
-            jn_outfits.get_wearable("jn_necklace_tight_golden_necklace").unlock()
+        if jn_outfits.getOutfit("jn_chocolate_plaid_collection").unlocked:
+            jn_outfits.getWearable("jn_necklace_tight_golden_necklace").unlock()
 
         if store.persistent.affinity >= 7500:
             store.persistent._jn_pic_aff = store.persistent.affinity

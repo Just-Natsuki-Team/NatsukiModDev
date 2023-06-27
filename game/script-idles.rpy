@@ -490,8 +490,8 @@ label idle_vibing_headphones:
     python:
         import copy
 
-        outfit_to_restore = jn_outfits.get_outfit(Natsuki.getOutfitName())
-        headphones = jn_outfits.get_wearable("jn_headgear_cat_headphones")
+        outfit_to_restore = jn_outfits.getOutfit(Natsuki.getOutfitName())
+        headphones = jn_outfits.getWearable("jn_headgear_cat_headphones")
         if not headphones.unlocked:
             headphones.unlock()
 
@@ -501,7 +501,7 @@ label idle_vibing_headphones:
     show natsuki 1ncsca
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     show prop music_notes zorder JN_PROP_ZORDER
-    $ jn_outfits.save_temporary_outfit(headphones_outfit)
+    $ jn_outfits.saveTemporaryOutfit(headphones_outfit)
     show natsuki vibing
     hide black with Dissolve(0.5)
     $ jnClickToContinue(silent=False)
