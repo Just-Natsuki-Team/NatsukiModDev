@@ -49,6 +49,7 @@ image prop hot_chocolate hot = "mod_assets/props/hot_chocolate.png"
 image prop hot_chocolate cold = "mod_assets/props/hot_chocolate_cold.png"
 image prop cake lit = "mod_assets/props/cake_lit.png"
 image prop cake unlit = "mod_assets/props/cake_unlit.png"
+image prop watering_can = "mod_assets/props/watering_can.png"
 
 image prop f14_heart give = "mod_assets/props/f14/give_heart.png"
 image prop f14_heart hold = "mod_assets/props/f14/hold_heart.png"

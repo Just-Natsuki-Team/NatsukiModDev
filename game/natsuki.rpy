@@ -93,7 +93,7 @@ init 0 python:
 
             IN:
                 - item - Can be one of:
-                    - JNDeskItem instance, in which case the displayable value is used
+                    - JNDeskItem instance, in which case an Image displayable is created from the image_path attribute
                     - str file path to image, in which case an Image displayable is created from it
                     - A Ren'Py displayable (Image, etc.), which is used directly
                 - desk_slot - Optional JNDeskSlots slot to use for the item (left, centre or right), if item is not JNDeskItem, or None

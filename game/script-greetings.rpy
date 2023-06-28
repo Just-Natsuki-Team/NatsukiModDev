@@ -928,7 +928,10 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_nat_dragged_in",
             unlocked=True,
-            affinity_range=(jn_affinity.LOVE, None)
+            affinity_range=(jn_affinity.LOVE, None),
+            additional_properties={
+                "expression": "2ccssm"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
