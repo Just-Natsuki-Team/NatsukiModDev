@@ -3784,7 +3784,8 @@ label talk_i_love_you:
             n 3fslpul "Y-{w=0.1}you're just lucky I've got a great sense of humor."
             n 4fnmpol "S-{w=0.1}so it's fine...{w=0.3} this time..."
             n 1fcsajl "Just...{w=0.3} think a little before you just blurt stuff out!{w=0.2} Sheesh."
-            n 1fllslf "[chosen_tease.capitalize()]..."
+            $ capitalized_tease = chosen_tease.capitalize()
+            n 1fllslf "[capitalized_tease]..."
 
         elif Natsuki.isNormal(higher=True):
             n 1fscgsf "Urk-!"

@@ -429,7 +429,7 @@ init python:
         if (
             Natsuki.isHappy(higher=True)
             and persistent.jn_custom_outfits_unlocked
-            and jn_outfits.hasPendingUnlocks()
+            and jn_outfits.getSafePendingUnlocks()
             and not jn_events.selectHolidays()
         ):
             queue("new_wearables_outfits_unlocked")

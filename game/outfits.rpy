@@ -586,7 +586,7 @@ init -1 python in jn_outfits:
 
                 # If this is the first time adding it to the list, and it isn't JN or created by this player in the session, it's a new unlock
                 if not "jn_" in outfit.reference_name and not player_created:
-                    store.persistent._jn_pending_outfit_unlocks.append(outfit)
+                    store.persistent._jn_pending_outfit_unlocks.append(outfit.reference_name)
 
     def __registerWearable(wearable):
         """
@@ -602,7 +602,7 @@ init -1 python in jn_outfits:
 
                 # If this is the first time adding it to the list, and it isn't JN, it's a new unlock
                 if not "jn_" in wearable.reference_name:
-                    store.persistent._jn_pending_outfit_unlocks.append(wearable)
+                    store.persistent._jn_pending_outfit_unlocks.append(wearable.reference_name)
 
             else:
                 wearable.__load()
@@ -1093,7 +1093,7 @@ init -1 python in jn_outfits:
             return True
 
         except Exception as exception:
-            renpy.notify("Save failed; please check log for more information.")
+            renpy.notify("Outfit save failed; check log for more information.")
             jn_utils.log("Failed to save outfit {0}, as a write operation was not possible.".format(new_custom_outfit.display_name))
             return False
 
@@ -1113,7 +1113,7 @@ init -1 python in jn_outfits:
         elif not jn_utils.deleteFileFromDirectory(
             path=os.path.join(__CUSTOM_OUTFITS_DIRECTORY, "{0}.json".format(outfit.reference_name))
         ):
-            renpy.notify("Delete failed; please check log for more information.")
+            renpy.notify("Delete outfit failed; check log for more information.")
             jn_utils.log("Failed to delete outfit {0}, as a remove operation was not possible.".format(outfit.display_name))
             return False
 
@@ -1153,12 +1153,15 @@ init -1 python in jn_outfits:
         Gets all pending unlocks that are safe to be mentioned in the gifting sequence.
 
         A safe unlock is an outfit/wearable with a corresponding item in memory.
+
+        OUT:
+            - List of str reference names for outfits/wearables that are pending gifting dialogue, or an empty list
         """
         if not len(store.persistent._jn_pending_outfit_unlocks):
             return []
 
-        safe_unlocks = store.persistent._jn_pending_outfit_unlocks
-        for unlock in safe_unlocks:
+        safe_unlocks = []
+        for unlock in store.persistent._jn_pending_outfit_unlocks:
             if wearableExists(unlock) or outfitExists(unlock):
                 safe_unlocks.append(unlock)
 
@@ -2287,9 +2290,10 @@ label outfits_suggest_outfit:
         $ jn_rm_topic_from_event_list("new_wearables_outfits_unlocked")
         jump new_wearables_outfits_unlocked
 
-    n 4unmaj "Ooh!{w=1.5}{nw}"
-    extend 1fchbg " I'm always open to a suggestion!{w=0.5}{nw}"
-    extend 1unmss " What did you have in mind?"
+    n 4unmaj "Ooh!{w=1}{nw}"
+    extend 4fchbg " Yeah,{w=0.2} I'll take a suggestion!{w=0.75}{nw}"
+    extend 7unmss " What're you thinking,{w=0.2} [player]?"
+
     python:
         # We copy these specifically so we can alter them without modifying the outfits in the master list
         import copy
@@ -2297,7 +2301,7 @@ label outfits_suggest_outfit:
         jn_outfits._PREVIEW_OUTFIT = copy.copy(jn_outfits.getOutfit(Natsuki.getOutfitName()))
         jn_outfits._changes_made = False
 
-    show natsuki idle at jn_left
+    show natsuki option_wait_curious at jn_left
     jump outfits_create_menu
 
 # Asking Natsuki to remove an existing outfit
@@ -2349,49 +2353,54 @@ label outfits_remove_outfit:
     show natsuki at jn_center
 
     if isinstance(_return, jn_outfits.JNOutfit):
-        $ outfit_name = _return.display_name.lower()
-        n 1unmaj "Oh?{w=0.2} [outfit_name]?{w=0.2} That outfit?"
+        $ outfit_name = _return.display_name.lower().capitalize()
+        n 1unmaj "Oh?{w=0.5} [outfit_name]?{w=0.75}{nw}" 
+        extend 1unmbo " That outfit?"
 
+        show natsuki option_wait_curious
         menu:
             n "You're sure you want me to forget about it?"
 
             "Yes, forget about [outfit_name].":
                 if Natsuki.isWearingOutfit(_return.reference_name):
                     # Change Natsuki out of the uniform to be removed, if she's wearing it
-                    n 4uwdaj "Oh! I totally forgot I'm wearing it already!"
-                    extend 1fslssl " Ehehe."
+                    n 7ullaj "Well...{w=1}{nw}"
+                    extend 7fslss " seeing as I'm not wearing {i}that{/i} again any time soon..."
+                    n 7fchgn "Guess I should probably change,{w=0.2} huh?"
+                    show natsuki 4fcssmeme
 
                     play audio clothing_ruffle
                     $ Natsuki.setOutfit(jn_outfits.getOutfit("jn_casual_clothes"))
                     with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
 
-                n 1nchgn "Okaaay!{w=1.5}{nw}"
-                extend 1ncsbg " Just give me a second here...{w=1.5}{nw}"
+                n 1nchgn "Okaaay!{w=1}{nw}"
+                extend 1ncsbg " Just give me a second here...{w=1}{nw}"
 
                 if jn_outfits.deleteCustomOutfit(_return):
                     n 1fchsm "...And it's gone!"
 
                 else:
-                    n 1kllaj "...Oh."
-                    n 1klrun "Uhmm...{w=1.5}{nw}"
-                    extend 4knmpu " [player]?"
-                    n 2kllpo "I wasn't able to forget about that one for some reason."
-                    n 2kllss "Sorry..."
+                    n 4kslfl "...Oh."
+                    n 4kllfl "Hey...{w=1}{nw}"
+                    extend 5knmpu " [player]?"
+                    n 2kdrfl "I...{w=1}{nw}" 
+                    extend 2kdrsssbr " can't forget about that outfit for some reason.{w=0.75}{nw}"
+                    extend 5ksrcasbr "Sorry."
 
             "Nevermind.":
                 n 1nnmbo "Oh."
-                n 1ullaj "Well...{w=1.5}{nw}"
+                n 1ullaj "Well...{w=1}{nw}"
                 extend 1nllca " okay then."
 
     else:
         n 1nnmbo "Oh.{w=1}{nw}"
-        extend 1nchgn " Well,{w=0.1} suits me!"
+        extend 1nchgn " Well,{w=0.2} suits me!"
 
     jump ch30_loop
 
 # Main outfit creator label
 label outfits_create_menu:
-    show natsuki idle at jn_left
+    show natsuki option_wait_curious at jn_left
     call screen create_outfit
 
 # Headgear selection for outfit creator flow
@@ -2562,13 +2571,15 @@ label outfits_create_quit:
     if jn_outfits._changes_made:
         n 4unmaj "Huh?{w=0.5}{nw}"
         extend 1tnmbo " You're done already,{w=0.1} [player]?"
+
+        show natsuki option_wait_curious
         menu:
             n "You're sure you don't want me to try more stuff on?"
 
             # Go back to editor
             "Yes, I'm not done yet.":
-                n 2fcsbg "Gotcha!"
-                extend 1tsqsm " What else have you got?"
+                n 7fcsbg "Gotcha!{w=0.75}{nw}"
+                extend 7tsqsm " What else have you got?"
 
                 jump outfits_create_menu
 
@@ -2584,10 +2595,10 @@ label outfits_create_quit:
                 jump ch30_loop
 
     else:
-        n 4tllaj "So...{w=1.5}{nw}"
+        n 4tllaj "So...{w=1}{nw}"
         extend 3tnmpo " you don't want me to change after all?"
         n 1nlrbo "Huh."
-        n 1tnmss "Well,{w=0.1} if it ain't broke,{w=0.1} right?{w=0.5}{nw}"
+        n 1tnmss "Well,{w=0.2} if it ain't broke,{w=0.2} right?{w=0.75}{nw}"
         extend 2fcssm " Ehehe."
         jump ch30_loop
 
@@ -2597,8 +2608,10 @@ label outfits_create_save:
     n 3flrpo "If I'd known you were {i}this{/i} into dress-up,{w=0.3} I'd have set a timer!{w=1.5}{nw}"
     extend 3fsqsm " Ehehe."
     n 1ullaj "So..."
+
+    show natsuki option_wait_curious
     menu:
-        n "All finished, [player]?"
+        n "All finished,{w=0.2} [player]?"
 
         "Yes, I'd like to save this outfit.":
             n 1fchbg "Gotcha!{w=1.5}{nw}"
@@ -2640,23 +2653,26 @@ label outfits_create_save:
                         jn_outfits._PREVIEW_OUTFIT.display_name = outfit_name
                         name_given = True
 
+            show natsuki at jn_center
+
             n 1nchbg "Okaaay!{w=1.5}{nw}"
-            extend 1ncsss " Let me just take some notes...{w=1.5}{nw}"
+            extend 1ncsss " Just gonna make a quick mental note here...{w=1.5}{nw}"
 
             if jn_outfits.saveCustomOutfit(jn_outfits._PREVIEW_OUTFIT):
                 n 1uchsm "...And done!"
-                n 1fchbg "Thanks,{w=0.1} [player]!{w=0.5}{nw}"
+                n 1fchbg "Thanks,{w=0.2} [player]!{w=0.75}{nw}"
                 extend 4uchsm " Ehehe."
 
                 $ jn_outfits._changes_made = False
                 jump ch30_loop
 
             else:
-                n 1kllaj "...Oh."
-                n 1klrun "Uhmm...{w=1.5}{nw}"
-                extend 4knmpu " [player]?"
-                n 2kllpo "I wasn't able to save that for some reason."
-                n 1kllss "Sorry..."
+                n 4kslfl "...Oh."
+                n 4kllfl "Hey...{w=1}{nw}"
+                extend 5knmpu " [player]?"
+                n 2kdrfl "I...{w=1}{nw}" 
+                extend 2kdrsssbr " can't make a note of that outfit for some reason.{w=0.75}{nw}"
+                extend 5ksrcasbr "Sorry."
 
                 jump outfits_create_menu
 
@@ -2672,10 +2688,10 @@ label outfits_create_save:
             jump ch30_loop
 
         "No, I'm not quite finished.":
-            n 3nslpo "I {i}knew{/i} I should have brought a book...{w=2}{nw}"
+            n 3nslpo "I {i}knew{/i} I should have brought a book.{w=0.75}{nw}"
             extend 1fsqsm " Ehehe."
-            n 1ulrss "Well,{w=0.1} whatever.{w=0.5}{nw}"
-            extend 4unmbo " What else did you have in mind,{w=0.1} [player]?"
+            n 1ulrss "Well,{w=0.2} whatever.{w=0.5}{nw}"
+            extend 4unmbo " What else did you have in mind,{w=0.2} [player]?"
 
             jump outfits_create_menu
 
@@ -2869,6 +2885,7 @@ label new_wearables_outfits_unlocked:
     while len(unlocks) > 0:
         play audio gift_rustle
         $ unlock = unlocks.pop()
+        $ unlock = jn_outfits.getOutfit(unlock) if jn_outfits.outfitExists(unlock) else jn_outfits.getWearable(unlock)
 
         if (len(unlocks) == 0):
             $ giftbox.empty()
@@ -2992,7 +3009,7 @@ label new_wearables_outfits_unlocked:
                     n 2fcspofess "Juuuust in case."
 
         $ alt_dialogue = not alt_dialogue
-        $ persistent._jn_pending_outfit_unlocks.remove(unlock)
+        $ persistent._jn_pending_outfit_unlocks.remove(unlock.reference_name)
 
         if len(persistent._jn_pending_outfit_unlocks) > 0:
             if Natsuki.isEnamored(higher=True):
