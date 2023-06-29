@@ -828,6 +828,9 @@ screen navigation():
 
         spacing gui.navigation_spacing
 
+        if not jn_data_migrations.current_version_latest:
+            textbutton _("View update!") action OpenURL(jn_globals.LINK_JN_LATEST)
+
         if main_menu:
             textbutton _("New Game"):
                 action If(
@@ -1370,9 +1373,9 @@ screen preferences():
                                 style "mute_all_button"
 
     text "v[config.version]":
-                xalign 1.0 yalign 1.0
-                xoffset -10 yoffset -10
-                style "default"
+        xalign 1.0 yalign 1.0
+        xoffset -10 yoffset -10
+        style "default"
 
 style pref_label is gui_label
 style pref_label_text is gui_label_text
