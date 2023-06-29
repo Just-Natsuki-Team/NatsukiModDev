@@ -491,6 +491,11 @@ init python in jn_jokes:
         display_name="Befriending sharks",
         joke_category=JNJokeCategories.neutral
     ))
+    __registerJoke(JNJoke(
+        label="joke_fisherman_broadcast",
+        display_name="Fishermen video calls",
+        joke_category=JNJokeCategories.corny
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -1100,5 +1105,14 @@ label joke_befriending_sharks:
     n 1fllss "You just gotta{w=0.75}{nw}"
     extend 1fsqbg " {i}chum{/i}{w=0.75}{nw}"
     extend 1nchgn " them up first!"
+
+    return
+
+label joke_fisherman_broadcast:
+    n 1csqfl "...Why is it so hard to get a video call with a fisherman?"
+    n 1csrca "..."
+    n 1ccsfresi "..."
+    n 1clrem "...Because they only do broad-{w=0.75}{nw}"
+    extend 1csqup "{i}casts{/i}."
 
     return
