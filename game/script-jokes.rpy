@@ -501,6 +501,11 @@ init python in jn_jokes:
         display_name="Lighthouse keeper",
         joke_category=JNJokeCategories.corny
     ))
+    __registerJoke(JNJoke(
+        label="joke_bakers",
+        display_name="Bakers",
+        joke_category=JNJokeCategories.corny
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -1130,5 +1135,16 @@ label joke_lighthouse_keeper:
     n 1ccsemesisbr "..."
     n 1ccsajsbr "Their career becomes...{w=1}{nw}"
     extend 1csrflsbr " {i}brighter than ever{/i}."
+
+    return
+
+label joke_bakers:
+    n 1ccsemesi "..."
+    n 1clrtr "How do you describe a baker about to break their own baking record?"
+    n 1csrsl "..."
+    n 1ccsflsbl "...Man,{w=0.5}{nw}" 
+    extend 1fslemsbl " this is dumb."
+    n 1cllajsbl "They'd be...{w=1}{nw}"
+    extend 1csqemsbl " {i}on a roll{/i}."
 
     return
