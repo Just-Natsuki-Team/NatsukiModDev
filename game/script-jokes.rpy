@@ -496,6 +496,11 @@ init python in jn_jokes:
         display_name="Fishermen video calls",
         joke_category=JNJokeCategories.corny
     ))
+    __registerJoke(JNJoke(
+        label="joke_lighthouse_keeper",
+        display_name="Lighthouse keeper",
+        joke_category=JNJokeCategories.corny
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -1114,5 +1119,16 @@ label joke_fisherman_broadcast:
     n 1ccsfresi "..."
     n 1clrem "...Because they only do broad-{w=0.75}{nw}"
     extend 1csqup "{i}casts{/i}."
+
+    return
+
+label joke_lighthouse_keeper:
+    n 1fsrpu "I seriously can't believe I'm telling {i}this{/i} one."
+    n 1ccsbo "..."
+    n 1cllfl "What happens when a lighthouse keeper gets promoted?"
+    n 1cllslsbr "..."
+    n 1ccsemesisbr "..."
+    n 1ccsajsbr "Their career becomes...{w=1}{nw}"
+    extend 1csrflsbr " {i}brighter than ever{/i}."
 
     return
