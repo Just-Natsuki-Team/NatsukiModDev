@@ -24,8 +24,8 @@ init 0 python in jn_snap:
         "spades"
     ]
 
-    _current_table_card_image = "mod_assets/games/snap/cards/blank.png"
-    _turn_indicator_image = "mod_assets/games/snap/ui/turn_indicator_none.png"
+    _current_table_card_image = "mod_assets/games/cards/blank.png"
+    _turn_indicator_image = "mod_assets/games/snap/turn_indicator_none.png"
 
     _SNAP_UI_Z_INDEX = 4
     _SNAP_POPUP_Z_INDEX = 5
@@ -118,18 +118,18 @@ init 0 python in jn_snap:
 
     # A little something extra
     if random.choice(range(1, 100)) == 1:
-        _CARD_FAN_IMAGE_PLAYER = "mod_assets/games/snap/ui/card_fan_icon_alt.png"
+        _CARD_FAN_IMAGE_PLAYER = "mod_assets/games/snap/card_fan_icon_alt.png"
 
     else:
-        _CARD_FAN_IMAGE_PLAYER = "mod_assets/games/snap/ui/card_fan_icon.png"
+        _CARD_FAN_IMAGE_PLAYER = "mod_assets/games/snap/card_fan_icon.png"
 
-    _CARD_FAN_IMAGE_NATSUKI = "mod_assets/games/snap/ui/card_fan_icon.png"
+    _CARD_FAN_IMAGE_NATSUKI = "mod_assets/games/snap/card_fan_icon.png"
 
     _SNAP_POPUP_SPRITES = [
-        "mod_assets/games/snap/ui/snap_a.png",
-        "mod_assets/games/snap/ui/snap_b.png",
-        "mod_assets/games/snap/ui/snap_c.png",
-        "mod_assets/games/snap/ui/snap_d.png"
+        "mod_assets/games/snap/snap_a.png",
+        "mod_assets/games/snap/snap_b.png",
+        "mod_assets/games/snap/snap_c.png",
+        "mod_assets/games/snap/snap_d.png"
     ]
 
     def _reset(complete_reset=False):
@@ -285,10 +285,10 @@ init 0 python in jn_snap:
         global _current_table_card_image
 
         if len(_cards_on_table) is not 0:
-            _current_table_card_image = "mod_assets/games/snap/cards/{0}/{1}.png".format(_cards_on_table[-1][0], _cards_on_table[-1][1])
+            _current_table_card_image = "mod_assets/games/cards/{0}/{1}.png".format(_cards_on_table[-1][0], _cards_on_table[-1][1])
 
         else:
-            _current_table_card_image = "mod_assets/games/snap/cards/blank.png"
+            _current_table_card_image = "mod_assets/games/cards/blank.png"
 
     def update_turn_indicator():
         """
@@ -297,13 +297,13 @@ init 0 python in jn_snap:
         global _turn_indicator_image
 
         if _is_player_turn is None:
-            _turn_indicator_image = "mod_assets/games/snap/ui/turn_indicator_none.png"
+            _turn_indicator_image = "mod_assets/games/snap/turn_indicator_none.png"
 
         elif _is_player_turn:
-            _turn_indicator_image = "mod_assets/games/snap/ui/turn_indicator_player.png"
+            _turn_indicator_image = "mod_assets/games/snap/turn_indicator_player.png"
 
         else:
-            _turn_indicator_image = "mod_assets/games/snap/ui/turn_indicator_natsuki.png"
+            _turn_indicator_image = "mod_assets/games/snap/turn_indicator_natsuki.png"
 
     def get_turn_label_to_display():
         """
@@ -839,13 +839,13 @@ transform snap_popup_fadeout:
 image snap_popup:
     block:
         choice:
-            "mod_assets/games/snap/ui/snap_a.png"
+            "mod_assets/games/snap/snap_a.png"
         choice:
-            "mod_assets/games/snap/ui/snap_b.png"
+            "mod_assets/games/snap/snap_b.png"
         choice:
-            "mod_assets/games/snap/ui/snap_c.png"
+            "mod_assets/games/snap/snap_c.png"
         choice:
-            "mod_assets/games/snap/ui/snap_d.png"
+            "mod_assets/games/snap/snap_d.png"
 
     snap_popup_fadeout
             

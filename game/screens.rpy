@@ -83,6 +83,27 @@ screen hotkeys():
                             null width 175 height 30
                             null width 175 height 0
 
+            if persistent._jn_blackjack_unlocked:
+                hbox:
+                    xoffset 550
+                    vbox:
+                        box_wrap True
+                        label _("Blackjack hotkeys") style "check_label"
+                        null height 20
+                        style_prefix "hotkeys"
+                        grid 2 3:
+                            xoffset 20                
+                            spacing 10
+
+                            text _("Hit!")
+                            text _("1")
+
+                            text _("Stay")
+                            text _("2")
+
+                            null width 175 height 30
+                            null width 175 height 0
+
 # Categorized menu
 ## Similar to MAS' twopane_scrollable menu.
 ## NOTE: This is meant to be called within a loop so long as the user hasn't clicked `Nevermind`
