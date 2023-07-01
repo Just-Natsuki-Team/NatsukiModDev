@@ -55,8 +55,10 @@ init 0 python in jn_blackjack:
 
         global _is_player_turn
         global _controls_enabled
+        global _last_game_result
         _is_player_turn = None
         _controls_enabled = None
+        _last_game_result = None
 
     def _setup():
         """
@@ -73,8 +75,7 @@ init 0 python in jn_blackjack:
             "spades"
         ]:
             for card_value in range(1, 14):
-                #TODO: this might as well be image path! (given we don't use suit apart from that)
-                _deck.append((card_suit, card_value))
+                _deck.append(("mod_assets/games/cards/{0}/{1}.png".format(card_suit, card_value), card_value))
 
         random.shuffle(_deck)
 
@@ -98,7 +99,7 @@ init 0 python in jn_blackjack:
         if is_player:
             # Player's turn
             if is_hit:
-                _player_hand.append(_desk.pop(0))
+                _player_hand.append(_desk.pop())
                 renpy.play("mod_assets/sfx/card_place.ogg")
 
             _is_player_turn = False
@@ -106,7 +107,7 @@ init 0 python in jn_blackjack:
         else:
             # Natsuki's turn
             if is_hit:
-                _natsuki_hand.append(_desk.pop(0))
+                _natsuki_hand.append(_desk.pop())
                 renpy.play("mod_assets/sfx/card_place.ogg")
 
             _is_player_turn = True
@@ -136,13 +137,13 @@ init 0 python in jn_blackjack:
             - str sprite path for the card at the given index, a hidden placeholder for Nat's first card if game ongoing, or empty it is doesn't exist.
         """
         if is_player:
-            return "mod_assets/games/cards/{0}/{1}.png".format(_player_hand[index][0], _player_hand[index][1]) if 0 <= index < len(_player_hand) else "mod_assets/natsuki/etc/empty.png"
+            return _player_hand[index][0] if 0 <= index < len(_player_hand) else "mod_assets/natsuki/etc/empty.png"
 
         else:
             if _last_game_result is not None and index == 0:
                 return "mod_assets/games/cards/blank.png"
             
-            return "mod_assets/games/cards/{0}/{1}.png".format(_natsuki_hand[index][0], _natsuki_hand[index][1]) if 0 <= index < len(_natsuki_hand) else "mod_assets/natsuki/etc/empty.png"
+            return _natsuki_hand[index][0] if 0 <= index < len(_natsuki_hand) else "mod_assets/natsuki/etc/empty.png"
 
 label blackjack_intro:
     # TODO: Writing
@@ -241,9 +242,14 @@ label blackjack_main_loop:
             $ natsuki_wins = True
             $ jn_blackjack._last_game_result = jn_blackjack.JNBlackjackEndings.natsuki_closest
 
-        else:
+        elif 21 - player_hand_sum < 21 - natsuki_hand_sum:
             $ player_wins = True
             $ jn_blackjack._last_game_result = jn_blackjack.JNBlackjackEndings.player_closest
+
+        else:
+            # Draw somehow
+            $ jn_blackjack._last_game_result = jn_blackjack.JNBlackjackEndings.draw
+            jump blackjack_end
 
     if natsuki_wins:
         $ persistent._jn_blackjack_natsuki_wins += 0
@@ -255,22 +261,90 @@ label blackjack_main_loop:
 
     $ jnPause(delay=random.randint(2, 3), hard=True)
 
-    # Natsuki's Blackjack logic
+    # Natsuki's hit/stay logic
     if not jn_blackjack._is_player_turn:
-        # TODO - need to weight this somehow. Current card values + probability of getting high/low card. Risk level? 
+        if natsuki_hand_sum == 20:
+            $ jn_blackjack._stayOrHit(is_player=False, is_hit=False)
+
+        else:
+            python:
+                hit_percent = 0.50
+                deck_used_high_cards = 0
+                deck_used_low_cards = 0
+                needed_to_blackjack = 21 - natsuki_hand_sum
+
+                for card in jn_snap._natsuki_hand:
+                    if card[1] > 6:
+                        deck_used_high_cards += 1
+                    else:
+                        deck_used_low_cards +=1
+
+                # TODO: figure out rolling down hit percent for when better to stay
+                if (
+                    deck_used_high_cards > deck_used_low_cards and needed_to_blackjack <= 6
+                    or low_cards > high_cards and needed_to_blackjack > 6
+                ):
+                    hit_percent += 0.35
+
+                elif (
+                    deck_used_high_cards == deck_used_low_cards and needed_to_blackjack <= 6
+                    or deck_used_high_cards == deck_used_low_cards and needed_to_blackjack > 6
+                ):
+                    hit_percent += 0.20
+
+                risk_percent = jn_snap._natsuki_win_streak / 100 if jn_snap._natsuki_win_streak > 0 else 0
+                risk_percent = 0.05 if risk_percent > 0.05 else risk_percent
+
+                hit_percent += risk_percent
+                hit_percent = 0.85 if hit_percent > 0.85 else hit_percent
+
+                will_hit = random.randint(0, 100) / 100 <= hit_percent
+                jn_blackjack._stayOrHit(is_player=False, is_hit=will_hit)
 
     jump blackjack_main_loop
 
 label blackjack_end:
+    #TODO: Writing
     $ jn_blackjack._controls_enabled = False
 
-    #TODO: end route conditions/handling
+    if jn_blackjack._last_game_result == jn_blackjack.JNBlackjackEndings.draw:
+        n "We drew? Weird."
 
-    # Reset the ingame flag, then hop back to ch30 as getting here has lost context
-    $ Natsuki.setInGame(False)
-    $ Natsuki.resetLastTopicCall()
-    $ Natsuki.resetLastIdleCall()
-    jump ch30_loop
+    elif jn_blackjack._last_game_result == jn_blackjack.JNBlackjackEndings.natsuki_bust:
+        n "I bust? Are you kidding me?! Ugh..."
+
+    elif jn_blackjack._last_game_result == jn_blackjack.JNBlackjackEndings.natsuki_blackjack:
+        n "Yes! Blackjack! Blackjack! Ehehe."
+
+    elif jn_blackjack._last_game_result == jn_blackjack.JNBlackjackEndings.natsuki_closest:
+        n "Yes! I win! I win!"
+
+    elif jn_blackjack._last_game_result == jn_blackjack.JNBlackjackEndings.player_bust:
+        n "Ha! You bust that one, [player]!"
+
+    elif jn_blackjack._last_game_result == jn_blackjack.JNBlackjackEndings.player_blackjack:
+        n "Uuuuu...! Are you kidding me?! You got a blackjack? Man..."
+
+    elif jn_blackjack._last_game_result == jn_blackjack.JNBlackjackEndings.player_closest:
+        n "Hmph. You just got lucky again, [player]."
+
+    n "So..."
+    show natsuki option_wait_curious
+    menu:
+        n "Up for another game?"
+
+        "You're on!":
+            n "You bet!"
+
+            jump blackjack_start
+
+        "I'll pass.":
+            n "Thanks for playing!"
+
+            $ Natsuki.setInGame(False)
+            $ Natsuki.resetLastTopicCall()
+            $ Natsuki.resetLastIdleCall()
+            jump ch30_loop
 
 label blackjack_forfeit:
     # TODO: writing
@@ -279,10 +353,13 @@ label blackjack_forfeit:
 
         "Yes":
             n "continuing"
+
             jump blackjack_main_loop
 
-        "No:"
+        "No":
             n "ending"
+
+            $ jn_blackjack._last_game_result = jn_blackjack.JNBlackjackEndings.forfeit
             jump blackjack_end
 
     return
@@ -293,47 +370,36 @@ screen blackjack_ui:
     add "mod_assets/natsuki/desk/table/topdown/table.png" anchor(0, 0) pos(0, 0)
 
     # Natsuki's hand
-    add jn_blackjack._getCardSprite(is_player=False, index=0) anchor(0,0) pos (0, 0)
-    add jn_blackjack._getCardSprite(is_player=False, index=1) anchor(0,0) pos (0, 0)
-    add jn_blackjack._getCardSprite(is_player=False, index=2) anchor(0,0) pos (0, 0)
-    add jn_blackjack._getCardSprite(is_player=False, index=3) anchor(0,0) pos (0, 0)
+    add jn_blackjack._getCardSprite(is_player=False, index=0) anchor(0,0) pos(60, 60) xysize(178, 250)
+    add jn_blackjack._getCardSprite(is_player=False, index=1) anchor(0,0) pos(194, 60) xysize(178, 250)
+    add jn_blackjack._getCardSprite(is_player=False, index=2) anchor(0,0) pos(388, 60) xysize(178, 250)
+    add jn_blackjack._getCardSprite(is_player=False, index=3) anchor(0,0) pos(582, 60) xysize(178, 250)
 
     # Player's hand
-    add jn_blackjack._getCardSprite(is_player=True, index=0) anchor(0,0) pos (0, 0)
-    add jn_blackjack._getCardSprite(is_player=True, index=1) anchor(0,0) pos (0, 0)
-    add jn_blackjack._getCardSprite(is_player=True, index=2) anchor(0,0) pos (0, 0)
-    add jn_blackjack._getCardSprite(is_player=True, index=3) anchor(0,0) pos (0, 0)
+    add jn_blackjack._getCardSprite(is_player=True, index=0) anchor(0,0) pos(60, 372) xysize(178, 250)
+    add jn_blackjack._getCardSprite(is_player=True, index=1) anchor(0,0) pos(194, 0) xysize(178, 250)
+    add jn_blackjack._getCardSprite(is_player=True, index=2) anchor(0,0) pos(388, 0) xysize(178, 250)
+    add jn_blackjack._getCardSprite(is_player=True, index=3) anchor(0,0) pos(582, 0) xysize(178, 250)
 
-    # Information
-    text "Your wins" size 32 xpos 1000 ypos 50 style "categorized_menu_button"
-    text "[n_name]'s wins" size 32 xpos 1000 ypos 50 style "categorized_menu_button"
-    
-    text "Turn: {0}".format(jn_blackjack._current_turn) size 22 xpos 750 ypos 265 style "categorized_menu_button"
-
-    # Controls
-    style_prefix "hkb"
+    # Information and controls
     vbox:
-        xpos 1012
-        ypos 420
+        xpos 1000 ypos 312
 
-        # Hotkeys
+        text "Your wins" size 22 style "categorized_menu_button"
+        null height 70
+        text "[n_name]'s wins" size 22 style "categorized_menu_button"
+        null height 70
+        text "Turn: {0}".format(jn_blackjack._current_turn) size 22 style "categorized_menu_button"
 
+        # Controls
+        style_prefix "hkb"
+
+        # Hit
         key "1" action [
-            # Hit
             If(
                 jn_blackjack._is_player_turn and jn_blackjack._controls_enabled,
                 Function(jn_blackjack._stayOrHit, True, True)) 
         ]
-        key "2" action [
-            # Stay
-            If(
-                jn_blackjack._is_player_turn and jn_blackjack._controls_enabled,
-                Function(jn_blackjack._stayOrHit, True, False))
-        ]
-
-        # Buttons
-
-        # Hit
         textbutton _("Hit!"):
             style "hkbd_option"
             action [
@@ -341,6 +407,12 @@ screen blackjack_ui:
                 SensitiveIf(jn_blackjack._is_player_turn and jn_blackjack._controls_enabled)]
 
         # Stay
+        key "2" action [
+            # Stay hotkey
+            If(
+                jn_blackjack._is_player_turn and jn_blackjack._controls_enabled,
+                Function(jn_blackjack._stayOrHit, True, False))
+        ]
         textbutton _("Stay"):
             style "hkbd_option"
             action [
