@@ -3,7 +3,11 @@ init python:
         """
         Hides hotkeybuttons
         """
-        config.overlay_screens.remove("hkb_overlay")
+        try:
+            config.overlay_screens.remove("hkb_overlay")
+        except:
+            pass
+        
         renpy.hide_screen("hkb_overlay")
 
 
