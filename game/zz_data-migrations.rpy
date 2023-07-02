@@ -6,7 +6,10 @@ default persistent._jn_pic = False
 python early in jn_data_migrations:
     from enum import Enum
     import re
+    import requests
+    import os
     import store
+    import store.jn_globals as jn_globals
     import store.jn_utils as jn_utils
 
     # dict mapping a from_version -> to_version, including the function used to migrate between those versions
@@ -25,6 +28,7 @@ python early in jn_data_migrations:
     VER_STR_PARSER = re.compile(r"^(?P<ver>\d+\.\d+\.\d+)(?P<suffix>.*)$")
 
     migrated_in_session = False
+    current_version_latest = False
 
     class MigrationRuntimes(Enum):
         """
@@ -112,6 +116,29 @@ python early in jn_data_migrations:
 
         #If we got here, the versions are equal
         return 0
+
+    def checkCurrentVersionIsLatest():
+        """
+        Checks the latest release and compares the version number against the persisted version number.
+        If an update is available, notify the user.
+        
+        For best results, run threaded as to not block execution.
+        """
+        try:
+            response = requests.get(jn_globals.LINK_JN_LATEST, verify=os.environ['SSL_CERT_FILE'])
+            if response.status_code != 200:
+                jn_utils.log("Failed to check for updates: response from GitHub releases was: {0}".format(response.status_code))
+                return False
+            
+            global current_version_latest
+            current_version_latest = compareVersions(store.persistent._jn_version, response.url.split("/")[-1].replace("v", "")) in [0, 1]
+            
+            if not current_version_latest:
+                renpy.notify("An update for Just Natsuki is now available!")
+
+        except Exception as exception:
+            jn_utils.log("Failed to check for updates: {0}".format(exception))
+            return False
 
     def runInitMigrations():
         """

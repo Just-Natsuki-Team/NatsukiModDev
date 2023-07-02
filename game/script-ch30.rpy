@@ -173,6 +173,9 @@ label ch30_init:
         elif persistent._jn_player_tt_state >= 2:
             renpy.jump("greeting_tt_game_over")
 
+        # Ping if update found
+        jn_utils.fireAndForgetFunction(jn_data_migrations.checkCurrentVersionIsLatest)
+
         # Check for holidays, then queue them up and run them in sequence if we have any
         available_holidays = jn_events.selectHolidays()
         if available_holidays:
@@ -210,7 +213,7 @@ label ch30_init:
 
     # Prepare visuals
     $ jnPause(0.1)
-    hide black with Dissolve(2)
+    hide black with Dissolve(1)
     show screen hkb_overlay
 
     # Play appropriate music
@@ -552,6 +555,8 @@ init python:
         ):
             # We call here so we don't skip day_check, as call returns us to this point
             renpy.call("outfits_auto_change")
+
+        jn_utils.fireAndForgetFunction(jn_data_migrations.checkCurrentVersionIsLatest)
 
         return
 
