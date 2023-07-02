@@ -160,24 +160,30 @@ init 0 python in jn_blackjack:
         global _last_game_result
 
         # Win via blackjack or bust
+        # TODO: figure out why splash isn't showing
         if natsuki_hand_sum == 21 and player_hand_sum != 21:
             natsuki_wins = True
             _last_game_result = JNBlackjackEndings.natsuki_blackjack
+            renpy.show(name="mod_assets/games/blackjack/blackjack.png", at_list=[store.blackjack_popup], zorder=10)
 
         elif natsuki_hand_sum > 21:
             player_wins = True
             _last_game_result = JNBlackjackEndings.natsuki_bust
+            renpy.show(name="mod_assets/games/blackjack/bust.png", at_list=[store.blackjack_popup], zorder=10)
 
         elif player_hand_sum == 21 and natsuki_hand_sum != 21:
             player_wins = True
             _last_game_result = JNBlackjackEndings.player_blackjack
+            renpy.show(name="mod_assets/games/blackjack/blackjack.png", at_list=[store.blackjack_popup], zorder=10)
 
         elif player_hand_sum > 21:
             natsuki_wins = True
             _last_game_result = JNBlackjackEndings.player_bust
+            renpy.show(name="mod_assets/games/blackjack/bust.png", at_list=[store.blackjack_popup], zorder=10)
 
         elif player_hand_sum == 21 and natsuki_hand_sum == 21:
             _last_game_result = JNBlackjackEndings.draw
+            renpy.show(name="mod_assets/games/blackjack/draw.png", at_list=[store.blackjack_popup], zorder=10)
 
         # Win via proximity
         elif (len(_natsuki_hand) == 4 and len(_natsuki_hand) == 4) or (_player_staying and _natsuki_staying):
@@ -192,6 +198,7 @@ init 0 python in jn_blackjack:
             else:
                 # Draw somehow
                 _last_game_result = JNBlackjackEndings.draw
+                renpy.show(name="mod_assets/games/blackjack/draw.png", at_list=[store.blackjack_popup], zorder=10)
 
         if natsuki_wins:
             store.persistent._jn_blackjack_natsuki_wins += 1
@@ -206,13 +213,27 @@ init 0 python in jn_blackjack:
         OUT:
             - Nobody if it is nobody's turn; otherwise the player or Natsuki's current nickname
         """
+        if _last_game_result == JNBlackjackEndings.draw:
+            return "Draw!"
+
+        if (
+            _last_game_result == JNBlackjackEndings.natsuki_bust
+            or _last_game_result == JNBlackjackEndings.player_blackjack
+            or _last_game_result == JNBlackjackEndings.player_closest
+        ):
+            return "You win!"
+
+        if (
+            _last_game_result == JNBlackjackEndings.natsuki_blackjack
+            or _last_game_result == JNBlackjackEndings.natsuki_closest
+            or _last_game_result == JNBlackjackEndings.player_bust
+        ):
+            return "You lost!"
+
         if _is_player_turn is None:
             return "Nobody!"
 
         return "Yours!" if _is_player_turn else "[n_name]"
-
-    def _getCardDisplayable():
-        pass
 
     def _getCardSprite(is_player, index):
         """
@@ -433,6 +454,9 @@ style blackjack_note_text:
 transform blackjack_card_scale_down:
     zoom 0.75
 
+transform blackjack_popup:
+    easeout 0.75 alpha 0
+
 screen blackjack_ui:
     zorder 5
 
@@ -472,7 +496,7 @@ screen blackjack_ui:
         xpos 960 ypos 230
 
         grid 1 3:
-            spacing 20
+            spacing 10
 
             text "Your wins: {0}".format(persistent._jn_blackjack_player_wins) style "blackjack_note_text"
             text "[n_name]'s wins: {0}".format(persistent._jn_blackjack_natsuki_wins) style "blackjack_note_text"
