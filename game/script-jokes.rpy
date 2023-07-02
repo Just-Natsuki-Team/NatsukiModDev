@@ -486,6 +486,26 @@ init python in jn_jokes:
         display_name="Action",
         joke_category=JNJokeCategories.corny
     ))
+    __registerJoke(JNJoke(
+        label="joke_befriending_sharks",
+        display_name="Befriending sharks",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_fisherman_broadcast",
+        display_name="Fishermen video calls",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_lighthouse_keeper",
+        display_name="Lighthouse keeper",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_bakers",
+        display_name="Bakers",
+        joke_category=JNJokeCategories.corny
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -1079,5 +1099,52 @@ label joke_action_figures:
     n 1fllbosbr "..."
     n 1fcsflsbr "...{i}Action{/i}{w=0.75}{nw}"
     extend 1fsqflsbr " figures."
+
+    return
+
+label joke_befriending_sharks:
+    n 1ccsss "Heh.{w=0.75}{nw}"
+    extend 1fsqss " You ready,{w=0.2} [player]?{w=0.75}{nw}"
+    extend 1fnmbg " You're gonna be like a fish out of water after this one."
+    n 1fcsaj "So!{w=0.75}{nw}"
+    extend 1fcsbg " How do you go about making friends with a shark?"
+    n 1fsqsm "..."
+    n 1fsqss "No?{w=0.75}{nw}"
+    extend 1flrss " Wow,{w=0.2} [player]..."
+    n 1fsgbg "Isn't it obvious?"
+    n 1fllss "You just gotta{w=0.75}{nw}"
+    extend 1fsqbg " {i}chum{/i}{w=0.75}{nw}"
+    extend 1nchgn " them up first!"
+
+    return
+
+label joke_fisherman_broadcast:
+    n 1csqfl "...Why is it so hard to get a video call with a fisherman?"
+    n 1csrca "..."
+    n 1ccspuesi "..."
+    n 1clrem "...Because they only do broad-{w=0.75}{nw}"
+    extend 1csqup "{i}casts{/i}."
+
+    return
+
+label joke_lighthouse_keeper:
+    n 1fsrpu "I seriously can't believe I'm telling {i}this{/i} one."
+    n 1ccsbo "..."
+    n 1cllfl "What happens when a lighthouse keeper gets promoted?"
+    n 1cllslsbr "..."
+    n 1ccsemesisbr "..."
+    n 1ccsajsbr "Their career becomes...{w=1}{nw}"
+    extend 1csrflsbr " {i}brighter than ever{/i}."
+
+    return
+
+label joke_bakers:
+    n 1ccsemesi "..."
+    n 1clrtr "How do you describe a baker about to break their own baking record?"
+    n 1csrsl "..."
+    n 1ccsflsbl "...Man,{w=0.5}{nw}" 
+    extend 1fslemsbl " this is dumb."
+    n 1cllajsbl "They'd be...{w=1}{nw}"
+    extend 1csqemsbl " {i}on a roll{/i}."
 
     return

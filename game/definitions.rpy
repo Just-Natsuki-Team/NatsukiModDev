@@ -1006,6 +1006,7 @@ init -990 python in jn_globals:
 
     # GitHub
     LINK_JN_GITHUB = "https://github.com/Just-Natsuki-Team/NatsukiModDev"
+    LINK_JN_LATEST = "{0}/releases/latest".format(LINK_JN_GITHUB)
 
     # OpenWeatherMap; used for setting up weather in-game
     LINK_OPEN_WEATHER_MAP_HOME = "https://openweathermap.org"
@@ -1044,6 +1045,8 @@ init -999 python in jn_utils:
     import hashlib
     import os
     import store
+    import threading
+    import uuid
     import pprint
     import pygame
 
@@ -1178,6 +1181,31 @@ init -999 python in jn_utils:
                 return_file_items.append((escapeRenpySubstitutionString(file), os.path.join(path, file)))
 
         return return_file_items
+
+    def fireAndForgetFunction(function, args=()):
+        """
+        Creates and starts a new, untracked background thread given a function and args that runs without blocking execution.
+        This will not return a result, therefore only use this for things like void functions where no return is expected/needed.
+        
+        IN:
+            - function - the function to call in the new thread
+            - args - parameters to be passed to the function; must be of type list or tuple
+        """
+
+        if not callable(function):
+            jn_utils.log("Failed to launch thread; function is not callable.")
+            return
+
+        if not isinstance(args, tuple) and not isinstance(args, list):
+            jn_utils.log("Failed to launch thread; args must be of types list or tuple.")
+            return
+
+        if isinstance(args, list):
+            args = tuple(args)
+
+        thread = threading.Thread(name=uuid.uuid4(), target=function, args=args)
+        thread.daemon = True
+        thread.start()
 
 init -100 python in jn_utils:
     import codecs

@@ -160,7 +160,7 @@ init -55 python in jn_desk_items:
 
     __registerDeskItem(JNDeskItem(
         reference_name="jn_card_pack",
-        desk_slot=JNDeskSlots.left,
+        desk_slot=JNDeskSlots.right,
         unlocked=False,
         image_path="mod_assets/props/card_pack.png"
     ))

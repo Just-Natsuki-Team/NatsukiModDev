@@ -849,6 +849,9 @@ screen navigation():
 
         spacing gui.navigation_spacing
 
+        if not jn_data_migrations.current_version_latest:
+            textbutton _("View update!") action OpenURL(jn_globals.LINK_JN_LATEST)
+
         if main_menu:
             textbutton _("New Game"):
                 action If(
@@ -1391,9 +1394,9 @@ screen preferences():
                                 style "mute_all_button"
 
     text "v[config.version]":
-                xalign 1.0 yalign 1.0
-                xoffset -10 yoffset -10
-                style "default"
+        xalign 1.0 yalign 1.0
+        xoffset -10 yoffset -10
+        style "default"
 
 style pref_label is gui_label
 style pref_label_text is gui_label_text
@@ -1863,7 +1866,10 @@ style notify_frame:
 
 style notify_text:
     size gui.notify_text_size
-
+    line_overlap_split 8
+    line_spacing 8
+    line_leading 8
+    
 screen problem(message):
     zorder 100
     text "[message]" size 30 xalign 0.5 ypos 40 text_align 0.5 xysize (None, None) color "#FF0000" outlines [(2, "#000000d2", 0, 0)]
