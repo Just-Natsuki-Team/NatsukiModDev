@@ -1121,7 +1121,7 @@ label joke_befriending_sharks:
 label joke_fisherman_broadcast:
     n 1csqfl "...Why is it so hard to get a video call with a fisherman?"
     n 1csrca "..."
-    n 1ccsfresi "..."
+    n 1ccspuesi "..."
     n 1clrem "...Because they only do broad-{w=0.75}{nw}"
     extend 1csqup "{i}casts{/i}."
 
