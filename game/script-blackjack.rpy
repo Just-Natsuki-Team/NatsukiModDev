@@ -24,9 +24,7 @@ init 0 python in jn_blackjack:
     # In-game tracking
     _controls_enabled = False
     _is_player_turn = None
-    _player_win_streak = 0
-    _natsuki_win_streak = 0
-    _last_game_result = None
+    _game_state = None
 
     _natsuki_staying = False
     _player_staying = False
@@ -36,7 +34,9 @@ init 0 python in jn_blackjack:
     _natsuki_hand = []
     _player_hand = []
 
-    class JNBlackjackEndings(Enum):
+    _splash_sprite = "draw"
+
+    class JNBlackjackStates(Enum):
         """
         Identifiers for the different ways a blackjack game can end.
         """
@@ -64,10 +64,10 @@ init 0 python in jn_blackjack:
 
         global _is_player_turn
         global _controls_enabled
-        global _last_game_result
+        global _game_state
         _is_player_turn = None
         _controls_enabled = None
-        _last_game_result = None
+        _game_state = None
 
     def _setup():
         """
@@ -101,6 +101,7 @@ init 0 python in jn_blackjack:
         # Assign each player their starting hand
         _player_hand.append(_deck.pop(0))
         _player_hand.append(_deck.pop(0))
+
         _natsuki_hand.append(_deck.pop(0))
         _natsuki_hand.append(_deck.pop(0))
 
@@ -154,57 +155,72 @@ init 0 python in jn_blackjack:
         """
         natsuki_hand_sum = _getHandSum(is_player=False)
         player_hand_sum = _getHandSum(is_player=True)
+
         natsuki_wins = False
         player_wins = False
 
-        global _last_game_result
+        global _game_state
 
         # Win via blackjack or bust
         # TODO: figure out why splash isn't showing
         if natsuki_hand_sum == 21 and player_hand_sum != 21:
             natsuki_wins = True
-            _last_game_result = JNBlackjackEndings.natsuki_blackjack
-            renpy.show(name="mod_assets/games/blackjack/blackjack.png", at_list=[store.blackjack_popup], zorder=10)
-
-        elif natsuki_hand_sum > 21:
-            player_wins = True
-            _last_game_result = JNBlackjackEndings.natsuki_bust
-            renpy.show(name="mod_assets/games/blackjack/bust.png", at_list=[store.blackjack_popup], zorder=10)
+            _game_state = JNBlackjackStates.natsuki_blackjack
 
         elif player_hand_sum == 21 and natsuki_hand_sum != 21:
             player_wins = True
-            _last_game_result = JNBlackjackEndings.player_blackjack
-            renpy.show(name="mod_assets/games/blackjack/blackjack.png", at_list=[store.blackjack_popup], zorder=10)
-
-        elif player_hand_sum > 21:
-            natsuki_wins = True
-            _last_game_result = JNBlackjackEndings.player_bust
-            renpy.show(name="mod_assets/games/blackjack/bust.png", at_list=[store.blackjack_popup], zorder=10)
+            _game_state = JNBlackjackStates.player_blackjack
 
         elif player_hand_sum == 21 and natsuki_hand_sum == 21:
-            _last_game_result = JNBlackjackEndings.draw
-            renpy.show(name="mod_assets/games/blackjack/draw.png", at_list=[store.blackjack_popup], zorder=10)
+            _game_state = JNBlackjackStates.draw
+
+        elif natsuki_hand_sum > 21 and player_hand_sum < 21:
+            player_wins = True
+            _game_state = JNBlackjackStates.natsuki_bust
+
+        elif player_hand_sum > 21 and natsuki_hand_sum < 21:
+            natsuki_wins = True
+            _game_state = JNBlackjackStates.player_bust
+
+        elif player_hand_sum > 21 and natsuki_hand_sum > 21:
+            _game_state = JNBlackjackStates.draw
 
         # Win via proximity
         elif (len(_natsuki_hand) == 4 and len(_natsuki_hand) == 4) or (_player_staying and _natsuki_staying):
             if 21 - natsuki_hand_sum < 21 - player_hand_sum:
                 natsuki_wins = True
-                _last_game_result = JNBlackjackEndings.natsuki_closest
+                _game_state = JNBlackjackStates.natsuki_closest
 
             elif 21 - player_hand_sum < 21 - natsuki_hand_sum:
                 player_wins = True
-                _last_game_result = JNBlackjackEndings.player_closest
+                _game_state = JNBlackjackStates.player_closest
 
             else:
                 # Draw somehow
-                _last_game_result = JNBlackjackEndings.draw
-                renpy.show(name="mod_assets/games/blackjack/draw.png", at_list=[store.blackjack_popup], zorder=10)
+                _game_state = JNBlackjackStates.draw
+
+        if _game_state is not None:
+            _controls_enabled = False
+            _showSplashImage()
 
         if natsuki_wins:
             store.persistent._jn_blackjack_natsuki_wins += 1
 
         if player_wins:
             store.persistent._jn_blackjack_player_wins += 1
+
+    def _showSplashImage():
+        image_state_map = {
+            JNBlackjackStates.natsuki_blackjack: "blackjack",
+            JNBlackjackStates.player_blackjack: "blackjack",
+            JNBlackjackStates.natsuki_bust: "bust",
+            JNBlackjackStates.player_bust: "bust",
+            JNBlackjackStates.draw: "draw",
+        }
+        if _game_state in image_state_map:
+            global _splash_sprite
+            _splash_sprite = image_state_map[_game_state]
+            renpy.show(name="blackjack_splash", zorder=100)
 
     def _getCurrentTurnLabel():
         """
@@ -213,20 +229,20 @@ init 0 python in jn_blackjack:
         OUT:
             - Nobody if it is nobody's turn; otherwise the player or Natsuki's current nickname
         """
-        if _last_game_result == JNBlackjackEndings.draw:
+        if _game_state == JNBlackjackStates.draw:
             return "Draw!"
 
         if (
-            _last_game_result == JNBlackjackEndings.natsuki_bust
-            or _last_game_result == JNBlackjackEndings.player_blackjack
-            or _last_game_result == JNBlackjackEndings.player_closest
+            _game_state == JNBlackjackStates.natsuki_bust
+            or _game_state == JNBlackjackStates.player_blackjack
+            or _game_state == JNBlackjackStates.player_closest
         ):
             return "You win!"
 
         if (
-            _last_game_result == JNBlackjackEndings.natsuki_blackjack
-            or _last_game_result == JNBlackjackEndings.natsuki_closest
-            or _last_game_result == JNBlackjackEndings.player_bust
+            _game_state == JNBlackjackStates.natsuki_blackjack
+            or _game_state == JNBlackjackStates.natsuki_closest
+            or _game_state == JNBlackjackStates.player_bust
         ):
             return "You lost!"
 
@@ -251,7 +267,7 @@ init 0 python in jn_blackjack:
             return _player_hand[index][0] if 0 <= index < len(_player_hand) else "mod_assets/natsuki/etc/empty.png"
 
         else:
-            if _last_game_result is None and index == 0:
+            if _game_state is None and index == 0:
                 return "mod_assets/games/cards/hide.png"
             
             return _natsuki_hand[index][0] if 0 <= index < len(_natsuki_hand) else "mod_assets/natsuki/etc/empty.png"
@@ -325,12 +341,14 @@ label blackjack_start:
     jump blackjack_main_loop
 
 label blackjack_main_loop:
-    if jn_blackjack._last_game_result is not None:
+    if jn_blackjack._game_state is not None:
         jump blackjack_end
 
-    # Natsuki's hit/stay logic
+    # Natsuki's hit/stay logic; TODO: revise
     if not jn_blackjack._is_player_turn:
+        $ jn_blackjack._controls_enabled = False
         $ natsuki_hand_sum = jn_blackjack._getHandSum(is_player=False)
+
         if natsuki_hand_sum == 20:
             $ jnPause(delay=random.randint(2, 3), hard=True)
             $ jn_blackjack._stayOrHit(is_player=False, is_hit=False)
@@ -371,38 +389,43 @@ label blackjack_main_loop:
                 will_hit = random.randint(0, 100) / 100 <= hit_percent
                 jnPause(delay=random.randint(2, 3), hard=True)
                 jn_blackjack._stayOrHit(is_player=False, is_hit=will_hit)
+    
+    if jn_blackjack._game_state is None:
+        $ jn_blackjack._controls_enabled = True
 
     $ jnPause(1)
     jump blackjack_main_loop
 
 label blackjack_end:
     $ jn_blackjack._controls_enabled = False
-    $ jnPause(delay=5, hard=True)
+    $ jnClickToContinue()
+    #$ jnPause(delay=5, hard=True)
     hide screen blackjack_ui
 
     #TODO: Writing
-    if jn_blackjack._last_game_result == jn_blackjack.JNBlackjackEndings.draw:
+    if jn_blackjack._game_state == jn_blackjack.JNBlackjackStates.draw:
         n 1tsrpu "We drew? Weird."
 
-    elif jn_blackjack._last_game_result == jn_blackjack.JNBlackjackEndings.natsuki_bust:
+    elif jn_blackjack._game_state == jn_blackjack.JNBlackjackStates.natsuki_bust:
         n 1fupem "I bust? Are you kidding me?! Ugh..."
 
-    elif jn_blackjack._last_game_result == jn_blackjack.JNBlackjackEndings.natsuki_blackjack:
+    elif jn_blackjack._game_state == jn_blackjack.JNBlackjackStates.natsuki_blackjack:
         n 1nchgnl "Yes! blackjack! blackjack! Ehehe."
 
-    elif jn_blackjack._last_game_result == jn_blackjack.JNBlackjackEndings.natsuki_closest:
+    elif jn_blackjack._game_state == jn_blackjack.JNBlackjackStates.natsuki_closest:
         n 1nchgnl "Yes! I win! I win!"
 
-    elif jn_blackjack._last_game_result == jn_blackjack.JNBlackjackEndings.player_bust:
+    elif jn_blackjack._game_state == jn_blackjack.JNBlackjackStates.player_bust:
         n 1fchgn "Ha! You bust that one, [player]!"
 
-    elif jn_blackjack._last_game_result == jn_blackjack.JNBlackjackEndings.player_blackjack:
+    elif jn_blackjack._game_state == jn_blackjack.JNBlackjackStates.player_blackjack:
         n 1cslpo "Uuuuu...! Are you kidding me?! You got a blackjack? Man..."
 
-    elif jn_blackjack._last_game_result == jn_blackjack.JNBlackjackEndings.player_closest:
+    elif jn_blackjack._game_state == jn_blackjack.JNBlackjackStates.player_closest:
         n 1ccspo "Hmph. You just got lucky again, [player]."
 
     n 1ulraj "So..."
+
     show natsuki option_wait_curious
     menu:
         n "Up for another game?"
@@ -433,7 +456,7 @@ label blackjack_forfeit:
         "No":
             n "ending"
 
-            $ jn_blackjack._last_game_result = jn_blackjack.JNBlackjackEndings.forfeit
+            $ jn_blackjack._game_state = jn_blackjack.JNBlackjackStates.forfeit
             jump blackjack_end
 
     return
@@ -456,6 +479,11 @@ transform blackjack_card_scale_down:
 
 transform blackjack_popup:
     easeout 0.75 alpha 0
+
+image blackjack_splash:
+    "mod_assets/games/blackjack/[jn_blackjack._splash_sprite].png"
+    ease 0.33 alpha 1.0 yoffset -30
+    blackjack_popup
 
 screen blackjack_ui:
     zorder 5
