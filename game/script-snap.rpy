@@ -486,7 +486,12 @@ label snap_main_loop:
             $ jn_snap._call_snap()
 
         # She may also snap by mistake, assuming it makes sense to do so: the higher the difficulty, the less she'll accidentally jn_snap.
-        elif random.choice(range(0,10 + jn_snap._natsuki_skill_level)) == 1 and len(jn_snap._cards_on_table) >= 2 and jn_snap._natsuki_can_fake_snap:
+        elif (
+            random.choice(range(0,10 + jn_snap._natsuki_skill_level)) == 1
+            and len(jn_snap._cards_on_table) >= 2
+            and jn_snap._natsuki_can_fake_snap
+            and not _player_failed_snap_streak
+        ):
             $ jn_snap._call_snap()
             $ jn_snap._natsuki_can_fake_snap = False
 
@@ -848,7 +853,7 @@ image snap_popup:
             "mod_assets/games/snap/snap_d.png"
 
     snap_popup_fadeout
-            
+
 # Game UI
 screen snap_ui:
     zorder jn_snap._SNAP_UI_Z_INDEX

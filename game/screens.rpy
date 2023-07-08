@@ -590,6 +590,7 @@ style input:
 
 # Default choice screen; this is offset so it doesn't get in front of Natsuki's face during dialogue
 screen choice(items, scroll="viewport"):
+    zorder 30
     style_prefix "choice"
 
     vbox:
@@ -602,6 +603,7 @@ screen choice(items, scroll="viewport"):
 
 # Identical to choice, but not offset - use this for menu options when Natsuki isn't present
 screen choice_centred(items, scroll="viewport"):
+    zorder 30
     style_prefix "choice"
 
     vbox:
@@ -614,6 +616,7 @@ screen choice_centred(items, scroll="viewport"):
 # Identical to choice_centred, but without hover/activate sounds - use this for menu options when Natsuki isn't present,
 # and when we need silence for atmospheric reasons (like the intro sequence)
 screen choice_centred_mute(items, scroll="viewport"):
+    zorder 30
     style_prefix "choice"
 
     vbox:

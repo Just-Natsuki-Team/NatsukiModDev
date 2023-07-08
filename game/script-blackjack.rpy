@@ -28,6 +28,7 @@ init 0 python in jn_blackjack:
 
     _natsuki_staying = False
     _player_staying = False
+    _natsuki_win_streak = 0
 
     # Collections of cards involved in the game
     _deck = []
@@ -51,6 +52,13 @@ init 0 python in jn_blackjack:
 
     def _getHandSum(is_player):
         """
+        Returns the total card value of a hand in blackjack.
+
+        IN:
+            - is_player - bool flag for whether to retrieve the sum from the players hand.
+
+        OUT:
+            - Total card value of the player's hand if is_player is True, otherwise total card value of Natsuki's hand.
         """
         return sum(card[1] for card in _player_hand) if is_player else sum(card[1] for card in _natsuki_hand)
 
@@ -68,6 +76,8 @@ init 0 python in jn_blackjack:
         _is_player_turn = None
         _controls_enabled = None
         _game_state = None
+
+        return
 
     def _setup():
         """
@@ -120,11 +130,17 @@ init 0 python in jn_blackjack:
         global _is_player_turn
         _is_player_turn = True
 
+        return
+
     def _stayOrHit(is_player, is_hit):
         """
-        Handles the action/display for the player or Natsuki staying or hitting during a game.
+        Handles the action/display for the player or Natsuki staying or hitting during a game, then checks win conditions post-turn.
         Staying refers to passing the turn.
         Hitting refers to pulling another card, adding it to the hand.
+
+        IN:
+            - is_player - bool flag for whether it is the player making the move. If False, it is Natsuki's move.
+            - is_hit - bool flag for whether the move is a hit (drawing a card). If False, it is a stay.
         """
         global _is_player_turn
 
@@ -150,8 +166,11 @@ init 0 python in jn_blackjack:
 
         _checkWinConditions()
 
+        return
+
     def _checkWinConditions():
         """
+        Checks the current game conditions to determine if either the player or Natsuki has won.
         """
         natsuki_hand_sum = _getHandSum(is_player=False)
         player_hand_sum = _getHandSum(is_player=True)
@@ -162,7 +181,6 @@ init 0 python in jn_blackjack:
         global _game_state
 
         # Win via blackjack or bust
-        # TODO: figure out why splash isn't showing
         if natsuki_hand_sum == 21 and player_hand_sum != 21:
             natsuki_wins = True
             _game_state = JNBlackjackStates.natsuki_blackjack
@@ -187,11 +205,11 @@ init 0 python in jn_blackjack:
 
         # Win via proximity
         elif (len(_natsuki_hand) == 4 and len(_natsuki_hand) == 4) or (_player_staying and _natsuki_staying):
-            if 21 - natsuki_hand_sum < 21 - player_hand_sum:
+            if natsuki_hand_sum > player_hand_sum:
                 natsuki_wins = True
                 _game_state = JNBlackjackStates.natsuki_closest
 
-            elif 21 - player_hand_sum < 21 - natsuki_hand_sum:
+            elif player_hand_sum > natsuki_hand_sum:
                 player_wins = True
                 _game_state = JNBlackjackStates.player_closest
 
@@ -203,13 +221,22 @@ init 0 python in jn_blackjack:
             _controls_enabled = False
             _showSplashImage()
 
+        global _natsuki_win_streak
+
         if natsuki_wins:
             store.persistent._jn_blackjack_natsuki_wins += 1
+            _natsuki_win_streak += 1
 
         if player_wins:
             store.persistent._jn_blackjack_player_wins += 1
+            _natsuki_win_streak = 0
+
+        return
 
     def _showSplashImage():
+        """
+        Shows a splash image corresponding to the current game state.
+        """
         image_state_map = {
             JNBlackjackStates.natsuki_blackjack: "blackjack",
             JNBlackjackStates.player_blackjack: "blackjack",
@@ -220,7 +247,9 @@ init 0 python in jn_blackjack:
         if _game_state in image_state_map:
             global _splash_sprite
             _splash_sprite = image_state_map[_game_state]
-            renpy.show(name="blackjack_splash", zorder=100)
+            renpy.show(name="blackjack_splash", zorder=10, layer="overlay")
+
+        return
 
     def _getCurrentTurnLabel():
         """
@@ -345,12 +374,12 @@ label blackjack_main_loop:
         jump blackjack_end
 
     # Natsuki's hit/stay logic; TODO: revise
-    if not jn_blackjack._is_player_turn:
+    elif not jn_blackjack._is_player_turn:
         $ jn_blackjack._controls_enabled = False
         $ natsuki_hand_sum = jn_blackjack._getHandSum(is_player=False)
 
-        if natsuki_hand_sum == 20:
-            $ jnPause(delay=random.randint(2, 3), hard=True)
+        if natsuki_hand_sum == 20 or len(jn_blackjack._natsuki_hand) == 4:
+            #$ jnPause(delay=random.randint(1, 3), hard=True)
             $ jn_blackjack._stayOrHit(is_player=False, is_hit=False)
 
         else:
@@ -360,7 +389,7 @@ label blackjack_main_loop:
                 deck_used_low_cards = 0
                 needed_to_blackjack = 21 - natsuki_hand_sum
 
-                for card in jn_snap._natsuki_hand:
+                for card in jn_blackjack._natsuki_hand:
                     if card[1] > 6:
                         deck_used_high_cards += 1
                     else:
@@ -380,14 +409,14 @@ label blackjack_main_loop:
                 if hit_percent == 0.50 and needed_to_blackjack <= 6:
                     hit_percent -= 35
 
-                risk_percent = jn_snap._natsuki_win_streak / 100 if jn_snap._natsuki_win_streak > 0 else 0
+                risk_percent = jn_blackjack._natsuki_win_streak / 100 if jn_blackjack._natsuki_win_streak > 0 else 0
                 risk_percent = 0.05 if risk_percent > 0.05 else risk_percent
 
                 hit_percent += risk_percent
                 hit_percent = 0.85 if hit_percent > 0.85 else hit_percent
 
                 will_hit = random.randint(0, 100) / 100 <= hit_percent
-                jnPause(delay=random.randint(2, 3), hard=True)
+                #jnPause(delay=random.randint(2, 3), hard=True)
                 jn_blackjack._stayOrHit(is_player=False, is_hit=will_hit)
     
     if jn_blackjack._game_state is None:
@@ -398,9 +427,9 @@ label blackjack_main_loop:
 
 label blackjack_end:
     $ jn_blackjack._controls_enabled = False
-    $ jnClickToContinue()
+    #$ jnClickToContinue()
     #$ jnPause(delay=5, hard=True)
-    hide screen blackjack_ui
+    #hide screen blackjack_ui
 
     #TODO: Writing
     if jn_blackjack._game_state == jn_blackjack.JNBlackjackStates.draw:
@@ -438,6 +467,7 @@ label blackjack_end:
         "I'll pass.":
             n "Thanks for playing!"
 
+            hide screen blackjack_ui
             $ Natsuki.setInGame(False)
             $ Natsuki.resetLastTopicCall()
             $ Natsuki.resetLastIdleCall()
@@ -537,13 +567,13 @@ screen blackjack_ui:
         
         # Hit
         key "1" action [
-            If(jn_blackjack._is_player_turn and jn_blackjack._controls_enabled, Function(jn_blackjack._stayOrHit, True, True)) 
+            If(jn_blackjack._is_player_turn and jn_blackjack._controls_enabled and len(jn_blackjack._player_hand) < 4, Function(jn_blackjack._stayOrHit, True, True)) 
         ]
         textbutton _("Hit!"):
             style "hkbd_option"
             action [
                 Function(jn_blackjack._stayOrHit, True, True),
-                SensitiveIf(jn_blackjack._is_player_turn and jn_blackjack._controls_enabled)]
+                SensitiveIf(jn_blackjack._is_player_turn and jn_blackjack._controls_enabled and len(jn_blackjack._player_hand) < 4)]
 
         # Stay
         key "2" action [
