@@ -1226,6 +1226,7 @@ screen preferences():
             scrollbars "vertical"
             mousewheel True
             draggable True
+            xoffset 40
 
             vbox:
                 yoffset 0
@@ -1240,6 +1241,13 @@ screen preferences():
                             label _("Display")
                             textbutton _("Window") action Preference("display", "window")
                             textbutton _("Fullscreen") action Preference("display", "fullscreen")
+                            textbutton _("Menu icons") action [
+                            ToggleField(
+                                object=persistent,
+                                field="_jn_display_option_icons",
+                                true_value=True,
+                                false_value=False)
+                            ]
 
                     vbox:
                         style_prefix "check"
@@ -1276,22 +1284,25 @@ screen preferences():
 
                     vbox:
                         style_prefix "check"
-                        label _("Outfits")
-                        textbutton _("Auto Change") action [
+                        label _("Natsuki")
+                        textbutton _("Auto outfits") action [
                             ToggleField(
                                 object=persistent,
                                 field="jn_natsuki_auto_outfit_change_enabled",
                                 true_value=True,
                                 false_value=False)
                         ]
-
-                    vbox:
-                        style_prefix "check"
-                        label _("Topics")
-                        textbutton _("Repeat seen") action [
+                        textbutton _("Repeat topics") action [
                             ToggleField(
                                 object=persistent,
                                 field="jn_natsuki_repeat_topics",
+                                true_value=True,
+                                false_value=False)
+                        ]
+                        textbutton _("Idles") action [
+                            ToggleField(
+                                object=persistent,
+                                field="_jn_natsuki_idles_enabled",
                                 true_value=True,
                                 false_value=False)
                         ]
@@ -1317,25 +1328,15 @@ screen preferences():
 
                     vbox:
                         style_prefix "check"
-                        label _("Idles")
-                        textbutton _("Enabled") action [
-                            ToggleField(
-                                object=persistent,
-                                field="_jn_natsuki_idles_enabled",
-                                true_value=True,
-                                false_value=False)
-                        ]
-
-                    vbox:
-                        style_prefix "check"
-                        label _("Visuals")
-                        textbutton _("Menu icons") action [
-                            ToggleField(
-                                object=persistent,
-                                field="_jn_display_option_icons",
-                                true_value=True,
-                                false_value=False)
-                        ]
+                        label _("Misc")
+                        if persistent._jn_blackjack_unlocked:
+                            textbutton _("Blackjack QM") action [
+                                ToggleField(
+                                    object=persistent,
+                                    field="_jn_blackjack_quick_mode",
+                                    true_value=True,
+                                    false_value=False)
+                            ]
 
                     ## Additional vboxes of type "radio_pref" or "check_pref" can be
                     ## added here, to add additional creator-defined preferences.
