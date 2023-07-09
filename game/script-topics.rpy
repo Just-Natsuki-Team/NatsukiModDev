@@ -8554,7 +8554,7 @@ label talk_player_change_name:
             show natsuki 2nsqsl at jn_center
 
     # Validate the nickname, respond appropriately
-    $ nickname = renpy.input(prompt="What were you thinking of,{w=0.3} [player]?", allow=jn_globals.DEFAULT_ALPHABETICAL_ALLOW_VALUES, length=10).strip()
+    $ nickname = renpy.input(prompt="What were you thinking of,{w=0.3} [player]?", allow=jn_globals.DEFAULT_ALPHABETICAL_ALLOW_VALUES, length=15).strip()
 
     if nickname.lower() == "nevermind":
         n 1nnmbo "Oh.{w=1}{nw}"
