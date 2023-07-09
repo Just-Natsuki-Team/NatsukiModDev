@@ -225,10 +225,12 @@ init 0 python in jn_blackjack:
         global _natsuki_win_streak
 
         if natsuki_wins:
+            renpy.play("mod_assets/sfx/pencil_scribble.ogg")
             store.persistent._jn_blackjack_natsuki_wins += 1
             _natsuki_win_streak += 1
 
         if player_wins:
+            renpy.play("mod_assets/sfx/pencil_scribble.ogg")
             store.persistent._jn_blackjack_player_wins += 1
             _natsuki_win_streak = 0
 
@@ -863,7 +865,8 @@ screen blackjack_ui:
     zorder 5
 
     add "mod_assets/natsuki/desk/table/topdown/table.png" anchor(0, 0) pos(0, 0)
-    add "mod_assets/natsuki/desk/table/topdown/sticky.png" anchor(0, 0) pos(0, 0)
+    add "mod_assets/natsuki/desk/table/topdown/accessories.png" anchor(0, 0) pos(0, 0)
+    add "mod_assets/natsuki/desk/table/topdown/nameplates.png" anchor(0, 0) pos(0, 0)
 
     # Natsuki's hand
     vbox:
