@@ -871,7 +871,7 @@ screen blackjack_ui:
     # Natsuki's hand
     vbox:
         pos(40, 60)
-        text "[n_name]" style "categorized_menu_button" size 24
+        text "[n_name]" style "categorized_menu_button" size 24 outlines [(3, "#2E1503EF", 0, 0)]
         null height 10
 
         grid 5 1:
@@ -887,10 +887,10 @@ screen blackjack_ui:
     vbox:
         pos(40, 342)
         if persistent._jn_blackjack_show_hand_value:
-            text "[player]: {0}".format(jn_blackjack._getHandSum(True)) style "categorized_menu_button" size 24
+            text "[player]: {0}".format(jn_blackjack._getHandSum(True)) style "categorized_menu_button" size 24 outlines [(3, "#2E1503EF", 0, 0)]
 
         else:
-            text "[player]" style "categorized_menu_button" size 24
+            text "[player]" style "categorized_menu_button" size 24 outlines [(3, "#2E1503EF", 0, 0)]
 
         null height 10
 
