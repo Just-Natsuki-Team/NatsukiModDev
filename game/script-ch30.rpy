@@ -218,9 +218,9 @@ label ch30_init:
 
     # TEST
     #$ renpy.watch("jn_blackjack._game_state")
-    $ renpy.watch("jn_blackjack._getHandSum(is_player=True)")
-    $ renpy.watch("jn_blackjack._getHandSum(is_player=False)")
-    $ renpy.watch("jn_blackjack._game_state")
+    #$ renpy.watch("jn_blackjack._getHandSum(is_player=True)")
+    #$ renpy.watch("jn_blackjack._getHandSum(is_player=False)")
+    #$ renpy.watch("jn_blackjack._game_state")
 
     # Play appropriate music
     if jn_random_music.getRandomMusicPlayable():

@@ -1328,12 +1328,19 @@ screen preferences():
 
                     vbox:
                         style_prefix "check"
-                        label _("Misc")
+                        label _("Blackjack")
                         if persistent._jn_blackjack_unlocked:
-                            textbutton _("Blackjack QM") action [
+                            textbutton _("Quick mode") action [
                                 ToggleField(
                                     object=persistent,
                                     field="_jn_blackjack_quick_mode",
+                                    true_value=True,
+                                    false_value=False)
+                            ]
+                            textbutton _("Hand total") action [
+                                ToggleField(
+                                    object=persistent,
+                                    field="_jn_blackjack_show_hand_value",
                                     true_value=True,
                                     false_value=False)
                             ]

@@ -79,3 +79,6 @@ default persistent._jn_display_option_icons = True
 
 # This determines if Natsuki should skip verbosity in blackjack in favour of quicker rematches
 default persistent._jn_blackjack_quick_mode = False
+
+# This determines if the sum of the player's hand should be shown in blackjack
+default persistent._jn_blackjack_show_hand_value = False

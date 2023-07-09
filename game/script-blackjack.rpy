@@ -8,11 +8,11 @@ default persistent._jn_blackjack_natsuki_wins = 0
 # NOTES ON BLACKJACK
 # Natsuki starts off with 2, but 1st card hidden
 # Player starts off with 2
-# Player can stay or hit each round, max 4 cards in hand
+# Player can stay or hit each round, max 5 cards in hand (3 hits)
 # Nat will stay or hit based on probability and her own risk level
 # If player or Nat goes over 21, they bust and lose
 # If player or Nat gets 21 exactly, they win automatically on the turn they get 21
-# Otherwise, win goes to whoever gets closest to 21 after drawing all cards
+# Otherwise, win goes to whoever gets closest to 21 after drawing all cards, or if both players stay on the same turn
 # Aces are considered as having value of 11, unless they'd cause a player to bust immediately on getting their hand (in which case, they equal 1)
 
 init 0 python in jn_blackjack:
@@ -205,7 +205,7 @@ init 0 python in jn_blackjack:
             _game_state = JNBlackjackStates.draw
 
         # Win via proximity
-        elif (len(_natsuki_hand) == 4 and len(_natsuki_hand) == 4) or (_player_staying and _natsuki_staying):
+        elif (len(_natsuki_hand) == 5 and len(_natsuki_hand) == 5) or (_player_staying and _natsuki_staying):
             if natsuki_hand_sum > player_hand_sum:
                 natsuki_wins = True
                 _game_state = JNBlackjackStates.natsuki_closest
@@ -220,6 +220,7 @@ init 0 python in jn_blackjack:
 
         if _game_state is not None:
             _controls_enabled = False
+            renpy.play("mod_assets/sfx/smack.ogg")
             _showSplashImage()
 
         global _natsuki_win_streak
@@ -248,6 +249,7 @@ init 0 python in jn_blackjack:
         if _game_state in image_state_map:
             global _splash_sprite
             _splash_sprite = image_state_map[_game_state]
+            renpy.hide(name="blackjack_splash", layer="overlay")
             renpy.show(name="blackjack_splash", zorder=10, layer="overlay")
 
         return
@@ -311,7 +313,8 @@ init 0 python in jn_blackjack:
 
 label blackjack_intro:
     # TODO: Writing
-    n "Alright! Let's play some blackjack!"
+    n 2fnmbg "Alright!{w=0.75}{nw}" 
+    extend 4fchgn " Let's play some blackjack!"
 
     if not persistent._jn_blackjack_explanation_given:
         n "Oh, right. Did you need an explanation on how it all works, or...?"
@@ -366,8 +369,6 @@ label blackjack_explanation:
             jump ch30_loop
 
 label blackjack_start:
-    # TODO: Writing
-
     $ HKBHideButtons()
     show screen blackjack_ui
     play audio card_shuffle
@@ -386,7 +387,7 @@ label blackjack_main_loop:
         $ jn_blackjack._controls_enabled = False
         $ natsuki_hand_sum = jn_blackjack._getHandSum(is_player=False)
 
-        if natsuki_hand_sum == 20 or len(jn_blackjack._natsuki_hand) == 4:
+        if natsuki_hand_sum == 20 or len(jn_blackjack._natsuki_hand) == 5:
             $ jnPause(delay=random.randint(1, 3), hard=True)
             $ jn_blackjack._stayOrHit(is_player=False, is_hit=False)
 
@@ -435,62 +436,64 @@ label blackjack_main_loop:
 
 label blackjack_end:
     $ jn_blackjack._controls_enabled = False
-    $ jnPause(delay=3, hard=True)
 
     if persistent._jn_blackjack_quick_mode:
+        $ jnPause(delay=1, hard=True)
+
         # Quick mode is restricted to a single line response before play continues, without hiding any UI
         $ response_map = {
-            JNBlackjackStates.draw: {
-                "We drew? Huh.",
-                "Huh. We drew? Weird.",
-                "Wait, we tied? Huh.",
-                "A tie? Weird."
-            },
-            JNBlackjackStates.natsuki_bust: {
-                "I bust? Are you kidding me?! Ugh...",
-                "Oh, come on! I bust {i}again{/i}?! Yeesh...",
-                "Oh, for-! {i}Another{/i} bust?!",
-                "A-as {i}if{/i} I bust! Man..."
-            },
-            JNBlackjackStates.natsuki_blackjack: {
-                "Yes! Yes! Blackjack! Ehehe.",
-                "Blackjack! Blackjack! Ehehe.",
-                "Blackjack! Yes! Now {i}that's{/i} how it's done!",
-                "Yes! Now {i}that's{/i} more like it! Ahaha."
-            },
-            JNBlackjackStates.natsuki_closest: {
-                "Yes! I win! I win! Ehehe.",
-                "Yes! I win again!",
-                "I was closer! I win! I win!",
-                "Yes! Take that, [player]! Ehehe."
-            },
-            JNBlackjackStates.player_bust: {
-                "Pfft-! Nice bust there, [player]!",
-                "Yep. Total misplay, [player]!",
-                "Now that's what I call a bust! Ehehe.",
-                "Ahaha. Sucks to be you, [player]!"  
-            },
-            JNBlackjackStates.player_blackjack: {
-                "Seriously? You got a blackjack?! Ugh...",
-                "Yeah, yeah. Enjoy your luck while it lasts, [player].",
-                "Hmph. You just lucked out this time.",
-                "Oh, come {i}on{/i}! Again? Seriously..."
-            },
-            JNBlackjackStates.player_closest: {
-                "Heh. Enjoy the luck while it lasts, [player].",
-                "{i}Seriously{/i}? Ugh...",
-                "Come on! Really? Man...",
-                "Yeah, yeah. Laugh it up, [player]. Just you wait..."
-            },
+            jn_blackjack.JNBlackjackStates.draw: [
+                "We drew?{w=0.75} Huh.",
+                "Huh.{w=0.75} We drew?{w=0.75} Weird.",
+                "Wait,{w=0.2} we tied?{w=0.75} Huh.",
+                "A tie?{w=0.75} Weird."
+            ],
+            jn_blackjack.JNBlackjackStates.natsuki_bust: [
+                "I bust?{w=0.75} Are you kidding me?!{w=0.75} Ugh...",
+                "Oh,{w=0.2} come on!{w=0.75} I bust {i}again{/i}?!{w=0.75} Yeesh...",
+                "Oh,{w=0.2} for-!{w=0.75} {i}Another{/i} bust?!",
+                "A-{w=0.2}as {i}if{/i} I bust!{w=0.75} Man..."
+            ],
+            jn_blackjack.JNBlackjackStates.natsuki_blackjack: [
+                "Yes!{w=0.5} Yes!{w=0.5} Blackjack!{w=0.75} Ehehe.",
+                "Blackjack!{w=0.5} Blackjack!{w=0.5} Ehehe.",
+                "Blackjack!{w=0.5} Yes!{w=0.5} Now {i}that's{/i} how it's done!",
+                "Yes!{w=0.5} Now {i}that's{/i} more like it! Ahaha."
+            ],
+            jn_blackjack.JNBlackjackStates.natsuki_closest: [
+                "Yes!{w=0.5} I win!{w=0.3} I win!{w=0.75} Ehehe.",
+                "Yes!{w=0.5} I win again!",
+                "I was closer!{w=0.5} I win!{w=0.3} I win!",
+                "Yes!{w=0.5} Take that,{w=0.2} [player]!{w=0.75} Ehehe."
+            ],
+            jn_blackjack.JNBlackjackStates.player_bust: [
+                "Pfft-!{w=0.75} Nice bust there,{w=0.2} [player]!",
+                "Yep.{w=0.5} Total misplay,{w=0.2} [player]!",
+                "Now that's what I call a bust!{w=0.75} Ehehe.",
+                "Ahaha.{w=0.75} Sucks to be you,{w=0.2} [player]!"  
+            ],
+            jn_blackjack.JNBlackjackStates.player_blackjack: [
+                "Seriously?{w=0.75} You got a blackjack?!{w=0.75} Ugh...",
+                "Yeah,{w=0.2} yeah.{w=0.75} Enjoy your luck while it lasts,{w=0.2} [player].",
+                "Hmph.{w=0.75} You just lucked out this time.",
+                "Oh,{w=0.2} come {i}on{/i}!{w=0.75} Again?{w=0.75} Seriously..."
+            ],
+            jn_blackjack.JNBlackjackStates.player_closest: [
+                "Heh.{w=0.75} Enjoy the luck while it lasts,{w=0.2} [player].",
+                "{i}Seriously{/i}?{w=0.75} Ugh...",
+                "Come on!{w=0.75} Really?{w=0.75} Man...",
+                "Yeah,{w=0.2} yeah.{w=0.75} Laugh it up,{w=0.2} [player].{w=0.75} Just you wait..."
+            ],
         }
         $ chosen_response = renpy.substitute(random.choice(response_map[jn_blackjack._game_state]))
         n "[chosen_response]"
 
-        $ jnPause(1)
+        $ jnPause(0.5)
         jump blackjack_start
 
     else:
         # Standard dialogue flow
+        $ jnPause(delay=3, hard=True)
         $ dialogue_choice = random.randint(1, 3)
         $ rematch_prompt = ""
         hide screen blackjack_ui
@@ -521,12 +524,16 @@ label blackjack_end:
             n "Come on, [player]!"
             extend " We're {i}totally{/i} doing this again!"
 
-            $ rematch_prompt = renpy.substitute(random.choice({
+            $ rematch_prompt = renpy.substitute(random.choice([
+                "I-I demand a rematch!",
+                "We're rematching!",
+                "We're totally having a rematch!",
+                "Rematch! Let's go!",
+                "Come on, [player]! Rematch!",
                 "Rematch! Rematch!",
-                "Come on! Rematch!",
-                "Rematch!",
+                "We are {i}so{/i} having a rematch!",
                 "We're doing a rematch!"
-            }))
+            ]))
             show natsuki option_wait_sulky
 
         elif jn_blackjack._game_state == jn_blackjack.JNBlackjackStates.natsuki_bust:
@@ -552,12 +559,16 @@ label blackjack_end:
             n "W-wipe that smile off your face already!"
             extend " There's no way I'm taking this lying down!"
 
-            $ rematch_prompt = renpy.substitute(random.choice({
+            $ rematch_prompt = renpy.substitute(random.choice([
                 "I-I demand a rematch!",
                 "We're rematching!",
                 "We're totally having a rematch!",
-                "Rematch! Now!"
-            }))
+                "Rematch! Let's go!",
+                "Come on, [player]! Rematch!",
+                "Rematch! Rematch!",
+                "We are {i}so{/i} having a rematch!",
+                "We're doing a rematch!"
+            ]))
             show natsuki option_wait_sulky
 
         elif jn_blackjack._game_state == jn_blackjack.JNBlackjackStates.natsuki_blackjack:
@@ -641,7 +652,7 @@ label blackjack_end:
                 extend " Just as I expected."
                 extend " Bust wide open!"
 
-            b "..."
+            n "..."
             n "Well?"
 
             $ rematch_prompt = renpy.substitute(random.choice([
@@ -653,8 +664,6 @@ label blackjack_end:
             show natsuki option_wait_smug
 
         elif jn_blackjack._game_state == jn_blackjack.JNBlackjackStates.player_blackjack:
-            n 1cslpo "Uuuuu...! Are you kidding me?! You got a blackjack? Man..."
-
             if dialogue_choice == 1:
                 n "Uuuuu...!"
                 n "Are you kidding me?"
@@ -662,36 +671,63 @@ label blackjack_end:
                 extend " Man..."
 
             elif dialogue_choice == 2:
-                n ""
+                n "Oh, for-!"
+                extend " Seriously?"
+                extend " Ugh..."
 
             else:
-                n ""
+                n "Nnnnnn-!"
+                n "Come on!"
+                extend " There's no {i}way{/i} you get a blackjack just like that!"
+                n "Yeesh..."
+
+            n "..."
+            n "You know what?"
+            extend " I bet that was just dumb luck!"
+            extend " Come on, [player]!"
 
             $ rematch_prompt = renpy.substitute(random.choice([
-                "Wanna try your luck again, [player]?",
-                "Think you can win this time, [player]?",
-                "Finished blaming the cards? You wanna try again?",
-                "Feeling lucky this time, [player]?"
+                "I-I demand a rematch!",
+                "We're rematching!",
+                "We're totally having a rematch!",
+                "Rematch! Let's go!",
+                "Come on, [player]! Rematch!",
+                "Rematch! Rematch!",
+                "We are {i}so{/i} having a rematch!",
+                "We're doing a rematch!"
             ]))
             show natsuki option_wait_sulky
 
         elif jn_blackjack._game_state == jn_blackjack.JNBlackjackStates.player_closest:
-            n 1ccspo "Hmph. You just got lucky again, [player]."
-
             if dialogue_choice == 1:
-                pass
+                n "..."
+                n "Yeah, yeah."
+                extend " Y-you totally just lucked out again, [player]."
 
             elif dialogue_choice == 2:
-                pass
+                n "Ugh..."
+                n "I {i}swear{/i} I always get the crappy hands."
+                extend " Come on."
+                n "..."
 
             else:
-                pass
+                n "Man..."
+                extend " seriously?"
+                extend " Ugh..."
+                n "Y-you're just lucky my cards just stink, [player]."
+
+            n "In fact..."
+            extend " you know what?"
+            extend " I don't have to put up with this!"
 
             $ rematch_prompt = renpy.substitute(random.choice([
-                "Wanna try your luck again, [player]?",
-                "Think you can win this time, [player]?",
-                "Finished blaming the cards? You wanna try again?",
-                "Feeling lucky this time, [player]?"
+                "I-I demand a rematch!",
+                "We're rematching!",
+                "We're totally having a rematch!",
+                "Rematch! Let's go!",
+                "Come on, [player]! Rematch!",
+                "Rematch! Rematch!",
+                "We are {i}so{/i} having a rematch!"
             ]))
             show natsuki option_wait_sulky
 
@@ -699,23 +735,91 @@ label blackjack_end:
             n "[rematch_prompt]"
 
             "You're on!":
-                n "You bet!"
+                if jn_blackjack._game_state == jn_blackjack.JNBlackjackStates.draw:
+                    n "Ehehe."
+                    extend " You bet!"
+
+                elif jn_blackjack._game_state in {jn_blackjack.JNBlackjackStates.natsuki_blackjack, jn_blackjack.JNBlackjackStates.natsuki_closest, jn_blackjack.JNBlackjackStates.player_bust}:
+                    n "Oh?"
+                    extend " What's that?"
+                    n "You need me to show you how it's done one more time," 
+                    extend " huh?"
+                    n "You bet it's on, [player]!"
+
+                else:
+                    n "Y-yeah!"
+                    extend " As if I was taking no for an answer."
+                    extend " Bring it on, [player]!"
 
                 jump blackjack_start
 
             "I'll pass.":
-                n "Thanks for playing!"
+                if jn_blackjack._game_state == jn_blackjack.JNBlackjackStates.draw:
+                    n "Really?"
+                    extend " Aww..."
+                    n "Well..." 
+                    extend " if you're sure."
+                    extend " Thanks for playing, [player]!"
 
-                hide screen blackjack_ui
+                    show natsuki 1fcssm
+
+                elif jn_blackjack._game_state in {jn_blackjack.JNBlackjackStates.natsuki_blackjack, jn_blackjack.JNBlackjackStates.natsuki_closest, jn_blackjack.JNBlackjackStates.player_bust}:
+                    # Natsuki won
+                    n "Eh?"
+                    extend " You're done playing for now, [player]?"
+                    n "...Or are you just done losing to me?"
+                    n "..."
+                    n "Well?"
+                    extend " Spit it out!"
+                    extend " It's okay to be upset, [player]!"
+                    n "..."
+                    n "Ehehe."
+                    n "Nah,"
+                    extend " that's fine."
+                    extend " I was about done here too anyway."
+                    n "Well,"
+                    extend " hope you had fun, [player]..."
+                    n "'Cause I know I sure did!"
+
+                    if Natsuki.isLove(higher=True):
+                        $ chosen_tease = jn_utils.getRandomTease()
+                        n "Love you too, [chosen_tease]~!"
+
+                    show natsuki 1fcssm
+
+                else:
+                    n "H-hey!"
+                    extend " Come on now!"
+                    extend " Seriously?"
+                    n "I was gonna win next time!"
+                    extend " I could practically {i}feel{/i} it!"
+                    extend " Man..."
+                    n "..."
+                    n "...Fine."
+                    extend " B-but just so you know, [player]."
+                    n "You are {i}so{/i} getting your butt kicked next time!"
+
+                    show natsuki 1fcssm
+                
+                show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+                $ jnPause(1)
+                play audio drawer
+                $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+                $ jnPause(1)
+                hide black with Dissolve(1.25)
+
                 $ Natsuki.setInGame(False)
                 $ Natsuki.resetLastTopicCall()
                 $ Natsuki.resetLastIdleCall()
                 $ HKBShowButtons()
+
                 jump ch30_loop
 
 label blackjack_forfeit:
     # TODO: writing
     n "Giving up?"
+
+    show natsuki option_wait_curious
     menu:
         "Yes":
             n "continuing"
@@ -730,9 +834,6 @@ label blackjack_forfeit:
 
     return
 
-style blackjack_card_scale:
-    xysize(178, 250)
-
 style blackjack_note_text:
     font gui.interface_font
     size gui.interface_text_size
@@ -744,7 +845,7 @@ style blackjack_note_text:
     line_leading 8
 
 transform blackjack_card_scale_down:
-    zoom 0.75
+    zoom 0.675
 
 transform blackjack_popup:
     easeout 0.75 alpha 0
@@ -762,31 +863,38 @@ screen blackjack_ui:
 
     # Natsuki's hand
     vbox:
-        pos(60, 60)
-        text "[n_name]" style "categorized_menu_button"
+        pos(40, 60)
+        text "[n_name]" style "categorized_menu_button" size 24
         null height 10
 
-        grid 4 1:
-            spacing 20
-            style "blackjack_card_scale"
+        grid 5 1:
+            spacing 10
+            #style "blackjack_card_scale"
             add jn_blackjack._getCardSprite(is_player=False, index=0) anchor(0,0) at blackjack_card_scale_down
             add jn_blackjack._getCardSprite(is_player=False, index=1) anchor(0,0) at blackjack_card_scale_down
             add jn_blackjack._getCardSprite(is_player=False, index=2) anchor(0,0) at blackjack_card_scale_down
             add jn_blackjack._getCardSprite(is_player=False, index=3) anchor(0,0) at blackjack_card_scale_down
-    
+            add jn_blackjack._getCardSprite(is_player=False, index=4) anchor(0,0) at blackjack_card_scale_down
+
     # Player's hand
     vbox:
-        pos(60, 372)
-        text "[player]" style "categorized_menu_button"
+        pos(40, 342)
+        if persistent._jn_blackjack_show_hand_value:
+            text "[player]: {0}".format(jn_blackjack._getHandSum(True)) style "categorized_menu_button" size 24
+
+        else:
+            text "[player]" style "categorized_menu_button" size 24
+
         null height 10
 
-        grid 4 1:
-            spacing 20
-            style "blackjack_card_scale"
+        grid 5 1:
+            spacing 10
+            #style "blackjack_card_scale"
             add jn_blackjack._getCardSprite(is_player=True, index=0) anchor(0,0) at blackjack_card_scale_down
             add jn_blackjack._getCardSprite(is_player=True, index=1) anchor(0,0) at blackjack_card_scale_down
             add jn_blackjack._getCardSprite(is_player=True, index=2) anchor(0,0) at blackjack_card_scale_down
             add jn_blackjack._getCardSprite(is_player=True, index=3) anchor(0,0) at blackjack_card_scale_down
+            add jn_blackjack._getCardSprite(is_player=True, index=4) anchor(0,0) at blackjack_card_scale_down
 
     # Information and controls
     vbox:
@@ -806,13 +914,13 @@ screen blackjack_ui:
         
         # Hit
         key "1" action [
-            If(jn_blackjack._is_player_turn and jn_blackjack._controls_enabled and len(jn_blackjack._player_hand) < 4, Function(jn_blackjack._stayOrHit, True, True)) 
+            If(jn_blackjack._is_player_turn and jn_blackjack._controls_enabled and len(jn_blackjack._player_hand) < 5, Function(jn_blackjack._stayOrHit, True, True)) 
         ]
         textbutton _("Hit!"):
             style "hkbd_option"
             action [
                 Function(jn_blackjack._stayOrHit, True, True),
-                SensitiveIf(jn_blackjack._is_player_turn and jn_blackjack._controls_enabled and len(jn_blackjack._player_hand) < 4)]
+                SensitiveIf(jn_blackjack._is_player_turn and jn_blackjack._controls_enabled and len(jn_blackjack._player_hand) < 5)]
 
         # Stay
         key "2" action [
