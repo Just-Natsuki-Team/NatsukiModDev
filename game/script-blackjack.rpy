@@ -31,6 +31,7 @@ init 0 python in jn_blackjack:
     _natsuki_staying = False
     _player_staying = False
     _natsuki_win_streak = 0
+    _rounds = 0
 
     # Collections of cards involved in the game
     _deck = []
@@ -76,10 +77,15 @@ init 0 python in jn_blackjack:
         global _is_player_committed
         global _controls_enabled
         global _game_state
+        global _player_staying
+        global _natsuki_staying
+
         _is_player_turn = None
         _is_player_committed = False
         _controls_enabled = None
         _game_state = None
+        _player_staying = False
+        _natsuki_staying = False
 
         return
 
@@ -225,7 +231,6 @@ init 0 python in jn_blackjack:
 
         if _game_state is not None:
             _controls_enabled = False
-            _showSplashImage()
 
         global _natsuki_win_streak
 
@@ -245,19 +250,23 @@ init 0 python in jn_blackjack:
         """
         Shows a splash image corresponding to the current game state.
         """
-        #TODO: Inconsistent display?
+        #TODO: Inconsistent display? Only seems to show on Staying
         image_state_map = {
             JNBlackjackStates.natsuki_blackjack: "blackjack",
             JNBlackjackStates.player_blackjack: "blackjack",
             JNBlackjackStates.natsuki_bust: "bust",
             JNBlackjackStates.player_bust: "bust",
-            JNBlackjackStates.draw: "draw",
+            JNBlackjackStates.natsuki_closest: "game",
+            JNBlackjackStates.player_closest: "game",
+            JNBlackjackStates.draw: "draw"
         }
         if _game_state in image_state_map:
-            global _splash_sprite
-            _splash_sprite = image_state_map[_game_state]
-            renpy.hide(name="blackjack_splash", layer="overlay")
-            renpy.show(name="blackjack_splash", zorder=10, layer="overlay")
+            renpy.show(
+                name="blackjack_popup",
+                at_list=[store.blackjack_popup],
+                layer="overlay",
+                what=store.Image("mod_assets/games/blackjack/{0}.png".format(image_state_map[_game_state])),
+                zorder=10)
 
         return
 
@@ -452,6 +461,8 @@ label blackjack_main_loop:
     jump blackjack_main_loop
 
 label blackjack_end:
+    $ jn_blackjack._rounds += 1
+    $ jn_utils.fireAndForgetFunction(jn_blackjack._showSplashImage)
     $ jn_blackjack._controls_enabled = False
     $ jnPause(delay=1, hard=True)
 
@@ -516,13 +527,92 @@ label blackjack_end:
 
 label blackjack_quit_forfeit:
     hide screen blackjack_ui
-    # TODO: writing
-    n  "Giving up?"
+    $ natsuki_prompt = ""
 
-    show natsuki option_wait_curious
+    if jn_blackjack._is_player_committed:
+        n "Eh?"
+        extend " You're done playing now?"
+        
+        if jn_blackjack._rounds == 0:
+            n "...W-wait!"
+            extend " Hang on just a second here, [player]!"
+            extend " What do you mean?"
+            n "We barely even started {i}playing{/i} yet!"
+            n "Y-you better not be pulling my leg again, [player]."
+
+            $ natsuki_prompt = "Do you {i}actually{/i} wanna play blackjack or not?"
+            show natsuki option_wait_sulky
+
+        elif jn_blackjack._rounds < 6:
+            n "Man..."
+            extend " really?"
+            extend " Come on, [player]!"
+            extend " You can't be done this soon {i}already{/i}."
+            n "Seriously -"
+            extend " it's only been like [jn_blackjack._rounds] rounds!"
+            extend " We've barely even started!"
+            
+            $ natsuki_prompt = "You can {i}easily{/i} play at least a couple more games... right?"
+            show natsuki option_wait_sulky
+
+        else:
+            n "..."
+            n "Well..."
+            extend " you have been playing a while."
+            extend " I {i}guess{/i}."
+            n "...Even if you {i}are{/i} calling it quits right in the middle of a game."
+            n "So..."
+
+            $ natsuki_prompt = "You're sure you don't wanna keep playing, [player]?"
+            show natsuki option_wait_curious
+
+    else:
+        n "Oh?"
+        extend " What's this, [player]?"
+        extend " Why the cold feet all of a sudden?"
+        n "Ehehe."
+        n "Come on!"
+        extend " Don't tell me you're giving up {i}that{/i} easily!"
+        extend " Besides..."
+        
+        $ natsuki_prompt = "You can at {i}least{/i} stick it out to the end, right?"
+        show natsuki option_wait_smug
+        
     menu:
-        "Yes":
-            n  "ending"
+        n "[natsuki_prompt]"
+
+        "No, I'm done playing for now.":
+            if jn_blackjack._is_player_committed:
+                n "...Man."
+                extend " For real, [player]?"
+                n "..."
+                n "Well..."
+                extend " I can't say I'm not at least a little disappointed."
+                extend " But I guess that's fine."
+                n "After all..."
+
+                $ dialogue_choice = random.randint(1, 3)
+                if dialogue_choice == 1:
+                    n "Just means another win for me!"
+
+                elif dialogue_choice == 2:
+                    n "As if I'm turning down an easy win!"
+
+                else:
+                    n "I'm taking this as a win for me!"
+
+                extend " Ehehe."
+
+            else:
+                n  "...Wow."
+                extend " And you didn't even end up making a single move!"
+                extend " Huh."
+                n "..."
+                n "Well,"
+                extend " looks like {i}you{/i} know what they say at least," 
+                extend " [player]."
+                n "I guess the only winning move was not to play!"
+                extend " Ehehe."
 
             show natsuki 1fcssm
             show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
@@ -532,6 +622,7 @@ label blackjack_quit_forfeit:
             $ jnPause(1)
             hide black with Dissolve(1.25)
 
+            $ jn_blackjack._rounds = 0
             $ Natsuki.setInGame(False)
             $ Natsuki.resetLastTopicCall()
             $ Natsuki.resetLastIdleCall()
@@ -539,8 +630,29 @@ label blackjack_quit_forfeit:
 
             jump ch30_loop 
 
-        "No":
-            n  "continuing"
+        "You're on!":
+            if not jn_blackjack._is_player_committed:
+                n "Y-yeah!"
+                extend " Now that's more like it!"
+                extend " Some fighting spirit!"
+                n "Bring it on already, [player]!"
+            
+            elif jn_blackjack._rounds == 0:
+                n "Yeah!"
+                extend " See?"
+                extend " I knew you had some kind of fight left in you!"
+                n "Besides..."
+                n "Only a real sore loser would bow out before they've even lost."
+                extend " Ehehe."
+                n "Prove me wrong, [player]!"
+                
+            else:
+                n "Ehehe."
+                extend " Now {i}that's{/i} what I'm talking about!"
+                n "..."
+                n "Well?"
+                extend " What're you waiting for?"
+                n "Make your move already, [player]!"
             
             show screen blackjack_ui
             jump blackjack_main_loop
@@ -561,12 +673,9 @@ transform blackjack_card_scale_down:
     zoom 0.675
 
 transform blackjack_popup:
-    easeout 0.75 alpha 0
-
-image blackjack_splash:
-    "mod_assets/games/blackjack/[jn_blackjack._splash_sprite].png"
-    ease 0.33 alpha 1.0 yoffset -30
-    blackjack_popup
+    parallel:
+        ease 0.33 alpha 1.0 yoffset -30
+        easeout 0.75 alpha 0
 
 screen blackjack_ui:
     zorder 5
