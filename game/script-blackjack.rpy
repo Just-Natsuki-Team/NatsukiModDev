@@ -530,89 +530,90 @@ label blackjack_quit_forfeit:
     $ natsuki_prompt = ""
 
     if jn_blackjack._is_player_committed:
-        n "Eh?"
-        extend " You're done playing now?"
+        n  "Eh?{w=0.75}{nw}"
+        extend  " You're done playing now?"
         
         if jn_blackjack._rounds == 0:
-            n "...W-wait!"
-            extend " Hang on just a second here, [player]!"
-            extend " What do you mean?"
-            n "We barely even started {i}playing{/i} yet!"
-            n "Y-you better not be pulling my leg again, [player]."
+            n  "...W-{w=0.2}wait.{w=0.75}{nw}"
+            extend  " Hang on just a second here,{w=0.2} [player]!{w=0.75}{nw}"
+            extend  " What do you mean?"
+            n  "We literally only just started {i}playing{/i}!"
+            extend " Jeez..."
+            n  "Y-{w=0.2}you better not be pulling my leg again,{w=0.2} [player]."
 
-            $ natsuki_prompt = "Do you {i}actually{/i} wanna play blackjack or not?"
+            $ natsuki_prompt = "Do you actually {i}want{/i} to play blackjack or not?"
             show natsuki option_wait_sulky
 
         elif jn_blackjack._rounds < 6:
-            n "Man..."
-            extend " really?"
-            extend " Come on, [player]!"
-            extend " You can't be done this soon {i}already{/i}."
-            n "Seriously -"
-            extend " it's only been like [jn_blackjack._rounds] rounds!"
-            extend " We've barely even started!"
+            n  "Man...{w=1}{nw}"
+            extend  " really?{w=0.75}{nw}"
+            extend  " Come on,{w=0.2} [player]!{w=0.75}{nw}"
+            extend  " You can't be done this soon {i}already{/i}."
+            n  "Seriously -{w=0.5}{nw}"
+            extend  " it's only been like [jn_blackjack._rounds] rounds!{w=0.75}{nw}"
+            extend  " We've barely even started!"
             
-            $ natsuki_prompt = "You can {i}easily{/i} play at least a couple more games... right?"
+            $ natsuki_prompt = "You can {i}easily{/i} play at least a couple more games...{w=0.3} right?"
             show natsuki option_wait_sulky
 
         else:
-            n "..."
-            n "Well..."
-            extend " you have been playing a while."
-            extend " I {i}guess{/i}."
-            n "...Even if you {i}are{/i} calling it quits right in the middle of a game."
-            n "So..."
+            n  "..."
+            n  "Well...{w=1}{nw}"
+            extend  " you have been playing a while.{w=0.75}{nw}"
+            extend  " I {i}guess{/i}."
+            n  "...Even if you {i}are{/i} calling it quits right in the middle of a game."
+            n  "So..."
 
-            $ natsuki_prompt = "You're sure you don't wanna keep playing, [player]?"
+            $ natsuki_prompt = "You're sure you don't wanna keep playing,{w=0.2} [player]?"
             show natsuki option_wait_curious
 
     else:
-        n "Oh?"
-        extend " What's this, [player]?"
-        extend " Why the cold feet all of a sudden?"
-        n "Ehehe."
-        n "Come on!"
-        extend " Don't tell me you're giving up {i}that{/i} easily!"
-        extend " Besides..."
+        n  "Oh?{w=0.75}{nw}"
+        extend  " What's this,{w=0.2} [player]?{w=0.75}{nw}"
+        extend  " Why the cold feet all of a sudden?"
+        n  "Ehehe."
+        n  "Come on!{w=0.75}{nw}"
+        extend  " Don't tell me you're giving up {i}that{/i} easily!{w=0.75}{nw}"
+        extend  " Besides..."
         
-        $ natsuki_prompt = "You can at {i}least{/i} stick it out to the end, right?"
+        $ natsuki_prompt = "You can at {i}least{/i} stick it out to the end,{w=0.2} right?"
         show natsuki option_wait_smug
         
     menu:
-        n "[natsuki_prompt]"
+        n  "[natsuki_prompt]"
 
         "No, I'm done playing for now.":
             if jn_blackjack._is_player_committed:
-                n "...Man."
-                extend " For real, [player]?"
-                n "..."
-                n "Well..."
-                extend " I can't say I'm not at least a little disappointed."
-                extend " But I guess that's fine."
-                n "After all..."
+                n  "...Man.{w=0.75}{nw}"
+                extend  " For real,{w=0.2} [player]?"
+                n  "..."
+                n  "Well...{w=1}{nw}"
+                extend  " I can't say I'm not at least a little disappointed.{w=0.75}{nw}"
+                extend  " But I guess that's fine."
+                n  "After all..."
 
                 $ dialogue_choice = random.randint(1, 3)
                 if dialogue_choice == 1:
-                    n "Just means another win for me!"
+                    n  "Just means another win for me!{w=0.75}{nw}"
 
                 elif dialogue_choice == 2:
-                    n "As if I'm turning down an easy win!"
+                    n  "As if I'm turning down an easy win!{w=0.75}{nw}"
 
                 else:
-                    n "I'm taking this as a win for me!"
+                    n  "I'm taking this as a win for me!{w=0.75}{nw}"
 
-                extend " Ehehe."
+                extend  " Ehehe."
 
             else:
-                n  "...Wow."
-                extend " And you didn't even end up making a single move!"
-                extend " Huh."
-                n "..."
-                n "Well,"
-                extend " looks like {i}you{/i} know what they say at least," 
-                extend " [player]."
-                n "I guess the only winning move was not to play!"
-                extend " Ehehe."
+                n  "...Wow.{w=0.75}{nw}"
+                extend  " And you didn't even end up making a single move!{w=0.75}{nw}"
+                extend  " Huh."
+                n  "..."
+                n  "Well,{w=0.5}{nw}"
+                extend  " looks like {i}you{/i} know what they say at least,{w=0.5}{nw}" 
+                extend  " [player]."
+                n  "I guess the only winning move for you was not to play!{w=0.75}{nw}"
+                extend  " Ehehe."
 
             show natsuki 1fcssm
             show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
@@ -632,27 +633,27 @@ label blackjack_quit_forfeit:
 
         "You're on!":
             if not jn_blackjack._is_player_committed:
-                n "Y-yeah!"
-                extend " Now that's more like it!"
-                extend " Some fighting spirit!"
-                n "Bring it on already, [player]!"
+                n  "Y-{w=0.2}yeah!{w=0.75}{nw}"
+                extend  " Now that's more like it!{w=0.75}{nw}"
+                extend  " Some fighting spirit!"
+                n  "Bring it on already,{w=0.2} [player]!"
             
             elif jn_blackjack._rounds == 0:
-                n "Yeah!"
-                extend " See?"
-                extend " I knew you had some kind of fight left in you!"
-                n "Besides..."
-                n "Only a real sore loser would bow out before they've even lost."
-                extend " Ehehe."
-                n "Prove me wrong, [player]!"
+                n  "Yeah!{w=0.75}{nw}"
+                extend  " See?{w=0.75}{nw}"
+                extend  " I knew you had some kind of fight left in you!"
+                n  "Besides..."
+                n  "Only a real sore loser would just chicken out before they've even {i}lost{/i}.{w=0.75}{nw}"
+                extend  " Ehehe."
+                n  "Prove me wrong,{w=0.2} [player]!"
                 
             else:
-                n "Ehehe."
-                extend " Now {i}that's{/i} what I'm talking about!"
-                n "..."
-                n "Well?"
-                extend " What're you waiting for?"
-                n "Make your move already, [player]!"
+                n  "Ehehe.{w=0.75}{nw}"
+                extend  " Now {i}that's{/i} what I'm talking about!"
+                n  "..."
+                n  "Well?{w=0.75}{nw}"
+                extend  " What're you waiting for?"
+                n  "Make your move already,{w=0.2} [player]!"
             
             show screen blackjack_ui
             jump blackjack_main_loop
