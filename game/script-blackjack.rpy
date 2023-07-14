@@ -340,7 +340,7 @@ init 0 python in jn_blackjack:
 
         return renpy.display.layout.LiveComposite(
             (223, 312), # Displayable size; this needs to match the size of the card asset
-            (5, 0), bottom_sprite, # Shadow is offset to the right
+            (5, 5), bottom_sprite, # Shadow is offset to the right bottom
             (0, 0), top_sprite
         )
 
