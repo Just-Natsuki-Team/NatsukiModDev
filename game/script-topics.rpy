@@ -9936,7 +9936,7 @@ label talk_staying_motivated:
     extend 1unmaj " I find most of the problem is just getting in the right mood -{w=0.5}{nw}"
     extend 4ulraj " and there's no shortage of ways to get there."
     n 3fchgn "Like music!"
-    n 3fcsbg "Nothing beats my tried-and-true music playlists to kick me out of a rutt!{w=0.75}{nw}"
+    n 3fcsbg "Nothing beats my tried-and-true music playlists to kick me out of a rut!{w=0.75}{nw}"
     extend 3fcssmeme " A good tune or two {i}always{/i} gets me pumped."
     n 4fnmaj "But you need to do what works for {i}you{/i},{w=0.2} [player]!"
 
