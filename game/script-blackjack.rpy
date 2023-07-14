@@ -130,13 +130,11 @@ init 0 python in jn_blackjack:
         # Set aces to one if they would result in an instant bust for Natsuki
         if _getHandSum(is_player=False) > 21:
             for card in _natsuki_hand:
-                # "tuple object does not support item assignment"?
                 card[1] = 1 if card[1] == 11 else card[1]
 
         # Set aces to one if they would result in an instant bust for the player
         if _getHandSum(is_player=True) > 21:
             for card in _player_hand:
-                # "tuple object does not support item assignment"?
                 card[1] = 1 if card[1] == 11 else card[1]
 
         # Value adjustments so neither Natsuki or the player can instantly bust: an Ace will be set to a value of one 
