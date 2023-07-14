@@ -373,27 +373,27 @@ label blackjack_intro:
                 jump blackjack_explanation
 
             "No, I'm ready.":
-                    $ dialogue_choice = random.randint(1, 3)
-                    if dialogue_choice == 1:
-                        n "Heh."
-                        n "You're ready,"
-                        extend " are you?"
-                        n "Ready to get a grade A butt kicking!"
-                        extend " Let's go, [player]!"
+                $ dialogue_choice = random.randint(1, 3)
+                if dialogue_choice == 1:
+                    n "Heh."
+                    n "You're ready,"
+                    extend " are you?"
+                    n "Ready to get a grade A butt kicking!"
+                    extend " Let's go, [player]!"
 
-                    elif dialogue_choice == 2:
-                        n "Hmm..."
-                        n "Yeah,"
-                        extend " I'd say you're about ready too."
-                        n "...Ready for the bitter taste of defeat!"
-                        extend " Now let's go already!"
+                elif dialogue_choice == 2:
+                    n "Hmm..."
+                    n "Yeah,"
+                    extend " I'd say you're about ready too."
+                    n "...Ready for the bitter taste of defeat!"
+                    extend " Now let's go already!"
 
-                    else:
-                        n  "Ehehe."
-                        extend " Oh?"
-                        extend " You're ready, huh?"
-                        n "...Ready for a total thrashing!"
-                        extend " Bring it, [player]!"
+                else:
+                    n  "Ehehe."
+                    extend " Oh?"
+                    extend " You're ready, huh?"
+                    n "...Ready for a total thrashing!"
+                    extend " Bring it, [player]!"
 
                 $ persistent._jn_blackjack_explanation_given = True
 
