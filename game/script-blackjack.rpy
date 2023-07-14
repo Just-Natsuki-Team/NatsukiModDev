@@ -308,27 +308,41 @@ init 0 python in jn_blackjack:
         """
         return "Forfeit" if _is_player_committed else "Quit"
 
-    def _getCardSprite(is_player, index):
+    def _getCardDisplayable(is_player, index):
         """
-        Returns the sprite path for a card in a hand for blackjack.
-        Note that Nat's first card is always hidden unless the game is over.
+        Returns a layered displayable for a card in a hand for blackjack, consisting of the card face and a shadow (or nothing if no card exists for the index).
+        Note that Nat's first card is always hidden/obfuscated unless the game is over.
         
         IN:
-            - is_player - bool flag for whether to get a sprite for the player's or Natsuki's hand
-            - index - int value for the card in the hand to get the sprite for
+            - is_player - bool flag for whether to get a displayable for the player's or Natsuki's hand
+            - index - int value for the card in the hand to get the displayable for
         
         OUT:
-            - str sprite path for the card at the given index, a hidden placeholder for Nat's first card if game ongoing, or empty it is doesn't exist.
+            - Displayable for the card at the given index
+
         """
-        #TODO: Custom disp to show card and underlying shadow
+        top_sprite = ""
+        bottom_sprite = ""
+
         if is_player:
-            return _player_hand[index][0] if 0 <= index < len(_player_hand) else "mod_assets/natsuki/etc/empty.png"
+            top_sprite = _player_hand[index][0] if 0 <= index < len(_player_hand) else "mod_assets/natsuki/etc/empty.png"
+            bottom_sprite = "mod_assets/games/cards/card_shadow.png" if 0 <= index < len(_player_hand) else "mod_assets/natsuki/etc/empty.png"
 
         else:
             if _game_state is None and index == 0:
-                return  "mod_assets/games/cards/hide.png"
+                # Natsuki's first card is always obfuscated unless the game is concluded
+                top_sprite =  "mod_assets/games/cards/hide.png"
+                bottom_sprite =  "mod_assets/natsuki/etc/empty.png"
             
-            return _natsuki_hand[index][0] if 0 <= index < len(_natsuki_hand) else "mod_assets/natsuki/etc/empty.png"
+            else:
+                top_sprite = _natsuki_hand[index][0] if 0 <= index < len(_natsuki_hand) else "mod_assets/natsuki/etc/empty.png"
+                bottom_sprite = "mod_assets/games/cards/card_shadow.png" if 0 <= index < len(_natsuki_hand) else "mod_assets/natsuki/etc/empty.png"
+
+        return renpy.display.layout.LiveComposite(
+            (223, 312), # Displayable size; this needs to match the size of the card asset
+            (5, 0), bottom_sprite, # Shadow is offset to the right
+            (0, 0), top_sprite
+        )
 
     # TODO: Remove this!
     jn_plugins.registerExtrasOption(
@@ -694,11 +708,11 @@ screen blackjack_ui:
         grid 5 1:
             spacing 10
             #style "blackjack_card_scale"
-            add jn_blackjack._getCardSprite(is_player=False, index=0) anchor(0,0) at blackjack_card_scale_down
-            add jn_blackjack._getCardSprite(is_player=False, index=1) anchor(0,0) at blackjack_card_scale_down
-            add jn_blackjack._getCardSprite(is_player=False, index=2) anchor(0,0) at blackjack_card_scale_down
-            add jn_blackjack._getCardSprite(is_player=False, index=3) anchor(0,0) at blackjack_card_scale_down
-            add jn_blackjack._getCardSprite(is_player=False, index=4) anchor(0,0) at blackjack_card_scale_down
+            add jn_blackjack._getCardDisplayable(is_player=False, index=0) anchor(0,0) at blackjack_card_scale_down
+            add jn_blackjack._getCardDisplayable(is_player=False, index=1) anchor(0,0) at blackjack_card_scale_down
+            add jn_blackjack._getCardDisplayable(is_player=False, index=2) anchor(0,0) at blackjack_card_scale_down
+            add jn_blackjack._getCardDisplayable(is_player=False, index=3) anchor(0,0) at blackjack_card_scale_down
+            add jn_blackjack._getCardDisplayable(is_player=False, index=4) anchor(0,0) at blackjack_card_scale_down
 
     # Player's hand
     vbox:
@@ -713,11 +727,11 @@ screen blackjack_ui:
 
         grid 5 1:
             spacing 10
-            add jn_blackjack._getCardSprite(is_player=True, index=0) anchor(0,0) at blackjack_card_scale_down
-            add jn_blackjack._getCardSprite(is_player=True, index=1) anchor(0,0) at blackjack_card_scale_down
-            add jn_blackjack._getCardSprite(is_player=True, index=2) anchor(0,0) at blackjack_card_scale_down
-            add jn_blackjack._getCardSprite(is_player=True, index=3) anchor(0,0) at blackjack_card_scale_down
-            add jn_blackjack._getCardSprite(is_player=True, index=4) anchor(0,0) at blackjack_card_scale_down
+            add jn_blackjack._getCardDisplayable(is_player=True, index=0) anchor(0,0) at blackjack_card_scale_down
+            add jn_blackjack._getCardDisplayable(is_player=True, index=1) anchor(0,0) at blackjack_card_scale_down
+            add jn_blackjack._getCardDisplayable(is_player=True, index=2) anchor(0,0) at blackjack_card_scale_down
+            add jn_blackjack._getCardDisplayable(is_player=True, index=3) anchor(0,0) at blackjack_card_scale_down
+            add jn_blackjack._getCardDisplayable(is_player=True, index=4) anchor(0,0) at blackjack_card_scale_down
 
     # Information and controls
     vbox:
