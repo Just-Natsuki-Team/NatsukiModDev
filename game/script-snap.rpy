@@ -10,6 +10,7 @@ default persistent._jn_snap_player_wins = 0
 default persistent._jn_snap_natsuki_wins = 0
 
 init 0 python in jn_snap:
+    from Enum import Enum
     import random
     import store
     import store.jn_apologies as jn_apologies
@@ -19,12 +20,6 @@ init 0 python in jn_snap:
     _player_win_streak = 0
     _natsuki_win_streak = 0
     last_game_result = None
-
-    # Game outcomes
-    RESULT_PLAYER_WIN = 0
-    RESULT_NATSUKI_WIN = 1
-    RESULT_DRAW = 3
-    RESULT_FORFEIT = 4
 
     # In-game tracking
     _is_player_turn = None
@@ -47,6 +42,15 @@ init 0 python in jn_snap:
 
     else:
         _CARD_FAN_IMAGE_PLAYER = "mod_assets/games/snap/card_fan_icon.png"
+
+    class JNSnapStates(Enum):
+        """
+        Identifiers for the different ways a snap game can end.
+        """
+        draw = 1
+        forfeit = 2
+        natsuki_win = 3
+        player_win = 4
 
     def _clear(complete_reset=False):
         """
@@ -352,7 +356,7 @@ label snap_main_loop:
         # We tied somehow? End the game
         $ jn_snap._player_win_streak = 0
         $ jn_snap._natsuki_win_streak = 0
-        $ jn_snap.last_game_result = jn_snap.RESULT_DRAW
+        $ jn_snap.last_game_result = jn_snap.JNSnapStates.draw
         jump snap_end
 
     elif len(jn_snap._player_hand) == 0:
@@ -360,7 +364,7 @@ label snap_main_loop:
         $ jn_snap._player_win_streak = 0
         $ jn_snap._natsuki_win_streak += 1
         $ persistent._jn_snap_natsuki_wins += 1 
-        $ jn_snap.last_game_result = jn_snap.RESULT_NATSUKI_WIN
+        $ jn_snap.last_game_result = jn_snap.JNSnapStates.natsuki_win
         jump snap_end
 
     elif len(jn_snap._natsuki_hand) == 0:
@@ -368,7 +372,7 @@ label snap_main_loop:
         $ jn_snap._player_win_streak += 1
         $ persistent._jn_snap_player_wins += 1
         $ jn_snap._natsuki_win_streak = 0
-        $ jn_snap.last_game_result = jn_snap.RESULT_PLAYER_WIN
+        $ jn_snap.last_game_result = jn_snap.JNSnapStates.player_win
         jump snap_end
 
     $ jnPause(delay=max(0.33, (3.0 - (jn_snap._natsuki_skill_level * 0.5))), hard=True)
@@ -574,7 +578,7 @@ label snap_end:
     $ jn_snap._controls_enabled = False
 
     # Player won, Natsuki amger
-    if jn_snap.last_game_result == jn_snap.RESULT_PLAYER_WIN:
+    if jn_snap.last_game_result == jn_snap.JNSnapStates.player_win:
 
         if jn_snap._player_win_streak > 10:
             n 2csltr "Yeah,{w=0.3} yeah.{w=1}{nw}" 
@@ -611,7 +615,7 @@ label snap_end:
             extend 2csrposbr " I guess."
 
     # Natsuki won, Natsuki happ
-    elif jn_snap.last_game_result == jn_snap.RESULT_NATSUKI_WIN:
+    elif jn_snap.last_game_result == jn_snap.JNSnapStates.natsuki_win:
 
         if jn_snap._natsuki_win_streak > 10:
             n 1fcsss "Man,{w=0.5}{nw}" 
@@ -647,7 +651,7 @@ label snap_end:
             n 1fsqsmeme "Ehehe."
 
     # What
-    elif jn_snap.last_game_result == jn_snap.RESULT_DRAW:
+    elif jn_snap.last_game_result == jn_snap.JNSnapStates.draw:
         n 1csrfl "...Huh.{w=0.75}{nw}" 
         extend 1tnmfl " We {i}actually{/i} tied?"
         n 2tslpu "..."
