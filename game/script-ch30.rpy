@@ -216,12 +216,6 @@ label ch30_init:
     hide black with Dissolve(1)
     show screen hkb_overlay
 
-    # TEST
-    #$ renpy.watch("jn_blackjack._game_state")
-    #$ renpy.watch("jn_blackjack._getHandSum(is_player=True)")
-    #$ renpy.watch("jn_blackjack._getHandSum(is_player=False)")
-    #$ renpy.watch("jn_blackjack._game_state")
-
     # Play appropriate music
     if jn_random_music.getRandomMusicPlayable():
         $ available_custom_music = jn_utils.getAllDirectoryFiles(
@@ -425,7 +419,7 @@ init python:
         jn_utils.save_game()
 
         # Check the daily affinity cap and reset if need be
-        Natsuki.checkResetDailies ()
+        Natsuki.checkResetDailies()
 
         # Run through all externally-registered minute check actions
         if len(jn_plugins.minute_check_calls) > 0:

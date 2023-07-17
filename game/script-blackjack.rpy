@@ -8,15 +8,16 @@ default persistent._jn_blackjack_player_streak = 0
 default persistent._jn_blackjack_natsuki_streak = 0
 default persistent._jn_blackjack_player_best_streak = 0
 
-# NOTES ON BLACKJACK
-# Natsuki starts off with 2, but 1st card hidden
-# Player starts off with 2
-# Player can stay or hit each round, max 5 cards in hand (3 hits)
-# Nat will stay or hit based on probability and her own risk level
+# How JN blackjack works:
+# ---
+# Both Natsuki and the player start with a hand of two random cards; Natsuki's first card is always hidden until the game ends
+# Player can stay or hit each round, with up to 5 cards in hand (3 total hits maximum)
+# Natsuki will stay or hit based on probability and her own risk level
 # If player or Nat goes over 21, they bust and lose
-# If player or Nat gets 21 exactly, they win automatically on the turn they get 21
+# If player or Nat gets 21 exactly, they win automatically on the turn they get 21 (Blackjack)
 # Otherwise, win goes to whoever gets closest to 21 after drawing all cards, or if both players stay on the same turn
-# Aces are considered as having value of 11, unless they'd cause a player to bust immediately on getting their hand (in which case, they equal 1)
+# Aces are considered as having value of 11, unless they'd cause Natsuki/the player to bust immediately on getting their hand (in which case, they equal 1)
+# ---
 
 init 0 python in jn_blackjack:
     from Enum import Enum
@@ -39,8 +40,6 @@ init 0 python in jn_blackjack:
     _deck = []
     _natsuki_hand = []
     _player_hand = []
-
-    _splash_sprite = "draw"
 
     class JNBlackjackStates(Enum):
         """
@@ -137,8 +136,7 @@ init 0 python in jn_blackjack:
             for card in _player_hand:
                 card[1] = 1 if card[1] == 11 else card[1]
 
-        # Value adjustments so neither Natsuki or the player can instantly bust: an Ace will be set to a value of one 
-
+        # Player always moves first
         global _is_player_turn
         _is_player_turn = True
 
@@ -406,30 +404,42 @@ label blackjack_explanation:
 
     else:
         n  "So!"
-        extend  " Blackjack is actually pretty simple, once you've got your head around the rules."
+        extend  " Blackjack is actually pretty simple," 
+        extend  " once you've got your head around the rules."
 
     n  "There's a bunch of different ways people play it,"
     extend  " so..." 
     extend  " we'll just go with something that works with only the two of us here."
-
     n  "To start off, we both get a couple random cards each from the deck."
-    n  "Then, we both take it in turns to either {i}hit{/i} -" 
+
+    if not persistent._jn_blackjack_explanation_given:
+        n "Yeah, yeah."
+        extend  " Don't worry, [player]."
+        extend  " I {i}always{/i} shuffle."
+
+    n  "Next, we both take it in turns to either {i}hit{/i} -" 
     extend  " draw another card," 
     extend  " or {i}stay{/i} -" 
     extend  " which is pretty much just skipping our turn."
     n  "So what's the goal, you ask?"
     n  "Well..." 
-    extend  " we're basically trying to get the total value of our cards as close to twenty one as we can -"
-    extend  " a blackjack!"
+    extend  " we're basically trying to get the total value of our cards as close to twenty one as we can."
+    extend  " That's called a blackjack!"
+    
+    if not persistent._jn_blackjack_explanation_given:
+        n  "As for how the cards are gonna work..."
+        n  "You remember Snap,"  
+        extend  " right?"
+        n  "Well, each card has a value -"
+        extend  " obviously -"
+        extend  " but don't worry about the actual {i}suit{/i}:" 
+        extend  " diamonds or spades or whatever."
+        extend  " We only care about the {i}numbers{/i}!"
 
-    n  "As for how the cards are gonna work..."
-    n  "You remember Snap,"  
-    extend  " right?"
-    n  "Well, each card has a value -"
-    extend  " obviously -"
-    extend  " but don't worry about the actual {i}suit{/i}:" 
-    extend  " diamonds or spades or whatever."
-    extend  " We only care about the {i}numbers{/i}!"
+    else:
+        n "Like I said before:"
+        extend " the suits of the cards don't matter at all for this,"
+        extend " so it's just the numbers you gotta keep an eye on."
 
     n  "The {i}face cards{/i} work a bit differently to the normal ones."
     n  "If you get a {i}king, queen or jack{/i},"
@@ -460,25 +470,43 @@ label blackjack_explanation:
     n  "So..."
     extend  " how about it, [player]?"
 
+    $ persistent._jn_blackjack_explanation_given = True
     show natsuki option_wait_curious
     menu:
-        #TODO: finish off script here
-        n  "Did that all make sense to you?"
+        n  "Did you catch all that, or...?"
 
         "Can you go over the rules again?":
             n 1tsqpueqm "Huh?{w=0.75}{nw}" 
-            extend 1tllca " Well,{w=0.2} okay..."
+            extend 1tllflsbr " Well,{w=0.2} alright..."
 
             jump blackjack_explanation
 
         "Got it. Let's play!":
-            n  "Finally! Now let's play!"
-
-            $ persistent._jn_blackjack_explanation_given = True
+            n  "Oh?{w=0.75}{nw}"
+            extend " You got all that?{w=0.75}{nw}"
+            extend " You sure,{w=0.2} [player]?"
+            n "Ehehe."
+            n "Well then..."
+            n "Guess it's about time we put that to the test!{w=0.75}{nw}"
+            extend " Let's do this,{w=0.2} [player]!"
+            
             jump blackjack_start
 
         "Thanks, [n_name]. I'll play later.":
-            n  "Wow... really? Fine."
+            n  "...Really,{w=0.5}{nw}"
+            extend " [player]?"
+            n "I went through all that just for you to say you're gonna play{w=0.5}{nw}" 
+            extend " {i}later{/i}?"
+            n "..."
+            n "Well,{w=0.75} your loss!{w=0.75}{nw}"
+            extend " Just a word of warning though,{w=0.2} [player]..."
+            n "Don't think I'm gonna go any easier on you later either!{w=0.75}{nw}"
+
+            if Natsuki.isLove(higher=True):
+                extend " You aren't sweet-talking your way out of losing!"
+            
+            else:
+                extend " Ahaha."
 
             if not Natsuki.getDeskSlotClear(jn_desk_items.JNDeskSlots.centre):
                 show natsuki 2ccspo
@@ -560,7 +588,6 @@ label blackjack_main_loop:
     jump blackjack_main_loop
 
 label blackjack_end:
-    #$ jn_utils.fireAndForgetFunction(jn_blackjack._showSplashImage)
     $ jn_blackjack._controls_enabled = False
     $ jn_blackjack._rounds += 1
     $ jnPause(delay=1, hard=True)
@@ -569,19 +596,22 @@ label blackjack_end:
     if persistent._jn_blackjack_natsuki_streak in [3, 5, 10]:
         $ natsuki_streak_milestone_map = {
             3: [
-                "Oh?{w=0.75} What's this?{w=0.75} Looks like {i}someone's{/i} got the makings of a streak going!",
+                "Oh?{w=0.75} Three wins now?{w=0.75} Looks like {i}someone's{/i} got the makings of a streak going!",
                 "Yes!{w=0.75} That makes three in a row!{w=0.75} Ehehe.",
-                "Three wins and counting,{w=0.2} [player]!{w=0.75} Ehehe."
+                "Three wins and counting,{w=0.2} [player]!{w=0.75} Ehehe.",
+                "What's that?{w=0.75} Three wins now?{w=0.75} Sounds like a streak to me!"
             ],
             5: [
                 "Ha!{w=0.75} That makes five in a row now,{w=0.2} [player]!",
                 "Yes!{w=0.75} Five in a row!{w=1} Top that,{w=0.2} {i}[player]{/i}.",
-                "Aaaand that makes five!{w=0.75} Didn't I {i}say{/i} I was good?"
+                "Aaaand that makes five!{w=0.75} Didn't I {i}say{/i} I was good?",
+                "Yes!{w=0.75} That's five wins and counting!"
             ],
             10: [
                 "Oh yeah!{w=0.75} Ten!{w=0.75} Now {i}that's{/i} what it means to be a pro,{w=0.2} [player]!",
                 "Man...{w=1} ten in a row?{w=0.75} I am on {i}fire{/i} today!{w=0.75} Ehehe.",
-                "Ha!{w=0.75} The big ten!{w=0.75} What have you got to say to that,{w=0.2} [player]?"
+                "Ha!{w=0.75} The big ten!{w=0.75} What have you got to say to that,{w=0.2} [player]?",
+                "Yes!{w=0.75} Ten in a row!{w=0.75} Man...{w=1} I'm unstoppable!"
             ]
         }
         $ chosen_response = renpy.substitute(random.choice(natsuki_streak_milestone_map[persistent._jn_blackjack_natsuki_streak]))
@@ -590,18 +620,21 @@ label blackjack_end:
         $ player_streak_milestone_map = {
             3: [
                 "L-{w=0.2}lucky break,{w=0.2} [player].{w=0.75} Anyone can luck out three times in a row!",
-                "Yeah, yeah.{w=0.75} T-{w=0.2}three in a row is nothing anyway!",
-                "B-{w=0.2}bet you can't make that four in a row,{w=0.2} [player]!"
+                "Yeah,{w=0.2} yeah.{w=0.75} T-{w=0.2}three in a row is nothing anyway!",
+                "B-{w=0.2}bet you can't make that four in a row,{w=0.2} [player]!",
+                "Y-{w=0.2}you better not be getting cocky.{w=0.75} Three in a row is nothing,{w=0.2} [player]!"
             ],
             5: [
                 "Uuuuuu...!{w=0.75} Y-{w=0.2}you can stop getting so lucky now,{w=0.2} [player]!{w=0.75} Jeez...",
                 "F-{w=0.2}five in a row now?{w=0.75} Are you kidding me?!",
-                "Seriously?{w=0.75} That's five times in a row?!{w=0.75} Ugh..."
+                "Seriously?{w=0.75} That's five times in a row?!{w=0.75} Ugh...",
+                "Nnnnnn-!{w=0.75} T-{w=0.2}there's no way you just got five in a row!{w=0.75} Cut me a break..."
             ],
             10: [
                 "A-{w=0.2}are you reading my cards or what?!{w=0.75} {i}Ten{/i}?!{w=0.75} Jeez...",
                 "Oh{w=0.2},{w=0.75} come {b}on{/b}!{w=0.75} There's no {i}way{/i} you just got ten in a row!{w=0.75} Ugh...",
-                "T-{w=0.2}this is just getting ridiculous!{w=0.75} Ten in a row?!{w=0.75} I {i}swear{/i} these cards are rigged..."
+                "T-{w=0.2}this is just getting ridiculous!{w=0.75} Ten in a row?!{w=0.75} I {i}swear{/i} these cards are rigged...",
+                "Okay!{w=0.75} Okay!{w=0.75} You've made your point...{w=1} now can you go back to losing already? Yeesh..."
             ]
         }
         $ chosen_response = renpy.substitute(random.choice(player_streak_milestone_map[persistent._jn_blackjack_player_streak]))
@@ -613,7 +646,8 @@ label blackjack_end:
                 "Huh.{w=0.75} We drew?{w=0.75} Weird.",
                 "Wait,{w=0.2} we tied?{w=0.75} Huh.",
                 "A tie?{w=0.75} Weird.",
-                "Come on,{w=0.2} [player]...{w=1} you gotta lose some time!"
+                "Come on,{w=0.2} [player]...{w=1} you gotta lose some time!",
+                "Huh.{w=0.75} Another tie."
             ],
             jn_blackjack.JNBlackjackStates.natsuki_bust: [
                 "I bust?{w=0.75} Are you kidding me?!{w=0.75} Ugh...",
@@ -621,42 +655,48 @@ label blackjack_end:
                 "Oh,{w=0.2} for-!{w=0.75} {i}Another{/i} bust?!{w=0.75} Seriously...",
                 "A-{w=0.2}as {i}if{/i} I bust!{w=0.75} Man...",
                 "Are you joking?!{w=0.75} I bust again?!",
-                "You have {i}got{/i} to be joking.{w=0.75} Again?!"
+                "You have {i}got{/i} to be joking.{w=0.75} Again?!",
+                "Come on,{w=0.5} [n_name]...{w=1} get it together!"
             ],
             jn_blackjack.JNBlackjackStates.natsuki_blackjack: [
                 "Yes!{w=0.5} Yes!{w=0.5} Blackjack!{w=0.75} Ehehe.",
                 "Blackjack!{w=0.5} Blackjack!{w=0.5} Ehehe.",
                 "Blackjack!{w=0.5} Yes!{w=0.5} Now {i}that's{/i} how it's done!",
                 "Yes!{w=0.5} Now {i}that's{/i} more like it!{w=0.75} Ahaha.",
-                "Better be taking notes,{w=0.2} [player]!{w=0.75} Ehehe."
+                "Better be taking notes,{w=0.2} [player]!{w=0.75} Ehehe.",
+                "Oh yeah!{w=0.75} Blackjack!"
             ],
             jn_blackjack.JNBlackjackStates.natsuki_closest: [
                 "Yes!{w=0.5} I win!{w=0.3} I win!{w=0.75} Ehehe.",
                 "Yes!{w=0.5} I win again!",
                 "I was closer!{w=0.5} I win!{w=0.3} I win!",
                 "Yes!{w=0.5} Take that,{w=0.2} [player]!{w=0.75} Ehehe.",
-                "Oh yeah!{w=0.75} Now {i}that's{/i} more like it!"
+                "Oh yeah!{w=0.75} Now {i}that's{/i} more like it!",
+                "Yes!{w=0.75} Tough luck,{w=0.2} [player]!{w=0.75} Ehehe."
             ],
             jn_blackjack.JNBlackjackStates.player_bust: [
                 "Pfft-!{w=0.75} Nice bust there,{w=0.2} [player]!{w=0.75} Ehehe.",
                 "Yep.{w=0.5} Total misplay,{w=0.2} [player]!",
                 "Now that's what I call a bust!{w=0.75} Ehehe.",
                 "Ahaha.{w=0.75} Sucks to be you,{w=0.2} [player]!",
-                "Pffft!{w=0.75} You {i}sure{/i} you know how to play,{w=0.2} [player]?"
+                "Pffft!{w=0.75} You {i}sure{/i} you know how to play,{w=0.2} [player]?",
+                "{i}Real{/i} smooth there,{w=0.2} [player]!{w=0.75} Ehehe."
             ],
             jn_blackjack.JNBlackjackStates.player_blackjack: [
                 "Seriously?{w=0.75} You got a blackjack?!{w=0.75} Ugh...",
                 "Yeah,{w=0.2} yeah.{w=0.75} Enjoy your luck while it lasts,{w=0.2} [player].",
                 "Hmph.{w=0.75} You just lucked out this time.",
                 "Oh,{w=0.2} come {i}on{/i}!{w=0.75} Again?{w=0.75} Seriously...",
-                "N-{w=0.2}now that one was just pure luck!{w=0.75} Ugh..."
+                "N-{w=0.2}now that one was just pure luck!{w=0.75} Ugh...",
+                "T-{w=0.2}that one was just pure chance!{w=0.75} Come on..."
             ],
             jn_blackjack.JNBlackjackStates.player_closest: [
                 "Heh.{w=0.75} Enjoy the luck while it lasts,{w=0.2} [player].",
                 "{i}Seriously{/i}?{w=0.75} Ugh...",
                 "Come on!{w=0.75} Really?{w=0.75} Man...",
                 "Yeah,{w=0.2} yeah.{w=0.75} Laugh it up,{w=0.2} [player].{w=0.75} Just you wait...",
-                "Hmph.{w=1} Lucky break,{w=0.2} [player].{w=0.75} That's all I'm saying."
+                "Hmph.{w=1} Lucky break,{w=0.2} [player].{w=0.75} That's all I'm saying.",
+                "Uuuuuu-!{w=0.75} You totally just got the better hand!{w=0.75} Ugh..."
             ],
         }
         $ chosen_response = renpy.substitute(random.choice(response_map[jn_blackjack._game_state]))
