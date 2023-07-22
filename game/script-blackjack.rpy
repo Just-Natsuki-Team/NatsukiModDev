@@ -399,76 +399,76 @@ label blackjack_intro:
 label blackjack_explanation:
     if persistent._jn_blackjack_explanation_given:
         n 7ulraj "So like I was saying before,{w=0.5}{nw}"
-        extend 1unmbo " Blackjack is pretty simple once you've got your head around the rules."
+        extend 7unmbo " Blackjack is pretty simple once you've got your head around the rules."
 
     else:
-        n 1fcsbg "So!{w=0.75}{nw}"
-        extend 1ullss " Blackjack is actually pretty simple,{w=0.5}{nw}" 
-        extend 1unmaj " once you've got your head around the rules."
+        n 4fcsbg "So!{w=0.75}{nw}"
+        extend 7ullss " Blackjack is actually pretty simple,{w=0.5}{nw}" 
+        extend 3unmaj " once you've got your head around the rules."
 
-    n 1nsrsssbl "There's a bunch of different ways people play it,{w=0.5}{nw}"
-    extend 1ulraj " so...{w=1}{nw}" 
-    extend 1ccssm " we'll just go with something that works with only the two of us here."
-    n 1ullaj "To start off,{w=0.2} we both get a couple random cards each from the deck."
+    n 5nsrsssbl "There's a bunch of different ways people play it,{w=0.5}{nw}"
+    extend 4ulraj " so...{w=1}{nw}" 
+    extend 6ccssm " we'll just go with something that works with only the two of us here."
+    n 3ullaj "To start off,{w=0.2} we both get a couple random cards each from the deck."
 
     if not persistent._jn_blackjack_explanation_given:
-        n 1fcsss "Yeah,{w=0.2} yeah.{w=0.75}{nw}"
-        extend 1fsqsm " Don't worry,{w=0.2} [player].{w=0.75}{nw}"
-        extend 1fcsbgeme " I {i}always{/i} shuffle."
+        n 4fcsss "Yeah,{w=0.2} yeah.{w=0.75}{nw}"
+        extend 2fsqsm " Don't worry,{w=0.2} [player].{w=0.75}{nw}"
+        extend 2fcsbgeme " I {i}always{/i} shuffle."
 
-    n 1unmaj "Next,{w=0.2} we both take it in turns to either {i}hit{/i} -{w=0.5}{nw}" 
-    extend 1clrss " draw another card,{w=0.5}{nw}" 
-    extend 1unmbo " or {i}stay{/i} -{w=0.5}{nw}" 
-    extend 1cllsm " which is pretty much just skipping our turn."
-    n 1tnmss "What's the goal,{w=0.2} you ask?"
-    n 1tlrss "Well...{w=1}{nw}" 
-    extend 1fnmsm " we're basically trying to get the total value of our cards as close to twenty one as we can.{w=0.75}{nw}"
-    extend 1fcsbg " That's called a {i}blackjack{/i}!"
+    n 3unmaj "Next,{w=0.2} we both take it in turns to either {i}hit{/i} -{w=0.5}{nw}" 
+    extend 3clrss " draw another card,{w=0.5}{nw}" 
+    extend 6unmbo " or {i}stay{/i} -{w=0.5}{nw}" 
+    extend 3cllsm " which is pretty much just skipping our turn."
+    n 4tnmss "What's the goal,{w=0.2} you ask?"
+    n 7tlrss "Well...{w=1}{nw}" 
+    extend 3fnmsm " we're basically trying to get the total value of our cards as close to twenty one as we can.{w=0.75}{nw}"
+    extend 3fcsbg " That's called a {i}blackjack{/i}!"
     
     if not persistent._jn_blackjack_explanation_given:
-        n 1cllss "As for how the cards work..."
+        n 7cllss "As for how the cards are gonna work..."
 
         if persistent.jn_snap_explanation_given:
-            n 1tnmbo "You remember Snap,{w=0.2} right?"
+            n 7tnmbo "You remember Snap,{w=0.2} right?"
 
         else:
-            n 1tnmbo "You've at least seen playing cards before,{w=0.2} right?"
+            n 3tnmbo "You've at least seen playing cards before,{w=0.2} right?"
 
-        n 1ullaj "Each card has a value -{w=0.5}{nw}"
-        extend 1ccssm " obviously -{w=0.5}{nw}"
-        extend 1nnmfl " but don't worry about the actual {i}suit{/i}:{w=0.75}{nw}" 
+        n 6ullaj "Well each card has a value -{w=0.5}{nw}"
+        extend 3ccssm " obviously -{w=0.5}{nw}"
+        extend 4nnmfl " but don't worry about the actual {i}suit{/i}:{w=0.75}{nw}" 
         extend 1tlrbo " diamonds or spades or whatever.{w=0.75}{nw}"
-        extend 1fcssmesm " We only care about the {i}numbers{/i}!"
+        extend 2fcssmesm " We only care about the {i}numbers{/i}!"
 
     else:
-        n 1clrss "Like I said last time:{w=0.75}{nw}"
-        extend 1tlraj " the suits of the cards don't matter here,{w=0.5}{nw}"
-        extend 1fnmsm " so it's just the numbers you gotta keep an eye on."
+        n 3clrss "Like I said last time:{w=0.75}{nw}"
+        extend 4tlraj " the suits of the cards don't matter here,{w=0.5}{nw}"
+        extend 2fnmsm " so it's just the numbers you gotta keep an eye on."
 
-    n 1clrss "The {i}face cards{/i} work a bit differently to the normal ones."
-    n 1tnmaj "If you get a {i}king,{w=0.2} queen or jack{/i},{w=0.5}{nw}"
-    extend 1ccssm " then those just count as being worth {i}ten{/i}."
-    n 1tllfl "As for aces...{w=1}{nw}"
-    extend 1nchgn " depends when you draw them!{w=0.75}{nw}"
-    n 1ulrss "We'll say aces are worth {i}eleven{/i},{w=0.2} {i}unless{/i} you got one to start with that would make you bust instantly.{w=0.75}{nw}"
-    extend 1fcsbg " Even I'm not that cruel!"
-    n 1cllbg "But yeah -{w=0.5}{nw}"
-    extend 1ullpu " if the ace would make you {i}lose on your first turn{/i},{w=0.5}{nw}"
-    extend 1nnmbo " then it's just worth {i}one{/i} instead."
-    n 1ulraj "We keep taking it in turns until one of us hits twenty one,{w=0.2} we both decide to {i}stay{/i} -{w=0.5}{nw}"
-    extend 1unmbo " or one of us ends up with a hand that goes over twenty one."
-    n 1fchbl "...That means you bust!"
+    n 4clrss "The {i}face cards{/i} work kinda differently to the normal ones."
+    n 6tnmaj "If you get a {i}king,{w=0.2} queen or jack{/i},{w=0.5}{nw}"
+    extend 3ccssm " then those just count as being worth {i}ten{/i}."
+    n 7tllfl "As for aces...{w=1}{nw}"
+    extend 3nchgn " depends when you draw them!{w=0.75}{nw}"
+    n 3ulrss "We'll say aces are worth {i}eleven{/i},{w=0.2} {i}unless{/i} you got one to start with that would make you bust instantly.{w=0.75}{nw}"
+    extend 3fcsbg " Even I'm not that cruel!"
+    n 4cllbg "But yeah -{w=0.5}{nw}"
+    extend 2ullpu " if the ace would make you {i}lose on your first turn{/i},{w=0.5}{nw}"
+    extend 2nnmbo " then it's just worth {i}one{/i} instead."
+    n 7ulraj "We keep taking it in turns until one of us hits twenty one,{w=0.2} we both decide to {i}stay{/i} -{w=0.5}{nw}"
+    extend 7unmbo " or one of us ends up with a hand that goes over twenty one."
+    n 6fchbl "...That means you bust!"
     n 1cllss "If neither of us end up busting,{w=0.5}{nw}"
-    extend 1ccssm " then whoever got {i}closest{/i} to twenty one wins the round!{w=0.75}{nw}"
-    extend 1fchbg " Simple,{w=0.2} right?"
-    n 1unmaj "Oh -{w=0.5}{nw}"
-    extend 1clrss " and don't worry about keeping tabs on the score or anything.{w=0.75}{nw}"
-    extend 1fcsbg " I've got it all covered!{w=0.75}{nw}"
-    extend 1fchsm " Ehehe."
-    n 1fnmsm "But yeah!{w=0.75}{nw}"
-    extend  1ullss" I think that's pretty much everything I had."
-    n 1ullaj "So...{w=1}{nw}"
-    extend 1unmbo " how about it,{w=0.2} [player]?"
+    extend 2ccssm " then whoever got {i}closest{/i} to twenty one wins the round!{w=0.75}{nw}"
+    extend 2fchbg " Simple,{w=0.2} right?"
+    n 4unmaj "Oh -{w=0.5}{nw}"
+    extend 7clrss " and don't worry about keeping tabs on the score or anything.{w=0.75}{nw}"
+    extend 6fcsbg " I've got it all covered!{w=0.75}{nw}"
+    extend 3fchsm " Ehehe."
+    n 4fnmsm "But yeah!{w=0.75}{nw}"
+    extend 1ullss " I think that's pretty much everything I had."
+    n 3ullaj "So...{w=1}{nw}"
+    extend 7unmbo " how about it,{w=0.2} [player]?"
 
     $ persistent._jn_blackjack_explanation_given = True
     show natsuki option_wait_curious
@@ -476,39 +476,39 @@ label blackjack_explanation:
         n "Did you catch all that,{w=0.2} or...?"
 
         "Can you go over the rules again?":
-            n 1tsqpueqm "Huh?{w=0.75}{nw}" 
-            extend 1tllflsbr " Well,{w=0.2} alright..."
-            n 1ccspo "{i}I{/i} thought I was clear enough."
+            n 7tsqpueqm "Huh?{w=0.75}{nw}" 
+            extend 3tllflsbr " Well,{w=0.2} alright..."
+            n 3ccspo "{i}I{/i} thought I was clear enough."
 
             jump blackjack_explanation
 
         "Got it. Let's play!":
-            n  "Oh?{w=0.75}{nw}"
-            extend " You got all that?{w=0.75}{nw}"
-            extend " You sure,{w=0.2} [player]?"
-            n "Ehehe."
-            n "Well then..."
-            n "Guess it's about time we put that to the test!{w=0.75}{nw}"
-            extend " Let's do this,{w=0.2} [player]!"
+            n 7tnmaj "Oh?{w=0.75}{nw}"
+            extend 7tnmfl " You got all that?{w=0.75}{nw}"
+            extend 3tsqsm " You sure,{w=0.2} [player]?"
+            n 1fcssm "Ehehe."
+            n 2fcsbg "Well then."
+            n 2fnmbg "...Guess it's about time we put that to the test!{w=0.75}{nw}"
+            extend 4fchgn " Let's do this,{w=0.2} [player]!"
             
             jump blackjack_start
 
         "Thanks, [n_name]. I'll play later.":
-            n  "..."
-            n  "...Really,{w=0.5}{nw}"
-            extend " [player]?"
-            n "I went through all that just for you to say you're gonna play{w=0.5}{nw}" 
-            extend " {i}later{/i}?"
-            n "..."
-            n "Well,{w=0.75} your loss!{w=0.75}{nw}"
-            extend " Just a word of warning though,{w=0.2} [player]..."
-            n "Don't think I'm gonna go any easier on you later either!{w=0.75}{nw}"
+            n 1ccsemesi "..."
+            n 2ccsfl "...Really,{w=0.5}{nw}"
+            extend 2csqfl " [player]?"
+            n 4fcsgs "I went through all that just for you to say you're gonna play{w=0.5}{nw}" 
+            extend 4ftlem " {i}later{/i}?"
+            n 1fsqca "..."
+            n 3fchgn "Well,{w=0.75} your loss!{w=0.75}{nw}"
+            extend 6fcssmesm " Just a word of warning though,{w=0.2} [player]..."
+            n 3fcsbg "Don't think I'm gonna go any easier on you later either!{w=0.75}{nw}"
 
             if Natsuki.isLove(higher=True):
-                extend " You aren't sweet-talking your way out of losing!"
+                extend 3fchbllsbr " You aren't gonna sweet-talk your way out of losing!"
             
             else:
-                extend " Ahaha."
+                extend 3nchgnl " Ahaha."
 
             if not Natsuki.getDeskSlotClear(jn_desk_items.JNDeskSlots.centre):
                 show natsuki 2ccspo
