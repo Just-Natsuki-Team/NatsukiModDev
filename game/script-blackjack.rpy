@@ -241,8 +241,8 @@ init 0 python in jn_blackjack:
         if player_wins:
             renpy.play("mod_assets/sfx/pencil_scribble.ogg")
             store.persistent._jn_blackjack_player_wins += 1
-            store.persistent._jn_blackjack_natsuki_streak = 0
             store.persistent._jn_blackjack_player_streak += 1
+            store.persistent._jn_blackjack_natsuki_streak = 0
 
             if store.persistent._jn_blackjack_player_streak > store.persistent._jn_blackjack_player_best_streak:
                 store.persistent._jn_blackjack_player_best_streak = store.persistent._jn_blackjack_player_streak
@@ -274,13 +274,13 @@ init 0 python in jn_blackjack:
 
     def _getCurrentTurnLabel():
         """
-        Returns the turn text to display on the blackjack UI.
+        Returns the turn text to display on the blackjack UI, including win/lose states.
 
         OUT:
             - Nobody if it is nobody's turn; otherwise the player or Natsuki's current nickname
         """
         if _game_state == JNBlackjackStates.draw:
-            return  "Draw!"
+            return  "It's a draw!"
 
         if (
             _game_state == JNBlackjackStates.natsuki_bust
@@ -294,7 +294,7 @@ init 0 python in jn_blackjack:
             or _game_state == JNBlackjackStates.natsuki_closest
             or _game_state == JNBlackjackStates.player_bust
         ):
-            return  "You lost!"
+            return  "You lose!"
 
         if _is_player_turn is None:
             return  "Nobody!"
@@ -354,44 +354,43 @@ init 0 python in jn_blackjack:
     )
 
 label blackjack_intro:
-    # TODO: Writing
     n 2fnmbg "Alright!{w=0.75}{nw}" 
-    extend 4fchgn  " Let's play some blackjack!"
+    extend 4fchgn " Let's play some blackjack!"
 
     if not persistent._jn_blackjack_explanation_given:
-        n  "Oh, right."
-        extend " I almost forgot."
-        n  "So before I get {i}too{/i} ahead of myself here..."
+        n 4unmajeex "Oh,{w=0.2} right.{w=0.75}{nw}"
+        extend 4flrsssbl " I almost forgot."
+        n 2nsrsssbl "So before I get {i}too{/i} ahead of myself here..."
 
         show natsuki option_wait_curious
         menu:
-            n  "Did you need an explanation on how it all works, or...?"
+            n  "Did you need an explanation on how it all works,{w=0.2} or...?"
 
-            "Yes, please!":
+            "Yes please!":
                 jump blackjack_explanation
 
             "No, I'm ready.":
                 $ dialogue_choice = random.randint(1, 3)
                 if dialogue_choice == 1:
-                    n "Heh."
-                    n "You're ready,"
-                    extend " are you?"
-                    n "Ready to get a grade A butt kicking!"
-                    extend " Let's go, [player]!"
+                    n 2fcssm "Heh."
+                    n 2fnmss "You're ready,{w=0.5}{nw}"
+                    extend  4fsqbg " are you?"
+                    n 6fchgn "Ready to get a grade A butt kicking!{w=0.75}{nw}"
+                    extend 4fnmbgedz " Let's go,{w=0.2} [player]!"
 
                 elif dialogue_choice == 2:
-                    n "Hmm..."
-                    n "Yeah,"
-                    extend " I'd say you're about ready too."
-                    n "...Ready for the bitter taste of defeat!"
-                    extend " Now let's go already!"
+                    n 7ttrbo "Hmm..."
+                    n 7ulraj "Yeah,{w=0.5}{nw}"
+                    extend  3unmbo " I'd say you're about ready too."
+                    n 4fcsbg "...Ready for the bitter taste of defeat!{w=0.75}{nw}"
+                    extend  4fchbgedz " Now let's go already!"
 
                 else:
-                    n  "Ehehe."
-                    extend " Oh?"
-                    extend " You're ready, huh?"
-                    n "...Ready for a total thrashing!"
-                    extend " Bring it, [player]!"
+                    n 1fcssm "Ehehe.{w=0.75}{nw}"
+                    extend 2tsqss  " Oh?{w=0.75}{nw}"
+                    extend 2fsqbg " You're ready,{w=0.2} huh?"
+                    n 4fnmbg "...Ready for a total thrashing!{w=0.75}{nw}"
+                    extend 4nchgnedz " Bring it,{w=0.2} [player]!"
 
                 $ persistent._jn_blackjack_explanation_given = True
 
@@ -399,85 +398,87 @@ label blackjack_intro:
 
 label blackjack_explanation:
     if persistent._jn_blackjack_explanation_given:
-        n  "So like I was saying before,"
-        extend  " Blackjack is pretty simple once you've got your head around the rules."
+        n 7ulraj "So like I was saying before,{w=0.5}{nw}"
+        extend 1unmbo " Blackjack is pretty simple once you've got your head around the rules."
 
     else:
-        n  "So!"
-        extend  " Blackjack is actually pretty simple," 
-        extend  " once you've got your head around the rules."
+        n 1fcsbg "So!{w=0.75}{nw}"
+        extend 1ullss " Blackjack is actually pretty simple,{w=0.5}{nw}" 
+        extend 1unmaj " once you've got your head around the rules."
 
-    n  "There's a bunch of different ways people play it,"
-    extend  " so..." 
-    extend  " we'll just go with something that works with only the two of us here."
-    n  "To start off, we both get a couple random cards each from the deck."
+    n 1nsrsssbl "There's a bunch of different ways people play it,{w=0.5}{nw}"
+    extend 1ulraj " so...{w=1}{nw}" 
+    extend 1ccssm " we'll just go with something that works with only the two of us here."
+    n 1ullaj "To start off,{w=0.2} we both get a couple random cards each from the deck."
 
     if not persistent._jn_blackjack_explanation_given:
-        n "Yeah, yeah."
-        extend  " Don't worry, [player]."
-        extend  " I {i}always{/i} shuffle."
+        n 1fcsss "Yeah,{w=0.2} yeah.{w=0.75}{nw}"
+        extend 1fsqsm " Don't worry,{w=0.2} [player].{w=0.75}{nw}"
+        extend 1fcsbgeme " I {i}always{/i} shuffle."
 
-    n  "Next, we both take it in turns to either {i}hit{/i} -" 
-    extend  " draw another card," 
-    extend  " or {i}stay{/i} -" 
-    extend  " which is pretty much just skipping our turn."
-    n  "So what's the goal, you ask?"
-    n  "Well..." 
-    extend  " we're basically trying to get the total value of our cards as close to twenty one as we can."
-    extend  " That's called a blackjack!"
+    n 1unmaj "Next,{w=0.2} we both take it in turns to either {i}hit{/i} -{w=0.5}{nw}" 
+    extend 1clrss " draw another card,{w=0.5}{nw}" 
+    extend 1unmbo " or {i}stay{/i} -{w=0.5}{nw}" 
+    extend 1cllsm " which is pretty much just skipping our turn."
+    n 1tnmss "What's the goal,{w=0.2} you ask?"
+    n 1tlrss "Well...{w=1}{nw}" 
+    extend 1fnmsm " we're basically trying to get the total value of our cards as close to twenty one as we can.{w=0.75}{nw}"
+    extend 1fcsbg " That's called a {i}blackjack{/i}!"
     
     if not persistent._jn_blackjack_explanation_given:
-        n  "As for how the cards are gonna work..."
-        n  "You remember Snap,"  
-        extend  " right?"
-        n  "Well, each card has a value -"
-        extend  " obviously -"
-        extend  " but don't worry about the actual {i}suit{/i}:" 
-        extend  " diamonds or spades or whatever."
-        extend  " We only care about the {i}numbers{/i}!"
+        n 1cllss "As for how the cards work..."
+
+        if persistent.jn_snap_explanation_given:
+            n 1tnmbo "You remember Snap,{w=0.2} right?"
+
+        else:
+            n 1tnmbo "You've at least seen playing cards before,{w=0.2} right?"
+
+        n 1ullaj "Each card has a value -{w=0.5}{nw}"
+        extend 1ccssm " obviously -{w=0.5}{nw}"
+        extend 1nnmfl " but don't worry about the actual {i}suit{/i}:{w=0.75}{nw}" 
+        extend 1tlrbo " diamonds or spades or whatever.{w=0.75}{nw}"
+        extend 1fcssmesm " We only care about the {i}numbers{/i}!"
 
     else:
-        n "Like I said before:"
-        extend " the suits of the cards don't matter at all for this,"
-        extend " so it's just the numbers you gotta keep an eye on."
+        n 1clrss "Like I said last time:{w=0.75}{nw}"
+        extend 1tlraj " the suits of the cards don't matter here,{w=0.5}{nw}"
+        extend 1fnmsm " so it's just the numbers you gotta keep an eye on."
 
-    n  "The {i}face cards{/i} work a bit differently to the normal ones."
-    n  "If you get a {i}king, queen or jack{/i},"
-    extend  " then those just count as being worth {i}ten{/i}."
-    n  "As for aces..."
-    extend  " depends when you draw them!"
-    extend  " But as a rule..."
-    n  "Aces are worth {i}eleven{/i}, {i}unless you got one to start with that would make you bust instantly{/i}."
-    extend  " Even I'm not that cruel!"
-    n  "But yeah -"
-    extend  " if the ace would make you {i}bust on your first turn{/i},"
-    extend  " then it's just worth {i}one{/i} instead."
-
-    n  "So..."
-    n  "The general idea is that we keep taking it in turns until one of us hits twenty one, we both decide to {i}stay{/i} -"
-    extend  " or one of us ends up with a hand that goes over twenty one."
-    n  "...That means you bust!"
-    n  "If neither of us end up busting,"
-    extend  " then whoever got {i}closest{/i} to twenty one wins the round!"
-    extend  " Simple, right?"
-
-    n  "Oh -"
-    extend  " and don't worry about keeping tabs on the score or anything."
-    extend  " I've got it all covered!"
-    extend  " Ehehe."
-    n  "But yeah!"
-    extend  " I think that's pretty much everything I had."
-    n  "So..."
-    extend  " how about it, [player]?"
+    n 1clrss "The {i}face cards{/i} work a bit differently to the normal ones."
+    n 1tnmaj "If you get a {i}king,{w=0.2} queen or jack{/i},{w=0.5}{nw}"
+    extend 1ccssm " then those just count as being worth {i}ten{/i}."
+    n 1tllfl "As for aces...{w=1}{nw}"
+    extend 1nchgn " depends when you draw them!{w=0.75}{nw}"
+    n 1ulrss "We'll say aces are worth {i}eleven{/i},{w=0.2} {i}unless{/i} you got one to start with that would make you bust instantly.{w=0.75}{nw}"
+    extend 1fcsbg " Even I'm not that cruel!"
+    n 1cllbg "But yeah -{w=0.5}{nw}"
+    extend 1ullpu " if the ace would make you {i}lose on your first turn{/i},{w=0.5}{nw}"
+    extend 1nnmbo " then it's just worth {i}one{/i} instead."
+    n 1ulraj "We keep taking it in turns until one of us hits twenty one,{w=0.2} we both decide to {i}stay{/i} -{w=0.5}{nw}"
+    extend 1unmbo " or one of us ends up with a hand that goes over twenty one."
+    n 1fchbl "...That means you bust!"
+    n 1cllss "If neither of us end up busting,{w=0.5}{nw}"
+    extend 1ccssm " then whoever got {i}closest{/i} to twenty one wins the round!{w=0.75}{nw}"
+    extend 1fchbg " Simple,{w=0.2} right?"
+    n 1unmaj "Oh -{w=0.5}{nw}"
+    extend 1clrss " and don't worry about keeping tabs on the score or anything.{w=0.75}{nw}"
+    extend 1fcsbg " I've got it all covered!{w=0.75}{nw}"
+    extend 1fchsm " Ehehe."
+    n 1fnmsm "But yeah!{w=0.75}{nw}"
+    extend  1ullss" I think that's pretty much everything I had."
+    n 1ullaj "So...{w=1}{nw}"
+    extend 1unmbo " how about it,{w=0.2} [player]?"
 
     $ persistent._jn_blackjack_explanation_given = True
     show natsuki option_wait_curious
     menu:
-        n  "Did you catch all that, or...?"
+        n "Did you catch all that,{w=0.2} or...?"
 
         "Can you go over the rules again?":
             n 1tsqpueqm "Huh?{w=0.75}{nw}" 
             extend 1tllflsbr " Well,{w=0.2} alright..."
+            n 1ccspo "{i}I{/i} thought I was clear enough."
 
             jump blackjack_explanation
 
@@ -493,6 +494,7 @@ label blackjack_explanation:
             jump blackjack_start
 
         "Thanks, [n_name]. I'll play later.":
+            n  "..."
             n  "...Really,{w=0.5}{nw}"
             extend " [player]?"
             n "I went through all that just for you to say you're gonna play{w=0.5}{nw}" 
@@ -717,7 +719,7 @@ label blackjack_quit_forfeit:
             n  "...W-{w=0.2}wait.{w=0.75}{nw}"
             extend  " Hang on just a second here,{w=0.2} [player]!{w=0.75}{nw}"
             extend  " What do you mean?"
-            n  "We literally only just started {i}playing{/i}!"
+            n  "We literally only just started {i}playing{/i}!{w=0.75}{nw}"
             extend " Jeez..."
             n  "Y-{w=0.2}you better not be pulling my leg again,{w=0.2} [player]."
 
