@@ -11545,3 +11545,96 @@ label talk_enable_no_topics_reminder:
 
     $ persistent._jn_natsuki_out_of_topics_remind = True
     return
+
+# Prompt Natsuki to play a game of Blackjack!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_play_blackjack",
+            unlocked=True,
+            prompt="Do you want to play Blackjack?",
+            conditional="persistent._jn_blackjack_unlocked",
+            category=["Games"],
+            player_says=True,
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_play_blackjack:
+    if Natsuki.isLove(higher=True):
+        $ chosen_tease = jn_utils.getRandomTease()
+        n 2ccsbgl "Duh!{w=0.75}{nw}"
+        extend 4fchgnl " Of course I wanna play with you,{w=0.2} [chosen_tease]!{w=0.75}{nw}"
+        extend 4fchsml " Ehehe."
+
+    elif Natsuki.isEnamored(higher=True):
+        n 2ccssml "Blackjack again,{w=0.2} huh?"
+        n 2fsqsml "Ehehe.{w=0.75}{nw}"
+        extend 4fnmbgl " You bet I do,{w=0.2} [player]!"
+
+    else:
+        n 2unmss "You wanna play blackjack again?{w=0.75}{nw}"
+        extend 2fchbg " Sure thing,{w=0.2} [player]!"
+
+    $ dialogue_choice = random.randint(1, 5)
+    if dialogue_choice == 1:
+        n 4nchgn "Time to break out the cards!"
+
+    elif dialogue_choice == 2:
+        n 4fcssmeme "Just gotta get set up real quick..."
+
+    elif dialogue_choice == 3:
+        n 4fcsss "Just give a second here..."
+
+    elif dialogue_choice == 4:
+        n 4fchbg "I'll grab the cards!"
+
+    else:
+        n 4fdwsm "Let me just set up here..."
+
+    show natsuki 4fcssmeme
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(1.5)
+    play audio drawer
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_card_pack"))
+    show natsuki 4fchsm
+    hide black with Dissolve(1)
+
+    jump blackjack_intro
+
+# Natsuki goes over the rules of blackjack again, for if the player has already heard the explanation pre-game
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_remind_blackjack_rules",
+            unlocked=True,
+            prompt="Can you go over the rules of Blackjack again?",
+            conditional="persistent._jn_blackjack_unlocked and persistent._jn_blackjack_explanation_given",
+            category=["Games"],
+            player_says=True,
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_remind_blackjack_rules:
+    # TODO: Writing
+    if Natsuki.isLove(higher=True):
+        n 1nchbg "Ahaha.{w=0.2} You're so forgetful sometimes,{w=0.1} [player]."
+        n 3nsqbg "Sure,{w=0.1} I'll go over it again!{w=0.2} Juuust for you~."
+
+    elif Natsuki.isEnamored(higher=True):
+        n 4nchbg "Of course I can!"
+
+    elif Natsuki.isAffectionate(higher=True):
+        n 1fchsm "You bet I can!"
+
+    else:
+        n 1nnmss "Sure thing!"
+
+    jump blackjack_explanation

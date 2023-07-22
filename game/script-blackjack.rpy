@@ -280,26 +280,26 @@ init 0 python in jn_blackjack:
             - Nobody if it is nobody's turn; otherwise the player or Natsuki's current nickname
         """
         if _game_state == JNBlackjackStates.draw:
-            return  "It's a draw!"
+            return "It's a draw!"
 
         if (
             _game_state == JNBlackjackStates.natsuki_bust
             or _game_state == JNBlackjackStates.player_blackjack
             or _game_state == JNBlackjackStates.player_closest
         ):
-            return  "You win!"
+            return "You win!"
 
         if (
             _game_state == JNBlackjackStates.natsuki_blackjack
             or _game_state == JNBlackjackStates.natsuki_closest
             or _game_state == JNBlackjackStates.player_bust
         ):
-            return  "You lose!"
+            return "You lose!"
 
         if _is_player_turn is None:
-            return  "Nobody!"
+            return "Nobody!"
 
-        return  "Yours!" if _is_player_turn else "[n_name]"
+        return "Yours!" if _is_player_turn else "[n_name]"
 
     def __getQuitOrForfeitLabel():
         """
@@ -364,7 +364,7 @@ label blackjack_intro:
 
         show natsuki option_wait_curious
         menu:
-            n  "Did you need an explanation on how it all works,{w=0.2} or...?"
+            n "Did you need an explanation on how it all works,{w=0.2} or...?"
 
             "Yes please!":
                 jump blackjack_explanation
@@ -476,9 +476,11 @@ label blackjack_explanation:
         n "Did you catch all that,{w=0.2} or...?"
 
         "Can you go over the rules again?":
-            n 7tsqpueqm "Huh?{w=0.75}{nw}" 
-            extend 3tllflsbr " Well,{w=0.2} alright..."
-            n 3ccspo "{i}I{/i} thought I was clear enough."
+            n 7tsqpueqm "Huh?{w=0.75}{nw}"
+            extend 7tsqfl " You need me to go over that stuff again?"
+            n 7cllfl "Well..."
+            extend 3nslbo " fine."
+            n 3ccspoesi "But you better be listening this time,{w=0.2} [player]."
 
             jump blackjack_explanation
 

@@ -2153,6 +2153,7 @@ init 5 python:
     )
 
 label event_sanjo:
+    $ jn_globals.force_quit_enabled = False
     n "..."
     n "Man...{w=1} is there seriously {i}nothing else{/i} to do in this dump?{w=0.75} I'm so {b}bored{/b}!"
     n "Would it actually have {i}killed them{/i} to keep some board games here or what?"
@@ -2347,6 +2348,37 @@ label event_sanjo:
     n 3nchgnl "'Cause I'm gonna get Sanjo here blooming before you know it!"
 
     $ sanjo.unlock()
+    return
+
+# Natsuki discovers a new card game she wants to try with the player!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_blackjack_unlock",
+            unlocked=True,
+            conditional="persistent.jn_snap_unlocked",
+            affinity_range=(jn_affinity.AFFECTIONATE, None)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
+
+label event_blackjack_unlock:
+    #TODO: Writing
+    $ jn_globals.force_quit_enabled = False
+
+    n "Before enter"
+
+    menu:
+        "Enter...":
+            pass
+
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_laptop"))
+    $ jn_events.displayVisuals("2fcssm")
+    $ jn_globals.force_quit_enabled = True
+
+    n "After enter"
+
     return
 
 # HOLIDAYS
