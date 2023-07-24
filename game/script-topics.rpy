@@ -11623,18 +11623,38 @@ init 5 python:
     )
 
 label talk_remind_blackjack_rules:
-    # TODO: Writing
     if Natsuki.isLove(higher=True):
-        n 1nchbg "Ahaha.{w=0.2} You're so forgetful sometimes,{w=0.1} [player]."
-        n 3nsqbg "Sure,{w=0.1} I'll go over it again!{w=0.2} Juuust for you~."
+        n 2tllss "Need a little refresher,{w=0.5}{nw}"
+        extend 2tnmbo " huh [player]?"
+        n 7tlrsl "..."
+        n 7tlraj "Well...{w=1}{nw}"
+        extend 7tlrss " I guess I can't be too surprised,{w=0.75}{nw}" 
+        extend 7tsqss " knowing you."
+        n 6ccssslsbr "A-{w=0.2}all too hard to pay attention with such a pretty face,{w=0.2} right?{w=0.75}{nw}"
+        extend 3csldvlsbr " Ehehe."
+        n 4ccsbglsbr "...A-{w=0.2}anyway."
 
     elif Natsuki.isEnamored(higher=True):
-        n 4nchbg "Of course I can!"
-
-    elif Natsuki.isAffectionate(higher=True):
-        n 1fchsm "You bet I can!"
+        n 1ccsbg "Oh?"
+        n 1flrbg "Someone needs a reminder already,{w=0.5}{nw}" 
+        extend 1fsqss " huh?"
+        n 1fsqsm "..."
+        n 1fchsm "Ahaha.{w=0.75}{nw}"
+        extend 1nlrbg " Nah,{w=0.2} it's fine.{w=0.75}{nw}"
+        extend 1unmbo " I don't mind going through it again."
+        n 1fsqbg "...So long as you keep your ears pricked {i}this{/i} time,{w=0.2} at least.{w=0.75}{nw}"
+        extend 1fsqsm " Ehehe."
 
     else:
-        n 1nnmss "Sure thing!"
+        n 1ccsss "Heh.{w=0.75}{nw}"
+        extend 1nsqsl " Wow,{w=0.2} [player]."
+        n 4nsgfl "You seriously forgot{w=0.5}{nw}"
+        extend 4csqfl " already?"
+        n 2csqbo "..."
+        n 2fcssm "Ehehe."
+        n 1tlrss "Nah,{w=0.5}{nw}"
+        extend 3clrss " It's fine."
+        n 7ccsbg "I can't expect {i}everyone{/i} to have memory as good as mine,{w=0.5}{nw}" 
+        extend 7fcssmesm " after all."
 
     jump blackjack_explanation

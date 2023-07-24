@@ -419,7 +419,7 @@ label blackjack_explanation:
     n 3unmaj "Next,{w=0.2} we both take it in turns to either {i}hit{/i} -{w=0.5}{nw}" 
     extend 3clrss " draw another card,{w=0.5}{nw}" 
     extend 6unmbo " or {i}stay{/i} -{w=0.5}{nw}" 
-    extend 3cllsm " which is pretty much just skipping our turn."
+    extend 3cllsm " which is just skipping our turn."
     n 4tnmss "What's the goal,{w=0.2} you ask?"
     n 7tlrss "Well...{w=1}{nw}" 
     extend 3fnmsm " we're basically trying to get the total value of our cards as close to twenty one as we can.{w=0.75}{nw}"
@@ -441,30 +441,30 @@ label blackjack_explanation:
         extend 2fcssmesm " We only care about the {i}numbers{/i}!"
 
     else:
-        n 3clrss "Like I said last time:{w=0.75}{nw}"
+        n 3clrss "Like I said last time:{w=0.5}{nw}"
         extend 4tlraj " the suits of the cards don't matter here,{w=0.5}{nw}"
         extend 2fnmsm " so it's just the numbers you gotta keep an eye on."
 
     n 4clrss "The {i}face cards{/i} work kinda differently to the normal ones."
-    n 6tnmaj "If you get a {i}king,{w=0.2} queen or jack{/i},{w=0.5}{nw}"
+    n 6tnmaj "If you get a {i}king,{w=0.2} queen,{w=0.2} or jack{/i},{w=0.5}{nw}"
     extend 3ccssm " then those just count as being worth {i}ten{/i}."
     n 7tllfl "As for aces...{w=1}{nw}"
     extend 3nchgn " depends when you draw them!{w=0.75}{nw}"
     n 3ulrss "We'll say aces are worth {i}eleven{/i},{w=0.2} {i}unless{/i} you got one to start with that would make you bust instantly.{w=0.75}{nw}"
-    extend 3fcsbg " Even I'm not that cruel!"
+    extend 3fcssm " I'm not {i}that{/i} mean."
     n 4cllbg "But yeah -{w=0.5}{nw}"
     extend 2ullpu " if the ace would make you {i}lose on your first turn{/i},{w=0.5}{nw}"
     extend 2nnmbo " then it's just worth {i}one{/i} instead."
     n 7ulraj "We keep taking it in turns until one of us hits twenty one,{w=0.2} we both decide to {i}stay{/i} -{w=0.5}{nw}"
     extend 7unmbo " or one of us ends up with a hand that goes over twenty one."
     n 6fchbl "...That means you bust!"
-    n 1cllss "If neither of us end up busting,{w=0.5}{nw}"
-    extend 2ccssm " then whoever got {i}closest{/i} to twenty one wins the round!{w=0.75}{nw}"
-    extend 2fchbg " Simple,{w=0.2} right?"
-    n 4unmaj "Oh -{w=0.5}{nw}"
+    n 1cllss "Otherwise if neither of us end up busting,{w=0.5}{nw}"
+    extend 2ccssm " then whoever got {i}closest{/i} to twenty one wins the round.{w=0.75}{nw}"
+    extend 2fchbg "Easy peasy!"
+    n 4unmaj "Oh,{w=0.2} yeah -{w=0.5}{nw}"
     extend 7clrss " and don't worry about keeping tabs on the score or anything.{w=0.75}{nw}"
-    extend 6fcsbg " I've got it all covered!{w=0.75}{nw}"
-    extend 3fchsm " Ehehe."
+    extend 6fcsbg " I've got it all covered!"
+    n 3fchsm "Ehehe."
     n 4fnmsm "But yeah!{w=0.75}{nw}"
     extend 1ullss " I think that's pretty much everything I had."
     n 3ullaj "So...{w=1}{nw}"
@@ -478,7 +478,7 @@ label blackjack_explanation:
         "Can you go over the rules again?":
             n 7tsqpueqm "Huh?{w=0.75}{nw}"
             extend 7tsqfl " You need me to go over that stuff again?"
-            n 7cllfl "Well..."
+            n 7cllfl "Well...{w=1}{nw}"
             extend 3nslbo " fine."
             n 3ccspoesi "But you better be listening this time,{w=0.2} [player]."
 
@@ -504,12 +504,13 @@ label blackjack_explanation:
             n 1fsqca "..."
             n 3fchgn "Well,{w=0.75} your loss!{w=0.75}{nw}"
             extend 6fcssmesm " Just a word of warning though,{w=0.2} [player]..."
-            n 3fcsbg "Don't think I'm gonna go any easier on you later either!{w=0.75}{nw}"
 
             if Natsuki.isLove(higher=True):
-                extend 3fchbllsbr " You aren't gonna sweet-talk your way out of losing!"
+                n 3fcsbg "Don't think I'm gonna go any easier on you later either!"
+                n 3fchbllsbr "You aren't gonna sweet-talk your way out of losing!"
             
             else:
+                n 3fcsbg "Don't think I'm gonna go any easier on you later either!{w=0.75}{nw}"
                 extend 3nchgnl " Ahaha."
 
             if not Natsuki.getDeskSlotClear(jn_desk_items.JNDeskSlots.centre):
@@ -714,50 +715,50 @@ label blackjack_quit_forfeit:
     $ natsuki_prompt = ""
 
     if jn_blackjack._is_player_committed:
-        n  "Eh?{w=0.75}{nw}"
-        extend  " You're done playing,{w=0.2} [player]?"
+        n 1tnmpueqm "Eh?{w=0.75}{nw}"
+        extend 2tnmsleqm " You're done playing,{w=0.2} [player]?"
         
         if jn_blackjack._rounds == 0:
-            n  "...W-{w=0.2}wait.{w=0.75}{nw}"
-            extend  " Hang on just a second here,{w=0.2} [player]!{w=0.75}{nw}"
-            extend  " What do you mean?"
-            n  "We literally only just started {i}playing{/i}!{w=0.75}{nw}"
-            extend " Jeez..."
-            n  "Y-{w=0.2}you better not be pulling my leg again,{w=0.2} [player]."
+            n 4ccsflsbr "...W-{w=0.2}wait.{w=0.75}{nw}"
+            extend 3fcsgssbr " Hang on just a second here,{w=0.2} [player]!{w=0.75}{nw}"
+            extend 3fnmgs " What do you mean?"
+            n 4fcswr "We literally only just started {i}playing{/i}!{w=0.75}{nw}"
+            extend 2flrem " Jeez..."
+            n 2csqcasbl "You better not be pulling my leg again,{w=0.2} [player]."
 
             $ natsuki_prompt = "Do you actually {i}want{/i} to play blackjack or not?"
             show natsuki option_wait_sulky
 
         elif jn_blackjack._rounds < 6:
-            n  "Man...{w=1}{nw}"
-            extend  " really?{w=0.75}{nw}"
-            extend  " Come on,{w=0.2} [player]!{w=0.75}{nw}"
-            extend  " You can't be done this soon {i}already{/i}."
-            n  "Seriously -{w=0.5}{nw}"
-            extend  " it's only been like [jn_blackjack._rounds] rounds!{w=0.75}{nw}"
-            extend  " We've barely even started!"
+            n 1kslfl "Man...{w=1}{nw}"
+            extend 4cnmem " really?{w=0.75}{nw}"
+            extend 4ccsgssbl " Come on,{w=0.2} [player]!{w=0.75}{nw}"
+            extend 3ccsposbl " You can't be done this soon {i}already{/i}."
+            n 3flrflsbr "Seriously -{w=0.5}{nw}"
+            extend 3tnmfl " it's only been like [jn_blackjack._rounds] rounds!{w=0.75}{nw}"
+            extend 4cnmaj " We've barely even started!"
             
             $ natsuki_prompt = "You can {i}easily{/i} play at least a couple more games...{w=0.3} right?"
             show natsuki option_wait_sulky
 
         else:
-            n  "..."
-            n  "Well...{w=1}{nw}"
-            extend  " you have been playing a while.{w=0.75}{nw}"
-            extend  " I {i}guess{/i}."
-            n  "...Even if you {i}are{/i} calling it quits right in the middle of a game."
-            n  "So..."
+            n 2tdrsl "..."
+            n 2tdrfl "Well...{w=1}{nw}"
+            extend 2tlrbo " you have been playing a while.{w=0.75}{nw}"
+            extend 4csrpo " I {i}guess{/i}."
+            n 2nsqca "...Even if you {i}are{/i} calling it quits right in the middle of a game."
+            n 2nllaj "So..."
 
             $ natsuki_prompt = "You're sure you don't wanna keep playing,{w=0.2} [player]?"
             show natsuki option_wait_curious
 
     else:
-        n  "Oh?{w=0.75}{nw}"
-        extend  " What's this,{w=0.2} [player]?{w=0.75}{nw}"
-        extend  " Why the cold feet all of a sudden?"
-        n  "Ehehe."
-        n  "Come on!{w=0.75}{nw}"
-        extend  " Don't tell me you're giving up {i}that{/i} easily!"
+        n 4ccsss "Oh?{w=0.75}{nw}"
+        extend 4fllss " What's this,{w=0.2} [player]?{w=0.75}{nw}"
+        extend 3fsqbg " Why the cold feet all of a sudden?"
+        n 1fsqsm "Ehehe."
+        n 2fnmbg "Come on!{w=0.75}{nw}"
+        extend 2fcsbs " Don't tell me you're giving up {i}that{/i} easily!"
         
         $ natsuki_prompt = "You can at {i}least{/i} stick it out to the end of this one,{w=0.2} right?"
         show natsuki option_wait_smug
@@ -767,36 +768,36 @@ label blackjack_quit_forfeit:
 
         "No, I'm done playing for now.":
             if jn_blackjack._is_player_committed:
-                n  "...Man.{w=0.75}{nw}"
-                extend  " For real,{w=0.2} [player]?"
-                n  "..."
-                n  "Well...{w=1}{nw}"
-                extend  " I can't say I'm not at least a little disappointed.{w=0.75}{nw}"
-                extend  " But I guess that's fine."
-                n  "After all..."
+                n 1kcsflesi "...Man.{w=0.75}{nw}"
+                extend 4ksqfl " For real,{w=0.2} [player]?"
+                n 2cslbo "..."
+                n 2nslaj "Well...{w=1}{nw}"
+                extend 5cdrca " I can't say I'm not at least a little disappointed.{w=0.75}{nw}"
+                extend 5nlraj " But I guess that's fine."
+                n 4ccsss "After all..."
 
                 $ dialogue_choice = random.randint(1, 3)
                 if dialogue_choice == 1:
-                    n  "Just means another win for me!{w=0.75}{nw}"
+                    n 3fcsbg "Just means another win for me!{w=0.75}{nw}"
 
                 elif dialogue_choice == 2:
-                    n  "As if I'm turning down an easy win!{w=0.75}{nw}"
+                    n 3fcssmesm "As if I'm turning down an easy win!{w=0.75}{nw}"
 
                 else:
-                    n  "I'm taking this as a win for me!{w=0.75}{nw}"
+                    n 3nchgn "That's still a win for me!{w=0.75}{nw}"
 
-                extend  " Ehehe."
+                extend 3fcssmeme " Ehehe."
 
             else:
-                n  "...Wow.{w=0.75}{nw}"
-                extend  " And you didn't even end up making a single move!{w=0.75}{nw}"
-                extend  " Huh."
-                n  "..."
-                n  "Well,{w=0.5}{nw}"
-                extend  " looks like {i}you{/i} know what they say at least,{w=0.5}{nw}" 
-                extend  " [player]."
-                n  "I guess the only winning move for you was not to play!{w=0.75}{nw}"
-                extend  " Ehehe."
+                n 1nsqpu "...Wow.{w=0.75}{nw}"
+                extend 4tnmfl " And you didn't even end up making a single move!{w=0.75}{nw}"
+                extend 4tlrbo " Huh."
+                n 2tlrsl "..."
+                n 2ulrfl "Well.{w=0.75}{nw}"
+                extend 2fcsss " looks like {i}you{/i} know what they say at least,{w=0.5}{nw}" 
+                extend 2fsqbg " [player]."
+                n 6fcsbs "Guess the only winning move for you was not to play!{w=0.75}{nw}"
+                extend 7fchsmeme " Ehehe."
 
             show natsuki 1fcssm
             show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
@@ -816,27 +817,27 @@ label blackjack_quit_forfeit:
 
         "You're on!":
             if not jn_blackjack._is_player_committed:
-                n  "Y-{w=0.2}yeah!{w=0.75}{nw}"
-                extend  " Now that's more like it!{w=0.75}{nw}"
-                extend  " Some fighting spirit!"
-                n  "Bring it on already,{w=0.2} [player]!"
+                n 4fcsbgsbr "Y-{w=0.2}yeah!{w=0.75}{nw}"
+                extend 2fcsbssbr " Now that's more like it!{w=0.75}{nw}"
+                extend 2fsqbg " Some fighting spirit!"
+                n 4fnmgsedz "Bring it on already,{w=0.2} [player]!"
             
             elif jn_blackjack._rounds == 0:
-                n  "Yeah!{w=0.75}{nw}"
-                extend  " See?{w=0.75}{nw}"
-                extend  " I knew you had some kind of fight left in you!"
-                n  "Besides..."
-                n  "Only a real sore loser would just chicken out before they've even {i}lost{/i}.{w=0.75}{nw}"
-                extend  " Ehehe."
-                n  "Prove me wrong,{w=0.2} [player]!"
+                n 1fspgs "Yeah!{w=0.75}{nw}"
+                extend 3fcsbg " See?{w=0.75}{nw}"
+                extend 3fchgn " I knew you had some kind of fight left in you!"
+                n 1ccsbg "Besides..."
+                n 2fsqbg "Only a real sore loser would just chicken out before they've even {i}lost{/i}.{w=0.75}{nw}"
+                extend 2fsqsm " Ehehe."
+                n 4fnmbs "Prove me wrong,{w=0.2} [player]!"
                 
             else:
-                n  "Ehehe.{w=0.75}{nw}"
-                extend  " Now {i}that's{/i} what I'm talking about!"
-                n  "..."
-                n  "Well?{w=0.75}{nw}"
-                extend  " What're you waiting for?"
-                n  "Make your move already,{w=0.2} [player]!"
+                n 1fsqsm "Ehehe.{w=0.75}{nw}"
+                extend 3fcsbs " Now {i}that's{/i} what I'm talking about!"
+                n 3fnmsm "..."
+                n 3fsqbg "Well?{w=0.75}{nw}"
+                extend 4fcsbg " What're you waiting for?"
+                n 4fchgn "Make your move already,{w=0.2} [player]!"
             
             show screen blackjack_ui
             jump blackjack_main_loop
