@@ -2349,6 +2349,126 @@ label event_sanjo:
     $ sanjo.unlock()
     return
 
+# Natsuki is walked in on reading a new volume of Parfait Girls. She isn't impressed.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_house_of_cards",
+            unlocked=True,
+            conditional="persistent.jn_snap_unlocked",
+            affinity_range=(jn_affinity.AFFECTIONATE, None)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
+
+label event_house_of_cards:
+    $ jn_globals.force_quit_enabled = False
+    $ jnPause(5)
+
+    n "And... that's another one! Yes!"
+    n "Man... why didn't I think of this before? This is way more fun than I thought!"
+    n "Ehehe."
+
+    $ jnPause(3)
+
+    n "..."
+    n "..."
+    n "Nnnnnnnn..."
+    n "..."
+    n "Yes! 'Kay... now for the next one..."
+
+    $ jnPause(3)
+
+    n "Mmmmm...!"
+    n "..."
+    n "Alriiiight! Man... I'm on a roll! This is the furthest I've gotten yet!"
+    n "..."
+    n "...Right. Next card..."
+
+    $ jnPause(3)
+
+    n "Easy, Natsuki... come on... don't throw this one now..."
+    n "..."
+    n "Man... so close...."
+    n "Just gotta... balance it... right...!"
+
+    menu:
+        "Enter...":
+            pass
+
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_sanjo"))
+    $ jn_events.displayVisuals("1fsrpo")
+    $ jn_globals.force_quit_enabled = True
+
+    n "..."
+    n "...?"
+    $ player_initial = jn_utils.getPlayerInitial()
+    n "[player_initial]-[player]!"
+    extend " Jeez!"
+    extend " H-how many times do I have to remind you?!"
+    n "I swear it's like you're actually {i}trying{/i} to give me a heart attack!"
+    extend " Come on!"
+    extend " Is knocking {i}seriously{/i} that hard?"
+    n "A-and besides!"
+    extend " Look!"
+    extend " Can't you {i}see{/i} I'm clearly busy right-"
+
+    play audio card_shuffle
+
+    n "..."
+    n "...Now."
+    $ jnPause(3)
+    n "..."
+    n "..."
+    n "..."
+    n "Are."
+    n "You."
+    n "Freaking" 
+    extend " {i}KIDDING ME{/i}?!"
+    $ player_final = jn_utils.getPlayerFinal(3)
+    extend " [player_initial]-[player][player_final]!"
+    n "Y-you totally threw me off!"
+    extend " You have no {i}idea{/i} how long it took for me to get that far!"
+    extend " It was basically perfect!"
+    n "...And now I gotta do that all over again!"
+    n "..."
+    n "Man..."
+    extend " and I didn't even get to take a picture or anything."
+    n "..."
+    n "..."
+    n "..."
+    n "...Forget it."
+    extend " Forget it!"
+    extend " I don't even care anymore."
+    n "This was a total waste of time in the first place, a-anyway."
+    
+    show natsuki annoyed_caret
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(1)
+    play audio drawer
+    $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+    show natsuki 2nlrbo
+    $ jnPause(1)
+    hide black with Dissolve(1.25)
+
+    n "..."
+    n "..."
+    n "..."
+    n "Hmph."
+    n "Well,"
+    extend " I hope you know what you're in for now, [player]."
+    extend " Seeing as how you owe me big time for throwing off my groove and all."
+    n "..."
+    n "What?"
+    extend " I'm being serious!"
+    extend " There's no way I'm letting you off the hook that easily."
+    n "...Heh."
+    extend " Sorry, [player]."
+    n "But that's just the hand you've been dealt!"
+
+    return
+
 # HOLIDAYS
 
 # Used to lead up to a holiday, but only if already in-game and the day changes
