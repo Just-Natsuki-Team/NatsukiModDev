@@ -2367,6 +2367,50 @@ label event_blackjack_unlock:
     #TODO: Writing
     $ jn_globals.force_quit_enabled = False
 
+    play audio laptop_close
+    n "..."
+    n "..."
+    n "...Alright. Let's try this out. {i}Again{/i}."
+    # typing sfx
+    n "Card games... two players..."
+    # key hit sfx
+    n "...Search."
+    # scrolling sfx
+    n "..."
+    n "...Card games... two players... {i}easy{/i}."
+    n "..."
+    n "..."
+    n "Oh, for-! Search! Jeez..."
+    n "Why is this thing so {i}slow{/i} now? What's even the point of updates if they always make things worse..."
+    n "Ugh... no wonder the school was literally giving these things away..."
+    n "...Finally. {i}Now{/i} you decide to load."
+    n "Of course they just had to install the worst browser they could find, too..."
+    
+    # scrolling sfx
+    n "..."
+    # scrolling sfx
+    n "..."
+    n "Uuuuuuuuu-!"
+    n "A-and I am {b}not{/b} looking for free spins! Why do search results stink so much now?!"
+    n "If I {i}wanted{/i} to gamble all my savings away, I'd have done it already! Sheesh..."
+    
+    # scrolling sfx
+    $ jnPause(2)
+    # scrolling sfx
+    $ jnPause(1)
+    # scrolling sfx
+    $ jnPause(0.5)
+    # scrolling sfx
+    n "Nnnnnn-!"
+    n "Come on! Why is this so hard?!"
+    n "Just give me a game I can actually {i}play{/i} or I swear, I'm gonna...!"
+    n "..."
+    n "...Huh."
+    # click sfx
+    n "..."
+
+
+
     n "Before enter"
 
     menu:
