@@ -1207,6 +1207,12 @@ init -999 python in jn_utils:
         thread.daemon = True
         thread.start()
 
+    def getSupportedMusicFileExtensions():
+        """
+        Returns a list of the music file extensions JN supports.
+        """
+        return {"mp3", "ogg", "wav"}
+
 init -100 python in jn_utils:
     import codecs
     import random
