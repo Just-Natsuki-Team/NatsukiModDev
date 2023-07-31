@@ -2364,108 +2364,148 @@ init 5 python:
 
 label event_house_of_cards:
     $ jn_globals.force_quit_enabled = False
+    play audio card_place
     $ jnPause(5)
-
-    n "And... that's another one! Yes!"
-    n "Man... why didn't I think of this before? This is way more fun than I thought!"
+    n "And...{w=1}{nw}" 
+    play audio card_place
+    extend " that's another one!{w=1} Yes!"
+    n "Jeez...{w=1} why didn't I think of this before?{w=0.75} This is actually {i}way{/i} more fun than I thought!"
     n "Ehehe."
 
-    $ jnPause(3)
+    $ jnPause(1)
+    play audio card_place
+    $ jnPause(2)
 
     n "..."
     n "..."
     n "Nnnnnnnn..."
     n "..."
-    n "Yes! 'Kay... now for the next one..."
+    play audio card_place
+    $ jnPause(1.5)
+    n "Yes!{w=0.75} 'Kay...{w=1.25} another one..."
+    n "I swear,{w=0.2} if this crappy desk wobbles again now..."
 
-    $ jnPause(3)
+    $ jnPause(2)
 
     n "Mmmmm...!"
     n "..."
-    n "Alriiiight! Man... I'm on a roll! This is the furthest I've gotten yet!"
-    n "..."
-    n "...Right. Next card..."
+    play audio card_place
+    $ jnPause(1.5)
+    n "Alright!{w=0.75} Man...{w=1} [n_name], you are on a {i}roll{/i}!{w=0.75} This is the furthest I've gotten yet!"
+    $ jnPause(1)
+    n "...R-{w=0.2}right.{w=0.75} Next card..."
 
+    $ jnPause(1.5)
+    play audio card_place
     $ jnPause(3)
 
-    n "Easy, Natsuki... come on... don't throw this one now..."
+    n "E-{w=0.2}easy...{w=1} come on...{w=1} don't throw this one now..."
     n "..."
-    n "Man... so close...."
-    n "Just gotta... balance it... right...!"
+    n "So...{w=1.5} close..."
+    play audio chair_in
+    n "Just gotta...{w=1} balance it...{w=1} right...!"
+    $ jnPause(1)
 
     menu:
         "Enter...":
             pass
 
-    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_sanjo"))
-    $ jn_events.displayVisuals("1fsrpo")
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_house_of_cards"))
+    $ jn_events.displayVisuals("4fdwpusbr")
     $ jn_globals.force_quit_enabled = True
 
-    n "..."
-    n "...?"
+    n 4fdwfosbr "..."
+    n 4tsqpueqmsbr "...?{w=0.75}{nw}"
+    n 4uskemleshsbl "...!{w=0.75}{nw}"
     $ player_initial = jn_utils.getPlayerInitial()
-    n "[player_initial]-[player]!"
-    extend " Jeez!"
-    extend " H-how many times do I have to remind you?!"
-    n "I swear it's like you're actually {i}trying{/i} to give me a heart attack!"
-    extend " Come on!"
-    extend " Is knocking {i}seriously{/i} that hard?"
-    n "A-and besides!"
-    extend " Look!"
-    extend " Can't you {i}see{/i} I'm clearly busy right-"
+    n 4fbkwrlsbr "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
+    extend 4fllwrlsbr " Jeez!{w=0.75}{nw}"
+    extend 4fcsgslsbr " H-{w=0.2}how many times do I have to remind you?!"
+    n 4ftlemlsbr "I swear it's like you're actually {i}trying{/i} to give me a heart attack!{w=0.75}{nw}"
+    extend 4fcsgssbr " Come on!\n{w=0.75}{nw}"
+    extend 4csqemsbl "Is knocking {i}seriously{/i} that hard?"
+    n 2fcswrsbl "A-{w=0.2}and besides!{w=0.75}{nw}"
+    extend 2fdwwrsbr " Look!{w=0.75}{nw}"
+    extend 4fcsgssbr " Can't you {i}see{/i} I'm clearly busy right-{nw}"
 
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_card_pile"))
+    show natsuki 1uskemeexsbl
     play audio card_shuffle
+    $ jnPause(1)
+    show natsuki 1ndwflsbl
+    $ jnPause(4)
 
-    n "..."
-    n "...Now."
+    n 4ndwpusbl "...Now."
+    show natsuki 1fdwbolsbl
+    $ jnPause(2)
+    show natsuki 1fdwunlsbl
     $ jnPause(3)
-    n "..."
-    n "..."
-    n "..."
-    n "Are."
-    n "You."
-    n "Freaking" 
-    extend " {i}KIDDING ME{/i}?!"
+    n 1fsrunl "..."
+    n 1fcsunl "..."
+    n 1fcsfll "Are."
+    n 1fcseml "You."
+    n 4fcsanl "Freaking{w=1}{nw}" 
+    extend 4fbkwrl " {i}KIDDING ME{/i}?!{w=0.75}{nw}"
     $ player_final = jn_utils.getPlayerFinal(3)
-    extend " [player_initial]-[player][player_final]!"
-    n "Y-you totally threw me off!"
-    extend " You have no {i}idea{/i} how long it took for me to get that far!"
-    extend " It was basically perfect!"
-    n "...And now I gotta do that all over again!"
-    n "..."
-    n "Man..."
-    extend " and I didn't even get to take a picture or anything."
-    n "..."
-    n "..."
-    n "..."
-    n "...Forget it."
-    extend " Forget it!"
-    extend " I don't even care anymore."
-    n "This was a total waste of time in the first place, a-anyway."
+    extend 4knmwrl " [player_initial]-[player][player_final]!"
+    n 4fcsanl "Uuuuuu-!"
+    n 4cbkwrless "Y-{w=0.2}you completely threw me off!{w=0.75}{nw}"
+    extend 2fcsful " You have no {i}idea{/i} how long it took for me to get that far!{w=0.75}{nw}"
+    extend 4knmeml " I-{w=0.2}I totally {i}had{/i}{w=0.5}{nw}" 
+    extend 4knmwrl " thaaat!"
+    n 1kdweml "...And now I gotta do it all over again!"
+    n 1kcsflesi "..."
+    n 1csrem "Man...{w=1.25}{nw}"
+    extend 2csrsl " and I didn't even get to take a picture or anything."
+    n 2fsrbo "..."
+    n 2csqbo "..."
+    n 2ccsfl "..."
+    n 1ccsaj "...Forget it.{w=0.75}{nw}"
+    extend 1fcswrlsbl " Forget it!{w=1}{nw}"
+    extend 4ftlfllsbl " I don't even care anymore."
+    n 4ccsfllsbl "This was a total waste of time in the first place,{w=0.5}{nw}" 
+    extend 4cslsllsbl " a-{w=0.2}anyway."
     
-    show natsuki annoyed_caret
+    show natsuki 1ccscasbl
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(1)
     play audio drawer
     $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
-    show natsuki 2nlrbo
+    show natsuki 2cslsl
     $ jnPause(1)
     hide black with Dissolve(1.25)
 
-    n "..."
-    n "..."
-    n "..."
-    n "Hmph."
-    n "Well,"
-    extend " I hope you know what you're in for now, [player]."
-    extend " Seeing as how you owe me big time for throwing off my groove and all."
-    n "..."
-    n "What?"
-    extend " I'm being serious!"
-    extend " There's no way I'm letting you off the hook that easily."
-    n "...Heh."
-    extend " Sorry, [player]."
-    n "But that's just the hand you've been dealt!"
+    n 2cslbo "..."
+    n 2csqbo "..."
+    n 2ccspo "Hmph."
+    n 2fcsfl "Well,{w=0.5}{nw}"
+    extend 4cnmaj " I hope you know what you're in for now,{w=0.2} [player]."
+    n 5cllaj "Seeing as how you owe me big time for throwing off my groove and all."
+    n 3cllsl "..."
+    n 3cnmem "What?{w=0.75}{nw}"
+    extend 3ccsgs " I'm being serious!{w=1}{nw}"
+    extend 4ccsposbl " There's no {i}way{/i} I'm letting you off the hook {i}that{/i} easily."
+
+    if Natsuki.isEnamored(higher=True):
+        n 1ccssssbl "...Heh.{w=0.75}{nw}"
+        extend 2fcsflsbl " A-{w=0.2}and besides,{w=0.2} [player]."
+        extend 2ccsaj " You've seen enough cards by now."
+        n 7ccsbgl "...S-{w=0.2}so don't you recognize a {i}queen{/i} when you see one?{w=0.75}{nw}"
+        extend 5fsrdvl " Ehehe."
+        n 3fsrfslsbl "..."
+        n 3ccsajlsbr "Well?{w=0.75}{nw}"
+        extend 3cllbglsbr " Get started already,{w=0.2} [player].{w=0.75}{nw}"
+        extend 4fsqsslsbr " After {i}that{/i} much of a screw up?"
+        $ time_of_day = "today" if jn_is_day() else "tonight"
+        n 3fcsbglsbr "Y-{w=0.2}you better {i}believe{/i} you're giving me the royal treatment [time_of_day]!"
+        n 3fsqsmlsbr "Ehehe."
+
+    else:
+        n 1ccsss "...Heh.{w=0.75}{nw}"
+        extend 2ccsaj " Sorry,{w=0.2} [player]."
+        n 2flltr "I'm done with the cards already."
+        extend 6fsqbg " But making this up to me is just the hand you've been dealt!"
+        n 3fcssm "Ehehe."
 
     return
 
