@@ -680,7 +680,7 @@ label blackjack_end:
                 "Pffft!{w=0.75} You {i}sure{/i} you know how to play,{w=0.2} [player]?",
                 "{i}Real{/i} smooth there,{w=0.2} [player]!{w=0.75} Ehehe.",
                 "Hey,{w=0.2} [player] -{w=0.5} you're meant to count up the cards!{w=0.75} Ehehe."
-            ],s
+            ],
             jn_blackjack.JNBlackjackStates.player_blackjack: [
                 "Seriously?{w=0.75} You got a blackjack?!{w=0.75} Ugh...",
                 "Yeah,{w=0.2} yeah.{w=0.75} Enjoy your luck while it lasts,{w=0.2} [player].",
