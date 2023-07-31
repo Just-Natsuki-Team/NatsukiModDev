@@ -2042,8 +2042,8 @@ label greeting_sanjo_generic:
     extend 3ccssm " Sanjo and I were juuuust about done here."
     
     if not jn_is_day():
-        n 5clrajsbr "N-{w=0.2}not that I completely forgot to water him before or anything like that,{w=0.5}{nw}"
-        extend 2fcscasbr " {i}obviously{/i}."
+        n 5clrajsbr "N-{w=0.2}not that I completely forgot to water him before or anything like that,\n{w=0.5}{nw}"
+        extend 2fcscasbr "{i}obviously{/i}."
 
     if Natsuki.isEnamored(higher=True):
         n 1ullaj "So...{w=1}{nw}"

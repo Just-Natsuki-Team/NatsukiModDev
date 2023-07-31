@@ -1787,8 +1787,9 @@ init -100 python in jn_utils:
         """
         Saves all game data.
         """
+
         # Save outfit data
-        store.jn_outfits.JNOutfit.save_all()
+        store.jn_outfits.JNOutfit.saveAll()
 
         # Save holiday data
         store.jn_events.JNHoliday.saveAll()
