@@ -218,12 +218,12 @@ init 0 python:
                 - outfit - The jn_outfits.JNOutfit outfit for Natsuki to wear.
                 - persist - True if the outfit should be remembered so Natsuki will be wearing it on next boot
             """
-            outfit.accessory = jn_outfits.get_wearable("jn_none") if not outfit.accessory else outfit.accessory
-            outfit.eyewear = jn_outfits.get_wearable("jn_none") if not outfit.eyewear else outfit.eyewear
-            outfit.headgear = jn_outfits.get_wearable("jn_none") if not outfit.headgear else outfit.headgear
-            outfit.necklace = jn_outfits.get_wearable("jn_none") if not outfit.necklace else outfit.necklace
-            outfit.facewear = jn_outfits.get_wearable("jn_none") if not outfit.facewear else outfit.facewear
-            outfit.back = jn_outfits.get_wearable("jn_none") if not outfit.back else outfit.back
+            outfit.accessory = jn_outfits.getWearable("jn_none") if not outfit.accessory else outfit.accessory
+            outfit.eyewear = jn_outfits.getWearable("jn_none") if not outfit.eyewear else outfit.eyewear
+            outfit.headgear = jn_outfits.getWearable("jn_none") if not outfit.headgear else outfit.headgear
+            outfit.necklace = jn_outfits.getWearable("jn_none") if not outfit.necklace else outfit.necklace
+            outfit.facewear = jn_outfits.getWearable("jn_none") if not outfit.facewear else outfit.facewear
+            outfit.back = jn_outfits.getWearable("jn_none") if not outfit.back else outfit.back
 
             Natsuki._outfit = outfit
 

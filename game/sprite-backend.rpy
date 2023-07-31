@@ -1980,82 +1980,197 @@ image natsuki talk_menu_enamored:
     block:
         choice:
             "natsuki 3nchbgl"
+            pause 4
+            repeat
+
         choice:
             "natsuki 4nnmbgl"
+            pause 4
+            "natsuki 4ncsbgl"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 3uchssl"
+            pause 4
+            repeat
+
         choice:
             "natsuki 3unmssl"
+            pause 4
+            "natsuki 3ucsssl"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 4uwltsl"
+            pause 4
+            "natsuki 4ucstsl"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 4fchbgl"
+            pause 4
+            repeat
+
         choice:
             "natsuki 3fchsml"
+            pause 4
+            repeat
+
         choice:
             "natsuki 7fchbgl"
+            pause 4
+            repeat
+
         choice:
             "natsuki 7fchsml"
+            pause 4
+            repeat
 
 # Menu images for AFFECTIONATE+
 image natsuki talk_menu_affectionate:
     block:
         choice:
             "natsuki 3unmsm"
+            pause 4
+            "natsuki 3ucssm"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 1unmbg"
+            pause 4
+            "natsuki 1ucsbg"
+            pause 0.1
+            repeat
+        
         choice:
             "natsuki 4uchbg"
+
         choice:
             "natsuki 2nchbg"
+
         choice:
             "natsuki 2tchbg"
+
         choice:
             "natsuki 3tsqsm"
+            pause 4
+            "natsuki 3tcssm"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 7nchbg"
+
         choice:
             "natsuki 7tsqsm"
+            pause 4
+            "natsuki 7tcssm"
+            pause 0.1
+            repeat
 
 # Menu images for HAPPY+
 image natsuki talk_menu_happy:
     block:
         choice:
             "natsuki 1unmss"
+            pause 4
+            "natsuki 1ucsss"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 2unmfs"
+            pause 4
+            "natsuki 2ucsfs"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 2tnmfs"
+            pause 4
+            "natsuki 2tcsfs"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 4ullaj"
+            pause 4
+            "natsuki 4ucsaj"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 4unmbo"
+            pause 4
+            "natsuki 4ucsbo"
+            pause 0.1
+            repeat
 
 # Menu images for NORMAL+
 image natsuki talk_menu_normal:
     block:
         choice:
             "natsuki 1unmss"
+            pause 4
+            "natsuki 1ucsss"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 2unmaj"
+            pause 4
+            "natsuki 2ucsaj"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 2ulraj"
+            pause 4
+            "natsuki 2ucsaj"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 1ullaj"
+            pause 4
+            "natsuki 1ucsaj"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 2unmca"
+            pause 4
+            "natsuki 2ucsca"
+            pause 0.1
+            repeat
 
 # Menu images for DISTRESSED+
 image natsuki talk_menu_distressed:
     block:
         choice:
             "natsuki 2fcsun"
+
         choice:
             "natsuki 2fslun"
+            pause 6
+            "natsuki 2fcsun"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 2fsrbo"
+            pause 6
+            "natsuki 2fcsbo"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 2fcsbo"
+
         choice:
             "natsuki 2fcsaj"
 
@@ -2064,12 +2179,23 @@ image natsuki talk_menu_ruined:
     block:
         choice:
             "natsuki 2fcsantsb"
+
         choice:
             "natsuki 2fsluntse"
+            pause 8
+            "natsuki 2fcsuntsd"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 2fcssrtse"
+
         choice:
             "natsuki 2fnmantdr"
+            pause 8
+            "natsuki 2fcsantsa"
+            pause 0.1
+            repeat
 
 image desk = "mod_assets/natsuki/desk/table/table_normal.png"
 image chair = "mod_assets/natsuki/desk/chair/chair_normal.png"

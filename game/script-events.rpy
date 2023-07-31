@@ -983,21 +983,21 @@ label event_not_ready_yet:
 
         # Unlock the starter ahoges
         unlocked_ahoges = [
-            jn_outfits.get_wearable("jn_headgear_ahoge_curly"),
-            jn_outfits.get_wearable("jn_headgear_ahoge_small"),
-            jn_outfits.get_wearable("jn_headgear_ahoge_swoop")
+            jn_outfits.getWearable("jn_headgear_ahoge_curly"),
+            jn_outfits.getWearable("jn_headgear_ahoge_small"),
+            jn_outfits.getWearable("jn_headgear_ahoge_swoop")
         ]
         for ahoge in unlocked_ahoges:
             ahoge.unlock()
 
         # Unlock the super-messy hairstyle
-        super_messy_hairstyle = jn_outfits.get_wearable("jn_hair_super_messy").unlock()
+        super_messy_hairstyle = jn_outfits.getWearable("jn_hair_super_messy").unlock()
 
         # Make note of the loaded outfit, then assign Natsuki a hidden one to show off hair/ahoge
         outfit_to_restore = Natsuki.getOutfitName()
-        ahoge_outfit = jn_outfits.get_outfit("jn_ahoge_unlock")
+        ahoge_outfit = jn_outfits.getOutfit("jn_ahoge_unlock")
         ahoge_outfit.headgear = random.choice(unlocked_ahoges)
-        jn_outfits.save_temporary_outfit(ahoge_outfit)
+        jn_outfits.saveTemporaryOutfit(ahoge_outfit)
 
     $ jnPause(5)
     n "Uuuuuu...{w=2}{nw}"
@@ -1027,7 +1027,7 @@ label event_not_ready_yet:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(2)
     play audio clothing_ruffle
-    $ Natsuki.setOutfit(jn_outfits.get_outfit(outfit_to_restore))
+    $ Natsuki.setOutfit(jn_outfits.getOutfit(outfit_to_restore))
     show natsuki 2fsrpol
     $ jnPause(4)
     hide black with Dissolve(1)
@@ -1369,21 +1369,21 @@ label event_eyewear_problems:
 
         # Unlock the starter glasses
         unlocked_eyewear = [
-            jn_outfits.get_wearable("jn_eyewear_round_glasses_black"),
-            jn_outfits.get_wearable("jn_eyewear_round_glasses_red"),
-            jn_outfits.get_wearable("jn_eyewear_round_glasses_brown"),
-            jn_outfits.get_wearable("jn_eyewear_round_sunglasses"),
-            jn_outfits.get_wearable("jn_eyewear_rectangular_glasses_black"),
-            jn_outfits.get_wearable("jn_eyewear_rectangular_glasses_red"),
+            jn_outfits.getWearable("jn_eyewear_round_glasses_black"),
+            jn_outfits.getWearable("jn_eyewear_round_glasses_red"),
+            jn_outfits.getWearable("jn_eyewear_round_glasses_brown"),
+            jn_outfits.getWearable("jn_eyewear_round_sunglasses"),
+            jn_outfits.getWearable("jn_eyewear_rectangular_glasses_black"),
+            jn_outfits.getWearable("jn_eyewear_rectangular_glasses_red"),
         ]
         for eyewear in unlocked_eyewear:
             eyewear.unlock()
 
         # Make note of the loaded outfit, then give Natsuki a copy without eyewear so we can show off the new ones!
         outfit_to_restore = Natsuki.getOutfitName()
-        eyewear_outfit = copy.copy(jn_outfits.get_outfit(outfit_to_restore))
-        eyewear_outfit.eyewear = jn_outfits.get_wearable("jn_none")
-        jn_outfits.save_temporary_outfit(eyewear_outfit)
+        eyewear_outfit = copy.copy(jn_outfits.getOutfit(outfit_to_restore))
+        eyewear_outfit.eyewear = jn_outfits.getWearable("jn_none")
+        jn_outfits.saveTemporaryOutfit(eyewear_outfit)
 
     n "..."
     play audio drawer
@@ -1579,7 +1579,7 @@ label event_eyewear_problems:
     # Hide glasses overlay and restore old outfit
     hide prop
     hide overlay
-    $ Natsuki.setOutfit(jn_outfits.get_outfit(outfit_to_restore))
+    $ Natsuki.setOutfit(jn_outfits.getOutfit(outfit_to_restore))
     show natsuki 1fcsbol at jn_center zorder JN_NATSUKI_ZORDER
     play audio glasses_case_close
     $ jnPause(0.75)
@@ -1858,7 +1858,7 @@ init 5 python:
 label event_warm_package:
     python:
         jn_globals.force_quit_enabled = False
-        teddy_cardigan_outfit = jn_outfits.get_outfit("jn_cosy_cardigan_outfit")
+        teddy_cardigan_outfit = jn_outfits.getOutfit("jn_cosy_cardigan_outfit")
         teddy_cardigan_outfit.unlock()
         Natsuki.setOutfit(teddy_cardigan_outfit)
 
@@ -2472,11 +2472,11 @@ label holiday_new_years_day:
         import copy
 
         # Give Natsuki a new year headband, using whatever she's currently wearing as a base
-        jn_outfits.get_wearable("jn_headgear_new_year_headband").unlock()
-        new_years_hat_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
-        new_years_hat_outfit.headgear = jn_outfits.get_wearable("jn_headgear_new_year_headband")
-        new_years_hat_outfit.hairstyle = jn_outfits.get_wearable("jn_hair_down")
-        jn_outfits.save_temporary_outfit(new_years_hat_outfit)
+        jn_outfits.getWearable("jn_headgear_new_year_headband").unlock()
+        new_years_hat_outfit = copy.copy(jn_outfits.getOutfit(Natsuki.getOutfitName()))
+        new_years_hat_outfit.headgear = jn_outfits.getWearable("jn_headgear_new_year_headband")
+        new_years_hat_outfit.hairstyle = jn_outfits.getWearable("jn_hair_down")
+        jn_outfits.saveTemporaryOutfit(new_years_hat_outfit)
 
         jn_events.getHoliday("holiday_new_years_day").run()
 
@@ -2654,10 +2654,10 @@ label holiday_new_years_day:
     return
 
 label holiday_valentines_day:
-    $ valentine_outfit = jn_outfits.get_outfit("jn_ruffle_neck_sweater_outfit")
+    $ valentine_outfit = jn_outfits.getOutfit("jn_ruffle_neck_sweater_outfit")
     $ valentine_outfit.unlock()
-    $ jn_outfits.save_temporary_outfit(valentine_outfit)
-    $ player_has_gifted_clothes = len(jn_outfits.JNWearable.filter_wearables(jn_outfits.get_all_wearables(), True, False)) > 0
+    $ jn_outfits.saveTemporaryOutfit(valentine_outfit)
+    $ player_has_gifted_clothes = len(jn_outfits.JNWearable.filterWearables(jn_outfits.getAllWearables(), True, False)) > 0
     $ jn_events.getHoliday("holiday_valentines_day").run()
 
     n 1uskfllsbr "...!{w=0.75}{nw}"
@@ -2747,9 +2747,9 @@ label holiday_valentines_day:
         $ jnPause(3)
         play audio clothing_ruffle
 
-        $ valentine_special_outfit = jn_outfits.get_outfit("jn_heart_sweater_outfit")
+        $ valentine_special_outfit = jn_outfits.getOutfit("jn_heart_sweater_outfit")
         $ valentine_special_outfit.unlock()
-        $ jn_outfits.save_temporary_outfit(valentine_special_outfit)
+        $ jn_outfits.saveTemporaryOutfit(valentine_special_outfit)
         show natsuki 1nsrdvfess at jn_center
 
         $ jnPause(5)
@@ -2906,9 +2906,9 @@ label holiday_easter:
         persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
         jn_atmosphere.showSky(jn_atmosphere.WEATHER_CHERRY_BLOSSOM)
 
-        chick_outfit = jn_outfits.get_outfit("jn_chick_outfit")
+        chick_outfit = jn_outfits.getOutfit("jn_chick_outfit")
         chick_outfit.unlock()
-        jn_outfits.save_temporary_outfit(chick_outfit)
+        jn_outfits.saveTemporaryOutfit(chick_outfit)
 
         jn_events.getHoliday("holiday_easter").run()
 
@@ -2954,7 +2954,7 @@ label holiday_easter:
     n 1ulrss "Plus with how the blossoms travel all the way up from south to north..."
     n 3uchgn "It's pretty much a rolling announcement for the summer!{w=0.2} I love it!"
     
-    $ cherry_blossom_outfit = jn_outfits.get_outfit("jn_cherry_blossom_outfit")
+    $ cherry_blossom_outfit = jn_outfits.getOutfit("jn_cherry_blossom_outfit")
     if not cherry_blossom_outfit.unlocked:
         $ cherry_blossom_outfit.unlock()
         n 4fslpu "I'm sure I had a super stylish dress themed around it somewhere..."
@@ -3110,11 +3110,11 @@ label holiday_christmas_eve:
         jn_atmosphere.showSky(jn_atmosphere.WEATHER_SNOW)
 
         # The Nat in the Hat
-        jn_outfits.get_wearable("jn_headgear_santa_hat").unlock()
-        santa_hat_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
-        santa_hat_outfit.headgear = jn_outfits.get_wearable("jn_headgear_santa_hat")
-        santa_hat_outfit.hairstyle = jn_outfits.get_wearable("jn_hair_down")
-        jn_outfits.save_temporary_outfit(santa_hat_outfit)
+        jn_outfits.getWearable("jn_headgear_santa_hat").unlock()
+        santa_hat_outfit = copy.copy(jn_outfits.getOutfit(Natsuki.getOutfitName()))
+        santa_hat_outfit.headgear = jn_outfits.getWearable("jn_headgear_santa_hat")
+        santa_hat_outfit.hairstyle = jn_outfits.getWearable("jn_hair_down")
+        jn_outfits.saveTemporaryOutfit(santa_hat_outfit)
 
         # Let it go
         jn_events.getHoliday("holiday_christmas_eve").run()
@@ -3321,9 +3321,9 @@ label holiday_christmas_day:
         jn_atmosphere.showSky(jn_atmosphere.WEATHER_SNOW)
 
         # Dress up Natsu
-        christmas_outfit = jn_outfits.get_outfit("jn_christmas_outfit")
+        christmas_outfit = jn_outfits.getOutfit("jn_christmas_outfit")
         christmas_outfit.unlock()
-        jn_outfits.save_temporary_outfit(christmas_outfit)
+        jn_outfits.saveTemporaryOutfit(christmas_outfit)
 
         # Let it go
         jn_events.getHoliday("holiday_christmas_day").run()
@@ -3691,15 +3691,15 @@ label holiday_natsuki_birthday:
         import copy
 
         # Give Natsuki a party hat, using whatever she's currently wearing as a base
-        party_hat = jn_outfits.get_wearable("jn_headgear_classic_party_hat")
+        party_hat = jn_outfits.getWearable("jn_headgear_classic_party_hat")
 
         if not party_hat.unlocked:
             party_hat.unlock()
 
-        birthday_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
+        birthday_outfit = copy.copy(jn_outfits.getOutfit(Natsuki.getOutfitName()))
         birthday_outfit.headgear = party_hat
-        birthday_outfit.hairstyle = jn_outfits.get_wearable("jn_hair_ponytail")
-        jn_outfits.save_temporary_outfit(birthday_outfit)
+        birthday_outfit.hairstyle = jn_outfits.getWearable("jn_hair_ponytail")
+        jn_outfits.saveTemporaryOutfit(birthday_outfit)
 
         # Delete the party supplies needed to proc this holiday
         jn_utils.deleteFileFromDirectory(os.path.join(renpy.config.basedir, "characters/party_supplies.nats").replace("\\", "/"))
@@ -4046,8 +4046,8 @@ label holiday_natsuki_birthday:
     hide black with Dissolve(1.25)
     $ jnPause(3)
     
-    $ gold_star_hairpin = jn_outfits.get_wearable("jn_accessory_gold_star_hairpin")
-    $ pink_star_hairpin = jn_outfits.get_wearable("jn_accessory_pink_star_hairpin")
+    $ gold_star_hairpin = jn_outfits.getWearable("jn_accessory_gold_star_hairpin")
+    $ pink_star_hairpin = jn_outfits.getWearable("jn_accessory_pink_star_hairpin")
     
     if (
         persistent.jn_custom_outfits_unlocked 
@@ -4101,7 +4101,7 @@ label holiday_natsuki_birthday:
         $ jnPause(3)
         play audio necklace_clip
         $ birthday_outfit.accessory = hairpin_to_gift
-        $ jn_outfits.save_temporary_outfit(birthday_outfit)
+        $ jn_outfits.saveTemporaryOutfit(birthday_outfit)
 
         if Natsuki.isEnamored(higher=True):
             show natsuki 2ksrsml
@@ -4175,11 +4175,11 @@ label holiday_player_birthday:
         today_day_month = (datetime.date.today().day, datetime.date.today().month)
 
         # Give Natsuki a party hat, using whatever she's currently wearing as a base
-        jn_outfits.get_wearable("jn_headgear_classic_party_hat").unlock()
-        birthday_hat_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
-        birthday_hat_outfit.headgear = jn_outfits.get_wearable("jn_headgear_classic_party_hat")
-        birthday_hat_outfit.hairstyle = jn_outfits.get_wearable("jn_hair_down")
-        jn_outfits.save_temporary_outfit(birthday_hat_outfit)
+        jn_outfits.getWearable("jn_headgear_classic_party_hat").unlock()
+        birthday_hat_outfit = copy.copy(jn_outfits.getOutfit(Natsuki.getOutfitName()))
+        birthday_hat_outfit.headgear = jn_outfits.getWearable("jn_headgear_classic_party_hat")
+        birthday_hat_outfit.hairstyle = jn_outfits.getWearable("jn_hair_down")
+        jn_outfits.saveTemporaryOutfit(birthday_hat_outfit)
 
         jn_events.getHoliday("holiday_player_birthday").run()
         player_name_capitalized = player.upper()
