@@ -117,7 +117,7 @@ label random_music_enable:
 
     if len(jn_utils.getAllDirectoryFiles(
             path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
-            extension_list=["mp3","wav","ogg"]
+            extension_list=jn_utils.getSupportedMusicFileExtensions()
         )) >= 2:
         # Proceed if we have at least two tracks
         n 1uchgn "Okaaay!{w=0.2} I think I've got enough to work with here!{w=0.5}{nw}"

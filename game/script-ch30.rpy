@@ -220,7 +220,7 @@ label ch30_init:
     if jn_random_music.getRandomMusicPlayable():
         $ available_custom_music = jn_utils.getAllDirectoryFiles(
             path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
-            extension_list=jn_custom_music._VALID_FILE_EXTENSIONS
+            extension_list=jn_utils.getSupportedMusicFileExtensions()
         )
         if (len(available_custom_music) >= 2):
             $ renpy.play(
