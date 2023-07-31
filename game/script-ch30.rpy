@@ -116,25 +116,25 @@ label ch30_init:
 
         # Load outfits from disk and corresponding persistent data
         if Natsuki.isHappy(higher=True) and persistent.jn_custom_outfits_unlocked:
-            jn_outfits.load_custom_wearables()
-            jn_outfits.load_custom_outfits()
+            jn_outfits.loadCustomWearables()
+            jn_outfits.loadCustomOutfits()
 
-        jn_outfits.JNWearable.load_all()
-        jn_outfits.JNOutfit.load_all()
+        jn_outfits.JNWearable.loadAll()
+        jn_outfits.JNOutfit.loadAll()
         jn_utils.log("Outfit data loaded.")
 
         # Set Natsuki's outfit
         if persistent.jn_natsuki_auto_outfit_change_enabled or persistent.jn_natsuki_outfit_on_quit == "jn_temporary_outfit":
             # Real-time outfit selection, or last outfit was temporary
-            Natsuki.setOutfit(jn_outfits.get_realtime_outfit())
+            Natsuki.setOutfit(jn_outfits.getRealtimeOutfit())
 
-        elif jn_outfits.outfit_exists(persistent.jn_natsuki_outfit_on_quit):
+        elif jn_outfits.outfitExists(persistent.jn_natsuki_outfit_on_quit):
             # Custom outfit/default outfit selection
-            Natsuki.setOutfit(jn_outfits.get_outfit(persistent.jn_natsuki_outfit_on_quit))
+            Natsuki.setOutfit(jn_outfits.getOutfit(persistent.jn_natsuki_outfit_on_quit))
 
         else:
             # Fallback to Natsuki's school uniform
-            Natsuki.setOutfit(jn_outfits.get_outfit("jn_school_uniform"))
+            Natsuki.setOutfit(jn_outfits.getOutfit("jn_school_uniform"))
 
         jn_utils.log("Outfit set.")
 
@@ -220,7 +220,7 @@ label ch30_init:
     if jn_random_music.getRandomMusicPlayable():
         $ available_custom_music = jn_utils.getAllDirectoryFiles(
             path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
-            extension_list=jn_custom_music._VALID_FILE_EXTENSIONS
+            extension_list=jn_utils.getSupportedMusicFileExtensions()
         )
         if (len(available_custom_music) >= 2):
             $ renpy.play(
@@ -419,7 +419,7 @@ init python:
         jn_utils.save_game()
 
         # Check the daily affinity cap and reset if need be
-        Natsuki.checkResetDailies ()
+        Natsuki.checkResetDailies()
 
         # Run through all externally-registered minute check actions
         if len(jn_plugins.minute_check_calls) > 0:
@@ -432,7 +432,7 @@ init python:
         if (
             Natsuki.isHappy(higher=True)
             and persistent.jn_custom_outfits_unlocked
-            and len(jn_outfits._SESSION_NEW_UNLOCKS)
+            and jn_outfits.getSafePendingUnlocks()
             and not jn_events.selectHolidays()
         ):
             queue("new_wearables_outfits_unlocked")
@@ -551,7 +551,7 @@ init python:
 
         if (
             persistent.jn_natsuki_auto_outfit_change_enabled
-            and not Natsuki.isWearingOutfit(jn_outfits.get_realtime_outfit().reference_name)
+            and not Natsuki.isWearingOutfit(jn_outfits.getRealtimeOutfit().reference_name)
         ):
             # We call here so we don't skip day_check, as call returns us to this point
             renpy.call("outfits_auto_change")
@@ -769,8 +769,8 @@ label outfits_menu:
     $ outfit_options = [
         ("Can you wear an outfit for me?", "outfits_wear_outfit"),
         ("Can I suggest a new outfit?", "outfits_suggest_outfit"),
-        ("Can I remove an outfit I suggested?", "outfits_remove_outfit"),
-        ("Can you search again for new outfits?", "outfits_reload")
+        ("Can you forget about an outfit I suggested?", "outfits_remove_outfit"),
+        ("Can you search again for new items?", "outfits_reload")
     ]
     call screen scrollable_choice_menu(outfit_options, ("Nevermind.", None))
 
@@ -822,30 +822,35 @@ label try_force_quit:
     else:
         # Standard quit behaviour
         if Natsuki.isAffectionate(higher=True):
-            n 2kplpo "W-{w=0.1}wait,{w=0.1} what?{w=0.2} Aren't you going to say goodbye first,{w=0.1} [player]?"
+            n 2ccsem "W-{w=0.2}wait,{w=0.5}{nw}" 
+            extend 2knmflsbl " what?{w=0.75}{nw}"
+            extend 5clrunlsbl " Can you at {i}least{/i} say goodbye first,{w=0.2} [player]?"
 
         elif Natsuki.isNormal(higher=True):
-            n 4kskem "H-{w=0.1}hey!{w=0.2} You aren't just going to leave like that,{w=0.1} are you?"
+            n 4kskem "H-{w=0.2}hey!{w=0.75}{nw}" 
+            extend 4kllflsbl " Y-{w=0.2}you aren't just going to leave like that,{w=0.5}{nw}" 
+            extend 4ksqunsbl " are you?"
 
         elif Natsuki.isDistressed(higher=True):
-            n 2fsqpu "...Really?{w=0.2} I don't even get a 'goodbye' now?"
+            n 2fsqpu "...Really?{w=0.75}{nw}" 
+            extend 2fcsupsbr " I don't even get a 'goodbye' now?"
 
         else:
-            n 2fsqsf "...Oh.{w=0.2} You're leaving."
+            n 2fsqsftsb "..."
 
         menu:
             # Back out of quitting
             "Nevermind.":
                 if Natsuki.isAffectionate(higher=True):
-                    n 4kllssl "T-{w=0.1}thanks,{w=0.1} [player].{w=1}{nw}"
-                    n 1tllss "Now,{w=0.1} where was I...?{w=1}{nw}"
-                    extend 1unmbo " Oh,{w=0.1} right.{w=1}{nw}"
+                    n 4kllssl "T-{w=0.2}thanks,{w=0.2} [player].{w=1}{nw}"
+                    n 1tllss "Now,{w=0.2} where was I...?{w=1}{nw}"
+                    extend 1unmbo " Oh,{w=0.2} right.{w=1}{nw}"
 
                 elif Natsuki.isNormal(higher=True):
-                    n 2flleml "G-{w=0.1}good!{w=1}{nw}"
+                    n 2flleml "G-{w=0.2}good!{w=1}{nw}"
                     extend 2kllpol " Good...{w=1}{nw}"
                     n 1tslpu "Now...{w=0.3} what was I saying again?{w=0.5}{nw}"
-                    extend 1nnmbo " Oh,{w=0.1} right.{w=1}{nw}"
+                    extend 1nnmbo " Oh,{w=0.2} right.{w=1}{nw}"
 
                 elif Natsuki.isDistressed(higher=True):
                     n 1fsqfr "...Thank you.{w=1}{nw}"
