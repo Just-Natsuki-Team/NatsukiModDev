@@ -865,7 +865,7 @@ label talk_service_animals:
             extend 3csrbo " or like a visit from the local police or some other snooze-fest."
             n 7utrpu "But...{w=0.75}{nw}"
             extend 7clrbg " there was {i}one{/i} visit I actually did like."
-            n 4fcsbg "Betcha can't guess what it was,{w=0.2} [player]."
+            n 4fcsbg "Betcha' can't guess what it was,{w=0.2} [player]."
             n 3fsqsm "Ehehe."
             n 3ullaj "It was actually a bunch of volunteers from a charity...{w=1}{nw}"
             extend 4unmfl " but for service and therapy animals!"
@@ -2885,7 +2885,7 @@ label talk_sustainable_fashion:
         n 2klrsr "I've...{w=0.3} never had tons of money to buy more clothes anyway,{w=0.1} so I try to reuse and fix up what I can."
         n 1fchbg "But you'd be surprised at what you can pull off with a little creativity!"
         extend 1fcssm " And just a pinch of know-how too,{w=0.1} obviously."
-        n 4fchgn "Betcha didn't know my favorite pink skirt was hand-made,{w=0.1} did you?"
+        n 4fchgn "Betcha' didn't know my favorite pink skirt was hand-made,{w=0.1} did you?"
 
     n 1unmaj "I think I've lectured you enough now,{w=0.1} [player],{w=0.1} so I won't keep harping on about it."
     n 3nllpu "But...{w=0.3} the next time you're out shopping for clothes,{w=0.1} or looking through some catalogues online?"
