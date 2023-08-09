@@ -23,7 +23,6 @@ init 0 python in jn_blackjack:
     from Enum import Enum
     import random
     import store
-    import store.jn_plugins as jn_plugins
     import time
 
     # In-game tracking
@@ -443,13 +442,13 @@ label blackjack_explanation:
     n 6fchbl "...That means you bust!"
     n 1cllss "Otherwise if neither of us end up busting,{w=0.5}{nw}"
     extend 2ccssm " then whoever got {i}closest{/i} to twenty one wins the round.{w=0.75}{nw}"
-    extend 2fchbg "Easy peasy!"
+    extend 2fchbg " Easy peasy!"
     n 4unmaj "Oh,{w=0.2} yeah -{w=0.5}{nw}"
-    extend 7clrss " and don't worry about keeping tabs on the score or anything.{w=0.75}{nw}"
+    extend 7clrss " and don't worry about keeping tabs on the score or anything.\n{w=0.75}{nw}"
     extend 6fcsbg " I've got it all covered!"
     n 3fchsm "Ehehe."
     n 4fnmsm "But yeah!{w=0.75}{nw}"
-    extend 1ullss " I think that's pretty much everything I had."
+    extend 4ullss " I think that's pretty much everything I had."
     n 3ullaj "So...{w=1}{nw}"
     extend 7unmbo " how about it,{w=0.2} [player]?"
 
@@ -496,12 +495,12 @@ label blackjack_explanation:
                 n 3fcsbg "Don't think I'm gonna go any easier on you later either!{w=0.75}{nw}"
                 extend 3nchgnl " Ahaha."
 
-            if not Natsuki.getDeskSlotClear(jn_desk_items.JNDeskSlots.centre):
+            if not Natsuki.getDeskSlotClear(jn_desk_items.JNDeskSlots.right):
                 show natsuki 2ccspo
                 show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
                 $ jnPause(1)
                 play audio drawer
-                $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+                $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.right)
                 show natsuki 2nlrbo
                 $ jnPause(1)
                 hide black with Dissolve(1.25)
@@ -511,6 +510,7 @@ label blackjack_explanation:
 label blackjack_start:
     $ HKBHideButtons()
     show screen blackjack_ui
+    show natsuki option_wait_smug
     play audio card_place
     $ jn_blackjack._setup()
     $ Natsuki.setInGame(True)
@@ -666,7 +666,7 @@ label blackjack_end:
             jn_blackjack.JNBlackjackStates.natsuki_closest: [
                 "Yes!{w=0.5} I win!{w=0.3} I win!{w=0.75} Ehehe.",
                 "Yes!{w=0.5} I win again!",
-                "I was closer!{w=0.5} I win!{w=0.3} I win!",
+                "Look!{w=0.5} I was closer!{w=0.3} I win!{w=0.3} I win!",
                 "Yes!{w=0.5} Take that,{w=0.2} [player]!{w=0.75} Ehehe.",
                 "Oh yeah!{w=0.75} Now {i}that's{/i} more like it!",
                 "Yes!{w=0.75} Tough luck,{w=0.2} [player]!{w=0.75} Ehehe.",
@@ -786,7 +786,7 @@ label blackjack_quit_forfeit:
 
             else:
                 n 1nsqpu "...Wow.{w=0.75}{nw}"
-                extend 4tnmfl " And you didn't even end up making a single move!{w=0.75}{nw}"
+                extend 4tnmfl " And you didn't even end up making a single move that round!{w=0.75}{nw}"
                 extend 4tlrbo " Huh."
                 n 2tlrsl "..."
                 n 2ulrfl "Well.{w=0.75}{nw}"
@@ -799,7 +799,7 @@ label blackjack_quit_forfeit:
             show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
             $ jnPause(1)
             play audio drawer
-            $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+            $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.right)
             $ jnPause(1)
             hide black with Dissolve(1.25)
 
@@ -836,6 +836,7 @@ label blackjack_quit_forfeit:
                 n 4fchgn "Make your move already,{w=0.2} [player]!"
             
             show screen blackjack_ui
+            show natsuki option_wait_smug
             jump blackjack_main_loop
 
     return
