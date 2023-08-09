@@ -506,6 +506,11 @@ init python in jn_jokes:
         display_name="Bakers",
         joke_category=JNJokeCategories.corny
     ))
+    __registerJoke(JNJoke(
+        label="joke_ravioli_pasta_way",
+        display_name="Ravioli",
+        joke_category=JNJokeCategories.corny
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -1147,4 +1152,17 @@ label joke_bakers:
     n 1cllajsbl "They'd be...{w=1}{nw}"
     extend 1csqemsbl " {i}on a roll{/i}."
 
+    return
+
+label joke_ravioli_pasta_way:
+    n 1cslflsbr "...I can't {i}believe{/i} I'm reading this one out.{w=0.75}{nw}"
+    extend 1ccsslsbr " Yeesh."
+    n 1csrbo "..."
+    n 1clrfl "Did you hear about the chef who just couldn't lay off the ravioli?"
+    n 1cnmsl "..."
+    n 1ccsemesi "..."
+    n 1cllfl "They...{w=1}{nw}"
+    extend 1csqup " {i}pasta{/i}"
+    extend 1csrsl " way."
+    
     return
