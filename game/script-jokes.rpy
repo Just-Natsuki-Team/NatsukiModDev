@@ -511,6 +511,21 @@ init python in jn_jokes:
         display_name="Ravioli",
         joke_category=JNJokeCategories.corny
     ))
+    __registerJoke(JNJoke(
+        label="joke_spices",
+        display_name="Spices",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_movie_theater_concessions",
+        display_name="Movie theater",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_octo_puss",
+        display_name="Eight-legged cat",
+        joke_category=JNJokeCategories.bad
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -1162,7 +1177,49 @@ label joke_ravioli_pasta_way:
     n 1cnmsl "..."
     n 1ccsemesi "..."
     n 1cllfl "They...{w=1}{nw}"
-    extend 1csqup " {i}pasta{/i}"
+    extend 1csqup " {i}pasta{/i}{w=0.75}{nw}"
     extend 1csrsl " way."
+    
+    return
+
+label joke_spices:
+    n 1csqbg "'Kay.{w=0.75}{nw}"
+    extend 1fcsbs " So!"
+    n 1unmss "When would a chef start adding extra paprika and chili powder to a dish you ordered?"
+    n 1cnmsm "..."
+    n 1csqss "No?{w=0.75}{nw}"
+    extend 1fcsaj " Come on,{w=0.2} [player]!{w=0.75}{nw}"
+    extend 1fnmbg " Even {i}you{/i} should have nailed this one!"
+    n 1fcsbg "...When they want to{w=0.5}{nw}"
+    extend 1fsqss " {i}spice{/i}{w=0.75}{nw}"
+    extend 1fchbs " up your life,{w=0.5}{nw}" 
+    extend 1nchgn " of course!"
+
+    return
+
+label joke_movie_theater_concessions:
+    n 1tllfl "Hey,{w=0.5}{nw}"
+    extend 1tnmaj " [player] -{w=0.5}{nw}"
+    extend 1unmaj " did you hear about the movie theater that got shut down recently?"
+    n 1csrem "Talk about a bummer!{w=0.75}{nw}"
+    extend 1unmem " Seriously -{w=0.5}{nw}" 
+    extend 1fllem " the owners had to completely sell up and everything!"
+    n 1ccsfl "Apparently they just couldn't come to a decent arrangement with all their costs and licensing stuff."
+    n 1csrss "Heh."
+    n 1ccsss "I guess you could say...{w=1}{nw}"
+    extend 1fchgn " they just didn't make enough {i}concessions{/i}!"
+
+    return
+
+label joke_octo_puss:
+    n 1ccsfl "Ugh...{w=1}{nw}"
+    extend 1clrfll " this one just sounds mean.{w=0.75}{nw}"
+    extend 1fsrsll " Gross."
+    n 1ccspuesi "..."
+    n 1cllfl "What do you call a cat born with double the amount of legs?"
+    n 1cllsl "..."
+    n 1fslsl "..."
+    n 1fcsfl "...An octo-{w=0.75}{nw}"
+    extend 1fsrbo "{i}puss{/i}."
     
     return
