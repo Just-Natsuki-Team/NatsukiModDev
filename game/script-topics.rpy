@@ -11546,3 +11546,145 @@ label talk_enable_no_topics_reminder:
 
     $ persistent._jn_natsuki_out_of_topics_remind = True
     return
+
+# Ask Natsuki to remind the player next time she runs out of topics.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_work_experience",
+            unlocked=True,
+            prompt="Did you ever have any work experience?",
+            category=["Society"],
+            conditional="jn_utils.get_total_gameplay_days() >= 2",
+            player_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_work_experience:
+    $ already_discussed_work_experience = get_topic("talk_work_experience").shown_count > 0
+
+    if already_discussed_work_experience:
+        n "Wait..."
+        extend " work experience?"
+        extend " H-hang on a sec."
+        n "Didn't you ask me about that already, [player]?"
+        extend " Huh."
+        n "Well,"
+        extend " whatever."
+        extend " I guess I don't mind sharing my..."
+        extend " {i}experience{/i}"
+        extend " again."
+        n "If you can even call it that, a-anyway."
+        n "Like I was saying before, we never properly got to choose our placements or anything like that."
+
+    else:
+        n "Work experience,"
+        extend " huh?"
+        n "...Wait."
+        extend " Don't tell me."
+        extend " You mean like some kind of placement while I was in school?"
+        n "{i}That{/i} kind of work experience?"
+        n "..."
+        n "Heh."
+        extend " Yeah."
+        extend " It was an {i}experience{/i} alright."
+        n "So."
+        extend " I don't know how it works for you, [player]."
+        extend " But at my school at least?"
+        extend " We didn't even get to properly choose our placements."
+
+    n "Seriously -" 
+    extend " it was just a total crapshoot!"
+    extend " Nothing but dumb luck!"
+    n "And no, [player], before you ask -"
+    extend " we didn't get a {i}choice{/i} on if we wanted to do it either."
+
+    n "We all had this online form we had to fill out in the computer room,"
+    extend " but it wasn't like we could just type in a place we already had in mind."
+    extend " Of {i}course{/i} not."
+    n "Nope!"
+    extend " It was just a bunch of pre-filled options we had to pick between."
+    extend " They weren't even good ones!"
+    n "There were a couple of office places, sure."
+    extend " But most of them were just working in some random store!"
+    extend " The whole point of those is that you don't even {i}need{/i} experience to do them!"
+    n "...And we had to pick {i}three{/i} of them too."
+    n "Heh." 
+    extend " The worst part, [player]?"
+    extend " You're not even gonna {i}believe{/i} this."
+    n "We had to write out a complete cover letter for all of them too!"
+    extend " I'm not even kidding."
+    extend " There was a word count and everything!"
+    n "I mean, I get it."
+    extend " It was meant to give us practice on how to apply for stuff in the future."
+    extend " I {i}get{/i} that."
+    n "But come"
+    extend " {i}on{/i}!"
+    n "Do you know how hard it is to sound convincing for something you don't even {i}care{/i} about?"
+    n "We didn't even know about half of the places we could pick until they appeared on the list!"
+    n "A-and besides,"
+    extend " it isn't like the places we were applying to didn't know we had to do it either!"
+    extend " It's all a total act anyway!"
+    n "Then with everyone applying for all the good ones, the teacher would just send off your last choice instead."
+    extend " Or dump you with some place nobody wanted at all."
+    extend " What a joke."
+
+    n "Ugh..."
+    $ already_discussed_interviews = get_topic("talk_how_to_interview_properly").shown_count > 0
+    if already_discussed_interviews:
+        n "Talk about a complete waste of time."
+        n "I already mentioned before that I never had the time for a part-time job or anything like that outside of school."
+        n "...So why did they think we'd have a couple of weeks to blow on something like {i}that{/i}?"
+        n "{i}Especially{/i} when it isn't even paid work."
+
+    else:
+        n "And with the constant assignments plus all the regular lessons too?"
+        extend " I didn't even have time for a {i}paid{/i} job!"
+        extend " Let alone forking over all my effort for {i}free{/i}."
+
+    n "Yeah, yeah."
+    extend " We get to spend time in a real workplace so we know what to expect later,"
+    extend " or build some connections."
+    n "It's just that..."
+    n "..."
+
+    if Natsuki.isAffectionate(higher=True):
+        n "I-it's just so frustrating!"
+        extend " You know?"
+        extend " With so much going on at the same time, I mean."
+        n "I..."
+        extend " don't..."
+        extend " mind helping a place out."
+        n "If it's about something I actually {i}care{/i} about."
+        n "...But why does my future have to suffer for it?"
+        n "It's not like I couldn't just land a job at one of those places when I actually needed the work."
+        extend " Right?"
+
+        if Natsuki.isEnamored(higher=True):
+            n "Heh."
+            extend " Besides."
+            n "..."
+            n "...I was already told my future was gonna be stacking shelves."
+            extend " The last thing I need is a preview."
+            n "..."
+
+        # TODO: introduce office outfit/getup? Work experience taking place in school instead in library?
+        # Possible concerns about transport
+
+
+    else:
+        n "N-nevermind."
+        extend " It's not like any of that really matters now, anyway."
+
+    # TODO: Ask player if they had work experience/internship
+
+    # n "I mean...."
+    # extend " we could rank what we picked, obviously."
+    # extend " But come on."
+    # extend " As if that really changed anything."
+
+    return
