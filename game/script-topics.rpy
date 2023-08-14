@@ -10540,9 +10540,9 @@ label talk_daily_jokes_seen_before_start:
         extend 3fsqbg " {i}Someone{/i} just can't get enough of the joke book,{w=0.2} huh?"
         n 3fcssm "Ehehe."
         n 4ullaj "Well...{w=1}{nw}"
-        extend 4cllss " I didn't exactly take notes or anything on the ones I've told you...\n{w=0.75}{nw}"
+        extend 5cllss " I didn't exactly take notes or anything on the ones I've told you...\n{w=0.75}{nw}"
         extend 2fcssssbr " but I'm pretty sure I can figure it out!"
-        n 2unmaj "Just give me a sec here..."
+        n 4unmaj "Just give me a sec here..."
 
     else:
         n 1csqss "Oh?{w=0.75}{nw}"

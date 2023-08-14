@@ -526,6 +526,11 @@ init python in jn_jokes:
         display_name="Eight-legged cat",
         joke_category=JNJokeCategories.bad
     ))
+    __registerJoke(JNJoke(
+        label="joke_roller_blade",
+        display_name="Shaving as a skater",
+        joke_category=JNJokeCategories.neutral
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -1222,4 +1227,20 @@ label joke_octo_puss:
     n 1fcsfl "...An octo-{w=0.75}{nw}"
     extend 1fsrbo "{i}puss{/i}."
     
+    return
+
+label joke_roller_blade:
+    n 1fcsbg "Let's see how much this one {i}grinds{/i} you,{w=0.5}{nw}" 
+    extend 1fsqbg " [player]!"
+    n 1fcsaj "So!{w=0.75}{nw}"
+    extend 1unmaj " What does a professional skater use for a clean shave?"
+    n 1tsqsm "..."
+    n 1tsqss "No?{w=0.75}{nw}"
+    extend 1fsqbg " Not even a guess?{w=0.75}{nw}"
+    extend 1fsgsm " Ehehe."
+    n 1fcsbs "Easy!"
+    n 1ullbg "They'd use a roller-{w=0.75}{nw}"
+    extend 1uchbg " {i}blade{/i}!{w=0.75}{nw}"
+    extend 1fchgn " Duh!"
+
     return
