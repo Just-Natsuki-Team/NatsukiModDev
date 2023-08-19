@@ -19,6 +19,7 @@ default persistent.jn_player_appearance_height_cm = None
 default persistent._jn_player_birthday_day_month = None # Format (day, month)
 default persistent._jn_player_birthday_is_leap_day = False # True if player gave birthday as 29th
 default persistent._jn_player_is_multilingual = None
+default persistent._jn_player_had_work_placement = None
 
 # Hobby data
 default persistent.jn_player_gaming_frequency = None
@@ -11566,125 +11567,255 @@ init 5 python:
 
 label talk_work_experience:
     $ already_discussed_work_experience = get_topic("talk_work_experience").shown_count > 0
+    if already_discussed_work_experience:
+        n  "Wait...{w=1}{nw}"
+        extend  " work experience?{w=0.75}{nw}"
+        extend  " H-{w=0.2}hang on a sec."
+        n  "Didn't you ask me about that already,{w=0.2} [player]?{w=0.75}{nw}"
+        extend  " Huh."
+        n  "Well,{w=0.5}{nw}"
+        extend  " whatever.{w=0.75}{nw}"
+        extend  " I guess I don't mind sharing my...{w=1}{nw}"
+        extend  " {i}experience{/i}{w=0.5}{nw}"
+        extend  " again."
+        n  "If you can even call it that,{w=0.2} a-{w=0.2}anyway."
+        n  "Like I was saying before,{w=0.2} we never properly got to choose our placements or anything like that."
+
+    else:
+        n  "Work experience,{w=0.5}{nw}"
+        extend  " huh?"
+        n  "...Wait.{w=0.75}{nw}"
+        extend  " Don't tell me.{w=0.75}{nw}"
+        extend  " You mean like some kind of placement while I was in school?"
+        n  "{i}That{/i} kind of work experience?"
+        n  "..."
+        n  "Heh.{w=0.75}{nw}"
+        extend  " Yeah.{w=0.75}{nw}"
+        extend  " It was an {i}experience{/i} alright."
+        n  "So.{w=0.75}{nw}"
+        extend  " I don't know how it works for you,{w=0.2} [player].{w=0.75}{nw}"
+        extend  " But at my school at least?{w=0.75}{nw}"
+        extend  " We didn't even get to properly choose our placements."
+
+    n  "Seriously -{w=0.5}{nw}" 
+    extend  " it was a total crapshoot!{w=0.75}{nw}"
+    extend  " Nothing but dumb luck!"
+    n  "And no,{w=0.2} [player],{w=0.2} before you ask -{w=0.5}{nw}"
+    extend  " we didn't get a choice on if we {i}wanted{/i} to do it either."
+    n  "We all had this online form we had to fill out in the computer room,{w=0.5}{nw}"
+    extend  " but it wasn't like we could just type in a place we already had in mind.{w=0.75}{nw}"
+    extend  " Of {i}course{/i} not."
+    n  "Nope!{w=0.75}{nw}"
+    extend  " It was just a bunch of pre-filled options we had to pick between.{w=0.75}{nw}"
+    extend  " They weren't even good ones!"
+    n  "There were a couple of office places,{w=0.2} sure.{w=0.75}{nw}"
+    extend  " But most of them were just working in some random store!{w=0.75}{nw}"
+    extend  " The whole point of those is that you don't even {i}need{/i} experience to do them!"
+    n  "...And we had to pick {i}three{/i} of them too.{w=0.2} {i}In order of preference{/i}."
+    n  "Heh.{w=0.75}{nw}" 
+    extend  " The worst part,{w=0.2} [player]?{w=0.75}{nw}"
 
     if already_discussed_work_experience:
-        n "Wait..."
-        extend " work experience?"
-        extend " H-hang on a sec."
-        n "Didn't you ask me about that already, [player]?"
-        extend " Huh."
-        n "Well,"
-        extend " whatever."
-        extend " I guess I don't mind sharing my..."
-        extend " {i}experience{/i}"
-        extend " again."
-        n "If you can even call it that, a-anyway."
-        n "Like I was saying before, we never properly got to choose our placements or anything like that."
+        extend  " It {i}still{/i} bugs me talking about it a second time."
 
     else:
-        n "Work experience,"
-        extend " huh?"
-        n "...Wait."
-        extend " Don't tell me."
-        extend " You mean like some kind of placement while I was in school?"
-        n "{i}That{/i} kind of work experience?"
-        n "..."
-        n "Heh."
-        extend " Yeah."
-        extend " It was an {i}experience{/i} alright."
-        n "So."
-        extend " I don't know how it works for you, [player]."
-        extend " But at my school at least?"
-        extend " We didn't even get to properly choose our placements."
+        extend  " You're not even gonna {i}believe{/i} this."
 
-    n "Seriously -" 
-    extend " it was just a total crapshoot!"
-    extend " Nothing but dumb luck!"
-    n "And no, [player], before you ask -"
-    extend " we didn't get a {i}choice{/i} on if we wanted to do it either."
+    n  "We had to write out a complete cover letter for all of them too!{w=0.75}{nw}"
+    extend  " There was a word count and everything!"
+    n "..."
+    n  "I mean,{w=0.2} I get it.{w=0.75}{nw}"
+    extend  " It was meant to give us practice on how to apply for stuff in the future.{w=0.75}{nw}"
+    extend  " I {i}get{/i} that."
+    n  "But come{w=0.5}{nw}"
+    extend  " {i}on{/i}!"
+    n  "Do you know how much of a pain it is to sound convincing for something you don't even {i}care{/i} about?"
+    n  "We didn't even know about half of the places we could pick until they appeared on the list!"
+    n  "A-{w=0.2}and besides.{w=0.75}{nw}"
+    extend  " It isn't like the places we were applying to didn't {i}know{/i} we had to do it either -{w=0.5}{nw}"
+    extend  " so it's all a total act anyway!"
+    n  "So then we were stuck trying to desperately research all these places,{w=0.5}{nw}"
+    extend  " what they even did,{w=0.5}{nw}"
+    extend  " how to actually {i}get{/i} there..."
+    n  "...While trying to play up how {i}amazing{/i} for the job we were and beat everyone else in submitting it!"
+    n  "..."
+    n  "Then with everyone applying for all the good ones,{w=0.5}{nw}" 
+    extend  " the teachers would just send off your last choice instead.{w=0.75}{nw}"
+    extend  " Or dump you with some place nobody wanted at all.{w=0.75}{nw}"
+    extend  " What a joke."
 
-    n "We all had this online form we had to fill out in the computer room,"
-    extend " but it wasn't like we could just type in a place we already had in mind."
-    extend " Of {i}course{/i} not."
-    n "Nope!"
-    extend " It was just a bunch of pre-filled options we had to pick between."
-    extend " They weren't even good ones!"
-    n "There were a couple of office places, sure."
-    extend " But most of them were just working in some random store!"
-    extend " The whole point of those is that you don't even {i}need{/i} experience to do them!"
-    n "...And we had to pick {i}three{/i} of them too."
-    n "Heh." 
-    extend " The worst part, [player]?"
-    extend " You're not even gonna {i}believe{/i} this."
-    n "We had to write out a complete cover letter for all of them too!"
-    extend " I'm not even kidding."
-    extend " There was a word count and everything!"
-    n "I mean, I get it."
-    extend " It was meant to give us practice on how to apply for stuff in the future."
-    extend " I {i}get{/i} that."
-    n "But come"
-    extend " {i}on{/i}!"
-    n "Do you know how hard it is to sound convincing for something you don't even {i}care{/i} about?"
-    n "We didn't even know about half of the places we could pick until they appeared on the list!"
-    n "A-and besides,"
-    extend " it isn't like the places we were applying to didn't know we had to do it either!"
-    extend " It's all a total act anyway!"
-    n "Then with everyone applying for all the good ones, the teacher would just send off your last choice instead."
-    extend " Or dump you with some place nobody wanted at all."
-    extend " What a joke."
-
-    n "Ugh..."
+    n  "Ugh..."
     $ already_discussed_interviews = get_topic("talk_how_to_interview_properly").shown_count > 0
     if already_discussed_interviews:
-        n "Talk about a complete waste of time."
-        n "I already mentioned before that I never had the time for a part-time job or anything like that outside of school."
-        n "...So why did they think we'd have a couple of weeks to blow on something like {i}that{/i}?"
-        n "{i}Especially{/i} when it isn't even paid work."
+        n  "Talk about a complete waste of time."
+        n  "I already mentioned before that I never had the time for a part-time job or anything like that outside of school."
+        n  "...So why did they think we'd have a couple of weeks to blow on something like {i}that{/i}?"
+        n  "{i}Especially{/i} when it isn't even paid work."
 
     else:
-        n "And with the constant assignments plus all the regular lessons too?"
-        extend " I didn't even have time for a {i}paid{/i} job!"
-        extend " Let alone forking over all my effort for {i}free{/i}."
+        n  "And with the constant assignments plus all the regular lessons too?{w=0.75}{nw}"
+        extend  " I didn't even have time for a {i}paid{/i} job!{w=0.75}{nw}"
+        extend  " Let alone just forking over all my effort for {i}free{/i}."
 
-    n "Yeah, yeah."
-    extend " We get to spend time in a real workplace so we know what to expect later,"
-    extend " or build some connections."
-    n "It's just that..."
-    n "..."
+    n  "Yeah,{w=0.2} yeah.{w=0.75}{nw}"
+    extend  " We get to spend time in a real workplace so we know what to expect later,{w=0.5}{nw}"
+    extend  " or build some connections."
+    n  "It's just that..."
+    n  "..."
 
     if Natsuki.isAffectionate(higher=True):
-        n "I-it's just so frustrating!"
-        extend " You know?"
-        extend " With so much going on at the same time, I mean."
-        n "I..."
-        extend " don't..."
-        extend " mind helping a place out."
-        n "If it's about something I actually {i}care{/i} about."
-        n "...But why does my future have to suffer for it?"
-        n "It's not like I couldn't just land a job at one of those places when I actually needed the work."
-        extend " Right?"
+        n  "I-{w=0.2}it's just so {i}annoying{/i}!{w=0.75}{nw}"
+        extend  " You know?{w=0.75}{nw}"
+        extend  " With so much going on at the same time,{w=0.2} I mean."
+        n  "..."
+        n  "I...{w=1}{nw}"
+        extend  " don't...{w=1}{nw}"
+        extend  " mind helping a place out."
+        n  "If it's about something I actually {i}care{/i} about."
+        n  "...But why does {i}my{/i} future have to suffer for it?"
+        n  "It's not like I couldn't just land a job at one of those places when I actually needed the work.{w=0.75}{nw}"
+        extend  " Right?"
 
         if Natsuki.isEnamored(higher=True):
-            n "Heh."
-            extend " Besides."
-            n "..."
-            n "...I was already told my future was gonna be stacking shelves."
-            extend " The last thing I need is a preview."
-            n "..."
+            n  "Heh.{w=0.75}{nw}"
+            extend  " Besides.{w=0.75}{nw}"
+            extend  " I was already told my future was gonna be stacking shelves."
+            n  "...The last thing I need is a preview."
+            n  "..."
+            n  "A-{w=0.2}anyway!"
 
-        # TODO: introduce office outfit/getup? Work experience taking place in school instead in library?
-        # Possible concerns about transport
+        else:
+            n  "..."
+            n  "A-{w=0.2}anyway."
 
+        n  "As if all the time spent looking and filling stuff out actually ended up meaning much."
+        n  "Not that I didn't {i}try{/i} or anything like that!{w=0.75}{nw}"
+        extend  " O-{w=0.2}of course I did!{w=0.75}{nw}"
+        extend  " Just my luck that everyone felt like picking the only places I could stomach."
+        n  "And it wasn't like I could even get to many other places either."
+        n  "Not with my situation."
+        n  "So..."
+        n  "They agreed to let me pull some time in the school library instead.{w=0.75}{nw}"
+        extend  " At least I got to study when it wasn't busy."
+        n  "...And I always got home on time."
+        n  "I guess I could appreciate that."
+
+        $ office_outfit = jn_outfits.getOutfit("jn_office_outfit")
+        if Natsuki.isEnamored(higher=True) and persistent.jn_custom_outfits_unlocked and not office_outfit.unlocked:
+            n  "...Actually.{w=0.75}{nw}"
+            extend  " Now that I think about it..."
+            n  "I'm pretty sure I still have the outfit I put together for it somewhere too.{w=0.75}{nw}"
+            extend  " Huh."
+            n  "..."
+            n  "In fact.{w=0.75}{nw}"
+            extend  " You know what?{w=0.75}{nw}"
+            extend  " Just give me a minute here.{w=0.75}{nw}"
+            extend  " Someone's gotta show you what a {i}real{/i} professional looks like,{w=0.2} a-{w=0.2}after all!"
+            
+            show natsuki nervous_smile
+            show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+            $ jnPause(1)
+            play audio chair_out
+
+            $ jnPause(3)
+            play audio drawer
+            $ jnPause(1.5)
+            play audio clothing_ruffle
+            $ jnPause(1.5)
+            n  "N-{w=0.2}no peeking!"
+            $ jnPause(1)
+            play audio zipper
+            $ jnPause(3)
+            $ office_outfit.unlock()
+            $ Natsuki.setOutfit(jn_outfits.getOutfit(office_outfit))
+
+            play audio chair_in
+            $ jnPause(3)
+            show natsuki 1fsldvlesssbr at jn_center
+            hide black with Dissolve(1.25)
+
+            n  "..."
+            n  "W-{w=0.2}well?{w=0.75}{nw}"
+            extend  " Don't lie,{w=0.2} [player]!{w=0.75}{nw}"
+            extend  " After all."
+            n  "I don't need to be a librarian to read {i}you{/i} like a book.{w=0.75}{nw}"
+            extend  " Ehehe."
+
+        else:
+            n  "..."
 
     else:
-        n "N-nevermind."
-        extend " It's not like any of that really matters now, anyway."
+        n  "N-{w=0.2}nevermind.{w=0.75}{nw}"
+        extend  " It's not like any of that really matters now,{w=0.2} anyway."
 
-    # TODO: Ask player if they had work experience/internship
+    n  "But...{w=1}{nw}"
+    extend  " I've gone on way too much already.{w=0.75}{nw}"
+    extend  " Again.{w=0.75}{nw}"
+    extend  " So..."
+    n  "What about you though,{w=0.2} [player]?"
 
-    # n "I mean...."
-    # extend " we could rank what we picked, obviously."
-    # extend " But come on."
-    # extend " As if that really changed anything."
+    menu:
+        n  "Did you ever have any kind of work placement,{w=0.2} or...?"
+
+        "Yes, I've had a work placement.":
+            $ persistent._jn_player_had_work_placement = True
+            n  "Aha!{w=0.75}{nw}"
+            extend  " I knew it!{w=0.75}{nw}"
+            extend  " Just couldn't slip your way out of it,{w=0.2} huh?"
+            n  "Well...{w=0.3} I can't really say I'm surprised.{w=0.75}{nw}"
+            extend  " Not like {i}you{/i} could talk yourself out of it if I couldn't!"
+
+        "No, I haven't had a work placement.":
+            $ persistent._jn_player_had_work_placement = False
+            n  "...Hmph.{w=0.75}{nw}"
+            extend  " Lucky."
+            n  "Though I gotta ask,{w=0.2} [player]."
+            n  "Is that because you just never went somewhere that did those?"
+            n  "...Or are you just sitting around waiting for your turn?"
+            n  "..."
+            n  "Ehehe.{w=0.75}{nw}"
+            extend  " Did I call you out?"
+
+        "I have a work placement now.":
+            $ persistent._jn_player_had_work_placement = True
+            n  "Oh?{w=0.75}{nw}"
+            extend  " And I suppose you're working hard then,{w=0.2} [player]?"
+            n  "...Heh."
+            n  "Or are you hardly working?"
+            n  "..."
+            n  "Ehehe."
+
+    n  "Well,{w=0.2} whatever."
+
+    if Natsuki.isEnamored(higher=True):
+        n  "I still wouldn't say I really rate my work placement."
+        n  "But...{w=1}{nw}"
+        extend  " being here with you,{w=0.2} [player]?"
+        n  "Heh."
+        n  "...Yeah,{w=0.5}{nw}"
+        extend  " I'd say that's an {i}experience{/i} I can be pretty happy about."
+        n  "E-{w=0.2}even if you {i}are{/i} a bunch of work sometimes.{w=0.75}{nw}"
+        extend  " Ehehe."
+
+        if Natsuki.isLove(higher=True):
+            $ chosen_tease = jn_utils.getRandomTease()
+            n  "L-{w=0.2}love you too,{w=0.2} [chosen_tease]!"
+
+    elif Natsuki.isAffectionate():
+        n  "I still wouldn't say I rate my experience honestly."
+        n  "But...{w=1}{nw}"
+        extend  " being stuck here with you,{w=0.2} [player]?"
+        n  "..."
+        n  "Well...{w=1}{nw}"
+        extend  " I-{w=0.2}I guess I could think of a worse placement!{w=0.75}{nw}"
+        extend  " Ehehe."
+
+    else:
+        n  "I wouldn't exactly say I rate my experience,{w=0.2} to be honest."
+        n  "But...{w=1}{nw}"
+        extend  " just sitting around here talking to you?{w=0.75}{nw}"
+        extend  " Well..."
+        n  "I guess I can think of plenty worse placements!{w=0.75}{nw}"
+        extend  " Ahaha."
 
     return

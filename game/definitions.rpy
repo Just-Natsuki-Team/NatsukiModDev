@@ -1632,9 +1632,13 @@ init -100 python in jn_utils:
             "stupid",
             "you dork",
             "you goof",
+            "you goofball",
             "you numpty",
             "you donut",
-            "you dope"
+            "you dope",
+            "you big dork",
+            "you big goof",
+            "you big dope"
         ])
 
     def getRandomEndearment():
