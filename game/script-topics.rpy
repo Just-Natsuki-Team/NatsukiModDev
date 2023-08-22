@@ -11945,7 +11945,7 @@ label talk_work_experience:
             extend 2fsqantsb " All of it."
             n 2fcsunltsa "Heh.{w=1}{nw}"
             extend  4fcsgtltsa " And yet somehow?"
-            n 4fsqgtltsb "I'd still prefer that to a placement with the likes of{w=0.5}{nw}"
+            n 4fsqgtltsb "I'd still prefer that to being stuck here with the likes of{w=0.5}{nw}"
             extend 1fsqwrltse " {b}YOU{/b}!"
 
         if Natsuki.isRuined():
