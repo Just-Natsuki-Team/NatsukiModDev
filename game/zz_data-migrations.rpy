@@ -182,6 +182,7 @@ init 10 python:
 init python in jn_data_migrations:
     import store
     import store.jn_affinity as jn_affinity
+    import store.jn_desk_items as jn_desk_items
     import store.jn_events as jn_events
     import store.jn_outfits as jn_outfits
     import store.jn_poems as jn_poems
@@ -374,6 +375,9 @@ init python in jn_data_migrations:
 
         if jn_outfits.getOutfit("jn_chocolate_plaid_collection").unlocked:
             jn_outfits.getWearable("jn_necklace_tight_golden_necklace").unlock()
+
+        if store.get_topic("event_caught_reading_manga").shown_count > 0:
+            jn_desk_items.getDeskItem("jn_parfait_manga_held").unlock()
 
         if store.persistent.affinity >= 7500:
             store.persistent._jn_pic_aff = store.persistent.affinity

@@ -3,7 +3,9 @@ init python:
         """
         Hides hotkeybuttons
         """
-        config.overlay_screens.remove("hkb_overlay")
+        if "hkb_overlay" in config.overlay_screens:
+            config.overlay_screens.remove("hkb_overlay")
+
         renpy.hide_screen("hkb_overlay")
 
 
@@ -11,7 +13,8 @@ init python:
         """
         Shows hotkeybuttons
         """
-        config.overlay_screens.append("hkb_overlay")
+        if "hkb_overlay" not in config.overlay_screens:
+            config.overlay_screens.append("hkb_overlay")
 
 init -1 python in hkb_button:
     enabled = True

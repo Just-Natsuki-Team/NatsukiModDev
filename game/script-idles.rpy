@@ -277,10 +277,10 @@ label idle_twitch_playing:
 
 label idle_reading_parfait_girls:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
-    show prop parfait_manga_held zorder JN_PROP_ZORDER
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_parfait_manga_held"))
+    $ Natsuki.setIsReadingToRight(True)
     show natsuki reading
     hide black with Dissolve(0.5)
-    $ Natsuki.setIsReadingToRight(True)
     $ jnClickToContinue(silent=False)
 
     n 1tlrbo "...{w=1}{nw}"
@@ -298,7 +298,7 @@ label idle_reading_parfait_girls:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     show natsuki 1fchsmeme
-    hide prop
+    $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
     play audio drawer
     $ jnPause(1.3)
     hide black with Dissolve(0.5)

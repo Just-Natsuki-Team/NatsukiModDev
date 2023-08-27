@@ -39,7 +39,6 @@ transform jn_confetti_fall:
 # Foreground props are displayed on the desk, in front of Natsuki
 image prop poetry_attempt = "mod_assets/props/poetry_attempt.png"
 image prop math_attempt = "mod_assets/props/math_attempt.png"
-image prop parfait_manga_held = "mod_assets/props/parfait_manga_held.png"
 image prop renpy_for_dummies_book_held = "mod_assets/props/renpy_for_dummies_book_held.png"
 image prop a_la_mode_manga_held = "mod_assets/props/a_la_mode_manga_held.png"
 image prop strawberry_milkshake = "mod_assets/props/strawberry_milkshake.png"
@@ -741,7 +740,9 @@ label event_caught_reading_manga:
         "Enter...":
             pass
 
-    show prop parfait_manga_held zorder JN_PROP_ZORDER
+    $ parfait_manga = jn_desk_items.getDeskItem('jn_parfait_manga_held')
+    $ parfait_manga.unlock()
+    $ Natsuki.setDeskItem(parfait_manga)
     $ jn_events.displayVisuals("1fsrpo")
     $ jn_globals.force_quit_enabled = True
 
@@ -765,7 +766,7 @@ label event_caught_reading_manga:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(2)
     play audio drawer
-    hide prop parfait_manga_held
+    $ Natsuki.clearDesk()
     show natsuki 4nlrbo
     $ jnPause(4)
     hide black with Dissolve(1)

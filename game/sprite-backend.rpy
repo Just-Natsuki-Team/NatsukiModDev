@@ -290,12 +290,6 @@ init -50 python:
             (0, 0), eyewear
         ])
 
-        # Emotes
-        if emote:
-            lc_args.extend([
-                (0, 0), "{0}/emote/sitting/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, emote)
-            ])
-
         # Brows
         lc_args.extend([
             (0, 0), "{0}/face/eyebrows/sitting/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, eyebrows)
@@ -333,6 +327,12 @@ init -50 python:
         lc_args.extend([
             (0, 0), DynamicDisplayable(Natsuki.getDeskItem, desk_slot=jn_desk_items.JNDeskSlots.right)
         ])
+
+        # Emotes
+        if emote:
+            lc_args.extend([
+                (0, 0), "{0}/emote/sitting/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, emote)
+            ])
 
         # Generate and return the sprite
         return renpy.display.layout.LiveComposite(

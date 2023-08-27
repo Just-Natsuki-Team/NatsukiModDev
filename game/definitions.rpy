@@ -1628,13 +1628,16 @@ init -100 python in jn_utils:
         """
         return random.choice([
             "dummy",
+            "you big dummy",
             "silly",
             "stupid",
             "you dork",
+            "you big dork",
             "you goof",
-            "you numpty",
+            "you big goof",
             "you donut",
-            "you dope"
+            "you dope",
+            "you big dope",
         ])
 
     def getRandomEndearment():
@@ -1676,7 +1679,8 @@ init -100 python in jn_utils:
             "idiot",
             "moron",
             "stupid",
-            "loser"
+            "loser",
+            "you ass"
         ])
 
     def getRandomHappyEmoticon():
