@@ -1035,7 +1035,7 @@ init 5 python:
             unlocked=True,
             prompt="Using computers healthily",
             conditional="store.jn_utils.get_current_session_length().total_seconds() / 3600 >= 8",
-            category=["Life", "You", "Health"],
+            category=["Health", "Technology"],
             nat_says=True,
             affinity_range=(jn_affinity.HAPPY, None),
             location="classroom"
@@ -1044,61 +1044,222 @@ init 5 python:
     )
 
 label talk_using_computers_healthily:
-    n 1unmaj "Huh."
-    n 3tnmaj "Hey,{w=0.1} [player].{w=0.2} I just thought of something."
-    n 1unmsf "You gotta be at your computer to talk to me,{w=0.1} right?"
-    n 4ullsf "And you've been here a while already..."
+    if get_topic("talk_using_computers_healthily").shown_count > 0:
+        n "..."
+        n "...Huh."
+        n "You know, [player]..."
+        extend " I just thought of something."
+        extend " About how you actually visit me and all."
+        n "So..."
+        extend " you gotta be at your desk to actually talk to me,"
+        extend " right?"
+        extend " Or using some kind of computer at least."
+        n "And you've been here for a bunch of time already too, now that I think about it."
 
-    if (jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.work_applications)
-        or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.artwork)
-        or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.coding)):
-            n 1knmaj "In fact, I've even {i}seen{/i} you working on a lot of stuff myself!"
-            n 1kllsl "..."
+        if Natsuki.isEnamored(higher=True):
+            n "N-not that I'm saying I don't appreciate it or anything like that!"
+            extend " O-of course I do!"
+            $ chosen_tease = jn_utils.getRandomTease()
+            extend " You should really know that by now anyway, [chosen_tease]."
+            n "Though..."
 
-    n 1nchgn "Alright,{w=0.1} that's it!{w=0.2} I've decided."
-    n 1uchgn "I'm gonna give you a little lesson on using your computer the right way!"
-    n 3nnmss "Number one:{w=0.2} posture!"
-    n 1fwmlg "Sit up straight,{w=0.1} and back against the chair,{w=0.1} [player].{w=0.2}"
-    extend 1uchlg " I mean it!"
-    n 4tnmlg "You don't want back problems,{w=0.1} do you?"
-    n 1nnmsm "Make sure your feet can still touch the floor,{w=0.1} though.{w=0.2}"
-    extend 3uchgn " Even I can do that!"
-    n 1nnmaj "Number two:{w=0.2} distance!"
-    n 3nsggn "I know you can't get enough of me,{w=0.1}"
-    extend 3fnmpo " but I don't wanna see you pressing your face against the screen.{w=0.2} It's weird."
-    n 1uchgn "So make sure you sit about an arm's length away from the display,{w=0.1} alright?"
-    n 4uwdaj "Oh!{w=0.2} Don't forget to keep your stuff in easy reach though{w=0.1} -{w=0.1}"
-    extend 1unmsm " like your mouse."
-    n 1unmbg "Number three:{w=0.2} breaks!"
-    n 1uwmbg "I don't know about you,{w=0.1} but I get all fidgety if I stay still too long..."
-    n 3fchgn "So make sure you get off your butt and do some stretches a few times per hour!"
-    n 4fsqsg "You could even get some water or something if you {i}really{/i} need an excuse to move."
-    n 1nnmsm "It'd also give your eyes a rest from the screen!"
-    n 1uchbs "Alright {w=0.1}-{w=0.1} and the last one!{w=0.2} This one's important,{w=0.1}"
-    extend 4uchgn " so listen up good!"
-    n 1unmbo "If you ever feel unwell {w=0.1}-{w=0.1} like your back aches,{w=0.1} or your eyes hurt or something..."
-    n 2fwmpu "Please just stop whatever you're doing.{w=0.2} Your health comes first.{w=0.2} I don't care what needs to be done."
-    n 1unmsm "Take some time to feel better,{w=0.1} then make sure all your stuff is set up right like I said."
-    n 3fcsss "Don't carry on until you feel well enough {w=0.1}-{w=0.1} talk to someone if you have to!"
-    n 1uchgn "Okaaay!{w=0.2} Lecture over!"
-    n 4ullaj "Wow...{w=0.3} I rambled on a while,{w=0.1} didn't I?{w=0.2}"
-    extend 1klrbgl " Sorry,{w=0.1} sorry!{w=0.2} Ehehe."
+        elif Natsuki.isAffectionate(higher=True):
+            n "N-not that it's a problem," 
+            extend " or anything like that!"
+            extend " You should know it isn't by now anyway, [player]."
+            n "Though..."
 
-    if Natsuki.isEnamored(higher=True):
-        n 3kwmsml "But you know I only do these things because I really care about you,{w=0.1} [player]...{w=0.3} right?"
-        n 4kwmnvl "So please...{w=0.3} take care of yourself, okay?{w=0.2} I don't want you hurting because of me."
+        else:
+            n "N-not that I'm saying it's some kind of problem or anything like that!"
+            extend " O-of course not!"
+            n "Though..."
 
-        if Natsuki.isLove(higher=True):
-            $ chosen_endearment = jn_utils.getRandomEndearment()
-            n 4kwmsml "I love you,{w=0.1} [chosen_endearment]."
-            n 1kwmnvl "..."
-            return
+        n "Doesn't that mean you're spending a whole bunch of extra time sat around with your computer every day?"
+        extend " Just for my sake?"
+        
+        if (jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.work_applications)
+            or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.artwork)
+            or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.coding)):
+            $ activity_mention = random.choice(["drawing", "programming", "working"])
+            n "I mean, don't get me wrong -"
+            extend " I know you use your computer already for a bunch of stuff."
+            extend " Like [activity_mention]!"
+
+        else:
+            n "I mean..."
+            extend " I guess you probably still use your computer for other stuff already, right?"
+
+        n "But that still doesn't change the fact you're gonna be racking up a load of extra screen time thanks to me."
+        
+        if Natsuki.isEnamored(higher=True):
+            n "And the last thing I wanna hear about is you getting yourself all cramped up because you were all slouched over like a potato for hours."
+            $ chosen_tease = jn_utils.getRandomTease().capitalize()
+            extend " [chosen_tease]."
+
+        else:
+            n "And the last thing I wanna hear is you complaining your back hurts because nobody told you not to slouch like a potato for hours."
+            extend " I-I'm not having {i}that{/i} on my conscience."
+
+        n "Heh."
+        extend " In fact..."
+        n "You know what, [player]?"
+        extend " I hope you're sitting."
+        n "'Cause I'm gonna make sure you're using your computer the {i}right{/i} way,"
+        extend " whether you like it or not!"
 
     else:
-        n 1usglg "But you know I only say these things because I care."
-        n 3nsqpo "...And I don't want you whining to me that your back hurts.{w=0.2}"
+        n "..."
+        n "..."
+        n "Say..."
+        extend " [player]?"
+        extend " You got a minute?"
+        extend " I gotta ask a question."
+        n "So..."
+        extend " you've been visiting me for a while already, huh?"
+        extend " Using your computer and everything."
+        n "And I'm pretty sure I went through how to make sure you aren't just setting yourself up for some major hurt down the line already."
+        n "But..."
+        extend " I gotta ask."
+        n "Just how much of that exactly do you {i}actually{/i} remember,"
+        extend " [player]?"
+        extend " Huh?"
+        n "..."
+        n "Ehehe."
+        extend " Yep, just as I thought."
+        extend " Total silence!"
+        n "Well [player], have no fear."
+        n "'Cause it's time for a little refresher from yours truly!"
 
-    n 4nchgn "Ahaha...{w=0.3} now, where were we?"
+    n "Alright."
+    extend " So!"
+    n  "Number one:{w=0.2}" 
+    extend " posture!"
+    n "...And no, [player]."
+    extend " I mean {i}actual{/i} posture." 
+    extend " The sitting kind."
+    n  "Now:" 
+    extend " sit up straight, and keep that back of yours against the chair, [player]."
+    extend  " I mean it!"
+    n "Seriously -"
+    extend " unless you feel like making friends with your nearest chiropractor,"
+    extend " trust me when I say you {i}really{/i} don't wanna spend all your time slouching:"
+    extend " or hunched up on your chair like some kind of weird computer gremlin."
+    n "If you're doing it right,"
+    extend " then you should have your arms and thighs parallel to the ground,"
+    extend " with your eyes roughly at the top of your screen."
+    extend " Easy peasy!"
+    n "Oh, right -"
+    extend  " make sure your feet can still touch the floor,{w=0.1} though.{w=0.2}"
+    extend  " Even {i}I{/i} can do that!"
+    n  "'Kay, number two:{w=0.2}" 
+    extend " distance!"
+    n "It's pretty easy to forget,"
+    extend " but if you wanna avoid sore eyes then you gotta make sure you're sitting a sensible distance from the screen too."
+    extend " Not right up close or a whole room away!"
+
+    if Natsuki.isEnamored(higher=True):
+        n "I-I know you just can't get enough of me, [player]."
+        extend " But really."
+        extend " Even I don't wanna see you practically pressing your face against the screen."
+
+    elif Natsuki.isAffectionate(higher=True):
+        n "I-I know I {i}am{/i} pretty awesome,"
+        extend " but the last thing I wanna see is you pressing your face right up against the screen."
+
+    else:
+        n "A-and besides,"
+        extend " the last thing I wanna see is your face all smushed up against the screen, [player]."
+        extend " I didn't ask for {i}that{/i}."
+
+    n "So..."
+    extend " just make sure you're sitting about an arm's length away from the screen."
+    extend " That's all I'm saying!"
+    n "Don't forget to keep all your stuff in easy reach though -"
+    extend " you can bet even Sayori wouldn't mess that up!"
+    n  "Number three:"
+    extend " breaks!"
+    n  "I don't know about you [player],"
+    extend " but personally?"
+    extend " I can't stand being stuck in one place for hours at a time."
+    n "Seriously -"
+    extend " I get all distracted and fidgety for some reason..."
+    extend " it's the worst!"
+    n "And on top of that,"
+    extend " you're {i}really{/i} not doing your circulation a favor either."
+    n  "...So get off your butt and do some stretches or something!"
+    extend " Or even go get some water if you {i}really{/i} need an excuse to get moving."
+    n "Really, it doesn't really matter exactly what you do -"
+    extend " it's all about doing something to get you off your butt and back on your feet."
+    extend " Simple enough!"
+    n "..."
+    n "Well?"
+    extend " Still following me, [player]?"
+    n "You better be."
+    extend " This one's easily the most important, so listen up!"
+    n "Now don't get me wrong, [player] -"
+    extend " I get that you're going to know your limits better than I do, obviously."
+    n "But..." 
+    extend " if you start feeling kinda weird or sick, or your eyes start hurting or something while you're here?"
+    n "Just..."
+    n "..."
+    n "...Just don't be a total dummy about it."
+    extend " Alright?"
+    extend " I'm being serious here."
+    n "If even being in front of the screen is starting to have some kind of impact..."
+    n "Call it quits on whatever you were doing and just come back to it later."
+    extend " Got it?"
+    n "Work or some dumb old assignment can wait if you're just gonna make yourself even worse trying to impress someone."
+    extend " Your professor isn't going to drop dead if some stinky report isn't done today."
+    n "Heh."
+    extend " And anyway, think about it."
+    n "It isn't like you're going to pull some kind of miracle if you try and push through it all."
+    extend " All you're ending up doing is making yourself feel all crappy for longer."
+    extend " It's just pointless."
+    
+    if Natsuki.isEnamored(higher=True):
+        n "...And besides, [player]."
+        n "You know I'm not going to get mad or anything if you have to take a rain check on our time together..."
+        n "Right?"
+        n "..."
+        n "..." # sigh
+        n "...Look."
+        n "I..."
+        extend " really..."
+        $ chosen_descriptor = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else player
+        extend " care about you, [chosen_descriptor]."
+        extend " Y-you should really know that by now."
+        n "...Just like you should know you I'm not gonna be impressed by some weird macho display of toughing it out."
+        n "Capiche?"
+        n "..."
+
+    if Natsuki.isAffectionate(higher=True):
+        n "A-and besides, [player]."
+        extend " I'm not selfish."
+        n "You do know I won't get mad or anything if you really have to go for a while..."
+        n "Right?"
+        n "..."
+
+    else:
+        n "A-and besides, [player]."
+        n "It's not like I'm gonna get mad at you or anything dumb like that either."
+        extend " Even I'm not that much of a jerk."
+        n "..."
+
+    n "A-anyway."
+    extend " I've gone on way long enough already,"
+    extend " so I'm just gonna say this, [player]:"
+    n "You might end up with a crappy back or nasty eyes if you aren't careful..."
+    n "But that's gonna be nothing compared to the earache you're getting if I find out you ignored me!"
+    n "Ehehe."
+
+    if Natsuki.isLove(higher=True):
+        $ chosen_tease = jn_utils.getRandomTease()
+        n "Love you too, [chosen_tease]!"
+
+    else:
+        $ chosen_descriptor = jn_utils.getRandomTease() if Natsuki.isEnamored(higher=True) else player
+        n "You're welcome, [chosen_descriptor]!"
+
     return
 
 # Natsuki highlights the importance of staying active and getting exercise
