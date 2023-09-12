@@ -10541,9 +10541,9 @@ label talk_daily_jokes_seen_before_start:
         extend 3fsqbg " {i}Someone{/i} just can't get enough of the joke book,{w=0.2} huh?"
         n 3fcssm "Ehehe."
         n 4ullaj "Well...{w=1}{nw}"
-        extend 4cllss " I didn't exactly take notes or anything on the ones I've told you...\n{w=0.75}{nw}"
-        extend 2fcssssbr "but I'm pretty sure I can figure it out!"
-        n 2unmaj "Just give me a sec here..."
+        extend 5cllss " I didn't exactly take notes or anything on the ones I've told you...\n{w=0.75}{nw}"
+        extend 2fcssssbr " but I'm pretty sure I can figure it out!"
+        n 4unmaj "Just give me a sec here..."
 
     else:
         n 1csqss "Oh?{w=0.75}{nw}"
@@ -10599,7 +10599,11 @@ label talk_daily_jokes_seen_before_loop:
         joke_options.sort(key = lambda option: option[0])
 
     show natsuki option_wait_holding at jn_left
-    call screen scrollable_choice_menu(joke_options, ("Nevermind.", None), 400, "mod_assets/icons/joke_book.png")
+    call screen scrollable_choice_menu(
+        joke_options,
+        ("Nevermind.", None),
+        400,
+        "mod_assets/icons/joke_book.png")
     show natsuki at jn_center
     $ joke_choice = _return
 
@@ -11548,7 +11552,7 @@ label talk_enable_no_topics_reminder:
     $ persistent._jn_natsuki_out_of_topics_remind = True
     return
 
-# Ask Natsuki to remind the player next time she runs out of topics.
+# Natsuki discusses her work "experience" and frustrations with the placement process.
 init 5 python:
     registerTopic(
         Topic(
