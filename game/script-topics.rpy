@@ -11550,3 +11550,150 @@ label talk_enable_no_topics_reminder:
 
     $ persistent._jn_natsuki_out_of_topics_remind = True
     return
+
+# Natsuki expresses her frustration towards people being inconsiderate with their audio in public.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_windup_playing_music_out_loud",
+            unlocked=True,
+            prompt="Playing music out loud",
+            category=["Wind-ups"],
+            conditional="jn_utils.get_total_gameplay_hours() >= 4",
+            natsuki_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_windup_playing_music_out_loud:
+    $ already_discussed_topic = get_topic("talk_windup_playing_music_out_loud").shown_count > 0
+    if already_discussed_topic:
+        n  "..."
+        n  "..."
+        n  "You know,{w=0.2} [player]...{w=1}{nw}"
+        n  "I'm pretty sure I went through it all before.{w=0.75}{nw}"
+        extend  " And I don't even know why it bothers me so much."
+        n  "But I {i}still{/i} can't stand when some people feel the need to just blast what {i}they{/i} wanna listen to in front of everyone else."
+        n  "..."
+        n  "What?{w=0.75}{nw}"
+        extend  " Do I look like I'm making it all up or something?{w=0.75}{nw}"
+        extend  " It's the worst!"
+
+    else:
+        n  "..."
+        n  "Tch!"
+        n  "..."
+        n  "Heh."
+        n  "Hey,{w=0.2} [player]...{w=1}{nw}"
+        extend  " you wanna know what winds me up?{w=0.75}{nw}"
+        extend  " And I mean{w=0.3}{nw}"
+        extend  "{i}really{/i}{w=0.3}{nw}"
+        extend  " gets on my nerves?"
+        n  "..." #angy sigh
+        n  "When you're taking some sort of public transport,{w=0.2} or you're just hanging around somewhere.{w=0.75}{nw}"
+        extend  " That kind of thing."
+        n  "...And then some total jerk feels the need to pull our their phone just to blast out what they feel like listening to."
+        n  "..."
+        n  "H-{w=0.2}hey!{w=0.75}{nw}"
+        extend  " I'm being serious here,{w=0.2} [player]!{w=0.75}{nw}"
+        extend  " It's the worst!"
+
+    n  "I mean,{w=0.2} come on.{w=0.75}{nw}"
+    extend  " Where do I even {i}begin{/i}?"
+    n  "First off,{w=0.5}{nw}"
+    extend  " you can basically guarantee that whatever it is,{w=0.75}{nw}" 
+    extend  " it's {i}never{/i} gonna sound good."
+    n  "Nothing ever does when you're playing it out of some crappy phone speakers or busted headphones!"
+    n  "And Oh.{w=0.75}{nw}"
+    extend  " My.{w=0.75}{nw}"
+    extend  " God,{w=0.5}{nw}"
+    extend  " [player]."
+    n  "Do you even {i}know{/i} how much worse it gets when you're stuck inside the train or literally anything else?{w=0.75}{nw}"
+    extend  " Talk about an earache.{w=0.75}{nw}"
+    extend  " Especially if you just wanted to relax before the day starts!"
+    n  "{i}And{/i} you can forget about trying to hold any kind of conversation too with all that noise in the background."
+    n  "Heh.{w=0.75}{nw}"
+    extend  " And you know what the worst part is,{w=0.2} [player]?"
+    n  "If you even try to call them out on it,{w=0.5}{nw}"
+    extend  " you just know they'll make a massive scene over it too,{w=0.2} or make out like you're overreacting!"
+    n  "'But you don't {i}have{/i} to listen to it!'{w=0.75}{nw}"
+    extend  " 'You can just play what you want too!'{w=0.75}{nw}"
+    extend  " As if that makes everything just a-okay,{w=0.5}{nw}" 
+    extend  " right?"
+    n  "Like...{w=1}{nw}"
+    extend  " just how inconsiderate can you get?{w=0.75}{nw}"
+    extend  " Seriously!"
+    n  "B-{w=0.2}besides,{w=0.5}{nw}"
+    extend  " it's not like you can just choose {i}not{/i} to hear whatever they decide to grace your ears with either..."
+    n  "...And not all of us can afford all those fancy noise cancelling things either."
+    n  "Ugh..."
+    n  "Jerks.{w=0.75}{nw}"
+    extend  " Just makes me wanna yank their stupid phone out of their hands and toss it out of the window or something."
+
+    if get_topic("talk_using_headphones_carefully").shown_count > 0:
+        n  "I know I said before that shutting yourself away from the world with headphones was a bad idea."
+        $ descriptor = "trying to be" if Natsuki.isAffectionate(higher=True) else "being kinda"
+        n  "But at least you're still [descriptor] considerate.{w=0.75}{nw}"
+        extend  " You know?"
+
+        if Natsuki.isAffectionate(higher=True):
+            n  "I just..."
+            n  "..."
+
+    n  "..." # sigh
+    n  "...Look.{w=0.75}{nw}"
+    extend  " I'm not dumb.{w=0.75}{nw}"
+    extend  " I get that if you're in a public space then you gotta accommodate others who want to use it too."
+    n  "Alright?"
+    n  "But that doesn't give anyone the right to use it however they want at the expense of everyone else!"
+    n  "...Let alone act so entitled over the whole stupid thing.{w=0.75}{nw}"
+    extend  " Yeesh."
+    n  "..."
+    n  "...Yeah,{w=0.2} yeah.{w=0.75}{nw}"
+    extend  " I know.{w=0.75}{nw}"
+
+    if already_discussed_topic:
+        extend  " I'm not gonna let myself get all wound up about it.{w=0.75}{nw}"
+        extend  " Again."
+
+    else:
+        extend  " I'm not gonna let myself get that wound up about it."
+
+    if Natsuki.isEnamored(higher=True):
+        n  "...E-{w=0.2}even if I know you just can't get enough of the sound of my voice by now."
+
+    elif Natsuki.isAffectionate(higher=True):
+        n  "...Even if I bet you just enjoy listening to my stupid rants by now."
+
+    n  "So...{w=1}{nw}"
+    extend  " I'm just gonna say this."
+    n  "I don't really care what you listen to or how you listen to it in your own four walls,{w=0.2} [player]."
+
+    if Natsuki.isEnamored(higher=True):
+        n  "And I {i}seriously{/i} doubt you of all people would do something like that.{w=0.75}{nw}"
+        $ descriptor = "you're still" if Natsuki.isLove(higher=True) else "you are"
+        extend  " Even if [descriptor] a big dope sometimes."
+
+    elif Natsuki.isAffectionate(higher=True):
+        n  "And I kinda doubt you're the sort of person who does that kind of thing anyway."
+
+    else:
+        n  "And I kinda doubt you're {i}that{/i} much of a jerk anyway."
+
+    n  "But...{w=1}{nw}"
+    extend  " if I hear about you broadcasting some kind of [player] special out there in front of everyone when literally no-one asked?"
+    n  "...Then you can bet your butt I'm going to give {i}your{/i} ears something extra-special to listen to instead!" #possible repetition of special here; replace?
+    n  "Ehehe."
+
+    if Natsuki.isLove(higher=True):
+        n  "Love you,{w=0.2} [player]~!"
+
+    elif Natsuki.isAffectionate(higher=True):
+        n  "You're welcome,{w=0.2} [player]!"
+
+    else:
+        n  "Hope you learned something,{w=0.2} [player]!"
+
+    return
