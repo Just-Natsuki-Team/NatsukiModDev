@@ -11556,144 +11556,148 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._topic_database,
-            label="talk_windup_playing_music_out_loud",
+            label="talk_windup_playing_things_out_loud",
             unlocked=True,
-            prompt="Playing music out loud",
+            prompt="Playing things out loud",
             category=["Wind-ups"],
             conditional="jn_utils.get_total_gameplay_hours() >= 4",
-            natsuki_says=True,
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
             location="classroom"
         ),
         topic_group=TOPIC_TYPE_NORMAL
     )
 
-label talk_windup_playing_music_out_loud:
-    $ already_discussed_topic = get_topic("talk_windup_playing_music_out_loud").shown_count > 0
+label talk_windup_playing_things_out_loud:
+    $ already_discussed_topic = get_topic("talk_windup_playing_things_out_loud").shown_count > 0
     if already_discussed_topic:
-        n  "..."
-        n  "..."
-        n  "You know,{w=0.2} [player]...{w=1}{nw}"
-        n  "I'm pretty sure I went through it all before.{w=0.75}{nw}"
-        extend  " And I don't even know why it bothers me so much."
-        n  "But I {i}still{/i} can't stand when some people feel the need to just blast what {i}they{/i} wanna listen to in front of everyone else."
-        n  "..."
-        n  "What?{w=0.75}{nw}"
-        extend  " Do I look like I'm making it all up or something?{w=0.75}{nw}"
-        extend  " It's the worst!"
+        n 7csrca "..."
+        n 3fcsflesi "..."
+        n 3cllfl "You know,{w=0.2} [player]..."
+        n 7tnmsl "I'm pretty sure I went through it all before.{w=0.75}{nw}"
+        extend 7clrflsbl " And I don't even know why it still bothers me so much."
+        n 4fsrem "But I {i}still{/i} can't stand when some people feel the need to just blast what {i}they{/i} wanna listen to out loud in front of everyone else."
+        n 2fsrca "..."
+        n 2fnmfll "What?{w=0.75}{nw}"
+        extend 2csqfll " Do I look like I'm making it all up or something?{w=0.75}{nw}"
+        extend 4fcsgsl " It's the {i}worst{/i}!"
 
     else:
-        n  "..."
-        n  "Tch!"
-        n  "..."
-        n  "Heh."
-        n  "Hey,{w=0.2} [player]...{w=1}{nw}"
-        extend  " you wanna know what winds me up?{w=0.75}{nw}"
-        extend  " And I mean{w=0.3}{nw}"
-        extend  "{i}really{/i}{w=0.3}{nw}"
-        extend  " gets on my nerves?"
-        n  "..." #angy sigh
-        n  "When you're taking some sort of public transport,{w=0.2} or you're just hanging around somewhere.{w=0.75}{nw}"
-        extend  " That kind of thing."
-        n  "...And then some total jerk feels the need to pull our their phone just to blast out what they feel like listening to."
-        n  "..."
-        n  "H-{w=0.2}hey!{w=0.75}{nw}"
-        extend  " I'm being serious here,{w=0.2} [player]!{w=0.75}{nw}"
-        extend  " It's the worst!"
+        n 7cslsl "..."
+        n 3fslan "Tch!"
+        n 3fsrbo "..."
+        n 3ccsss "Heh."
+        n 4cllfl "Hey,{w=0.2} [player]...{w=1}{nw}"
+        extend 2cnmaj " you wanna know what winds me up?"
+        n 2fnmfl "And I mean{w=0.5}{nw}"
+        extend 4fsqem " {i}really{/i}{w=0.5}{nw}"
+        extend 4fsran " gets on my nerves?"
+        n 2fcsemesi "..."
+        n 2fllaj "When you're taking some sort of public transport,{w=0.2} or you're just hanging around somewhere.{w=0.75}{nw}"
+        extend 2fllfl " That kind of thing."
+        n 4fcsanean "...And then some total jerk feels the need to pull our their phone just to blast out what {i}they{/i} feel like listening to."
+        n 4fsrsl "..."
+        n 2fnmwrl "H-{w=0.2}hey!{w=0.75}{nw}"
+        extend 2fcspol " I'm being serious here,{w=0.2} [player]!{w=0.75}{nw}"
+        extend 4fbkwrl " It's the {i}worst{/i}!"
 
-    n  "I mean,{w=0.2} come on.{w=0.75}{nw}"
-    extend  " Where do I even {i}begin{/i}?"
-    n  "First off,{w=0.5}{nw}"
-    extend  " you can basically guarantee that whatever it is,{w=0.75}{nw}" 
-    extend  " it's {i}never{/i} gonna sound good."
-    n  "Nothing ever does when you're playing it out of some crappy phone speakers or busted headphones!"
-    n  "And Oh.{w=0.75}{nw}"
-    extend  " My.{w=0.75}{nw}"
-    extend  " God,{w=0.5}{nw}"
-    extend  " [player]."
-    n  "Do you even {i}know{/i} how much worse it gets when you're stuck inside the train or literally anything else?{w=0.75}{nw}"
-    extend  " Talk about an earache.{w=0.75}{nw}"
-    extend  " Especially if you just wanted to relax before the day starts!"
-    n  "{i}And{/i} you can forget about trying to hold any kind of conversation too with all that noise in the background."
-    n  "Heh.{w=0.75}{nw}"
-    extend  " And you know what the worst part is,{w=0.2} [player]?"
-    n  "If you even try to call them out on it,{w=0.5}{nw}"
-    extend  " you just know they'll make a massive scene over it too,{w=0.2} or make out like you're overreacting!"
-    n  "'But you don't {i}have{/i} to listen to it!'{w=0.75}{nw}"
-    extend  " 'You can just play what you want too!'{w=0.75}{nw}"
-    extend  " As if that makes everything just a-okay,{w=0.5}{nw}" 
-    extend  " right?"
-    n  "Like...{w=1}{nw}"
-    extend  " just how inconsiderate can you get?{w=0.75}{nw}"
-    extend  " Seriously!"
-    n  "B-{w=0.2}besides,{w=0.5}{nw}"
-    extend  " it's not like you can just choose {i}not{/i} to hear whatever they decide to grace your ears with either..."
-    n  "...And not all of us can afford all those fancy noise cancelling things either."
-    n  "Ugh..."
-    n  "Jerks.{w=0.75}{nw}"
-    extend  " Just makes me wanna yank their stupid phone out of their hands and toss it out of the window or something."
+    n 3flrem "I mean,{w=0.2} come on.{w=0.75}{nw}"
+    extend 3fupwr " Where do I even {i}start{/i}?"
+    n 6fcsgs "First off,{w=0.5}{nw}"
+    extend 3fllan " you can basically guarantee that whatever it is,{w=0.75}{nw}" 
+    extend 3fslan " it's {i}never{/i} gonna sound good."
+    n 4fbkwr "Nothing ever {i}does{/i} when you're blasting it out of crappy phone speakers or busted-up headphones!"
+    n 1nsqem "And{w=0.3} Oh.{w=0.75}{nw}"
+    extend 2csqfl " My.{w=0.75}{nw}"
+    extend 2fsqem " God,{w=0.5}{nw}"
+    extend 4fsrfu " [player]."
+    n 4fcsup "{i}The echoing{/i}."
+    n 3fsqgs "Do you even know how much worse it gets when you're stuck inside the train,{w=0.5}{nw}" 
+    extend 3fcsgs " or literally anything else?"
+    n 3fcsan "Talk about an earache.{w=0.75}{nw}"
+    extend 7fllem " Especially if you just wanted to relax before the day starts!"
+    n 4fsrem "{i}And{/i} you can forget about trying to hold any kind of conversation too with all that noise in the background."
+    n 2fcssl "Heh.{w=0.75}{nw}"
+    extend 2fsqfr " Then you know what the worst part is,{w=0.2} [player]?"
+    n 4fllem "If you even try to call them out,{w=0.5}{nw}"
+    extend 4csqem " you just know they'll make a massive scene over it too,{w=0.5}{nw}" 
+    extend 4fslfu " or make it sound like you're just freaking out!"
+    n 6ftlgs "'But you don't {i}have{/i} to listen to it!'{w=0.5}{nw}"
+    extend 3ftrwr " 'You can play what you want too!'\n{w=0.75}{nw}"
+    extend 3fsran "As if that makes everything just a-okay,{w=0.5}{nw}" 
+    extend 3fsqan " right?"
+    n 1fcsem "Cut me a break."
+    n 2flran "Like just how inconsiderate can you get?{w=0.75}{nw}"
+    extend 2fcsan " Seriously?!"
+    n 4fslem "B-{w=0.2}besides,{w=0.5}{nw}"
+    extend 4fcsgs " it's not like you can just choose {i}not{/i} to hear whatever they decide to grace your ears with."
+    n 2fsrsll "...And not all of us can afford all the fancy noise cancelling stuff either."
+    n 1ccsemesi "Ugh..."
+    n 2fllsl "Jerks.{w=0.75}{nw}"
+    extend 2fslbol " Makes me wanna yank that stupid phone out of their hands and toss it out the window or something."
 
     if get_topic("talk_using_headphones_carefully").shown_count > 0:
-        n  "I know I said before that shutting yourself away from the world with headphones was a bad idea."
-        $ descriptor = "trying to be" if Natsuki.isAffectionate(higher=True) else "being kinda"
-        n  "But at least you're still [descriptor] considerate.{w=0.75}{nw}"
-        extend  " You know?"
+        n 1ccsfll "And I know I said before that shutting yourself away from the world with headphones was a bad idea."
+        $ descriptor = "{i}trying{/i} to be" if Natsuki.isAffectionate(higher=True) else "being kinda"
+        n 5csrsl "But at least you're still [descriptor] considerate.{w=0.75}{nw}"
+        extend 5cnmbol " You know?"
 
         if Natsuki.isAffectionate(higher=True):
-            n  "I just..."
-            n  "..."
+            n 1ccsfll "I just..."
+            n 4csrsll "..."
 
-    n  "..." # sigh
-    n  "...Look.{w=0.75}{nw}"
-    extend  " I'm not dumb.{w=0.75}{nw}"
-    extend  " I get that if you're in a public space then you gotta accommodate others who want to use it too."
-    n  "Alright?"
-    n  "But that doesn't give anyone the right to use it however they want at the expense of everyone else!"
-    n  "...Let alone act so entitled over the whole stupid thing.{w=0.75}{nw}"
-    extend  " Yeesh."
-    n  "..."
-    n  "...Yeah,{w=0.2} yeah.{w=0.75}{nw}"
-    extend  " I know.{w=0.75}{nw}"
+    n 4ccsfllesi "..."
+    n 2cslajl "...Look.{w=0.75}{nw}"
+    extend 2ccsbo " I'm not dumb.{w=0.75}{nw}"
+    extend 1clrfl " I get that if you're in a public space then you gotta accommodate others who want to use it too."
+    n 3fslem "But that doesn't give any old jerk the right to use it how {i}they{/i} want at the expense of everyone else!"
+    n 3fsrsl "...Let alone act so entitled over the whole stupid thing.{w=0.75}{nw}"
+    extend 3fsrfl " Yeesh."
+    n 3fnmca "..."
+    n 4ccsflsbl "...Yeah,{w=0.2} yeah.{w=0.75}{nw}"
+    extend 1cllcasbl " I know.{w=0.75}{nw}"
 
     if already_discussed_topic:
-        extend  " I'm not gonna let myself get all wound up about it.{w=0.75}{nw}"
-        extend  " Again."
+        extend 2cllflsbr " I'm not gonna let myself get all wound up about it.{w=0.75}{nw}"
+        extend 2cslflsbr " Again."
 
     else:
-        extend  " I'm not gonna let myself get that wound up about it."
+        extend 2ccstrlsbr " I'm not gonna let myself get {i}that{/i} wound up about it."
 
     if Natsuki.isEnamored(higher=True):
-        n  "...E-{w=0.2}even if I know you just can't get enough of the sound of my voice by now."
+        n 2fcsssl "...E-{w=0.2}even if I know you just can't get enough of the sound of my voice."
 
     elif Natsuki.isAffectionate(higher=True):
-        n  "...Even if I bet you just enjoy listening to my stupid rants by now."
+        n 2csrpol "...Even if I bet you just enjoy listening to my stupid rants by now."
 
-    n  "So...{w=1}{nw}"
-    extend  " I'm just gonna say this."
-    n  "I don't really care what you listen to or how you listen to it in your own four walls,{w=0.2} [player]."
+    n 2ulraj "So...{w=1}{nw}"
+    extend 2cnmca " I'm just gonna say this."
+    n 1tllfl "I don't really care what you listen to or how you listen to it in your own four walls,{w=0.2} [player]."
 
     if Natsuki.isEnamored(higher=True):
-        n  "And I {i}seriously{/i} doubt you of all people would do something like that.{w=0.75}{nw}"
+        n 5csrssl "And I {i}seriously{/i} doubt you of all people would do something like that.{w=0.75}{nw}"
         $ descriptor = "you're still" if Natsuki.isLove(higher=True) else "you are"
-        extend  " Even if [descriptor] a big dope sometimes."
+        extend 5csqssl " Even if [descriptor] a big dope sometimes."
 
     elif Natsuki.isAffectionate(higher=True):
-        n  "And I kinda doubt you're the sort of person who does that kind of thing anyway."
+        n 4csrsslsbr "And I kinda doubt you're the sort of person who does that kind of thing anyway."
 
     else:
-        n  "And I kinda doubt you're {i}that{/i} much of a jerk anyway."
+        n 2tlraj "And I kinda doubt you're {i}that{/i} much of a jerk anyway."
 
-    n  "But...{w=1}{nw}"
-    extend  " if I hear about you broadcasting some kind of [player] special out there in front of everyone when literally no-one asked?"
-    n  "...Then you can bet your butt I'm going to give {i}your{/i} ears something extra-special to listen to instead!" #possible repetition of special here; replace?
-    n  "Ehehe."
+    n 2clrfl "But...{w=1}{nw}"
+    extend 2csgfl " if I hear about you blasting some kind of [player] broadcast out there in front of everyone when {w=0.3}{i}literally{/i}{w=0.5}{nw}" 
+    extend 2csqfl " no-one asked?"
+    n 4fcsbs "...Then you can bet your butt I'm going to give {i}your{/i} ears something extra-special to listen to!{w=0.75}{nw}"
+    extend 4fsqsmeme " Ehehe."
 
     if Natsuki.isLove(higher=True):
-        n  "Love you,{w=0.2} [player]~!"
+        n 2fchbgl "Love you,{w=0.2} [player]~!"
 
     elif Natsuki.isAffectionate(higher=True):
-        n  "You're welcome,{w=0.2} [player]!"
+        n 2fchgnl "You're welcome,{w=0.2} [player]!"
 
     else:
-        n  "Hope you learned something,{w=0.2} [player]!"
+        n 2nchgn "Hope you learned something,{w=0.2} [player]!"
 
     return
