@@ -2153,15 +2153,34 @@ label outfits_wear_outfit:
         n 1nsqpu "...Wait.{w=1.25}{nw}"
         extend 3tnmfl " What's {i}that{/i} you're holding?"
         n 1fcstrlesi "At {i}least{/i} show me what it is first!"
+
         show natsuki 1fcspol
 
         $ jn_rm_topic_from_event_list("new_wearables_outfits_unlocked")
         jump new_wearables_outfits_unlocked
 
-    n 4unmaj "Huh?{w=0.2} You want me to put on another outfit?"
-    n 1fchbg "Sure thing!{w=0.5}{nw}"
-    extend 1unmbg " What do you want me to wear?{w=1.5}{nw}"
-    show natsuki option_wait_excited at jn_left
+    n 4unmaj "Huh?{w=0.75}{nw}" 
+    extend 4unmbo " You want me to try on another outfit?"
+    
+    if Natsuki.isEnamored(higher=True):
+        n 1fchbgl "Sure thing!{w=0.75}{nw}"
+        $ chosen_descriptor = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else player
+        extend 1unmbgl " What did you wanna see,{w=0.2} [chosen_descriptor]?"
+
+        show natsuki option_wait_excited at jn_left
+
+    elif Natsuki.isAffectionate(higher=True):
+        n 1fchbg "Yeah!{w=0.2} I can do that!{w=0.75}{nw}"
+        extend 1tnmss " What are you thinking,{w=0.2} [player]?"
+
+        show natsuki option_wait_excited at jn_left
+
+    else:
+        n 4unmaj "Sure,{w=0.2} I can do that."
+        n 7tlrsl "So...{w=1}{nw}"
+        extend 7unmbo " did you have something in mind,{w=0.2} or?"
+
+        show natsuki option_wait_curious at jn_left
 
     python:
         # Get unlocked outfits, sort them and generate player options
@@ -2182,27 +2201,72 @@ label outfits_wear_outfit:
     if isinstance(_return, jn_outfits.JNOutfit):
         # Wear the chosen outfit
         $ outfit_name = _return.display_name.lower()
-        n 4unmaj "Oh?{w=0.2} You want me to wear my [outfit_name]?{w=0.5}{nw}"
-        extend 1uchbg " Gotcha!"
-        n 1nchsm "Just give me a second...{w=2}{nw}"
+
+        if Natsuki.isEnamored(higher=True):
+            n 4ulraj "My [outfit_name],{w=0.5}{nw}" 
+            extend 2unmbo " [player]?"
+            n 1fcssml "Ehehe.{w=0.75}{nw}"
+            extend 3uchgnl " You bet!"
+            n 3ccsbgl "Just a second here...{w=2}{nw}"
+
+            show natsuki 4ccssml
+
+        elif Natsuki.isAffectionate(higher=True):
+            n 4unmaj "Oh?{w=0.75}{nw}" 
+            extend 4tnmbo " You want me to wear my [outfit_name]?{w=0.75}{nw}"
+            extend 2fchbg " Gotcha!"
+            n 1fcsbg "Just give me a second here...{w=2}{nw}"
+
+            show natsuki 4fcssm
+
+        else:
+            n 2ullaj "[outfit_name],{w=0.5}{nw}"
+            extend 2tnmbo " huh?{w=0.75}{nw}"
+            extend 4fchsm " You got it!"
+            n 2clrsssbl "Just give me a second here.{w=0.75}{nw}"
+            extend 2fcspolsbl " A-{w=0.2}and no peeking!{w=2}{nw}"
+
+            show natsuki 4fcsbol
 
         play audio clothing_ruffle
         $ Natsuki.setOutfit(_return)
+
+        if Natsuki.isEnamored(higher=True):
+            show natsuki 3ccssml
+
+        elif Natsuki.isAffectionate(higher=True):
+            show natsuki 2fcssm
+
+        else:
+            show natsuki 2fcssm
+
         with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
 
-        n 1nchbg "Okaaay!"
-        n 4tnmsm "How do I look,{w=0.1} [player]?{w=0.5}{nw}"
-        extend 4flldvl " Ehehe."
+        if Natsuki.isEnamored(higher=True):
+            n 3nchgnl "Okaaay!"
+            $ chosen_descriptor = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else player
+            n 3fsqbgl "H-{w=0.2}how am I looking,{w=0.2} [chosen_descriptor]?{w=0.75}{nw}"
+            extend 5fchsml " Ehehe."
+
+        elif Natsuki.isAffectionate(higher=True):
+            n 1fchbg "Alright!"
+            n 4fcsbglsbr "H-{w=0.2}how do I look,{w=0.2} [player]?{w=0.75}{nw}"
+            extend 4fsldvlsbr " Ehehe."
+
+        else:
+            n 2fcsbg "And...{w=1}{nw}" 
+            extend 2fchgn " we're good to go!"
+
         $ persistent.jn_natsuki_auto_outfit_change_enabled = False
 
     elif _return == "random":
         # Wear a random unlocked outfit
-        n 1fchbg "You got it!{w=1.5}{nw}"
-        extend 3fslss " Now what have we got here...{w=1.5}{nw}"
-        n 1ncssr "...{w=1.5}{nw}"
-        n 4fnmbg "Aha!{w=1.5}{nw}"
-        extend 4fchbg " This'll do.{w=1.5}{nw}"
-        extend 1uchsm " One second!"
+        n 1fchbg "You got it!{w=0.75}{nw}"
+        extend 3fslss " Now what have we got here..."
+        n 1ncssr "..."
+        n 4fnmbg "Aha!{w=0.75}{nw}"
+        extend 4fchbg " This'll do.{w=0.75}{nw}"
+        extend 1uchsm " One second!{w=2}{nw}"
 
         play audio clothing_ruffle
         $ Natsuki.setOutfit(
@@ -2326,7 +2390,8 @@ label outfits_remove_outfit:
     ):
         # No outfits, no point proceeding
         n 1tnmbo "Huh?{w=0.5}{nw}"
-        extend 1fchbg " I don't {i}have{/i} any outfit ideas from you to forget about,{w=0.2} dummy!"
+        $ chosen_tease = jn_utils.getRandomTease() if Natsuki.isEnamored(higher=True) else "dummy"
+        extend 1fchbg " I don't {i}have{/i} any outfit ideas from you to forget about,{w=0.2} [chosen_tease]!"
 
         jump ch30_loop
 
