@@ -972,6 +972,32 @@ label greeting_love_plus_show_yourself:
 
     return
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_love_plus_cant_live_without_me",
+            unlocked=True,
+            affinity_range=(jn_affinity.LOVE, None),
+            additional_properties={
+                "expression": "2cklpu"
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_love_plus_cant_live_without_me:
+    n 2ccsss "Oho?{w=0.75}{nw}"
+    extend 2fsqbg " And just who do we have here then?{w=1}{nw}"
+    extend 2fnmbg " Huh?"
+    n 4fcssm "Ehehe.{w=0.75}{nw}"
+    extend 7cllbgl " Well [player],{w=0.2} what can I say?"
+    n 7fchgnl "Guess you really can't live without me after all!"
+    $ chosen_tease = jn_utils.getRandomTease()
+    n 3fchbll "Hurry up and get comfy,{w=0.2} [chosen_tease]!"
+
+    return
+
 # AFFECTIONATE/ENAMORED greetings
 
 init 5 python:
@@ -1110,6 +1136,39 @@ label greeting_affectionate_enamored_in_for_some_fun:
     extend 2fcsbglsbr " it's about time you showed up!"
     n 4fsqsml "Ehehe.{w=0.75}{nw}"
     extend 3fchbgleme " Now I {i}know{/i} we're in for some fun!"
+
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_affectionate_enamored_in_for_some_fun",
+            unlocked=True,
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED),
+            additional_properties={
+                "expression": "2cklpu"
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_affectionate_enamored_know_what_time:
+    n 2fnmgs "[player]!{w=1}{nw}"
+    extend 2fcsgs " Well it's about time you got your sorry butt in here!{w=0.75}{nw}"
+    extend 2flrem " Jeez!"
+    n 4fcsem "I mean...{w=1}{nw}"
+    extend 4fnmwr " what were you thinking?{w=0.75}{nw}"
+    extend 3fsqan " Do you even {i}know{/i} what time it is?"
+    n 3fcspo "..."
+    n 3fkrpo "..."
+    n 3fchdvesm "Pfffft-!"
+    n 7fsqbg "Isn't it obvious,{w=0.2} [player]?"
+    $ time_descriptor = "day" if jn_is_day() else "night"
+    n 7fchbg "...Time for another fun [time_descriptor] with [n_name],{w=0.5}{nw}"
+    extend 3fchgn " duh!"
+    $ chosen_tease = jn_utils.getRandomTease()
+    n 3fchbgl "Welcome back,{w=0.2} [chosen_tease]!"
 
     return
 

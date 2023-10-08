@@ -556,6 +556,31 @@ init python in jn_jokes:
         display_name="Entomology",
         joke_category=JNJokeCategories.neutral
     ))
+    __registerJoke(JNJoke(
+        label="joke_booked_it",
+        display_name="Author pulled over",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_sheep_flock",
+        display_name="Cults",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_multiple_choice",
+        display_name="Multiple choice",
+        joke_category=JNJokeCategories.normal
+    ))
+    __registerJoke(JNJoke(
+        label="joke_horse_hairstyles",
+        display_name="Horse hairstyles",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_new_heights",
+        display_name="Mountain climbers",
+        joke_category=JNJokeCategories.corny
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -1327,4 +1352,70 @@ label joke_entomology_programming:
     extend 1tsgss " Isn't it obvious?"
     n 1nchgn "'Cause they heard they'd be constantly finding {i}bugs{/i}!"
     
+    return
+
+label joke_booked_it:
+    n 1fcsbg "Alright!{w=0.75}{nw}"
+    extend 1fnmbg " Let's see if you can paper-{w=0.75}{nw}"
+    extend 1fsgss " {i}back{/i}{w=0.5}{nw}"
+    extend 1fcssmesm " this one,{w=0.2} [player]."
+    n 1fcsaj "So!"
+    n 1unmfl "Did you hear about that famous author the police pulled over the other day?"
+    n 1tnmsl "..."
+    n 1csqsm "No?"
+    n 1ccsss "Heh.{w=0.75}{nw}"
+    extend 1flrbg " Can't say I'm surprised."
+    n 1fchbg "...'Cause he {i}booked{/i} it,{w=0.75}{nw}" 
+    extend 1fchgnelg " obviously!"
+    
+    return
+
+label joke_sheep_flock:
+    n 1fcsfl "Ugh..."
+    n 1fsrca "Whoever added this one {i}definitely{/i} had wool between their ears.{w=0.75}{nw}"
+    extend 1fsraj " That's all I'm saying."
+    n 1fcsflesi "..."
+    n 1cllbo "Whatever.{w=0.75}{nw}"
+    extend 1cnmfl " Why are sheep the best at starting a cult?"
+    n 1clrsl "..."
+    n 1csrsl "..."
+    n 1csqfl "...Because they already have a{w=0.5}{nw}"
+    extend 1cslem " {i}flock{/i}."
+
+    return
+
+label joke_multiple_choice:
+    n 1ccsbg "Let me{w=0.5}{nw}" 
+    extend 1csqbg " {i}quiz{/i}{w=0.5}{nw}" 
+    extend 1fsqsm " you on this one,{w=0.2} [player]."
+    n 1fcsbg "Alright!"
+    n 1unmaj "So,{w=0.2} why are multiple choice exams the worst way you can test someone?"
+    n 1tsgsm "..."
+    n 1csgss "Really?"
+    n 1csqbg "Not even a guess,{w=0.2} [player]?{w=0.75}{nw}"
+    extend 1fsqsm " Ehehe."
+    n 1fcsbg "Easy -{w=0.5}{nw}"
+    extend 1fchgnelg " 'cause it's just a {i}box-ticking exercise{/i}!"
+
+    return
+
+label joke_horse_hairstyles:
+    n 1ccsem "I seriously can't believe {i}this{/i} is the one I gotta read out.{w=0.75}{nw}"
+    extend 1csrsl " Ugh."
+    n 1ccsflesi "..."
+    n 1csqfl "What kind of hairstyle should you never give to a horse?"
+    n 1csqsl "..."
+    n 1csrbo "..."
+    n 1csrem "...A {i}pony{/i}{w=0.5}{nw}"
+    extend 1csqem "-tail."
+
+    return
+
+label joke_new_heights:
+    n 1csqaj "What happens when a mountain climber gets a promotion?"
+    n 1cslsl "..."
+    n 1ccsflesi "Ugh..."
+    n 1cllpu "...They reach{w=0.75}{nw}"
+    extend 1csqem " {i}new heights{/i}."
+
     return
