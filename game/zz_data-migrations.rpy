@@ -272,7 +272,6 @@ init python in jn_data_migrations:
     def to_1_0_2():
         jn_utils.log("Migration to 1.0.2 START")
         store.persistent._jn_version = "1.0.2"
-        jn_utils.save_game()
         jn_utils.log("Migration to 1.0.2 DONE")
         return
 
@@ -324,7 +323,6 @@ init python in jn_data_migrations:
     def to_1_1_1():
         jn_utils.log("Migration to 1.1.1 START")
         store.persistent._jn_version = "1.1.1"
-        jn_utils.save_game()
         jn_utils.log("Migration to 1.1.1 DONE")
         return
 
@@ -344,7 +342,6 @@ init python in jn_data_migrations:
     def to_1_2_1():
         jn_utils.log("Migration to 1.2.1 START")
         store.persistent._jn_version = "1.2.1"
-        jn_utils.save_game()
         jn_utils.log("Migration to 1.2.1 DONE")
         return
 
@@ -352,11 +349,64 @@ init python in jn_data_migrations:
     def to_1_2_2():
         jn_utils.log("Migration to 1.2.2 START")
         store.persistent._jn_version = "1.2.2"
-        jn_utils.save_game()
         jn_utils.log("Migration to 1.2.2 DONE")
         return
 
-    @migration(["1.2.2", "1.2.3"], "1.3.0", runtime=MigrationRuntimes.INIT)
+    @migration(["1.2.2"], "1.2.3", runtime=MigrationRuntimes.INIT)
+    def to_1_2_3():
+        jn_utils.log("Migration to 1.2.3 START")
+        store.persistent._jn_version = "1.2.3"
+        jn_utils.log("Migration to 1.2.3 DONE")
+        return
+
+    @migration(["1.2.3"], "1.2.4", runtime=MigrationRuntimes.INIT)
+    def to_1_2_4():
+        jn_utils.log("Migration to 1.2.4 START")
+        store.persistent._jn_version = "1.2.4"
+
+        if "holiday_christmas_day" in store.persistent._seen_ever:
+            jn_outfits.get_outfit("jn_christmas_outfit").unlock()
+            jn_utils.log("Unlock state corrected for outfit: jn_christmas_outfit")
+
+        if "talk_are_you_into_cosplay" in store.persistent._seen_ever and store.Natsuki.isAffectionate(higher=True):
+            jn_outfits.get_outfit("jn_trainer_cosplay").unlock()
+            jn_outfits.get_outfit("jn_sango_cosplay").unlock()
+            jn_utils.log("Unlock state corrected for outfits: jn_trainer_cosplay, jn_sango_cosplay")
+
+        if "talk_skateboarding" in store.persistent._seen_ever and store.Natsuki.isAffectionate(higher=True):
+            jn_outfits.get_outfit("jn_skater_outfit").unlock()
+            jn_utils.log("Unlock state corrected for outfit: jn_skater_outfit")
+
+        if "event_warm_package" in store.persistent._seen_ever:
+            jn_outfits.get_outfit("jn_cosy_cardigan_outfit").unlock()
+            jn_utils.log("Unlock state corrected for outfit: jn_cosy_cardigan_outfit")
+
+        if "talk_fitting_clothing" in store.persistent._seen_ever:
+            jn_outfits.get_outfit("jn_pastel_goth_getup").unlock()
+            jn_utils.log("Unlock state corrected for outfit: jn_pastel_goth_getup")
+
+        if "holiday_valentines_day" in store.persistent._seen_ever:
+            jn_outfits.get_outfit("jn_ruffle_neck_sweater_outfit").unlock()
+            jn_utils.log("Unlock state corrected for outfit: jn_ruffle_neck_sweater_outfit")
+
+            if store.Natsuki.isLove(higher=True):
+                jn_outfits.get_outfit("jn_heart_sweater_outfit").unlock()
+                jn_utils.log("Unlock state corrected for outfit: jn_heart_sweater_outfit")
+
+        if "talk_chocolate_preference" in store.persistent._seen_ever and store.Natsuki.isAffectionate(higher=True):
+            jn_outfits.get_outfit("jn_chocolate_plaid_collection").unlock()
+            jn_utils.log("Unlock state corrected for outfit: jn_chocolate_plaid_collection")
+
+        if "holiday_easter" in store.persistent._seen_ever:
+            jn_outfits.get_outfit("jn_chick_outfit").unlock()
+            jn_outfits.get_outfit("jn_cherry_blossom_outfit").unlock()
+            jn_utils.log("Unlock state corrected for outfits: jn_chick_outfit, jn_cherry_blossom_outfit")
+
+        jn_utils.save_game()
+        jn_utils.log("Migration to 1.2.4 DONE")
+        return
+
+    @migration(["1.2.4"], "1.3.0", runtime=MigrationRuntimes.INIT)
     def to_1_3_0():
         jn_utils.log("Migration to 1.3.0 START")
         store.persistent._jn_version = "1.3.0"
