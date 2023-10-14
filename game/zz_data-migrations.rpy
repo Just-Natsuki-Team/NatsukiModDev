@@ -365,41 +365,41 @@ init python in jn_data_migrations:
         store.persistent._jn_version = "1.2.4"
 
         if "holiday_christmas_day" in store.persistent._seen_ever:
-            jn_outfits.get_outfit("jn_christmas_outfit").unlock()
+            jn_outfits.getOutfit("jn_christmas_outfit").unlock()
             jn_utils.log("Unlock state corrected for outfit: jn_christmas_outfit")
 
         if "talk_are_you_into_cosplay" in store.persistent._seen_ever and store.Natsuki.isAffectionate(higher=True):
-            jn_outfits.get_outfit("jn_trainer_cosplay").unlock()
-            jn_outfits.get_outfit("jn_sango_cosplay").unlock()
+            jn_outfits.getOutfit("jn_trainer_cosplay").unlock()
+            jn_outfits.getOutfit("jn_sango_cosplay").unlock()
             jn_utils.log("Unlock state corrected for outfits: jn_trainer_cosplay, jn_sango_cosplay")
 
         if "talk_skateboarding" in store.persistent._seen_ever and store.Natsuki.isAffectionate(higher=True):
-            jn_outfits.get_outfit("jn_skater_outfit").unlock()
+            jn_outfits.getOutfit("jn_skater_outfit").unlock()
             jn_utils.log("Unlock state corrected for outfit: jn_skater_outfit")
 
         if "event_warm_package" in store.persistent._seen_ever:
-            jn_outfits.get_outfit("jn_cosy_cardigan_outfit").unlock()
+            jn_outfits.getOutfit("jn_cosy_cardigan_outfit").unlock()
             jn_utils.log("Unlock state corrected for outfit: jn_cosy_cardigan_outfit")
 
         if "talk_fitting_clothing" in store.persistent._seen_ever:
-            jn_outfits.get_outfit("jn_pastel_goth_getup").unlock()
+            jn_outfits.getOutfit("jn_pastel_goth_getup").unlock()
             jn_utils.log("Unlock state corrected for outfit: jn_pastel_goth_getup")
 
         if "holiday_valentines_day" in store.persistent._seen_ever:
-            jn_outfits.get_outfit("jn_ruffle_neck_sweater_outfit").unlock()
+            jn_outfits.getOutfit("jn_ruffle_neck_sweater_outfit").unlock()
             jn_utils.log("Unlock state corrected for outfit: jn_ruffle_neck_sweater_outfit")
 
             if store.Natsuki.isLove(higher=True):
-                jn_outfits.get_outfit("jn_heart_sweater_outfit").unlock()
+                jn_outfits.getOutfit("jn_heart_sweater_outfit").unlock()
                 jn_utils.log("Unlock state corrected for outfit: jn_heart_sweater_outfit")
 
         if "talk_chocolate_preference" in store.persistent._seen_ever and store.Natsuki.isAffectionate(higher=True):
-            jn_outfits.get_outfit("jn_chocolate_plaid_collection").unlock()
+            jn_outfits.getOutfit("jn_chocolate_plaid_collection").unlock()
             jn_utils.log("Unlock state corrected for outfit: jn_chocolate_plaid_collection")
 
         if "holiday_easter" in store.persistent._seen_ever:
-            jn_outfits.get_outfit("jn_chick_outfit").unlock()
-            jn_outfits.get_outfit("jn_cherry_blossom_outfit").unlock()
+            jn_outfits.getOutfit("jn_chick_outfit").unlock()
+            jn_outfits.getOutfit("jn_cherry_blossom_outfit").unlock()
             jn_utils.log("Unlock state corrected for outfits: jn_chick_outfit, jn_cherry_blossom_outfit")
 
         jn_utils.save_game()

@@ -569,7 +569,7 @@ init python in jn_jokes:
     __registerJoke(JNJoke(
         label="joke_multiple_choice",
         display_name="Multiple choice",
-        joke_category=JNJokeCategories.normal
+        joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_horse_hairstyles",

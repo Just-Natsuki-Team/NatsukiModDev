@@ -141,7 +141,7 @@ label music_menu:
         n 3ullss "Well, whatever.{w=0.5}{nw}"
         extend 3unmaj " So..."
 
-        show natsuki 3unmboeqm
+        show natsuki option_wait_curious
         menu:
             n "Did you want me to turn the music back up so you can pick something?"
 
