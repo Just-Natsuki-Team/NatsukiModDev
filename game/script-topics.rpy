@@ -11607,6 +11607,7 @@ label talk_windup_playing_things_out_loud:
     extend 3fllan " you can basically guarantee that whatever it is,{w=0.75}{nw}" 
     extend 3fslan " it's {i}never{/i} gonna sound good."
     n 4fbkwr "Nothing ever {i}does{/i} when you're blasting it out of crappy phone speakers or busted-up headphones!"
+    n 4fcsan "Bonus points too if it's some kid playing on something their parents gave them just to shut them up."
     n 1nsqem "And{w=0.3} Oh.{w=0.75}{nw}"
     extend 2csqfl " My.{w=0.75}{nw}"
     extend 2fsqem " God,{w=0.5}{nw}"
@@ -11634,7 +11635,7 @@ label talk_windup_playing_things_out_loud:
     n 2fsrsll "...And not all of us can afford all the fancy noise cancelling stuff either."
     n 1ccsemesi "Ugh..."
     n 2fllsl "Jerks.{w=0.75}{nw}"
-    extend 2fslbol " Makes me wanna yank that stupid phone out of their hands and toss it out the window or something."
+    extend 2fslbol " Makes me wanna yank that stupid phone or whatever out of their hands and toss it out the window."
 
     if get_topic("talk_using_headphones_carefully").shown_count > 0:
         n 1ccsfll "And I know I said before that shutting yourself away from the world with headphones was a bad idea."
