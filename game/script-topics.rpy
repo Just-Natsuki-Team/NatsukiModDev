@@ -1036,7 +1036,7 @@ init 5 python:
             unlocked=True,
             prompt="Using computers healthily",
             conditional="store.jn_utils.get_current_session_length().total_seconds() / 3600 >= 8",
-            category=["Life", "You", "Health"],
+            category=["Health", "Technology"],
             nat_says=True,
             affinity_range=(jn_affinity.HAPPY, None),
             location="classroom"
@@ -1045,61 +1045,250 @@ init 5 python:
     )
 
 label talk_using_computers_healthily:
-    n 1unmaj "Huh."
-    n 3tnmaj "Hey,{w=0.1} [player].{w=0.2} I just thought of something."
-    n 1unmsf "You gotta be at your computer to talk to me,{w=0.1} right?"
-    n 4ullsf "And you've been here a while already..."
-
-    if (jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.work_applications)
-        or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.artwork)
-        or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.coding)):
-            n 1knmaj "In fact, I've even {i}seen{/i} you working on a lot of stuff myself!"
-            n 1kllsl "..."
-
-    n 1nchgn "Alright,{w=0.1} that's it!{w=0.2} I've decided."
-    n 1uchgn "I'm gonna give you a little lesson on using your computer the right way!"
-    n 3nnmss "Number one:{w=0.2} posture!"
-    n 1fwmlg "Sit up straight,{w=0.1} and back against the chair,{w=0.1} [player].{w=0.2}"
-    extend 1uchlg " I mean it!"
-    n 4tnmlg "You don't want back problems,{w=0.1} do you?"
-    n 1nnmsm "Make sure your feet can still touch the floor,{w=0.1} though.{w=0.2}"
-    extend 3uchgn " Even I can do that!"
-    n 1nnmaj "Number two:{w=0.2} distance!"
-    n 3nsggn "I know you can't get enough of me,{w=0.1}"
-    extend 3fnmpo " but I don't wanna see you pressing your face against the screen.{w=0.2} It's weird."
-    n 1uchgn "So make sure you sit about an arm's length away from the display,{w=0.1} alright?"
-    n 4uwdaj "Oh!{w=0.2} Don't forget to keep your stuff in easy reach though{w=0.1} -{w=0.1}"
-    extend 1unmsm " like your mouse."
-    n 1unmbg "Number three:{w=0.2} breaks!"
-    n 1uwmbg "I don't know about you,{w=0.1} but I get all fidgety if I stay still too long..."
-    n 3fchgn "So make sure you get off your butt and do some stretches a few times per hour!"
-    n 4fsqsg "You could even get some water or something if you {i}really{/i} need an excuse to move."
-    n 1nnmsm "It'd also give your eyes a rest from the screen!"
-    n 1uchbs "Alright {w=0.1}-{w=0.1} and the last one!{w=0.2} This one's important,{w=0.1}"
-    extend 4uchgn " so listen up good!"
-    n 1unmbo "If you ever feel unwell {w=0.1}-{w=0.1} like your back aches,{w=0.1} or your eyes hurt or something..."
-    n 2fwmpu "Please just stop whatever you're doing.{w=0.2} Your health comes first.{w=0.2} I don't care what needs to be done."
-    n 1unmsm "Take some time to feel better,{w=0.1} then make sure all your stuff is set up right like I said."
-    n 3fcsss "Don't carry on until you feel well enough {w=0.1}-{w=0.1} talk to someone if you have to!"
-    n 1uchgn "Okaaay!{w=0.2} Lecture over!"
-    n 4ullaj "Wow...{w=0.3} I rambled on a while,{w=0.1} didn't I?{w=0.2}"
-    extend 1klrbgl " Sorry,{w=0.1} sorry!{w=0.2} Ehehe."
-
-    if Natsuki.isEnamored(higher=True):
-        n 3kwmsml "But you know I only do these things because I really care about you,{w=0.1} [player]...{w=0.3} right?"
-        n 4kwmnvl "So please...{w=0.3} take care of yourself, okay?{w=0.2} I don't want you hurting because of me."
-
-        if Natsuki.isLove(higher=True):
-            $ chosen_endearment = jn_utils.getRandomEndearment()
-            n 4kwmsml "I love you,{w=0.1} [chosen_endearment]."
-            n 1kwmnvl "..."
-            return
+    if get_topic("talk_using_computers_healthily").shown_count > 0:
+        n 3tllsl "..."
+        n 7tslbo "..."
+        n 7tslfl "Say...{w=1}{nw}"
+        extend 7tnmfl " [player]?{w=0.75}{nw}"
+        extend 3unmaj " You got a minute?{w=0.75}{nw}"
+        extend 3tnmbo " I gotta ask you a question."
+        n 7tslsl "..."
+        n 7tslaj "So...{w=1}{nw}"
+        extend 7unmaj " you've been visiting me for a while already,{w=0.2} huh?{w=0.75}{nw}"
+        extend 3ulrbo " You know,{w=0.2} using your computer and everything."
+        n 4csrss "And I'm pretty sure I went through how to make sure you aren't just setting yourself up for some major hurt down the line already."
+        n 4tlraj "But...{w=1}{nw}"
+        extend 7tnmaj " I gotta ask."
+        n 3fnmbg "Just how much of that exactly do you{w=0.3}{nw}"
+        extend 3fsqbg " {i}actually{/i}{w=0.3}{nw}"
+        extend 3fnmbg " remember,{w=0.75}{nw}"
+        extend 3fsqsm " [player]?"
+        n 4fnmbg "Huh?"
+        n 4tsqsm "..."
+        n 2fcssm "Ehehe.{w=0.75}{nw}"
+        extend 2fcsbg " Yep,{w=0.2} just as I thought.{w=0.75}{nw}"
+        extend 2nchgn " Total silence!"
+        n 4fllbg "Well [player],{w=0.2} have no fear."
+        n 6fcssmedz "'Cause it's time for a little refresher on how {i}not{/i} to ruin your spine from yours truly!"
 
     else:
-        n 1usglg "But you know I only say these things because I care."
-        n 3nsqpo "...And I don't want you whining to me that your back hurts.{w=0.2}"
+        n 7tslsl "..."
+        n 7cslpu "...Huh."
+        n 7tnmaj "You know,{w=0.2} [player]...{w=1}{nw}"
+        extend 3tlraj " I just thought of something.{w=0.75}{nw}"
+        extend 3unmbo " About how you actually visit me and all."
+        n 7ulraj "So...{w=1}{nw}"
+        extend 2tlrfl " you gotta be at your desk to actually talk to me,{w=0.5}{nw}"
+        extend 2tnmca " right?{w=0.75}{nw}"
+        extend 4cslss " Or using some kind of computer at least."
+        n 7tslpu "And you've been here for a bunch of time already too,{w=0.2} now that I think about it."
 
-    n 4nchgn "Ahaha...{w=0.3} now, where were we?"
+        if Natsuki.isEnamored(higher=True):
+            n 3unmfll "N-{w=0.2}not that I'm saying I don't appreciate it or anything like that!\n{w=0.75}{nw}"
+            extend 3ccsajlsbr "O-{w=0.2}of course I do!"
+            $ chosen_tease = jn_utils.getRandomTease()
+            n 5csrbolsbr "I shouldn't even have to remind you by now,{w=0.2} [chosen_tease]."
+
+        elif Natsuki.isAffectionate(higher=True):
+            n 3unmeml "N-{w=0.2}not that it's a problem,{w=0.5}{nw}" 
+            extend 3clremlsbl " or anything like that!{w=0.75}{nw}"
+            extend 3ccspolsbl " Y-{w=0.2}you should know it isn't by now anyway,{w=0.2} [player]."
+
+        else:
+            n 3unmeml "N-{w=0.2}not that I'm saying it's some kind of problem or anything like that,\n{w=0.5}{nw}" 
+            extend 4ccsgslsbl "{i}obviously{/i}!"
+            n 2csrbolsbl "..."
+
+        n 4clrpu "Though..."
+        n 7tnmflsbr "Doesn't that mean you're spending a whole bunch of extra time sat around with your computer every day?{w=0.75}{nw}"
+        extend 3tsqslsbr " Just for my sake?"
+        
+        if (
+            Natsuki.isAffectionate(higher=True) 
+            and (jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.artwork) 
+            or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.coding) 
+            or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.work_applications))
+        ):
+            $ activity_options = []
+            if jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.artwork):
+                $ activity_options.append("drawing")
+
+            if jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.coding):
+                $ activity_options.append("coding")
+
+            if jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.work_applications):
+                $ activity_options.append("working")
+
+            if len(activity_options) > 0:
+                $ activity_mention = random.choice(activity_options)
+                n 2ccsfl "I mean...{w=1}{nw}"
+                extend 2ulraj " I know you use your computer already for a bunch of stuff.\n{w=0.75}{nw}"
+                extend 4fchbg "Like [activity_mention]!"
+
+        else:
+            n 2ccsfl "I mean...{w=1}{nw}"
+            extend 2tllsl " I guess you probably still use your computer for other stuff already."
+
+        n 1ccsflsbl "But that still doesn't change the fact you're gonna be racking up a load of extra screen time thanks to me."
+        
+        if Natsuki.isEnamored(higher=True):
+            n 2clrfllsbl "And the last thing I wanna hear about is you getting yourself all cramped up because you were slouched over like a potato for hours."
+            n 2cllsl "..."
+
+        else:
+            n 2ccsaj "And the last thing I wanna hear is you complaining your back hurts because nobody had the brains to tell you not to slouch like a potato for hours."
+            n 2ccspol "I-{w=0.2}I'm not having {i}that{/i} on my conscience."
+
+        n 1ccsss "Heh.{w=0.75}{nw}"
+        extend 4fsrss " In fact..."
+        n 2fnmbg "You know what,{w=0.2} [player]?{w=0.75}{nw}"
+        extend 2fsqsm " I hope you're sitting."
+        n 6fcsbg "'Cause I'm gonna make sure you're using your computer the {i}right{/i} way,{w=0.5}{nw}"
+        extend 3fchgn " whether you like it or not!"
+
+    n 1fcsbg "Alright,{w=0.75}{nw}"
+    extend 6fcsaj " so number one:{w=1}{nw}" 
+    extend 3unmbg " posture!"
+    n 1ccsflsbl "...And no,{w=0.2} [player].{w=0.75}{nw}"
+    extend 4csqtr " I mean {i}actual{/i} posture.{w=0.75}{nw}"
+    extend 4ccspo " The sitting kind."
+    n 3fnmfl "Now sit up straight,{w=0.2} and keep that back of yours against the chair,{w=0.2} [player].{w=0.75}{nw}"
+    extend 3fcsgs " I mean it!"
+    n 4cllfl "Seriously -{w=0.5}{nw}"
+    extend 4tsqem " unless you feel like making friends with your nearest chiropractor,{w=0.5}{nw}"
+    extend 4cslem " trust me when I say you {i}really{/i} don't wanna spend all your time slouching."
+    n 2csqss "...Or hunched up on your chair like some kind of weird computer gremlin."
+    n 6unmaj "If you're doing it right,{w=0.5}{nw}"
+    extend 3ullaj " then you should have your arms and thighs parallel to the ground,{w=0.5}{nw}"
+    extend 3fcssm " with your eyes roughly at the top of your screen.{w=0.75}{nw}"
+    extend 3fcsbg " Easy peasy!"
+    n 4unmfl "Oh,{w=0.2} right -{w=0.5}{nw}"
+    extend 2clrsssbl " make sure your feet can still touch the floor,{w=0.2} though.\n{w=0.75}{nw}"
+    extend 2fcscasbr "Even {i}I{/i} can do that,{w=0.2} [player]."
+    n 1fnmaj "Number two:{w=0.75}{nw}"
+    extend 2fcsbg " distance!"
+    n 2clrbg "It's pretty easy to forget,{w=0.5}{nw}"
+    extend 4tnmbo " but if you wanna avoid sore eyes then you've gotta make sure you're actually a decent distance from the screen too."
+    n 2fcsca "Not right up close or so far away you need binoculars!"
+
+    if Natsuki.isEnamored(higher=True):
+        n 2fcsbglsbr "I-{w=0.2}I know you just can't get enough of me,{w=0.2} [player].{w=0.75}{nw}"
+        extend 4cslfllsbr " But really."
+        n 4ccspol "Even I don't wanna see you practically pressing your face against the screen either."
+
+    elif Natsuki.isAffectionate(higher=True):
+        n 2fsrsslsbr "I-{w=0.2}I know I {i}am{/i} pretty awesome,{w=0.5}{nw}"
+        extend 4csqflsbr " but the last thing I wanna be greeted by is your face right up against the screen either."
+
+    else:
+        n 2ccsflsbr "A-{w=0.2}and besides,{w=0.5}{nw}"
+        extend 2cslflsbr " the last thing I wanna see is your face all smushed up against the screen,{w=0.2} [player].{w=0.75}{nw}"
+        extend 2ccsposbr " I didn't ask for {i}that{/i}."
+
+    n 2ulraj "So...{w=1}{nw}"
+    extend 4tsgbg " just make sure you're sitting about an arm's length away from the screen.{w=0.75}{nw}"
+    extend 4ccsbg " That's all I'm saying!"
+    n 3unmpu "Don't forget to keep all your stuff in easy reach though -{w=0.5}{nw}"
+    extend 3ccsbg " unless you're a psychic,{w=0.5}{nw}"
+    extend 6csqsm " you aren't getting far if you can barely hit the keyboard."
+
+    if get_topic("talk_using_computers_healthily").shown_count > 0:
+        n 7ullaj "And remember,{w=0.2} there's plenty of stuff to see beyond the screen -{w=0.5}{nw}"
+        extend 3fcsbg " so you better be giving your eyes a break too!"
+
+    else:
+        n 7ullfl "And while you're at it?{w=0.75}{nw}"
+        extend 7ullaj " Spend some time looking at something {i}other{/i} than the screen too,{w=0.5}{nw}"
+        extend 7unmbo " for that matter."
+        n 3fcsbg "You've got windows there,{w=0.2} right?{w=0.75}{nw}"
+        extend 3fsqbg " So you better be using them!"
+
+    n 7ccsbg "Now,{w=0.2} number three:{w=0.75}{nw}"
+    extend 3fchbg " breaks!"
+    n 3tllfl "I don't know about you [player],{w=0.5}{nw}"
+    extend 7tnmbo " but personally?{w=0.75}{nw}"
+    extend 7csrem " I can't stand being sat staring at a screen for hours at a time."
+    n 3cnmem "Seriously -{w=0.5}{nw}"
+    extend 4cllan " I keep getting distracted if I'm stuck in front of my laptop for too long.{w=1}{nw}"
+    extend 4fcsem " It's the worst!"
+    n 2fslem "Plus on top of that,{w=0.5}{nw}"
+    extend 2csqsl " you're {i}really{/i} not doing your circulation a favor either."
+    n 6fcsbg "...So get off your butt and do some stretches or something!{w=0.75}{nw}"
+    extend 3clraj " Or even go get some water if you {i}really{/i} need an excuse to get moving."
+    n 3tnmbo "Really,{w=0.2} it doesn't matter what you do.{w=0.75}{nw}"
+    extend 4ccsca " It's all about getting off your rear,{w=0.2} back on your feet,{w=0.2} and giving your eyes a break.{w=0.75}{nw}"
+    extend 6ccsbg " Simple enough!"
+    n 3fsqsm "..."
+    n 3fsqss "Well?{w=0.75}{nw}"
+    extend 7fcsbg " Still following me,{w=0.2} [player]?"
+    n 3flraj "You better be.{w=0.75}{nw}"
+    extend 3fnmfl " This one's easily the most important,{w=0.2} so listen up!"
+    n 4tllfl "Don't get the wrong idea,{w=0.2} [player] -{w=0.5}{nw}"
+    extend 4tsqfl " obviously you're gonna know your limits better than I do."
+    n 2tlrpu "But...{w=1}{nw}" 
+    extend 2tnmbo " if you start feeling kinda weird or sick,{w=0.2} or your eyes start hurting or something while you're around?"
+    n 2cllaj "Just..."
+    n 1cdlsll "..."
+    n 4ccsfllsbl "...Just don't be a total dummy about it.{w=0.75}{nw}"
+    extend 4csqfllsbl " Alright?"
+    n 2clrflsbr "I'm being serious here."
+    n 2cnmslsbr "Call it quits on whatever you were doing and just come back to it later.{w=0.75}{nw}"
+    extend 1csqbosbr " Got it?"
+    n 3ccstr "Work or some dusty old assignment can wait if you're just gonna make yourself even worse trying to impress someone."
+    n 3csqbo "No,{w=0.2} your boss or professor isn't going to drop dead if that stinky report isn't done today."
+    n 1ccsss "Heh.{w=0.75}{nw}"
+    extend 4clrss " Anyway,{w=0.2} think about it."
+    n 3tnmbo "It isn't like you're going to pull some kind of miracle if you try and push through it all."
+    n 3ccsaj "All you're gonna achieve is make yourself feel like crap for even longer.{w=0.75}{nw}"
+    extend 3fcsca " It's totally pointless."
+    
+    if Natsuki.isEnamored(higher=True):
+        n 2cllca "...And besides,{w=0.2} [player]."
+        n 2cllpulsbl "You know I'm not going to get mad or anything if you have to take a rain check on our time together..."
+        n 4knmbolsbl "Right?"
+        n 4klrbolsbl "..."
+        n 2ccsfllesisbl "..."
+        n 2cnmsll "...Look."
+        n 1fcspul "I...{w=1}{nw}"
+        
+        if Natsuki.isLove(higher=True):
+            extend 1ncspul " really...{w=1}{nw}"
+        
+        $ chosen_descriptor = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else player
+        extend 4csrbol " care about you,{w=0.2} [chosen_descriptor].{w=0.75}{nw}"
+        extend 5cnmbol " You should seriously know that by now."
+        n 3ccsajl "...Just like you should know you I'm {i}not{/i} gonna be impressed by some weird macho display of toughing it out."
+        n 3cnmpol "Capiche?"
+        n 3cslbol "..."
+
+    elif Natsuki.isAffectionate(higher=True):
+        n 2cllflsbr "A-{w=0.2}and besides,{w=0.2} [player].{w=0.75}{nw}"
+        extend 2ccssllsbl " I'm not {i}that{/i} selfish."
+        n 4csrajlsbl "You {i}do{/i} know I won't get mad or anything if you really have to go for a while..."
+        n 4cnmsllsbl "Right?"
+        n 1cslbolsbl "..."
+
+    else:
+        n 2fcstr "A-{w=0.2}and besides,{w=0.2} [player]."
+        n 2clrajsbl "It's not like I'm gonna get mad at you or anything like that either if you gotta duck out.{w=0.75}{nw}"
+        extend 2clrsll " Even I'm not that much of a jerk."
+        n 1clrbol "..."
+
+    n 4ccsflsbr "A-{w=0.2}anyway."
+    n 4ullaj "I've gone on way long enough already,{w=0.5}{nw}"
+    extend 2cnmca " so I'm just gonna say this,{w=0.2} [player]."
+    n 7fcsaj "You might end up with a crappy back or nasty eyes if you aren't careful..."
+    n 3fcspo "...But that's gonna be nothing compared to the grade-A earache you're getting if you come crying to me later!"
+    n 3fsqsm "Ehehe."
+
+    if Natsuki.isLove(higher=True):
+        $ chosen_tease = jn_utils.getRandomTease()
+        n 4fchbll "Love you too,{w=0.2} [chosen_tease]!"
+
+    else:
+        $ chosen_descriptor = jn_utils.getRandomTease() if Natsuki.isEnamored(higher=True) else player
+        n 4fchgnedz "You're welcome,{w=0.2} [chosen_descriptor]!"
+
     return
 
 # Natsuki highlights the importance of staying active and getting exercise
