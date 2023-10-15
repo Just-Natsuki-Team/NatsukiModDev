@@ -19,6 +19,7 @@ default persistent.jn_player_appearance_height_cm = None
 default persistent._jn_player_birthday_day_month = None # Format (day, month)
 default persistent._jn_player_birthday_is_leap_day = False # True if player gave birthday as 29th
 default persistent._jn_player_is_multilingual = None
+default persistent._jn_player_had_work_placement = None
 
 # Hobby data
 default persistent.jn_player_gaming_frequency = None
