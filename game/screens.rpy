@@ -260,7 +260,7 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
 
                             null height 5
 
-screen scrollable_choice_menu(items, last_item=None, option_width=560, icon_path=None):
+screen scrollable_choice_menu(items, last_item=None, option_width=560, icon_path=None, menu_caption=None):
     if icon_path and persistent._jn_display_option_icons:
         add icon_path anchor(0, 0) pos(1280 - (275 + option_width), 20)
     
@@ -270,8 +270,13 @@ screen scrollable_choice_menu(items, last_item=None, option_width=560, icon_path
     if option_width > 560:
         $ option_width = 560
 
+    if menu_caption:
+        text "[menu_caption]" style "hkbd_label" pos(1280 - (40 + option_width), 20)
+
+    $ scrollable_start_y = 60 if menu_caption else 40
+
     fixed:
-        area (1280 - (40 + option_width), 40, option_width, 440)
+        area (1280 - (40 + option_width), scrollable_start_y, option_width, 440)
         vbox:
             ypos 0
             yanchor 0

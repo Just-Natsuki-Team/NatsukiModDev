@@ -588,6 +588,9 @@ init -1 python in jn_outfits:
                 if not "jn_" in outfit.reference_name and not player_created:
                     store.persistent._jn_pending_outfit_unlocks.append(outfit.reference_name)
 
+            else:
+                outfit.__load()
+
     def __registerWearable(wearable):
         """
         Registers a new wearable in the list of all wearables, allowing in-game access and persistency.

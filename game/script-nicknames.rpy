@@ -180,7 +180,7 @@ init 0 python in jn_nicknames:
             elif re.search(NATSUKI_FUNNY_NICKNAME_REGEX, nickname):
                 return NicknameTypes.funny
 
-            elif re.search(NATSUKI_DISLIKED_NICKNAME_REGEX, nickname):
+            elif re.search(NATSUKI_DISLIKED_NICKNAME_REGEX, nickname) or jn_utils.getStringContainsLabel(nickname):
                 return NicknameTypes.disliked
 
             elif jn_utils.getStringContainsInsult(nickname):
@@ -218,7 +218,7 @@ init 0 python in jn_nicknames:
             if re.search(PLAYER_FUNNY_NICKNAME_REGEX, nickname):
                 return NicknameTypes.funny
 
-            elif re.search(PLAYER_DISLIKED_NICKNAME_REGEX, nickname):
+            elif re.search(PLAYER_DISLIKED_NICKNAME_REGEX, nickname) or jn_utils.getStringContainsLabel(nickname):
                 return NicknameTypes.disliked
 
             elif jn_utils.getStringContainsInsult(nickname):
