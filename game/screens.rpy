@@ -181,7 +181,7 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                         null height 20
 
                     for button_name in menu_items.keys():
-                        $ has_unseen = len(Topic.filter_topics(topic_list=menu_items.get(button_name), unlocked=True, is_seen=False)) > 0
+                        $ has_unseen = len(Topic.filter_topics(topic_list=menu_items.get(button_name), is_seen=False)) > 0
                         $ display_text = "{i}[button_name]{/i}" if has_unseen else button_name
 
                         textbutton display_text:
