@@ -2241,11 +2241,9 @@ label outfits_wear_outfit:
 
                     show natsuki 4fcsbol
 
-                show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
-                $ jnPause(0.5)
                 play audio clothing_ruffle
-                $ jnPause(1)
                 $ Natsuki.setOutfit(_return)
+                with Fade(out_time=0.5, hold_time=1, in_time=0.5, color="#181212")
 
                 if Natsuki.isEnamored(higher=True):
                     show natsuki 3ccssml
@@ -2255,9 +2253,6 @@ label outfits_wear_outfit:
 
                 else:
                     show natsuki 2fcssm
-
-                hide black with Dissolve(0.5)
-                $ jnPause(0.5)
 
                 if Natsuki.isEnamored(higher=True):
                     n 3nchgnl "Okaaay!"
@@ -2286,10 +2281,7 @@ label outfits_wear_outfit:
             extend 4fchbg " This'll do.{w=0.75}{nw}"
             extend 1uchsm " One second!{w=2}{nw}"
 
-            show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
-            $ jnPause(0.5)
             play audio clothing_ruffle
-            $ jnPause(1)
             $ Natsuki.setOutfit(
                 random.choice(
                     jn_outfits.JNOutfit.filterOutfits(
@@ -2298,9 +2290,7 @@ label outfits_wear_outfit:
                         not_reference_name=Natsuki.getOutfitName())
                 )
             )
-
-            hide black with Dissolve(0.5)
-            $ jnPause(0.5)
+            with Fade(out_time=0.5, hold_time=1, in_time=0.5, color="#181212")
 
             n 1nchbg "All done!"
             $ persistent.jn_natsuki_auto_outfit_change_enabled = False
