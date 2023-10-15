@@ -185,3 +185,17 @@ init -55 python in jn_desk_items:
         unlocked=True,
         image_path="mod_assets/props/plant_care_book_held.png"
     ))
+
+    __registerDeskItem(JNDeskItem(
+        reference_name="jn_house_of_cards",
+        desk_slot=JNDeskSlots.centre,
+        unlocked=True,
+        image_path="mod_assets/props/cards/house_of_cards.png"
+    ))
+
+    __registerDeskItem(JNDeskItem(
+        reference_name="jn_card_pile",
+        desk_slot=JNDeskSlots.centre,
+        unlocked=True,
+        image_path="mod_assets/props/cards/card_pile.png"
+    ))
