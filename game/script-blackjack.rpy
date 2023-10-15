@@ -203,6 +203,8 @@ init 0 python in jn_blackjack:
 
         elif player_hand_sum > 21 and natsuki_hand_sum > 21:
             _game_state = JNBlackjackStates.draw
+            store.persistent._jn_blackjack_natsuki_streak = 0
+            store.persistent._jn_blackjack_player_streak = 0
 
         # Win via proximity
         elif (len(_natsuki_hand) == 5 and len(_natsuki_hand) == 5) or (_player_staying and _natsuki_staying):
@@ -298,6 +300,19 @@ init 0 python in jn_blackjack:
             - str "Forfeit" if the player has made any move, otherwise "Quit"
         """
         return "Forfeit" if _is_player_committed else "Quit"
+
+    def _getNatsukiHandSumLabel():
+        """
+        Returns text for Natsuki's hand display, based on the current game state.
+        The value of the first card in Natsuki's hand is always obfuscated, except for at the end of a round.
+
+        OUT:
+            - str "[n_name]: ? + X" if the round is ongoing, "[n_name]: 0" if Nat has yet to draw any cards, or "[n_name]: X" if the round is over.
+        """
+        if _game_state is None:
+            return "[n_name]: ? + {0}".format(_getHandSum(is_player=False) - _natsuki_hand[0][1]) if len(_natsuki_hand) > 1 else "[n_name]: 0"
+
+        return "[n_name]: {0}".format(_getHandSum(is_player=False))
 
     def _getCardDisplayable(is_player, index):
         """
@@ -581,7 +596,7 @@ label blackjack_end:
     $ jnPause(delay=1, hard=True)
     $ chosen_response = ""
 
-    if persistent._jn_blackjack_natsuki_streak in [3, 5, 10]:
+    if persistent._jn_blackjack_natsuki_streak in [3, 5, 10] and jn_blackjack._game_state in [jn_blackjack.JNBlackjackStates.natsuki_blackjack, jn_blackjack.JNBlackjackStates.natsuki_closest]:
         $ natsuki_streak_milestone_map = {
             3: [
                 "Oh?{w=0.75} Three wins now?{w=0.75} Looks like {i}someone's{/i} got the makings of a streak going!",
@@ -607,7 +622,7 @@ label blackjack_end:
         }
         $ chosen_response = renpy.substitute(random.choice(natsuki_streak_milestone_map[persistent._jn_blackjack_natsuki_streak]))
 
-    elif persistent._jn_blackjack_player_streak in [3, 5, 10]:
+    elif persistent._jn_blackjack_player_streak in [3, 5, 10] and jn_blackjack._game_state in [jn_blackjack.JNBlackjackStates.player_blackjack, jn_blackjack.JNBlackjackStates.player_closest]:
         $ player_streak_milestone_map = {
             3: [
                 "L-{w=0.2}lucky break,{w=0.2} [player].{w=0.75} Anyone can luck out three times in a row!",
@@ -869,7 +884,12 @@ screen blackjack_ui:
     # Natsuki's hand
     vbox:
         pos(40, 60)
-        text "[n_name]" style "categorized_menu_button" size 24 outlines [(3, "#2E1503EF", 0, 0)]
+        if persistent._jn_blackjack_show_hand_value:
+            text jn_blackjack._getNatsukiHandSumLabel() style "categorized_menu_button" size 24 xysize (300, None) outlines [(3, "#2E1503EF", 0, 0)]
+
+        else:
+            text "[n_name]" style "categorized_menu_button" size 24 xysize (300, None) outlines [(3, "#2E1503EF", 0, 0)]
+
         null height 10
 
         grid 5 1:
