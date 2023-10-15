@@ -2167,20 +2167,14 @@ label outfits_wear_outfit:
         $ chosen_descriptor = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else player
         extend 1unmbgl " What did you wanna see,{w=0.2} [chosen_descriptor]?"
 
-        show natsuki option_wait_excited at jn_left
-
     elif Natsuki.isAffectionate(higher=True):
         n 1fchbg "Yeah!{w=0.2} I can do that!{w=0.75}{nw}"
         extend 1tnmss " What are you thinking,{w=0.2} [player]?"
-
-        show natsuki option_wait_excited at jn_left
 
     else:
         n 4unmaj "Sure,{w=0.2} I can do that."
         n 7tlrsl "So...{w=1}{nw}"
         extend 7unmbo " did you have something in mind,{w=0.2} or?"
-
-        show natsuki option_wait_curious at jn_left
 
     python:
         # Get unlocked outfits, sort them and generate player options
@@ -2195,98 +2189,129 @@ label outfits_wear_outfit:
 
         options.insert(0, ("You pick!", "random"))
 
-    call screen scrollable_choice_menu(options, ("Nevermind.", None))
-    show natsuki at jn_center
-
-    if isinstance(_return, jn_outfits.JNOutfit):
-        # Wear the chosen outfit
-        $ outfit_name = _return.display_name.lower()
-
-        if Natsuki.isEnamored(higher=True):
-            n 4ulraj "My [outfit_name],{w=0.5}{nw}" 
-            extend 2unmbo " [player]?"
-            n 1fcssml "Ehehe.{w=0.75}{nw}"
-            extend 3uchgnl " You bet!"
-            n 3ccsbgl "Just a second here...{w=2}{nw}"
-
-            show natsuki 4ccssml
-
-        elif Natsuki.isAffectionate(higher=True):
-            n 4unmaj "Oh?{w=0.75}{nw}" 
-            extend 4tnmbo " You want me to wear my [outfit_name]?{w=0.75}{nw}"
-            extend 2fchbg " Gotcha!"
-            n 1fcsbg "Just give me a second here...{w=2}{nw}"
-
-            show natsuki 4fcssm
+    $ outfit_confirmed = False
+    while not outfit_confirmed:
+        # Get the outfit
+        if Natsuki.isAffectionate(higher=True):
+            show natsuki option_wait_excited at jn_left
 
         else:
-            n 2ullaj "[outfit_name],{w=0.5}{nw}"
-            extend 2tnmbo " huh?{w=0.75}{nw}"
-            extend 4fchsm " You got it!"
-            n 2clrsssbl "Just give me a second here.{w=0.75}{nw}"
-            extend 2fcspolsbl " A-{w=0.2}and no peeking!{w=2}{nw}"
+            show natsuki option_wait_curious at jn_left
 
-            show natsuki 4fcsbol
+        call screen scrollable_choice_menu(options, ("Nevermind.", None))
+        show natsuki at jn_center
 
-        play audio clothing_ruffle
-        $ Natsuki.setOutfit(_return)
+        if isinstance(_return, jn_outfits.JNOutfit):
+            if _return.reference_name == Natsuki.getOutfitName():
+                # Natsuki is already wearing the selected outfit so no point changing, bonk the player and allow loop back
+                n 2fchsmesm "Pffff-!"
+                n 2tsqss "Really,{w=0.2} [player]?{w=0.75}{nw}"
+                extend 4fsgbg " Do your eyes need checking or something?"
+                $ chosen_descriptor = "you {0}".format(jn_utils.getRandomTeaseName()) if Natsuki.isAffectionate(higher=True) else player
+                n 4fchgn "I'm already wearing that,{w=0.2} [chosen_descriptor]!{w=0.75}{nw}"
+                extend 3fsqbg " At least pick {i}something{/i} different!"
 
-        if Natsuki.isEnamored(higher=True):
-            show natsuki 3ccssml
+            else:
+                # Wear the chosen outfit, stop the loop
+                $ outfit_name = _return.display_name.lower().capitalize()
 
-        elif Natsuki.isAffectionate(higher=True):
-            show natsuki 2fcssm
+                if Natsuki.isEnamored(higher=True):
+                    n 4ulraj "My [outfit_name],{w=0.5}{nw}" 
+                    extend 2unmbo " [player]?"
+                    n 1fcssml "Ehehe.{w=0.75}{nw}"
+                    extend 3uchgnl " You bet!"
+                    n 3ccsbgl "Just a second here...{w=2}{nw}"
 
-        else:
-            show natsuki 2fcssm
+                    show natsuki 4ccssml
 
-        with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
+                elif Natsuki.isAffectionate(higher=True):
+                    n 4unmaj "Oh?{w=0.75}{nw}" 
+                    extend 4tnmbo " You want me to wear my [outfit_name]?{w=0.75}{nw}"
+                    extend 2fchbg " Gotcha!"
+                    n 1fcsbg "Just give me a second here...{w=2}{nw}"
 
-        if Natsuki.isEnamored(higher=True):
-            n 3nchgnl "Okaaay!"
-            $ chosen_descriptor = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else player
-            n 3fsqbgl "H-{w=0.2}how am I looking,{w=0.2} [chosen_descriptor]?{w=0.75}{nw}"
-            extend 5fchsml " Ehehe."
+                    show natsuki 4fcssm
 
-        elif Natsuki.isAffectionate(higher=True):
-            n 1fchbg "Alright!"
-            n 4fcsbglsbr "H-{w=0.2}how do I look,{w=0.2} [player]?{w=0.75}{nw}"
-            extend 4fsldvlsbr " Ehehe."
+                else:
+                    n 2ullaj "[outfit_name],{w=0.5}{nw}"
+                    extend 2tnmbo " huh?{w=0.75}{nw}"
+                    extend 4fchsm " You got it!"
+                    n 2clrsssbl "Just give me a second here.{w=0.75}{nw}"
+                    extend 2fcspolsbl " A-{w=0.2}and no peeking!{w=2}{nw}"
 
-        else:
-            n 2fcsbg "And...{w=1}{nw}" 
-            extend 2fchgn " we're good to go!"
+                    show natsuki 4fcsbol
 
-        $ persistent.jn_natsuki_auto_outfit_change_enabled = False
+                show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+                $ jnPause(0.5)
+                play audio clothing_ruffle
+                $ jnPause(1)
+                $ Natsuki.setOutfit(_return)
 
-    elif _return == "random":
-        # Wear a random unlocked outfit
-        n 1fchbg "You got it!{w=0.75}{nw}"
-        extend 3fslss " Now what have we got here..."
-        n 1ncssr "..."
-        n 4fnmbg "Aha!{w=0.75}{nw}"
-        extend 4fchbg " This'll do.{w=0.75}{nw}"
-        extend 1uchsm " One second!{w=2}{nw}"
+                if Natsuki.isEnamored(higher=True):
+                    show natsuki 3ccssml
 
-        play audio clothing_ruffle
-        $ Natsuki.setOutfit(
-            random.choice(
-                jn_outfits.JNOutfit.filterOutfits(
-                    outfit_list=jn_outfits.getAllOutfits(),
-                    unlocked=True,
-                    not_reference_name=Natsuki.getOutfitName())
+                elif Natsuki.isAffectionate(higher=True):
+                    show natsuki 2fcssm
+
+                else:
+                    show natsuki 2fcssm
+
+                hide black with Dissolve(0.5)
+                $ jnPause(0.5)
+
+                if Natsuki.isEnamored(higher=True):
+                    n 3nchgnl "Okaaay!"
+                    $ chosen_descriptor = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else player
+                    n 3fsqbgl "H-{w=0.2}how am I looking,{w=0.2} [chosen_descriptor]?{w=0.75}{nw}"
+                    extend 5fchsml " Ehehe."
+
+                elif Natsuki.isAffectionate(higher=True):
+                    n 1fchbg "Alright!"
+                    n 4fcsbglsbr "H-{w=0.2}how do I look,{w=0.2} [player]?{w=0.75}{nw}"
+                    extend 4fsldvlsbr " Ehehe."
+
+                else:
+                    n 2fcsbg "And...{w=1}{nw}" 
+                    extend 2fchgn " we're good to go!"
+
+                $ persistent.jn_natsuki_auto_outfit_change_enabled = False
+                $ outfit_confirmed = True
+
+        elif _return == "random":
+            # Wear a random unlocked outfit, stop the loop
+            n 1fchbg "You got it!{w=0.75}{nw}"
+            extend 7fslss " Now what have we got here..."
+            n 7ccssresp "..."
+            n 4fnmbg "Aha!{w=0.75}{nw}"
+            extend 4fchbg " This'll do.{w=0.75}{nw}"
+            extend 1uchsm " One second!{w=2}{nw}"
+
+            show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+            $ jnPause(0.5)
+            play audio clothing_ruffle
+            $ jnPause(1)
+            $ Natsuki.setOutfit(
+                random.choice(
+                    jn_outfits.JNOutfit.filterOutfits(
+                        outfit_list=jn_outfits.getAllOutfits(),
+                        unlocked=True,
+                        not_reference_name=Natsuki.getOutfitName())
+                )
             )
-        )
-        with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
 
-        n 1nchbg "All done!"
-        $ persistent.jn_natsuki_auto_outfit_change_enabled = False
+            hide black with Dissolve(0.5)
+            $ jnPause(0.5)
 
-    else:
-        # Nevermind
-        n 1nnmbo "Oh.{w=1.5}{nw}"
-        extend 1nllaj " Well,{w=0.2} that's fine."
-        n 3nsrpol "I didn't wanna change anyway."
+            n 1nchbg "All done!"
+            $ persistent.jn_natsuki_auto_outfit_change_enabled = False
+            $ outfit_confirmed = True
+
+        else:
+            # Nevermind, stop the loop
+            n 1nnmbo "Oh.{w=1.5}{nw}"
+            extend 1nllaj " Well,{w=0.2} that's fine."
+            n 3nsrpol "I didn't wanna change anyway."
+            $ outfit_confirmed = True
 
     return
 
