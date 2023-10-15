@@ -1190,11 +1190,23 @@ label talk_using_computers_healthily:
     n 3unmpu "Don't forget to keep all your stuff in easy reach though -{w=0.5}{nw}"
     extend 3ccsbg " unless you're a psychic,{w=0.5}{nw}"
     extend 6csqsm " you aren't getting far if you can barely hit the keyboard."
+
+    if get_topic("talk_using_computers_healthily").shown_count > 0:
+        n 7ullaj "And remember,{w=0.2} there's plenty of stuff to see beyond the screen -{w=0.5}{nw}"
+        extend 3fcsbg " so you better be giving your eyes a break too!"
+
+    else:
+        n 7ullfl "And while you're at it?{w=0.75}{nw}"
+        extend 7ullaj " Spend some time looking at something {i}other{/i} than the screen too,{w=0.5}{nw}"
+        extend 7unmbo " for that matter."
+        n 3fcsbg "You've got windows there,{w=0.2} right?{w=0.75}{nw}"
+        extend 3fsqbg " So you better be using them!"
+
     n 7ccsbg "Now,{w=0.2} number three:{w=0.75}{nw}"
     extend 3fchbg " breaks!"
     n 3tllfl "I don't know about you [player],{w=0.5}{nw}"
     extend 7tnmbo " but personally?{w=0.75}{nw}"
-    extend 7csrem " I can't stand being stuck in one place for hours at a time."
+    extend 7csrem " I can't stand being sat staring at a screen for hours at a time."
     n 3cnmem "Seriously -{w=0.5}{nw}"
     extend 4cllan " I keep getting distracted if I'm stuck in front of my laptop for too long.{w=1}{nw}"
     extend 4fcsem " It's the worst!"
@@ -1203,7 +1215,7 @@ label talk_using_computers_healthily:
     n 6fcsbg "...So get off your butt and do some stretches or something!{w=0.75}{nw}"
     extend 3clraj " Or even go get some water if you {i}really{/i} need an excuse to get moving."
     n 3tnmbo "Really,{w=0.2} it doesn't matter what you do.{w=0.75}{nw}"
-    extend 4ccsca " It's all about getting off your rear and back on your feet.{w=0.75}{nw}"
+    extend 4ccsca " It's all about getting off your rear,{w=0.2} back on your feet,{w=0.2} and giving your eyes a break.{w=0.75}{nw}"
     extend 6ccsbg " Simple enough!"
     n 3fsqsm "..."
     n 3fsqss "Well?{w=0.75}{nw}"
@@ -1222,7 +1234,7 @@ label talk_using_computers_healthily:
     n 2cnmslsbr "Call it quits on whatever you were doing and just come back to it later.{w=0.75}{nw}"
     extend 1csqbosbr " Got it?"
     n 3ccstr "Work or some dusty old assignment can wait if you're just gonna make yourself even worse trying to impress someone."
-    n 3csqbo "No,{w=0.2} your boss or professor isn't going to drop dead if some stinky report isn't done today."
+    n 3csqbo "No,{w=0.2} your boss or professor isn't going to drop dead if that stinky report isn't done today."
     n 1ccsss "Heh.{w=0.75}{nw}"
     extend 4clrss " Anyway,{w=0.2} think about it."
     n 3tnmbo "It isn't like you're going to pull some kind of miracle if you try and push through it all."
@@ -1264,7 +1276,7 @@ label talk_using_computers_healthily:
     n 4ccsflsbr "A-{w=0.2}anyway."
     n 4ullaj "I've gone on way long enough already,{w=0.5}{nw}"
     extend 2cnmca " so I'm just gonna say this,{w=0.2} [player]."
-    n 2fcsaj "You might end up with a crappy back or nasty eyes if you aren't careful..."
+    n 7fcsaj "You might end up with a crappy back or nasty eyes if you aren't careful..."
     n 3fcspo "...But that's gonna be nothing compared to the grade-A earache you're getting if you come crying to me later!"
     n 3fsqsm "Ehehe."
 
