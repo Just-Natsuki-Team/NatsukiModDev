@@ -1844,6 +1844,35 @@ label greeting_morning_top_of_the_mornin:
 
     return
 
+# Guten Morgen, Schlafmütze!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_morning_german",
+            unlocked=True,
+            conditional="store.jn_get_current_hour() in range(5, 11) and get_topic('talk_learning_languages').shown_count > 0",
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE)
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_morning_german:
+    n 1unmbg "Oh!{w=0.5}{nw}"
+    extend 4fchbg " [player]!"
+    n 7fcsaw "A-{w=0.2}hem."
+    n 1fslss "G-{w=0.1}guten Morgen,{w=0.2} Schlafmuetze."
+    n 1fsqcalsbl "..."
+    n 2tnmpu "What?{w=0.5}{nw}"
+    extend 2tsqsm " Did I get you by surprise?"
+    n 2nnmss "Of course I'm still working on my Gemran skills."
+    n 2fcssm "Ehehe."
+    n 7ntlaj "After all..."
+    n 6fwlbg "Der fruehe Vogel faengt den Wurm!{w=0.75}{nw}"
+    extend 3fllsm " Or something like that."
+
+    return
+
 # Afternoon
 
 # Natsuki hopes the player is keeping well
