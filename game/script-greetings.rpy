@@ -1034,7 +1034,9 @@ label greeting_love_plus_manga_chapters:
     $ jnPause(0.5)
     show natsuki 3nlrsmleme
     $ Natsuki.clearDesk()
-    play audio drawer
+    $ manga_closed = jn_desk_items.getDeskItem("jn_parfait_manga_closed")
+    $ Natsuki.setDeskItem(manga_closed)
+    play audio book_closing
     $ jnPause(1.3)
     hide black with Dissolve(0.5)
     $ jnPause(1)

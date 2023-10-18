@@ -742,6 +742,8 @@ label event_caught_reading_manga:
 
     $ parfait_manga = jn_desk_items.getDeskItem('jn_parfait_manga_held')
     $ parfait_manga.unlock()
+    $ manga_closed = jn_desk_items.getDeskItem("jn_parfait_manga_closed")
+    $ manga_closed.unlock()
     $ Natsuki.setDeskItem(parfait_manga)
     $ jn_events.displayVisuals("1fsrpo")
     $ jn_globals.force_quit_enabled = True

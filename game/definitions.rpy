@@ -1859,6 +1859,7 @@ define audio.t4g = "<loop 1.000>bgm/4g.ogg"
 
 # Singleton sound effects
 define audio.blow = "mod_assets/sfx/blow.ogg"
+define audio.book_closing = "mod_assets/sfx/book_closing.ogg"
 define audio.button_mashing_a = "mod_assets/sfx/button_mashing_a.ogg"
 define audio.button_mashing_b = "mod_assets/sfx/button_mashing_b.ogg"
 define audio.button_mashing_c = "mod_assets/sfx/button_mashing_c.ogg"
