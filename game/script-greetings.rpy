@@ -1037,7 +1037,7 @@ label greeting_love_plus_manga_chapters:
     $ manga_closed = jn_desk_items.getDeskItem("jn_parfait_manga_closed")
     $ Natsuki.setDeskItem(manga_closed)
     play audio book_closing
-    $ jnPause(1.3)
+    $ jnPause(0.3)
     hide black with Dissolve(0.5)
     $ jnPause(1)
 

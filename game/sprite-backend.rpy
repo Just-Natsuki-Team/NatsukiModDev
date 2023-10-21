@@ -317,15 +317,15 @@ init -50 python:
 
         # Left desk item
         lc_args.extend([
-            (0, 0), DynamicDisplayable(Natsuki.getDeskItem, desk_slot=jn_desk_items.JNDeskSlots.left)
+            (0, 0), DynamicDisplayable(Natsuki.getDeskItemDisplayable, desk_slot=jn_desk_items.JNDeskSlots.left)
         ])
         # Centre desk item
         lc_args.extend([
-            (0, 0), DynamicDisplayable(Natsuki.getDeskItem, desk_slot=jn_desk_items.JNDeskSlots.centre)
+            (0, 0), DynamicDisplayable(Natsuki.getDeskItemDisplayable, desk_slot=jn_desk_items.JNDeskSlots.centre)
         ])
         # Right desk item
         lc_args.extend([
-            (0, 0), DynamicDisplayable(Natsuki.getDeskItem, desk_slot=jn_desk_items.JNDeskSlots.right)
+            (0, 0), DynamicDisplayable(Natsuki.getDeskItemDisplayable, desk_slot=jn_desk_items.JNDeskSlots.right)
         ])
 
         # Emotes
