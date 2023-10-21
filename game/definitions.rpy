@@ -1661,9 +1661,11 @@ init -100 python in jn_utils:
         """
         return random.choice([
             "dummy",
+            "you big dummy",
             "silly",
             "stupid",
             "you dork",
+            "you big dork",
             "you goof",
             "you goofball",
             "you numpty",
@@ -1726,7 +1728,8 @@ init -100 python in jn_utils:
             "idiot",
             "moron",
             "stupid",
-            "loser"
+            "loser",
+            "you ass"
         ])
 
     def getRandomHappyEmoticon():
@@ -1906,6 +1909,7 @@ define audio.t4g = "<loop 1.000>bgm/4g.ogg"
 
 # Singleton sound effects
 define audio.blow = "mod_assets/sfx/blow.ogg"
+define audio.book_closing = "mod_assets/sfx/book_closing.ogg"
 define audio.button_mashing_a = "mod_assets/sfx/button_mashing_a.ogg"
 define audio.button_mashing_b = "mod_assets/sfx/button_mashing_b.ogg"
 define audio.button_mashing_c = "mod_assets/sfx/button_mashing_c.ogg"
@@ -1938,6 +1942,7 @@ define audio.headpat = "mod_assets/sfx/headpat.ogg"
 define audio.kettle_boil = "mod_assets/sfx/kettle_boil.ogg"
 define audio.keyboard = "mod_assets/sfx/keyboard.ogg"
 define audio.kiss = "mod_assets/sfx/kiss.ogg"
+define audio.laptop_close = "mod_assets/sfx/laptop_close.ogg"
 define audio.necklace_clip = "mod_assets/sfx/necklace_clip.ogg"
 define audio.notification = "mod_assets/sfx/notification.ogg"
 define audio.page_turn = "mod_assets/sfx/page_turn.ogg"
@@ -1954,7 +1959,6 @@ define audio.switch_flip = "mod_assets/sfx/switch_flip.ogg"
 define audio.twitch_die = "mod_assets/sfx/twitch_die.ogg"
 define audio.twitch_you_lose = "mod_assets/sfx/twitch_you_lose.ogg"
 define audio.zipper = "mod_assets/sfx/zipper.ogg"
-define audio.laptop_close = "mod_assets/sfx/laptop_close.ogg"
 
 # Glitch sound effects
 define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
