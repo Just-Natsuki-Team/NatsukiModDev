@@ -1730,7 +1730,7 @@ image natsuki idle normal:
                 "Natsuki.getMouseIsRight() and Natsuki.getMouseIsBelow()", "natsuki 2udrca",
                 "Natsuki.getMouseIsLeft()", "natsuki 2ullca",
                 "Natsuki.getMouseIsRight()", "natsuki 2ulrca",
-                "Natsuki.getMouseIsUp()", "natsuki 2uupca",
+                "Natsuki.getMouseIsAbove()", "natsuki 2uupca",
                 "Natsuki.getMouseIsDown()", "natsuki 2udwca",
                 "True", "natsuki 2unmca",
                 predict_all = True
