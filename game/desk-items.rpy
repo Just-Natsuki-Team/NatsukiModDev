@@ -199,3 +199,17 @@ init -55 python in jn_desk_items:
         unlocked=False,
         image_path="mod_assets/props/parfait_manga_closed.png"
     ))
+
+    __registerDeskItem(JNDeskItem(
+        reference_name="jn_house_of_cards",
+        desk_slot=JNDeskSlots.centre,
+        unlocked=True,
+        image_path="mod_assets/props/cards/house_of_cards.png"
+    ))
+
+    __registerDeskItem(JNDeskItem(
+        reference_name="jn_card_pile",
+        desk_slot=JNDeskSlots.centre,
+        unlocked=True,
+        image_path="mod_assets/props/cards/card_pile.png"
+    ))

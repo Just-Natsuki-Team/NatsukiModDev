@@ -506,6 +506,56 @@ init python in jn_jokes:
         display_name="Bakers",
         joke_category=JNJokeCategories.corny
     ))
+    __registerJoke(JNJoke(
+        label="joke_ravioli_pasta_way",
+        display_name="Ravioli",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_spices",
+        display_name="Spices",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_movie_theater_concessions",
+        display_name="Movie theater",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_octo_puss",
+        display_name="Eight-legged cat",
+        joke_category=JNJokeCategories.bad
+    ))
+    __registerJoke(JNJoke(
+        label="joke_roller_blade",
+        display_name="Shaving as a skater",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_psychic_medium",
+        display_name="Psychic meals",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_ex_press_delivery",
+        display_name="Ex-press",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_keymakers_lockstep",
+        display_name="Keymakers",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_tube_piping_hot",
+        display_name="Tube cuisine",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_entomology_programming",
+        display_name="Entomology",
+        joke_category=JNJokeCategories.neutral
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -1147,4 +1197,134 @@ label joke_bakers:
     n 1cllajsbl "They'd be...{w=1}{nw}"
     extend 1csqemsbl " {i}on a roll{/i}."
 
+    return
+
+label joke_ravioli_pasta_way:
+    n 1cslflsbr "...I can't {i}believe{/i} I'm reading this one out.{w=0.75}{nw}"
+    extend 1ccsslsbr " Yeesh."
+    n 1csrbo "..."
+    n 1clrfl "Did you hear about the chef who just couldn't lay off the ravioli?"
+    n 1cnmsl "..."
+    n 1ccsemesi "..."
+    n 1cllfl "They...{w=1}{nw}"
+    extend 1csqup " {i}pasta{/i}{w=0.75}{nw}"
+    extend 1csrsl " way."
+    
+    return
+
+label joke_spices:
+    n 1csqbg "'Kay.{w=0.75}{nw}"
+    extend 1fcsbs " So!"
+    n 1unmss "When would a chef start adding extra paprika and chili powder to a dish you ordered?"
+    n 1cnmsm "..."
+    n 1csqss "No?{w=0.75}{nw}"
+    extend 1fcsaj " Come on,{w=0.2} [player]!{w=0.75}{nw}"
+    extend 1fnmbg " Even {i}you{/i} should have nailed this one!"
+    n 1fcsbg "...When they want to{w=0.5}{nw}"
+    extend 1fsqss " {i}spice{/i}{w=0.75}{nw}"
+    extend 1fchbs " up your life,{w=0.5}{nw}" 
+    extend 1nchgn " of course!"
+
+    return
+
+label joke_movie_theater_concessions:
+    n 1tllfl "Hey,{w=0.5}{nw}"
+    extend 1tnmaj " [player] -{w=0.5}{nw}"
+    extend 1unmaj " did you hear about the movie theater that got shut down recently?"
+    n 1csrem "Talk about a bummer!{w=0.75}{nw}"
+    extend 1unmem " Seriously -{w=0.5}{nw}" 
+    extend 1fllem " the owners had to completely sell up and everything!"
+    n 1ccsfl "Apparently they just couldn't come to a decent arrangement with all their costs and licensing stuff."
+    n 1csrss "Heh."
+    n 1ccsss "I guess you could say...{w=1}{nw}"
+    extend 1fchgn " they just didn't make enough {i}concessions{/i}!"
+
+    return
+
+label joke_octo_puss:
+    n 1ccsfl "Ugh...{w=1}{nw}"
+    extend 1clrfll " this one just sounds mean.{w=0.75}{nw}"
+    extend 1fsrsll " Gross."
+    n 1ccspuesi "..."
+    n 1cllfl "What do you call a cat born with double the amount of legs?"
+    n 1cllsl "..."
+    n 1fslsl "..."
+    n 1fcsfl "...An octo-{w=0.75}{nw}"
+    extend 1fsrbo "{i}puss{/i}."
+    
+    return
+
+label joke_roller_blade:
+    n 1fcsbg "Let's see how much this one {i}grinds{/i} you,{w=0.5}{nw}" 
+    extend 1fsqbg " [player]!"
+    n 1fcsaj "So!{w=0.75}{nw}"
+    extend 1unmaj " What does a professional skater use for a clean shave?"
+    n 1tsqsm "..."
+    n 1tsqss "No?{w=0.75}{nw}"
+    extend 1fsqbg " Not even a guess?{w=0.75}{nw}"
+    extend 1fsgsm " Ehehe."
+    n 1fcsbs "Easy!"
+    n 1ullbg "They'd use a roller-{w=0.75}{nw}"
+    extend 1uchbg " {i}blade{/i}!{w=0.75}{nw}"
+    extend 1fchgn " Duh!"
+
+    return
+
+label joke_psychic_medium:
+    n 1fcsgs "Right!{w=0.75}{nw}"
+    extend 1fsqbg " Here's a {i}reading{/i} for you,{w=0.5}{nw}" 
+    extend 1fsgsm " [player]!"
+    n 1ccsbg "What kind of meal size would a psychic order?"
+    n 1csqcs "..."
+    n 1fsgsmeme "Ehehe."
+    n 1fcsbs "...They'd get a {i}medium{/i},{w=0.75}{nw}"
+    extend 1fchbg " obviously!"
+
+    return
+
+label joke_ex_press_delivery:
+    n 1nlraj "By the way,{w=0.2} [player] -{w=0.5}{nw}"
+    extend 1unmfl " did you hear about the newspaper that shut down recently?"
+    n 1fllfl "They barely even gave notice.{w=0.75}{nw}"
+    extend 1fsgem " So everyone just had to pack up and find new jobs immediately!{w=0.75}{nw}"
+    extend 1fcsfl " What a joke."
+    n 1cnmaj "A couple even ended up going into courier work!"
+    n 1ncsss "...Heh."
+    n 1clrsssbl "I guess you could say they specialize in...{w=1}{nw}"
+    extend 1fsqbg " {i}ex-press{/i}{w=0.75}{nw}"
+    extend 1fchgn " deliveries!"
+    
+    return
+
+label joke_keymakers_lockstep:
+    n 1ccsemesi "..."
+    n 1ctrfl "...How do keymakers and their colleagues walk around at work?"
+    n 1csrslsbr "..."
+    n 1csqfl "...In lock-{w=0.75}{nw}" 
+    extend 1cslup "step."
+    
+    return
+
+label joke_tube_piping_hot:
+    n 1ccsbg "Let's see if this one's your flavor,{w=0.5}{nw}" 
+    extend 1fsgsm " [player]."
+    n 1fcsbg "Can you eat food someone prepared inside a tube?"
+    n 1fsqsm "..."
+    n 1ullbg "Well,{w=0.2} yeah!{w=0.75}{nw}"
+    extend 1fchbg " Sure you can!"
+    n 1flrss "It's just gotta be served{w=0.5}{nw}"
+    extend 1fsgbg " {i}piping{/i}{w=0.75}{nw}"
+    extend 1fchbg " hot,{w=0.5}{nw}" 
+    extend 1fchsmeme " that's all!"
+
+    return
+
+label joke_entomology_programming:
+    n 1fnmbg "Okay!{w=0.75}{nw}"
+    extend 1fcsbg " Why did the entomologist think about taking up programming?"
+    n 1fnmsm "..."
+    n 1tllss "Well,{w=0.2} [player]?{w=0.75}{nw}"
+    extend 1tsgss " Isn't it obvious?"
+    n 1nchgn "'Cause they heard they'd be constantly finding {i}bugs{/i}!"
+    
     return

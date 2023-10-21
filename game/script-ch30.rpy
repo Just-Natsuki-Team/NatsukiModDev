@@ -766,13 +766,12 @@ label farewell_menu:
     jump ch30_loop
 
 label outfits_menu:
-    $ outfit_options = [
+    call screen scrollable_choice_menu([
         ("Can you wear an outfit for me?", "outfits_wear_outfit"),
         ("Can I suggest a new outfit?", "outfits_suggest_outfit"),
         ("Can you forget about an outfit I suggested?", "outfits_remove_outfit"),
-        ("Can you search again for new items?", "outfits_reload")
-    ]
-    call screen scrollable_choice_menu(outfit_options, ("Nevermind.", None))
+        ("Can you search again for new items?", "outfits_reload")],
+        ("Nevermind.", None))
 
     if isinstance(_return, basestring):
         show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
