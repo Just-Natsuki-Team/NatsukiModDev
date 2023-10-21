@@ -14,7 +14,9 @@ default persistent._jn_blackjack_player_best_streak = 0
 # Player can stay or hit each round, with up to 5 cards in hand (3 total hits maximum)
 # Natsuki will stay or hit based on probability and her own risk level
 # If player or Nat goes over 21, they bust and lose
-# If player or Nat gets 21 exactly, they win automatically on the turn they get 21 (Blackjack)
+# If player or Nat gets 21 exactly:
+# - They win automatically on the turn they get 21
+# - If they have only two cards, it's a blackjack - otherwise, it's a 21
 # Otherwise, win goes to whoever gets closest to 21 after drawing all cards, or if both players stay on the same turn
 # Aces are considered as having value of 11, unless they'd cause Natsuki/the player to bust immediately on getting their hand (in which case, they equal 1)
 # ---
@@ -49,9 +51,11 @@ init 0 python in jn_blackjack:
         natsuki_bust = 3
         natsuki_blackjack = 4
         natsuki_closest = 5
-        player_bust = 6
-        player_blackjack = 7
-        player_closest = 8
+        natsuki_exact = 6
+        player_bust = 7
+        player_blackjack = 8
+        player_closest = 9
+        player_exact = 10
 
     def _getHandSum(is_player):
         """
@@ -184,11 +188,11 @@ init 0 python in jn_blackjack:
         # Win via blackjack or bust
         if natsuki_hand_sum == 21 and player_hand_sum != 21:
             natsuki_wins = True
-            _game_state = JNBlackjackStates.natsuki_blackjack
+            _game_state = JNBlackjackStates.natsuki_blackjack if len(_natsuki_hand) == 2 else JNBlackjackStates.natsuki_exact
 
         elif player_hand_sum == 21 and natsuki_hand_sum != 21:
             player_wins = True
-            _game_state = JNBlackjackStates.player_blackjack
+            _game_state = JNBlackjackStates.player_blackjack if len(_player_hand) == 2 else JNBlackjackStates.player_exact
 
         elif player_hand_sum == 21 and natsuki_hand_sum == 21:
             _game_state = JNBlackjackStates.draw
@@ -245,12 +249,14 @@ init 0 python in jn_blackjack:
         Shows a splash image corresponding to the current game state.
         """
         image_state_map = {
-            JNBlackjackStates.natsuki_blackjack: "blackjack",
-            JNBlackjackStates.player_blackjack: "blackjack",
-            JNBlackjackStates.natsuki_bust: "bust",
-            JNBlackjackStates.player_bust: "bust",
-            JNBlackjackStates.natsuki_closest: "game",
-            JNBlackjackStates.player_closest: "game",
+            JNBlackjackStates.natsuki_blackjack: "nat_blackjack",
+            JNBlackjackStates.player_blackjack: "you_blackjack",
+            JNBlackjackStates.natsuki_bust: "nat_bust",
+            JNBlackjackStates.player_bust: "you_bust",
+            JNBlackjackStates.natsuki_closest: "nat_wins",
+            JNBlackjackStates.player_closest: "you_win",
+            JNBlackjackStates.natsuki_exact: "nat_wins",
+            JNBlackjackStates.player_exact: "you_win",
             JNBlackjackStates.draw: "draw"
         }
         if _game_state in image_state_map:
@@ -277,13 +283,15 @@ init 0 python in jn_blackjack:
             _game_state == JNBlackjackStates.natsuki_bust
             or _game_state == JNBlackjackStates.player_blackjack
             or _game_state == JNBlackjackStates.player_closest
+            or _game_state == JNBlackjackStates.player_exact
         ):
             return "You win!"
 
         if (
-            _game_state == JNBlackjackStates.natsuki_blackjack
+            _game_state == JNBlackjackStates.player_bust
+            or _game_state == JNBlackjackStates.natsuki_blackjack
             or _game_state == JNBlackjackStates.natsuki_closest
-            or _game_state == JNBlackjackStates.player_bust
+            or _game_state == JNBlackjackStates.natsuki_exact
         ):
             return "You lose!"
 
@@ -420,7 +428,7 @@ label blackjack_explanation:
     n 4tnmss "What's the goal,{w=0.2} you ask?"
     n 7tlrss "Well...{w=1}{nw}" 
     extend 3fnmsm " we're basically trying to get the total value of our cards as close to twenty one as we can.{w=0.75}{nw}"
-    extend 3fcsbg " That's called a {i}blackjack{/i}!"
+    extend 3fcsbg " If you get it with just two cards,{w=0.2} that's called a {i}blackjack{/i}!"
     
     if not persistent._jn_blackjack_explanation_given:
         n 7cllss "As for how the cards are gonna work..."
@@ -536,6 +544,7 @@ label blackjack_start:
 label blackjack_main_loop:
     if jn_blackjack._game_state is not None:
         $ jn_utils.fireAndForgetFunction(jn_blackjack._showSplashImage)
+        $ jnPause(0.85)
         jump blackjack_end
 
     # Natsuki's hit/stay logic
@@ -543,7 +552,14 @@ label blackjack_main_loop:
         $ jn_blackjack._controls_enabled = False
         $ natsuki_hand_sum = jn_blackjack._getHandSum(is_player=False)
 
-        if natsuki_hand_sum == 20 or len(jn_blackjack._natsuki_hand) == 5:
+        $ nat_safe_range = [20]
+        if persistent._jn_blackjack_player_streak > 1:
+            $ nat_safe_range.append(19)
+
+        if persistent._jn_blackjack_player_streak > 3:
+            $ nat_safe_range.append(18)
+
+        if natsuki_hand_sum in nat_safe_range or len(jn_blackjack._natsuki_hand) == 5:
             $ jnPause(delay=random.randint(1, 3), hard=True)
             $ jn_blackjack._stayOrHit(is_player=False, is_hit=False)
 
@@ -581,7 +597,7 @@ label blackjack_main_loop:
                 hit_percent = 0.85 if hit_percent > 0.85 else hit_percent
 
                 will_hit = random.randint(0, 100) / 100 <= hit_percent
-                jnPause(delay=random.randint(2, 3), hard=True)
+                jnPause(delay=random.randint(2, 4), hard=True)
                 jn_blackjack._stayOrHit(is_player=False, is_hit=will_hit)
     
     if jn_blackjack._game_state is None:
@@ -596,7 +612,7 @@ label blackjack_end:
     $ jnPause(delay=1, hard=True)
     $ chosen_response = ""
 
-    if persistent._jn_blackjack_natsuki_streak in [3, 5, 10] and jn_blackjack._game_state in [jn_blackjack.JNBlackjackStates.natsuki_blackjack, jn_blackjack.JNBlackjackStates.natsuki_closest]:
+    if persistent._jn_blackjack_natsuki_streak in [3, 5, 10] and jn_blackjack._game_state in [jn_blackjack.JNBlackjackStates.natsuki_blackjack, jn_blackjack.JNBlackjackStates.natsuki_closest, jn_blackjack.JNBlackjackStates.natsuki_exact]:
         $ natsuki_streak_milestone_map = {
             3: [
                 "Oh?{w=0.75} Three wins now?{w=0.75} Looks like {i}someone's{/i} got the makings of a streak going!",
@@ -622,7 +638,7 @@ label blackjack_end:
         }
         $ chosen_response = renpy.substitute(random.choice(natsuki_streak_milestone_map[persistent._jn_blackjack_natsuki_streak]))
 
-    elif persistent._jn_blackjack_player_streak in [3, 5, 10] and jn_blackjack._game_state in [jn_blackjack.JNBlackjackStates.player_blackjack, jn_blackjack.JNBlackjackStates.player_closest]:
+    elif persistent._jn_blackjack_player_streak in [3, 5, 10] and jn_blackjack._game_state in [jn_blackjack.JNBlackjackStates.player_blackjack, jn_blackjack.JNBlackjackStates.player_closest, jn_blackjack.JNBlackjackStates.player_exact]:
         $ player_streak_milestone_map = {
             3: [
                 "L-{w=0.2}lucky break,{w=0.2} [player].{w=0.75} Anyone can luck out three times in a row!",
@@ -687,6 +703,15 @@ label blackjack_end:
                 "Yes!{w=0.75} Tough luck,{w=0.2} [player]!{w=0.75} Ehehe.",
                 "Ehehe.{w=0.75} Now {i}that's{/i} how it's played,{w=0.2} [player]!"
             ],
+            jn_blackjack.JNBlackjackStates.natsuki_exact: [
+                "Well...{w=0.75} it's not a {i}blackjack{/i}...{w=0.75} but I'll take it!",
+                "Ehehe.{w=0.75} A win's a win,{w=0.2} [player]!",
+                "Just you watch,{w=0.2} [player]!{w=0.75} Next win's a blackjack!",
+                "Heh.{w=0.75} Doesn't matter,{w=0.2} [player] -{w=0.2} still a win!",
+                "W-{w=0.2}who says you need to blackjack to be a pro?{w=0.75} Ehehe.",
+                "H-{w=0.2}hey!{w=0.75} It's still twenty one,{w=0.2} whether you like it or not!",
+                "Ehehe.{w=0.75} Still twenty one,{w=0.2} [player]!"
+            ],
             jn_blackjack.JNBlackjackStates.player_bust: [
                 "Pfft-!{w=0.75} Nice bust there,{w=0.2} [player]!{w=0.75} Ehehe.",
                 "Yep.{w=0.5} Total misplay,{w=0.2} [player]!",
@@ -714,6 +739,15 @@ label blackjack_end:
                 "Uuuuuu-!{w=0.75} You totally just got the better hand!{w=0.75} Ugh...",
                 "Y-{w=0.2}you totally just got lucky this time,{w=0.2} [player].{w=0.75} That's all this is."
             ],
+            jn_blackjack.JNBlackjackStates.player_exact: [
+                "Heh.{w=0.75} Too bad it wasn't a blackjack,{w=0.2} [player]!",
+                "Nnnnn-!{w=0.75} A-{w=0.2}at least you didn't blackjack.",
+                "Yeah,{w=0.2} yeah,{w=0.2} whatever.{w=0.75} Lucky hand,{w=0.2} [player].",
+                "L-{w=0.2}lucky break!{w=0.75} Now try {i}actually{/i} blackjacking...",
+                "A-{w=0.2}as if {i}that{/i} hand won!{w=0.75} Ugh...",
+                "Are you kidding me?!{w=0.75} You won with that?!{w=0.75} Man...",
+                "Ugh...{w=0.75} and it wasn't even a {i}blackjack{/i}..."
+            ]
         }
         $ chosen_response = renpy.substitute(random.choice(response_map[jn_blackjack._game_state]))
 
@@ -749,7 +783,7 @@ label blackjack_quit_forfeit:
             extend 3tnmfl " it's only been like [jn_blackjack._rounds] rounds!{w=0.75}{nw}"
             extend 4cnmaj " We've barely even started!"
             
-            $ natsuki_prompt = "You can {i}easily{/i} play at least a couple more games...{w=0.3} right?"
+            $ natsuki_prompt = "You can {i}easily{/i} play at least a couple more games...{w=0.5} right?"
             show natsuki option_wait_sulky
 
         else:
@@ -810,7 +844,7 @@ label blackjack_quit_forfeit:
                 n 6fcsbs "Guess the only winning move for you was not to play!{w=0.75}{nw}"
                 extend 7fchsmeme " Ehehe."
 
-            show natsuki 1fcssm
+            show natsuki 4fcssm
             show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
             $ jnPause(1)
             play audio drawer
@@ -871,7 +905,7 @@ transform blackjack_card_scale_down:
 
 transform blackjack_popup:
     parallel:
-        ease 0.33 alpha 1.0 yoffset -30
+        ease 0.25 alpha 1.0 yoffset -30
         easeout 0.75 alpha 0
 
 screen blackjack_ui:
@@ -894,7 +928,6 @@ screen blackjack_ui:
 
         grid 5 1:
             spacing 10
-            #style "blackjack_card_scale"
             add jn_blackjack._getCardDisplayable(is_player=False, index=0) anchor(0,0) at blackjack_card_scale_down
             add jn_blackjack._getCardDisplayable(is_player=False, index=1) anchor(0,0) at blackjack_card_scale_down
             add jn_blackjack._getCardDisplayable(is_player=False, index=2) anchor(0,0) at blackjack_card_scale_down

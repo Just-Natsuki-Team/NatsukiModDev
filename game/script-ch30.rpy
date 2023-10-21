@@ -767,7 +767,9 @@ label outfits_menu:
         ("Can I suggest a new outfit?", "outfits_suggest_outfit"),
         ("Can you forget about an outfit I suggested?", "outfits_remove_outfit"),
         ("Can you search again for new items?", "outfits_reload")],
-        ("Nevermind.", None))
+        ("Nevermind.", None),
+        400,
+        "mod_assets/icons/outfits.png")
 
     if isinstance(_return, basestring):
         show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
