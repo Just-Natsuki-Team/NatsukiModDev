@@ -202,7 +202,7 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                         null height 20
 
                     for button_name in menu_items.keys():
-                        $ has_unseen = len(Topic.filter_topics(topic_list=menu_items.get(button_name), is_seen=False)) > 0
+                        $ has_unseen = len(Topic.filter_topics(topic_list=menu_items.get(button_name), nat_says=False, is_seen=False)) > 0
                         $ display_text = "{i}[button_name]{/i}" if has_unseen else button_name
 
                         textbutton display_text:
@@ -256,7 +256,7 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                             #NOTE: This should be preprocessed such that Topics without prompts aren't passed into this menu
                             textbutton display_text:
                                 style "categorized_menu_button"
-                                #Return the label so it can be called
+                                # Return the label so it can be called
                                 action [ Return(_topic.label), Function(prev_adjustment.change, 0), SetVariable("selected_category", None) ]
                                 hover_sound gui.hover_sound
                                 activate_sound gui.activate_sound

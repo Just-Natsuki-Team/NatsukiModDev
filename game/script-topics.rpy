@@ -5716,6 +5716,7 @@ label talk_play_snap:
     $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_card_pack"))
     show natsuki 4fchsm
     hide black with Dissolve(1)
+    $ get_topic("talk_play_snap").shown_count += 1 # Have to increment here manually thanks to jump
 
     jump snap_intro
 
@@ -5741,6 +5742,8 @@ label talk_remind_snap_rules:
         n 2fcsan "Come on,{w=0.1} [player]."
         n 2flrpo "If you cared about the rules,{w=0.1} then why did you cheat when we played earlier?"
         n 4fnmpo "You haven't even apologized for it yet..."
+
+        $ get_topic("talk_remind_snap_rules").shown_count += 1 # Have to increment manually here thanks to jump
         return
 
     else:
@@ -5757,6 +5760,7 @@ label talk_remind_snap_rules:
         else:
             n 1nnmss "Sure thing!"
 
+        $ get_topic("talk_remind_snap_rules").shown_count += 1 # Have to increment manually here thanks to jump
         jump snap_explanation
 
 # Natsuki hates people being inconsiderate with chewing gum
@@ -12354,6 +12358,7 @@ label talk_play_blackjack:
     $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_card_pack"))
     show natsuki 4fchsm
     hide black with Dissolve(1)
+    $ get_topic("talk_play_blackjack").shown_count += 1 # Have to increment here manually thanks to jump
 
     jump blackjack_intro
 
@@ -12409,4 +12414,5 @@ label talk_remind_blackjack_rules:
         n 7ccsbg "I can't expect {i}everyone{/i} to have memory as good as mine,{w=0.5}{nw}" 
         extend 7fcssmesm " after all."
 
+    $ get_topic("talk_remind_blackjack_rules").shown_count += 1 # Have to increment manually here thanks to jump
     jump blackjack_explanation
