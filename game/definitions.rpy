@@ -1891,6 +1891,11 @@ transform JN_TRANSFORM_FADE_OUT:
     alpha 1
     ease 0.5 alpha 0
 
+transform JN_NATSUKI_CLOSE_UP:
+    subpixel True
+    zoom 2
+    ypos -200
+
 # Vanilla resources from base DDLC
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
 define audio.t2 = "<loop 4.499>bgm/2.ogg"   #Sayori theme
@@ -1955,6 +1960,7 @@ define audio.stationary_rustle_b = "mod_assets/sfx/stationary_rustle_a.ogg"
 define audio.stationary_rustle_c = "mod_assets/sfx/stationary_rustle_a.ogg"
 define audio.straw_sip = "mod_assets/sfx/straw_sip.ogg"
 define audio.switch_flip = "mod_assets/sfx/switch_flip.ogg"
+define audio.thump = "mod_assets/sfx/switch_flip.ogg"
 define audio.twitch_die = "mod_assets/sfx/twitch_die.ogg"
 define audio.twitch_you_lose = "mod_assets/sfx/twitch_you_lose.ogg"
 define audio.zipper = "mod_assets/sfx/zipper.ogg"

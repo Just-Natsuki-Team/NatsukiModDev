@@ -176,6 +176,7 @@ image deco wall_stocking day = "mod_assets/deco/wall_stocking_day.png"
 image deco wall_stocking night = "mod_assets/deco/wall_stocking_night.png"
 image deco d24 = "mod_assets/deco/d24.png"
 image deco d25 = "mod_assets/deco/d25.png"
+image deco o31 = "mod_assets/deco/o31.png"
 
 # Overlays are displayed over the top of Natsuki, in front of any decorations but behind any props
 image overlay slipping_glasses = "mod_assets/overlays/slipping_glasses.png"
@@ -3183,8 +3184,129 @@ label holiday_easter:
     return
 
 label holiday_halloween:
-    #TODO: writing
+    hide natsuki
+    show chair zorder JN_NATSUKI_ZORDER
+    show desk zorder JN_NATSUKI_ZORDER
     $ jn_events.getHoliday("holiday_halloween").run()
+
+    $ jnPause(7)
+    play audio thump
+    $ jnPause(3)
+    play audio thump
+    $ jnPause(3)
+    play audio thump
+    $ jnPause(5)
+
+    for i in range(1, 10):
+        play audio thump
+        $ jnPause(0.75)
+        # vignette?
+
+    play audio static
+    show glitch_garbled_b zorder JN_GLITCH_ZORDER with vpunch
+    hide glitch_garbled_b
+    $ jnPause(1)
+
+    for i in range(1, 6):
+        play audio thump
+        $ jnPause(0.55)
+        # vignette?
+
+    play audio static
+    show glitch_garbled_a zorder JN_GLITCH_ZORDER with hpunch
+    hide glitch_garbled_a
+    $ jnPause(0.75)
+
+    for i in range(1, 3):
+        play audio thump
+        $ jnPause(0.35)
+        # vignette?
+
+    play audio static
+    show glitch_garbled_b zorder JN_GLITCH_ZORDER with hpunch
+    hide glitch_garbled_b
+    $ jnPause(0.35)
+
+    play audio static
+    show glitch_garbled_c zorder JN_GLITCH_ZORDER with vpunch
+    hide glitch_garbled_c
+    $ jnPause(0.35)
+
+    show black zorder JN_BLACK_ZORDER
+    play audio doom
+    $ jnPause(3)
+    hide desk
+    hide chair
+    $ magical_girl_cosplay = jn_outfits.getOutfit("jn_magical_girl_cosplay")
+    $ magical_girl_cosplay.unlock()
+    $ Natsuki.setOutfit(magical_girl_cosplay)
+    show natsuki at JN_NATSUKI_CLOSE_UP
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_renpy_for_dummies_closed"))
+    play audio switch_flip
+    hide black
+
+    show black zorder JN_BLACK_ZORDER
+    show natsuki smug_happy at jn_center
+    play audio switch_flip
+    hide black
+    #
+    n "..."
+    $ player_capitalized = player.capitalize()
+    n "HAPPY HALLOWEEN, [player_capitalized]!"
+    n "..."
+    n "Ehehe."
+    extend " Well?"
+    extend " Don't just sit there!"
+    extend " Say something already!"
+    n "Did I get you? Did I get you?"
+    extend " Don't lie!"
+    extend " I {i}totally{/i} got you this time."
+    n "Well, anyway."
+    extend " You better appreciate all the effort I put into all this, [player]."
+    n "Yep!"
+    extend " As you can {i}clearly{/i} see -"
+    extend " I pulled out {i}all{/i} the stops this time!"
+    n "Awesome hand-crafted decorations?"
+    extend " Check!"
+    extend " Fabulously made cosplay?"
+    extend " Check again!"
+
+    n "Getting the best jump of the year on [player]?"
+    n "..."
+    n "Ehehe."
+    extend " You bet!"
+    n "Man..."
+
+    if get_topic("talk_thoughts_on_horror").shown_count > 0:
+        n "You know, I'm pretty sure I mentioned it before at some point."
+        extend " About how I don't really like horror and all."
+        n "But let's be real here, [player]."
+
+    else:
+        extend " I know I said I wasn't the biggest fan of horror, but let's be real."
+
+    n "When it comes to bang for your buck?"
+    extend " You just can't beat a good old Halloween."
+    extend " Think about it a little!"
+
+    n "Not only is it an excuse to break out the sewing kit and blow everyone away with my needlework..."
+    n "But come on -"
+    extend " what other holidays give you the excuse to pig out on as much candy as you can swipe?"
+    n "..."
+    n "Ehehe."
+    extend " Yep!"
+    extend " Didn't think so, [player]!"
+
+    n "Seriously -"
+    extend " what's not to like?"
+
+    # Talk about candy/sweets/showing off cosplay
+    n ""
+
+    # Point about jerks "pranking" people?
+
+    # Finish - play on words for trick or treat?
+
     $ jn_events.getHoliday("holiday_halloween").complete()
 
     return

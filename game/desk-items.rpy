@@ -213,3 +213,10 @@ init -55 python in jn_desk_items:
         unlocked=True,
         image_path="mod_assets/props/cards/card_pile.png"
     ))
+
+    __registerDeskItem(JNDeskItem(
+        reference_name="jn_renpy_for_dummies_closed",
+        desk_slot=JNDeskSlots.left,
+        unlocked=False,
+        image_path="mod_assets/props/renpy_for_dummies_closed.png"
+    ))
