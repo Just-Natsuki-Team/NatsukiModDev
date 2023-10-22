@@ -402,10 +402,13 @@ init python in jn_events:
 
             return True
 
-        def run(self):
+        def run(self, suppress_visuals=False):
             """
             Sets up all visuals for this holiday, before revealing everything to the player.
             Any props or decorations left over from the previous holiday are tidied up before presentation.
+
+            IN:
+                - suppress_visuals - If True, prevents 
             """
             renpy.hide("prop")
             renpy.hide("deco")
@@ -423,7 +426,9 @@ init python in jn_events:
                 kwargs.update({"bgm": self.bgm})
 
             jn_globals.force_quit_enabled = True
-            displayVisuals(**kwargs)
+
+            if not suppress_visuals:
+                displayVisuals(**kwargs)
 
         def complete(self):
             """
@@ -432,6 +437,7 @@ init python in jn_events:
             We also mark the holiday type as completed for this year, so we can't cycle through all seasonal events in one year
             Lastly, set the persisted deco list so reloading the game without a day change shows the deco for this event.
             """
+            store.persistent._jn_event_completed_count += 1
             self.is_seen = True
             self.__save()
 
@@ -608,7 +614,6 @@ init python in jn_events:
             - natsuki_sprite_code - The sprite code to show Natsuki displaying before dialogue
             - music_file_path - The str file path of the music to play upon revealing Natsuki; defaults to standard bgm
         """
-        store.persistent._jn_event_completed_count += 1
         renpy.show("natsuki {0}".format(natsuki_sprite_code), at_list=[store.jn_center], zorder=store.JN_NATSUKI_ZORDER)
         store.jnPause(0.1)
         renpy.hide("black")
@@ -674,6 +679,16 @@ init python in jn_events:
         holiday_type=JNHolidayTypes.easter,
         affinity_range=(jn_affinity.HAPPY, None),
         natsuki_sprite_code="1fsrunlsbr",
+        priority=10
+    ))
+
+    # Halloween
+    __registerHoliday(JNHoliday(
+        label="holiday_halloween",
+        holiday_type=JNHolidayTypes.halloween,
+        affinity_range=(jn_affinity.HAPPY, None),
+        natsuki_sprite_code="1fsrunlsbr",
+        deco_list=["o31"],
         priority=10
     ))
 
@@ -3187,7 +3202,8 @@ label holiday_halloween:
     hide natsuki
     show chair zorder JN_NATSUKI_ZORDER
     show desk zorder JN_NATSUKI_ZORDER
-    $ jn_events.getHoliday("holiday_halloween").run()
+    $ jn_events.getHoliday("holiday_halloween").run(suppress_visuals=True)
+    hide black
 
     $ jnPause(7)
     play audio thump
@@ -3197,30 +3213,30 @@ label holiday_halloween:
     play audio thump
     $ jnPause(5)
 
-    for i in range(1, 10):
-        play audio thump
-        $ jnPause(0.75)
-        # vignette?
+    python:
+        for i in range(1, 10):
+            renpy.play(filename=audio.thump)
+            jnPause(0.75)
 
     play audio static
     show glitch_garbled_b zorder JN_GLITCH_ZORDER with vpunch
     hide glitch_garbled_b
-    $ jnPause(1)
+    $ jnPause(2)
 
-    for i in range(1, 6):
-        play audio thump
-        $ jnPause(0.55)
-        # vignette?
+    python:
+        for i in range(1, 6):
+            renpy.play(filename=audio.thump)
+            jnPause(0.55)
 
     play audio static
     show glitch_garbled_a zorder JN_GLITCH_ZORDER with hpunch
     hide glitch_garbled_a
     $ jnPause(0.75)
 
-    for i in range(1, 3):
-        play audio thump
-        $ jnPause(0.35)
-        # vignette?
+    python:
+        for i in range(1, 3):
+            renpy.play(filename=audio.thump)
+            jnPause(0.35)
 
     play audio static
     show glitch_garbled_b zorder JN_GLITCH_ZORDER with hpunch
@@ -3242,15 +3258,21 @@ label holiday_halloween:
     $ Natsuki.setOutfit(magical_girl_cosplay)
     show natsuki at JN_NATSUKI_CLOSE_UP
     $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_renpy_for_dummies_closed"))
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_pumpkins"))
     play audio switch_flip
     hide black
+    $ jnPause(1)
 
     show black zorder JN_BLACK_ZORDER
     show natsuki smug_happy at jn_center
     play audio switch_flip
     hide black
-    #
-    n "..."
+    $ jnPause(3)
+
+    # Have to proc manually here due to fake reveal for the prank
+    $ renpy.play(filename="mod_assets/bgm/vacation.ogg", channel="music")
+    $ renpy.show_screen("hkb_overlay")
+
     $ player_capitalized = player.capitalize()
     n "HAPPY HALLOWEEN, [player_capitalized]!"
     n "..."
@@ -3275,35 +3297,57 @@ label holiday_halloween:
     n "..."
     n "Ehehe."
     extend " You bet!"
-    n "Man..."
 
     if get_topic("talk_thoughts_on_horror").shown_count > 0:
+        n "Man..."
         n "You know, I'm pretty sure I mentioned it before at some point."
         extend " About how I don't really like horror and all."
         n "But let's be real here, [player]."
 
     else:
+        n "Man..."
         extend " I know I said I wasn't the biggest fan of horror, but let's be real."
 
-    n "When it comes to bang for your buck?"
+    n "When it really comes to bang for your buck?"
     extend " You just can't beat a good old Halloween."
     extend " Think about it a little!"
 
     n "Not only is it an excuse to break out the sewing kit and blow everyone away with my needlework..."
     n "But come on -"
-    extend " what other holidays give you the excuse to pig out on as much candy as you can swipe?"
+    extend " what {i}other{/i} holidays give you the excuse to pig out on as much free candy as you can swipe?"
     n "..."
     n "Ehehe."
     extend " Yep!"
-    extend " Didn't think so, [player]!"
+    extend " Didn't think so, [player]."
+    extend " Halloween is the best!"
 
-    n "Seriously -"
-    extend " what's not to like?"
+    n "Or..."
+    extend " it would be."
+    extend  " If {i}some people{/i} didn't take it all way too far."
+    extend " Ugh."
+    n "Don't get me wrong -"
+    extend " I'm always game for a good prank!"
+    extend " I'm not that thin-skinned, obviously."
+    n "But what I can't {i}stand{/i} is when some people just take it all {i}way{/i} over the top -"
+    extend " or they're just straight-up jerks about the whole thing."
+    n "Yeah."
+    extend " You know the type, [player]."
+    n "{i}Pranksters{/i},"
+    extend " my butt."
+    n "Seriously!"
+    extend " What kind of prank involves just pissing people off?!"
+    extend " Or just going around everywhere and making a total ass out of yourself?"
+    n "Cut me a break."
+    n "And don't even get me started on keeping everyone up all night with crappy music..."
+    n "Or just trashing a bunch of other people's stuff on purpose."
+    n "Ugh..."
+    n "Forget the eggs and toilet paper."
+    extend " Just makes me wanna smack them right in their stupid faces."
+    n "..." # sigh
 
-    # Talk about candy/sweets/showing off cosplay
-    n ""
-
-    # Point about jerks "pranking" people?
+    n "A-anyway."
+    extend " I'm not gonna let thinking about that drag me down."
+    extend " "
 
     # Finish - play on words for trick or treat?
 

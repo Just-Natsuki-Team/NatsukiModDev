@@ -2068,7 +2068,8 @@ init -1 python in jn_outfits:
         clothes=getWearable("jn_clothes_magical_girl"),
         hairstyle=getWearable("jn_hair_twintails"),
         accessory=getWearable("jn_accessory_hairband_stars"),
-        headgear=getWearable("jn_headgear_hairtie")
+        headgear=getWearable("jn_headgear_hairtie"),
+        necklace=getWearable("jn_necklace_plain_choker")
     ))
 
     # Internal outfits; used for events, etc. These shouldn't be unlocked!

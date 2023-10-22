@@ -1331,7 +1331,7 @@ screen preferences():
 
                     vbox:
 
-                        label _("Random chatter: {0}".format(jn_preferences.random_topic_frequency.get_random_topic_frequency_description()))
+                        label _("Random chatter: {0}".format(jn_preferences.random_topic_frequency.getRandomTopicFrequencyDescription()))
 
                         bar value FieldValue(
                             object=persistent,
@@ -1349,8 +1349,13 @@ screen preferences():
 
                         bar value Preference("auto-forward time")
 
-                    vbox:
+                        label _("Sunrise: [persistent.jn_sunrise_hour]AM")
+                        bar value VariableValue(persistent, "jn_sunrise_hour", range=5, max_is_zero=False, style="slider")
 
+                        label _("Sunset: [persistent.jn_sunset_hour]PM")
+                        bar value VariableValue(persistent, "jn_sunset_hour", range=5, max_is_zero=False, style="slider")
+
+                    vbox:
                         if config.has_music:
                             label _("Music Volume")
 

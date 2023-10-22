@@ -440,7 +440,7 @@ init python:
         # Push a topic, if we have waited long enough since the last one, and settings for random chat allow it
         if (
             persistent.jn_natsuki_random_topic_frequency != jn_preferences.random_topic_frequency.NEVER
-            and datetime.datetime.now() > Natsuki.getLastTopicCall() + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown())
+            and datetime.datetime.now() > Natsuki.getLastTopicCall() + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.getRandomTopicCooldown())
             and datetime.datetime.now() >= Natsuki.getLastMenuCall() + datetime.timedelta(seconds=5)
             and not persistent._event_list
         ):
