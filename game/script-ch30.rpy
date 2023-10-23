@@ -282,7 +282,8 @@ label ch30_wait:
     python:
         import random
 
-        jn_locations.updateLocationSunriseSunset(main_background)
+        if not jn_topic_in_event_list("weather_change") and jn_locations.checkUpdateLocationSunriseSunset(main_background):
+            queue("weather_change")
         
         if (random.randint(1, 10000) == 1):
             jn_stickers.stickerWindowPeekUp(at_right=random.choice([True, False]))
@@ -519,8 +520,11 @@ init python:
             for action in jn_plugins.quarter_hour_check_calls:
                 eval(action.statement)
 
-        queue("weather_change")
-        queue("random_music_change")
+        if not jn_topic_in_event_list("weather_change"):
+            queue("weather_change")
+
+        if not jn_topic_in_event_list("random_music_change"):
+            queue("random_music_change")
 
         return
 
@@ -546,10 +550,8 @@ init python:
             for action in jn_plugins.hour_check_calls:
                 eval(action.statement)
 
-        queue("weather_change")
-
-        # Draw background
-        main_background.check_redraw()
+        if not jn_topic_in_event_list("weather_change"):
+            queue("weather_change")
 
         if (
             persistent.jn_natsuki_auto_outfit_change_enabled
@@ -571,7 +573,8 @@ init python:
             for action in jn_plugins.day_check_calls:
                 eval(action.statement)
 
-        queue("weather_change")
+        if not jn_topic_in_event_list("weather_change"):
+            queue("weather_change")
 
         # Determine if the year has changed, in which case we reset all holidays so they can be celebrated again
         if (datetime.datetime.now().year > persistent.jn_last_visited_date.year):

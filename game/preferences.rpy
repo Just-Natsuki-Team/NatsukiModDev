@@ -76,6 +76,3 @@ default persistent._jn_natsuki_out_of_topics_remind = True
 
 # This determines if the game should display icons on the scrollable choice menu
 default persistent._jn_display_option_icons = True
-
-# 
-

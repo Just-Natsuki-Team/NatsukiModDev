@@ -2028,7 +2028,8 @@ init -999 python:
             "choice",
             "poem_view",
             "preferences",
-            "history"
+            "history",
+            "hotkeys"
         )
         for blocked_screen in blocked_screens:
             if renpy.get_screen(blocked_screen):

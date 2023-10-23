@@ -429,6 +429,9 @@ init python in jn_data_migrations:
         if store.get_topic("event_caught_reading_manga").shown_count > 0:
             jn_desk_items.getDeskItem("jn_parfait_manga_held").unlock()
 
+        del store.persistent.jn_sunrise_hour
+        del store.persistent.jn_sunset_hour
+
         if store.persistent.affinity >= 7500:
             store.persistent._jn_pic_aff = store.persistent.affinity
             store.persistent.affinity = 0

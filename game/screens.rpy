@@ -1208,13 +1208,16 @@ screen preferences():
     use game_menu(_("Settings")):
 
         viewport id "preferences":
+            ysize 650
+            yoffset -75
+            xoffset 40
             scrollbars "vertical"
             mousewheel True
             draggable True
 
             vbox:
                 yoffset 0
-                xoffset 50
+                
                 hbox:
                     box_wrap True
 
@@ -1357,14 +1360,14 @@ screen preferences():
 
                     vbox:
                         if config.has_music:
-                            label _("Music Volume")
+                            label _("Music Volume: {0}%".format(int(preferences.get_volume("music") * 100)))
 
                             hbox:
                                 bar value Preference("music volume")
 
                         if config.has_sound:
 
-                            label _("Sound Volume")
+                            label _("Sound Volume: {0}%".format(int(preferences.get_volume("sfx") * 100)))
 
                             hbox:
                                 bar value Preference("sound volume")

@@ -5,11 +5,21 @@ default persistent._jn_sunrise_setting = 3
 default persistent._jn_sunset_setting = 2
 
 init python in jn_locations:
+    import datetime
     import store
+
     LOCATION_MAP = dict()
 
     def getHourFromSunriseSunsetValue(value, is_sunset=False):
         """
+        For a given sunrise/sunset preference value, returns the 24-hour time it corresponds to.
+
+        IN: 
+            - value - int preference value (from 1 to 5) to get a 24-hour time for
+            - is_sunset - bool flag for whether to map value to a sunset 24-hour time
+
+        OUT:
+            - int 24-hour time represention of the given value, based on is_sunset
         """
         if is_sunset:
             return {
@@ -31,11 +41,27 @@ init python in jn_locations:
                 5: 9
             }.get(value)
 
-    def updateLocationSunriseSunset(location):
+    def checkUpdateLocationSunriseSunset(location):
         """
+        Gets the 24-hour value corresponding to the current preferences for sunrise/sunset hours and 
+        updates the sunrise/sunset times for the room if they differ from what is currently defined.
+
+        IN: 
+            - location - JNRoom location to check/set the sunrise/sunset times for
+
+        OUT:
+            - True if the sunrise/sunset times were updated, otherwise False
         """
-        location.sunrise_hour=int(getHourFromSunriseSunsetValue(store.persistent._jn_sunrise_setting))
-        location.sunset_hour=int(getHourFromSunriseSunsetValue(store.persistent._jn_sunset_setting, is_sunset=True))
+        sunrise_hour = getHourFromSunriseSunsetValue(store.persistent._jn_sunrise_setting)
+        sunset_hour = getHourFromSunriseSunsetValue(store.persistent._jn_sunset_setting, is_sunset=True)
+        updated = False
+
+        if sunrise_hour != location.sunrise.hour or sunset_hour != location.sunset.hour:
+            location.sunrise=datetime.time(sunrise_hour)
+            location.sunset=datetime.time(sunset_hour)
+            updated = True
+
+        return updated
 
 init -20 python:
     import os
