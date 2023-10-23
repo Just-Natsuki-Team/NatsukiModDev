@@ -282,6 +282,8 @@ label ch30_wait:
     python:
         import random
 
+        jn_locations.updateLocationSunriseSunset(main_background)
+        
         if (random.randint(1, 10000) == 1):
             jn_stickers.stickerWindowPeekUp(at_right=random.choice([True, False]))
 

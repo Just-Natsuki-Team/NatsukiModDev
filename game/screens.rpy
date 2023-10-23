@@ -1349,11 +1349,11 @@ screen preferences():
 
                         bar value Preference("auto-forward time")
 
-                        label _("Sunrise: [persistent.jn_sunrise_hour]AM")
-                        bar value VariableValue(persistent, "jn_sunrise_hour", range=5, max_is_zero=False, style="slider")
+                        label _("Sunrise: {0}AM".format(jn_locations.getHourFromSunriseSunsetValue(persistent._jn_sunrise_setting)))
+                        bar value FieldValue(persistent, "_jn_sunrise_setting", range=5, max_is_zero=False, style="slider")
 
-                        label _("Sunset: [persistent.jn_sunset_hour]PM")
-                        bar value VariableValue(persistent, "jn_sunset_hour", range=5, max_is_zero=False, style="slider")
+                        label _("Sunset: {0}PM".format(jn_locations.getHourFromSunriseSunsetValue(persistent._jn_sunset_setting)))
+                        bar value FieldValue(persistent, "_jn_sunset_setting", range=5, max_is_zero=False, style="slider")
 
                     vbox:
                         if config.has_music:

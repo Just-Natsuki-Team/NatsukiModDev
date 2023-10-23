@@ -944,7 +944,7 @@ init -3 python:
         """
         Returns True if the current time is judged to be day, taking into account user preferences on sunrise/sunset.
         """
-        return datetime.time(persistent.jn_sunrise_hour) <= datetime.datetime.now().time() < datetime.time(persistent.jn_sunset_hour)
+        return datetime.time(jn_locations.getHourFromSunriseSunsetValue(store.persistent._jn_sunrise_setting)) <= datetime.datetime.now().time() < datetime.time(jn_locations.getHourFromSunriseSunsetValue(store.persistent._jn_sunset_setting, is_sunset=True))
 
     def jn_open_google_maps(latitude, longitude):
         """

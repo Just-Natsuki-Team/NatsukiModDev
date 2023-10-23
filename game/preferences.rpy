@@ -12,33 +12,6 @@ init python in jn_preferences.weather:
         def __int__(self):
             return self.value
 
-init python in jn_preferences.locations:
-
-    _sunsetHour = 0
-    _sunriseHour = 0
-
-    _SUNRISE_HOUR_VALUE_MAP = {
-        0: 4,
-        1: 5,
-        2: 6,
-        3: 7,
-        4: 8,
-        5: 9
-    }
-    _SUNSET_HOUR_VALUE_MAP = {
-        0: 16,
-        1: 17,
-        2: 18,
-        3: 19,
-        4: 20,
-        5: 21
-    }
-
-    def getHourFromSunriseSunsetValue(value, is_sunset=False):
-        """
-        """
-        return _SUNSET_HOUR_VALUE_MAP.get(value) if is_sunset else _SUNRISE_HOUR_VALUE_MAP.get(value)
-
 init python in jn_preferences.random_topic_frequency:
     from Enum import Enum
     import store
@@ -103,3 +76,6 @@ default persistent._jn_natsuki_out_of_topics_remind = True
 
 # This determines if the game should display icons on the scrollable choice menu
 default persistent._jn_display_option_icons = True
+
+# 
+

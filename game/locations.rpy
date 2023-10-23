@@ -1,13 +1,41 @@
 #Start off in the clubroom
 default persistent._current_location = "classroom"
 
-# These determine when the sun rises/sets
-default persistent.jn_sunrise_hour = 6
-default persistent.jn_sunset_hour = 19
+default persistent._jn_sunrise_setting = 3
+default persistent._jn_sunset_setting = 2
 
-init python in locations:
+init python in jn_locations:
     import store
     LOCATION_MAP = dict()
+
+    def getHourFromSunriseSunsetValue(value, is_sunset=False):
+        """
+        """
+        if is_sunset:
+            return {
+                0: 16,
+                1: 17,
+                2: 18,
+                3: 19,
+                4: 20,
+                5: 21
+            }.get(value)
+
+        else:
+            return {
+                0: 4,
+                1: 5,
+                2: 6,
+                3: 7,
+                4: 8,
+                5: 9
+            }.get(value)
+
+    def updateLocationSunriseSunset(location):
+        """
+        """
+        location.sunrise_hour=int(getHourFromSunriseSunsetValue(store.persistent._jn_sunrise_setting))
+        location.sunset_hour=int(getHourFromSunriseSunsetValue(store.persistent._jn_sunset_setting, is_sunset=True))
 
 init -20 python:
     import os
@@ -54,7 +82,7 @@ init -20 python:
                     (Default: None)
             """
             #Initial checks to make sure this can be loaded
-            if id in store.locations.LOCATION_MAP:
+            if id in store.jn_locations.LOCATION_MAP:
                 raise Exception("[ERROR]: A Location with id '{0}' already exists.".format(id))
 
             if not os.path.isdir(renpy.config.gamedir + "/mod_assets/backgrounds/{0}".format(image_dir)):
@@ -242,10 +270,9 @@ init -20 python:
             persistent._current_location = self.location.id
 
 init python:
-
     main_background = JNRoom(
-        sunrise_hour=int(store.persistent.jn_sunrise_hour),
-        sunset_hour=int(store.persistent.jn_sunset_hour)
+        sunrise_hour=int(jn_locations.getHourFromSunriseSunsetValue(store.persistent._jn_sunrise_setting)),
+        sunset_hour=int(jn_locations.getHourFromSunriseSunsetValue(store.persistent._jn_sunset_setting, is_sunset=True))
     )
 
     classroom = Location(
@@ -280,5 +307,5 @@ init python:
     else:
         main_background.day_to_night_event()
 
-    if persistent._current_location in locations.LOCATION_MAP:
+    if persistent._current_location in jn_locations.LOCATION_MAP:
         main_background.change_location(persistent._current_location)
