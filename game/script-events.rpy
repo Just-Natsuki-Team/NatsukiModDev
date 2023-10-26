@@ -2156,6 +2156,7 @@ init 5 python:
     )
 
 label event_sanjo:
+    $ jn_globals.force_quit_enabled = False
     n "..."
     n "Man...{w=1} is there seriously {i}nothing else{/i} to do in this dump?{w=0.75} I'm so {b}bored{/b}!"
     n "Would it actually have {i}killed them{/i} to keep some board games here or what?"
@@ -2509,6 +2510,266 @@ label event_house_of_cards:
         n 2flltr "I'm done with the cards already."
         extend 6fsqbg " But making this up to me is just the hand you've been dealt!"
         n 3fcssm "Ehehe."
+
+    return
+
+# Natsuki discovers a new card game she wants to try with the player!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_blackjack_unlock",
+            unlocked=True,
+            conditional="persistent.jn_snap_unlocked",
+            affinity_range=(jn_affinity.AFFECTIONATE, None)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
+
+label event_blackjack_unlock:
+    $ jn_globals.force_quit_enabled = False
+    $ jnPause(3)
+    play audio laptop_close
+    $ jnPause(2)
+    n "...Alright.{w=0.75} Let's try this out.{w=0.75} {i}Again{/i}."
+    n "There {i}has{/i} to be some decent results this time..."
+    $ jnPause(2)
+
+    play audio keyboard
+    n "Card games...{w=1.75}{nw}"
+    play audio keyboard
+    extend " two players..."
+    n "..."
+    play audio button_tap_c
+    extend "Search."
+    $ jnPause(3)
+
+    n "..."
+    play audio keyboard
+    n "...Card games...{w=1} two players...{w=1.75}{nw}" 
+    play audio keyboard
+    extend " {i}easy{/i}."
+
+    play audio button_tap_c
+    $ jnPause(2)
+    n "..."
+    play audio button_tap_c
+    $ jnPause(0.25)
+    play audio button_tap_c
+    $ jnPause(2)
+
+    play audio button_tap_c
+    $ jnPause(0.25)
+    play audio button_tap_c
+    $ jnPause(0.25)
+    play audio button_tap_c
+    $ jnPause(2)
+
+    n "Oh,{w=0.2} for-!{w=0.5}{nw}"
+    play audio button_tap_c
+    $ jnPause(0.15)
+    play audio button_tap_c
+    $ jnPause(0.15)
+    play audio button_tap_c
+    $ jnPause(0.15)
+    play audio button_tap_c
+    extend " Search!{w=0.75} Jeez..."
+    n "Why is this thing so {i}slow{/i}?{w=0.75} What's even the {i}point{/i} of updates if they always make things worse..."
+    n "Ugh...{w=1} no wonder the school was literally giving these piles of junk away."
+    n "Stupid budget cuts."
+    $ jnPause(3)
+    n "...Finally.{w=0.75} {i}Now{/i} you decide to load."
+    n "Of course they just {i}had{/i} to install the worst browser they could find too." 
+    n "Cut me a break."
+    
+    $ jnPause(1)
+    play audio button_tap_c
+    $ jnPause(2)
+    n "..."
+    play audio button_tap_c
+    $ jnPause(2)
+    n "..."
+    play audio button_tap_c
+    $ jnPause(0.75)
+    n "Uuuuuuuuu-!"
+    n "A-and for the last time,{w=0.2} I am {b}not{/b} looking for free spins!{w=0.75} Why do search results {i}stink{/i} so much now?!"
+    n "If I {i}wanted{/i} to gamble all my savings away,{w=0.2} I'd have {i}done it{/i} already!"
+    n "Sheesh..."
+
+    $ jnPause(2)
+    play audio button_tap_c
+    $ jnPause(2)
+    play audio keyboard
+    $ jnPause(3)
+    play audio button_tap_c
+    $ jnPause(1)
+
+    n "Nnnnnn-!"
+    n "Come on!{w=0.75} Why does this have to be so {i}difficult{/i}?!"
+    n "Just give me a game I can actually {i}play{/i} or I swear,{w=0.2} I'm gonna-!"
+    n "..."
+    n "...Huh."
+    play audio button_tap_c
+    $ jnPause(3)
+    play audio button_tap_c
+    $ jnPause(5)
+
+    menu:
+        "Enter...":
+            pass
+
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_laptop"))
+    $ jn_events.displayVisuals("1ndwpu")
+    $ jn_globals.force_quit_enabled = True
+
+    # Nat's body is obscured by the laptop, so don't need as much spritecode variation
+    n 1ndwpu "..."
+    n 1fdwpu "..."
+    n 1fdwbo "..."
+    n 1tnmboeqm "...?{w=0.75}{nw}"
+    n 1unmfllesh "A-{w=0.2}ah!{w=0.75}{nw}"
+    extend 2ullemlsbr " [player]!{w=0.75}{nw}"
+    extend 2fcsgslsbr " W-{w=0.2}well,{w=0.2} finally!"
+    n 2fcsajlsbr "You sure took your sweet time getting here.{w=0.75}{nw}"
+    extend 1csqcasbl " {i}Again{/i}.{w=0.75}{nw}"
+    extend 1tsqflsbl " Are you {i}trying{/i} to set some kind of lateness record or what?"
+    n 1tllflsbl "Seriously...{w=1}{nw}"
+    extend 1nsqem " you're gonna put Sayori's tardiness to shame at this rate."
+    n 1ncsflesi "..."
+    n 1nlraj "Well,{w=0.2} anyway.{w=0.75}{nw}"
+    extend 7fcsaj " Lucky for you,{w=0.2} [player]."
+    n 7fnmsl "There's at least {i}one{/i} thing you showed up on time for."
+    n 3fsqsm "Ehehe."
+    n 6fnmbg "...'Cause I've finally found a new game I wanna try!{w=0.75}{nw}"
+    extend 3fchgn " I even memorized all the rules and everything!"
+    n 1tsqbg "And the best thing about it?"
+    n 6fnmbg "We don't even {i}need{/i} anything new to play it!"
+    n 7fcscs "Yep!{w=0.75}{nw}"
+    extend 7flrbg " No rooting around in that stinky old closet again for me today.\n{w=0.75}{nw}"
+    extend 3fcssmesm " I got everything I need right here!"
+    n 1fcsss "Heh.{w=0.75}{nw}"
+    extend 1tsqsm " And thanks to you?{w=0.75}{nw}"
+    extend 1fsqbg " That includes a second player!"
+    n 1fchsm "..."
+    n 1tsqpu "What?"
+    n 7unmaj "Oh,{w=0.2} right.{w=0.75}{nw}"
+    extend 7nnmss " You're probably wondering what all the fuss is about all of a sudden,{w=0.5}{nw}"
+    extend 7nlrss " huh."
+    n 7ulraj "So...{w=1}{nw}"
+    
+    if persistent._jn_snap_player_wins > 0 or persistent._jn_snap_player_wins > 0:
+        extend 7nllaj " I know we've played a bunch of Snap before,{w=0.2} obviously.{w=0.75}{nw}"
+        extend 3unmfl " And don't get me wrong -{w=0.5}{nw}"
+        extend 3clrflsbl " I'm not saying I was getting {i}bored{/i} of it,{w=0.2} exactly."
+        n 1nsraj "But...{w=1}{nw}"
+        extend 1clrfl " it always felt like it was missing something.{w=0.75}{nw}"
+        extend 7tnmbo " You know?"
+
+    else:
+        extend 7tlrbo " I'm pretty sure I mentioned Snap before.{w=0.75}{nw}"
+        extend 7tnmfl " That card game where you gotta call out matching cards to win?"
+        n 3nllfl "...Even if we never actually ended up {i}playing{/i} it,{w=0.5}{nw}" 
+        extend 3nslsl " for whatever reason."
+        n 3nllpu "But like...{w=1}{nw}"
+        extend 7nsqcasbr " I guess it's fine if all you actually care about in a game is reaction times."
+
+    n 1fllaj "I wouldn't exactly say it's a {i}skilled{/i} game or anything like that."
+    n 1ccsss "So it's not like it takes some kind of mastermind to figure out what's missing here."
+    n 3fsqsm "..."
+    n 3tsqss "What?{w=0.75}{nw}"
+    extend 3fnmsm " Wasn't it obvious already,{w=0.5}{nw}"  
+    extend 3fsqsm " [player]?"
+    n 6fcsbg "...Some actual strategy!{w=0.75}{nw}"
+    extend 6fchgn " Duh!"
+    n 1fnmbg "And what better way to make sure you're actually using your noggin than a game where you've gotta think for once about your moves?"
+    n 7fcsbg "You guessed it!{w=0.75}{nw}"
+    extend 1fsqbg " I'm talking about..."
+
+    show natsuki 1fcssm
+    $ jnPause(1)
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_card_pack"))
+    play audio smack
+    $ jnPause(1.25)
+
+    n 3fchbs "...Blackjack!"
+    n 3fchsm "..."
+    n 3fcssmeme "Ehehe."
+    n 7ullss "I know,{w=0.2} I know.{w=0.75}{nw}"
+    extend 7ccsbgedz " Genius,{w=0.2} right?{w=0.75}{nw}"
+    extend 6ccssm " Betcha' wish {i}you'd{/i} thought of it before,{w=0.2} huh?"
+    n 7ulraj "I'd actually heard about it a while ago,{w=0.5}{nw}" 
+    extend 7clrsssbl " but I never thought it was something that could actually be fun to play.{w=0.75}{nw}"
+    extend 3cslsssbl " Especially with only two players."
+    n 3tnmbo "So when I was looking for something else to do with the card pack,{w=0.2} I guess it just kinda came to mind."
+    n 3tllss "Besides.{w=0.75}{nw}"
+    extend 1cslsssbr " I {i}did{/i} say I didn't know a whole lot of card games before.{w=0.75}{nw}"
+    extend 1ccsposbr " Studying up on another one was clearly way overdue."
+    n 7unmaj "Seriously though -{w=0.5}{nw}"
+    extend 3fchbg " it's perfect!{w=0.75}{nw}"
+    extend 3fspbg " And it's {i}super{/i} easy to pick up too!"
+    n 3ccsss "Trust me,{w=0.2} [player].{w=0.75}{nw}"
+    extend 7tsqss " Give it a couple rounds?"
+    n 7tsrss "Well.{w=0.75}{nw}"
+    extend 6ccssmesm " You'll still be losing,{w=0.2} of course.{w=0.75}{nw}"
+    extend 3fchgnelg " But at least you'll be having tons of fun while you do!"
+    n 1csqsm "..."
+    n 1csqbg "...Well?{w=0.75}{nw}"
+    extend 1unmbg " What do you think about it,{w=0.2} [player]?{w=0.75}{nw}"
+    extend 3fcsbg " Don't lie!"
+
+    $ persistent._jn_blackjack_unlocked = True
+    show natsuki option_wait_smug
+    menu:
+        n "I can tell you're just {i}itching{/i} to get started,{w=0.2} right?"
+
+        "You bet I am!":
+            n 1fcssm "Heh.{w=0.75}{nw}"
+            extend 7fcsbg " Just as I thought.{w=0.75}{nw}"
+            extend 3fchgn " I can read you like a book!"
+            n 3unmaj "Oh -{w=0.5}{nw}"
+            extend 3cdwss " let me just pack this thing up real quick first."
+
+            show natsuki 1ccssmeme
+            show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+            $ jnPause(1)
+            play audio laptop_close
+            $ jnPause(2)
+            play audio drawer
+            $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+            show natsuki 1cllsmeme
+            $ jnPause(1)
+            hide black with Dissolve(1)
+
+            jump blackjack_explanation
+
+        "Not right now,{w=0.2} [n_name].":
+            n 1ccssl "Heh.{w=0.75}{nw}"
+            extend 3clrfl " Say no more,{w=0.2} [player].{w=0.75}{nw}"
+            extend 3clrsl " Say no more."
+            n 3ccstr "I {i}totally{/i} get it."
+            n 1csqbo "..."
+            n 3fcsbg "...Totally get that you'll just come crawling back later instead when you finally get bored,{w=0.2} that is."
+            n 3fsqsm "Ehehe."
+            n 7ulrfl "Nah,{w=0.2} I guess that's fine.{w=0.75}{nw}"
+            extend 3cnmbo " As if I'm gonna force you to play or anything like that.{w=0.75}{nw}"
+            extend 3csrfll " I'm not {i}that{/i} entitled."
+            n 1ullsl "But hey."
+            extend 6nchgn " Not like there's any shortage of time for you to start learning and losing later,{w=0.2} right?"
+            
+            show natsuki 1ccssmeme
+            show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+            $ jnPause(2)
+            play audio laptop_close
+            $ jnPause(2)
+            play audio drawer
+            $ Natsuki.clearDesk()
+            show natsuki 1cllsmeme
+            $ jnPause(2)
+            hide black with Dissolve(1)
+
+            n 2cllss "Well,{w=0.2} now that's finally out of the way..."
+            $ chosen_descriptor = jn_utils.getRandomTease() if Natsuki.isEnamored(higher=True) else player
+            n 7fchbgl "What's happening,{w=0.2} [chosen_descriptor]?"
 
     return
 

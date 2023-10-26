@@ -8,7 +8,6 @@ init python:
 
         renpy.hide_screen("hkb_overlay")
 
-
     def HKBShowButtons():
         """
         Shows hotkeybuttons

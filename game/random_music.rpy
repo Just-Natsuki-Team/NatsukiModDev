@@ -144,7 +144,7 @@ label random_music_enable:
         $ chosen_tease = jn_utils.getRandomTease()
         n 3uchbg "Just add them to the custom music folder,{w=0.1} [chosen_tease]!"
 
-    jump ch30_loop
+    return
 
 # Disable random music
 init 5 python:
@@ -186,4 +186,4 @@ label random_music_disable:
     $ jn_custom_music.hideMusicPlayer()
 
     $ persistent.jn_random_music_enabled = False
-    jump ch30_loop
+    return

@@ -866,7 +866,7 @@ label talk_service_animals:
             extend 3csrbo " or like a visit from the local police or some other snooze-fest."
             n 7utrpu "But...{w=0.75}{nw}"
             extend 7clrbg " there was {i}one{/i} visit I actually did like."
-            n 4fcsbg "Betcha can't guess what it was,{w=0.2} [player]."
+            n 4fcsbg "Betcha' can't guess what it was,{w=0.2} [player]."
             n 3fsqsm "Ehehe."
             n 3ullaj "It was actually a bunch of volunteers from a charity...{w=1}{nw}"
             extend 4unmfl " but for service and therapy animals!"
@@ -3075,7 +3075,7 @@ label talk_sustainable_fashion:
         n 2klrsr "I've...{w=0.3} never had tons of money to buy more clothes anyway,{w=0.1} so I try to reuse and fix up what I can."
         n 1fchbg "But you'd be surprised at what you can pull off with a little creativity!"
         extend 1fcssm " And just a pinch of know-how too,{w=0.1} obviously."
-        n 4fchgn "Betcha didn't know my favorite pink skirt was hand-made,{w=0.1} did you?"
+        n 4fchgn "Betcha' didn't know my favorite pink skirt was hand-made,{w=0.1} did you?"
 
     n 1unmaj "I think I've lectured you enough now,{w=0.1} [player],{w=0.1} so I won't keep harping on about it."
     n 3nllpu "But...{w=0.3} the next time you're out shopping for clothes,{w=0.1} or looking through some catalogues online?"
@@ -5716,6 +5716,7 @@ label talk_play_snap:
     $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_card_pack"))
     show natsuki 4fchsm
     hide black with Dissolve(1)
+    $ get_topic("talk_play_snap").shown_count += 1 # Have to increment here manually thanks to jump
 
     jump snap_intro
 
@@ -5741,6 +5742,8 @@ label talk_remind_snap_rules:
         n 2fcsan "Come on,{w=0.1} [player]."
         n 2flrpo "If you cared about the rules,{w=0.1} then why did you cheat when we played earlier?"
         n 4fnmpo "You haven't even apologized for it yet..."
+
+        $ get_topic("talk_remind_snap_rules").shown_count += 1 # Have to increment manually here thanks to jump
         return
 
     else:
@@ -5757,6 +5760,7 @@ label talk_remind_snap_rules:
         else:
             n 1nnmss "Sure thing!"
 
+        $ get_topic("talk_remind_snap_rules").shown_count += 1 # Have to increment manually here thanks to jump
         jump snap_explanation
 
 # Natsuki hates people being inconsiderate with chewing gum
@@ -12297,3 +12301,118 @@ label talk_work_experience:
             n 2fcsfultse "{i}[chosen_insult].{/i}"
 
     return
+
+# Prompt Natsuki to play a game of Blackjack!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_play_blackjack",
+            unlocked=True,
+            prompt="Do you want to play Blackjack?",
+            conditional="persistent._jn_blackjack_unlocked",
+            category=["Games"],
+            player_says=True,
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_play_blackjack:
+    if Natsuki.isLove(higher=True):
+        $ chosen_tease = jn_utils.getRandomTease()
+        n 2ccsbgl "Duh!{w=0.75}{nw}"
+        extend 4fchgnl " Of course I wanna play with you,{w=0.2} [chosen_tease]!{w=0.75}{nw}"
+        extend 4fchsml " Ehehe."
+
+    elif Natsuki.isEnamored(higher=True):
+        n 2ccssml "Blackjack again,{w=0.2} huh?"
+        n 2fsqsml "Ehehe.{w=0.75}{nw}"
+        extend 4fnmbgl " You bet I do,{w=0.2} [player]!"
+
+    else:
+        n 2unmss "You wanna play blackjack again?{w=0.75}{nw}"
+        extend 2fchbg " Sure thing,{w=0.2} [player]!"
+
+    $ dialogue_choice = random.randint(1, 5)
+    if dialogue_choice == 1:
+        n 4nchgn "Time to break out the cards!"
+
+    elif dialogue_choice == 2:
+        n 4fcssmeme "Just gotta get set up real quick..."
+
+    elif dialogue_choice == 3:
+        n 4fcsss "Just give a second here..."
+
+    elif dialogue_choice == 4:
+        n 4fchbg "I'll grab the cards!"
+
+    else:
+        n 4fdwsm "Let me just set up here..."
+
+    show natsuki 4fcssmeme
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(1.5)
+    play audio drawer
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_card_pack"))
+    show natsuki 4fchsm
+    hide black with Dissolve(1)
+    $ get_topic("talk_play_blackjack").shown_count += 1 # Have to increment here manually thanks to jump
+
+    jump blackjack_intro
+
+# Natsuki goes over the rules of blackjack again, for if the player has already heard the explanation pre-game
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_remind_blackjack_rules",
+            unlocked=True,
+            prompt="Can you go over the rules of Blackjack again?",
+            conditional="persistent._jn_blackjack_unlocked and persistent._jn_blackjack_explanation_given",
+            category=["Games"],
+            player_says=True,
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_remind_blackjack_rules:
+    if Natsuki.isLove(higher=True):
+        n 2tllss "Need a little refresher,{w=0.5}{nw}"
+        extend 2tnmbo " huh [player]?"
+        n 7tlrsl "..."
+        n 7tlraj "Well...{w=1}{nw}"
+        extend 7tlrss " I guess I can't be too surprised,{w=0.75}{nw}" 
+        extend 7tsqss " knowing you."
+        n 6ccssslsbr "A-{w=0.2}all too hard to pay attention with such a pretty face,{w=0.2} right?{w=0.75}{nw}"
+        extend 3csldvlsbr " Ehehe."
+        n 4ccsbglsbr "...A-{w=0.2}anyway."
+
+    elif Natsuki.isEnamored(higher=True):
+        n 1ccsbg "Oh?"
+        n 1flrbg "Someone needs a reminder already,{w=0.5}{nw}" 
+        extend 1fsqss " huh?"
+        n 1fsqsm "..."
+        n 1fchsm "Ahaha.{w=0.75}{nw}"
+        extend 1nlrbg " Nah,{w=0.2} it's fine.{w=0.75}{nw}"
+        extend 1unmbo " I don't mind going through it again."
+        n 1fsqbg "...So long as you keep your ears pricked {i}this{/i} time,{w=0.2} at least.{w=0.75}{nw}"
+        extend 1fsqsm " Ehehe."
+
+    else:
+        n 1ccsss "Heh.{w=0.75}{nw}"
+        extend 1nsqsl " Wow,{w=0.2} [player]."
+        n 4nsgfl "You seriously forgot{w=0.5}{nw}"
+        extend 4csqfl " already?"
+        n 2csqbo "..."
+        n 2fcssm "Ehehe."
+        n 1tlrss "Nah,{w=0.5}{nw}"
+        extend 3clrss " It's fine."
+        n 7ccsbg "I can't expect {i}everyone{/i} to have memory as good as mine,{w=0.5}{nw}" 
+        extend 7fcssmesm " after all."
+
+    $ get_topic("talk_remind_blackjack_rules").shown_count += 1 # Have to increment manually here thanks to jump
+    jump blackjack_explanation
