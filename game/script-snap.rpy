@@ -124,14 +124,14 @@ init 0 python in jn_snap:
             if (len(_player_hand) > 0):
                 new_card = _player_hand.pop(0)
                 _cards_on_table.append(new_card)
-                renpy.play("mod_assets/sfx/card_place.ogg")
+                renpy.play("mod_assets/sfx/card_flip_{0}.ogg".format(random.choice(["a", "b", "c"])))
                 _is_player_turn = False
 
         else:
             if (len(_natsuki_hand) > 0):
                 new_card = _natsuki_hand.pop(0)
                 _cards_on_table.append(new_card)
-                renpy.play("mod_assets/sfx/card_place.ogg")
+                renpy.play("mod_assets/sfx/card_flip_{0}.ogg".format(random.choice(["a", "b", "c"])))
                 _is_player_turn = True
 
     def _getSnapResult():
@@ -187,6 +187,23 @@ init 0 python in jn_snap:
         else:
             # Natsuki comments on the incorrect snap
             renpy.call("snap_quip", is_player_snap=is_player, is_correct_snap=False)
+
+    def _showSplashImage(is_player_snap=False):
+        """
+        Shows a splash image for a Snap call.
+
+        IN:
+            - is_player_snap - bool flag as to if the player is calling Snap. Determines if the popup has a Nat chibi.
+        """
+        snap_image = "you_snap" if is_player_snap else "nat_snap"
+        renpy.show(
+            name="snap_popup",
+            at_list=[store.snap_popup],
+            layer="overlay",
+            what=store.Image("mod_assets/games/snap/{0}.png".format(snap_image)),
+            zorder=10)
+
+        return
 
     def _getCurrentTopCard():
         """
@@ -302,12 +319,12 @@ label snap_explanation:
             extend 4nslca " fine."
             n 2flrpo "...Spoilsport."
 
-            if not Natsuki.getDeskSlotClear(jn_desk_items.JNDeskSlots.centre):
+            if not Natsuki.getDeskSlotClear(jn_desk_items.JNDeskSlots.right):
                 show natsuki 2ccspo
                 show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
                 $ jnPause(1)
                 play audio drawer
-                $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+                $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.right)
                 show natsuki 2nlrbo
                 $ jnPause(1)
                 hide black with Dissolve(1.25)
@@ -445,9 +462,8 @@ label snap_quip(is_player_snap, is_correct_snap):
 
             # Some UE things to make it fun
             play audio smack
-            show snap_popup zorder 5
+            $ jn_utils.fireAndForgetFunction(jn_snap._showSplashImage(is_player_snap=True))
             $ jnPause(0.75)
-            hide snap_popup
 
         # Player snapped, and was incorrect
         else:
@@ -488,7 +504,7 @@ label snap_quip(is_player_snap, is_correct_snap):
                 show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
                 $ jnPause(1)
                 play audio drawer
-                $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+                $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.right)
                 show natsuki 2cslbo
                 $ jnPause(1)
                 hide black with Dissolve(1.25)
@@ -540,9 +556,8 @@ label snap_quip(is_player_snap, is_correct_snap):
             # Some UE things to make it fun
 
             play audio smack
-            show snap_popup zorder 5
+            $ jn_utils.fireAndForgetFunction(jn_snap._showSplashImage())
             $ jnPause(0.75)
-            hide snap_popup
 
         # Natsuki snapped, and was incorrect
         else:
@@ -723,12 +738,13 @@ label snap_end:
                 extend 2fchsm " Thanks for playing~!"
                 show natsuki 1fcssm
 
-            show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
-            $ jnPause(1)
-            play audio drawer
-            $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
-            $ jnPause(1)
-            hide black with Dissolve(1.25)
+            if random.choice([True, False]):
+                show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+                $ jnPause(1)
+                play audio drawer
+                $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.right)
+                $ jnPause(1)
+                hide black with Dissolve(1.25)
 
             # Reset the ingame flag, then hop back to ch30 as getting here has lost context
             $ Natsuki.setInGame(False)
@@ -759,18 +775,20 @@ label snap_forfeit:
             $ jn_snap._natsuki_win_streak += 1
             $ persistent._jn_snap_natsuki_wins += 1
 
-            show natsuki 1fcssm
-            show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
-            $ jnPause(1)
-            play audio drawer
-            $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
-            $ jnPause(1)
-            hide black with Dissolve(1.25)
+            if random.choice([True, False]):
+                show natsuki 1fcssm
+                show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+                $ jnPause(1)
+                play audio drawer
+                $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.right)
+                $ jnPause(1)
+                hide black with Dissolve(1.25)
 
             # Reset the ingame flag, then hop back to ch30 as getting here has lost context
             $ Natsuki.setInGame(False)
             $ Natsuki.resetLastTopicCall()
             $ Natsuki.resetLastIdleCall()
+
             jump ch30_loop
 
         "In your dreams!":
@@ -785,22 +803,8 @@ label snap_forfeit:
             jump snap_main_loop
 
 # Animation for the Snap! popup fading out; we use this because Ren'Py sucks at image prediction
-transform snap_popup_fadeout:
+transform snap_popup:
     easeout 0.75 alpha 0
-
-# Self-explanatory, you dummy
-image snap_popup:
-    block:
-        choice:
-            "mod_assets/games/snap/snap_a.png"
-        choice:
-            "mod_assets/games/snap/snap_b.png"
-        choice:
-            "mod_assets/games/snap/snap_c.png"
-        choice:
-            "mod_assets/games/snap/snap_d.png"
-
-    snap_popup_fadeout
 
 # Game UI
 screen snap_ui:

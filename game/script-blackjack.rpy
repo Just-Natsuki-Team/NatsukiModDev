@@ -844,13 +844,14 @@ label blackjack_quit_forfeit:
                 n 6fcsbs "Guess the only winning move for you was not to play!{w=0.75}{nw}"
                 extend 7fchsmeme " Ehehe."
 
-            show natsuki 4fcssm
-            show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
-            $ jnPause(1)
-            play audio drawer
-            $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.right)
-            $ jnPause(1)
-            hide black with Dissolve(1.25)
+            if random.choice([True, False]):
+                show natsuki 4fcssm
+                show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+                $ jnPause(1)
+                play audio drawer
+                $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.right)
+                $ jnPause(1)
+                hide black with Dissolve(1.25)
 
             $ jn_blackjack._rounds = 0
             $ Natsuki.setInGame(False)

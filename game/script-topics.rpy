@@ -5707,17 +5707,22 @@ label talk_play_snap:
         n 1unmaj "You wanna play Snap?{w=0.75}{nw}" 
         extend 4fchsm " Sure!"
 
-    n 4fcsss "Let me just get the cards out real quick..."
+    if Natsuki.getDeskItemReferenceName(jn_desk_items.JNDeskSlots.right) == "jn_card_pack":
+        n 7csqbg "Good thing I never put the cards away,{w=0.2} huh?"
 
-    show natsuki 4fcssm
-    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
-    $ jnPause(1.5)
-    play audio drawer
-    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_card_pack"))
-    show natsuki 4fchsm
-    hide black with Dissolve(1)
+    else:
+        n 4fcsss "Let me just get the cards out real quick..."
+
+        show natsuki 4fcssm
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+        $ jnPause(1.5)
+        play audio drawer
+        $ jnPause(1)
+        $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_card_pack"))
+        show natsuki 4fchsm
+        hide black with Dissolve(1)
+
     $ get_topic("talk_play_snap").shown_count += 1 # Have to increment here manually thanks to jump
-
     jump snap_intro
 
 # Natsuki goes over the rules of snap again, for if the player has already heard the explanation pre-game
@@ -12335,31 +12340,36 @@ label talk_play_blackjack:
         n 2unmss "You wanna play blackjack again?{w=0.75}{nw}"
         extend 2fchbg " Sure thing,{w=0.2} [player]!"
 
-    $ dialogue_choice = random.randint(1, 5)
-    if dialogue_choice == 1:
-        n 4nchgn "Time to break out the cards!"
-
-    elif dialogue_choice == 2:
-        n 4fcssmeme "Just gotta get set up real quick..."
-
-    elif dialogue_choice == 3:
-        n 4fcsss "Just give a second here..."
-
-    elif dialogue_choice == 4:
-        n 4fchbg "I'll grab the cards!"
+    if Natsuki.getDeskItemReferenceName(jn_desk_items.JNDeskSlots.right) == "jn_card_pack":
+        n 7csqbg "Just as well I didn't pack the cards up yet,{w=0.2} huh?"
 
     else:
-        n 4fdwsm "Let me just set up here..."
+        $ dialogue_choice = random.randint(1, 5)
+        if dialogue_choice == 1:
+            n 4nchgn "Time to break out the cards!"
 
-    show natsuki 4fcssmeme
-    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
-    $ jnPause(1.5)
-    play audio drawer
-    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_card_pack"))
-    show natsuki 4fchsm
-    hide black with Dissolve(1)
+        elif dialogue_choice == 2:
+            n 4fcssmeme "Just gotta get set up real quick..."
+
+        elif dialogue_choice == 3:
+            n 4fcsss "Just give a second here..."
+
+        elif dialogue_choice == 4:
+            n 4fchbg "I'll grab the cards!"
+
+        else:
+            n 4fdwsm "Let me just set up here..."
+
+        show natsuki 4fcssmeme
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+        $ jnPause(1.5)
+        play audio drawer
+        $ jnPause(1)
+        $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_card_pack"))
+        show natsuki 4fchsm
+        hide black with Dissolve(1)
+
     $ get_topic("talk_play_blackjack").shown_count += 1 # Have to increment here manually thanks to jump
-
     jump blackjack_intro
 
 # Natsuki goes over the rules of blackjack again, for if the player has already heard the explanation pre-game
