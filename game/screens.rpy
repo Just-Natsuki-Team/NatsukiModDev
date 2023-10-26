@@ -866,7 +866,8 @@ screen navigation():
         spacing gui.navigation_spacing
 
         if not jn_data_migrations.current_version_latest:
-            textbutton _("View update!") action OpenURL(jn_globals.LINK_JN_LATEST)
+            textbutton _("Update now!") action OpenURL(jn_globals.LINK_JN_LATEST)
+            null height 16
 
         if main_menu:
             textbutton _("New Game"):
@@ -1240,7 +1241,6 @@ screen preferences():
             scrollbars "vertical"
             mousewheel True
             draggable True
-            xoffset 40
 
             vbox:
                 yoffset 0
