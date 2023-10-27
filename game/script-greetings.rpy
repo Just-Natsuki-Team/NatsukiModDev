@@ -2046,6 +2046,43 @@ label greeting_morning_top_of_the_mornin:
 
     return
 
+# Guten Morgen, Schlafmütze!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_morning_german",
+            unlocked=True,
+            conditional="(jn_is_time_block_mid_morning() or jn_is_time_block_late_morning()) and get_topic('talk_learning_languages').shown_count > 0",
+            affinity_range=(jn_affinity.HAPPY, None),
+            additional_properties={
+                "expression": "7ccssm"
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_morning_german:
+    n 3unmajesu "Ah!{w=1}{nw}"
+    $ player_initial = jn_utils.getPlayerInitial()
+    extend 4fllbgl " [player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
+    extend 4fcsbgl " Perfect timing!"
+    n 7fcsaw "A-{w=0.2}hem."
+    n 6fcsbsl "G-{w=0.1}guten Morgen,{w=0.75}{nw}" 
+    extend 6fchbgl " Schlafmuetze!"
+    n 5fsqsmlsbl "..."
+    n 5fsqcalsbl "..."
+    n 2cnmfll "What?{w=0.5}{nw}"
+    extend 2cnmpol " What's {i}that{/i} look for,{w=0.2} all of a sudden?"
+    n 7fsqbg "Did you forget that I was studying German {i}already{/i} or something?"
+    n 2fcssm "Ehehe."
+    n 4fsgbg "Well,{w=0.2} better start looking sharp,{w=0.2} [player]!{w=0.75}{nw}"
+    extend 7fcsbg " After all..."
+    n 6fwlgn "Der fruehe Vogel faengt den Wurm!{w=1}{nw}"
+    extend 3fllbgsbr " O-{w=0.2}or something like that."
+
+    return
+
 # Afternoon
 
 # Natsuki hopes the player is keeping well

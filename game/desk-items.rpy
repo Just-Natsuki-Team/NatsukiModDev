@@ -195,7 +195,7 @@ init -55 python in jn_desk_items:
 
     __registerDeskItem(JNDeskItem(
         reference_name="jn_parfait_manga_closed",
-        desk_slot=JNDeskSlots.left,
+        desk_slot=JNDeskSlots.right,
         unlocked=False,
         image_path="mod_assets/props/parfait_manga_closed.png"
     ))
