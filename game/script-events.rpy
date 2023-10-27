@@ -3547,7 +3547,9 @@ label holiday_halloween:
     extend " I {i}totally{/i} got you this time."
     n "Jeez..."
     extend " I {i}knew{/i} this dumb old book would come in handy someday!"
-    extend " And I didn't even blow the classroom up or anything."
+    n "I didn't even blow the classroom up or anything either."
+    extend " I'd call that a complete success!"
+    extend " Ahaha."
     n "Well, anyway."
     extend " You better appreciate all the effort I put into all this, [player]."
     n "Yep!"
@@ -3593,51 +3595,155 @@ label holiday_halloween:
         n "Or..."
         extend " I guess it would be."
         n "Not like I'd be the kind to know, a-after all."
-        n "It's just that..."
-        n "..."
-        n "I-it just sucks."
-        extend " You know?"
-        extend " W-with my family and everything."
+
+        if "holiday_christmas_day" in store.persistent._seen_ever:
+            n "..."
+            n "What?"
+            extend " Don't you remember, [player]?"
+            extend " L-like I told you last Christmas."
+
+        else:
+            n "It's just that..."
+            n "..."
+            n "I-it just sucks."
+            extend " You know?"
+            extend " W-with my family and everything."
+
         n "We..."
         extend " never..."
         extend " really celebrated much."
         extend " At all."
+        n "...And Halloween was no exception."
+        extend " Obviously."
+        extend " Why wouldn't it be?"
         n "'It's not what we do here, Natsuki!'"
-        extend  "'It's just not right, Natsuki!'"
+        extend  "'It's just not right, Natsuki! What would our neighbors think?'"
         extend  " Cut me a break."
-        n "We all knew what the real reasons were."
+        n "Heh."
+        extend " We all knew what the real reasons were, [player]."
+        n "And they weren't just because it wasn't Japanese enough, I'll tell you that much."
+        n ""
+
+        n "..."
+        n "...I wrote you something too,"
+        extend " you know."
+        n "..."
+
+        $ halloween_poem = jn_poems.getPoem("jn_natsuki_hallows_end")
+        play audio page_turn
+        show prop poetry_attempt zorder JN_PROP_ZORDER at JN_TRANSFORM_FADE_IN
+        $ jnPause(2)
+
+        n "..."
+        n "H-hey!"
+        extend " Come on!"
+        n " Don't give me that look, [player]."
+        extend " Just..."
+        n "..."
+        n "...Just take it already."
+        extend " Before I change my mind about the whole thing."
+        n "..."
+
+        show natsuki 1fsrbolsbr
+        call show_poem(halloween_poem)
+        show natsuki 1fsrbolsbr
+
+        n "Hey..."
+        extend " you did actually read all of that..."
+        extend " right?"
+        extend " I'll get mad if you didn't."
+        n "You have no {i}idea{/i} how much of a pain that was at short notice." 
+        extend " Especially with you sneaking around all the time."
+        extend " You dork."
+        n "..."
+        n "But..."
+        n "[player]?"
+        n "..."
+
+        show natsuki 1fsldvlsbl at jn_center zorder JN_NATSUKI_ZORDER
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+        play audio clothing_ruffle
+        $ jnPause(3.5)
+        play audio kiss
+        $ jnPause(1.5)
+        show natsuki 1fsldvlsbl at jn_center zorder JN_NATSUKI_ZORDER
+        hide black with Dissolve(1.25)
+
+        n "...T-thank you."
+        extend " For being with me for Halloween, I mean."
+        n "I know I never got to really dress up,"
+        extend " or make tons of fancy decorations,"
+        extend " or go bobbing for apples or anything fancy like that."
+        n "But..."
+        extend " I-I guess I can settle for treating myself to you instead."
+        extend " So..."
+        n "...Yeah."
+        $ chosen_endearment = jn_utils.getRandomEndearment()
+        n "H-happy Halloween, [chosen_endearment]."
+        extend " Ahaha..."
+        n "..."
+        n "N-now, enough of all the lovey-dovey stuff."
+        extend " Jeez, [player]."
+        extend " Have you totally forgotten what today is meant to be for already or what?"
+        n "..."
+        n "No?"
+        n "Heh."
+        extend " Then you better start preparing yourself."
+        n "Being here with you might be a treat..."
+        n "...But you bet I've still got a ton of {i}tricks{/i} up my sleeve!"
+        extend " Ehehe."
+        $ chosen_tease = jn_utils.getRandomTeaseName()
+        n "Now let's get spooky already, you [chosen_tease]!"
 
     else:
         n "Or..."
         extend " at least it would be."
         extend " If {i}some people{/i} didn't insist on taking it all way too far."
         n "Ugh."
-        n "Don't get me wrong -"
+        n "Like, don't get me wrong -"
         extend " I'm always game for a good prank!"
-        extend " I'm not thin-skinned like that, obviously."
-        n "But what I can't {i}stand{/i} is when some people just take it all {i}way{/i} over the top -"
+        extend " I'm not thin-skinned, obviously."
+        n "But what I can't {i}stand{/i} is when some people take it all {i}way{/i} over the top -"
         extend " or they're just straight-up jerks about the whole thing."
         n "Yeah."
         extend " You know the type, [player]."
         n "{i}Pranksters{/i},"
         extend " my butt."
         n "Seriously!"
-        extend " What the hell kind of 'mischief' involves just pissing people off?!"
+        n "I get that mischief night is a thing too."
+        extend " But what the hell kind of 'mischief' involves just pissing people off?!"
         extend " Or going around everywhere and making a total ass out of yourself?"
         n "Cut me a break."
         n "And don't even get me {i}started{/i} on keeping everyone up all night with crappy music..."
         n "...Or trashing a bunch of other people's stuff on purpose."
         n "Ugh..."
         n "Forget the eggs and toilet paper."
-        extend " Just makes me wanna smack them right in their stupid faces."
+        n "Just makes me wanna smack them right in their stupid faces."
+        extend " Who says that isn't just {i}my{/i} take on a 'prank'?"
+        n "Jerks."
         n "..."
         n "W-whatever."
         extend " You know what, [player]?"
-        extend " I'm not gonna let any of that get on my back."
-        n "Nope!"
-        n ""
+        extend " Who even has the time to care about a bunch of idiots ruining things for themselves."
+        n "A-and besides."
+        extend " It's not like we have to worry about any of that here, at any rate."
+        n "So!"
+        n "I hope you prepared yourself, [player]."
+        n "'Cause if you haven't prepared plenty of treats today for yours truly..."
+        n "...Then you better get ready for some more grade-A tricks instead!"
+        extend " Ehehe."
 
-    # Finish - play on words for trick or treat?
+        if Natsuki.isLove(higher=True):
+            $ chosen_tease = jn_utils.getRandomTeaseName()
+            n "Love you too," 
+            extend " you big [chosen_tease]~!"
+
+        elif Natsuki.isAffectionate(higher=True):
+            $ random_tease = random.choice(["dork", "dope"])
+            n "Now let's get spooky already, you [random_tease]!"
+
+        else:
+            n "Now let's spook things up already!"
 
     $ jn_events.getHoliday("holiday_halloween").complete()
 
