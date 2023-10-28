@@ -447,6 +447,9 @@ init python in jn_events:
             if self.deco_list:
                 store.persistent._jn_holiday_deco_list_on_quit = self.deco_list
 
+            store.Natsuki.resetLastTopicCall()
+            store.Natsuki.resetLastIdleCall()
+
         def isCompleted(self):
             """
             Returns whether this holiday has been completed.
@@ -688,7 +691,6 @@ init python in jn_events:
         holiday_type=JNHolidayTypes.halloween,
         affinity_range=(jn_affinity.HAPPY, None),
         natsuki_sprite_code="1fsrunlsbr",
-        deco_list=["o31"],
         priority=10
     ))
 
@@ -3460,6 +3462,13 @@ label holiday_easter:
     return
 
 label holiday_halloween:
+    if preferences.get_volume("music") < 0.25:
+        $ preferences.set_volume("music", 0.75)
+
+    if preferences.get_volume("sfx") < 0.25:
+        $ preferences.set_volume("sfx", 0.75)
+
+    $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_GLITCH)
     hide natsuki
     show chair zorder JN_NATSUKI_ZORDER
     show desk zorder JN_NATSUKI_ZORDER
@@ -3476,7 +3485,7 @@ label holiday_halloween:
 
     python:
         for i in range(1, 10):
-            renpy.play(filename=audio.thump)
+            renpy.play(filename=audio.thump, channel="audio")
             jnPause(0.75)
 
     play audio static
@@ -3486,7 +3495,7 @@ label holiday_halloween:
 
     python:
         for i in range(1, 6):
-            renpy.play(filename=audio.thump)
+            renpy.play(filename=audio.thump, channel="audio")
             jnPause(0.55)
 
     play audio static
@@ -3496,7 +3505,7 @@ label holiday_halloween:
 
     python:
         for i in range(1, 3):
-            renpy.play(filename=audio.thump)
+            renpy.play(filename=audio.thump, channel="audio")
             jnPause(0.35)
 
     play audio static
@@ -3507,25 +3516,21 @@ label holiday_halloween:
     play audio static
     show glitch_garbled_c zorder JN_GLITCH_ZORDER with vpunch
     hide glitch_garbled_c
-    $ jnPause(0.35)
-
-    show black zorder JN_BLACK_ZORDER
-    play audio doom
-    $ jnPause(3)
-    hide desk
-    hide chair
-    $ magical_girl_cosplay = jn_outfits.getOutfit("jn_magical_girl_cosplay")
-    $ magical_girl_cosplay.unlock()
-    $ Natsuki.setOutfit(magical_girl_cosplay)
-    show natsuki at JN_NATSUKI_CLOSE_UP
-    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_renpy_for_dummies_closed"))
-    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_pumpkins"))
-    play audio switch_flip
-    hide black
     $ jnPause(1)
 
     show black zorder JN_BLACK_ZORDER
-    show natsuki smug_happy at jn_center
+    play audio ooo_creep
+    $ jnPause(3)
+    hide desk
+    hide chair
+    $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_SUNNY)
+    $ magical_girl_cosplay = jn_outfits.getOutfit("jn_magical_girl_cosplay")
+    $ magical_girl_cosplay.unlock()
+    $ Natsuki.setOutfit(magical_girl_cosplay)
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_renpy_for_dummies_closed"))
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_pumpkins"))
+    show o31 zorder JN_DECO_ZORDER
+    show natsuki 4fchgn at jn_center
     play audio switch_flip
     hide black
     $ jnPause(3)
@@ -3535,218 +3540,263 @@ label holiday_halloween:
     $ renpy.show_screen("hkb_overlay")
 
     $ player_capitalized = player.capitalize()
-    n "HAPPY HALLOWEEN," 
-    extend " [player_capitalized]!"
-    n "..."
-    n "..."
-    n "Well?"
-    extend " Don't just sit there!"
-    extend " Say something already!"
-    n "Did I get you? Did I get you?"
-    extend " Don't lie!"
-    extend " I {i}totally{/i} got you this time."
-    n "Jeez..."
-    extend " I {i}knew{/i} this dumb old book would come in handy someday!"
-    n "I didn't even blow the classroom up or anything either."
-    extend " I'd call that a complete success!"
-    extend " Ahaha."
-    n "Well, anyway."
-    extend " You better appreciate all the effort I put into all this, [player]."
-    n "Yep!"
-    extend " As you can {i}clearly{/i} see -"
-    extend " I pulled out {i}all{/i} the stops this time!"
-    n "Awesome hand-crafted decorations?"
-    extend " Check!"
-    extend " Fabulously made cosplay?"
-    extend " Check again!"
-
-    n "Getting the best jump of the year on [player]?"
-    n "..."
-    n "Ehehe."
-    extend " You bet!"
+    n 4fchbg "HAPPY HALLOWEEN,{w=0.75}{nw}" 
+    extend 4fchbs " [player_capitalized]!"
+    n 4fchsm "..."
+    n 4fsqsm "..."
+    n 2fsqss "Well?{w=0.75}{nw}"
+    extend 2fcsgs " Don't just sit there!{w=0.75}{nw}"
+    extend 1fchgn " Say something already!"
+    n 3fnmbs "Did I get you?{w=0.2} Did I get you?{w=0.75}{nw}"
+    extend 3fcsbs " Don't lie!{w=1}{nw}"
+    extend 7fsqbg " I {b}totally{/b} got you this time."
+    n 3ccsbg "Jeez...{w=1}{nw}"
+    extend 7fcsbs " I {i}knew{/i} this dumb old book would come in handy someday!"
+    n 3unmbg "And hey -{w=0.5}{nw}"
+    n 3tlrbg "I didn't even blow the classroom up or anything.{w=0.75}{nw}"
+    extend 4fchbg " I'd call that a complete success!{w=0.75}{nw}"
+    n 2fchsm "Ahaha."
+    n 2cllss "Well,{w=0.2} anyway.{w=0.75}{nw}"
+    extend 4csqbg " Like what you see?{w=0.75}{nw}"
+    extend 3ccspo " You better appreciate all the effort I put into all this,{w=0.2} [player]."
+    n 3fnmbg "Yep!{w=0.75}{nw}"
+    extend 7fcsbg " As you can {i}clearly{/i} see -{w=0.5}{nw}"
+    extend 6fchbg " I pulled out {i}all{/i} the stops this time!"
+    n 7clrbg "Awesome hand-crafted decorations?{w=0.75}{nw}"
+    extend 7ccsbg " Check!{w=1}{nw}"
+    extend 6ckrsm " Fabulously made cosplay?{w=0.75}{nw}"
+    extend 6fcsbs " Check again!"
+    n 3fnmbg "Getting the best jump of the year on [player]?"
+    n 7fsgsm "..."
+    n 7fcssm "Ehehe.{w=0.75}{nw}"
+    extend 3fchgnelg " You bet!"
 
     if get_topic("talk_thoughts_on_horror").shown_count > 0:
-        n "Man..."
-        n "You know, I'm pretty sure I mentioned it before at some point."
-        extend " About how I don't really like horror and all."
-        n "But let's be real here, [player]."
+        n 1cllbg "Man..."
+        n 2unmaj "You know,{w=0.2} I'm pretty sure I mentioned it before at some point.{w=0.75}{nw}"
+        extend 5csrbosbl " About how I don't really like horror and all."
+        n 4ccsfl "But let's be real here,{w=0.2} [player]."
 
     else:
-        n "Man..."
-        extend " I know I said I wasn't the biggest fan of horror, but let's be real."
+        n 1cllbg "Man...{w=1}{nw}"
+        extend 2tlraj " I know I told you I wasn't the biggest fan of horror already,{w=0.75}{nw}" 
+        extend 4ccsfl " but let's be real."
 
-    n "When it really comes to bang for your buck?"
-    extend " You just can't beat a good old Halloween."
-    n "No, really!"
-    extend " Think about it!"
-
-    n "Not {i}only{/i} is it an excuse to break out my sewing kit and blow everyone away with my needlework..."
-    n "But come on -"
-    extend " what {i}other{/i} holidays give you the excuse to pig out on as much free candy as you can swipe?"
-    n "..."
-    n "Ehehe."
-    extend " Yep!"
-    extend " Didn't think so, [player]."
-    extend " Halloween is the best!"
+    n 4tnmaj "When it really comes to bang for your buck?{w=0.75}{nw}"
+    extend 7ccssmesm " You just can't beat a good old Halloween."
+    n 3unmfl "No,{w=0.2} really!{w=0.75}{nw}"
+    extend 3fcsbg " Think about it!"
+    n 4fsqss "Not {i}only{/i} is it an excuse to break out my sewing kit and blow {i}everyone{/i} away with my needlework..."
+    n 1ccsss "But come on -{w=0.5}{nw}"
+    extend 2fchgn " what {i}other{/i} holidays give you the excuse to pig out on as much free candy as you can swipe,{w=0.2} huh?"
+    n 2fsqsm "..."
+    n 1fcssm "Ehehe.{w=0.75}{nw}"
+    extend 4fcsbg " Didn't think so,{w=0.2} [player].{w=1.25}{nw}"
+    extend 3fchbg " Halloween is the best!"
 
     # Not ideal conditioning; holidays should really have a shown_count - see: #813
     if Natsuki.isLove(higher=True) and "holiday_halloween" in store.persistent._seen_ever:
-        n "..."
-        n "Or..."
-        extend " I guess it would be."
-        n "Not like I'd be the kind to know, a-after all."
+        n  "..."
+        n  "Or...{w=1}{nw}"
+        extend  " I guess it would be."
+        n  "Not like I'd be the kind to know,{w=0.2} a-{w=0.2}after all."
 
         if "holiday_christmas_day" in store.persistent._seen_ever:
-            n "..."
-            n "What?"
-            extend " Don't you remember, [player]?"
-            extend " L-like I told you last Christmas."
+            n  "..."
+            n  "What?{w=0.75}{nw}"
+            extend  " Don't you remember,{w=0.2} [player]?{w=0.75}{nw}"
+            extend  " It's like how I told you last Christmas."
 
         else:
-            n "It's just that..."
-            n "..."
-            n "I-it just sucks."
-            extend " You know?"
-            extend " W-with my family and everything."
-
-        n "We..."
-        extend " never..."
-        extend " really celebrated much."
-        extend " At all."
-        n "...And Halloween was no exception."
-        extend " Obviously."
-        extend " Why wouldn't it be?"
-        n "'It's not what we do here, Natsuki!'"
-        extend  "'It's just not right, Natsuki! What would our neighbors think?'"
-        extend  " Cut me a break."
-        n "Heh."
-        extend " We all knew what the real reasons were, [player]."
-        n "And they weren't just because it wasn't Japanese enough, I'll tell you that much."
-        n ""
-
+            n  "It's just that..."
+            n  "..."
+            n  "I-{w=0.2}it just sucks.{w=0.75}{nw}"
+            extend  " You know?{w=1}{nw}"
+            extend  " With my family and everything."
+        
         n "..."
-        n "...I wrote you something too,"
-        extend " you know."
-        n "..."
+        n  "We...{w=1}{nw}"
+        extend  " never...{w=1}{nw}"
+        extend  " really celebrated much.{w=1.25}{nw}"
+        extend  " At all."
+        n  "...And Halloween was no exception.{w=0.75}{nw}"
+        extend  " Obviously.{w=0.75}{nw}"
+        extend  " Why would it be?"
+        n "And the excuses.{w=0.75}{nw}"
+        extend " Every year without fail."
+        n  "'It's not what we do here,{w=0.2} Natsuki!'{w=0.75}{nw}"
+        extend  "'It's just not right,{w=0.2} Natsuki!{w=0.2} What would our neighbors think?'{w=0.75}{nw}"
+        extend "As if almost everyone on our street {i}didn't{/i} have kids,{w=0.2} or put decorations up!"
+        n  "Cut me a break."
+        n  "Heh.{w=0.75}{nw}"
+        extend  " We all knew what the {i}real{/i} reasons were,{w=0.2} [player]."
+        n  "And they weren't just because it wasn't Japanese enough,{w=0.2} I'll tell you that much."
+        n  "..."
+        n  "..." # sad sigh
+        n  "...Look.{w=0.75}{nw}"
+        extend  " I'm not just annoyed about missing out literally every year."
+        n  "I don't care about some tacky outfits or a bunch of junk from the convenience store.{w=0.75}{nw}"
+        extend  " Not like that stuff just disappears or something the rest of the year,{w=0.2} obviously."
+        n  "I don't care about any of that."
+        n  "I..."
+        n  "..."
+        n  "I...{w=1}{nw}"
+        extend  " just...{w=1}{nw}"
+        extend  " wanted to join in with what everyone else was doing.{w=1}{nw}"
+        extend  " W-{w=0.2}with what my {i}friends{/i} invited me to do!{w=0.75}{nw}"
+        extend  " Is that {i}really{/i} such a crime?"
+        n  "A-{w=0.2}and besides,{w=0.2} what right did {i}they{/i} have to...!"
+        n  "T-{w=0.2}to..."
+        n  "..."
+        n  "..."
+        n  "..."
+        n  "...Forget it.{w=1.25}{nw}"
+        extend  " Forget it!{w=1}{nw}"
+        extend  " I don't even know why it still annoys me so much."
+        n  "It was all just..."
+        n  "..."
+        n  "...So dumb."
+        n  "A-{w=0.2}and I know there's nothing stopping me doing what I want now.{w=0.75}{nw}"
+        extend  " As you can see."
+        n  "But that still doesn't change all the wasted time.{w=1.25}{nw}"
+        extend  " All the disappointment."
+        n  "...E-{w=0.2}even if getting to spend Halloween with you now instead {i}is{/i} pretty awesome."
+        n  "..."
+        n  "...I wrote you something too,{w=0.5}{nw}"
+        extend  " you know."
+        n  "..."
 
         $ halloween_poem = jn_poems.getPoem("jn_natsuki_hallows_end")
         play audio page_turn
         show prop poetry_attempt zorder JN_PROP_ZORDER at JN_TRANSFORM_FADE_IN
         $ jnPause(2)
 
-        n "..."
-        n "H-hey!"
-        extend " Come on!"
-        n " Don't give me that look, [player]."
-        extend " Just..."
-        n "..."
-        n "...Just take it already."
-        extend " Before I change my mind about the whole thing."
-        n "..."
+        n  "..."
+        n  "H-{w=0.2}hey!{w=0.75}{nw}"
+        extend  " Come on."
+        n  " Don't give me that look,{w=0.2} [player].{w=0.75}{nw}"
+        extend  " Just..."
+        n  "..."
+        n  "...Just take it already.{w=1}{nw}"
+        extend  " Before I change my mind about the whole thing."
+        n  "..."
 
         show natsuki 1fsrbolsbr
         call show_poem(halloween_poem)
         show natsuki 1fsrbolsbr
 
-        n "Hey..."
-        extend " you did actually read all of that..."
-        extend " right?"
-        extend " I'll get mad if you didn't."
-        n "You have no {i}idea{/i} how much of a pain that was at short notice." 
-        extend " Especially with you sneaking around all the time."
-        extend " You dork."
-        n "..."
-        n "But..."
-        n "[player]?"
-        n "..."
+        n  "You..."
+        n  "You did actually read all of that..."
+        n  "Right?{w=0.75}{nw}"
+        extend  " I'll get mad if you didn't."
+        n  "You have no {i}idea{/i} how much of a pain that was at short notice.{w=0.75}{nw}" 
+        extend  " Especially with you sneaking around all the time.{w=1}{nw}"
+        extend  " You dork."
+        n  "..."
+        n  "But..."
+        n  "Seriously,{w=0.2} [player]?"
+        n  "..."
 
         show natsuki 1fsldvlsbl at jn_center zorder JN_NATSUKI_ZORDER
         show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         play audio clothing_ruffle
         $ jnPause(3.5)
-        play audio kiss
-        $ jnPause(1.5)
         show natsuki 1fsldvlsbl at jn_center zorder JN_NATSUKI_ZORDER
         hide black with Dissolve(1.25)
 
-        n "...T-thank you."
-        extend " For being with me for Halloween, I mean."
-        n "I know I never got to really dress up,"
-        extend " or make tons of fancy decorations,"
-        extend " or go bobbing for apples or anything fancy like that."
-        n "But..."
-        extend " I-I guess I can settle for treating myself to you instead."
-        extend " So..."
-        n "...Yeah."
+        n  "...T-{w=0.2}thank you.{w=0.75}{nw}"
+        extend  " For being with me for Halloween,{w=0.2} I mean."
+        n  "I know I never got to really dress up,{w=0.75}{nw}"
+        extend  " or make tons of fancy decorations,{w=0.75}{nw}"
+        extend  " or go partying or anything exciting like that."
+        n  "But...{w=1.25}{nw}"
+        extend  " I-{w=0.2}I guess I can settle for treating myself to you instead.{w=1}{nw}"
+        extend  " So..."
+        n  "...Yeah."
         $ chosen_endearment = jn_utils.getRandomEndearment()
-        n "H-happy Halloween, [chosen_endearment]."
-        extend " Ahaha..."
-        n "..."
-        n "N-now, enough of all the lovey-dovey stuff."
-        extend " Jeez, [player]."
-        extend " Have you totally forgotten what today is meant to be for already or what?"
-        n "..."
-        n "No?"
-        n "Heh."
-        extend " Then you better start preparing yourself."
-        n "Being here with you might be a treat..."
-        n "...But you bet I've still got a ton of {i}tricks{/i} up my sleeve!"
-        extend " Ehehe."
+        n  "H-{w=0.2}happy Halloween,{w=0.2} [chosen_endearment].{w=0.75}{nw}"
+        extend  " Ahaha..."
+        n  "..."
+        n  "N-{w=0.2}now,{w=0.2} enough of all the lovey-dovey stuff.{w=0.75}{nw}"
+        extend  " Jeez,{w=0.2} [player]."
+        n  "Have you {i}totally{/i} forgotten what today is meant to be for already or what?"
+        n  "..."
+        n  "No?"
+        n  "Heh.{w=0.75}{nw}"
+        extend  " Then you better start preparing yourself."
+        n  "Being here with you might be a treat..."
+        $ jn_stickers.stickerWindowPeekUp(at_right=True)
+        n  "...But you bet I've still got a ton of {i}tricks{/i} up my sleeve!{w=0.75}{nw}"
+        extend  " Ehehe."
         $ chosen_tease = jn_utils.getRandomTeaseName()
-        n "Now let's get spooky already, you [chosen_tease]!"
+        n  "Now let's get spooky already,{w=0.2} you [chosen_tease]!"
 
     else:
-        n "Or..."
-        extend " at least it would be."
-        extend " If {i}some people{/i} didn't insist on taking it all way too far."
-        n "Ugh."
-        n "Like, don't get me wrong -"
-        extend " I'm always game for a good prank!"
-        extend " I'm not thin-skinned, obviously."
-        n "But what I can't {i}stand{/i} is when some people take it all {i}way{/i} over the top -"
-        extend " or they're just straight-up jerks about the whole thing."
-        n "Yeah."
-        extend " You know the type, [player]."
-        n "{i}Pranksters{/i},"
-        extend " my butt."
-        n "Seriously!"
-        n "I get that mischief night is a thing too."
-        extend " But what the hell kind of 'mischief' involves just pissing people off?!"
-        extend " Or going around everywhere and making a total ass out of yourself?"
-        n "Cut me a break."
-        n "And don't even get me {i}started{/i} on keeping everyone up all night with crappy music..."
-        n "...Or trashing a bunch of other people's stuff on purpose."
-        n "Ugh..."
-        n "Forget the eggs and toilet paper."
-        n "Just makes me wanna smack them right in their stupid faces."
-        extend " Who says that isn't just {i}my{/i} take on a 'prank'?"
-        n "Jerks."
-        n "..."
-        n "W-whatever."
-        extend " You know what, [player]?"
-        extend " Who even has the time to care about a bunch of idiots ruining things for themselves."
-        n "A-and besides."
-        extend " It's not like we have to worry about any of that here, at any rate."
-        n "So!"
-        n "I hope you prepared yourself, [player]."
-        n "'Cause if you haven't prepared plenty of treats today for yours truly..."
-        n "...Then you better get ready for some more grade-A tricks instead!"
-        extend " Ehehe."
+        n 3cslss "..."
+        n 4cslfl "Or...{w=1}{nw}"
+        extend 4cslsl " at least it would be.{w=0.75}{nw}"
+        extend 2fsrem " If {i}some people{/i} didn't insist on being complete idiots about it."
+        n 2fcsfl "Ugh."
+        n 2clrfl "Like,{w=0.2} don't get me wrong -{w=0.5}{nw}"
+        extend 4fcsaj " I'm always game for a good prank!{w=0.75}{nw}"
+        extend 4ccspo " I'm not thin-skinned,{w=0.2} obviously."
+        n 2fslan "But what I can't {i}stand{/i} is when some people take it all {i}way{/i} over the top!{w=0.75}{nw}"
+        extend 1fsqem " Or they're just straight-up jerks about the whole thing."
+        n 4fcsfl "Yeah.{w=0.75}{nw}"
+        extend 4fsgfl " You know the type,{w=0.2} [player]."
+        n 3ftrfl "{i}Pranksters{/i},{w=0.5}{nw}"
+        extend 3fsran " my butt."
+        n 4fnmgs "Seriously!"
+        n 4fllem "I get that mischief night is a thing too.{w=0.75}{nw}"
+        extend 2fcswr " But what the hell kind of 'mischief' involves just pissing people off?!{w=0.75}{nw}"
+        extend 2fnmfu " Or going around everywhere and making a total ass out of yourself?"
+        n 2fcsan "Cut me a break."
+        n 4csqan "And don't even get me {i}started{/i} on keeping everyone up all night with crappy music..."
+        n 3fsrem "...Or trashing a bunch of other people's stuff on purpose."
+        n 3fcsemesi "Ugh..."
+        n 4cllsl "Forget the eggs and toilet paper."
+        n 5fslsl "Just makes me wanna smack them right in their stupid faces.{w=0.75}{nw}"
+        extend 2fcsgs " Who says that isn't just {i}my{/i} take on a 'prank'?"
+        n 2fsrsl "Jerks."
+        n 1fcsflesi "..."
+        n 4ccsfl "W-{w=0.2}whatever.{w=0.75}{nw}"
+        extend 4cnmaj " You know what,{w=0.2} [player]?"
+        n 2flrfl "Who even has the time to care about a bunch of idiots ruining things for themselves?{w=0.75}{nw}"
+        extend 2fcspo " I can tell you I don't."
+        n 1ccsaj "A-{w=0.2}and besides.{w=0.75}{nw}"
+
+        if Natsuki.isLove(higher=True):
+            n 3cllssl "We both know {i}you{/i} aren't like that.{w=0.75}{nw}"
+            extend 5ccssslsbr " T-{w=0.2}that's all that matters."
+
+        elif Natsuki.isAffectionate(higher=True):
+            n 7cllsslsbr "I'm pretty sure {i}you{/i} aren't like that.{w=0.75}{nw}"
+            extend 3ccssslsbr " Even if you are a dork."
+
+        else:
+            n 7csqss "I kinda doubt {i}you're{/i} one of those people."
+
+        n 3clrss "And it's not like we have to worry about any of that here either,{w=0.2} at any rate."
+        n 4fcsaw "So!"
+        n 4fsqbg "I hope you prepared yourself,{w=0.2} [player]."
+        n 2ccsbg "'Cause if you haven't prepared plenty of treats today for yours truly..."
+        $ jn_stickers.stickerWindowPeekUp(at_right=True)
+        n 2fchgn "...Then you better get ready for some more grade-A tricks instead!{w=0.75}{nw}"
+        extend 1nchgn " Ehehe."
 
         if Natsuki.isLove(higher=True):
             $ chosen_tease = jn_utils.getRandomTeaseName()
-            n "Love you too," 
-            extend " you big [chosen_tease]~!"
+            n 2fwlbgl "Love you too,{w=0.5}{nw}" 
+            extend 2fchblleaf " you big [chosen_tease]~!"
 
         elif Natsuki.isAffectionate(higher=True):
             $ random_tease = random.choice(["dork", "dope"])
-            n "Now let's get spooky already, you [random_tease]!"
+            n 3fchbgl "Now let's get spooky already,{w=0.2} you [random_tease]!"
 
         else:
-            n "Now let's spook things up already!"
+            n 3fnmbg "Now let's spook things up already!"
 
     $ jn_events.getHoliday("holiday_halloween").complete()
-
     return
 
 label holiday_christmas_eve:

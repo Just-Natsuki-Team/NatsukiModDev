@@ -1891,11 +1891,6 @@ transform JN_TRANSFORM_FADE_OUT:
     alpha 1
     ease 0.5 alpha 0
 
-transform JN_NATSUKI_CLOSE_UP:
-    subpixel True
-    zoom 2
-    ypos -200
-
 # Vanilla resources from base DDLC
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
 define audio.t2 = "<loop 4.499>bgm/2.ogg"   #Sayori theme
@@ -1921,7 +1916,6 @@ define audio.button_mashing_c = "mod_assets/sfx/button_mashing_c.ogg"
 define audio.button_tap_a = "mod_assets/sfx/button_tap_a.ogg"
 define audio.button_tap_b = "mod_assets/sfx/button_tap_b.ogg"
 define audio.button_tap_c = "mod_assets/sfx/button_tap_c.ogg"
-define audio.camera_shutter = "mod_assets/sfx/camera_shutter.ogg"
 define audio.card_place = "mod_assets/sfx/card_place.ogg"
 define audio.card_shuffle = "mod_assets/sfx/card_shuffle.ogg"
 define audio.cassette_close = "mod_assets/sfx/cassette_close.ogg"
@@ -1966,14 +1960,16 @@ define audio.twitch_die = "mod_assets/sfx/twitch_die.ogg"
 define audio.twitch_you_lose = "mod_assets/sfx/twitch_you_lose.ogg"
 define audio.zipper = "mod_assets/sfx/zipper.ogg"
 
-# Glitch sound effects
+# Glitch/spooky sound effects
 define audio.glitch_a = "mod_assets/sfx/glitch_a.ogg"
 define audio.glitch_b = "mod_assets/sfx/glitch_b.ogg"
 define audio.glitch_c = "mod_assets/sfx/glitch_c.ogg"
 define audio.glitch_d = "mod_assets/sfx/glitch_d.ogg"
 define audio.glitch_e = "mod_assets/sfx/glitch_e.ogg"
 define audio.interference = "mod_assets/sfx/interference.ogg"
+define audio.ooo_creep = "mod_assets/sfx/ooo_creep.ogg"
 define audio.static = "mod_assets/sfx/glitch_static.ogg"
+define audio.thump = "mod_assets/sfx/thump.ogg"
 
 # Looped sound effects
 define audio.rain_muffled = "mod_assets/sfx/rain_muffled.ogg"
