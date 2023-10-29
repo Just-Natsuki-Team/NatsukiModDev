@@ -3634,21 +3634,21 @@ label holiday_halloween:
     n 3unmfl "No,{w=0.2} really!{w=0.75}{nw}"
     extend 3fcsbg " Think about it!"
     n 4fsqss "Not {i}only{/i} is it an excuse to break out my sewing kit and blow {i}everyone{/i} away with my needlework..."
-    n 1ccsss "But come on -{w=0.5}{nw}"
-    extend 2fchgn " what {i}other{/i} holidays give you the excuse to pig out on as much free candy as you can swipe,{w=0.2} huh?"
+    n 1ccsss "But come on.{w=0.75}{nw}"
+    extend 2fchgn " What {i}other{/i} holidays give you the excuse to pig out on as much free candy as you can swipe,{w=0.2} huh?"
     n 2fsqsm "..."
     n 1fcssm "Ehehe.{w=0.75}{nw}"
     extend 4fcsbg " Didn't think so,{w=0.2} [player].{w=1.25}{nw}"
     extend 3fchbg " Halloween is the best!"
 
     # Not ideal conditioning; holidays should really have a shown_count - see: #813
-    if Natsuki.isLove(higher=True) and "holiday_halloween" in store.persistent._seen_ever:
+    if Natsuki.isLove(higher=True) and not "holiday_halloween" in persistent._seen_ever:
         n 3clrbo "..."
         n 4clrpu "Or...{w=1}{nw}"
         extend 4klrsl " I guess it would be."
         n 5csrslsbl "Not like I'd be the kind to know,{w=0.2} a-{w=0.2}after all."
 
-        if "holiday_christmas_day" in store.persistent._seen_ever:
+        if "holiday_christmas_day" in persistent._seen_ever:
             n 5cnmsl "..."
             n 2knmfl "What?{w=0.75}{nw}"
             extend 2kllfll " Don't you remember,{w=0.2} [player]?{w=0.75}{nw}"
@@ -3672,8 +3672,8 @@ label holiday_halloween:
         n 4cslfl "And the excuses.{w=0.75}{nw}"
         extend 1fcsan " Every year without fail."
         n 3flrwr "'It's not what we do here,{w=0.2} Natsuki!'{w=0.75}{nw}"
-        extend 3fllem "'It's just not right,{w=0.2} Natsuki!{w=0.2} What would our neighbors think?'{w=0.75}{nw}"
-        extend 3fslan "As if almost everyone on our street {i}didn't{/i} have kids,{w=0.2} or put decorations up!"
+        extend 3fllem " 'It's just not right,{w=0.2} Natsuki!{w=0.2} What would our neighbors think?'"
+        n 3fslan "As if almost everyone on our street {i}didn't{/i} have kids,{w=0.2} or put decorations up!"
         n 4fcsan "Cut me a break."
         n 4fsrsl "Heh.{w=0.75}{nw}"
         extend 2fnmsl " We all knew what the {i}real{/i} reasons were,{w=0.2} [player]."
@@ -3682,8 +3682,8 @@ label holiday_halloween:
         n 1ccsfllesi "..."
         n 4cnmfll "...Look.{w=0.75}{nw}"
         extend 4ccsajl " I'm not just annoyed about missing out literally every year."
-        n 2cllsll "I don't care about some tacky outfits or a bunch of junk from the convenience store.{w=0.75}{nw}"
-        extend 2cslsll " Not like that stuff just disappears or something the rest of the year,{w=0.2} obviously."
+        n 2cllsll "I don't care about some tacky outfits or a bunch of junk from the convenience store."
+        n 2cslsll "It's not like that stuff just disappears or something the rest of the year."
         n 2cnmpul "I don't care about any of that."
         n 1clrgsl "I..."
         n 5clrunl "..."
@@ -3703,11 +3703,11 @@ label holiday_halloween:
         n 4fcseml "It was all just..."
         n 4cslbol "..."
         n 1kslbol "...So dumb."
-        n 3ccseml "A-{w=0.2}and I know there's nothing stopping me doing what I want now.{w=0.75}{nw}"
-        extend 3clrbol " As you can see."
+        n 3ccseml "A-{w=0.2}and I know there's nothing stopping me doing what I want now.\n{w=0.75}{nw}"
+        extend 3clrbol "As you can see."
         n 4klrfll "But that doesn't change all the wasted time.{w=1.25}{nw}"
         extend 5kdlbol " All the disappointment."
-        extend 1kslbol " And I don't think it ever will."
+        n 1kslbol "And I don't think it ever will."
         n 2kslsslsbr "...E-{w=0.2}even if getting to spend Halloween with you instead {i}is{/i} pretty awesome."
         n 2kslsllsbr "..."
         n 4knmpulsbr "...I wrote you something too,{w=0.5}{nw}"
@@ -3716,13 +3716,14 @@ label holiday_halloween:
 
         $ halloween_poem = jn_poems.getPoem("jn_natsuki_hallows_end")
         play audio page_turn
+        $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_poem_on_desk"))
         show prop poetry_attempt zorder JN_PROP_ZORDER at JN_TRANSFORM_FADE_IN
         $ jnPause(2)
 
         n 5csqcalsbr "..."
         n 4fnmfllsbl "H-{w=0.2}hey!{w=0.75}{nw}"
         extend 4fllfllsbl " Come on."
-        n 2cdlbolsbl " Don't give me that look,{w=0.2} [player].{w=0.75}{nw}"
+        n 2cdlbolsbl "Don't give me that look,{w=0.2} [player].{w=0.75}{nw}"
         extend 2ccsemlsbl " Just..."
         n 1ksrpulsbl "..."
         n 1ccsfll "...Just take it already.{w=1}{nw}"
@@ -3730,6 +3731,7 @@ label holiday_halloween:
         n 4cdrcal "..."
 
         show natsuki 4kdrcal
+        $ jnPause(0.5)
         call show_poem(halloween_poem)
         show natsuki 1cnmcal
 
@@ -3746,6 +3748,7 @@ label holiday_halloween:
 
         show natsuki 4ccsunlsbl at jn_center zorder JN_NATSUKI_ZORDER
         show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+        $ jnPause(2)
         play audio clothing_ruffle
         $ jnPause(3.5)
         show natsuki 5cslbolsbr at jn_center zorder JN_NATSUKI_ZORDER
@@ -3757,11 +3760,11 @@ label holiday_halloween:
         extend 4cdrfll " or make tons of fancy decorations,{w=0.75}{nw}"
         extend 1ksrsll " or go partying or anything exciting like that."
         n 1nlrpul "But...{w=1.25}{nw}"
-        extend 5nsrssfsbl " I-{w=0.2}I guess I can settle for treating myself to you instead.{w=1}{nw}"
+        extend 5nsrssfsbl " I-{w=0.2}I guess I can settle for treating myself to you instead."
         n 5nsrajlsbl "So..."
         n 1csrfslsbl "...Yeah."
         $ chosen_endearment = jn_utils.getRandomEndearment()
-        n 4cchsmlsbl "H-{w=0.2}happy Halloween,{w=0.2} [chosen_endearment].{w=0.75}{nw}"
+        n 4cchsmlsbl "H-{w=0.2}happy Halloween,{w=0.2} [chosen_endearment]."
         n 4cslsmlsbl "..."
         n 3ccsfllsbr "N-{w=0.2}now,{w=0.2} enough of all the lovey-dovey stuff.{w=0.75}{nw}"
         extend 3cllfllsbr " Jeez,{w=0.2} [player]."
@@ -3769,11 +3772,18 @@ label holiday_halloween:
         n 7fsqsm "..."
         n 7fsqss "No?"
         n 3fcsss "Heh.{w=0.75}{nw}"
-        extend 3ccsbg " Then you better start preparing,{w=0.2} you know."
+        extend 3ccsbg " Then you better start preparing,{w=0.2} [player]."
         n 4cslbgsbr "Being here with you might be a treat..."
         $ jn_stickers.stickerWindowPeekUp(at_right=True)
         n 4fsqbs "...But you bet I've still got a ton of {i}tricks{/i} up my sleeve!{w=0.75}{nw}"
         extend 2nchgn " Ehehe."
+
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+        $ jnPause(1)
+        play audio drawer
+        $ jnPause(2)
+        hide black with Dissolve(0.5)
+
         $ chosen_tease = jn_utils.getRandomTeaseName()
         n 2uchgnl "Now let's get spooky already,{w=0.2} you [chosen_tease]!"
 
@@ -3793,8 +3803,8 @@ label holiday_halloween:
         n 3ftrfl "{i}Pranksters{/i},{w=0.5}{nw}"
         extend 3fsran " my butt."
         n 4fnmgs "Seriously!"
-        n 4fllem "I get that mischief night is a thing too.{w=0.75}{nw}"
-        extend 2fcswr " But what the hell kind of 'mischief' involves just pissing people off?!{w=0.75}{nw}"
+        n 4fllem "I get that mischief night is a thing too."
+        n 2fcswr "But what the hell kind of 'mischief' involves just pissing people off?!{w=0.75}{nw}"
         extend 2fnmfu " Or going around everywhere and making a total ass out of yourself?"
         n 2fcsan "Cut me a break."
         n 4csqan "And don't even get me {i}started{/i} on keeping everyone up all night with crappy music..."
@@ -3833,7 +3843,7 @@ label holiday_halloween:
         if Natsuki.isLove(higher=True):
             $ chosen_tease = jn_utils.getRandomTeaseName()
             n 2fwlbgl "Love you too,{w=0.5}{nw}" 
-            extend 2fchblleaf " you big [chosen_tease]~!"
+            extend 2fchblleaf " you big [chosen_tease]!"
 
         elif Natsuki.isAffectionate(higher=True):
             $ random_tease = random.choice(["dork", "dope"])
