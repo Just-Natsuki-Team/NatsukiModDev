@@ -1143,7 +1143,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_affectionate_enamored_in_for_some_fun",
+            label="greeting_affectionate_enamored_know_what_time",
             unlocked=True,
             affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED),
             additional_properties={
