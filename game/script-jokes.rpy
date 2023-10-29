@@ -1357,7 +1357,7 @@ label joke_entomology_programming:
 label joke_booked_it:
     n 1fcsbg "Alright!{w=0.75}{nw}"
     extend 1fnmbg " Let's see if you can paper-{w=0.75}{nw}"
-    extend 1fsgss " {i}back{/i}{w=0.5}{nw}"
+    extend 1fsgss "{i}back{/i}{w=0.5}{nw}"
     extend 1fcssmesm " this one,{w=0.2} [player]."
     n 1fcsaj "So!"
     n 1unmfl "Did you hear about that famous author the police pulled over the other day?"

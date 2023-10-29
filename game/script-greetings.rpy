@@ -1800,7 +1800,7 @@ label greeting_broken_minus_trash_already:
     n 2fslslltsb "..."
     n 2fsqunltsb "...?"
     n 4fcsslltsa "Heh.{w=0.75}{nw}"
-    extend 1fcseml " As if I didn't feel like trash enough already."
+    extend 1fcsemltsa " As if I didn't feel like trash enough already."
     n 4fsqfultsb "Now I'm {i}sat{/i} in front of it again too."
 
     return
