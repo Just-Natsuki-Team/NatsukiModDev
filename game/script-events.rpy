@@ -3476,19 +3476,25 @@ label holiday_halloween:
     $ jn_events.getHoliday("holiday_halloween").run(suppress_visuals=True)
     hide black
 
-    $ jnPause(7)
-    show tense at JN_PULSE zorder JN_GLITCH_ZORDER
-    play audio thump
     $ jnPause(3)
     show tense at JN_PULSE zorder JN_GLITCH_ZORDER
     play audio thump
-    $ jnPause(3)
+    $ jnPause(1.5)
+    hide tense
+    $ jnPause(1)
     show tense at JN_PULSE zorder JN_GLITCH_ZORDER
     play audio thump
-    $ jnPause(5)
+    $ jnPause(1.5)
+    hide tense
+    $ jnPause(1)
+    show tense at JN_PULSE zorder JN_GLITCH_ZORDER
+    play audio thump
+    $ jnPause(1.5)
+    hide tense
+    $ jnPause(1)
 
     python:
-        for i in range(1, 10):
+        for i in range(1, 7):
             renpy.show(
                 name="tense",
                 at_list=[JN_PULSE],
@@ -3499,10 +3505,10 @@ label holiday_halloween:
     play audio static
     show glitch_garbled_b zorder JN_GLITCH_ZORDER with vpunch
     hide glitch_garbled_b
-    $ jnPause(2)
+    $ jnPause(1)
 
     python:
-        for i in range(1, 6):
+        for i in range(1, 5):
             renpy.show(
                 name="tense",
                 at_list=[JN_PULSE],
@@ -3510,14 +3516,18 @@ label holiday_halloween:
             renpy.play(filename=audio.thump, channel="audio")
             jnPause(1)
 
+            if (random.randint(1,5) == 1):
+                renpy.play(filename=audio.glitch_d, channel="audio")
+                jnPause(0.25)
+
     play audio static
     show glitch_garbled_a zorder JN_GLITCH_ZORDER with hpunch
     hide glitch_garbled_a
-    $ jnPause(0.75)
+    $ jnPause(0.5)
     play audio static
     show glitch_garbled_c zorder JN_GLITCH_ZORDER with vpunch
     hide glitch_garbled_c
-    $ jnPause(0.5)
+    $ jnPause(0.3)
 
     python:
         for i in range(1, 3):
@@ -3528,20 +3538,31 @@ label holiday_halloween:
             renpy.play(filename=audio.thump, channel="audio")
             jnPause(0.75)
 
+            if (random.randint(1,4) == 1):
+                renpy.play(filename=audio.glitch_d, channel="audio")
+                jnPause(0.25)
+                renpy.show(
+                    name="glitch_garbled_red",
+                    at_list=[JN_PULSE],
+                    zorder=JN_GLITCH_ZORDER)
+                jnPause(0.15)
+                renpy.hide("glitch_garbled_red")
+
     play audio static
     show glitch_garbled_b zorder JN_GLITCH_ZORDER with hpunch
     hide glitch_garbled_b
-    $ jnPause(0.35)
+    $ jnPause(0.25)
 
     play audio static
     show glitch_garbled_c zorder JN_GLITCH_ZORDER with vpunch
     hide glitch_garbled_c
-    $ jnPause(0.5)
+    $ jnPause(0.15)
+    play audio glitch_d
 
     show black zorder JN_BLACK_ZORDER
     $ jnPause(0.25)
     play audio ooo_creep
-    $ jnPause(3)
+    $ jnPause(6)
     hide desk
     hide chair
     $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_SUNNY)
@@ -3551,39 +3572,39 @@ label holiday_halloween:
     $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_renpy_for_dummies_closed"))
     $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_pumpkins"))
     show deco o31 zorder JN_DECO_ZORDER
-    show natsuki 4fchgn at jn_center zorder JN_NATSUKI_ZORDER 
+    show natsuki 4fchgn at jn_center zorder JN_NATSUKI_ZORDER
+    $ jnPause(0.15)
     play audio switch_flip
     hide black
-    $ jnPause(1.5)
+    $ jnPause(1)
 
     # Have to proc manually here due to fake reveal for the prank
     $ renpy.play(filename="mod_assets/bgm/vacation.ogg", channel="music")
     $ renpy.show_screen("hkb_overlay")
     $ jn_globals.force_quit_enabled = True
 
-    $ player_capitalized = player.capitalize()
+    $ player_upper = player.upper()
     n 4fchbg "HAPPY HALLOWEEN,{w=0.75}{nw}" 
-    extend 4fchbs " [player_capitalized]!"
-
-    n "Early end"
-    jump ch30_loop
-
+    extend 4fchbs " [player_upper]!"
     n 4fchsm "..."
     n 4fsqsm "..."
     n 2fsqss "Well?{w=0.75}{nw}"
     extend 2fcsgs " Don't just sit there!{w=0.75}{nw}"
-    extend 1fchgn " Say something already!"
+    extend 4fchgn " Say something already!"
     n 3fnmbs "Did I get you?{w=0.2} Did I get you?{w=0.75}{nw}"
     extend 3fcsbs " Don't lie!{w=1}{nw}"
-    extend 7fsqbg " I {b}totally{/b} got you this time."
+    extend 7fsqbg " I {i}totally{/i} got you this time!"
     n 3ccsbg "Jeez...{w=1}{nw}"
-    extend 7fcsbs " I {i}knew{/i} this dumb old book would come in handy someday!"
+    extend 7fcsbs " I {i}knew{/i} this dumb old book would come in handy someday!\n{w=0.75}{nw}"
+    extend 7fsqss "Not bad for a bunch of reused scripts,{w=0.2} huh?"
     n 3unmbg "And hey -{w=0.5}{nw}"
-    n 3tlrbg "I didn't even blow the classroom up or anything.{w=0.75}{nw}"
-    extend 4fchbg " I'd call that a complete success!{w=0.75}{nw}"
+    extend 3tlrbg " I didn't even blow the classroom up or anything.{w=0.75}{nw}"
+    extend 4fchbg " I'd call that a complete success!"
     n 2fchsm "Ahaha."
     n 2cllss "Well,{w=0.2} anyway.{w=0.75}{nw}"
-    extend 4csqbg " Like what you see?{w=0.75}{nw}"
+    extend 2ccsbg " I think I'm about done screwing around now."
+    n 4ullaj "So -{w=0.5}{nw}"
+    extend 4csqbg " you like what I've done with the place?{w=0.75}{nw}"
     extend 3ccspo " You better appreciate all the effort I put into all this,{w=0.2} [player]."
     n 3fnmbg "Yep!{w=0.75}{nw}"
     extend 7fcsbg " As you can {i}clearly{/i} see -{w=0.5}{nw}"
@@ -3592,7 +3613,7 @@ label holiday_halloween:
     extend 7ccsbg " Check!{w=1}{nw}"
     extend 6ckrsm " Fabulously made cosplay?{w=0.75}{nw}"
     extend 6fcsbs " Check again!"
-    n 3fnmbg "Getting the best jump of the year on [player]?"
+    n 3fnmbg "Getting easily the best jump of the year on [player]?"
     n 7fsgsm "..."
     n 7fcssm "Ehehe.{w=0.75}{nw}"
     extend 3fchgnelg " You bet!"

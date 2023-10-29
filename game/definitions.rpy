@@ -1891,18 +1891,19 @@ transform JN_TRANSFORM_FADE_OUT:
     alpha 1
     ease 0.5 alpha 0
 
-transform JN_PULSE:
+transform JN_PULSE(time=1, wait=1.5):
     truecenter
+    alpha 1
     parallel:
         0.144
-        zoom 1.00 + 0.07 * 1
-        easein 0.250 zoom 1.00 + 0.04 * 1
-        easeout 0.269 zoom 1.00 + 0.07 * 1
+        zoom 1.00 + 0.07 * time
+        easein 0.250 zoom 1.00 + 0.04 * time
+        easeout 0.269 zoom 1.00 + 0.07 * time
         zoom 1.00
-        1.479
+        wait
     parallel:
-        easeout_bounce 0.3 xalign 0.5 + 0.02 * 1
-        easeout_bounce 0.3 xalign 0.5 - 0.02 * 1
+        easeout_bounce 0.3 xalign 0.5 + 0.02 * time
+        easeout_bounce 0.3 xalign 0.5 - 0.02 * time
     
     ease 0.15 alpha 0
 
