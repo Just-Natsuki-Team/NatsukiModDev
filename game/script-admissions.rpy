@@ -1313,6 +1313,8 @@ label admission_tired:
             n 1fchbleme "Don't let the bed bugs bite~!"
 
         $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_TIRED
+        $ persistent._jn_player_admission_forced_leave_date = datetime.datetime.now()
+        
         return { "quit": None }
 
     elif jn_admissions.last_admission_type == jn_admissions.TYPE_SICK:
@@ -1339,6 +1341,7 @@ label admission_tired:
         # Add pending apology
         $ Natsuki.addApology(jn_apologies.ApologyTypes.unhealthy)
         $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_SICK
+        $ persistent._jn_player_admission_forced_leave_date = datetime.datetime.now()
 
         return { "quit": None }
 
@@ -1383,6 +1386,7 @@ label admission_tired:
         # Add pending apology
         $ Natsuki.addApology(jn_apologies.ApologyTypes.unhealthy)
         $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_TIRED
+        $ persistent._jn_player_admission_forced_leave_date = datetime.datetime.now()
 
         return { "quit": None }
 
