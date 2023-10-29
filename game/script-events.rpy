@@ -3642,7 +3642,7 @@ label holiday_halloween:
     extend 2fchgn " What {i}other{/i} holidays give you the excuse to pig out on as much free candy as you can swipe,{w=0.2} huh?"
     n 2fsqsm "..."
     n 1fcssm "Ehehe.{w=0.75}{nw}"
-    extend 4fcsbg " Didn't think so,{w=0.2} [player].{w=1.25}{nw}"
+    extend 4fcsbg " That's what I thought,{w=0.2} [player].{w=1.25}{nw}"
     extend 3fchbg " Halloween is the best!"
 
     # Not ideal conditioning; holidays should really have a shown_count - see: #813. Replace this check and delete persistent flag once this is done!
@@ -3720,6 +3720,7 @@ label holiday_halloween:
         n 5clrcalsbr "..."
 
         $ halloween_poem = jn_poems.getPoem("jn_natsuki_hallows_end")
+        $ halloween_poem.unlock()
         play audio page_turn
         $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_poem_on_desk"))
         show prop poetry_attempt zorder JN_PROP_ZORDER at JN_TRANSFORM_FADE_IN
