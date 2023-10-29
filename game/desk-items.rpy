@@ -20,6 +20,14 @@ init -55 python in jn_desk_items:
         centre = 2
         right = 3
 
+    class JNDeskItemTypes(Enum):
+        """
+        The different types that a desk item can be.
+        Determines handling for things like the event deco cleanup topic.
+        """
+        normal = 1
+        holiday = 2
+
     class JNDeskItem:
         """
         Describes a standalone object that Natsuki can have on her desk.
@@ -29,6 +37,7 @@ init -55 python in jn_desk_items:
         def __init__(
             self,
             reference_name,
+            item_type,
             desk_slot,
             unlocked,
             image_path
@@ -38,11 +47,13 @@ init -55 python in jn_desk_items:
 
             IN:
                 - reference_name - Str name used to uniquely identify this desk item and refer to it internally
+                - item_type - JNDeskItemTypes type this desk item qualifies as
                 - desk_slot - JNDeskSlots slot this desk item will take up when displayed
                 - unlocked - Bool unlock state of this desk item
                 - image_path - Path of the image to be shown when this desk item is displayed
             """
             self.reference_name = reference_name
+            self.item_type = item_type
             self.desk_slot = desk_slot
             self.unlocked = unlocked
             self.image_path = image_path
@@ -139,6 +150,7 @@ init -55 python in jn_desk_items:
 
     __registerDeskItem(JNDeskItem(
         reference_name="jn_laptop",
+        item_type=JNDeskItemTypes.normal,
         desk_slot=JNDeskSlots.centre,
         unlocked=True,
         image_path="mod_assets/props/laptop.png"
@@ -146,6 +158,7 @@ init -55 python in jn_desk_items:
 
     __registerDeskItem(JNDeskItem(
         reference_name="jn_joke_book_held",
+        item_type=JNDeskItemTypes.normal,
         desk_slot=JNDeskSlots.centre,
         unlocked=True,
         image_path="mod_assets/props/joke_book_held.png"
@@ -153,6 +166,7 @@ init -55 python in jn_desk_items:
 
     __registerDeskItem(JNDeskItem(
         reference_name="jn_hammie",
+        item_type=JNDeskItemTypes.normal,
         desk_slot=JNDeskSlots.left,
         unlocked=False,
         image_path="mod_assets/props/plush/hammie/hammie_fixed.png" if store.persistent._jn_hammie_fixed else "mod_assets/props/plush/hammie/hammie_damaged.png"
@@ -160,6 +174,7 @@ init -55 python in jn_desk_items:
 
     __registerDeskItem(JNDeskItem(
         reference_name="jn_card_pack",
+        item_type=JNDeskItemTypes.normal,
         desk_slot=JNDeskSlots.right,
         unlocked=False,
         image_path="mod_assets/props/card_pack.png"
@@ -167,6 +182,7 @@ init -55 python in jn_desk_items:
 
     __registerDeskItem(JNDeskItem(
         reference_name="jn_sanjo",
+        item_type=JNDeskItemTypes.normal,
         desk_slot=JNDeskSlots.left,
         unlocked=False,
         image_path="mod_assets/props/plants/sanjo/sanjo_bloom.png" if store.persistent._jn_sanjo_bloom else "mod_assets/props/plants/sanjo/sanjo.png"
@@ -174,6 +190,7 @@ init -55 python in jn_desk_items:
 
     __registerDeskItem(JNDeskItem(
         reference_name="jn_poem_on_desk",
+        item_type=JNDeskItemTypes.normal,
         desk_slot=JNDeskSlots.centre,
         unlocked=True,
         image_path="mod_assets/props/poem_on_desk.png"
@@ -181,6 +198,7 @@ init -55 python in jn_desk_items:
 
     __registerDeskItem(JNDeskItem(
         reference_name="jn_plant_care_book_held",
+        item_type=JNDeskItemTypes.normal,
         desk_slot=JNDeskSlots.centre,
         unlocked=True,
         image_path="mod_assets/props/plant_care_book_held.png"
@@ -188,6 +206,7 @@ init -55 python in jn_desk_items:
 
     __registerDeskItem(JNDeskItem(
         reference_name="jn_parfait_manga_held",
+        item_type=JNDeskItemTypes.normal,
         desk_slot=JNDeskSlots.centre,
         unlocked=False,
         image_path="mod_assets/props/parfait_manga_held.png"
@@ -195,6 +214,7 @@ init -55 python in jn_desk_items:
 
     __registerDeskItem(JNDeskItem(
         reference_name="jn_parfait_manga_closed",
+        item_type=JNDeskItemTypes.normal,
         desk_slot=JNDeskSlots.right,
         unlocked=False,
         image_path="mod_assets/props/parfait_manga_closed.png"
@@ -202,6 +222,7 @@ init -55 python in jn_desk_items:
 
     __registerDeskItem(JNDeskItem(
         reference_name="jn_house_of_cards",
+        item_type=JNDeskItemTypes.normal,
         desk_slot=JNDeskSlots.centre,
         unlocked=True,
         image_path="mod_assets/props/cards/house_of_cards.png"
@@ -209,7 +230,24 @@ init -55 python in jn_desk_items:
 
     __registerDeskItem(JNDeskItem(
         reference_name="jn_card_pile",
+        item_type=JNDeskItemTypes.normal,
         desk_slot=JNDeskSlots.centre,
         unlocked=True,
         image_path="mod_assets/props/cards/card_pile.png"
+    ))
+
+    __registerDeskItem(JNDeskItem(
+        reference_name="jn_renpy_for_dummies_closed",
+        item_type=JNDeskItemTypes.normal,
+        desk_slot=JNDeskSlots.left,
+        unlocked=False,
+        image_path="mod_assets/props/renpy_for_dummies_closed.png"
+    ))
+
+    __registerDeskItem(JNDeskItem(
+        reference_name="jn_pumpkins",
+        item_type=JNDeskItemTypes.holiday,
+        desk_slot=JNDeskSlots.right,
+        unlocked=False,
+        image_path="mod_assets/props/pumpkins.png"
     ))

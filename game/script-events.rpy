@@ -5,6 +5,7 @@ default persistent._jn_holiday_deco_list_on_quit = []
 default persistent._jn_event_completed_count = 0
 
 default persistent._jn_player_celebrates_christmas = None
+default persistent._jn_player_love_halloween_seen = None
 
 # Transforms for overlays
 transform jn_glasses_pre_slide:
@@ -176,6 +177,7 @@ image deco wall_stocking day = "mod_assets/deco/wall_stocking_day.png"
 image deco wall_stocking night = "mod_assets/deco/wall_stocking_night.png"
 image deco d24 = "mod_assets/deco/d24.png"
 image deco d25 = "mod_assets/deco/d25.png"
+image deco o31 = "mod_assets/deco/o31.png"
 
 # Overlays are displayed over the top of Natsuki, in front of any decorations but behind any props
 image overlay slipping_glasses = "mod_assets/overlays/slipping_glasses.png"
@@ -401,19 +403,24 @@ init python in jn_events:
 
             return True
 
-        def run(self):
+        def run(self, suppress_visuals=False):
             """
             Sets up all visuals for this holiday, before revealing everything to the player.
             Any props or decorations left over from the previous holiday are tidied up before presentation.
+
+            IN:
+                - suppress_visuals - If True, prevents any props or deco from being displayed automatically
             """
             renpy.hide("prop")
             renpy.hide("deco")
 
-            for prop in self.prop_list:
-                renpy.show(name="prop {0}".format(prop), zorder=store.JN_PROP_ZORDER)
+            if not suppress_visuals:
+                for prop in self.prop_list:
+                    renpy.show(name="prop {0}".format(prop), zorder=store.JN_PROP_ZORDER)
 
-            for deco in self.deco_list:
-                renpy.show(name="deco {0}".format(deco), zorder=store.JN_DECO_ZORDER)
+            if not suppress_visuals:
+                for deco in self.deco_list:
+                    renpy.show(name="deco {0}".format(deco), zorder=store.JN_DECO_ZORDER)
 
             kwargs = {
                 "natsuki_sprite_code": self.natsuki_sprite_code
@@ -421,8 +428,11 @@ init python in jn_events:
             if self.bgm:
                 kwargs.update({"bgm": self.bgm})
 
-            jn_globals.force_quit_enabled = True
-            displayVisuals(**kwargs)
+            if not suppress_visuals:
+                displayVisuals(**kwargs)
+
+            else:
+                jn_globals.force_quit_enabled = True
 
         def complete(self):
             """
@@ -431,6 +441,7 @@ init python in jn_events:
             We also mark the holiday type as completed for this year, so we can't cycle through all seasonal events in one year
             Lastly, set the persisted deco list so reloading the game without a day change shows the deco for this event.
             """
+            store.persistent._jn_event_completed_count += 1
             self.is_seen = True
             self.__save()
 
@@ -439,6 +450,9 @@ init python in jn_events:
 
             if self.deco_list:
                 store.persistent._jn_holiday_deco_list_on_quit = self.deco_list
+
+            store.Natsuki.resetLastTopicCall()
+            store.Natsuki.resetLastIdleCall()
 
         def isCompleted(self):
             """
@@ -607,7 +621,6 @@ init python in jn_events:
             - natsuki_sprite_code - The sprite code to show Natsuki displaying before dialogue
             - music_file_path - The str file path of the music to play upon revealing Natsuki; defaults to standard bgm
         """
-        store.persistent._jn_event_completed_count += 1
         renpy.show("natsuki {0}".format(natsuki_sprite_code), at_list=[store.jn_center], zorder=store.JN_NATSUKI_ZORDER)
         store.jnPause(0.1)
         renpy.hide("black")
@@ -673,6 +686,16 @@ init python in jn_events:
         holiday_type=JNHolidayTypes.easter,
         affinity_range=(jn_affinity.HAPPY, None),
         natsuki_sprite_code="1fsrunlsbr",
+        priority=10
+    ))
+
+    # Halloween
+    __registerHoliday(JNHoliday(
+        label="holiday_halloween",
+        holiday_type=JNHolidayTypes.halloween,
+        affinity_range=(jn_affinity.HAPPY, None),
+        natsuki_sprite_code="1fsrunlsbr",
+        deco_list=["o31"],
         priority=10
     ))
 
@@ -3444,10 +3467,399 @@ label holiday_easter:
     return
 
 label holiday_halloween:
-    #TODO: writing
-    $ jn_events.getHoliday("holiday_halloween").run()
-    $ jn_events.getHoliday("holiday_halloween").complete()
+    if preferences.get_volume("music") < 0.25:
+        $ preferences.set_volume("music", 0.75)
 
+    if preferences.get_volume("sfx") < 0.25:
+        $ preferences.set_volume("sfx", 0.75)
+
+    $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_GLITCH)
+    hide natsuki
+    show chair zorder JN_NATSUKI_ZORDER
+    show desk zorder JN_NATSUKI_ZORDER
+    $ jn_events.getHoliday("holiday_halloween").run(suppress_visuals=True)
+    hide black
+
+    $ jnPause(3)
+    show tense at JN_PULSE zorder JN_GLITCH_ZORDER
+    play audio thump
+    $ jnPause(1.5)
+    hide tense
+    $ jnPause(1)
+    show tense at JN_PULSE zorder JN_GLITCH_ZORDER
+    play audio thump
+    $ jnPause(1.5)
+    hide tense
+    $ jnPause(1)
+    show tense at JN_PULSE zorder JN_GLITCH_ZORDER
+    play audio thump
+    $ jnPause(1.5)
+    hide tense
+    $ jnPause(1)
+
+    python:
+        for i in range(1, 7):
+            renpy.show(
+                name="tense",
+                at_list=[JN_PULSE],
+                zorder=JN_GLITCH_ZORDER)
+            renpy.play(filename=audio.thump, channel="audio")
+            jnPause(1.5)
+
+    play audio static
+    show glitch_garbled_b zorder JN_GLITCH_ZORDER with vpunch
+    hide glitch_garbled_b
+    $ jnPause(1)
+
+    python:
+        for i in range(1, 5):
+            renpy.show(
+                name="tense",
+                at_list=[JN_PULSE],
+                zorder=JN_GLITCH_ZORDER)
+            renpy.play(filename=audio.thump, channel="audio")
+            jnPause(1)
+
+            if (random.randint(1,5) == 1):
+                renpy.play(filename=audio.glitch_d, channel="audio")
+                jnPause(0.25)
+
+    play audio static
+    show glitch_garbled_a zorder JN_GLITCH_ZORDER with hpunch
+    hide glitch_garbled_a
+    $ jnPause(0.5)
+    play audio static
+    show glitch_garbled_c zorder JN_GLITCH_ZORDER with vpunch
+    hide glitch_garbled_c
+    $ jnPause(0.3)
+
+    python:
+        for i in range(1, 3):
+            renpy.show(
+                name="tense",
+                at_list=[JN_PULSE],
+                zorder=JN_GLITCH_ZORDER)
+            renpy.play(filename=audio.thump, channel="audio")
+            jnPause(0.75)
+
+            if (random.randint(1,4) == 1):
+                renpy.play(filename=audio.glitch_d, channel="audio")
+                jnPause(0.25)
+                renpy.show(
+                    name="glitch_garbled_red",
+                    at_list=[JN_PULSE],
+                    zorder=JN_GLITCH_ZORDER)
+                jnPause(0.15)
+                renpy.hide("glitch_garbled_red")
+
+    play audio static
+    show glitch_garbled_b zorder JN_GLITCH_ZORDER with hpunch
+    hide glitch_garbled_b
+    $ jnPause(0.25)
+
+    play audio static
+    show glitch_garbled_c zorder JN_GLITCH_ZORDER with vpunch
+    hide glitch_garbled_c
+    $ jnPause(0.15)
+    play audio glitch_d
+
+    show black zorder JN_BLACK_ZORDER
+    $ jnPause(0.25)
+    play audio ooo_creep
+    $ jnPause(6)
+    hide desk
+    hide chair
+    $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_SUNNY)
+    $ magical_girl_cosplay = jn_outfits.getOutfit("jn_magical_girl_cosplay")
+    $ magical_girl_cosplay.unlock()
+    $ Natsuki.setOutfit(outfit=magical_girl_cosplay, persist=False)
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_renpy_for_dummies_closed"))
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_pumpkins"))
+    show deco o31 zorder JN_DECO_ZORDER
+    show natsuki 4fchgn at jn_center zorder JN_NATSUKI_ZORDER
+    $ jnPause(0.15)
+    play audio switch_flip
+    hide black
+    $ jnPause(1)
+
+    # Have to proc manually here due to fake reveal for the prank
+    $ renpy.play(filename="mod_assets/bgm/vacation.ogg", channel="music")
+    $ renpy.show_screen("hkb_overlay")
+    $ jn_globals.force_quit_enabled = True
+
+    $ player_upper = player.upper()
+    n 4fchbg "HAPPY HALLOWEEN,{w=0.75}{nw}" 
+    extend 4fchbs " [player_upper]!"
+    n 4fchsm "..."
+    n 4fsqsm "..."
+    n 2fsqss "Well?{w=0.75}{nw}"
+    extend 2fcsgs " Don't just sit there!{w=0.75}{nw}"
+    extend 4fchgn " Say something already!"
+    n 3fnmbs "Did I get you?{w=0.2} Did I get you?{w=0.75}{nw}"
+    extend 3fcsbs " Don't lie!{w=1}{nw}"
+    extend 7fsqbg " I {i}totally{/i} got you this time!"
+    n 3ccsbg "Jeez...{w=1}{nw}"
+    extend 7fcsbs " I {i}knew{/i} this dumb old book would come in handy someday!\n{w=0.75}{nw}"
+    extend 7fsqss "Not bad for a bunch of reused scripts,{w=0.2} huh?"
+    n 3unmbg "And hey -{w=0.5}{nw}"
+    extend 3tlrbg " I didn't even blow the classroom up or anything.{w=0.75}{nw}"
+    extend 4fchbg " I'd call that a complete success!"
+    n 2fchsm "Ahaha."
+    n 2cllss "Well,{w=0.2} anyway.{w=0.75}{nw}"
+    extend 2ccsbg " I think I'm about done screwing around now."
+    n 4ullaj "So -{w=0.5}{nw}"
+    extend 4csqbg " you like what I've done with the place?{w=0.75}{nw}"
+    extend 3ccspo " You better appreciate all the effort I put into all this,{w=0.2} [player]."
+    n 3fnmbg "Yep!{w=0.75}{nw}"
+    extend 7fcsbg " As you can {i}clearly{/i} see -{w=0.5}{nw}"
+    extend 6fchbg " I pulled out {i}all{/i} the stops this time!"
+    n 7clrbg "Awesome hand-crafted decorations?{w=0.75}{nw}"
+    extend 7ccsbg " Check!{w=1}{nw}"
+    extend 6ckrsm " Fabulously made cosplay?{w=0.75}{nw}"
+    extend 6fcsbs " Check again!"
+    n 3fnmbg "Getting easily the best jump of the year on [player]?"
+    n 7fsgsm "..."
+    n 7fcssm "Ehehe.{w=0.75}{nw}"
+    extend 3fchgnelg " You bet!"
+
+    if get_topic("talk_thoughts_on_horror").shown_count > 0:
+        n 1cllbg "Man..."
+        n 2unmaj "You know,{w=0.2} I'm pretty sure I mentioned it before at some point.{w=0.75}{nw}"
+        extend 5csrbosbl " About how I don't really like horror and all."
+        n 4ccsfl "But let's be real here,{w=0.2} [player]."
+
+    else:
+        n 1cllbg "Man...{w=1}{nw}"
+        extend 2tlraj " I know I told you I wasn't the biggest fan of horror already,{w=0.75}{nw}" 
+        extend 4ccsfl " but let's be real."
+
+    n 4tnmaj "When it really comes to bang for your buck?{w=0.75}{nw}"
+    extend 7ccssmesm " You just can't beat a good old Halloween."
+    n 3unmfl "No,{w=0.2} really!{w=0.75}{nw}"
+    extend 3fcsbg " Think about it!"
+    n 4fsqss "Not {i}only{/i} is it an excuse to break out my sewing kit and blow {i}everyone{/i} away with my needlework..."
+    n 1ccsss "But come on.{w=0.75}{nw}"
+    extend 2fchgn " What {i}other{/i} holidays give you the excuse to pig out on as much free candy as you can swipe,{w=0.2} huh?"
+    n 2fsqsm "..."
+    n 1fcssm "Ehehe.{w=0.75}{nw}"
+    extend 4fcsbg " That's what I thought,{w=0.2} [player].{w=1.25}{nw}"
+    extend 3fchbg " Halloween is the best!"
+
+    # Not ideal conditioning; holidays should really have a shown_count - see: #813. Replace this check and delete persistent flag once this is done!
+    # Will need to migrate other holidays for shown counts too... FML.
+    if Natsuki.isLove(higher=True) and not persistent._jn_player_love_halloween_seen:
+        n 3clrbo "..."
+        n 4clrpu "Or...{w=1}{nw}"
+        extend 4klrsl " I guess it would be."
+        n 5csrslsbl "Not like I'd be the kind to know,{w=0.2} a-{w=0.2}after all."
+
+        if "holiday_christmas_day" in persistent._seen_ever:
+            n 5cnmsl "..."
+            n 2knmfl "What?{w=0.75}{nw}"
+            extend 2kllfll " Don't you remember,{w=0.2} [player]?{w=0.75}{nw}"
+            extend 1cllbol " It's like how I told you last Christmas."
+
+        else:
+            n 4fcsem "It's just that..."
+            n 2kslsl "..."
+            n 2kslfl "I-{w=0.2}it just sucks.{w=0.75}{nw}"
+            extend 4knmbol " You know?{w=1}{nw}"
+            extend 1klrsll " With my family and everything."
+        
+        n 1ksrsll "..."
+        n 4ccspu "We...{w=1}{nw}"
+        extend 4ccsfl " never...{w=1}{nw}"
+        extend 4cllfl " really celebrated much.{w=1.25}{nw}"
+        extend 2cdlsl " At all."
+        n 2clrfl "...And Halloween was no exception.{w=0.75}{nw}"
+        extend 2clrsl " Obviously.{w=0.75}{nw}"
+        extend 4knmfl " Why would it be?"
+        n 4cslfl "And the excuses.{w=0.75}{nw}"
+        extend 1fcsan " Every year without fail."
+        n 3flrwr "'It's not what we do here,{w=0.2} Natsuki!'{w=0.75}{nw}"
+        extend 3fllem " 'It's just not right,{w=0.2} Natsuki!{w=0.2} What would our neighbors think?'"
+        n 3fslan "As if almost everyone on our street {i}didn't{/i} have kids,{w=0.2} or put decorations up!"
+        n 4fcsan "Cut me a break."
+        n 4fsrsl "Heh.{w=0.75}{nw}"
+        extend 2fnmsl " We all knew what the {i}real{/i} reasons were,{w=0.2} [player]."
+        n 2flrbol "And they weren't just because it wasn't Japanese enough,{w=0.2} I'll tell you that much."
+        n 1ksrbol "..."
+        n 1ccsfllesi "..."
+        n 4cnmfll "...Look.{w=0.75}{nw}"
+        extend 4ccsajl " I'm not just annoyed about missing out literally every year."
+        n 2cllsll "I don't care about some tacky outfits or a bunch of junk from the convenience store."
+        n 2cslsll "It's not like that stuff just disappears or something the rest of the year."
+        n 2cnmpul "I don't care about any of that."
+        n 1clrgsl "I..."
+        n 5clrunl "..."
+        n 5fcsajl "I...{w=1}{nw}"
+        extend 1fcsfll " just...{w=1}{nw}"
+        extend 1fllfll " wanted to join in with what everyone else was doing.{w=1}{nw}"
+        extend 4knmwrl " W-{w=0.2}with what my {i}friends{/i} invited me to do!{w=0.75}{nw}"
+        extend 4clrunl " Is that {i}really{/i} such a crime?"
+        n 4fcswrl "A-{w=0.2}and besides,{w=0.2} what right did {i}they{/i} have to...!"
+        n 4fllunltsc "T-{w=0.2}to..."
+        n 1fcsunltsa "..."
+        n 1fcsanltsa "..."
+        n 2fcsflltsa "..."
+        n 2csrslltsb "...Forget it.{w=1.25}{nw}"
+        extend 2ccsgsl " Forget it!{w=1}{nw}"
+        extend 4cslunl " I don't even know {i}why{/i} it still annoys me so much."
+        n 4fcseml "It was all just..."
+        n 4cslbol "..."
+        n 1kslbol "...So dumb."
+        n 3ccseml "A-{w=0.2}and I know there's nothing stopping me doing what I want now.\n{w=0.75}{nw}"
+        extend 3clrbol "As you can see."
+        n 4klrfll "But that doesn't change all the wasted time.{w=1.25}{nw}"
+        extend 5kdlbol " All the disappointment."
+        n 1kslbol "And I don't think it ever will."
+        n 2kslsslsbr "...E-{w=0.2}even if getting to spend Halloween with you instead {i}is{/i} pretty awesome."
+        n 2kslsllsbr "..."
+        n 4knmpulsbr "...I wrote you something too,{w=0.5}{nw}"
+        extend 5klrbolsbr " you know."
+        n 5clrcalsbr "..."
+
+        $ halloween_poem = jn_poems.getPoem("jn_natsuki_hallows_end")
+        $ halloween_poem.unlock()
+        play audio page_turn
+        $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_poem_on_desk"))
+        $ jnPause(2)
+
+        n 5csqcalsbr "..."
+        n 4fnmfllsbl "H-{w=0.2}hey!{w=0.75}{nw}"
+        extend 4fllfllsbl " Come on."
+        n 2cdlbolsbl "Don't give me that look,{w=0.2} [player].{w=0.75}{nw}"
+        extend 2ccsemlsbl " Just..."
+        n 1ksrpulsbl "..."
+        n 1ccsfll "...Just take it already.{w=1}{nw}"
+        extend 4cnmcal " Before I change my mind about the whole thing."
+        n 4cdrcal "..."
+
+        show natsuki 4kdrcal
+        $ jnPause(0.5)
+        call show_poem(halloween_poem)
+        show natsuki 1cnmcal
+
+        n 1cnmajl "You..."
+        n 4cllajl "You did actually read all of that..."
+        n 5csgsll "Right?"
+        n 2ccseml "Because you have no {i}idea{/i} how much of a pain that was at short notice.{w=0.75}{nw}" 
+        extend 2clleml " Especially with you sneaking around all the time.{w=1}{nw}"
+        extend 2ccspol " You dork."
+        n 1clrbolsbl "..."
+        n 4ksrpulsbl "But..."
+        n 4ksgpulsbl "Seriously,{w=0.2} [player]?"
+        n 1kslsllsbl "..."
+
+        show natsuki 4ccsunlsbl at jn_center zorder JN_NATSUKI_ZORDER
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+        $ jnPause(2)
+        play audio clothing_ruffle
+        $ jnPause(3.5)
+        show natsuki 5cslbolsbr at jn_center zorder JN_NATSUKI_ZORDER
+        hide black with Dissolve(1.25)
+
+        n 5kslpul "...T-{w=0.2}thank you.{w=0.75}{nw}"
+        extend 2knmbol " For being with me for Halloween,{w=0.2} I mean."
+        n 4ccsfll "I know I never got to really dress up,{w=0.75}{nw}"
+        extend 4cdrfll " or make tons of fancy decorations,{w=0.75}{nw}"
+        extend 1ksrsll " or go partying or anything exciting like that."
+        n 1nlrpul "But...{w=1.25}{nw}"
+        extend 5nsrssfsbl " I-{w=0.2}I guess I can settle for treating myself to you instead."
+        n 5nsrajlsbl "So..."
+        n 1csrfslsbl "...Yeah."
+        $ chosen_endearment = jn_utils.getRandomEndearment()
+        n 4cchsmlsbl "H-{w=0.2}happy Halloween,{w=0.2} [chosen_endearment]."
+        n 4cslsmlsbl "..."
+        n 2ccsfllsbr "N-{w=0.2}now,{w=0.2} enough of all the lovey-dovey stuff.{w=0.75}{nw}"
+        extend 2cllfllsbr " Jeez,{w=0.2} [player]."
+        n 2csqpo "Have you {i}totally{/i} forgotten what today is meant to be for already or what?"
+        n 4fsqsm "..."
+        n 4fsqss "No?"
+        n 2fcsss "Heh.{w=0.75}{nw}"
+        extend 2ccsbg " Then you better start preparing,{w=0.2} [player]."
+        n 4cslbgsbr "Being here with you might be a treat..."
+        $ jn_stickers.stickerWindowPeekUp(at_right=True)
+        n 4fsqbs "...But you bet I've still got a ton of {i}tricks{/i} up my sleeve!{w=0.75}{nw}"
+        extend 2nchgn " Ehehe."
+
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+        $ jnPause(1)
+        play audio drawer
+        $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+        $ jnPause(2)
+        hide black with Dissolve(0.5)
+
+        $ chosen_tease = jn_utils.getRandomTeaseName()
+        n 2uchgnl "Now let's get spooky already,{w=0.2} you [chosen_tease]!"
+        $ persistent._jn_player_love_halloween_seen = True
+
+    else:
+        n 3cslss "..."
+        n 4cslfl "Or...{w=1}{nw}"
+        extend 4cslsl " at least it would be.{w=0.75}{nw}"
+        extend 2fsrem " If {i}some people{/i} didn't insist on being complete idiots about it."
+        n 2fcsfl "Ugh."
+        n 2clrfl "Like,{w=0.2} don't get me wrong -{w=0.5}{nw}"
+        extend 4fcsaj " I'm always game for a good prank!{w=0.75}{nw}"
+        extend 4ccspo " I'm not thin-skinned,{w=0.2} obviously."
+        n 2fslan "But what I can't {i}stand{/i} is when some people take it all {i}way{/i} over the top!{w=0.75}{nw}"
+        extend 1fsqem " Or they're just straight-up jerks about the whole thing."
+        n 4fcsfl "Yeah.{w=0.75}{nw}"
+        extend 4fsgfl " You know the type,{w=0.2} [player]."
+        n 3ftrfl "{i}Pranksters{/i},{w=0.5}{nw}"
+        extend 3fsran " my butt."
+        n 4fnmgs "Seriously!"
+        n 4fllem "I get that mischief night is a thing too."
+        n 2fcswr "But what the hell kind of 'mischief' involves just pissing people off?!{w=0.75}{nw}"
+        extend 2fnmfu " Or going around everywhere and making a total ass out of yourself?"
+        n 2fcsan "Cut me a break."
+        n 4csqan "And don't even get me {i}started{/i} on keeping everyone up all night with crappy music..."
+        n 3fsrem "...Or trashing a bunch of other people's stuff on purpose."
+        n 3fcsemesi "Ugh..."
+        n 4cllsl "Forget the eggs and toilet paper."
+        n 5fslsl "Just makes me wanna smack them right in their stupid faces.{w=0.75}{nw}"
+        extend 2fcsgs " Who says that isn't just {i}my{/i} take on a 'prank'?"
+        n 2fsrsl "Jerks."
+        n 1fcsflesi "..."
+        n 4ccsfl "W-{w=0.2}whatever.{w=0.75}{nw}"
+        extend 4cnmaj " You know what,{w=0.2} [player]?"
+        n 2flrfl "Who even has the time to care about a bunch of idiots ruining things for themselves?{w=0.75}{nw}"
+        extend 2fcspo " I sure don't."
+        n 1ccsaj "A-{w=0.2}and besides."
+
+        if Natsuki.isLove(higher=True):
+            n 3cllssl "We both know {i}you{/i} aren't like that.{w=0.75}{nw}"
+            extend 5ccssslsbr " T-{w=0.2}that's all that matters."
+
+        elif Natsuki.isAffectionate(higher=True):
+            n 7cllsslsbr "I'm pretty sure {i}you{/i} aren't like that.{w=0.75}{nw}"
+            extend 3ccssslsbr " Even if you are a dork."
+
+        else:
+            n 7csqss "I kinda doubt {i}you're{/i} one of those people."
+
+        n 3clrss "And it's not like we have to worry about any of that here either,{w=0.2} at any rate."
+        n 4fcsaw "So!"
+        n 4fsqbg "I hope you prepared yourself,{w=0.2} [player]."
+        n 2ccsbg "'Cause if you haven't prepared plenty of treats today for yours truly..."
+        $ jn_stickers.stickerWindowPeekUp(at_right=True)
+        n 2fchgn "...Then you better get ready for some more grade-A tricks instead!{w=0.75}{nw}"
+        extend 1nchgn " Ehehe."
+
+        if Natsuki.isLove(higher=True):
+            $ chosen_tease = jn_utils.getRandomTeaseName()
+            n 2fwlbgl "Love you too,{w=0.5}{nw}" 
+            extend 2fchblleaf " you big [chosen_tease]!"
+
+        elif Natsuki.isAffectionate(higher=True):
+            $ random_tease = random.choice(["dork", "dope"])
+            n 3fchbgl "Now let's get spooky already,{w=0.2} you [random_tease]!"
+
+        else:
+            n 3fnmbg "Now let's spook things up already!"
+
+    $ jn_events.getHoliday("holiday_halloween").complete()
     return
 
 label holiday_christmas_eve:

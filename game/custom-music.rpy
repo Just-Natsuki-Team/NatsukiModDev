@@ -107,9 +107,12 @@ label music_menu:
             # Add the default music as the first option
             custom_music_options.insert(1, ("Default", (jn_custom_music.JNMusicOptionTypes.bgm, "just_natsuki.ogg")))
 
+            # Add the space classroom music - why not?
+            custom_music_options.insert(2, ("Space Classroom", (jn_custom_music.JNMusicOptionTypes.bgm, "space_classroom.ogg")))
+
             # Add holiday music if unlocked
             if persistent._jn_event_completed_count > 0 and Natsuki.isNormal(higher=True):
-                custom_music_options.insert(2, ("Vacation!", (jn_custom_music.JNMusicOptionTypes.bgm, "vacation.ogg")))
+                custom_music_options.insert(3, ("Vacation!", (jn_custom_music.JNMusicOptionTypes.bgm, "vacation.ogg")))
 
             custom_music_options.append(("No music", (jn_custom_music.JNMusicOptionTypes.no_music, None)))
             success = True

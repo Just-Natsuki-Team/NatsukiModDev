@@ -866,7 +866,8 @@ screen navigation():
         spacing gui.navigation_spacing
 
         if not jn_data_migrations.current_version_latest:
-            textbutton _("View update!") action OpenURL(jn_globals.LINK_JN_LATEST)
+            textbutton _("Update now!") action OpenURL(jn_globals.LINK_JN_LATEST)
+            null height 16
 
         if main_menu:
             textbutton _("New Game"):
@@ -1234,14 +1235,16 @@ screen preferences():
     use game_menu(_("Settings")):
 
         viewport id "preferences":
+            ysize 650
+            yoffset -75
+            xoffset 40
             scrollbars "vertical"
             mousewheel True
             draggable True
-            xoffset 40
 
             vbox:
                 yoffset 0
-                xoffset 50
+                
                 hbox:
                     box_wrap True
 
@@ -1358,7 +1361,7 @@ screen preferences():
 
                     vbox:
 
-                        label _("Random chatter: {0}".format(jn_preferences.random_topic_frequency.get_random_topic_frequency_description()))
+                        label _("Random chatter: {0}".format(jn_preferences.random_topic_frequency.getRandomTopicFrequencyDescription()))
 
                         bar value FieldValue(
                             object=persistent,
@@ -1376,17 +1379,22 @@ screen preferences():
 
                         bar value Preference("auto-forward time")
 
-                    vbox:
+                        label _("Sunrise: {0}AM".format(jn_locations.getHourFromSunriseSunsetValue(persistent._jn_sunrise_setting)))
+                        bar value FieldValue(persistent, "_jn_sunrise_setting", range=5, max_is_zero=False, style="slider")
 
+                        label _("Sunset: {0}PM".format(jn_locations.getHourFromSunriseSunsetValue(persistent._jn_sunset_setting)))
+                        bar value FieldValue(persistent, "_jn_sunset_setting", range=5, max_is_zero=False, style="slider")
+
+                    vbox:
                         if config.has_music:
-                            label _("Music Volume")
+                            label _("Music Volume: {0}%".format(int(preferences.get_volume("music") * 100)))
 
                             hbox:
                                 bar value Preference("music volume")
 
                         if config.has_sound:
 
-                            label _("Sound Volume")
+                            label _("Sound Volume: {0}%".format(int(preferences.get_volume("sfx") * 100)))
 
                             hbox:
                                 bar value Preference("sound volume")

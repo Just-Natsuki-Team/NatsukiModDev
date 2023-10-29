@@ -279,7 +279,17 @@ label ch30_loop:
 
 label ch30_wait:
     window hide
-    $ jnPause(delay=5.0, hard=True)
+    python:
+        import random
+
+        if not jn_topic_in_event_list("weather_change") and jn_locations.checkUpdateLocationSunriseSunset(main_background):
+            queue("weather_change")
+        
+        if (random.randint(1, 10000) == 1):
+            jn_stickers.stickerWindowPeekUp(at_right=random.choice([True, False]))
+
+        jnPause(delay=5.0, hard=True)
+
     jump ch30_loop
 
 #Other labels
@@ -433,7 +443,7 @@ init python:
         # Push a topic, if we have waited long enough since the last one, and settings for random chat allow it
         if (
             persistent.jn_natsuki_random_topic_frequency != jn_preferences.random_topic_frequency.NEVER
-            and datetime.datetime.now() > Natsuki.getLastTopicCall() + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown())
+            and datetime.datetime.now() > Natsuki.getLastTopicCall() + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.getRandomTopicCooldown())
             and datetime.datetime.now() >= Natsuki.getLastMenuCall() + datetime.timedelta(seconds=5)
             and not persistent._event_list
         ):
@@ -513,8 +523,11 @@ init python:
             for action in jn_plugins.quarter_hour_check_calls:
                 eval(action.statement)
 
-        queue("weather_change")
-        queue("random_music_change")
+        if not jn_topic_in_event_list("weather_change"):
+            queue("weather_change")
+
+        if not jn_topic_in_event_list("random_music_change"):
+            queue("random_music_change")
 
         return
 
@@ -540,10 +553,8 @@ init python:
             for action in jn_plugins.hour_check_calls:
                 eval(action.statement)
 
-        queue("weather_change")
-
-        # Draw background
-        main_background.check_redraw()
+        if not jn_topic_in_event_list("weather_change"):
+            queue("weather_change")
 
         if (
             persistent.jn_natsuki_auto_outfit_change_enabled
@@ -565,7 +576,8 @@ init python:
             for action in jn_plugins.day_check_calls:
                 eval(action.statement)
 
-        queue("weather_change")
+        if not jn_topic_in_event_list("weather_change"):
+            queue("weather_change")
 
         # Determine if the year has changed, in which case we reset all holidays so they can be celebrated again
         if (datetime.datetime.now().year > persistent.jn_last_visited_date.year):

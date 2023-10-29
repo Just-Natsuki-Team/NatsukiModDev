@@ -1,13 +1,67 @@
 #Start off in the clubroom
 default persistent._current_location = "classroom"
 
-# These determine when the sun rises/sets
-default persistent.jn_sunrise_hour = 6
-default persistent.jn_sunset_hour = 19
+default persistent._jn_sunrise_setting = 3
+default persistent._jn_sunset_setting = 2
 
-init python in locations:
+init python in jn_locations:
+    import datetime
     import store
+
     LOCATION_MAP = dict()
+
+    def getHourFromSunriseSunsetValue(value, is_sunset=False):
+        """
+        For a given sunrise/sunset preference value, returns the 24-hour time it corresponds to.
+
+        IN: 
+            - value - int preference value (from 1 to 5) to get a 24-hour time for
+            - is_sunset - bool flag for whether to map value to a sunset 24-hour time
+
+        OUT:
+            - int 24-hour time represention of the given value, based on is_sunset
+        """
+        if is_sunset:
+            return {
+                0: 16,
+                1: 17,
+                2: 18,
+                3: 19,
+                4: 20,
+                5: 21
+            }.get(value)
+
+        else:
+            return {
+                0: 4,
+                1: 5,
+                2: 6,
+                3: 7,
+                4: 8,
+                5: 9
+            }.get(value)
+
+    def checkUpdateLocationSunriseSunset(location):
+        """
+        Gets the 24-hour value corresponding to the current preferences for sunrise/sunset hours and 
+        updates the sunrise/sunset times for the room if they differ from what is currently defined.
+
+        IN: 
+            - location - JNRoom location to check/set the sunrise/sunset times for
+
+        OUT:
+            - True if the sunrise/sunset times were updated, otherwise False
+        """
+        sunrise_hour = getHourFromSunriseSunsetValue(store.persistent._jn_sunrise_setting)
+        sunset_hour = getHourFromSunriseSunsetValue(store.persistent._jn_sunset_setting, is_sunset=True)
+        updated = False
+
+        if sunrise_hour != location.sunrise.hour or sunset_hour != location.sunset.hour:
+            location.sunrise=datetime.time(sunrise_hour)
+            location.sunset=datetime.time(sunset_hour)
+            updated = True
+
+        return updated
 
 init -20 python:
     import os
@@ -54,7 +108,7 @@ init -20 python:
                     (Default: None)
             """
             #Initial checks to make sure this can be loaded
-            if id in store.locations.LOCATION_MAP:
+            if id in store.jn_locations.LOCATION_MAP:
                 raise Exception("[ERROR]: A Location with id '{0}' already exists.".format(id))
 
             if not os.path.isdir(renpy.config.gamedir + "/mod_assets/backgrounds/{0}".format(image_dir)):
@@ -242,10 +296,9 @@ init -20 python:
             persistent._current_location = self.location.id
 
 init python:
-
     main_background = JNRoom(
-        sunrise_hour=int(store.persistent.jn_sunrise_hour),
-        sunset_hour=int(store.persistent.jn_sunset_hour)
+        sunrise_hour=int(jn_locations.getHourFromSunriseSunsetValue(store.persistent._jn_sunrise_setting)),
+        sunset_hour=int(jn_locations.getHourFromSunriseSunsetValue(store.persistent._jn_sunset_setting, is_sunset=True))
     )
 
     classroom = Location(
@@ -280,5 +333,5 @@ init python:
     else:
         main_background.day_to_night_event()
 
-    if persistent._current_location in locations.LOCATION_MAP:
+    if persistent._current_location in jn_locations.LOCATION_MAP:
         main_background.change_location(persistent._current_location)

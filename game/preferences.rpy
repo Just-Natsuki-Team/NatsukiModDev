@@ -38,13 +38,13 @@ init python in jn_preferences.random_topic_frequency:
         4: "Often",
     }
 
-    def get_random_topic_frequency_description():
+    def getRandomTopicFrequencyDescription():
         """
         Gets the descriptor for the random topic frequency, as given by the current frequency.
         """
         return _RANDOM_TOPIC_FREQUENCY_DESC_MAP.get(store.persistent.jn_natsuki_random_topic_frequency)
 
-    def get_random_topic_cooldown():
+    def getRandomTopicCooldown():
         """
         Gets the cooldown (in minutes) between topics prompted by Natsuki, as given by the current frequency.
         """

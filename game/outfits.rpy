@@ -1451,7 +1451,7 @@ init -1 python in jn_outfits:
     ))
     __registerWearable(JNClothes(
         reference_name="jn_clothes_magical_girl",
-        display_name="Magical girl cosplay",
+        display_name="Magical girl cosplay dress",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -2059,6 +2059,17 @@ init -1 python in jn_outfits:
         accessory=getWearable("jn_accessory_cherry_blossom_hairpin"),
         hairstyle=getWearable("jn_hair_twintails_braided"),
         necklace=getWearable("jn_necklace_bunny_necklace")
+    ))
+    __registerOutfit(JNOutfit(
+        reference_name="jn_magical_girl_cosplay",
+        display_name="Magical girl cosplay",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=getWearable("jn_clothes_magical_girl"),
+        hairstyle=getWearable("jn_hair_twintails"),
+        accessory=getWearable("jn_accessory_hairband_stars"),
+        headgear=getWearable("jn_headgear_hairtie"),
+        necklace=getWearable("jn_necklace_plain_choker")
     ))
 
     # Internal outfits; used for events, etc. These shouldn't be unlocked!
