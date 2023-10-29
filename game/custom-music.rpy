@@ -133,15 +133,15 @@ label music_menu:
 
     elif preferences.get_volume("music") == 0:
         show natsuki at jn_center
-        n 1tsqaj "Uh...{w=0.5}{nw}"
+        n 1tsqaj "Uh...{w=1}{nw}"
         extend 1tslaj " huh."
         n 2tsgsg "And {i}how{/i} exactly do you plan to hear any music with the volume at zero?"
-        n 2fchbg "Jeez, [player].{w=0.5}{nw}" 
+        n 2fchbg "Jeez,{w=0.2} [player].{w=0.75}{nw}" 
         extend 1uchgn " How do you even get dressed in the morning with memory like that?!"
-        n 3ullss "Well, whatever.{w=0.5}{nw}"
+        n 3ullss "Well,{w=0.2} whatever.{w=0.75}{nw}"
         extend 3unmaj " So..."
 
-        show natsuki 3unmboeqm
+        show natsuki option_wait_curious
         menu:
             n "Did you want me to turn the music back up so you can pick something?"
 
