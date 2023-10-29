@@ -195,7 +195,7 @@ init 5 python:
     )
 
 label greeting_leave_return:
-    $ time_since_departure = (datetime.datetime.now() - persistent._jn_player_extended_leave_departure_date).total_seconds()
+    $ time_since_departure = (datetime.datetime.now() - persistent._jn_player_extended_leave_departure_date).total_seconds() 
 
     if time_since_departure / 2628000 > 3: # Gone more than three months
         if jn_farewells.JNExtendedLeaveResponseTypes(store.persistent._jn_player_extended_leave_response) != jn_farewells.JNExtendedLeaveResponseTypes.unknown:
@@ -837,8 +837,8 @@ label greeting_love_plus_always_welcome_here:
     n 2fslunfesssbl "I was really starting to miss you,{w=0.3} you know..."
     n 2fplcafsbl "Don't keep me waiting so long next time,{w=0.3} alright?"
     $ chosen_tease = jn_utils.getRandomTease()
-    n 4ccsssfsbr "Y-{w=0.2}you should know you're {i}always{/i} welcome here by now,{w=0.5}{nw}" 
-    extend 1fchsmfsbr " [chosen_tease]."
+    n 4klrssf "You should know you're {i}always{/i} welcome here by now,{w=0.33}{nw}" 
+    extend 1fchsmf " [chosen_tease]."
 
     return
 
@@ -976,25 +976,74 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_love_plus_cant_live_without_me",
+            label="greeting_love_plus_amazing_scenery",
             unlocked=True,
             affinity_range=(jn_affinity.LOVE, None),
             additional_properties={
-                "expression": "2cklpu"
+                "expression": "2cslbol"
             }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_love_plus_cant_live_without_me:
-    n 2ccsss "Oho?{w=0.75}{nw}"
-    extend 2fsqbg " And just who do we have here then?{w=1}{nw}"
-    extend 2fnmbg " Huh?"
-    n 4fcssm "Ehehe.{w=0.75}{nw}"
-    extend 7cllbgl " Well [player],{w=0.2} what can I say?"
-    n 7fchgnl "Guess you really can't live without me after all!"
+label greeting_love_plus_amazing_scenery:
+    n 4unmbgleex "Aha!{w=0.75}{nw}"
+    extend 3fchbgl " [player]!{w=0.75}{nw}"
+    extend 6fcssmlsbl " I-{w=0.2}I knew you'd show up eventually!"
+    n 1fslsslsbl "Heh.{w=0.75}{nw}"
+    extend 4fllbgl " After all..."
+    n 2fcsbgledz "I don't see any other pieces of {w=0.2}{i}amazing{/i}{w=0.2} scenery around here!"
+    n 2fsqsml "Ehehe."
     $ chosen_tease = jn_utils.getRandomTease()
-    n 3fchbll "Hurry up and get comfy,{w=0.2} [chosen_tease]!"
+    n 2fchblleaf "Welcome back,{w=0.2} [chosen_tease]!"
+
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_love_plus_manga_chapters",
+            unlocked=True,
+            conditional="jn_desk_items.getDeskItem('jn_parfait_manga_held').unlocked",
+            affinity_range=(jn_affinity.LOVE, None),
+            additional_properties={
+                "desk_item": "jn_parfait_manga_held",
+                "expression": "1cdwca"
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_love_plus_manga_chapters:
+    n 1cdwpu "..."
+    n 1tdwsl "..."
+    n 1tnmboeqm "...?{w=0.75}{nw}"
+    n 1unmgsleshsbr "Ah!{w=0.75}{nw}"
+    $ player_initial = jn_utils.getPlayerInitial()
+    extend 1cllbglsbr " [player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
+    extend 1cchbglsbr " What's up?"
+    n 1fchsmlsbr "..."
+    n 1cnmpul "Huh?{w=0.75}{nw}"
+    extend 1udwaj " Oh.{w=0.75}{nw}"
+    extend 1ulrbo " Don't mind the manga."
+    n 1fcsbglsbl "{i}Our{/i} chapters together are way more interesting,{w=0.2} a-{w=0.2}anyway.{w=0.75}{nw}"
+    extend 1fchsmlsbl " Ehehe."
+
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    show natsuki 3nlrsmleme
+    $ Natsuki.clearDesk()
+    $ manga_closed = jn_desk_items.getDeskItem("jn_parfait_manga_closed")
+    $ Natsuki.setDeskItem(manga_closed)
+    play audio book_closing
+    $ jnPause(0.3)
+    hide black with Dissolve(0.5)
+    $ jnPause(1)
+
+    n 7ulrssl "So...{w=1}{nw}"
+    $ chosen_tease = jn_utils.getRandomTease()
+    extend 7fchbgl " what's new,{w=0.2} [chosen_tease]?"
 
     return
 
@@ -1143,33 +1192,57 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_affectionate_enamored_know_what_time",
+            label="greeting_affectionate_enamored_good_taste",
             unlocked=True,
             affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED),
             additional_properties={
-                "expression": "2cklpu"
+                "expression": "3fsgsm"
             }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_affectionate_enamored_know_what_time:
-    n 2fnmwr "[player]!{w=1}{nw}"
-    extend 2fcsgs " Well,{w=0.2} it's about time you got your sorry butt in here!{w=0.75}{nw}"
-    extend 2flrem " Jeez!"
-    n 4fcsem "I mean...{w=1}{nw}"
-    extend 4fnmwr " what were you thinking?{w=0.75}{nw}"
-    extend 3fsqan " Do you even {i}know{/i} what time it is?"
-    n 3fcspo "..."
-    n 3fkrpo "..."
-    n 3fchdvesm "Pfffft-!"
-    n 7fsqbg "Isn't it obvious,{w=0.2} [player]?"
-    $ time_descriptor = "day" if jn_is_day() else "night"
-    n 7fchbg "...Time for another fun [time_descriptor] with [n_name],{w=0.5}{nw}"
-    extend 3fchgn " duh!"
-    $ chosen_tease = jn_utils.getRandomTease()
-    n 3fchbgl "Welcome back,{w=0.2} [chosen_tease]!"
+label greeting_affectionate_enamored_good_taste:
+    n 3fcsct "Oh?{w=0.75}{nw}"
+    extend 3fsqbg " And just look who decided to drop into the clubroom today,{w=0.2} huh?"
+    n 3fcssmesm "..."
+    n 4tllbg "Well,{w=0.2} what can I say?"
+    n 2uchgnl "Looks like you've got {i}some{/i} good taste after all,{w=0.2} [player]!{w=0.75}{nw}"
+    extend 2nchgnl " Ahaha."
 
+    if Natsuki.isEnamored(higher=True):
+        $ chosen_tease = jn_utils.getRandomTease()
+        n 4fchbll "Get comfy already,{w=0.2} [chosen_tease]!"
+
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_affectionate_enamored_crawling_back",
+            unlocked=True,
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED),
+            additional_properties={
+                "expression": "2nsrsl"
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_affectionate_enamored_crawling_back:
+    n 4unmbs "[player]!{w=0.75}{nw}"
+    extend 7fchgn " I was wondering when you were gonna show up!"
+    n 3fcsajlsbr "N-{w=0.2}not that I was just sat around waiting for you or anything,{w=0.2} obviously."
+    n 3fslsslsbr "After all..."
+    n 6fcssmlesm "As {i}if{/i} you could resist crawling back to someone as awesome as me!"
+
+    if Natsuki.isEnamored(higher=True):
+        n 3nchgnl "Now get cozy already,{w=0.2} you dork!"
+    
+    else:
+        n 3fchsmeme "Ehehe."
+    
     return
 
 # NORMAL/HAPPY greetings
@@ -1322,7 +1395,7 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_normal_oh_whats_up",
+            label="greeting_normal_happy_oh_whats_up",
             unlocked=True,
             affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY),
             additional_properties={
@@ -1332,7 +1405,7 @@ init 5 python:
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_normal_oh_whats_up:
+label greeting_normal_happy_oh_whats_up:
     n 2tlrsl "..."
     n 2tnmpueqm "...Huh?{w=0.5}{nw}"
     extend 4unmfllesu " Oh!{w=0.75}{nw}"
@@ -1345,31 +1418,69 @@ init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_normal_some_notice",
+            label="greeting_normal_happy_whats_new",
             unlocked=True,
             affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY),
             additional_properties={
-                "expression": "7nsrsl"
+                "expression": "7cdlsl"
             }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_normal_some_notice:
-    n 7ncsfl "..."
-    n 3kcspuesi "..."
-    n 3nsrbo "..."
-    n 3tnmpueqm "...Eh?"
-    n 4unmfllsbr "Oh!{w=0.75}{nw}"
-    $ player_initial = jn_utils.getPlayerInitial()
-    extend 4cllwrlsbr " [player_initial]-{w=0.2}[player]!"
-    n 2ccsemsbr "Y-{w=0.2}you should really know I need some kind of notice by now.{w=0.75}{nw}"
-    extend 2cslpo " Sheesh."
-    n 1cslca "..."
-    n 1cllaj "So...{w=1}{nw}"
-    $ time_descriptor = "today" if jn_is_day() else "tonight"
-    extend 2tllaj " what's new [time_descriptor],{w=0.5}{nw}"
-    extend 2tnmbo " [player]?"
+label greeting_normal_happy_whats_new:
+    n 7unmfllesu "Ah!{w=0.75}{nw}"
+    extend 7flrsssbr " [player]!{w=0.75}{nw}"
+    extend 3ccsajsbr " I-{w=0.2}I was wondering when you were gonna decide to show up."
+
+    if Natsuki.isHappy(higher=True):
+        n 3tllajsbr "So...{w=1}{nw}"
+        extend 3fchbgsbr " what's new,{w=0.2} [player]?"
+
+    else:
+        n 3cllbosbr "..."
+        n 3cllajsbr "So...{w=1}{nw}"
+        extend 7tnmss " what's new with you,{w=0.2} huh?"
+
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_normal_happy_nevermind",
+            unlocked=True,
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY),
+            additional_properties={
+                "expression": "7clrsl"
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_normal_happy_nevermind:
+    n 7cdrsl "..."
+    n 7csrsl "..."
+    n 7ksrbo "..."
+    n 7kcsflesi "..."
+    n 7ksqsleqm "...?{w=0.75}{nw}"
+    n 7unmemlesh "Oh!{w=0.75}{nw}"
+    extend 3cslsssbr " Heh.{w=0.75}{nw}"
+    extend 3ccssssbr " H-{w=0.2}hey, [player]."
+    n 7unmflsbr "Me?{w=0.2} I was just..."
+    n 3cdrslsbr "..."
+    n 4ccsflsbr "N-{w=0.2}nevermind.{w=0.75}{nw}"
+
+    if Natsuki.isHappy(higher=True):
+        extend 4nsrbosbr " I guess it doesn't matter now anyway."
+        n 2tlraj "So...{w=1}{nw}"
+        extend 2tnmss " what's going on,{w=0.2} [player]?"
+
+    else:
+        extend 4csrbosbr " It's nothing."
+        n 2nsrca "..."
+        n 2nlraj "So...{w=1}{nw}"
+        extend 2unmaj " what did I miss,{w=0.2} [player]?"
 
     return
 
@@ -1483,31 +1594,6 @@ label greeting_distressed_upset_oh_great:
 
     return
 
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._greeting_database,
-            label="greeting_distressed_upset_just_perfect",
-            unlocked=True,
-            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET),
-            additional_properties={
-                "expression": "2fsrsl"
-            }
-        ),
-        topic_group=TOPIC_TYPE_GREETING
-    )
-
-label greeting_distressed_upset_just_perfect:
-    n 2clrsl "..."
-    n 2tsqfl "...Huh?{w=0.75}{nw}"
-    extend 2csqfl " Oh.{w=0.75}{nw}"
-    extend 4fllsl " Heh."
-    n 4fsqem "It's {i}you{/i}."
-    n 1fcsan "Well,{w=0.2} isn't that just{w=0.5}{nw}"
-    extend 1fsqan " {i}perfect{/i}."
-
-    return
-
 # BROKEN- greetings
 
 init 5 python:
@@ -1613,29 +1699,6 @@ label greeting_broken_minus_just_leave_me_alone:
 
     return
 
-init 5 python:
-    registerTopic(
-        Topic(
-            persistent._greeting_database,
-            label="greeting_broken_minus_trash_already",
-            unlocked=True,
-            affinity_range=(None, jn_affinity.BROKEN),
-            additional_properties={
-                "expression": "1fcsunl"
-            }
-        ),
-        topic_group=TOPIC_TYPE_GREETING
-    )
-
-label greeting_broken_minus_trash_already:
-    n 2fslslltsb "..."
-    n 2fsqunltsb "...?"
-    n 4fcsslltsa "Heh.{w=0.75}{nw}"
-    extend 1fcseml " As if I didn't feel like trash enough already."
-    n 4fsqfultsb "Now I'm {i}sat{/i} in front of it again too."
-
-    return
-
 # Admission-locked greetings; used when Natsuki made the player leave due to tiredness, etc.
 
 init 5 python:
@@ -1648,214 +1711,42 @@ init 5 python:
             affinity_range=(jn_affinity.HAPPY, None),
             additional_properties={
                 "admission_type": jn_admissions.TYPE_SICK,
-                "expression": "1cllbolsbr"
             }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_feeling_better_sick:
-    n 1unmajlesu "Oh!{w=0.75}{nw}"
-    $ chosen_descriptor = jn_utils.getRandomEndearment().capitalize() if Natsuki.isLove(higher=True) else player
-    extend 2cnmbgl " [chosen_descriptor]!{w=0.75}{nw}" 
-    extend 2cchbgl " H-{w=0.2}hey!"
-
-    if (
-        persistent._jn_player_admission_forced_leave_date is not None
-        and (datetime.datetime.now() - persistent._jn_player_admission_forced_leave_date).total_seconds() / 60 <= 60
-    ):
-        n 2csrsssbr "...I gotta admit.{w=0.75}{nw}"
-        extend 2tllflsbr " I wasn't expecting you to {i}actually{/i} show up already."
-        n 2tslbosbr "So..."
-
-    n 2unmajsbr "How're you holding up?"
-    show natsuki option_wait_curious
+    n 1unmajlesu "Oh!{w=0.5}{nw}"
+    extend 2knmbgl " [player]!{w=0.3} Hey!"
+    show natsuki 2knmbol
 
     menu:
-        n "You feeling any better yet,{w=0.2} or...?"
+        n "How're you feeling?{w=0.2} Any better?"
 
-        "Much better!":
-            if Natsuki.isEnamored(higher=True):
-                n 1fcssm "Ehehe.{w=0.75}{nw}"
-                extend 2fnmbg " See?{w=0.2} What did I tell you?{w=0.75}{nw}"
-                extend 2fchbg " I-{w=0.2}I knew you'd beat the crap out of some dumb old bug any day!"
-                n 4csrsssbl "But...{w=1}{nw}"
-                $ chosen_descriptor = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else player
-                extend 4tnmflsbl " in all seriousness, [player]?"
-                n 1nsrsll "..."
-                n 1ncsfll "Just...{w=1}{nw}"
-                extend 4cllsll " take better care of yourself next in the future.{w=0.75}{nw}"
-                extend 4cnmajl " Alright?{w=1.25}{nw}"
-                extend 3csgbol " Really."
-                n 3ccsfllsbr "I-{w=0.2}I don't want some stinky sickness stealing all of our time together just because you needed me to nurse you back up again.{w=0.75}{nw}"
-                extend 3csrbol " You big dork."
-                n 5ksrbol "..."
-                n 5ccsajlsbl "A-{w=0.2}anyway.{w=0.75}{nw}"
-                extend 3csqssl " You better be running on all cylinders again now,{w=0.2} [player]..."
-                n 6fchgnl "'Cause you've got a whole bunch of time to make all up to me!{w=0.75}{nw}"
-                extend 7fchsml " Ehehe."
-                $ chosen_tease = jn_utils.getRandomTease()
-
-                if Natsuki.isLove(higher=True):
-                    n 7fchblleaf "Love you too,{w=0.2} [chosen_tease]~!"
-
-                else:
-                    n 3fchbgl "Welcome back,{w=0.2} [chosen_tease]!"
-
-            else:
-                n 2fcsbgsbr "Ha!{w=0.75}{nw}"
-                extend 2usqbg " See?{w=0.2} Just as I thought.{w=0.75}{nw}"
-                extend 2ccsbgsbl " I-{w=0.2}I totally knew you'd see the back of it soon!"
-                n 4clreml "N-{w=0.2}not that I care {i}that{/i} much, obviously!{w=0.75}{nw}"
-                extend 4ccsajlsbr " Nobody likes being sick, that's for sure."
-
-                if Natsuki.isAffectionate(higher=True):
-                    n 2ccscal "..."
-                    n 2nlraj "But...{w=1}{nw}"
-                    extend 2ccssm " I'm glad to see you back again,{w=0.2} [player]."
-                    n 1ccsss "Heh.{w=0.75}{nw}"
-                    extend 4clrss " After all."
-                    n 4fsqbg "As if I'm letting you off making it all up to me now!{w=0.75}{nw}"
-                    extend 2nchgn " Ehehe."
-
-                else:
-                    n 2csrbolsbr "..."
-                    n 2ccsfll "Well,{w=0.2} anyway.{w=0.75}{nw}"
-                    extend 4ccsaj " I'm just glad you're back again,{w=0.2} [player].{w=0.75}{nw}"
-                    extend 4fsqss " After all..."
-                    n 4fcsbg "You aren't worming your way out of making it up to me that easily!{w=0.75}{nw}"
-                    extend 2nchgn " Ehehe."
+        "Much better, thanks!":
+            n 2fcsbgsbr "Good,{w=0.2} good!{w=0.3} I-{w=0.2}I knew you'd see the back of it soon!{w=0.5}{nw}"
+            extend 2fcsaj " Being ill is gross,{w=0.2} right?"
+            n 4nllaj "Now...{w=1}{nw}"
+            extend 3fsqbgl " since that's out of the way,{w=0.2} how about we spend some actual quality time together?"
+            n 4fsqblleme "Gotta make up for lost plans,{w=0.2} no?"
 
             $ persistent.jn_player_admission_type_on_quit = None
 
         "A little better.":
-            n 2knmbosbr "..."
-            n 2clrsssbr "...I'll admit,{w=0.2} that's...{w=1}{nw}" 
-            extend 2csrajsbr " not exactly what I wanted to hear."
-            n 1clrflsbl "But...{w=1}{nw}" 
-            extend 4tnmslsbl " I'll take 'a little' over not at all.{w=1}{nw}" 
-            extend 3cslbosbl " I guess."
-            n 3ccsflsbr "Just..."
-            n 3kslcasbr "..."
-            n 4ccstrsbr "Don't...{w=0.3} push yourself trying to be here,{w=0.2} [player].{w=1}{nw}"
-            extend 4cnmfl " Got it?{w=0.75}{nw}"
-            extend 2csqca " I'm being serious."
-
-            if Natsuki.isEnamored(higher=True):
-                n 4unmfllsbl "I-{w=0.2}It isn't like I don't {i}want{/i} you here or anything like that!"
-                extend 2ccswrlsbl " O-{w=0.2}of course I do!"
-                n 2clremlsbl "It's just that..."
-                n 2ksrbolsbl "..."
-                n 4ccsfll "...Just let me know if you gotta head off again.{w=0.75}{nw}"
-                extend 2clrbol " It's not like I'm keeping you prisoner here,{w=0.2} you know.{w=1}{nw}"
-                extend 2csrbol " I won't get mad."
-
-                if Natsuki.isLove(higher=True):
-                    n 4nsrfll "You do know that..."
-                    n 4knmcal "Right?"
-                    n 5kslbol "..."
-
-                n 1ncsflesi "..."
-                n 4nllbo "So...{w=1}{nw}"
-                $ chosen_descriptor = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else player
-                extend 7tnmpusbr " what did you wanna talk about,{w=0.2} [chosen_descriptor]?"
-
-            else:
-                n 4unmfllsbl "D-{w=0.2}don't get me wrong!{w=0.75}{nw}"
-                extend 4clremlsbl " It's not that I {i}want{/i} you to go away or anything like that."
-                n 3ccsajlsbl "I-{w=0.2}I just don't wanna be held responsible if you end up giving yourself a face full of keys because you were too stubborn to go rest properly.{w=0.75}{nw}"
-                extend 3ccspol " That's all I'm saying."
-                n 3cslbo "..."
-                n 3cslaj "So...{w=1}{nw}"
-                extend 7tnmslsbr " was there anything you wanted to talk about,{w=0.2} [player]?"
+            n 2kslpo "...I'll admit,{w=0.2} that wasn't really what I wanted to hear."
+            n 2ullbo "But...{w=0.5}{nw}" 
+            extend 2klrbosbl " I'll take 'a little' over not at all,{w=0.2} I guess."
+            n 4fchbgsbl "Anyway...{w=0.3} welcome back,{w=0.2} [player]!"
 
             # Add pending apology, reset the admission
             $ Natsuki.addApology(jn_apologies.ApologyTypes.unhealthy)
             $ jn_admissions.last_admission_type = jn_admissions.TYPE_SICK
 
-        "I don't feel any better.":
-            if Natsuki.isEnamored(higher=True):
-                n 2ccseml "H-{w=0.2}hang on a second.{w=0.75}{nw}"
-                extend 4cnmeml " What?{w=0.75}{nw}"
-                n 4fnmwrl "A-{w=0.2}are you being {i}serious{/i} right now?{w=1}{nw}"
-                extend 4cnmgsl " [player]!{w=0.75}{nw}"
-                extend 4fbkwrl " Come {i}on{/i}!"
-                n 2fcsajl "If you're really still feeling {i}that{/i} bad..."
-                n 2fnmwrl "Then why did you feel the need to drag yourself back just to be here, [player]?!{w=0.75}{nw}"
-                extend 1csrfll " Yeesh..."
-                n 1fnmeml "Are you {i}trying{/i} to get told off or something?"
-                n 1ksrsll "..."
-
-                if Natsuki.isLove(higher=True):
-                    n 4kcsfl "...Look,{w=0.2} [player].{w=0.75}{nw}"
-                    extend 4kllfllsbr " I-{w=0.2}it's not like I don't want you to be here.{w=0.75}{nw}"
-                    extend 2ksqfllsbl " I shouldn't even have to remind you about all that by now."
-                    n 2clremlsbl "It's just that..."
-                    n 1ksrsllsbl "..."
-                    n 4ccspul "I...{w=1}{nw}"
-                    extend 4ccsfll " don't...{w=1}{nw}"
-                    extend 3ksqsll " want you wasting your time feeling all crappy thanks to some stinky bug you can't control.{w=0.75}{nw}"
-                    extend 3cslsll " Nobody likes being sick."
-                    n 7tnmfll "And even more than that?"
-                    n 7csrfll "I don't want you feeling like trash even longer just for {i}my{/i} sake,{w=0.5}{nw}"
-                    extend 5csrbol " or because nobody else told you that you gotta take better care of yourself."
-                    n 4ccssll "..."
-
-                else:
-                    n 4ccsaj "...Okay,{w=0.2} look."
-                    n 4cllajl "It's not that I don't enjoy your company,{w=0.5}{nw}"
-                    extend 4cnmfll " or that I don't wanna see you today.{w=0.75}{nw}"
-                    extend 3fcsemlsbr " O-{w=0.2}of course I do!{w=0.75}{nw}"
-                    n 3csrcalsbr "You of all people should really {i}know{/i} that by now."
-                    n 3ccswrlsbl "But it can't be at your own expense!{w=0.75}{nw}"
-                    extend 7knmfllsbl " You know?"
-                    n 7cllfll "I-{w=0.2}I mean,{w=0.2} really..."
-                    extend 3tsqfll " did you think I would be impressed or something,{w=0.2} [player]?"
-
-            else:
-                n 1fcsan "Oh,{w=0.2} for-!{w=0.75}{nw}"
-                $ player_initial = jn_utils.getPlayerInitial()
-                extend 4fnmwr " [player_initial]-[player]!{w=0.75}{nw}"
-                extend 4fcsgs " Come {i}on{/i}!"
-                n 1fllfl "If you're {i}still{/i} feeling that crappy..."
-                n 2knmwrsbl "Then why would you drag yourself all the way back here,{w=0.5}{nw}" 
-                extend 2klrflsbl " of all places?!{w=0.75}{nw}"
-                extend 2ccsemlsbl " Jeez..."
-
-                if Natsuki.isAffectionate(higher=True):
-                    n 5csqpul "This isn't the nurses' office,{w=0.2} [player].{w=0.75}{nw}"
-                    extend 5csrpol " You dork."
-
-                else:
-                    n 2cslcal "This isn't the nurses' office,{w=0.2} you know."
-
-            n 4ncsemesi "..."
-            n 1ncsfl "...Look.{w=0.75}{nw}"
-            extend 2clrca " I'm not gonna start getting all on your case about taking care of yourself or anything like that."
-            n 2csrss "I'm pretty sure a headache's the last thing you need anyway."
-            n 1clraj "Just..."
-            n 4ccsaj "Don't...{w=1}{nw}" 
-            extend 4cnmsll " push it,{w=0.2} [player].{w=1}{nw}"
-            extend 3csgsll " Got it?"
-            n 7cslbol "I won't get mad if you gotta head off or something.{w=0.75}{nw}"
-            extend 3ccsfllsbl " And the last thing I wanna hear about is how you made yourself even worse trying to tough it out like some kind of macho."
-            n 3csqfll "Capiche?"
-            n 3nslsll "..."
-
-            if Natsuki.isEnamored(higher=True):
-                n 4nslpul "But..."
-                n 4cslunl "..."
-                $ chosen_descriptor = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else player
-                n 1ccsfll "Thanks,{w=0.2} [chosen_descriptor].{w=1}{nw}"
-                extend 2csgbol " For showing up anyway,{w=0.2} I mean."
-                n 1ccspul "It really...{w=1.25}{nw}"
-                extend 1klrbol " means a lot to me."
-                $ chosen_tease_name = jn_utils.getRandomTeaseName()
-                n 5cslssl "...Even if you {i}are{/i} a total [chosen_tease_name] for doing it right now."
-
-            n 1csrpu "So...{w=1}{nw}"
-            $ time_descriptor = "today" if jn_is_day() else "tonight"
-            extend 1tnmbo " what did you wanna do [time_descriptor],{w=0.2} [player]?"
+        "Still unwell.":
+            n 2knmsr "Still not feeling up to scratch,{w=0.2} [player]?"
+            n 2klrsll "I don't {i}mind{/i} you being here...{w=0.3} but don't strain yourself,{w=0.2} alright?"
+            n 3kslsllesosbr "I don't want you making yourself worse for my sake..."
 
             # Add pending apology, reset the admission
             $ Natsuki.addApology(jn_apologies.ApologyTypes.unhealthy)
@@ -2155,6 +2046,43 @@ label greeting_morning_top_of_the_mornin:
 
     return
 
+# Guten Morgen, Schlafmütze!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_morning_german",
+            unlocked=True,
+            conditional="(jn_is_time_block_mid_morning() or jn_is_time_block_late_morning()) and get_topic('talk_learning_languages').shown_count > 0",
+            affinity_range=(jn_affinity.HAPPY, None),
+            additional_properties={
+                "expression": "7ccssm"
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_morning_german:
+    n 3unmajesu "Ah!{w=1}{nw}"
+    $ player_initial = jn_utils.getPlayerInitial()
+    extend 4fllbgl " [player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
+    extend 4fcsbgl " Perfect timing!"
+    n 7fcsaw "A-{w=0.2}hem."
+    n 6fcsbsl "G-{w=0.1}guten Morgen,{w=0.75}{nw}" 
+    extend 6fchbgl " Schlafmuetze!"
+    n 5fsqsmlsbl "..."
+    n 5fsqcalsbl "..."
+    n 2cnmfll "What?{w=0.5}{nw}"
+    extend 2cnmpol " What's {i}that{/i} look for,{w=0.2} all of a sudden?"
+    n 7fsqbg "Did you forget that I was studying German {i}already{/i} or something?"
+    n 2fcssm "Ehehe."
+    n 4fsgbg "Well,{w=0.2} better start looking sharp,{w=0.2} [player]!{w=0.75}{nw}"
+    extend 7fcsbg " After all..."
+    n 6fwlgn "Der fruehe Vogel faengt den Wurm!{w=1}{nw}"
+    extend 3fllbgsbr " O-{w=0.2}or something like that."
+
+    return
+
 # Afternoon
 
 # Natsuki hopes the player is keeping well
@@ -2287,6 +2215,60 @@ label greeting_night_night_owl:
     extend 3fllsslsbl " You're a night owl too,{w=0.2} huh?"
     n 3fcsbg "N-{w=0.2}not that I have a problem with that,{w=0.2} obviously." 
     extend 4nchgnl " Welcome back!"
+
+    return
+
+# Natsuki is somewhat concerned about the player being up late again
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_night_what_time_do_you_call_this",
+            unlocked=True,
+            conditional="store.jn_get_current_hour() >= 23 or store.jn_get_current_hour() <= 4",
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
+            additional_properties={
+                "expression": "2fsqsf"
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_night_what_time_do_you_call_this:
+    n 2fnmgs "[player]!{w=0.75}{nw}"
+    extend 2fcsgs " Come on!{w=0.75}{nw}"
+    extend 2fsqan " Are you {i}kidding me{/i}?"
+    n 4fsqwr "What kind of time do you call {i}this{/i} then?{w=0.75}{nw}"
+    extend 4fnmwr " Huh?"
+    n 1fsqsl "..."
+    n 2fsqgs "Well?{w=0.75}{nw}"
+    extend 2fcsgs " Let's hear it already!{w=0.5} Spit it out!"
+    n 2fsqbo "..."
+    n 2fsqcs "..."
+    n 2fchdvesi "Pffft-!"
+    n 1flrbg "Man...{w=1}{nw}"
+    extend 4nchgn " I swear that {i}never{/i} gets old."
+    n 4cllss "But...{w=1}{nw}"
+    extend 3cnmfl " for real,{w=0.2} [player]?"
+    n 3ccsflesi "..."
+    n 3ccspu "Just..." 
+    extend 4clrsl " don't overdo it.{w=0.75}{nw}"
+    extend 4cnmbo " Alright?{w=1.25}{nw}"
+    extend 5cslbolsbr " Seriously."
+
+    if Natsuki.isEnamored(higher=True):
+        $ emphasis = " really" if Natsuki.isLove(higher=True) else ""
+        n 3ccsfllsbr "I[emphasis] don't wanna hear about you missing something important just because you couldn't drag your butt out of bed later."
+        n 3ccspolsbr "You dork."
+        n 4csrbolsbr "..."
+        n 4nsrajl "So...{w=1}{nw}"
+        $ chosen_descriptor = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else player
+        extend 7tnmbol " what did you wanna talk about,{w=0.2} [chosen_descriptor]?"
+
+    else:
+        n 7ccspol "Besides.{w=0.75}{nw}"
+        extend 3fchgnl " It's {i}totally{/i} on you if you can't get your sleep-deprived butt out of bed later!"
+        n 3fsqsml "Ehehe."
 
     return
 

@@ -83,6 +83,27 @@ screen hotkeys():
                             null width 175 height 30
                             null width 175 height 0
 
+            if persistent._jn_blackjack_unlocked:
+                hbox:
+                    xoffset 550
+                    vbox:
+                        box_wrap True
+                        label _("Blackjack hotkeys") style "check_label"
+                        null height 20
+                        style_prefix "hotkeys"
+                        grid 2 3:
+                            xoffset 20                
+                            spacing 10
+
+                            text _("Hit!")
+                            text _("1")
+
+                            text _("Stay")
+                            text _("2")
+
+                            null width 175 height 30
+                            null width 175 height 0
+
 # Categorized menu
 ## Similar to MAS' twopane_scrollable menu.
 ## NOTE: This is meant to be called within a loop so long as the user hasn't clicked `Nevermind`
@@ -181,12 +202,18 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                         null height 20
 
                     for button_name in menu_items.keys():
-                        textbutton button_name:
+                        $ has_unseen = len(Topic.filter_topics(topic_list=menu_items.get(button_name), nat_says=False, is_seen=False)) > 0
+                        $ display_text = "{i}[button_name]{/i}" if has_unseen else button_name
+
+                        textbutton display_text:
                             style "categorized_menu_button"
                             #Set the selected category
                             action SetVariable("selected_category", button_name)
                             hover_sound gui.hover_sound
                             activate_sound gui.activate_sound
+
+                            if has_unseen:
+                                idle_background Frame("mod_assets/buttons/choice_hover_blank_star.png", gui.frame_hover_borders, tile=gui.frame_tile)
 
                         null height 5
 
@@ -229,7 +256,7 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                             #NOTE: This should be preprocessed such that Topics without prompts aren't passed into this menu
                             textbutton display_text:
                                 style "categorized_menu_button"
-                                #Return the label so it can be called
+                                # Return the label so it can be called
                                 action [ Return(_topic.label), Function(prev_adjustment.change, 0), SetVariable("selected_category", None) ]
                                 hover_sound gui.hover_sound
                                 activate_sound gui.activate_sound
@@ -437,6 +464,8 @@ style frame:
 ## https://www.renpy.org/doc/html/screen_special.html#say
 
 screen say(who, what):
+    zorder 30
+
     style_prefix "say"
 
     window:
@@ -572,6 +601,7 @@ style input:
 
 # Default choice screen; this is offset so it doesn't get in front of Natsuki's face during dialogue
 screen choice(items, scroll="viewport"):
+    zorder 30
     style_prefix "choice"
 
     vbox:
@@ -584,6 +614,7 @@ screen choice(items, scroll="viewport"):
 
 # Identical to choice, but not offset - use this for menu options when Natsuki isn't present
 screen choice_centred(items, scroll="viewport"):
+    zorder 30
     style_prefix "choice"
 
     vbox:
@@ -596,6 +627,7 @@ screen choice_centred(items, scroll="viewport"):
 # Identical to choice_centred, but without hover/activate sounds - use this for menu options when Natsuki isn't present,
 # and when we need silence for atmospheric reasons (like the intro sequence)
 screen choice_centred_mute(items, scroll="viewport"):
+    zorder 30
     style_prefix "choice"
 
     vbox:
@@ -1205,6 +1237,7 @@ screen preferences():
             scrollbars "vertical"
             mousewheel True
             draggable True
+            xoffset 40
 
             vbox:
                 yoffset 0
@@ -1219,6 +1252,13 @@ screen preferences():
                             label _("Display")
                             textbutton _("Window") action Preference("display", "window")
                             textbutton _("Fullscreen") action Preference("display", "fullscreen")
+                            textbutton _("Menu icons") action [
+                            ToggleField(
+                                object=persistent,
+                                field="_jn_display_option_icons",
+                                true_value=True,
+                                false_value=False)
+                            ]
 
                     vbox:
                         style_prefix "check"
@@ -1255,22 +1295,25 @@ screen preferences():
 
                     vbox:
                         style_prefix "check"
-                        label _("Outfits")
-                        textbutton _("Auto Change") action [
+                        label _("Natsuki")
+                        textbutton _("Auto outfits") action [
                             ToggleField(
                                 object=persistent,
                                 field="jn_natsuki_auto_outfit_change_enabled",
                                 true_value=True,
                                 false_value=False)
                         ]
-
-                    vbox:
-                        style_prefix "check"
-                        label _("Topics")
-                        textbutton _("Repeat seen") action [
+                        textbutton _("Repeat topics") action [
                             ToggleField(
                                 object=persistent,
                                 field="jn_natsuki_repeat_topics",
+                                true_value=True,
+                                false_value=False)
+                        ]
+                        textbutton _("Idles") action [
+                            ToggleField(
+                                object=persistent,
+                                field="_jn_natsuki_idles_enabled",
                                 true_value=True,
                                 false_value=False)
                         ]
@@ -1296,25 +1339,15 @@ screen preferences():
 
                     vbox:
                         style_prefix "check"
-                        label _("Idles")
-                        textbutton _("Enabled") action [
-                            ToggleField(
-                                object=persistent,
-                                field="_jn_natsuki_idles_enabled",
-                                true_value=True,
-                                false_value=False)
-                        ]
-
-                    vbox:
-                        style_prefix "check"
-                        label _("Visuals")
-                        textbutton _("Menu icons") action [
-                            ToggleField(
-                                object=persistent,
-                                field="_jn_display_option_icons",
-                                true_value=True,
-                                false_value=False)
-                        ]
+                        label _("Blackjack")
+                        if persistent._jn_blackjack_unlocked:
+                            textbutton _("Hand total") action [
+                                ToggleField(
+                                    object=persistent,
+                                    field="_jn_blackjack_show_hand_value",
+                                    true_value=True,
+                                    false_value=False)
+                            ]
 
                     ## Additional vboxes of type "radio_pref" or "check_pref" can be
                     ## added here, to add additional creator-defined preferences.

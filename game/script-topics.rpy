@@ -19,6 +19,7 @@ default persistent.jn_player_appearance_height_cm = None
 default persistent._jn_player_birthday_day_month = None # Format (day, month)
 default persistent._jn_player_birthday_is_leap_day = False # True if player gave birthday as 29th
 default persistent._jn_player_is_multilingual = None
+default persistent._jn_player_had_work_placement = None
 
 # Hobby data
 default persistent.jn_player_gaming_frequency = None
@@ -865,7 +866,7 @@ label talk_service_animals:
             extend 3csrbo " or like a visit from the local police or some other snooze-fest."
             n 7utrpu "But...{w=0.75}{nw}"
             extend 7clrbg " there was {i}one{/i} visit I actually did like."
-            n 4fcsbg "Betcha can't guess what it was,{w=0.2} [player]."
+            n 4fcsbg "Betcha' can't guess what it was,{w=0.2} [player]."
             n 3fsqsm "Ehehe."
             n 3ullaj "It was actually a bunch of volunteers from a charity...{w=1}{nw}"
             extend 4unmfl " but for service and therapy animals!"
@@ -1035,7 +1036,7 @@ init 5 python:
             unlocked=True,
             prompt="Using computers healthily",
             conditional="store.jn_utils.get_current_session_length().total_seconds() / 3600 >= 8",
-            category=["Life", "You", "Health"],
+            category=["Health", "Technology"],
             nat_says=True,
             affinity_range=(jn_affinity.HAPPY, None),
             location="classroom"
@@ -1044,61 +1045,250 @@ init 5 python:
     )
 
 label talk_using_computers_healthily:
-    n 1unmaj "Huh."
-    n 3tnmaj "Hey,{w=0.1} [player].{w=0.2} I just thought of something."
-    n 1unmsf "You gotta be at your computer to talk to me,{w=0.1} right?"
-    n 4ullsf "And you've been here a while already..."
-
-    if (jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.work_applications)
-        or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.artwork)
-        or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.coding)):
-            n 1knmaj "In fact, I've even {i}seen{/i} you working on a lot of stuff myself!"
-            n 1kllsl "..."
-
-    n 1nchgn "Alright,{w=0.1} that's it!{w=0.2} I've decided."
-    n 1uchgn "I'm gonna give you a little lesson on using your computer the right way!"
-    n 3nnmss "Number one:{w=0.2} posture!"
-    n 1fwmlg "Sit up straight,{w=0.1} and back against the chair,{w=0.1} [player].{w=0.2}"
-    extend 1uchlg " I mean it!"
-    n 4tnmlg "You don't want back problems,{w=0.1} do you?"
-    n 1nnmsm "Make sure your feet can still touch the floor,{w=0.1} though.{w=0.2}"
-    extend 3uchgn " Even I can do that!"
-    n 1nnmaj "Number two:{w=0.2} distance!"
-    n 3nsggn "I know you can't get enough of me,{w=0.1}"
-    extend 3fnmpo " but I don't wanna see you pressing your face against the screen.{w=0.2} It's weird."
-    n 1uchgn "So make sure you sit about an arm's length away from the display,{w=0.1} alright?"
-    n 4uwdaj "Oh!{w=0.2} Don't forget to keep your stuff in easy reach though{w=0.1} -{w=0.1}"
-    extend 1unmsm " like your mouse."
-    n 1unmbg "Number three:{w=0.2} breaks!"
-    n 1uwmbg "I don't know about you,{w=0.1} but I get all fidgety if I stay still too long..."
-    n 3fchgn "So make sure you get off your butt and do some stretches a few times per hour!"
-    n 4fsqsg "You could even get some water or something if you {i}really{/i} need an excuse to move."
-    n 1nnmsm "It'd also give your eyes a rest from the screen!"
-    n 1uchbs "Alright {w=0.1}-{w=0.1} and the last one!{w=0.2} This one's important,{w=0.1}"
-    extend 4uchgn " so listen up good!"
-    n 1unmbo "If you ever feel unwell {w=0.1}-{w=0.1} like your back aches,{w=0.1} or your eyes hurt or something..."
-    n 2fwmpu "Please just stop whatever you're doing.{w=0.2} Your health comes first.{w=0.2} I don't care what needs to be done."
-    n 1unmsm "Take some time to feel better,{w=0.1} then make sure all your stuff is set up right like I said."
-    n 3fcsss "Don't carry on until you feel well enough {w=0.1}-{w=0.1} talk to someone if you have to!"
-    n 1uchgn "Okaaay!{w=0.2} Lecture over!"
-    n 4ullaj "Wow...{w=0.3} I rambled on a while,{w=0.1} didn't I?{w=0.2}"
-    extend 1klrbgl " Sorry,{w=0.1} sorry!{w=0.2} Ehehe."
-
-    if Natsuki.isEnamored(higher=True):
-        n 3kwmsml "But you know I only do these things because I really care about you,{w=0.1} [player]...{w=0.3} right?"
-        n 4kwmnvl "So please...{w=0.3} take care of yourself, okay?{w=0.2} I don't want you hurting because of me."
-
-        if Natsuki.isLove(higher=True):
-            $ chosen_endearment = jn_utils.getRandomEndearment()
-            n 4kwmsml "I love you,{w=0.1} [chosen_endearment]."
-            n 1kwmnvl "..."
-            return
+    if get_topic("talk_using_computers_healthily").shown_count > 0:
+        n 3tllsl "..."
+        n 7tslbo "..."
+        n 7tslfl "Say...{w=1}{nw}"
+        extend 7tnmfl " [player]?{w=0.75}{nw}"
+        extend 3unmaj " You got a minute?{w=0.75}{nw}"
+        extend 3tnmbo " I gotta ask you a question."
+        n 7tslsl "..."
+        n 7tslaj "So...{w=1}{nw}"
+        extend 7unmaj " you've been visiting me for a while already,{w=0.2} huh?{w=0.75}{nw}"
+        extend 3ulrbo " You know,{w=0.2} using your computer and everything."
+        n 4csrss "And I'm pretty sure I went through how to make sure you aren't just setting yourself up for some major hurt down the line already."
+        n 4tlraj "But...{w=1}{nw}"
+        extend 7tnmaj " I gotta ask."
+        n 3fnmbg "Just how much of that exactly do you{w=0.3}{nw}"
+        extend 3fsqbg " {i}actually{/i}{w=0.3}{nw}"
+        extend 3fnmbg " remember,{w=0.75}{nw}"
+        extend 3fsqsm " [player]?"
+        n 4fnmbg "Huh?"
+        n 4tsqsm "..."
+        n 2fcssm "Ehehe.{w=0.75}{nw}"
+        extend 2fcsbg " Yep,{w=0.2} just as I thought.{w=0.75}{nw}"
+        extend 2nchgn " Total silence!"
+        n 4fllbg "Well [player],{w=0.2} have no fear."
+        n 6fcssmedz "'Cause it's time for a little refresher on how {i}not{/i} to ruin your spine from yours truly!"
 
     else:
-        n 1usglg "But you know I only say these things because I care."
-        n 3nsqpo "...And I don't want you whining to me that your back hurts.{w=0.2}"
+        n 7tslsl "..."
+        n 7cslpu "...Huh."
+        n 7tnmaj "You know,{w=0.2} [player]...{w=1}{nw}"
+        extend 3tlraj " I just thought of something.{w=0.75}{nw}"
+        extend 3unmbo " About how you actually visit me and all."
+        n 7ulraj "So...{w=1}{nw}"
+        extend 2tlrfl " you gotta be at your desk to actually talk to me,{w=0.5}{nw}"
+        extend 2tnmca " right?{w=0.75}{nw}"
+        extend 4cslss " Or using some kind of computer at least."
+        n 7tslpu "And you've been here for a bunch of time already too,{w=0.2} now that I think about it."
 
-    n 4nchgn "Ahaha...{w=0.3} now, where were we?"
+        if Natsuki.isEnamored(higher=True):
+            n 3unmfll "N-{w=0.2}not that I'm saying I don't appreciate it or anything like that!\n{w=0.75}{nw}"
+            extend 3ccsajlsbr "O-{w=0.2}of course I do!"
+            $ chosen_tease = jn_utils.getRandomTease()
+            n 5csrbolsbr "I shouldn't even have to remind you by now,{w=0.2} [chosen_tease]."
+
+        elif Natsuki.isAffectionate(higher=True):
+            n 3unmeml "N-{w=0.2}not that it's a problem,{w=0.5}{nw}" 
+            extend 3clremlsbl " or anything like that!{w=0.75}{nw}"
+            extend 3ccspolsbl " Y-{w=0.2}you should know it isn't by now anyway,{w=0.2} [player]."
+
+        else:
+            n 3unmeml "N-{w=0.2}not that I'm saying it's some kind of problem or anything like that,\n{w=0.5}{nw}" 
+            extend 4ccsgslsbl "{i}obviously{/i}!"
+            n 2csrbolsbl "..."
+
+        n 4clrpu "Though..."
+        n 7tnmflsbr "Doesn't that mean you're spending a whole bunch of extra time sat around with your computer every day?{w=0.75}{nw}"
+        extend 3tsqslsbr " Just for my sake?"
+        
+        if (
+            Natsuki.isAffectionate(higher=True) 
+            and (jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.artwork) 
+            or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.coding) 
+            or jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.work_applications))
+        ):
+            $ activity_options = []
+            if jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.artwork):
+                $ activity_options.append("drawing")
+
+            if jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.coding):
+                $ activity_options.append("coding")
+
+            if jn_activity.ACTIVITY_MANAGER.hasPlayerDoneActivity(jn_activity.JNActivities.work_applications):
+                $ activity_options.append("working")
+
+            if len(activity_options) > 0:
+                $ activity_mention = random.choice(activity_options)
+                n 2ccsfl "I mean...{w=1}{nw}"
+                extend 2ulraj " I know you use your computer already for a bunch of stuff.\n{w=0.75}{nw}"
+                extend 4fchbg "Like [activity_mention]!"
+
+        else:
+            n 2ccsfl "I mean...{w=1}{nw}"
+            extend 2tllsl " I guess you probably still use your computer for other stuff already."
+
+        n 1ccsflsbl "But that still doesn't change the fact you're gonna be racking up a load of extra screen time thanks to me."
+        
+        if Natsuki.isEnamored(higher=True):
+            n 2clrfllsbl "And the last thing I wanna hear about is you getting yourself all cramped up because you were slouched over like a potato for hours."
+            n 2cllsl "..."
+
+        else:
+            n 2ccsaj "And the last thing I wanna hear is you complaining your back hurts because nobody had the brains to tell you not to slouch like a potato for hours."
+            n 2ccspol "I-{w=0.2}I'm not having {i}that{/i} on my conscience."
+
+        n 1ccsss "Heh.{w=0.75}{nw}"
+        extend 4fsrss " In fact..."
+        n 2fnmbg "You know what,{w=0.2} [player]?{w=0.75}{nw}"
+        extend 2fsqsm " I hope you're sitting."
+        n 6fcsbg "'Cause I'm gonna make sure you're using your computer the {i}right{/i} way,{w=0.5}{nw}"
+        extend 3fchgn " whether you like it or not!"
+
+    n 1fcsbg "Alright,{w=0.75}{nw}"
+    extend 6fcsaj " so number one:{w=1}{nw}" 
+    extend 3unmbg " posture!"
+    n 1ccsflsbl "...And no,{w=0.2} [player].{w=0.75}{nw}"
+    extend 4csqtr " I mean {i}actual{/i} posture.{w=0.75}{nw}"
+    extend 4ccspo " The sitting kind."
+    n 3fnmfl "Now sit up straight,{w=0.2} and keep that back of yours against the chair,{w=0.2} [player].{w=0.75}{nw}"
+    extend 3fcsgs " I mean it!"
+    n 4cllfl "Seriously -{w=0.5}{nw}"
+    extend 4tsqem " unless you feel like making friends with your nearest chiropractor,{w=0.5}{nw}"
+    extend 4cslem " trust me when I say you {i}really{/i} don't wanna spend all your time slouching."
+    n 2csqss "...Or hunched up on your chair like some kind of weird computer gremlin."
+    n 6unmaj "If you're doing it right,{w=0.5}{nw}"
+    extend 3ullaj " then you should have your arms and thighs parallel to the ground,{w=0.5}{nw}"
+    extend 3fcssm " with your eyes roughly at the top of your screen.{w=0.75}{nw}"
+    extend 3fcsbg " Easy peasy!"
+    n 4unmfl "Oh,{w=0.2} right -{w=0.5}{nw}"
+    extend 2clrsssbl " make sure your feet can still touch the floor,{w=0.2} though.\n{w=0.75}{nw}"
+    extend 2fcscasbr "Even {i}I{/i} can do that,{w=0.2} [player]."
+    n 1fnmaj "Number two:{w=0.75}{nw}"
+    extend 2fcsbg " distance!"
+    n 2clrbg "It's pretty easy to forget,{w=0.5}{nw}"
+    extend 4tnmbo " but if you wanna avoid sore eyes then you've gotta make sure you're actually a decent distance from the screen too."
+    n 2fcsca "Not right up close or so far away you need binoculars!"
+
+    if Natsuki.isEnamored(higher=True):
+        n 2fcsbglsbr "I-{w=0.2}I know you just can't get enough of me,{w=0.2} [player].{w=0.75}{nw}"
+        extend 4cslfllsbr " But really."
+        n 4ccspol "Even I don't wanna see you practically pressing your face against the screen either."
+
+    elif Natsuki.isAffectionate(higher=True):
+        n 2fsrsslsbr "I-{w=0.2}I know I {i}am{/i} pretty awesome,{w=0.5}{nw}"
+        extend 4csqflsbr " but the last thing I wanna be greeted by is your face right up against the screen either."
+
+    else:
+        n 2ccsflsbr "A-{w=0.2}and besides,{w=0.5}{nw}"
+        extend 2cslflsbr " the last thing I wanna see is your face all smushed up against the screen,{w=0.2} [player].{w=0.75}{nw}"
+        extend 2ccsposbr " I didn't ask for {i}that{/i}."
+
+    n 2ulraj "So...{w=1}{nw}"
+    extend 4tsgbg " just make sure you're sitting about an arm's length away from the screen.{w=0.75}{nw}"
+    extend 4ccsbg " That's all I'm saying!"
+    n 3unmpu "Don't forget to keep all your stuff in easy reach though -{w=0.5}{nw}"
+    extend 3ccsbg " unless you're a psychic,{w=0.5}{nw}"
+    extend 6csqsm " you aren't getting far if you can barely hit the keyboard."
+
+    if get_topic("talk_using_computers_healthily").shown_count > 0:
+        n 7ullaj "And remember,{w=0.2} there's plenty of stuff to see beyond the screen -{w=0.5}{nw}"
+        extend 3fcsbg " so you better be giving your eyes a break too!"
+
+    else:
+        n 7ullfl "And while you're at it?{w=0.75}{nw}"
+        extend 7ullaj " Spend some time looking at something {i}other{/i} than the screen too,{w=0.5}{nw}"
+        extend 7unmbo " for that matter."
+        n 3fcsbg "You've got windows there,{w=0.2} right?{w=0.75}{nw}"
+        extend 3fsqbg " So you better be using them!"
+
+    n 7ccsbg "Now,{w=0.2} number three:{w=0.75}{nw}"
+    extend 3fchbg " breaks!"
+    n 3tllfl "I don't know about you [player],{w=0.5}{nw}"
+    extend 7tnmbo " but personally?{w=0.75}{nw}"
+    extend 7csrem " I can't stand being sat staring at a screen for hours at a time."
+    n 3cnmem "Seriously -{w=0.5}{nw}"
+    extend 4cllan " I keep getting distracted if I'm stuck in front of my laptop for too long.{w=1}{nw}"
+    extend 4fcsem " It's the worst!"
+    n 2fslem "Plus on top of that,{w=0.5}{nw}"
+    extend 2csqsl " you're {i}really{/i} not doing your circulation a favor either."
+    n 6fcsbg "...So get off your butt and do some stretches or something!{w=0.75}{nw}"
+    extend 3clraj " Or even go get some water if you {i}really{/i} need an excuse to get moving."
+    n 3tnmbo "Really,{w=0.2} it doesn't matter what you do.{w=0.75}{nw}"
+    extend 4ccsca " It's all about getting off your rear,{w=0.2} back on your feet,{w=0.2} and giving your eyes a break.{w=0.75}{nw}"
+    extend 6ccsbg " Simple enough!"
+    n 3fsqsm "..."
+    n 3fsqss "Well?{w=0.75}{nw}"
+    extend 7fcsbg " Still following me,{w=0.2} [player]?"
+    n 3flraj "You better be.{w=0.75}{nw}"
+    extend 3fnmfl " This one's easily the most important,{w=0.2} so listen up!"
+    n 4tllfl "Don't get the wrong idea,{w=0.2} [player] -{w=0.5}{nw}"
+    extend 4tsqfl " obviously you're gonna know your limits better than I do."
+    n 2tlrpu "But...{w=1}{nw}" 
+    extend 2tnmbo " if you start feeling kinda weird or sick,{w=0.2} or your eyes start hurting or something while you're around?"
+    n 2cllaj "Just..."
+    n 1cdlsll "..."
+    n 4ccsfllsbl "...Just don't be a total dummy about it.{w=0.75}{nw}"
+    extend 4csqfllsbl " Alright?"
+    n 2clrflsbr "I'm being serious here."
+    n 2cnmslsbr "Call it quits on whatever you were doing and just come back to it later.{w=0.75}{nw}"
+    extend 1csqbosbr " Got it?"
+    n 3ccstr "Work or some dusty old assignment can wait if you're just gonna make yourself even worse trying to impress someone."
+    n 3csqbo "No,{w=0.2} your boss or professor isn't going to drop dead if that stinky report isn't done today."
+    n 1ccsss "Heh.{w=0.75}{nw}"
+    extend 4clrss " Anyway,{w=0.2} think about it."
+    n 3tnmbo "It isn't like you're going to pull some kind of miracle if you try and push through it all."
+    n 3ccsaj "All you're gonna achieve is make yourself feel like crap for even longer.{w=0.75}{nw}"
+    extend 3fcsca " It's totally pointless."
+    
+    if Natsuki.isEnamored(higher=True):
+        n 2cllca "...And besides,{w=0.2} [player]."
+        n 2cllpulsbl "You know I'm not going to get mad or anything if you have to take a rain check on our time together..."
+        n 4knmbolsbl "Right?"
+        n 4klrbolsbl "..."
+        n 2ccsfllesisbl "..."
+        n 2cnmsll "...Look."
+        n 1fcspul "I...{w=1}{nw}"
+        
+        if Natsuki.isLove(higher=True):
+            extend 1ncspul " really...{w=1}{nw}"
+        
+        $ chosen_descriptor = jn_utils.getRandomEndearment() if Natsuki.isLove(higher=True) else player
+        extend 4csrbol " care about you,{w=0.2} [chosen_descriptor].{w=0.75}{nw}"
+        extend 5cnmbol " You should seriously know that by now."
+        n 3ccsajl "...Just like you should know you I'm {i}not{/i} gonna be impressed by some weird macho display of toughing it out."
+        n 3cnmpol "Capiche?"
+        n 3cslbol "..."
+
+    elif Natsuki.isAffectionate(higher=True):
+        n 2cllflsbr "A-{w=0.2}and besides,{w=0.2} [player].{w=0.75}{nw}"
+        extend 2ccssllsbl " I'm not {i}that{/i} selfish."
+        n 4csrajlsbl "You {i}do{/i} know I won't get mad or anything if you really have to go for a while..."
+        n 4cnmsllsbl "Right?"
+        n 1cslbolsbl "..."
+
+    else:
+        n 2fcstr "A-{w=0.2}and besides,{w=0.2} [player]."
+        n 2clrajsbl "It's not like I'm gonna get mad at you or anything like that either if you gotta duck out.{w=0.75}{nw}"
+        extend 2clrsll " Even I'm not that much of a jerk."
+        n 1clrbol "..."
+
+    n 4ccsflsbr "A-{w=0.2}anyway."
+    n 4ullaj "I've gone on way long enough already,{w=0.5}{nw}"
+    extend 2cnmca " so I'm just gonna say this,{w=0.2} [player]."
+    n 7fcsaj "You might end up with a crappy back or nasty eyes if you aren't careful..."
+    n 3fcspo "...But that's gonna be nothing compared to the grade-A earache you're getting if you come crying to me later!"
+    n 3fsqsm "Ehehe."
+
+    if Natsuki.isLove(higher=True):
+        $ chosen_tease = jn_utils.getRandomTease()
+        n 4fchbll "Love you too,{w=0.2} [chosen_tease]!"
+
+    else:
+        $ chosen_descriptor = jn_utils.getRandomTease() if Natsuki.isEnamored(higher=True) else player
+        n 4fchgnedz "You're welcome,{w=0.2} [chosen_descriptor]!"
+
     return
 
 # Natsuki highlights the importance of staying active and getting exercise
@@ -2885,7 +3075,7 @@ label talk_sustainable_fashion:
         n 2klrsr "I've...{w=0.3} never had tons of money to buy more clothes anyway,{w=0.1} so I try to reuse and fix up what I can."
         n 1fchbg "But you'd be surprised at what you can pull off with a little creativity!"
         extend 1fcssm " And just a pinch of know-how too,{w=0.1} obviously."
-        n 4fchgn "Betcha didn't know my favorite pink skirt was hand-made,{w=0.1} did you?"
+        n 4fchgn "Betcha' didn't know my favorite pink skirt was hand-made,{w=0.1} did you?"
 
     n 1unmaj "I think I've lectured you enough now,{w=0.1} [player],{w=0.1} so I won't keep harping on about it."
     n 3nllpu "But...{w=0.3} the next time you're out shopping for clothes,{w=0.1} or looking through some catalogues online?"
@@ -5517,16 +5707,22 @@ label talk_play_snap:
         n 1unmaj "You wanna play Snap?{w=0.75}{nw}" 
         extend 4fchsm " Sure!"
 
-    n 4fcsss "Let me just get the cards out real quick..."
+    if Natsuki.getDeskItemReferenceName(jn_desk_items.JNDeskSlots.right) == "jn_card_pack":
+        n 7csqbg "Good thing I never put the cards away,{w=0.2} huh?"
 
-    show natsuki 4fcssm
-    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
-    $ jnPause(1.5)
-    play audio drawer
-    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_card_pack"))
-    show natsuki 4fchsm
-    hide black with Dissolve(1)
+    else:
+        n 4fcsss "Let me just get the cards out real quick..."
 
+        show natsuki 4fcssm
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+        $ jnPause(1.5)
+        play audio drawer
+        $ jnPause(1)
+        $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_card_pack"))
+        show natsuki 4fchsm
+        hide black with Dissolve(1)
+
+    $ get_topic("talk_play_snap").shown_count += 1 # Have to increment here manually thanks to jump
     jump snap_intro
 
 # Natsuki goes over the rules of snap again, for if the player has already heard the explanation pre-game
@@ -5551,6 +5747,8 @@ label talk_remind_snap_rules:
         n 2fcsan "Come on,{w=0.1} [player]."
         n 2flrpo "If you cared about the rules,{w=0.1} then why did you cheat when we played earlier?"
         n 4fnmpo "You haven't even apologized for it yet..."
+
+        $ get_topic("talk_remind_snap_rules").shown_count += 1 # Have to increment manually here thanks to jump
         return
 
     else:
@@ -5567,6 +5765,7 @@ label talk_remind_snap_rules:
         else:
             n 1nnmss "Sure thing!"
 
+        $ get_topic("talk_remind_snap_rules").shown_count += 1 # Have to increment manually here thanks to jump
         jump snap_explanation
 
 # Natsuki hates people being inconsiderate with chewing gum
@@ -11550,3 +11749,680 @@ label talk_enable_no_topics_reminder:
 
     $ persistent._jn_natsuki_out_of_topics_remind = True
     return
+
+# Natsuki expresses her frustration towards people being inconsiderate with their audio in public.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_windup_playing_things_out_loud",
+            unlocked=True,
+            prompt="Playing things out loud",
+            category=["Wind-ups"],
+            conditional="jn_utils.get_total_gameplay_hours() >= 4",
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_windup_playing_things_out_loud:
+    $ already_discussed_topic = get_topic("talk_windup_playing_things_out_loud").shown_count > 0
+    if already_discussed_topic:
+        n 7csrca "..."
+        n 3fcsflesi "..."
+        n 3cllfl "You know,{w=0.2} [player]..."
+        n 7tnmsl "I'm pretty sure I went through it all before.{w=0.75}{nw}"
+        extend 7clrflsbl " And I don't even know why it still bothers me so much."
+        n 4fsrem "But I {i}still{/i} can't stand when some people feel the need to just blast what {i}they{/i} wanna listen to out loud in front of everyone else."
+        n 2fsrca "..."
+        n 2fnmfll "What?{w=0.75}{nw}"
+        extend 2csqfll " Do I look like I'm making it all up or something?{w=0.75}{nw}"
+        extend 4fcsgsl " It's the {i}worst{/i}!"
+
+    else:
+        n 7cslsl "..."
+        n 3fslan "Tch!"
+        n 3fsrbo "..."
+        n 3ccsss "Heh."
+        n 4cllfl "Hey,{w=0.2} [player]...{w=1}{nw}"
+        extend 2cnmaj " you wanna know what winds me up?"
+        n 2fnmfl "And I mean{w=0.5}{nw}"
+        extend 4fsqem " {i}really{/i}{w=0.5}{nw}"
+        extend 4fsran " gets on my nerves?"
+        n 2fcsemesi "..."
+        n 2fllaj "When you're taking some sort of public transport,{w=0.2} or you're just hanging around somewhere.{w=0.75}{nw}"
+        extend 2fllfl " That kind of thing."
+        n 4fcsanean "...And then some total jerk feels the need to pull our their phone just to blast out what {i}they{/i} feel like listening to."
+        n 4fsrsl "..."
+        n 2fnmwrl "H-{w=0.2}hey!{w=0.75}{nw}"
+        extend 2fcspol " I'm being serious here,{w=0.2} [player]!{w=0.75}{nw}"
+        extend 4fbkwrl " It's the {i}worst{/i}!"
+
+    n 3flrem "I mean,{w=0.2} come on.{w=0.75}{nw}"
+    extend 3fupwr " Where do I even {i}start{/i}?"
+    n 6fcsgs "First off,{w=0.5}{nw}"
+    extend 3fllan " you can basically guarantee that whatever it is,{w=0.75}{nw}" 
+    extend 3fslan " it's {i}never{/i} gonna sound good."
+    n 4fbkwr "Nothing ever {i}does{/i} when you're blasting it out of crappy phone speakers or busted-up headphones!"
+    n 4fcsan "Bonus points too if it's some kid playing on something their parents gave them just to shut them up."
+    n 1nsqem "And{w=0.3} Oh.{w=0.75}{nw}"
+    extend 2csqfl " My.{w=0.75}{nw}"
+    extend 2fsqem " God,{w=0.5}{nw}"
+    extend 4fsrfu " [player]."
+    n 4fcsup "{i}The echoing{/i}."
+    n 3fsqgs "Do you even know how much worse it gets when you're stuck inside the train,{w=0.5}{nw}" 
+    extend 3fcsgs " or literally anything else?"
+    n 3fcsan "Talk about an earache.{w=0.75}{nw}"
+    extend 7fllem " Especially if you just wanted to relax before the day starts!"
+    n 4fsrem "{i}And{/i} you can forget about trying to hold any kind of conversation too with all that noise in the background."
+    n 2fcssl "Heh.{w=0.75}{nw}"
+    extend 2fsqfr " Then you know what the worst part is,{w=0.2} [player]?"
+    n 4fllem "If you even try to call them out,{w=0.5}{nw}"
+    extend 4csqem " you just know they'll make a massive scene over it too,{w=0.5}{nw}" 
+    extend 4fslfu " or make it sound like you're just freaking out!"
+    n 6ftlgs "'But you don't {i}have{/i} to listen to it!'{w=0.5}{nw}"
+    extend 3ftrwr " 'You can play what you want too!'\n{w=0.75}{nw}"
+    extend 3fsran "As if that makes everything just a-okay,{w=0.5}{nw}" 
+    extend 3fsqan " right?"
+    n 1fcsem "Cut me a break."
+    n 2flran "Like just how inconsiderate can you get?{w=0.75}{nw}"
+    extend 2fcsan " Seriously?!"
+    n 4fslem "B-{w=0.2}besides,{w=0.5}{nw}"
+    extend 4fcsgs " it's not like you can just choose {i}not{/i} to hear whatever they decide to grace your ears with."
+    n 2fsrsll "...And not all of us can afford all the fancy noise cancelling stuff either."
+    n 1ccsemesi "Ugh..."
+    n 2fllsl "Jerks.{w=0.75}{nw}"
+    extend 2fslbol " Makes me wanna yank that stupid phone or whatever out of their hands and toss it out the window."
+
+    if get_topic("talk_using_headphones_carefully").shown_count > 0:
+        n 1ccsfll "And I know I said before that shutting yourself away from the world with headphones was a bad idea."
+        $ descriptor = "{i}trying{/i} to be" if Natsuki.isAffectionate(higher=True) else "being kinda"
+        n 5csrsl "But at least you're still [descriptor] considerate.{w=0.75}{nw}"
+        extend 5cnmbol " You know?"
+
+        if Natsuki.isAffectionate(higher=True):
+            n 1ccsfll "I just..."
+            n 4csrsll "..."
+
+    n 4ccsfllesi "..."
+    n 2cslajl "...Look.{w=0.75}{nw}"
+    extend 2ccsbo " I'm not dumb.{w=0.75}{nw}"
+    extend 1clrfl " I get that if you're in a public space then you gotta accommodate others who want to use it too."
+    n 3fslem "But that doesn't give any old jerk the right to use it how {i}they{/i} want at the expense of everyone else!"
+    n 3fsrsl "...Let alone act so entitled over the whole stupid thing.{w=0.75}{nw}"
+    extend 3fsrfl " Yeesh."
+    n 3fnmca "..."
+    n 4ccsflsbl "...Yeah,{w=0.2} yeah.{w=0.75}{nw}"
+    extend 1cllcasbl " I know.{w=0.75}{nw}"
+
+    if already_discussed_topic:
+        extend 2cllflsbr " I'm not gonna let myself get all wound up about it.{w=0.75}{nw}"
+        extend 2cslflsbr " Again."
+
+    else:
+        extend 2ccstrlsbr " I'm not gonna let myself get {i}that{/i} wound up about it."
+
+    if Natsuki.isEnamored(higher=True):
+        n 2fcsssl "...E-{w=0.2}even if I know you just can't get enough of the sound of my voice."
+
+    elif Natsuki.isAffectionate(higher=True):
+        n 2csrpol "...Even if I bet you just enjoy listening to my stupid rants by now."
+
+    n 2ulraj "So...{w=1}{nw}"
+    extend 2cnmca " I'm just gonna say this."
+    n 1tllfl "I don't really care what you listen to or how you listen to it in your own four walls,{w=0.2} [player]."
+
+    if Natsuki.isEnamored(higher=True):
+        n 5csrssl "And I {i}seriously{/i} doubt you of all people would do something like that.{w=0.75}{nw}"
+        $ descriptor = "you're still" if Natsuki.isLove(higher=True) else "you are"
+        extend 5csqssl " Even if [descriptor] a big dope sometimes."
+
+    elif Natsuki.isAffectionate(higher=True):
+        n 4csrsslsbr "And I kinda doubt you're the sort of person who does that kind of thing anyway."
+
+    else:
+        n 2tlraj "And I kinda doubt you're {i}that{/i} much of a jerk anyway."
+
+    n 2clrfl "But...{w=1}{nw}"
+    extend 2csgfl " if I hear about you blasting some kind of [player] broadcast out there in front of everyone when {w=0.3}{i}literally{/i}{w=0.5}{nw}" 
+    extend 2csqfl " no-one asked?"
+    n 4fcsbs "...Then you can bet your butt I'm going to give {i}your{/i} ears something extra-special to listen to!{w=0.75}{nw}"
+    extend 4fsqsmeme " Ehehe."
+
+    if Natsuki.isLove(higher=True):
+        n 2fchbgl "Love you,{w=0.2} [player]~!"
+
+    elif Natsuki.isAffectionate(higher=True):
+        n 2fchgnl "You're welcome,{w=0.2} [player]!"
+
+    else:
+        n 2nchgn "Hope you learned something,{w=0.2} [player]!"
+
+    return
+
+# Natsuki discusses her work "experience" and frustrations with the placement process.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_work_experience",
+            unlocked=True,
+            prompt="Did you ever have any work experience?",
+            category=["Society"],
+            conditional="jn_utils.get_total_gameplay_days() >= 2",
+            player_says=True,
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_work_experience:
+    $ already_discussed_work_experience = get_topic("talk_work_experience").shown_count > 0
+    if Natsuki.isNormal(higher=True):
+        if already_discussed_work_experience:
+            n 7csrfl "Wait...{w=1}{nw}"
+            extend 7tnmfl " work experience?{w=0.75}{nw}"
+            extend 3ccsajsbr " H-{w=0.2}hang on a sec."
+            n 7tnmbosbr "Didn't you ask me about that already,{w=0.2} [player]?{w=0.75}{nw}"
+            extend 7tllsl " Huh."
+            n 4tllaj "Well,{w=0.5}{nw}"
+            extend 4ullaj " whatever.{w=0.75}{nw}"
+            extend 2cnmfl " I guess I don't mind sharing my...{w=1}{nw}"
+            extend 2csrfl " {i}experience{/i}{w=0.5}{nw}"
+            extend 2csrsl " again."
+            n 1ccsem "If you can even call it that,{w=0.2} a-{w=0.2}anyway."
+            n 3cllfl "Like I was saying before,{w=0.2} we never properly got to choose our placements or anything like that."
+
+        else:
+            n 3tlrbo "Work experience,{w=0.5}{nw}"
+            extend 3tnmbo " huh?"
+            n 4ccsflsbl "...Wait.{w=0.75}{nw}"
+            extend 4nsqflsbl " Don't tell me.{w=0.75}{nw}"
+            extend 2csqem " You mean like some kind of placement while I was in school?{w=0.75}{nw}"
+            extend 2tsqfl " Or like an internship?"
+            n 1cnmsl "{i}That{/i} kind of work experience?"
+            n 2fcsslesi "..."
+            n 2ccsfl "Heh.{w=0.75}{nw}"
+            extend 2cllfl " Yeah.{w=0.75}{nw}"
+            extend 4cslfr " The whole process was an {i}experience{/i} alright."
+            n 7nllaj "So.{w=0.75}{nw}"
+            extend 7ullfl " I don't know how it works for you,{w=0.2} [player].{w=0.75}{nw}"
+            extend 3tnmsl " But at my school at least?{w=0.75}{nw}"
+            extend 3clrem " We didn't even get to properly {i}choose{/i} our placements."
+
+        n 1fnmem "Seriously -{w=0.5}{nw}" 
+        extend 4fllgs " it was a total crapshoot!{w=0.75}{nw}"
+        extend 2fslan " Nothing but dumb luck!"
+
+        if already_discussed_work_experience:
+            n 2ccsslsbr "And no,{w=0.2} like I said -{w=0.5}{nw}"
+
+        else:
+            n 2ccsemsbr "And no,{w=0.2} [player],{w=0.2} before you ask -{w=0.5}{nw}"
+
+        extend 1csqemsbr " we didn't get a choice on if we {i}wanted{/i} to do it either."
+        n 4clraj "We all had this online form we had to fill out in the computer room,{w=0.5}{nw}"
+        extend 4fsqfl " but it wasn't like we could just type in a place we already had in mind.\n{w=0.75}{nw}"
+        extend 2fupem "Of {i}course{/i} not."
+        n 2fcsgs "Nope!{w=0.75}{nw}"
+        extend 2fllem " It was just a bunch of pre-filled options we had to pick between.{w=0.75}{nw}"
+        extend 4fslan " They weren't even good ones!"
+        n 2flrem "There were a couple of office places,{w=0.2} sure."
+        n 2fnman "But most of them were just working in some random store!{w=0.75}{nw}"
+        extend 4fcswr " The whole point of those is that you don't even {i}need{/i} experience to do them!"
+        n 2fsrem "...And we had to pick {i}three{/i} of them too.{w=0.5} {i}In order of preference{/i}."
+        n 1fcssl "Heh.{w=0.75}{nw}" 
+        extend 4fsqfl " The worst part,{w=0.2} [player]?{w=0.75}{nw}"
+
+        if already_discussed_work_experience:
+            extend 4fslsl " It {i}still{/i} bugs me talking about it a second time."
+
+        else:
+            extend 4fllfl " You're not even gonna {i}believe{/i} this."
+
+        n 4fnmgs "We had to write out a complete cover letter for all of them too!{w=0.75}{nw}"
+        extend 2fsran " There was a word count and everything!"
+        n 2ccsemesi "..."
+        n 2fcsbosbr "I get it.{w=0.75}{nw}"
+        extend 7cllflsbl " It was supposed to give us practice on how to apply for stuff in the future."
+        n 3fcsgs "But {i}seriously{/i}!"
+        n 2fslan "Do you know how much of a pain it is to sound convincing for something you don't even {i}care{/i} about?"
+        n 2fcswr "We didn't even know about half of the places we could pick until they showed up on the list!"
+        n 1fsran "It isn't like the places we were applying to didn't {i}know{/i} we had to do it either -{w=0.5}{nw}"
+        extend 3fcsan " it's all a total act anyway!"
+        n 3fllem "So then we were stuck trying to desperately research all these places,{w=0.5}{nw}"
+        extend 3fnmem " what they even did,{w=0.5}{nw}"
+        extend 4flran " how to actually {i}get{/i} there..."
+        n 1fsqan "...While trying to play up how {i}amazing{/i} for the job we were and beat everyone else in submitting it!"
+        n 2fslsl "Then with everyone applying for all the good ones,{w=0.5}{nw}" 
+        extend 2fslem " the teachers would just send off your last choice instead.{w=0.75}{nw}"
+        extend 4fnmbo " Or dump you with some place nobody wanted at all."
+
+        $ already_discussed_interviews = get_topic("talk_how_to_interview_properly").shown_count > 0
+        if already_discussed_interviews:
+            n 1csrsl "Talk about a complete waste of time."
+            n 2clrflsbl "I already mentioned before that I never had the time for a part-time job or anything like that outside of school."
+            n 4csqslsbl "...So why did they think we'd have a couple of weeks to blow on something like {i}that{/i}?"
+            n 2fcsfl "{i}Especially{/i} when it isn't even paid work."
+
+        else:
+            n 2fcsfl "Ugh..."
+            n 6tsqfl "And with the constant assignments plus all the regular lessons too?{w=0.75}{nw}"
+            extend 4fllfl " I didn't even have time for a {i}paid{/i} job!{w=0.75}{nw}"
+            extend 2fcsaj " Let alone just forking over all my effort for {i}free{/i}."
+
+        n 2csrfl "Yeah,{w=0.2} yeah.{w=0.75}{nw}"
+        extend 2clrfl " We get to spend time in a real workplace so we know what to expect later,{w=0.5}{nw}"
+        extend 1clrbo " or build some connections."
+        n 2ccsflsbr "It's just that..."
+        n 5cslbosbr "..."
+
+        if Natsuki.isAffectionate(higher=True):
+            n 4fcsemsbr "I-{w=0.2}it's just so {i}annoying{/i}!{w=0.75}{nw}"
+            extend 4knmemsbr " You know?{w=0.75}{nw}"
+            extend 2csrfllsbl " With so much going on at the same time,{w=0.2} I mean."
+            n 1csrsllsbl "..."
+            n 4ccspulsbl "I...{w=1}{nw}"
+            extend 4fcspul " don't...{w=1}{nw}"
+            extend 2flrbol " mind helping a place out."
+            n 5csrpul "If it's about something I actually {i}care{/i} about."
+            n 5cnmeml "...But why does {i}my{/i} future have to suffer for it?"
+            n 2cslsll "It's not like I couldn't just land a job at one of those places when I actually needed the work.{w=0.75}{nw}"
+            extend 2knmbol " Right?"
+
+            if Natsuki.isEnamored(higher=True):
+                n 1ccsss "Heh.{w=0.75}{nw}"
+                extend 1csrpu " Besides."
+                n 1clrsll "I was already told my future was just gonna be stacking shelves."
+                n 2kslsll "...The last thing I needed was a preview."
+                n 2kslbol "..."
+                n 4ccsemlsbr "A-{w=0.2}anyway!"
+
+            else:
+                n 2kslbol "..."
+                n 4ccscasbr "A-{w=0.2}anyway."
+
+            n 5cslbo "As if all the time spent looking and filling stuff out actually ended up meaning much."
+            n 4unmgs "Not that I didn't {i}try{/i} or anything like that!{w=0.75}{nw}"
+            extend 2fcsgssbr " O-{w=0.2}of course I did!{w=0.75}{nw}"
+            extend 2fllslsbr " Just my luck that everyone felt like picking the only places {i}I{/i} could stomach."
+            n 5flrflsbr "And it wasn't like I could even get to many other places either."
+            n 5clrslsbr "Not with my...{w=1}{nw}" 
+            extend 1ksrslsbr " situation."
+            n 1nlraj "So..."
+            n 2nslbo "They agreed to let me pull some time in the school library instead.\n{w=0.75}{nw}"
+            extend 2cslss "At least I got to study when it wasn't busy."
+            n 2kslsllsbr "...And I always got home on time.{w=1}{nw}"
+            extend 5cslbol " I guess I could appreciate that."
+
+            $ office_outfit = jn_outfits.getOutfit("jn_office_outfit")
+            if Natsuki.isEnamored(higher=True) and persistent.jn_custom_outfits_unlocked and not office_outfit.unlocked:
+                n 7cllbo "..."
+                n 7cllfl "...Actually.{w=0.75}{nw}"
+                extend 7tllbo " Now that I think about it..."
+                n 3tnmfl "I'm pretty sure I still have the outfit I put together for my placement somewhere too.{w=0.75}{nw}"
+                extend 3nlrfl " Huh."
+                n 4tlrsl "..."
+                n 4tsrss "In fact.{w=0.75}{nw}"
+                extend 7cnmss " You know what?{w=0.75}{nw}"
+                extend 6ccsss " Just give me a minute here."
+                n 3fcsbslsbl "Someone's gotta show you what a {i}real{/i} professional looks like,{w=0.2} a-{w=0.2}after all!"
+                
+                show natsuki 4fcssmlsbl
+                show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+                $ jnPause(1)
+                play audio chair_out
+
+                $ jnPause(3)
+                play audio drawer
+                $ jnPause(1.5)
+                play audio clothing_ruffle
+                $ jnPause(1.5)
+                n "Hey!{w=0.5} N-{w=0.2}no peeking!"
+                $ jnPause(1)
+                play audio zipper
+                $ jnPause(3)
+                $ office_outfit.unlock()
+                $ Natsuki.setOutfit(outfit=office_outfit, persist=False)
+
+                play audio chair_in
+                $ jnPause(3)
+                show natsuki 5csrdvlsbr at jn_center
+                hide black with Dissolve(1.25)
+
+                n 5csqbolsbr "..."
+                n 5ccssslsbr "W-{w=0.2}well?{w=0.75}{nw}"
+                extend 4cnmajlsbr " Don't lie,{w=0.2} [player]!{w=0.75}{nw}"
+                extend 4cllbglsbr " After all."
+                n 3fcsbglsbl "I don't need to be a proper librarian to read {i}you{/i} like a book.{w=0.75}{nw}"
+
+                if Natsuki.isLove(higher=True) and get_topic("talk_school_uniform").shown_count > 0:
+                    extend 4fslbglsbl " Besides..."
+                    n 6fsgsmlsbl "D-{w=0.2}didn't you {i}like{/i} a girl in uniform,{w=0.2} [player]?{w=0.75}{nw}"
+
+                extend 3fsqsmlsbl " Ehehe."
+                n 5fcsbgsbl "Obviously I didn't {i}have{/i} to dress up for it or anything like that.{w=0.75}{nw}"
+                extend 2flrbg " But come on."
+                n 2fchgn "Who {i}wouldn't{/i} pass up a break from school uniform,{w=0.2} right?"
+
+            else:
+                n 1ccsfllesi "..."
+
+        else:
+            n 4ccsflsbr "N-{w=0.2}nevermind.{w=0.75}{nw}"
+            extend 2ccsposbr " Obviously my placement was fine.{w=0.75}{nw}"
+            extend 2csrbosbr " Though it's not like any of that matters now anyway."
+
+        if persistent._jn_player_had_work_placement is None:
+            n 1ulraj "But...{w=1}{nw}"
+            extend 4clrflsbl " I've gone on way too much already.{w=0.75}{nw}"
+            extend 5csrbosbl " Again.{w=0.75}{nw}"
+            extend 2tlraj " So..."
+            n 7tnmaj "What about you though,{w=0.2} [player]?"
+
+            show natsuki option_wait_curious
+            menu:
+                n "Did you ever have any kind of work placement,{w=0.2} or...?"
+
+                "Yes, I've had a work placement.":
+                    $ persistent._jn_player_had_work_placement = True
+                    n 4fnmbg "Aha!{w=0.75}{nw}"
+                    extend 3fcsbg " I knew it!{w=0.75}{nw}"
+                    extend 6fsqsm " Just couldn't slip your way out of it,{w=0.2} huh?"
+                    n 7tllss "Well...{w=0.3} I can't really say I'm surprised.{w=0.75}{nw}"
+                    extend 7ccssmesm " Not like {i}you{/i} could talk yourself out of it if I couldn't."
+
+                "No, I haven't had a work placement.":
+                    $ persistent._jn_player_had_work_placement = False
+                    n 3nsrsl "...Hmph.{w=0.75}{nw}"
+                    extend 3fcspo " Lucky."
+                    n 7clraj "Though I gotta ask,{w=0.2} [player]."
+                    n 7tnmfl "Is that because you just never went somewhere that did those?"
+                    n 6fcsbg "...Or are you just sitting around waiting for your turn?"
+                    n 3fsqsm "..."
+                    n 3fcssm "Ehehe.{w=0.75}{nw}"
+                    extend 4csgbg " Did I call you out?"
+
+                "I have a work placement now.":
+                    $ persistent._jn_player_had_work_placement = True
+                    n 3ccsss "Oh?{w=0.75}{nw}"
+                    extend 7ccsbg " And I suppose you're working hard then,{w=0.2} [player]?"
+                    n 7csqsm "...Heh."
+                    n 6fsqbg "Or are you hardly working?"
+                    n 3fsqsm "..."
+                    n 3fcssmeme "Ehehe."
+
+            n 4ulrss "Well,{w=0.2} whatever."
+
+        else:
+            n 1nlraj "But...{w=1}{nw}"
+            extend 5clrpu " I've gone on for way too long already.{w=0.75}{nw}"
+            extend 5csrbosbl " I really gotta stop doing that."
+
+        if Natsuki.isEnamored(higher=True):
+            n 3clrfl "I still wouldn't say I really rate my work placement."
+            n 7tlrbo "But...{w=1}{nw}"
+            extend 7tnmca " being here with you,{w=0.2} [player]?"
+            n 4ccsssl "Heh."
+            n 4cllsslsbr "...Yeah,{w=0.5}{nw}"
+            extend 5ccssmlsbr " I'd say that's an {i}experience{/i} I can be pretty happy about."
+            n 5clrbglsbr "E-{w=0.2}even if you {i}are{/i} a bunch of work sometimes.{w=0.75}{nw}"
+            extend 2fchsmfsbr " Ehehe."
+
+            if Natsuki.isLove(higher=True):
+                $ chosen_tease = jn_utils.getRandomTease()
+                n 5fchblfeaf "L-{w=0.2}love you too,{w=0.2} [chosen_tease]!"
+
+        elif Natsuki.isAffectionate():
+            n 3clrfl "I still wouldn't say I rate my experience honestly."
+            n 7tlrbo "But...{w=1}{nw}"
+            extend 7tnmfl " being stuck here with you,{w=0.2} [player]?"
+            n 5tllbolsbr "..."
+            n 5tllsslsbr "Well...{w=1}{nw}"
+            extend 6ccsbglsbl " I-{w=0.2}I guess I could think of a worse placement!"
+            n 3ccssmlsbl "Ehehe."
+
+        elif Natsuki.isHappy():
+            n 5clrfl "I wouldn't exactly say I rate my experience,{w=0.2} to be honest."
+            n 7clrpu "But...{w=1}{nw}"
+            extend 7tnmpu " just sitting around here talking to you?{w=0.75}{nw}"
+            extend 7ullbo " Well..."
+            n 2fchgn "I guess I can think of plenty worse placements!{w=0.75}{nw}"
+            extend 2nchgn " Ahaha."
+
+        else:
+            n 7ulraj "I wouldn't exactly say I rate my experience,{w=0.2} to be honest."
+            n 7tlrfl "But...{w=1}{nw}"
+            extend 7tnmfl " just sitting around here with you?"
+            n 4tllaj "Well...{w=1}{nw}"
+            extend 4nchgn " I guess I could do worse!"
+            n 2csrajsbl "J-{w=0.2}just don't make it all awkward,{w=0.2} [player].{w=0.75}{nw}"
+            extend 5cslposbl " Capiche?"
+
+    elif Natsuki.isDistressed(higher=True):
+        if already_discussed_work_experience:
+            n 1ccsemesi "..."
+            n 2cslem "Seriously,{w=0.75}{nw}" 
+            extend 2csqem " [player]?{w=0.75}{nw}"
+            extend 4fsqfl " This {i}again{/i}?{w=0.75}{nw}"
+            extend 4fnmfl " Were you even {i}listening{/i} the first time or what?"
+            n 1fcsfr "..."
+            n 1flrfl "...Fine.{w=0.75}{nw}"
+            extend 2fcsfl " Besides."
+            n 4fllsl "I'm not gonna discriminate against the{w=0.5}{nw}" 
+            extend 4fsqsl " {i}hard of hearing{/i}."
+            n 1fcsfl "So.{w=0.75}{nw}"
+            extend 1flrbo " Like I was saying before..."
+
+        else:
+            n 4nsqfl "...What?{w=0.75}{nw}"
+            extend 4tsqsl " Work experience?"
+            n 4nslfl "Oh."
+            n 2fcsfl "Heh.{w=0.75}{nw}"
+            extend 2flrfl " Yeah.{w=0.75}{nw}"
+            extend 2fsrpu " I had an {i}experience{/i} alright.{w=0.75}{nw}"
+            extend 4csqsl " If that actually matters."
+
+        n 1nllaj "My school did placements,{w=0.75}{nw}" 
+        extend 1nllsl " but it wasn't some kind of big event if that's what you were thinking."
+        n 2fslfr "Though some actual {i}notice{/i} would have been nice."
+        n 2fcsaj "Nope -{w=0.5}{nw}"
+        extend 4flrem " we were all just shuffled off to the computer room one day,{w=0.5}{nw}"
+        extend 4fnmfl " and told to log into some special placement website."
+        n 3cslfl "Then we had to pick some choices from a list of places that were accepting students to do work placements."
+        n 3ctlfl "There were a couple decent places,{w=0.2} sure.{w=0.75}{nw}"
+        extend 3fcsan " But {i}everybody{/i} went for those!{w=0.75}{nw}"
+        extend 3fsran " And then you'd just be shipped off to some dump nobody cared about instead if you weren't the teacher's favorite."
+        n 1fcsem "...And no,{w=0.2} [player].{w=0.75}{nw}"
+        extend 2nsqsl " We didn't get the option to pass.{w=0.75}{nw}"
+        extend 2cllsl " We {i}all{/i} had to do it."
+        n 4fllem "It wasn't just picking stuff from a list either -{w=0.5}{nw}"
+        extend 4fsqfl " cover letters and interviews too.{w=0.75}{nw}"
+        extend 4fsrfl " The whole stupid process."
+        n 1flrsl "I don't even know who they thought they were kidding."
+        extend 2fsrsl " It wasn't like those places {i}weren't{/i} just going to accept whoever the school sent them."
+        n 2fllfl "And then all of that around our regular studies just to rub it in.\n{w=0.75}{nw}"
+        extend 4fslem "As if we'd just {i}magically{/i} find the time around all the assignments and exams or something."
+        n 4fcsemesi "..."
+        n 2fcssl "I get it,{w=0.2} okay?{w=0.75}{nw}"
+        extend 1fsrem " I'm not dumb.{w=0.75}{nw}"
+        extend 2ccsem " {i}Obviously{/i} life skills and connections matter."
+        n 4fcsfl "But come{w=0.5}{nw}"
+        extend 4fcsgs " {b}on{/b}!{w=0.75}{nw}"
+        extend 3flrsl " As if I'm missing out on {i}super important{/i} life experience stacking{w=0.5}{nw}" 
+        extend 3fsran " shelves,{w=0.5}{nw}" 
+        extend 3fllem " or playing cashier for two weeks."
+        n 1fcsem "Ugh..."
+        n 2flrsl "I wouldn't have cared so much if I didn't have everything else to keep on top of.{w=0.75}{nw}"
+        extend 2fsrsl " Or if the work was actually {i}paid{/i}.{w=0.75}{nw}"
+        extend 2fsrem " What a waste of time."
+        n 1fcsfl "Not like any of that matters now though,{w=0.2} I guess."
+        n 4fsqfl "After all."
+
+        if Natsuki.isUpset(higher=True):
+            n 4fslsl "Being here right now already feels like a job enough to me,{w=0.5}{nw}"
+            extend 4fsqfr " {i}[player]{/i}."
+            
+        else:
+            n 4fcsan "Dealing with {i}you{/i} right now feels like a job enough to me,{w=0.5}{nw}"
+            extend 4fsqan " {i}[player]{/i}."
+
+    else:
+        if already_discussed_work_experience:
+            n 1fcsfltsa "Heh.{w=1}{nw}"
+            extend 1fsqantsb " What do I look like?{w=1.25}{nw}"
+            extend 4fnmuptsc " Your personal {i}soundboard{/i}?"
+            n 4fcsantsa "Like I already {i}told you{/i} -{w=0.75}{nw}"
+            extend 4fcswrtsa " it sucked,{w=0.2} okay?!{w=1}{nw}"
+            extend 2fsqwrtsb " Is that what you wanted to hear?!"
+            n 2fslantsb "I never wanted to do any,{w=0.2} and I was made to anyway."
+            n 4fsqfultsb "Much like this conversation.{w=1}{nw}"
+            extend 4fcsanltsa " I'm {i}done{/i} talking about this,{w=0.2} {i}[player]{/i}."
+
+        else:
+            n 1fsqfltsb "...Really?{w=1}{nw}"
+            extend 4fnmantsc " And since when did you care about any of my experiences,{w=0.75}{nw}" 
+            extend 4fsqantsc " {i}[player]{/i}?"
+            n 4fcsuntsa "..."
+            n 2fcsemtsa "You know what?{w=1}{nw}"
+            extend 2fcsantsa " I don't care.{w=1}{nw}"
+            extend 1fnmantsc " You want an answer so bad?{w=1.25}" 
+            extend 2fsquptsb " {b}Fine{/b}."
+            n 2flrantsc "It was crap.{w=1}{nw}"
+            extend 4fnmfutsc " Okay?!{w=1.25}{nw}"
+            extend 4fcsfutsa " The {i}entire{/i} process."
+            n 1fslantsb "From applying to all the stupid choices,{w=0.75}{nw}"
+            extend 1fslfrtsb " to writing out pointless letters.{w=1}{nw}"
+            extend 2fsqantsb " All of it."
+            n 2fcsunltsa "Heh.{w=1}{nw}"
+            extend  4fcsgtltsa " And yet somehow?"
+            n 4fsqgtltsb "I'd still prefer that to being stuck here with the likes of{w=0.5}{nw}"
+            extend 1fsqwrltse " {b}YOU{/b}!"
+
+        if Natsuki.isRuined():
+            $ chosen_insult = jn_utils.getRandomInsult()
+            n 2fcsfultse "{i}[chosen_insult].{/i}"
+
+    return
+
+# Prompt Natsuki to play a game of Blackjack!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_play_blackjack",
+            unlocked=True,
+            prompt="Do you want to play Blackjack?",
+            conditional="persistent._jn_blackjack_unlocked",
+            category=["Games"],
+            player_says=True,
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_play_blackjack:
+    if Natsuki.isLove(higher=True):
+        $ chosen_tease = jn_utils.getRandomTease()
+        n 2ccsbgl "Duh!{w=0.75}{nw}"
+        extend 4fchgnl " Of course I wanna play with you,{w=0.2} [chosen_tease]!{w=0.75}{nw}"
+        extend 4fchsml " Ehehe."
+
+    elif Natsuki.isEnamored(higher=True):
+        n 2ccssml "Blackjack again,{w=0.2} huh?"
+        n 2fsqsml "Ehehe.{w=0.75}{nw}"
+        extend 4fnmbgl " You bet I do,{w=0.2} [player]!"
+
+    else:
+        n 2unmss "You wanna play blackjack again?{w=0.75}{nw}"
+        extend 2fchbg " Sure thing,{w=0.2} [player]!"
+
+    if Natsuki.getDeskItemReferenceName(jn_desk_items.JNDeskSlots.right) == "jn_card_pack":
+        n 7csqbg "Just as well I didn't pack the cards up yet,{w=0.2} huh?"
+
+    else:
+        $ dialogue_choice = random.randint(1, 5)
+        if dialogue_choice == 1:
+            n 4nchgn "Time to break out the cards!"
+
+        elif dialogue_choice == 2:
+            n 4fcssmeme "Just gotta get set up real quick..."
+
+        elif dialogue_choice == 3:
+            n 4fcsss "Just give a second here..."
+
+        elif dialogue_choice == 4:
+            n 4fchbg "I'll grab the cards!"
+
+        else:
+            n 4fdwsm "Let me just set up here..."
+
+        show natsuki 4fcssmeme
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+        $ jnPause(1.5)
+        play audio drawer
+        $ jnPause(1)
+        $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_card_pack"))
+        show natsuki 4fchsm
+        hide black with Dissolve(1)
+
+    $ get_topic("talk_play_blackjack").shown_count += 1 # Have to increment here manually thanks to jump
+    jump blackjack_intro
+
+# Natsuki goes over the rules of blackjack again, for if the player has already heard the explanation pre-game
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_remind_blackjack_rules",
+            unlocked=True,
+            prompt="Can you go over the rules of Blackjack again?",
+            conditional="persistent._jn_blackjack_unlocked and persistent._jn_blackjack_explanation_given",
+            category=["Games"],
+            player_says=True,
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_remind_blackjack_rules:
+    if Natsuki.isLove(higher=True):
+        n 2tllss "Need a little refresher,{w=0.5}{nw}"
+        extend 2tnmbo " huh [player]?"
+        n 7tlrsl "..."
+        n 7tlraj "Well...{w=1}{nw}"
+        extend 7tlrss " I guess I can't be too surprised,{w=0.75}{nw}" 
+        extend 7tsqss " knowing you."
+        n 6ccssslsbr "A-{w=0.2}all too hard to pay attention with such a pretty face,{w=0.2} right?{w=0.75}{nw}"
+        extend 3csldvlsbr " Ehehe."
+        n 4ccsbglsbr "...A-{w=0.2}anyway."
+
+    elif Natsuki.isEnamored(higher=True):
+        n 1ccsbg "Oh?"
+        n 1flrbg "Someone needs a reminder already,{w=0.5}{nw}" 
+        extend 1fsqss " huh?"
+        n 1fsqsm "..."
+        n 1fchsm "Ahaha.{w=0.75}{nw}"
+        extend 1nlrbg " Nah,{w=0.2} it's fine.{w=0.75}{nw}"
+        extend 1unmbo " I don't mind going through it again."
+        n 1fsqbg "...So long as you keep your ears pricked {i}this{/i} time,{w=0.2} at least.{w=0.75}{nw}"
+        extend 1fsqsm " Ehehe."
+
+    else:
+        n 1ccsss "Heh.{w=0.75}{nw}"
+        extend 1nsqsl " Wow,{w=0.2} [player]."
+        n 4nsgfl "You seriously forgot{w=0.5}{nw}"
+        extend 4csqfl " already?"
+        n 2csqbo "..."
+        n 2fcssm "Ehehe."
+        n 1tlrss "Nah,{w=0.5}{nw}"
+        extend 3clrss " It's fine."
+        n 7ccsbg "I can't expect {i}everyone{/i} to have memory as good as mine,{w=0.5}{nw}" 
+        extend 7fcssmesm " after all."
+
+    $ get_topic("talk_remind_blackjack_rules").shown_count += 1 # Have to increment manually here thanks to jump
+    jump blackjack_explanation

@@ -279,14 +279,7 @@ label ch30_loop:
 
 label ch30_wait:
     window hide
-    python:
-        import random
-
-        if (random.randint(1, 10000) == 1):
-            jn_stickers.stickerWindowPeekUp(at_right=random.choice([True, False]))
-
-        jnPause(delay=5.0, hard=True)
-
+    $ jnPause(delay=5.0, hard=True)
     jump ch30_loop
 
 #Other labels
@@ -504,6 +497,9 @@ init python:
             jn_activity.ACTIVITY_MANAGER.last_activity = current_activity
             if jn_activity.ACTIVITY_MANAGER.last_activity.getRandomNotifyText():
                 jn_activity.notifyPopup(jn_activity.ACTIVITY_MANAGER.last_activity.getRandomNotifyText())
+
+        if (random.randint(1, 10000) == 1):
+            jn_stickers.stickerWindowPeekUp(at_right=random.choice([True, False]))
 
         return
 
@@ -766,13 +762,14 @@ label farewell_menu:
     jump ch30_loop
 
 label outfits_menu:
-    $ outfit_options = [
+    call screen scrollable_choice_menu([
         ("Can you wear an outfit for me?", "outfits_wear_outfit"),
         ("Can I suggest a new outfit?", "outfits_suggest_outfit"),
         ("Can you forget about an outfit I suggested?", "outfits_remove_outfit"),
-        ("Can you search again for new items?", "outfits_reload")
-    ]
-    call screen scrollable_choice_menu(outfit_options, ("Nevermind.", None))
+        ("Can you search again for new items?", "outfits_reload")],
+        ("Nevermind.", None),
+        400,
+        "mod_assets/icons/outfits.png")
 
     if isinstance(_return, basestring):
         show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
