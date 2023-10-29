@@ -425,10 +425,11 @@ init python in jn_events:
             if self.bgm:
                 kwargs.update({"bgm": self.bgm})
 
-            jn_globals.force_quit_enabled = True
-
             if not suppress_visuals:
                 displayVisuals(**kwargs)
+
+            else:
+                jn_globals.force_quit_enabled = True
 
         def complete(self):
             """
@@ -3476,17 +3477,24 @@ label holiday_halloween:
     hide black
 
     $ jnPause(7)
+    show tense at JN_PULSE zorder JN_GLITCH_ZORDER
     play audio thump
     $ jnPause(3)
+    show tense at JN_PULSE zorder JN_GLITCH_ZORDER
     play audio thump
     $ jnPause(3)
+    show tense at JN_PULSE zorder JN_GLITCH_ZORDER
     play audio thump
     $ jnPause(5)
 
     python:
         for i in range(1, 10):
+            renpy.show(
+                name="tense",
+                at_list=[JN_PULSE],
+                zorder=JN_GLITCH_ZORDER)
             renpy.play(filename=audio.thump, channel="audio")
-            jnPause(0.75)
+            jnPause(1.5)
 
     play audio static
     show glitch_garbled_b zorder JN_GLITCH_ZORDER with vpunch
@@ -3495,18 +3503,30 @@ label holiday_halloween:
 
     python:
         for i in range(1, 6):
+            renpy.show(
+                name="tense",
+                at_list=[JN_PULSE],
+                zorder=JN_GLITCH_ZORDER)
             renpy.play(filename=audio.thump, channel="audio")
-            jnPause(0.55)
+            jnPause(1)
 
     play audio static
     show glitch_garbled_a zorder JN_GLITCH_ZORDER with hpunch
     hide glitch_garbled_a
     $ jnPause(0.75)
+    play audio static
+    show glitch_garbled_c zorder JN_GLITCH_ZORDER with vpunch
+    hide glitch_garbled_c
+    $ jnPause(0.5)
 
     python:
         for i in range(1, 3):
+            renpy.show(
+                name="tense",
+                at_list=[JN_PULSE],
+                zorder=JN_GLITCH_ZORDER)
             renpy.play(filename=audio.thump, channel="audio")
-            jnPause(0.35)
+            jnPause(0.75)
 
     play audio static
     show glitch_garbled_b zorder JN_GLITCH_ZORDER with hpunch
@@ -3516,9 +3536,10 @@ label holiday_halloween:
     play audio static
     show glitch_garbled_c zorder JN_GLITCH_ZORDER with vpunch
     hide glitch_garbled_c
-    $ jnPause(1)
+    $ jnPause(0.5)
 
     show black zorder JN_BLACK_ZORDER
+    $ jnPause(0.25)
     play audio ooo_creep
     $ jnPause(3)
     hide desk
@@ -3529,19 +3550,24 @@ label holiday_halloween:
     $ Natsuki.setOutfit(magical_girl_cosplay)
     $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_renpy_for_dummies_closed"))
     $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_pumpkins"))
-    show o31 zorder JN_DECO_ZORDER
-    show natsuki 4fchgn at jn_center
+    show deco o31 zorder JN_DECO_ZORDER
+    show natsuki 4fchgn at jn_center zorder JN_NATSUKI_ZORDER 
     play audio switch_flip
     hide black
-    $ jnPause(3)
+    $ jnPause(1.5)
 
     # Have to proc manually here due to fake reveal for the prank
     $ renpy.play(filename="mod_assets/bgm/vacation.ogg", channel="music")
     $ renpy.show_screen("hkb_overlay")
+    $ jn_globals.force_quit_enabled = True
 
     $ player_capitalized = player.capitalize()
     n 4fchbg "HAPPY HALLOWEEN,{w=0.75}{nw}" 
     extend 4fchbs " [player_capitalized]!"
+
+    n "Early end"
+    jump ch30_loop
+
     n 4fchsm "..."
     n 4fsqsm "..."
     n 2fsqss "Well?{w=0.75}{nw}"
@@ -3596,140 +3622,139 @@ label holiday_halloween:
 
     # Not ideal conditioning; holidays should really have a shown_count - see: #813
     if Natsuki.isLove(higher=True) and "holiday_halloween" in store.persistent._seen_ever:
-        n  "..."
-        n  "Or...{w=1}{nw}"
-        extend  " I guess it would be."
-        n  "Not like I'd be the kind to know,{w=0.2} a-{w=0.2}after all."
+        n 3clrbo "..."
+        n 4clrpu "Or...{w=1}{nw}"
+        extend 4klrsl " I guess it would be."
+        n 5csrslsbl "Not like I'd be the kind to know,{w=0.2} a-{w=0.2}after all."
 
         if "holiday_christmas_day" in store.persistent._seen_ever:
-            n  "..."
-            n  "What?{w=0.75}{nw}"
-            extend  " Don't you remember,{w=0.2} [player]?{w=0.75}{nw}"
-            extend  " It's like how I told you last Christmas."
+            n 5cnmsl "..."
+            n 2knmfl "What?{w=0.75}{nw}"
+            extend 2kllfll " Don't you remember,{w=0.2} [player]?{w=0.75}{nw}"
+            extend 1cllbol " It's like how I told you last Christmas."
 
         else:
-            n  "It's just that..."
-            n  "..."
-            n  "I-{w=0.2}it just sucks.{w=0.75}{nw}"
-            extend  " You know?{w=1}{nw}"
-            extend  " With my family and everything."
+            n 4fcsem "It's just that..."
+            n 2kslsl "..."
+            n 2kslfl "I-{w=0.2}it just sucks.{w=0.75}{nw}"
+            extend 4knmbol " You know?{w=1}{nw}"
+            extend 1klrsll " With my family and everything."
         
-        n "..."
-        n  "We...{w=1}{nw}"
-        extend  " never...{w=1}{nw}"
-        extend  " really celebrated much.{w=1.25}{nw}"
-        extend  " At all."
-        n  "...And Halloween was no exception.{w=0.75}{nw}"
-        extend  " Obviously.{w=0.75}{nw}"
-        extend  " Why would it be?"
-        n "And the excuses.{w=0.75}{nw}"
-        extend " Every year without fail."
-        n  "'It's not what we do here,{w=0.2} Natsuki!'{w=0.75}{nw}"
-        extend  "'It's just not right,{w=0.2} Natsuki!{w=0.2} What would our neighbors think?'{w=0.75}{nw}"
-        extend "As if almost everyone on our street {i}didn't{/i} have kids,{w=0.2} or put decorations up!"
-        n  "Cut me a break."
-        n  "Heh.{w=0.75}{nw}"
-        extend  " We all knew what the {i}real{/i} reasons were,{w=0.2} [player]."
-        n  "And they weren't just because it wasn't Japanese enough,{w=0.2} I'll tell you that much."
-        n  "..."
-        n  "..." # sad sigh
-        n  "...Look.{w=0.75}{nw}"
-        extend  " I'm not just annoyed about missing out literally every year."
-        n  "I don't care about some tacky outfits or a bunch of junk from the convenience store.{w=0.75}{nw}"
-        extend  " Not like that stuff just disappears or something the rest of the year,{w=0.2} obviously."
-        n  "I don't care about any of that."
-        n  "I..."
-        n  "..."
-        n  "I...{w=1}{nw}"
-        extend  " just...{w=1}{nw}"
-        extend  " wanted to join in with what everyone else was doing.{w=1}{nw}"
-        extend  " W-{w=0.2}with what my {i}friends{/i} invited me to do!{w=0.75}{nw}"
-        extend  " Is that {i}really{/i} such a crime?"
-        n  "A-{w=0.2}and besides,{w=0.2} what right did {i}they{/i} have to...!"
-        n  "T-{w=0.2}to..."
-        n  "..."
-        n  "..."
-        n  "..."
-        n  "...Forget it.{w=1.25}{nw}"
-        extend  " Forget it!{w=1}{nw}"
-        extend  " I don't even know why it still annoys me so much."
-        n  "It was all just..."
-        n  "..."
-        n  "...So dumb."
-        n  "A-{w=0.2}and I know there's nothing stopping me doing what I want now.{w=0.75}{nw}"
-        extend  " As you can see."
-        n  "But that still doesn't change all the wasted time.{w=1.25}{nw}"
-        extend  " All the disappointment."
-        n  "...E-{w=0.2}even if getting to spend Halloween with you now instead {i}is{/i} pretty awesome."
-        n  "..."
-        n  "...I wrote you something too,{w=0.5}{nw}"
-        extend  " you know."
-        n  "..."
+        n 1ksrsll "..."
+        n 4ccspu "We...{w=1}{nw}"
+        extend 4ccsfl " never...{w=1}{nw}"
+        extend 4cllfl " really celebrated much.{w=1.25}{nw}"
+        extend 2cdlsl " At all."
+        n 2clrfl "...And Halloween was no exception.{w=0.75}{nw}"
+        extend 2clrsl " Obviously.{w=0.75}{nw}"
+        extend 4knmfl " Why would it be?"
+        n 4cslfl "And the excuses.{w=0.75}{nw}"
+        extend 1fcsan " Every year without fail."
+        n 3flrwr "'It's not what we do here,{w=0.2} Natsuki!'{w=0.75}{nw}"
+        extend 3fllem "'It's just not right,{w=0.2} Natsuki!{w=0.2} What would our neighbors think?'{w=0.75}{nw}"
+        extend 3fslan "As if almost everyone on our street {i}didn't{/i} have kids,{w=0.2} or put decorations up!"
+        n 4fcsan "Cut me a break."
+        n 4fsrsl "Heh.{w=0.75}{nw}"
+        extend 2fnmsl " We all knew what the {i}real{/i} reasons were,{w=0.2} [player]."
+        n 2flrbol "And they weren't just because it wasn't Japanese enough,{w=0.2} I'll tell you that much."
+        n 1ksrbol "..."
+        n 1ccsfllesi "..."
+        n 4cnmfll "...Look.{w=0.75}{nw}"
+        extend 4ccsajl " I'm not just annoyed about missing out literally every year."
+        n 2cllsll "I don't care about some tacky outfits or a bunch of junk from the convenience store.{w=0.75}{nw}"
+        extend 2cslsll " Not like that stuff just disappears or something the rest of the year,{w=0.2} obviously."
+        n 2cnmpul "I don't care about any of that."
+        n 1clrgsl "I..."
+        n 5clrunl "..."
+        n 5fcsajl "I...{w=1}{nw}"
+        extend 1fcsfll " just...{w=1}{nw}"
+        extend 1fllfll " wanted to join in with what everyone else was doing.{w=1}{nw}"
+        extend 4knmwrl " W-{w=0.2}with what my {i}friends{/i} invited me to do!{w=0.75}{nw}"
+        extend 4clrunl " Is that {i}really{/i} such a crime?"
+        n 4fcswrl "A-{w=0.2}and besides,{w=0.2} what right did {i}they{/i} have to...!"
+        n 4fllunltsc "T-{w=0.2}to..."
+        n 1fcsunltsa "..."
+        n 1fcsanltsa "..."
+        n 2fcsflltsa "..."
+        n 2csrslltsb "...Forget it.{w=1.25}{nw}"
+        extend 2ccsgsl " Forget it!{w=1}{nw}"
+        extend 4cslunl " I don't even know {i}why{/i} it still annoys me so much."
+        n 4fcseml "It was all just..."
+        n 4cslbol "..."
+        n 1kslbol "...So dumb."
+        n 3ccseml "A-{w=0.2}and I know there's nothing stopping me doing what I want now.{w=0.75}{nw}"
+        extend 3clrbol " As you can see."
+        n 4klrfll "But that doesn't change all the wasted time.{w=1.25}{nw}"
+        extend 5kdlbol " All the disappointment."
+        extend 1kslbol " And I don't think it ever will."
+        n 2kslsslsbr "...E-{w=0.2}even if getting to spend Halloween with you instead {i}is{/i} pretty awesome."
+        n 2kslsllsbr "..."
+        n 4knmpulsbr "...I wrote you something too,{w=0.5}{nw}"
+        extend 5klrbolsbr " you know."
+        n 5clrcalsbr "..."
 
         $ halloween_poem = jn_poems.getPoem("jn_natsuki_hallows_end")
         play audio page_turn
         show prop poetry_attempt zorder JN_PROP_ZORDER at JN_TRANSFORM_FADE_IN
         $ jnPause(2)
 
-        n  "..."
-        n  "H-{w=0.2}hey!{w=0.75}{nw}"
-        extend  " Come on."
-        n  " Don't give me that look,{w=0.2} [player].{w=0.75}{nw}"
-        extend  " Just..."
-        n  "..."
-        n  "...Just take it already.{w=1}{nw}"
-        extend  " Before I change my mind about the whole thing."
-        n  "..."
+        n 5csqcalsbr "..."
+        n 4fnmfllsbl "H-{w=0.2}hey!{w=0.75}{nw}"
+        extend 4fllfllsbl " Come on."
+        n 2cdlbolsbl " Don't give me that look,{w=0.2} [player].{w=0.75}{nw}"
+        extend 2ccsemlsbl " Just..."
+        n 1ksrpulsbl "..."
+        n 1ccsfll "...Just take it already.{w=1}{nw}"
+        extend 4cnmcal " Before I change my mind about the whole thing."
+        n 4cdrcal "..."
 
-        show natsuki 1fsrbolsbr
+        show natsuki 4kdrcal
         call show_poem(halloween_poem)
-        show natsuki 1fsrbolsbr
+        show natsuki 1cnmcal
 
-        n  "You..."
-        n  "You did actually read all of that..."
-        n  "Right?{w=0.75}{nw}"
-        extend  " I'll get mad if you didn't."
-        n  "You have no {i}idea{/i} how much of a pain that was at short notice.{w=0.75}{nw}" 
-        extend  " Especially with you sneaking around all the time.{w=1}{nw}"
-        extend  " You dork."
-        n  "..."
-        n  "But..."
-        n  "Seriously,{w=0.2} [player]?"
-        n  "..."
+        n 1cnmajl "You..."
+        n 4cllajl "You did actually read all of that..."
+        n 5csgsll "Right?"
+        n 2ccseml "Because you have no {i}idea{/i} how much of a pain that was at short notice.{w=0.75}{nw}" 
+        extend 2clleml " Especially with you sneaking around all the time.{w=1}{nw}"
+        extend 2ccspol " You dork."
+        n 1clrbolsbl "..."
+        n 4ksrpulsbl "But..."
+        n 4ksgpulsbl "Seriously,{w=0.2} [player]?"
+        n 1kslsllsbl "..."
 
-        show natsuki 1fsldvlsbl at jn_center zorder JN_NATSUKI_ZORDER
+        show natsuki 4ccsunlsbl at jn_center zorder JN_NATSUKI_ZORDER
         show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         play audio clothing_ruffle
         $ jnPause(3.5)
-        show natsuki 1fsldvlsbl at jn_center zorder JN_NATSUKI_ZORDER
+        show natsuki 5cslbolsbr at jn_center zorder JN_NATSUKI_ZORDER
         hide black with Dissolve(1.25)
 
-        n  "...T-{w=0.2}thank you.{w=0.75}{nw}"
-        extend  " For being with me for Halloween,{w=0.2} I mean."
-        n  "I know I never got to really dress up,{w=0.75}{nw}"
-        extend  " or make tons of fancy decorations,{w=0.75}{nw}"
-        extend  " or go partying or anything exciting like that."
-        n  "But...{w=1.25}{nw}"
-        extend  " I-{w=0.2}I guess I can settle for treating myself to you instead.{w=1}{nw}"
-        extend  " So..."
-        n  "...Yeah."
+        n 5kslpul "...T-{w=0.2}thank you.{w=0.75}{nw}"
+        extend 2knmbol " For being with me for Halloween,{w=0.2} I mean."
+        n 4ccsfll "I know I never got to really dress up,{w=0.75}{nw}"
+        extend 4cdrfll " or make tons of fancy decorations,{w=0.75}{nw}"
+        extend 1ksrsll " or go partying or anything exciting like that."
+        n 1nlrpul "But...{w=1.25}{nw}"
+        extend 5nsrssfsbl " I-{w=0.2}I guess I can settle for treating myself to you instead.{w=1}{nw}"
+        n 5nsrajlsbl "So..."
+        n 1csrfslsbl "...Yeah."
         $ chosen_endearment = jn_utils.getRandomEndearment()
-        n  "H-{w=0.2}happy Halloween,{w=0.2} [chosen_endearment].{w=0.75}{nw}"
-        extend  " Ahaha..."
-        n  "..."
-        n  "N-{w=0.2}now,{w=0.2} enough of all the lovey-dovey stuff.{w=0.75}{nw}"
-        extend  " Jeez,{w=0.2} [player]."
-        n  "Have you {i}totally{/i} forgotten what today is meant to be for already or what?"
-        n  "..."
-        n  "No?"
-        n  "Heh.{w=0.75}{nw}"
-        extend  " Then you better start preparing yourself."
-        n  "Being here with you might be a treat..."
+        n 4cchsmlsbl "H-{w=0.2}happy Halloween,{w=0.2} [chosen_endearment].{w=0.75}{nw}"
+        n 4cslsmlsbl "..."
+        n 3ccsfllsbr "N-{w=0.2}now,{w=0.2} enough of all the lovey-dovey stuff.{w=0.75}{nw}"
+        extend 3cllfllsbr " Jeez,{w=0.2} [player]."
+        n 3csqpo "Have you {i}totally{/i} forgotten what today is meant to be for already or what?"
+        n 7fsqsm "..."
+        n 7fsqss "No?"
+        n 3fcsss "Heh.{w=0.75}{nw}"
+        extend 3ccsbg " Then you better start preparing,{w=0.2} you know."
+        n 4cslbgsbr "Being here with you might be a treat..."
         $ jn_stickers.stickerWindowPeekUp(at_right=True)
-        n  "...But you bet I've still got a ton of {i}tricks{/i} up my sleeve!{w=0.75}{nw}"
-        extend  " Ehehe."
+        n 4fsqbs "...But you bet I've still got a ton of {i}tricks{/i} up my sleeve!{w=0.75}{nw}"
+        extend 2nchgn " Ehehe."
         $ chosen_tease = jn_utils.getRandomTeaseName()
-        n  "Now let's get spooky already,{w=0.2} you [chosen_tease]!"
+        n 2uchgnl "Now let's get spooky already,{w=0.2} you [chosen_tease]!"
 
     else:
         n 3cslss "..."
@@ -3762,8 +3787,8 @@ label holiday_halloween:
         n 4ccsfl "W-{w=0.2}whatever.{w=0.75}{nw}"
         extend 4cnmaj " You know what,{w=0.2} [player]?"
         n 2flrfl "Who even has the time to care about a bunch of idiots ruining things for themselves?{w=0.75}{nw}"
-        extend 2fcspo " I can tell you I don't."
-        n 1ccsaj "A-{w=0.2}and besides.{w=0.75}{nw}"
+        extend 2fcspo " I sure don't."
+        n 1ccsaj "A-{w=0.2}and besides."
 
         if Natsuki.isLove(higher=True):
             n 3cllssl "We both know {i}you{/i} aren't like that.{w=0.75}{nw}"

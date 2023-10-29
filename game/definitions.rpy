@@ -1891,6 +1891,28 @@ transform JN_TRANSFORM_FADE_OUT:
     alpha 1
     ease 0.5 alpha 0
 
+transform JN_PULSE:
+    truecenter
+    parallel:
+        0.144
+        zoom 1.00 + 0.07 * 1
+        easein 0.250 zoom 1.00 + 0.04 * 1
+        easeout 0.269 zoom 1.00 + 0.07 * 1
+        zoom 1.00
+        1.479
+    parallel:
+        easeout_bounce 0.3 xalign 0.5 + 0.02 * 1
+        easeout_bounce 0.3 xalign 0.5 - 0.02 * 1
+    
+    ease 0.15 alpha 0
+
+transform JN_TRANSFORM_FADE_IN_OUT_FAST:
+    subpixel True
+    alpha 0
+    ease 0.15 alpha 1
+    pause 0.25
+    ease 0.15 alpha 0
+
 # Vanilla resources from base DDLC
 define audio.t1 = "<loop 22.073>bgm/1.ogg"  #Main theme (title)
 define audio.t2 = "<loop 4.499>bgm/2.ogg"   #Sayori theme

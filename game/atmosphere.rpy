@@ -32,6 +32,7 @@ image glitch_garbled_b = "mod_assets/backgrounds/etc/glitch_garbled_b.png"
 image glitch_garbled_c = "mod_assets/backgrounds/etc/glitch_garbled_c.png"
 image glitch_garbled_n = "mod_assets/backgrounds/etc/youdidthis.png"
 image glitch_garbled_red = "mod_assets/backgrounds/etc/glitch_garbled_red.png"
+image tense = "mod_assets/backgrounds/etc/tense.png"
 
 image sky glitch_fuzzy:
     "mod_assets/backgrounds/etc/glitch_fuzzy_a.png"
