@@ -3723,7 +3723,6 @@ label holiday_halloween:
         $ halloween_poem.unlock()
         play audio page_turn
         $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_poem_on_desk"))
-        show prop poetry_attempt zorder JN_PROP_ZORDER at JN_TRANSFORM_FADE_IN
         $ jnPause(2)
 
         n 5csqcalsbr "..."
