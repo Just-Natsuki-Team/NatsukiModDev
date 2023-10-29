@@ -1689,19 +1689,6 @@ init -100 python in jn_utils:
             "dope"
         ])
 
-    def getRandomTeaseName():
-        """
-        Returns a random tease from Natsuki, avoiding any assignment of the term I.E "you" or descriptions I.E "silly".
-        Natsuki may use these at higher levels of affinity to tease her player with.
-        """
-        return random.choice([
-            "dummy",
-            "dork",
-            "goof",
-            "donut",
-            "dope"
-        ])
-
     def getRandomEndearment():
         """
         Returns a random endearment from Natsuki for the player from the list.
