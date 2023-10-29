@@ -5,6 +5,7 @@ default persistent._jn_holiday_deco_list_on_quit = []
 default persistent._jn_event_completed_count = 0
 
 default persistent._jn_player_celebrates_christmas = None
+default persistent._jn_player_love_halloween_seen = None
 
 # Transforms for overlays
 transform jn_glasses_pre_slide:
@@ -3644,8 +3645,9 @@ label holiday_halloween:
     extend 4fcsbg " Didn't think so,{w=0.2} [player].{w=1.25}{nw}"
     extend 3fchbg " Halloween is the best!"
 
-    # Not ideal conditioning; holidays should really have a shown_count - see: #813
-    if Natsuki.isLove(higher=True) and not "holiday_halloween" in persistent._seen_ever:
+    # Not ideal conditioning; holidays should really have a shown_count - see: #813. Replace this check and delete persistent flag once this is done!
+    # Will need to migrate other holidays for shown counts too... FML.
+    if Natsuki.isLove(higher=True) and not persistent._jn_player_love_halloween_seen:
         n 3clrbo "..."
         n 4clrpu "Or...{w=1}{nw}"
         extend 4klrsl " I guess it would be."
@@ -3790,6 +3792,7 @@ label holiday_halloween:
 
         $ chosen_tease = jn_utils.getRandomTeaseName()
         n 2uchgnl "Now let's get spooky already,{w=0.2} you [chosen_tease]!"
+        $ persistent._jn_player_love_halloween_seen = True
 
     else:
         n 3cslss "..."
