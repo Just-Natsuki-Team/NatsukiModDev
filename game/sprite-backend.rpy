@@ -108,6 +108,8 @@ init -50 python:
         think_right = 27
         down_left = 28
         down_right = 29
+        peek_left = 30
+        peek_right = 31
 
         def __str__(self):
             return self.name
@@ -371,6 +373,8 @@ init 1 python:
         "dw": JNEyes.down,
         "dl": JNEyes.down_left,
         "dr": JNEyes.down_right,
+        "kl": JNEyes.peek_left,
+        "kr": JNEyes.peek_right,
         "ll": JNEyes.look_left,
         "lr": JNEyes.look_right,
         "nm": JNEyes.normal,

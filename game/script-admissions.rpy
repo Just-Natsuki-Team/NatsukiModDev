@@ -3,6 +3,8 @@ default persistent._admission_database = dict()
 # Retain the last admission made on quitting the game, so Natsuki can react on boot
 default persistent._jn_player_admission_type_on_quit = None
 
+default persistent._jn_player_admission_forced_leave_date = None
+
 init 0 python in jn_admissions:
     import random
     import store
@@ -1311,6 +1313,8 @@ label admission_tired:
             n 1fchbleme "Don't let the bed bugs bite~!"
 
         $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_TIRED
+        $ persistent._jn_player_admission_forced_leave_date = datetime.datetime.now()
+        
         return { "quit": None }
 
     elif jn_admissions.last_admission_type == jn_admissions.TYPE_SICK:
@@ -1337,6 +1341,7 @@ label admission_tired:
         # Add pending apology
         $ Natsuki.addApology(jn_apologies.ApologyTypes.unhealthy)
         $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_SICK
+        $ persistent._jn_player_admission_forced_leave_date = datetime.datetime.now()
 
         return { "quit": None }
 
@@ -1381,6 +1386,7 @@ label admission_tired:
         # Add pending apology
         $ Natsuki.addApology(jn_apologies.ApologyTypes.unhealthy)
         $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_TIRED
+        $ persistent._jn_player_admission_forced_leave_date = datetime.datetime.now()
 
         return { "quit": None }
 
