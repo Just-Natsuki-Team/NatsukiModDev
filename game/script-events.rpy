@@ -408,16 +408,18 @@ init python in jn_events:
             Any props or decorations left over from the previous holiday are tidied up before presentation.
 
             IN:
-                - suppress_visuals - If True, prevents 
+                - suppress_visuals - If True, prevents any props or deco from being displayed automatically
             """
             renpy.hide("prop")
             renpy.hide("deco")
 
-            for prop in self.prop_list:
-                renpy.show(name="prop {0}".format(prop), zorder=store.JN_PROP_ZORDER)
+            if not suppress_visuals:
+                for prop in self.prop_list:
+                    renpy.show(name="prop {0}".format(prop), zorder=store.JN_PROP_ZORDER)
 
-            for deco in self.deco_list:
-                renpy.show(name="deco {0}".format(deco), zorder=store.JN_DECO_ZORDER)
+            if not suppress_visuals:
+                for deco in self.deco_list:
+                    renpy.show(name="deco {0}".format(deco), zorder=store.JN_DECO_ZORDER)
 
             kwargs = {
                 "natsuki_sprite_code": self.natsuki_sprite_code
@@ -692,6 +694,7 @@ init python in jn_events:
         holiday_type=JNHolidayTypes.halloween,
         affinity_range=(jn_affinity.HAPPY, None),
         natsuki_sprite_code="1fsrunlsbr",
+        deco_list=["o31"],
         priority=10
     ))
 
@@ -3568,7 +3571,7 @@ label holiday_halloween:
     $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_SUNNY)
     $ magical_girl_cosplay = jn_outfits.getOutfit("jn_magical_girl_cosplay")
     $ magical_girl_cosplay.unlock()
-    $ Natsuki.setOutfit(magical_girl_cosplay)
+    $ Natsuki.setOutfit(outfit=magical_girl_cosplay, persist=False)
     $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_renpy_for_dummies_closed"))
     $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_pumpkins"))
     show deco o31 zorder JN_DECO_ZORDER
@@ -3781,6 +3784,7 @@ label holiday_halloween:
         show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
         $ jnPause(1)
         play audio drawer
+        $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
         $ jnPause(2)
         hide black with Dissolve(0.5)
 
