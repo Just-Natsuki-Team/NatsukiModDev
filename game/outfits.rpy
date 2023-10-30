@@ -735,7 +735,7 @@ init -1 python in jn_outfits:
 
             # Finally, make sure the resources necessary for this wearable exist
             if not _checkWearableSprites(wearable):
-                jn_utils.log("Cannot load wearable {0} as one or more sprites are missing.".format(wearable.reference_name))
+                jn_utils.log("Cannot load wearable {0} as one or more sprites are missing: does this item support {1}?".format(wearable.reference_name, store.config.version))
                 return False
 
             __registerWearable(wearable)

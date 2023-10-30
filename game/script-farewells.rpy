@@ -583,7 +583,7 @@ label farewell_option_extended_leave:
     extend 1knmaj " A while?"
     n 2fnmsr "..."
     n 2fsqaj "...What do you mean 'a while',{w=0.2} [player]?{w=0.75}{nw}"
-    extend 2fnmgs " Huh?"
+    extend 4fnmgs " Huh?"
     n 3fllem "Are you trying to avoid me?{w=1}{nw}"
     extend 3knmem " Am I {i}not{/i} the best to be around?"
     n 4fbkwrl "I-{w=0.2}is {i}that{/i} it?!"
