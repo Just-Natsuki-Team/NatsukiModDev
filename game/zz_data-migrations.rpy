@@ -425,15 +425,19 @@ init python in jn_data_migrations:
 
         if jn_outfits.getOutfit("jn_chocolate_plaid_collection").unlocked:
             jn_outfits.getWearable("jn_necklace_tight_golden_necklace").unlock()
+            jn_utils.log("Unlock state corrected for wearable: jn_necklace_tight_golden_necklace")
 
         if store.get_topic("event_caught_reading_manga").shown_count > 0:
             jn_desk_items.getDeskItem("jn_parfait_manga_held").unlock()
+            jn_utils.log("Unlock state corrected for desk item: jn_parfait_manga_held")
 
         if store.persistent.jn_sunrise_hour is not None:
             del store.persistent.jn_sunrise_hour
+            jn_utils.log("Removed: persistent.jn_sunrise_hour")
         
         if store.persistent.jn_sunset_hour is not None:
             del store.persistent.jn_sunset_hour
+            jn_utils.log("Removed: persistent.jn_sunset_hour")
 
         if store.persistent.affinity >= 7500:
             store.persistent._jn_pic_aff = store.persistent.affinity

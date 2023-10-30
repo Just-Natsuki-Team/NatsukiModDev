@@ -279,7 +279,6 @@ label music_menu:
         $ jn_custom_music.hideMusicPlayer()
 
     elif _return is not None:
-        $ jn_utils.log(_return)
         $ music_title = store.jn_utils.escapeRenpySubstitutionString(_return[1].split('/')[-1])
 
         n 2fwlbg "You got it!{w=2}{nw}"

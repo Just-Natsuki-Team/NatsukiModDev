@@ -1341,9 +1341,9 @@ screen preferences():
                         ]
 
                     vbox:
-                        style_prefix "check"
-                        label _("Blackjack")
                         if persistent._jn_blackjack_unlocked:
+                            style_prefix "check"
+                            label _("Blackjack")
                             textbutton _("Hand total") action [
                                 ToggleField(
                                     object=persistent,
