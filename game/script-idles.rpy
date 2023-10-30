@@ -40,6 +40,7 @@ init python in jn_idles:
         gaming = 2
         resting = 3
         vibing = 4
+        working = 5
 
     class JNIdle:
         """
@@ -205,7 +206,7 @@ init python in jn_idles:
 
     __registerIdle(JNIdle(
         label="idle_poetry_attempts",
-        idle_type=JNIdleTypes.reading,
+        idle_type=JNIdleTypes.working,
         affinity_range=(jn_affinity.NORMAL, None),
         conditional="get_topic('event_caught_writing_poetry').shown_count > 0"
     ))
@@ -221,6 +222,26 @@ init python in jn_idles:
         label="idle_whistling",
         idle_type=JNIdleTypes.vibing,
         affinity_range=(jn_affinity.NORMAL, None)
+    ))
+
+    __registerIdle(JNIdle(
+        label="idle_laptop",
+        idle_type=JNIdleTypes.gaming,
+        affinity_range=(jn_affinity.HAPPY, None)
+    ))
+
+    __registerIdle(JNIdle(
+        label="idle_math_attempts",
+        idle_type=JNIdleTypes.working,
+        affinity_range=(jn_affinity.NORMAL, None),
+        conditional="get_topic('talk_favorite_subject').shown_count > 0"
+    ))
+
+    __registerIdle(JNIdle(
+        label="idle_plantcare",
+        idle_type=JNIdleTypes.reading,
+        affinity_range=(jn_affinity.AFFECTIONATE, None),
+        conditional="jn_desk_items.getDeskItem('jn_sanjo').unlocked"
     ))
 
 label idle_twitch_playing:
@@ -256,7 +277,12 @@ label idle_twitch_playing:
 
 label idle_reading_parfait_girls:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
-    show prop parfait_manga_held zorder JN_PROP_ZORDER
+
+    if Natsuki.getDeskItemReferenceName(jn_desk_items.JNDeskSlots.left) == "jn_parfait_manga_closed":
+        $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.left)
+
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_parfait_manga_held"))
+    $ Natsuki.setIsReadingToRight(True)
     show natsuki reading
     hide black with Dissolve(0.5)
     $ jnClickToContinue(silent=False)
@@ -276,9 +302,17 @@ label idle_reading_parfait_girls:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     show natsuki 1fchsmeme
-    hide prop
-    play audio drawer
-    $ jnPause(1.3)
+    $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+
+    if random.choice([True, False]):
+        play audio drawer
+        $ jnPause(1.3)
+    
+    else:
+        play audio book_closing
+        $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_parfait_manga_closed"))
+        $ jnPause(0.3)
+
     hide black with Dissolve(0.5)
     $ jnPause(1)
 
@@ -289,6 +323,7 @@ label idle_reading_renpy_for_dummies:
     show prop renpy_for_dummies_book_held zorder JN_PROP_ZORDER
     show natsuki reading
     hide black with Dissolve(0.5)
+    $ Natsuki.setIsReadingToRight(True)
     $ jnClickToContinue(silent=False)
 
     n 1fdwbo "...{w=1}{nw}"
@@ -322,6 +357,7 @@ label idle_reading_a_la_mode:
     show prop a_la_mode_manga_held zorder JN_PROP_ZORDER
     show natsuki reading
     hide black with Dissolve(0.5)
+    $ Natsuki.setIsReadingToRight(False)
     $ jnClickToContinue(silent=False)
 
     if random.choice([True, False]):
@@ -358,6 +394,7 @@ label idle_reading_step_by_step:
     show prop step_by_step_manga_held zorder JN_PROP_ZORDER
     show natsuki reading
     hide black with Dissolve(0.5)
+    $ Natsuki.setIsReadingToRight(False)
     $ jnClickToContinue(silent=False)
 
     n 1tnmpu "Eh?{w=1.25}{nw}"
@@ -431,7 +468,7 @@ label idle_daydreaming:
 label idle_poetry_attempts:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     show prop poetry_attempt zorder JN_PROP_ZORDER
-    show natsuki thinking
+    show natsuki working_on_papers
     hide black with Dissolve(0.5)
     $ jnClickToContinue(silent=False)
 
@@ -472,8 +509,8 @@ label idle_vibing_headphones:
     python:
         import copy
 
-        outfit_to_restore = jn_outfits.get_outfit(Natsuki.getOutfitName())
-        headphones = jn_outfits.get_wearable("jn_headgear_cat_headphones")
+        outfit_to_restore = jn_outfits.getOutfit(Natsuki.getOutfitName())
+        headphones = jn_outfits.getWearable("jn_headgear_cat_headphones")
         if not headphones.unlocked:
             headphones.unlock()
 
@@ -483,7 +520,7 @@ label idle_vibing_headphones:
     show natsuki 1ncsca
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     show prop music_notes zorder JN_PROP_ZORDER
-    $ jn_outfits.save_temporary_outfit(headphones_outfit)
+    $ jn_outfits.saveTemporaryOutfit(headphones_outfit)
     show natsuki vibing
     hide black with Dissolve(0.5)
     $ jnClickToContinue(silent=False)
@@ -535,5 +572,142 @@ label idle_whistling:
         extend 2nlrsslsbl " Heh.{w=0.75}{nw}"
         extend 2nllbolsbl " Hey."
         n 2tnmbo "What's happening,{w=0.2} [player]?"
+
+    $ jn_idles._concludeIdle()
+
+label idle_laptop:
+    show natsuki 4udwbo
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+
+    if random.choice([True, False]):
+        show natsuki reading
+
+    else:
+        show natsuki gaming
+
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_laptop"))
+    hide black with Dissolve(0.5)
+    $ jnClickToContinue(silent=False)
+
+    if random.choice([True, False]):
+        n 4tdwbo "...{w=0.75}{nw}"
+        n 4tnmfleqm "Eh?{w=0.75}{nw}"
+        n 4unmaj "Oh.{w=0.75}{nw}"
+        extend 4ulraj " Hey [player].{w=0.75}{nw}"
+        extend 4cllsssbl " Let me just finish up here real quick..."
+        show natsuki gaming
+
+    else:
+        n 4cdwpu "...{w=0.75}{nw}"
+        n 4cnmpueqm "...?{w=0.75}{nw}"
+        n 4unmfllesh "Huh?{w=0.75}{nw}"
+        extend 4unmgslesh " O-{w=0.2}oh!{w=0.75}{nw}"
+        extend 4fllbglsbr " [player]!"
+        n 4cslsssbr "Heh."
+        n 4ccsajsbr "I...{w=1}{nw}"
+        extend 4clrcasbr " kinda got distracted.{w=0.75}{nw}"
+        extend 4ccstrsbr " J-{w=0.2}just give me a sec to power down,{w=0.2} alright?"
+        show natsuki 4ccscasbr
+
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    play audio laptop_close
+    $ jnPause(0.75)
+    play audio drawer
+    $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+    $ jnPause(1.3)
+    show natsuki 3ullbo
+    hide black with Dissolve(0.5)
+    $ jnPause(1)
+
+    $ jn_idles._concludeIdle()
+
+label idle_math_attempts:
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    show prop math_attempt zorder JN_PROP_ZORDER
+    show natsuki working_on_papers
+    hide black with Dissolve(0.5)
+    $ jnClickToContinue(silent=False)
+
+    if random.choice([True, False]):
+        n 1tnmboeqm "...?{w=1.25}{nw}"
+        n 1uwdajesu "Oh!{w=0.75}{nw}"
+        extend 1fchbgsbl " H-{w=0.2}hey [player]."
+        n 2fslsssbl "I-{w=0.2}I was just..."
+        n 2fslunsbl "..."
+        n 2ccsfl "Ugh.{w=0.5} Nevermind.{w=0.75}{nw}"
+        extend 2fcsposbr " Math is such a dumb subject anyway."
+
+    else:
+        n 1tlrca "...{w=1.25}{nw}"
+        n 1tnmcaeqm "...?{w=0.75}{nw}"
+        n 1uwdwrlesh "A-{w=0.2}ah!{w=0.75}{nw}"
+        extend 1cdrbol " [player]!"
+        n 2fcsajlsbr "Y-{w=0.2}you {i}seriously{/i} need to learn how to speak up!{w=0.75}{nw}"
+        extend 2fcsfllsbr " Yeesh..."
+        n 2cslbosbr "At least let me clean up this mess..."
+
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    show natsuki 4nsrbosbl
+    hide prop
+    play audio drawer
+    $ jnPause(1.3)
+    hide black with Dissolve(0.5)
+    $ jnPause(1)
+
+    $ jn_idles._concludeIdle()
+
+label idle_plantcare:
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_sanjo"))
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_plant_care_book_held"))
+    $ Natsuki.setIsReadingToRight(True)
+    show prop watering_can zorder JN_PROP_ZORDER
+    show natsuki reading
+    hide black with Dissolve(0.5)
+    $ jnClickToContinue(silent=False)
+    $ dialogue_choice = random.randint(1, 3)
+
+    if dialogue_choice == 1:
+        n 1cdwbo "...{w=0.75}{nw}"
+        n 1tnmboeqm "...?{w=0.75}{nw}"
+        n 1uwdflesu "Oh!{w=0.75}{nw}"
+        extend 1fllbgsbr " H-{w=0.2}hey,{w=0.2} [player].{w=0.75}{nw}"
+        extend 1fchbgsbr " What's happening?"
+        n 1unmaj "Let me just finish up here real quick.{w=0.75}{nw}"
+        extend 1ccsss " Besides."
+        n 1cdltr "I gotta do right by Sanjo after all,{w=0.5}{nw}" 
+        extend 1fcscaesi " you know."
+        show natsuki 1fcsca
+
+    elif dialogue_choice == 2:
+        n 1clrpu "...{w=0.75}{nw}"
+        n 1tnmpu "...Huh?{w=0.75}{nw}"
+        n 1unmpuesu "Oh!{w=0.75}{nw}"
+        extend 1cllsssbr " Heh.{w=0.75}{nw}"
+        extend 1ccssssbr " What's up,{w=0.2} [player]?"
+        n 1clraj "Just give me a minute.{w=0.75}{nw}"
+        extend 1nsrpo " I was getting tired of all the plant mumbo-jumbo anyway."
+        show natsuki 1ccspo
+
+    else:
+        n 1cdwpu "...{w=0.75}{nw}"
+        n 1cnmpueqm "Eh?{w=0.75}{nw}"
+        extend 1unmaj " Oh.{w=0.75}{nw}"
+        extend 1ullbo " Hey,{w=0.2} [player]."
+        n 1clrss "Don't mind me.{w=0.75}{nw}"
+        extend 1fcsss " Don't mind me at all."
+        n 1fcssmesm "Juuuust making sure I'm keeping Sanjo here in tip-top shape!"
+        show natsuki 1fchsmeme
+
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    hide prop
+    $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+    play audio drawer
+    $ jnPause(1.3)
+    hide black with Dissolve(0.5)
+    $ jnPause(1)
 
     $ jn_idles._concludeIdle()

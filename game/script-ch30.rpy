@@ -116,27 +116,32 @@ label ch30_init:
 
         # Load outfits from disk and corresponding persistent data
         if Natsuki.isHappy(higher=True) and persistent.jn_custom_outfits_unlocked:
-            jn_outfits.load_custom_wearables()
-            jn_outfits.load_custom_outfits()
+            jn_outfits.loadCustomWearables()
+            jn_outfits.loadCustomOutfits()
 
-        jn_outfits.JNWearable.load_all()
-        jn_outfits.JNOutfit.load_all()
+        jn_outfits.JNWearable.loadAll()
+        jn_outfits.JNOutfit.loadAll()
         jn_utils.log("Outfit data loaded.")
 
         # Set Natsuki's outfit
         if persistent.jn_natsuki_auto_outfit_change_enabled or persistent.jn_natsuki_outfit_on_quit == "jn_temporary_outfit":
             # Real-time outfit selection, or last outfit was temporary
-            Natsuki.setOutfit(jn_outfits.get_realtime_outfit())
+            Natsuki.setOutfit(jn_outfits.getRealtimeOutfit())
 
-        elif jn_outfits.outfit_exists(persistent.jn_natsuki_outfit_on_quit):
+        elif jn_outfits.outfitExists(persistent.jn_natsuki_outfit_on_quit):
             # Custom outfit/default outfit selection
-            Natsuki.setOutfit(jn_outfits.get_outfit(persistent.jn_natsuki_outfit_on_quit))
+            Natsuki.setOutfit(jn_outfits.getOutfit(persistent.jn_natsuki_outfit_on_quit))
 
         else:
             # Fallback to Natsuki's school uniform
-            Natsuki.setOutfit(jn_outfits.get_outfit("jn_school_uniform"))
+            Natsuki.setOutfit(jn_outfits.getOutfit("jn_school_uniform"))
 
         jn_utils.log("Outfit set.")
+
+        # LOAD DESK ITEMS
+
+        jn_desk_items.JNDeskItem.loadAll()
+        jn_utils.log("Desk item data loaded.")
 
         # LOAD HOLIDAYS, POEMS, JOKES
 
@@ -168,6 +173,9 @@ label ch30_init:
         elif persistent._jn_player_tt_state >= 2:
             renpy.jump("greeting_tt_game_over")
 
+        # Ping if update found
+        jn_utils.fireAndForgetFunction(jn_data_migrations.checkCurrentVersionIsLatest)
+
         # Check for holidays, then queue them up and run them in sequence if we have any
         available_holidays = jn_events.selectHolidays()
         if available_holidays:
@@ -178,27 +186,41 @@ label ch30_init:
         elif not jn_topic_in_event_list_pattern("^greeting_"):
             if (
                 random.randint(1, 10) == 1
-                and (not persistent.jn_player_admission_type_on_quit and not persistent._jn_player_apology_type_on_quit)
+                and (not persistent._jn_player_admission_type_on_quit and not persistent._jn_player_apology_type_on_quit)
                 and jn_events.selectEvent()
             ):
                 push(jn_events.selectEvent())
                 renpy.call("call_next_topic", False)
 
             else:
-                push(greetings.select_greeting())
-                persistent.jn_player_admission_type_on_quit = None
+                greeting_topic = jn_greetings.selectGreeting()
+                push(greeting_topic.label)
+                
+                # Show desk item if one is associated with this greeting
+                if "desk_item" in greeting_topic.additional_properties:
+                    desk_item = jn_desk_items.getDeskItem(greeting_topic.additional_properties["desk_item"])
+                    Natsuki.setDeskItem(desk_item)
+
+                # Show Natsuki with an alternate expression if one is associated with this greeting, or default to idle
+                if "expression" in greeting_topic.additional_properties:
+                    renpy.show("natsuki {0}".format(greeting_topic.additional_properties["expression"]), at_list=[jn_center], zorder=JN_NATSUKI_ZORDER)
+
+                else:
+                    renpy.show("natsuki idle", at_list=[jn_center], zorder=JN_NATSUKI_ZORDER)
+
+                persistent._jn_player_admission_type_on_quit = None
                 persistent._jn_player_apology_type_on_quit = None
 
     # Prepare visuals
-    show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
-    hide black with Dissolve(2)
+    $ jnPause(0.1)
+    hide black with Dissolve(1)
     show screen hkb_overlay
 
     # Play appropriate music
     if jn_random_music.getRandomMusicPlayable():
         $ available_custom_music = jn_utils.getAllDirectoryFiles(
             path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
-            extension_list=jn_custom_music._VALID_FILE_EXTENSIONS
+            extension_list=jn_utils.getSupportedMusicFileExtensions()
         )
         if (len(available_custom_music) >= 2):
             $ renpy.play(
@@ -260,6 +282,9 @@ label ch30_wait:
     python:
         import random
 
+        if not jn_topic_in_event_list("weather_change") and jn_locations.checkUpdateLocationSunriseSunset(main_background):
+            queue("weather_change")
+        
         if (random.randint(1, 10000) == 1):
             jn_stickers.stickerWindowPeekUp(at_right=random.choice([True, False]))
 
@@ -348,6 +373,9 @@ label call_next_topic(show_natsuki=True):
             $ Natsuki.setInConversation(True)
             call expression _topic
 
+            # Prevent going into an idle immediately after a conversation
+            $ Natsuki.resetLastIdleCall()
+
     python:
         #Collect our return keys here
         #NOTE: This is instance checked for safety
@@ -376,18 +404,13 @@ label call_next_topic(show_natsuki=True):
         if isinstance(_topic, basestring): 
             # Prevent pushed mechanic topics such as weather changes from resetting topic wait timer
             if re.search("(^talk_)", _topic) or not re.search("(_change$)|(^idle_)", _topic):
-                global LAST_TOPIC_CALL
-                LAST_TOPIC_CALL = datetime.datetime.now()
+                Natsuki.resetLastTopicCall()
 
         Natsuki.setInConversation(False)
 
     jump ch30_loop
 
 init python:
-    LAST_IDLE_CALL = datetime.datetime.now()
-    LAST_TOPIC_CALL = datetime.datetime.now()
-    LAST_MENU_CALL = datetime.datetime.now()
-
     LAST_MINUTE_CHECK = datetime.datetime.now()
     LAST_HOUR_CHECK = LAST_MINUTE_CHECK.hour
     LAST_DAY_CHECK = LAST_MINUTE_CHECK.day
@@ -396,12 +419,10 @@ init python:
         """
         Runs every minute during breaks between topics
         """
-        global LAST_IDLE_CALL
-
         jn_utils.save_game()
 
         # Check the daily affinity cap and reset if need be
-        Natsuki.checkResetDailies ()
+        Natsuki.checkResetDailies()
 
         # Run through all externally-registered minute check actions
         if len(jn_plugins.minute_check_calls) > 0:
@@ -414,7 +435,7 @@ init python:
         if (
             Natsuki.isHappy(higher=True)
             and persistent.jn_custom_outfits_unlocked
-            and len(jn_outfits._SESSION_NEW_UNLOCKS)
+            and jn_outfits.getSafePendingUnlocks()
             and not jn_events.selectHolidays()
         ):
             queue("new_wearables_outfits_unlocked")
@@ -422,8 +443,8 @@ init python:
         # Push a topic, if we have waited long enough since the last one, and settings for random chat allow it
         if (
             persistent.jn_natsuki_random_topic_frequency != jn_preferences.random_topic_frequency.NEVER
-            and datetime.datetime.now() > LAST_TOPIC_CALL + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.get_random_topic_cooldown())
-            and datetime.datetime.now() >= LAST_MENU_CALL + datetime.timedelta(seconds=5)
+            and datetime.datetime.now() > Natsuki.getLastTopicCall() + datetime.timedelta(minutes=jn_preferences.random_topic_frequency.getRandomTopicCooldown())
+            and datetime.datetime.now() >= Natsuki.getLastMenuCall() + datetime.timedelta(seconds=5)
             and not persistent._event_list
         ):
             if not persistent.jn_natsuki_repeat_topics:
@@ -466,15 +487,15 @@ init python:
         # Select a random idle if enabled, we haven't had one for a while and there's nothing already queued
         if (
             persistent._jn_natsuki_idles_enabled
-            and datetime.datetime.now() >= LAST_TOPIC_CALL + datetime.timedelta(minutes=2)
-            and datetime.datetime.now() >= LAST_IDLE_CALL + datetime.timedelta(minutes=10)
-            and datetime.datetime.now() >= LAST_MENU_CALL + datetime.timedelta(seconds=5)
+            and datetime.datetime.now() >= Natsuki.getLastTopicCall() + datetime.timedelta(minutes=2)
+            and datetime.datetime.now() >= Natsuki.getLastIdleCall() + datetime.timedelta(minutes=10)
+            and datetime.datetime.now() >= Natsuki.getLastMenuCall() + datetime.timedelta(seconds=5)
             and not persistent._event_list
         ):
             idle_topic = jn_idles.selectIdle()
             if idle_topic:
                 queue(idle_topic)
-                LAST_IDLE_CALL = datetime.datetime.now()
+                Natsuki.resetLastIdleCall()
 
         # Notify for player activity, if settings allow it
         if (
@@ -486,6 +507,9 @@ init python:
             jn_activity.ACTIVITY_MANAGER.last_activity = current_activity
             if jn_activity.ACTIVITY_MANAGER.last_activity.getRandomNotifyText():
                 jn_activity.notifyPopup(jn_activity.ACTIVITY_MANAGER.last_activity.getRandomNotifyText())
+
+        if (random.randint(1, 10000) == 1):
+            jn_stickers.stickerWindowPeekUp(at_right=random.choice([True, False]))
 
         return
 
@@ -499,8 +523,11 @@ init python:
             for action in jn_plugins.quarter_hour_check_calls:
                 eval(action.statement)
 
-        queue("weather_change")
-        queue("random_music_change")
+        if not jn_topic_in_event_list("weather_change"):
+            queue("weather_change")
+
+        if not jn_topic_in_event_list("random_music_change"):
+            queue("random_music_change")
 
         return
 
@@ -526,17 +553,17 @@ init python:
             for action in jn_plugins.hour_check_calls:
                 eval(action.statement)
 
-        queue("weather_change")
-
-        # Draw background
-        main_background.check_redraw()
+        if not jn_topic_in_event_list("weather_change"):
+            queue("weather_change")
 
         if (
             persistent.jn_natsuki_auto_outfit_change_enabled
-            and not Natsuki.isWearingOutfit(jn_outfits.get_realtime_outfit().reference_name)
+            and not Natsuki.isWearingOutfit(jn_outfits.getRealtimeOutfit().reference_name)
         ):
             # We call here so we don't skip day_check, as call returns us to this point
             renpy.call("outfits_auto_change")
+
+        jn_utils.fireAndForgetFunction(jn_data_migrations.checkCurrentVersionIsLatest)
 
         return
 
@@ -549,7 +576,8 @@ init python:
             for action in jn_plugins.day_check_calls:
                 eval(action.statement)
 
-        queue("weather_change")
+        if not jn_topic_in_event_list("weather_change"):
+            queue("weather_change")
 
         # Determine if the year has changed, in which case we reset all holidays so they can be celebrated again
         if (datetime.datetime.now().year > persistent.jn_last_visited_date.year):
@@ -570,24 +598,74 @@ label talk_menu:
     python:
         # Get the flavor text for the talk menu, based on affinity state
         if Natsuki.isEnamored(higher=True):
-            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_LOVE_ENAMORED)
+            _talk_flavor_text = random.choice([
+                "What's up,{w=0.1} [player]?",
+                "What's on your mind,{w=0.1} [player]?",
+                "Something up,{w=0.1} [player]?",
+                "You wanna talk?{w=0.2} Ehehe.",
+                "I'd love to talk!",
+                "I always love talking to you,{w=0.1} [player]!",
+                "[player]!{w=0.2} What's up?",
+                "[player]!{w=0.2} What's on your mind?",
+                "Ooh!{w=0.2} What did you wanna talk about?",
+                "I'm all ears,{w=0.1} [player]!",
+                "I've always got time for you,{w=0.1} [player]!",
+                "Hey!{w=0.2} What's up,{w=0.2} [player]?",
+                "What have you got for me?{w=0.2} Ehehe.",
+                "[player]!{w=0.2} What's new?",
+                "[player]!{w=0.2} You wanna talk?",
+                "Shoot,{w=0.2} [player]!{w=0.3} Ehehe.",
+                "Shoot,{w=0.2} [player]!",
+                "Oh!{w=0.2} Oh!{w=0.2} You got something for me?",
+                "Talk to me,{w=0.2} [player]!{w=0.3} Ehehe."
+            ])
 
         elif Natsuki.isNormal(higher=True):
-            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_AFFECTIONATE_NORMAL)
+            _talk_flavor_text = random.choice([
+                "What's up?",
+                "What's on your mind?",
+                "What's happening?",
+                "Something on your mind?",
+                "Oh?{w=0.2} You wanna talk?",
+                "Huh?{w=0.2} What's up?",
+                "You wanna share something?",
+                "What's new,{w=0.1} [player]?",
+                "'Sup,{w=0.1} [player]?",
+                "You wanna talk?",
+                "Hey,{w=0.2} [player]!"
+            ])
 
         elif Natsuki.isDistressed(higher=True):
-            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_UPSET_DISTRESSED)
+            _talk_flavor_text = random.choice([
+                "What do you want?",
+                "What is it?",
+                "Make it quick.",
+                "What now?",
+                "What do you want now?",
+                "What is it this time?",
+                "Yeah?{w=0.2} What?",
+                "What now?",
+                "This better be good."
+            ])
 
         else:
-            _talk_flavor_text = random.choice(store.jn_globals.DEFAULT_TALK_FLAVOR_TEXT_BROKEN_RUINED)
+            _talk_flavor_text = random.choice([
+                "...",
+                "...?",
+                "What?",
+                "Just talk already.",
+                "Spit it out.",
+                "Start talking.",
+                "Get it over with.",
+                "What do {i}you{/i} want?",
+                "Get on with it.",
+                "Talk."
+            ])
 
         # Ensure any variable references are substituted
         _talk_flavor_text = renpy.substitute(_talk_flavor_text)
         show_natsuki_talk_menu()
         Natsuki.setInConversation(True)
-
-        global LAST_IDLE_CALL
-        global LAST_MENU_CALL
 
     menu:
         n "[_talk_flavor_text]"
@@ -621,12 +699,12 @@ label talk_menu:
             jump farewell_start
 
         "Nevermind.":
-            $ LAST_IDLE_CALL = datetime.datetime.now()
-            $ LAST_MENU_CALL = datetime.datetime.now()
+            $ Natsuki.resetLastIdleCall()
+            $ Natsuki.resetLastMenuCall()
             jump ch30_loop
 
-    $ LAST_IDLE_CALL = datetime.datetime.now()
-    $ LAST_MENU_CALL = datetime.datetime.now()
+    $ Natsuki.resetLastIdleCall()
+    $ Natsuki.resetLastMenuCall()
 
     return
 
@@ -659,8 +737,8 @@ label player_select_topic(is_repeat_topics=False):
 
     call screen categorized_menu(
         menu_items=menu_items,
-        category_pane_space=(1020, 70, 250, 572),
-        option_list_space=(740, 70, 250, 572),
+        category_pane_space=(990, 40, 250, 572),
+        option_list_space=(710, 40, 250, 572), # x should be 280 less than above
         category_length=len(_topics))
 
     $ _choice = _return
@@ -696,13 +774,14 @@ label farewell_menu:
     jump ch30_loop
 
 label outfits_menu:
-    $ outfit_options = [
+    call screen scrollable_choice_menu([
         ("Can you wear an outfit for me?", "outfits_wear_outfit"),
         ("Can I suggest a new outfit?", "outfits_suggest_outfit"),
-        ("Can I remove an outfit I suggested?", "outfits_remove_outfit"),
-        ("Can you search again for new outfits?", "outfits_reload")
-    ]
-    call screen scrollable_choice_menu(outfit_options, ("Nevermind.", None))
+        ("Can you forget about an outfit I suggested?", "outfits_remove_outfit"),
+        ("Can you search again for new items?", "outfits_reload")],
+        ("Nevermind.", None),
+        400,
+        "mod_assets/icons/outfits.png")
 
     if isinstance(_return, basestring):
         show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
@@ -752,30 +831,35 @@ label try_force_quit:
     else:
         # Standard quit behaviour
         if Natsuki.isAffectionate(higher=True):
-            n 2kplpo "W-{w=0.1}wait,{w=0.1} what?{w=0.2} Aren't you going to say goodbye first,{w=0.1} [player]?"
+            n 2ccsem "W-{w=0.2}wait,{w=0.5}{nw}" 
+            extend 2knmflsbl " what?{w=0.75}{nw}"
+            extend 5clrunlsbl " Can you at {i}least{/i} say goodbye first,{w=0.2} [player]?"
 
         elif Natsuki.isNormal(higher=True):
-            n 4kskem "H-{w=0.1}hey!{w=0.2} You aren't just going to leave like that,{w=0.1} are you?"
+            n 4kskem "H-{w=0.2}hey!{w=0.75}{nw}" 
+            extend 4kllflsbl " Y-{w=0.2}you aren't just going to leave like that,{w=0.5}{nw}" 
+            extend 4ksqunsbl " are you?"
 
         elif Natsuki.isDistressed(higher=True):
-            n 2fsqpu "...Really?{w=0.2} I don't even get a 'goodbye' now?"
+            n 2fsqpu "...Really?{w=0.75}{nw}" 
+            extend 2fcsupsbr " I don't even get a 'goodbye' now?"
 
         else:
-            n 2fsqsf "...Oh.{w=0.2} You're leaving."
+            n 2fsqsftsb "..."
 
         menu:
             # Back out of quitting
             "Nevermind.":
                 if Natsuki.isAffectionate(higher=True):
-                    n 4kllssl "T-{w=0.1}thanks,{w=0.1} [player].{w=1}{nw}"
-                    n 1tllss "Now,{w=0.1} where was I...?{w=1}{nw}"
-                    extend 1unmbo " Oh,{w=0.1} right.{w=1}{nw}"
+                    n 4kllssl "T-{w=0.2}thanks,{w=0.2} [player].{w=1}{nw}"
+                    n 1tllss "Now,{w=0.2} where was I...?{w=1}{nw}"
+                    extend 1unmbo " Oh,{w=0.2} right.{w=1}{nw}"
 
                 elif Natsuki.isNormal(higher=True):
-                    n 2flleml "G-{w=0.1}good!{w=1}{nw}"
+                    n 2flleml "G-{w=0.2}good!{w=1}{nw}"
                     extend 2kllpol " Good...{w=1}{nw}"
                     n 1tslpu "Now...{w=0.3} what was I saying again?{w=0.5}{nw}"
-                    extend 1nnmbo " Oh,{w=0.1} right.{w=1}{nw}"
+                    extend 1nnmbo " Oh,{w=0.2} right.{w=1}{nw}"
 
                 elif Natsuki.isDistressed(higher=True):
                     n 1fsqfr "...Thank you.{w=1}{nw}"

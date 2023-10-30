@@ -4,6 +4,7 @@ image paper default = "mod_assets/poems/default.png"
 image paper pink_floral = "mod_assets/poems/pink_floral.png"
 image paper festive = "mod_assets/poems/festive.png"
 image paper notepad = "mod_assets/poems/notepad.png"
+image paper spooky = "mod_assets/poems/spooky.png"
 
 init python in jn_poems:
     import store
@@ -382,6 +383,39 @@ init python in jn_poems:
         ),
         paper="notepad",
         font_size=16
+    ))
+
+    __registerPoem(JNPoem(
+        reference_name="jn_natsuki_hallows_end",
+        display_name="Hallow's End",
+        holiday_type=jn_events.JNHolidayTypes.halloween,
+        affinity_range=(jn_affinity.LOVE, None),
+        poem=(
+            "When the month ends, the costumes come out\n"
+            "Children dress up and run door to door with glee\n"
+            "Or be it the haunted houses ready to cause a shout\n"
+            "This holiday holds something for everyone to see\n"
+            "\n"
+            "In her case, not so much as she will commonly pout\n"
+            "As common festivities aren't always simple and carefree\n"
+            "So when she sees everyone at play she can only doubt\n"
+            "And wish that things could be different, that is her plea\n"
+            "\n"
+            "Through the lamenting, she's ready to let down her guard\n"
+            "She's ready to laugh, yell, jump in horror and scream.\n"
+            "All things that previously once left her afraid and scarred.\n"
+            "But experiencing all of that in a much safer space? A dream.\n"
+            "\n"
+            "So take her on that journey, be her accompanying bodyguard\n"
+            "And let her experience what she always desired her eyes agleam\n"
+            "She'll let you in and together she'll be free with sadness to discard\n"
+            "Her face shining through the darkness, the holiday now redeemed\n"
+            "\n"
+            "So applying some effort and being patient with her is no trick.\n"
+            "Because a smile from her is worth more than any received treat!\n"
+        ),
+        paper="spooky",
+        font_size=18
     ))
 
 label show_poem(poem):

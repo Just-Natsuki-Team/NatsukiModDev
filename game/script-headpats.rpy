@@ -2,7 +2,6 @@ default persistent._jn_headpats_total_given = 0
 
 init python in jn_headpats:
     import os
-    import pygame
     import random
     import store
     import store.jn_utils as jn_utils
@@ -10,22 +9,6 @@ init python in jn_headpats:
 
     _PATS_UI_Z_INDEX = 4
     _PATS_POPUP_Z_INDEX = 5
-
-    _FINISHED_START_QUIPS = [
-        "...Satisfied?",
-        "Happy now,{w=0.2} [player]?",
-        "...Y-{w=0.3}you're done now?",
-        "A-{w=0.2}all done,{w=0.2} [player]?",
-        "I-{w=0.2}is that all,{w=0.2} [player]?"
-    ]
-
-    _FINISHED_END_QUIPS = [
-        "...Good.",
-        "...A-{w=0.2}about time.",
-        "Finally...{w=0.5} jeez...",
-        "T-{w=0.2}took you long enough.",
-        "Finally..."
-    ]
 
     # Tracking
     _more_pats_requested = False
@@ -35,17 +18,27 @@ init python in jn_headpats:
 
     # Collision detection
     _last_mouse_position = None
-
-    _ACTIVE_PAT_AREA = pygame.Rect(519, 100, 239, 152)
+    _cursor_in_active_area = False
 
     def _getMousePositionChanged():
         """
         Returns whether the current mouse position has changed compared to the last mouse position given as stored under _last_mouse_position.
         """
-        if _last_mouse_position is None or _last_mouse_position != jn_utils.getMousePosition():
+        if _last_mouse_position is None or _last_mouse_position != renpy.get_mouse_pos():
             return True
 
         return False
+
+    def _setCursorInActiveArea(is_active):
+        """
+        Sets whether the cursor is in the active pat area for Natsuki.__capped_aff_dates.
+        Needed as SetVariable on hovered/unhovered doesn't function properly on mousearea elements; thanks Ren'Py.
+
+        IN:
+            - is_active - bool state to set
+        """
+        global _cursor_in_active_area
+        _cursor_in_active_area = is_active
 
     jn_plugins.registerExtrasOption(
         option_name="Headpats",
@@ -86,16 +79,10 @@ label headpats_start:
 
 # Main headpat loop/logic
 label headpats_loop:
-    $ current_mouse_position = jn_utils.getMousePosition()    
-    $ config.mouse = (
-        {"default": [("mod_assets/extra/headpats/headpats_active_cursor.png", 24, 24)]} if jn_headpats._ACTIVE_PAT_AREA.collidepoint(current_mouse_position[0], current_mouse_position[1])
-        else None
-    )  
+    $ current_mouse_position = renpy.get_mouse_pos()   
+    $ config.mouse = {"default": [("mod_assets/extra/headpats/headpats_active_cursor.png", 24, 24)]} if jn_headpats._cursor_in_active_area else None
 
-    if (
-        jn_headpats._ACTIVE_PAT_AREA.collidepoint(current_mouse_position[0], current_mouse_position[1]) 
-        and jn_headpats._getMousePositionChanged()
-    ):
+    if jn_headpats._cursor_in_active_area and jn_headpats._getMousePositionChanged():
         python:
             global _last_mouse_position
             persistent._jn_headpats_total_given += 1
@@ -277,12 +264,27 @@ label headpats_finished:
                 extend 2fcspolsbl " I wasn't really {i}that{/i} into it anyway."
                 n 1kslpol "..."
     else:
-        $ finished_start_quip = renpy.substitute(random.choice(jn_headpats._FINISHED_START_QUIPS))
+        $ finished_start_quip = renpy.substitute(random.choice([
+            "...Satisfied?",
+            "Happy now,{w=0.2} [player]?",
+            "...Y-{w=0.3}you're done now?",
+            "A-{w=0.2}all done,{w=0.2} [player]?",
+            "I-{w=0.2}is that all,{w=0.2} [player]?"
+        ]))
         n 1kwmpul "[finished_start_quip]"
-        $ finished_end_quip = renpy.substitute(random.choice(jn_headpats._FINISHED_END_QUIPS))
+
+        $ finished_end_quip = renpy.substitute(random.choice([
+            "...Good.",
+            "...A-{w=0.2}about time.",
+            "Finally...{w=0.5} jeez...",
+            "T-{w=0.2}took you long enough.",
+            "Finally..."
+        ]))
         n 1kllpul "[finished_end_quip]"
+        
         n 1kcsdvf "..."
 
+    $ jn_headpats._cursor_in_active_area = False
     hide screen headpats_ui
     jump ch30_loop
 
@@ -421,7 +423,13 @@ screen headpats_ui:
 
     # Pat counter
     text "{0} headpats given".format(persistent._jn_headpats_total_given) size 30 xalign 0.5 ypos 40 text_align 0.5 xysize (None, None) outlines [(3, "#000000aa", 0, 0)] style "categorized_menu_button_text"
-    
+
+    mousearea:
+        area (506, 109, 265, 155)
+        hovered Function(jn_headpats._setCursorInActiveArea, True)
+        unhovered Function(jn_headpats._setCursorInActiveArea, False)
+        focus_mask None
+
     # Options
     style_prefix "hkb"
     vbox:

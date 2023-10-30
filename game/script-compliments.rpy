@@ -44,7 +44,7 @@ label player_compliments_start:
         ]
         compliment_menu_items.sort()
 
-    call screen scrollable_choice_menu(compliment_menu_items, ("Nevermind.", None))
+    call screen scrollable_choice_menu(compliment_menu_items, ("Nevermind.", None), 400, "mod_assets/icons/compliments.png")
 
     if _return:
         $ push(_return)

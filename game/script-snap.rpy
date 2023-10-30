@@ -10,96 +10,16 @@ default persistent._jn_snap_player_wins = 0
 default persistent._jn_snap_natsuki_wins = 0
 
 init 0 python in jn_snap:
+    from Enum import Enum
     import random
     import store
     import store.jn_apologies as jn_apologies
     import time
 
-    # Card config
-    _CARD_VALUES = range(1, 11)
-    _CARD_SUITS = [
-        "clubs",
-        "diamonds",
-        "hearts",
-        "spades"
-    ]
-
-    _current_table_card_image = "mod_assets/games/snap/cards/blank.png"
-    _turn_indicator_image = "mod_assets/games/snap/ui/turn_indicator_none.png"
-
-    _SNAP_UI_Z_INDEX = 4
-    _SNAP_POPUP_Z_INDEX = 5
-
-    # Quips
-    _PLAYER_CORRECT_SNAP_QUIPS = [
-        "Nnnnn-!",
-        "Ugh!{w=0.2} Come on!",
-        "Y-{w=0.1}You're fast!",
-        "But I was just about to call ittt!",
-        "Just you wait,{w=0.1} [player]...",
-        "Uuuuuu-!",
-        "Not again!{w=0.2} Grrr...",
-        "Damn it...",
-        "Fudge...",
-        "So dumb...",
-        "Again?{w=0.2} Really?",
-        "Ugh...",
-        "So ridiculous...",
-        "So dumb...",
-        "Jeez! Whatever...",
-        "Jeez!",
-        "Jeeeeeez!",
-        "Oh come on,{w=0.2} [player]!",
-        "How are you {i}that{/i} fast?!"
-    ]
-
-    _NATSUKI_CORRECT_SNAP_QUIPS = [
-        "SNAP!{w=0.2} Ahaha!",
-        "Snap!{w=0.2} Ahaha!",
-        "SNAP!{w=0.2} Ehehe.",
-        "SNAP!",
-        "Snap!",
-        "Snap~!",
-        "Snap!{w=0.2} Snap snap snap!",
-        "Snappy snap!",
-        "Boom!{w=0.2} Snap!",
-        "Snap!{w=0.2} Snap!",
-        "Snap!{w=0.2} Snap!{w=0.2} Snap!",
-        "Yes!{w=0.2} SNAP!",
-        "Yeah!{w=0.2} SNAP!",
-        "Yeah!{w=0.2} Snap!{w=0.2} Snap!",
-        "Snap snap freaking snap!",
-        "SNAAAP!{w=0.2} Ehehe.",
-        "Bam!{w=0.2} Snap!"
-    ]
-
-    _PLAYER_INCORRECT_SNAP_QUIPS = [
-        "Oh?{w=0.2} Someone's impatient,{w=0.1} huh?",
-        "Oopsie daisy,{w=0.1} [player]~.{w=0.2} Ehehe.",
-        "Nice one,{w=0.1} dummy.{w=0.2} Ahaha!",
-        "Real smooth,{w=0.1} [player].{w=0.2} Ehehe.",
-        "Ahaha!{w=0.2} What was that,{w=0.1} [player]?",
-        "Hey,{w=0.1} [player] -{w=0.1} you're meant to read the cards!{w=0.2} Ehehe.",
-        "Great play,{w=0.1} dummy!{w=0.2} Ahaha!"
-    ]
-
-    _NATSUKI_INCORRECT_SNAP_QUIPS = [
-        "Sn-...{w=0.3} oh.",
-        "Snap!{w=0.2} Wait...",
-        "SNAP!{w=0.2} Huh...?{w=0.2} O-{w=0.1}oh.",
-        "Snap sna-...{w=0.3} grrr."
-    ]
-
     # Out of game tracking
     _player_win_streak = 0
     _natsuki_win_streak = 0
     last_game_result = None
-
-    # Game outcomes
-    RESULT_PLAYER_WIN = 0
-    RESULT_NATSUKI_WIN = 1
-    RESULT_DRAW = 3
-    RESULT_FORFEIT = 4
 
     # In-game tracking
     _is_player_turn = None
@@ -118,21 +38,21 @@ init 0 python in jn_snap:
 
     # A little something extra
     if random.choice(range(1, 100)) == 1:
-        _CARD_FAN_IMAGE_PLAYER = "mod_assets/games/snap/ui/card_fan_icon_alt.png"
+        _CARD_FAN_IMAGE_PLAYER = "mod_assets/games/snap/card_fan_icon_alt.png"
 
     else:
-        _CARD_FAN_IMAGE_PLAYER = "mod_assets/games/snap/ui/card_fan_icon.png"
+        _CARD_FAN_IMAGE_PLAYER = "mod_assets/games/snap/card_fan_icon.png"
 
-    _CARD_FAN_IMAGE_NATSUKI = "mod_assets/games/snap/ui/card_fan_icon.png"
+    class JNSnapStates(Enum):
+        """
+        Identifiers for the different ways a snap game can end.
+        """
+        draw = 1
+        forfeit = 2
+        natsuki_win = 3
+        player_win = 4
 
-    _SNAP_POPUP_SPRITES = [
-        "mod_assets/games/snap/ui/snap_a.png",
-        "mod_assets/games/snap/ui/snap_b.png",
-        "mod_assets/games/snap/ui/snap_c.png",
-        "mod_assets/games/snap/ui/snap_d.png"
-    ]
-
-    def _reset(complete_reset=False):
+    def _clear(complete_reset=False):
         """
         Resets the in-game variables associated with Snap
 
@@ -156,7 +76,7 @@ init 0 python in jn_snap:
         if complete_reset:
             _natsuki_skill_level = 1
 
-    def _generate_hands():
+    def _setup():
         """
         Generates a deck of cards based on the card configuration
         Deck is then shuffled, and the players are then assigned their hands
@@ -167,8 +87,13 @@ init 0 python in jn_snap:
         del _natsuki_hand[:]
 
         # Generate all possible card combinations based on suits and values
-        for card_suit in _CARD_SUITS:
-            for card_value in _CARD_VALUES:
+        for card_suit in [
+            "clubs",
+            "diamonds",
+            "hearts",
+            "spades"
+        ]:
+            for card_value in range(1, 11):
                 _cards_in_deck.append((card_suit, card_value))
 
         # Assign each player their deck
@@ -187,7 +112,7 @@ init 0 python in jn_snap:
         # Finally clear here, since we can't remove elements while iterating through
         del _cards_in_deck[:]
 
-    def _place_card_on_table(is_player=False):
+    def _placeCard(is_player=False):
         """
         Takes the top-most card from the player's hand and places it on the table pile
 
@@ -199,30 +124,17 @@ init 0 python in jn_snap:
             if (len(_player_hand) > 0):
                 new_card = _player_hand.pop(0)
                 _cards_on_table.append(new_card)
-                renpy.play("mod_assets/sfx/card_place.ogg")
+                renpy.play("mod_assets/sfx/card_flip_{0}.ogg".format(random.choice(["a", "b", "c"])))
                 _is_player_turn = False
 
         else:
             if (len(_natsuki_hand) > 0):
                 new_card = _natsuki_hand.pop(0)
                 _cards_on_table.append(new_card)
-                renpy.play("mod_assets/sfx/card_place.ogg")
+                renpy.play("mod_assets/sfx/card_flip_{0}.ogg".format(random.choice(["a", "b", "c"])))
                 _is_player_turn = True
 
-        update_turn_indicator()
-        draw_card_onscreen()
-
-    def _get_card_label_to_display():
-        """
-        Returns a string representing the uppermost card on the table pile
-        """
-        if len(_cards_on_table) >= 1:
-            return "{0} of {1}".format(_cards_on_table[-1][0], _cards_on_table[-1][1])
-
-        else:
-            return "None!"
-
-    def _get_snap_result():
+    def _getSnapResult():
         """
         Compares the last two cards placed on the table pile, and returns True if either:
             - The suits on both cards match
@@ -236,7 +148,7 @@ init 0 python in jn_snap:
         else:
             return False
 
-    def _call_snap(is_player=False):
+    def _callSnap(is_player=False):
         """
         Attempts to call snap and award cards for the player or Natsuki, based on who made the call
 
@@ -251,8 +163,7 @@ init 0 python in jn_snap:
             _player_is_snapping = True
 
         # If the suit/value on the last placed card matches the preceding card, the snap is valid
-        if _get_snap_result():
-
+        if _getSnapResult():
             if is_player:
                 # Player called snap successfully; give them the cards on the table
                 for card in _cards_on_table:
@@ -266,7 +177,6 @@ init 0 python in jn_snap:
             # Clear the cards on the table
             del _cards_on_table[:]
             renpy.play("mod_assets/sfx/card_shuffle.ogg")
-            draw_card_onscreen()
 
             # Use of renpy.call here is a stopgap and will be reworked, as renpy.call risks breaking label flow if not carefully applied.
             # Please use renpy.jump instead of this approach
@@ -278,45 +188,56 @@ init 0 python in jn_snap:
             # Natsuki comments on the incorrect snap
             renpy.call("snap_quip", is_player_snap=is_player, is_correct_snap=False)
 
-    def draw_card_onscreen():
+    def _showSplashImage(is_player_snap=False):
         """
-        Shows the card currently on top of the table pile, or nothing if no cards are on the pile
+        Shows a splash image for a Snap call.
+
+        IN:
+            - is_player_snap - bool flag as to if the player is calling Snap. Determines if the popup has a Nat chibi.
         """
-        global _current_table_card_image
+        snap_image = "you_snap" if is_player_snap else "nat_snap"
+        renpy.show(
+            name="snap_popup",
+            at_list=[store.snap_popup],
+            layer="overlay",
+            what=store.Image("mod_assets/games/snap/{0}.png".format(snap_image)),
+            zorder=10)
 
-        if len(_cards_on_table) is not 0:
-            _current_table_card_image = "mod_assets/games/snap/cards/{0}/{1}.png".format(_cards_on_table[-1][0], _cards_on_table[-1][1])
+        return
 
-        else:
-            _current_table_card_image = "mod_assets/games/snap/cards/blank.png"
-
-    def update_turn_indicator():
+    def _getCurrentTopCard():
         """
-        Updates the turn indicator graphic to display who's turn it is to move
+        Returns the sprite path of the card currently on top of the table pile, or nothing if no cards are on the pile
+        
+        OUT:
+            - str sprite path of the card to show on top of the pile
         """
-        global _turn_indicator_image
+        return "mod_assets/games/cards/{0}/{1}.png".format(_cards_on_table[-1][0], _cards_on_table[-1][1]) if len(_cards_on_table) else "mod_assets/games/cards/blank.png"
 
+    def _getCurrentTurnIndicator():
+        """
+        Returns the sprite path of the turn indicator to display on the snap UI.
+
+        OUT:
+            - Arrow pointing to Natsuki or the player, based on the current turn
+        """
         if _is_player_turn is None:
-            _turn_indicator_image = "mod_assets/games/snap/ui/turn_indicator_none.png"
-
-        elif _is_player_turn:
-            _turn_indicator_image = "mod_assets/games/snap/ui/turn_indicator_player.png"
+            return "mod_assets/games/snap/turn_indicator_none.png"
 
         else:
-            _turn_indicator_image = "mod_assets/games/snap/ui/turn_indicator_natsuki.png"
+            return "mod_assets/games/snap/turn_indicator_player.png" if _is_player_turn else "mod_assets/games/snap/turn_indicator_natsuki.png" 
 
-    def get_turn_label_to_display():
+    def _getCurrentTurnLabel():
         """
-        Returns a turn descriptor label based on who's turn it is to move
+        Returns the turn text to display on the snap UI.
+
+        OUT:
+            - Nobody if it is nobody's turn; otherwise the player or Natsuki's current nickname
         """
         if _is_player_turn is None:
             return "Nobody!"
 
-        elif _is_player_turn:
-            return "Yours!"
-
-        else:
-            return renpy.substitute("[n_name]")
+        return "Yours!" if _is_player_turn else "[n_name]"
 
 label snap_intro:
     n 1nchbs "Alriiiight!{w=0.75}{nw}" 
@@ -325,77 +246,96 @@ label snap_intro:
     if not persistent.jn_snap_explanation_given:
         n 1nnmaj "Oh -{w=0.3} before we start,{w=0.2} did you want an explanation?{w=0.5}{nw}" 
         extend 4tllca " You know,{w=0.2} on how it works?"
-        n 1nchsm "It's a super simple game,{w=0.2} but I thought I'd better ask."
-        n 3fcsbg "I don't wanna win just because you didn't know what you were doing!"
-        n 1usqfs "So...{w=1}{nw}"
-        extend 3fchss " How about it?"
+        n 4nchsm "It's a super simple game,{w=0.2} but I thought I'd better ask."
+        n 2fcsbg "I don't wanna win just because you didn't know what you were doing!"
+        n 2usqfs "So...{w=1}{nw}"
+        extend 4fchss " how about it?"
 
-        show natsuki 3fchsm
+        show natsuki 4fchsm
         menu:
             n "Need me to run through the rules real quick?"
 
-            "Yes please!":
+            "Yes, please!":
                 jump snap_explanation
 
             "No, I'm ready.":
-                n 1fsqbg "Oh?{w=0.2} You're ready,{w=0.1} huh?"
-                n 3tsqdv "Ready to get your butt kicked!{w=0.75}{nw}" 
-                extend 3fchbs " Let's go,{w=0.1} [player]!"
+                n 4tsqss "Oh?{w=0.75}{nw}" 
+                extend 4flrbg " You're ready,{w=0.5}{nw}" 
+                extend 4fsqbg " huh?"
+                n 2fchgn "Ready to get your butt kicked!{w=0.75}{nw}" 
+                extend 2fchbs " Let's go,{w=0.2} [player]!"
                 $ persistent.jn_snap_explanation_given = True
 
     jump snap_start
 
 label snap_explanation:
     n 1nnmss "Alright!{w=0.2} So the rules are dead simple,{w=0.5}{nw}" 
-    extend 3nslsm " like I was saying before."
-    n 1unmaj "Basically,{w=0.1} we each get half a deck of cards."
-    n 3nchss "Then,{w=0.1} we take it in turns placing a card face up on the table -{w=0.5}{nw}"
-    extend 3fsrdv " we don't get to {i}pick or see{/i} the card before,{w=0.1} though!"
-    n 4fsgbg "Following me so far,{w=0.1} [player]?{w=0.2} Ehehe."
+    extend 4nslsm " like I was saying before."
+    n 4unmaj "Basically,{w=0.2} we each get half a deck of cards."
+    n 2nchss "Then,{w=0.2} we take it in turns placing a card face up on the table -{w=0.5}{nw}"
+    extend 2fsrdv " we don't get to {i}pick or see{/i} the card before,{w=0.2} though!"
+    n 4fsgbg "Following me so far,{w=0.2} [player]?{w=0.2} Ehehe."
     n 1nnmbg "If the card just placed down on the table matches either the {i}value or suit{/i} of the card that was there before..."
     n 4usqsm "Then we gotta call{w=0.5}{nw}"
     extend 4fchbs " Snap!"
     n 1nnmsm "Whoever calls it first gets the cards on the table."
     n 1unmaj "Oh -{w=0.5}{nw}"
-    extend 3tsqss " but you gotta be careful,{w=0.2} [player]."
-    n 1fllsg "When you call snap,{w=0.2} it becomes the other player's turn..."
-    n 1fsqsm "So don't shout unless you know you got it,{w=0.5}{nw}"
-    extend 1nchgn " 'kay?"
+    extend 2tsqss " but you gotta be careful,{w=0.2} [player]."
+    n 4fllsg "When you call snap,{w=0.2} it becomes the other player's turn..."
+    n 2fsqsm "So don't shout unless you know you got it,{w=0.5}{nw}"
+    extend 2nchgn " 'kay?"
     n 1uchbg "The winner is whoever ends up with all the cards first!"
     n 4tsqsm "Which is usually me,{w=0.75}{nw}"
     extend 2fsldv " obviously."
-    n 4uwdaj "Oh,{w=0.1} right -{w=0.5}{nw}"
-    extend 1nnmsm " you also lose if you run out of cards to play,{w=0.1} so you should keep that in mind too."
-    n 4tsqss "So...{w=0.3} how about it,{w=0.1} [player]?{w=0.2} You got all that?"
+    n 4uwdaj "Oh,{w=0.2} right -{w=0.5}{nw}"
+    extend 1nnmsm " you also lose if you run out of cards to play,{w=0.2} so you should keep that in mind too."
+    n 4tsqss "So...{w=0.3} how about it,{w=0.2} [player]?{w=0.2} You got all that?"
 
+    show natsuki 4unmbo
     menu:
-        n "Do the rules all make sense to you?"
+        n "Did that all make sense to you?"
 
-        "Could you go over them again, please?":
-            n 1unmaj "Huh?{w=0.2} Well,{w=0.2} okay..."
+        "Can you go over the rules again?":
+            n 1tsqpueqm "Huh?{w=0.75}{nw}" 
+            extend 1tllca " Well,{w=0.2} okay..."
+
             jump snap_explanation
 
         "Got it. Let's play!":
-            n 1uchbg "That's what I'm talking about!{w=0.2} Some fighting spirit!"
-            n 2flldv "I should warn you though,{w=0.2} [player]..."
-            n 2fchbs "I'm not gonna hold back!{w=0.5} Let's do this!"
+            n 1fcsbg "Now {i}that's{/i} what I'm talking about.{w=0.75}{nw}" 
+            extend 1fchgn " Some fighting spirit!"
+            n 2fsqbg "I should warn you though,{w=0.2} [player]..."
+            n 2fcsbs "I'm not gonna hold back!{w=0.75}{nw}" 
+            extend 2uchgn " Let's do this!"
+
             $ persistent.jn_snap_explanation_given = True
             jump snap_start
 
         "Thanks, [n_name]. I'll play later.":
-            n 1unmaj "Huh?{w=0.2} Well,{w=0.1} alright..."
-            n 3fllpo "...Spoilsport."
+            n 1tsqpueqm "Huh?{w=0.75}{nw}"
+            extend 2nsqflsbl " Seriously?"
+            n 2nslpo "..."
+            n 4nllfl "Well...{w=1.25}{nw}" 
+            extend 4nslca " fine."
+            n 2flrpo "...Spoilsport."
+
+            if not Natsuki.getDeskSlotClear(jn_desk_items.JNDeskSlots.right):
+                show natsuki 2ccspo
+                show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+                $ jnPause(1)
+                play audio drawer
+                $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.right)
+                show natsuki 2nlrbo
+                $ jnPause(1)
+                hide black with Dissolve(1.25)
+
             jump ch30_loop
 
 label snap_start:
     # Reset everything ready for a fresh game
     play audio card_shuffle
-    $ jn_snap._reset()
-    $ jn_snap._generate_hands()
-
-    # Reset the UI
-    $ jn_snap.draw_card_onscreen()
-    $ jn_snap.update_turn_indicator()
+    $ jn_snap._clear()
+    $ jn_snap._setup()
 
     show natsuki 1uchsm at jn_left
     show screen snap_ui
@@ -409,7 +349,6 @@ label snap_start:
 
     n 4fnmpu "..."
     $ jn_snap._is_player_turn = random.choice([True, False])
-    $ jn_snap.update_turn_indicator()
 
     if jn_snap._is_player_turn:
         n 1fcssm "Ehehe.{w=0.5}{nw}" 
@@ -417,10 +356,10 @@ label snap_start:
         extend 1fchgn " Looks like you're up first!"
 
     else:
-        n 3nsqsl "..."
-        n 3fslpo "Hmph.{w=0.5}{nw}" 
-        extend 3fcsaj " You just got lucky this time.{w=0.75}{nw}" 
-        extend 3fcsca " I guess I'll go first then,{w=0.2} [player]."
+        n 2nsqsl "..."
+        n 2fslpo "Hmph.{w=0.5}{nw}" 
+        extend 2fcsaj " You just got lucky this time.{w=0.75}{nw}" 
+        extend 2fcsca " I guess I'll go first then,{w=0.2} [player]."
 
     show natsuki snap
     $ Natsuki.setInGame(True)
@@ -434,7 +373,7 @@ label snap_main_loop:
         # We tied somehow? End the game
         $ jn_snap._player_win_streak = 0
         $ jn_snap._natsuki_win_streak = 0
-        $ jn_snap.last_game_result = jn_snap.RESULT_DRAW
+        $ jn_snap.last_game_result = jn_snap.JNSnapStates.draw
         jump snap_end
 
     elif len(jn_snap._player_hand) == 0:
@@ -442,7 +381,7 @@ label snap_main_loop:
         $ jn_snap._player_win_streak = 0
         $ jn_snap._natsuki_win_streak += 1
         $ persistent._jn_snap_natsuki_wins += 1 
-        $ jn_snap.last_game_result = jn_snap.RESULT_NATSUKI_WIN
+        $ jn_snap.last_game_result = jn_snap.JNSnapStates.natsuki_win
         jump snap_end
 
     elif len(jn_snap._natsuki_hand) == 0:
@@ -450,7 +389,7 @@ label snap_main_loop:
         $ jn_snap._player_win_streak += 1
         $ persistent._jn_snap_player_wins += 1
         $ jn_snap._natsuki_win_streak = 0
-        $ jn_snap.last_game_result = jn_snap.RESULT_PLAYER_WIN
+        $ jn_snap.last_game_result = jn_snap.JNSnapStates.player_win
         jump snap_end
 
     $ jnPause(delay=max(0.33, (3.0 - (jn_snap._natsuki_skill_level * 0.5))), hard=True)
@@ -459,24 +398,29 @@ label snap_main_loop:
 
     # If a correct snap is possible, and the player isn't snapping already, Natsuki will try to call it: the higher the difficulty, the quicker Natsuki will be.
     if not jn_snap._player_is_snapping:
-        if jn_snap._get_snap_result():
-            $ jn_snap._call_snap()
+        if jn_snap._getSnapResult():
+            $ jn_snap._callSnap()
 
         # She may also snap by mistake, assuming it makes sense to do so: the higher the difficulty, the less she'll accidentally jn_snap.
-        elif random.choice(range(0,10 + jn_snap._natsuki_skill_level)) == 1 and len(jn_snap._cards_on_table) >= 2 and jn_snap._natsuki_can_fake_snap:
-            $ jn_snap._call_snap()
+        elif (
+            random.choice(range(0,10 + jn_snap._natsuki_skill_level)) == 1
+            and len(jn_snap._cards_on_table) >= 2
+            and jn_snap._natsuki_can_fake_snap
+            and not jn_snap._player_failed_snap_streak
+        ):
+            $ jn_snap._callSnap()
             $ jn_snap._natsuki_can_fake_snap = False
 
     if not jn_snap._is_player_turn:
         # Natsuki gets to place a card
-        $ jn_snap._place_card_on_table(False)
+        $ jn_snap._placeCard(False)
 
         # If Natsuki only has one card left, she'll try to see if she can snap before admitting defeat
         if len(jn_snap._natsuki_hand) == 0:
             $ jnPause(delay=max(0.33, (1.25 - (jn_snap._natsuki_skill_level * 0.5))), hard=True)
 
-            if jn_snap._get_snap_result():
-                $ jn_snap._call_snap()
+            if jn_snap._getSnapResult():
+                $ jn_snap._callSnap()
 
         $ jn_snap._is_player_turn = True
         $ jn_snap._natsuki_can_fake_snap = True
@@ -493,14 +437,33 @@ label snap_quip(is_player_snap, is_correct_snap):
         # Player snapped, and was correct
         if is_correct_snap:
             $ jn_snap._player_failed_snap_streak = 0
-            $ quip = renpy.substitute(random.choice(jn_snap._PLAYER_CORRECT_SNAP_QUIPS))
+            $ quip = renpy.substitute(random.choice([
+                "Nnnnn-!",
+                "Ugh!{w=0.2} Come on!",
+                "Y-{w=0.2}You're fast!",
+                "But I was just about to call ittt!",
+                "Just you wait,{w=0.2} [player]...",
+                "Uuuuuu-!",
+                "Not again!{w=0.2} Grrr...",
+                "Damn it...",
+                "Fudge...",
+                "So dumb...",
+                "Again?{w=0.2} Really?",
+                "Ugh...",
+                "So ridiculous...",
+                "So dumb...",
+                "Jeez! Whatever...",
+                "Jeez!",
+                "Jeeeeeez!",
+                "Oh come on,{w=0.2} [player]!",
+                "How are you {i}that{/i} fast?!"
+            ]))
             show natsuki 4klrca zorder JN_NATSUKI_ZORDER
 
             # Some UE things to make it fun
             play audio smack
-            show snap_popup zorder jn_snap._SNAP_POPUP_Z_INDEX
+            $ jn_utils.fireAndForgetFunction(jn_snap._showSplashImage(is_player_snap=True))
             $ jnPause(0.75)
-            hide snap_popup
 
         # Player snapped, and was incorrect
         else:
@@ -537,35 +500,73 @@ label snap_quip(is_player_snap, is_correct_snap):
                 # Hide all the UI
                 hide screen snap_ui
 
+                show natsuki 2fcsbo
+                show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+                $ jnPause(1)
                 play audio drawer
-                with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+                $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.right)
+                show natsuki 2cslbo
+                $ jnPause(1)
+                hide black with Dissolve(1.25)
 
                 # Reset the ingame flag, then hop back to ch30 as getting here has lost context
                 $ Natsuki.setInGame(False)
+                $ Natsuki.resetLastTopicCall()
+                $ Natsuki.resetLastIdleCall()
                 jump ch30_loop
 
             # Generic incorrect quip/tease
             else:
-                $ quip = renpy.substitute(random.choice(jn_snap._PLAYER_INCORRECT_SNAP_QUIPS))
+                $ quip = renpy.substitute(random.choice([
+                    "Oh?{w=0.2} Someone's impatient,{w=0.2} huh?",
+                    "Oopsie daisy,{w=0.2} [player]~.{w=0.2} Ehehe.",
+                    "Nice one,{w=0.2} dummy.{w=0.2} Ahaha!",
+                    "Real smooth,{w=0.2} [player].{w=0.2} Ehehe.",
+                    "Ahaha!{w=0.2} What was that,{w=0.2} [player]?",
+                    "Hey,{w=0.2} [player] -{w=0.2} you're meant to read the cards!{w=0.2} Ehehe.",
+                    "Great play,{w=0.2} dummy!{w=0.2} Ahaha!"
+                ]))
                 show natsuki 2fsqsm zorder JN_NATSUKI_ZORDER
 
     else:
 
         # Natsuki snapped, and was correct
         if is_correct_snap:
-            $ quip = renpy.substitute(random.choice(jn_snap._NATSUKI_CORRECT_SNAP_QUIPS))
+            $ quip = renpy.substitute(random.choice([
+                "SNAP!{w=0.2} Ahaha!",
+                "Snap!{w=0.2} Ahaha!",
+                "SNAP!{w=0.2} Ehehe.",
+                "SNAP!",
+                "Snap!",
+                "Snap~!",
+                "Snap!{w=0.2} Snap snap snap!",
+                "Snappy snap!",
+                "Boom!{w=0.2} Snap!",
+                "Snap!{w=0.2} Snap!",
+                "Snap!{w=0.2} Snap!{w=0.2} Snap!",
+                "Yes!{w=0.2} SNAP!",
+                "Yeah!{w=0.2} SNAP!",
+                "Yeah!{w=0.2} Snap!{w=0.2} Snap!",
+                "Snap snap freaking snap!",
+                "SNAAAP!{w=0.2} Ehehe.",
+                "Bam!{w=0.2} Snap!"
+            ]))
             show natsuki 4uchbg zorder JN_NATSUKI_ZORDER
 
             # Some UE things to make it fun
 
             play audio smack
-            show snap_popup zorder jn_snap._SNAP_POPUP_Z_INDEX
+            $ jn_utils.fireAndForgetFunction(jn_snap._showSplashImage())
             $ jnPause(0.75)
-            hide snap_popup
 
         # Natsuki snapped, and was incorrect
         else:
-            $ quip = renpy.substitute(random.choice(jn_snap._NATSUKI_INCORRECT_SNAP_QUIPS))
+            $ quip = renpy.substitute(random.choice([
+                "Sn-...{w=0.3} oh.",
+                "Snap!{w=0.2} Wait...",
+                "SNAP!{w=0.2} Huh...?{w=0.2} O-{w=0.2}oh.",
+                "Snap sna-...{w=0.3} grrr."
+            ]))
             show natsuki 2fsqsr zorder JN_NATSUKI_ZORDER
 
     # Natsuki quips; disable controls so player can't skip dialogue
@@ -585,8 +586,6 @@ label snap_quip(is_player_snap, is_correct_snap):
     else:
         $ jn_snap._is_player_turn = True
 
-    $ jn_snap.update_turn_indicator()
-
     return
 
 label snap_end:
@@ -594,17 +593,17 @@ label snap_end:
     $ jn_snap._controls_enabled = False
 
     # Player won, Natsuki amger
-    if jn_snap.last_game_result == jn_snap.RESULT_PLAYER_WIN:
+    if jn_snap.last_game_result == jn_snap.JNSnapStates.player_win:
 
         if jn_snap._player_win_streak > 10:
-            n 3csltr "Yeah,{w=0.3} yeah.{w=1}{nw}" 
-            extend 3cslpo " You won again."
-            n 3csrsssbr "...You nerd."
+            n 2csltr "Yeah,{w=0.3} yeah.{w=1}{nw}" 
+            extend 2cslpo " You won again."
+            n 2csrsssbr "...You nerd."
 
         elif jn_snap._player_win_streak == 10:
-            n 3fcsaj "Oh,{w=0.5}{nw}"
-            extend 3fcsan " come{w=0.75}{nw}"
-            extend 3fbkwrl " {b}on{/b}!"
+            n 2fcsaj "Oh,{w=0.5}{nw}"
+            extend 2fcsan " come{w=0.75}{nw}"
+            extend 2fbkwrl " {b}on{/b}!"
             n 4fllgs "Seriously?!{w=0.75}{nw}"
             extend 4fnmgs " Ten in a row?!{w=0.75}{nw}"
             extend 2clremsbl " Man..."
@@ -625,40 +624,40 @@ label snap_end:
             n 1fcsbgsbr "'Cause that lucky streak won't last forever!"
 
         else:
-            n 3nllpo "Well,{w=0.2} heck.{w=0.5}{nw}" 
-            extend 3nslsssbr " I guess that's it,{w=0.2} huh?"
-            n 3fcssssbr "W-{w=0.2}well played,{w=0.2} [player].{w=0.75}{nw}"
-            extend 3csrposbr " I guess."
+            n 2nllpo "Well,{w=0.2} heck.{w=0.5}{nw}" 
+            extend 2nslsssbr " I guess that's it,{w=0.2} huh?"
+            n 2fcssssbr "W-{w=0.2}well played,{w=0.2} [player].{w=0.75}{nw}"
+            extend 2csrposbr " I guess."
 
     # Natsuki won, Natsuki happ
-    elif jn_snap.last_game_result == jn_snap.RESULT_NATSUKI_WIN:
+    elif jn_snap.last_game_result == jn_snap.JNSnapStates.natsuki_win:
 
         if jn_snap._natsuki_win_streak > 10:
             n 1fcsss "Man,{w=0.5}{nw}" 
             extend 4fcsbg " this is just too{w=0.25}{nw}" 
             extend 4fchgn " {i}easy{/i}!{w=0.75}{nw}" 
             extend 4fcsbg " I {i}almost{/i} feel bad."
-            n 3fsqsm "...Almost.{w=0.75}{nw}" 
-            extend 3fchsmeme " Ehehe."
+            n 2fsqsm "...Almost.{w=0.75}{nw}" 
+            extend 2fchsmeme " Ehehe."
 
         if jn_snap._natsuki_win_streak == 10:
             n 2cllss "Wow...{w=1}{nw}"
             extend 2fchgn " is {i}someone{/i} having a bad day or what?"
             n 4fsqbg "...Or am I just {i}that{/i} good?{w=0.75}{nw}"
-            extend 3fsqsmeme " Ehehe."
+            extend 2fsqsmeme " Ehehe."
 
         elif jn_snap._natsuki_win_streak == 5:
             n 2fcsbg "Oh?{w=0.75}{nw}"
             extend 2fsqbg " What's that?"
             n 4fchgn "The sound of five in a row {i}already{/i}?{w=0.75}{nw}"
             extend 1nchgn " Ehehe."
-            n 3fcscs "Well don't you worry,{w=0.2} [player].{w=0.75}{nw}"
-            extend 3fcsbgeme " There's plenty more where {i}that{/i} came from!"
+            n 2fcscs "Well don't you worry,{w=0.2} [player].{w=0.75}{nw}"
+            extend 2fcsbgeme " There's plenty more where {i}that{/i} came from!"
 
         elif jn_snap._natsuki_win_streak == 3:
             n 1fcssm "Ehehe.{w=0.75}{nw}"
-            extend 3fchbg " Yep!{w=0.75}{nw}"
-            extend 3fcssmesm " Yet another one for Team [n_name]!"
+            extend 2fchbg " Yep!{w=0.75}{nw}"
+            extend 2fcssmesm " Yet another one for Team [n_name]!"
 
         else:
             n 1unmbs "Yes!{w=0.5}{nw}"
@@ -667,14 +666,14 @@ label snap_end:
             n 1fsqsmeme "Ehehe."
 
     # What
-    elif jn_snap.last_game_result == jn_snap.RESULT_DRAW:
+    elif jn_snap.last_game_result == jn_snap.JNSnapStates.draw:
         n 1csrfl "...Huh.{w=0.75}{nw}" 
         extend 1tnmfl " We {i}actually{/i} tied?"
         n 2tslpu "..."
         n 2tslaj "That's...{w=1}{nw}"
         extend 4tllsl " almost impressive,{w=0.2} actually.{w=1}{nw}" 
-        extend 3cllsssbr " Weird."
-        n 3ccssssbr "Well,{w=0.2} whatever."
+        extend 2cllsssbr " Weird."
+        n 2ccssssbr "Well,{w=0.2} whatever."
 
     else:
         # Assume forfeit
@@ -690,29 +689,29 @@ label snap_end:
     if jn_snap._player_win_streak >= 3:
         n 2fcsan "Uuuuuu-!"
         n 4fcsgsl "I-{w=0.2}I demand a rematch!{w=0.75}{nw}" 
-        extend 3fcspol " I'm not going down like this!"
+        extend 2fcspol " I'm not going down like this!"
 
-        show natsuki 3fcsgsl
+        show natsuki 2fcsgsl
         $ play_again_prompt = "We're playing again!"
 
     elif jn_snap._natsuki_win_streak >= 3:
         n 4fnmaj "Come on,{w=0.2} [player]!{w=0.75}{nw}"
-        extend 3fcsbs " That {i}can't{/i} be all you've got!"
-        n 3fchbs "Rematch!{w=0.3} Rematch!"
+        extend 2fcsbs " That {i}can't{/i} be all you've got!"
+        n 2fchbs "Rematch!{w=0.3} Rematch!"
 
-        show natsuki 3fchbg
+        show natsuki 2fchbg
         $ play_again_prompt = "Again!"
 
     else:
-        n 3nsqsm "So..."
+        n 2nsqsm "So..."
 
-        show natsuki 3fchbg
+        show natsuki 2fchbg
 
     menu:
         n "[play_again_prompt]"
 
         "You're on!":
-            n 3fcsbg "You bet you are,{w=0.2} [player]!"
+            n 2fcsbg "You bet you are,{w=0.2} [player]!"
 
             $ jn_snap._natsuki_skill_level += 1
             jump snap_start
@@ -731,19 +730,26 @@ label snap_end:
 
             elif jn_snap._natsuki_win_streak >= 3:
                 extend 4fchsm " And thanks for playing."
-                n 3fsqcs "...Just bring more fight with you next time."
-                extend 3fcssm " Ahaha."
+                n 2fsqcs "...Just bring more fight with you next time."
+                extend 2fcssm " Ahaha."
                 show natsuki 1fcssm
 
             else:
-                extend 3fchsm " Thanks for playing~!"
+                extend 2fchsm " Thanks for playing~!"
                 show natsuki 1fcssm
 
-            play audio drawer
-            with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+            if random.choice([True, False]):
+                show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+                $ jnPause(1)
+                play audio drawer
+                $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.right)
+                $ jnPause(1)
+                hide black with Dissolve(1.25)
 
             # Reset the ingame flag, then hop back to ch30 as getting here has lost context
             $ Natsuki.setInGame(False)
+            $ Natsuki.resetLastTopicCall()
+            $ Natsuki.resetLastIdleCall()
             jump ch30_loop
 
 label snap_forfeit:
@@ -769,12 +775,20 @@ label snap_forfeit:
             $ jn_snap._natsuki_win_streak += 1
             $ persistent._jn_snap_natsuki_wins += 1
 
-            show natsuki 1fcssm
-            play audio drawer
-            with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+            if random.choice([True, False]):
+                show natsuki 1fcssm
+                show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+                $ jnPause(1)
+                play audio drawer
+                $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.right)
+                $ jnPause(1)
+                hide black with Dissolve(1.25)
 
             # Reset the ingame flag, then hop back to ch30 as getting here has lost context
             $ Natsuki.setInGame(False)
+            $ Natsuki.resetLastTopicCall()
+            $ Natsuki.resetLastIdleCall()
+
             jump ch30_loop
 
         "In your dreams!":
@@ -789,42 +803,28 @@ label snap_forfeit:
             jump snap_main_loop
 
 # Animation for the Snap! popup fading out; we use this because Ren'Py sucks at image prediction
-transform snap_popup_fadeout:
+transform snap_popup:
     easeout 0.75 alpha 0
 
-# Self-explanatory, you dummy
-image snap_popup:
-    block:
-        choice:
-            "mod_assets/games/snap/ui/snap_a.png"
-        choice:
-            "mod_assets/games/snap/ui/snap_b.png"
-        choice:
-            "mod_assets/games/snap/ui/snap_c.png"
-        choice:
-            "mod_assets/games/snap/ui/snap_d.png"
-
-    snap_popup_fadeout
-            
 # Game UI
 screen snap_ui:
-    zorder jn_snap._SNAP_UI_Z_INDEX
+    zorder 4
 
     # This is the card currently on the top of the pile being shown
-    add jn_snap._current_table_card_image anchor(0, 0) pos(1000, 100)
+    add jn_snap._getCurrentTopCard() anchor(0, 0) pos(1000, 100)
     
     # Icons representing each player's hand
     add jn_snap._CARD_FAN_IMAGE_PLAYER anchor(0,0) pos (675, 110)
-    add jn_snap._CARD_FAN_IMAGE_NATSUKI anchor(0,0) pos (675, 180)
+    add "mod_assets/games/snap/card_fan_icon.png" anchor(0,0) pos (675, 180)
 
     # Icon representing who's turn it is
-    add jn_snap._turn_indicator_image anchor(0,0) pos(675, 250)
+    add jn_snap._getCurrentTurnIndicator() anchor(0,0) pos(675, 250)
 
     # Game information
     text "Cards down: {0}".format(len(jn_snap._cards_on_table)) size 32 xpos 1000 ypos 50 style "categorized_menu_button"
     text "Your hand: {0}".format(len(jn_snap._player_hand)) size 22 xpos 750 ypos 125 style "categorized_menu_button"
     text "[n_name]'s hand: {0}".format(len(jn_snap._natsuki_hand)) size 22 xpos 750 ypos 195 style "categorized_menu_button"
-    text "Turn: {0}".format(jn_snap.get_turn_label_to_display()) size 22 xpos 750 ypos 265 style "categorized_menu_button"
+    text "Turn: {0}".format(jn_snap._getCurrentTurnLabel()) size 22 xpos 750 ypos 265 style "categorized_menu_button"
 
     # Options
     style_prefix "hkb"
@@ -835,25 +835,25 @@ screen snap_ui:
         # Hotkeys
         key "1" action [
             # Place
-            If(jn_snap._is_player_turn and (len(jn_snap._natsuki_hand) > 0 or len(jn_snap._player_hand) > 0) and jn_snap._controls_enabled, Function(jn_snap._place_card_on_table, True)) 
+            If(jn_snap._is_player_turn and (len(jn_snap._natsuki_hand) > 0 or len(jn_snap._player_hand) > 0) and jn_snap._controls_enabled, Function(jn_snap._placeCard, True)) 
         ]
         key "2" action [
             # Snap
-            If(len(jn_snap._cards_on_table) >= 2 and not jn_snap._player_is_snapping and (len(jn_snap._natsuki_hand) > 0 or len(jn_snap._player_hand) > 0) and jn_snap._controls_enabled, Function(jn_snap._call_snap, True))
+            If(len(jn_snap._cards_on_table) >= 2 and not jn_snap._player_is_snapping and (len(jn_snap._natsuki_hand) > 0 or len(jn_snap._player_hand) > 0) and jn_snap._controls_enabled, Function(jn_snap._callSnap, True))
         ]
 
         # Place card, but only selectable if player's turn, and both players are still capable of playing
         textbutton _("Place"):
             style "hkbd_option"
             action [
-                Function(jn_snap._place_card_on_table, True),
+                Function(jn_snap._placeCard, True),
                 SensitiveIf(jn_snap._is_player_turn and (len(jn_snap._natsuki_hand) > 0 or len(jn_snap._player_hand) > 0) and jn_snap._controls_enabled)]
 
         # Snap, but only selectable if there's enough cards down on the table, and both players are still capable of playing
         textbutton _("Snap!"):
             style "hkbd_option"
             action [
-                Function(jn_snap._call_snap, True),
+                Function(jn_snap._callSnap, True),
                 SensitiveIf(len(jn_snap._cards_on_table) >= 2 and not jn_snap._player_is_snapping and (len(jn_snap._natsuki_hand) > 0 or len(jn_snap._player_hand) > 0) and jn_snap._controls_enabled)]
 
         null height 20

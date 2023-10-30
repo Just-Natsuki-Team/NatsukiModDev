@@ -1,5 +1,6 @@
 init -50 python:
     import store
+    import store.jn_desk_items as jn_desk_items
     import store.jn_outfits as jn_outfits
     import store.jn_utils as jn_utils
     from Enum import Enum
@@ -12,6 +13,9 @@ init -50 python:
         arms_crossed_body = 2
         arms_crossed_desk = 3
         fingers_on_desk = 4
+        finger_touching = 5
+        pointy_finger = 6
+        hand_on_chin = 7
 
         def __str__(self):
             return self.name
@@ -102,6 +106,10 @@ init -50 python:
         up = 25
         think_left = 26
         think_right = 27
+        down_left = 28
+        down_right = 29
+        peek_left = 30
+        peek_right = 31
 
         def __str__(self):
             return self.name
@@ -170,13 +178,16 @@ init -50 python:
     # These are poses with arms rendered under the desk
     _JN_BEFORE_DESK_POSES = [
         JNPose.sitting,
-        JNPose.arms_crossed_body
+        JNPose.arms_crossed_body,
+        JNPose.finger_touching
     ]
 
-    # These are poses with arms rendere on top of the desk
+    # These are poses with arms rendered on top of the desk
     _JN_AFTER_DESK_POSES = [
         JNPose.arms_crossed_desk,
-        JNPose.fingers_on_desk
+        JNPose.fingers_on_desk,
+        JNPose.pointy_finger,
+        JNPose.hand_on_chin
     ]
 
     def jn_generate_natsuki_sprite(
@@ -281,12 +292,6 @@ init -50 python:
             (0, 0), eyewear
         ])
 
-        # Emotes
-        if emote:
-            lc_args.extend([
-                (0, 0), "{0}/emote/sitting/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, emote)
-            ])
-
         # Brows
         lc_args.extend([
             (0, 0), "{0}/face/eyebrows/sitting/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, eyebrows)
@@ -312,6 +317,25 @@ init -50 python:
                 (0, 0), "{0}/sleeves/[Natsuki._outfit.clothes.reference_name]/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, pose)
             ])
 
+        # Left desk item
+        lc_args.extend([
+            (0, 0), DynamicDisplayable(Natsuki.getDeskItemDisplayable, desk_slot=jn_desk_items.JNDeskSlots.left)
+        ])
+        # Centre desk item
+        lc_args.extend([
+            (0, 0), DynamicDisplayable(Natsuki.getDeskItemDisplayable, desk_slot=jn_desk_items.JNDeskSlots.centre)
+        ])
+        # Right desk item
+        lc_args.extend([
+            (0, 0), DynamicDisplayable(Natsuki.getDeskItemDisplayable, desk_slot=jn_desk_items.JNDeskSlots.right)
+        ])
+
+        # Emotes
+        if emote:
+            lc_args.extend([
+                (0, 0), "{0}/emote/sitting/{1}.png".format(_JN_NATSUKI_BASE_SPRITE_PATH, emote)
+            ])
+
         # Generate and return the sprite
         return renpy.display.layout.LiveComposite(
             *lc_args
@@ -324,7 +348,10 @@ init 1 python:
         "1": JNPose.sitting,
         "2": JNPose.arms_crossed_body,
         "3": JNPose.arms_crossed_desk,
-        "4": JNPose.fingers_on_desk
+        "4": JNPose.fingers_on_desk,
+        "5": JNPose.finger_touching,
+        "6": JNPose.pointy_finger,
+        "7": JNPose.hand_on_chin
     }
 
     EYEBROW_MAP = {
@@ -344,6 +371,10 @@ init 1 python:
         "cu": JNEyes.cute,
         "dt": JNEyes.doubt,
         "dw": JNEyes.down,
+        "dl": JNEyes.down_left,
+        "dr": JNEyes.down_right,
+        "kl": JNEyes.peek_left,
+        "kr": JNEyes.peek_right,
         "ll": JNEyes.look_left,
         "lr": JNEyes.look_right,
         "nm": JNEyes.normal,
@@ -783,23 +814,59 @@ image natsuki reading:
             "natsuki 1ndwfs"
             pause 4
 
+        choice:
+            ConditionSwitch("Natsuki.getIsReadingToRight()", "natsuki 1cdrbo", "True", "natsuki 1cdlbo", predict_all=True)
+            pause 3
+            "natsuki 1cdwbo"
+            pause 3
+            ConditionSwitch("Natsuki.getIsReadingToRight()", "natsuki 1cdlbo", "True", "natsuki 1cdrbo", predict_all=True)
+            pause 3
+            "natsuki 1ccsbo"
+            pause 0.1
+            ConditionSwitch("Natsuki.getIsReadingToRight()", "natsuki 1cdlbo", "True", "natsuki 1cdrbo", predict_all=True)
+            pause 3
+            ConditionSwitch("Natsuki.getIsReadingToRight()", "natsuki 1cdrbo", "True", "natsuki 1cdlbo", predict_all=True)
+            pause 3
+            "natsuki 1cdwbo"
+            pause 3
+            "natsuki 1ccsbo"
+            pause 0.1
+
+        choice:
+            ConditionSwitch("Natsuki.getIsReadingToRight()", "natsuki 1udrsm", "True", "natsuki 1udlsm", predict_all=True)
+            pause 3
+            "natsuki 1udwsm"
+            pause 3
+            ConditionSwitch("Natsuki.getIsReadingToRight()", "natsuki 1udlsm", "True", "natsuki 1udrsm", predict_all=True)
+            pause 3
+            "natsuki 1ucssm"
+            pause 0.1
+            ConditionSwitch("Natsuki.getIsReadingToRight()", "natsuki 1udlsm", "True", "natsuki 1udrsm", predict_all=True)
+            pause 3
+            ConditionSwitch("Natsuki.getIsReadingToRight()", "natsuki 1udrsm", "True", "natsuki 1udlsm", predict_all=True)
+            pause 3
+            "natsuki 1udwsm"
+            pause 3
+            "natsuki 1ucssm"
+            pause 0.1
+
     repeat
 
 # Idle images for Natsuki daydreaming/in thought
 image natsuki thinking:
     block:
         choice:
-            "natsuki 2tupbo"
+            "natsuki 7tupbo"
             pause 4
-            "natsuki 2tcsbo"
+            "natsuki 7tcsbo"
             pause 0.1
-            "natsuki 2tupbo"
+            "natsuki 7tupbo"
             pause 1
-            "natsuki 2tcsbo"
+            "natsuki 7tcsbo"
             pause 0.1
-            "natsuki 2tupbo"
+            "natsuki 7tupbo"
             pause 4
-            "natsuki 2tcsbo"
+            "natsuki 7tcsbo"
             pause 0.1
 
         choice:
@@ -823,19 +890,19 @@ image natsuki thinking:
             pause 0.1
     
         choice:
-            "natsuki 4tsrpu"
+            "natsuki 7tsrpu"
             pause 4
-            "natsuki 4tcspu"
+            "natsuki 7tcspu"
             pause 0.1
-            "natsuki 4tsrpu"
+            "natsuki 7tsrpu"
             pause 3
-            "natsuki 4fsrpu"
+            "natsuki 7fsrpu"
             pause 3
-            "natsuki 4fcspu"
+            "natsuki 7fcspu"
             pause 0.1
-            "natsuki 4tsrsl"
+            "natsuki 7tsrsl"
             pause 5
-            "natsuki 4tcssl"
+            "natsuki 7tcssl"
             pause 0.1
 
     repeat
@@ -950,6 +1017,61 @@ image natsuki whistling:
             pause 4
     repeat
 
+# Idle images for Natsuki working_on_papers
+image natsuki working_on_papers:
+    block:
+        choice:
+            "natsuki 2tupbo"
+            pause 4
+            "natsuki 2tcsbo"
+            pause 0.1
+            "natsuki 2tupbo"
+            pause 1
+            "natsuki 2tcsbo"
+            pause 0.1
+            "natsuki 2tupbo"
+            pause 4
+            "natsuki 2tcsbo"
+            pause 0.1
+
+        choice:
+            "natsuki 2tllbo"
+            pause 4
+            "natsuki 2tcsbo"
+            pause 0.1
+            "natsuki 2tllbo"
+            pause 4
+            "natsuki 2tcsbo"
+            pause 0.1
+
+        choice:
+            "natsuki 4tlrbo"
+            pause 4
+            "natsuki 4tcsbo"
+            pause 0.1
+            "natsuki 4tlrbo"
+            pause 4
+            "natsuki 4tcsbo"
+            pause 0.1
+    
+        choice:
+            "natsuki 2tsrpu"
+            pause 4
+            "natsuki 2tcspu"
+            pause 0.1
+            "natsuki 2tsrpu"
+            pause 3
+            "natsuki 2fsrpu"
+            pause 3
+            "natsuki 2fcspu"
+            pause 0.1
+            "natsuki 2tsrsl"
+            pause 5
+            "natsuki 2tcssl"
+            pause 0.1
+
+    repeat
+
 image natsuki snap:
     block:
         choice:
@@ -962,13 +1084,13 @@ image natsuki snap:
             "natsuki 4ccssm"
             pause 0.1
         choice:
-            "natsuki 4fsqsm"
+            "natsuki 7fsqsm"
             pause 4
-            "natsuki 4fcssm"
+            "natsuki 7fcssm"
             pause 0.1
-            "natsuki 4fsqsm"
+            "natsuki 7fsqsm"
             pause 4
-            "natsuki 4fcssm"
+            "natsuki 7fcssm"
             pause 0.1
         choice:
             "natsuki 1flrss"
@@ -1000,6 +1122,209 @@ image natsuki snap:
 
     repeat
 
+image natsuki option_wait_excited:
+    block:
+        choice:
+            "natsuki 4unmbg"
+            pause 4
+            "natsuki 4ucsbg"
+            pause 0.1
+            "natsuki 4unmbg"
+            pause 4
+            "natsuki 4ucsbg"
+            pause 0.1
+
+        choice:
+            "natsuki 4unmsm"
+            pause 4
+            "natsuki 4ucssm"
+            pause 0.1
+            "natsuki 4unmsm"
+            pause 4
+            "natsuki 4ucssm"
+            pause 0.1
+
+        choice:
+            "natsuki 4unmss"
+            pause 4
+            "natsuki 4ucsss"
+            pause 0.1
+            "natsuki 4unmss"
+            pause 4
+            "natsuki 4ucsss"
+            pause 0.1
+
+    repeat
+
+image natsuki option_wait_curious:
+    block:
+        choice:
+            "natsuki 2tnmbo"
+            pause 4
+            "natsuki 2tcsbo"
+            pause 0.1
+            "natsuki 2tnmbo"
+            pause 4
+            "natsuki 2tcsbo"
+            pause 0.1
+
+        choice:
+            "natsuki 2unmbo"
+            pause 4
+            "natsuki 2ucsbo"
+            pause 0.1
+            "natsuki 2unmbo"
+            pause 4
+            "natsuki 2ucsbo"
+            pause 0.1
+
+        choice:
+            "natsuki 7unmbo"
+            pause 4
+            "natsuki 7ucsbo"
+            pause 0.1
+            "natsuki 7unmbo"
+            pause 4
+            "natsuki 7ucsbo"
+            pause 0.1
+
+    repeat
+
+image natsuki option_wait_smug:
+    block:
+        choice:
+            "natsuki 2tsqsm"
+            pause 4
+            "natsuki 2tcssm"
+            pause 0.1
+            "natsuki 2tsqsm"
+            pause 4
+            "natsuki 2tcssm"
+            pause 0.1
+
+        choice:
+            "natsuki 4tsqcs"
+            pause 4
+            "natsuki 4tcscs"
+            pause 0.1
+            "natsuki 2tsqcs"
+            pause 4
+            "natsuki 2tcscs"
+            pause 0.1
+
+        choice:
+            "natsuki 7tsqsm"
+            pause 4
+            "natsuki 7tcssm"
+            pause 0.1
+            "natsuki 7tsqsm"
+            pause 4
+            "natsuki 7tcssm"
+            pause 0.1
+
+        choice:
+            "natsuki 7csqcs"
+            pause 4
+            "natsuki 7ccscs"
+            pause 0.1
+            "natsuki 7csqcs"
+            pause 4
+            "natsuki 7ccscs"
+
+    repeat
+
+image natsuki option_wait_holding:
+    block:
+        choice:
+            "natsuki 1ulrbo"
+            pause 4
+            "natsuki 1ucsbo"
+            pause 0.1
+            "natsuki 1ulrbo"
+            pause 4
+            "natsuki 1ucsbo"
+            pause 0.1
+
+        choice:
+            "natsuki 1tlrbo"
+            pause 4
+            "natsuki 1tcsbo"
+            pause 0.1
+            "natsuki 1tlrbo"
+            pause 4
+            "natsuki 1tcsbo"
+            pause 0.1
+
+        choice:
+            "natsuki 1tnmbo"
+            pause 4
+            "natsuki 1tcsbo"
+            pause 0.1
+            "natsuki 1tnmbo"
+            pause 4
+            "natsuki 1tcsbo"
+            pause 0.1
+
+        choice:
+            "natsuki 1unmbo"
+            pause 4
+            "natsuki 1ucsbo"
+            pause 0.1
+            "natsuki 1unmbo"
+            pause 4
+            "natsuki 1ucsbo"
+            pause 0.1
+            "natsuki 1unmbo"
+            pause 1
+            "natsuki 1ucsbo"
+            pause 0.1
+
+    repeat
+
+image natsuki option_wait_sulky:
+    block:
+        choice:
+            "natsuki 2csqca"
+            pause 4
+            "natsuki 2ccsca"
+            pause 0.1
+            "natsuki 2csqca"
+            pause 4
+            "natsuki 2ccsca"
+            pause 0.1
+
+        choice:
+            "natsuki 5cslca"
+            pause 4
+            "natsuki 5ccsca"
+            pause 0.1
+            "natsuki 5cslca"
+            pause 4
+            "natsuki 5ccsca"
+            pause 0.1
+
+        choice:
+            "natsuki 2ccspo"
+            pause 4
+            "natsuki 2fcspo"
+            pause 4
+
+        choice:
+            "natsuki 2ccsca"
+            pause 6
+
+        choice:
+            "natsuki 2csrbo"
+            pause 4
+            "natsuki 2ccsbo"
+            pause 0.1
+            "natsuki 2csrbo"
+            pause 4
+            "natsuki 2ccsbo"
+            pause 0.1
+
+    repeat
+
 # This selects which idle image to show based on current affinity state
 image natsuki idle = ConditionSwitch(
     "Natsuki.isEnamored(higher=True)", "natsuki idle enamored",
@@ -1014,6 +1339,36 @@ image natsuki idle = ConditionSwitch(
 # Idle images for ENAMORED+
 image natsuki idle enamored:
     block:
+        choice:
+            ConditionSwitch(
+                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsAbove()", "natsuki 5utlsml",
+                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsAbove()", "natsuki 5utrsml",
+                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsBelow()", "natsuki 5udlsml",
+                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsBelow()", "natsuki 5udrsml",
+                "Natsuki.getMouseIsLeft()", "natsuki 5ullsml",
+                "Natsuki.getMouseIsRight()", "natsuki 5ulrsml",
+                "Natsuki.getMouseIsAbove()", "natsuki 5uupsml",
+                "Natsuki.getMouseIsBelow()", "natsuki 5udwsml",
+                "True", "natsuki 5unmsml",
+                predict_all = True
+            )
+            pause 6
+            "natsuki 3fchbll"
+            pause 1
+            "natsuki 3fchsml"
+            pause 3
+
+        choice:
+            ConditionSwitch(
+                "Natsuki.getMouseIsLeft()", "natsuki 7tslsml",
+                "Natsuki.getMouseIsRight()", "natsuki 7tsrsml",
+                "True", "natsuki 7tsqsml",
+                predict_all = True
+            )
+            pause 6
+            "natsuki 7fchsml"
+            pause 3
+
         choice:
             "natsuki 1nchsmf"
             pause 10
@@ -1107,9 +1462,9 @@ image natsuki idle enamored:
             pause 1.5
             "natsuki 3fcspul"
             pause 0.1
-            "natsuki 4fllcsfsbl"
+            "natsuki 5fllcsfsbl"
             pause 4
-            "natsuki 4fcscsf"
+            "natsuki 5fcscsf"
             pause 0.1
 
         choice:
@@ -1125,6 +1480,25 @@ image natsuki idle enamored:
 # Idle images for AFFECTIONATE+
 image natsuki idle affectionate:
     block:
+        choice:
+            ConditionSwitch(
+                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsAbove()", "natsuki 3utlcsl",
+                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsAbove()", "natsuki 3utrcsl",
+                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsBelow()", "natsuki 3udlcsl",
+                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsBelow()", "natsuki 3udrcsl",
+                "Natsuki.getMouseIsLeft()", "natsuki 3ullcsl",
+                "Natsuki.getMouseIsRight()", "natsuki 3ulrcsl",
+                "Natsuki.getMouseIsAbove()", "natsuki 3uupcsl",
+                "Natsuki.getMouseIsBelow()", "natsuki 3udwcsl",
+                "True", "natsuki 3unmcsl",
+                predict_all = True
+            )
+            pause 5
+            "natsuki 4cslfslsbr"
+            pause 4
+            "natsuki 4ccsfslsbr"
+            pause 0.1
+
         choice:
             "natsuki 3ullcsl"
             pause 5
@@ -1170,16 +1544,6 @@ image natsuki idle affectionate:
             pause 0.1
 
         choice:
-            "natsuki 2nnmsgl"
-            pause 5
-            "natsuki 2ncssgl"
-            pause 0.1
-            "natsuki 2nnmsgl"
-            pause 5
-            "natsuki 2ncssgl"
-            pause 0.1
-
-        choice:
             "natsuki 1nllbol"
             pause 4
             "natsuki 2fllbol"
@@ -1200,17 +1564,17 @@ image natsuki idle affectionate:
             pause 0.1
 
         choice:
-            "natsuki 1nllpul"
+            "natsuki 7nllpul"
             pause 3
-            "natsuki 1ncspul"
+            "natsuki 7ncspul"
             pause 0.1
-            "natsuki 1fllpul"
+            "natsuki 7fllpul"
             pause 5
-            "natsuki 1ncspul"
+            "natsuki 7ncspul"
             pause 0.1
-            "natsuki 1tnmpul"
+            "natsuki 7tnmpul"
             pause 4
-            "natsuki 1tcspul"
+            "natsuki 7tcspul"
             pause 0.1
             "natsuki 4flrdvless"
             pause 4
@@ -1222,6 +1586,29 @@ image natsuki idle affectionate:
 # Idle images for HAPPY+
 image natsuki idle happy:
     block:
+        choice:
+            ConditionSwitch(
+                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsAbove()", "natsuki 3utlbo",
+                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsAbove()", "natsuki 3utrbo",
+                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsBelow()", "natsuki 3udlbo",
+                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsBelow()", "natsuki 3udrbo",
+                "Natsuki.getMouseIsLeft()", "natsuki 3ullbo",
+                "Natsuki.getMouseIsRight()", "natsuki 3ulrbo",
+                "Natsuki.getMouseIsAbove()", "natsuki 3uupbo",
+                "Natsuki.getMouseIsBelow()", "natsuki 3udwbo",
+                "True", "natsuki 3unmbo",
+                predict_all = True
+            )
+            pause 4
+            "natsuki 3unmcalesusbr"
+            pause 2
+            "natsuki 3ucscalsbr"
+            pause 0.1
+            "natsuki 4csrcalsbr"
+            pause 4
+            "natsuki 4ccscalsbr"
+            pause 0.1
+
         choice:
             "natsuki 3ullbo"
             pause 4
@@ -1339,6 +1726,25 @@ image natsuki idle happy:
 # Idle images for NORMAL+
 image natsuki idle normal:
     block:
+        choice:
+            ConditionSwitch(
+                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsAbove()", "natsuki 2utlca",
+                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsAbove()", "natsuki 2utrca",
+                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsBelow()", "natsuki 2udlca",
+                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsBelow()", "natsuki 2udrca",
+                "Natsuki.getMouseIsLeft()", "natsuki 2ullca",
+                "Natsuki.getMouseIsRight()", "natsuki 2ulrca",
+                "Natsuki.getMouseIsAbove()", "natsuki 2uupca",
+                "Natsuki.getMouseIsDown()", "natsuki 2udwca",
+                "True", "natsuki 2unmca",
+                predict_all = True
+            )
+            pause 4
+            "natsuki 2nllcasbl"
+            pause 4
+            "natsuki 2ncscasbl"
+            pause 0.1
+
         choice:
             "natsuki 2nllbo"
             pause 4
@@ -1578,74 +1984,197 @@ image natsuki talk_menu_enamored:
     block:
         choice:
             "natsuki 3nchbgl"
+            pause 4
+            repeat
+
         choice:
             "natsuki 4nnmbgl"
+            pause 4
+            "natsuki 4ncsbgl"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 3uchssl"
+            pause 4
+            repeat
+
         choice:
             "natsuki 3unmssl"
+            pause 4
+            "natsuki 3ucsssl"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 4uwltsl"
+            pause 4
+            "natsuki 4ucstsl"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 4fchbgl"
+            pause 4
+            repeat
+
         choice:
             "natsuki 3fchsml"
+            pause 4
+            repeat
+
+        choice:
+            "natsuki 7fchbgl"
+            pause 4
+            repeat
+
+        choice:
+            "natsuki 7fchsml"
+            pause 4
+            repeat
 
 # Menu images for AFFECTIONATE+
 image natsuki talk_menu_affectionate:
     block:
         choice:
             "natsuki 3unmsm"
+            pause 4
+            "natsuki 3ucssm"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 1unmbg"
+            pause 4
+            "natsuki 1ucsbg"
+            pause 0.1
+            repeat
+        
         choice:
             "natsuki 4uchbg"
+
         choice:
             "natsuki 2nchbg"
+
         choice:
             "natsuki 2tchbg"
+
         choice:
             "natsuki 3tsqsm"
+            pause 4
+            "natsuki 3tcssm"
+            pause 0.1
+            repeat
+
+        choice:
+            "natsuki 7nchbg"
+
+        choice:
+            "natsuki 7tsqsm"
+            pause 4
+            "natsuki 7tcssm"
+            pause 0.1
+            repeat
 
 # Menu images for HAPPY+
 image natsuki talk_menu_happy:
     block:
         choice:
             "natsuki 1unmss"
+            pause 4
+            "natsuki 1ucsss"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 2unmfs"
+            pause 4
+            "natsuki 2ucsfs"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 2tnmfs"
+            pause 4
+            "natsuki 2tcsfs"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 4ullaj"
+            pause 4
+            "natsuki 4ucsaj"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 4unmbo"
+            pause 4
+            "natsuki 4ucsbo"
+            pause 0.1
+            repeat
 
 # Menu images for NORMAL+
 image natsuki talk_menu_normal:
     block:
         choice:
             "natsuki 1unmss"
+            pause 4
+            "natsuki 1ucsss"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 2unmaj"
+            pause 4
+            "natsuki 2ucsaj"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 2ulraj"
+            pause 4
+            "natsuki 2ucsaj"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 1ullaj"
+            pause 4
+            "natsuki 1ucsaj"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 2unmca"
+            pause 4
+            "natsuki 2ucsca"
+            pause 0.1
+            repeat
 
 # Menu images for DISTRESSED+
 image natsuki talk_menu_distressed:
     block:
         choice:
             "natsuki 2fcsun"
+
         choice:
             "natsuki 2fslun"
+            pause 6
+            "natsuki 2fcsun"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 2fsrbo"
+            pause 6
+            "natsuki 2fcsbo"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 2fcsbo"
+
         choice:
             "natsuki 2fcsaj"
 
@@ -1654,28 +2183,23 @@ image natsuki talk_menu_ruined:
     block:
         choice:
             "natsuki 2fcsantsb"
+
         choice:
             "natsuki 2fsluntse"
+            pause 8
+            "natsuki 2fcsuntsd"
+            pause 0.1
+            repeat
+
         choice:
             "natsuki 2fcssrtse"
+
         choice:
             "natsuki 2fnmantdr"
+            pause 8
+            "natsuki 2fcsantsa"
+            pause 0.1
+            repeat
 
 image desk = "mod_assets/natsuki/desk/table/table_normal.png"
 image chair = "mod_assets/natsuki/desk/chair/chair_normal.png"
-
-label pose_test:
-    n 1tsqss "Oh?{w=0.5}{nw}"
-    extend 1tsqbg " You wanna see some poses?{w=0.75}{nw}"
-    extend 1fsqsm " Ehehe."
-    n 1fchbl "You got it!"
-
-    n 1fcssm "This is just my sitting pose!"
-    n 2fllpo "This is my arms_crossed_body pose!"
-    n 3kwmsml "This is my arms_crossed_desk pose!"
-    n 4kwmpu "And this is my fingers_on_desk pose!"
-
-    n 1fchbg "...And that's about it!{w=0.75}{nw}"
-    extend 1fwlsm  " Glad to be of service,{w=0.2} [player]!"
-
-    jump ch30_loop

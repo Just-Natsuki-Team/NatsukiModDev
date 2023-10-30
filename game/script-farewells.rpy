@@ -419,7 +419,7 @@ label farewell_option_work:
 
         n 2nlrpo "It sucks that you've gotta work,{w=0.1} but I get it.{w=0.5}{nw}" 
         extend 2nsrpo " I guess."
-        n 4fnmpo "...You better come vist when you finish though."
+        n 4fnmpo "...You better come visit when you finish though."
         n 4fsqsm "Ehehe."
         n 3fchbg "Take it easy,{w=0.1} [player]!{w=0.2} Don't let anyone push you around!"
 
@@ -583,7 +583,7 @@ label farewell_option_extended_leave:
     extend 1knmaj " A while?"
     n 2fnmsr "..."
     n 2fsqaj "...What do you mean 'a while',{w=0.2} [player]?{w=0.75}{nw}"
-    extend 2fnmgs " Huh?"
+    extend 4fnmgs " Huh?"
     n 3fllem "Are you trying to avoid me?{w=1}{nw}"
     extend 3knmem " Am I {i}not{/i} the best to be around?"
     n 4fbkwrl "I-{w=0.2}is {i}that{/i} it?!"

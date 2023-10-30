@@ -83,6 +83,27 @@ screen hotkeys():
                             null width 175 height 30
                             null width 175 height 0
 
+            if persistent._jn_blackjack_unlocked:
+                hbox:
+                    xoffset 550
+                    vbox:
+                        box_wrap True
+                        label _("Blackjack hotkeys") style "check_label"
+                        null height 20
+                        style_prefix "hotkeys"
+                        grid 2 3:
+                            xoffset 20                
+                            spacing 10
+
+                            text _("Hit!")
+                            text _("1")
+
+                            text _("Stay")
+                            text _("2")
+
+                            null width 175 height 30
+                            null width 175 height 0
+
 # Categorized menu
 ## Similar to MAS' twopane_scrollable menu.
 ## NOTE: This is meant to be called within a loop so long as the user hasn't clicked `Nevermind`
@@ -181,12 +202,18 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                         null height 20
 
                     for button_name in menu_items.keys():
-                        textbutton button_name:
+                        $ has_unseen = len(Topic.filter_topics(topic_list=menu_items.get(button_name), nat_says=False, is_seen=False)) > 0
+                        $ display_text = "{i}[button_name]{/i}" if has_unseen else button_name
+
+                        textbutton display_text:
                             style "categorized_menu_button"
                             #Set the selected category
                             action SetVariable("selected_category", button_name)
                             hover_sound gui.hover_sound
                             activate_sound gui.activate_sound
+
+                            if has_unseen:
+                                idle_background Frame("mod_assets/buttons/choice_hover_blank_star.png", gui.frame_hover_borders, tile=gui.frame_tile)
 
                         null height 5
 
@@ -229,7 +256,7 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
                             #NOTE: This should be preprocessed such that Topics without prompts aren't passed into this menu
                             textbutton display_text:
                                 style "categorized_menu_button"
-                                #Return the label so it can be called
+                                # Return the label so it can be called
                                 action [ Return(_topic.label), Function(prev_adjustment.change, 0), SetVariable("selected_category", None) ]
                                 hover_sound gui.hover_sound
                                 activate_sound gui.activate_sound
@@ -239,9 +266,23 @@ screen categorized_menu(menu_items, category_pane_space, option_list_space, cate
 
                             null height 5
 
-screen scrollable_choice_menu(items, last_item=None):
+screen scrollable_choice_menu(items, last_item=None, option_width=560, icon_path=None, menu_caption=None):
+    if icon_path and persistent._jn_display_option_icons:
+        add icon_path anchor(0, 0) pos(1280 - (275 + option_width), 20)
+    
+    elif not persistent._jn_display_option_icons:
+        $ option_width += 175
+
+    if option_width > 560:
+        $ option_width = 560
+
+    if menu_caption:
+        text "[menu_caption]" style "hkbd_label" pos(1280 - (40 + option_width), 20)
+
+    $ scrollable_start_y = 60 if menu_caption else 40
+
     fixed:
-        area (680, 40, 560, 440)
+        area (1280 - (40 + option_width), scrollable_start_y, option_width, 440)
         vbox:
             ypos 0
             yanchor 0
@@ -249,7 +290,7 @@ screen scrollable_choice_menu(items, last_item=None):
             if last_item:
                 textbutton last_item[0]:
                     style "categorized_menu_button"
-                    xsize 560
+                    xsize option_width
                     action Return(last_item[1])
                     hover_sound gui.hover_sound
                     activate_sound gui.activate_sound
@@ -265,7 +306,7 @@ screen scrollable_choice_menu(items, last_item=None):
                     for prompt, _value in items:
                         textbutton prompt:
                             style "categorized_menu_button"
-                            xsize 560
+                            xsize option_width
                             action Return(_value)
                             hover_sound gui.hover_sound
                             activate_sound gui.activate_sound
@@ -423,6 +464,8 @@ style frame:
 ## https://www.renpy.org/doc/html/screen_special.html#say
 
 screen say(who, what):
+    zorder 30
+
     style_prefix "say"
 
     window:
@@ -558,6 +601,7 @@ style input:
 
 # Default choice screen; this is offset so it doesn't get in front of Natsuki's face during dialogue
 screen choice(items, scroll="viewport"):
+    zorder 30
     style_prefix "choice"
 
     vbox:
@@ -570,6 +614,7 @@ screen choice(items, scroll="viewport"):
 
 # Identical to choice, but not offset - use this for menu options when Natsuki isn't present
 screen choice_centred(items, scroll="viewport"):
+    zorder 30
     style_prefix "choice"
 
     vbox:
@@ -582,6 +627,7 @@ screen choice_centred(items, scroll="viewport"):
 # Identical to choice_centred, but without hover/activate sounds - use this for menu options when Natsuki isn't present,
 # and when we need silence for atmospheric reasons (like the intro sequence)
 screen choice_centred_mute(items, scroll="viewport"):
+    zorder 30
     style_prefix "choice"
 
     vbox:
@@ -818,6 +864,10 @@ screen navigation():
         yalign 0.8
 
         spacing gui.navigation_spacing
+
+        if not jn_data_migrations.current_version_latest:
+            textbutton _("Update now!") action OpenURL(jn_globals.LINK_JN_LATEST)
+            null height 16
 
         if main_menu:
             textbutton _("New Game"):
@@ -1185,13 +1235,16 @@ screen preferences():
     use game_menu(_("Settings")):
 
         viewport id "preferences":
+            ysize 650
+            yoffset -75
+            xoffset 40
             scrollbars "vertical"
             mousewheel True
             draggable True
 
             vbox:
                 yoffset 0
-                xoffset 50
+                
                 hbox:
                     box_wrap True
 
@@ -1202,6 +1255,13 @@ screen preferences():
                             label _("Display")
                             textbutton _("Window") action Preference("display", "window")
                             textbutton _("Fullscreen") action Preference("display", "fullscreen")
+                            textbutton _("Menu icons") action [
+                            ToggleField(
+                                object=persistent,
+                                field="_jn_display_option_icons",
+                                true_value=True,
+                                false_value=False)
+                            ]
 
                     vbox:
                         style_prefix "check"
@@ -1238,22 +1298,25 @@ screen preferences():
 
                     vbox:
                         style_prefix "check"
-                        label _("Outfits")
-                        textbutton _("Auto Change") action [
+                        label _("Natsuki")
+                        textbutton _("Auto outfits") action [
                             ToggleField(
                                 object=persistent,
                                 field="jn_natsuki_auto_outfit_change_enabled",
                                 true_value=True,
                                 false_value=False)
                         ]
-
-                    vbox:
-                        style_prefix "check"
-                        label _("Topics")
-                        textbutton _("Repeat seen") action [
+                        textbutton _("Repeat topics") action [
                             ToggleField(
                                 object=persistent,
                                 field="jn_natsuki_repeat_topics",
+                                true_value=True,
+                                false_value=False)
+                        ]
+                        textbutton _("Idles") action [
+                            ToggleField(
+                                object=persistent,
+                                field="_jn_natsuki_idles_enabled",
                                 true_value=True,
                                 false_value=False)
                         ]
@@ -1278,15 +1341,16 @@ screen preferences():
                         ]
 
                     vbox:
-                        style_prefix "check"
-                        label _("Idles")
-                        textbutton _("Enabled") action [
-                            ToggleField(
-                                object=persistent,
-                                field="_jn_natsuki_idles_enabled",
-                                true_value=True,
-                                false_value=False)
-                        ]
+                        if persistent._jn_blackjack_unlocked:
+                            style_prefix "check"
+                            label _("Blackjack")
+                            textbutton _("Hand total") action [
+                                ToggleField(
+                                    object=persistent,
+                                    field="_jn_blackjack_show_hand_value",
+                                    true_value=True,
+                                    false_value=False)
+                            ]
 
                     ## Additional vboxes of type "radio_pref" or "check_pref" can be
                     ## added here, to add additional creator-defined preferences.
@@ -1297,7 +1361,7 @@ screen preferences():
 
                     vbox:
 
-                        label _("Random chatter: {0}".format(jn_preferences.random_topic_frequency.get_random_topic_frequency_description()))
+                        label _("Random chatter: {0}".format(jn_preferences.random_topic_frequency.getRandomTopicFrequencyDescription()))
 
                         bar value FieldValue(
                             object=persistent,
@@ -1315,17 +1379,22 @@ screen preferences():
 
                         bar value Preference("auto-forward time")
 
-                    vbox:
+                        label _("Sunrise: {0}AM".format(jn_locations.getHourFromSunriseSunsetValue(persistent._jn_sunrise_setting)))
+                        bar value FieldValue(persistent, "_jn_sunrise_setting", range=5, max_is_zero=False, style="slider")
 
+                        label _("Sunset: {0}PM".format(jn_locations.getHourFromSunriseSunsetValue(persistent._jn_sunset_setting)))
+                        bar value FieldValue(persistent, "_jn_sunset_setting", range=5, max_is_zero=False, style="slider")
+
+                    vbox:
                         if config.has_music:
-                            label _("Music Volume")
+                            label _("Music Volume: {0}%".format(int(preferences.get_volume("music") * 100)))
 
                             hbox:
                                 bar value Preference("music volume")
 
                         if config.has_sound:
 
-                            label _("Sound Volume")
+                            label _("Sound Volume: {0}%".format(int(preferences.get_volume("sfx") * 100)))
 
                             hbox:
                                 bar value Preference("sound volume")
@@ -1350,9 +1419,9 @@ screen preferences():
                                 style "mute_all_button"
 
     text "v[config.version]":
-                xalign 1.0 yalign 1.0
-                xoffset -10 yoffset -10
-                style "default"
+        xalign 1.0 yalign 1.0
+        xoffset -10 yoffset -10
+        style "default"
 
 style pref_label is gui_label
 style pref_label_text is gui_label_text
@@ -1822,7 +1891,10 @@ style notify_frame:
 
 style notify_text:
     size gui.notify_text_size
-
+    line_overlap_split 8
+    line_spacing 8
+    line_leading 8
+    
 screen problem(message):
     zorder 100
     text "[message]" size 30 xalign 0.5 ypos 40 text_align 0.5 xysize (None, None) color "#FF0000" outlines [(2, "#000000d2", 0, 0)]

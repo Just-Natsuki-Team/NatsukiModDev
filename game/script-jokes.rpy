@@ -25,10 +25,12 @@ init python in jn_jokes:
         def __init__(
             self,
             label,
+            display_name,
             joke_category,
             conditional=None,
         ):
             self.label = label
+            self.display_name = display_name
             self.is_seen = False
             self.shown_count = 0
             self.joke_category = joke_category
@@ -55,7 +57,8 @@ init python in jn_jokes:
         @staticmethod
         def filterJokes(
             joke_list,
-            is_seen=None
+            is_seen=None,
+            shown_count=None
         ):
             """
             Returns a filtered list of jokes, given a joke list and filter criteria.
@@ -63,6 +66,7 @@ init python in jn_jokes:
             IN:
                 - label - list of labels the joke must have 
                 - is_seen - bool is_seen state the joke must be
+                - shown_count - int number of times the joke must have been seen before
 
             OUT:
                 - list of jokes matching the search criteria
@@ -71,7 +75,8 @@ init python in jn_jokes:
                 _joke
                 for _joke in joke_list
                 if _joke.__filterJoke(
-                    is_seen
+                    is_seen,
+                    shown_count
                 )
             ]
 
@@ -111,18 +116,23 @@ init python in jn_jokes:
 
         def __filterJoke(
             self,
-            is_seen=None
+            is_seen=None,
+            shown_count=None
         ):
             """
             Returns True, if the joke meets the filter criteria. Otherwise False.
 
             IN:
                 - is_seen - bool is_seen state the joke must be
+                - shown_count - int number of times the joke must have been seen before
 
             OUT:
                 - True, if the joke meets the filter criteria. Otherwise False
             """
             if is_seen is not None and not self.is_seen == is_seen:
+                return False
+
+            elif shown_count is not None and self.shown_count < shown_count: 
                 return False
 
             elif self.conditional is not None and not eval(self.conditional, store.__dict__):
@@ -162,7 +172,7 @@ init python in jn_jokes:
         """
         return __ALL_JOKES.values()
 
-    def selectJokes():
+    def getUnseenJokes():
         """
         Returns a list of all unseen jokes, or None if zero that are unlocked and unseen exist.
         
@@ -172,6 +182,20 @@ init python in jn_jokes:
         joke_list = JNJoke.filterJokes(
             joke_list=getAllJokes(),
             is_seen=False
+        )
+
+        return joke_list if len(joke_list) > 0 else None
+
+    def getShownBeforeJokes():
+        """
+        Returns a list of all jokes shown at least once previously, or None if zero that are unlocked and shown before exist.
+        
+        OUT:
+            - List of JNJoke jokes, or None
+        """
+        joke_list = JNJoke.filterJokes(
+            joke_list=getAllJokes(),
+            shown_count=1
         )
 
         return joke_list if len(joke_list) > 0 else None
@@ -187,181 +211,375 @@ init python in jn_jokes:
 
     __registerJoke(JNJoke(
         label="joke_clock_eating",
+        display_name="Eating clocks",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_anime_animated",
+        display_name="Anime",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_pirate_shower",
+        display_name="Pirate hygiene",
         joke_category=JNJokeCategories.corny
     ))
     __registerJoke(JNJoke(
         label="joke_cinderella_soccer",
+        display_name="Cinderella",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_blind_fish",
+        display_name="Fish eyesight",
         joke_category=JNJokeCategories.corny
     ))
     __registerJoke(JNJoke(
         label="joke_skeleton_music",
+        display_name="Skeletal music",
         joke_category=JNJokeCategories.corny,
         conditional="persistent.jn_custom_music_unlocked"
     ))
     __registerJoke(JNJoke(
         label="joke_skeleton_communication",
+        display_name="Skeletal communication",
         joke_category=JNJokeCategories.corny,
         conditional="jn_jokes.getJoke('joke_skeleton_music').shown_count > 0"
     ))
     __registerJoke(JNJoke(
         label="joke_ocean_greeting",
+        display_name="Ocean greetings",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_tractor_trailer",
+        display_name="Tractor-trailer",
         joke_category=JNJokeCategories.funny
     ))
     __registerJoke(JNJoke(
         label="joke_tentacle_tickles",
+        display_name="Tentacles",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_basic_chemistry",
+        display_name="Basic chemistry",
         joke_category=JNJokeCategories.funny
     ))
     __registerJoke(JNJoke(
         label="joke_upset_cat",
+        display_name="Upsetting a cat",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_cute_chicks",
+        display_name="Cute chicks",
         joke_category=JNJokeCategories.bad
     ))
     __registerJoke(JNJoke(
         label="joke_lumberjack_axeception",
+        display_name="Lumberjacks",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_tallest_building",
+        display_name="Tallest building",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_baking_baseball",
+        display_name="Baking and baseball",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_soya_tofu",
+        display_name="Tofu",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_distrust_atoms",
+        display_name="Atomic theory",
         joke_category=JNJokeCategories.funny
     ))
     __registerJoke(JNJoke(
         label="joke_running_latte",
+        display_name="Barista",
         joke_category=JNJokeCategories.corny
     ))
     __registerJoke(JNJoke(
         label="joke_guitar_stringing_along",
+        display_name="Guitarist",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_snek_maths",
+        display_name="Snake mathematics",
         joke_category=JNJokeCategories.bad
     ))
     __registerJoke(JNJoke(
         label="joke_balloonist_hot_air",
+        display_name="Hot air",
         joke_category=JNJokeCategories.corny
     ))
     __registerJoke(JNJoke(
         label="joke_author_cover_story",
+        display_name="Cover story",
         joke_category=JNJokeCategories.funny
     ))
     __registerJoke(JNJoke(
         label="joke_wrapped_up_quickly",
+        display_name="Packaging",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_carpentry_nailed_it",
+        display_name="Nailed it",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_neutrons_no_charge",
+        display_name="Neutrons",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_train_sound_track",
+        display_name="Sound tracks",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_bored_typist",
+        display_name="Typists",
         joke_category=JNJokeCategories.bad
     ))
     __registerJoke(JNJoke(
         label="joke_regular_moovements",
+        display_name="Cows and stairs",
         joke_category=JNJokeCategories.bad
     ))
     __registerJoke(JNJoke(
         label="joke_rabbit_lottery",
+        display_name="Rabbit lottery",
         joke_category=JNJokeCategories.funny
     ))
     __registerJoke(JNJoke(
         label="joke_trees_logged_out",
+        display_name="Logging out",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_con_crete",
+        display_name="Con-crete",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_footless_snakes",
+        display_name="Measuring snakes",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_bigger_ball",
+        display_name="Ball sports",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_meeting_walls",
+        display_name="Meeting walls",
         joke_category=JNJokeCategories.bad
     ))
     __registerJoke(JNJoke(
         label="joke_hour_feeling",
-        joke_category=JNJokeCategories.funny
+        display_name="Clock and the watch",
+        joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_spotless_tigers",
+        display_name="Tiger's stripes",
         joke_category=JNJokeCategories.funny
     ))
     __registerJoke(JNJoke(
         label="joke_missing_bell",
+        display_name="No bell",
         joke_category=JNJokeCategories.funny
     ))
     __registerJoke(JNJoke(
         label="joke_cheesy_pizza",
+        display_name="Pizza",
         joke_category=JNJokeCategories.bad
     ))
     __registerJoke(JNJoke(
         label="joke_veggie_mood",
+        display_name="Vegetarian moods",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_scarecrow_award",
+        display_name="Scarecrows",
         joke_category=JNJokeCategories.corny
     ))
     __registerJoke(JNJoke(
         label="joke_sundae_school",
+        display_name="School",
         joke_category=JNJokeCategories.funny
     ))
     __registerJoke(JNJoke(
         label="joke_burned_tongue",
+        display_name="Burned tongues",
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
         label="joke_pointless_pencil",
+        display_name="Pencils",
         joke_category=JNJokeCategories.funny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_know_the_drill",
+        display_name="The drill",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_can_do_attitude",
+        display_name="Cannery",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_out_of_ctrl",
+        display_name="Out of control",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_dishwashing",
+        display_name="Dishwashing",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_escape_artists",
+        display_name="Escape artist",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_shoemakers",
+        display_name="Shoemakers",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_lead_times",
+        display_name="Dog walkers",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_shark_literature",
+        display_name="Shark literature",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_developers_committed",
+        display_name="Developers",
+        joke_category=JNJokeCategories.funny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_shelved_plans",
+        display_name="Plans",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_action_figures",
+        display_name="Action",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_befriending_sharks",
+        display_name="Befriending sharks",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_fisherman_broadcast",
+        display_name="Fishermen video calls",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_lighthouse_keeper",
+        display_name="Lighthouse keeper",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_bakers",
+        display_name="Bakers",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_ravioli_pasta_way",
+        display_name="Ravioli",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_spices",
+        display_name="Spices",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_movie_theater_concessions",
+        display_name="Movie theater",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_octo_puss",
+        display_name="Eight-legged cat",
+        joke_category=JNJokeCategories.bad
+    ))
+    __registerJoke(JNJoke(
+        label="joke_roller_blade",
+        display_name="Shaving as a skater",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_psychic_medium",
+        display_name="Psychic meals",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_ex_press_delivery",
+        display_name="Ex-press",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_keymakers_lockstep",
+        display_name="Keymakers",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_tube_piping_hot",
+        display_name="Tube cuisine",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_entomology_programming",
+        display_name="Entomology",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_booked_it",
+        display_name="Author pulled over",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_sheep_flock",
+        display_name="Cults",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_multiple_choice",
+        display_name="Multiple choice",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_horse_hairstyles",
+        display_name="Horse hairstyles",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_new_heights",
+        display_name="Mountain climbers",
+        joke_category=JNJokeCategories.corny
     ))
 
 label joke_clock_eating:
@@ -647,7 +865,7 @@ label joke_regular_moovements:
 
 label joke_rabbit_lottery:
     n 1nlraj "Hey,{w=0.2} [player]...{w=1}{nw}"
-    extend 1unmaj "did {i}you{/i} know that there's actually a rabbit {i}lottery{/i}?"
+    extend 1unmaj " did {i}you{/i} know that there's actually a rabbit {i}lottery{/i}?"
     n 1fcsbg "Not what you expected to hear,{w=0.2} I bet."
     n 1fchbg "But it makes perfect sense when you think about it!{w=1}{nw}"
     extend 1fsqsm " After all..."
@@ -778,7 +996,7 @@ label joke_scarecrow_award:
     return
 
 label joke_sundae_school:
-    n 1ullaj "You know...{w=0.75}"
+    n 1ullaj "You know..."
     n 1tnmbo "I've been thinking about school a bunch lately."
     n 1ulraj "I mean,{w=0.5}{nw}"
     extend 1unmfl " there were {i}so{/i} many schools I could've gone to -{w=0.5}{nw}"
@@ -811,5 +1029,393 @@ label joke_pointless_pencil:
     n 1cllaj "I was {i}going{/i} to tell a joke about it..."
     n 1tnmbo "But now?{w=0.5}{nw}"
     extend 1fsqsm " It's {i}pointless{/i}."
+
+    return
+
+label joke_know_the_drill:
+    n 1ulraj "You know,{w=0.2} [player]..."
+    n 1nsqsl "I always used to get annoyed at people doing construction work.{w=0.75}{nw}"
+    extend 1fnmem " {i}Especially{/i} on the weekends!"
+    n 1fllfl "Like...{w=1}{nw}"
+    extend 1fcsbo " I get they have a job to do.{w=0.75}{nw}"
+    extend 1fsran " But do they seriously have to start so {i}early{/i}?!{w=0.75}{nw}"
+    extend 1fcsan " Yeesh!"
+    n 1cslsl "..."
+    n 1cslaj "But...{w=1}{nw}"
+    extend 1cllca " you do get used to all the noise after a while,{w=0.2} I suppose."
+    n 1cnmss "I guess eventually you just...{w=1}{nw}"
+    extend 1fsqbg " {i}know the drill{/i},{w=0.75}{nw}"
+    extend 1nchgn " right?"
+
+    return
+
+label joke_can_do_attitude:
+    n 1fcsbg "Let's see how well you can {i}process{/i} this one,{w=0.2} [player].{w=0.75}{nw}"
+    extend 1fsqsm " Ehehe."
+    n 1fcsbs "So!{w=0.75}{nw}"
+    extend 1tsqss " Ever wondered what it takes to land a job in a cannery?"
+    n 1tsqsm "..."
+    n 1fsqsm "No?{w=0.75}{nw}"
+    extend 1fcsbs " Come on,{w=0.2} [player]!{w=0.75}{nw}"
+    extend 1fcssmesm " Isn't it obvious?"
+    n 1fcsbg "...You just need a{w=0.5}{nw}"
+    extend 1fsqbg " {i}can{/i}-do{w=1}{nw}"
+    extend 1uchgn " attitude!"
+
+    return
+
+label joke_out_of_ctrl:
+    n 1fllbo "I gotta say,{w=0.2} [player].{w=0.75}{nw}"
+    extend 1fsqfl " I'm starting to get {i}really{/i} sick of all these stories about shortages."
+    n 1fnmem "Seriously -{w=0.5}{nw}"
+    extend 1fcsgs " it's ridiculous!{w=0.75}{nw}"
+    extend 1flrfl " Like why is it so hard to just order stuff in,{w=0.2} all of a sudden?"
+    n 1fcsgs "I mean,{w=0.5}{nw}"
+    extend 1fslpo " even just the other day I heard about places running out of parts for keyboards!"
+    n 1fcsss "...Heh."
+    n 1fcstr "I guess their management must really be{w=0.5}{nw}"
+    extend 1fsqbg " out of {i}Control{/i},{w=0.75}{nw}"
+    extend 1fchgn " huh?"
+
+    return
+
+label joke_dishwashing:
+    n 1csqfl "Why isn't dishwashing considered a competitive sport?"
+    n 1csrsl "..."
+    n 1fcsemesi "..."
+    n 1nsqfl "Because victory is handed to you...{w=1.25}{nw}" 
+    extend 1cslcasbr " on a {i}plate{/i}."
+
+    return
+
+label joke_escape_artists:
+    n 1ccsflesi "..."
+    n 1cllsl "Why shouldn't you rely on an escape artist to turn up to an invitation?"
+    n 1csrbosbr "..."
+    n 1ccsemsbr "..."
+    n 1nsrtrsbr "...Because they're always getting{w=0.5}{nw}" 
+    extend 1csqcasbr " {i}tied down{/i}."
+
+    return
+
+label joke_shoemakers:
+    n 1fllfl "Why don't shoemakers go anywhere sunny on vacation?"
+    n 1fslca "..."
+    n 1ccsemesi "..."
+    n 1csrem "...Because they've already{w=0.5}{nw}" 
+    extend 1csrsl " {i}tanned{/i}."
+
+    return
+
+label joke_lead_times:
+    n 1ccsfl "...Alright.{w=0.75}{nw}"
+    extend 1csqem " You asked for this,{w=0.2} [player]."
+    n 1csqsl "Why is it so hard to land a job as a dog walker nowadays?"
+    n 1cslsl "..."
+    n 1ccssl "Heh."
+    n 1cdlfl "...Because there's such a long{w=0.5}{nw}" 
+    extend 1fslfl " {i}lead time{/i}."
+
+    return
+
+label joke_shark_literature:
+    n 1fcsbs "Alright!{w=0.75}{nw}"
+    extend 1fdwbg " How about this one,{w=0.5}{nw}" 
+    extend 1fsqsm " [player]?"
+    n 1fcsbg "What kind of literature do you hand a shark?"
+    n 1fnmsm "..."
+    n 1usqss "No?{w=0.75}{nw}"
+    extend 1fsqsm " Not even a guess?"
+    n 1fcssmesm "How disappointing.{w=0.75}{nw}"
+    extend 1fcsbg " Isn't it obvious,{w=0.2} [player]?"
+    n 1fnmss "You give them stuff they can really...{w=1}{nw}" 
+    extend 1fsqbg " {i}sink their teeth into{/i},{w=0.75}{nw}" 
+    extend 1fchgn " duh!"
+    
+    return
+
+label joke_developers_committed:
+    n 1ttrpu "You know,{w=0.2} [player]...{w=1}{nw}"
+    extend 1tlraj " I've always wondered."
+    n 1tsqfl "Is it hard for developers to start relationships?{w=0.75}{nw}"
+    extend 1tllbo " The ones that mess around with code and all that stuff?"
+    n 1tsqsl "..."
+    n 1tsqfl "No?{w=0.75}{nw}"
+    extend 1clrpu " Huh.{w=1}{nw}"
+    extend 1csqss " You sure,{w=0.2} [player]?"
+    n 1fcsss "'Cause from what I'm reading here..."
+    n 1nchgn "...They always seem to be pretty {i}committed{/i} already!"
+
+    return
+
+label joke_shelved_plans:
+    n 1ccstr "I gotta say,{w=0.2} [player].{w=0.75}{nw}"
+    extend 1cslca " I'm still pretty bummed out about being stuck here and everything,{w=0.2} you know."
+    n 1cllbo "..."
+    n 1tnmfl "What?{w=0.75}{nw}"
+    extend 1tnmbo " Didn't I tell you?"
+    n 1fcsgs "I actually landed an interview for a part-time job after school at a bookstore!{w=0.75}{nw}"
+    extend 1fcspo " I applied online and everything!"
+    n 1knmfl "...But how am I supposed to get there now?"
+    n 1ccsemesi "Ugh..."
+    n 1nsrpo "..."
+    n 1ncsaj "Well."
+    n 1tllss "I guess those plans are gonna have to be{w=0.5}{nw}"
+    extend 1fsqbg " {i}shelved{/i}{w=0.75}{nw}"
+    extend 1nchgn " after all,{w=0.2} huh?"
+
+    return
+
+label joke_action_figures:
+    n 1fsrem "...Seriously can't believe I'm telling {i}this{/i} one.{w=0.75}{nw}"
+    extend 1ccsem " Ugh."
+    n 1ccstresi "..."
+    n 1nsqsl "What kind of gift do movie directors love the most?"
+    n 1fllbosbr "..."
+    n 1fcsflsbr "...{i}Action{/i}{w=0.75}{nw}"
+    extend 1fsqflsbr " figures."
+
+    return
+
+label joke_befriending_sharks:
+    n 1ccsss "Heh.{w=0.75}{nw}"
+    extend 1fsqss " You ready,{w=0.2} [player]?{w=0.75}{nw}"
+    extend 1fnmbg " You're gonna be like a fish out of water after this one."
+    n 1fcsaj "So!{w=0.75}{nw}"
+    extend 1fcsbg " How do you go about making friends with a shark?"
+    n 1fsqsm "..."
+    n 1fsqss "No?{w=0.75}{nw}"
+    extend 1flrss " Wow,{w=0.2} [player]..."
+    n 1fsgbg "Isn't it obvious?"
+    n 1fllss "You just gotta{w=0.75}{nw}"
+    extend 1fsqbg " {i}chum{/i}{w=0.75}{nw}"
+    extend 1nchgn " them up first!"
+
+    return
+
+label joke_fisherman_broadcast:
+    n 1csqfl "...Why is it so hard to get a video call with a fisherman?"
+    n 1csrca "..."
+    n 1ccspuesi "..."
+    n 1clrem "...Because they only do broad-{w=0.75}{nw}"
+    extend 1csqup "{i}casts{/i}."
+
+    return
+
+label joke_lighthouse_keeper:
+    n 1fsrpu "I seriously can't believe I'm telling {i}this{/i} one."
+    n 1ccsbo "..."
+    n 1cllfl "What happens when a lighthouse keeper gets promoted?"
+    n 1cllslsbr "..."
+    n 1ccsemesisbr "..."
+    n 1ccsajsbr "Their career becomes...{w=1}{nw}"
+    extend 1csrflsbr " {i}brighter than ever{/i}."
+
+    return
+
+label joke_bakers:
+    n 1ccsemesi "..."
+    n 1clrtr "How do you describe a baker about to break their own baking record?"
+    n 1csrsl "..."
+    n 1ccsflsbl "...Man,{w=0.5}{nw}" 
+    extend 1fslemsbl " this is dumb."
+    n 1cllajsbl "They'd be...{w=1}{nw}"
+    extend 1csqemsbl " {i}on a roll{/i}."
+
+    return
+
+label joke_ravioli_pasta_way:
+    n 1cslflsbr "...I can't {i}believe{/i} I'm reading this one out.{w=0.75}{nw}"
+    extend 1ccsslsbr " Yeesh."
+    n 1csrbo "..."
+    n 1clrfl "Did you hear about the chef who just couldn't lay off the ravioli?"
+    n 1cnmsl "..."
+    n 1ccsemesi "..."
+    n 1cllfl "They...{w=1}{nw}"
+    extend 1csqup " {i}pasta{/i}{w=0.75}{nw}"
+    extend 1csrsl " way."
+    
+    return
+
+label joke_spices:
+    n 1csqbg "'Kay.{w=0.75}{nw}"
+    extend 1fcsbs " So!"
+    n 1unmss "When would a chef start adding extra paprika and chili powder to a dish you ordered?"
+    n 1cnmsm "..."
+    n 1csqss "No?{w=0.75}{nw}"
+    extend 1fcsaj " Come on,{w=0.2} [player]!{w=0.75}{nw}"
+    extend 1fnmbg " Even {i}you{/i} should have nailed this one!"
+    n 1fcsbg "...When they want to{w=0.5}{nw}"
+    extend 1fsqss " {i}spice{/i}{w=0.75}{nw}"
+    extend 1fchbs " up your life,{w=0.5}{nw}" 
+    extend 1nchgn " of course!"
+
+    return
+
+label joke_movie_theater_concessions:
+    n 1tllfl "Hey,{w=0.5}{nw}"
+    extend 1tnmaj " [player] -{w=0.5}{nw}"
+    extend 1unmaj " did you hear about the movie theater that got shut down recently?"
+    n 1csrem "Talk about a bummer!{w=0.75}{nw}"
+    extend 1unmem " Seriously -{w=0.5}{nw}" 
+    extend 1fllem " the owners had to completely sell up and everything!"
+    n 1ccsfl "Apparently they just couldn't come to a decent arrangement with all their costs and licensing stuff."
+    n 1csrss "Heh."
+    n 1ccsss "I guess you could say...{w=1}{nw}"
+    extend 1fchgn " they just didn't make enough {i}concessions{/i}!"
+
+    return
+
+label joke_octo_puss:
+    n 1ccsfl "Ugh...{w=1}{nw}"
+    extend 1clrfll " this one just sounds mean.{w=0.75}{nw}"
+    extend 1fsrsll " Gross."
+    n 1ccspuesi "..."
+    n 1cllfl "What do you call a cat born with double the amount of legs?"
+    n 1cllsl "..."
+    n 1fslsl "..."
+    n 1fcsfl "...An octo-{w=0.75}{nw}"
+    extend 1fsrbo "{i}puss{/i}."
+    
+    return
+
+label joke_roller_blade:
+    n 1fcsbg "Let's see how much this one {i}grinds{/i} you,{w=0.5}{nw}" 
+    extend 1fsqbg " [player]!"
+    n 1fcsaj "So!{w=0.75}{nw}"
+    extend 1unmaj " What does a professional skater use for a clean shave?"
+    n 1tsqsm "..."
+    n 1tsqss "No?{w=0.75}{nw}"
+    extend 1fsqbg " Not even a guess?{w=0.75}{nw}"
+    extend 1fsgsm " Ehehe."
+    n 1fcsbs "Easy!"
+    n 1ullbg "They'd use a roller-{w=0.75}{nw}"
+    extend 1uchbg " {i}blade{/i}!{w=0.75}{nw}"
+    extend 1fchgn " Duh!"
+
+    return
+
+label joke_psychic_medium:
+    n 1fcsgs "Right!{w=0.75}{nw}"
+    extend 1fsqbg " Here's a {i}reading{/i} for you,{w=0.5}{nw}" 
+    extend 1fsgsm " [player]!"
+    n 1ccsbg "What kind of meal size would a psychic order?"
+    n 1csqcs "..."
+    n 1fsgsmeme "Ehehe."
+    n 1fcsbs "...They'd get a {i}medium{/i},{w=0.75}{nw}"
+    extend 1fchbg " obviously!"
+
+    return
+
+label joke_ex_press_delivery:
+    n 1nlraj "By the way,{w=0.2} [player] -{w=0.5}{nw}"
+    extend 1unmfl " did you hear about the newspaper that shut down recently?"
+    n 1fllfl "They barely even gave notice.{w=0.75}{nw}"
+    extend 1fsgem " So everyone just had to pack up and find new jobs immediately!{w=0.75}{nw}"
+    extend 1fcsfl " What a joke."
+    n 1cnmaj "A couple even ended up going into courier work!"
+    n 1ncsss "...Heh."
+    n 1clrsssbl "I guess you could say they specialize in...{w=1}{nw}"
+    extend 1fsqbg " {i}ex-press{/i}{w=0.75}{nw}"
+    extend 1fchgn " deliveries!"
+    
+    return
+
+label joke_keymakers_lockstep:
+    n 1ccsemesi "..."
+    n 1ctrfl "...How do keymakers and their colleagues walk around at work?"
+    n 1csrslsbr "..."
+    n 1csqfl "...In lock-{w=0.75}{nw}" 
+    extend 1cslup "step."
+    
+    return
+
+label joke_tube_piping_hot:
+    n 1ccsbg "Let's see if this one's your flavor,{w=0.5}{nw}" 
+    extend 1fsgsm " [player]."
+    n 1fcsbg "Can you eat food someone prepared inside a tube?"
+    n 1fsqsm "..."
+    n 1ullbg "Well,{w=0.2} yeah!{w=0.75}{nw}"
+    extend 1fchbg " Sure you can!"
+    n 1flrss "It's just gotta be served{w=0.5}{nw}"
+    extend 1fsgbg " {i}piping{/i}{w=0.75}{nw}"
+    extend 1fchbg " hot,{w=0.5}{nw}" 
+    extend 1fchsmeme " that's all!"
+
+    return
+
+label joke_entomology_programming:
+    n 1fnmbg "Okay!{w=0.75}{nw}"
+    extend 1fcsbg " Why did the entomologist think about taking up programming?"
+    n 1fnmsm "..."
+    n 1tllss "Well,{w=0.2} [player]?{w=0.75}{nw}"
+    extend 1tsgss " Isn't it obvious?"
+    n 1nchgn "'Cause they heard they'd be constantly finding {i}bugs{/i}!"
+    
+    return
+
+label joke_booked_it:
+    n 1fcsbg "Alright!{w=0.75}{nw}"
+    extend 1fnmbg " Let's see if you can paper-{w=0.75}{nw}"
+    extend 1fsgss "{i}back{/i}{w=0.5}{nw}"
+    extend 1fcssmesm " this one,{w=0.2} [player]."
+    n 1fcsaj "So!"
+    n 1unmfl "Did you hear about that famous author the police pulled over the other day?"
+    n 1tnmsl "..."
+    n 1csqsm "No?"
+    n 1ccsss "Heh.{w=0.75}{nw}"
+    extend 1flrbg " Can't say I'm surprised."
+    n 1fchbg "...'Cause he {i}booked{/i} it,{w=0.75}{nw}" 
+    extend 1fchgnelg " obviously!"
+    
+    return
+
+label joke_sheep_flock:
+    n 1fcsfl "Ugh..."
+    n 1fsrca "Whoever added this one {i}definitely{/i} had wool between their ears.{w=0.75}{nw}"
+    extend 1fsraj " That's all I'm saying."
+    n 1fcsflesi "..."
+    n 1cllbo "Whatever.{w=0.75}{nw}"
+    extend 1cnmfl " Why are sheep the best at starting a cult?"
+    n 1clrsl "..."
+    n 1csrsl "..."
+    n 1csqfl "...Because they already have a{w=0.5}{nw}"
+    extend 1cslem " {i}flock{/i}."
+
+    return
+
+label joke_multiple_choice:
+    n 1ccsbg "Let me{w=0.5}{nw}" 
+    extend 1csqbg " {i}quiz{/i}{w=0.5}{nw}" 
+    extend 1fsqsm " you on this one,{w=0.2} [player]."
+    n 1fcsbg "Alright!"
+    n 1unmaj "So,{w=0.2} why are multiple choice exams the worst way you can test someone?"
+    n 1tsgsm "..."
+    n 1csgss "Really?"
+    n 1csqbg "Not even a guess,{w=0.2} [player]?{w=0.75}{nw}"
+    extend 1fsqsm " Ehehe."
+    n 1fcsbg "Easy -{w=0.5}{nw}"
+    extend 1fchgnelg " 'cause it's just a {i}box-ticking exercise{/i}!"
+
+    return
+
+label joke_horse_hairstyles:
+    n 1ccsem "I seriously can't believe {i}this{/i} is the one I gotta read out.{w=0.75}{nw}"
+    extend 1csrsl " Ugh."
+    n 1ccsflesi "..."
+    n 1csqfl "What kind of hairstyle should you never give to a horse?"
+    n 1csqsl "..."
+    n 1csrbo "..."
+    n 1csrem "...A {i}pony{/i}{w=0.5}{nw}"
+    extend 1csqem "-tail."
+
+    return
+
+label joke_new_heights:
+    n 1csqaj "What happens when a mountain climber gets a promotion?"
+    n 1cslsl "..."
+    n 1ccsflesi "Ugh..."
+    n 1cllpu "...They reach{w=0.75}{nw}"
+    extend 1csqem " {i}new heights{/i}."
 
     return

@@ -5,6 +5,7 @@ default persistent._jn_holiday_deco_list_on_quit = []
 default persistent._jn_event_completed_count = 0
 
 default persistent._jn_player_celebrates_christmas = None
+default persistent._jn_player_love_halloween_seen = None
 
 # Transforms for overlays
 transform jn_glasses_pre_slide:
@@ -38,7 +39,7 @@ transform jn_confetti_fall:
 
 # Foreground props are displayed on the desk, in front of Natsuki
 image prop poetry_attempt = "mod_assets/props/poetry_attempt.png"
-image prop parfait_manga_held = "mod_assets/props/parfait_manga_held.png"
+image prop math_attempt = "mod_assets/props/math_attempt.png"
 image prop renpy_for_dummies_book_held = "mod_assets/props/renpy_for_dummies_book_held.png"
 image prop a_la_mode_manga_held = "mod_assets/props/a_la_mode_manga_held.png"
 image prop strawberry_milkshake = "mod_assets/props/strawberry_milkshake.png"
@@ -48,6 +49,7 @@ image prop hot_chocolate hot = "mod_assets/props/hot_chocolate.png"
 image prop hot_chocolate cold = "mod_assets/props/hot_chocolate_cold.png"
 image prop cake lit = "mod_assets/props/cake_lit.png"
 image prop cake unlit = "mod_assets/props/cake_unlit.png"
+image prop watering_can = "mod_assets/props/watering_can.png"
 
 image prop f14_heart give = "mod_assets/props/f14/give_heart.png"
 image prop f14_heart hold = "mod_assets/props/f14/hold_heart.png"
@@ -175,6 +177,7 @@ image deco wall_stocking day = "mod_assets/deco/wall_stocking_day.png"
 image deco wall_stocking night = "mod_assets/deco/wall_stocking_night.png"
 image deco d24 = "mod_assets/deco/d24.png"
 image deco d25 = "mod_assets/deco/d25.png"
+image deco o31 = "mod_assets/deco/o31.png"
 
 # Overlays are displayed over the top of Natsuki, in front of any decorations but behind any props
 image overlay slipping_glasses = "mod_assets/overlays/slipping_glasses.png"
@@ -400,19 +403,24 @@ init python in jn_events:
 
             return True
 
-        def run(self):
+        def run(self, suppress_visuals=False):
             """
             Sets up all visuals for this holiday, before revealing everything to the player.
             Any props or decorations left over from the previous holiday are tidied up before presentation.
+
+            IN:
+                - suppress_visuals - If True, prevents any props or deco from being displayed automatically
             """
             renpy.hide("prop")
             renpy.hide("deco")
 
-            for prop in self.prop_list:
-                renpy.show(name="prop {0}".format(prop), zorder=store.JN_PROP_ZORDER)
+            if not suppress_visuals:
+                for prop in self.prop_list:
+                    renpy.show(name="prop {0}".format(prop), zorder=store.JN_PROP_ZORDER)
 
-            for deco in self.deco_list:
-                renpy.show(name="deco {0}".format(deco), zorder=store.JN_DECO_ZORDER)
+            if not suppress_visuals:
+                for deco in self.deco_list:
+                    renpy.show(name="deco {0}".format(deco), zorder=store.JN_DECO_ZORDER)
 
             kwargs = {
                 "natsuki_sprite_code": self.natsuki_sprite_code
@@ -420,8 +428,11 @@ init python in jn_events:
             if self.bgm:
                 kwargs.update({"bgm": self.bgm})
 
-            jn_globals.force_quit_enabled = True
-            displayVisuals(**kwargs)
+            if not suppress_visuals:
+                displayVisuals(**kwargs)
+
+            else:
+                jn_globals.force_quit_enabled = True
 
         def complete(self):
             """
@@ -430,6 +441,7 @@ init python in jn_events:
             We also mark the holiday type as completed for this year, so we can't cycle through all seasonal events in one year
             Lastly, set the persisted deco list so reloading the game without a day change shows the deco for this event.
             """
+            store.persistent._jn_event_completed_count += 1
             self.is_seen = True
             self.__save()
 
@@ -438,6 +450,9 @@ init python in jn_events:
 
             if self.deco_list:
                 store.persistent._jn_holiday_deco_list_on_quit = self.deco_list
+
+            store.Natsuki.resetLastTopicCall()
+            store.Natsuki.resetLastIdleCall()
 
         def isCompleted(self):
             """
@@ -606,7 +621,6 @@ init python in jn_events:
             - natsuki_sprite_code - The sprite code to show Natsuki displaying before dialogue
             - music_file_path - The str file path of the music to play upon revealing Natsuki; defaults to standard bgm
         """
-        store.persistent._jn_event_completed_count += 1
         renpy.show("natsuki {0}".format(natsuki_sprite_code), at_list=[store.jn_center], zorder=store.JN_NATSUKI_ZORDER)
         store.jnPause(0.1)
         renpy.hide("black")
@@ -675,6 +689,16 @@ init python in jn_events:
         priority=10
     ))
 
+    # Halloween
+    __registerHoliday(JNHoliday(
+        label="holiday_halloween",
+        holiday_type=JNHolidayTypes.halloween,
+        affinity_range=(jn_affinity.HAPPY, None),
+        natsuki_sprite_code="1fsrunlsbr",
+        deco_list=["o31"],
+        priority=10
+    ))
+
     # Player's birthday
     __registerHoliday(JNHoliday(
         label="holiday_player_birthday",
@@ -739,7 +763,11 @@ label event_caught_reading_manga:
         "Enter...":
             pass
 
-    show prop parfait_manga_held zorder JN_PROP_ZORDER
+    $ parfait_manga = jn_desk_items.getDeskItem('jn_parfait_manga_held')
+    $ parfait_manga.unlock()
+    $ manga_closed = jn_desk_items.getDeskItem("jn_parfait_manga_closed")
+    $ manga_closed.unlock()
+    $ Natsuki.setDeskItem(parfait_manga)
     $ jn_events.displayVisuals("1fsrpo")
     $ jn_globals.force_quit_enabled = True
 
@@ -763,7 +791,7 @@ label event_caught_reading_manga:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(2)
     play audio drawer
-    hide prop parfait_manga_held
+    $ Natsuki.clearDesk()
     show natsuki 4nlrbo
     $ jnPause(4)
     hide black with Dissolve(1)
@@ -981,21 +1009,21 @@ label event_not_ready_yet:
 
         # Unlock the starter ahoges
         unlocked_ahoges = [
-            jn_outfits.get_wearable("jn_headgear_ahoge_curly"),
-            jn_outfits.get_wearable("jn_headgear_ahoge_small"),
-            jn_outfits.get_wearable("jn_headgear_ahoge_swoop")
+            jn_outfits.getWearable("jn_headgear_ahoge_curly"),
+            jn_outfits.getWearable("jn_headgear_ahoge_small"),
+            jn_outfits.getWearable("jn_headgear_ahoge_swoop")
         ]
         for ahoge in unlocked_ahoges:
             ahoge.unlock()
 
         # Unlock the super-messy hairstyle
-        super_messy_hairstyle = jn_outfits.get_wearable("jn_hair_super_messy").unlock()
+        super_messy_hairstyle = jn_outfits.getWearable("jn_hair_super_messy").unlock()
 
         # Make note of the loaded outfit, then assign Natsuki a hidden one to show off hair/ahoge
         outfit_to_restore = Natsuki.getOutfitName()
-        ahoge_outfit = jn_outfits.get_outfit("jn_ahoge_unlock")
+        ahoge_outfit = jn_outfits.getOutfit("jn_ahoge_unlock")
         ahoge_outfit.headgear = random.choice(unlocked_ahoges)
-        jn_outfits.save_temporary_outfit(ahoge_outfit)
+        jn_outfits.saveTemporaryOutfit(ahoge_outfit)
 
     $ jnPause(5)
     n "Uuuuuu...{w=2}{nw}"
@@ -1025,7 +1053,7 @@ label event_not_ready_yet:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(2)
     play audio clothing_ruffle
-    $ Natsuki.setOutfit(jn_outfits.get_outfit(outfit_to_restore))
+    $ Natsuki.setOutfit(jn_outfits.getOutfit(outfit_to_restore))
     show natsuki 2fsrpol
     $ jnPause(4)
     hide black with Dissolve(1)
@@ -1367,21 +1395,21 @@ label event_eyewear_problems:
 
         # Unlock the starter glasses
         unlocked_eyewear = [
-            jn_outfits.get_wearable("jn_eyewear_round_glasses_black"),
-            jn_outfits.get_wearable("jn_eyewear_round_glasses_red"),
-            jn_outfits.get_wearable("jn_eyewear_round_glasses_brown"),
-            jn_outfits.get_wearable("jn_eyewear_round_sunglasses"),
-            jn_outfits.get_wearable("jn_eyewear_rectangular_glasses_black"),
-            jn_outfits.get_wearable("jn_eyewear_rectangular_glasses_red"),
+            jn_outfits.getWearable("jn_eyewear_round_glasses_black"),
+            jn_outfits.getWearable("jn_eyewear_round_glasses_red"),
+            jn_outfits.getWearable("jn_eyewear_round_glasses_brown"),
+            jn_outfits.getWearable("jn_eyewear_round_sunglasses"),
+            jn_outfits.getWearable("jn_eyewear_rectangular_glasses_black"),
+            jn_outfits.getWearable("jn_eyewear_rectangular_glasses_red"),
         ]
         for eyewear in unlocked_eyewear:
             eyewear.unlock()
 
         # Make note of the loaded outfit, then give Natsuki a copy without eyewear so we can show off the new ones!
         outfit_to_restore = Natsuki.getOutfitName()
-        eyewear_outfit = copy.copy(jn_outfits.get_outfit(outfit_to_restore))
-        eyewear_outfit.eyewear = jn_outfits.get_wearable("jn_none")
-        jn_outfits.save_temporary_outfit(eyewear_outfit)
+        eyewear_outfit = copy.copy(jn_outfits.getOutfit(outfit_to_restore))
+        eyewear_outfit.eyewear = jn_outfits.getWearable("jn_none")
+        jn_outfits.saveTemporaryOutfit(eyewear_outfit)
 
     n "..."
     play audio drawer
@@ -1577,7 +1605,7 @@ label event_eyewear_problems:
     # Hide glasses overlay and restore old outfit
     hide prop
     hide overlay
-    $ Natsuki.setOutfit(jn_outfits.get_outfit(outfit_to_restore))
+    $ Natsuki.setOutfit(jn_outfits.getOutfit(outfit_to_restore))
     show natsuki 1fcsbol at jn_center zorder JN_NATSUKI_ZORDER
     play audio glasses_case_close
     $ jnPause(0.75)
@@ -1787,13 +1815,12 @@ label event_wintendo_twitch_game_over:
         "Enter...":
             pass
 
-    show prop wintendo_twitch_playing charging zorder JN_PROP_ZORDER
+    show prop wintendo_twitch_held charging zorder JN_PROP_ZORDER
     show natsuki gaming at jn_center zorder JN_NATSUKI_ZORDER
     $ jn_events.displayVisuals("1unmpu")
     $ jn_globals.force_quit_enabled = True
-    $ jnPause(1.5)
+    $ jnPause(0.5)
 
-    show prop wintendo_twitch_held charging
     n 1unmemesu "...!"
     $ player_initial = jn_utils.getPlayerInitial()
     n 1fnmgs "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
@@ -1817,22 +1844,27 @@ label event_wintendo_twitch_game_over:
     n 1fslsl "..."
     n 1flrtr "I guess I'll just do that later."
     n 1fsqcal "{b}Again{/b}."
+    n 1fcsajlsbl "You're just lucky I've done that part so many times {i}already{/i},{w=0.2} [player].{w=0.75}{nw}"
+    extend 1fcscalesm " Trust me."
+    n 1ccspol "A-{w=0.2}as if I'd seriously let some minor setback annoy me {i}that{/i} much."
 
+    show natsuki 1csrpol
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     hide prop
     play audio chair_out_in
+    show natsuki 4nsrbol
     $ jnPause(5)
     hide black with Dissolve(2)
 
-    n 1nsrcal "..."
-    n 2nnmtrl "Well,{w=0.2} [player]."
-    n 2nsqtrl "I hope you're buckled up."
+    n 4nsrcal "..."
+    n 2nnmtrl "Well,{w=0.2} [player].{w=0.75}{nw}"
+    extend 2nsqtrl " Hope you're buckled up."
     n 2nsrpol "...'Cause now you owe me {i}twice{/i} as much fun today to make up for that."
     n 4nsqbol "..."
-    n 4fsqajl "Well?{w=0.5}{nw}"
-    extend 3fcspolesi " Get to it then,{w=0.2} [player]!"
-    n 3fsqsml " Ehehe."
+    n 4fsqajl "Well?{w=0.75}{nw}"
+    extend 3fcspolesi " Get to it then,{w=0.2} [player]!{w=0.75}{nw}"
+    extend 3fsqsml " Ehehe."
 
     return
 
@@ -1852,7 +1884,7 @@ init 5 python:
 label event_warm_package:
     python:
         jn_globals.force_quit_enabled = False
-        teddy_cardigan_outfit = jn_outfits.get_outfit("jn_cosy_cardigan_outfit")
+        teddy_cardigan_outfit = jn_outfits.getOutfit("jn_cosy_cardigan_outfit")
         teddy_cardigan_outfit.unlock()
         Natsuki.setOutfit(teddy_cardigan_outfit)
 
@@ -2133,6 +2165,637 @@ label event_warm_package:
 
     return
 
+# Natsuki finds a new friend in the clubroom!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_sanjo",
+            unlocked=True,
+            conditional="jn_utils.get_total_gameplay_days() >= 7",
+            affinity_range=(jn_affinity.AFFECTIONATE, None)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
+
+label event_sanjo:
+    $ jn_globals.force_quit_enabled = False
+    n "..."
+    n "Man...{w=1} is there seriously {i}nothing else{/i} to do in this dump?{w=0.75} I'm so {b}bored{/b}!"
+    n "Would it actually have {i}killed them{/i} to keep some board games here or what?"
+    n "Ugh..."
+
+    $ jnPause(5)
+
+    n "..."
+    n "Oh,{w=0.2} screw this!{w=0.75} I'm done just sitting around.{w=0.75} {i}Again{/i}." 
+    n "There's gotta be something I missed in the teacher's desk or...{w=1} something..."
+
+    play audio chair_out
+    $ jnPause(3)
+
+    n "..."
+
+    play audio drawer
+    $ jnPause(3)
+    n "Huh.{w=0.75} Since when did the teachers keep so much stationary around?{w=0.75} Neat."
+    n "Pretty sure nobody would mind if I...{w=1} just..."
+    play audio stationary_rustle_c
+    $ jnPause(0.75)
+    n "Yoink."
+    $ jnPause(3)
+
+    n "Alright...{w=1} now what have we got here..."
+    $ jnPause(2)
+    
+    n "Trash..."
+    play audio stationary_rustle_a
+    extend " more trash..."
+    play audio stationary_rustle_b
+    n "..."
+    play audio paper_crumple
+    n "Huh?{w=0.75} What's...?"
+    n "..."
+    n "...Oh,{w=0.75} {i}yuck{/i}!{w=0.75} G-{w=0.2}gross!"
+    play audio paper_throw
+    $ jnPause(2)
+    n "I-{w=0.2}I don't even {i}want{/i} to know what was in {i}that{/i}..."
+    n "Almost makes me wanna hurl."
+
+    play audio drawer
+    $ jnPause(4)
+
+    n "..."
+    n "...Huh?" 
+    n "Wait.{w=0.75} Is that...?"
+    n "..."
+    n "I-{w=0.2}it is!{w=0.75} What are {i}you{/i} still doing here?" 
+    n "...And what kind of inconsiderate jerk just left you {i}there{/i}?"
+
+    play audio gift_slide
+    $ jnPause(1)
+    play audio necklace_clip
+    n "Ack!{w=0.5} My finger!{w=0.75} P-{w=0.2}pricked it..."
+    $ jnPause(3)
+
+    n "Man...{w=1} and you're all nasty and crusty now too."
+    n "..."
+    n "Alright.{w=0.75} I guess I better get you all fixed up..."
+
+    $ jnPause(2)
+    play audio drink_pour
+    $ jnPause(2)
+    play audio glasses_case_close
+    $ jnPause(2)
+    play audio chair_in
+    $ jnPause(2)
+
+    menu:
+        "Enter...":
+            pass
+    
+    $ sanjo = jn_desk_items.getDeskItem("jn_sanjo")
+    $ Natsuki.setDeskItem(sanjo)
+    $ jn_events.displayVisuals("2fcssm")
+    $ jn_globals.force_quit_enabled = True
+
+    n 2fcssmeme "...{w=0.75}{nw}"
+    n 2ccssm "...{w=0.75}{nw}"
+    n 2tsqbo "...?{w=0.75}{nw}"
+    $ player_initial = jn_utils.getPlayerInitial()
+    n 2unmgslesh "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
+    extend 4fbkwrl " Jeez!{w=0.75}{nw}"
+    extend 4flrwrlsbl " Since when did {i}you{/i} get here?"
+    n 4fsqemlsbl "Did you seriously just wait outside the room for all that time?!{w=0.75}{nw}"
+    extend 4csqfllsbl " How long were you even {i}there{/i}?"
+    n 4ccsemsbl "Ugh..."
+    n 2flrflsbr "I really wish you'd stop doing that.{w=0.75}{nw}"
+    extend 2fsqposbr " You big jerk.{w=0.75}{nw}"
+    extend 2ccsposbr " You should know I hate being made to jump by now."
+    n 4ccsemsbl "A-{w=0.2}and anyway,{w=0.2} [player].{w=0.75}{nw}"
+    extend 4cllaj " Can't you see I'm {i}busy{/i} here already?{w=0.75}{nw}"
+    extend 3cslbo " Yeesh."
+
+    if Natsuki.isEnamored(higher=True):
+        n 4ccsfl "I mean,{w=0.75}{nw}"
+        extend 5cllfll " it's not that I mind {i}that{/i} much.{w=0.75}{nw}"
+        extend 3ccspolsbr " B-{w=0.2}but still."
+        n 3ccsajlsbr "A little notice would have been nice.{w=1}{nw}"
+        extend 3nsrbolsbr " That's all I'm saying."
+    
+    else:
+        n 3ccstr "Talk about inconsiderate.{w=0.75}{nw}"
+        extend 3csrca " You could at least give me some kinda notice or something next time."
+    
+    n 4csrbo "..."
+    n 4tsqbo "..."
+    n 2tnmfl "...What?{w=0.75}{nw}"
+    extend 2cnmflsbl " What's the deal with {i}that{/i} look,{w=0.5}{nw}"
+    extend 2clrflsbl " all of a sudden?"
+
+    show natsuki option_wait_sulky
+    menu:
+        n "If you've got something you gotta ask then just say it already,{w=0.2} [player]."
+
+        "What's with the plant, [n_name]?":
+            n 1csqfl "...Seriously,{w=0.2} [player]?{w=0.75}{nw}"
+            extend 2fsqem " 'What's with the plant'?"
+            n 4fllem "And just what exactly is {i}that{/i} supposed to mean?{w=0.75}{nw}" 
+            extend 4fnmaj " Huh?"
+            n 3fcsgs "You trying to say he needs an {i}excuse{/i} to be here or something?{w=0.75}{nw}"
+            extend 3fcspo " Sheesh."
+            n 1csrbo "Talk about rolling out the red carpet."
+            n 4ccsaj "Besides."
+            n 2fslfl "{i}'The plant'{/i} has a name,{w=0.5}{nw}" 
+            extend 2ccsaj " you know."
+            n 2cllbo "..."
+            n 2cslbolsbl "..."
+            n 5csqcalsbl "...It's Sanjo."
+
+        "Looks like you and the plant have something in common...":
+            n 4fsqfl "...A-{w=0.2}and what exactly {i}is{/i} that,{w=0.5}{nw}"
+            extend 4fsqem " [player]?"
+            n 2fsqca "..."
+            n 2fcsgs "No,{w=0.2} no.{w=0.75}{nw}"
+            extend 4fnmaj " Go on.{w=1}{nw}"
+            extend 3fsqca " I {i}insist{/i}."
+            n 3fsqbo "..."
+            n 3tsqfl "Well?"
+            n 3ccsss "Don't start getting cold feet now,{w=0.2} [player].{w=0.75}{nw}"
+            extend 3ccsfl " Spit it out!"
+            n 4csqfs "..."
+            n 4fcsfs "Heh.{w=0.75}{nw}"
+            extend 2fcsfl " Yeah."
+            n 2fcspoesm "That's about what Sanjo here and I thought."
+
+        "...":
+            n 5csrunsbr "..."
+            n 5csqemsbr "W-{w=0.2}what?{w=0.75}{nw}"
+            extend 4ccsajsbr " Don't look at me like that,{w=0.2} [player]."
+            n 3ccsflsbr "Besides."
+            n 3ccsposbr "...You'll annoy Sanjo here."
+    
+    n 1ccsajlsbr "A-{w=0.2}and no,{w=0.5}{nw}"
+    extend 5cdlbosbr " I didn't name him myself."
+    n 4tllpu "In fact...{w=0.75}{nw}"
+    extend 7tllbo " come to think of it.{w=1}{nw}"
+    extend 7tnmfl " I don't actually know {i}who{/i} did."
+    n 3unmaj "One of the teachers just kinda brought him in one day and told the class to take care of him.{w=0.75}{nw}"
+    extend 3clrpu " Then just never bothered taking him back."
+    n 3tlraj "So...{w=1}{nw}"
+    extend 7tnmbo " I guess we kinda just took to having him around,{w=0.2} I suppose."
+    n 4cslfl "...Still doesn't explain why someone just decided to shove him underneath the teacher's desk though.{w=0.75}{nw}"
+    extend 4fslem " Jerks."
+    n 2ccsfl "Well,{w=0.2} whatever.{w=0.75}{nw}"
+    extend 2ulrfl " He's been left around long enough,{w=0.5}{nw}"
+    extend 1fcstr " so clearly {i}someone{/i} is gonna have to take care of Sanjo here."
+    n 3fchgn "...And who better to step up to the plate than yours truly!"
+    n 3fsqsm "Ehehe.{w=0.75}{nw}"
+    extend 6fcsbg " Yep!"
+    n 3fcssmesm "I think it's about time [n_name] finally got her green thumb going!"
+    n 4clrbgsbl "Don't get me wrong -{w=0.5}{nw}"
+    extend 4csrsssbl " I'm not saying I'm gonna be some professional gardener or anything like that.{w=0.75}{nw}"
+    extend 7fcsss " But let's face it."
+    n 7ullaj "If you're gonna take up a little horticulture..."
+    n 6fchbg "Where better to start than a cactus,{w=0.2} right?"
+    n 4tlrss "Think about it,{w=0.2} [player] -{w=0.5}{nw}" 
+    extend 3fdlsm " this little guy was practically {i}made{/i} for a beginner.{w=0.75}{nw}"
+    extend 6fcsbg " He basically already fends for himself!"
+    n 7ulraj "Plus I mean...{w=0.75}{nw}"
+    extend 7unmbo " it's not like I've really gotta go out of my way to take care of him either.{w=1}{nw}"
+    extend 3cdlss " I think you can guess why."
+    n 1ullss "Some sunlight here,{w=0.2} a couple splashes of water there...{w=1}{nw}"
+    extend 2fcsbg " how hard could it {i}possibly{/i} be?"
+    n 2fcssmesm "Ehehe."
+    n 4fcsaj "So!"
+    n 2flrss "You better keep your eyes and ears{w=0.5}{nw}" 
+    extend 2fsqss " {i}pricked{/i},{w=0.75}{nw}" 
+    extend 4fsqbg " [player]..."
+    n 3nchgnl "'Cause I'm gonna get Sanjo here blooming before you know it!"
+
+    $ sanjo.unlock()
+    return
+
+# Natsuki is walked in on reading a new volume of Parfait Girls. She isn't impressed.
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_house_of_cards",
+            unlocked=True,
+            conditional="persistent.jn_snap_unlocked",
+            affinity_range=(jn_affinity.AFFECTIONATE, None)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
+
+label event_house_of_cards:
+    $ jn_globals.force_quit_enabled = False
+    play audio card_place
+    $ jnPause(5)
+    n "And...{w=1}{nw}" 
+    play audio card_place
+    extend " that's another one!{w=1} Yes!"
+    n "Jeez...{w=1} why didn't I think of this before?{w=0.75} This is actually {i}way{/i} more fun than I thought!"
+    n "Ehehe."
+
+    $ jnPause(1)
+    play audio card_place
+    $ jnPause(2)
+
+    n "..."
+    n "..."
+    n "Nnnnnnnn..."
+    n "..."
+    play audio card_place
+    $ jnPause(1.5)
+    n "Yes!{w=0.75} 'Kay...{w=1.25} another one..."
+    n "I swear,{w=0.2} if this crappy desk wobbles again now..."
+
+    $ jnPause(2)
+
+    n "Mmmmm...!"
+    n "..."
+    play audio card_place
+    $ jnPause(1.5)
+    n "Alright!{w=0.75} Man...{w=1} [n_name], you are on a {i}roll{/i}!{w=0.75} This is the furthest I've gotten yet!"
+    $ jnPause(1)
+    n "...R-{w=0.2}right.{w=0.75} Next card..."
+
+    $ jnPause(1.5)
+    play audio card_place
+    $ jnPause(3)
+
+    n "E-{w=0.2}easy...{w=1} come on...{w=1} don't throw this one now..."
+    n "..."
+    n "So...{w=1.5} close..."
+    play audio chair_in
+    n "Just gotta...{w=1} balance it...{w=1} right...!"
+    $ jnPause(1)
+
+    menu:
+        "Enter...":
+            pass
+
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_house_of_cards"))
+    $ jn_events.displayVisuals("4fdwpusbr")
+    $ jn_globals.force_quit_enabled = True
+
+    n 4fdwfosbr "..."
+    n 4tsqpueqmsbr "...?{w=0.75}{nw}"
+    n 4uskemleshsbl "...!{w=0.75}{nw}"
+    $ player_initial = jn_utils.getPlayerInitial()
+    n 4fbkwrlsbr "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
+    extend 4fllwrlsbr " Jeez!{w=0.75}{nw}"
+    extend 4fcsgslsbr " H-{w=0.2}how many times do I have to remind you?!"
+    n 4ftlemlsbr "I swear it's like you're actually {i}trying{/i} to give me a heart attack!{w=0.75}{nw}"
+    extend 4fcsgssbr " Come on!\n{w=0.75}{nw}"
+    extend 4csqemsbl "Is knocking {i}seriously{/i} that hard?"
+    n 2fcswrsbl "A-{w=0.2}and besides!{w=0.75}{nw}"
+    extend 2fdwwrsbr " Look!{w=0.75}{nw}"
+    extend 4fcsgssbr " Can't you {i}see{/i} I'm clearly busy right-{nw}"
+
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_card_pile"))
+    show natsuki 1uskemeexsbl
+    play audio card_shuffle
+    $ jnPause(1)
+    show natsuki 1ndwflsbl
+    $ jnPause(4)
+
+    n 4ndwpusbl "...Now."
+    show natsuki 1fdwbolsbl
+    $ jnPause(2)
+    show natsuki 1fdwunlsbl
+    $ jnPause(3)
+    n 1fsrunl "..."
+    n 1fcsunl "..."
+    n 1fcsfll "Are."
+    n 1fcseml "You."
+    n 4fcsanl "Freaking{w=1}{nw}" 
+    extend 4fbkwrl " {i}KIDDING ME{/i}?!{w=0.75}{nw}"
+    $ player_final = jn_utils.getPlayerFinal(3)
+    extend 4knmwrl " [player_initial]-[player][player_final]!"
+    n 4fcsanl "Uuuuuu-!"
+    n 4cbkwrless "Y-{w=0.2}you completely threw me off!{w=0.75}{nw}"
+    extend 2fcsful " You have no {i}idea{/i} how long it took for me to get that far!{w=0.75}{nw}"
+    extend 4knmeml " I-{w=0.2}I totally {i}had{/i}{w=0.5}{nw}" 
+    extend 4knmwrl " thaaat!"
+    n 1kdweml "...And now I gotta do it all over again!"
+    n 1kcsflesi "..."
+    n 1csrem "Man...{w=1.25}{nw}"
+    extend 2csrsl " and I didn't even get to take a picture or anything."
+    n 2fsrbo "..."
+    n 2csqbo "..."
+    n 2ccsfl "..."
+    n 1ccsaj "...Forget it.{w=0.75}{nw}"
+    extend 1fcswrlsbl " Forget it!{w=1}{nw}"
+    extend 4ftlfllsbl " I don't even care anymore."
+    n 4ccsfllsbl "This was a total waste of time in the first place,{w=0.5}{nw}" 
+    extend 4cslsllsbl " a-{w=0.2}anyway."
+    
+    show natsuki 1ccscasbl
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(1)
+    play audio drawer
+    $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+    show natsuki 2cslsl
+    $ jnPause(1)
+    hide black with Dissolve(1.25)
+
+    n 2cslbo "..."
+    n 2csqbo "..."
+    n 2ccspo "Hmph."
+    n 2fcsfl "Well,{w=0.5}{nw}"
+    extend 4cnmaj " I hope you know what you're in for now,{w=0.2} [player]."
+    n 5cllaj "Seeing as how you owe me big time for throwing off my groove and all."
+    n 3cllsl "..."
+    n 3cnmem "What?{w=0.75}{nw}"
+    extend 3ccsgs " I'm being serious!{w=1}{nw}"
+    extend 4ccsposbl " There's no {i}way{/i} I'm letting you off the hook {i}that{/i} easily."
+
+    if Natsuki.isEnamored(higher=True):
+        n 1ccssssbl "...Heh.{w=0.75}{nw}"
+        extend 2fcsflsbl " A-{w=0.2}and besides,{w=0.2} [player]."
+        extend 2ccsaj " You've seen enough cards by now."
+        n 7ccsbgl "...S-{w=0.2}so don't you recognize a {i}queen{/i} when you see one?{w=0.75}{nw}"
+        extend 5fsrdvl " Ehehe."
+        n 3fsrfslsbl "..."
+        n 3ccsajlsbr "Well?{w=0.75}{nw}"
+        extend 3cllbglsbr " Get started already,{w=0.2} [player].{w=0.75}{nw}"
+        extend 4fsqsslsbr " After {i}that{/i} much of a screw up?"
+        $ time_of_day = "today" if jn_is_day() else "tonight"
+        n 3fcsbglsbr "Y-{w=0.2}you better {i}believe{/i} you're giving me the royal treatment [time_of_day]!"
+        n 3fsqsmlsbr "Ehehe."
+
+    else:
+        n 1ccsss "...Heh.{w=0.75}{nw}"
+        extend 2ccsaj " Sorry,{w=0.2} [player]."
+        n 2flltr "I'm done with the cards already."
+        extend 6fsqbg " But making this up to me is just the hand you've been dealt!"
+        n 3fcssm "Ehehe."
+
+    return
+
+# Natsuki discovers a new card game she wants to try with the player!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_blackjack_unlock",
+            unlocked=True,
+            conditional="persistent.jn_snap_unlocked",
+            affinity_range=(jn_affinity.AFFECTIONATE, None)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
+
+label event_blackjack_unlock:
+    $ jn_globals.force_quit_enabled = False
+    $ jnPause(3)
+    play audio laptop_close
+    $ jnPause(2)
+    n "...Alright.{w=0.75} Let's try this out.{w=0.75} {i}Again{/i}."
+    n "There {i}has{/i} to be some decent results this time..."
+    $ jnPause(2)
+
+    play audio keyboard
+    n "Card games...{w=1.75}{nw}"
+    play audio keyboard
+    extend " two players..."
+    n "..."
+    play audio button_tap_c
+    extend "Search."
+    $ jnPause(3)
+
+    n "..."
+    play audio keyboard
+    n "...Card games...{w=1} two players...{w=1.75}{nw}" 
+    play audio keyboard
+    extend " {i}easy{/i}."
+
+    play audio button_tap_c
+    $ jnPause(2)
+    n "..."
+    play audio button_tap_c
+    $ jnPause(0.25)
+    play audio button_tap_c
+    $ jnPause(2)
+
+    play audio button_tap_c
+    $ jnPause(0.25)
+    play audio button_tap_c
+    $ jnPause(0.25)
+    play audio button_tap_c
+    $ jnPause(2)
+
+    n "Oh,{w=0.2} for-!{w=0.5}{nw}"
+    play audio button_tap_c
+    $ jnPause(0.15)
+    play audio button_tap_c
+    $ jnPause(0.15)
+    play audio button_tap_c
+    $ jnPause(0.15)
+    play audio button_tap_c
+    extend " Search!{w=0.75} Jeez..."
+    n "Why is this thing so {i}slow{/i}?{w=0.75} What's even the {i}point{/i} of updates if they always make things worse..."
+    n "Ugh...{w=1} no wonder the school was literally giving these piles of junk away."
+    n "Stupid budget cuts."
+    $ jnPause(3)
+    n "...Finally.{w=0.75} {i}Now{/i} you decide to load."
+    n "Of course they just {i}had{/i} to install the worst browser they could find too." 
+    n "Cut me a break."
+    
+    $ jnPause(1)
+    play audio button_tap_c
+    $ jnPause(2)
+    n "..."
+    play audio button_tap_c
+    $ jnPause(2)
+    n "..."
+    play audio button_tap_c
+    $ jnPause(0.75)
+    n "Uuuuuuuuu-!"
+    n "A-and for the last time,{w=0.2} I am {b}not{/b} looking for free spins!{w=0.75} Why do search results {i}stink{/i} so much now?!"
+    n "If I {i}wanted{/i} to gamble all my savings away,{w=0.2} I'd have {i}done it{/i} already!"
+    n "Sheesh..."
+
+    $ jnPause(2)
+    play audio button_tap_c
+    $ jnPause(2)
+    play audio keyboard
+    $ jnPause(3)
+    play audio button_tap_c
+    $ jnPause(1)
+
+    n "Nnnnnn-!"
+    n "Come on!{w=0.75} Why does this have to be so {i}difficult{/i}?!"
+    n "Just give me a game I can actually {i}play{/i} or I swear,{w=0.2} I'm gonna-!"
+    n "..."
+    n "...Huh."
+    play audio button_tap_c
+    $ jnPause(3)
+    play audio button_tap_c
+    $ jnPause(5)
+
+    menu:
+        "Enter...":
+            pass
+
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_laptop"))
+    $ jn_events.displayVisuals("1ndwpu")
+    $ jn_globals.force_quit_enabled = True
+
+    # Nat's body is obscured by the laptop, so don't need as much spritecode variation
+    n 1ndwpu "..."
+    n 1fdwpu "..."
+    n 1fdwbo "..."
+    n 1tnmboeqm "...?{w=0.75}{nw}"
+    n 1unmfllesh "A-{w=0.2}ah!{w=0.75}{nw}"
+    extend 2ullemlsbr " [player]!{w=0.75}{nw}"
+    extend 2fcsgslsbr " W-{w=0.2}well,{w=0.2} finally!"
+    n 2fcsajlsbr "You sure took your sweet time getting here.{w=0.75}{nw}"
+    extend 1csqcasbl " {i}Again{/i}.{w=0.75}{nw}"
+    extend 1tsqflsbl " Are you {i}trying{/i} to set some kind of lateness record or what?"
+    n 1tllflsbl "Seriously...{w=1}{nw}"
+    extend 1nsqem " you're gonna put Sayori's tardiness to shame at this rate."
+    n 1ncsflesi "..."
+    n 1nlraj "Well,{w=0.2} anyway.{w=0.75}{nw}"
+    extend 7fcsaj " Lucky for you,{w=0.2} [player]."
+    n 7fnmsl "There's at least {i}one{/i} thing you showed up on time for."
+    n 3fsqsm "Ehehe."
+    n 6fnmbg "...'Cause I've finally found a new game I wanna try!{w=0.75}{nw}"
+    extend 3fchgn " I even memorized all the rules and everything!"
+    n 1tsqbg "And the best thing about it?"
+    n 6fnmbg "We don't even {i}need{/i} anything new to play it!"
+    n 7fcscs "Yep!{w=0.75}{nw}"
+    extend 7flrbg " No rooting around in that stinky old closet again for me today.\n{w=0.75}{nw}"
+    extend 3fcssmesm " I got everything I need right here!"
+    n 1fcsss "Heh.{w=0.75}{nw}"
+    extend 1tsqsm " And thanks to you?{w=0.75}{nw}"
+    extend 1fsqbg " That includes a second player!"
+    n 1fchsm "..."
+    n 1tsqpu "What?"
+    n 7unmaj "Oh,{w=0.2} right.{w=0.75}{nw}"
+    extend 7nnmss " You're probably wondering what all the fuss is about all of a sudden,{w=0.5}{nw}"
+    extend 7nlrss " huh."
+    n 7ulraj "So...{w=1}{nw}"
+    
+    if persistent._jn_snap_player_wins > 0 or persistent._jn_snap_player_wins > 0:
+        extend 7nllaj " I know we've played a bunch of Snap before,{w=0.2} obviously.{w=0.75}{nw}"
+        extend 3unmfl " And don't get me wrong -{w=0.5}{nw}"
+        extend 3clrflsbl " I'm not saying I was getting {i}bored{/i} of it,{w=0.2} exactly."
+        n 1nsraj "But...{w=1}{nw}"
+        extend 1clrfl " it always felt like it was missing something.{w=0.75}{nw}"
+        extend 7tnmbo " You know?"
+
+    else:
+        extend 7tlrbo " I'm pretty sure I mentioned Snap before.{w=0.75}{nw}"
+        extend 7tnmfl " That card game where you gotta call out matching cards to win?"
+        n 3nllfl "...Even if we never actually ended up {i}playing{/i} it,{w=0.5}{nw}" 
+        extend 3nslsl " for whatever reason."
+        n 3nllpu "But like...{w=1}{nw}"
+        extend 7nsqcasbr " I guess it's fine if all you actually care about in a game is reaction times."
+
+    n 1fllaj "I wouldn't exactly say it's a {i}skilled{/i} game or anything like that."
+    n 1ccsss "So it's not like it takes some kind of mastermind to figure out what's missing here."
+    n 3fsqsm "..."
+    n 3tsqss "What?{w=0.75}{nw}"
+    extend 3fnmsm " Wasn't it obvious already,{w=0.5}{nw}"  
+    extend 3fsqsm " [player]?"
+    n 6fcsbg "...Some actual strategy!{w=0.75}{nw}"
+    extend 6fchgn " Duh!"
+    n 1fnmbg "And what better way to make sure you're actually using your noggin than a game where you've gotta think for once about your moves?"
+    n 7fcsbg "You guessed it!{w=0.75}{nw}"
+    extend 1fsqbg " I'm talking about..."
+
+    show natsuki 1fcssm
+    $ jnPause(1)
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_card_pack"))
+    play audio smack
+    $ jnPause(1.25)
+
+    n 3fchbs "...Blackjack!"
+    n 3fchsm "..."
+    n 3fcssmeme "Ehehe."
+    n 7ullss "I know,{w=0.2} I know.{w=0.75}{nw}"
+    extend 7ccsbgedz " Genius,{w=0.2} right?{w=0.75}{nw}"
+    extend 6ccssm " Betcha' wish {i}you'd{/i} thought of it before,{w=0.2} huh?"
+    n 7ulraj "I'd actually heard about it a while ago,{w=0.5}{nw}" 
+    extend 7clrsssbl " but I never thought it was something that could actually be fun to play.{w=0.75}{nw}"
+    extend 3cslsssbl " Especially with only two players."
+    n 3tnmbo "So when I was looking for something else to do with the card pack,{w=0.2} I guess it just kinda came to mind."
+    n 3tllss "Besides.{w=0.75}{nw}"
+    extend 1cslsssbr " I {i}did{/i} say I didn't know a whole lot of card games before.{w=0.75}{nw}"
+    extend 1ccsposbr " Studying up on another one was clearly way overdue."
+    n 7unmaj "Seriously though -{w=0.5}{nw}"
+    extend 3fchbg " it's perfect!{w=0.75}{nw}"
+    extend 3fspbg " And it's {i}super{/i} easy to pick up too!"
+    n 3ccsss "Trust me,{w=0.2} [player].{w=0.75}{nw}"
+    extend 7tsqss " Give it a couple rounds?"
+    n 7tsrss "Well.{w=0.75}{nw}"
+    extend 6ccssmesm " You'll still be losing,{w=0.2} of course.{w=0.75}{nw}"
+    extend 3fchgnelg " But at least you'll be having tons of fun while you do!"
+    n 1csqsm "..."
+    n 1csqbg "...Well?{w=0.75}{nw}"
+    extend 1unmbg " What do you think about it,{w=0.2} [player]?{w=0.75}{nw}"
+    extend 3fcsbg " Don't lie!"
+
+    $ persistent._jn_blackjack_unlocked = True
+    show natsuki option_wait_smug
+    menu:
+        n "I can tell you're just {i}itching{/i} to get started,{w=0.2} right?"
+
+        "You bet I am!":
+            n 1fcssm "Heh.{w=0.75}{nw}"
+            extend 7fcsbg " Just as I thought.{w=0.75}{nw}"
+            extend 3fchgn " I can read you like a book!"
+            n 3unmaj "Oh -{w=0.5}{nw}"
+            extend 3cdwss " let me just pack this thing up real quick first."
+
+            show natsuki 1ccssmeme
+            show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+            $ jnPause(1)
+            play audio laptop_close
+            $ jnPause(2)
+            play audio drawer
+            $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+            show natsuki 1cllsmeme
+            $ jnPause(1)
+            hide black with Dissolve(1)
+
+            jump blackjack_explanation
+
+        "Not right now,{w=0.2} [n_name].":
+            n 1ccssl "Heh.{w=0.75}{nw}"
+            extend 3clrfl " Say no more,{w=0.2} [player].{w=0.75}{nw}"
+            extend 3clrsl " Say no more."
+            n 3ccstr "I {i}totally{/i} get it."
+            n 1csqbo "..."
+            n 3fcsbg "...Totally get that you'll just come crawling back later instead when you finally get bored,{w=0.2} that is."
+            n 3fsqsm "Ehehe."
+            n 7ulrfl "Nah,{w=0.2} I guess that's fine.{w=0.75}{nw}"
+            extend 3cnmbo " As if I'm gonna force you to play or anything like that.{w=0.75}{nw}"
+            extend 3csrfll " I'm not {i}that{/i} entitled."
+            n 1ullsl "But hey."
+            extend 6nchgn " Not like there's any shortage of time for you to start learning and losing later,{w=0.2} right?"
+            
+            show natsuki 1ccssmeme
+            show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+            $ jnPause(2)
+            play audio laptop_close
+            $ jnPause(2)
+            play audio drawer
+            $ Natsuki.clearDesk()
+            show natsuki 1cllsmeme
+            $ jnPause(2)
+            hide black with Dissolve(1)
+
+            n 2cllss "Well,{w=0.2} now that's finally out of the way..."
+            $ chosen_descriptor = jn_utils.getRandomTease() if Natsuki.isEnamored(higher=True) else player
+            n 7fchbgl "What's happening,{w=0.2} [chosen_descriptor]?"
+
+    return
+
 # HOLIDAYS
 
 # Used to lead up to a holiday, but only if already in-game and the day changes
@@ -2180,11 +2843,11 @@ label holiday_new_years_day:
         import copy
 
         # Give Natsuki a new year headband, using whatever she's currently wearing as a base
-        jn_outfits.get_wearable("jn_headgear_new_year_headband").unlock()
-        new_years_hat_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
-        new_years_hat_outfit.headgear = jn_outfits.get_wearable("jn_headgear_new_year_headband")
-        new_years_hat_outfit.hairstyle = jn_outfits.get_wearable("jn_hair_down")
-        jn_outfits.save_temporary_outfit(new_years_hat_outfit)
+        jn_outfits.getWearable("jn_headgear_new_year_headband").unlock()
+        new_years_hat_outfit = copy.copy(jn_outfits.getOutfit(Natsuki.getOutfitName()))
+        new_years_hat_outfit.headgear = jn_outfits.getWearable("jn_headgear_new_year_headband")
+        new_years_hat_outfit.hairstyle = jn_outfits.getWearable("jn_hair_down")
+        jn_outfits.saveTemporaryOutfit(new_years_hat_outfit)
 
         jn_events.getHoliday("holiday_new_years_day").run()
 
@@ -2362,10 +3025,10 @@ label holiday_new_years_day:
     return
 
 label holiday_valentines_day:
-    $ valentine_outfit = jn_outfits.get_outfit("jn_ruffle_neck_sweater_outfit")
+    $ valentine_outfit = jn_outfits.getOutfit("jn_ruffle_neck_sweater_outfit")
     $ valentine_outfit.unlock()
-    $ jn_outfits.save_temporary_outfit(valentine_outfit)
-    $ player_has_gifted_clothes = len(jn_outfits.JNWearable.filter_wearables(jn_outfits.get_all_wearables(), True, False)) > 0
+    $ jn_outfits.saveTemporaryOutfit(valentine_outfit)
+    $ player_has_gifted_clothes = len(jn_outfits.JNWearable.filterWearables(jn_outfits.getAllWearables(), True, False)) > 0
     $ jn_events.getHoliday("holiday_valentines_day").run()
 
     n 1uskfllsbr "...!{w=0.75}{nw}"
@@ -2455,9 +3118,9 @@ label holiday_valentines_day:
         $ jnPause(3)
         play audio clothing_ruffle
 
-        $ valentine_special_outfit = jn_outfits.get_outfit("jn_heart_sweater_outfit")
+        $ valentine_special_outfit = jn_outfits.getOutfit("jn_heart_sweater_outfit")
         $ valentine_special_outfit.unlock()
-        $ jn_outfits.save_temporary_outfit(valentine_special_outfit)
+        $ jn_outfits.saveTemporaryOutfit(valentine_special_outfit)
         show natsuki 1nsrdvfess at jn_center
 
         $ jnPause(5)
@@ -2614,9 +3277,9 @@ label holiday_easter:
         persistent._jn_weather_setting = int(jn_preferences.weather.JNWeatherSettings.disabled)
         jn_atmosphere.showSky(jn_atmosphere.WEATHER_CHERRY_BLOSSOM)
 
-        chick_outfit = jn_outfits.get_outfit("jn_chick_outfit")
+        chick_outfit = jn_outfits.getOutfit("jn_chick_outfit")
         chick_outfit.unlock()
-        jn_outfits.save_temporary_outfit(chick_outfit)
+        jn_outfits.saveTemporaryOutfit(chick_outfit)
 
         jn_events.getHoliday("holiday_easter").run()
 
@@ -2662,7 +3325,7 @@ label holiday_easter:
     n 1ulrss "Plus with how the blossoms travel all the way up from south to north..."
     n 3uchgn "It's pretty much a rolling announcement for the summer!{w=0.2} I love it!"
     
-    $ cherry_blossom_outfit = jn_outfits.get_outfit("jn_cherry_blossom_outfit")
+    $ cherry_blossom_outfit = jn_outfits.getOutfit("jn_cherry_blossom_outfit")
     if not cherry_blossom_outfit.unlocked:
         $ cherry_blossom_outfit.unlock()
         n 4fslpu "I'm sure I had a super stylish dress themed around it somewhere..."
@@ -2804,10 +3467,399 @@ label holiday_easter:
     return
 
 label holiday_halloween:
-    #TODO: writing
-    $ jn_events.getHoliday("holiday_halloween").run()
-    $ jn_events.getHoliday("holiday_halloween").complete()
+    if preferences.get_volume("music") < 0.25:
+        $ preferences.set_volume("music", 0.75)
 
+    if preferences.get_volume("sfx") < 0.25:
+        $ preferences.set_volume("sfx", 0.75)
+
+    $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_GLITCH)
+    hide natsuki
+    show chair zorder JN_NATSUKI_ZORDER
+    show desk zorder JN_NATSUKI_ZORDER
+    $ jn_events.getHoliday("holiday_halloween").run(suppress_visuals=True)
+    hide black
+
+    $ jnPause(3)
+    show tense at JN_PULSE zorder JN_GLITCH_ZORDER
+    play audio thump
+    $ jnPause(1.5)
+    hide tense
+    $ jnPause(1)
+    show tense at JN_PULSE zorder JN_GLITCH_ZORDER
+    play audio thump
+    $ jnPause(1.5)
+    hide tense
+    $ jnPause(1)
+    show tense at JN_PULSE zorder JN_GLITCH_ZORDER
+    play audio thump
+    $ jnPause(1.5)
+    hide tense
+    $ jnPause(1)
+
+    python:
+        for i in range(1, 7):
+            renpy.show(
+                name="tense",
+                at_list=[JN_PULSE],
+                zorder=JN_GLITCH_ZORDER)
+            renpy.play(filename=audio.thump, channel="audio")
+            jnPause(1.5)
+
+    play audio static
+    show glitch_garbled_b zorder JN_GLITCH_ZORDER with vpunch
+    hide glitch_garbled_b
+    $ jnPause(1)
+
+    python:
+        for i in range(1, 5):
+            renpy.show(
+                name="tense",
+                at_list=[JN_PULSE],
+                zorder=JN_GLITCH_ZORDER)
+            renpy.play(filename=audio.thump, channel="audio")
+            jnPause(1)
+
+            if (random.randint(1,5) == 1):
+                renpy.play(filename=audio.glitch_d, channel="audio")
+                jnPause(0.25)
+
+    play audio static
+    show glitch_garbled_a zorder JN_GLITCH_ZORDER with hpunch
+    hide glitch_garbled_a
+    $ jnPause(0.5)
+    play audio static
+    show glitch_garbled_c zorder JN_GLITCH_ZORDER with vpunch
+    hide glitch_garbled_c
+    $ jnPause(0.3)
+
+    python:
+        for i in range(1, 3):
+            renpy.show(
+                name="tense",
+                at_list=[JN_PULSE],
+                zorder=JN_GLITCH_ZORDER)
+            renpy.play(filename=audio.thump, channel="audio")
+            jnPause(0.75)
+
+            if (random.randint(1,4) == 1):
+                renpy.play(filename=audio.glitch_d, channel="audio")
+                jnPause(0.25)
+                renpy.show(
+                    name="glitch_garbled_red",
+                    at_list=[JN_PULSE],
+                    zorder=JN_GLITCH_ZORDER)
+                jnPause(0.15)
+                renpy.hide("glitch_garbled_red")
+
+    play audio static
+    show glitch_garbled_b zorder JN_GLITCH_ZORDER with hpunch
+    hide glitch_garbled_b
+    $ jnPause(0.25)
+
+    play audio static
+    show glitch_garbled_c zorder JN_GLITCH_ZORDER with vpunch
+    hide glitch_garbled_c
+    $ jnPause(0.15)
+    play audio glitch_d
+
+    show black zorder JN_BLACK_ZORDER
+    $ jnPause(0.25)
+    play audio ooo_creep
+    $ jnPause(6)
+    hide desk
+    hide chair
+    $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_SUNNY)
+    $ magical_girl_cosplay = jn_outfits.getOutfit("jn_magical_girl_cosplay")
+    $ magical_girl_cosplay.unlock()
+    $ Natsuki.setOutfit(outfit=magical_girl_cosplay, persist=False)
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_renpy_for_dummies_closed"))
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_pumpkins"))
+    show deco o31 zorder JN_DECO_ZORDER
+    show natsuki 4fchgn at jn_center zorder JN_NATSUKI_ZORDER
+    $ jnPause(0.15)
+    play audio switch_flip
+    hide black
+    $ jnPause(1)
+
+    # Have to proc manually here due to fake reveal for the prank
+    $ renpy.play(filename="mod_assets/bgm/vacation.ogg", channel="music")
+    $ renpy.show_screen("hkb_overlay")
+    $ jn_globals.force_quit_enabled = True
+
+    $ player_upper = player.upper()
+    n 4fchbg "HAPPY HALLOWEEN,{w=0.75}{nw}" 
+    extend 4fchbs " [player_upper]!"
+    n 4fchsm "..."
+    n 4fsqsm "..."
+    n 2fsqss "Well?{w=0.75}{nw}"
+    extend 2fcsgs " Don't just sit there!{w=0.75}{nw}"
+    extend 4fchgn " Say something already!"
+    n 3fnmbs "Did I get you?{w=0.2} Did I get you?{w=0.75}{nw}"
+    extend 3fcsbs " Don't lie!{w=1}{nw}"
+    extend 7fsqbg " I {i}totally{/i} got you this time!"
+    n 3ccsbg "Jeez...{w=1}{nw}"
+    extend 7fcsbs " I {i}knew{/i} this dumb old book would come in handy someday!\n{w=0.75}{nw}"
+    extend 7fsqss "Not bad for a bunch of reused scripts,{w=0.2} huh?"
+    n 3unmbg "And hey -{w=0.5}{nw}"
+    extend 3tlrbg " I didn't even blow the classroom up or anything.{w=0.75}{nw}"
+    extend 4fchbg " I'd call that a complete success!"
+    n 2fchsm "Ahaha."
+    n 2cllss "Well,{w=0.2} anyway.{w=0.75}{nw}"
+    extend 2ccsbg " I think I'm about done screwing around now."
+    n 4ullaj "So -{w=0.5}{nw}"
+    extend 4csqbg " you like what I've done with the place?{w=0.75}{nw}"
+    extend 3ccspo " You better appreciate all the effort I put into all this,{w=0.2} [player]."
+    n 3fnmbg "Yep!{w=0.75}{nw}"
+    extend 7fcsbg " As you can {i}clearly{/i} see -{w=0.5}{nw}"
+    extend 6fchbg " I pulled out {i}all{/i} the stops this time!"
+    n 7clrbg "Awesome hand-crafted decorations?{w=0.75}{nw}"
+    extend 7ccsbg " Check!{w=1}{nw}"
+    extend 6ckrsm " Fabulously made cosplay?{w=0.75}{nw}"
+    extend 6fcsbs " Check again!"
+    n 3fnmbg "Getting easily the best jump of the year on [player]?"
+    n 7fsgsm "..."
+    n 7fcssm "Ehehe.{w=0.75}{nw}"
+    extend 3fchgnelg " You bet!"
+
+    if get_topic("talk_thoughts_on_horror").shown_count > 0:
+        n 1cllbg "Man..."
+        n 2unmaj "You know,{w=0.2} I'm pretty sure I mentioned it before at some point.{w=0.75}{nw}"
+        extend 5csrbosbl " About how I don't really like horror and all."
+        n 4ccsfl "But let's be real here,{w=0.2} [player]."
+
+    else:
+        n 1cllbg "Man...{w=1}{nw}"
+        extend 2tlraj " I know I told you I wasn't the biggest fan of horror already,{w=0.75}{nw}" 
+        extend 4ccsfl " but let's be real."
+
+    n 4tnmaj "When it really comes to bang for your buck?{w=0.75}{nw}"
+    extend 7ccssmesm " You just can't beat a good old Halloween."
+    n 3unmfl "No,{w=0.2} really!{w=0.75}{nw}"
+    extend 3fcsbg " Think about it!"
+    n 4fsqss "Not {i}only{/i} is it an excuse to break out my sewing kit and blow {i}everyone{/i} away with my needlework..."
+    n 1ccsss "But come on.{w=0.75}{nw}"
+    extend 2fchgn " What {i}other{/i} holidays give you the excuse to pig out on as much free candy as you can swipe,{w=0.2} huh?"
+    n 2fsqsm "..."
+    n 1fcssm "Ehehe.{w=0.75}{nw}"
+    extend 4fcsbg " That's what I thought,{w=0.2} [player].{w=1.25}{nw}"
+    extend 3fchbg " Halloween is the best!"
+
+    # Not ideal conditioning; holidays should really have a shown_count - see: #813. Replace this check and delete persistent flag once this is done!
+    # Will need to migrate other holidays for shown counts too... FML.
+    if Natsuki.isLove(higher=True) and not persistent._jn_player_love_halloween_seen:
+        n 3clrbo "..."
+        n 4clrpu "Or...{w=1}{nw}"
+        extend 4klrsl " I guess it would be."
+        n 5csrslsbl "Not like I'd be the kind to know,{w=0.2} a-{w=0.2}after all."
+
+        if "holiday_christmas_day" in persistent._seen_ever:
+            n 5cnmsl "..."
+            n 2knmfl "What?{w=0.75}{nw}"
+            extend 2kllfll " Don't you remember,{w=0.2} [player]?{w=0.75}{nw}"
+            extend 1cllbol " It's like how I told you last Christmas."
+
+        else:
+            n 4fcsem "It's just that..."
+            n 2kslsl "..."
+            n 2kslfl "I-{w=0.2}it just sucks.{w=0.75}{nw}"
+            extend 4knmbol " You know?{w=1}{nw}"
+            extend 1klrsll " With my family and everything."
+        
+        n 1ksrsll "..."
+        n 4ccspu "We...{w=1}{nw}"
+        extend 4ccsfl " never...{w=1}{nw}"
+        extend 4cllfl " really celebrated much.{w=1.25}{nw}"
+        extend 2cdlsl " At all."
+        n 2clrfl "...And Halloween was no exception.{w=0.75}{nw}"
+        extend 2clrsl " Obviously.{w=0.75}{nw}"
+        extend 4knmfl " Why would it be?"
+        n 4cslfl "And the excuses.{w=0.75}{nw}"
+        extend 1fcsan " Every year without fail."
+        n 3flrwr "'It's not what we do here,{w=0.2} Natsuki!'{w=0.75}{nw}"
+        extend 3fllem " 'It's just not right,{w=0.2} Natsuki!{w=0.2} What would our neighbors think?'"
+        n 3fslan "As if almost everyone on our street {i}didn't{/i} have kids,{w=0.2} or put decorations up!"
+        n 4fcsan "Cut me a break."
+        n 4fsrsl "Heh.{w=0.75}{nw}"
+        extend 2fnmsl " We all knew what the {i}real{/i} reasons were,{w=0.2} [player]."
+        n 2flrbol "And they weren't just because it wasn't Japanese enough,{w=0.2} I'll tell you that much."
+        n 1ksrbol "..."
+        n 1ccsfllesi "..."
+        n 4cnmfll "...Look.{w=0.75}{nw}"
+        extend 4ccsajl " I'm not just annoyed about missing out literally every year."
+        n 2cllsll "I don't care about some tacky outfits or a bunch of junk from the convenience store."
+        n 2cslsll "It's not like that stuff just disappears or something the rest of the year."
+        n 2cnmpul "I don't care about any of that."
+        n 1clrgsl "I..."
+        n 5clrunl "..."
+        n 5fcsajl "I...{w=1}{nw}"
+        extend 1fcsfll " just...{w=1}{nw}"
+        extend 1fllfll " wanted to join in with what everyone else was doing.{w=1}{nw}"
+        extend 4knmwrl " W-{w=0.2}with what my {i}friends{/i} invited me to do!{w=0.75}{nw}"
+        extend 4clrunl " Is that {i}really{/i} such a crime?"
+        n 4fcswrl "A-{w=0.2}and besides,{w=0.2} what right did {i}they{/i} have to...!"
+        n 4fllunltsc "T-{w=0.2}to..."
+        n 1fcsunltsa "..."
+        n 1fcsanltsa "..."
+        n 2fcsflltsa "..."
+        n 2csrslltsb "...Forget it.{w=1.25}{nw}"
+        extend 2ccsgsl " Forget it!{w=1}{nw}"
+        extend 4cslunl " I don't even know {i}why{/i} it still annoys me so much."
+        n 4fcseml "It was all just..."
+        n 4cslbol "..."
+        n 1kslbol "...So dumb."
+        n 3ccseml "A-{w=0.2}and I know there's nothing stopping me doing what I want now.\n{w=0.75}{nw}"
+        extend 3clrbol "As you can see."
+        n 4klrfll "But that doesn't change all the wasted time.{w=1.25}{nw}"
+        extend 5kdlbol " All the disappointment."
+        n 1kslbol "And I don't think it ever will."
+        n 2kslsslsbr "...E-{w=0.2}even if getting to spend Halloween with you instead {i}is{/i} pretty awesome."
+        n 2kslsllsbr "..."
+        n 4knmpulsbr "...I wrote you something too,{w=0.5}{nw}"
+        extend 5klrbolsbr " you know."
+        n 5clrcalsbr "..."
+
+        $ halloween_poem = jn_poems.getPoem("jn_natsuki_hallows_end")
+        $ halloween_poem.unlock()
+        play audio page_turn
+        $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_poem_on_desk"))
+        $ jnPause(2)
+
+        n 5csqcalsbr "..."
+        n 4fnmfllsbl "H-{w=0.2}hey!{w=0.75}{nw}"
+        extend 4fllfllsbl " Come on."
+        n 2cdlbolsbl "Don't give me that look,{w=0.2} [player].{w=0.75}{nw}"
+        extend 2ccsemlsbl " Just..."
+        n 1ksrpulsbl "..."
+        n 1ccsfll "...Just take it already.{w=1}{nw}"
+        extend 4cnmcal " Before I change my mind about the whole thing."
+        n 4cdrcal "..."
+
+        show natsuki 4kdrcal
+        $ jnPause(0.5)
+        call show_poem(halloween_poem)
+        show natsuki 1cnmcal
+
+        n 1cnmajl "You..."
+        n 4cllajl "You did actually read all of that..."
+        n 5csgsll "Right?"
+        n 2ccseml "Because you have no {i}idea{/i} how much of a pain that was at short notice.{w=0.75}{nw}" 
+        extend 2clleml " Especially with you sneaking around all the time.{w=1}{nw}"
+        extend 2ccspol " You dork."
+        n 1clrbolsbl "..."
+        n 4ksrpulsbl "But..."
+        n 4ksgpulsbl "Seriously,{w=0.2} [player]?"
+        n 1kslsllsbl "..."
+
+        show natsuki 4ccsunlsbl at jn_center zorder JN_NATSUKI_ZORDER
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+        $ jnPause(2)
+        play audio clothing_ruffle
+        $ jnPause(3.5)
+        show natsuki 5cslbolsbr at jn_center zorder JN_NATSUKI_ZORDER
+        hide black with Dissolve(1.25)
+
+        n 5kslpul "...T-{w=0.2}thank you.{w=0.75}{nw}"
+        extend 2knmbol " For being with me for Halloween,{w=0.2} I mean."
+        n 4ccsfll "I know I never got to really dress up,{w=0.75}{nw}"
+        extend 4cdrfll " or make tons of fancy decorations,{w=0.75}{nw}"
+        extend 1ksrsll " or go partying or anything exciting like that."
+        n 1nlrpul "But...{w=1.25}{nw}"
+        extend 5nsrssfsbl " I-{w=0.2}I guess I can settle for treating myself to you instead."
+        n 5nsrajlsbl "So..."
+        n 1csrfslsbl "...Yeah."
+        $ chosen_endearment = jn_utils.getRandomEndearment()
+        n 4cchsmlsbl "H-{w=0.2}happy Halloween,{w=0.2} [chosen_endearment]."
+        n 4cslsmlsbl "..."
+        n 2ccsfllsbr "N-{w=0.2}now,{w=0.2} enough of all the lovey-dovey stuff.{w=0.75}{nw}"
+        extend 2cllfllsbr " Jeez,{w=0.2} [player]."
+        n 2csqpo "Have you {i}totally{/i} forgotten what today is meant to be for already or what?"
+        n 4fsqsm "..."
+        n 4fsqss "No?"
+        n 2fcsss "Heh.{w=0.75}{nw}"
+        extend 2ccsbg " Then you better start preparing,{w=0.2} [player]."
+        n 4cslbgsbr "Being here with you might be a treat..."
+        $ jn_stickers.stickerWindowPeekUp(at_right=True)
+        n 4fsqbs "...But you bet I've still got a ton of {i}tricks{/i} up my sleeve!{w=0.75}{nw}"
+        extend 2nchgn " Ehehe."
+
+        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+        $ jnPause(1)
+        play audio drawer
+        $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+        $ jnPause(2)
+        hide black with Dissolve(0.5)
+
+        $ chosen_tease = jn_utils.getRandomTeaseName()
+        n 2uchgnl "Now let's get spooky already,{w=0.2} you [chosen_tease]!"
+        $ persistent._jn_player_love_halloween_seen = True
+
+    else:
+        n 3cslss "..."
+        n 4cslfl "Or...{w=1}{nw}"
+        extend 4cslsl " at least it would be.{w=0.75}{nw}"
+        extend 2fsrem " If {i}some people{/i} didn't insist on being complete idiots about it."
+        n 2fcsfl "Ugh."
+        n 2clrfl "Like,{w=0.2} don't get me wrong -{w=0.5}{nw}"
+        extend 4fcsaj " I'm always game for a good prank!{w=0.75}{nw}"
+        extend 4ccspo " I'm not thin-skinned,{w=0.2} obviously."
+        n 2fslan "But what I can't {i}stand{/i} is when some people take it all {i}way{/i} over the top!{w=0.75}{nw}"
+        extend 1fsqem " Or they're just straight-up jerks about the whole thing."
+        n 4fcsfl "Yeah.{w=0.75}{nw}"
+        extend 4fsgfl " You know the type,{w=0.2} [player]."
+        n 3ftrfl "{i}Pranksters{/i},{w=0.5}{nw}"
+        extend 3fsran " my butt."
+        n 4fnmgs "Seriously!"
+        n 4fllem "I get that mischief night is a thing too."
+        n 2fcswr "But what the hell kind of 'mischief' involves just pissing people off?!{w=0.75}{nw}"
+        extend 2fnmfu " Or going around everywhere and making a total ass out of yourself?"
+        n 2fcsan "Cut me a break."
+        n 4csqan "And don't even get me {i}started{/i} on keeping everyone up all night with crappy music..."
+        n 3fsrem "...Or trashing a bunch of other people's stuff on purpose."
+        n 3fcsemesi "Ugh..."
+        n 4cllsl "Forget the eggs and toilet paper."
+        n 5fslsl "Just makes me wanna smack them right in their stupid faces.{w=0.75}{nw}"
+        extend 2fcsgs " Who says that isn't just {i}my{/i} take on a 'prank'?"
+        n 2fsrsl "Jerks."
+        n 1fcsflesi "..."
+        n 4ccsfl "W-{w=0.2}whatever.{w=0.75}{nw}"
+        extend 4cnmaj " You know what,{w=0.2} [player]?"
+        n 2flrfl "Who even has the time to care about a bunch of idiots ruining things for themselves?{w=0.75}{nw}"
+        extend 2fcspo " I sure don't."
+        n 1ccsaj "A-{w=0.2}and besides."
+
+        if Natsuki.isLove(higher=True):
+            n 3cllssl "We both know {i}you{/i} aren't like that.{w=0.75}{nw}"
+            extend 5ccssslsbr " T-{w=0.2}that's all that matters."
+
+        elif Natsuki.isAffectionate(higher=True):
+            n 7cllsslsbr "I'm pretty sure {i}you{/i} aren't like that.{w=0.75}{nw}"
+            extend 3ccssslsbr " Even if you are a dork."
+
+        else:
+            n 7csqss "I kinda doubt {i}you're{/i} one of those people."
+
+        n 3clrss "And it's not like we have to worry about any of that here either,{w=0.2} at any rate."
+        n 4fcsaw "So!"
+        n 4fsqbg "I hope you prepared yourself,{w=0.2} [player]."
+        n 2ccsbg "'Cause if you haven't prepared plenty of treats today for yours truly..."
+        $ jn_stickers.stickerWindowPeekUp(at_right=True)
+        n 2fchgn "...Then you better get ready for some more grade-A tricks instead!{w=0.75}{nw}"
+        extend 1nchgn " Ehehe."
+
+        if Natsuki.isLove(higher=True):
+            $ chosen_tease = jn_utils.getRandomTeaseName()
+            n 2fwlbgl "Love you too,{w=0.5}{nw}" 
+            extend 2fchblleaf " you big [chosen_tease]!"
+
+        elif Natsuki.isAffectionate(higher=True):
+            $ random_tease = random.choice(["dork", "dope"])
+            n 3fchbgl "Now let's get spooky already,{w=0.2} you [random_tease]!"
+
+        else:
+            n 3fnmbg "Now let's spook things up already!"
+
+    $ jn_events.getHoliday("holiday_halloween").complete()
     return
 
 label holiday_christmas_eve:
@@ -2818,11 +3870,11 @@ label holiday_christmas_eve:
         jn_atmosphere.showSky(jn_atmosphere.WEATHER_SNOW)
 
         # The Nat in the Hat
-        jn_outfits.get_wearable("jn_headgear_santa_hat").unlock()
-        santa_hat_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
-        santa_hat_outfit.headgear = jn_outfits.get_wearable("jn_headgear_santa_hat")
-        santa_hat_outfit.hairstyle = jn_outfits.get_wearable("jn_hair_down")
-        jn_outfits.save_temporary_outfit(santa_hat_outfit)
+        jn_outfits.getWearable("jn_headgear_santa_hat").unlock()
+        santa_hat_outfit = copy.copy(jn_outfits.getOutfit(Natsuki.getOutfitName()))
+        santa_hat_outfit.headgear = jn_outfits.getWearable("jn_headgear_santa_hat")
+        santa_hat_outfit.hairstyle = jn_outfits.getWearable("jn_hair_down")
+        jn_outfits.saveTemporaryOutfit(santa_hat_outfit)
 
         # Let it go
         jn_events.getHoliday("holiday_christmas_eve").run()
@@ -3029,9 +4081,9 @@ label holiday_christmas_day:
         jn_atmosphere.showSky(jn_atmosphere.WEATHER_SNOW)
 
         # Dress up Natsu
-        christmas_outfit = jn_outfits.get_outfit("jn_christmas_outfit")
+        christmas_outfit = jn_outfits.getOutfit("jn_christmas_outfit")
         christmas_outfit.unlock()
-        jn_outfits.save_temporary_outfit(christmas_outfit)
+        jn_outfits.saveTemporaryOutfit(christmas_outfit)
 
         # Let it go
         jn_events.getHoliday("holiday_christmas_day").run()
@@ -3399,15 +4451,15 @@ label holiday_natsuki_birthday:
         import copy
 
         # Give Natsuki a party hat, using whatever she's currently wearing as a base
-        party_hat = jn_outfits.get_wearable("jn_headgear_classic_party_hat")
+        party_hat = jn_outfits.getWearable("jn_headgear_classic_party_hat")
 
         if not party_hat.unlocked:
             party_hat.unlock()
 
-        birthday_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
+        birthday_outfit = copy.copy(jn_outfits.getOutfit(Natsuki.getOutfitName()))
         birthday_outfit.headgear = party_hat
-        birthday_outfit.hairstyle = jn_outfits.get_wearable("jn_hair_ponytail")
-        jn_outfits.save_temporary_outfit(birthday_outfit)
+        birthday_outfit.hairstyle = jn_outfits.getWearable("jn_hair_ponytail")
+        jn_outfits.saveTemporaryOutfit(birthday_outfit)
 
         # Delete the party supplies needed to proc this holiday
         jn_utils.deleteFileFromDirectory(os.path.join(renpy.config.basedir, "characters/party_supplies.nats").replace("\\", "/"))
@@ -3754,8 +4806,8 @@ label holiday_natsuki_birthday:
     hide black with Dissolve(1.25)
     $ jnPause(3)
     
-    $ gold_star_hairpin = jn_outfits.get_wearable("jn_accessory_gold_star_hairpin")
-    $ pink_star_hairpin = jn_outfits.get_wearable("jn_accessory_pink_star_hairpin")
+    $ gold_star_hairpin = jn_outfits.getWearable("jn_accessory_gold_star_hairpin")
+    $ pink_star_hairpin = jn_outfits.getWearable("jn_accessory_pink_star_hairpin")
     
     if (
         persistent.jn_custom_outfits_unlocked 
@@ -3809,7 +4861,7 @@ label holiday_natsuki_birthday:
         $ jnPause(3)
         play audio necklace_clip
         $ birthday_outfit.accessory = hairpin_to_gift
-        $ jn_outfits.save_temporary_outfit(birthday_outfit)
+        $ jn_outfits.saveTemporaryOutfit(birthday_outfit)
 
         if Natsuki.isEnamored(higher=True):
             show natsuki 2ksrsml
@@ -3883,11 +4935,11 @@ label holiday_player_birthday:
         today_day_month = (datetime.date.today().day, datetime.date.today().month)
 
         # Give Natsuki a party hat, using whatever she's currently wearing as a base
-        jn_outfits.get_wearable("jn_headgear_classic_party_hat").unlock()
-        birthday_hat_outfit = copy.copy(jn_outfits.get_outfit(Natsuki.getOutfitName()))
-        birthday_hat_outfit.headgear = jn_outfits.get_wearable("jn_headgear_classic_party_hat")
-        birthday_hat_outfit.hairstyle = jn_outfits.get_wearable("jn_hair_down")
-        jn_outfits.save_temporary_outfit(birthday_hat_outfit)
+        jn_outfits.getWearable("jn_headgear_classic_party_hat").unlock()
+        birthday_hat_outfit = copy.copy(jn_outfits.getOutfit(Natsuki.getOutfitName()))
+        birthday_hat_outfit.headgear = jn_outfits.getWearable("jn_headgear_classic_party_hat")
+        birthday_hat_outfit.hairstyle = jn_outfits.getWearable("jn_hair_down")
+        jn_outfits.saveTemporaryOutfit(birthday_hat_outfit)
 
         jn_events.getHoliday("holiday_player_birthday").run()
         player_name_capitalized = player.upper()

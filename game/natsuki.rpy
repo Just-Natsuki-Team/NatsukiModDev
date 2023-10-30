@@ -5,6 +5,7 @@ default persistent._jn_natsuki_birthday_known = False
 init 0 python:
     import codecs
     import datetime
+    import store.jn_desk_items as jn_desk_items
     import store.jn_outfits as jn_outfits
 
     class Natsuki(object):
@@ -69,7 +70,154 @@ init 0 python:
         # Tracks whether Natsuki is currently playing a game
         __is_in_game = False
 
+        # Tracks the last time Natsuki went through a topic, idle and menu to prevent sudden dialogue jumps
+        __last_topic_call = datetime.datetime.now()
+        __last_idle_call = datetime.datetime.now()
+        __last_menu_call = datetime.datetime.now()
+
         __capped_aff_dates = list()
+        
+        # Natsuki's desk slots; items are drawn over Natsuki so be wary of overlaps!
+        # Format is [A, B] where A is the displayable to draw and B is a reference name (if any), or None
+        _desk_left = [Null(), None]
+        _desk_centre = [Null(), None]
+        _desk_right = [Null(), None]
+
+        # Whether Natsuki is reading to the left or right of her book for animations: 
+        # We have to cater for both since Natsuki owns books that read both ways
+        _is_reading_to_right = False
+
+        @staticmethod
+        def setDeskItem(item, desk_slot=None):
+            """
+            Sets a desk item for Natsuki's desk, and updates her current sprite.
+
+            IN:
+                - item - Can be one of:
+                    - JNDeskItem instance, in which case an Image displayable is created from the image_path attribute
+                    - str file path to image, in which case an Image displayable is created from it
+                    - A Ren'Py displayable (Image, etc.), which is used directly
+                - desk_slot - Optional JNDeskSlots slot to use for the item (left, centre or right), if item is not JNDeskItem, or None
+            """
+            if isinstance(item, jn_desk_items.JNDeskItem):
+                image = Image(item.image_path)
+                desk_slot = item.desk_slot
+                reference_name = item.reference_name
+
+            elif isinstance(item, basestring):
+                image = Image(item)
+                reference_name = "unknown"
+
+            else:
+                image = item
+                reference_name = "unknown"
+
+            if desk_slot == jn_desk_items.JNDeskSlots.left:
+                Natsuki._desk_left = [image, reference_name]
+
+            elif desk_slot == jn_desk_items.JNDeskSlots.centre:
+                Natsuki._desk_centre = [image, reference_name]
+
+            elif desk_slot == jn_desk_items.JNDeskSlots.right:
+                Natsuki._desk_right = [image, reference_name]
+
+            else:
+                jn_utils.log("Cannot assign item to desk slot {0} as the slot does not exist.".format(desk_slot))
+
+        @staticmethod
+        def getDeskItemReferenceName(desk_slot):
+            """
+            Gets the reference name of the desk item for Natsuki's desk given a specific slot.
+            To get the displayable item for rendering in a specific slot, use getDeskItemDisplayable instead.
+
+            IN:
+                - desk_slot - JNDeskSlots slot to return an item for (left, centre or right)
+
+            OUT:
+                - str reference name for the desk item, or None
+            """
+            if desk_slot == jn_desk_items.JNDeskSlots.left:
+                return Natsuki._desk_left[1]
+
+            elif desk_slot == jn_desk_items.JNDeskSlots.centre:
+                return Natsuki._desk_centre[1]
+
+            elif desk_slot == jn_desk_items.JNDeskSlots.right:
+                return Natsuki._desk_right[1]
+
+            else:
+                jn_utils.log("Cannot get reference name for desk slot {0} as the slot does not exist.".format(desk_slot))
+
+        @staticmethod
+        def getDeskItemDisplayable(st, at, desk_slot):
+            """
+            Gets a desk item displayable for Natsuki's desk given a specific slot.
+            To get the name of an item in a specific slot, use getDeskItemReferenceName instead.
+
+            IN:
+                - desk_slot - JNDeskSlots slot to return an displayable for (left, centre or right)
+            """
+            if desk_slot == jn_desk_items.JNDeskSlots.left:
+                return Natsuki._desk_left[0], None
+
+            elif desk_slot == jn_desk_items.JNDeskSlots.centre:
+                return Natsuki._desk_centre[0], None
+
+            elif desk_slot == jn_desk_items.JNDeskSlots.right:
+                return Natsuki._desk_right[0], None
+
+            else:
+                jn_utils.log("Cannot get displayable for desk slot {0} as the slot does not exist.".format(desk_slot))
+
+        @staticmethod
+        def clearDeskItem(desk_slot):
+            """
+            Removes a desk item from Natsuki's desk given a specific slot.
+
+            IN:
+                - desk_slot - JNDeskSlots slot of the desk to clear (left, centre or right)
+            """
+            if desk_slot == jn_desk_items.JNDeskSlots.left:
+                Natsuki._desk_left = [Null(), None]
+
+            elif desk_slot == jn_desk_items.JNDeskSlots.centre:
+                Natsuki._desk_centre = [Null(), None]
+
+            elif desk_slot == jn_desk_items.JNDeskSlots.right:
+                Natsuki._desk_right = [Null(), None]
+
+            else:
+                jn_utils.log("Cannot clear desk slot {0} as the slot does not exist.".format(desk_slot))
+
+        @staticmethod 
+        def clearDesk():
+            """
+            Completely clears Natsuki's desk.
+            """
+            Natsuki._desk_left = [Null(), None]
+            Natsuki._desk_centre = [Null(), None]
+            Natsuki._desk_right = [Null(), None]
+
+        @staticmethod
+        def getDeskSlotClear(desk_slot):
+            """
+            Returns the state of the desk for the given slot, based on if a displayable is present.
+
+            IN:
+                - desk_slot - JNDeskSlots slot of the desk to clear (left, centre or right)
+            OUT:
+                - True if the slot is clear/unoccupied, otherwise False
+            """
+            if desk_slot == jn_desk_items.JNDeskSlots.left:
+                return isinstance(Natsuki._desk_left[0], Null)
+
+            elif desk_slot == jn_desk_items.JNDeskSlots.centre:
+                return isinstance(Natsuki._desk_centre[0], Null)
+
+            elif desk_slot == jn_desk_items.JNDeskSlots.right:
+                return isinstance(Natsuki._desk_right[0], Null)
+
+            return False
 
         # START: Outfit functionality
 
@@ -84,6 +232,13 @@ init 0 python:
             return Natsuki._outfit.reference_name
 
         @staticmethod
+        def getOutfit():
+            """
+            Gets the JNOutfit Natsuki is currently wearing.
+            """
+            return Natsuki._outfit
+
+        @staticmethod
         def setOutfit(outfit, persist=True):
             """
             Assigns the specified jn_outfits.JNOutfit outfit to Natsuki.
@@ -92,12 +247,12 @@ init 0 python:
                 - outfit - The jn_outfits.JNOutfit outfit for Natsuki to wear.
                 - persist - True if the outfit should be remembered so Natsuki will be wearing it on next boot
             """
-            outfit.accessory = jn_outfits.get_wearable("jn_none") if not outfit.accessory else outfit.accessory
-            outfit.eyewear = jn_outfits.get_wearable("jn_none") if not outfit.eyewear else outfit.eyewear
-            outfit.headgear = jn_outfits.get_wearable("jn_none") if not outfit.headgear else outfit.headgear
-            outfit.necklace = jn_outfits.get_wearable("jn_none") if not outfit.necklace else outfit.necklace
-            outfit.facewear = jn_outfits.get_wearable("jn_none") if not outfit.facewear else outfit.facewear
-            outfit.back = jn_outfits.get_wearable("jn_none") if not outfit.back else outfit.back
+            outfit.accessory = jn_outfits.getWearable("jn_none") if not outfit.accessory else outfit.accessory
+            outfit.eyewear = jn_outfits.getWearable("jn_none") if not outfit.eyewear else outfit.eyewear
+            outfit.headgear = jn_outfits.getWearable("jn_none") if not outfit.headgear else outfit.headgear
+            outfit.necklace = jn_outfits.getWearable("jn_none") if not outfit.necklace else outfit.necklace
+            outfit.facewear = jn_outfits.getWearable("jn_none") if not outfit.facewear else outfit.facewear
+            outfit.back = jn_outfits.getWearable("jn_none") if not outfit.back else outfit.back
 
             Natsuki._outfit = outfit
 
@@ -221,7 +376,7 @@ init 0 python:
             """
             return Natsuki._outfit.back.reference_name == reference_name
 
-        # Start: Relationship functionality
+        # START: Relationship functionality
 
         @staticmethod
         def calculatedAffinityGain(base=1, bypass=False):
@@ -590,6 +745,8 @@ init 0 python:
                 )
                 return "UNKNOWN"
 
+        # START: Dialogue functionality
+
         @staticmethod
         def addApology(apology_type):
             """
@@ -640,6 +797,7 @@ init 0 python:
 
             IN:
                 - is_in_conversation - The bool in conversation flag to set
+                - reset_calls - bool whether to reset the idle and topic calls, preventing an immediate topic or idle call
             """
             if not isinstance(is_in_conversation, bool):
                 raise TypeError("is_in_conversation must be of type bool")
@@ -654,6 +812,7 @@ init 0 python:
 
             IN:
                 - is_in_game - The bool in game flag to set
+                - reset_calls - bool whether to reset the idle and topic calls, preventing an immediate topic or idle call
             """
             if not isinstance(is_in_game, bool):
                 raise TypeError("is_in_game must be of type bool")
@@ -681,6 +840,99 @@ init 0 python:
                 - True if in game, otherwise False
             """
             return Natsuki.__is_in_game
+
+        @staticmethod
+        def getLastTopicCall():
+            """
+            Gets the time of the last topic call.
+            """
+            return Natsuki.__last_topic_call
+
+        @staticmethod
+        def getLastIdleCall():
+            """
+            Gets the time of the last idle call.
+            """
+            return Natsuki.__last_idle_call
+
+        @staticmethod
+        def getLastMenuCall():
+            """
+            Gets the time of the last menu call.
+            """
+            return Natsuki.__last_menu_call
+
+        @staticmethod
+        def resetLastTopicCall():
+            """
+            Sets the time of the last topic call to the current time.
+            """
+            Natsuki.__last_topic_call = datetime.datetime.now()
+
+        @staticmethod
+        def resetLastIdleCall():
+            """
+            Sets the time of the last idle call to the current time.
+            """
+            Natsuki.__last_idle_call = datetime.datetime.now()
+
+        @staticmethod
+        def resetLastMenuCall():
+            """
+            Sets the time of the last menu call to the current time.
+            """
+            Natsuki.__last_menu_call = datetime.datetime.now()
+
+        @staticmethod
+        def getMouseIsLeft():
+            """
+            Returns True if the mouse is to the left of Natsuki, otherwise False. Note this only accounts for Natsuki being centred!
+            """
+            current_mouse_pos = renpy.get_mouse_pos()[0]
+            return current_mouse_pos > 0 and current_mouse_pos < 520
+
+        @staticmethod
+        def getMouseIsRight():
+            """
+            Returns True if the mouse is to the right of Natsuki, otherwise False. Note this only accounts for Natsuki being centred!
+            """
+            current_mouse_pos = renpy.get_mouse_pos()[0]
+            return current_mouse_pos > 760
+
+        @staticmethod
+        def getMouseIsAbove():
+            """
+            Returns True if the mouse is above Natsuki, otherwise False. Note this only accounts for Natsuki being centred!
+            """
+            current_mouse_pos = renpy.get_mouse_pos()[1]
+            return current_mouse_pos < 220
+        
+        @staticmethod
+        def getMouseIsBelow():
+            """
+            Returns True if the mouse is below Natsuki, otherwise False. Note this only accounts for Natsuki being centred!
+            """
+            current_mouse_pos = renpy.get_mouse_pos()[1]
+            return current_mouse_pos > 370
+
+        @staticmethod
+        def getIsReadingToRight():
+            """
+            Returns True if Natsuki's current reading direction for books is from left to right, otherwise False.
+            """
+            return Natsuki._is_reading_to_right
+        
+        @staticmethod
+        def setIsReadingToRight(is_reading_from_right):
+            """
+            Sets Natsuki's current reading direction for right/left.
+            For a traditional (Western) book read from left to right, this should be True.
+            For a manga volume read from right to left, this should be False.
+
+            IN:
+                - is_reading_from_right - bool reading from right value to set
+            """
+            Natsuki._is_reading_to_right = is_reading_from_right
 
 # KWWWMMMMMMMWNNNNNNXXXKKKKK00KKXXKKK0KK0000KKKKKK000Okkxdoodk0KKKKKXKKKK0000KOxoccdkko;,cOX00XXXXXXXX
 # KNWWWWWMMWWNNNNNXXXXXXXXKKKKKXXXXXXKKKKXXXXXXXKKKXXKKKKKKXKKKXXK00KKKKKKK000OxOOdclxOx:;kXOxKXXXXXKK

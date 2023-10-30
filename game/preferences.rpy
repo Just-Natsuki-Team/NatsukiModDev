@@ -38,13 +38,13 @@ init python in jn_preferences.random_topic_frequency:
         4: "Often",
     }
 
-    def get_random_topic_frequency_description():
+    def getRandomTopicFrequencyDescription():
         """
         Gets the descriptor for the random topic frequency, as given by the current frequency.
         """
         return _RANDOM_TOPIC_FREQUENCY_DESC_MAP.get(store.persistent.jn_natsuki_random_topic_frequency)
 
-    def get_random_topic_cooldown():
+    def getRandomTopicCooldown():
         """
         Gets the cooldown (in minutes) between topics prompted by Natsuki, as given by the current frequency.
         """
@@ -73,3 +73,9 @@ default persistent._jn_scw = True
 
 # This determines if Natsuki should warn the player whenever she runs out of unlocked things to say
 default persistent._jn_natsuki_out_of_topics_remind = True
+
+# This determines if the game should display icons on the scrollable choice menu
+default persistent._jn_display_option_icons = True
+
+# This determines if the sum of the player's hand should be shown in blackjack
+default persistent._jn_blackjack_show_hand_value = False

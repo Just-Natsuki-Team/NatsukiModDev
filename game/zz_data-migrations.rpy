@@ -6,7 +6,10 @@ default persistent._jn_pic = False
 python early in jn_data_migrations:
     from enum import Enum
     import re
+    import requests
+    import os
     import store
+    import store.jn_globals as jn_globals
     import store.jn_utils as jn_utils
 
     # dict mapping a from_version -> to_version, including the function used to migrate between those versions
@@ -25,6 +28,7 @@ python early in jn_data_migrations:
     VER_STR_PARSER = re.compile(r"^(?P<ver>\d+\.\d+\.\d+)(?P<suffix>.*)$")
 
     migrated_in_session = False
+    current_version_latest = False
 
     class MigrationRuntimes(Enum):
         """
@@ -113,6 +117,29 @@ python early in jn_data_migrations:
         #If we got here, the versions are equal
         return 0
 
+    def checkCurrentVersionIsLatest():
+        """
+        Checks the latest release and compares the version number against the persisted version number.
+        If an update is available, notify the user.
+        
+        For best results, run threaded as to not block execution.
+        """
+        try:
+            response = requests.get(jn_globals.LINK_JN_LATEST, verify=os.environ['SSL_CERT_FILE'])
+            if response.status_code != 200:
+                jn_utils.log("Failed to check for updates: response from GitHub releases was: {0}".format(response.status_code))
+                return False
+            
+            global current_version_latest
+            current_version_latest = compareVersions(store.persistent._jn_version, response.url.split("/")[-1].replace("v", "")) in [0, 1]
+            
+            if not current_version_latest:
+                renpy.notify("An update for Just Natsuki is now available!")
+
+        except Exception as exception:
+            jn_utils.log("Failed to check for updates: {0}".format(exception))
+            return False
+
     def runInitMigrations():
         """
         Runs init time migration functions. Must be run after init 0
@@ -155,6 +182,7 @@ init 10 python:
 init python in jn_data_migrations:
     import store
     import store.jn_affinity as jn_affinity
+    import store.jn_desk_items as jn_desk_items
     import store.jn_events as jn_events
     import store.jn_outfits as jn_outfits
     import store.jn_poems as jn_poems
@@ -221,7 +249,7 @@ init python in jn_data_migrations:
             store.persistent._jn_notify_conversations = store.persistent.jn_notify_conversations
             del store.persistent.jn_notify_conversations
             jn_utils.log("Migrated: persistent.jn_player_nicknames_bad_given_total")
-        
+
         store.persistent._jn_version = "1.0.0"
         jn_utils.save_game()
         jn_utils.log("Migration to 1.0.0 DONE")
@@ -232,9 +260,9 @@ init python in jn_data_migrations:
         jn_utils.log("Migration to 1.0.1 START")
 
         # Unlock some outfit items registered originally as locked, now unlocked by default
-        jn_outfits.get_outfit("jn_nyatsuki_outfit").unlock()
-        jn_outfits.get_wearable("jn_clothes_qeeb_sweater").unlock()
-        jn_outfits.get_wearable("jn_clothes_qt_sweater").unlock()
+        jn_outfits.getOutfit("jn_nyatsuki_outfit").unlock()
+        jn_outfits.getWearable("jn_clothes_qeeb_sweater").unlock()
+        jn_outfits.getWearable("jn_clothes_qt_sweater").unlock()
 
         store.persistent._jn_version = "1.0.1"
         jn_utils.save_game()
@@ -253,8 +281,8 @@ init python in jn_data_migrations:
         jn_utils.log("Migration to 1.0.3 START")
         store.persistent._jn_version = "1.0.3"
 
-        if jn_outfits.get_outfit("jn_skater_outfit").unlocked:
-            jn_outfits.get_wearable("jn_facewear_plasters").unlock()
+        if jn_outfits.getOutfit("jn_skater_outfit").unlocked:
+            jn_outfits.getWearable("jn_facewear_plasters").unlock()
 
         jn_utils.save_game()
         jn_utils.log("Migration to 1.0.3 DONE")
@@ -278,7 +306,7 @@ init python in jn_data_migrations:
         if "holiday_player_birthday" in store.persistent._seen_ever:
             jn_poems.getPoem("jn_birthday_cakes_candles").unlock()
             jn_utils.log("Migrated: jn_birthday_cakes_candles unlock state")
-        
+
         if "holiday_christmas_day" in store.persistent._seen_ever:
             if store.Natsuki.isEnamored(higher=True):
                 jn_poems.getPoem("jn_christmas_evergreen").unlock()
@@ -338,49 +366,85 @@ init python in jn_data_migrations:
         store.persistent._jn_version = "1.2.4"
 
         if "holiday_christmas_day" in store.persistent._seen_ever:
-            jn_outfits.get_outfit("jn_christmas_outfit").unlock()
+            jn_outfits.getOutfit("jn_christmas_outfit").unlock()
             jn_utils.log("Unlock state corrected for outfit: jn_christmas_outfit")
 
         if "talk_are_you_into_cosplay" in store.persistent._seen_ever and store.Natsuki.isAffectionate(higher=True):
-            jn_outfits.get_outfit("jn_trainer_cosplay").unlock()
-            jn_outfits.get_outfit("jn_sango_cosplay").unlock()
+            jn_outfits.getOutfit("jn_trainer_cosplay").unlock()
+            jn_outfits.getOutfit("jn_sango_cosplay").unlock()
             jn_utils.log("Unlock state corrected for outfits: jn_trainer_cosplay, jn_sango_cosplay")
 
         if "talk_skateboarding" in store.persistent._seen_ever and store.Natsuki.isAffectionate(higher=True):
-            jn_outfits.get_outfit("jn_skater_outfit").unlock()
+            jn_outfits.getOutfit("jn_skater_outfit").unlock()
             jn_utils.log("Unlock state corrected for outfit: jn_skater_outfit")
 
         if "event_warm_package" in store.persistent._seen_ever:
-            jn_outfits.get_outfit("jn_cosy_cardigan_outfit").unlock()
+            jn_outfits.getOutfit("jn_cosy_cardigan_outfit").unlock()
             jn_utils.log("Unlock state corrected for outfit: jn_cosy_cardigan_outfit")
 
         if "talk_fitting_clothing" in store.persistent._seen_ever:
-            jn_outfits.get_outfit("jn_pastel_goth_getup").unlock()
+            jn_outfits.getOutfit("jn_pastel_goth_getup").unlock()
             jn_utils.log("Unlock state corrected for outfit: jn_pastel_goth_getup")
 
         if "holiday_valentines_day" in store.persistent._seen_ever:
-            jn_outfits.get_outfit("jn_ruffle_neck_sweater_outfit").unlock()
+            jn_outfits.getOutfit("jn_ruffle_neck_sweater_outfit").unlock()
             jn_utils.log("Unlock state corrected for outfit: jn_ruffle_neck_sweater_outfit")
 
             if store.Natsuki.isLove(higher=True):
-                jn_outfits.get_outfit("jn_heart_sweater_outfit").unlock()
+                jn_outfits.getOutfit("jn_heart_sweater_outfit").unlock()
                 jn_utils.log("Unlock state corrected for outfit: jn_heart_sweater_outfit")
 
         if "talk_chocolate_preference" in store.persistent._seen_ever and store.Natsuki.isAffectionate(higher=True):
-            jn_outfits.get_outfit("jn_chocolate_plaid_collection").unlock()
+            jn_outfits.getOutfit("jn_chocolate_plaid_collection").unlock()
             jn_utils.log("Unlock state corrected for outfit: jn_chocolate_plaid_collection")
 
         if "holiday_easter" in store.persistent._seen_ever:
-            jn_outfits.get_outfit("jn_chick_outfit").unlock()
-            jn_outfits.get_outfit("jn_cherry_blossom_outfit").unlock()
+            jn_outfits.getOutfit("jn_chick_outfit").unlock()
+            jn_outfits.getOutfit("jn_cherry_blossom_outfit").unlock()
             jn_utils.log("Unlock state corrected for outfits: jn_chick_outfit, jn_cherry_blossom_outfit")
 
-        if store.persistent.affinity >= 12500:
+        jn_utils.save_game()
+        jn_utils.log("Migration to 1.2.4 DONE")
+        return
+
+    @migration(["1.2.4"], "1.3.0", runtime=MigrationRuntimes.INIT)
+    def to_1_3_0():
+        jn_utils.log("Migration to 1.3.0 START")
+        store.persistent._jn_version = "1.3.0"
+        
+        # Migrate topic persistent data
+        if store.persistent.jn_player_pet is not None:
+            store.persistent._jn_player_pet = store.persistent.jn_player_pet
+            del store.persistent.jn_player_pet
+            jn_utils.log("Migrated: persistent.jn_player_pet")
+
+        if store.persistent.jn_player_admission_type_on_quit is not None:
+            store.persistent._jn_player_admission_type_on_quit = store.persistent.jn_player_admission_type_on_quit
+            del store.persistent.jn_player_admission_type_on_quit
+            jn_utils.log("Migrated: persistent.jn_player_admission_type_on_quit")
+
+        if jn_outfits.getOutfit("jn_chocolate_plaid_collection").unlocked:
+            jn_outfits.getWearable("jn_necklace_tight_golden_necklace").unlock()
+            jn_utils.log("Unlock state corrected for wearable: jn_necklace_tight_golden_necklace")
+
+        if store.get_topic("event_caught_reading_manga").shown_count > 0:
+            jn_desk_items.getDeskItem("jn_parfait_manga_held").unlock()
+            jn_utils.log("Unlock state corrected for desk item: jn_parfait_manga_held")
+
+        if store.persistent.jn_sunrise_hour is not None:
+            del store.persistent.jn_sunrise_hour
+            jn_utils.log("Removed: persistent.jn_sunrise_hour")
+        
+        if store.persistent.jn_sunset_hour is not None:
+            del store.persistent.jn_sunset_hour
+            jn_utils.log("Removed: persistent.jn_sunset_hour")
+
+        if store.persistent.affinity >= 7500:
             store.persistent._jn_pic_aff = store.persistent.affinity
             store.persistent.affinity = 0
             store.persistent._jn_pic = True
             jn_utils.log("434346".decode("hex"))
 
         jn_utils.save_game()
-        jn_utils.log("Migration to 1.2.4 DONE")
+        jn_utils.log("Migration to 1.3.0 DONE")
         return

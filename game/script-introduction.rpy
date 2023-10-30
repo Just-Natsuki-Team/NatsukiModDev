@@ -32,7 +32,7 @@ init 0 python in jn_introduction:
 default persistent.jn_introduction_state = 1
 
 label introduction_progress_check:
-    $ Natsuki.setOutfit(jn_outfits.get_outfit("jn_school_uniform"))
+    $ Natsuki.setOutfit(jn_outfits.getOutfit("jn_school_uniform"))
 
     # Handling for if player decides to quit during the introduction sequence so we don't skip unseen segments
     if not jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.new_game:
@@ -121,7 +121,7 @@ label introduction_opening:
     show glitch_garbled_a zorder JN_GLITCH_ZORDER with vpunch
 
     # Get the visuals ready
-    $ Natsuki.setOutfit(jn_outfits.get_outfit("jn_school_uniform"))
+    $ Natsuki.setOutfit(jn_outfits.getOutfit("jn_school_uniform"))
     $ main_background.show()
     $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_GLITCH, with_transition=False)
     show natsuki idle introduction at jn_center zorder JN_NATSUKI_ZORDER
@@ -229,7 +229,7 @@ label introduction_first_meeting:
         if len(player_name) == 0:
             n 4kskem "P-{w=0.3}please!{w=1} Who are you?!"
 
-        elif jn_nicknames.get_player_nickname_type(player_name) != jn_nicknames.NicknameTypes.neutral:            # We only apply penalty once here so we don't have to rewrite the whole sequence for diff aff/trust levels
+        elif jn_nicknames.getPlayerNicknameType(player_name) != jn_nicknames.NicknameTypes.neutral:            # We only apply penalty once here so we don't have to rewrite the whole sequence for diff aff/trust levels
             if persistent._jn_player_profanity_during_introduction:
                 play audio static
                 show glitch_garbled_a zorder JN_GLITCH_ZORDER with hpunch

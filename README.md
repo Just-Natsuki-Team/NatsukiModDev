@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://justnatsuki.club/img/logos/jn_1-2-4_logo.png" height="300"/>
+    <img src="https://justnatsuki.club/img/logos/jn_1-3-0_logo.png" height="300"/>
 </p>
 <br>
 
@@ -10,6 +10,7 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
 **Please read this document and the license thoroughly before downloading and installing the mod!**
 
 ### Made possible thanks to our team members, past and present:
+
 <table>
 <tr>
     <td align="center">
@@ -104,7 +105,7 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
             </a>
         </td>
     </tr>
-</table>  
+</table>
 
 ### And extra special thanks to:
 
@@ -146,26 +147,14 @@ It's rude to keep someone waiting, you know...
 
 *Please note that we do **not** officially support installations using mod management software, nor do we support installations from sources other than our official GitHub. DDLC+ is not supported.*
 
-**Read the instructions carefully.**
-
 #### Using the Official JN Installer (recommended)
 
-1. Download a fresh copy of DDLC from the [official site](https://ddlc.moe). **Do not use a Steam installation**.
-2. Extract/unzip DDLC.
-3. Download the [Official JN Installer](https://github.com/Just-Natsuki-Team/NatsukiModInstaller/releases/tag/release) for your operating system (one starting with `jn-installer`).
-4. Extract the JN Installer file you have downloaded.
-5. Run the JN Installer, and follow the steps in the application: **make sure you select your DDLC folder when prompted** (the one formatted _DDLC-1.1.X-x_, E.G. `DDLC-1.1.0-pc`).
-    1. If on Windows, you may receive a security warning from SmartScreen: to continue, click _More Info_, then _Run anyway_.
-6. **This only applies if you have played the Just Natsuki BETA, wish to completely reset your progress, or if you are running the discontinued build from Wix/Google Drive**: You may already have a persistent from the old version of JN - this **must** be deleted.
-    1. Guidance on how to find your persistent can be found [here](https://github.com/Just-Natsuki-Team/NatsukiModDev/wiki/04:-FAQ#can-i-back-up-my-save-data--how-do-i-find-my-persistent).
-7. Finally, launch _DDLC_.
-    1. If you are on OSX, you may have to review your security settings for the game to launch properly; please see the guidance listed [here](https://github.com/Just-Natsuki-Team/NatsukiModDev/issues/221).
-8. Enjoy!
+Download the official launcher and follow the installation steps [here](https://github.com/Just-Natsuki-Team/NatsukiModInstaller/releases/tag/release)!
 
 #### Manual installation
 
 <details>
-<summary>Details</summary> 
+<summary>Details</summary>
 
 1. Download a fresh copy of DDLC from the [official site](https://ddlc.moe). **Do not use a Steam installation**.
 2. Extract/unzip DDLC.
@@ -188,24 +177,16 @@ It's rude to keep someone waiting, you know...
 
 *Use these instructions if you already have JN installed. If you are running a BETA version of JN, please follow the [Installation](#installation) steps instead.*
 
-**[Back up your persistent](https://github.com/Just-Natsuki-Team/NatsukiModDev/wiki/04:-FAQ#can-i-back-up-my-save-data--how-do-i-find-my-persistent) and read the instructions carefully.**
-
 #### Using the Official JN Installer (recommended)
 
-1. Stop JN, if you are currently playing the mod.
-2. Download the [Official JN Installer](https://github.com/Just-Natsuki-Team/NatsukiModInstaller/releases/tag/release) for your operating system (one starting with `jn-installer`).
-3. Extract the JN Installer file you have downloaded.
-4. Run the JN Installer, and follow the steps in the application: **make sure you select your DDLC folder when prompted** (the one formatted _DDLC-1.1.X-x_, E.G. `DDLC-1.1.0-pc`).
-    1. If on Windows, you may receive a security warning from SmartScreen: to continue, click _More Info_, then _Run anyway_.
-5. Finally, launch _DDLC_.
-6. Enjoy!
+Download the official launcher and follow the update steps [here](https://github.com/Just-Natsuki-Team/NatsukiModInstaller/releases/tag/release)!
 
 #### Manual update
 
 <details>
-<summary>Details</summary> 
+<summary>Details</summary>
 
-1. Stop JN, if you are currently playing the mod.
+1. Stop JN, if you are currently playing the mod and **[back up your persistent](https://github.com/Just-Natsuki-Team/NatsukiModDev/wiki/04:-FAQ#can-i-back-up-my-save-data--how-do-i-find-my-persistent)**.
 2. Download the latest release [here](https://github.com/Just-Natsuki-Team/NatsukiModDev/releases): select the ZIP file starting with `jn` (I.E `jn-1.0.0.zip`). **Do not download the source code, as this will result in future updates failing.**
 3. Extract/unzip the new release files.
 4. From the release files, copy the `game` folder contents (all of it) into the `game` folder of your JN installation. If asked to replace files, select _Yes_.
