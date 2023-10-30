@@ -588,7 +588,7 @@ label blackjack_main_loop:
                     hit_percent += 0.20
 
                 if hit_percent == 0.50 and needed_to_blackjack <= 6:
-                    hit_percent -= 35
+                    hit_percent -= 0.55
 
                 risk_percent = jn_blackjack.store.persistent._jn_blackjack_natsuki_streak / 100 if jn_blackjack.store.persistent._jn_blackjack_natsuki_streak > 0 else 0
                 risk_percent = 0.05 if risk_percent > 0.05 else risk_percent
