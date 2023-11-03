@@ -7847,7 +7847,7 @@ label talk_thoughts_on_tea:
         "I prefer tea.":
             if player_tea_coffee_preference_known:
                 if persistent.jn_player_tea_coffee_preference == "tea":
-                    n 1nnmss "2tnmss,{w=0.5}{nw}"
+                    n 1nnmss "Well,{w=0.5}{nw}"
                     extend 1tnmss " some things never change,{w=0.2} huh?"
                     n 1fchsm "Ehehe."
 
