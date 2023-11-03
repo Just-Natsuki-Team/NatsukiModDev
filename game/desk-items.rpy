@@ -237,6 +237,14 @@ init -55 python in jn_desk_items:
     ))
 
     __registerDeskItem(JNDeskItem(
+        reference_name="jn_renpy_for_dummies_held",
+        item_type=JNDeskItemTypes.normal,
+        desk_slot=JNDeskSlots.centre,
+        unlocked=False,
+        image_path="mod_assets/props/renpy_for_dummies_book_held.png"
+    ))
+
+    __registerDeskItem(JNDeskItem(
         reference_name="jn_renpy_for_dummies_closed",
         item_type=JNDeskItemTypes.normal,
         desk_slot=JNDeskSlots.left,

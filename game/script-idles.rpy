@@ -278,8 +278,8 @@ label idle_twitch_playing:
 label idle_reading_parfait_girls:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
 
-    if Natsuki.getDeskItemReferenceName(jn_desk_items.JNDeskSlots.left) == "jn_parfait_manga_closed":
-        $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.left)
+    if Natsuki.getDeskItemReferenceName(jn_desk_items.JNDeskSlots.right) == "jn_parfait_manga_closed":
+        $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.right)
 
     $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_parfait_manga_held"))
     $ Natsuki.setIsReadingToRight(True)
@@ -320,10 +320,14 @@ label idle_reading_parfait_girls:
 
 label idle_reading_renpy_for_dummies:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
-    show prop renpy_for_dummies_book_held zorder JN_PROP_ZORDER
+
+    if Natsuki.getDeskItemReferenceName(jn_desk_items.JNDeskSlots.left) == "jn_renpy_for_dummies_closed":
+        $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.left)
+
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_renpy_for_dummies_held"))
+    $ Natsuki.setIsReadingToRight(True)
     show natsuki reading
     hide black with Dissolve(0.5)
-    $ Natsuki.setIsReadingToRight(True)
     $ jnClickToContinue(silent=False)
 
     n 1fdwbo "...{w=1}{nw}"
@@ -344,9 +348,17 @@ label idle_reading_renpy_for_dummies:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     show natsuki 1fcssmeme
-    hide prop
-    play audio drawer
-    $ jnPause(1.3)
+    $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+
+    if random.choice([True, False]):
+        play audio drawer
+        $ jnPause(1.3)
+    
+    else:
+        play audio book_closing
+        $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_renpy_for_dummies_closed"))
+        $ jnPause(0.3)
+
     hide black with Dissolve(0.5)
     $ jnPause(1)
 
