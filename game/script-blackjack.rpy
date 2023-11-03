@@ -807,7 +807,8 @@ label blackjack_quit_forfeit:
         
         $ natsuki_prompt = "You can at {i}least{/i} stick it out to the end of this one,{w=0.2} right?"
         show natsuki option_wait_smug
-        
+    
+    $ natsuki_prompt = renpy.substitute(natsuki_prompt)
     menu:
         n  "[natsuki_prompt]"
 
@@ -839,7 +840,7 @@ label blackjack_quit_forfeit:
                 extend 4tlrbo " Huh."
                 n 2tlrsl "..."
                 n 2ulrfl "Well.{w=0.75}{nw}"
-                extend 2fcsss " looks like {i}you{/i} know what they say at least,{w=0.5}{nw}" 
+                extend 2fcsss " Looks like {i}you{/i} know what they say at least,{w=0.5}{nw}" 
                 extend 2fsqbg " [player]."
                 n 6fcsbs "Guess the only winning move for you was not to play!{w=0.75}{nw}"
                 extend 7fchsmeme " Ehehe."
