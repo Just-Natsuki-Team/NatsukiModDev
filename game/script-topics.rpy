@@ -7847,7 +7847,7 @@ label talk_thoughts_on_tea:
         "I prefer tea.":
             if player_tea_coffee_preference_known:
                 if persistent.jn_player_tea_coffee_preference == "tea":
-                    n 1nnmss "2tnmss,{w=0.5}{nw}"
+                    n 1nnmss "Well,{w=0.5}{nw}"
                     extend 1tnmss " some things never change,{w=0.2} huh?"
                     n 1fchsm "Ehehe."
 
@@ -11794,7 +11794,7 @@ label talk_windup_playing_things_out_loud:
         n 2fcsemesi "..."
         n 2fllaj "When you're taking some sort of public transport,{w=0.2} or you're just hanging around somewhere.{w=0.75}{nw}"
         extend 2fllfl " That kind of thing."
-        n 4fcsanean "...And then some total jerk feels the need to pull our their phone just to blast out what {i}they{/i} feel like listening to."
+        n 4fcsanean "...And then some total jerk feels the need to pull out their phone just to blast out what {i}they{/i} feel like listening to."
         n 4fsrsl "..."
         n 2fnmwrl "H-{w=0.2}hey!{w=0.75}{nw}"
         extend 2fcspol " I'm being serious here,{w=0.2} [player]!{w=0.75}{nw}"
