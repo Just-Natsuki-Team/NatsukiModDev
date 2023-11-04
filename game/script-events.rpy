@@ -40,7 +40,6 @@ transform jn_confetti_fall:
 # Foreground props are displayed on the desk, in front of Natsuki
 image prop poetry_attempt = "mod_assets/props/poetry_attempt.png"
 image prop math_attempt = "mod_assets/props/math_attempt.png"
-image prop renpy_for_dummies_book_held = "mod_assets/props/renpy_for_dummies_book_held.png"
 image prop a_la_mode_manga_held = "mod_assets/props/a_la_mode_manga_held.png"
 image prop strawberry_milkshake = "mod_assets/props/strawberry_milkshake.png"
 image prop step_by_step_manga_held = "mod_assets/props/step_by_step_manga_held.png"
@@ -1120,7 +1119,7 @@ label event_renpy_for_dummies:
         "Enter...":
             pass
 
-    show prop renpy_for_dummies_book_held zorder JN_PROP_ZORDER
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_renpy_for_dummies_held"))
     $ jn_events.displayVisuals("1fcspo")
     $ jn_globals.force_quit_enabled = True
 
@@ -1136,7 +1135,7 @@ label event_renpy_for_dummies:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(2)
     play audio drawer
-    hide prop renpy_for_dummies_book_held
+    $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
     show natsuki 4nslsr
     $ jnPause(4)
     hide black with Dissolve(1)
