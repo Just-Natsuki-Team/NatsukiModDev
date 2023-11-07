@@ -244,7 +244,8 @@ label ch30_init:
 
 #The main loop
 label ch30_loop:
-    show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
+    if not renpy.showing("natsuki idle"):
+        show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
 
     #Run our checks
     python:
