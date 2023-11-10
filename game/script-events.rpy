@@ -2980,7 +2980,7 @@ label holiday_new_years_day:
             play audio kiss
             $ jnPause(1.5)
             hide black with Dissolve(1.25)
-            $ chosen_endearment = random.choice(jn_globals.DEFAULT_PLAYER_ENDEARMENTS)
+            $ chosen_endearment = jn_utils.getRandomEndearment()
             n 4kwmsmf "...Happy new year,{w=0.2} [chosen_endearment].{w=1.25}{nw}"
             extend 4kllssfess " Ehehe."
 
@@ -2988,7 +2988,7 @@ label holiday_new_years_day:
             show natsuki 1nsldvlsbl at jn_center zorder JN_NATSUKI_ZORDER
             $ jnPause(1.5)
             hide black with Dissolve(1.25)
-            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            $ chosen_tease = jn_utils.getRandomTease()
             n 4klrssf "Heh."
             n 1fchsmfess "...Happy new year,{w=0.2} [chosen_tease]."
 
@@ -5026,7 +5026,7 @@ label holiday_player_birthday:
             n 4fsrsrl "..."
             n 4fcsunl "Uuuuu..."
             n 1fcspul "Just...{w=1}{nw}"
-            $ chosen_tease = random.choice(jn_globals.DEFAULT_PLAYER_TEASE_NAMES)
+            $ chosen_tease = jn_utils.getRandomTease()
             extend 2klrpol " read it already,{w=0.2} [chosen_tease]."
 
         else:
