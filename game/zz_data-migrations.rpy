@@ -443,17 +443,17 @@ init python in jn_data_migrations:
         jn_utils.log("Migration to 1.3.0 DONE")
         return
 
-    @migration(["1.3.0", "1.3.1", "1.3.2"], "1.3.3", runtime=MigrationRuntimes.INIT)
-    def to_1_3_2():
-        jn_utils.log("Migration to 1.3.3 START")
-        store.persistent._jn_version = "1.3.3"
+    @migration(["1.3.0", "1.3.1", "1.3.2", "1.3.3"], "1.3.4", runtime=MigrationRuntimes.INIT)
+    def to_1_3_4():
+        jn_utils.log("Migration to 1.3.4 START")
+        store.persistent._jn_version = "1.3.4"
 
-        if store.persistent.affinity >= 10000:
+        if store.persistent.affinity >= 12500:
             store.persistent._jn_pic_aff = store.persistent.affinity
             store.persistent.affinity = 0
             store.persistent._jn_pic = True
             jn_utils.log("434346".decode("hex"))
 
         jn_utils.save_game()
-        jn_utils.log("Migration to 1.3.3 DONE")
+        jn_utils.log("Migration to 1.3.4 DONE")
         return
