@@ -854,6 +854,9 @@ label blackjack_quit_forfeit:
                 $ jnPause(1)
                 hide black with Dissolve(1.25)
 
+            if jn_blackjack._rounds > 0:
+                $ Natsuki.calculatedAffinityGain()
+
             $ jn_blackjack._rounds = 0
             $ Natsuki.setInGame(False)
             $ Natsuki.resetLastTopicCall()

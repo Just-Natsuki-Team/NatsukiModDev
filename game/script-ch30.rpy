@@ -747,6 +747,7 @@ label player_select_topic(is_repeat_topics=False):
     # We got a string, we should push
     if isinstance(_choice, basestring):
         $ push(_choice)
+        $ Natsuki.calculatedAffinityGain()
         jump call_next_topic
 
     # -1 means go back
