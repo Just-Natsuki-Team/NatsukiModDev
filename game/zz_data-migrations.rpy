@@ -180,6 +180,8 @@ init 10 python:
 
 #All migration scripts go here
 init python in jn_data_migrations:
+    import os
+    import shutil
     import store
     import store.jn_affinity as jn_affinity
     import store.jn_desk_items as jn_desk_items
@@ -447,6 +449,21 @@ init python in jn_data_migrations:
     def to_1_3_4():
         jn_utils.log("Migration to 1.3.4 START")
         store.persistent._jn_version = "1.3.4"
+
+        if renpy.linux:
+            qt_clothes_path = os.path.join(renpy.config.basedir, "game/mod_assets/natsuki/clothes/jn_clothes_QT_sweater")
+            qt_sleeves_path = os.path.join(renpy.config.basedir, "game/mod_assets/natsuki/sleeves/jn_clothes_QT_sweater")
+            
+            try:
+                if os.path.exists(qt_clothes_path):
+                    shutil.rmtree(qt_clothes_path)
+                    jn_utils.log("Removed: {0}".format(qt_clothes_path))
+
+                if os.path.exists(qt_sleeves_path):
+                    shutil.rmtree(qt_sleeves_path)
+                    jn_utils.log("Removed: {0}".format(qt_sleeves_path))
+            except:
+                jn_utils.log("Failed to remove obsolete QT sweater components; continuing.")
 
         if store.persistent.affinity >= 12500:
             store.persistent._jn_pic_aff = store.persistent.affinity
