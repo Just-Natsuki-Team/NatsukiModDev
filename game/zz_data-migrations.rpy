@@ -450,7 +450,7 @@ init python in jn_data_migrations:
         jn_utils.log("Migration to 1.3.4 START")
         store.persistent._jn_version = "1.3.4"
 
-        if renpy.linux:
+        if renpy.linux or renpy.macintosh:
             qt_clothes_path = os.path.join(renpy.config.basedir, "game/mod_assets/natsuki/clothes/jn_clothes_QT_sweater")
             qt_sleeves_path = os.path.join(renpy.config.basedir, "game/mod_assets/natsuki/sleeves/jn_clothes_QT_sweater")
             
