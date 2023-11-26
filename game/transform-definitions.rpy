@@ -8,6 +8,7 @@
 #########
 ####Transforms to place characters on the screen in proper positions based on whether there are 2, 3, or 4 characters in the scene.
 transform categorized_menu_slide_in_right:
+    subpixel True
     xoffset 600
     easeout 0.4 xoffset 0
 
@@ -18,7 +19,6 @@ transform jn_tcommon(x=640):
         xcenter x yoffset -20
         easein .25 yoffset 0 alpha 1.00
     on replace:
-
         alpha 1.00
         parallel:
             easein .25 xcenter x
