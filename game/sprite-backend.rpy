@@ -190,7 +190,7 @@ init -50 python:
         JNPose.hand_on_chin
     ]
 
-    def jn_generate_natsuki_sprite(
+    def jnGenerateNatsukiSprite(
         pose,
         eyebrows,
         eyes,
@@ -563,7 +563,7 @@ init 1 python:
         Internal function to generate the image from the given expression code
         """
         #Parse the expression code and generate the displayable
-        disp = jn_generate_natsuki_sprite(**_parse_exp_code(exp_code))
+        disp = jnGenerateNatsukiSprite(**_parse_exp_code(exp_code))
 
         #Get existing attrs to append this one to the known attrs
         _existing_attr_list = renpy.display.image.image_attributes["natsuki"]

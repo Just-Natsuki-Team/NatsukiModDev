@@ -9,8 +9,7 @@ label ch30_autoload:
         config.skipping = False
         config.allow_skipping = False
         config.predict_statements = 5
-        n.display_args["callback"] = jnNoDismissDialogue
-        n.what_args["slow_abortable"] = False
+        config.image_cache_size = 128
         n.display_args["callback"] = jnNoDismissDialogue
         n.what_args["slow_abortable"] = False
 

@@ -581,6 +581,11 @@ init python in jn_jokes:
         display_name="Mountain climbers",
         joke_category=JNJokeCategories.corny
     ))
+    __registerJoke(JNJoke(
+        label="joke_coffee_grind",
+        display_name="Instant coffee",
+        joke_category=JNJokeCategories.neutral
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -1417,5 +1422,19 @@ label joke_new_heights:
     n 1ccsflesi "Ugh..."
     n 1cllpu "...They reach{w=0.75}{nw}"
     extend 1csqem " {i}new heights{/i}."
+
+    return
+
+label joke_coffee_grind:
+    n 1ccsbg "Let's see how you{w=0.5}{nw}"
+    extend 1csgbg " {i}take{/i}{w=0.5}{nw}"
+    extend 1fnmbg " this one,{w=0.5}{nw}"
+    extend 1fsqsm " [player]!"
+    n 1fcsgs "So!{w=0.75}{nw}"
+    extend 1fnmss " Why did the barista finally start offering instant coffee?"
+    n 1fsqsm "..."
+    n 1fcsss "Heh."
+    n 1flrbs "'Cause they were sick of the {i}grind{/i},{w=0.75}{nw}"
+    extend 1fchgnelg " of course!"
 
     return
