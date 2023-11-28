@@ -180,6 +180,8 @@ init 10 python:
 
 #All migration scripts go here
 init python in jn_data_migrations:
+    import os
+    import shutil
     import store
     import store.jn_affinity as jn_affinity
     import store.jn_desk_items as jn_desk_items
@@ -443,17 +445,31 @@ init python in jn_data_migrations:
         jn_utils.log("Migration to 1.3.0 DONE")
         return
 
-    @migration(["1.3.0", "1.3.1", "1.3.2"], "1.3.3", runtime=MigrationRuntimes.INIT)
-    def to_1_3_2():
-        jn_utils.log("Migration to 1.3.3 START")
-        store.persistent._jn_version = "1.3.3"
+    @migration(["1.3.0", "1.3.1", "1.3.2", "1.3.3"], "1.3.4", runtime=MigrationRuntimes.INIT)
+    def to_1_3_4():
+        jn_utils.log("Migration to 1.3.4 START")
+        store.persistent._jn_version = "1.3.4"
 
-        if store.persistent.affinity >= 10000:
+        if renpy.linux or renpy.macintosh:
+            # See: https://github.com/Just-Natsuki-Team/NatsukiModDev/pull/844
+            if jn_utils.deleteDirectory(os.path.join(renpy.config.basedir, "game/mod_assets/natsuki/clothes/jn_clothes_QT_sweater")):
+                jn_utils.log("Removed unused assets: clothes/jn_clothes_QT_sweater")
+
+            if jn_utils.deleteDirectory(os.path.join(renpy.config.basedir, "game/mod_assets/natsuki/sleeves/jn_clothes_QT_sweater")):
+                jn_utils.log("Removed unused assets: sleeves/jn_clothes_QT_sweater")
+
+        if jn_utils.deleteFileFromDirectory(os.path.join(renpy.config.basedir, "game/threading.rpy")):
+            jn_utils.log("Removed unused source file: game/threading.rpy")
+        
+        if jn_utils.deleteFileFromDirectory(os.path.join(renpy.config.basedir, "game/threading.rpyc")):
+            jn_utils.log("Removed unused compiled file: game/threading.rpyc")
+        
+        if store.persistent.affinity >= 12500:
             store.persistent._jn_pic_aff = store.persistent.affinity
             store.persistent.affinity = 0
             store.persistent._jn_pic = True
             jn_utils.log("434346".decode("hex"))
 
         jn_utils.save_game()
-        jn_utils.log("Migration to 1.3.3 DONE")
+        jn_utils.log("Migration to 1.3.4 DONE")
         return

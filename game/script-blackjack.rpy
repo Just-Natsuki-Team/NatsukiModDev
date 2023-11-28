@@ -854,6 +854,9 @@ label blackjack_quit_forfeit:
                 $ jnPause(1)
                 hide black with Dissolve(1.25)
 
+            if jn_blackjack._rounds > 0:
+                $ Natsuki.calculatedAffinityGain()
+
             $ jn_blackjack._rounds = 0
             $ Natsuki.setInGame(False)
             $ Natsuki.resetLastTopicCall()
@@ -910,7 +913,7 @@ transform blackjack_popup:
         ease 0.25 alpha 1.0 yoffset -30
         easeout 0.75 alpha 0
 
-screen blackjack_ui:
+screen blackjack_ui():
     zorder 5
 
     add "mod_assets/natsuki/desk/table/topdown/table.png" anchor(0, 0) pos(0, 0)

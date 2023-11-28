@@ -462,7 +462,7 @@ label snap_quip(is_player_snap, is_correct_snap):
 
             # Some UE things to make it fun
             play audio smack
-            $ jn_utils.fireAndForgetFunction(jn_snap._showSplashImage(is_player_snap=True))
+            $ jn_utils.fireAndForgetFunction(function=jn_snap._showSplashImage, args=(True,))
             $ jnPause(0.75)
 
         # Player snapped, and was incorrect
@@ -556,7 +556,7 @@ label snap_quip(is_player_snap, is_correct_snap):
             # Some UE things to make it fun
 
             play audio smack
-            $ jn_utils.fireAndForgetFunction(jn_snap._showSplashImage())
+            $ jn_utils.fireAndForgetFunction(function=jn_snap._showSplashImage)
             $ jnPause(0.75)
 
         # Natsuki snapped, and was incorrect
@@ -807,7 +807,7 @@ transform snap_popup:
     easeout 0.75 alpha 0
 
 # Game UI
-screen snap_ui:
+screen snap_ui():
     zorder 4
 
     # This is the card currently on the top of the pile being shown

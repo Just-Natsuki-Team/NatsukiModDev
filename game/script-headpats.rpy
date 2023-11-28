@@ -55,24 +55,30 @@ label headpats_start:
         n 1uskemlesh "H-{w=0.2}huh?!{w=0.75}{nw}"
         extend 1uwdemlsbl " D-{w=0.1}did you just say...?!"
         n 2kbkwrlsbl "[player]!{w=0.5} W-{w=0.2}wait...!"
+        show natsuki headpats waiting min
 
     elif persistent._jn_headpats_total_given < 10:
         n 1knmemlsbl "T-{w=0.2}this again?!"
         n 2kslunlsbr "[player]..."
+        show natsuki headpats waiting min
 
     elif persistent._jn_headpats_total_given < 25:
         n 1ksqsllsbr "...Again,{w=0.2} [player]?"
         n 2ksrcalsbl "..."
+        show natsuki headpats waiting low
 
     elif persistent._jn_headpats_total_given < 50:
         n 1kcspulesisbl "..."
         n 2kslcaf "Fine..."
+        show natsuki headpats waiting medium
 
     elif persistent._jn_headpats_total_given < 250:
         n 2kcscaf "...Fine."
+        show natsuki headpats waiting high
 
     else:
         n 4nsrssf "...Okay."
+        show natsuki headpats waiting high
     
     show screen headpats_ui
     jump headpats_loop
@@ -418,7 +424,7 @@ image natsuki headpats active:
         pause 2
         repeat
 
-screen headpats_ui:
+screen headpats_ui():
     zorder jn_headpats._PATS_UI_Z_INDEX
 
     # Pat counter

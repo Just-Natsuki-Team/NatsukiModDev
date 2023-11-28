@@ -1044,6 +1044,7 @@ init -999 python in jn_utils:
     from Enum import Enum
     import hashlib
     import os
+    import shutil
     import store
     import threading
     import uuid
@@ -1075,8 +1076,8 @@ init -999 python in jn_utils:
         Writes a message to the main log file (DDLC/log/log.txt)
 
         IN:
-            message - message to write to the log file
-            logseverity - Severity level of the log message (Default: INFO)
+            - message - message to write to the log file
+            - logseverity - Severity level of the log message (Default: INFO)
         """
         global __main_log
         __main_log.write(
@@ -1091,9 +1092,9 @@ init -999 python in jn_utils:
         Returns a PrettyPrint-formatted representation of an object as a dict.
 
         IN:
-            object - the object to be converted
-            indent - the level of indentation in the formatted string
-            width - the maximum length of each line in the formatted string, before remaining content is shifted to next line
+            - object - the object to be converted
+            - indent - the level of indentation in the formatted string
+            - width - the maximum length of each line in the formatted string, before remaining content is shifted to next line
 
         OUT:
             Formatted string representation of object __dict__
@@ -1105,7 +1106,7 @@ init -999 python in jn_utils:
         Checks to see if the specified file exists.
 
         IN:
-            path - The path to check
+            - path - The path to check
 
         OUT:
             - True if the file exists, otherwise False
@@ -1118,7 +1119,7 @@ init -999 python in jn_utils:
         Returns True if a directory was created, otherwise False
 
         IN:
-            path - The path to check
+            - path - The path to check
 
         OUT:
             - True if a directory was created, otherwise False
@@ -1134,7 +1135,7 @@ init -999 python in jn_utils:
         Attempts to delete the file at the given path.
 
         IN:
-            path - The path to delete the file at.
+            - path - The path to delete the file at.
 
         OUT:
             - True if the file was deleted, otherwise False
@@ -1146,6 +1147,27 @@ init -999 python in jn_utils:
 
             except Exception as exception:
                 log("Failed to delete file on path {0}; {1}".format(path, exception.message))
+                return False
+
+        return False
+
+    def deleteDirectory(path):
+        """
+        Attempts to delete the directory at the given path.
+
+        IN:
+            - path - The path of the directory to delete.
+
+        OUT:
+            - True if the directory was deleted, otherwise False
+        """
+        if os.path.exists(path):
+            try:
+                shutil.rmtree(path)
+                return True
+
+            except Exception as exception:
+                log("Failed to delete directory at path {0}; {1}".format(path, exception.message))
                 return False
 
         return False

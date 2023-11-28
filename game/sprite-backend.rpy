@@ -190,7 +190,7 @@ init -50 python:
         JNPose.hand_on_chin
     ]
 
-    def jn_generate_natsuki_sprite(
+    def jnGenerateNatsukiSprite(
         pose,
         eyebrows,
         eyes,
@@ -563,7 +563,7 @@ init 1 python:
         Internal function to generate the image from the given expression code
         """
         #Parse the expression code and generate the displayable
-        disp = jn_generate_natsuki_sprite(**_parse_exp_code(exp_code))
+        disp = jnGenerateNatsukiSprite(**_parse_exp_code(exp_code))
 
         #Get existing attrs to append this one to the known attrs
         _existing_attr_list = renpy.display.image.image_attributes["natsuki"]
@@ -1340,32 +1340,24 @@ image natsuki idle = ConditionSwitch(
 image natsuki idle enamored:
     block:
         choice:
-            ConditionSwitch(
-                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsAbove()", "natsuki 5utlsml",
-                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsAbove()", "natsuki 5utrsml",
-                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsBelow()", "natsuki 5udlsml",
-                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsBelow()", "natsuki 5udrsml",
-                "Natsuki.getMouseIsLeft()", "natsuki 5ullsml",
-                "Natsuki.getMouseIsRight()", "natsuki 5ulrsml",
-                "Natsuki.getMouseIsAbove()", "natsuki 5uupsml",
-                "Natsuki.getMouseIsBelow()", "natsuki 5udwsml",
-                "True", "natsuki 5unmsml",
-                predict_all = True
-            )
-            pause 6
+            "natsuki 5csqsml"
+            pause 1
+            "natsuki 5ccssml"
+            pause 0.1
+            "natsuki 5csqsml"
+            pause 3
             "natsuki 3fchbll"
             pause 1
             "natsuki 3fchsml"
             pause 3
 
         choice:
-            ConditionSwitch(
-                "Natsuki.getMouseIsLeft()", "natsuki 7tslsml",
-                "Natsuki.getMouseIsRight()", "natsuki 7tsrsml",
-                "True", "natsuki 7tsqsml",
-                predict_all = True
-            )
-            pause 6
+            "natsuki 7tsqsml"
+            pause 1
+            "natsuki 7tcssml"
+            pause 0.1
+            "natsuki 7tsqsml"
+            pause 3
             "natsuki 7fchsml"
             pause 3
 
@@ -1481,19 +1473,14 @@ image natsuki idle enamored:
 image natsuki idle affectionate:
     block:
         choice:
-            ConditionSwitch(
-                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsAbove()", "natsuki 3utlcsl",
-                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsAbove()", "natsuki 3utrcsl",
-                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsBelow()", "natsuki 3udlcsl",
-                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsBelow()", "natsuki 3udrcsl",
-                "Natsuki.getMouseIsLeft()", "natsuki 3ullcsl",
-                "Natsuki.getMouseIsRight()", "natsuki 3ulrcsl",
-                "Natsuki.getMouseIsAbove()", "natsuki 3uupcsl",
-                "Natsuki.getMouseIsBelow()", "natsuki 3udwcsl",
-                "True", "natsuki 3unmcsl",
-                predict_all = True
-            )
-            pause 5
+            "natsuki 3unmcsl"
+            pause 1
+            "natsuki 3ucscsl"
+            pause 0.1
+            "natsuki 3unmcsl"
+            pause 3
+            "natsuki 3ucscsl"
+            pause 0.1
             "natsuki 4cslfslsbr"
             pause 4
             "natsuki 4ccsfslsbr"
@@ -1587,22 +1574,13 @@ image natsuki idle affectionate:
 image natsuki idle happy:
     block:
         choice:
-            ConditionSwitch(
-                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsAbove()", "natsuki 3utlbo",
-                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsAbove()", "natsuki 3utrbo",
-                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsBelow()", "natsuki 3udlbo",
-                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsBelow()", "natsuki 3udrbo",
-                "Natsuki.getMouseIsLeft()", "natsuki 3ullbo",
-                "Natsuki.getMouseIsRight()", "natsuki 3ulrbo",
-                "Natsuki.getMouseIsAbove()", "natsuki 3uupbo",
-                "Natsuki.getMouseIsBelow()", "natsuki 3udwbo",
-                "True", "natsuki 3unmbo",
-                predict_all = True
-            )
-            pause 4
-            "natsuki 3unmcalesusbr"
-            pause 2
-            "natsuki 3ucscalsbr"
+            "natsuki 3unmbo"
+            pause 1
+            "natsuki 3ucsbo"
+            pause 0.1
+            "natsuki 3unmbo"
+            pause 3
+            "natsuki 3ucsbo"
             pause 0.1
             "natsuki 4csrcalsbr"
             pause 4
@@ -1727,22 +1705,17 @@ image natsuki idle happy:
 image natsuki idle normal:
     block:
         choice:
-            ConditionSwitch(
-                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsAbove()", "natsuki 2utlca",
-                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsAbove()", "natsuki 2utrca",
-                "Natsuki.getMouseIsLeft() and Natsuki.getMouseIsBelow()", "natsuki 2udlca",
-                "Natsuki.getMouseIsRight() and Natsuki.getMouseIsBelow()", "natsuki 2udrca",
-                "Natsuki.getMouseIsLeft()", "natsuki 2ullca",
-                "Natsuki.getMouseIsRight()", "natsuki 2ulrca",
-                "Natsuki.getMouseIsAbove()", "natsuki 2uupca",
-                "Natsuki.getMouseIsBelow()", "natsuki 2udwca",
-                "True", "natsuki 2unmca",
-                predict_all = True
-            )
+            "natsuki 2unmca"
+            pause 1
+            "natsuki 2ucsca"
+            pause 0.1
+            "natsuki 2unmca"
+            pause 3
+            "natsuki 2ucsca"
+            pause 0.1
+            "natsuki 2nllbosbl"
             pause 4
-            "natsuki 2nllcasbl"
-            pause 4
-            "natsuki 2ncscasbl"
+            "natsuki 2ncsbosbl"
             pause 0.1
 
         choice:
@@ -1957,7 +1930,7 @@ image natsuki idle fluster:
         repeat
 
 init python:
-    def show_natsuki_talk_menu():
+    def showNatsukiTalkMenu():
         """
         Hack to work around renpy issue where the sprite is not refreshed when showing again
         """

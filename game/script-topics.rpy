@@ -7376,12 +7376,12 @@ label talk_custom_outfits_unlock:
         get_topic("talk_custom_outfits_unlock").lock()
 
         # We have to unload outfits before wearables due to dependencies
-        jn_outfits.unload_custom_outfits()
-        jn_outfits.unload_custom_wearables()
+        jn_outfits.unloadCustomOutfits()
+        jn_outfits.unloadCustomWearables()
 
         # We have to load wearables before outfits due to dependencies
-        jn_outfits.load_custom_wearables()
-        jn_outfits.load_custom_outfits()
+        jn_outfits.loadCustomWearables()
+        jn_outfits.loadCustomOutfits()
 
         # Now we've loaded back into memory, reload the persisted data
         jn_outfits.JNWearable.loadAll()
