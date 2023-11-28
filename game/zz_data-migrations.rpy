@@ -451,20 +451,19 @@ init python in jn_data_migrations:
         store.persistent._jn_version = "1.3.4"
 
         if renpy.linux or renpy.macintosh:
-            qt_clothes_path = os.path.join(renpy.config.basedir, "game/mod_assets/natsuki/clothes/jn_clothes_QT_sweater")
-            qt_sleeves_path = os.path.join(renpy.config.basedir, "game/mod_assets/natsuki/sleeves/jn_clothes_QT_sweater")
-            
-            try:
-                if os.path.exists(qt_clothes_path):
-                    shutil.rmtree(qt_clothes_path)
-                    jn_utils.log("Removed: {0}".format(qt_clothes_path))
+            # See: https://github.com/Just-Natsuki-Team/NatsukiModDev/pull/844
+            if jn_utils.deleteDirectory(os.path.join(renpy.config.basedir, "game/mod_assets/natsuki/clothes/jn_clothes_QT_sweater")):
+                jn_utils.log("Removed unused assets: clothes/jn_clothes_QT_sweater")
 
-                if os.path.exists(qt_sleeves_path):
-                    shutil.rmtree(qt_sleeves_path)
-                    jn_utils.log("Removed: {0}".format(qt_sleeves_path))
-            except:
-                jn_utils.log("Failed to remove obsolete QT sweater components; continuing.")
+            if jn_utils.deleteDirectory(os.path.join(renpy.config.basedir, "game/mod_assets/natsuki/sleeves/jn_clothes_QT_sweater")):
+                jn_utils.log("Removed unused assets: sleeves/jn_clothes_QT_sweater")
 
+        if jn_utils.deleteFileFromDirectory(os.path.join(renpy.config.basedir, "game/threading.rpy")):
+            jn_utils.log("Removed unused source file: game/threading.rpy")
+        
+        if jn_utils.deleteFileFromDirectory(os.path.join(renpy.config.basedir, "game/threading.rpyc")):
+            jn_utils.log("Removed unused compiled file: game/threading.rpyc")
+        
         if store.persistent.affinity >= 12500:
             store.persistent._jn_pic_aff = store.persistent.affinity
             store.persistent.affinity = 0
