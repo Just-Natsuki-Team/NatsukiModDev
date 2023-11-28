@@ -243,7 +243,7 @@ style talkd_button_text is default:
     hover_color "#FF8ED0"
     outlines []
 
-screen hkb_overlay:
+screen hkb_overlay():
     zorder 50
 
     style_prefix "hkb"

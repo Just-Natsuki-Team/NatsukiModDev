@@ -475,7 +475,7 @@ init 0 python:
             jn_utils.log("416666696e6974792d".decode("hex"))
 
         @staticmethod
-        def checkResetDailies ():
+        def checkResetDailies():
             """
             Resets the daily affinity cap, if 24 hours has elapsed.
             """

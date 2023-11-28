@@ -8,8 +8,8 @@ label ch30_autoload:
         in_sayori_kill = None
         config.skipping = False
         config.allow_skipping = False
-        n.display_args["callback"] = jnNoDismissDialogue
-        n.what_args["slow_abortable"] = False
+        config.predict_statements = 5
+        config.image_cache_size = 128
         n.display_args["callback"] = jnNoDismissDialogue
         n.what_args["slow_abortable"] = False
 
@@ -62,7 +62,7 @@ label ch30_init:
             player = persistent._jn_nicknames_player_current_nickname
 
         # Check the daily affinity cap and reset if need be
-        Natsuki.checkResetDailies ()
+        Natsuki.checkResetDailies()
         Natsuki.setInConversation(True)
         persistent.jn_total_visit_count += 1
 
@@ -599,7 +599,7 @@ label talk_menu:
     python:
         # Get the flavor text for the talk menu, based on affinity state
         if Natsuki.isEnamored(higher=True):
-            _talk_flavor_text = random.choice([
+            _talk_flavor_text = renpy.substitute(random.choice([
                 "What's up,{w=0.1} [player]?",
                 "What's on your mind,{w=0.1} [player]?",
                 "Something up,{w=0.1} [player]?",
@@ -619,10 +619,10 @@ label talk_menu:
                 "Shoot,{w=0.2} [player]!",
                 "Oh!{w=0.2} Oh!{w=0.2} You got something for me?",
                 "Talk to me,{w=0.2} [player]!{w=0.3} Ehehe."
-            ])
+            ]))
 
         elif Natsuki.isNormal(higher=True):
-            _talk_flavor_text = random.choice([
+            _talk_flavor_text = renpy.substitute(random.choice([
                 "What's up?",
                 "What's on your mind?",
                 "What's happening?",
@@ -634,10 +634,10 @@ label talk_menu:
                 "'Sup,{w=0.1} [player]?",
                 "You wanna talk?",
                 "Hey,{w=0.2} [player]!"
-            ])
+            ]))
 
         elif Natsuki.isDistressed(higher=True):
-            _talk_flavor_text = random.choice([
+            _talk_flavor_text = renpy.substitute(random.choice([
                 "What do you want?",
                 "What is it?",
                 "Make it quick.",
@@ -647,10 +647,10 @@ label talk_menu:
                 "Yeah?{w=0.2} What?",
                 "What now?",
                 "This better be good."
-            ])
+            ]))
 
         else:
-            _talk_flavor_text = random.choice([
+            _talk_flavor_text = renpy.substitute(random.choice([
                 "...",
                 "...?",
                 "What?",
@@ -661,11 +661,9 @@ label talk_menu:
                 "What do {i}you{/i} want?",
                 "Get on with it.",
                 "Talk."
-            ])
+            ]))
 
-        # Ensure any variable references are substituted
-        _talk_flavor_text = renpy.substitute(_talk_flavor_text)
-        show_natsuki_talk_menu()
+        showNatsukiTalkMenu()
         Natsuki.setInConversation(True)
 
     menu:

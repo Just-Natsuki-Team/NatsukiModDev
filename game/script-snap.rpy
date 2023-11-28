@@ -807,7 +807,7 @@ transform snap_popup:
     easeout 0.75 alpha 0
 
 # Game UI
-screen snap_ui:
+screen snap_ui():
     zorder 4
 
     # This is the card currently on the top of the pile being shown
