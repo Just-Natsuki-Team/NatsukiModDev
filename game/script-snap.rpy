@@ -462,7 +462,7 @@ label snap_quip(is_player_snap, is_correct_snap):
 
             # Some UE things to make it fun
             play audio smack
-            $ jn_utils.fireAndForgetFunction(jn_snap._showSplashImage(is_player_snap=True))
+            $ jn_utils.fireAndForgetFunction(function=jn_snap._showSplashImage, args=(True,))
             $ jnPause(0.75)
 
         # Player snapped, and was incorrect
@@ -556,7 +556,7 @@ label snap_quip(is_player_snap, is_correct_snap):
             # Some UE things to make it fun
 
             play audio smack
-            $ jn_utils.fireAndForgetFunction(jn_snap._showSplashImage())
+            $ jn_utils.fireAndForgetFunction(function=jn_snap._showSplashImage)
             $ jnPause(0.75)
 
         # Natsuki snapped, and was incorrect
