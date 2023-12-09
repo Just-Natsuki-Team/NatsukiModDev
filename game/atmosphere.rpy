@@ -219,7 +219,6 @@ init 0 python in jn_atmosphere:
             self.night_particles_image = night_particles_image
             self.weather_sfx = weather_sfx
 
-        
         def getNotifyText(self):
             """
             Gets a random notification string for this weather to be used in a popup
@@ -443,6 +442,7 @@ init 0 python in jn_atmosphere:
         clouds_to_show = weather.day_clouds_image if store.main_background.is_day() else weather.night_clouds_image
 
         # Show the selected sky
+        #store.jnPause(0.1)
         renpy.show(name=sky_to_show, zorder=_SKY_Z_INDEX)
         if with_transition:
             renpy.with_statement(trans=store.weather_change_transition)
@@ -455,6 +455,7 @@ init 0 python in jn_atmosphere:
 
         else:
             renpy.hide("clouds")
+            renpy.with_statement(trans=store.weather_change_transition)
 
         # Add the particles, if defined
         if weather.day_particles_image or weather.night_particles_image:
@@ -469,6 +470,7 @@ init 0 python in jn_atmosphere:
 
         else:
             renpy.hide("particles")
+            renpy.with_statement(trans=store.weather_change_transition)
 
         # Add the dimming effect, if defined
         if weather.dim_image:
@@ -478,6 +480,7 @@ init 0 python in jn_atmosphere:
 
         else:
             renpy.hide("dim")
+            renpy.with_statement(trans=store.weather_change_transition)
 
         global current_weather
         current_weather = weather
@@ -646,7 +649,7 @@ label weather_change:
                 else:
                     n 3fcsem "Ugh...{w=1.5}{nw}"
                     extend 3fslpol " I'll never {i}not{/i} find rain gross.{w=3}{nw}"
-                
+
             elif jn_atmosphere.isCurrentWeatherThunder():
                 # Thunder
                 if alt_dialogue:
