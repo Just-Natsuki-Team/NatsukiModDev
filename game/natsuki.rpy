@@ -776,6 +776,13 @@ init 0 python:
             store.persistent._jn_player_apology_type_on_quit = int(apology_type)
 
         @staticmethod
+        def clearQuitApology():
+            """
+            Clears the quit apology type to be checked on loading the game after quitting.
+            """
+            store.persistent._jn_player_apology_type_on_quit = None
+
+        @staticmethod
         def removeApology(apology_type):
             """
             Removes an apology from the list of pending apologies, if it exists.

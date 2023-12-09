@@ -2070,6 +2070,9 @@ init -999 python:
             if renpy.get_screen(blocked_screen):
                 return
 
+        if jn_globals.current_label == "try_force_quit":
+            return
+
         if jn_globals.force_quit_enabled:
             renpy.call("try_force_quit")
 

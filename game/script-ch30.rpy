@@ -829,6 +829,9 @@ label try_force_quit:
         $ renpy.jump("quit")
 
     else:
+        $ Natsuki.addApology(jn_apologies.ApologyTypes.sudden_leave)
+        $ Natsuki.setQuitApology(jn_apologies.ApologyTypes.sudden_leave)
+
         # Standard quit behaviour
         if Natsuki.isAffectionate(higher=True):
             n 2ccsem "W-{w=0.2}wait,{w=0.5}{nw}" 
@@ -868,6 +871,9 @@ label try_force_quit:
                 else:
                     n 1fcsfr "Whatever.{w=1}{nw}"
                     n 2fsqsl "{cps=\7.5}As I was saying.{/cps}{w=1}{nw}"
+
+                $ Natsuki.removeApology(jn_apologies.ApologyTypes.sudden_leave)
+                $ Natsuki.clearQuitApology()
 
                 return
 
@@ -914,8 +920,6 @@ label try_force_quit:
                 # Apply consequences for force quitting, then glitch quit out
                 python:
                     Natsuki.percentageAffinityLoss(2)
-                    Natsuki.addApology(jn_apologies.ApologyTypes.sudden_leave)
-                    Natsuki.setQuitApology(jn_apologies.ApologyTypes.sudden_leave)
 
                 play audio static
                 show glitch_garbled_b zorder JN_GLITCH_ZORDER with hpunch
