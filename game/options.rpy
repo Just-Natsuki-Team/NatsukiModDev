@@ -12,7 +12,7 @@
 ##
 ## The _() surrounding the string marks it as eligible for translation.
 
-define config.version = "1.3.4"
+define config.version = "1.3.5"
 define config.name = "Just Natsuki"
 define config.window_title = _("Just Natsuki - {0}".format(config.version))
 

@@ -445,10 +445,10 @@ init python in jn_data_migrations:
         jn_utils.log("Migration to 1.3.0 DONE")
         return
 
-    @migration(["1.3.0", "1.3.1", "1.3.2", "1.3.3"], "1.3.4", runtime=MigrationRuntimes.INIT)
-    def to_1_3_4():
-        jn_utils.log("Migration to 1.3.4 START")
-        store.persistent._jn_version = "1.3.4"
+    @migration(["1.3.0", "1.3.1", "1.3.2", "1.3.3", "1.3.4"], "1.3.5", runtime=MigrationRuntimes.INIT)
+    def to_1_3_5():
+        jn_utils.log("Migration to 1.3.5 START")
+        store.persistent._jn_version = "1.3.5"
 
         if renpy.linux or renpy.macintosh:
             # See: https://github.com/Just-Natsuki-Team/NatsukiModDev/pull/844
@@ -471,5 +471,5 @@ init python in jn_data_migrations:
             jn_utils.log("434346".decode("hex"))
 
         jn_utils.save_game()
-        jn_utils.log("Migration to 1.3.4 DONE")
+        jn_utils.log("Migration to 1.3.5 DONE")
         return
