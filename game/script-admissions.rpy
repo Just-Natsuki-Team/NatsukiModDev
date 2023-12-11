@@ -29,7 +29,7 @@ init 0 python in jn_admissions:
     # The last admission the player gave to Natsuki
     last_admission_type = None
 
-    def get_all_admissions():
+    def getAllAdmissions():
         """
         Gets all admission topics which are available
 
@@ -46,7 +46,7 @@ label player_admissions_start:
     python:
         admission_menu_items = [
             (_admission.prompt, _admission.label)
-            for _admission in jn_admissions.get_all_admissions()
+            for _admission in jn_admissions.getAllAdmissions()
         ]
         admission_menu_items.sort()
 
@@ -1314,6 +1314,7 @@ label admission_tired:
 
         $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_TIRED
         $ persistent._jn_player_admission_forced_leave_date = datetime.datetime.now()
+        $ Natsuki.setForceQuitAttempt(False)
         
         return { "quit": None }
 
@@ -1340,6 +1341,7 @@ label admission_tired:
 
         # Add pending apology
         $ Natsuki.addApology(jn_apologies.ApologyTypes.unhealthy)
+        $ Natsuki.setForceQuitAttempt(False)
         $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_SICK
         $ persistent._jn_player_admission_forced_leave_date = datetime.datetime.now()
 
@@ -1385,6 +1387,7 @@ label admission_tired:
 
         # Add pending apology
         $ Natsuki.addApology(jn_apologies.ApologyTypes.unhealthy)
+        $ Natsuki.setForceQuitAttempt(False)
         $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_TIRED
         $ persistent._jn_player_admission_forced_leave_date = datetime.datetime.now()
 

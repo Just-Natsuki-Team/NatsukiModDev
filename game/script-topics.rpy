@@ -4022,8 +4022,11 @@ label talk_i_love_you:
             n 1fcsantsd "..."
             n 1fsqfutse "Go!"
             n 4fscsctdc "{i}JUST LEAVE ME ALONE!{/i}{nw}"
+            
             $ Natsuki.percentageAffinityLoss(25)
+            $ Natsuki.setForceQuitAttempt(False)
             $ persistent.jn_player_love_you_count += 1
+
             return { "quit": None }
 
         $ persistent.jn_player_love_you_count += 1
