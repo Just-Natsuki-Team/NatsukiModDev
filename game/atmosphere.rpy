@@ -138,7 +138,7 @@ transform cherry_blossom_scroll:
         repeat
 
 # Transitions
-define weather_change_transition = Dissolve(0.75)
+define weather_change_transition = Dissolve(0.5)
 define dim_change_transition = Dissolve(0.25)
 
 init 0 python in jn_atmosphere:
@@ -425,6 +425,7 @@ init 0 python in jn_atmosphere:
     def showSky(weather, with_transition=True):
         """
         Shows the specified sky with related clouds and dimming effect (if defined), based on time of day.
+        Note that any other animations will be sped up thanks to how Dissolve works! These should be frozen first.
 
         IN:
             weather - JNWeather to set
@@ -450,11 +451,12 @@ init 0 python in jn_atmosphere:
         # Add the clouds, if defined
         if clouds_to_show:
             renpy.show(name=clouds_to_show, zorder=_CLOUDS_Z_INDEX)
-            if with_transition:
-                renpy.with_statement(trans=store.weather_change_transition)
-
+        
         else:
             renpy.hide("clouds")
+            renpy.with_statement(trans=store.weather_change_transition)
+
+        if with_transition:
             renpy.with_statement(trans=store.weather_change_transition)
 
         # Add the particles, if defined
@@ -465,21 +467,22 @@ init 0 python in jn_atmosphere:
             elif weather.night_particles_image:
                 renpy.show(name=weather.night_particles_image, zorder=_PARTICLES_Z_INDEX)
 
-            if with_transition:
-                renpy.with_statement(trans=store.weather_change_transition)
-
         else:
             renpy.hide("particles")
+            renpy.with_statement(trans=store.weather_change_transition)
+
+        if with_transition:
             renpy.with_statement(trans=store.weather_change_transition)
 
         # Add the dimming effect, if defined
         if weather.dim_image:
             renpy.show(name=weather.dim_image, zorder=_DIM_Z_INDEX)
-            if with_transition:
-                renpy.with_statement(trans=store.dim_change_transition)
 
         else:
             renpy.hide("dim")
+            renpy.with_statement(trans=store.weather_change_transition)
+
+        if with_transition:
             renpy.with_statement(trans=store.weather_change_transition)
 
         global current_weather
@@ -604,6 +607,7 @@ init 0 python in jn_atmosphere:
 
 label weather_change:
     $ previous_weather = jn_atmosphere.current_weather
+    $ renpy.show("natsuki {0}".format(jnGetNatsukiRandomStaticIdleSprite()))
     $ main_background.check_redraw()
     $ jn_atmosphere.updateSky()
 
@@ -675,6 +679,4 @@ label weather_change:
                     n 4ullbg "Heeey!{w=0.75}{nw}"
                     extend 4uchgnledz " It's snowing!{w=3}{nw}"
 
-            pause 1
-            show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
             return

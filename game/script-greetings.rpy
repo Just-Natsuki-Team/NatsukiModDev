@@ -1259,7 +1259,7 @@ init 5 python:
 label greeting_affectionate_enamored_crawling_back:
     n 4unmbs "[player]!{w=0.75}{nw}"
     extend 7fchgn " I was wondering when you were gonna show up!"
-    n 3fcsajlsbr "N-{w=0.2}not that I was just sat around waiting for you or anything,{w=0.2} obviously."
+    n 3fcsajlsbr "N-{w=0.2}not that I was just sitting around waiting for you or anything,{w=0.2} obviously."
     n 3fslsslsbr "After all..."
     n 6fcssmlesm "As {i}if{/i} you could resist crawling back to someone as awesome as me!"
 
