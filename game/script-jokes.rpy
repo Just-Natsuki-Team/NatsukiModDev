@@ -20,6 +20,7 @@ init python in jn_jokes:
         funny = 2
         corny = 3
         bad = 4
+        confusing = 5
 
     class JNJoke:
         def __init__(
@@ -585,6 +586,31 @@ init python in jn_jokes:
         label="joke_coffee_grind",
         display_name="Instant coffee",
         joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_sting_operation",
+        display_name="Bee theft",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_sculptors_steak_marbled",
+        display_name="Sculptors",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_rhetorical",
+        display_name="Rhetorical",
+        joke_category=JNJokeCategories.confusing
+    ))
+    __registerJoke(JNJoke(
+        label="joke_fuzz",
+        display_name="Fuzz",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_restroom_comedian",
+        display_name="Restroom comedian",
+        joke_category=JNJokeCategories.corny
     ))
 
 label joke_clock_eating:
@@ -1436,5 +1462,64 @@ label joke_coffee_grind:
     n 1fcsss "Heh."
     n 1flrbs "'Cause they were sick of the {i}grind{/i},{w=0.75}{nw}"
     extend 1fchgnelg " of course!"
+
+    return
+
+label joke_sting_operation:
+    n 1clraj "Hey,{w=0.2} [player]...{w=1}{nw}"
+    extend 1tnmsl " did you hear about all the thefts targeting beekeepers recently?"
+    n 1ccsfl "I mean,{w=0.5}{nw}"
+    extend 1fcswr " come on!{w=0.75}{nw}"
+    extend 1fsqem " {i}Bees{/i}?{w=0.75}{nw}"
+    extend 1fllem " How low could you {i}possibly{/i} get?"
+    n 1fllpu "Though...{w=1}{nw}"
+    extend 1cllbo " I gotta admit.{w=0.75}{nw}" 
+    extend 1unmfl " How they caught them in the end?"
+    n 1ccsss "Heh."
+    n 1ccsbg "Now that's what I call a{w=0.5}{nw}" 
+    extend 1fsqbg " {i}sting{/i}{w=0.75}{nw}"
+    extend 1fchgn " operation!"
+    
+    return
+
+label joke_sculptors_steak_marbled:
+    n 1fcsbg "'Kay!{w=0.75}{nw}"
+    extend 1fsqbg " So,{w=0.2} [player]..."
+    n 1fsgss "How do sculptors prefer their steaks?"
+    n 1fsgsm "..."
+    n 1tsqbg "No?{w=0.75}{nw}"
+    extend 1fcssmesm " Come on,{w=0.2} [player]!{w=0.75}{nw}"
+    extend 1tlrbg " Isn't it obvious?"
+    n 1tsgbg "...With plenty of{w=0.5}{nw}"
+    extend 1fsqbg " {i}marbling{/i},{w=0.75}{nw}"
+    extend 1fchbs " duh!"
+
+    return
+
+label joke_rhetorical:
+    n 1ccsaj "...So."
+    n 1cdwpu "...What do you get if you cross a joke{w=0.5}{nw}"
+    extend 1tsqsl " with a rhetorical question?"
+    
+    return
+
+label joke_fuzz:
+    n 1ccsflesi "...Man,{w=0.2} this is dumb.{w=0.75}{nw}"
+    extend 1csrsl " Fine."
+    n 1ccsaj "Who do you call for someone who only steals wool,{w=0.2} yarn,{w=0.2} and fluffy socks?"
+    n 1cnmbo "..."
+    n 1cllbo "..."
+    n 1cnmfl "...The{w=0.5}{nw}" 
+    extend 1cslfl " {i}fuzz{/i}."
+
+    return
+
+label joke_restroom_comedian:
+    n 1ccsemesi "..."
+    n 1clrbo "Why did the comedian insist on warming up his act in the restroom?"
+    n 1csqbo "..."
+    n 1cslfl "...I can't believe I'm saying this."
+    n 1ccsfl "So he always had jokes...{w=1}{nw}"
+    extend 1csqpo " {i}on tap{/i}."
 
     return
