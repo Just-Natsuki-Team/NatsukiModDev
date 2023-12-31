@@ -185,14 +185,16 @@ label ch30_init:
         # No holiday, so pick a greeting or random event
         elif not jn_topic_in_event_list_pattern("^greeting_"):
             if (
-                random.randint(1, 10) == 1
+                (random.randint(1, 10) == 1 or persistent._jn_event_attempt_count == 20)
                 and (not persistent._jn_player_admission_type_on_quit and not persistent._jn_player_apology_type_on_quit)
                 and jn_events.selectEvent()
             ):
+                persistent._jn_event_attempt_count = 0
                 push(jn_events.selectEvent())
                 renpy.call("call_next_topic", False)
 
             else:
+                persistent._jn_event_attempt_count += 1
                 greeting_topic = jn_greetings.selectGreeting()
                 push(greeting_topic.label)
                 

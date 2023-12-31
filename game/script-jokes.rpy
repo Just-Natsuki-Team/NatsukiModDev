@@ -612,6 +612,31 @@ init python in jn_jokes:
         display_name="Restroom comedian",
         joke_category=JNJokeCategories.corny
     ))
+    __registerJoke(JNJoke(
+        label="joke_glasses_framed",
+        display_name="Eyeglasses",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_surround_sound",
+        display_name="Audio technician",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_rose_thorns",
+        display_name="Roses",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_acrobats_somersault",
+        display_name="Acrobats",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_frog_seating",
+        display_name="Frog seating",
+        joke_category=JNJokeCategories.corny
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -1521,5 +1546,68 @@ label joke_restroom_comedian:
     n 1cslfl "...I can't believe I'm saying this."
     n 1ccsfl "So he always had jokes...{w=1}{nw}"
     extend 1csqpo " {i}on tap{/i}."
+
+    return
+
+label joke_glasses_framed:
+    n 1fsqbg "Let's see how you handle this one.{w=0.75}{nw}"
+    extend 1fcsaj " So!"
+    n 1csqbg "How does someone with glasses react to being told bad news?"
+    n 1csqsm "..."
+    n 1fsqss "Heh.{w=0.75}{nw}"
+    extend 1csgbg " Don't you know,{w=0.2} [player]?"
+    n 1flrss "It all depends on how you{w=0.5}{nw}"
+    extend 1fsqbg " {i}frame{/i}{w=0.5}{nw}"
+    extend 1fchbs " the situation!"
+
+    return
+
+label joke_surround_sound:
+    n 1csqflsbl "Don't say I didn't warn you,{w=0.2} [player]."
+    n 1ccsfl "How do audio technicians get over feeling lonely?"
+    n 1csrca "..."
+    n 1ccsem "Ugh."
+    n 1cllem "They use...{w=1}{nw}"
+    extend 1cnmfl " {i}surround{/i}{w=0.5}{nw}"
+    extend 1csqfl " {i}sound{/i}."
+
+    return
+
+label joke_rose_thorns:
+    n 1ccsss "You better{w=0.5}{nw}"
+    extend 1csgbg " {i}prick{/i}{w=0.5}{nw}"
+    extend 1fnmbg " your ears for this one!"
+    n 1fcsaj "'Kay!{w=0.75}{nw}"
+    extend 1fcssm " So."
+    n 1tsqbg "Why did the gardener give up on planting roses?"
+    n 1fnmsm "..."
+    n 1ccssmesm "Heh."
+    n 1clrbg "'Cause they were turning out to be a real{w=0.5}{nw}"
+    extend 1csqbg " {i}thorn{/i}{w=0.75}{nw}" 
+    extend 1fchbs " in his side!"
+
+    return
+
+label joke_acrobats_somersault:
+    n 1ccssmesm "Heh.{w=0.75}{nw}"
+    extend  1fsqbg " Riddle me this,{w=0.2} [player]!"
+    n 1fcsbg "What kind of move do acrobats practice most in the middle of the year?"
+    n 1fnmsm "..."
+    n 1fcsbs "Duh!"
+    n 1fsqbg "They'd practice{w=0.5}{nw}"
+    extend 1fsgbg " {i}summer{/i}{w=0.75}{nw}"
+    extend 1fchbg " -saults,{w=0.5}{nw}"
+    extend 1fchgn " of course!"
+
+    return
+
+label joke_frog_seating:
+    n 1cslem "Who did they annoy to have to include {i}this{/i} one?{w=0.75}{nw}"
+    extend 1ccsem " Ugh."
+    n 1clrsl "What kind of seating do you set out for a frog?"
+    n 1csrsl "..."
+    n 1ccsflesi "..."
+    n 1cllfl "A {i}toad{/i}-{w=0.75}{nw}"
+    extend 1fsqca " stool."
 
     return
