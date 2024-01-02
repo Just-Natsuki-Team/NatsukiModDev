@@ -3,7 +3,7 @@ default persistent._jn_holiday_list = dict()
 default persistent._jn_holiday_completed_list = []
 default persistent._jn_holiday_deco_list_on_quit = []
 default persistent._jn_event_completed_count = 0
-default persistent._jn_event_attempt_count = 0
+default persistent._jn_event_attempt_count = 15
 
 default persistent._jn_player_celebrates_christmas = None
 default persistent._jn_player_love_halloween_seen = None
