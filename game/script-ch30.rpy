@@ -762,18 +762,18 @@ label player_select_topic(is_repeat_topics=False):
 label farewell_menu:
     python:
         # Sort the farewell options by their display name
-        available_farewell_options = jn_farewells.get_farewell_options()
+        available_farewell_options = jn_farewells.getFarewellOptions()
         available_farewell_options.sort(key = lambda option: option[0])
         available_farewell_options.append(("Goodbye.", "farewell_start"))
 
-    call screen scrollable_choice_menu(available_farewell_options, ("Nevermind.", None))
+    call screen scrollable_choice_menu(available_farewell_options, ("Go back", None))
 
     if isinstance(_return, basestring):
         show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
         $ push(_return)
         jump call_next_topic
 
-    jump ch30_loop
+    jump talk_menu
 
 label outfits_menu:
     call screen scrollable_choice_menu([
@@ -781,7 +781,7 @@ label outfits_menu:
         ("Can I suggest a new outfit?", "outfits_suggest_outfit"),
         ("Can you forget about an outfit I suggested?", "outfits_remove_outfit"),
         ("Can you search again for new items?", "outfits_reload")],
-        ("Nevermind.", None),
+        ("Go back", None),
         400,
         "mod_assets/icons/outfits.png")
 
@@ -790,7 +790,7 @@ label outfits_menu:
         $ push(_return)
         jump call_next_topic
 
-    jump ch30_loop
+    jump talk_menu
 
 label extras_menu:
     python:

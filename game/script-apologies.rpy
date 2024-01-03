@@ -32,7 +32,7 @@ init 0 python in jn_apologies:
         def __int__(self):
             return self.value
 
-    def get_all_apologies():
+    def getAllApologies():
         """
         Gets all apology topics for the currently pending apologies, as well as the generic
 
@@ -52,17 +52,17 @@ label player_apologies_start:
     python:
         apologies_menu_items = [
             (_apologies.prompt, _apologies.label)
-            for _apologies in jn_apologies.get_all_apologies()
+            for _apologies in jn_apologies.getAllApologies()
         ]
         apologies_menu_items.sort()
 
-    call screen scrollable_choice_menu(apologies_menu_items, ("Nevermind.", None), 400, "mod_assets/icons/apologies.png")
+    call screen scrollable_choice_menu(apologies_menu_items, ("Go back", None), 400, "mod_assets/icons/apologies.png")
 
-    if _return:
+    if isinstance(_return, basestring):
         $ push(_return)
         jump call_next_topic
 
-    return
+    jump talk_menu
 
 # Apology for giving Natsuki a bad nickname
 init 5 python:

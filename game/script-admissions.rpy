@@ -29,7 +29,7 @@ init 0 python in jn_admissions:
     # The last admission the player gave to Natsuki
     last_admission_type = None
 
-    def get_all_admissions():
+    def getAllAdmissions():
         """
         Gets all admission topics which are available
 
@@ -46,17 +46,17 @@ label player_admissions_start:
     python:
         admission_menu_items = [
             (_admission.prompt, _admission.label)
-            for _admission in jn_admissions.get_all_admissions()
+            for _admission in jn_admissions.getAllAdmissions()
         ]
         admission_menu_items.sort()
 
-    call screen scrollable_choice_menu(admission_menu_items, ("Nevermind.", None), 400, "mod_assets/icons/admissions.png")
+    call screen scrollable_choice_menu(admission_menu_items, ("Go back", None), 400, "mod_assets/icons/admissions.png")
 
-    if _return:
+    if isinstance(_return, basestring):
         $ push(_return)
         jump call_next_topic
 
-    return
+    jump talk_menu
 
 init 5 python:
     registerTopic(
