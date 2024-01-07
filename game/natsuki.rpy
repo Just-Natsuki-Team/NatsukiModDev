@@ -87,6 +87,9 @@ init 0 python:
         # We have to cater for both since Natsuki owns books that read both ways
         _is_reading_to_right = False
 
+        # The force quit state; used for some extra handling of consequences around force quits
+        _is_force_quit_attempt = None
+
         @staticmethod
         def setDeskItem(item, desk_slot=None):
             """
@@ -748,6 +751,24 @@ init 0 python:
         # START: Dialogue functionality
 
         @staticmethod
+        def getForceQuitAttempt():
+            """
+            Gets the force quit attempt state.
+            If True, the player attempted a force quit in this session that wasn't backed out of.
+            """
+            return Natsuki._is_force_quit_attempt
+        
+        @staticmethod
+        def setForceQuitAttempt(force_quit):
+            """
+            Sets the force quit attempt state.
+
+            IN:
+                - force_quit - The bool force quit attempt state to set
+            """
+            Natsuki._is_force_quit_attempt = force_quit
+
+        @staticmethod
         def addApology(apology_type):
             """
             Adds a new apology possiblity to the list of pending apologies.
@@ -763,6 +784,13 @@ init 0 python:
                 store.persistent._jn_player_pending_apologies.append(int(apology_type))
 
         @staticmethod
+        def getQuitApology():
+            """
+            Gets the jn_apologies.ApologyTypes type to be checked on loading the game after quitting, or None if not set.
+            """
+            return jn_apologies.ApologyTypes(store.persistent._jn_player_apology_type_on_quit) if store.persistent._jn_player_apology_type_on_quit is not None else None
+
+        @staticmethod
         def setQuitApology(apology_type):
             """
             Sets the jn_apologies.ApologyTypes type to be checked on loading the game after quitting.
@@ -774,6 +802,13 @@ init 0 python:
                 raise TypeError("apology_type must be of types int or jn_apologies.ApologyTypes")
 
             store.persistent._jn_player_apology_type_on_quit = int(apology_type)
+
+        @staticmethod
+        def clearQuitApology():
+            """
+            Clears the quit apology type to be checked on loading the game after quitting.
+            """
+            store.persistent._jn_player_apology_type_on_quit = None
 
         @staticmethod
         def removeApology(apology_type):

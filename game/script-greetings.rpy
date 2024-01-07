@@ -32,7 +32,7 @@ init python in jn_greetings:
         kwargs = dict()
 
         # The player either left suddenly, or has been gone a long time
-        if store.persistent._jn_player_apology_type_on_quit is not None:
+        if store.Natsuki.getQuitApology() is not None:
             kwargs.update({"additional_properties": [("apology_type", jn_apologies.ApologyTypes(store.persistent._jn_player_apology_type_on_quit))]})
 
         # The player left or was forced to leave by way of an admission (E.G tired, sick)
@@ -686,6 +686,7 @@ label greeting_tt_warning:
         show glitch_garbled_c zorder JN_GLITCH_ZORDER with vpunch
         hide glitch_garbled_c
         $ Natsuki.percentageAffinityLoss(10)
+        $ Natsuki.setForceQuitAttempt(False)
 
         return { "quit": None }
 
@@ -2104,6 +2105,7 @@ init 5 python:
     )
 
 label greeting_sudden_leave:
+    $ Natsuki.percentageAffinityLoss(2)
     if Natsuki.isEnamored(higher=True):
         n 4kwmsrl "..."
         n 4kwmsrl "[player]."

@@ -26,7 +26,7 @@ init 0 python in jn_stickers:
 
     class StickerTypes(Enum):
         """
-        Identifiers for different weather objects, used for sanity checks when changing weather.
+        Identifiers for different sticker types, used for determining which sticker graphic to show when peeping it.
         """
         blank = 1
         blank_cheer = 2
