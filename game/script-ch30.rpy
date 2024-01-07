@@ -214,6 +214,7 @@ label ch30_init:
     # Prepare visuals
     $ jnPause(0.1)
     hide black with Dissolve(1)
+    $ jnPause(0.5)
     show screen hkb_overlay
 
     # Play appropriate music
@@ -293,7 +294,7 @@ label ch30_wait:
 
     jump ch30_loop
 
-#Other labels
+# Other labels
 label call_next_topic(show_natsuki=True):
     $ _topic = None
 
@@ -663,7 +664,7 @@ label talk_menu:
                 "Talk."
             ]))
 
-        showNatsukiTalkMenu()
+        jnShowNatsukiTalkMenu()
         Natsuki.setInConversation(True)
 
     menu:

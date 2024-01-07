@@ -1903,15 +1903,15 @@ init -100 python in jn_utils:
             store.persistent._jn_gs_aff = store.persistent.affinity
 
 # Generic transforms/animations
-transform JN_TRANSFORM_FADE_IN:
+transform JN_TRANSFORM_FADE_IN(time=0.5):
     subpixel True
     alpha 0
-    ease 0.5 alpha 1
+    ease time alpha 1
 
-transform JN_TRANSFORM_FADE_OUT:
+transform JN_TRANSFORM_FADE_OUT(time=0.5):
     subpixel True
     alpha 1
-    ease 0.5 alpha 0
+    ease time alpha 0
 
 transform JN_PULSE(time=1, wait=1.5):
     truecenter

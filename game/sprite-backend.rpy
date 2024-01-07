@@ -1930,9 +1930,12 @@ image natsuki idle fluster:
         repeat
 
 init python:
-    def showNatsukiTalkMenu():
+    import random
+
+    def jnShowNatsukiTalkMenu():
         """
-        Hack to work around renpy issue where the sprite is not refreshed when showing again
+        Shows the appropriate Natsuki sprite for the talk menu based on the current affinity level.
+        Hack to work around Ren'Py issue where the sprite is not refreshed when showing again.
         """
         if Natsuki.isEnamored(higher=True):
             renpy.show("natsuki talk_menu_enamored", at_list=[jn_left])
@@ -1951,6 +1954,88 @@ init python:
 
         else:
             renpy.show("natsuki talk_menu_ruined", at_list=[jn_left])
+
+    def jnGetNatsukiRandomStaticIdleSprite():
+        """
+        Returns a random idle sprite code based on the current affinity level.
+        Hack to work around Ren'Py issue speeding up Nat's idle animation when a weather Dissolve transition took place.
+        """
+        if Natsuki.isEnamored(higher=True):
+            return random.choice([
+                "5csqsml",
+                "7tsqsml",
+                "1nchsmf",
+                "4kwmsmf",
+                "3kllsmf",
+                "4klrsmf",
+                "1knmsmf",
+                "1kcssmf",
+                "2kcssgf",
+                "1kllsmf",
+                "2kcssmf",
+                "3uchsmfedz",
+                "3nchsmfeme"
+            ])
+
+        elif Natsuki.isAffectionate(higher=True):
+            return random.choice([
+                "3unmcsl",
+                "3ullcsl",
+                "3ulrcsl",
+                "3ullsml",
+                "4ulrsml",
+                "1unmsml",
+                "1nllbol",
+                "7nllpul"
+            ])
+
+        elif Natsuki.isHappy(higher=True):
+            return random.choice([
+                "3unmbo",
+                "3ullbo",
+                "1ulrbo",
+                "2ullfs",
+                "4ulrfs",
+                "2ulrcal",
+                "1nnmca",
+                "2ullfs"
+            ])
+
+        elif Natsuki.isNormal(higher=True):
+            return random.choice([
+                "2unmca",
+                "2nllbo",
+                "2nlrbo",
+                "1nllpu",
+                "2nlrpu",
+                "2nllca",
+                "4nlrca",
+                "2nnmca",
+                "1nllpu"
+            ])
+
+        elif Natsuki.isDistressed(higher=True):
+            return random.choice([
+                "2fllsl",
+                "2flrsl",
+                "1kcssl",
+                "1kcssf",
+                "2fcssf",
+                "2fllsf",
+                "2flrsf",
+                "2fsqca"
+            ])
+
+        else:
+            return random.choice([
+                "1fcsuntsa",
+                "4fcsantsa",
+                "4fslantsb",
+                "2fcssrtsa",
+                "4kcssrtsa",
+                "1ksrsrtsb",
+                "4fsrantse"
+            ])
 
 # Menu images for ENAMORED+
 image natsuki talk_menu_enamored:
