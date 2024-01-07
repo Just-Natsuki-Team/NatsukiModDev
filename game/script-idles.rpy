@@ -530,7 +530,9 @@ label idle_vibing_headphones:
         headphones_outfit.headgear = headphones
 
     show natsuki 1ncsca
+    $ jnPause(0.1)
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
     show prop music_notes zorder JN_PROP_ZORDER
     $ jn_outfits.saveTemporaryOutfit(headphones_outfit)
     show natsuki vibing

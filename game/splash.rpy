@@ -227,6 +227,13 @@ label before_main_menu:
 
 label quit:
     python:
+        # Remove any consequences from not quitting properly
+        if not Natsuki.getForceQuitAttempt():
+            Natsuki.removeApology(jn_apologies.ApologyTypes.sudden_leave)
+            
+            if Natsuki.getQuitApology() == jn_apologies.ApologyTypes.sudden_leave:
+                Natsuki.clearQuitApology()
+
         # Save game data
         jn_utils.save_game()
 

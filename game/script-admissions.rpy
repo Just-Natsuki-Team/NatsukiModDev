@@ -1314,6 +1314,7 @@ label admission_tired:
 
         $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_TIRED
         $ persistent._jn_player_admission_forced_leave_date = datetime.datetime.now()
+        $ Natsuki.setForceQuitAttempt(False)
         
         return { "quit": None }
 
@@ -1340,6 +1341,7 @@ label admission_tired:
 
         # Add pending apology
         $ Natsuki.addApology(jn_apologies.ApologyTypes.unhealthy)
+        $ Natsuki.setForceQuitAttempt(False)
         $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_SICK
         $ persistent._jn_player_admission_forced_leave_date = datetime.datetime.now()
 
@@ -1385,6 +1387,7 @@ label admission_tired:
 
         # Add pending apology
         $ Natsuki.addApology(jn_apologies.ApologyTypes.unhealthy)
+        $ Natsuki.setForceQuitAttempt(False)
         $ persistent.jn_player_admission_type_on_quit = jn_admissions.TYPE_TIRED
         $ persistent._jn_player_admission_forced_leave_date = datetime.datetime.now()
 

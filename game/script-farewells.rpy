@@ -90,6 +90,7 @@ init python in jn_farewells:
         return random.choice(farewell_pool).label
 
 label farewell_start:
+    $ Natsuki.setForceQuitAttempt(False)
     $ push(jn_farewells.selectFarewell())
     jump call_next_topic
 
