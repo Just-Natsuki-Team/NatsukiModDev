@@ -2820,7 +2820,7 @@ label event_internet_connection:
     $ jn_globals.force_quit_enabled = False
     $ jnPause(3)
     n "...Finally!{w=0.75} About time it loaded!" 
-    n "Jeez...{w=1} I swear this stupid site takes way longer to load up now..."
+    n "Jeez...{w=1} I swear the website takes way longer to load up now..."
     n "Stupid school network policies."
     $ jnPause(2)
     n "'Kay...{w=1} Now where did I pause it last time...?"
@@ -2837,16 +2837,19 @@ label event_internet_connection:
     n "..."
     play audio anime_slash
     n "Ack!{w=0.75} What the hell was that?!{w=0.75} C-{w=0.2}come on,{w=0.2} Minori!" 
-    extend "Screw the rules!{w=0.75} Fight back!"
+    n "S-{w=0.2}screw the rules!{w=0.75} Fight back!"
     $ jnPause(3)
 
     play audio anime_punch
+    $ jnPause(0.5)
+    play audio anime_punch
     n "Oh,{w=0.2} for-!"
     n "What are you {i}doing{/i}?{w=0.75} Stop hugging it out with the ground and get up already!"
-    n "As {i}if{/i} some no-name wannabe has both of you floored this easily!{w=1} Please..."
+    n "As {i}if{/i} some no-name wannabe has both of you floored this easily!" 
+    n "Please..."
     $ jnPause(3)
 
-    n "Sheesh...{w=1} Enough with the monologues!{w=0.75} You had an entire {i}episode{/i} to doubt yourself!"
+    n "Sheesh...{w=1} Enough with the inner monologues!{w=0.75} You had an entire {i}episode{/i} to doubt yourself!"
     n "Ugh..."
     n "I hate when they drag it out like this.{w=0.75} As if there {i}wasn't{/i} already enough filler this episode..."
     n "Cut me a break."
@@ -2857,7 +2860,9 @@ label event_internet_connection:
     play audio anime_punch
     $ jnPause(0.25)
     play audio anime_punch
-    n "Yeah!{w=0.5} Yeah!{w=0.5} Now {i}that's{/i} what I'm talking about!{w=0.75} Go!"
+    n "Yeah!{w=0.5} Yeah!{w=0.5} Now {i}that's{/i} what I'm talking about!{w=0.75}{nw}" 
+    play audio anime_punch
+    extend " Go!"
     $ jnPause(2)
 
     n "...!"
@@ -2894,7 +2899,11 @@ label event_internet_connection:
             renpy.play(filename=audio.button_tap_c, channel="audio")
             jnPause(0.2)
 
-    n "...Oh,{w=0.5} you have {w=0.3}{b}got{/b}{w=0.3} to be kidding me.{w=0.75} W-{w=0.2}why now?!"
+    n "...Oh,{w=0.5} you have {w=0.3}{b}got{/b}{w=0.3} to be kidding me.{w=0.75}{nw}" 
+    play audio button_tap_c
+    extend " W-{w=0.2}why now?!"
+    play audio button_tap_c
+    $ jnPause(1)
 
     play audio button_tap_c
     $ jnPause(0.5)
@@ -2952,9 +2961,9 @@ label event_internet_connection:
     extend 4fcsanl " but the connection here absolutely {b}blows{/b}!"
     n 4flreml "Seriously -{w=0.5}{nw}"
     extend 4fbkwrl " it's driving me crazy!"
-    extend 2fcsanl " This is like the third time this week it totally died on me!"
+    extend 2fcsanl " This is like the third time this week it's just totally died on me!"
     n 2fcsgs "Why is it the one time I'm actually in the mood to wanna sit down and watch something,{w=0.5}{nw}"
-    extend 2fsrem " it decides it wants to stutter more than Yuri trying stand-up!"
+    extend 2fsrem " it decides it wants to stutter more than Yuri trying stand-up?"
     n 1fcsflesi "Ugh..."
     n 2fslfl "What a joke.{w=0.75}{nw}"
     extend 2fslbo " I swear it was never this bad before too."
@@ -2987,8 +2996,9 @@ label event_internet_connection:
     $ jnPause(0.5)
 
     n 3clrbo "..."
-    n 3csrpu "...I'd be lying if I said I wasn't at least kinda peeved about that.{w=0.75}{nw}"
-    extend 4cdrem " Talk about a letdown."
+    n 3csraj "...I gotta admit.{w=0.75}{nw}"
+    extend 3csrsl " I'd be lying if I said I wasn't at least kinda peeved about that.{w=0.75}{nw}"
+    n 4cdrem "Talk about a letdown."
     n 4csqfl "Especially with how long I was waiting for the episode to come out too."
     n 2cllbo "..."
     n 2cllaj "But...{w=1}{nw}"
@@ -3008,7 +3018,7 @@ label event_internet_connection:
             n 2fchbll "Make yourself at home already,{w=0.2} [chosen_endearment]!"
 
         else:
-            n 2nchgnl "Now get comfy already,{w=0.2} dummy!"
+            n 2nchgnl "Now get comfy already!"
     
     else:
         n 7ccsbgl "A-{w=0.2}after all..."
