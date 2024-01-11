@@ -42,7 +42,6 @@ image prop poetry_attempt = "mod_assets/props/poetry_attempt.png"
 image prop math_attempt = "mod_assets/props/math_attempt.png"
 image prop a_la_mode_manga_held = "mod_assets/props/a_la_mode_manga_held.png"
 image prop strawberry_milkshake = "mod_assets/props/strawberry_milkshake.png"
-image prop step_by_step_manga_held = "mod_assets/props/step_by_step_manga_held.png"
 image prop glasses_case = "mod_assets/props/glasses_case.png"
 image prop hot_chocolate hot = "mod_assets/props/hot_chocolate.png"
 image prop hot_chocolate cold = "mod_assets/props/hot_chocolate_cold.png"
@@ -1328,10 +1327,13 @@ label event_step_by_step_manga:
     menu:
         "Enter...":
             pass
-
-    show prop step_by_step_manga_held zorder JN_PROP_ZORDER
-    $ jn_events.displayVisuals("1uskemfesh")
-    $ jn_globals.force_quit_enabled = True
+    
+    python:
+        step_by_step_manga = jn_desk_items.getDeskItem('jn_step_by_step_manga_held')
+        step_by_step_manga.unlock()
+        Natsuki.setDeskItem(step_by_step_manga)
+        jn_events.displayVisuals("1uskemfesh")
+        jn_globals.force_quit_enabled = True
 
     n 1uskemesh "...!"
     $ player_initial = jn_utils.getPlayerInitial()
@@ -1361,14 +1363,19 @@ label event_step_by_step_manga:
     n 1fsrbol "...And only a real jerk would tease someone for trying."
     n 1fcsajl "Never forget that."
 
+    show natsuki 1ccscal
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
     play audio drawer
-    hide prop step_by_step_manga_held
-    with Fade(out_time=0.5, hold_time=0.5, in_time=0.5, color="#000000")
+    $ Natsuki.clearDesk()
+    $ jnPause(1.3)
+    show natsuki 2ccscal
+    hide black with Dissolve(0.5)
+    $ jnPause(0.5)
 
-    n 4nllpol "..."
-    n 4ulrbol "So..."
-    n 3tnmsslsbr "What's new,{w=0.2} [player]?{w=1}{nw}"
-    extend 3fllsslsbl " Ahaha..."
+    n 4nllcal "..."
+    n 4ullajl "So..."
+    n 3tnmsslsbr "What's new,{w=0.2} [player]?"
 
     return
 
@@ -2792,6 +2799,184 @@ label event_blackjack_unlock:
             n 2cllss "Well,{w=0.2} now that's finally out of the way..."
             $ chosen_descriptor = jn_utils.getRandomTease() if Natsuki.isEnamored(higher=True) else player
             n 7fchbgl "What's happening,{w=0.2} [chosen_descriptor]?"
+
+    return
+
+# Natsuki isn't happy at the school's internet connection...
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_internet_connection",
+            unlocked=True,
+            affinity_range=(jn_affinity.HAPPY, None)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
+
+label event_internet_connection:
+    $ jn_globals.force_quit_enabled = False
+    $ jnPause(3)
+    n "...Finally!{w=0.75} About time it loaded!{w=0.75} I swear it takes longer every time..."
+    n "'Kay...{w=1} Now where did I pause it last time...?"
+    n "..."
+    n "Aha!{w=0.75} Here we go!"
+    $ jnPause(3)
+
+    n "..."
+    n "..."
+    n "Ack!{w=0.75} What the hell was that?!{w=0.75} C-{w=0.2}come on,{w=0.2} Minori!{w=0.75} Fight back!"
+    $ jnPause(3)
+
+    n "Oh,{w=0.2} for-!"
+    n "What are you {i}doing{/i}?{w=0.75} Stop hugging it out with the ground and get up already!"
+    n "As {i}if{/i} some no-name wannabe has both of you floored this easily!{w=0.75} Please..."
+    n "..."
+    n "..."
+    $ jnPause(3)
+
+    n "Sheesh...{w=1} Enough with the monologues! You had an entire {i}episode{/i} to doubt yourself!"
+    n "Ugh..."
+    n "I hate when they drag it out like this.{w=0.75} As if there {i}isn't{/i} enough filler already this episode..."
+    n "Cut me a break."
+    $ jnPause(3)
+
+    n "Yeah!{w=0.5} Yeah!{w=0.5} Now {i}that's{/i} what I'm talking about! Go!"
+    $ jnPause(2)
+
+    n "...!"
+    play audio chair_out_fast
+    n "M-{w=0.2}Minori!{w=0.5} MOVE!{w=0.75} Jeez..."
+    n "Can you dodge {i}any{/i} slower?"
+    $ jnPause(2)
+
+    n "YES!"
+    n "Show him,{w=0.2} Alice! Kick his sorry ass-!"
+    $ jnPause(1)
+    n "..."
+    play audio button_tap_c
+    n "...Huh?"
+
+    play audio button_tap_c
+    $ jnPause(1)
+    play audio button_mashing_c
+
+    n "...Oh,{w=0.2} you have {i}got{/i} to be kidding me.{w=0.75} Why now?!"
+
+    play audio button_tap_c
+    $ jnPause(0.5)
+    play audio button_tap_c
+
+    n "Nnnnn-!"
+    n "What is {i}up{/i} with the internet in this dump?!{w=0.75} Seriously!"
+
+    if jn_outfits.getOutfit("jn_cosy_cardigan_outfit").unlocked:
+        n  "As if the busted heating wasn't enough of a pain in the ass.{w=0.75} Now the internet connection is checking out too?"
+
+    else:
+        n  "Don't tell me the internet connection is {i}already{/i} checking out on me..."
+
+    n "Come on,{w=0.2} you pile of junk!{w=0.75} Load!{w=0.75} Load!"
+
+    play audio button_tap_c
+    $ jnPause(0.5)
+    play audio button_tap_c
+    $ jnPause(1)
+
+    play audio button_tap_c
+    $ jnPause(0.25)
+    play audio button_tap_c
+    $ jnPause(0.25)
+    play audio button_tap_c
+
+    n "Uuuuuuuu-!"
+    n "D-{w=0.2}does nothing in this {i}STUPID{/i} classroom work besides me?"
+
+    play audio button_tap_c
+    $ jnPause(1)
+    play audio button_tap_c
+    $ jnPause(0.2)
+    play audio button_tap_c
+
+    menu:
+        "Enter...":
+            pass
+
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_laptop"))
+    $ jn_events.displayVisuals("")
+    $ jn_globals.force_quit_enabled = True
+
+    n 1fdwan "..."
+    n 1fcsup "..."
+    n 1csqemeqm "...?"
+    n 1unmflleshsbl "A-{w=0.2}ah!{w=0.75}{nw}"
+    extend 1flrgslsbl " [player]!{w=0.75}{nw}"
+    extend 1fcswrlsbl " C-{w=0.2}can you {i}believe{/i} this garbage?!"
+    n 1fslanl "I don't know if it's this ancient laptop or what,{w=0.5}{nw}"
+    extend 1fcsanl " but the connection here absolutely {b}blows{/b}!{w=0.75}{nw}"
+    extend 1fcsgsl " This is like the third time this week it totally died on me!"
+    n 1flranl "Seriously -{w=0.5}{nw}"
+    extend 1fbkwrl " it's driving me crazy!"
+    n 1fcsgs "Why is it that the one time I'm actually in the mood to wanna sit down and watch something,{w=0.5}{nw}"
+    extend 1fsran " it decides it wants to stutter more than Yuri trying stand-up!"
+    n 1fcsflesi "Ugh..."
+    n 1fslbo "I swear it was never this bad before too."
+
+    if Natsuki.isEnamored(higher=True):
+        n 1csraj "You haven't been messing around with the internet connection or something,{w=0.5}{nw}"
+        extend 1csqpo " have you,{w=0.2} [player]?"
+
+    else:
+        n 1fsqfl "You better not have been messing around with the internet connection or something on purpose,{w=0.5}{nw}"
+        extend 1fsrca " [player]."
+
+    n 1ccsemesi "..."
+    n 1ccsaj "W-{w=0.2}whatever.{w=0.75}{nw}"
+    extend 1cllfl " It's not like I can't just try streaming it again later.{w=0.75}{nw}"
+    extend 1fslfl " {i}I guess{/i}."
+    n 1fcsfl "Besides.{w=0.75}{nw}"
+    extend 1fcsposbr " Everybody knows that the season finales are always overhyped,{w=0.2} a-{w=0.2}anyway."
+
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    play audio laptop_close
+    $ jnPause(0.75)
+    play audio drawer
+    $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+    $ jnPause(1.3)
+    show natsuki 3ullbo
+    hide black with Dissolve(0.5)
+    $ jnPause(0.5)
+
+    n  "..."
+    n  "...I'd be lying if I said I wasn't at least kinda peeved about that.{w=0.75}{nw}"
+    extend  " Talk about a letdown.{w=0.75}{nw}"
+    extend  " Especially with how long I was waiting for the episode to come out too."
+    n  "Heh.{w=0.75}{nw}"
+    extend  " I'll tell you one thing though,{w=0.2} [player]."
+    n  "You've gotta be joking if you seriously think I'm gonna let {i}that{/i} of all things get me down."
+    
+    if Natsuki.isEnamored(higher=True):
+        n  "After all..."
+        n  "A-{w=0.2}at least there's {i}one{/i} connection here I can always rely on,{w=0.2} right?{w=0.75}{nw}"
+        extend  " Ehehe."
+        n  "W-{w=0.2}welcome back,{w=0.5}{nw}"
+        $ chosen_tease = jn_utils.getRandomTease()
+        extend  " [chosen_tease]!"
+
+        if Natsuki.isLove(higher=True):
+            $ chosen_endearment = jn_utils.getRandomEndearment()
+            n  "Make yourself at home,{w=0.2} [chosen_endearment]!"
+
+        else:
+            n  "Now get comfy already!"
+    
+    else:
+        n  "A-{w=0.2}after all..."
+        n  "Looks like there's still {i}one{/i} connection here that isn't gonna flake out on me.{w=0.75}{nw}"
+        extend  " As if you even had a choice."
+        n  "Ehehe."
+        n  "Welcome back,{w=0.2} [player]!"
 
     return
 
