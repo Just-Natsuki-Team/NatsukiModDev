@@ -40,7 +40,6 @@ transform jn_confetti_fall:
 # Foreground props are displayed on the desk, in front of Natsuki
 image prop poetry_attempt = "mod_assets/props/poetry_attempt.png"
 image prop math_attempt = "mod_assets/props/math_attempt.png"
-image prop a_la_mode_manga_held = "mod_assets/props/a_la_mode_manga_held.png"
 image prop strawberry_milkshake = "mod_assets/props/strawberry_milkshake.png"
 image prop glasses_case = "mod_assets/props/glasses_case.png"
 image prop hot_chocolate hot = "mod_assets/props/hot_chocolate.png"
@@ -1186,10 +1185,13 @@ label event_reading_a_la_mode:
     menu:
         "Enter...":
             pass
-
-    show prop a_la_mode_manga_held zorder JN_PROP_ZORDER
-    $ jn_events.displayVisuals("1fdwca")
-    $ jn_globals.force_quit_enabled = True
+    
+    python:
+        a_la_mode_manga = jn_desk_items.getDeskItem('jn_a_la_mode_manga_held')
+        a_la_mode_manga.unlock()
+        Natsuki.setDeskItem(a_la_mode_manga)
+        jn_events.displayVisuals("1fdwca")
+        jn_globals.force_quit_enabled = True
 
     n 1unmgslesu "Oh!{w=1}{nw}"
     extend 1fllbgl " H-{w=0.2}hey,{w=0.2} [player]!"
@@ -1204,7 +1206,7 @@ label event_reading_a_la_mode:
     play audio page_turn
     $ jnPause(1.5)
     play audio drawer
-    hide prop a_la_mode_manga_held
+    $ Natsuki.clearDesk()
     $ jnPause(4)
     hide black with Dissolve(1)
 
@@ -2817,55 +2819,87 @@ init 5 python:
 label event_internet_connection:
     $ jn_globals.force_quit_enabled = False
     $ jnPause(3)
-    n "...Finally!{w=0.75} About time it loaded!{w=0.75} I swear it takes longer every time..."
+    n "...Finally!{w=0.75} About time it loaded!" 
+    n "Jeez...{w=1} I swear this stupid site takes way longer to load up now..."
+    n "Stupid school network policies."
+    $ jnPause(2)
     n "'Kay...{w=1} Now where did I pause it last time...?"
+    play audio button_tap_c
     n "..."
+    play audio button_tap_c
+    n "..."
+    play audio button_tap_c
     n "Aha!{w=0.75} Here we go!"
+    play music anime_generic_theme loop
     $ jnPause(3)
 
     n "..."
     n "..."
-    n "Ack!{w=0.75} What the hell was that?!{w=0.75} C-{w=0.2}come on,{w=0.2} Minori!{w=0.75} Fight back!"
+    play audio anime_slash
+    n "Ack!{w=0.75} What the hell was that?!{w=0.75} C-{w=0.2}come on,{w=0.2} Minori!" 
+    extend "Screw the rules!{w=0.75} Fight back!"
     $ jnPause(3)
 
+    play audio anime_punch
     n "Oh,{w=0.2} for-!"
     n "What are you {i}doing{/i}?{w=0.75} Stop hugging it out with the ground and get up already!"
-    n "As {i}if{/i} some no-name wannabe has both of you floored this easily!{w=0.75} Please..."
-    n "..."
-    n "..."
+    n "As {i}if{/i} some no-name wannabe has both of you floored this easily!{w=1} Please..."
     $ jnPause(3)
 
-    n "Sheesh...{w=1} Enough with the monologues! You had an entire {i}episode{/i} to doubt yourself!"
+    n "Sheesh...{w=1} Enough with the monologues!{w=0.75} You had an entire {i}episode{/i} to doubt yourself!"
     n "Ugh..."
-    n "I hate when they drag it out like this.{w=0.75} As if there {i}isn't{/i} enough filler already this episode..."
+    n "I hate when they drag it out like this.{w=0.75} As if there {i}wasn't{/i} already enough filler this episode..."
     n "Cut me a break."
     $ jnPause(3)
 
-    n "Yeah!{w=0.5} Yeah!{w=0.5} Now {i}that's{/i} what I'm talking about! Go!"
+    play audio anime_punch
+    $ jnPause(0.75)
+    play audio anime_punch
+    $ jnPause(0.25)
+    play audio anime_punch
+    n "Yeah!{w=0.5} Yeah!{w=0.5} Now {i}that's{/i} what I'm talking about!{w=0.75} Go!"
     $ jnPause(2)
 
     n "...!"
     play audio chair_out_fast
-    n "M-{w=0.2}Minori!{w=0.5} MOVE!{w=0.75} Jeez..."
-    n "Can you dodge {i}any{/i} slower?"
+    $ jnPause(0.2)
+    n "M-{w=0.2}Minori!{w=0.5}{nw}" 
+    play audio anime_slash
+    extend " MOVE!"
+    n "Man..."
+    n "Can you seriously dodge {i}any{/i} slower?"
     $ jnPause(2)
 
+    play audio anime_punch
     n "YES!"
-    n "Show him,{w=0.2} Alice! Kick his sorry ass-!"
+    play audio anime_punch
+    $ jnPause(0.25)
+    play audio anime_punch
+    n "Show him,{w=0.2} Alice!{w=0.75}{nw}"
+    play audio anime_punch 
+    extend " Kick his sorry ass-!"
+    play audio chair_in
     $ jnPause(1)
+    stop music
+    $ jnPause(2)
     n "..."
     play audio button_tap_c
     n "...Huh?"
 
     play audio button_tap_c
-    $ jnPause(1)
-    play audio button_mashing_c
 
-    n "...Oh,{w=0.2} you have {i}got{/i} to be kidding me.{w=0.75} Why now?!"
+    python:
+        jnPause(1)
+        for i in range(0, 7):
+            renpy.play(filename=audio.button_tap_c, channel="audio")
+            jnPause(0.2)
+
+    n "...Oh,{w=0.5} you have {w=0.3}{b}got{/b}{w=0.3} to be kidding me.{w=0.75} W-{w=0.2}why now?!"
 
     play audio button_tap_c
     $ jnPause(0.5)
     play audio button_tap_c
+    $ jnPause(2)
 
     n "Nnnnn-!"
     n "What is {i}up{/i} with the internet in this dump?!{w=0.75} Seriously!"
@@ -2876,7 +2910,9 @@ label event_internet_connection:
     else:
         n  "Don't tell me the internet connection is {i}already{/i} checking out on me..."
 
-    n "Come on,{w=0.2} you pile of junk!{w=0.75} Load!{w=0.75} Load!"
+    n "Come on,{w=0.2} you pile of junk!{w=0.75} Load!{w=0.75}{nw}"
+    play audio button_tap_c
+    extend " Load!"
 
     play audio button_tap_c
     $ jnPause(0.5)
@@ -2890,12 +2926,12 @@ label event_internet_connection:
     play audio button_tap_c
 
     n "Uuuuuuuu-!"
-    n "D-{w=0.2}does nothing in this {i}STUPID{/i} classroom work besides me?"
+    n "D-{w=0.2}does nothing in this {w=0.2}{i}STUPID{/i}{w=0.2} classroom work besides me?"
 
     play audio button_tap_c
     $ jnPause(1)
     play audio button_tap_c
-    $ jnPause(0.2)
+    $ jnPause(0.35)
     play audio button_tap_c
 
     menu:
@@ -2903,40 +2939,42 @@ label event_internet_connection:
             pass
 
     $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_laptop"))
-    $ jn_events.displayVisuals("")
+    $ jn_events.displayVisuals("4fcsan")
     $ jn_globals.force_quit_enabled = True
 
-    n 1fdwan "..."
-    n 1fcsup "..."
-    n 1csqemeqm "...?"
-    n 1unmflleshsbl "A-{w=0.2}ah!{w=0.75}{nw}"
-    extend 1flrgslsbl " [player]!{w=0.75}{nw}"
-    extend 1fcswrlsbl " C-{w=0.2}can you {i}believe{/i} this garbage?!"
+    n 4fdwan "..."
+    n 4fcsup "..."
+    n 4csqemeqm "...?{w=0.75}{nw}"
+    n 4unmflleshsbl "A-{w=0.2}ah!{w=0.75}{nw}"
+    extend 3flrgslsbl " [player]!{w=0.75}{nw}"
+    extend 3fcswrlsbl " C-{w=0.2}can you {i}believe{/i}{w=0.2} this garbage?!"
     n 1fslanl "I don't know if it's this ancient laptop or what,{w=0.5}{nw}"
-    extend 1fcsanl " but the connection here absolutely {b}blows{/b}!{w=0.75}{nw}"
-    extend 1fcsgsl " This is like the third time this week it totally died on me!"
-    n 1flranl "Seriously -{w=0.5}{nw}"
-    extend 1fbkwrl " it's driving me crazy!"
-    n 1fcsgs "Why is it that the one time I'm actually in the mood to wanna sit down and watch something,{w=0.5}{nw}"
-    extend 1fsran " it decides it wants to stutter more than Yuri trying stand-up!"
+    extend 4fcsanl " but the connection here absolutely {b}blows{/b}!"
+    n 4flreml "Seriously -{w=0.5}{nw}"
+    extend 4fbkwrl " it's driving me crazy!"
+    extend 2fcsanl " This is like the third time this week it totally died on me!"
+    n 2fcsgs "Why is it the one time I'm actually in the mood to wanna sit down and watch something,{w=0.5}{nw}"
+    extend 2fsrem " it decides it wants to stutter more than Yuri trying stand-up!"
     n 1fcsflesi "Ugh..."
-    n 1fslbo "I swear it was never this bad before too."
+    n 2fslfl "What a joke.{w=0.75}{nw}"
+    extend 2fslbo " I swear it was never this bad before too."
 
     if Natsuki.isEnamored(higher=True):
-        n 1csraj "You haven't been messing around with the internet connection or something,{w=0.5}{nw}"
-        extend 1csqpo " have you,{w=0.2} [player]?"
+        n 2csraj "You haven't been messing around with the internet connection or something,{w=0.5}{nw}"
+        extend 2csqpo " have you [player]?"
 
     else:
-        n 1fsqfl "You better not have been messing around with the internet connection or something on purpose,{w=0.5}{nw}"
-        extend 1fsrca " [player]."
+        n 2fsqfl "You better not have been messing around with the internet connection or something on purpose,{w=0.5}{nw}"
+        extend 2fsrca " [player]."
 
-    n 1ccsemesi "..."
-    n 1ccsaj "W-{w=0.2}whatever.{w=0.75}{nw}"
-    extend 1cllfl " It's not like I can't just try streaming it again later.{w=0.75}{nw}"
-    extend 1fslfl " {i}I guess{/i}."
-    n 1fcsfl "Besides.{w=0.75}{nw}"
-    extend 1fcsposbr " Everybody knows that the season finales are always overhyped,{w=0.2} a-{w=0.2}anyway."
+    n 2ccsemesi "..."
+    n 4ccsaj "W-{w=0.2}whatever.{w=0.75}{nw}"
+    extend 3cllfl " It's not like I can't just try streaming it again later.{w=0.75}{nw}"
+    extend 3fslfl " {i}I guess{/i}."
+    n 7fcsfl "Besides.{w=0.75}{nw}"
+    extend 7fcstrsbr " Everybody knows that the season finales are always overhyped,{w=0.2} a-{w=0.2}anyway."
 
+    show natsuki 4fcscasbr
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     play audio laptop_close
@@ -2944,39 +2982,40 @@ label event_internet_connection:
     play audio drawer
     $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
     $ jnPause(1.3)
-    show natsuki 3ullbo
+    show natsuki 3ccsbo
     hide black with Dissolve(0.5)
     $ jnPause(0.5)
 
-    n  "..."
-    n  "...I'd be lying if I said I wasn't at least kinda peeved about that.{w=0.75}{nw}"
-    extend  " Talk about a letdown.{w=0.75}{nw}"
-    extend  " Especially with how long I was waiting for the episode to come out too."
-    n  "Heh.{w=0.75}{nw}"
-    extend  " I'll tell you one thing though,{w=0.2} [player]."
-    n  "You've gotta be joking if you seriously think I'm gonna let {i}that{/i} of all things get me down."
+    n 3clrbo "..."
+    n 3csrpu "...I'd be lying if I said I wasn't at least kinda peeved about that.{w=0.75}{nw}"
+    extend 4cdrem " Talk about a letdown."
+    n 4csqfl "Especially with how long I was waiting for the episode to come out too."
+    n 2cllbo "..."
+    n 2cllaj "But...{w=1}{nw}"
+    extend 2ccstr " I'll tell you one thing though,{w=0.2} [player]."
+    n 4ccsss "You're kidding yourself if you seriously think I'm gonna let {w=0.2}{i}that{/i}{w=0.2} of all things get me down."
     
     if Natsuki.isEnamored(higher=True):
-        n  "After all..."
-        n  "A-{w=0.2}at least there's {i}one{/i} connection here I can always rely on,{w=0.2} right?{w=0.75}{nw}"
-        extend  " Ehehe."
-        n  "W-{w=0.2}welcome back,{w=0.5}{nw}"
+        n 4ccsbg "After all..."
+        n 7ccsbgl "A-{w=0.2}at least there's {i}one{/i} connection here I can always rely on,{w=0.2} right?{w=0.75}{nw}"
+        extend 3fsqsml " Ehehe."
+        n 5fchbgl "W-{w=0.2}welcome back,{w=0.5}{nw}"
         $ chosen_tease = jn_utils.getRandomTease()
-        extend  " [chosen_tease]!"
+        extend 5fchgnl " [chosen_tease]!"
 
         if Natsuki.isLove(higher=True):
             $ chosen_endearment = jn_utils.getRandomEndearment()
-            n  "Make yourself at home,{w=0.2} [chosen_endearment]!"
+            n 2fchbll "Make yourself at home already,{w=0.2} [chosen_endearment]!"
 
         else:
-            n  "Now get comfy already!"
+            n 2nchgnl "Now get comfy already,{w=0.2} dummy!"
     
     else:
-        n  "A-{w=0.2}after all..."
-        n  "Looks like there's still {i}one{/i} connection here that isn't gonna flake out on me.{w=0.75}{nw}"
-        extend  " As if you even had a choice."
-        n  "Ehehe."
-        n  "Welcome back,{w=0.2} [player]!"
+        n 7ccsbgl "A-{w=0.2}after all..."
+        n 7fsqbgl "Looks like there's still {i}one{/i} connection here that isn't gonna flake out on me.{w=0.75}{nw}"
+        extend 3fcsbgsbr " As if you even had a choice."
+        n 3fcssmsbr "Ehehe."
+        n 3fchbg "Welcome back,{w=0.2} [player]!"
 
     return
 

@@ -366,7 +366,8 @@ label idle_reading_renpy_for_dummies:
 
 label idle_reading_a_la_mode:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
-    show prop a_la_mode_manga_held zorder JN_PROP_ZORDER
+    $ jnPause(0.5)
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_a_la_mode_manga_held"))
     show natsuki reading
     hide black with Dissolve(0.5)
     $ Natsuki.setIsReadingToRight(False)
@@ -393,7 +394,7 @@ label idle_reading_a_la_mode:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     show natsuki 1fchsmeme
-    hide prop
+    $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
     play audio drawer
     $ jnPause(1.3)
     hide black with Dissolve(0.5)
@@ -403,7 +404,8 @@ label idle_reading_a_la_mode:
 
 label idle_reading_step_by_step:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
-    show prop step_by_step_manga_held zorder JN_PROP_ZORDER
+    $ jnPause(0.5)
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_step_by_step_manga_held"))
     show natsuki reading
     hide black with Dissolve(0.5)
     $ Natsuki.setIsReadingToRight(False)
@@ -427,7 +429,7 @@ label idle_reading_step_by_step:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     show natsuki 1fchsmeme
-    hide prop
+    $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
     play audio drawer
     $ jnPause(1.3)
     hide black with Dissolve(0.5)
