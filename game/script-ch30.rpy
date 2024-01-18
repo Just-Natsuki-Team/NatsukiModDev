@@ -422,7 +422,7 @@ init python:
         """
         Runs every minute during breaks between topics
         """
-        jn_utils.save_game()
+        jn_utils.saveGame()
 
         # Check the daily affinity cap and reset if need be
         Natsuki.checkResetDailies()
