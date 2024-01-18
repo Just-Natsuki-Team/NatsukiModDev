@@ -92,6 +92,7 @@ image prop wintendo_twitch_playing free:
         pause 0.15
 
     repeat
+
 image prop wintendo_twitch_playing charging:
     "mod_assets/props/twitch/gaming/charging/wintendo_twitch_playing_a.png"
     pause 1
@@ -129,12 +130,14 @@ image prop wintendo_twitch_playing charging:
         pause 0.15
 
     repeat
+
 image prop wintendo_twitch_battery_low:
     "mod_assets/props/twitch/low_battery/wintendo_twitch_battery_low_a.png"
     pause 1
     "mod_assets/props/twitch/low_battery/wintendo_twitch_battery_low_b.png"
     pause 1
     repeat
+
 image prop wintendo_twitch_dead:
     "mod_assets/props/twitch/dead/wintendo_twitch_dead_a.png"
     pause 1
@@ -268,6 +271,7 @@ init python in jn_events:
             """
             self.label = label
             self.is_seen = False
+            self.shown_count = 0
             self.holiday_type = holiday_type
             self.conditional = conditional
             self.affinity_range = affinity_range
@@ -299,6 +303,7 @@ init python in jn_events:
         def filterHolidays(
             holiday_list,
             is_seen=None,
+            shown_count=None,
             holiday_types=None,
             affinity=None,
             holiday_completion_state=None
@@ -307,7 +312,9 @@ init python in jn_events:
             Returns a filtered list of holidays, given an holiday list and filter criteria.
 
             IN:
-                - holiday_list - the list of JNHoliday objects to query
+                - holiday_list - the list of JNHoliday objects to query#
+                - is_seen - boolean state the seen flag of the holiday must be
+                - shown_count - int number of times the holiday must have been seen before
                 - holiday_types - list of JNHolidayTypes the holiday must be in
                 - affinity - minimum affinity state the holiday must have
                 - holiday_completion_state - boolean state the completion state corresponding to each holiday must be
@@ -320,6 +327,7 @@ init python in jn_events:
                 for _holiday in holiday_list
                 if _holiday.__filterHoliday(
                     is_seen,
+                    shown_count,
                     holiday_types,
                     affinity,
                     holiday_completion_state
@@ -334,7 +342,8 @@ init python in jn_events:
                 dictionary representation of the holiday object
             """
             return {
-                "is_seen": self.is_seen
+                "is_seen": self.is_seen,
+                "shown_count": self.shown_count
             }
 
         def currAffinityInAffinityRange(self, affinity_state=None):
@@ -358,6 +367,7 @@ init python in jn_events:
             """
             if store.persistent._jn_holiday_list[self.label]:
                 self.is_seen = store.persistent._jn_holiday_list[self.label]["is_seen"]
+                self.shown_count = store.persistent._jn_holiday_list[self.label]["shown_count"] if "shown_count" in store.persistent._jn_holiday_list[self.label] else 0
 
         def __save(self):
             """
@@ -368,6 +378,7 @@ init python in jn_events:
         def __filterHoliday(
             self,
             is_seen=None,
+            shown_count=None,
             holiday_types=None,
             affinity=None,
             holiday_completion_state=None
@@ -376,13 +387,20 @@ init python in jn_events:
             Returns True, if the holiday meets the filter criteria. Otherwise False.
 
             IN:
+                - holiday_list - the list of JNHoliday objects to query#
+                - is_seen - boolean state the seen flag of the holiday must be
+                - shown_count - int number of times the holiday must have been seen before
                 - holiday_types - list of JNHolidayTypes the holiday must be in
                 - affinity - minimum affinity state the holiday must have
+                - holiday_completion_state - boolean state the completion state corresponding to each holiday must be
 
             OUT:
                 - True, if the holiday meets the filter criteria. Otherwise False
             """
             if is_seen is not None and self.is_seen != is_seen:
+                return False
+
+            elif shown_count is not None and self.shown_count < shown_count:
                 return False
 
             elif holiday_types is not None and not self.holiday_type in holiday_types:
@@ -442,6 +460,7 @@ init python in jn_events:
             """
             store.persistent._jn_event_completed_count += 1
             self.is_seen = True
+            self.shown_count += 1
             self.__save()
 
             if not self.isCompleted():
@@ -3644,15 +3663,13 @@ label holiday_halloween:
     extend 4fcsbg " That's what I thought,{w=0.2} [player].{w=1.25}{nw}"
     extend 3fchbg " Halloween is the best!"
 
-    # Not ideal conditioning; holidays should really have a shown_count - see: #813. Replace this check and delete persistent flag once this is done!
-    # Will need to migrate other holidays for shown counts too... FML.
-    if Natsuki.isLove(higher=True) and not persistent._jn_player_love_halloween_seen:
+    if Natsuki.isLove(higher=True) and jn_events.getHoliday("holiday_halloween").shown_count == 0:
         n 3clrbo "..."
         n 4clrpu "Or...{w=1}{nw}"
         extend 4klrsl " I guess it would be."
         n 5csrslsbl "Not like I'd be the kind to know,{w=0.2} a-{w=0.2}after all."
 
-        if "holiday_christmas_day" in persistent._seen_ever:
+        if jn_events.getHoliday("holiday_christmas_day").shown_count > 0:
             n 5cnmsl "..."
             n 2knmfl "What?{w=0.75}{nw}"
             extend 2kllfll " Don't you remember,{w=0.2} [player]?{w=0.75}{nw}"

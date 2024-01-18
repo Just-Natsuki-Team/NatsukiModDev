@@ -235,7 +235,7 @@ label quit:
                 Natsuki.clearQuitApology()
 
         # Save game data
-        jn_utils.save_game()
+        jn_utils.saveGame()
 
         # Finally quit
         renpy.quit()

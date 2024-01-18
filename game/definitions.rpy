@@ -1864,7 +1864,7 @@ init -100 python in jn_utils:
         """
         return __KEY_VALID
 
-    def save_game():
+    def saveGame():
         """
         Saves all game data.
         """
