@@ -50,9 +50,9 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
     </td>
     <td align="center">
         <a href="https://github.com/Edgarmods">
-            <img src="https://avatars.githubusercontent.com/u/68255592?v=4" width="100;" alt="Edgarmods"/>
+            <img src="https://avatars.githubusercontent.com/u/68255592?v=4" width="100;" alt="Primrose"/>
             <br />
-            <sub><b>Edgarmods</b></sub>
+            <sub><b>Primrose</b></sub>
         </a>
     </td></tr>
 <tr>

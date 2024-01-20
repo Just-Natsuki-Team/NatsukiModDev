@@ -10485,6 +10485,20 @@ label talk_daily_joke(from_unlock=False):
         elif dialogue_choice == 3:
             n 1fsrem "Ugh..."
 
+    elif daily_joke.joke_category == jn_jokes.JNJokeCategories.confusing:
+        $ dialogue_choice = random.randint(1, 3)
+        if dialogue_choice == 1:
+            n 1cdwpu "...Huh."
+
+        elif dialogue_choice == 2:
+            n 1tdrsl "..."
+            n 1tdlpu "O-{w=0.2}kay..."
+
+        elif dialogue_choice == 3:
+            n 1tdwca "..."
+            n 1tdwaj "Uh...{w=1}{nw}"
+            extend 1tdwbo " huh."
+
     else:
         $ dialogue_choice = random.randint(1, 6)
         if dialogue_choice == 1:
@@ -10600,6 +10614,30 @@ label talk_daily_joke(from_unlock=False):
             extend 1fcsca " I think that's more than enough for today."
 
         show natsuki 1fcspo
+
+    elif daily_joke.joke_category == jn_jokes.JNJokeCategories.confusing:
+        if dialogue_choice == 1:
+            n 1cdwslsbl "..."
+            n 1cnmslsbl "..."
+            n 1cdrslsbl "..."
+            n 1cdrflsbr "...Yeah.{w=0.75}{nw}"
+            extend 1csrcasbr " Not much to say about {i}that{/i} one,{w=0.2} [player]."
+
+        elif dialogue_choice == 2:
+            n 1tdwbo "..."
+            n 1tdwfl "I...{w=1}{nw}"
+            extend 1cslslsbr " don't get it.{w=0.75}{nw}"
+            extend 1cnmemsbr " Was that even {i}meant{/i} to be funny or what?"
+            n 1clrajsbr "'Jokes for everyone',{w=0.5}{nw}"
+            extend 1csrbosbr " my butt."
+
+        else:
+            n 1csrfl "...Yeah."
+            n 1tlrfl "I...{w=1}{nw}"
+            extend 1csrsssbl " think we're about done with this for today,{w=0.5}{nw}" 
+            extend 1cslcasbl " [player]."
+
+        show natsuki 1nsrbo
 
     else:
         if dialogue_choice == 1:
@@ -10868,6 +10906,31 @@ label talk_daily_jokes_seen_before_loop:
 
             show natsuki 1cdwca
 
+        elif joke_choice.joke_category == jn_jokes.JNJokeCategories.confusing:
+            if dialogue_choice == 1:
+                n 1cdwpu "...[joke_choice.display_name],{w=0.2} [player]?{w=0.75}{nw}"
+                extend 1tsqpu " Are you sure?"
+                n 1tslsl "..."
+                n 1tllbo "Well...{w=1}{nw}"
+                extend 1tdlsl " if you say so,{w=0.2} I guess."
+
+            elif dialogue_choice == 2:
+                n 1tnmpu "...Really?{w=0.75}{nw}"
+                extend 1tsqpu " [joke_choice.display_name]?"
+                n 1tsrbo "...Huh.{w=0.75}{nw}"
+                extend 1tlraj " If you insist.{w=0.75}{nw}"
+                extend 1ccsflsbl " Just don't say I didn't warn you."
+            
+            else:
+                n 1ccsflsbr "...Wait.{w=0.75}{nw}"
+                extend 1ccsflsbr " [joke_choice.display_name]?{w=0.75}{nw}"
+                extend 1tsqslsbr " You sure?"
+                n 1ccssssbl "What?{w=0.75}{nw}"
+                extend 1csqsssbl " Do you actually {i}get{/i} that joke or something?"
+                n 1ccsajsbl "...Whatever."
+
+            show natsuki 1cdwca
+
         else:
             if dialogue_choice == 1:
                 n 1unmaj "[joke_choice.display_name]?{w=0.75}{nw}"
@@ -10962,6 +11025,29 @@ label talk_daily_jokes_seen_before_loop:
             extend 1nllaj " So..."
             show natsuki 1tnmsl
 
+        elif joke_choice.joke_category == jn_jokes.JNJokeCategories.confusing:
+            if dialogue_choice == 1:
+                n 1cslfl "...Yeah.{w=0.75}{nw}"
+                extend 1cslaj " Makes just about as much sense to me as it did before."
+                n1 1csrsl "{i}Not much{/i}."
+
+            elif dialogue_choice == 2:
+                n 1csrsl "..."
+                n 1ccsajsbl "Well,{w=0.5}{nw}"
+                extend 1cllflsbl " I gotta admit.{w=0.75}{nw}"
+                extend 1cdwflsbl " I've still got no idea who {i}that{/i} joke is meant to be for."
+                n 1csrbosbl "..."
+            
+            else:
+                n 1ccsaj "Uh huh.{w=0.75}{nw}"
+                extend 1ccsbg " Yep!"
+                n 1cllflsbr "...Still no idea what all the fuss is about with{w=0.75}{nw}"
+                extend 1cslflsbr " {i}that one{/i}."
+                n 1cslbosbr "..."
+
+            n 1ccsajsbr "W-{w=0.2}well,{w=0.2} anyway."
+            show natsuki 1tnmca
+
         else:
             if dialogue_choice == 1:
                 n 1fcssmeme "Ehehe.{w=0.75}{nw}"
@@ -10985,6 +11071,10 @@ label talk_daily_jokes_seen_before_loop:
                 if joke_choice.joke_category == jn_jokes.JNJokeCategories.corny or joke_choice.joke_category == jn_jokes.JNJokeCategories.bad:
                     n 1nlrsl "...Alright.{w=0.75}{nw}"
                     extend 1csrsssbl " Just try and pick out a good one this time."
+
+                elif joke_choice.joke_category == jn_jokes.JNJokeCategories.confusing:
+                    n 1unmbo "'Kay.{w=0.75}{nw}"
+                    extend 1tsqbosbl " Just pick out a normal one this time."
 
                 else:
                     n 1nchbg "Gotcha!{w=0.75}{nw}"
@@ -11013,7 +11103,7 @@ label talk_daily_jokes_seen_before_loop:
 
                     show natsuki 1fchsmeme
 
-                elif joke_choice.joke_category == jn_jokes.JNJokeCategories.corny:
+                elif joke_choice.joke_category == jn_jokes.JNJokeCategories.corny or joke_choice.joke_category == jn_jokes.JNJokeCategories.confusing:
                     n 1ncsss "Heh.{w=0.75}{nw}"
                     extend 1ulrfl " Well...{w=1}{nw}"
                     extend 1nslsssbl " can't say I blame you,{w=0.2} [player]."

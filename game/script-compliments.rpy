@@ -23,7 +23,7 @@ init 0 python in jn_compliments:
     # The last compliment the player gave to Natsuki
     last_compliment_type = None
 
-    def get_all_compliments():
+    def getAllCompliments():
         """
         Gets all compliment topics which are available
 
@@ -40,17 +40,17 @@ label player_compliments_start:
     python:
         compliment_menu_items = [
             (_compliment.prompt, _compliment.label)
-            for _compliment in jn_compliments.get_all_compliments()
+            for _compliment in jn_compliments.getAllCompliments()
         ]
         compliment_menu_items.sort()
 
-    call screen scrollable_choice_menu(compliment_menu_items, ("Nevermind.", None), 400, "mod_assets/icons/compliments.png")
+    call screen scrollable_choice_menu(compliment_menu_items, ("Go back", None), 400, "mod_assets/icons/compliments.png")
 
-    if _return:
+    if isinstance(_return, basestring):
         $ push(_return)
         jump call_next_topic
 
-    return
+    jump talk_menu
 
 init 5 python:
     registerTopic(

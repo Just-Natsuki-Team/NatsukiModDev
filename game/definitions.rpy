@@ -1353,6 +1353,18 @@ init -100 python in jn_utils:
         else:
             return ["th", "st", "nd", "rd", "th"][min(value % 10, 4)]
 
+    def diceRoll(faces):
+        """
+        Returns True or False based on whether a roll with the given faces returns one.
+
+        IN:
+            - faces - int number of faces for the diceroll
+
+        OUT:
+            - True if the roll equals one, otherwise False
+        """
+        return random.randint(1, faces) == 1
+
     def getPlayerInitial():
         """
         Returns the first letter of the player's name.
