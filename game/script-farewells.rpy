@@ -154,7 +154,7 @@ label farewell_force_quit:
     play audio glitch_c
 
     n 1uskem "H-{w=0.3}huh?{w=1}{nw}"
-    extend 4uscwr " N-{w=0.3}no!{w=0.2} Wait!!{w=0.2} PLEASE-{w=0.3}{nw}"
+    extend 4uscwr " N-{w=0.3}no!{w=0.2} Wait!!{w=0.2} PLEASE-{w=0.1}{nw}"
     show natsuki 4kchupltsa at jn_center zorder JN_NATSUKI_ZORDER
 
     play audio static
