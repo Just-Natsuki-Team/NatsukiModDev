@@ -586,6 +586,21 @@ init python in jn_jokes:
         display_name="Instant coffee",
         joke_category=JNJokeCategories.neutral
     ))
+    __registerJoke(JNJoke(
+        label="joke_butterfly",
+        display_name="Butterflies",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_crampons",
+        display_name="Ice climbers",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_frog_notes",
+        display_name="Frog notes",
+        joke_category=JNJokeCategories.corny
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -1436,5 +1451,43 @@ label joke_coffee_grind:
     n 1fcsss "Heh."
     n 1flrbs "'Cause they were sick of the {i}grind{/i},{w=0.75}{nw}"
     extend 1fchgnelg " of course!"
+
+    return
+
+label joke_butterfly:
+    n 1ccsss "Heh."
+    n 1ccsbg "Better be sitting,{w=0.2} [player].{w=0.75}{nw}"
+    extend 1fnmbg " 'Cause I can guarantee this one'll {i}bug{/i} you!"
+    n 1fdwaj "What's the hardest kind of insect to catch?"
+    n 1fsqsm "..."
+    n 1fcssm "Ehehe."
+    n 1fnmbg "A {i}butter{/i}{w=0.75}{nw}"
+    extend 1fsgbs " -fly,{w=0.5}{nw}"
+    extend 1fchgn " Obviously!"
+
+    return
+
+label joke_crampons:
+    n 1fdrfl "Sheesh...{w=1}{nw}"
+    extend 1fsrem " Is this one seriously the {i}best{/i} they could do?{w=0.75}{nw}"
+    extend 1fcsem " Cut me a break."
+    n 1fllfl "Ugh.{w=0.75}{nw}"
+    extend 1fcsfl " What's the worst thing to give an ice climber with a sprain?"
+    n 1csqsl "..."
+    n 1csremsbr "{i}Cramp{/i}{w=0.75}{nw}"
+    extend 1csrajsbr " -ons."
+
+    return
+
+label joke_frog_notes:
+    n 1ccsemesi "..."
+    n 1cslflsbl "Guess I better apologize in advance for this one,{w=0.2} [player].{w=0.75}{nw}"
+    extend 1ccsemsbl " Ugh."
+    n 1ccsaj "Alright.{w=0.75}{nw}"
+    extend 1csgsl " How do frogs take their notes for class?"
+    n 1clrsl "..."
+    n 1fsrsl "..."
+    n 1fcsfl "They use lily-{w=0.75}{nw}"
+    extend 1csqfl " {i}pads{/i}."
 
     return

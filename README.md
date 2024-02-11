@@ -87,7 +87,7 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
     </tr>
 </table>
 
-### With thanks to our amazing guest artists:
+### With thanks to our amazing guest artists and musicians:
 <table>
     <tr>
         <td align="center">
@@ -99,9 +99,16 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
         </td>
         <td align="center">
             <a href="https://twitter.com/TheShunBun">
-                <img src="https://justnatsuki.club/img/portraits/shunbun.png" width="100;" alt="Almay_art"/>
+                <img src="https://justnatsuki.club/img/portraits/shunbun.png" width="100;" alt="TheShunBun"/>
                 <br />
                 <sub><b>TheShunBun</b></sub>
+            </a>
+        </td>
+        <td align="center">
+            <a href="https://youtube.com/@ivaadenfebbs">
+                <img src="https://justnatsuki.club/img/portraits/febbs.png" width="100;" alt="Febbs!"/>
+                <br />
+                <sub><b>Febbs!</b></sub>
             </a>
         </td>
     </tr>
@@ -111,6 +118,7 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
 
 - Snow, rain graphics thanks to Monika After Story team @ https://github.com/Monika-After-Story/MonikaModDev
 - License template thanks to Monika After Story team @ https://github.com/Monika-After-Story/MonikaModDev
+- _Strawberry Daydream_ (clubroom daytime theme), _Stars that Shimmer_ (clubroom nighttime theme) thanks to Febbs! @ https://youtube.com/@ivaadenfebbs
 - Our [contributors](https://github.com/Just-Natsuki-Team/NatsukiModDev/graphs/contributors)!
 - Our community, for being so patient despite our delays
 

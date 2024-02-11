@@ -1343,6 +1343,19 @@ init -100 python in jn_utils:
         else:
             return "a while"
 
+    def getMinutesSinceLastVisit():
+        """
+        Returns the number of minutes since the player's last visit.
+
+        OUT:
+            - Minutes elapsed since the last time JN was started.
+        """
+        if store.persistent.jn_last_visited_date is not None:
+            return (datetime.datetime.now() - store.persistent.jn_last_visited_date).total_seconds() / 60
+
+        else:
+            return (datetime.datetime.now() - datetime.datetime.today()).total_seconds() / 60
+
     def getNumberOrdinal(value):
         """
         Returns the ordinal (trailing characters) for a given numerical value.
@@ -1864,7 +1877,7 @@ init -100 python in jn_utils:
         """
         return __KEY_VALID
 
-    def save_game():
+    def saveGame():
         """
         Saves all game data.
         """

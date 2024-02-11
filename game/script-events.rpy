@@ -92,6 +92,7 @@ image prop wintendo_twitch_playing free:
         pause 0.15
 
     repeat
+
 image prop wintendo_twitch_playing charging:
     "mod_assets/props/twitch/gaming/charging/wintendo_twitch_playing_a.png"
     pause 1
@@ -129,12 +130,14 @@ image prop wintendo_twitch_playing charging:
         pause 0.15
 
     repeat
+
 image prop wintendo_twitch_battery_low:
     "mod_assets/props/twitch/low_battery/wintendo_twitch_battery_low_a.png"
     pause 1
     "mod_assets/props/twitch/low_battery/wintendo_twitch_battery_low_b.png"
     pause 1
     repeat
+
 image prop wintendo_twitch_dead:
     "mod_assets/props/twitch/dead/wintendo_twitch_dead_a.png"
     pause 1
@@ -626,6 +629,7 @@ init python in jn_events:
         renpy.show_screen("hkb_overlay")
         renpy.play(filename=audio.switch_flip, channel="audio")
         renpy.play(filename=bgm, channel="music")
+        jn_custom_music._last_music_option = jn_custom_music.JNMusicOptionTypes.location
         renpy.hide("black")
 
     # Holiday registration
@@ -911,7 +915,7 @@ label event_relationship_doubts:
         "Enter.":
             pass
 
-    $ jn_events.displayVisuals(natsuki_sprite_code="1fcsupl", bgm="mod_assets/bgm/just_natsuki.ogg")
+    $ jn_events.displayVisuals(natsuki_sprite_code="1fcsupl", bgm=jn_custom_music.getMusicFileRelativePath(file_name=main_background.location.getCurrentTheme(), is_custom=False))
     $ jn_globals.force_quit_enabled = True
 
     n 1fsqunltsb "..."
@@ -2792,6 +2796,196 @@ label event_blackjack_unlock:
             n 2cllss "Well,{w=0.2} now that's finally out of the way..."
             $ chosen_descriptor = jn_utils.getRandomTease() if Natsuki.isEnamored(higher=True) else player
             n 7fchbgl "What's happening,{w=0.2} [chosen_descriptor]?"
+
+    return
+
+# Natsuki decides it's finally time to change things up a bit!
+# init 5 python:
+#     registerTopic(
+#         Topic(
+#             persistent._event_database,
+#             label="event_change_of_atmosphere",
+#             unlocked=True,
+#             conditional="persistent.jn_total_visit_count > 3 and jn_utils.get_total_gameplay_minutes() > 30",
+#             affinity_range=(jn_affinity.NORMAL, None)
+#         ),
+#         topic_group=TOPIC_TYPE_EVENT
+#     )
+
+label event_change_of_atmosphere:
+    $ jn_globals.force_quit_enabled = False
+    $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_RAIN)
+    n "..."
+    n "Mmmmmmnnn..."
+    n "...Uh?"
+    $ jnPause(3)
+
+    n "Uuuuuu... my head..."
+    n "What time is it, even... H-how long was I out for?"
+    n "Man..."
+
+    if jn_utils.getMinutesSinceLastVisit() > 60:
+        extend " I {i}knew{/i} trying to get some sleep at my desk wasn't going to work..."
+
+    else:
+        extend " I {i}knew{/i} trying to take a powernap at my desk was a {i}stupid{/i} idea..."
+
+    n "Ugh."
+    $ jnPause(3)
+
+    n "And these stupid wooden chairs don't help... Would it have seriously killed them to get furniture that was actually comfortable or what?"
+    n "Sheesh... Not like we {i}weren't{/i} gonna be sat here on our butts for hours."
+    n "My back is {w=0.2}{i}killing{/i}{w=0.2} me..."
+
+    $ jnPause(3)
+    play audio chair_out
+    n "Gotta wake up... I gotta wake up..."
+    n "Ugh... Think, [n_name]! There's gotta be some coffee or something around here somewhe-"
+    play audio puddle_step
+    $ jnPause(0.5)
+
+    n "A-ack! It's all wet! What the...?!"
+    $ jnPause(1)
+    play audio drip
+    $ jnPause(0.25)
+    play audio drip
+    
+    n "..."
+    n "Is that... {i}rainwater{/i}...? Oh, you have {w=0.2}{b}got{/b}{w=0.2} to be joking. Why now?!"
+    n "Who even built this crappy school? The carpentry club?!"
+    $ jnPause(2)
+
+    n "No... Don't tell me."
+    n "..."
+    play audio puddle_step
+    $ jnPause(0.25)
+    n "Uuuuuuu-!" 
+    n "It's {i}everywhere{/i}! Even the teacher's desk is dripping now!"
+    n "...Gross. And my slippers are all soaked through now, too..."
+    n "Great. Just perfect."
+    n "I totally needed all this in my life right now."
+    n "...{i}Not{/i}."
+    $ jnPause(2)
+
+    n "..."
+    n "Come on..."
+    $ time_of_day = "day" if jn_is_day() else "night"
+    n "Where did they leave that stupid bucket? I {i}know{/i} they had one in here! I had to stand outside with it enough times..." 
+    n "Could this [time_of_day] {i}possibly{/i} get any worse-"
+
+    play audio metal_clang
+    n "O-ow! Who-!"
+    $ jnPause(0.25)
+    play audio water_splash
+    $ jnPause(3)
+
+    n "..."
+    n "..."
+    n "..."
+    play audio chair_in
+    $ jnPause(3)
+
+    menu:
+        "Enter...":
+            pass
+
+    if preferences.get_volume("music") == 0:
+        $ preferences.set_volume("music", 0.75)
+        
+    $ jn_events.displayVisuals("1ndwpu")
+    $ jn_globals.force_quit_enabled = True
+
+    if Natsuki.isEnamored(higher=True):
+        n "...Heh."
+        extend " [player]."
+        extend " You really have a knack for choosing the worst times to show up sometimes."
+        n "You do know that..."
+        extend " Right?"
+
+    elif Natsuki.isHappy(higher=True):
+        n "..."
+        n "...Huh?"
+        extend " [player_initial]-[player]!"
+        extend " "
+        n "Did you seriously have to pick now of all times to show up?"
+        extend " Jeez..."
+
+    else:
+        n "..."
+        n "...Huh?"
+        extend " Oh. [player]."
+        n "..."
+        n "Of course you'd pick now of all times to decide to show up, too."
+
+    n "..."
+    n "...Yeah."
+    extend " As you can probably tell."
+    extend " I haven't exactly been having fun here."
+    n "'Brand new classrooms!', my butt."
+    n "They were always pretty lousy."
+    extend " But I swear it was never {i}this{/i} bad before!"
+    n "No, really!"
+    extend " I'm being serious here, [player]!"
+
+    if get_topic("event_warm_package").shown_count > :
+        n "I-I know I said that the heating was totally busted in here already,"
+        extend " but it was never actually {i}leaking{/i} or anything!"
+        extend " At least not this much."
+
+    else:
+        n "Stuff like the heating in here was always completely busted."
+        extend " We were never just sitting around soaking or anything!"
+        n "...Or at least not as bad as this."
+
+    n ""
+
+    # Contemplate about safety of classroom?
+    n "And actually."
+    extend " N-now that I think about it."
+    n "If this place can't even keep the weather out, then..."
+    n "..."
+    n "Yeah, no."
+    extend  " I really don't wanna think about that right now."
+    n "Man..."
+    n "As if I didn't have enough on my plate right now."
+    extend " Now I gotta remember to mop up this dump later too."
+    extend " Great."
+
+    n "..."
+    n "..."
+    n "Uuuuuuu...!"
+    n "And would it kill this place to get some different music for once?"
+    extend " I don't even know how long I've been listening to the same song now."
+    n "Well, newsflash:"
+    extend " I'm sick of it!"
+    extend " It's like everything is coming together just to bug the crap out of me!"
+
+    show natsuki angry 1
+    $ jnPause(1)
+    show natsuki angry 2
+    
+    n "The "
+    # TODO: transition to angry outburst
+
+    n "Why can't this dump just KNOCK!"
+    extend " IT!"
+    extend  " OFFF!"
+    show natsuki angry
+
+    stop music fadeout 1
+    $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_SUNNY)
+    $ jnPause(1)
+
+    $ renpy.play(filename=jn_custom_music.getMusicFileRelativePath(file_name=main_background.location.getCurrentTheme(), is_custom=False), channel="music")
+
+    if Natsuki.isEnamored(higher=True):
+        n ""
+
+    elif Natsuki.isHappy(higher=True):
+        n ""
+
+    else:
+        n ""
 
     return
 

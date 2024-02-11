@@ -439,8 +439,8 @@ init 0 python in jn_atmosphere:
             renpy.music.stop(channel="weather_loop", fadeout=5.0)
 
         # Get images to show based on day/night state
-        sky_to_show = weather.day_sky_image if store.main_background.is_day() else weather.night_sky_image
-        clouds_to_show = weather.day_clouds_image if store.main_background.is_day() else weather.night_clouds_image
+        sky_to_show = weather.day_sky_image if store.main_background.isDay() else weather.night_sky_image
+        clouds_to_show = weather.day_clouds_image if store.main_background.isDay() else weather.night_clouds_image
 
         # Show the selected sky
         #store.jnPause(0.1)
@@ -461,7 +461,7 @@ init 0 python in jn_atmosphere:
 
         # Add the particles, if defined
         if weather.day_particles_image or weather.night_particles_image:
-            if store.main_background.is_day() and weather.day_particles_image:
+            if store.main_background.isDay() and weather.day_particles_image:
                 renpy.show(name=weather.day_particles_image, zorder=_PARTICLES_Z_INDEX)
 
             elif weather.night_particles_image:
@@ -608,7 +608,7 @@ init 0 python in jn_atmosphere:
 label weather_change:
     $ previous_weather = jn_atmosphere.current_weather
     $ renpy.show("natsuki {0}".format(jnGetNatsukiRandomStaticIdleSprite()))
-    $ main_background.check_redraw()
+    $ main_background.checkRedraw()
     $ jn_atmosphere.updateSky()
 
     if (

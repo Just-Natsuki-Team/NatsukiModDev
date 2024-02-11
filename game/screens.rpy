@@ -869,6 +869,9 @@ screen navigation():
             textbutton _("Update now!") action OpenURL(jn_globals.LINK_JN_LATEST)
             null height 16
 
+        else:
+            textbutton _("Check version") action Function(jn_utils.fireAndForgetFunction, jn_data_migrations.checkCurrentVersionIsLatestFromMenu)
+
         if main_menu:
             textbutton _("New Game"):
                 action If(
@@ -1380,10 +1383,10 @@ screen preferences():
                         bar value Preference("auto-forward time")
 
                         label _("Sunrise: {0}AM".format(jn_locations.getHourFromSunriseSunsetValue(persistent._jn_sunrise_setting)))
-                        bar value FieldValue(persistent, "_jn_sunrise_setting", range=5, max_is_zero=False, style="slider")
+                        bar value FieldValue(persistent, "_jn_sunrise_setting", range=6, max_is_zero=False, style="slider")
 
                         label _("Sunset: {0}PM".format(jn_locations.getHourFromSunriseSunsetValue(persistent._jn_sunset_setting)))
-                        bar value FieldValue(persistent, "_jn_sunset_setting", range=5, max_is_zero=False, style="slider")
+                        bar value FieldValue(persistent, "_jn_sunset_setting", range=6, max_is_zero=False, style="slider")
 
                     vbox:
                         if config.has_music:
@@ -1863,13 +1866,13 @@ style skip_triangle:
 
 screen notify(message):
 
-    zorder 100
+    zorder 1000
     style_prefix "notify"
 
     frame at notify_appear:
         text message
 
-    timer 3.25 action Hide('notify')
+    timer 3.75 action Hide('notify')
 
 
 transform notify_appear:
