@@ -192,6 +192,11 @@ label ch30_init:
                 push(jn_events.selectEvent())
                 renpy.call("call_next_topic", False)
 
+            elif persistent._jn_player_allow_legacy_music_switch_event and get_topic("event_change_of_atmosphere").shown_count == 0:
+                # Hacky, but no other way to force an event here - force the custom music switch event if it applies
+                push("event_change_of_atmosphere")
+                renpy.call("call_next_topic", False)
+
             else:
                 greeting_topic = jn_greetings.selectGreeting()
                 push(greeting_topic.label)

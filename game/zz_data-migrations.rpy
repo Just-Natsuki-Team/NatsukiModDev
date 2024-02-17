@@ -477,6 +477,10 @@ init python in jn_data_migrations:
         
         if jn_utils.deleteFileFromDirectory(os.path.join(renpy.config.basedir, "game/threading.rpyc")):
             jn_utils.log("Removed unused compiled file: game/threading.rpyc")
+
+        if store.persistent.jn_total_visit_count > 0 and Natsuki.isNormal(higher=True):
+            # Allow players who have experienced the old music to see the transition event
+            store.persistent._jn_player_allow_legacy_music_switch_event = True
         
         if store.persistent.affinity >= 12500:
             store.persistent._jn_pic_aff = store.persistent.affinity

@@ -6,6 +6,7 @@ default persistent._jn_event_completed_count = 0
 
 default persistent._jn_player_celebrates_christmas = None
 default persistent._jn_player_love_halloween_seen = None
+default persistent._jn_player_allow_legacy_music_switch_event = False
 
 # Transforms for overlays
 transform jn_glasses_pre_slide:
@@ -2800,17 +2801,17 @@ label event_blackjack_unlock:
     return
 
 # Natsuki decides it's finally time to change things up a bit!
-# init 5 python:
-#     registerTopic(
-#         Topic(
-#             persistent._event_database,
-#             label="event_change_of_atmosphere",
-#             unlocked=True,
-#             conditional="persistent.jn_total_visit_count > 3 and jn_utils.get_total_gameplay_minutes() > 30",
-#             affinity_range=(jn_affinity.NORMAL, None)
-#         ),
-#         topic_group=TOPIC_TYPE_EVENT
-#     )
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._event_database,
+            label="event_change_of_atmosphere",
+            unlocked=True,
+            conditional="persistent._jn_player_allow_legacy_music_switch_event",
+            affinity_range=(jn_affinity.NORMAL, None)
+        ),
+        topic_group=TOPIC_TYPE_EVENT
+    )
 
 label event_change_of_atmosphere:
     $ jn_globals.force_quit_enabled = False
@@ -2833,7 +2834,7 @@ label event_change_of_atmosphere:
     n "Ugh."
     $ jnPause(3)
 
-    n "And these stupid wooden chairs don't help... Would it have seriously killed them to get furniture that was actually comfortable or what?"
+    n "And these busted wooden chairs... Would it have seriously killed them to get furniture that was actually comfortable or what?"
     n "Sheesh... Not like we {i}weren't{/i} gonna be sat here on our butts for hours."
     n "My back is {w=0.2}{i}killing{/i}{w=0.2} me..."
 
@@ -2851,8 +2852,8 @@ label event_change_of_atmosphere:
     play audio drip
     
     n "..."
-    n "Is that... {i}rainwater{/i}...? Oh, you have {w=0.2}{b}got{/b}{w=0.2} to be joking. Why now?!"
-    n "Who even built this crappy school? The carpentry club?!"
+    n "Is that... {i}rainwater{/i}...? Oh, you have {w=0.2}{b}got{/b}{w=0.2} to be joking. Really?! Why now?!"
+    n "Who even built this crappy school? The {i}carpentry club{/i}?!"
     $ jnPause(2)
 
     n "No... Don't tell me."
@@ -2891,8 +2892,8 @@ label event_change_of_atmosphere:
 
     if preferences.get_volume("music") == 0:
         $ preferences.set_volume("music", 0.75)
-        
-    $ jn_events.displayVisuals("1ndwpu")
+
+    $ jn_events.displayVisuals(natsuki_sprite_code="1ndwpu", bgm="mod_assets/bgm/just_natsuki.ogg")
     $ jn_globals.force_quit_enabled = True
 
     if Natsuki.isEnamored(higher=True):
@@ -2906,8 +2907,8 @@ label event_change_of_atmosphere:
         n "..."
         n "...Huh?"
         extend " [player_initial]-[player]!"
-        extend " "
-        n "Did you seriously have to pick now of all times to show up?"
+        extend " When did you get here, all of a sudden?!"
+        n "...And did you seriously have to pick {i}now{/i} of all times to show up?"
         extend " Jeez..."
 
     else:
@@ -2923,7 +2924,7 @@ label event_change_of_atmosphere:
     extend " I haven't exactly been having fun here."
     n "'Brand new classrooms!', my butt."
     n "They were always pretty lousy."
-    extend " But I swear it was never {i}this{/i} bad before!"
+    extend " But I swear it was never {i}this{/i} bad before..."
     n "No, really!"
     extend " I'm being serious here, [player]!"
 
@@ -2934,16 +2935,15 @@ label event_change_of_atmosphere:
 
     else:
         n "Stuff like the heating in here was always completely busted."
-        extend " We were never just sitting around soaking or anything!"
-        n "...Or at least not as bad as this."
+        extend " It was never like we were just sitting around soaking or anything!"
+        n "...Or at least not as badly as this."
 
-    n ""
-
-    # Contemplate about safety of classroom?
+    n "Such a joke."
+    n "..."
     n "And actually."
     extend " N-now that I think about it."
     n "If this place can't even keep the weather out, then..."
-    n "..."
+    n "..." # worry
     n "Yeah, no."
     extend  " I really don't wanna think about that right now."
     n "Man..."
@@ -2958,34 +2958,79 @@ label event_change_of_atmosphere:
     extend " I don't even know how long I've been listening to the same song now."
     n "Well, newsflash:"
     extend " I'm sick of it!"
-    extend " It's like everything is coming together just to bug the crap out of me!"
+    extend " It's like everything is coming together just to get on my nerves!"
+
+    n "I feel like crap," 
+    extend " it's {i}always{/i} freezing..."
+    n "All my stuff is getting soaked..."
+    n "And that {i}music{/i}..."
 
     show natsuki angry 1
     $ jnPause(1)
     show natsuki angry 2
-    
-    n "The "
-    # TODO: transition to angry outburst
+    $ jnPause(1)
+    show natsuki angry 3
 
-    n "Why can't this dump just KNOCK!"
+    n "Nnnnnnnn-!"
+    n "Just...." 
+    n "Seriously..."
+    n "Why can't this dump just "
+    extend " KNOCK!"
     extend " IT!"
-    extend  " OFFF!"
-    show natsuki angry
+    extend " OFF!"
 
+    show natsuki angry
     stop music fadeout 1
     $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_SUNNY)
     $ jnPause(1)
+    show natsuki surprised
 
+    n "..."
+    n "..."
+    n "I..."
+    extend " still have no idea how I did that the first time."
+    extend " Huh."
+    n "W-well, at least that's the rain sorted out."
+    extend " Guess I won't have to mop up after all!"
+    n "Now, if the music could just hurry up and get the message too..."
+
+    show natsuki cocky
+    $ jnPause(3)
+
+    n "..."
+    n "I said," 
+    extend " now if the music could just {i}change{/i} already!"
+
+    show natsuki angy
+    $ jnPause(2)
+
+    n "Oh, for-!"
+    extend " What do I have to do to get a little atmosphere around her-!"
     $ renpy.play(filename=jn_custom_music.getMusicFileRelativePath(file_name=main_background.location.getCurrentTheme(), is_custom=False), channel="music")
+    show natsuki oh
+    $ jnPause(2)
 
-    if Natsuki.isEnamored(higher=True):
-        n ""
+    n "Heh."
+    extend " Y-yeah!"
+    extend " Now {i}that's{/i} what I'm talking about!"
+    extend " Some actual freaking music for once!"
+    n "A-and speaking of changing tunes..."
+    $ time_of_day = "today" if jn_is_day() else "tonight"
+    n "How about we start [time_of_day] on the right track too, huh?"
+    extend " Ehehe."
 
-    elif Natsuki.isHappy(higher=True):
-        n ""
+    if Natsuki.isLove(higher=True):
+        $ chosen_tease = jn_utils.getRandomTeaseName()
+        n "W-welcome back, []!"
+        extend " Now make yourself at home already!"
+
+    elif Natsuki.isEnamored(higher=True):
+        $ chosen_tease = jn_utils.getRandomTeaseName()
+        n "W-welcome back, you big [chosen_tease]!"
+        extend " Make yourself comfy already!"
 
     else:
-        n ""
+        n "W-welcome back, [player]!"
 
     return
 

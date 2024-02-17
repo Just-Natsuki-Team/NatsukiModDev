@@ -117,7 +117,6 @@ label music_menu:
         success = False
 
         if not jn_utils.createDirectoryIfNotExists(jn_custom_music.CUSTOM_MUSIC_DIRECTORY):
-            
             # Get the user's music, then sort the options for presentation
             custom_music_options = [jn_custom_music.JNCustomMusicSelectionOption(
                 display_prompt=music_file[0].split(".")[0],
@@ -452,6 +451,7 @@ screen custom_music_menu(items):
                             hover_sound gui.hover_sound
                             activate_sound gui.activate_sound
 
+                            # Visual option differentiation
                             if _value.option_type == jn_custom_music.JNMusicOptionTypes.bgm:
                                 idle_background Frame("mod_assets/buttons/choice_hover_blank_note.png", gui.frame_hover_borders, tile=gui.frame_tile)
 

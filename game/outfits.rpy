@@ -1108,6 +1108,11 @@ init -1 python in jn_outfits:
         IN:
             - outfit - the JNOutfit to delete
         """
+        if outfit.is_jn_outfit:
+            renpy.notify("Delete outfit failed; check log for more information.")
+            jn_utils.log("Failed to delete outfit {0}, as it is an official item and cannot be removed.".format(outfit.display_name))
+            return False
+
         # Create directory if it doesn't exist
         if jn_utils.createDirectoryIfNotExists(__CUSTOM_OUTFITS_DIRECTORY):
             jn_utils.log("custom_outfits directory was not found and had to be created.")
@@ -2170,7 +2175,7 @@ label outfits_wear_outfit:
 
         show natsuki 1fcspol
 
-        $ jn_rm_topic_from_event_list("new_wearables_outfits_unlocked")
+        $ jnRemoveTopicFromEventList("new_wearables_outfits_unlocked")
         jump new_wearables_outfits_unlocked
 
     n 4unmaj "Huh?{w=0.75}{nw}" 
@@ -2192,16 +2197,12 @@ label outfits_wear_outfit:
 
     python:
         # Get unlocked outfits, sort them and generate player options
-        options = []
         available_outfits = jn_outfits.JNOutfit.filterOutfits(
             outfit_list=jn_outfits.getAllOutfits(),
             unlocked=True)
-        available_outfits.sort(key = lambda option: option.display_name)
-
-        for outfit in available_outfits:
-            options.append((jn_utils.escapeRenpySubstitutionString(outfit.display_name), outfit))
-
-        options.insert(0, ("You pick!", "random"))
+        outfit_options = [(jn_utils.escapeRenpySubstitutionString(outfit.display_name), outfit) for outfit in available_outfits]
+        outfit_options.sort(key = lambda option: (not option[1].is_jn_outfit, option[1].display_name))
+        outfit_options.insert(0, ("You pick!", "random"))
 
     $ outfit_confirmed = False
     while not outfit_confirmed:
@@ -2212,7 +2213,7 @@ label outfits_wear_outfit:
         else:
             show natsuki option_wait_curious at jn_left
 
-        call screen scrollable_choice_menu(options, ("Nevermind.", None))
+        call screen outfit_item_menu(outfit_options)
         show natsuki at jn_center
 
         if isinstance(_return, jn_outfits.JNOutfit):
@@ -2346,7 +2347,7 @@ label outfits_reload:
         extend 7tlrfl " I-{w=0.5}{nw}"
         show natsuki 4udwflleshsbl
 
-        $ jn_rm_topic_from_event_list("new_wearables_outfits_unlocked")
+        $ jnRemoveTopicFromEventList("new_wearables_outfits_unlocked")
         jump new_wearables_outfits_unlocked
 
     else:
@@ -2380,7 +2381,7 @@ label outfits_suggest_outfit:
         n 1fcstrlesi "At {i}least{/i} show me what it is first!"
         show natsuki 1fcspol
 
-        $ jn_rm_topic_from_event_list("new_wearables_outfits_unlocked")
+        $ jnRemoveTopicFromEventList("new_wearables_outfits_unlocked")
         jump new_wearables_outfits_unlocked
 
     n 4unmaj "Ooh!{w=1}{nw}"
@@ -2407,7 +2408,7 @@ label outfits_remove_outfit:
         n 1fcstrlesi "At least show me what it is first!"
         show natsuki 1fcspol
 
-        $ jn_rm_topic_from_event_list("new_wearables_outfits_unlocked")
+        $ jnRemoveTopicFromEventList("new_wearables_outfits_unlocked")
         jump new_wearables_outfits_unlocked
 
     elif (
@@ -2502,10 +2503,10 @@ label outfits_create_select_headgear:
     python:
         unlocked_wearables = jn_outfits.JNWearable.filterWearables(wearable_list=jn_outfits.getAllWearables(), unlocked=True, wearable_type=jn_outfits.JNHeadgear)
         wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
-        wearable_options.sort(key = lambda option: option[1].display_name)
+        wearable_options.sort(key = lambda option: (not option[1].is_jn_wearable, option[1].display_name))
         wearable_options.insert(0, ("No headgear", "none"))
 
-    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+    call screen outfit_item_menu(wearable_options)
 
     if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNHeadgear):
         play audio clothing_ruffle
@@ -2522,9 +2523,9 @@ label outfits_create_select_hairstyle:
     python:
         unlocked_wearables = jn_outfits.JNWearable.filterWearables(wearable_list=jn_outfits.getAllWearables(), unlocked=True, wearable_type=jn_outfits.JNHairstyle)
         wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
-        wearable_options.sort(key = lambda option: option[1].display_name)
+        wearable_options.sort(key = lambda option: (option[1].is_jn_wearable, option[1].display_name))
 
-    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+    call screen outfit_item_menu(wearable_options)
 
     if isinstance(_return, jn_outfits.JNHairstyle):
         play audio hair_brush
@@ -2540,10 +2541,10 @@ label outfits_create_select_eyewear:
     python:
         unlocked_wearables = jn_outfits.JNWearable.filterWearables(wearable_list=jn_outfits.getAllWearables(), unlocked=True, wearable_type=jn_outfits.JNEyewear)
         wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
-        wearable_options.sort(key = lambda option: option[1].display_name)
+        wearable_options.sort(key = lambda option: (not option[1].is_jn_wearable, option[1].display_name))
         wearable_options.insert(0, ("No eyewear", "none"))
 
-    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+    call screen outfit_item_menu(wearable_options)
 
     if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNEyewear):
         python:
@@ -2559,10 +2560,10 @@ label outfits_create_select_accessory:
     python:
         unlocked_wearables = jn_outfits.JNWearable.filterWearables(wearable_list=jn_outfits.getAllWearables(), unlocked=True, wearable_type=jn_outfits.JNAccessory)
         wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
-        wearable_options.sort(key = lambda option: option[1].display_name)
+        wearable_options.sort(key = lambda option: (not option[1].is_jn_wearable, option[1].display_name))
         wearable_options.insert(0, ("No accessory", "none"))
 
-    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+    call screen outfit_item_menu(wearable_options)
 
     if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNAccessory):
         play audio hair_clip
@@ -2579,10 +2580,10 @@ label outfits_create_select_necklace:
     python:
         unlocked_wearables = jn_outfits.JNWearable.filterWearables(wearable_list=jn_outfits.getAllWearables(), unlocked=True, wearable_type=jn_outfits.JNNecklace)
         wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
-        wearable_options.sort(key = lambda option: option[1].display_name)
+        wearable_options.sort(key = lambda option: (not option[1].is_jn_wearable, option[1].display_name))
         wearable_options.insert(0, ("No necklace", "none"))
 
-    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+    call screen outfit_item_menu(wearable_options)
 
     if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNNecklace):
         play audio necklace_clip
@@ -2599,9 +2600,9 @@ label outfits_create_select_clothes:
     python:
         unlocked_wearables = jn_outfits.JNWearable.filterWearables(wearable_list=jn_outfits.getAllWearables(), unlocked=True, wearable_type=jn_outfits.JNClothes)
         wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
-        wearable_options.sort(key = lambda option: option[1].display_name)
+        wearable_options.sort(key = lambda option: (not option[1].is_jn_wearable, option[1].display_name))
 
-    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+    call screen outfit_item_menu(wearable_options)
 
     if isinstance(_return, jn_outfits.JNClothes):
         if (random.choice([True, False])):
@@ -2621,10 +2622,10 @@ label outfits_create_select_facewear:
     python:
         unlocked_wearables = jn_outfits.JNWearable.filterWearables(wearable_list=jn_outfits.getAllWearables(), unlocked=True, wearable_type=jn_outfits.JNFacewear)
         wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
-        wearable_options.sort(key = lambda option: option[1].display_name)
+        wearable_options.sort(key = lambda option: (not option[1].is_jn_wearable, option[1].display_name))
         wearable_options.insert(0, ("No facewear", "none"))
 
-    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+    call screen outfit_item_menu(wearable_options)
 
     if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNFacewear):
         play audio hair_clip
@@ -2641,10 +2642,10 @@ label outfits_create_select_back:
     python:
         unlocked_wearables = jn_outfits.JNWearable.filterWearables(wearable_list=jn_outfits.getAllWearables(), unlocked=True, wearable_type=jn_outfits.JNBack)
         wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
-        wearable_options.sort(key = lambda option: option[1].display_name)
+        wearable_options.sort(key = lambda option: (not option[1].is_jn_wearable, option[1].display_name))
         wearable_options.insert(0, ("No back", "none"))
 
-    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+    call screen outfit_item_menu(wearable_options)
 
     if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNBack):
         if (random.choice([True, False])):
@@ -3312,3 +3313,49 @@ screen create_outfit():
         textbutton _("Quit"):
             style "hkbd_option"
             action Jump("outfits_create_quit")
+
+screen outfit_item_menu(items):
+    $ option_width = 560
+
+    fixed:
+        area (1280 - (40 + option_width), 40, option_width, 440)
+        vbox:
+            ypos 0
+            yanchor 0
+
+            textbutton "Nevermind":
+                style "categorized_menu_button"
+                xsize option_width
+                action Return(False)
+                hover_sound gui.hover_sound
+                activate_sound gui.activate_sound
+
+            null height 20
+
+            viewport:
+                id "viewport"
+                yfill False
+                mousewheel True
+
+                vbox:
+                    for display_prompt, _value in items:
+                        textbutton display_prompt:
+                            style "categorized_menu_button"
+                            xsize option_width
+                            action Return(_value)
+                            hover_sound gui.hover_sound
+                            activate_sound gui.activate_sound
+
+                            # Visual option differentiation
+                            if (type(_value) is jn_outfits.JNOutfit and _value.is_jn_outfit) or (issubclass(type(_value), jn_outfits.JNWearable) and _value.is_jn_wearable):
+                                idle_background Frame("mod_assets/buttons/choice_hover_blank_cd.png", gui.frame_hover_borders, tile=gui.frame_tile)
+
+                            elif (not isinstance(_value, basestring)):
+                                idle_background Frame("mod_assets/buttons/choice_hover_blank_folder.png", gui.frame_hover_borders, tile=gui.frame_tile)
+
+                        null height 5
+
+        bar:
+            style "classroom_vscrollbar"
+            value YScrollValue("viewport")
+            xalign scroll_align

@@ -601,6 +601,21 @@ init python in jn_jokes:
         display_name="Frog notes",
         joke_category=JNJokeCategories.corny
     ))
+    __registerJoke(JNJoke(
+        label="joke_sea_urchins",
+        display_name="Urchins",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_airforce_wings",
+        display_name="Air force",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_time_trial",
+        display_name="Time trials",
+        joke_category=JNJokeCategories.neutral
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -1489,5 +1504,59 @@ label joke_frog_notes:
     n 1fsrsl "..."
     n 1fcsfl "They use lily-{w=0.75}{nw}"
     extend 1csqfl " {i}pads{/i}."
+
+    return
+
+label joke_frog_notes:
+    n 1ccsemesi "..."
+    n 1cslflsbl "Guess I better apologize in advance for this one,{w=0.2} [player].{w=0.75}{nw}"
+    extend 1ccsemsbl " Ugh."
+    n 1ccsaj "Alright.{w=0.75}{nw}"
+    extend 1csgsl " How do frogs take their notes for class?"
+    n 1clrsl "..."
+    n 1fsrsl "..."
+    n 1fcsfl "They use lily-{w=0.75}{nw}"
+    extend 1csqfl " {i}pads{/i}."
+
+    return
+
+label joke_sea_urchins:
+    n 1ccsflesi "..."
+    n 1csqem "Do I seriously have to read {i}this{/i} one out to you?{w=0.75}{nw}"
+    extend 1csrfl " Man..."
+    n 1ccsaj "Alright.{w=0.2} What sort of sealife causes the most trouble on the streets?"
+    n 1csgslsbl "..."
+    n 1fllemsbl "Ugh.{w=0.75}{nw}"
+    extend 1fcsemsbr " A sea{w=0.5}{nw}"
+    extend 1fsqflsbr " {i}urchin{/i}."
+
+    return
+
+label joke_airforce_wings:
+    n 1ulraj "Hey,{w=0.2} [player]...{w=1}{nw}"
+    extend 1tsgfl " Did you hear about the air force that began using birds to fly special missions?"
+    n 1unmgs "Yeah!{w=0.75}{nw}"
+    extend 1cllflsbl " Talk about unexpected!{w=0.75}{nw}"
+    extend 1cslbosbl " I thought someone was just pulling a prank when I found out!"
+    n 1ccsajsbl "Well,{w=0.2} anyway."
+    n 1csrss "They never exactly said what kind of stuff they'd do,{w=0.75}{nw}"
+    extend 1ccssmesm " but I can tell you one thing,{w=0.2} [player]."
+    n 1ccsbg "At least they've already{w=0.5}{nw}"
+    extend 1fsqbg " {i}earned their wings{/i},{w=0.75}{nw}"
+    extend 1fchgn " right?"
+
+    return
+
+label joke_time_trial:
+    n 1ccsbg "Heh.{w=0.75}{nw}"
+    extend 1fcsss " So,{w=0.2} [player].{w=0.75}{nw}"
+    extend 1csqbg " What kind of motorsports does a clockmaker watch on the weekends?"
+    n 1tsqsm "..."
+    n 1tsqaj "No?{w=0.75}{nw}"
+    extend 1tsgfl " Seriously?{w=0.75}{nw}"
+    extend 1fcssm " {i}I{/i} thought it was easy enough,{w=0.2} [player]."
+    n 1ccsbg "They'd be watching{w=0.5}{nw}"
+    extend 1csgbg " {i}time trials{/i},{w=0.75}{nw}"
+    extend 1fchbs " duh!"
 
     return

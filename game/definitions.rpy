@@ -530,7 +530,7 @@ init -3 python:
         if topic_label in persistent._event_list:
             persistent._event_list.remove(topic_label)
 
-    def jn_rm_topic_from_event_list(topic_label):
+    def jnRemoveTopicFromEventList(topic_label):
         """
         Removes all occurrences of a topic from the event list
 
@@ -543,7 +543,7 @@ init -3 python:
             if _topic_label != topic_label
         ]
 
-    def jn_rm_topic_from_event_list_pattern(topic_label_pattern):
+    def jnRemoveTopicFromEventListPattern(topic_label_pattern):
         """
         Removes all occurrences of a topic from the event list
 
