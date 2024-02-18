@@ -119,6 +119,14 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
 - Snow, rain graphics thanks to Monika After Story team @ https://github.com/Monika-After-Story/MonikaModDev
 - License template thanks to Monika After Story team @ https://github.com/Monika-After-Story/MonikaModDev
 - _Strawberry Daydream_ (clubroom daytime theme), _Stars that Shimmer_ (clubroom nighttime theme) thanks to Febbs! @ https://youtube.com/@ivaadenfebbs
+- Sound effects thanks to various contributors at Freesound @ https://freesound.org
+    <details>
+    <summary>Full list</summary>
+
+    - InspectorJ
+    - launemax
+
+    </details>
 - Our [contributors](https://github.com/Just-Natsuki-Team/NatsukiModDev/graphs/contributors)!
 - Our community, for being so patient despite our delays
 

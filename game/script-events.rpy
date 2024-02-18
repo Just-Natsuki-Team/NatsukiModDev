@@ -54,6 +54,8 @@ image prop watering_can = "mod_assets/props/watering_can.png"
 image prop f14_heart give = "mod_assets/props/f14/give_heart.png"
 image prop f14_heart hold = "mod_assets/props/f14/hold_heart.png"
 
+image prop puddles = "mod_assets/props/puddles.png"
+
 image prop wintendo_twitch_held free = "mod_assets/props/twitch/held/wintendo_twitch_held_free.png"
 image prop wintendo_twitch_held charging = "mod_assets/props/twitch/held/wintendo_twitch_held_charging.png"
 image prop wintendo_twitch_playing free:
@@ -2816,13 +2818,17 @@ init 5 python:
 label event_change_of_atmosphere:
     $ jn_globals.force_quit_enabled = False
     $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_RAIN)
+    show prop puddles zorder JN_PROP_ZORDER
+    $ jn_outfits.getWearable("jn_clothes_raincoat").unlock()
+    $ jn_outfits.saveTemporaryOutfit(jn_outfits.getOutfit("jn_raincoat_unlock"))
+
     n "..."
     n "Mmmmmmnnn..."
     n "...Uh?"
     $ jnPause(3)
 
-    n "Uuuuuu... my head..."
-    n "What time is it, even... H-how long was I out for?"
+    n "Uuuuuu...{w=0.3} my head..."
+    n "What time is it,{w=0.2} even...{w=0.3} H-{w=0.2}how long was I out for?"
     n "Man..."
 
     if jn_utils.getMinutesSinceLastVisit() > 60:
@@ -2834,36 +2840,36 @@ label event_change_of_atmosphere:
     n "Ugh."
     $ jnPause(3)
 
-    n "And these busted wooden chairs... Would it have seriously killed them to get furniture that was actually comfortable or what?"
-    n "Sheesh... Not like we {i}weren't{/i} gonna be sat here on our butts for hours."
+    n "And these busted wooden chairs...{w=0.3} Would it have seriously killed them to get furniture that was actually comfortable or what?"
+    n "Sheesh...{w=0.3} Not like we {i}weren't{/i} gonna be sat here on our butts for hours."
     n "My back is {w=0.2}{i}killing{/i}{w=0.2} me..."
 
     $ jnPause(3)
     play audio chair_out
-    n "Gotta wake up... I gotta wake up..."
-    n "Ugh... Think, [n_name]! There's gotta be some coffee or something around here somewhe-"
+    n "Gotta wake up...{w=0.3} I gotta wake up..."
+    n "Ugh...{w=0.3} Think,{w=0.2} [n_name]!{w=0.2} There's gotta be some coffee or something around here somewhe-{w=0.5}{nw}"
     play audio puddle_step
     $ jnPause(0.5)
 
-    n "A-ack! It's all wet! What the...?!"
+    n "A-{w=0.2}ack!{w=0.2} It's all wet!{w=0.2} What the...?!"
     $ jnPause(1)
     play audio drip
     $ jnPause(0.25)
     play audio drip
     
     n "..."
-    n "Is that... {i}rainwater{/i}...? Oh, you have {w=0.2}{b}got{/b}{w=0.2} to be joking. Really?! Why now?!"
-    n "Who even built this crappy school? The {i}carpentry club{/i}?!"
+    n "Is that...{w=0.3} {i}rainwater{/i}...?{w=0.2} Oh,{w=0.2} you have {w=0.2}{b}got{/b}{w=0.2} to be joking.{w=0.2} Really?!{w=0.2} Why now?!"
+    n "Who even built this crappy school?{w=0.2} The {i}carpentry club{/i}?!"
     $ jnPause(2)
 
-    n "No... Don't tell me."
+    n "No...{w=0.3} Don't tell me."
     n "..."
     play audio puddle_step
     $ jnPause(0.25)
     n "Uuuuuuu-!" 
-    n "It's {i}everywhere{/i}! Even the teacher's desk is dripping now!"
-    n "...Gross. And my slippers are all soaked through now, too..."
-    n "Great. Just perfect."
+    n "It's {i}everywhere{/i}!{w=0.2} Even the teacher's desk is dripping now!"
+    n "...Gross.{w=0.2} And my slippers are all soaked through now,{w=0.2} too..."
+    n "Great.{w=0.2} Just perfect."
     n "I totally needed all this in my life right now."
     n "...{i}Not{/i}."
     $ jnPause(2)
@@ -2871,11 +2877,11 @@ label event_change_of_atmosphere:
     n "..."
     n "Come on..."
     $ time_of_day = "day" if jn_is_day() else "night"
-    n "Where did they leave that stupid bucket? I {i}know{/i} they had one in here! I had to stand outside with it enough times..." 
+    n "Where did they leave that stupid bucket?{w=0.2} I {i}know{/i} they had one in here!{w=0.75} I had to stand outside with it enough times..." 
     n "Could this [time_of_day] {i}possibly{/i} get any worse-"
 
     play audio metal_clang
-    n "O-ow! Who-!"
+    n "O-{w=0.2}ow!{w=0.2} Who-!{w=0.5}{nw}"
     $ jnPause(0.25)
     play audio water_splash
     $ jnPause(3)
@@ -2895,142 +2901,185 @@ label event_change_of_atmosphere:
 
     $ jn_events.displayVisuals(natsuki_sprite_code="1ndwpu", bgm="mod_assets/bgm/just_natsuki.ogg")
     $ jn_globals.force_quit_enabled = True
-
-    if Natsuki.isEnamored(higher=True):
-        n "...Heh."
-        extend " [player]."
-        extend " You really have a knack for choosing the worst times to show up sometimes."
-        n "You do know that..."
-        extend " Right?"
-
-    elif Natsuki.isHappy(higher=True):
-        n "..."
-        n "...Huh?"
-        extend " [player_initial]-[player]!"
-        extend " When did you get here, all of a sudden?!"
-        n "...And did you seriously have to pick {i}now{/i} of all times to show up?"
-        extend " Jeez..."
-
-    else:
-        n "..."
-        n "...Huh?"
-        extend " Oh. [player]."
-        n "..."
-        n "Of course you'd pick now of all times to decide to show up, too."
-
-    n "..."
-    n "...Yeah."
-    extend " As you can probably tell."
-    extend " I haven't exactly been having fun here."
-    n "'Brand new classrooms!', my butt."
-    n "They were always pretty lousy."
-    extend " But I swear it was never {i}this{/i} bad before..."
-    n "No, really!"
-    extend " I'm being serious here, [player]!"
-
-    if get_topic("event_warm_package").shown_count > :
-        n "I-I know I said that the heating was totally busted in here already,"
-        extend " but it was never actually {i}leaking{/i} or anything!"
-        extend " At least not this much."
-
-    else:
-        n "Stuff like the heating in here was always completely busted."
-        extend " It was never like we were just sitting around soaking or anything!"
-        n "...Or at least not as badly as this."
-
-    n "Such a joke."
-    n "..."
-    n "And actually."
-    extend " N-now that I think about it."
-    n "If this place can't even keep the weather out, then..."
-    n "..." # worry
-    n "Yeah, no."
-    extend  " I really don't wanna think about that right now."
-    n "Man..."
-    n "As if I didn't have enough on my plate right now."
-    extend " Now I gotta remember to mop up this dump later too."
-    extend " Great."
-
-    n "..."
-    n "..."
-    n "Uuuuuuu...!"
-    n "And would it kill this place to get some different music for once?"
-    extend " I don't even know how long I've been listening to the same song now."
-    n "Well, newsflash:"
-    extend " I'm sick of it!"
-    extend " It's like everything is coming together just to get on my nerves!"
-
-    n "I feel like crap," 
-    extend " it's {i}always{/i} freezing..."
-    n "All my stuff is getting soaked..."
-    n "And that {i}music{/i}..."
-
-    show natsuki angry 1
-    $ jnPause(1)
-    show natsuki angry 2
-    $ jnPause(1)
-    show natsuki angry 3
-
-    n "Nnnnnnnn-!"
-    n "Just...." 
-    n "Seriously..."
-    n "Why can't this dump just "
-    extend " KNOCK!"
-    extend " IT!"
-    extend " OFF!"
-
-    show natsuki angry
-    stop music fadeout 1
-    $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_SUNNY)
-    $ jnPause(1)
-    show natsuki surprised
-
-    n "..."
-    n "..."
-    n "I..."
-    extend " still have no idea how I did that the first time."
-    extend " Huh."
-    n "W-well, at least that's the rain sorted out."
-    extend " Guess I won't have to mop up after all!"
-    n "Now, if the music could just hurry up and get the message too..."
-
-    show natsuki cocky
     $ jnPause(3)
 
-    n "..."
-    n "I said," 
-    extend " now if the music could just {i}change{/i} already!"
+    if Natsuki.isEnamored(higher=True):
+        n 2fsrsl "..."
+        n 2csqpueqm "...Huh?{w=0.75}{nw}"
+        extend 2cllpul " Oh."
+        n 4cslssl "...Heh.{w=0.75}{nw}"
+        extend 4ccsfllsbr " [player].{w=0.75}{nw}"
+        extend 3csqfllsbr " You really have a knack for choosing the worst times to show up sometimes."
+        n 3clrsllsbr "You {i}do{/i} know that...{w=1}{nw}"
+        extend 5csgcalsbr " Right?"
 
-    show natsuki angy
+    elif Natsuki.isHappy(higher=True):
+        n 2fsrsl "..."
+        n 2tsgpueqm "...Huh?{w=0.75}{nw}"
+        extend 4unmemlesh " [player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
+        extend 4cllemlsbl " When did you get here,{w=0.2} all of a sudden?!"
+        n 3ccsgslsbl "...And did you seriously have to pick {i}now{/i} of all times to show up?{w=0.75}{nw}"
+        extend 3csrfllsbl " Jeez..."
+
+    else:
+        n 2fsrsl "..."
+        n 2tsqpueqm "...Huh?{w=0.75}{nw}"
+        extend 1cllfllsbr " Oh.{w=0.2} [player]."
+        n 1fcsflesisbr "..."
+        n 4ftlem "Of course you'd pick now of all times to decide to show up,{w=0.2} too.{w=0.75}{nw}"
+        extend 4fslfl " Amazing."
+
+    n 4fslsl "..."
+    n 4csqfl "...Yeah.{w=0.75}{nw}"
+    extend 2flrem " As you can probably tell.{w=0.75}{nw}"
+    extend 2fcsan " I haven't exactly been having {i}fun{/i} here."
+    n 2ftrem "{i}'Brand new classrooms!'{/i},{w=0.5}{nw}" 
+    extend 4fsran " my butt."
+    n 7fcsem "Like...{w=0.3} They were always pretty lousy.{w=0.75}{nw}"
+    extend 3fslsl " But I swear it was never {i}this{/i} bad before."
+    n 4cnmwrl "No,{w=0.2} really!{w=0.75}{nw}"
+    extend 3fcswrsbr " I'm being serious here,{w=0.2} [player]!"
+
+    if get_topic("event_warm_package").shown_count > 0:
+        n 3fcsflsbr "I-{w=0.2}I know I said that the heating was totally busted in here already.{w=0.75}{nw}"
+        extend 1clrwrsbr " It was never actually {i}leaking{/i} everywhere or anything!{w=0.75}{nw}"
+        extend 2csrunsbr " At least not this much."
+
+    else:
+        n 3fcsgssbr "Stuff like the heating or cabinets in here were always pretty busted.{w=0.75}{nw}"
+        extend 1clrwrsbl " I-{w=0.2}it was never like we were just sitting around soaking or anything!"
+        n 2cslemsbr "...Or at least not as badly as {i}this{/i}."
+
+    n 2cupemsbr "Never thought I'd need to wear this stupid thing {i}indoors{/i} of all places.{w=0.75}{nw}"
+    extend 2fcsemsbr " Such a joke."
+    n 2cslsl "..."
+    n 4cslaj "And actually.{w=0.75}{nw}"
+    extend 4cllflsbr " N-{w=0.2}now that I think about it."
+    n 7clrfllsbr "If this place can't even keep the {i}weather{/i} out anymore,{w=0.2} then..."
+    n 7csrunlsbr "..."
+    n 3ccsemlsbr "Yeah,{w=0.2} no.{w=0.75}{nw}"
+    extend 3cllemlsbr " I really don't wanna think about that right now."
+    n 1kcsflesi "Man..."
+    n 1ksrsl "And as if I didn't have enough on my plate.{w=0.75}{nw}"
+    extend 2csrfl " Now I gotta remember to dry up this dump later too.{w=0.75}{nw}"
+    extend 2csrem " Great."
+    n 4knmwr "I don't even know if there's a mop around here anymore!{w=0.75}{nw}"
+    extend 4fllem " I bet they thought those were {i}too expensive{/i} as well..."
+    n 2fllsl "..."
+    n 2fslan "..."
+    n 4fcsan "Uuuuuuu...!"
+    n 4fllem "And would it kill this place to get some different music for once?{w=0.75}{nw}"
+    extend 4fsqan " I don't even know how long I've been listening to the same song now."
+    n 3fcsup "Well,{w=0.2} newsflash:{w=0.5}{nw}"
+    extend 3fbkwr " I'm sick of it!{w=0.75}{nw}"
+    extend 4flrfu " It's like everything is coming together just to get on my nerves!"
+    n 1fcsfu "I feel like crap,{w=0.5}{nw}" 
+    extend 2fsran " it's {i}always{/i} freezing..."
+    n 2fllan "All my stuff is totally soaked..."
+    n 1fsqan "And that {i}music{/i}..."
+
+    show natsuki 1fsqun
+    $ jnPause(1)
+    show natsuki 2fcsun
+    $ jnPause(1)
+    show natsuki 4fcsup
+
+    n 4fcsan "Nnnnnnnn-!"
+    n 4fcsupl "Just...." 
+    n 4fsrupl "Seriously..."
+    n 4fcsupl "Why can't this dump just{w=0.75}{nw}"
+    extend 1fcsanl " KNOCK!{w=0.75}{nw}"
+    extend 1fcsful " IT!{w=0.75}{nw}"
+    extend 1fbkwrlean " OFF!"
+
+    show natsuki 4fcsunl
+    stop music fadeout 1
+    show prop puddles at JN_TRANSFORM_FADE_OUT zorder JN_PROP_ZORDER
+    $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_SUNNY)
+    $ jnPause(1)
+    show natsuki 4ulrbol
+
+    n 1nlrbol "..."
+    n 1clrbol "..."
+    n 2clrflsbl "I...{w=1}{nw}"
+    extend 2csrflsbl " still have no idea how I did that the first time.{w=0.75}{nw}"
+    extend 1csrslsbl " Huh."
+    n 3ccsfllsbr "W-{w=0.2}well,{w=0.2} at least that's the rain sorted out.{w=0.75}{nw}"
+    extend 3ccssslsbr " Guess I won't have to mop up after all!"
+    n 7ccsbg "Now,{w=0.2} if the music could just hurry up and get the message too..."
+
+    show natsuki 7ccssm
+    $ jnPause(3)
+    show natsuki 3csqsr
     $ jnPause(2)
 
-    n "Oh, for-!"
-    extend " What do I have to do to get a little atmosphere around her-!"
-    $ renpy.play(filename=jn_custom_music.getMusicFileRelativePath(file_name=main_background.location.getCurrentTheme(), is_custom=False), channel="music")
-    show natsuki oh
+    n 1ccsemesi "..."
+    n 4ccsem "I said,{w=0.5}{nw}" 
+    extend 4fsrfl " now if the music could just {i}change{/i} already!"
+
+    show natsuki 2fsrsr
+    $ jnPause(2)
+    show natsuki 2fsrun
+    $ jnPause(2)
+    show natsuki 2fcsun
     $ jnPause(2)
 
-    n "Heh."
-    extend " Y-yeah!"
-    extend " Now {i}that's{/i} what I'm talking about!"
-    extend " Some actual freaking music for once!"
-    n "A-and speaking of changing tunes..."
+    n 1fllem "Oh,{w=0.2} for-!{w=0.75}{nw}"
+    extend 2fcswr " Is this a joke?!{w=0.75}{nw}"
+    extend 2fllem " Was that a one-{w=0.2}time thing?!"
+    n 4fbkwr "What do I have to do to get a little atmosphere around-!{w=0.5}{nw}"
+    $ renpy.play(filename=jn_custom_music.getMusicFileRelativePath(file_name=main_background.location.getCurrentTheme(),{w=0.2} is_custom=False),{w=0.2} channel="music")
+    show natsuki 4unmpul
+    $ jnPause(1)
+    n 4nlrpulsbl "...Here."
+    $ jnPause(2)
+    show natsuki 1nlrsllsbl
+
+    n 3ccssslsbr "Heh.{w=0.75}{nw}"
+    extend 3ccsbglsbr " Y-{w=0.2}yeah!{w=0.75}{nw}"
+    extend 7fchbg " Now {i}that's{/i} what I'm talking about!{w=0.75}{nw}"
+    extend 4fnmgsedz " Some actual freaking music for once!"
+    n 3fcsbgsbl "A-{w=0.2}and speaking of changing tunes...{w=1}{nw}"
     $ time_of_day = "today" if jn_is_day() else "tonight"
-    n "How about we start [time_of_day] on the right track too, huh?"
-    extend " Ehehe."
+
+    if Natsuki.isAffectionate(higher=True):
+        n 7fsqbgl "How about we {i}finally{/i} start [time_of_day] on the right track too now,{w=0.2} huh?{w=0.75}{nw}"
+        extend 3fcssml " E-{w=0.2}ehehe."
+        n 4fllssl "Just let me ditch the raincoat real quick..."
+        show natsuki 4fcssml
+
+    else:
+        n 3fsqbg "It's about time we finally got things back on track!{w=0.75}{nw}"
+        extend 3fcssm " Ehehe."
+        n 1unmbo "Oh, right."
+        extend 4clrsssbl " Just gonna dump this thing real quick..."
+        show natsuki 4ccssm
+
+    $ jnPause(0.1)
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    show natsuki 2fcssmeme
+    $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+    hide black with Dissolve(0.5)
+    $ jnPause(1)
+
+    n 7fcsbg "Yep.{w=0.75}{nw}"
+    extend 3fchgn " Much better!"
+    n 3fchsm "..."
+    n 4fsqsm "Well?{w=0.75}{nw}"
+    extend 4fcsbg " What are you waiting for?"
 
     if Natsuki.isLove(higher=True):
-        $ chosen_tease = jn_utils.getRandomTeaseName()
-        n "W-welcome back, []!"
-        extend " Now make yourself at home already!"
+        $ chosen_endearment = jn_utils.getRandomEndearment()
+        n 3fchgnl "M-{w=0.2}make yourself at home already,{w=0.2} [chosen_endearment]!"
 
     elif Natsuki.isEnamored(higher=True):
         $ chosen_tease = jn_utils.getRandomTeaseName()
-        n "W-welcome back, you big [chosen_tease]!"
-        extend " Make yourself comfy already!"
+        n 3fchbgl "M-{w=0.2}make yourself comfy already,{w=0.5}{nw}"
+        extend 3fchgnl " you big [chosen_tease]!"
 
     else:
-        n "W-welcome back, [player]!"
+        n 2fchbg "Start talking already,{w=0.2} [player]!"
 
     return
 

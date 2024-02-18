@@ -1610,6 +1610,12 @@ init -1 python in jn_outfits:
         unlocked=False,
         is_jn_wearable=True
     ))
+    __registerWearable(JNClothes(
+        reference_name="jn_clothes_raincoat",
+        display_name="Raincoat",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
 
     # Official JN headgear
 
@@ -1707,6 +1713,12 @@ init -1 python in jn_outfits:
     __registerWearable(JNHeadgear(
         reference_name="jn_headgear_chocolate_plaid_bow",
         display_name="Chocolate plaid bow",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __registerWearable(JNClothes(
+        reference_name="jn_headgear_raincoat_hood",
+        display_name="Raincoat hood",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -2090,7 +2102,7 @@ init -1 python in jn_outfits:
         accessory=getWearable("jn_accessory_hairband_red")
     ))
 
-    # Outfit used for ahoge unlock event
+    # Outfit used for ahoge unlock event: event_not_ready_yet
     __registerOutfit(JNOutfit(
         reference_name="jn_ahoge_unlock",
         display_name="Ahoge unlock",
@@ -2098,6 +2110,18 @@ init -1 python in jn_outfits:
         is_jn_outfit=True,
         clothes=getWearable("jn_clothes_star_pajamas"),
         hairstyle=getWearable("jn_hair_super_messy")
+    ))
+
+    # Outfit used for raincoat/new music unlock event: event_change_of_atmosphere
+    __registerOutfit(JNOutfit(
+        reference_name="jn_raincoat_unlock",
+        display_name="Raincoat unlock",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=getWearable("jn_clothes_raincoat"),
+        hairstyle=getWearable("jn_hair_down"),
+        accessory=getWearable("jn_accessory_hairband_red"),
+        headgear=getWearable("jn_headgear_raincoat_hood")
     ))
 
     # Random choice between pajamas
