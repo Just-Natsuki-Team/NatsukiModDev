@@ -1235,6 +1235,60 @@ init -999 python in jn_utils:
         """
         return {"mp3", "ogg", "wav"}
 
+    def testFunction():
+        store.jn_utils.JN_TEST_VAL += 1
+        renpy.play("mod_assets/sfx/smack.ogg")
+
+    class JNThreadedFunction():
+        def __init__(self, function, args=(), sleep_time=10):
+            """
+            Initialises a new instance of JNThreadedFunction.
+
+            Allows a given function with arguments to be started and stopped on an independent thread.
+            This will not return a result, therefore only use this for things like void functions where no return is expected/needed.
+
+            IN:
+                - function - the function to call when run is called
+                - args - parameters to be passed to the function; must be of type list or tuple
+                - sleep_time - int amount of time to wait between calls of the function
+            """
+            if not callable(function):
+                raise Exception("Failed to initialise threaded function instance; function is not callable.")
+
+            if not isinstance(args, tuple) and not isinstance(args, list):
+                raise Exception("Failed to initialise threaded function instance; args must be of types list or tuple.")
+
+            if isinstance(args, list):
+                args = tuple(args)
+
+            self.__function = function
+            self.__args = args
+            self.__sleep_time = sleep_time
+            self.__running = False
+            self.__thread = None
+
+        def __run(self):
+            while self.__running:
+                self.__function(self.__args)
+                time.sleep(self.__sleep_time)
+
+        def start(self):
+            if self.__running:
+                return
+
+            self.__running = True
+            self.__thread = threading.Thread(name=uuid.uuid4(), target=self.__run)
+            self.__thread.start()
+
+        def stop(self):
+            if not self.__running:
+                return
+            
+            self.__running = False
+            self.__thread.join()
+
+    JN_SANGO = JNThreadedFunction(function=store.jn_utils.testFunction, sleep_time=500)
+
 init -100 python in jn_utils:
     import codecs
     import random

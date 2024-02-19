@@ -2853,9 +2853,9 @@ label event_change_of_atmosphere:
 
     n "A-{w=0.2}ack!{w=0.2} It's all wet!{w=0.2} What the...?!"
     $ jnPause(1)
-    play audio drip
+    play audio drip_a
     $ jnPause(0.25)
-    play audio drip
+    play audio drip_b
     
     n "..."
     n "Is that...{w=0.3} {i}rainwater{/i}...?{w=0.2} Oh,{w=0.2} you have {w=0.2}{b}got{/b}{w=0.2} to be joking.{w=0.2} Really?!{w=0.2} Why now?!"
@@ -2864,12 +2864,15 @@ label event_change_of_atmosphere:
 
     n "No...{w=0.3} Don't tell me."
     n "..."
-    play audio puddle_step
+    play audio puddle_step_a
+    $ jnPause(0.5)
+    play audio puddle_step_b
     $ jnPause(0.25)
     n "Uuuuuuu-!" 
     n "It's {i}everywhere{/i}!{w=0.2} Even the teacher's desk is dripping now!"
     n "...Gross.{w=0.2} And my slippers are all soaked through now,{w=0.2} too..."
     n "Great.{w=0.2} Just perfect."
+    play audio drip_b
     n "I totally needed all this in my life right now."
     n "...{i}Not{/i}."
     $ jnPause(2)
@@ -2878,19 +2881,26 @@ label event_change_of_atmosphere:
     n "Come on..."
     $ time_of_day = "day" if jn_is_day() else "night"
     n "Where did they leave that stupid bucket?{w=0.2} I {i}know{/i} they had one in here!{w=0.75} I had to stand outside with it enough times..." 
+    play audio drip_a
     n "Could this [time_of_day] {i}possibly{/i} get any worse-"
 
     play audio metal_clang
     n "O-{w=0.2}ow!{w=0.2} Who-!{w=0.5}{nw}"
     $ jnPause(0.25)
     play audio water_splash
-    $ jnPause(3)
+    $ jnPause(1)
+    play audio drip_a
+    $ jnPause(2)
+    play audio drip_b
 
     n "..."
+    play audio drip_a
     n "..."
     n "..."
     play audio chair_in
-    $ jnPause(3)
+    $ jnPause(2)
+    play audio drip_a
+    $ jnPause(1)
 
     menu:
         "Enter...":
@@ -3028,7 +3038,7 @@ label event_change_of_atmosphere:
     extend 2fcswr " Is this a joke?!{w=0.75}{nw}"
     extend 2fllem " Was that a one-{w=0.2}time thing?!"
     n 4fbkwr "What do I have to do to get a little atmosphere around-!{w=0.5}{nw}"
-    $ renpy.play(filename=jn_custom_music.getMusicFileRelativePath(file_name=main_background.location.getCurrentTheme(),{w=0.2} is_custom=False),{w=0.2} channel="music")
+    $ renpy.play(filename=jn_custom_music.getMusicFileRelativePath(file_name=main_background.location.getCurrentTheme(), is_custom=False), channel="music")
     show natsuki 4unmpul
     $ jnPause(1)
     n 4nlrpulsbl "...Here."
