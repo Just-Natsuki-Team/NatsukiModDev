@@ -110,6 +110,8 @@ init -50 python:
         down_right = 29
         peek_left = 30
         peek_right = 31
+        dizzy = 32
+        swirl = 33
 
         def __str__(self):
             return self.name
@@ -369,6 +371,7 @@ init 1 python:
         "ch": JNEyes.closed_happy,
         "cs": JNEyes.closed_sad,
         "cu": JNEyes.cute,
+        "dz": JNEyes.dizzy,
         "dt": JNEyes.doubt,
         "dw": JNEyes.down,
         "dl": JNEyes.down_left,
@@ -387,6 +390,7 @@ init 1 python:
         "sq": JNEyes.squint,
         "sl": JNEyes.squint_left,
         "sr": JNEyes.squint_right,
+        "sw": JNEyes.swirl,
         "tl": JNEyes.think_left,
         "tr": JNEyes.think_right,
         "un": JNEyes.unamused,
