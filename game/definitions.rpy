@@ -21,6 +21,7 @@ init -990 python:
     # Remember that higher zorder values are displayed closer to the player!
     JN_GLITCH_ZORDER = 99
     JN_BLACK_ZORDER = 10
+    JN_SPECIAL_EFFECTS_ZORDER = 6
     JN_OVERLAY_ZORDER = 5
     JN_PROP_ZORDER = 4
     JN_NATSUKI_ZORDER = 3
@@ -40,6 +41,7 @@ init -3 python:
     from collections import OrderedDict
     import datetime
     from Enum import Enum
+    import random
     import re
     import store.jn_affinity as jn_affinity
     import store.jn_utils as jn_utils
@@ -981,6 +983,13 @@ init -3 python:
 
         return renpy.display.image.images[tags] if tags in renpy.display.image.images else Null()
 
+    def jnGenerateRandomForScreenWidth(trans, st, at):
+        """
+        Generates a random number and stores it globally for animations, etc.
+        """
+        trans.xpos = random.choice(range(0, 1280))
+        return
+
 # Variables with cross-script utility specific to Just Natsuki
 init -990 python in jn_globals:
     import re
@@ -1235,12 +1244,8 @@ init -999 python in jn_utils:
         """
         return {"mp3", "ogg", "wav"}
 
-    def testFunction():
-        store.jn_utils.JN_TEST_VAL += 1
-        renpy.play("mod_assets/sfx/smack.ogg")
-
     class JNThreadedFunction():
-        def __init__(self, function, args=(), sleep_time=10):
+        def __init__(self, function, args=()):
             """
             Initialises a new instance of JNThreadedFunction.
 
@@ -1250,7 +1255,6 @@ init -999 python in jn_utils:
             IN:
                 - function - the function to call when run is called
                 - args - parameters to be passed to the function; must be of type list or tuple
-                - sleep_time - int amount of time to wait between calls of the function
             """
             if not callable(function):
                 raise Exception("Failed to initialise threaded function instance; function is not callable.")
@@ -1263,31 +1267,28 @@ init -999 python in jn_utils:
 
             self.__function = function
             self.__args = args
-            self.__sleep_time = sleep_time
             self.__running = False
             self.__thread = None
 
-        def __run(self):
-            while self.__running:
-                self.__function(self.__args)
-                time.sleep(self.__sleep_time)
+        def getIsRunning(self):
+            return self.__running
 
         def start(self):
-            if self.__running:
-                return
+            if not self.__running:
+                if len(self.__args) > 0:
+                    self.__thread = threading.Thread(name=uuid.uuid4(), target=self.__function, args=self.__args)
 
-            self.__running = True
-            self.__thread = threading.Thread(name=uuid.uuid4(), target=self.__run)
-            self.__thread.start()
+                else:
+                    self.__thread = threading.Thread(name=uuid.uuid4(), target=self.__function)
+
+                self.__thread.daemon = True
+                self.__thread.start()
+                self.__running = True
 
         def stop(self):
-            if not self.__running:
-                return
-            
-            self.__running = False
-            self.__thread.join()
-
-    JN_SANGO = JNThreadedFunction(function=store.jn_utils.testFunction, sleep_time=500)
+            if self.__running:
+                self.__running = False
+                self.__thread.join()
 
 init -100 python in jn_utils:
     import codecs

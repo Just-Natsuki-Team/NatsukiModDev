@@ -54,8 +54,6 @@ image prop watering_can = "mod_assets/props/watering_can.png"
 image prop f14_heart give = "mod_assets/props/f14/give_heart.png"
 image prop f14_heart hold = "mod_assets/props/f14/hold_heart.png"
 
-image prop puddles = "mod_assets/props/puddles.png"
-
 image prop wintendo_twitch_held free = "mod_assets/props/twitch/held/wintendo_twitch_held_free.png"
 image prop wintendo_twitch_held charging = "mod_assets/props/twitch/held/wintendo_twitch_held_charging.png"
 image prop wintendo_twitch_playing free:
@@ -187,6 +185,8 @@ image deco o31 = "mod_assets/deco/o31.png"
 # Overlays are displayed over the top of Natsuki, in front of any decorations but behind any props
 image overlay slipping_glasses = "mod_assets/overlays/slipping_glasses.png"
 image overlay mistletoe = "mod_assets/overlays/mistletoe.png"
+image overlay puddles day = "mod_assets/overlays/puddles_day.png"
+image overlay puddles night = "mod_assets/overlays/puddles_night.png"
 
 init python in jn_events:
     import datetime
@@ -2818,7 +2818,15 @@ init 5 python:
 label event_change_of_atmosphere:
     $ jn_globals.force_quit_enabled = False
     $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_RAIN)
-    show prop puddles zorder JN_PROP_ZORDER
+    $ jn_atmosphere.SOUND_EFFECTS_RAIN.start()
+
+    if jn_is_day():
+        show overlay puddles day zorder JN_OVERLAY_ZORDER
+
+    else:
+        show overlay puddles night zorder JN_OVERLAY_ZORDER
+    
+    show screen weather_raindrops
     $ jn_outfits.getWearable("jn_clothes_raincoat").unlock()
     $ jn_outfits.saveTemporaryOutfit(jn_outfits.getOutfit("jn_raincoat_unlock"))
 
@@ -3004,7 +3012,9 @@ label event_change_of_atmosphere:
 
     show natsuki 4fcsunl
     stop music fadeout 1
-    show prop puddles at JN_TRANSFORM_FADE_OUT zorder JN_PROP_ZORDER
+    hide screen weather_raindrops
+    $ jn_atmosphere.SOUND_EFFECTS_RAIN.stop()
+    show overlay puddles at JN_TRANSFORM_FADE_OUT zorder JN_OVERLAY_ZORDER
     $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_SUNNY)
     $ jnPause(1)
     show natsuki 4ulrbol

@@ -103,6 +103,9 @@ image particles cherry_blossom night:
     "mod_assets/backgrounds/atmosphere/particles/cherry_blossom_night.png"
     cherry_blossom_scroll
 
+image raindrop:
+    "mod_assets/backgrounds/atmosphere/particles/rain_drop.png"
+
 # Transforms
 transform cloud_scroll:
     # Clouds shift from left to right
@@ -118,7 +121,7 @@ transform snow_scroll:
     right
     parallel:
         xoffset 0 yoffset 0
-        linear 60 xoffset 220  yoffset 1280
+        linear 60 xoffset 220 yoffset 1280
         repeat
 
 transform rain_scroll:
@@ -126,7 +129,7 @@ transform rain_scroll:
     right
     parallel:
         xoffset 0 yoffset 0
-        linear 2 xoffset 220  yoffset 1280
+        linear 2 xoffset 220 yoffset 1280
         repeat
 
 transform cherry_blossom_scroll:
@@ -134,8 +137,20 @@ transform cherry_blossom_scroll:
     right
     parallel:
         xoffset 0 yoffset 0
-        linear 30 xoffset 220  yoffset 1280
+        linear 30 xoffset 220 yoffset 1280
         repeat
+
+transform rain_drop:
+    subpixel True
+    xoffset 0 yoffset 0
+    ypos -29
+    function jnGenerateRandomForScreenWidth
+
+    parallel:
+        linear 2 yoffset 20
+        linear 0.34 yoffset 720
+
+    repeat
 
 # Transitions
 define weather_change_transition = Dissolve(0.5)
@@ -150,6 +165,7 @@ init 0 python in jn_atmosphere:
     import store
     import store.jn_preferences as jn_preferences
     import store.jn_utils as jn_utils
+    import time
 
     # Zorder indexes
     # Complete order is:
@@ -605,6 +621,24 @@ init 0 python in jn_atmosphere:
         """
         return current_weather.weather_type == JNWeatherTypes.glitch
 
+    def playRaindropSoundEffects():
+        """
+        Plays raindrop sound effects on a loop, with a 2-3 second interval.
+        """
+        import time
+        import random
+
+        while True:
+            if random.choice([True, False]):
+                renpy.play("mod_assets/sfx/drip_a.ogg")
+
+            else:
+                renpy.play("mod_assets/sfx/drip_b.ogg")
+            
+            time.sleep(random.randint(2, 3))
+
+    SOUND_EFFECTS_RAIN = jn_utils.JNThreadedFunction(function=store.jn_atmosphere.playRaindropSoundEffects)
+
 label weather_change:
     $ previous_weather = jn_atmosphere.current_weather
     $ renpy.show("natsuki {0}".format(jnGetNatsukiRandomStaticIdleSprite()))
@@ -680,3 +714,7 @@ label weather_change:
                     extend 4uchgnledz " It's snowing!{w=3}{nw}"
 
             return
+
+screen weather_raindrops:
+    zorder store.JN_SPECIAL_EFFECTS_ZORDER
+    add "mod_assets/backgrounds/atmosphere/particles/rain_drop.png" at rain_drop
