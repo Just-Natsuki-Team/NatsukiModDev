@@ -196,6 +196,7 @@ init python in jn_events:
     import store.audio as audio
     import store.jn_atmosphere as jn_atmosphere
     import store.jn_affinity as jn_affinity
+    import store.jn_custom_music as jn_custom_music
     import store.jn_globals as jn_globals
     import store.jn_outfits as jn_outfits
     import store.jn_utils as jn_utils
@@ -2825,8 +2826,7 @@ label event_change_of_atmosphere:
 
     else:
         show overlay puddles night zorder JN_OVERLAY_ZORDER
-    
-    show screen weather_raindrops
+
     $ jn_outfits.getWearable("jn_clothes_raincoat").unlock()
     $ jn_outfits.saveTemporaryOutfit(jn_outfits.getOutfit("jn_raincoat_unlock"))
 
@@ -2835,9 +2835,10 @@ label event_change_of_atmosphere:
     n "...Uh?"
     $ jnPause(3)
 
-    n "Uuuuuu...{w=0.3} my head..."
-    n "What time is it,{w=0.2} even...{w=0.3} H-{w=0.2}how long was I out for?"
-    n "Man..."
+    n "Uuuuuu...{w=2} my head..."
+    n "What time is it,{w=0.2} even...{w=2} H-{w=0.2}how long was I even {i}out{/i} for?"
+    $ jnPause(2)
+    n "Man...{w=2}{nw}"
 
     if jn_utils.getMinutesSinceLastVisit() > 60:
         extend " I {i}knew{/i} trying to get some sleep at my desk wasn't going to work..."
@@ -2848,38 +2849,38 @@ label event_change_of_atmosphere:
     n "Ugh."
     $ jnPause(3)
 
-    n "And these busted wooden chairs...{w=0.3} Would it have seriously killed them to get furniture that was actually comfortable or what?"
-    n "Sheesh...{w=0.3} Not like we {i}weren't{/i} gonna be sat here on our butts for hours."
-    n "My back is {w=0.2}{i}killing{/i}{w=0.2} me..."
+    n "And these busted wooden chairs...{w=1} Would it have seriously killed them to get furniture that was actually comfortable or what?"
+    n "Sheesh...{w=1} Not like we {i}weren't{/i} gonna be sat here on our butts for hours."
+    n "My back is {w=0.5}{i}killing{/i}{w=0.2} me..."
 
     $ jnPause(3)
-    play audio chair_out
-    n "Gotta wake up...{w=0.3} I gotta wake up..."
-    n "Ugh...{w=0.3} Think,{w=0.2} [n_name]!{w=0.2} There's gotta be some coffee or something around here somewhe-{w=0.5}{nw}"
-    play audio puddle_step
-    $ jnPause(0.5)
+    play audio chair_out_slow
+    n "Gotta wake up...{w=1} I gotta wake up..."
+    n "Ugh...{w=1} Think,{w=0.2} [n_name]!{w=0.75} There's gotta be some coffee or something around here somewhe-{nw}"
+    play audio puddle_step_a
+    $ jnPause(1)
 
-    n "A-{w=0.2}ack!{w=0.2} It's all wet!{w=0.2} What the...?!"
+    n "A-{w=0.2}ack!{w=0.2} It's all wet!{w=0.75} What the...?!"
     $ jnPause(1)
     play audio drip_a
     $ jnPause(0.25)
     play audio drip_b
     
     n "..."
-    n "Is that...{w=0.3} {i}rainwater{/i}...?{w=0.2} Oh,{w=0.2} you have {w=0.2}{b}got{/b}{w=0.2} to be joking.{w=0.2} Really?!{w=0.2} Why now?!"
-    n "Who even built this crappy school?{w=0.2} The {i}carpentry club{/i}?!"
+    n "Is that...{w=1} {i}rainwater{/i}...?{w=0.75} Oh,{w=0.2} you have {w=0.2}{b}got{/b}{w=0.2} to be joking.{w=0.75} Really?!{w=0.75} Why now?!"
+    n "Who even built this crappy school?{w=0.75} The {i}carpentry club{/i}?!"
     $ jnPause(2)
 
-    n "No...{w=0.3} Don't tell me."
+    n "No...{w=1} Don't tell me."
     n "..."
     play audio puddle_step_a
     $ jnPause(0.5)
     play audio puddle_step_b
     $ jnPause(0.25)
     n "Uuuuuuu-!" 
-    n "It's {i}everywhere{/i}!{w=0.2} Even the teacher's desk is dripping now!"
-    n "...Gross.{w=0.2} And my slippers are all soaked through now,{w=0.2} too..."
-    n "Great.{w=0.2} Just perfect."
+    n "It's {i}everywhere{/i}!{w=0.75} Even the teacher's desk is dripping now!"
+    n "...Gross.{w=1} {i}And{/i} my slippers are all soaked through now,{w=0.2} too..."
+    n "Great.{w=1} Just {i}perfect{/i}."
     play audio drip_b
     n "I totally needed all this in my life right now."
     n "...{i}Not{/i}."
@@ -2888,12 +2889,12 @@ label event_change_of_atmosphere:
     n "..."
     n "Come on..."
     $ time_of_day = "day" if jn_is_day() else "night"
-    n "Where did they leave that stupid bucket?{w=0.2} I {i}know{/i} they had one in here!{w=0.75} I had to stand outside with it enough times..." 
+    n "Where did they leave that stupid bucket?{w=0.75} I {i}know{/i} they had one in here!\n{w=0.75}I had to stand outside with it enough times..." 
     play audio drip_a
-    n "Could this [time_of_day] {i}possibly{/i} get any worse-"
+    n "Could this [time_of_day] {i}possibly{/i} get any worse-{nw}"
 
     play audio metal_clang
-    n "O-{w=0.2}ow!{w=0.2} Who-!{w=0.5}{nw}"
+    n "O-{w=0.2}ow!{w=0.2} Who the-!{nw}"
     $ jnPause(0.25)
     play audio water_splash
     $ jnPause(1)
@@ -2917,9 +2918,22 @@ label event_change_of_atmosphere:
     if preferences.get_volume("music") == 0:
         $ preferences.set_volume("music", 0.75)
 
-    $ jn_events.displayVisuals(natsuki_sprite_code="1ndwpu", bgm="mod_assets/bgm/just_natsuki.ogg")
+    $ jn_events.displayVisuals(natsuki_sprite_code="2fslsr", bgm="mod_assets/bgm/just_natsuki.ogg")
+    show screen weather_raindrops
     $ jn_globals.force_quit_enabled = True
-    $ jnPause(3)
+    $ jnPause(1)
+    show natsuki 2fcssr
+    $ jnPause(0.1)
+    show natsuki 2fslsr
+    $ jnPause(2)
+    show natsuki 2fcssr
+    $ jnPause(0.3)
+    show natsuki 2fslsr
+    $ jnPause(0.1)
+    show natsuki 2fcssr
+    $ jnPause(0.1)
+    show natsuki 2fslsr
+    $ jnPause(2)
 
     if Natsuki.isEnamored(higher=True):
         n 2fsrsl "..."
@@ -2934,6 +2948,7 @@ label event_change_of_atmosphere:
     elif Natsuki.isHappy(higher=True):
         n 2fsrsl "..."
         n 2tsgpueqm "...Huh?{w=0.75}{nw}"
+        $ player_initial = jn_utils.getPlayerInitial()
         extend 4unmemlesh " [player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
         extend 4cllemlsbl " When did you get here,{w=0.2} all of a sudden?!"
         n 3ccsgslsbl "...And did you seriously have to pick {i}now{/i} of all times to show up?{w=0.75}{nw}"
@@ -2977,10 +2992,11 @@ label event_change_of_atmosphere:
     n 7csrunlsbr "..."
     n 3ccsemlsbr "Yeah,{w=0.2} no.{w=0.75}{nw}"
     extend 3cllemlsbr " I really don't wanna think about that right now."
-    n 1kcsflesi "Man..."
-    n 1ksrsl "And as if I didn't have enough on my plate.{w=0.75}{nw}"
+    n 1kcsflesi "..."
+    n 1ksrfl "Man..."
+    n 2csrsl "And as if I didn't have enough on my plate.{w=0.75}{nw}"
     extend 2csrfl " Now I gotta remember to dry up this dump later too.{w=0.75}{nw}"
-    extend 2csrem " Great."
+    extend 2ftrem " Great."
     n 4knmwr "I don't even know if there's a mop around here anymore!{w=0.75}{nw}"
     extend 4fllem " I bet they thought those were {i}too expensive{/i} as well..."
     n 2fllsl "..."
@@ -2997,24 +3013,25 @@ label event_change_of_atmosphere:
     n 1fsqan "And that {i}music{/i}..."
 
     show natsuki 1fsqun
-    $ jnPause(1)
+    $ jnPause(2)
     show natsuki 2fcsun
-    $ jnPause(1)
+    $ jnPause(2)
     show natsuki 4fcsup
 
-    n 4fcsan "Nnnnnnnn-!"
-    n 4fcsupl "Just...." 
-    n 4fsrupl "Seriously..."
-    n 4fcsupl "Why can't this dump just{w=0.75}{nw}"
-    extend 1fcsanl " KNOCK!{w=0.75}{nw}"
-    extend 1fcsful " IT!{w=0.75}{nw}"
-    extend 1fbkwrlean " OFF!"
+    n 1fcsan "Nnnnnnnn-!"
+    n 1fcsupl "Just...." 
+    n 2fsrupl "Seriously..."
+    n 1fcsupl "Why can't this dump just{w=0.75}{nw}"
+    extend 4fcsanl " KNOCK!{w=0.75}{nw}"
+    extend 4fcsful " IT!{w=0.75}{nw}"
+    extend 4fbkwrlean " OFF!"
 
     show natsuki 4fcsunl
     stop music fadeout 1
     hide screen weather_raindrops
     $ jn_atmosphere.SOUND_EFFECTS_RAIN.stop()
-    show overlay puddles at JN_TRANSFORM_FADE_OUT zorder JN_OVERLAY_ZORDER
+    show overlay puddles at JN_TRANSFORM_FADE_OUT(4) zorder JN_OVERLAY_ZORDER
+    $ jnPause(0.5)
     $ jn_atmosphere.showSky(jn_atmosphere.WEATHER_SUNNY)
     $ jnPause(1)
     show natsuki 4ulrbol
@@ -3022,16 +3039,18 @@ label event_change_of_atmosphere:
     n 1nlrbol "..."
     n 1clrbol "..."
     n 2clrflsbl "I...{w=1}{nw}"
-    extend 2csrflsbl " still have no idea how I did that the first time.{w=0.75}{nw}"
+    extend 2csrflsbl " still have no idea how I did that the first time.{w=1.5}{nw}"
     extend 1csrslsbl " Huh."
-    n 3ccsfllsbr "W-{w=0.2}well,{w=0.2} at least that's the rain sorted out.{w=0.75}{nw}"
-    extend 3ccssslsbr " Guess I won't have to mop up after all!"
+    n 3ccsfllsbr "W-{w=0.2}well,{w=0.2} at least that's the rain sorted out."
+    n 3ccssslsbr "Heh.{w=0.75}{nw}"
+    extend 3nchgn " Guess I don't have to mop up after all!"
     n 7ccsbg "Now,{w=0.2} if the music could just hurry up and get the message too..."
 
     show natsuki 7ccssm
     $ jnPause(3)
     show natsuki 3csqsr
     $ jnPause(2)
+    hide overlay
 
     n 1ccsemesi "..."
     n 4ccsem "I said,{w=0.5}{nw}" 
@@ -3046,11 +3065,12 @@ label event_change_of_atmosphere:
 
     n 1fllem "Oh,{w=0.2} for-!{w=0.75}{nw}"
     extend 2fcswr " Is this a joke?!{w=0.75}{nw}"
-    extend 2fllem " Was that a one-{w=0.2}time thing?!"
-    n 4fbkwr "What do I have to do to get a little atmosphere around-!{w=0.5}{nw}"
+    extend 2fllem " Was that a one-time thing?!"
+    n 4fbkwr "What do I have to do to get a little atmosphere around-!{nw}"
     $ renpy.play(filename=jn_custom_music.getMusicFileRelativePath(file_name=main_background.location.getCurrentTheme(), is_custom=False), channel="music")
+    $ jnPause(0.2)
     show natsuki 4unmpul
-    $ jnPause(1)
+    $ jnPause(1.5)
     n 4nlrpulsbl "...Here."
     $ jnPause(2)
     show natsuki 1nlrsllsbl
@@ -3059,11 +3079,11 @@ label event_change_of_atmosphere:
     extend 3ccsbglsbr " Y-{w=0.2}yeah!{w=0.75}{nw}"
     extend 7fchbg " Now {i}that's{/i} what I'm talking about!{w=0.75}{nw}"
     extend 4fnmgsedz " Some actual freaking music for once!"
-    n 3fcsbgsbl "A-{w=0.2}and speaking of changing tunes...{w=1}{nw}"
+    n 3fcsbgsbl "A-{w=0.2}and speaking of changing tunes..."
     $ time_of_day = "today" if jn_is_day() else "tonight"
 
     if Natsuki.isAffectionate(higher=True):
-        n 7fsqbgl "How about we {i}finally{/i} start [time_of_day] on the right track too now,{w=0.2} huh?{w=0.75}{nw}"
+        n 7fsqbgl "How about we {i}finally{/i} start [time_of_day] on the right track too now,{w=0.2} huh?\n{w=0.75}{nw}"
         extend 3fcssml " E-{w=0.2}ehehe."
         n 4fllssl "Just let me ditch the raincoat real quick..."
         show natsuki 4fcssml
@@ -3080,6 +3100,10 @@ label event_change_of_atmosphere:
     $ jnPause(0.5)
     show natsuki 2fcssmeme
     $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
+    play audio zipper
+    $ jnPause(1)
+    play audio clothing_ruffle
+    $ jnPause(1.5)
     hide black with Dissolve(0.5)
     $ jnPause(1)
 

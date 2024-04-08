@@ -321,7 +321,8 @@ init 0 python in jn_atmosphere:
     WEATHER_GLITCH = JNWeather(
         weather_type=JNWeatherTypes.glitch,
         day_sky_image="sky glitch_fuzzy",
-        night_sky_image="sky glitch_fuzzy")
+        night_sky_image="sky glitch_fuzzy"
+    )
 
     WEATHER_CHERRY_BLOSSOM = JNWeather(
         weather_type=JNWeatherTypes.cherry_blossom,
@@ -621,14 +622,17 @@ init 0 python in jn_atmosphere:
         """
         return current_weather.weather_type == JNWeatherTypes.glitch
 
-    def playRaindropSoundEffects():
+    def playRaindropSoundEffects(threaded_function_reference):
         """
-        Plays raindrop sound effects on a loop, with a 2-3 second interval.
+        Plays random raindrop sound effects on a loop, with a 2-3 second interval, until the passed JNThreadedFunction reference is no longer running.
+        
+        IN:
+            - threaded_function_reference - JNThreadedFunction instance used to check whether the loop should continue, based on the running state.
         """
         import time
         import random
 
-        while True:
+        while threaded_function_reference.getIsRunning():
             if random.choice([True, False]):
                 renpy.play("mod_assets/sfx/drip_a.ogg")
 
@@ -637,7 +641,27 @@ init 0 python in jn_atmosphere:
             
             time.sleep(random.randint(2, 3))
 
+    def playThunderSoundEffects(threaded_function_reference):
+        """
+        Plays random thunder sound effects on a loop, with a 10-20 second interval, until the passed JNThreadedFunction reference is no longer running.
+        
+        IN:
+            - threaded_function_reference - JNThreadedFunction instance used to check whether the loop should continue, based on the running state.
+        """
+        import time
+        import random
+
+        while threaded_function_reference.getIsRunning():
+            if random.choice([True, False]):
+                renpy.play("mod_assets/sfx/thunder_a.ogg")
+
+            else:
+                renpy.play("mod_assets/sfx/thunder_b.ogg")
+            
+            time.sleep(random.randint(10, 20))
+
     SOUND_EFFECTS_RAIN = jn_utils.JNThreadedFunction(function=store.jn_atmosphere.playRaindropSoundEffects)
+    SOUND_EFFECTS_THUNDER = jn_utils.JNThreadedFunction(function=store.jn_atmosphere.playThunderSoundEffects)
 
 label weather_change:
     $ previous_weather = jn_atmosphere.current_weather
@@ -646,7 +670,7 @@ label weather_change:
     $ jn_atmosphere.updateSky()
 
     if (
-        Natsuki.isAffectionate(higher=True) 
+        Natsuki.isHappy(higher=True) 
         and random.randint(1, 4) == 1
         and previous_weather.weather_type != jn_atmosphere.current_weather.weather_type
     ):

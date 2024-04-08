@@ -1269,8 +1269,8 @@ screen preferences():
                     vbox:
                         style_prefix "check"
                         label _("Skip")
-                        textbutton _("Unseen Text") action Preference("skip", "toggle")
-                        textbutton _("After Choices") action Preference("after choices", "toggle")
+                        textbutton _("Unseen text") action Preference("skip", "toggle")
+                        textbutton _("After choices") action Preference("after choices", "toggle")
 
                     vbox:
                         # Weather options

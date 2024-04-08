@@ -893,6 +893,35 @@ label farewell_love_that_time_again:
 
     return { "quit": None }
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_love_stranger",
+            unlocked=True,
+            affinity_range=(jn_affinity.LOVE, None)
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
+
+label farewell_love_stranger:
+    n 4ccsfllesi "Man...{w=1}{nw}"
+    extend 4tnmfll " Already?{w=0.75}{nw}"
+    extend 2csqeml " You're kidding,{w=0.2} right?"
+    n 1kllsll "..."
+    n 1ccsfllesi "..."
+    n 2cdrfll "Yeah,{w=0.2} yeah.{w=0.75}{nw}"
+    extend 2ccsajl " I know,{w=0.2} [player].{w=0.75}{nw}"
+    extend 2csrtrl " I've heard it enough times already."
+    n 4ccspol "...Doesn't mean I have to like it though."
+    n 4fsqsml "Ehehe."
+    n 7ccsbgl "You know the deal by now.{w=0.75}{nw}"
+    $ chosen_endearment = jn_utils.getRandomEndearment()
+    extend 7fchbgl " Better not be a stranger,{w=0.2} [chosen_endearment]!"
+    n 3fchblleaf "L-{w=0.2}love you!"
+
+    return { "quit": None }
+
 # AFFECTIONATE/ENAMORED farewells
 
 init 5 python:
@@ -1081,6 +1110,35 @@ label farewell_affectionate_enamored_making_it_up:
 
     return { "quit": None }
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_affectionate_enamored_stranger",
+            unlocked=True,
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED)
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
+
+label farewell_affectionate_enamored_stranger:
+    n 1ccsflesi "..."
+    n 1kllfl "Man...{w=1}{nw}"
+    extend 4tnmfl " Seriously?{w=0.75}{nw}"
+    extend 4ksqflsbr " You sure you can't just hang around a bit longer?"
+    n 2ccsemlesisbr "..."
+    n 2clrfllsbr "Yeah,{w=0.2} yeah.{w=0.75}{nw}"
+    extend 2cdrfll " I get it.{w=0.75}{nw}"
+    $ chosen_tease = jn_utils.getRandomTeaseName()
+    extend 2csqcal " You big [chosen_tease]."
+    n 4fsqsml "Ehehe."
+    n 7fcsbglsbr "D-{w=0.2}don't be a stranger,{w=0.2} [player]!"
+
+    if Natsuki.isEnamored(higher=True):
+        n 7fchbglsbr "S-{w=0.2}see you soon!"
+
+    return { "quit": None }
+
 # HAPPY/AFFECTIONATE farewells
 
 init 5 python:
@@ -1190,6 +1248,30 @@ label farewell_happy_affectionate_catch_you_later:
 
     return { "quit": None }
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_happy_affectionate_stranger",
+            unlocked=True,
+            affinity_range=(jn_affinity.HAPPY, jn_affinity.AFFECTIONATE)
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
+
+label farewell_happy_affectionate_stranger:
+    n 7tnmpueqm "Eh?{w=0.75}{nw}"
+    extend 7tnmfl " You're going now,{w=0.2} then?"
+    n 2tllsl "..."
+    n 2tllaj "Well...{w=1}{nw}"
+    extend 2clrfl " I guess that's fine.{w=0.75}{nw}"
+    extend 1ccscal " This time."
+    n 4ccsssl "Heh."
+    n 3ccsbgl "D-{w=0.2}don't be a stranger,{w=0.5} [player]!"
+    n 3ksrbolsbl "..."
+
+    return { "quit": None }
+
 # NORMAL/HAPPY farewells
 
 init 5 python:
@@ -1287,6 +1369,29 @@ label farewell_normal_happy_oh_right:
     n 1tnmfleqm "Huh?{w=0.75}{nw}"
     extend 1ullbo " Oh,{w=0.2} right."
     n 1cchsm "Later,{w=0.2} [player]!"
+
+    return { "quit": None }
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._farewell_database,
+            label="farewell_normal_happy_stranger",
+            unlocked=True,
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
+        ),
+        topic_group=TOPIC_TYPE_FAREWELL
+    )
+
+label farewell_normal_happy_stranger:
+    n 1tsqpueqm "Eh?{w=0.75}{nw}"
+    extend 2cnmfl " You're done here for now,{w=0.2} [player]?{w=1.5}{nw}"
+    extend 2cdlpu " Huh."
+    n 7cdlbo "..."
+    n 7cdlfl "Well..."
+    n 3tnmaj "Don't be a stranger then,{w=0.5}{nw}"
+    extend 3clrbo " I guess."
+    n 4kdrbosbl "..."
 
     return { "quit": None }
 
@@ -1524,7 +1629,7 @@ label farewell_short_session_ask:
     n 1uskwrlesh "What?{w=0.75}{nw}" 
     extend 4knmemlsbl " You're leaving?{w=1}{nw}" 
     extend 4fnmgslsbl " B-{w=0.1}but you've {i}barely{/i} even been here at all today,{w=0.2} [player]!"
-    $ time_in_session_descriptor = jn_utils.get_time_in_session_descriptor()
+    $ time_in_session_descriptor = jn_utils.getTimeInSessionDescriptor()
     n 3fcsgslsbr "I mean,{w=0.75}{nw}"
     extend 3fnmpol " you've literally only been here for [time_in_session_descriptor]!"
 
@@ -1640,7 +1745,7 @@ init 5 python:
 label farewell_short_session_ask_alt:
     n 4knmajl "N-{w=0.2}now wait just one second,{w=0.2} [player]!{w=1}{nw}"
     extend 2fcsgsl " T-{w=0.2}this isn't fair at all!"
-    $ time_in_session_descriptor = jn_utils.get_time_in_session_descriptor()
+    $ time_in_session_descriptor = jn_utils.getTimeInSessionDescriptor()
     n 2flleml "You've barely been here [time_in_session_descriptor],{w=0.75}{nw}" 
     extend 2fnmajl " and you're {i}already{/i} going?"
 

@@ -125,6 +125,7 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
 
     - InspectorJ
     - launemax
+    - LG
 
     </details>
 - Our [contributors](https://github.com/Just-Natsuki-Team/NatsukiModDev/graphs/contributors)!

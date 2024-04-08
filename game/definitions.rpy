@@ -1269,26 +1269,30 @@ init -999 python in jn_utils:
             self.__args = args
             self.__running = False
             self.__thread = None
-
+ 
         def getIsRunning(self):
             return self.__running
 
         def start(self):
             if not self.__running:
+                self.__running = True
+
+                # We pass a reference to the thread so any continuous loop can reference the running state 
+                run_args = (self,) + self.__args
+
                 if len(self.__args) > 0:
-                    self.__thread = threading.Thread(name=uuid.uuid4(), target=self.__function, args=self.__args)
+                    self.__thread = threading.Thread(name=uuid.uuid4(), target=self.__function, args=run_args)
 
                 else:
-                    self.__thread = threading.Thread(name=uuid.uuid4(), target=self.__function)
+                    self.__thread = threading.Thread(name=uuid.uuid4(), target=self.__function, args=run_args)
+                    self.test = self.__thread
 
                 self.__thread.daemon = True
                 self.__thread.start()
-                self.__running = True
-
+                
         def stop(self):
             if self.__running:
                 self.__running = False
-                self.__thread.join()
 
 init -100 python in jn_utils:
     import codecs
@@ -1365,7 +1369,7 @@ init -100 python in jn_utils:
         """
         return get_total_gameplay_length().total_seconds() / 2628000
 
-    def get_time_in_session_descriptor():
+    def getTimeInSessionDescriptor():
         """
         Get a descriptor based on the number of minutes the player has spent in the session, up to 30 minutes
 
@@ -2030,6 +2034,7 @@ define audio.chair_in = "mod_assets/sfx/chair_in.ogg"
 define audio.chair_out = "mod_assets/sfx/chair_out.ogg"
 define audio.chair_out_fast = "mod_assets/sfx/chair_out_fast.ogg"
 define audio.chair_out_in = "mod_assets/sfx/chair_out_in.ogg"
+define audio.chair_out_slow = "mod_assets/sfx/chair_out_slow.ogg"
 define audio.clothing_ruffle = "mod_assets/sfx/clothing_ruffle.ogg"
 define audio.coin_flip = "mod_assets/sfx/coin_flip.ogg"
 define audio.drawer = "mod_assets/sfx/drawer.ogg"
