@@ -199,8 +199,17 @@ label ch30_init:
 
             else:
                 greeting_topic = jn_greetings.selectGreeting()
+                greeting_topic = get_topic("greeting_glasses_eyetest")
                 push(greeting_topic.label)
-                
+
+                # Show prop if one is associated with this greeting
+                if "prop" in greeting_topic.additional_properties:
+                    renpy.show(name="prop {0}".format(greeting_topic.additional_properties["prop"]), zorder=JN_PROP_ZORDER)
+
+                # Show overlay if one is associated with this greeting
+                if "overlay" in greeting_topic.additional_properties:
+                    renpy.show(name="overlay {0}".format(greeting_topic.additional_properties["overlay"]), zorder=JN_OVERLAY_ZORDER)
+
                 # Show desk item if one is associated with this greeting
                 if "desk_item" in greeting_topic.additional_properties:
                     desk_item = jn_desk_items.getDeskItem(greeting_topic.additional_properties["desk_item"])

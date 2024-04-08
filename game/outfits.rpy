@@ -1570,7 +1570,7 @@ init -1 python in jn_outfits:
     ))
     __registerWearable(JNClothes(
         reference_name="jn_clothes_cosy_cardigan",
-        display_name="Cosy cardigan",
+        display_name="Cozy cardigan",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -2001,7 +2001,7 @@ init -1 python in jn_outfits:
     ))
     __registerOutfit(JNOutfit(
         reference_name="jn_cosy_cardigan_outfit",
-        display_name="Cosy cardigan outfit",
+        display_name="Cozy cardigan outfit",
         unlocked=False,
         is_jn_outfit=True,
         clothes=getWearable("jn_clothes_cosy_cardigan"),
@@ -2202,8 +2202,18 @@ label outfits_wear_outfit:
         $ jnRemoveTopicFromEventList("new_wearables_outfits_unlocked")
         jump new_wearables_outfits_unlocked
 
-    n 4unmaj "Huh?{w=0.75}{nw}" 
-    extend 4unmbo " You want me to try on another outfit?"
+    $ dialogue_choice = random.randint(1, 3)
+    if dialogue_choice == 1:
+        n 4tnmpu "Eh?{w=0.75}{nw}"
+        extend 4tnmbo " You wanna see another outfit,{w=0.2} [player]?"
+
+    elif dialogue_choice == 2:
+        n 4tnmss "Oh?{w=0.75}{nw}"
+        extend 4clrss " You wanna see me try something else on,{w=0.2} [player]?"
+
+    else:
+        n 4unmaj "Huh?{w=0.75}{nw}"
+        extend 4unmbo " You want me to try on another outfit?"
     
     if Natsuki.isEnamored(higher=True):
         n 1fchbgl "Sure thing!{w=0.75}{nw}"
@@ -2219,6 +2229,12 @@ label outfits_wear_outfit:
         n 7tlrsl "So...{w=1}{nw}"
         extend 7unmbo " did you have something in mind,{w=0.2} or?"
 
+    if Natsuki.isAffectionate(higher=True):
+        show natsuki option_wait_excited at jn_left
+
+    else:
+        show natsuki option_wait_curious at jn_left
+
     python:
         # Get unlocked outfits, sort them and generate player options
         available_outfits = jn_outfits.JNOutfit.filterOutfits(
@@ -2231,12 +2247,6 @@ label outfits_wear_outfit:
     $ outfit_confirmed = False
     while not outfit_confirmed:
         # Get the outfit
-        if Natsuki.isAffectionate(higher=True):
-            show natsuki option_wait_excited at jn_left
-
-        else:
-            show natsuki option_wait_curious at jn_left
-
         call screen outfit_item_menu(outfit_options)
         show natsuki at jn_center
 
@@ -2249,6 +2259,8 @@ label outfits_wear_outfit:
                 $ chosen_descriptor = "you {0}".format(jn_utils.getRandomTeaseName()) if Natsuki.isAffectionate(higher=True) else player
                 n 4fchgn "I'm already wearing that,{w=0.2} [chosen_descriptor]!{w=0.75}{nw}"
                 extend 3fsqbg " At least pick {i}something{/i} different!"
+                
+                show natsuki option_wait_smug at jn_left
 
             else:
                 # Wear the chosen outfit, stop the loop

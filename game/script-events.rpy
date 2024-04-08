@@ -44,12 +44,12 @@ image prop math_attempt = "mod_assets/props/math_attempt.png"
 image prop a_la_mode_manga_held = "mod_assets/props/a_la_mode_manga_held.png"
 image prop strawberry_milkshake = "mod_assets/props/strawberry_milkshake.png"
 image prop step_by_step_manga_held = "mod_assets/props/step_by_step_manga_held.png"
-image prop glasses_case = "mod_assets/props/glasses_case.png"
 image prop hot_chocolate hot = "mod_assets/props/hot_chocolate.png"
 image prop hot_chocolate cold = "mod_assets/props/hot_chocolate_cold.png"
 image prop cake lit = "mod_assets/props/cake_lit.png"
 image prop cake unlit = "mod_assets/props/cake_unlit.png"
 image prop watering_can = "mod_assets/props/watering_can.png"
+image prop glasses_desk = "mod_assets/props/glasses_desk.png"
 
 image prop f14_heart give = "mod_assets/props/f14/give_heart.png"
 image prop f14_heart hold = "mod_assets/props/f14/hold_heart.png"
@@ -1492,8 +1492,8 @@ label event_eyewear_problems:
     menu:
         "Enter...":
             pass
-
-    show prop glasses_case zorder JN_PROP_ZORDER
+    
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_glasses_case"))
     show overlay slipping_glasses zorder JN_OVERLAY_ZORDER at jn_glasses_pre_slide
     $ jn_events.displayVisuals("1fcssmesi")
     $ jn_globals.force_quit_enabled = True
@@ -1610,7 +1610,7 @@ label event_eyewear_problems:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     # Hide glasses overlay and restore old outfit
-    hide prop
+    $ Natsuki.clearDesk()
     hide overlay
     $ Natsuki.setOutfit(jn_outfits.getOutfit(outfit_to_restore))
     show natsuki 1fcsbol at jn_center zorder JN_NATSUKI_ZORDER

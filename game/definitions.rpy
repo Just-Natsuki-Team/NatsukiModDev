@@ -990,6 +990,34 @@ init -3 python:
         trans.xpos = random.choice(range(0, 1280))
         return
 
+    def jnFadeToBlack(fade_time=0, delay=0):
+        """
+        Fades into the standard black screen.
+
+        IN:
+            - fade_time - The time to take for the fadeout to occur.
+            - delay - The time to delay after the fadeout has completed.
+        """
+        renpy.show(name="black", zorder=JN_BLACK_ZORDER)
+        renpy.with_statement(Dissolve(fade_time))
+        jnPause(fade_time + delay)
+
+        return
+
+    def jnFadeFromBlack(fade_time=0, delay=0):
+        """
+        Fades from the standard black screen.
+
+        IN:
+            - fade_time - The time to take for the fadein to occur.
+            - delay - The time to delay after the fadein has completed.
+        """
+        renpy.hide("black")
+        renpy.with_statement(Dissolve(fade_time))
+        jnPause(fade_time + delay)
+
+        return
+
 # Variables with cross-script utility specific to Just Natsuki
 init -990 python in jn_globals:
     import re
@@ -1424,6 +1452,16 @@ init -100 python in jn_utils:
 
         else:
             return ["th", "st", "nd", "rd", "th"][min(value % 10, 4)]
+    
+    def diceRoll(faces):
+        """
+        Returns True or False based on whether a roll with the given faces returns one.
+        IN:
+            - faces - int number of faces for the diceroll
+        OUT:
+            - True if the roll equals one, otherwise False
+        """
+        return random.randint(1, faces) == 1
 
     def getPlayerInitial():
         """

@@ -2228,7 +2228,7 @@ label talk_favourite_season:
                 elif season_preference_changed and persistent.jn_player_favourite_season == "Winter":
                     n 1tllss "Winter,{w=0.1} huh?{w=0.2} I wasn't expecting that."
                     n 3tnmbo "Do you prefer being indoors now or something,{w=0.1} [player]?"
-                    n 4flrss "Well,{w=0.1} if you prefer being all cosy inside..."
+                    n 4flrss "Well,{w=0.1} if you prefer being all cozy inside..."
                     n 1fsqsm "Then you better not be slacking on your reading,{w=0.1} [player]!{w=0.5}{nw}"
                     extend 1fchsm " Ehehe."
 

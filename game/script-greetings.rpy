@@ -776,25 +776,32 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_world_revolves_around_you",
             unlocked=True,
-            affinity_range=(jn_affinity.LOVE, None)
+            affinity_range=(jn_affinity.LOVE, None),
+            additional_properties={
+                "expression": "3fkrbol"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_love_plus_world_revolves_around_you:
-    n 1fsqpol "[player]!{w=0.75}{nw}" 
-    extend 2fnmgsl " What took you so long?{w=0.75}{nw}" 
+    n 4fsqgsl "[player]!{w=0.75}{nw}"
+    extend 2fnmwrl " What took you so long?{w=0.75}{nw}" 
     extend 2fllemlesi " Jeez!"
-    n 2fnmsfl "You think my entire {i}world{/i} revolves around you or something?"
+    n 2fupeml "Do you seriously think my entire {i}world{/i} revolves around you{w=0.5}{nw}" 
+    extend 2fsqeml " or something?"
+    n 2fsqpol "..."
     n 2fnmdvl "..."
-    n 2fsqsml "..."
-    n 4uchlglelg "Ahaha!{w=1}{nw}" 
+    n 2fchsmlesm "Pffft-!"
+    n 4fchbglelg "Ahaha!{w=1}{nw}" 
     extend 3fsqsml " Did I getcha,{w=0.2} [player]?{w=0.5}{nw}" 
     extend 3fchgnl " Don't lie!"
+    n 3fcssml "Ehehe.{w=0.75}{nw}"
+    extend 3tllbgl " Well,{w=0.2} anyway." 
     $ chosen_endearment = jn_utils.getRandomEndearment()
-    n 3ullssl "Well,{w=0.2} anyway." 
     n 4fcsbgl "You're here now,{w=0.2} [chosen_endearment].{w=0.75}{nw}"
-    extend 4uchsmleme " Make yourself at home,{w=0.2} silly!"
+    $ chosen_tease = jn_utils.getRandomTeaseName()
+    extend 4uchsmleme " Make yourself at home,{w=0.2} you big [chosen_tease]!"
 
     return
 
@@ -804,16 +811,21 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_make_today_amazing",
             unlocked=True,
-            affinity_range=(jn_affinity.LOVE, None)
+            affinity_range=(jn_affinity.LOVE, None),
+            additional_properties={
+                "expression": "7ksrsfl"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_love_plus_make_today_amazing:
-    n 4uchbsfeex "[player]!{w=0.3} [player]{w=0.2} [player]{w=0.2} [player]!"
-    n 2fcsbgfsbl "I-{w=0.2}I was wondering when you were gonna show up!{w=0.75}{nw}"
-    extend 2fchsml " Ehehe."
-    n 4fwlsmledz "Let's make today amazing too,{w=0.2} alright?"
+    n 7unmflleex "...!{w=0.75}{nw}"
+    n 4unmbgl "[player]!{w=0.5}{nw}"
+    extend 4uchbsf " [player]{w=0.2} [player]{w=0.2} [player]!"
+    n 2fcsbgfsbl "I-{w=0.2}I was just wondering when you were gonna decide to finally show up!\n{w=0.75}{nw}"
+    extend 2fchsmlsbr "Ehehe."
+    n 7fwlbgledz "Let's make today amazing too,{w=0.2} alright?"
 
     return
 
@@ -825,7 +837,7 @@ init 5 python:
             unlocked=True,
             affinity_range=(jn_affinity.LOVE, None),
             additional_properties={
-                "expression": "1ksrsll"
+                "expression": "7ksrsll"
             }
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -833,13 +845,17 @@ init 5 python:
 
 label greeting_love_plus_always_welcome_here:
     $ player_initial = jn_utils.getPlayerInitial()
-    n 1uskgsfesu "[player_initial]-{w=0.2}[player]!{w=0.5}{nw}" 
-    extend 1ullemfsbl " You're back!"
+    n 4unmgslesu "[player_initial]-{w=0.2}[player]!{w=0.5}{nw}" 
+    extend 4ullemfsbl " You're back!"
     n 2fslunfesssbl "I was really starting to miss you,{w=0.3} you know..."
-    n 2fplcafsbl "Don't keep me waiting so long next time,{w=0.3} alright?"
+    n 2ccsfllesisbl "..."
+    n 2csrsllsbl "..."
+    n 2nsrfllsbl "Just..."
+    extend 4ccstrlsbl " Don't keep me waiting so long next time,{w=0.3} alright?"
+    extend 4ccssslsbl " Anyway."
     $ chosen_tease = jn_utils.getRandomTease()
-    n 4ccsssfsbr "Y-{w=0.2}you should know you're {i}always{/i} welcome here by now,{w=0.5}{nw}" 
-    extend 1fchsmfsbr " [chosen_tease]."
+    n 4ccssmfsbr "Y-{w=0.2}you should know you're {i}always{/i} welcome here by now,{w=0.5}{nw}" 
+    extend 7fchsmfsbr " [chosen_tease]."
 
     return
 
@@ -851,26 +867,29 @@ init 5 python:
             unlocked=True,
             affinity_range=(jn_affinity.LOVE, None),
             additional_properties={
-                "expression": "1kcssml"
+                "expression": "2kcssml"
             }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_love_plus_lovestruck:
-    n 1kcssml "..."
-    n 1ksqsml "..."
-    n 1uskgsfeex "...!{w=0.5}{nw}"
+    n 2kcssml "..."
+    n 2ksqsml "...{w=0.75}{nw}"
+    n 2unmgsfeex "...!{w=0.5}{nw}"
     $ player_initial = jn_utils.getPlayerInitial()
-    n 1kbkwrf "[player_initial]-{w=0.3}[player]!{w=1}{nw}" 
-    extend 1fbkwrfess " When did you {i}get{/i} here?!"
-    n 4klrgsf "I-{w=0.3}I was...!{w=1}{nw}" 
+    n 4kbkwrf "[player_initial]-{w=0.3}[player]!{w=1}{nw}" 
+    extend 4fbkwrfess " When did you {i}get{/i} here?!"
+    n 4klrgsf "I-{w=0.5}I was...!{w=1}{nw}" 
     extend 4kllemfsbl " I was just...!"
-    n 1kcsunf "..."
-    n 1kcssml "..."
-    n 4kplsml "I missed you,{w=0.2} [player].{w=0.3} Ahaha..."
+    n 1kslunl "..."
+    n 1cslsml "..."
+    n 4cdlssl "I-{w=0.2}I missed you,{w=0.2} [player].{w=0.75}{nw}"
+    extend 3ccsajlsbr " J-{w=0.2}just a little."
+    n 3ccspolsbr "..."
+    n 3ccspulsbr "But..."
     $ chosen_endearment = jn_utils.getRandomEndearment()
-    n 4kwmsmf "But I know everything's gonna be okay now you're here,{w=0.2} [chosen_endearment]."
+    n 3cchsmleafsbr "At least I know everything's gonna be okay now you're here,{w=0.2} [chosen_endearment]."
 
     return
 
@@ -2628,5 +2647,73 @@ label greeting_sanjo_generic:
     else:
         n 1ullaj "So..."
         n 3tnmss "What's new,{w=0.2} [player]?"
+
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_glasses_eyetest",
+            unlocked=True,
+            conditional="persistent.jn_custom_outfits_unlocked and get_topic('event_eyewear_problems').shown_count > 0 and jn_utils.diceRoll(3)",
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
+            additional_properties={
+                "desk_item": "jn_glasses_case",
+                "expression": "7csqsl",
+                "prop": "glasses_desk"
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_glasses_eyetest:
+    n 7fdwsl "..."
+    n 7flrsl "..."
+    n 7tnmboeqm "...?{w=0.75}{nw}"
+    n 3unmgslesu "O-{w=0.2}oh!{w=0.75}{nw}"
+    $ player_initial = jn_utils.getPlayerInitial()
+    extend 4fllbglsbr " [player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
+    extend 4fcsbglsbr " I didn't even see you come in!{w=0.75}{nw}"
+    extend 7fchbglsbr " W-{w=0.2}what's up?"
+    n 7fchsmlsbl "..."
+    n 7nsqsllsbl "..."
+    n 4ccsfllesisbl "..."
+    n 4ctlfllsbl "...And no,{w=0.2} before you say anything.{w=0.75}{nw}"
+    extend 2ccstrlsbl " The glasses had nothing to do with that.{w=0.75}{nw}"
+    extend 2ccscalsbl " O-{w=0.2}obviously."
+    show natsuki 2fcspol
+
+    $ jnFadeToBlack(0.5)
+    show natsuki 3ccsbo
+    $ Natsuki.clearDesk()
+    hide prop
+    play audio glasses_case_close
+    $ jnPause(0.75)
+    play audio drawer
+    $ jnPause(3)
+    $ jnFadeFromBlack(0.5, 0.5)
+
+    n 3nlrbo "..."
+    n 3nlraj "So...{w=1}{nw}"
+    extend 3tnmss " What's up with you,{w=0.2} [player]?{w=0.75}{nw}"
+    extend 3tnmbg " Anything new?"
+    n 7fcsbglsbr "...O-{w=0.2}or did you just come here for an eye test featuring yours truly?{w=0.75}{nw}"
+    extend 7fsqsmlsbr " Ehehe."
+    
+    if Natsuki.isLove(higher=True):
+        $ chosen_endearment = random.choice(["babe", "hun"])
+        n 3fchbgl "Welcome back,{w=0.2} [chosen_endearment]!{w=0.75}{nw}"
+        extend 3fchblleaf " Now hurry up and get cozy already!"
+
+    elif Natsuki.isEnamored(higher=True):
+        $ chosen_tease = jn_utils.getRandomTeaseName()
+        n 3fchbgl "Welcome back,{w=0.2} you big [chosen_tease]!{w=0.75}{nw}"
+        extend 3fchsml " Now hurry up and get comfy already!"
+
+    else:
+        $ chosen_tease = jn_utils.getRandomTeaseName()
+        n 3fchbgl "Welcome back,{w=0.2} you [chosen_tease]!{w=0.75}{nw}"
+        extend 3nchgnl " Now start talking already!"
 
     return

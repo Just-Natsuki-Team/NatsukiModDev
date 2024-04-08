@@ -259,3 +259,11 @@ init -55 python in jn_desk_items:
         unlocked=False,
         image_path="mod_assets/props/pumpkins.png"
     ))
+
+    __registerDeskItem(JNDeskItem(
+        reference_name="jn_glasses_case",
+        item_type=JNDeskItemTypes.holiday,
+        desk_slot=JNDeskSlots.right,
+        unlocked=False,
+        image_path="mod_assets/props/glasses_case.png"
+    ))
