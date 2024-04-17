@@ -667,7 +667,7 @@ label joke_tractor_trailer:
     n 1fllaj "I was meant to see a film all about tractors,{w=0.75}{nw}"
     extend 1fcspo " but I ended up missing it!"
     n 1ulraj "It's fine though,{w=0.2} really."
-    n 1fsqss "I didn't catch see the tractor..."
+    n 1fsqss "I didn't catch the tractor..."
     n 1fchbg "...But I at least saw the {i}trailer{/i}!"
 
     return     
