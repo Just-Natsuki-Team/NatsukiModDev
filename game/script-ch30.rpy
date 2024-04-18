@@ -199,7 +199,6 @@ label ch30_init:
 
             else:
                 greeting_topic = jn_greetings.selectGreeting()
-                greeting_topic = get_topic("greeting_glasses_eyetest")
                 push(greeting_topic.label)
 
                 # Show prop if one is associated with this greeting
