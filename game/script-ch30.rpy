@@ -245,8 +245,7 @@ label ch30_init:
 
 #The main loop
 label ch30_loop:
-    if not renpy.showing("natsuki idle"):
-        show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
+    $ jnShowNatsukiIdle(jn_center)  
 
     #Run our checks
     python:
@@ -287,10 +286,8 @@ label ch30_wait:
 
         if not jn_topic_in_event_list("weather_change") and jn_locations.checkUpdateLocationSunriseSunset(main_background):
             queue("weather_change")
-        
-        if (random.randint(1, 10000) == 1):
-            jn_stickers.stickerWindowPeekUp(at_right=random.choice([True, False]))
 
+        jnShowNatsukiIdle(jn_center)  
         jnPause(delay=5.0, hard=True)
 
     jump ch30_loop
@@ -300,7 +297,7 @@ label call_next_topic(show_natsuki=True):
     $ _topic = None
 
     if show_natsuki:
-        show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
+        $ jnShowNatsukiIdle(jn_center)  
 
     if persistent._event_list:
         $ _topic = persistent._event_list.pop(0)
@@ -770,7 +767,7 @@ label farewell_menu:
     $ Natsuki.setForceQuitAttempt(False)
 
     if isinstance(_return, basestring):
-        show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
+        $ jnShowNatsukiIdle(jn_center)  
         $ push(_return)
         jump call_next_topic
 
@@ -787,7 +784,7 @@ label outfits_menu:
         "mod_assets/icons/outfits.png")
 
     if isinstance(_return, basestring):
-        show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
+        $ jnShowNatsukiIdle(jn_center)  
         $ push(_return)
         jump call_next_topic
 
