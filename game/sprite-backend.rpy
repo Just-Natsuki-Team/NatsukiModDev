@@ -1325,16 +1325,7 @@ image natsuki option_wait_sulky:
 
     repeat
 
-# This selects which idle image to show based on current affinity state
-image natsuki idle = ConditionSwitch(
-    "Natsuki.isEnamored(higher=True)", "natsuki idle enamored",
-    "Natsuki.isAffectionate(higher=True)", "natsuki idle affectionate",
-    "Natsuki.isHappy(higher=True)", "natsuki idle happy",
-    "Natsuki.isNormal(higher=True)", "natsuki idle normal",
-    "Natsuki.isDistressed(higher=True)", "natsuki idle distressed",
-    "True", "natsuki idle ruined",
-    predict_all = True
-)
+image natsuki idle = Natsuki.getIdleImageTagsForAffinity()
 
 # Idle images for ENAMORED+
 image natsuki idle enamored:
@@ -1931,6 +1922,14 @@ image natsuki idle fluster:
 
 init python:
     import random
+
+    def jnShowNatsukiIdle(position, zorder=store.JN_NATSUKI_ZORDER):
+        """
+        Shows the appropriate Natsuki idle sprite based on the current affinity level.
+        Avoids having to use a condition switch to constantly check and update the sprite,
+        which is extremely expensive in CPU cycles.
+        """
+        renpy.show(Natsuki.getIdleImageTagsForAffinity(), at_list=[position], zorder=zorder)
 
     def jnShowNatsukiTalkMenu():
         """

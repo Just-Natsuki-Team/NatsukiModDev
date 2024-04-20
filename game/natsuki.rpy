@@ -382,6 +382,32 @@ init 0 python:
         # START: Relationship functionality
 
         @staticmethod
+        def getIdleImageTagsForAffinity():
+            """
+            Returns the idle image tags/name for Natsuki based on her current affinity state.
+
+            OUT:
+                - String image tags/name
+            """
+            if Natsuki.isEnamored(higher=True):
+                return "natsuki idle enamored"
+
+            elif Natsuki.isAffectionate(higher=True):
+                return "natsuki idle affectionate"
+
+            elif Natsuki.isHappy(higher=True):
+                return "natsuki idle happy"
+
+            elif Natsuki.isNormal(higher=True):
+                return "natsuki idle normal"
+            
+            elif Natsuki.isDistressed(higher=True):
+                return "natsuki idle distressed"
+
+            else:
+                return "natsuki idle ruined"
+
+        @staticmethod
         def calculatedAffinityGain(base=1, bypass=False):
             """
             Adds a calculated amount to affinity, based on the player's relationship with Natsuki and daily cap state.

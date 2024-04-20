@@ -2155,6 +2155,19 @@ init -1 python in jn_outfits:
 
 # Asking Natsuki to wear an outfit
 label outfits_wear_outfit:
+    python:
+        # We have to unload outfits before wearables due to dependencies
+        jn_outfits.unloadCustomOutfits()
+        jn_outfits.unloadCustomWearables()
+
+        # We have to load wearables before outfits due to dependencies
+        jn_outfits.loadCustomWearables()
+        jn_outfits.loadCustomOutfits()
+
+        # Now we've loaded back into memory, reload the persisted data
+        jn_outfits.JNWearable.loadAll()
+        jn_outfits.JNOutfit.loadAll()
+
     if not jn_outfits.getAllOutfits():
         # No outfits, no point proceeding
         n 4tnmbo "Huh?{w=0.5}{nw}"
@@ -2826,7 +2839,7 @@ label outfits_auto_change:
     else:
         n 2fsqsl "...{w=0.75}{nw}"
 
-    show natsuki idle at jn_center
+    $ jnShowNatsukiIdle(jn_center) 
     return
 
 label new_wearables_outfits_unlocked:
