@@ -1325,6 +1325,52 @@ image natsuki option_wait_sulky:
 
     repeat
 
+image natsuki_option_wait_annoyed:
+    block:
+        choice:
+            "natsuki 2fslsl"
+            pause 4
+            "natsuki 2fcssl"
+            pause 0.1
+            "natsuki 2fslsl"
+            pause 4
+            "natsuki 2fcssl"
+            pause 0.1
+
+        choice:
+            "natsuki 2fsrsl"
+            pause 4
+            "natsuki 2fcssl"
+            pause 0.1
+            "natsuki 2fsrsl"
+            pause 4
+            "natsuki 2fcssl"
+            pause 0.1
+
+        choice:
+            "natsuki 2ccssl"
+            pause 6
+
+        choice:
+            "natsuki 2fcssr"
+            pause 6
+
+        choice:
+            "natsuki 2fllsl"
+            pause 4
+            "natsuki 2fcssl"
+            pause 0.1
+            "natsuki 2fnmsl"
+            pause 2
+            "natsuki 2fcssl"
+            pause 0.1
+            "natsuki 2fllsl"
+            pause 2
+            "natsuki 2fcssl"
+            pause 0.1
+
+    repeat
+
 image natsuki idle = Natsuki.getIdleImageTagsForAffinity()
 
 # Idle images for ENAMORED+
