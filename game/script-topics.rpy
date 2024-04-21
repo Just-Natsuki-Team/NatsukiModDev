@@ -12429,3 +12429,99 @@ label talk_remind_blackjack_rules:
 
     $ get_topic("talk_remind_blackjack_rules").shown_count += 1 # Have to increment manually here thanks to jump
     jump blackjack_explanation
+
+# Natsuki isn't a fan of shaving!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_windup_shaving",
+            unlocked=True,
+            prompt="Shaving",
+            category=["Wind-ups", "Fashion"],
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_windup_shaving:
+    if get_topic("").shown_count > 0:
+        n "..."
+        n "I mean,"
+        extend " I know I said it isn't exactly something I've really gotta deal with anymore here."
+        extend " But I still can't get over how much of a relief it is not having to think about shaving anymore."
+        n "..."
+        n "H-hey!"
+        extend " Don't give me that look, [player]!"
+        extend " It's just like I said before -"
+        extend " it's seriously the worst!"
+
+    else:
+        n "...Ugh."
+        extend " Man, I totally forgot about how much that got on my nerves."
+        n "You know what I really can't stand, [player]?"
+        extend " B-before I got stuck here, I mean."
+        n "..."
+        n "...Shaving."
+        n "..."
+        n "...Yeah."
+        extend " You know exactly what I'm talking about."
+        extend " I can practically see it on your face."
+        n "Seriously, [player] -"
+        extend " it's actually the worst!"
+        extend " I can't stand it!"
+        n "It's like every part of it all is practically {i}designed{/i} to piss you off!"
+
+    n "Yeah."
+    extend " You better be sitting comfortably, [player]."
+    extend " 'Cause I've got a real bucket list to go off on this one."
+    n "So first off,"
+    extend " let's give a {i}huge{/i} round of applause to everybody's favorite pain in the backside:"
+    extend " the human body!"
+    n "I don't know about you, [player] -" 
+    extend " but depending on how fast your hair grows?"
+    extend " You're gonna be looking at anywhere from days to hours between shaves."
+    n "Because nobody {i}ever{/i} had anything better to do in the morning than blow a bunch of time obsessing over how {i}silky smooth{/i} their features are, right?"
+    n "Come on -"
+    extend " It isn't even like you gotta worry about that for the hair on your head."
+    extend " Why does it {i}have{/i} to be so different for hair anywhere else?"
+    n "Cut me a break."
+
+    n "Oh, and did I mention just how much you have to pay for the privilege?"
+    extend " It doesn't even matter what you use!"
+    n "Those razors with the replaceable bits on the end?"
+    extend " Hope you enjoy squeezing as much out of each one as you can to save on the refills!"
+    extend " Going disposable?"
+    extend " Yeah, because I {i}totally{/i} enjoy emptying the trash as much as by bank account."
+    extend " Not."
+    n "Even the stupid electric ones don't help -"
+    extend " they're even more expensive than everything else!"
+    extend " At least the others don't feel the need to die on the job either."
+
+    n "And whatever you buy, it feels like you'll never get the kind of shave you even wanted in the first place."
+
+
+
+    n "'Our closest shave ever!'."
+    extend " Yeah, right."
+    extend " More like shaving away all your savings."
+    
+
+
+    # ??
+    n "Yeah, right."
+    n "'Closest shave ever', my butt."
+    extend " More like cutting my bank balance."
+
+    if Natsuki.isEnamored(higher=True):
+        n ""
+
+    elif Natsuki.isAffectionate(higher=True):
+        n ""
+
+    else:
+        n ""
+
+    return
