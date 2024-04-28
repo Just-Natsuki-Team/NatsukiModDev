@@ -12447,21 +12447,25 @@ init 5 python:
     )
 
 label talk_windup_shaving:
-    if get_topic("").shown_count > 0:
+    $ already_discussed_shaving = get_topic("talk_windup_shaving").shown_count > 0
+    if already_discussed_shaving:
         n "..."
         n "I mean,"
-        extend " I know I said it isn't exactly something I've really gotta deal with anymore here."
-        extend " But I still can't get over how much of a relief it is not having to think about shaving anymore."
+        extend " I know I said it isn't exactly something I've really gotta deal with here."
+        extend " F-for now, anyway."
+        n "But I still can't get over how much of a relief it is not having to think about shaving anymore."
         n "..."
         n "H-hey!"
         extend " Don't give me that look, [player]!"
-        extend " It's just like I said before -"
-        extend " it's seriously the worst!"
+        extend " You know perfectly well what I'm talking about, just like before."
+        extend " It's the {i}worst{/i}!"
 
     else:
+        n "..."
+        n "Tch!"
         n "...Ugh."
         extend " Man, I totally forgot about how much that got on my nerves."
-        n "You know what I really can't stand, [player]?"
+        n "You know what I {i}really{/i} can't stand, [player]?"
         extend " B-before I got stuck here, I mean."
         n "..."
         n "...Shaving."
@@ -12483,45 +12487,114 @@ label talk_windup_shaving:
     n "I don't know about you, [player] -" 
     extend " but depending on how fast your hair grows?"
     extend " You're gonna be looking at anywhere from days to hours between shaves."
-    n "Because nobody {i}ever{/i} had anything better to do in the morning than blow a bunch of time obsessing over how {i}silky smooth{/i} their features are, right?"
-    n "Come on -"
+    n "Of course!"
+    extend " Because nobody " 
+    extend "{i}ever{/i}"
+    extend " had anything better to do in the morning than blow a bunch of time obsessing over how {i}silky smooth{/i} their features are,"
+    extend " right?"
+    n "And don't even get me started on how counter-intuitive it all is either."
+    n "Go too slow?"
+    extend " Go too fast?"
+    extend " Just {i}look{/i} at your razor the wrong way?"
+    n "Surprise!"
+    extend " Hope you stocked up on band-aids."
+    extend " 'Cause you know what you're gonna be doing for the next ten minutes."
+    n "I mean, seriously -"
     extend " It isn't even like you gotta worry about that for the hair on your head."
     extend " Why does it {i}have{/i} to be so different for hair anywhere else?"
     n "Cut me a break."
 
-    n "Oh, and did I mention just how much you have to pay for the privilege?"
+    n "Oh -" 
+    extend " and did I mention just how much you have to pay for the privilege?"
     extend " It doesn't even matter what you use!"
     n "Those razors with the replaceable bits on the end?"
     extend " Hope you enjoy squeezing as much out of each one as you can to save on the refills!"
-    extend " Going disposable?"
-    extend " Yeah, because I {i}totally{/i} enjoy emptying the trash as much as by bank account."
-    extend " Not."
-    n "Even the stupid electric ones don't help -"
-    extend " they're even more expensive than everything else!"
-    extend " At least the others don't feel the need to die on the job either."
-
-    n "And whatever you buy, it feels like you'll never get the kind of shave you even wanted in the first place."
-
-
-
+    n "Going disposable?"
+    extend " Yeah, because I " 
+    extend "{i}totally{/i}"
+    extend " enjoy emptying the trash just like how they're emptying my bank account."
+    n "...Not."
+    n "Even the stupid fancy electric ones don't help -"
+    extend " they're even {i}more{/i} expensive than everything else!"
+    extend " And we all know just how much fun it is having {i}another{/i} thing that keeps running out of juice."
     n "'Our closest shave ever!'."
     extend " Yeah, right."
     extend " More like shaving away all your savings."
-    
 
+    n "Heh."
+    extend " And whatever you buy?" 
+    extend " It feels like you'll never even get the kind of shave you wanted in the first place."
+    n "Yeah, yeah."
+    extend " Say whatever you want, [player]."
+    extend " I've heard it all before."
+    n "'Oh, you just gotta let your skin soak, Natsuki!.'"
+    extend " 'It's easy! Just follow the grain!.'"
+    extend " 'Don't forget to lather up every time!.'"
+    extend " You think I haven't {i}tried{/i} that already?!"
+    n "Like..."
+    extend " Come {i}on{/i}!"
+    extend " Is this meant to be a morning routine?" 
+    extend " Or some kind of cult ritual?"
+    n "At least a ritual doesn't leave your legs looking like a war zone either."
+    n "Ugh..."
 
-    # ??
-    n "Yeah, right."
-    n "'Closest shave ever', my butt."
-    extend " More like cutting my bank balance."
+    if already_discussed_shaving:
+        n "..."
+        n "...Look."
+        extend " I'm not gonna go all out and work myself up about all this."
+        extend " Again."
+        n "Not like just complaining about something ever achieved anything anyway."
+        
+    else:
+        n "You'd think something practically everybody's had to deal with would be solved by now,"
+        extend " right?"
+        n "..."
+        n "..."
+        n "Alright, look."
+        extend " I've already gone on about this long enough."
+        extend " And I really don't want shaving of all things living rent-free in my head again."
 
-    if Natsuki.isEnamored(higher=True):
-        n ""
+    n "So..." 
+    $ chosen_descriptor = "babe" if Natsuki.isLove(higher=True) else player
+    extend " I'm just gonna say this, [chosen_descriptor]."
 
-    elif Natsuki.isAffectionate(higher=True):
-        n ""
+    if already_discussed_shaving:
+        n "Like I said before."
+        extend " I don't really care or anything if you shave or not, [player]."
 
     else:
-        n ""
+        n "I don't particularly care or anything if you shave or not, [player]."
+
+    extend " T-that's your call, obviously."
+    extend " I'm not gonna think any less of someone not wanting to go through all of..."
+    extend " that."
+    n "..."
+    n "But..."
+    extend " If you {i}do{/i} somehow have some kind of magical morning routine that {i}actually{/i} works for you?"
+    n "...Heh."
+    n "Then I hope you know just who you have to share it with first."
+    extend " T-that's all I'm saying!"
+
+    # Tease about sharing approach with Nat
+    if Natsuki.isLove(higher=True):
+        n "And besides, [player]."
+        extend " I-isn't that just what couples do?"
+        n "Ehehe."
+        n "L-{w=0.2}love you too, [player]!"
+
+    elif Natsuki.isEnamored(higher=True):
+        n "A-and besides, [player]."
+        extend " You know what they say."
+        n "Sharing is caring, right?"
+        extend " Ehehe."
+        $ chosen_tease = jn_utils.getRandomTeaseName()
+        n "Thanks a bunch, you big [chosen_tease]!"
+
+    elif Natsuki.isAffectionate(higher=True):
+        n "E"
+
+    else:
+        n "Ehehe."
+        n "Thanks a bunch, [player]!"
 
     return
