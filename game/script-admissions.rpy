@@ -226,7 +226,7 @@ label admission_anxious:
             else:
                 n 4fchsml "Ehehe."
                 $ chosen_tease = jn_utils.getRandomTease()
-                n 4fchbgl "Do your best,{w=0.2} [chosen_tease]"
+                n 4fchbgl "Do your best,{w=0.2} [chosen_tease]."
         
         else:
             n 4fcssslsbl "B-{w=0.2}besides..."
