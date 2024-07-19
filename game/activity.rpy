@@ -206,7 +206,7 @@ init python in jn_activity:
     ))
     ACTIVITY_MANAGER.registerActivity(JNPlayerActivity(
         activity_type=JNActivities.music_applications,
-        window_name_regex="(^spotify$|^spotify premium$|^groove$|^zune$|^itunes$|^musicbee|^aimp|^winamp)",
+        window_name_regex="(^spotify$|^spotify premium$|^groove$|^zune$|^itunes$|^musicbee$|^aimp$|^winamp$)",
         notify_text=[
             "You better play something good!",
             "New playlist, [player]?",
