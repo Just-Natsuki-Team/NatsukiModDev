@@ -264,6 +264,7 @@ label idle_twitch_playing:
         n 1fsrsssbr "Just give me a second here..."
 
     show natsuki gaming
+    $ jnPause(0.1)
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     show natsuki 1fchsmeme
@@ -299,6 +300,7 @@ label idle_reading_parfait_girls:
         n 1fcssssbl "Just gotta find a good stopping point here..."
 
     show natsuki reading
+    $ jnPause(0.1)
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     show natsuki 1fchsmeme
@@ -345,6 +347,7 @@ label idle_reading_renpy_for_dummies:
         n 1fcsflsbr "None of this crap was making any sense,{w=0.2} a-{w=0.2}anyway."
 
     show natsuki 1fcspo
+    $ jnPause(0.1)
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     show natsuki 1fcssmeme
@@ -366,7 +369,8 @@ label idle_reading_renpy_for_dummies:
 
 label idle_reading_a_la_mode:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
-    show prop a_la_mode_manga_held zorder JN_PROP_ZORDER
+    $ jnPause(0.5)
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_a_la_mode_manga_held"))
     show natsuki reading
     hide black with Dissolve(0.5)
     $ Natsuki.setIsReadingToRight(False)
@@ -390,10 +394,11 @@ label idle_reading_a_la_mode:
         extend 1fsqsm " Ehehe."
 
     show natsuki 1fcssm
+    $ jnPause(0.1)
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     show natsuki 1fchsmeme
-    hide prop
+    $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
     play audio drawer
     $ jnPause(1.3)
     hide black with Dissolve(0.5)
@@ -403,7 +408,8 @@ label idle_reading_a_la_mode:
 
 label idle_reading_step_by_step:
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
-    show prop step_by_step_manga_held zorder JN_PROP_ZORDER
+    $ jnPause(0.5)
+    $ Natsuki.setDeskItem(jn_desk_items.getDeskItem("jn_step_by_step_manga_held"))
     show natsuki reading
     hide black with Dissolve(0.5)
     $ Natsuki.setIsReadingToRight(False)
@@ -424,10 +430,11 @@ label idle_reading_step_by_step:
         extend 1nsrsslsbr " I'll just...{w=1}{nw}" 
         extend 1nsrcal " bookmark this real quick."
 
+    $ jnPause(0.1)
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     show natsuki 1fchsmeme
-    hide prop
+    $ Natsuki.clearDeskItem(jn_desk_items.JNDeskSlots.centre)
     play audio drawer
     $ jnPause(1.3)
     hide black with Dissolve(0.5)
@@ -506,6 +513,7 @@ label idle_poetry_attempts:
         n 1fcsajlsbr "J-{w=0.2}just a second!{w=1}{nw}"
         extend 1fsrcalsbr " Jeez..."
 
+    $ jnPause(0.1)
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     show natsuki 1nsrcasbl
@@ -530,7 +538,9 @@ label idle_vibing_headphones:
         headphones_outfit.headgear = headphones
 
     show natsuki 1ncsca
+    $ jnPause(0.1)
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
     show prop music_notes zorder JN_PROP_ZORDER
     $ jn_outfits.saveTemporaryOutfit(headphones_outfit)
     show natsuki vibing
@@ -556,6 +566,7 @@ label idle_vibing_headphones:
         extend 2fslfllsbr " Jeez..."
         n 2fcsposbr "At {i}least{/i} let me put these on charge first..."
 
+    $ jnPause(0.1)
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     play audio drawer
@@ -621,6 +632,7 @@ label idle_laptop:
         extend 4ccstrsbr " J-{w=0.2}just give me a sec to power down,{w=0.2} alright?"
         show natsuki 4ccscasbr
 
+    $ jnPause(0.1)
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     play audio laptop_close
@@ -659,6 +671,7 @@ label idle_math_attempts:
         extend 2fcsfllsbr " Yeesh..."
         n 2cslbosbr "At least let me clean up this mess..."
 
+    $ jnPause(0.1)
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     show natsuki 4nsrbosbl
@@ -713,6 +726,7 @@ label idle_plantcare:
         n 1fcssmesm "Juuuust making sure I'm keeping Sanjo here in tip-top shape!"
         show natsuki 1fchsmeme
 
+    $ jnPause(0.1)
     show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
     $ jnPause(0.5)
     hide prop

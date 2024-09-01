@@ -306,11 +306,6 @@ init python:
         image_dir="classroom"
     )
 
-    beach = Location(
-        id="beach",
-        image_dir="beach"
-    )
-
     main_background.set_location(classroom)
 
     #Register the event handlers to handle button sounds

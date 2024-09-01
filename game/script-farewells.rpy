@@ -52,7 +52,7 @@ init python in jn_farewells:
         def __int__(self):
             return self.value
 
-    def get_farewell_options():
+    def getFarewellOptions():
         """
         Returns the list of all farewell options when saying Goodbye to Natsuki.
         """
@@ -69,7 +69,7 @@ init python in jn_farewells:
             ("I'm going away for a while.", "farewell_option_extended_leave")
         ]
 
-    def select_farewell():
+    def selectFarewell():
         """
         Picks a random farewell, accounting for affinity
         If the player has already been asked to stay by Natsuki, a farewell without the option
@@ -90,7 +90,8 @@ init python in jn_farewells:
         return random.choice(farewell_pool).label
 
 label farewell_start:
-    $ push(jn_farewells.select_farewell())
+    $ Natsuki.setForceQuitAttempt(False)
+    $ push(jn_farewells.selectFarewell())
     jump call_next_topic
 
 # Only chosen for the first time the player chooses to say Goodbye
@@ -153,7 +154,7 @@ label farewell_force_quit:
     play audio glitch_c
 
     n 1uskem "H-{w=0.3}huh?{w=1}{nw}"
-    extend 4uscwr " N-{w=0.3}no!{w=0.2} Wait!!{w=0.2} PLEASE-{w=0.3}{nw}"
+    extend 4uscwr " N-{w=0.3}no!{w=0.2} Wait!!{w=0.2} PLEASE-{w=0.1}{nw}"
     show natsuki 4kchupltsa at jn_center zorder JN_NATSUKI_ZORDER
 
     play audio static

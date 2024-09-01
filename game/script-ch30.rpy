@@ -90,7 +90,7 @@ label ch30_init:
             Natsuki.setQuitApology(jn_apologies.ApologyTypes.prolonged_leave)
 
         # Repeat visits have a small affinity gain
-        elif not persistent._jn_player_apology_type_on_quit and datetime.date.today().day != persistent.jn_last_visited_date.day:
+        elif not Natsuki.getQuitApology() and datetime.date.today().day != persistent.jn_last_visited_date.day:
             Natsuki.calculatedAffinityGain()
 
         # If we have decorations from the last holiday, and the day hasn't changed, then we should put them back up
@@ -185,14 +185,16 @@ label ch30_init:
         # No holiday, so pick a greeting or random event
         elif not jn_topic_in_event_list_pattern("^greeting_"):
             if (
-                random.randint(1, 10) == 1
-                and (not persistent._jn_player_admission_type_on_quit and not persistent._jn_player_apology_type_on_quit)
+                (random.randint(1, 10) == 1 or persistent._jn_event_attempt_count == 20)
+                and (not persistent._jn_player_admission_type_on_quit and not Natsuki.getQuitApology())
                 and jn_events.selectEvent()
             ):
+                persistent._jn_event_attempt_count = 0
                 push(jn_events.selectEvent())
                 renpy.call("call_next_topic", False)
 
             else:
+                persistent._jn_event_attempt_count += 1
                 greeting_topic = jn_greetings.selectGreeting()
                 push(greeting_topic.label)
                 
@@ -209,11 +211,12 @@ label ch30_init:
                     renpy.show("natsuki idle", at_list=[jn_center], zorder=JN_NATSUKI_ZORDER)
 
                 persistent._jn_player_admission_type_on_quit = None
-                persistent._jn_player_apology_type_on_quit = None
+                Natsuki.clearQuitApology()
 
     # Prepare visuals
     $ jnPause(0.1)
     hide black with Dissolve(1)
+    $ jnPause(0.5)
     show screen hkb_overlay
 
     # Play appropriate music
@@ -244,8 +247,7 @@ label ch30_init:
 
 #The main loop
 label ch30_loop:
-    if not renpy.showing("natsuki idle"):
-        show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
+    $ jnShowNatsukiIdle(jn_center)  
 
     #Run our checks
     python:
@@ -270,6 +272,7 @@ label ch30_loop:
             LAST_DAY_CHECK = _now.day
             day_check()
 
+        Natsuki.setForceQuitAttempt(False)
         Natsuki.setInConversation(False)
 
     #Now, as long as there's something in the queue, we should go for it
@@ -285,20 +288,18 @@ label ch30_wait:
 
         if not jn_topic_in_event_list("weather_change") and jn_locations.checkUpdateLocationSunriseSunset(main_background):
             queue("weather_change")
-        
-        if (random.randint(1, 10000) == 1):
-            jn_stickers.stickerWindowPeekUp(at_right=random.choice([True, False]))
 
+        jnShowNatsukiIdle(jn_center)  
         jnPause(delay=5.0, hard=True)
 
     jump ch30_loop
 
-#Other labels
+# Other labels
 label call_next_topic(show_natsuki=True):
     $ _topic = None
 
     if show_natsuki:
-        show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
+        $ jnShowNatsukiIdle(jn_center)  
 
     if persistent._event_list:
         $ _topic = persistent._event_list.pop(0)
@@ -420,7 +421,7 @@ init python:
         """
         Runs every minute during breaks between topics
         """
-        jn_utils.save_game()
+        jn_utils.saveGame()
 
         # Check the daily affinity cap and reset if need be
         Natsuki.checkResetDailies()
@@ -663,7 +664,7 @@ label talk_menu:
                 "Talk."
             ]))
 
-        showNatsukiTalkMenu()
+        jnShowNatsukiTalkMenu()
         Natsuki.setInConversation(True)
 
     menu:
@@ -760,18 +761,19 @@ label player_select_topic(is_repeat_topics=False):
 label farewell_menu:
     python:
         # Sort the farewell options by their display name
-        available_farewell_options = jn_farewells.get_farewell_options()
+        available_farewell_options = jn_farewells.getFarewellOptions()
         available_farewell_options.sort(key = lambda option: option[0])
         available_farewell_options.append(("Goodbye.", "farewell_start"))
 
-    call screen scrollable_choice_menu(available_farewell_options, ("Nevermind.", None))
+    call screen scrollable_choice_menu(available_farewell_options, ("Go back", None))
+    $ Natsuki.setForceQuitAttempt(False)
 
     if isinstance(_return, basestring):
-        show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
+        $ jnShowNatsukiIdle(jn_center)  
         $ push(_return)
         jump call_next_topic
 
-    jump ch30_loop
+    jump talk_menu
 
 label outfits_menu:
     call screen scrollable_choice_menu([
@@ -779,16 +781,16 @@ label outfits_menu:
         ("Can I suggest a new outfit?", "outfits_suggest_outfit"),
         ("Can you forget about an outfit I suggested?", "outfits_remove_outfit"),
         ("Can you search again for new items?", "outfits_reload")],
-        ("Nevermind.", None),
+        ("Go back", None),
         400,
         "mod_assets/icons/outfits.png")
 
     if isinstance(_return, basestring):
-        show natsuki idle at jn_center zorder JN_NATSUKI_ZORDER
+        $ jnShowNatsukiIdle(jn_center)  
         $ push(_return)
         jump call_next_topic
 
-    jump ch30_loop
+    jump talk_menu
 
 label extras_menu:
     python:
@@ -811,6 +813,8 @@ label extras_menu:
     jump ch30_loop
 
 label try_force_quit:
+    $ Natsuki.setInConversation(True)
+
     # Goodnight
     if persistent._jn_player_tt_state >= 2 or persistent._jn_pic:
         $ renpy.jump("quit")
@@ -821,14 +825,20 @@ label try_force_quit:
         and jn_farewells.JNForceQuitStates(persistent.jn_player_force_quit_state) == jn_farewells.JNForceQuitStates.not_force_quit
     ):
         # Player hasn't force quit before, special dialogue
+        $ Natsuki.setForceQuitAttempt(False)
         $ push("farewell_force_quit")
         $ renpy.jump("call_next_topic")
 
     elif not jn_introduction.JNIntroductionStates(persistent.jn_introduction_state) == jn_introduction.JNIntroductionStates.complete:
         # Player hasn't passed the intro sequence, just quit
+        $ Natsuki.setForceQuitAttempt(False)
         $ renpy.jump("quit")
 
     else:
+        $ Natsuki.setForceQuitAttempt(True)
+        $ Natsuki.addApology(jn_apologies.ApologyTypes.sudden_leave)
+        $ Natsuki.setQuitApology(jn_apologies.ApologyTypes.sudden_leave)
+
         # Standard quit behaviour
         if Natsuki.isAffectionate(higher=True):
             n 2ccsem "W-{w=0.2}wait,{w=0.5}{nw}" 
@@ -868,6 +878,10 @@ label try_force_quit:
                 else:
                     n 1fcsfr "Whatever.{w=1}{nw}"
                     n 2fsqsl "{cps=\7.5}As I was saying.{/cps}{w=1}{nw}"
+
+                $ Natsuki.setForceQuitAttempt(False)
+                $ Natsuki.removeApology(jn_apologies.ApologyTypes.sudden_leave)
+                $ Natsuki.clearQuitApology()
 
                 return
 
@@ -910,12 +924,6 @@ label try_force_quit:
                         $ jnPause(0.025, hard=True)
                         hide glitch_garbled_n
                         hide glitch_garbled_red
-
-                # Apply consequences for force quitting, then glitch quit out
-                python:
-                    Natsuki.percentageAffinityLoss(2)
-                    Natsuki.addApology(jn_apologies.ApologyTypes.sudden_leave)
-                    Natsuki.setQuitApology(jn_apologies.ApologyTypes.sudden_leave)
 
                 play audio static
                 show glitch_garbled_b zorder JN_GLITCH_ZORDER with hpunch

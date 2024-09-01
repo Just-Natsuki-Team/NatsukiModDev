@@ -343,6 +343,7 @@ init -1 python in jn_outfits:
             outfit_list,
             unlocked=None,
             is_jn_outfit=None,
+            display_name=None,
             not_reference_name=None,
             has_accessory=None,
             has_eyewear=None,
@@ -358,7 +359,8 @@ init -1 python in jn_outfits:
                 - outfit_list - the list of JNOutfit outfits to query
                 - unlocked - the boolean unlocked state to filter for
                 - is_jn_outfit - the boolean is_jn_outfit state to filter for
-                - not_reference_name - list of reference_names the outfit must not have
+                - display_name - list of display names any outfits must have
+                - not_reference_name - list of reference names outfits must not have
                 - has_accessory - the boolean has_accessory state to filter for
                 - has_eyewear - the boolean has_eyewear state to filter for
                 - has_headgear - the boolean has_headgear state to filter for
@@ -375,6 +377,7 @@ init -1 python in jn_outfits:
                 if _outfit.__filterOutfit(
                     unlocked,
                     is_jn_outfit,
+                    display_name,
                     not_reference_name,
                     has_accessory,
                     has_eyewear,
@@ -495,6 +498,7 @@ init -1 python in jn_outfits:
             self,
             unlocked=None,
             is_jn_outfit=None,
+            display_name=None,
             not_reference_name=None,
             has_accessory=None,
             has_eyewear=None,
@@ -509,6 +513,7 @@ init -1 python in jn_outfits:
             IN:
                 - unlocked - the boolean unlocked state to filter for
                 - is_jn_outfit - the boolean is_jn_outfit state to filter for
+                - display_name - list of display names any outfits must have
                 - not_reference_name - list of reference_names the outfit must not have
                 - has_accessory - the boolean has_accessory state to filter for
                 - has_eyewear - the boolean has_eyewear state to filter for
@@ -524,6 +529,9 @@ init -1 python in jn_outfits:
                 return False
 
             elif is_jn_outfit is not None and self.is_jn_outfit != is_jn_outfit:
+                return False
+
+            elif display_name is not None and self.reference_name not in display_name:
                 return False
 
             elif not_reference_name is not None and self.reference_name in not_reference_name:
@@ -2155,6 +2163,19 @@ init -1 python in jn_outfits:
 
 # Asking Natsuki to wear an outfit
 label outfits_wear_outfit:
+    python:
+        # We have to unload outfits before wearables due to dependencies
+        jn_outfits.unloadCustomOutfits()
+        jn_outfits.unloadCustomWearables()
+
+        # We have to load wearables before outfits due to dependencies
+        jn_outfits.loadCustomWearables()
+        jn_outfits.loadCustomOutfits()
+
+        # Now we've loaded back into memory, reload the persisted data
+        jn_outfits.JNWearable.loadAll()
+        jn_outfits.JNOutfit.loadAll()
+
     if not jn_outfits.getAllOutfits():
         # No outfits, no point proceeding
         n 4tnmbo "Huh?{w=0.5}{nw}"
@@ -2505,7 +2526,7 @@ label outfits_create_select_headgear:
         wearable_options.sort(key = lambda option: option[1].display_name)
         wearable_options.insert(0, ("No headgear", "none"))
 
-    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+    call screen scrollable_choice_menu(items=wearable_options, last_item=("Nevermind.", None), menu_caption="Choose a headgear item...")
 
     if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNHeadgear):
         play audio clothing_ruffle
@@ -2524,7 +2545,7 @@ label outfits_create_select_hairstyle:
         wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
         wearable_options.sort(key = lambda option: option[1].display_name)
 
-    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+    call screen scrollable_choice_menu(items=wearable_options, last_item=("Nevermind.", None), menu_caption="Choose a hairstyle...")
 
     if isinstance(_return, jn_outfits.JNHairstyle):
         play audio hair_brush
@@ -2543,7 +2564,7 @@ label outfits_create_select_eyewear:
         wearable_options.sort(key = lambda option: option[1].display_name)
         wearable_options.insert(0, ("No eyewear", "none"))
 
-    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+    call screen scrollable_choice_menu(items=wearable_options, last_item=("Nevermind.", None), menu_caption="Choose an eyewear item...")
 
     if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNEyewear):
         python:
@@ -2562,7 +2583,7 @@ label outfits_create_select_accessory:
         wearable_options.sort(key = lambda option: option[1].display_name)
         wearable_options.insert(0, ("No accessory", "none"))
 
-    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+    call screen scrollable_choice_menu(items=wearable_options, last_item=("Nevermind.", None), menu_caption="Choose an accessory...")
 
     if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNAccessory):
         play audio hair_clip
@@ -2582,7 +2603,7 @@ label outfits_create_select_necklace:
         wearable_options.sort(key = lambda option: option[1].display_name)
         wearable_options.insert(0, ("No necklace", "none"))
 
-    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+    call screen scrollable_choice_menu(items=wearable_options, last_item=("Nevermind.", None), menu_caption="Choose a necklace...")
 
     if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNNecklace):
         play audio necklace_clip
@@ -2601,7 +2622,7 @@ label outfits_create_select_clothes:
         wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
         wearable_options.sort(key = lambda option: option[1].display_name)
 
-    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+    call screen scrollable_choice_menu(items=wearable_options, last_item=("Nevermind.", None), menu_caption="Choose a clothing item...")
 
     if isinstance(_return, jn_outfits.JNClothes):
         if (random.choice([True, False])):
@@ -2624,7 +2645,7 @@ label outfits_create_select_facewear:
         wearable_options.sort(key = lambda option: option[1].display_name)
         wearable_options.insert(0, ("No facewear", "none"))
 
-    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+    call screen scrollable_choice_menu(items=wearable_options, last_item=("Nevermind.", None), menu_caption="Choose a facewear item...")
 
     if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNFacewear):
         play audio hair_clip
@@ -2644,7 +2665,7 @@ label outfits_create_select_back:
         wearable_options.sort(key = lambda option: option[1].display_name)
         wearable_options.insert(0, ("No back", "none"))
 
-    call screen scrollable_choice_menu(wearable_options, ("Nevermind.", None))
+    call screen scrollable_choice_menu(items=wearable_options, last_item=("Nevermind.", None), menu_caption="Choose a back item...")
 
     if isinstance(_return, basestring) or isinstance(_return, jn_outfits.JNBack):
         if (random.choice([True, False])):
@@ -2656,6 +2677,34 @@ label outfits_create_select_back:
             jn_outfits._changes_made = True
             wearable_to_apply = jn_outfits.getWearable("jn_none") if _return == "none" else _return
             jn_outfits._PREVIEW_OUTFIT.back = wearable_to_apply
+            Natsuki.setOutfit(jn_outfits._PREVIEW_OUTFIT)
+
+    jump outfits_create_menu
+
+# Copy an existing outfit as the base for this one
+label outfits_create_copy:
+    python:
+        options = []
+        available_outfits = jn_outfits.JNOutfit.filterOutfits(
+            outfit_list=jn_outfits.getAllOutfits(),
+            unlocked=True,
+            is_jn_outfit=False)
+
+        available_outfits.sort(key = lambda option: option.display_name)
+
+        for outfit in available_outfits:
+            options.append((jn_utils.escapeRenpySubstitutionString(outfit.display_name), outfit))
+
+    call screen scrollable_choice_menu(items=options, last_item=("Nevermind.", None), menu_caption="Copy which outfit?")
+
+    if isinstance(_return, jn_outfits.JNOutfit):
+        play audio clothing_ruffle
+
+        python:
+            import copy
+
+            jn_outfits._changes_made = True
+            jn_outfits._PREVIEW_OUTFIT = copy.copy(_return)
             Natsuki.setOutfit(jn_outfits._PREVIEW_OUTFIT)
 
     jump outfits_create_menu
@@ -2712,34 +2761,171 @@ label outfits_create_save:
             extend 1unmsm " What did you wanna call it?"
 
             $ name_given = False
+            $ no_name_count = 0
+            $ robot_repeat_count = 0
+            $ profanity_repeat_count = 0
+            $ duplicate_repeat_count = 0
+
+            show natsuki option_wait_excited at jn_center
+
             while not name_given:
                 $ outfit_name = renpy.input(
-                    "What is the name of this outfit?",
+                    "What's the name of this outfit, [player]?",
                     allow=(jn_globals.DEFAULT_ALPHABETICAL_ALLOW_VALUES+jn_globals.DEFAULT_NUMERICAL_ALLOW_VALUES),
                     length=30
                 ).strip()
 
                 # Outfit name cannot be empty or None
-                if len(outfit_name) == 0 or outfit_name is None:
-                    n 2knmpo "Come on,{w=0.3} [player]!{w=1.5}{nw}"
-                    extend 1fchbg " Any outfit worth wearing has a {i}name{/i},{w=0.1} dummy!"
+                if len(outfit_name) == 0 or outfit_name is None or outfit_name.isspace():
+                    if no_name_count == 0:
+                        n 2knmpo "Come on,{w=0.2} [player]!{w=1.5}{nw}"
+                        extend 1fchbg " Any outfit worth remembering has a {i}name{/i}!"
+
+                        show natsuki option_wait_smug
+
+                    elif no_name_count == 1:
+                        n 4ccsss "Heh.{w=0.75}{nw}"
+                        extend 4csqbg " What's this,{w=0.2} [player]?"
+                        n 2fsqbg "You trying to give me the silent treatment now or something?"
+                        $ chosen_tease_name = jn_utils.getRandomTeaseName()
+                        n 2fcsbg "Spit it out already,{w=0.2} you [chosen_tease_name]!"
+
+                        show natsuki option_wait_smug
+
+                    elif no_name_count == 2:
+                        n 3csqflsbr "[player].{w=0.75}{nw}"
+                        extend 3csqcasbr " Come on."
+                        n 3cslbosbr "We both know I gotta call it {i}something{/i}."
+
+                        show natsuki option_wait_sulky
+                    
+                    else:
+                        n 2csqtrsbr "...Quit messing around,{w=0.2} [player]."
+
+                        show natsuki option_wait_sulky
+
+                    $ no_name_count += 1
 
                 # Outfit name cannot contain the jn_ namespace, though this should never happen
                 elif re.search("^jn_.", outfit_name.lower()):
-                    n 1tsqsssbl "...Is that some kind of robot name or something?"
-                    n 4fchbl "Try harder,{w=0.2} [player]!"
+                    if robot_repeat_count == 0:
+                        n 2csqfl "[outfit_name]?"
+                        n 2tsqsssbl "...Is that some kind of robot name or something?"
+                        n 7fcsbg "Try harder,{w=0.2} [player]!"
+
+                        show natsuki option_wait_smug
+
+                    elif robot_repeat_count == 1:
+                        n 2tsqpu "...Really?{w=0.75}{nw}"
+                        extend 2csqsssbl " This again?"
+                        n 2ccsss "Sorry,{w=0.2} [player].{w=0.75}{nw}"
+                        extend 2ccssmesm " Guess I just don't speak robot!"
+
+                        show natsuki option_wait_smug
+
+                    elif robot_repeat_count == 2:
+                        n 3csqbo "..."
+                        n 3csqtr "...Not happening,{w=0.2} [player]."
+
+                        show natsuki option_wait_sulky
+
+                    else:
+                        n 3csqcasbr "...No."
+
+                        show natsuki option_wait_sulky
+
+                    $ robot_repeat_count += 1
 
                 # Outfit cannot be an insult or profanity
                 elif(
                     jn_utils.getStringContainsProfanity(outfit_name.lower())
                     or jn_utils.getStringContainsInsult(outfit_name.lower())
                 ):
-                    n 2fsqem "...Really,{w=0.5} [player]."
-                    n 1fsqsr "Come on.{w=1}{nw}"
-                    extend 1fllsr " Quit being a jerk."
+                    if profanity_repeat_count == 0:
+                        n 2fsqem "...Really,{w=0.5} [player]."
+                        n 2fsqsr "Come on.{w=1}{nw}"
+                        extend 4fllsr " Quit being a jerk."
 
+                        show natsuki_option_wait_annoyed
+
+                    elif profanity_repeat_count == 1:
+                        n 4fsqfl "Seriously,{w=0.2} [player].{w=0.75}{nw}"
+                        extend 4fsqan " It wasn't even funny the first time."
+                        n 2fcsem "Now knock.{w=1}{nw}"
+                        extend 2fcsan " It.{w=1}{nw}"
+                        extend 2fsqfr " Off."
+
+                        show natsuki_option_wait_annoyed
+                    
+                    else:
+                        n 2fsqsr "..."
+
+                        show natsuki_option_wait_annoyed
+
+                    $ profanity_repeat_count += 1
                     $ Natsuki.addApology(jn_apologies.ApologyTypes.rude)
                     $ Natsuki.percentageAffinityLoss(2)
+
+                    if Natsuki.isNormal(lower=True):
+                        # Lost ability to switch outfits as affinity is too low
+                        n 2fcsemesi "..." 
+                        n 2fcsfl "...Actually."
+                        extend 2fsqan " You know what?"
+                        extend 4fsqwr " Forget this."
+                        n 4fcsem "We're done here,{w=0.2} [player]."
+                        n 4fsqan "Jerk."
+
+                        $ jn_outfits._changes_made = False
+                        show natsuki 4fcsfr
+                        $ jnPause(0.1)
+                        show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+                        $ Natsuki.setOutfit(jn_outfits.getOutfit("jn_school_uniform"))
+                        play audio clothing_ruffle
+                        $ jnPause(2)
+                        show natsuki 2fsrfr
+                        hide black with Dissolve(1.25)
+
+                        jump ch30_loop
+
+                # Outfit cannot use the name of an outfit that already exists
+                elif jn_outfits.JNOutfit.filterOutfits(outfit_list=jn_outfits.getAllOutfits(), display_name=[outfit_name]) is not None:
+                    if duplicate_repeat_count == 0:
+                        n 2nsqaj "Wow.{w=0.75}{nw}"
+                        extend 2tsqfl " Really,{w=0.2} [player]?{w=0.75}{nw}"
+                        extend 4fsqbg " Did you seriously forget already?"
+                        $ chosen_descriptor = "you {0}".format(jn_utils.getRandomTeaseName()) if Natsuki.isAffectionate(higher=True) else player
+                        n 6fcsbg "I already {i}have{/i} an outfit called that,{w=0.5}{nw}" 
+                        extend 3fchgn " [chosen_descriptor]!"
+                        n 3clrbg "Jeez...{w=1}{nw}"
+                        extend 7ccsbgesm " You could at least {i}try{/i} to be original,{w=0.2} you know."
+                        n 7fsqsm "Ehehe."
+                        n 3fcsbg "Give me another,{w=0.2} [player]!"
+
+                        show natsuki option_wait_smug
+                    
+                    elif duplicate_repeat_count == 1:
+                        n 2tsqsl "..."
+                        n 2tsrfl "You...{w=1.5}{nw}"
+                        extend 4tlrfl " really like that name,{w=0.5}{nw}"
+                        extend 4tnmbo " huh."
+                        n 1tllbo "..."
+                        n 3ccsbg "Well,{w=0.2} still not happening,{w=0.2} [player].{w=0.75}{nw}"
+                        extend 3fchgn " Sorry!"
+
+                        show natsuki option_wait_smug
+
+                    elif duplicate_repeat_count == 2:
+                        n 2tsqpu "..."
+                        n 2tsqslsbl "...Really,{w=0.2} [player]?"
+
+                        show natsuki option_wait_sulky
+
+                    else:
+                        n 2csqflsbr "...Don't you have anything better to do?"
+
+                        show natsuki option_wait_sulky
+
+                    $ duplicate_repeat_count += 1
 
                 else:
                     # It's allowed!
@@ -2826,7 +3012,7 @@ label outfits_auto_change:
     else:
         n 2fsqsl "...{w=0.75}{nw}"
 
-    show natsuki idle at jn_center
+    $ jnShowNatsukiIdle(jn_center) 
     return
 
 label new_wearables_outfits_unlocked:
@@ -3303,7 +3489,11 @@ screen create_outfit():
     vbox:
         xpos 600
         ypos 450
-        null height 20
+        null height 60
+
+        textbutton _("Copy from..."):
+            style "hkbd_option"
+            action Jump("outfits_create_copy")
 
         textbutton _("Finished"):
             style "hkbd_option"

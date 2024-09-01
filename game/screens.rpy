@@ -305,6 +305,7 @@ screen scrollable_choice_menu(items, last_item=None, option_width=560, icon_path
                 vbox:
                     for prompt, _value in items:
                         textbutton prompt:
+                            id prompt
                             style "categorized_menu_button"
                             xsize option_width
                             action Return(_value)

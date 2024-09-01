@@ -1353,6 +1353,18 @@ init -100 python in jn_utils:
         else:
             return ["th", "st", "nd", "rd", "th"][min(value % 10, 4)]
 
+    def diceRoll(faces):
+        """
+        Returns True or False based on whether a roll with the given faces returns one.
+
+        IN:
+            - faces - int number of faces for the diceroll
+
+        OUT:
+            - True if the roll equals one, otherwise False
+        """
+        return random.randint(1, faces) == 1
+
     def getPlayerInitial():
         """
         Returns the first letter of the player's name.
@@ -1864,7 +1876,7 @@ init -100 python in jn_utils:
         """
         return __KEY_VALID
 
-    def save_game():
+    def saveGame():
         """
         Saves all game data.
         """
@@ -1903,15 +1915,15 @@ init -100 python in jn_utils:
             store.persistent._jn_gs_aff = store.persistent.affinity
 
 # Generic transforms/animations
-transform JN_TRANSFORM_FADE_IN:
+transform JN_TRANSFORM_FADE_IN(time=0.5):
     subpixel True
     alpha 0
-    ease 0.5 alpha 1
+    ease time alpha 1
 
-transform JN_TRANSFORM_FADE_OUT:
+transform JN_TRANSFORM_FADE_OUT(time=0.5):
     subpixel True
     alpha 1
-    ease 0.5 alpha 0
+    ease time alpha 0
 
 transform JN_PULSE(time=1, wait=1.5):
     truecenter
@@ -1946,6 +1958,9 @@ define audio.t4g = "<loop 1.000>bgm/4g.ogg"
 # JN resources
 
 # Singleton sound effects
+define audio.anime_generic_theme = "mod_assets/sfx/anime_generic_theme.ogg"
+define audio.anime_punch = "mod_assets/sfx/anime_punch.ogg"
+define audio.anime_slash = "mod_assets/sfx/anime_slash.ogg"
 define audio.blow = "mod_assets/sfx/blow.ogg"
 define audio.book_closing = "mod_assets/sfx/book_closing.ogg"
 define audio.button_mashing_a = "mod_assets/sfx/button_mashing_a.ogg"
@@ -2048,29 +2063,45 @@ init python:
     player = persistent.playername
 
 init -999 python:
-    def label_callback(name, abnormal):
+    def labelCallback(name, abnormal):
         jn_globals.last_label = jn_globals.current_label
         jn_globals.current_label = name
 
-    config.label_callback = label_callback
+    config.label_callback = labelCallback
 
-    def quit_input_check():
+    def quitInputCheck():
         """
-        This checks to ensure an input or menu screen is not up before allowing a force quit, as these crash the game. Thanks, Tom.
+        Checks to ensure that a screen/label isn't up that crashes the game, interferes or otherwise doesn't work with the force quit mechanics/dialogue.
+        If so, then prevents the force quit process from continuing until that screen/label is hidden, or the player quits in a way we can't control (I.E spamming the close button or task manager).
         """
-        blocked_screens = (
+        for blocked_screen in (
             "input",
             "choice",
+            "choice_centred",
+            "choice_centred_mute",
+            "categorized_menu",
+            "scrollable_choice_menu",
             "poem_view",
             "preferences",
             "history",
-            "hotkeys"
-        )
-        for blocked_screen in blocked_screens:
+            "hotkeys",
+            "create_outfit",
+            "snap_ui",
+            "blackjack_ui"
+        ):
             if renpy.get_screen(blocked_screen):
+                Natsuki.setForceQuitAttempt(True)
+                Natsuki.addApology(jn_apologies.ApologyTypes.sudden_leave)
+                Natsuki.setQuitApology(jn_apologies.ApologyTypes.sudden_leave)
                 return
 
-        if jn_globals.force_quit_enabled:
+        if jn_globals.current_label in (
+            "try_force_quit"
+        ):
+            # Prevent the dialogue being called again if a force quit is already in progress
+            return
+
+        elif jn_globals.force_quit_enabled:
             renpy.call("try_force_quit")
 
     class JNEvent(object):

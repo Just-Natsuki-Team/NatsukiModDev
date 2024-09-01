@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://justnatsuki.club/img/logos/jn_1-3-4_logo.png" height="300"/>
+    <img src="https://justnatsuki.club/img/logos/jn_1-3-5_logo.png" height="300"/>
 </p>
 <br>
 
@@ -50,9 +50,9 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
     </td>
     <td align="center">
         <a href="https://github.com/Edgarmods">
-            <img src="https://avatars.githubusercontent.com/u/68255592?v=4" width="100;" alt="Edgarmods"/>
+            <img src="https://avatars.githubusercontent.com/u/68255592?v=4" width="100;" alt="Primrose"/>
             <br />
-            <sub><b>Edgarmods</b></sub>
+            <sub><b>Primrose</b></sub>
         </a>
     </td></tr>
 <tr>
@@ -111,6 +111,36 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
 
 - Snow, rain graphics thanks to Monika After Story team @ https://github.com/Monika-After-Story/MonikaModDev
 - License template thanks to Monika After Story team @ https://github.com/Monika-After-Story/MonikaModDev
+- Sound effects thanks to various contributors at Freesound @ https://freesound.org
+    <details>
+    <summary>Full list</summary>
+
+    - angeliqueperdikes
+    - Bee09
+    - Bertrof
+    - brandondelehoy
+    - ChazzRavenelle
+    - cupido-1
+    - Daleonfire
+    - Euphrosyyn
+    - Garuda1982
+    - HogantheLogan
+    - JasonElrod
+    - Joao_Janz
+    - jrssandoval
+    - Mydo1
+    - Robinhood76
+    - ryanharding95
+    - Sai-AnnNadesan
+    - SDLx
+    - Sirkoto51
+    - suntemple
+    - Syna-Max
+    - TinyRay
+    - tmkappelt
+    - valli39
+
+    </details>
 - Our [contributors](https://github.com/Just-Natsuki-Team/NatsukiModDev/graphs/contributors)!
 - Our community, for being so patient despite our delays
 
