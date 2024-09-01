@@ -588,6 +588,21 @@ init python in jn_jokes:
         joke_category=JNJokeCategories.neutral
     ))
     __registerJoke(JNJoke(
+        label="joke_wolves_alphabet",
+        display_name="Wolf education",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_sailor_shipshape",
+        display_name="Sailors",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_seamstress_thread",
+        display_name="Seamstress",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
         label="joke_sting_operation",
         display_name="Bee theft",
         joke_category=JNJokeCategories.neutral
@@ -1488,6 +1503,52 @@ label joke_coffee_grind:
     n 1flrbs "'Cause they were sick of the {i}grind{/i},{w=0.75}{nw}"
     extend 1fchgnelg " of course!"
 
+    return
+
+label joke_wolves_alphabet:
+    n 1ccsbg "Heh.{w=0.75}{nw}"
+    extend 1fllbg " We'll see who's{w=0.75}{nw}"
+    extend 1fsqss " {i}howling{/i}{w=0.75}{nw}"
+    extend 1fcsss " after this one."
+    n 1fcsaj "'Kay.{w=0.75}{nw}"
+    extend 1fcssm " So!"
+    n 1unmaj "What's the first thing a wolf would learn if it started going to school?"
+    n 1cnmsm "..."
+    n 1csqss "Oh?{w=0.75}{nw}"
+    extend 1csqbg " You're not gonna bite,{w=0.2} [player]?"
+    n 1ccssm "Ehehe."
+    n 1flrbg "They'd learn the {i}alpha{/i}-{w=0.75}{nw}"
+    extend 1fsqbg "bet,{w=0.5}{nw}"
+    extend 1fchbs " Duh!"
+
+    return
+
+label joke_sailor_shipshape:
+    n 1fupfl "Ugh.{w=0.75}{nw}"
+    extend 1fsrem " As if {i}this{/i} excuse for a joke holds any water.{w=0.75}{nw}"
+    extend 1cnmem " Do I really have to read it out,{w=0.2} [player]?"
+    n 1ccsemesi "..."
+    n 1cslfl "How do you describe a sailor that works out every day?"
+    n 1cllslsbr "..."
+    n 1fdlslsbr "..."
+    n 1fsqfl "...{i}Ship{/i}-{w=0.75}{nw}"
+    extend 1fsrem "{i}shape{/i}."
+
+    return
+
+label joke_seamstress_thread:
+    n 1ccsaj "So,{w=0.2} [player] -{w=0.5}{nw}"
+    extend 1unmaj " did you hear about the seamstress that always left her work up until the last possible minute?"
+    n 1clrfl "Yeah!{w=0.75}{nw}"
+    extend 1cnmwr " Talk about unforgiving.{w=0.75}{nw}"
+    extend 1csqemsbr " Can you imagine all it would take to totally screw everything up,{w=0.2} working like that?"
+    n 1ccsfl "Man...{w=1}{nw}"
+    extend 1tnmpu " If anything happened?"
+    n 1ccsss "...Heh."
+    n 1fllss "I guess she really would be{w=0.5}{nw}"
+    extend 1fsqbg " {i}hanging on by a thread{/i},{w=0.75}{nw}"
+    extend 1fchgn " right?"
+    
     return
 
 label joke_sting_operation:
