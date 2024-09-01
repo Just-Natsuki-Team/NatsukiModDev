@@ -87,7 +87,7 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
     </tr>
 </table>
 
-### With thanks to our amazing guest artists:
+### With thanks to our amazing guest artists and composers:
 <table>
     <tr>
         <td align="center">
@@ -102,6 +102,13 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
                 <img src="https://justnatsuki.club/img/portraits/shunbun.png" width="100;" alt="Almay_art"/>
                 <br />
                 <sub><b>TheShunBun</b></sub>
+            </a>
+        </td>
+        <td align="center">
+            <a href="https://x.com/IvaadenFebbs">
+                <img src="https://justnatsuki.club/img/portraits/febbs.png" width="100;" alt="Febbs"/>
+                <br />
+                <sub><b>Febbs</b></sub>
             </a>
         </td>
     </tr>
@@ -181,7 +188,7 @@ It's rude to keep someone waiting, you know...
 
 Download the official launcher and follow the installation steps [here](https://github.com/Just-Natsuki-Team/NatsukiModInstaller/releases/tag/release)!
 
-#### Manual installation
+#### Manual installation (not recommended: see [using the official installer](#using-the-official-jn-installer-recommended))
 
 <details>
 <summary>Details</summary>
@@ -211,7 +218,7 @@ Download the official launcher and follow the installation steps [here](https://
 
 Download the official launcher and follow the update steps [here](https://github.com/Just-Natsuki-Team/NatsukiModInstaller/releases/tag/release)!
 
-#### Manual update
+#### Manual update (not recommended: see [using the official installer](#using-the-official-jn-installer-recommended))
 
 <details>
 <summary>Details</summary>
