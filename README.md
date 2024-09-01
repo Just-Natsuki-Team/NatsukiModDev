@@ -275,7 +275,7 @@ If so, then please consider joining us on Discord: we'd love to see you there!
 
 <br>
 <p align="center">
-    <a href="https://discord.gg/sFxdsCBh94">
+    <a href="https://discord.gg/jr59Tts23d">
         <img src="https://discordapp.com/api/guilds/930206430148063242/widget.png?style=banner4"/>
     </a>
 </p>
