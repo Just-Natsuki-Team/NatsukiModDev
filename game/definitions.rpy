@@ -1958,6 +1958,9 @@ define audio.t4g = "<loop 1.000>bgm/4g.ogg"
 # JN resources
 
 # Singleton sound effects
+define audio.anime_generic_theme = "mod_assets/sfx/anime_generic_theme.ogg"
+define audio.anime_punch = "mod_assets/sfx/anime_punch.ogg"
+define audio.anime_slash = "mod_assets/sfx/anime_slash.ogg"
 define audio.blow = "mod_assets/sfx/blow.ogg"
 define audio.book_closing = "mod_assets/sfx/book_closing.ogg"
 define audio.button_mashing_a = "mod_assets/sfx/button_mashing_a.ogg"
