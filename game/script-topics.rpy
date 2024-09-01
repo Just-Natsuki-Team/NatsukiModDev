@@ -12646,3 +12646,185 @@ label talk_remind_blackjack_rules:
 
     $ get_topic("talk_remind_blackjack_rules").shown_count += 1 # Have to increment manually here thanks to jump
     jump blackjack_explanation
+
+# Natsuki isn't a fan of shaving!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._topic_database,
+            label="talk_windup_shaving",
+            unlocked=True,
+            prompt="Shaving",
+            category=["Wind-ups", "Fashion"],
+            nat_says=True,
+            affinity_range=(jn_affinity.NORMAL, None),
+            location="classroom"
+        ),
+        topic_group=TOPIC_TYPE_NORMAL
+    )
+
+label talk_windup_shaving:
+    $ already_discussed_shaving = get_topic("talk_windup_shaving").shown_count > 0
+    if already_discussed_shaving:
+        n 2ccsemesi "..."
+        n 2cllfl "I know it isn't exactly something I've gotta think about here so much.\n{w=0.75}{nw}"
+        extend 4ccsajlsbr " A-{w=0.2}and I know you're probably sick of hearing about it by now."
+        n 3csrfl "But I still can't get over how much of a pain keeping up with shaving always is."
+        n 3fsqbo "..."
+        n 4cnmwrl "H-{w=0.2}hey!{w=0.75}{nw}"
+        extend 2fcstrlsbr " Don't give me that look,{w=0.2} [player]!"
+        n 2fcspo "You should know perfectly well what I'm talking about!{w=0.75}{nw}"
+        extend 4fsrem " Especially after last time.{w=0.75}{nw}"
+        extend 4fcsan " It's the {i}worst{/i}!"
+        n 6fcsgs "First off,{w=0.5}{nw}"
+
+    else:
+        n 7cslpu "..."
+        n 7fcsan "Tch!"
+        n 3fsrsl "..."
+        n 3fcsem "...Ugh."
+        n 4fsrfl "Man.{w=0.75}{nw}" 
+        extend 4flrfl " I totally forgot about how much that got on my nerves."
+        n 2csqem "...You know what I {i}always{/i} hated,{w=0.2} [player]?{w=0.75}{nw}"
+        extend 4fslan " Something that {i}never{/i} failed to get on my nerves?"
+        n 1fslsl "..."
+        n 2fsqpu "...Shaving."
+        n 2fsqfr "..."
+        n 2fsqfl "...Yeah.{w=0.75}{nw}"
+        extend 2fsgem " You know exactly what I'm talking about.{w=0.75}{nw}"
+        extend 2fcsgs " I can practically see it on your face."
+        n 4fllwr "Seriously,{w=0.2} [player] -{w=0.5}{nw}"
+        extend 4fsqan " it's actually the worst!{w=0.75}{nw}"
+        extend 4fbkwr " I can't stand it!"
+        n 3fcswr "It's like every part of it all is practically {i}designed{/i} to piss you off!"
+        n 3fcsemesi "..."
+        n 4fsgwr "You better be sitting comfortably,{w=0.2} [player].{w=0.75}{nw}"
+        extend 2fslan " 'Cause I've got a real bucket list to go off on this one."
+        n 6fcsgs "First off,{w=0.5}{nw}"
+
+    extend 3fupwr " let's give a {i}huge{/i} round of applause to everybody's favorite pain in the backside:{w=0.75}{nw}"
+    extend 3fsran " the human body!"
+    n 1fcsgs "I don't know about you,{w=0.2} [player].{w=0.75}{nw}" 
+    extend 2tnmem " But depending on how fast your hair grows?{w=0.75}{nw}"
+    extend 2csqem " You're gonna be looking at anywhere from days to hours between shaves."
+    n 2fupgs "Of course!"
+    n 2fcsgs "Because nobody{w=0.5}{nw}" 
+    extend 2fsqem " {i}ever{/i}{w=0.5}{nw}"
+    extend 2fllem " had anything better to do in the morning than blow a bunch of time obsessing over how {i}silky smooth{/i} their features are."
+    n 4fsqfl "Right?"
+    n 3flran "And don't even get me started on how counter-intuitive it all is either."
+    n 7fsqem "Go too slow?{w=0.75}{nw}"
+    extend 7fnmem " Go too fast?{w=0.75}{nw}"
+    extend 3fsqem " Just {i}look{/i} at your razor the wrong way?"
+    n 4ftlwr "Surprise!{w=0.75}{nw}"
+    extend 4fcswr " Hope you stocked up on band-aids.{w=0.75}{nw}"
+    extend 2csqup " 'Cause you know what you're gonna be doing for the next ten minutes."
+    n 2ccswr "I mean,{w=0.2} seriously -{w=0.5}{nw}"
+    extend 2fsqwr " It isn't even like you gotta worry about that for the hair on your head."
+    n 4flran "Why does it {i}have{/i} to be so different for hair anywhere else?"
+    n 4fcsan "Cut me a break."
+
+    n 1fnmfl "Oh -{w=0.5}{nw}" 
+    extend 3fsqwr " and did I mention just how much you have to pay for the privilege?"
+    n 3fbkwr "It doesn't even matter what you use!"
+    n 7fllem "Those razors with the replaceable bits on the end?{w=0.75}{nw}"
+    extend 3fcswr " Hope you enjoy squeezing as much out of each one as you can to save on the refills!"
+    n 6csqem "Going disposable?{w=0.75}{nw}"
+    extend 3flrem " Yeah,{w=0.2} because I{w=0.2}{nw}" 
+    extend 4fsrem " {i}totally{/i}{w=0.2}{nw}"
+    extend 4fsqan " enjoy emptying the trash just like how they're emptying my bank account."
+    n 2fslem "...Not."
+    n 2fnmgs "Even the stupid fancy electric ones don't help!{w=0.75}{nw}"
+    extend 4fbkwr " They're even {i}more{/i} expensive than everything else!"
+    n 4fcsan "And we all know just how much fun it is having {i}another{/i} thing that keeps running out of juice."
+    n 6ftrem "'Our closest shave ever!'.{w=0.75}{nw}"
+    extend 3fsrem " Yeah,{w=0.2} right.{w=0.75}{nw}"
+    extend 3fsran " More like shaving away all your savings."
+    n 3fcsemesi "..."
+
+    n 3fcssl "Heh.{w=0.75}{nw}"
+    extend 7fsqfl " And whatever you do?{w=0.75}{nw}" 
+    extend 7fslun " It {i}never{/i} feels like you'll even get the kind of shave you wanted in the first place."
+    n 1fcsfl "Yeah,{w=0.2} yeah.{w=0.75}{nw}"
+    extend 4fcsgs " Say whatever you want,{w=0.2} [player].{w=0.75}{nw}"
+    extend 2csrfl " I've heard it all before."
+    n 2ftlgs "'You just gotta let your skin soak,{w=0.2} Natsuki!.'{w=0.75}{nw}"
+    extend 6ftrwr " 'It's easy!{w=0.2} Just follow the grain!.'{w=0.75}{nw}"
+    extend 3flrem " 'Don't forget to lather up every time!.'{w=0.75}{nw}"
+    extend 4fcsan " As if they think I haven't {i}tried{/i} that already!"
+    n 2fllem "Like...{w=1}{nw}"
+    extend 2fslan " Come {w=0.5}{nw}{i}on{/i}!{w=0.75}{nw}"
+    extend 2fsqwr " Is this meant to be a morning routine?{w=1}{nw}" 
+    extend 1fbkwrean " Or some kind of cult ritual?"
+    n 1fslsl "At least a ritual doesn't leave your legs looking like a war zone either."
+    n 2fcsem "Ugh..."
+
+    if already_discussed_shaving:
+        n 2clrsllsbl "..."
+        n 2ccsajlsbl "...L-{w=0.2}look.{w=0.75}{nw}"
+        extend 4cllfl " I'm not gonna go all out and work myself up about all this.{w=0.75}{nw}"
+        extend 4cslfl " Again."
+
+        if Natsuki.isEnamored(higher=True):
+            n 7ccsssl "E-{w=0.2}even if you can't get enough of the sound of my voice."
+
+        else:
+            n 3ccsca "Not like just complaining about something ever achieved anything anyway."
+        
+    else:
+        n 2csrpu "You'd think something practically everybody's had to deal with for so long would actually be {i}solved{/i} by now,{w=0.5}{nw}"
+        extend 2csqsl " right?"
+        n 1ccsflesi "..."
+        n 1cslsl "..."
+        n 3ccstr "Alright,{w=0.2} look.{w=0.75}{nw}"
+        extend 3cllfl " I've already gone on about this long enough.{w=0.75}{nw}"
+        extend 7cslfl " And I really don't want {i}shaving{/i} of all things living rent-free in my head again."
+
+    n 3clraj "So...{w=1}{nw}" 
+    extend 3ccsaj " I'm just gonna say this."
+
+    $ chosen_descriptor = "babe" if Natsuki.isLove(higher=True) else player
+    if already_discussed_shaving:
+        n 4ulrfl "Like I said before.{w=0.75}{nw}"
+        extend 4tnmsl " I don't really care or anything if you shave or not,{w=0.2} [chosen_descriptor].{w=0.75}{nw}"
+
+    else:
+        n 4ccspu "I don't particularly care or anything if you shave or not,{w=0.2} [chosen_descriptor].{w=0.75}{nw}"
+
+    extend 7ccsfll " T-{w=0.2}that's your call,{w=0.2} obviously."
+    n 7cllajl "I'm not gonna think any less of someone not wanting to go through all of...{w=1}{nw}"
+    extend 3csleml " That."
+    n 3cslsl "..."
+    n 3cllaj "But...{w=1}{nw}"
+    extend 7tnmpu " If you {i}do{/i} somehow have some kind of magical morning routine that {i}actually{/i} works for you?"
+    n 1ccsss "...Heh."
+    n 2fcsbgsbr "Then I hope you know just who you have to share it with first,{w=0.2} just in case."
+    n 2fchbgsbr "T-{w=0.2}that's all I'm saying!"
+
+    if Natsuki.isLove(higher=True):
+        n 2ccsbgl "And besides,{w=0.2} [player].{w=0.75}{nw}"
+        extend 4csqsml " I-{w=0.2}isn't that just what couples do?"
+        n 3fcssml "Ehehe."
+        n 3fchblleaf "L-{w=0.2}love you too,{w=0.2} [player]!"
+
+    elif Natsuki.isEnamored(higher=True):
+        n 2fcsbgl "A-{w=0.2}and besides,{w=0.2} [player].{w=0.75}{nw}"
+        extend 6fcssmlesm " You know what they say."
+        n 3fsqssl "Sharing is caring,{w=0.2} right?"
+        n 4fcssml "Ehehe."
+        $ chosen_tease = jn_utils.getRandomTeaseName()
+        n 3fchgnl "Thanks a bunch,{w=0.2} you big [chosen_tease]!"
+
+    elif Natsuki.isAffectionate(higher=True):
+        n 2fcsss "And besides,{w=0.2} [player].{w=0.75}{nw}"
+        extend 7fsqss " If you don't?{w=1}{nw}"
+        extend 7tlraj " Well..."
+        n 3fcsbg "Let's just say I'll show you a {i}real{/i} close shave instead."
+        n 3fsqsm "Ehehe."
+        n 3fchgn "'Preciated,{w=0.2} [player]!"
+
+    else:
+        n 2fsqsm "Ehehe."
+        n 7fchgn "T-{w=0.2}thanks a bunch,{w=0.2} [player]!~"
+
+    return
